@@ -1,8 +1,8 @@
-<%@ Page ValidateRequest="false" Language="C#" AutoEventWireup="true" CodeFile="messages.aspx.cs" Inherits="messages" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="messages.aspx.cs" Inherits="HWgrp.messages" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
-   <%=Db2.header()%>
+   <%=Db.header()%>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
 <!--[if IE 7 ]>    <body class="ie7"> <![endif]-->

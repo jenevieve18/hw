@@ -1,145 +1,144 @@
 ﻿using System;
-using System.Data.SqlClient;
-using System.Configuration;
-using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web;
-using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
+using System.Data.SqlClient;
 
-public partial class superReportImage : System.Web.UI.Page
+namespace HWgrp
 {
-    private void Page_Load(object sender, System.EventArgs e)
+    public partial class superReportImage : System.Web.UI.Page
     {
-        string rnds1 = (HttpContext.Current.Request.QueryString["RNDS1"] != null ? HttpContext.Current.Request.QueryString["RNDS1"] : "");
-        string rnds2 = (HttpContext.Current.Request.QueryString["RNDS2"] != null ? HttpContext.Current.Request.QueryString["RNDS2"] : "");
-        string rndsd1 = (HttpContext.Current.Request.QueryString["RNDSD1"] != null ? HttpContext.Current.Request.QueryString["RNDSD1"] : "");
-        string rndsd2 = (HttpContext.Current.Request.QueryString["RNDSD2"] != null ? HttpContext.Current.Request.QueryString["RNDSD2"] : "");
-        string pid1 = (HttpContext.Current.Request.QueryString["PID1"] != null ? HttpContext.Current.Request.QueryString["PID1"] : "");
-        string pid2 = (HttpContext.Current.Request.QueryString["PID2"] != null ? HttpContext.Current.Request.QueryString["PID2"] : "");
-
-        // For min/max
-        string rnds = (rnds1 == "0" || rnds2 == "0" ? "" : " AND pru.ProjectRoundUnitID IN (" + rnds1 + (rnds2 != "" ? "," + rnds2 : "") + ")");
-
-        if (rnds1 == "0")
+        private void Page_Load(object sender, System.EventArgs e)
         {
-            rnds1 = " AND pru.ProjectRoundUnitID NOT IN (" + HttpContext.Current.Request.QueryString["N"].ToString() + ")";
-        }
-        else
-        {
-            if (rnds1 != "")
+            string rnds1 = (HttpContext.Current.Request.QueryString["RNDS1"] != null ? HttpContext.Current.Request.QueryString["RNDS1"] : "");
+            string rnds2 = (HttpContext.Current.Request.QueryString["RNDS2"] != null ? HttpContext.Current.Request.QueryString["RNDS2"] : "");
+            string rndsd1 = (HttpContext.Current.Request.QueryString["RNDSD1"] != null ? HttpContext.Current.Request.QueryString["RNDSD1"] : "");
+            string rndsd2 = (HttpContext.Current.Request.QueryString["RNDSD2"] != null ? HttpContext.Current.Request.QueryString["RNDSD2"] : "");
+            string pid1 = (HttpContext.Current.Request.QueryString["PID1"] != null ? HttpContext.Current.Request.QueryString["PID1"] : "");
+            string pid2 = (HttpContext.Current.Request.QueryString["PID2"] != null ? HttpContext.Current.Request.QueryString["PID2"] : "");
+
+            // For min/max
+            string rnds = (rnds1 == "0" || rnds2 == "0" ? "" : " AND pru.ProjectRoundUnitID IN (" + rnds1 + (rnds2 != "" ? "," + rnds2 : "") + ")");
+
+            if (rnds1 == "0")
             {
-                rnds1 = " AND (pru.ProjectRoundUnitID IN (" + rnds1 + ")";
-                if (pid1 != "")
-                {
-                    rnds1 += " OR a.ProjectRoundUserID IN (" + pid1 + ")";
-                }
-                rnds1 += ")";
+                rnds1 = " AND pru.ProjectRoundUnitID NOT IN (" + HttpContext.Current.Request.QueryString["N"].ToString() + ")";
             }
             else
             {
-                rnds1 = " AND a.ProjectRoundUserID IN (" + pid1 + ")";
-            }
-        }
-        if (rnds2 == "")
-        {
-            rnds2 = "";
-        }
-        else
-        {
-            if (rnds2 == "0")
-            {
-                rnds2 = " AND pru.ProjectRoundUnitID NOT IN (" + HttpContext.Current.Request.QueryString["N"].ToString() + ")";
-            }
-            else
-            {
-                if (rnds2 != "")
+                if (rnds1 != "")
                 {
-                    rnds2 = " AND (pru.ProjectRoundUnitID IN (" + rnds2 + ")";
-                    if (pid2 != "")
+                    rnds1 = " AND (pru.ProjectRoundUnitID IN (" + rnds1 + ")";
+                    if (pid1 != "")
                     {
-                        rnds2 += " OR a.ProjectRoundUserID IN (" + pid2 + ")";
+                        rnds1 += " OR a.ProjectRoundUserID IN (" + pid1 + ")";
                     }
-                    rnds2 += ")";
+                    rnds1 += ")";
                 }
                 else
                 {
-                    rnds2 = " AND a.ProjectRoundUserID IN (" + pid2 + ")";
+                    rnds1 = " AND a.ProjectRoundUserID IN (" + pid1 + ")";
                 }
             }
-        }
-
-        string join1 = "";
-        if (rndsd1 != "")
-        {
-            SqlDataReader rs2 = Db.rs("SELECT " +
-                "d.Department, " +
-                "d.DepartmentID, " +
-                "d.SortString " +
-                "FROM Department d " +
-                "WHERE d.DepartmentID IN (" + rndsd1 + ") " +
-                "ORDER BY d.SortString");
-            while (rs2.Read())
+            if (rnds2 == "")
             {
-                join1 += "INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID " +
-                        "INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID " +
-                        "INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID " +
-                        "INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString," + rs2.GetString(2).Length + ") = '" + rs2.GetString(2) + "' ";
+                rnds2 = "";
             }
-            rs2.Close();
-        }
-        string join2 = "";
-        if (rndsd2 != "")
-        {
-            SqlDataReader rs2 = Db.rs("SELECT " +
-                "d.Department, " +
-                "d.DepartmentID, " +
-                "d.SortString " +
-                "FROM Department d " +
-                "WHERE d.DepartmentID IN (" + rndsd2 + ") " +
-                "ORDER BY d.SortString");
-            while (rs2.Read())
+            else
             {
-                join2 += "INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID " +
-                        "INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID " +
-                        "INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID " +
-                        "INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString," + rs2.GetString(2).Length + ") = '" + rs2.GetString(2) + "' ";
+                if (rnds2 == "0")
+                {
+                    rnds2 = " AND pru.ProjectRoundUnitID NOT IN (" + HttpContext.Current.Request.QueryString["N"].ToString() + ")";
+                }
+                else
+                {
+                    if (rnds2 != "")
+                    {
+                        rnds2 = " AND (pru.ProjectRoundUnitID IN (" + rnds2 + ")";
+                        if (pid2 != "")
+                        {
+                            rnds2 += " OR a.ProjectRoundUserID IN (" + pid2 + ")";
+                        }
+                        rnds2 += ")";
+                    }
+                    else
+                    {
+                        rnds2 = " AND a.ProjectRoundUserID IN (" + pid2 + ")";
+                    }
+                }
             }
-            rs2.Close();
-        }
 
-        int cx = 0, type = 0, q = 0, o = 0, rac = 0, pl = 0;
-        Graph g;
+            string join1 = "";
+            if (rndsd1 != "")
+            {
+                SqlDataReader rs2 = Db.rs("SELECT " +
+                    "d.Department, " +
+                    "d.DepartmentID, " +
+                    "d.SortString " +
+                    "FROM Department d " +
+                    "WHERE d.DepartmentID IN (" + rndsd1 + ") " +
+                    "ORDER BY d.SortString");
+                while (rs2.Read())
+                {
+                    join1 += "INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID " +
+                            "INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID " +
+                            "INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID " +
+                            "INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString," + rs2.GetString(2).Length + ") = '" + rs2.GetString(2) + "' ";
+                }
+                rs2.Close();
+            }
+            string join2 = "";
+            if (rndsd2 != "")
+            {
+                SqlDataReader rs2 = Db.rs("SELECT " +
+                    "d.Department, " +
+                    "d.DepartmentID, " +
+                    "d.SortString " +
+                    "FROM Department d " +
+                    "WHERE d.DepartmentID IN (" + rndsd2 + ") " +
+                    "ORDER BY d.SortString");
+                while (rs2.Read())
+                {
+                    join2 += "INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID " +
+                            "INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID " +
+                            "INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID " +
+                            "INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString," + rs2.GetString(2).Length + ") = '" + rs2.GetString(2) + "' ";
+                }
+                rs2.Close();
+            }
 
-        int steps = 0, GB = 3;
-        bool stdev = (rnds2 == "");
-        string groupBy = "";
+            int cx = 0, type = 0, q = 0, o = 0, rac = 0, pl = 0;
+            Graph g;
 
-        SqlDataReader rs = Db.rs("SELECT " +
-            "rp.Type, " +
-            "(" +
-                "SELECT COUNT(*) " +
-                "FROM ReportPartComponent rpc " +
-                "WHERE rpc.ReportPartID = rp.ReportPartID" +
-            "), " +
-            "rp.QuestionID, " +
-            "rp.OptionID, " +
-            "rp.RequiredAnswerCount, " +
-            "rp.PartLevel " +
-            "FROM ReportPart rp " +
-            "WHERE rp.ReportPartID = " + HttpContext.Current.Request.QueryString["RPID"], "eFormSqlConnection");
-        if (rs.Read())
-        {
-            type = rs.GetInt32(0);
-            cx = rs.GetInt32(1);
-            q = (rs.IsDBNull(2) ? 0 : rs.GetInt32(2));
-            o = (rs.IsDBNull(3) ? 0 : rs.GetInt32(3));
-            rac = (rs.IsDBNull(4) ? 0 : rs.GetInt32(4));
-            pl = (rs.IsDBNull(5) ? 0 : rs.GetInt32(5));
-        }
-        rs.Close();
+            int steps = 0, GB = 3;
+            bool stdev = (rnds2 == "");
+            string groupBy = "";
+
+            SqlDataReader rs = Db.rs("SELECT " +
+                "rp.Type, " +
+                "(" +
+                    "SELECT COUNT(*) " +
+                    "FROM ReportPartComponent rpc " +
+                    "WHERE rpc.ReportPartID = rp.ReportPartID" +
+                "), " +
+                "rp.QuestionID, " +
+                "rp.OptionID, " +
+                "rp.RequiredAnswerCount, " +
+                "rp.PartLevel " +
+                "FROM ReportPart rp " +
+                "WHERE rp.ReportPartID = " + HttpContext.Current.Request.QueryString["RPID"], "eFormSqlConnection");
+            if (rs.Read())
+            {
+                type = rs.GetInt32(0);
+                cx = rs.GetInt32(1);
+                q = (rs.IsDBNull(2) ? 0 : rs.GetInt32(2));
+                o = (rs.IsDBNull(3) ? 0 : rs.GetInt32(3));
+                rac = (rs.IsDBNull(4) ? 0 : rs.GetInt32(4));
+                pl = (rs.IsDBNull(5) ? 0 : rs.GetInt32(5));
+            }
+            rs.Close();
 
             #region group stats
 
@@ -385,7 +384,7 @@ public partial class superReportImage : System.Web.UI.Page
                     g.drawAxis(false);
 
                     g.drawColorExplBox(HttpContext.Current.Request.QueryString["R1"].ToString(), 4, 300, 20);
- 
+
                     float lastVal = -1f;
                     float lastStd = -1f;
                     int lastCX = 1;
@@ -502,7 +501,7 @@ public partial class superReportImage : System.Web.UI.Page
                             if (rs2.GetInt32(2) >= rac)
                             {
                                 float newVal = (rs2.IsDBNull(1) ? -1f : (float)Convert.ToDouble(rs2.GetValue(1)));
-                                
+
                                 if (newVal != -1f)
                                 {
                                     if (lastVal != -1f)
@@ -528,7 +527,8 @@ public partial class superReportImage : System.Web.UI.Page
 
             #endregion
 
-        // g.printCopyRight();
-        g.render();
+            // g.printCopyRight();
+            g.render();
+        }
     }
 }

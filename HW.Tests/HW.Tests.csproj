@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{561534C3-E27C-4F5D-A9E6-A14A7F01EC20}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>HW.Tests</RootNamespace>
+    <AssemblyName>HW.Tests</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\ie185004\Application Data\ICSharpCode/SharpDevelop4\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <RunSourceAnalysis>False</RunSourceAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NUnit.Framework">
+      <HintPath>..\NUnit.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\DbTests.cs" />
+    <Compile Include="Models\ExtendedGraphTests.cs" />
+    <Compile Include="Models\HWListTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AnswerRepositoryTests.cs" />
+    <Compile Include="Repositories\DepartmentRepositoryTests.cs" />
+    <Compile Include="Repositories\ExerciseRepositoryTests.cs" />
+    <Compile Include="Repositories\IndexRepositoryTests.cs" />
+    <Compile Include="Repositories\LanguageRepositoryTests.cs" />
+    <Compile Include="Repositories\ManagerFunctionRepositoryTests.cs" />
+    <Compile Include="Repositories\OptionRepositoryTests.cs" />
+    <Compile Include="Repositories\ProjectRepositoryTests.cs" />
+    <Compile Include="Repositories\QuestionRepositoryTests.cs" />
+    <Compile Include="Repositories\ReportRepositoryTests.cs" />
+    <Compile Include="Repositories\RepositoryFactoryTests.cs" />
+    <Compile Include="Repositories\SponsorRepositoryTests.cs" />
+    <Compile Include="Repositories\UserRepositoryTests.cs" />
+    <Compile Include="Views\DefaultTests.cs" />
+    <Compile Include="Views\ExerciseTests.cs" />
+    <Compile Include="Views\FeedbackTests.cs" />
+    <Compile Include="Views\ManagerSetupTests.cs" />
+    <Compile Include="Views\ManagersTests.cs" />
+    <Compile Include="Views\MessagesTests.cs" />
+    <Compile Include="Views\OrgTests.cs" />
+    <Compile Include="Views\ReportImageTests.cs" />
+    <Compile Include="Views\StatsTests.cs" />
+    <Compile Include="Views\SuperAdminTests.cs" />
+    <Compile Include="Views\SuperReportImageTests.cs" />
+    <Compile Include="Views\SuperStatsTests.cs" />
+    <Compile Include="Views\VerticalTextTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HW.Core\HW.Core.csproj">
+      <Project>{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}</Project>
+      <Name>HW.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Views" />
+    <Folder Include="Util" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+</Project>

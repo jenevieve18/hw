@@ -1,8 +1,8 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="org.aspx.cs" Inherits="org" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="org.aspx.cs" Inherits="HWgrp.org" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
-   <%=Db2.header()%>
+   <%=Db.header()%>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
 <!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
@@ -17,8 +17,8 @@
                     <div class="top">
                         <div class="search">
                             Search user by email
-                            <asp:TextBox ID=SearchEmail runat=server />
-                            <asp:Button ID=Search Text="Search" runat=server />
+                            <asp:TextBox ID="SearchEmail" runat="server" />
+                            <asp:Button ID="Search" Text="Search" runat="server" />
                         </div>
                     </div>
                     <div class="bottom" id=ActionNav runat=server>

@@ -1,8 +1,9 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="managers.aspx.cs" Inherits="managers" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="managers.aspx.cs" Inherits="HWgrp.managers" %>
+
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
-   <%=Db2.header()%>
+   <%=Db.header()%>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
 <!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
@@ -30,3 +31,4 @@
 	</form>
   </body>
 </html>
+

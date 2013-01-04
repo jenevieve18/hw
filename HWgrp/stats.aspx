@@ -1,8 +1,9 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="stats.aspx.cs" Inherits="stats" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="stats.aspx.cs" Inherits="HWgrp.stats" %>
+
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
-   <%=Db2.header()%>
+   <%=Db.header()%>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
 <!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
@@ -17,26 +18,27 @@
                     <div class="settingsPane">
 	                    <span class="desc">Timeframe</span>
                         <asp:DropDownList ID=FromYear runat=server />--<asp:DropDownList ID=ToYear runat=server />
-                        Survey 
+                        Survey
                         <asp:DropDownList AutoPostBack=true ID=ProjectRoundUnitID runat=server />
 			            Aggregation
-				            <asp:DropDownList AutoPostBack=true ID=GroupBy runat=server>
-					            <asp:ListItem Value=1 Text="One week" />
-					            <asp:ListItem Value=7 Text="Two weeks, start with even" />
-					            <asp:ListItem Value=2 Text="Two weeks, start with odd" />
-					            <asp:ListItem Value=3 Text="One month" />
-					            <asp:ListItem Value=4 Text="Three months" />
-					            <asp:ListItem Value=5 Text="Six months" />
-					            <asp:ListItem Value=6 Text="One year" />
-				            </asp:DropDownList><br />
+				        <asp:DropDownList AutoPostBack=true ID=GroupBy runat=server>
+					        <asp:ListItem Value=1 Text="One week" />
+					        <asp:ListItem Value=7 Text="Two weeks, start with even" />
+					        <asp:ListItem Value=2 Text="Two weeks, start with odd" />
+					        <asp:ListItem Value=3 Text="One month" />
+					        <asp:ListItem Value=4 Text="Three months" />
+					        <asp:ListItem Value=5 Text="Six months" />
+					        <asp:ListItem Value=6 Text="One year" />
+				        </asp:DropDownList><br />
 			            <span class="desc">Grouping</span>
-				            <asp:DropDownList AutoPostBack=true ID=Grouping runat=server>
-					            <asp:ListItem Value=0 Text="< none >" />
-					            <asp:ListItem Value=1 Text="Users on unit" />
-					            <asp:ListItem Value=2 Text="Users on unit+subunits" />
-					            <asp:ListItem Value=3 Text="Background variable" />
-				            </asp:DropDownList>
-                        Language <asp:DropDownList ID=LangID runat=server />
+				        <asp:DropDownList AutoPostBack=true ID=Grouping runat=server>
+					        <asp:ListItem Value=0 Text="< none >" />
+					        <asp:ListItem Value=1 Text="Users on unit" />
+					        <asp:ListItem Value=2 Text="Users on unit+subunits" />
+					        <asp:ListItem Value=3 Text="Background variable" />
+				        </asp:DropDownList>
+                        Language
+                        <asp:DropDownList ID="LangID" runat="server" />
 				        <asp:CheckBox ID="STDEV" runat=server Text="Show standard deviation" />
                         <br />
                         <asp:PlaceHolder ID="Org" runat=server Visible=false />
@@ -44,9 +46,38 @@
                         <asp:Button ID="Execute" CssClass="btn" runat=server Text="Execute" />
 			        </div>
                 </div>
-        		<asp:Label ID=StatsImg runat=server />
+        		<!--<asp:Label ID=StatsImg runat=server />-->
+                <% if (reportParts != null) { %>
+                    <% int cx = 0; %>
+                    <% string URL = GetURL(Convert.ToInt32(Grouping.SelectedValue)); %>
+                    <% foreach (var r in reportParts) { %>
+                        <% if (cx == 0) { %>
+                            <div>&nbsp;<br>&nbsp;<br></div>
+                        <% } else { %>
+                            <div style="page-break-before:always;">&nbsp;<br>&nbsp;<br></div>
+                        <% } %>
+                        <table border="0" cellspacing="0" cellpadding="0">
+                            <tr class="nocreen">
+                                <td align="center" valign="middle" background="img/top_healthWath.jpg" height="140" style="font-size:24px;">
+                                    <%= r.Subject %>
+                                </td>
+                            </tr>
+                            <tr class="noprint"><td style="font-size:18px;"><%= r.Subject %></td></tr>
+                            <tr><td><%= r.Header.Replace("\r", "").Replace("\n", "<br>") %></td></tr>
+                            <tr>
+                                <td>
+                                    <!--<img src="reportImage.aspx?LangID=1&amp;FY=2011&amp;TY=2012&amp;SAID=0&amp;SID=1&amp;Anonymized=1&amp;STDEV=0&amp;GB=7&amp;RPID=0&amp;PRUID=1&amp;GID=0&amp;GRPNG=1" />-->
+                                    <img src="<%= GetReportImageUrl(r.Id, URL) %>"/>
+                                </td>
+                            </tr>
+                            <tr><td><%= r.Footer.Replace("\r", "").Replace("\n", "<br>") %></td></tr>
+                        </table>
+                        <% cx++; %>
+                    <% } %>
+                <% } %>
             </div><!-- end .contentgroup	-->
         </div> <!-- end .container_12 -->
 	</form>
   </body>
 </html>
+

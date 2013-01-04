@@ -1,0 +1,356 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1DD98AAE-98D7-4D4D-B013-BF656BAC11CA}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HWgrp</RootNamespace>
+    <AssemblyName>HWgrp</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <SignAssembly>False</SignAssembly>
+    <DelaySign>False</DelaySign>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <RunCodeAnalysis>False</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <StartAction>Project</StartAction>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\eform.mdf" />
+    <Content Include="App_Data\eform_log.ldf">
+      <DependentUpon>eform.mdf</DependentUpon>
+    </Content>
+    <Content Include="App_Data\healthWatch.mdf" />
+    <Content Include="App_Data\healthWatchNews.mdf" />
+    <Content Include="App_Data\healthWatchNews_log.ldf">
+      <DependentUpon>healthWatchNews.mdf</DependentUpon>
+    </Content>
+    <Content Include="App_Data\healthWatch_log.ldf">
+      <DependentUpon>healthWatch.mdf</DependentUpon>
+    </Content>
+    <Content Include="Default.aspx" />
+    <Content Include="exercise.aspx" />
+    <Content Include="feedback.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="images\hwlogo.png" />
+    <Content Include="img\auditTrail.gif" />
+    <Content Include="img\back.gif" />
+    <Content Include="img\DelToolSmall.gif" />
+    <Content Include="img\graphIcon.gif" />
+    <Content Include="img\graphIcon2.gif" />
+    <Content Include="img\graphIcon3.gif" />
+    <Content Include="img\hwlogo.png" />
+    <Content Include="img\I.gif" />
+    <Content Include="img\key.gif" />
+    <Content Include="img\L.gif" />
+    <Content Include="img\LangID_0.gif" />
+    <Content Include="img\LangID_1.gif" />
+    <Content Include="img\lock.gif" />
+    <Content Include="img\locked.gif" />
+    <Content Include="img\logout.gif" />
+    <Content Include="img\mess.gif" />
+    <Content Include="img\null.gif" />
+    <Content Include="img\org.gif" />
+    <Content Include="img\save.gif" />
+    <Content Include="img\star.gif" />
+    <Content Include="img\starOK.gif" />
+    <Content Include="img\stat.gif" />
+    <Content Include="img\T.gif" />
+    <Content Include="img\top_healthWatch.jpg" />
+    <Content Include="img\unlock.gif" />
+    <Content Include="img\unt_add.gif" />
+    <Content Include="img\unt_cls.gif" />
+    <Content Include="img\unt_del.gif" />
+    <Content Include="img\unt_edt.gif" />
+    <Content Include="img\unt_imp.gif" />
+    <Content Include="img\unt_opn.gif" />
+    <Content Include="img\UpToolSmall.gif" />
+    <Content Include="img\usr_add.gif" />
+    <Content Include="img\usr_del.gif" />
+    <Content Include="img\usr_edt.gif" />
+    <Content Include="img\usr_imp.gif" />
+    <Content Include="img\usr_off.gif" />
+    <Content Include="img\usr_on.gif" />
+    <Content Include="includes\css\960.css" />
+    <Content Include="includes\css\960_12.css" />
+    <Content Include="includes\css\admin.css" />
+    <Content Include="includes\css\site.css" />
+    <Content Include="includes\iepngfix.htc" />
+    <Content Include="includes\jquery-1.4.min.js" />
+    <Content Include="includes\resources\admin\folderImport.png" />
+    <Content Include="includes\resources\admin\gears.gif" />
+    <Content Include="includes\resources\admin\organization_sprites.gif" />
+    <Content Include="includes\resources\admin\organization_sprites.png" />
+    <Content Include="includes\resources\admin\search.png" />
+    <Content Include="includes\resources\admin\submenu.gif" />
+    <Content Include="includes\resources\admin\userImport.png" />
+    <Content Include="includes\resources\admin\user_add.png" />
+    <Content Include="includes\resources\avatars\default.gif" />
+    <Content Include="includes\resources\background.gif" />
+    <Content Include="includes\resources\ovningar\clock_1.png" />
+    <Content Include="includes\resources\rsaquo.gif" />
+    <Content Include="includes\ui\css\ui-lightness\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="includes\ui\css\ui-lightness\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="includes\ui\css\ui-lightness\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="includes\ui\css\ui-lightness\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="includes\ui\css\ui-lightness\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="includes\ui\css\ui-lightness\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="includes\ui\css\ui-lightness\images\ui-icons_222222_256x240.png" />
+    <Content Include="includes\ui\css\ui-lightness\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="includes\ui\css\ui-lightness\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="includes\ui\css\ui-lightness\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="includes\ui\css\ui-lightness\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="includes\ui\css\ui-lightness\jquery-ui-1.8.11.custom.css" />
+    <Content Include="includes\ui\css\ui-lightness\jquery-ui-1.8.8.custom_q.css" />
+    <Content Include="includes\ui\js\jquery-1.4.4.min_bak.js" />
+    <Content Include="includes\ui\js\jquery-1.5.1.min.js" />
+    <Content Include="includes\ui\js\jquery-ui-1.8.11.custom.min.js" />
+    <Content Include="includes\ui\js\jquery-ui-1.8.8.custom.min_bak.js" />
+    <Content Include="includes\ui\resources\VASeraseA.gif" />
+    <Content Include="includes\ui\resources\VASeraseN.gif" />
+    <Content Include="includes\ui\resources\VASknob.gif" />
+    <Content Include="includes\ui\resources\VASline.gif" />
+    <Content Include="includes\ui\resources\VASline_l.gif" />
+    <Content Include="includes\ui\resources\VASnrBgr.gif" />
+    <Content Include="main.css" />
+    <Content Include="managers.aspx" />
+    <Content Include="managerSetup.aspx" />
+    <Content Include="messages.aspx" />
+    <Content Include="org.aspx" />
+    <Content Include="reportImage.aspx" />
+    <Content Include="robots.txt" />
+    <Content Include="settings.aspx" />
+    <Content Include="stats.aspx" />
+    <Content Include="superadmin.aspx" />
+    <Content Include="superReportImage.aspx" />
+    <Content Include="superstats.aspx" />
+    <Content Include="verticalText.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="WebForm1.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.Master.cs">
+      <DependentUpon>Default.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.Master.designer.cs">
+      <DependentUpon>Default.Master</DependentUpon>
+    </Compile>
+    <Compile Include="exercise.aspx.cs">
+      <DependentUpon>exercise.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="exercise.aspx.designer.cs">
+      <DependentUpon>exercise.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="feedback.aspx.cs">
+      <DependentUpon>feedback.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="feedback.aspx.designer.cs">
+      <DependentUpon>feedback.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="managers.aspx.cs">
+      <DependentUpon>managers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="managers.aspx.designer.cs">
+      <DependentUpon>managers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="managerSetup.aspx.cs">
+      <DependentUpon>managerSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="managerSetup.aspx.designer.cs">
+      <DependentUpon>managerSetup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="messages.aspx.cs">
+      <DependentUpon>messages.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="messages.aspx.designer.cs">
+      <DependentUpon>messages.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="org.aspx.cs">
+      <DependentUpon>org.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="org.aspx.designer.cs">
+      <DependentUpon>org.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="reportImage.aspx.cs">
+      <DependentUpon>reportImage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="reportImage.aspx.designer.cs">
+      <DependentUpon>reportImage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="settings.aspx.cs">
+      <DependentUpon>settings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="settings.aspx.designer.cs">
+      <DependentUpon>settings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Site.Master.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site.Master.designer.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="stats.aspx.cs">
+      <DependentUpon>stats.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="stats.aspx.designer.cs">
+      <DependentUpon>stats.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="superadmin.aspx.cs">
+      <DependentUpon>superadmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="superadmin.aspx.designer.cs">
+      <DependentUpon>superadmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="superReportImage.aspx.cs">
+      <DependentUpon>superReportImage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="superReportImage.aspx.designer.cs">
+      <DependentUpon>superReportImage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="superstats.aspx.cs">
+      <DependentUpon>superstats.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="superstats.aspx.designer.cs">
+      <DependentUpon>superstats.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="verticalText.aspx.cs">
+      <DependentUpon>verticalText.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="verticalText.aspx.designer.cs">
+      <DependentUpon>verticalText.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HW.Core\HW.Core.csproj">
+      <Project>{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}</Project>
+      <Name>HW.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Default.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Site.Master" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>34472</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:2002/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

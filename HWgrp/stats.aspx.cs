@@ -1,148 +1,174 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Configuration;
-using System.Collections;
+using System.Linq;
 using System.Web;
-using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
+using HW.Core;
 
-public partial class stats : System.Web.UI.Page
+namespace HWgrp
 {
-    int sponsorID = 0;
-	bool execute = false;
-
-    protected void Page_Load(object sender, EventArgs e)
-    {
-        sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
-
-        if (sponsorID != 0)
-        {
-            SqlDataReader rs;
-            if (!IsPostBack)
-            {
-                int pruid = 0;
-                rs = Db.rs("SELECT " +
-                    "sprul.LangID, " +
-                    "spru.ProjectRoundUnitID, " +
-                    "l.LID, " +
-                    "l.Language " +
-                    "FROM SponsorProjectRoundUnit spru " +
-                    "LEFT OUTER JOIN SponsorProjectRoundUnitLang sprul ON spru.SponsorProjectRoundUnitID = sprul.SponsorProjectRoundUnitID " +
-                    "INNER JOIN LID l ON ISNULL(sprul.LangID,1) = l.LID " +
-                    "WHERE spru.SponsorID = " + sponsorID + " ORDER BY spru.SortOrder, spru.SponsorProjectRoundUnitID, l.LID");
-                while (rs.Read() && (pruid == 0 || pruid == rs.GetInt32(1)))
-                {
-                    LangID.Items.Add(new ListItem(rs.GetString(3), rs.GetInt32(2).ToString()));
-                    if (rs.GetInt32(2) == 2)
-                    {
-                        LangID.SelectedValue = rs.GetInt32(2).ToString();
-                    }
-                    pruid = rs.GetInt32(1);
-                }
-                rs.Close();
-
-                rs = Db.rs("SELECT " +
-                    "ISNULL(sprul.Nav,'?'), " +
-                    "spru.ProjectRoundUnitID " +
-                    "FROM SponsorProjectRoundUnit spru " +
-                    "LEFT OUTER JOIN SponsorProjectRoundUnitLang sprul ON spru.SponsorProjectRoundUnitID = sprul.SponsorProjectRoundUnitID " +
-                    "WHERE spru.SponsorID = " + sponsorID + " " +
-                    "AND ISNULL(sprul.LangID,1) = " + Convert.ToInt32(LangID.SelectedValue));
-                while (rs.Read())
-                {
-                    ProjectRoundUnitID.Items.Add(new ListItem(rs.GetString(0), rs.GetInt32(1).ToString()));
-                }
-                rs.Close();
-                GroupBy.SelectedValue = "7";
-
-                for (int i = 2005; i <= DateTime.Now.Year; i++)
-                {
-                    FromYear.Items.Add(new ListItem(i.ToString(), i.ToString()));
-                    ToYear.Items.Add(new ListItem(i.ToString(), i.ToString()));
-                }
-                FromYear.SelectedValue = (DateTime.Now.Year - 1).ToString();
-                ToYear.SelectedValue = DateTime.Now.Year.ToString();
-
-				rs = Db.rs("SELECT sbq.BQID, BQ.Internal FROM SponsorBQ sbq INNER JOIN BQ ON BQ.BQID = sbq.BQID WHERE (BQ.Comparison = 1 OR sbq.Hidden = 1) AND BQ.Type IN (1,7) AND sbq.SponsorID = " + sponsorID);
-				while (rs.Read())
-				{
-					BQ.Items.Add(new ListItem(rs.GetString(1), rs.GetInt32(0).ToString()));
-				}
-				rs.Close();
-				BQ.SelectedIndex = 0;
-            }
-
-            Org.Controls.Add(new LiteralControl("</BR><TABLE BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\" style=\"border:0;border-collapse:collapse; border-spacing:0;\"><TR><TD COLSPAN=\"3\">" + HttpContext.Current.Session["Sponsor"] + "</TD><TR>"));
-            bool[] DX = new bool[8];
-            rs = Db.rs("SELECT " +
-                (Convert.ToInt32(HttpContext.Current.Session["Anonymized"]) == 1 ? "d.DepartmentAnonymized" : "d.Department") + ", " +
-                "d.DepartmentID, " +
-                (Convert.ToInt32(HttpContext.Current.Session["Anonymized"]) == 1 ? "''" : "d.DepartmentShort") + ", " +
-                "dbo.cf_departmentDepth(d.DepartmentID), " +
-                "(" +
-                    "SELECT COUNT(*) FROM Department x " +
-                    (HttpContext.Current.Session["SponsorAdminID"].ToString() != "-1" ? "INNER JOIN SponsorAdminDepartment xx ON x.DepartmentID = xx.DepartmentID AND xx.SponsorAdminID = " + HttpContext.Current.Session["SponsorAdminID"] + " " : "") +
-                    "WHERE (x.ParentDepartmentID = d.ParentDepartmentID OR x.ParentDepartmentID IS NULL AND d.ParentDepartmentID IS NULL) " +
-                    "AND d.SponsorID = x.SponsorID " +
-                    "AND d.SortString < x.SortString" +
-                ") " +		// 4 - Number of departments on same level after this one
-                "FROM Department d " +
-                (HttpContext.Current.Session["SponsorAdminID"].ToString() != "-1" ?
-                "INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID " +
-                "WHERE sad.SponsorAdminID = " + HttpContext.Current.Session["SponsorAdminID"] + " " +
-                "AND " : "WHERE ") + "d.SponsorID = " + sponsorID + " " +
-                "ORDER BY d.SortString");
-            while (rs.Read())
-            {
-                Org.Controls.Add(new LiteralControl("<TR><TD>"));
-                CheckBox O = new CheckBox();
-                O.ID = "DID" + rs.GetInt32(1);
-                Org.Controls.Add(O);
-                Org.Controls.Add(new LiteralControl("</TD><TD>" + (!rs.IsDBNull(2) && rs.GetString(2).Trim().ToLower() != rs.GetString(0).Trim().ToLower() ? rs.GetString(2) + "&nbsp;" : "") + "</TD><TD>"));
-
-                int depth = rs.GetInt32(3);
-                DX[depth] = (rs.GetInt32(4) > 0);
-
-                string d = "";
-                for (int i = 1; i <= depth; i++)
-                {
-                    d += "<img src=\"img/";
-                    if (i == depth)
-                    {
-                        d += (DX[i] ? "T" : "L");
-                    }
-                    else
-                    {
-                        d += (DX[i] ? "I" : "null");
-                    }
-                    d += ".gif\" width=\"19\" height=\"20\"/>";
-                }
-                Org.Controls.Add(new LiteralControl(
-                    "<TABLE BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\" style=\"border:0;border-collapse:collapse; border-spacing:0;\"><TR><TD>" + d + "</TD><TD>" + rs.GetString(0) + "</TD></TR></TABLE>"));
-
-                Org.Controls.Add(new LiteralControl("</TD></TR>"));
-            }
-            rs.Close();
-            Org.Controls.Add(new LiteralControl("</TABLE>"));
-        }
-        else
-        {
-            HttpContext.Current.Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
-        }
-
-		Execute.Click += new EventHandler(Execute_Click);
-    }
-
-	void Execute_Click(object sender, EventArgs e)
+	public partial class stats : System.Web.UI.Page
 	{
-		execute = true;
-    }
+		int sponsorID = 0;
+//		bool exec = false;
+		ILanguageRepository langRepository = AppContext.GetRepositoryFactory().CreateLanguageRepository();
+		IProjectRepository projRepository = AppContext.GetRepositoryFactory().CreateProjectRepository();
+		ISponsorRepository sponsorRepository = AppContext.GetRepositoryFactory().CreateSponsorRepository();
+		IDepartmentRepository departmentRepository = AppContext.GetRepositoryFactory().CreateDepartmentRepository();
+		IReportRepository reportRepository = AppContext.GetRepositoryFactory().CreateReportRepository();
 
-    #region export
-    /*
+        protected IList<Department> departments;
+		
+		protected void Page_Load(object sender, EventArgs e)
+		{
+			sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
+			
+			if (sponsorID != 0)
+			{
+//				SqlDataReader rs;
+				if (!IsPostBack)
+				{
+					int pruid = 0;
+//					rs = Db.rs("SELECT " +
+//					           "sprul.LangID, " +
+//					           "spru.ProjectRoundUnitID, " +
+//					           "l.LID, " +
+//					           "l.Language " +
+//					           "FROM SponsorProjectRoundUnit spru " +
+//					           "LEFT OUTER JOIN SponsorProjectRoundUnitLang sprul ON spru.SponsorProjectRoundUnitID = sprul.SponsorProjectRoundUnitID " +
+//					           "INNER JOIN LID l ON ISNULL(sprul.LangID,1) = l.LID " +
+//					           "WHERE spru.SponsorID = " + sponsorID + " ORDER BY spru.SortOrder, spru.SponsorProjectRoundUnitID, l.LID");
+//					while (rs.Read() && (pruid == 0 || pruid == rs.GetInt32(1)))
+					foreach (var l in langRepository.FindBySponsor(sponsorID))
+					{
+//						LangID.Items.Add(new ListItem(rs.GetString(3), rs.GetInt32(2).ToString()));
+						LangID.Items.Add(new ListItem(l.Language.Name, l.Language.Id.ToString()));
+//						if (rs.GetInt32(2) == 2)
+						if (l.Id == 2)
+						{
+//							LangID.SelectedValue = rs.GetInt32(2).ToString();
+							LangID.SelectedValue = l.Language.Id.ToString();
+						}
+//						pruid = rs.GetInt32(1);
+						pruid = l.SponsorProjectRoundUnit.ProjectRoundUnit.Id;
+					}
+//					rs.Close();
+
+//					rs = Db.rs("SELECT " +
+//					           "ISNULL(sprul.Nav,'?'), " +
+//					           "spru.ProjectRoundUnitID " +
+//					           "FROM SponsorProjectRoundUnit spru " +
+//					           "LEFT OUTER JOIN SponsorProjectRoundUnitLang sprul ON spru.SponsorProjectRoundUnitID = sprul.SponsorProjectRoundUnitID " +
+//					           "WHERE spru.SponsorID = " + sponsorID + " " +
+//					           "AND ISNULL(sprul.LangID,1) = " + Convert.ToInt32(LangID.SelectedValue));
+//					while (rs.Read())
+					foreach (var p in sponsorRepository.FindBySponsorAndLanguage(sponsorID, Convert.ToInt32(LangID.SelectedValue)))
+					{
+//						ProjectRoundUnitID.Items.Add(new ListItem(rs.GetString(0), rs.GetInt32(1).ToString()));
+						ProjectRoundUnitID.Items.Add(new ListItem(p.Navigation, p.Id.ToString()));
+					}
+//					rs.Close();
+					GroupBy.SelectedValue = "7";
+
+					for (int i = 2005; i <= DateTime.Now.Year; i++)
+					{
+						FromYear.Items.Add(new ListItem(i.ToString(), i.ToString()));
+						ToYear.Items.Add(new ListItem(i.ToString(), i.ToString()));
+					}
+					FromYear.SelectedValue = (DateTime.Now.Year - 1).ToString();
+					ToYear.SelectedValue = DateTime.Now.Year.ToString();
+//
+//					rs = Db.rs("SELECT sbq.BQID, BQ.Internal FROM SponsorBQ sbq INNER JOIN BQ ON BQ.BQID = sbq.BQID WHERE (BQ.Comparison = 1 OR sbq.Hidden = 1) AND BQ.Type IN (1,7) AND sbq.SponsorID = " + sponsorID);
+//					while (rs.Read())
+					foreach (var s in sponsorRepository.FindBySponsor(sponsorID))
+					{
+//						BQ.Items.Add(new ListItem(rs.GetString(1), rs.GetInt32(0).ToString()));
+						BQ.Items.Add(new ListItem(s.Question.Internal, s.Id.ToString()));
+					}
+//					rs.Close();
+					BQ.SelectedIndex = 0;
+				}
+
+//				Org.Controls.Add(new LiteralControl("</BR><TABLE BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\" style=\"border:0;border-collapse:collapse; border-spacing:0;\"><TR><TD COLSPAN=\"3\">" + HttpContext.Current.Session["Sponsor"] + "</TD><TR>"));
+				Org.Controls.Add(new LiteralControl("<br><table border='0' cellspacing='0' cellpadding='0' style='border:0;border-collapse:collapse;border-spacing:0'><tr><td colspan='3'>" + HttpContext.Current.Session["Sponsor"] + "</td><tr>"));
+				bool[] DX = new bool[8];
+//				rs = Db.rs("SELECT " +
+//				           (Convert.ToInt32(HttpContext.Current.Session["Anonymized"]) == 1 ? "d.DepartmentAnonymized" : "d.Department") + ", " +
+//				           "d.DepartmentID, " +
+//				           (Convert.ToInt32(HttpContext.Current.Session["Anonymized"]) == 1 ? "''" : "d.DepartmentShort") + ", " +
+//				           "dbo.cf_departmentDepth(d.DepartmentID), " +
+//				           "(" +
+//				           "SELECT COUNT(*) FROM Department x " +
+//				           (HttpContext.Current.Session["SponsorAdminID"].ToString() != "-1" ? "INNER JOIN SponsorAdminDepartment xx ON x.DepartmentID = xx.DepartmentID AND xx.SponsorAdminID = " + HttpContext.Current.Session["SponsorAdminID"] + " " : "") +
+//				           "WHERE (x.ParentDepartmentID = d.ParentDepartmentID OR x.ParentDepartmentID IS NULL AND d.ParentDepartmentID IS NULL) " +
+//				           "AND d.SponsorID = x.SponsorID " +
+//				           "AND d.SortString < x.SortString" +
+//				           ") " +		// 4 - Number of departments on same level after this one
+//				           "FROM Department d " +
+//				           (HttpContext.Current.Session["SponsorAdminID"].ToString() != "-1" ?
+//				            "INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID " +
+//				            "WHERE sad.SponsorAdminID = " + HttpContext.Current.Session["SponsorAdminID"] + " " +
+//				            "AND " : "WHERE ") + "d.SponsorID = " + sponsorID + " " +
+//				           "ORDER BY d.SortString");
+				int sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
+//				while (rs.Read())
+				foreach (var d in departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID))
+				{
+					Org.Controls.Add(new LiteralControl("<TR><TD>"));
+					CheckBox O = new CheckBox();
+//					O.ID = "DID" + rs.GetInt32(1);
+//					Org.Controls.Add(new LiteralControl("</TD><TD>" + (!rs.IsDBNull(2) && rs.GetString(2).Trim().ToLower() != rs.GetString(0).Trim().ToLower() ? rs.GetString(2) + "&nbsp;" : "") + "</TD><TD>"));
+					O.ID = "DID" + d.Id;
+					Org.Controls.Add(O);
+					Org.Controls.Add(new LiteralControl("</td><td>" + d.Name + "</td><td>"));
+//
+//					int depth = rs.GetInt32(3);
+//					DX[depth] = (rs.GetInt32(4) > 0);
+					int depth = d.Depth;
+					DX[depth] = d.Siblings > 0;
+
+					string img = "";
+					for (int i = 1; i <= depth; i++)
+					{
+//						img += "<img src=\"img/";
+//						if (i == depth)
+//						{
+//							img += (DX[i] ? "T" : "L");
+//						}
+//						else
+//						{
+//							img += (DX[i] ? "I" : "null");
+//						}
+//						img += ".gif\" width=\"19\" height=\"20\"/>";
+						img += string.Format("<img src='img/{0}.gif' width='19' height='20'>", i == depth ? (DX[i] ? "T" : "L") : (DX[i] ? "I" : "null"));
+					}
+//					Org.Controls.Add(new LiteralControl(
+//						"<TABLE BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\" style=\"border:0;border-collapse:collapse; border-spacing:0;\"><TR><TD>" + d + "</TD><TD>" + rs.GetString(0) + "</TD></TR></TABLE>"));
+					Org.Controls.Add(new LiteralControl("<table border='0' cellspacing='0' cellpadding='0' style='border:0;border-collapse:collapse;border-spacing:0'><tr><td>" + img + "</td><td>" + d.Name + "</td></tr></table>"));
+
+					Org.Controls.Add(new LiteralControl("</TD></TR>"));
+				}
+//				rs.Close();
+				Org.Controls.Add(new LiteralControl("</TABLE>"));
+			}
+			else
+			{
+				HttpContext.Current.Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+			}
+
+			Execute.Click += new EventHandler(Execute_Click);
+		}
+
+		void Execute_Click(object sender, EventArgs e)
+		{
+//			exec = true;
+			reportParts = reportRepository.FindByProjectAndLanguage(Convert.ToInt32(ProjectRoundUnitID.SelectedValue), Convert.ToInt32(LangID.SelectedValue));
+		}
+
+		#region export
+		/*
     private void exportStats(int GRPNG, int PRUID, int SPONS, int SID, string GID, int langID)
     {
         System.Text.StringBuilder export = new System.Text.StringBuilder();
@@ -535,65 +561,112 @@ public partial class stats : System.Web.UI.Page
         }
         rpid.Close();
     }
-    */
-    #endregion
+		 */
+		#endregion
 
-    protected override void OnPreRender(EventArgs e)
-    {
-		Org.Visible = (Grouping.SelectedValue == "1" || Grouping.SelectedValue == "2");
-		BQ.Visible = (Grouping.SelectedValue == "3");
-
-		StatsImg.Text = "";
-
-		if (execute)
+		protected string GetURL(int grouping)
 		{
 			string URL = "";
-			switch (Convert.ToInt32(Grouping.SelectedValue))
-			{
+			switch (grouping) {
 				case 1:
-					{
-						SqlDataReader rs2 = Db.rs("SELECT " +
-							"d.DepartmentID " +
-							"FROM Department d " +
-                            (HttpContext.Current.Session["SponsorAdminID"].ToString() != "-1" ?
-							"INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID " +
-							"WHERE sad.SponsorAdminID = " + HttpContext.Current.Session["SponsorAdminID"] + " " +
-                            "AND " : "WHERE ") + "d.SponsorID = " + sponsorID + " " +
-							"ORDER BY d.SortString");
-						while (rs2.Read())
-						{
-							if (((CheckBox)Org.FindControl("DID" + rs2.GetInt32(0))).Checked)
-							{
-								URL += "," + rs2.GetInt32(0);
-							}
-						}
-						rs2.Close();
-
-						URL = "&GID=0" + URL;
-						break;
-					}
 				case 2:
-					{
-						goto case 1;
+					int sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
+					var departments = sponsorAdminID != -1 ? departmentRepository.FindBySponsorWithSponsorAdmin(sponsorID, sponsorAdminID) : departmentRepository.FindBySponsorOrderedBySortString(sponsorID);
+					foreach (var d in departments) {
+						if (((CheckBox)Org.FindControl("DID" + d.Id.ToString())).Checked) {
+							URL += "," + d.Id;
+						}
 					}
+
+					URL = "&GID=0" + URL;
+					break;
 				case 3:
-					{
-						SqlDataReader rs2 = Db.rs("SELECT sbq.BQID FROM SponsorBQ sbq INNER JOIN BQ ON BQ.BQID = sbq.BQID WHERE (BQ.Comparison = 1 OR sbq.Hidden = 1) AND BQ.Type IN (1,7) AND sbq.SponsorID = " + sponsorID);
-						while (rs2.Read())
+					foreach (var s in sponsorRepository.FindBySponsor(sponsorID)) {
+						if (BQ.Items.FindByValue(s.Id.ToString()).Selected) {
+							URL += "," + s.Id;
+						}
+					}
+					URL = "&GID=0" + URL;
+					break;
+			}
+			return URL;
+		}
+		
+		protected IList<ReportPartLanguage> reportParts = null;
+		
+		protected string GetReportImageUrl(int id, string URL)
+		{
+			return "reportImage.aspx?LangID=" + Convert.ToInt32(LangID.SelectedValue) + "&FY=" + FromYear.SelectedValue + "&TY=" + ToYear.SelectedValue + "&SAID=" + Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]) + "&SID=" + Convert.ToInt32(HttpContext.Current.Session["SponsorID"]) + "&" + (Convert.ToInt32(HttpContext.Current.Session["Anonymized"]) == 1 ? "Anonymized=1&" : "") + "STDEV=" + (STDEV.Checked ? "1" : "0") + "&GB=" + GroupBy.SelectedValue + "&RPID=" + id + "&PRUID=" + ProjectRoundUnitID.SelectedValue + URL + "&GRPNG=" + Convert.ToInt32(Grouping.SelectedValue);
+		}
+		
+		protected override void OnPreRender(EventArgs e)
+		{
+			Org.Visible = (Grouping.SelectedValue == "1" || Grouping.SelectedValue == "2");
+			BQ.Visible = (Grouping.SelectedValue == "3");
+
+//			StatsImg.Text = "";
+//			
+//			if (exec)
+//			{
+//				string URL = GetURL(Convert.ToInt32(Grouping.SelectedValue));
+				#region Commented and Moved to GetURL() method
+				/*string URL = "";
+				switch (Convert.ToInt32(Grouping.SelectedValue))
+				{
+					case 1:
+					case 2:
+//						{
+//							SqlDataReader rs2 = Db.rs("SELECT " +
+//							                          "d.DepartmentID " +
+//							                          "FROM Department d " +
+//							                          (HttpContext.Current.Session["SponsorAdminID"].ToString() != "-1" ?
+//							                           "INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID " +
+//							                           "WHERE sad.SponsorAdminID = " + HttpContext.Current.Session["SponsorAdminID"] + " " +
+//							                           "AND " : "WHERE ") + "d.SponsorID = " + sponsorID + " " +
+//							                          "ORDER BY d.SortString");
+						int sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
+						var departments = sponsorAdminID != -1 ? departmentRepository.FindBySponsorWithSponsorAdmin(sponsorID, sponsorAdminID) : departmentRepository.FindBySponsorOrderedBySortString(sponsorID);
+//							while (rs2.Read())
+						foreach (var d in departments)
 						{
-							if (BQ.Items.FindByValue(rs2.GetInt32(0).ToString()).Selected)
+//								if (((CheckBox)Org.FindControl("DID" + rs2.GetInt32(0))).Checked)
+							if (((CheckBox)Org.FindControl("DID" + d.Id.ToString())).Checked)
 							{
-								URL += "," + rs2.GetInt32(0);
+//									URL += "," + rs2.GetInt32(0);
+								URL += "," + d.Id;
 							}
 						}
-						rs2.Close();
+//							rs2.Close();
 
 						URL = "&GID=0" + URL;
 						break;
-					}
-			}
-			#region REMOVED
-			/*
+//						}
+//					case 2:
+//						{
+//							goto case 1;
+//						}
+					case 3:
+//						{
+//							SqlDataReader rs2 = Db.rs("SELECT sbq.BQID FROM SponsorBQ sbq INNER JOIN BQ ON BQ.BQID = sbq.BQID WHERE (BQ.Comparison = 1 OR sbq.Hidden = 1) AND BQ.Type IN (1,7) AND sbq.SponsorID = " + sponsorID);
+//							while (rs2.Read())
+						foreach (var s in sponsorRepository.FindBySponsor(sponsorID))
+						{
+//								if (BQ.Items.FindByValue(rs2.GetInt32(0).ToString()).Selected)
+							if (BQ.Items.FindByValue(s.Id.ToString()).Selected)
+							{
+//									URL += "," + rs2.GetInt32(0);
+								URL += "," + s.Id;
+							}
+						}
+//							rs2.Close();
+
+						URL = "&GID=0" + URL;
+						break;
+//						}
+				}*/
+				#endregion
+				#region REMOVED
+				/*
 			if (!IsPostBack)
 			{
 				OrgTree.Text = "";
@@ -620,43 +693,57 @@ public partial class stats : System.Web.UI.Page
 
 				OrgTree.Text += "</TABLE>";
 			}
-			*/
-			#endregion
+				 */
+				#endregion
 
-			int cx = 0;
-			SqlDataReader rs = Db.rs("SELECT " +
-				"rp.ReportPartID, " +
-				"rpl.Subject, " +
-				"rpl.Header, " +
-				"rpl.Footer, " +
-				"rp.Type " +
-				"FROM ProjectRoundUnit pru " +
-				"INNER JOIN Report r ON r.ReportID = pru.ReportID " +
-				"INNER JOIN ReportPart rp ON r.ReportID = rp.ReportID " +
-				"INNER JOIN ReportPartLang rpl ON rp.ReportPartID = rpl.ReportPartID " +
-				"AND rpl.LangID = " + Convert.ToInt32(LangID.SelectedValue) + " " +
-				"WHERE pru.ProjectRoundUnitID = " + ProjectRoundUnitID.SelectedValue + " " +
-				"ORDER BY rp.SortOrder", "eFormSqlConnection");
-			while (rs.Read())
-			{
-                StatsImg.Text += "<div" + (cx > 0 ? " style=\"page-break-before:always;\"" : "") + ">&nbsp;<br/>&nbsp;<br/></div><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">";
-                StatsImg.Text += "<tr class=\"noscreen\"><td align=\"center\" valign=\"middle\" background=\"img/top_healthWatch.jpg\" height=\"140\" style=\"font-size:24px;\">" + rs.GetString(1) + "</td></tr>";
-                StatsImg.Text += "<tr class=\"noprint\"><td style=\"font-size:18px;\">" + rs.GetString(1) + "</td></tr>";
+//				int cx = 0;
+				
+				#region COMMENTED
+				/*
+//				SqlDataReader rs = Db.rs("SELECT " +
+//				                         "rp.ReportPartID, " +
+//				                         "rpl.Subject, " +
+//				                         "rpl.Header, " +
+//				                         "rpl.Footer, " +
+//				                         "rp.Type " +
+//				                         "FROM ProjectRoundUnit pru " +
+//				                         "INNER JOIN Report r ON r.ReportID = pru.ReportID " +
+//				                         "INNER JOIN ReportPart rp ON r.ReportID = rp.ReportID " +
+//				                         "INNER JOIN ReportPartLang rpl ON rp.ReportPartID = rpl.ReportPartID " +
+//				                         "AND rpl.LangID = " + Convert.ToInt32(LangID.SelectedValue) + " " +
+//				                         "WHERE pru.ProjectRoundUnitID = " + ProjectRoundUnitID.SelectedValue + " " +
+//				                         "ORDER BY rp.SortOrder", "eFormSqlConnection");
+//				while (rs.Read())
+				foreach (var r in reportRepository.FindByProjectAndLanguage(Convert.ToInt32(ProjectRoundUnitID.SelectedValue), Convert.ToInt32(LangID.SelectedValue)))
+				{
+//					StatsImg.Text += "<div" + (cx > 0 ? " style=\"page-break-before:always;\"" : "") + ">&nbsp;<br/>&nbsp;<br/></div><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">";
+					StatsImg.Text += "<div" + (cx > 0 ? " style='page-break-before:always;'" : "") + ">&nbsp;<br>&nbsp;<br></div><table border='0' cellspacing='0' cellpadding='0'>";
+//					StatsImg.Text += "<tr class=\"noscreen\"><td align=\"center\" valign=\"middle\" background=\"img/top_healthWatch.jpg\" height=\"140\" style=\"font-size:24px;\">" + rs.GetString(1) + "</td></tr>";
+					StatsImg.Text += "<tr class='nocreen'><td align='center' valign='middle' background='img/top_healthWath.jpg' height='140' style='font-size:24px;'>" + r.Subject + "</td></tr>";
+//					StatsImg.Text += "<tr class=\"noprint\"><td style=\"font-size:18px;\">" + rs.GetString(1) + "</td></tr>";
+					StatsImg.Text += "<tr class='noprint'><td style='font-size:18px;'>" + r.Subject + "</td></tr>";
+//
+//					if (!rs.IsDBNull(2) && rs.GetString(2) != "")
+					if (r.Header != "")
+//						StatsImg.Text += "<tr><td>" + rs.GetString(2).Replace("\r", "").Replace("\n", "<br/>") + "</td></tr>";
+						StatsImg.Text += "<tr><td>" + r.Header.Replace("\r", "").Replace("\n", "<br>") + "</td></tr>";
+//
+//					StatsImg.Text += "<tr><td><img src=\"reportImage.aspx?LangID=" + Convert.ToInt32(LangID.SelectedValue) + "&FY=" + FromYear.SelectedValue + "&TY=" + ToYear.SelectedValue + "&SAID=" + Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]) + "&SID=" + Convert.ToInt32(HttpContext.Current.Session["SponsorID"]) + "&" + (Convert.ToInt32(HttpContext.Current.Session["Anonymized"]) == 1 ? "Anonymized=1&" : "") + "STDEV=" + (STDEV.Checked ? "1" : "0") + "&GB=" + GroupBy.SelectedValue + "&RPID=" + rs.GetInt32(0) + "&PRUID=" + ProjectRoundUnitID.SelectedValue + URL + "&GRPNG=" + Convert.ToInt32(Grouping.SelectedValue) + "\"/></td></tr>";
+					StatsImg.Text += "<tr><td><img src='reportImage.aspx?LangID=" + Convert.ToInt32(LangID.SelectedValue) + "&FY=" + FromYear.SelectedValue + "&TY=" + ToYear.SelectedValue + "&SAID=" + Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]) + "&SID=" + Convert.ToInt32(HttpContext.Current.Session["SponsorID"]) + "&" + (Convert.ToInt32(HttpContext.Current.Session["Anonymized"]) == 1 ? "Anonymized=1&" : "") + "STDEV=" + (STDEV.Checked ? "1" : "0") + "&GB=" + GroupBy.SelectedValue + "&RPID=" + r.Id + "&PRUID=" + ProjectRoundUnitID.SelectedValue + URL + "&GRPNG=" + Convert.ToInt32(Grouping.SelectedValue) + "'/></td></tr>";
+//
+//					if (!rs.IsDBNull(3) && rs.GetString(3) != "")
+					if (r.Footer != "")
+//						StatsImg.Text += "<tr><td>" + rs.GetString(3).Replace("\r", "").Replace("\n", "<br/>") + "</td></tr>";
+						StatsImg.Text += "<tr><td>" + r.Footer.Replace("\r", "").Replace("\n", "<br>") + "</td></tr>";
+//
+//					StatsImg.Text += "</table>";
+					StatsImg.Text += "</table>";
 
-				if (!rs.IsDBNull(2) && rs.GetString(2) != "")
-					StatsImg.Text += "<tr><td>" + rs.GetString(2).Replace("\r", "").Replace("\n", "<br/>") + "</td></tr>";
-
-                StatsImg.Text += "<tr><td><img src=\"reportImage.aspx?LangID=" + Convert.ToInt32(LangID.SelectedValue) + "&FY=" + FromYear.SelectedValue + "&TY=" + ToYear.SelectedValue + "&SAID=" + Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]) + "&SID=" + Convert.ToInt32(HttpContext.Current.Session["SponsorID"]) + "&" + (Convert.ToInt32(HttpContext.Current.Session["Anonymized"]) == 1 ? "Anonymized=1&" : "") + "STDEV=" + (STDEV.Checked ? "1" : "0") + "&GB=" + GroupBy.SelectedValue + "&RPID=" + rs.GetInt32(0) + "&PRUID=" + ProjectRoundUnitID.SelectedValue + URL + "&GRPNG=" + Convert.ToInt32(Grouping.SelectedValue) + "\"/></td></tr>";
-
-				if (!rs.IsDBNull(3) && rs.GetString(3) != "")
-					StatsImg.Text += "<tr><td>" + rs.GetString(3).Replace("\r", "").Replace("\n", "<br/>") + "</td></tr>";
-
-                StatsImg.Text += "</table>";
-
-                cx++;
-			}
-			rs.Close();
+					cx++;
+				}
+//				rs.Close();*/
+				#endregion
+//			}
 		}
-    }
-
+	}
 }

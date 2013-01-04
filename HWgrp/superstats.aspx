@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="superstats.aspx.cs" Inherits="superstats" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="superstats.aspx.cs" Inherits="HWgrp.superstats" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" > 
 <html>
   <head>
