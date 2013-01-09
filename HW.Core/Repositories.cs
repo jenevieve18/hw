@@ -145,17 +145,25 @@ namespace HW.Core
 	
 	public interface IDepartmentRepository : IBaseRepository<Department>
 	{
-		IList<Department> FindBySponsorWithSponsorAdminSortStringAndTree(int sponsorID, string sortString, int sponsorAdminID);
+		void SaveSponsorAdminDepartment(SponsorAdminDepartment d);
 		
-		IList<Department> FindBySponsorWithSponsorAdminAndTree(int sponsorID, int sponsorAdminID);
+		void UpdateDepartmentBySponsor(int sponsorID);
+		
+		void UpdateDepartment(Department d);
+		
+		void UpdateDepartment2(Department d);
+		
+		void DeleteSponsorAdminDepartment(int sponsorAdminID, int departmentID);
+		
+		Department ReadBySponsor(int sponsorId);
 		
 		Department ReadByIdAndSponsor(int departmentID, int sponsorID);
 		
 		IList<Department> FindBySponsorWithSponsorAdminOnTree(int sponsorID, int sponsorAdminID);
 		
-		void InsertSponsorAdminDepartment(SponsorAdminDepartment d);
+		IList<Department> FindBySponsorWithSponsorAdminSortStringAndTree(int sponsorID, string sortString, int sponsorAdminID);
 		
-		void DeleteSponsorAdminDepartment(int sponsorAdminID, int departmentID);
+		IList<Department> FindBySponsorWithSponsorAdminAndTree(int sponsorID, int sponsorAdminID);
 		
 		IList<SponsorAdminDepartment> a(int sponsorID, int sponsorAdminID);
 		
@@ -174,31 +182,33 @@ namespace HW.Core
 	
 	public interface IUserRepository : IBaseRepository<User>
 	{
-		User ReadByIdAndSponsorExtendedSurvey(int userID, int sponsorExtendedSurveyID);
+		void SaveUserProfileBackgroundQuestion(UserProfileBackgroundQuestion s);
 		
 		void UpdateUserProfile(int userID, int sponsorID, int departmentID);
 		
 		void UpdateUser(int userID, int sponsorID, int departmentID);
 		
-		User ReadById(int userID);
-		
-		void UpdateUserProjectRoundUser(int projectRoundUnitID, int userProjectRoundUserID);
-		
-		IList<User> FindBySponsorWithExtendedSurvey(int sponsorID, int sponsorAdminID, int sponsorExtendedSurveyID);
-		
 		void UpdateLastReminderSent(int userID);
 		
 		void UpdateEmailFailure(int userID);
 		
-		IList<User> Find2(int sponsorID, int sponsorAdminID);
-		
-		IList<User> FindBySponsorWithLoginDays(int sponsorID, int sponsorAdminID, int loginDays);
+		void UpdateUserProjectRoundUser(int projectRoundUnitID, int userProjectRoundUserID);
 		
 		int a(int sponsorID, int sponsorAdminID);
 		
 		int CountBySponsorWithAdminAndExtendedSurvey2(int sponsorID, int sponsorAdminID, int sponsorExtendedSurveyID);
 		
 		int CountBySponsorWithAdminAndExtendedSurvey(int sponsorID, int sponsorAdminID, int sponsorExtendedSurveyID);
+		
+		User ReadByIdAndSponsorExtendedSurvey(int userID, int sponsorExtendedSurveyID);
+		
+		User ReadById(int userID);
+		
+		IList<User> FindBySponsorWithExtendedSurvey(int sponsorID, int sponsorAdminID, int sponsorExtendedSurveyID);
+		
+		IList<User> Find2(int sponsorID, int sponsorAdminID);
+		
+		IList<User> FindBySponsorWithLoginDays(int sponsorID, int sponsorAdminID, int loginDays);
 		
 		IList<UserProjectRoundUser> FindUserProjectRoundUser(int sponsorID, int surveyID, int userID);
 		
@@ -207,19 +217,13 @@ namespace HW.Core
 	
 	public interface ISponsorRepository : IBaseRepository<Sponsor>
 	{
-		SponsorInvite ReadSponsorInviteByUser(int userID);
-		
-		IList<SponsorInviteBackgroundQuestion> FindInviteBackgroundQuestionsByUser(int userID);
-		
-		SponsorInvite ReadSponsorInviteBySponsor(int inviteID, int sponsorID);
-		
 		void UpdateSponsorInviteSent(int userID, int sponsorInviteID);
 		
 		void UpdateNullUserForUserInvite(int userID);
 		
 		void Z(int sponsorInviteID, string previewExtendedSurveys);
 		
-		void InsertSponsorAdminFunction(SponsorAdminFunction f);
+		void SaveSponsorAdminFunction(SponsorAdminFunction f);
 		
 		void DeleteSponsorAdmin(int sponsorAdminID);
 		
@@ -237,11 +241,31 @@ namespace HW.Core
 		
 		void UpdateExtendedSurveyLastEmailSent(int sponsorExtendedSurveyID);
 		
-		IList<SponsorInvite> FindSentInvitesBySponsor(int sponsorID, int sponsorAdminID);
-		
-		IList<SponsorInvite> FindInvitesBySponsor(int sponsorID, int sponsorAdminID);
-		
 		void UpdateSponsorLastInviteSent(int sponsorID);
+		
+		void UpdateSponsorAdmin(SponsorAdmin a);
+		
+		void SaveSponsorAdmin(SponsorAdmin a);
+		
+		void UpdateDeletedAdmin(int sponsorID, int sponsorAdminID);
+		
+		bool SponsorAdminExists(int sponsorAdminID, string usr);
+		
+		int CountSentInvitesBySponsor(int sponsorID, DateTime dateSent);
+		
+		int CountCreatedInvitesBySponsor(int sponsorID, DateTime dateCreated);
+		
+		Sponsor X(int sponsorID);
+		
+		Sponsor ReadSponsor(int sponsorID);
+		
+		SponsorInvite ReadSponsorInvite(int sponsorInviteID);
+		
+		SponsorInvite ReadSponsorInviteByUser(int userID);
+		
+		SponsorInvite ReadSponsorInviteBySponsor(int inviteID, int sponsorID);
+		
+		SponsorInviteBackgroundQuestion ReadSponsorInviteBackgroundQuestion(int sponsorID, int userID, int bqID);
 		
 		SponsorAdmin ReadSponsorAdmin(int sponsorID, int sponsorAdminID, string password);
 		
@@ -249,15 +273,21 @@ namespace HW.Core
 		
 		SponsorAdmin ReadSponsorAdmin(int sponsorID, int sponsorAdminID, int SAID);
 		
-//		SponsorAdmin ReadSponsorAdmin2(int sponsorAdminID, string usr);
-		
-		bool SponsorAdminExists(int sponsorAdminID, string usr);
+		SponsorAdmin ReadSponsorAdmin(string SKEY, string SAKEY, string SA, string SAID, string ANV, string LOS);
 		
 		SponsorAdmin ReadSponsorAdmin(int sponsorAdminID, string usr);
 		
-		void UpdateSponsorAdmin(SponsorAdmin a);
+		SponsorProjectRoundUnit ReadSponsorProjectRoundUnit(int sponsorID);
 		
-		void InsertSponsorAdmin(SponsorAdmin a);
+//		SponsorAdmin ReadSponsorAdmin2(int sponsorAdminID, string usr);
+		
+		IList<Sponsor> FindAndCountDetailsBySuperAdmin(int superAdminID);
+		
+		IList<SponsorInviteBackgroundQuestion> FindInviteBackgroundQuestionsByUser(int userID);
+		
+		IList<SponsorInvite> FindSentInvitesBySponsor(int sponsorID, int sponsorAdminID);
+		
+		IList<SponsorInvite> FindInvitesBySponsor(int sponsorID, int sponsorAdminID);
 		
 		IList<SponsorAdminDepartment> FindAdminDepartmentBySponsorAdmin(int sponsorAdminID);
 		
@@ -274,22 +304,6 @@ namespace HW.Core
 		IList<SponsorProjectRoundUnit> FindDistinctRoundUnitsWithReportBySuperAdmin(int superAdminID);
 		
 		IList<SponsorAdmin> FindAdminBySponsor(int sponsorID, int sponsorAdminID);
-		
-		IList<Sponsor> FindAndCountDetailsBySuperAdmin(int superAdminID);
-		
-		SponsorAdmin ReadSponsorAdmin(string SKEY, string SAKEY, string SA, string SAID, string ANV, string LOS);
-		
-		int CountSentInvitesBySponsor(int sponsorID, DateTime dateSent);
-		
-		void UpdateDeletedAdmin(int sponsorID, int sponsorAdminID);
-		
-		int CountCreatedInvitesBySponsor(int sponsorID, DateTime dateCreated);
-		
-		Sponsor X(int sponsorID);
-		
-		SponsorProjectRoundUnit ReadSponsorProjectRoundUnit(int sponsorID);
-		
-		Sponsor ReadSponsor(int sponsorID);
 		
 		IList<SponsorExtendedSurvey> FindExtendedSurveysBySponsorAdmin(int sponsorID, int sponsorAdminID);
 	}
@@ -466,6 +480,10 @@ namespace HW.Core
 	
 	public class UserRepositoryStub : BaseRepositoryStub<User>, IUserRepository
 	{
+		public void SaveUserProfileBackgroundQuestion(UserProfileBackgroundQuestion s)
+		{
+		}
+		
 		public User ReadByIdAndSponsorExtendedSurvey(int userID, int sponsorExtendedSurveyID)
 		{
 			var s = new Sponsor();
@@ -814,20 +832,10 @@ namespace HW.Core
 			};
 		}
 		
-		public IList<SponsorInviteBackgroundQuestion> FindInviteBackgroundQuestionsByUser(int userID)
+		public SponsorInviteBackgroundQuestion ReadSponsorInviteBackgroundQuestion(int sponsorID, int userID, int bqID)
 		{
-			var invites = new List<SponsorInviteBackgroundQuestion>();
-			for (int i = 0; i < 10; i++) {
-				var q = new SponsorInviteBackgroundQuestion {
-					Question = new BackgroundQuestion { Id = 1, Type = 1, Restricted = 1 },
-					Answer = new BackgroundAnswer { Id = 1 },
-					ValueInt = i,
-					ValueDate = DateTime.Now,
-					ValueText = "Text " + i
-				};
-				invites.Add(q);
-			}
-			return invites;
+			return new SponsorInviteBackgroundQuestion {
+			};
 		}
 		
 		public SponsorInvite ReadSponsorInviteBySponsor(int inviteID, int sponsorID)
@@ -849,6 +857,13 @@ namespace HW.Core
 			};
 		}
 		
+		public SponsorInvite ReadSponsorInvite(int sponsorInviteID)
+		{
+			return new SponsorInvite {
+				Email = "some@domain.com"
+			};
+		}
+		
 		public void UpdateSponsorInviteSent(int userID, int sponsorInviteID)
 		{
 		}
@@ -859,6 +874,22 @@ namespace HW.Core
 		
 		public void Z(int sponsorInviteID, string previewExtendedSurveys)
 		{
+		}
+		
+		public IList<SponsorInviteBackgroundQuestion> FindInviteBackgroundQuestionsByUser(int userID)
+		{
+			var invites = new List<SponsorInviteBackgroundQuestion>();
+			for (int i = 0; i < 10; i++) {
+				var q = new SponsorInviteBackgroundQuestion {
+					Question = new BackgroundQuestion { Id = 1, Type = 1, Restricted = 1 },
+					Answer = new BackgroundAnswer { Id = 1 },
+					ValueInt = i,
+					ValueDate = DateTime.Now,
+					ValueText = "Text " + i
+				};
+				invites.Add(q);
+			}
+			return invites;
 		}
 		
 		public IList<SponsorBackgroundQuestion> FindBySponsor(int sponsorID)
@@ -1135,7 +1166,7 @@ namespace HW.Core
 			throw new NotImplementedException();
 		}
 		
-		public void InsertSponsorAdmin(SponsorAdmin a)
+		public void SaveSponsorAdmin(SponsorAdmin a)
 		{
 		}
 		
@@ -1154,7 +1185,7 @@ namespace HW.Core
 			throw new NotImplementedException();
 		}
 		
-		public void InsertSponsorAdminFunction(SponsorAdminFunction f)
+		public void SaveSponsorAdminFunction(SponsorAdminFunction f)
 		{
 			throw new NotImplementedException();
 		}
@@ -1384,6 +1415,51 @@ namespace HW.Core
 			}
 		}
 		
+		public void SaveSponsorAdminDepartment(SponsorAdminDepartment d)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public void UpdateDepartment(Department d)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public void UpdateDepartment2(Department d)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public void UpdateDepartmentBySponsor(int sponsorID)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public void DeleteSponsorAdminDepartment(int sponsorAdminID, int departmentID)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public Department ReadBySponsor(int sponsorID)
+		{
+			return new Department {
+				SortString = "SortString",
+				Parent = new Department { Id = 1 },
+				Name = "Department",
+				ShortName = "ShortName"
+			};
+		}
+		
+		public Department ReadByIdAndSponsor(int departmentID, int sponsorID)
+		{
+			return new Department {
+				SortString = "SortString",
+				Parent = new Department { Id = 1 },
+				Name = "Department",
+				ShortName = "ShortName"
+			};
+		}
+		
 		public IList<Department> FindBySponsorWithSponsorAdminSortStringAndTree(int sponsorID, string sortString, int sponsorAdminID)
 		{
 			var departments = new List<Department>();
@@ -1408,16 +1484,6 @@ namespace HW.Core
 				departments.Add(d);
 			}
 			return departments;
-		}
-		
-		public Department ReadByIdAndSponsor(int departmentID, int sponsorID)
-		{
-			return new Department {
-				SortString = "SortString",
-				Parent = new Department { Id = 1 },
-				Name = "Department",
-				ShortName = "ShortName"
-			};
 		}
 		
 		public IList<Department> FindBySponsorWithSponsorAdminOnTree(int sponsorID, int sponsorAdminID)
@@ -1479,16 +1545,6 @@ namespace HW.Core
 		}
 		
 		public IList<SponsorAdminDepartment> b(int sponsorID, int sponsorAdminID)
-		{
-			throw new NotImplementedException();
-		}
-		
-		public void InsertSponsorAdminDepartment(SponsorAdminDepartment d)
-		{
-			throw new NotImplementedException();
-		}
-		
-		public void DeleteSponsorAdminDepartment(int sponsorAdminID, int departmentID)
 		{
 			throw new NotImplementedException();
 		}

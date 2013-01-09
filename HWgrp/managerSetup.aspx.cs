@@ -227,7 +227,7 @@ namespace HWgrp
 						SuperUser = SuperUser.Checked,
 						ReadOnly = ReadOnly.Checked
 					};
-					sponsorRepository.InsertSponsorAdmin(a);
+					sponsorRepository.SaveSponsorAdmin(a);
 //					rs = Db.rs("SELECT SponsorAdminID FROM SponsorAdmin WHERE SponsorID = " + Convert.ToInt32(HttpContext.Current.Session["SponsorID"]) + " AND Usr = '" + Usr.Text.Replace("'", "") + "'");
 					sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 					a = sponsorRepository.ReadSponsorAdmin(sponsorAdminID, Usr.Text);
@@ -256,7 +256,7 @@ namespace HWgrp
 								Admin = new SponsorAdmin { Id = sponsorAdminID },
 								Function = new ManagerFunction { Id = f.Id }
 							};
-							sponsorRepository.InsertSponsorAdminFunction(x);
+							sponsorRepository.SaveSponsorAdminFunction(x);
 						}
 					}
 				}
@@ -290,7 +290,7 @@ namespace HWgrp
 									Id = sponsorAdminID,
 									Department = new Department { Id = d.Department.Id }
 								};
-								departmentRepository.InsertSponsorAdminDepartment(x);
+								departmentRepository.SaveSponsorAdminDepartment(x);
 							}
 						}
 					}

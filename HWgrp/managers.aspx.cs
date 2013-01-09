@@ -11,20 +11,24 @@ namespace HWgrp
 {
 	public partial class managers : System.Web.UI.Page
 	{
-        IManagerFunctionRepository managerRepository = AppContext.GetRepositoryFactory().CreateManagerFunctionRepository();
-        ISponsorRepository sponsorRepository = AppContext.GetRepositoryFactory().CreateSponsorRepository();
+		IManagerFunctionRepository managerRepository = AppContext.GetRepositoryFactory().CreateManagerFunctionRepository();
+		ISponsorRepository sponsorRepository = AppContext.GetRepositoryFactory().CreateSponsorRepository();
+		
+		bool Delete {
+			get { return HttpContext.Current.Request.QueryString["Delete"] != null; }
+		}
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			if (HttpContext.Current.Request.QueryString["Delete"] != null)
+			int sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
+			if (Delete)
 			{
 //				Db.exec("UPDATE SponsorAdmin SET SponsorID = -ABS(SponsorID), Usr = Usr+'DELETED' WHERE SponsorAdminID = " + Convert.ToInt32(HttpContext.Current.Request.QueryString["Delete"]) + " " +
 //				        "AND SponsorID = " + Convert.ToInt32(HttpContext.Current.Session["SponsorID"]));
-				int sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
 				int sponsorAdminID = Convert.ToInt32(HttpContext.Current.Request.QueryString["Delete"]);
 				sponsorRepository.UpdateDeletedAdmin(sponsorID, sponsorAdminID);
 			}
-			if (Convert.ToInt32(HttpContext.Current.Session["SponsorID"]) != 0)
+			if (sponsorID != 0)
 			{
 				Managers.Text = " <tr><td><B>Name</B>&nbsp;&nbsp;</td><td><b>Roles</b></td></tr>";
 //				SqlDataReader rs = Db.rs("SELECT " +
@@ -37,7 +41,6 @@ namespace HWgrp
 //				                         (HttpContext.Current.Session["SponsorAdminID"].ToString() != "-1" ?     // Only see managers with no department access (yet) or with access to at least one of "my" departments
 //				                          "AND ((SELECT COUNT(*) FROM SponsorAdminDepartment sad WHERE sad.SponsorAdminID = sa.SponsorAdminID) = 0 OR (SELECT COUNT(*) FROM SponsorAdminDepartment sad INNER JOIN SponsorAdminDepartment sad2 ON sad.DepartmentID = sad2.DepartmentID WHERE sad.SponsorAdminID = sa.SponsorAdminID AND sad2.SponsorAdminID = " + Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]) + ") > 0) " : "") +
 //				                         "AND sa.SponsorID = " + Convert.ToInt32(HttpContext.Current.Session["SponsorID"]));
-				int sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
 				int sponsorAdminID = HttpContext.Current.Session["SponsorAdminID"] != null ? Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]) : -1;
 //				while (rs.Read())
 				foreach (var s in sponsorRepository.FindAdminBySponsor(sponsorID, sponsorAdminID))

@@ -82,7 +82,7 @@ namespace HW.Core
 		{
 		}
 		
-		public void SaveOrUpdate(T t)
+		public virtual void SaveOrUpdate(T t)
 		{
 			throw new NotImplementedException();
 		}
@@ -592,11 +592,11 @@ SELECT av1.ValueInt,
 	u.Email
 FROM ProjectRoundUser u
 INNER JOIN Answer a ON a.ProjectRoundUserID = u.ProjectRoundUserID
-INNER JOIN AnswerValue av1 ON a.AnswerID = av1.AnswerID 
-	AND av1.QuestionID = {1} 
-	AND av1.OptionID = {2} 
+INNER JOIN AnswerValue av1 ON a.AnswerID = av1.AnswerID
+	AND av1.QuestionID = {1}
+	AND av1.OptionID = {2}
 	AND av1.DeletedSessionID IS NULL
-WHERE a.EndDT IS NOT NULL 
+WHERE a.EndDT IS NOT NULL
 AND u.ProjectRoundID = {0}",
 				projectRoundID,
 				questionID,
@@ -1836,7 +1836,20 @@ FROM ManagerFunction AS mf {0}",
 	
 	public class SqlDepartmentRepository : BaseSqlRepository<Department>, IDepartmentRepository
 	{
-		public void InsertSponsorAdminDepartment(SponsorAdminDepartment d)
+		public override void SaveOrUpdate(Department d)
+		{
+			string query = string.Format(
+				@"
+INSERT INTO Department (SponsorID, Department, ParentDepartmentID)
+VALUES ({0}, '{1}', {2})",
+				d.Sponsor.Id,
+				d.Name,
+				d.Parent.Id
+			);
+			Db2.exec(query);
+		}
+		
+		public void SaveSponsorAdminDepartment(SponsorAdminDepartment d)
 		{
 			string query = string.Format(
 				@"
@@ -1845,6 +1858,47 @@ VALUES ({0}, {1})",
 				d.Id, d.Department.Id
 			);
 			Db.exec(query, "healthWatchSqlConnection");
+		}
+		
+		public void UpdateDepartment2(Department d)
+		{
+			string query = string.Format(
+				@"
+UPDATE Department SET Department = '{0}',
+DepartmentShort = '{1}',
+ParentDepartmentID = {2}
+WHERE DepartmentID = {3}",
+				d.Name,
+				d.ShortName,
+				d.Parent.Id,
+				d.Id
+			);
+			Db2.exec(query);
+		}
+		
+		public void UpdateDepartment(Department d)
+		{
+			string query = string.Format(
+				@"
+UPDATE Department SET DepartmentShort = '{0}',
+SortOrder = {1}
+WHERE DepartmentID = {2}",
+				d.ShortName,
+				d.SortOrder,
+				d.Id
+			);
+			Db2.exec(query);
+		}
+		
+		public void UpdateDepartmentBySponsor(int sponsorID)
+		{
+			string query = string.Format(
+				@"
+UPDATE Department SET SortString = dbo.cf_departmentSortString(DepartmentID)
+WHERE SponsorID = {0}",
+				sponsorID
+			);
+			Db2.exec(query);
 		}
 		
 		public void DeleteSponsorAdminDepartment(int sponsorAdminID, int departmentID)
@@ -1857,6 +1911,46 @@ WHERE DepartmentID = {1} AND SponsorAdminID = {0}",
 				departmentID
 			);
 			Db.exec(query, "healthWatchSqlConnection");
+		}
+		
+		public Department ReadBySponsor(int sponsorId)
+		{
+			string query = string.Format(
+				@"
+SELECT DepartmentID
+FROM Department
+WHERE SponsorID = {0} ORDER BY DepartmentID DESC",
+				sponsorId
+			);
+			using (SqlDataReader rs = Db2.rs(query)) {
+				if (rs.Read()) {
+					var d = new Department {
+						Id = rs.GetInt32(0)
+					};
+					return d;
+				}
+			}
+			return null;
+		}
+		
+		public override Department Read(int id)
+		{
+			string query = string.Format(
+				@"
+SELECT dbo.cf_departmentTree(d.DepartmentID,' » ') 
+FROM Department d 
+WHERE d.DepartmentID = {0}",
+				id
+			);
+			using (SqlDataReader rs = Db2.rs(query)) {
+				if (rs.Read()) {
+					var d = new Department {
+						TreeName = rs.GetString(0)
+					};
+					return d;
+				}
+			}
+			return null;
 		}
 		
 		public Department ReadByIdAndSponsor(int departmentID, int sponsorID)
@@ -2029,7 +2123,8 @@ SELECT DepartmentShort,
 	DepartmentID
 FROM Department
 WHERE DepartmentShort IS NOT NULL
-AND SponsorID = " + sponsorID
+AND SponsorID = {0}",
+				sponsorID
 			);
 			var departments = new List<Department>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
@@ -2111,7 +2206,7 @@ ORDER BY d.SortString",
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
 					var d = new Department {
-						Id = rs.GetInt32(0), //Name = rs.GetString(0),
+						Id = rs.GetInt32(0),
 						TreeName = rs.GetString(1)
 					};
 					departments.Add(d);
@@ -2262,6 +2357,24 @@ ORDER BY spru.SortOrder, spru.SponsorProjectRoundUnitID, l.LID",
 	
 	public class SqlUserRepository : BaseSqlRepository<User>, IUserRepository
 	{
+		public void SaveUserProfileBackgroundQuestion(UserProfileBackgroundQuestion s)
+		{
+			string query = string.Format(
+				@"
+INSERT INTO UserProfileBQ (UserProfileID, BQID, ValueInt, ValueText, ValueDate)
+VALUES (@UserProfileID, @BQID, @ValueInt, @ValueText, @ValueDate)"
+			);
+			ExecuteNonQuery(
+				query,
+				"healthWatchSqlConnection",
+				new SqlParameter("@UserProfileID", s.Profile.Id),
+				new SqlParameter("@BQID", s.Question.Id),
+				new SqlParameter("@ValueInt", s.ValueInt),
+				new SqlParameter("@ValueText", s.ValueText),
+				new SqlParameter("@ValueDate", s.ValueDate)
+			);
+		}
+		
 		public void UpdateUser(int userID, int sponsorID, int departmentID)
 		{
 			string query = "UPDATE [User] SET DepartmentID = " + departmentID + ", SponsorID = " + sponsorID + " WHERE UserID = " + userID;
@@ -2652,64 +2765,113 @@ AND u.Email NOT LIKE '%DELETED'",
 	{
 		public void UpdateSponsorLastLoginSent(int sponsorID)
 		{
-			string query = "UPDATE Sponsor SET LoginLastSent = GETDATE() WHERE SponsorID = " + sponsorID;
+			string query = string.Format(
+				@"
+UPDATE Sponsor SET LoginLastSent = GETDATE()
+WHERE SponsorID = {0}",
+				sponsorID
+			);
 			Db.exec(query, "healthWatchSqlConnection"); // TODO: move to department???
 		}
 		
 		public void UpdateLastAllMessageSent(int sponsorID)
 		{
-			string query = "UPDATE Sponsor SET AllMessageLastSent = GETDATE() WHERE SponsorID = " + sponsorID;
+			string query = string.Format(
+				@"
+UPDATE Sponsor SET AllMessageLastSent = GETDATE()
+WHERE SponsorID = {0}",
+				sponsorID
+			);
 			Db.exec(query, "healthWatchSqlConnection"); // TODO: move to department???
 		}
 		
 		public void UpdateSponsorLastInviteReminderSent(int sponsorID)
 		{
-			string query = "UPDATE Sponsor SET InviteReminderLastSent = GETDATE() WHERE SponsorID = " + sponsorID;
+			string query = string.Format(
+				@"
+UPDATE Sponsor SET InviteReminderLastSent = GETDATE()
+WHERE SponsorID = {0}",
+				sponsorID
+			);
 			Db.exec(query, "healthWatchSqlConnection"); // TODO: move to department???
 		}
 		
 		public void UpdateSponsorLastInviteSent(int sponsorID)
 		{
-			string query = string.Format("UPDATE Sponsor SET InviteLastSent = GETDATE() WHERE SponsorID = {0}", sponsorID);
+			string query = string.Format(
+				@"
+UPDATE Sponsor SET InviteLastSent = GETDATE()
+WHERE SponsorID = {0}",
+				sponsorID
+			);
 			Db.exec(query, "healthWatchSqlConnection"); // TODO: move to department???
 		}
 		
 		public void Z(int sponsorInviteID, string previewExtendedSurveys)
 		{
-			string query = "UPDATE SponsorInvite SET PreviewExtendedSurveys = " + previewExtendedSurveys + " WHERE SponsorInviteID = " + sponsorInviteID;
-//			Db2.exec(query, "healthWatchSqlConnection");
+			string query = string.Format(
+				@"
+UPDATE SponsorInvite SET PreviewExtendedSurveys = {0}
+WHERE SponsorInviteID = {1}",
+				previewExtendedSurveys,
+				sponsorInviteID
+			);
 			Db.exec(query, "healthWatchSqlConnection");
 		}
 		
 		public void UpdateSponsorInviteSent(int userID, int sponsorInviteID)
 		{
-			string query = "UPDATE SponsorInvite SET UserID = " + userID + ", Sent = GETDATE() WHERE SponsorInviteID = " + sponsorInviteID;
-//			Db2.exec(query, "healthWatchSqlConnection");
+			string query = string.Format(
+				@"
+UPDATE SponsorInvite SET UserID = {0}, Sent = GETDATE()
+WHERE SponsorInviteID = {1}",
+				userID,
+				sponsorInviteID
+			);
 			Db.exec(query, "healthWatchSqlConnection");
 		}
 		
 		public void UpdateNullUserForUserInvite(int userID)
 		{
-			string query = "UPDATE SponsorInvite SET UserID = NULL WHERE UserID = " + userID;
-//			Db2.exec(query, "healthWatchSqlConnection");
+			string query = string.Format(
+				@"
+UPDATE SponsorInvite SET UserID = NULL
+WHERE UserID = {0}",
+				userID
+			);
 			Db.exec(query, "healthWatchSqlConnection");
 		}
 		
 		public void UpdateExtendedSurveyLastEmailSent(int sponsorExtendedSurveyID)
 		{
-			string query = "UPDATE SponsorExtendedSurvey SET EmailLastSent = GETDATE() WHERE SponsorExtendedSurveyID = " + sponsorExtendedSurveyID;
+			string query = string.Format(
+				@"
+UPDATE SponsorExtendedSurvey SET EmailLastSent = GETDATE()
+WHERE SponsorExtendedSurveyID = {0}",
+				sponsorExtendedSurveyID
+			);
 			Db.exec(query, "healthWatchSqlConnection");
 		}
 		
 		public void UpdateExtendedSurveyLastFinishedSent(int sponsorExtendedSurveyID)
 		{
-			string query = "UPDATE SponsorExtendedSurvey SET FinishedLastSent = GETDATE() WHERE SponsorExtendedSurveyID = " + sponsorExtendedSurveyID;
+			string query = string.Format(
+				@"
+UPDATE SponsorExtendedSurvey SET FinishedLastSent = GETDATE()
+WHERE SponsorExtendedSurveyID = {0}",
+				sponsorExtendedSurveyID
+			);
 			Db.exec(query, "healthWatchSqlConnection");
 		}
 		
 		public void UpdateSponsor(int sponsorID)
 		{
-			string query = "UPDATE Sponsor SET AllMessageLastSent = GETDATE() WHERE SponsorID = " + sponsorID;
+			string query = string.Format(
+				@"
+UPDATE Sponsor SET AllMessageLastSent = GETDATE()
+WHERE SponsorID = {0}",
+				sponsorID
+			);
 			Db.exec(query, "healthWatchSqlConnection"); // TODO: move to department???
 		}
 		
@@ -2796,7 +2958,7 @@ AND SponsorID = {7}",
 			Db.exec(query, "healthWatchSqlConnection");
 		}
 		
-		public void InsertSponsorAdmin(SponsorAdmin a)
+		public void SaveSponsorAdmin(SponsorAdmin a)
 		{
 //			string query = string.Format(
 //				@"
@@ -2829,7 +2991,7 @@ VALUES (@Email, @Name, @Usr, @Pas, @SponsorID, @SuperUser, @ReadOnly)"
 			);
 		}
 		
-		public void InsertSponsorAdminFunction(SponsorAdminFunction f)
+		public void SaveSponsorAdminFunction(SponsorAdminFunction f)
 		{
 //			string query = string.Format(
 //				@"
@@ -3053,7 +3215,27 @@ WHERE s.SponsorID = " + sponsorID + " AND si.SponsorInviteID = " + inviteID
 			return null;
 		}
 		
-		public SponsorInvite ReadSponsorInvite(int sponsorID, int userID, int bqID)
+		public SponsorInvite ReadSponsorInvite(int sponsorInviteID)
+		{
+			string query = string.Format(
+				@"
+SELECT Email
+FROM SponsorInvite
+WHERE SponsorInviteID = {0}",
+				sponsorInviteID
+			);
+			using (SqlDataReader rs = Db2.rs(query)) {
+				if (rs.Read()) {
+					var i = new SponsorInvite {
+						Email = rs.GetString(0)
+					};
+					return i;
+				}
+			}
+			return null;
+		}
+		
+		public SponsorInviteBackgroundQuestion ReadSponsorInviteBackgroundQuestion(int sponsorID, int userID, int bqID)
 		{
 			string query = string.Format(
 				@"
@@ -3079,8 +3261,19 @@ AND si.SponsorID = {0}",
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				if (rs.Read()) {
 					var i = new SponsorInvite {
+						User = new User {
+							Profile = new UserProfile { Id = GetInt32(rs, 5) }
+						}
 					};
-					return i;
+					var sib = new SponsorInviteBackgroundQuestion {
+						Answer = new BackgroundAnswer { Id = rs.GetInt32(0) },
+						ValueInt = GetInt32(rs, 1),
+						ValueText = GetString(rs, 2),
+						ValueDate = GetDateTime(rs, 3),
+						Question = new BackgroundQuestion { Type = GetInt32(rs, 4) },
+						Invite = i
+					};
+					return sib;
 				}
 			}
 			return null;
@@ -3401,8 +3594,8 @@ WHERE s.SponsorInviteID = " + userID
 						Question = new BackgroundQuestion { Id = rs.GetInt32(0), Type = rs.GetInt32(2), Restricted = rs.GetInt32(6) },
 						Answer = new BackgroundAnswer { Id = rs.GetInt32(1) },
 						ValueInt = rs.GetInt32(3),
-						ValueDate = rs.GetDateTime(4),
-						ValueText = rs.GetString(5)
+						ValueDate = GetDateTime(rs, 4),
+						ValueText = GetString(rs, 5)
 					};
 					invites.Add(i);
 				}

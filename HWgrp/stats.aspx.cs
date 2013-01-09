@@ -64,7 +64,8 @@ namespace HWgrp
 //					           "WHERE spru.SponsorID = " + sponsorID + " " +
 //					           "AND ISNULL(sprul.LangID,1) = " + Convert.ToInt32(LangID.SelectedValue));
 //					while (rs.Read())
-					foreach (var p in sponsorRepository.FindBySponsorAndLanguage(sponsorID, Convert.ToInt32(LangID.SelectedValue)))
+					int selectedLangID = Convert.ToInt32(LangID.SelectedValue);
+					foreach (var p in sponsorRepository.FindBySponsorAndLanguage(sponsorID, selectedLangID))
 					{
 //						ProjectRoundUnitID.Items.Add(new ListItem(rs.GetString(0), rs.GetInt32(1).ToString()));
 						ProjectRoundUnitID.Items.Add(new ListItem(p.Navigation, p.Id.ToString()));
@@ -164,7 +165,9 @@ namespace HWgrp
 		void Execute_Click(object sender, EventArgs e)
 		{
 //			exec = true;
-			reportParts = reportRepository.FindByProjectAndLanguage(Convert.ToInt32(ProjectRoundUnitID.SelectedValue), Convert.ToInt32(LangID.SelectedValue));
+			int selectedLangID = Convert.ToInt32(LangID.SelectedValue);
+			int selectedProjectRoundUnitID = Convert.ToInt32(ProjectRoundUnitID.SelectedValue);
+			reportParts = reportRepository.FindByProjectAndLanguage(selectedProjectRoundUnitID, selectedLangID);
 		}
 
 		#region export

@@ -919,6 +919,7 @@ namespace HW.Core
 		public User User { get; set; }
 		public int StoppedReason { get; set; }
 		public DateTime? Stopped { get; set; }
+		public IList<SponsorInviteBackgroundQuestion> BackgroundQuestions { get; set; }
 		
 		public string InvitationKey { get; set; }
 	}
@@ -929,7 +930,7 @@ namespace HW.Core
 		public BackgroundQuestion Question { get; set; }
 		public BackgroundAnswer Answer { get; set; }
 		public int ValueInt { get; set; }
-		public DateTime ValueDate { get; set; }
+		public DateTime? ValueDate { get; set; }
 		public string ValueText { get; set; }
 	}
 	
@@ -1031,9 +1032,9 @@ namespace HW.Core
 	{
 		public UserProfile Profile { get; set; }
 		public BackgroundQuestion Question { get; set; }
-		public int IntegerValue { get; set; }
-		public string StringValue { get; set; }
-		public DateTime DateValue { get; set; }
+		public int ValueInt { get; set; }
+		public string ValueText { get; set; }
+		public DateTime? ValueDate { get; set; }
 	}
 	
 	public class UserProjectRoundUser : BaseModel

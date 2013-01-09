@@ -52,7 +52,7 @@ namespace HW.Tests.Repositories
 			var d = new SponsorAdminDepartment {
 				Department = new Department { Id = 1 }
 			};
-			r.InsertSponsorAdminDepartment(d);
+			r.SaveSponsorAdminDepartment(d);
 		}
 		
 		[Test]

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<!--
+  For more information on how to configure your ASP.NET application, please visit
+  http://go.microsoft.com/fwlink/?LinkId=169433
+  -->
+
+<configuration>
+	<system.web>
+		<compilation debug="true" targetFramework="4.0" />
+	</system.web>
+	<appSettings>
+		<add key="mysql" value="Server=localhost;Database=HWgrp;Uid=root;Pwd=;"/>
+		<add key="sqlite" value="Data Source=|DataDirectory|\HWgrp.sqlite;Version=3" />
+		<add key="mysql" value="server=localhost;user id=root;database=hwgrp"/>
+		<add key="healthWatchSqlConnection" value="Server=.;Database=healthWatch;Trusted_Connection=True;"/>
+		<add key="eFormSqlConnection" value="Server=.;Database=eform;Trusted_Connection=True;"/>
+		<!--<add key="healthWatchSqlConnection" value="data source=.\SQLEXPRESS;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|\healthWatch.mdf;User Instance=true"/>
+		<add key="eFormSqlConnection" value="data source=.\SQLEXPRESS;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|\eform.mdf;User Instance=true"/>-->
+        <add key="healthWatchURL" value="http://localhost:2002"/>
+		<!--<add key="SqlConnection" value="data source=.\SQLEXPRESS;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|\healthWatch.mdf;User Instance=true"/>-->
+	</appSettings>
+</configuration>

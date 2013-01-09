@@ -88,9 +88,9 @@ namespace HW.Tests.Repositories
 		}
 		
 		[Test]
-		public void TestReadSponsorInvite()
+		public void TestReadSponsorInviteBackgroundQuestion()
 		{
-			r.ReadSponsorInvite(1, 1, 1);
+			r.ReadSponsorInviteBackgroundQuestion(1, 1, 1);
 		}
 		
 		[Test]
@@ -229,7 +229,7 @@ namespace HW.Tests.Repositories
 		[Test]
 		public void TestInsertSponsorAdmin()
 		{
-			r.InsertSponsorAdmin(new SponsorAdmin { Sponsor = new Sponsor() });
+			r.SaveSponsorAdmin(new SponsorAdmin { Sponsor = new Sponsor() });
 		}
 		
 		[Test]
@@ -271,7 +271,7 @@ namespace HW.Tests.Repositories
 		[Test]
 		public void TestInsertSponsorAdminFunction()
 		{
-			r.InsertSponsorAdminFunction(new SponsorAdminFunction { Admin = new SponsorAdmin(), Function = new ManagerFunction() });
+			r.SaveSponsorAdminFunction(new SponsorAdminFunction { Admin = new SponsorAdmin(), Function = new ManagerFunction() });
 		}
 		
 		[Test]
