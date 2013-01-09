@@ -30,7 +30,6 @@ namespace HWgrp
 			string sortQS = "&SORT=" + SORT;
 
 			System.Text.StringBuilder sb = new System.Text.StringBuilder();
-//			SqlDataReader rs;
 			int rExerciseAreaID = 0, rExerciseID = 0;
 
 			if (!IsPostBack)
@@ -44,34 +43,10 @@ namespace HWgrp
 					}
 				}
 				string s = "";
-//				rs = Db.rs("SELECT " +
-//				           "eal.ExerciseArea, " +          // 0
-//				           "eal.ExerciseAreaID " +
-//				           "FROM [ExerciseArea] ea " +
-//				           "INNER JOIN [ExerciseAreaLang] eal ON ea.ExerciseAreaID = eal.ExerciseAreaID " +
-//				           "WHERE eal.Lang = " + LID + " " +
-//				           "AND (" +
-//				           "SELECT COUNT(*) " +
-//				           "FROM Exercise e " +
-//				           "INNER JOIN [ExerciseLang] el ON e.ExerciseID = el.ExerciseID " +
-//				           "INNER JOIN [ExerciseVariant] ev ON e.ExerciseID = ev.ExerciseID " +
-//				           "INNER JOIN [ExerciseVariantLang] evl ON ev.ExerciseVariantID = evl.ExerciseVariantID " +
-//				           "INNER JOIN [ExerciseType] et ON ev.ExerciseTypeID = et.ExerciseTypeID " +
-//				           "INNER JOIN [ExerciseTypeLang] etl ON et.ExerciseTypeID = etl.ExerciseTypeID " +
-//				           "WHERE e.ExerciseAreaID = ea.ExerciseAreaID " +
-//				           "AND eal.Lang = el.Lang " +
-//				           "AND e.RequiredUserLevel = 10 " +
-//				           "AND el.Lang = evl.Lang " +
-//				           "AND evl.Lang = etl.Lang " +
-//				           ") > 0 " +
-//				           "ORDER BY CASE eal.ExerciseAreaID WHEN " + EAID + " THEN NULL ELSE ea.ExerciseAreaSortOrder END");
-//				while (rs.Read())
 				foreach (var a in exerciseRepository.FindAreas(EAID, LID))
 				{
-//					if (EAID == rs.GetInt32(1))
 					if (EAID == a.Area.Id)
 					{
-//						AreaID.Controls.Add(new LiteralControl("<dt><a href=\"javascript:;\"><span>" + rs.GetString(0) + "</span></a></dt><dd><ul>"));
 						AreaID.Controls.Add(new LiteralControl("<dt><a href=\"javascript:;\"><span>" + a.AreaName + "</span></a></dt><dd><ul>"));
 						switch (LID)
 						{
@@ -85,11 +60,9 @@ namespace HWgrp
 						{
 							AreaID.Controls.Add(new LiteralControl("<li" + s));
 						}
-//						s = " id=\"EAID" + rs.GetInt32(1) + "\"><a href=\"exercise.aspx?EAID=" + rs.GetInt32(1) + "" + sortQS + "#filter\">" + rs.GetString(0) + "</a></li>";
 						s = " id=\"EAID" + a.Area.Id + "\"><a href=\"exercise.aspx?EAID=" + a.Area.Id + "" + sortQS + "#filter\">" + a.AreaName + "</a></li>";
 					}
 				}
-//				rs.Close();
 				AreaID.Controls.Add(new LiteralControl("<li class=\"last\"" + s));
 				AreaID.Controls.Add(new LiteralControl("</ul></dd>"));
 
@@ -106,32 +79,8 @@ namespace HWgrp
 					}
 				}
 				s = "";
-//				rs = Db.rs("SELECT " +
-//				           "eal.ExerciseCategory, " +          // 0
-//				           "eal.ExerciseCategoryID " +
-//				           "FROM [ExerciseCategory] ea " +
-//				           "INNER JOIN [ExerciseCategoryLang] eal ON ea.ExerciseCategoryID = eal.ExerciseCategoryID " +
-//				           "WHERE eal.Lang = " + LID + " " +
-//				           "AND (" +
-//				           "SELECT COUNT(*) " +
-//				           "FROM Exercise e " +
-//				           "INNER JOIN [ExerciseLang] el ON e.ExerciseID = el.ExerciseID " +
-//				           "INNER JOIN [ExerciseVariant] ev ON e.ExerciseID = ev.ExerciseID " +
-//				           "INNER JOIN [ExerciseVariantLang] evl ON ev.ExerciseVariantID = evl.ExerciseVariantID " +
-//				           "INNER JOIN [ExerciseType] et ON ev.ExerciseTypeID = et.ExerciseTypeID " +
-//				           "INNER JOIN [ExerciseTypeLang] etl ON et.ExerciseTypeID = etl.ExerciseTypeID " +
-//				           "WHERE e.ExerciseCategoryID = ea.ExerciseCategoryID " +
-//				           (EAID != 0 ? "AND e.ExerciseAreaID = " + EAID + " " : "") +
-//				           "AND eal.Lang = el.Lang " +
-//				           "AND e.RequiredUserLevel = 10 " +
-//				           "AND el.Lang = evl.Lang " +
-//				           "AND evl.Lang = etl.Lang " +
-//				           ") > 0 " +
-//				           "ORDER BY CASE eal.ExerciseCategoryID WHEN " + ECID + " THEN NULL ELSE ea.ExerciseCategorySortOrder END");
-//				while (rs.Read())
 				foreach (var c in exerciseRepository.FindCategories(EAID, ECID, LID))
 				{
-//					if (ECID == rs.GetInt32(1))
 					if (ECID == c.Category.Id)
 					{
 						CategoryID.Controls.Add(new LiteralControl("<dt><a href=\"javascript:;\"><span>" + c.CategoryName + "</span></a></dt><dd><ul>"));
@@ -150,57 +99,12 @@ namespace HWgrp
 						s = " id=\"ECID" + c.Category.Id + "\"><a href=\"exercise.aspx?ECID=" + c.Category.Id + "" + sortQS + (EAID != 0 ? "&EAID=" + EAID : "") + "#filter\">" + c.CategoryName + "</a></li>";
 					}
 				}
-//				rs.Close();
 				CategoryID.Controls.Add(new LiteralControl("<li class=\"last\"" + s));
 				CategoryID.Controls.Add(new LiteralControl("</ul></dd>"));
 			}
 
-//			rs = Db.rs("SELECT " +
-//			           "el.New, " +                    // 0
-//			           "NULL, " +
-//			           "evl.ExerciseVariantLangID, " + // 2
-//			           "eal.ExerciseArea, " +          // 3
-//			           "eal.ExerciseAreaID, " +        // 4
-//			           "e.ExerciseImg, " +             // 5
-//			           "e.ExerciseID, " +              // 6
-//			           "ea.ExerciseAreaImg, " +        // 7
-//			           "el.Exercise, " +               // 8
-//			           "el.ExerciseTime, " +           // 9
-//			           "el.ExerciseTeaser, " +         // 10
-//			           "evl.ExerciseFile, " +          // 11
-//			           "evl.ExerciseFileSize, " +      // 12
-//			           "evl.ExerciseContent, " +       // 13
-//			           "evl.ExerciseWindowX, " +       // 14
-//			           "evl.ExerciseWindowY, " +       // 15
-//			           "et.ExerciseTypeID, " +         // 16
-//			           "etl.ExerciseType, " +          // 17
-//			           "etl.ExerciseSubtype, " +       // 18
-//			           "ecl.ExerciseCategory " +       // 19
-//			           "FROM [ExerciseArea] ea " +
-//			           "INNER JOIN [ExerciseAreaLang] eal ON ea.ExerciseAreaID = eal.ExerciseAreaID " +
-//			           "INNER JOIN [Exercise] e ON ea.ExerciseAreaID = e.ExerciseAreaID " +
-//			           "INNER JOIN [ExerciseLang] el ON e.ExerciseID = el.ExerciseID " +
-//			           "INNER JOIN [ExerciseVariant] ev ON e.ExerciseID = ev.ExerciseID " +
-//			           "INNER JOIN [ExerciseVariantLang] evl ON ev.ExerciseVariantID = evl.ExerciseVariantID " +
-//			           "INNER JOIN [ExerciseType] et ON ev.ExerciseTypeID = et.ExerciseTypeID " +
-//			           "INNER JOIN [ExerciseTypeLang] etl ON et.ExerciseTypeID = etl.ExerciseTypeID " +
-//			           "LEFT OUTER JOIN [ExerciseCategory] ec ON e.ExerciseCategoryID = ec.ExerciseCategoryID " +
-//			           "LEFT OUTER JOIN [ExerciseCategoryLang] ecl ON ec.ExerciseCategoryID = ecl.ExerciseCategoryID AND ecl.Lang = eal.Lang " +
-//			           "WHERE eal.Lang = el.Lang " +
-//			           "AND e.RequiredUserLevel = 10 " +
-//			           "AND el.Lang = evl.Lang " +
-//			           "AND evl.Lang = etl.Lang " +
-//			           "AND etl.Lang = " + LID + " " +
-//			           (ECID != 0 ? "AND e.ExerciseCategoryID = " + ECID + " " : "") +
-//			           (EAID != 0 ? "AND e.ExerciseAreaID = " + EAID + " " : "") +
-//			           "ORDER BY " +
-//			           (SORT == 1 ? "(SELECT COUNT(*) FROM ExerciseStats esX INNER JOIN ExerciseVariantLang evlX ON esX.ExerciseVariantLangID = evlX.ExerciseVariantLangID INNER JOIN ExerciseVariant evX ON evlX.ExerciseVariantID = evX.ExerciseVariantID WHERE evX.ExerciseID = e.ExerciseID) DESC, " : (SORT == 2 ? "el.Exercise ASC, " : "")) +
-//			           "HASHBYTES('MD2',CAST(RAND(" + DateTime.Now.Second * DateTime.Now.Minute + ")*e.ExerciseID AS VARCHAR(16))) ASC, " +
-//			           "et.ExerciseTypeSortOrder ASC");
-//			while (rs.Read())
 			foreach (var l in exerciseRepository.FindByAreaAndCategory(EAID, ECID, LID, SORT)) // TODO:
 			{
-//				if (rs.GetInt32(6) != rExerciseID)
 				if (l.Id != rExerciseID)
 				{
 					BX++;
@@ -211,53 +115,41 @@ namespace HWgrp
 
 					sb.Append("<div class=\"item\"><div class=\"overview\"></div><div class=\"detail\">");
 
-//					sb.Append("<div class=\"image\">" + (!rs.IsDBNull(5) && rs.GetString(5) != "" ? "<img src=\"" + rs.GetString(5) + "\" width=\"121\" height=\"100\">" : "") + "</div>");
 					sb.Append("<div class=\"image\">" + (l.Image != "" ? "<img src=\"" + l.Image + "\" width=\"121\" height=\"100\">" : "") + "</div>");
 
 					// time
-//					if (!rs.IsDBNull(9) && rs.GetString(9) != "")
 					if (l.CurrentLanguage.Time != "")
 					{
 						sb.Append("<div class=\"time\">" + l.CurrentLanguage.Time + "<span class=\"time-end\"></span></div>");
 					}
 
 					// exercise
-//					sb.Append("<div class=\"descriptions\">" + rs.GetString(3) + (rs.IsDBNull(19) ? "" : " - " + rs.GetString(19)) + "</div><h2>" + rs.GetString(8) + "</h2>");
 					sb.Append("<div class=\"descriptions\">" + l.CurrentArea.AreaName + (l.CurrentCategory.CategoryName == "" ? "" : " - " + l.CurrentCategory.CategoryName) + "</div><h2>" + l.CurrentLanguage.ExerciseName + "</h2>");
 
 					// teaser
-//					if (!rs.IsDBNull(10) && rs.GetString(10) != "")
 					if (l.CurrentLanguage.Teaser != "")
 					{
-//						sb.Append("<p>" + rs.GetString(10) + "</p>");
 						sb.Append("<p>" + l.CurrentLanguage.Teaser + "</p>");
 					}
 					sb.Append("<div>");
 				}
 
-//				sb.Append("<a class=\"sidearrow\" href=\"JavaScript:void(window.open('" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "/exerciseShow.aspx?SID=" + Convert.ToInt32(HttpContext.Current.Session["SponsorID"]) + "&AUID=" + Math.Abs(Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"])) + "&ExerciseVariantLangID=" + rs.GetInt32(2) + "','EVLID" + rs.GetInt32(2) + "','scrollbars=yes,resizable=yes,");
 				sb.Append("<a class=\"sidearrow\" href=\"JavaScript:void(window.open('" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "/exerciseShow.aspx?SID=" + Convert.ToInt32(HttpContext.Current.Session["SponsorID"]) + "&AUID=" + Math.Abs(Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"])) + "&ExerciseVariantLangID=" + l.CurrentVariant.Id + "','EVLID" + l.CurrentVariant.Id + "','scrollbars=yes,resizable=yes,");
 
-//				if (rs.IsDBNull(14))
 				if (l.CurrentVariant.ExerciseWindowX != 0)
 				{
 					sb.Append("width=650,height=580");
 				}
 				else
 				{
-//					sb.Append("width=" + rs.GetInt32(14) + ",height=" + rs.GetInt32(15));
 					sb.Append("width=" + l.CurrentVariant.ExerciseWindowX + ",height=" + l.CurrentVariant.ExerciseWindowY);
 				}
-//				sb.Append("'));\">" + rs.GetString(17) + (!rs.IsDBNull(18) && rs.GetString(18) != "" ? " (" + rs.GetString(18) + ")" : "") + "</a>");
 				sb.Append("'));\">" + l.CurrentType.TypeName + (l.CurrentType.SubTypeName != "" ? " (" + l.CurrentType.SubTypeName + ")" : "") + "</a>");
 
-//				rExerciseAreaID = rs.GetInt32(4);
 				rExerciseAreaID = l.CurrentArea.Id;
-//				rExerciseID = rs.GetInt32(6);
 				rExerciseID = l.Id;
 				AX++;
 			}
-//			rs.Close();
 
 			if (AX > 0)
 			{
