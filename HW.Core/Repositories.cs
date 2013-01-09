@@ -1413,27 +1413,22 @@ namespace HW.Core
 		
 		public void SaveSponsorAdminDepartment(SponsorAdminDepartment d)
 		{
-			throw new NotImplementedException();
 		}
 		
 		public void UpdateDepartment(Department d)
 		{
-			throw new NotImplementedException();
 		}
 		
 		public void UpdateDepartment2(Department d)
 		{
-			throw new NotImplementedException();
 		}
 		
 		public void UpdateDepartmentBySponsor(int sponsorID)
 		{
-			throw new NotImplementedException();
 		}
 		
 		public void DeleteSponsorAdminDepartment(int sponsorAdminID, int departmentID)
 		{
-			throw new NotImplementedException();
 		}
 		
 		public Department ReadBySponsor(int sponsorID)
@@ -1542,7 +1537,22 @@ namespace HW.Core
 		
 		public IList<SponsorAdminDepartment> b(int sponsorID, int sponsorAdminID)
 		{
-			throw new NotImplementedException();
+			var departments = new List<SponsorAdminDepartment>();
+			var r = new Random();
+			for (int i = 0; i < 10; i++) {
+				var d = new SponsorAdminDepartment {
+					Admin = new SponsorAdmin { SuperUser = false },
+					Department = new Department {
+						Name = "Department " + i,
+						Depth = r.Next(0, 8),
+						Id = i,
+						Siblings = r.Next(0, 8),
+						ShortName = "Short Name " + i
+					}
+				};
+				departments.Add(d);
+			}
+			return departments;
 		}
 	}
 	

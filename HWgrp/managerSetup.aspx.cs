@@ -17,6 +17,10 @@ namespace HWgrp
 		IDepartmentRepository departmentRepository = AppContext.GetRepositoryFactory().CreateDepartmentRepository();
 		IManagerFunctionRepository managerRepository = AppContext.GetRepositoryFactory().CreateManagerFunctionRepository();
 		ISponsorRepository sponsorRepository = AppContext.GetRepositoryFactory().CreateSponsorRepository();
+		
+		bool HasSAID {
+			get { return HttpContext.Current.Request.QueryString["SAID"] != null; }
+		}
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -60,7 +64,7 @@ namespace HWgrp
 					}
 				}
 
-				if (HttpContext.Current.Request.QueryString["SAID"] != null) {
+				if (HasSAID) {
 					int SAID = Convert.ToInt32(HttpContext.Current.Request.QueryString["SAID"]);
 					var a = sponsorRepository.ReadSponsorAdmin(sponsorID, sponsorAdminID, SAID);
 					if (a !=  null) {
@@ -141,8 +145,10 @@ namespace HWgrp
 				foreach (var d in departmentRepository.b(sponsorID, sponsorAdminID)) {
 					if (!d.Admin.SuperUser) {
 						departmentRepository.DeleteSponsorAdminDepartment(sponsorAdminID, d.Department.Id);
-						if (HttpContext.Current.Request.Form["DepartmentID"] != null) {
-							if (("#" + HttpContext.Current.Request.Form["DepartmentID"].ToString().Replace(" ", "").Replace(",", "#") + "#").IndexOf("#" + d.Department.Id + "#") >= 0) {
+						bool hasDepartmentID = HttpContext.Current.Request.Form["DepartmentID"] != null;
+						if (hasDepartmentID) {
+							string departmentID = HttpContext.Current.Request.Form["DepartmentID"];
+							if (("#" + departmentID.Replace(" ", "").Replace(",", "#") + "#").IndexOf("#" + d.Department.Id + "#") >= 0) {
 								var x = new SponsorAdminDepartment {
 									Id = sponsorAdminID,
 									Department = new Department { Id = d.Department.Id }
