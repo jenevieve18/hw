@@ -17,6 +17,7 @@ namespace HWgrp
 {
 	public partial class stats : System.Web.UI.Page
 	{
+		protected IList<ReportPartLanguage> reportParts = null;
 		int sponsorID = 0;
 		ILanguageRepository langRepository = AppContext.GetRepositoryFactory().CreateLanguageRepository();
 		IProjectRepository projRepository = AppContext.GetRepositoryFactory().CreateProjectRepository();
@@ -30,38 +31,31 @@ namespace HWgrp
 		{
 			sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
 			
-			if (sponsorID != 0)
-			{
-				if (!IsPostBack)
-				{
+			if (sponsorID != 0) {
+				if (!IsPostBack) {
 					int pruid = 0;
-					foreach (var l in langRepository.FindBySponsor(sponsorID))
-					{
+					foreach (var l in langRepository.FindBySponsor(sponsorID)) {
 						LangID.Items.Add(new ListItem(l.Language.Name, l.Language.Id.ToString()));
-						if (l.Id == 2)
-						{
+						if (l.Id == 2) {
 							LangID.SelectedValue = l.Language.Id.ToString();
 						}
 						pruid = l.SponsorProjectRoundUnit.ProjectRoundUnit.Id;
 					}
 					
 					int selectedLangID = Convert.ToInt32(LangID.SelectedValue);
-					foreach (var p in sponsorRepository.FindBySponsorAndLanguage(sponsorID, selectedLangID))
-					{
+					foreach (var p in sponsorRepository.FindBySponsorAndLanguage(sponsorID, selectedLangID)) {
 						ProjectRoundUnitID.Items.Add(new ListItem(p.Navigation, p.Id.ToString()));
 					}
 					GroupBy.SelectedValue = "7";
 
-					for (int i = 2005; i <= DateTime.Now.Year; i++)
-					{
+					for (int i = 2005; i <= DateTime.Now.Year; i++) {
 						FromYear.Items.Add(new ListItem(i.ToString(), i.ToString()));
 						ToYear.Items.Add(new ListItem(i.ToString(), i.ToString()));
 					}
 					FromYear.SelectedValue = (DateTime.Now.Year - 1).ToString();
 					ToYear.SelectedValue = DateTime.Now.Year.ToString();
 
-					foreach (var s in sponsorRepository.FindBySponsor(sponsorID))
-					{
+					foreach (var s in sponsorRepository.FindBySponsor(sponsorID)) {
 						BQ.Items.Add(new ListItem(s.Question.Internal, s.Id.ToString()));
 					}
 					BQ.SelectedIndex = 0;
@@ -70,8 +64,7 @@ namespace HWgrp
 				Org.Controls.Add(new LiteralControl("<br><table border='0' cellspacing='0' cellpadding='0' style='border:0;border-collapse:collapse;border-spacing:0'><tr><td colspan='3'>" + HttpContext.Current.Session["Sponsor"] + "</td><tr>"));
 				bool[] DX = new bool[8];
 				int sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
-				foreach (var d in departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID))
-				{
+				foreach (var d in departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID)) {
 					Org.Controls.Add(new LiteralControl("<TR><TD>"));
 					CheckBox O = new CheckBox();
 					O.ID = "DID" + d.Id;
@@ -82,8 +75,7 @@ namespace HWgrp
 					DX[depth] = d.Siblings > 0;
 
 					string img = "";
-					for (int i = 1; i <= depth; i++)
-					{
+					for (int i = 1; i <= depth; i++) {
 						img += string.Format("<img src='img/{0}.gif' width='19' height='20'>", i == depth ? (DX[i] ? "T" : "L") : (DX[i] ? "I" : "null"));
 					}
 					Org.Controls.Add(new LiteralControl("<table border='0' cellspacing='0' cellpadding='0' style='border:0;border-collapse:collapse;border-spacing:0'><tr><td>" + img + "</td><td>" + d.Name + "</td></tr></table>"));
@@ -91,9 +83,7 @@ namespace HWgrp
 					Org.Controls.Add(new LiteralControl("</TD></TR>"));
 				}
 				Org.Controls.Add(new LiteralControl("</TABLE>"));
-			}
-			else
-			{
+			} else {
 				HttpContext.Current.Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
 
@@ -531,8 +521,6 @@ namespace HWgrp
 			}
 			return URL;
 		}
-		
-		protected IList<ReportPartLanguage> reportParts = null;
 		
 		protected string GetReportImageUrl(int id, string URL)
 		{

@@ -29,8 +29,8 @@ namespace HW.Tests.Views
 			foreach (var l in langRepository.FindBySponsor(sponsorID)) {
 				// Add to language combo box
 			}
-			int langID = 1;
-			foreach (var p in sponsorRepository.FindBySponsorAndLanguage(sponsorID, langID)) {
+			int selectedLangID = 1;
+			foreach (var p in sponsorRepository.FindBySponsorAndLanguage(sponsorID, selectedLangID)) {
 				// Add project round unit to combo box
 			}
 			foreach (var s in sponsorRepository.FindBySponsor(sponsorID)) {
