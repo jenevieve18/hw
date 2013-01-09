@@ -822,6 +822,91 @@ namespace HW.Core
 	
 	public class SponsorRepositoryStub : BaseRepositoryStub<Sponsor>, ISponsorRepository
 	{
+		public void SaveSponsorAdminFunction(SponsorAdminFunction f)
+		{
+		}
+		
+		public void SaveSponsorAdmin(SponsorAdmin a)
+		{
+		}
+		
+		public void UpdateSponsorAdmin(SponsorAdmin a)
+		{
+		}
+		
+		public void DeleteSponsorAdmin(int sponsorAdminID)
+		{
+		}
+		
+		public void UpdateSponsorInviteSent(int userID, int sponsorInviteID)
+		{
+		}
+		
+		public void UpdateNullUserForUserInvite(int userID)
+		{
+		}
+		
+		public void UpdateDeletedAdmin(int sponsorID, int sponsorAdminID)
+		{
+		}
+		
+		public void UpdateSponsorLastInviteSent(int sponsorID)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public void UpdateSponsorLastLoginSent(int sponsorID)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public void UpdateSponsorLastInviteReminderSent(int sponsorID)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public void UpdateExtendedSurveyLastEmailSent(int sponsorExtendedSurveyID)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public void UpdateExtendedSurveyLastFinishedSent(int sponsorExtendedSurveyID)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public void UpdateLastAllMessageSent(int sponsorID)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public void UpdateSponsor(Sponsor s)
+		{
+		}
+		
+		public void UpdateSponsorExtendedSurvey(SponsorExtendedSurvey s)
+		{
+		}
+		
+		public void Z(int sponsorInviteID, string previewExtendedSurveys)
+		{
+		}
+		
+		public int CountSentInvitesBySponsor(int sponsorID, DateTime dateSent)
+		{
+			return 10;
+		}
+		
+		public int CountCreatedInvitesBySponsor(int sponsorID, DateTime dateCreated)
+		{
+			return 10;
+		}
+		
+		public bool SponsorAdminExists(int sponsorAdminID, string usr)
+		{
+			return usr == "ian";
+		}
+		
 		public SponsorInvite ReadSponsorInviteByUser(int userID)
 		{
 			return new SponsorInvite {
@@ -864,16 +949,101 @@ namespace HW.Core
 			};
 		}
 		
-		public void UpdateSponsorInviteSent(int userID, int sponsorInviteID)
+		public SponsorAdmin ReadSponsorAdmin(string SKEY, string SAKEY, string SA, string SAID, string ANV, string LOS)
 		{
+			return new SponsorAdmin {
+				Name = ANV,
+				SuperAdmin = false,
+				Sponsor = new Sponsor { Id = 1, Name = ANV },
+				Anonymized = true,
+				SeeUsers = true,
+				ReadOnly = false
+			};
 		}
 		
-		public void UpdateNullUserForUserInvite(int userID)
+		public Sponsor X(int sponsorID)
 		{
+			var s = new Sponsor();
+			s.Name = "test";
+			var u =  new SuperSponsor { Id = 1 };
+			s.SuperSponsor = u;
+			u.Languages = new List<SuperSponsorLanguage>(
+				new SuperSponsorLanguage[] {
+					new SuperSponsorLanguage { Header = "Header 1" }
+				}
+			);
+			return s;
 		}
 		
-		public void Z(int sponsorInviteID, string previewExtendedSurveys)
+		public Sponsor ReadSponsor(int sponsorID)
 		{
+			return new Sponsor {
+				InviteText = "Invite Text",
+				InviteReminderText = "Invite Reminder Text",
+				LoginText = "Login Text",
+				InviteSubject = "Invite Subject",
+				InviteReminderSubject = "Invite Reminder Subject",
+				LoginSubject = "Login Subject",
+				InviteLastSent = DateTime.Now,
+				InviteReminderLastSent = DateTime.Now,
+				LoginLastSent = DateTime.Now,
+				LoginDays = 1,
+				LoginWeekday = 1,
+				AllMessageSubject = "All Message Subject",
+				AllMessageBody = "All Message Body",
+				AllMessageLastSent = DateTime.Now,
+			};
+		}
+		
+		public SponsorAdmin ReadSponsorAdmin(int sponsorAdminID)
+		{
+			return new SponsorAdmin {
+				SuperUser = true
+			};
+		}
+		
+		public SponsorAdmin ReadSponsorAdmin(int sponsorID, int sponsorAdminID, int SAID)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public SponsorAdmin ReadSponsorAdmin2(int sponsorAdminID, string usr)
+		{
+			return new SponsorAdmin {
+				Id = 1
+			};
+		}
+		
+		public SponsorAdmin ReadSponsorAdmin(int sponsorAdminID, string usr)
+		{
+			return new SponsorAdmin {
+				Id = 1
+			};
+		}
+		
+		public SponsorProjectRoundUnit ReadSponsorProjectRoundUnit(int sponsorID)
+		{
+			return new SponsorProjectRoundUnit {
+				Id = 1,
+				Survey = new Survey { Id = 1 }
+			};
+		}
+		
+		public SponsorAdmin ReadSponsorAdmin(int sponsorID, int sponsorAdminID, string password)
+		{
+			return new SponsorAdmin {
+				Id = 1
+			};
+		}
+		
+		public IList<SponsorInvite> FindInvitesBySponsor(int sponsorID, int sponsorAdminID)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public IList<SponsorInvite> FindSentInvitesBySponsor(int sponsorID, int sponsorAdminID)
+		{
+			throw new NotImplementedException();
 		}
 		
 		public IList<SponsorInviteBackgroundQuestion> FindInviteBackgroundQuestionsByUser(int userID)
@@ -991,67 +1161,6 @@ namespace HW.Core
 			return sponsors;
 		}
 		
-		public SponsorAdmin ReadSponsorAdmin(string SKEY, string SAKEY, string SA, string SAID, string ANV, string LOS)
-		{
-			return new SponsorAdmin {
-				Name = ANV,
-				SuperAdmin = false,
-				Sponsor = new Sponsor { Id = 1, Name = ANV },
-				Anonymized = true,
-				SeeUsers = true,
-				ReadOnly = false
-			};
-		}
-		
-		public int CountSentInvitesBySponsor(int sponsorID, DateTime dateSent)
-		{
-			return 10;
-		}
-		
-		public void UpdateDeletedAdmin(int sponsorID, int sponsorAdminID)
-		{
-			throw new NotImplementedException();
-		}
-		
-		public int CountCreatedInvitesBySponsor(int sponsorID, DateTime dateCreated)
-		{
-			return 10;
-		}
-		
-		public Sponsor X(int sponsorID)
-		{
-			var s = new Sponsor();
-			s.Name = "test";
-			var u =  new SuperSponsor { Id = 1 };
-			s.SuperSponsor = u;
-			u.Languages = new List<SuperSponsorLanguage>(
-				new SuperSponsorLanguage[] {
-					new SuperSponsorLanguage { Header = "Header 1" }
-				}
-			);
-			return s;
-		}
-		
-		public Sponsor ReadSponsor(int sponsorID)
-		{
-			return new Sponsor {
-				InviteText = "Invite Text",
-				InviteReminderText = "Invite Reminder Text",
-				LoginText = "Login Text",
-				InviteSubject = "Invite Subject",
-				InviteReminderSubject = "Invite Reminder Subject",
-				LoginSubject = "Login Subject",
-				InviteLastSent = DateTime.Now,
-				InviteReminderLastSent = DateTime.Now,
-				LoginLastSent = DateTime.Now,
-				LoginDays = 1,
-				LoginWeekday = 1,
-				AllMessageSubject = "All Message Subject",
-				AllMessageBody = "All Message Body",
-				AllMessageLastSent = DateTime.Now,
-			};
-		}
-		
 		public IList<SponsorExtendedSurvey> FindExtendedSurveysBySponsorAdmin(int sponsorID, int sponsorAdminID)
 		{
 			var surveys = new List<SponsorExtendedSurvey>();
@@ -1072,104 +1181,6 @@ namespace HW.Core
 			return surveys;
 		}
 		
-		public SponsorProjectRoundUnit ReadSponsorProjectRoundUnit(int sponsorID)
-		{
-			return new SponsorProjectRoundUnit {
-				Id = 1,
-				Survey = new Survey { Id = 1 }
-			};
-		}
-		
-		public SponsorAdmin ReadSponsorAdmin(int sponsorID, int sponsorAdminID, string password)
-		{
-			return new SponsorAdmin {
-				Id = 1
-			};
-		}
-		
-		public void UpdateSponsorLastInviteSent(int sponsorID)
-		{
-			throw new NotImplementedException();
-		}
-		
-		public IList<SponsorInvite> FindInvitesBySponsor(int sponsorID, int sponsorAdminID)
-		{
-			throw new NotImplementedException();
-		}
-		
-		public void UpdateSponsorLastLoginSent(int sponsorID)
-		{
-			throw new NotImplementedException();
-		}
-		
-		public void UpdateSponsorLastInviteReminderSent(int sponsorID)
-		{
-			throw new NotImplementedException();
-		}
-		
-		public void UpdateExtendedSurveyLastEmailSent(int sponsorExtendedSurveyID)
-		{
-			throw new NotImplementedException();
-		}
-		
-		public IList<SponsorInvite> FindSentInvitesBySponsor(int sponsorID, int sponsorAdminID)
-		{
-			throw new NotImplementedException();
-		}
-		
-		public void UpdateExtendedSurveyLastFinishedSent(int sponsorExtendedSurveyID)
-		{
-			throw new NotImplementedException();
-		}
-		
-		public void UpdateLastAllMessageSent(int sponsorID)
-		{
-			throw new NotImplementedException();
-		}
-		
-		public void UpdateSponsor(Sponsor s)
-		{
-		}
-		
-		public void UpdateSponsorExtendedSurvey(SponsorExtendedSurvey s)
-		{
-		}
-		
-		public SponsorAdmin ReadSponsorAdmin(int sponsorAdminID)
-		{
-			return new SponsorAdmin {
-				SuperUser = true
-			};
-		}
-		
-		public SponsorAdmin ReadSponsorAdmin(int sponsorID, int sponsorAdminID, int SAID)
-		{
-			throw new NotImplementedException();
-		}
-		
-		public SponsorAdmin ReadSponsorAdmin2(int sponsorAdminID, string usr)
-		{
-			return new SponsorAdmin {
-				Id = 1
-			};
-		}
-		
-		public SponsorAdmin ReadSponsorAdmin(int sponsorAdminID, string usr)
-		{
-			return new SponsorAdmin {
-				Id = 1
-			};
-		}
-		
-		public void UpdateSponsorAdmin(SponsorAdmin a)
-		{
-			throw new NotImplementedException();
-		}
-		
-		public void SaveSponsorAdmin(SponsorAdmin a)
-		{
-		}
-		
 		public IList<SponsorAdminDepartment> FindAdminDepartmentBySponsorAdmin(int sponsorAdminID)
 		{
 			throw new NotImplementedException();
@@ -1178,21 +1189,6 @@ namespace HW.Core
 		public IList<SponsorAdminFunction> FindAdminFunctionBySponsorAdmin(int sponsorAdminID)
 		{
 			throw new NotImplementedException();
-		}
-		
-		public void DeleteSponsorAdmin(int sponsorAdminID)
-		{
-			throw new NotImplementedException();
-		}
-		
-		public void SaveSponsorAdminFunction(SponsorAdminFunction f)
-		{
-			throw new NotImplementedException();
-		}
-		
-		public bool SponsorAdminExists(int sponsorAdminID, string usr)
-		{
-			return usr == "ian";
 		}
 	}
 	

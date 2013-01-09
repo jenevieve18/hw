@@ -1992,7 +1992,8 @@ AND sad.SponsorAdminID = {0} ",
 FROM Department d ";
 			
 			string query = string.Format(
-				@"SELECT d.DepartmentID,
+				@"
+SELECT d.DepartmentID,
 	{1}
 WHERE d.SponsorID = {0}",
 				sponsorID,
