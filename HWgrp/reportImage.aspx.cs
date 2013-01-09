@@ -1,4 +1,10 @@
-﻿using System;
+﻿//	<file>
+//		<license></license>
+//		<owner name="Jens Pettersson" email=""/>
+//		<owner name="Ian Escarro" email="ian.escarro@gmail.com"/>
+//	</file>
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
