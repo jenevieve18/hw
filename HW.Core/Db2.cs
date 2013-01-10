@@ -170,7 +170,7 @@ public class Db2
 				sb.Append("HealthWatch.se");
 //				if (!r.IsDBNull(2) && r.GetString(0).Replace(" ", "").IndexOf(r.GetString(2).Replace(" ", "")) < 0)
 				var l = s.SuperSponsor.Languages[0];
-				if (l != null && s.Name.Replace(" ", "").IndexOf(l.Header.Replace(" ", "")) < 0)
+				if (l != null && l.Header != null && s.Name.Replace(" ", "").IndexOf(l.Header.Replace(" ", "")) < 0)
 				{
 //					sb.Append(" - " + r.GetString(2));
 					sb.Append(" - " + l.Header);

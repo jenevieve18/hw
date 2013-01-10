@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-# SharpDevelop 4.3
+# SharpDevelop 4.2.0.8774-RC
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW.Core", "HW.Core\HW.Core.csproj", "{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW.Tests", "HW.Tests\HW.Tests.csproj", "{561534C3-E27C-4F5D-A9E6-A14A7F01EC20}"

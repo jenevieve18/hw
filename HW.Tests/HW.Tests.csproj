@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>HW.Tests</RootNamespace>
     <AssemblyName>HW.Tests</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\ie185004\Application Data\ICSharpCode/SharpDevelop4\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
@@ -15,6 +15,7 @@
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <RunSourceAnalysis>False</RunSourceAnalysis>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -40,8 +41,8 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NUnit.Framework">
-      <HintPath>..\NUnit.Framework.dll</HintPath>
+    <Reference Include="nunit.framework">
+      <HintPath>..\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -91,6 +92,10 @@
     <ProjectReference Include="..\HW.Core\HW.Core.csproj">
       <Project>{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}</Project>
       <Name>HW.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HWgrp\HWgrp.csproj">
+      <Project>{1DD98AAE-98D7-4D4D-B013-BF656BAC11CA}</Project>
+      <Name>HWgrp</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

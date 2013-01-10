@@ -5,7 +5,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Web;
 using HW.Core;
+using HWgrp;
 using NUnit.Framework;
 
 namespace HW.Tests.Views
@@ -13,21 +15,26 @@ namespace HW.Tests.Views
 	[TestFixture]
 	public class DefaultTests
 	{
-		SqlSponsorRepository sponsorRepository;
-		SqlManagerFunctionRepository functionRepository;
+		Default p;
 		
 		[SetUp]
 		public void Setup()
 		{
-			sponsorRepository = new SqlSponsorRepository();
-			functionRepository = new SqlManagerFunctionRepository();
+			AppContext.SetRepositoryFactory(new SqlRepositoryFactory());
+			p = new Default();
 		}
 		
 		[Test]
 		public void TestLogin()
 		{
-			SponsorAdmin s = sponsorRepository.ReadSponsorAdmin(null, null, null, "", "Usr188", "Pas188");
-			ManagerFunction f = functionRepository.ReadFirstFunctionBySponsorAdmin(s.Id);
+			p.Login(null, null, null, "", "Usr1", "Pas1");
+		}
+		
+		[Test]
+		[Ignore("Can't test session for now. Prolly in the future.")]
+		public void TestLogout()
+		{
+			p.Logout();
 		}
 	}
 }

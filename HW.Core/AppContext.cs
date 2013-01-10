@@ -4,10 +4,12 @@
 //	</file>
 
 using System;
+using System.Web;
+using System.Web.SessionState;
 
 namespace HW.Core
 {
-	public class AppContext
+	public static class AppContext
 	{
 		static IRepositoryFactory repositoryFactory;
 		

@@ -12,8 +12,8 @@ namespace HWgrp
 	{
 		protected void Application_Start(object sender, EventArgs e)
 		{
-			AppContext.SetRepositoryFactory(new RepositoryFactoryStub());
-//			AppContext.SetRepositoryFactory(new SqlRepositoryFactory());
+//			AppContext.SetRepositoryFactory(new RepositoryFactoryStub());
+			AppContext.SetRepositoryFactory(new SqlRepositoryFactory());
 		}
 
 		protected void Session_Start(object sender, EventArgs e)

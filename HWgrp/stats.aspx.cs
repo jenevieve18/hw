@@ -61,16 +61,20 @@ namespace HWgrp
 					BQ.SelectedIndex = 0;
 				}
 
-				Org.Controls.Add(new LiteralControl("<br><table border='0' cellspacing='0' cellpadding='0' style='border:0;border-collapse:collapse;border-spacing:0'><tr><td colspan='3'>" + HttpContext.Current.Session["Sponsor"] + "</td><tr>"));
+				Org.Controls.Add(new LiteralControl("<br>"));
+				Org.Controls.Add(new LiteralControl("<table border='0' cellspacing='0' cellpadding='0' style='border:0;border-collapse:collapse;border-spacing:0'><tr><td colspan='3'>" + HttpContext.Current.Session["Sponsor"] + "</td><tr>"));
 				bool[] DX = new bool[8];
 				int sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 				foreach (var d in departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID)) {
-					Org.Controls.Add(new LiteralControl("<TR><TD>"));
+					Org.Controls.Add(new LiteralControl("<tr>"));
+					Org.Controls.Add(new LiteralControl("<td>"));
 					CheckBox O = new CheckBox();
 					O.ID = "DID" + d.Id;
 					Org.Controls.Add(O);
-					Org.Controls.Add(new LiteralControl("</td><td>" + d.Name + "</td><td>"));
-
+					Org.Controls.Add(new LiteralControl("</td>"));
+					Org.Controls.Add(new LiteralControl("<td>" + d.Name + "</td>"));
+					
+					Org.Controls.Add(new LiteralControl("<td>"));
 					int depth = d.Depth;
 					DX[depth] = d.Siblings > 0;
 
@@ -79,10 +83,10 @@ namespace HWgrp
 						img += string.Format("<img src='img/{0}.gif' width='19' height='20'>", i == depth ? (DX[i] ? "T" : "L") : (DX[i] ? "I" : "null"));
 					}
 					Org.Controls.Add(new LiteralControl("<table border='0' cellspacing='0' cellpadding='0' style='border:0;border-collapse:collapse;border-spacing:0'><tr><td>" + img + "</td><td>" + d.Name + "</td></tr></table>"));
-
-					Org.Controls.Add(new LiteralControl("</TD></TR>"));
+					Org.Controls.Add(new LiteralControl("</td>"));
+					Org.Controls.Add(new LiteralControl("</tr>"));
 				}
-				Org.Controls.Add(new LiteralControl("</TABLE>"));
+				Org.Controls.Add(new LiteralControl("</table>"));
 			} else {
 				HttpContext.Current.Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}

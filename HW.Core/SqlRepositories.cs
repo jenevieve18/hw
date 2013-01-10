@@ -1937,8 +1937,8 @@ WHERE SponsorID = {0} ORDER BY DepartmentID DESC",
 		{
 			string query = string.Format(
 				@"
-SELECT dbo.cf_departmentTree(d.DepartmentID,' » ') 
-FROM Department d 
+SELECT dbo.cf_departmentTree(d.DepartmentID,' » ')
+FROM Department d
 WHERE d.DepartmentID = {0}",
 				id
 			);
@@ -3297,17 +3297,17 @@ WHERE s.SponsorID = {0}",
 				if (rs.Read()) {
 					var s = new Sponsor();
 					s.Name = GetString(rs, 0);
-					if (!rs.IsDBNull(1)) {
-						var u =  new SuperSponsor { Id = rs.GetInt32(1) };
-						s.SuperSponsor = u;
-						if (!rs.IsDBNull(2)) {
-							u.Languages = new List<SuperSponsorLanguage>(
-								new SuperSponsorLanguage[] {
-									new SuperSponsorLanguage { Header = GetString(rs, 2) }
-								}
-							);
+//					if (!rs.IsDBNull(1)) {
+					var u = new SuperSponsor { Id = GetInt32(rs, 1) }; //rs.GetInt32(1) };
+					s.SuperSponsor = u;
+//					if (!rs.IsDBNull(2)) {
+					u.Languages = new List<SuperSponsorLanguage>(
+						new SuperSponsorLanguage[] {
+							new SuperSponsorLanguage { Header = GetString(rs, 2) }
 						}
-					}
+					);
+//					}
+//					}
 					return s;
 				}
 			}
@@ -3539,8 +3539,8 @@ FROM Sponsor s
 					var a = new SponsorAdmin {
 						Id = GetInt32(rs, 1),
 						Sponsor = new Sponsor { Id = GetInt32(rs, 0), Name = GetString(rs, 2) },
-						Anonymized = GetBoolean(rs, 3),
-						SeeUsers = GetBoolean(rs, 4),
+						Anonymized = GetInt32(rs, 3) == 1, //GetBoolean(rs, 3),
+						SeeUsers = GetInt32(rs, 4) == 1, //GetBoolean(rs, 4),
 						SuperAdmin = GetInt32(rs, 5) == 1, // FIXME: Is this really boolean?
 						ReadOnly = GetBoolean(rs, 6),
 						Name = GetString(rs, 7)

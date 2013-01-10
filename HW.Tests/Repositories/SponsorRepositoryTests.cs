@@ -182,7 +182,7 @@ namespace HW.Tests.Repositories
 		{
 			r.ReadSponsorAdmin(1, 1, "");
 			r.ReadSponsorAdmin(1, "");
-			r.ReadSponsorAdmin(null, null, null, "", "Username1", "Pass1");
+			r.ReadSponsorAdmin(null, null, null, "", "Usr5", "Pas5");
 			r.ReadSponsorAdmin(1);
 			r.ReadSponsorAdmin(1, 1, 1);
 		}
@@ -208,6 +208,7 @@ namespace HW.Tests.Repositories
 		[Test]
 		public void TestX()
 		{
+			var x = r.X(5);
 //			var s = r.X(1);
 			string s = "test";
 			string h = "test";
