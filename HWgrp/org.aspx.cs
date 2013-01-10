@@ -1290,6 +1290,7 @@ namespace HWgrp
 			int[] ESanswerCount = new int[EScount];
 
 			OrgTree.Text = "";
+			OrgTree.Text += "<br>";
 
 			if (showDepartmentID != 0)
 			{
