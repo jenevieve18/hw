@@ -3,7 +3,27 @@
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
-   <%=Db.header()%>
+    <%=Db.header()%>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(document).bind('click', function (e) {
+                var $clicked = $(e.target);
+                if (!$clicked.parents().hasClass("dropdown")) {
+                    $(".dropdown dd ul").hide();
+                    $(".activated").removeClass("activated")
+                }
+            });
+        });
+        function xxx(plot, img, imgUrl) {
+            var r = document.getElementsByName(plot);
+            for (var i = 0; i < r.length; i++) {
+                if (r[i].checked) {
+                    //alert("Selected item value " + r[i].value);
+                    document.getElementById(img).src = imgUrl + "&Plot=" + r[i].value;
+                }
+            }
+        }
+    </script>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
 <!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
@@ -11,7 +31,7 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
     <form id="Form1" method="post" runat="server">
-		<div class="container_16" id="admin">
+        <div class="container_16" id="admin">
 		<%=Db2.nav()%>
             <div class="contentgroup grid_16">
                 <div id="contextbar">
@@ -46,8 +66,8 @@
                         <asp:Button ID="Execute" CssClass="btn" runat=server Text="Execute" />
 			        </div>
                 </div>
-        		<!--<asp:Label ID=StatsImg runat=server />-->
-                <% if (reportParts != null) { %>
+        		<asp:Label ID=StatsImg runat=server />
+                <!--<% if (reportParts != null) { %>
                     <% int cx = 0; %>
                     <% string URL = GetURL(Convert.ToInt32(Grouping.SelectedValue)); %>
                     <% foreach (var r in reportParts) { %>
@@ -66,7 +86,6 @@
                             <tr><td><%= r.Header.Replace("\r", "").Replace("\n", "<br>") %></td></tr>
                             <tr>
                                 <td>
-                                    <!--<img src="reportImage.aspx?LangID=1&amp;FY=2011&amp;TY=2012&amp;SAID=0&amp;SID=1&amp;Anonymized=1&amp;STDEV=0&amp;GB=7&amp;RPID=0&amp;PRUID=1&amp;GID=0&amp;GRPNG=1" />-->
                                     <img src="<%= GetReportImageUrl(r.Id, URL) %>"/>
                                 </td>
                             </tr>
@@ -74,7 +93,7 @@
                         </table>
                         <% cx++; %>
                     <% } %>
-                <% } %>
+                <% } %>-->
             </div><!-- end .contentgroup	-->
         </div> <!-- end .container_12 -->
 	</form>

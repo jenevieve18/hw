@@ -108,6 +108,8 @@ namespace HW.Core
 		
 		IList<Answer> FindByQuestionAndOptionJoinedAndGrouped(string join, string groupBy, int questionID, int optionID, int yearFrom, int yearTo);
 		
+		IList<Answer> FindByQuestionAndOptionJoinedAndGrouped2(string join, string groupBy, int questionID, int optionID, int yearFrom, int yearTo);
+		
 		Answer ReadByKey(string key);
 		
 		int CountByValueWithDateOptionAndQuestion(int val, int yearFrom, int yearTo, int optionID, int questionID, string sortString);
@@ -796,7 +798,7 @@ namespace HW.Core
 	{
 		public ManagerFunctionRepositoryStub()
 		{
-			Data.Add(new ManagerFunction { URL = "org.aspx", Function = "Organization", Expl = "Organization" });
+//			Data.Add(new ManagerFunction { URL = "org.aspx", Function = "Organization", Expl = "Organization" });
 			Data.Add(new ManagerFunction { URL = "stats.aspx", Function = "Statistics", Expl = "Statistics" });
 			Data.Add(new ManagerFunction { URL = "messages.aspx", Function = "Messages", Expl = "Messages" });
 			Data.Add(new ManagerFunction { URL = "managers.aspx", Function = "Managers", Expl = "Managers" });
@@ -1278,18 +1280,22 @@ namespace HW.Core
 		
 		public IList<Answer> FindByQuestionAndOptionJoinedAndGrouped(string @join, string groupBy, int questionID, int optionID, int yearFrom, int yearTo)
 		{
-//			var answers = new List<Answer>();
-//			for (int i = 0; i < 10; i++) {
-//				var a = new Answer {
-//					SomeInteger = 1,
-//					AverageV = r.Next(0, 100),
-//					CountV = 10,
-//					StandardDeviation = 11.3f
-//				};
-//				answers.Add(a);
-//			}
-//			x += 2;
-//			return answers;
+			var answers = new List<Answer>();
+			for (int i = 0; i < 10; i++) {
+				var a = new Answer {
+					SomeInteger = 1,
+					AverageV = r.Next(0, 100),
+					CountV = 10,
+					StandardDeviation = 11.3f
+				};
+				answers.Add(a);
+			}
+			x += 2;
+			return answers;
+		}
+		
+		public IList<Answer> FindByQuestionAndOptionJoinedAndGrouped2(string @join, string groupBy, int questionID, int optionID, int yearFrom, int yearTo)
+		{
 			var answers = new List<Answer>();
 			for (int i = 0; i < 1; i++) {
 				var a = new Answer {
@@ -1307,26 +1313,6 @@ namespace HW.Core
 			x += 2;
 			return answers;
 		}
-		
-//		public IList<Answer> FindByQuestionAndOptionJoinedAndGrouped2(string @join, string groupBy, int questionID, int optionID, int yearFrom, int yearTo)
-//		{
-//			var answers = new List<Answer>();
-//			for (int i = 0; i < 1; i++) {
-//				var a = new Answer {
-//					SomeInteger = 1,
-//					AverageV = r.Next(0, 100),
-//					CountV = 10,
-//					StandardDeviation = 11.3f
-//				};
-//				a.Values = new List<AnswerValue>();
-//				for (int j = 0; j < 10; j++) {
-//					a.Values.Add(new AnswerValue { ValueDecimal = r.Next(0, 100) });
-//				}
-//				answers.Add(a);
-//			}
-//			x += 2;
-//			return answers;
-//		}
 		
 		public Answer ReadByKey(string key)
 		{

@@ -945,6 +945,50 @@ ORDER BY tmp.DT",
 			return answers;
 		}
 		
+		public IList<Answer> FindByQuestionAndOptionJoinedAndGrouped2(string join, string groupBy, int questionID, int optionID, int yearFrom, int yearTo)
+		{
+			string query = string.Format(
+				@"
+SELECT tmp.DT,
+	AVG(tmp.V),
+	COUNT(tmp.V),
+	STDEV(tmp.V)
+FROM (
+	SELECT {1}(a.EndDT) AS DT, AVG(av.ValueInt) AS V
+	FROM Answer a
+	{0}
+	INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID
+		AND av.QuestionID = {2}
+		AND av.OptionID = {3}
+	WHERE a.EndDT IS NOT NULL
+	{4}
+	{5}
+	GROUP BY a.ProjectRoundUserID, {1}(a.EndDT)
+) tmp
+GROUP BY tmp.DT
+ORDER BY tmp.DT",
+				join,
+				groupBy,
+				questionID,
+				optionID,
+				yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
+				yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : ""
+			);
+			var answers = new List<Answer>();
+			using (SqlDataReader rs = Db.rs(query, "eFormSqlconnection")) {
+				while (rs.Read()) {
+					var a = new Answer {
+						SomeInteger = rs.GetInt32(0),
+						AverageV = rs.GetInt32(1),
+						CountV = rs.GetInt32(2),
+						StandardDeviation = rs.GetFloat(3)
+					};
+					answers.Add(a);
+				}
+			}
+			return answers;
+		}
+		
 		public IList<Answer> FindByQuestionAndOptionGrouped(string groupBy, int questionID, int optionID, int yearFrom, int yearTo, string sortString)
 		{
 			string query = string.Format(
