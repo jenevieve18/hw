@@ -27,13 +27,13 @@ namespace HW.Tests.Repositories
 		}
 		
 		[Test]
-		public void TestFindBySponsorAdmin2()
+		public void TestFindBySponsorAdmin()
 		{
-			r.FindBySponsorAdmin2(742);
+			r.FindBySponsorAdmin(5);
 		}
 		
 		[Test]
-		public void TestFindBySponsorAdmin()
+		public void TestReadFirstFunctionBySponsorAdmin()
 		{
 			r.ReadFirstFunctionBySponsorAdmin(742);
 		}

@@ -132,8 +132,8 @@ namespace HWgrp
 					{
 						if (!IsPostBack)
 						{
-							ExtendedSurvey.Text = ExtendedSurvey.Text.Replace("[x]", "Period: " + (u.Started ==  null ? "?" : u.Started.Value.ToString("yyyy-MM-dd")) + "--" + (u.Closed != null ? "?" : u.Closed.Value.ToString("yyyy-MM-dd")) + ", ");
-							ExtendedSurveyFinished.Text = ExtendedSurveyFinished.Text.Replace("[x]", "Period: " + (u.Started != null ? "?" : u.Started.Value.ToString("yyyy-MM-dd")) + "--" + (u.Closed != null ? "?" : u.Closed.Value.ToString("yyyy-MM-dd")) + ", ");
+							ExtendedSurvey.Text = ExtendedSurvey.Text.Replace("[x]", "Period: " + (u.Started ==  null ? "?" : u.Started.Value.ToString("yyyy-MM-dd")) + "--" + (u.Closed == null ? "?" : u.Closed.Value.ToString("yyyy-MM-dd")) + ", ");
+							ExtendedSurveyFinished.Text = ExtendedSurveyFinished.Text.Replace("[x]", "Period: " + (u.Started == null ? "?" : u.Started.Value.ToString("yyyy-MM-dd")) + "--" + (u.Closed == null ? "?" : u.Closed.Value.ToString("yyyy-MM-dd")) + ", ");
 						}
 						if (
 							//!rs.IsDBNull(0) && rs.GetDateTime(0) <= DateTime.Now

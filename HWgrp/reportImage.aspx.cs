@@ -148,7 +148,7 @@ namespace HWgrp
 			int pl = 0;
 			ExtendedGraph g = null;
 
-			int steps = 0;
+//			int steps = 0;
 			int GB = (HttpContext.Current.Request.QueryString["GB"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["GB"].ToString()) : 0);
 			bool stdev = (HttpContext.Current.Request.QueryString["STDEV"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["STDEV"]) == 1 : false);
 			string groupBy = "";

@@ -1627,7 +1627,7 @@ et.ExerciseTypeSortOrder ASC",
 				while (rs.Read()) {
 					var e = new Exercise(); // TODO: Get exercise values!
 					e.Id = rs.GetInt32(6);
-					e.Image = rs.GetString(5);
+					e.Image = GetString(rs, 5);
 					e.CurrentLanguage = new ExerciseLanguage {
 						IsNew = rs.GetBoolean(0),
 						ExerciseName = rs.GetString(8),
@@ -1639,19 +1639,19 @@ et.ExerciseTypeSortOrder ASC",
 						AreaName = rs.GetString(3)
 					};
 					e.CurrentVariant = new ExerciseVariantLanguage {
-						Id = rs.GetInt32(2),
-						File = rs.GetString(11),
-						Size = rs.GetInt32(12),
-						Content = rs.GetString(13),
-						ExerciseWindowX = rs.GetInt32(14),
-						ExerciseWindowY = rs.GetInt32(15)
+						Id = GetInt32(rs, 2),
+						File = GetString(rs, 11),
+						Size = GetInt32(rs, 12),
+						Content = GetString(rs, 13),
+						ExerciseWindowX = GetInt32(rs, 14),
+						ExerciseWindowY = GetInt32(rs, 15)
 					};
 					e.CurrentType = new ExerciseTypeLanguage {
-						TypeName = rs.GetString(17),
-						SubTypeName = rs.GetString(18)
+						TypeName = GetString(rs, 17),
+						SubTypeName = GetString(rs, 18)
 					};
 					e.CurrentCategory = new ExerciseCategoryLanguage {
-						CategoryName = rs.GetString(19)
+						CategoryName = GetString(rs, 19)
 					};
 					exercises.Add(e);
 				}
@@ -1833,11 +1833,53 @@ FROM ManagerFunction AS mf {0}",
 			return functions;
 		}
 		
-		public IList<ManagerFunction> FindBySponsorAdmin2(int sponsorAdminID)
+//		public IList<ManagerFunction> FindBySponsorAdmin2(int sponsorAdminID)
+//		{
+//			string query = string.Format(
+//				@"
+		//SELECT mf.ManagerFunction
+		//FROM SponsorAdminFunction saf
+		//INNER JOIN ManagerFunction mf ON saf.ManagerFunctionID = mf.ManagerFunctionID
+		//WHERE saf.SponsorAdminID = {0}
+		//ORDER BY mf.ManagerFunctionID",
+//				sponsorAdminID
+//			);
+//			var functions = new List<ManagerFunction>();
+//			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+//				while (rs.Read()) {
+//					var f = new ManagerFunction { Function = rs.GetString(0) };
+//					functions.Add(f);
+//				}
+//			}
+//			return functions;
+//		}
+		
+		public IList<ManagerFunction> FindBySponsorAdmin(int sponsorAdminID)
 		{
+//			string query = string.Format(
+//				@"
+			//SELECT TOP (1) mf.ManagerFunction,
+//	mf.URL,
+//	mf.Expl
+			//FROM ManagerFunction AS mf {0}",
+//				sponsorAdminID != -1 ? "INNER JOIN SponsorAdminFunction AS s ON s.ManagerFunctionID = mf.ManagerFunctionID WHERE s.SponsorAdminID = " + sponsorAdminID : ""
+//			);
+//			var functions = new List<ManagerFunction>();
+//			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+//				while (rs.Read()) {
+//					var f = new ManagerFunction();
+//					f.Function = rs.GetString(0);
+//					f.URL = rs.GetString(1);
+//					f.Expl = rs.GetString(2);
+//					functions.Add(f);
+//				}
+//			}
+//			return functions;
 			string query = string.Format(
 				@"
-SELECT mf.ManagerFunction
+SELECT mf.ManagerFunction,
+mf.URL,
+mf.Expl
 FROM SponsorAdminFunction saf
 INNER JOIN ManagerFunction mf ON saf.ManagerFunctionID = mf.ManagerFunctionID
 WHERE saf.SponsorAdminID = {0}
@@ -1847,30 +1889,11 @@ ORDER BY mf.ManagerFunctionID",
 			var functions = new List<ManagerFunction>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
-					var f = new ManagerFunction { Function = rs.GetString(0) };
-					functions.Add(f);
-				}
-			}
-			return functions;
-		}
-		
-		public IList<ManagerFunction> FindBySponsorAdmin(int sponsorAdminID)
-		{
-			string query = string.Format(
-				@"
-SELECT TOP (1) mf.ManagerFunction,
-	mf.URL,
-	mf.Expl
-FROM ManagerFunction AS mf {0}",
-				sponsorAdminID != -1 ? "INNER JOIN SponsorAdminFunction AS s ON s.ManagerFunctionID = mf.ManagerFunctionID WHERE s.SponsorAdminID = " + sponsorAdminID : ""
-			);
-			var functions = new List<ManagerFunction>();
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				while (rs.Read()) {
-					var f = new ManagerFunction();
-					f.Function = rs.GetString(0);
-					f.URL = rs.GetString(1);
-					f.Expl = rs.GetString(2);
+					var f = new ManagerFunction {
+						Function = rs.GetString(0),
+						URL = rs.GetString(1),
+						Expl = rs.GetString(2)
+					};
 					functions.Add(f);
 				}
 			}
@@ -2125,7 +2148,7 @@ ORDER BY d.SortString",
 			var departments = new List<Department>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
-					var d = new Department { };
+					var d = new Department { Id = rs.GetInt32(0) };
 					departments.Add(d);
 				}
 			}
