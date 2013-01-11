@@ -1818,7 +1818,10 @@ FROM ManagerFunction AS mf {0}",
 		
 		public override IList<ManagerFunction> FindAll()
 		{
-			string query = "SELECT ManagerFunctionID, ManagerFunction, Expl FROM ManagerFunction";
+			string query = string.Format(
+				@"
+SELECT ManagerFunctionID, ManagerFunction, Expl FROM ManagerFunction"
+			);
 			var functions = new List<ManagerFunction>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
@@ -1833,48 +1836,8 @@ FROM ManagerFunction AS mf {0}",
 			return functions;
 		}
 		
-//		public IList<ManagerFunction> FindBySponsorAdmin2(int sponsorAdminID)
-//		{
-//			string query = string.Format(
-//				@"
-		//SELECT mf.ManagerFunction
-		//FROM SponsorAdminFunction saf
-		//INNER JOIN ManagerFunction mf ON saf.ManagerFunctionID = mf.ManagerFunctionID
-		//WHERE saf.SponsorAdminID = {0}
-		//ORDER BY mf.ManagerFunctionID",
-//				sponsorAdminID
-//			);
-//			var functions = new List<ManagerFunction>();
-//			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-//				while (rs.Read()) {
-//					var f = new ManagerFunction { Function = rs.GetString(0) };
-//					functions.Add(f);
-//				}
-//			}
-//			return functions;
-//		}
-		
 		public IList<ManagerFunction> FindBySponsorAdmin(int sponsorAdminID)
 		{
-//			string query = string.Format(
-//				@"
-			//SELECT TOP (1) mf.ManagerFunction,
-//	mf.URL,
-//	mf.Expl
-			//FROM ManagerFunction AS mf {0}",
-//				sponsorAdminID != -1 ? "INNER JOIN SponsorAdminFunction AS s ON s.ManagerFunctionID = mf.ManagerFunctionID WHERE s.SponsorAdminID = " + sponsorAdminID : ""
-//			);
-//			var functions = new List<ManagerFunction>();
-//			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-//				while (rs.Read()) {
-//					var f = new ManagerFunction();
-//					f.Function = rs.GetString(0);
-//					f.URL = rs.GetString(1);
-//					f.Expl = rs.GetString(2);
-//					functions.Add(f);
-//				}
-//			}
-//			return functions;
 			string query = string.Format(
 				@"
 SELECT mf.ManagerFunction,
