@@ -94,43 +94,6 @@ namespace HWgrp
 
 			Execute.Click += new EventHandler(Execute_Click);
 		}
-		
-		class IHGHtmlTableRow : HtmlTableRow
-		{
-			public IHGHtmlTableRow(params HtmlTableCell[] cells)
-			{
-				foreach (var c in cells) {
-					Cells.Add(c);
-				}
-			}
-		}
-		
-		class IHGHtmlTableCell : HtmlTableCell
-		{
-			public IHGHtmlTableCell(string text)
-			{
-				InnerText = text;
-			}
-			
-			public IHGHtmlTableCell(params Control[] cc)
-			{
-				foreach (var c in cc) {
-					Controls.Add(c);
-				}
-			}
-		}
-		
-		class IHGRadioButtonList : RadioButtonList
-		{
-			public IHGRadioButtonList(params string[] texts)
-			{
-				RepeatDirection = RepeatDirection.Horizontal;
-                RepeatLayout = RepeatLayout.Flow;
-				foreach (string t in texts) {
-					Items.Add(new ListItem(t));
-				}
-			}
-		}
 
 		void Execute_Click(object sender, EventArgs e)
 		{

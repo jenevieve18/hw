@@ -61,6 +61,7 @@
     <Compile Include="AppContext.cs" />
     <Compile Include="EFormModels.cs" />
     <Compile Include="HealthWatchNewsModels.cs" />
+    <Compile Include="HtmlControls.cs" />
     <Compile Include="HWList.cs" />
     <Compile Include="Repositories.cs" />
     <Compile Include="Quantizer.cs" />
