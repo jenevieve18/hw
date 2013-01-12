@@ -410,8 +410,10 @@ namespace HWgrp
 					g = new ExtendedGraph(895, 440, "#FFFFFF");
 
 					if (HttpContext.Current.Request.QueryString["Plot"] != null && HttpContext.Current.Request.QueryString["Plot"] == "BoxPlot") {
+						g.Type = new BoxPlotGraphType();
 						ForBoxPlot(g, stdev, rac, langID, GB, GRPNG, SPONS, SID, PRUID, GID, groupBy, fy, ty, sortString, cx, minDT, maxDT, rpid);
 					} else {
+						g.Type = new LineGraphType(stdev);
 						ForLineChart(g, stdev, rac, langID, GB, GRPNG, SPONS, SID, PRUID, GID, groupBy, fy, ty, sortString, cx, minDT, maxDT, rpid);
 					}
 				}
@@ -450,7 +452,6 @@ namespace HWgrp
 			g.SetMinMaxes(minMaxes);
 			g.DrawBackgroundFromIndexes(indexes);
 			g.DrawComputingSteps(HttpContext.Current.Request.QueryString["DISABLED"], cx);
-			g.Type = new LineGraphType(stdev);
 
 			cx = 0;
 			
@@ -523,27 +524,15 @@ namespace HWgrp
 			} else {
 				int bx = 0;
 				foreach (var c in reportRepository.FindComponentsByPartAndLanguage2(rpid, langID)) {
-					if (bx == 0) {
-						explanations.Add(
-							new Explanation {
-								Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (IsStandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
-								Color = bx + 4,
-								Right = false,
-								Box = true,
-								HasAxis = false
-							}
-						);
-					} else {
-						explanations.Add(
-							new Explanation {
-								Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (IsStandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
-								Color = bx + 4,
-								Right = true,
-								Box = false,
-								HasAxis = true
-							}
-						);
-					}
+					explanations.Add(
+						new Explanation {
+							Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (IsStandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+							Color = bx + 4,
+							Right = bx == 0 ? false : true,
+							Box = bx == 0 ? true : false,
+							HasAxis = bx == 0 ? false : true
+						}
+					);
 					cx = 1;
 					int lastDT = minDT - 1;
 					Series s = new Series { Color = bx + 4 };
@@ -596,7 +585,6 @@ namespace HWgrp
 			g.SetMinMaxes(minMaxes);
 			g.DrawBackgroundFromIndexes(indexes);
 			g.DrawComputingSteps(HttpContext.Current.Request.QueryString["DISABLED"], cx);
-			g.Type = new BoxPlotGraphType();
 
 			cx = 0;
 			
@@ -646,7 +634,6 @@ namespace HWgrp
 								Y = 20 + (int)Math.Floor((double)bx / breaker) * 15
 							}
 						);
-//						cx = 1;
 						int lastDT = minDT - 1;
 						Series s = new Series { Color = bx + 4 };
 						foreach (var a in answerRepository.FindByQuestionAndOptionJoinedAndGrouped2(join[i].ToString(), groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty)) {
@@ -654,28 +641,13 @@ namespace HWgrp
 								lastDT++;
 								cx++;
 							}
-//							if (a.CountV >= rac) {
-//								if (COUNT == 1) {
-//									g.DrawBottomString(GB, a.SomeInteger, cx, (COUNT == 1 ? ", n = " + a.CountV : ""));
-//								}
 							List<double> n = new List<double>();
 							foreach (var v in a.Values) {
 								n.Add((double)v.ValueDecimal);
 							}
 							HWList l = new HWList(n);
-							s.Points.Add(
-								new PointV {
-									X = cx,
-									Y = (float)l.Median,
-									UpperWhisker = l.UpperWhisker,
-									LowerWhisker = l.LowerWhisker,
-									UpperBox = l.UpperBox,
-									LowerBox = l.LowerBox
-								}
-							);
-//							}
+							s.Points.Add(new PointV { X = cx, Y = (float)l.Median, UpperWhisker = l.UpperWhisker, LowerWhisker = l.LowerWhisker, UpperBox = l.UpperBox, LowerBox = l.LowerBox });
 							lastDT = a.SomeInteger;
-//							cx++;
 						}
 						g.Series.Add(s);
 						bx++;
@@ -685,27 +657,15 @@ namespace HWgrp
 			} else {
 				int bx = 0;
 				foreach (var c in reportRepository.FindComponentsByPartAndLanguage2(rpid, langID)) {
-					if (bx == 0) {
-						explanations.Add(
-							new Explanation {
-								Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (IsStandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
-								Color = bx + 4,
-								Right = false,
-								Box = true,
-								HasAxis = false
-							}
-						);
-					} else {
-						explanations.Add(
-							new Explanation {
-								Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (IsStandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
-								Color = bx + 4,
-								Right = true,
-								Box = false,
-								HasAxis = true
-							}
-						);
-					}
+					explanations.Add(
+						new Explanation {
+							Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (IsStandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+							Color = bx + 4,
+							Right = bx == 0 ? false : true,
+							Box = bx == 0 ? true : false,
+							HasAxis = bx == 0 ? false : true
+						}
+					);
 					cx = 1;
 					int lastDT = minDT - 1;
 					Series s = new Series { Color = bx + 4 };
