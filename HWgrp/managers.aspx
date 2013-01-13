@@ -22,6 +22,7 @@
                     </div>
                 </div>
                 <div class="smallContent">
+				<br />
                 <table border="0" cellpadding="0" cellspacing="0">
 		            <asp:Label ID=Managers runat=server/>
 		        </table>

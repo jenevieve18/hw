@@ -69,8 +69,7 @@ namespace HWgrp
 				foreach (var d in departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID)) {
 					Org.Controls.Add(new LiteralControl("<tr>"));
 					Org.Controls.Add(new LiteralControl("<td>"));
-					CheckBox O = new CheckBox();
-					O.ID = "DID" + d.Id;
+					CheckBox O = new CheckBox() { ID = "DID" + d.Id };
 					Org.Controls.Add(O);
 					Org.Controls.Add(new LiteralControl("</td>"));
 					Org.Controls.Add(new LiteralControl("<td>" + d.Name + "</td>"));
