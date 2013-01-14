@@ -4,6 +4,7 @@
 //	</file>
 
 using System;
+using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -27,11 +28,18 @@ namespace HW.Core
 			InnerText = text;
 		}
 		
-		public IHGHtmlTableCell(params Control[] cc)
+		public IHGHtmlTableCell(IList<Control> cc)
 		{
 			foreach (var c in cc) {
 				Controls.Add(c);
 			}
+		}
+		
+		public IHGHtmlTableCell(params Control[] cc) : this(new List<Control>(cc))
+		{
+//			foreach (var c in cc) {
+//				Controls.Add(c);
+//			}
 		}
 	}
 	

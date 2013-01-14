@@ -63,30 +63,34 @@ namespace HWgrp
 				}
 
 				Org.Controls.Add(new LiteralControl("<br>"));
-				Org.Controls.Add(new LiteralControl("<table border='0' cellspacing='0' cellpadding='0' style='border:0;border-collapse:collapse;border-spacing:0'><tr><td colspan='3'>" + HttpContext.Current.Session["Sponsor"] + "</td><tr>"));
+				HtmlTable table = new HtmlTable { Border = 0, CellSpacing = 0, CellPadding = 0 };
+				table.Style.Add("border", "0");
+				table.Style.Add("border-collapse", "collapse");
+				table.Style.Add("border-spacing", "0");
+				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(HttpContext.Current.Session["Sponsor"].ToString()) { ColSpan = 3 }));
 				bool[] DX = new bool[8];
 				int sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 				foreach (var d in departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID)) {
-					Org.Controls.Add(new LiteralControl("<tr>"));
-					Org.Controls.Add(new LiteralControl("<td>"));
-					CheckBox O = new CheckBox() { ID = "DID" + d.Id };
-					Org.Controls.Add(O);
-					Org.Controls.Add(new LiteralControl("</td>"));
-					Org.Controls.Add(new LiteralControl("<td>" + d.Name + "</td>"));
+					IHGHtmlTableRow row = new IHGHtmlTableRow(new IHGHtmlTableCell(new CheckBox { ID = "DID" + d.Id }), new IHGHtmlTableCell(d.Name));
 					
-					Org.Controls.Add(new LiteralControl("<td>"));
 					int depth = d.Depth;
 					DX[depth] = d.Siblings > 0;
 
-					string img = "";
+					IList<Control> images = new List<Control>();
 					for (int i = 1; i <= depth; i++) {
-						img += string.Format("<img src='img/{0}.gif' width='19' height='20'>", i == depth ? (DX[i] ? "T" : "L") : (DX[i] ? "I" : "null"));
+						images.Add(new HtmlImage { Src = string.Format("img/{0}.gif", i == depth ? (DX[i] ? "T" : "L") : (DX[i] ? "I" : "null")), Width = 19, Height = 20 });
 					}
-					Org.Controls.Add(new LiteralControl("<table border='0' cellspacing='0' cellpadding='0' style='border:0;border-collapse:collapse;border-spacing:0'><tr><td>" + img + "</td><td>" + d.Name + "</td></tr></table>"));
-					Org.Controls.Add(new LiteralControl("</td>"));
-					Org.Controls.Add(new LiteralControl("</tr>"));
+					HtmlTable t = new HtmlTable { Border = 0, CellSpacing = 0, CellPadding = 0 };
+					t.Style.Add("border", "0");
+					t.Style.Add("border-collapse", "collapse");
+					t.Style.Add("border-spacing", "0");
+					t.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(images), new IHGHtmlTableCell(d.Name)));
+					
+					IHGHtmlTableCell c = new IHGHtmlTableCell(t);
+					row.Cells.Add(c);
+					table.Rows.Add(row);
 				}
-				Org.Controls.Add(new LiteralControl("</table>"));
+				Org.Controls.Add(table);
 			} else {
 				HttpContext.Current.Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
@@ -118,12 +122,12 @@ namespace HWgrp
 				table.Rows.Add(new IHGHtmlTableRow(subjectCell));
 				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(r.Header.Replace("\r", "").Replace("\n", "<br>"))));
 
-                string imgID = "img" + cx;
+				string imgID = "img" + cx;
 				IHGRadioButtonList plotType = new IHGRadioButtonList();
 				plotType.ID = "plt" + cx;
 				plotType.Items.Add("LinePlot");
 				plotType.Items.Add("BoxPlot");
-                plotType.Attributes.Add("onclick", string.Format("javascript:xxx('{0}', '{1}', '{2}')", plotType.ID, imgID, GetReportImageUrl(r.Id, URL)));
+				plotType.Attributes.Add("onclick", string.Format("javascript:xxx('{0}', '{1}', '{2}')", plotType.ID, imgID, GetReportImageUrl(r.Id, URL)));
 				
 				IHGHtmlTableCell plotTypeCell = new IHGHtmlTableCell(plotType);
 				plotTypeCell.Style["font-size"] = "10px";
@@ -131,7 +135,7 @@ namespace HWgrp
 				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(new HtmlImage() { ID = imgID, Src = GetReportImageUrl(r.Id, URL) })));
 				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(r.Footer.Replace("\r", "").Replace("\n", "<br>"))));
 				StatsImg.Controls.Add(table);
-                cx++;
+				cx++;
 			}
 		}
 
