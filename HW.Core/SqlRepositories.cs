@@ -3878,7 +3878,7 @@ AND sa.SponsorID = {0}",
 						Id = rs.GetInt32(0),
 						Usr = rs.GetString(1),
 						Name = rs.GetString(2),
-						ReadOnly = rs.GetBoolean(3)
+						ReadOnly = GetInt32(rs, 3) == 1
 					};
 				}
 			}
