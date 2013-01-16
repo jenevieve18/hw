@@ -650,7 +650,7 @@ namespace HWgrp
 							lastDT = a.SomeInteger;
 						}
 						g.Series.Add(s);
-						bx++;
+//						bx++;
 						cx++;
 					}
 				}
