@@ -20,6 +20,7 @@ namespace HWgrp
 	{
 		protected IList<ReportPartLanguage> reportParts = null;
 		int sponsorID = 0;
+		int sponsorAdminID = 0;
 		ILanguageRepository langRepository = AppContext.GetRepositoryFactory().CreateLanguageRepository();
 		IProjectRepository projRepository = AppContext.GetRepositoryFactory().CreateProjectRepository();
 		ISponsorRepository sponsorRepository = AppContext.GetRepositoryFactory().CreateSponsorRepository();
@@ -31,6 +32,7 @@ namespace HWgrp
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
+			sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 			
 			if (sponsorID != 0) {
 				if (!IsPostBack) {
@@ -42,7 +44,7 @@ namespace HWgrp
 						}
 						pruid = l.SponsorProjectRoundUnit.ProjectRoundUnit.Id;
 					}
-					
+
 					int selectedLangID = Convert.ToInt32(LangID.SelectedValue);
 					foreach (var p in sponsorRepository.FindBySponsorAndLanguage(sponsorID, selectedLangID)) {
 						ProjectRoundUnitID.Items.Add(new ListItem(p.Navigation, p.Id.ToString()));
@@ -63,13 +65,9 @@ namespace HWgrp
 				}
 
 				Org.Controls.Add(new LiteralControl("<br>"));
-				HtmlTable table = new HtmlTable { Border = 0, CellSpacing = 0, CellPadding = 0 };
-				table.Style.Add("border", "0");
-				table.Style.Add("border-collapse", "collapse");
-				table.Style.Add("border-spacing", "0");
+				IHGHtmlTable table = new IHGHtmlTable { Border = 0, CellSpacing = 0, CellPadding = 0 };
 				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(HttpContext.Current.Session["Sponsor"].ToString()) { ColSpan = 3 }));
 				bool[] DX = new bool[8];
-				int sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 				foreach (var d in departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID)) {
 					IHGHtmlTableRow row = new IHGHtmlTableRow(new IHGHtmlTableCell(new CheckBox { ID = "DID" + d.Id }), new IHGHtmlTableCell(d.Name));
 					
@@ -80,14 +78,11 @@ namespace HWgrp
 					for (int i = 1; i <= depth; i++) {
 						images.Add(new HtmlImage { Src = string.Format("img/{0}.gif", i == depth ? (DX[i] ? "T" : "L") : (DX[i] ? "I" : "null")), Width = 19, Height = 20 });
 					}
-					HtmlTable t = new HtmlTable { Border = 0, CellSpacing = 0, CellPadding = 0 };
-					t.Style.Add("border", "0");
-					t.Style.Add("border-collapse", "collapse");
-					t.Style.Add("border-spacing", "0");
-					t.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(images), new IHGHtmlTableCell(d.Name)));
+					IHGHtmlTable imagesTable = new IHGHtmlTable { Border = 0, CellSpacing = 0, CellPadding = 0 };
+					imagesTable.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(images), new IHGHtmlTableCell(d.Name)));
 					
-					IHGHtmlTableCell c = new IHGHtmlTableCell(t);
-					row.Cells.Add(c);
+					IHGHtmlTableCell imageCell = new IHGHtmlTableCell(imagesTable);
+					row.Cells.Add(imageCell);
 					table.Rows.Add(row);
 				}
 				Org.Controls.Add(table);
@@ -97,13 +92,11 @@ namespace HWgrp
 
 			Execute.Click += new EventHandler(Execute_Click);
 		}
-
-		void Execute_Click(object sender, EventArgs e)
+		
+		public void DisplayGraph(int selectedProjectRoundUnitID, int selectedLangID, int grouping)
 		{
-			int selectedLangID = Convert.ToInt32(LangID.SelectedValue);
-			int selectedProjectRoundUnitID = Convert.ToInt32(ProjectRoundUnitID.SelectedValue);
-			
-			string URL = GetURL(Convert.ToInt32(Grouping.SelectedValue));
+			var selectedDepartments = SelectedDepartments;
+			string URL = GetURL(grouping, selectedDepartments);
 			reportParts = reportRepository.FindByProjectAndLanguage(selectedProjectRoundUnitID, selectedLangID);
 			int cx = 0;
 			foreach (var r in reportParts) {
@@ -114,24 +107,26 @@ namespace HWgrp
 				}
 				
 				HtmlTable table = new HtmlTable { Border = 0, CellSpacing = 0, CellPadding = 0 };
-				IHGHtmlTableCell headerCell = new IHGHtmlTableCell(r.Subject) { Align = "Center", VAlign = "Middle", Height = "140" };
-				headerCell.Style["font-size"] = "24px";
+				IHGHtmlTableCell headerCell = new IHGHtmlTableCell(r.Subject) { Align = "Center", VAlign = "Middle", Height = "140", FontSize = "24px" };
 				table.Rows.Add(new IHGHtmlTableRow(headerCell));
-				IHGHtmlTableCell subjectCell = new IHGHtmlTableCell(r.Subject);
-				subjectCell.Style["font-size"] = "18px";
+				IHGHtmlTableCell subjectCell = new IHGHtmlTableCell(r.Subject) { FontSize = "18px" };
 				table.Rows.Add(new IHGHtmlTableRow(subjectCell));
 				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(r.Header.Replace("\r", "").Replace("\n", "<br>"))));
 
 				string imgID = "img" + cx;
-				IHGRadioButtonList plotType = new IHGRadioButtonList();
-				plotType.ID = "plt" + cx;
-				plotType.Items.Add("LinePlot");
-				plotType.Items.Add("BoxPlot");
-				plotType.Attributes.Add("onclick", string.Format("javascript:xxx('{0}', '{1}', '{2}')", plotType.ID, imgID, GetReportImageUrl(r.Id, URL)));
 				
-				IHGHtmlTableCell plotTypeCell = new IHGHtmlTableCell(plotType);
-				plotTypeCell.Style["font-size"] = "10px";
-				table.Rows.Add(new IHGHtmlTableRow(plotTypeCell));
+				if (selectedDepartments.Count == 1) {
+					IHGRadioButtonList plotType = new IHGRadioButtonList();
+					plotType.ID = "plt" + cx;
+					plotType.Items.Add(new ListItem("Line Plot", "LinePlot") { Selected = true });
+					plotType.Items.Add(new ListItem("Box Plot", "BoxPlot"));
+					plotType.Attributes.Add("onclick", string.Format("javascript:xxx('{0}', '{1}', '{2}')", plotType.ID, imgID, GetReportImageUrl(r.Id, URL)));
+					IHGHtmlTableCell plotTypeCell = new IHGHtmlTableCell(plotType) { FontSize = "10px" };
+					table.Rows.Add(new IHGHtmlTableRow(plotTypeCell));
+				} else {
+					table.Rows.Add(new IHGHtmlTableRow());
+				}
+
 				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(new HtmlImage() { ID = imgID, Src = GetReportImageUrl(r.Id, URL) })));
 				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(r.Footer.Replace("\r", "").Replace("\n", "<br>"))));
 				StatsImg.Controls.Add(table);
@@ -139,6 +134,28 @@ namespace HWgrp
 			}
 		}
 
+		void Execute_Click(object sender, EventArgs e)
+		{
+			int selectedLangID = Convert.ToInt32(LangID.SelectedValue);
+			int selectedProjectRoundUnitID = Convert.ToInt32(ProjectRoundUnitID.SelectedValue);
+			int grouping = Convert.ToInt32(Grouping.SelectedValue);
+			
+			DisplayGraph(selectedProjectRoundUnitID, selectedLangID, grouping);
+		}
+		
+		IList<BaseModel> SelectedDepartments {
+			get {
+                var selectedDepartments = new List<BaseModel>();
+				var departments = sponsorAdminID != -1 ? departmentRepository.FindBySponsorWithSponsorAdmin(sponsorID, sponsorAdminID) : departmentRepository.FindBySponsorOrderedBySortString(sponsorID);
+				foreach (var d in departments) {
+					if (((CheckBox)Org.FindControl("DID" + d.Id.ToString())).Checked) {
+						selectedDepartments.Add(d);
+					}
+				}
+				return selectedDepartments;
+			}
+		}
+		
 		#region export
 		/*
     private void exportStats(int GRPNG, int PRUID, int SPONS, int SID, string GID, int langID)
@@ -536,20 +553,15 @@ namespace HWgrp
 		 */
 		#endregion
 
-		protected string GetURL(int grouping)
+		protected string GetURL(int grouping, IList<BaseModel> selectedDepartments)
 		{
 			string URL = "";
 			switch (grouping) {
 				case 1:
 				case 2:
-					int sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
-					var departments = sponsorAdminID != -1 ? departmentRepository.FindBySponsorWithSponsorAdmin(sponsorID, sponsorAdminID) : departmentRepository.FindBySponsorOrderedBySortString(sponsorID);
-					foreach (var d in departments) {
-						if (((CheckBox)Org.FindControl("DID" + d.Id.ToString())).Checked) {
-							URL += "," + d.Id;
-						}
+					foreach (var d in selectedDepartments) {
+						URL += "," + d.Id;
 					}
-
 					URL = "&GID=0" + URL;
 					break;
 				case 3:
@@ -567,7 +579,23 @@ namespace HWgrp
 		protected string GetReportImageUrl(int id, string URL)
 		{
 			string s = HttpContext.Current.Request.QueryString["Plot"] != null ? "&Plot=" + HttpContext.Current.Request["Plot"] : "";
-			return "reportImage.aspx?LangID=" + Convert.ToInt32(LangID.SelectedValue) + "&FY=" + FromYear.SelectedValue + "&TY=" + ToYear.SelectedValue + "&SAID=" + Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]) + "&SID=" + Convert.ToInt32(HttpContext.Current.Session["SponsorID"]) + "&" + (Convert.ToInt32(HttpContext.Current.Session["Anonymized"]) == 1 ? "Anonymized=1&" : "") + "STDEV=" + (STDEV.Checked ? "1" : "0") + "&GB=" + GroupBy.SelectedValue + "&RPID=" + id + "&PRUID=" + ProjectRoundUnitID.SelectedValue + URL + "&GRPNG=" + Convert.ToInt32(Grouping.SelectedValue) + s;
+			string reportImageUrl = string.Format(
+				"reportImage.aspx?LangID={0}&FY={1}&TY={2}&SAID={3}&SID={4}&{5}STDEV={6}&GB={7}&RPID={8}&PRUID={9}{10}&GRPNG={11}{12}",
+				Convert.ToInt32(LangID.SelectedValue),
+				FromYear.SelectedValue,
+				ToYear.SelectedValue,
+				sponsorAdminID,
+				sponsorID,
+				Convert.ToInt32(HttpContext.Current.Session["Anonymized"]) == 1 ? "Anonymized=1&" : "",
+				STDEV.Checked ? "1" : "0",
+				GroupBy.SelectedValue,
+				id,
+				ProjectRoundUnitID.SelectedValue,
+				URL,
+				Convert.ToInt32(Grouping.SelectedValue),
+				s
+			);
+			return reportImageUrl;
 		}
 		
 		protected override void OnPreRender(EventArgs e)

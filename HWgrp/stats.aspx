@@ -58,7 +58,7 @@
 					        <asp:ListItem Value=3 Text="Background variable" />
 				        </asp:DropDownList>
                         Language
-                        <asp:DropDownList ID="LangID" runat="server" />
+                        <asp:DropDownList ID="LangID" runat="server" AutoPostBack=true />
 				        <asp:CheckBox ID="STDEV" runat=server Text="Show standard deviation" />
                         <br />
                         <asp:PlaceHolder ID="Org" runat=server Visible=false />
@@ -67,33 +67,6 @@
 			        </div>
                 </div>
         		<asp:Label ID=StatsImg runat=server />
-                <!--<% if (reportParts != null) { %>
-                    <% int cx = 0; %>
-                    <% string URL = GetURL(Convert.ToInt32(Grouping.SelectedValue)); %>
-                    <% foreach (var r in reportParts) { %>
-                        <% if (cx == 0) { %>
-                            <div>&nbsp;<br>&nbsp;<br></div>
-                        <% } else { %>
-                            <div style="page-break-before:always;">&nbsp;<br>&nbsp;<br></div>
-                        <% } %>
-                        <table border="0" cellspacing="0" cellpadding="0">
-                            <tr class="nocreen">
-                                <td align="center" valign="middle" background="img/top_healthWath.jpg" height="140" style="font-size:24px;">
-                                    <%= r.Subject %>
-                                </td>
-                            </tr>
-                            <tr class="noprint"><td style="font-size:18px;"><%= r.Subject %></td></tr>
-                            <tr><td><%= r.Header.Replace("\r", "").Replace("\n", "<br>") %></td></tr>
-                            <tr>
-                                <td>
-                                    <img src="<%= GetReportImageUrl(r.Id, URL) %>"/>
-                                </td>
-                            </tr>
-                            <tr><td><%= r.Footer.Replace("\r", "").Replace("\n", "<br>") %></td></tr>
-                        </table>
-                        <% cx++; %>
-                    <% } %>
-                <% } %>-->
             </div><!-- end .contentgroup	-->
         </div> <!-- end .container_12 -->
 	</form>

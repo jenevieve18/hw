@@ -1251,7 +1251,7 @@ SELECT rpc.WeightedQuestionOptionID,
 	wqo.GreenHigh,
 	wqo.YellowHigh,
 	wqo.QuestionID,
-	wqo.OptionID,
+	wqo.OptionID
 FROM ReportPartComponent rpc
 INNER JOIN WeightedQuestionOption wqo ON rpc.WeightedQuestionOptionID = wqo.WeightedQuestionOptionID
 INNER JOIN WeightedQuestionOptionLang wqol ON wqo.WeightedQuestionOptionID = wqol.WeightedQuestionOptionID
@@ -1297,7 +1297,7 @@ SELECT rpc.WeightedQuestionOptionID,
 	wqo.GreenHigh,
 	wqo.YellowHigh,
 	wqo.QuestionID,
-	wqo.OptionID,
+	wqo.OptionID
 FROM    ReportPartComponent rpc
 INNER JOIN WeightedQuestionOption wqo ON rpc.WeightedQuestionOptionID = wqo.WeightedQuestionOptionID
 WHERE rpc.ReportPartID = {0}
@@ -3918,7 +3918,8 @@ SELECT ISNULL(sprul.Nav, '?'),
 	spru.ProjectRoundUnitID
 FROM SponsorProjectRoundUnit spru
 LEFT OUTER JOIN SponsorProjectRoundUnitLang sprul ON spru.SponsorProjectRoundUnitID = sprul.SponsorProjectRoundUnitID
-WHERE spru.SponsorID = {0} AND ISNULL(sprul.LangID, 1) = {1}",
+WHERE spru.SponsorID = {0} 
+AND ISNULL(sprul.LangID, 1) = {1}",
 				sponsorID,
 				langID
 			);

@@ -11,6 +11,16 @@ using System.Web.UI.WebControls;
 
 namespace HW.Core
 {
+	public class IHGHtmlTable : HtmlTable
+	{
+		public IHGHtmlTable()
+		{
+			Style.Add("border", "0");
+			Style.Add("border-collapse", "collapse");
+			Style.Add("border-spacing", "0");
+		}
+	}
+	
 	public class IHGHtmlTableRow : HtmlTableRow
 	{
 		public IHGHtmlTableRow(params HtmlTableCell[] cells)
@@ -37,9 +47,11 @@ namespace HW.Core
 		
 		public IHGHtmlTableCell(params Control[] cc) : this(new List<Control>(cc))
 		{
-//			foreach (var c in cc) {
-//				Controls.Add(c);
-//			}
+		}
+		
+		public string FontSize {
+			get { return Style["font-size"]; }
+			set { Style["font-size"] = value; }
 		}
 	}
 	

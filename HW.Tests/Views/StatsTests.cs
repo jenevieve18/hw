@@ -14,28 +14,46 @@ namespace HW.Tests.Views
 	{
 		SqlLanguageRepository langRepository;
 		SqlSponsorRepository sponsorRepository;
+		SqlReportRepository reportRepository;
+		SqlDepartmentRepository departmentRepository;
 		
 		[SetUp]
 		public void Setup()
 		{
 			langRepository = new SqlLanguageRepository();
 			sponsorRepository = new SqlSponsorRepository();
+			reportRepository = new SqlReportRepository();
+			departmentRepository = new SqlDepartmentRepository();
 		}
 		
 		[Test]
-		public void TestNotPostBack()
+		public void TestPageLoad()
 		{
 			int sponsorID = 1;
-			foreach (var l in langRepository.FindBySponsor(sponsorID)) {
-				// Add to language combo box
+			int sponsorAdminID = 0;
+			bool isPostBack = true;
+			if (!isPostBack) {
+				foreach (var l in langRepository.FindBySponsor(sponsorID)) {
+					// Add to language combo box
+				}
+				int selectedLangID = 1;
+				foreach (var p in sponsorRepository.FindBySponsorAndLanguage(sponsorID, selectedLangID)) {
+					// Add project round unit to combo box
+				}
+				foreach (var s in sponsorRepository.FindBySponsor(sponsorID)) {
+					// Add background questions to combo box
+				}
 			}
-			int selectedLangID = 1;
-			foreach (var p in sponsorRepository.FindBySponsorAndLanguage(sponsorID, selectedLangID)) {
-				// Add project round unit to combo box
+			foreach (var d in departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID)) {
+				// Add departments
 			}
-			foreach (var s in sponsorRepository.FindBySponsor(sponsorID)) {
-				// Add background questions to combo box
-			}
+		}
+		
+		[Test]
+		public void a()
+		{
+			sponsorRepository.FindBySponsorAndLanguage(101, 1);
+			reportRepository.FindByProjectAndLanguage(0, 1);
 		}
 	}
 }

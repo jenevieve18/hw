@@ -116,11 +116,19 @@ namespace HW.Core
 
 						item.Add("1");
 						desc.Add("1", tmpDesc);
-						join.Add("1", "" +
-						         "INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID " +
-						         "INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID " +
-						         "INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID AND HWu.ProjectRoundUnitID = " + PRUID + " " +
-						         "INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString," + sslen + ") IN (" + tmpSS + ") ");
+						join.Add(
+							"1",
+							string.Format(
+								@"
+INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
+INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID
+INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID AND HWu.ProjectRoundUnitID = {0}
+INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString, {1}) IN ({2}) ",
+								PRUID,
+								sslen,
+								tmpSS
+							)
+						);
 						COUNT++;
 						break;
 					}
@@ -130,11 +138,17 @@ namespace HW.Core
 						foreach (Department d in departments) {
 							item.Add(d.Id.ToString());
 							desc.Add(d.Id.ToString(), d.Name);
-							join.Add(d.Id.ToString(), "" +
-							         "INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID " +
-							         "INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID AND HWu.ProjectRoundUnitID = " + PRUID + " " +
-							         "INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID AND HWup.DepartmentID = " + d.Id + " " +
-							         "");
+							join.Add(
+								d.Id.ToString(),
+								string.Format(
+									@"
+INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
+INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID AND HWu.ProjectRoundUnitID = {0}
+INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID AND HWup.DepartmentID = {1}",
+									PRUID,
+									d.Id
+								)
+							);
 							COUNT++;
 						}
 						break;
@@ -145,11 +159,19 @@ namespace HW.Core
 						foreach (Department d in departments) {
 							item.Add(d.Id.ToString());
 							desc.Add(d.Id.ToString(), d.Name);
-							join.Add(d.Id.ToString(), "" +
-							         "INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID " +
-							         "INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID AND HWu.ProjectRoundUnitID = " + PRUID + " " +
-							         "INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID " +
-							         "INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString," + d.SortString.Length + ") = '" + d.SortString + "' ");
+							join.Add(
+								d.Id.ToString(),
+								string.Format(
+									@"
+INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
+INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID AND HWu.ProjectRoundUnitID = {0}
+INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID
+INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString, {1}) = '{2}'",
+									PRUID,
+									d.SortString.Length,
+									d.SortString
+								)
+							);
 							COUNT++;
 						}
 						break;
@@ -192,11 +214,18 @@ namespace HW.Core
 							tmpOrder;
 						rs2 = Db.rs(query);
 						while (rs2.Read()) {
-							string key = "", txt = "", sql = "" +
-								"INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID " +
-								"INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID AND HWu.ProjectRoundUnitID = " + PRUID + " " +
-								"INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID " +
-								"INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString," + sslen + ") IN (" + tmpSS + ") ";
+							string key = "";
+							string txt = "";
+							string sql = string.Format(
+								@"
+INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
+INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID AND HWu.ProjectRoundUnitID = {}
+INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID
+INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString, {1}) IN ({2})",
+								PRUID,
+								sslen,
+								tmpSS
+							);
 
 							for(int i=0; i< GIDS.Length; i++) {
 								key += (key != "" ? "X" : "") + rs2.GetInt32(0 + i*2);
