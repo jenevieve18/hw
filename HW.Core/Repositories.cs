@@ -63,6 +63,8 @@ namespace HW.Core
 	
 	public interface IReportRepository : IBaseRepository<Report>
 	{
+		ReportPart ReadReportPart(int reportPartID);
+		
 		ReportPartComponent ReadComponentByPartAndLanguage(int reportPartID, int langID);
 		
 		IList<ReportPartComponent> FindComponentsByPartAndLanguage(int reportPartID, int langID);
@@ -71,11 +73,9 @@ namespace HW.Core
 		
 		IList<ReportPartComponent> FindComponentsByPart(int reportPartID);
 		
+		IList<ReportPartComponent> FindComponents(int reportPartID);
+		
 		IList<ReportPartLanguage> FindByProjectAndLanguage(int projectRoundID, int langID);
-		
-		ReportPart ReadReportPart(int reportPartID);
-		
-		IList<ReportPartComponent> FindComponents(int reportID);
 		
 		IList<ReportPartLanguage> FindPartLanguagesByReport(int reportID);
 	}
@@ -93,7 +93,7 @@ namespace HW.Core
 	{
 		IList<BackgroundQuestion> FindBackgroundQuestions(int sponsorID);
 		
-		IList<BackgroundQuestion> FindLikeBackgroundQuestions(int bqID);
+		IList<BackgroundQuestion> FindLikeBackgroundQuestions(string bqID);
 	}
 	
 	public interface IAnswerRepository : IBaseRepository<Answer>
@@ -161,17 +161,19 @@ namespace HW.Core
 		
 		Department ReadByIdAndSponsor(int departmentID, int sponsorID);
 		
+		IList<SponsorAdminDepartment> a(int sponsorID, int sponsorAdminID);
+		
+		IList<SponsorAdminDepartment> b(int sponsorID, int sponsorAdminID);
+		
+		IList<Department> FindIn(string rndsd2);
+		
 		IList<Department> FindBySponsorWithSponsorAdminOnTree(int sponsorID, int sponsorAdminID);
 		
 		IList<Department> FindBySponsorWithSponsorAdminSortStringAndTree(int sponsorID, string sortString, int sponsorAdminID);
 		
 		IList<Department> FindBySponsorWithSponsorAdminAndTree(int sponsorID, int sponsorAdminID);
 		
-		IList<SponsorAdminDepartment> a(int sponsorID, int sponsorAdminID);
-		
-		IList<SponsorAdminDepartment> b(int sponsorID, int sponsorAdminID);
-		
-		IList<Department> FindBySponsorWithSponsorAdmin(int sponsorID, int sponsorAdminID);
+		IList<Department> FindBySponsorWithSponsorAdmin(int sponsorID, int sponsorAdminID, string GID);
 		
 		IList<Department> FindBySponsor(int sponsorID);
 		
@@ -179,7 +181,7 @@ namespace HW.Core
 		
 		IList<Department> FindBySponsorInDepth(int sponsorID);
 		
-		IList<Department> FindBySponsorOrderedBySortString(int sponsorID);
+		IList<Department> FindBySponsorOrderedBySortString(int sponsorID, string GID);
 	}
 	
 	public interface IUserRepository : IBaseRepository<User>
@@ -267,6 +269,8 @@ namespace HW.Core
 		
 		SponsorInvite ReadSponsorInviteBySponsor(int inviteID, int sponsorID);
 		
+		SponsorInvite ReadSponsorInvite(string email, int sponsorID);
+		
 		SponsorInviteBackgroundQuestion ReadSponsorInviteBackgroundQuestion(int sponsorID, int userID, int bqID);
 		
 		SponsorAdmin ReadSponsorAdmin(int sponsorID, int sponsorAdminID, string password);
@@ -296,6 +300,8 @@ namespace HW.Core
 		IList<SponsorAdminFunction> FindAdminFunctionBySponsorAdmin(int sponsorAdminID);
 		
 		IList<SponsorBackgroundQuestion> FindBySponsor(int sponsorID);
+		
+		IList<SponsorBackgroundQuestion> FindBackgroundQuestions(int sponsorID);
 		
 		IList<SponsorProjectRoundUnit> FindBySponsorAndLanguage(int sponsorID, int langID);
 		
@@ -599,7 +605,7 @@ namespace HW.Core
 			return questions;
 		}
 		
-		public IList<BackgroundQuestion> FindLikeBackgroundQuestions(int bqID)
+		public IList<BackgroundQuestion> FindLikeBackgroundQuestions(string bqID)
 		{
 			var questions = new List<BackgroundQuestion>();
 			for (int i = 0; i < 10; i++) {
@@ -951,6 +957,14 @@ namespace HW.Core
 			};
 		}
 		
+		public SponsorInvite ReadSponsorInvite(string email, int sponsorID)
+		{
+			return new SponsorInvite {
+				Id = 1,
+				Email = "some@domain.com"
+			};
+		}
+		
 		public SponsorAdmin ReadSponsorAdmin(string SKEY, string SAKEY, string SA, string SAID, string ANV, string LOS)
 		{
 			return new SponsorAdmin {
@@ -1073,11 +1087,24 @@ namespace HW.Core
 			);
 		}
 		
+		public IList<SponsorBackgroundQuestion> FindBackgroundQuestions(int sponsorID)
+		{
+			return new List<SponsorBackgroundQuestion>(
+				new SponsorBackgroundQuestion[] {
+					new SponsorBackgroundQuestion { Id = 1, Question = new BackgroundQuestion { Internal = "Test" }}
+				}
+			);
+		}
+		
 		public IList<SponsorProjectRoundUnit> FindBySponsorAndLanguage(int sponsorID, int langID)
 		{
 			return new List<SponsorProjectRoundUnit>(
 				new SponsorProjectRoundUnit[] {
-					new SponsorProjectRoundUnit { Id = 1, Navigation = "Health & Stress", }
+					new SponsorProjectRoundUnit { 
+						Id = 1, 
+						Navigation = "Health & Stress", 
+						ProjectRoundUnit = new ProjectRoundUnit { Id = 1 }
+					}
 				}
 			);
 		}
@@ -1306,7 +1333,7 @@ namespace HW.Core
 				};
 				a.Values = new List<AnswerValue>();
 				for (int j = 0; j < 10; j++) {
-					a.Values.Add(new AnswerValue { ValueDecimal = r.Next(0, 100) });
+					a.Values.Add(new AnswerValue { ValueDecimal = r.Next(0, 100), ValueInt = r.Next(0, 100) });
 				}
 				answers.Add(a);
 			}
@@ -1437,6 +1464,59 @@ namespace HW.Core
 			};
 		}
 		
+		public IList<SponsorAdminDepartment> a(int sponsorID, int sponsorAdminID)
+		{
+			var departments = new List<SponsorAdminDepartment>();
+			var r = new Random();
+			for (int i = 0; i < 10; i++) {
+				var d = new SponsorAdminDepartment {
+					Admin = new SponsorAdmin { SuperUser = true },
+					Department = new Department {
+						Name = "Department " + i,
+						Depth = r.Next(0, 8),
+						Id = i,
+						Siblings = r.Next(0, 8),
+						ShortName = "Short Name " + i
+					}
+				};
+				departments.Add(d);
+			}
+			return departments;
+		}
+		
+		public IList<SponsorAdminDepartment> b(int sponsorID, int sponsorAdminID)
+		{
+			var departments = new List<SponsorAdminDepartment>();
+			var r = new Random();
+			for (int i = 0; i < 10; i++) {
+				var d = new SponsorAdminDepartment {
+					Admin = new SponsorAdmin { SuperUser = false },
+					Department = new Department {
+						Name = "Department " + i,
+						Depth = r.Next(0, 8),
+						Id = i,
+						Siblings = r.Next(0, 8),
+						ShortName = "Short Name " + i
+					}
+				};
+				departments.Add(d);
+			}
+			return departments;
+		}
+		
+		public IList<Department> FindIn(string rndsd2)
+		{
+			var departments = new List<Department>();
+			for (int i = 0; i < 10; i++) {
+				var d = new Department {
+					Name = "Department " + i,
+					TreeName = "TreeName " + i
+				};
+				departments.Add(d);
+			}
+			return departments;
+		}
+		
 		public IList<Department> FindBySponsorWithSponsorAdminSortStringAndTree(int sponsorID, string sortString, int sponsorAdminID)
 		{
 			var departments = new List<Department>();
@@ -1476,7 +1556,7 @@ namespace HW.Core
 			return departments;
 		}
 		
-		public IList<Department> FindBySponsorWithSponsorAdmin(int sponsorID, int sponsorAdminID)
+		public IList<Department> FindBySponsorWithSponsorAdmin(int sponsorID, int sponsorAdminID, string GID)
 		{
 			return Data;
 		}
@@ -1496,49 +1576,9 @@ namespace HW.Core
 			throw new NotImplementedException();
 		}
 		
-		public IList<Department> FindBySponsorOrderedBySortString(int sponsorID)
+		public IList<Department> FindBySponsorOrderedBySortString(int sponsorID, string GID)
 		{
 			throw new NotImplementedException();
-		}
-		
-		public IList<SponsorAdminDepartment> a(int sponsorID, int sponsorAdminID)
-		{
-			var departments = new List<SponsorAdminDepartment>();
-			var r = new Random();
-			for (int i = 0; i < 10; i++) {
-				var d = new SponsorAdminDepartment {
-					Admin = new SponsorAdmin { SuperUser = true },
-					Department = new Department {
-						Name = "Department " + i,
-						Depth = r.Next(0, 8),
-						Id = i,
-						Siblings = r.Next(0, 8),
-						ShortName = "Short Name " + i
-					}
-				};
-				departments.Add(d);
-			}
-			return departments;
-		}
-		
-		public IList<SponsorAdminDepartment> b(int sponsorID, int sponsorAdminID)
-		{
-			var departments = new List<SponsorAdminDepartment>();
-			var r = new Random();
-			for (int i = 0; i < 10; i++) {
-				var d = new SponsorAdminDepartment {
-					Admin = new SponsorAdmin { SuperUser = false },
-					Department = new Department {
-						Name = "Department " + i,
-						Depth = r.Next(0, 8),
-						Id = i,
-						Siblings = r.Next(0, 8),
-						ShortName = "Short Name " + i
-					}
-				};
-				departments.Add(d);
-			}
-			return departments;
 		}
 	}
 	

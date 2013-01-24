@@ -17,6 +17,7 @@ public class Db
 	{
 		return rs(sqlString, "SqlConnection");
 	}
+	
 	public static SqlDataReader rs(string sqlString, string con)
 	{
 		SqlConnection dataConnection = new SqlConnection(ConfigurationSettings.AppSettings[con]);
@@ -30,6 +31,7 @@ public class Db
 	{
 		exec(sqlString, "SqlConnection");
 	}
+	
 	public static void exec(string sqlString, string con)
 	{
 		SqlConnection dataConnection = new SqlConnection(ConfigurationSettings.AppSettings[con]);
@@ -83,11 +85,11 @@ public class Db
 	{
 		return sendMail("reminder@healthwatch.se", email, body, subject);
 	}
+	
 	public static bool sendMail(string from, string email, string body, string subject)
 	{
 		bool success = false;
-		try
-		{
+		try {
 //			System.Web.Mail.SmtpMail.SmtpServer = System.Configuration.ConfigurationSettings.AppSettings["SmtpServer"];
 //			System.Web.Mail.MailMessage mail = new System.Web.Mail.MailMessage();
 //			mail.To = email;
@@ -101,8 +103,8 @@ public class Db
 			System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient(server);
 			client.Send(mail);
 			success = true;
+		} catch (Exception) {
 		}
-		catch (Exception) { }
 		return success;
 	}
 
@@ -112,8 +114,7 @@ public class Db
 
 		if (Db.isEmail(email))
 		{
-			try
-			{
+			try {
 				if (body.IndexOf("<LINK/>") >= 0)
 				{
 					body = body.Replace("<LINK/>", "" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "/i/" + key + sponsorInviteID.ToString());
@@ -137,16 +138,15 @@ public class Db
 				Db.exec("UPDATE SponsorInvite SET Sent = GETDATE() WHERE SponsorInviteID = " + sponsorInviteID);
 
 				success = true;
+			} catch (Exception) {
 			}
-			catch (Exception) { }
 		}
-
 		return success;
 	}
 
 	public static string bottom()
 	{
-		return "";// "</div></div>";
+		return ""; // "</div></div>";
 	}
 	
 	static SqlManagerFunctionRepository managerFunctionRepository = new SqlManagerFunctionRepository();
@@ -178,7 +178,6 @@ public class Db
 		//    "></td>";
 		//ret += "<td><img src=\"img/null.gif\" width=\"25\" height=\"1\"></td>";
 		//ret += "<td valign=\"top\"><br/>";
-
 		if (HttpContext.Current.Request.Url.AbsolutePath.IndexOf("super") < 0 && HttpContext.Current.Session["SponsorID"] != null || HttpContext.Current.Request.Url.AbsolutePath.IndexOf("super") >= 0 && HttpContext.Current.Session["SuperAdminID"] != null)
 		{
 			sb.Append("<div class=\"logincontainer grid_5 alpha omega\">");
@@ -218,7 +217,7 @@ public class Db
 //					sb.Append("<a title=\"" + r.GetString(2) + "\" " + (active ? "class=\"active\"" : "") + " href=\"" + r.GetString(1) + "?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">" + r.GetString(0) + "</a>");
 					sb.Append("<a title=\"" + f.Expl + "\" " + (active ? "class=\"active\"" : "") + " href=\"" + f.URL + "?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">" + f.Function + "</a>");
 					
-					if(active)
+					if (active)
 					{
 //						desc = r.GetString(2);
 						desc = f.Expl;
@@ -252,7 +251,6 @@ public class Db
 		//ret += "</table>";
 		
 		//ret += "<div id=\"container\">";
-
 		return sb.ToString();
 	}
 
@@ -262,9 +260,10 @@ public class Db
 			@"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
 			@".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
 		Regex re = new Regex(strRegex);
-		if (re.IsMatch(inputEmail))
+		if (re.IsMatch(inputEmail)) {
 			return true;
-		else
+		} else {
 			return false;
+		}
 	}
 }

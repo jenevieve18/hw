@@ -758,13 +758,16 @@ namespace HWgrp
 				//HttpContext.Current.Response.End();
 
 				string extra = "", extraType = "";
-				rs = Db2.rs("SELECT s.BQID, b.Type FROM SponsorBQ s INNER JOIN BQ b ON s.BQID = b.BQID WHERE s.Hidden = 1 AND s.SponsorID = " + sponsorID + " ORDER BY s.SortOrder");
-				while (rs.Read())
+//				rs = Db2.rs("SELECT s.BQID, b.Type FROM SponsorBQ s INNER JOIN BQ b ON s.BQID = b.BQID WHERE s.Hidden = 1 AND s.SponsorID = " + sponsorID + " ORDER BY s.SortOrder");
+//				while (rs.Read())
+				foreach (var q in sponsorRepository.FindBackgroundQuestions(sponsorID))
 				{
-					extra += (extra != "" ? "," : "") + rs.GetInt32(0).ToString();
-					extraType += (extraType != "" ? "," : "") + rs.GetInt32(1).ToString();
+//					extra += (extra != "" ? "," : "") + rs.GetInt32(0).ToString();
+//					extraType += (extraType != "" ? "," : "") + rs.GetInt32(1).ToString();
+					extra += (extra != "" ? "," : "") + q.Id.ToString();
+					extraType += (extraType != "" ? "," : "") + q.Question.Id.ToString();
 				}
-				rs.Close();
+//				rs.Close();
 
 				if (valid)
 				{
@@ -788,12 +791,15 @@ namespace HWgrp
 
 							int uid = 0;
 
-							rs = Db2.rs("SELECT SponsorInviteID FROM SponsorInvite WHERE Email = '" + email + "' AND SponsorID = " + sponsorID);
-							if (rs.Read())
+//							rs = Db2.rs("SELECT SponsorInviteID FROM SponsorInvite WHERE Email = '" + email + "' AND SponsorID = " + sponsorID);
+//							if (rs.Read())
+							var x = sponsorRepository.ReadSponsorInvite(email, sponsorID);
+							if (x != null)
 							{
-								uid = rs.GetInt32(0);
+//								uid = rs.GetInt32(0);
+								uid = x.Id;
 							}
-							rs.Close();
+//							rs.Close();
 
 							if (uid != 0)
 							{
@@ -2120,7 +2126,7 @@ namespace HWgrp
 							}
 						}
 					}
-					rs.Close();
+//					rs.Close();
 					#endregion
 					Db2.exec("UPDATE SponsorInvite SET Email = '" + Email.Text.Replace("'", "''").Trim() + "'" + sql + ", " +
 					         (stoppedReason != oldStoppedReason ? "" +

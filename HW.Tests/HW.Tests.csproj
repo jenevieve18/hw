@@ -9,7 +9,7 @@
     <AssemblyName>HW.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\ie185004\Application Data\ICSharpCode/SharpDevelop4\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <SourceAnalysisOverrideSettingsFile>..\Settings.StyleCop</SourceAnalysisOverrideSettingsFile>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <NoStdLib>False</NoStdLib>
     <WarningLevel>4</WarningLevel>
@@ -41,6 +41,9 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="itextsharp">
+      <HintPath>..\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\nunit.framework.dll</HintPath>
     </Reference>
@@ -60,6 +63,7 @@
     <Compile Include="Models\DbTests.cs" />
     <Compile Include="Models\ExtendedGraphTests.cs" />
     <Compile Include="Models\HWListTests.cs" />
+    <Compile Include="Models\Test1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AnswerRepositoryTests.cs" />
     <Compile Include="Repositories\DepartmentRepositoryTests.cs" />
@@ -74,6 +78,7 @@
     <Compile Include="Repositories\RepositoryFactoryTests.cs" />
     <Compile Include="Repositories\SponsorRepositoryTests.cs" />
     <Compile Include="Repositories\UserRepositoryTests.cs" />
+    <Compile Include="Test1.cs" />
     <Compile Include="Views\DefaultTests.cs" />
     <Compile Include="Views\ExerciseTests.cs" />
     <Compile Include="Views\FeedbackTests.cs" />

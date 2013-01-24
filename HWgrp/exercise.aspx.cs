@@ -17,7 +17,9 @@ namespace HWgrp
 {
 	public partial class exercise : System.Web.UI.Page
 	{
-		protected int AX = 0, BX = 0, LID = 0;
+		int AX = 0;
+		int BX = 0;
+		int	LID = 0;
 		IExerciseRepository exerciseRepository = AppContext.GetRepositoryFactory().CreateExerciseRepository();
 
 		protected void Page_Load(object sender, EventArgs e)

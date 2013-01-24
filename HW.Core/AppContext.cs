@@ -13,6 +13,17 @@ namespace HW.Core
 	{
 		static IRepositoryFactory repositoryFactory;
 		
+		public static void SetRepositoryFactory(string name)
+		{
+			if (name == "SQL") {
+				SetRepositoryFactory(new SqlRepositoryFactory());
+			} else if (name == "STUB") {
+				SetRepositoryFactory(new RepositoryFactoryStub());
+			} else {
+				throw new NotSupportedException();
+			}
+		}
+		
 		public static void SetRepositoryFactory(IRepositoryFactory repositoryFactory)
 		{
 			AppContext.repositoryFactory = repositoryFactory;

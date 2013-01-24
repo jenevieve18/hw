@@ -19,6 +19,8 @@ namespace HWgrp
 	public partial class stats : System.Web.UI.Page
 	{
 		protected IList<ReportPartLanguage> reportParts = null;
+		IList<Department> departments;
+		IList<SponsorBackgroundQuestion> questions;
 		int sponsorID = 0;
 		int sponsorAdminID = 0;
 		ILanguageRepository langRepository = AppContext.GetRepositoryFactory().CreateLanguageRepository();
@@ -26,49 +28,47 @@ namespace HWgrp
 		ISponsorRepository sponsorRepository = AppContext.GetRepositoryFactory().CreateSponsorRepository();
 		IDepartmentRepository departmentRepository = AppContext.GetRepositoryFactory().CreateDepartmentRepository();
 		IReportRepository reportRepository = AppContext.GetRepositoryFactory().CreateReportRepository();
-
-		protected IList<Department> departments;
-
-		protected void Page_Load(object sender, EventArgs e)
-		{
-			sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
-			sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
-			
-			if (sponsorID != 0) {
-				if (!IsPostBack) {
-					int pruid = 0;
-					foreach (var l in langRepository.FindBySponsor(sponsorID)) {
-						LangID.Items.Add(new ListItem(l.Language.Name, l.Language.Id.ToString()));
-						if (l.Id == 2) {
-							LangID.SelectedValue = l.Language.Id.ToString();
-						}
-						pruid = l.SponsorProjectRoundUnit.ProjectRoundUnit.Id;
+		
+		public IList<SponsorProjectRoundUnitLanguage> Languages {
+			set {
+				int pruid = 0;
+				foreach (var l in value) {
+					LangID.Items.Add(new ListItem(l.Language.Name, l.Language.Id.ToString()));
+					if (l.Id == 2) {
+						LangID.SelectedValue = l.Language.Id.ToString();
 					}
-
-					int selectedLangID = Convert.ToInt32(LangID.SelectedValue);
-					foreach (var p in sponsorRepository.FindBySponsorAndLanguage(sponsorID, selectedLangID)) {
-						ProjectRoundUnitID.Items.Add(new ListItem(p.Navigation, p.Id.ToString()));
-					}
-					GroupBy.SelectedValue = "7";
-
-					for (int i = 2005; i <= DateTime.Now.Year; i++) {
-						FromYear.Items.Add(new ListItem(i.ToString(), i.ToString()));
-						ToYear.Items.Add(new ListItem(i.ToString(), i.ToString()));
-					}
-					FromYear.SelectedValue = (DateTime.Now.Year - 1).ToString();
-					ToYear.SelectedValue = DateTime.Now.Year.ToString();
-
-					foreach (var s in sponsorRepository.FindBySponsor(sponsorID)) {
-						BQ.Items.Add(new ListItem(s.Question.Internal, s.Id.ToString()));
-					}
-					BQ.SelectedIndex = 0;
+					pruid = l.SponsorProjectRoundUnit.ProjectRoundUnit.Id;
 				}
-
+			}
+		}
+		
+		public IList<SponsorProjectRoundUnit> ProjectRoundUnits {
+			set {
+				foreach (var p in value) {
+					ProjectRoundUnitID.Items.Add(new ListItem(p.Navigation, p.ProjectRoundUnit.Id.ToString()));
+				}
+				GroupBy.SelectedValue = "7";
+			}
+		}
+		
+		public IList<SponsorBackgroundQuestion> BackgroundQuestions {
+			set {
+				this.questions = value;
+				foreach (var s in questions) {
+					BQ.Items.Add(new ListItem(s.Question.Internal, s.Id.ToString()));
+				}
+				BQ.SelectedIndex = 0;
+			}
+		}
+		
+		public IList<Department> Departments {
+			set {
+				this.departments = value;
 				Org.Controls.Add(new LiteralControl("<br>"));
 				IHGHtmlTable table = new IHGHtmlTable { Border = 0, CellSpacing = 0, CellPadding = 0 };
 				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(HttpContext.Current.Session["Sponsor"].ToString()) { ColSpan = 3 }));
 				bool[] DX = new bool[8];
-				foreach (var d in departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID)) {
+				foreach (var d in departments) {
 					IHGHtmlTableRow row = new IHGHtmlTableRow(new IHGHtmlTableCell(new CheckBox { ID = "DID" + d.Id }), new IHGHtmlTableCell(d.Name));
 					
 					int depth = d.Depth;
@@ -86,18 +86,67 @@ namespace HWgrp
 					table.Rows.Add(row);
 				}
 				Org.Controls.Add(table);
+			}
+		}
+		
+		IList<BaseModel> SelectedDepartments {
+			get {
+				var selectedDepartments = new List<BaseModel>();
+//				var departments = sponsorAdminID != -1 ? departmentRepository.FindBySponsorWithSponsorAdmin(sponsorID, sponsorAdminID) : departmentRepository.FindBySponsorOrderedBySortString(sponsorID);
+				foreach (var d in departments) {
+					if (((CheckBox)Org.FindControl("DID" + d.Id.ToString())).Checked) {
+						selectedDepartments.Add(d);
+					}
+				}
+				return selectedDepartments;
+			}
+		}
+		
+		IList<BaseModel> SelectedQuestions {
+			get {
+				var selectedQuestions = new List<BaseModel>();
+//				foreach (var q in questions) {
+				foreach (var q in sponsorRepository.FindBySponsor(sponsorID)) {
+					if (BQ.Items.FindByValue(q.Id.ToString()).Selected) {
+						selectedQuestions.Add(q);
+					}
+				}
+				return selectedQuestions;
+			}
+		}
+
+		protected void Page_Load(object sender, EventArgs e)
+		{
+			sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
+			sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
+			
+			if (sponsorID != 0) {
+				if (!IsPostBack) {
+					Languages = langRepository.FindBySponsor(sponsorID);
+
+					int selectedLangID = Convert.ToInt32(LangID.SelectedValue);
+					ProjectRoundUnits = sponsorRepository.FindBySponsorAndLanguage(sponsorID, selectedLangID);
+
+					for (int i = 2005; i <= DateTime.Now.Year; i++) {
+						FromYear.Items.Add(new ListItem(i.ToString(), i.ToString()));
+						ToYear.Items.Add(new ListItem(i.ToString(), i.ToString()));
+					}
+					FromYear.SelectedValue = (DateTime.Now.Year - 1).ToString();
+					ToYear.SelectedValue = DateTime.Now.Year.ToString();
+					
+					BackgroundQuestions = sponsorRepository.FindBySponsor(sponsorID);
+				}
+				Departments = departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID);
 			} else {
 				HttpContext.Current.Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
-
 			Execute.Click += new EventHandler(Execute_Click);
 		}
 		
-		public void DisplayGraph(int selectedProjectRoundUnitID, int selectedLangID, int grouping)
+		public void SetReportPartLanguages(IList<ReportPartLanguage> reportParts, IList<BaseModel> urlModels)
 		{
 			var selectedDepartments = SelectedDepartments;
-			string URL = GetURL(grouping, selectedDepartments);
-			reportParts = reportRepository.FindByProjectAndLanguage(selectedProjectRoundUnitID, selectedLangID);
+			string URL = GetURL(urlModels);
 			int cx = 0;
 			foreach (var r in reportParts) {
 				if (cx == 0) {
@@ -120,39 +169,20 @@ namespace HWgrp
 					plotType.ID = "plt" + cx;
 					plotType.Items.Add(new ListItem("Line Plot", "LinePlot") { Selected = true });
 					plotType.Items.Add(new ListItem("Box Plot", "BoxPlot"));
-					plotType.Attributes.Add("onclick", string.Format("javascript:xxx('{0}', '{1}', '{2}')", plotType.ID, imgID, GetReportImageUrl(r.Id, URL)));
+					plotType.Attributes.Add("onclick", string.Format("javascript:xxx('{0}', '{1}', '{2}')", plotType.ID, imgID, GetReportImageUrl(r.ReportPart.Id, "reportImage", URL)));
 					IHGHtmlTableCell plotTypeCell = new IHGHtmlTableCell(plotType) { FontSize = "10px" };
 					table.Rows.Add(new IHGHtmlTableRow(plotTypeCell));
 				} else {
 					table.Rows.Add(new IHGHtmlTableRow());
 				}
 
-				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(new HtmlImage() { ID = imgID, Src = GetReportImageUrl(r.Id, URL) })));
+				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(new HtmlImage { ID = imgID, Src = GetReportImageUrl(r.ReportPart.Id, "reportImage", URL) })));
+				var a = new HtmlAnchor { Target = "_blank", HRef = GetReportImageUrl(r.ReportPart.Id, "Export", URL) };
+				a.Controls.Add(new HtmlImage { Src = "images/page_white_acrobat.png" });
+				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(a)));
 				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(r.Footer.Replace("\r", "").Replace("\n", "<br>"))));
 				StatsImg.Controls.Add(table);
 				cx++;
-			}
-		}
-
-		void Execute_Click(object sender, EventArgs e)
-		{
-			int selectedLangID = Convert.ToInt32(LangID.SelectedValue);
-			int selectedProjectRoundUnitID = Convert.ToInt32(ProjectRoundUnitID.SelectedValue);
-			int grouping = Convert.ToInt32(Grouping.SelectedValue);
-			
-			DisplayGraph(selectedProjectRoundUnitID, selectedLangID, grouping);
-		}
-		
-		IList<BaseModel> SelectedDepartments {
-			get {
-                var selectedDepartments = new List<BaseModel>();
-				var departments = sponsorAdminID != -1 ? departmentRepository.FindBySponsorWithSponsorAdmin(sponsorID, sponsorAdminID) : departmentRepository.FindBySponsorOrderedBySortString(sponsorID);
-				foreach (var d in departments) {
-					if (((CheckBox)Org.FindControl("DID" + d.Id.ToString())).Checked) {
-						selectedDepartments.Add(d);
-					}
-				}
-				return selectedDepartments;
 			}
 		}
 		
@@ -553,34 +583,24 @@ namespace HWgrp
 		 */
 		#endregion
 
-		protected string GetURL(int grouping, IList<BaseModel> selectedDepartments)
+		IList<BaseModel> GetUrlModels(int grouping)
 		{
-			string URL = "";
 			switch (grouping) {
 				case 1:
 				case 2:
-					foreach (var d in selectedDepartments) {
-						URL += "," + d.Id;
-					}
-					URL = "&GID=0" + URL;
-					break;
+					return SelectedDepartments;
 				case 3:
-					foreach (var s in sponsorRepository.FindBySponsor(sponsorID)) {
-						if (BQ.Items.FindByValue(s.Id.ToString()).Selected) {
-							URL += "," + s.Id;
-						}
-					}
-					URL = "&GID=0" + URL;
-					break;
+					return SelectedQuestions;
+				default:
+					return new List<BaseModel>();
 			}
-			return URL;
 		}
 		
-		protected string GetReportImageUrl(int id, string URL)
+		protected string GetReportImageUrl(int id, string page, string URL)
 		{
 			string s = HttpContext.Current.Request.QueryString["Plot"] != null ? "&Plot=" + HttpContext.Current.Request["Plot"] : "";
 			string reportImageUrl = string.Format(
-				"reportImage.aspx?LangID={0}&FY={1}&TY={2}&SAID={3}&SID={4}&{5}STDEV={6}&GB={7}&RPID={8}&PRUID={9}{10}&GRPNG={11}{12}",
+				"{13}.aspx?LangID={0}&FY={1}&TY={2}&SAID={3}&SID={4}&{5}STDEV={6}&GB={7}&RPID={8}&PRUID={9}{10}&GRPNG={11}{12}",
 				Convert.ToInt32(LangID.SelectedValue),
 				FromYear.SelectedValue,
 				ToYear.SelectedValue,
@@ -593,7 +613,8 @@ namespace HWgrp
 				ProjectRoundUnitID.SelectedValue,
 				URL,
 				Convert.ToInt32(Grouping.SelectedValue),
-				s
+				s,
+				page
 			);
 			return reportImageUrl;
 		}
@@ -602,6 +623,26 @@ namespace HWgrp
 		{
 			Org.Visible = (Grouping.SelectedValue == "1" || Grouping.SelectedValue == "2");
 			BQ.Visible = (Grouping.SelectedValue == "3");
+		}
+		
+		string GetURL(IList<BaseModel> models)
+		{
+			string URL = "";
+			foreach (var m in models) {
+				URL += "," + m.Id;
+			}
+			URL = "&GID=0" + URL;
+			return URL;
+		}
+
+		void Execute_Click(object sender, EventArgs e)
+		{
+			int selectedLangID = Convert.ToInt32(LangID.SelectedValue);
+			int selectedProjectRoundUnitID = Convert.ToInt32(ProjectRoundUnitID.SelectedValue);
+			int grouping = Convert.ToInt32(Grouping.SelectedValue);
+			
+			var reportParts = reportRepository.FindByProjectAndLanguage(selectedProjectRoundUnitID, selectedLangID);
+			SetReportPartLanguages(reportParts, GetUrlModels(grouping));
 		}
 	}
 }

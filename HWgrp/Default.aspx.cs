@@ -20,34 +20,6 @@ namespace HWgrp
 		IManagerFunctionRepository functionRepository = AppContext.GetRepositoryFactory().CreateManagerFunctionRepository();
 		ISponsorRepository sponsorRepository = AppContext.GetRepositoryFactory().CreateSponsorRepository();
 		
-		protected void Page_Load(object sender, EventArgs e)
-		{
-			if (HttpContext.Current.Request.Form["ANV"] != null && HttpContext.Current.Request.Form["LOS"] != null || HttpContext.Current.Request.QueryString["SKEY"] != null || HttpContext.Current.Request.QueryString["SAKEY"] != null) {
-				string SKEY = HttpContext.Current.Request.QueryString["SKEY"];
-				string SAKEY = HttpContext.Current.Request.QueryString["SAKEY"];
-				string ANV = HttpContext.Current.Request.Form["ANV"];
-				string LOS = HttpContext.Current.Request.Form["LOS"];
-				string SA = HttpContext.Current.Request.QueryString["SA"];
-				string SAID = SA != null ? HttpContext.Current.Session["SuperAdminID"].ToString() : "";
-				Login(SKEY, SAKEY, SA, SAID, ANV, LOS);
-			} else if (HttpContext.Current.Request.QueryString["Logout"] != null || HttpContext.Current.Request.QueryString["SuperLogout"] != null) {
-				Logout();
-			}
-//			if (login && HttpContext.Current.Session["SponsorAdminID"] != null || HttpContext.Current.Request.QueryString["Logout"] != null) {
-//				HttpContext.Current.Session.Remove("SponsorID");
-//				HttpContext.Current.Session.Remove("SponsorAdminID");
-//				HttpContext.Current.Session.Remove("Sponsor");
-//				HttpContext.Current.Session.Remove("Anonymized");
-//				HttpContext.Current.Session.Remove("SeeUsers");
-//				HttpContext.Current.Session.Remove("ReadOnly");
-//				ClientScript.RegisterStartupScript(this.GetType(), "CLOSE", "<script language=\"JavaScript\">window.close();</script>");
-//			} else if (login && HttpContext.Current.Session["SuperAdminID"] != null || HttpContext.Current.Request.QueryString["SuperLogout"] != null) {
-//				HttpContext.Current.Session.Remove("SuperAdminID");
-//
-//				ClientScript.RegisterStartupScript(this.GetType(), "CLOSE", "<script language=\"JavaScript\">window.close();</script>");
-//			}
-		}
-		
 		public void Logout()
 		{
 			HttpContext.Current.Session.Remove("SponsorID");
@@ -62,9 +34,9 @@ namespace HWgrp
 			ClientScript.RegisterStartupScript(this.GetType(), "CLOSE", "<script language=\"JavaScript\">window.close();</script>");
 		}
 		
-		public void Login(string SKEY, string SAKEY, string SA, string SAID, string ANV, string LOS)
+		public void Login(string skey, string sakey, string sa, string said, string anv, string los)
 		{
-			SponsorAdmin s = sponsorRepository.ReadSponsorAdmin(SKEY, SAKEY, SA, SAID, ANV, LOS);
+			SponsorAdmin s = sponsorRepository.ReadSponsorAdmin(skey, sakey, sa, said, anv, los);
 			if (s != null) {
 				HttpContext.Current.Session["Name"] = s.Name;
 				if (s.SuperAdmin) {
@@ -86,6 +58,34 @@ namespace HWgrp
 					HttpContext.Current.Response.Redirect(firstUrl, true);
 				}
 			}
+		}
+		
+		protected void Page_Load(object sender, EventArgs e)
+		{
+			if (HttpContext.Current.Request.Form["ANV"] != null && HttpContext.Current.Request.Form["LOS"] != null || HttpContext.Current.Request.QueryString["SKEY"] != null || HttpContext.Current.Request.QueryString["SAKEY"] != null) {
+				string skey = HttpContext.Current.Request.QueryString["SKEY"];
+				string sakey = HttpContext.Current.Request.QueryString["SAKEY"];
+				string anv = HttpContext.Current.Request.Form["ANV"];
+				string los = HttpContext.Current.Request.Form["LOS"];
+				string sa = HttpContext.Current.Request.QueryString["SA"];
+				string said = sa != null ? HttpContext.Current.Session["SuperAdminID"].ToString() : "";
+				Login(skey, sakey, sa, said, anv, los);
+			} else if (HttpContext.Current.Request.QueryString["Logout"] != null || HttpContext.Current.Request.QueryString["SuperLogout"] != null) {
+				Logout();
+			}
+//			if (login && HttpContext.Current.Session["SponsorAdminID"] != null || HttpContext.Current.Request.QueryString["Logout"] != null) {
+//				HttpContext.Current.Session.Remove("SponsorID");
+//				HttpContext.Current.Session.Remove("SponsorAdminID");
+//				HttpContext.Current.Session.Remove("Sponsor");
+//				HttpContext.Current.Session.Remove("Anonymized");
+//				HttpContext.Current.Session.Remove("SeeUsers");
+//				HttpContext.Current.Session.Remove("ReadOnly");
+//				ClientScript.RegisterStartupScript(this.GetType(), "CLOSE", "<script language=\"JavaScript\">window.close();</script>");
+//			} else if (login && HttpContext.Current.Session["SuperAdminID"] != null || HttpContext.Current.Request.QueryString["SuperLogout"] != null) {
+//				HttpContext.Current.Session.Remove("SuperAdminID");
+//
+//				ClientScript.RegisterStartupScript(this.GetType(), "CLOSE", "<script language=\"JavaScript\">window.close();</script>");
+//			}
 		}
 	}
 }

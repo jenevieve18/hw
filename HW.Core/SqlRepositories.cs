@@ -157,6 +157,11 @@ namespace HW.Core
 			return rs.IsDBNull(index) ? 0 : rs.GetInt32(index);
 		}
 		
+		protected double GetDouble(SqlDataReader rs, int index)
+		{
+			return rs.IsDBNull(index) ? 0 : rs.GetDouble(index);
+		}
+		
 		void CloseConnection()
 		{
 			if (con.State == ConnectionState.Open) {
@@ -309,6 +314,7 @@ WHERE REPLACE(a.AnswerKey,'-','') = '{0}'",
 				if (rs.Read()) {
 					var a = new Answer() {
 						Id = rs.GetInt32(0),
+						Language = new Language { Id = rs.GetInt32(1) },
 						ProjectRoundUser = new ProjectRoundUser { Id = rs.GetInt32(2) }
 					};
 					return a;
@@ -412,8 +418,8 @@ FROM (
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				if (rs.Read()) {
 					var a = new Answer() {
-						Max = GetInt32(rs, 0), //rs.GetInt32(0),
-						Min = GetInt32(rs, 1) //rs.GetInt32(1)
+						Max = GetInt32(rs, 0),
+						Min = GetInt32(rs, 1)
 					};
 					return a;
 				}
@@ -936,8 +942,10 @@ ORDER BY tmp.DT",
 					var a = new Answer {
 						SomeInteger = rs.GetInt32(0),
 						AverageV = rs.GetInt32(1),
-						CountV = rs.GetInt32(2),
-						StandardDeviation = rs.GetFloat(3)
+						CountV = GetInt32(rs, 2),
+//						StandardDeviation = rs.GetFloat(3)
+//						StandardDeviation = (float)rs.GetDouble(3)
+						StandardDeviation = (float)GetDouble(rs, 3)
 					};
 					answers.Add(a);
 				}
@@ -947,13 +955,36 @@ ORDER BY tmp.DT",
 		
 		public IList<Answer> FindByQuestionAndOptionJoinedAndGrouped2(string join, string groupBy, int questionID, int optionID, int yearFrom, int yearTo)
 		{
+//			string query = string.Format(
+//				@"
+			//SELECT tmp.DT,
+//	AVG(tmp.V),
+//	COUNT(tmp.V),
+//	STDEV(tmp.V)
+			//FROM (
+//	SELECT {1}(a.EndDT) AS DT, AVG(av.ValueInt) AS V
+//	FROM Answer a
+//	{0}
+//	INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID
+//		AND av.QuestionID = {2}
+//		AND av.OptionID = {3}
+//	WHERE a.EndDT IS NOT NULL
+//	{4}
+//	{5}
+//	GROUP BY a.ProjectRoundUserID, {1}(a.EndDT)
+			//) tmp
+			//GROUP BY tmp.DT
+			//ORDER BY tmp.DT",
+//				join,
+//				groupBy,
+//				questionID,
+//				optionID,
+//				yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
+//				yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : ""
+//			);
 			string query = string.Format(
 				@"
-SELECT tmp.DT,
-	AVG(tmp.V),
-	COUNT(tmp.V),
-	STDEV(tmp.V)
-FROM (
+
 	SELECT {1}(a.EndDT) AS DT, AVG(av.ValueInt) AS V
 	FROM Answer a
 	{0}
@@ -964,9 +995,7 @@ FROM (
 	{4}
 	{5}
 	GROUP BY a.ProjectRoundUserID, {1}(a.EndDT)
-) tmp
-GROUP BY tmp.DT
-ORDER BY tmp.DT",
+",
 				join,
 				groupBy,
 				questionID,
@@ -976,14 +1005,29 @@ ORDER BY tmp.DT",
 			);
 			var answers = new List<Answer>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlconnection")) {
-				while (rs.Read()) {
-					var a = new Answer {
-						SomeInteger = rs.GetInt32(0),
-						AverageV = rs.GetInt32(1),
-						CountV = rs.GetInt32(2),
-						StandardDeviation = rs.GetFloat(3)
-					};
-					answers.Add(a);
+//				while (rs.Read()) {
+//					var a = new Answer {
+//						SomeInteger = rs.GetInt32(0),
+//						AverageV = rs.GetInt32(1),
+//						CountV = rs.GetInt32(2),
+//						StandardDeviation = (float)GetDouble(rs, 3)
+//					};
+//					answers.Add(a);
+//				}
+				if (rs.Read()) {
+					bool done = false;
+					while (!done) {
+						var a = new Answer { };
+//						int dt;
+						do {
+							a.SomeInteger = rs.GetInt32(0);
+//							dt = rs.GetInt32(0);
+							a.Values.Add(new AnswerValue { ValueInt = rs.GetInt32(1) });
+							done = !rs.Read();
+//						} while (!done && rs.GetInt32(0) == dt);
+						} while (!done && rs.GetInt32(0) == a.SomeInteger);
+						answers.Add(a);
+					}
 				}
 			}
 			return answers;
@@ -1061,13 +1105,8 @@ ORDER BY rpc.SortOrder",
 				if (rs.Read()) {
 					var c = new ReportPartComponent();
 					c.QuestionOption = new WeightedQuestionOption {
-						Id = rs.GetInt32(0),
-						YellowLow = rs.GetInt32(1),
-						GreenLow = rs.GetInt32(2),
-						GreenHigh = rs.GetInt32(3),
-						YellowHigh = rs.GetInt32(4),
-						Question = new Question { Id = rs.GetInt32(5) },
-						Option = new Option { Id = rs.GetInt32(6) }
+						Question = new Question { Id = rs.GetInt32(2) },
+						Option = new Option { Id = rs.GetInt32(3) }
 					};
 					return c;
 				}
@@ -1084,7 +1123,8 @@ SELECT rp.Type,
 	rp.QuestionID,
 	rp.OptionID,
 	rp.RequiredAnswerCount,
-	rp.PartLevel
+	rp.PartLevel,
+	rp.ReportPartID
 FROM ReportPart rp
 WHERE rp.ReportPartID = {0}",
 				reportPartID
@@ -1094,14 +1134,17 @@ WHERE rp.ReportPartID = {0}",
 					var p = new ReportPart();
 					p.Type = rs.GetInt32(0);
 					p.Components = new List<ReportPartComponent>(rs.GetInt32(1));
-					if (!rs.IsDBNull(2)) {
-						p.Question = new Question { Id = rs.GetInt32(2) };
-					}
-					if (!rs.IsDBNull(3)) {
-						p.Option = new Option { Id = rs.GetInt32(3) };
-					}
+//					if (!rs.IsDBNull(2)) {
+//						p.Question = new Question { Id = rs.GetInt32(2) };
+//					}
+					p.Question = new Question { Id = GetInt32(rs, 2) };
+//					if (!rs.IsDBNull(3)) {
+//						p.Option = new Option { Id = rs.GetInt32(3) };
+//					}
+					p.Option = new Option { Id = GetInt32(rs, 3) };
 					p.RequiredAnswerCount = rs.GetInt32(4);
 					p.PartLevel = GetInt32(rs, 5);
+					p.Id = GetInt32(rs, 6);
 					return p;
 				}
 			}
@@ -1172,7 +1215,7 @@ ORDER BY rp.SortOrder",
 			return languages;
 		}
 		
-		public IList<ReportPartComponent> FindComponents(int reportID)
+		public IList<ReportPartComponent> FindComponents(int reportPartID)
 		{
 			string query = string.Format(
 				@"
@@ -1183,10 +1226,11 @@ SELECT rpc.IdxID,
 	i.GreenLow,
 	i.GreenHigh,
 	i.YellowHigh
-FROM ReportPartComponent rpc INNER JOIN Idx i ON rpc.IdxID = i.IdxID
+FROM ReportPartComponent rpc
+INNER JOIN Idx i ON rpc.IdxID = i.IdxID
 WHERE rpc.ReportPartID = {0}
 ORDER BY rpc.SortOrder",
-				reportID
+				reportPartID
 			);
 			var components = new List<ReportPartComponent>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
@@ -1201,6 +1245,42 @@ ORDER BY rpc.SortOrder",
 						YellowHigh = rs.GetInt32(6)
 					};
 					c.Index.Parts = new List<IndexPart>(rs.GetInt32(1));
+					components.Add(c);
+				}
+			}
+			return components;
+		}
+		
+		public IList<ReportPartComponent> FindComponentsByPart(int reportPartID)
+		{
+			string query = string.Format(
+				@"
+SELECT rpc.WeightedQuestionOptionID,
+	wqo.YellowLow,
+	wqo.GreenLow,
+	wqo.GreenHigh,
+	wqo.YellowHigh,
+	wqo.QuestionID,
+	wqo.OptionID
+FROM    ReportPartComponent rpc
+INNER JOIN WeightedQuestionOption wqo ON rpc.WeightedQuestionOptionID = wqo.WeightedQuestionOptionID
+WHERE rpc.ReportPartID = {0}
+ORDER BY rpc.SortOrder",
+				reportPartID
+			);
+			var components = new List<ReportPartComponent>();
+			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
+				while (rs.Read()) {
+					var c = new ReportPartComponent();
+					c.QuestionOption = new WeightedQuestionOption {
+						Id = rs.GetInt32(0),
+						YellowLow = rs.GetInt32(1),
+						GreenLow = rs.GetInt32(2),
+						GreenHigh = rs.GetInt32(3),
+						YellowHigh = rs.GetInt32(4),
+						Question = new Question { Id = rs.GetInt32(5) },
+						Option = new Option { Id = rs.GetInt32(6) }
+					};
 					components.Add(c);
 				}
 			}
@@ -1281,42 +1361,6 @@ ORDER BY rpc.SortOrder",
 						}
 					);
 					c.QuestionOption = q;
-					components.Add(c);
-				}
-			}
-			return components;
-		}
-		
-		public IList<ReportPartComponent> FindComponentsByPart(int reportPartID)
-		{
-			string query = string.Format(
-				@"
-SELECT rpc.WeightedQuestionOptionID,
-	wqo.YellowLow,
-	wqo.GreenLow,
-	wqo.GreenHigh,
-	wqo.YellowHigh,
-	wqo.QuestionID,
-	wqo.OptionID
-FROM    ReportPartComponent rpc
-INNER JOIN WeightedQuestionOption wqo ON rpc.WeightedQuestionOptionID = wqo.WeightedQuestionOptionID
-WHERE rpc.ReportPartID = {0}
-ORDER BY rpc.SortOrder",
-				reportPartID
-			);
-			var components = new List<ReportPartComponent>();
-			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
-				while (rs.Read()) {
-					var c = new ReportPartComponent();
-					c.QuestionOption = new WeightedQuestionOption {
-						Id = rs.GetInt32(0),
-						YellowLow = rs.GetInt32(1),
-						GreenLow = rs.GetInt32(2),
-						GreenHigh = rs.GetInt32(3),
-						YellowHigh = rs.GetInt32(4),
-						Question = new Question { Id = rs.GetInt32(5) },
-						Option = new Option { Id = rs.GetInt32(6) }
-					};
 					components.Add(c);
 				}
 			}
@@ -1771,11 +1815,11 @@ ORDER BY sbq.SortOrder",
 			return questions;
 		}
 		
-		public IList<BackgroundQuestion> FindLikeBackgroundQuestions(int bqID)
+		public IList<BackgroundQuestion> FindLikeBackgroundQuestions(string bqID)
 		{
 			string query = string.Format(
 				@"
-SELECT BQ.BQID, BQ.Internal FROM BQ WHERE BQ.BQID IN (23)",
+SELECT BQ.BQID, BQ.Internal FROM BQ WHERE BQ.BQID IN ({0})",
 				bqID
 			);
 			var questions = new List<BackgroundQuestion>();
@@ -2008,42 +2052,6 @@ WHERE d.SponsorID = " + sponsorID + " AND d.DepartmentID = " + departmentID
 			return null;
 		}
 		
-		public IList<SponsorAdminDepartment> b(int sponsorID, int sponsorAdminID)
-		{
-			string j = sponsorAdminID != -1
-				? string.Format(
-					@"ISNULL(sad.DepartmentID,sa.SuperUser)
-FROM Department d
-INNER JOIN SponsorAdmin sa ON sa.SponsorAdminID = {0}
-LEFT OUTER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID
-AND sad.SponsorAdminID = {0} ",
-					sponsorAdminID)
-				: @"1
-FROM Department d ";
-			
-			string query = string.Format(
-				@"
-SELECT d.DepartmentID,
-	{1}
-WHERE d.SponsorID = {0}",
-				sponsorID,
-				j
-			);
-			var departments = new List<SponsorAdminDepartment>();
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				while (rs.Read()) {
-					var d = new SponsorAdminDepartment {
-						Admin = new SponsorAdmin { SuperUser = rs.GetBoolean(1) },
-						Department = new Department {
-							Id = rs.GetInt32(0)
-						}
-					};
-					departments.Add(d);
-				}
-			}
-			return departments;
-		}
-		
 		public IList<SponsorAdminDepartment> a(int sponsorID, int sponsorAdminID)
 		{
 			string j = sponsorAdminID != -1
@@ -2096,49 +2104,61 @@ ORDER BY d.SortString",
 			return departments;
 		}
 		
-		public IList<Department> FindBySponsorWithSponsorAdmin(int sponsorID, int sponsorAdminID)
+		public IList<SponsorAdminDepartment> b(int sponsorID, int sponsorAdminID)
 		{
+			string j = sponsorAdminID != -1
+				? string.Format(
+					@"ISNULL(sad.DepartmentID,sa.SuperUser)
+FROM Department d
+INNER JOIN SponsorAdmin sa ON sa.SponsorAdminID = {0}
+LEFT OUTER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID
+AND sad.SponsorAdminID = {0} ",
+					sponsorAdminID)
+				: @"1
+FROM Department d ";
+			
 			string query = string.Format(
 				@"
-SELECT d.DepartmentID
-FROM Department d
-INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID
-WHERE sad.SponsorAdminID = {1} AND d.SponsorID = {0}
-ORDER BY d.SortString",
+SELECT d.DepartmentID,
+	{1}
+WHERE d.SponsorID = {0}",
 				sponsorID,
-				sponsorAdminID
+				j
 			);
-			var departments = new List<Department>();
+			var departments = new List<SponsorAdminDepartment>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
-					var d = new Department { Id = rs.GetInt32(0) };
+					var d = new SponsorAdminDepartment {
+						Admin = new SponsorAdmin { SuperUser = rs.GetBoolean(1) },
+						Department = new Department {
+							Id = rs.GetInt32(0)
+						}
+					};
 					departments.Add(d);
 				}
 			}
 			return departments;
 		}
 		
-		public IList<Department> FindBySponsorWithSponsorAdminOnTree(int sponsorID, int sponsorAdminID)
+		public IList<Department> FindIn(string rndsd2)
 		{
-			string j = sponsorAdminID != -1
-				? string.Format("INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
-				: "WHERE ";
 			string query = string.Format(
 				@"
-SELECT d.DepartmentID,
-	dbo.cf_departmentTree(d.DepartmentID,' » ')
+SELECT d.Department,
+	d.DepartmentID,
+	d.SortString
 FROM Department d
-{1}d.SponsorID = {0}
+WHERE d.DepartmentID IN ({0})
 ORDER BY d.SortString",
-				sponsorID,
-				j
+				rndsd2
 			);
 			var departments = new List<Department>();
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+			using (SqlDataReader rs = Db.rs(query)) {
 				while (rs.Read()) {
 					var d = new Department {
-						Id = rs.GetInt32(0),
-						TreeName = rs.GetString(1)
+						Name = GetString(rs, 0),
+						Id = GetInt32(rs, 1),
+						SortString = GetString(rs, 2)
 					};
 					departments.Add(d);
 				}
@@ -2170,29 +2190,6 @@ AND SponsorID = {0}",
 			return departments;
 		}
 		
-		public IList<Department> FindBySponsorOrderedBySortString(int sponsorID)
-		{
-			string query = string.Format(
-				@"
-SELECT d.DepartmentID,
-	DepartmentShort
-FROM Department d
-WHERE d.SponsorID = {0}
-ORDER BY d.SortString",
-				sponsorID
-			);
-			var departments = new List<Department>();
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				while (rs.Read()) {
-					var d = new Department {
-						Id = rs.GetInt32(0)
-					};
-					departments.Add(d);
-				}
-			}
-			return departments;
-		}
-		
 		public IList<Department> FindBySponsor2(int sponsorID)
 		{
 			string query = string.Format(
@@ -2211,6 +2208,95 @@ ORDER BY LEN(d.SortString)",
 					var d = new Department {
 						Name = rs.GetString(0),
 						SortString = rs.GetString(2)
+					};
+					departments.Add(d);
+				}
+			}
+			return departments;
+		}
+		
+		// TODO: How about anonymized?
+		public IList<Department> FindBySponsorWithSponsorAdmin(int sponsorID, int sponsorAdminID, string GID)
+		{
+			string query = string.Format(
+				@"
+SELECT d.Department,
+	d.DepartmentID,
+	d.SortString
+FROM Department d
+INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID
+WHERE sad.SponsorAdminID = {1}
+AND d.SponsorID = {0}
+AND (d.DepartmentID IN ({2}))
+ORDER BY d.SortString",
+				sponsorID,
+				sponsorAdminID,
+				GID
+			);
+			var departments = new List<Department>();
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				while (rs.Read()) {
+					var d = new Department {
+						Name = GetString(rs, 0),
+						Id = rs.GetInt32(1),
+						SortString = GetString(rs, 2)
+					};
+					departments.Add(d);
+				}
+			}
+			return departments;
+		}
+		
+		// TODO: How about anonymized?
+		public IList<Department> FindBySponsorOrderedBySortString(int sponsorID, string GID)
+		{
+			string query = string.Format(
+				@"
+SELECT d.Department,
+	d.DepartmentID,
+	DepartmentShort
+FROM Department d
+WHERE d.SponsorID = {0}
+AND (d.DepartmentID IN ({1}))
+ORDER BY d.SortString",
+				sponsorID,
+				GID
+			);
+			var departments = new List<Department>();
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				while (rs.Read()) {
+					var d = new Department {
+						Name = GetString(rs, 0),
+						Id = rs.GetInt32(1),
+						ShortName = GetString(rs, 2)
+					};
+					departments.Add(d);
+				}
+			}
+			return departments;
+		}
+		
+		public IList<Department> FindBySponsorWithSponsorAdminOnTree(int sponsorID, int sponsorAdminID)
+		{
+			string j = sponsorAdminID != -1
+				? string.Format("INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
+				: "WHERE ";
+			string query = string.Format(
+				@"
+SELECT d.DepartmentID,
+	dbo.cf_departmentTree(d.DepartmentID,' » ')
+FROM Department d
+{1}d.SponsorID = {0}
+ORDER BY d.SortString",
+				sponsorID,
+				j
+			);
+			var departments = new List<Department>();
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				while (rs.Read()) {
+					var d = new Department {
+						Id = rs.GetInt32(0),
+						TreeName = rs.GetString(1)
 					};
 					departments.Add(d);
 				}
@@ -3187,17 +3273,19 @@ AND Pas = '{2}'",
 SELECT Email,
 	DepartmentID,
 	StoppedReason,
-	Stopped
+	Stopped,
+	UserID
 FROM SponsorInvite
 WHERE SponsorInviteID = " + userID
 			);
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				if (rs.Read()) {
 					var i = new SponsorInvite {
-						Email = GetString(rs, 0), //rs.GetString(0),
-						Department = new Department { Id = GetInt32(rs, 1) }, //rs.GetInt32(1) },
-						StoppedReason = GetInt32(rs, 2), //rs.GetInt32(2),
-						Stopped = GetDateTime(rs, 3) //rs.GetDateTime(3)
+						Email = GetString(rs, 0),
+						Department = new Department { Id = GetInt32(rs, 1) },
+						StoppedReason = GetInt32(rs, 2),
+						Stopped = GetDateTime(rs, 3),
+						User = new User { Id = GetInt32(rs, 4) }
 					};
 					return i;
 				}
@@ -3261,6 +3349,27 @@ WHERE SponsorInviteID = {0}",
 						Email = rs.GetString(0)
 					};
 					return i;
+				}
+			}
+			return null;
+		}
+		
+		public SponsorInvite ReadSponsorInvite(string email, int sponsorID)
+		{
+			string query = string.Format(
+				@"
+SELECT SponsorInviteID
+FROM SponsorInvite
+WHERE Email = '{0}'
+AND SponsorID = {1}",
+				email,
+				sponsorID
+			);
+			using (SqlDataReader rs = Db2.rs(query)) {
+				if (rs.Read()) {
+					var i = new SponsorInvite {
+						Id = rs.GetInt32(0)
+					};
 				}
 			}
 			return null;
@@ -3666,6 +3775,39 @@ AND si.Sent IS NULL",
 			return invites;
 		}
 		
+		public IList<SponsorInvite> FindSentInvitesBySponsor(int sponsorID, int sponsorAdminID)
+		{
+			string j = sponsorAdminID != -1
+				? string.Format("INNER JOIN SponsorAdminDepartment sad ON si.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
+				: "WHERE ";
+			string query = string.Format(
+				@"
+SELECT DISTINCT si.SponsorInviteID,
+	si.Email,
+	LEFT(REPLACE(CONVERT(VARCHAR(255),si.InvitationKey),'-',''),8)
+FROM SponsorInvite si
+{1}si.SponsorID = {0}
+AND si.UserID IS NULL
+AND si.StoppedReason IS NULL
+AND si.Sent IS NOT NULL
+AND DATEADD(hh,1,si.Sent) < GETDATE()",
+				sponsorID,
+				j
+			);
+			var invites = new List<SponsorInvite>();
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				while (rs.Read()) {
+					var i = new SponsorInvite {
+						Id = rs.GetInt32(0),
+						Email = rs.GetString(1),
+						InvitationKey = rs.GetString(2)
+					};
+					invites.Add(i);
+				}
+			}
+			return invites;
+		}
+		
 		public IList<SponsorExtendedSurvey> FindExtendedSurveysBySponsorAdmin(int sponsorID, int sponsorAdminID)
 		{
 			string w = sponsorAdminID != -1
@@ -3784,44 +3926,13 @@ ORDER BY s.Sponsor, ses.Internal, ses.RoundText",
 			return surveys;
 		}
 		
-		public IList<SponsorInvite> FindSentInvitesBySponsor(int sponsorID, int sponsorAdminID)
-		{
-			string j = sponsorAdminID != -1
-				? string.Format("INNER JOIN SponsorAdminDepartment sad ON si.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
-				: "WHERE ";
-			string query = string.Format(
-				@"
-SELECT DISTINCT si.SponsorInviteID,
-	si.Email,
-	LEFT(REPLACE(CONVERT(VARCHAR(255),si.InvitationKey),'-',''),8)
-FROM SponsorInvite si
-{1}si.SponsorID = {0}
-AND si.UserID IS NULL
-AND si.StoppedReason IS NULL
-AND si.Sent IS NOT NULL
-AND DATEADD(hh,1,si.Sent) < GETDATE()",
-				sponsorID,
-				j
-			);
-			var invites = new List<SponsorInvite>();
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				while (rs.Read()) {
-					var i = new SponsorInvite {
-						Id = rs.GetInt32(0),
-						Email = rs.GetString(1),
-						InvitationKey = rs.GetString(2)
-					};
-					invites.Add(i);
-				}
-			}
-			return invites;
-		}
-		
 		public IList<SponsorAdminDepartment> FindAdminDepartmentBySponsorAdmin(int sponsorAdminID)
 		{
 			string query = string.Format(
 				@"
-SELECT DepartmentID FROM SponsorAdminDepartment WHERE SponsorAdminID = {0}",
+SELECT DepartmentID
+FROM SponsorAdminDepartment
+WHERE SponsorAdminID = {0}",
 				sponsorAdminID
 			);
 			var departments = new List<SponsorAdminDepartment>();
@@ -3840,7 +3951,9 @@ SELECT DepartmentID FROM SponsorAdminDepartment WHERE SponsorAdminID = {0}",
 		{
 			string query = string.Format(
 				@"
-SELECT ManagerFunctionID FROM SponsorAdminFunction WHERE SponsorAdminID = {0}",
+SELECT ManagerFunctionID
+FROM SponsorAdminFunction
+WHERE SponsorAdminID = {0}",
 				sponsorAdminID
 			);
 			var functions = new List<SponsorAdminFunction>();
@@ -3910,6 +4023,31 @@ AND sbq.SponsorID = {0}",
 			return sponsors;
 		}
 		
+		public IList<SponsorBackgroundQuestion> FindBackgroundQuestions(int sponsorID)
+		{
+			string query = string.Format(
+				@"
+SELECT s.BQID,
+	b.Type
+FROM SponsorBQ s
+INNER JOIN BQ b ON s.BQID = b.BQID
+WHERE s.Hidden = 1 AND s.SponsorID = {0}
+ORDER BY s.SortOrder",
+				sponsorID
+			);
+			var questions = new List<SponsorBackgroundQuestion>();
+			using (SqlDataReader rs = Db2.rs(query)) {
+				while (rs.Read()) {
+					var q = new SponsorBackgroundQuestion {
+						Id = rs.GetInt32(0),
+						Question = new BackgroundQuestion { Id = rs.GetInt32(1) }
+					};
+					questions.Add(q);
+				}
+			}
+			return questions;
+		}
+		
 		public IList<SponsorProjectRoundUnit> FindBySponsorAndLanguage(int sponsorID, int langID)
 		{
 			string query = string.Format(
@@ -3918,7 +4056,7 @@ SELECT ISNULL(sprul.Nav, '?'),
 	spru.ProjectRoundUnitID
 FROM SponsorProjectRoundUnit spru
 LEFT OUTER JOIN SponsorProjectRoundUnitLang sprul ON spru.SponsorProjectRoundUnitID = sprul.SponsorProjectRoundUnitID
-WHERE spru.SponsorID = {0} 
+WHERE spru.SponsorID = {0}
 AND ISNULL(sprul.LangID, 1) = {1}",
 				sponsorID,
 				langID

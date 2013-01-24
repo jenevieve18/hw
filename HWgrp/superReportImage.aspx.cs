@@ -17,6 +17,9 @@ namespace HWgrp
 {
 	public partial class superReportImage : System.Web.UI.Page
 	{
+		IDepartmentRepository departmentReopsitory = AppContext.GetRepositoryFactory().CreateDepartmentRepository();
+		IReportRepository reportRepository = AppContext.GetRepositoryFactory().CreateReportRepository();
+		
 		private void Page_Load(object sender, System.EventArgs e)
 		{
 			string rnds1 = (HttpContext.Current.Request.QueryString["RNDS1"] != null ? HttpContext.Current.Request.QueryString["RNDS1"] : "");
@@ -80,72 +83,92 @@ namespace HWgrp
 			string join1 = "";
 			if (rndsd1 != "")
 			{
-				SqlDataReader rs2 = Db.rs("SELECT " +
-				                          "d.Department, " +
-				                          "d.DepartmentID, " +
-				                          "d.SortString " +
-				                          "FROM Department d " +
-				                          "WHERE d.DepartmentID IN (" + rndsd1 + ") " +
-				                          "ORDER BY d.SortString");
-				while (rs2.Read())
+//				SqlDataReader rs2 = Db.rs("SELECT " +
+//				                          "d.Department, " +
+//				                          "d.DepartmentID, " +
+//				                          "d.SortString " +
+//				                          "FROM Department d " +
+//				                          "WHERE d.DepartmentID IN (" + rndsd1 + ") " +
+//				                          "ORDER BY d.SortString");
+//				while (rs2.Read())
+				foreach (var d in departmentReopsitory.FindIn(rndsd1)) 
 				{
+//					join1 += "INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID " +
+//						"INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID " +
+//						"INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID " +
+//						"INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString," + rs2.GetString(2).Length + ") = '" + rs2.GetString(2) + "' ";
 					join1 += "INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID " +
 						"INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID " +
 						"INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID " +
-						"INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString," + rs2.GetString(2).Length + ") = '" + rs2.GetString(2) + "' ";
+						"INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString," + d.SortString.Length + ") = '" + d.SortString + "' ";
 				}
-				rs2.Close();
+//				rs2.Close();
 			}
 			string join2 = "";
 			if (rndsd2 != "")
 			{
-				SqlDataReader rs2 = Db.rs("SELECT " +
-				                          "d.Department, " +
-				                          "d.DepartmentID, " +
-				                          "d.SortString " +
-				                          "FROM Department d " +
-				                          "WHERE d.DepartmentID IN (" + rndsd2 + ") " +
-				                          "ORDER BY d.SortString");
-				while (rs2.Read())
+//				SqlDataReader rs2 = Db.rs("SELECT " +
+//				                          "d.Department, " +
+//				                          "d.DepartmentID, " +
+//				                          "d.SortString " +
+//				                          "FROM Department d " +
+//				                          "WHERE d.DepartmentID IN (" + rndsd2 + ") " +
+//				                          "ORDER BY d.SortString");
+//				while (rs2.Read())
+				foreach (var d in departmentReopsitory.FindIn(rndsd2))
 				{
+//					join2 += "INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID " +
+//						"INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID " +
+//						"INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID " +
+//						"INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString," + rs2.GetString(2).Length + ") = '" + rs2.GetString(2) + "' ";
 					join2 += "INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID " +
 						"INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID " +
 						"INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID " +
-						"INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString," + rs2.GetString(2).Length + ") = '" + rs2.GetString(2) + "' ";
+						"INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString," + d.SortString.Length + ") = '" + d.SortString + "' ";
 				}
-				rs2.Close();
+//				rs2.Close();
 			}
 
 			int cx = 0, type = 0, q = 0, o = 0, rac = 0, pl = 0;
-			Graph g;
+			ExtendedGraph g;
 
 			int steps = 0, GB = 3;
 			bool stdev = (rnds2 == "");
 			string groupBy = "";
 
-			SqlDataReader rs = Db.rs("SELECT " +
-			                         "rp.Type, " +
-			                         "(" +
-			                         "SELECT COUNT(*) " +
-			                         "FROM ReportPartComponent rpc " +
-			                         "WHERE rpc.ReportPartID = rp.ReportPartID" +
-			                         "), " +
-			                         "rp.QuestionID, " +
-			                         "rp.OptionID, " +
-			                         "rp.RequiredAnswerCount, " +
-			                         "rp.PartLevel " +
-			                         "FROM ReportPart rp " +
-			                         "WHERE rp.ReportPartID = " + HttpContext.Current.Request.QueryString["RPID"], "eFormSqlConnection");
-			if (rs.Read())
+//			SqlDataReader rs = Db.rs("SELECT " +
+//			                         "rp.Type, " +
+//			                         "(" +
+//			                         "SELECT COUNT(*) " +
+//			                         "FROM ReportPartComponent rpc " +
+//			                         "WHERE rpc.ReportPartID = rp.ReportPartID" +
+//			                         "), " +
+//			                         "rp.QuestionID, " +
+//			                         "rp.OptionID, " +
+//			                         "rp.RequiredAnswerCount, " +
+//			                         "rp.PartLevel " +
+//			                         "FROM ReportPart rp " +
+//			                         "WHERE rp.ReportPartID = " + HttpContext.Current.Request.QueryString["RPID"], "eFormSqlConnection");
+//			if (rs.Read())
+			SqlDataReader rs;
+			int rpid = Convert.ToInt32(HttpContext.Current.Request.QueryString["RPID"]);
+			var reportPart = reportRepository.ReadReportPart(rpid);
+			if (reportPart != null)
 			{
-				type = rs.GetInt32(0);
-				cx = rs.GetInt32(1);
-				q = (rs.IsDBNull(2) ? 0 : rs.GetInt32(2));
-				o = (rs.IsDBNull(3) ? 0 : rs.GetInt32(3));
-				rac = (rs.IsDBNull(4) ? 0 : rs.GetInt32(4));
-				pl = (rs.IsDBNull(5) ? 0 : rs.GetInt32(5));
+//				type = rs.GetInt32(0);
+//				cx = rs.GetInt32(1);
+//				q = (rs.IsDBNull(2) ? 0 : rs.GetInt32(2));
+//				o = (rs.IsDBNull(3) ? 0 : rs.GetInt32(3));
+//				rac = (rs.IsDBNull(4) ? 0 : rs.GetInt32(4));
+//				pl = (rs.IsDBNull(5) ? 0 : rs.GetInt32(5));
+				type = reportPart.Type;
+				cx = reportPart.Components.Count;
+				q = reportPart.Question.Id;
+				o = reportPart.Option.Id;
+				rac = reportPart.RequiredAnswerCount;
+				pl = reportPart.PartLevel;
 			}
-			rs.Close();
+//			rs.Close();
 
 			#region group stats
 
@@ -153,17 +176,18 @@ namespace HWgrp
 
 			if (type == 8)
 			{
-				switch (GB)
-				{
-						case 1: groupBy = "dbo.cf_yearWeek"; break;
-						case 2: groupBy = "dbo.cf_year2Week"; break;
-						case 3: groupBy = "dbo.cf_yearMonth"; break;
-						case 4: groupBy = "dbo.cf_year3Month"; break;
-						case 5: groupBy = "dbo.cf_year6Month"; break;
-						case 6: groupBy = "YEAR"; break;
-						case 7: groupBy = "dbo.cf_year2WeekEven"; break;
-				}
-				g = new Graph(895, 440, "#FFFFFF");
+//				switch (GB)
+//				{
+//						case 1: groupBy = "dbo.cf_yearWeek"; break;
+//						case 2: groupBy = "dbo.cf_year2Week"; break;
+//						case 3: groupBy = "dbo.cf_yearMonth"; break;
+//						case 4: groupBy = "dbo.cf_year3Month"; break;
+//						case 5: groupBy = "dbo.cf_year6Month"; break;
+//						case 6: groupBy = "YEAR"; break;
+//						case 7: groupBy = "dbo.cf_year2WeekEven"; break;
+//				}
+				groupBy = GroupFactory.GetGroupBy(GB);
+				g = new ExtendedGraph(895, 440, "#FFFFFF");
 
 				rs = Db.rs("SELECT " +
 				           "" + groupBy + "(MAX(a.EndDT)) - " + groupBy + "(MIN(a.EndDT)), " +
@@ -269,7 +293,7 @@ namespace HWgrp
 			}
 			else
 			{
-				g = new Graph(895, 550, "#FFFFFF");
+				g = new ExtendedGraph(895, 550, "#FFFFFF");
 				g.setMinMax(0f, 100f);
 
 				cx += 2;
@@ -284,94 +308,94 @@ namespace HWgrp
 
 			if (type == 8)
 			{
-
+				g.DrawBottomString(minDT, maxDT, GB);
 				#region Bottom string
-				int dx = 0;
-				for (int i = minDT; i <= maxDT; i++)
-				{
-					dx++;
-
-					switch (GB)
-					{
-						case 1:
-							{
-								int d = i;
-								int w = d % 52;
-								if (w == 0)
-								{
-									w = 52;
-								}
-								string v = "v" + w + ", " + (d / 52);
-								g.drawBottomString(v, dx, true);
-								break;
-							}
-						case 2:
-							{
-								int d = i * 2;
-								int w = d % 52;
-								if (w == 0)
-								{
-									w = 52;
-								}
-								string v = "v" + (w - 1) + "-" + w + ", " + (d - ((d - 1) % 52)) / 52;
-								g.drawBottomString(v, dx, true);
-								break;
-							}
-						case 3:
-							{
-								int d = i;
-								int w = d % 12;
-								if (w == 0)
-								{
-									w = 12;
-								}
-								string v = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedMonthNames[w - 1] + ", " + ((d - w) / 12);
-								g.drawBottomString(v, dx, true);
-								break;
-							}
-						case 4:
-							{
-								int d = i * 3;
-								int w = d % 12;
-								if (w == 0)
-								{
-									w = 12;
-								}
-								string v = "Q" + (w / 3) + ", " + ((d - w) / 12);
-								g.drawBottomString(v, dx, true);
-								break;
-							}
-						case 5:
-							{
-								int d = i * 6;
-								int w = d % 12;
-								if (w == 0)
-								{
-									w = 12;
-								}
-								string v = ((d - w) / 12) + "/" + (w / 6);
-								g.drawBottomString(v, dx, true);
-								break;
-							}
-						case 6:
-							{
-								g.drawBottomString(i.ToString(), dx, true);
-								break;
-							}
-						case 7:
-							{
-								int d = i * 2;
-								int w = d % 52;
-								if (w == 0)
-								{
-									w = 52;
-								}
-								string v = "v" + w + "-" + (w + 1) + ", " + ((d + 1) - (d % 52)) / 52;
-								g.drawBottomString(v, dx, true);
-								break;
-							}
-					}
-				}
+//				int dx = 0;
+//				for (int i = minDT; i <= maxDT; i++)
+//				{
+//					dx++;
+//
+//					switch (GB)
+//					{
+//						case 1:
+//							{
+//								int d = i;
+//								int w = d % 52;
+//								if (w == 0)
+//								{
+//									w = 52;
+//								}
+//								string v = "v" + w + ", " + (d / 52);
+//								g.drawBottomString(v, dx, true);
+//								break;
+//							}
+//						case 2:
+//							{
+//								int d = i * 2;
+//								int w = d % 52;
+//								if (w == 0)
+//								{
+//									w = 52;
+//								}
+//								string v = "v" + (w - 1) + "-" + w + ", " + (d - ((d - 1) % 52)) / 52;
+//								g.drawBottomString(v, dx, true);
+//								break;
+//							}
+//						case 3:
+//							{
+//								int d = i;
+//								int w = d % 12;
+//								if (w == 0)
+//								{
+//									w = 12;
+//								}
+//								string v = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedMonthNames[w - 1] + ", " + ((d - w) / 12);
+//								g.drawBottomString(v, dx, true);
+//								break;
+//							}
+//						case 4:
+//							{
+//								int d = i * 3;
+//								int w = d % 12;
+//								if (w == 0)
+//								{
+//									w = 12;
+//								}
+//								string v = "Q" + (w / 3) + ", " + ((d - w) / 12);
+//								g.drawBottomString(v, dx, true);
+//								break;
+//							}
+//						case 5:
+//							{
+//								int d = i * 6;
+//								int w = d % 12;
+//								if (w == 0)
+//								{
+//									w = 12;
+//								}
+//								string v = ((d - w) / 12) + "/" + (w / 6);
+//								g.drawBottomString(v, dx, true);
+//								break;
+//							}
+//						case 6:
+//							{
+//								g.drawBottomString(i.ToString(), dx, true);
+//								break;
+//							}
+//						case 7:
+//							{
+//								int d = i * 2;
+//								int w = d % 52;
+//								if (w == 0)
+//								{
+//									w = 52;
+//								}
+//								string v = "v" + w + "-" + (w + 1) + ", " + ((d + 1) - (d % 52)) / 52;
+//								g.drawBottomString(v, dx, true);
+//								break;
+//							}
+//					}
+//				}
 				#endregion
 
 				int bx = 0;

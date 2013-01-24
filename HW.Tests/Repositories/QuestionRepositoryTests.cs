@@ -29,7 +29,7 @@ namespace HW.Tests.Repositories
 		[Test]
 		public void TestFindLikeBackgroundQuestions()
 		{
-			r.FindLikeBackgroundQuestions(1);
+			r.FindLikeBackgroundQuestions("1");
 		}
 	}
 }

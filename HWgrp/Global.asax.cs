@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
@@ -12,8 +13,7 @@ namespace HWgrp
 	{
 		protected void Application_Start(object sender, EventArgs e)
 		{
-			AppContext.SetRepositoryFactory(new RepositoryFactoryStub());
-//			AppContext.SetRepositoryFactory(new SqlRepositoryFactory());
+			AppContext.SetRepositoryFactory(ConfigurationManager.AppSettings["RepositoryFactory"]);
 		}
 
 		protected void Session_Start(object sender, EventArgs e)

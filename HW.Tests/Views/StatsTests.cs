@@ -5,6 +5,7 @@
 
 using System;
 using HW.Core;
+using HWgrp;
 using NUnit.Framework;
 
 namespace HW.Tests.Views
@@ -12,48 +13,49 @@ namespace HW.Tests.Views
 	[TestFixture]
 	public class StatsTests
 	{
+		stats p;
 		SqlLanguageRepository langRepository;
 		SqlSponsorRepository sponsorRepository;
-		SqlReportRepository reportRepository;
 		SqlDepartmentRepository departmentRepository;
+		SqlReportRepository reportRepository;
 		
 		[SetUp]
 		public void Setup()
 		{
 			langRepository = new SqlLanguageRepository();
 			sponsorRepository = new SqlSponsorRepository();
-			reportRepository = new SqlReportRepository();
 			departmentRepository = new SqlDepartmentRepository();
+			reportRepository = new SqlReportRepository();
+			AppContext.SetRepositoryFactory(new SqlRepositoryFactory());
+			p = new stats();
 		}
 		
 		[Test]
-		public void TestPageLoad()
+		public void TestProperties()
 		{
-			int sponsorID = 1;
+			int sponsorID = 0;
+//			p.Languages = langRepository.FindBySponsor(sponsorID);
+			int selectedLangID = 0;
+			p.ProjectRoundUnits = sponsorRepository.FindBySponsorAndLanguage(sponsorID, selectedLangID);
+//			p.BackgroundQuestions = sponsorRepository.FindBySponsor(sponsorID);
 			int sponsorAdminID = 0;
-			bool isPostBack = true;
-			if (!isPostBack) {
-				foreach (var l in langRepository.FindBySponsor(sponsorID)) {
-					// Add to language combo box
-				}
-				int selectedLangID = 1;
-				foreach (var p in sponsorRepository.FindBySponsorAndLanguage(sponsorID, selectedLangID)) {
-					// Add project round unit to combo box
-				}
-				foreach (var s in sponsorRepository.FindBySponsor(sponsorID)) {
-					// Add background questions to combo box
-				}
-			}
-			foreach (var d in departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID)) {
-				// Add departments
-			}
+			p.Departments = departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID);
 		}
 		
 		[Test]
 		public void a()
 		{
-			sponsorRepository.FindBySponsorAndLanguage(101, 1);
-			reportRepository.FindByProjectAndLanguage(0, 1);
+			int sponsorID = 1;
+			int selectedLangID = 1;
+			var x = sponsorRepository.FindBySponsorAndLanguage(sponsorID, selectedLangID);
+		}
+		
+		[Test]
+		public void b()
+		{
+			int selectedProjectRoundUnitID = 0;
+			int selectedLangID = 1;
+			var x = reportRepository.FindByProjectAndLanguage(selectedProjectRoundUnitID, selectedLangID);
 		}
 	}
 }

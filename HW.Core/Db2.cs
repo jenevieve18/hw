@@ -17,6 +17,7 @@ public class Db2
 	{
 		return rs(sqlString, "SqlConnection");
 	}
+	
 	public static SqlDataReader rs(string sqlString, string con)
 	{
 		SqlConnection dataConnection = new SqlConnection(ConfigurationSettings.AppSettings[con]);
@@ -30,6 +31,7 @@ public class Db2
 	{
 		exec(sqlString, "SqlConnection");
 	}
+	
 	public static void exec(string sqlString, string con)
 	{
 		SqlConnection dataConnection = new SqlConnection(ConfigurationSettings.AppSettings[con]);
@@ -141,6 +143,7 @@ public class Db2
 //	}
 //	
 	static ISponsorRepository sponsorRepository = AppContext.GetRepositoryFactory().CreateSponsorRepository();
+
 	static IManagerFunctionRepository managerFunctionRepository = AppContext.GetRepositoryFactory().CreateManagerFunctionRepository();
 
 	public static string nav()
@@ -217,7 +220,6 @@ public class Db2
 		//    "></td>";
 		//ret += "<td><img src=\"img/null.gif\" width=\"25\" height=\"1\"></td>";
 		//ret += "<td valign=\"top\"><br/>";
-
 		if (HttpContext.Current.Request.Url.AbsolutePath.IndexOf("super") < 0 && HttpContext.Current.Session["SponsorID"] != null || HttpContext.Current.Request.Url.AbsolutePath.IndexOf("super") >= 0 && HttpContext.Current.Session["SuperAdminID"] != null)
 		{
 			sb.Append("<div class=\"logincontainer grid_5 alpha omega\">");
@@ -258,7 +260,7 @@ public class Db2
 //					sb.Append("<a title=\"" + r.GetString(2) + "\" " + (active ? "class=\"active\"" : "") + " href=\"" + r.GetString(1) + "?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">" + r.GetString(0) + "</a>");
 					sb.Append("<a title=\"" + f.Expl + "\" " + (active ? "class=\"active\"" : "") + " href=\"" + f.URL + "?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">" + f.Function + "</a>");
 					
-					if(active)
+					if (active)
 					{
 //						desc = r.GetString(2);
 						desc = f.Expl;
@@ -292,7 +294,6 @@ public class Db2
 		//ret += "</table>";
 		
 		//ret += "<div id=\"container\">";
-
 		return sb.ToString();
 	}
 

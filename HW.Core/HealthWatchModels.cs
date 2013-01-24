@@ -198,6 +198,11 @@ namespace HW.Core
 	public class Language : BaseModel
 	{
 		public string Name { get; set; }
+
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 	
 	public interface IGraphType
@@ -279,10 +284,12 @@ namespace HW.Core
 		public void Draw(List<Series> series)
 		{
 			foreach (Series s in series) {
-				PointV p = s.Points[0];
-				Graph.DrawWhiskers((int)p.X, (int)p.UpperWhisker, (int)p.LowerWhisker);
-				Graph.DrawBar2(s.Color, (int)p.X, (int)p.LowerBox, (int)p.UpperBox);
-				Graph.DrawMedian((int)p.X, (int)p.Y);
+				if (s.Points.Count == 1) {
+					PointV p = s.Points[0];
+					Graph.DrawWhiskers((int)p.X, (int)p.UpperWhisker, (int)p.LowerWhisker);
+					Graph.DrawBar2(s.Color, (int)p.X, (int)p.LowerBox, (int)p.UpperBox);
+					Graph.DrawMedian((int)p.X, (int)p.Y);
+				}
 			}
 		}
 	}
@@ -962,6 +969,12 @@ namespace HW.Core
 		public SponsorProjectRoundUnit SponsorProjectRoundUnit { get; set; }
 		public Language Language { get; set; }
 		public string Navigation { get; set; }
+		
+		public override string ToString()
+		{
+			return Language.ToString();
+		}
+
 	}
 	
 	public class SuperAdmin : BaseModel
