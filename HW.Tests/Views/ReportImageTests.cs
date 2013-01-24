@@ -57,7 +57,7 @@ namespace HW.Tests.Views
 		[Test]
 		public void b()
 		{
-			var x = new SqlDepartmentRepository().FindBySponsorWithSponsorAdmin(1, 1, "0");
+			var x = new SqlDepartmentRepository().FindBySponsorWithSponsorAdminIn(1, 1, "0");
 		}
 		
 		[Test]

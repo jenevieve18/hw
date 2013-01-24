@@ -76,13 +76,13 @@ namespace HW.Tests.Repositories
 		[Test]
 		public void TestFindBySponsor()
 		{
-			r.FindBySponsorOrderedBySortString(1, "0");
+			r.FindBySponsorOrderedBySortStringIn(1, "0");
 		}
 		
 		[Test]
 		public void TestFindBySponsorWithSponsorAdmin()
 		{
-			r.FindBySponsorWithSponsorAdmin(1, 1, "0");
+			r.FindBySponsorWithSponsorAdminIn(1, 1, "0");
 		}
 		
 		[Test]

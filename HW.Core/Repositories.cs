@@ -173,15 +173,19 @@ namespace HW.Core
 		
 		IList<Department> FindBySponsorWithSponsorAdminAndTree(int sponsorID, int sponsorAdminID);
 		
-		IList<Department> FindBySponsorWithSponsorAdmin(int sponsorID, int sponsorAdminID, string GID);
+		IList<Department> FindBySponsorWithSponsorAdmin(int sponsorID, int sponsorAdminID);
+		
+		IList<Department> FindBySponsorOrderedBySortString(int sponsorID);
+		
+		IList<Department> FindBySponsorWithSponsorAdminIn(int sponsorID, int sponsorAdminID, string GID);
+		
+		IList<Department> FindBySponsorOrderedBySortStringIn(int sponsorID, string GID);
 		
 		IList<Department> FindBySponsor(int sponsorID);
 		
 		IList<Department> FindBySponsorWithSponsorAdminInDepth(int sponsorID, int sponsorAdminID);
 		
 		IList<Department> FindBySponsorInDepth(int sponsorID);
-		
-		IList<Department> FindBySponsorOrderedBySortString(int sponsorID, string GID);
 	}
 	
 	public interface IUserRepository : IBaseRepository<User>
@@ -1556,9 +1560,24 @@ namespace HW.Core
 			return departments;
 		}
 		
-		public IList<Department> FindBySponsorWithSponsorAdmin(int sponsorID, int sponsorAdminID, string GID)
+		public IList<Department> FindBySponsorWithSponsorAdminIn(int sponsorID, int sponsorAdminID, string GID)
 		{
 			return Data;
+		}
+		
+		public IList<Department> FindBySponsorOrderedBySortStringIn(int sponsorID, string GID)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public IList<Department> FindBySponsorWithSponsorAdmin(int sponsorID, int sponsorAdminID)
+		{
+			return Data;
+		}
+		
+		public IList<Department> FindBySponsorOrderedBySortString(int sponsorID)
+		{
+			throw new NotImplementedException();
 		}
 		
 		public IList<Department> FindBySponsor(int sponsorID)
@@ -1572,11 +1591,6 @@ namespace HW.Core
 		}
 		
 		public IList<Department> FindBySponsorInDepth(int sponsorID)
-		{
-			throw new NotImplementedException();
-		}
-		
-		public IList<Department> FindBySponsorOrderedBySortString(int sponsorID, string GID)
 		{
 			throw new NotImplementedException();
 		}

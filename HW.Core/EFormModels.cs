@@ -106,7 +106,7 @@ namespace HW.Core
 					{
 						string tmpDesc = ""; int sslen = 0; string tmpSS = "";
 
-						IList<Department> departments = SPONS != -1 ? departmentRepository.FindBySponsorWithSponsorAdmin(SID, SPONS, GID) : departmentRepository.FindBySponsorOrderedBySortString(SID, GID);
+						IList<Department> departments = SPONS != -1 ? departmentRepository.FindBySponsorWithSponsorAdmin(SID, SPONS) : departmentRepository.FindBySponsorOrderedBySortString(SID);
 						foreach (Department d in departments) {
 							if (sslen == 0) {
 								sslen = d.SortString.Length;
@@ -139,7 +139,7 @@ namespace HW.Core
 					}
 				case 1:
 					{
-						IList<Department> departments = SPONS != -1 ? departmentRepository.FindBySponsorWithSponsorAdmin(SID, SPONS, GID) : departmentRepository.FindBySponsorOrderedBySortString(SID, GID);
+						IList<Department> departments = SPONS != -1 ? departmentRepository.FindBySponsorWithSponsorAdminIn(SID, SPONS, GID) : departmentRepository.FindBySponsorOrderedBySortStringIn(SID, GID);
 						foreach (Department d in departments) {
 							item.Add(d.Id.ToString());
 							desc.Add(d.Id.ToString(), d.Name);
@@ -160,7 +160,7 @@ namespace HW.Core
 					}
 				case 2:
 					{
-						IList<Department> departments = SPONS != -1 ? departmentRepository.FindBySponsorWithSponsorAdmin(SID, SPONS, GID) : departmentRepository.FindBySponsorOrderedBySortString(SID, GID);
+						IList<Department> departments = SPONS != -1 ? departmentRepository.FindBySponsorWithSponsorAdminIn(SID, SPONS, GID) : departmentRepository.FindBySponsorOrderedBySortStringIn(SID, GID);
 						foreach (Department d in departments) {
 							item.Add(d.Id.ToString());
 							desc.Add(d.Id.ToString(), d.Name);
@@ -191,7 +191,7 @@ namespace HW.Core
 						int sslen = 0; 
 						string tmpSS = "";
 
-						IList<Department> departments = SPONS != -1 ? departmentRepository.FindBySponsorWithSponsorAdmin(SID, SPONS, GID) : departmentRepository.FindBySponsorOrderedBySortString(SID, GID);
+						IList<Department> departments = SPONS != -1 ? departmentRepository.FindBySponsorWithSponsorAdmin(SID, SPONS) : departmentRepository.FindBySponsorOrderedBySortString(SID);
 						foreach (Department d in departments) {
 							if (sslen == 0) {
 								sslen = d.SortString.Length;
