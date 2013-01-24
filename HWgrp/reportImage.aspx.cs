@@ -556,15 +556,15 @@ namespace HWgrp
 					itemWidth = 240;
 				}
 				
-				explanations.Add(
-					new Explanation {
-						Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
-						Color = 0,
-						Right = false,
-						Box = false,
-						HasAxis = false
-					}
-				);
+//				explanations.Add(
+//					new Explanation {
+//						Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+//						Color = 0,
+//						Right = false,
+//						Box = false,
+//						HasAxis = false
+//					}
+//				);
 				ReportPartComponent c = reportRepository.ReadComponentByPartAndLanguage(rpid, langID);
 				if (c != null) {
 					int bx = 0;
