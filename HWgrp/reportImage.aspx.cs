@@ -444,10 +444,8 @@ namespace HWgrp
 								lastDT++;
 								cx++;
 							}
-//							if (a.CountV >= rac) {
 							if (a.Values.Count >= rac) {
 								if (COUNT == 1) {
-//									g.DrawBottomString(GB, a.SomeInteger, cx, (COUNT == 1 ? ", n = " + a.CountV : ""));
 									g.DrawBottomString(GB, a.SomeInteger, cx, (COUNT == 1 ? ", n = " + a.Values.Count : ""));
 								}
 								List<double> n = new List<double>();
@@ -455,7 +453,6 @@ namespace HWgrp
 									n.Add((double)v.ValueInt);
 								}
 								HWList l = new HWList(n);
-//								s.Points.Add(new PointV { X = cx, Y = a.AverageV, Deviation = a.StandardDeviation, T = 2 + (!stdev ? 1 : 0) });
 								s.Points.Add(new PointV { X = cx, Y = (float)l.Mean, Deviation = (float)l.StandardDeviation, T = 2 + (!stdev ? 1 : 0) });
 							}
 							lastDT = a.SomeInteger;
@@ -556,15 +553,6 @@ namespace HWgrp
 					itemWidth = 240;
 				}
 				
-//				explanations.Add(
-//					new Explanation {
-//						Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
-//						Color = 0,
-//						Right = false,
-//						Box = false,
-//						HasAxis = false
-//					}
-//				);
 				ReportPartComponent c = reportRepository.ReadComponentByPartAndLanguage(rpid, langID);
 				if (c != null) {
 					int bx = 0;
@@ -579,7 +567,6 @@ namespace HWgrp
 							}
 						);
 						int lastDT = minDT - 1;
-//						Series s = new Series { Color = bx + 4 };
 						foreach (Answer a in answerRepository.FindByQuestionAndOptionJoinedAndGrouped2(join[i].ToString(), groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty)) {
 							Series s = new Series { Color = bx + 4 };
 							while (lastDT + 1 < a.SomeInteger) {
@@ -598,19 +585,9 @@ namespace HWgrp
 								s.Points.Add(new PointV { X = cx, Y = (float)l.Median, UpperWhisker = l.UpperWhisker, LowerWhisker = l.LowerWhisker, UpperBox = l.UpperBox, LowerBox = l.LowerBox });
 							}
 							lastDT = a.SomeInteger;
-							/*List<double> n = new List<double>();
-							foreach (var v in a.Values) {
-								n.Add((double)v.ValueInt);
-							}
-							HWList l = new HWList(n);
-							s.Points.Add(new PointV { X = cx, Y = (float)l.Median, UpperWhisker = l.UpperWhisker, LowerWhisker = l.LowerWhisker, UpperBox = l.UpperBox, LowerBox = l.LowerBox });
-							lastDT = a.SomeInteger;*/
 							cx++;
 							g.Series.Add(s);
 						}
-//						g.Series.Add(s);
-//						bx++;
-//						cx++;
 					}
 				}
 			} else {
