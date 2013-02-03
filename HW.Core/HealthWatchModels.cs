@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Globalization;
 using System.Threading;
+using System.Web;
 using MySql.Data.MySqlClient;
 
 namespace HW.Core
@@ -235,44 +236,95 @@ namespace HW.Core
 	{
 		public int X { get; set; }
 		public float Y { get; set; }
-		public float Deviation { get; set; }
-		public int T { get; set; }
+		public HWList Values { get; set; }
+		public string Description { get; set; }
 		
-		public double LowerWhisker { get; set; }
-		public double UpperWhisker { get; set; }
-		public double LowerBox { get; set; }
-		public double UpperBox { get; set; }
-		public double Median { get; set; }
+//		public int T { get; set; }
+//		public float Deviation { get; set; }
+//		public double LowerWhisker { get; set; }
+//		public double UpperWhisker { get; set; }
+//		public double LowerBox { get; set; }
+//		public double UpperBox { get; set; }
+//		public double Median { get; set; }
 	}
 	
 	public class LineGraphType : IGraphType
 	{
 		public ExtendedGraph Graph { get; set; }
 		bool stdev;
+		int t;
 		
-		public LineGraphType() : this(false)
+		public LineGraphType() : this(false, 2)
 		{
 		}
 		
-		public LineGraphType(bool stdev)
+		public LineGraphType(bool stdev, int t)
 		{
 			this.stdev = stdev;
+			this.t = t;
 		}
 		
 		public void Draw(List<Series> series)
 		{
+			Graph.DrawExplanations();
 			foreach (Series s in series) {
+				Graph.drawColorExplBox(s.Description, s.Color, s.X, s.Y);
 				for (int i = 0; i < s.Points.Count; i++) {
 					PointV p = s.Points[i];
+					HWList l = p.Values;
 					if (stdev) {
-						Graph.DrawDeviation(s.Color, (int)p.X, (int)p.Y, (int)p.Deviation);
+						Graph.DrawDeviation(s.Color, (int)p.X, (int)l.Mean, (int)l.StandardDeviation);
 					}
-					Graph.drawCircle((int)p.X, p.Y, 4);
+					Graph.drawCircle((int)p.X, (int)l.Mean, 4);
 					if (i > 0) {
 						PointV pp = s.Points[i -1];
-						Graph.drawStepLine(s.Color, (int)p.X, p.Y, (int)pp.X, pp.Y, p.T);
+						HWList ll = pp.Values;
+						Graph.drawStepLine(s.Color, (int)p.X, (int)l.Mean, (int)pp.X, (int)ll.Mean, t);
 					}
 				}
+			}
+		}
+	}
+	
+	public class BarGraphTYpe : IGraphType
+	{
+		public ExtendedGraph Graph { get; set; }
+		
+		public void Draw(List<Series> series)
+		{
+//			Graph.DrawBars(new object(), 10, tot, bars);
+			int steps = 10;
+			
+			Graph.setMinMax(0f, 100f);
+
+			steps += 2;
+			int tot = 2000;
+			
+			Graph.computeSteping((steps <= 1 ? 2 : steps));
+			Graph.drawOutlines(11);
+//			Graph.drawAxis(disabled);
+			Graph.drawAxis(new object());
+
+			int i = 0;
+			decimal sum = 0;
+			Series s = series[0];
+//			foreach (Bar b in bars) {
+			foreach (var p in s.Points) {
+				i++;
+				sum += (decimal)p.Y;
+				Graph.drawBar(s.Color, i, p.Y);
+				Graph.drawBottomString(p.Description, i, true);
+//				if (b.HasReference) {
+//					Graph.drawReference(i, b.Reference);
+//				}
+				Graph.drawReference(i, 12);
+			}
+//			foreach (int l in referenceLines) {
+//				drawReferenceLine(l, " = riktvärde");
+//			}
+			if (tot > 0) {
+				Graph.drawBar(4, ++i, Convert.ToInt32(Math.Round((tot - sum) / tot * 100M, 0)));
+				Graph.drawBottomString("Inget svar", i, true);
 			}
 		}
 	}
@@ -283,13 +335,13 @@ namespace HW.Core
 		
 		public void Draw(List<Series> series)
 		{
-			foreach (Series s in series) {
-				if (s.Points.Count == 1) {
-					PointV p = s.Points[0];
-					Graph.DrawWhiskers((int)p.X, (int)p.UpperWhisker, (int)p.LowerWhisker);
-					Graph.DrawBar2(s.Color, (int)p.X, (int)p.LowerBox, (int)p.UpperBox);
-					Graph.DrawMedian((int)p.X, (int)p.Y);
-				}
+			Series s = series[0];
+			Graph.drawColorExplBox(s.Description, s.Color, s.X, s.Y);
+			foreach (PointV p in s.Points) {
+				HWList l = p.Values;
+				Graph.DrawWhiskers((int)p.X, (int)l.UpperWhisker, (int)l.LowerWhisker);
+				Graph.DrawBar2(s.Color, (int)p.X, (int)l.LowerBox, (int)l.UpperBox);
+				Graph.DrawMedian((int)p.X, (int)l.Median);
 			}
 		}
 	}
@@ -298,6 +350,13 @@ namespace HW.Core
 	{
 		public List<PointV> Points { get; set; }
 		public int Color { get; set; }
+		public string Description { get; set; }
+		
+		public bool Right { get; set; }
+		public bool Box { get; set; }
+		public bool HasAxis { get; set; }
+		public int X { get; set; }
+		public int Y { get; set; }
 		
 		public Series()
 		{
@@ -308,12 +367,15 @@ namespace HW.Core
 	public class ExtendedGraph : Graph
 	{
 		IGraphType type;
-		List<Series> series;
+//		List<Series> series;
 		
-		public List<Series> Series {
-			get { return series; }
-			set { series = value; }
-		}
+		public List<IExplanation> Explanations { get; set; }
+		
+//		public List<Series> Series {
+//			get { return series; }
+//			set { series = value; }
+//		}
+		public List<Series> Series { get; set; }
 		
 		public IGraphType Type {
 			get { return type; }
@@ -323,8 +385,9 @@ namespace HW.Core
 		public ExtendedGraph(int width, int height, string color) : base(width, height, color)
 		{
 			Series = new List<Series>();
+			Explanations = new List<IExplanation>();
 			
-			Type = new LineGraphType(false);
+			Type = new LineGraphType(false, 2); // TODO: Why default to line graph?
 		}
 		
 		public void DrawDeviation(int color, int cx, int newVal, int newStd)
@@ -442,15 +505,15 @@ namespace HW.Core
 //		{
 //			drawBar2(color, i, min + 14, v, steping, barW, 1, 0, 100, false, false);
 //		}
-		
-		public void DrawExplanations(List<IExplanation> explanations)
+//
+		public void DrawExplanations()
 		{
-			foreach (var e in explanations) {
+			foreach (var e in Explanations) {
 				drawAxis(e.HasAxis);
 				drawAxisExpl(e.Description, e.Color, e.Right, e.Box);
 			}
 		}
-		
+
 //		public void DrawCircles(List<ICircle> circles)
 //		{
 //			foreach (var c in circles) {
@@ -471,12 +534,12 @@ namespace HW.Core
 //			}
 //		}
 		
-		public void DrawExplanationBoxes(List<IExplanation> explanationBoxes)
-		{
-			foreach (var e in explanationBoxes) {
-				drawColorExplBox(e.Description, e.Color, e.X, e.Y);
-			}
-		}
+//		public void DrawExplanationBoxes(List<IExplanation> explanationBoxes)
+//		{
+//			foreach (var e in explanationBoxes) {
+//				drawColorExplBox(e.Description, e.Color, e.X, e.Y);
+//			}
+//		}
 		
 		public void DrawBars(object disabled, int steps, List<Bar> bars)
 		{
@@ -540,6 +603,27 @@ namespace HW.Core
 				}
 				if (i.YellowHigh < 100) {
 					drawBgFromString(Math.Max(minVal, (float)Convert.ToDouble(i.YellowHigh)), maxVal, "FFA8A8");                           // red
+				}
+			}
+		}
+		
+		public void DrawBackgroundFromIndexes2(List<IIndex> indexes)
+		{
+			foreach (var i in indexes) {
+				if (i.YellowLow > 0) {
+					drawBgFromString2(minVal, Math.Min(maxVal, (float)Convert.ToDouble(i.YellowLow)), "FFA8A8");                             // red
+				}
+				if (i.YellowLow < 100 && i.GreenLow > 0) {
+					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.YellowLow)), Math.Min(maxVal, (float)Convert.ToDouble(i.GreenLow)), "FFFEBE");    // yellow
+				}
+				if (i.GreenLow < 100 && i.GreenHigh > 0) {
+					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.GreenLow)), Math.Min(maxVal, (float)Convert.ToDouble(i.GreenHigh)), "CCFFBB");   // green
+				}
+				if (i.GreenHigh < 100 && i.YellowHigh > 0) {
+					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.GreenHigh)), Math.Min(maxVal, (float)Convert.ToDouble(i.YellowHigh)), "FFFEBE"); // yellow
+				}
+				if (i.YellowHigh < 100) {
+					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.YellowHigh)), maxVal, "FFA8A8");                           // red
 				}
 			}
 		}

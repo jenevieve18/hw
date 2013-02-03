@@ -87,7 +87,7 @@ namespace HW.Core
 
 		public override string ToString()
 		{
-			return string.Format("[Lower Whisker: {0}, Upper Whisker: {1}, Lower Box: {2}, Upper Box: {3}, Mean: {4}, Median: {5}]", YValues);
+			return string.Format("[Lower Whisker: {0}, Lower Box: {1}, Median: {2}, Upper Box: {3}, Upper Whisker: {4}, Mean: {5}]", LowerWhisker, LowerBox, Median, UpperBox, UpperWhisker, Mean);
 		}
 
 		double GetMedian(List<double> data)

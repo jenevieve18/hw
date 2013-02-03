@@ -27,6 +27,15 @@ namespace HW.Core
 		public DateTime EndDate { get; set; }
 		public IList<AnswerValue> Values { get; set; }
 		
+		public HWList GetIntValues()
+		{
+			List<double> n = new List<double>();
+			foreach (var v in Values) {
+				n.Add((double)v.ValueInt);
+			}
+			return new HWList(n);
+		}
+		
 		public float Average { get; set; }
 		public int DummyValue1 { get; set; } // TODO: This is used by dbo.cf_yearWeek and related methods
 		public int DummyValue2 { get; set; }
@@ -187,8 +196,8 @@ namespace HW.Core
 						string tmpJoin = "";
 						string tmpOrder = "";
 
-						string tmpDesc = ""; 
-						int sslen = 0; 
+						string tmpDesc = "";
+						int sslen = 0;
 						string tmpSS = "";
 
 						IList<Department> departments = SPONS != -1 ? departmentRepository.FindBySponsorWithSponsorAdmin(SID, SPONS) : departmentRepository.FindBySponsorOrderedBySortString(SID);

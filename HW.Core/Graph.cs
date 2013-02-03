@@ -143,6 +143,19 @@ public class Graph
 		int low = Convert.ToInt32(mMaxH - (Convert.ToDouble(lowVal) - minVal) / (maxVal - minVal) * mMaxH);
 		objGraphics.FillRectangle(new SolidBrush(ColorTranslator.FromHtml("#" + color)), leftSpacing, topSpacing + 1 + dMaxH + top, w - leftSpacing - rightSpacing, low - top);
 	}
+	
+	public void drawBgFromString2(float lowVal, float topVal, string color)
+	{
+		float mMaxH = maxH * 100 / 100;
+		float dMaxH = maxH - mMaxH;
+		int top = Convert.ToInt32(mMaxH - (Convert.ToDouble(topVal) - minVal) / (maxVal - minVal) * mMaxH);
+		int low = Convert.ToInt32(mMaxH - (Convert.ToDouble(lowVal) - minVal) / (maxVal - minVal) * mMaxH);
+		float x = leftSpacing;
+		float y = topSpacing + 1 + dMaxH + top;
+		float innerWidth = w - leftSpacing - rightSpacing;
+		float height = low - top;
+		objGraphics.FillRectangle(new SolidBrush(ColorTranslator.FromHtml("#" + color)), x + innerWidth - 20, y, 20, height);
+	}
 
 	public void drawBg(float lowPercent, float topPercent, string color)
 	{
@@ -685,7 +698,7 @@ public class Graph
 //		objGraphics.DrawString(stc, new Font("Arial", 11), solidBlackBrush, 300, 55, drawFormatCenter);
 //		objGraphics.DrawString(str, new Font("Arial", 11), solidBlackBrush, 433, 55, drawFormatCenter);
 //	}
-//	
+//
 //	public void drawNSTDvalVert(int n1, float std1, int n2, float std2, int cx, bool show2) // Not used
 //	{
 //		string s = "\nn=" + n1 + (show2 ? "/" + n2 : "") + " stdev=" + Math.Round((Convert.ToDouble(std1)), 2) + (show2 ? "/" + Math.Round((Convert.ToDouble(std2)), 2) : "");
@@ -725,7 +738,7 @@ public class Graph
 //	{
 //		objGraphics.DrawString(
 //			@"ø
-//n",
+	//n",
 //			smallFont,
 //			solidBlackBrush,
 //			2,
@@ -733,8 +746,8 @@ public class Graph
 //			drawFormatNear
 //		);
 //	}
-//	
-//	
+//
+//
 //	public void drawNval(int n1, float avg1, int n2, float avg2, int cx, bool two)
 //	{
 //		int avg1dec = (avg1 > 100f ? 0 : (avg1 > 25f ? 1 : 2));
@@ -754,8 +767,8 @@ public class Graph
 //	{
 //		objGraphics.DrawString(
 //			@"ø
-//n
-//std",
+	//n
+	//std",
 //			smallFont,
 //			solidBlackBrush,
 //			2,
@@ -763,7 +776,7 @@ public class Graph
 //			drawFormatNear
 //		);
 //	}
-//	
+//
 //	public void drawNSTDval(int n1, float std1, float avg1, int n2, float std2, float avg2, int cx, bool two, int dH)
 //	{
 //		int std1dec = (std1 > 100f ? 0 : (std1 > 25f ? 1 : 2));
@@ -780,22 +793,22 @@ public class Graph
 //			objGraphics.DrawString("" + Math.Round((Convert.ToDouble(avg1)), avg1dec) + "\n" + n1 + "\n" + Math.Round((Convert.ToDouble(std1)), std1dec), smallFont, solidBlackBrush, leftSpacing + cx * steping, h - dH, drawFormat);
 //		}
 //	}
-//	
+//
 //	public void drawLeftHeader(string s)
 //	{
 //		objGraphics.DrawString(s, bigFont, solidBlackBrush, 20, 20, drawFormatNearCenter);
 //	}
-//	
+//
 //	public void drawHeader(string s)
 //	{
 //		objGraphics.DrawString(s, bigFont, solidBlackBrush, w / 2, topSpacing - 25, drawFormat);
 //	}
-//	
+//
 //	public void drawCenterHeader(string s)
 //	{
 //		objGraphics.DrawString(s, bigFont, solidBlackBrush, w / 2, topSpacing - 25, drawFormatCenter);
 //	}
-//	
+//
 //	public void drawRightHeader(string s)
 //	{
 //		objGraphics.DrawString(s, bigFont, solidBlackBrush, w - 5, 14, drawFormatFarNear);
@@ -858,7 +871,7 @@ public class Graph
 //			objGraphics.DrawString(val.ToString() + (percent ? "%" : ""), smallFont, solidBlackBrush, leftSpacing + x, topSpacing + maxH - 15, drawFormatCenter);
 //		}
 //	}
-//	
+//
 //	public void drawMultiBar(int color, int i, float v, int s, int b, int barDivision, int align, int occupy, bool writeN, bool percent)
 //	{
 //		float mMaxH = maxH * occupy / 100;

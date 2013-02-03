@@ -1021,6 +1021,7 @@ ORDER BY tmp.DT",
 //						int dt;
 						do {
 							a.SomeInteger = rs.GetInt32(0);
+							Console.WriteLine(rs.GetInt32(0) + "\t" + rs.GetInt32(1));
 //							dt = rs.GetInt32(0);
 							a.Values.Add(new AnswerValue { ValueInt = rs.GetInt32(1) });
 							done = !rs.Read();

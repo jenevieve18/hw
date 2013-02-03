@@ -1328,7 +1328,7 @@ namespace HW.Core
 		public IList<Answer> FindByQuestionAndOptionJoinedAndGrouped2(string @join, string groupBy, int questionID, int optionID, int yearFrom, int yearTo)
 		{
 			var answers = new List<Answer>();
-			for (int i = 0; i < 1; i++) {
+			for (int i = 0; i < 10; i++) {
 				var a = new Answer {
 					SomeInteger = 1,
 					AverageV = r.Next(0, 100),

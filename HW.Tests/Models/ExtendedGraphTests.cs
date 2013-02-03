@@ -42,7 +42,7 @@ namespace HW.Tests.Models
 			
 			f = new Form();
 			f.Size = new Size(1000, 650);
-			f.KeyDown += delegate(object sender, KeyEventArgs e) { 
+			f.KeyDown += delegate(object sender, KeyEventArgs e) {
 				if (e.KeyCode == Keys.Escape) {
 					f.Close();
 				}
@@ -82,6 +82,7 @@ namespace HW.Tests.Models
 		public void TestType1()
 		{
 			List<Bar> bars = new List<Bar>();
+			Series s = new Series { Color = 5 };
 			int tot = 10;
 			foreach (OptionComponentLanguage c in optionRepository.FindComponentsByLanguage(1, 1)) {
 				var x = answerRepository.CountByValueWithDateOptionAndQuestion(c.Component.Id, 2011, 2012, 1, 1, "");
@@ -94,6 +95,27 @@ namespace HW.Tests.Models
 			}
 			g = new ExtendedGraph(895, 550, "#FFFFFF");
 			g.DrawBars(new object(), 10, tot, bars);
+			g.Draw();
+		}
+		
+		[Test]
+		public void TestType1b()
+		{
+			Series s = new Series { Color = 5 };
+			int tot = 10;
+			foreach (OptionComponentLanguage c in optionRepository.FindComponentsByLanguage(1, 1)) {
+				var x = answerRepository.CountByValueWithDateOptionAndQuestion(c.Component.Id, 2011, 2012, 1, 1, "");
+				s.Points.Add(
+					new PointV {
+						Description = c.Text,
+						Y = Convert.ToInt32(Math.Round(Convert.ToDecimal(x) / tot * 100M, 0))
+					}
+				);
+			}
+			g = new ExtendedGraph(895, 550, "#FFFFFF");
+			g.Series.Add(s);
+			g.Type = new BarGraphTYpe();
+			g.Draw();
 		}
 		
 		[Test]
@@ -201,9 +223,12 @@ namespace HW.Tests.Models
 			
 			g = new ExtendedGraph(895, 440, "#FFFFFF");
 			g.setMinMax(0f, 100f);
-			g.drawBgFromString(g.minVal, Math.Min(g.maxVal, (float)Convert.ToDouble(40)), "FFA8A8");
-			g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(40)), Math.Min(g.maxVal, (float)Convert.ToDouble(60)), "FFFEBE");
-			g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(60)), Math.Min(g.maxVal, (float)Convert.ToDouble(101)), "CCFFBB");
+//			g.drawBgFromString(g.minVal, Math.Min(g.maxVal, (float)Convert.ToDouble(40)), "FFA8A8");
+//			g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(40)), Math.Min(g.maxVal, (float)Convert.ToDouble(60)), "FFFEBE");
+//			g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(60)), Math.Min(g.maxVal, (float)Convert.ToDouble(101)), "CCFFBB");
+			g.drawBgFromString2(g.minVal, Math.Min(g.maxVal, (float)Convert.ToDouble(40)), "FFA8A8");
+			g.drawBgFromString2(Math.Max(g.minVal, (float)Convert.ToDouble(40)), Math.Min(g.maxVal, (float)Convert.ToDouble(60)), "FFFEBE");
+			g.drawBgFromString2(Math.Max(g.minVal, (float)Convert.ToDouble(60)), Math.Min(g.maxVal, (float)Convert.ToDouble(101)), "CCFFBB");
 			
 			g.computeSteping(steps + 1 + 2);
 			g.drawOutlines(11);
@@ -304,189 +329,6 @@ namespace HW.Tests.Models
 		}
 		
 		[Test]
-		public void a()
-		{
-			g = new ExtendedGraph(895, 440, "#FFFFFF");
-			X(g, new object());
-		}
-		
-		void X(ExtendedGraph g, object disabled)
-		{
-			int GB = 0;
-			string groupBy = "";
-			int fy = 2011;
-			int ty = 2012;
-			int minDT = 0;
-			int maxDT = 0;
-			string sortString = "";
-			int rpid = 1;
-			int cx = 0;
-//			int steps = 0;
-			
-			int GRPNG = 1;
-			int PRUID = 1;
-			int SPONS = 1;
-			int SID = 1;
-			string GID = "0,1";
-			
-			int langID = 1;
-			int rac = 10;
-			
-			bool stdev = true;
-			
-			if (GB == 0) {
-				GB = 2;
-			}
-			
-			groupBy = GroupFactory.GetGroupBy(GB);
-//			var g = new Graph(895, 440, "#FFFFFF");
-
-			Answer answer = answerRepository.ReadByGroup(groupBy, fy, ty, sortString);
-			if (answer != null) {
-				cx = answer.DummyValue1 + 3;
-				minDT = answer.DummyValue2;
-				maxDT = answer.DummyValue3;
-			}
-
-			List<IIndex> indexes = new List<IIndex>();
-			List<IMinMax> minMaxes = new List<IMinMax>();
-			foreach (ReportPartComponent c in reportRepository.FindComponentsByPart(rpid)) {
-				if (!HasGrouping) {
-					Answer a = answerRepository.ReadMinMax(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString);
-					if (a != null) {
-						minMaxes.Add(a);
-					} else {
-						minMaxes.Add(new Answer());
-					}
-				} else {
-					minMaxes.Add(new Answer());
-				}
-				indexes.Add(c.QuestionOption);
-			}
-			g.SetMinMaxes(minMaxes);
-			g.DrawBackgroundFromIndexes(indexes);
-//			g.DrawWiggle();
-			g.DrawComputingSteps(disabled, cx);
-			g.Type = new LineGraphType(stdev);
-
-			cx = 0;
-			
-			g.DrawBottomString(minDT, maxDT, GB);
-			
-			List<IExplanation> explanations = new List<IExplanation>();
-			List<IExplanation> explanationBoxes = new List<IExplanation>();
-			
-			if (HasGrouping) {
-				int COUNT = 0;
-				Hashtable desc = new Hashtable();
-				Hashtable join = new Hashtable();
-				ArrayList item = new ArrayList();
-				string extraDesc = "";
-				
-				COUNT = GroupFactory.GetCount(GRPNG, SPONS, SID, PRUID, GID, ref extraDesc, desc, join, item, departmentRepository, questionRepository);
-				
-				int breaker = 6, itemWidth = 120;
-				if (COUNT < 6) {
-					breaker = 4;
-					itemWidth = 180;
-				}
-				if (COUNT < 4) {
-					breaker = 3;
-					itemWidth = 240;
-				}
-				
-				explanations.Add(
-					new Explanation {
-						Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (IsStandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
-						Color = 0,
-						Right = false,
-						Box = false,
-						HasAxis = false
-					}
-				);
-				ReportPartComponent c = reportRepository.ReadComponentByPartAndLanguage(rpid, langID);
-				if (c != null) {
-					int bx = 0;
-					foreach(string i in item) {
-						explanationBoxes.Add(
-							new Explanation {
-								Description = (string)desc[i],
-								Color = bx + 4,
-								X = 130 + (int)((bx % breaker) * itemWidth),
-								Y = 20 + (int)Math.Floor((double)bx / breaker) * 15
-							}
-						);
-						cx = 1;
-						int lastDT = minDT - 1;
-						Series s = new Series { Color = bx + 4 };
-						foreach (var a in answerRepository.FindByQuestionAndOptionJoinedAndGrouped(join[i].ToString(), groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty)) {
-							while (lastDT + 1 < a.SomeInteger) {
-								lastDT++;
-								cx++;
-							}
-							if (a.CountV >= rac) {
-								if (COUNT == 1) {
-									g.DrawBottomString(GB, a.SomeInteger, cx, (COUNT == 1 ? ", n = " + a.CountV : ""));
-								}
-								s.Points.Add(new PointV { X = cx, Y = a.AverageV, Deviation = a.StandardDeviation, T = 2 + (!stdev ? 1 : 0) });
-							}
-							lastDT = a.SomeInteger;
-							cx++;
-						}
-						g.Series.Add(s);
-						bx++;
-					}
-				}
-			} else {
-				int bx = 0;
-				foreach (var c in reportRepository.FindComponentsByPartAndLanguage2(rpid, langID)) {
-					if (bx == 0) {
-						explanations.Add(
-							new Explanation {
-								Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (IsStandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
-								Color = bx + 4,
-								Right = false,
-								Box = true,
-								HasAxis = false
-							}
-						);
-					} else {
-						explanations.Add(
-							new Explanation {
-								Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (IsStandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
-								Color = bx + 4,
-								Right = true,
-								Box = false,
-								HasAxis = true
-							}
-						);
-					}
-					cx = 1;
-					int lastDT = minDT - 1;
-					Series s = new Series { Color = bx + 4 };
-					foreach (var a in answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString)) {
-						while (lastDT + 1 < a.SomeInteger) {
-							lastDT++;
-							cx++;
-						}
-
-						if (a.CountV >= rac) {
-							g.DrawBottomString(GB, a.SomeInteger, cx, ", n = " + a.CountV);
-							s.Points.Add(new PointV { X = cx, Y = a.AverageV, Deviation = a.StandardDeviation, T = 3 });
-						}
-						lastDT = a.SomeInteger;
-						cx++;
-					}
-					g.Series.Add(s);
-					bx++;
-				}
-			}
-			g.DrawExplanations(explanations);
-			g.DrawExplanationBoxes(explanationBoxes);
-			g.Draw();
-		}
-		
-		[Test]
 		public void b()
 		{
 			g = new ExtendedGraph(895, 440, "#FFFFFF");
@@ -516,6 +358,7 @@ namespace HW.Tests.Models
 			int rac = 10;
 			
 			bool stdev = false;
+			bool hasGrouping = true;
 			
 			if (GB == 0) {
 				GB = 2;
@@ -560,7 +403,7 @@ namespace HW.Tests.Models
 			List<ILine> lines = new List<ILine>();
 			List<ICircle> circles = new List<ICircle>();
 			
-			if (HasGrouping) {
+			if (hasGrouping) {
 				int COUNT = 0;
 				Hashtable desc = new Hashtable();
 				Hashtable join = new Hashtable();
@@ -571,91 +414,102 @@ namespace HW.Tests.Models
 				
 				int breaker = 6, itemWidth = 120;
 				if (COUNT < 6) {
-					breaker = 4; itemWidth = 180;
+					breaker = 4;
+					itemWidth = 180;
 				}
 				if (COUNT < 4) {
-					breaker = 3; itemWidth = 240;
+					breaker = 3;
+					itemWidth = 240;
 				}
 				
-				explanations.Add(
+//				explanations.Add(
+//					new Explanation {
+//						Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+//						Color = 0,
+//						Right = false,
+//						Box = false,
+//						HasAxis = false
+//					}
+//				);
+				g.Explanations.Add(
 					new Explanation {
-						HasAxis = false,
-						Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (IsStandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+						Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
 						Color = 0,
 						Right = false,
-						Box = false
+						Box = false,
+						HasAxis = false
 					}
 				);
 				ReportPartComponent c = reportRepository.ReadComponentByPartAndLanguage(rpid, langID);
 				if (c != null) {
 					int bx = 0;
 					foreach(string i in item) {
-//						if (bx == 0) {
-//							g.drawAxis(false);
-//							g.drawAxisExpl((extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (IsStandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""), 0, false, false);
-//						}
-//						g.drawColorExplBox((string)desc[i], bx + 4, 130 + (int)((bx % breaker) * itemWidth), 20 + (int)Math.Floor((double)bx / breaker) * 15);
-						explanationBoxes.Add(new Explanation { Description = (string)desc[i], Color = bx + 4, X = 130 + (int)((bx % breaker) * itemWidth), Y = 20 + (int)Math.Floor((double)bx / breaker) * 15 });
-						float lastVal = -1f;
-						float lastStd = -1f;
-						int lastCX = 1;
+						explanationBoxes.Add(
+							new Explanation {
+								Description = (string)desc[i],
+								Color = bx + 4,
+								X = 130 + (int)((bx % breaker) * itemWidth),
+								Y = 20 + (int)Math.Floor((double)bx / breaker) * 15
+							}
+						);
 						cx = 1;
-						int lastDT = minDT-1;
-						foreach (var a in answerRepository.FindByQuestionAndOptionJoinedAndGrouped(join[i].ToString(), groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty)) {
+						int lastDT = minDT - 1;
+						var answers = answerRepository.FindByQuestionAndOptionJoinedAndGrouped2(join[i].ToString(), groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty);
+						Series s = new Series {
+							Description = (string)desc[i],
+							Color = bx + 4,
+							X = 130 + (int)((bx % breaker) * itemWidth),
+							Y = 20 + (int)Math.Floor((double)bx / breaker) * 15
+						};
+						foreach (Answer a in answers) {
 							while (lastDT + 1 < a.SomeInteger) {
 								lastDT++;
 								cx++;
 							}
-
-							if (a.CountV >= rac) {
+							if (a.Values.Count >= rac) {
 								if (COUNT == 1) {
-									g.DrawBottomString(GB, a.SomeInteger, cx, (COUNT == 1 ? ", n = " + a.CountV : ""));
+									g.DrawBottomString(GB, a.SomeInteger, cx, (COUNT == 1 ? ", n = " + a.Values.Count : ""));
 								}
-
-								float newVal = a.AverageV;
-								float newStd = a.StandardDeviation;
-
-								if (stdev) {
-									g.drawLine(bx + 4, cx * g.steping - 10, Convert.ToInt32(g.maxH - ((newVal - newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), cx * g.steping + 10, Convert.ToInt32(g.maxH - ((newVal - newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), 1);
-									g.drawLine(20, cx * g.steping, Convert.ToInt32(g.maxH - ((newVal - newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), cx * g.steping, Convert.ToInt32(g.maxH - ((newVal + newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), 1);
-									g.drawLine(bx + 4, cx * g.steping - 10, Convert.ToInt32(g.maxH - ((newVal + newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), cx * g.steping + 10, Convert.ToInt32(g.maxH - ((newVal + newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), 1);
-								}
-
-								if (newVal != -1f) {
-									if (lastVal != -1f) {
-//										g.drawStepLine(bx + 4, lastCX, lastVal, cx, newVal, 2 + (!stdev ? 1 : 0));
-										lines.Add(new Line { Color = bx + 4, X1 = lastCX, Y1 = lastVal, X2 = cx, Y2 = newVal, T = 2 + (!stdev ? 1 : 0) });
-									}
-									lastCX = cx;
-								}
-								lastVal = newVal;
-								lastStd = newStd;
-
-//								g.drawCircle(cx, newVal, bx + 4);
-								circles.Add(new Circle { CX = cx, Value = newVal, Color = bx + 4 });
+//								List<double> n = new List<double>();
+//								foreach (var v in a.Values) {
+//									n.Add((double)v.ValueInt);
+//								}
+//								HWList l = new HWList(n);
+//								s.Points.Add(new PointV { X = cx, Y = (float)l.Mean, Deviation = (float)l.StandardDeviation, T = 2 + (!stdev ? 1 : 0) });
+								s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
 							}
 							lastDT = a.SomeInteger;
 							cx++;
 						}
+						g.Series.Add(s);
 						bx++;
 					}
 				}
 			} else {
 				int bx = 0;
-				foreach (var c in reportRepository.FindComponentsByPartAndLanguage2(rpid, langID)) {
-					if (bx == 0) {
-						g.drawAxisExpl(c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (IsStandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""), bx + 4, false, true);
-						g.drawAxis(false);
-					} else {
-						g.drawAxisExpl(c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (IsStandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""), bx + 4, true, true);
-						g.drawAxis(true);
-					}
-					float lastVal = -1f;
-					float lastStd = -1f;
-					int lastCX = 1;
+				foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(rpid, langID)) {
+//					explanations.Add(
+//						new Explanation {
+//							Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+//							Color = bx + 4,
+//							Right = bx == 0 ? false : true,
+//							Box = bx == 0 ? true : false,
+//							HasAxis = bx == 0 ? false : true
+//						}
+//					);
+					g.Explanations.Add(
+						new Explanation {
+							Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+							Color = bx + 4,
+							Right = bx == 0 ? false : true,
+							Box = bx == 0 ? true : false,
+							HasAxis = bx == 0 ? false : true
+						}
+					);
 					cx = 1;
-					int lastDT = minDT-1;
-					foreach (var a in answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString)) {
+					int lastDT = minDT - 1;
+					Series s = new Series { Color = bx + 4 };
+					foreach (Answer a in answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString)) {
 						while (lastDT + 1 < a.SomeInteger) {
 							lastDT++;
 							cx++;
@@ -663,32 +517,19 @@ namespace HW.Tests.Models
 
 						if (a.CountV >= rac) {
 							g.DrawBottomString(GB, a.SomeInteger, cx, ", n = " + a.CountV);
-							float newVal = a.AverageV;
-							float newStd = a.StandardDeviation;
-
-							g.drawLine(20, cx * g.steping - 10, Convert.ToInt32(g.maxH - ((newVal - newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), cx * g.steping + 10, Convert.ToInt32(g.maxH - ((newVal - newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), 1);
-							g.drawLine(20, cx * g.steping, Convert.ToInt32(g.maxH - ((newVal - newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), cx * g.steping, Convert.ToInt32(g.maxH - ((newVal + newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), 1);
-							g.drawLine(20, cx * g.steping - 10, Convert.ToInt32(g.maxH - ((newVal + newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), cx * g.steping + 10, Convert.ToInt32(g.maxH - ((newVal + newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), 1);
-
-							if (newVal != -1f) {
-								if (lastVal != -1f) {
-									g.drawStepLine(bx + 4, lastCX, lastVal, cx, newVal, 3);
-								}
-								lastCX = cx;
-							}
-							lastVal = newVal;
-							lastStd = newStd;
-
-							g.drawCircle(cx, newVal);
+//							s.Points.Add(new PointV { X = cx, Y = a.AverageV, Deviation = a.StandardDeviation, T = 3 });
+							s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
 						}
 						lastDT = a.SomeInteger;
 						cx++;
 					}
+					g.Series.Add(s);
 					bx++;
 				}
 			}
-			g.DrawExplanations(explanations);
-			g.DrawExplanationBoxes(explanationBoxes);
+//			g.DrawExplanations(explanations);
+//			g.DrawExplanationBoxes(explanationBoxes);
+			g.Draw();
 		}
 		
 		[Test]
@@ -721,6 +562,7 @@ namespace HW.Tests.Models
 			int rac = 10;
 			
 			bool stdev = true;
+			bool hasGrouping = true;
 			
 			if (GB == 0) {
 				GB = 2;
@@ -763,7 +605,7 @@ namespace HW.Tests.Models
 			List<IExplanation> explanations = new List<IExplanation>();
 			List<IExplanation> explanationBoxes = new List<IExplanation>();
 			
-			if (HasGrouping) {
+			if (hasGrouping) {
 				int COUNT = 0;
 				Hashtable desc = new Hashtable();
 				Hashtable join = new Hashtable();
@@ -782,9 +624,9 @@ namespace HW.Tests.Models
 					itemWidth = 240;
 				}
 				
-				explanations.Add(
+				g.Explanations.Add(
 					new Explanation {
-						Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (IsStandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+						Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
 						Color = 0,
 						Right = false,
 						Box = false,
@@ -794,7 +636,6 @@ namespace HW.Tests.Models
 				ReportPartComponent c = reportRepository.ReadComponentByPartAndLanguage(rpid, langID);
 				if (c != null) {
 					int bx = 0;
-					cx = 1;
 					foreach(string i in item) {
 						explanationBoxes.Add(
 							new Explanation {
@@ -804,70 +645,64 @@ namespace HW.Tests.Models
 								Y = 20 + (int)Math.Floor((double)bx / breaker) * 15
 							}
 						);
-//						cx = 1;
+						cx = 1;
 						int lastDT = minDT - 1;
-						Series s = new Series { Color = bx + 4 };
-						foreach (var a in answerRepository.FindByQuestionAndOptionJoinedAndGrouped(join[i].ToString(), groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty)) {
+						var answers = answerRepository.FindByQuestionAndOptionJoinedAndGrouped2(join[i].ToString(), groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty);
+						Series s = new Series {
+							Description = (string)desc[i],
+							Color = bx + 4,
+							X = 130 + (int)((bx % breaker) * itemWidth),
+							Y = 20 + (int)Math.Floor((double)bx / breaker) * 15
+						};
+						foreach (Answer a in answers) {
 							while (lastDT + 1 < a.SomeInteger) {
 								lastDT++;
 								cx++;
 							}
-//							if (a.CountV >= rac) {
-//								if (COUNT == 1) {
-//									g.DrawBottomString(GB, a.SomeInteger, cx, (COUNT == 1 ? ", n = " + a.CountV : ""));
-//								}
-							List<double> n = new List<double>();
-							foreach (var v in a.Values) {
-								n.Add((double)v.ValueDecimal);
-							}
-							HWList l = new HWList(n);
-							s.Points.Add(
-								new PointV { 
-									X = cx, 
-									Y = (float)l.Median,
-									UpperWhisker = l.UpperWhisker,
-									LowerWhisker = l.LowerWhisker,
-									UpperBox = l.UpperBox,
-									LowerBox = l.LowerBox
+							if (a.Values.Count >= rac) {
+								if (COUNT == 1) {
+									g.DrawBottomString(GB, a.SomeInteger, cx, (COUNT == 1 ? ", n = " + a.Values.Count : ""));
 								}
-							);
-//							}
+//								List<double> n = new List<double>();
+//								foreach (var v in a.Values) {
+//									n.Add((double)v.ValueInt);
+//								}
+//								HWList l = new HWList(n);
+//								s.Points.Add(new PointV { X = cx, Y = (float)l.Median, UpperWhisker = l.UpperWhisker, LowerWhisker = l.LowerWhisker, UpperBox = l.UpperBox, LowerBox = l.LowerBox });
+								s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
+							}
 							lastDT = a.SomeInteger;
-//							cx++;
+							cx++;
 						}
 						g.Series.Add(s);
 						bx++;
-						cx++;
 					}
 				}
 			} else {
 				int bx = 0;
-				foreach (var c in reportRepository.FindComponentsByPartAndLanguage2(rpid, langID)) {
-					if (bx == 0) {
-						explanations.Add(
-							new Explanation {
-								Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (IsStandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
-								Color = bx + 4,
-								Right = false,
-								Box = true,
-								HasAxis = false
-							}
-						);
-					} else {
-						explanations.Add(
-							new Explanation {
-								Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (IsStandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
-								Color = bx + 4,
-								Right = true,
-								Box = false,
-								HasAxis = true
-							}
-						);
-					}
+				foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(rpid, langID)) {
+//					explanations.Add(
+//						new Explanation {
+//							Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+//							Color = bx + 4,
+//							Right = bx == 0 ? false : true,
+//							Box = bx == 0 ? true : false,
+//							HasAxis = bx == 0 ? false : true
+//						}
+//					);
+					g.Explanations.Add(
+						new Explanation {
+							Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+							Color = bx + 4,
+							Right = bx == 0 ? false : true,
+							Box = bx == 0 ? true : false,
+							HasAxis = bx == 0 ? false : true
+						}
+					);
 					cx = 1;
 					int lastDT = minDT - 1;
 					Series s = new Series { Color = bx + 4 };
-					foreach (var a in answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString)) {
+					foreach (Answer a in answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString)) {
 						while (lastDT + 1 < a.SomeInteger) {
 							lastDT++;
 							cx++;
@@ -875,7 +710,8 @@ namespace HW.Tests.Models
 
 						if (a.CountV >= rac) {
 							g.DrawBottomString(GB, a.SomeInteger, cx, ", n = " + a.CountV);
-							s.Points.Add(new PointV { X = cx, Y = a.AverageV, Deviation = a.StandardDeviation, T = 3 });
+//							s.Points.Add(new PointV { X = cx, Y = a.AverageV, Deviation = a.StandardDeviation, T = 3 });
+							s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
 						}
 						lastDT = a.SomeInteger;
 						cx++;
@@ -884,8 +720,8 @@ namespace HW.Tests.Models
 					bx++;
 				}
 			}
-			g.DrawExplanations(explanations);
-			g.DrawExplanationBoxes(explanationBoxes);
+//			g.DrawExplanations(explanations);
+//			g.DrawExplanationBoxes(explanationBoxes);
 			g.Draw();
 		}
 	}
