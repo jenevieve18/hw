@@ -33,7 +33,7 @@ namespace HW.Tests.Views
 		{
 			ReportPart r = reportRepository.ReadReportPart(1);
 			ExtendedGraph g = new ExtendedGraph(100, 100, "#FFFFFF");
-			p.SetReportPart(r, g, 1, 1, 2010, 2013, 1, true, true, "LinePlot");
+//			p.SetReportPart("", true, r, g, 1, 1, 2010, 2013, 1, true, true, "LinePlot");
 		}
 		
 		[Test]

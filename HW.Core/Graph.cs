@@ -154,7 +154,7 @@ public class Graph
 		float y = topSpacing + 1 + dMaxH + top;
 		float innerWidth = w - leftSpacing - rightSpacing;
 		float height = low - top;
-		objGraphics.FillRectangle(new SolidBrush(ColorTranslator.FromHtml("#" + color)), x + innerWidth - 20, y, 20, height);
+		objGraphics.FillRectangle(new SolidBrush(ColorTranslator.FromHtml("#" + color)), x + innerWidth, y, 10, height);
 	}
 
 	public void drawBg(float lowPercent, float topPercent, string color)

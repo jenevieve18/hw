@@ -13,12 +13,25 @@
                     $(".activated").removeClass("activated")
                 }
             });
+			$('#selectAll').click(function () {
+				$(this).parents('#StatsImg').find(':checkbox').attr('checked', this.checked);
+			});
+			$('#graphTypes').change(function() {
+				var graphType = $('#graphTypes input:checked').val();
+				$('#StatsImg table :checkbox').each(function () {
+				    if (this.checked) {
+				        var url = $(this).parent().find(':hidden').val();
+			            url += "&Plot=" + graphType;
+			            var img = $(this).parents('#StatsImg table').find('.img');
+			            img.attr('src', url);
+				    }
+				});
+			});
         });
         function xxx(plot, img, imgUrl) {
             var r = document.getElementsByName(plot);
             for (var i = 0; i < r.length; i++) {
                 if (r[i].checked) {
-                    //alert("Selected item value " + r[i].value);
                     document.getElementById(img).src = imgUrl + "&Plot=" + r[i].value;
                 }
             }
