@@ -16,7 +16,7 @@
 			$('#selectAll').click(function () {
 				$(this).parents('#StatsImg').find(':checkbox').attr('checked', this.checked);
 			});
-			$('#graphTypes').change(function() {
+			$('#graphTypes').click(function() {
 				var graphType = $('#graphTypes input:checked').val();
 				$('#StatsImg table :checkbox').each(function () {
 				    if (this.checked) {
