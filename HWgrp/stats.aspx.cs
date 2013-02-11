@@ -162,18 +162,6 @@ namespace HWgrp
 				StatsImg.Controls.Add(new LiteralControl(""));
 			}
 			
-//			var allNone = new CheckBox() { ID = "selectAll" };
-//
-//			var graphTypes = new DropDownList() { ID = "graphTypes" };
-//			graphTypes.Items.Add(new ListItem("Line Plot", "LinePlot"));
-//			if (selectedDepartments.Count == 1) {
-//				graphTypes.Items.Add(new ListItem("Box Plot", "BoxPlot"));
-//			}
-//
-//			StatsImg.Controls.Add(allNone);
-//			StatsImg.Controls.Add(new LiteralControl("Graph Type: "));
-//			StatsImg.Controls.Add(graphTypes);
-			
 			foreach (var r in reportParts) {
 				if (cx == 0) {
 					StatsImg.Controls.Add(new LiteralControl("<div>&nbsp;<br>&nbsp;<br></div>"));
@@ -187,7 +175,6 @@ namespace HWgrp
 				IHGHtmlTableCell headerCell = new IHGHtmlTableCell(r.Subject) { Align = "Center", VAlign = "Middle", Height = "140", FontSize = "24px" };
 				table.Rows.Add(new IHGHtmlTableRow(headerCell));
 				
-//				IHGHtmlTableCell subjectCell = new IHGHtmlTableCell(new CheckBox() { ID = "chk" + cx }, new LiteralControl(r.Subject), new HtmlInputHidden() { Value = GetReportImageUrl(r.ReportPart.Id, "reportImage", URL) }) { FontSize = "18px" };
 				IHGHtmlTableCell subjectCell = new IHGHtmlTableCell() { FontSize = "18px" };
 				if (selectedDepartments.Count == 1) {
 					subjectCell.Controls.Add(new CheckBox() { ID = "chk" + cx });

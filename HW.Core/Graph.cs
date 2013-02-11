@@ -19,11 +19,12 @@ public class Graph
 	StringFormat drawFormatNear;
 	StringFormat drawFormatFarCenter;
 	StringFormat drawFormatFarNear;
-	StringFormat drawFormatNearCenter;
+	protected StringFormat drawFormatNearCenter;
 
 	static int outerTopSpacing = 40;
 	static int bottomSpacing = 40;
-	static int rightSpacing = 35;
+//	static int rightSpacing = 35;
+	static int rightSpacing = 100;
 	static int innerRightSpacing = rightSpacing + 15;
 
 	public int w = 0;
@@ -144,7 +145,7 @@ public class Graph
 		objGraphics.FillRectangle(new SolidBrush(ColorTranslator.FromHtml("#" + color)), leftSpacing, topSpacing + 1 + dMaxH + top, w - leftSpacing - rightSpacing, low - top);
 	}
 	
-	public void drawBgFromString2(float lowVal, float topVal, string color)
+	public void drawBgFromString2(float lowVal, float topVal, string color, string label)
 	{
 		float mMaxH = maxH * 100 / 100;
 		float dMaxH = maxH - mMaxH;
@@ -155,6 +156,11 @@ public class Graph
 		float innerWidth = w - leftSpacing - rightSpacing;
 		float height = low - top;
 		objGraphics.FillRectangle(new SolidBrush(ColorTranslator.FromHtml("#" + color)), x + innerWidth, y, 10, height);
+		
+//		objGraphics.TranslateTransform(0, h);
+//		objGraphics.RotateTransform(90F);
+		objGraphics.DrawString(label, smallFont, solidBlackBrush, x + innerWidth + 12, y + (height / 2), drawFormatNear);
+//		objGraphics.ResetTransform();
 	}
 
 	public void drawBg(float lowPercent, float topPercent, string color)

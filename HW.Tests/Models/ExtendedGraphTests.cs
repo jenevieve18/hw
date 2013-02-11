@@ -226,9 +226,9 @@ namespace HW.Tests.Models
 //			g.drawBgFromString(g.minVal, Math.Min(g.maxVal, (float)Convert.ToDouble(40)), "FFA8A8");
 //			g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(40)), Math.Min(g.maxVal, (float)Convert.ToDouble(60)), "FFFEBE");
 //			g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(60)), Math.Min(g.maxVal, (float)Convert.ToDouble(101)), "CCFFBB");
-			g.drawBgFromString2(g.minVal, Math.Min(g.maxVal, (float)Convert.ToDouble(40)), "FFA8A8");
-			g.drawBgFromString2(Math.Max(g.minVal, (float)Convert.ToDouble(40)), Math.Min(g.maxVal, (float)Convert.ToDouble(60)), "FFFEBE");
-			g.drawBgFromString2(Math.Max(g.minVal, (float)Convert.ToDouble(60)), Math.Min(g.maxVal, (float)Convert.ToDouble(101)), "CCFFBB");
+			g.drawBgFromString2(g.minVal, Math.Min(g.maxVal, (float)Convert.ToDouble(40)), "FFA8A8", "");
+			g.drawBgFromString2(Math.Max(g.minVal, (float)Convert.ToDouble(40)), Math.Min(g.maxVal, (float)Convert.ToDouble(60)), "FFFEBE", "");
+			g.drawBgFromString2(Math.Max(g.minVal, (float)Convert.ToDouble(60)), Math.Min(g.maxVal, (float)Convert.ToDouble(101)), "CCFFBB", "");
 			
 			g.computeSteping(steps + 1 + 2);
 			g.drawOutlines(11);

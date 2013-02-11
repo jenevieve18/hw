@@ -232,19 +232,19 @@ namespace HW.Core
 		{
 			foreach (var i in indexes) {
 				if (i.YellowLow > 0) {
-					drawBgFromString2(minVal, Math.Min(maxVal, (float)Convert.ToDouble(i.YellowLow)), "FFA8A8");                             // red
+					drawBgFromString2(minVal, Math.Min(maxVal, (float)Convert.ToDouble(i.YellowLow)), "FFA8A8", "Very Bad");                             // red
 				}
 				if (i.YellowLow < 100 && i.GreenLow > 0) {
-					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.YellowLow)), Math.Min(maxVal, (float)Convert.ToDouble(i.GreenLow)), "FFFEBE");    // yellow
+					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.YellowLow)), Math.Min(maxVal, (float)Convert.ToDouble(i.GreenLow)), "FFFEBE", "Neither Good nor Bad");    // yellow
 				}
 				if (i.GreenLow < 100 && i.GreenHigh > 0) {
-					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.GreenLow)), Math.Min(maxVal, (float)Convert.ToDouble(i.GreenHigh)), "CCFFBB");   // green
+					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.GreenLow)), Math.Min(maxVal, (float)Convert.ToDouble(i.GreenHigh)), "CCFFBB", "Very Good");   // green
 				}
 				if (i.GreenHigh < 100 && i.YellowHigh > 0) {
-					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.GreenHigh)), Math.Min(maxVal, (float)Convert.ToDouble(i.YellowHigh)), "FFFEBE"); // yellow
+					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.GreenHigh)), Math.Min(maxVal, (float)Convert.ToDouble(i.YellowHigh)), "FFFEBE", "Neither Good nor Bad"); // yellow
 				}
 				if (i.YellowHigh < 100) {
-					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.YellowHigh)), maxVal, "FFA8A8");                           // red
+					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.YellowHigh)), maxVal, "FFA8A8", "Very Bad");                           // red
 				}
 			}
 		}
