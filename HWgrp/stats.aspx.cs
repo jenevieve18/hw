@@ -158,16 +158,18 @@ namespace HWgrp
 				plotType.Items.Add(new ListItem("Box Plot", "BoxPlot"));
 				StatsImg.Controls.Add(allNone);
 				StatsImg.Controls.Add(plotType);
+			} else {
+				StatsImg.Controls.Add(new LiteralControl(""));
 			}
 			
 //			var allNone = new CheckBox() { ID = "selectAll" };
-//			
+//
 //			var graphTypes = new DropDownList() { ID = "graphTypes" };
 //			graphTypes.Items.Add(new ListItem("Line Plot", "LinePlot"));
 //			if (selectedDepartments.Count == 1) {
 //				graphTypes.Items.Add(new ListItem("Box Plot", "BoxPlot"));
 //			}
-//			
+//
 //			StatsImg.Controls.Add(allNone);
 //			StatsImg.Controls.Add(new LiteralControl("Graph Type: "));
 //			StatsImg.Controls.Add(graphTypes);
@@ -184,22 +186,20 @@ namespace HWgrp
 				HtmlTable table = new HtmlTable { Border = 0, CellSpacing = 0, CellPadding = 0 };
 				IHGHtmlTableCell headerCell = new IHGHtmlTableCell(r.Subject) { Align = "Center", VAlign = "Middle", Height = "140", FontSize = "24px" };
 				table.Rows.Add(new IHGHtmlTableRow(headerCell));
-				IHGHtmlTableCell subjectCell = new IHGHtmlTableCell(new CheckBox() { ID = "chk" + cx }, new LiteralControl(r.Subject), new HtmlInputHidden() { Value = GetReportImageUrl(r.ReportPart.Id, "reportImage", URL) }) { FontSize = "18px" };
+				
+//				IHGHtmlTableCell subjectCell = new IHGHtmlTableCell(new CheckBox() { ID = "chk" + cx }, new LiteralControl(r.Subject), new HtmlInputHidden() { Value = GetReportImageUrl(r.ReportPart.Id, "reportImage", URL) }) { FontSize = "18px" };
+				IHGHtmlTableCell subjectCell = new IHGHtmlTableCell() { FontSize = "18px" };
+				if (selectedDepartments.Count == 1) {
+					subjectCell.Controls.Add(new CheckBox() { ID = "chk" + cx });
+					subjectCell.Controls.Add(new LiteralControl(r.Subject));
+					subjectCell.Controls.Add(new HtmlInputHidden() { Value = GetReportImageUrl(r.ReportPart.Id, "reportImage", URL) });
+				} else {
+					subjectCell.Controls.Add(new LiteralControl(r.Subject));
+				}
 				table.Rows.Add(new IHGHtmlTableRow(subjectCell));
+
 				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(r.Header.Replace("\r", "").Replace("\n", "<br>"))));
 				
-//				if (selectedDepartments.Count == 1) {
-//					IHGRadioButtonList plotType = new IHGRadioButtonList();
-//					plotType.ID = "plt" + cx;
-//					plotType.Items.Add(new ListItem("Line Plot", "LinePlot") { Selected = true });
-//					plotType.Items.Add(new ListItem("Box Plot", "BoxPlot"));
-//					plotType.Attributes.Add("onclick", string.Format("javascript:xxx('{0}', '{1}', '{2}')", plotType.ID, imgID, GetReportImageUrl(r.ReportPart.Id, "reportImage", URL)));
-//					IHGHtmlTableCell plotTypeCell = new IHGHtmlTableCell(plotType) { FontSize = "10px" };
-//					table.Rows.Add(new IHGHtmlTableRow(plotTypeCell));
-//				} else {
-//					table.Rows.Add(new IHGHtmlTableRow());
-//				}
-//
 				var img = new HtmlImage { ID = imgID, Src = GetReportImageUrl(r.ReportPart.Id, "reportImage", URL) };
 				img.Attributes.Add("class", "img");
 				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(img)));
