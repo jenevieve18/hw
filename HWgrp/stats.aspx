@@ -20,22 +20,32 @@
 				var graphType = $('#graphTypes input:checked').val();
 				$('#StatsImg table :checkbox').each(function () {
 				    if (this.checked) {
-				        var url = $(this).parent().find(':hidden').val();
-			            url += "&Plot=" + graphType;
+				        var reportUrl = $(this).parent().find('#reportUrl:hidden').val();
+			            reportUrl += "&Plot=" + graphType;
 			            var img = $(this).parents('#StatsImg table').find('.img');
-			            img.attr('src', url);
+			            img.attr('src', reportUrl);
+			            
+			            var exportPdfUrl = $(this).parent().find('#exportPdfUrl:hidden').val();
+			            exportPdfUrl += "&Plot=" + graphType;
+			            var exportPdfAnchor = $(this).parents('#StatsImg table').find('.exportPdfAnchor');
+			            exportPdfAnchor.attr('href', exportPdfUrl);
+			            
+			            var exportCsvUrl = $(this).parent().find('#exportCsvUrl:hidden').val();
+			            exportCsvUrl += "&Plot=" + graphType;
+			            var exportCsvAnchor = $(this).parents('#StatsImg table').find('.exportCsvAnchor');
+			            exportCsvAnchor.attr('href', exportCsvUrl);
 				    }
 				});
 			});
         });
-        function xxx(plot, img, imgUrl) {
+        /*function xxx(plot, img, imgUrl) {
             var r = document.getElementsByName(plot);
             for (var i = 0; i < r.length; i++) {
                 if (r[i].checked) {
                     document.getElementById(img).src = imgUrl + "&Plot=" + r[i].value;
                 }
             }
-        }
+        }*/
     </script>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->

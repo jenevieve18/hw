@@ -24,7 +24,7 @@ public class Graph
 	static int outerTopSpacing = 40;
 	static int bottomSpacing = 40;
 //	static int rightSpacing = 35;
-	static int rightSpacing = 100;
+	static int rightSpacing = 110;
 	static int innerRightSpacing = rightSpacing + 15;
 
 	public int w = 0;

@@ -10,6 +10,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Globalization;
+using System.Text;
 using System.Threading;
 using System.Web;
 using MySql.Data.MySqlClient;
@@ -232,19 +233,19 @@ namespace HW.Core
 		{
 			foreach (var i in indexes) {
 				if (i.YellowLow > 0) {
-					drawBgFromString2(minVal, Math.Min(maxVal, (float)Convert.ToDouble(i.YellowLow)), "FFA8A8", "Very Bad");                             // red
+					drawBgFromString2(minVal, Math.Min(maxVal, (float)Convert.ToDouble(i.YellowLow)), "FFA8A8", "Unhealthy");                             // red
 				}
 				if (i.YellowLow < 100 && i.GreenLow > 0) {
-					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.YellowLow)), Math.Min(maxVal, (float)Convert.ToDouble(i.GreenLow)), "FFFEBE", "Neither Good nor Bad");    // yellow
+					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.YellowLow)), Math.Min(maxVal, (float)Convert.ToDouble(i.GreenLow)), "FFFEBE", "Improvement Needed");    // yellow
 				}
 				if (i.GreenLow < 100 && i.GreenHigh > 0) {
-					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.GreenLow)), Math.Min(maxVal, (float)Convert.ToDouble(i.GreenHigh)), "CCFFBB", "Very Good");   // green
+					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.GreenLow)), Math.Min(maxVal, (float)Convert.ToDouble(i.GreenHigh)), "CCFFBB", "Healthy");   // green
 				}
 				if (i.GreenHigh < 100 && i.YellowHigh > 0) {
-					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.GreenHigh)), Math.Min(maxVal, (float)Convert.ToDouble(i.YellowHigh)), "FFFEBE", "Neither Good nor Bad"); // yellow
+					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.GreenHigh)), Math.Min(maxVal, (float)Convert.ToDouble(i.YellowHigh)), "FFFEBE", "Improvement Needed"); // yellow
 				}
 				if (i.YellowHigh < 100) {
-					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.YellowHigh)), maxVal, "FFA8A8", "Very Bad");                           // red
+					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.YellowHigh)), maxVal, "FFA8A8", "Unhealthy");                           // red
 				}
 			}
 		}
@@ -370,6 +371,8 @@ namespace HW.Core
 	public interface IGraphFactory
 	{
 		ExtendedGraph CreateGraph(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool stdev, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled);
+		
+		string CreateGraph2(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool stdev, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled);
 	}
 	
 	public class UserLevelGraphFactory : IGraphFactory
@@ -471,6 +474,96 @@ namespace HW.Core
 				g.drawColorExplBox("Ohälsosam nivå", 2, 400, 30);
 			}
 			return g;
+		}
+		
+		public string CreateGraph2(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool stdev, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled)
+		{
+			int answerID = 0;
+			int projectRoundUserID = 0;
+			Answer a = answerRepository.ReadByKey(key);
+			if (a != null) {
+				answerID = a.Id;
+				if (langID == 0) {
+					langID = a.Language.Id;
+				}
+				projectRoundUserID = a.ProjectRoundUser.Id;
+			}
+			LanguageFactory.SetCurrentCulture(langID);
+
+			StringBuilder s = new StringBuilder();
+//			ExtendedGraph g = new ExtendedGraph(width, height, bg);
+//			g.setMinMax(0f, 100f);
+
+			if (type == 8) {
+				int dx = answerRepository.CountByProject(projectRoundUserID, fy, ty);
+				if (dx == 1) {
+					type = 9;
+				} else {
+					cx = dx;
+				}
+			}
+			if (type == 8) {
+//				g.computeSteping(cx);
+//				g.drawOutlines(11);
+
+				int bx = 0;
+				foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(rpid, langID)) {
+					if (bx == 0) {
+//						g.drawAxisExpl(c.QuestionOption.Languages[0].Question, bx + 4, false, true);
+//						g.drawAxis(false);
+					} else {
+//						g.drawAxisExpl(c.QuestionOption.Languages[0].Question, bx + 4, true, true);
+//						g.drawAxis(true);
+					}
+					float lastVal = -1f;
+					int lastCX = 0;
+					cx = 0;
+					foreach (Answer aa in answerRepository.FindByQuestionAndOptionWithYearSpan(c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty)) {
+						if (bx == 0) {
+//							g.drawBottomString(aa.SomeString, cx);
+						}
+						float newVal = aa.Average;
+						if (lastVal != -1f && newVal != -1f) {
+//							g.drawStepLine(bx + 4, lastCX, lastVal, cx, newVal);
+							lastCX = cx;
+						}
+						cx++;
+						lastVal = newVal;
+					}
+					bx++;
+				}
+			} else if (type == 9) {
+//				g.computeSteping(cx + 2);
+//				g.drawOutlines(11);
+//				g.drawAxis();
+
+				cx = 0;
+
+				bool hasReference = false;
+
+				foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(rpid, langID)) {
+					a = answerRepository.ReadByQuestionAndOption(answerID, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id);
+					if (a != null) {
+						int color = IndexFactory.GetColor(c.QuestionOption, a.Values[0].ValueInt);
+//						g.drawBar(color, ++cx, a.Values[0].ValueInt);
+						if (c.QuestionOption.TargetValue != 0) {
+							hasReference = true;
+//							g.drawReference(cx, c.QuestionOption.TargetValue);
+						}
+//						g.drawBottomString(c.QuestionOption.Languages[0].Question, cx, true);
+					}
+				}
+
+				if (hasReference) {
+//					g.drawReference(450, 25, " = riktvärde");
+				}
+
+//				g.drawColorExplBox("Hälsosam nivå", 0, 100, 30);
+//				g.drawColorExplBox("Förbättringsbehov", 1, 250, 30);
+//				g.drawColorExplBox("Ohälsosam nivå", 2, 400, 30);
+			}
+//			return g;
+			return s.ToString();
 		}
 	}
 	
@@ -591,11 +684,6 @@ namespace HW.Core
 				g.drawAxisExpl("poäng", 0, false, false);
 				g.drawReference(780, 25, " = riktvärde");
 			} else if (type == 8) {
-//				int GRPNG = Convert.ToInt32(HttpContext.Current.Request.QueryString["GRPNG"]);
-//				int SPONS = Convert.ToInt32((HttpContext.Current.Request.QueryString["SAID"] != null ? HttpContext.Current.Request.QueryString["SAID"] : HttpContext.Current.Session["SponsorAdminID"]));
-//				int SID = Convert.ToInt32((HttpContext.Current.Request.QueryString["SID"] != null ? HttpContext.Current.Request.QueryString["SID"] : HttpContext.Current.Session["SponsorID"]));
-//				string GID = (HttpContext.Current.Request.QueryString["GID"] != null ? HttpContext.Current.Request.QueryString["GID"].ToString().Replace(" ", "") : "");
-				
 				if (GB == 0) {
 					GB = 2;
 				}
@@ -743,6 +831,252 @@ namespace HW.Core
 				g.Draw();
 			}
 			return g;
+		}
+		
+		public string CreateGraph2(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool stdev, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled)
+		{
+			string sortString = "";
+			int minDT = 0;
+			int maxDT = 0;
+			ProjectRoundUnit roundUnit = projectRepository.ReadRoundUnit(PRUID);
+			if (roundUnit != null) {
+				sortString = roundUnit.SortString;
+				if (langID == 0) {
+					langID = roundUnit.Language.Id;
+				}
+			}
+			StringBuilder ss = new StringBuilder();
+//			ExtendedGraph g = null;
+
+			LanguageFactory.SetCurrentCulture(langID);
+
+			if (type == 1) {
+				decimal tot = answerRepository.CountByDate(fy, ty, sortString);
+
+				if (rac > Convert.ToInt32(tot)) {
+//					g = new ExtendedGraph(895, 50, "#FFFFFF");
+//					g.drawStringInGraph("Ingen återkoppling pga otillräckligt underlag", 300, -30);
+				} else {
+//					g = new ExtendedGraph(895, 550, "#FFFFFF");
+//					List<Bar> bars = new List<Bar>();
+					foreach (OptionComponentLanguage c in optionRepository.FindComponentsByLanguage(o, langID)) {
+						int x = answerRepository.CountByValueWithDateOptionAndQuestion(c.Component.Id, fy, ty, o, q, sortString);
+//						var b = new Bar {
+//							Description = c.Text,
+//							Value = Convert.ToInt32(Math.Round(Convert.ToDecimal(x) / tot * 100M, 0)),
+//							Color = 5
+//						};
+//						bars.Add(b);
+					}
+					cx = optionRepository.CountByOption(o);
+//					g.DrawBars(disabled, cx, tot, bars);
+//					g.drawAxisExpl(string.Format("% (n = {0})", tot), 5, false, false);
+				}
+			} else if (type == 3) {
+//				g = new ExtendedGraph(895, 550, "#FFFFFF");
+//				List<Bar> bars = new List<Bar>();
+//				List<int> referenceLines = new List<int>();
+				
+				foreach (ReportPartComponent c in reportRepository.FindComponents(rpid)) {
+					System.Collections.SortedList all = new System.Collections.SortedList();
+
+					foreach (ProjectRoundUnit u in projectRepository.FindRoundUnitsBySortString(sortString)) {
+						res = new System.Collections.Hashtable();
+
+						if (c.Index.Parts.Count == 0) {
+							GetIdxVal(c.Index.Id, u.SortString, langID, fy, ty);
+						} else {
+							GetOtherIdxVal(c.Index.Id, u.SortString, langID, fy, ty);
+						}
+
+						if (all.Contains(lastVal)) {
+							all[lastVal] += "," + u.TreeString;
+						} else {
+							all.Add(lastVal, u.TreeString);
+						}
+					}
+
+					for (int i = all.Count - 1; i >= 0; i--) {
+						int color = IndexFactory.GetColor(c.Index, Convert.ToInt32(all.GetKey(i)));
+						string[] u = all.GetByIndex(i).ToString().Split(',');
+
+						foreach (string s in u) {
+//							bars.Add(new Bar { Color = color, Value = Convert.ToInt32(all.GetKey(i)), Description = s });
+						}
+					}
+//					referenceLines.Add(c.Index.TargetValue);
+				}
+//				g.DrawBars(disabled, cx, bars, referenceLines);
+//				g.drawAxisExpl("poäng", 0, false, false);
+			} else if (type == 2) {
+//				g = new ExtendedGraph(895, 550, "#FFFFFF");
+//				List<Bar> bars = new List<Bar>();
+				foreach (ReportPartComponent c in reportRepository.FindComponents(rpid)) {
+					if (c.Index.Parts.Count == 0) {
+						GetIdxVal(c.Index.Id, sortString, langID, fy, ty);
+					} else {
+						GetOtherIdxVal(c.Index.Id, sortString, langID, fy, ty);
+					}
+					int color = IndexFactory.GetColor(c.Index, lastVal);
+//					bars.Add(new Bar { Value = lastVal, Color = color, Description = lastDesc, Reference = c.Index.TargetValue });
+				}
+//				g.DrawBars(disabled, cx, bars);
+//				g.drawAxisExpl("poäng", 0, false, false);
+//				g.drawReference(780, 25, " = riktvärde");
+			} else if (type == 8) {
+				if (GB == 0) {
+					GB = 2;
+				}
+				
+				string groupBy = GroupFactory.GetGroupBy(GB);
+//				g = new ExtendedGraph(895, 440, "#FFFFFF");
+
+				int t = 2 + (!stdev ? 1 : 0);
+				if (plot == "BoxPlot") {
+//					g.Type = new BoxPlotGraphType();
+				} else {
+//					g.Type = new LineGraphType(stdev, t);
+				}
+				Answer answer = answerRepository.ReadByGroup(groupBy, fy, ty, sortString);
+				if (answer != null) {
+					cx = answer.DummyValue1 + 3;
+					minDT = answer.DummyValue2;
+					maxDT = answer.DummyValue3;
+				}
+
+				List<IIndex> indexes = new List<IIndex>();
+				List<IMinMax> minMaxes = new List<IMinMax>();
+				foreach (ReportPartComponent c in reportRepository.FindComponentsByPart(rpid)) {
+					if (!hasGrouping) {
+						Answer a = answerRepository.ReadMinMax(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString);
+						if (a != null) {
+							minMaxes.Add(a);
+						} else {
+							minMaxes.Add(new Answer());
+						}
+					} else {
+						minMaxes.Add(new Answer());
+					}
+					indexes.Add(c.QuestionOption);
+				}
+//				g.SetMinMaxes(minMaxes);
+//				g.DrawBackgroundFromIndexes2(indexes);
+//				g.DrawComputingSteps(disabled, cx);
+
+				cx = 0;
+				
+//				g.DrawBottomString(minDT, maxDT, GB);
+				
+				List<IExplanation> explanationBoxes = new List<IExplanation>();
+				
+				if (hasGrouping) {
+					int COUNT = 0;
+					Hashtable desc = new Hashtable();
+					Hashtable join = new Hashtable();
+					ArrayList item = new ArrayList();
+					string extraDesc = "";
+					
+					COUNT = GroupFactory.GetCount(GRPNG, SPONS, SID, PRUID, GID, ref extraDesc, desc, join, item, departmentRepository, questionRepository);
+					
+					int breaker = 6, itemWidth = 120;
+					if (COUNT < 6) {
+						breaker = 4;
+						itemWidth = 180;
+					}
+					if (COUNT < 4) {
+						breaker = 3;
+						itemWidth = 240;
+					}
+					
+//					g.Explanations.Add(
+//						new Explanation {
+//							Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+//							Color = 0,
+//							Right = false,
+//							Box = false,
+//							HasAxis = false
+//						}
+//					);
+					ReportPartComponent c = reportRepository.ReadComponentByPartAndLanguage(rpid, langID);
+					if (c != null) {
+						int bx = 0;
+						foreach(string i in item) {
+//							explanationBoxes.Add(
+//								new Explanation {
+//									Description = (string)desc[i],
+//									Color = bx + 4,
+//									X = 130 + (int)((bx % breaker) * itemWidth),
+//									Y = 20 + (int)Math.Floor((double)bx / breaker) * 15
+//								}
+//							);
+							cx = 1;
+							int lastDT = minDT - 1;
+							var answers = answerRepository.FindByQuestionAndOptionJoinedAndGrouped2(join[i].ToString(), groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty);
+//							Series s = new Series {
+//								Description = (string)desc[i],
+//								Color = bx + 4,
+//								X = 130 + (int)((bx % breaker) * itemWidth),
+//								Y = 20 + (int)Math.Floor((double)bx / breaker) * 15
+//							};
+							foreach (Answer a in answers) {
+								while (lastDT + 1 < a.SomeInteger) {
+									lastDT++;
+									cx++;
+								}
+								if (a.Values.Count >= rac) {
+									if (COUNT == 1) {
+//										g.DrawBottomString(GB, a.SomeInteger, cx, (COUNT == 1 ? ", n = " + a.Values.Count : ""));
+									}
+//									s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
+									foreach (var v in a.Values) {
+										ss.Append(v.ValueInt.ToString());
+										ss.Append(",");
+									}
+								}
+								ss.Append(Environment.NewLine);
+								lastDT = a.SomeInteger;
+								cx++;
+							}
+//							g.Series.Add(s);
+							bx++;
+						}
+					}
+				} else {
+					int bx = 0;
+					foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(rpid, langID)) {
+//						g.Explanations.Add(
+//							new Explanation {
+//								Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+//								Color = bx + 4,
+//								Right = bx == 0 ? false : true,
+//								Box = bx == 0 ? true : false,
+//								HasAxis = bx == 0 ? false : true
+//							}
+//						);
+						cx = 1;
+						int lastDT = minDT - 1;
+//						Series s = new Series { Color = bx + 4 };
+						foreach (Answer a in answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString)) {
+							while (lastDT + 1 < a.SomeInteger) {
+								lastDT++;
+								cx++;
+							}
+
+							if (a.CountV >= rac) {
+//								g.DrawBottomString(GB, a.SomeInteger, cx, ", n = " + a.CountV);
+//								s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
+							}
+							lastDT = a.SomeInteger;
+							cx++;
+						}
+//						g.Series.Add(s);
+						bx++;
+					}
+				}
+//				g.Draw();
+			}
+//			return g;
+			return ss.ToString();
 		}
 		
 		void GetIdxVal(int idx, string sortString, int langID, int fy, int ty)
