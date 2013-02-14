@@ -967,7 +967,7 @@ namespace HW.Core
 				
 //				g.DrawBottomString(minDT, maxDT, GB);
 				
-				List<IExplanation> explanationBoxes = new List<IExplanation>();
+//				List<IExplanation> explanationBoxes = new List<IExplanation>();
 				
 				if (hasGrouping) {
 					int COUNT = 0;
@@ -1018,10 +1018,16 @@ namespace HW.Core
 //								X = 130 + (int)((bx % breaker) * itemWidth),
 //								Y = 20 + (int)Math.Floor((double)bx / breaker) * 15
 //							};
+							int ii = minDT;
+							int jj = 0;
 							foreach (Answer a in answers) {
+								ss.Append((string)desc[i] + ",");
+								jj++;
+								ss.Append("\"" + DrawBottomString(GB, ii, jj, "") + "\",");
 								while (lastDT + 1 < a.SomeInteger) {
 									lastDT++;
 									cx++;
+									ss.Append(Environment.NewLine);
 								}
 								if (a.Values.Count >= rac) {
 									if (COUNT == 1) {
@@ -1029,13 +1035,13 @@ namespace HW.Core
 									}
 //									s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
 									foreach (var v in a.Values) {
-										ss.Append(v.ValueInt.ToString());
-										ss.Append(",");
+										ss.Append(v.ValueInt.ToString() + ",");
 									}
 								}
 								ss.Append(Environment.NewLine);
 								lastDT = a.SomeInteger;
 								cx++;
+								ii++;
 							}
 //							g.Series.Add(s);
 							bx++;
@@ -1077,6 +1083,97 @@ namespace HW.Core
 			}
 //			return g;
 			return ss.ToString();
+		}
+		
+		public string DrawBottomString(int groupBy, int i, int dx, string str)
+		{
+			switch (groupBy) {
+				case 1:
+					{
+						int d = i;
+						int w = d % 52;
+						if (w == 0) {
+							w = 52;
+						}
+						//						string v = "v" + w + ", " + (d / 52) + str;
+						string v = string.Format("v{0}, {1}{2}", w, d / 52, str);
+//						drawBottomString(v, dx, true);
+//						break;
+						return v;
+					}
+				case 2:
+					{
+						int d = i * 2;
+						int w = d % 52;
+						if (w == 0) {
+							w = 52;
+						}
+						//						string v = "v" + (w - 1) + "-" + w + ", " + (d - ((d - 1) % 52)) / 52 + str;
+						string v = string.Format("v{0}-{1}, {2}{3}", w - 2, w, (d - ((d - 1) % 52)) / 52, str);
+//						drawBottomString(v, dx, true);
+//						break;
+						return v;
+					}
+				case 3:
+					{
+						int d = i;
+						int w = d % 12;
+						if (w == 0) {
+							w = 12;
+						}
+						string v = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedMonthNames[w - 1] + ", " + ((d - w) / 12) + str;
+//						drawBottomString(v, dx, true);
+//						break;
+						return v;
+					}
+				case 4:
+					{
+						int d = i * 3;
+						int w = d % 12;
+						if (w == 0) {
+							w = 12;
+						}
+						//						string v = "Q" + (w / 3) + ", " + ((d - w) / 12) + str;
+						string v = string.Format("Q{0}, {1}{2}", w / 3, (d - w) / 12, str);
+//						drawBottomString(v, dx, true);
+//						break;
+						return v;
+					}
+				case 5:
+					{
+						int d = i * 6;
+						int w = d % 12;
+						if (w == 0) {
+							w = 12;
+						}
+						//						string v = ((d - w) / 12) + "/" + (w / 6) + str;
+						string v = string.Format("{0}/{1}{2}", (d - w) / 12, w / 6, str);
+//						drawBottomString(v, dx, true);
+//						break;
+						return v;
+					}
+				case 6:
+					{
+						string v = i.ToString() + str;
+//						drawBottomString(v, dx, true);
+//						break;
+						return v;
+					}
+				case 7:
+					{
+						int d = i * 2;
+						int w = d % 52;
+						if (w == 0) {
+							w = 52;
+						}
+						string v = "v" + w + "-" + ((w == 52 ? 0 : w) + 1) + ", " + ((d + 1) - (d % 52)) / 52 + str;
+//						drawBottomString(v, dx, true);
+//						break;
+						return v;
+					}
+				default:
+					throw new NotSupportedException();
+			}
 		}
 		
 		void GetIdxVal(int idx, string sortString, int langID, int fy, int ty)
