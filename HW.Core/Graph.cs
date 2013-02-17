@@ -23,8 +23,8 @@ public class Graph
 
 	static int outerTopSpacing = 40;
 	static int bottomSpacing = 40;
-//	static int rightSpacing = 35;
-	static int rightSpacing = 110;
+	static int rightSpacing = 35;
+//	static int rightSpacing = 110;
 	static int innerRightSpacing = rightSpacing + 15;
 
 	public int w = 0;
@@ -155,12 +155,9 @@ public class Graph
 		float y = topSpacing + 1 + dMaxH + top;
 		float innerWidth = w - leftSpacing - rightSpacing;
 		float height = low - top;
-		objGraphics.FillRectangle(new SolidBrush(ColorTranslator.FromHtml("#" + color)), x + innerWidth, y, 10, height);
-		
-//		objGraphics.TranslateTransform(0, h);
-//		objGraphics.RotateTransform(90F);
-		objGraphics.DrawString(label, smallFont, solidBlackBrush, x + innerWidth + 12, y + (height / 2), drawFormatNear);
-//		objGraphics.ResetTransform();
+		objGraphics.FillRectangle(new SolidBrush(ColorTranslator.FromHtml("#" + color)), x, y, 30, height);
+//		
+//		objGraphics.DrawString(label, smallFont, solidBlackBrush, x + innerWidth + 12, y + (height / 2), drawFormatNear);
 	}
 
 	public void drawBg(float lowPercent, float topPercent, string color)

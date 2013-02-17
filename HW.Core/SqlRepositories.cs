@@ -943,7 +943,6 @@ ORDER BY tmp.DT",
 						SomeInteger = rs.GetInt32(0),
 						AverageV = rs.GetInt32(1),
 						CountV = GetInt32(rs, 2),
-//						StandardDeviation = rs.GetFloat(3)
 //						StandardDeviation = (float)rs.GetDouble(3)
 						StandardDeviation = (float)GetDouble(rs, 3)
 					};
@@ -984,7 +983,6 @@ ORDER BY tmp.DT",
 //			);
 			string query = string.Format(
 				@"
-
 	SELECT {1}(a.EndDT) AS DT, AVG(av.ValueInt) AS V
 	FROM Answer a
 	{0}

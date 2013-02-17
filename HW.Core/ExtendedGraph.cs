@@ -978,15 +978,15 @@ namespace HW.Core
 					
 					COUNT = GroupFactory.GetCount(GRPNG, SPONS, SID, PRUID, GID, ref extraDesc, desc, join, item, departmentRepository, questionRepository);
 					
-					int breaker = 6, itemWidth = 120;
-					if (COUNT < 6) {
-						breaker = 4;
-						itemWidth = 180;
-					}
-					if (COUNT < 4) {
-						breaker = 3;
-						itemWidth = 240;
-					}
+//					int breaker = 6, itemWidth = 120;
+//					if (COUNT < 6) {
+//						breaker = 4;
+//						itemWidth = 180;
+//					}
+//					if (COUNT < 4) {
+//						breaker = 3;
+//						itemWidth = 240;
+//					}
 					
 //					g.Explanations.Add(
 //						new Explanation {
