@@ -75,7 +75,7 @@
                         Language
                         <asp:DropDownList ID="LangID" runat="server" AutoPostBack=true />
 				        <!--<asp:CheckBox ID="STDEV" runat=server Text="Show standard deviation" />-->
-			            <span>Extra Point</span>
+			            <span>Distribution</span>
                         <asp:DropDownList AutoPostBack=true ID=ExtraPoint runat=server>
 					        <asp:ListItem Value=0 Text="< none >" />
 					        <asp:ListItem Value=1 Text="Standard Deviation" />
