@@ -56,7 +56,7 @@ namespace HW.Tests.Models
 				new QuestionRepositoryStub(),
 				new IndexRepositoryStub()
 			);
-			g = ff.CreateGraph(null, 14, 1, 3101, 8, 2012, 2013, 10, 10, 1, 1, 1, false, true, "BoxPlot", 550, 440, "#FFFFFF", 1, 1, 1, "", new object(), 0);
+			g = ff.CreateGraph(null, 14, 1, 3101, 8, 2012, 2013, 10, 10, 1, 1, 1, false, "BoxPlot", 550, 440, "#FFFFFF", 1, 1, 1, "", new object(), 0);
 		}
 		
 		[Test]
@@ -72,7 +72,7 @@ namespace HW.Tests.Models
 				new QuestionRepositoryStub(),
 				new IndexRepositoryStub()
 			);
-			string s = ff.CreateGraph2(null, 14, 2, 3101, 8, 2012, 2013, 0, 10, 0, 0, 7, false, true, "LinePlot", 550, 440, "#FFFFFF", 2, 658, 101, "0,1101,1093", null, 0);
+			string s = ff.CreateGraph2(null, 14, 2, 3101, 8, 2012, 2013, 0, 10, 0, 0, 7, false, "LinePlot", 550, 440, "#FFFFFF", 2, 658, 101, "0,1101,1093", null, 0);
 			Console.WriteLine(s);
 		}
 		
@@ -89,7 +89,7 @@ namespace HW.Tests.Models
 				new SqlQuestionRepository(),
 				new SqlIndexRepository()
 			);
-			string s = ff.CreateGraph2(null, 14, 2, 3101, 8, 2012, 2013, 0, 10, 0, 0, 7, false, true, "LinePlot", 550, 440, "#FFFFFF", 2, 658, 101, "0,1101,1093", null, 0);
+			string s = ff.CreateGraph2(null, 14, 2, 3101, 8, 2012, 2013, 0, 10, 0, 0, 7, false, "LinePlot", 550, 440, "#FFFFFF", 2, 658, 101, "0,1101,1093", null, 0);
 			Console.WriteLine(s);
 		}
 		
@@ -106,7 +106,7 @@ namespace HW.Tests.Models
 				new QuestionRepositoryStub(),
 				new IndexRepositoryStub()
 			);
-			g = ff.CreateGraph("", 1, 1, 1, 8, 2011, 2012, 10, 10, 1, 1, 1, false, true, "BoxPlot", 550, 440, "#FFFFFF", 1, 1, 1, "", new object(), 0);
+			g = ff.CreateGraph("", 1, 1, 1, 8, 2011, 2012, 10, 10, 1, 1, 1, false, "BoxPlot", 550, 440, "#FFFFFF", 1, 1, 1, "", new object(), 0);
 		}
 		
 		[Test]
@@ -122,7 +122,7 @@ namespace HW.Tests.Models
 				new QuestionRepositoryStub(),
 				new IndexRepositoryStub()
 			);
-			g = ff.CreateGraph("", 1, 1, 1, 8, 2011, 2012, 10, 10, 1, 1, 1, false, true, "BoxPlot", 550, 440, "#FFFFFF", 1, 1, 1, "", new object(), 0);
+			g = ff.CreateGraph("", 1, 1, 1, 8, 2011, 2012, 10, 10, 1, 1, 1, false, "BoxPlot", 550, 440, "#FFFFFF", 1, 1, 1, "", new object(), 0);
 		}
 	}
 }

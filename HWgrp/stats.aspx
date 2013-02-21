@@ -88,7 +88,7 @@
 			        </div>
                 </div>
         		<asp:Label ID=StatsImg runat=server />
-				<!--<% if (reportParts != null) { %>
+				<%-- <% if (reportParts != null) { %>
 					<% int i = 0; %>
         			<% foreach (var r in reportParts) { %>
         				<% if (i == 0) { %>
@@ -109,13 +109,13 @@
 							<tr><td><%= r.Header %></td></tr>
 							<tr>
 								<td>
-									<img src='<%= GetReportImageUrl(r.ReportPart.Id, "reportImage", GetURL(urlModels)) %>'>
+									<img src='<%= GetReportImageUrl(r.ReportPart.Id, r.Id, "reportImage", GetURL(urlModels)) %>'>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<a href='<%= GetReportImageUrl(r.ReportPart.Id, "Export", GetURL(urlModels) + "&type=pdf") %>' target="_blank" class="exportPdfAnchor"><img src="images/page_white_acrobat.png"></a>
-									<a href='<%= GetReportImageUrl(r.ReportPart.Id, "Export", GetURL(urlModels) + "&type=csv") %>' target="_blank" class="exportCsvAnchor"><img src="images/page_white_excel.png"></a>
+									<a href='<%= GetReportImageUrl(r.ReportPart.Id, r.Id, "Export", GetURL(urlModels) + "&type=pdf") %>' target="_blank" class="exportPdfAnchor"><img src="images/page_white_acrobat.png"></a>
+									<a href='<%= GetReportImageUrl(r.ReportPart.Id, r.Id, "Export", GetURL(urlModels) + "&type=csv") %>' target="_blank" class="exportCsvAnchor"><img src="images/page_white_excel.png"></a>
 								</td>
 							</tr>
 							<tr>
@@ -123,7 +123,7 @@
 							</tr>
 						</table>
 					<% } %>
-				<% } %>-->
+				<% } %> --%>
             </div><!-- end .contentgroup	-->
         </div> <!-- end .container_12 -->
 	</form>

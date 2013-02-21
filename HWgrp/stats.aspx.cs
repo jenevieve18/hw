@@ -182,9 +182,9 @@ namespace HWgrp
 				if (selectedDepartments.Count == 1) {
 					subjectCell.Controls.Add(new CheckBox() { ID = "chk" + cx });
 					subjectCell.Controls.Add(new LiteralControl(r.Subject));
-					subjectCell.Controls.Add(new HtmlInputHidden() { ID = "reportUrl", Value = GetReportImageUrl(r.ReportPart.Id, "reportImage", URL) });
-					subjectCell.Controls.Add(new HtmlInputHidden() { ID = "exportPdfUrl", Value = GetReportImageUrl(r.ReportPart.Id, "Export", URL + "&type=pdf") });
-					subjectCell.Controls.Add(new HtmlInputHidden() { ID = "exportCsvUrl", Value = GetReportImageUrl(r.ReportPart.Id, "Export", URL + "&type=csv") });
+					subjectCell.Controls.Add(new HtmlInputHidden() { ID = "reportUrl", Value = GetReportImageUrl(r.ReportPart.Id, r.Id, "reportImage", URL) });
+					subjectCell.Controls.Add(new HtmlInputHidden() { ID = "exportPdfUrl", Value = GetReportImageUrl(r.ReportPart.Id, r.Id, "Export", URL + "&type=pdf") });
+					subjectCell.Controls.Add(new HtmlInputHidden() { ID = "exportCsvUrl", Value = GetReportImageUrl(r.ReportPart.Id, r.Id, "Export", URL + "&type=csv") });
 				} else {
 					subjectCell.Controls.Add(new LiteralControl(r.Subject));
 				}
@@ -192,15 +192,15 @@ namespace HWgrp
 
 				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(r.Header.Replace("\r", "").Replace("\n", "<br>"))));
 				
-				var img = new HtmlImage { ID = imgID, Src = GetReportImageUrl(r.ReportPart.Id, "reportImage", URL) };
+				var img = new HtmlImage { ID = imgID, Src = GetReportImageUrl(r.ReportPart.Id, r.Id, "reportImage", URL) };
 				img.Attributes.Add("class", "img");
 				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(img)));
 				
-				var exportPdfAnchor = new HtmlAnchor { Target = "_blank", HRef = GetReportImageUrl(r.ReportPart.Id, "Export", URL + "&type=pdf") };
+				var exportPdfAnchor = new HtmlAnchor { Target = "_blank", HRef = GetReportImageUrl(r.ReportPart.Id, r.Id, "Export", URL + "&type=pdf") };
 				exportPdfAnchor.Attributes.Add("class", "exportPdfAnchor");
 				exportPdfAnchor.Controls.Add(new HtmlImage { Src = "images/page_white_acrobat.png" });
 				
-				var exportCsvAnchor= new HtmlAnchor { Target = "_blank", HRef = GetReportImageUrl(r.ReportPart.Id, "Export", URL + "&type=csv") };
+				var exportCsvAnchor= new HtmlAnchor { Target = "_blank", HRef = GetReportImageUrl(r.ReportPart.Id, r.Id, "Export", URL + "&type=csv") };
 				exportCsvAnchor.Attributes.Add("class", "exportCsvAnchor");
 				exportCsvAnchor.Controls.Add(new HtmlImage { Src = "images/page_white_excel.png" });
 				
@@ -225,11 +225,11 @@ namespace HWgrp
 			}
 		}
 		
-		protected string GetReportImageUrl(int reportID, string page, string URL)
+		protected string GetReportImageUrl(int reportID, int reportPartLangID, string page, string URL)
 		{
 			string plotQuery = HttpContext.Current.Request.QueryString["Plot"] != null ? "&Plot=" + HttpContext.Current.Request["Plot"] : "";
 			string reportImageUrl = string.Format(
-				"{13}.aspx?LangID={0}&FY={1}&TY={2}&SAID={3}&SID={4}&{5}STDEV={6}&ExtraPoint={14}&GB={7}&RPID={8}&PRUID={9}{10}&GRPNG={11}{12}",
+				"{13}.aspx?LangID={0}&FY={1}&TY={2}&SAID={3}&SID={4}&{5}STDEV={6}&ExtraPoint={14}&GB={7}&RPID={8}&RPLID={15}&PRUID={9}{10}&GRPNG={11}{12}",
 				Convert.ToInt32(LangID.SelectedValue),
 				FromYear.SelectedValue,
 				ToYear.SelectedValue,
@@ -244,7 +244,8 @@ namespace HWgrp
 				Convert.ToInt32(Grouping.SelectedValue),
 				plotQuery,
 				page,
-				ExtraPoint.SelectedValue
+				ExtraPoint.SelectedValue,
+				reportPartLangID
 			);
 			return reportImageUrl;
 		}

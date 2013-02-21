@@ -374,9 +374,9 @@ namespace HW.Core
 	
 	public interface IGraphFactory
 	{
-		ExtendedGraph CreateGraph(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool stdev, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point);
+		ExtendedGraph CreateGraph(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point);
 		
-		string CreateGraph2(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool stdev, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point);
+		string CreateGraph2(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point);
 	}
 	
 	public class UserLevelGraphFactory : IGraphFactory
@@ -390,7 +390,7 @@ namespace HW.Core
 			this.reportRepository = reportRepository;
 		}
 		
-		public ExtendedGraph CreateGraph(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool stdev, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
+		public ExtendedGraph CreateGraph(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
 		{
 			int answerID = 0;
 			int projectRoundUserID = 0;
@@ -481,7 +481,7 @@ namespace HW.Core
 			return g;
 		}
 		
-		public string CreateGraph2(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool stdev, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
+		public string CreateGraph2(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
 		{
 			int answerID = 0;
 			int projectRoundUserID = 0;
@@ -600,7 +600,7 @@ namespace HW.Core
 			this.departmentRepository = departmentRepository;
 		}
 		
-		public ExtendedGraph CreateGraph(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool stdev, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
+		public ExtendedGraph CreateGraph(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
 		{
 			string sortString = "";
 			int minDT = 0;
@@ -699,7 +699,8 @@ namespace HW.Core
 				string groupBy = GroupFactory.GetGroupBy(GB);
 				g = new ExtendedGraph(895, 440, "#FFFFFF");
 
-				int t = 2 + (!stdev ? 1 : 0);
+//				int t = 2 + (!stdev ? 1 : 0);
+				int t = 2;
 				if (plot == "BoxPlot") {
 					g.Type = new BoxPlotGraphType();
 				} else {
@@ -759,7 +760,8 @@ namespace HW.Core
 					
 					g.Explanations.Add(
 						new Explanation {
-							Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+//							Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+							Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (point == ExtraPoint.StandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
 							Color = 0,
 							Right = false,
 							Box = false,
@@ -810,7 +812,8 @@ namespace HW.Core
 					foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(rpid, langID)) {
 						g.Explanations.Add(
 							new Explanation {
-								Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+//								Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+								Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (point == ExtraPoint.StandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
 								Color = bx + 4,
 								Right = bx == 0 ? false : true,
 								Box = bx == 0 ? true : false,
@@ -842,7 +845,7 @@ namespace HW.Core
 			return g;
 		}
 		
-		public string CreateGraph2(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool stdev, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
+		public string CreateGraph2(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
 		{
 			string sortString = "";
 			int minDT = 0;
@@ -944,7 +947,7 @@ namespace HW.Core
 				string groupBy = GroupFactory.GetGroupBy(GB);
 //				g = new ExtendedGraph(895, 440, "#FFFFFF");
 
-				int t = 2 + (!stdev ? 1 : 0);
+//				int t = 2 + (!stdev ? 1 : 0);
 				if (plot == "BoxPlot") {
 //					g.Type = new BoxPlotGraphType();
 				} else {
@@ -1013,8 +1016,6 @@ namespace HW.Core
 					ReportPartComponent c = reportRepository.ReadComponentByPartAndLanguage(rpid, langID);
 					if (c != null) {
 						int bx = 0;
-//						header1.Append(",");
-//						header2.Append(",");
 						foreach(string i in item) {
 //							explanationBoxes.Add(
 //								new Explanation {
@@ -1039,7 +1040,6 @@ namespace HW.Core
 							foreach (Answer a in answers) {
 								jj++;
 								string w = DrawBottomString(GB, ii, jj, "");
-//								Console.WriteLine(w);
 								if (!weeks.ContainsKey(w)) {
 									week = new List<Answer>();
 									weeks.Add(w, week);
@@ -1049,7 +1049,6 @@ namespace HW.Core
 								while (lastDT + 1 < a.DT) {
 									lastDT++;
 									cx++;
-//									body.Append(Environment.NewLine);
 //									week.Add(new Answer());
 								}
 								if (a.Values.Count >= rac) {
