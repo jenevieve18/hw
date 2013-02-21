@@ -103,11 +103,14 @@ namespace HW.Core
 		
 		public void DrawMedian(int cx, int mean)
 		{
+			float halfWidth = (barW / 1) / 2;
 			Line l1 = new Line {
 				Color = 20,
-				X1 = cx * steping - 23,
+//				X1 = cx * steping - 23,
+				X1 = cx * steping - (int)halfWidth,
 				Y1 = Convert.ToInt32(maxH - (mean - minVal) / (maxVal - minVal) * maxH),
-				X2 = cx * steping + 23,
+//				X2 = cx * steping + 23,
+				X2 = cx * steping + (int)halfWidth,
 				Y2 = Convert.ToInt32(maxH - (mean - minVal) / (maxVal - minVal) * maxH),
 				T = 1
 			};
