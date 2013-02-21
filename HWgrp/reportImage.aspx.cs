@@ -538,11 +538,13 @@ namespace HWgrp
 			
 			object disabled = HttpContext.Current.Request.QueryString["DISABLED"];
 			
+			int point = HttpContext.Current.Request.QueryString["ExtraPoint"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["ExtraPoint"]) : 0;
+			
 			ReportPart r = reportRepository.ReadReportPart(rpid);
 //			SetReportPart(key, HasAnswerKey, r, g, langID, PRUID, fy, ty, GB, stdev, hasGrouping, plot);
 			
 			var f = GraphFactory.CreateFactory(HasAnswerKey, answerRepository, reportRepository, projectRepository, optionRepository, departmentRepository, questionRepository, indexRepository);
-			g = f.CreateGraph(key, rpid, langID, PRUID, r.Type, fy, ty, r.Components.Count, r.RequiredAnswerCount, r.Option.Id, r.Question.Id, GB, stdev, hasGrouping, plot, Width, Height, Background, GRPNG, SPONS, SID, GID, disabled);
+			g = f.CreateGraph(key, rpid, langID, PRUID, r.Type, fy, ty, r.Components.Count, r.RequiredAnswerCount, r.Option.Id, r.Question.Id, GB, stdev, hasGrouping, plot, Width, Height, Background, GRPNG, SPONS, SID, GID, disabled, point);
 			g.render();
 		}
 	}

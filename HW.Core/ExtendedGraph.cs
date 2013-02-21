@@ -35,7 +35,8 @@ namespace HW.Core
 			Series = new List<Series>();
 			Explanations = new List<IExplanation>();
 			
-			Type = new LineGraphType(false, 2); // TODO: Why default to line graph?
+//			Type = new LineGraphType(false, 2); // TODO: Why default to line graph?
+			Type = new LineGraphType(0, 2); // TODO: Why default to line graph? Also map the point value to ExtraPoint class.
 		}
 		
 		public void DrawDeviation(int color, int cx, int newVal, int newStd)
@@ -370,9 +371,9 @@ namespace HW.Core
 	
 	public interface IGraphFactory
 	{
-		ExtendedGraph CreateGraph(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool stdev, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled);
+		ExtendedGraph CreateGraph(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool stdev, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point);
 		
-		string CreateGraph2(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool stdev, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled);
+		string CreateGraph2(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool stdev, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point);
 	}
 	
 	public class UserLevelGraphFactory : IGraphFactory
@@ -386,7 +387,7 @@ namespace HW.Core
 			this.reportRepository = reportRepository;
 		}
 		
-		public ExtendedGraph CreateGraph(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool stdev, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled)
+		public ExtendedGraph CreateGraph(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool stdev, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
 		{
 			int answerID = 0;
 			int projectRoundUserID = 0;
@@ -477,7 +478,7 @@ namespace HW.Core
 			return g;
 		}
 		
-		public string CreateGraph2(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool stdev, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled)
+		public string CreateGraph2(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool stdev, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
 		{
 			int answerID = 0;
 			int projectRoundUserID = 0;
@@ -596,7 +597,7 @@ namespace HW.Core
 			this.departmentRepository = departmentRepository;
 		}
 		
-		public ExtendedGraph CreateGraph(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool stdev, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled)
+		public ExtendedGraph CreateGraph(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool stdev, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
 		{
 			string sortString = "";
 			int minDT = 0;
@@ -699,7 +700,8 @@ namespace HW.Core
 				if (plot == "BoxPlot") {
 					g.Type = new BoxPlotGraphType();
 				} else {
-					g.Type = new LineGraphType(stdev, t);
+//					g.Type = new LineGraphType(stdev, t);
+					g.Type = new LineGraphType(point, t);
 				}
 				Answer answer = answerRepository.ReadByGroup(groupBy, fy, ty, sortString);
 				if (answer != null) {
@@ -837,7 +839,7 @@ namespace HW.Core
 			return g;
 		}
 		
-		public string CreateGraph2(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool stdev, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled)
+		public string CreateGraph2(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool stdev, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
 		{
 			string sortString = "";
 			int minDT = 0;
@@ -1101,7 +1103,14 @@ namespace HW.Core
 			if (plot == "BoxPlot") {
 				return new BoxPlot().ToCsv(departments, weeks);
 			} else {
-				return new Line().ToCsv(departments, weeks);
+//				return new Line().ToCsv(departments, weeks);
+				if (point == ExtraPoint.None) {
+					return new Line().ToCsv(departments, weeks);
+				} else if (point == ExtraPoint.StandardDeviation) {
+					return new StandardDeviationLine().ToCsv(departments, weeks);
+				} else {
+					return new ConfidenceIntervalLine().ToCsv(departments, weeks);
+				}
 			}
 		}
 		
@@ -1153,6 +1162,80 @@ namespace HW.Core
 			}
 		}
 		
+		class ConfidenceIntervalLine : BaseCsv
+		{
+			public override string ToCsv(List<Department> departments, Dictionary<string, List<Answer>> weeks)
+			{
+				StringBuilder content = new StringBuilder();
+				StringBuilder header1 = new StringBuilder(",");
+				StringBuilder header2 = new StringBuilder(",");
+				foreach (var d in departments) {
+					header1.Append(AddComma(d.Name));
+					header1.Append(",");
+					header1.Append(",");
+					header2.Append(AddComma("Mean"));
+					header2.Append(AddComma("Confidence Interval"));
+					header2.Append(AddComma("Count"));
+				}
+				header1.AppendLine();
+				header2.AppendLine();
+				foreach (var w in weeks.Keys) {
+					content.Append(AddComma(w));
+					foreach (var x in weeks[w]) {
+						if (x.Values.Count > 0) {
+							var v = x.GetIntValues();
+							content.Append(AddComma(v.Mean.ToString()));
+							content.Append(AddComma(v.ConfidenceInterval.ToString()));
+							content.Append(AddComma(x.Values.Count.ToString()));
+						} else {
+							content.Append(",,,");
+						}
+					}
+					content.AppendLine();
+				}
+				header1.Append(header2);
+				header1.Append(content);
+				return header1.ToString();
+			}
+		}
+		
+		class StandardDeviationLine : BaseCsv
+		{
+			public override string ToCsv(List<Department> departments, Dictionary<string, List<Answer>> weeks)
+			{
+				StringBuilder content = new StringBuilder();
+				StringBuilder header1 = new StringBuilder(",");
+				StringBuilder header2 = new StringBuilder(",");
+				foreach (var d in departments) {
+					header1.Append(AddComma(d.Name));
+					header1.Append(",");
+					header1.Append(",");
+					header2.Append(AddComma("Mean"));
+					header2.Append(AddComma("Standard Deviation"));
+					header2.Append(AddComma("Count"));
+				}
+				header1.AppendLine();
+				header2.AppendLine();
+				foreach (var w in weeks.Keys) {
+					content.Append(AddComma(w));
+					foreach (var x in weeks[w]) {
+						if (x.Values.Count > 0) {
+							var v = x.GetIntValues();
+							content.Append(AddComma(v.Mean.ToString()));
+							content.Append(AddComma(v.ConfidenceInterval.ToString()));
+							content.Append(AddComma(x.Values.Count.ToString()));
+						} else {
+							content.Append(",,");
+						}
+					}
+					content.AppendLine();
+				}
+				header1.Append(header2);
+				header1.Append(content);
+				return header1.ToString();
+			}
+		}
+		
 		class BoxPlot : BaseCsv
 		{
 			public override string ToCsv(List<Department> departments, Dictionary<string, List<Answer>> weeks)
@@ -1184,6 +1267,13 @@ namespace HW.Core
 				header1.Append(content);
 				return header1.ToString();
 			}
+		}
+		
+		class ExtraPoint
+		{
+			public const int None = 0;
+			public const int StandardDeviation = 1;
+			public const int ConfidenceInterval = 2;
 		}
 		
 		public string DrawBottomString(int groupBy, int i, int dx, string str)

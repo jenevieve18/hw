@@ -252,16 +252,20 @@ namespace HW.Core
 	public class LineGraphType : IGraphType
 	{
 		public ExtendedGraph Graph { get; set; }
-		bool stdev;
+//		bool stdev;
+		int point;
 		int t;
 		
-		public LineGraphType() : this(false, 2)
+//		public LineGraphType() : this(false, 2)
+		public LineGraphType() : this(0, 2) // TODO: Map this point value to ExtraPoint class.
 		{
 		}
 		
-		public LineGraphType(bool stdev, int t)
+//		public LineGraphType(bool stdev, int t)
+		public LineGraphType(int point, int t)
 		{
-			this.stdev = stdev;
+//			this.stdev = stdev;
+			this.point = point;
 			this.t = t;
 		}
 		
@@ -273,8 +277,11 @@ namespace HW.Core
 				for (int i = 0; i < s.Points.Count; i++) {
 					PointV p = s.Points[i];
 					HWList l = p.Values;
-					if (stdev) {
+//					if (stdev) {
+					if (point == 1) { // TODO: Map this to ExtraPoint class.
 						Graph.DrawDeviation(s.Color, (int)p.X, (int)l.Mean, (int)l.StandardDeviation);
+					} else if (point == 2) { // TODO: Map this to ExtraPoint class.
+						Graph.DrawDeviation(s.Color, (int)p.X, (int)l.Mean, (int)l.ConfidenceInterval);
 					}
 					Graph.drawCircle((int)p.X, (int)l.Mean, 4);
 					if (i > 0) {

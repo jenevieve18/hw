@@ -57,6 +57,10 @@ namespace HW.Core
 			}
 		}
 		
+		public double ConfidenceInterval {
+			get { return StandardDeviation * 1.96; }
+		}
+		
 		public double StandardDeviation {
 			get {
 				double total = 0;

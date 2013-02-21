@@ -229,7 +229,7 @@ namespace HWgrp
 		{
 			string plotQuery = HttpContext.Current.Request.QueryString["Plot"] != null ? "&Plot=" + HttpContext.Current.Request["Plot"] : "";
 			string reportImageUrl = string.Format(
-				"{13}.aspx?LangID={0}&FY={1}&TY={2}&SAID={3}&SID={4}&{5}STDEV={6}&GB={7}&RPID={8}&PRUID={9}{10}&GRPNG={11}{12}",
+				"{13}.aspx?LangID={0}&FY={1}&TY={2}&SAID={3}&SID={4}&{5}STDEV={6}&ExtraPoint={14}&GB={7}&RPID={8}&PRUID={9}{10}&GRPNG={11}{12}",
 				Convert.ToInt32(LangID.SelectedValue),
 				FromYear.SelectedValue,
 				ToYear.SelectedValue,
@@ -243,7 +243,8 @@ namespace HWgrp
 				URL,
 				Convert.ToInt32(Grouping.SelectedValue),
 				plotQuery,
-				page
+				page,
+				ExtraPoint.SelectedValue
 			);
 			return reportImageUrl;
 		}

@@ -74,7 +74,13 @@
 				        </asp:DropDownList>
                         Language
                         <asp:DropDownList ID="LangID" runat="server" AutoPostBack=true />
-				        <asp:CheckBox ID="STDEV" runat=server Text="Show standard deviation" />
+				        <!--<asp:CheckBox ID="STDEV" runat=server Text="Show standard deviation" />-->
+			            <span>Extra Point</span>
+                        <asp:DropDownList AutoPostBack=true ID=ExtraPoint runat=server>
+					        <asp:ListItem Value=0 Text="< none >" />
+					        <asp:ListItem Value=1 Text="Standard Deviation" />
+					        <asp:ListItem Value=2 Text="Confidence Interval" />
+				        </asp:DropDownList>
                         <br />
                         <asp:PlaceHolder ID="Org" runat=server Visible=false />
     	                <asp:CheckBoxList RepeatDirection=Vertical RepeatLayout=table CellPadding=0 CellSpacing=0 ID="BQ" runat=server Visible=false />

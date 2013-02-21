@@ -48,12 +48,14 @@ namespace HWgrp
 			
 			object disabled = HttpContext.Current.Request.QueryString["DISABLED"];
 			
+			int point = HttpContext.Current.Request.QueryString["ExtraPoint"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["ExtraPoint"]) : 0;
+			
 			ReportPart r = reportRepository.ReadReportPart(rpid);
 			
 			var exporter = ExportFactory.GetExporter(answerRepository, reportRepository, projectRepository, optionRepository, departmentRepository, questionRepository, indexRepository, type, HasAnswerKey, hasGrouping, disabled, Width, Height, Background, r, key);
 			Response.ContentType = exporter.Type;
 			AddHeaderIf(exporter.HasContentDisposition, "content-disposition", exporter.ContentDisposition);
-			Write(exporter.Export(GB, stdev, fy, ty, langID, rpid, PRUID, GRPNG, SPONS, SID, GID, plot, Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath));
+			Write(exporter.Export(GB, stdev, fy, ty, langID, rpid, PRUID, GRPNG, SPONS, SID, GID, plot, Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath, point));
 		}
 		
 		void Write(object obj)
@@ -141,7 +143,7 @@ namespace HWgrp
 		
 		string ContentDisposition { get; }
 		
-		object Export(int GB, int stdev, int fy, int ty, int langID, int rpid, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path);
+		object Export(int GB, int stdev, int fy, int ty, int langID, int rpid, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int point);
 	}
 	
 	public class CsvExporter : IExporter
@@ -193,7 +195,7 @@ namespace HWgrp
 			get { return "attachment;filename=test.csv"; }
 		}
 		
-		public object Export(int GB, int stdev, int fy, int ty, int langID, int rpid, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path)
+		public object Export(int GB, int stdev, int fy, int ty, int langID, int rpid, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int point)
 		{
 //			StringBuilder s = new StringBuilder();
 //			for (int i = 0; i < 10; i++) {
@@ -206,7 +208,7 @@ namespace HWgrp
 //			
 			var f = GraphFactory.CreateFactory(hasAnswerKey, answerRepository, reportRepository, projectRepository, optionRepository, departmentRepository, questionRepository, indexRepository);
 //			var g = f.CreateGraph(key, rpid, langID, PRUID, r.Type, fy, ty, r.Components.Count, r.RequiredAnswerCount, r.Option.Id, r.Question.Id, GB, stdev == 1, hasGrouping, plot, width, height, background, GRPNG, SPONS, SID, GID, disabled);
-			return f.CreateGraph2(key, rpid, langID, PRUID, r.Type, fy, ty, r.Components.Count, r.RequiredAnswerCount, r.Option.Id, r.Question.Id, GB, stdev == 1, hasGrouping, plot, width, height, background, GRPNG, SPONS, SID, GID, disabled);
+			return f.CreateGraph2(key, rpid, langID, PRUID, r.Type, fy, ty, r.Components.Count, r.RequiredAnswerCount, r.Option.Id, r.Question.Id, GB, stdev == 1, hasGrouping, plot, width, height, background, GRPNG, SPONS, SID, GID, disabled, point);
 //			g.render();
 			
 //			return s.ToString();
@@ -227,7 +229,7 @@ namespace HWgrp
 			get { return ""; }
 		}
 		
-		public object Export(int GB, int stdev, int fy, int ty, int langID, int rpid, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path)
+		public object Export(int GB, int stdev, int fy, int ty, int langID, int rpid, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int point)
 		{
 			Document doc = new Document();
 			var output = new MemoryStream();
