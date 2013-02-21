@@ -19,6 +19,7 @@ namespace HWgrp
 	public partial class stats : System.Web.UI.Page
 	{
 		protected IList<ReportPartLanguage> reportParts = null;
+		protected IList<BaseModel> urlModels;
 		IList<Department> departments;
 		IList<SponsorBackgroundQuestion> questions;
 		int sponsorID = 0;
@@ -145,6 +146,8 @@ namespace HWgrp
 		
 		public void SetReportPartLanguages(IList<ReportPartLanguage> reportParts, IList<BaseModel> urlModels)
 		{
+			this.reportParts = reportParts;
+			this.urlModels = urlModels;
 			var selectedDepartments = SelectedDepartments;
 			string URL = GetURL(urlModels);
 			int cx = 0;
@@ -251,7 +254,7 @@ namespace HWgrp
 			BQ.Visible = (Grouping.SelectedValue == "3");
 		}
 		
-		string GetURL(IList<BaseModel> models)
+		protected string GetURL(IList<BaseModel> models)
 		{
 			string URL = "";
 			foreach (var m in models) {

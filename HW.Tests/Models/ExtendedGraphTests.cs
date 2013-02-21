@@ -157,7 +157,8 @@ namespace HW.Tests.Models
 				}
 
 				for (int i = all.Count - 1; i >= 0; i--) {
-					int color = IndexFactory.GetColor(c.Index, Convert.ToInt32(all.GetKey(i)));
+//					int color = IndexFactory.GetColor(c.Index, Convert.ToInt32(all.GetKey(i)));
+					int color = c.Index.GetColor(Convert.ToInt32(all.GetKey(i)));
 					
 					string[] u = all.GetByIndex(i).ToString().Split(',');
 
@@ -311,7 +312,8 @@ namespace HW.Tests.Models
 				} else {
 					getOtherIdxVal(c.Index.Id, sortString, langID);
 				}
-				int color = IndexFactory.GetColor(c.Index, lastVal);
+//				int color = IndexFactory.GetColor(c.Index, lastVal);
+				int color = c.Index.GetColor(lastVal);
 				Bar b = new Bar { Color = color, Description = lastDesc, Reference = c.Index.TargetValue, Value = lastVal };
 				bars.Add(b);
 			}
@@ -462,13 +464,13 @@ namespace HW.Tests.Models
 							Y = 20 + (int)Math.Floor((double)bx / breaker) * 15
 						};
 						foreach (Answer a in answers) {
-							while (lastDT + 1 < a.SomeInteger) {
+							while (lastDT + 1 < a.DT) {
 								lastDT++;
 								cx++;
 							}
 							if (a.Values.Count >= rac) {
 								if (COUNT == 1) {
-									g.DrawBottomString(GB, a.SomeInteger, cx, (COUNT == 1 ? ", n = " + a.Values.Count : ""));
+									g.DrawBottomString(GB, a.DT, cx, (COUNT == 1 ? ", n = " + a.Values.Count : ""));
 								}
 //								List<double> n = new List<double>();
 //								foreach (var v in a.Values) {
@@ -478,7 +480,7 @@ namespace HW.Tests.Models
 //								s.Points.Add(new PointV { X = cx, Y = (float)l.Mean, Deviation = (float)l.StandardDeviation, T = 2 + (!stdev ? 1 : 0) });
 								s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
 							}
-							lastDT = a.SomeInteger;
+							lastDT = a.DT;
 							cx++;
 						}
 						g.Series.Add(s);
@@ -510,17 +512,17 @@ namespace HW.Tests.Models
 					int lastDT = minDT - 1;
 					Series s = new Series { Color = bx + 4 };
 					foreach (Answer a in answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString)) {
-						while (lastDT + 1 < a.SomeInteger) {
+						while (lastDT + 1 < a.DT) {
 							lastDT++;
 							cx++;
 						}
 
 						if (a.CountV >= rac) {
-							g.DrawBottomString(GB, a.SomeInteger, cx, ", n = " + a.CountV);
+							g.DrawBottomString(GB, a.DT, cx, ", n = " + a.CountV);
 //							s.Points.Add(new PointV { X = cx, Y = a.AverageV, Deviation = a.StandardDeviation, T = 3 });
 							s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
 						}
-						lastDT = a.SomeInteger;
+						lastDT = a.DT;
 						cx++;
 					}
 					g.Series.Add(s);
@@ -655,13 +657,13 @@ namespace HW.Tests.Models
 							Y = 20 + (int)Math.Floor((double)bx / breaker) * 15
 						};
 						foreach (Answer a in answers) {
-							while (lastDT + 1 < a.SomeInteger) {
+							while (lastDT + 1 < a.DT) {
 								lastDT++;
 								cx++;
 							}
 							if (a.Values.Count >= rac) {
 								if (COUNT == 1) {
-									g.DrawBottomString(GB, a.SomeInteger, cx, (COUNT == 1 ? ", n = " + a.Values.Count : ""));
+									g.DrawBottomString(GB, a.DT, cx, (COUNT == 1 ? ", n = " + a.Values.Count : ""));
 								}
 //								List<double> n = new List<double>();
 //								foreach (var v in a.Values) {
@@ -671,7 +673,7 @@ namespace HW.Tests.Models
 //								s.Points.Add(new PointV { X = cx, Y = (float)l.Median, UpperWhisker = l.UpperWhisker, LowerWhisker = l.LowerWhisker, UpperBox = l.UpperBox, LowerBox = l.LowerBox });
 								s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
 							}
-							lastDT = a.SomeInteger;
+							lastDT = a.DT;
 							cx++;
 						}
 						g.Series.Add(s);
@@ -703,17 +705,17 @@ namespace HW.Tests.Models
 					int lastDT = minDT - 1;
 					Series s = new Series { Color = bx + 4 };
 					foreach (Answer a in answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString)) {
-						while (lastDT + 1 < a.SomeInteger) {
+						while (lastDT + 1 < a.DT) {
 							lastDT++;
 							cx++;
 						}
 
 						if (a.CountV >= rac) {
-							g.DrawBottomString(GB, a.SomeInteger, cx, ", n = " + a.CountV);
+							g.DrawBottomString(GB, a.DT, cx, ", n = " + a.CountV);
 //							s.Points.Add(new PointV { X = cx, Y = a.AverageV, Deviation = a.StandardDeviation, T = 3 });
 							s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
 						}
-						lastDT = a.SomeInteger;
+						lastDT = a.DT;
 						cx++;
 					}
 					g.Series.Add(s);

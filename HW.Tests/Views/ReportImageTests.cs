@@ -90,7 +90,7 @@ namespace HW.Tests.Views
 //					Console.Write(a.SomeInteger + "\t");
 //					Console.WriteLine(v.ValueInt);
 				}
-				if (a.SomeInteger == 52324) {
+				if (a.DT == 52324) {
 					HWList l = a.GetIntValues();
 					Console.WriteLine(l.ToString());
 				}

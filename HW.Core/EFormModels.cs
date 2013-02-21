@@ -49,7 +49,7 @@ namespace HW.Core
 			set { min = value; }
 		}
 		public string SomeString { get; set; } // TODO: From cf_yearMonthDay(a.EndDT) function
-		public int SomeInteger { get; set; } // TODO: From cf_yearWeek(a.EndDT) function
+		public int DT { get; set; } // TODO: From cf_yearWeek(a.EndDT) function
 		public float AverageV { get; set; }
 		public int CountV { get; set; }
 		public float StandardDeviation { get; set; }
@@ -88,20 +88,49 @@ namespace HW.Core
 	public class Group : BaseModel
 	{
 		public string Description { get; set; }
+		
+		public class Grouping // TODO: Make this enum, it's awkward having this constant class!
+		{
+			public const int None = 0;
+			public const int UsersOnUnit = 1;
+			public const int UsersOnUnitAndSubUnits = 2;
+			public const int BackgroundVariable = 3;
+		}
+		
+		public class GroupBy // TODO: Make this enum, it's awkward having this constant class!
+		{
+			public const int OneWeek = 1;
+			public const int TwoWeeksStartWithEvent = 7;
+			public const int TwoWeeksStartWithOdd = 2;
+			public const int OneMonth = 3;
+			public const int ThreeMonths = 4;
+			public const int SixMonths = 5;
+			public const int OneYear = 6;
+		}
 	}
 	
 	public class GroupFactory
 	{
 		public static string GetGroupBy(int GB)
 		{
+//			switch (GB) {
+//					case 1: return "dbo.cf_yearWeek";
+//					case 2: return "dbo.cf_year2Week";
+//					case 3: return "dbo.cf_yearMonth";
+//					case 4: return "dbo.cf_year3Month";
+//					case 5: return "dbo.cf_year6Month";
+//					case 6: return "YEAR";
+//					case 7: return "dbo.cf_year2WeekEven";
+//					default: throw new NotSupportedException();
+//			}
 			switch (GB) {
-					case 1: return "dbo.cf_yearWeek";
-					case 2: return "dbo.cf_year2Week";
-					case 3: return "dbo.cf_yearMonth";
-					case 4: return "dbo.cf_year3Month";
-					case 5: return "dbo.cf_year6Month";
-					case 6: return "YEAR";
-					case 7: return "dbo.cf_year2WeekEven";
+					case Group.GroupBy.OneWeek: return "dbo.cf_yearWeek";
+					case Group.GroupBy.TwoWeeksStartWithOdd: return "dbo.cf_year2Week";
+					case Group.GroupBy.OneMonth: return "dbo.cf_yearMonth";
+					case Group.GroupBy.ThreeMonths: return "dbo.cf_year3Month";
+					case Group.GroupBy.SixMonths: return "dbo.cf_year6Month";
+					case Group.GroupBy.OneYear: return "YEAR";
+					case Group.GroupBy.TwoWeeksStartWithEvent: return "dbo.cf_year2WeekEven";
 					default: throw new NotSupportedException();
 			}
 		}
@@ -111,10 +140,12 @@ namespace HW.Core
 			int COUNT = 0;
 			switch (GRPNG)
 			{
-				case 0:
+//				case 0:
+				case Group.Grouping.None:
 					{
-						string tmpDesc = ""; int sslen = 0; string tmpSS = "";
-
+						string tmpDesc = "";
+						int sslen = 0;
+						string tmpSS = "";
 						IList<Department> departments = SPONS != -1 ? departmentRepository.FindBySponsorWithSponsorAdmin(SID, SPONS) : departmentRepository.FindBySponsorOrderedBySortString(SID);
 						foreach (Department d in departments) {
 							if (sslen == 0) {
@@ -134,10 +165,10 @@ namespace HW.Core
 							"1",
 							string.Format(
 								@"
-	INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
-	INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID
-	INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID AND HWu.ProjectRoundUnitID = {0}
-	INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString, {1}) IN ({2}) ",
+INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
+INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID
+INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID AND HWu.ProjectRoundUnitID = {0}
+INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString, {1}) IN ({2}) ",
 								PRUID,
 								sslen,
 								tmpSS
@@ -146,7 +177,8 @@ namespace HW.Core
 						COUNT++;
 						break;
 					}
-				case 1:
+//				case 1:
+				case Group.Grouping.UsersOnUnit:
 					{
 						IList<Department> departments = SPONS != -1 ? departmentRepository.FindBySponsorWithSponsorAdminIn(SID, SPONS, GID) : departmentRepository.FindBySponsorOrderedBySortStringIn(SID, GID);
 						foreach (Department d in departments) {
@@ -156,9 +188,9 @@ namespace HW.Core
 								d.Id.ToString(),
 								string.Format(
 									@"
-	INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
-	INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID AND HWu.ProjectRoundUnitID = {0}
-	INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID AND HWup.DepartmentID = {1}",
+INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
+INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID AND HWu.ProjectRoundUnitID = {0}
+INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID AND HWup.DepartmentID = {1}",
 									PRUID,
 									d.Id
 								)
@@ -167,7 +199,8 @@ namespace HW.Core
 						}
 						break;
 					}
-				case 2:
+//				case 2:
+				case Group.Grouping.UsersOnUnitAndSubUnits:
 					{
 						IList<Department> departments = SPONS != -1 ? departmentRepository.FindBySponsorWithSponsorAdminIn(SID, SPONS, GID) : departmentRepository.FindBySponsorOrderedBySortStringIn(SID, GID);
 						foreach (Department d in departments) {
@@ -177,10 +210,10 @@ namespace HW.Core
 								d.Id.ToString(),
 								string.Format(
 									@"
-	INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
-	INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID AND HWu.ProjectRoundUnitID = {0}
-	INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID
-	INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString, {1}) = '{2}'",
+INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
+INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID AND HWu.ProjectRoundUnitID = {0}
+INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID
+INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString, {1}) = '{2}'",
 									PRUID,
 									d.SortString.Length,
 									d.SortString
@@ -190,7 +223,8 @@ namespace HW.Core
 						}
 						break;
 					}
-				case 3:
+//				case 3:
+				case Group.Grouping.BackgroundVariable:
 					{
 						string tmpSelect = "";
 						string tmpJoin = "";
@@ -236,10 +270,10 @@ namespace HW.Core
 							string txt = "";
 							string sql = string.Format(
 								@"
-	INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
-	INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID AND HWu.ProjectRoundUnitID = {0}
-	INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID
-	INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString, {1}) IN ({2})",
+INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
+INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID AND HWu.ProjectRoundUnitID = {0}
+INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID
+INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString, {1}) IN ({2})",
 								PRUID,
 								sslen,
 								tmpSS
@@ -251,7 +285,7 @@ namespace HW.Core
 //								sql += "INNER JOIN healthWatch..UserProfileBQ HWp" + GIDS[i] + " ON HWup.UserProfileID = HWp" + GIDS[i] + ".UserProfileID AND HWp" + GIDS[i] + ".BQID = " + GIDS[i] + " AND HWp" + GIDS[i] + ".ValueInt = " + rs2.GetInt32(0 + i*2);
 								sql += string.Format(
 									@"
-	INNER JOIN healthWatch..UserProfileBQ HWp{0} ON HWup.UserProfileID = HWp{0}.UserProfileID AND HWp{0}.BQID = {0} AND HWp{0}.ValueInt = {1}",
+INNER JOIN healthWatch..UserProfileBQ HWp{0} ON HWup.UserProfileID = HWp{0}.UserProfileID AND HWp{0}.BQID = {0} AND HWp{0}.ValueInt = {1}",
 									GIDS[i],
 									rs2.GetInt32(0 + i*2)
 								);
@@ -270,56 +304,14 @@ namespace HW.Core
 		}
 	}
 	
-	public enum Grouping
-	{
-		None = 0,
-		UsersOnUnit = 1,
-		UsersOnUnitAndSubUnits = 2,
-		BackgroundVariable = 3
-	}
-	
-	public enum GroupBy
-	{
-		OneWeek = 1,
-		TwoWeeksStartWithEvent = 7,
-		TwoWeeksStartWithOdd = 2,
-		OneMonth = 3,
-		ThreeMonths = 4,
-		SixMonths = 5,
-		OneYear = 6
-	}
-	
-	public class Index : BaseModel, IIndex
+	public class Index : BaseIndex
 	{
 		public int MaxValue { get; set; }
 		public IList<IndexPart> Parts { get; set; }
-		public int TargetValue { get; set; }
-		public int YellowLow { get; set; }
-		public int GreenLow { get; set; }
-		public int GreenHigh { get; set; }
-		public int YellowHigh { get; set; }
 		public IList<IndexLanguage> Languages { get; set; }
 		
 		public float AverageAX { get; set; }
 		public int CountDX { get; set; }
-	}
-	
-	public class IndexFactory
-	{
-		public static int GetColor(IIndex index, float x)
-		{
-			if (index.YellowLow >= 0 && index.YellowLow <= 100 && x >= index.YellowLow) {
-				return 1;
-			} else if (index.GreenLow >= 0 && index.GreenLow <= 100 && x >= index.GreenLow) {
-				return 0;
-			} else if (index.GreenHigh >= 0 && index.GreenHigh <= 100 && x >= index.GreenHigh) {
-				return 1;
-			} else if (index.YellowHigh >= 0 && index.YellowHigh <= 100 && x >= index.YellowHigh) {
-				return 2;
-			} else {
-				return 2;
-			}
-		}
 	}
 	
 	public class IndexPart : BaseModel
@@ -458,8 +450,15 @@ namespace HW.Core
 	
 	public class Question : BaseModel
 	{
+		public Question()
+		{
+			Answers = new List<Answer>();
+		}
+		
 		public QuestionCategory Category { get; set; }
 		public string VariableName { get; set; }
+		public IList<QuestionLanguage> Languages { get; set; }
+		public IList<Answer> Answers { get; set; }
 	}
 	
 	public class QuestionCategory : BaseModel
@@ -658,15 +657,40 @@ namespace HW.Core
 		int YellowHigh { get; set; }
 	}
 	
-	public class WeightedQuestionOption : BaseModel, IIndex
+	public class BaseIndex : BaseModel, IIndex
 	{
-		public Question Question { get; set; }
-		public Option Option { get; set; }
 		public int TargetValue { get; set; }
 		public int YellowLow { get; set; }
 		public int GreenLow { get; set; }
 		public int GreenHigh { get; set; }
 		public int YellowHigh { get; set; }
+		
+		public int GetColor(float x)
+		{
+			if (YellowLow >= 0 && YellowLow <= 100 && x >= YellowLow) {
+				return 1;
+			} else if (GreenLow >= 0 && GreenLow <= 100 && x >= GreenLow) {
+				return 0;
+			} else if (GreenHigh >= 0 && GreenHigh <= 100 && x >= GreenHigh) {
+				return 1;
+			} else if (YellowHigh >= 0 && YellowHigh <= 100 && x >= YellowHigh) {
+				return 2;
+			} else {
+				return 2;
+			}
+		}
+	}
+	
+//	public class WeightedQuestionOption : BaseModel, IIndex
+	public class WeightedQuestionOption : BaseIndex
+	{
+		public Question Question { get; set; }
+		public Option Option { get; set; }
+//		public int TargetValue { get; set; }
+//		public int YellowLow { get; set; }
+//		public int GreenLow { get; set; }
+//		public int GreenHigh { get; set; }
+//		public int YellowHigh { get; set; }
 		public IList<WeightedQuestionOptionLanguage> Languages { get; set; }
 	}
 	

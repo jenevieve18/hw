@@ -38,14 +38,6 @@
 				});
 			});
         });
-        /*function xxx(plot, img, imgUrl) {
-            var r = document.getElementsByName(plot);
-            for (var i = 0; i < r.length; i++) {
-                if (r[i].checked) {
-                    document.getElementById(img).src = imgUrl + "&Plot=" + r[i].value;
-                }
-            }
-        }*/
     </script>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
@@ -90,6 +82,42 @@
 			        </div>
                 </div>
         		<asp:Label ID=StatsImg runat=server />
+				<!--<% if (reportParts != null) { %>
+					<% int i = 0; %>
+        			<% foreach (var r in reportParts) { %>
+        				<% if (i == 0) { %>
+        					<div>&nbsp;<br>&nbsp;<br></div>
+        				<% } else { %>
+        					<div style='page-break-before:always;'>&nbsp;<br>&nbsp;<br></div>
+        				<% } %>
+						<table>
+							<tr><td><%= r.Subject %></td></tr>
+							<tr>
+								<td style="font-size:18px;">
+									<input id="chk<%= i %>" type="checkbox"><label for="chk<%= i %>"><%= r.Subject %></label>
+									<input name="reportUrl" type="hidden" id="reportUrl" value="reportImage.aspx?LangID=1&amp;FY=2012&amp;TY=2013&amp;SAID=0&amp;SID=1&amp;Anonymized=1&amp;STDEV=0&amp;GB=7&amp;RPID=1&amp;PRUID=1&amp;GID=0,9&amp;GRPNG=2">
+									<input name="exportPdfUrl" type="hidden" id="exportPdfUrl" value="Export.aspx?LangID=1&amp;FY=2012&amp;TY=2013&amp;SAID=0&amp;SID=1&amp;Anonymized=1&amp;STDEV=0&amp;GB=7&amp;RPID=1&amp;PRUID=1&amp;GID=0,9&amp;type=pdf&amp;GRPNG=2">
+									<input name="exportCsvUrl" type="hidden" id="exportCsvUrl" value="Export.aspx?LangID=1&amp;FY=2012&amp;TY=2013&amp;SAID=0&amp;SID=1&amp;Anonymized=1&amp;STDEV=0&amp;GB=7&amp;RPID=1&amp;PRUID=1&amp;GID=0,9&amp;type=csv&amp;GRPNG=2">
+								</td>
+							</tr>
+							<tr><td><%= r.Header %></td></tr>
+							<tr>
+								<td>
+									<img src='<%= GetReportImageUrl(r.ReportPart.Id, "reportImage", GetURL(urlModels)) %>'>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<a href='<%= GetReportImageUrl(r.ReportPart.Id, "Export", GetURL(urlModels) + "&type=pdf") %>' target="_blank" class="exportPdfAnchor"><img src="images/page_white_acrobat.png"></a>
+									<a href='<%= GetReportImageUrl(r.ReportPart.Id, "Export", GetURL(urlModels) + "&type=csv") %>' target="_blank" class="exportCsvAnchor"><img src="images/page_white_excel.png"></a>
+								</td>
+							</tr>
+							<tr>
+								<td><%= r.Footer %></td>
+							</tr>
+						</table>
+					<% } %>
+				<% } %>-->
             </div><!-- end .contentgroup	-->
         </div> <!-- end .container_12 -->
 	</form>

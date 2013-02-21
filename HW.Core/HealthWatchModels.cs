@@ -769,7 +769,8 @@ namespace HW.Core
 		public DateTime Date { get; set; }
 		public UserProfile Profile { get; set; }
 		public Answer Answer { get; set; }
-		public ProjectRoundUser ProjectRoundUser { get; set; }
+//		public ProjectRoundUser ProjectRoundUser { get; set; }
+		public UserProjectRoundUser ProjectRoundUser { get; set; }
 	}
 	
 	public class UserToken : BaseModel

@@ -1296,7 +1296,7 @@ namespace HW.Core
 			var answers = new List<Answer>();
 			for (int i = 0; i < 2; i++) {
 				var a = new Answer {
-					SomeInteger = 1,
+					DT = 1,
 					AverageV = r.Next(20, 100),
 					CountV = 10,
 					StandardDeviation = 11.3f
@@ -1314,7 +1314,7 @@ namespace HW.Core
 			var answers = new List<Answer>();
 			for (int i = 0; i < 10; i++) {
 				var a = new Answer {
-					SomeInteger = 1,
+					DT = 1,
 					AverageV = r.Next(0, 100),
 					CountV = 10,
 					StandardDeviation = 11.3f
@@ -1330,7 +1330,7 @@ namespace HW.Core
 			var answers = new List<Answer>();
 			for (int i = 0; i < 10; i++) {
 				var a = new Answer {
-					SomeInteger = 1,
+					DT = 1,
 					AverageV = r.Next(0, 100),
 					CountV = 10,
 					StandardDeviation = 11.3f

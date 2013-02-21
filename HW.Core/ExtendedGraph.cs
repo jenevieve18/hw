@@ -453,7 +453,8 @@ namespace HW.Core
 				foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(rpid, langID)) {
 					a = answerRepository.ReadByQuestionAndOption(answerID, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id);
 					if (a != null) {
-						int color = IndexFactory.GetColor(c.QuestionOption, a.Values[0].ValueInt);
+//						int color = IndexFactory.GetColor(c.QuestionOption, a.Values[0].ValueInt);
+						int color = c.QuestionOption.GetColor(a.Values[0].ValueInt);
 						g.drawBar(color, ++cx, a.Values[0].ValueInt);
 						if (c.QuestionOption.TargetValue != 0) {
 							hasReference = true;
@@ -544,7 +545,8 @@ namespace HW.Core
 				foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(rpid, langID)) {
 					a = answerRepository.ReadByQuestionAndOption(answerID, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id);
 					if (a != null) {
-						int color = IndexFactory.GetColor(c.QuestionOption, a.Values[0].ValueInt);
+//						int color = IndexFactory.GetColor(c.QuestionOption, a.Values[0].ValueInt);
+						int color = c.QuestionOption.GetColor(a.Values[0].ValueInt);
 //						g.drawBar(color, ++cx, a.Values[0].ValueInt);
 						if (c.QuestionOption.TargetValue != 0) {
 							hasReference = true;
@@ -657,7 +659,8 @@ namespace HW.Core
 					}
 
 					for (int i = all.Count - 1; i >= 0; i--) {
-						int color = IndexFactory.GetColor(c.Index, Convert.ToInt32(all.GetKey(i)));
+//						int color = IndexFactory.GetColor(c.Index, Convert.ToInt32(all.GetKey(i)));
+						int color = c.Index.GetColor(Convert.ToInt32(all.GetKey(i)));
 						string[] u = all.GetByIndex(i).ToString().Split(',');
 
 						foreach (string s in u) {
@@ -677,7 +680,8 @@ namespace HW.Core
 					} else {
 						GetOtherIdxVal(c.Index.Id, sortString, langID, fy, ty);
 					}
-					int color = IndexFactory.GetColor(c.Index, lastVal);
+//					int color = IndexFactory.GetColor(c.Index, lastVal);
+					int color = c.Index.GetColor(lastVal);
 					bars.Add(new Bar { Value = lastVal, Color = color, Description = lastDesc, Reference = c.Index.TargetValue });
 				}
 				g.DrawBars(disabled, cx, bars);
@@ -779,17 +783,17 @@ namespace HW.Core
 								Y = 20 + (int)Math.Floor((double)bx / breaker) * 15
 							};
 							foreach (Answer a in answers) {
-								while (lastDT + 1 < a.SomeInteger) {
+								while (lastDT + 1 < a.DT) {
 									lastDT++;
 									cx++;
 								}
 								if (a.Values.Count >= rac) {
 									if (COUNT == 1) {
-										g.DrawBottomString(GB, a.SomeInteger, cx, (COUNT == 1 ? ", n = " + a.Values.Count : ""));
+										g.DrawBottomString(GB, a.DT, cx, (COUNT == 1 ? ", n = " + a.Values.Count : ""));
 									}
 									s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
 								}
-								lastDT = a.SomeInteger;
+								lastDT = a.DT;
 								cx++;
 							}
 							g.Series.Add(s);
@@ -812,16 +816,16 @@ namespace HW.Core
 						int lastDT = minDT - 1;
 						Series s = new Series { Color = bx + 4 };
 						foreach (Answer a in answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString)) {
-							while (lastDT + 1 < a.SomeInteger) {
+							while (lastDT + 1 < a.DT) {
 								lastDT++;
 								cx++;
 							}
 
 							if (a.CountV >= rac) {
-								g.DrawBottomString(GB, a.SomeInteger, cx, ", n = " + a.CountV);
+								g.DrawBottomString(GB, a.DT, cx, ", n = " + a.CountV);
 								s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
 							}
-							lastDT = a.SomeInteger;
+							lastDT = a.DT;
 							cx++;
 						}
 						g.Series.Add(s);
@@ -845,7 +849,9 @@ namespace HW.Core
 					langID = roundUnit.Language.Id;
 				}
 			}
-			StringBuilder ss = new StringBuilder();
+			Dictionary<string, List<Answer>> weeks = new Dictionary<string, List<Answer>>();
+			List<Answer> week =  new List<Answer>();
+			List<Department> departments = new List<Department>();
 //			ExtendedGraph g = null;
 
 			LanguageFactory.SetCurrentCulture(langID);
@@ -897,7 +903,8 @@ namespace HW.Core
 					}
 
 					for (int i = all.Count - 1; i >= 0; i--) {
-						int color = IndexFactory.GetColor(c.Index, Convert.ToInt32(all.GetKey(i)));
+//						int color = IndexFactory.GetColor(c.Index, Convert.ToInt32(all.GetKey(i)));
+						int color = c.Index.GetColor(Convert.ToInt32(all.GetKey(i)));
 						string[] u = all.GetByIndex(i).ToString().Split(',');
 
 						foreach (string s in u) {
@@ -917,7 +924,8 @@ namespace HW.Core
 					} else {
 						GetOtherIdxVal(c.Index.Id, sortString, langID, fy, ty);
 					}
-					int color = IndexFactory.GetColor(c.Index, lastVal);
+//					int color = IndexFactory.GetColor(c.Index, lastVal);
+					int color = c.Index.GetColor(lastVal);
 //					bars.Add(new Bar { Value = lastVal, Color = color, Description = lastDesc, Reference = c.Index.TargetValue });
 				}
 //				g.DrawBars(disabled, cx, bars);
@@ -944,21 +952,21 @@ namespace HW.Core
 					maxDT = answer.DummyValue3;
 				}
 
-				List<IIndex> indexes = new List<IIndex>();
-				List<IMinMax> minMaxes = new List<IMinMax>();
-				foreach (ReportPartComponent c in reportRepository.FindComponentsByPart(rpid)) {
-					if (!hasGrouping) {
-						Answer a = answerRepository.ReadMinMax(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString);
-						if (a != null) {
-							minMaxes.Add(a);
-						} else {
-							minMaxes.Add(new Answer());
-						}
-					} else {
-						minMaxes.Add(new Answer());
-					}
-					indexes.Add(c.QuestionOption);
-				}
+//				List<IIndex> indexes = new List<IIndex>();
+//				List<IMinMax> minMaxes = new List<IMinMax>();
+//				foreach (ReportPartComponent c in reportRepository.FindComponentsByPart(rpid)) {
+//					if (!hasGrouping) {
+//						Answer a = answerRepository.ReadMinMax(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString);
+//						if (a != null) {
+//							minMaxes.Add(a);
+//						} else {
+//							minMaxes.Add(new Answer());
+//						}
+//					} else {
+//						minMaxes.Add(new Answer());
+//					}
+//					indexes.Add(c.QuestionOption);
+//				}
 //				g.SetMinMaxes(minMaxes);
 //				g.DrawBackgroundFromIndexes2(indexes);
 //				g.DrawComputingSteps(disabled, cx);
@@ -1000,6 +1008,8 @@ namespace HW.Core
 					ReportPartComponent c = reportRepository.ReadComponentByPartAndLanguage(rpid, langID);
 					if (c != null) {
 						int bx = 0;
+//						header1.Append(",");
+//						header2.Append(",");
 						foreach(string i in item) {
 //							explanationBoxes.Add(
 //								new Explanation {
@@ -1018,28 +1028,33 @@ namespace HW.Core
 //								X = 130 + (int)((bx % breaker) * itemWidth),
 //								Y = 20 + (int)Math.Floor((double)bx / breaker) * 15
 //							};
+							departments.Add(new Department { Name = (string)desc[i]});
 							int ii = minDT;
 							int jj = 0;
 							foreach (Answer a in answers) {
-								ss.Append((string)desc[i] + ",");
 								jj++;
-								ss.Append("\"" + DrawBottomString(GB, ii, jj, "") + "\",");
-								while (lastDT + 1 < a.SomeInteger) {
+								string w = DrawBottomString(GB, ii, jj, "");
+//								Console.WriteLine(w);
+								if (!weeks.ContainsKey(w)) {
+									week = new List<Answer>();
+									weeks.Add(w, week);
+								} else {
+									week = weeks[w];
+								}
+								while (lastDT + 1 < a.DT) {
 									lastDT++;
 									cx++;
-									ss.Append(Environment.NewLine);
+//									body.Append(Environment.NewLine);
+//									week.Add(new Answer());
 								}
 								if (a.Values.Count >= rac) {
 									if (COUNT == 1) {
 //										g.DrawBottomString(GB, a.SomeInteger, cx, (COUNT == 1 ? ", n = " + a.Values.Count : ""));
 									}
 //									s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
-									foreach (var v in a.Values) {
-										ss.Append(v.ValueInt.ToString() + ",");
-									}
+									week.Add(a);
 								}
-								ss.Append(Environment.NewLine);
-								lastDT = a.SomeInteger;
+								lastDT = a.DT;
 								cx++;
 								ii++;
 							}
@@ -1063,7 +1078,7 @@ namespace HW.Core
 						int lastDT = minDT - 1;
 //						Series s = new Series { Color = bx + 4 };
 						foreach (Answer a in answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString)) {
-							while (lastDT + 1 < a.SomeInteger) {
+							while (lastDT + 1 < a.DT) {
 								lastDT++;
 								cx++;
 							}
@@ -1072,7 +1087,7 @@ namespace HW.Core
 //								g.DrawBottomString(GB, a.SomeInteger, cx, ", n = " + a.CountV);
 //								s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
 							}
-							lastDT = a.SomeInteger;
+							lastDT = a.DT;
 							cx++;
 						}
 //						g.Series.Add(s);
@@ -1082,7 +1097,93 @@ namespace HW.Core
 //				g.Draw();
 			}
 //			return g;
-			return ss.ToString();
+			
+			if (plot == "BoxPlot") {
+				return new BoxPlot().ToCsv(departments, weeks);
+			} else {
+				return new Line().ToCsv(departments, weeks);
+			}
+		}
+		
+		interface ICsv
+		{
+			string ToCsv(List<Department> departments, Dictionary<string, List<Answer>> weeks);
+		}
+		
+		abstract class BaseCsv : ICsv
+		{
+			public abstract string ToCsv(List<Department> departments, Dictionary<string, List<Answer>> weeks);
+			
+			protected string AddComma(string s)
+			{
+				return "\"" + s + "\"" + ",";
+			}
+		}
+		
+		class Line : BaseCsv
+		{
+			public override string ToCsv(List<Department> departments, Dictionary<string, List<Answer>> weeks)
+			{
+				StringBuilder content = new StringBuilder();
+				StringBuilder header1 = new StringBuilder(",");
+				StringBuilder header2 = new StringBuilder(",");
+				foreach (var d in departments) {
+					header1.Append(AddComma(d.Name));
+					header1.Append(",");
+					header2.Append(AddComma("Mean"));
+					header2.Append(AddComma("Count"));
+				}
+				header1.AppendLine();
+				header2.AppendLine();
+				foreach (var w in weeks.Keys) {
+					content.Append(AddComma(w));
+					foreach (var x in weeks[w]) {
+						if (x.Values.Count > 0) {
+							content.Append(AddComma(x.GetIntValues().Mean.ToString()));
+							content.Append(AddComma(x.Values.Count.ToString()));
+						} else {
+							content.Append(",,");
+						}
+					}
+					content.AppendLine();
+				}
+				header1.Append(header2);
+				header1.Append(content);
+				return header1.ToString();
+			}
+		}
+		
+		class BoxPlot : BaseCsv
+		{
+			public override string ToCsv(List<Department> departments, Dictionary<string, List<Answer>> weeks)
+			{
+				StringBuilder content = new StringBuilder();
+				StringBuilder header1 = new StringBuilder(",");
+				StringBuilder header2 = new StringBuilder(",");
+				foreach (var d in departments) {
+					header1.Append(AddComma(d.Name));
+					header1.Append(",");
+					header2.Append(AddComma("Median"));
+					header2.Append(AddComma("Count"));
+				}
+				header1.AppendLine();
+				header2.AppendLine();
+				foreach (var w in weeks.Keys) {
+					content.Append(AddComma(w));
+					foreach (var x in weeks[w]) {
+						if (x.Values.Count > 0) {
+							content.Append(AddComma(x.GetIntValues().Median.ToString()));
+							content.Append(AddComma(x.Values.Count.ToString()));
+						} else {
+							content.Append(",,");
+						}
+					}
+					content.AppendLine();
+				}
+				header1.Append(header2);
+				header1.Append(content);
+				return header1.ToString();
+			}
 		}
 		
 		public string DrawBottomString(int groupBy, int i, int dx, string str)
