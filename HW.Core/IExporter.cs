@@ -4,7 +4,9 @@
 //	</file>
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 
@@ -92,6 +94,168 @@ namespace HW.Core
 			var f = GraphFactory.CreateFactory(hasAnswerKey, answerRepository, reportRepository, projectRepository, optionRepository, departmentRepository, questionRepository, indexRepository);
 			return f.CreateGraph2(key, rpid, langID, PRUID, r.Type, fy, ty, r.Components.Count, r.RequiredAnswerCount, r.Option.Id, r.Question.Id, GB, hasGrouping, plot, width, height, background, GRPNG, SPONS, SID, GID, disabled, point);
 		}
+	}
+	
+	public interface ICsv
+	{
+		string ToCsv(List<Department> departments, Dictionary<string, List<Answer>> weeks);
+	}
+	
+	public abstract class BaseCsv : ICsv
+	{
+		public abstract string ToCsv(List<Department> departments, Dictionary<string, List<Answer>> weeks);
+		
+		protected string AddComma(string s)
+		{
+			return "\"" + s + "\"" + ",";
+		}
+	}
+	
+	public class LineCsv : BaseCsv
+	{
+		public override string ToCsv(List<Department> departments, Dictionary<string, List<Answer>> weeks)
+		{
+			StringBuilder content = new StringBuilder();
+			StringBuilder header1 = new StringBuilder(",");
+			StringBuilder header2 = new StringBuilder(",");
+			foreach (var d in departments) {
+				header1.Append(AddComma(d.Name));
+				header1.Append(",");
+				header2.Append(AddComma("Mean"));
+				header2.Append(AddComma("Count"));
+			}
+			header1.AppendLine();
+			header2.AppendLine();
+			foreach (var w in weeks.Keys) {
+				content.Append(AddComma(w));
+				foreach (var x in weeks[w]) {
+					if (x.Values.Count > 0) {
+						content.Append(AddComma(x.GetIntValues().Mean.ToString()));
+						content.Append(AddComma(x.Values.Count.ToString()));
+					} else {
+						content.Append(",,");
+					}
+				}
+				content.AppendLine();
+			}
+			header1.Append(header2);
+			header1.Append(content);
+			return header1.ToString();
+		}
+	}
+	
+	public class ConfidenceIntervalLineCsv : BaseCsv
+	{
+		public override string ToCsv(List<Department> departments, Dictionary<string, List<Answer>> weeks)
+		{
+			StringBuilder content = new StringBuilder();
+			StringBuilder header1 = new StringBuilder(",");
+			StringBuilder header2 = new StringBuilder(",");
+			foreach (var d in departments) {
+				header1.Append(AddComma(d.Name));
+				header1.Append(",");
+				header1.Append(",");
+				header2.Append(AddComma("Mean"));
+				header2.Append(AddComma("Confidence Interval"));
+				header2.Append(AddComma("Count"));
+			}
+			header1.AppendLine();
+			header2.AppendLine();
+			foreach (var w in weeks.Keys) {
+				content.Append(AddComma(w));
+				foreach (var x in weeks[w]) {
+					if (x.Values.Count > 0) {
+						var v = x.GetIntValues();
+						content.Append(AddComma(v.Mean.ToString()));
+						content.Append(AddComma(v.ConfidenceInterval.ToString()));
+						content.Append(AddComma(x.Values.Count.ToString()));
+					} else {
+						content.Append(",,,");
+					}
+				}
+				content.AppendLine();
+			}
+			header1.Append(header2);
+			header1.Append(content);
+			return header1.ToString();
+		}
+	}
+	
+	public class StandardDeviationLineCsv : BaseCsv
+	{
+		public override string ToCsv(List<Department> departments, Dictionary<string, List<Answer>> weeks)
+		{
+			StringBuilder content = new StringBuilder();
+			StringBuilder header1 = new StringBuilder(",");
+			StringBuilder header2 = new StringBuilder(",");
+			foreach (var d in departments) {
+				header1.Append(AddComma(d.Name));
+				header1.Append(",");
+				header1.Append(",");
+				header2.Append(AddComma("Mean"));
+				header2.Append(AddComma("Standard Deviation"));
+				header2.Append(AddComma("Count"));
+			}
+			header1.AppendLine();
+			header2.AppendLine();
+			foreach (var w in weeks.Keys) {
+				content.Append(AddComma(w));
+				foreach (var x in weeks[w]) {
+					if (x.Values.Count > 0) {
+						var v = x.GetIntValues();
+						content.Append(AddComma(v.Mean.ToString()));
+						content.Append(AddComma(v.ConfidenceInterval.ToString()));
+						content.Append(AddComma(x.Values.Count.ToString()));
+					} else {
+						content.Append(",,");
+					}
+				}
+				content.AppendLine();
+			}
+			header1.Append(header2);
+			header1.Append(content);
+			return header1.ToString();
+		}
+	}
+	
+	public class BoxPlotCsv : BaseCsv
+	{
+		public override string ToCsv(List<Department> departments, Dictionary<string, List<Answer>> weeks)
+		{
+			StringBuilder content = new StringBuilder();
+			StringBuilder header1 = new StringBuilder(",");
+			StringBuilder header2 = new StringBuilder(",");
+			foreach (var d in departments) {
+				header1.Append(AddComma(d.Name));
+				header1.Append(",");
+				header2.Append(AddComma("Median"));
+				header2.Append(AddComma("Count"));
+			}
+			header1.AppendLine();
+			header2.AppendLine();
+			foreach (var w in weeks.Keys) {
+				content.Append(AddComma(w));
+				foreach (var x in weeks[w]) {
+					if (x.Values.Count > 0) {
+						content.Append(AddComma(x.GetIntValues().Median.ToString()));
+						content.Append(AddComma(x.Values.Count.ToString()));
+					} else {
+						content.Append(",,");
+					}
+				}
+				content.AppendLine();
+			}
+			header1.Append(header2);
+			header1.Append(content);
+			return header1.ToString();
+		}
+	}
+	
+	public class Distribution
+	{
+		public const int None = 0;
+		public const int StandardDeviation = 1;
+		public const int ConfidenceInterval = 2;
 	}
 	
 	public class PdfExporter : IExporter

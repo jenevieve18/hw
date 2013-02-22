@@ -761,7 +761,7 @@ namespace HW.Core
 					g.Explanations.Add(
 						new Explanation {
 //							Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
-							Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (point == ExtraPoint.StandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+							Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (point == Distribution.StandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
 							Color = 0,
 							Right = false,
 							Box = false,
@@ -813,7 +813,7 @@ namespace HW.Core
 						g.Explanations.Add(
 							new Explanation {
 //								Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
-								Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (point == ExtraPoint.StandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+								Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (point == Distribution.StandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
 								Color = bx + 4,
 								Right = bx == 0 ? false : true,
 								Box = bx == 0 ? true : false,
@@ -1103,179 +1103,16 @@ namespace HW.Core
 //			return g;
 			
 			if (plot == "BoxPlot") {
-				return new BoxPlot().ToCsv(departments, weeks);
+				return new BoxPlotCsv().ToCsv(departments, weeks);
 			} else {
-//				return new Line().ToCsv(departments, weeks);
-				if (point == ExtraPoint.None) {
-					return new Line().ToCsv(departments, weeks);
-				} else if (point == ExtraPoint.StandardDeviation) {
-					return new StandardDeviationLine().ToCsv(departments, weeks);
+				if (point == Distribution.None) {
+					return new LineCsv().ToCsv(departments, weeks);
+				} else if (point == Distribution.StandardDeviation) {
+					return new StandardDeviationLineCsv().ToCsv(departments, weeks);
 				} else {
-					return new ConfidenceIntervalLine().ToCsv(departments, weeks);
+					return new ConfidenceIntervalLineCsv().ToCsv(departments, weeks);
 				}
 			}
-		}
-		
-		interface ICsv
-		{
-			string ToCsv(List<Department> departments, Dictionary<string, List<Answer>> weeks);
-		}
-		
-		abstract class BaseCsv : ICsv
-		{
-			public abstract string ToCsv(List<Department> departments, Dictionary<string, List<Answer>> weeks);
-			
-			protected string AddComma(string s)
-			{
-				return "\"" + s + "\"" + ",";
-			}
-		}
-		
-		class Line : BaseCsv
-		{
-			public override string ToCsv(List<Department> departments, Dictionary<string, List<Answer>> weeks)
-			{
-				StringBuilder content = new StringBuilder();
-				StringBuilder header1 = new StringBuilder(",");
-				StringBuilder header2 = new StringBuilder(",");
-				foreach (var d in departments) {
-					header1.Append(AddComma(d.Name));
-					header1.Append(",");
-					header2.Append(AddComma("Mean"));
-					header2.Append(AddComma("Count"));
-				}
-				header1.AppendLine();
-				header2.AppendLine();
-				foreach (var w in weeks.Keys) {
-					content.Append(AddComma(w));
-					foreach (var x in weeks[w]) {
-						if (x.Values.Count > 0) {
-							content.Append(AddComma(x.GetIntValues().Mean.ToString()));
-							content.Append(AddComma(x.Values.Count.ToString()));
-						} else {
-							content.Append(",,");
-						}
-					}
-					content.AppendLine();
-				}
-				header1.Append(header2);
-				header1.Append(content);
-				return header1.ToString();
-			}
-		}
-		
-		class ConfidenceIntervalLine : BaseCsv
-		{
-			public override string ToCsv(List<Department> departments, Dictionary<string, List<Answer>> weeks)
-			{
-				StringBuilder content = new StringBuilder();
-				StringBuilder header1 = new StringBuilder(",");
-				StringBuilder header2 = new StringBuilder(",");
-				foreach (var d in departments) {
-					header1.Append(AddComma(d.Name));
-					header1.Append(",");
-					header1.Append(",");
-					header2.Append(AddComma("Mean"));
-					header2.Append(AddComma("Confidence Interval"));
-					header2.Append(AddComma("Count"));
-				}
-				header1.AppendLine();
-				header2.AppendLine();
-				foreach (var w in weeks.Keys) {
-					content.Append(AddComma(w));
-					foreach (var x in weeks[w]) {
-						if (x.Values.Count > 0) {
-							var v = x.GetIntValues();
-							content.Append(AddComma(v.Mean.ToString()));
-							content.Append(AddComma(v.ConfidenceInterval.ToString()));
-							content.Append(AddComma(x.Values.Count.ToString()));
-						} else {
-							content.Append(",,,");
-						}
-					}
-					content.AppendLine();
-				}
-				header1.Append(header2);
-				header1.Append(content);
-				return header1.ToString();
-			}
-		}
-		
-		class StandardDeviationLine : BaseCsv
-		{
-			public override string ToCsv(List<Department> departments, Dictionary<string, List<Answer>> weeks)
-			{
-				StringBuilder content = new StringBuilder();
-				StringBuilder header1 = new StringBuilder(",");
-				StringBuilder header2 = new StringBuilder(",");
-				foreach (var d in departments) {
-					header1.Append(AddComma(d.Name));
-					header1.Append(",");
-					header1.Append(",");
-					header2.Append(AddComma("Mean"));
-					header2.Append(AddComma("Standard Deviation"));
-					header2.Append(AddComma("Count"));
-				}
-				header1.AppendLine();
-				header2.AppendLine();
-				foreach (var w in weeks.Keys) {
-					content.Append(AddComma(w));
-					foreach (var x in weeks[w]) {
-						if (x.Values.Count > 0) {
-							var v = x.GetIntValues();
-							content.Append(AddComma(v.Mean.ToString()));
-							content.Append(AddComma(v.ConfidenceInterval.ToString()));
-							content.Append(AddComma(x.Values.Count.ToString()));
-						} else {
-							content.Append(",,");
-						}
-					}
-					content.AppendLine();
-				}
-				header1.Append(header2);
-				header1.Append(content);
-				return header1.ToString();
-			}
-		}
-		
-		class BoxPlot : BaseCsv
-		{
-			public override string ToCsv(List<Department> departments, Dictionary<string, List<Answer>> weeks)
-			{
-				StringBuilder content = new StringBuilder();
-				StringBuilder header1 = new StringBuilder(",");
-				StringBuilder header2 = new StringBuilder(",");
-				foreach (var d in departments) {
-					header1.Append(AddComma(d.Name));
-					header1.Append(",");
-					header2.Append(AddComma("Median"));
-					header2.Append(AddComma("Count"));
-				}
-				header1.AppendLine();
-				header2.AppendLine();
-				foreach (var w in weeks.Keys) {
-					content.Append(AddComma(w));
-					foreach (var x in weeks[w]) {
-						if (x.Values.Count > 0) {
-							content.Append(AddComma(x.GetIntValues().Median.ToString()));
-							content.Append(AddComma(x.Values.Count.ToString()));
-						} else {
-							content.Append(",,");
-						}
-					}
-					content.AppendLine();
-				}
-				header1.Append(header2);
-				header1.Append(content);
-				return header1.ToString();
-			}
-		}
-		
-		class ExtraPoint
-		{
-			public const int None = 0;
-			public const int StandardDeviation = 1;
-			public const int ConfidenceInterval = 2;
 		}
 		
 		public string DrawBottomString(int groupBy, int i, int dx, string str)
