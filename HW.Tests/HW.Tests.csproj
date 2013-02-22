@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Models\DbTests.cs" />
     <Compile Include="Models\ExtendedGraphTests.cs" />
+    <Compile Include="Models\ExtendedGraphTests2.cs" />
     <Compile Include="Models\GraphFactoryTests.cs" />
     <Compile Include="Models\HWListTests.cs" />
     <Compile Include="Models\Test1.cs" />
