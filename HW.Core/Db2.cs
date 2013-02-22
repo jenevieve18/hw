@@ -187,7 +187,9 @@ public class Db2
 				if (s.SuperSponsor != null)
 				{
 //					sb.Append("<img src=\"" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "/img/partner/" + r.GetInt32(1) + ".gif\"/>");
-					sb.Append("<img src=\"" + ConfigurationSettings.AppSettings["healthWatchURL"] + "/img/partner/" + s.SuperSponsor.Id + ".gif\"/>");
+//					sb.Append("<img src=\"" + ConfigurationSettings.AppSettings["healthWatchURL"] + "/img/partner/" + s.SuperSponsor.Id + ".gif\"/>");
+					string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
+					sb.Append("<img src=\"" + path + "img/partner/" + s.SuperSponsor.Id + ".gif\"/>");
 				}
 			}
 			else
