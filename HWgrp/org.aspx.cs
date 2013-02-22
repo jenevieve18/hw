@@ -221,7 +221,9 @@ namespace HWgrp
 //						string body = rs.GetString(0);
 						string body = u.Sponsor.ExtendedSurveys[0].ExtraEmailBody;
 
-						string personalLink = "" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "";
+//						string personalLink = "" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "";
+						string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
+						string personalLink = "" + path + "";
 //						if (!rs.IsDBNull(4) && rs.GetInt32(4) > 0)
 						if (u.ReminderLink > 0)
 						{
@@ -277,7 +279,9 @@ namespace HWgrp
 //							string body = rs.GetString(7);
 							string body = i.Sponsor.LoginText;
 
-							string personalLink = "" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "";
+//							string personalLink = "" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "";
+							string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
+							string personalLink = "" + path + "";
 //							if (!rs.IsDBNull(5) && rs.GetInt32(5) > 0)
 							if (i.User.ReminderLink > 0)
 							{
@@ -1551,7 +1555,9 @@ namespace HWgrp
 						{
 							if (!rs2.IsDBNull(3) && !rs2.IsDBNull(5))
 							{
-								usr.Append("<A TITLE=\"Log on to users account\" HREF=\"" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "/a/" + rs2.GetString(5) + rs2.GetInt32(3).ToString() + "\" TARGET=\"_blank\">" + rs2.GetInt32(3).ToString() + "/" + (rs2.IsDBNull(4) ? "0" : rs2.GetInt32(4).ToString()) + "</A>");
+//								usr.Append("<A TITLE=\"Log on to users account\" HREF=\"" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "/a/" + rs2.GetString(5) + rs2.GetInt32(3).ToString() + "\" TARGET=\"_blank\">" + rs2.GetInt32(3).ToString() + "/" + (rs2.IsDBNull(4) ? "0" : rs2.GetInt32(4).ToString()) + "</A>");
+								string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
+								usr.Append("<A TITLE=\"Log on to users account\" HREF=\"" + path + "a/" + rs2.GetString(5) + rs2.GetInt32(3).ToString() + "\" TARGET=\"_blank\">" + rs2.GetInt32(3).ToString() + "/" + (rs2.IsDBNull(4) ? "0" : rs2.GetInt32(4).ToString()) + "</A>");
 
 								SqlDataReader rs3 = Db2.rs("SELECT u.UserID, s.Sponsor FROM [User] u LEFT OUTER JOIN Sponsor s ON u.SponsorID = s.SponsorID WHERE u.UserID <> " + rs2.GetInt32(3) + " AND u.Email = '" + rs2.GetString(1).Replace("'", "''") + "'");
 								while (rs3.Read())

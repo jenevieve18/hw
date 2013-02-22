@@ -117,11 +117,15 @@ public class Db
 			try {
 				if (body.IndexOf("<LINK/>") >= 0)
 				{
-					body = body.Replace("<LINK/>", "" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "/i/" + key + sponsorInviteID.ToString());
+//					body = body.Replace("<LINK/>", "" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "/i/" + key + sponsorInviteID.ToString());
+					string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
+					body = body.Replace("<LINK/>", "" + path + "i/" + key + sponsorInviteID.ToString());
 				}
 				else
 				{
-					body += "\r\n\r\n" + "" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "/i/" + key + sponsorInviteID.ToString();
+//					body += "\r\n\r\n" + "" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "/i/" + key + sponsorInviteID.ToString();
+					string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
+					body += "\r\n\r\n" + "" + path + "i/" + key + sponsorInviteID.ToString();
 				}
 //				System.Web.Mail.SmtpMail.SmtpServer = System.Configuration.ConfigurationSettings.AppSettings["SmtpServer"];
 //				System.Web.Mail.MailMessage mail = new System.Web.Mail.MailMessage();

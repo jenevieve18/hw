@@ -298,7 +298,9 @@ namespace HWgrp
 									{
 										string body = LoginTxt.Text;
 
-										string personalLink = "" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "";
+//										string personalLink = "" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "";
+										string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
+										string personalLink = "" + path + "";
 										if (u.ReminderLink > 0)
 										{
 											personalLink += "/c/" + u.UserKey.ToLower() + u.Id.ToString();
@@ -360,7 +362,9 @@ namespace HWgrp
 									{
 										string body = ExtendedSurveyTxt.Text;
 
-										string personalLink = "" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "";
+//										string personalLink = "" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "";
+										string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
+										string personalLink = "" + path + "";
 										if (u.ReminderLink > 0)
 										{
 											personalLink += "/c/" + u.UserKey.ToLower() + u.Id.ToString();
@@ -418,7 +422,9 @@ namespace HWgrp
 									{
 										string body = ExtendedSurveyFinishedTxt.Text;
 
-										string personalLink = "" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "";
+//										string personalLink = "" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "";
+										string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
+										string personalLink = "" + path + "";
 										if (u.ReminderLink > 0)
 										{
 											personalLink += "/c/" + u.UserKey.ToLower() + u.Id.ToString();

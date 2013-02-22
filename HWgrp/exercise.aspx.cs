@@ -142,7 +142,9 @@ namespace HWgrp
 					sb.Append("<div>");
 				}
 
-				sb.Append("<a class=\"sidearrow\" href=\"JavaScript:void(window.open('" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "/exerciseShow.aspx?SID=" + Convert.ToInt32(HttpContext.Current.Session["SponsorID"]) + "&AUID=" + Math.Abs(Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"])) + "&ExerciseVariantLangID=" + l.CurrentVariant.Id + "','EVLID" + l.CurrentVariant.Id + "','scrollbars=yes,resizable=yes,");
+//				sb.Append("<a class=\"sidearrow\" href=\"JavaScript:void(window.open('" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "/exerciseShow.aspx?SID=" + Convert.ToInt32(HttpContext.Current.Session["SponsorID"]) + "&AUID=" + Math.Abs(Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"])) + "&ExerciseVariantLangID=" + l.CurrentVariant.Id + "','EVLID" + l.CurrentVariant.Id + "','scrollbars=yes,resizable=yes,");
+				string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
+				sb.Append("<a class=\"sidearrow\" href=\"JavaScript:void(window.open('" + path + "exerciseShow.aspx?SID=" + Convert.ToInt32(HttpContext.Current.Session["SponsorID"]) + "&AUID=" + Math.Abs(Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"])) + "&ExerciseVariantLangID=" + l.CurrentVariant.Id + "','EVLID" + l.CurrentVariant.Id + "','scrollbars=yes,resizable=yes,");
 
 				if (l.CurrentVariant.ExerciseWindowX != 0)
 				{
