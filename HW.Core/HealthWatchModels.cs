@@ -213,26 +213,6 @@ namespace HW.Core
 		void Draw(List<Series> series);
 	}
 	
-//	public class BoxPlot : IHWList, IGraphType
-//	{
-//		public double Mean { get; set; }
-//		public double LowerWhisker { get; set;  }
-//		public double UpperWhisker { get; set; }
-//		public double LowerBox { get; set; }
-//		public double UpperBox { get; set; }
-//		public double Median { get; set; }
-//		public ExtendedGraph Graph { get; set; }
-//
-//		public BoxPlot(IHWList plot)
-//		{
-//			this.Mean = plot.Mean;
-//		}
-//
-//		public void Draw(List<Series> series)
-//		{
-//		}
-//	}
-//
 	public class PointV
 	{
 		public int X { get; set; }
@@ -252,19 +232,15 @@ namespace HW.Core
 	public class LineGraphType : IGraphType
 	{
 		public ExtendedGraph Graph { get; set; }
-//		bool stdev;
 		int point;
 		int t;
 		
-//		public LineGraphType() : this(false, 2)
 		public LineGraphType() : this(0, 2) // TODO: Map this point value to ExtraPoint class.
 		{
 		}
 		
-//		public LineGraphType(bool stdev, int t)
 		public LineGraphType(int point, int t)
 		{
-//			this.stdev = stdev;
 			this.point = point;
 			this.t = t;
 		}
@@ -277,7 +253,6 @@ namespace HW.Core
 				for (int i = 0; i < s.Points.Count; i++) {
 					PointV p = s.Points[i];
 					HWList l = p.Values;
-//					if (stdev) {
 					if (point == 1) { // TODO: Map this to ExtraPoint class.
 						Graph.DrawDeviation(s.Color, (int)p.X, (int)l.Mean, (int)l.StandardDeviation);
 					} else if (point == 2) { // TODO: Map this to ExtraPoint class.

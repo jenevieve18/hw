@@ -113,16 +113,6 @@ namespace HW.Core
 	{
 		public static string GetGroupBy(int GB)
 		{
-//			switch (GB) {
-//					case 1: return "dbo.cf_yearWeek";
-//					case 2: return "dbo.cf_year2Week";
-//					case 3: return "dbo.cf_yearMonth";
-//					case 4: return "dbo.cf_year3Month";
-//					case 5: return "dbo.cf_year6Month";
-//					case 6: return "YEAR";
-//					case 7: return "dbo.cf_year2WeekEven";
-//					default: throw new NotSupportedException();
-//			}
 			switch (GB) {
 					case Group.GroupBy.OneWeek: return "dbo.cf_yearWeek";
 					case Group.GroupBy.TwoWeeksStartWithOdd: return "dbo.cf_year2Week";
@@ -140,7 +130,6 @@ namespace HW.Core
 			int COUNT = 0;
 			switch (GRPNG)
 			{
-//				case 0:
 				case Group.Grouping.None:
 					{
 						string tmpDesc = "";
@@ -177,7 +166,6 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 						COUNT++;
 						break;
 					}
-//				case 1:
 				case Group.Grouping.UsersOnUnit:
 					{
 						IList<Department> departments = SPONS != -1 ? departmentRepository.FindBySponsorWithSponsorAdminIn(SID, SPONS, GID) : departmentRepository.FindBySponsorOrderedBySortStringIn(SID, GID);
@@ -199,7 +187,6 @@ INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfile
 						}
 						break;
 					}
-//				case 2:
 				case Group.Grouping.UsersOnUnitAndSubUnits:
 					{
 						IList<Department> departments = SPONS != -1 ? departmentRepository.FindBySponsorWithSponsorAdminIn(SID, SPONS, GID) : departmentRepository.FindBySponsorOrderedBySortStringIn(SID, GID);
@@ -223,7 +210,6 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 						}
 						break;
 					}
-//				case 3:
 				case Group.Grouping.BackgroundVariable:
 					{
 						string tmpSelect = "";

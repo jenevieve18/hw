@@ -3,7 +3,7 @@
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
-    <%=Db.header()%>
+    <%= Db.header() %>
     <script type="text/javascript">
         $(document).ready(function () {
             $(document).bind('click', function (e) {
@@ -47,7 +47,7 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
     <form id="Form1" method="post" runat="server">
         <div class="container_16" id="admin">
-		<%=Db2.nav()%>
+		<%= Db2.nav() %>
             <div class="contentgroup grid_16">
                 <div id="contextbar">
                     <div class="settingsPane">
@@ -75,7 +75,7 @@
                         Language
                         <asp:DropDownList ID="LangID" runat="server" AutoPostBack=true />
 				        <!--<asp:CheckBox ID="STDEV" runat=server Text="Show standard deviation" />-->
-			            <span>Distribution</span>
+			            Distribution
                         <asp:DropDownList AutoPostBack=true ID=ExtraPoint runat=server>
 					        <asp:ListItem Value=0 Text="< none >" />
 					        <asp:ListItem Value=1 Text="Standard Deviation" />
@@ -88,7 +88,7 @@
 			        </div>
                 </div>
         		<asp:Label ID=StatsImg runat=server />
-				<%-- <% if (reportParts != null) { %>
+				<!-- <% if (reportParts != null) { %>
 					<% int i = 0; %>
         			<% foreach (var r in reportParts) { %>
         				<% if (i == 0) { %>
@@ -123,7 +123,7 @@
 							</tr>
 						</table>
 					<% } %>
-				<% } %> --%>
+				<% } %> -->
             </div><!-- end .contentgroup	-->
         </div> <!-- end .container_12 -->
 	</form>

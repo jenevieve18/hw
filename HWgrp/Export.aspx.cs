@@ -59,7 +59,8 @@ namespace HWgrp
 			var exporter = ExportFactory.GetExporter(answerRepository, reportRepository, projectRepository, optionRepository, departmentRepository, questionRepository, indexRepository, type, HasAnswerKey, hasGrouping, disabled, Width, Height, Background, r, key);
 			Response.ContentType = exporter.Type;
 			AddHeaderIf(exporter.HasContentDisposition, "content-disposition", exporter.ContentDisposition);
-			Write(exporter.Export(GB, fy, ty, langID, rpid, PRUID, GRPNG, SPONS, SID, GID, plot, Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath, point));
+			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
+			Write(exporter.Export(GB, fy, ty, langID, rpid, PRUID, GRPNG, SPONS, SID, GID, plot, path, point));
 		}
 		
 		void Write(object obj)
