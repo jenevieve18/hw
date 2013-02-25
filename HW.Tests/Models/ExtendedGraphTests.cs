@@ -11,6 +11,9 @@ using System.Threading;
 using System.Web;
 using System.Windows.Forms;
 using HW.Core;
+using HW.Core.Helpers;
+using HW.Core.Models;
+using HW.Core.Repositories;
 using NUnit.Framework;
 
 namespace HW.Tests.Models
@@ -157,7 +160,6 @@ namespace HW.Tests.Models
 				}
 
 				for (int i = all.Count - 1; i >= 0; i--) {
-//					int color = IndexFactory.GetColor(c.Index, Convert.ToInt32(all.GetKey(i)));
 					int color = c.Index.GetColor(Convert.ToInt32(all.GetKey(i)));
 					
 					string[] u = all.GetByIndex(i).ToString().Split(',');
@@ -312,7 +314,6 @@ namespace HW.Tests.Models
 				} else {
 					getOtherIdxVal(c.Index.Id, sortString, langID);
 				}
-//				int color = IndexFactory.GetColor(c.Index, lastVal);
 				int color = c.Index.GetColor(lastVal);
 				Bar b = new Bar { Color = color, Description = lastDesc, Reference = c.Index.TargetValue, Value = lastVal };
 				bars.Add(b);

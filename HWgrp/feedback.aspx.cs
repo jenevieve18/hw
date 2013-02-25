@@ -13,21 +13,25 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Core;
+using HW.Core.Repositories;
+using HW.Core.Repositories.Sql;
 
 namespace HWgrp
 {
 	public partial class feedback : System.Web.UI.Page
 	{
-		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository(); //AppContext.GetRepositoryFactory().CreateSponsorRepository();
-		SqlAnswerRepository answerRepository = new SqlAnswerRepository(); // AppContext.GetRepositoryFactory().CreateAnswerRepository();
+//		ISponsorRepository sponsorRepository = AppContext.GetRepositoryFactory().CreateSponsorRepository();
+//		IAnswerRepository answerRepository = AppContext.GetRepositoryFactory().CreateAnswerRepository();
+//		IProjectRepository projectRepository = AppContext.GetRepositoryFactory().CreateProjectRepository();
+		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
+		SqlAnswerRepository answerRepository = new SqlAnswerRepository();
 		SqlProjectRepository projectRepository = new SqlProjectRepository();
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			bool showIndividuals = (HttpContext.Current.Request.QueryString["ShowIndividuals"] != null);
 			int sponsorID = (HttpContext.Current.Request.QueryString["SponsorID"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["SponsorID"]) : 0);
-			if (sponsorID == 0)
-			{
+			if (sponsorID == 0) {
 				sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
 			}
 //			SqlDataReader rs = Db.rs("SELECT " +
@@ -40,8 +44,7 @@ namespace HWgrp
 //			                         "WHERE ses.SponsorID = " + sponsorID + " " +
 //			                         "ORDER BY ses.SponsorExtendedSurveyID");
 //			while (rs.Read())
-			foreach (var s in sponsorRepository.FindExtendedSurveysBySponsor(sponsorID))
-			{
+			foreach (var s in sponsorRepository.FindExtendedSurveysBySponsor(sponsorID)) {
 				ArrayList l = new ArrayList();
 				int cx = 0;
 
@@ -74,15 +77,12 @@ namespace HWgrp
 //				                          "INNER JOIN AnswerValue av16 ON a.AnswerID = av16.AnswerID AND av16.QuestionID = 404 AND av16.OptionID = 116 AND av16.DeletedSessionID IS NULL " +
 //				                          "WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = " + rs.GetInt32(0), "eFormSqlConnection");
 //				while (rs2.Read())
-				foreach (var a in answerRepository.FindByProjectRound(s.ProjectRoundUnit.Id))
-				{
+				foreach (var a in answerRepository.FindByProjectRound(s.ProjectRoundUnit.Id)) {
 					bool pbs = false;
 					float scoreN = 0;
-					for (int i = 5; i < 9; i++)
-					{
+					for (int i = 5; i < 9; i++) {
 //						switch (rs2.GetInt32(i))
-						switch (a.Values[i].ValueInt)
-						{
+						switch (a.Values[i].ValueInt) {
 								case 367: scoreN += 5; break;
 								case 363: scoreN += 4; break;
 								case 368: scoreN += 3; break;
@@ -90,30 +90,23 @@ namespace HWgrp
 								case 361: scoreN += 1; break;
 						}
 					}
-					if (scoreN / 4 > 3.25)
-					{
+					if (scoreN / 4 > 3.25) {
 						pbs = true;
 					}
 
 					scoreN = 0;
-					for (int i = 0; i < 5; i++)
-					{
-						if (i == 0 || i == 1 || i == 4)
-						{
+					for (int i = 0; i < 5; i++) {
+						if (i == 0 || i == 1 || i == 4) {
 //							switch (rs2.GetInt32(i))
-							switch (a.Values[i].ValueInt)
-							{
+							switch (a.Values[i].ValueInt) {
 									case 361: scoreN += 1; break;
 									case 362: scoreN += 2; break;
 									case 363: scoreN += 3; break;
 									case 360: scoreN += 4; break;
 							}
-						}
-						else
-						{
+						} else {
 //							switch (rs2.GetInt32(i))
-							switch (a.Values[i].ValueInt)
-							{
+							switch (a.Values[i].ValueInt) {
 									case 361: scoreN += 4; break;
 									case 362: scoreN += 3; break;
 									case 363: scoreN += 2; break;
@@ -123,31 +116,25 @@ namespace HWgrp
 					}
 
 					scoreN = scoreN / 5;
-					if (scoreN > 2.6)
-					{
+					if (scoreN > 2.6) {
 						//if (pbs)
 						//{
 //						if (!l.Contains(rs2.GetString(9))) { l.Add(rs2.GetString(9)); }
-						if (!l.Contains(a.ProjectRoundUser.Email))
-						{
+						if (!l.Contains(a.ProjectRoundUser.Email)) {
 //							l.Add(rs2.GetString(9));
 							l.Add(a.ProjectRoundUser.Email);
 						}
-						if (showIndividuals)
-						{
+						if (showIndividuals) {
 //							List.Text += "<br/>" + rs2.GetString(9);
 							List.Text += "<br/>" + a.ProjectRoundUser.Email;
-						}
-						else
-						{
+						} else {
 							cx++;
 						}
 						//}
 					}
 				}
 //				rs2.Close();
-				if (!showIndividuals)
-				{
+				if (!showIndividuals) {
 					List.Text += cx;
 				}
 				cx = 0;
@@ -175,40 +162,32 @@ namespace HWgrp
 //				            "INNER JOIN AnswerValue av7 ON a.AnswerID = av7.AnswerID AND av7.QuestionID = 393 AND av7.OptionID = 122 AND av7.DeletedSessionID IS NULL " +
 //				            "WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = " + rs.GetInt32(0), "eFormSqlConnection");
 //				while (rs2.Read())
-				foreach (var a in answerRepository.x(s.ProjectRoundUnit.Id))
-				{
+				foreach (var a in answerRepository.x(s.ProjectRoundUnit.Id)) {
 					bool depr = false;
-					for (int i = 0; i < 6; i++)
-					{
+					for (int i = 0; i < 6; i++) {
 //						switch (rs2.GetInt32(i))
-						switch (a.Values[i].ValueInt)
-						{
+						switch (a.Values[i].ValueInt) {
 								case 364: depr = true; break;
 								case 365: depr = true; break;
 						}
 					}
 //					if (rs2.GetInt32(6) == 294 && depr)
-					if (a.Values[6].ValueInt == 294 && depr)
-					{
+					if (a.Values[6].ValueInt == 294 && depr) {
 //						if (!l.Contains(rs2.GetString(7))) { l.Add(rs2.GetString(7)); }
 						if (!l.Contains(a.ProjectRoundUser.Email)) {
 //							l.Add(rs2.GetString(7));
 							l.Add(a.ProjectRoundUser.Email);
 						}
-						if (showIndividuals)
-						{
+						if (showIndividuals) {
 //							List.Text += "<br/>" + rs2.GetString(7);
 							List.Text += "<br/>" + a.ProjectRoundUser.Email;
-						}
-						else
-						{
+						} else {
 							cx++;
 						}
 					}
 				}
 //				rs2.Close();
-				if (!showIndividuals)
-				{
+				if (!showIndividuals) {
 					List.Text += cx;
 				}
 				cx = 0;
@@ -365,30 +344,24 @@ namespace HWgrp
 //				            "INNER JOIN AnswerValue av1 ON a.AnswerID = av1.AnswerID AND av1.QuestionID = 331 AND av1.OptionID = 98 AND av1.DeletedSessionID IS NULL " +
 //				            "WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = " + rs.GetInt32(0), "eFormSqlConnection");
 //				while (rs2.Read())
-				foreach (var a in answerRepository.FindByRoundQuestionAndOption(s.ProjectRoundUnit.Id, 331, 98))
-				{
+				foreach (var a in answerRepository.FindByRoundQuestionAndOption(s.ProjectRoundUnit.Id, 331, 98)) {
 //					if (rs2.GetInt32(0) == 316 || rs2.GetInt32(0) == 317)
-					if (a.Values[0].ValueInt == 316 || a.Values[0].ValueInt == 317)
-					{
+					if (a.Values[0].ValueInt == 316 || a.Values[0].ValueInt == 317) {
 //						if (!l.Contains(rs2.GetString(1))) { l.Add(rs2.GetString(1)); }
 						if (!l.Contains(a.ProjectRoundUser.Email)) {
 //							l.Add(rs2.GetString(1));
 							l.Add(a.ProjectRoundUser.Email);
 						}
-						if (showIndividuals)
-						{
+						if (showIndividuals) {
 //							List.Text += "<br/>" + rs2.GetString(1);
 							List.Text += "<br/>" + a.ProjectRoundUser.Email;
-						}
-						else
-						{
+						} else {
 							cx++;
 						}
 					}
 				}
 //				rs2.Close();
-				if (!showIndividuals)
-				{
+				if (!showIndividuals) {
 					List.Text += cx;
 				}
 				cx = 0;
@@ -410,30 +383,24 @@ namespace HWgrp
 //				            "INNER JOIN AnswerValue av4 ON a.AnswerID = av4.AnswerID AND av4.QuestionID = 343 AND av4.OptionID = 90 AND av4.DeletedSessionID IS NULL " +
 //				            "WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = " + rs.GetInt32(0), "eFormSqlConnection");
 //				while (rs2.Read())
-				foreach (var a in answerRepository.a(s.ProjectRoundUnit.Id))
-				{
+				foreach (var a in answerRepository.a(s.ProjectRoundUnit.Id)) {
 //					if (rs2.GetInt32(0) == 294 && (rs2.GetInt32(1) == 294 || rs2.GetInt32(2) == 294 || rs2.GetInt32(3) == 294))
-					if (a.Values[0].ValueInt == 294 && (a.Values[1].ValueInt == 294 || a.Values[2].ValueInt == 294 || a.Values[3].ValueInt == 294))
-					{
+					if (a.Values[0].ValueInt == 294 && (a.Values[1].ValueInt == 294 || a.Values[2].ValueInt == 294 || a.Values[3].ValueInt == 294)) {
 //						if (!l.Contains(rs2.GetString(4))) { l.Add(rs2.GetString(4)); }
 						if (!l.Contains(a.ProjectRoundUser.Email)) {
 //							l.Add(rs2.GetString(4));
 							l.Add(a.ProjectRoundUser.Email);
 						}
-						if (showIndividuals)
-						{
+						if (showIndividuals) {
 //							List.Text += "<br/>" + rs2.GetString(4);
 							List.Text += "<br/>" + a.ProjectRoundUser.Email;
-						}
-						else
-						{
+						} else {
 							cx++;
 						}
 					}
 				}
 //				rs2.Close();
-				if (!showIndividuals)
-				{
+				if (!showIndividuals) {
 					List.Text += cx;
 				}
 				cx = 0;
@@ -455,30 +422,24 @@ namespace HWgrp
 //				            "INNER JOIN AnswerValue av4 ON a.AnswerID = av4.AnswerID AND av4.QuestionID = 348 AND av4.OptionID = 90 AND av4.DeletedSessionID IS NULL " +
 //				            "WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = " + rs.GetInt32(0), "eFormSqlConnection");
 //				while (rs2.Read())
-				foreach (var a in answerRepository.b(s.ProjectRoundUnit.Id))
-				{
+				foreach (var a in answerRepository.b(s.ProjectRoundUnit.Id)) {
 //					if (rs2.GetInt32(0) == 294 && (rs2.GetInt32(1) == 294 || rs2.GetInt32(2) == 294 || rs2.GetInt32(3) == 294))
-					if (a.Values[0].ValueInt == 294 && (a.Values[1].ValueInt == 294 || a.Values[2].ValueInt == 294 || a.Values[3].ValueInt == 294))
-					{
+					if (a.Values[0].ValueInt == 294 && (a.Values[1].ValueInt == 294 || a.Values[2].ValueInt == 294 || a.Values[3].ValueInt == 294)) {
 //						if (!l.Contains(rs2.GetString(4))) { l.Add(rs2.GetString(4)); }
 						if (!l.Contains(a.ProjectRoundUser.Email)) {
 //							l.Add(rs2.GetString(4));
 							l.Add(a.ProjectRoundUser.Email);
 						}
-						if (showIndividuals)
-						{
+						if (showIndividuals) {
 //							List.Text += "<br/>" + rs2.GetString(4);
 							List.Text += "<br/>" + a.ProjectRoundUser.Email;
-						}
-						else
-						{
+						} else {
 							cx++;
 						}
 					}
 				}
 //				rs2.Close();
-				if (!showIndividuals)
-				{
+				if (!showIndividuals) {
 					List.Text += cx;
 				}
 				cx = 0;
@@ -494,30 +455,24 @@ namespace HWgrp
 //				            "INNER JOIN AnswerValue av1 ON a.AnswerID = av1.AnswerID AND av1.QuestionID = 370 AND av1.OptionID = 90 AND av1.DeletedSessionID IS NULL " +
 //				            "WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = " + rs.GetInt32(0), "eFormSqlConnection");
 //				while (rs2.Read())
-				foreach (var a in answerRepository.FindByRoundQuestionAndOption(s.ProjectRoundUnit.Id, 370, 90))
-				{
+				foreach (var a in answerRepository.FindByRoundQuestionAndOption(s.ProjectRoundUnit.Id, 370, 90)) {
 //					if (rs2.GetInt32(0) == 294)
-					if (a.Values[0].ValueInt == 294)
-					{
+					if (a.Values[0].ValueInt == 294) {
 //						if (!l.Contains(rs2.GetString(1))) { l.Add(rs2.GetString(1)); }
 						if (!l.Contains(a.ProjectRoundUser.Email)) {
 //							l.Add(rs2.GetString(1));
 							l.Add(a.ProjectRoundUser.Email);
 						}
-						if (showIndividuals)
-						{
+						if (showIndividuals) {
 //							List.Text += "<br/>" + rs2.GetString(1);
 							List.Text += "<br/>" + a.ProjectRoundUser.Email;
-						}
-						else
-						{
+						} else {
 							cx++;
 						}
 					}
 				}
 //				rs2.Close();
-				if (!showIndividuals)
-				{
+				if (!showIndividuals) {
 					List.Text += cx;
 				}
 				cx = 0;
@@ -533,30 +488,24 @@ namespace HWgrp
 //				            "INNER JOIN AnswerValue av1 ON a.AnswerID = av1.AnswerID AND av1.QuestionID = 349 AND av1.OptionID = 90 AND av1.DeletedSessionID IS NULL " +
 //				            "WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = " + rs.GetInt32(0), "eFormSqlConnection");
 //				while (rs2.Read())
-				foreach (var a in answerRepository.FindByRoundQuestionAndOption(s.ProjectRoundUnit.Id, 349, 90))
-				{
+				foreach (var a in answerRepository.FindByRoundQuestionAndOption(s.ProjectRoundUnit.Id, 349, 90)) {
 //					if (rs2.GetInt32(0) == 294)
-					if (a.Values[0].ValueInt == 294)
-					{
+					if (a.Values[0].ValueInt == 294) {
 //						if (!l.Contains(rs2.GetString(1))) { l.Add(rs2.GetString(1)); }
 						if (!l.Contains(a.ProjectRoundUser.Email)) {
 //							l.Add(rs2.GetString(1));
 							l.Add(a.ProjectRoundUser.Email);
 						}
-						if (showIndividuals)
-						{
+						if (showIndividuals) {
 //							List.Text += "<br/>" + rs2.GetString(1);
 							List.Text += "<br/>" + a.ProjectRoundUser.Email;
-						}
-						else
-						{
+						} else {
 							cx++;
 						}
 					}
 				}
 //				rs2.Close();
-				if (!showIndividuals)
-				{
+				if (!showIndividuals) {
 					List.Text += cx;
 				}
 				cx = 0;
@@ -572,30 +521,24 @@ namespace HWgrp
 //				            "INNER JOIN AnswerValue av1 ON a.AnswerID = av1.AnswerID AND av1.QuestionID = 350 AND av1.OptionID = 90 AND av1.DeletedSessionID IS NULL " +
 //				            "WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = " + rs.GetInt32(0), "eFormSqlConnection");
 //				while (rs2.Read())
-				foreach (var a in answerRepository.FindByRoundQuestionAndOption(s.ProjectRoundUnit.Id, 350, 90))
-				{
+				foreach (var a in answerRepository.FindByRoundQuestionAndOption(s.ProjectRoundUnit.Id, 350, 90)) {
 //					if (rs2.GetInt32(0) == 294)
-					if (a.Values[0].ValueInt == 294)
-					{
+					if (a.Values[0].ValueInt == 294) {
 //						if (!l.Contains(rs2.GetString(1))) { l.Add(rs2.GetString(1)); }
-						if (!l.Contains(a.ProjectRoundUser.Email)) { 
+						if (!l.Contains(a.ProjectRoundUser.Email)) {
 //							l.Add(rs2.GetString(1));
 							l.Add(a.ProjectRoundUser.Email);
 						}
-						if (showIndividuals)
-						{
+						if (showIndividuals) {
 //							List.Text += "<br/>" + rs2.GetString(1);
 							List.Text += "<br/>" + a.ProjectRoundUser.Email;
-						}
-						else
-						{
+						} else {
 							cx++;
 						}
 					}
 				}
 //				rs2.Close();
-				if (!showIndividuals)
-				{
+				if (!showIndividuals) {
 					List.Text += cx;
 				}
 				cx = 0;
@@ -617,8 +560,7 @@ namespace HWgrp
 //				            "INNER JOIN AnswerValue av4 ON a.AnswerID = av4.AnswerID AND av4.QuestionID = 213 AND av4.OptionID = 42 AND av4.DeletedSessionID IS NULL " +
 //				            "WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = " + rs.GetInt32(0), "eFormSqlConnection");
 //				while (rs2.Read())
-				foreach (var a in answerRepository.f(s.ProjectRoundUnit.Id))
-				{
+				foreach (var a in answerRepository.f(s.ProjectRoundUnit.Id)) {
 					if (
 //						(rs2.GetInt32(0) == 340 || rs2.GetInt32(0) == 341)
 						(a.Values[0].ValueInt == 340 || a.Values[0].ValueInt == 341)
@@ -646,20 +588,16 @@ namespace HWgrp
 //							l.Add(rs2.GetString(4));
 							l.Add(a.ProjectRoundUser.Email);
 						}
-						if (showIndividuals)
-						{
+						if (showIndividuals) {
 //							List.Text += "<br/>" + rs2.GetString(4);
 							List.Text += "<br/>" + a.ProjectRoundUser.Email;
-						}
-						else
-						{
+						} else {
 							cx++;
 						}
 					}
 				}
 //				rs2.Close();
-				if (!showIndividuals)
-				{
+				if (!showIndividuals) {
 					List.Text += cx;
 				}
 				cx = 0;
@@ -699,8 +637,7 @@ namespace HWgrp
 				//List.Text += sql;
 //				rs2 = Db.rs(sql, "eFormSqlConnection");
 //				while (rs2.Read())
-				foreach (var a in answerRepository.g(s.ProjectRoundUnit.Id))
-				{
+				foreach (var a in answerRepository.g(s.ProjectRoundUnit.Id)) {
 					int Qscore = 0;
 
 //					decimal Qbmi = rs2.GetDecimal(10) / ((rs2.GetDecimal(11) / 100) * (rs2.GetDecimal(11) / 100));
@@ -710,9 +647,9 @@ namespace HWgrp
 //					if (rs2.GetDecimal(0) >= 65) { Qscore += 4; } else if (rs2.GetDecimal(0) >= 55) { Qscore += 3; } else if (rs2.GetDecimal(0) >= 45) { Qscore += 2; }
 					if (a.Values[0].ValueDecimal >= 65) {
 						Qscore += 4;
-					} else if (a.Values[0].ValueDecimal >= 55) { 
+					} else if (a.Values[0].ValueDecimal >= 55) {
 						Qscore += 3;
-					} else if (a.Values[0].ValueDecimal >= 45) { 
+					} else if (a.Values[0].ValueDecimal >= 45) {
 						Qscore += 2;
 					}
 
@@ -740,24 +677,19 @@ namespace HWgrp
 //					if (rs2.GetInt32(9) == 428) { Qscore += 3; } else if (rs2.GetInt32(9) == 429) { Qscore += 5; }
 					if (a.Values[9].ValueInt == 428) { Qscore += 3; } else if (a.Values[9].ValueInt == 429) { Qscore += 5; }
 
-					if (Qscore >= 15)
-					{
+					if (Qscore >= 15) {
 //						if (!l.Contains(rs2.GetString(12))) { l.Add(rs2.GetString(12)); }
 						if (!l.Contains(a.ProjectRoundUser.Email)) { l.Add(a.ProjectRoundUser.Email	); }
-						if (showIndividuals)
-						{
+						if (showIndividuals) {
 //							List.Text += "<br/>" + rs2.GetString(12);
 							List.Text += "<br/>" + a.ProjectRoundUser.Email;
-						}
-						else
-						{
+						} else {
 							cx++;
 						}
 					}
 				}
 //				rs2.Close();
-				if (!showIndividuals)
-				{
+				if (!showIndividuals) {
 					List.Text += cx;
 				}
 				cx = 0;
@@ -765,32 +697,23 @@ namespace HWgrp
 
 				List.Text += "<br/><br/><I>Totalt unika</i> ";
 
-				if (showIndividuals)
-				{
-					foreach (string x in l)
-					{
+				if (showIndividuals) {
+					foreach (string x in l) {
 //						if (!rs.IsDBNull(3) && !rs.IsDBNull(4))
-						if (s.IndividualFeedbackEmailSubject != "" && s.IndividualFeedbackEmailBody != "")
-						{
-							if (x == (HttpContext.Current.Request.QueryString["Send"] != null ? HttpContext.Current.Request.QueryString["Send"].ToString() : ""))
-							{
-								if (Db.isEmail(x))
-								{
+						if (s.IndividualFeedbackEmailSubject != "" && s.IndividualFeedbackEmailBody != "") {
+							if (x == (HttpContext.Current.Request.QueryString["Send"] != null ? HttpContext.Current.Request.QueryString["Send"].ToString() : "")) {
+								if (Db.isEmail(x)) {
 //									Db.sendMail("info@healthwatch.se", x, rs.GetString(4), rs.GetString(3));
 									Db.sendMail("info@healthwatch.se", x, s.IndividualFeedbackEmailBody, s.IndividualFeedbackEmailSubject);
 								}
 							}
 //							List.Text += "<br/><A HREF=\"feedback.aspx?PRID=" + rs.GetInt32(0) + "&Send=" + x + "\"/>" + x + "</A>";
 							List.Text += "<br/><A HREF=\"feedback.aspx?PRID=" + s.ProjectRoundUnit.Id + "&Send=" + x + "\"/>" + x + "</A>";
-						}
-						else
-						{
+						} else {
 							List.Text += "<br/>" + x;
 						}
 					}
-				}
-				else
-				{
+				} else {
 					List.Text += l.Count;
 				}
 
@@ -806,12 +729,10 @@ namespace HWgrp
 //				            "ORDER BY pru.Email", "eFormSqlConnection");
 				var u = answerRepository.ReadByProjectRound(s.ProjectRoundUnit.Id);
 //				if (rs2.Read())
-				if (u != null)
-				{
+				if (u != null) {
 					List.Text += "<br/><br/><I>Intervju</i><table border=\"1\"><tr><td>Email</td><td>Chef</td></tr>";
 //					do
-					foreach (var v in u.Values)
-					{
+					foreach (var v in u.Values) {
 //						List.Text += "<tr><td>" + rs2.GetString(0) + "</td><td>" + (rs2.IsDBNull(1) ? "" : rs2.GetString(1)) + "</td></tr>";
 						List.Text += "<tr><td>" + u.ProjectRoundUser.Email + "</td><td>" + v.Option.CurrentComponent.Text + "</td></tr>";
 					}

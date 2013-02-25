@@ -1,8 +1,9 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="org.aspx.cs" Inherits="HWgrp.org" %>
+<%@ Import Namespace="HW.Core.Helpers" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
-   <%=Db.header()%>
+   <%= Db.header() %>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
 <!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
@@ -11,7 +12,7 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
     <form id="Form1" method="post" runat="server">
 		<div class="container_16" id="admin">
-		<%=Db2.nav()%>
+		<%= Db2.nav() %>
             <div class="contentgroup grid_16">
                 <div id="contextbar">
                     <div class="top">

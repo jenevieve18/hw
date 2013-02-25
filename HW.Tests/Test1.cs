@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using HW.Core;
+using HW.Core.Models;
 using NUnit.Framework;
 
 namespace HW.Tests

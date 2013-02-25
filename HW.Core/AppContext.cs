@@ -6,6 +6,8 @@
 using System;
 using System.Web;
 using System.Web.SessionState;
+using HW.Core.Repositories;
+using HW.Core.Repositories.Sql;
 
 namespace HW.Core
 {

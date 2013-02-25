@@ -5,9 +5,9 @@
 
 using System;
 using System.Collections.Generic;
-using HW.Core;
+using HW.Core.Models;
 
-namespace HW.Core
+namespace HW.Core.Repositories
 {
 	public interface IRepositoryFactory
 	{

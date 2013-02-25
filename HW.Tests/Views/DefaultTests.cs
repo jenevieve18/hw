@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Web;
 using HW.Core;
+using HW.Core.Repositories.Sql;
 using HWgrp;
 using NUnit.Framework;
 

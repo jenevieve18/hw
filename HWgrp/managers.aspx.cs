@@ -12,6 +12,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Core;
+using HW.Core.Repositories;
 
 namespace HWgrp
 {

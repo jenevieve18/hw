@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using HW.Core;
+using HW.Core.Helpers;
 using NUnit.Framework;
 
 namespace HW.Tests.Models

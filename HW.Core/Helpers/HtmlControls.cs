@@ -9,7 +9,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
-namespace HW.Core
+namespace HW.Core.Helpers
 {
 	public class IHGHtmlTable : HtmlTable
 	{

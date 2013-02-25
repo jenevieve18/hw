@@ -64,21 +64,64 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppContext.cs" />
-    <Compile Include="EFormModels.cs" />
-    <Compile Include="ExtendedGraph.cs" />
-    <Compile Include="HealthWatchNewsModels.cs" />
-    <Compile Include="HtmlControls.cs" />
+    <Compile Include="Helpers\Db2.cs" />
+    <Compile Include="Helpers\ExtendedGraph.cs" />
+    <Compile Include="Helpers\Graph.cs" />
+    <Compile Include="Helpers\OctreeQuantizer.cs" />
+    <Compile Include="Helpers\Quantizer.cs" />
+    <Compile Include="Helpers\Exporter.cs" />
+    <Compile Include="Helpers\HtmlControls.cs" />
     <Compile Include="HWList.cs" />
-    <Compile Include="IExporter.cs" />
-    <Compile Include="Repositories.cs" />
-    <Compile Include="Quantizer.cs" />
-    <Compile Include="OctreeQuantizer.cs" />
+    <Compile Include="Models\Answer.cs" />
+    <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\Affiliate.cs" />
+    <Compile Include="Models\CX.cs" />
+    <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\Diary.cs" />
+    <Compile Include="Models\Exercise.cs" />
+    <Compile Include="Models\Feedback.cs" />
+    <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\Index.cs" />
+    <Compile Include="Models\Language.cs" />
+    <Compile Include="Models\Manager.cs" />
+    <Compile Include="Models\Measure.cs" />
+    <Compile Include="Models\Navigation.cs" />
+    <Compile Include="Models\News.cs" />
+    <Compile Include="Models\Option.cs" />
+    <Compile Include="Models\Profile.cs" />
+    <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\Question.cs" />
+    <Compile Include="Models\Reminder.cs" />
+    <Compile Include="Models\Report.cs" />
+    <Compile Include="Models\Sponsor.cs" />
+    <Compile Include="Models\Survey.cs" />
+    <Compile Include="Models\Unit.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Wise.cs" />
     <Compile Include="Db.cs" />
     <Compile Include="Db2.cs" />
-    <Compile Include="Graph.cs" />
-    <Compile Include="HealthWatchModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SqlRepositories.cs" />
+    <Compile Include="Repositories\Repositories.cs" />
+    <Compile Include="Repositories\Sql\BaseSqlRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlReportRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlProjectRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlOptionRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlIndexRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlManagerFunctionRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlQuestionRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlExerciseRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlSponsorRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlUserRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlLanguageRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlDepartmentRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlAnswerRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlRepositoryFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models" />
+    <Folder Include="Helpers" />
+    <Folder Include="Repositories" />
+    <Folder Include="Repositories\Sql" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="exercise.aspx.cs" Inherits="HWgrp.exercise" %>
 <%@ Import Namespace="HW.Core" %>
-
+<%@ Import Namespace="HW.Core.Models" %>
+<%@ Import Namespace="HW.Core.Helpers" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
@@ -70,7 +71,7 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
     <form id="Form1" method="post" runat="server">
 		<div class="container_16" id="admin">
-		    <%=Db2.nav()%>
+		    <%= Db2.nav() %>
             <div class="contentgroup grid_16 exercises">
                 <div class="statschosergroup">
                     <h1 class="header"><%= LanguageFactory.GetGroupExercise(LID) %></h1>

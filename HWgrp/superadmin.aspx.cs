@@ -12,6 +12,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using HW.Core;
+using HW.Core.Models;
+using HW.Core.Repositories;
 
 namespace HWgrp
 {

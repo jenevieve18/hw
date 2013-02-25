@@ -7,10 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using HW.Core.Models;
+using HW.Core.Repositories;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 
-namespace HW.Core
+namespace HW.Core.Helpers
 {
 	public class ExportFactory
 	{

@@ -5,6 +5,9 @@
 
 using System;
 using HW.Core;
+using HW.Core.Helpers;
+using HW.Core.Models;
+using HW.Core.Repositories.Sql;
 using HWgrp;
 using NUnit.Framework;
 

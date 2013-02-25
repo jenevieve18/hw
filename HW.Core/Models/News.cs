@@ -5,7 +5,7 @@
 
 using System;
 
-namespace HW.Core
+namespace HW.Core.Models
 {
 	public class News : BaseModel
 	{

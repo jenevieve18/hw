@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -15,6 +16,9 @@ using System.Text.RegularExpressions;
 using System.Collections;
 using System.Text;
 using HW.Core;
+using HW.Core.Helpers;
+using HW.Core.Models;
+using HW.Core.Repositories;
 
 namespace HWgrp
 {
@@ -49,14 +53,14 @@ namespace HWgrp
 //				                           "AND u.SurveyID = " + rs.GetInt32(1) + " " +
 //				                           "AND upru.UserID = " + userID);
 //				while (rs2.Read())
-				foreach (var x in userRepository.FindUserProjectRoundUser(sponsorID, u.Survey.Id, userID))
+				foreach (var up in userRepository.FindUserProjectRoundUser(sponsorID, u.Survey.Id, userID))
 				{
 //					Db2.exec("UPDATE UserProjectRoundUser SET ProjectRoundUnitID = " + rs.GetInt32(0) + " WHERE UserProjectRoundUserID = " + rs2.GetInt32(0));
-					userRepository.UpdateUserProjectRoundUser(x.ProjectRoundUnit.Id, x.Id);
+					userRepository.UpdateUserProjectRoundUser(up.ProjectRoundUnit.Id, up.Id);
 //					Db2.exec("UPDATE [eform]..[ProjectRoundUser] SET ProjectRoundUnitID = " + rs.GetInt32(0) + " WHERE ProjectRoundUserID = " + rs2.GetInt32(1));
-					projectRepository.UpdateProjectRoundUser(x.ProjectRoundUnit.Id, x.ProjectRoundUser.Id);
+					projectRepository.UpdateProjectRoundUser(up.ProjectRoundUnit.Id, up.ProjectRoundUser.Id);
 //					Db2.exec("UPDATE [eform]..[Answer] SET ProjectRoundUnitID = " + rs.GetInt32(0) + " WHERE ProjectRoundUserID = " + rs2.GetInt32(1));
-					answerRepository.UpdateAnswer(x.ProjectRoundUnit.Id, x.ProjectRoundUser.Id);
+					answerRepository.UpdateAnswer(up.ProjectRoundUnit.Id, up.ProjectRoundUser.Id);
 				}
 //				rs2.Close();
 			}
@@ -96,14 +100,10 @@ namespace HWgrp
 
 			sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
 
-			if (sponsorID != 0)
-			{
-				if (ShowRegistry && !ReadOnly)
-				{
+			if (sponsorID != 0) {
+				if (ShowRegistry && !ReadOnly) {
 					showReg = true;
-				}
-				else if (SeeUsers && !ReadOnly)
-				{
+				} else if (SeeUsers && !ReadOnly) {
 					showReg = true;
 				}
 				deptID = (HttpContext.Current.Request.QueryString["DID"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["DID"]) : 0);
@@ -115,22 +115,19 @@ namespace HWgrp
 
 //				SqlDataReader rs;
 
-				if (HttpContext.Current.Request.QueryString["PESSIID"] != null && HttpContext.Current.Request.QueryString["Flip"] != null)
-				{
+				if (HttpContext.Current.Request.QueryString["PESSIID"] != null && HttpContext.Current.Request.QueryString["Flip"] != null) {
 //					Db2.exec("UPDATE SponsorInvite SET PreviewExtendedSurveys = " + (HttpContext.Current.Request.QueryString["Flip"] == "1" ? "1" : "NULL") + " WHERE SponsorInviteID = " + Convert.ToInt32(HttpContext.Current.Request.QueryString["PESSIID"]));
 					string previewExtendedSurveys = HttpContext.Current.Request.QueryString["Flip"] == "1" ? "1" : "NULL";
 					int sponsorInviteID = Convert.ToInt32(HttpContext.Current.Request.QueryString["PESSIID"]);
 					sponsorRepository.Z(sponsorInviteID, previewExtendedSurveys);
 					HttpContext.Current.Response.Redirect("org.aspx?SDID=" + showDepartmentID + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + (showReg ? "&ShowReg=1" : ""), true);
 				}
-				if (HttpContext.Current.Request.QueryString["ConnectSPIID"] != null)
-				{
+				if (HttpContext.Current.Request.QueryString["ConnectSPIID"] != null) {
 //					rs = Db.rs("SELECT UserID, SponsorID FROM [User] WHERE UserID = " + Convert.ToInt32(HttpContext.Current.Request.QueryString["WithUID"]));
 					int uID = Convert.ToInt32(HttpContext.Current.Request.QueryString["WithUID"]);
 					var u = userRepository.ReadById(uID);
 //					if (rs.Read())
-					if (u != null)
-					{
+					if (u != null) {
 //						rewritePRU(rs.GetInt32(1), sponsorID, rs.GetInt32(0));
 						rewritePRU(u.Sponsor.Id, sponsorID, u.Id);
 //						Db2.exec("UPDATE SponsorInvite SET UserID = NULL WHERE UserID = " + rs.GetInt32(0));
@@ -199,8 +196,7 @@ namespace HWgrp
 //					rs.Close();
 					HttpContext.Current.Response.Redirect("org.aspx?SDID=" + showDepartmentID + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + (showReg ? "&ShowReg=1" : ""), true);
 				}
-				if (HttpContext.Current.Request.QueryString["SendExtra"] != null)
-				{
+				if (HttpContext.Current.Request.QueryString["SendExtra"] != null) {
 					#region Send extra
 //					rs = Db2.rs("SELECT " +
 //					            "ses.ExtraEmailBody, " +           // 0
@@ -225,17 +221,13 @@ namespace HWgrp
 						string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
 						string personalLink = "" + path + "";
 //						if (!rs.IsDBNull(4) && rs.GetInt32(4) > 0)
-						if (u.ReminderLink > 0)
-						{
+						if (u.ReminderLink > 0) {
 //							personalLink += "/c/" + rs.GetString(5).ToLower() + rs.GetInt32(3).ToString();
 							personalLink += "/c/" + u.UserKey.ToLower() + u.Id.ToString();
 						}
-						if (body.IndexOf("<LINK/>") >= 0)
-						{
+						if (body.IndexOf("<LINK/>") >= 0) {
 							body = body.Replace("<LINK/>", personalLink);
-						}
-						else
-						{
+						} else {
 							body += "\r\n\r\n" + personalLink;
 						}
 
@@ -246,8 +238,7 @@ namespace HWgrp
 					#endregion
 					HttpContext.Current.Response.Redirect("org.aspx?SDID=" + showDepartmentID + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + (showReg ? "&ShowReg=1" : ""), true);
 				}
-				if (sendSponsorInvitationID != 0)
-				{
+				if (sendSponsorInvitationID != 0) {
 					#region Resend
 //					rs = Db2.rs("SELECT " +
 //					            "s.InviteTxt, " +           // 0
@@ -429,8 +420,7 @@ namespace HWgrp
 					Actions.Visible = false;
 				}
 
-				if (!IsPostBack)
-				{
+				if (!IsPostBack) {
 					ImportUnitsParentDepartmentID.Items.Add(new ListItem("< top level >", "NULL"));
 					//ImportUsersParentDepartmentID.Items.Add(new ListItem("< top level >", "NULL"));
 //					rs = Db2.rs("SELECT " +
@@ -444,8 +434,7 @@ namespace HWgrp
 //					            "ORDER BY d.SortString");
 //					while (rs.Read())
 					int sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
-					foreach (var d in departmentRepository.FindBySponsorWithSponsorAdminOnTree(sponsorID, sponsorAdminID))
-					{
+					foreach (var d in departmentRepository.FindBySponsorWithSponsorAdminOnTree(sponsorID, sponsorAdminID)) {
 //						ImportUnitsParentDepartmentID.Items.Add(new ListItem(rs.GetString(1), rs.GetInt32(0).ToString()));
 //						ImportUsersParentDepartmentID.Items.Add(new ListItem(rs.GetString(1), rs.GetInt32(0).ToString()));
 						ImportUnitsParentDepartmentID.Items.Add(new ListItem(d.TreeName, d.Id.ToString()));
@@ -462,13 +451,11 @@ namespace HWgrp
 //						rs = Db2.rs("SELECT d.SortString, d.ParentDepartmentID, d.Department, d.DepartmentShort FROM Department d WHERE d.SponsorID = " + sponsorID + " AND d.DepartmentID = " + departmentID);
 						var x = departmentRepository.ReadByIdAndSponsor(deptID, sponsorID);
 //						if (rs.Read())
-						if (x != null)
-						{
+						if (x != null) {
 //							sortString = rs.GetString(0);
 							sortString = x.SortString;
 //							if (!rs.IsDBNull(1))
-							if (x.Parent != null)
-							{
+							if (x.Parent != null) {
 //								parentDepartmentID = rs.GetInt32(1).ToString();
 								parentDepartmentID = x.Parent.Id.ToString();
 							}
@@ -488,8 +475,7 @@ namespace HWgrp
 //						            "ORDER BY d.SortString");
 //						while (rs.Read())
 						sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
-						foreach (var d in departmentRepository.FindBySponsorWithSponsorAdminSortStringAndTree(sponsorID, sortString, sponsorAdminID))
-						{
+						foreach (var d in departmentRepository.FindBySponsorWithSponsorAdminSortStringAndTree(sponsorID, sortString, sponsorAdminID)) {
 //							ParentDepartmentID.Items.Add(new ListItem(rs.GetString(1), rs.GetInt32(0).ToString()));
 							ParentDepartmentID.Items.Add(new ListItem(d.TreeName, d.Id.ToString()));
 						}
@@ -498,9 +484,7 @@ namespace HWgrp
 						Department.Text = department;
 						DepartmentShort.Text = departmentShort;
 						ParentDepartmentID.SelectedValue = parentDepartmentID;
-					}
-					else
-					{
+					} else {
 //						rs = Db2.rs("SELECT " +
 //						            "d.DepartmentID, " +
 //						            "dbo.cf_departmentTree(d.DepartmentID,' » ') " +
@@ -512,8 +496,7 @@ namespace HWgrp
 //						            "ORDER BY d.SortString");
 //						while (rs.Read())
 						sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
-						foreach (var d in departmentRepository.FindBySponsorWithSponsorAdminAndTree(sponsorID, sponsorAdminID))
-						{
+						foreach (var d in departmentRepository.FindBySponsorWithSponsorAdminAndTree(sponsorID, sponsorAdminID)) {
 //							ParentDepartmentID.Items.Add(new ListItem(rs.GetString(1), rs.GetInt32(0).ToString()));
 							ParentDepartmentID.Items.Add(new ListItem(d.TreeName, d.Id.ToString()));
 						}
@@ -530,20 +513,17 @@ namespace HWgrp
 //					            "ORDER BY d.SortString");
 //					while (rs.Read())
 					sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
-					foreach (var d in departmentRepository.FindBySponsorWithSponsorAdminAndTree(sponsorID, sponsorAdminID))
-					{
+					foreach (var d in departmentRepository.FindBySponsorWithSponsorAdminAndTree(sponsorID, sponsorAdminID)) {
 //						DepartmentID.Items.Add(new ListItem(rs.GetString(1), rs.GetInt32(0).ToString()));
 						DepartmentID.Items.Add(new ListItem(d.TreeName, d.Id.ToString()));
 					}
 //					rs.Close();
 
-					if (userID != 0)
-					{
+					if (userID != 0) {
 //						rs = Db2.rs("SELECT Email, DepartmentID, StoppedReason, Stopped FROM SponsorInvite WHERE SponsorInviteID = " + userID);
 						var i = sponsorRepository.ReadSponsorInviteByUser(userID);
 //						if (rs.Read())
-						if (i != null)
-						{
+						if (i != null) {
 //							Email.Text = rs.GetString(0);
 							Email.Text = i.Email;
 //							DepartmentID.SelectedValue = (rs.IsDBNull(1) ? "NULL" : rs.GetInt32(1).ToString());
@@ -667,27 +647,14 @@ namespace HWgrp
 				HttpContext.Current.Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
 		}
-
-//		public static bool isEmail(string inputEmail)
-//		{
-//			string strRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
-//				@"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
-//				@".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
-//			Regex re = new Regex(strRegex);
-//			if (re.IsMatch(inputEmail))
-//				return true;
-//			else
-//				return false;
-//		}
-
+		
 		void SaveImportUser_Click(object sender, EventArgs e)
 		{
 			// 0 Email
 			// 1 DepartmentShort
 			// n Background
-			if (UsersFilename.PostedFile != null && UsersFilename.PostedFile.ContentLength != 0)
-			{
-				System.IO.StreamReader f = new System.IO.StreamReader(UsersFilename.PostedFile.InputStream, System.Text.Encoding.Default);
+			if (UsersFilename.PostedFile != null && UsersFilename.PostedFile.ContentLength != 0) {
+				StreamReader f = new StreamReader(UsersFilename.PostedFile.InputStream, Encoding.Default);
 				string s = f.ReadToEnd();
 				f.Close();
 				s = s.Replace("\r", "\n");
@@ -704,21 +671,15 @@ namespace HWgrp
 				{
 					//HttpContext.Current.Response.Write(a + "<BR>");
 					string email = a.Split('\t')[0].Replace("'", "").Trim().ToLower();
-					if (email != "Email" && email != "")
-					{
+					if (email != "Email" && email != "") {
 //						if (!isEmail(email))
-						if (!Db.isEmail(email))
-						{
+						if (!Db.isEmail(email)) {
 							valid = false;
 							ImportUsersError.Text += "Error: Invalid email-address \"" + email + "\"<BR/>";
-						}
-						else if (emails.Contains(email))
-						{
+						} else if (emails.Contains(email)) {
 							valid = false;
 							ImportUsersError.Text += "Error: Duplicate email-address \"" + email + "\"<BR/>";
-						}
-						else
-						{
+						} else {
 							emails.Add(email);
 						}
 						//rs = Db2.rs("SELECT SponsorInviteID FROM SponsorInvite WHERE Email = '" + email + "' AND SponsorID = " + sponsorID);
@@ -728,11 +689,9 @@ namespace HWgrp
 						//    ImportUsersError.Text += "Error: Email-address \"" + email + "\" already exist<BR/>";
 						//}
 						//rs.Close();
-						if (a.Split('\t').Length > 1)
-						{
+						if (a.Split('\t').Length > 1) {
 							string unitID = a.Split('\t')[1].Replace("'", "").ToLower();
-							if (unitID != "" && units.IndexOf(unitID) < 0)
-							{
+							if (unitID != "" && units.IndexOf(unitID) < 0) {
 								units += (units != "" ? "," : "") + unitID + "";
 							}
 						}
@@ -2243,8 +2202,7 @@ namespace HWgrp
 
 		void SaveUnit_Click(object sender, EventArgs e)
 		{
-			if (deptID == 0)
-			{
+			if (deptID == 0) {
 //				Db2.exec("INSERT INTO Department (" +
 //				         "SponsorID," +
 //				         "Department," +
@@ -2261,8 +2219,7 @@ namespace HWgrp
 //				SqlDataReader rs = Db2.rs("SELECT DepartmentID FROM Department WHERE SponsorID = " + sponsorID + " ORDER BY DepartmentID DESC");
 				d = departmentRepository.ReadBySponsor(sponsorID);
 //				if (rs.Read())
-				if (d != null)
-				{
+				if (d != null) {
 //					deptID = rs.GetInt32(0);
 					deptID = d.Id;
 				}
@@ -2274,8 +2231,7 @@ namespace HWgrp
 					Id = deptID
 				};
 				departmentRepository.UpdateDepartment(d);
-				if (HttpContext.Current.Session["SponsorAdminID"].ToString() != "-1")
-				{
+				if (HttpContext.Current.Session["SponsorAdminID"].ToString() != "-1") {
 //					Db2.exec("INSERT INTO SponsorAdminDepartment (SponsorAdminID,DepartmentID) VALUES (" + HttpContext.Current.Session["SponsorAdminID"] + "," + deptID + ")");
 					var sad = new SponsorAdminDepartment {
 						Id = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]),
@@ -2283,9 +2239,7 @@ namespace HWgrp
 					};
 					departmentRepository.SaveSponsorAdminDepartment(sad);
 				}
-			}
-			else
-			{
+			} else {
 //				Db2.exec("UPDATE Department SET Department = '" + Department.Text.Replace("'", "''") + "'" +
 //				         ",DepartmentShort = '" + DepartmentShort.Text.Replace("'", "''") + "'" +
 //				         ", ParentDepartmentID = " + ParentDepartmentID.SelectedValue + " WHERE DepartmentID = " + deptID);

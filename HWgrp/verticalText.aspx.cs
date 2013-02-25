@@ -13,6 +13,7 @@ using System.Web.UI.WebControls;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Drawing.Imaging;
+using HW.Core.Helpers;
 
 namespace HWgrp
 {
