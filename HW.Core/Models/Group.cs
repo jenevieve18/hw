@@ -7,6 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using HW.Core.Helpers;
 using HW.Core.Repositories;
 
 namespace HW.Core.Models

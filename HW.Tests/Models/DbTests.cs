@@ -4,6 +4,7 @@
 //	</file>
 
 using System;
+using HW.Core.Helpers;
 using NUnit.Framework;
 
 namespace HW.Tests.Models
