@@ -165,3 +165,6 @@ pip-log.txt
 #PartCover Log
 PartCover**
 partcover.driver.log
+
+#OpenCover
+OpenCover**
