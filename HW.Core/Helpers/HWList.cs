@@ -6,7 +6,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace HW.Core
+namespace HW.Core.Helpers
 {
 	public interface IHWList
 	{
