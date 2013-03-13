@@ -6,7 +6,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-	<style type="text/css">
+<style type="text/css">
 .ui-accordion-header {
 	font-size:10pt;
 	font-family: Arial;
@@ -74,7 +74,7 @@
 			<asp:Button ID="Execute" CssClass="btn" runat="server" Text="Execute" />
 		</div>
 	</div>
-	<asp:Label ID="StatsImg" runat="server" />
+	<!--<asp:Label ID="StatsImg" runat="server" />-->
 	<% if (reportParts != null) { %>
 		<div id="accordion">
 		<% foreach (var r in reportParts) { %>

@@ -64,42 +64,6 @@ namespace HWgrp.Web
 				this.departments = value;
 				tableDepartment.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(Session["Sponsor"].ToString()) { ColSpan = 3 }));
 				tableDepartment.Departments = value;
-//				checkBoxDepartments.Items.Clear();
-//				bool[] DX = new bool[8];
-//				foreach (var d in departments) {
-//					StringBuilder s = new StringBuilder();
-//					s.Append(d.Name);
-//					int depth = d.Depth;
-//					DX[depth] = d.Siblings > 0;
-//					for (int i = 1; i <= depth; i++) {
-//						string img = string.Format("img/{0}.gif", i == depth ? (DX[i] ? "T" : "L") : (DX[i] ? "I" : "null"));
-//						s.Append(HtmlHelper.Image(img, 19, 20));
-//					}
-//					s.Append(d.Name);
-//					checkBoxDepartments.Items.Add(new ListItem(s.ToString(), "DID" + d.Id));
-//				}
-//				Org.Controls.Add(new LiteralControl("<br>"));
-//				IHGHtmlTable table = new IHGHtmlTable { Border = 0, CellSpacing = 0, CellPadding = 0 };
-//				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(Session["Sponsor"].ToString()) { ColSpan = 3 }));
-//				bool[] DX = new bool[8];
-//				foreach (var d in departments) {
-//					IHGHtmlTableRow row = new IHGHtmlTableRow(new IHGHtmlTableCell(new CheckBox { ID = "DID" + d.Id }), new IHGHtmlTableCell(d.Name));
-//
-//					int depth = d.Depth;
-//					DX[depth] = d.Siblings > 0;
-//
-//					IList<Control> images = new List<Control>();
-//					for (int i = 1; i <= depth; i++) {
-//						images.Add(new HtmlImage { Src = string.Format("img/{0}.gif", i == depth ? (DX[i] ? "T" : "L") : (DX[i] ? "I" : "null")), Width = 19, Height = 20 });
-//					}
-//					IHGHtmlTable imagesTable = new IHGHtmlTable { Border = 0, CellSpacing = 0, CellPadding = 0 };
-//					imagesTable.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(images), new IHGHtmlTableCell(d.Name)));
-//
-//					IHGHtmlTableCell imageCell = new IHGHtmlTableCell(imagesTable);
-//					row.Cells.Add(imageCell);
-//					table.Rows.Add(row);
-//				}
-//				Org.Controls.Add(table);
 			}
 		}
 		
@@ -107,9 +71,6 @@ namespace HWgrp.Web
 			get {
 				var selectedDepartments = new List<BaseModel>();
 				foreach (var d in departments) {
-//					if (((CheckBox)Org.FindControl("DID" + d.Id.ToString())).Checked) {
-//						selectedDepartments.Add(d);
-//					}
 					if (((CheckBox)tableDepartment.FindControl("DID" + d.Id)).Checked) {
 						selectedDepartments.Add(d);
 					}
@@ -121,8 +82,8 @@ namespace HWgrp.Web
 		IList<BaseModel> SelectedQuestions {
 			get {
 				var selectedQuestions = new List<BaseModel>();
-//				foreach (var q in questions) {
-				foreach (var q in sponsorRepository.FindBySponsor(sponsorID)) {
+				foreach (var q in questions) {
+//				foreach (var q in sponsorRepository.FindBySponsor(sponsorID)) {
 					if (checkBoxQuestions.Items.FindByValue(q.Id.ToString()).Selected) {
 						selectedQuestions.Add(q);
 					}
@@ -159,10 +120,9 @@ namespace HWgrp.Web
 			}
 		}
 		
-		public void SetReportPartLanguages(IList<ReportPartLanguage> reportParts, IList<BaseModel> urlModels)
-		{
+//		public void SetReportPartLanguages(IList<ReportPartLanguage> reportParts, IList<BaseModel> urlModels)
+//		{
 //			this.reportParts = reportParts;
-			this.urlModels = urlModels;
 //			var selectedDepartments = SelectedDepartments;
 //			string URL = GetURL(urlModels);
 //			int cx = 0;
@@ -225,7 +185,7 @@ namespace HWgrp.Web
 //				StatsImg.Controls.Add(table);
 //				cx++;
 //			}
-		}
+//		}
 
 		IList<BaseModel> GetUrlModels(int grouping)
 		{
@@ -289,7 +249,8 @@ namespace HWgrp.Web
 			int grouping = Convert.ToInt32(dropDownGrouping.SelectedValue);
 			
 			reportParts = reportRepository.FindByProjectAndLanguage(selectedProjectRoundUnitID, selectedLangID);
-			SetReportPartLanguages(reportParts, GetUrlModels(grouping));
+			urlModels = GetUrlModels(grouping);
+//			SetReportPartLanguages(reportParts, GetUrlModels(grouping));
 		}
 	}
 }
