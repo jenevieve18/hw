@@ -61,6 +61,11 @@
 		<%= HtmlHelper.Password("LOS", "", "input-block-level", R.Str("user.password", "Password")) %>
         <button class="btn btn-large btn-info" type="submit"><i class="icon-circle-arrow-right"></i>Sign in</button>
     </form>
+	<% if (errorMessage != "") { %>
+		<div class="alert alert-error">
+			<%= errorMessage %>
+		</div>
+	<% } %>
 
     <script src="js/bootstrap.js"></script>
 </body>

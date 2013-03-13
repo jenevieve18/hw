@@ -14,6 +14,7 @@ namespace HWgrp.Web
 	{
 		IManagerFunctionRepository functionRepository = AppContext.GetRepositoryFactory().CreateManagerFunctionRepository();
 		ISponsorRepository sponsorRepository = AppContext.GetRepositoryFactory().CreateSponsorRepository();
+		protected string errorMessage = "";
 		
 		public void Logout()
 		{
@@ -52,6 +53,8 @@ namespace HWgrp.Web
 					}
 					Response.Redirect(firstUrl, true);
 				}
+			} else {
+				errorMessage = "Oh snap! Type in your username and password and try submitting again.";
 			}
 		}
 		
