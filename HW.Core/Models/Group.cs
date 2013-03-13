@@ -34,6 +34,18 @@ namespace HW.Core.Models
 			public const int SixMonths = 5;
 			public const int OneYear = 6;
 		}
+		
+		public IList<Group> GetAllGrouping()
+		{
+			return new List<Group>(
+				new Group[] {
+					new Group { Id = Grouping.None, Description = "None" },
+					new Group { Id = Grouping.UsersOnUnit, Description = "Users on unit" },
+					new Group { Id = Grouping.UsersOnUnitAndSubUnits, Description = "Users on units+subunits" },
+					new Group { Id = Grouping.BackgroundVariable, Description = "Background variables" }
+				}
+			);
+		}
 	}
 	
 	public class GroupFactory

@@ -1,0 +1,158 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="HWgrp.Web.Site" %>
+<%@ Import Namespace="HW.Core.Helpers" %>
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head runat="server">
+	<title>HealthWatch.se / Group admin</title>
+	
+	<asp:ContentPlaceHolder ID="head" runat="server">
+	</asp:ContentPlaceHolder>
+
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Expires" content="-1">
+	<meta name="Robots" content="noarchive">
+	<script language="JavaScript">window.history.forward(1);</script>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<!--<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">-->
+	
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css"/>
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/bootstrap-responsive.css">
+
+	<style>
+		.description {
+			padding:5px 0;
+		}
+		.settingsPane, .actionPane2, .top {
+			background:#e3f4fb;
+			border-bottom:1px solid #97D2EB;
+			border-top:1px solid #97D2EB;
+			padding:10px 20px;
+		}
+		.bottom {
+			background:#cdecf7;
+			padding:10px 20px;
+		}
+		.add-unit, .import-unit, .add-user, .import-users {
+			padding-left:20px;
+		}
+		.import-unit, .add-user, .import-users {
+			margin-left:20px;
+		}
+		.add-unit {
+			background:url(img/folder_add.png) no-repeat;
+		}
+		.import-unit {
+			background:url(img/folder_go.png) no-repeat;
+		}
+		.add-user {
+			background:url(img/user_add.png) no-repeat;
+		}
+		.import-users {
+			background:url(img/user_go.png) no-repeat;
+		}
+		.grid_3, .grid_8 {
+			float:left;
+		}
+		.grid_8 h1 {
+			font:20px arial;
+		}
+		.grid_8 h1, .grid_8 h2 {
+			line-height:0;
+		}
+		.grid_8 h2 {
+			font:14px arial;
+		}
+		.grid_5 {
+			height:63px;
+		}
+		.logincontainer {
+			float:right;
+			width:300px;
+		}
+		.gears {
+			background:url(img/gears.gif) no-repeat;
+			padding:20px 20px 20px 130px;
+		}
+	</style>
+
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+	<script src="js/bootstrap.js"></script>
+	
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('#submenu a').mouseover(function() {
+				$('.description').text($(this).attr('title'));
+			});
+			$('#submenu a').mouseout(function() {
+				$('.description').text($(this).text());
+			});
+		});
+	</script>
+</head>
+<body>
+	<form id="form1" runat="server">
+				<div class="container">
+		<div class="container_16 navbar" id="admin">
+			<div class="headergroup grid_16 navbar-inner">
+					<%--<div class="grid_3 alpha">
+						<img src="img/hwlogo.png" />
+					</div>
+					<div class="grid_8 omega p2">
+						<h1>HealthWatch.se - <%= sponsor.SuperSponsor.Languages[0].Header %></h1>
+						<h2>Group administration - <%= sponsor.Name %></h2>
+						<br />
+						<%= HtmlHelper.Image(string.Format("/img/partner/{0}.gif", sponsor.SuperSponsor.Id)) %>
+					</div>
+					<div class="logincontainer grid_5 alpha omega">
+						<div class="gears">
+							<span>Name</span> <span style="color: white;">658</span><br />
+							<%= HtmlHelper.Anchor("Settings", "settings.aspx?Rnd=1384562012", "regular") %>&nbsp;&nbsp;
+							<%= HtmlHelper.Anchor("Log out", "default.aspx?Rnd=1384562012", "regular") %>
+						</div>
+					</div>--%>
+					<ul class="nav">
+						<li><img src="img/hwlogo.png" /></li>
+						<li>
+							<span class="brand">HealthWatch.se - <%= sponsor.SuperSponsor.Languages[0].Header %></span>
+							<br />
+							Group administration - <%= sponsor.Name %>
+							<br />
+							<%= HtmlHelper.Image(string.Format("/img/partner/{0}.gif", sponsor.SuperSponsor.Id)) %>
+						</li>
+					</ul>
+					<ul class="nav pull-right">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="icon-cog"></b>Utility</a>
+							<ul class="dropdown-menu">
+								<li><%= BootstrapHelper.Anchor("Settings", "settings.aspx?Rnd=1384562012", "icon-cog") %></li>
+								<li><%= BootstrapHelper.Anchor("Log out", "default.aspx?Rnd=1384562012", "icon-off") %></li>
+							</ul>
+						</li>
+					</ul>
+			</div>
+		</div>
+				</div>
+		<div class="container">
+			<div id="submenu" class="grid_16 alpha btn-group">
+				<% string desc = ""; %>
+				<% foreach (var f in functions) { %>
+					<% bool active = Request.Url.AbsolutePath.IndexOf(f.URL) >= 0; %>
+					<% if (active) { %>
+						<%= HtmlHelper.Anchor(f.Function, f.URL, new Dictionary<string, string>() { { "class", "active btn btn-large btn-info"}, { "title", f.Expl } } ) %>
+						<% desc = f.Expl; %>
+					<% } else { %>
+						<%= HtmlHelper.Anchor(f.Function, f.URL, new Dictionary<string, string>() { { "class", "btn btn-large btn-info"}, { "title", f.Expl } } ) %>
+					<% } %>
+				<% } %>
+			</div>
+			<div class="description"><%= desc %></div>
+			<asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+			</asp:ContentPlaceHolder>
+		</div>
+	</form>
+</body>
+</html>

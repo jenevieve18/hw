@@ -64,15 +64,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppContext.cs" />
+    <Compile Include="Helpers\BootstrapHelper.cs" />
     <Compile Include="Helpers\Db.cs" />
     <Compile Include="Helpers\Db2.cs" />
     <Compile Include="Helpers\ExtendedGraph.cs" />
     <Compile Include="Helpers\Graph.cs" />
+    <Compile Include="Helpers\HtmlHelper.cs" />
     <Compile Include="Helpers\HWList.cs" />
     <Compile Include="Helpers\OctreeQuantizer.cs" />
     <Compile Include="Helpers\Quantizer.cs" />
     <Compile Include="Helpers\Exporter.cs" />
     <Compile Include="Helpers\HtmlControls.cs" />
+    <Compile Include="Helpers\R.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Affiliate.cs" />
@@ -115,10 +118,12 @@
     <Compile Include="Repositories\Sql\SqlDepartmentRepository.cs" />
     <Compile Include="Repositories\Sql\SqlAnswerRepository.cs" />
     <Compile Include="Repositories\Sql\SqlRepositoryFactory.cs" />
+    <Compile Include="Services\ReportService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models" />
     <Folder Include="Helpers" />
+    <Folder Include="Services" />
     <Folder Include="Repositories" />
     <Folder Include="Repositories\Sql" />
   </ItemGroup>

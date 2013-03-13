@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -38,7 +39,7 @@ namespace HWgrp
 			int SORT = (HttpContext.Current.Request.QueryString["SORT"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["SORT"]) : 0);
 			string sortQS = "&SORT=" + SORT;
 
-			System.Text.StringBuilder sb = new System.Text.StringBuilder();
+			StringBuilder sb = new StringBuilder();
 			int rExerciseAreaID = 0, rExerciseID = 0;
 
 			if (!IsPostBack)
