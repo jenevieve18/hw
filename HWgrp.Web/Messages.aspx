@@ -47,18 +47,20 @@
 			</tr>
 			<tr>
 				<td>
-					<asp:TextBox ID="InviteSubject" runat="server" Width="460" />
+					<asp:TextBox ID="InviteSubject" runat="server" Width="430px" />
 				</td>
 				<td>
-					<asp:TextBox ID="LoginSubject" runat="server" Width="460" />
+					<asp:TextBox ID="LoginSubject" runat="server" Width="430px" />
 				</td>
 			</tr>
 			<tr>
 				<td valign="top">
-					<asp:TextBox ID="InviteTxt" runat="server" TextMode="MultiLine" Rows="10" Width="460" />
+					<asp:TextBox ID="InviteTxt" runat="server" TextMode="MultiLine" Rows="10" 
+						Width="430px" />
 				</td>
 				<td>
-					<asp:TextBox ID="LoginTxt" runat="server" TextMode="MultiLine" Rows="6" Width="460" /><br />
+					<asp:TextBox ID="LoginTxt" runat="server" TextMode="MultiLine" Rows="6" 
+						Width="430px" /><br />
 					Send to individuals who have not logged in during the last
 					<asp:DropDownList ID="LoginDays" runat="server">
 						<asp:ListItem Value="1" Text="every day" />
@@ -102,22 +104,25 @@
 			</tr>
 			<tr>
 				<td>
-					<asp:TextBox ID="InviteReminderSubject" runat="server" Width="460" />
+					<asp:TextBox ID="InviteReminderSubject" runat="server" Width="430px" />
 				</td>
 				<td>
-					<asp:TextBox Visible="false" ID="ExtendedSurveySubject" runat="server" Width="460" /><asp:TextBox
-						Visible="false" ID="ExtendedSurveyFinishedSubject" runat="server" Width="460" />
+					<asp:TextBox Visible="false" ID="ExtendedSurveySubject" runat="server" 
+						Width="430px" />
+					<asp:TextBox
+						Visible="false" ID="ExtendedSurveyFinishedSubject" runat="server" Width="430px" />
 				</td>
 			</tr>
 			<tr>
 				<td>
 					<asp:TextBox ID="InviteReminderTxt" runat="server" TextMode="MultiLine" Rows="10"
-						Width="460" />
+						Width="430px" />
 				</td>
 				<td>
 					<asp:TextBox Visible="false" ID="ExtendedSurveyTxt" runat="server" TextMode="MultiLine"
-						Rows="10" Width="460" /><asp:TextBox Visible="false" ID="ExtendedSurveyFinishedTxt"
-							runat="server" TextMode="MultiLine" Rows="10" Width="460" />
+						Rows="10" Width="430px" />
+					<asp:TextBox Visible="false" ID="ExtendedSurveyFinishedTxt"
+							runat="server" TextMode="MultiLine" Rows="10" Width="430px" />
 				</td>
 			</tr>
 			<tr>
@@ -133,12 +138,13 @@
 			</tr>
 			<tr>
 				<td>
-					<asp:TextBox ID="AllMessageSubject" runat="server" Width="460" />
+					<asp:TextBox ID="AllMessageSubject" runat="server" Width="430px" />
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<asp:TextBox ID="AllMessageBody" runat="server" TextMode="MultiLine" Rows="10" Width="460" />
+					<asp:TextBox ID="AllMessageBody" runat="server" TextMode="MultiLine" Rows="10" 
+						Width="430px" />
 				</td>
 			</tr>
 			<tr>
