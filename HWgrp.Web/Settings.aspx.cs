@@ -13,7 +13,7 @@ namespace HWgrp.Web
         protected void Page_Load(object sender, EventArgs e)
         {
             buttonSave.Click += new EventHandler(Save_Click);
-            if (Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]) <= 0) {
+            if (Convert.ToInt32(Session["SponsorAdminID"]) <= 0) {
                 labelMessage.Text = "Super administrators cannot change password. Please contact support@healthwatch.se!";
                 buttonSave.Visible = false;
                 textBoxPassword.Visible = false;
