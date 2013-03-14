@@ -70,7 +70,9 @@
     <Content Include="ReportImage.aspx" />
     <Content Include="Settings.aspx" />
     <Content Include="Stats.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

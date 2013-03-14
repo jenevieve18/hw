@@ -11,7 +11,7 @@ using HW.Core.Models;
 
 namespace HW.Core.Repositories.Sql
 {
-	public class SqlSponsorRepository : BaseSqlRepository<Sponsor>, ISponsorRepository
+	public class SqlSponsorRepository : BaseSqlRepository<SponsorAdmin>, ISponsorRepository
 	{
 		public void UpdateSponsorLastLoginSent(int sponsorID)
 		{

@@ -10,11 +10,15 @@ namespace HW.Core.Services
 {
 	public class ReportService
 	{
-		IReportRepository rr;
+		IReportRepository reportRepository;
+		ILanguageRepository langRepository;
+		IProjectRepository projRepository;
+		ISponsorRepository sponsorRepository;
+		IDepartmentRepository departmentRepository;
 		
-		public ReportService(IReportRepository rr)
+		public ReportService(IReportRepository reportRepository)
 		{
-			this.rr = rr;
+			this.reportRepository = reportRepository;
 		}
 	}
 }
