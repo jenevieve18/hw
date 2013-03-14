@@ -11,7 +11,7 @@
 			<asp:Button ID="Save" CssClass="btn" runat="server" Text="Save" />
 			Send
 			<asp:DropDownList ID="SendType" runat="server">
-				<asp:ListItem Value="0" Text="< select send type >" />
+				<asp:ListItem Value="0" Text="< select message type >" />
 				<asp:ListItem Value="1" Text="Registration" />
 				<asp:ListItem Value="2" Text="Registration reminder" />
 				<asp:ListItem Value="3" Text="Login reminder" />
