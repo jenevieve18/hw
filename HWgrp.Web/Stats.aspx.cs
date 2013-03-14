@@ -228,7 +228,7 @@ namespace HWgrp.Web
 		
 		protected override void OnPreRender(EventArgs e)
 		{
-			Org.Visible = (dropDownGrouping.SelectedValue == "1" || dropDownGrouping.SelectedValue == "2");
+			tableDepartment.Visible = Org.Visible = (dropDownGrouping.SelectedValue == "1" || dropDownGrouping.SelectedValue == "2");
 			checkBoxQuestions.Visible = (dropDownGrouping.SelectedValue == "3");
 		}
 		
