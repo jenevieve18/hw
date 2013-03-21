@@ -69,6 +69,7 @@
     <Compile Include="Helpers\Db2.cs" />
     <Compile Include="Helpers\ExtendedGraph.cs" />
     <Compile Include="Helpers\Graph.cs" />
+    <Compile Include="Helpers\Graph2.cs" />
     <Compile Include="Helpers\HtmlHelper.cs" />
     <Compile Include="Helpers\HWList.cs" />
     <Compile Include="Helpers\OctreeQuantizer.cs" />
