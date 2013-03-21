@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="AppContext.cs" />
     <Compile Include="Helpers\BootstrapHelper.cs" />
+    <Compile Include="Helpers\CsvExporter.cs" />
     <Compile Include="Helpers\Db.cs" />
     <Compile Include="Helpers\Db2.cs" />
     <Compile Include="Helpers\ExtendedGraph.cs" />
@@ -74,7 +75,7 @@
     <Compile Include="Helpers\HWList.cs" />
     <Compile Include="Helpers\OctreeQuantizer.cs" />
     <Compile Include="Helpers\Quantizer.cs" />
-    <Compile Include="Helpers\Exporter.cs" />
+    <Compile Include="Helpers\IExporter.cs" />
     <Compile Include="Helpers\HtmlControls.cs" />
     <Compile Include="Helpers\R.cs" />
     <Compile Include="Models\Answer.cs" />

@@ -15,47 +15,6 @@ using iTextSharp.text.pdf;
 
 namespace HW.Core.Helpers
 {
-	public class ExportFactory
-	{
-		public static readonly string Pdf = "pdf";
-		public static readonly string Csv = "csv";
-		
-		public static IExporter GetExporter(ReportService service, string type, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, ReportPart r, string key)
-		{
-			if (type == Pdf) {
-				return new PdfExporter(r);
-			} else if (type == Csv) {
-				return new CsvExporter(service, hasAnswerKey, hasGrouping, disabled, width, height, background, r, key);
-			} else {
-				throw new NotSupportedException();
-			}
-		}
-		
-		public static IExporter GetExporter2(ReportService service, string type, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, IList<ReportPartLanguage> r, string key)
-		{
-			if (type == Pdf) {
-				return new PdfExporter(r);
-			} else if (type == Csv) {
-				return new CsvExporter(service, hasAnswerKey, hasGrouping, disabled, width, height, background, r, key);
-			} else {
-				throw new NotSupportedException();
-			}
-		}
-	}
-	
-	public interface IExporter
-	{
-		string Type { get; }
-		
-		bool HasContentDisposition { get; }
-		
-		string ContentDisposition { get; }
-		
-		object Export(int GB, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int distribution);
-		
-		object Export2(int GB, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int distribution);
-	}
-	
 	public class CsvExporter : IExporter
 	{
 		bool hasAnswerKey;
@@ -82,7 +41,7 @@ namespace HW.Core.Helpers
 			this.key = key;
 		}
 		
-		public CsvExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, IList<ReportPartLanguage> languages, string key)
+		public CsvExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, IList<ReportPartLanguage> parts, string key)
 		{
 			this.service = service;
 			this.hasAnswerKey = hasAnswerKey;
@@ -91,7 +50,7 @@ namespace HW.Core.Helpers
 			this.width = width;
 			this.height = height;
 			this.background = background;
-			this.parts = languages;
+			this.parts = parts;
 			this.key = key;
 		}
 		
@@ -279,124 +238,6 @@ namespace HW.Core.Helpers
 			header1.Append(header2);
 			header1.Append(content);
 			return header1.ToString();
-		}
-	}
-	
-	public class Distribution
-	{
-		public const int None = 0;
-		public const int StandardDeviation = 1;
-		public const int ConfidenceInterval = 2;
-	}
-	
-	public class PdfExporter : IExporter
-	{
-		ReportPart r;
-		IList<ReportPartLanguage> parts;
-		
-		public PdfExporter(ReportPart r)
-		{
-			this.r = r;
-		}
-		
-		public PdfExporter(IList<ReportPartLanguage> parts)
-		{
-			this.parts = parts;
-		}
-		
-		public string Type {
-			get { return "application/pdf"; }
-		}
-		
-		public bool HasContentDisposition {
-			get { return ContentDisposition.Length > 0; }
-		}
-		
-		public string ContentDisposition {
-			get { return ""; }
-		}
-		
-		public object Export(int GB, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int distribution)
-		{
-			Document doc = new Document();
-			var output = new MemoryStream();
-			PdfWriter writer = PdfWriter.GetInstance(doc, output);
-			doc.Open();
-			
-//			string url = string.Format(
-//				@"{12}reportImage.aspx?LangID={0}&FY={1}&TY={2}&SAID={3}&SID={4}&STDEV={5}&ExtraPoint={13}&GB={6}&RPID={7}&PRUID={8}&GID={9}&GRPNG={10}&Plot={11}",
-//				langID,
-//				fy,
-//				ty,
-//				SPONS,
-//				SID,
-//				0, // TODO: No use for standard deviation. Current use is extra point or "distribution".
-//				GB,
-//				r.Id,
-//				PRUID,
-//				GID,
-//				GRPNG,
-//				plot,
-//				path,
-//				distribution
-//			);
-			string url = string.Format(
-				@"{12}reportImage.aspx?LangID={0}&FY={1}&TY={2}&SAID={3}&SID={4}&STDEV={5}&DIST={13}&GB={6}&RPID={7}&PRUID={8}&GID={9}&GRPNG={10}&Plot={11}",
-				langID,
-				fy,
-				ty,
-				SPONS,
-				SID,
-				0, // TODO: No use for standard deviation. Current use is extra point or "distribution".
-				GB,
-				r.Id,
-				PRUID,
-				GID,
-				GRPNG,
-				plot,
-				path,
-				distribution
-			);
-			doc.Add(new Chunk(r.CurrentLanguage.Subject));
-			iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(new Uri(url));
-			jpg.ScaleToFit(500f, 500f);
-			doc.Add(jpg);
-			doc.Close();
-			return output;
-		}
-		
-		public object Export2(int GB, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int distribution)
-		{
-			Document doc = new Document();
-			var output = new MemoryStream();
-			PdfWriter writer = PdfWriter.GetInstance(doc, output);
-			doc.Open();
-			
-			foreach (var p in parts) {
-				string url = string.Format(
-					@"{12}reportImage.aspx?LangID={0}&FY={1}&TY={2}&SAID={3}&SID={4}&STDEV={5}&DIST={13}&GB={6}&RPID={7}&PRUID={8}&GID={9}&GRPNG={10}&Plot={11}",
-					langID,
-					fy,
-					ty,
-					SPONS,
-					SID,
-					0, // TODO: No use for standard deviation. Current use is extra point or "distribution".
-					GB,
-					p.ReportPart.Id,
-					PRUID,
-					GID,
-					GRPNG,
-					plot,
-					path,
-					distribution
-				);
-//				doc.Add(new Chunk(r.CurrentLanguage.Subject));
-				iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(new Uri(url));
-				jpg.ScaleToFit(500f, 500f);
-				doc.Add(jpg);
-			}
-			doc.Close();
-			return output;
 		}
 	}
 }
