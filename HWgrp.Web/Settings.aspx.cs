@@ -12,6 +12,8 @@ namespace HWgrp.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+        	HtmlHelper.RedirectIf(Convert.ToInt32(Session["SponsorID"]) == 0, "default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next());
+        	
             buttonSave.Click += new EventHandler(Save_Click);
             if (Convert.ToInt32(Session["SponsorAdminID"]) <= 0) {
                 labelMessage.Text = "Super administrators cannot change password. Please contact support@healthwatch.se!";

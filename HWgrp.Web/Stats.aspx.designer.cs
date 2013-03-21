@@ -76,13 +76,13 @@ namespace HWgrp.Web {
         protected global::System.Web.UI.WebControls.DropDownList dropDownDistribution;
         
         /// <summary>
-        /// tableDepartment control.
+        /// tableDepartments control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::HW.Core.Helpers.DepartmentHtmlTable tableDepartment;
+        protected global::HW.Core.Helpers.DepartmentListHtmlTable tableDepartments;
         
         /// <summary>
         /// Org control.

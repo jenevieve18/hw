@@ -85,7 +85,7 @@ namespace HW.Core.Helpers
 		}
 	}
 	
-	public class DepartmentHtmlTable : HtmlTable
+	public class DepartmentListHtmlTable : HtmlTable
 	{
 		IList<Department> departments;
 		

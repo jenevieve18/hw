@@ -62,8 +62,8 @@ namespace HWgrp.Web
 		public IList<Department> Departments {
 			set {
 				this.departments = value;
-				tableDepartment.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(Session["Sponsor"].ToString()) { ColSpan = 3 }));
-				tableDepartment.Departments = value;
+				tableDepartments.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(Session["Sponsor"].ToString()) { ColSpan = 3 }));
+				tableDepartments.Departments = value;
 			}
 		}
 		
@@ -71,7 +71,7 @@ namespace HWgrp.Web
 			get {
 				var selectedDepartments = new List<BaseModel>();
 				foreach (var d in departments) {
-					if (((CheckBox)tableDepartment.FindControl("DID" + d.Id)).Checked) {
+					if (((CheckBox)tableDepartments.FindControl("DID" + d.Id)).Checked) {
 						selectedDepartments.Add(d);
 					}
 				}
@@ -94,30 +94,28 @@ namespace HWgrp.Web
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			if (Session["SponsorID"] != null) {
-				sponsorID = Convert.ToInt32(Session["SponsorID"]);
-				sponsorAdminID = Convert.ToInt32(Session["SponsorAdminID"]);
-				
-				if (IsPostBack) {
-					BackgroundQuestions = sponsorRepository.FindBySponsor(sponsorID);
-					Departments = departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID);
-				} else {
-					Languages = langRepository.FindBySponsor(sponsorID);
-
-					int selectedLangID = Convert.ToInt32(dropDownLanguages.SelectedValue);
-					ProjectRoundUnits = sponsorRepository.FindBySponsorAndLanguage(sponsorID, selectedLangID);
-
-					for (int i = 2005; i <= DateTime.Now.Year; i++) {
-						dropDownYearFrom.Items.Add(new ListItem(i.ToString(), i.ToString()));
-						dropDownYearTo.Items.Add(new ListItem(i.ToString(), i.ToString()));
-					}
-					dropDownYearFrom.SelectedValue = (DateTime.Now.Year - 1).ToString();
-					dropDownYearTo.SelectedValue = DateTime.Now.Year.ToString();
-				}
-				Execute.Click += new EventHandler(Execute_Click);
+			HtmlHelper.RedirectIf(Session["SponsorID"] == null, "default.aspx", true);
+			
+			sponsorID = Convert.ToInt32(Session["SponsorID"]);
+			sponsorAdminID = Convert.ToInt32(Session["SponsorAdminID"]);
+			
+			if (IsPostBack) {
+				BackgroundQuestions = sponsorRepository.FindBySponsor(sponsorID);
+				Departments = departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID);
 			} else {
-				Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+				Languages = langRepository.FindBySponsor(sponsorID);
+
+				int selectedLangID = Convert.ToInt32(dropDownLanguages.SelectedValue);
+				ProjectRoundUnits = sponsorRepository.FindBySponsorAndLanguage(sponsorID, selectedLangID);
+
+				for (int i = 2005; i <= DateTime.Now.Year; i++) {
+					dropDownYearFrom.Items.Add(new ListItem(i.ToString(), i.ToString()));
+					dropDownYearTo.Items.Add(new ListItem(i.ToString(), i.ToString()));
+				}
+				dropDownYearFrom.SelectedValue = (DateTime.Now.Year - 1).ToString();
+				dropDownYearTo.SelectedValue = DateTime.Now.Year.ToString();
 			}
+			Execute.Click += new EventHandler(Execute_Click);
 		}
 		
 //		public void SetReportPartLanguages(IList<ReportPartLanguage> reportParts, IList<BaseModel> urlModels)
@@ -202,33 +200,50 @@ namespace HWgrp.Web
 		
 		protected string GetReportImageUrl(int reportID, int reportPartLangID, string page, string URL)
 		{
-			string plotQuery = Request.QueryString["Plot"] != null ? "&Plot=" + Request["Plot"] : "";
+			string plotQuery = Request.QueryString["PLOT"] != null ? string.Format("&PLOT={0}", Request.QueryString["PLOT"]) : "";
+//			string reportImageUrl = string.Format(
+//				"{13}.aspx?LangID={0}&FY={1}&TY={2}&SAID={3}&SID={4}&{5}STDEV={6}&ExtraPoint={14}&GB={7}&RPID={8}&RPLID={15}&PRUID={9}{10}&GRPNG={11}{12}",
+//				Convert.ToInt32(dropDownLanguages.SelectedValue),
+//				dropDownYearFrom.SelectedValue,
+//				dropDownYearTo.SelectedValue,
+//				sponsorAdminID,
+//				sponsorID,
+//				Convert.ToInt32(Session["Anonymized"]) == 1 ? "Anonymized=1&" : "",
+//				"1", // TODO: Remove the reference for this value, this was Standard Deviation (true/false).
+//				dropDownGroupBy.SelectedValue,
+//				reportID,
+//				dropDownListProjectRoundUnits.SelectedValue,
+//				URL,
+//				Convert.ToInt32(dropDownGrouping.SelectedValue),
+//				plotQuery,
+//				page,
+//				dropDownDistribution.SelectedValue,
+//				reportPartLangID
+//			);
 			string reportImageUrl = string.Format(
-				"{13}.aspx?LangID={0}&FY={1}&TY={2}&SAID={3}&SID={4}&{5}STDEV={6}&ExtraPoint={14}&GB={7}&RPID={8}&RPLID={15}&PRUID={9}{10}&GRPNG={11}{12}",
+				"{0}.aspx?LangID={1}&FY={2}&TY={3}&SAID={4}&SID={5}&{6}&DIST={7}&GB={8}&RPID={9}&RPLID={10}&PRUID={11}{12}&GRPNG={13}{14}",
+				page,
 				Convert.ToInt32(dropDownLanguages.SelectedValue),
 				dropDownYearFrom.SelectedValue,
 				dropDownYearTo.SelectedValue,
 				sponsorAdminID,
 				sponsorID,
 				Convert.ToInt32(Session["Anonymized"]) == 1 ? "Anonymized=1&" : "",
-//				STDEV.Checked ? "1" : "0",
-				"1",
+				dropDownDistribution.SelectedValue,
 				dropDownGroupBy.SelectedValue,
 				reportID,
+				reportPartLangID,
 				dropDownListProjectRoundUnits.SelectedValue,
 				URL,
 				Convert.ToInt32(dropDownGrouping.SelectedValue),
-				plotQuery,
-				page,
-				dropDownDistribution.SelectedValue,
-				reportPartLangID
+				plotQuery
 			);
 			return reportImageUrl;
 		}
 		
 		protected override void OnPreRender(EventArgs e)
 		{
-			tableDepartment.Visible = Org.Visible = (dropDownGrouping.SelectedValue == "1" || dropDownGrouping.SelectedValue == "2");
+			tableDepartments.Visible = Org.Visible = (dropDownGrouping.SelectedValue == "1" || dropDownGrouping.SelectedValue == "2");
 			checkBoxQuestions.Visible = (dropDownGrouping.SelectedValue == "3");
 		}
 		

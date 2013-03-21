@@ -7,18 +7,30 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
 <style type="text/css">
-.ui-accordion-header {
-	font-size:10pt;
-	font-family: Arial;
-}
-.ui-accordion-content {
-	font-size:10pt;
-	font-family: Arial;
-}
-.ui-accordion .ui-accordion-content {
-      padding: 1em 0 15em 0;
-}
+	.ui-accordion-header {
+		font-size:10pt;
+		font-family: Arial;
+	}
+	.ui-accordion-content {
+		font-size:10pt;
+		font-family: Arial;
+	}
+	.ui-accordion .ui-accordion-content {
+			padding: 1em;
+	}
 </style>
+<script type="text/javascript">
+	$(document).ready(function () {
+		$('.plot .btn').click(function () {
+			var partImg = $(this).closest('.report-part-image');
+			var img = partImg.find('img');
+			console.log(img.attr('src'));
+			var newSrc = partImg.find('.hidden').text();
+			console.log(newSrc);
+			img.attr('src', newSrc + '&PLOT=' + $(this).text());
+		});
+	});
+</script>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -64,7 +76,7 @@
 				<asp:ListItem Value="2" Text="Confidence Interval" />
 			</asp:DropDownList>
 			<br />
-			<cc1:DepartmentHtmlTable runat="server" ID="tableDepartment"></cc1:DepartmentHtmlTable>
+			<cc1:DepartmentListHtmlTable runat="server" ID="tableDepartments"></cc1:DepartmentListHtmlTable>
 			<asp:PlaceHolder ID="Org" runat="server" Visible="false" />
 			<asp:CheckBoxList ID="checkBoxDepartments" runat="server">
 			</asp:CheckBoxList>
@@ -76,11 +88,37 @@
 	</div>
 	<!--<asp:Label ID="StatsImg" runat="server" />-->
 	<% if (reportParts != null) { %>
+		<br>
+		<div class="btn-toolbar">
+			<div class="btn-group">
+				<%= HtmlHelper.Anchor("PDF", "ExportAll.aspx", new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
+				<%= HtmlHelper.Anchor("CSV", "ExportAll.aspx", new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
+			</div>
+			<div class="btn-group">
+				<span class="btn btn-mini">LINE</span>
+				<span class="btn btn-mini">BOXPLOT</span>
+			</div>
+		</div>
+		<br>
 		<div id="accordion">
+		<% string URL = GetURL(urlModels); %>
 		<% foreach (var r in reportParts) { %>
-			<h1><%= r.Header %></h1>
-			<div>
-				<%= HtmlHelper.Image(GetReportImageUrl(r.ReportPart.Id, r.Id, "reportImage", GetURL(urlModels))) %>
+			<h1><%= r.Subject %></h1>
+			<div class="report-part-image">
+				<span class="hidden"><%=GetReportImageUrl(r.ReportPart.Id, r.Id, "reportImage", GetURL(urlModels))%></span>
+				<div>
+					<%= HtmlHelper.Image(GetReportImageUrl(r.ReportPart.Id, r.Id, "reportImage", GetURL(urlModels))) %>
+				</div>
+				<div class="btn-toolbar">
+					<div class="btn-group">
+						<%= HtmlHelper.Anchor("PDF", GetReportImageUrl(r.ReportPart.Id, r.Id, "Export", URL + "&type=pdf"), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
+						<%= HtmlHelper.Anchor("CSV", GetReportImageUrl(r.ReportPart.Id, r.Id, "Export", URL + "&type=csv"), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
+					</div>
+					<div class="btn-group plot">
+						<span class="btn btn-mini">LINE</span>
+						<span class="btn btn-mini">BOXPLOT</span>
+					</div>
+				</div>
 			</div>
 		<% } %>
 		</div>
