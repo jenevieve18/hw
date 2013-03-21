@@ -11,7 +11,7 @@
 			<div class="search">
 				Search user by email
 				<asp:TextBox ID="SearchEmail" runat="server" />
-				<asp:Button ID="Search" Text="Search" runat="server" />
+				<asp:Button ID="Search" Text="Search" runat="server" CssClass="btn" />
 			</div>
 		</div>
 		<div class="bottom" id=ActionNav runat=server>
