@@ -67,7 +67,7 @@ namespace HWgrp.Web
 			}
 		}
 		
-		IList<BaseModel> SelectedDepartments {
+		protected IList<BaseModel> SelectedDepartments {
 			get {
 				var selectedDepartments = new List<BaseModel>();
 				foreach (var d in departments) {

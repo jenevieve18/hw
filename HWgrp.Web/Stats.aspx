@@ -94,10 +94,12 @@
 				<%= HtmlHelper.Anchor("PDF", "ExportAll.aspx", new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
 				<%= HtmlHelper.Anchor("CSV", "ExportAll.aspx", new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
 			</div>
+			<% if (SelectedDepartments.Count == 1) { %>
 			<div class="btn-group">
 				<span class="btn btn-mini">LINE</span>
 				<span class="btn btn-mini">BOXPLOT</span>
 			</div>
+			<% } %>
 		</div>
 		<br>
 		<div id="accordion">
@@ -114,10 +116,12 @@
 						<%= HtmlHelper.Anchor("PDF", GetReportImageUrl(r.ReportPart.Id, r.Id, "Export", URL + "&type=pdf"), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
 						<%= HtmlHelper.Anchor("CSV", GetReportImageUrl(r.ReportPart.Id, r.Id, "Export", URL + "&type=csv"), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
 					</div>
+					<% if (SelectedDepartments.Count == 1) { %>
 					<div class="btn-group plot">
 						<span class="btn btn-mini">LINE</span>
 						<span class="btn btn-mini">BOXPLOT</span>
 					</div>
+					<% } %>
 				</div>
 			</div>
 		<% } %>
