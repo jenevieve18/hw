@@ -87,10 +87,12 @@ namespace HW.Tests.Models
 			List<Bar> bars = new List<Bar>();
 			Series s = new Series { Color = 5 };
 			int tot = 10;
-			foreach (OptionComponentLanguage c in optionRepository.FindComponentsByLanguage(1, 1)) {
+//			foreach (OptionComponentLanguage c in optionRepository.FindComponentsByLanguage(1, 1)) {
+			foreach (OptionComponents c in optionRepository.FindComponentsByLanguage(1, 1)) {
 				var x = answerRepository.CountByValueWithDateOptionAndQuestion(c.Component.Id, 2011, 2012, 1, 1, "");
 				var b = new Bar {
-					Description = c.Text,
+//					Description = c.Text,
+					Description = c.Component.CurrentLanguage.Text,
 					Value = Convert.ToInt32(Math.Round(Convert.ToDecimal(x) / tot * 100M, 0)),
 					Color = 5
 				};
@@ -106,11 +108,13 @@ namespace HW.Tests.Models
 		{
 			Series s = new Series { Color = 5 };
 			int tot = 10;
-			foreach (OptionComponentLanguage c in optionRepository.FindComponentsByLanguage(1, 1)) {
+//			foreach (OptionComponentLanguage c in optionRepository.FindComponentsByLanguage(1, 1)) {
+			foreach (OptionComponents c in optionRepository.FindComponentsByLanguage(1, 1)) {
 				var x = answerRepository.CountByValueWithDateOptionAndQuestion(c.Component.Id, 2011, 2012, 1, 1, "");
 				s.Points.Add(
 					new PointV {
-						Description = c.Text,
+//						Description = c.Text,
+						Description = c.Component.CurrentLanguage.Text,
 						Y = Convert.ToInt32(Math.Round(Convert.ToDecimal(x) / tot * 100M, 0))
 					}
 				);
