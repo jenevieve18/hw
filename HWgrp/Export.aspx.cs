@@ -15,6 +15,7 @@ using HW.Core;
 using HW.Core.Helpers;
 using HW.Core.Models;
 using HW.Core.Repositories;
+using HW.Core.Services;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 
@@ -22,13 +23,23 @@ namespace HWgrp
 {
 	public partial class Export : System.Web.UI.Page
 	{
-		IReportRepository reportRepository = AppContext.GetRepositoryFactory().CreateReportRepository();
-		IAnswerRepository answerRepository = AppContext.GetRepositoryFactory().CreateAnswerRepository();
-		IProjectRepository projectRepository = AppContext.GetRepositoryFactory().CreateProjectRepository();
-		IOptionRepository optionRepository = AppContext.GetRepositoryFactory().CreateOptionRepository();
-		IDepartmentRepository departmentRepository = AppContext.GetRepositoryFactory().CreateDepartmentRepository();
-		IIndexRepository indexRepository = AppContext.GetRepositoryFactory().CreateIndexRepository();
-		IQuestionRepository questionRepository = AppContext.GetRepositoryFactory().CreateQuestionRepository();
+//		IReportRepository reportRepository = AppContext.GetRepositoryFactory().CreateReportRepository();
+//		IAnswerRepository answerRepository = AppContext.GetRepositoryFactory().CreateAnswerRepository();
+//		IProjectRepository projectRepository = AppContext.GetRepositoryFactory().CreateProjectRepository();
+//		IOptionRepository optionRepository = AppContext.GetRepositoryFactory().CreateOptionRepository();
+//		IDepartmentRepository departmentRepository = AppContext.GetRepositoryFactory().CreateDepartmentRepository();
+//		IIndexRepository indexRepository = AppContext.GetRepositoryFactory().CreateIndexRepository();
+//		IQuestionRepository questionRepository = AppContext.GetRepositoryFactory().CreateQuestionRepository();
+		ReportService service = new ReportService(
+			AppContext.GetRepositoryFactory().CreateAnswerRepository(),
+			AppContext.GetRepositoryFactory().CreateReportRepository(),
+			AppContext.GetRepositoryFactory().CreateProjectRepository(),
+			AppContext.GetRepositoryFactory().CreateOptionRepository(),
+			AppContext.GetRepositoryFactory().CreateDepartmentRepository(),
+			AppContext.GetRepositoryFactory().CreateQuestionRepository(),
+			AppContext.GetRepositoryFactory().CreateIndexRepository()
+			
+		);
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -57,13 +68,16 @@ namespace HWgrp
 			
 			int point = HttpContext.Current.Request.QueryString["ExtraPoint"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["ExtraPoint"]) : 0;
 			
-			ReportPart r = reportRepository.ReadReportPart(rpid);
+//			ReportPart r = reportRepository.ReadReportPart(rpid);
+			ReportPart r = service.ReadReportPart(rpid, langID);
 			
-			var exporter = ExportFactory.GetExporter(answerRepository, reportRepository, projectRepository, optionRepository, departmentRepository, questionRepository, indexRepository, type, HasAnswerKey, hasGrouping, disabled, Width, Height, Background, r, key);
+//			var exporter = ExportFactory.GetExporter(answerRepository, reportRepository, projectRepository, optionRepository, departmentRepository, questionRepository, indexRepository, type, HasAnswerKey, hasGrouping, disabled, Width, Height, Background, r, key);
+			var exporter = ExportFactory.GetExporter(service, type, HasAnswerKey, hasGrouping, disabled, Width, Height, Background, r, key);
 			Response.ContentType = exporter.Type;
 			AddHeaderIf(exporter.HasContentDisposition, "content-disposition", exporter.ContentDisposition);
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
-			Write(exporter.Export(GB, fy, ty, langID, rpid, PRUID, GRPNG, SPONS, SID, GID, plot, path, point));
+//			Write(exporter.Export(GB, fy, ty, langID, rpid, PRUID, GRPNG, SPONS, SID, GID, plot, path, point));
+			Write(exporter.Export(GB, fy, ty, langID, PRUID, GRPNG, SPONS, SID, GID, plot, path, point));
 		}
 		
 		void Write(object obj)

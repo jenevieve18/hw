@@ -8,18 +8,22 @@ using HW.Core;
 using HW.Core.Helpers;
 using HW.Core.Models;
 using HW.Core.Repositories;
+using HW.Core.Services;
 
 namespace HWgrp.Web
 {
 	public partial class ReportImage : System.Web.UI.Page
 	{
-		IReportRepository reportRepository = AppContext.GetRepositoryFactory().CreateReportRepository();
-		IAnswerRepository answerRepository = AppContext.GetRepositoryFactory().CreateAnswerRepository();
-		IProjectRepository projectRepository = AppContext.GetRepositoryFactory().CreateProjectRepository();
-		IOptionRepository optionRepository = AppContext.GetRepositoryFactory().CreateOptionRepository();
-		IDepartmentRepository departmentRepository = AppContext.GetRepositoryFactory().CreateDepartmentRepository();
-		IIndexRepository indexRepository = AppContext.GetRepositoryFactory().CreateIndexRepository();
-		IQuestionRepository questionRepository = AppContext.GetRepositoryFactory().CreateQuestionRepository();
+		ReportService service = new ReportService(
+			AppContext.GetRepositoryFactory().CreateAnswerRepository(),
+			AppContext.GetRepositoryFactory().CreateReportRepository(),
+			AppContext.GetRepositoryFactory().CreateProjectRepository(),
+			AppContext.GetRepositoryFactory().CreateOptionRepository(),
+			AppContext.GetRepositoryFactory().CreateDepartmentRepository(),
+			AppContext.GetRepositoryFactory().CreateQuestionRepository(),
+			AppContext.GetRepositoryFactory().CreateIndexRepository()
+			
+		);
 		
 		bool HasAnswerKey {
 			get { return Request.QueryString["AK"] != null; }
@@ -80,11 +84,12 @@ namespace HWgrp.Web
 			int langID = (Request.QueryString["LangID"] != null ? Convert.ToInt32(Request.QueryString["LangID"]) : 0);
 
 			int rpid = Convert.ToInt32(Request.QueryString["RPID"]);
+			int RPLID = Convert.ToInt32(Request.QueryString["RPLID"]);
 			int PRUID = Convert.ToInt32(Request.QueryString["PRUID"]);
 
 			bool hasGrouping = Request.QueryString["GRPNG"] != null || Request.QueryString["GRPNG"] != "0";
 
-			string plot = Request.QueryString["Plot"] != null ? Request.QueryString["Plot"] : "";
+			string plot = Request.QueryString["PLOT"] != null ? Request.QueryString["PLOT"] : "";
 			string key = Request.QueryString["AK"];
 
 			int GRPNG = Convert.ToInt32(Request.QueryString["GRPNG"]);
@@ -94,13 +99,12 @@ namespace HWgrp.Web
 
 			object disabled = Request.QueryString["DISABLED"];
 
-			int point = Request.QueryString["ExtraPoint"] != null ? Convert.ToInt32(Request.QueryString["ExtraPoint"]) : 0;
+			int distribution = Request.QueryString["DIST"] != null ? Convert.ToInt32(Request.QueryString["DIST"]) : 0;
 
-			ReportPart r = reportRepository.ReadReportPart(rpid);
-			//			SetReportPart(key, HasAnswerKey, r, g, langID, PRUID, fy, ty, GB, stdev, hasGrouping, plot);
+			ReportPart r = service.ReadReportPart(rpid, langID);
 
-			var f = GraphFactory.CreateFactory(HasAnswerKey, answerRepository, reportRepository, projectRepository, optionRepository, departmentRepository, questionRepository, indexRepository);
-			g = f.CreateGraph(key, rpid, langID, PRUID, r.Type, fy, ty, r.Components.Count, r.RequiredAnswerCount, r.Option.Id, r.Question.Id, GB, hasGrouping, plot, Width, Height, Background, GRPNG, SPONS, SID, GID, disabled, point);
+			var f = service.GetGraphFactory(HasAnswerKey);
+			g = f.CreateGraph(key, r, langID, PRUID, fy, ty, GB, hasGrouping, plot, Width, Height, Background, GRPNG, SPONS, SID, GID, disabled, distribution);
 			g.render();
 		}
 	}

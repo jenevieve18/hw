@@ -16,6 +16,7 @@ using HW.Core;
 using HW.Core.Helpers;
 using HW.Core.Models;
 using HW.Core.Repositories;
+using HW.Core.Services;
 
 namespace HWgrp
 {
@@ -27,13 +28,16 @@ namespace HWgrp
 //		System.Collections.Hashtable res = new System.Collections.Hashtable();
 //		System.Collections.Hashtable cnt = new System.Collections.Hashtable();
 		
-		IReportRepository reportRepository = AppContext.GetRepositoryFactory().CreateReportRepository();
-		IAnswerRepository answerRepository = AppContext.GetRepositoryFactory().CreateAnswerRepository();
-		IProjectRepository projectRepository = AppContext.GetRepositoryFactory().CreateProjectRepository();
-		IOptionRepository optionRepository = AppContext.GetRepositoryFactory().CreateOptionRepository();
-		IDepartmentRepository departmentRepository = AppContext.GetRepositoryFactory().CreateDepartmentRepository();
-		IIndexRepository indexRepository = AppContext.GetRepositoryFactory().CreateIndexRepository();
-		IQuestionRepository questionRepository = AppContext.GetRepositoryFactory().CreateQuestionRepository();
+		ReportService service = new ReportService(
+			AppContext.GetRepositoryFactory().CreateAnswerRepository(),
+			AppContext.GetRepositoryFactory().CreateReportRepository(),
+			AppContext.GetRepositoryFactory().CreateProjectRepository(),
+			AppContext.GetRepositoryFactory().CreateOptionRepository(),
+			AppContext.GetRepositoryFactory().CreateDepartmentRepository(),
+			AppContext.GetRepositoryFactory().CreateQuestionRepository(),
+			AppContext.GetRepositoryFactory().CreateIndexRepository()
+			
+		);
 		
 		bool HasAnswerKey {
 			get { return HttpContext.Current.Request.QueryString["AK"] != null; }
@@ -170,7 +174,7 @@ namespace HWgrp
 //			}
 //			return g;
 //		}
-//		
+//
 //		public ExtendedGraph GroupStats(int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool stdev, bool hasGrouping, string plot)
 //		{
 //			string sortString = "";
@@ -216,7 +220,7 @@ namespace HWgrp
 //				g = new ExtendedGraph(895, 550, "#FFFFFF");
 //				List<Bar> bars = new List<Bar>();
 //				List<int> referenceLines = new List<int>();
-//				
+//
 //				foreach (ReportPartComponent c in reportRepository.FindComponents(rpid)) {
 //					System.Collections.SortedList all = new System.Collections.SortedList();
 //
@@ -271,23 +275,23 @@ namespace HWgrp
 //				int SPONS = Convert.ToInt32((HttpContext.Current.Request.QueryString["SAID"] != null ? HttpContext.Current.Request.QueryString["SAID"] : HttpContext.Current.Session["SponsorAdminID"]));
 //				int SID = Convert.ToInt32((HttpContext.Current.Request.QueryString["SID"] != null ? HttpContext.Current.Request.QueryString["SID"] : HttpContext.Current.Session["SponsorID"]));
 //				string GID = (HttpContext.Current.Request.QueryString["GID"] != null ? HttpContext.Current.Request.QueryString["GID"].ToString().Replace(" ", "") : "");
-//				
+//
 //				if (GB == 0) {
 //					GB = 2;
 //				}
-//				
+//
 //				string groupBy = GroupFactory.GetGroupBy(GB);
 //				g = new ExtendedGraph(895, 440, "#FFFFFF");
 //
-////				if (HttpContext.Current.Request.QueryString["Plot"] != null && HttpContext.Current.Request.QueryString["Plot"] == "BoxPlot") {
-////					g.Type = new BoxPlotGraphType();
-////					ForBoxPlot(g, stdev, rac, langID, GB, GRPNG, SPONS, SID, PRUID, GID, groupBy, fy, ty, sortString, cx, minDT, maxDT, rpid, hasGrouping);
-////				} else {
-////					int t = 2 + (!stdev ? 1 : 0);
-////					g.Type = new LineGraphType(stdev, t);
-////					ForLineChart(g, stdev, rac, langID, GB, GRPNG, SPONS, SID, PRUID, GID, groupBy, fy, ty, sortString, cx, minDT, maxDT, rpid, hasGrouping);
-////				}
-////
+		////				if (HttpContext.Current.Request.QueryString["Plot"] != null && HttpContext.Current.Request.QueryString["Plot"] == "BoxPlot") {
+		////					g.Type = new BoxPlotGraphType();
+		////					ForBoxPlot(g, stdev, rac, langID, GB, GRPNG, SPONS, SID, PRUID, GID, groupBy, fy, ty, sortString, cx, minDT, maxDT, rpid, hasGrouping);
+		////				} else {
+		////					int t = 2 + (!stdev ? 1 : 0);
+		////					g.Type = new LineGraphType(stdev, t);
+		////					ForLineChart(g, stdev, rac, langID, GB, GRPNG, SPONS, SID, PRUID, GID, groupBy, fy, ty, sortString, cx, minDT, maxDT, rpid, hasGrouping);
+		////				}
+		////
 //				int t = 2 + (!stdev ? 1 : 0);
 //				if (plot == "BoxPlot") {
 //					g.Type = new BoxPlotGraphType();
@@ -298,7 +302,7 @@ namespace HWgrp
 //			}
 //			return g;
 //		}
-//		
+//
 //		public void SetReportPart(string key, bool hasAnswerKey, ReportPart r, ExtendedGraph g, int langID, int PRUID, int fy, int ty, int GB, bool stdev, bool hasGrouping, string plot)
 //		{
 //			if (hasAnswerKey) {
@@ -349,7 +353,7 @@ namespace HWgrp
 //			lastVal = 100 * tot / max;
 //			lastCount = minCnt;
 //		}
-//		
+//
 //		void ForLineChart(ExtendedGraph g, bool stdev, int rac, int langID, int GB, int GRPNG, int SPONS, int SID, int PRUID, string GID, string groupBy, int fy, int ty, string sortString, int cx, int minDT, int maxDT, int rpid, bool hasGrouping)
 //		{
 //			Answer answer = answerRepository.ReadByGroup(groupBy, fy, ty, sortString);
@@ -379,21 +383,21 @@ namespace HWgrp
 //			g.DrawComputingSteps(HttpContext.Current.Request.QueryString["DISABLED"], cx);
 //
 //			cx = 0;
-//			
+//
 //			g.DrawBottomString(minDT, maxDT, GB);
-//			
-////			List<IExplanation> explanations = new List<IExplanation>();
+//
+		////			List<IExplanation> explanations = new List<IExplanation>();
 //			List<IExplanation> explanationBoxes = new List<IExplanation>();
-//			
+//
 //			if (hasGrouping) {
 //				int COUNT = 0;
 //				Hashtable desc = new Hashtable();
 //				Hashtable join = new Hashtable();
 //				ArrayList item = new ArrayList();
 //				string extraDesc = "";
-//				
+//
 //				COUNT = GroupFactory.GetCount(GRPNG, SPONS, SID, PRUID, GID, ref extraDesc, desc, join, item, departmentRepository, questionRepository);
-//				
+//
 //				int breaker = 6, itemWidth = 120;
 //				if (COUNT < 6) {
 //					breaker = 4;
@@ -403,16 +407,16 @@ namespace HWgrp
 //					breaker = 3;
 //					itemWidth = 240;
 //				}
-//				
-////				explanations.Add(
-////					new Explanation {
-////						Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
-////						Color = 0,
-////						Right = false,
-////						Box = false,
-////						HasAxis = false
-////					}
-////				);
+//
+		////				explanations.Add(
+		////					new Explanation {
+		////						Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+		////						Color = 0,
+		////						Right = false,
+		////						Box = false,
+		////						HasAxis = false
+		////					}
+		////				);
 //				g.Explanations.Add(
 //					new Explanation {
 //						Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
@@ -452,12 +456,12 @@ namespace HWgrp
 //								if (COUNT == 1) {
 //									g.DrawBottomString(GB, a.SomeInteger, cx, (COUNT == 1 ? ", n = " + a.Values.Count : ""));
 //								}
-////								List<double> n = new List<double>();
-////								foreach (var v in a.Values) {
-////									n.Add((double)v.ValueInt);
-////								}
-////								HWList l = new HWList(n);
-////								s.Points.Add(new PointV { X = cx, Y = (float)l.Mean, Deviation = (float)l.StandardDeviation, T = 2 + (!stdev ? 1 : 0) });
+		////								List<double> n = new List<double>();
+		////								foreach (var v in a.Values) {
+		////									n.Add((double)v.ValueInt);
+		////								}
+		////								HWList l = new HWList(n);
+		////								s.Points.Add(new PointV { X = cx, Y = (float)l.Mean, Deviation = (float)l.StandardDeviation, T = 2 + (!stdev ? 1 : 0) });
 //								s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
 //							}
 //							lastDT = a.SomeInteger;
@@ -470,15 +474,15 @@ namespace HWgrp
 //			} else {
 //				int bx = 0;
 //				foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(rpid, langID)) {
-////					explanations.Add(
-////						new Explanation {
-////							Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
-////							Color = bx + 4,
-////							Right = bx == 0 ? false : true,
-////							Box = bx == 0 ? true : false,
-////							HasAxis = bx == 0 ? false : true
-////						}
-////					);
+		////					explanations.Add(
+		////						new Explanation {
+		////							Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+		////							Color = bx + 4,
+		////							Right = bx == 0 ? false : true,
+		////							Box = bx == 0 ? true : false,
+		////							HasAxis = bx == 0 ? false : true
+		////						}
+		////					);
 //					g.Explanations.Add(
 //						new Explanation {
 //							Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
@@ -499,7 +503,7 @@ namespace HWgrp
 //
 //						if (a.CountV >= rac) {
 //							g.DrawBottomString(GB, a.SomeInteger, cx, ", n = " + a.CountV);
-////							s.Points.Add(new PointV { X = cx, Y = a.AverageV, Deviation = a.StandardDeviation, T = 3 });
+		////							s.Points.Add(new PointV { X = cx, Y = a.AverageV, Deviation = a.StandardDeviation, T = 3 });
 //							s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
 //						}
 //						lastDT = a.SomeInteger;
@@ -509,8 +513,8 @@ namespace HWgrp
 //					bx++;
 //				}
 //			}
-////			g.DrawExplanations(explanations);
-////			g.DrawExplanationBoxes(explanationBoxes);
+		////			g.DrawExplanations(explanations);
+		////			g.DrawExplanationBoxes(explanationBoxes);
 //			g.Draw();
 //		}
 
@@ -543,11 +547,11 @@ namespace HWgrp
 			
 			int point = HttpContext.Current.Request.QueryString["ExtraPoint"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["ExtraPoint"]) : 0;
 			
-			ReportPart r = reportRepository.ReadReportPart(rpid);
+			ReportPart r = service.ReadReportPart(rpid, langID);
 //			SetReportPart(key, HasAnswerKey, r, g, langID, PRUID, fy, ty, GB, stdev, hasGrouping, plot);
 			
-			var f = GraphFactory.CreateFactory(HasAnswerKey, answerRepository, reportRepository, projectRepository, optionRepository, departmentRepository, questionRepository, indexRepository);
-			g = f.CreateGraph(key, rpid, langID, PRUID, r.Type, fy, ty, r.Components.Count, r.RequiredAnswerCount, r.Option.Id, r.Question.Id, GB, hasGrouping, plot, Width, Height, Background, GRPNG, SPONS, SID, GID, disabled, point);
+			var f = service.GetGraphFactory(HasAnswerKey);
+			g = f.CreateGraph(key, r, langID, PRUID, fy, ty, GB, hasGrouping, plot, Width, Height, Background, GRPNG, SPONS, SID, GID, disabled, point);
 			g.render();
 		}
 	}

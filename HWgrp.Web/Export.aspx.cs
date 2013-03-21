@@ -9,18 +9,22 @@ using HW.Core;
 using HW.Core.Helpers;
 using HW.Core.Models;
 using HW.Core.Repositories;
+using HW.Core.Services;
 
 namespace HWgrp.Web
 {
-    public partial class Export : System.Web.UI.Page
-    {
-        IReportRepository reportRepository = AppContext.GetRepositoryFactory().CreateReportRepository();
-		IAnswerRepository answerRepository = AppContext.GetRepositoryFactory().CreateAnswerRepository();
-		IProjectRepository projectRepository = AppContext.GetRepositoryFactory().CreateProjectRepository();
-		IOptionRepository optionRepository = AppContext.GetRepositoryFactory().CreateOptionRepository();
-		IDepartmentRepository departmentRepository = AppContext.GetRepositoryFactory().CreateDepartmentRepository();
-		IIndexRepository indexRepository = AppContext.GetRepositoryFactory().CreateIndexRepository();
-		IQuestionRepository questionRepository = AppContext.GetRepositoryFactory().CreateQuestionRepository();
+	public partial class Export : System.Web.UI.Page
+	{
+		ReportService service = new ReportService(
+			AppContext.GetRepositoryFactory().CreateAnswerRepository(),
+			AppContext.GetRepositoryFactory().CreateReportRepository(),
+			AppContext.GetRepositoryFactory().CreateProjectRepository(),
+			AppContext.GetRepositoryFactory().CreateOptionRepository(),
+			AppContext.GetRepositoryFactory().CreateDepartmentRepository(),
+			AppContext.GetRepositoryFactory().CreateQuestionRepository(),
+			AppContext.GetRepositoryFactory().CreateIndexRepository()
+			
+		);
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -39,7 +43,7 @@ namespace HWgrp.Web
 			int SPONS = Convert.ToInt32((Request.QueryString["SAID"] != null ? Request.QueryString["SAID"] : HttpContext.Current.Session["SponsorAdminID"]));
 			int SID = Convert.ToInt32((Request.QueryString["SID"] != null ? Request.QueryString["SID"] : HttpContext.Current.Session["SponsorID"]));
 			string GID = (Request.QueryString["GID"] != null ? Request.QueryString["GID"].ToString().Replace(" ", "") : "");
-			string plot = Request.QueryString["Plot"] != null ? Request.QueryString["Plot"].ToString() : "LinePlot";
+			string plot = Request.QueryString["PLOT"] != null ? Request.QueryString["PLOT"].ToString() : "LinePlot";
 			string type = Request.QueryString["type"].ToString();
 			
 			bool hasGrouping = Request.QueryString["GRPNG"] != null || Request.QueryString["GRPNG"] != "0";
@@ -47,15 +51,15 @@ namespace HWgrp.Web
 			
 			object disabled = Request.QueryString["DISABLED"];
 			
-			int point = Request.QueryString["ExtraPoint"] != null ? Convert.ToInt32(Request.QueryString["ExtraPoint"]) : 0;
+			int distribution = Request.QueryString["DIST"] != null ? Convert.ToInt32(Request.QueryString["DIST"]) : 0;
 			
-			ReportPart r = reportRepository.ReadReportPart(rpid);
+			ReportPart r = service.ReadReportPart(rpid, langID);
 			
-			var exporter = ExportFactory.GetExporter(answerRepository, reportRepository, projectRepository, optionRepository, departmentRepository, questionRepository, indexRepository, type, HasAnswerKey, hasGrouping, disabled, Width, Height, Background, r, key);
+			var exporter = ExportFactory.GetExporter(service, type, HasAnswerKey, hasGrouping, disabled, Width, Height, Background, r, key);
 			Response.ContentType = exporter.Type;
 			AddHeaderIf(exporter.HasContentDisposition, "content-disposition", exporter.ContentDisposition);
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
-			Write(exporter.Export(GB, fy, ty, langID, rpid, PRUID, GRPNG, SPONS, SID, GID, plot, path, point));
+			Write(exporter.Export(GB, fy, ty, langID, PRUID, GRPNG, SPONS, SID, GID, plot, path, distribution));
 		}
 		
 		void Write(object obj)
@@ -119,5 +123,5 @@ namespace HWgrp.Web
 				}
 			}
 		}
-    }
+	}
 }

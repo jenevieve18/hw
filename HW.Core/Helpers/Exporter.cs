@@ -9,6 +9,7 @@ using System.IO;
 using System.Text;
 using HW.Core.Models;
 using HW.Core.Repositories;
+using HW.Core.Services;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 
@@ -19,12 +20,12 @@ namespace HW.Core.Helpers
 		public static readonly string Pdf = "pdf";
 		public static readonly string Csv = "csv";
 		
-		public static IExporter GetExporter(IAnswerRepository answerRepository, IReportRepository reportRepository, IProjectRepository projectRepository, IOptionRepository optionRepository, IDepartmentRepository departmentRepository, IQuestionRepository questionRepository, IIndexRepository indexRepository, string type, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, ReportPart r, string key)
+		public static IExporter GetExporter(ReportService service, string type, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, ReportPart r, string key)
 		{
 			if (type == Pdf) {
-				return new PdfExporter();
+				return new PdfExporter(r);
 			} else if (type == Csv) {
-				return new CsvExporter(answerRepository, reportRepository, projectRepository, optionRepository, departmentRepository, questionRepository, indexRepository, hasAnswerKey, hasGrouping, disabled, width, height, background, r, key);
+				return new CsvExporter(service, hasAnswerKey, hasGrouping, disabled, width, height, background, r, key);
 			} else {
 				throw new NotSupportedException();
 			}
@@ -39,18 +40,11 @@ namespace HW.Core.Helpers
 		
 		string ContentDisposition { get; }
 		
-		object Export(int GB, int fy, int ty, int langID, int rpid, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int point);
+		object Export(int GB, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int distribution);
 	}
 	
 	public class CsvExporter : IExporter
 	{
-		IAnswerRepository answerRepository;
-		IReportRepository reportRepository;
-		IProjectRepository projectRepository;
-		IOptionRepository optionRepository;
-		IDepartmentRepository departmentRepository;
-		IQuestionRepository questionRepository;
-		IIndexRepository indexRepository;
 		bool hasAnswerKey;
 		bool hasGrouping;
 		object disabled;
@@ -59,16 +53,11 @@ namespace HW.Core.Helpers
 		string background;
 		ReportPart r;
 		string key;
+		ReportService service;
 		
-		public CsvExporter(IAnswerRepository answerRepository, IReportRepository reportRepository, IProjectRepository projectRepository, IOptionRepository optionRepository, IDepartmentRepository departmentRepository, IQuestionRepository questionRepository, IIndexRepository indexRepository, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, ReportPart r, string key)
+		public CsvExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, ReportPart r, string key)
 		{
-			this.answerRepository = answerRepository;
-			this.reportRepository = reportRepository;
-			this.projectRepository = projectRepository;
-			this.optionRepository = optionRepository;
-			this.departmentRepository = departmentRepository;
-			this.questionRepository = questionRepository;
-			this.indexRepository = indexRepository;
+			this.service = service;
 			this.hasAnswerKey = hasAnswerKey;
 			this.hasGrouping = hasGrouping;
 			this.disabled = disabled;
@@ -91,10 +80,10 @@ namespace HW.Core.Helpers
 			get { return "attachment;filename=Report.csv"; }
 		}
 		
-		public object Export(int GB, int fy, int ty, int langID, int rpid, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int point)
+		public object Export(int GB, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int distribution)
 		{
-			var f = GraphFactory.CreateFactory(hasAnswerKey, answerRepository, reportRepository, projectRepository, optionRepository, departmentRepository, questionRepository, indexRepository);
-			return f.CreateGraph2(key, rpid, langID, PRUID, r.Type, fy, ty, r.Components.Count, r.RequiredAnswerCount, r.Option.Id, r.Question.Id, GB, hasGrouping, plot, width, height, background, GRPNG, SPONS, SID, GID, disabled, point);
+			var f = service.GetGraphFactory(hasAnswerKey);
+			return f.CreateGraph2(key, r, langID, PRUID, fy, ty, GB, hasGrouping, plot, GRPNG, SPONS, SID, GID, disabled, distribution);
 		}
 	}
 	
@@ -262,6 +251,13 @@ namespace HW.Core.Helpers
 	
 	public class PdfExporter : IExporter
 	{
+		ReportPart r;
+		
+		public PdfExporter(ReportPart r)
+		{
+			this.r = r;
+		}
+		
 		public string Type {
 			get { return "application/pdf"; }
 		}
@@ -274,15 +270,32 @@ namespace HW.Core.Helpers
 			get { return ""; }
 		}
 		
-		public object Export(int GB, int fy, int ty, int langID, int rpid, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int point)
+		public object Export(int GB, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int distribution)
 		{
 			Document doc = new Document();
 			var output = new MemoryStream();
 			PdfWriter writer = PdfWriter.GetInstance(doc, output);
 			doc.Open();
 			
+//			string url = string.Format(
+//				@"{12}reportImage.aspx?LangID={0}&FY={1}&TY={2}&SAID={3}&SID={4}&STDEV={5}&ExtraPoint={13}&GB={6}&RPID={7}&PRUID={8}&GID={9}&GRPNG={10}&Plot={11}",
+//				langID,
+//				fy,
+//				ty,
+//				SPONS,
+//				SID,
+//				0, // TODO: No use for standard deviation. Current use is extra point or "distribution".
+//				GB,
+//				r.Id,
+//				PRUID,
+//				GID,
+//				GRPNG,
+//				plot,
+//				path,
+//				distribution
+//			);
 			string url = string.Format(
-				@"{12}reportImage.aspx?LangID={0}&FY={1}&TY={2}&SAID={3}&SID={4}&STDEV={5}&ExtraPoint={13}&GB={6}&RPID={7}&PRUID={8}&GID={9}&GRPNG={10}&Plot={11}",
+				@"{12}reportImage.aspx?LangID={0}&FY={1}&TY={2}&SAID={3}&SID={4}&STDEV={5}&DIST={13}&GB={6}&RPID={7}&PRUID={8}&GID={9}&GRPNG={10}&Plot={11}",
 				langID,
 				fy,
 				ty,
@@ -290,14 +303,15 @@ namespace HW.Core.Helpers
 				SID,
 				0, // TODO: No use for standard deviation. Current use is extra point or "distribution".
 				GB,
-				rpid,
+				r.Id,
 				PRUID,
 				GID,
 				GRPNG,
 				plot,
 				path,
-				point
+				distribution
 			);
+			doc.Add(new Chunk(r.CurrentLanguage.Subject));
 			iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(new Uri(url));
 			jpg.ScaleToFit(500f, 500f);
 			doc.Add(jpg);
