@@ -38,6 +38,9 @@ namespace HW.Core.Models
 		public Question Question { get; set; }
 		public Option Option { get; set; }
 		public IList<ReportPartComponent> Components { get; set; }
+		public IList<ReportPartLanguage> Languages { get; set; }
+		
+		public ReportPartLanguage CurrentLanguage { get; set; }
 	}
 	
 	public class ReportPartComponent : BaseModel

@@ -31,7 +31,6 @@ namespace HW.Core.Helpers
 			Series = new List<Series>();
 			Explanations = new List<IExplanation>();
 			
-//			Type = new LineGraphType(false, 2); // TODO: Why default to line graph?
 			Type = new LineGraphType(0, 2); // TODO: Why default to line graph? Also map the point value to ExtraPoint class.
 		}
 		
@@ -102,10 +101,8 @@ namespace HW.Core.Helpers
 			float halfWidth = (barW / 1) / 2;
 			Line l1 = new Line {
 				Color = 20,
-//				X1 = cx * steping - 23,
 				X1 = cx * steping - (int)halfWidth,
 				Y1 = Convert.ToInt32(maxH - (mean - minVal) / (maxVal - minVal) * maxH),
-//				X2 = cx * steping + 23,
 				X2 = cx * steping + (int)halfWidth,
 				Y2 = Convert.ToInt32(maxH - (mean - minVal) / (maxVal - minVal) * maxH),
 				T = 1
@@ -296,7 +293,6 @@ namespace HW.Core.Helpers
 						if (w == 0) {
 							w = 52;
 						}
-						//						string v = "v" + w + ", " + (d / 52) + str;
 						string v = string.Format("v{0}, {1}{2}", w, d / 52, str);
 						drawBottomString(v, dx, true);
 						break;
@@ -308,7 +304,6 @@ namespace HW.Core.Helpers
 						if (w == 0) {
 							w = 52;
 						}
-						//						string v = "v" + (w - 1) + "-" + w + ", " + (d - ((d - 1) % 52)) / 52 + str;
 						string v = string.Format("v{0}-{1}, {2}{3}", w - 2, w, (d - ((d - 1) % 52)) / 52, str);
 						drawBottomString(v, dx, true);
 						break;
@@ -331,7 +326,6 @@ namespace HW.Core.Helpers
 						if (w == 0) {
 							w = 12;
 						}
-						//						string v = "Q" + (w / 3) + ", " + ((d - w) / 12) + str;
 						string v = string.Format("Q{0}, {1}{2}", w / 3, (d - w) / 12, str);
 						drawBottomString(v, dx, true);
 						break;
@@ -343,7 +337,6 @@ namespace HW.Core.Helpers
 						if (w == 0) {
 							w = 12;
 						}
-						//						string v = ((d - w) / 12) + "/" + (w / 6) + str;
 						string v = string.Format("{0}/{1}{2}", (d - w) / 12, w / 6, str);
 						drawBottomString(v, dx, true);
 						break;
@@ -370,9 +363,9 @@ namespace HW.Core.Helpers
 	
 	public interface IGraphFactory
 	{
-		ExtendedGraph CreateGraph(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point);
-		
-		string CreateGraph2(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point);
+		ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point);
+
+		string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int GRPNG, int SPONS, int SID, string GID, object disabled, int point);
 	}
 	
 	public class UserLevelGraphFactory : IGraphFactory
@@ -386,8 +379,9 @@ namespace HW.Core.Helpers
 			this.reportRepository = reportRepository;
 		}
 		
-		public ExtendedGraph CreateGraph(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
+		public ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
 		{
+			int cx = p.Components.Count;
 			int answerID = 0;
 			int projectRoundUserID = 0;
 			Answer a = answerRepository.ReadByKey(key);
@@ -403,20 +397,20 @@ namespace HW.Core.Helpers
 			ExtendedGraph g = new ExtendedGraph(width, height, bg);
 			g.setMinMax(0f, 100f);
 
-			if (type == 8) {
+			if (p.Type == 8) {
 				int dx = answerRepository.CountByProject(projectRoundUserID, fy, ty);
 				if (dx == 1) {
-					type = 9;
+					p.Type = 9;
 				} else {
 					cx = dx;
 				}
 			}
-			if (type == 8) {
+			if (p.Type == 8) {
 				g.computeSteping(cx);
 				g.drawOutlines(11);
 
 				int bx = 0;
-				foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(rpid, langID)) {
+				foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(p.Id, langID)) {
 					if (bx == 0) {
 						g.drawAxisExpl(c.QuestionOption.Languages[0].Question, bx + 4, false, true);
 						g.drawAxis(false);
@@ -441,7 +435,7 @@ namespace HW.Core.Helpers
 					}
 					bx++;
 				}
-			} else if (type == 9) {
+			} else if (p.Type == 9) {
 				g.computeSteping(cx + 2);
 				g.drawOutlines(11);
 				g.drawAxis();
@@ -450,7 +444,7 @@ namespace HW.Core.Helpers
 
 				bool hasReference = false;
 
-				foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(rpid, langID)) {
+				foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(p.Id, langID)) {
 					a = answerRepository.ReadByQuestionAndOption(answerID, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id);
 					if (a != null) {
 						int color = c.QuestionOption.GetColor(a.Values[0].ValueInt);
@@ -476,8 +470,9 @@ namespace HW.Core.Helpers
 			return g;
 		}
 		
-		public string CreateGraph2(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
+		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
 		{
+			int cx = p.Components.Count;
 			int answerID = 0;
 			int projectRoundUserID = 0;
 			Answer a = answerRepository.ReadByKey(key);
@@ -494,20 +489,20 @@ namespace HW.Core.Helpers
 //			ExtendedGraph g = new ExtendedGraph(width, height, bg);
 //			g.setMinMax(0f, 100f);
 
-			if (type == 8) {
+			if (p.Type == 8) {
 				int dx = answerRepository.CountByProject(projectRoundUserID, fy, ty);
 				if (dx == 1) {
-					type = 9;
+					p.Type = 9;
 				} else {
 					cx = dx;
 				}
 			}
-			if (type == 8) {
+			if (p.Type == 8) {
 //				g.computeSteping(cx);
 //				g.drawOutlines(11);
 
 				int bx = 0;
-				foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(rpid, langID)) {
+				foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(p.Id, langID)) {
 					if (bx == 0) {
 //						g.drawAxisExpl(c.QuestionOption.Languages[0].Question, bx + 4, false, true);
 //						g.drawAxis(false);
@@ -532,7 +527,7 @@ namespace HW.Core.Helpers
 					}
 					bx++;
 				}
-			} else if (type == 9) {
+			} else if (p.Type == 9) {
 //				g.computeSteping(cx + 2);
 //				g.drawOutlines(11);
 //				g.drawAxis();
@@ -541,7 +536,7 @@ namespace HW.Core.Helpers
 
 				bool hasReference = false;
 
-				foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(rpid, langID)) {
+				foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(p.Id, langID)) {
 					a = answerRepository.ReadByQuestionAndOption(answerID, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id);
 					if (a != null) {
 						int color = c.QuestionOption.GetColor(a.Values[0].ValueInt);
@@ -594,8 +589,9 @@ namespace HW.Core.Helpers
 			this.departmentRepository = departmentRepository;
 		}
 		
-		public ExtendedGraph CreateGraph(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
+		public ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
 		{
+			int cx = p.Components.Count;
 			string sortString = "";
 			int minDT = 0;
 			int maxDT = 0;
@@ -610,34 +606,34 @@ namespace HW.Core.Helpers
 
 			LanguageFactory.SetCurrentCulture(langID);
 
-			if (type == 1) {
+			if (p.Type == 1) {
 				decimal tot = answerRepository.CountByDate(fy, ty, sortString);
 
-				if (rac > Convert.ToInt32(tot)) {
+				if (p.RequiredAnswerCount > Convert.ToInt32(tot)) {
 					g = new ExtendedGraph(895, 50, "#FFFFFF");
 					g.drawStringInGraph("Ingen återkoppling pga otillräckligt underlag", 300, -30);
 				} else {
 					g = new ExtendedGraph(895, 550, "#FFFFFF");
 					List<Bar> bars = new List<Bar>();
-					foreach (OptionComponentLanguage c in optionRepository.FindComponentsByLanguage(o, langID)) {
-						int x = answerRepository.CountByValueWithDateOptionAndQuestion(c.Component.Id, fy, ty, o, q, sortString);
+					foreach (OptionComponents c in optionRepository.FindComponentsByLanguage(p.Option.Id, langID)) {
+						int x = answerRepository.CountByValueWithDateOptionAndQuestion(c.Component.Id, fy, ty, p.Option.Id, p.Question.Id, sortString);
 						var b = new Bar {
-							Description = c.Text,
+							Description = c.Component.CurrentLanguage.Text,
 							Value = Convert.ToInt32(Math.Round(Convert.ToDecimal(x) / tot * 100M, 0)),
 							Color = 5
 						};
 						bars.Add(b);
 					}
-					cx = optionRepository.CountByOption(o);
+					cx = optionRepository.CountByOption(p.Option.Id);
 					g.DrawBars(disabled, cx, tot, bars);
 					g.drawAxisExpl(string.Format("% (n = {0})", tot), 5, false, false);
 				}
-			} else if (type == 3) {
+			} else if (p.Type == 3) {
 				g = new ExtendedGraph(895, 550, "#FFFFFF");
 				List<Bar> bars = new List<Bar>();
 				List<int> referenceLines = new List<int>();
 				
-				foreach (ReportPartComponent c in reportRepository.FindComponents(rpid)) {
+				foreach (ReportPartComponent c in reportRepository.FindComponents(p.Id)) {
 					System.Collections.SortedList all = new System.Collections.SortedList();
 
 					foreach (ProjectRoundUnit u in projectRepository.FindRoundUnitsBySortString(sortString)) {
@@ -668,10 +664,10 @@ namespace HW.Core.Helpers
 				}
 				g.DrawBars(disabled, cx, bars, referenceLines);
 				g.drawAxisExpl("poäng", 0, false, false);
-			} else if (type == 2) {
+			} else if (p.Type == 2) {
 				g = new ExtendedGraph(895, 550, "#FFFFFF");
 				List<Bar> bars = new List<Bar>();
-				foreach (ReportPartComponent c in reportRepository.FindComponents(rpid)) {
+				foreach (ReportPartComponent c in reportRepository.FindComponents(p.Id)) {
 					if (c.Index.Parts.Count == 0) {
 						GetIdxVal(c.Index.Id, sortString, langID, fy, ty);
 					} else {
@@ -683,7 +679,7 @@ namespace HW.Core.Helpers
 				g.DrawBars(disabled, cx, bars);
 				g.drawAxisExpl("poäng", 0, false, false);
 				g.drawReference(780, 25, " = riktvärde");
-			} else if (type == 8) {
+			} else if (p.Type == 8) {
 				if (GB == 0) {
 					GB = 2;
 				}
@@ -691,12 +687,10 @@ namespace HW.Core.Helpers
 				string groupBy = GroupFactory.GetGroupBy(GB);
 				g = new ExtendedGraph(895, 440, "#FFFFFF");
 
-//				int t = 2 + (!stdev ? 1 : 0);
 				int t = 2;
-				if (plot == "BoxPlot") {
+				if (plot.Equals("BOXPLOT")) {
 					g.Type = new BoxPlotGraphType();
 				} else {
-//					g.Type = new LineGraphType(stdev, t);
 					g.Type = new LineGraphType(point, t);
 				}
 				Answer answer = answerRepository.ReadByGroup(groupBy, fy, ty, sortString);
@@ -708,7 +702,7 @@ namespace HW.Core.Helpers
 
 				List<IIndex> indexes = new List<IIndex>();
 				List<IMinMax> minMaxes = new List<IMinMax>();
-				foreach (ReportPartComponent c in reportRepository.FindComponentsByPart(rpid)) {
+				foreach (ReportPartComponent c in reportRepository.FindComponentsByPart(p.Id)) {
 					if (!hasGrouping) {
 						Answer a = answerRepository.ReadMinMax(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString);
 						if (a != null) {
@@ -752,7 +746,6 @@ namespace HW.Core.Helpers
 					
 					g.Explanations.Add(
 						new Explanation {
-//							Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
 							Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (point == Distribution.StandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
 							Color = 0,
 							Right = false,
@@ -760,7 +753,7 @@ namespace HW.Core.Helpers
 							HasAxis = false
 						}
 					);
-					ReportPartComponent c = reportRepository.ReadComponentByPartAndLanguage(rpid, langID);
+					ReportPartComponent c = reportRepository.ReadComponentByPartAndLanguage(p.Id, langID);
 					if (c != null) {
 						int bx = 0;
 						foreach(string i in item) {
@@ -786,7 +779,7 @@ namespace HW.Core.Helpers
 									lastDT++;
 									cx++;
 								}
-								if (a.Values.Count >= rac) {
+								if (a.Values.Count >= p.RequiredAnswerCount) {
 									if (COUNT == 1) {
 										g.DrawBottomString(GB, a.DT, cx, (COUNT == 1 ? ", n = " + a.Values.Count : ""));
 									}
@@ -801,10 +794,9 @@ namespace HW.Core.Helpers
 					}
 				} else {
 					int bx = 0;
-					foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(rpid, langID)) {
+					foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(p.Id, langID)) {
 						g.Explanations.Add(
 							new Explanation {
-//								Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
 								Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (point == Distribution.StandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
 								Color = bx + 4,
 								Right = bx == 0 ? false : true,
@@ -821,7 +813,7 @@ namespace HW.Core.Helpers
 								cx++;
 							}
 
-							if (a.CountV >= rac) {
+							if (a.CountV >= p.RequiredAnswerCount) {
 								g.DrawBottomString(GB, a.DT, cx, ", n = " + a.CountV);
 								s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
 							}
@@ -837,8 +829,9 @@ namespace HW.Core.Helpers
 			return g;
 		}
 		
-		public string CreateGraph2(string key, int rpid, int langID, int PRUID, int type, int fy, int ty, int cx, int rac, int o, int q, int GB, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
+		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
 		{
+			int cx = p.Components.Count;
 			string sortString = "";
 			int minDT = 0;
 			int maxDT = 0;
@@ -852,21 +845,20 @@ namespace HW.Core.Helpers
 			Dictionary<string, List<Answer>> weeks = new Dictionary<string, List<Answer>>();
 			List<Answer> week =  new List<Answer>();
 			List<Department> departments = new List<Department>();
-//			ExtendedGraph g = null;
 
 			LanguageFactory.SetCurrentCulture(langID);
 
-			if (type == 1) {
+			if (p.Type == 1) {
 				decimal tot = answerRepository.CountByDate(fy, ty, sortString);
 
-				if (rac > Convert.ToInt32(tot)) {
+				if (p.RequiredAnswerCount > Convert.ToInt32(tot)) {
 //					g = new ExtendedGraph(895, 50, "#FFFFFF");
 //					g.drawStringInGraph("Ingen återkoppling pga otillräckligt underlag", 300, -30);
 				} else {
 //					g = new ExtendedGraph(895, 550, "#FFFFFF");
 //					List<Bar> bars = new List<Bar>();
-					foreach (OptionComponentLanguage c in optionRepository.FindComponentsByLanguage(o, langID)) {
-						int x = answerRepository.CountByValueWithDateOptionAndQuestion(c.Component.Id, fy, ty, o, q, sortString);
+					foreach (OptionComponents c in optionRepository.FindComponentsByLanguage(p.Option.Id, langID)) {
+						int x = answerRepository.CountByValueWithDateOptionAndQuestion(c.Component.Id, fy, ty, p.Option.Id, p.Question.Id, sortString);
 //						var b = new Bar {
 //							Description = c.Text,
 //							Value = Convert.ToInt32(Math.Round(Convert.ToDecimal(x) / tot * 100M, 0)),
@@ -874,16 +866,16 @@ namespace HW.Core.Helpers
 //						};
 //						bars.Add(b);
 					}
-					cx = optionRepository.CountByOption(o);
+					cx = optionRepository.CountByOption(p.Option.Id);
 //					g.DrawBars(disabled, cx, tot, bars);
 //					g.drawAxisExpl(string.Format("% (n = {0})", tot), 5, false, false);
 				}
-			} else if (type == 3) {
+			} else if (p.Type == 3) {
 //				g = new ExtendedGraph(895, 550, "#FFFFFF");
 //				List<Bar> bars = new List<Bar>();
 //				List<int> referenceLines = new List<int>();
 				
-				foreach (ReportPartComponent c in reportRepository.FindComponents(rpid)) {
+				foreach (ReportPartComponent c in reportRepository.FindComponents(p.Id)) {
 					System.Collections.SortedList all = new System.Collections.SortedList();
 
 					foreach (ProjectRoundUnit u in projectRepository.FindRoundUnitsBySortString(sortString)) {
@@ -914,10 +906,10 @@ namespace HW.Core.Helpers
 				}
 //				g.DrawBars(disabled, cx, bars, referenceLines);
 //				g.drawAxisExpl("poäng", 0, false, false);
-			} else if (type == 2) {
+			} else if (p.Type == 2) {
 //				g = new ExtendedGraph(895, 550, "#FFFFFF");
 //				List<Bar> bars = new List<Bar>();
-				foreach (ReportPartComponent c in reportRepository.FindComponents(rpid)) {
+				foreach (ReportPartComponent c in reportRepository.FindComponents(p.Id)) {
 					if (c.Index.Parts.Count == 0) {
 						GetIdxVal(c.Index.Id, sortString, langID, fy, ty);
 					} else {
@@ -929,7 +921,7 @@ namespace HW.Core.Helpers
 //				g.DrawBars(disabled, cx, bars);
 //				g.drawAxisExpl("poäng", 0, false, false);
 //				g.drawReference(780, 25, " = riktvärde");
-			} else if (type == 8) {
+			} else if (p.Type == 8) {
 				if (GB == 0) {
 					GB = 2;
 				}
@@ -938,7 +930,7 @@ namespace HW.Core.Helpers
 //				g = new ExtendedGraph(895, 440, "#FFFFFF");
 
 //				int t = 2 + (!stdev ? 1 : 0);
-				if (plot == "BoxPlot") {
+				if (plot == "BOXPLOT") {
 //					g.Type = new BoxPlotGraphType();
 				} else {
 //					g.Type = new LineGraphType(stdev, t);
@@ -972,7 +964,7 @@ namespace HW.Core.Helpers
 				cx = 0;
 				
 //				g.DrawBottomString(minDT, maxDT, GB);
-				
+//				
 //				List<IExplanation> explanationBoxes = new List<IExplanation>();
 				
 				if (hasGrouping) {
@@ -993,7 +985,7 @@ namespace HW.Core.Helpers
 //						breaker = 3;
 //						itemWidth = 240;
 //					}
-					
+//					
 //					g.Explanations.Add(
 //						new Explanation {
 //							Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
@@ -1003,7 +995,7 @@ namespace HW.Core.Helpers
 //							HasAxis = false
 //						}
 //					);
-					ReportPartComponent c = reportRepository.ReadComponentByPartAndLanguage(rpid, langID);
+					ReportPartComponent c = reportRepository.ReadComponentByPartAndLanguage(p.Id, langID);
 					if (c != null) {
 						int bx = 0;
 						foreach(string i in item) {
@@ -1041,7 +1033,7 @@ namespace HW.Core.Helpers
 									cx++;
 //									week.Add(new Answer());
 								}
-								if (a.Values.Count >= rac) {
+								if (a.Values.Count >= p.RequiredAnswerCount) {
 									if (COUNT == 1) {
 //										g.DrawBottomString(GB, a.SomeInteger, cx, (COUNT == 1 ? ", n = " + a.Values.Count : ""));
 									}
@@ -1058,7 +1050,7 @@ namespace HW.Core.Helpers
 					}
 				} else {
 					int bx = 0;
-					foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(rpid, langID)) {
+					foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(p.Id, langID)) {
 //						g.Explanations.Add(
 //							new Explanation {
 //								Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
@@ -1077,7 +1069,7 @@ namespace HW.Core.Helpers
 								cx++;
 							}
 
-							if (a.CountV >= rac) {
+							if (a.CountV >= p.RequiredAnswerCount) {
 //								g.DrawBottomString(GB, a.SomeInteger, cx, ", n = " + a.CountV);
 //								s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
 							}
@@ -1092,7 +1084,7 @@ namespace HW.Core.Helpers
 			}
 //			return g;
 			
-			if (plot == "BoxPlot") {
+			if (plot == "BOXPLOT") {
 				return new BoxPlotCsv().ToCsv(departments, weeks);
 			} else {
 				if (point == Distribution.None) {
@@ -1115,10 +1107,7 @@ namespace HW.Core.Helpers
 						if (w == 0) {
 							w = 52;
 						}
-						//						string v = "v" + w + ", " + (d / 52) + str;
 						string v = string.Format("v{0}, {1}{2}", w, d / 52, str);
-//						drawBottomString(v, dx, true);
-//						break;
 						return v;
 					}
 				case 2:
@@ -1128,10 +1117,7 @@ namespace HW.Core.Helpers
 						if (w == 0) {
 							w = 52;
 						}
-						//						string v = "v" + (w - 1) + "-" + w + ", " + (d - ((d - 1) % 52)) / 52 + str;
 						string v = string.Format("v{0}-{1}, {2}{3}", w - 2, w, (d - ((d - 1) % 52)) / 52, str);
-//						drawBottomString(v, dx, true);
-//						break;
 						return v;
 					}
 				case 3:
@@ -1142,8 +1128,6 @@ namespace HW.Core.Helpers
 							w = 12;
 						}
 						string v = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedMonthNames[w - 1] + ", " + ((d - w) / 12) + str;
-//						drawBottomString(v, dx, true);
-//						break;
 						return v;
 					}
 				case 4:
@@ -1153,10 +1137,7 @@ namespace HW.Core.Helpers
 						if (w == 0) {
 							w = 12;
 						}
-						//						string v = "Q" + (w / 3) + ", " + ((d - w) / 12) + str;
 						string v = string.Format("Q{0}, {1}{2}", w / 3, (d - w) / 12, str);
-//						drawBottomString(v, dx, true);
-//						break;
 						return v;
 					}
 				case 5:
@@ -1166,17 +1147,12 @@ namespace HW.Core.Helpers
 						if (w == 0) {
 							w = 12;
 						}
-						//						string v = ((d - w) / 12) + "/" + (w / 6) + str;
 						string v = string.Format("{0}/{1}{2}", (d - w) / 12, w / 6, str);
-//						drawBottomString(v, dx, true);
-//						break;
 						return v;
 					}
 				case 6:
 					{
 						string v = i.ToString() + str;
-//						drawBottomString(v, dx, true);
-//						break;
 						return v;
 					}
 				case 7:
@@ -1187,8 +1163,6 @@ namespace HW.Core.Helpers
 							w = 52;
 						}
 						string v = "v" + w + "-" + ((w == 52 ? 0 : w) + 1) + ", " + ((d + 1) - (d % 52)) / 52 + str;
-//						drawBottomString(v, dx, true);
-//						break;
 						return v;
 					}
 				default:
@@ -1236,18 +1210,6 @@ namespace HW.Core.Helpers
 		}
 	}
 	
-	public class GraphFactory
-	{
-		public static IGraphFactory CreateFactory(bool hasAnswerKey, IAnswerRepository answerRepository, IReportRepository reportRepository, IProjectRepository projectRepository, IOptionRepository optionRepository, IDepartmentRepository departmentRepository, IQuestionRepository questionRepository, IIndexRepository indexRepository)
-		{
-			if (hasAnswerKey) {
-				return new UserLevelGraphFactory(answerRepository, reportRepository);
-			} else {
-				return new GroupStatsGraphFactory(answerRepository, reportRepository, projectRepository, optionRepository, indexRepository, questionRepository, departmentRepository);
-			}
-		}
-	}
-	
 	public interface IGraphType
 	{
 		ExtendedGraph Graph { get; set; }
@@ -1260,14 +1222,6 @@ namespace HW.Core.Helpers
 		public float Y { get; set; }
 		public HWList Values { get; set; }
 		public string Description { get; set; }
-		
-//		public int T { get; set; }
-//		public float Deviation { get; set; }
-//		public double LowerWhisker { get; set; }
-//		public double UpperWhisker { get; set; }
-//		public double LowerBox { get; set; }
-//		public double UpperBox { get; set; }
-//		public double Median { get; set; }
 	}
 	
 	public class LineGraphType : IGraphType

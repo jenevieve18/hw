@@ -24,6 +24,11 @@ namespace HW.Core.Models
 		public ExerciseCategoryLanguage CurrentCategory { get; set; }
 		public ExerciseVariantLanguage CurrentVariant { get; set; }
 		public ExerciseTypeLanguage CurrentType { get; set; }
+		
+		public override string ToString()
+		{
+			return string.Format("{0} - {1}", CurrentArea.AreaName, CurrentCategory.CategoryName);
+		}
 	}
 	
 	public class ExerciseArea : BaseModel
@@ -38,6 +43,11 @@ namespace HW.Core.Models
 		public ExerciseArea Area { get; set; }
 		public Language Language { get; set; }
 		public string AreaName { get; set; }
+		
+		public override string ToString()
+		{
+			return AreaName;
+		}
 	}
 	
 	public class ExerciseCategory : BaseModel
@@ -51,6 +61,11 @@ namespace HW.Core.Models
 		public Language Language { get; set; }
 		public ExerciseCategory Category { get; set; }
 		public string CategoryName { get; set; }
+		
+		public override string ToString()
+		{
+			return CategoryName;
+		}
 	}
 	
 	public class ExerciseLanguage : BaseModel

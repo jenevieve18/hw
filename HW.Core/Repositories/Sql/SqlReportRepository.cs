@@ -63,17 +63,54 @@ WHERE rp.ReportPartID = {0}",
 					var p = new ReportPart();
 					p.Type = rs.GetInt32(0);
 					p.Components = new List<ReportPartComponent>(rs.GetInt32(1));
-//					if (!rs.IsDBNull(2)) {
-//						p.Question = new Question { Id = rs.GetInt32(2) };
-//					}
 					p.Question = new Question { Id = GetInt32(rs, 2) };
-//					if (!rs.IsDBNull(3)) {
-//						p.Option = new Option { Id = rs.GetInt32(3) };
-//					}
 					p.Option = new Option { Id = GetInt32(rs, 3) };
 					p.RequiredAnswerCount = rs.GetInt32(4);
 					p.PartLevel = GetInt32(rs, 5);
 					p.Id = GetInt32(rs, 6);
+					return p;
+				}
+			}
+			return null;
+		}
+		
+		public ReportPart ReadReportPart(int reportPartID, int langID)
+		{
+			string query = string.Format(
+				@"
+SELECT rp.Type,
+	(SELECT COUNT(*) FROM ReportPartComponent rpc WHERE rpc.ReportPartID = rp.ReportPartID),
+	rp.QuestionID,
+	rp.OptionID,
+	rp.RequiredAnswerCount,
+	rp.PartLevel,
+	rp.ReportPartID,
+	rpl.Subject,
+	rpl.Header,
+	rpl.Footer
+FROM ReportPart rp,
+ReportPartLang rpl 
+WHERE rp.ReportPartID = {0}
+AND rp.ReportPartID = rpl.ReportPartID
+AND rpl.LangID = {1}",
+				reportPartID,
+				langID
+			);
+			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
+				if (rs.Read()) {
+					var p = new ReportPart();
+					p.Type = rs.GetInt32(0);
+					p.Components = new List<ReportPartComponent>(rs.GetInt32(1));
+					p.Question = new Question { Id = GetInt32(rs, 2) };
+					p.Option = new Option { Id = GetInt32(rs, 3) };
+					p.RequiredAnswerCount = rs.GetInt32(4);
+					p.PartLevel = GetInt32(rs, 5);
+					p.Id = GetInt32(rs, 6);
+					p.CurrentLanguage = new ReportPartLanguage {
+						Subject = GetString(rs, 7),
+						Header = GetString(rs, 8),
+						Footer = GetString(rs, 9)
+					};
 					return p;
 				}
 			}
@@ -88,7 +125,8 @@ SELECT rp.ReportPartID,
 	rpl.Subject,
 	rpl.Header,
 	rpl.Footer,
-	rp.Type
+	rp.Type,
+	rpl.ReportPartLangID
 FROM ProjectRoundUnit pru
 INNER JOIN Report r ON r.ReportID = pru.ReportID
 INNER JOIN ReportPart rp ON r.ReportID = rp.ReportID
@@ -102,6 +140,7 @@ ORDER BY rp.SortOrder",
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				while (rs.Read()) {
 					var l = new ReportPartLanguage {
+						Id = rs.GetInt32(5),
 						ReportPart = new ReportPart { Id = rs.GetInt32(0), Type = rs.GetInt32(4) },
 						Subject = rs.GetString(1),
 						Header = rs.GetString(2),

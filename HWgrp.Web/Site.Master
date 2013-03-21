@@ -5,9 +5,6 @@
 <html lang="en" class="no-js">
 <head runat="server">
 	<title>HealthWatch.se / Group admin</title>
-	
-	<asp:ContentPlaceHolder ID="head" runat="server">
-	</asp:ContentPlaceHolder>
 
 	<meta http-equiv="Pragma" content="no-cache">
 	<meta http-equiv="Expires" content="-1">
@@ -25,13 +22,13 @@
 		.description {
 			padding:5px 0;
 		}
-		.settingsPane, .actionPane2, .top {
+		.settingsPane, .actionPane2, #contextbar .top, .statschosergroup {
 			background:#e3f4fb;
 			border-bottom:1px solid #97D2EB;
 			border-top:1px solid #97D2EB;
 			padding:10px 20px;
 		}
-		.bottom {
+		#contextbar .bottom {
 			background:#cdecf7;
 			padding:10px 20px;
 		}
@@ -76,10 +73,23 @@
 			background:url(img/gears.gif) no-repeat;
 			padding:20px 20px 20px 130px;
 		}
+		.time {
+			float:right;
+			background:url(img/time.png) no-repeat;
+			padding-left:20px;
+		}
+		.sidearrow {
+			background: url(img/myhealth_formchoser_arrow.gif) no-repeat;
+			padding-left: 20px;
+		}
 	</style>
 
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 	<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+	
+	<asp:ContentPlaceHolder ID="head" runat="server">
+	</asp:ContentPlaceHolder>
+
 	<script src="js/bootstrap.js"></script>
 	
 	<script type="text/javascript">
@@ -110,8 +120,8 @@
 					<div class="logincontainer grid_5 alpha omega">
 						<div class="gears">
 							<span>Name</span> <span style="color: white;">658</span><br />
-							<%= HtmlHelper.Anchor("Settings", "settings.aspx?Rnd=1384562012", "regular") %>&nbsp;&nbsp;
-							<%= HtmlHelper.Anchor("Log out", "default.aspx?Rnd=1384562012", "regular") %>
+							<%= HtmlHelper.Anchor("Settings", "settings.aspx", "regular") %>&nbsp;&nbsp;
+							<%= HtmlHelper.Anchor("Log out", "default.aspx", "regular") %>
 						</div>
 					</div>--%>
 					<ul class="nav">
@@ -128,8 +138,8 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="icon-cog"></b>Utility</a>
 							<ul class="dropdown-menu">
-								<li><%= BootstrapHelper.Anchor("Settings", "settings.aspx?Rnd=1384562012", "icon-cog") %></li>
-								<li><%= BootstrapHelper.Anchor("Log out", "default.aspx?Rnd=1384562012", "icon-off") %></li>
+								<li><%= BootstrapHelper.Anchor("Settings", "settings.aspx", true, "icon-cog") %></li>
+								<li><%= BootstrapHelper.Anchor("Log out", "default.aspx", true, "icon-off") %></li>
 							</ul>
 						</li>
 					</ul>
@@ -142,10 +152,10 @@
 				<% foreach (var f in functions) { %>
 					<% bool active = Request.Url.AbsolutePath.IndexOf(f.URL) >= 0; %>
 					<% if (active) { %>
-						<%= HtmlHelper.Anchor(f.Function, f.URL, new Dictionary<string, string>() { { "class", "active btn btn-large btn-info"}, { "title", f.Expl } } ) %>
+						<%= HtmlHelper.Anchor(f.Function, f.URL, true, new Dictionary<string, string>() { { "class", "active btn btn-large btn-info"}, { "title", f.Expl } } ) %>
 						<% desc = f.Expl; %>
 					<% } else { %>
-						<%= HtmlHelper.Anchor(f.Function, f.URL, new Dictionary<string, string>() { { "class", "btn btn-large btn-info"}, { "title", f.Expl } } ) %>
+						<%= HtmlHelper.Anchor(f.Function, f.URL, true, new Dictionary<string, string>() { { "class", "btn btn-large btn-info"}, { "title", f.Expl } } ) %>
 					<% } %>
 				<% } %>
 			</div>

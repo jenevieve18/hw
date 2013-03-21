@@ -28,7 +28,8 @@ SELECT COUNT(*) FROM OptionComponents WHERE OptionID = {0}",
 			return 0;
 		}
 		
-		public IList<OptionComponentLanguage> FindComponentsByLanguage(int optionID, int langID)
+//		public IList<OptionComponentLanguage> FindComponentsByLanguage(int optionID, int langID)
+		public IList<OptionComponents> FindComponentsByLanguage(int optionID, int langID)
 		{
 			string query = string.Format(
 				@"
@@ -42,12 +43,17 @@ ORDER BY ocs.SortOrder",
 				optionID,
 				langID
 			);
-			var components = new List<OptionComponentLanguage>();
+//			var components = new List<OptionComponentLanguage>();
+			var components = new List<OptionComponents>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				while (rs.Read()) {
-					var c = new OptionComponentLanguage();
-					c.Text = rs.GetString(1);
-					c.Component = new OptionComponent { Id = rs.GetInt32(0) };
+//					var c = new OptionComponentLanguage();
+					var c = new OptionComponents();
+					var o = new OptionComponent { Id = rs.GetInt32(0) };
+					o.CurrentLanguage = new OptionComponentLanguage { Text = rs.GetString(1) };
+					c.Component = o;
+//					c.Text = rs.GetString(1);
+//					c.Component = new OptionComponent { Id = rs.GetInt32(0) };
 					components.Add(c);
 				}
 			}

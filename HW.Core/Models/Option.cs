@@ -18,8 +18,14 @@ namespace HW.Core.Models
 		public OptionContainer Container { get; set; }
 		public string BackgroundColor { get; set; }
 		public int InnerWidth { get; set; }
+		public IList<OptionComponents> Components { get; set; }
 		
 		public OptionComponentLanguage CurrentComponent { get; set; }
+	}
+	
+	public class OptionComponents : BaseModel
+	{
+		public OptionComponent Component { get; set; }
 	}
 	
 	public class OptionContainer : BaseModel
@@ -33,6 +39,8 @@ namespace HW.Core.Models
 		public string Internal { get; set; }
 		public IList<OptionComponentLanguage> Languages { get; set; }
 		public OptionComponentContainer Container { get; set; }
+		
+		public OptionComponentLanguage CurrentLanguage { get; set; }
 	}
 	
 	public class OptionComponentContainer : BaseModel
