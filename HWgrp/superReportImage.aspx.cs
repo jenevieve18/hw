@@ -25,19 +25,19 @@ namespace HWgrp
 		
 		private void Page_Load(object sender, System.EventArgs e)
 		{
-			string rnds1 = (HttpContext.Current.Request.QueryString["RNDS1"] != null ? HttpContext.Current.Request.QueryString["RNDS1"] : "");
-			string rnds2 = (HttpContext.Current.Request.QueryString["RNDS2"] != null ? HttpContext.Current.Request.QueryString["RNDS2"] : "");
-			string rndsd1 = (HttpContext.Current.Request.QueryString["RNDSD1"] != null ? HttpContext.Current.Request.QueryString["RNDSD1"] : "");
-			string rndsd2 = (HttpContext.Current.Request.QueryString["RNDSD2"] != null ? HttpContext.Current.Request.QueryString["RNDSD2"] : "");
-			string pid1 = (HttpContext.Current.Request.QueryString["PID1"] != null ? HttpContext.Current.Request.QueryString["PID1"] : "");
-			string pid2 = (HttpContext.Current.Request.QueryString["PID2"] != null ? HttpContext.Current.Request.QueryString["PID2"] : "");
+			string rnds1 = (Request.QueryString["RNDS1"] != null ? Request.QueryString["RNDS1"] : "");
+			string rnds2 = (Request.QueryString["RNDS2"] != null ? Request.QueryString["RNDS2"] : "");
+			string rndsd1 = (Request.QueryString["RNDSD1"] != null ? Request.QueryString["RNDSD1"] : "");
+			string rndsd2 = (Request.QueryString["RNDSD2"] != null ? Request.QueryString["RNDSD2"] : "");
+			string pid1 = (Request.QueryString["PID1"] != null ? Request.QueryString["PID1"] : "");
+			string pid2 = (Request.QueryString["PID2"] != null ? Request.QueryString["PID2"] : "");
 
 			// For min/max
 			string rnds = (rnds1 == "0" || rnds2 == "0" ? "" : " AND pru.ProjectRoundUnitID IN (" + rnds1 + (rnds2 != "" ? "," + rnds2 : "") + ")");
 
 			if (rnds1 == "0")
 			{
-				rnds1 = " AND pru.ProjectRoundUnitID NOT IN (" + HttpContext.Current.Request.QueryString["N"].ToString() + ")";
+				rnds1 = " AND pru.ProjectRoundUnitID NOT IN (" + Request.QueryString["N"].ToString() + ")";
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace HWgrp
 			{
 				if (rnds2 == "0")
 				{
-					rnds2 = " AND pru.ProjectRoundUnitID NOT IN (" + HttpContext.Current.Request.QueryString["N"].ToString() + ")";
+					rnds2 = " AND pru.ProjectRoundUnitID NOT IN (" + Request.QueryString["N"].ToString() + ")";
 				}
 				else
 				{
@@ -151,11 +151,11 @@ namespace HWgrp
 //			                         "rp.RequiredAnswerCount, " +
 //			                         "rp.PartLevel " +
 //			                         "FROM ReportPart rp " +
-//			                         "WHERE rp.ReportPartID = " + HttpContext.Current.Request.QueryString["RPID"], "eFormSqlConnection");
+//			                         "WHERE rp.ReportPartID = " + Request.QueryString["RPID"], "eFormSqlConnection");
 //			if (rs.Read())
 			SqlDataReader rs;
-			int rpid = Convert.ToInt32(HttpContext.Current.Request.QueryString["RPID"]);
-			var reportPart = reportRepository.ReadReportPart(rpid);
+			int rpid = Convert.ToInt32(Request.QueryString["RPID"]);
+			var reportPart = reportRepository.ReadReportPart(rpid, 1); // TODO: This should be related to a language, right?
 			if (reportPart != null)
 			{
 //				type = rs.GetInt32(0);
@@ -199,8 +199,8 @@ namespace HWgrp
 				           "FROM Answer a " +
 				           "INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID " +
 				           "WHERE a.EndDT IS NOT NULL " +
-				           "AND a.EndDT >= '" + HttpContext.Current.Request.QueryString["FDT"].ToString() + "' " +
-				           "AND a.EndDT < '" + HttpContext.Current.Request.QueryString["TDT"].ToString() + "' " +
+				           "AND a.EndDT >= '" + Request.QueryString["FDT"].ToString() + "' " +
+				           "AND a.EndDT < '" + Request.QueryString["TDT"].ToString() + "' " +
 				           rnds, "eFormSqlConnection");
 				if (rs.Read())
 				{
@@ -220,7 +220,7 @@ namespace HWgrp
 				           "wqo.YellowHigh " +
 				           "FROM ReportPartComponent rpc " +
 				           "INNER JOIN WeightedQuestionOption wqo ON rpc.WeightedQuestionOptionID = wqo.WeightedQuestionOptionID " +
-				           "WHERE rpc.ReportPartID = " + HttpContext.Current.Request.QueryString["RPID"] + " " +
+				           "WHERE rpc.ReportPartID = " + Request.QueryString["RPID"] + " " +
 				           "ORDER BY rpc.SortOrder", "eFormSqlConnection");
 				while (rs.Read())
 				{
@@ -239,8 +239,8 @@ namespace HWgrp
 					                          "INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = " + rs.GetInt32(1) + " AND av.OptionID = " + rs.GetInt32(2) + " " +
 					                          "INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID " +
 					                          "WHERE a.EndDT IS NOT NULL " +
-					                          "AND a.EndDT >= '" + HttpContext.Current.Request.QueryString["FDT"].ToString() + "' " +
-					                          "AND a.EndDT < '" + HttpContext.Current.Request.QueryString["TDT"].ToString() + "' " +
+					                          "AND a.EndDT >= '" + Request.QueryString["FDT"].ToString() + "' " +
+					                          "AND a.EndDT < '" + Request.QueryString["TDT"].ToString() + "' " +
 					                          rnds +
 					                          "GROUP BY a.ProjectRoundUserID, " + groupBy + "(a.EndDT) " +
 					                          ") tmp " +
@@ -410,7 +410,7 @@ namespace HWgrp
 				           "FROM ReportPartComponent rpc " +
 				           "INNER JOIN WeightedQuestionOption wqo ON rpc.WeightedQuestionOptionID = wqo.WeightedQuestionOptionID " +
 				           "INNER JOIN WeightedQuestionOptionLang wqol ON wqo.WeightedQuestionOptionID = wqol.WeightedQuestionOptionID AND wqol.LangID = " + langID + " " +
-				           "WHERE rpc.ReportPartID = " + HttpContext.Current.Request.QueryString["RPID"] + " " +
+				           "WHERE rpc.ReportPartID = " + Request.QueryString["RPID"] + " " +
 				           "ORDER BY rpc.SortOrder", "eFormSqlConnection");
 				if (rs.Read())
 				{
@@ -418,7 +418,7 @@ namespace HWgrp
 					g.drawAxisExpl(rs.GetString(1) + ", " + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""), 20, false, false);
 					g.drawAxis(false);
 
-					g.drawColorExplBox(HttpContext.Current.Request.QueryString["R1"].ToString(), 4, 300, 20);
+					g.drawColorExplBox(Request.QueryString["R1"].ToString(), 4, 300, 20);
 
 					float lastVal = -1f;
 					float lastStd = -1f;
@@ -440,8 +440,8 @@ namespace HWgrp
 					                          "INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID " +
 					                          join1 +
 					                          "WHERE a.EndDT IS NOT NULL " +
-					                          "AND a.EndDT >= '" + HttpContext.Current.Request.QueryString["FDT"].ToString() + "' " +
-					                          "AND a.EndDT < '" + HttpContext.Current.Request.QueryString["TDT"].ToString() + "' " +
+					                          "AND a.EndDT >= '" + Request.QueryString["FDT"].ToString() + "' " +
+					                          "AND a.EndDT < '" + Request.QueryString["TDT"].ToString() + "' " +
 					                          rnds1 +
 					                          "GROUP BY a.ProjectRoundUserID, " + groupBy + "(a.EndDT) " +
 					                          ") tmp " +
@@ -494,7 +494,7 @@ namespace HWgrp
 
 					if (rnds2 != "")
 					{
-						g.drawColorExplBox(HttpContext.Current.Request.QueryString["R2"].ToString(), 5, 600, 20);
+						g.drawColorExplBox(Request.QueryString["R2"].ToString(), 5, 600, 20);
 
 						lastVal = -1f;
 						lastStd = -1f;
@@ -516,8 +516,8 @@ namespace HWgrp
 						            "INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID " +
 						            join2 +
 						            "WHERE a.EndDT IS NOT NULL " +
-						            "AND a.EndDT >= '" + HttpContext.Current.Request.QueryString["FDT"].ToString() + "' " +
-						            "AND a.EndDT < '" + HttpContext.Current.Request.QueryString["TDT"].ToString() + "' " +
+						            "AND a.EndDT >= '" + Request.QueryString["FDT"].ToString() + "' " +
+						            "AND a.EndDT < '" + Request.QueryString["TDT"].ToString() + "' " +
 						            rnds2 +
 						            "GROUP BY a.ProjectRoundUserID, " + groupBy + "(a.EndDT) " +
 						            ") tmp " +
