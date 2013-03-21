@@ -24,7 +24,7 @@ namespace HW.Tests.Repositories
 		[Test]
 		public void TestReadReportPart()
 		{
-			var p = r.ReadReportPart(1);
+			var p = r.ReadReportPart(1, 1);
 		}
 	}
 }

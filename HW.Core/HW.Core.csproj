@@ -74,6 +74,7 @@
     <Compile Include="Helpers\HtmlHelper.cs" />
     <Compile Include="Helpers\HWList.cs" />
     <Compile Include="Helpers\OctreeQuantizer.cs" />
+    <Compile Include="Helpers\PdfExporter.cs" />
     <Compile Include="Helpers\Quantizer.cs" />
     <Compile Include="Helpers\IExporter.cs" />
     <Compile Include="Helpers\HtmlControls.cs" />

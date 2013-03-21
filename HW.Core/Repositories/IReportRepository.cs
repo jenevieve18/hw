@@ -112,20 +112,6 @@ namespace HW.Core.Repositories
 			return languages;
 		}
 		
-		public ReportPart ReadReportPart(int reportPartID)
-		{
-			int[] types = new int[] { 2, 8, 9 };
-			return new ReportPart {
-//				Type = types[new Random().Next(0, types.Length)],
-				Type = 8,
-				Components = new List<ReportPartComponent>(10),
-				Question = new Question { Id = 1 },
-				Option = new Option { Id = 1 },
-				RequiredAnswerCount = 1,
-				PartLevel = 1
-			};
-		}
-		
 		public ReportPart ReadReportPart(int reportPartID, int langID)
 		{
 			int[] types = new int[] { 2, 8, 9 };

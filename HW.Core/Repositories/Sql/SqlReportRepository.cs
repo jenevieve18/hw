@@ -43,37 +43,6 @@ ORDER BY rpc.SortOrder",
 			return null;
 		}
 		
-		public ReportPart ReadReportPart(int reportPartID)
-		{
-			string query = string.Format(
-				@"
-SELECT rp.Type,
-	(SELECT COUNT(*) FROM ReportPartComponent rpc WHERE rpc.ReportPartID = rp.ReportPartID),
-	rp.QuestionID,
-	rp.OptionID,
-	rp.RequiredAnswerCount,
-	rp.PartLevel,
-	rp.ReportPartID
-FROM ReportPart rp
-WHERE rp.ReportPartID = {0}",
-				reportPartID
-			);
-			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
-				if (rs.Read()) {
-					var p = new ReportPart();
-					p.Type = rs.GetInt32(0);
-					p.Components = new List<ReportPartComponent>(rs.GetInt32(1));
-					p.Question = new Question { Id = GetInt32(rs, 2) };
-					p.Option = new Option { Id = GetInt32(rs, 3) };
-					p.RequiredAnswerCount = rs.GetInt32(4);
-					p.PartLevel = GetInt32(rs, 5);
-					p.Id = GetInt32(rs, 6);
-					return p;
-				}
-			}
-			return null;
-		}
-		
 		public ReportPart ReadReportPart(int reportPartID, int langID)
 		{
 			string query = string.Format(

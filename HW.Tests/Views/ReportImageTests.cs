@@ -34,7 +34,7 @@ namespace HW.Tests.Views
 		[Test]
 		public void TestSetReportPart()
 		{
-			ReportPart r = reportRepository.ReadReportPart(1);
+			ReportPart r = reportRepository.ReadReportPart(1, 1);
 			ExtendedGraph g = new ExtendedGraph(100, 100, "#FFFFFF");
 //			p.SetReportPart("", true, r, g, 1, 1, 2010, 2013, 1, true, true, "LinePlot");
 		}
@@ -73,7 +73,7 @@ namespace HW.Tests.Views
 		public void d()
 		{
 			int rpid = 14;
-			var x = reportRepository.ReadReportPart(rpid);
+			var x = reportRepository.ReadReportPart(rpid, 1);
 		}
 		
 		[Test]
