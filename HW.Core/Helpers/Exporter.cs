@@ -30,6 +30,17 @@ namespace HW.Core.Helpers
 				throw new NotSupportedException();
 			}
 		}
+		
+		public static IExporter GetExporter2(ReportService service, string type, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, IList<ReportPartLanguage> r, string key)
+		{
+			if (type == Pdf) {
+				return new PdfExporter(r);
+			} else if (type == Csv) {
+				return new CsvExporter(service, hasAnswerKey, hasGrouping, disabled, width, height, background, r, key);
+			} else {
+				throw new NotSupportedException();
+			}
+		}
 	}
 	
 	public interface IExporter
@@ -41,6 +52,8 @@ namespace HW.Core.Helpers
 		string ContentDisposition { get; }
 		
 		object Export(int GB, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int distribution);
+		
+		object Export2(int GB, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int distribution);
 	}
 	
 	public class CsvExporter : IExporter
@@ -54,6 +67,7 @@ namespace HW.Core.Helpers
 		ReportPart r;
 		string key;
 		ReportService service;
+		IList<ReportPartLanguage> parts;
 		
 		public CsvExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, ReportPart r, string key)
 		{
@@ -65,6 +79,19 @@ namespace HW.Core.Helpers
 			this.height = height;
 			this.background = background;
 			this.r = r;
+			this.key = key;
+		}
+		
+		public CsvExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, IList<ReportPartLanguage> languages, string key)
+		{
+			this.service = service;
+			this.hasAnswerKey = hasAnswerKey;
+			this.hasGrouping = hasGrouping;
+			this.disabled = disabled;
+			this.width = width;
+			this.height = height;
+			this.background = background;
+			this.parts = languages;
 			this.key = key;
 		}
 		
@@ -84,6 +111,19 @@ namespace HW.Core.Helpers
 		{
 			var f = service.GetGraphFactory(hasAnswerKey);
 			return f.CreateGraph2(key, r, langID, PRUID, fy, ty, GB, hasGrouping, plot, GRPNG, SPONS, SID, GID, disabled, distribution);
+		}
+		
+		public object Export2(int GB, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int distribution)
+		{
+			StringBuilder s = new StringBuilder();
+			foreach (var p in parts) {
+				ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
+				var f = service.GetGraphFactory(hasAnswerKey);
+				string x = f.CreateGraph2(key, r, langID, PRUID, fy, ty, GB, hasGrouping, plot, GRPNG, SPONS, SID, GID, disabled, distribution);
+				s.AppendLine(x);
+				s.AppendLine();
+			}
+			return s.ToString();
 		}
 	}
 	
@@ -252,10 +292,16 @@ namespace HW.Core.Helpers
 	public class PdfExporter : IExporter
 	{
 		ReportPart r;
+		IList<ReportPartLanguage> parts;
 		
 		public PdfExporter(ReportPart r)
 		{
 			this.r = r;
+		}
+		
+		public PdfExporter(IList<ReportPartLanguage> parts)
+		{
+			this.parts = parts;
 		}
 		
 		public string Type {
@@ -315,6 +361,40 @@ namespace HW.Core.Helpers
 			iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(new Uri(url));
 			jpg.ScaleToFit(500f, 500f);
 			doc.Add(jpg);
+			doc.Close();
+			return output;
+		}
+		
+		public object Export2(int GB, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int distribution)
+		{
+			Document doc = new Document();
+			var output = new MemoryStream();
+			PdfWriter writer = PdfWriter.GetInstance(doc, output);
+			doc.Open();
+			
+			foreach (var p in parts) {
+				string url = string.Format(
+					@"{12}reportImage.aspx?LangID={0}&FY={1}&TY={2}&SAID={3}&SID={4}&STDEV={5}&DIST={13}&GB={6}&RPID={7}&PRUID={8}&GID={9}&GRPNG={10}&Plot={11}",
+					langID,
+					fy,
+					ty,
+					SPONS,
+					SID,
+					0, // TODO: No use for standard deviation. Current use is extra point or "distribution".
+					GB,
+					p.ReportPart.Id,
+					PRUID,
+					GID,
+					GRPNG,
+					plot,
+					path,
+					distribution
+				);
+//				doc.Add(new Chunk(r.CurrentLanguage.Subject));
+				iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(new Uri(url));
+				jpg.ScaleToFit(500f, 500f);
+				doc.Add(jpg);
+			}
 			doc.Close();
 			return output;
 		}

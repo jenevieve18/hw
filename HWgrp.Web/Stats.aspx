@@ -88,11 +88,12 @@
 	</div>
 	<!--<asp:Label ID="StatsImg" runat="server" />-->
 	<% if (reportParts != null) { %>
+		<% string URL = GetURL(urlModels); %>
 		<br>
 		<div class="btn-toolbar">
 			<div class="btn-group">
-				<%= HtmlHelper.Anchor("PDF", "ExportAll.aspx", new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
-				<%= HtmlHelper.Anchor("CSV", "ExportAll.aspx", new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
+				<%= HtmlHelper.Anchor("PDF", GetReportImageUrl(0, 0, "ExportAll", URL + "&type=pdf"), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
+				<%= HtmlHelper.Anchor("CSV", GetReportImageUrl(0, 0, "ExportAll", URL + "&type=csv"), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
 			</div>
 			<% if (SelectedDepartments.Count == 1) { %>
 			<div class="btn-group">
@@ -103,13 +104,12 @@
 		</div>
 		<br>
 		<div id="accordion">
-		<% string URL = GetURL(urlModels); %>
 		<% foreach (var r in reportParts) { %>
 			<h1><%= r.Subject %></h1>
 			<div class="report-part-image">
-				<span class="hidden"><%=GetReportImageUrl(r.ReportPart.Id, r.Id, "reportImage", GetURL(urlModels))%></span>
+				<span class="hidden"><%=GetReportImageUrl(r.ReportPart.Id, r.Id, "reportImage", URL)%></span>
 				<div>
-					<%= HtmlHelper.Image(GetReportImageUrl(r.ReportPart.Id, r.Id, "reportImage", GetURL(urlModels))) %>
+					<%= HtmlHelper.Image(GetReportImageUrl(r.ReportPart.Id, r.Id, "reportImage", URL)) %>
 				</div>
 				<div class="btn-toolbar">
 					<div class="btn-group">

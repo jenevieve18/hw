@@ -40,6 +40,11 @@ namespace HW.Core.Services
 			this.indexRepository = indexRepository;
 		}
 		
+		public IList<ReportPartLanguage> FindByProjectAndLanguage(int projectRoundID, int langID)
+		{
+			return reportRepository.FindByProjectAndLanguage(projectRoundID, langID);
+		}
+		
 		public ReportPart ReadReportPart(int rpid, int langID)
 		{
 			return reportRepository.ReadReportPart(rpid, langID);
