@@ -6,7 +6,7 @@
 <div class="contentgroup grid_16">
 	<div id="contextbar">
 		<div class="actionPane2">
-			<div class="bottom" id=ActionNav runat=server>
+			<div class="" id=ActionNav runat=server>
 				<a class="add-user" href="managerSetup.aspx">Add manager</a>
 			</div>
 		</div>
