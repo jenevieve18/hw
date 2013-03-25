@@ -14,28 +14,38 @@ namespace HW.Core.Helpers
 {
 	public static class HtmlHelper
 	{
-		public static string Anchor(string text, string url)
-		{
-			return Anchor(text, url, new Dictionary<string, string>());
-		}
-		
 		public static string Hidden(string id, string val)
 		{
 			return string.Format("<input type='hidden' id='{0}' value='{1}'/>", id, val);
 		}
 		
+		public static string Anchor(string text, string url)
+		{
+			return Anchor(text, url, new Dictionary<string, string>());
+		}
+		
 		public static string Anchor(string text, string url, Dictionary<string, string> attributes)
 		{
-			return Anchor(text, url, false, attributes);
+			return Anchor(text, url, false, attributes, "");
+		}
+		
+		public static string Anchor(string text, string url, Dictionary<string, string> attributes, string target)
+		{
+			return Anchor(text, url, false, attributes, target);
 		}
 		
 		public static string Anchor(string text, string url, bool random, Dictionary<string, string> attributes)
 		{
+			return Anchor(text, url, random, attributes, "");
+		}
+		
+		public static string Anchor(string text, string url, bool random, Dictionary<string, string> attributes, string target)
+		{
 			if (random) {
 				url = string.Format("{0}?Rnd={1}", url, GetRandomInt());
-				return string.Format("<a href='{1}'{2}>{0}</a>", text, url, GetAttributes(attributes));
+				return string.Format("<a href='{1}'{2} target='{3}'>{0}</a>", text, url, GetAttributes(attributes), target);
 			} else {
-				return string.Format("<a href='{1}'{2}>{0}</a>", text, url, GetAttributes(attributes));
+				return string.Format("<a href='{1}'{2} target='{3}'>{0}</a>", text, url, GetAttributes(attributes), target);
 			}
 		}
 		
@@ -96,6 +106,78 @@ namespace HW.Core.Helpers
 			StringBuilder s = new StringBuilder();
 			foreach (var a in attributes.Keys) {
 				s.Append(string.Format(" {0}='{1}'", a, attributes[a]));
+			}
+			return s.ToString();
+		}
+		
+		public static string CreatePage(string name)
+		{
+			return CreatePage(new P(name));
+		}
+		
+		public static string CreatePage(P p)
+		{
+			return p.ToString();
+		}
+	}
+	
+	public class P
+	{
+		public string Name { get; set; }
+		public string Path { get; set; }
+		public Q Q { get; set; }
+		
+		public P(string name) : this("", name)
+		{
+		}
+		
+		public P(string path, string name)
+		{
+			this.Path = path;
+			this.Name = name;
+			this.Q = new Q();
+		}
+		
+		public override string ToString()
+		{
+			StringBuilder s = new StringBuilder();
+			s.Append(Path);
+			s.Append(Name);
+			s.Append("?");
+			s.Append(Q.ToString());
+			return s.ToString();
+		}
+		
+		public void Add(Q q)
+		{
+			foreach (var k in q.Keys) {
+				Q.Add(k, q[k]);
+			}
+		}
+	}
+	
+	public class Q : Dictionary<string, object>
+	{
+		public Q()
+		{
+		}
+		
+		public void AddIf(bool condition, string key, object val)
+		{
+			if (condition) {
+				Add(key, val);
+			}
+		}
+		
+		public override string ToString()
+		{
+			StringBuilder s = new StringBuilder();
+			int i = 1;
+			foreach (var k in Keys) {
+				s.Append(string.Format("{0}={1}", k, this[k]));
+				if (i++ < this.Count) {
+					s.Append("&");
+				}
 			}
 			return s.ToString();
 		}
