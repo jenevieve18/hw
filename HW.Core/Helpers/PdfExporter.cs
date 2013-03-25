@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Xml;
+using System.Xml.Linq;
 using HW.Core.Models;
 using HW.Core.Repositories;
 using HW.Core.Services;
@@ -51,29 +53,31 @@ namespace HW.Core.Helpers
 			PdfWriter writer = PdfWriter.GetInstance(doc, output);
 			doc.Open();
 			
-			string url = string.Format(
-				@"{12}reportImage.aspx?LangID={0}&FY={1}&TY={2}&SAID={3}&SID={4}&STDEV={5}&DIST={13}&GB={6}&RPID={7}&PRUID={8}&GID={9}&GRPNG={10}&Plot={11}",
-				langID,
-				fy,
-				ty,
-				SPONS,
-				SID,
-				0, // TODO: No use for standard deviation. Current use is extra point or "distribution".
-				GB,
-				r.Id,
-				PRUID,
-				GID,
-				GRPNG,
-				plot,
-				path,
-				distribution
-			);
+			string url = GetUrl(path, langID, fy, ty, SPONS, SID, GB, r.Id, PRUID, GID, GRPNG, plot, distribution);
 			doc.Add(new Chunk(r.CurrentLanguage.Subject));
 			iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(new Uri(url));
 			jpg.ScaleToFit(500f, 500f);
 			doc.Add(jpg);
 			doc.Close();
 			return output;
+		}
+		
+		string GetUrl(string path, int langID, int fy, int ty, int SPONS, int SID, int GB, int rpid, int PRUID, string GID, int GRPNG, string plot, int distribution)
+		{
+			P p = new P(path, "reportImage.aspx");
+			p.Q.Add("LangID", langID);
+			p.Q.Add("FY", fy);
+			p.Q.Add("TY", ty);
+			p.Q.Add("SAID", SPONS);
+			p.Q.Add("SID", SID);
+			p.Q.Add("GB", GB);
+			p.Q.Add("RPID", rpid);
+			p.Q.Add("PRUID", PRUID);
+			p.Q.Add("GID", GID);
+			p.Q.Add("GRPNG", GRPNG);
+			p.Q.Add("PLOT", plot);
+			p.Q.Add("DIST", distribution);
+			return p.ToString();
 		}
 		
 		public object Export2(int GB, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int distribution)
@@ -83,29 +87,18 @@ namespace HW.Core.Helpers
 			PdfWriter writer = PdfWriter.GetInstance(doc, output);
 			doc.Open();
 			
+			int i = 0;
 			foreach (var p in parts) {
-				string url = string.Format(
-					@"{12}reportImage.aspx?LangID={0}&FY={1}&TY={2}&SAID={3}&SID={4}&STDEV={5}&DIST={13}&GB={6}&RPID={7}&PRUID={8}&GID={9}&GRPNG={10}&Plot={11}",
-					langID,
-					fy,
-					ty,
-					SPONS,
-					SID,
-					0, // TODO: No use for standard deviation. Current use is extra point or "distribution".
-					GB,
-					p.ReportPart.Id,
-					PRUID,
-					GID,
-					GRPNG,
-					plot,
-					path,
-					distribution
-				);
+				string url = GetUrl(path, langID, fy, ty, SPONS, SID, GB, p.ReportPart.Id, PRUID, GID, GRPNG, plot, distribution);
 				ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
 				doc.Add(new Chunk(r.CurrentLanguage.Subject));
 				iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(new Uri(url));
 				jpg.ScaleToFit(500f, 500f);
 				doc.Add(jpg);
+				
+				if (i++ < parts.Count - 1) {
+					doc.NewPage();
+				}
 			}
 			doc.Close();
 			return output;

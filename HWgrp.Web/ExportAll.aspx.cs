@@ -58,6 +58,7 @@ namespace HWgrp.Web
 			
 			var exporter = ExportFactory.GetExporter2(service, type, HasAnswerKey, hasGrouping, disabled, Width, Height, Background, reportParts, key);
 			Response.ContentType = exporter.Type;
+			
 			AddHeaderIf(exporter.HasContentDisposition, "content-disposition", exporter.ContentDisposition);
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
 			Write(exporter.Export2(GB, fy, ty, langID, PRUID, GRPNG, SPONS, SID, GID, plot, path, distribution));

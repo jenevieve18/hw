@@ -41,6 +41,7 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DocumentFormat.OpenXml" />
     <Reference Include="itextsharp">
       <HintPath>..\itextsharp.dll</HintPath>
     </Reference>
@@ -61,6 +62,9 @@
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppContext.cs" />
@@ -75,10 +79,12 @@
     <Compile Include="Helpers\HWList.cs" />
     <Compile Include="Helpers\OctreeQuantizer.cs" />
     <Compile Include="Helpers\PdfExporter.cs" />
+    <Compile Include="Helpers\PresentationDocumentExporter.cs" />
     <Compile Include="Helpers\Quantizer.cs" />
     <Compile Include="Helpers\IExporter.cs" />
     <Compile Include="Helpers\HtmlControls.cs" />
     <Compile Include="Helpers\R.cs" />
+    <Compile Include="Helpers\WordExporter.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Affiliate.cs" />
