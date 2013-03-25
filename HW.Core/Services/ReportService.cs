@@ -7,6 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Text;
 using HW.Core.Helpers;
 using HW.Core.Models;
 using HW.Core.Repositories;
@@ -301,6 +302,23 @@ namespace HW.Core.Services
 			}
 			lastVal = 100 * tot / max;
 			lastCount = minCnt;
+		}
+		
+		public string GetReportImageUrl(int GB, int rpid, int rplid, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int distribution)
+		{
+			P p = new P("reportImage.aspx");
+			p.Q.Add("LangID", langID);
+			p.Q.Add("FY", fy);
+			p.Q.Add("TY", ty);
+			p.Q.Add("SAID", SPONS);
+			p.Q.Add("SID", SID);
+			p.Q.Add("DIST", distribution);
+			p.Q.Add("GB", GB);
+			p.Q.Add("RPID", rpid);
+			p.Q.Add("RPLID", rplid);
+			p.Q.Add("PRUID", PRUID);
+			p.Q.Add("GRPNG", GRPNG);
+			return p.ToString();
 		}
 	}
 }
