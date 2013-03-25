@@ -22,12 +22,20 @@
 <script type="text/javascript">
 	$(document).ready(function () {
 		$('.plot .btn').click(function () {
-			var partImg = $(this).closest('.report-part-image');
+			var partImg = $(this).closest('.report-part-content');
 			var img = partImg.find('img');
-			console.log(img.attr('src'));
 			var newSrc = partImg.find('.hidden').text();
-			console.log(newSrc);
 			img.attr('src', newSrc + '&PLOT=' + $(this).text());
+		});
+		$('.report-parts .btn').click(function() {
+			var partImgs = $('.report-part-content');
+			for (i = 0; i < partImgs.length; i++) {
+				var partImg = partImgs[i];
+				console.log(partImg);
+				var img = partImg.find('img');
+				var newSrc = partImg.find('.hidden').text();
+				img.attr('src', newSrc + '&PLOT=' + $(this).text());
+			}
 		});
 	});
 </script>
@@ -86,40 +94,44 @@
 			<asp:Button ID="Execute" CssClass="btn" runat="server" Text="Execute" />
 		</div>
 	</div>
-	<!--<asp:Label ID="StatsImg" runat="server" />-->
 	<% if (reportParts != null) { %>
-		<% string URL = GetURL(urlModels); %>
+		<% Q additionalQuery = GetGID(urlModels); %>
 		<br>
 		<div class="btn-toolbar">
 			<div class="btn-group">
-				<%= HtmlHelper.Anchor("PDF", GetReportImageUrl(0, 0, "ExportAll", URL + "&type=pdf"), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
-				<%= HtmlHelper.Anchor("CSV", GetReportImageUrl(0, 0, "ExportAll", URL + "&type=csv"), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
+				<%= HtmlHelper.Anchor("PDF", GetExportAllUrl("pdf", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } }, "_blank")%>
+				<%= HtmlHelper.Anchor("CSV", GetExportAllUrl("csv", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
+				<%= HtmlHelper.Anchor("DOC", GetExportAllUrl("docx", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
+				<%= HtmlHelper.Anchor("PPT", GetExportAllUrl("pptx", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
 			</div>
 			<% if (SelectedDepartments.Count == 1) { %>
-			<div class="btn-group">
+			<div class="btn-group report-parts">
 				<span class="btn btn-mini">LINE</span>
-				<span class="btn btn-mini">BOXPLOT</span>
+				<span class="btn btn-mini">Boxplot</span>
 			</div>
 			<% } %>
 		</div>
 		<br>
-		<div id="accordion">
+		<div id="notaccordion">
 		<% foreach (var r in reportParts) { %>
-			<h1><%= r.Subject %></h1>
-			<div class="report-part-image">
-				<span class="hidden"><%=GetReportImageUrl(r.ReportPart.Id, r.Id, "reportImage", URL)%></span>
+			<h3><%= r.Subject %></h3>
+			<div class="report-part-content">
+				<span class="hidden"><%= GetReportImageUrl(r.ReportPart.Id, r.Id, additionalQuery) %></span>
 				<div>
-					<%= HtmlHelper.Image(GetReportImageUrl(r.ReportPart.Id, r.Id, "reportImage", URL)) %>
+					<%= HtmlHelper.Image(GetReportImageUrl(r.ReportPart.Id, r.Id, additionalQuery)) %>
 				</div>
 				<div class="btn-toolbar">
 					<div class="btn-group">
-						<%= HtmlHelper.Anchor("PDF", GetReportImageUrl(r.ReportPart.Id, r.Id, "Export", URL + "&type=pdf"), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
-						<%= HtmlHelper.Anchor("CSV", GetReportImageUrl(r.ReportPart.Id, r.Id, "Export", URL + "&type=csv"), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
+						<%= HtmlHelper.Anchor("PDF", GetExportUrl(r.ReportPart.Id, r.Id, "pdf", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } }, "_blank")%>
+						<%= HtmlHelper.Anchor("CSV", GetExportUrl(r.ReportPart.Id, r.Id, "csv", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
+						<%= HtmlHelper.Anchor("DOC", GetExportUrl(r.ReportPart.Id, r.Id, "docx", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
+						<%= HtmlHelper.Anchor("PPT", GetExportUrl(r.ReportPart.Id, r.Id, "pptx", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
 					</div>
 					<% if (SelectedDepartments.Count == 1) { %>
 					<div class="btn-group plot">
-						<span class="btn btn-mini">LINE</span>
-						<span class="btn btn-mini">BOXPLOT</span>
+						<span class="btn btn-mini">Line (mean ± SD)</span>
+						<span class="btn btn-mini">Line (mean ± 2 SD)</span>
+						<span class="btn btn-mini">Boxplot</span>
 					</div>
 					<% } %>
 				</div>
@@ -128,8 +140,25 @@
 		</div>
 		<script>
 			$("#accordion").accordion({
-				heightStyle: "content"
+				heightStyle:"content"
 			});
+			$("#notaccordion").addClass("ui-accordion ui-accordion-icons ui-widget ui-helper-reset")
+				.find("h3")
+				.addClass("ui-accordion-header ui-helper-reset ui-state-default ui-corner-top ui-corner-bottom")
+				.hover(function() { 
+					$(this).toggleClass("ui-state-hover"); 
+				})
+				.prepend('<span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>')
+				.click(function() {
+					$(this)
+						.toggleClass("ui-accordion-header-active ui-state-active ui-state-default ui-corner-bottom")
+						.find("> .ui-icon").toggleClass("ui-icon-triangle-1-e ui-icon-triangle-1-s").end()
+						.next().toggleClass("ui-accordion-content-active").slideToggle();
+					return false;
+				})
+				.next()
+				.addClass("ui-accordion-content  ui-helper-reset ui-widget-content ui-corner-bottom")
+				.hide();
 		</script>
 	<% } %>
 </div>

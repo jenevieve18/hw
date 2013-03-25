@@ -117,73 +117,6 @@ namespace HWgrp.Web
 			}
 			Execute.Click += new EventHandler(Execute_Click);
 		}
-		
-//		public void SetReportPartLanguages(IList<ReportPartLanguage> reportParts, IList<BaseModel> urlModels)
-//		{
-//			this.reportParts = reportParts;
-//			var selectedDepartments = SelectedDepartments;
-//			string URL = GetURL(urlModels);
-//			int cx = 0;
-//
-//			if (selectedDepartments.Count == 1) {
-//				var allNone = new CheckBox() { ID = "selectAll" };
-//
-//				IHGRadioButtonList plotType = new IHGRadioButtonList();
-//				plotType.ID = "graphTypes";
-//				plotType.Items.Add(new ListItem("Line Plot", "LinePlot") { Selected = true });
-//				plotType.Items.Add(new ListItem("Box Plot", "BoxPlot"));
-//				StatsImg.Controls.Add(allNone);
-//				StatsImg.Controls.Add(plotType);
-//			} else {
-//				StatsImg.Controls.Add(new LiteralControl(""));
-//			}
-//
-//			foreach (var r in reportParts) {
-//				if (cx == 0) {
-//					StatsImg.Controls.Add(new LiteralControl("<div>&nbsp;<br>&nbsp;<br></div>"));
-//				} else {
-//					StatsImg.Controls.Add(new LiteralControl("<div style='page-break-before:always;'>&nbsp;<br>&nbsp;<br></div>"));
-//				}
-//
-//				string imgID = "img" + cx;
-//
-//				HtmlTable table = new HtmlTable { Border = 0, CellSpacing = 0, CellPadding = 0 };
-//				IHGHtmlTableCell headerCell = new IHGHtmlTableCell(r.Subject) { Align = "Center", VAlign = "Middle", Height = "140", FontSize = "24px" };
-//				table.Rows.Add(new IHGHtmlTableRow(headerCell));
-//
-//				IHGHtmlTableCell subjectCell = new IHGHtmlTableCell() { FontSize = "18px" };
-//				if (selectedDepartments.Count == 1) {
-//					subjectCell.Controls.Add(new CheckBox() { ID = "chk" + cx });
-//					subjectCell.Controls.Add(new LiteralControl(r.Subject));
-//					subjectCell.Controls.Add(new HtmlInputHidden() { ID = "reportUrl", Value = GetReportImageUrl(r.ReportPart.Id, r.Id, "reportImage", URL) });
-//					subjectCell.Controls.Add(new HtmlInputHidden() { ID = "exportPdfUrl", Value = GetReportImageUrl(r.ReportPart.Id, r.Id, "Export", URL + "&type=pdf") });
-//					subjectCell.Controls.Add(new HtmlInputHidden() { ID = "exportCsvUrl", Value = GetReportImageUrl(r.ReportPart.Id, r.Id, "Export", URL + "&type=csv") });
-//				} else {
-//					subjectCell.Controls.Add(new LiteralControl(r.Subject));
-//				}
-//				table.Rows.Add(new IHGHtmlTableRow(subjectCell));
-//
-//				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(r.Header.Replace("\r", "").Replace("\n", "<br>"))));
-//
-//				var img = new HtmlImage { ID = imgID, Src = GetReportImageUrl(r.ReportPart.Id, r.Id, "reportImage", URL) };
-//				img.Attributes.Add("class", "img");
-//				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(img)));
-//
-//				var exportPdfAnchor = new HtmlAnchor { Target = "_blank", HRef = GetReportImageUrl(r.ReportPart.Id, r.Id, "Export", URL + "&type=pdf") };
-//				exportPdfAnchor.Attributes.Add("class", "exportPdfAnchor");
-//				exportPdfAnchor.Controls.Add(new HtmlImage { Src = "images/page_white_acrobat.png" });
-//
-//				var exportCsvAnchor= new HtmlAnchor { Target = "_blank", HRef = GetReportImageUrl(r.ReportPart.Id, r.Id, "Export", URL + "&type=csv") };
-//				exportCsvAnchor.Attributes.Add("class", "exportCsvAnchor");
-//				exportCsvAnchor.Controls.Add(new HtmlImage { Src = "images/page_white_excel.png" });
-//
-//				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(exportPdfAnchor, new LiteralControl("&nbsp;"), exportCsvAnchor)));
-//
-//				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(r.Footer.Replace("\r", "").Replace("\n", "<br>"))));
-//				StatsImg.Controls.Add(table);
-//				cx++;
-//			}
-//		}
 
 		IList<BaseModel> GetUrlModels(int grouping)
 		{
@@ -198,47 +131,46 @@ namespace HWgrp.Web
 			}
 		}
 		
-		protected string GetReportImageUrl(int reportID, int reportPartLangID, string page, string URL)
+		protected string GetReportImageUrl(int reportID, int reportPartLangID, Q additionalQuery)
 		{
-			string plotQuery = Request.QueryString["PLOT"] != null ? string.Format("&PLOT={0}", Request.QueryString["PLOT"]) : "";
-//			string reportImageUrl = string.Format(
-//				"{13}.aspx?LangID={0}&FY={1}&TY={2}&SAID={3}&SID={4}&{5}STDEV={6}&ExtraPoint={14}&GB={7}&RPID={8}&RPLID={15}&PRUID={9}{10}&GRPNG={11}{12}",
-//				Convert.ToInt32(dropDownLanguages.SelectedValue),
-//				dropDownYearFrom.SelectedValue,
-//				dropDownYearTo.SelectedValue,
-//				sponsorAdminID,
-//				sponsorID,
-//				Convert.ToInt32(Session["Anonymized"]) == 1 ? "Anonymized=1&" : "",
-//				"1", // TODO: Remove the reference for this value, this was Standard Deviation (true/false).
-//				dropDownGroupBy.SelectedValue,
-//				reportID,
-//				dropDownListProjectRoundUnits.SelectedValue,
-//				URL,
-//				Convert.ToInt32(dropDownGrouping.SelectedValue),
-//				plotQuery,
-//				page,
-//				dropDownDistribution.SelectedValue,
-//				reportPartLangID
-//			);
-			string reportImageUrl = string.Format(
-				"{0}.aspx?LangID={1}&FY={2}&TY={3}&SAID={4}&SID={5}&{6}&DIST={7}&GB={8}&RPID={9}&RPLID={10}&PRUID={11}{12}&GRPNG={13}{14}",
-				page,
-				Convert.ToInt32(dropDownLanguages.SelectedValue),
-				dropDownYearFrom.SelectedValue,
-				dropDownYearTo.SelectedValue,
-				sponsorAdminID,
-				sponsorID,
-				Convert.ToInt32(Session["Anonymized"]) == 1 ? "Anonymized=1&" : "",
-				dropDownDistribution.SelectedValue,
-				dropDownGroupBy.SelectedValue,
-				reportID,
-				reportPartLangID,
-				dropDownListProjectRoundUnits.SelectedValue,
-				URL,
-				Convert.ToInt32(dropDownGrouping.SelectedValue),
-				plotQuery
-			);
-			return reportImageUrl;
+			var p = GetPage("reportImage.aspx", reportID, reportPartLangID);
+			p.Add(additionalQuery);
+			return p.ToString();
+		}
+		
+		protected string GetExportUrl(int reportID, int reportPartID, string type, Q additionalQuery)
+		{
+			var p = GetPage("Export.aspx", reportID, reportPartID);
+			p.Q.Add("type", type);
+			p.Add(additionalQuery);
+			return p.ToString();
+		}
+		
+		protected string GetExportAllUrl(string type, Q additionalQuery)
+		{
+			var p = GetPage("ExportAll.aspx", 0, 0);
+			p.Q.Add("type", type);
+			p.Add(additionalQuery);
+			return p.ToString();
+		}
+		
+		P GetPage(string page, int reportID, int reportPartLangID)
+		{
+			P p = new P(page);
+			p.Q.Add("LangID", dropDownLanguages.SelectedValue);
+			p.Q.Add("FY", dropDownYearFrom.SelectedValue);
+			p.Q.Add("TY", dropDownYearTo.SelectedValue);
+			p.Q.Add("SAID", sponsorAdminID);
+			p.Q.Add("SID", sponsorID);
+			p.Q.AddIf(Convert.ToInt32(Session["Anonymized"]) == 1, "Anonymized", 1);
+			p.Q.Add("DIST", dropDownDistribution.SelectedValue);
+			p.Q.Add("GB", dropDownGroupBy.SelectedValue);
+			p.Q.Add("RPID", reportID);
+			p.Q.Add("RPLID", reportPartLangID);
+			p.Q.Add("PRUID", dropDownListProjectRoundUnits.SelectedValue);
+			p.Q.Add("GRPNG", dropDownGrouping.SelectedValue);
+			p.Q.AddIf(Request.QueryString["PLOT"] != null, "PLOT", Request.QueryString["PLOT"]);
+			return p;
 		}
 		
 		protected override void OnPreRender(EventArgs e)
@@ -247,14 +179,15 @@ namespace HWgrp.Web
 			checkBoxQuestions.Visible = (dropDownGrouping.SelectedValue == "3");
 		}
 		
-		protected string GetURL(IList<BaseModel> models)
+		protected Q GetGID(IList<BaseModel> models)
 		{
-			string URL = "";
+			string v = "";
 			foreach (var m in models) {
-				URL += "," + m.Id;
+				v += "," + m.Id;
 			}
-			URL = "&GID=0" + URL;
-			return URL;
+			var q = new Q();
+			q.Add("GID", "0" + v);
+			return q;
 		}
 
 		void Execute_Click(object sender, EventArgs e)
@@ -265,7 +198,6 @@ namespace HWgrp.Web
 			
 			reportParts = reportRepository.FindByProjectAndLanguage(selectedProjectRoundUnitID, selectedLangID);
 			urlModels = GetUrlModels(grouping);
-//			SetReportPartLanguages(reportParts, GetUrlModels(grouping));
 		}
 	}
 }
