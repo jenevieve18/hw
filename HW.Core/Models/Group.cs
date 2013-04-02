@@ -173,14 +173,14 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 						}
 						string bqid = GID.Replace("'", "");
 						GID = "";
-						foreach (var x in questionRepository.FindLikeBackgroundQuestions(bqid)) {
-							GID += (GID != "" ? "," : "") + x.Id;
+						foreach (var bq in questionRepository.FindLikeBackgroundQuestions(bqid)) {
+							GID += (GID != "" ? "," : "") + bq.Id;
 
-							extraDesc += (extraDesc != "" ? " / " : "") + x.Internal;
+							extraDesc += (extraDesc != "" ? " / " : "") + bq.Internal;
 
-							tmpSelect += (tmpSelect != "" ? " ," : "") + "ba" + x.Id + ".BAID,ba" + x.Id + ".Internal ";
-							tmpJoin += (tmpJoin != "" ? "INNER JOIN BA ba" + x.Id + " ON ba" + x.Id + ".BQID = " + x.Id + " " : "FROM BA ba" + x.Id + " ");
-							tmpOrder += (tmpOrder != "" ? ", ba" + x.Id + ".SortOrder" : "WHERE ba" + x.Id + ".BQID = " + x.Id + " ORDER BY ba" + x.Id + ".SortOrder");
+							tmpSelect += (tmpSelect != "" ? " ," : "") + "ba" + bq.Id + ".BAID,ba" + bq.Id + ".Internal ";
+							tmpJoin += (tmpJoin != "" ? "INNER JOIN BA ba" + bq.Id + " ON ba" + bq.Id + ".BQID = " + bq.Id + " " : "FROM BA ba" + bq.Id + " ");
+							tmpOrder += (tmpOrder != "" ? ", ba" + bq.Id + ".SortOrder" : "WHERE ba" + bq.Id + ".BQID = " + bq.Id + " ORDER BY ba" + bq.Id + ".SortOrder");
 						}
 						string[] GIDS = GID.Split(',');
 

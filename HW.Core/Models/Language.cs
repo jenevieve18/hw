@@ -83,5 +83,15 @@ namespace HW.Core.Models
 					default: throw new NotSupportedException();
 			}
 		}
+
+		public static void SetCurrentCulture2(int lid)
+		{
+			switch (lid)
+			{
+				case 0: Thread.CurrentThread.CurrentCulture = new CultureInfo("sv-SE"); break;
+				case 1: Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US"); break;
+				default: throw new NotSupportedException();
+			}
+		}
 	}
 }

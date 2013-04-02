@@ -876,7 +876,7 @@ namespace HW.Core.Helpers
 //				List<int> referenceLines = new List<int>();
 				
 				foreach (ReportPartComponent c in reportRepository.FindComponents(p.Id)) {
-					System.Collections.SortedList all = new System.Collections.SortedList();
+					SortedList all = new SortedList();
 
 					foreach (ProjectRoundUnit u in projectRepository.FindRoundUnitsBySortString(sortString)) {
 						res = new System.Collections.Hashtable();
@@ -1230,7 +1230,7 @@ namespace HW.Core.Helpers
 		int point;
 		int t;
 		
-		public LineGraphType() : this(0, 2) // TODO: Map this point value to ExtraPoint class.
+		public LineGraphType() : this(0, 2) // TODO: Map this point value to Distribution class.
 		{
 		}
 		
