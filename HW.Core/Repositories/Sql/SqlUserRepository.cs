@@ -34,14 +34,12 @@ VALUES (@UserProfileID, @BQID, @ValueInt, @ValueText, @ValueDate)"
 		public void UpdateUser(int userID, int sponsorID, int departmentID)
 		{
 			string query = "UPDATE [User] SET DepartmentID = " + departmentID + ", SponsorID = " + sponsorID + " WHERE UserID = " + userID;
-//			Db2.exec(query, "healthWatchSqlConnection");
 			Db.exec(query, "healthWatchSqlConnection");
 		}
 		
 		public void UpdateUserProfile(int userID, int sponsorID, int departmentID)
 		{
 			string query = "UPDATE UserProfile SET DepartmentID = " + departmentID + ", SponsorID = " + sponsorID + " WHERE UserID = " + userID;
-//			Db2.exec(query, "healthWatchSqlConnection");
 			Db.exec(query, "healthWatchSqlConnection");
 		}
 		
@@ -54,7 +52,6 @@ WHERE UserProjectRoundUserID = {1}",
 				projectRoundUnitID,
 				userProjectRoundUserID
 			);
-//			Db2.exec(query, "healthWatchSqlConnection");
 			Db.exec(query, "healthWatchSqlConnection");
 		}
 		

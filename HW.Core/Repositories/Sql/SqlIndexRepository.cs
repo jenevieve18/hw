@@ -41,8 +41,8 @@ FROM (
 	WHERE a.EndDT IS NOT NULL
 		AND i.IdxID = {0}
 		AND LEFT(pru.SortString, {5}) = '{4}'
-		{2}
-		{3}
+		AND YEAR(a.EndDT) >= {2}
+		AND YEAR(a.EndDT) <= {3}
 	GROUP BY i.IdxID,
 		a.AnswerID,
 		i.MaxVal,
@@ -54,8 +54,8 @@ WHERE tmp.AllPartsRequired = 0 OR tmp.CX = tmp.BX
 GROUP BY tmp.IdxID, tmp.Idx",
 				idxID,
 				langID,
-				yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
-				yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
+				yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
+				yearTo, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
 				sortString,
 				sortString.Length
 			);
