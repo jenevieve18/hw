@@ -124,6 +124,9 @@
     <value>Password</value>
   </data>
   <data name="login.label" xml:space="preserve">
-    <value>HealthWatch.se - Group administration</value>
+    <value>HealthWatch.se&lt;br&gt;Group administration</value>
+  </data>
+  <data name="login.submit" xml:space="preserve">
+    <value>Sign in</value>
   </data>
 </root>

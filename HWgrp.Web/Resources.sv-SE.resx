@@ -118,7 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="login.label" xml:space="preserve">
-    <value>HealthWatch.se - Grupp förvaltning</value>
+    <value>HealthWatch.se&lt;br&gt;Grupp förvaltning</value>
+  </data>
+  <data name="login.submit" xml:space="preserve">
+    <value>Logga in</value>
   </data>
   <data name="user.name" xml:space="preserve">
     <value>Användarnamn</value>

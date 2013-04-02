@@ -1,15 +1,10 @@
-﻿//	<file>
-//		<license></license>
-//		<owner name="Ian Escarro" email="ian.escarro@gmail.com"/>
-//	</file>
-
-using System;
-using System.Resources;
+﻿using System;
 using System.Drawing;
 using System.Globalization;
 using System.Reflection;
+using System.Resources;
 
-namespace HW.Core.Helpers
+namespace HWgrp.Web
 {
 	public static class R
 	{
