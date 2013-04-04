@@ -1,10 +1,11 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="HWgrp.Web.Site" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
+<%@ Import Namespace="HWgrp.Web" %>
 
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head runat="server">
-	<title>HealthWatch.se / Group admin</title>
+	<title><%= R.Str("layout.header", "HealthWatch.se / Group admin") %></title>
 
 	<meta http-equiv="Pragma" content="no-cache">
 	<meta http-equiv="Expires" content="-1">
@@ -108,22 +109,6 @@
 				<div class="container">
 		<div class="container_16 navbar" id="admin">
 			<div class="headergroup grid_16 navbar-inner">
-					<%--<div class="grid_3 alpha">
-						<img src="img/hwlogo.png" />
-					</div>
-					<div class="grid_8 omega p2">
-						<h1>HealthWatch.se - <%= sponsor.SuperSponsor.Languages[0].Header %></h1>
-						<h2>Group administration - <%= sponsor.Name %></h2>
-						<br />
-						<%= HtmlHelper.Image(string.Format("/img/partner/{0}.gif", sponsor.SuperSponsor.Id)) %>
-					</div>
-					<div class="logincontainer grid_5 alpha omega">
-						<div class="gears">
-							<span>Name</span> <span style="color: white;">658</span><br />
-							<%= HtmlHelper.Anchor("Settings", "settings.aspx", "regular") %>&nbsp;&nbsp;
-							<%= HtmlHelper.Anchor("Log out", "default.aspx", "regular") %>
-						</div>
-					</div>--%>
 					<ul class="nav">
 						<li><img src="img/hwlogo.png" /></li>
 						<li>
@@ -136,10 +121,10 @@
 					</ul>
 					<ul class="nav pull-right">
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="icon-cog"></b>Utility</a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="icon-cog"></b><%= R.Str("layout.utility", "Utility") %></a>
 							<ul class="dropdown-menu">
-								<li><%= BootstrapHelper.Anchor("Settings", "settings.aspx", true, "icon-cog") %></li>
-								<li><%= BootstrapHelper.Anchor("Log out", "default.aspx", true, "icon-off") %></li>
+								<li><%= BootstrapHelper.Anchor(R.Str("layout.settings", "Settings"), "settings.aspx", true, "icon-cog") %></li>
+								<li><%= BootstrapHelper.Anchor(R.Str("layout.logout", "Log out"), "default.aspx", true, "icon-off") %></li>
 							</ul>
 						</li>
 					</ul>

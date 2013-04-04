@@ -58,8 +58,8 @@
     <form id="Form1" method="post" runat="server" class="form-signin">
         <img src="img/hwlogo.png" alt="HealthWatch group administrator">
         <h2><%= R.Str("login.header", "HealthWatch.se<br>Group administration") %></h2>
-		<%= HtmlHelper.Input("ANV", "", "input-block-level", R.Str("user.name", "Username")) %>
-		<%= HtmlHelper.Password("LOS", "", "input-block-level", R.Str("user.password", "Password")) %>
+		<%= FormHelper.Input("ANV", "", "input-block-level", R.Str("user.name", "Username")) %>
+		<%= FormHelper.Password("LOS", "", "input-block-level", R.Str("user.password", "Password")) %>
         <button class="btn btn-large btn-info" type="submit"><i class="icon-circle-arrow-right"></i>Sign in</button>
     </form>
 	<% if (errorMessage != "") { %>
