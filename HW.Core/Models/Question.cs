@@ -81,6 +81,7 @@ namespace HW.Core.Models
 		public string Variable { get; set; }
 		public IList<BackgroundQuestionLanguage> Languages { get; set; }
 		public int Restricted { get; set; }
+		public IList<BackgroundAnswer> Answers { get; set; }
 	}
 	
 	public class BackgroundQuestionLanguage : BaseModel

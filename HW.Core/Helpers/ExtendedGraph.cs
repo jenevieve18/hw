@@ -688,10 +688,15 @@ namespace HW.Core.Helpers
 				g = new ExtendedGraph(895, 440, "#FFFFFF");
 
 				int t = 2;
-				if (plot.Equals("BOXPLOT")) {
+				if (plot.ToUpper().Equals("Boxplot".ToUpper())) {
 					g.Type = new BoxPlotGraphType();
+				} else if (plot.ToUpper().Equals("Line (mean ± 2 SD)".ToUpper())) {
+					g.Type = new LineGraphType(2, t);
+				} else if (plot.ToUpper().Equals("Line (mean ± SD)".ToUpper())) {
+					g.Type = new LineGraphType(1, t);
 				} else {
-					g.Type = new LineGraphType(point, t);
+//					g.Type = new LineGraphType(point, t);
+					g.Type = new LineGraphType(0, t);
 				}
 				Answer answer = answerRepository.ReadByGroup(groupBy, fy, ty, sortString);
 				if (answer != null) {
@@ -727,9 +732,9 @@ namespace HW.Core.Helpers
 				
 				if (hasGrouping) {
 					int COUNT = 0;
-					Hashtable desc = new Hashtable();
-					Hashtable join = new Hashtable();
-					ArrayList item = new ArrayList();
+					Dictionary<string, string> desc = new Dictionary<string, string>();
+					Dictionary<string, string> join =  new Dictionary<string, string>();
+					List<string> item = new List<string>();
 					string extraDesc = "";
 					
 					COUNT = GroupFactory.GetCount(GRPNG, SPONS, SID, PRUID, GID, ref extraDesc, desc, join, item, departmentRepository, questionRepository);
@@ -969,9 +974,12 @@ namespace HW.Core.Helpers
 				
 				if (hasGrouping) {
 					int COUNT = 0;
-					Hashtable desc = new Hashtable();
-					Hashtable join = new Hashtable();
-					ArrayList item = new ArrayList();
+//					Hashtable desc = new Hashtable();
+//					Hashtable join = new Hashtable();
+//					ArrayList item = new ArrayList();
+					Dictionary<string, string> desc = new Dictionary<string, string>();
+					Dictionary<string, string> join = new Dictionary<string, string>();
+					List<string> item = new List<string>();
 					string extraDesc = "";
 					
 					COUNT = GroupFactory.GetCount(GRPNG, SPONS, SID, PRUID, GID, ref extraDesc, desc, join, item, departmentRepository, questionRepository);

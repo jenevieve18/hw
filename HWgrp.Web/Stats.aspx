@@ -16,7 +16,10 @@
 		font-family: Arial;
 	}
 	.ui-accordion .ui-accordion-content {
-			padding: 1em;
+		padding: 1em;
+	}
+	.accordion-group .ui-state-default {
+		border:none;
 	}
 </style>
 <script type="text/javascript">
@@ -76,13 +79,13 @@
 			<asp:DropDownList ID="dropDownLanguages" runat="server" AutoPostBack="true" 
 				CssClass="input-small" />
 			<!--<input id="STDEV" type="checkbox" name="STDEV" /><label for="STDEV">Show standard deviation</label>-->
-			Distribution
+			<!--Distribution
 			<asp:DropDownList AutoPostBack="true" ID="dropDownDistribution" runat="server" 
 				CssClass="input-medium">
 				<asp:ListItem Value="0" Text="< none >" />
 				<asp:ListItem Value="1" Text="Standard Deviation" />
 				<asp:ListItem Value="2" Text="Confidence Interval" />
-			</asp:DropDownList>
+			</asp:DropDownList>-->
 			<br />
 			<cc1:DepartmentListHtmlTable runat="server" ID="tableDepartments"></cc1:DepartmentListHtmlTable>
 			<asp:PlaceHolder ID="Org" runat="server" Visible="false" />
@@ -100,40 +103,54 @@
 		<div class="btn-toolbar">
 			<div class="btn-group">
 				<%= HtmlHelper.Anchor("PDF", GetExportAllUrl("pdf", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } }, "_blank")%>
-				<%= HtmlHelper.Anchor("CSV", GetExportAllUrl("csv", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
+				<%= HtmlHelper.Anchor("XLS", GetExportAllUrl("csv", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
 				<%= HtmlHelper.Anchor("DOC", GetExportAllUrl("docx", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
-				<%= HtmlHelper.Anchor("PPT", GetExportAllUrl("pptx", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
+				<!--<%= HtmlHelper.Anchor("PPT", GetExportAllUrl("pptx", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>-->
 			</div>
-			<% if (SelectedDepartments.Count == 1) { %>
 			<div class="btn-group report-parts">
-				<span class="btn btn-mini">LINE</span>
-				<span class="btn btn-mini">Boxplot</span>
+				<!--<span class="btn btn-mini">Line</span>
+				<span class="btn btn-mini">Line (mean ± SD)</span>
+				<span class="btn btn-mini">Line (mean ± 2 SD)</span>
+				<% if (SelectedDepartments.Count == 1) { %>
+					<span class="btn btn-mini">Boxplot</span>
+				<% } %>-->
 			</div>
-			<% } %>
 		</div>
 		<br>
-		<div id="notaccordion">
+		<div class="accordion" id="accordion2">
 		<% foreach (var r in reportParts) { %>
-			<h3><%= r.Subject %></h3>
-			<div class="report-part-content">
-				<span class="hidden"><%= GetReportImageUrl(r.ReportPart.Id, r.Id, additionalQuery) %></span>
-				<div>
-					<%= HtmlHelper.Image(GetReportImageUrl(r.ReportPart.Id, r.Id, additionalQuery)) %>
+			<div class="accordion-group">
+				<div class="accordion-heading ui-accordion-header ui-helper-reset ui-state-default ui-corner-all ui-accordion-icons">
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse<%= r.ReportPart.Id %>">
+						<strong><%= r.Subject %></strong>
+					</a>
 				</div>
-				<div class="btn-toolbar">
-					<div class="btn-group">
-						<%= HtmlHelper.Anchor("PDF", GetExportUrl(r.ReportPart.Id, r.Id, "pdf", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } }, "_blank")%>
-						<%= HtmlHelper.Anchor("CSV", GetExportUrl(r.ReportPart.Id, r.Id, "csv", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
-						<%= HtmlHelper.Anchor("DOC", GetExportUrl(r.ReportPart.Id, r.Id, "docx", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
-						<%= HtmlHelper.Anchor("PPT", GetExportUrl(r.ReportPart.Id, r.Id, "pptx", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
+				<div id="collapse<%= r.ReportPart.Id %>" class="accordion-body collapse">
+					<div class="accordion-inner"><%= r.Subject %></div>
+				</div>
+				<div>
+					<div class="accordion-inner report-part-content">
+						<span class="hidden"><%= GetReportImageUrl(r.ReportPart.Id, r.Id, additionalQuery) %></span>
+						<div>
+							<%= HtmlHelper.Image(GetReportImageUrl(r.ReportPart.Id, r.Id, additionalQuery)) %>
+						</div>
+						<div class="btn-toolbar">
+							<div class="btn-group">
+								<%= HtmlHelper.Anchor("PDF", GetExportUrl(r.ReportPart.Id, r.Id, "pdf", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } }, "_blank")%>
+								<%= HtmlHelper.Anchor("XLS", GetExportUrl(r.ReportPart.Id, r.Id, "csv", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
+								<%= HtmlHelper.Anchor("DOC", GetExportUrl(r.ReportPart.Id, r.Id, "docx", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
+								<!--<%= HtmlHelper.Anchor("PPT", GetExportUrl(r.ReportPart.Id, r.Id, "pptx", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>-->
+							</div>
+							<div class="btn-group plot">
+								<span class="btn btn-mini">Line</span>
+								<span class="btn btn-mini">Line (mean ± SD)</span>
+								<span class="btn btn-mini">Line (mean ± 2 SD)</span>
+								<% if (SelectedDepartments.Count == 1) { %>
+									<span class="btn btn-mini">Boxplot</span>
+								<% } %>
+							</div>
+						</div>
 					</div>
-					<% if (SelectedDepartments.Count == 1) { %>
-					<div class="btn-group plot">
-						<span class="btn btn-mini">Line (mean ± SD)</span>
-						<span class="btn btn-mini">Line (mean ± 2 SD)</span>
-						<span class="btn btn-mini">Boxplot</span>
-					</div>
-					<% } %>
 				</div>
 			</div>
 		<% } %>
@@ -144,7 +161,7 @@
 			});
 			$("#notaccordion").addClass("ui-accordion ui-widget ui-helper-reset")
 				.find("h3")
-				.addClass("ui-accordion-header ui-helper-reset ui-state-default ui-corner-all ui-accordion-icons ui-state-hover")
+				.addClass("ui-accordion-header ui-accordion-content-active ui-helper-reset ui-state-default ui-corner-all ui-accordion-icons ui-state-hover")
 				.hover(function() { 
 					$(this).toggleClass("ui-state-hover"); 
 				})

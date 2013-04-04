@@ -34,18 +34,6 @@ namespace HW.Core.Models
 			public const int SixMonths = 5;
 			public const int OneYear = 6;
 		}
-//		
-//		public IList<Group> GetAllGrouping()
-//		{
-//			return new List<Group>(
-//				new Group[] {
-//					new Group { Id = Grouping.None, Description = "None" },
-//					new Group { Id = Grouping.UsersOnUnit, Description = "Users on unit" },
-//					new Group { Id = Grouping.UsersOnUnitAndSubUnits, Description = "Users on units+subunits" },
-//					new Group { Id = Grouping.BackgroundVariable, Description = "Background variables" }
-//				}
-//			);
-//		}
 	}
 	
 	public class GroupFactory
@@ -64,7 +52,8 @@ namespace HW.Core.Models
 			}
 		}
 		
-		public static int GetCount(int GRPNG, int SPONS, int SID, int PRUID, string GID, ref string extraDesc, Hashtable desc, Hashtable join, ArrayList item, IDepartmentRepository departmentRepository, IQuestionRepository questionRepository)
+//		public static int GetCount(int GRPNG, int SPONS, int SID, int PRUID, string GID, ref string extraDesc, Hashtable desc, Hashtable join, ArrayList item, IDepartmentRepository departmentRepository, IQuestionRepository questionRepository)
+		public static int GetCount(int GRPNG, int SPONS, int SID, int PRUID, string GID, ref string extraDesc, Dictionary<string, string> desc, Dictionary<string, string> join, List<string> item, IDepartmentRepository departmentRepository, IQuestionRepository questionRepository)
 		{
 			int COUNT = 0;
 			switch (GRPNG)
@@ -165,22 +154,30 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 								sslen = d.SortString.Length;
 							}
 							if (sslen == d.SortString.Length) {
-								tmpDesc += (tmpDesc != "" ? ", " : "") + d.Name + "+";
-								tmpSS += (tmpSS != "" ? "," : "") + "'" + d.SortString + "'";
+//								tmpDesc += (tmpDesc != "" ? ", " : "") + d.Name + "+";
+//								tmpSS += (tmpSS != "" ? "," : "") + "'" + d.SortString + "'";
+								tmpDesc += string.Format("{0}{1}+", (tmpDesc != "" ? ", " : ""), d.Name);
+								tmpSS += string.Format("{0}'{1}'", (tmpSS != "" ? "," : ""), d.SortString);
 							} else {
 								break;
 							}
 						}
 						string bqid = GID.Replace("'", "");
 						GID = "";
-						foreach (var bq in questionRepository.FindLikeBackgroundQuestions(bqid)) {
-							GID += (GID != "" ? "," : "") + bq.Id;
+						var questions = questionRepository.FindLikeBackgroundQuestions(bqid);
+						foreach (var bq in questions) {
+//							GID += (GID != "" ? "," : "") + bq.Id;
+							GID += string.Format("{0}{1}", (GID != "" ? "," : ""), bq.Id);
 
-							extraDesc += (extraDesc != "" ? " / " : "") + bq.Internal;
+//							extraDesc += (extraDesc != "" ? " / " : "") + bq.Internal;
+							extraDesc += string.Format("{0}{1}", (extraDesc != "" ? " / " : ""), bq.Internal);
 
-							tmpSelect += (tmpSelect != "" ? " ," : "") + "ba" + bq.Id + ".BAID,ba" + bq.Id + ".Internal ";
-							tmpJoin += (tmpJoin != "" ? "INNER JOIN BA ba" + bq.Id + " ON ba" + bq.Id + ".BQID = " + bq.Id + " " : "FROM BA ba" + bq.Id + " ");
-							tmpOrder += (tmpOrder != "" ? ", ba" + bq.Id + ".SortOrder" : "WHERE ba" + bq.Id + ".BQID = " + bq.Id + " ORDER BY ba" + bq.Id + ".SortOrder");
+//							tmpSelect += (tmpSelect != "" ? " ," : "") + "ba" + bq.Id + ".BAID,ba" + bq.Id + ".Internal ";
+							tmpSelect += string.Format("{0}ba{1}.BAID,ba{1}.Internal,ba{1}.BQID", (tmpSelect != "" ? " ," : ""), bq.Id); // TODO: Add BQID here!
+//							tmpJoin += (tmpJoin != "" ? "INNER JOIN BA ba" + bq.Id + " ON ba" + bq.Id + ".BQID = " + bq.Id + " " : "FROM BA ba" + bq.Id + " ");
+							tmpJoin += (tmpJoin != "" ? string.Format("INNER JOIN BA ba{0} ON ba{0}.BQID = {0} ", bq.Id) : string.Format(" FROM BA ba{0} ", bq.Id));
+//							tmpOrder += (tmpOrder != "" ? ", ba" + bq.Id + ".SortOrder" : "WHERE ba" + bq.Id + ".BQID = " + bq.Id + " ORDER BY ba" + bq.Id + ".SortOrder");
+							tmpOrder += (tmpOrder != "" ? string.Format(", ba{0}.SortOrder", bq.Id) : string.Format("WHERE ba{0}.BQID = {0} ORDER BY ba{0}.SortOrder", bq.Id));
 						}
 						string[] GIDS = GID.Split(',');
 
@@ -191,6 +188,7 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 							tmpOrder;
 						rs2 = Db.rs(query);
 						while (rs2.Read()) {
+//						foreach (var bq in questionRepository.FindBackgroundQuestionsWithAnswers(query, GIDS.Length)) {
 							string key = "";
 							string txt = "";
 							string sql = string.Format(
@@ -205,15 +203,23 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 							);
 
 							for (int i= 0; i < GIDS.Length; i++) {
-								key += (key != "" ? "X" : "") + rs2.GetInt32(0 + i * 2);
-								txt += (txt != "" ? " / " : "") + rs2.GetString(1 + i * 2);
-//								sql += "INNER JOIN healthWatch..UserProfileBQ HWp" + GIDS[i] + " ON HWup.UserProfileID = HWp" + GIDS[i] + ".UserProfileID AND HWp" + GIDS[i] + ".BQID = " + GIDS[i] + " AND HWp" + GIDS[i] + ".ValueInt = " + rs2.GetInt32(0 + i*2);
+//							foreach (var a in bq.Answers) {
+								key += (key != "" ? "X" : "") + rs2.GetInt32(0 + i * 3);
+								txt += (txt != "" ? " / " : "") + rs2.GetString(1 + i * 3);
 								sql += string.Format(
 									@"
 INNER JOIN healthWatch..UserProfileBQ HWp{0} ON HWup.UserProfileID = HWp{0}.UserProfileID AND HWp{0}.BQID = {0} AND HWp{0}.ValueInt = {1}",
 									GIDS[i],
-									rs2.GetInt32(0 + i*2)
+									rs2.GetInt32(0 + i * 3)
 								);
+//								key += string.Format("{0}{1}", (key != "" ? "X" : ""), a.Id);
+//								txt += string.Format("{0}{1}", (txt != "" ? " / " : ""), a.Internal);
+//								sql += string.Format(
+//									@"
+//INNER JOIN healthWatch..UserProfileBQ HWp{0} ON HWup.UserProfileID = HWp{0}.UserProfileID AND HWp{0}.BQID = {0} AND HWp{0}.ValueInt = {1}",
+//									bq.Id,
+//									a.Id
+//								);
 							}
 							COUNT++;
 

@@ -11,9 +11,21 @@ namespace HW.Core.Repositories
 {
 	public interface IAnswerRepository : IBaseRepository<Answer>
 	{
-		IList<BackgroundAnswer> FindBackgroundAnswers(int bqID);
-		
 		void UpdateAnswer(int projectRoundUnitID, int projectRoundUserID);
+		
+		Answer ReadByKey(string key);
+		
+		Answer ReadByQuestionAndOption(int answerID, int questionID, int optionID);
+		
+		Answer ReadByGroup(string groupBy, int yearFrom, int yearTo, string sortString);
+		
+		Answer ReadMinMax(string groupBy, int questionID, int optionID, int yearFrom, int yearTO, string sortString);
+
+		int CountByValueWithDateOptionAndQuestion(int val, int yearFrom, int yearTo, int optionID, int questionID, string sortString);
+		
+		int CountByProject(int projectRoundUserID, int yearFrom, int yearTo);
+		
+		int CountByDate(int yearFrom, int yearTo, string sortString);
 		
 		IList<Answer> FindByProjectRound(int projectRoundID);
 		
@@ -23,21 +35,9 @@ namespace HW.Core.Repositories
 		
 		IList<Answer> FindByQuestionAndOptionJoinedAndGrouped2(string join, string groupBy, int questionID, int optionID, int yearFrom, int yearTo);
 		
-		Answer ReadByKey(string key);
-		
-		int CountByValueWithDateOptionAndQuestion(int val, int yearFrom, int yearTo, int optionID, int questionID, string sortString);
-		
-		int CountByProject(int projectRoundUserID, int yearFrom, int yearTo);
+		IList<BackgroundAnswer> FindBackgroundAnswers(int bqID);
 		
 		IList<Answer> FindByQuestionAndOptionWithYearSpan(int questionID, int optionID, int yearFrom, int yearTo);
-		
-		Answer ReadByQuestionAndOption(int answerID, int questionID, int optionID);
-		
-		Answer ReadByGroup(string groupBy, int yearFrom, int yearTo, string sortString);
-		
-		Answer ReadMinMax(string groupBy, int questionID, int optionID, int yearFrom, int yearTO, string sortString);
-		
-		int CountByDate(int yearFrom, int yearTo, string sortString);
 	}
 	
 	public class AnswerRepositoryStub : BaseRepositoryStub<Answer>, IAnswerRepository

@@ -126,6 +126,18 @@
   <data name="login.label" xml:space="preserve">
     <value>HealthWatch.se&lt;br&gt;Group administration</value>
   </data>
+  <data name="layout.header" xml:space="preserve">
+    <value>HealthWatch.se / Group admin</value>
+  </data>
+  <data name="layout.logout" xml:space="preserve">
+    <value>Log out</value>
+  </data>
+  <data name="layout.settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="layout.utility" xml:space="preserve">
+    <value>Utility</value>
+  </data>
   <data name="login.submit" xml:space="preserve">
     <value>Sign in</value>
   </data>

@@ -82,8 +82,8 @@ namespace HWgrp.Web
 		IList<BaseModel> SelectedQuestions {
 			get {
 				var selectedQuestions = new List<BaseModel>();
-				foreach (var q in questions) {
-//				foreach (var q in sponsorRepository.FindBySponsor(sponsorID)) {
+//				foreach (var q in questions) {
+				foreach (var q in sponsorRepository.FindBySponsor(sponsorID)) {
 					if (checkBoxQuestions.Items.FindByValue(q.Id.ToString()).Selected) {
 						selectedQuestions.Add(q);
 					}
@@ -99,10 +99,7 @@ namespace HWgrp.Web
 			sponsorID = Convert.ToInt32(Session["SponsorID"]);
 			sponsorAdminID = Convert.ToInt32(Session["SponsorAdminID"]);
 			
-			if (IsPostBack) {
-				BackgroundQuestions = sponsorRepository.FindBySponsor(sponsorID);
-				Departments = departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID);
-			} else {
+			if (!IsPostBack) {
 				Languages = langRepository.FindBySponsor(sponsorID);
 
 				int selectedLangID = Convert.ToInt32(dropDownLanguages.SelectedValue);
@@ -114,6 +111,9 @@ namespace HWgrp.Web
 				}
 				dropDownYearFrom.SelectedValue = (DateTime.Now.Year - 1).ToString();
 				dropDownYearTo.SelectedValue = DateTime.Now.Year.ToString();
+				BackgroundQuestions = sponsorRepository.FindBySponsor(sponsorID);
+			} else {
+				Departments = departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID);
 			}
 			Execute.Click += new EventHandler(Execute_Click);
 		}
@@ -141,7 +141,7 @@ namespace HWgrp.Web
 		protected string GetExportUrl(int reportID, int reportPartID, string type, Q additionalQuery)
 		{
 			var p = GetPage("Export.aspx", reportID, reportPartID);
-			p.Q.Add("type", type);
+			p.Q.Add("TYPE", type);
 			p.Add(additionalQuery);
 			return p.ToString();
 		}
@@ -149,7 +149,7 @@ namespace HWgrp.Web
 		protected string GetExportAllUrl(string type, Q additionalQuery)
 		{
 			var p = GetPage("ExportAll.aspx", 0, 0);
-			p.Q.Add("type", type);
+			p.Q.Add("TYPE", type);
 			p.Add(additionalQuery);
 			return p.ToString();
 		}

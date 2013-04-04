@@ -34,8 +34,6 @@ namespace HW.Tests.Models
 			
 			p = new PictureBox();
 			p.Dock = DockStyle.Fill;
-			
-			
 		}
 		
 		[TearDown]

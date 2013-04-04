@@ -45,7 +45,7 @@ namespace HWgrp.Web
 			int SID = Convert.ToInt32((Request.QueryString["SID"] != null ? Request.QueryString["SID"] : HttpContext.Current.Session["SponsorID"]));
 			string GID = (Request.QueryString["GID"] != null ? Request.QueryString["GID"].ToString().Replace(" ", "") : "");
 			string plot = Request.QueryString["PLOT"] != null ? Request.QueryString["PLOT"].ToString() : "LinePlot";
-			string type = Request.QueryString["type"].ToString();
+			string type = Request.QueryString["TYPE"].ToString();
 			
 			bool hasGrouping = Request.QueryString["GRPNG"] != null || Request.QueryString["GRPNG"] != "0";
 			string key = Request.QueryString["AK"];

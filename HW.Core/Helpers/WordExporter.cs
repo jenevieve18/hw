@@ -55,25 +55,9 @@ namespace HW.Core.Helpers
 		public object Export(int GB, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot,	string path, int distribution)
 		{
 			MemoryStream output = new MemoryStream();
-//			using (WordprocessingDocument doc = WordprocessingDocument.Create(output, WordprocessingDocumentType.Document)) {
-//				MainDocumentPart mainPart = doc.AddMainDocumentPart();
-//				mainPart.Document = new Document();
-//				Body body = new Body();
-//
-//				Paragraph paragraph = new Paragraph();
-//				Run run =  new Run();
-//				Text text = new Text(r.CurrentLanguage.Subject);
-//				run.Append(text);
-//				paragraph.Append(run);
-//				body.Append(paragraph);
-//
-//				mainPart.Document.Append(body);
-//				mainPart.Document.Save();
-//			}
-			using(WordprocessingDocument package = WordprocessingDocument.Create(output, WordprocessingDocumentType.Document))
-			{
+			using (WordprocessingDocument package = WordprocessingDocument.Create(output, WordprocessingDocumentType.Document)) {
 				string url = GetUrl(path, langID, fy, ty, SPONS, SID, GB, r.Id, PRUID, GID, GRPNG, plot, distribution);
-				CreateParts(package, url);
+				CreateParts(package, r.CurrentLanguage, url);
 			}
 
 			return output;
@@ -81,20 +65,43 @@ namespace HW.Core.Helpers
 		
 		public object Export2(int GB, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int distribution)
 		{
-			throw new NotImplementedException();
+			MemoryStream output = new MemoryStream();
+			using (WordprocessingDocument package = WordprocessingDocument.Create(output, WordprocessingDocumentType.Document)) {
+				foreach (var r in parts) {
+					string url = GetUrl(path, langID, fy, ty, SPONS, SID, GB, r.Id, PRUID, GID, GRPNG, plot, distribution);
+					CreateParts(package, r, url);
+				}
+			}
+
+			return output;
 		}
 		
-		
-		
-		
+		string GetUrl(string path, int langID, int fy, int ty, int SPONS, int SID, int GB, int rpid, int PRUID, string GID, int GRPNG, string plot, int distribution)
+		{
+			P p = new P(path, "reportImage.aspx");
+			p.Q.Add("LangID", langID);
+			p.Q.Add("FY", fy);
+			p.Q.Add("TY", ty);
+			p.Q.Add("SAID", SPONS);
+			p.Q.Add("SID", SID);
+			p.Q.Add("GB", GB);
+			p.Q.Add("RPID", rpid);
+			p.Q.Add("PRUID", PRUID);
+			p.Q.Add("GID", GID);
+			p.Q.Add("GRPNG", GRPNG);
+			p.Q.Add("PLOT", plot);
+			p.Q.Add("DIST", distribution);
+			return p.ToString();
+		}
+
 		// Adds child parts and generates content of the specified part.
-		private void CreateParts(WordprocessingDocument document, string url)
+		private void CreateParts(WordprocessingDocument document, ReportPartLanguage r, string url)
 		{
 			ExtendedFilePropertiesPart extendedFilePropertiesPart1 = document.AddNewPart<ExtendedFilePropertiesPart>("rId3");
 			GenerateExtendedFilePropertiesPart1Content(extendedFilePropertiesPart1);
 
 			MainDocumentPart mainDocumentPart1 = document.AddMainDocumentPart();
-			GenerateMainDocumentPart1Content(mainDocumentPart1);
+			GenerateMainDocumentPart1Content(mainDocumentPart1, r);
 
 			WebSettingsPart webSettingsPart1 = mainDocumentPart1.AddNewPart<WebSettingsPart>("rId3");
 			GenerateWebSettingsPart1Content(webSettingsPart1);
@@ -209,7 +216,7 @@ namespace HW.Core.Helpers
 		}
 
 		// Generates content of mainDocumentPart1.
-		private void GenerateMainDocumentPart1Content(MainDocumentPart mainDocumentPart1)
+		private void GenerateMainDocumentPart1Content(MainDocumentPart mainDocumentPart1, ReportPartLanguage r)
 		{
 			Document document1 = new Document();
 			document1.AddNamespaceDeclaration("ve", "http://schemas.openxmlformats.org/markup-compatibility/2006");
@@ -228,7 +235,8 @@ namespace HW.Core.Helpers
 
 			Run run1 = new Run();
 			Text text1 = new Text();
-			text1.Text = "Subject";
+//			text1.Text = "Subject";
+			text1.Text = r.Subject;
 
 			run1.Append(text1);
 
@@ -1549,31 +1557,13 @@ namespace HW.Core.Helpers
 		// Generates content of imagePart1.
 		private void GenerateImagePart1Content(ImagePart imagePart1, string url)
 		{
-//			System.IO.Stream data = GetBinaryDataStream(imagePart1Data);
-//			imagePart1.FeedData(data);
-//			data.Close();
+			//        	System.IO.Stream data = GetBinaryDataStream(imagePart1Data);
+			//        	imagePart1.FeedData(data);
+			//        	data.Close();
 			WebRequest req = WebRequest.Create(url);
 			WebResponse response = req.GetResponse();
 			Stream stream = response.GetResponseStream();
 			imagePart1.FeedData(stream);
-		}
-		
-		string GetUrl(string path, int langID, int fy, int ty, int SPONS, int SID, int GB, int rpid, int PRUID, string GID, int GRPNG, string plot, int distribution)
-		{
-			P p = new P(path, "reportImage.aspx");
-			p.Q.Add("LangID", langID);
-			p.Q.Add("FY", fy);
-			p.Q.Add("TY", ty);
-			p.Q.Add("SAID", SPONS);
-			p.Q.Add("SID", SID);
-			p.Q.Add("GB", GB);
-			p.Q.Add("RPID", rpid);
-			p.Q.Add("PRUID", PRUID);
-			p.Q.Add("GID", GID);
-			p.Q.Add("GRPNG", GRPNG);
-			p.Q.Add("PLOT", plot);
-			p.Q.Add("DIST", distribution);
-			return p.ToString();
 		}
 
 		private void SetPackageProperties(OpenXmlPackage document)
@@ -1598,6 +1588,7 @@ namespace HW.Core.Helpers
 		}
 
 		#endregion
+
 
 	}
 }

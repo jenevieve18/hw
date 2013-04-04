@@ -12,9 +12,9 @@ using HW.Core.Models;
 
 namespace HWgrp.Web
 {
-    public partial class Exercise : System.Web.UI.Page
-    {
-//        int AX = 0;
+	public partial class Exercise : System.Web.UI.Page
+	{
+//		int AX = 0;
 		protected int BX = 0;
 		protected int LID = 0;
 		protected IList<ExerciseAreaLanguage> areas;
@@ -148,7 +148,7 @@ namespace HWgrp.Web
 //					sb.Append("<div>");
 //				}
 //
-////				sb.Append("<a class=\"sidearrow\" href=\"JavaScript:void(window.open('" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "/exerciseShow.aspx?SID=" + Convert.ToInt32(HttpContext.Current.Session["SponsorID"]) + "&AUID=" + Math.Abs(Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"])) + "&ExerciseVariantLangID=" + l.CurrentVariant.Id + "','EVLID" + l.CurrentVariant.Id + "','scrollbars=yes,resizable=yes,");
+			////				sb.Append("<a class=\"sidearrow\" href=\"JavaScript:void(window.open('" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "/exerciseShow.aspx?SID=" + Convert.ToInt32(HttpContext.Current.Session["SponsorID"]) + "&AUID=" + Math.Abs(Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"])) + "&ExerciseVariantLangID=" + l.CurrentVariant.Id + "','EVLID" + l.CurrentVariant.Id + "','scrollbars=yes,resizable=yes,");
 //				string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
 //				sb.Append("<a class=\"sidearrow\" href=\"JavaScript:void(window.open('" + path + "exerciseShow.aspx?SID=" + Convert.ToInt32(Session["SponsorID"]) + "&AUID=" + Math.Abs(Convert.ToInt32(Session["SponsorAdminID"])) + "&ExerciseVariantLangID=" + l.CurrentVariant.Id + "','EVLID" + l.CurrentVariant.Id + "','scrollbars=yes,resizable=yes,");
 //
@@ -194,5 +194,5 @@ namespace HWgrp.Web
 //				}
 			}
 		}
-    }
+	}
 }

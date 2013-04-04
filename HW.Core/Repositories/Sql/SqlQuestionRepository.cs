@@ -60,5 +60,27 @@ SELECT BQ.BQID, BQ.Internal FROM BQ WHERE BQ.BQID IN ({0})",
 			}
 			return questions;
 		}
+		
+		public IList<BackgroundQuestion> FindBackgroundQuestionsWithAnswers(string query, int count)
+		{
+			var questions = new List<BackgroundQuestion>();
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				int j = 0;
+				while (rs.Read()) {
+					var bq = new BackgroundQuestion { Id = rs.GetInt32(2 + 0 * 3) };
+					var answers = new List<BackgroundAnswer>();
+					for (int i = 0; i < count; i++) {
+						var a = new BackgroundAnswer {
+							Id = rs.GetInt32(0 + i * 3),
+							Internal = rs.GetString(1 + i * 3)
+						};
+						answers.Add(a);
+					}
+					bq.Answers = answers;
+					questions.Add(bq);
+				}
+			}
+			return questions;
+		}
 	}
 }
