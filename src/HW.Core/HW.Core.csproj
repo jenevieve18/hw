@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>HW.Core</RootNamespace>
+    <AssemblyName>HW.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <TargetFrameworkProfile />
+    <SourceAnalysisOverrideSettingsFile>..\Settings.StyleCop</SourceAnalysisOverrideSettingsFile>
+    <RunSourceAnalysis>False</RunSourceAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DocumentFormat.OpenXml" />
+    <Reference Include="itextsharp">
+      <HintPath>..\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>..\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppContext.cs" />
+    <Compile Include="Helpers\BootstrapHelper.cs" />
+    <Compile Include="Helpers\CsvExporter.cs" />
+    <Compile Include="Helpers\Db.cs" />
+    <Compile Include="Helpers\Db2.cs" />
+    <Compile Include="Helpers\ExtendedGraph.cs" />
+    <Compile Include="Helpers\Graph.cs" />
+    <Compile Include="Helpers\Graph2.cs" />
+    <Compile Include="Helpers\HtmlHelper.cs" />
+    <Compile Include="Helpers\HWList.cs" />
+    <Compile Include="Helpers\OctreeQuantizer.cs" />
+    <Compile Include="Helpers\PdfExporter.cs" />
+    <Compile Include="Helpers\PresentationDocumentExporter.cs" />
+    <Compile Include="Helpers\Quantizer.cs" />
+    <Compile Include="Helpers\IExporter.cs" />
+    <Compile Include="Helpers\HtmlControls.cs" />
+    <Compile Include="Helpers\WordExporter.cs" />
+    <Compile Include="Models\Answer.cs" />
+    <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\Affiliate.cs" />
+    <Compile Include="Models\CX.cs" />
+    <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\Diary.cs" />
+    <Compile Include="Models\Exercise.cs" />
+    <Compile Include="Models\Feedback.cs" />
+    <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\Index.cs" />
+    <Compile Include="Models\Language.cs" />
+    <Compile Include="Models\Manager.cs" />
+    <Compile Include="Models\Measure.cs" />
+    <Compile Include="Models\Navigation.cs" />
+    <Compile Include="Models\News.cs" />
+    <Compile Include="Models\Option.cs" />
+    <Compile Include="Models\Profile.cs" />
+    <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\Question.cs" />
+    <Compile Include="Models\Reminder.cs" />
+    <Compile Include="Models\Report.cs" />
+    <Compile Include="Models\Sponsor.cs" />
+    <Compile Include="Models\Survey.cs" />
+    <Compile Include="Models\Unit.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Wise.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\IAnswerRepository.cs" />
+    <Compile Include="Repositories\IDepartmentRepository.cs" />
+    <Compile Include="Repositories\IExerciseRepository.cs" />
+    <Compile Include="Repositories\IIndexRepository.cs" />
+    <Compile Include="Repositories\ILanguageRepository.cs" />
+    <Compile Include="Repositories\IManagerFunctionRepository.cs" />
+    <Compile Include="Repositories\IOptionRepository.cs" />
+    <Compile Include="Repositories\IProjectRepository.cs" />
+    <Compile Include="Repositories\IQuestionRepository.cs" />
+    <Compile Include="Repositories\IReportRepository.cs" />
+    <Compile Include="Repositories\IRepositoryFactory.cs" />
+    <Compile Include="Repositories\ISponsorRepository.cs" />
+    <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="Repositories\IBaseRepository.cs" />
+    <Compile Include="Repositories\Sql\BaseSqlRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlReportRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlProjectRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlOptionRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlIndexRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlManagerFunctionRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlQuestionRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlExerciseRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlSponsorRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlUserRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlLanguageRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlDepartmentRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlAnswerRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlRepositoryFactory.cs" />
+    <Compile Include="Services\ReportService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models" />
+    <Folder Include="Helpers" />
+    <Folder Include="Services" />
+    <Folder Include="Repositories" />
+    <Folder Include="Repositories\Sql" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+</Project>

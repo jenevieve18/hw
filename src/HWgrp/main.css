@@ -1,0 +1,47 @@
+﻿body
+{
+	margin: 0 auto;
+	text-align:center;
+}
+body, a, td
+{
+	font-family:Arial;
+	font-size: 12px;
+	color:#333333;
+}
+.noTD
+{
+	text-decoration:none;
+}
+
+label, textarea, input, .small, button
+{
+	font-family:Verdana;
+	font-size:10px;
+	color:#555555;
+}
+@media print 
+{ 
+	.noprint { display:none; } 
+	.noscreen { display:; } 
+}
+@media screen 
+{ 
+	.noprint { display:; } 
+	.noscreen { display:none; } 
+	#main
+	{
+		background:URL(img/top_healthWatch.jpg) no-repeat top;
+		height:140px;
+		position:relative;
+		text-align:left;
+		width:1000px;
+	}
+	#container
+	{
+		top:140px;
+		position:absolute;
+		left:0px;
+		width:1000px;
+	}
+}
