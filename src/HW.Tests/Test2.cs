@@ -28,19 +28,5 @@ namespace HW.Tests
 			q.Add("TEST", "");
 			Console.WriteLine(q.ToString());
 		}
-		
-		[Test]
-		public void a()
-		{
-			string filepath = @"d:\ian\temp\test.docx";
-			using (WordprocessingDocument d = WordprocessingDocument.Create(filepath, WordprocessingDocumentType.Document)) {
-				MainDocumentPart mp = d.AddMainDocumentPart();
-				mp.Document = new Document();
-				Body b = mp.Document.AppendChild(new Body());
-				Paragraph p = b.AppendChild(new Paragraph());
-				Run r = p.AppendChild(new Run());
-				r.AppendChild(new w.Text("Hello world"));
-			}
-		}
 	}
 }

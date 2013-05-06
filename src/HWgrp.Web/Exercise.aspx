@@ -4,15 +4,26 @@
 <%@ Import Namespace="HW.Core.Helpers" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<style>
+	.statschoser .navbar-inner { padding:20px; margin-top:15px; }
+</style>
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     
 	<div class="contentgroup grid_16 exercises">
 	<div class="statschosergroup">
-		<h2 class="header"><%= LanguageFactory.GetGroupExercise(LID) %></h2>
-		<a name=filter></a>
-		<div class="statschoser">
-			<div class="filter misc">
+		
+		<div class="statschoser row">
+			<div class="span3">
+				<h2 class="header"><%= LanguageFactory.GetGroupExercise(LID) %></h2>
+				<a name=filter></a>
+			</div>
+			<div class="navbar span8">
+			<div class="navbar-inner">
+			<ul class="nav">
+			<li>
+				<%= LanguageFactory.GetChooseArea(LID) %>
 				<div class="title btn-group">
 					<button class="btn btn-info">
 						<%= LanguageFactory.GetChooseArea(LID) %>
@@ -21,10 +32,17 @@
 						<span class="caret"></span>
 					</button>
 					<%--<dl class="dropdown"><asp:PlaceHolder ID=AreaID runat=server/></dl>--%>
-					<%= BootstrapHelper.DropDownList<ExerciseAreaLanguage>(areas, "dropdown-menu") %>
+					<%-- %><%= BootstrapHelper.DropDownList<ExerciseAreaLanguage>(areas, "dropdown-menu") %>--%>
+					<ul class="dropdown-menu">
+						<% foreach (var a in areas) { %>
+                        <li><%= HtmlHelper.Anchor(a.AreaName, "") %></li>
+						<% } %>
+                    </ul>
 				</div>
-			</div>
-			<div class="filter misc">
+			</li>
+			<li class="divider-vertical"></li>
+			<li>
+				<%= LanguageFactory.GetChooseCategory(LID) %>
 				<div class="title btn-group">
 					<button class="btn btn-info">
 						<%= LanguageFactory.GetChooseCategory(LID) %>
@@ -35,8 +53,16 @@
 					<%--<dl class="dropdown"><asp:PlaceHolder ID=CategoryID runat=server/></dl>--%>
 					<%--<asp:BulletedList ID="BulletedList1" runat="server" CssClass="dropdown-menu">
 					</asp:BulletedList>--%>
-					<%= BootstrapHelper.DropDownList<ExerciseCategoryLanguage>(categories, "dropdown-menu")%>
+					<%-- %><%= BootstrapHelper.DropDownList<ExerciseCategoryLanguage>(categories, "dropdown-menu")%>--%>
+					<ul class="dropdown-menu">
+						<% foreach (var c in categories) { %>
+                        <li><%= HtmlHelper.Anchor(c.CategoryName, "") %></li>
+						<% } %>
+                    </ul>
 				</div>
+			</li>
+			</ul>
+			</div>
 			</div>
 		</div>
 	</div>
@@ -48,9 +74,9 @@
 			</span>
 			<div class="forms btn-group">
 				<%-- <asp:PlaceHolder ID=Sort runat=server /> --%>
-				<a class="active btn" href="javascript:;"><span>Slumpmässigt</span></a>
-				<a class="btn" href="exercise.aspx?SORT=1#filter"><span>Popularitet</span></a>
-				<a class="btn" href="exercise.aspx?SORT=2#filter"><span>Bokstavsordning</span></a>
+				<a class="active btn btn-mini" href="javascript:;">Slumpmässigt</a>
+				<a class="btn btn-mini" href="exercise.aspx?SORT=1#filter">Popularitet</a>
+				<a class="btn btn-mini" href="exercise.aspx?SORT=2#filter">Bokstavsordning</a>
 			</div>
 		</div>
 	</div>

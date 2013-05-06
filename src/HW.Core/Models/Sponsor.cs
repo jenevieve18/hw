@@ -10,136 +10,139 @@ namespace HW.Core.Models
 {
 	public class Sponsor : BaseModel
 	{
-		public string Name { get; set; }
-		public string Application { get; set; }
-		public ProjectRoundUnit ProjectRoundUnit { get; set; }
-		public string LoginText { get; set; }
-		public DateTime? ClosedAt { get; set; }
-		public DateTime DeletedAt { get; set; }
-		public string ConsentText { get; set; }
-		public SuperSponsor SuperSponsor { get; set; }
-		public IList<SponsorProjectRoundUnit> RoundUnits { get; set; }
-		public IList<SponsorInvite> Invites { get; set; }
-		public IList<SponsorExtendedSurvey> ExtendedSurveys { get; set; }
-		public IList<SuperAdminSponsor> SuperAdminSponsors { get; set; }
-		public string InviteText { get; set; }
-		public string InviteReminderText { get; set; }
-		public string InviteSubject { get; set; }
-		public string InviteReminderSubject { get; set; }
-		public string LoginSubject { get; set; }
-		public DateTime? InviteLastSent { get; set; }
-		public DateTime? InviteReminderLastSent { get; set; }
-		public DateTime? LoginLastSent { get; set; }
-		public int LoginDays { get; set; }
-		public int LoginWeekday { get; set; }
-		public string AllMessageSubject { get; set; }
-		public string AllMessageBody { get; set; }
-		public DateTime? AllMessageLastSent { get; set; }
-		public string SponsorKey { get; set; }
+		public virtual string Name { get; set; }
+		public virtual string Application { get; set; }
+		public virtual ProjectRoundUnit ProjectRoundUnit { get; set; }
+		public virtual string LoginText { get; set; }
+		public virtual DateTime? ClosedAt { get; set; }
+		public virtual DateTime DeletedAt { get; set; }
+		public virtual string ConsentText { get; set; }
+		public virtual SuperSponsor SuperSponsor { get; set; }
+		public virtual string InviteText { get; set; }
+		public virtual string InviteReminderText { get; set; }
+		public virtual string InviteSubject { get; set; }
+		public virtual string InviteReminderSubject { get; set; }
+		public virtual string LoginSubject { get; set; }
+		public virtual DateTime? InviteLastSent { get; set; }
+		public virtual DateTime? InviteReminderLastSent { get; set; }
+		public virtual DateTime? LoginLastSent { get; set; }
+		public virtual int LoginDays { get; set; }
+		public virtual int LoginWeekday { get; set; }
+		public virtual string AllMessageSubject { get; set; }
+		public virtual string AllMessageBody { get; set; }
+		public virtual DateTime? AllMessageLastSent { get; set; }
+		public virtual string SponsorKey { get; set; }
+		public virtual IList<SponsorProjectRoundUnit> RoundUnits { get; set; }
+		public virtual IList<SponsorInvite> Invites { get; set; }
+		public virtual IList<SponsorExtendedSurvey> ExtendedSurveys { get; set; }
+		public virtual IList<SuperAdminSponsor> SuperAdminSponsors { get; set; }
+		public virtual IList<SponsorAdmin> Admins { get; set; }
+		public virtual IList<SponsorBackgroundQuestion> BackgroundQuestions { get; set; }
 		
-		public DateTime? MinimumInviteDate { get; set; }
-		public bool Closed { get { return ClosedAt != null; } }
-		public IList<SponsorInvite> SentInvites { get; set; }
-		public IList<SponsorInvite> ActiveInvites { get; set; }
+		public virtual DateTime? MinimumInviteDate { get; set; }
+		public virtual bool Closed { get { return ClosedAt != null; } }
+		public virtual IList<SponsorInvite> SentInvites { get; set; }
+		public virtual IList<SponsorInvite> ActiveInvites { get; set; }
 	}
 	
 	public class SponsorAdmin : BaseModel
 	{
-		public Sponsor Sponsor { get; set; }
-		public string Name { get; set; }
-		public string Email { get; set; }
-		public string Usr { get; set; }
-		public bool ReadOnly { get; set; }
-		public bool SuperUser { get; set; }
-		public string Password { get; set; }
-		public bool SeeUsers { get; set; }
-		public bool Anonymized { get; set; }
+		public virtual Sponsor Sponsor { get; set; }
+		public virtual string Name { get; set; }
+		public virtual string Email { get; set; }
+		public virtual string Usr { get; set; }
+		public virtual bool ReadOnly { get; set; }
+		public virtual bool SuperUser { get; set; }
+		public virtual string Password { get; set; }
+		public virtual bool SeeUsers { get; set; }
+		public virtual bool Anonymized { get; set; }
+		public virtual IList<SponsorAdminFunction> Functions { get; set; }
+		public virtual IList<SponsorAdminDepartment> Departments { get; set; }
 		
-		public bool SuperAdmin { get; set; } // FIXME: Used with Default to determine whether it's a SuperAdmin who logs in.
+		public virtual bool SuperAdmin { get; set; } // FIXME: Used with Default to determine whether it's a SuperAdmin who logs in.
 	}
 	
 	public class SponsorExtendedSurvey : BaseModel
 	{
-		public Sponsor Sponsor { get; set; }
-		public ProjectRoundUnit ProjectRoundUnit { get; set; }
-		public string Internal { get; set; }
-		public string RoundText { get; set; }
-		public string IndividualFeedbackEmailSubject { get; set; }
-		public string IndividualFeedbackEmailBody { get; set; }
-		public DateTime EmailLastSent { get; set; }
-		public string EmailSubject { get; set; }
-		public string EmailBody { get; set; }
-		public string FinishedEmailSubject { get; set; }
-		public string FinishedEmailBody { get; set; }
-		public string ExtraEmailSubject { get; set; }
-		public string ExtraEmailBody { get; set; }
+		public virtual Sponsor Sponsor { get; set; }
+		public virtual ProjectRoundUnit ProjectRoundUnit { get; set; }
+		public virtual string Internal { get; set; }
+		public virtual string RoundText { get; set; }
+		public virtual string IndividualFeedbackEmailSubject { get; set; }
+		public virtual string IndividualFeedbackEmailBody { get; set; }
+		public virtual DateTime EmailLastSent { get; set; }
+		public virtual string EmailSubject { get; set; }
+		public virtual string EmailBody { get; set; }
+		public virtual string FinishedEmailSubject { get; set; }
+		public virtual string FinishedEmailBody { get; set; }
+		public virtual string ExtraEmailSubject { get; set; }
+		public virtual string ExtraEmailBody { get; set; }
 	}
 	
 	public class SponsorAdminDepartment : BaseModel
 	{
-		public SponsorAdmin Admin { get; set; }
-		public Department Department { get; set; }
+		public virtual SponsorAdmin Admin { get; set; }
+		public virtual Department Department { get; set; }
 	}
 	
 	public class SponsorAdminFunction : BaseModel
 	{
-		public SponsorAdmin Admin { get; set; }
-		public ManagerFunction Function { get; set; }
+		public virtual SponsorAdmin Admin { get; set; }
+		public virtual ManagerFunction Function { get; set; }
 	}
 	
 	public class SponsorBackgroundQuestion : BaseModel
 	{
-		public Sponsor Sponsor { get; set; }
-		public BackgroundQuestion Question { get; set; }
+		public virtual Sponsor Sponsor { get; set; }
+		public virtual BackgroundQuestion BackgroundQuestion { get; set; }
 	}
 	
 	public class SponsorInvite : BaseModel
 	{
-		public Sponsor Sponsor { get; set; }
-		public Department Department { get; set; }
-		public string Email { get; set; }
-		public User User { get; set; }
-		public int StoppedReason { get; set; }
-		public DateTime? Stopped { get; set; }
-		public IList<SponsorInviteBackgroundQuestion> BackgroundQuestions { get; set; }
-		
-		public string InvitationKey { get; set; }
+		public virtual Sponsor Sponsor { get; set; }
+		public virtual Department Department { get; set; }
+		public virtual string Email { get; set; }
+		public virtual User User { get; set; }
+		public virtual int StoppedReason { get; set; }
+		public virtual DateTime? Stopped { get; set; }
+		public virtual IList<SponsorInviteBackgroundQuestion> BackgroundQuestions { get; set; }
+		public virtual string InvitationKey { get; set; }
 	}
 	
 	public class SponsorInviteBackgroundQuestion : BaseModel
 	{
-		public SponsorInvite Invite { get; set; }
-		public BackgroundQuestion Question { get; set; }
-		public BackgroundAnswer Answer { get; set; }
-		public int ValueInt { get; set; }
-		public DateTime? ValueDate { get; set; }
-		public string ValueText { get; set; }
+		public virtual SponsorInvite Invite { get; set; }
+		public virtual BackgroundQuestion Question { get; set; }
+		public virtual BackgroundAnswer Answer { get; set; }
+		public virtual int ValueInt { get; set; }
+		public virtual DateTime? ValueDate { get; set; }
+		public virtual string ValueText { get; set; }
 	}
 	
 	public class SponsorLanguage : BaseModel
 	{
-		public Sponsor Sponsor { get; set; }
-		public Language Language { get; set; }
+		public virtual Sponsor Sponsor { get; set; }
+		public virtual Language Language { get; set; }
 	}
 	
 	public class SponsorLogo : BaseModel
 	{
-		public Sponsor Sponsor { get; set; }
+		public virtual Sponsor Sponsor { get; set; }
 	}
 	
 	public class SponsorProjectRoundUnit : BaseModel
 	{
-		public Sponsor Sponsor { get; set; }
-		public ProjectRoundUnit ProjectRoundUnit { get; set; }
-		public string Navigation { get; set; }
-		public Survey Survey { get; set; }
+		public virtual Sponsor Sponsor { get; set; }
+		public virtual ProjectRoundUnit ProjectRoundUnit { get; set; }
+		public virtual string Navigation { get; set; }
+		public virtual Survey Survey { get; set; }
 	}
 	
 	public class SponsorProjectRoundUnitLanguage : BaseModel
 	{
-		public SponsorProjectRoundUnit SponsorProjectRoundUnit { get; set; }
-		public Language Language { get; set; }
-		public string Navigation { get; set; }
+		public virtual SponsorProjectRoundUnit SponsorProjectRoundUnit { get; set; }
+		public virtual Language Language { get; set; }
+		public virtual string Navigation { get; set; }
 		
 		public override string ToString()
 		{
@@ -149,29 +152,29 @@ namespace HW.Core.Models
 	
 	public class SuperAdmin : BaseModel
 	{
-		public string Name { get; set; }
-		public string Password { get; set; }
+		public virtual string Name { get; set; }
+		public virtual string Password { get; set; }
 	}
 	
 	public class SuperAdminSponsor : BaseModel
 	{
-		public SuperAdmin Admin { get; set; }
-		public Sponsor Sponsor { get; set; }
-		public bool SeeUsers { get; set; }
+		public virtual SuperAdmin Admin { get; set; }
+		public virtual Sponsor Sponsor { get; set; }
+		public virtual bool SeeUsers { get; set; }
 	}
 	
 	public class SuperSponsor : BaseModel
 	{
-		public string Name { get; set; }
-		public string Logo { get; set; }
-		public IList<SuperSponsorLanguage> Languages { get; set; }
+		public virtual string Name { get; set; }
+		public virtual string Logo { get; set; }
+		public virtual IList<SuperSponsorLanguage> Languages { get; set; }
 	}
 	
 	public class SuperSponsorLanguage : BaseModel
 	{
-		public SuperSponsor Sponsor { get; set; }
-		public Language Language { get; set; }
-		public string Slogan { get; set; }
-		public string Header { get; set; }
+		public virtual SuperSponsor Sponsor { get; set; }
+		public virtual Language Language { get; set; }
+		public virtual string Slogan { get; set; }
+		public virtual string Header { get; set; }
 	}
 }

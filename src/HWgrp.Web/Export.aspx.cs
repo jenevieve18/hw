@@ -23,61 +23,7 @@ namespace HWgrp.Web
 			AppContext.GetRepositoryFactory().CreateDepartmentRepository(),
 			AppContext.GetRepositoryFactory().CreateQuestionRepository(),
 			AppContext.GetRepositoryFactory().CreateIndexRepository()
-			
 		);
-		
-		protected void Page_Load(object sender, EventArgs e)
-		{
-			int GB = (Request.QueryString["GB"] != null ? Convert.ToInt32(Request.QueryString["GB"].ToString()) : 0);
-			int stdev = Convert.ToInt32(Request.QueryString["STDEV"]);
-			
-			int fy = Request.QueryString["FY"] != null ? Convert.ToInt32(Request.QueryString["FY"]) : 0;
-			int ty = Request.QueryString["TY"] != null ? Convert.ToInt32(Request.QueryString["TY"]) : 0;
-			
-			int langID = (Request.QueryString["LangID"] != null ? Convert.ToInt32(Request.QueryString["LangID"]) : 0);
-
-			int rpid = Convert.ToInt32(Request.QueryString["RPID"]);
-			int PRUID = Convert.ToInt32(Request.QueryString["PRUID"]);
-			
-			int GRPNG = Convert.ToInt32(Request.QueryString["GRPNG"]);
-			int SPONS = Convert.ToInt32((Request.QueryString["SAID"] != null ? Request.QueryString["SAID"] : HttpContext.Current.Session["SponsorAdminID"]));
-			int SID = Convert.ToInt32((Request.QueryString["SID"] != null ? Request.QueryString["SID"] : HttpContext.Current.Session["SponsorID"]));
-			string GID = (Request.QueryString["GID"] != null ? Request.QueryString["GID"].ToString().Replace(" ", "") : "");
-			string plot = Request.QueryString["PLOT"] != null ? Request.QueryString["PLOT"].ToString() : "LinePlot";
-			string type = Request.QueryString["TYPE"].ToString();
-			
-			bool hasGrouping = Request.QueryString["GRPNG"] != null || Request.QueryString["GRPNG"] != "0";
-			string key = Request.QueryString["AK"];
-			
-			object disabled = Request.QueryString["DISABLED"];
-			
-			int distribution = Request.QueryString["DIST"] != null ? Convert.ToInt32(Request.QueryString["DIST"]) : 0;
-			
-			ReportPart r = service.ReadReportPart(rpid, langID);
-			
-			var exporter = ExportFactory.GetExporter(service, type, HasAnswerKey, hasGrouping, disabled, Width, Height, Background, r, key);
-			Response.ContentType = exporter.Type;
-			AddHeaderIf(exporter.HasContentDisposition, "content-disposition", exporter.ContentDisposition);
-			
-			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
-			Write(exporter.Export(GB, fy, ty, langID, PRUID, GRPNG, SPONS, SID, GID, plot, path, distribution));
-		}
-		
-		void Write(object obj)
-		{
-			if (obj is MemoryStream) {
-				Response.BinaryWrite(((MemoryStream)obj).ToArray());
-			} else if (obj is string) {
-				Response.Write((string)obj);
-			}
-		}
-		
-		void AddHeaderIf(bool condition, string name, string value)
-		{
-			if (condition) {
-				Response.AddHeader(name, value);
-			}
-		}
 		
 		bool HasAnswerKey {
 			get { return Request.QueryString["AK"] != null; }
@@ -122,6 +68,60 @@ namespace HWgrp.Web
 				} else {
 					return "#EFEFEF";
 				}
+			}
+		}
+		
+		protected void Page_Load(object sender, EventArgs e)
+		{
+			int GB = (Request.QueryString["GB"] != null ? Convert.ToInt32(Request.QueryString["GB"].ToString()) : 0);
+			int stdev = Convert.ToInt32(Request.QueryString["STDEV"]);
+			
+			int fy = Request.QueryString["FY"] != null ? Convert.ToInt32(Request.QueryString["FY"]) : 0;
+			int ty = Request.QueryString["TY"] != null ? Convert.ToInt32(Request.QueryString["TY"]) : 0;
+			
+			int langID = (Request.QueryString["LangID"] != null ? Convert.ToInt32(Request.QueryString["LangID"]) : 0);
+
+			int rpid = Convert.ToInt32(Request.QueryString["RPID"]);
+			int PRUID = Convert.ToInt32(Request.QueryString["PRUID"]);
+			
+			int GRPNG = Convert.ToInt32(Request.QueryString["GRPNG"]);
+			int SPONS = Convert.ToInt32((Request.QueryString["SAID"] != null ? Request.QueryString["SAID"] : HttpContext.Current.Session["SponsorAdminID"]));
+			int SID = Convert.ToInt32((Request.QueryString["SID"] != null ? Request.QueryString["SID"] : HttpContext.Current.Session["SponsorID"]));
+			string GID = (Request.QueryString["GID"] != null ? Request.QueryString["GID"].ToString().Replace(" ", "") : "");
+			string plot = Request.QueryString["PLOT"] != null ? Request.QueryString["PLOT"].ToString() : "LinePlot";
+			string type = Request.QueryString["TYPE"].ToString();
+			
+			bool hasGrouping = Request.QueryString["GRPNG"] != null || Request.QueryString["GRPNG"] != "0";
+			string key = Request.QueryString["AK"];
+			
+			object disabled = Request.QueryString["DISABLED"];
+			
+			int distribution = Request.QueryString["DIST"] != null ? Convert.ToInt32(Request.QueryString["DIST"]) : 0;
+			
+			ReportPart r = service.ReadReportPart(rpid, langID);
+			
+			var exporter = ExportFactory.GetExporter(service, type, HasAnswerKey, hasGrouping, disabled, Width, Height, Background, r, key);
+			Response.ContentType = exporter.Type;
+			AddHeaderIf(exporter.HasContentDisposition, "content-disposition", exporter.ContentDisposition);
+			
+			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
+//			Write(exporter.Export(GB, fy, ty, langID, PRUID, GRPNG, SPONS, SID, GID, plot, path, distribution));
+			Write(exporter.Export(GB, fy, ty, langID, PRUID, GRPNG, SPONS, SID, GID, plot, path));
+		}
+		
+		void Write(object obj)
+		{
+			if (obj is MemoryStream) {
+				Response.BinaryWrite(((MemoryStream)obj).ToArray());
+			} else if (obj is string) {
+				Response.Write((string)obj);
+			}
+		}
+		
+		void AddHeaderIf(bool condition, string name, string value)
+		{
+			if (condition) {
+				Response.AddHeader(name, value);
 			}
 		}
 	}

@@ -12,9 +12,9 @@ namespace HWgrp.Web
 {
 	public partial class Default : System.Web.UI.Page
 	{
+		protected string errorMessage = "";
 		IManagerFunctionRepository functionRepository = AppContext.GetRepositoryFactory().CreateManagerFunctionRepository();
 		ISponsorRepository sponsorRepository = AppContext.GetRepositoryFactory().CreateSponsorRepository();
-		protected string errorMessage = "";
 		
 		public void Logout()
 		{

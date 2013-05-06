@@ -9,7 +9,8 @@ using HW.Core.Models;
 
 namespace HW.Core.Repositories
 {
-	public interface ISponsorRepository : IBaseRepository<SponsorAdmin>
+//	public interface ISponsorRepository : IBaseRepository<SponsorAdmin>
+	public interface ISponsorRepository : IBaseRepository<Sponsor>
 	{
 		void UpdateSponsorInviteSent(int userID, int sponsorInviteID);
 		
@@ -75,7 +76,11 @@ namespace HW.Core.Repositories
 		
 		SponsorProjectRoundUnit ReadSponsorProjectRoundUnit(int sponsorID);
 		
+		SponsorBackgroundQuestion ReadSponsorBackgroundQuestion(int sponsorBQID);
+		
 //		SponsorAdmin ReadSponsorAdmin2(int sponsorAdminID, string usr);
+		
+//		IList<Sponsor> FindAllSponsors();
 		
 		IList<Sponsor> FindAndCountDetailsBySuperAdmin(int superAdminID);
 		
@@ -106,19 +111,20 @@ namespace HW.Core.Repositories
 		IList<SponsorExtendedSurvey> FindExtendedSurveysBySponsorAdmin(int sponsorID, int sponsorAdminID);
 	}
 	
-	public class SponsorRepositoryStub : BaseRepositoryStub<SponsorAdmin>, ISponsorRepository
+//	public class SponsorRepositoryStub : BaseRepositoryStub<SponsorAdmin>, ISponsorRepository
+	public class SponsorRepositoryStub : BaseRepositoryStub<Sponsor>, ISponsorRepository
 	{
 		public SponsorRepositoryStub()
 		{
-			data.Add(new SponsorAdmin {
-	         	Name = "test",
-	         	Password = "",
-	         	SuperAdmin = false,
-	         	Sponsor = new Sponsor { Id = 1, Name = "test" },
-	         	Anonymized = true,
-	         	SeeUsers = true,
-	         	ReadOnly = false
-	         });
+//			data.Add(new SponsorAdmin {
+//	         	Name = "test",
+//	         	Password = "",
+//	         	SuperAdmin = false,
+//	         	Sponsor = new Sponsor { Id = 1, Name = "test" },
+//	         	Anonymized = true,
+//	         	SeeUsers = true,
+//	         	ReadOnly = false
+//	         });
 		}
 		
 		public void SaveSponsorAdminFunction(SponsorAdminFunction f)
@@ -258,7 +264,16 @@ namespace HW.Core.Repositories
 		
 		public SponsorAdmin ReadSponsorAdmin(string SKEY, string SAKEY, string SA, string SAID, string ANV, string LOS)
 		{
-			return data.Find(x => x.Name == ANV && x.Password == LOS);;
+//			return data.Find(x => x.Name == ANV && x.Password == LOS);;
+			return new SponsorAdmin {
+				Name = "test",
+				Password = "",
+				SuperAdmin = false,
+				Sponsor = new Sponsor { Id = 1, Name = "test" },
+				Anonymized = true,
+				SeeUsers = true,
+				ReadOnly = false
+			};
 		}
 		
 		public Sponsor X(int sponsorID)
@@ -366,7 +381,7 @@ namespace HW.Core.Repositories
 		{
 			return new List<SponsorBackgroundQuestion>(
 				new SponsorBackgroundQuestion[] {
-					new SponsorBackgroundQuestion { Id = 1, Question = new BackgroundQuestion { Internal = "Test" }}
+					new SponsorBackgroundQuestion { Id = 1, BackgroundQuestion = new BackgroundQuestion { Internal = "Test" }}
 				}
 			);
 		}
@@ -375,7 +390,7 @@ namespace HW.Core.Repositories
 		{
 			return new List<SponsorBackgroundQuestion>(
 				new SponsorBackgroundQuestion[] {
-					new SponsorBackgroundQuestion { Id = 1, Question = new BackgroundQuestion { Internal = "Test" }}
+					new SponsorBackgroundQuestion { Id = 1, BackgroundQuestion = new BackgroundQuestion { Internal = "Test" }}
 				}
 			);
 		}
@@ -397,7 +412,7 @@ namespace HW.Core.Repositories
 		{
 			var surveys = new List<SponsorExtendedSurvey>();
 			for (int i = 0; i < 10; i++) {
-				var v = new Survey { Id = 1, Name = "Survey " + i };
+				var v = new Survey { Id = 1, Internal = "Survey " + i };
 				var u = new ProjectRoundUnit { Id = 1, Survey = v };
 				u.Answers = new List<Answer>(10);
 				var s = new SponsorExtendedSurvey {
@@ -500,6 +515,11 @@ namespace HW.Core.Repositories
 		}
 		
 		public IList<SponsorAdminFunction> FindAdminFunctionBySponsorAdmin(int sponsorAdminID)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public SponsorBackgroundQuestion ReadSponsorBackgroundQuestion(int sponsorBQID)
 		{
 			throw new NotImplementedException();
 		}

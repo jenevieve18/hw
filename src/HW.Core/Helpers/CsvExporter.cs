@@ -15,6 +15,21 @@ using iTextSharp.text.pdf;
 
 namespace HW.Core.Helpers
 {
+	public interface ICsv
+	{
+		string ToCsv(List<Department> departments, Dictionary<string, List<Answer>> weeks);
+	}
+	
+	public abstract class BaseCsv : ICsv
+	{
+		public abstract string ToCsv(List<Department> departments, Dictionary<string, List<Answer>> weeks);
+		
+		protected string AddComma(string s)
+		{
+			return "\"" + s + "\"" + ",";
+		}
+	}
+	
 	public class CsvExporter : IExporter
 	{
 		bool hasAnswerKey;
@@ -66,38 +81,27 @@ namespace HW.Core.Helpers
 			get { return "attachment;filename=Report.csv"; }
 		}
 		
-		public object Export(int GB, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int distribution)
+//		public object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path, int distribution)
+		public object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path)
 		{
 			var f = service.GetGraphFactory(hasAnswerKey);
-			return f.CreateGraph2(key, r, langID, PRUID, fy, ty, GB, hasGrouping, plot, GRPNG, SPONS, SID, GID, disabled, distribution);
+//			return f.CreateGraph2(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled, distribution);
+			return f.CreateGraph2(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled);
 		}
 		
-		public object Export2(int GB, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int distribution)
+//		public object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path, int distribution)
+		public object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path)
 		{
 			StringBuilder s = new StringBuilder();
 			foreach (var p in parts) {
 				ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
 				var f = service.GetGraphFactory(hasAnswerKey);
-				string x = f.CreateGraph2(key, r, langID, PRUID, fy, ty, GB, hasGrouping, plot, GRPNG, SPONS, SID, GID, disabled, distribution);
+//				string x = f.CreateGraph2(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled, distribution);
+				string x = f.CreateGraph2(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled);
 				s.AppendLine(x);
 				s.AppendLine();
 			}
 			return s.ToString();
-		}
-	}
-	
-	public interface ICsv
-	{
-		string ToCsv(List<Department> departments, Dictionary<string, List<Answer>> weeks);
-	}
-	
-	public abstract class BaseCsv : ICsv
-	{
-		public abstract string ToCsv(List<Department> departments, Dictionary<string, List<Answer>> weeks);
-		
-		protected string AddComma(string s)
-		{
-			return "\"" + s + "\"" + ",";
 		}
 	}
 	

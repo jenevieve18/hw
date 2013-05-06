@@ -721,7 +721,7 @@ namespace HWgrp.Web
 //					extra += (extra != "" ? "," : "") + rs.GetInt32(0).ToString();
 //					extraType += (extraType != "" ? "," : "") + rs.GetInt32(1).ToString();
 					extra += (extra != "" ? "," : "") + q.Id.ToString();
-					extraType += (extraType != "" ? "," : "") + q.Question.Id.ToString();
+					extraType += (extraType != "" ? "," : "") + q.BackgroundQuestion.Id.ToString();
 				}
 //				rs.Close();
 

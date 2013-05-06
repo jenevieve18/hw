@@ -9,16 +9,21 @@ namespace HW.Core.Models
 {
 	public class Manager : BaseModel
 	{
-		public string Email { get; set; }
-		public string Password { get; set; }
-		public string Name { get; set; }
-		public string Phone { get; set; }
+		public virtual string Email { get; set; }
+		public virtual string Password { get; set; }
+		public virtual string Name { get; set; }
+		public virtual string Phone { get; set; }
 	}
 	
 	public class ManagerFunction : BaseModel
 	{
-		public string Function { get; set; }
-		public string URL { get; set; }
-		public string Expl { get; set; }
+		public virtual string Function { get; set; }
+		public virtual string URL { get; set; }
+		public virtual string Expl { get; set; }
+		
+		public override string ToString()
+		{
+			return Function;
+		}
 	}
 }

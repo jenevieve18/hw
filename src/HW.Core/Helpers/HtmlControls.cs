@@ -89,6 +89,15 @@ namespace HW.Core.Helpers
 	{
 		IList<Department> departments;
 		
+		public DepartmentListHtmlTable()
+		{
+			Style.Add("border", "0");
+			Style.Add("border-collapse", "collapse");
+			Style.Add("border-spacing", "0");
+			CellPadding = 0;
+			CellSpacing = 0;
+		}
+		
 		public IList<Department> Departments {
 			get { return departments; }
 			set {

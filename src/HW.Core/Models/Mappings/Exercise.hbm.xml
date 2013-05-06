@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="HW.Core.Models" assembly="HW.Core">
+	<class name="Exercise" table="Exercise">
+		<id name="Id" column="ExerciseID">
+			<generator class="identity" />
+		</id>
+		<property name="Image" column="ExerciseImg" />
+		<many-to-one name="Area" class="ExerciseArea" column="ExerciseAreaID" />
+		<many-to-one name="Category" class="ExerciseCategory" column="ExerciseCategoryID" />
+	</class>
+	<class name="ExerciseArea" table="ExerciseArea">
+		<id name="Id" column="ExerciseAreaID">
+			<generator class="identity" />
+		</id>
+		<property name="Image" column="ExerciseAreaImg" />
+	</class>
+	<class name="ExerciseCategory" table="ExerciseCategory">
+		<id name="Id" column="ExerciseCategoryID">
+			<generator class="identity" />
+		</id>
+		<property name="SortOrder" column="ExerciseCategorySortOrder" />
+	</class>
+</hibernate-mapping>

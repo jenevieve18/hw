@@ -11,9 +11,9 @@ using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Presentation;
-using P = DocumentFormat.OpenXml.Presentation;
-using D = DocumentFormat.OpenXml.Drawing;
 using NUnit.Framework;
+using D = DocumentFormat.OpenXml.Drawing;
+using P = DocumentFormat.OpenXml.Presentation;
 
 namespace HW.Tests
 {
@@ -27,7 +27,7 @@ namespace HW.Tests
 			CreatePresentation(f);
 		}
 		
-		public static void CreatePresentation(string filepath)
+		public void CreatePresentation(string filepath)
 		{
 			// Create a presentation at a specified file path. The presentation document type is pptx, by default.
 			PresentationDocument presentationDoc = PresentationDocument.Create(filepath, PresentationDocumentType.Presentation);
@@ -40,7 +40,7 @@ namespace HW.Tests
 			presentationDoc.Close();
 		}
 
-		private static void CreatePresentationParts(PresentationPart presentationPart)
+		private void CreatePresentationParts(PresentationPart presentationPart)
 		{
 			SlideMasterIdList slideMasterIdList1 = new SlideMasterIdList(new SlideMasterId() { Id = (UInt32Value)2147483648U, RelationshipId = "rId1" });
 			SlideIdList slideIdList1 = new SlideIdList(new SlideId() { Id = (UInt32Value)256U, RelationshipId = "rId2" });
@@ -55,7 +55,6 @@ namespace HW.Tests
 			SlideMasterPart slideMasterPart1;
 			ThemePart themePart1;
 
-			
 			slidePart1 = CreateSlidePart(presentationPart);
 			slideLayoutPart1 = CreateSlideLayoutPart(slidePart1);
 			slideMasterPart1 = CreateSlideMasterPart(slideLayoutPart1);
@@ -66,7 +65,7 @@ namespace HW.Tests
 			presentationPart.AddPart(themePart1, "rId5");
 		}
 
-		private static SlidePart CreateSlidePart(PresentationPart presentationPart)
+		private SlidePart CreateSlidePart(PresentationPart presentationPart)
 		{
 			SlidePart slidePart1 = presentationPart.AddNewPart<SlidePart>("rId2");
 			slidePart1.Slide = new Slide(
@@ -91,7 +90,7 @@ namespace HW.Tests
 			return slidePart1;
 		}
 		
-		private static SlideLayoutPart CreateSlideLayoutPart(SlidePart slidePart1)
+		private SlideLayoutPart CreateSlideLayoutPart(SlidePart slidePart1)
 		{
 			SlideLayoutPart slideLayoutPart1 = slidePart1.AddNewPart<SlideLayoutPart>("rId1");
 			SlideLayout slideLayout = new SlideLayout(
@@ -116,7 +115,7 @@ namespace HW.Tests
 			return slideLayoutPart1;
 		}
 
-		private static SlideMasterPart CreateSlideMasterPart(SlideLayoutPart slideLayoutPart1)
+		private SlideMasterPart CreateSlideMasterPart(SlideLayoutPart slideLayoutPart1)
 		{
 			SlideMasterPart slideMasterPart1 = slideLayoutPart1.AddNewPart<SlideMasterPart>("rId1");
 			SlideMaster slideMaster = new SlideMaster(
@@ -144,7 +143,7 @@ namespace HW.Tests
 			return slideMasterPart1;
 		}
 
-		private static ThemePart CreateTheme(SlideMasterPart slideMasterPart1)
+		private ThemePart CreateTheme(SlideMasterPart slideMasterPart1)
 		{
 			ThemePart themePart1 = slideMasterPart1.AddNewPart<ThemePart>("rId5");
 			D.Theme theme1 = new D.Theme() { Name = "Office Theme" };
@@ -271,7 +270,6 @@ namespace HW.Tests
 
 			themePart1.Theme = theme1;
 			return themePart1;
-
 		}
 	}
 }

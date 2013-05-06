@@ -370,33 +370,35 @@ namespace HWgrp
 				"</TR>";*/
 		}
 
-        protected bool WithATSID(int id)
-        {
-            return HttpContext.Current.Request.QueryString["ATSID"] != null && Convert.ToInt32(HttpContext.Current.Request.QueryString["ATSID"]) == id;
-        }
+		protected bool WithATSID(int id)
+		{
+			return HttpContext.Current.Request.QueryString["ATSID"] != null && Convert.ToInt32(HttpContext.Current.Request.QueryString["ATSID"]) == id;
+		}
 
-        protected void UpdateProjectRoundUnit(SponsorProjectRoundUnit u)
-        {
-            if (ReportID.Items.FindByValue(u.ProjectRoundUnit.Report.Id.ToString()) == null)
-            {
-                ReportID.Items.Add(new ListItem(u.ProjectRoundUnit.Report.Internal, u.ProjectRoundUnit.Report.Id.ToString()));
-            }
-        }
+		protected void UpdateProjectRoundUnit(SponsorProjectRoundUnit u)
+		{
+			if (ReportID.Items.FindByValue(u.ProjectRoundUnit.Report.Id.ToString()) == null)
+			{
+				ReportID.Items.Add(new ListItem(u.ProjectRoundUnit.Report.Internal, u.ProjectRoundUnit.Report.Id.ToString()));
+			}
+		}
 
-        protected void UpdateExtendedSurvey(SponsorExtendedSurvey u)
-        {
-            if (SurveyID.Items.FindByValue(u.ProjectRoundUnit.Survey.Id.ToString()) == null)
-            {
-                SurveyID.Items.Add(new ListItem(u.ProjectRoundUnit.Survey.Name, u.ProjectRoundUnit.Survey.Id.ToString()));
-                if (SurveyName.Text == "")
-                {
-                    SurveyName.Text = u.ProjectRoundUnit.Survey.Name;
-                    if (SurveyName.Text.IndexOf(" ") >= 0)
-                    {
-                        SurveyName.Text = SurveyName.Text.Substring(0, SurveyName.Text.IndexOf(" "));
-                    }
-                }
-            }
-        }
+		protected void UpdateExtendedSurvey(SponsorExtendedSurvey u)
+		{
+			if (SurveyID.Items.FindByValue(u.ProjectRoundUnit.Survey.Id.ToString()) == null)
+			{
+//				SurveyID.Items.Add(new ListItem(u.ProjectRoundUnit.Survey.Name, u.ProjectRoundUnit.Survey.Id.ToString()));
+				SurveyID.Items.Add(new ListItem(u.ProjectRoundUnit.Survey.Internal, u.ProjectRoundUnit.Survey.Id.ToString()));
+				if (SurveyName.Text == "")
+				{
+//					SurveyName.Text = u.ProjectRoundUnit.Survey.Name;
+					SurveyName.Text = u.ProjectRoundUnit.Survey.Internal;
+					if (SurveyName.Text.IndexOf(" ") >= 0)
+					{
+						SurveyName.Text = SurveyName.Text.Substring(0, SurveyName.Text.IndexOf(" "));
+					}
+				}
+			}
+		}
 	}
 }

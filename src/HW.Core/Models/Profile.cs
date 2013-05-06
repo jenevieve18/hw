@@ -9,13 +9,13 @@ namespace HW.Core.Models
 {
 	public class ProfileComparison : BaseModel
 	{
-		public string Hash { get; set; }
+		public virtual string Hash { get; set; }
 	}
 	
 	public class ProfileComparisonBackgroundQuestion : BaseModel
 	{
-		public ProfileComparison Comparison { get; set; }
-		public BackgroundQuestion Question { get; set; }
-		public int Value { get; set; }
+		public virtual ProfileComparison Comparison { get; set; }
+		public virtual BackgroundQuestion Question { get; set; }
+		public virtual int Value { get; set; }
 	}
 }

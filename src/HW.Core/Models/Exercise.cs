@@ -10,20 +10,20 @@ namespace HW.Core.Models
 {
 	public class Exercise : BaseModel
 	{
-		public string Image { get; set; }
-		public ExerciseCategory Category { get; set; }
-		public ExerciseArea Area { get; set; }
-		public int SortOrder { get; set; }
-		public int Minutes { get; set; }
-		public int RequiredUserLevel { get; set; }
-		public string ReplacementHead { get; set; }
-		public IList<ExerciseLanguage> Languages { get; set; }
+		public virtual string Image { get; set; }
+		public virtual ExerciseCategory Category { get; set; }
+		public virtual ExerciseArea Area { get; set; }
+		public virtual int SortOrder { get; set; }
+		public virtual int Minutes { get; set; }
+		public virtual int RequiredUserLevel { get; set; }
+		public virtual string ReplacementHead { get; set; }
+		public virtual IList<ExerciseLanguage> Languages { get; set; }
 		
-		public ExerciseLanguage CurrentLanguage { get; set; }
-		public ExerciseAreaLanguage CurrentArea { get; set; }
-		public ExerciseCategoryLanguage CurrentCategory { get; set; }
-		public ExerciseVariantLanguage CurrentVariant { get; set; }
-		public ExerciseTypeLanguage CurrentType { get; set; }
+		public virtual ExerciseLanguage CurrentLanguage { get; set; }
+		public virtual ExerciseAreaLanguage CurrentArea { get; set; }
+		public virtual ExerciseCategoryLanguage CurrentCategory { get; set; }
+		public virtual ExerciseVariantLanguage CurrentVariant { get; set; }
+		public virtual ExerciseTypeLanguage CurrentType { get; set; }
 		
 		public override string ToString()
 		{
@@ -33,16 +33,16 @@ namespace HW.Core.Models
 	
 	public class ExerciseArea : BaseModel
 	{
-		public string Image { get; set; }
-		public int SortOrder { get; set; }
-		public IList<ExerciseAreaLanguage> Languages { get; set; }
+		public virtual string Image { get; set; }
+		public virtual int SortOrder { get; set; }
+		public virtual IList<ExerciseAreaLanguage> Languages { get; set; }
 	}
 	
 	public class ExerciseAreaLanguage : BaseModel
 	{
-		public ExerciseArea Area { get; set; }
-		public Language Language { get; set; }
-		public string AreaName { get; set; }
+		public virtual ExerciseArea Area { get; set; }
+		public virtual Language Language { get; set; }
+		public virtual string AreaName { get; set; }
 		
 		public override string ToString()
 		{
@@ -52,8 +52,8 @@ namespace HW.Core.Models
 	
 	public class ExerciseCategory : BaseModel
 	{
-		public int SortOrder { get; set; }
-		public IList<ExerciseCategoryLanguage> Languages { get; set; }
+		public virtual int SortOrder { get; set; }
+		public virtual IList<ExerciseCategoryLanguage> Languages { get; set; }
 	}
 	
 	public class ExerciseCategoryLanguage : BaseModel
@@ -70,12 +70,12 @@ namespace HW.Core.Models
 	
 	public class ExerciseLanguage : BaseModel
 	{
-		public Exercise Exercise { get; set; }
-		public string ExerciseName { get; set; }
-		public string Time { get; set; }
-		public string Teaser { get; set; }
-		public Language Language { get; set; }
-		public bool IsNew { get; set; }
+		public virtual Exercise Exercise { get; set; }
+		public virtual string ExerciseName { get; set; }
+		public virtual string Time { get; set; }
+		public virtual string Teaser { get; set; }
+		public virtual Language Language { get; set; }
+		public virtual bool IsNew { get; set; }
 	}
 	
 	public class ExerciseMiracle : BaseModel

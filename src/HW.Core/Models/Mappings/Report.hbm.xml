@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="HW.Core.Models" assembly="HW.Core">
+	<class name="Report" table="Report">
+		<id name="Id" column="ReportID">
+			<generator class="identity" />
+		</id>
+		<property name="Internal" />
+		<property name="ReportKey" />
+		<bag name="Parts" inverse="true" cascade="all-delete-orphan">
+			<key column="ReportID" />
+			<one-to-many class="ReportPart" />
+		</bag>
+		<bag name="Languages" inverse="true" cascade="all-delete-orphan">
+			<key column="ReportID" />
+			<one-to-many class="ReportLanguage" />
+		</bag>
+		<bag name="ProjectRounds" inverse="true" cascade="all-delete-orphan">
+			<key column="ReportID" />
+			<one-to-many class="ProjectRound" />
+		</bag>
+		<bag name="ProjectRoundUnits" inverse="true" cascade="all-delete-orphan">
+			<key column="ReportID" />
+			<one-to-many class="ProjectRoundUnit" />
+		</bag>
+	</class>
+	<class name="ReportLanguage" table="ReportLang">
+		<id name="Id" column="ReportLangID">
+			<generator class="identity" />
+		</id>
+		<many-to-one name="Report" class="Report" column="ReportID" />
+		<many-to-one name="Language" class="Language" column="LangID" />
+		<property name="Feedback" />
+	</class>
+	<class name="ReportPart" table="ReportPart">
+		<id name="Id" column="ReportPartID">
+			<generator class="identity" />
+		</id>
+		<many-to-one name="Report" class="Report" column="ReportID" />
+		<property name="Internal" />
+		<property name="Type" />
+		<many-to-one name="Question" class="Question" column="QuestionID" />
+		<bag name="Components" inverse="true" cascade="all-delete-orphan">
+			<key column="ReportPartID" />
+			<one-to-many class="ReportPartComponent" />
+		</bag>
+		<bag name="Languages" inverse="true" cascade="all-delete-orphan">
+			<key column="ReportPartID" />
+			<one-to-many class="ReportPartLanguage" />
+		</bag>
+	</class>
+	<class name="ReportPartComponent" table="ReportPartComponent">
+		<id name="Id" column="ReportPartComponentID">
+			<generator class="identity" />
+		</id>
+		<many-to-one name="ReportPart" class="ReportPart" column="ReportPartID" />
+		<many-to-one name="Index" class="Index" column="IdxID" />
+	<many-to-one name="QuestionOption" class="WeightedQuestionOption" column="WeightedQuestionOptionID" />
+	</class>
+	<class name="ReportPartLanguage" table="ReportPartLang">
+		<id name="Id" column="ReportPartLangID">
+			<generator class="identity" />
+		</id>
+		<property name="Header" />
+		<property name="Subject" />
+		<property name="Footer" />
+		<many-to-one name="ReportPart" class="ReportPart" column="ReportPartID" />
+		<many-to-one name="Language" class="Language" column="LangID" />
+	</class>
+</hibernate-mapping>

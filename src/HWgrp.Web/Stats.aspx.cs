@@ -53,7 +53,7 @@ namespace HWgrp.Web
 				this.questions = value;
 				checkBoxQuestions.Items.Clear();
 				foreach (var s in questions) {
-					checkBoxQuestions.Items.Add(new ListItem(s.Question.Internal, s.Id.ToString()));
+					checkBoxQuestions.Items.Add(new ListItem(s.BackgroundQuestion.Internal, s.Id.ToString()));
 				}
 				checkBoxQuestions.SelectedIndex = 0;
 			}

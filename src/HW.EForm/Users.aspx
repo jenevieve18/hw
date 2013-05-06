@@ -6,17 +6,22 @@
 
 <h3>Users</h3>
 
-<p><%= BootstrapHelper.Anchor("Add a user", "UsersAdd.aspx") %></p>
+<p><%= BootstrapHelper.Anchor("Add a user", "UsersAdd.aspx", "btn btn-success", "icon-plus") %></p>
 
 <table class="table table-hover">
 	<tr>
 		<th>User name</th>
 		<th>Actions</th>
 	</tr>
+	<% foreach (var u in users) { %>
 	<tr>
-		<td></td>
-		<td></td>
+		<td><%= u.Name %></td>
+		<td>
+			<%= HtmlHelper.Anchor("Edit", "") %>
+			<%= HtmlHelper.Anchor("Delete", "") %>
+		</td>
 	</tr>
+	<% } %>
 </table>
 
 </asp:Content>

@@ -9,16 +9,21 @@ namespace HW.Core.Models
 {
 	public class Department : BaseModel
 	{
-		public Sponsor Sponsor { get; set; }
-		public string Name { get; set; }
-		public Department Parent { get; set; }
-		public int SortOrder { get; set; }
-		public string SortString { get; set; }
-		public string ShortName { get; set; }
-		public string AnonymizedName { get; set; }
+		public virtual Sponsor Sponsor { get; set; }
+		public virtual string Name { get; set; }
+		public virtual Department Parent { get; set; }
+		public virtual int SortOrder { get; set; }
+		public virtual string SortString { get; set; }
+		public virtual string ShortName { get; set; }
+		public virtual string AnonymizedName { get; set; }
 		
-		public int Depth { get; set; }
-		public int Siblings { get; set; }
-		public string TreeName { get; set; }
+		public virtual int Depth { get; set; }
+		public virtual int Siblings { get; set; }
+		public virtual string TreeName { get; set; }
+		
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 }

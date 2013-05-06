@@ -77,7 +77,8 @@ namespace HWgrp
 			AddHeaderIf(exporter.HasContentDisposition, "content-disposition", exporter.ContentDisposition);
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
 //			Write(exporter.Export(GB, fy, ty, langID, rpid, PRUID, GRPNG, SPONS, SID, GID, plot, path, point));
-			Write(exporter.Export(GB, fy, ty, langID, PRUID, GRPNG, SPONS, SID, GID, plot, path, point));
+//			Write(exporter.Export(GB, fy, ty, langID, PRUID, GRPNG, SPONS, SID, GID, plot, path, point));
+			Write(exporter.Export(GB, fy, ty, langID, PRUID, GRPNG, SPONS, SID, GID, plot, path));
 		}
 		
 		void Write(object obj)

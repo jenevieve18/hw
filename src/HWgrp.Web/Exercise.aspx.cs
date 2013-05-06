@@ -6,9 +6,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Core;
-using HW.Core.Repositories;
 using HW.Core.Helpers;
 using HW.Core.Models;
+using HW.Core.Repositories;
 
 namespace HWgrp.Web
 {
@@ -171,8 +171,7 @@ namespace HWgrp.Web
 //			{
 //				sb.Append("</div><div class=\"bottom\">&nbsp;</div></div><!-- end .detail --> </div><!-- end .item -->");
 //			}
-
-
+//
 			if (!IsPostBack)
 			{
 //				ExerciseList.Controls.Add(new LiteralControl(sb.ToString()));

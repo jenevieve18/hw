@@ -1,0 +1,18 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Settings.aspx.cs" Inherits="HW.Grp.Settings" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+	<div class="contentgroup grid_16">
+		<div id="contextbar">
+			<div class="settingsPane">
+				<asp:PlaceHolder ID=Txt runat=server>Change password</asp:PlaceHolder> <asp:TextBox ID=Password runat=server TextMode=Password /> <asp:Button ID=Save runat=server Text="Save" /> <asp:Label ID=Message runat=server />
+			</div>
+		</div>
+				
+		<div class="smallContent">
+			
+		</div>
+	</div>
+
+</asp:Content>

@@ -42,13 +42,20 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DocumentFormat.OpenXml" />
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+    </Reference>
     <Reference Include="itextsharp">
       <HintPath>..\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data">
       <HintPath>..\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -69,6 +76,7 @@
   <ItemGroup>
     <Compile Include="AppContext.cs" />
     <Compile Include="Helpers\BootstrapHelper.cs" />
+    <Compile Include="Helpers\ConvertHelper.cs" />
     <Compile Include="Helpers\CsvExporter.cs" />
     <Compile Include="Helpers\Db.cs" />
     <Compile Include="Helpers\Db2.cs" />
@@ -125,6 +133,17 @@
     <Compile Include="Repositories\ISponsorRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Repositories\IBaseRepository.cs" />
+    <Compile Include="Repositories\NHibernate\BaseNHibernateRepository.cs" />
+    <Compile Include="Repositories\NHibernate\NHibernateDepartmentRepository.cs" />
+    <Compile Include="Repositories\NHibernate\NHibernateExerciseRepository.cs" />
+    <Compile Include="Repositories\NHibernate\NHibernateLanguageRepository.cs" />
+    <Compile Include="Repositories\NHibernate\NHibernateManagerFunctionRepository.cs" />
+    <Compile Include="Repositories\NHibernate\NHibernateProjectRepository.cs" />
+    <Compile Include="Repositories\NHibernate\NHibernateQuestionRepository.cs" />
+    <Compile Include="Repositories\NHibernate\NHibernateReportRepository.cs" />
+    <Compile Include="Repositories\NHibernate\NHibernateRepositoryFactory.cs" />
+    <Compile Include="Repositories\NHibernate\NHibernateSponsorRepository.cs" />
+    <Compile Include="Repositories\NHibernate\NHibernateUserRepository.cs" />
     <Compile Include="Repositories\Sql\BaseSqlRepository.cs" />
     <Compile Include="Repositories\Sql\SqlReportRepository.cs" />
     <Compile Include="Repositories\Sql\SqlProjectRepository.cs" />
@@ -141,12 +160,22 @@
     <Compile Include="Repositories\Sql\SqlRepositoryFactory.cs" />
     <Compile Include="Services\ReportService.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Models" />
-    <Folder Include="Helpers" />
-    <Folder Include="Services" />
-    <Folder Include="Repositories" />
-    <Folder Include="Repositories\Sql" />
+    <EmbeddedResource Include="Models\Mappings\Report.hbm.xml" />
+    <EmbeddedResource Include="Models\Mappings\Question.hbm.xml" />
+    <EmbeddedResource Include="Models\Mappings\Language.hbm.xml" />
+    <EmbeddedResource Include="Models\Mappings\User.hbm.xml" />
+    <EmbeddedResource Include="Models\Mappings\Index.hbm.xml" />
+    <EmbeddedResource Include="Models\Mappings\Sponsor.hbm.xml" />
+    <EmbeddedResource Include="Models\Mappings\Answer.hbm.xml" />
+    <EmbeddedResource Include="Models\Mappings\Project.hbm.xml" />
+    <EmbeddedResource Include="Models\Mappings\Option.hbm.xml" />
+    <EmbeddedResource Include="Models\Mappings\Survey.hbm.xml" />
+    <EmbeddedResource Include="Models\Mappings\Department.hbm.xml" />
+    <EmbeddedResource Include="Models\Mappings\ManagerFunction.hbm.xml" />
+    <EmbeddedResource Include="Models\Mappings\Exercise.hbm.xml" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

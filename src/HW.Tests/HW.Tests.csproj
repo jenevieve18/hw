@@ -42,15 +42,28 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DocumentFormat.OpenXml" />
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+    </Reference>
     <Reference Include="itextsharp">
       <HintPath>..\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\packages\System.Data.SQLite.x86.1.0.84.0\lib\net40\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq">
+      <HintPath>..\packages\System.Data.SQLite.x86.1.0.84.0\lib\net40\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -64,6 +77,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GenerateSchemaTests.cs" />
     <Compile Include="Models\DbTests.cs" />
     <Compile Include="Models\ExtendedGraphTests.cs" />
     <Compile Include="Models\ExtendedGraphTests2.cs" />
@@ -91,15 +105,12 @@
     <Compile Include="Test2.cs" />
     <Compile Include="Test3.cs" />
     <Compile Include="Test4.cs" />
-    <Compile Include="Views\DefaultTests.cs" />
     <Compile Include="Views\ExerciseTests.cs" />
     <Compile Include="Views\FeedbackTests.cs" />
     <Compile Include="Views\ManagerSetupTests.cs" />
     <Compile Include="Views\ManagersTests.cs" />
     <Compile Include="Views\MessagesTests.cs" />
     <Compile Include="Views\OrgTests.cs" />
-    <Compile Include="Views\ReportImageTests.cs" />
-    <Compile Include="Views\StatsTests.cs" />
     <Compile Include="Views\SuperAdminTests.cs" />
     <Compile Include="Views\SuperReportImageTests.cs" />
     <Compile Include="Views\SuperStatsTests.cs" />
@@ -110,13 +121,10 @@
       <Project>{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}</Project>
       <Name>HW.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HWgrp\HWgrp.csproj">
-      <Project>{1DD98AAE-98D7-4D4D-B013-BF656BAC11CA}</Project>
-      <Name>HWgrp</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />

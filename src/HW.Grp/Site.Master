@@ -1,0 +1,93 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="HW.Grp.Site" %>
+<%@ Import Namespace="HW.Core.Helpers" %>
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <title>HealthWatch.se / Group admin</title>
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Expires" content="-1">
+	<meta name="Robots" content="noarchive">
+	<script language="JavaScript">		window.history.forward(1);</script>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link type="text/css" rel="stylesheet" href="includes/css/960.css">
+	<link type="text/css" rel="stylesheet" href="includes/css/site.css">
+	<link type="text/css" rel="stylesheet" href="includes/css/admin.css">
+	<link type="text/css" href="includes/ui/css/ui-lightness/jquery-ui-1.8.11.custom.css" rel="Stylesheet">
+	<script type="text/javascript" src="includes/ui/js/jquery-1.5.1.min.js"></script>
+	<script type="text/javascript" src="includes/ui/js/jquery-ui-1.8.11.custom.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			var descriptionS = $("#submenu .description").html();
+			$("#submenu a").mouseover(function () {
+				$("#submenu .description").html($(this).html());
+				$("#submenu .active").css('background-position', 'center -80px');
+			});
+			$("#submenu a").mouseout(function () {
+				$("#submenu .description").html(descriptionS);
+				$("#submenu .active").css('background-position', 'center -120px');
+			});
+		});
+	</script>
+
+	<!--<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/bootstrap-responsive.css">-->
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div class="container_16" id="admin">
+		<div class="headergroup grid_16">
+			<div class="grid_3 alpha">
+				<img src="img/hwlogo.png" width="186" height="126" alt="HealthWatch group administrator">
+			</div>
+			<div class="grid_8 omega p2">
+				<!--HealthWatch.se - Header 1<br>
+				<span style="font-size:14px;">Group administration - test</span><br>
+				<img src="http://localhost:20135/img/partner/1.gif">-->
+				HealthWatch.se - <%= sponsor.SuperSponsor.Languages[0].Header %><br />
+				<span style="font-size:14px;">Group administration - <%= sponsor.Name %></span><br />
+				<%= HtmlHelper.Image(string.Format("/img/partner/{0}.gif", sponsor.SuperSponsor.Id)) %>
+			</div>
+			<div class="logincontainer grid_5 alpha omega">
+				<div class="gears">
+					<!--<span>test</span>
+					<span style="color:white;">0</span><br>
+					<a href="settings.aspx?Rnd=258566570" class="regular">Settings</a>&nbsp;&nbsp;
+					<a href="default.aspx?Logout=1&amp;Rnd=258566570" class="regular">Log out</a>-->
+					<span><%= sponsor.Name %></span>
+					<span style="color:white;"><%= sponsorAdminID %></span><br>
+					<%= HtmlHelper.Anchor("Settings", "Settings.aspx", true, new Dictionary<string, string>() { { "class", "active"} })  %>&nbsp;&nbsp;
+					<%= HtmlHelper.Anchor("Log out", "Default.aspx?Logout=1", true, new Dictionary<string, string>() { { "class", "active"} })  %>
+				</div>
+			</div>
+			<div id="submenu" class="grid_16 alpha">
+				<!--<a title="Statistics" class="active" href="stats.aspx?Rnd=258566570">Statistics</a>
+				<a title="Messages" href="messages.aspx?Rnd=258566570">Messages</a>
+				<a title="Managers" href="managers.aspx?Rnd=258566570">Managers</a>
+				<a title="TEST" href="debug.aspx?Rnd=258566570">TEST</a>
+				<a title="Exercises" href="exercise.aspx?Rnd=258566570">Exercises</a>
+				<div class="description">Statistics</div>-->
+				<% string desc = ""; %>
+				<% foreach (var f in functions) { %>
+					<% bool active = Request.Url.AbsolutePath.IndexOf(f.URL) >= 0; %>
+					<% if (active) { %>
+						<%= HtmlHelper.Anchor(f.Function, f.URL, true, new Dictionary<string, string>() { { "class", "active"}, { "title", f.Expl } } ) %>
+						<% desc = f.Expl; %>
+					<% } else { %>
+						<%= HtmlHelper.Anchor(f.Function, f.URL, true, new Dictionary<string, string>() { { "class", ""}, { "title", f.Expl } } ) %>
+					<% } %>
+				<% } %>
+				<div class="description"><%= desc %></div>
+			</div>
+		</div>
+
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>

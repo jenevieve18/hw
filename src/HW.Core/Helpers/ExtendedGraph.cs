@@ -363,9 +363,10 @@ namespace HW.Core.Helpers
 	
 	public interface IGraphFactory
 	{
-		ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point);
+		ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int pruid, int fy, int ty, int GB, bool hasGrouping, string plot, int width, int height, string bg, int grpng, int spons, int sid, string gid, object disabled, int point);
 
-		string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int GRPNG, int SPONS, int SID, string GID, object disabled, int point);
+//		string CreateGraph2(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, string plot, int grpng, int spons, int sid, string gid, object disabled, int point);
+		string CreateGraph2(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, string plot, int grpng, int spons, int sid, string gid, object disabled);
 	}
 	
 	public class UserLevelGraphFactory : IGraphFactory
@@ -470,7 +471,8 @@ namespace HW.Core.Helpers
 			return g;
 		}
 		
-		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
+//		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
+		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int GRPNG, int SPONS, int SID, string GID, object disabled)
 		{
 			int cx = p.Components.Count;
 			int answerID = 0;
@@ -690,7 +692,7 @@ namespace HW.Core.Helpers
 				int t = 2;
 				if (plot.ToUpper().Equals("Boxplot".ToUpper())) {
 					g.Type = new BoxPlotGraphType();
-				} else if (plot.ToUpper().Equals("Line (mean ± 2 SD)".ToUpper())) {
+				} else if (plot.ToUpper().Equals("Line (mean ± 1.96 SD)".ToUpper())) {
 					g.Type = new LineGraphType(2, t);
 				} else if (plot.ToUpper().Equals("Line (mean ± SD)".ToUpper())) {
 					g.Type = new LineGraphType(1, t);
@@ -834,7 +836,8 @@ namespace HW.Core.Helpers
 			return g;
 		}
 		
-		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
+//		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
+		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int GRPNG, int SPONS, int SID, string GID, object disabled)
 		{
 			int cx = p.Components.Count;
 			string sortString = "";
@@ -969,7 +972,7 @@ namespace HW.Core.Helpers
 				cx = 0;
 				
 //				g.DrawBottomString(minDT, maxDT, GB);
-//				
+//
 //				List<IExplanation> explanationBoxes = new List<IExplanation>();
 				
 				if (hasGrouping) {
@@ -993,7 +996,7 @@ namespace HW.Core.Helpers
 //						breaker = 3;
 //						itemWidth = 240;
 //					}
-//					
+//
 //					g.Explanations.Add(
 //						new Explanation {
 //							Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
@@ -1092,16 +1095,26 @@ namespace HW.Core.Helpers
 			}
 //			return g;
 			
-			if (plot == "BOXPLOT") {
+//			if (plot == "BOXPLOT") {
+//				return new BoxPlotCsv().ToCsv(departments, weeks);
+//			} else {
+//				if (point == Distribution.None) {
+//					return new LineCsv().ToCsv(departments, weeks);
+//				} else if (point == Distribution.StandardDeviation) {
+//					return new StandardDeviationLineCsv().ToCsv(departments, weeks);
+//				} else {
+//					return new ConfidenceIntervalLineCsv().ToCsv(departments, weeks);
+//				}
+//			}
+			
+			if (plot.ToUpper().Equals("Boxplot".ToUpper())) {
 				return new BoxPlotCsv().ToCsv(departments, weeks);
+			} else if (plot.ToUpper().Equals("Line (mean ± 1.96 SD)".ToUpper())) {
+				return new ConfidenceIntervalLineCsv().ToCsv(departments, weeks);
+			} else if (plot.ToUpper().Equals("Line (mean ± SD)".ToUpper())) {
+				return new StandardDeviationLineCsv().ToCsv(departments, weeks);
 			} else {
-				if (point == Distribution.None) {
-					return new LineCsv().ToCsv(departments, weeks);
-				} else if (point == Distribution.StandardDeviation) {
-					return new StandardDeviationLineCsv().ToCsv(departments, weeks);
-				} else {
-					return new ConfidenceIntervalLineCsv().ToCsv(departments, weeks);
-				}
+				return new LineCsv().ToCsv(departments, weeks);
 			}
 		}
 		

@@ -15,13 +15,6 @@ namespace HW.Tests
 	public class Test1
 	{
 		[Test]
-		public void a()
-		{
-			string s = "\r\nSELECT dbo.cf_year2WeekEven(a.EndDT) AS DT, AVG(av.ValueInt) AS V\r\nFROM Answer a\r\n\r\nINNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID\r\nINNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID AND HWu.ProjectRoundUnitID = 3101\r\nINNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID\r\nINNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString, 16) = '0000110100001093'\r\nINNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID\r\n\tAND av.QuestionID = 238\r\n\tAND av.OptionID = 55\r\nWHERE a.EndDT IS NOT NULL\r\nAND YEAR(a.EndDT) >= 2012\r\nAND YEAR(a.EndDT) <= 2013\r\nGROUP BY a.ProjectRoundUserID, dbo.cf_year2WeekEven(a.EndDT)\r\n";
-			Console.WriteLine(s);
-		}
-		
-		[Test]
 		public void TestMethod()
 		{
 			string s = @"52312	90
@@ -178,7 +171,6 @@ namespace HW.Tests
 //					Console.WriteLine("\t" + v.ValueInt);
 //				}
 			}
-			
 		}
 		
 		class X

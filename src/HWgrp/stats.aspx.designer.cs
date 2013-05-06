@@ -85,15 +85,6 @@ namespace HWgrp {
         protected global::System.Web.UI.WebControls.CheckBox STDEV;
         
         /// <summary>
-        /// ExtraPoint control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ExtraPoint;
-        
-        /// <summary>
         /// Org control.
         /// </summary>
         /// <remarks>

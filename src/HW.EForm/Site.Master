@@ -9,9 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-
-	<style>
-		body {
+	<style type="text/css">
+      body {
         padding-top: 60px;
         padding-bottom: 40px;
       }
@@ -27,33 +26,46 @@
           padding-right: 5px;
         }
       }
-	</style>
+    </style>
+
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-146052-10']);
+		_gaq.push(['_trackPageview']);
+		(function () {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+    </script>
+	
 
     <asp:ContentPlaceHolder ID="head" runat="server">
 
     </asp:ContentPlaceHolder>
 </head>
-<body>
-    <form id="form1" runat="server">
-    <div class="navbar navbar-inverse navbar-fixed-top">
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
+    <!--<form id="form1" runat="server">-->
+
+	<div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container-fluid">
+        <div class="container">
           <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="#"><img src="img/eform.png" /></a>
+          <a class="brand" href="./index.html"><img src="img/eform.png" /></a>
           <div class="nav-collapse collapse">
-            <p class="navbar-text pull-right">
-              Logged in as <a href="#" class="navbar-link">Username</a>
-            </p>
             <ul class="nav">
-              <li class="active"><%= HtmlHelper.Anchor("Home", "Dashboard.aspx") %></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li class=""><a href="">Home</a></li>
+              <li class="active"><a href="">About</a></li>
+              <li class=""><a href="">Contact</a></li>
+              <li class=""><%= HtmlHelper.Anchor("Logout", "Logout.aspx") %></li>
             </ul>
-          </div><!--/.nav-collapse -->
+          </div>
         </div>
       </div>
     </div>
@@ -63,10 +75,18 @@
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header">Maintenance</li>
-              <li class="active"><%= HtmlHelper.Anchor("Reports", "Reports.aspx") %></li>
+              <li class="nav-header">EForm</li>
+              <li><%= HtmlHelper.Anchor("Reports", "Reports.aspx") %></li>
+			  <li><%= HtmlHelper.Anchor("Projects", "Projects.aspx") %></li>
+			  <li><%= HtmlHelper.Anchor("Languages", "Languages.aspx") %></li>
+			  <li><%= HtmlHelper.Anchor("Questions", "Questions.aspx") %></li>
 			  <li><%= HtmlHelper.Anchor("Users", "Users.aspx") %></li>
-              <li class="nav-header">Transactions</li>
+              <li class="nav-header">HealthWatch</li>
+			  <li><%= HtmlHelper.Anchor("Manager Functions", "ManagerFunctions.aspx") %></li>
+			  <li><%= HtmlHelper.Anchor("Departments", "Departments.aspx") %></li>
+              <li><%= HtmlHelper.Anchor("Background Questions", "BackgroundQuestions.aspx") %></li>
+              <li><%= HtmlHelper.Anchor("Sponsors", "Sponsors.aspx") %></li>
+			  <li><%= HtmlHelper.Anchor("Exercises", "Exercises.aspx")%></li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
@@ -86,7 +106,9 @@
       </footer>
 
     </div>
-    </form>
+    
+	
+	<!--</form>-->
     
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>

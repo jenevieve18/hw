@@ -10,15 +10,15 @@ namespace HW.Core.Models
 {
 	public class Wise : BaseModel
 	{
-		public DateTime LastShown { get; set; }
-		public IList<WiseLanguage> Languages { get; set; }
+		public virtual DateTime LastShown { get; set; }
+		public virtual IList<WiseLanguage> Languages { get; set; }
 	}
 	
 	public class WiseLanguage : BaseModel
 	{
-		public Wise Wise { get; set; }
-		public Language Language { get; set; }
-		public string WiseName { get; set; }
-		public string Owner { get; set; }
+		public virtual Wise Wise { get; set; }
+		public virtual Language Language { get; set; }
+		public virtual string WiseName { get; set; }
+		public virtual string Owner { get; set; }
 	}
 }

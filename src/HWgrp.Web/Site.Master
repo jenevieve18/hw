@@ -83,6 +83,31 @@
 			background: url(img/myhealth_formchoser_arrow.gif) no-repeat;
 			padding-left: 20px;
 		}
+		
+#submenu {
+background: #cccccc;
+height: 40px;
+padding-left: 0;
+margin-top: 10px;
+}#submenu a {
+margin-top: 0;
+background: url('img/submenu.gif') center 0;
+height: 40px;
+padding: 0 23px;
+margin: 0 1px 0 0;
+line-height: 40px;
+font-size: 18px;
+color: #fff;
+float:left;
+} #submenu a.active {
+background: url('img/submenu.gif') center -120px;
+}
+#submenu a { text-decoration:none;}
+#submenu a:hover { background: url('img/submenu.gif') center -40px; }
+.xx 
+{ margin-top:30px;
+}
+.description { width:100%;}
 	</style>
 
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
@@ -106,34 +131,79 @@
 </head>
 <body>
 	<form id="form1" runat="server">
-				<div class="container">
-		<div class="container_16 navbar" id="admin">
-			<div class="headergroup grid_16 navbar-inner">
-					<ul class="nav">
-						<li><img src="img/hwlogo.png" /></li>
-						<li>
-							<span class="brand">HealthWatch.se - <%= sponsor.SuperSponsor.Languages[0].Header %></span>
-							<br />
-							Group administration - <%= sponsor.Name %>
-							<br />
-							<%= HtmlHelper.Image(string.Format("/img/partner/{0}.gif", sponsor.SuperSponsor.Id)) %>
-						</li>
-					</ul>
-					<ul class="nav pull-right">
-						<li><img src="img/LangID_1.gif" /></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="icon-cog"></b><%= R.Str("layout.utility", "Utility") %></a>
-							<ul class="dropdown-menu">
-								<li><%= BootstrapHelper.Anchor(R.Str("layout.settings", "Settings"), "settings.aspx", true, "icon-cog") %></li>
-								<li><%= BootstrapHelper.Anchor(R.Str("layout.logout", "Log out"), "default.aspx", true, "icon-off") %></li>
-							</ul>
-						</li>
-					</ul>
+		<!--<div class="container">
+			<div class="container_16 navbar" id="admin">
+				<div class="headergroup grid_16 navbar-inner">
+						<ul class="nav">
+							<li><img src="img/hwlogo.png" /></li>
+							<li>
+								<span class="brand">HealthWatch.se - <%= sponsor.SuperSponsor.Languages[0].Header %></span>
+								<br />
+								Group administration - <%= sponsor.Name %>
+								<br />
+								<%= HtmlHelper.Image(string.Format("/img/partner/{0}.gif", sponsor.SuperSponsor.Id)) %>
+							</li>
+						</ul>
+						<ul class="nav pull-right">
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="icon-cog"></b><%= R.Str("layout.utility", "Utility") %></a>
+								<ul class="dropdown-menu">
+									<li><%= BootstrapHelper.Anchor(R.Str("layout.settings", "Settings"), "settings.aspx", "", "icon-cog", true) %></li>
+									<li><%= BootstrapHelper.Anchor(R.Str("layout.logout", "Log out"), "default.aspx", "", "icon-off", true) %></li>
+								</ul>
+							</li>
+						</ul>
+				</div>
+			</div>
+		</div>-->
+
+		<div class="container xx">
+			<div class="row-fluid">
+			<div class="span2">
+				<img src="img/hwlogo.png" width="186" height="126" alt="HealthWatch group administrator">
+			</div>
+			<div class="span6">
+				HealthWatch.se - <%= sponsor.SuperSponsor.Languages[0].Header %><br>
+				<span style="font-size:14px;">Group administration - <%= sponsor.Name %></span>
+				<br>
+				<%= HtmlHelper.Image(string.Format("/img/partner/{0}.gif", sponsor.SuperSponsor.Id)) %>
+			</div>
+			<div class="span4">
+				<div class="gears">
+					<span><%= sponsor.Name %></span>
+					<span style="color:white;">0</span><br>
+					<%= HtmlHelper.Anchor("Settings", "Settings.aspx", true, new Dictionary<string, string>() { { "class", "active"} })  %>
+					<%= HtmlHelper.Anchor("Log out", "Default.aspx?Logout=1", true, new Dictionary<string, string>() { { "class", "active"} })  %>
+					<!--<a href="settings.aspx?Rnd=1633023790" class="regular">Settings</a>&nbsp;&nbsp;
+					<a href="default.aspx?Logout=1&amp;Rnd=1633023790" class="regular">Log out</a>-->
+				</div>
+			</div>
 			</div>
 		</div>
-				</div>
 		<div class="container">
-			<div id="submenu" class="grid_16 alpha btn-group">
+		
+			<div id="submenu" class="grid_16 alpha">
+				<!--<a title="Statistics" class="active" href="stats.aspx?Rnd=1633023790" style="background-position: 50% -120px;">Statistics</a>
+				<a title="Messages" href="messages.aspx?Rnd=1633023790">Messages</a>
+				<a title="Managers" href="managers.aspx?Rnd=1633023790">Managers</a>
+				<a title="TEST" href="debug.aspx?Rnd=1633023790">TEST</a>
+				<a title="Exercises" href="exercise.aspx?Rnd=1633023790">Exercises</a>-->
+				<% string desc = ""; %>
+				<% foreach (var f in functions) { %>
+					<% bool active = Request.Url.AbsolutePath.IndexOf(f.URL) >= 0; %>
+					<% if (active) { %>
+						<%= HtmlHelper.Anchor(f.Function, f.URL, true, new Dictionary<string, string>() { { "class", "active"}, { "title", f.Expl } } ) %>
+						<% desc = f.Expl; %>
+					<% } else { %>
+						<%= HtmlHelper.Anchor(f.Function, f.URL, true, new Dictionary<string, string>() { { "class", ""}, { "title", f.Expl } } ) %>
+					<% } %>
+				<% } %>
+			</div>
+		</div>
+
+		<div class="container">
+				<div class="description"><%= desc %></div>
+			<%--<div id="submenu" class="grid_16 alpha btn-group">
 				<% string desc = ""; %>
 				<% foreach (var f in functions) { %>
 					<% bool active = Request.Url.AbsolutePath.IndexOf(f.URL) >= 0; %>
@@ -145,7 +215,7 @@
 					<% } %>
 				<% } %>
 			</div>
-			<div class="description"><%= desc %></div>
+			<div class="description"><%= desc %></div>--%>
 			<asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
 			</asp:ContentPlaceHolder>
 		</div>

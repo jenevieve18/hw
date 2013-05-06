@@ -51,7 +51,45 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BackgroundQuestions.aspx" />
+    <Content Include="BackgroundQuestionsAdd.aspx" />
+    <Content Include="BackgroundQuestionsShow.aspx" />
+    <Content Include="Dashboard.aspx" />
+    <Content Include="Default.aspx" />
+    <Content Include="Departments.aspx" />
+    <Content Include="Exercises.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="Languages.aspx" />
+    <Content Include="LanguagesAdd.aspx" />
+    <Content Include="LanguagesDelete.aspx" />
+    <Content Include="LanguagesEdit.aspx" />
+    <Content Include="Login.aspx" />
+    <Content Include="Logout.aspx" />
+    <Content Include="ManagerFunctions.aspx" />
+    <Content Include="ProjectRoundsShow.aspx" />
+    <Content Include="Projects.aspx" />
+    <Content Include="ProjectsAdd.aspx" />
+    <Content Include="ProjectsShow.aspx" />
+    <Content Include="Questions.aspx" />
+    <Content Include="QuestionsEdit.aspx" />
+    <Content Include="QuestionsShow.aspx" />
+    <Content Include="ReportPartLanguagesAdd.aspx" />
+    <Content Include="ReportPartLanguagesDelete.aspx" />
+    <Content Include="ReportPartLanguagesEdit.aspx" />
+    <Content Include="ReportPartsAdd.aspx" />
+    <Content Include="ReportPartsEdit.aspx" />
+    <Content Include="ReportPartsShow.aspx" />
     <Content Include="Reports.aspx" />
+    <Content Include="ReportsAdd.aspx" />
+    <Content Include="ReportsEdit.aspx" />
+    <Content Include="ReportsShow.aspx" />
+    <Content Include="SponsorAdminsAdd.aspx" />
+    <Content Include="SponsorAdminsShow.aspx" />
+    <Content Include="SponsorBackgroundQuestionsShow.aspx" />
+    <Content Include="Sponsors.aspx" />
+    <Content Include="SponsorsAdd.aspx" />
+    <Content Include="SponsorsEdit.aspx" />
+    <Content Include="SponsorsShow.aspx" />
     <Content Include="Users.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -62,7 +100,199 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackgroundQuestions.aspx.cs">
+      <DependentUpon>BackgroundQuestions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BackgroundQuestions.aspx.designer.cs">
+      <DependentUpon>BackgroundQuestions.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BackgroundQuestionsAdd.aspx.cs">
+      <DependentUpon>BackgroundQuestionsAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BackgroundQuestionsAdd.aspx.designer.cs">
+      <DependentUpon>BackgroundQuestionsAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BackgroundQuestionsShow.aspx.cs">
+      <DependentUpon>BackgroundQuestionsShow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BackgroundQuestionsShow.aspx.designer.cs">
+      <DependentUpon>BackgroundQuestionsShow.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Dashboard.aspx.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Dashboard.aspx.designer.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Departments.aspx.cs">
+      <DependentUpon>Departments.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Departments.aspx.designer.cs">
+      <DependentUpon>Departments.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Exercises.aspx.cs">
+      <DependentUpon>Exercises.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Exercises.aspx.designer.cs">
+      <DependentUpon>Exercises.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Languages.aspx.cs">
+      <DependentUpon>Languages.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Languages.aspx.designer.cs">
+      <DependentUpon>Languages.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LanguagesAdd.aspx.cs">
+      <DependentUpon>LanguagesAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LanguagesAdd.aspx.designer.cs">
+      <DependentUpon>LanguagesAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LanguagesDelete.aspx.cs">
+      <DependentUpon>LanguagesDelete.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LanguagesDelete.aspx.designer.cs">
+      <DependentUpon>LanguagesDelete.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LanguagesEdit.aspx.cs">
+      <DependentUpon>LanguagesEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LanguagesEdit.aspx.designer.cs">
+      <DependentUpon>LanguagesEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Logout.aspx.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Logout.aspx.designer.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ManagerFunctions.aspx.cs">
+      <DependentUpon>ManagerFunctions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ManagerFunctions.aspx.designer.cs">
+      <DependentUpon>ManagerFunctions.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectRoundsShow.aspx.cs">
+      <DependentUpon>ProjectRoundsShow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProjectRoundsShow.aspx.designer.cs">
+      <DependentUpon>ProjectRoundsShow.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Projects.aspx.cs">
+      <DependentUpon>Projects.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Projects.aspx.designer.cs">
+      <DependentUpon>Projects.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectsAdd.aspx.cs">
+      <DependentUpon>ProjectsAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProjectsAdd.aspx.designer.cs">
+      <DependentUpon>ProjectsAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectsShow.aspx.cs">
+      <DependentUpon>ProjectsShow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProjectsShow.aspx.designer.cs">
+      <DependentUpon>ProjectsShow.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Questions.aspx.cs">
+      <DependentUpon>Questions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Questions.aspx.designer.cs">
+      <DependentUpon>Questions.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="QuestionsEdit.aspx.cs">
+      <DependentUpon>QuestionsEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="QuestionsEdit.aspx.designer.cs">
+      <DependentUpon>QuestionsEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="QuestionsShow.aspx.cs">
+      <DependentUpon>QuestionsShow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="QuestionsShow.aspx.designer.cs">
+      <DependentUpon>QuestionsShow.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportPartLanguagesAdd.aspx.cs">
+      <DependentUpon>ReportPartLanguagesAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportPartLanguagesAdd.aspx.designer.cs">
+      <DependentUpon>ReportPartLanguagesAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportPartLanguagesDelete.aspx.cs">
+      <DependentUpon>ReportPartLanguagesDelete.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportPartLanguagesDelete.aspx.designer.cs">
+      <DependentUpon>ReportPartLanguagesDelete.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportPartLanguagesEdit.aspx.cs">
+      <DependentUpon>ReportPartLanguagesEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportPartLanguagesEdit.aspx.designer.cs">
+      <DependentUpon>ReportPartLanguagesEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportPartsAdd.aspx.cs">
+      <DependentUpon>ReportPartsAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportPartsAdd.aspx.designer.cs">
+      <DependentUpon>ReportPartsAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportPartsEdit.aspx.cs">
+      <DependentUpon>ReportPartsEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportPartsEdit.aspx.designer.cs">
+      <DependentUpon>ReportPartsEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportPartsShow.aspx.cs">
+      <DependentUpon>ReportPartsShow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportPartsShow.aspx.designer.cs">
+      <DependentUpon>ReportPartsShow.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Reports.aspx.cs">
       <DependentUpon>Reports.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -70,12 +300,82 @@
     <Compile Include="Reports.aspx.designer.cs">
       <DependentUpon>Reports.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ReportsAdd.aspx.cs">
+      <DependentUpon>ReportsAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportsAdd.aspx.designer.cs">
+      <DependentUpon>ReportsAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsEdit.aspx.cs">
+      <DependentUpon>ReportsEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportsEdit.aspx.designer.cs">
+      <DependentUpon>ReportsEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsShow.aspx.cs">
+      <DependentUpon>ReportsShow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportsShow.aspx.designer.cs">
+      <DependentUpon>ReportsShow.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="SponsorAdminsAdd.aspx.cs">
+      <DependentUpon>SponsorAdminsAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SponsorAdminsAdd.aspx.designer.cs">
+      <DependentUpon>SponsorAdminsAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SponsorAdminsShow.aspx.cs">
+      <DependentUpon>SponsorAdminsShow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SponsorAdminsShow.aspx.designer.cs">
+      <DependentUpon>SponsorAdminsShow.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SponsorBackgroundQuestionsShow.aspx.cs">
+      <DependentUpon>SponsorBackgroundQuestionsShow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SponsorBackgroundQuestionsShow.aspx.designer.cs">
+      <DependentUpon>SponsorBackgroundQuestionsShow.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Sponsors.aspx.cs">
+      <DependentUpon>Sponsors.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Sponsors.aspx.designer.cs">
+      <DependentUpon>Sponsors.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SponsorsAdd.aspx.cs">
+      <DependentUpon>SponsorsAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SponsorsAdd.aspx.designer.cs">
+      <DependentUpon>SponsorsAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SponsorsEdit.aspx.cs">
+      <DependentUpon>SponsorsEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SponsorsEdit.aspx.designer.cs">
+      <DependentUpon>SponsorsEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SponsorsShow.aspx.cs">
+      <DependentUpon>SponsorsShow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SponsorsShow.aspx.designer.cs">
+      <DependentUpon>SponsorsShow.aspx</DependentUpon>
     </Compile>
     <Compile Include="Users.aspx.cs">
       <DependentUpon>Users.aspx</DependentUpon>
@@ -93,6 +393,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Site.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

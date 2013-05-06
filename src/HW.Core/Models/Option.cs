@@ -10,49 +10,49 @@ namespace HW.Core.Models
 {
 	public class Option : BaseModel
 	{
-		public int Type { get; set; }
-		public int Placement { get; set; }
-		public string Internal { get; set; }
-		public int Width { get; set; }
-		public int Height { get; set; }
-		public OptionContainer Container { get; set; }
-		public string BackgroundColor { get; set; }
-		public int InnerWidth { get; set; }
-		public IList<OptionComponents> Components { get; set; }
+		public virtual int Type { get; set; }
+		public virtual int Placement { get; set; }
+		public virtual string Internal { get; set; }
+		public virtual int Width { get; set; }
+		public virtual int Height { get; set; }
+		public virtual OptionContainer Container { get; set; }
+		public virtual string BackgroundColor { get; set; }
+		public virtual int InnerWidth { get; set; }
+		public virtual IList<OptionComponents> Components { get; set; }
 		
-		public OptionComponentLanguage CurrentComponent { get; set; }
+		public virtual OptionComponentLanguage CurrentComponent { get; set; }
 	}
 	
 	public class OptionComponents : BaseModel
 	{
-		public OptionComponent Component { get; set; }
+		public virtual OptionComponent Component { get; set; }
 	}
 	
 	public class OptionContainer : BaseModel
 	{
-		public string Container { get; set; }
+		public virtual string Container { get; set; }
 	}
 	
 	public class OptionComponent : BaseModel
 	{
-		public int ExportValue { get; set; }
-		public string Internal { get; set; }
-		public IList<OptionComponentLanguage> Languages { get; set; }
-		public OptionComponentContainer Container { get; set; }
+		public virtual int ExportValue { get; set; }
+		public virtual string Internal { get; set; }
+		public virtual IList<OptionComponentLanguage> Languages { get; set; }
+		public virtual OptionComponentContainer Container { get; set; }
 		
-		public OptionComponentLanguage CurrentLanguage { get; set; }
+		public virtual OptionComponentLanguage CurrentLanguage { get; set; }
 	}
 	
 	public class OptionComponentContainer : BaseModel
 	{
-		public string Container { get; set; }
+		public virtual string Container { get; set; }
 	}
 	
 	public class OptionComponentLanguage : BaseModel
 	{
-		public Language Language { get; set; }
-		public OptionComponent Component { get; set; }
-		public string Text { get; set; }
-		public string TextJapaneseUnicode { get; set; }
+		public virtual Language Language { get; set; }
+		public virtual OptionComponent Component { get; set; }
+		public virtual string Text { get; set; }
+		public virtual string TextJapaneseUnicode { get; set; }
 	}
 }

@@ -11,7 +11,13 @@ namespace HW.Core.Repositories
 {
 	public interface IQuestionRepository : IBaseRepository<Question>
 	{
+		void SaveOrUpdateBackgroundQuestion(BackgroundQuestion q);
+		
+		BackgroundQuestion ReadBackgroundQuestion(int bqid);
+		
 		IList<BackgroundQuestion> FindBackgroundQuestions(int sponsorID);
+		
+		IList<BackgroundQuestion> FindAllBackgroundQuestions();
 		
 		IList<BackgroundQuestion> FindLikeBackgroundQuestions(string bqID);
 
@@ -65,6 +71,26 @@ namespace HW.Core.Repositories
 				questions.Add(bq);
 			}
 			return questions;
+		}
+		
+		public IList<BackgroundQuestion> FindAllBackgroundQuestions()
+		{
+			return new List<BackgroundQuestion>(
+				new BackgroundQuestion[] {
+					new BackgroundQuestion { Id = 1, Internal = "Internal 1" },
+					new BackgroundQuestion { Id = 2, Internal = "Internal 2" }
+				}
+			);
+		}
+		
+		public BackgroundQuestion ReadBackgroundQuestion(int bqid)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public void SaveOrUpdateBackgroundQuestion(BackgroundQuestion q)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

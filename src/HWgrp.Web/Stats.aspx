@@ -30,15 +30,13 @@
 			var newSrc = partImg.find('.hidden').text();
 			img.attr('src', newSrc + '&PLOT=' + $(this).text());
 		});
-		$('.report-parts .btn').click(function() {
-			var partImgs = $('.report-part-content');
-			for (i = 0; i < partImgs.length; i++) {
-				var partImg = partImgs[i];
-				console.log(partImg);
-				var img = partImg.find('img');
-				var newSrc = partImg.find('.hidden').text();
-				img.attr('src', newSrc + '&PLOT=' + $(this).text());
-			}
+		$('.report-parts .btn').click(function () {
+			text = $(this).text();
+			$.each($('.report-part-content'), function () {
+				img = $(this).find('img');
+				url = $(this).find('.hidden').text();
+				img.attr('src', url + '&PLOT=' + text);
+			});
 		});
 	});
 </script>
@@ -49,7 +47,7 @@
 	<div class="contentgroup grid_16">
 	<div id="contextbar">
 		<div class="settingsPane">
-			<span class="desc">Timeframe</span>
+			<span class="desc">Time frame</span>
 			<asp:DropDownList ID="dropDownYearFrom" runat="server" CssClass="input-small" />
 			--
 			<asp:DropDownList ID="dropDownYearTo" runat="server" CssClass="input-small" />
@@ -101,19 +99,19 @@
 		<% Q additionalQuery = GetGID(urlModels); %>
 		<br>
 		<div class="btn-toolbar">
-			<div class="btn-group">
+			<!--<div class="btn-group">
 				<%= HtmlHelper.Anchor("PDF", GetExportAllUrl("pdf", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } }, "_blank")%>
 				<%= HtmlHelper.Anchor("XLS", GetExportAllUrl("csv", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
 				<%= HtmlHelper.Anchor("DOC", GetExportAllUrl("docx", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
-				<!--<%= HtmlHelper.Anchor("PPT", GetExportAllUrl("pptx", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>-->
-			</div>
+				<%= HtmlHelper.Anchor("PPT", GetExportAllUrl("pptx", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
+			</div>-->
 			<div class="btn-group report-parts">
-				<!--<span class="btn btn-mini">Line</span>
+				<span class="btn btn-mini">Line</span>
 				<span class="btn btn-mini">Line (mean ± SD)</span>
-				<span class="btn btn-mini">Line (mean ± 2 SD)</span>
+				<span class="btn btn-mini">Line (mean ± 1.96 SD)</span>
 				<% if (SelectedDepartments.Count == 1) { %>
 					<span class="btn btn-mini">Boxplot</span>
-				<% } %>-->
+				<% } %>
 			</div>
 		</div>
 		<br>
@@ -125,9 +123,9 @@
 						<strong><%= r.Subject %></strong>
 					</a>
 				</div>
-				<div id="collapse<%= r.ReportPart.Id %>" class="accordion-body collapse">
-					<div class="accordion-inner"><%= r.Subject %></div>
-				</div>
+				<!--<div id="collapse<%= r.ReportPart.Id %>" class="accordion-body collapse">
+					<div class="accordion-inner"><%= r.Header %></div>
+				</div>-->
 				<div>
 					<div class="accordion-inner report-part-content">
 						<span class="hidden"><%= GetReportImageUrl(r.ReportPart.Id, r.Id, additionalQuery) %></span>
@@ -135,16 +133,16 @@
 							<%= HtmlHelper.Image(GetReportImageUrl(r.ReportPart.Id, r.Id, additionalQuery)) %>
 						</div>
 						<div class="btn-toolbar">
-							<div class="btn-group">
+							<!--<div class="btn-group">
 								<%= HtmlHelper.Anchor("PDF", GetExportUrl(r.ReportPart.Id, r.Id, "pdf", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } }, "_blank")%>
 								<%= HtmlHelper.Anchor("XLS", GetExportUrl(r.ReportPart.Id, r.Id, "csv", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
 								<%= HtmlHelper.Anchor("DOC", GetExportUrl(r.ReportPart.Id, r.Id, "docx", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
-								<!--<%= HtmlHelper.Anchor("PPT", GetExportUrl(r.ReportPart.Id, r.Id, "pptx", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>-->
-							</div>
+								<%= HtmlHelper.Anchor("PPT", GetExportUrl(r.ReportPart.Id, r.Id, "pptx", additionalQuery), new Dictionary<string, string> { { "class", "btn btn-mini" } })%>
+							</div>-->
 							<div class="btn-group plot">
 								<span class="btn btn-mini">Line</span>
 								<span class="btn btn-mini">Line (mean ± SD)</span>
-								<span class="btn btn-mini">Line (mean ± 2 SD)</span>
+								<span class="btn btn-mini">Line (mean ± 1.96 SD)</span>
 								<% if (SelectedDepartments.Count == 1) { %>
 									<span class="btn btn-mini">Boxplot</span>
 								<% } %>

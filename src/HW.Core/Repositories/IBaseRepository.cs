@@ -13,7 +13,11 @@ namespace HW.Core.Repositories
 	{
 		void SaveOrUpdate(T t);
 		
+		void SaveOrUpdate<U>(U u);
+		
 		void Delete(T t);
+		
+		void Delete<U>(U t);
 		
 		T Read(int id);
 		
@@ -34,6 +38,11 @@ namespace HW.Core.Repositories
 			data.Add(t);
 		}
 		
+		public void SaveOrUpdate<U>(U t)
+		{
+//			data.Add(t);
+		}
+		
 		public void Delete(T t)
 		{
 			data.Remove(t);
@@ -47,6 +56,11 @@ namespace HW.Core.Repositories
 		public virtual IList<T> FindAll()
 		{
 			return data;
+		}
+		
+		public void Delete<U>(U t)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

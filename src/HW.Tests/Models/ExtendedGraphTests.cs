@@ -32,6 +32,22 @@ namespace HW.Tests.Models
 		DepartmentRepositoryStub departmentRepository;
 		QuestionRepositoryStub questionRepository;
 		
+		float lastVal = 0;
+		string lastDesc = "";
+		System.Collections.Hashtable res = new System.Collections.Hashtable();
+		System.Collections.Hashtable cnt = new System.Collections.Hashtable();
+		int lastCount = 0;
+		
+		bool HasGrouping {
+			get { return true; }
+//			get { return false; }
+		}
+		
+		bool IsStandardDeviation {
+//			get { return HttpContext.Current.Request.QueryString["STDEV"] != null && Convert.ToInt32(HttpContext.Current.Request.QueryString["STDEV"]) == 1; }
+			get { return false; }
+		}
+		
 		[SetUp]
 		public void Setup()
 		{
@@ -177,50 +193,6 @@ namespace HW.Tests.Models
 			g.DrawBars(new object(), 10, bars, referenceLines);
 		}
 		
-		float lastVal = 0;
-		string lastDesc = "";
-		System.Collections.Hashtable res = new System.Collections.Hashtable();
-		System.Collections.Hashtable cnt = new System.Collections.Hashtable();
-		int lastCount = 0;
-		
-		void getIdxVal(int idx, string sortString, int langID, int fy, int ty)
-		{
-			foreach (Index i in indexRepository.FindByLanguage(idx, langID, fy, ty, sortString)) {
-				lastCount = i.CountDX;
-				lastVal = i.AverageAX;
-				lastDesc = i.Languages[0].IndexName;
-
-				if (!res.Contains(i.Id)) {
-					res.Add(i.Id, lastVal);
-				}
-				if (!cnt.Contains(i.Id)) {
-					cnt.Add(i.Id, lastCount);
-				}
-			}
-		}
-		
-		void getOtherIdxVal(int idx, string sortString, int langID)
-		{
-			float tot = 0;
-			int max = 0;
-			int minCnt = Int32.MaxValue;
-			Index index = indexRepository.ReadByIdAndLanguage(idx, langID);
-			if (index != null) {
-				lastDesc = index.Languages[0].IndexName;
-				foreach (IndexPart p in index.Parts) {
-					max += 100 * p.Multiple;
-					if (res.Contains(p.OtherIndex.Id)) {
-						tot += (float)res[p.OtherIndex.Id] * p.Multiple;
-						minCnt = Math.Min((int)cnt[p.OtherIndex.Id], minCnt);
-					} else {
-						getIdxVal(p.OtherIndex.Id, sortString, langID, 2011, 2012);
-					}
-				}
-			}
-			lastVal = 100 * tot / max;
-			lastCount = minCnt;
-		}
-		
 		[Test]
 		public void TestType8()
 		{
@@ -325,21 +297,42 @@ namespace HW.Tests.Models
 			g.DrawBars(new object(), 10, bars);
 		}
 		
-		bool HasGrouping {
-			get { return true; }
-//			get { return false; }
-		}
-		
-		bool IsStandardDeviation {
-//			get { return HttpContext.Current.Request.QueryString["STDEV"] != null && Convert.ToInt32(HttpContext.Current.Request.QueryString["STDEV"]) == 1; }
-			get { return false; }
-		}
-		
-		[Test]
-		public void b()
+		void getIdxVal(int idx, string sortString, int langID, int fy, int ty)
 		{
-			g = new ExtendedGraph(895, 440, "#FFFFFF");
-			X2(g, new object());
+			foreach (Index i in indexRepository.FindByLanguage(idx, langID, fy, ty, sortString)) {
+				lastCount = i.CountDX;
+				lastVal = i.AverageAX;
+				lastDesc = i.Languages[0].IndexName;
+
+				if (!res.Contains(i.Id)) {
+					res.Add(i.Id, lastVal);
+				}
+				if (!cnt.Contains(i.Id)) {
+					cnt.Add(i.Id, lastCount);
+				}
+			}
+		}
+		
+		void getOtherIdxVal(int idx, string sortString, int langID)
+		{
+			float tot = 0;
+			int max = 0;
+			int minCnt = Int32.MaxValue;
+			Index index = indexRepository.ReadByIdAndLanguage(idx, langID);
+			if (index != null) {
+				lastDesc = index.Languages[0].IndexName;
+				foreach (IndexPart p in index.Parts) {
+					max += 100 * p.Multiple;
+					if (res.Contains(p.OtherIndex.Id)) {
+						tot += (float)res[p.OtherIndex.Id] * p.Multiple;
+						minCnt = Math.Min((int)cnt[p.OtherIndex.Id], minCnt);
+					} else {
+						getIdxVal(p.OtherIndex.Id, sortString, langID, 2011, 2012);
+					}
+				}
+			}
+			lastVal = 100 * tot / max;
+			lastCount = minCnt;
 		}
 		
 		void X2(ExtendedGraph g, object disabled)

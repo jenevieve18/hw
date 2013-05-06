@@ -17,9 +17,11 @@ namespace HW.Core.Repositories
 		
 		ProjectRoundUnit ReadRoundUnit(int projectRoundUnitID);
 		
+		int CountForSortString(string sortString);
+		
 		IList<ProjectRoundUnit> FindRoundUnitsBySortString(string sortString);
 		
-		int CountForSortString(string sortString);
+		IList<ProjectRoundUnit> FindAllProjectRoundUnits();
 	}
 	
 	public class ProjectRepositoryStub : BaseRepositoryStub<Project>, IProjectRepository
@@ -61,6 +63,11 @@ namespace HW.Core.Repositories
 				Closed = DateTime.Now
 			};
 			return p;
+		}
+		
+		public IList<ProjectRoundUnit> FindAllProjectRoundUnits()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

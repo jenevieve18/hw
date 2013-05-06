@@ -21,7 +21,8 @@
     <script type="text/javascript" src="includes/ui/js/jquery-ui-1.8.11.custom.min.js"></script>
     <script type="text/javascript">        $(document).ready(function () { var descriptionS = $("#submenu .description").html(); $("#submenu a").mouseover(function () { $("#submenu .description").html($(this).html()); $("#submenu .active").css('background-position', 'center -80px'); }); $("#submenu a").mouseout(function () { $("#submenu .description").html(descriptionS); $("#submenu .active").css('background-position', 'center -120px'); }); });</script>-->
     <!--<link type="text/css" rel="stylesheet" href="css/bootstrap.css">-->
-    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/bootstrap-responsive.css">
     <style>
         body {
             padding-top: 40px;
@@ -58,8 +59,8 @@
     <form id="Form1" method="post" runat="server" class="form-signin">
         <img src="img/hwlogo.png" alt="HealthWatch group administrator">
         <h2><%= R.Str("login.header", "HealthWatch.se<br>Group administration") %></h2>
-		<%= FormHelper.Input("ANV", "", "input-block-level", R.Str("user.name", "Username")) %>
-		<%= FormHelper.Password("LOS", "", "input-block-level", R.Str("user.password", "Password")) %>
+		<%= FormHelper.Input("ANV", "", R.Str("user.name", "Username"), "input-block-level") %>
+		<%= FormHelper.Password("LOS", "", R.Str("user.password", "Password"), "input-block-level")%>
         <button class="btn btn-large btn-info" type="submit"><i class="icon-circle-arrow-right"></i>Sign in</button>
     </form>
 	<% if (errorMessage != "") { %>

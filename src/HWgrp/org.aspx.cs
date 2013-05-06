@@ -728,7 +728,7 @@ namespace HWgrp
 //					extra += (extra != "" ? "," : "") + rs.GetInt32(0).ToString();
 //					extraType += (extraType != "" ? "," : "") + rs.GetInt32(1).ToString();
 					extra += (extra != "" ? "," : "") + q.Id.ToString();
-					extraType += (extraType != "" ? "," : "") + q.Question.Id.ToString();
+					extraType += (extraType != "" ? "," : "") + q.BackgroundQuestion.Id.ToString();
 				}
 //				rs.Close();
 
@@ -2202,6 +2202,7 @@ namespace HWgrp
 
 		void SaveUnit_Click(object sender, EventArgs e)
 		{
+			int parentID = ConvertHelper.ToInt32(ParentDepartmentID.SelectedValue);
 			if (deptID == 0) {
 //				Db2.exec("INSERT INTO Department (" +
 //				         "SponsorID," +
@@ -2213,7 +2214,8 @@ namespace HWgrp
 				var d = new Department {
 					Sponsor = new Sponsor { Id = sponsorID },
 					Name = Department.Text.Replace("'", "''"),
-					Parent = new Department { Id = Convert.ToInt32(ParentDepartmentID.SelectedValue) }
+//					Parent = new Department { Id = Convert.ToInt32(ParentDepartmentID.SelectedValue) }
+					Parent = parentID > 0 ? new Department { Id = parentID } : null
 				};
 				departmentRepository.SaveOrUpdate(d);
 //				SqlDataReader rs = Db2.rs("SELECT DepartmentID FROM Department WHERE SponsorID = " + sponsorID + " ORDER BY DepartmentID DESC");
@@ -2246,7 +2248,8 @@ namespace HWgrp
 				var d = new Department {
 					Name = Department.Text.Replace("'", "''"),
 					ShortName = DepartmentShort.Text.Replace("'", "''"),
-					Parent = new Department { Id = Convert.ToInt32(ParentDepartmentID.SelectedValue) },
+//					Parent = new Department { Id = Convert.ToInt32(ParentDepartmentID.SelectedValue) },
+					Parent = parentID > 0 ? new Department { Id = parentID } : null,
 					Id = deptID
 				};
 				departmentRepository.UpdateDepartment2(d);

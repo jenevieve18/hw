@@ -8,11 +8,6 @@ using System.Collections.Generic;
 
 namespace HW.Core.Models
 {
-	public class Report : BaseModel
-	{
-		public string Internal { get; set; }
-	}
-	
 	public enum ReportType
 	{
 		One = 1,
@@ -22,41 +17,54 @@ namespace HW.Core.Models
 		Nine = 9
 	}
 	
+	public class Report : BaseModel
+	{
+		public virtual string Internal { get; set; }
+		public virtual Guid ReportKey { get; set; }
+		public virtual IList<ReportPart> Parts { get; set; }
+		public virtual IList<ReportLanguage> Languages { get; set; }
+		public virtual IList<ProjectRound> ProjectRounds { get; set; }
+		public virtual IList<ProjectRoundUnit> ProjectRoundUnits { get; set; }
+	}
+	
 	public class ReportLanguage : BaseModel
 	{
-		public Language Language { get; set; }
-		public Option Option { get; set; }
-		public Question Question { get; set; }
+		public virtual Report Report { get; set; }
+		public virtual Language Language { get; set; }
+		public virtual Option Option { get; set; }
+		public virtual Question Question { get; set; }
+		public virtual string Feedback { get; set; }
 	}
 	
 	public class ReportPart : BaseModel
 	{
-		public Report Report { get; set; }
-		public int Type { get; set; }
-		public int RequiredAnswerCount { get; set; }
-		public int PartLevel { get; set; }
-		public Question Question { get; set; }
-		public Option Option { get; set; }
-		public IList<ReportPartComponent> Components { get; set; }
-		public IList<ReportPartLanguage> Languages { get; set; }
+		public virtual Report Report { get; set; }
+		public virtual string Internal { get; set; }
+		public virtual int Type { get; set; }
+		public virtual int RequiredAnswerCount { get; set; }
+		public virtual int PartLevel { get; set; }
+		public virtual Question Question { get; set; }
+		public virtual Option Option { get; set; }
+		public virtual IList<ReportPartComponent> Components { get; set; }
+		public virtual IList<ReportPartLanguage> Languages { get; set; }
 		
-		public ReportPartLanguage CurrentLanguage { get; set; }
+		public virtual ReportPartLanguage CurrentLanguage { get; set; }
 	}
 	
 	public class ReportPartComponent : BaseModel
 	{
-		public ReportPart ReportPart { get; set; }
-		public Index Index { get; set; }
-		public int SortOrder { get; set; }
-		public WeightedQuestionOption QuestionOption { get; set; }
+		public virtual ReportPart ReportPart { get; set; }
+		public virtual Index Index { get; set; }
+		public virtual int SortOrder { get; set; }
+		public virtual WeightedQuestionOption QuestionOption { get; set; }
 	}
 	
 	public class ReportPartLanguage : BaseModel
 	{
-		public ReportPart ReportPart { get; set; }
-		public Language Language { get; set; }
-		public string Subject { get; set; }
-		public string Header { get; set; }
-		public string Footer { get; set; }
+		public virtual ReportPart ReportPart { get; set; }
+		public virtual Language Language { get; set; }
+		public virtual string Subject { get; set; }
+		public virtual string Header { get; set; }
+		public virtual string Footer { get; set; }
 	}
 }

@@ -59,7 +59,7 @@ namespace HWgrp
 			set {
 				this.questions = value;
 				foreach (var s in questions) {
-					BQ.Items.Add(new ListItem(s.Question.Internal, s.Id.ToString()));
+					BQ.Items.Add(new ListItem(s.BackgroundQuestion.Internal, s.Id.ToString()));
 				}
 				BQ.SelectedIndex = 0;
 			}
@@ -247,7 +247,7 @@ namespace HWgrp
 				Convert.ToInt32(Grouping.SelectedValue),
 				plotQuery,
 				page,
-				ExtraPoint.SelectedValue,
+				0, //ExtraPoint.SelectedValue,
 				reportPartLangID
 			);
 			return reportImageUrl;

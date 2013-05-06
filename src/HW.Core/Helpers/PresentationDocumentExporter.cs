@@ -26,7 +26,8 @@ namespace HW.Core.Helpers
 			get { return "attachment;filename=Report.pptx;"; }
 		}
 		
-		public object Export(int GB, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot,	string path, int distribution)
+//		public object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot,	string path, int distribution)
+		public object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot,	string path)
 		{
 			MemoryStream output = new MemoryStream();
 			using (PresentationDocument doc = PresentationDocument.Create(output, PresentationDocumentType.Presentation)) {
@@ -35,7 +36,8 @@ namespace HW.Core.Helpers
 			return output;
 		}
 		
-		public object Export2(int GB, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int distribution)
+//		public object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path, int distribution)
+		public object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path)
 		{
 			throw new NotImplementedException();
 		}

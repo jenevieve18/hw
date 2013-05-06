@@ -52,23 +52,27 @@ namespace HW.Core.Helpers
 			get { return "attachment;filename=Report.docx;"; }
 		}
 		
-		public object Export(int GB, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot,	string path, int distribution)
+//		public object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot,	string path, int distribution)
+		public object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot,	string path)
 		{
 			MemoryStream output = new MemoryStream();
 			using (WordprocessingDocument package = WordprocessingDocument.Create(output, WordprocessingDocumentType.Document)) {
-				string url = GetUrl(path, langID, fy, ty, SPONS, SID, GB, r.Id, PRUID, GID, GRPNG, plot, distribution);
+//				string url = GetUrl(path, langID, fy, ty, spons, sid, gb, r.Id, pruid, gid, grpng, plot, distribution);
+				string url = GetUrl(path, langID, fy, ty, spons, sid, gb, r.Id, pruid, gid, grpng, plot);
 				CreateParts(package, r.CurrentLanguage, url);
 			}
 
 			return output;
 		}
 		
-		public object Export2(int GB, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int distribution)
+//		public object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path, int distribution)
+		public object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path)
 		{
 			MemoryStream output = new MemoryStream();
 			using (WordprocessingDocument package = WordprocessingDocument.Create(output, WordprocessingDocumentType.Document)) {
 				foreach (var r in parts) {
-					string url = GetUrl(path, langID, fy, ty, SPONS, SID, GB, r.Id, PRUID, GID, GRPNG, plot, distribution);
+//					string url = GetUrl(path, langID, fy, ty, spons, sid, gb, r.Id, pruid, gid, grpng, plot, distribution);
+					string url = GetUrl(path, langID, fy, ty, spons, sid, gb, r.Id, pruid, gid, grpng, plot);
 					CreateParts(package, r, url);
 				}
 			}
@@ -76,21 +80,22 @@ namespace HW.Core.Helpers
 			return output;
 		}
 		
-		string GetUrl(string path, int langID, int fy, int ty, int SPONS, int SID, int GB, int rpid, int PRUID, string GID, int GRPNG, string plot, int distribution)
+//		string GetUrl(string path, int langID, int fy, int ty, int spons, int sid, int gb, int rpid, int pruid, string gid, int grpng, string plot, int distribution)
+		string GetUrl(string path, int langID, int fy, int ty, int spons, int sid, int gb, int rpid, int pruid, string gid, int grpng, string plot)
 		{
 			P p = new P(path, "reportImage.aspx");
 			p.Q.Add("LangID", langID);
 			p.Q.Add("FY", fy);
 			p.Q.Add("TY", ty);
-			p.Q.Add("SAID", SPONS);
-			p.Q.Add("SID", SID);
-			p.Q.Add("GB", GB);
+			p.Q.Add("SAID", spons);
+			p.Q.Add("SID", sid);
+			p.Q.Add("GB", gb);
 			p.Q.Add("RPID", rpid);
-			p.Q.Add("PRUID", PRUID);
-			p.Q.Add("GID", GID);
-			p.Q.Add("GRPNG", GRPNG);
+			p.Q.Add("PRUID", pruid);
+			p.Q.Add("GID", gid);
+			p.Q.Add("GRPNG", grpng);
 			p.Q.Add("PLOT", plot);
-			p.Q.Add("DIST", distribution);
+//			p.Q.Add("DIST", distribution);
 			return p.ToString();
 		}
 

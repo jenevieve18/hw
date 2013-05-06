@@ -11,7 +11,13 @@ namespace HW.Core.Repositories
 {
 	public interface IReportRepository : IBaseRepository<Report>
 	{
+		void SaveOrUpdateReportPart(ReportPart part);
+		
+		void SaveOrUpdateReportPartLanguage(ReportPartLanguage part);
+		
 		ReportPart ReadReportPart(int reportPartID, int langID);
+		
+		ReportPartLanguage ReadReportPartLanguage(int reportPartLangID);
 		
 		ReportPartComponent ReadComponentByPartAndLanguage(int reportPartID, int langID);
 		
@@ -162,6 +168,21 @@ namespace HW.Core.Repositories
 				languages.Add(p);
 			}
 			return languages;
+		}
+		
+		public ReportPartLanguage ReadReportPartLanguage(int reportPartLangID)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public void SaveOrUpdateReportPart(ReportPart part)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public void SaveOrUpdateReportPartLanguage(ReportPartLanguage part)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

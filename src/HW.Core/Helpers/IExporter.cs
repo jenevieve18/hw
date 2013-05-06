@@ -61,9 +61,11 @@ namespace HW.Core.Helpers
 		
 		string ContentDisposition { get; }
 		
-		object Export(int GB, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int distribution);
+//		object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path, int distribution);
+		object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path);
 		
-		object Export2(int GB, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int distribution);
+//		object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path, int distribution);
+		object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path);
 	}
 	
 	public abstract class AbstractExporter : IExporter
@@ -76,9 +78,11 @@ namespace HW.Core.Helpers
 		
 		public abstract string ContentDisposition { get; }
 		
-		public abstract object Export(int GB, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int distribution);
+//		public abstract object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path, int distribution);
+		public abstract object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path);
 		
-		public abstract object Export2(int GB, int fy, int ty, int langID, int PRUID, int GRPNG, int SPONS, int SID, string GID, string plot, string path, int distribution);
+//		public abstract object Export2(int gb, int fy, int ty, int langID, int pruid, int GRPNG, int spons, int sid, string gid, string plot, string path, int distribution);
+		public abstract object Export2(int gb, int fy, int ty, int langID, int pruid, int GRPNG, int spons, int sid, string gid, string plot, string path);
 	}
 	
 	public class Distribution

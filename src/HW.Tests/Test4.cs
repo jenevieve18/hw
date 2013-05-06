@@ -4,6 +4,7 @@
 //	</file>
 
 using System;
+using HW.Core.Repositories.NHibernate;
 using NUnit.Framework;
 
 namespace HW.Tests
@@ -14,8 +15,22 @@ namespace HW.Tests
 		[Test]
 		public void TestMethod()
 		{
-			bool x = false;
-			Console.WriteLine(Convert.ToInt32(x));
+			var q = new NHibernateQuestionRepository().ReadBackgroundQuestion(3);
+			foreach (var l in q.Languages) {
+				Console.WriteLine(l);
+			}
+		}
+		
+		[Test]
+		public void a()
+		{
+			var s = new NHibernateSponsorRepository().Read(96);
+			Console.WriteLine(s.ProjectRoundUnit.Name);
+		}
+		
+		[Test]
+		public void b()
+		{
 		}
 	}
 }
