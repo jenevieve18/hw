@@ -15,10 +15,15 @@ namespace HW.Core.Helpers
 		
 		public static int ToInt32(object val)
 		{
+			return ToInt32(val, 0);
+		}
+		
+		public static int ToInt32(object val, int def)
+		{
 			try {
 				return Convert.ToInt32(val);
 			} catch {
-				return 0;
+				return def;
 			}
 		}
 	}
