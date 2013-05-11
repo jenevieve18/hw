@@ -95,7 +95,12 @@ namespace HW.Core.Repositories.Sql
 		
 		protected int GetInt32(SqlDataReader rs, int index)
 		{
-			return rs.IsDBNull(index) ? 0 : rs.GetInt32(index);
+			return GetInt32(rs, index, 0);
+		}
+		
+		protected int GetInt32(SqlDataReader rs, int index, int def)
+		{
+			return rs.IsDBNull(index) ? def : rs.GetInt32(index);
 		}
 		
 		protected double GetDouble(SqlDataReader rs, int index)
