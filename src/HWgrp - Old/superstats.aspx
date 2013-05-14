@@ -1,5 +1,6 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="superstats.aspx.cs" Inherits="superstats" %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" > 
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="superstats.aspx.cs" Inherits="HWgrp___Old.superstats" %>
+<%@ Import Namespace="HW.Core.Helpers" %>
+<!doctype html> 
 <html>
   <head>
    <%=Db.header()%>

@@ -1,8 +1,9 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="managerSetup.aspx.cs" Inherits="managerSetup" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="managerSetup.aspx.cs" Inherits="HWgrp___Old.managerSetup" %>
+<%@ Import Namespace="HW.Core.Helpers" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
-   <%=Db2.header()%>
+   <%=Db.header()%>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
 <!--[if IE 7 ]>    <body class="ie7"> <![endif]-->

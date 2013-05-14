@@ -1,1 +1,1 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="verticalText.aspx.cs" Inherits="verticalText" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="verticalText.aspx.cs" Inherits="HWgrp___Old.verticalText" %>

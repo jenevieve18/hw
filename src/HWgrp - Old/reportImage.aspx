@@ -1,1 +1,1 @@
-<%@ Page ContentType="image/gif" Language="C#" AutoEventWireup="true" CodeFile="reportImage.aspx.cs" Inherits="reportImage" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="reportImage.aspx.cs" Inherits="HWgrp___Old.reportImage" %>
