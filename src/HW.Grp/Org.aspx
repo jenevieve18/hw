@@ -100,7 +100,7 @@
 		        </asp:PlaceHolder>
             </div>
         </div>
-        <div>
+        <div style="clear:both">
             <asp:Label ID=Actions runat=server Visible=false>
 				<table border="0" cellpadding="0" cellspacing="0" width="100%">
 					<tr>
