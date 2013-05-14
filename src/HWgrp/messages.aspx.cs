@@ -62,7 +62,7 @@ namespace HWgrp
 						LoginLastSent.Text = (s.LoginLastSent == null ? "Never" : s.LoginLastSent.Value.ToString("yyyy-MM-dd HH:mm"));
 
 						LoginDays.SelectedValue = (s.LoginDays <= 0 ? "14" : s.LoginDays.ToString());
-						LoginWeekday.SelectedValue = (s.LoginWeekday <= 0 ? "NULL" : s.LoginWeekday.ToString());
+						LoginWeekday.SelectedValue = (s.LoginWeekday <= -1 ? "NULL" : s.LoginWeekday.ToString());
 
 						AllMessageSubject.Text = s.AllMessageSubject;
 						AllMessageBody.Text = s.AllMessageBody;
