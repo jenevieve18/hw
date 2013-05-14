@@ -149,36 +149,63 @@ WHERE SponsorExtendedSurveyID = @SponsorExtendedSurveyID"
 		
 		public void UpdateSponsor(Sponsor s)
 		{
+//			string query = string.Format(
+//				@"
+//UPDATE Sponsor SET
+//	InviteTxt = @InviteTxt,
+//	InviteReminderTxt = @InviteReminderTxt,
+//	AllMessageSubject = @AllMessageSubject,
+//	LoginTxt = @LoginTxt,
+//	InviteSubject = @InviteSubject,
+//	InviteReminderSubject = @InviteReminderSubject,
+//	AllMessageBody = @AllMessageBody,
+//	LoginSubject = @LoginSubject,
+//	LoginDays = @LoginDays,
+//	LoginWeekday = @LoginWeekday
+//WHERE SponsorID = @SponsorID"
+//			);
+//			ExecuteNonQuery(
+//				query,
+//				"healthWatchSqlConnection",
+//				new SqlParameter("@InviteTxt", s.InviteText),
+//				new SqlParameter("@InviteReminderTxt", s.InviteReminderText),
+//				new SqlParameter("@AllMessageSubject", s.AllMessageSubject),
+//				new SqlParameter("@LoginTxt", s.LoginText),
+//				new SqlParameter("@InviteSubject", s.InviteSubject),
+//				new SqlParameter("@InviteReminderSubject", s.InviteReminderSubject),
+//				new SqlParameter("@AllMessageBody", s.AllMessageBody),
+//				new SqlParameter("@LoginSubject", s.LoginSubject),
+//				new SqlParameter("@LoginDays", s.LoginDays),
+//				new SqlParameter("@LoginWeekday", s.LoginWeekday),
+//				new SqlParameter("@SponsorID", s.Id)
+//			);
 			string query = string.Format(
 				@"
 UPDATE Sponsor SET
-	InviteTxt = @InviteTxt,
-	InviteReminderTxt = @InviteReminderTxt,
-	AllMessageSubject = @AllMessageSubject,
-	LoginTxt = @LoginTxt,
-	InviteSubject = @InviteSubject,
-	InviteReminderSubject = @InviteReminderSubject,
-	AllMessageBody = @AllMessageBody,
-	LoginSubject = @LoginSubject,
-	LoginDays = @LoginDays,
-	LoginWeekday = @LoginWeekday
-WHERE SponsorID = @SponsorID"
+	InviteTxt = '{0}',
+	InviteReminderTxt = '{1}',
+	AllMessageSubject = '{2}',
+	LoginTxt = '{3}',
+	InviteSubject = '{4}',
+	InviteReminderSubject = '{5}',
+	AllMessageBody = '{6}',
+	LoginSubject = '{7}',
+	LoginDays = {8},
+	LoginWeekday = {9}
+WHERE SponsorID = {10}",
+				s.InviteText,
+				s.InviteReminderText,
+				s.AllMessageSubject,
+				s.LoginText,
+				s.InviteSubject,
+				s.InviteReminderSubject,
+				s.AllMessageBody,
+				s.LoginSubject,
+				s.LoginDays,
+				s.LoginWeekday,
+				s.Id
 			);
-			ExecuteNonQuery(
-				query,
-				"healthWatchSqlConnection",
-				new SqlParameter("@InviteTxt", s.InviteText),
-				new SqlParameter("@InviteReminderTxt", s.InviteReminderText),
-				new SqlParameter("@AllMessageSubject", s.AllMessageSubject),
-				new SqlParameter("@LoginTxt", s.LoginText),
-				new SqlParameter("@InviteSubject", s.InviteSubject),
-				new SqlParameter("@InviteReminderSubject", s.InviteReminderSubject),
-				new SqlParameter("@AllMessageBody", s.AllMessageBody),
-				new SqlParameter("@LoginSubject", s.LoginSubject),
-				new SqlParameter("@LoginDays", s.LoginDays),
-				new SqlParameter("@LoginWeekday", s.LoginWeekday),
-				new SqlParameter("@SponsorID", s.Id)
-			);
+			Db.exec(query, "healthWatchSqlConnection");
 		}
 		
 		public void UpdateSponsorAdmin(SponsorAdmin a)
@@ -449,9 +476,15 @@ WHERE s.SponsorID = " + sponsorID + " AND si.SponsorInviteID = " + inviteID
 					var i = new SponsorInvite {
 						Email = rs.GetString(2),
 						InvitationKey = rs.GetString(3),
-						User = new User {
+						/*User = new User {
 							Id = rs.GetInt32(4),
 							ReminderLink = rs.GetInt32(5),
+							UserKey = rs.GetString(6)
+						},*/
+						User = rs.IsDBNull(4) ? null : new User {
+							Id = rs.GetInt32(4),
+							//ReminderLink = rs.GetInt32(5),
+							ReminderLink = GetInt32(rs, 5),
 							UserKey = rs.GetString(6)
 						},
 						Sponsor = new Sponsor {
@@ -617,7 +650,7 @@ WHERE s.SponsorID = {0}",
 						InviteReminderLastSent = GetDateTime(rs, 7),
 						LoginLastSent = GetDateTime(rs, 8),
 						LoginDays = GetInt32(rs, 9),
-						LoginWeekday = GetInt32(rs, 10),
+						LoginWeekday = GetInt32(rs, 10, -1),
 						AllMessageSubject = GetString(rs, 11),
 						AllMessageBody = GetString(rs, 12),
 						AllMessageLastSent = GetDateTime(rs, 13),
