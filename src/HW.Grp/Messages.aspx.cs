@@ -55,7 +55,7 @@ namespace HW.Grp
 						LoginLastSent.Text = (s.LoginLastSent == null ? "Never" : s.LoginLastSent.Value.ToString("yyyy-MM-dd HH:mm"));
 
 						LoginDays.SelectedValue = (s.LoginDays <= 0 ? "14" : s.LoginDays.ToString());
-						LoginWeekday.SelectedValue = (s.LoginWeekday <= 0 ? "NULL" : s.LoginWeekday.ToString());
+						LoginWeekday.SelectedValue = (s.LoginWeekday <= -1 ? "NULL" : s.LoginWeekday.ToString());
 
 						AllMessageSubject.Text = s.AllMessageSubject;
 						AllMessageBody.Text = s.AllMessageBody;
@@ -184,7 +184,7 @@ namespace HW.Grp
 					AllMessageBody = AllMessageBody.Text,
 					LoginSubject = LoginSubject.Text,
 					LoginDays = Convert.ToInt32(LoginDays.SelectedValue),
-					LoginWeekday = ConvertHelper.ToInt32(LoginWeekday.SelectedValue),
+					LoginWeekday = ConvertHelper.ToInt32(LoginWeekday.SelectedValue, -1),
 					Id = sponsorID
 				}
 			);
