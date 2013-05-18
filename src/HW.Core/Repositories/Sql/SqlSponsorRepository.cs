@@ -81,6 +81,17 @@ WHERE SponsorInviteID = {1}",
 			Db.exec(query, "healthWatchSqlConnection");
 		}
 		
+		public void UpdateSponsorInviteSent(int sponsorInviteID)
+		{
+			string query = string.Format(
+				@"
+UPDATE SponsorInvite SET Sent = GETDATE()
+WHERE SponsorInviteID = {0}",
+				sponsorInviteID
+			);
+			Db.exec(query, "healthWatchSqlConnection");
+		}
+		
 		public void UpdateNullUserForUserInvite(int userID)
 		{
 			string query = string.Format(

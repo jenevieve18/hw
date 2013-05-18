@@ -13,6 +13,7 @@ using HW.Core;
 using HW.Core.Helpers;
 using HW.Core.Models;
 using HW.Core.Repositories;
+using HW.Core.Repositories.Sql;
 
 namespace HW.Grp
 {
@@ -23,6 +24,7 @@ namespace HW.Grp
 		int sponsorID = 0;
 		bool showReg = false;
 		string hiddenBqJoin = "", hiddenBqWhere = "";
+		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 
 		private void rewritePRU(int fromSponsorID, int sponsorID, int userID)
 		{
@@ -204,6 +206,7 @@ namespace HW.Grp
 						if (rs.IsDBNull(4))
 						{
 //							Db2.sendInvitation(sendSponsorInvitationID, rs.GetString(2).Trim(), rs.GetString(0), rs.GetString(1), rs.GetString(3));
+							sponsorRepository.UpdateSponsorInviteSent(sendSponsorInvitationID);
 							Db.sendInvitation(sendSponsorInvitationID, rs.GetString(2).Trim(), rs.GetString(0), rs.GetString(1), rs.GetString(3));
 						}
 						else
