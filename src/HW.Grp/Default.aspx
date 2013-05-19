@@ -76,10 +76,12 @@
 		</div>-->
 
 		<img src="img/hwlogo.png" alt="HealthWatch group administrator">
+        
         <h2><%= R.Str("login.header", "HealthWatch.se<br>Group administration") %></h2>
 		<%= FormHelper.Input("ANV", "", R.Str("user.name", "Username"), "input-block-level") %>
 		<%= FormHelper.Password("LOS", "", R.Str("user.password", "Password"), "input-block-level")%>
-        <button class="btn btn-large btn-info" type="submit"><i class="icon-circle-arrow-right"></i>Sign in</button>
+		
+        <button class="btn btn-large btn-info" type="submit"><i class="icon-circle-arrow-right"></i><%= R.Str("login.signin", "Sign in") %></button>
     </form>
 
 	<% if (errorMessage != "") { %>
