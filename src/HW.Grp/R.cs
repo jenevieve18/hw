@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Reflection;
 using System.Resources;
+using System.Threading;
 
 namespace HW.Grp
 {
@@ -17,11 +18,7 @@ namespace HW.Grp
 
 		static R()
 		{
-		}
-		
-		public static void SetResource(string resource)
-		{
-			manager = new ResourceManager("HWgrp.Web.Resources", Assembly.GetExecutingAssembly());
+			manager = new ResourceManager("HW.Grp.Resources", Assembly.GetExecutingAssembly());
 		}
 		
 		public static string Str(string key)
