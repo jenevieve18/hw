@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
-using System.Web;
-using System.Web.Security;
-using System.Web.SessionState;
 using HW.Core;
-using HW.Core.Repositories;
-using HW.Core.Repositories.NHibernate;
-using HW.Core.Repositories.Sql;
 
 namespace HW.EForm
 {
@@ -16,8 +8,6 @@ namespace HW.EForm
 	{
 		protected void Application_Start(object sender, EventArgs e)
 		{
-			
-			
 			AppContext.SetRepositoryFactory("NHIBERNATE");
 		}
 
