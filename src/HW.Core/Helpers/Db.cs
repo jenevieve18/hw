@@ -101,7 +101,7 @@ namespace HW.Core.Helpers
 //			mail.Body = body;
 //			System.Web.Mail.SmtpMail.Send(mail);
 //			success = true;
-				string server = System.Configuration.ConfigurationSettings.AppSettings["SmtpServer"];
+				string server = ConfigurationSettings.AppSettings["SmtpServer"];
 				System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage(from, email, subject, body);
 				System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient(server);
 				client.Send(mail);
@@ -120,14 +120,14 @@ namespace HW.Core.Helpers
 				try {
 					if (body.IndexOf("<LINK/>") >= 0)
 					{
-//					body = body.Replace("<LINK/>", "" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "/i/" + key + sponsorInviteID.ToString());
-						string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
+//						string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
+						string path = ConfigurationSettings.AppSettings["healthWatchURL"];
 						body = body.Replace("<LINK/>", "" + path + "i/" + key + sponsorInviteID.ToString());
 					}
 					else
 					{
-//					body += "\r\n\r\n" + "" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "/i/" + key + sponsorInviteID.ToString();
-						string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
+//						string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
+						string path = ConfigurationSettings.AppSettings["healthWatchURL"];
 						body += "\r\n\r\n" + "" + path + "i/" + key + sponsorInviteID.ToString();
 					}
 //				System.Web.Mail.SmtpMail.SmtpServer = System.Configuration.ConfigurationSettings.AppSettings["SmtpServer"];
@@ -137,7 +137,7 @@ namespace HW.Core.Helpers
 //				mail.Subject = subject;
 //				mail.Body = body;
 //				System.Web.Mail.SmtpMail.Send(mail);
-					string server = System.Configuration.ConfigurationSettings.AppSettings["SmtpServer"];
+					string server = ConfigurationSettings.AppSettings["SmtpServer"];
 					System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage("info@healthwatch.se", email, subject, body);
 					System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient(server);
 					client.Send(mail);
