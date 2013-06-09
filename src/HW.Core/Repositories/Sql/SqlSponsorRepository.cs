@@ -222,24 +222,26 @@ WHERE SponsorID = {10}",
 		public void UpdateSponsorAdmin(SponsorAdmin a)
 		{
 			string p = (a.Password != "Not shown" && a.Password != "")
-				? string.Format(", Pas = '{0}'", a.Password.Replace("'", "''"))
+				? string.Format("Pas = '{0}',", a.Password.Replace("'", "''"))
 				: "";
 			string query = string.Format(
 				@"
 UPDATE SponsorAdmin SET ReadOnly = {0},
 	Email = '{1}',
 	Name = '{2}',
-	Usr = '{3}'
+	Usr = '{3}',
 	{4}
 	SuperUser = {5}
 WHERE SponsorAdminID = {6}
 AND SponsorID = {7}",
-				a.ReadOnly,
+				a.ReadOnly ? "1" : "0",
+//				a.ReadOnly,
 				a.Email.Replace("'", "''"),
 				a.Name.Replace("'", "''"),
 				a.Usr.Replace("'", ""),
 				p,
-				a.SuperUser,
+				a.SuperUser ? "1" : "0",
+//				a.SuperUser,
 				a.Id,
 				a.Sponsor.Id
 			);
@@ -386,8 +388,11 @@ AND SponsorID = {0}",
 						Name = rs.GetString(1),
 						Usr = rs.GetString(2),
 						Email = rs.GetString(3),
-						SuperUser = rs.GetBoolean(4),
-						ReadOnly = rs.GetBoolean(5)
+//						SuperUser = rs.GetBoolean(4),
+//						SuperUser = GetBoolean(rs, 4),
+//						ReadOnly = GetBoolean(rs, 5)
+						SuperUser = !rs.IsDBNull(4) && rs.GetInt32(4) != 0,
+						ReadOnly = !rs.IsDBNull(5) && rs.GetInt32(5) != 0
 					};
 					return a;
 				}
@@ -1147,6 +1152,7 @@ AND sa.SponsorID = {0}",
 						Name = rs.GetString(2),
 						ReadOnly = GetInt32(rs, 3) == 1
 					};
+					admins.Add(a);
 				}
 			}
 			return admins;

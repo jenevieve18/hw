@@ -194,7 +194,7 @@ ORDER BY d.SortString",
 				while (rs.Read()) {
 					var d = new SponsorAdminDepartment {
 //						Admin = new SponsorAdmin { SuperUser = rs.GetBoolean(4) },
-						Admin = new SponsorAdmin { SuperUser = !rs.IsDBNull(4) },
+						Admin = new SponsorAdmin { SuperUser = !rs.IsDBNull(4) && rs.GetInt32(4) != 0 },
 						Department = new Department {
 							Name = rs.GetString(0),
 							Depth = rs.GetInt32(1),
@@ -213,7 +213,7 @@ ORDER BY d.SortString",
 		{
 			string j = sponsorAdminID != -1
 				? string.Format(
-					@"ISNULL(sad.DepartmentID,sa.SuperUser)
+					@"ISNULL(sad.DepartmentID, sa.SuperUser)
 FROM Department d
 INNER JOIN SponsorAdmin sa ON sa.SponsorAdminID = {0}
 LEFT OUTER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID
@@ -234,7 +234,8 @@ WHERE d.SponsorID = {0}",
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
 					var d = new SponsorAdminDepartment {
-						Admin = new SponsorAdmin { SuperUser = rs.GetBoolean(1) },
+//						Admin = new SponsorAdmin { SuperUser = rs.GetBoolean(1) },
+						Admin = new SponsorAdmin { SuperUser = !rs.IsDBNull(1) && rs.GetInt32(1) != 0 },
 						Department = new Department {
 							Id = rs.GetInt32(0)
 						}

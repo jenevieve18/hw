@@ -59,6 +59,11 @@ namespace HW.Core.Models
 		public virtual IList<SponsorAdminFunction> Functions { get; set; }
 		public virtual IList<SponsorAdminDepartment> Departments { get; set; }
 		
+		public override string ToString()
+		{
+			return Name == "" ? (Usr == "" ? "&gt; empty &lt;" : Usr) : Name;
+		}
+		
 		public virtual bool SuperAdmin { get; set; } // FIXME: Used with Default to determine whether it's a SuperAdmin who logs in.
 	}
 	
