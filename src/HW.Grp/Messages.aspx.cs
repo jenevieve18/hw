@@ -1,6 +1,13 @@
-﻿using System;
+﻿//	<file>
+//		<license></license>
+//		<owner name="Jens Pettersson" email="jens.pettersson@healthwatch.se"/>
+//		<owner name="Ian Escarro" email="ian.escarro@gmail.com"/>
+//	</file>
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -294,8 +301,8 @@ namespace HW.Grp
 									{
 										string body = LoginTxt.Text;
 
-//										string personalLink = "" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "";
-										string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
+//										string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
+										string path = ConfigurationSettings.AppSettings["healthWatchURL"];
 										string personalLink = "" + path + "";
 										if (u.ReminderLink > 0)
 										{
@@ -358,8 +365,8 @@ namespace HW.Grp
 									{
 										string body = ExtendedSurveyTxt.Text;
 
-//										string personalLink = "" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "";
-										string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
+//										string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
+										string path = ConfigurationSettings.AppSettings["healthWatchURL"];
 										string personalLink = "" + path + "";
 										if (u.ReminderLink > 0)
 										{
@@ -418,8 +425,8 @@ namespace HW.Grp
 									{
 										string body = ExtendedSurveyFinishedTxt.Text;
 
-//										string personalLink = "" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "";
-										string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
+//										string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
+										string path = ConfigurationSettings.AppSettings["healthWatchURL"];
 										string personalLink = "" + path + "";
 										if (u.ReminderLink > 0)
 										{

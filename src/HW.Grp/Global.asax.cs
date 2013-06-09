@@ -1,4 +1,10 @@
-﻿using System;
+﻿//	<file>
+//		<license></license>
+//		<owner name="Jens Pettersson" email="jens.pettersson@healthwatch.se"/>
+//		<owner name="Ian Escarro" email="ian.escarro@gmail.com"/>
+//	</file>
+
+using System;
 using System.Configuration;
 using System.Linq;
 

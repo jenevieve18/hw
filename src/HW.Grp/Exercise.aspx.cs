@@ -1,5 +1,12 @@
-﻿using System;
+﻿//	<file>
+//		<license></license>
+//		<owner name="Jens Pettersson" email="jens.pettersson@healthwatch.se"/>
+//		<owner name="Ian Escarro" email="ian.escarro@gmail.com"/>
+//	</file>
+
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -115,8 +122,8 @@ namespace HW.Grp
 					sb.Append("<div>");
 				}
 
-//				sb.Append("<a class=\"sidearrow\" href=\"JavaScript:void(window.open('" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "/exerciseShow.aspx?SID=" + Convert.ToInt32(Session["SponsorID"]) + "&AUID=" + Math.Abs(Convert.ToInt32(Session["SponsorAdminID"])) + "&ExerciseVariantLangID=" + l.CurrentVariant.Id + "','EVLID" + l.CurrentVariant.Id + "','scrollbars=yes,resizable=yes,");
-				string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
+//				string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
+				string path = ConfigurationSettings.AppSettings["healthWatchURL"];
 				sb.Append("<a class=\"sidearrow\" href=\"JavaScript:void(window.open('" + path + "exerciseShow.aspx?SID=" + Convert.ToInt32(Session["SponsorID"]) + "&AUID=" + Math.Abs(Convert.ToInt32(Session["SponsorAdminID"])) + "&ExerciseVariantLangID=" + l.CurrentVariant.Id + "','EVLID" + l.CurrentVariant.Id + "','scrollbars=yes,resizable=yes,");
 
 				if (l.CurrentVariant.ExerciseWindowX != 0) {
