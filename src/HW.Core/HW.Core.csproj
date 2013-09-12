@@ -41,7 +41,15 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DocumentFormat.OpenXml" />
+    <Reference Include="DocumentFormat.OpenXml">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DocX">
+      <HintPath>..\..\lib\DocX.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus">
+      <HintPath>..\..\..\..\..\..\Downloads\EPPlus 3.1.3 sample\Binaries\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Iesi.Collections">
       <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
@@ -80,9 +88,13 @@
     <Compile Include="Helpers\CsvExporter.cs" />
     <Compile Include="Helpers\Db.cs" />
     <Compile Include="Helpers\Db2.cs" />
+    <Compile Include="Helpers\DocXExporter.cs" />
+    <Compile Include="Helpers\ExcelExporter.cs" />
+    <Compile Include="Helpers\ExcelWriter2.cs" />
     <Compile Include="Helpers\ExtendedGraph.cs" />
     <Compile Include="Helpers\Graph.cs" />
     <Compile Include="Helpers\Graph2.cs" />
+    <Compile Include="Helpers\GraphFactory.cs" />
     <Compile Include="Helpers\HtmlHelper.cs" />
     <Compile Include="Helpers\HWList.cs" />
     <Compile Include="Helpers\OctreeQuantizer.cs" />
@@ -91,7 +103,9 @@
     <Compile Include="Helpers\Quantizer.cs" />
     <Compile Include="Helpers\IExporter.cs" />
     <Compile Include="Helpers\HtmlControls.cs" />
-    <Compile Include="Helpers\WordExporter.cs" />
+    <Compile Include="Helpers\SpreadsheetDocumentExporter.cs" />
+    <Compile Include="Helpers\SpreadsheetDocumentExporter2.cs" />
+    <Compile Include="Helpers\WordDocumentExporter2.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Affiliate.cs" />

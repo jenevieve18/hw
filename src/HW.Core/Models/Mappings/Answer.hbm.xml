@@ -10,7 +10,6 @@
 		<many-to-one name="ProjectRoundUnit" class="ProjectRoundUnit" column="ProjectRoundUnitID" />
 		<many-to-one name="ProjectRoundUser" class="ProjectRoundUser" column="ProjectRoundUserID" />
 	</class>
-	
 	<class name="BackgroundAnswer" table="BA">
 		<id name="Id" column="BAID">
 			<generator class="identity" />

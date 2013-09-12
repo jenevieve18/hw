@@ -20,33 +20,45 @@ namespace HW.Core.Helpers
 		public static readonly string Pdf = "pdf";
 		public static readonly string Csv = "csv";
 		public static readonly string WordDocument = "docx";
+		public static readonly string SpreadsheetDocument = "xlsx";
 		public static readonly string PresentationDocument = "pptx";
+        public static readonly string Excel = "xls";
 		
-		public static IExporter GetExporter(ReportService service, string type, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, ReportPart r, string key)
+		public static IExporter GetExporter(ReportService service, string type, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, ReportPart r, string key, string template)
 		{
 			if (type == Pdf) {
 				return new PdfExporter(r);
 			} else if (type == Csv) {
 				return new CsvExporter(service, hasAnswerKey, hasGrouping, disabled, width, height, background, r, key);
+			} else if (type == Excel) {
+				return new ExcelExporter(service, hasAnswerKey, hasGrouping, disabled, width, height, background, r, key);
 			} else if (type == WordDocument) {
-				return new WordDocumentExporter(r);
+//				return new WordDocumentExporter2(r);
+				return new DocXExporter(r, template);
+			} else if (type == SpreadsheetDocument) {
+				return new SpreadsheetDocumentExporter(r);
 			} else if (type == PresentationDocument) {
-				return new PresentationDocumentExporter();
+				return new PresentationDocumentExporter(r);
 			} else {
 				throw new NotSupportedException();
 			}
 		}
 		
-		public static IExporter GetExporter2(ReportService service, string type, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, IList<ReportPartLanguage> parts, string key)
+		public static IExporter GetExporter2(ReportService service, string type, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, IList<ReportPartLanguage> parts, string key, string template)
 		{
 			if (type == Pdf) {
 				return new PdfExporter(service, parts);
 			} else if (type == Csv) {
 				return new CsvExporter(service, hasAnswerKey, hasGrouping, disabled, width, height, background, parts, key);
+			} else if (type == Excel) {
+				return new ExcelExporter(service, hasAnswerKey, hasGrouping, disabled, width, height, background, parts, key);
 			} else if (type == WordDocument) {
-				return new WordDocumentExporter(service, parts);
+//				return new WordDocumentExporter2(service, parts);
+				return new DocXExporter(service, parts, template);
+			} else if (type == SpreadsheetDocument) {
+				return new SpreadsheetDocumentExporter(service, parts);
 			} else if (type == PresentationDocument) {
-				return new PresentationDocumentExporter();
+				return new PresentationDocumentExporter(service, parts);
 			} else {
 				throw new NotSupportedException();
 			}
@@ -57,14 +69,16 @@ namespace HW.Core.Helpers
 	{
 		string Type { get; }
 		
-		bool HasContentDisposition { get; }
+		bool HasContentDisposition(string file);
 		
-		string ContentDisposition { get; }
+		string GetContentDisposition(string file);
 		
-//		object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path, int distribution);
+		string ContentDisposition2 { get; }
+		
+		bool HasContentDisposition2 { get; }
+		
 		object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path);
 		
-//		object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path, int distribution);
 		object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path);
 	}
 	
@@ -72,17 +86,46 @@ namespace HW.Core.Helpers
 	{
 		public abstract string Type { get; }
 		
-		public bool HasContentDisposition {
-			get { return ContentDisposition.Length > 0; }
+		public bool HasContentDisposition(string file)
+		{
+			return GetContentDisposition(file).Length > 0;
 		}
 		
-		public abstract string ContentDisposition { get; }
+		public abstract string GetContentDisposition(string file);
 		
-//		public abstract object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path, int distribution);
+		public bool HasContentDisposition2 {
+			get { return ContentDisposition2.Length > 0; }
+		}
+		
+		public abstract string ContentDisposition2 { get; }
+		
 		public abstract object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path);
 		
-//		public abstract object Export2(int gb, int fy, int ty, int langID, int pruid, int GRPNG, int spons, int sid, string gid, string plot, string path, int distribution);
 		public abstract object Export2(int gb, int fy, int ty, int langID, int pruid, int GRPNG, int spons, int sid, string gid, string plot, string path);
+		
+		protected string GetUrl(string path, int langID, int fy, int ty, int spons, int sid, int gb, int rpid, int pruid, string gid, int grpng, string plot)
+		{
+			P p = new P(path, "reportImage.aspx");
+			p.Q.Add("LangID", langID);
+			p.Q.Add("FY", fy);
+			p.Q.Add("TY", ty);
+			p.Q.Add("SAID", spons);
+			p.Q.Add("SID", sid);
+			p.Q.Add("GB", gb);
+			p.Q.Add("RPID", rpid);
+			p.Q.Add("PRUID", pruid);
+			p.Q.Add("GID", gid);
+			p.Q.Add("GRPNG", grpng);
+			p.Q.Add("PLOT", plot);
+			return p.ToString();
+		}
+	}
+	
+	public abstract class BinaryExporter : AbstractExporter
+	{
+		public override string Type {
+			get { return "application/octet-stream"; }
+		}
 	}
 	
 	public class Distribution

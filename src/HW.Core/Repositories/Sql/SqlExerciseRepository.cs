@@ -181,5 +181,35 @@ ORDER BY CASE eal.ExerciseAreaID WHEN {0} THEN NULL ELSE ea.ExerciseAreaSortOrde
 			}
 			return areas;
 		}
+		
+		public IList<ExerciseCategory> FindCategories()
+		{
+			throw new NotImplementedException();
+		}
+		
+		public IList<ExerciseCategoryLanguage> FindCategoryLanguages()
+		{
+			throw new NotImplementedException();
+		}
+		
+		public ExerciseCategoryLanguage ReadCategoryLanguage(int id)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public IList<ExerciseAreaLanguage> FindAreaLanguages()
+		{
+			throw new NotImplementedException();
+		}
+		
+		public IList<ExerciseVariantLanguage> FindVariantLanguages()
+		{
+			throw new NotImplementedException();
+		}
+		
+		public IList<ExerciseTypeLanguage> FindTypeLanguages()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

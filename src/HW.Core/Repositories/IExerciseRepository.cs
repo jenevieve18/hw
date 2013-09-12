@@ -11,11 +11,23 @@ namespace HW.Core.Repositories
 {
 	public interface IExerciseRepository : IBaseRepository<Exercise>
 	{
+		ExerciseCategoryLanguage ReadCategoryLanguage(int id);
+		
 		IList<Exercise> FindByAreaAndCategory(int areaID, int categoryID, int langID, int sort);
 		
 		IList<ExerciseAreaLanguage> FindAreas(int areaID, int langID);
 		
+		IList<ExerciseAreaLanguage> FindAreaLanguages();
+		
+		IList<ExerciseCategory> FindCategories();
+		
+		IList<ExerciseCategoryLanguage> FindCategoryLanguages();
+		
 		IList<ExerciseCategoryLanguage> FindCategories(int areaID, int categoryID, int langID);
+		
+		IList<ExerciseVariantLanguage> FindVariantLanguages();
+		
+		IList<ExerciseTypeLanguage> FindTypeLanguages();
 	}
 	
 	public class ExerciseRepositoryStub : BaseRepositoryStub<Exercise>, IExerciseRepository
@@ -81,6 +93,36 @@ namespace HW.Core.Repositories
 				categories.Add(c);
 			}
 			return categories;
+		}
+		
+		public IList<ExerciseCategory> FindCategories()
+		{
+			throw new NotImplementedException();
+		}
+		
+		public IList<ExerciseCategoryLanguage> FindCategoryLanguages()
+		{
+			throw new NotImplementedException();
+		}
+		
+		public ExerciseCategoryLanguage ReadCategoryLanguage(int id)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public IList<ExerciseAreaLanguage> FindAreaLanguages()
+		{
+			throw new NotImplementedException();
+		}
+		
+		public IList<ExerciseVariantLanguage> FindVariantLanguages()
+		{
+			throw new NotImplementedException();
+		}
+		
+		public IList<ExerciseTypeLanguage> FindTypeLanguages()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

@@ -20,7 +20,7 @@ namespace HW.Core.Repositories
 		
 		void SaveSponsorAdminFunction(SponsorAdminFunction f);
 		
-		void DeleteSponsorAdmin(int sponsorAdminID);
+		void DeleteSponsorAdminFunction(int sponsorAdminID);
 		
 		void UpdateSponsor(Sponsor s);
 		
@@ -139,7 +139,7 @@ namespace HW.Core.Repositories
 		{
 		}
 		
-		public void DeleteSponsorAdmin(int sponsorAdminID)
+		public void DeleteSponsorAdminFunction(int sponsorAdminID)
 		{
 		}
 		
@@ -268,7 +268,8 @@ namespace HW.Core.Repositories
 			return new SponsorAdmin {
 				Name = "test",
 				Password = "",
-				SuperAdmin = false,
+//				SuperAdmin = false,
+				SuperAdminId = 1,
 				Sponsor = new Sponsor { Id = 1, Name = "test" },
 				Anonymized = true,
 				SeeUsers = true,

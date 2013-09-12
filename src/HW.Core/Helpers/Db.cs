@@ -93,14 +93,14 @@ namespace HW.Core.Helpers
 		{
 			bool success = false;
 			try {
-//			System.Web.Mail.SmtpMail.SmtpServer = System.Configuration.ConfigurationSettings.AppSettings["SmtpServer"];
-//			System.Web.Mail.MailMessage mail = new System.Web.Mail.MailMessage();
-//			mail.To = email;
-//			mail.From = from;
-//			mail.Subject = subject;
-//			mail.Body = body;
-//			System.Web.Mail.SmtpMail.Send(mail);
-//			success = true;
+//				System.Web.Mail.SmtpMail.SmtpServer = System.Configuration.ConfigurationSettings.AppSettings["SmtpServer"];
+//				System.Web.Mail.MailMessage mail = new System.Web.Mail.MailMessage();
+//				mail.To = email;
+//				mail.From = from;
+//				mail.Subject = subject;
+//				mail.Body = body;
+//				System.Web.Mail.SmtpMail.Send(mail);
+//				success = true;
 				string server = ConfigurationSettings.AppSettings["SmtpServer"];
 				System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage(from, email, subject, body);
 				System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient(server);
@@ -118,25 +118,22 @@ namespace HW.Core.Helpers
 			if (Db.isEmail(email))
 			{
 				try {
-					if (body.IndexOf("<LINK/>") >= 0)
-					{
+					if (body.IndexOf("<LINK/>") >= 0) {
 //						string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
 						string path = ConfigurationSettings.AppSettings["healthWatchURL"];
 						body = body.Replace("<LINK/>", "" + path + "i/" + key + sponsorInviteID.ToString());
-					}
-					else
-					{
+					} else {
 //						string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
 						string path = ConfigurationSettings.AppSettings["healthWatchURL"];
 						body += "\r\n\r\n" + "" + path + "i/" + key + sponsorInviteID.ToString();
 					}
-//				System.Web.Mail.SmtpMail.SmtpServer = System.Configuration.ConfigurationSettings.AppSettings["SmtpServer"];
-//				System.Web.Mail.MailMessage mail = new System.Web.Mail.MailMessage();
-//				mail.To = email;
-//				mail.From = "info@healthwatch.se";
-//				mail.Subject = subject;
-//				mail.Body = body;
-//				System.Web.Mail.SmtpMail.Send(mail);
+//					System.Web.Mail.SmtpMail.SmtpServer = System.Configuration.ConfigurationSettings.AppSettings["SmtpServer"];
+//					System.Web.Mail.MailMessage mail = new System.Web.Mail.MailMessage();
+//					mail.To = email;
+//					mail.From = "info@healthwatch.se";
+//					mail.Subject = subject;
+//					mail.Body = body;
+//					System.Web.Mail.SmtpMail.Send(mail);
 					string server = ConfigurationSettings.AppSettings["SmtpServer"];
 					System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage("info@healthwatch.se", email, subject, body);
 					System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient(server);
@@ -185,52 +182,45 @@ namespace HW.Core.Helpers
 			//    "></td>";
 			//ret += "<td><img src=\"img/null.gif\" width=\"25\" height=\"1\"></td>";
 			//ret += "<td valign=\"top\"><br/>";
-			if (HttpContext.Current.Request.Url.AbsolutePath.IndexOf("super") < 0 && HttpContext.Current.Session["SponsorID"] != null || HttpContext.Current.Request.Url.AbsolutePath.IndexOf("super") >= 0 && HttpContext.Current.Session["SuperAdminID"] != null)
-			{
+			if (HttpContext.Current.Request.Url.AbsolutePath.IndexOf("super") < 0 && HttpContext.Current.Session["SponsorID"] != null || HttpContext.Current.Request.Url.AbsolutePath.IndexOf("super") >= 0 && HttpContext.Current.Session["SuperAdminID"] != null) {
 				sb.Append("<div class=\"logincontainer grid_5 alpha omega\">");
 				sb.Append("<div class=\"gears\">");
 				sb.Append("<span>" + HttpContext.Current.Session["Name"] + "</span><br />");
-				if (HttpContext.Current.Request.Url.AbsolutePath.IndexOf("super") < 0 && HttpContext.Current.Session["SponsorID"] != null)
-				{
+				if (HttpContext.Current.Request.Url.AbsolutePath.IndexOf("super") < 0 && HttpContext.Current.Session["SponsorID"] != null) {
 					sb.Append("<a href=\"default.aspx?Logout=1&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\" class=\"regular\">Log out</a>");
-				}
-				else if (HttpContext.Current.Request.Url.AbsolutePath.IndexOf("super") >= 0 && HttpContext.Current.Session["SuperAdminID"] != null)
-				{
+				} else if (HttpContext.Current.Request.Url.AbsolutePath.IndexOf("super") >= 0 && HttpContext.Current.Session["SuperAdminID"] != null) {
 					sb.Append("<a href=\"default.aspx?SuperLogout=1&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\" class=\"regular\">Log out</a>");
 					//ret += "<A class=\"unli\" HREF=\"default.aspx?SuperLogout=1&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\"><img src=\"img/logout.gif\" border=\"0\"/>Log out</A><br/>";
 				}
 				sb.Append("</div>");
 				sb.Append("</div>");
 
-				if (HttpContext.Current.Request.Url.AbsolutePath.IndexOf("super") < 0 && HttpContext.Current.Session["SponsorID"] != null)
-				{
+				if (HttpContext.Current.Request.Url.AbsolutePath.IndexOf("super") < 0 && HttpContext.Current.Session["SponsorID"] != null) {
 					sb.Append("<div id=\"submenu\" class=\"grid_16 alpha\">");
 					string desc = "";
-//				SqlDataReader r = Db.rs("SELECT " +
-//				                        "mf.ManagerFunction, " +
-//				                        "mf.URL, " +
-//				                        "mf.Expl " +
-//				                        "FROM ManagerFunction mf " +
-//				                        (HttpContext.Current.Session["SponsorAdminID"].ToString() != "-1" ?
-//				                         "INNER JOIN SponsorAdminFunction s ON s.ManagerFunctionID = mf.ManagerFunctionID " +
-//				                         "WHERE s.SponsorAdminID = " + HttpContext.Current.Session["SponsorAdminID"] : ""));
-//				while (r.Read())
+//					SqlDataReader r = Db.rs("SELECT " +
+//					                        "mf.ManagerFunction, " +
+//					                        "mf.URL, " +
+//					                        "mf.Expl " +
+//					                        "FROM ManagerFunction mf " +
+//					                        (HttpContext.Current.Session["SponsorAdminID"].ToString() != "-1" ?
+//					                         "INNER JOIN SponsorAdminFunction s ON s.ManagerFunctionID = mf.ManagerFunctionID " +
+//					                         "WHERE s.SponsorAdminID = " + HttpContext.Current.Session["SponsorAdminID"] : ""));
+//					while (r.Read())
 					int sponsorAdminID = HttpContext.Current.Session["SponsorAdminID"] != null ? Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]) : -1;
-					foreach (var f in managerFunctionRepository.FindBySponsorAdmin(sponsorAdminID))
-					{
-//					bool active = HttpContext.Current.Request.Url.AbsolutePath.IndexOf(r.GetString(1)) >= 0;
+					foreach (var f in managerFunctionRepository.FindBySponsorAdmin(sponsorAdminID)) {
+//						bool active = HttpContext.Current.Request.Url.AbsolutePath.IndexOf(r.GetString(1)) >= 0;
 						bool active = HttpContext.Current.Request.Url.AbsolutePath.IndexOf(f.URL) >= 0;
 
-//					sb.Append("<a title=\"" + r.GetString(2) + "\" " + (active ? "class=\"active\"" : "") + " href=\"" + r.GetString(1) + "?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">" + r.GetString(0) + "</a>");
+//						sb.Append("<a title=\"" + r.GetString(2) + "\" " + (active ? "class=\"active\"" : "") + " href=\"" + r.GetString(1) + "?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">" + r.GetString(0) + "</a>");
 						sb.Append("<a title=\"" + f.Expl + "\" " + (active ? "class=\"active\"" : "") + " href=\"" + f.URL + "?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">" + f.Function + "</a>");
 						
-						if (active)
-						{
-//						desc = r.GetString(2);
+						if (active) {
+//							desc = r.GetString(2);
 							desc = f.Expl;
 						}
 					}
-//				r.Close();
+//					r.Close();
 					sb.Append("<div class=\"description\">" + desc + "</div>");
 					sb.Append("</div>");
 					//ret += "<A class=\"unli\" HREF=\"default.aspx?Logout=1&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\"><img src=\"img/logout.gif\" border=\"0\"/>Log out</A><br/>";

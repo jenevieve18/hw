@@ -68,15 +68,15 @@ namespace HW.Core.Models
 	
 	public class AnswerValue : BaseModel
 	{
-		public Answer Answer { get; set; }
-		public Question Question { get; set; }
-		public Option Option { get; set; }
-		public int ValueInt { get; set; }
-		public decimal ValueDecimal { get; set; }
-		public DateTime ValueDateTime { get; set; }
-		public DateTime Created { get; set; }
-		public string ValueText { get; set; }
-		public string ValueTextJapaneseUnicode { get; set; }
+		public virtual Answer Answer { get; set; }
+		public virtual Question Question { get; set; }
+		public virtual Option Option { get; set; }
+		public virtual int ValueInt { get; set; }
+		public virtual decimal ValueDecimal { get; set; }
+		public virtual DateTime ValueDateTime { get; set; }
+		public virtual DateTime Created { get; set; }
+		public virtual string ValueText { get; set; }
+		public virtual string ValueTextJapaneseUnicode { get; set; }
 	}
 	
 	public class BackgroundAnswer : BaseModel
@@ -90,7 +90,7 @@ namespace HW.Core.Models
 	
 	public class BackgroundAnswerLanguage : BaseModel
 	{
-		public Language Language { get; set; }
-		public BackgroundAnswer Answer { get; set; }
+		public virtual Language Language { get; set; }
+		public virtual BackgroundAnswer Answer { get; set; }
 	}
 }

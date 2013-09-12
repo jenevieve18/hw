@@ -18,6 +18,7 @@ namespace HW.Core.Models
 		public virtual int RequiredUserLevel { get; set; }
 		public virtual string ReplacementHead { get; set; }
 		public virtual IList<ExerciseLanguage> Languages { get; set; }
+		public virtual IList<ExerciseVariant> Variants { get; set; }
 		
 		public virtual ExerciseLanguage CurrentLanguage { get; set; }
 		public virtual ExerciseAreaLanguage CurrentArea { get; set; }
@@ -58,9 +59,9 @@ namespace HW.Core.Models
 	
 	public class ExerciseCategoryLanguage : BaseModel
 	{
-		public Language Language { get; set; }
-		public ExerciseCategory Category { get; set; }
-		public string CategoryName { get; set; }
+		public virtual Language Language { get; set; }
+		public virtual ExerciseCategory Category { get; set; }
+		public virtual string CategoryName { get; set; }
 		
 		public override string ToString()
 		{
@@ -80,50 +81,51 @@ namespace HW.Core.Models
 	
 	public class ExerciseMiracle : BaseModel
 	{
-		public User User { get; set; }
-		public DateTime Time { get; set; }
-		public DateTime TimeChanged { get; set; }
-		public string MiracleDescription { get; set; }
-		public bool AllowPublished { get; set; }
-		public bool Published { get; set; }
+		public virtual User User { get; set; }
+		public virtual DateTime Time { get; set; }
+		public virtual DateTime TimeChanged { get; set; }
+		public virtual string MiracleDescription { get; set; }
+		public virtual bool AllowPublished { get; set; }
+		public virtual bool Published { get; set; }
 	}
 	
 	public class ExerciseStats : BaseModel
 	{
-		public User User { get; set; }
-		public ExerciseVariantLanguage VariantLanguage { get; set; }
-		public DateTime Date { get; set; }
-		public UserProfile UserProfile { get; set; }
+		public virtual User User { get; set; }
+		public virtual ExerciseVariantLanguage VariantLanguage { get; set; }
+		public virtual DateTime Date { get; set; }
+		public virtual UserProfile UserProfile { get; set; }
 	}
 	
 	public class ExerciseType : BaseModel
 	{
-		public int SortOrder { get; set; }
-		public IList<ExerciseTypeLanguage> Languages { get; set; }
+		public virtual int SortOrder { get; set; }
+		public virtual IList<ExerciseTypeLanguage> Languages { get; set; }
 	}
 	
 	public class ExerciseTypeLanguage : BaseModel
 	{
-		public ExerciseType Type { get; set; }
-		public Language Language { get; set; }
-		public string TypeName { get; set; }
-		public string SubTypeName { get; set; }
+		public virtual ExerciseType Type { get; set; }
+		public virtual Language Language { get; set; }
+		public virtual string TypeName { get; set; }
+		public virtual string SubTypeName { get; set; }
 	}
 	
 	public class ExerciseVariant : BaseModel
 	{
-		public Exercise Exercise { get; set; }
-		public ExerciseType Type { get; set; }
-		public IList<ExerciseVariantLanguage> Languages { get; set; }
+		public virtual Exercise Exercise { get; set; }
+		public virtual ExerciseType Type { get; set; }
+		public virtual IList<ExerciseVariantLanguage> Languages { get; set; }
 	}
 	
 	public class ExerciseVariantLanguage : BaseModel
 	{
-		public ExerciseVariant Variant { get; set; }
-		public string File { get; set; }
-		public int Size { get; set; }
-		public string Content { get; set; }
-		public int ExerciseWindowX { get; set; }
-		public int ExerciseWindowY { get; set; }
+		public virtual ExerciseVariant Variant { get; set; }
+		public virtual string File { get; set; }
+		public virtual int Size { get; set; }
+		public virtual string Content { get; set; }
+		public virtual int ExerciseWindowX { get; set; }
+		public virtual int ExerciseWindowY { get; set; }
+		public virtual Language Language { get; set; }
 	}
 }

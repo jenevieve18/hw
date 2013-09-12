@@ -9,12 +9,12 @@ namespace HW.Core.Models
 {
 	public class Feedback : BaseModel
 	{
-		public string Notes { get; set; }
+		public virtual string Notes { get; set; }
 	}
 	
 	public class FeedbackQuestion : BaseModel
 	{
-		public Feedback Feedback { get; set; }
-		public Question Question { get; set; }
+		public virtual Feedback Feedback { get; set; }
+		public virtual Question Question { get; set; }
 	}
 }

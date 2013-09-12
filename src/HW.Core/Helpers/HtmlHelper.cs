@@ -44,6 +44,11 @@ namespace HW.Core.Helpers
 			}
 		}
 		
+		public static string AnchorImage(string url, string image)
+		{
+			return AnchorImage(url, image, false);
+		}
+		
 		public static string AnchorImage(string url, string image, bool random)
 		{
 			if (random) {
@@ -140,6 +145,11 @@ namespace HW.Core.Helpers
 			}
 			sb.AppendLine("</select>");
 			return sb.ToString();
+		}
+		
+		public static string CheckBox(string name, string value, bool disabled)
+		{
+			return string.Format("<input type='checkbox' name='{0}' value='{1}' {2}/>", name, value, disabled ? "disabled" : "");
 		}
 		
 		public static string Input(string name)

@@ -64,7 +64,11 @@ namespace HW.Core.Models
 			return Name == "" ? (Usr == "" ? "&gt; empty &lt;" : Usr) : Name;
 		}
 		
-		public virtual bool SuperAdmin { get; set; } // FIXME: Used with Default to determine whether it's a SuperAdmin who logs in.
+//		public virtual bool SuperAdmin { get; set; } // FIXME: Used with Default to determine whether it's a SuperAdmin who logs in.
+		public virtual bool SuperAdmin { 
+			get { return SuperAdminId > 0; }
+		}
+		public virtual int SuperAdminId { get; set; }
 	}
 	
 	public class SponsorExtendedSurvey : BaseModel
@@ -75,7 +79,7 @@ namespace HW.Core.Models
 		public virtual string RoundText { get; set; }
 		public virtual string IndividualFeedbackEmailSubject { get; set; }
 		public virtual string IndividualFeedbackEmailBody { get; set; }
-		public virtual DateTime EmailLastSent { get; set; }
+		public virtual DateTime? EmailLastSent { get; set; }
 		public virtual string EmailSubject { get; set; }
 		public virtual string EmailBody { get; set; }
 		public virtual string FinishedEmailSubject { get; set; }

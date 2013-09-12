@@ -11,6 +11,11 @@ namespace HW.Core.Models
 {
 	public class BaseModel
 	{
+        public BaseModel()
+        {
+            Errors = new ErrorMessages();
+        }
+
 		public virtual int Id { get; set; }
 		public virtual ErrorMessages Errors { get; set; }
 		public virtual bool HasErrors {

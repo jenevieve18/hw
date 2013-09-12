@@ -360,7 +360,8 @@ ORDER BY d.SortString",
 				@"
 SELECT d.Department,
 	d.DepartmentID,
-	DepartmentShort
+	DepartmentShort,
+    SortString
 FROM Department d
 WHERE d.SponsorID = {0}
 AND (d.DepartmentID IN ({1}))
@@ -374,7 +375,8 @@ ORDER BY d.SortString",
 					var d = new Department {
 						Name = GetString(rs, 0),
 						Id = rs.GetInt32(1),
-						ShortName = GetString(rs, 2)
+						ShortName = GetString(rs, 2),
+                        SortString = GetString(rs, 3)
 					};
 					departments.Add(d);
 				}
@@ -419,7 +421,8 @@ ORDER BY LEN(d.SortString)",
 				@"
 SELECT d.Department,
 	d.DepartmentID,
-	DepartmentShort
+	DepartmentShort,
+	SortString
 FROM Department d
 WHERE d.SponsorID = {0}
 ORDER BY LEN(d.SortString)",
@@ -431,7 +434,8 @@ ORDER BY LEN(d.SortString)",
 					var d = new Department {
 						Name = GetString(rs, 0),
 						Id = rs.GetInt32(1),
-						ShortName = GetString(rs, 2)
+						ShortName = GetString(rs, 2),
+						SortString = GetString(rs, 3)
 					};
 					departments.Add(d);
 				}
@@ -538,7 +542,7 @@ SELECT d.Department,
 	dbo.cf_departmentDepth(d.DepartmentID),
 	(
 		SELECT COUNT(*) FROM Department x
-		INNER JOIN SponsorAdminDepartment xx ON x.DepartmentID = xx.DepartmentID AND xx.SponsorAdminID = {1}
+		{2}
 		WHERE (x.ParentDepartmentID = d.ParentDepartmentID
 			OR x.ParentDepartmentID IS NULL
 			AND d.ParentDepartmentID IS NULL)
@@ -546,11 +550,13 @@ SELECT d.Department,
 			AND d.SortString < x.SortString
 	)
 FROM Department d
-INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID
-WHERE sad.SponsorAdminID = {1} AND d.SponsorID = {0}
+{3}
+WHERE {1} d.SponsorID = {0}
 ORDER BY d.SortString",
 				sponsorID,
-				sponsorAdminID
+                (sponsorAdminID != -1 ? "sad.SponsorAdminID = " + sponsorAdminID + " AND " : ""),
+                (sponsorAdminID != -1 ? "INNER JOIN SponsorAdminDepartment xx ON x.DepartmentID = xx.DepartmentID AND xx.SponsorAdminID = " + sponsorAdminID + " " : ""),
+                (sponsorAdminID != -1 ? "INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID " : "")
 			);
 			var departments = new List<Department>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {

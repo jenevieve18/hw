@@ -30,7 +30,7 @@ namespace HW.Core.Helpers
 		}
 	}
 	
-	public class CsvExporter : IExporter
+	public class CsvExporter : AbstractExporter
 	{
 		bool hasAnswerKey;
 		bool hasGrouping;
@@ -69,34 +69,31 @@ namespace HW.Core.Helpers
 			this.key = key;
 		}
 		
-		public string Type {
+		public override string Type {
 			get { return "text/csv"; }
 		}
 		
-		public bool HasContentDisposition {
-			get { return ContentDisposition.Length > 0; }
+		public override string GetContentDisposition(string file)
+		{
+			return string.Format("attachment;filename=HealthWatch {0} {1}.csv", file, DateTime.Now.ToString("yyyyMMdd"));
 		}
 		
-		public string ContentDisposition {
-			get { return "attachment;filename=Report.csv"; }
+		public override string ContentDisposition2 {
+			get { return string.Format("attachment;filename=HealthWatch Survey {0}.csv", DateTime.Now.ToString("yyyyMMdd")); }
 		}
 		
-//		public object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path, int distribution)
-		public object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path)
+		public override object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path)
 		{
 			var f = service.GetGraphFactory(hasAnswerKey);
-//			return f.CreateGraph2(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled, distribution);
 			return f.CreateGraph2(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled);
 		}
 		
-//		public object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path, int distribution)
-		public object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path)
+		public override object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path)
 		{
 			StringBuilder s = new StringBuilder();
 			foreach (var p in parts) {
 				ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
 				var f = service.GetGraphFactory(hasAnswerKey);
-//				string x = f.CreateGraph2(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled, distribution);
 				string x = f.CreateGraph2(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled);
 				s.AppendLine(x);
 				s.AppendLine();

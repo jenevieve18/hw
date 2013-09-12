@@ -304,7 +304,7 @@ VALUES (@SponsorAdminID, @ManagerFunctionID)"
 			);
 		}
 		
-		public void DeleteSponsorAdmin(int sponsorAdminID)
+		public void DeleteSponsorAdminFunction(int sponsorAdminID)
 		{
 			Db.exec("DELETE FROM SponsorAdminFunction WHERE SponsorAdminID = " + sponsorAdminID, "healthWatchSqlConnection");
 		}
@@ -361,85 +361,6 @@ WHERE si.SponsorID = {0} AND u.Created < '{1}'",
 				}
 			}
 			return 0;
-		}
-		
-		public SponsorAdmin ReadSponsorAdmin(int sponsorID, int sponsorAdminID, int SAID)
-		{
-			string query = string.Format(
-				@"
-SELECT SponsorAdminID,
-	Name,
-	Usr,
-	Email,
-	SuperUser,
-	ReadOnly
-FROM SponsorAdmin
-WHERE (SponsorAdminID <> {1} OR SuperUser = 1)
-AND SponsorAdminID = {2}
-AND SponsorID = {0}",
-				sponsorID,
-				sponsorAdminID,
-				SAID
-			);
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				if (rs.Read()) {
-					var a = new SponsorAdmin {
-						Id = rs.GetInt32(0),
-						Name = rs.GetString(1),
-						Usr = rs.GetString(2),
-						Email = rs.GetString(3),
-//						SuperUser = rs.GetBoolean(4),
-//						SuperUser = GetBoolean(rs, 4),
-//						ReadOnly = GetBoolean(rs, 5)
-						SuperUser = !rs.IsDBNull(4) && rs.GetInt32(4) != 0,
-						ReadOnly = !rs.IsDBNull(5) && rs.GetInt32(5) != 0
-					};
-					return a;
-				}
-			}
-			return null;
-		}
-		
-		public SponsorAdmin ReadSponsorAdmin(int sponsorAdminID)
-		{
-			string query = string.Format(
-				@"
-SELECT SuperUser FROM SponsorAdmin WHERE SponsorAdminID = {0}",
-				sponsorAdminID
-			);
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				if (rs.Read()) {
-					var a = new SponsorAdmin {
-						SuperUser = GetBoolean(rs, 0)
-					};
-					return a;
-				}
-			}
-			return null;
-		}
-		
-		public SponsorAdmin ReadSponsorAdmin(int sponsorID, int sponsorAdminID, string password)
-		{
-			string query = string.Format(
-				@"
-SELECT SponsorAdminID
-FROM SponsorAdmin
-WHERE SponsorID = {0}
-AND SponsorAdminID = {1}
-AND Pas = '{2}'",
-				sponsorID,
-				sponsorAdminID,
-				password.Replace("'", "''")
-			);
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				if (rs.Read()) {
-					var a = new SponsorAdmin {
-						Id = rs.GetInt32(0)
-					};
-					return a;
-				}
-			}
-			return null;
 		}
 		
 		public SponsorInvite ReadSponsorInviteByUser(int userID)
@@ -677,6 +598,98 @@ WHERE s.SponsorID = {0}",
 			return null;
 		}
 		
+		public bool SponsorAdminExists(int sponsorAdminID, string usr)
+		{
+			string query = string.Format(
+				@"
+SELECT SponsorAdminID FROM SponsorAdmin WHERE Usr = '{0}' {1}",
+				usr.Replace("'", ""),
+				(sponsorAdminID != 0 ? " AND SponsorAdminID != " + sponsorAdminID : "")
+			);
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				if (rs.Read()) {
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		public SponsorAdmin ReadSponsorAdmin(int sponsorID, int sponsorAdminID, int SAID)
+		{
+			string query = string.Format(
+				@"
+SELECT SponsorAdminID,
+	Name,
+	Usr,
+	Email,
+	SuperUser,
+	ReadOnly
+FROM SponsorAdmin
+WHERE (SponsorAdminID <> {1} OR SuperUser = 1)
+AND SponsorAdminID = {2}
+AND SponsorID = {0}",
+				sponsorID,
+				sponsorAdminID,
+				SAID
+			);
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				if (rs.Read()) {
+					var a = new SponsorAdmin {
+						Id = rs.GetInt32(0),
+						Name = rs.GetString(1),
+						Usr = rs.GetString(2),
+						Email = rs.GetString(3),
+						SuperUser = !rs.IsDBNull(4) && rs.GetInt32(4) != 0,
+						ReadOnly = !rs.IsDBNull(5) && rs.GetInt32(5) != 0
+					};
+					return a;
+				}
+			}
+			return null;
+		}
+		
+		public SponsorAdmin ReadSponsorAdmin(int sponsorAdminID)
+		{
+			string query = string.Format(
+				@"
+SELECT SuperUser FROM SponsorAdmin WHERE SponsorAdminID = {0}",
+				sponsorAdminID
+			);
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				if (rs.Read()) {
+					var a = new SponsorAdmin {
+						SuperUser = !rs.IsDBNull(0) && rs.GetInt32(0) != 0 //GetBoolean(rs, 0)
+					};
+					return a;
+				}
+			}
+			return null;
+		}
+		
+		public SponsorAdmin ReadSponsorAdmin(int sponsorID, int sponsorAdminID, string password)
+		{
+			string query = string.Format(
+				@"
+SELECT SponsorAdminID
+FROM SponsorAdmin
+WHERE SponsorID = {0}
+AND SponsorAdminID = {1}
+AND Pas = '{2}'",
+				sponsorID,
+				sponsorAdminID,
+				password.Replace("'", "''")
+			);
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				if (rs.Read()) {
+					var a = new SponsorAdmin {
+						Id = rs.GetInt32(0)
+					};
+					return a;
+				}
+			}
+			return null;
+		}
+		
 		public SponsorAdmin ReadSponsorAdmin(int sponsorAdminID, string usr)
 		{
 			string query = string.Format(
@@ -696,22 +709,6 @@ SELECT SponsorAdminID FROM SponsorAdmin WHERE SponsorID = {0} AND Usr = '{1}'",
 			return null;
 		}
 		
-		public bool SponsorAdminExists(int sponsorAdminID, string usr)
-		{
-			string query = string.Format(
-				@"
-SELECT SponsorAdminID FROM SponsorAdmin WHERE Usr = '{0}' {1}",
-				usr.Replace("'", ""),
-				(sponsorAdminID != 0 ? " AND SponsorAdminID != " + sponsorAdminID : "")
-			);
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				if (rs.Read()) {
-					return true;
-				}
-			}
-			return false;
-		}
-		
 		public SponsorAdmin ReadSponsorAdmin(string SKEY, string SAKEY, string SA, string SAID, string ANV, string LOS)
 		{
 			string s1 = (SKEY == null ? "sa.SponsorAdminID, " : "-1, ");
@@ -719,23 +716,24 @@ SELECT SponsorAdminID FROM SponsorAdmin WHERE Usr = '{0}' {1}",
 			string s4 = (SKEY == null ? "sa.SeeUsers, " : (SA != null ? "sas.SeeUsers, " : "1, "));
 			string s6 = (SKEY == null ? "sa.ReadOnly, " : "NULL, ");
 			string s7 = (SKEY == null ? "ISNULL(sa.Name,sa.Usr) " : "'Internal administrator' ");
-			string j = (ANV != null && LOS != null || SAKEY != null ?
-			            "INNER JOIN SponsorAdmin sa ON sa.SponsorID = s.SponsorID " +
-			            (SAKEY != null ?
-			             "WHERE LEFT(REPLACE(CONVERT(VARCHAR(255),sa.SponsorAdminKey),'-',''),8) = '" + SAKEY.Substring(0, 8).Replace("'", "") + "' " +
-			             "AND s.SponsorID = " + SAKEY.Substring(8).Replace("'", "")
-			             :
-			             "WHERE sa.Usr = '" + ANV.Replace("'", "") + "' " +
-			             "AND sa.Pas = '" + LOS.Replace("'", "") + "'")
-			            :
-			            (SA != null ?
-			             "INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID AND sas.SuperAdminID = " + Convert.ToInt32(SAID) + " "
-			             :
-			             ""
-			            ) +
-			            "WHERE LEFT(REPLACE(CONVERT(VARCHAR(255),s.SponsorKey),'-',''),8) = '" + SKEY.Substring(0, 8).Replace("'", "") + "' " +
-			            "AND s.SponsorID = " + SKEY.Substring(8).Replace("'", "")
-			           );
+			string j = (
+				ANV != null && LOS != null || SAKEY != null ?
+				"INNER JOIN SponsorAdmin sa ON sa.SponsorID = s.SponsorID " + (
+					SAKEY != null ?
+					"WHERE LEFT(REPLACE(CONVERT(VARCHAR(255),sa.SponsorAdminKey),'-',''),8) = '" + SAKEY.Substring(0, 8).Replace("'", "") + "' " +
+					"AND s.SponsorID = " + SAKEY.Substring(8).Replace("'", "")
+					:
+					"WHERE sa.Usr = '" + ANV.Replace("'", "") + "' " +
+					"AND sa.Pas = '" + LOS.Replace("'", "") + "'")
+				: (
+					SA != null ?
+					"INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID AND sas.SuperAdminID = " + Convert.ToInt32(SAID) + " "
+					:
+					""
+				) +
+				"WHERE LEFT(REPLACE(CONVERT(VARCHAR(255),s.SponsorKey),'-',''),8) = '" + SKEY.Substring(0, 8).Replace("'", "") + "' " +
+				"AND s.SponsorID = " + SKEY.Substring(8).Replace("'", "")
+			);
 //			string j = ANV != null && LOS != null || SAKEY != null
 //				? string.Format(
 //					@"INNER JOIN SponsorAdmin sa ON sa.SponsorID = s.SponsorID {0}",
@@ -839,8 +837,9 @@ FROM Sponsor s
 						Sponsor = new Sponsor { Id = GetInt32(rs, 0), Name = GetString(rs, 2) },
 						Anonymized = GetInt32(rs, 3) == 1, //GetBoolean(rs, 3),
 						SeeUsers = GetInt32(rs, 4) == 1, //GetBoolean(rs, 4),
-						SuperAdmin = GetInt32(rs, 5) == 1, // FIXME: Is this really boolean?
-						ReadOnly = GetBoolean(rs, 6),
+//						SuperAdmin = GetInt32(rs, 5) != 0, // FIXME: Is this really boolean?
+						SuperAdminId = GetInt32(rs, 5),
+						ReadOnly = GetInt32(rs, 6) == 1, //GetBoolean(rs, 6),
 						Name = GetString(rs, 7)
 					};
 					return a;
@@ -1002,14 +1001,21 @@ ORDER BY ses.SponsorExtendedSurveyID DESC",
 				while (rs.Read()) {
 					var s = new SponsorExtendedSurvey {
 						ProjectRoundUnit = new ProjectRoundUnit { Id = rs.GetInt32(0) },
-						EmailSubject = rs.GetString(1),
-						EmailBody = rs.GetString(2),
-						EmailLastSent = rs.GetDateTime(3),
-						Internal = rs.GetString(4),
+//						EmailSubject = rs.GetString(1),
+//						EmailBody = rs.GetString(2),
+//						EmailLastSent = rs.GetDateTime(3),
+//						Internal = rs.GetString(4),
+						EmailSubject = GetString(rs, 1),
+						EmailBody = GetString(rs, 2),
+						EmailLastSent = GetDateTime(rs, 3),
+						Internal = GetString(rs, 4),
 						Id = rs.GetInt32(5),
-						FinishedEmailSubject = rs.GetString(6),
-						FinishedEmailBody = rs.GetString(7),
-						RoundText = rs.GetString(8)
+//						FinishedEmailSubject = rs.GetString(6),
+//						FinishedEmailBody = rs.GetString(7),
+//						RoundText = rs.GetString(8)
+						FinishedEmailSubject = GetString(rs, 6),
+						FinishedEmailBody = GetString(rs, 7),
+						RoundText = GetString(rs, 8)
 					};
 					surveys.Add(s);
 				}

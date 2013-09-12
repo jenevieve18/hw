@@ -17,7 +17,7 @@ using iTextSharp.text.pdf;
 
 namespace HW.Core.Helpers
 {
-	public class PdfExporter : IExporter
+	public class PdfExporter : AbstractExporter
 	{
 		ReportPart r;
 		IList<ReportPartLanguage> parts;
@@ -34,27 +34,26 @@ namespace HW.Core.Helpers
 			this.parts = parts;
 		}
 		
-		public string Type {
+		public override string Type {
 			get { return "application/pdf"; }
 		}
 		
-		public bool HasContentDisposition {
-			get { return ContentDisposition.Length > 0; }
+		public override string GetContentDisposition(string file)
+		{
+			return "";
 		}
 		
-		public string ContentDisposition {
+		public override string ContentDisposition2 {
 			get { return ""; }
 		}
 		
-//		public object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path, int distribution)
-		public object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path)
+		public override object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path)
 		{
 			Document doc = new Document();
 			var output = new MemoryStream();
 			PdfWriter writer = PdfWriter.GetInstance(doc, output);
 			doc.Open();
 			
-//			string url = GetUrl(path, langID, fy, ty, spons, sid, gb, r.Id, pruid, gid, grpng, plot, distribution);
 			string url = GetUrl(path, langID, fy, ty, spons, sid, gb, r.Id, pruid, gid, grpng, plot);
 			doc.Add(new Chunk(r.CurrentLanguage.Subject));
 			iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(new Uri(url));
@@ -64,8 +63,7 @@ namespace HW.Core.Helpers
 			return output;
 		}
 		
-//		public object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path, int distribution)
-		public object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path)
+		public override object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path)
 		{
 			Document doc = new Document();
 			var output = new MemoryStream();
@@ -74,7 +72,6 @@ namespace HW.Core.Helpers
 			
 			int i = 0;
 			foreach (var p in parts) {
-//				string url = GetUrl(path, langID, fy, ty, spons, sid, gb, p.ReportPart.Id, pruid, gid, grpng, plot, distribution);
 				string url = GetUrl(path, langID, fy, ty, spons, sid, gb, p.ReportPart.Id, pruid, gid, grpng, plot);
 				ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
 				doc.Add(new Chunk(r.CurrentLanguage.Subject));
@@ -88,25 +85,6 @@ namespace HW.Core.Helpers
 			}
 			doc.Close();
 			return output;
-		}
-		
-//		string GetUrl(string path, int langID, int fy, int ty, int spons, int sid, int gb, int rpid, int pruid, string gid, int grpng, string plot, int distribution)
-		string GetUrl(string path, int langID, int fy, int ty, int spons, int sid, int gb, int rpid, int pruid, string gid, int grpng, string plot)
-		{
-			P p = new P(path, "reportImage.aspx");
-			p.Q.Add("LangID", langID);
-			p.Q.Add("FY", fy);
-			p.Q.Add("TY", ty);
-			p.Q.Add("SAID", spons);
-			p.Q.Add("SID", sid);
-			p.Q.Add("GB", gb);
-			p.Q.Add("RPID", rpid);
-			p.Q.Add("PRUID", pruid);
-			p.Q.Add("GID", gid);
-			p.Q.Add("GRPNG", grpng);
-			p.Q.Add("PLOT", plot);
-//			p.Q.Add("DIST", distribution);
-			return p.ToString();
 		}
 	}
 }

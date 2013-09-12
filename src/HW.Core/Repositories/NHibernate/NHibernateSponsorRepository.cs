@@ -55,7 +55,7 @@ namespace HW.Core.Repositories.NHibernate
 			throw new NotImplementedException();
 		}
 		
-		public void DeleteSponsorAdmin(int sponsorAdminID)
+		public void DeleteSponsorAdminFunction(int sponsorAdminID)
 		{
 			throw new NotImplementedException();
 		}

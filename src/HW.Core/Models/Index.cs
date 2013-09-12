@@ -56,14 +56,14 @@ namespace HW.Core.Models
 	
 	public class IndexPart : BaseModel
 	{
-		public int Multiple { get; set; }
-		public Index OtherIndex { get; set; }
+		public virtual int Multiple { get; set; }
+		public virtual Index OtherIndex { get; set; }
 	}
 	
 	public class IndexLanguage : BaseModel
 	{
-		public Index Index { get; set; }
-		public Language Language { get; set; }
-		public string IndexName { get; set;}
+		public virtual Index Index { get; set; }
+		public virtual Language Language { get; set; }
+		public virtual string IndexName { get; set;}
 	}
 }

@@ -57,17 +57,32 @@ SELECT ManagerFunctionID, ManagerFunction, Expl FROM ManagerFunction"
 		
 		public IList<ManagerFunction> FindBySponsorAdmin(int sponsorAdminID)
 		{
+			string q = sponsorAdminID != -1 ?
+				string.Format(@"
+INNER JOIN SponsorAdminFunction saf ON saf.ManagerFunctionID = mf.ManagerFunctionID
+WHERE saf.SponsorAdminID = {0}", sponsorAdminID)
+				: "";
 			string query = string.Format(
 				@"
 SELECT mf.ManagerFunction,
 mf.URL,
 mf.Expl
-FROM SponsorAdminFunction saf
-INNER JOIN ManagerFunction mf ON saf.ManagerFunctionID = mf.ManagerFunctionID
-WHERE saf.SponsorAdminID = {0}
+FROM ManagerFunction mf
+{0}
 ORDER BY mf.ManagerFunctionID",
-				sponsorAdminID
+				q
 			);
+//			string query = string.Format(
+//				@"
+//SELECT mf.ManagerFunction,
+//mf.URL,
+//mf.Expl
+//FROM SponsorAdminFunction saf
+//INNER JOIN ManagerFunction mf ON saf.ManagerFunctionID = mf.ManagerFunctionID
+//WHERE saf.SponsorAdminID = {0}
+//ORDER BY mf.ManagerFunctionID",
+//				sponsorAdminID
+//			);
 			var functions = new List<ManagerFunction>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {

@@ -9,11 +9,11 @@ namespace HW.Core.Models
 {
 	public class Diary : BaseModel
 	{
-		public string Note { get; set; }
-		public DateTime Date { get; set; }
-		public User User { get; set; }
-		public DateTime Created { get; set; }
-		public DateTime Deleted { get; set; }
-		public int Mood { get; set; }
+		public virtual string Note { get; set; }
+		public virtual DateTime Date { get; set; }
+		public virtual User User { get; set; }
+		public virtual DateTime Created { get; set; }
+		public virtual DateTime Deleted { get; set; }
+		public virtual int Mood { get; set; }
 	}
 }
