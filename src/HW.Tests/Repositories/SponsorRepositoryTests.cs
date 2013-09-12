@@ -189,6 +189,12 @@ namespace HW.Tests.Repositories
 			r.ReadSponsorAdmin(1, 1, 1);
 		}
 		
+		[Test]
+		public void TestReadSponsorAdmin2()
+		{
+			r.ReadSponsorAdmin("FB8CC11083", null, null, "", null, null);
+		}
+		
 //		[Test]
 //		public void TestReadSponsorAdmin2()
 //		{
@@ -238,7 +244,7 @@ namespace HW.Tests.Repositories
 		[Test]
 		public void TestDeleteSponsorAdmin()
 		{
-			r.DeleteSponsorAdmin(1);
+			r.DeleteSponsorAdminFunction(1);
 		}
 		
 		[Test]
