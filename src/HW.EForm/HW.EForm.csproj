@@ -57,7 +57,12 @@
     <Content Include="Dashboard.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Departments.aspx" />
+    <Content Include="ExerciseAreas.aspx" />
+    <Content Include="ExerciseCategories.aspx" />
+    <Content Include="ExerciseCategoriesEdit.aspx" />
     <Content Include="Exercises.aspx" />
+    <Content Include="ExercisesShow.aspx" />
+    <Content Include="ExerciseTypes.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Languages.aspx" />
     <Content Include="LanguagesAdd.aspx" />
@@ -142,12 +147,47 @@
     <Compile Include="Departments.aspx.designer.cs">
       <DependentUpon>Departments.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ExerciseAreas.aspx.cs">
+      <DependentUpon>ExerciseAreas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExerciseAreas.aspx.designer.cs">
+      <DependentUpon>ExerciseAreas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ExerciseCategories.aspx.cs">
+      <DependentUpon>ExerciseCategories.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExerciseCategories.aspx.designer.cs">
+      <DependentUpon>ExerciseCategories.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ExerciseCategoriesEdit.aspx.cs">
+      <DependentUpon>ExerciseCategoriesEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExerciseCategoriesEdit.aspx.designer.cs">
+      <DependentUpon>ExerciseCategoriesEdit.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Exercises.aspx.cs">
       <DependentUpon>Exercises.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Exercises.aspx.designer.cs">
       <DependentUpon>Exercises.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ExercisesShow.aspx.cs">
+      <DependentUpon>ExercisesShow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExercisesShow.aspx.designer.cs">
+      <DependentUpon>ExercisesShow.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ExerciseTypes.aspx.cs">
+      <DependentUpon>ExerciseTypes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExerciseTypes.aspx.designer.cs">
+      <DependentUpon>ExerciseTypes.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

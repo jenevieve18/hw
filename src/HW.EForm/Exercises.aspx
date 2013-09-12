@@ -15,7 +15,7 @@
 	</tr>
 	<% foreach (var e in exercises) { %>
 	<tr>
-		<td><%= e.Image %></td>
+		<td><%= HtmlHelper.Anchor(e.Image, "ExercisesShow.aspx?ExerciseID=" + e.Id)%></td>
 		<td>
 			<%= HtmlHelper.Anchor("Edit", "") %>
 			<%= HtmlHelper.Anchor("Delete", "") %>

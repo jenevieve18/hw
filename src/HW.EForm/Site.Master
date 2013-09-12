@@ -86,6 +86,8 @@
 			  <li><%= HtmlHelper.Anchor("Departments", "Departments.aspx") %></li>
               <li><%= HtmlHelper.Anchor("Background Questions", "BackgroundQuestions.aspx") %></li>
               <li><%= HtmlHelper.Anchor("Sponsors", "Sponsors.aspx") %></li>
+			  <li><%= HtmlHelper.Anchor("Exercise Categories", "ExerciseCategories.aspx")%></li>
+			  <li><%= HtmlHelper.Anchor("Exercise Areas", "ExerciseAreas.aspx")%></li>
 			  <li><%= HtmlHelper.Anchor("Exercises", "Exercises.aspx")%></li>
             </ul>
           </div><!--/.well -->
