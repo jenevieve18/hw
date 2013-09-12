@@ -7,7 +7,7 @@
 using System;
 using System.Configuration;
 using System.Linq;
-
+using System.Web;
 using HW.Core;
 
 namespace HW.Grp
@@ -21,7 +21,30 @@ namespace HW.Grp
 
 		protected void Session_Start(object sender, EventArgs e)
 		{
+			HttpRequest httpRequest = HttpContext.Current.Request;
+			if (httpRequest.Browser.IsMobileDevice) {
+				string path = httpRequest.Url.PathAndQuery;
+				bool isOnMobilePage = path.StartsWith("/Mobile/", StringComparison.OrdinalIgnoreCase);
+				if (!isOnMobilePage) {
+					string redirectTo = "~/Mobile/";
 
+					// Could also add special logic to redirect from certain
+					// recognized pages to the mobile equivalents of those
+					// pages (where they exist). For example,
+					// if (HttpContext.Current.Handler is UserRegistration)
+					//     redirectTo = "~/Mobile/Register.aspx";
+
+					HttpContext.Current.Response.Redirect(redirectTo);
+				}
+			}
+		}
+		
+		public override string GetVaryByCustomString(HttpContext context, string custom)
+		{
+			if (string.Equals(custom, "isMobileDevice", StringComparison.OrdinalIgnoreCase)) {
+				return context.Request.Browser.IsMobileDevice.ToString();
+			}
+			return base.GetVaryByCustomString(context, custom);
 		}
 
 		protected void Application_BeginRequest(object sender, EventArgs e)

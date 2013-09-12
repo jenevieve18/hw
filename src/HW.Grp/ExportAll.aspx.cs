@@ -29,7 +29,6 @@ namespace HW.Grp
 			AppContext.GetRepositoryFactory().CreateDepartmentRepository(),
 			AppContext.GetRepositoryFactory().CreateQuestionRepository(),
 			AppContext.GetRepositoryFactory().CreateIndexRepository()
-			
 		);
 		
 		bool HasAnswerKey {
@@ -103,14 +102,14 @@ namespace HW.Grp
 			
 			object disabled = Request.QueryString["DISABLED"];
 			
-			int distribution = Request.QueryString["DIST"] != null ? Convert.ToInt32(Request.QueryString["DIST"]) : 0;
+//			int distribution = Request.QueryString["DIST"] != null ? Convert.ToInt32(Request.QueryString["DIST"]) : 0;
 			
 			reportParts = service.FindByProjectAndLanguage(pruid, langID);
-			
-			var exporter = ExportFactory.GetExporter2(service, type, HasAnswerKey, hasGrouping, disabled, Width, Height, Background, reportParts, key);
+
+            var exporter = ExportFactory.GetExporter2(service, type, HasAnswerKey, hasGrouping, disabled, Width, Height, Background, reportParts, key, Server.MapPath("HW template for Word.docx"));
 			Response.ContentType = exporter.Type;
 			
-			AddHeaderIf(exporter.HasContentDisposition, "content-disposition", exporter.ContentDisposition);
+			AddHeaderIf(exporter.HasContentDisposition2, "content-disposition", exporter.ContentDisposition2);
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
 			Write(exporter.Export2(GB, fy, ty, langID, pruid, grpng, spons, sid, gid, plot, path));
 		}
@@ -119,6 +118,7 @@ namespace HW.Grp
 		{
 			if (obj is MemoryStream) {
 				Response.BinaryWrite(((MemoryStream)obj).ToArray());
+				Response.End();
 			} else if (obj is string) {
 				Response.Write((string)obj);
 			}

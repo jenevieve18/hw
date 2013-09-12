@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ManagerSetup.aspx.cs" Inherits="HW.Grp.ManagerSetup" %>
+<%@ Import Namespace="HW.Core.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -8,7 +9,10 @@
             <div class="settingsPane">
 			    <asp:Button CssClass="btn" ID="Cancel" runat=server Text="Cancel" />
 			    <asp:Button CssClass="btn" ID="Save" runat=server Text="Save" />
-			    <asp:Label ID=ErrorMsg runat=server />
+			    <!--<asp:Label ID=ErrorMsg runat=server />-->
+			    <% if (errorMessage != "") { %>
+			    	<span style="color:#cc0000;"><%= errorMessage %></span>
+			    <% } %>
             </div>
         </div>
 
@@ -36,8 +40,38 @@
                 </tr>
 	        </table>
             <table border="0" cellpadding="0" cellspacing="0">
-	            <tr><td><b>Organisation access</b></td></tr>
+	            <tr>
+					<td><b>Organisation access</b></td>
+				</tr>
 	            <asp:Label ID=OrgTree runat=server />
+				<!--<tr>
+					<td><%= Session["Sponsor"] %></td>
+				</tr>
+				<% bool[] DX = new bool[8]; %>
+				<% if (sponsorAdminDepartments != null) { %>
+					<% foreach (var d in sponsorAdminDepartments) { %>
+					<% int depth = d.Department.Depth; %>
+					<% DX[depth] = (d.Department.Siblings > 0); %>
+					<tr>
+						<td>
+							<table border="0" cellpadding="0" cellspacing="0">
+								<tr>
+									<td>
+										<% for (int i = 1; i <= depth; i++) { %>
+											<% if (i == depth) { %>
+												<%= HtmlHelper.Image(string.Format("img/{0}.gif", DX[i] ? "T" : "L"), "", 19, 20) %>
+											<% } else { %>
+												<%= HtmlHelper.Image(string.Format("img/{0}.gif", DX[i] ? "I" : "null"), "", 19, 20) %>
+											<% } %>
+										<% } %>
+									</td>
+									<td><%= FormHelper.CheckBox("DepartmentID", d.Department.Id.ToString(), !d.Admin.SuperUser) %>&nbsp;<%= d.Department.Name %>&nbsp;&nbsp;&nbsp;</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<% } %>
+				<% } %>-->
             </table>
         </div>
 

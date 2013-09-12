@@ -13,7 +13,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Core;
+using HW.Core.Helpers;
 using HW.Core.Repositories;
+using HW.Core.Models;
 
 namespace HW.Grp
 {
@@ -22,7 +24,53 @@ namespace HW.Grp
 		int AX = 0;
 		protected int BX = 0;
 		protected int LID = 0;
-		IExerciseRepository exerciseRepository = AppContext.GetRepositoryFactory().CreateExerciseRepository();
+		protected int EAID;
+		protected string sortQS;
+		protected int ECID;
+		protected IExerciseRepository exerciseRepository = AppContext.GetRepositoryFactory().CreateExerciseRepository();
+		protected IList<ExerciseCategoryLanguage> categories;
+		protected IList<ExerciseAreaLanguage> areas;
+		protected IList<HW.Core.Models.Exercise> exercises;
+		protected int sponsorID;
+		protected int sponsorAdminID;
+		
+		public bool HasSelectedArea {
+			get { return SelectedArea != null; }
+		}
+		
+		public ExerciseAreaLanguage SelectedArea {
+			get {
+				foreach (var a in areas) {
+					if (a.Area.Id == EAID) {
+						return a;
+					}
+				}
+				return null;
+			}
+		}
+		
+		public IList<ExerciseAreaLanguage> Areas {
+			get { return areas; }
+		}
+		
+		public bool HasSelectedCategory {
+			get { return SelectedCategory != null; }
+		}
+		
+		public ExerciseCategoryLanguage SelectedCategory {
+			get {
+				foreach (var c in categories) {
+					if (c.Category.Id == ECID) {
+						return c;
+					}
+				}
+				return null;
+			}
+		}
+		
+		public IList<ExerciseCategoryLanguage> Categories {
+			get { return categories; }
+		}
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -32,13 +80,17 @@ namespace HW.Grp
 			if (Request.QueryString["LID"] != null) {
 				LID = Convert.ToInt32(Request.QueryString["LID"]);
 			}
-			int EAID = (Request.QueryString["EAID"] != null ? Convert.ToInt32(Request.QueryString["EAID"]) : 0);
-			int ECID = (Request.QueryString["ECID"] != null ? Convert.ToInt32(Request.QueryString["ECID"]) : 0);
-			int SORT = (Request.QueryString["SORT"] != null ? Convert.ToInt32(Request.QueryString["SORT"]) : 0);
-			string sortQS = "&SORT=" + SORT;
+//			EAID = (Request.QueryString["EAID"] != null ? Convert.ToInt32(Request.QueryString["EAID"]) : 0);
+//			ECID = (Request.QueryString["ECID"] != null ? Convert.ToInt32(Request.QueryString["ECID"]) : 0);
+//			int SORT = (Request.QueryString["SORT"] != null ? Convert.ToInt32(Request.QueryString["SORT"]) : 0);
+			EAID = ConvertHelper.ToInt32(Request.QueryString["EAID"]);
+			ECID = ConvertHelper.ToInt32(Request.QueryString["ECID"]);
+			int SORT = ConvertHelper.ToInt32(Request.QueryString["SORT"]);
+			sortQS = "&SORT=" + SORT;
 
 			StringBuilder sb = new StringBuilder();
-			int rExerciseAreaID = 0, rExerciseID = 0;
+			int rExerciseAreaID = 0;
+			int rExerciseID = 0;
 
 			if (!IsPostBack) {
 				if (EAID == 0) {
@@ -48,7 +100,8 @@ namespace HW.Grp
 					}
 				}
 				string s = "";
-				foreach (var a in exerciseRepository.FindAreas(EAID, LID)) {
+				areas = exerciseRepository.FindAreas(EAID, LID);
+				foreach (var a in areas) {
 					if (EAID == a.Area.Id) {
 						AreaID.Controls.Add(new LiteralControl("<dt><a href=\"javascript:;\"><span>" + a.AreaName + "</span></a></dt><dd><ul>"));
 						switch (LID) {
@@ -76,7 +129,8 @@ namespace HW.Grp
 					}
 				}
 				s = "";
-				foreach (var c in exerciseRepository.FindCategories(EAID, ECID, LID)) {
+				categories = exerciseRepository.FindCategories(EAID, ECID, LID);
+				foreach (var c in categories) {
 					if (ECID == c.Category.Id) {
 						CategoryID.Controls.Add(new LiteralControl("<dt><a href=\"javascript:;\"><span>" + c.CategoryName + "</span></a></dt><dd><ul>"));
 						switch (LID) {
@@ -84,8 +138,7 @@ namespace HW.Grp
 								case 1: CategoryID.Controls.Add(new LiteralControl("<li id=\"ECID0\"><a href=\"exercise.aspx?ECID=0" + sortQS + (EAID != 0 ? "&EAID=" + EAID : "") + "#filter\">Show all</a></li>")); break;
 						}
 					} else {
-						if (s != "")
-						{
+						if (s != "") {
 							CategoryID.Controls.Add(new LiteralControl("<li" + s));
 						}
 						s = " id=\"ECID" + c.Category.Id + "\"><a href=\"exercise.aspx?ECID=" + c.Category.Id + "" + sortQS + (EAID != 0 ? "&EAID=" + EAID : "") + "#filter\">" + c.CategoryName + "</a></li>";
@@ -95,7 +148,8 @@ namespace HW.Grp
 				CategoryID.Controls.Add(new LiteralControl("</ul></dd>"));
 			}
 
-			foreach (var l in exerciseRepository.FindByAreaAndCategory(EAID, ECID, LID, SORT)) { // TODO:
+			exercises = exerciseRepository.FindByAreaAndCategory(EAID, ECID, LID, SORT);
+			foreach (var l in exercises) { // TODO:
 				if (l.Id != rExerciseID) {
 					BX++;
 					if (AX > 0) {
@@ -107,8 +161,7 @@ namespace HW.Grp
 					sb.Append("<div class=\"image\">" + (l.Image != "" ? "<img src=\"" + l.Image + "\" width=\"121\" height=\"100\">" : "") + "</div>");
 
 					// time
-					if (l.CurrentLanguage.Time != "")
-					{
+					if (l.CurrentLanguage.Time != "") {
 						sb.Append("<div class=\"time\">" + l.CurrentLanguage.Time + "<span class=\"time-end\"></span></div>");
 					}
 
@@ -122,7 +175,6 @@ namespace HW.Grp
 					sb.Append("<div>");
 				}
 
-//				string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
 				string path = ConfigurationSettings.AppSettings["healthWatchURL"];
 				sb.Append("<a class=\"sidearrow\" href=\"JavaScript:void(window.open('" + path + "exerciseShow.aspx?SID=" + Convert.ToInt32(Session["SponsorID"]) + "&AUID=" + Math.Abs(Convert.ToInt32(Session["SponsorAdminID"])) + "&ExerciseVariantLangID=" + l.CurrentVariant.Id + "','EVLID" + l.CurrentVariant.Id + "','scrollbars=yes,resizable=yes,");
 
@@ -144,7 +196,7 @@ namespace HW.Grp
 
 			if (!IsPostBack) {
 				ExerciseList.Controls.Add(new LiteralControl(sb.ToString()));
-
+				
 				string q = (EAID != 0 ? "&EAID=" + EAID : "") + (ECID != 0 ? "&ECID=" + ECID : "");
 
 				switch (LID) {

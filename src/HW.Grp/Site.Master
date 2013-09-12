@@ -48,9 +48,14 @@
 				<!--HealthWatch.se - Header 1<br>
 				<span style="font-size:14px;">Group administration - test</span><br>
 				<img src="http://localhost:20135/img/partner/1.gif">-->
-				HealthWatch.se - <%= sponsor.SuperSponsor.Languages[0].Header %><br />
-				<span style="font-size:14px;">Group administration - <%= sponsor.Name %></span><br />
-				<%= HtmlHelper.Image(string.Format("/img/partner/{0}.gif", sponsor.SuperSponsor.Id)) %>
+				<% if (sponsor != null) { %>
+					HealthWatch.se - <%= sponsor.SuperSponsor.Languages[0].Header %><br />
+					<span style="font-size:14px;">Group administration - <%= sponsor.Name %></span><br />
+					<%= HtmlHelper.Image(string.Format("/img/partner/{0}.gif", sponsor.SuperSponsor.Id)) %>
+				<% } else { %>
+					HealthWatch.se<br />
+					Group administration<br />
+				<% } %>
 			</div>
 			<div class="logincontainer grid_5 alpha omega">
 				<div class="gears">
@@ -58,30 +63,32 @@
 					<span style="color:white;">0</span><br>
 					<a href="settings.aspx?Rnd=258566570" class="regular">Settings</a>&nbsp;&nbsp;
 					<a href="default.aspx?Logout=1&amp;Rnd=258566570" class="regular">Log out</a>-->
-					<span><%= sponsor.Name %></span>
+					<span><%= sponsorName %></span>
 					<span style="color:white;"><%= sponsorAdminID %></span><br>
 					<%= HtmlHelper.Anchor("Settings", "Settings.aspx", true, new Dictionary<string, string>() { { "class", "active"} })  %>&nbsp;&nbsp;
 					<%= HtmlHelper.Anchor("Log out", "Default.aspx?Logout=1", true, new Dictionary<string, string>() { { "class", "active"} })  %>
 				</div>
 			</div>
 			<div id="submenu" class="grid_16 alpha">
-				<!--<a title="Statistics" class="active" href="stats.aspx?Rnd=258566570">Statistics</a>
-				<a title="Messages" href="messages.aspx?Rnd=258566570">Messages</a>
-				<a title="Managers" href="managers.aspx?Rnd=258566570">Managers</a>
-				<a title="TEST" href="debug.aspx?Rnd=258566570">TEST</a>
-				<a title="Exercises" href="exercise.aspx?Rnd=258566570">Exercises</a>
-				<div class="description">Statistics</div>-->
-				<% string desc = ""; %>
-				<% foreach (var f in functions) { %>
-					<% bool active = Request.Url.AbsolutePath.IndexOf(f.URL) >= 0; %>
-					<% if (active) { %>
-						<%= HtmlHelper.Anchor(f.Function, f.URL, true, new Dictionary<string, string>() { { "class", "active"}, { "title", f.Expl } } ) %>
-						<% desc = f.Expl; %>
-					<% } else { %>
-						<%= HtmlHelper.Anchor(f.Function, f.URL, true, new Dictionary<string, string>() { { "class", ""}, { "title", f.Expl } } ) %>
+				<% if (!super && Session["SponsorID"] != null) { %>
+					<!--<a title="Statistics" class="active" href="stats.aspx?Rnd=258566570">Statistics</a>
+					<a title="Messages" href="messages.aspx?Rnd=258566570">Messages</a>
+					<a title="Managers" href="managers.aspx?Rnd=258566570">Managers</a>
+					<a title="TEST" href="debug.aspx?Rnd=258566570">TEST</a>
+					<a title="Exercises" href="exercise.aspx?Rnd=258566570">Exercises</a>
+					<div class="description">Statistics</div>-->
+					<% string desc = ""; %>
+					<% foreach (var f in functions) { %>
+						<% bool active = Request.Url.AbsolutePath.IndexOf(f.URL) >= 0; %>
+						<% if (active) { %>
+							<%= HtmlHelper.Anchor(f.Function, f.URL, true, new Dictionary<string, string>() { { "class", "active"}, { "title", f.Expl } } ) %>
+							<% desc = f.Expl; %>
+						<% } else { %>
+							<%= HtmlHelper.Anchor(f.Function, f.URL, true, new Dictionary<string, string>() { { "class", ""}, { "title", f.Expl } } ) %>
+						<% } %>
 					<% } %>
+					<div class="description"><%= desc %></div>
 				<% } %>
-				<div class="description"><%= desc %></div>
 			</div>
 		</div>
 

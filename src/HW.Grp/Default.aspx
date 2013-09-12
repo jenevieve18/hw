@@ -44,6 +44,11 @@
             -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
             box-shadow: 0 1px 2px rgba(0,0,0,.05);
         }
+        .footer 
+        {
+            max-width:300px;
+            margin:auto;
+        }
         .form-signin input[type="text"], .form-signin input[type="password"] {
             font-size: 16px;
             height: auto;
@@ -78,17 +83,24 @@
 		<img src="img/hwlogo.png" alt="HealthWatch group administrator">
         
         <h2><%= R.Str("login.header", "HealthWatch.se<br>Group administration") %></h2>
+
+		<% if (errorMessage != "") { %>
+			<div class="alert alert-error">
+				<%= errorMessage %>
+			</div>
+		<% } %>
+
 		<%= FormHelper.Input("ANV", "", R.Str("user.name", "Username"), "input-block-level") %>
 		<%= FormHelper.Password("LOS", "", R.Str("user.password", "Password"), "input-block-level")%>
 		
-        <button class="btn btn-large btn-info" type="submit"><i class="icon-circle-arrow-right"></i><%= R.Str("login.signin", "Sign in") %></button>
+        <button class="btn btn-large btn-info" type="submit">
+            <i class="icon-circle-arrow-right"></i><%= R.Str("login.signin", "Sign in") %>
+        </button>
     </form>
-
-	<% if (errorMessage != "") { %>
-		<div class="alert alert-error">
-			<%= errorMessage %>
-		</div>
-	<% } %>
+    <div class="footer">
+        &copy; Interactive Health Group 2013<br />
+        Version <%= typeof(Default).Assembly.GetName().Version%>
+    </div>
 
 </body>
 </html>

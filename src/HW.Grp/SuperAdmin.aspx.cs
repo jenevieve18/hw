@@ -7,15 +7,15 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Core.Helpers;
 
-namespace HWgrp___Old
+namespace HW.Grp
 {
-	public partial class superadmin : System.Web.UI.Page
+	public partial class SuperAdmin : System.Web.UI.Page
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			if (HttpContext.Current.Session["SuperAdminID"] == null)
+			if (Session["SuperAdminID"] == null)
 			{
-				HttpContext.Current.Response.Redirect("default.aspx?SuperLogout=1&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+				Response.Redirect("default.aspx?SuperLogout=1&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
 			submit.Click += new EventHandler(submit_Click);
 			submit2.Click += new EventHandler(submit2_Click);
@@ -42,12 +42,13 @@ namespace HWgrp___Old
 				}
 			}
 		}
+
 		void submit2_Click(object sender, EventArgs e)
 		{
 			string qs1 = "", qs2 = "", not = "";
 
-			if (HttpContext.Current.Request.Form["Measure_0"] != null && HttpContext.Current.Request.Form["Measure_0"] == "1") { qs1 = ",0"; }
-			if (HttpContext.Current.Request.Form["Measure_0"] != null && HttpContext.Current.Request.Form["Measure_0"] == "2") { qs2 = ",0"; }
+			if (Request.Form["Measure_0"] != null && Request.Form["Measure_0"] == "1") { qs1 = ",0"; }
+			if (Request.Form["Measure_0"] != null && Request.Form["Measure_0"] == "2") { qs2 = ",0"; }
 
 			SqlDataReader rs = Db.rs("SELECT " +
 					"s.Sponsor, " +
@@ -60,19 +61,19 @@ namespace HWgrp___Old
 					"INNER JOIN eform..ProjectRound rr ON r.ProjectRoundID = rr.ProjectRoundID " +
 					"INNER JOIN eform..Survey ss ON ISNULL(r.SurveyID,ss.SurveyID) = ss.SurveyID " +
 					"INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID " +
-					"WHERE sas.SuperAdminID = " + Convert.ToInt32(HttpContext.Current.Session["SuperAdminID"]) + " " +
+					"WHERE sas.SuperAdminID = " + Convert.ToInt32(Session["SuperAdminID"]) + " " +
 					"ORDER BY s.Sponsor, ses.Nav");
 			while (rs.Read())
 			{
 				not += "," + rs.GetInt32(1);
-				if (HttpContext.Current.Request.Form["Measure_" + rs.GetInt32(1)] != null && HttpContext.Current.Request.Form["Measure_" + rs.GetInt32(1)] == "1" && qs1 != ",0") { qs1 += "," + rs.GetInt32(1).ToString(); }
-				if (HttpContext.Current.Request.Form["Measure_" + rs.GetInt32(1)] != null && HttpContext.Current.Request.Form["Measure_" + rs.GetInt32(1)] == "2" && qs2 != ",0") { qs2 += "," + rs.GetInt32(1).ToString(); }
+				if (Request.Form["Measure_" + rs.GetInt32(1)] != null && Request.Form["Measure_" + rs.GetInt32(1)] == "1" && qs1 != ",0") { qs1 += "," + rs.GetInt32(1).ToString(); }
+				if (Request.Form["Measure_" + rs.GetInt32(1)] != null && Request.Form["Measure_" + rs.GetInt32(1)] == "2" && qs2 != ",0") { qs2 += "," + rs.GetInt32(1).ToString(); }
 			}
 			rs.Close();
 
 			if (qs1 != "")
 			{
-				HttpContext.Current.Response.Redirect("http://" + HttpContext.Current.Request.Url.Host + HttpContext.Current.Request.Url.PathAndQuery.Substring(0, HttpContext.Current.Request.Url.PathAndQuery.LastIndexOf("/")) + "/superstats.aspx?" +
+				Response.Redirect("http://" + Request.Url.Host + Request.Url.PathAndQuery.Substring(0, Request.Url.PathAndQuery.LastIndexOf("/")) + "/superstats.aspx?" +
 					"N=" + not.Substring(1) + "" +
 					"&FDT=" + FromDT.SelectedValue + "" +
 					"&TDT=" + ToDT.SelectedValue + "" +
@@ -83,12 +84,13 @@ namespace HWgrp___Old
 					"&RID=" + ReportID.SelectedValue, true);
 			}
 		}
+
 		void submit_Click(object sender, EventArgs e)
 		{
 			string qs1 = "", qs2 = "", not = "";
 
-			if (HttpContext.Current.Request.Form["Measure0"] != null && HttpContext.Current.Request.Form["Measure0"] == "1") { qs1 = ",0"; }
-			if (HttpContext.Current.Request.Form["Measure0"] != null && HttpContext.Current.Request.Form["Measure0"] == "2") { qs2 = ",0"; }
+			if (Request.Form["Measure0"] != null && Request.Form["Measure0"] == "1") { qs1 = ",0"; }
+			if (Request.Form["Measure0"] != null && Request.Form["Measure0"] == "2") { qs2 = ",0"; }
 
 			SqlDataReader rs = Db.rs("SELECT " +
 					"s.Sponsor, " +
@@ -102,23 +104,24 @@ namespace HWgrp___Old
 					"INNER JOIN eform..ProjectRound r ON ses.ProjectRoundID = r.ProjectRoundID " +
 					"INNER JOIN eform..Survey ss ON r.SurveyID = ss.SurveyID " +
 					"INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID " +
-					"WHERE sas.SuperAdminID = " + Convert.ToInt32(HttpContext.Current.Session["SuperAdminID"]) + " " +
+					"WHERE sas.SuperAdminID = " + Convert.ToInt32(Session["SuperAdminID"]) + " " +
 					"ORDER BY s.Sponsor, ses.Internal, ses.RoundText");
 			while (rs.Read())
 			{
 				not += "," + rs.GetInt32(1);
-				if (HttpContext.Current.Request.Form["Measure" + rs.GetInt32(1)] != null && HttpContext.Current.Request.Form["Measure" + rs.GetInt32(1)] == "1" && qs1 != ",0") { qs1 += "," + rs.GetInt32(1).ToString(); }
-				if (HttpContext.Current.Request.Form["Measure" + rs.GetInt32(1)] != null && HttpContext.Current.Request.Form["Measure" + rs.GetInt32(1)] == "2" && qs2 != ",0") { qs2 += "," + rs.GetInt32(1).ToString(); }
+				if (Request.Form["Measure" + rs.GetInt32(1)] != null && Request.Form["Measure" + rs.GetInt32(1)] == "1" && qs1 != ",0") { qs1 += "," + rs.GetInt32(1).ToString(); }
+				if (Request.Form["Measure" + rs.GetInt32(1)] != null && Request.Form["Measure" + rs.GetInt32(1)] == "2" && qs2 != ",0") { qs2 += "," + rs.GetInt32(1).ToString(); }
 			}
 			rs.Close();
 
 			if (qs1 != "")
 			{
-				HttpContext.Current.Response.Redirect("" + System.Configuration.ConfigurationSettings.AppSettings["eFormURL"] + "/feedback.aspx?" +
+				Response.Redirect("" + System.Configuration.ConfigurationSettings.AppSettings["eFormURL"] + "/feedback.aspx?" +
 					"RNDS=" + not.Substring(1) + "" +
 					"&R1=" + MeasureTxt1.Text + "&R2=" + MeasureTxt2.Text + "&RNDS1=" + qs1.Substring(1) + (qs2 != "" ? "&RNDS2=" + qs2.Substring(1) : "") + "&SID=" + SurveyID.SelectedValue + "&SN=" + SurveyName.Text, true);
 			}
 		}
+
 		protected override void OnPreRender(EventArgs e)
 		{
 			base.OnPreRender(e);
@@ -145,7 +148,7 @@ namespace HWgrp___Old
 					"INNER JOIN eform..ProjectRound r ON ses.ProjectRoundID = r.ProjectRoundID " +
 					"INNER JOIN eform..Survey ss ON r.SurveyID = ss.SurveyID " +
 					"INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID " +
-					"WHERE s.Deleted IS NULL AND sas.SuperAdminID = " + Convert.ToInt32(HttpContext.Current.Session["SuperAdminID"]) + " " +
+					"WHERE s.Deleted IS NULL AND sas.SuperAdminID = " + Convert.ToInt32(Session["SuperAdminID"]) + " " +
 					"ORDER BY s.Sponsor, ses.Internal, ses.RoundText");
 			while (rs.Read())
 			{
@@ -202,7 +205,7 @@ namespace HWgrp___Old
 				"s.Closed " +
 				"FROM Sponsor s " +
 				"INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID " +
-				"WHERE s.Deleted IS NULL AND sas.SuperAdminID = " + Convert.ToInt32(HttpContext.Current.Session["SuperAdminID"]) + " " +
+				"WHERE s.Deleted IS NULL AND sas.SuperAdminID = " + Convert.ToInt32(Session["SuperAdminID"]) + " " +
 				"ORDER BY s.Sponsor");
 			while (rs.Read())
 			{
@@ -217,7 +220,7 @@ namespace HWgrp___Old
 					totNonClosedActive += rs.GetInt32(5);
 				}
 				SponsorID.Text += "<TR" + (cx % 2 == 0 ? " BGCOLOR=\"#F2F2F2\"" : "") + ">" +
-//					"<TD><A" + (!rs.IsDBNull(9) ? " style=\"text-decoration:line-through;color:#cc0000;\"" : "") + " HREF=\"http://" + HttpContext.Current.Request.Url.Host + HttpContext.Current.Request.Url.PathAndQuery.Substring(0, HttpContext.Current.Request.Url.PathAndQuery.LastIndexOf("/")) + "/default.aspx?SA=0&SKEY=" + rs.GetString(2) + rs.GetInt32(0).ToString() + "\" TARGET=\"_blank\">" + rs.GetString(1) + "</A></TD>" +
+//					"<TD><A" + (!rs.IsDBNull(9) ? " style=\"text-decoration:line-through;color:#cc0000;\"" : "") + " HREF=\"http://" + Request.Url.Host + Request.Url.PathAndQuery.Substring(0, Request.Url.PathAndQuery.LastIndexOf("/")) + "/default.aspx?SA=0&SKEY=" + rs.GetString(2) + rs.GetInt32(0).ToString() + "\" TARGET=\"_blank\">" + rs.GetString(1) + "</A></TD>" +
 					"<TD><A" + (!rs.IsDBNull(9) ? " style=\"text-decoration:line-through;color:#cc0000;\"" : "") + " HREF=\"default.aspx?SA=0&SKEY=" + rs.GetString(2) + rs.GetInt32(0).ToString() + "\" TARGET=\"_blank\">" + rs.GetString(1) + "</A></TD>" +
 					"<TD>" + rs.GetInt32(3) + "</TD>" +
 					"<TD>" + rs.GetInt32(8) + "</TD>" +
@@ -228,7 +231,7 @@ namespace HWgrp___Old
 					"<TD>" + (!rs.IsDBNull(6) ? "<A HREF=\"superadmin.aspx?ATSID=" + rs.GetInt32(0) + "\"><img src=\"img/auditTrail.gif\" border=\"0\"/></A>" : "") + (rs.IsDBNull(9) ? "" : " <span style=\"color:#cc0000;\">Closed " + rs.GetDateTime(9).ToString("yyyy-MM-dd") + "</span>") + "</TD>" +
 					"</TR>";
 
-				if (HttpContext.Current.Request.QueryString["ATSID"] != null && Convert.ToInt32(HttpContext.Current.Request.QueryString["ATSID"]) == rs.GetInt32(0))
+				if (Request.QueryString["ATSID"] != null && Convert.ToInt32(Request.QueryString["ATSID"]) == rs.GetInt32(0))
 				{
 					int y = rs.GetDateTime(6).Year; int m = rs.GetDateTime(6).Month;
 					int y2 = DateTime.Now.Year; int m2 = DateTime.Now.Month;
@@ -291,7 +294,7 @@ namespace HWgrp___Old
 					"INNER JOIN eform..ProjectRoundUnit r ON ses.ProjectRoundUnitID = r.ProjectRoundUnitID " +
 					"INNER JOIN eform..Report rep ON rep.ReportID = r.ReportID " +
 					"INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID " +
-					"WHERE s.Deleted IS NULL AND sas.SuperAdminID = " + Convert.ToInt32(HttpContext.Current.Session["SuperAdminID"]) + " " +
+					"WHERE s.Deleted IS NULL AND sas.SuperAdminID = " + Convert.ToInt32(Session["SuperAdminID"]) + " " +
 					"ORDER BY s.Sponsor, ses.Nav");
 			while (rs.Read())
 			{

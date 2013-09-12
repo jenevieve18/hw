@@ -85,11 +85,11 @@ namespace HW.Grp
 								if (!IsPostBack)
 								{
 									extendedSurvey = s.Internal + s.RoundText;
-									ExtendedSurvey.Text = "Reminder for <B>" + extendedSurvey + "</B> (<span style=\"font-size:9px;\">[x]Last sent: " + (s.EmailLastSent == null ? "Never" : s.EmailLastSent.ToString("yyyy-MM-dd")) + "</span>)";
+									ExtendedSurvey.Text = "Reminder for <B>" + extendedSurvey + "</B> (<span style=\"font-size:9px;\">[x]Last sent: " + (s.EmailLastSent == null ? "Never" : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
 									ExtendedSurveyTxt.Text = s.EmailBody;
 									ExtendedSurveySubject.Text = s.EmailSubject;
 
-									ExtendedSurveyFinished.Text = "Thank you mail for <B>" + extendedSurvey + "</B> (<span style=\"font-size:9px;\">[x]Last sent: " + (s.EmailLastSent == null ? "Never" : s.EmailLastSent.ToString("yyyy-MM-dd")) + "</span>)";
+									ExtendedSurveyFinished.Text = "Thank you mail for <B>" + extendedSurvey + "</B> (<span style=\"font-size:9px;\">[x]Last sent: " + (s.EmailLastSent == null ? "Never" : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
 									ExtendedSurveyFinishedTxt.Text = s.FinishedEmailBody;
 									ExtendedSurveyFinishedSubject.Text = s.FinishedEmailSubject;
 								}

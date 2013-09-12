@@ -25,13 +25,19 @@ namespace HW.Grp
 		protected int lid;
 		protected bool swedish;
 		protected int sponsorAdminID;
+		protected string sponsorName;
+		protected bool super;
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			int sponsorID = Convert.ToInt32(Session["SponsorID"]);
 			sponsor = sponsorRepository.X(sponsorID);
 			
+			sponsorName = Session["Name"].ToString();
 			sponsorAdminID = Session["SponsorAdminID"] != null ? Convert.ToInt32(Session["SponsorAdminID"]) : -1;
+			
+			super = Request.Url.AbsolutePath.Contains("super");
+			
 			functions = managerFunctionRepository.FindBySponsorAdmin(sponsorAdminID);
 			
 			lid = Request["LID"] != null ? Convert.ToInt32(Request["LID"]) : 0;

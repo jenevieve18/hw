@@ -113,6 +113,7 @@ namespace HW.Grp
 		{
 			if (!sponsorRepository.SponsorAdminExists(sponsorAdminID, Usr.Text)) {
 				var a = new SponsorAdmin {
+					Id = sponsorAdminID,
 					ReadOnly = ReadOnly.Checked,
 					Email = Email.Text,
 					Name = Name.Text,
@@ -123,6 +124,7 @@ namespace HW.Grp
 				};
 				if (sponsorAdminID != 0) {
 //					var a = new SponsorAdmin {
+//						Id = sponsorAdminID,
 //						ReadOnly = ReadOnly.Checked,
 //						Email = Email.Text,
 //						Name = Name.Text,
@@ -149,7 +151,7 @@ namespace HW.Grp
 						sponsorAdminID = a.Id;
 					}
 				}
-				sponsorRepository.DeleteSponsorAdmin(sponsorAdminID);
+				sponsorRepository.DeleteSponsorAdminFunction(sponsorAdminID);
 				foreach (var f in managerRepository.FindAll()) {
 					if (ManagerFunctionID.Items.FindByValue(f.Id.ToString()) != null) {
 						if (ManagerFunctionID.Items.FindByValue(f.Id.ToString()).Selected) {
@@ -163,12 +165,15 @@ namespace HW.Grp
 				}
 //				sponsorAdminID = Convert.ToInt32(Session["SponsorAdminID"]);
 				foreach (var d in departmentRepository.b(sponsorID, sponsorAdminID)) {
-					if (!d.Admin.SuperUser) {
+//					if (!d.Admin.SuperUser) {
 						departmentRepository.DeleteSponsorAdminDepartment(sponsorAdminID, d.Department.Id);
 						bool hasDepartmentID = Request.Form["DepartmentID"] != null;
 						if (hasDepartmentID) {
 							string departmentID = Request.Form["DepartmentID"];
-							if (("#" + departmentID.Replace(" ", "").Replace(",", "#") + "#").IndexOf("#" + d.Department.Id + "#") >= 0) {
+							string ids = string.Format("#{0}#", departmentID.Replace(" ", "").Replace(",", "#"));
+							bool deptIDInIds = ids.IndexOf("#" + d.Department.Id + "#") >= 0;
+							if (deptIDInIds) {
+//							if (("#" + departmentID.Replace(" ", "").Replace(",", "#") + "#").IndexOf("#" + d.Department.Id + "#") >= 0) {
 								var x = new SponsorAdminDepartment {
 									Id = sponsorAdminID,
 									Department = new Department { Id = d.Department.Id }
@@ -176,7 +181,7 @@ namespace HW.Grp
 								departmentRepository.SaveSponsorAdminDepartment(x);
 							}
 						}
-					}
+//					}
 				}
 				Response.Redirect("managers.aspx", true);
 			} else {
