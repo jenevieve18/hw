@@ -25,7 +25,7 @@
 
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/bootstrap-responsive.css">
-    <style>
+    <style type="text/css">
         body {
             padding-top: 40px;
             padding-bottom: 40px;
