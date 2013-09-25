@@ -1,9 +1,4 @@
-﻿//	<file>
-//		<license></license>
-//		<owner name="Ian Escarro" email="ian.escarro@gmail.com"/>
-//	</file>
-
-using System;
+﻿using System;
 using System.Web;
 using System.Web.SessionState;
 using HW.Core.Repositories;
