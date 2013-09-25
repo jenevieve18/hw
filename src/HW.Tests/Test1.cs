@@ -1,12 +1,4 @@
-﻿/*
- * Created by SharpDevelop.
- * User: ultra
- * Date: 8/19/2013
- * Time: 3:07 PM
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-using System;
+﻿using System;
 using System.Reflection;
 using Microsoft.Office.Interop.Excel;
 using NUnit.Framework;
