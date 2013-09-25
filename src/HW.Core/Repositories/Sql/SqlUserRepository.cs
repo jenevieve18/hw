@@ -95,7 +95,8 @@ WHERE u.UserID = {0}",
 						Sponsor = s,
 						Email = rs.GetString(2),
 						Id = rs.GetInt32(3),
-						ReminderLink = rs.GetInt32(4),
+//						ReminderLink = rs.GetInt32(4),
+						ReminderLink = GetInt32(rs, 4),
 						UserKey = rs.GetString(5)
 					};
 					return u;
@@ -215,7 +216,8 @@ AND si.StoppedReason IS NULL
 AND sesd.Hide IS NULL
 AND u.Email NOT LIKE '%DELETED'",
 				sponsorID,
-				sponsorAdminID,
+//				sponsorAdminID,
+				sponsorExtendedSurveyID,
 				j
 			);
 			var users = new List<User>();
@@ -224,7 +226,8 @@ AND u.Email NOT LIKE '%DELETED'",
 					var u = new User {
 						Id = rs.GetInt32(0),
 						Email = rs.GetString(1),
-						ReminderLink = rs.GetInt32(2),
+//						ReminderLink = rs.GetInt32(2),
+						ReminderLink = GetInt32(rs, 2),
 						UserKey = rs.GetString(3)
 					};
 					users.Add(u);
@@ -269,7 +272,8 @@ AND u.Email NOT LIKE '%DELETED'",
 					var u = new User {
 						Id = rs.GetInt32(0),
 						Email = rs.GetString(1),
-						ReminderLink = rs.GetInt32(2),
+//						ReminderLink = rs.GetInt32(2),
+						ReminderLink = GetInt32(rs, 2),
 						UserKey = rs.GetString(3)
 					};
 					users.Add(u);
@@ -308,7 +312,8 @@ AND (u.ReminderLastSent IS NULL OR DATEADD(hh,1,u.ReminderLastSent) < GETDATE())
 					var u = new User {
 						Id = rs.GetInt32(0),
 						Email = rs.GetString(1),
-						ReminderLink = rs.GetInt32(2),
+//						ReminderLink = rs.GetInt32(2),
+						ReminderLink = GetInt32(rs, 2),
 						UserKey = rs.GetString(3)
 					};
 					users.Add(u);
