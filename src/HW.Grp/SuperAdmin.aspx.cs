@@ -45,35 +45,43 @@ namespace HW.Grp
 
 		void submit2_Click(object sender, EventArgs e)
 		{
-			string qs1 = "", qs2 = "", not = "";
+			string qs1 = "";
+            string qs2 = "";
+            string not = "";
 
 			if (Request.Form["Measure_0"] != null && Request.Form["Measure_0"] == "1") { qs1 = ",0"; }
 			if (Request.Form["Measure_0"] != null && Request.Form["Measure_0"] == "2") { qs2 = ",0"; }
 
-			SqlDataReader rs = Db.rs("SELECT " +
-					"s.Sponsor, " +
-					"ses.ProjectRoundUnitID, " +
-					"ISNULL(r.SurveyID,ss.SurveyID), " +
-					"ss.Internal " +
-					"FROM Sponsor s " +
-					"INNER JOIN SponsorProjectRoundUnit ses ON ses.SponsorID = s.SponsorID " +
-					"INNER JOIN eform..ProjectRoundUnit r ON ses.ProjectRoundUnitID = r.ProjectRoundUnitID " +
-					"INNER JOIN eform..ProjectRound rr ON r.ProjectRoundID = rr.ProjectRoundID " +
-					"INNER JOIN eform..Survey ss ON ISNULL(r.SurveyID,ss.SurveyID) = ss.SurveyID " +
-					"INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID " +
-					"WHERE sas.SuperAdminID = " + Convert.ToInt32(Session["SuperAdminID"]) + " " +
-					"ORDER BY s.Sponsor, ses.Nav");
+            string query = "SELECT " +
+                    "s.Sponsor, " +
+                    "ses.ProjectRoundUnitID, " +
+                    "ISNULL(r.SurveyID,ss.SurveyID), " +
+                    "ss.Internal " +
+                    "FROM Sponsor s " +
+                    "INNER JOIN SponsorProjectRoundUnit ses ON ses.SponsorID = s.SponsorID " +
+                    "INNER JOIN eform..ProjectRoundUnit r ON ses.ProjectRoundUnitID = r.ProjectRoundUnitID " +
+                    "INNER JOIN eform..ProjectRound rr ON r.ProjectRoundID = rr.ProjectRoundID " +
+                    "INNER JOIN eform..Survey ss ON ISNULL(r.SurveyID,ss.SurveyID) = ss.SurveyID " +
+                    "INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID " +
+                    "WHERE sas.SuperAdminID = " + Convert.ToInt32(Session["SuperAdminID"]) + " " +
+                    "ORDER BY s.Sponsor, ses.Nav";
+			SqlDataReader rs = Db.rs(query);
 			while (rs.Read())
 			{
 				not += "," + rs.GetInt32(1);
-				if (Request.Form["Measure_" + rs.GetInt32(1)] != null && Request.Form["Measure_" + rs.GetInt32(1)] == "1" && qs1 != ",0") { qs1 += "," + rs.GetInt32(1).ToString(); }
-				if (Request.Form["Measure_" + rs.GetInt32(1)] != null && Request.Form["Measure_" + rs.GetInt32(1)] == "2" && qs2 != ",0") { qs2 += "," + rs.GetInt32(1).ToString(); }
+				if (Request.Form["Measure_" + rs.GetInt32(1)] != null && Request.Form["Measure_" + rs.GetInt32(1)] == "1" && qs1 != ",0") {
+                    qs1 += "," + rs.GetInt32(1).ToString();
+                }
+				if (Request.Form["Measure_" + rs.GetInt32(1)] != null && Request.Form["Measure_" + rs.GetInt32(1)] == "2" && qs2 != ",0") {
+                    qs2 += "," + rs.GetInt32(1).ToString();
+                }
 			}
 			rs.Close();
 
 			if (qs1 != "")
 			{
-				Response.Redirect("http://" + Request.Url.Host + Request.Url.PathAndQuery.Substring(0, Request.Url.PathAndQuery.LastIndexOf("/")) + "/superstats.aspx?" +
+				//Response.Redirect("http://" + Request.Url.Host + Request.Url.PathAndQuery.Substring(0, Request.Url.PathAndQuery.LastIndexOf("/")) + "/superstats.aspx?" +
+                Response.Redirect("superstats.aspx?" +
 					"N=" + not.Substring(1) + "" +
 					"&FDT=" + FromDT.SelectedValue + "" +
 					"&TDT=" + ToDT.SelectedValue + "" +
@@ -89,8 +97,12 @@ namespace HW.Grp
 		{
 			string qs1 = "", qs2 = "", not = "";
 
-			if (Request.Form["Measure0"] != null && Request.Form["Measure0"] == "1") { qs1 = ",0"; }
-			if (Request.Form["Measure0"] != null && Request.Form["Measure0"] == "2") { qs2 = ",0"; }
+			if (Request.Form["Measure0"] != null && Request.Form["Measure0"] == "1") {
+                qs1 = ",0";
+            }
+			if (Request.Form["Measure0"] != null && Request.Form["Measure0"] == "2") {
+                qs2 = ",0";
+            }
 
 			SqlDataReader rs = Db.rs("SELECT " +
 					"s.Sponsor, " +
@@ -109,8 +121,12 @@ namespace HW.Grp
 			while (rs.Read())
 			{
 				not += "," + rs.GetInt32(1);
-				if (Request.Form["Measure" + rs.GetInt32(1)] != null && Request.Form["Measure" + rs.GetInt32(1)] == "1" && qs1 != ",0") { qs1 += "," + rs.GetInt32(1).ToString(); }
-				if (Request.Form["Measure" + rs.GetInt32(1)] != null && Request.Form["Measure" + rs.GetInt32(1)] == "2" && qs2 != ",0") { qs2 += "," + rs.GetInt32(1).ToString(); }
+				if (Request.Form["Measure" + rs.GetInt32(1)] != null && Request.Form["Measure" + rs.GetInt32(1)] == "1" && qs1 != ",0") {
+                    qs1 += "," + rs.GetInt32(1).ToString();
+                }
+				if (Request.Form["Measure" + rs.GetInt32(1)] != null && Request.Form["Measure" + rs.GetInt32(1)] == "2" && qs2 != ",0") {
+                    qs2 += "," + rs.GetInt32(1).ToString();
+                }
 			}
 			rs.Close();
 

@@ -28,9 +28,10 @@
 					<td><B>Not included</B></td>
 					<td><b>Last month<br />answer count</b></td>
 				</tr>
-			<asp:Label ID=Survey runat=server />
+			    <asp:Label ID=Survey runat=server />
 		    </table>
-		    <asp:DropDownList ID=FromDT runat=server />--<asp:DropDownList ID=ToDT runat=server /><asp:DropDownList ID="ReportID" runat=server /><asp:Button Text="Submit" ID=submit2 runat=server />
+		    <asp:DropDownList ID=FromDT runat=server />--<asp:DropDownList ID=ToDT runat=server /><asp:DropDownList ID="ReportID" runat=server />
+            <asp:Button Text="Submit" ID=submit2 runat=server />
         </div>
     </div>
 

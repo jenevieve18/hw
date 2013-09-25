@@ -76,6 +76,8 @@
     <Content Include="Settings.aspx" />
     <Content Include="Stats.aspx" />
     <Content Include="SuperAdmin.aspx" />
+    <Content Include="SuperReportImage.aspx" />
+    <Content Include="SuperStats.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -257,6 +259,20 @@
     </Compile>
     <Compile Include="SuperAdmin.aspx.designer.cs">
       <DependentUpon>SuperAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SuperReportImage.aspx.cs">
+      <DependentUpon>SuperReportImage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SuperReportImage.aspx.designer.cs">
+      <DependentUpon>SuperReportImage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SuperStats.aspx.cs">
+      <DependentUpon>SuperStats.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SuperStats.aspx.designer.cs">
+      <DependentUpon>SuperStats.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
