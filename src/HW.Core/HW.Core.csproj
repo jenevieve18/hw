@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="AppContext.cs" />
     <Compile Include="Helpers\BootstrapHelper.cs" />
+    <Compile Include="Helpers\Class1.cs" />
     <Compile Include="Helpers\ConvertHelper.cs" />
     <Compile Include="Helpers\CsvExporter.cs" />
     <Compile Include="Helpers\Db.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Helpers\OctreeQuantizer.cs" />
     <Compile Include="Helpers\PdfExporter.cs" />
     <Compile Include="Helpers\PresentationDocumentExporter.cs" />
+    <Compile Include="Helpers\PresentationDocumentGeneratedCode.cs" />
     <Compile Include="Helpers\Quantizer.cs" />
     <Compile Include="Helpers\IExporter.cs" />
     <Compile Include="Helpers\HtmlControls.cs" />

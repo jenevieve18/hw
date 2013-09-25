@@ -69,6 +69,9 @@
             var exportAllXlsUrl = $('.hidden-exportall-xls-url').text();
             $('.exportall-xls-url').attr('href', exportAllXlsUrl + '&PLOT=' + text);
 
+            var exportAllPptxUrl = $('.hidden-exportall-pptx-url').text();
+            $('.exportall-pptx-url').attr('href', exportAllPptxUrl + '&PLOT=' + text);
+
             $.each($('.report-part-content'), function () {
                 img = $(this).find('img');
                 imageUrl = $(this).find('.hidden-image-url').text();
@@ -145,6 +148,11 @@
                         <% string exportAllDocXUrl = GetExportAllUrl("docx", additionalQuery); %>
                         <span class="hidden hidden-exportall-docx-url"><%= exportAllDocXUrl%></span>
 						<%= HtmlHelper.Anchor("docx", exportAllDocXUrl, new Dictionary<string, string>() { { "class", "exportall-docx-url" } }, "_blank")%>
+                    </span>
+					<span class="button white small export">
+                        <% string exportAllPptxUrl = GetExportAllUrl("pptx", additionalQuery); %>
+                        <span class="hidden hidden-exportall-pptx-url"><%= exportAllPptxUrl%></span>
+						<%= HtmlHelper.Anchor("pptx", exportAllPptxUrl, new Dictionary<string, string>() { { "class", "exportall-pptx-url" } }, "_blank")%>
                     </span>
                     <% string exportAllXlsUrl = GetExportAllUrl("xls", additionalQuery); %>
 					<span class="button white small export">

@@ -5,6 +5,7 @@
 
 using System;
 using System.IO;
+using DocumentFormat.OpenXml;
 using HW.Core.Helpers;
 using HW.Core.Models;
 using HW.Core.Repositories.Sql;
@@ -26,23 +27,22 @@ namespace HW.Tests.Helpers
 			new SqlQuestionRepository(),
 			new SqlIndexRepository()
 		);
-		ExcelExporter e;
-		ExcelExporter e2;
+		PresentationDocumentExporter e;
+		PresentationDocumentExporter e2;
 		
 		[SetUpAttribute]
 		public void Setup()
 		{
 			r = new SqlReportRepository().ReadReportPart(14, 1);
-			e = new ExcelExporter(service, false, true, null, 550, 440, "#efefef", r, null);
+			e = new PresentationDocumentExporter(r);
 			
 			var parts = service.FindByProjectAndLanguage(2643, 1);
-			e2 = new ExcelExporter(service, false, true, null, 550, 440, "#efefef", parts, null);
+			e2 = new PresentationDocumentExporter(service, parts);
 		}
 		
 		[Test]
 		public void TestPresentationDocumentExporter()
 		{
-			PresentationDocumentExporter e = new PresentationDocumentExporter(r);
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\test.pptx", FileMode.Create, FileAccess.Write)) {
 				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", "LinePlot", "http://localhost:3428/") as MemoryStream;
 				s.WriteTo(f);
@@ -52,7 +52,6 @@ namespace HW.Tests.Helpers
 		[Test]
 		public void TestPresentationDocumentExporter2()
 		{
-			PresentationDocumentExporter e = new PresentationDocumentExporter(r);
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\test2.pptx", FileMode.Create, FileAccess.Write)) {
 				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", "LinePlot", "http://localhost:3428/") as MemoryStream;
 				s.WriteTo(f);
