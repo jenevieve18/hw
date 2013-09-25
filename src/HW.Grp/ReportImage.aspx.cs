@@ -1,10 +1,4 @@
-﻿//	<file>
-//		<license></license>
-//		<owner name="Jens Pettersson" email="jens.pettersson@healthwatch.se"/>
-//		<owner name="Ian Escarro" email="ian.escarro@gmail.com"/>
-//	</file>
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -19,7 +13,6 @@ namespace HW.Grp
 {
 	public partial class ReportImage : System.Web.UI.Page
 	{
-		
 //		int lastCount = 0;
 //		float lastVal = 0;
 //		string lastDesc = "";
