@@ -409,11 +409,11 @@ namespace HW.Core.Repositories
 			var surveys = new List<SponsorExtendedSurvey>();
 			for (int i = 0; i < 10; i++) {
 				var v = new Survey { Id = 1, Internal = "Survey " + i };
-				var u = new ProjectRoundUnit { Id = 1, Survey = v };
+				var u = new ProjectRound { Id = 1, Survey = v };
 				u.Answers = new List<Answer>(10);
 				var s = new SponsorExtendedSurvey {
 					Sponsor = new Sponsor { Name = "Sponsor " + i },
-					ProjectRoundUnit = u,
+					ProjectRound = u,
 					Internal = "Internal " + i,
 					RoundText = "RoundText " + i
 				};
@@ -490,7 +490,7 @@ namespace HW.Core.Repositories
 			var surveys = new List<SponsorExtendedSurvey>();
 			for (int i = 0; i < 10; i++) {
 				var s = new SponsorExtendedSurvey {
-					ProjectRoundUnit = new ProjectRoundUnit { Id = 1 },
+//					ProjectRoundUnit = new ProjectRoundUnit { Id = 1 },
 					EmailSubject = "Email Subject " + i,
 					EmailBody = "Email Body " + i,
 					EmailLastSent = DateTime.Now,

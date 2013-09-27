@@ -71,11 +71,11 @@ namespace HW.Grp
 				{
 					if (!seen.Contains(s.Id))
 					{
-						if (s.ProjectRoundUnit != null)
+						if (s.ProjectRound != null)
 						{
 							if (!found)
 							{
-								projectRoundID = s.ProjectRoundUnit.Id;
+								projectRoundID = s.ProjectRound.Id;
 								if (!IsPostBack)
 								{
 									extendedSurvey = s.Internal + s.RoundText;

@@ -69,7 +69,7 @@ namespace HW.Core.Models
 	public class SponsorExtendedSurvey : BaseModel
 	{
 		public virtual Sponsor Sponsor { get; set; }
-		public virtual ProjectRoundUnit ProjectRoundUnit { get; set; }
+		public virtual ProjectRound ProjectRound { get; set; }
 		public virtual string Internal { get; set; }
 		public virtual string RoundText { get; set; }
 		public virtual string IndividualFeedbackEmailSubject { get; set; }

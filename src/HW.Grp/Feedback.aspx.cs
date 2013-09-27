@@ -69,7 +69,7 @@ namespace HW.Grp
 //				                          "INNER JOIN AnswerValue av16 ON a.AnswerID = av16.AnswerID AND av16.QuestionID = 404 AND av16.OptionID = 116 AND av16.DeletedSessionID IS NULL " +
 //				                          "WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = " + rs.GetInt32(0), "eFormSqlConnection");
 //				while (rs2.Read())
-				foreach (var a in answerRepository.FindByProjectRound(s.ProjectRoundUnit.Id)) {
+				foreach (var a in answerRepository.FindByProjectRound(s.ProjectRound.Id)) {
 					bool pbs = false;
 					float scoreN = 0;
 					for (int i = 5; i < 9; i++) {
@@ -154,7 +154,7 @@ namespace HW.Grp
 //				            "INNER JOIN AnswerValue av7 ON a.AnswerID = av7.AnswerID AND av7.QuestionID = 393 AND av7.OptionID = 122 AND av7.DeletedSessionID IS NULL " +
 //				            "WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = " + rs.GetInt32(0), "eFormSqlConnection");
 //				while (rs2.Read())
-				foreach (var a in answerRepository.x(s.ProjectRoundUnit.Id)) {
+				foreach (var a in answerRepository.x(s.ProjectRound.Id)) {
 					bool depr = false;
 					for (int i = 0; i < 6; i++) {
 //						switch (rs2.GetInt32(i))
@@ -299,7 +299,7 @@ namespace HW.Grp
 //				            "INNER JOIN AnswerValue av1 ON a.AnswerID = av1.AnswerID AND av1.QuestionID = 374 AND av1.OptionID = 86 AND av1.DeletedSessionID IS NULL " +
 //				            "WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = " + rs.GetInt32(0), "eFormSqlConnection");
 //				while (rs2.Read())
-				foreach (var a in answerRepository.FindByRoundQuestionAndOption(s.ProjectRoundUnit.Id, 374, 86))
+				foreach (var a in answerRepository.FindByRoundQuestionAndOption(s.ProjectRound.Id, 374, 86))
 				{
 //					if (rs2.GetInt32(0) == 313 || rs2.GetInt32(0) == 314)
 					if (a.Values[0].ValueInt == 313 || a.Values[0].ValueInt == 314)
@@ -336,7 +336,7 @@ namespace HW.Grp
 //				            "INNER JOIN AnswerValue av1 ON a.AnswerID = av1.AnswerID AND av1.QuestionID = 331 AND av1.OptionID = 98 AND av1.DeletedSessionID IS NULL " +
 //				            "WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = " + rs.GetInt32(0), "eFormSqlConnection");
 //				while (rs2.Read())
-				foreach (var a in answerRepository.FindByRoundQuestionAndOption(s.ProjectRoundUnit.Id, 331, 98)) {
+				foreach (var a in answerRepository.FindByRoundQuestionAndOption(s.ProjectRound.Id, 331, 98)) {
 //					if (rs2.GetInt32(0) == 316 || rs2.GetInt32(0) == 317)
 					if (a.Values[0].ValueInt == 316 || a.Values[0].ValueInt == 317) {
 //						if (!l.Contains(rs2.GetString(1))) { l.Add(rs2.GetString(1)); }
@@ -375,7 +375,7 @@ namespace HW.Grp
 //				            "INNER JOIN AnswerValue av4 ON a.AnswerID = av4.AnswerID AND av4.QuestionID = 343 AND av4.OptionID = 90 AND av4.DeletedSessionID IS NULL " +
 //				            "WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = " + rs.GetInt32(0), "eFormSqlConnection");
 //				while (rs2.Read())
-				foreach (var a in answerRepository.a(s.ProjectRoundUnit.Id)) {
+				foreach (var a in answerRepository.a(s.ProjectRound.Id)) {
 //					if (rs2.GetInt32(0) == 294 && (rs2.GetInt32(1) == 294 || rs2.GetInt32(2) == 294 || rs2.GetInt32(3) == 294))
 					if (a.Values[0].ValueInt == 294 && (a.Values[1].ValueInt == 294 || a.Values[2].ValueInt == 294 || a.Values[3].ValueInt == 294)) {
 //						if (!l.Contains(rs2.GetString(4))) { l.Add(rs2.GetString(4)); }
@@ -414,7 +414,7 @@ namespace HW.Grp
 //				            "INNER JOIN AnswerValue av4 ON a.AnswerID = av4.AnswerID AND av4.QuestionID = 348 AND av4.OptionID = 90 AND av4.DeletedSessionID IS NULL " +
 //				            "WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = " + rs.GetInt32(0), "eFormSqlConnection");
 //				while (rs2.Read())
-				foreach (var a in answerRepository.b(s.ProjectRoundUnit.Id)) {
+				foreach (var a in answerRepository.b(s.ProjectRound.Id)) {
 //					if (rs2.GetInt32(0) == 294 && (rs2.GetInt32(1) == 294 || rs2.GetInt32(2) == 294 || rs2.GetInt32(3) == 294))
 					if (a.Values[0].ValueInt == 294 && (a.Values[1].ValueInt == 294 || a.Values[2].ValueInt == 294 || a.Values[3].ValueInt == 294)) {
 //						if (!l.Contains(rs2.GetString(4))) { l.Add(rs2.GetString(4)); }
@@ -447,7 +447,7 @@ namespace HW.Grp
 //				            "INNER JOIN AnswerValue av1 ON a.AnswerID = av1.AnswerID AND av1.QuestionID = 370 AND av1.OptionID = 90 AND av1.DeletedSessionID IS NULL " +
 //				            "WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = " + rs.GetInt32(0), "eFormSqlConnection");
 //				while (rs2.Read())
-				foreach (var a in answerRepository.FindByRoundQuestionAndOption(s.ProjectRoundUnit.Id, 370, 90)) {
+				foreach (var a in answerRepository.FindByRoundQuestionAndOption(s.ProjectRound.Id, 370, 90)) {
 //					if (rs2.GetInt32(0) == 294)
 					if (a.Values[0].ValueInt == 294) {
 //						if (!l.Contains(rs2.GetString(1))) { l.Add(rs2.GetString(1)); }
@@ -480,7 +480,7 @@ namespace HW.Grp
 //				            "INNER JOIN AnswerValue av1 ON a.AnswerID = av1.AnswerID AND av1.QuestionID = 349 AND av1.OptionID = 90 AND av1.DeletedSessionID IS NULL " +
 //				            "WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = " + rs.GetInt32(0), "eFormSqlConnection");
 //				while (rs2.Read())
-				foreach (var a in answerRepository.FindByRoundQuestionAndOption(s.ProjectRoundUnit.Id, 349, 90)) {
+				foreach (var a in answerRepository.FindByRoundQuestionAndOption(s.ProjectRound.Id, 349, 90)) {
 //					if (rs2.GetInt32(0) == 294)
 					if (a.Values[0].ValueInt == 294) {
 //						if (!l.Contains(rs2.GetString(1))) { l.Add(rs2.GetString(1)); }
@@ -513,7 +513,7 @@ namespace HW.Grp
 //				            "INNER JOIN AnswerValue av1 ON a.AnswerID = av1.AnswerID AND av1.QuestionID = 350 AND av1.OptionID = 90 AND av1.DeletedSessionID IS NULL " +
 //				            "WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = " + rs.GetInt32(0), "eFormSqlConnection");
 //				while (rs2.Read())
-				foreach (var a in answerRepository.FindByRoundQuestionAndOption(s.ProjectRoundUnit.Id, 350, 90)) {
+				foreach (var a in answerRepository.FindByRoundQuestionAndOption(s.ProjectRound.Id, 350, 90)) {
 //					if (rs2.GetInt32(0) == 294)
 					if (a.Values[0].ValueInt == 294) {
 //						if (!l.Contains(rs2.GetString(1))) { l.Add(rs2.GetString(1)); }
@@ -552,7 +552,7 @@ namespace HW.Grp
 //				            "INNER JOIN AnswerValue av4 ON a.AnswerID = av4.AnswerID AND av4.QuestionID = 213 AND av4.OptionID = 42 AND av4.DeletedSessionID IS NULL " +
 //				            "WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = " + rs.GetInt32(0), "eFormSqlConnection");
 //				while (rs2.Read())
-				foreach (var a in answerRepository.f(s.ProjectRoundUnit.Id)) {
+				foreach (var a in answerRepository.f(s.ProjectRound.Id)) {
 					if (
 //						(rs2.GetInt32(0) == 340 || rs2.GetInt32(0) == 341)
 						(a.Values[0].ValueInt == 340 || a.Values[0].ValueInt == 341)
@@ -629,7 +629,7 @@ namespace HW.Grp
 				//List.Text += sql;
 //				rs2 = Db.rs(sql, "eFormSqlConnection");
 //				while (rs2.Read())
-				foreach (var a in answerRepository.g(s.ProjectRoundUnit.Id)) {
+				foreach (var a in answerRepository.g(s.ProjectRound.Id)) {
 					int Qscore = 0;
 
 //					decimal Qbmi = rs2.GetDecimal(10) / ((rs2.GetDecimal(11) / 100) * (rs2.GetDecimal(11) / 100));
@@ -700,7 +700,7 @@ namespace HW.Grp
 								}
 							}
 //							List.Text += "<br/><A HREF=\"feedback.aspx?PRID=" + rs.GetInt32(0) + "&Send=" + x + "\"/>" + x + "</A>";
-							List.Text += "<br/><A HREF=\"feedback.aspx?PRID=" + s.ProjectRoundUnit.Id + "&Send=" + x + "\"/>" + x + "</A>";
+							List.Text += "<br/><A HREF=\"feedback.aspx?PRID=" + s.ProjectRound.Id + "&Send=" + x + "\"/>" + x + "</A>";
 						} else {
 							List.Text += "<br/>" + x;
 						}
@@ -719,7 +719,7 @@ namespace HW.Grp
 //				            "LEFT OUTER JOIN OptionComponentLang opl ON av2.ValueInt = opl.OptionComponentID AND opl.LangID = 1 " +
 //				            "WHERE a.EndDT IS NOT NULL AND pru.ProjectRoundID = " + rs.GetInt32(0) + " " +
 //				            "ORDER BY pru.Email", "eFormSqlConnection");
-				var u = answerRepository.ReadByProjectRound(s.ProjectRoundUnit.Id);
+				var u = answerRepository.ReadByProjectRound(s.ProjectRound.Id);
 //				if (rs2.Read())
 				if (u != null) {
 					List.Text += "<br/><br/><I>Intervju</i><table border=\"1\"><tr><td>Email</td><td>Chef</td></tr>";
