@@ -1,14 +1,14 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="HW.Grp.Site" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Grp.master.cs" Inherits="HW.Grp.Grp" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
 <!DOCTYPE html>
 
 <html lang="en">
-<head runat="server">
+<head id="Head1" runat="server">
     <title>HealthWatch.se / Group admin</title>
 	<meta http-equiv="Pragma" content="no-cache">
 	<meta http-equiv="Expires" content="-1">
 	<meta name="Robots" content="noarchive">
-	<script language="JavaScript">		window.history.forward(1);</script>
+	<script language="JavaScript">	    window.history.forward(1);</script>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<link type="text/css" rel="stylesheet" href="includes/css/960.css">
@@ -18,17 +18,17 @@
 	<script type="text/javascript" src="includes/ui/js/jquery-1.5.1.min.js"></script>
 	<script type="text/javascript" src="includes/ui/js/jquery-ui-1.8.11.custom.min.js"></script>
 	<script type="text/javascript">
-		$(document).ready(function () {
-			var descriptionS = $("#submenu .description").html();
-			$("#submenu a").mouseover(function () {
-				$("#submenu .description").html($(this).html());
-				$("#submenu .active").css('background-position', 'center -80px');
-			});
-			$("#submenu a").mouseout(function () {
-				$("#submenu .description").html(descriptionS);
-				$("#submenu .active").css('background-position', 'center -120px');
-			});
-		});
+	    $(document).ready(function () {
+	        var descriptionS = $("#submenu .description").html();
+	        $("#submenu a").mouseover(function () {
+	            $("#submenu .description").html($(this).html());
+	            $("#submenu .active").css('background-position', 'center -80px');
+	        });
+	        $("#submenu a").mouseout(function () {
+	            $("#submenu .description").html(descriptionS);
+	            $("#submenu .active").css('background-position', 'center -120px');
+	        });
+	    });
 	</script>
 
 	<!--<link rel="stylesheet" href="css/bootstrap.css">

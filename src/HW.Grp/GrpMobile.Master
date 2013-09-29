@@ -1,8 +1,8 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="HW.Grp.Site1" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="GrpMobile.master.cs" Inherits="HW.Grp.GrpMobile" %>
 
 <!DOCTYPE html>
 <html>
-<head runat="server">
+<head id="Head1" runat="server">
 	<meta charset="utf-8">
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 	<meta name="apple-mobile-web-app-capable" content="yes">
