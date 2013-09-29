@@ -25,6 +25,8 @@ namespace HW.Core.Models
 		public virtual Report Report { get; set; }
 		public virtual IList<ProjectRoundLanguage> Languages { get; set; }
 		public virtual IList<ProjectRoundUnit> Units { get; set; }
+		public virtual Survey Survey { get; set; }
+		public virtual IList<Answer> Answers { get; set; }
 	}
 	
 	public class ProjectRoundLanguage : BaseModel
