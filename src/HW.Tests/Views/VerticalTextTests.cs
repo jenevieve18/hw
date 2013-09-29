@@ -9,7 +9,6 @@ namespace HW.Tests.Views
 		[Test]
 		public void TestMethod()
 		{
-			// TODO: Add your test.
 		}
 	}
 }
