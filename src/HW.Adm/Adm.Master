@@ -1,0 +1,67 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Adm.master.cs" Inherits="HW.Adm.Adm" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>HealthWatch</title>
+    <link href="main.css?V=1.0.5022.26678" rel="stylesheet" type="text/css">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta name="Robots" content="noarchive">
+    <script language="JavaScript">window.history.forward(1);</script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <table border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr>
+                    <td>
+                        <img src="img/null.gif" width="150" height="125" border="0" usemap="#top">
+                        <map name="top">
+                            <area shape="poly" coords="11,14, 11,90, 181,88, 179,16" href="default.aspx?Rnd=430677665">
+                        </map>
+                    </td>
+                    <td>
+                        <img src="img/null.gif" width="25" height="1">
+                    </td>
+                    <td>
+                        <a class="unli" href="news.aspx?Rnd=430677665">News</a><br>
+                        <a class="unli" href="rss.aspx?Rnd=430677665">News setup</a><br>
+                        <a class="unli" href="sponsor.aspx?Rnd=430677665">Sponsors</a><br>
+                        <a class="unli" href="grpUser.aspx?Rnd=430677665">Sponsor managers</a><br>
+                        <a class="unli" href="sponsorStats.aspx?Rnd=430677665">Sponsor statistics</a><br>
+                        <a class="unli" href="superAdmin.aspx?Rnd=430677665">Super managers</a><br>
+                    </td>
+                    <td>
+                        <img src="img/null.gif" width="25" height="1">
+                    </td>
+                    <td>
+                        <a class="unli" href="bq.aspx?Rnd=430677665">Background questions</a><br>
+                        <a class="unli" href="messages.aspx?Rnd=430677665">Messages</a><br>
+                        <a class="unli" href="export.aspx?Rnd=430677665">Data export</a><br>
+                        <a class="unli" href="stats.aspx?Rnd=430677665">Usage statistics</a><br>
+                        <a class="unli" href="tx.aspx?Rnd=430677665">File uploads</a><br><br>
+                    </td>
+                    <td>
+                        <img src="img/null.gif" width="25" height="1">
+                    </td>
+                    <td>
+                        <a class="unli" href="exercise.aspx?Rnd=430677665">Exercises</a><br>
+                        <a class="unli" href="users.aspx?Rnd=430677665">Users</a><br>
+                        <a class="unli" href="extendedSurvey.aspx?Rnd=430677665">Extended survey statistics</a><br>
+                        <a class="unli" href="survey.aspx?Rnd=430677665">Survey statistics</a><br>
+                        <a class="unli" href="wise.aspx?Rnd=430677665">Words of wisdom</a><br><br>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>

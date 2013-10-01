@@ -11,6 +11,85 @@ namespace HW.Core.Helpers
 {
 	public class Db
 	{
+        public static int createProjectRoundUnit(int parentProjectRoundUnitID, string name, int SID, int individualReportID, int reportID)
+        {
+            int ID = 0;
+
+            SqlDataReader rs = Db.rs("SELECT ProjectRoundID FROM ProjectRoundUnit WHERE ProjectRoundUnitID = " + parentProjectRoundUnitID, "eFormSqlConnection");
+            if (rs.Read())
+            {
+                Db.exec("INSERT INTO ProjectRoundUnit (" +
+                    "UserCount," +
+                    "LangID," +
+                    "SurveyID," +
+                    "ProjectRoundID," +
+                    "Unit," +
+                    "ParentProjectRoundUnitID," +
+                    "IndividualReportID," +
+                    "ReportID" +
+                    ") VALUES (" +
+                    "0," +
+                    "0," +
+                    "" + SID + "," +
+                    "" + rs.GetInt32(0) + "," +
+                    "'" + name.Replace("'", "''") + "'," +
+                    "" + parentProjectRoundUnitID + "," +
+                    "" + individualReportID + "," +
+                    "" + reportID + "" +
+                    ")", "eFormSqlConnection");
+                SqlDataReader rs2 = Db.rs("SELECT ProjectRoundUnitID FROM [ProjectRoundUnit] " +
+                    "WHERE ProjectRoundID=" + rs.GetInt32(0) + " AND Unit = '" + name.Replace("'", "''") + "' " +
+                    "ORDER BY ProjectRoundUnitID DESC", "eFormSqlConnection");
+                if (rs2.Read())
+                {
+                    ID = rs2.GetInt32(0);
+                }
+                rs2.Close();
+            }
+            rs.Close();
+
+            Db.exec("UPDATE ProjectRoundUnit " +
+                "SET ID = dbo.cf_unitExtID(" + ID + ",dbo.cf_unitDepth(" + ID + "),''), " +
+                "SortOrder = " + ID + " " +
+                "WHERE ProjectRoundUnitID = " + ID, "eFormSqlConnection");
+
+            Db.exec("UPDATE ProjectRoundUnit SET SortString = dbo.cf_unitSortString(ProjectRoundUnitID) WHERE ProjectRoundUnitID = " + ID, "eFormSqlConnection");
+
+            return ID;
+        }
+
+        public static int getInt32(string sqlString)
+        {
+            return getInt32(sqlString, "SqlConnection");
+        }
+
+        public static int getInt32(string sqlString, string con)
+        {
+            int returnValue = 0;
+            SqlConnection dataConnection = new SqlConnection(ConfigurationSettings.AppSettings[con]);
+            dataConnection.Open();
+            SqlCommand dataCommand = new SqlCommand(sqlString.Replace("\\", "\\\\"), dataConnection);
+            dataCommand.CommandTimeout = 900;
+            SqlDataReader dataReader = dataCommand.ExecuteReader();
+            if (dataReader.Read())
+                if (!dataReader.IsDBNull(0))
+                    returnValue = Convert.ToInt32(dataReader.GetValue(0));
+            dataReader.Close();
+            dataConnection.Close();
+            dataConnection.Dispose();
+            return returnValue;
+        }
+
+        public static string HashMD5(string str)
+        {
+            System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
+            byte[] hashByteArray = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes("HW" + str + "HW"));
+            string hash = "";
+            for (int i = 0; i < hashByteArray.Length; i++)
+                hash += hashByteArray[i];
+            return hash;
+        }
+
 		public static SqlDataReader rs(string sqlString)
 		{
 			return rs(sqlString, "SqlConnection");
@@ -77,6 +156,18 @@ namespace HW.Core.Helpers
 			sb.Append("</script>");
 
 			return sb.ToString();
+		}
+		
+		public static string header2()
+		{
+			string ret = "<TITLE>HealthWatch</TITLE>";
+			ret += "<link href=\"main.css?V=" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString() + "\" rel=\"stylesheet\" type=\"text/css\">";
+			ret += "<meta http-equiv=\"Pragma\" content=\"no-cache\">";
+			ret += "<meta http-equiv=\"Expires\" content=\"-1\">";
+			ret += "<meta name=\"Robots\" content=\"noarchive\">";
+			ret += "<script language=\"JavaScript\">window.history.forward(1);</script>";
+
+			return ret;
 		}
 
 		public static bool sendMail(string email, string body, string subject)
@@ -149,6 +240,50 @@ namespace HW.Core.Helpers
 		}
 		
 		static SqlManagerFunctionRepository managerFunctionRepository = new SqlManagerFunctionRepository();
+		
+		public static string nav2()
+		{
+			SqlDataReader r;
+
+			string ret = "<div id=\"main\">";
+
+			ret += "<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">";
+			ret += "<tr>";
+			ret += "<td><img src=\"img/null.gif\" width=\"150\" height=\"125\" border=\"0\" USEMAP=\"#top\"><MAP NAME=\"top\"><AREA SHAPE=\"poly\" COORDS=\"11,14, 11,90, 181,88, 179,16\" HREF=\"default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\"></MAP></td>";
+			ret += "<td><img src=\"img/null.gif\" width=\"25\" height=\"1\"></td>";
+			ret += "<td>" +
+				"<A class=\"unli\" HREF=\"news.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">News</A><br/>" +
+				"<A class=\"unli\" HREF=\"rss.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">News setup</A><br/>" +
+				"<A class=\"unli\" HREF=\"sponsor.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Sponsors</A><br/>" +
+				"<A class=\"unli\" HREF=\"grpUser.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Sponsor managers</A><br/>" +
+				"<A class=\"unli\" HREF=\"sponsorStats.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Sponsor statistics</A><br/>" +
+				"<A class=\"unli\" HREF=\"superAdmin.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Super managers</A><br/>" +
+				"</td>";
+			ret += "<td><img src=\"img/null.gif\" width=\"25\" height=\"1\"></td>";
+			ret += "<td>" +
+				"<A class=\"unli\" HREF=\"bq.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Background questions</A><br/>" +
+				"<A class=\"unli\" HREF=\"messages.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Messages</A><br/>" +
+				"<A class=\"unli\" HREF=\"export.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Data export</A><br/>" +
+				"<A class=\"unli\" HREF=\"stats.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Usage statistics</A><br/>" +
+				"<A class=\"unli\" HREF=\"tx.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">File uploads</A><br/>" +
+				"<br/>" +
+				"</td>";
+			ret += "<td><img src=\"img/null.gif\" width=\"25\" height=\"1\"></td>";
+			ret += "<td>" +
+				"<A class=\"unli\" HREF=\"exercise.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Exercises</A><br/>" +
+				"<A class=\"unli\" HREF=\"users.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Users</A><br/>" +
+				"<A class=\"unli\" HREF=\"extendedSurvey.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Extended survey statistics</A><br/>" +
+				"<A class=\"unli\" HREF=\"survey.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Survey statistics</A><br/>" +
+				"<A class=\"unli\" HREF=\"wise.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Words of wisdom</A><br/>" +
+				"<br/>" +
+				"</td>";
+			ret += "</tr>";
+			ret += "</table>";
+		   
+			ret += "<div id=\"container\">";
+
+			return ret;
+		}
 
 		public static string nav()
 		{
