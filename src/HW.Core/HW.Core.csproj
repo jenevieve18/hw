@@ -141,6 +141,7 @@
     <Compile Include="Repositories\IIndexRepository.cs" />
     <Compile Include="Repositories\ILanguageRepository.cs" />
     <Compile Include="Repositories\IManagerFunctionRepository.cs" />
+    <Compile Include="Repositories\INewsRepository.cs" />
     <Compile Include="Repositories\IOptionRepository.cs" />
     <Compile Include="Repositories\IProjectRepository.cs" />
     <Compile Include="Repositories\IQuestionRepository.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="Repositories\NHibernate\NHibernateSponsorRepository.cs" />
     <Compile Include="Repositories\NHibernate\NHibernateUserRepository.cs" />
     <Compile Include="Repositories\Sql\BaseSqlRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlNewsRepository.cs" />
     <Compile Include="Repositories\Sql\SqlReportRepository.cs" />
     <Compile Include="Repositories\Sql\SqlProjectRepository.cs" />
     <Compile Include="Repositories\Sql\SqlOptionRepository.cs" />

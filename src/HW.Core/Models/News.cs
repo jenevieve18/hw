@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace HW.Core.Models
 {
@@ -22,6 +23,10 @@ namespace HW.Core.Models
 	{
 		public virtual string Name { get; set; }
 		public virtual string ShortName { get; set; }
+		public virtual int OnlyDirectFromFeed { get; set; }
+		
+		public virtual IList<News> SomeNews { get; set; }
+		public virtual IList<News> News { get; set; }
 	}
 	
 	public class NewsCategoryLanguage : BaseModel
@@ -32,7 +37,21 @@ namespace HW.Core.Models
 	
 	public class NewsChannel : BaseModel
 	{
-		public virtual string Name { get; set; }
+		public virtual NewsSource Source { get; set; }
+		public virtual string Feed { get; set; }
+		public virtual Language Language { get; set; }
+		public virtual DateTime? Pause { get; set; }
+		public virtual NewsCategory Category { get; set; }
+		public virtual string Internal { get; set; }
+		
+		public virtual IList<NewsRSS> UndeletedRSS { get; set; }
+		public virtual IList<NewsRSS> DeletedRSS { get; set; }
+	}
+	
+	public class NewsRSS : BaseModel
+	{
+		public virtual NewsChannel Channel { get; set; }
+		public virtual string Link { get; set; }
 	}
 	
 	public class NewsImage : BaseModel
@@ -43,5 +62,12 @@ namespace HW.Core.Models
 		public virtual int Width { get; set; }
 		public virtual int Height { get; set; }
 		public virtual int Size { get; set; }
+	}
+	
+	public class NewsSource : BaseModel
+	{
+		public virtual string Source { get; set; }
+		public virtual string SourceShort { get; set; }
+		public virtual int Favourite { get; set; }
 	}
 }

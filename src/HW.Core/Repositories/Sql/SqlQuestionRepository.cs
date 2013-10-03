@@ -80,7 +80,29 @@ SELECT BQ.BQID, BQ.Internal FROM BQ WHERE BQ.BQID IN ({0})",
 		
 		public IList<BackgroundQuestion> FindAllBackgroundQuestions()
 		{
-			throw new NotImplementedException();
+			string query = string.Format(
+        		@"
+SELECT BQID, 
+	Internal, 
+	Type, 
+	Comparison, 
+	Variable 
+FROM BQ ORDER BY Internal"
+        	);
+            var questions = new List<BackgroundQuestion>();
+			using (SqlDataReader rs = Db.rs(query)) {
+				while (rs.Read()) {
+					var q = new BackgroundQuestion {
+						Id = GetInt32(rs, 0),
+						Internal = GetString(rs, 1),
+						Type = GetInt32(rs, 2),
+						Comparison = GetInt32(rs, 3),
+						Variable = GetString(rs, 4)
+					};
+            		questions.Add(q);
+				}
+			}
+			return questions;
 		}
 		
 		public BackgroundQuestion ReadBackgroundQuestion(int bqid)
