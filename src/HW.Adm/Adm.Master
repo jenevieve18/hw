@@ -1,11 +1,12 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Adm.master.cs" Inherits="HW.Adm.Adm" %>
-
+<%@ Import Namespace="HW.Core.Helpers" %>
+<%@ Import Namespace="System.Reflection" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>HealthWatch</title>
-    <link href="main.css?V=1.0.5022.26678" rel="stylesheet" type="text/css">
+    <link href="main.css?V=<%= Assembly.GetExecutingAssembly().GetName().Version.ToString() %>" rel="stylesheet" type="text/css">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="-1">
     <meta name="Robots" content="noarchive">
@@ -15,7 +16,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
+    <div id="main">
         <table border="0" cellspacing="0" cellpadding="0">
             <tbody>
                 <tr>
@@ -29,38 +30,40 @@
                         <img src="img/null.gif" width="25" height="1">
                     </td>
                     <td>
-                        <a class="unli" href="news.aspx?Rnd=430677665">News</a><br>
-                        <a class="unli" href="rss.aspx?Rnd=430677665">News setup</a><br>
-                        <a class="unli" href="sponsor.aspx?Rnd=430677665">Sponsors</a><br>
-                        <a class="unli" href="grpUser.aspx?Rnd=430677665">Sponsor managers</a><br>
-                        <a class="unli" href="sponsorStats.aspx?Rnd=430677665">Sponsor statistics</a><br>
-                        <a class="unli" href="superAdmin.aspx?Rnd=430677665">Super managers</a><br>
+                        <%= HtmlHelper.Anchor("News", "news.aspx", true, new Dictionary<string, string>() { { "class", "unli" } }) %><br />
+                        <%= HtmlHelper.Anchor("News setup", "rss.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
+                        <%= HtmlHelper.Anchor("Sponsors", "sponsor.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
+                        <%= HtmlHelper.Anchor("Sponsor managers", "grpUser.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
+                        <%= HtmlHelper.Anchor("Sponsor statistics", "sponsorStats.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
+                        <%= HtmlHelper.Anchor("Super managers", "superAdmin.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
                     </td>
                     <td>
                         <img src="img/null.gif" width="25" height="1">
                     </td>
                     <td>
-                        <a class="unli" href="bq.aspx?Rnd=430677665">Background questions</a><br>
-                        <a class="unli" href="messages.aspx?Rnd=430677665">Messages</a><br>
-                        <a class="unli" href="export.aspx?Rnd=430677665">Data export</a><br>
-                        <a class="unli" href="stats.aspx?Rnd=430677665">Usage statistics</a><br>
-                        <a class="unli" href="tx.aspx?Rnd=430677665">File uploads</a><br><br>
+                        <%= HtmlHelper.Anchor("Background questions", "bq.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
+                        <%= HtmlHelper.Anchor("Messages", "messages.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
+                        <%= HtmlHelper.Anchor("Data export", "export.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
+                        <%= HtmlHelper.Anchor("Usage statistics", "stats.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
+                        <%= HtmlHelper.Anchor("File uploads", "stats.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
                     </td>
                     <td>
                         <img src="img/null.gif" width="25" height="1">
                     </td>
                     <td>
-                        <a class="unli" href="exercise.aspx?Rnd=430677665">Exercises</a><br>
-                        <a class="unli" href="users.aspx?Rnd=430677665">Users</a><br>
-                        <a class="unli" href="extendedSurvey.aspx?Rnd=430677665">Extended survey statistics</a><br>
-                        <a class="unli" href="survey.aspx?Rnd=430677665">Survey statistics</a><br>
-                        <a class="unli" href="wise.aspx?Rnd=430677665">Words of wisdom</a><br><br>
+                        <%= HtmlHelper.Anchor("Exercises", "exercise.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
+                        <%= HtmlHelper.Anchor("Users", "users.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
+                        <%= HtmlHelper.Anchor("Extended survey statistics", "extendedSurvey.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
+                        <%= HtmlHelper.Anchor("Survey statistics", "survey.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
+                        <%= HtmlHelper.Anchor("Words of wisdom", "wise.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
                     </td>
                 </tr>
             </tbody>
         </table>
+        <div id="container">
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         </asp:ContentPlaceHolder>
+        </div>
     </div>
     </form>
 </body>

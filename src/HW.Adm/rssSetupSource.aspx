@@ -1,13 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="rssSetupSource.aspx.cs" Inherits="HW.Adm.rssSetupSource" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Adm.Master" AutoEventWireup="true" CodeBehind="rssSetupSource.aspx.cs" Inherits="HW.Adm.rssSetupSource" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" > 
-<html>
-  <head>
-   <%=Db.header()%>
-  </head>
-  <body>
-	    <form id="Form1" method="post" runat="server">
-		<%=Db.nav()%>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 		<table width="500" border="0" cellspacing="0" cellpadding="0">
 			<tr><td style="font-size:16px;" align="center">RSS Source setup</td></tr>
 		</table>
@@ -17,7 +12,4 @@
 			<tr><td>Favourite&nbsp;</td><td><asp:CheckBox ID=Favourite runat=server /></td></tr>
 			<tr><td><asp:Button ID=Save runat=server Text=Save /></td></tr>
 		</table>
-		<%=Db.bottom()%>
-		</form>
-  </body>
-</html>
+</asp:Content>

@@ -1,13 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="survey.aspx.cs" Inherits="HW.Adm.survey" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Adm.Master" AutoEventWireup="true" CodeBehind="survey.aspx.cs" Inherits="HW.Adm.survey" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" > 
-<html>
-  <head>
-   <%=Db.header()%>
-  </head>
-  <body>
-	    <form id="Form1" method="post" runat="server">
-		<%=Db.nav()%>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 		<table width="800" border="0" cellspacing="0" cellpadding="0">
 			<tr><td style="font-size:16px;" align="center">Surveys</td></tr>
 		</table>
@@ -17,7 +12,4 @@
 			<asp:Label ID=Survey runat=server />
 		</table>
 		<span style="margin:20px;"><asp:DropDownList ID=FromDT runat=server />--<asp:DropDownList ID=ToDT runat=server /><asp:DropDownList ID="ReportID" runat=server /><asp:Button Text="Submit" ID=submit runat=server /></span>
-		<%=Db.bottom()%>
-		</form>
-  </body>
-</html>
+</asp:Content>

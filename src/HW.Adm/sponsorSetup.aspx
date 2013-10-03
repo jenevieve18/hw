@@ -1,13 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="sponsorSetup.aspx.cs" Inherits="HW.Adm.sponsorSetup" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Adm.Master" AutoEventWireup="true" CodeBehind="sponsorSetup.aspx.cs" Inherits="HW.Adm.sponsorSetup" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" > 
-<html>
-  <head>
-   <%=Db.header()%>
-  </head>
-  <body>
-	    <form id="Form1" method="post" runat="server">
-		<%=Db.nav()%>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 		<table width="800" border="0" cellspacing="0" cellpadding="0">
 			<tr><td style="font-size:16px;" align="center">Sponsor</td></tr>
 		</table>
@@ -119,7 +114,4 @@
 			</tr>
 			<asp:PlaceHolder ID=BQ runat=server />
 		</table>
-		<%=Db.bottom()%>
-		</form>
-  </body>
-</html>
+</asp:Content>

@@ -1,13 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="messages.aspx.cs" Inherits="HW.Adm.messages" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Adm.Master" AutoEventWireup="true" CodeBehind="messages.aspx.cs" Inherits="HW.Adm.messages" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" > 
-<html>
-  <head>
-   <%=Db.header()%>
-  </head>
-  <body>
-	    <form id="Form1" method="post" runat="server">
-		<%=Db.nav()%>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 		<table border="0" cellspacing="0" cellpadding="0" style="margin:20px;">
 		<tr>
 			<td><b>Reminder email</b></td>
@@ -30,7 +25,4 @@
 		<tr><td>&nbsp;</td></tr>
 		<tr><td align=center><asp:Button ID=Save runat=server Text="Save" /><asp:Button ID=RecalculateReminders runat=server Text="Recalculate reminders" /></td></tr>
 		</table>
-		<%=Db.bottom()%>
-		</form>
-  </body>
-</html>
+</asp:Content>

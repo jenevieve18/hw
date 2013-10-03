@@ -1,13 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="superadmin.aspx.cs" Inherits="HW.Adm.superadmin" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Adm.Master" AutoEventWireup="true" CodeBehind="superadmin.aspx.cs" Inherits="HW.Adm.superadmin" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" > 
-<html>
-  <head>
-   <%=Db.header()%>
-  </head>
-  <body>
-	    <form id="Form1" method="post" runat="server">
-		<%=Db.nav()%>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 		<table width="970" border="0" cellspacing="0" cellpadding="0">
 			<tr><td style="font-size:16px;" align="center">Super managers</td></tr>
 		</table>
@@ -24,7 +19,4 @@
             <tr><td colspan="2"><a href="superadmin.aspx?SuperAdminID=0">Add new &gt;&gt;</a></td></tr>
 		</table>
         </asp:PlaceHolder>
-		<%=Db.bottom()%>
-		</form>
-  </body>
-</html>
+</asp:Content>

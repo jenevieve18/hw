@@ -1,9 +1,6 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="news.aspx.cs" Inherits="HW.Adm.news" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Adm.Master" AutoEventWireup="true" CodeBehind="news.aspx.cs" Inherits="HW.Adm.news" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" > 
-<html>
-  <head>
-   <%=Db.header()%>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
    <script type="text/javascript">       google.load("language", "1");</script>
    <script language="Javascript">
@@ -86,14 +83,12 @@
            document.forms[0].submit();
        }
    </script>
-  </head>
-  <body>
-	    <form id="Form1" method="post" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 	    <input id="NewsID" type="hidden" name="NewsID" value="0" runat="server" />
 	    <input id="LoadNews" type="hidden" name="LoadNews" value="0" runat="server" />
 	    <input id="DeleteImage" type="hidden" name="DeleteImage" value="0" runat="server" />
 	    <input id="NewsLangID" type="hidden" name="NewsLangID" value="0" runat="server" />
-		<%=Db.nav()%>
 		<div id="img1" style="display:none;position:absolute;top:100px;left:110px;border: solid 1px #333333;"></div>
 		<div id="img2" style="display:none;position:absolute;top:300px;left:60px;border: solid 1px #333333;"></div>
 		<table border="0" cellpadding="0" cellspacing="0">
@@ -142,7 +137,4 @@
 				</td>
 			</tr>
 		</table>
-		<%=Db.bottom()%>
-		</form>
-  </body>
-</html>
+</asp:Content>

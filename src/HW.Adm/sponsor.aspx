@@ -1,9 +1,6 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="sponsor.aspx.cs" Inherits="HW.Adm.sponsor" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Adm.Master" AutoEventWireup="true" CodeBehind="sponsor.aspx.cs" Inherits="HW.Adm.sponsor" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" > 
-<html>
-  <head>
-   <%=Db.header2()%>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
    <script type="text/javascript">
        function exportRedirect(w) {
            var s = '', b = document.forms[0].ExportSponsorID;
@@ -27,10 +24,8 @@
                     '&AM=' + document.forms[0].ActivityMonth[document.forms[0].ActivityMonth.selectedIndex].value;
        }
    </script>
-  </head>
-  <body>
-	    <form id="Form1" method="post" runat="server">
-		<%=Db.nav2()%>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 		<table width="970" border="0" cellspacing="0" cellpadding="0">
 			<tr><td style="font-size:16px;" align="center">Sponsors</td></tr>
 		</table>
@@ -39,10 +34,7 @@
 		</table>
 		<span style="margin:20px;"><button onclick="location.href='sponsorSetup.aspx';">Add</button></span>
 		<table style="margin:20px;" border="0" cellspacing="0" cellpadding="0">
-		<asp:Label ID=Merge runat=server Visible=false/>
+		    <asp:Label ID=Merge runat=server Visible=false/>
 		</table>
 		<asp:Button ID=ExecMerge runat=server text="Merge" visible=false />
-		<%=Db.bottom()%>
-		</form>
-  </body>
-</html>
+</asp:Content>
