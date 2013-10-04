@@ -84,7 +84,7 @@
   <ItemGroup>
     <Compile Include="AppContext.cs" />
     <Compile Include="Helpers\BootstrapHelper.cs" />
-    <Compile Include="Helpers\Class1.cs" />
+    <Compile Include="Helpers\GeneratedClass.cs" />
     <Compile Include="Helpers\ConvertHelper.cs" />
     <Compile Include="Helpers\CsvExporter.cs" />
     <Compile Include="Helpers\Db.cs" />
