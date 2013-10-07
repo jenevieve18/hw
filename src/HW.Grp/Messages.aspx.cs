@@ -364,7 +364,7 @@ namespace HW.Grp
 										string personalLink = "" + path + "";
 										if (u.ReminderLink > 0)
 										{
-											personalLink += "/c/" + u.UserKey.ToLower() + u.Id.ToString();
+											personalLink += "c/" + u.UserKey.ToLower() + u.Id.ToString();
 										}
 										if (body.IndexOf("<LINK/>") >= 0)
 										{
@@ -424,7 +424,7 @@ namespace HW.Grp
 										string personalLink = "" + path + "";
 										if (u.ReminderLink > 0)
 										{
-											personalLink += "/c/" + u.UserKey.ToLower() + u.Id.ToString();
+											personalLink += "c/" + u.UserKey.ToLower() + u.Id.ToString();
 										}
 										if (body.IndexOf("<LINK/>") >= 0)
 										{

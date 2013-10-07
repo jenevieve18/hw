@@ -153,7 +153,7 @@ namespace HW.Grp
 						string personalLink = "" + ConfigurationSettings.AppSettings["healthWatchURL"] + "";
 						if (!rs.IsDBNull(4) && rs.GetInt32(4) > 0)
 						{
-							personalLink += "/c/" + rs.GetString(5).ToLower() + rs.GetInt32(3).ToString();
+							personalLink += "c/" + rs.GetString(5).ToLower() + rs.GetInt32(3).ToString();
 						}
 						if (body.IndexOf("<LINK/>") >= 0)
 						{
@@ -202,7 +202,7 @@ namespace HW.Grp
 							string personalLink = "" + ConfigurationSettings.AppSettings["healthWatchURL"] + "";
 							if (!rs.IsDBNull(5) && rs.GetInt32(5) > 0)
 							{
-								personalLink += "/c/" + rs.GetString(6).ToLower() + rs.GetInt32(4).ToString();
+								personalLink += "c/" + rs.GetString(6).ToLower() + rs.GetInt32(4).ToString();
 							}
 							if (body.IndexOf("<LINK/>") >= 0)
 							{
@@ -1389,7 +1389,7 @@ namespace HW.Grp
 						           "<TD ALIGN=\"CENTER\">");
 						if (showReg) {
 							if (!rs2.IsDBNull(3) && !rs2.IsDBNull(5)) {
-								usr.Append("<A TITLE=\"Log on to users account\" HREF=\"" + ConfigurationSettings.AppSettings["healthWatchURL"] + "/a/" + rs2.GetString(5) + rs2.GetInt32(3).ToString() + "\" TARGET=\"_blank\">" + rs2.GetInt32(3).ToString() + "/" + (rs2.IsDBNull(4) ? "0" : rs2.GetInt32(4).ToString()) + "</A>");
+								usr.Append("<A TITLE=\"Log on to users account\" HREF=\"" + ConfigurationSettings.AppSettings["healthWatchURL"] + "a/" + rs2.GetString(5) + rs2.GetInt32(3).ToString() + "\" TARGET=\"_blank\">" + rs2.GetInt32(3).ToString() + "/" + (rs2.IsDBNull(4) ? "0" : rs2.GetInt32(4).ToString()) + "</A>");
 
 								SqlDataReader rs3 = Db2.rs("SELECT u.UserID, s.Sponsor FROM [User] u LEFT OUTER JOIN Sponsor s ON u.SponsorID = s.SponsorID WHERE u.UserID <> " + rs2.GetInt32(3) + " AND u.Email = '" + rs2.GetString(1).Replace("'", "''") + "'");
 								while (rs3.Read()) {
