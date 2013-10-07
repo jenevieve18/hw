@@ -511,6 +511,8 @@ namespace HW.Grp
 
 		private void Page_Load(object sender, System.EventArgs e)
 		{
+            Response.ContentType = "image/gif";
+
 			ExtendedGraph g = null;
 
 			int GB = (HttpContext.Current.Request.QueryString["GB"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["GB"].ToString()) : 0);
@@ -540,7 +542,7 @@ namespace HW.Grp
 			
 			ReportPart r = service.ReadReportPart(rpid, langID);
 //			SetReportPart(key, HasAnswerKey, r, g, langID, PRUID, fy, ty, GB, stdev, hasGrouping, plot);
-			
+
 			var f = service.GetGraphFactory(HasAnswerKey);
 			g = f.CreateGraph(key, r, langID, PRUID, fy, ty, GB, hasGrouping, plot, Width, Height, Background, GRPNG, SPONS, SID, GID, disabled, point);
 			g.render();
