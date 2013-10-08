@@ -16,15 +16,15 @@ namespace HW.Adm
         protected void Page_Load(object sender, EventArgs e)
         {
             Save.Click += new EventHandler(Save_Click);
-            eid = (HttpContext.Current.Request.QueryString["ExerciseID"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["ExerciseID"]) : 0);
-            if (HttpContext.Current.Request.QueryString["DeleteImage"] != null)
+            eid = (Request.QueryString["ExerciseID"] != null ? Convert.ToInt32(Request.QueryString["ExerciseID"]) : 0);
+            if (Request.QueryString["DeleteImage"] != null)
             {
                 Db.exec("UPDATE Exercise SET ExerciseImg = NULL WHERE ExerciseID = " + eid);
-                HttpContext.Current.Response.Redirect("exerciseSetup.aspx?ExerciseID=" + eid + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+                Response.Redirect("exerciseSetup.aspx?ExerciseID=" + eid + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
             }
-            if (HttpContext.Current.Request.QueryString["DeleteVariant"] != null)
+            if (Request.QueryString["DeleteVariant"] != null)
             {
-                Db.exec("UPDATE ExerciseVariant SET ExerciseID = -ABS(ExerciseID) WHERE ExerciseVariantID = " + Convert.ToInt32(HttpContext.Current.Request.QueryString["DeleteVariant"]) + " AND ExerciseID = " + eid);
+                Db.exec("UPDATE ExerciseVariant SET ExerciseID = -ABS(ExerciseID) WHERE ExerciseVariantID = " + Convert.ToInt32(Request.QueryString["DeleteVariant"]) + " AND ExerciseID = " + eid);
             }
             SqlDataReader rs = Db.rs("SELECT " +
                 "ev.ExerciseVariantID, " +
@@ -297,7 +297,7 @@ namespace HW.Adm
             {
                 Db.exec("INSERT INTO ExerciseVariant (ExerciseID,ExerciseTypeID) VALUES (" + eid + "," + Convert.ToInt32(ExerciseTypeID.SelectedValue) + ")");
             }
-            HttpContext.Current.Response.Redirect("exerciseSetup.aspx?ExerciseID=" + eid + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+            Response.Redirect("exerciseSetup.aspx?ExerciseID=" + eid + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
         }
     }
 }

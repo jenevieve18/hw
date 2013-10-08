@@ -29,7 +29,7 @@ namespace HW.Adm
                 "WHERE x.ProjectRoundUserID NOT IN (" + dontConvertUsers + ") AND x.ProjectRoundUnitID NOT IN (" + dontConvertUnits + ") AND x.ProjectRoundID = " + PRID, "eFormSqlConnection");
             while (rs.Read())
             {
-                HttpContext.Current.Response.Write(rs.GetString(1) + " <BR>\r\n");
+                Response.Write(rs.GetString(1) + " <BR>\r\n");
 
                 #region createdepartment
                 int departmentID = 0;

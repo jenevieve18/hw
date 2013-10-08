@@ -57,23 +57,23 @@ namespace HW.Adm
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack && HttpContext.Current.Request.QueryString["Search"] != null && HttpContext.Current.Request.QueryString["Search"].ToString() != "")
+            if (!IsPostBack && Request.QueryString["Search"] != null && Request.QueryString["Search"].ToString() != "")
             {
-                search.Text = HttpContext.Current.Request.QueryString["Search"].ToString();
+                search.Text = Request.QueryString["Search"].ToString();
             }
 
             //OK.Click += new EventHandler(OK_Click);
             SqlDataReader rs;
 
-            if (HttpContext.Current.Request.QueryString["RemoveReminder"] != null)
+            if (Request.QueryString["RemoveReminder"] != null)
             {
-                Db.exec("UPDATE [User] SET Reminder = 0, ReminderNextSend = NULL WHERE UserID = " + Convert.ToInt32(HttpContext.Current.Request.QueryString["RemoveReminder"]));
-                HttpContext.Current.Response.Redirect("users.aspx?Search=" + search.Text, true);
+                Db.exec("UPDATE [User] SET Reminder = 0, ReminderNextSend = NULL WHERE UserID = " + Convert.ToInt32(Request.QueryString["RemoveReminder"]));
+                Response.Redirect("users.aspx?Search=" + search.Text, true);
             }
-            if (HttpContext.Current.Request.Form["Merge"] != null && HttpContext.Current.Request.Form["With"] != null)
+            if (Request.Form["Merge"] != null && Request.Form["With"] != null)
             {
-                int merge = Convert.ToInt32(HttpContext.Current.Request.Form["Merge"]);
-                int with = Convert.ToInt32(HttpContext.Current.Request.Form["With"]);
+                int merge = Convert.ToInt32(Request.Form["Merge"]);
+                int with = Convert.ToInt32(Request.Form["With"]);
                 int departmentID = 0, sponsorID = 0, fromSponsorID = 0;
 
                 rs = Db.rs("SELECT DepartmentID, SponsorID FROM [User] WHERE UserID = " + with);
@@ -101,16 +101,16 @@ namespace HW.Adm
 
                 rewritePRU(fromSponsorID, sponsorID, merge, with);
 
-                HttpContext.Current.Response.Redirect("users.aspx?Search=" + search.Text, true);
+                Response.Redirect("users.aspx?Search=" + search.Text, true);
             }
-            if (HttpContext.Current.Request.QueryString["Undelete"] != null)
+            if (Request.QueryString["Undelete"] != null)
             {
-                Db.exec("UPDATE [User] SET Username = REPLACE(Username,'DELETED',''), Email = REPLACE(Email,'DELETED','') WHERE UserID = " + Convert.ToInt32(HttpContext.Current.Request.QueryString["Undelete"]));
-                HttpContext.Current.Response.Redirect("users.aspx?Search=" + search.Text, true);
+                Db.exec("UPDATE [User] SET Username = REPLACE(Username,'DELETED',''), Email = REPLACE(Email,'DELETED','') WHERE UserID = " + Convert.ToInt32(Request.QueryString["Undelete"]));
+                Response.Redirect("users.aspx?Search=" + search.Text, true);
             }
-            if (HttpContext.Current.Request.QueryString["DeleteSPIID"] != null)
+            if (Request.QueryString["DeleteSPIID"] != null)
             {
-                int deleteSPIID = Convert.ToInt32(HttpContext.Current.Request.QueryString["DeleteSPIID"]);
+                int deleteSPIID = Convert.ToInt32(Request.QueryString["DeleteSPIID"]);
                 rs = Db.rs("SELECT si.UserID FROM SponsorInvite si WHERE si.SponsorInviteID = " + deleteSPIID);
                 if (rs.Read() && !rs.IsDBNull(0))
                 {
@@ -150,10 +150,10 @@ namespace HW.Adm
                 rs.Close();
                 Db.exec("UPDATE SponsorInvite SET SponsorID = -ABS(SponsorID), DepartmentID = -ABS(DepartmentID), UserID = -ABS(UserID) WHERE SponsorInviteID = " + deleteSPIID);
             }
-            if (HttpContext.Current.Request.QueryString["ConnectSPIID"] != null)
+            if (Request.QueryString["ConnectSPIID"] != null)
             {
                 int sponsorID = 0, userID = 0, departmentID = 0, fromSponsorID = 0; string email = "";
-                rs = Db.rs("SELECT SponsorID, Email, DepartmentID FROM SponsorInvite WHERE SponsorInviteID = " + Convert.ToInt32(HttpContext.Current.Request.QueryString["ConnectSPIID"]));
+                rs = Db.rs("SELECT SponsorID, Email, DepartmentID FROM SponsorInvite WHERE SponsorInviteID = " + Convert.ToInt32(Request.QueryString["ConnectSPIID"]));
                 if (rs.Read())
                 {
                     sponsorID = rs.GetInt32(0);
@@ -176,13 +176,13 @@ namespace HW.Adm
                     {
                         rewritePRU(fromSponsorID, sponsorID, userID);
                         Db.exec("UPDATE SponsorInvite SET UserID = NULL WHERE UserID = " + userID);
-                        Db.exec("UPDATE SponsorInvite SET UserID = " + userID + ", Sent = GETDATE() WHERE SponsorInviteID = " + Convert.ToInt32(HttpContext.Current.Request.QueryString["ConnectSPIID"]));
+                        Db.exec("UPDATE SponsorInvite SET UserID = " + userID + ", Sent = GETDATE() WHERE SponsorInviteID = " + Convert.ToInt32(Request.QueryString["ConnectSPIID"]));
                         Db.exec("UPDATE [User] SET DepartmentID = " + departmentID + ", SponsorID = " + sponsorID + " WHERE UserID = " + userID);
                         Db.exec("UPDATE UserProfile SET DepartmentID = " + departmentID + ", SponsorID = " + sponsorID + " WHERE UserID = " + userID);
                     }
                 }
 
-                HttpContext.Current.Response.Redirect("users.aspx?Search=" + search.Text, true);
+                Response.Redirect("users.aspx?Search=" + search.Text, true);
             }
             if (search.Text != "")
             {
@@ -231,7 +231,7 @@ namespace HW.Adm
             }
 
             string mergeEmail = "";
-            int merge = (HttpContext.Current.Request.Form["Merge"] != null ? Convert.ToInt32(HttpContext.Current.Request.Form["Merge"]) : 0);
+            int merge = (Request.Form["Merge"] != null ? Convert.ToInt32(Request.Form["Merge"]) : 0);
             if (merge != 0)
             {
                 rs = Db.rs("SELECT Email FROM [User] WHERE UserID = " + merge);

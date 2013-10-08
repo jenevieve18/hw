@@ -17,42 +17,42 @@ namespace HW.Adm
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            sponsorID = (HttpContext.Current.Request.QueryString["SponsorID"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["SponsorID"]) : 0);
+            sponsorID = (Request.QueryString["SponsorID"] != null ? Convert.ToInt32(Request.QueryString["SponsorID"]) : 0);
 
             SqlDataReader rs;
 
-            if (HttpContext.Current.Request.QueryString["MoveUp"] != null)
+            if (Request.QueryString["MoveUp"] != null)
             {
-                rs = Db.rs("SELECT SortOrder FROM SponsorProjectRoundUnit WHERE ABS(SponsorID) = " + sponsorID + " AND SurveyID = " + HttpContext.Current.Request.QueryString["MoveUp"]);
+                rs = Db.rs("SELECT SortOrder FROM SponsorProjectRoundUnit WHERE ABS(SponsorID) = " + sponsorID + " AND SurveyID = " + Request.QueryString["MoveUp"]);
                 if (rs.Read())
                 {
                     SqlDataReader rs2 = Db.rs("SELECT TOP 1 SurveyID, SortOrder FROM SponsorProjectRoundUnit WHERE SortOrder < " + rs.GetInt32(0) + " AND ABS(SponsorID) = " + sponsorID + " ORDER BY SortOrder DESC");
                     if (rs2.Read())
                     {
                         Db.exec("UPDATE SponsorProjectRoundUnit SET SortOrder = " + rs.GetInt32(0) + " WHERE ABS(SponsorID) = " + sponsorID + " AND SurveyID = " + rs2.GetInt32(0));
-                        Db.exec("UPDATE SponsorProjectRoundUnit SET SortOrder = " + rs2.GetInt32(1) + " WHERE ABS(SponsorID) = " + sponsorID + " AND SurveyID = " + HttpContext.Current.Request.QueryString["MoveUp"]);
+                        Db.exec("UPDATE SponsorProjectRoundUnit SET SortOrder = " + rs2.GetInt32(1) + " WHERE ABS(SponsorID) = " + sponsorID + " AND SurveyID = " + Request.QueryString["MoveUp"]);
                     }
                     rs2.Close();
                 }
                 rs.Close();
-                HttpContext.Current.Response.Redirect("sponsorSetup.aspx?SponsorID=" + sponsorID, true);
+                Response.Redirect("sponsorSetup.aspx?SponsorID=" + sponsorID, true);
             }
 
-            if (HttpContext.Current.Request.QueryString["MoveUpBQ"] != null)
+            if (Request.QueryString["MoveUpBQ"] != null)
             {
-                rs = Db.rs("SELECT SortOrder FROM SponsorBQ WHERE ABS(SponsorID) = " + sponsorID + " AND BQID = " + HttpContext.Current.Request.QueryString["MoveUpBQ"]);
+                rs = Db.rs("SELECT SortOrder FROM SponsorBQ WHERE ABS(SponsorID) = " + sponsorID + " AND BQID = " + Request.QueryString["MoveUpBQ"]);
                 if (rs.Read())
                 {
                     SqlDataReader rs2 = Db.rs("SELECT TOP 1 BQID, SortOrder FROM SponsorBQ WHERE SortOrder < " + rs.GetInt32(0) + " AND ABS(SponsorID) = " + sponsorID + " ORDER BY SortOrder DESC");
                     if (rs2.Read())
                     {
                         Db.exec("UPDATE SponsorBQ SET SortOrder = " + rs.GetInt32(0) + " WHERE ABS(SponsorID) = " + sponsorID + " AND BQID = " + rs2.GetInt32(0));
-                        Db.exec("UPDATE SponsorBQ SET SortOrder = " + rs2.GetInt32(1) + " WHERE ABS(SponsorID) = " + sponsorID + " AND BQID = " + HttpContext.Current.Request.QueryString["MoveUpBQ"]);
+                        Db.exec("UPDATE SponsorBQ SET SortOrder = " + rs2.GetInt32(1) + " WHERE ABS(SponsorID) = " + sponsorID + " AND BQID = " + Request.QueryString["MoveUpBQ"]);
                     }
                     rs2.Close();
                 }
                 rs.Close();
-                HttpContext.Current.Response.Redirect("sponsorSetup.aspx?SponsorID=" + sponsorID, true);
+                Response.Redirect("sponsorSetup.aspx?SponsorID=" + sponsorID, true);
             }
 
             Save.Click += new EventHandler(Save_Click);
@@ -697,19 +697,19 @@ namespace HW.Adm
         void Close_Click(object sender, EventArgs e)
         {
             Db.exec("UPDATE Sponsor SET Closed = GETDATE() WHERE SponsorID = " + sponsorID);
-            HttpContext.Current.Response.Redirect("sponsor.aspx", true);
+            Response.Redirect("sponsor.aspx", true);
         }
         void Delete_Click(object sender, EventArgs e)
         {
             Db.exec("UPDATE Sponsor SET Deleted = GETDATE() WHERE SponsorID = " + sponsorID);
-            HttpContext.Current.Response.Redirect("sponsor.aspx", true);
+            Response.Redirect("sponsor.aspx", true);
         }
 
         void AddExtendedSurvey_Click(object sender, EventArgs e)
         {
             Db.exec("INSERT INTO SponsorExtendedSurvey (SponsorID) VALUES (" + sponsorID + ")");
 
-            HttpContext.Current.Response.Redirect("sponsorSetup.aspx?SponsorID=" + sponsorID, true);
+            Response.Redirect("sponsorSetup.aspx?SponsorID=" + sponsorID, true);
         }
 
         void Save_Click(object sender, EventArgs e)
@@ -970,12 +970,12 @@ namespace HW.Adm
             }
             rs.Close();
 
-            HttpContext.Current.Response.Redirect("sponsorSetup.aspx?SponsorID=" + sponsorID, true);
+            Response.Redirect("sponsorSetup.aspx?SponsorID=" + sponsorID, true);
         }
 
         void Back_Click(object sender, EventArgs e)
         {
-            HttpContext.Current.Response.Redirect("sponsor.aspx", true);
+            Response.Redirect("sponsor.aspx", true);
         }
     }
 }

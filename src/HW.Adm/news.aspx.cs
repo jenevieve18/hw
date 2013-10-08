@@ -81,8 +81,8 @@ namespace HW.Adm
                     "WHERE (nr.Deleted = 0 OR nr.Deleted IS NULL) AND " + (SourceType.SelectedValue == "0" ? "(ns.Favourite = 0 OR ns.Favourite IS NULL)" : "ns.Favourite = 1") + " " + (LangID.SelectedValue != "-1" ? "AND nc.LangID = " + LangID.SelectedValue + " " : "") +
                     "GROUP BY ns.sourceID, ns.source " +
                     "ORDER BY ns.source";
-            //HttpContext.Current.Response.Write(sql);
-            //HttpContext.Current.Response.End();
+            //Response.Write(sql);
+            //Response.End();
             SqlDataReader rs = Db.rs(sql, "newsSqlConnection");
             while (rs.Read())
             {
@@ -124,16 +124,16 @@ namespace HW.Adm
         void Delete_Click(object sender, EventArgs e)
         {
             //string formKeys = "";
-            //foreach (string s in HttpContext.Current.Request.Form.AllKeys)
-            //    formKeys += s + " = " + (HttpContext.Current.Request.Form[s] != null ? HttpContext.Current.Request.Form[s] : "") + "\r\n";
-            //HttpContext.Current.Response.Write(formKeys);
+            //foreach (string s in Request.Form.AllKeys)
+            //    formKeys += s + " = " + (Request.Form[s] != null ? Request.Form[s] : "") + "\r\n";
+            //Response.Write(formKeys);
 
             SqlDataReader rs = Db.rs("SELECT TOP 50 n.rssID FROM NewsRSS n INNER JOIN NewsChannel c ON n.channelID = c.channelID INNER JOIN NewsSource s ON c.sourceID = s.SourceID WHERE n.Deleted = 0 " + (SourceID.SelectedValue == "-1" ? "AND s.Favourite = 1 " : (SourceID.SelectedValue != "0" ? "AND c.sourceID = " + Convert.ToInt32(SourceID.SelectedValue) + " " : "")) + "ORDER BY n.DT DESC", "newsSqlConnection");
             while (rs.Read())
             {
-                if (HttpContext.Current.Request.Form["rssIDdelete"] != null)
+                if (Request.Form["rssIDdelete"] != null)
                 {
-                    string s = "#" + HttpContext.Current.Request.Form["rssIDdelete"].ToString().Replace(" ", "").Replace(",", "#") + "#";
+                    string s = "#" + Request.Form["rssIDdelete"].ToString().Replace(" ", "").Replace(",", "#") + "#";
                     if (s.IndexOf("#" + rs.GetInt32(0) + "#") != -1)
                     {
                         Db.exec("UPDATE NewsRSS SET Deleted = 1 WHERE rssID = " + rs.GetInt32(0), "newsSqlConnection");
@@ -243,7 +243,7 @@ namespace HW.Adm
                         Db.exec("UPDATE News SET ImageID = " + newsImageID + " WHERE NewsID = " + newsID, "newsSqlConnection");
                     }
                 }
-                catch (Exception ex) { HttpContext.Current.Response.Write(ex.Message); }
+                catch (Exception ex) { Response.Write(ex.Message); }
             }
             else
             {
@@ -364,8 +364,8 @@ namespace HW.Adm
             while (rs.Read())
             {
                 buffer += "<tr id=\"h" + rs.GetInt32(0) + "\">" +
-                    "<td valign=\"top\"><input type=\"radio\" value=\"" + rs.GetInt32(0) + "\" onclick=\"toggleNews();\" name=\"rssID\"" + (HttpContext.Current.Request.Form["rssID"] != null && ("#" + HttpContext.Current.Request.Form["rssID"].ToString().Replace(" ", "").Replace(",", "#") + "#").IndexOf("#" + rs.GetInt32(0) + "#") != -1 ? " checked" : "") + "></td>" +
-                    "<td valign=\"top\"><input type=\"checkbox\" value=\"" + rs.GetInt32(0) + "\" name=\"rssIDdelete\"" + (HttpContext.Current.Request.Form["rssIDdelete"] != null && ("#" + HttpContext.Current.Request.Form["rssIDdelete"].ToString().Replace(" ", "").Replace(",", "#") + "#").IndexOf("#" + rs.GetInt32(0) + "#") != -1 ? " checked" : "") + "></td>" +
+                    "<td valign=\"top\"><input type=\"radio\" value=\"" + rs.GetInt32(0) + "\" onclick=\"toggleNews();\" name=\"rssID\"" + (Request.Form["rssID"] != null && ("#" + Request.Form["rssID"].ToString().Replace(" ", "").Replace(",", "#") + "#").IndexOf("#" + rs.GetInt32(0) + "#") != -1 ? " checked" : "") + "></td>" +
+                    "<td valign=\"top\"><input type=\"checkbox\" value=\"" + rs.GetInt32(0) + "\" name=\"rssIDdelete\"" + (Request.Form["rssIDdelete"] != null && ("#" + Request.Form["rssIDdelete"].ToString().Replace(" ", "").Replace(",", "#") + "#").IndexOf("#" + rs.GetInt32(0) + "#") != -1 ? " checked" : "") + "></td>" +
                     "<td valign=\"top\"><nobr>" + rs.GetDateTime(5).ToString("yyMMdd HH:mm") + "&nbsp;</nobr><input type=\"hidden\" name=\"rssDT" + rs.GetInt32(0) + "\" id=\"rssDT" + rs.GetInt32(0) + "\" value=\"" + rs.GetDateTime(5).ToString("yyyy-MM-dd HH:mm") + "\"></td>" +
                     "<td VALIGN=\"top\" id=\"t" + rs.GetInt32(0) + "\">" + rs.GetString(3) + "</td><td VALIGN=\"top\">&nbsp;<img id=\"i" + rs.GetInt32(0) + "\" src=\"img/LangID_" + rs.GetInt32(6) + ".gif\"/>&nbsp;</td>" +
                     "<td VALIGN=\"top\"><nobr><a href=\"" + rs.GetString(1) + "\" target=\"_blank\" class=\"noTD\">" + rs.GetString(7) + "</A></nobr></td>" +

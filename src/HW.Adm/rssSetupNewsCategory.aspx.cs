@@ -13,9 +13,9 @@ namespace HW.Adm
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack && HttpContext.Current.Request.QueryString["SID"] != null)
+            if (!IsPostBack && Request.QueryString["SID"] != null)
             {
-                SqlDataReader rs = Db.rs("SELECT NewsCategory, NewsCategoryShort, OnlyDirectFromFeed FROM NewsCategory WHERE NewsCategoryID = " + Convert.ToInt32(HttpContext.Current.Request.QueryString["SID"]), "newsSqlConnection");
+                SqlDataReader rs = Db.rs("SELECT NewsCategory, NewsCategoryShort, OnlyDirectFromFeed FROM NewsCategory WHERE NewsCategoryID = " + Convert.ToInt32(Request.QueryString["SID"]), "newsSqlConnection");
                 if (rs.Read())
                 {
                     NewsCategory.Text = rs.GetString(0);
@@ -30,16 +30,16 @@ namespace HW.Adm
 
         void Save_Click(object sender, EventArgs e)
         {
-            if (HttpContext.Current.Request.QueryString["SID"] != null)
+            if (Request.QueryString["SID"] != null)
             {
-                Db.exec("UPDATE NewsCategory SET NewsCategory = '" + NewsCategory.Text.Replace("'", "''") + "', NewsCategoryShort = '" + NewsCategoryShort.Text.Replace("'", "''") + "', OnlyDirectFromFeed = " + (OnlyDirectFromFeed.Checked ? "1" : "0") + " WHERE NewsCategoryID = " + Convert.ToInt32(HttpContext.Current.Request.QueryString["SID"]), "newsSqlConnection");
+                Db.exec("UPDATE NewsCategory SET NewsCategory = '" + NewsCategory.Text.Replace("'", "''") + "', NewsCategoryShort = '" + NewsCategoryShort.Text.Replace("'", "''") + "', OnlyDirectFromFeed = " + (OnlyDirectFromFeed.Checked ? "1" : "0") + " WHERE NewsCategoryID = " + Convert.ToInt32(Request.QueryString["SID"]), "newsSqlConnection");
             }
             else
             {
                 Db.exec("INSERT INTO NewsCategory (NewsCategory, NewsCategoryShort, OnlyDirectFromFeed) VALUES ('" + NewsCategory.Text.Replace("'", "''") + "', '" + NewsCategoryShort.Text.Replace("'", "''") + "'," + (OnlyDirectFromFeed.Checked ? "1" : "0") + ")", "newsSqlConnection");
             }
 
-            HttpContext.Current.Response.Redirect("rss.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+            Response.Redirect("rss.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
         }
     }
 }

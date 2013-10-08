@@ -60,7 +60,7 @@ namespace HW.Adm
                 "ReminderSubject = '" + ReminderSubject.Text.Replace("'", "''") + "' " +
                 "WHERE SystemID = 1");
 
-            HttpContext.Current.Response.Redirect("messages.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+            Response.Redirect("messages.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
         }
 
         private string nextReminderSend(int type, string[] settings, DateTime lastLogin, DateTime lastSend)

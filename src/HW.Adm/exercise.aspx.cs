@@ -15,7 +15,7 @@ namespace HW.Adm
         {
             SqlDataReader rs, rs2;
 
-            if (HttpContext.Current.Request.QueryString["MoveUp"] != null)
+            if (Request.QueryString["MoveUp"] != null)
             {
                 rs = Db.rs("SELECT " +
                         "ExerciseID, " +
@@ -23,7 +23,7 @@ namespace HW.Adm
                         "ExerciseSortOrder, " +
                         "Minutes " +
                         "FROM Exercise " +
-                        "WHERE ExerciseID = " + Convert.ToInt32(HttpContext.Current.Request.QueryString["MoveUp"]));
+                        "WHERE ExerciseID = " + Convert.ToInt32(Request.QueryString["MoveUp"]));
                 if (rs.Read())
                 {
                     rs2 = Db.rs("SELECT TOP 1 " +
@@ -42,15 +42,15 @@ namespace HW.Adm
                 }
                 rs.Close();
 
-                HttpContext.Current.Response.Redirect("exercise.aspx", true);
+                Response.Redirect("exercise.aspx", true);
             }
-            if (HttpContext.Current.Request.QueryString["MoveUpArea"] != null)
+            if (Request.QueryString["MoveUpArea"] != null)
             {
                 rs = Db.rs("SELECT " +
                         "ExerciseAreaID, " +
                         "ExerciseAreaSortOrder " +
                         "FROM ExerciseArea " +
-                        "WHERE ExerciseAreaID = " + Convert.ToInt32(HttpContext.Current.Request.QueryString["MoveUpArea"]));
+                        "WHERE ExerciseAreaID = " + Convert.ToInt32(Request.QueryString["MoveUpArea"]));
                 if (rs.Read())
                 {
                     rs2 = Db.rs("SELECT TOP 1 " +
@@ -68,7 +68,7 @@ namespace HW.Adm
                 }
                 rs.Close();
 
-                HttpContext.Current.Response.Redirect("exercise.aspx", true);
+                Response.Redirect("exercise.aspx", true);
             }
 
             int cx = 0;

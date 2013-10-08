@@ -16,11 +16,11 @@ namespace HW.Adm
         protected void Page_Load(object sender, EventArgs e)
         {
             Save.Click += new EventHandler(Save_Click);
-            eaid = (HttpContext.Current.Request.QueryString["ExerciseAreaID"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["ExerciseAreaID"]) : 0);
-            if (HttpContext.Current.Request.QueryString["DeleteImage"] != null)
+            eaid = (Request.QueryString["ExerciseAreaID"] != null ? Convert.ToInt32(Request.QueryString["ExerciseAreaID"]) : 0);
+            if (Request.QueryString["DeleteImage"] != null)
             {
                 Db.exec("UPDATE ExerciseArea SET ExerciseAreaImg = NULL WHERE ExerciseAreaID = " + eaid);
-                HttpContext.Current.Response.Redirect("exerciseAreaSetup.aspx?ExerciseAreaID=" + eaid + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+                Response.Redirect("exerciseAreaSetup.aspx?ExerciseAreaID=" + eaid + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
             }
             SqlDataReader rs = Db.rs("SELECT LangID FROM Lang");
             while (rs.Read())
@@ -124,7 +124,7 @@ namespace HW.Adm
                 {
                 }
             }
-            HttpContext.Current.Response.Redirect("exerciseAreaSetup.aspx?ExerciseAreaID=" + eaid + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+            Response.Redirect("exerciseAreaSetup.aspx?ExerciseAreaID=" + eaid + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
         }
     }
 }

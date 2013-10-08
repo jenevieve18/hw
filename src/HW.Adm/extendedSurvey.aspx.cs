@@ -18,9 +18,9 @@ namespace HW.Adm
 
             ExtendedSurvey.Text = "<TR>" +
             "<TD><I>Database total</I></TD>" +
-            "<TD><INPUT TYPE=\"radio\" NAME=\"Measure0\" VALUE=\"1\"" + (HttpContext.Current.Request.Form["Measure0"] != null && HttpContext.Current.Request.Form["Measure0"] == "1" ? " CHECKED" : "") + "/></TD>" +
-            "<TD><INPUT TYPE=\"radio\" NAME=\"Measure0\" VALUE=\"2\"" + (HttpContext.Current.Request.Form["Measure0"] != null && HttpContext.Current.Request.Form["Measure0"] == "2" ? " CHECKED" : "") + "/></TD>" +
-            "<TD><INPUT TYPE=\"radio\" NAME=\"Measure0\" VALUE=\"0\"" + (HttpContext.Current.Request.Form["Measure0"] == null || HttpContext.Current.Request.Form["Measure0"] == "0" ? " CHECKED" : "") + "/></TD>" +
+            "<TD><INPUT TYPE=\"radio\" NAME=\"Measure0\" VALUE=\"1\"" + (Request.Form["Measure0"] != null && Request.Form["Measure0"] == "1" ? " CHECKED" : "") + "/></TD>" +
+            "<TD><INPUT TYPE=\"radio\" NAME=\"Measure0\" VALUE=\"2\"" + (Request.Form["Measure0"] != null && Request.Form["Measure0"] == "2" ? " CHECKED" : "") + "/></TD>" +
+            "<TD><INPUT TYPE=\"radio\" NAME=\"Measure0\" VALUE=\"0\"" + (Request.Form["Measure0"] == null || Request.Form["Measure0"] == "0" ? " CHECKED" : "") + "/></TD>" +
             "</TR>";
 
             int cx = 0;
@@ -56,9 +56,9 @@ namespace HW.Adm
                 }
                 ExtendedSurvey.Text += "<TR" + (cx % 2 == 0 ? " style=\"background-color:#cccccc;\"" : "") + ">" +
                     "<TD>" + rs.GetString(0) + (rs.IsDBNull(2) ? ", " + rs.GetString(2) : "") + (!rs.IsDBNull(3) ? ", " + rs.GetString(3) : "") + (!rs.IsDBNull(6) ? ", " + rs.GetString(6) : "") + "</TD>" +
-                    "<TD><INPUT TYPE=\"radio\" NAME=\"Measure" + rs.GetInt32(1) + "\" VALUE=\"1\"" + (HttpContext.Current.Request.Form["Measure" + rs.GetInt32(1) + ""] != null && HttpContext.Current.Request.Form["Measure" + rs.GetInt32(1) + ""] == "1" ? " CHECKED" : "") + "/></TD>" +
-                    "<TD><INPUT TYPE=\"radio\" NAME=\"Measure" + rs.GetInt32(1) + "\" VALUE=\"2\"" + (HttpContext.Current.Request.Form["Measure" + rs.GetInt32(1) + ""] != null && HttpContext.Current.Request.Form["Measure" + rs.GetInt32(1) + ""] == "2" ? " CHECKED" : "") + "/></TD>" +
-                    "<TD><INPUT TYPE=\"radio\" NAME=\"Measure" + rs.GetInt32(1) + "\" VALUE=\"0\"" + (HttpContext.Current.Request.Form["Measure" + rs.GetInt32(1) + ""] == null || HttpContext.Current.Request.Form["Measure" + rs.GetInt32(1) + ""] == "0" ? " CHECKED" : "") + "/></TD>" +
+                    "<TD><INPUT TYPE=\"radio\" NAME=\"Measure" + rs.GetInt32(1) + "\" VALUE=\"1\"" + (Request.Form["Measure" + rs.GetInt32(1) + ""] != null && Request.Form["Measure" + rs.GetInt32(1) + ""] == "1" ? " CHECKED" : "") + "/></TD>" +
+                    "<TD><INPUT TYPE=\"radio\" NAME=\"Measure" + rs.GetInt32(1) + "\" VALUE=\"2\"" + (Request.Form["Measure" + rs.GetInt32(1) + ""] != null && Request.Form["Measure" + rs.GetInt32(1) + ""] == "2" ? " CHECKED" : "") + "/></TD>" +
+                    "<TD><INPUT TYPE=\"radio\" NAME=\"Measure" + rs.GetInt32(1) + "\" VALUE=\"0\"" + (Request.Form["Measure" + rs.GetInt32(1) + ""] == null || Request.Form["Measure" + rs.GetInt32(1) + ""] == "0" ? " CHECKED" : "") + "/></TD>" +
                     "</TR>";
                 cx++;
             }
@@ -103,8 +103,8 @@ namespace HW.Adm
         {
             string qs1 = "", qs2 = "";
 
-            if (HttpContext.Current.Request.Form["Measure0"] != null && HttpContext.Current.Request.Form["Measure0"] == "1") { qs1 = ",0"; }
-            if (HttpContext.Current.Request.Form["Measure0"] != null && HttpContext.Current.Request.Form["Measure0"] == "2") { qs2 = ",0"; }
+            if (Request.Form["Measure0"] != null && Request.Form["Measure0"] == "1") { qs1 = ",0"; }
+            if (Request.Form["Measure0"] != null && Request.Form["Measure0"] == "2") { qs2 = ",0"; }
 
             SqlDataReader rs = Db.rs("SELECT " +
                      "s.Sponsor, " +
@@ -120,8 +120,8 @@ namespace HW.Adm
                      "ORDER BY s.Sponsor, ses.Internal, ses.RoundText");
             while (rs.Read())
             {
-                if (HttpContext.Current.Request.Form["Measure" + rs.GetInt32(1)] != null && HttpContext.Current.Request.Form["Measure" + rs.GetInt32(1)] == "1" && qs1 != ",0") { qs1 += "," + rs.GetInt32(1).ToString(); }
-                if (HttpContext.Current.Request.Form["Measure" + rs.GetInt32(1)] != null && HttpContext.Current.Request.Form["Measure" + rs.GetInt32(1)] == "2" && qs2 != ",0") { qs2 += "," + rs.GetInt32(1).ToString(); }
+                if (Request.Form["Measure" + rs.GetInt32(1)] != null && Request.Form["Measure" + rs.GetInt32(1)] == "1" && qs1 != ",0") { qs1 += "," + rs.GetInt32(1).ToString(); }
+                if (Request.Form["Measure" + rs.GetInt32(1)] != null && Request.Form["Measure" + rs.GetInt32(1)] == "2" && qs2 != ",0") { qs2 += "," + rs.GetInt32(1).ToString(); }
             }
             rs.Close();
 

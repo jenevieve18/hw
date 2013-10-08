@@ -29,9 +29,9 @@ namespace HW.Adm
                 }
                 rs.Close();
 
-                if (HttpContext.Current.Request.QueryString["CID"] != null)
+                if (Request.QueryString["CID"] != null)
                 {
-                    rs = Db.rs("SELECT sourceID, feed, langID, pause, NewsCategoryID, internal FROM NewsChannel WHERE channelID = " + Convert.ToInt32(HttpContext.Current.Request.QueryString["CID"]), "newsSqlConnection");
+                    rs = Db.rs("SELECT sourceID, feed, langID, pause, NewsCategoryID, internal FROM NewsChannel WHERE channelID = " + Convert.ToInt32(Request.QueryString["CID"]), "newsSqlConnection");
                     if (rs.Read())
                     {
                         sourceID.SelectedValue = rs.GetInt32(0).ToString();
@@ -50,16 +50,16 @@ namespace HW.Adm
 
         void Save_Click(object sender, EventArgs e)
         {
-            if (HttpContext.Current.Request.QueryString["CID"] != null)
+            if (Request.QueryString["CID"] != null)
             {
-                Db.exec("UPDATE NewsChannel SET sourceID = " + sourceID.SelectedValue + ", feed = '" + feed.Text.Replace("'", "''") + "', internal = '" + Internal.Text.Replace("'", "''") + "', langID = " + langID.SelectedValue + ", pause = " + (Pause.Text != "" ? "'" + Convert.ToDateTime(Pause.Text).AddHours(-1).ToString("yyyy-MM-dd HH:mm") + "'" : "NULL") + ", NewsCategoryID = " + NewsCategoryID.SelectedValue + " WHERE channelID = " + Convert.ToInt32(HttpContext.Current.Request.QueryString["CID"]), "newsSqlConnection");
+                Db.exec("UPDATE NewsChannel SET sourceID = " + sourceID.SelectedValue + ", feed = '" + feed.Text.Replace("'", "''") + "', internal = '" + Internal.Text.Replace("'", "''") + "', langID = " + langID.SelectedValue + ", pause = " + (Pause.Text != "" ? "'" + Convert.ToDateTime(Pause.Text).AddHours(-1).ToString("yyyy-MM-dd HH:mm") + "'" : "NULL") + ", NewsCategoryID = " + NewsCategoryID.SelectedValue + " WHERE channelID = " + Convert.ToInt32(Request.QueryString["CID"]), "newsSqlConnection");
             }
             else
             {
                 Db.exec("INSERT INTO NewsChannel (sourceID, internal, feed, langID, pause, NewsCategoryID) VALUES (" + sourceID.SelectedValue + ",'" + Internal.Text.Replace("'", "''") + "','" + feed.Text.Replace("'", "''") + "', " + langID.SelectedValue + ", " + (Pause.Text != "" ? "'" + Convert.ToDateTime(Pause.Text).AddHours(-1).ToString("yyyy-MM-dd HH:mm") + "'" : "NULL") + ", " + NewsCategoryID.SelectedValue + ")", "newsSqlConnection");
             }
 
-            HttpContext.Current.Response.Redirect("rss.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+            Response.Redirect("rss.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
         }
     }
 }

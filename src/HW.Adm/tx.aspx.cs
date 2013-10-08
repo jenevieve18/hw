@@ -14,9 +14,9 @@ namespace HW.Adm
         protected void Page_Load(object sender, EventArgs e)
         {
             int id = 0; string fn = "";
-            if (HttpContext.Current.Request.QueryString["FUID"] != null)
+            if (Request.QueryString["FUID"] != null)
             {
-                id = Convert.ToInt32(HttpContext.Current.Request.QueryString["FUID"]);
+                id = Convert.ToInt32(Request.QueryString["FUID"]);
             }
             string org = "";
             SqlDataReader rs = Db.rs("SELECT FileUploadID, Filename, Organisation, Description FROM FileUpload ORDER BY Organisation");
@@ -35,22 +35,22 @@ namespace HW.Adm
             }
             rs.Close();
 
-            if (HttpContext.Current.Request.QueryString["FUID"] != null)
+            if (Request.QueryString["FUID"] != null)
             {
-                HttpContext.Current.Response.Clear();
-                HttpContext.Current.Response.ClearHeaders();
-                HttpContext.Current.Response.Charset = "UTF-8";
-                HttpContext.Current.Response.ContentEncoding = System.Text.Encoding.UTF8;
-                //HttpContext.Current.Response.ContentType = "application/xml";
-                HttpContext.Current.Response.WriteFile(System.Configuration.ConfigurationManager.AppSettings["hwUNC"] + "\\tx\\" + id);
+                Response.Clear();
+                Response.ClearHeaders();
+                Response.Charset = "UTF-8";
+                Response.ContentEncoding = System.Text.Encoding.UTF8;
+                //Response.ContentType = "application/xml";
+                Response.WriteFile(System.Configuration.ConfigurationManager.AppSettings["hwUNC"] + "\\tx\\" + id);
                 try
                 {
-                    HttpContext.Current.Response.AddHeader("content-length", (new System.IO.FileInfo(System.Configuration.ConfigurationManager.AppSettings["hwUNC"] + "\\tx\\" + id)).Length.ToString());
+                    Response.AddHeader("content-length", (new System.IO.FileInfo(System.Configuration.ConfigurationManager.AppSettings["hwUNC"] + "\\tx\\" + id)).Length.ToString());
                 }
                 catch (Exception) { }
-                HttpContext.Current.Response.AppendHeader("content-disposition", "attachment; filename=\"" + fn + "\"");
-                HttpContext.Current.Response.Flush();
-                HttpContext.Current.Response.End();
+                Response.AppendHeader("content-disposition", "attachment; filename=\"" + fn + "\"");
+                Response.Flush();
+                Response.End();
             }
         }
     }

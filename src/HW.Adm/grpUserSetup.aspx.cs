@@ -15,7 +15,7 @@ namespace HW.Adm
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            sponsorAdminID = (HttpContext.Current.Request.QueryString["SAID"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["SAID"]) : 0);
+            sponsorAdminID = (Request.QueryString["SAID"] != null ? Convert.ToInt32(Request.QueryString["SAID"]) : 0);
 
             if (!IsPostBack)
             {
@@ -135,7 +135,7 @@ namespace HW.Adm
             }
             rs.Close();
 
-            HttpContext.Current.Response.Redirect("grpUser.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+            Response.Redirect("grpUser.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
         }
     }
 }
