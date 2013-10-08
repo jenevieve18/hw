@@ -53,7 +53,9 @@
     <Reference Include="itextsharp">
       <HintPath>..\..\lib\itextsharp.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Office.Interop.Excel" />
+    <Reference Include="Microsoft.Office.Interop.Excel">
+      <HintPath>..\..\lib\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate">
       <HintPath>..\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
