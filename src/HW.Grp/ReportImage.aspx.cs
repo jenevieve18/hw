@@ -25,25 +25,25 @@ namespace HW.Grp
 		);
 		
 		bool HasAnswerKey {
-			get { return HttpContext.Current.Request.QueryString["AK"] != null; }
+			get { return Request.QueryString["AK"] != null; }
 		}
 		
 		bool HasWidth {
-			get { return HttpContext.Current.Request.QueryString["W"] != null; }
+			get { return Request.QueryString["W"] != null; }
 		}
 		
 		bool HasHeight {
-			get { return HttpContext.Current.Request.QueryString["H"] != null; }
+			get { return Request.QueryString["H"] != null; }
 		}
 		
 		bool HasBackground {
-			get { return HttpContext.Current.Request.QueryString["BG"] != null; }
+			get { return Request.QueryString["BG"] != null; }
 		}
 		
 		int Width {
 			get {
 				if (HasWidth) {
-					return Convert.ToInt32(HttpContext.Current.Request.QueryString["W"]);
+					return Convert.ToInt32(Request.QueryString["W"]);
 				} else {
 					return 550;
 				}
@@ -53,7 +53,7 @@ namespace HW.Grp
 		int Height {
 			get {
 				if (HasHeight) {
-					return Convert.ToInt32(HttpContext.Current.Request.QueryString["H"]);
+					return Convert.ToInt32(Request.QueryString["H"]);
 				} else {
 					return 440;
 				}
@@ -63,7 +63,7 @@ namespace HW.Grp
 		string Background {
 			get {
 				if (HasBackground) {
-					return "#" + HttpContext.Current.Request.QueryString["BG"];
+					return "#" + Request.QueryString["BG"];
 				} else {
 					return "#EFEFEF";
 				}
@@ -76,30 +76,30 @@ namespace HW.Grp
 
 			ExtendedGraph g = null;
 
-			int GB = (HttpContext.Current.Request.QueryString["GB"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["GB"].ToString()) : 0);
-			bool stdev = (HttpContext.Current.Request.QueryString["STDEV"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["STDEV"]) == 1 : false);
+			int GB = (Request.QueryString["GB"] != null ? Convert.ToInt32(Request.QueryString["GB"].ToString()) : 0);
+			bool stdev = (Request.QueryString["STDEV"] != null ? Convert.ToInt32(Request.QueryString["STDEV"]) == 1 : false);
 			
-			int fy = HttpContext.Current.Request.QueryString["FY"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["FY"]) : 0;
-			int ty = HttpContext.Current.Request.QueryString["TY"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["TY"]) : 0;
+			int fy = Request.QueryString["FY"] != null ? Convert.ToInt32(Request.QueryString["FY"]) : 0;
+			int ty = Request.QueryString["TY"] != null ? Convert.ToInt32(Request.QueryString["TY"]) : 0;
 			
-			int langID = (HttpContext.Current.Request.QueryString["LangID"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["LangID"]) : 0);
+			int langID = (Request.QueryString["LangID"] != null ? Convert.ToInt32(Request.QueryString["LangID"]) : 0);
 
-			int rpid = Convert.ToInt32(HttpContext.Current.Request.QueryString["RPID"]);
-			int PRUID = Convert.ToInt32(HttpContext.Current.Request.QueryString["PRUID"]);
+			int rpid = Convert.ToInt32(Request.QueryString["RPID"]);
+			int PRUID = Convert.ToInt32(Request.QueryString["PRUID"]);
 			
-			bool hasGrouping = HttpContext.Current.Request.QueryString["GRPNG"] != null || HttpContext.Current.Request.QueryString["GRPNG"] != "0";
+			bool hasGrouping = Request.QueryString["GRPNG"] != null || Request.QueryString["GRPNG"] != "0";
 			
-			string plot = HttpContext.Current.Request.QueryString["Plot"] != null ? HttpContext.Current.Request.QueryString["Plot"] : "";
-			string key = HttpContext.Current.Request.QueryString["AK"];
+			string plot = Request.QueryString["Plot"] != null ? Request.QueryString["Plot"] : "";
+			string key = Request.QueryString["AK"];
 			
-			int GRPNG = Convert.ToInt32(HttpContext.Current.Request.QueryString["GRPNG"]);
-			int SPONS = Convert.ToInt32((HttpContext.Current.Request.QueryString["SAID"] != null ? HttpContext.Current.Request.QueryString["SAID"] : HttpContext.Current.Session["SponsorAdminID"]));
-			int SID = Convert.ToInt32((HttpContext.Current.Request.QueryString["SID"] != null ? HttpContext.Current.Request.QueryString["SID"] : HttpContext.Current.Session["SponsorID"]));
-			string GID = (HttpContext.Current.Request.QueryString["GID"] != null ? HttpContext.Current.Request.QueryString["GID"].ToString().Replace(" ", "") : "");
+			int GRPNG = Convert.ToInt32(Request.QueryString["GRPNG"]);
+			int SPONS = Convert.ToInt32((Request.QueryString["SAID"] != null ? Request.QueryString["SAID"] : Session["SponsorAdminID"]));
+			int SID = Convert.ToInt32((Request.QueryString["SID"] != null ? Request.QueryString["SID"] : Session["SponsorID"]));
+			string GID = (Request.QueryString["GID"] != null ? Request.QueryString["GID"].ToString().Replace(" ", "") : "");
 			
-			object disabled = HttpContext.Current.Request.QueryString["DISABLED"];
+			object disabled = Request.QueryString["DISABLED"];
 			
-			int point = HttpContext.Current.Request.QueryString["ExtraPoint"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["ExtraPoint"]) : 0;
+			int point = Request.QueryString["ExtraPoint"] != null ? Convert.ToInt32(Request.QueryString["ExtraPoint"]) : 0;
 			
 			ReportPart r = service.ReadReportPart(rpid, langID);
 
