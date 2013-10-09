@@ -117,29 +117,9 @@ namespace HW.Grp
 					Sponsor = new Sponsor { Id = sponsorID }
 				};
 				if (sponsorAdminID != 0) {
-//					var a = new SponsorAdmin {
-//						Id = sponsorAdminID,
-//						ReadOnly = ReadOnly.Checked,
-//						Email = Email.Text,
-//						Name = Name.Text,
-//						Usr = Usr.Text,
-//						Password = Pas.Text,
-//						SuperUser = SuperUser.Checked,
-//						Sponsor = new Sponsor { Id = sponsorID }
-//					};
 					sponsorRepository.UpdateSponsorAdmin(a);
 				} else {
-//					var a = new SponsorAdmin {
-//						Email = Email.Text,
-//						Name = Name.Text,
-//						Usr = Usr.Text,
-//						Password = Pas.Text,
-//						Sponsor = new Sponsor { Id = sponsorID },
-//						SuperUser = SuperUser.Checked,
-//						ReadOnly = ReadOnly.Checked
-//					};
 					sponsorRepository.SaveSponsorAdmin(a);
-//					sponsorAdminID = Convert.ToInt32(Session["SponsorAdminID"]);
 					a = sponsorRepository.ReadSponsorAdmin(sponsorID, Usr.Text);
 					if (a != null) {
 						sponsorAdminID = a.Id;
@@ -157,7 +137,6 @@ namespace HW.Grp
 						}
 					}
 				}
-//				sponsorAdminID = Convert.ToInt32(Session["SponsorAdminID"]);
 				foreach (var d in departmentRepository.b(sponsorID, sponsorAdminID)) {
 //					if (!d.Admin.SuperUser) {
 						departmentRepository.DeleteSponsorAdminDepartment(sponsorAdminID, d.Department.Id);

@@ -479,19 +479,7 @@ namespace HW.Grp
 				Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
 		}
-
-//		public static bool isEmail(string inputEmail)
-//		{
-//			string strRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
-//				@"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
-//				@".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
-//			Regex re = new Regex(strRegex);
-//			if (re.IsMatch(inputEmail))
-//				return true;
-//			else
-//				return false;
-//		}
-//
+		
 		void SaveImportUser_Click(object sender, EventArgs e)
 		{
 			// 0 Email
@@ -519,7 +507,6 @@ namespace HW.Grp
 					string email = a.Split('\t')[0].Replace("'", "").Trim().ToLower();
 					if (email != "Email" && email != "")
 					{
-//						if (!isEmail(email))
 						if (!Db.isEmail(email))
 						{
 							valid = false;

@@ -96,8 +96,6 @@ namespace HW.Grp
 			
 			object disabled = Request.QueryString["DISABLED"];
 			
-//			int distribution = Request.QueryString["DIST"] != null ? Convert.ToInt32(Request.QueryString["DIST"]) : 0;
-			
 			reportParts = service.FindByProjectAndLanguage(pruid, langID);
 
             var exporter = ExportFactory.GetExporter2(service, type, HasAnswerKey, hasGrouping, disabled, Width, Height, Background, reportParts, key, Server.MapPath("HW template for Word.docx"));

@@ -295,7 +295,6 @@ namespace HW.Grp
 									{
 										string body = LoginTxt.Text;
 
-//										string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
 										string path = ConfigurationSettings.AppSettings["healthWatchURL"];
 										string personalLink = "" + path + "";
 										if (u.ReminderLink > 0)
@@ -346,8 +345,6 @@ namespace HW.Grp
 							#region Extended survey
 							sponsorRepository.UpdateExtendedSurveyLastEmailSent(sponsorExtendedSurveyID);
 
-							//HttpContext.Current.Response.Write(sql);
-							//HttpContext.Current.Response.End();
 							sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 							foreach (var u in userRepository.FindBySponsorWithExtendedSurvey2(sponsorID, sponsorAdminID, sponsorExtendedSurveyID))
 							{
@@ -359,7 +356,6 @@ namespace HW.Grp
 									{
 										string body = ExtendedSurveyTxt.Text;
 
-//										string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
 										string path = ConfigurationSettings.AppSettings["healthWatchURL"];
 										string personalLink = "" + path + "";
 										if (u.ReminderLink > 0)
@@ -419,7 +415,6 @@ namespace HW.Grp
 									{
 										string body = ExtendedSurveyFinishedTxt.Text;
 
-//										string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
 										string path = ConfigurationSettings.AppSettings["healthWatchURL"];
 										string personalLink = "" + path + "";
 										if (u.ReminderLink > 0)

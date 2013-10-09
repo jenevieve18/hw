@@ -31,7 +31,6 @@ namespace HW.Grp
 				foreach (var s in sponsorAdmins) {
 					labelManagers.Text += "<TR><TD>" + (!s.ReadOnly ? "" : "<img src=\"img/locked.gif\"/> ") + "<A HREF=\"managerSetup.aspx?SAID=" + s.Id.ToString() + "\">" + (s.Name == "" ? (s.Usr == "" ? "&gt; empty &lt;" : s.Usr) : s.Name) + "</A>&nbsp;&nbsp;</TD><TD>";
 					int cx = 0;
-//					foreach (var f in managerRepository.FindBySponsorAdmin(sponsorAdminID)) {
 					foreach (var f in managerRepository.FindBySponsorAdmin(s.Id)) {
 						labelManagers.Text += (cx++ > 0 ? ", " : "") + f.Function;
 					}

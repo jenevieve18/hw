@@ -74,9 +74,6 @@ namespace HW.Grp
 			if (Request.QueryString["LID"] != null) {
 				LID = Convert.ToInt32(Request.QueryString["LID"]);
 			}
-//			EAID = (Request.QueryString["EAID"] != null ? Convert.ToInt32(Request.QueryString["EAID"]) : 0);
-//			ECID = (Request.QueryString["ECID"] != null ? Convert.ToInt32(Request.QueryString["ECID"]) : 0);
-//			int SORT = (Request.QueryString["SORT"] != null ? Convert.ToInt32(Request.QueryString["SORT"]) : 0);
 			EAID = ConvertHelper.ToInt32(Request.QueryString["EAID"]);
 			ECID = ConvertHelper.ToInt32(Request.QueryString["ECID"]);
 			int SORT = ConvertHelper.ToInt32(Request.QueryString["SORT"]);
