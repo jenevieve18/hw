@@ -12,14 +12,14 @@ namespace HW.Grp
 {
 	public partial class ManagerSetup : System.Web.UI.Page
 	{
+		protected IList<SponsorAdminDepartment> sponsorAdminDepartments;
+		protected string errorMessage = string.Empty;
 		int sponsorAdminID = 0;
 		int sponsorID = 0;
 
 		IDepartmentRepository departmentRepository = AppContext.GetRepositoryFactory().CreateDepartmentRepository();
 		IManagerFunctionRepository managerRepository = AppContext.GetRepositoryFactory().CreateManagerFunctionRepository();
 		ISponsorRepository sponsorRepository = AppContext.GetRepositoryFactory().CreateSponsorRepository();
-		protected IList<SponsorAdminDepartment> sponsorAdminDepartments;
-		protected string errorMessage = string.Empty;
 
 		bool HasSAID {
 			get { return Request.QueryString["SAID"] != null; }

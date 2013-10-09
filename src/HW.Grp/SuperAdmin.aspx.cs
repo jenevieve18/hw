@@ -61,18 +61,18 @@ namespace HW.Grp
 
 //			string query = string.Format(
 //				@"
-//SELECT s.Sponsor,
+			//SELECT s.Sponsor,
 //	ses.ProjectRoundUnitID,
 //	ISNULL(r.SurveyID, ss.SurveyID),
 //	ss.Internal
-//FROM Sponsor s
-//INNER JOIN SponsorProjectRoundUnit ses ON ses.SponsorID = s.SponsorID
-//INNER JOIN eform..ProjectRoundUnit r ON ses.ProjectRoundUnitID = r.ProjectRoundUnitID
-//INNER JOIN eform..ProjectRound rr ON r.ProjectRoundID = rr.ProjectRoundID
-//INNER JOIN eform..Survey ss ON ISNULL(r.SurveyID, ss.SurveyID) = ss.SurveyID
-//INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID
-//WHERE sas.SuperAdminID = {0}
-//ORDER BY s.Sponsor, ses.Nav",
+			//FROM Sponsor s
+			//INNER JOIN SponsorProjectRoundUnit ses ON ses.SponsorID = s.SponsorID
+			//INNER JOIN eform..ProjectRoundUnit r ON ses.ProjectRoundUnitID = r.ProjectRoundUnitID
+			//INNER JOIN eform..ProjectRound rr ON r.ProjectRoundID = rr.ProjectRoundID
+			//INNER JOIN eform..Survey ss ON ISNULL(r.SurveyID, ss.SurveyID) = ss.SurveyID
+			//INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID
+			//WHERE sas.SuperAdminID = {0}
+			//ORDER BY s.Sponsor, ses.Nav",
 //				Convert.ToInt32(Session["SuperAdminID"])
 //			);
 //			SqlDataReader rs = Db.rs(query);
@@ -93,19 +93,21 @@ namespace HW.Grp
 				}
 			}
 //			rs.Close();
-
 			if (qs1 != "")
 			{
 				//Response.Redirect("http://" + Request.Url.Host + Request.Url.PathAndQuery.Substring(0, Request.Url.PathAndQuery.LastIndexOf("/")) + "/superstats.aspx?" +
-				Response.Redirect("superstats.aspx?" +
-				                  "N=" + not.Substring(1) + "" +
-				                  "&FDT=" + FromDT.SelectedValue + "" +
-				                  "&TDT=" + ToDT.SelectedValue + "" +
-				                  "&R1=" + Measure2Txt1.Text + "" +
-				                  "&R2=" + Measure2Txt2.Text + "" +
-				                  "&RNDS1=" + qs1.Substring(1) +
-				                  (qs2 != "" ? "&RNDS2=" + qs2.Substring(1) : "") +
-				                  "&RID=" + ReportID.SelectedValue, true);
+				Response.Redirect(
+					"superstats.aspx?" +
+					"N=" + not.Substring(1) + "" +
+					"&FDT=" + FromDT.SelectedValue + "" +
+					"&TDT=" + ToDT.SelectedValue + "" +
+					"&R1=" + Measure2Txt1.Text + "" +
+					"&R2=" + Measure2Txt2.Text + "" +
+					"&RNDS1=" + qs1.Substring(1) +
+					(qs2 != "" ? "&RNDS2=" + qs2.Substring(1) : "") +
+					"&RID=" + ReportID.SelectedValue,
+					true
+				);
 			}
 		}
 
@@ -122,19 +124,19 @@ namespace HW.Grp
 
 //			string query = string.Format(
 //				@"
-//SELECT s.Sponsor,
+			//SELECT s.Sponsor,
 //	ses.ProjectRoundID,
 //	ses.Internal,
 //	ses.RoundText,
 //	ss.SurveyID,
 //	ss.Internal
-//FROM Sponsor s
-//INNER JOIN SponsorExtendedSurvey ses ON ses.SponsorID = s.SponsorID
-//INNER JOIN eform..ProjectRound r ON ses.ProjectRoundID = r.ProjectRoundID
-//INNER JOIN eform..Survey ss ON r.SurveyID = ss.SurveyID
-//INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID
-//WHERE sas.SuperAdminID =  {0}
-//ORDER BY s.Sponsor, ses.Internal, ses.RoundText",
+			//FROM Sponsor s
+			//INNER JOIN SponsorExtendedSurvey ses ON ses.SponsorID = s.SponsorID
+			//INNER JOIN eform..ProjectRound r ON ses.ProjectRoundID = r.ProjectRoundID
+			//INNER JOIN eform..Survey ss ON r.SurveyID = ss.SurveyID
+			//INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID
+			//WHERE sas.SuperAdminID =  {0}
+			//ORDER BY s.Sponsor, ses.Internal, ses.RoundText",
 //				Convert.ToInt32(Session["SuperAdminID"])
 //			);
 //			SqlDataReader rs = Db.rs(query);
@@ -155,12 +157,14 @@ namespace HW.Grp
 				}
 			}
 //			rs.Close();
-
 			if (qs1 != "")
 			{
-				Response.Redirect("" + System.Configuration.ConfigurationSettings.AppSettings["eFormURL"] + "feedback.aspx?" +
-				                  "RNDS=" + not.Substring(1) + "" +
-				                  "&R1=" + MeasureTxt1.Text + "&R2=" + MeasureTxt2.Text + "&RNDS1=" + qs1.Substring(1) + (qs2 != "" ? "&RNDS2=" + qs2.Substring(1) : "") + "&SID=" + SurveyID.SelectedValue + "&SN=" + SurveyName.Text, true);
+				Response.Redirect(
+					"" + System.Configuration.ConfigurationSettings.AppSettings["eFormURL"] + "feedback.aspx?" +
+					"RNDS=" + not.Substring(1) + "" +
+					"&R1=" + MeasureTxt1.Text + "&R2=" + MeasureTxt2.Text + "&RNDS1=" + qs1.Substring(1) + (qs2 != "" ? "&RNDS2=" + qs2.Substring(1) : "") + "&SID=" + SurveyID.SelectedValue + "&SN=" + SurveyName.Text,
+					true
+				);
 			}
 		}
 
@@ -179,20 +183,20 @@ namespace HW.Grp
 			int cx = 0, bx = 0;
 //			string query = string.Format(
 //				@"
-//SELECT s.Sponsor,
+			//SELECT s.Sponsor,
 //	ses.ProjectRoundID,
 //	ses.Internal,
 //	ses.RoundText,
 //	ss.SurveyID,
 //	ss.Internal,
 //	(SELECT COUNT(*) FROM eform..Answer a WHERE a.ProjectRoundID = r.ProjectRoundID AND a.EndDT IS NOT NULL) AS CX
-//FROM Sponsor s
-//INNER JOIN SponsorExtendedSurvey ses ON ses.SponsorID = s.SponsorID
-//INNER JOIN eform..ProjectRound r ON ses.ProjectRoundID = r.ProjectRoundID
-//INNER JOIN eform..Survey ss ON r.SurveyID = ss.SurveyID
-//INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID
-//WHERE s.Deleted IS NULL AND sas.SuperAdminID = {0}
-//ORDER BY s.Sponsor, ses.Internal, ses.RoundText",
+			//FROM Sponsor s
+			//INNER JOIN SponsorExtendedSurvey ses ON ses.SponsorID = s.SponsorID
+			//INNER JOIN eform..ProjectRound r ON ses.ProjectRoundID = r.ProjectRoundID
+			//INNER JOIN eform..Survey ss ON r.SurveyID = ss.SurveyID
+			//INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID
+			//WHERE s.Deleted IS NULL AND sas.SuperAdminID = {0}
+			//ORDER BY s.Sponsor, ses.Internal, ses.RoundText",
 //				Convert.ToInt32(Session["SuperAdminID"])
 //			);
 //			SqlDataReader rs = Db.rs(query);
@@ -246,7 +250,7 @@ namespace HW.Grp
 			int totInvitees = 0, totNonClosedInvites = 0, totActive = 0, totNonClosedActive = 0;
 //			query = string.Format(
 //				@"
-//SELECT s.SponsorID,
+			//SELECT s.SponsorID,
 //	s.Sponsor,
 //	LEFT(REPLACE(CONVERT(VARCHAR(255),s.SponsorKey),'-',''),8),
 //	(SELECT COUNT(*) FROM SponsorExtendedSurvey ses WHERE ses.SponsorID = s.SponsorID),
@@ -256,10 +260,10 @@ namespace HW.Grp
 //	sas.SeeUsers,
 //	(SELECT COUNT(*) FROM SponsorInvite si WHERE si.SponsorID = s.SponsorID),
 //	s.Closed
-//FROM Sponsor s
-//INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID
-//WHERE s.Deleted IS NULL AND sas.SuperAdminID = {0}
-//ORDER BY s.Sponsor",
+			//FROM Sponsor s
+			//INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID
+			//WHERE s.Deleted IS NULL AND sas.SuperAdminID = {0}
+			//ORDER BY s.Sponsor",
 //				Convert.ToInt32(Session["SuperAdminID"])
 //			);
 //			rs = Db.rs(query);
@@ -368,24 +372,23 @@ namespace HW.Grp
 			//    SurveyID.Items.Add(new ListItem(rs.GetString(1), rs.GetInt32(0).ToString()));
 			//}
 			//rs.Close();
-
 			cx = 0; bx = 0;
 //			query = string.Format(
 //				@"
-//SELECT DISTINCT
+			//SELECT DISTINCT
 //	s.Sponsor,
 //	ses.ProjectRoundUnitID,
 //	ses.Nav,
 //	rep.ReportID,
 //	rep.Internal,
 //	(SELECT COUNT(DISTINCT a.ProjectRoundUserID) FROM eform..Answer a WHERE a.ProjectRoundUnitID = r.ProjectRoundUnitID AND a.EndDT >= '{0}' AND a.EndDT < '{1}') AS CX
-//FROM Sponsor s
-//INNER JOIN SponsorProjectRoundUnit ses ON ses.SponsorID = s.SponsorID
-//INNER JOIN eform..ProjectRoundUnit r ON ses.ProjectRoundUnitID = r.ProjectRoundUnitID
-//INNER JOIN eform..Report rep ON rep.ReportID = r.ReportID
-//INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID
-//WHERE s.Deleted IS NULL AND sas.SuperAdminID = {2}
-//ORDER BY s.Sponsor, ses.Nav",
+			//FROM Sponsor s
+			//INNER JOIN SponsorProjectRoundUnit ses ON ses.SponsorID = s.SponsorID
+			//INNER JOIN eform..ProjectRoundUnit r ON ses.ProjectRoundUnitID = r.ProjectRoundUnitID
+			//INNER JOIN eform..Report rep ON rep.ReportID = r.ReportID
+			//INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID
+			//WHERE s.Deleted IS NULL AND sas.SuperAdminID = {2}
+			//ORDER BY s.Sponsor, ses.Nav",
 //				DateTime.Now.AddMonths(-1).ToString("yyyy-MM-01"),
 //				DateTime.Now.ToString("yyyy-MM-01"),
 //				Convert.ToInt32(Session["SuperAdminID"])

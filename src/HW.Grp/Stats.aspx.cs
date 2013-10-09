@@ -112,6 +112,26 @@ namespace HW.Grp
 			}
 		}
 
+		IList<BaseModel> GetUrlModels(int grouping)
+		{
+			switch (grouping) {
+				case 1:
+				case 2:
+					return SelectedDepartments;
+				case 3:
+					return SelectedQuestions;
+				default:
+					return new List<BaseModel>();
+			}
+		}
+		
+		public void SetReportPartLanguages(IList<ReportPartLanguage> reportParts, IList<BaseModel> urlModels)
+		{
+			this.reportParts = reportParts;
+			this.urlModels = urlModels;
+			var selectedDepartments = SelectedDepartments;
+		}
+
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
@@ -140,26 +160,6 @@ namespace HW.Grp
 			Execute.Click += new EventHandler(Execute_Click);
 		}
 		
-		public void SetReportPartLanguages(IList<ReportPartLanguage> reportParts, IList<BaseModel> urlModels)
-		{
-			this.reportParts = reportParts;
-			this.urlModels = urlModels;
-			var selectedDepartments = SelectedDepartments;
-		}
-
-		IList<BaseModel> GetUrlModels(int grouping)
-		{
-			switch (grouping) {
-				case 1:
-				case 2:
-					return SelectedDepartments;
-				case 3:
-					return SelectedQuestions;
-				default:
-					return new List<BaseModel>();
-			}
-		}
-		
 		protected string GetReportImageUrl(int reportID, int reportPartLangID, Q additionalQuery)
 		{
 			var p = GetPage("reportImage.aspx", reportID, reportPartLangID);
@@ -183,6 +183,33 @@ namespace HW.Grp
 			return p.ToString();
 		}
 		
+		protected override void OnPreRender(EventArgs e)
+		{
+			Org.Visible = (Grouping.SelectedValue == "1" || Grouping.SelectedValue == "2");
+			BQ.Visible = (Grouping.SelectedValue == "3");
+		}
+		
+		protected string GetURL(IList<BaseModel> models)
+		{
+			string url = "";
+			foreach (var m in models) {
+				url += "," + m.Id;
+			}
+			url = "&GID=0" + url;
+			return url;
+		}
+		
+		protected Q GetGID(IList<BaseModel> models)
+		{
+			string v = "";
+			foreach (var m in models) {
+				v += "," + m.Id;
+			}
+			var q = new Q();
+			q.Add("GID", "0" + v);
+			return q;
+		}
+		
 		P GetPage(string page, int reportID, int reportPartLangID)
 		{
 			P p = new P(page);
@@ -199,33 +226,6 @@ namespace HW.Grp
 			p.Q.Add("GRPNG", Grouping.SelectedValue);
 			p.Q.AddIf(Request.QueryString["PLOT"] != null, "PLOT", Request.QueryString["PLOT"]);
 			return p;
-		}
-		
-		protected override void OnPreRender(EventArgs e)
-		{
-			Org.Visible = (Grouping.SelectedValue == "1" || Grouping.SelectedValue == "2");
-			BQ.Visible = (Grouping.SelectedValue == "3");
-		}
-		
-		protected string GetURL(IList<BaseModel> models)
-		{
-			string URL = "";
-			foreach (var m in models) {
-				URL += "," + m.Id;
-			}
-			URL = "&GID=0" + URL;
-			return URL;
-		}
-		
-		protected Q GetGID(IList<BaseModel> models)
-		{
-			string v = "";
-			foreach (var m in models) {
-				v += "," + m.Id;
-			}
-			var q = new Q();
-			q.Add("GID", "0" + v);
-			return q;
 		}
 
 		void Execute_Click(object sender, EventArgs e)

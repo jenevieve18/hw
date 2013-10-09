@@ -8,6 +8,14 @@ namespace HW.Grp
 {
 	public class Global : System.Web.HttpApplication
 	{
+		public override string GetVaryByCustomString(HttpContext context, string custom)
+		{
+			if (string.Equals(custom, "isMobileDevice", StringComparison.OrdinalIgnoreCase)) {
+				return context.Request.Browser.IsMobileDevice.ToString();
+			}
+			return base.GetVaryByCustomString(context, custom);
+		}
+		
 		protected void Application_Start(object sender, EventArgs e)
 		{
 			AppContext.SetRepositoryFactory(ConfigurationManager.AppSettings["RepositoryFactory"]);
@@ -27,18 +35,9 @@ namespace HW.Grp
 					// pages (where they exist). For example,
 					// if (HttpContext.Current.Handler is UserRegistration)
 					//     redirectTo = "~/Mobile/Register.aspx";
-
 					HttpContext.Current.Response.Redirect(redirectTo);
 				}
 			}
-		}
-		
-		public override string GetVaryByCustomString(HttpContext context, string custom)
-		{
-			if (string.Equals(custom, "isMobileDevice", StringComparison.OrdinalIgnoreCase)) {
-				return context.Request.Browser.IsMobileDevice.ToString();
-			}
-			return base.GetVaryByCustomString(context, custom);
 		}
 
 		protected void Application_BeginRequest(object sender, EventArgs e)

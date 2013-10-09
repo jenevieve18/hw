@@ -11,7 +11,6 @@ namespace HW.Grp.Mobile
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
-
 		}
 	}
 }

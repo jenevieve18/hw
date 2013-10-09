@@ -1,12 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+
 using HW.Core.Helpers;
 using HW.Core.Repositories.Sql;
-using System.Collections;
 
 namespace HW.Grp
 {
@@ -634,7 +633,11 @@ namespace HW.Grp
 
 //					decimal Qbmi = rs2.GetDecimal(10) / ((rs2.GetDecimal(11) / 100) * (rs2.GetDecimal(11) / 100));
 					decimal Qbmi = a.Values[10].ValueDecimal / ((a.Values[11].ValueDecimal / 100) * (a.Values[11].ValueDecimal / 100));
-					if (Qbmi > 30) { Qscore += 3; } else if (Qbmi >= 25) { Qscore += 1; }
+					if (Qbmi > 30) {
+						Qscore += 3;
+					} else if (Qbmi >= 25) {
+						Qscore += 1;
+					}
 
 //					if (rs2.GetDecimal(0) >= 65) { Qscore += 4; } else if (rs2.GetDecimal(0) >= 55) { Qscore += 3; } else if (rs2.GetDecimal(0) >= 45) { Qscore += 2; }
 					if (a.Values[0].ValueDecimal >= 65) {
@@ -655,23 +658,37 @@ namespace HW.Grp
 					}
 
 //					if ((rs2.GetInt32(3) == 342 && (rs2.GetInt32(4) == 322 || rs2.GetInt32(4) == 346)) || (rs2.GetInt32(3) == 343 && rs2.GetInt32(4) == 322)) { Qscore += 2; }
-					if ((a.Values[3].ValueInt == 342 && (a.Values[4].ValueInt == 322 || a.Values[4].ValueInt == 346)) || (a.Values[3].ValueInt == 343 && a.Values[4].ValueInt == 322)) { Qscore += 2; }
+					if ((a.Values[3].ValueInt == 342 && (a.Values[4].ValueInt == 322 || a.Values[4].ValueInt == 346)) || (a.Values[3].ValueInt == 343 && a.Values[4].ValueInt == 322)) {
+						Qscore += 2;
+					}
 
 //					if (rs2.GetInt32(5) == 417) { Qscore += 1; }
-					if (a.Values[5].ValueInt == 417) { Qscore += 1; }
+					if (a.Values[5].ValueInt == 417) {
+						Qscore += 1;
+					}
 
 //					if (!rs2.IsDBNull(6) && rs2.GetInt32(6) == 294 && !rs2.IsDBNull(7) && rs2.GetInt32(7) == 294) { Qscore += 2; }
-					if (a.Values[6].ValueInt == 294 && a.Values[7].ValueInt == 294) { Qscore += 2; }
+					if (a.Values[6].ValueInt == 294 && a.Values[7].ValueInt == 294) {
+						Qscore += 2;
+					}
 
 //					if (!rs2.IsDBNull(8) && rs2.GetInt32(8) == 294) { Qscore += 5; }
-					if (a.Values[8].ValueInt == 294) { Qscore += 5; }
+					if (a.Values[8].ValueInt == 294) {
+						Qscore += 5;
+					}
 
 //					if (rs2.GetInt32(9) == 428) { Qscore += 3; } else if (rs2.GetInt32(9) == 429) { Qscore += 5; }
-					if (a.Values[9].ValueInt == 428) { Qscore += 3; } else if (a.Values[9].ValueInt == 429) { Qscore += 5; }
+					if (a.Values[9].ValueInt == 428) {
+						Qscore += 3;
+					} else if (a.Values[9].ValueInt == 429) {
+						Qscore += 5;
+					}
 
 					if (Qscore >= 15) {
 //						if (!l.Contains(rs2.GetString(12))) { l.Add(rs2.GetString(12)); }
-						if (!l.Contains(a.ProjectRoundUser.Email)) { l.Add(a.ProjectRoundUser.Email	); }
+						if (!l.Contains(a.ProjectRoundUser.Email)) {
+							l.Add(a.ProjectRoundUser.Email	);
+						}
 						if (showIndividuals) {
 //							List.Text += "<br/>" + rs2.GetString(12);
 							List.Text += "<br/>" + a.ProjectRoundUser.Email;

@@ -73,7 +73,7 @@ namespace HW.Grp
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			int GB = (Request.QueryString["GB"] != null ? Convert.ToInt32(Request.QueryString["GB"].ToString()) : 0);
+			int gb = (Request.QueryString["GB"] != null ? Convert.ToInt32(Request.QueryString["GB"].ToString()) : 0);
 			int stdev = Convert.ToInt32(Request.QueryString["STDEV"]);
 			
 			int fy = Request.QueryString["FY"] != null ? Convert.ToInt32(Request.QueryString["FY"]) : 0;
@@ -103,7 +103,7 @@ namespace HW.Grp
 			
 			AddHeaderIf(exporter.HasContentDisposition2, "content-disposition", exporter.ContentDisposition2);
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
-			Write(exporter.Export2(GB, fy, ty, langID, pruid, grpng, spons, sid, gid, plot, path));
+			Write(exporter.Export2(gb, fy, ty, langID, pruid, grpng, spons, sid, gid, plot, path));
 		}
 		
 		void Write(object obj)

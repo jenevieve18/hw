@@ -8,14 +8,13 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Core;
 using HW.Core.Helpers;
-using HW.Core.Repositories;
 using HW.Core.Models;
+using HW.Core.Repositories;
 
 namespace HW.Grp
 {
 	public partial class Exercise : System.Web.UI.Page
 	{
-		int AX = 0;
 		protected int BX = 0;
 		protected int LID = 0;
 		protected int EAID;
@@ -27,6 +26,7 @@ namespace HW.Grp
 		protected IList<HW.Core.Models.Exercise> exercises;
 		protected int sponsorID;
 		protected int sponsorAdminID;
+		int AX = 0;
 		
 		public bool HasSelectedArea {
 			get { return SelectedArea != null; }
@@ -80,8 +80,8 @@ namespace HW.Grp
 			sortQS = "&SORT=" + SORT;
 
 			StringBuilder sb = new StringBuilder();
-			int rExerciseAreaID = 0;
-			int rExerciseID = 0;
+			int exerciseAreaID = 0;
+			int exerciseID = 0;
 
 			if (!IsPostBack) {
 				if (EAID == 0) {
@@ -141,7 +141,7 @@ namespace HW.Grp
 
 			exercises = exerciseRepository.FindByAreaAndCategory(EAID, ECID, LID, SORT);
 			foreach (var l in exercises) { // TODO:
-				if (l.Id != rExerciseID) {
+				if (l.Id != exerciseID) {
 					BX++;
 					if (AX > 0) {
 						sb.Append("</div><div class=\"bottom\">&nbsp;</div></div><!-- end .detail --> </div><!-- end .item -->");
@@ -176,8 +176,8 @@ namespace HW.Grp
 				}
 				sb.Append("'));\">" + l.CurrentType.TypeName + (l.CurrentType.SubTypeName != "" ? " (" + l.CurrentType.SubTypeName + ")" : "") + "</a>");
 
-				rExerciseAreaID = l.CurrentArea.Id;
-				rExerciseID = l.Id;
+				exerciseAreaID = l.CurrentArea.Id;
+				exerciseID = l.Id;
 				AX++;
 			}
 
