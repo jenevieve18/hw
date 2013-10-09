@@ -28,7 +28,7 @@ namespace HW.Grp
 				"FROM Report r " +
 				"INNER JOIN ReportPart rp ON r.ReportID = rp.ReportID " +
 				"INNER JOIN ReportPartLang rpl ON rp.ReportPartID = rpl.ReportPartID AND rpl.LangID = 1 " +
-				"WHERE r.ReportID = " + Convert.ToInt32(HttpContext.Current.Request.QueryString["RID"]) + " " +
+				"WHERE r.ReportID = " + Convert.ToInt32(Request.QueryString["RID"]) + " " +
 				"ORDER BY rp.SortOrder",
 				"eFormSqlConnection"
 			);
@@ -44,17 +44,17 @@ namespace HW.Grp
 				}
 
 				StatsImg.Text += "<tr><td><img src=\"superReportImage.aspx?" +
-					"N=" + (HttpContext.Current.Request.QueryString["N"] != null ? HttpContext.Current.Request.QueryString["N"] : "") + "&" +
-					"FDT=" + (HttpContext.Current.Request.QueryString["FDT"] != null ? HttpContext.Current.Request.QueryString["FDT"] : "") + "&" +
-					"TDT=" + (HttpContext.Current.Request.QueryString["TDT"] != null ? HttpContext.Current.Request.QueryString["TDT"] : "") + "&" +
-					"RNDS1=" + (HttpContext.Current.Request.QueryString["RNDS1"] != null ? HttpContext.Current.Request.QueryString["RNDS1"] : "") + "&" +
-					"RNDSD1=" + (HttpContext.Current.Request.QueryString["RNDSD1"] != null ? HttpContext.Current.Request.QueryString["RNDSD1"] : "") + "&" +
-					"PID1=" + (HttpContext.Current.Request.QueryString["PID1"] != null ? HttpContext.Current.Request.QueryString["PID1"] : "") + "&" +
-					"RNDS2=" + (HttpContext.Current.Request.QueryString["RNDS2"] != null ? HttpContext.Current.Request.QueryString["RNDS2"] : "") + "&" +
-					"RNDSD2=" + (HttpContext.Current.Request.QueryString["RNDSD2"] != null ? HttpContext.Current.Request.QueryString["RNDSD2"] : "") + "&" +
-					"PID2=" + (HttpContext.Current.Request.QueryString["PID2"] != null ? HttpContext.Current.Request.QueryString["PID2"] : "") + "&" +
-					"R1=" + (HttpContext.Current.Request.QueryString["R1"] != null ? HttpContext.Current.Request.QueryString["R1"] : "") + "&" +
-					"R2=" + (HttpContext.Current.Request.QueryString["R2"] != null ? HttpContext.Current.Request.QueryString["R2"] : "") + "&" +
+					"N=" + (Request.QueryString["N"] != null ? Request.QueryString["N"] : "") + "&" +
+					"FDT=" + (Request.QueryString["FDT"] != null ? Request.QueryString["FDT"] : "") + "&" +
+					"TDT=" + (Request.QueryString["TDT"] != null ? Request.QueryString["TDT"] : "") + "&" +
+					"RNDS1=" + (Request.QueryString["RNDS1"] != null ? Request.QueryString["RNDS1"] : "") + "&" +
+					"RNDSD1=" + (Request.QueryString["RNDSD1"] != null ? Request.QueryString["RNDSD1"] : "") + "&" +
+					"PID1=" + (Request.QueryString["PID1"] != null ? Request.QueryString["PID1"] : "") + "&" +
+					"RNDS2=" + (Request.QueryString["RNDS2"] != null ? Request.QueryString["RNDS2"] : "") + "&" +
+					"RNDSD2=" + (Request.QueryString["RNDSD2"] != null ? Request.QueryString["RNDSD2"] : "") + "&" +
+					"PID2=" + (Request.QueryString["PID2"] != null ? Request.QueryString["PID2"] : "") + "&" +
+					"R1=" + (Request.QueryString["R1"] != null ? Request.QueryString["R1"] : "") + "&" +
+					"R2=" + (Request.QueryString["R2"] != null ? Request.QueryString["R2"] : "") + "&" +
 					"RPID=" + rs.GetInt32(0) +
 					"\"/></td></tr>";
 
