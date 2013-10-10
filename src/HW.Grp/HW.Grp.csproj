@@ -54,6 +54,14 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Themes\Bootstrap\bootstrap-responsive.css" />
+    <Content Include="App_Themes\Bootstrap\bootstrap-responsive.min.css" />
+    <Content Include="App_Themes\Bootstrap\bootstrap.css" />
+    <Content Include="App_Themes\Bootstrap\bootstrap.min.css" />
+    <Content Include="App_Themes\Bootstrap\main.css" />
+    <Content Include="App_Themes\Grp\960.css" />
+    <Content Include="App_Themes\Grp\admin.css" />
+    <Content Include="App_Themes\Grp\site.css" />
     <Content Include="Default.aspx" />
     <Content Include="Exercise.aspx" />
     <Content Include="Export.aspx" />
@@ -79,7 +87,9 @@
     <Content Include="SuperAdmin.aspx" />
     <Content Include="SuperReportImage.aspx" />
     <Content Include="SuperStats.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -298,15 +308,18 @@
     <Content Include="App_Browsers\opera.browser" />
     <Content Include="App_Browsers\safari.browser" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Themes\Bootstrap\" />
-    <Folder Include="App_Themes\Grp\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Grp.Master" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="GrpMobile.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Themes\Bootstrap\Controls.skin" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Themes\Grp\Controls.skin" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
