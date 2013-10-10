@@ -9,6 +9,7 @@ using HW.Core;
 using HW.Core.Helpers;
 using HW.Core.Models;
 using HW.Core.Repositories;
+using HW.Core.Repositories.Sql;
 
 namespace HW.Grp
 {
@@ -24,7 +25,8 @@ namespace HW.Grp
 		IProjectRepository projRepository = AppContext.GetRepositoryFactory().CreateProjectRepository();
 		ISponsorRepository sponsorRepository = AppContext.GetRepositoryFactory().CreateSponsorRepository();
 		IDepartmentRepository departmentRepository = AppContext.GetRepositoryFactory().CreateDepartmentRepository();
-		IReportRepository reportRepository = AppContext.GetRepositoryFactory().CreateReportRepository();
+		//IReportRepository reportRepository = AppContext.GetRepositoryFactory().CreateReportRepository();
+		SqlReportRepository reportRepository = new SqlReportRepository();
 		
 		public IList<SponsorProjectRoundUnitLanguage> Languages {
 			set {
@@ -234,7 +236,10 @@ namespace HW.Grp
 			int selectedProjectRoundUnitID = Convert.ToInt32(ProjectRoundUnitID.SelectedValue);
 			int grouping = Convert.ToInt32(Grouping.SelectedValue);
 			
-			var reportParts = reportRepository.FindByProjectAndLanguage(selectedProjectRoundUnitID, selectedLangID);
+			var reportParts = reportRepository.FindByProjectAndLanguage2(selectedProjectRoundUnitID, selectedLangID);
+			if (reportParts.Count <= 0) {
+				reportParts = reportRepository.FindByProjectAndLanguage(selectedProjectRoundUnitID, selectedLangID);
+			}
 			SetReportPartLanguages(reportParts, GetUrlModels(grouping));
 		}
 	}

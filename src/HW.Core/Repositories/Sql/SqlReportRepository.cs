@@ -102,6 +102,44 @@ FROM Report"
 			return reports;
 		}
 		
+		public IList<ReportPartLanguage> FindByProjectAndLanguage2(int projectRoundID, int langID)
+		{
+			string query = string.Format(
+				@"
+SELECT rp.ReportPartID,
+	rpl.Subject,
+	rpl.Header,
+	rpl.Footer,
+	rp.Type,
+	rpl.ReportPartLangID
+FROM healthwatch..SponsorProjectRoundUnitDepartment pru
+INNER JOIN Report r ON r.ReportID = pru.ReportID
+INNER JOIN ReportPart rp ON r.ReportID = rp.ReportID
+INNER JOIN ReportPartLang rpl ON rp.ReportPartID = rpl.ReportPartID AND rpl.LangID = {1}
+WHERE pru.SponsorProjectRoundUnitID = {0}
+ORDER BY rp.SortOrder",
+				projectRoundID,
+				langID
+			);
+			var languages = new List<ReportPartLanguage>();
+			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
+				while (rs.Read()) {
+					var l = new ReportPartLanguage {
+						Id = rs.GetInt32(5),
+						ReportPart = new ReportPart {
+							Id = rs.GetInt32(0),
+							Type = rs.GetInt32(4)
+						},
+						Subject = rs.GetString(1),
+						Header = rs.GetString(2),
+						Footer = rs.GetString(3)
+					};
+					languages.Add(l);
+				}
+			}
+			return languages;
+		}
+		
 		public IList<ReportPartLanguage> FindByProjectAndLanguage(int projectRoundID, int langID)
 		{
 			string query = string.Format(
