@@ -1,16 +1,15 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="HW.Grp.Default" %>
+﻿<%@ Page Language="C#" Theme="" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="HW.Grp.Default" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
 <%@ Import Namespace="HW.Grp" %>
-<!DOCTYPE html>
 
+<!DOCTYPE html>
 <html lang="en">
 <head runat="server">
-    
     <title>HealthWatch.se / Group admin</title>
 	<meta http-equiv="Pragma" content="no-cache">
 	<meta http-equiv="Expires" content="-1">
 	<meta name="Robots" content="noarchive">
-	<script language="JavaScript">		window.history.forward(1);</script>
+	<script language="JavaScript">window.history.forward(1);</script>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<!--
@@ -23,8 +22,8 @@
 	<script type="text/javascript">		$(document).ready(function () { var descriptionS = $("#submenu .description").html(); $("#submenu a").mouseover(function () { $("#submenu .description").html($(this).html()); $("#submenu .active").css('background-position', 'center -80px'); }); $("#submenu a").mouseout(function () { $("#submenu .description").html(descriptionS); $("#submenu .active").css('background-position', 'center -120px'); }); });</script>
 	-->
 
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<link rel="stylesheet" href="css/bootstrap-responsive.css">
+	<link rel="stylesheet" href="~/css/bootstrap.css">
+	<link rel="stylesheet" href="~/css/bootstrap-responsive.css">
     <style type="text/css">
         body {
             padding-top: 40px;
