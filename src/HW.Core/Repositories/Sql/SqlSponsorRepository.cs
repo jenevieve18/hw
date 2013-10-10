@@ -214,6 +214,17 @@ WHERE SponsorID = {10}",
 			Db.exec(query, "healthWatchSqlConnection");
 		}
 		
+		public void UpdateSponsorAdminPassword(string password, int sponsorAdminID)
+		{
+			string query = string.Format(
+				@"
+UPDATE SponsorAdmin SET Pas = '{0}' WHERE SponsorAdminID = {1}",
+				password,
+				sponsorAdminID
+			);
+			Db2.exec(query);
+		}
+		
 		public void UpdateSponsorAdmin(SponsorAdmin a)
 		{
 			string p = (a.Password != "Not shown" && a.Password != "")
@@ -322,7 +333,7 @@ WHERE SponsorAdminID = {1} AND SponsorID = {0}",
 			string query = string.Format(
 				@"
 SELECT COUNT(*)
-FROM SponsorInvite si INNER JOIN [User] u ON si.UserID = u.UserID 
+FROM SponsorInvite si INNER JOIN [User] u ON si.UserID = u.UserID
 WHERE si.SponsorID = {0} AND u.Created < '{1}'",
 				sponsorID,
 				dt.ToString("yyyy-MM-dd")
