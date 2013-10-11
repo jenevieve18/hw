@@ -794,8 +794,7 @@ INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID
 WHERE a.EndDT IS NOT NULL
 AND YEAR(a.EndDT) >= {4}
 AND YEAR(a.EndDT) <= {5}
-GROUP BY a.ProjectRoundUserID, {1}(a.EndDT)
-",
+GROUP BY a.ProjectRoundUserID, {1}(a.EndDT)",
 				join,
 				groupBy,
 				questionID,
