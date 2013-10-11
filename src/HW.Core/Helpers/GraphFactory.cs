@@ -998,7 +998,6 @@ namespace HW.Core.Helpers
 							int lastDT = minDT - 1;
 							var answers = answerRepository.FindByQuestionAndOptionJoinedAndGrouped2(join[i].ToString(), groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty);
 							var d = new Department { Name = (string)desc[i] };
-							Console.WriteLine(d.Name);
 							departments.Add(d);
 							int ii = minDT;
 							int jj = 0;
