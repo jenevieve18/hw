@@ -1099,7 +1099,7 @@ ORDER BY ses.SponsorExtendedSurveyID",
 		public IList<SponsorExtendedSurvey> FindExtendedSurveysBySuperAdmin2(int superAdminID)
 		{
 			string query = string.Format(
-				@"
+                @"
 SELECT s.Sponsor,
 	ses.ProjectRoundID,
 	ses.Internal,
@@ -1112,6 +1112,7 @@ INNER JOIN eform..ProjectRound r ON ses.ProjectRoundID = r.ProjectRoundID
 INNER JOIN eform..Survey ss ON r.SurveyID = ss.SurveyID
 INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID
 WHERE sas.SuperAdminID =  {0}
+AND s.Closed IS NOT NULL
 ORDER BY s.Sponsor, ses.Internal, ses.RoundText",
 				superAdminID
 			);
