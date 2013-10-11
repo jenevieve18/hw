@@ -14,7 +14,6 @@ namespace HW.Core.Helpers
 
 		string CreateGraph2(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, string plot, int grpng, int spons, int sid, string gid, object disabled);
 		
-//		void CreateGraph3(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, string plot, int grpng, int spons, int sid, string gid, object disabled, IExcelWriter w, ref int i);
 		void CreateGraph3(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, string plot, int grpng, int spons, int sid, string gid, object disabled, ExcelWriter w, ref int i);
 		
 		event EventHandler<MergeEventArgs> ForMerge;
@@ -213,7 +212,6 @@ namespace HW.Core.Helpers
 			return s.ToString();
 		}
 		
-//		public void CreateGraph3(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, string plot, int grpng, int spons, int sid, string gid, object disabled, IExcelWriter w, ref int i)
 		public void CreateGraph3(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, string plot, int grpng, int spons, int sid, string gid, object disabled, ExcelWriter w, ref int i)
 		{
 			throw new NotImplementedException();
@@ -362,7 +360,6 @@ namespace HW.Core.Helpers
 				} else if (plot.ToUpper().Equals("Line (mean ± SD)".ToUpper())) {
 					g.Type = new LineGraphType(1, t);
 				} else {
-//					g.Type = new LineGraphType(point, t);
 					g.Type = new LineGraphType(0, t);
 				}
 				Answer answer = answerRepository.ReadByGroup(groupBy, fy, ty, sortString);
@@ -501,7 +498,6 @@ namespace HW.Core.Helpers
 			return g;
 		}
 		
-//		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
 		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int GRPNG, int SPONS, int SID, string GID, object disabled)
 		{
 			int cx = p.Components.Count;
@@ -892,7 +888,6 @@ namespace HW.Core.Helpers
 			lastCount = minCnt;
 		}
 		
-//		public void CreateGraph3(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int GRPNG, int SPONS, int SID, string GID, object disabled, IExcelWriter writer, ref int index)
 		public void CreateGraph3(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int GRPNG, int SPONS, int SID, string GID, object disabled, ExcelWriter writer, ref int index)
 		{
 			int cx = p.Components.Count;
