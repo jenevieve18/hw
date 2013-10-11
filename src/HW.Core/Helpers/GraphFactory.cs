@@ -642,9 +642,6 @@ namespace HW.Core.Helpers
 				
 				if (hasGrouping) {
 					int COUNT = 0;
-//					Hashtable desc = new Hashtable();
-//					Hashtable join = new Hashtable();
-//					ArrayList item = new ArrayList();
 					Dictionary<string, string> desc = new Dictionary<string, string>();
 					Dictionary<string, string> join = new Dictionary<string, string>();
 					List<string> item = new List<string>();
