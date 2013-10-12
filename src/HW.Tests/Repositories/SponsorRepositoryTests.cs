@@ -115,12 +115,6 @@ namespace HW.Tests.Repositories
 		}
 		
 		[Test]
-		public void TestY()
-		{
-			r.Y(1);
-		}
-		
-		[Test]
 		public void TestFindAndCountDetailsBySuperAdmin()
 		{
 			var ss = r.FindAndCountDetailsBySuperAdmin(1);

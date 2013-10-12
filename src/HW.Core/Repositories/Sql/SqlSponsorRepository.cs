@@ -1099,7 +1099,7 @@ ORDER BY ses.SponsorExtendedSurveyID",
 		public IList<SponsorExtendedSurvey> FindExtendedSurveysBySuperAdmin2(int superAdminID)
 		{
 			string query = string.Format(
-                @"
+				@"
 SELECT s.Sponsor,
 	ses.ProjectRoundID,
 	ses.Internal,
@@ -1499,45 +1499,45 @@ ORDER BY s.Sponsor",
 			return sponsors;
 		}
 		
-		public IList<Sponsor> Y(int sponsorID)
-		{
-			string query = string.Format(
-				@"
-SELECT DISTINCT s.Sponsor,
-	ses.ProjectRoundUnitID,
-	ses.Nav,
-	rep.ReportID,
-	rep.Internal,
-	(
-		SELECT COUNT(DISTINCT a.ProjectRoundUserID)
-		FROM eform.dbo.Answer AS a
-		WHERE (a.ProjectRoundUnitID = r.ProjectRoundUnitID)
-			AND (a.EndDT >= '{1}')
-			AND (a.EndDT < '{2}')
-	) AS CX
-FROM Sponsor AS s
-INNER JOIN SponsorProjectRoundUnit AS ses ON ses.SponsorID = s.SponsorID
-INNER JOIN eform.dbo.ProjectRoundUnit AS r ON ses.ProjectRoundUnitID = r.ProjectRoundUnitID
-INNER JOIN eform.dbo.Report AS rep ON rep.ReportID = r.ReportID
-INNER JOIN SuperAdminSponsor AS sas ON s.SponsorID = sas.SponsorID
-WHERE (s.Deleted IS NULL) AND (sas.SuperAdminID = {0})
-ORDER BY s.Sponsor, ses.Nav",
-				sponsorID,
-				DateTime.Now.AddMonths(-1).ToString("yyyy-MM-01"),
-				DateTime.Now.ToString("yyyy-MM-01")
-			);
-			var sponsors = new List<Sponsor>();
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				while (rs.Read()) {
-					var s = new Sponsor();
-					s.Name = rs.GetString(0);
-					s.ProjectRoundUnit = new ProjectRoundUnit {
-						Report = new Report { Id = rs.GetInt32(3), Internal = rs.GetString(4) }
-					};
-				}
-			}
-			return sponsors;
-		}
+//		public IList<Sponsor> Y(int sponsorID)
+//		{
+//			string query = string.Format(
+//				@"
+		//SELECT DISTINCT s.Sponsor,
+//	ses.ProjectRoundUnitID,
+//	ses.Nav,
+//	rep.ReportID,
+//	rep.Internal,
+//	(
+//		SELECT COUNT(DISTINCT a.ProjectRoundUserID)
+//		FROM eform.dbo.Answer AS a
+//		WHERE (a.ProjectRoundUnitID = r.ProjectRoundUnitID)
+//			AND (a.EndDT >= '{1}')
+//			AND (a.EndDT < '{2}')
+//	) AS CX
+		//FROM Sponsor AS s
+		//INNER JOIN SponsorProjectRoundUnit AS ses ON ses.SponsorID = s.SponsorID
+		//INNER JOIN eform.dbo.ProjectRoundUnit AS r ON ses.ProjectRoundUnitID = r.ProjectRoundUnitID
+		//INNER JOIN eform.dbo.Report AS rep ON rep.ReportID = r.ReportID
+		//INNER JOIN SuperAdminSponsor AS sas ON s.SponsorID = sas.SponsorID
+		//WHERE (s.Deleted IS NULL) AND (sas.SuperAdminID = {0})
+		//ORDER BY s.Sponsor, ses.Nav",
+//				sponsorID,
+//				DateTime.Now.AddMonths(-1).ToString("yyyy-MM-01"),
+//				DateTime.Now.ToString("yyyy-MM-01")
+//			);
+//			var sponsors = new List<Sponsor>();
+//			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+//				while (rs.Read()) {
+//					var s = new Sponsor();
+//					s.Name = rs.GetString(0);
+//					s.ProjectRoundUnit = new ProjectRoundUnit {
+//						Report = new Report { Id = rs.GetInt32(3), Internal = rs.GetString(4) }
+//					};
+//				}
+//			}
+//			return sponsors;
+//		}
 		
 		public void SaveOrUpdate(Sponsor t)
 		{
