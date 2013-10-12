@@ -68,13 +68,13 @@ namespace HW.Core.Helpers
 			get { return "text/csv"; }
 		}
 		
+		public override string ContentDisposition2 {
+			get { return string.Format("attachment;filename=HealthWatch Survey {0}.csv", DateTime.Now.ToString("yyyyMMdd")); }
+		}
+		
 		public override string GetContentDisposition(string file)
 		{
 			return string.Format("attachment;filename=HealthWatch {0} {1}.csv", file, DateTime.Now.ToString("yyyyMMdd"));
-		}
-		
-		public override string ContentDisposition2 {
-			get { return string.Format("attachment;filename=HealthWatch Survey {0}.csv", DateTime.Now.ToString("yyyyMMdd")); }
 		}
 		
 		public override object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path)
