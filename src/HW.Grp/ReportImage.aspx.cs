@@ -76,7 +76,7 @@ namespace HW.Grp
 
 			ExtendedGraph g = null;
 
-			int GB = (Request.QueryString["GB"] != null ? Convert.ToInt32(Request.QueryString["GB"].ToString()) : 0);
+			int gb = (Request.QueryString["GB"] != null ? Convert.ToInt32(Request.QueryString["GB"].ToString()) : 0);
 			bool stdev = (Request.QueryString["STDEV"] != null ? Convert.ToInt32(Request.QueryString["STDEV"]) == 1 : false);
 			
 			int fy = Request.QueryString["FY"] != null ? Convert.ToInt32(Request.QueryString["FY"]) : 0;
@@ -85,17 +85,17 @@ namespace HW.Grp
 			int langID = (Request.QueryString["LangID"] != null ? Convert.ToInt32(Request.QueryString["LangID"]) : 0);
 
 			int rpid = Convert.ToInt32(Request.QueryString["RPID"]);
-			int PRUID = Convert.ToInt32(Request.QueryString["PRUID"]);
+			int pruid = Convert.ToInt32(Request.QueryString["PRUID"]);
 			
 			bool hasGrouping = Request.QueryString["GRPNG"] != null || Request.QueryString["GRPNG"] != "0";
 			
 			string plot = Request.QueryString["Plot"] != null ? Request.QueryString["Plot"] : "";
 			string key = Request.QueryString["AK"];
 			
-			int GRPNG = Convert.ToInt32(Request.QueryString["GRPNG"]);
-			int SPONS = Convert.ToInt32((Request.QueryString["SAID"] != null ? Request.QueryString["SAID"] : Session["SponsorAdminID"]));
-			int SID = Convert.ToInt32((Request.QueryString["SID"] != null ? Request.QueryString["SID"] : Session["SponsorID"]));
-			string GID = (Request.QueryString["GID"] != null ? Request.QueryString["GID"].ToString().Replace(" ", "") : "");
+			int grpng = Convert.ToInt32(Request.QueryString["GRPNG"]);
+			int spons = Convert.ToInt32((Request.QueryString["SAID"] != null ? Request.QueryString["SAID"] : Session["SponsorAdminID"]));
+			int sid = Convert.ToInt32((Request.QueryString["SID"] != null ? Request.QueryString["SID"] : Session["SponsorID"]));
+			string gid = (Request.QueryString["GID"] != null ? Request.QueryString["GID"].ToString().Replace(" ", "") : "");
 			
 			object disabled = Request.QueryString["DISABLED"];
 			
@@ -104,7 +104,7 @@ namespace HW.Grp
 			ReportPart r = service.ReadReportPart(rpid, langID);
 
 			var f = service.GetGraphFactory(HasAnswerKey);
-			g = f.CreateGraph(key, r, langID, PRUID, fy, ty, GB, hasGrouping, plot, Width, Height, Background, GRPNG, SPONS, SID, GID, disabled, point);
+			g = f.CreateGraph(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, Width, Height, Background, grpng, spons, sid, gid, disabled, point);
 			g.render();
 		}
 	}
