@@ -27,24 +27,8 @@ WHERE ProjectRoundUnitID = {0}",
 			{
 				query = string.Format(
 					@"
-INSERT INTO ProjectRoundUnit (
-	UserCount,
-	LangID,
-	SurveyID,
-	ProjectRoundID,
-	Unit,
-	ParentProjectRoundUnitID,
-	IndividualReportID,
-	ReportID)
-VALUES (
-    0,
-    0,
-    {0},
-    {1},
-    '{2}',
-    {3},
-    {4},
-    {5})",
+INSERT INTO ProjectRoundUnit (UserCount, LangID, SurveyID, ProjectRoundID, Unit, ParentProjectRoundUnitID, IndividualReportID, ReportID)
+VALUES (0, 0, {0}, {1}, '{2}', {3}, {4}, {5})",
 					SID,
 					rs.GetInt32(0),
 					name.Replace("'", "''"),
@@ -100,7 +84,7 @@ WHERE ProjectRoundUnitID = {0}",
 		public static int getInt32(string sqlString, string con)
 		{
 			int returnValue = 0;
-			SqlConnection dataConnection = new SqlConnection(ConfigurationSettings.AppSettings[con]);
+			SqlConnection dataConnection = new SqlConnection(ConfigurationManager.AppSettings[con]);
 			dataConnection.Open();
 			SqlCommand dataCommand = new SqlCommand(sqlString.Replace("\\", "\\\\"), dataConnection);
 			dataCommand.CommandTimeout = 900;
@@ -134,7 +118,7 @@ WHERE ProjectRoundUnitID = {0}",
 		
 		public static SqlDataReader rs(string sqlString, string con)
 		{
-			SqlConnection dataConnection = new SqlConnection(ConfigurationSettings.AppSettings[con]);
+            SqlConnection dataConnection = new SqlConnection(ConfigurationManager.AppSettings[con]);
 			dataConnection.Open();
 			SqlCommand dataCommand = new SqlCommand(sqlString, dataConnection);
 			SqlDataReader dataReader = dataCommand.ExecuteReader(CommandBehavior.CloseConnection);
@@ -148,7 +132,7 @@ WHERE ProjectRoundUnitID = {0}",
 		
 		public static void exec(string sqlString, string con)
 		{
-			SqlConnection dataConnection = new SqlConnection(ConfigurationSettings.AppSettings[con]);
+            SqlConnection dataConnection = new SqlConnection(ConfigurationManager.AppSettings[con]);
 			dataConnection.Open();
 			SqlCommand dataCommand = new SqlCommand(sqlString, dataConnection);
 			dataCommand.ExecuteNonQuery();
@@ -214,61 +198,38 @@ WHERE ProjectRoundUnitID = {0}",
 		
 		public static bool sendMail(string from, string email, string body, string subject)
 		{
-			bool success = false;
 			try {
-//				System.Web.Mail.SmtpMail.SmtpServer = System.Configuration.ConfigurationSettings.AppSettings["SmtpServer"];
-//				System.Web.Mail.MailMessage mail = new System.Web.Mail.MailMessage();
-//				mail.To = email;
-//				mail.From = from;
-//				mail.Subject = subject;
-//				mail.Body = body;
-//				System.Web.Mail.SmtpMail.Send(mail);
-//				success = true;
-				string server = ConfigurationSettings.AppSettings["SmtpServer"];
+                string server = ConfigurationManager.AppSettings["SmtpServer"];
 				System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage(from, email, subject, body);
 				System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient(server);
 				client.Send(mail);
-				success = true;
+				return true;
 			} catch (Exception) {
 			}
-			return success;
+			return false;
 		}
 
 		public static bool sendInvitation(int sponsorInviteID, string email, string body, string subject, string key)
 		{
-			bool success = false;
-
-			if (Db.isEmail(email))
-			{
+			if (Db.isEmail(email)) {
 				try {
 					if (body.IndexOf("<LINK/>") >= 0) {
-//						string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
-						string path = ConfigurationSettings.AppSettings["healthWatchURL"];
+                        string path = ConfigurationManager.AppSettings["healthWatchURL"];
 						body = body.Replace("<LINK/>", "" + path + "i/" + key + sponsorInviteID.ToString());
 					} else {
-//						string path = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
-						string path = ConfigurationSettings.AppSettings["healthWatchURL"];
+                        string path = ConfigurationManager.AppSettings["healthWatchURL"];
 						body += "\r\n\r\n" + "" + path + "i/" + key + sponsorInviteID.ToString();
 					}
-//					System.Web.Mail.SmtpMail.SmtpServer = System.Configuration.ConfigurationSettings.AppSettings["SmtpServer"];
-//					System.Web.Mail.MailMessage mail = new System.Web.Mail.MailMessage();
-//					mail.To = email;
-//					mail.From = "info@healthwatch.se";
-//					mail.Subject = subject;
-//					mail.Body = body;
-//					System.Web.Mail.SmtpMail.Send(mail);
-					string server = ConfigurationSettings.AppSettings["SmtpServer"];
-					System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage("info@healthwatch.se", email, subject, body);
-					System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient(server);
-					client.Send(mail);
+					sendMail("info@healthwatch.se", email, subject, body);
 
-					Db.exec("UPDATE SponsorInvite SET Sent = GETDATE() WHERE SponsorInviteID = " + sponsorInviteID);
+					string query = string.Format("UPDATE SponsorInvite SET Sent = GETDATE() WHERE SponsorInviteID = {0}", sponsorInviteID);
+					Db.exec(query);
 
-					success = true;
+					return true;
 				} catch (Exception) {
 				}
 			}
-			return success;
+			return false;
 		}
 
 		public static string bottom()
@@ -392,9 +353,7 @@ WHERE ProjectRoundUnitID = {0}",
 					sb.Append("</div>");
 					//ret += "<A class=\"unli\" HREF=\"default.aspx?Logout=1&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\"><img src=\"img/logout.gif\" border=\"0\"/>Log out</A><br/>";
 				}
-			}
-			else
-			{
+			} else {
 				sb.Append("<br/><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">");
 				sb.Append("<tr>");
 				sb.Append("<td>Username&nbsp;</td>");

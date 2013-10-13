@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -221,7 +222,7 @@ namespace HWgrp___Old
 					sb.Append("<div>");
 				}
 
-				sb.Append("<a class=\"sidearrow\" href=\"JavaScript:void(window.open('" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "/exerciseShow.aspx?SID=" + Convert.ToInt32(HttpContext.Current.Session["SponsorID"]) + "&AUID=" + Math.Abs(Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"])) + "&ExerciseVariantLangID=" + rs.GetInt32(2) + "','EVLID" + rs.GetInt32(2) + "','scrollbars=yes,resizable=yes,");
+				sb.Append("<a class=\"sidearrow\" href=\"JavaScript:void(window.open('" + ConfigurationManager.AppSettings["healthWatchURL"] + "/exerciseShow.aspx?SID=" + Convert.ToInt32(HttpContext.Current.Session["SponsorID"]) + "&AUID=" + Math.Abs(Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"])) + "&ExerciseVariantLangID=" + rs.GetInt32(2) + "','EVLID" + rs.GetInt32(2) + "','scrollbars=yes,resizable=yes,");
 
 				if (rs.IsDBNull(14))
 				{

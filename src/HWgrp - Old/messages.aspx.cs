@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -429,7 +430,7 @@ namespace HWgrp___Old
 									{
 										string body = LoginTxt.Text;
 
-										string personalLink = "" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "";
+										string personalLink = "" + ConfigurationManager.AppSettings["healthWatchURL"] + "";
 										if (!rs.IsDBNull(2) && rs.GetInt32(2) > 0)
 										{
 											personalLink += "/c/" + rs.GetString(3).ToLower() + rs.GetInt32(0).ToString();
@@ -515,7 +516,7 @@ namespace HWgrp___Old
 									{
 										string body = ExtendedSurveyTxt.Text;
 
-										string personalLink = "" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "";
+										string personalLink = "" + ConfigurationManager.AppSettings["healthWatchURL"] + "";
 										if (!rs.IsDBNull(2) && rs.GetInt32(2) > 0)
 										{
 											personalLink += "/c/" + rs.GetString(3).ToLower() + rs.GetInt32(0).ToString();
@@ -596,7 +597,7 @@ namespace HWgrp___Old
 									{
 										string body = ExtendedSurveyFinishedTxt.Text;
 
-										string personalLink = "" + System.Configuration.ConfigurationSettings.AppSettings["healthWatchURL"] + "";
+										string personalLink = "" + ConfigurationManager.AppSettings["healthWatchURL"] + "";
 										if (!rs.IsDBNull(2) && rs.GetInt32(2) > 0)
 										{
 											personalLink += "/c/" + rs.GetString(3).ToLower() + rs.GetInt32(0).ToString();

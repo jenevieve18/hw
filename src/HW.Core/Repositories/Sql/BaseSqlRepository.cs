@@ -41,7 +41,7 @@ namespace HW.Core.Repositories.Sql
 		
 		protected void ExecuteNonQuery(string query, string connectionName, params SqlParameter[] parameters)
 		{
-			con = new SqlConnection(ConfigurationSettings.AppSettings[connectionName]);
+			con = new SqlConnection(ConfigurationManager.AppSettings[connectionName]);
 			OpenConnection();
 			SqlCommand cmd = new SqlCommand(query, con);
 			foreach (var p in parameters) {
@@ -60,7 +60,7 @@ namespace HW.Core.Repositories.Sql
 		
 		protected SqlDataReader ExecuteReader(string query, string connectionName)
 		{
-			con = new SqlConnection(ConfigurationSettings.AppSettings[connectionName]);
+			con = new SqlConnection(ConfigurationManager.AppSettings[connectionName]);
 			OpenConnection();
 			SqlCommand cmd = new SqlCommand(query, con);
 			return cmd.ExecuteReader(CommandBehavior.CloseConnection);

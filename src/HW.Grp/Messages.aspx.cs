@@ -295,7 +295,7 @@ namespace HW.Grp
 									{
 										string body = LoginTxt.Text;
 
-										string path = ConfigurationSettings.AppSettings["healthWatchURL"];
+										string path = ConfigurationManager.AppSettings["healthWatchURL"];
 										string personalLink = "" + path + "";
 										if (u.ReminderLink > 0)
 										{
@@ -356,7 +356,7 @@ namespace HW.Grp
 									{
 										string body = ExtendedSurveyTxt.Text;
 
-										string path = ConfigurationSettings.AppSettings["healthWatchURL"];
+										string path = ConfigurationManager.AppSettings["healthWatchURL"];
 										string personalLink = "" + path + "";
 										if (u.ReminderLink > 0)
 										{
@@ -415,7 +415,7 @@ namespace HW.Grp
 									{
 										string body = ExtendedSurveyFinishedTxt.Text;
 
-										string path = ConfigurationSettings.AppSettings["healthWatchURL"];
+										string path = ConfigurationManager.AppSettings["healthWatchURL"];
 										string personalLink = "" + path + "";
 										if (u.ReminderLink > 0)
 										{

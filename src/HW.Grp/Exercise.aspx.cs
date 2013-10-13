@@ -166,7 +166,7 @@ namespace HW.Grp
 					sb.Append("<div>");
 				}
 
-				string path = ConfigurationSettings.AppSettings["healthWatchURL"];
+				string path = ConfigurationManager.AppSettings["healthWatchURL"];
 				sb.Append("<a class=\"sidearrow\" href=\"JavaScript:void(window.open('" + path + "exerciseShow.aspx?SID=" + Convert.ToInt32(Session["SponsorID"]) + "&AUID=" + Math.Abs(Convert.ToInt32(Session["SponsorAdminID"])) + "&ExerciseVariantLangID=" + l.CurrentVariant.Id + "','EVLID" + l.CurrentVariant.Id + "','scrollbars=yes,resizable=yes,");
 
 				if (l.CurrentVariant.ExerciseWindowX != 0) {

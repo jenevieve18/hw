@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Core.Helpers;
 using HW.Core.Repositories.Sql;
+using System.Configuration;
 
 namespace HW.Grp
 {
@@ -160,7 +161,7 @@ namespace HW.Grp
 			if (qs1 != "")
 			{
 				Response.Redirect(
-					"" + System.Configuration.ConfigurationSettings.AppSettings["eFormURL"] + "feedback.aspx?" +
+					"" + ConfigurationManager.AppSettings["eFormURL"] + "feedback.aspx?" +
 					"RNDS=" + not.Substring(1) + "" +
 					"&R1=" + MeasureTxt1.Text + "&R2=" + MeasureTxt2.Text + "&RNDS1=" + qs1.Substring(1) + (qs2 != "" ? "&RNDS2=" + qs2.Substring(1) : "") + "&SID=" + SurveyID.SelectedValue + "&SN=" + SurveyName.Text,
 					true

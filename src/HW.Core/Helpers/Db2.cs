@@ -17,7 +17,7 @@ namespace HW.Core.Helpers
 		
 		public static SqlDataReader rs(string sqlString, string con)
 		{
-			SqlConnection dataConnection = new SqlConnection(ConfigurationSettings.AppSettings[con]);
+            SqlConnection dataConnection = new SqlConnection(ConfigurationManager.AppSettings[con]);
 			dataConnection.Open();
 			SqlCommand dataCommand = new SqlCommand(sqlString, dataConnection);
 			SqlDataReader dataReader = dataCommand.ExecuteReader(CommandBehavior.CloseConnection);
@@ -31,7 +31,7 @@ namespace HW.Core.Helpers
 		
 		public static void exec(string sqlString, string con)
 		{
-			SqlConnection dataConnection = new SqlConnection(ConfigurationSettings.AppSettings[con]);
+            SqlConnection dataConnection = new SqlConnection(ConfigurationManager.AppSettings[con]);
 			dataConnection.Open();
 			SqlCommand dataCommand = new SqlCommand(sqlString, dataConnection);
 			dataCommand.ExecuteNonQuery();

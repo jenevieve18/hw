@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -139,7 +140,7 @@ namespace HW.Adm
                 Db.exec("UPDATE Answer SET ProjectRoundID = " + targetPRID + ", ProjectRoundUnitID = " + targetPRUID + " WHERE ProjectRoundUserID = " + rs.GetInt32(0), "eFormSqlConnection");
                 Db.exec("INSERT INTO SponsorInvite SELECT SponsorID, DepartmentID, Email, UserID, GETDATE(), NEWID() FROM [User] WHERE UserID = " + userID);
 
-                System.Web.Mail.SmtpMail.SmtpServer = System.Configuration.ConfigurationSettings.AppSettings["SmtpServer"];
+                System.Web.Mail.SmtpMail.SmtpServer = ConfigurationManager.AppSettings["SmtpServer"];
                 System.Web.Mail.MailMessage mail = new System.Web.Mail.MailMessage();
                 mail.To = rs.GetString(1);
                 mail.Bcc = "jens@interactivehealthgroup.com";

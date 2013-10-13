@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -114,7 +115,7 @@ namespace HWgrp___Old
 
 			if (qs1 != "")
 			{
-				HttpContext.Current.Response.Redirect("" + System.Configuration.ConfigurationSettings.AppSettings["eFormURL"] + "/feedback.aspx?" +
+				HttpContext.Current.Response.Redirect("" + ConfigurationManager.AppSettings["eFormURL"] + "/feedback.aspx?" +
 					"RNDS=" + not.Substring(1) + "" +
 					"&R1=" + MeasureTxt1.Text + "&R2=" + MeasureTxt2.Text + "&RNDS1=" + qs1.Substring(1) + (qs2 != "" ? "&RNDS2=" + qs2.Substring(1) : "") + "&SID=" + SurveyID.SelectedValue + "&SN=" + SurveyName.Text, true);
 			}

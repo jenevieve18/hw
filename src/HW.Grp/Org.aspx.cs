@@ -127,7 +127,7 @@ namespace HW.Grp
 					{
 						string body = rs.GetString(0);
 
-						string personalLink = "" + ConfigurationSettings.AppSettings["healthWatchURL"] + "";
+						string personalLink = "" + ConfigurationManager.AppSettings["healthWatchURL"] + "";
 						if (!rs.IsDBNull(4) && rs.GetInt32(4) > 0)
 						{
 							personalLink += "c/" + rs.GetString(5).ToLower() + rs.GetInt32(3).ToString();
@@ -176,7 +176,7 @@ namespace HW.Grp
 						{
 							string body = rs.GetString(7);
 
-							string personalLink = "" + ConfigurationSettings.AppSettings["healthWatchURL"] + "";
+							string personalLink = "" + ConfigurationManager.AppSettings["healthWatchURL"] + "";
 							if (!rs.IsDBNull(5) && rs.GetInt32(5) > 0)
 							{
 								personalLink += "c/" + rs.GetString(6).ToLower() + rs.GetInt32(4).ToString();
@@ -1280,7 +1280,7 @@ namespace HW.Grp
 								&&
 								rac <= rs.GetInt32(idx)
 								?
-								"<A HREF=\"JavaScript:void(window.open('" + ConfigurationSettings.AppSettings["eFormURL"] + "feedback.aspx?" +
+								"<A HREF=\"JavaScript:void(window.open('" + ConfigurationManager.AppSettings["eFormURL"] + "feedback.aspx?" +
 								"AB=1&" +
 								"R=" + (ESrounds.Split(',')[i]) + "&" +
 								(ESpreviousRounds.Split(',')[i] != "0" ? "RR=" + ESpreviousRounds.Split(',')[i] + "&" : "") +
@@ -1375,7 +1375,7 @@ namespace HW.Grp
 						           "<TD ALIGN=\"CENTER\">");
 						if (showReg) {
 							if (!rs2.IsDBNull(3) && !rs2.IsDBNull(5)) {
-								usr.Append("<A TITLE=\"Log on to users account\" HREF=\"" + ConfigurationSettings.AppSettings["healthWatchURL"] + "a/" + rs2.GetString(5) + rs2.GetInt32(3).ToString() + "\" TARGET=\"_blank\">" + rs2.GetInt32(3).ToString() + "/" + (rs2.IsDBNull(4) ? "0" : rs2.GetInt32(4).ToString()) + "</A>");
+								usr.Append("<A TITLE=\"Log on to users account\" HREF=\"" + ConfigurationManager.AppSettings["healthWatchURL"] + "a/" + rs2.GetString(5) + rs2.GetInt32(3).ToString() + "\" TARGET=\"_blank\">" + rs2.GetInt32(3).ToString() + "/" + (rs2.IsDBNull(4) ? "0" : rs2.GetInt32(4).ToString()) + "</A>");
 
 								SqlDataReader rs3 = Db2.rs("SELECT u.UserID, s.Sponsor FROM [User] u LEFT OUTER JOIN Sponsor s ON u.SponsorID = s.SponsorID WHERE u.UserID <> " + rs2.GetInt32(3) + " AND u.Email = '" + rs2.GetString(1).Replace("'", "''") + "'");
 								while (rs3.Read()) {
@@ -1521,7 +1521,7 @@ namespace HW.Grp
 			string header = "<TD ALIGN=\"CENTER\" STYLE=\"font-size:9px;\">" + (AX >= MIN_SHOW ? AX.ToString() : "<img src=\"img/key.gif\"/>") + "</TD>";
 			for (int i = 0; i < EScount; i++) {
 				header += "<TD ALIGN=\"CENTER\" STYLE=\"font-size:9px;\">&nbsp;" +
-					(Convert.ToInt32(ESattr.Split(',')[i].Split(':')[0]) != 0 && Convert.ToInt32(ESattr.Split(',')[i].Split(':')[1]) <= ESanswerCount[i] ? "<A HREF=\"JavaScript:void(window.open('" + ConfigurationSettings.AppSettings["eFormURL"] + "feedback.aspx?" +
+					(Convert.ToInt32(ESattr.Split(',')[i].Split(':')[0]) != 0 && Convert.ToInt32(ESattr.Split(',')[i].Split(':')[1]) <= ESanswerCount[i] ? "<A HREF=\"JavaScript:void(window.open('" + ConfigurationManager.AppSettings["eFormURL"] + "feedback.aspx?" +
 					 "R=" + (ESrounds.Split(',')[i]) + "&" +
 					 (ESpreviousRounds.Split(',')[i] != "0" ? "RR=" + ESpreviousRounds.Split(',')[i] + "&" : "") +
 					 (ESpreviousRounds.Split(',')[i] != "0" ? "R1=" + ESroundTexts.Split(',')[i] + "&" : "") +
@@ -1591,7 +1591,7 @@ namespace HW.Grp
 								rs3.Close();
 
 								OrgTree.Text += "<TD ALIGN=\"CENTER\">&nbsp;" +
-									"<A HREF=\"JavaScript:void(window.open('" + ConfigurationSettings.AppSettings["eFormURL"] + "feedback.aspx?" +
+									"<A HREF=\"JavaScript:void(window.open('" + ConfigurationManager.AppSettings["eFormURL"] + "feedback.aspx?" +
 									"R=" + (ESrounds.Split(',')[i]) + "&" +
 									"AIDS=0" + sb.ToString() + "&" +
 									"UD=" + rs2.GetString(1) + "&" +
