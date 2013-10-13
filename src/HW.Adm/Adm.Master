@@ -45,7 +45,7 @@
                         <%= HtmlHelper.Anchor("Messages", "messages.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
                         <%= HtmlHelper.Anchor("Data export", "export.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
                         <%= HtmlHelper.Anchor("Usage statistics", "stats.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
-                        <%= HtmlHelper.Anchor("File uploads", "stats.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
+                        <%= HtmlHelper.Anchor("File uploads", "tx.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
                     </td>
                     <td>
                         <img src="img/null.gif" width="25" height="1">
