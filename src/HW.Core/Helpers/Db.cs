@@ -11,84 +11,121 @@ namespace HW.Core.Helpers
 {
 	public class Db
 	{
-        public static int createProjectRoundUnit(int parentProjectRoundUnitID, string name, int SID, int individualReportID, int reportID)
-        {
-            int ID = 0;
+		public static int createProjectRoundUnit(int parentProjectRoundUnitID, string name, int SID, int individualReportID, int reportID)
+		{
+			int ID = 0;
 
-            SqlDataReader rs = Db.rs("SELECT ProjectRoundID FROM ProjectRoundUnit WHERE ProjectRoundUnitID = " + parentProjectRoundUnitID, "eFormSqlConnection");
-            if (rs.Read())
-            {
-                Db.exec("INSERT INTO ProjectRoundUnit (" +
-                    "UserCount," +
-                    "LangID," +
-                    "SurveyID," +
-                    "ProjectRoundID," +
-                    "Unit," +
-                    "ParentProjectRoundUnitID," +
-                    "IndividualReportID," +
-                    "ReportID" +
-                    ") VALUES (" +
-                    "0," +
-                    "0," +
-                    "" + SID + "," +
-                    "" + rs.GetInt32(0) + "," +
-                    "'" + name.Replace("'", "''") + "'," +
-                    "" + parentProjectRoundUnitID + "," +
-                    "" + individualReportID + "," +
-                    "" + reportID + "" +
-                    ")", "eFormSqlConnection");
-                SqlDataReader rs2 = Db.rs("SELECT ProjectRoundUnitID FROM [ProjectRoundUnit] " +
-                    "WHERE ProjectRoundID=" + rs.GetInt32(0) + " AND Unit = '" + name.Replace("'", "''") + "' " +
-                    "ORDER BY ProjectRoundUnitID DESC", "eFormSqlConnection");
-                if (rs2.Read())
-                {
-                    ID = rs2.GetInt32(0);
-                }
-                rs2.Close();
-            }
-            rs.Close();
+			string query = string.Format(
+				@"
+SELECT ProjectRoundID
+FROM ProjectRoundUnit
+WHERE ProjectRoundUnitID = {0}",
+				parentProjectRoundUnitID
+			);
+			SqlDataReader rs = Db.rs(query, "eFormSqlConnection");
+			if (rs.Read())
+			{
+				query = string.Format(
+					@"
+INSERT INTO ProjectRoundUnit (
+	UserCount,
+	LangID,
+	SurveyID,
+	ProjectRoundID,
+	Unit,
+	ParentProjectRoundUnitID,
+	IndividualReportID,
+	ReportID)
+VALUES (
+    0,
+    0,
+    {0},
+    {1},
+    '{2}',
+    {3},
+    {4},
+    {5})",
+					SID,
+					rs.GetInt32(0),
+					name.Replace("'", "''"),
+					parentProjectRoundUnitID,
+					individualReportID,
+					reportID
+				);
+				Db.exec(query, "eFormSqlConnection");
+				query = string.Format(
+					@"
+SELECT ProjectRoundUnitID
+FROM [ProjectRoundUnit]
+WHERE ProjectRoundID={0} AND Unit = '{1}'
+ORDER BY ProjectRoundUnitID DESC",
+					rs.GetInt32(0),
+					name.Replace("'", "''")
+				);
+				SqlDataReader rs2 = Db.rs(query, "eFormSqlConnection");
+				if (rs2.Read()) {
+					ID = rs2.GetInt32(0);
+				}
+				rs2.Close();
+			}
+			rs.Close();
 
-            Db.exec("UPDATE ProjectRoundUnit " +
-                "SET ID = dbo.cf_unitExtID(" + ID + ",dbo.cf_unitDepth(" + ID + "),''), " +
-                "SortOrder = " + ID + " " +
-                "WHERE ProjectRoundUnitID = " + ID, "eFormSqlConnection");
+			query = string.Format(
+				@"
+UPDATE ProjectRoundUnit
+SET ID = dbo.cf_unitExtID({0},dbo.cf_unitDepth({0}),''),
+SortOrder = {0}
+WHERE ProjectRoundUnitID = {0}",
+				ID
+			);
+			Db.exec(query, "eFormSqlConnection");
 
-            Db.exec("UPDATE ProjectRoundUnit SET SortString = dbo.cf_unitSortString(ProjectRoundUnitID) WHERE ProjectRoundUnitID = " + ID, "eFormSqlConnection");
+			query = string.Format(
+				@"
+UPDATE ProjectRoundUnit
+SET SortString = dbo.cf_unitSortString(ProjectRoundUnitID)
+WHERE ProjectRoundUnitID = {0}",
+				ID
+			);
+			Db.exec(query, "eFormSqlConnection");
 
-            return ID;
-        }
+			return ID;
+		}
 
-        public static int getInt32(string sqlString)
-        {
-            return getInt32(sqlString, "SqlConnection");
-        }
+		public static int getInt32(string sqlString)
+		{
+			return getInt32(sqlString, "SqlConnection");
+		}
 
-        public static int getInt32(string sqlString, string con)
-        {
-            int returnValue = 0;
-            SqlConnection dataConnection = new SqlConnection(ConfigurationSettings.AppSettings[con]);
-            dataConnection.Open();
-            SqlCommand dataCommand = new SqlCommand(sqlString.Replace("\\", "\\\\"), dataConnection);
-            dataCommand.CommandTimeout = 900;
-            SqlDataReader dataReader = dataCommand.ExecuteReader();
-            if (dataReader.Read())
-                if (!dataReader.IsDBNull(0))
-                    returnValue = Convert.ToInt32(dataReader.GetValue(0));
-            dataReader.Close();
-            dataConnection.Close();
-            dataConnection.Dispose();
-            return returnValue;
-        }
+		public static int getInt32(string sqlString, string con)
+		{
+			int returnValue = 0;
+			SqlConnection dataConnection = new SqlConnection(ConfigurationSettings.AppSettings[con]);
+			dataConnection.Open();
+			SqlCommand dataCommand = new SqlCommand(sqlString.Replace("\\", "\\\\"), dataConnection);
+			dataCommand.CommandTimeout = 900;
+			SqlDataReader dataReader = dataCommand.ExecuteReader();
+			if (dataReader.Read()) {
+				if (!dataReader.IsDBNull(0)) {
+					returnValue = Convert.ToInt32(dataReader.GetValue(0));
+				}
+			}
+			dataReader.Close();
+			dataConnection.Close();
+			dataConnection.Dispose();
+			return returnValue;
+		}
 
-        public static string HashMD5(string str)
-        {
-            System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
-            byte[] hashByteArray = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes("HW" + str + "HW"));
-            string hash = "";
-            for (int i = 0; i < hashByteArray.Length; i++)
-                hash += hashByteArray[i];
-            return hash;
-        }
+		public static string HashMD5(string str)
+		{
+			System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
+			byte[] hashByteArray = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes("HW" + str + "HW"));
+			string hash = "";
+			for (int i = 0; i < hashByteArray.Length; i++) {
+				hash += hashByteArray[i];
+			}
+			return hash;
+		}
 
 		public static SqlDataReader rs(string sqlString)
 		{
@@ -279,7 +316,7 @@ namespace HW.Core.Helpers
 				"</td>";
 			ret += "</tr>";
 			ret += "</table>";
-		   
+			
 			ret += "<div id=\"container\">";
 
 			return ret;
