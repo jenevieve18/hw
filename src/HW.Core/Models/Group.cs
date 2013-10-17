@@ -22,12 +22,12 @@ namespace HW.Core.Models
 		public class GroupBy // TODO: Make this enum, it's awkward having this constant class!
 		{
 			public const int OneWeek = 1;
-			public const int TwoWeeksStartWithEvent = 7;
 			public const int TwoWeeksStartWithOdd = 2;
 			public const int OneMonth = 3;
 			public const int ThreeMonths = 4;
 			public const int SixMonths = 5;
 			public const int OneYear = 6;
+			public const int TwoWeeksStartWithEven = 7;
 		}
 	}
 	
@@ -42,7 +42,7 @@ namespace HW.Core.Models
 					case Group.GroupBy.ThreeMonths: return "dbo.cf_year3Month";
 					case Group.GroupBy.SixMonths: return "dbo.cf_year6Month";
 					case Group.GroupBy.OneYear: return "YEAR";
-					case Group.GroupBy.TwoWeeksStartWithEvent: return "dbo.cf_year2WeekEven";
+					case Group.GroupBy.TwoWeeksStartWithEven: return "dbo.cf_year2WeekEven";
 					default: throw new NotSupportedException();
 			}
 		}
