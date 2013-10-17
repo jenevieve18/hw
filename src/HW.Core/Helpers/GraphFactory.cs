@@ -450,7 +450,9 @@ namespace HW.Core.Helpers
 								}
 								if (a.Values.Count >= p.RequiredAnswerCount) {
 									if (COUNT == 1) {
-										g.DrawBottomString(GB, a.DT, cx, (COUNT == 1 ? ", n = " + a.Values.Count : ""));
+										string v = GetBottomString(GB, a.DT, cx, (COUNT == 1 ? ", n = " + a.Values.Count : ""));
+										g.DrawBottomString(v, cx);
+//										g.DrawBottomString(GB, a.DT, cx, (COUNT == 1 ? ", n = " + a.Values.Count : ""));
 									}
 									s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
 								}
@@ -483,7 +485,9 @@ namespace HW.Core.Helpers
 							}
 
 							if (a.CountV >= p.RequiredAnswerCount) {
-								g.DrawBottomString(GB, a.DT, cx, ", n = " + a.CountV);
+								string v = GetBottomString(GB, a.DT, cx, ", n = " + a.CountV);
+								g.DrawBottomString(v, cx);
+//								g.DrawBottomString(GB, a.DT, cx, ", n = " + a.CountV);
 								s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
 							}
 							lastDT = a.DT;
@@ -690,7 +694,7 @@ namespace HW.Core.Helpers
 							int jj = 0;
 							foreach (Answer a in answers) {
 								jj++;
-								string w = DrawBottomString(GB, ii, jj, "");
+								string w = GetBottomString(GB, ii, jj, "");
 								if (!weeks.ContainsKey(w)) {
 									week = new List<Answer>();
 									weeks.Add(w, week);
@@ -776,7 +780,7 @@ namespace HW.Core.Helpers
 			}
 		}
 		
-		public string DrawBottomString(int groupBy, int i, int dx, string str)
+		public static string GetBottomString(int groupBy, int i, int dx, string str)
 		{
 			switch (groupBy) {
 				case 1:
@@ -796,7 +800,7 @@ namespace HW.Core.Helpers
 						if (w == 0) {
 							w = 52;
 						}
-						string v = string.Format("v{0}-{1}, {2}{3}", w - 2, w, (d - ((d - 1) % 52)) / 52, str);
+						string v = string.Format("v{0}-{1}, {2}{3}", w - 1, w, (d - ((d - 1) % 52)) / 52, str);
 						return v;
 					}
 				case 3:
@@ -995,7 +999,7 @@ namespace HW.Core.Helpers
 							int jj = 0;
 							foreach (Answer a in answers) {
 								jj++;
-								string w = DrawBottomString(GB, ii, jj, "");
+								string w = GetBottomString(GB, ii, jj, "");
 								Console.WriteLine(w);
 								if (!weeks.ContainsKey(w)) {
 									week = new List<Answer>();
