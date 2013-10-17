@@ -102,7 +102,7 @@ FROM Report"
 			return reports;
 		}
 		
-		public IList<ReportPartLanguage> FindByProjectAndLanguage2(int projectRoundID, int langID)
+		public IList<ReportPartLanguage> FindByProjectAndLanguage2(int projectRoundUnitID, int langID, int departmentID)
 		{
 			string query = string.Format(
 				@"
@@ -112,14 +112,17 @@ SELECT rp.ReportPartID,
 	rpl.Footer,
 	rp.Type,
 	rpl.ReportPartLangID
-FROM healthwatch..SponsorProjectRoundUnitDepartment pru
-INNER JOIN Report r ON r.ReportID = pru.ReportID
+FROM healthwatch..SponsorProjectRoundUnitDepartment sprud
+INNER JOIN healthwatch..SponsorProjectRoundUnit spru ON spru.SponsorProjectRoundUnitID = sprud.SponsorProjectRoundUnitID
+INNER JOIN Report r ON r.ReportID = sprud.ReportID
 INNER JOIN ReportPart rp ON r.ReportID = rp.ReportID
 INNER JOIN ReportPartLang rpl ON rp.ReportPartID = rpl.ReportPartID AND rpl.LangID = {1}
-WHERE pru.SponsorProjectRoundUnitID = {0}
+WHERE spru.SponsorProjectRoundUnitID = {0}
+AND sprud.DepartmentID = {2}
 ORDER BY rp.SortOrder",
-				projectRoundID,
-				langID
+				projectRoundUnitID,
+				langID,
+				departmentID
 			);
 			var languages = new List<ReportPartLanguage>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
@@ -140,7 +143,7 @@ ORDER BY rp.SortOrder",
 			return languages;
 		}
 		
-		public IList<ReportPartLanguage> FindByProjectAndLanguage(int projectRoundID, int langID)
+		public IList<ReportPartLanguage> FindByProjectAndLanguage(int projectRoundUnitID, int langID)
 		{
 			string query = string.Format(
 				@"
@@ -156,7 +159,7 @@ INNER JOIN ReportPart rp ON r.ReportID = rp.ReportID
 INNER JOIN ReportPartLang rpl ON rp.ReportPartID = rpl.ReportPartID AND rpl.LangID = {1}
 WHERE pru.ProjectRoundUnitID = {0}
 ORDER BY rp.SortOrder",
-				projectRoundID,
+				projectRoundUnitID,
 				langID
 			);
 			var languages = new List<ReportPartLanguage>();

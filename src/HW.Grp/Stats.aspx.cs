@@ -86,6 +86,9 @@ namespace HW.Grp
 				}
 				Org.Controls.Add(table);
 			}
+			get {
+				return departments;
+			}
 		}
 		
 		protected IList<BaseModel> SelectedDepartments {
@@ -236,7 +239,8 @@ namespace HW.Grp
 			int selectedProjectRoundUnitID = Convert.ToInt32(ProjectRoundUnitID.SelectedValue);
 			int grouping = Convert.ToInt32(Grouping.SelectedValue);
 			
-			var reportParts = reportRepository.FindByProjectAndLanguage2(selectedProjectRoundUnitID, selectedLangID);
+			int selectedDepartmentID = departments[0].Id;
+			var reportParts = reportRepository.FindByProjectAndLanguage2(selectedProjectRoundUnitID, selectedLangID, selectedDepartmentID);
 			if (reportParts.Count <= 0) {
 				reportParts = reportRepository.FindByProjectAndLanguage(selectedProjectRoundUnitID, selectedLangID);
 			}
