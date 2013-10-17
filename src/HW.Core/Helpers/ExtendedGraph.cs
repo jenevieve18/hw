@@ -399,7 +399,7 @@ namespace HW.Core.Helpers
 					} else if (point == 2) { // TODO: Map this to ExtraPoint class.
 						Graph.DrawDeviation(s.Color, (int)p.X, (int)l.Mean, (int)l.ConfidenceInterval);
 					}
-					Graph.drawCircle((int)p.X, (int)l.Mean, 4);
+					Graph.drawCircle((int)p.X, (int)l.Mean, s.Color);
 					if (i > 0) {
 						PointV pp = s.Points[i -1];
 						HWList ll = pp.Values;
