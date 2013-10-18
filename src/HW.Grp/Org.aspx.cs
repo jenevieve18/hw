@@ -1365,7 +1365,7 @@ namespace HW.Grp
 						for (int i = 1; i <= depth; i++) {
 							usr.Append("<IMG SRC=\"img/" + (DX[i] ? "I" : "null") + ".gif\" width=\"19\" height=\"20\"/>");
 						}
-						usr.Append("</TD><TD>" + (rs2.IsDBNull(1) ? "" : rs2.GetString(1)) + "</TD>" +
+						usr.Append("</TD><TD style=\"font-size:9px\">" + (rs2.IsDBNull(1) ? "" : rs2.GetString(1)) + "</TD>" +
 						           "<TD ALIGN=\"CENTER\">" +
 						           (Convert.ToInt32(Session["ReadOnly"]) == 0 ?
 						            "<A HREF=\"org.aspx?SDID=" + showDepartmentID.ToString() + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&UID=" + rs2.GetInt32(0).ToString() + "\"><img src=\"img/usr_edt.gif\" border=\"0\"/></A>" +
