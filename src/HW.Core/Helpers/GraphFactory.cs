@@ -385,7 +385,8 @@ namespace HW.Core.Helpers
 					indexes.Add(c.QuestionOption);
 				}
 				g.SetMinMaxes(minMaxes);
-				g.DrawBackgroundFromIndexes2(indexes);
+				g.DrawBackgroundFromIndexes(indexes);
+//				g.DrawBackgroundFromIndexes2(indexes);
 				g.DrawComputingSteps(disabled, cx);
 
 				cx = 0;
