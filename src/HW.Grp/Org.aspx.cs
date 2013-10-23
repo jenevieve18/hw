@@ -1132,7 +1132,7 @@ namespace HW.Grp
 				OrgTree.Text += "<TABLE BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\" style=\"font-size:12px;line-height:1.0;vertical-align:middle;\"><TR style=\"border-bottom:1px solid #333333;\">" +
 					"<TD COLSPAN=\"2\"><B>Unit/Email</B>&nbsp;</TD>" +
 					"<TD ALIGN=\"CENTER\" STYLE=\"font-size:9px;\">&nbsp;<B>Action</B>&nbsp;</TD>" +
-					"<TD ALIGN=\"CENTER\" STYLE=\"font-size:9px;\">&nbsp;<B>Activated</B>&nbsp;</TD>" +
+					"<TD ALIGN=\"CENTER\" STYLE=\"font-size:9px;\">&nbsp;<B>Active/<br>Activated</B>&nbsp;</TD>" +
 					"" + ESdesc + "" +
 					"<TD ALIGN=\"CENTER\" STYLE=\"font-size:9px;\">&nbsp;<B>Total</B>&nbsp;</TD>" +
 					"<TD ALIGN=\"CENTER\" STYLE=\"font-size:9px;\">&nbsp;<B>Received&nbsp;<br/>&nbsp;inivtation</B>&nbsp;</TD>" +
@@ -1145,7 +1145,7 @@ namespace HW.Grp
 				OrgTree.Text += "<TABLE BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\" style=\"font-size:12px;line-height:1.0;vertical-align:middle;\"><TR style=\"border-bottom:1px solid #333333;\">" +
 					"<TD COLSPAN=\"2\"><B>Unit</B>&nbsp;</TD>" +
 					"<TD ALIGN=\"CENTER\" STYLE=\"font-size:9px;\">&nbsp;<B>Action</B>&nbsp;</TD>" +
-					"<TD ALIGN=\"CENTER\" STYLE=\"font-size:9px;\">&nbsp;<B>Activated</B>&nbsp;</TD>" +
+					"<TD ALIGN=\"CENTER\" STYLE=\"font-size:9px;\">&nbsp;<B>Active/<br>Activated</B>&nbsp;</TD>" +
 					"" + ESdesc + "" +
 					"<TD ALIGN=\"CENTER\" STYLE=\"font-size:9px;\">&nbsp;<B>Total</B>&nbsp;</TD>" +
 					"<TD ALIGN=\"CENTER\" STYLE=\"font-size:9px;\">&nbsp;<B>Received&nbsp;<br/>&nbsp;inivtation</B>&nbsp;</TD>" +
@@ -1216,6 +1216,15 @@ namespace HW.Grp
 				")," +                  // 10
 				"d.DepartmentShort " +  // 11
 				ESselect +
+				",(SELECT COUNT(*) " +
+				"FROM SponsorInvite si " +
+				"INNER JOIN [User] u ON si.UserID = u.UserID " +
+				"INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID " +
+				"WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString " +
+				"AND si.SponsorID = d.SponsorID " +
+				"AND si.StoppedReason IS NULL " +
+				"AND si.UserID IS NOT NULL" +
+				") " +		// 16 - Number of active users at current department and down
 				"FROM Department d " +
 				"INNER JOIN Sponsor s ON d.SponsorID = s.SponsorID " +
 				ESjoin +
@@ -1264,7 +1273,9 @@ namespace HW.Grp
 					 "" : "") +
 					"" + (rs.GetInt32(3) > 0 ? "<A HREF=\"org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&SDID=" + rs.GetInt32(2) + "\"><img src=\"img/usr_on.gif\" border=\"0\"/></A>" : (Convert.ToInt32(Session["ReadOnly"]) == 0 ? "<A HREF=\"org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DeleteDID=" + rs.GetInt32(2) + "\"><img src=\"img/unt_del.gif\" border=\"0\"/></A>" : "")) + "" +
 					"</TD>" +
-					"<TD ALIGN=\"CENTER\" STYLE=\"font-size:9px;\"><span title=\"" + (rs.GetInt32(3) > 0 && rs.GetInt32(8) != rs.GetInt32(4) ? "" + (rs.GetInt32(4) >= MIN_SHOW ? rs.GetInt32(4).ToString() : (showReg ? rs.GetInt32(4).ToString() : "")) + "" : "") + "\">" + (rs.GetInt32(8) >= MIN_SHOW ? rs.GetInt32(8).ToString() : "<img src=\"img/key.gif\"/>") + "</span></TD>";
+					"<TD ALIGN=\"CENTER\" STYLE=\"font-size:9px;\">" +
+					"<span title=\"" + (rs.GetInt32(3) > 0 && rs.GetInt32(8) != rs.GetInt32(4) ? "" + (rs.GetInt32(4) >= MIN_SHOW ? rs.GetInt32(4).ToString() : (showReg ? rs.GetInt32(4).ToString() : "")) + "" : "") + "\">" + (rs.GetInt32(8) >= MIN_SHOW ? rs.GetInt32(18).ToString() + " / " + rs.GetInt32(8).ToString() : "<img src=\"img/key.gif\"/>") + "</span>" +
+					"</TD>";
 
 				for (int i = 0; i < EScount; i++) {
 					int idx = 12 + 6 * i;
