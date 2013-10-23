@@ -88,7 +88,7 @@ namespace HW.Grp
 			int spons = Convert.ToInt32((Request.QueryString["SAID"] != null ? Request.QueryString["SAID"] : HttpContext.Current.Session["SponsorAdminID"]));
 			int sid = Convert.ToInt32((Request.QueryString["SID"] != null ? Request.QueryString["SID"] : HttpContext.Current.Session["SponsorID"]));
 			string gid = (Request.QueryString["GID"] != null ? Request.QueryString["GID"].ToString().Replace(" ", "") : "");
-			string plot = Request.QueryString["PLOT"] != null ? Request.QueryString["PLOT"].ToString() : "LinePlot";
+			int plot = ConvertHelper.ToInt32(Request.QueryString["PLOT"]);
 			string type = Request.QueryString["TYPE"].ToString();
 			
 			bool hasGrouping = Request.QueryString["GRPNG"] != null || Request.QueryString["GRPNG"] != "0";

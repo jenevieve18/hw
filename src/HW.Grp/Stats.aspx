@@ -46,22 +46,25 @@
     $(document).ready(function () {
         $('.report-part .action .graph').click(function () {
             var partContent = $(this).closest('.report-part-content');
+            //text = $(this).text();
+            text = $(this).find('.plot-type').text();
 
             var img = partContent.find('img');
             var imageUrl = partContent.find('.hidden-image-url').text();
-            img.attr('src', imageUrl + '&PLOT=' + $(this).text());
+            img.attr('src', imageUrl + '&PLOT=' + text);
 
             var exportDocXUrl = partContent.find('.hidden-export-docx-url').text();
-            partContent.find('.export-docx-url').attr('href', exportDocXUrl + '&PLOT=' + $(this).text());
+            partContent.find('.export-docx-url').attr('href', exportDocXUrl + '&PLOT=' + text);
 
             var exportXlsXUrl = partContent.find('.hidden-export-xls-url').text();
-            partContent.find('.export-xls-url').attr('href', exportXlsXUrl + '&PLOT=' + $(this).text());
+            partContent.find('.export-xls-url').attr('href', exportXlsXUrl + '&PLOT=' + text);
 
             var exportPptXUrl = partContent.find('.hidden-export-pptx-url').text();
-            partContent.find('.export-pptx-url').attr('href', exportPptXUrl + '&PLOT=' + $(this).text());
+            partContent.find('.export-pptx-url').attr('href', exportPptXUrl + '&PLOT=' + text);
         });
         $('.report-parts > .action .graph').click(function () {
-            text = $(this).text();
+            //text = $(this).text();
+            text = $(this).find('.plot-type').text();
 
             var exportAllDocXUrl = $('.hidden-exportall-docx-url').text();
             $('.exportall-docx-url').attr('href', exportAllDocXUrl + '&PLOT=' + text);
@@ -137,11 +140,11 @@
 			<div class="report-parts">
 				<div class="action">
 					<span class="small">Change all graphs to:</span>
-					<span class="button white small graph">Line</span>
-					<span class="button white small graph">Line (mean ± SD)</span>
-					<span class="button white small graph">Line (mean ± 1.96 SD)</span>
+					<span class="button white small graph"><span class="hidden plot-type"><%= Plot.Line %></span>Line</span>
+					<span class="button white small graph"><span class="hidden plot-type"><%= Plot.LineSD %></span>Line (mean ± SD)</span>
+					<span class="button white small graph"><span class="hidden plot-type"><%= Plot.LineSDWithCI %></span>Line (mean ± 1.96 SD)</span>
                     <% if (supportsBoxPlot) { %>
-						<span class="button white small graph">Boxplot</span>
+						<span class="button white small graph"><span class="hidden plot-type"><%= Plot.BoxPlot %></span>Boxplot</span>
 					<% } %>
 					<span class="small">Export all graphs to:</span>
 					<span class="button white small export">
@@ -177,11 +180,11 @@
 							<%= HtmlHelper.Image(imageUrl) %>
 							<div class="action">
 								<span class="small">Change graph to:</span>
-								<span class="button white small graph">Line</span>
-								<span class="button white small graph">Line (mean ± SD)</span>
-								<span class="button white small graph">Line (mean ± 1.96 SD)</span>
+								<span class="button white small graph"><span class="hidden plot-type"><%= Plot.Line %></span>Line</span>
+								<span class="button white small graph"><span class="hidden plot-type"><%= Plot.LineSD %></span>Line (mean ± SD)</span>
+								<span class="button white small graph"><span class="hidden plot-type"><%= Plot.LineSDWithCI %></span>Line (mean ± 1.96 SD)</span>
                                 <% if (supportsBoxPlot) { %>
-									<span class="button white small graph">Boxplot</span>
+									<span class="button white small graph"><span class="hidden plot-type"><%= Plot.BoxPlot %></span>Boxplot</span>
 								<% } %>
 								<span class="small">Export graph to:</span>
 								<span class="button white small export">

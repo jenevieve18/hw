@@ -38,7 +38,7 @@ namespace HW.Tests.Helpers
 		public void TestLinePlot()
 		{
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\test.docx", FileMode.Create)) {
-				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", "LinePlot", "http://localhost:3428/") as MemoryStream;
+				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", Plot.Line, "http://localhost:3428/") as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
@@ -47,7 +47,7 @@ namespace HW.Tests.Helpers
 		public void TestLinePlot2()
 		{
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\test2.docx", FileMode.Create)) {
-				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", "LinePlot", "http://localhost:3428/") as MemoryStream;
+				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", Plot.Line, "http://localhost:3428/") as MemoryStream;
 				s.WriteTo(f);
 			}
 		}

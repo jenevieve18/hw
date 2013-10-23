@@ -38,7 +38,7 @@ namespace HW.Tests.Helpers
 		public void TestLinePlot()
 		{
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\line.xlsx", FileMode.Create)) {
-				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", "LinePlot", "http://localhost:3428/") as MemoryStream;
+				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", Plot.Line, "http://localhost:3428/") as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
@@ -47,7 +47,7 @@ namespace HW.Tests.Helpers
 		public void TestLinePlot2()
 		{
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\line2.xlsx", FileMode.Create)) {
-				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", "LinePlot", "http://localhost:3428/") as MemoryStream;
+				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", Plot.Line, "http://localhost:3428/") as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
@@ -56,7 +56,7 @@ namespace HW.Tests.Helpers
 		public void TestLineWithSD()
 		{
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\linesd.xlsx", FileMode.Create)) {
-				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", "Line (mean ± SD)", "http://localhost:3428/") as MemoryStream;
+				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", Plot.LineSD, "http://localhost:3428/") as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
@@ -65,7 +65,7 @@ namespace HW.Tests.Helpers
 		public void TestLineWithSD2()
 		{
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\linesd2.xlsx", FileMode.Create)) {
-				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", "Line (mean ± SD)", "http://localhost:3428/") as MemoryStream;
+				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", Plot.LineSD, "http://localhost:3428/") as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
@@ -74,7 +74,7 @@ namespace HW.Tests.Helpers
 		public void TestLinePlotWithCI()
 		{
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\lineci.xlsx", FileMode.Create)) {
-				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", "Line (mean ± 1.96 SD)", "http://localhost:3428/") as MemoryStream;
+				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", Plot.LineSDWithCI, "http://localhost:3428/") as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
@@ -83,7 +83,7 @@ namespace HW.Tests.Helpers
 		public void TestLinePlotWithCI2()
 		{
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\lineci2.xlsx", FileMode.Create)) {
-				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", "Line (mean ± 1.96 SD)", "http://localhost:3428/") as MemoryStream;
+				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", Plot.LineSDWithCI, "http://localhost:3428/") as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
@@ -92,7 +92,7 @@ namespace HW.Tests.Helpers
 		public void TestBoxPlot()
 		{
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\boxplot.xlsx", FileMode.Create)) {
-				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", "Boxplot", "http://localhost:3428/") as MemoryStream;
+				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", Plot.BoxPlot, "http://localhost:3428/") as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
@@ -101,7 +101,7 @@ namespace HW.Tests.Helpers
 		public void TestBoxPlot2()
 		{
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\boxplot2.xlsx", FileMode.Create)) {
-				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", "Boxplot", "http://localhost:3428/") as MemoryStream;
+				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", Plot.BoxPlot, "http://localhost:3428/") as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
@@ -110,7 +110,7 @@ namespace HW.Tests.Helpers
 		public void TestVerbose()
 		{
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\verbose.xlsx", FileMode.Create)) {
-				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923,925", "Verbose", "http://localhost:3428/") as MemoryStream;
+				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923,925", Plot.Verbose, "http://localhost:3428/") as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
@@ -119,7 +119,7 @@ namespace HW.Tests.Helpers
 		public void TestVerbose2()
 		{
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\verbose2.xlsx", FileMode.Create)) {
-				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923,925", "Verbose", "http://localhost:3428/") as MemoryStream;
+				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923,925", Plot.Verbose, "http://localhost:3428/") as MemoryStream;
 				s.WriteTo(f);
 			}
 		}

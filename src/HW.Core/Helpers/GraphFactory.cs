@@ -10,11 +10,11 @@ namespace HW.Core.Helpers
 {
 	public interface IGraphFactory
 	{
-		ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int pruid, int fy, int ty, int GB, bool hasGrouping, string plot, int width, int height, string bg, int grpng, int spons, int sid, string gid, object disabled, int point);
+		ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int pruid, int fy, int ty, int GB, bool hasGrouping, int plot, int width, int height, string bg, int grpng, int spons, int sid, string gid, object disabled, int point);
 
-		string CreateGraph2(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, string plot, int grpng, int spons, int sid, string gid, object disabled);
+		string CreateGraph2(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int spons, int sid, string gid, object disabled);
 		
-		void CreateGraph3(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, string plot, int grpng, int spons, int sid, string gid, object disabled, ExcelWriter w, ref int i);
+		void CreateGraph3(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int spons, int sid, string gid, object disabled, ExcelWriter w, ref int i);
 		
 		event EventHandler<MergeEventArgs> ForMerge;
 	}
@@ -30,7 +30,7 @@ namespace HW.Core.Helpers
 			this.reportRepository = reportRepository;
 		}
 		
-		public ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
+		public ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
 		{
 			int cx = p.Components.Count;
 			int answerID = 0;
@@ -121,7 +121,7 @@ namespace HW.Core.Helpers
 			return g;
 		}
 		
-		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int GRPNG, int SPONS, int SID, string GID, object disabled)
+		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int SPONS, int SID, string GID, object disabled)
 		{
 			int cx = p.Components.Count;
 			int answerID = 0;
@@ -212,7 +212,7 @@ namespace HW.Core.Helpers
 			return s.ToString();
 		}
 		
-		public void CreateGraph3(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, string plot, int grpng, int spons, int sid, string gid, object disabled, ExcelWriter w, ref int i)
+		public void CreateGraph3(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int spons, int sid, string gid, object disabled, ExcelWriter w, ref int i)
 		{
 			throw new NotImplementedException();
 		}
@@ -223,6 +223,26 @@ namespace HW.Core.Helpers
 		{
 			if (ForMerge != null) {
 				ForMerge(this, e);
+			}
+		}
+	}
+	
+	public class Plot
+	{
+		public const int Line = 1;
+		public const int LineSD = 2;
+		public const int LineSDWithCI = 3;
+		public const int BoxPlot = 4;
+		public const int Verbose = 5;
+		
+		public static string GetString(int plot)
+		{
+			switch (plot) {
+					case Line: return "Line";
+					case LineSD: return "Line (mean ± SD)";
+					case LineSDWithCI: return "Line (mean ± 1.96 SD)";
+					case BoxPlot: return "BoxPlot";
+					default: throw new NotSupportedException();
 			}
 		}
 	}
@@ -254,7 +274,7 @@ namespace HW.Core.Helpers
 			this.departmentRepository = departmentRepository;
 		}
 		
-		public ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
+		public ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
 		{
 			int cx = p.Components.Count;
 			string sortString = "";
@@ -353,11 +373,14 @@ namespace HW.Core.Helpers
 				g = new ExtendedGraph(895, 440, "#FFFFFF");
 
 				int t = 2;
-				if (plot.ToUpper().Equals("Boxplot".ToUpper())) {
+//				if (plot.ToUpper().Equals("Boxplot".ToUpper())) {
+				if (plot == Plot.BoxPlot) {
 					g.Type = new BoxPlotGraphType();
-				} else if (plot.ToUpper().Equals("Line (mean ± 1.96 SD)".ToUpper())) {
+//				} else if (plot.ToUpper().Equals("Line (mean ± 1.96 SD)".ToUpper())) {
+				} else if (plot == Plot.LineSDWithCI) {
 					g.Type = new LineGraphType(2, t);
-				} else if (plot.ToUpper().Equals("Line (mean ± SD)".ToUpper())) {
+//				} else if (plot.ToUpper().Equals("Line (mean ± SD)".ToUpper())) {
+				} else if (plot == Plot.LineSD) {
 					g.Type = new LineGraphType(1, t);
 				} else {
 					g.Type = new LineGraphType(0, t);
@@ -503,7 +526,7 @@ namespace HW.Core.Helpers
 			return g;
 		}
 		
-		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int GRPNG, int SPONS, int SID, string GID, object disabled)
+		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int SPONS, int SID, string GID, object disabled)
 		{
 			int cx = p.Components.Count;
 			string sortString = "";
@@ -604,7 +627,8 @@ namespace HW.Core.Helpers
 //				g = new ExtendedGraph(895, 440, "#FFFFFF");
 
 //				int t = 2 + (!stdev ? 1 : 0);
-				if (plot == "BOXPLOT") {
+//				if (plot == "BOXPLOT") {
+				if (plot == Plot.BoxPlot) {
 //					g.Type = new BoxPlotGraphType();
 				} else {
 //					g.Type = new LineGraphType(stdev, t);
@@ -770,11 +794,14 @@ namespace HW.Core.Helpers
 //				}
 //			}
 			
-			if (plot.ToUpper().Equals("Boxplot".ToUpper())) {
+//			if (plot.ToUpper().Equals("Boxplot".ToUpper())) {
+			if (plot == Plot.BoxPlot) {
 				return new BoxPlotCsv().ToCsv(departments, weeks);
-			} else if (plot.ToUpper().Equals("Line (mean ± 1.96 SD)".ToUpper())) {
+//			} else if (plot.ToUpper().Equals("Line (mean ± 1.96 SD)".ToUpper())) {
+			} else if (plot == Plot.LineSDWithCI) {
 				return new ConfidenceIntervalLineCsv().ToCsv(departments, weeks);
-			} else if (plot.ToUpper().Equals("Line (mean ± SD)".ToUpper())) {
+//			} else if (plot.ToUpper().Equals("Line (mean ± SD)".ToUpper())) {
+			} else if (plot == Plot.LineSD) {
 				return new StandardDeviationLineCsv().ToCsv(departments, weeks);
 			} else {
 				return new LineCsv().ToCsv(departments, weeks);
@@ -893,7 +920,7 @@ namespace HW.Core.Helpers
 			lastCount = minCnt;
 		}
 		
-		public void CreateGraph3(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int GRPNG, int SPONS, int SID, string GID, object disabled, ExcelWriter writer, ref int index)
+		public void CreateGraph3(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int SPONS, int SID, string GID, object disabled, ExcelWriter writer, ref int index)
 		{
 			int cx = p.Components.Count;
 			string sortString = "";
@@ -966,7 +993,8 @@ namespace HW.Core.Helpers
 				
 				string groupBy = GroupFactory.GetGroupBy(GB);
 
-				if (plot == "BOXPLOT") {
+//				if (plot == "BOXPLOT") {
+				if (plot == Plot.BoxPlot) {
 				} else {
 				}
 				Answer answer = answerRepository.ReadByGroup(groupBy, fy, ty, sortString);
@@ -1045,19 +1073,23 @@ namespace HW.Core.Helpers
 				}
 			}
 			
-			if (plot.ToUpper().Equals("Boxplot".ToUpper())) {
+//			if (plot.ToUpper().Equals("Boxplot".ToUpper())) {
+			if (plot == Plot.BoxPlot) {
 				var xx = new BoxPlotExcel();
 				xx.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
 				xx.ToExcel(departments, weeks, writer, ref index);
-			} else if (plot.ToUpper().Equals("Line (mean ± 1.96 SD)".ToUpper())) {
+//			} else if (plot.ToUpper().Equals("Line (mean ± 1.96 SD)".ToUpper())) {
+			} else if (plot == Plot.LineSDWithCI) {
 				var xx = new ConfidenceIntervalLineExcel();
 				xx.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
 				xx.ToExcel(departments, weeks, writer, ref index);
-			} else if (plot.ToUpper().Equals("Line (mean ± SD)".ToUpper())) {
+//			} else if (plot.ToUpper().Equals("Line (mean ± SD)".ToUpper())) {
+			} else if (plot == Plot.LineSD) {
 				var xx = new StandardDeviationLineExcel();
 				xx.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
 				xx.ToExcel(departments, weeks, writer, ref index);
-			} else if (plot.ToUpper().Equals("Verbose".ToUpper())) {
+//			} else if (plot.ToUpper().Equals("Verbose".ToUpper())) {
+			} else if (plot == Plot.Verbose) {
 				var xx = new EverythingExcel();
 				xx.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
 				xx.ToExcel(departments, weeks, writer, ref index);

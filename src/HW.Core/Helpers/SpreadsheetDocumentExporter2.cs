@@ -44,7 +44,7 @@ namespace HW.Core.Helpers
 			get { return string.Format("attachment;filename=HealthWatch Survey {0}.xlsx;", DateTime.Now.ToString("yyyyMMdd")); }
 		}
 		
-		public override object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path)
+		public override object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path)
 		{
 			MemoryStream output = new MemoryStream();
 			using (SpreadsheetDocument  package = SpreadsheetDocument.Create(output, SpreadsheetDocumentType.Workbook)) {
@@ -54,7 +54,7 @@ namespace HW.Core.Helpers
 			return output;
 		}
 		
-		public override object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, string plot, string path)
+		public override object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path)
 		{
 			throw new NotImplementedException();
 		}

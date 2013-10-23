@@ -89,7 +89,7 @@ namespace HW.Grp
 			
 			bool hasGrouping = Request.QueryString["GRPNG"] != null || Request.QueryString["GRPNG"] != "0";
 			
-			string plot = Request.QueryString["Plot"] != null ? Request.QueryString["Plot"] : "";
+			int plot = ConvertHelper.ToInt32(Request.QueryString["Plot"]);
 			string key = Request.QueryString["AK"];
 			
 			int grpng = Convert.ToInt32(Request.QueryString["GRPNG"]);
