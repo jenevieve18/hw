@@ -21,5 +21,19 @@ namespace HW.Core.Helpers
 				return def;
 			}
 		}
+		
+		public static double ToDouble(object val)
+		{
+			return ToDouble(val, 0);
+		}
+		
+		public static double ToDouble(object val, double def)
+		{
+			try {
+				return Convert.ToDouble(val);
+			} catch {
+				return def;
+			}
+		}
 	}
 }
