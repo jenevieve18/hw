@@ -9,14 +9,17 @@ using System.Web.UI.WebControls;
 using HW.Core;
 using HW.Core.Models;
 using HW.Core.Repositories;
+using HW.Core.Repositories.Sql;
 
 namespace HW.Grp
 {
 	public partial class Default : System.Web.UI.Page
 	{
 		protected string errorMessage = "";
-		IManagerFunctionRepository functionRepository = AppContext.GetRepositoryFactory().CreateManagerFunctionRepository();
-		ISponsorRepository sponsorRepository = AppContext.GetRepositoryFactory().CreateSponsorRepository();
+//		IManagerFunctionRepository functionRepository = AppContext.GetRepositoryFactory().CreateManagerFunctionRepository();
+//		ISponsorRepository sponsorRepository = AppContext.GetRepositoryFactory().CreateSponsorRepository();
+		SqlManagerFunctionRepository functionRepository = new SqlManagerFunctionRepository();
+		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -30,7 +33,7 @@ namespace HW.Grp
 				string anv = Request.Form["ANV"];
 				string los = Request.Form["LOS"];
 				string sa = Request.QueryString["SA"];
-				string said = sa != null ? Session["SuperAdminID"].ToString() : "";
+				string said = sa != null ? (Session["SuperAdminID"] != null ? Session["SuperAdminID"].ToString() : "0") : "";
 				s = sponsorRepository.ReadSponsorAdmin(skey, sakey, sa, said, anv, los);
 				if (s != null) {
 					Session["Name"] = s.Name;

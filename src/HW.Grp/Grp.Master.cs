@@ -25,7 +25,7 @@ namespace HW.Grp
             int sponsorID = Convert.ToInt32(Session["SponsorID"]);
             sponsor = sponsorRepository.X(sponsorID);
 
-            sponsorName = Session["Name"].ToString();
+            sponsorName = Session["Name"] != null ? Session["Name"].ToString() : "";
             sponsorAdminID = Session["SponsorAdminID"] != null ? Convert.ToInt32(Session["SponsorAdminID"]) : -1;
 
             super = Request.Url.AbsolutePath.Contains("super");
