@@ -174,7 +174,7 @@ namespace HW.Grp
 				} else {
 					sb.Append("width=" + l.CurrentVariant.ExerciseWindowX + ",height=" + l.CurrentVariant.ExerciseWindowY);
 				}
-				sb.Append("'));\">" + l.CurrentType.TypeName + (l.CurrentType.SubTypeName != "" ? " (" + l.CurrentType.SubTypeName + ")" : "") + "</a>");
+				sb.Append("'));\">" + l.CurrentType.TypeName + (l.CurrentType.SubTypeName != null && l.CurrentType.SubTypeName != "" ? " (" + l.CurrentType.SubTypeName + ")" : "") + "</a>");
 
 				exerciseAreaID = l.CurrentArea.Id;
 				exerciseID = l.Id;
