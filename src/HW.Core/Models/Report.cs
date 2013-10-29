@@ -19,7 +19,6 @@ namespace HW.Core.Models
 		public virtual IList<ReportPart> Parts { get; set; }
 		public virtual IList<ReportLanguage> Languages { get; set; }
 		public virtual IList<ProjectRound> ProjectRounds { get; set; }
-		public virtual IList<ProjectRoundUnit> ProjectRoundUnits { get; set; }
 	}
 	
 	public class ReportLanguage : BaseModel

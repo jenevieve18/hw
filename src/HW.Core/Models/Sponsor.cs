@@ -34,6 +34,7 @@ namespace HW.Core.Models
 		public virtual IList<SponsorAdmin> Admins { get; set; }
 		public virtual IList<SponsorBackgroundQuestion> BackgroundQuestions { get; set; }
 		
+		// FIXME: These are not necessary properties
 		public virtual DateTime? MinimumInviteDate { get; set; }
 		public virtual bool Closed { get { return ClosedAt != null; } }
 		public virtual IList<SponsorInvite> SentInvites { get; set; }
@@ -59,7 +60,6 @@ namespace HW.Core.Models
 			return Name == "" ? (Usr == "" ? "&gt; empty &lt;" : Usr) : Name;
 		}
 		
-//		public virtual bool SuperAdmin { get; set; } // FIXME: Used with Default to determine whether it's a SuperAdmin who logs in.
 		public virtual bool SuperAdmin { 
 			get { return SuperAdminId > 0; }
 		}
