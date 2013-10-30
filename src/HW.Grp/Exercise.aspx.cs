@@ -10,6 +10,7 @@ using HW.Core;
 using HW.Core.Helpers;
 using HW.Core.Models;
 using HW.Core.Repositories;
+using HW.Core.Repositories.Sql;
 
 namespace HW.Grp
 {
@@ -20,7 +21,7 @@ namespace HW.Grp
 		protected int EAID;
 		protected string sortQS;
 		protected int ECID;
-		protected IExerciseRepository exerciseRepository = AppContext.GetRepositoryFactory().CreateExerciseRepository();
+		protected SqlExerciseRepository exerciseRepository = new SqlExerciseRepository();
 		protected IList<ExerciseCategoryLanguage> categories;
 		protected IList<ExerciseAreaLanguage> areas;
 		protected IList<HW.Core.Models.Exercise> exercises;

@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using HW.Core;
 using HW.Core.Models;
 using HW.Core.Repositories;
+using HW.Core.Repositories.Sql;
 
 namespace HW.Grp
 {
@@ -17,9 +18,9 @@ namespace HW.Grp
 		int sponsorAdminID = 0;
 		int sponsorID = 0;
 
-		IDepartmentRepository departmentRepository = AppContext.GetRepositoryFactory().CreateDepartmentRepository();
-		IManagerFunctionRepository managerRepository = AppContext.GetRepositoryFactory().CreateManagerFunctionRepository();
-		ISponsorRepository sponsorRepository = AppContext.GetRepositoryFactory().CreateSponsorRepository();
+		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
+		SqlManagerFunctionRepository managerRepository = new SqlManagerFunctionRepository();
+		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 
 		bool HasSAID {
 			get { return Request.QueryString["SAID"] != null; }

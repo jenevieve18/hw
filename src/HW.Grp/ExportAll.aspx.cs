@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using HW.Core;
 using HW.Core.Helpers;
 using HW.Core.Models;
+using HW.Core.Repositories.Sql;
 using HW.Core.Services;
 
 namespace HW.Grp
@@ -16,13 +17,13 @@ namespace HW.Grp
 	{
 		protected IList<ReportPartLanguage> reportParts = null;
 		ReportService service = new ReportService(
-			AppContext.GetRepositoryFactory().CreateAnswerRepository(),
-			AppContext.GetRepositoryFactory().CreateReportRepository(),
-			AppContext.GetRepositoryFactory().CreateProjectRepository(),
-			AppContext.GetRepositoryFactory().CreateOptionRepository(),
-			AppContext.GetRepositoryFactory().CreateDepartmentRepository(),
-			AppContext.GetRepositoryFactory().CreateQuestionRepository(),
-			AppContext.GetRepositoryFactory().CreateIndexRepository()
+			new SqlAnswerRepository(),
+			new SqlReportRepository(),
+			new SqlProjectRepository(),
+			new SqlOptionRepository(),
+			new SqlDepartmentRepository(),
+			new SqlQuestionRepository(),
+			new SqlIndexRepository()
 		);
 		
 		bool HasAnswerKey {

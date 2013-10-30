@@ -21,11 +21,10 @@ namespace HW.Grp
 		IList<SponsorBackgroundQuestion> questions;
 		int sponsorID = 0;
 		int sponsorAdminID = 0;
-		ILanguageRepository langRepository = AppContext.GetRepositoryFactory().CreateLanguageRepository();
-		IProjectRepository projRepository = AppContext.GetRepositoryFactory().CreateProjectRepository();
-		ISponsorRepository sponsorRepository = AppContext.GetRepositoryFactory().CreateSponsorRepository();
-		IDepartmentRepository departmentRepository = AppContext.GetRepositoryFactory().CreateDepartmentRepository();
-		//IReportRepository reportRepository = AppContext.GetRepositoryFactory().CreateReportRepository();
+		SqlLanguageRepository langRepository = new SqlLanguageRepository();
+		SqlProjectRepository projRepository = new SqlProjectRepository();
+		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
+		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
 		SqlReportRepository reportRepository = new SqlReportRepository();
 		
 		public IList<SponsorProjectRoundUnitLanguage> Languages {
