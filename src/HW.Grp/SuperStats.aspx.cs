@@ -18,28 +18,27 @@ namespace HW.Grp
 			base.OnPreRender(e);
 
 			int cx = 0;
-			SqlDataReader rs = Db.rs(
-				"SELECT " +
-				"rp.ReportPartID, " +
-				"rpl.Subject, " +
-				"rpl.Header, " +
-				"rpl.Footer, " +
-				"rp.Type " +
-				"FROM Report r " +
-				"INNER JOIN ReportPart rp ON r.ReportID = rp.ReportID " +
-				"INNER JOIN ReportPartLang rpl ON rp.ReportPartID = rpl.ReportPartID AND rpl.LangID = 1 " +
-				"WHERE r.ReportID = " + Convert.ToInt32(Request.QueryString["RID"]) + " " +
-				"ORDER BY rp.SortOrder",
-				"eFormSqlConnection"
+			string query = string.Format(
+				@"
+SELECT rp.ReportPartID, 
+	rpl.Subject,
+	rpl.Header,
+	rpl.Footer,
+	rp.Type
+FROM Report r 
+INNER JOIN ReportPart rp ON r.ReportID = rp.ReportID 
+INNER JOIN ReportPartLang rpl ON rp.ReportPartID = rpl.ReportPartID AND rpl.LangID = 1 
+WHERE r.ReportID = {0} 
+ORDER BY rp.SortOrder",
+				Convert.ToInt32(Request.QueryString["RID"])
 			);
-			while (rs.Read())
-			{
+			SqlDataReader rs = Db.rs(query, "eFormSqlConnection");
+			while (rs.Read()) {
 				StatsImg.Text += "<div" + (cx > 0 ? " style=\"page-break-before:always;\"" : "") + ">&nbsp;<br/>&nbsp;<br/></div><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">";
 				StatsImg.Text += "<tr class=\"noscreen\"><td align=\"center\" valign=\"middle\" background=\"img/top_healthWatch.jpg\" height=\"140\" style=\"font-size:24px;\">" + rs.GetString(1) + "</td></tr>";
 				StatsImg.Text += "<tr class=\"noprint\"><td style=\"font-size:18px;\">" + rs.GetString(1) + "</td></tr>";
 
-				if (!rs.IsDBNull(2) && rs.GetString(2) != "")
-				{
+				if (!rs.IsDBNull(2) && rs.GetString(2) != "") {
 					StatsImg.Text += "<tr><td>" + rs.GetString(2).Replace("\r", "").Replace("\n", "<br/>") + "</td></tr>";
 				}
 
@@ -58,8 +57,7 @@ namespace HW.Grp
 					"RPID=" + rs.GetInt32(0) +
 					"\"/></td></tr>";
 
-				if (!rs.IsDBNull(3) && rs.GetString(3) != "")
-				{
+				if (!rs.IsDBNull(3) && rs.GetString(3) != "") {
 					StatsImg.Text += "<tr><td>" + rs.GetString(3).Replace("\r", "").Replace("\n", "<br/>") + "</td></tr>";
 				}
 
