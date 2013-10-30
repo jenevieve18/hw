@@ -2,13 +2,17 @@
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-
 using HW.Core.Helpers;
+using HW.Core.Models;
+using HW.Core.Repositories.Sql;
 
 namespace HW.Grp
 {
 	public partial class SuperReportImage : System.Web.UI.Page
 	{
+		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
+		SqlReportRepository reportRepository = new SqlReportRepository();
+		
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			string rnds1 = (Request.QueryString["RNDS1"] != null ? Request.QueryString["RNDS1"] : "");
@@ -53,38 +57,63 @@ namespace HW.Grp
 			}
 
 			string join1 = "";
+			string query = "";
 			if (rndsd1 != "") {
-				SqlDataReader rs2 = Db.rs("SELECT " +
-				                          "d.Department, " +
-				                          "d.DepartmentID, " +
-				                          "d.SortString " +
-				                          "FROM Department d " +
-				                          "WHERE d.DepartmentID IN (" + rndsd1 + ") " +
-				                          "ORDER BY d.SortString");
-				while (rs2.Read()) {
-					join1 += "INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID " +
-						"INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID " +
-						"INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID " +
-						"INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString," + rs2.GetString(2).Length + ") = '" + rs2.GetString(2) + "' ";
+//				query = string.Format(
+//					@"
+				//SELECT d.Department,
+//	d.DepartmentID,
+//	d.SortString
+				//FROM Department d
+				//WHERE d.DepartmentID IN ({0})
+				//ORDER BY d.SortString",
+//					rndsd1
+//				);
+//				SqlDataReader rs2 = Db.rs(query);
+//				while (rs2.Read()) {
+				foreach (var d in departmentRepository.FindIn(rndsd1)) {
+					join1 += string.Format(
+						@"
+INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
+INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID
+INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID
+INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString,{0}) = '{1}' ",
+//						rs2.GetString(2).Length,
+//						rs2.GetString(2)
+						d.SortString.Length,
+						d.SortString
+					);
 				}
-				rs2.Close();
+//				rs2.Close();
 			}
 			string join2 = "";
 			if (rndsd2 != "") {
-				SqlDataReader rs2 = Db.rs("SELECT " +
-				                          "d.Department, " +
-				                          "d.DepartmentID, " +
-				                          "d.SortString " +
-				                          "FROM Department d " +
-				                          "WHERE d.DepartmentID IN (" + rndsd2 + ") " +
-				                          "ORDER BY d.SortString");
-				while (rs2.Read()) {
-					join2 += "INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID " +
-						"INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID " +
-						"INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID " +
-						"INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString," + rs2.GetString(2).Length + ") = '" + rs2.GetString(2) + "' ";
+//				query = string.Format(
+//					@"
+				//SELECT d.Department,
+//	d.DepartmentID,
+//	d.SortString
+				//FROM Department d
+				//WHERE d.DepartmentID IN ({0})
+				//ORDER BY d.SortString",
+//					rndsd2
+//				);
+//				SqlDataReader rs2 = Db.rs(query);
+//				while (rs2.Read()) {
+				foreach (var d in departmentRepository.FindIn(rndsd2)) {
+					join2 += string.Format(
+						@"
+INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
+INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID
+INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID
+INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString,{0}) = '{1}' ",
+//						rs2.GetString(2).Length,
+//						rs2.GetString(2)
+						d.SortString.Length,
+						d.SortString
+					);
 				}
-				rs2.Close();
+//				rs2.Close();
 			}
 
 			int cx = 0, type = 0, q = 0, o = 0, rac = 0, pl = 0;
@@ -94,59 +123,76 @@ namespace HW.Grp
 			bool stdev = (rnds2 == "");
 			string groupBy = "";
 
-			string query = string.Format(
-				@"
-SELECT rp.Type,
-	(
-		SELECT COUNT(*)
-		FROM ReportPartComponent rpc
-		WHERE rpc.ReportPartID = rp.ReportPartID
-	),
-	rp.QuestionID,
-	rp.OptionID,
-	rp.RequiredAnswerCount,
-	rp.PartLevel
-FROM ReportPart rp
-WHERE rp.ReportPartID = {0}",
-				Request.QueryString["RPID"]
-			);
-			SqlDataReader rs = Db.rs(query, "eFormSqlConnection");
-			if (rs.Read()) {
-				type = rs.GetInt32(0);
-				cx = rs.GetInt32(1);
-				q = (rs.IsDBNull(2) ? 0 : rs.GetInt32(2));
-				o = (rs.IsDBNull(3) ? 0 : rs.GetInt32(3));
-				rac = (rs.IsDBNull(4) ? 0 : rs.GetInt32(4));
-				pl = (rs.IsDBNull(5) ? 0 : rs.GetInt32(5));
+//			query = string.Format(
+//				@"
+			//SELECT rp.Type,
+//	(
+//		SELECT COUNT(*)
+//		FROM ReportPartComponent rpc
+//		WHERE rpc.ReportPartID = rp.ReportPartID
+//	),
+//	rp.QuestionID,
+//	rp.OptionID,
+//	rp.RequiredAnswerCount,
+//	rp.PartLevel
+			//FROM ReportPart rp
+			//WHERE rp.ReportPartID = {0}",
+//				Request.QueryString["RPID"]
+//			);
+			SqlDataReader rs;
+//			SqlDataReader rs = Db.rs(query, "eFormSqlConnection");
+//			if (rs.Read()) {
+			var r = reportRepository.ReadReportPart(Convert.ToInt32(Request.QueryString["RPID"]));
+			if (r != null) {
+//				type = rs.GetInt32(0);
+//				cx = rs.GetInt32(1);
+//				q = (rs.IsDBNull(2) ? 0 : rs.GetInt32(2));
+//				o = (rs.IsDBNull(3) ? 0 : rs.GetInt32(3));
+//				rac = (rs.IsDBNull(4) ? 0 : rs.GetInt32(4));
+//				pl = (rs.IsDBNull(5) ? 0 : rs.GetInt32(5));
+				type = r.Type;
+				cx = r.Components.Count;
+				q = r.Question.Id;
+				o = r.Option.Id;
+				rac = r.RequiredAnswerCount;
+				pl = r.PartLevel;
 			}
-			rs.Close();
+//			rs.Close();
 
 			#region group stats
 
 			int langID = 1, minDT = 0, maxDT = 0;
 
 			if (type == 8) {
-				switch (GB) {
-						case 1: groupBy = "dbo.cf_yearWeek"; break;
-						case 2: groupBy = "dbo.cf_year2Week"; break;
-						case 3: groupBy = "dbo.cf_yearMonth"; break;
-						case 4: groupBy = "dbo.cf_year3Month"; break;
-						case 5: groupBy = "dbo.cf_year6Month"; break;
-						case 6: groupBy = "YEAR"; break;
-						case 7: groupBy = "dbo.cf_year2WeekEven"; break;
-				}
+//				switch (GB) {
+//						case 1: groupBy = "dbo.cf_yearWeek"; break;
+//						case 2: groupBy = "dbo.cf_year2Week"; break;
+//						case 3: groupBy = "dbo.cf_yearMonth"; break;
+//						case 4: groupBy = "dbo.cf_year3Month"; break;
+//						case 5: groupBy = "dbo.cf_year6Month"; break;
+//						case 6: groupBy = "YEAR"; break;
+//						case 7: groupBy = "dbo.cf_year2WeekEven"; break;
+//				}
+				groupBy = GroupFactory.GetGroupBy(GB);
 				g = new Graph(895, 440, "#FFFFFF");
 
-				rs = Db.rs("SELECT " +
-				           "" + groupBy + "(MAX(a.EndDT)) - " + groupBy + "(MIN(a.EndDT)), " +
-				           "" + groupBy + "(MIN(a.EndDT)), " +
-				           "" + groupBy + "(MAX(a.EndDT)) " +
-				           "FROM Answer a " +
-				           "INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID " +
-				           "WHERE a.EndDT IS NOT NULL " +
-				           "AND a.EndDT >= '" + Request.QueryString["FDT"].ToString() + "' " +
-				           "AND a.EndDT < '" + Request.QueryString["TDT"].ToString() + "' " +
-				           rnds, "eFormSqlConnection");
+				query = string.Format(
+					@"
+SELECT {0}(MAX(a.EndDT)) - {0}(MIN(a.EndDT)),
+	{0}(MIN(a.EndDT)),
+	{0}(MAX(a.EndDT))
+FROM Answer a
+INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
+WHERE a.EndDT IS NOT NULL
+AND a.EndDT >= '{1}'
+AND a.EndDT < '{2}'
+{3}",
+					groupBy,
+					Request.QueryString["FDT"].ToString(),
+					Request.QueryString["TDT"].ToString(),
+					rnds
+				);
+				rs = Db.rs(query, "eFormSqlConnection");
 				if (rs.Read()) {
 					cx = Convert.ToInt32(rs.GetValue(0)) + 3;
 					minDT = rs.GetInt32(1);
@@ -154,47 +200,52 @@ WHERE rp.ReportPartID = {0}",
 				}
 				rs.Close();
 
-				rs = Db.rs(
-					"SELECT " +
-					"rpc.WeightedQuestionOptionID, " +	// 0
-					"wqo.QuestionID, " +
-					"wqo.OptionID, " +
-					"wqo.YellowLow, " +
-					"wqo.GreenLow, " +
-					"wqo.GreenHigh, " +
-					"wqo.YellowHigh " +
-					"FROM ReportPartComponent rpc " +
-					"INNER JOIN WeightedQuestionOption wqo ON rpc.WeightedQuestionOptionID = wqo.WeightedQuestionOptionID " +
-					"WHERE rpc.ReportPartID = " + Request.QueryString["RPID"] + " " +
-					"ORDER BY rpc.SortOrder",
-					"eFormSqlConnection"
+				query = string.Format(
+					@"
+SELECT rpc.WeightedQuestionOptionID,
+	wqo.QuestionID,
+	wqo.OptionID,
+	wqo.YellowLow,
+	wqo.GreenLow,
+	wqo.GreenHigh,
+	wqo.YellowHigh
+FROM ReportPartComponent rpc
+INNER JOIN WeightedQuestionOption wqo ON rpc.WeightedQuestionOptionID = wqo.WeightedQuestionOptionID
+WHERE rpc.ReportPartID = {0}
+ORDER BY rpc.SortOrder",
+					Request.QueryString["RPID"]
 				);
+				rs = Db.rs(query, "eFormSqlConnection");
 				while (rs.Read()) {
-					SqlDataReader rs2 = Db.rs(
-						"SELECT " +
-						"MAX(tmp2.VA + tmp2.SD), " +
-						"MIN(tmp2.VA - tmp2.SD) " +
-						"FROM (" +
-						"SELECT " +
-						"AVG(tmp.V) AS VA, " +
-						"STDEV(tmp.V) AS SD " +
-						"FROM (" +
-						"SELECT " +
-						"" + groupBy + "(a.EndDT) AS DT, " +
-						"AVG(av.ValueInt) AS V " +
-						"FROM Answer a " +
-						"INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = " + rs.GetInt32(1) + " AND av.OptionID = " + rs.GetInt32(2) + " " +
-						"INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID " +
-						"WHERE a.EndDT IS NOT NULL " +
-						"AND a.EndDT >= '" + Request.QueryString["FDT"].ToString() + "' " +
-						"AND a.EndDT < '" + Request.QueryString["TDT"].ToString() + "' " +
-						rnds +
-						"GROUP BY a.ProjectRoundUserID, " + groupBy + "(a.EndDT) " +
-						") tmp " +
-						"GROUP BY tmp.DT " +
-						") tmp2",
-						"eFormSqlConnection"
+					query = string.Format(
+						@"
+SELECT MAX(tmp2.VA + tmp2.SD),
+	MIN(tmp2.VA - tmp2.SD)
+FROM (
+	SELECT AVG(tmp.V) AS VA,
+		STDEV(tmp.V) AS SD
+	FROM (
+		SELECT {0}(a.EndDT) AS DT,
+			AVG(av.ValueInt) AS V
+		FROM Answer a
+		INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = {1} AND av.OptionID = {2}
+		INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
+		WHERE a.EndDT IS NOT NULL
+		AND a.EndDT >= '{3}'
+		AND a.EndDT < '{4}'
+		{5}
+		GROUP BY a.ProjectRoundUserID, {0}(a.EndDT)
+	) tmp
+	GROUP BY tmp.DT
+) tmp2",
+						groupBy,
+						rs.GetInt32(1),
+						rs.GetInt32(2),
+						Request.QueryString["FDT"].ToString(),
+						Request.QueryString["TDT"].ToString(),
+						rnds
 					);
+					SqlDataReader rs2 = Db.rs(query, "eFormSqlConnection");
 					if (rs2.Read()) {
 						g.setMinMax((float)Convert.ToDouble(rs2.GetValue(1)), (float)Convert.ToDouble(rs2.GetValue(0)));
 						g.roundMinMax();
@@ -249,18 +300,15 @@ WHERE rp.ReportPartID = {0}",
 			if (type == 8) {
 				#region Bottom string
 				int dx = 0;
-				for (int i = minDT; i <= maxDT; i++)
-				{
+				for (int i = minDT; i <= maxDT; i++) {
 					dx++;
 
-					switch (GB)
-					{
+					switch (GB) {
 						case 1:
 							{
 								int d = i;
 								int w = d % 52;
-								if (w == 0)
-								{
+								if (w == 0) {
 									w = 52;
 								}
 								string v = "v" + w + ", " + (d / 52);
@@ -271,8 +319,7 @@ WHERE rp.ReportPartID = {0}",
 							{
 								int d = i * 2;
 								int w = d % 52;
-								if (w == 0)
-								{
+								if (w == 0) {
 									w = 52;
 								}
 								string v = "v" + (w - 1) + "-" + w + ", " + (d - ((d - 1) % 52)) / 52;
@@ -283,8 +330,7 @@ WHERE rp.ReportPartID = {0}",
 							{
 								int d = i;
 								int w = d % 12;
-								if (w == 0)
-								{
+								if (w == 0) {
 									w = 12;
 								}
 								string v = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedMonthNames[w - 1] + ", " + ((d - w) / 12);
@@ -295,8 +341,7 @@ WHERE rp.ReportPartID = {0}",
 							{
 								int d = i * 3;
 								int w = d % 12;
-								if (w == 0)
-								{
+								if (w == 0) {
 									w = 12;
 								}
 								string v = "Q" + (w / 3) + ", " + ((d - w) / 12);
@@ -307,8 +352,7 @@ WHERE rp.ReportPartID = {0}",
 							{
 								int d = i * 6;
 								int w = d % 12;
-								if (w == 0)
-								{
+								if (w == 0) {
 									w = 12;
 								}
 								string v = ((d - w) / 12) + "/" + (w / 6);
@@ -324,8 +368,7 @@ WHERE rp.ReportPartID = {0}",
 							{
 								int d = i * 2;
 								int w = d % 52;
-								if (w == 0)
-								{
+								if (w == 0) {
 									w = 52;
 								}
 								string v = "v" + w + "-" + (w + 1) + ", " + ((d + 1) - (d % 52)) / 52;
@@ -337,19 +380,21 @@ WHERE rp.ReportPartID = {0}",
 				#endregion
 
 				int bx = 0;
-				rs = Db.rs(
-					"SELECT " +
-					"rpc.WeightedQuestionOptionID, " +	// 0
-					"wqol.WeightedQuestionOption, " +
-					"wqo.QuestionID, " +
-					"wqo.OptionID " +
-					"FROM ReportPartComponent rpc " +
-					"INNER JOIN WeightedQuestionOption wqo ON rpc.WeightedQuestionOptionID = wqo.WeightedQuestionOptionID " +
-					"INNER JOIN WeightedQuestionOptionLang wqol ON wqo.WeightedQuestionOptionID = wqol.WeightedQuestionOptionID AND wqol.LangID = " + langID + " " +
-					"WHERE rpc.ReportPartID = " + Request.QueryString["RPID"] + " " +
-					"ORDER BY rpc.SortOrder",
-					"eFormSqlConnection"
+				query = string.Format(
+					@"
+SELECT rpc.WeightedQuestionOptionID,
+	wqol.WeightedQuestionOption,
+	wqo.QuestionID,
+	wqo.OptionID
+FROM ReportPartComponent rpc
+INNER JOIN WeightedQuestionOption wqo ON rpc.WeightedQuestionOptionID = wqo.WeightedQuestionOptionID
+INNER JOIN WeightedQuestionOptionLang wqol ON wqo.WeightedQuestionOptionID = wqol.WeightedQuestionOptionID AND wqol.LangID = {0}
+WHERE rpc.ReportPartID = {1}
+ORDER BY rpc.SortOrder",
+					langID,
+					Request.QueryString["RPID"]
 				);
+				rs = Db.rs(query, "eFormSqlConnection");
 				if (rs.Read()) {
 					g.drawAxisExpl(rs.GetString(1) + ", " + (langID == 1 ? "medelvärde" : "mean value") + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""), 20, false, false);
 					g.drawAxis(false);
@@ -363,59 +408,58 @@ WHERE rp.ReportPartID = {0}",
 					int lastDT = minDT - 1;
 					
 					#region Data loop 1
-					SqlDataReader rs2 = Db.rs(
-						"SELECT " +
-						"tmp.DT, " +
-						"AVG(tmp.V), " +
-						"COUNT(tmp.V), " +
-						"STDEV(tmp.V) " +
-						"FROM (" +
-						"SELECT " +
-						"" + groupBy + "(a.EndDT) AS DT, " +
-						"AVG(av.ValueInt) AS V " +
-						"FROM Answer a " +
-						"INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = " + rs.GetInt32(2) + " AND av.OptionID = " + rs.GetInt32(3) + " " +
-						"INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID " +
-						join1 +
-						"WHERE a.EndDT IS NOT NULL " +
-						"AND a.EndDT >= '" + Request.QueryString["FDT"].ToString() + "' " +
-						"AND a.EndDT < '" + Request.QueryString["TDT"].ToString() + "' " +
-						rnds1 +
-						"GROUP BY a.ProjectRoundUserID, " + groupBy + "(a.EndDT) " +
-						") tmp " +
-						"GROUP BY tmp.DT " +
-						"ORDER BY tmp.DT",
-						"eFormSqlConnection"
+					query = string.Format(
+						@"
+SELECT tmp.DT,
+	AVG(tmp.V),
+	COUNT(tmp.V),
+	STDEV(tmp.V)
+FROM (
+	SELECT {0}(a.EndDT) AS DT,
+		AVG(av.ValueInt) AS V
+	FROM Answer a
+	INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = {1} AND av.OptionID = {2}
+	INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
+	{3}
+	WHERE a.EndDT IS NOT NULL
+	AND a.EndDT >= '{4}'
+	AND a.EndDT < '{5}'
+	{6}
+	GROUP BY a.ProjectRoundUserID, {0}(a.EndDT)
+) tmp
+GROUP BY tmp.DT
+ORDER BY tmp.DT",
+						groupBy,
+						rs.GetInt32(2),
+						rs.GetInt32(3),
+						join1,
+						Request.QueryString["FDT"].ToString(),
+						Request.QueryString["TDT"].ToString(),
+						rnds1
 					);
-					while (rs2.Read())
-					{
+					SqlDataReader rs2 = Db.rs(query, "eFormSqlConnection");
+					while (rs2.Read()) {
 						//if (lastDT == 0) { lastDT = rs2.GetInt32(0); }
-						while (lastDT + 1 < rs2.GetInt32(0))
-						{
+						while (lastDT + 1 < rs2.GetInt32(0)) {
 							lastDT++;
 							cx++;
 						}
 
-						if (rs2.GetInt32(2) >= rac)
-						{
+						if (rs2.GetInt32(2) >= rac) {
 							float newVal = (rs2.IsDBNull(1) ? -1f : (float)Convert.ToDouble(rs2.GetValue(1)));
 							float newStd = (rs2.IsDBNull(3) ? -1f : (float)Convert.ToDouble(rs2.GetValue(3)));
 
-							if (stdev)
-							{
+							if (stdev) {
 								g.drawLine(20, cx * g.steping - 10, Convert.ToInt32(g.maxH - ((newVal - newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), cx * g.steping + 10, Convert.ToInt32(g.maxH - ((newVal - newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), 1);
 								g.drawLine(20, cx * g.steping, Convert.ToInt32(g.maxH - ((newVal - newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), cx * g.steping, Convert.ToInt32(g.maxH - ((newVal + newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), 1);
 								g.drawLine(20, cx * g.steping - 10, Convert.ToInt32(g.maxH - ((newVal + newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), cx * g.steping + 10, Convert.ToInt32(g.maxH - ((newVal + newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), 1);
 							}
 
-							if (newVal != -1f)
-							{
-								if (lastVal != -1f)
-								{
+							if (newVal != -1f) {
+								if (lastVal != -1f) {
 									g.drawStepLine(4, lastCX, lastVal, cx, newVal, 3);
 								}
-								if (rnds2 == "")
-								{
+								if (rnds2 == "") {
 									g.drawBottomString("\n\n\n\n\n\nn=" + rs2.GetInt32(2).ToString(), cx, false);
 								}
 								lastCX = cx;
@@ -440,47 +484,48 @@ WHERE rp.ReportPartID = {0}",
 						cx = 1;
 						lastDT = minDT - 1;
 						#region Data loop 2
-						rs2 = Db.rs(
-							"SELECT " +
-							"tmp.DT, " +
-							"AVG(tmp.V), " +
-							"COUNT(tmp.V), " +
-							"STDEV(tmp.V) " +
-							"FROM (" +
-							"SELECT " +
-							"" + groupBy + "(a.EndDT) AS DT, " +
-							"AVG(av.ValueInt) AS V " +
-							"FROM Answer a " +
-							"INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = " + rs.GetInt32(2) + " AND av.OptionID = " + rs.GetInt32(3) + " " +
-							"INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID " +
-							join2 +
-							"WHERE a.EndDT IS NOT NULL " +
-							"AND a.EndDT >= '" + Request.QueryString["FDT"].ToString() + "' " +
-							"AND a.EndDT < '" + Request.QueryString["TDT"].ToString() + "' " +
-							rnds2 +
-							"GROUP BY a.ProjectRoundUserID, " + groupBy + "(a.EndDT) " +
-							") tmp " +
-							"GROUP BY tmp.DT " +
-							"ORDER BY tmp.DT",
-							"eFormSqlConnection"
+						query = string.Format(
+							@"
+SELECT tmp.DT,
+	AVG(tmp.V),
+	COUNT(tmp.V),
+	STDEV(tmp.V)
+FROM (
+	SELECT {0}(a.EndDT) AS DT,
+		AVG(av.ValueInt) AS V
+	FROM Answer a
+	INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = {1} AND av.OptionID = {2}
+	INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
+	{3}
+	WHERE a.EndDT IS NOT NULL
+	AND a.EndDT >= '{4}'
+	AND a.EndDT < '{5}'
+	{6}
+	GROUP BY a.ProjectRoundUserID, {0}(a.EndDT)
+) tmp
+GROUP BY tmp.DT
+ORDER BY tmp.DT",
+							groupBy,
+							rs.GetInt32(2),
+							rs.GetInt32(3),
+							join2,
+							Request.QueryString["FDT"].ToString(),
+							Request.QueryString["TDT"].ToString(),
+							rnds2
 						);
-						while (rs2.Read())
-						{
+						rs2 = Db.rs(query, "eFormSqlConnection");
+						while (rs2.Read()) {
 							//if (lastDT == 0) { lastDT = rs2.GetInt32(0); }
-							while (lastDT + 1 < rs2.GetInt32(0))
-							{
+							while (lastDT + 1 < rs2.GetInt32(0)) {
 								lastDT++;
 								cx++;
 							}
 
-							if (rs2.GetInt32(2) >= rac)
-							{
+							if (rs2.GetInt32(2) >= rac) {
 								float newVal = (rs2.IsDBNull(1) ? -1f : (float)Convert.ToDouble(rs2.GetValue(1)));
 
-								if (newVal != -1f)
-								{
-									if (lastVal != -1f)
-									{
+								if (newVal != -1f) {
+									if (lastVal != -1f) {
 										g.drawStepLine(5, lastCX, lastVal, cx, newVal, 3);
 									}
 									lastCX = cx;

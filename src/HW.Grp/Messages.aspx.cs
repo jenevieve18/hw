@@ -10,6 +10,7 @@ using HW.Core;
 using HW.Core.Helpers;
 using HW.Core.Models;
 using HW.Core.Repositories;
+using HW.Core.Repositories.Sql;
 
 namespace HW.Grp
 {
@@ -19,9 +20,12 @@ namespace HW.Grp
 		bool incorrectPassword = false;
 		bool sent = false;
 		
-		IUserRepository userRepository = AppContext.GetRepositoryFactory().CreateUserRepository();
-		ISponsorRepository sponsorRepository = AppContext.GetRepositoryFactory().CreateSponsorRepository();
-		IProjectRepository projectRepository = AppContext.GetRepositoryFactory().CreateProjectRepository();
+//		IUserRepository userRepository = AppContext.GetRepositoryFactory().CreateUserRepository();
+//		ISponsorRepository sponsorRepository = AppContext.GetRepositoryFactory().CreateSponsorRepository();
+//		IProjectRepository projectRepository = AppContext.GetRepositoryFactory().CreateProjectRepository();
+		SqlUserRepository userRepository = new SqlUserRepository();
+		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
+		SqlProjectRepository projectRepository = new SqlProjectRepository();
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -30,19 +34,16 @@ namespace HW.Grp
 			Save.Click += new EventHandler(Save_Click);
 			Send.Click += new EventHandler(Send_Click);
 
-			if (sponsorID != 0)
-			{
+			if (sponsorID != 0) {
 				sent = (HttpContext.Current.Request.QueryString["Sent"] != null);
 
-				if (!IsPostBack)
-				{
+				if (!IsPostBack) {
 					int sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 					var u = userRepository.a(sponsorID, sponsorAdminID);
 					AllMessageLastSent.Text = "Recipients: " + u + ", ";
 
 					var s = sponsorRepository.ReadSponsor(sponsorID);
-					if (s != null)
-					{
+					if (s != null) {
 						InviteTxt.Text = s.InviteText;
 						InviteReminderTxt.Text = s.InviteReminderText;
 						LoginTxt.Text = s.LoginText;
@@ -67,17 +68,12 @@ namespace HW.Grp
 				int projectRoundID = 0; string extendedSurvey = ""; bool found = false;
 				ArrayList seen = new ArrayList();
 				int SAID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
-				foreach (var s in sponsorRepository.FindExtendedSurveysBySponsorAdmin(sponsorID, SAID))
-				{
-					if (!seen.Contains(s.Id))
-					{
-						if (s.ProjectRound != null)
-						{
-							if (!found)
-							{
+				foreach (var s in sponsorRepository.FindExtendedSurveysBySponsorAdmin(sponsorID, SAID)) {
+					if (!seen.Contains(s.Id)) {
+						if (s.ProjectRound != null) {
+							if (!found) {
 								projectRoundID = s.ProjectRound.Id;
-								if (!IsPostBack)
-								{
+								if (!IsPostBack) {
 									extendedSurvey = s.Internal + s.RoundText;
 									ExtendedSurvey.Text = "Reminder for <B>" + extendedSurvey + "</B> (<span style=\"font-size:9px;\">[x]Last sent: " + (s.EmailLastSent == null ? "Never" : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
 									ExtendedSurveyTxt.Text = s.EmailBody;
@@ -90,31 +86,24 @@ namespace HW.Grp
 								sponsorExtendedSurveyID = s.Id;
 								found = true;
 
-								if (!IsPostBack)
-								{
+								if (!IsPostBack) {
 									var r = userRepository.CountBySponsorWithAdminAndExtendedSurvey2(sponsorID, SAID, sponsorExtendedSurveyID);
 									ExtendedSurvey.Text = ExtendedSurvey.Text.Replace("[x]", "[x]Recipients: " + r + ", ");
 
 									r = userRepository.CountBySponsorWithAdminAndExtendedSurvey(sponsorID, SAID, sponsorExtendedSurveyID);
 									ExtendedSurveyFinished.Text = ExtendedSurveyFinished.Text.Replace("[x]", "[x]Recipients: " + r + ", ");
 								}
-							}
-							else
-							{
-								if (ExtendedSurveyTxt.Text == "")
-								{
+							} else {
+								if (ExtendedSurveyTxt.Text == "") {
 									ExtendedSurveyTxt.Text = s.EmailBody;
 								}
-								if (ExtendedSurveySubject.Text == "")
-								{
+								if (ExtendedSurveySubject.Text == "") {
 									ExtendedSurveySubject.Text = s.EmailSubject;
 								}
-								if (ExtendedSurveyFinishedTxt.Text == "")
-								{
+								if (ExtendedSurveyFinishedTxt.Text == "") {
 									ExtendedSurveyFinishedTxt.Text = s.FinishedEmailBody;
 								}
-								if (ExtendedSurveyFinishedSubject.Text == "")
-								{
+								if (ExtendedSurveyFinishedSubject.Text == "") {
 									ExtendedSurveyFinishedSubject.Text = s.FinishedEmailSubject;
 								}
 							}
@@ -122,13 +111,10 @@ namespace HW.Grp
 						seen.Add(s.Id);
 					}
 				}
-				if (projectRoundID != 0)
-				{
+				if (projectRoundID != 0) {
 					var u = projectRepository.ReadRound(projectRoundID);
-					if (u != null)
-					{
-						if (!IsPostBack)
-						{
+					if (u != null) {
+						if (!IsPostBack) {
 							ExtendedSurvey.Text = ExtendedSurvey.Text.Replace("[x]", "Period: " + (u.Started ==  null ? "?" : u.Started.Value.ToString("yyyy-MM-dd")) + "--" + (u.Closed == null ? "?" : u.Closed.Value.ToString("yyyy-MM-dd")) + ", ");
 							ExtendedSurveyFinished.Text = ExtendedSurveyFinished.Text.Replace("[x]", "Period: " + (u.Started == null ? "?" : u.Started.Value.ToString("yyyy-MM-dd")) + "--" + (u.Closed == null ? "?" : u.Closed.Value.ToString("yyyy-MM-dd")) + ", ");
 						}
@@ -138,26 +124,20 @@ namespace HW.Grp
 							(u.Closed == null || u.Closed >= DateTime.Now)
 						)
 						{
-							if (!IsPostBack)
-							{
+							if (!IsPostBack) {
 								ExtendedSurveySubject.Visible = true;
 								ExtendedSurvey.Visible = true;
 								ExtendedSurveyTxt.Visible = true;
 								SendType.Items.Add(new ListItem("Reminder: " + extendedSurvey, "4"));
 							}
-						}
-						else
-						{
+						} else {
 							projectRoundID = 0;
 						}
-					}
-					else
-					{
+					} else {
 						projectRoundID = 0;
 					}
 
-					if (!ExtendedSurvey.Visible && ExtendedSurveyFinished.Text != "")
-					{
+					if (!ExtendedSurvey.Visible && ExtendedSurveyFinished.Text != "") {
 						ExtendedSurveyFinishedSubject.Visible = true;
 						ExtendedSurveyFinished.Visible = true;
 						ExtendedSurveyFinishedTxt.Visible = true;
@@ -165,9 +145,7 @@ namespace HW.Grp
 					}
 				}
 				#endregion
-			}
-			else
-			{
+			} else {
 				HttpContext.Current.Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
 		}
@@ -190,8 +168,7 @@ namespace HW.Grp
 				}
 			);
 
-			if ((ExtendedSurveyFinishedSubject.Visible || ExtendedSurveySubject.Visible) && sponsorExtendedSurveyID != 0)
-			{
+			if ((ExtendedSurveyFinishedSubject.Visible || ExtendedSurveySubject.Visible) && sponsorExtendedSurveyID != 0) {
 				sponsorRepository.UpdateSponsorExtendedSurvey(
 					new SponsorExtendedSurvey {
 						EmailSubject = ExtendedSurveySubject.Text,
@@ -215,45 +192,34 @@ namespace HW.Grp
 		{
 			save();
 
-			if (SendType.SelectedIndex != -1)
-			{
+			if (SendType.SelectedIndex != -1) {
 				bool valid = (HttpContext.Current.Session["SponsorAdminID"].ToString() == "-1");
-				if (!valid)
-				{
+				if (!valid) {
 					int sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 					var a = sponsorRepository.ReadSponsorAdmin(sponsorID, sponsorAdminID, Password.Text);
-					if (a != null && a.Id == sponsorAdminID)
-					{
+					if (a != null && a.Id == sponsorAdminID) {
 						valid = true;
-					}
-					else
-					{
+					} else {
 						incorrectPassword = true;
 					}
 				}
 
-				if (valid)
-				{
+				if (valid) {
 					int cx = 0;
 					int bx = 0;
 
-					switch (Convert.ToInt32(SendType.SelectedValue))
-					{
+					switch (Convert.ToInt32(SendType.SelectedValue)) {
 						case 1:
 							#region Invite
 							sponsorRepository.UpdateSponsorLastInviteSent(sponsorID);
 
 							int sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
-							foreach (var i in sponsorRepository.FindInvitesBySponsor(sponsorID, sponsorAdminID))
-							{
+							foreach (var i in sponsorRepository.FindInvitesBySponsor(sponsorID, sponsorAdminID)) {
 								bool success = Db.sendInvitation(i.Id, i.Email, InviteTxt.Text, InviteSubject.Text, i.InvitationKey);
 
-								if (success)
-								{
+								if (success) {
 									cx++;
-								}
-								else
-								{
+								} else {
 									bx++;
 								}
 							}
@@ -264,16 +230,12 @@ namespace HW.Grp
 							sponsorRepository.UpdateSponsorLastInviteReminderSent(sponsorID);
 
 							sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
-							foreach (var i in sponsorRepository.FindSentInvitesBySponsor(sponsorID, sponsorAdminID))
-							{
+							foreach (var i in sponsorRepository.FindSentInvitesBySponsor(sponsorID, sponsorAdminID)) {
 								bool success = Db.sendInvitation(i.Id, i.Email, InviteReminderTxt.Text, InviteReminderSubject.Text, i.InvitationKey);
 
-								if (success)
-								{
+								if (success) {
 									cx++;
-								}
-								else
-								{
+								} else {
 									bx++;
 								}
 							}
@@ -285,28 +247,21 @@ namespace HW.Grp
 
 							sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 							int selectedValue = Convert.ToInt32(LoginDays.SelectedValue);
-							foreach (var u in userRepository.FindBySponsorWithLoginDays(sponsorID, sponsorAdminID, selectedValue))
-							{
+							foreach (var u in userRepository.FindBySponsorWithLoginDays(sponsorID, sponsorAdminID, selectedValue)) {
 								bool success = false;
 								bool badEmail = false;
-								if (Db.isEmail(u.Email))
-								{
-									try
-									{
+								if (Db.isEmail(u.Email)) {
+									try {
 										string body = LoginTxt.Text;
 
 										string path = ConfigurationManager.AppSettings["healthWatchURL"];
 										string personalLink = "" + path + "";
-										if (u.ReminderLink > 0)
-										{
+										if (u.ReminderLink > 0) {
 											personalLink += "/c/" + u.UserKey.ToLower() + u.Id.ToString();
 										}
-										if (body.IndexOf("<LINK/>") >= 0)
-										{
+										if (body.IndexOf("<LINK/>") >= 0) {
 											body = body.Replace("<LINK/>", personalLink);
-										}
-										else
-										{
+										} else {
 											body += "\r\n\r\n" + personalLink;
 										}
 
@@ -315,27 +270,19 @@ namespace HW.Grp
 										userRepository.UpdateLastReminderSent(u.Id);
 
 										success = true;
-									}
-									catch (Exception)
-									{
+									} catch (Exception) {
 										badEmail = true;
 									}
-								}
-								else
-								{
+								} else {
 									badEmail = true;
 								}
-								if (badEmail)
-								{
+								if (badEmail) {
 									userRepository.UpdateEmailFailure(u.Id);
 								}
 
-								if (success)
-								{
+								if (success) {
 									cx++;
-								}
-								else
-								{
+								} else {
 									bx++;
 								}
 							}
@@ -346,55 +293,40 @@ namespace HW.Grp
 							sponsorRepository.UpdateExtendedSurveyLastEmailSent(sponsorExtendedSurveyID);
 
 							sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
-							foreach (var u in userRepository.FindBySponsorWithExtendedSurvey2(sponsorID, sponsorAdminID, sponsorExtendedSurveyID))
-							{
+							foreach (var u in userRepository.FindBySponsorWithExtendedSurvey2(sponsorID, sponsorAdminID, sponsorExtendedSurveyID)) {
 								bool success = false;
 								bool badEmail = false;
-								if (Db.isEmail(u.Email))
-								{
-									try
-									{
+								if (Db.isEmail(u.Email)) {
+									try {
 										string body = ExtendedSurveyTxt.Text;
 
 										string path = ConfigurationManager.AppSettings["healthWatchURL"];
 										string personalLink = "" + path + "";
-										if (u.ReminderLink > 0)
-										{
+										if (u.ReminderLink > 0) {
 											personalLink += "c/" + u.UserKey.ToLower() + u.Id.ToString();
 										}
-										if (body.IndexOf("<LINK/>") >= 0)
-										{
+										if (body.IndexOf("<LINK/>") >= 0) {
 											body = body.Replace("<LINK/>", personalLink);
-										}
-										else
-										{
+										} else {
 											body += "\r\n\r\n" + personalLink;
 										}
 
 										Db.sendMail(u.Email, body, ExtendedSurveySubject.Text);
 
 										success = true;
-									}
-									catch (Exception)
-									{
+									} catch (Exception) {
 										badEmail = true;
 									}
-								}
-								else
-								{
+								} else {
 									badEmail = true;
 								}
-								if (badEmail)
-								{
+								if (badEmail) {
 									userRepository.UpdateEmailFailure(u.Id);
 								}
 
-								if (success)
-								{
+								if (success) {
 									cx++;
-								}
-								else
-								{
+								} else {
 									bx++;
 								}
 							}
@@ -405,55 +337,40 @@ namespace HW.Grp
 							sponsorRepository.UpdateExtendedSurveyLastFinishedSent(sponsorExtendedSurveyID);
 
 							sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
-							foreach (var u in userRepository.FindBySponsorWithExtendedSurvey(sponsorID, sponsorAdminID, sponsorExtendedSurveyID))
-							{
+							foreach (var u in userRepository.FindBySponsorWithExtendedSurvey(sponsorID, sponsorAdminID, sponsorExtendedSurveyID)) {
 								bool success = false;
 								bool badEmail = false;
-								if (Db.isEmail(u.Email))
-								{
-									try
-									{
+								if (Db.isEmail(u.Email)) {
+									try {
 										string body = ExtendedSurveyFinishedTxt.Text;
 
 										string path = ConfigurationManager.AppSettings["healthWatchURL"];
 										string personalLink = "" + path + "";
-										if (u.ReminderLink > 0)
-										{
+										if (u.ReminderLink > 0) {
 											personalLink += "c/" + u.UserKey.ToLower() + u.Id.ToString();
 										}
-										if (body.IndexOf("<LINK/>") >= 0)
-										{
+										if (body.IndexOf("<LINK/>") >= 0) {
 											body = body.Replace("<LINK/>", personalLink);
-										}
-										else
-										{
+										} else {
 											body += "\r\n\r\n" + personalLink;
 										}
 
 										Db.sendMail(u.Email, body, ExtendedSurveyFinishedSubject.Text);
 
 										success = true;
-									}
-									catch (Exception)
-									{
+									} catch (Exception) {
 										badEmail = true;
 									}
-								}
-								else
-								{
+								} else {
 									badEmail = true;
 								}
-								if (badEmail)
-								{
+								if (badEmail) {
 									userRepository.UpdateEmailFailure(u.Id);
 								}
 
-								if (success)
-								{
+								if (success) {
 									cx++;
-								}
-								else
-								{
+								} else {
 									bx++;
 								}
 							}
@@ -464,38 +381,27 @@ namespace HW.Grp
 							sponsorRepository.UpdateLastAllMessageSent(sponsorID);
 
 							sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
-							foreach (var u in userRepository.Find2(sponsorID, sponsorAdminID))
-							{
+							foreach (var u in userRepository.Find2(sponsorID, sponsorAdminID)) {
 								bool success = false;
 								bool badEmail = false;
-								if (Db.isEmail(u.Email))
-								{
-									try
-									{
+								if (Db.isEmail(u.Email)) {
+									try {
 										Db.sendMail(u.Email, AllMessageBody.Text, AllMessageSubject.Text);
 
 										success = true;
-									}
-									catch (Exception)
-									{
+									} catch (Exception) {
 										badEmail = true;
 									}
-								}
-								else
-								{
+								} else {
 									badEmail = true;
 								}
-								if (badEmail)
-								{
+								if (badEmail) {
 									userRepository.UpdateEmailFailure(u.Id);
 								}
 
-								if (success)
-								{
+								if (success) {
 									cx++;
-								}
-								else
-								{
+								} else {
 									bx++;
 								}
 							}
@@ -511,12 +417,10 @@ namespace HW.Grp
 		{
 			base.OnPreRender(e);
 
-			if (incorrectPassword)
-			{
+			if (incorrectPassword) {
 				Page.RegisterStartupScript("ERROR", "<script language=\"JavaScript\">alert('Incorrect password!');</SCRIPT>");
 			}
-			if (sent)
-			{
+			if (sent) {
 				Page.RegisterStartupScript("SENT", "<script language=\"JavaScript\">alert('" + HttpContext.Current.Request.QueryString["Sent"].ToString() + " messages successfully sent.\\r\\n" + HttpContext.Current.Request.QueryString["Fail"].ToString() + " incorrect email address(es) found.');</SCRIPT>");
 			}
 		}

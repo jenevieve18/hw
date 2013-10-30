@@ -7,14 +7,17 @@ using System.Web.UI.WebControls;
 using HW.Core;
 using HW.Core.Models;
 using HW.Core.Repositories;
+using HW.Core.Repositories.Sql;
 
 namespace HW.Grp
 {
 	public partial class Managers : System.Web.UI.Page
 	{
 		protected IList<SponsorAdmin> sponsorAdmins;
-		protected IManagerFunctionRepository managerRepository = AppContext.GetRepositoryFactory().CreateManagerFunctionRepository();
-		ISponsorRepository sponsorRepository = AppContext.GetRepositoryFactory().CreateSponsorRepository();
+//		protected IManagerFunctionRepository managerRepository = AppContext.GetRepositoryFactory().CreateManagerFunctionRepository();
+//		ISponsorRepository sponsorRepository = AppContext.GetRepositoryFactory().CreateSponsorRepository();
+		SqlManagerFunctionRepository managerRepository = new SqlManagerFunctionRepository();
+		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
