@@ -1,1 +1,1 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SuperReportImage.aspx.cs" Inherits="HW.Grp.SuperReportImage" %>
+﻿<%@ Page Theme="" Language="C#" AutoEventWireup="true" CodeBehind="SuperReportImage.aspx.cs" Inherits="HW.Grp.SuperReportImage" %>
