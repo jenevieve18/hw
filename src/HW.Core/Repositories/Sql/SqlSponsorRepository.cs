@@ -254,6 +254,18 @@ AND SponsorID = {7}",
 			Db.exec(query, "healthWatchSqlConnection");
 		}
 		
+		public void SaveSponsorAdminDepartment(SponsorAdminDepartment d)
+		{
+			string query = string.Format(
+				@"
+INSERT INTO SponsorAdminDepartment (SponsorAdminID,DepartmentID)
+VALUES ({0},{1})",
+				d.Id,
+				d.Department.Id
+			);
+			Db2.exec(query);
+		}
+		
 		public void SaveSponsorAdmin(SponsorAdmin a)
 		{
 //			string query = string.Format(
