@@ -8,11 +8,11 @@ namespace HW.Core.Repositories
 	{
 		void SaveSponsorAdminDepartment(SponsorAdminDepartment d);
 		
-		void UpdateDepartmentBySponsor(int sponsorID);
+		void UpdateDepartmentSortString(int sponsorID);
 		
 		void UpdateDepartment(Department d);
 		
-		void UpdateDepartment2(Department d);
+//		void UpdateDepartment2(Department d);
 		
 		void DeleteSponsorAdminDepartment(int sponsorAdminID, int departmentID);
 		
@@ -77,7 +77,7 @@ namespace HW.Core.Repositories
 		{
 		}
 		
-		public void UpdateDepartmentBySponsor(int sponsorID)
+		public void UpdateDepartmentSortString(int sponsorID)
 		{
 		}
 		

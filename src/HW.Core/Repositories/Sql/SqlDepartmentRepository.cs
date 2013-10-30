@@ -21,6 +21,19 @@ VALUES ({0}, '{1}', {2})",
 			Db2.exec(query);
 		}
 		
+		public void Save(Department d)
+		{
+			string query = string.Format(
+				@"
+INSERT INTO Department (SponsorID, Department, ParentDepartmentID)
+VALUES ({0}, '{1}', {2})",
+				d.Sponsor.Id,
+				d.Name,
+				d.Parent == null ? "null" : d.Parent.Id.ToString()
+			);
+			Db2.exec(query);
+		}
+		
 		public void SaveSponsorAdminDepartment(SponsorAdminDepartment d)
 		{
 			string query = string.Format(
@@ -32,7 +45,7 @@ VALUES ({0}, {1})",
 			Db.exec(query, "healthWatchSqlConnection");
 		}
 		
-		public void UpdateDepartment2(Department d)
+		public void UpdateDepartment(Department d)
 		{
 			string query = string.Format(
 				@"
@@ -48,7 +61,7 @@ WHERE DepartmentID = {3}",
 			Db2.exec(query);
 		}
 		
-		public void UpdateDepartment(Department d)
+		public void UpdateDepartment2(Department d)
 		{
 			string query = string.Format(
 				@"
@@ -61,8 +74,8 @@ WHERE DepartmentID = {2}",
 			);
 			Db2.exec(query);
 		}
-		
-		public void UpdateDepartmentBySponsor(int sponsorID)
+
+		public void UpdateDepartmentSortString(int sponsorID)
 		{
 			string query = string.Format(
 				@"
@@ -103,6 +116,18 @@ WHERE SponsorID = {0} ORDER BY DepartmentID DESC",
 				}
 			}
 			return null;
+		}
+		
+		public int GetLatestDepartmentID(int sponsorID)
+		{
+			string query = string.Format("SELECT DepartmentID FROM Department WHERE SponsorID = {0} ORDER BY DepartmentID DESC", sponsorID);
+			int deptID = 0;
+			using (SqlDataReader rs = Db2.rs(query)) {
+				if (rs.Read()) {
+					deptID = rs.GetInt32(0);
+				}
+			}
+			return deptID;
 		}
 		
 		public override Department Read(int id)
@@ -371,7 +396,7 @@ ORDER BY d.SortString",
 						Name = GetString(rs, 0),
 						Id = rs.GetInt32(1),
 						ShortName = GetString(rs, 2),
-                        SortString = GetString(rs, 3)
+						SortString = GetString(rs, 3)
 					};
 					departments.Add(d);
 				}
@@ -549,9 +574,9 @@ FROM Department d
 WHERE {1} d.SponsorID = {0}
 ORDER BY d.SortString",
 				sponsorID,
-                (sponsorAdminID != -1 ? "sad.SponsorAdminID = " + sponsorAdminID + " AND " : ""),
-                (sponsorAdminID != -1 ? "INNER JOIN SponsorAdminDepartment xx ON x.DepartmentID = xx.DepartmentID AND xx.SponsorAdminID = " + sponsorAdminID + " " : ""),
-                (sponsorAdminID != -1 ? "INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID " : "")
+				(sponsorAdminID != -1 ? "sad.SponsorAdminID = " + sponsorAdminID + " AND " : ""),
+				(sponsorAdminID != -1 ? "INNER JOIN SponsorAdminDepartment xx ON x.DepartmentID = xx.DepartmentID AND xx.SponsorAdminID = " + sponsorAdminID + " " : ""),
+				(sponsorAdminID != -1 ? "INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID " : "")
 			);
 			var departments = new List<Department>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {

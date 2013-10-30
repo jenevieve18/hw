@@ -20,7 +20,7 @@ namespace HW.Core.Repositories.NHibernate
 			throw new NotImplementedException();
 		}
 		
-		public void UpdateDepartmentBySponsor(int sponsorID)
+		public void UpdateDepartmentSortString(int sponsorID)
 		{
 			throw new NotImplementedException();
 		}
