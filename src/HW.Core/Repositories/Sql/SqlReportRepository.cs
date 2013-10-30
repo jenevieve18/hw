@@ -230,7 +230,7 @@ ORDER BY rp.SortOrder",
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				while (rs.Read()) {
 					var p = new ReportPartLanguage {
-						ReportPart = new ReportPart { Id = rs.GetInt32(0), Type = rs.GetInt32(1) },
+						ReportPart = new ReportPart { Id = rs.GetInt32(0), Type = rs.GetInt32(4) },
 						Subject = rs.GetString(1),
 						Header = rs.GetString(2),
 						Footer = rs.GetString(3),
