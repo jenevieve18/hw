@@ -21,28 +21,29 @@ namespace HW.Grp
 
 			int cx = 0;
 			foreach (var p in reportRepository.FindPartLanguagesByReport(Convert.ToInt32(Request.QueryString["RID"]))) {
-				StatsImg.Text += "<div" + (cx > 0 ? " style=\"page-break-before:always;\"" : "") + ">&nbsp;<br/>&nbsp;<br/></div><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">";
-				StatsImg.Text += "<tr class=\"noscreen\"><td align=\"center\" valign=\"middle\" background=\"img/top_healthWatch.jpg\" height=\"140\" style=\"font-size:24px;\">" + p.Subject + "</td></tr>";
-				StatsImg.Text += "<tr class=\"noprint\"><td style=\"font-size:18px;\">" + p.Subject + "</td></tr>";
+				StatsImg.Text += string.Format("<div{0}>&nbsp;<br/>&nbsp;<br/></div><table border='0' cellspacing='0' cellpadding='0'>", (cx > 0 ? " style='page-break-before:always;'" : ""));
+				StatsImg.Text += string.Format("<tr class='noscreen'><td align='center' valign='middle' background='img/top_healthWatch.jpg' height='140' style='font-size:24px;'>{0}</td></tr>", p.Subject);
+				StatsImg.Text += string.Format("<tr class='noprint'><td style='font-size:18px;'>{0}</td></tr>", p.Subject);
 
 				if (p.Header != "") {
-					StatsImg.Text += "<tr><td>" + p.Header.Replace("\r", "").Replace("\n", "<br/>") + "</td></tr>";
+					StatsImg.Text += string.Format("<tr><td>{0}</td></tr>", p.Header.Replace("\r", "").Replace("\n", "<br/>"));
 				}
 
-				StatsImg.Text += "<tr><td><img src=\"superReportImage.aspx?" +
-					"N=" + (Request.QueryString["N"] != null ? Request.QueryString["N"] : "") + "&" +
-					"FDT=" + (Request.QueryString["FDT"] != null ? Request.QueryString["FDT"] : "") + "&" +
-					"TDT=" + (Request.QueryString["TDT"] != null ? Request.QueryString["TDT"] : "") + "&" +
-					"RNDS1=" + (Request.QueryString["RNDS1"] != null ? Request.QueryString["RNDS1"] : "") + "&" +
-					"RNDSD1=" + (Request.QueryString["RNDSD1"] != null ? Request.QueryString["RNDSD1"] : "") + "&" +
-					"PID1=" + (Request.QueryString["PID1"] != null ? Request.QueryString["PID1"] : "") + "&" +
-					"RNDS2=" + (Request.QueryString["RNDS2"] != null ? Request.QueryString["RNDS2"] : "") + "&" +
-					"RNDSD2=" + (Request.QueryString["RNDSD2"] != null ? Request.QueryString["RNDSD2"] : "") + "&" +
-					"PID2=" + (Request.QueryString["PID2"] != null ? Request.QueryString["PID2"] : "") + "&" +
-					"R1=" + (Request.QueryString["R1"] != null ? Request.QueryString["R1"] : "") + "&" +
-					"R2=" + (Request.QueryString["R2"] != null ? Request.QueryString["R2"] : "") + "&" +
-					"RPID=" + p.ReportPart.Id +
-					"\"/></td></tr>";
+				StatsImg.Text += string.Format(
+					"<tr><td><img src='superReportImage.aspx?N={0}&FDT={1}&TDT={2}&RNDS1={3}&RNDSD1={4}&PID1={5}&RNDS2={6}&RNDSD2={7}&PID2={8}&R1={9}&R2={10}&RPID={11}'/></td></tr>",
+					(Request.QueryString["N"] != null ? Request.QueryString["N"] : ""),
+					(Request.QueryString["FDT"] != null ? Request.QueryString["FDT"] : ""),
+					(Request.QueryString["TDT"] != null ? Request.QueryString["TDT"] : ""),
+					(Request.QueryString["RNDS1"] != null ? Request.QueryString["RNDS1"] : ""),
+					(Request.QueryString["RNDSD1"] != null ? Request.QueryString["RNDSD1"] : ""),
+					(Request.QueryString["PID1"] != null ? Request.QueryString["PID1"] : ""),
+					(Request.QueryString["RNDS2"] != null ? Request.QueryString["RNDS2"] : ""),
+					(Request.QueryString["RNDSD2"] != null ? Request.QueryString["RNDSD2"] : ""),
+					(Request.QueryString["PID2"] != null ? Request.QueryString["PID2"] : ""),
+					(Request.QueryString["R1"] != null ? Request.QueryString["R1"] : ""),
+					(Request.QueryString["R2"] != null ? Request.QueryString["R2"] : ""),
+					p.ReportPart.Id
+				);
 
 				if (p.Footer != "") {
 					StatsImg.Text += string.Format("<tr><td>{0}</td></tr>", p.Footer.Replace("\r", "").Replace("\n", "<br/>"));
