@@ -2,13 +2,15 @@
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-
 using HW.Core.Helpers;
+using HW.Core.Repositories.Sql;
 
 namespace HW.Grp
 {
 	public partial class SuperStats : System.Web.UI.Page
 	{
+		SqlReportRepository reportRepository = new SqlReportRepository();
+		
 		protected void Page_Load(object sender, EventArgs e)
 		{
 		}
@@ -18,28 +20,13 @@ namespace HW.Grp
 			base.OnPreRender(e);
 
 			int cx = 0;
-			string query = string.Format(
-				@"
-SELECT rp.ReportPartID, 
-	rpl.Subject,
-	rpl.Header,
-	rpl.Footer,
-	rp.Type
-FROM Report r 
-INNER JOIN ReportPart rp ON r.ReportID = rp.ReportID 
-INNER JOIN ReportPartLang rpl ON rp.ReportPartID = rpl.ReportPartID AND rpl.LangID = 1 
-WHERE r.ReportID = {0} 
-ORDER BY rp.SortOrder",
-				Convert.ToInt32(Request.QueryString["RID"])
-			);
-			SqlDataReader rs = Db.rs(query, "eFormSqlConnection");
-			while (rs.Read()) {
+			foreach (var p in reportRepository.FindPartLanguagesByReport(Convert.ToInt32(Request.QueryString["RID"]))) {
 				StatsImg.Text += "<div" + (cx > 0 ? " style=\"page-break-before:always;\"" : "") + ">&nbsp;<br/>&nbsp;<br/></div><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">";
-				StatsImg.Text += "<tr class=\"noscreen\"><td align=\"center\" valign=\"middle\" background=\"img/top_healthWatch.jpg\" height=\"140\" style=\"font-size:24px;\">" + rs.GetString(1) + "</td></tr>";
-				StatsImg.Text += "<tr class=\"noprint\"><td style=\"font-size:18px;\">" + rs.GetString(1) + "</td></tr>";
+				StatsImg.Text += "<tr class=\"noscreen\"><td align=\"center\" valign=\"middle\" background=\"img/top_healthWatch.jpg\" height=\"140\" style=\"font-size:24px;\">" + p.Subject + "</td></tr>";
+				StatsImg.Text += "<tr class=\"noprint\"><td style=\"font-size:18px;\">" + p.Subject + "</td></tr>";
 
-				if (!rs.IsDBNull(2) && rs.GetString(2) != "") {
-					StatsImg.Text += "<tr><td>" + rs.GetString(2).Replace("\r", "").Replace("\n", "<br/>") + "</td></tr>";
+				if (p.Header != "") {
+					StatsImg.Text += "<tr><td>" + p.Header.Replace("\r", "").Replace("\n", "<br/>") + "</td></tr>";
 				}
 
 				StatsImg.Text += "<tr><td><img src=\"superReportImage.aspx?" +
@@ -54,18 +41,17 @@ ORDER BY rp.SortOrder",
 					"PID2=" + (Request.QueryString["PID2"] != null ? Request.QueryString["PID2"] : "") + "&" +
 					"R1=" + (Request.QueryString["R1"] != null ? Request.QueryString["R1"] : "") + "&" +
 					"R2=" + (Request.QueryString["R2"] != null ? Request.QueryString["R2"] : "") + "&" +
-					"RPID=" + rs.GetInt32(0) +
+					"RPID=" + p.ReportPart.Id +
 					"\"/></td></tr>";
 
-				if (!rs.IsDBNull(3) && rs.GetString(3) != "") {
-					StatsImg.Text += "<tr><td>" + rs.GetString(3).Replace("\r", "").Replace("\n", "<br/>") + "</td></tr>";
+				if (p.Footer != "") {
+					StatsImg.Text += string.Format("<tr><td>{0}</td></tr>", p.Footer.Replace("\r", "").Replace("\n", "<br/>"));
 				}
 
 				StatsImg.Text += "</table>";
 
 				cx++;
 			}
-			rs.Close();
 		}
 	}
 }
