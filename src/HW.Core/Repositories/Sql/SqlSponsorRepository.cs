@@ -222,7 +222,8 @@ UPDATE SponsorAdmin SET Pas = '{0}' WHERE SponsorAdminID = {1}",
 				password,
 				sponsorAdminID
 			);
-			Db2.exec(query);
+//			Db2.exec(query);
+			Db.exec(query);
 		}
 		
 		public void UpdateSponsorAdmin(SponsorAdmin a)
@@ -263,7 +264,8 @@ VALUES ({0},{1})",
 				d.Id,
 				d.Department.Id
 			);
-			Db2.exec(query);
+//			Db2.exec(query);
+			Db.exec(query);
 		}
 		
 		public void SaveSponsorAdmin(SponsorAdmin a)
@@ -501,7 +503,8 @@ FROM SponsorInvite
 WHERE SponsorInviteID = {0}",
 				sponsorInviteID
 			);
-			using (SqlDataReader rs = Db2.rs(query)) {
+//			using (SqlDataReader rs = Db2.rs(query)) {
+			using (SqlDataReader rs = Db.rs(query)) {
 				if (rs.Read()) {
 					var i = new SponsorInvite {
 						Email = rs.GetString(0)
@@ -523,7 +526,8 @@ AND SponsorID = {1}",
 				email,
 				sponsorID
 			);
-			using (SqlDataReader rs = Db2.rs(query)) {
+//			using (SqlDataReader rs = Db2.rs(query)) {
+			using (SqlDataReader rs = Db.rs(query)) {
 				if (rs.Read()) {
 					var i = new SponsorInvite {
 						Id = rs.GetInt32(0)
@@ -624,7 +628,24 @@ SELECT s.InviteTxt,
 	s.LoginWeekday,
 	s.AllMessageSubject,
 	s.AllMessageBody,
-	s.AllMessageLastSent
+	s.AllMessageLastSent,
+	s.Sponsor,
+	s.Application,
+	CAST(s.SponsorKey AS VARCHAR(64)),
+	s.TreatmentOffer,
+	s.TreatmentOfferText,
+	s.TreatmentOfferEmail,
+	s.TreatmentOfferIfNeededText,
+	s.TreatmentOfferBQ,
+	s.TreatmentOfferBQfn,
+	s.TreatmentOfferBQmorethan,
+	s.InfoText,
+	s.ConsentText,
+	s.SuperSponsorID,
+	s.AlternativeTreatmentOfferText,
+	s.AlternativeTreatmentOfferEmail,
+	s.LID,
+	s.MinUserCountToDisclose
 FROM Sponsor s
 WHERE s.SponsorID = {0}",
 				sponsorID
@@ -646,6 +667,23 @@ WHERE s.SponsorID = {0}",
 						AllMessageSubject = GetString(rs, 11),
 						AllMessageBody = GetString(rs, 12),
 						AllMessageLastSent = GetDateTime(rs, 13),
+						Name = GetString(rs, 14),
+						Application = GetString(rs, 15),
+						SponsorKey = GetString(rs, 16),
+						TreatmentOffer = GetInt32(rs, 17),
+						TreatmentOfferText = GetString(rs, 18),
+						TreatmentOfferEmail = GetString(rs, 19),
+						TreatmentOfferIfNeededText = GetString(rs, 20),
+						TreatmentOfferBQ = GetInt32(rs, 21),
+						TreatmentOfferBQfn = GetInt32(rs, 22),
+						TreatmentOfferBQmorethan = GetInt32(rs, 23),
+						InfoText = GetString(rs, 24),
+						ConsentText = GetString(rs, 25),
+						SuperSponsor = new SuperSponsor { Id = GetInt32(rs, 26) },
+						AlternativeTreatmentOfferText = GetString(rs, 27),
+						AlternativeTreatmentOfferEmail = GetString(rs, 28),
+						Language = new Language { Id = GetInt32(rs, 29) },
+						MinUserCountToDisclose = GetInt32(rs, 30, 10)
 					};
 					return s;
 				}
@@ -1383,7 +1421,8 @@ ORDER BY s.SortOrder",
 				sponsorID
 			);
 			var questions = new List<SponsorBackgroundQuestion>();
-			using (SqlDataReader rs = Db2.rs(query)) {
+//			using (SqlDataReader rs = Db2.rs(query)) {
+			using (SqlDataReader rs = Db.rs(query)) {
 				while (rs.Read()) {
 					var q = new SponsorBackgroundQuestion {
 						Id = rs.GetInt32(0),

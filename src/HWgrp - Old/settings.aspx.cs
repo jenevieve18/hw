@@ -26,7 +26,7 @@ namespace HWgrp___Old
 		{
 			if (Password.Text.Length > 1)
 			{
-				Db2.exec("UPDATE SponsorAdmin SET Pas = '" + Password.Text.Replace("'", "''") + "' WHERE SponsorAdminID = " + Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]));
+				Db.exec("UPDATE SponsorAdmin SET Pas = '" + Password.Text.Replace("'", "''") + "' WHERE SponsorAdminID = " + Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]));
 				Message.Text = "New password saved!";
 			}
 			else

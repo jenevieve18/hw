@@ -18,7 +18,8 @@ VALUES ({0}, '{1}', {2})",
 				d.Name,
 				d.Parent == null ? "null" : d.Parent.Id.ToString()
 			);
-			Db2.exec(query);
+//			Db2.exec(query);
+			Db.exec(query);
 		}
 		
 		public void Save(Department d)
@@ -31,7 +32,8 @@ VALUES ({0}, '{1}', {2})",
 				d.Name,
 				d.Parent == null ? "null" : d.Parent.Id.ToString()
 			);
-			Db2.exec(query);
+//			Db2.exec(query);
+			Db.exec(query);
 		}
 		
 		public void SaveSponsorAdminDepartment(SponsorAdminDepartment d)
@@ -58,7 +60,8 @@ WHERE DepartmentID = {3}",
 				d.Parent == null ? "null" : d.Parent.Id.ToString(),
 				d.Id
 			);
-			Db2.exec(query);
+//			Db2.exec(query);
+			Db.exec(query);
 		}
 		
 		public void UpdateDepartment2(Department d)
@@ -72,7 +75,8 @@ WHERE DepartmentID = {2}",
 				d.SortOrder,
 				d.Id
 			);
-			Db2.exec(query);
+//			Db2.exec(query);
+			Db.exec(query);
 		}
 
 		public void UpdateDepartmentSortString(int sponsorID)
@@ -83,7 +87,8 @@ UPDATE Department SET SortString = dbo.cf_departmentSortString(DepartmentID)
 WHERE SponsorID = {0}",
 				sponsorID
 			);
-			Db2.exec(query);
+//			Db2.exec(query);
+			Db.exec(query);
 		}
 		
 		public void DeleteSponsorAdminDepartment(int sponsorAdminID, int departmentID)
@@ -107,7 +112,8 @@ FROM Department
 WHERE SponsorID = {0} ORDER BY DepartmentID DESC",
 				sponsorId
 			);
-			using (SqlDataReader rs = Db2.rs(query)) {
+//			using (SqlDataReader rs = Db2.rs(query)) {
+			using (SqlDataReader rs = Db.rs(query)) {
 				if (rs.Read()) {
 					var d = new Department {
 						Id = rs.GetInt32(0)
@@ -122,7 +128,8 @@ WHERE SponsorID = {0} ORDER BY DepartmentID DESC",
 		{
 			string query = string.Format("SELECT DepartmentID FROM Department WHERE SponsorID = {0} ORDER BY DepartmentID DESC", sponsorID);
 			int deptID = 0;
-			using (SqlDataReader rs = Db2.rs(query)) {
+//			using (SqlDataReader rs = Db2.rs(query)) {
+			using (SqlDataReader rs = Db.rs(query)) {
 				if (rs.Read()) {
 					deptID = rs.GetInt32(0);
 				}
@@ -139,7 +146,8 @@ FROM Department d
 WHERE d.DepartmentID = {0}",
 				id
 			);
-			using (SqlDataReader rs = Db2.rs(query)) {
+//			using (SqlDataReader rs = Db2.rs(query)) {
+			using (SqlDataReader rs = Db.rs(query)) {
 				if (rs.Read()) {
 					var d = new Department {
 						TreeName = rs.GetString(0)

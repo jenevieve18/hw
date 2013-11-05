@@ -33,6 +33,18 @@ namespace HW.Core.Models
 		public virtual IList<SuperAdminSponsor> SuperAdminSponsors { get; set; }
 		public virtual IList<SponsorAdmin> Admins { get; set; }
 		public virtual IList<SponsorBackgroundQuestion> BackgroundQuestions { get; set; }
+		public virtual int TreatmentOffer { get; set; }
+		public virtual string TreatmentOfferText { get; set; }
+		public virtual string TreatmentOfferEmail { get; set; }
+		public virtual string TreatmentOfferIfNeededText { get; set; }
+		public virtual int TreatmentOfferBQ { get; set; }
+		public virtual int TreatmentOfferBQfn { get; set; }
+		public virtual int TreatmentOfferBQmorethan { get; set; }
+		public virtual string InfoText { get; set; }
+		public virtual string AlternativeTreatmentOfferText { get; set; }
+		public virtual string AlternativeTreatmentOfferEmail { get; set; }
+		public virtual Language Language { get; set; }
+		public virtual int MinUserCountToDisclose { get; set; }
 		
 		// FIXME: These are not necessary properties
 		public virtual DateTime? MinimumInviteDate { get; set; }
