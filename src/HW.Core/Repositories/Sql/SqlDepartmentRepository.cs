@@ -120,7 +120,13 @@ WHERE SponsorID = {0} ORDER BY DepartmentID DESC",
 		
 		public int GetLatestDepartmentID(int sponsorID)
 		{
-			string query = string.Format("SELECT DepartmentID FROM Department WHERE SponsorID = {0} ORDER BY DepartmentID DESC", sponsorID);
+			string query = string.Format(
+				@"
+SELECT DepartmentID
+FROM Department
+WHERE SponsorID = {0} ORDER BY DepartmentID DESC",
+				sponsorID
+			);
 			int deptID = 0;
 			using (SqlDataReader rs = Db.rs(query)) {
 				if (rs.Read()) {
