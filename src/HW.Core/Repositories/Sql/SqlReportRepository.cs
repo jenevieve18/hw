@@ -18,8 +18,7 @@ SELECT rpc.WeightedQuestionOptionID,
 	wqo.OptionID
 FROM ReportPartComponent rpc
 INNER JOIN WeightedQuestionOption wqo ON rpc.WeightedQuestionOptionID = wqo.WeightedQuestionOptionID
-INNER JOIN WeightedQuestionOptionLang wqol ON wqo.WeightedQuestionOptionID = wqol.WeightedQuestionOptionID
-	AND wqol.LangID = {1}
+INNER JOIN WeightedQuestionOptionLang wqol ON wqo.WeightedQuestionOptionID = wqol.WeightedQuestionOptionID AND wqol.LangID = {1}
 WHERE rpc.ReportPartID = {0}
 ORDER BY rpc.SortOrder",
 				reportPartID,
@@ -29,9 +28,15 @@ ORDER BY rpc.SortOrder",
 				if (rs.Read()) {
 					var c = new ReportPartComponent();
 					c.QuestionOption = new WeightedQuestionOption {
+						Id = GetInt32(rs, 0),
 						Question = new Question { Id = rs.GetInt32(2) },
 						Option = new Option { Id = rs.GetInt32(3) }
 					};
+					c.QuestionOption.Languages = new List<WeightedQuestionOptionLanguage>(
+						new WeightedQuestionOptionLanguage[] {
+							new WeightedQuestionOptionLanguage { Question = GetString(rs, 1) }
+						}
+					);
 					return c;
 				}
 			}
@@ -288,7 +293,7 @@ SELECT rpc.WeightedQuestionOptionID,
 	wqo.YellowHigh,
 	wqo.QuestionID,
 	wqo.OptionID
-FROM    ReportPartComponent rpc
+FROM  ReportPartComponent rpc
 INNER JOIN WeightedQuestionOption wqo ON rpc.WeightedQuestionOptionID = wqo.WeightedQuestionOptionID
 WHERE rpc.ReportPartID = {0}
 ORDER BY rpc.SortOrder",
