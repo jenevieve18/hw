@@ -88,6 +88,16 @@ namespace HW.Core.Repositories.Sql
 			return rs.IsDBNull(index) ? false : rs.GetBoolean(index);
 		}
 		
+		public float GetFloat(SqlDataReader rs, int index)
+		{
+			return GetFloat(rs, index, 0);
+		}
+		
+		public float GetFloat(SqlDataReader rs, int index, float def)
+		{
+			return rs.IsDBNull(index) ? def : rs.GetFloat(index);
+		}
+		
 		protected int GetInt32(SqlDataReader rs, int index)
 		{
 			return GetInt32(rs, index, 0);
