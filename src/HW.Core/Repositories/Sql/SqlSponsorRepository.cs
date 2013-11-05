@@ -222,7 +222,6 @@ UPDATE SponsorAdmin SET Pas = '{0}' WHERE SponsorAdminID = {1}",
 				password,
 				sponsorAdminID
 			);
-//			Db2.exec(query);
 			Db.exec(query);
 		}
 		
@@ -264,7 +263,6 @@ VALUES ({0},{1})",
 				d.Id,
 				d.Department.Id
 			);
-//			Db2.exec(query);
 			Db.exec(query);
 		}
 		
@@ -340,6 +338,23 @@ WHERE SponsorAdminID = {1} AND SponsorID = {0}",
 				sponsorAdminID
 			);
 			Db.exec(query, "healthWatchSqlConnection");
+		}
+		
+		public int CountExtendedSurveyBySponsor(int sponsorID)
+		{
+			string query = string.Format(
+				@"
+SELECT COUNT(*)
+FROM SponsorExtendedSurvey ses
+WHERE ses.SponsorID = {0}",
+				sponsorID
+			);
+			using (SqlDataReader rs = Db.rs(query)) {
+				if (rs.Read()) {
+					return rs.GetInt32(0);
+				}
+			}
+			return 0;
 		}
 		
 		public int CountSentInvitesBySponsor3(int sponsorID, DateTime dt)
@@ -503,7 +518,6 @@ FROM SponsorInvite
 WHERE SponsorInviteID = {0}",
 				sponsorInviteID
 			);
-//			using (SqlDataReader rs = Db2.rs(query)) {
 			using (SqlDataReader rs = Db.rs(query)) {
 				if (rs.Read()) {
 					var i = new SponsorInvite {
@@ -526,7 +540,6 @@ AND SponsorID = {1}",
 				email,
 				sponsorID
 			);
-//			using (SqlDataReader rs = Db2.rs(query)) {
 			using (SqlDataReader rs = Db.rs(query)) {
 				if (rs.Read()) {
 					var i = new SponsorInvite {
@@ -1251,6 +1264,27 @@ WHERE SponsorAdminID = {0}",
 			return departments;
 		}
 		
+		public IList<SuperSponsor> FindSuperSponsors()
+		{
+			string query = string.Format(
+				@"
+SELECT SuperSponsorID,
+SuperSponsor
+FROM SuperSponsor"
+			);
+			var supers = new List<SuperSponsor>();
+			using (SqlDataReader rs = Db.rs(query)) {
+				while (rs.Read()) {
+					var s = new SuperSponsor {
+						Id = GetInt32(rs, 0),
+						Name = GetString(rs, 1)
+					};
+					supers.Add(s);
+				}
+			}
+			return supers;
+		}
+		
 		public IList<SuperAdminSponsor> FindSuperAdminSponsors(int superAdminID)
 		{
 			string query = string.Format(
@@ -1421,7 +1455,6 @@ ORDER BY s.SortOrder",
 				sponsorID
 			);
 			var questions = new List<SponsorBackgroundQuestion>();
-//			using (SqlDataReader rs = Db2.rs(query)) {
 			using (SqlDataReader rs = Db.rs(query)) {
 				while (rs.Read()) {
 					var q = new SponsorBackgroundQuestion {

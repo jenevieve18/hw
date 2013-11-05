@@ -16,7 +16,6 @@ UPDATE [eform]..[ProjectRoundUser] SET ProjectRoundUnitID = {0} WHERE ProjectRou
 				projectRoundUnitID,
 				proejctRoundUserID
 			);
-//			Db2.exec(query);
 			Db.exec(query, "eFormSqlConnection");
 		}
 		
