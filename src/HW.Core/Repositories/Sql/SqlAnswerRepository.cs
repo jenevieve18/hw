@@ -181,6 +181,36 @@ AND av.OptionID = {2}",
 			return null;
 		}
 		
+		public Answer ReadByGroup(string groupBy, string yearFrom, string yearTo, string rnds)
+		{
+			string query = string.Format(
+				@"
+SELECT {0}(MAX(a.EndDT)) - {0}(MIN(a.EndDT)),
+	{0}(MIN(a.EndDT)),
+	{0}(MAX(a.EndDT))
+FROM Answer a
+INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
+WHERE a.EndDT IS NOT NULL
+AND a.EndDT >= '{1}'
+AND a.EndDT < '{2}'
+{3}",
+				groupBy,
+				yearFrom,
+				yearTo,
+				rnds
+			);
+			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
+				if (rs.Read()) {
+					var a = new Answer();
+					a.DummyValue1 = rs.GetInt32(0);
+					a.DummyValue2 = rs.GetInt32(1);
+					a.DummyValue3 = rs.GetInt32(2);
+					return a;
+				}
+			}
+			return null;
+		}
+		
 		public Answer ReadByGroup(string groupBy, int yearFrom, int yearTo, string sortString)
 		{
 			string query = string.Format(
@@ -208,6 +238,48 @@ AND LEFT(pru.SortString, {4}) = '{3}'",
 					a.DummyValue1 = rs.GetInt32(0);
 					a.DummyValue2 = rs.GetInt32(1);
 					a.DummyValue3 = rs.GetInt32(2);
+					return a;
+				}
+			}
+			return null;
+		}
+		
+		public Answer ReadMinMax(string groupBy, int questionID, int optionID, string yearFrom, string yearTo, string rnds)
+		{
+			string query = string.Format(
+				@"
+SELECT MAX(tmp2.VA + tmp2.SD),
+	MIN(tmp2.VA - tmp2.SD)
+FROM (
+	SELECT AVG(tmp.V) AS VA, STDEV(tmp.V) AS SD
+	FROM (
+		SELECT {0}(a.EndDT) AS DT, AVG(av.ValueInt) AS V
+		FROM Answer a
+		INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID
+			AND av.QuestionID = {1}
+			AND av.OptionID = {2}
+		INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
+		WHERE a.EndDT IS NOT NULL
+		AND a.EndDT >= '{3}'
+		AND a.EndDT < '{4}'
+		{5}
+		GROUP BY a.ProjectRoundUserID, {0}(a.EndDT)
+	) tmp
+	GROUP BY tmp.DT
+) tmp2",
+				groupBy,
+				questionID,
+				optionID,
+				yearFrom,
+				yearTo,
+				rnds
+			);
+			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
+				if (rs.Read()) {
+					var a = new Answer() {
+						Max = (float)GetDouble(rs, 0),
+						Min = (float)GetDouble(rs, 1)
+					};
 					return a;
 				}
 			}
@@ -248,8 +320,10 @@ FROM (
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				if (rs.Read()) {
 					var a = new Answer() {
-						Max = GetInt32(rs, 0),
-						Min = GetInt32(rs, 1)
+//						Max = GetInt32(rs, 0),
+//						Min = GetInt32(rs, 1)
+						Max = (float)GetDouble(rs, 0),
+						Min = (float)GetDouble(rs, 1)
 					};
 					return a;
 				}
@@ -746,12 +820,11 @@ SELECT tmp.DT,
 	COUNT(tmp.V),
 	STDEV(tmp.V)
 FROM (
-	SELECT {1}(a.EndDT) AS DT, AVG(av.ValueInt) AS V
+	SELECT {1}(a.EndDT) AS DT, 
+		AVG(av.ValueInt) AS V
 	FROM Answer a
 	{0}
-	INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID
-		AND av.QuestionID = {2}
-		AND av.OptionID = {3}
+	INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = {2} AND av.OptionID = {3}
 	WHERE a.EndDT IS NOT NULL
 	AND YEAR(a.EndDT) >= {4}
 	AND YEAR(a.EndDT) <= {5}
@@ -788,9 +861,7 @@ ORDER BY tmp.DT",
 SELECT {1}(a.EndDT) AS DT, AVG(av.ValueInt) AS V
 FROM Answer a
 {0}
-INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID
-	AND av.QuestionID = {2}
-	AND av.OptionID = {3}
+INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = {2} AND av.OptionID = {3}
 WHERE a.EndDT IS NOT NULL
 AND YEAR(a.EndDT) >= {4}
 AND YEAR(a.EndDT) <= {5}
