@@ -12,6 +12,7 @@ namespace HW.Grp
 	{
 		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
 		SqlReportRepository reportRepository = new SqlReportRepository();
+		SqlAnswerRepository answerRepository = new SqlAnswerRepository();
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -117,7 +118,8 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 			}
 
 			int cx = 0, type = 0, q = 0, o = 0, rac = 0, pl = 0;
-			Graph g;
+//			Graph g;
+			ExtendedGraph g;
 
 			int steps = 0, GB = 3;
 			bool stdev = (rnds2 == "");
@@ -174,117 +176,146 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 //						case 7: groupBy = "dbo.cf_year2WeekEven"; break;
 //				}
 				groupBy = GroupFactory.GetGroupBy(GB);
-				g = new Graph(895, 440, "#FFFFFF");
+//				g = new Graph(895, 440, "#FFFFFF");
+				g = new ExtendedGraph(895, 440, "#FFFFFF");
 
-				query = string.Format(
-					@"
-SELECT {0}(MAX(a.EndDT)) - {0}(MIN(a.EndDT)),
-	{0}(MIN(a.EndDT)),
-	{0}(MAX(a.EndDT))
-FROM Answer a
-INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
-WHERE a.EndDT IS NOT NULL
-AND a.EndDT >= '{1}'
-AND a.EndDT < '{2}'
-{3}",
-					groupBy,
-					Request.QueryString["FDT"].ToString(),
-					Request.QueryString["TDT"].ToString(),
-					rnds
-				);
-				rs = Db.rs(query, "eFormSqlConnection");
-				if (rs.Read()) {
-					cx = Convert.ToInt32(rs.GetValue(0)) + 3;
-					minDT = rs.GetInt32(1);
-					maxDT = rs.GetInt32(2);
+//				query = string.Format(
+//					@"
+//				SELECT {0}(MAX(a.EndDT)) - {0}(MIN(a.EndDT)),
+//	{0}(MIN(a.EndDT)),
+//	{0}(MAX(a.EndDT))
+//				FROM Answer a
+//				INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
+//				WHERE a.EndDT IS NOT NULL
+//				AND a.EndDT >= '{1}'
+//				AND a.EndDT < '{2}'
+//				{3}",
+//					groupBy,
+//					Request.QueryString["FDT"].ToString(),
+//					Request.QueryString["TDT"].ToString(),
+//					rnds
+//				);
+//				rs = Db.rs(query, "eFormSqlConnection");
+//				if (rs.Read()) {
+//					cx = Convert.ToInt32(rs.GetValue(0)) + 3;
+//					minDT = rs.GetInt32(1);
+//					maxDT = rs.GetInt32(2);
+//				}
+//				rs.Close();
+				Answer answer = answerRepository.ReadByGroup(groupBy, Request.QueryString["FDT"].ToString(), Request.QueryString["TDT"].ToString(), rnds);
+				if (answer != null) {
+					cx = answer.DummyValue1 + 3;
+					minDT = answer.DummyValue2;
+					maxDT = answer.DummyValue3;
 				}
-				rs.Close();
 
-				query = string.Format(
-					@"
-SELECT rpc.WeightedQuestionOptionID,
-	wqo.QuestionID,
-	wqo.OptionID,
-	wqo.YellowLow,
-	wqo.GreenLow,
-	wqo.GreenHigh,
-	wqo.YellowHigh
-FROM ReportPartComponent rpc
-INNER JOIN WeightedQuestionOption wqo ON rpc.WeightedQuestionOptionID = wqo.WeightedQuestionOptionID
-WHERE rpc.ReportPartID = {0}
-ORDER BY rpc.SortOrder",
-					Request.QueryString["RPID"]
-				);
-				rs = Db.rs(query, "eFormSqlConnection");
-				while (rs.Read()) {
-					query = string.Format(
-						@"
-SELECT MAX(tmp2.VA + tmp2.SD),
-	MIN(tmp2.VA - tmp2.SD)
-FROM (
-	SELECT AVG(tmp.V) AS VA,
-		STDEV(tmp.V) AS SD
-	FROM (
-		SELECT {0}(a.EndDT) AS DT,
-			AVG(av.ValueInt) AS V
-		FROM Answer a
-		INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = {1} AND av.OptionID = {2}
-		INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
-		WHERE a.EndDT IS NOT NULL
-		AND a.EndDT >= '{3}'
-		AND a.EndDT < '{4}'
-		{5}
-		GROUP BY a.ProjectRoundUserID, {0}(a.EndDT)
-	) tmp
-	GROUP BY tmp.DT
-) tmp2",
-						groupBy,
-						rs.GetInt32(1),
-						rs.GetInt32(2),
-						Request.QueryString["FDT"].ToString(),
-						Request.QueryString["TDT"].ToString(),
-						rnds
-					);
-					SqlDataReader rs2 = Db.rs(query, "eFormSqlConnection");
-					if (rs2.Read()) {
-						g.setMinMax((float)Convert.ToDouble(rs2.GetValue(1)), (float)Convert.ToDouble(rs2.GetValue(0)));
+//				query = string.Format(
+//					@"
+				//SELECT rpc.WeightedQuestionOptionID,
+//	wqo.QuestionID,
+//	wqo.OptionID,
+//	wqo.YellowLow,
+//	wqo.GreenLow,
+//	wqo.GreenHigh,
+//	wqo.YellowHigh
+				//FROM ReportPartComponent rpc
+				//INNER JOIN WeightedQuestionOption wqo ON rpc.WeightedQuestionOptionID = wqo.WeightedQuestionOptionID
+				//WHERE rpc.ReportPartID = {0}
+				//ORDER BY rpc.SortOrder",
+//					Request.QueryString["RPID"]
+//				);
+//				rs = Db.rs(query, "eFormSqlConnection");
+//				while (rs.Read()) {
+				foreach (var p in reportRepository.FindComponentsByPart(ConvertHelper.ToInt32(Request.QueryString["RPID"]))) {
+//					query = string.Format(
+//						@"
+					//SELECT MAX(tmp2.VA + tmp2.SD),
+//	MIN(tmp2.VA - tmp2.SD)
+					//FROM (
+//	SELECT AVG(tmp.V) AS VA,
+//		STDEV(tmp.V) AS SD
+//	FROM (
+//		SELECT {0}(a.EndDT) AS DT,
+//			AVG(av.ValueInt) AS V
+//		FROM Answer a
+//		INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = {1} AND av.OptionID = {2}
+//		INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
+//		WHERE a.EndDT IS NOT NULL
+//		AND a.EndDT >= '{3}'
+//		AND a.EndDT < '{4}'
+//		{5}
+//		GROUP BY a.ProjectRoundUserID, {0}(a.EndDT)
+//	) tmp
+//	GROUP BY tmp.DT
+					//) tmp2",
+//						groupBy,
+					////						rs.GetInt32(1),
+//						p.QuestionOption.Question.Id,
+					////						rs.GetInt32(2),
+//						p.QuestionOption.Option.Id,
+//						Request.QueryString["FDT"].ToString(),
+//						Request.QueryString["TDT"].ToString(),
+//						rnds
+//					);
+//					SqlDataReader rs2 = Db.rs(query, "eFormSqlConnection");
+//					if (rs2.Read()) {
+//						g.setMinMax((float)Convert.ToDouble(rs2.GetValue(1)), (float)Convert.ToDouble(rs2.GetValue(0)));
+//						g.roundMinMax();
+//						//g.computeMinMax(0.01f, 0.01f);
+//					} else {
+//						g.setMinMax(0f, 100f);
+//					}
+//					rs2.Close();
+					Answer a = answerRepository.ReadMinMax(groupBy, p.QuestionOption.Question.Id, p.QuestionOption.Option.Id, Request.QueryString["FDT"].ToString(), Request.QueryString["TDT"].ToString(), rnds);
+					if (a != null) {
+						g.setMinMax((float)Convert.ToDouble(a.Min), (float)Convert.ToDouble(a.Max));
 						g.roundMinMax();
-						//g.computeMinMax(0.01f, 0.01f);
 					} else {
 						g.setMinMax(0f, 100f);
 					}
-					rs2.Close();
 
-					if (!rs.IsDBNull(3) && !rs.IsDBNull(4) && !rs.IsDBNull(5) && !rs.IsDBNull(6)) {
-						if (rs.GetInt32(3) > 0) {
-							g.drawBgFromString(g.minVal, Math.Min(g.maxVal, (float)Convert.ToDouble(rs.GetInt32(3))), "FFA8A8");                             // red
-						}
-						if (rs.GetInt32(3) < 100 && rs.GetInt32(4) > 0) {
-							g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(rs.GetInt32(3))), Math.Min(g.maxVal, (float)Convert.ToDouble(rs.GetInt32(4))), "FFFEBE");    // yellow
-						}
-						if (rs.GetInt32(4) < 100 && rs.GetInt32(5) > 0) {
-							g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(rs.GetInt32(4))), Math.Min(g.maxVal, (float)Convert.ToDouble(rs.GetInt32(5))), "CCFFBB");   // green
-						}
-						if (rs.GetInt32(5) < 100 && rs.GetInt32(6) > 0) {
-							g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(rs.GetInt32(5))), Math.Min(g.maxVal, (float)Convert.ToDouble(rs.GetInt32(6))), "FFFEBE"); // yellow
-						}
-						if (rs.GetInt32(6) < 100) {
-							g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(rs.GetInt32(6))), g.maxVal, "FFA8A8");                           // red
-						}
+//					if (!rs.IsDBNull(3) && !rs.IsDBNull(4) && !rs.IsDBNull(5) && !rs.IsDBNull(6)) {
+//						if (rs.GetInt32(3) > 0) {
+					if (p.QuestionOption.YellowLow > 0) {
+//							g.drawBgFromString(g.minVal, Math.Min(g.maxVal, (float)Convert.ToDouble(rs.GetInt32(3))), "FFA8A8");                             // red
+						g.drawBgFromString(g.minVal, Math.Min(g.maxVal, (float)Convert.ToDouble(p.QuestionOption.YellowLow)), "FFA8A8");                             // red
 					}
+//						if (rs.GetInt32(3) < 100 && rs.GetInt32(4) > 0) {
+					if (p.QuestionOption.YellowLow < 100 && p.QuestionOption.GreenLow > 0) {
+//							g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(rs.GetInt32(3))), Math.Min(g.maxVal, (float)Convert.ToDouble(rs.GetInt32(4))), "FFFEBE");    // yellow
+						g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(p.QuestionOption.YellowLow)), Math.Min(g.maxVal, (float)Convert.ToDouble(p.QuestionOption.GreenLow)), "FFFEBE");    // yellow
+					}
+//						if (rs.GetInt32(4) < 100 && rs.GetInt32(5) > 0) {
+					if (p.QuestionOption.GreenLow < 100 && p.QuestionOption.GreenHigh > 0) {
+//							g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(rs.GetInt32(4))), Math.Min(g.maxVal, (float)Convert.ToDouble(rs.GetInt32(5))), "CCFFBB");   // green
+						g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(p.QuestionOption.GreenLow)), Math.Min(g.maxVal, (float)Convert.ToDouble(p.QuestionOption.GreenHigh)), "CCFFBB");   // green
+					}
+//						if (rs.GetInt32(5) < 100 && rs.GetInt32(6) > 0) {
+					if (p.QuestionOption.GreenHigh < 100 && p.QuestionOption.YellowHigh > 0) {
+//							g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(rs.GetInt32(5))), Math.Min(g.maxVal, (float)Convert.ToDouble(rs.GetInt32(6))), "FFFEBE"); // yellow
+						g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(p.QuestionOption.GreenHigh)), Math.Min(g.maxVal, (float)Convert.ToDouble(p.QuestionOption.YellowHigh)), "FFFEBE"); // yellow
+					}
+//						if (rs.GetInt32(6) < 100) {
+					if (p.QuestionOption.YellowHigh < 100) {
+//							g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(rs.GetInt32(6))), g.maxVal, "FFA8A8");                           // red
+						g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(p.QuestionOption.YellowHigh)), g.maxVal, "FFA8A8");                           // red
+					}
+//					}
 				}
-				rs.Close();
+//				rs.Close();
 
-				if (g.minVal != 0f) {
-					// Crunched graph sign
-					g.drawLine(20, 0, (int)g.maxH + 20, 0, (int)g.maxH + 23, 1);
-					g.drawLine(20, 0, (int)g.maxH + 23, -5, (int)g.maxH + 26, 1);
-					g.drawLine(20, -5, (int)g.maxH + 26, 5, (int)g.maxH + 32, 1);
-					g.drawLine(20, 5, (int)g.maxH + 32, 0, (int)g.maxH + 35, 1);
-					g.drawLine(20, 0, (int)g.maxH + 35, 0, (int)g.maxH + 38, 1);
-				}
+//				if (g.minVal != 0f) {
+//					// Crunched graph sign
+//					g.drawLine(20, 0, (int)g.maxH + 20, 0, (int)g.maxH + 23, 1);
+//					g.drawLine(20, 0, (int)g.maxH + 23, -5, (int)g.maxH + 26, 1);
+//					g.drawLine(20, -5, (int)g.maxH + 26, 5, (int)g.maxH + 32, 1);
+//					g.drawLine(20, 5, (int)g.maxH + 32, 0, (int)g.maxH + 35, 1);
+//					g.drawLine(20, 0, (int)g.maxH + 35, 0, (int)g.maxH + 38, 1);
+//				}
+				g.DrawWiggle();
 			} else {
-				g = new Graph(895, 550, "#FFFFFF");
+//				g = new Graph(895, 550, "#FFFFFF");
+				g = new ExtendedGraph(895, 550, "#FFFFFF");
 				g.setMinMax(0f, 100f);
 
 				cx += 2;
@@ -299,104 +330,108 @@ FROM (
 
 			if (type == 8) {
 				#region Bottom string
-				int dx = 0;
-				for (int i = minDT; i <= maxDT; i++) {
-					dx++;
-
-					switch (GB) {
-						case 1:
-							{
-								int d = i;
-								int w = d % 52;
-								if (w == 0) {
-									w = 52;
-								}
-								string v = "v" + w + ", " + (d / 52);
-								g.drawBottomString(v, dx, true);
-								break;
-							}
-						case 2:
-							{
-								int d = i * 2;
-								int w = d % 52;
-								if (w == 0) {
-									w = 52;
-								}
-								string v = "v" + (w - 1) + "-" + w + ", " + (d - ((d - 1) % 52)) / 52;
-								g.drawBottomString(v, dx, true);
-								break;
-							}
-						case 3:
-							{
-								int d = i;
-								int w = d % 12;
-								if (w == 0) {
-									w = 12;
-								}
-								string v = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedMonthNames[w - 1] + ", " + ((d - w) / 12);
-								g.drawBottomString(v, dx, true);
-								break;
-							}
-						case 4:
-							{
-								int d = i * 3;
-								int w = d % 12;
-								if (w == 0) {
-									w = 12;
-								}
-								string v = "Q" + (w / 3) + ", " + ((d - w) / 12);
-								g.drawBottomString(v, dx, true);
-								break;
-							}
-						case 5:
-							{
-								int d = i * 6;
-								int w = d % 12;
-								if (w == 0) {
-									w = 12;
-								}
-								string v = ((d - w) / 12) + "/" + (w / 6);
-								g.drawBottomString(v, dx, true);
-								break;
-							}
-						case 6:
-							{
-								g.drawBottomString(i.ToString(), dx, true);
-								break;
-							}
-						case 7:
-							{
-								int d = i * 2;
-								int w = d % 52;
-								if (w == 0) {
-									w = 52;
-								}
-								string v = "v" + w + "-" + (w + 1) + ", " + ((d + 1) - (d % 52)) / 52;
-								g.drawBottomString(v, dx, true);
-								break;
-							}
-					}
-				}
+//				int dx = 0;
+//				for (int i = minDT; i <= maxDT; i++) {
+//					dx++;
+//
+//					switch (GB) {
+//						case 1:
+//							{
+//								int d = i;
+//								int w = d % 52;
+//								if (w == 0) {
+//									w = 52;
+//								}
+//								string v = "v" + w + ", " + (d / 52);
+//								g.drawBottomString(v, dx, true);
+//								break;
+//							}
+//						case 2:
+//							{
+//								int d = i * 2;
+//								int w = d % 52;
+//								if (w == 0) {
+//									w = 52;
+//								}
+//								string v = "v" + (w - 1) + "-" + w + ", " + (d - ((d - 1) % 52)) / 52;
+//								g.drawBottomString(v, dx, true);
+//								break;
+//							}
+//						case 3:
+//							{
+//								int d = i;
+//								int w = d % 12;
+//								if (w == 0) {
+//									w = 12;
+//								}
+//								string v = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedMonthNames[w - 1] + ", " + ((d - w) / 12);
+//								g.drawBottomString(v, dx, true);
+//								break;
+//							}
+//						case 4:
+//							{
+//								int d = i * 3;
+//								int w = d % 12;
+//								if (w == 0) {
+//									w = 12;
+//								}
+//								string v = "Q" + (w / 3) + ", " + ((d - w) / 12);
+//								g.drawBottomString(v, dx, true);
+//								break;
+//							}
+//						case 5:
+//							{
+//								int d = i * 6;
+//								int w = d % 12;
+//								if (w == 0) {
+//									w = 12;
+//								}
+//								string v = ((d - w) / 12) + "/" + (w / 6);
+//								g.drawBottomString(v, dx, true);
+//								break;
+//							}
+//						case 6:
+//							{
+//								g.drawBottomString(i.ToString(), dx, true);
+//								break;
+//							}
+//						case 7:
+//							{
+//								int d = i * 2;
+//								int w = d % 52;
+//								if (w == 0) {
+//									w = 52;
+//								}
+//								string v = "v" + w + "-" + (w + 1) + ", " + ((d + 1) - (d % 52)) / 52;
+//								g.drawBottomString(v, dx, true);
+//								break;
+//							}
+//					}
+//				}
 				#endregion
+				g.DrawBottomString(minDT, maxDT, GB);
 
 				int bx = 0;
-				query = string.Format(
-					@"
-SELECT rpc.WeightedQuestionOptionID,
-	wqol.WeightedQuestionOption,
-	wqo.QuestionID,
-	wqo.OptionID
-FROM ReportPartComponent rpc
-INNER JOIN WeightedQuestionOption wqo ON rpc.WeightedQuestionOptionID = wqo.WeightedQuestionOptionID
-INNER JOIN WeightedQuestionOptionLang wqol ON wqo.WeightedQuestionOptionID = wqol.WeightedQuestionOptionID AND wqol.LangID = {0}
-WHERE rpc.ReportPartID = {1}
-ORDER BY rpc.SortOrder",
-					langID,
-					Request.QueryString["RPID"]
-				);
-				rs = Db.rs(query, "eFormSqlConnection");
-				if (rs.Read()) {
-					g.drawAxisExpl(rs.GetString(1) + ", " + (langID == 1 ? "medelvärde" : "mean value") + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""), 20, false, false);
+//				query = string.Format(
+//					@"
+				//SELECT rpc.WeightedQuestionOptionID,
+//	wqol.WeightedQuestionOption,
+//	wqo.QuestionID,
+//	wqo.OptionID
+				//FROM ReportPartComponent rpc
+				//INNER JOIN WeightedQuestionOption wqo ON rpc.WeightedQuestionOptionID = wqo.WeightedQuestionOptionID
+				//INNER JOIN WeightedQuestionOptionLang wqol ON wqo.WeightedQuestionOptionID = wqol.WeightedQuestionOptionID AND wqol.LangID = {0}
+				//WHERE rpc.ReportPartID = {1}
+				//ORDER BY rpc.SortOrder",
+//					langID,
+//					Request.QueryString["RPID"]
+//				);
+//				rs = Db.rs(query, "eFormSqlConnection");
+//				if (rs.Read()) {
+				var p = reportRepository.ReadComponentByPartAndLanguage(ConvertHelper.ToInt32(Request.QueryString["RPID"]), langID);
+				if (p != null) {
+//					g.drawAxisExpl(rs.GetString(1) + ", " + (langID == 1 ? "medelvärde" : "mean value") + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""), 20, false, false);
+					g.drawAxisExpl(p.QuestionOption.Languages[0].Question + ", " + (langID == 1 ? "medelvärde" : "mean value") + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""), 20, false, false);
 					g.drawAxis(false);
 
 					g.drawColorExplBox(Request.QueryString["R1"].ToString(), 4, 300, 20);
@@ -430,8 +465,10 @@ FROM (
 GROUP BY tmp.DT
 ORDER BY tmp.DT",
 						groupBy,
-						rs.GetInt32(2),
-						rs.GetInt32(3),
+//						rs.GetInt32(2),
+						p.QuestionOption.Question.Id,
+//						rs.GetInt32(3),
+						p.QuestionOption.Option.Id,
 						join1,
 						Request.QueryString["FDT"].ToString(),
 						Request.QueryString["TDT"].ToString(),
@@ -506,8 +543,10 @@ FROM (
 GROUP BY tmp.DT
 ORDER BY tmp.DT",
 							groupBy,
-							rs.GetInt32(2),
-							rs.GetInt32(3),
+//							rs.GetInt32(2),
+							p.QuestionOption.Question.Id,
+//							rs.GetInt32(3),
+							p.QuestionOption.Option.Id,
 							join2,
 							Request.QueryString["FDT"].ToString(),
 							Request.QueryString["TDT"].ToString(),
@@ -542,7 +581,7 @@ ORDER BY tmp.DT",
 					}
 					bx++;
 				}
-				rs.Close();
+//				rs.Close();
 			}
 
 			#endregion
