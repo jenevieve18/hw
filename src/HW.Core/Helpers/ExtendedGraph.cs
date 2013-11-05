@@ -250,7 +250,7 @@ namespace HW.Core.Helpers
 			}
 		}
 		
-		void DrawWiggle()
+		public void DrawWiggle()
 		{
 			if (minVal != 0f) {
 				// Crunched graph sign
