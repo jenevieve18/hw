@@ -6,18 +6,19 @@ using System.Text;
 using HW.Core.Helpers;
 using HW.Core.Models;
 using HW.Core.Repositories;
+using HW.Core.Repositories.Sql;
 
 namespace HW.Core.Services
 {
 	public class ReportService
 	{
-		IAnswerRepository answerRepository;
-		IReportRepository reportRepository;
-		IProjectRepository projectRepository;
-		IOptionRepository optionRepository;
-		IDepartmentRepository departmentRepository;
-		IQuestionRepository questionRepository;
-		IIndexRepository indexRepository;
+		SqlAnswerRepository answerRepository;
+		SqlReportRepository reportRepository;
+		SqlProjectRepository projectRepository;
+		SqlOptionRepository optionRepository;
+		SqlDepartmentRepository departmentRepository;
+		SqlQuestionRepository questionRepository;
+		SqlIndexRepository indexRepository;
 		
 		int lastCount = 0;
 		float lastVal = 0;
@@ -25,7 +26,7 @@ namespace HW.Core.Services
 		Hashtable res = new Hashtable();
 		Hashtable cnt = new Hashtable();
 		
-		public ReportService(IAnswerRepository answerRepository, IReportRepository reportRepository, IProjectRepository projectRepository, IOptionRepository optionRepository, IDepartmentRepository departmentRepository, IQuestionRepository questionRepository, IIndexRepository indexRepository)
+		public ReportService(SqlAnswerRepository answerRepository, SqlReportRepository reportRepository, SqlProjectRepository projectRepository, SqlOptionRepository optionRepository, SqlDepartmentRepository departmentRepository, SqlQuestionRepository questionRepository, SqlIndexRepository indexRepository)
 		{
 			this.answerRepository = answerRepository;
 			this.reportRepository = reportRepository;

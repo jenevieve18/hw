@@ -5,6 +5,7 @@ using System.Text;
 using System.Web;
 using HW.Core.Models;
 using HW.Core.Repositories;
+using HW.Core.Repositories.Sql;
 
 namespace HW.Core.Helpers
 {
@@ -21,10 +22,10 @@ namespace HW.Core.Helpers
 	
 	public class UserLevelGraphFactory : IGraphFactory
 	{
-		IAnswerRepository answerRepository;
-		IReportRepository reportRepository;
+		SqlAnswerRepository answerRepository;
+		SqlReportRepository reportRepository;
 		
-		public UserLevelGraphFactory(IAnswerRepository answerRepository, IReportRepository reportRepository)
+		public UserLevelGraphFactory(SqlAnswerRepository answerRepository, SqlReportRepository reportRepository)
 		{
 			this.answerRepository = answerRepository;
 			this.reportRepository = reportRepository;
@@ -249,13 +250,13 @@ namespace HW.Core.Helpers
 	
 	public class GroupStatsGraphFactory : IGraphFactory
 	{
-		IProjectRepository projectRepository;
-		IAnswerRepository answerRepository;
-		IOptionRepository optionRepository;
-		IReportRepository reportRepository;
-		IIndexRepository indexRepository;
-		IQuestionRepository questionRepository;
-		IDepartmentRepository departmentRepository;
+		SqlProjectRepository projectRepository;
+		SqlAnswerRepository answerRepository;
+		SqlOptionRepository optionRepository;
+		SqlReportRepository reportRepository;
+		SqlIndexRepository indexRepository;
+		SqlQuestionRepository questionRepository;
+		SqlDepartmentRepository departmentRepository;
 		
 		int lastCount = 0;
 		float lastVal = 0;
@@ -263,7 +264,7 @@ namespace HW.Core.Helpers
 		System.Collections.Hashtable res = new System.Collections.Hashtable();
 		System.Collections.Hashtable cnt = new System.Collections.Hashtable();
 		
-		public GroupStatsGraphFactory(IAnswerRepository answerRepository, IReportRepository reportRepository, IProjectRepository projectRepository, IOptionRepository optionRepository, IIndexRepository indexRepository, IQuestionRepository questionRepository, IDepartmentRepository departmentRepository)
+		public GroupStatsGraphFactory(SqlAnswerRepository answerRepository, SqlReportRepository reportRepository, SqlProjectRepository projectRepository, SqlOptionRepository optionRepository, SqlIndexRepository indexRepository, SqlQuestionRepository questionRepository, SqlDepartmentRepository departmentRepository)
 		{
 			this.projectRepository = projectRepository;
 			this.answerRepository = answerRepository;
