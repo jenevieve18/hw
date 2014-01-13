@@ -820,7 +820,7 @@ SELECT tmp.DT,
 	COUNT(tmp.V),
 	STDEV(tmp.V)
 FROM (
-	SELECT {1}(a.EndDT) AS DT, 
+	SELECT {1}(a.EndDT) AS DT,
 		AVG(av.ValueInt) AS V
 	FROM Answer a
 	{0}
@@ -891,6 +891,52 @@ GROUP BY a.ProjectRoundUserID, {1}(a.EndDT)",
 			return answers;
 		}
 		
+		public IList<Answer> FindByQuestionAndOptionGrouped3(string groupBy, int questionID, int optionID, string join1, string yearFrom, string yearTo, string rnds1)
+		{
+			string query = string.Format(
+				@"
+SELECT tmp.DT,
+	AVG(tmp.V),
+	COUNT(tmp.V),
+	STDEV(tmp.V)
+FROM (
+	SELECT {0}(a.EndDT) AS DT,
+		AVG(av.ValueInt) AS V
+	FROM Answer a
+	INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = {1} AND av.OptionID = {2}
+	INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
+	{3}
+	WHERE a.EndDT IS NOT NULL
+	AND a.EndDT >= '{4}'
+	AND a.EndDT < '{5}'
+	{6}
+	GROUP BY a.ProjectRoundUserID, {0}(a.EndDT)
+) tmp
+GROUP BY tmp.DT
+ORDER BY tmp.DT",
+				groupBy,
+				questionID,
+				optionID,
+				join1,
+				yearFrom,
+				yearTo,
+				rnds1
+			);
+			var answers = new List<Answer>();
+			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
+				while (rs.Read()) {
+					var a = new Answer {
+						DT = rs.GetInt32(0),
+						AverageV = GetInt32(rs, 1, -1),
+						CountV = GetInt32(rs, 2),
+						StandardDeviation = (float)GetDouble(rs, 3, -1)
+					};
+					answers.Add(a);
+				}
+			}
+			return answers;
+		}
+		
 		public IList<Answer> FindByQuestionAndOptionGrouped(string groupBy, int questionID, int optionID, int yearFrom, int yearTo, string sortString)
 		{
 			string query = string.Format(
@@ -900,11 +946,10 @@ SELECT tmp.DT,
 	COUNT(tmp.V),
 	STDEV(tmp.V)
 FROM (
-	SELECT {0}(a.EndDT) AS DT, AVG(av.ValueInt) AS V
+	SELECT {0}(a.EndDT) AS DT,
+		AVG(av.ValueInt) AS V
 	FROM Answer a
-	INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID
-		AND av.QuestionID = {1}
-		AND av.OptionID = {2}
+	INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = {1} AND av.OptionID = {2}
 	INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
 	INNER JOIN ProjectRound pr ON pru.ProjectRoundID = pr.ProjectRoundID
 	WHERE a.EndDT IS NOT NULL

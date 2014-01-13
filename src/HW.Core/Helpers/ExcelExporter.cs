@@ -62,7 +62,7 @@ namespace HW.Core.Helpers
 			get { return string.Format("attachment;filename=HealthWatch Survey {0}.xlsx;", DateTime.Now.ToString("yyyyMMdd")); }
 		}
 		
-		public override object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot,	string path)
+		public override object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose)
 		{
 			MemoryStream output = new MemoryStream();
 			var f = service.GetGraphFactory(hasAnswerKey);
@@ -74,12 +74,12 @@ namespace HW.Core.Helpers
 				w.Merge(j, 0, j, e.WeeksCount, ExcelBorderStyle.Thin);
 			};
 			i++;
-			f.CreateGraph3(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled, w, ref i);
+			f.CreateGraph3(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled, w, ref i, sponsorMinUserCountToDisclose);
 			w.EndWrite();
 			return output;
 		}
 		
-		public override object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path)
+		public override object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose)
 		{
 			MemoryStream output = new MemoryStream();
 			ExcelWriter w = new ExcelWriter(output);
@@ -93,7 +93,7 @@ namespace HW.Core.Helpers
 					w.Merge(j, 0, j, e.WeeksCount, ExcelBorderStyle.Thin);
 				};
 				i++;
-				f.CreateGraph3(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled, w, ref i);
+				f.CreateGraph3(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled, w, ref i, sponsorMinUserCountToDisclose);
 				
 			}
 			w.EndWrite();

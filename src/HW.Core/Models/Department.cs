@@ -11,6 +11,7 @@ namespace HW.Core.Models
 		public virtual string SortString { get; set; }
 		public virtual string ShortName { get; set; }
 		public virtual string AnonymizedName { get; set; }
+		public virtual int MinUserCountToDisclose { get; set; }
 		
 		public virtual int Depth { get; set; }
 		public virtual int Siblings { get; set; }

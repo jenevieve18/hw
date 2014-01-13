@@ -90,12 +90,12 @@ namespace HW.Core.Repositories.NHibernate
 			throw new NotImplementedException();
 		}
 		
-		public IList<Department> FindBySponsorWithSponsorAdminIn(int sponsorID, int sponsorAdminID, string GID)
+		public IList<Department> FindBySponsorWithSponsorAdminIn(int sponsorID, int sponsorAdminID, string gid, int sponsorMinUserCountToDisclose)
 		{
 			throw new NotImplementedException();
 		}
 		
-		public IList<Department> FindBySponsorOrderedBySortStringIn(int sponsorID, string GID)
+		public IList<Department> FindBySponsorOrderedBySortStringIn(int sponsorID, string gid, int sponsorMinUserCountToDisclose)
 		{
 			throw new NotImplementedException();
 		}

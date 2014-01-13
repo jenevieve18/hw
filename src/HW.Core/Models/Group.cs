@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using HW.Core.Helpers;
 using HW.Core.Repositories;
+using HW.Core.Repositories.Sql;
 
 namespace HW.Core.Models
 {
@@ -47,11 +48,10 @@ namespace HW.Core.Models
 			}
 		}
 		
-		public static int GetCount(int grpng, int spons, int sid, int pruid, string gid, ref string extraDesc, Dictionary<string, string> desc, Dictionary<string, string> join, List<string> item, IDepartmentRepository departmentRepository, IQuestionRepository questionRepository)
+		public static int GetCount(int grpng, int spons, int sid, int pruid, string gid, ref string extraDesc, Dictionary<string, string> desc, Dictionary<string, string> join, List<string> item, Dictionary<string, int> mins, SqlDepartmentRepository departmentRepository, SqlQuestionRepository questionRepository, int sponsorMinUserCountToDisclose)
 		{
 			int count = 0;
-			switch (grpng)
-			{
+			switch (grpng) {
 				case Group.Grouping.None:
 					{
 						string tmpDesc = "";
@@ -90,10 +90,11 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 					}
 				case Group.Grouping.UsersOnUnit:
 					{
-						IList<Department> departments = spons != -1 ? departmentRepository.FindBySponsorWithSponsorAdminIn(sid, spons, gid) : departmentRepository.FindBySponsorOrderedBySortStringIn(sid, gid);
+						IList<Department> departments = spons != -1 ? departmentRepository.FindBySponsorWithSponsorAdminIn(sid, spons, gid, sponsorMinUserCountToDisclose) : departmentRepository.FindBySponsorOrderedBySortStringIn(sid, gid, sponsorMinUserCountToDisclose);
 						foreach (Department d in departments) {
 							item.Add(d.Id.ToString());
 							desc.Add(d.Id.ToString(), d.Name);
+							mins.Add(d.Id.ToString(), d.MinUserCountToDisclose);
 							join.Add(
 								d.Id.ToString(),
 								string.Format(
@@ -111,10 +112,11 @@ INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfile
 					}
 				case Group.Grouping.UsersOnUnitAndSubUnits:
 					{
-						IList<Department> departments = spons != -1 ? departmentRepository.FindBySponsorWithSponsorAdminIn(sid, spons, gid) : departmentRepository.FindBySponsorOrderedBySortStringIn(sid, gid);
+						IList<Department> departments = spons != -1 ? departmentRepository.FindBySponsorWithSponsorAdminIn(sid, spons, gid, sponsorMinUserCountToDisclose) : departmentRepository.FindBySponsorOrderedBySortStringIn(sid, gid, sponsorMinUserCountToDisclose);
 						foreach (Department d in departments) {
 							item.Add(d.Id.ToString());
 							desc.Add(d.Id.ToString(), d.Name);
+							mins.Add(d.Id.ToString(), d.MinUserCountToDisclose);
 							join.Add(
 								d.Id.ToString(),
 								string.Format(
@@ -148,8 +150,6 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 								sslen = d.SortString.Length;
 							}
 							if (sslen == d.SortString.Length) {
-//								tmpDesc += (tmpDesc != "" ? ", " : "") + d.Name + "+";
-//								tmpSS += (tmpSS != "" ? "," : "") + "'" + d.SortString + "'";
 								tmpDesc += string.Format("{0}{1}+", (tmpDesc != "" ? ", " : ""), d.Name);
 								tmpSS += string.Format("{0}'{1}'", (tmpSS != "" ? "," : ""), d.SortString);
 							} else {
@@ -160,17 +160,12 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 						gid = "";
 						var questions = questionRepository.FindLikeBackgroundQuestions(bqid);
 						foreach (var bq in questions) {
-//							GID += (GID != "" ? "," : "") + bq.Id;
 							gid += string.Format("{0}{1}", (gid != "" ? "," : ""), bq.Id);
 
-//							extraDesc += (extraDesc != "" ? " / " : "") + bq.Internal;
 							extraDesc += string.Format("{0}{1}", (extraDesc != "" ? " / " : ""), bq.Internal);
 
-//							tmpSelect += (tmpSelect != "" ? " ," : "") + "ba" + bq.Id + ".BAID,ba" + bq.Id + ".Internal ";
 							tmpSelect += string.Format("{0}ba{1}.BAID,ba{1}.Internal,ba{1}.BQID", (tmpSelect != "" ? " ," : ""), bq.Id); // TODO: Add BQID here!
-//							tmpJoin += (tmpJoin != "" ? "INNER JOIN BA ba" + bq.Id + " ON ba" + bq.Id + ".BQID = " + bq.Id + " " : "FROM BA ba" + bq.Id + " ");
 							tmpJoin += (tmpJoin != "" ? string.Format("INNER JOIN BA ba{0} ON ba{0}.BQID = {0} ", bq.Id) : string.Format(" FROM BA ba{0} ", bq.Id));
-//							tmpOrder += (tmpOrder != "" ? ", ba" + bq.Id + ".SortOrder" : "WHERE ba" + bq.Id + ".BQID = " + bq.Id + " ORDER BY ba" + bq.Id + ".SortOrder");
 							tmpOrder += (tmpOrder != "" ? string.Format(", ba{0}.SortOrder", bq.Id) : string.Format("WHERE ba{0}.BQID = {0} ORDER BY ba{0}.SortOrder", bq.Id));
 						}
 						string[] gids = gid.Split(',');

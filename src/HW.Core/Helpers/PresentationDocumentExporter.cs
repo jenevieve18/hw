@@ -47,7 +47,7 @@ namespace HW.Core.Helpers
 			get { return string.Format("attachment;filename=HealthWatch Survey {0}.pptx;", DateTime.Now.ToString("yyyyMMdd")); }
 		}
 		
-		public override object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot,	string path)
+		public override object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose)
 		{
 			MemoryStream output = new MemoryStream();
 			using (PresentationDocument package = PresentationDocument.Create(output, PresentationDocumentType.Presentation)) {
@@ -58,7 +58,7 @@ namespace HW.Core.Helpers
 			return output;
 		}
 		
-		public override object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path)
+		public override object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose)
 		{
 			MemoryStream output = new MemoryStream();
 			using (PresentationDocument package = PresentationDocument.Create(output, PresentationDocumentType.Presentation)) {

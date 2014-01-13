@@ -42,7 +42,7 @@ namespace HW.Core.Helpers
 			get { return ""; }
 		}
 		
-		public override object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path)
+		public override object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose)
 		{
 			Document doc = new Document();
 			var output = new MemoryStream();
@@ -58,7 +58,7 @@ namespace HW.Core.Helpers
 			return output;
 		}
 		
-		public override object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path)
+		public override object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose)
 		{
 			Document doc = new Document();
 			var output = new MemoryStream();

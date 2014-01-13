@@ -29,6 +29,11 @@ namespace HW.Core.Repositories.Sql
 			throw new NotImplementedException();
 		}
 		
+		public void Delete<U>(U t)
+		{
+			throw new NotImplementedException();
+		}
+		
 		public virtual T Read(int id)
 		{
 			throw new NotImplementedException();
@@ -88,12 +93,12 @@ namespace HW.Core.Repositories.Sql
 			return rs.IsDBNull(index) ? false : rs.GetBoolean(index);
 		}
 		
-		public float GetFloat(SqlDataReader rs, int index)
+		protected float GetFloat(SqlDataReader rs, int index)
 		{
 			return GetFloat(rs, index, 0);
 		}
 		
-		public float GetFloat(SqlDataReader rs, int index, float def)
+		protected float GetFloat(SqlDataReader rs, int index, float def)
 		{
 			return rs.IsDBNull(index) ? def : rs.GetFloat(index);
 		}
@@ -110,7 +115,12 @@ namespace HW.Core.Repositories.Sql
 		
 		protected double GetDouble(SqlDataReader rs, int index)
 		{
-			return rs.IsDBNull(index) ? 0 : rs.GetDouble(index);
+			return GetDouble(rs, index, 0);
+		}
+		
+		protected double GetDouble(SqlDataReader rs, int index, double def)
+		{
+			return rs.IsDBNull(index) ? def : rs.GetDouble(index);
 		}
 		
 		void CloseConnection()
@@ -125,11 +135,6 @@ namespace HW.Core.Repositories.Sql
 			if (con.State == ConnectionState.Closed) {
 				con.Open();
 			}
-		}
-		
-		public void Delete<U>(U t)
-		{
-			throw new NotImplementedException();
 		}
 	}
 }

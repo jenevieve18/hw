@@ -11,11 +11,11 @@ namespace HW.Core.Helpers
 {
 	public interface IGraphFactory
 	{
-		ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int pruid, int fy, int ty, int GB, bool hasGrouping, int plot, int width, int height, string bg, int grpng, int spons, int sid, string gid, object disabled, int point);
+		ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int pruid, int fy, int ty, int GB, bool hasGrouping, int plot, int width, int height, string bg, int grpng, int spons, int sid, string gid, object disabled, int point, int sponsorMinUserCountToDisclose);
 
-		string CreateGraph2(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int spons, int sid, string gid, object disabled);
+		string CreateGraph2(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int spons, int sid, string gid, object disabled, int sponsorMinUserCountToDisclose);
 		
-		void CreateGraph3(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int spons, int sid, string gid, object disabled, ExcelWriter w, ref int i);
+		void CreateGraph3(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int spons, int sid, string gid, object disabled, ExcelWriter w, ref int i, int sponsorMinUserCountToDisclose);
 		
 		event EventHandler<MergeEventArgs> ForMerge;
 	}
@@ -31,7 +31,7 @@ namespace HW.Core.Helpers
 			this.reportRepository = reportRepository;
 		}
 		
-		public ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
+		public ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point, int sponsorMinUserCountToDisclose)
 		{
 			int cx = p.Components.Count;
 			int answerID = 0;
@@ -122,7 +122,7 @@ namespace HW.Core.Helpers
 			return g;
 		}
 		
-		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int SPONS, int SID, string GID, object disabled)
+		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int SPONS, int SID, string GID, object disabled, int sponsorMinUserCountToDisclose)
 		{
 			int cx = p.Components.Count;
 			int answerID = 0;
@@ -213,7 +213,7 @@ namespace HW.Core.Helpers
 			return s.ToString();
 		}
 		
-		public void CreateGraph3(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int spons, int sid, string gid, object disabled, ExcelWriter w, ref int i)
+		public void CreateGraph3(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int spons, int sid, string gid, object disabled, ExcelWriter w, ref int i, int sponsorMinUserCountToDisclose)
 		{
 			throw new NotImplementedException();
 		}
@@ -275,7 +275,7 @@ namespace HW.Core.Helpers
 			this.departmentRepository = departmentRepository;
 		}
 		
-		public ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point)
+		public ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point, int sponsorMinUserCountToDisclose)
 		{
 			int cx = p.Components.Count;
 			string sortString = "";
@@ -374,13 +374,10 @@ namespace HW.Core.Helpers
 				g = new ExtendedGraph(895, 440, "#FFFFFF");
 
 				int t = 2;
-//				if (plot.ToUpper().Equals("Boxplot".ToUpper())) {
 				if (plot == Plot.BoxPlot) {
 					g.Type = new BoxPlotGraphType();
-//				} else if (plot.ToUpper().Equals("Line (mean ± 1.96 SD)".ToUpper())) {
 				} else if (plot == Plot.LineSDWithCI) {
 					g.Type = new LineGraphType(2, t);
-//				} else if (plot.ToUpper().Equals("Line (mean ± SD)".ToUpper())) {
 				} else if (plot == Plot.LineSD) {
 					g.Type = new LineGraphType(1, t);
 				} else {
@@ -420,20 +417,21 @@ namespace HW.Core.Helpers
 				List<IExplanation> explanationBoxes = new List<IExplanation>();
 				
 				if (hasGrouping) {
-					int COUNT = 0;
+					int count = 0;
 					Dictionary<string, string> desc = new Dictionary<string, string>();
 					Dictionary<string, string> join =  new Dictionary<string, string>();
 					List<string> item = new List<string>();
+					Dictionary<string, int> mins = new Dictionary<string, int>();
 					string extraDesc = "";
 					
-					COUNT = GroupFactory.GetCount(GRPNG, SPONS, SID, PRUID, GID, ref extraDesc, desc, join, item, departmentRepository, questionRepository);
+					count = GroupFactory.GetCount(GRPNG, SPONS, SID, PRUID, GID, ref extraDesc, desc, join, item, mins, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
 					
 					int breaker = 6, itemWidth = 120;
-					if (COUNT < 6) {
+					if (count < 6) {
 						breaker = 4;
 						itemWidth = 180;
 					}
-					if (COUNT < 4) {
+					if (count < 4) {
 						breaker = 3;
 						itemWidth = 240;
 					}
@@ -473,11 +471,11 @@ namespace HW.Core.Helpers
 									lastDT++;
 									cx++;
 								}
-								if (a.Values.Count >= p.RequiredAnswerCount) {
-									if (COUNT == 1) {
-										string v = GetBottomString(GB, a.DT, cx, (COUNT == 1 ? ", n = " + a.Values.Count : ""));
+//								if (a.Values.Count >= p.RequiredAnswerCount) {
+								if (a.Values.Count >= mins[i]) {
+									if (count == 1) {
+										string v = GetBottomString(GB, a.DT, cx, (count == 1 ? ", n = " + a.Values.Count : ""));
 										g.DrawBottomString(v, cx);
-//										g.DrawBottomString(GB, a.DT, cx, (COUNT == 1 ? ", n = " + a.Values.Count : ""));
 									}
 									s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
 								}
@@ -512,7 +510,6 @@ namespace HW.Core.Helpers
 							if (a.CountV >= p.RequiredAnswerCount) {
 								string v = GetBottomString(GB, a.DT, cx, ", n = " + a.CountV);
 								g.DrawBottomString(v, cx);
-//								g.DrawBottomString(GB, a.DT, cx, ", n = " + a.CountV);
 								s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
 							}
 							lastDT = a.DT;
@@ -527,7 +524,7 @@ namespace HW.Core.Helpers
 			return g;
 		}
 		
-		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int SPONS, int SID, string GID, object disabled)
+		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int SPONS, int SID, string GID, object disabled, int sponsorMinUserCountToDisclose)
 		{
 			int cx = p.Components.Count;
 			string sortString = "";
@@ -671,9 +668,10 @@ namespace HW.Core.Helpers
 					Dictionary<string, string> desc = new Dictionary<string, string>();
 					Dictionary<string, string> join = new Dictionary<string, string>();
 					List<string> item = new List<string>();
+					Dictionary<string, int> mins = new Dictionary<string, int>();
 					string extraDesc = "";
 					
-					COUNT = GroupFactory.GetCount(GRPNG, SPONS, SID, PRUID, GID, ref extraDesc, desc, join, item, departmentRepository, questionRepository);
+					COUNT = GroupFactory.GetCount(GRPNG, SPONS, SID, PRUID, GID, ref extraDesc, desc, join, item, mins, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
 					
 //					int breaker = 6, itemWidth = 120;
 //					if (COUNT < 6) {
@@ -732,7 +730,8 @@ namespace HW.Core.Helpers
 									cx++;
 //									week.Add(new Answer());
 								}
-								if (a.Values.Count >= p.RequiredAnswerCount) {
+//								if (a.Values.Count >= p.RequiredAnswerCount) {
+								if (a.Values.Count >= mins[i]) {
 									if (COUNT == 1) {
 //										g.DrawBottomString(GB, a.SomeInteger, cx, (COUNT == 1 ? ", n = " + a.Values.Count : ""));
 									}
@@ -921,7 +920,7 @@ namespace HW.Core.Helpers
 			lastCount = minCnt;
 		}
 		
-		public void CreateGraph3(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int SPONS, int SID, string GID, object disabled, ExcelWriter writer, ref int index)
+		public void CreateGraph3(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int SPONS, int SID, string GID, object disabled, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose)
 		{
 			int cx = p.Components.Count;
 			string sortString = "";
@@ -994,7 +993,6 @@ namespace HW.Core.Helpers
 				
 				string groupBy = GroupFactory.GetGroupBy(GB);
 
-//				if (plot == "BOXPLOT") {
 				if (plot == Plot.BoxPlot) {
 				} else {
 				}
@@ -1012,9 +1010,10 @@ namespace HW.Core.Helpers
 					Dictionary<string, string> desc = new Dictionary<string, string>();
 					Dictionary<string, string> join = new Dictionary<string, string>();
 					List<string> item = new List<string>();
+					Dictionary<string, int> mins = new Dictionary<string, int>();
 					string extraDesc = "";
 					
-					COUNT = GroupFactory.GetCount(GRPNG, SPONS, SID, PRUID, GID, ref extraDesc, desc, join, item, departmentRepository, questionRepository);
+					COUNT = GroupFactory.GetCount(GRPNG, SPONS, SID, PRUID, GID, ref extraDesc, desc, join, item, mins, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
 					
 					ReportPartComponent c = reportRepository.ReadComponentByPartAndLanguage(p.Id, langID);
 					if (c != null) {
@@ -1041,7 +1040,8 @@ namespace HW.Core.Helpers
 									lastDT++;
 									cx++;
 								}
-								if (a.Values.Count >= p.RequiredAnswerCount) {
+//								if (a.Values.Count >= p.RequiredAnswerCount) {
+								if (a.Values.Count >= mins[i]) {
 									if (COUNT == 1) {
 									}
 									week.Add(a);
@@ -1074,22 +1074,18 @@ namespace HW.Core.Helpers
 				}
 			}
 			
-//			if (plot.ToUpper().Equals("Boxplot".ToUpper())) {
 			if (plot == Plot.BoxPlot) {
 				var xx = new BoxPlotExcel();
 				xx.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
 				xx.ToExcel(departments, weeks, writer, ref index);
-//			} else if (plot.ToUpper().Equals("Line (mean ± 1.96 SD)".ToUpper())) {
 			} else if (plot == Plot.LineSDWithCI) {
 				var xx = new ConfidenceIntervalLineExcel();
 				xx.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
 				xx.ToExcel(departments, weeks, writer, ref index);
-//			} else if (plot.ToUpper().Equals("Line (mean ± SD)".ToUpper())) {
 			} else if (plot == Plot.LineSD) {
 				var xx = new StandardDeviationLineExcel();
 				xx.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
 				xx.ToExcel(departments, weeks, writer, ref index);
-//			} else if (plot.ToUpper().Equals("Verbose".ToUpper())) {
 			} else if (plot == Plot.Verbose) {
 				var xx = new EverythingExcel();
 				xx.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };

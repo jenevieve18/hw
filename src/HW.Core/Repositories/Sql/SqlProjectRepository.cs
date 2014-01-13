@@ -12,9 +12,22 @@ namespace HW.Core.Repositories.Sql
 		{
 			string query = string.Format(
 				@"
-UPDATE [eform]..[ProjectRoundUser] SET ProjectRoundUnitID = {0} WHERE ProjectRoundUserID = {1}",
+UPDATE [eform]..[ProjectRoundUser] SET ProjectRoundUnitID = {0}
+WHERE ProjectRoundUserID = {1}",
 				projectRoundUnitID,
 				proejctRoundUserID
+			);
+			Db.exec(query, "eFormSqlConnection");
+		}
+		
+		public void UpdateProjectRoundUnit(string unit, int projectRoundUnitID)
+		{
+			string query = string.Format(
+				@"
+UPDATE ProjectRoundUnit SET Unit = '{0}'
+WHERE ProjectRoundUnitID = {1}",
+				unit,
+				projectRoundUnitID
 			);
 			Db.exec(query, "eFormSqlConnection");
 		}

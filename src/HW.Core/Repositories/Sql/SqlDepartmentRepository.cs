@@ -298,48 +298,55 @@ ORDER BY d.SortString",
 			return departments;
 		}
 		
+//		public IList<Department> FindBySponsor(int sponsorID)
+//		{
+//			string query = string.Format(
+//				@"
+		//SELECT DepartmentID,
+//	dbo.cf_departmentTree(DepartmentID,' &gt; '),
+//	DepartmentShort
+		//FROM Department
+		//WHERE DepartmentShort IS NOT NULL
+		//AND SponsorID = {0}",
+//				sponsorID
+//			);
+//			var departments = new List<Department>();
+//			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+//				while (rs.Read()) {
+//					var d = new Department {
+//						Id = GetInt32(rs, 0),
+//						TreeName = GetString(rs, 1),
+//						ShortName = GetString(rs, 2)
+//					};
+//					departments.Add(d);
+//				}
+//			}
+//			return departments;
+//		}
+		
 		public IList<Department> FindBySponsor(int sponsorID)
 		{
 			string query = string.Format(
 				@"
-SELECT DepartmentShort,
-	DepartmentID
-FROM Department
-WHERE DepartmentShort IS NOT NULL
-AND SponsorID = {0}",
-				sponsorID
-			);
-			var departments = new List<Department>();
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				while (rs.Read()) {
-					var d = new Department {
-						ShortName = rs.GetString(0),
-						Id = rs.GetInt32(1)
-					};
-					departments.Add(d);
-				}
-			}
-			return departments;
-		}
-		
-		public IList<Department> FindBySponsor2(int sponsorID)
-		{
-			string query = string.Format(
-				@"
-SELECT d.Department,
-	LEN(d.SortString),
-	d.SortString
+SELECT d.DepartmentID,
+	d.Department,
+	dbo.cf_departmentTree(DepartmentID,' &gt; '),
+	d.SortString,
+	d.MinUserCountToDisclose
 FROM Department d
 WHERE d.SponsorID = {0}
-ORDER BY LEN(d.SortString)",
+ORDER BY dbo.cf_departmentSortString(d.DepartmentID)",
 				sponsorID
 			);
 			var departments = new List<Department>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
 					var d = new Department {
-						Name = rs.GetString(0),
-						SortString = rs.GetString(2)
+						Id = GetInt32(rs, 0),
+						Name = GetString(rs, 1),
+						TreeName = GetString(rs, 2),
+						SortString = GetString(rs, 3),
+						MinUserCountToDisclose = GetInt32(rs, 4, 10)
 					};
 					departments.Add(d);
 				}
@@ -348,13 +355,14 @@ ORDER BY LEN(d.SortString)",
 		}
 		
 		// TODO: How about anonymized?
-		public IList<Department> FindBySponsorWithSponsorAdminIn(int sponsorID, int sponsorAdminID, string GID)
+		public IList<Department> FindBySponsorWithSponsorAdminIn(int sponsorID, int sponsorAdminID, string gid, int sponsorMinUserCountToDisclose)
 		{
 			string query = string.Format(
 				@"
 SELECT d.Department,
 	d.DepartmentID,
-	d.SortString
+	d.SortString,
+	d.MinUserCountToDisclose
 FROM Department d
 INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID
 WHERE sad.SponsorAdminID = {1}
@@ -363,7 +371,7 @@ AND (d.DepartmentID IN ({2}))
 ORDER BY d.SortString",
 				sponsorID,
 				sponsorAdminID,
-				GID
+				gid
 			);
 			var departments = new List<Department>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
@@ -371,7 +379,8 @@ ORDER BY d.SortString",
 					var d = new Department {
 						Name = GetString(rs, 0),
 						Id = rs.GetInt32(1),
-						SortString = GetString(rs, 2)
+						SortString = GetString(rs, 2),
+						MinUserCountToDisclose = GetInt32(rs, 3, sponsorMinUserCountToDisclose)
 					};
 					departments.Add(d);
 				}
@@ -380,20 +389,21 @@ ORDER BY d.SortString",
 		}
 		
 		// TODO: How about anonymized?
-		public IList<Department> FindBySponsorOrderedBySortStringIn(int sponsorID, string GID)
+		public IList<Department> FindBySponsorOrderedBySortStringIn(int sponsorID, string gid, int sponsorMinUserCountToDisclose)
 		{
 			string query = string.Format(
 				@"
 SELECT d.Department,
 	d.DepartmentID,
 	DepartmentShort,
-    SortString
+    SortString,
+	d.MinUserCountToDisclose
 FROM Department d
 WHERE d.SponsorID = {0}
 AND (d.DepartmentID IN ({1}))
 ORDER BY d.SortString",
 				sponsorID,
-				GID
+				gid
 			);
 			var departments = new List<Department>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
@@ -402,7 +412,8 @@ ORDER BY d.SortString",
 						Name = GetString(rs, 0),
 						Id = rs.GetInt32(1),
 						ShortName = GetString(rs, 2),
-						SortString = GetString(rs, 3)
+						SortString = GetString(rs, 3),
+						MinUserCountToDisclose = GetInt32(rs, 4, sponsorMinUserCountToDisclose)
 					};
 					departments.Add(d);
 				}

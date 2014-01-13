@@ -19,6 +19,7 @@ namespace HW.Core.Services
 		SqlDepartmentRepository departmentRepository;
 		SqlQuestionRepository questionRepository;
 		SqlIndexRepository indexRepository;
+		SqlSponsorRepository sponsorRepository;
 		
 		int lastCount = 0;
 		float lastVal = 0;
@@ -26,7 +27,7 @@ namespace HW.Core.Services
 		Hashtable res = new Hashtable();
 		Hashtable cnt = new Hashtable();
 		
-		public ReportService(SqlAnswerRepository answerRepository, SqlReportRepository reportRepository, SqlProjectRepository projectRepository, SqlOptionRepository optionRepository, SqlDepartmentRepository departmentRepository, SqlQuestionRepository questionRepository, SqlIndexRepository indexRepository)
+		public ReportService(SqlAnswerRepository answerRepository, SqlReportRepository reportRepository, SqlProjectRepository projectRepository, SqlOptionRepository optionRepository, SqlDepartmentRepository departmentRepository, SqlQuestionRepository questionRepository, SqlIndexRepository indexRepository, SqlSponsorRepository sponsorRepository)
 		{
 			this.answerRepository = answerRepository;
 			this.reportRepository = reportRepository;
@@ -35,11 +36,17 @@ namespace HW.Core.Services
 			this.departmentRepository = departmentRepository;
 			this.questionRepository = questionRepository;
 			this.indexRepository = indexRepository;
+			this.sponsorRepository = sponsorRepository;
 		}
 		
 		public IList<ReportPartLanguage> FindByProjectAndLanguage(int projectRoundID, int langID)
 		{
 			return reportRepository.FindByProjectAndLanguage(projectRoundID, langID);
+		}
+		
+		public Sponsor ReadSponsor(int sponsorID)
+		{
+			return sponsorRepository.ReadSponsor(sponsorID);
 		}
 		
 		public ReportPart ReadReportPart(int rpid, int langID)
@@ -56,14 +63,14 @@ namespace HW.Core.Services
 			}
 		}
 		
-		public ReportPart ReadReportPart2(int rpid, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int GRPNG, int SPONS, int SID, string GID, int point)
+		public ReportPart ReadReportPart2(int rpid, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int GRPNG, int SPONS, int SID, string GID, int point, int sponsorMinUserCountToDisclose)
 		{
 			var r = reportRepository.ReadReportPart(rpid, langID);
-			SetReportPart(r, langID, PRUID, fy, ty, GB, hasGrouping, plot, GRPNG, SPONS, SID, GID, point);
+			SetReportPart(r, langID, PRUID, fy, ty, GB, hasGrouping, plot, GRPNG, SPONS, SID, GID, point, sponsorMinUserCountToDisclose);
 			return r;
 		}
 		
-		public void SetReportPart(ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int GRPNG, int SPONS, int SID, string GID, int point)
+		public void SetReportPart(ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, string plot, int GRPNG, int SPONS, int SID, string GID, int point, int sponsorMinUserCountToDisclose)
 		{
 			string sortString = "";
 			int minDT = 0;
@@ -140,13 +147,14 @@ namespace HW.Core.Services
 				}
 
 				if (hasGrouping) {
-					int COUNT = 0;
+					int count = 0;
 					Dictionary<string, string> desc = new Dictionary<string, string>();
 					Dictionary<string, string> join = new Dictionary<string, string>();
 					List<string> item = new List<string>();
+					Dictionary<string, int> mins = new Dictionary<string, int>();
 					string extraDesc = "";
 					
-					COUNT = GroupFactory.GetCount(GRPNG, SPONS, SID, PRUID, GID, ref extraDesc, desc, join, item, departmentRepository, questionRepository);
+					count = GroupFactory.GetCount(GRPNG, SPONS, SID, PRUID, GID, ref extraDesc, desc, join, item, mins, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
 					
 					int bx = 0;
 					foreach(string i in item) {
@@ -159,8 +167,9 @@ namespace HW.Core.Services
 							while (lastDT + 1 < a.DT) {
 								lastDT++;
 							}
-							if (a.Values.Count >= p.RequiredAnswerCount) {
-								if (COUNT == 1) {
+//							if (a.Values.Count >= p.RequiredAnswerCount) {
+							if (a.Values.Count >= mins[i]) {
+								if (count == 1) {
 								}
 							}
 							lastDT = a.DT;

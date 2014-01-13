@@ -36,9 +36,9 @@ namespace HW.Core.Repositories
 		
 		IList<Department> FindBySponsorOrderedBySortString(int sponsorID);
 		
-		IList<Department> FindBySponsorWithSponsorAdminIn(int sponsorID, int sponsorAdminID, string GID);
+		IList<Department> FindBySponsorWithSponsorAdminIn(int sponsorID, int sponsorAdminID, string gid, int sponsorMinUserCountToDisclose);
 		
-		IList<Department> FindBySponsorOrderedBySortStringIn(int sponsorID, string GID);
+		IList<Department> FindBySponsorOrderedBySortStringIn(int sponsorID, string gid, int sponsorMinUserCountToDisclose);
 		
 		IList<Department> FindBySponsor(int sponsorID);
 		
@@ -197,12 +197,12 @@ namespace HW.Core.Repositories
 			return departments;
 		}
 		
-		public IList<Department> FindBySponsorWithSponsorAdminIn(int sponsorID, int sponsorAdminID, string GID)
+		public IList<Department> FindBySponsorWithSponsorAdminIn(int sponsorID, int sponsorAdminID, string gid, int sponsorMinUserCountToDisclose)
 		{
 			return data;
 		}
 		
-		public IList<Department> FindBySponsorOrderedBySortStringIn(int sponsorID, string GID)
+		public IList<Department> FindBySponsorOrderedBySortStringIn(int sponsorID, string gid, int sponsorMinUserCountToDisclose)
 		{
 			throw new NotImplementedException();
 		}

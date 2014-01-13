@@ -8,6 +8,25 @@ namespace HW.Core.Repositories.Sql
 {
 	public class SqlLanguageRepository : BaseSqlRepository<Language>, ILanguageRepository
 	{
+		public override IList<Language> FindAll()
+		{
+			string query = @"
+SELECT LangID,
+Lang
+FROM Lang";
+			var languages = new List<Language>();
+			using (SqlDataReader rs = Db.rs(query)) {
+				while (rs.Read()) {
+					var l = new Language {
+						Id = GetInt32(rs, 0),
+						Name = GetString(rs, 1)
+					};
+					languages.Add(l);
+				}
+			}
+			return languages;
+		}
+		
 		public IList<SponsorProjectRoundUnitLanguage> FindBySponsor(int sponsorID)
 		{
 			string query = string.Format(

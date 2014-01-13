@@ -658,7 +658,8 @@ SELECT s.InviteTxt,
 	s.AlternativeTreatmentOfferText,
 	s.AlternativeTreatmentOfferEmail,
 	s.LID,
-	s.MinUserCountToDisclose
+	s.MinUserCountToDisclose,
+	s.ProjectRoundUnitID
 FROM Sponsor s
 WHERE s.SponsorID = {0}",
 				sponsorID
@@ -696,7 +697,8 @@ WHERE s.SponsorID = {0}",
 						AlternativeTreatmentOfferText = GetString(rs, 27),
 						AlternativeTreatmentOfferEmail = GetString(rs, 28),
 						Language = new Language { Id = GetInt32(rs, 29) },
-						MinUserCountToDisclose = GetInt32(rs, 30, 10)
+						MinUserCountToDisclose = GetInt32(rs, 30, 10),
+						ProjectRoundUnit = new ProjectRoundUnit { Id = GetInt32(rs, 31) }
 					};
 					return s;
 				}
@@ -1137,7 +1139,8 @@ SELECT ses.ProjectRoundID,
 	ses.Internal,
 	ses.RoundText,
 	ses.IndividualFeedbackEmailSubject,
-	ses.IndividualFeedbackEmailBody
+	ses.IndividualFeedbackEmailBody,
+	ses.SponsorExtendedSurveyID
 FROM SponsorExtendedSurvey ses
 WHERE ses.SponsorID = {0}
 ORDER BY ses.SponsorExtendedSurveyID",
@@ -1151,7 +1154,8 @@ ORDER BY ses.SponsorExtendedSurveyID",
 						Internal = rs.GetString(1),
 						RoundText = rs.GetString(2),
 						IndividualFeedbackEmailSubject = rs.GetString(3),
-						IndividualFeedbackEmailBody = rs.GetString(4)
+						IndividualFeedbackEmailBody = rs.GetString(4),
+						Id = GetInt32(rs, 5)
 					};
 					surveys.Add(s);
 				}
@@ -1320,7 +1324,8 @@ ORDER BY s.Sponsor",
 							Invites = new List<SponsorInvite>(GetInt32(rs, 8)),
 							ClosedAt = GetDateTime(rs, 9)
 						},
-						SeeUsers = GetBoolean(rs, 7)
+//						SeeUsers = GetBoolean(rs, 7)
+						SeeUsers = GetInt32(rs, 7) == 1
 					};
 					admins.Add(a);
 				}
