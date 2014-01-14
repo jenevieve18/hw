@@ -22,7 +22,8 @@ namespace HW.Grp
 			new SqlOptionRepository(),
 			new SqlDepartmentRepository(),
 			new SqlQuestionRepository(),
-			new SqlIndexRepository()
+			new SqlIndexRepository(),
+			new SqlSponsorRepository()
 		);
 		
 		bool HasAnswerKey {
@@ -96,13 +97,14 @@ namespace HW.Grp
 			
 			object disabled = Request.QueryString["DISABLED"];
 			
+			Sponsor s = service.ReadSponsor(sid);
 			ReportPart r = service.ReadReportPart(rpid, langID);
 			
 			var exporter = ExportFactory.GetExporter(service, type, HasAnswerKey, hasGrouping, disabled, Width, Height, Background, r, key, Server.MapPath("HW template for Word.docx"));
 			Response.ContentType = exporter.Type;
 			AddHeaderIf(exporter.HasContentDisposition(r.CurrentLanguage.Subject), "content-disposition", exporter.GetContentDisposition(r.CurrentLanguage.Subject));
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
-			Write(exporter.Export(gb, fy, ty, langID, pruid, grpng, spons, sid, gid, plot, path));
+			Write(exporter.Export(gb, fy, ty, langID, pruid, grpng, spons, sid, gid, plot, path, s.MinUserCountToDisclose));
 		}
 		
 		void Write(object obj)

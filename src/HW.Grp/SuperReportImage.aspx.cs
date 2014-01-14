@@ -141,7 +141,6 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 			//WHERE rp.ReportPartID = {0}",
 //				Request.QueryString["RPID"]
 //			);
-			SqlDataReader rs;
 //			SqlDataReader rs = Db.rs(query, "eFormSqlConnection");
 //			if (rs.Read()) {
 			var r = reportRepository.ReadReportPart(Convert.ToInt32(Request.QueryString["RPID"]));
@@ -191,18 +190,18 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 //				AND a.EndDT < '{2}'
 //				{3}",
 //					groupBy,
-//					Request.QueryString["FDT"].ToString(),
-//					Request.QueryString["TDT"].ToString(),
+//					Request.QueryString["FDT"],
+//					Request.QueryString["TDT"],
 //					rnds
 //				);
-//				rs = Db.rs(query, "eFormSqlConnection");
+//				SqlDataReader rs = Db.rs(query, "eFormSqlConnection");
 //				if (rs.Read()) {
 //					cx = Convert.ToInt32(rs.GetValue(0)) + 3;
 //					minDT = rs.GetInt32(1);
 //					maxDT = rs.GetInt32(2);
 //				}
 //				rs.Close();
-				Answer answer = answerRepository.ReadByGroup(groupBy, Request.QueryString["FDT"].ToString(), Request.QueryString["TDT"].ToString(), rnds);
+				Answer answer = answerRepository.ReadByGroup(groupBy, Request.QueryString["FDT"], Request.QueryString["TDT"], rnds);
 				if (answer != null) {
 					cx = answer.DummyValue1 + 3;
 					minDT = answer.DummyValue2;
@@ -253,8 +252,8 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 //						p.QuestionOption.Question.Id,
 					////						rs.GetInt32(2),
 //						p.QuestionOption.Option.Id,
-//						Request.QueryString["FDT"].ToString(),
-//						Request.QueryString["TDT"].ToString(),
+//						Request.QueryString["FDT"],
+//						Request.QueryString["TDT"],
 //						rnds
 //					);
 //					SqlDataReader rs2 = Db.rs(query, "eFormSqlConnection");
@@ -266,7 +265,7 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 //						g.setMinMax(0f, 100f);
 //					}
 //					rs2.Close();
-					Answer a = answerRepository.ReadMinMax(groupBy, p.QuestionOption.Question.Id, p.QuestionOption.Option.Id, Request.QueryString["FDT"].ToString(), Request.QueryString["TDT"].ToString(), rnds);
+					Answer a = answerRepository.ReadMinMax(groupBy, p.QuestionOption.Question.Id, p.QuestionOption.Option.Id, Request.QueryString["FDT"], Request.QueryString["TDT"], rnds);
 					if (a != null) {
 						g.setMinMax((float)Convert.ToDouble(a.Min), (float)Convert.ToDouble(a.Max));
 						g.roundMinMax();
@@ -441,50 +440,54 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 					int lastCX = 1;
 					cx = 1;
 					int lastDT = minDT - 1;
+					string yearFrom = Request.QueryString["FDT"];
+					string yearTo = Request.QueryString["TDT"];
 					
 					#region Data loop 1
-					query = string.Format(
-						@"
-SELECT tmp.DT,
-	AVG(tmp.V),
-	COUNT(tmp.V),
-	STDEV(tmp.V)
-FROM (
-	SELECT {0}(a.EndDT) AS DT,
-		AVG(av.ValueInt) AS V
-	FROM Answer a
-	INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = {1} AND av.OptionID = {2}
-	INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
-	{3}
-	WHERE a.EndDT IS NOT NULL
-	AND a.EndDT >= '{4}'
-	AND a.EndDT < '{5}'
-	{6}
-	GROUP BY a.ProjectRoundUserID, {0}(a.EndDT)
-) tmp
-GROUP BY tmp.DT
-ORDER BY tmp.DT",
-						groupBy,
-//						rs.GetInt32(2),
-						p.QuestionOption.Question.Id,
-//						rs.GetInt32(3),
-						p.QuestionOption.Option.Id,
-						join1,
-						Request.QueryString["FDT"].ToString(),
-						Request.QueryString["TDT"].ToString(),
-						rnds1
-					);
-					SqlDataReader rs2 = Db.rs(query, "eFormSqlConnection");
-					while (rs2.Read()) {
-						//if (lastDT == 0) { lastDT = rs2.GetInt32(0); }
-						while (lastDT + 1 < rs2.GetInt32(0)) {
+//					query = string.Format(
+//						@"
+//					SELECT tmp.DT,
+//	AVG(tmp.V),
+//	COUNT(tmp.V),
+//	STDEV(tmp.V)
+//					FROM (
+//	SELECT {0}(a.EndDT) AS DT,
+//		AVG(av.ValueInt) AS V
+//	FROM Answer a
+//	INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = {1} AND av.OptionID = {2}
+//	INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
+//	{3}
+//	WHERE a.EndDT IS NOT NULL
+//	AND a.EndDT >= '{4}'
+//	AND a.EndDT < '{5}'
+//	{6}
+//	GROUP BY a.ProjectRoundUserID, {0}(a.EndDT)
+//					) tmp
+//					GROUP BY tmp.DT
+//					ORDER BY tmp.DT",
+//						groupBy,
+//						p.QuestionOption.Question.Id,
+//						p.QuestionOption.Option.Id,
+//						join1,
+//						yearFrom,
+//						yearTo,
+//						rnds1
+//					);
+//					SqlDataReader rs2 = Db.rs(query, "eFormSqlConnection");
+//					while (rs2.Read()) {
+					foreach (var a in answerRepository.FindByQuestionAndOptionGrouped3(groupBy, p.QuestionOption.Question.Id, p.QuestionOption.Option.Id, join1, yearFrom, yearTo, rnds1)) {
+//						while (lastDT + 1 < rs2.GetInt32(0)) {
+						while (lastDT + 1 < a.DT) {
 							lastDT++;
 							cx++;
 						}
 
-						if (rs2.GetInt32(2) >= rac) {
-							float newVal = (rs2.IsDBNull(1) ? -1f : (float)Convert.ToDouble(rs2.GetValue(1)));
-							float newStd = (rs2.IsDBNull(3) ? -1f : (float)Convert.ToDouble(rs2.GetValue(3)));
+//						if (rs2.GetInt32(2) >= rac) {
+						if (a.CountV >= rac) {
+//							float newVal = (rs2.IsDBNull(1) ? -1f : (float)Convert.ToDouble(rs2.GetValue(1)));
+//							float newStd = (rs2.IsDBNull(3) ? -1f : (float)Convert.ToDouble(rs2.GetValue(3)));
+							float newVal = (a.AverageV == -1 ? -1f : (float)Convert.ToDouble(a.AverageV));
+							float newStd = (a.StandardDeviation == -1 ? -1f : (float)Convert.ToDouble(a.StandardDeviation));
 
 							if (stdev) {
 								g.drawLine(20, cx * g.steping - 10, Convert.ToInt32(g.maxH - ((newVal - newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), cx * g.steping + 10, Convert.ToInt32(g.maxH - ((newVal - newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), 1);
@@ -497,7 +500,8 @@ ORDER BY tmp.DT",
 									g.drawStepLine(4, lastCX, lastVal, cx, newVal, 3);
 								}
 								if (rnds2 == "") {
-									g.drawBottomString("\n\n\n\n\n\nn=" + rs2.GetInt32(2).ToString(), cx, false);
+//									g.drawBottomString("\n\n\n\n\n\nn=" + rs2.GetInt32(2).ToString(), cx, false);
+									g.drawBottomString("\n\n\n\n\n\nn=" + a.CountV.ToString(), cx, false);
 								}
 								lastCX = cx;
 							}
@@ -506,10 +510,11 @@ ORDER BY tmp.DT",
 
 							g.drawCircle(cx, newVal);
 						}
-						lastDT = rs2.GetInt32(0);
+//						lastDT = rs2.GetInt32(0);
+						lastDT = a.DT;
 						cx++;
 					}
-					rs2.Close();
+//					rs2.Close();
 					#endregion
 
 					if (rnds2 != "") {
@@ -521,47 +526,48 @@ ORDER BY tmp.DT",
 						cx = 1;
 						lastDT = minDT - 1;
 						#region Data loop 2
-						query = string.Format(
-							@"
-SELECT tmp.DT,
-	AVG(tmp.V),
-	COUNT(tmp.V),
-	STDEV(tmp.V)
-FROM (
-	SELECT {0}(a.EndDT) AS DT,
-		AVG(av.ValueInt) AS V
-	FROM Answer a
-	INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = {1} AND av.OptionID = {2}
-	INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
-	{3}
-	WHERE a.EndDT IS NOT NULL
-	AND a.EndDT >= '{4}'
-	AND a.EndDT < '{5}'
-	{6}
-	GROUP BY a.ProjectRoundUserID, {0}(a.EndDT)
-) tmp
-GROUP BY tmp.DT
-ORDER BY tmp.DT",
-							groupBy,
-//							rs.GetInt32(2),
-							p.QuestionOption.Question.Id,
-//							rs.GetInt32(3),
-							p.QuestionOption.Option.Id,
-							join2,
-							Request.QueryString["FDT"].ToString(),
-							Request.QueryString["TDT"].ToString(),
-							rnds2
-						);
-						rs2 = Db.rs(query, "eFormSqlConnection");
-						while (rs2.Read()) {
-							//if (lastDT == 0) { lastDT = rs2.GetInt32(0); }
-							while (lastDT + 1 < rs2.GetInt32(0)) {
+//						query = string.Format(
+//							@"
+//						SELECT tmp.DT,
+//	AVG(tmp.V),
+//	COUNT(tmp.V),
+//	STDEV(tmp.V)
+//						FROM (
+//	SELECT {0}(a.EndDT) AS DT,
+//		AVG(av.ValueInt) AS V
+//	FROM Answer a
+//	INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = {1} AND av.OptionID = {2}
+//	INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
+//	{3}
+//	WHERE a.EndDT IS NOT NULL
+//	AND a.EndDT >= '{4}'
+//	AND a.EndDT < '{5}'
+//	{6}
+//	GROUP BY a.ProjectRoundUserID, {0}(a.EndDT)
+//						) tmp
+//						GROUP BY tmp.DT
+//						ORDER BY tmp.DT",
+//							groupBy,
+//							p.QuestionOption.Question.Id,
+//							p.QuestionOption.Option.Id,
+//							join2,
+//							Request.QueryString["FDT"],
+//							Request.QueryString["TDT"],
+//							rnds2
+//						);
+//						rs2 = Db.rs(query, "eFormSqlConnection");
+//						while (rs2.Read()) {
+						foreach (var a in answerRepository.FindByQuestionAndOptionGrouped3(groupBy, p.QuestionOption.Question.Id, p.QuestionOption.Option.Id, join2, Request.QueryString["FDT"], Request.QueryString["TDT"], rnds2)) {
+//							while (lastDT + 1 < rs2.GetInt32(0)) {
+							while (lastDT + 1 < a.DT) {
 								lastDT++;
 								cx++;
 							}
 
-							if (rs2.GetInt32(2) >= rac) {
-								float newVal = (rs2.IsDBNull(1) ? -1f : (float)Convert.ToDouble(rs2.GetValue(1)));
+//							if (rs2.GetInt32(2) >= rac) {
+							if (a.CountV >= rac) {
+//								float newVal = (rs2.IsDBNull(1) ? -1f : (float)Convert.ToDouble(rs2.GetValue(1)));
+								float newVal = (a.AverageV == -1 ? -1f : (float)Convert.ToDouble(a.AverageV));
 
 								if (newVal != -1f) {
 									if (lastVal != -1f) {
@@ -573,10 +579,11 @@ ORDER BY tmp.DT",
 
 								g.drawCircle(cx, newVal);
 							}
-							lastDT = rs2.GetInt32(0);
+//							lastDT = rs2.GetInt32(0);
+							lastDT = a.DT;
 							cx++;
 						}
-						rs2.Close();
+//						rs2.Close();
 						#endregion
 					}
 					bx++;

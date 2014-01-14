@@ -21,7 +21,8 @@ namespace HW.Grp
 			new SqlOptionRepository(),
 			new SqlDepartmentRepository(),
 			new SqlQuestionRepository(),
-			new SqlIndexRepository()
+			new SqlIndexRepository(),
+			new SqlSponsorRepository()
 		);
 		
 		bool HasAnswerKey {
@@ -101,10 +102,11 @@ namespace HW.Grp
 			
 			int point = Request.QueryString["ExtraPoint"] != null ? Convert.ToInt32(Request.QueryString["ExtraPoint"]) : 0;
 			
+			Sponsor s = service.ReadSponsor(sid);
 			ReportPart r = service.ReadReportPart(rpid, langID);
 
 			var f = service.GetGraphFactory(HasAnswerKey);
-			g = f.CreateGraph(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, Width, Height, Background, grpng, spons, sid, gid, disabled, point);
+			g = f.CreateGraph(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, Width, Height, Background, grpng, spons, sid, gid, disabled, point, s.MinUserCountToDisclose);
 			g.render();
 		}
 	}

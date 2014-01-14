@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -16,6 +17,11 @@
     <SourceAnalysisOverrideSettingsFile>..\Settings.StyleCop</SourceAnalysisOverrideSettingsFile>
     <RunSourceAnalysis>False</RunSourceAnalysis>
     <UseIISExpress>false</UseIISExpress>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -71,15 +77,6 @@
     <Content Include="Managers.aspx" />
     <Content Include="ManagerSetup.aspx" />
     <Content Include="Messages.aspx" />
-    <Content Include="Mobile\Default.aspx" />
-    <Content Include="Mobile\Exercise.aspx" />
-    <Content Include="Mobile\Feedback.aspx" />
-    <Content Include="Mobile\Managers.aspx" />
-    <Content Include="Mobile\ManagerSetup.aspx" />
-    <Content Include="Mobile\Messages.aspx" />
-    <Content Include="Mobile\Org.aspx" />
-    <Content Include="Mobile\Settings.aspx" />
-    <Content Include="Mobile\Stats.aspx" />
     <Content Include="Org.aspx" />
     <Content Include="ReportImage.aspx" />
     <Content Include="Settings.aspx" />
@@ -171,69 +168,6 @@
     <Compile Include="Messages.aspx.designer.cs">
       <DependentUpon>Messages.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Mobile\Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Mobile\Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Mobile\Exercise.aspx.cs">
-      <DependentUpon>Exercise.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Mobile\Exercise.aspx.designer.cs">
-      <DependentUpon>Exercise.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Mobile\Feedback.aspx.cs">
-      <DependentUpon>Feedback.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Mobile\Feedback.aspx.designer.cs">
-      <DependentUpon>Feedback.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Mobile\Managers.aspx.cs">
-      <DependentUpon>Managers.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Mobile\Managers.aspx.designer.cs">
-      <DependentUpon>Managers.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Mobile\ManagerSetup.aspx.cs">
-      <DependentUpon>ManagerSetup.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Mobile\ManagerSetup.aspx.designer.cs">
-      <DependentUpon>ManagerSetup.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Mobile\Messages.aspx.cs">
-      <DependentUpon>Messages.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Mobile\Messages.aspx.designer.cs">
-      <DependentUpon>Messages.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Mobile\Org.aspx.cs">
-      <DependentUpon>Org.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Mobile\Org.aspx.designer.cs">
-      <DependentUpon>Org.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Mobile\Settings.aspx.cs">
-      <DependentUpon>Settings.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Mobile\Settings.aspx.designer.cs">
-      <DependentUpon>Settings.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Mobile\Stats.aspx.cs">
-      <DependentUpon>Stats.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Mobile\Stats.aspx.designer.cs">
-      <DependentUpon>Stats.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Org.aspx.cs">
       <DependentUpon>Org.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -321,8 +255,13 @@
   <ItemGroup>
     <Content Include="App_Themes\Grp\Controls.skin" />
   </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
