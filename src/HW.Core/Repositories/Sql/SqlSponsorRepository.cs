@@ -1402,7 +1402,8 @@ SELECT sa.SponsorAdminID,
 FROM SponsorAdmin sa
 WHERE (sa.SponsorAdminID <> {1} OR sa.SuperUser = 1)
 {2}
-AND sa.SponsorID = {0}",
+AND sa.SponsorID = {0}
+ORDER BY sa.Name",
 				sponsorID,
 				sponsorAdminID,
 				sponsorAdminID != -1 ? "AND ((SELECT COUNT(*) FROM SponsorAdminDepartment sad WHERE sad.SponsorAdminID = sa.SponsorAdminID) = 0 OR (SELECT COUNT(*) FROM SponsorAdminDepartment sad INNER JOIN SponsorAdminDepartment sad2 ON sad.DepartmentID = sad2.DepartmentID WHERE sad.SponsorAdminID = sa.SponsorAdminID AND sad2.SponsorAdminID = " + sponsorAdminID + ") > 0) " : ""

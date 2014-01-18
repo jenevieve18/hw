@@ -16,7 +16,7 @@
 			<br />
 			<table border="0" cellpadding="0" cellspacing="0">
 				<asp:Label ID=labelManagers runat=server/>
-				<!--<tr>
+				<%--<tr>
 					<th>Name</th>
 					<th>Roles</th>
 				</tr>
@@ -47,7 +47,7 @@
 						<%= HtmlHelper.AnchorImage(url, "img/deltoolsmall.gif")%>
 					</td>
 				</tr>
-				<% } %>-->
+				<% } %>--%>
 			</table>
 		</div>
 	</div>

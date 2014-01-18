@@ -16,7 +16,7 @@ namespace HW.Grp
 		protected IList<SponsorAdmin> sponsorAdmins;
 //		protected IManagerFunctionRepository managerRepository = AppContext.GetRepositoryFactory().CreateManagerFunctionRepository();
 //		ISponsorRepository sponsorRepository = AppContext.GetRepositoryFactory().CreateSponsorRepository();
-		SqlManagerFunctionRepository managerRepository = new SqlManagerFunctionRepository();
+		protected SqlManagerFunctionRepository managerRepository = new SqlManagerFunctionRepository();
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		
 		protected void Page_Load(object sender, EventArgs e)
