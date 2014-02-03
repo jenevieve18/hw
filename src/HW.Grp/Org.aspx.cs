@@ -2341,7 +2341,7 @@ VALUES ({0},{1},{2})",
 					new Department {
 						Sponsor = new Sponsor { Id = sponsorID },
 						Name = Department.Text.Replace("'", "''"),
-						Parent = new Department { Id = ConvertHelper.ToInt32(ParentDepartmentID.SelectedValue) }}
+						Parent = ConvertHelper.ToInt32(ParentDepartmentID.SelectedValue) == 0 ? null : new Department { Id = ConvertHelper.ToInt32(ParentDepartmentID.SelectedValue) }}
 				);
 //				query = string.Format("SELECT DepartmentID FROM Department WHERE SponsorID = {0} ORDER BY DepartmentID DESC", sponsorID);
 //				SqlDataReader rs = Db.rs(query);
@@ -2387,7 +2387,7 @@ VALUES ({0},{1},{2})",
 						Id = deptID,
 						Name = Department.Text.Replace("'", "''"),
 						ShortName = DepartmentShort.Text.Replace("'", "''"),
-						Parent = new Department { Id = ConvertHelper.ToInt32(ParentDepartmentID.SelectedValue) }
+						Parent = ConvertHelper.ToInt32(ParentDepartmentID.SelectedValue) == 0 ? null : new Department { Id = ConvertHelper.ToInt32(ParentDepartmentID.SelectedValue) }
 					}
 				);
 			}
