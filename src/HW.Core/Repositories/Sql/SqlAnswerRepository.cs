@@ -34,12 +34,13 @@ AND YEAR(a.EndDT) >= {1}
 AND YEAR(a.EndDT) <= {2}
 AND av.OptionID = {3}
 AND av.QuestionID = {4}
-AND LEFT(pru.SortString, 5) = '{5}'",
+AND LEFT(pru.SortString, {5}) = '{6}'",
 				val,
 				yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
 				yearTo, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
 				optionID,
 				questionID,
+				sortString.Length,
 				sortString
 			);
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
@@ -81,11 +82,11 @@ INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
 WHERE a.EndDT IS NOT NULL
 AND YEAR(a.EndDT) >= {0}
 AND YEAR(a.EndDT) <= {1}
-AND LEFT(pru.SortString, {3}) = '{2}'",
+AND LEFT(pru.SortString, {2}) = '{3}'",
 				yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
 				yearTo, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
-				sortString,
-				sortString.Length
+				sortString.Length,
+				sortString
 			);
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				if (rs.Read()) {
@@ -225,19 +226,22 @@ WHERE a.EndDT IS NOT NULL
 AND a.EndDT >= pr.Started
 AND YEAR(a.EndDT) >= {1}
 AND YEAR(a.EndDT) <= {2}
-AND LEFT(pru.SortString, {4}) = '{3}'",
+AND LEFT(pru.SortString, {3}) = '{4}'",
 				groupBy,
 				yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
 				yearTo, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
-				sortString,
-				sortString.Length
+				sortString.Length,
+				sortString
 			);
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				if (rs.Read()) {
 					var a = new Answer();
-					a.DummyValue1 = rs.GetInt32(0);
-					a.DummyValue2 = rs.GetInt32(1);
-					a.DummyValue3 = rs.GetInt32(2);
+//					a.DummyValue1 = rs.GetInt32(0);
+//					a.DummyValue2 = rs.GetInt32(1);
+//					a.DummyValue3 = rs.GetInt32(2);
+					a.DummyValue1 = GetInt32(rs, 0, 0);
+					a.DummyValue2 = GetInt32(rs, 1, 0);
+					a.DummyValue3 = GetInt32(rs, 2, 0);
 					return a;
 				}
 			}
@@ -305,7 +309,7 @@ FROM (
 		WHERE a.EndDT IS NOT NULL
 		AND YEAR(a.EndDT) >= {3}
 		AND YEAR(a.EndDT) <= {4}
-		AND LEFT(pru.SortString, 5) = '{5}'
+		AND LEFT(pru.SortString, {5}) = '{6}'
 		GROUP BY a.ProjectRoundUserID, {0}(a.EndDT)
 	) tmp
 	GROUP BY tmp.DT
@@ -315,6 +319,7 @@ FROM (
 				optionID,
 				yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
 				yearTo, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
+				sortString.Length,
 				sortString
 			);
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
@@ -956,7 +961,7 @@ FROM (
 		AND a.EndDT >= pr.Started
 		AND YEAR(a.EndDT) >= {3}
 		AND YEAR(a.EndDT) <= {4}
-		AND LEFT(pru.SortString, {6}) = '{5}'
+		AND LEFT(pru.SortString, {5}) = '{6}'
 	GROUP BY a.ProjectRoundUserID, {0}(a.EndDT)
 ) tmp
 GROUP BY tmp.DT
@@ -966,8 +971,8 @@ ORDER BY tmp.DT",
 				optionID,
 				yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
 				yearTo, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
-				sortString,
-				sortString.Length
+				sortString.Length,
+				sortString
 			);
 			var answers = new List<Answer>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlconnection")) {
@@ -999,15 +1004,15 @@ WHERE a.EndDT IS NOT NULL
 	AND a.EndDT >= pr.Started
 	AND YEAR(a.EndDT) >= {3}
 	AND YEAR(a.EndDT) <= {4}
-	AND LEFT(pru.SortString, {6}) = '{5}'
+	AND LEFT(pru.SortString, {5}) = '{6}'
 GROUP BY a.ProjectRoundUserID, {0}(a.EndDT)",
 				groupBy,
 				questionID,
 				optionID,
 				yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
 				yearTo, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
-				sortString,
-				sortString.Length
+				sortString.Length,
+				sortString
 			);
 			var answers = new List<Answer>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlconnection")) {
