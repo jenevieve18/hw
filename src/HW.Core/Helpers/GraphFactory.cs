@@ -717,6 +717,9 @@ namespace HW.Core.Helpers
 							int ii = minDT;
 							int jj = 0;
 							foreach (Answer a in answers) {
+								if (a.DT < minDT) {
+									continue;
+								}
 								jj++;
 								string w = GetBottomString(GB, ii, jj, "");
 								if (!weeks.ContainsKey(w)) {
@@ -761,7 +764,11 @@ namespace HW.Core.Helpers
 						cx = 1;
 						int lastDT = minDT - 1;
 //						Series s = new Series { Color = bx + 4 };
-						foreach (Answer a in answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString)) {
+						var answers = answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString);
+						foreach (Answer a in answers) {
+							if (a.DT < minDT) {
+								continue;
+							}
 							while (lastDT + 1 < a.DT) {
 								lastDT++;
 								cx++;
