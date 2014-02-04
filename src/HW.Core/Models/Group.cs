@@ -57,8 +57,12 @@ namespace HW.Core.Models
 						string tmpDesc = "";
 						int sslen = 0;
 						string tmpSS = "";
+						int i = 0;
 						IList<Department> departments = spons != -1 ? departmentRepository.FindBySponsorWithSponsorAdmin(sid, spons) : departmentRepository.FindBySponsorOrderedBySortString(sid);
 						foreach (Department d in departments) {
+							if (i == 0) {
+								mins.Add("1", d.MinUserCountToDisclose);
+							}
 							if (sslen == 0) {
 								sslen = d.SortString.Length;
 							}
@@ -68,6 +72,7 @@ namespace HW.Core.Models
 							} else {
 								break;
 							}
+							i++;
 						}
 
 						item.Add("1");
@@ -143,9 +148,13 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 						string tmpDesc = "";
 						int sslen = 0;
 						string tmpSS = "";
+						int i = 0;
 
 						IList<Department> departments = spons != -1 ? departmentRepository.FindBySponsorWithSponsorAdmin(sid, spons) : departmentRepository.FindBySponsorOrderedBySortString(sid);
 						foreach (Department d in departments) {
+							if (i == 0) {
+								sponsorMinUserCountToDisclose = d.MinUserCountToDisclose;
+							}
 							if (sslen == 0) {
 								sslen = d.SortString.Length;
 							}
@@ -155,6 +164,7 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 							} else {
 								break;
 							}
+							i++;
 						}
 						string bqid = gid.Replace("'", "");
 						gid = "";
@@ -170,14 +180,15 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 						}
 						string[] gids = gid.Split(',');
 
-						SqlDataReader rs2;
+//						SqlDataReader rs2;
 						string query = "SELECT " +
 							tmpSelect +
 							tmpJoin +
 							tmpOrder;
-						rs2 = Db.rs(query);
-						while (rs2.Read()) {
-//						foreach (var bq in questionRepository.FindBackgroundQuestionsWithAnswers(query, GIDS.Length)) {
+//						rs2 = Db.rs(query);
+//						while (rs2.Read()) {
+						questions = questionRepository.FindBackgroundQuestionsWithAnswers(query, gids.Length);
+						foreach (var bq in questions) {
 							string key = "";
 							string txt = "";
 							string sql = string.Format(
@@ -191,32 +202,33 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 								tmpSS
 							);
 
-							for (int i= 0; i < gids.Length; i++) {
-//							foreach (var a in bq.Answers) {
-								key += (key != "" ? "X" : "") + rs2.GetInt32(0 + i * 3);
-								txt += (txt != "" ? " / " : "") + rs2.GetString(1 + i * 3);
-								sql += string.Format(
-									@"
-INNER JOIN healthWatch..UserProfileBQ HWp{0} ON HWup.UserProfileID = HWp{0}.UserProfileID AND HWp{0}.BQID = {0} AND HWp{0}.ValueInt = {1}",
-									gids[i],
-									rs2.GetInt32(0 + i * 3)
-								);
-//								key += string.Format("{0}{1}", (key != "" ? "X" : ""), a.Id);
-//								txt += string.Format("{0}{1}", (txt != "" ? " / " : ""), a.Internal);
+//							for (int i= 0; i < gids.Length; i++) {
+							foreach (var a in bq.Answers) {
+//								key += (key != "" ? "X" : "") + rs2.GetInt32(0 + i * 3);
+//								txt += (txt != "" ? " / " : "") + rs2.GetString(1 + i * 3);
 //								sql += string.Format(
 //									@"
 //INNER JOIN healthWatch..UserProfileBQ HWp{0} ON HWup.UserProfileID = HWp{0}.UserProfileID AND HWp{0}.BQID = {0} AND HWp{0}.ValueInt = {1}",
-//									bq.Id,
-//									a.Id
+//									gids[i],
+//									rs2.GetInt32(0 + i * 3)
 //								);
+								key += string.Format("{0}{1}", (key != "" ? "X" : ""), a.Id);
+								txt += string.Format("{0}{1}", (txt != "" ? " / " : ""), a.Internal);
+								sql += string.Format(
+									@"
+INNER JOIN healthWatch..UserProfileBQ HWp{0} ON HWup.UserProfileID = HWp{0}.UserProfileID AND HWp{0}.BQID = {0} AND HWp{0}.ValueInt = {1}",
+									bq.Id,
+									a.Id
+								);
 							}
 							count++;
 
 							item.Add(key);
 							desc.Add(key, txt);
+							mins.Add(key, sponsorMinUserCountToDisclose);
 							join.Add(key, sql);
 						}
-						rs2.Close();
+//						rs2.Close();
 						break;
 					}
 			}
