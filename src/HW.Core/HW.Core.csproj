@@ -88,7 +88,6 @@
     <Compile Include="Helpers\ConvertHelper.cs" />
     <Compile Include="Helpers\CsvExporter.cs" />
     <Compile Include="Helpers\Db.cs" />
-    <Compile Include="Helpers\Db2.cs" />
     <Compile Include="Helpers\DocXExporter.cs" />
     <Compile Include="Helpers\ExcelExporter.cs" />
     <Compile Include="Helpers\ExcelWriter2.cs" />
