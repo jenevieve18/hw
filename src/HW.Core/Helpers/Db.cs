@@ -191,27 +191,31 @@ WHERE ProjectRoundUnitID = {0}",
 //			return ret;
 //		}
 
-		public static bool sendMail(string email, string body, string subject)
+//		public static bool sendMail(string email, string body, string subject)
+		public static bool sendMail(string to, string subject, string body)
 		{
-			return sendMail("reminder@healthwatch.se", email, body, subject);
+//			return sendMail("reminder@healthwatch.se", email, body, subject);
+			return sendMail("reminder@healthwatch.se", to, subject, body);
 		}
 		
-		public static bool sendMail(string from, string email, string body, string subject)
+//		public static bool sendMail(string from, string email, string body, string subject)
+		public static bool sendMail(string from, string to, string subject, string body)
 		{
 			try {
                 string server = ConfigurationManager.AppSettings["SmtpServer"];
-				System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage(from, email, subject, body);
+				System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage(from, to, subject, body);
 				System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient(server);
 				client.Send(mail);
 				return true;
-			} catch (Exception) {
+			} catch (Exception ex) {
 			}
 			return false;
 		}
 
-		public static bool sendInvitation(int sponsorInviteID, string email, string body, string subject, string key)
+//		public static bool sendInvitation(int sponsorInviteID, string email, string body, string subject, string key)
+		public static bool sendInvitation(int sponsorInviteID, string to, string subject, string body, string key)
 		{
-			if (Db.isEmail(email)) {
+			if (Db.isEmail(to)) {
 				try {
 					if (body.IndexOf("<LINK/>") >= 0) {
                         string path = ConfigurationManager.AppSettings["healthWatchURL"];
@@ -220,7 +224,7 @@ WHERE ProjectRoundUnitID = {0}",
                         string path = ConfigurationManager.AppSettings["healthWatchURL"];
 						body += "\r\n\r\n" + "" + path + "i/" + key + sponsorInviteID.ToString();
 					}
-					sendMail("info@healthwatch.se", email, subject, body);
+					sendMail("info@healthwatch.se", to, subject, body);
 
 					string query = string.Format("UPDATE SponsorInvite SET Sent = GETDATE() WHERE SponsorInviteID = {0}", sponsorInviteID);
 					Db.exec(query);
