@@ -97,7 +97,7 @@
         </button>
     </form>
     <div class="footer">
-        &copy; Interactive Health Group 2013<br />
+        &copy; Interactive Health Group <%= DateTime.Now.ToString("yyyy") %><br />
         Version <%= typeof(Default).Assembly.GetName().Version%>
     </div>
 
