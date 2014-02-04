@@ -215,7 +215,8 @@ namespace HW.Grp
 
 							int sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 							foreach (var i in sponsorRepository.FindInvitesBySponsor(sponsorID, sponsorAdminID)) {
-								bool success = Db.sendInvitation(i.Id, i.Email, InviteTxt.Text, InviteSubject.Text, i.InvitationKey);
+//								bool success = Db.sendInvitation(i.Id, i.Email, InviteTxt.Text, InviteSubject.Text, i.InvitationKey);
+								bool success = Db.sendInvitation(i.Id, i.Email, InviteSubject.Text, InviteTxt.Text, i.InvitationKey);
 
 								if (success) {
 									cx++;
@@ -231,7 +232,8 @@ namespace HW.Grp
 
 							sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 							foreach (var i in sponsorRepository.FindSentInvitesBySponsor(sponsorID, sponsorAdminID)) {
-								bool success = Db.sendInvitation(i.Id, i.Email, InviteReminderTxt.Text, InviteReminderSubject.Text, i.InvitationKey);
+//								bool success = Db.sendInvitation(i.Id, i.Email, InviteReminderTxt.Text, InviteReminderSubject.Text, i.InvitationKey);
+								bool success = Db.sendInvitation(i.Id, i.Email, InviteReminderSubject.Text, InviteReminderTxt.Text, i.InvitationKey);
 
 								if (success) {
 									cx++;

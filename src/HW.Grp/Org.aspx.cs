@@ -185,7 +185,8 @@ WHERE s.SponsorID = {0} AND si.SponsorInviteID = {1}",
 						if (rs.IsDBNull(4)) {
 //							Db2.sendInvitation(sendSponsorInvitationID, rs.GetString(2).Trim(), rs.GetString(0), rs.GetString(1), rs.GetString(3));
 							sponsorRepository.UpdateSponsorInviteSent(sendSponsorInvitationID);
-							Db.sendInvitation(sendSponsorInvitationID, rs.GetString(2).Trim(), rs.GetString(0), rs.GetString(1), rs.GetString(3));
+//							Db.sendInvitation(sendSponsorInvitationID, rs.GetString(2).Trim(), rs.GetString(0), rs.GetString(1), rs.GetString(3));
+							Db.sendInvitation(sendSponsorInvitationID, rs.GetString(2).Trim(), rs.GetString(1), rs.GetString(0), rs.GetString(3));
 						} else {
 							string body = rs.GetString(7);
 
@@ -2208,7 +2209,7 @@ WHERE sbq.SponsorID = {0} AND sbq.Hidden = 1",
 						@"
 UPDATE SponsorInvite SET Email = '{0}'{1},
 {2}
-DepartmentID =  WHERE SponsorInviteID = {3}",
+DepartmentID = {3} WHERE SponsorInviteID = {4}",
 						Email.Text.Replace("'", "''").Trim(),
 						sql,
 						(stoppedReason != oldStoppedReason ? "" + "StoppedReason=" + (stoppedReason == 0 ? "NULL" : stoppedReason.ToString()) + ",Stopped=" + (stoppedReason == 0 || Stopped.Text == "" ? "NULL" : "'" + Stopped.Text.Replace("'", "") + "'") + "," + "" : ""),
