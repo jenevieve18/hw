@@ -422,13 +422,14 @@ ORDER BY d.SortString",
 		}
 		
 		// TODO: How about anonymized?
-		public IList<Department> FindBySponsorWithSponsorAdmin(int sponsorID, int sponsorAdminID)
+		public IList<Department> FindBySponsorWithSponsorAdmin(int sponsorID, int sponsorAdminID, int sponsorMinUserCountToDisclose)
 		{
 			string query = string.Format(
 				@"
 SELECT d.Department,
 	d.DepartmentID,
-	d.SortString
+	d.SortString,
+	d.MinUserCountToDisclose
 FROM Department d
 INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID
 WHERE sad.SponsorAdminID = {1}
@@ -443,7 +444,8 @@ ORDER BY LEN(d.SortString)",
 					var d = new Department {
 						Name = GetString(rs, 0),
 						Id = rs.GetInt32(1),
-						SortString = GetString(rs, 2)
+						SortString = GetString(rs, 2),
+						MinUserCountToDisclose = GetInt32(rs, 3, sponsorMinUserCountToDisclose)
 					};
 					departments.Add(d);
 				}
@@ -452,14 +454,15 @@ ORDER BY LEN(d.SortString)",
 		}
 		
 		// TODO: How about anonymized?
-		public IList<Department> FindBySponsorOrderedBySortString(int sponsorID)
+		public IList<Department> FindBySponsorOrderedBySortString(int sponsorID, int sponsorMinUserCountToDisclose)
 		{
 			string query = string.Format(
 				@"
 SELECT d.Department,
 	d.DepartmentID,
 	DepartmentShort,
-	SortString
+	SortString,
+	d.MinUserCountToDisclose
 FROM Department d
 WHERE d.SponsorID = {0}
 ORDER BY LEN(d.SortString)",
@@ -472,7 +475,8 @@ ORDER BY LEN(d.SortString)",
 						Name = GetString(rs, 0),
 						Id = rs.GetInt32(1),
 						ShortName = GetString(rs, 2),
-						SortString = GetString(rs, 3)
+						SortString = GetString(rs, 3),
+						MinUserCountToDisclose = GetInt32(rs, 4, sponsorMinUserCountToDisclose)
 					};
 					departments.Add(d);
 				}

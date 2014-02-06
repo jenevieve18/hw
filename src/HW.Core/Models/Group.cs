@@ -58,7 +58,7 @@ namespace HW.Core.Models
 						int sslen = 0;
 						string tmpSS = "";
 						int i = 0;
-						IList<Department> departments = spons != -1 ? departmentRepository.FindBySponsorWithSponsorAdmin(sid, spons) : departmentRepository.FindBySponsorOrderedBySortString(sid);
+						IList<Department> departments = spons != -1 ? departmentRepository.FindBySponsorWithSponsorAdmin(sid, spons, sponsorMinUserCountToDisclose) : departmentRepository.FindBySponsorOrderedBySortString(sid, sponsorMinUserCountToDisclose);
 						foreach (Department d in departments) {
 							if (i == 0) {
 								mins.Add("1", d.MinUserCountToDisclose);
@@ -150,7 +150,7 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 						string tmpSS = "";
 						int i = 0;
 
-						IList<Department> departments = spons != -1 ? departmentRepository.FindBySponsorWithSponsorAdmin(sid, spons) : departmentRepository.FindBySponsorOrderedBySortString(sid);
+						IList<Department> departments = spons != -1 ? departmentRepository.FindBySponsorWithSponsorAdmin(sid, spons, sponsorMinUserCountToDisclose) : departmentRepository.FindBySponsorOrderedBySortString(sid, sponsorMinUserCountToDisclose);
 						foreach (Department d in departments) {
 							if (i == 0) {
 								sponsorMinUserCountToDisclose = d.MinUserCountToDisclose;
