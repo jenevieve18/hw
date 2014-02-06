@@ -1313,7 +1313,8 @@ d.SponsorID = {4} ORDER BY d.SortString",
 					"" + (rs.GetInt32(3) > 0 ? "<A HREF='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&SDID=" + rs.GetInt32(2) + "'><img src='img/usr_on.gif' border='0'/></A>" : (Convert.ToInt32(Session["ReadOnly"]) == 0 ? "<A HREF='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DeleteDID=" + rs.GetInt32(2) + "'><img src='img/unt_del.gif' border='0'/></A>" : "")) + "" +
 					"</TD>" +
 					"<TD ALIGN='CENTER' STYLE='font-size:9px;'>" +
-					"<span title='" + (rs.GetInt32(3) > 0 && rs.GetInt32(8) != rs.GetInt32(4) ? "" + (rs.GetInt32(4) >= MIN_SHOW ? rs.GetInt32(4).ToString() : (showReg ? rs.GetInt32(4).ToString() : "")) + "" : "") + "'>" + (rs.GetInt32(8) >= MIN_SHOW ? rs.GetInt32(18).ToString() + " / " + rs.GetInt32(8).ToString() : "<img src='img/key.gif'/>") + "</span>" +
+//					"<span title='" + (rs.GetInt32(3) > 0 && rs.GetInt32(8) != rs.GetInt32(4) ? "" + (rs.GetInt32(4) >= MIN_SHOW ? rs.GetInt32(4).ToString() : (showReg ? rs.GetInt32(4).ToString() : "")) + "" : "") + "'>" + (rs.GetInt32(8) >= MIN_SHOW ? rs.GetInt32(18).ToString() + " / " + rs.GetInt32(8).ToString() : "<img src='img/key.gif'/>") + "</span>" +
+					"<span title='" + (rs.GetInt32(3) > 0 && rs.GetInt32(8) != rs.GetInt32(4) ? "" + (rs.GetInt32(4) >= MIN_SHOW ? rs.GetInt32(4).ToString() : (showReg ? rs.GetInt32(4).ToString() : "")) + "" : "") + "'>" + (rs.GetInt32(8) >= MIN_SHOW ? rs.GetInt32(12 + 6 * EScount).ToString() + " / " + rs.GetInt32(8).ToString() : "<img src='img/key.gif'/>") + "</span>" +
 					"</TD>";
 
 				for (int i = 0; i < EScount; i++) {
