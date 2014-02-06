@@ -117,16 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="login.header" xml:space="preserve">
-    <value>HealthWatch.se&lt;br&gt;Grupp adminsitration</value>
-  </data>
-  <data name="user.name" xml:space="preserve">
-    <value>Användarnamn</value>
-  </data>
-  <data name="user.password" xml:space="preserve">
-    <value>Lösenord</value>
-  </data>
-  <data name="login.signin" xml:space="preserve">
-    <value>Sign in</value>
-  </data>
 </root>
