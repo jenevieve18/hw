@@ -106,7 +106,7 @@
             <h4>News</h4>
             <% foreach (var n in adminNews) { %>
                 <p>
-                    <span class="date"><%= n.Date.Value.ToString("MMM d, yyyy")%></span>
+                    <span class="date"><%= n.Date.Value.ToString("MMM d, yyyy").ToUpper() %></span>
                     <%= n.News %>
                 </p>
                 <hr />
