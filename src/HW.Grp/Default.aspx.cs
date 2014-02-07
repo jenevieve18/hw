@@ -18,6 +18,7 @@ namespace HW.Grp
 		protected string errorMessage = "";
 		SqlManagerFunctionRepository functionRepository = new SqlManagerFunctionRepository();
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
+		protected SqlNewsRepository newsRepository = new SqlNewsRepository();
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{

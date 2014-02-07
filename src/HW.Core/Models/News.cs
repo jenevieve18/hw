@@ -70,4 +70,10 @@ namespace HW.Core.Models
 		public virtual string SourceShort { get; set; }
 		public virtual int Favourite { get; set; }
 	}
+	
+	public class AdminNews : BaseModel
+	{
+		public virtual DateTime? Date { get; set; }
+		public virtual string News { get; set; }
+	}
 }

@@ -43,8 +43,11 @@
             -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
             box-shadow: 0 1px 2px rgba(0,0,0,.05);
         }
-        .footer 
-        {
+        .footer {
+            max-width:300px;
+            margin:auto;
+        }
+        .news {
             max-width:300px;
             margin:auto;
         }
@@ -99,6 +102,13 @@
     <div class="footer">
         &copy; Interactive Health Group <%= DateTime.Now.ToString("yyyy") %><br />
         Version <%= typeof(Default).Assembly.GetName().Version%>
+    </div>
+    <div class="news">
+        <h4>Adminitration News</h4>
+    <% foreach (var n in newsRepository.FindTop3AdminNews()) { %>
+        <p><%= n.News %></p>
+        <hr />
+    <% } %>
     </div>
 
 </body>

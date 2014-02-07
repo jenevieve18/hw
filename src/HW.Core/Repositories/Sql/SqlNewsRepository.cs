@@ -99,5 +99,29 @@ ORDER BY ns.sourceShort, nc.internal"
 			}
 			return channels;
 		}
+		
+		public IList<AdminNews> FindTop3AdminNews()
+		{
+			string query = string.Format(
+				@"
+SELECT n.AdminNewsID,
+	n.DT,
+	n.News
+FROM AdminNews n
+ORDER BY n.DT DESC"
+			);
+			var news = new List<AdminNews>();
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				while (rs.Read()) {
+					var c = new AdminNews {
+						Id = GetInt32(rs, 0),
+						Date = GetDateTime(rs, 1),
+						News = GetString(rs, 2)
+					};
+					news.Add(c);
+				}
+			}
+			return news;
+		}
 	}
 }
