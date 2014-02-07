@@ -51,6 +51,9 @@
             max-width:300px;
             margin:auto;
         }
+        .news .date {
+            color:#999999;
+        }
         .form-signin input[type="text"], .form-signin input[type="password"] {
             font-size: 16px;
             height: auto;
@@ -98,20 +101,23 @@
         <button class="btn btn-large btn-info" type="submit">
             <i class="icon-circle-arrow-right"></i><%= R.Str("login.signin", "Sign in") %>
         </button>
+        <% if (adminNews.Count > 0) { %>
+        <div class="news">
+            <h4>News</h4>
+            <% foreach (var n in adminNews) { %>
+                <p>
+                    <span class="date"><%= n.Date.Value.ToString("MMM d, yyyy")%></span>
+                    <%= n.News %>
+                </p>
+                <hr />
+            <% } %>
+        </div>
+        <% } %>
     </form>
     <div class="footer">
         &copy; Interactive Health Group <%= DateTime.Now.ToString("yyyy") %><br />
         Version <%= typeof(Default).Assembly.GetName().Version%>
     </div>
-    <% if (adminNews.Count > 0) { %>
-    <div class="news">
-        <h4>Administration News</h4>
-        <% foreach (var n in adminNews) { %>
-            <p><%= n.News %></p>
-            <hr />
-        <% } %>
-    </div>
-    <% } %>
 
 </body>
 </html>
