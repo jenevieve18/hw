@@ -101,6 +101,7 @@
         <button class="btn btn-large btn-info" type="submit">
             <i class="icon-circle-arrow-right"></i><%= R.Str("login.signin", "Sign in") %>
         </button>
+        <hr />
         <% if (adminNews.Count > 0) { %>
         <div class="news">
             <h4>News</h4>
