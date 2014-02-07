@@ -18,10 +18,13 @@ namespace HW.Grp
 		protected string errorMessage = "";
 		SqlManagerFunctionRepository functionRepository = new SqlManagerFunctionRepository();
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
-		protected SqlNewsRepository newsRepository = new SqlNewsRepository();
+		SqlNewsRepository newsRepository = new SqlNewsRepository();
+		protected IList<AdminNews> adminNews;
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			adminNews = newsRepository.FindTop3AdminNews();
+			
 			bool superAdmin = false;
 			bool login = false;
 			SponsorAdmin s = null;

@@ -103,13 +103,15 @@
         &copy; Interactive Health Group <%= DateTime.Now.ToString("yyyy") %><br />
         Version <%= typeof(Default).Assembly.GetName().Version%>
     </div>
+    <% if (adminNews.Count > 0) { %>
     <div class="news">
-        <h4>Adminitration News</h4>
-    <% foreach (var n in newsRepository.FindTop3AdminNews()) { %>
-        <p><%= n.News %></p>
-        <hr />
-    <% } %>
+        <h4>Administration News</h4>
+        <% foreach (var n in adminNews) { %>
+            <p><%= n.News %></p>
+            <hr />
+        <% } %>
     </div>
+    <% } %>
 
 </body>
 </html>
