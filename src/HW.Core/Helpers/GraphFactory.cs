@@ -467,6 +467,9 @@ namespace HW.Core.Helpers
 								Y = 20 + (int)Math.Floor((double)bx / breaker) * 15
 							};
 							foreach (Answer a in answers) {
+								if (a.DT < minDT) {
+									continue;
+								}
 								while (lastDT + 1 < a.DT) {
 									lastDT++;
 									cx++;
@@ -502,6 +505,9 @@ namespace HW.Core.Helpers
 						int lastDT = minDT - 1;
 						Series s = new Series { Color = bx + 4 };
 						foreach (Answer a in answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString)) {
+							if (a.DT < minDT) {
+								continue;
+							}
 							while (lastDT + 1 < a.DT) {
 								lastDT++;
 								cx++;
