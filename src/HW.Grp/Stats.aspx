@@ -203,7 +203,7 @@
 									<%= HtmlHelper.Anchor("xls", exportXlsUrl, new Dictionary<string, string>() { { "class", "export-xls-url" } }, "_blank")%>
 								</span>
 								<span class="button white small export">
-									<%= HtmlHelper.Anchor("xls verbose", exportXlsUrl + "&Plot=Verbose", new Dictionary<string, string>() { { "class", "export-xls-verbose-url" } }, "_blank")%>
+									<%= HtmlHelper.Anchor("xls verbose", exportXlsUrl + "&PLOT=" + Plot.Verbose, new Dictionary<string, string>() { { "class", "export-xls-verbose-url" } }, "_blank")%>
 								</span>
 							</div>
 							<div class="small action-desc"></div>
