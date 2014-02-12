@@ -1291,7 +1291,7 @@ d.SponsorID = {4} ORDER BY d.SortString",
 				AX += rs.GetInt32(4);
 				IX += rs.GetInt32(5);
 				AX2 += rs.GetInt32(12 + 6 * EScount + 1);
-				int MIN_SHOW2 = rs.IsDBNull(12 + 6 * EScount + 2) ? 10 : rs.GetInt32(12 + 6 * EScount + 2);
+				int MIN_SHOW2 = rs.IsDBNull(12 + 6 * EScount + 2) ? MIN_SHOW : rs.GetInt32(12 + 6 * EScount + 2);
 
 				OrgTree.Text += "<tr" + (depth == 1 || depth == 4 ? " style='background-color:#EEEEEE'" : (depth == 2 || depth == 5 ? " style='background-color:#F6F6F6'" : "")) + "><td colspan='2'><table border='0' cellspacing='0' cellpadding='0'><tr><td>";
 				for (int i = 1; i <= depth; i++) {
