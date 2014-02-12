@@ -236,57 +236,57 @@ WHERE ProjectRoundUnitID = {0}",
 			return false;
 		}
 
-		public static string bottom()
-		{
-			return ""; // "</div></div>";
-		}
-		
-		static SqlManagerFunctionRepository managerFunctionRepository = new SqlManagerFunctionRepository();
-		
-		public static string nav2()
-		{
-			SqlDataReader r;
-
-			string ret = "<div id=\"main\">";
-
-			ret += "<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">";
-			ret += "<tr>";
-			ret += "<td><img src=\"img/null.gif\" width=\"150\" height=\"125\" border=\"0\" USEMAP=\"#top\"><MAP NAME=\"top\"><AREA SHAPE=\"poly\" COORDS=\"11,14, 11,90, 181,88, 179,16\" HREF=\"default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\"></MAP></td>";
-			ret += "<td><img src=\"img/null.gif\" width=\"25\" height=\"1\"></td>";
-			ret += "<td>" +
-				"<A class=\"unli\" HREF=\"news.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">News</A><br/>" +
-				"<A class=\"unli\" HREF=\"rss.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">News setup</A><br/>" +
-				"<A class=\"unli\" HREF=\"sponsor.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Sponsors</A><br/>" +
-				"<A class=\"unli\" HREF=\"grpUser.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Sponsor managers</A><br/>" +
-				"<A class=\"unli\" HREF=\"sponsorStats.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Sponsor statistics</A><br/>" +
-				"<A class=\"unli\" HREF=\"superAdmin.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Super managers</A><br/>" +
-				"</td>";
-			ret += "<td><img src=\"img/null.gif\" width=\"25\" height=\"1\"></td>";
-			ret += "<td>" +
-				"<A class=\"unli\" HREF=\"bq.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Background questions</A><br/>" +
-				"<A class=\"unli\" HREF=\"messages.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Messages</A><br/>" +
-				"<A class=\"unli\" HREF=\"export.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Data export</A><br/>" +
-				"<A class=\"unli\" HREF=\"stats.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Usage statistics</A><br/>" +
-				"<A class=\"unli\" HREF=\"tx.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">File uploads</A><br/>" +
-				"<br/>" +
-				"</td>";
-			ret += "<td><img src=\"img/null.gif\" width=\"25\" height=\"1\"></td>";
-			ret += "<td>" +
-				"<A class=\"unli\" HREF=\"exercise.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Exercises</A><br/>" +
-				"<A class=\"unli\" HREF=\"users.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Users</A><br/>" +
-				"<A class=\"unli\" HREF=\"extendedSurvey.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Extended survey statistics</A><br/>" +
-				"<A class=\"unli\" HREF=\"survey.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Survey statistics</A><br/>" +
-				"<A class=\"unli\" HREF=\"wise.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Words of wisdom</A><br/>" +
-				"<br/>" +
-				"</td>";
-			ret += "</tr>";
-			ret += "</table>";
-			
-			ret += "<div id=\"container\">";
-
-			return ret;
-		}
-
+//		public static string bottom()
+//		{
+//			return ""; // "</div></div>";
+//		}
+//		
+//		static SqlManagerFunctionRepository managerFunctionRepository = new SqlManagerFunctionRepository();
+//		
+//		public static string nav2()
+//		{
+//			SqlDataReader r;
+//
+//			string ret = "<div id=\"main\">";
+//
+//			ret += "<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">";
+//			ret += "<tr>";
+//			ret += "<td><img src=\"img/null.gif\" width=\"150\" height=\"125\" border=\"0\" USEMAP=\"#top\"><MAP NAME=\"top\"><AREA SHAPE=\"poly\" COORDS=\"11,14, 11,90, 181,88, 179,16\" HREF=\"default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\"></MAP></td>";
+//			ret += "<td><img src=\"img/null.gif\" width=\"25\" height=\"1\"></td>";
+//			ret += "<td>" +
+//				"<A class=\"unli\" HREF=\"news.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">News</A><br/>" +
+//				"<A class=\"unli\" HREF=\"rss.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">News setup</A><br/>" +
+//				"<A class=\"unli\" HREF=\"sponsor.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Sponsors</A><br/>" +
+//				"<A class=\"unli\" HREF=\"grpUser.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Sponsor managers</A><br/>" +
+//				"<A class=\"unli\" HREF=\"sponsorStats.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Sponsor statistics</A><br/>" +
+//				"<A class=\"unli\" HREF=\"superAdmin.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Super managers</A><br/>" +
+//				"</td>";
+//			ret += "<td><img src=\"img/null.gif\" width=\"25\" height=\"1\"></td>";
+//			ret += "<td>" +
+//				"<A class=\"unli\" HREF=\"bq.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Background questions</A><br/>" +
+//				"<A class=\"unli\" HREF=\"messages.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Messages</A><br/>" +
+//				"<A class=\"unli\" HREF=\"export.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Data export</A><br/>" +
+//				"<A class=\"unli\" HREF=\"stats.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Usage statistics</A><br/>" +
+//				"<A class=\"unli\" HREF=\"tx.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">File uploads</A><br/>" +
+//				"<br/>" +
+//				"</td>";
+//			ret += "<td><img src=\"img/null.gif\" width=\"25\" height=\"1\"></td>";
+//			ret += "<td>" +
+//				"<A class=\"unli\" HREF=\"exercise.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Exercises</A><br/>" +
+//				"<A class=\"unli\" HREF=\"users.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Users</A><br/>" +
+//				"<A class=\"unli\" HREF=\"extendedSurvey.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Extended survey statistics</A><br/>" +
+//				"<A class=\"unli\" HREF=\"survey.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Survey statistics</A><br/>" +
+//				"<A class=\"unli\" HREF=\"wise.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Words of wisdom</A><br/>" +
+//				"<br/>" +
+//				"</td>";
+//			ret += "</tr>";
+//			ret += "</table>";
+//			
+//			ret += "<div id=\"container\">";
+//
+//			return ret;
+//		}
+//
 //		public static string nav()
 //		{
 //			StringBuilder sb = new StringBuilder();
