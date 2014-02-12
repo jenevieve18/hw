@@ -474,7 +474,6 @@ namespace HW.Core.Helpers
 									lastDT++;
 									cx++;
 								}
-//								if (a.Values.Count >= p.RequiredAnswerCount) {
 								if (a.Values.Count >= mins[i]) {
 									if (count == 1) {
 										string v = GetBottomString(GB, a.DT, cx, (count == 1 ? ", n = " + a.Values.Count : ""));
@@ -504,7 +503,8 @@ namespace HW.Core.Helpers
 						cx = 1;
 						int lastDT = minDT - 1;
 						Series s = new Series { Color = bx + 4 };
-						foreach (Answer a in answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString)) {
+						var answers = answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString);
+						foreach (Answer a in answers) {
 							if (a.DT < minDT) {
 								continue;
 							}
@@ -670,14 +670,14 @@ namespace HW.Core.Helpers
 //				List<IExplanation> explanationBoxes = new List<IExplanation>();
 				
 				if (hasGrouping) {
-					int COUNT = 0;
+					int count = 0;
 					Dictionary<string, string> desc = new Dictionary<string, string>();
 					Dictionary<string, string> join = new Dictionary<string, string>();
 					List<string> item = new List<string>();
 					Dictionary<string, int> mins = new Dictionary<string, int>();
 					string extraDesc = "";
 					
-					COUNT = GroupFactory.GetCount(GRPNG, SPONS, SID, PRUID, GID, ref extraDesc, desc, join, item, mins, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
+					count = GroupFactory.GetCount(GRPNG, SPONS, SID, PRUID, GID, ref extraDesc, desc, join, item, mins, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
 					
 //					int breaker = 6, itemWidth = 120;
 //					if (COUNT < 6) {
@@ -727,7 +727,8 @@ namespace HW.Core.Helpers
 									continue;
 								}
 								jj++;
-								string w = GetBottomString(GB, ii, jj, "");
+//								string w = GetBottomString(GB, ii, jj, "");
+								string w = GetBottomString(GB, a.DT, cx, "");
 								if (!weeks.ContainsKey(w)) {
 									week = new List<Answer>();
 									weeks.Add(w, week);
@@ -737,11 +738,9 @@ namespace HW.Core.Helpers
 								while (lastDT + 1 < a.DT) {
 									lastDT++;
 									cx++;
-//									week.Add(new Answer());
 								}
-//								if (a.Values.Count >= p.RequiredAnswerCount) {
 								if (a.Values.Count >= mins[i]) {
-									if (COUNT == 1) {
+									if (count == 1) {
 //										g.DrawBottomString(GB, a.SomeInteger, cx, (COUNT == 1 ? ", n = " + a.Values.Count : ""));
 									}
 //									s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
@@ -807,17 +806,205 @@ namespace HW.Core.Helpers
 //				}
 //			}
 			
-//			if (plot.ToUpper().Equals("Boxplot".ToUpper())) {
 			if (plot == Plot.BoxPlot) {
 				return new BoxPlotCsv().ToCsv(departments, weeks);
-//			} else if (plot.ToUpper().Equals("Line (mean ± 1.96 SD)".ToUpper())) {
 			} else if (plot == Plot.LineSDWithCI) {
 				return new ConfidenceIntervalLineCsv().ToCsv(departments, weeks);
-//			} else if (plot.ToUpper().Equals("Line (mean ± SD)".ToUpper())) {
 			} else if (plot == Plot.LineSD) {
 				return new StandardDeviationLineCsv().ToCsv(departments, weeks);
 			} else {
 				return new LineCsv().ToCsv(departments, weeks);
+			}
+		}
+		
+		public void CreateGraph3(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int SPONS, int SID, string GID, object disabled, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose)
+		{
+			int cx = p.Components.Count;
+			string sortString = "";
+			int minDT = 0;
+			int maxDT = 0;
+			ProjectRoundUnit roundUnit = projectRepository.ReadRoundUnit(PRUID);
+			if (roundUnit != null) {
+				sortString = roundUnit.SortString;
+				if (langID == 0) {
+					langID = roundUnit.Language.Id;
+				}
+			}
+			Dictionary<string, List<Answer>> weeks = new Dictionary<string, List<Answer>>();
+			List<Answer> week =  new List<Answer>();
+			List<Department> departments = new List<Department>();
+
+			LanguageFactory.SetCurrentCulture(langID);
+
+			if (p.Type == 1) {
+				decimal tot = answerRepository.CountByDate(fy, ty, sortString);
+
+				if (p.RequiredAnswerCount > Convert.ToInt32(tot)) {
+				} else {
+					foreach (OptionComponents c in optionRepository.FindComponentsByLanguage(p.Option.Id, langID)) {
+						int x = answerRepository.CountByValueWithDateOptionAndQuestion(c.Component.Id, fy, ty, p.Option.Id, p.Question.Id, sortString);
+					}
+					cx = optionRepository.CountByOption(p.Option.Id);
+				}
+			} else if (p.Type == 3) {
+				foreach (ReportPartComponent c in reportRepository.FindComponents(p.Id)) {
+					SortedList all = new SortedList();
+
+					foreach (ProjectRoundUnit u in projectRepository.FindRoundUnitsBySortString(sortString)) {
+						res = new System.Collections.Hashtable();
+
+						if (c.Index.Parts.Count == 0) {
+							GetIdxVal(c.Index.Id, u.SortString, langID, fy, ty);
+						} else {
+							GetOtherIdxVal(c.Index.Id, u.SortString, langID, fy, ty);
+						}
+
+						if (all.Contains(lastVal)) {
+							all[lastVal] += "," + u.TreeString;
+						} else {
+							all.Add(lastVal, u.TreeString);
+						}
+					}
+
+					for (int i = all.Count - 1; i >= 0; i--) {
+						int color = c.Index.GetColor(Convert.ToInt32(all.GetKey(i)));
+						string[] u = all.GetByIndex(i).ToString().Split(',');
+
+						foreach (string s in u) {
+						}
+					}
+				}
+			} else if (p.Type == 2) {
+				foreach (ReportPartComponent c in reportRepository.FindComponents(p.Id)) {
+					if (c.Index.Parts.Count == 0) {
+						GetIdxVal(c.Index.Id, sortString, langID, fy, ty);
+					} else {
+						GetOtherIdxVal(c.Index.Id, sortString, langID, fy, ty);
+					}
+					int color = c.Index.GetColor(lastVal);
+				}
+			} else if (p.Type == 8) {
+				if (GB == 0) {
+					GB = 2;
+				}
+				
+				string groupBy = GroupFactory.GetGroupBy(GB);
+
+				if (plot == Plot.BoxPlot) {
+				} else {
+				}
+				Answer answer = answerRepository.ReadByGroup(groupBy, fy, ty, sortString);
+				if (answer != null) {
+					cx = answer.DummyValue1 + 3;
+					minDT = answer.DummyValue2;
+					maxDT = answer.DummyValue3;
+				}
+
+				cx = 0;
+				
+				if (hasGrouping) {
+					int count = 0;
+					Dictionary<string, string> desc = new Dictionary<string, string>();
+					Dictionary<string, string> join = new Dictionary<string, string>();
+					List<string> item = new List<string>();
+					Dictionary<string, int> mins = new Dictionary<string, int>();
+					string extraDesc = "";
+					
+					count = GroupFactory.GetCount(GRPNG, SPONS, SID, PRUID, GID, ref extraDesc, desc, join, item, mins, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
+					
+					ReportPartComponent c = reportRepository.ReadComponentByPartAndLanguage(p.Id, langID);
+					if (c != null) {
+						int bx = 0;
+						foreach(string i in item) {
+							cx = 1;
+							int lastDT = minDT - 1;
+							var answers = answerRepository.FindByQuestionAndOptionJoinedAndGrouped2(join[i].ToString(), groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty);
+							departments.Add(new Department { Name = (string)desc[i] });
+							int ii = minDT;
+							int jj = 0;
+							foreach (Answer a in answers) {
+								if (a.DT < minDT) {
+									continue;
+								}
+								jj++;
+//								string w = GetBottomString(GB, ii, jj, "");
+								string w = GetBottomString(GB, a.DT, cx, "");
+								if (!weeks.ContainsKey(w)) {
+									week = new List<Answer>();
+									weeks.Add(w, week);
+								} else {
+									week = weeks[w];
+								}
+								while (lastDT + 1 < a.DT) {
+									lastDT++;
+									cx++;
+								}
+								if (a.Values.Count >= mins[i]) {
+									if (count == 1) {
+									}
+									week.Add(a);
+								}
+								lastDT = a.DT;
+								cx++;
+								ii++;
+							}
+							bx++;
+						}
+					}
+				} else {
+					int bx = 0;
+					foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(p.Id, langID)) {
+						cx = 1;
+						int lastDT = minDT - 1;
+						var answers = answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString);
+						foreach (Answer a in answers) {
+							if (a.DT < minDT) {
+								continue;
+							}
+							while (lastDT + 1 < a.DT) {
+								lastDT++;
+								cx++;
+							}
+
+							if (a.CountV >= p.RequiredAnswerCount) {
+							}
+							lastDT = a.DT;
+							cx++;
+						}
+						bx++;
+					}
+				}
+			}
+			
+			if (plot == Plot.BoxPlot) {
+				var plotter = new BoxPlotExcel();
+				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
+				plotter.ToExcel(departments, weeks, writer, ref index);
+			} else if (plot == Plot.LineSDWithCI) {
+				var plotter = new ConfidenceIntervalLineExcel();
+				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
+				plotter.ToExcel(departments, weeks, writer, ref index);
+			} else if (plot == Plot.LineSD) {
+				var plotter = new StandardDeviationLineExcel();
+				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
+				plotter.ToExcel(departments, weeks, writer, ref index);
+			} else if (plot == Plot.Verbose) {
+				var plotter = new EverythingExcel();
+				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
+				plotter.ToExcel(departments, weeks, writer, ref index);
+			} else {
+				var plotter = new LineExcel();
+				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
+				plotter.ToExcel(departments, weeks, writer, ref index);
+			}
+		}
+		
+		public event EventHandler<MergeEventArgs> ForMerge;
+		
+		protected virtual void OnForMerge(MergeEventArgs e)
+		{
+			if (ForMerge != null) {
+				ForMerge(this, e);
 			}
 		}
 		
@@ -931,198 +1118,6 @@ namespace HW.Core.Helpers
 			}
 			lastVal = 100 * tot / max;
 			lastCount = minCnt;
-		}
-		
-		public void CreateGraph3(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int SPONS, int SID, string GID, object disabled, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose)
-		{
-			int cx = p.Components.Count;
-			string sortString = "";
-			int minDT = 0;
-			int maxDT = 0;
-			ProjectRoundUnit roundUnit = projectRepository.ReadRoundUnit(PRUID);
-			if (roundUnit != null) {
-				sortString = roundUnit.SortString;
-				if (langID == 0) {
-					langID = roundUnit.Language.Id;
-				}
-			}
-			Dictionary<string, List<Answer>> weeks = new Dictionary<string, List<Answer>>();
-			List<Answer> week =  new List<Answer>();
-			List<Department> departments = new List<Department>();
-
-			LanguageFactory.SetCurrentCulture(langID);
-
-			if (p.Type == 1) {
-				decimal tot = answerRepository.CountByDate(fy, ty, sortString);
-
-				if (p.RequiredAnswerCount > Convert.ToInt32(tot)) {
-				} else {
-					foreach (OptionComponents c in optionRepository.FindComponentsByLanguage(p.Option.Id, langID)) {
-						int x = answerRepository.CountByValueWithDateOptionAndQuestion(c.Component.Id, fy, ty, p.Option.Id, p.Question.Id, sortString);
-					}
-					cx = optionRepository.CountByOption(p.Option.Id);
-				}
-			} else if (p.Type == 3) {
-				foreach (ReportPartComponent c in reportRepository.FindComponents(p.Id)) {
-					SortedList all = new SortedList();
-
-					foreach (ProjectRoundUnit u in projectRepository.FindRoundUnitsBySortString(sortString)) {
-						res = new System.Collections.Hashtable();
-
-						if (c.Index.Parts.Count == 0) {
-							GetIdxVal(c.Index.Id, u.SortString, langID, fy, ty);
-						} else {
-							GetOtherIdxVal(c.Index.Id, u.SortString, langID, fy, ty);
-						}
-
-						if (all.Contains(lastVal)) {
-							all[lastVal] += "," + u.TreeString;
-						} else {
-							all.Add(lastVal, u.TreeString);
-						}
-					}
-
-					for (int i = all.Count - 1; i >= 0; i--) {
-						int color = c.Index.GetColor(Convert.ToInt32(all.GetKey(i)));
-						string[] u = all.GetByIndex(i).ToString().Split(',');
-
-						foreach (string s in u) {
-						}
-					}
-				}
-			} else if (p.Type == 2) {
-				foreach (ReportPartComponent c in reportRepository.FindComponents(p.Id)) {
-					if (c.Index.Parts.Count == 0) {
-						GetIdxVal(c.Index.Id, sortString, langID, fy, ty);
-					} else {
-						GetOtherIdxVal(c.Index.Id, sortString, langID, fy, ty);
-					}
-					int color = c.Index.GetColor(lastVal);
-				}
-			} else if (p.Type == 8) {
-				if (GB == 0) {
-					GB = 2;
-				}
-				
-				string groupBy = GroupFactory.GetGroupBy(GB);
-
-				if (plot == Plot.BoxPlot) {
-				} else {
-				}
-				Answer answer = answerRepository.ReadByGroup(groupBy, fy, ty, sortString);
-				if (answer != null) {
-					cx = answer.DummyValue1 + 3;
-					minDT = answer.DummyValue2;
-					maxDT = answer.DummyValue3;
-				}
-
-				cx = 0;
-				
-				if (hasGrouping) {
-					int COUNT = 0;
-					Dictionary<string, string> desc = new Dictionary<string, string>();
-					Dictionary<string, string> join = new Dictionary<string, string>();
-					List<string> item = new List<string>();
-					Dictionary<string, int> mins = new Dictionary<string, int>();
-					string extraDesc = "";
-					
-					COUNT = GroupFactory.GetCount(GRPNG, SPONS, SID, PRUID, GID, ref extraDesc, desc, join, item, mins, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
-					
-					ReportPartComponent c = reportRepository.ReadComponentByPartAndLanguage(p.Id, langID);
-					if (c != null) {
-						int bx = 0;
-						foreach(string i in item) {
-							cx = 1;
-							int lastDT = minDT - 1;
-							var answers = answerRepository.FindByQuestionAndOptionJoinedAndGrouped2(join[i].ToString(), groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty);
-							var d = new Department { Name = (string)desc[i] };
-							departments.Add(d);
-							int ii = minDT;
-							int jj = 0;
-							foreach (Answer a in answers) {
-								if (a.DT < minDT) {
-									continue;
-								}
-								jj++;
-								string w = GetBottomString(GB, ii, jj, "");
-								if (!weeks.ContainsKey(w)) {
-									week = new List<Answer>();
-									weeks.Add(w, week);
-								} else {
-									week = weeks[w];
-								}
-								while (lastDT + 1 < a.DT) {
-									lastDT++;
-									cx++;
-								}
-//								if (a.Values.Count >= p.RequiredAnswerCount) {
-								if (a.Values.Count >= mins[i]) {
-									if (COUNT == 1) {
-									}
-									week.Add(a);
-								}
-								lastDT = a.DT;
-								cx++;
-								ii++;
-							}
-							bx++;
-						}
-					}
-				} else {
-					int bx = 0;
-					foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(p.Id, langID)) {
-						cx = 1;
-						int lastDT = minDT - 1;
-						var answers = answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString);
-						foreach (Answer a in answers) {
-							if (a.DT < minDT) {
-								continue;
-							}
-							while (lastDT + 1 < a.DT) {
-								lastDT++;
-								cx++;
-							}
-
-							if (a.CountV >= p.RequiredAnswerCount) {
-							}
-							lastDT = a.DT;
-							cx++;
-						}
-						bx++;
-					}
-				}
-			}
-			
-			if (plot == Plot.BoxPlot) {
-				var xx = new BoxPlotExcel();
-				xx.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-				xx.ToExcel(departments, weeks, writer, ref index);
-			} else if (plot == Plot.LineSDWithCI) {
-				var xx = new ConfidenceIntervalLineExcel();
-				xx.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-				xx.ToExcel(departments, weeks, writer, ref index);
-			} else if (plot == Plot.LineSD) {
-				var xx = new StandardDeviationLineExcel();
-				xx.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-				xx.ToExcel(departments, weeks, writer, ref index);
-			} else if (plot == Plot.Verbose) {
-				var xx = new EverythingExcel();
-				xx.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-				xx.ToExcel(departments, weeks, writer, ref index);
-			} else {
-				var xx = new LineExcel();
-				xx.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-				xx.ToExcel(departments, weeks, writer, ref index);
-			}
-		}
-		
-		public event EventHandler<MergeEventArgs> ForMerge;
-		
-		protected virtual void OnForMerge(MergeEventArgs e)
-		{
-			if (ForMerge != null) {
-				ForMerge(this, e);
-			}
 		}
 	}
 	
