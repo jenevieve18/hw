@@ -1193,9 +1193,9 @@ ORDER BY ses.SponsorExtendedSurveyID",
 			//OrgTree.Text += "<TR><TD COLSPAN='" + (aggrBQcx + 8 + (showDepartmentID != 0 && BQs != "" ? BQs.Split(':').Length : 0) + EScount) + "' style='height:1px;line-height:1px;background-color:#333333'><img src='img/null.gif' width='1' height='1'></TD></TR>";
 			OrgTree.Text += string.Format("<tr><td colspan='3'>{0}</td>[xxx]</tr>", Session["Sponsor"]);
 
-			int UX = 0, AX = 0, IX = 0;
+			int UX = 0, AX = 0, IX = 0, AX2 = 0;
 
-			int MIN_SHOW = 10;
+			int MIN_SHOW = sponsorRepository.ReadSponsor(sponsorID).MinUserCountToDisclose;
 
 			bool[] DX = new bool[8];
 
@@ -1262,7 +1262,15 @@ SELECT d.Department,
 		AND si.SponsorID = d.SponsorID
 		AND si.StoppedReason IS NULL
 		AND si.UserID IS NOT NULL
-	)
+	),
+	(
+  SELECT COUNT(*)
+  FROM SponsorInvite si
+  INNER JOIN [User] u ON si.UserID = u.UserID
+  WHERE si.DepartmentID = d.DepartmentID
+  AND si.StoppedReason IS NULL
+ ),
+ d.MinUserCountToDisclose
 FROM Department d
 INNER JOIN Sponsor s ON d.SponsorID = s.SponsorID
 {2}
@@ -1282,8 +1290,10 @@ d.SponsorID = {4} ORDER BY d.SortString",
 				UX += rs.GetInt32(3);
 				AX += rs.GetInt32(4);
 				IX += rs.GetInt32(5);
+				AX2 += rs.GetInt32(12 + 6 * EScount + 1);
+				int MIN_SHOW2 = rs.IsDBNull(12 + 6 * EScount + 2) ? 10 : rs.GetInt32(12 + 6 * EScount + 2);
 
-				OrgTree.Text += "<TR" + (depth == 1 || depth == 4 ? " style='background-color:#EEEEEE'" : (depth == 2 || depth == 5 ? " style='background-color:#F6F6F6'" : "")) + "><TD COLSPAN='2'><TABLE BORDER='0' CELLSPACING='0' CELLPADDING='0'><TR><TD>";
+				OrgTree.Text += "<tr" + (depth == 1 || depth == 4 ? " style='background-color:#EEEEEE'" : (depth == 2 || depth == 5 ? " style='background-color:#F6F6F6'" : "")) + "><td colspan='2'><table border='0' cellspacing='0' cellpadding='0'><tr><td>";
 				for (int i = 1; i <= depth; i++) {
 					OrgTree.Text += "<img src='img/";
 					if (i == depth) {
@@ -1305,24 +1315,23 @@ d.SponsorID = {4} ORDER BY d.SortString",
 						s += s1.Substring(i1);
 					}
 				}
-				OrgTree.Text += "</TD><TD style='vertical-align:MIDDLE;" + (s.Length > 20 ? "font-size:10px;" : "") + "'>&nbsp;" + (deptID == rs.GetInt32(2) || showDepartmentID == rs.GetInt32(2) ? "<B>" : "") + s + (deptID == rs.GetInt32(2) || showDepartmentID == rs.GetInt32(2) ? "</B>" : "") + "&nbsp;</TD></TR></TABLE></TD>" +
-					"<TD ALIGN='CENTER'>" +
+				OrgTree.Text += "</td><td style='vertical-align:middle;" + (s.Length > 20 ? "font-size:10px;" : "") + "'>&nbsp;" + (deptID == rs.GetInt32(2) || showDepartmentID == rs.GetInt32(2) ? "<b>" : "") + s + (deptID == rs.GetInt32(2) || showDepartmentID == rs.GetInt32(2) ? "</b>" : "") + "&nbsp;</td></tr></table></td>" +
+					"<td align='center'>" +
 					(Convert.ToInt32(Session["ReadOnly"]) == 0 ?
-					 "<A HREF='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DID=" + rs.GetInt32(2) + "'><img src='img/unt_edt.gif' border='0'/></A>" +
+					 "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DID=" + rs.GetInt32(2) + "'><img src='img/unt_edt.gif' border='0'/></A>" +
 					 "" : "") +
-					"" + (rs.GetInt32(3) > 0 ? "<A HREF='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&SDID=" + rs.GetInt32(2) + "'><img src='img/usr_on.gif' border='0'/></A>" : (Convert.ToInt32(Session["ReadOnly"]) == 0 ? "<A HREF='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DeleteDID=" + rs.GetInt32(2) + "'><img src='img/unt_del.gif' border='0'/></A>" : "")) + "" +
-					"</TD>" +
-					"<TD ALIGN='CENTER' STYLE='font-size:9px;'>" +
-//					"<span title='" + (rs.GetInt32(3) > 0 && rs.GetInt32(8) != rs.GetInt32(4) ? "" + (rs.GetInt32(4) >= MIN_SHOW ? rs.GetInt32(4).ToString() : (showReg ? rs.GetInt32(4).ToString() : "")) + "" : "") + "'>" + (rs.GetInt32(8) >= MIN_SHOW ? rs.GetInt32(18).ToString() + " / " + rs.GetInt32(8).ToString() : "<img src='img/key.gif'/>") + "</span>" +
-					"<span title='" + (rs.GetInt32(3) > 0 && rs.GetInt32(8) != rs.GetInt32(4) ? "" + (rs.GetInt32(4) >= MIN_SHOW ? rs.GetInt32(4).ToString() : (showReg ? rs.GetInt32(4).ToString() : "")) + "" : "") + "'>" + (rs.GetInt32(8) >= MIN_SHOW ? rs.GetInt32(12 + 6 * EScount).ToString() + " / " + rs.GetInt32(8).ToString() : "<img src='img/key.gif'/>") + "</span>" +
-					"</TD>";
+					"" + (rs.GetInt32(3) > 0 ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&SDID=" + rs.GetInt32(2) + "'><img src='img/usr_on.gif' border='0'/></A>" : (Convert.ToInt32(Session["ReadOnly"]) == 0 ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DeleteDID=" + rs.GetInt32(2) + "'><img src='img/unt_del.gif' border='0'/></a>" : "")) + "" +
+					"</td>" +
+					"<td align='center' style='font-size:9px;'>" +
+					"<span title='" + (rs.GetInt32(3) > 0 && rs.GetInt32(8) != rs.GetInt32(4) ? "" + (rs.GetInt32(4) >= MIN_SHOW2 ? rs.GetInt32(4).ToString() : (showReg ? rs.GetInt32(4).ToString() : "")) + "" : "") + "'>" + (rs.GetInt32(8) >= MIN_SHOW2 ? rs.GetInt32(12 + 6 * EScount).ToString() + " / " + rs.GetInt32(8).ToString() : "<img src='img/key.gif'/>") + "</span>" +
+					"</td>";
 
 				for (int i = 0; i < EScount; i++) {
 					int idx = 12 + 6 * i;
 					ESanswerCount[i] += rs.GetInt32(idx + 1);
 					int rac = (rs.IsDBNull(idx + 3) ? Convert.ToInt32(ESattr.Split(',')[i].Split(':')[1]) : rs.GetInt32(idx + 3));
 					if (rs.IsDBNull(idx + 4)) {
-						OrgTree.Text += "<TD ALIGN='CENTER' STYLE='font-size:9px;'>&nbsp;" +
+						OrgTree.Text += "<td align='center' style='font-size:9px;'>&nbsp;" +
 							(!rs.IsDBNull(idx + 5) ? "E" : "") +
 							(
 								!rs.IsDBNull(idx + 2)
@@ -1331,7 +1340,7 @@ d.SponsorID = {4} ORDER BY d.SortString",
 								&&
 								rac <= rs.GetInt32(idx)
 								?
-								"<A HREF=\"JavaScript:void(window.open('" + ConfigurationManager.AppSettings["eFormURL"] + "feedback.aspx?" +
+								"<a href=\"JavaScript:void(window.open('" + ConfigurationManager.AppSettings["eFormURL"] + "feedback.aspx?" +
 								"AB=1&" +
 								"R=" + (ESrounds.Split(',')[i]) + "&" +
 								(ESpreviousRounds.Split(',')[i] != "0" ? "RR=" + ESpreviousRounds.Split(',')[i] + "&" : "") +
@@ -1341,7 +1350,7 @@ d.SponsorID = {4} ORDER BY d.SortString",
 								"RAC=" + rac + "&" +
 								"UD=" + Server.HtmlEncode(rs.GetString(0)).Replace("&", "_0_").Replace("#", "_1_") + "&" +
 								"N=" + Server.HtmlEncode(Session["Sponsor"].ToString()).Replace("&", "_0_").Replace("#", "_1_") + "" +
-								"','es" + i + "','scrollbars=1,width=880,height=700,resizable=1,toolbar=0,status=0,menubar=0,location=0'));\"><IMG SRC='img/graphIcon2.gif' BORDER='0'/></A>" : "") + "&nbsp;" +
+								"','es" + i + "','scrollbars=1,width=880,height=700,resizable=1,toolbar=0,status=0,menubar=0,location=0'));\"><img src='img/graphIcon2.gif' BORDER='0'/></a>" : "") + "&nbsp;" +
 							(rs.GetInt32(idx) >= rac
 							 ? "<span title='" +
 							 (rs.GetInt32(3) > 0 && rs.GetInt32(idx) != rs.GetInt32(idx + 1)
@@ -1353,9 +1362,9 @@ d.SponsorID = {4} ORDER BY d.SortString",
 							  ""
 							  : "") +
 							 "'>" + rs.GetInt32(idx).ToString() + "</span>" : "<img src='img/key.gif' title='" + (showReg ? rs.GetInt32(idx + 1).ToString() : "") + "'/>") +
-							"&nbsp;</TD>";
+							"&nbsp;</td>";
 					} else {
-						OrgTree.Text += "<TD ALIGN='CENTER'>&nbsp;</td>";
+						OrgTree.Text += "<td align='center'>&nbsp;</td>";
 					}
 				}
 				OrgTree.Text += string.Format("<td align='center' style='font-size:9px;'>&nbsp;{0}{1}&nbsp;</td>", rs.GetInt32(7),  (rs.GetInt32(3) > 0 && rs.GetInt32(3) != rs.GetInt32(7) ? " (" + rs.GetInt32(3) + ")" : ""));
@@ -1380,7 +1389,7 @@ WHERE d.DepartmentID = {1}",
 						);
 						SqlDataReader rs2 = Db.rs(query);
 						if (rs2.Read() && !rs2.IsDBNull(0)) {
-							OrgTree.Text += (rs2.GetInt32(1) >= MIN_SHOW ? rs2.GetValue(0).ToString() : "<img src='img/key.gif'/>");
+							OrgTree.Text += (rs2.GetInt32(1) >= MIN_SHOW2 ? rs2.GetValue(0).ToString() : "<img src='img/key.gif'/>");
 						}
 						rs2.Close();
 						OrgTree.Text += "&nbsp;</td>";
@@ -1610,7 +1619,7 @@ WHERE up.UserID = {1}",
 			}
 			rs.Close();
 			OrgTree.Text += "<tr><td colspan='" + (aggrBQcx + 8 + (showDepartmentID != 0 && BQs != "" ? BQs.Split(':').Length : 0) + EScount) + "' style='border-top:1px solid #333333'>&nbsp;</td></tr>";
-			string header = "<td align='center' style='font-size:9px;'>" + (AX >= MIN_SHOW ? AX.ToString() : "<img src='img/key.gif'/>") + "</TD>";
+			string header = "<td align='center' style='font-size:9px;'>" + AX2.ToString() + " / " + (AX >= MIN_SHOW ? AX.ToString() : "<img src='img/key.gif'/>") + "</td>";
 			for (int i = 0; i < EScount; i++) {
 				header += "<td align='center' style='font-size:9px;'>&nbsp;" +
 					(Convert.ToInt32(ESattr.Split(',')[i].Split(':')[0]) != 0 && Convert.ToInt32(ESattr.Split(',')[i].Split(':')[1]) <= ESanswerCount[i] ? "<A HREF=\"JavaScript:void(window.open('" + ConfigurationManager.AppSettings["eFormURL"] + "feedback.aspx?" +
