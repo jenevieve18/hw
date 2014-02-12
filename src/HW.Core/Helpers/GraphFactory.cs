@@ -665,6 +665,8 @@ namespace HW.Core.Helpers
 
 				cx = 0;
 				
+				weeks = GetWeeks(minDT, maxDT, GB);
+				
 //				g.DrawBottomString(minDT, maxDT, GB);
 //
 //				List<IExplanation> explanationBoxes = new List<IExplanation>();
@@ -720,20 +722,9 @@ namespace HW.Core.Helpers
 //								Y = 20 + (int)Math.Floor((double)bx / breaker) * 15
 //							};
 							departments.Add(new Department { Name = (string)desc[i]});
-							int ii = minDT;
-							int jj = 0;
 							foreach (Answer a in answers) {
 								if (a.DT < minDT) {
 									continue;
-								}
-								jj++;
-//								string w = GetBottomString(GB, ii, jj, "");
-								string w = GetBottomString(GB, a.DT, cx, "");
-								if (!weeks.ContainsKey(w)) {
-									week = new List<Answer>();
-									weeks.Add(w, week);
-								} else {
-									week = weeks[w];
 								}
 								while (lastDT + 1 < a.DT) {
 									lastDT++;
@@ -744,11 +735,10 @@ namespace HW.Core.Helpers
 //										g.DrawBottomString(GB, a.SomeInteger, cx, (COUNT == 1 ? ", n = " + a.Values.Count : ""));
 									}
 //									s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
-									week.Add(a);
+									weeks[GetBottomString(GB, a.DT, cx, "")].Add(a);
 								}
 								lastDT = a.DT;
 								cx++;
-								ii++;
 							}
 //							g.Series.Add(s);
 							bx++;
@@ -815,6 +805,20 @@ namespace HW.Core.Helpers
 			} else {
 				return new LineCsv().ToCsv(departments, weeks);
 			}
+		}
+		
+		Dictionary<string, List<Answer>> GetWeeks(int minDT, int maxDT, int groupBy)
+		{
+			int j = 0;
+			Dictionary<string, List<Answer>> weeks = new Dictionary<string, List<Answer>>();
+			for (int i = minDT; i <= maxDT; i++) {
+				j++;
+				string w = GetBottomString(groupBy, i, j, "");
+				if (!weeks.ContainsKey(w)) {
+					weeks.Add(w, new List<Answer>());
+				}
+			}
+			return weeks;
 		}
 		
 		public void CreateGraph3(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int SPONS, int SID, string GID, object disabled, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose)
@@ -902,6 +906,8 @@ namespace HW.Core.Helpers
 
 				cx = 0;
 				
+				weeks = GetWeeks(minDT, maxDT, GB);
+				
 				if (hasGrouping) {
 					int count = 0;
 					Dictionary<string, string> desc = new Dictionary<string, string>();
@@ -920,20 +926,9 @@ namespace HW.Core.Helpers
 							int lastDT = minDT - 1;
 							var answers = answerRepository.FindByQuestionAndOptionJoinedAndGrouped2(join[i].ToString(), groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty);
 							departments.Add(new Department { Name = (string)desc[i] });
-							int ii = minDT;
-							int jj = 0;
 							foreach (Answer a in answers) {
 								if (a.DT < minDT) {
 									continue;
-								}
-								jj++;
-//								string w = GetBottomString(GB, ii, jj, "");
-								string w = GetBottomString(GB, a.DT, cx, "");
-								if (!weeks.ContainsKey(w)) {
-									week = new List<Answer>();
-									weeks.Add(w, week);
-								} else {
-									week = weeks[w];
 								}
 								while (lastDT + 1 < a.DT) {
 									lastDT++;
@@ -942,11 +937,10 @@ namespace HW.Core.Helpers
 								if (a.Values.Count >= mins[i]) {
 									if (count == 1) {
 									}
-									week.Add(a);
+									weeks[GetBottomString(GB, a.DT, cx, "")].Add(a);
 								}
 								lastDT = a.DT;
 								cx++;
-								ii++;
 							}
 							bx++;
 						}
