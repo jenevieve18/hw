@@ -299,10 +299,10 @@ namespace HW.Grp
 //					"</TR>";
 				SponsorID.Text += "<TR" + (cx % 2 == 0 ? " BGCOLOR=\"#F2F2F2\"" : "") + ">" +
 					"<TD><A" + (sap.Sponsor.ClosedAt != null ? " style=\"text-decoration:line-through;color:#cc0000;\"" : "") + " HREF=\"default.aspx?SA=0&SKEY=" + sap.Sponsor.SponsorKey + sap.Sponsor.Id.ToString() + "\" TARGET=\"_blank\">" + sap.Sponsor.Name + "</A></TD>" +
-					"<TD>" + sap.Sponsor.ExtendedSurveys.Count + "</TD>" +
-					"<TD>" + sap.Sponsor.Invites.Count + "</TD>" +
-					"<TD>" + sap.Sponsor.SentInvites.Count + "</TD>" +
-					"<TD>" + sap.Sponsor.ActiveInvites.Count + "</TD>" +
+					"<TD>" + sap.Sponsor.ExtendedSurveys.Capacity + "</TD>" +
+					"<TD>" + sap.Sponsor.Invites.Capacity + "</TD>" +
+					"<TD>" + sap.Sponsor.SentInvites.Capacity + "</TD>" +
+					"<TD>" + sap.Sponsor.ActiveInvites.Capacity + "</TD>" +
 					"<TD>" + (sap.Sponsor.MinimumInviteDate == null ? "N/A" : sap.Sponsor.MinimumInviteDate.Value.ToString("yyyy-MM-dd")) + "</TD>" +
 					"<TD>" + (sap.SeeUsers ? "No" : "Yes") + "</TD>" +
 					"<TD>" + (sap.Sponsor.MinimumInviteDate != null ? "<A HREF=\"superadmin.aspx?ATSID=" + sap.Sponsor.Id + "\"><img src=\"img/auditTrail.gif\" border=\"0\"/></A>" : "") + (sap.Sponsor.ClosedAt == null ? "" : " <span style=\"color:#cc0000;\">Closed " + sap.Sponsor.ClosedAt.Value.ToString("yyyy-MM-dd") + "</span>") + "</TD>" +
