@@ -220,10 +220,10 @@ namespace HW.Grp
 					}
 				}
 //				ExtendedSurvey.Text += "<TR" + (cx % 2 == 0 ? " style=\"background-color:#F2F2F2;\"" : "") + "><TD>" + rs.GetString(0) + (rs.IsDBNull(2) ? ", " + rs.GetString(2) : "") + (!rs.IsDBNull(3) ? ", " + rs.GetString(3) : "") + "</TD><TD><INPUT TYPE=\"radio\" NAME=\"Measure" + rs.GetInt32(1) + "\" VALUE=\"1\"/></TD><TD><INPUT TYPE=\"radio\" NAME=\"Measure" + rs.GetInt32(1) + "\" VALUE=\"2\"/></TD><TD><INPUT TYPE=\"radio\" NAME=\"Measure" + rs.GetInt32(1) + "\" VALUE=\"0\" CHECKED/></TD><TD>" + rs.GetInt32(6) + "</TD></TR>";
-				ExtendedSurvey.Text += "<TR" + (cx % 2 == 0 ? " style=\"background-color:#F2F2F2;\"" : "") + "><TD>" + ses.Sponsor.Name + (ses.Internal != "" ? ", " + ses.Internal : "") + (ses.RoundText != "" ? ", " + ses.RoundText : "") + "</TD><TD><INPUT TYPE=\"radio\" NAME=\"Measure" + ses.ProjectRound.Id + "\" VALUE=\"1\"/></TD><TD><INPUT TYPE=\"radio\" NAME=\"Measure" + ses.ProjectRound.Id + "\" VALUE=\"2\"/></TD><TD><INPUT TYPE=\"radio\" NAME=\"Measure" + ses.ProjectRound.Id + "\" VALUE=\"0\" CHECKED/></TD><TD>" + ses.ProjectRound.Answers.Count + "</TD></TR>";
+				ExtendedSurvey.Text += "<TR" + (cx % 2 == 0 ? " style=\"background-color:#F2F2F2;\"" : "") + "><TD>" + ses.Sponsor.Name + (ses.Internal != "" ? ", " + ses.Internal : "") + (ses.RoundText != "" ? ", " + ses.RoundText : "") + "</TD><TD><INPUT TYPE=\"radio\" NAME=\"Measure" + ses.ProjectRound.Id + "\" VALUE=\"1\"/></TD><TD><INPUT TYPE=\"radio\" NAME=\"Measure" + ses.ProjectRound.Id + "\" VALUE=\"2\"/></TD><TD><INPUT TYPE=\"radio\" NAME=\"Measure" + ses.ProjectRound.Id + "\" VALUE=\"0\" CHECKED/></TD><TD>" + ses.ProjectRound.Answers.Capacity + "</TD></TR>";
 				cx++;
 //				bx += rs.GetInt32(6);
-				bx += ses.ProjectRound.Answers.Count;
+				bx += ses.ProjectRound.Answers.Capacity;
 			}
 //			rs.Close();
 			ExtendedSurvey.Text += "" +
@@ -272,20 +272,20 @@ namespace HW.Grp
 			foreach (var sap in sponsorRepository.FindSuperAdminSponsors(Convert.ToInt32(Session["SuperAdminID"])))
 			{
 //				totInvitees += rs.GetInt32(4);
-				totInvitees += sap.Sponsor.SentInvites.Count;
+				totInvitees += sap.Sponsor.SentInvites.Capacity;
 //				if (rs.IsDBNull(9))
 				if (sap.Sponsor.ClosedAt == null)
 				{
 //					totNonClosedInvites += rs.GetInt32(4);
-					totNonClosedInvites += sap.Sponsor.SentInvites.Count;
+					totNonClosedInvites += sap.Sponsor.SentInvites.Capacity;
 				}
 //				totActive += rs.GetInt32(5);
-				totActive += sap.Sponsor.ActiveInvites.Count;
+				totActive += sap.Sponsor.ActiveInvites.Capacity;
 //				if (rs.IsDBNull(9))
 				if (sap.Sponsor.ClosedAt == null)
 				{
 //					totNonClosedActive += rs.GetInt32(5);
-					totNonClosedActive += sap.Sponsor.ActiveInvites.Count;
+					totNonClosedActive += sap.Sponsor.ActiveInvites.Capacity;
 				}
 //				SponsorID.Text += "<TR" + (cx % 2 == 0 ? " BGCOLOR=\"#F2F2F2\"" : "") + ">" +
 //					"<TD><A" + (!rs.IsDBNull(9) ? " style=\"text-decoration:line-through;color:#cc0000;\"" : "") + " HREF=\"default.aspx?SA=0&SKEY=" + rs.GetString(2) + rs.GetInt32(0).ToString() + "\" TARGET=\"_blank\">" + rs.GetString(1) + "</A></TD>" +
@@ -416,11 +416,11 @@ namespace HW.Grp
 					"<TD><INPUT TYPE=\"radio\" NAME=\"Measure_" + ss.ProjectRoundUnit.Id + "\" VALUE=\"1\"/></TD>" +
 					"<TD><INPUT TYPE=\"radio\" NAME=\"Measure_" + ss.ProjectRoundUnit.Id + "\" VALUE=\"2\"/></TD>" +
 					"<TD><INPUT TYPE=\"radio\" NAME=\"Measure_" + ss.ProjectRoundUnit.Id + "\" VALUE=\"0\" CHECKED/></TD>" +
-					"<TD>" + ss.ProjectRoundUnit.Answers.Count + "</TD>" +
+					"<TD>" + ss.ProjectRoundUnit.Answers.Capacity + "</TD>" +
 					"</TR>";
 				cx++;
 //				bx += rs.GetInt32(5);
-				bx += ss.ProjectRoundUnit.Answers.Count;
+				bx += ss.ProjectRoundUnit.Answers.Capacity;
 			}
 //			rs.Close();
 			Survey.Text += "<TR style=\"background-color:#cccccc;\">" +

@@ -26,7 +26,8 @@ namespace HW.Core.Models
 		public virtual IList<ProjectRoundLanguage> Languages { get; set; }
 		public virtual IList<ProjectRoundUnit> Units { get; set; }
 		public virtual Survey Survey { get; set; }
-		public virtual IList<Answer> Answers { get; set; }
+//		public virtual IList<Answer> Answers { get; set; }
+		public virtual List<Answer> Answers { get; set; }
 	}
 	
 	public class ProjectRoundLanguage : BaseModel
@@ -42,7 +43,8 @@ namespace HW.Core.Models
 		public virtual Report Report { get; set; }
 		public virtual string SortString { get; set; }
 		public virtual Language Language { get; set; }
-		public virtual IList<Answer> Answers { get; set; }
+//		public virtual IList<Answer> Answers { get; set; }
+		public virtual List<Answer> Answers { get; set; }
 		public virtual Survey Survey { get; set; }
 		public virtual ProjectRound ProjectRound { get; set; }
 		
