@@ -34,21 +34,47 @@ namespace HW.Core.Helpers
 		public double LowerWhisker {
 			get { return data[0]; }
 		}
+		
+		public double NerdLowerWhisker {
+			get { return LowerBox - 1.5 * (UpperBox - LowerBox); }
+		}
 
 		public double UpperWhisker {
 			get { return data[data.Count - 1]; }
 		}
+		
+		public double NerdUpperWhisker {
+			get { return UpperBox + 1.5 * (UpperBox - LowerBox); }
+		}
 
 		public double LowerBox {
 			get {
-				return GetMedian(data.GetRange(0, data.Count / 2));
+//				return GetMeanMedian(data.GetRange(0, data.Count / 2));
+				double q = 0.25 * (data.Count);
+				if (q % 1 == 0) {
+					return data[(int)q];
+				} else {
+					int index = (int)q;
+					double a = data[index - 1];
+					double b = data[index];
+					return a + 0.25 * (b - a);
+				}
 			}
 		}
 
 		public double UpperBox {
 			get {
-				int lower = data.Count % 2 != 0 ? data.Count / 2 + 1 : data.Count / 2;
-				return GetMedian(data.GetRange(lower, data.Count / 2));
+//				int lower = data.Count % 2 != 0 ? data.Count / 2 + 1 : data.Count / 2;
+//				return GetMeanMedian(data.GetRange(lower, data.Count / 2));
+				double q = 0.75 * (data.Count);
+				if (q % 1 == 0) {
+					return data[(int)q];
+				} else {
+					int index = (int)q;
+					double a = data[index];
+					double b = data[index + 1];
+					return a + 0.5 * (b - a);
+				}
 			}
 		}
 		
@@ -77,7 +103,7 @@ namespace HW.Core.Helpers
 		}
 
 		public double Median {
-			get { return GetMedian(data); }
+			get { return GetMeanMedian(data); }
 		}
 
 		public object[] YValues {
@@ -89,7 +115,7 @@ namespace HW.Core.Helpers
 			return string.Format("[Lower Whisker: {0}, Lower Box: {1}, Median: {2}, Upper Box: {3}, Upper Whisker: {4}, Mean: {5}]", LowerWhisker, LowerBox, Median, UpperBox, UpperWhisker, Mean);
 		}
 
-		double GetMedian(List<double> data)
+		double GetMeanMedian(List<double> data)
 		{
 			if (data.Count % 2 != 0) {
 				return data[data.Count / 2];
