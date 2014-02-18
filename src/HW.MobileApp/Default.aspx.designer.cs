@@ -10,6 +10,6 @@
 namespace HW.MobileApp {
     
     
-    public partial class Login {
+    public partial class Default {
     }
 }
