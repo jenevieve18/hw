@@ -140,11 +140,12 @@
 			<div class="report-parts">
 				<div class="action">
 					<span class="small">Change all graphs to:</span>
-					<span class="button white small graph"><span class="hidden plot-type"><%= Plot.Line %></span>Line</span>
-					<span class="button white small graph"><span class="hidden plot-type"><%= Plot.LineSD %></span>Line (mean ± SD)</span>
-					<span class="button white small graph"><span class="hidden plot-type"><%= Plot.LineSDWithCI %></span>Line (mean ± 1.96 SD)</span>
+					<span class="button white small graph"><span class="hidden plot-type"><%= Plot.Line %></span><%= Plot.GetString(Plot.Line) %></span>
+					<span class="button white small graph"><span class="hidden plot-type"><%= Plot.LineSD %></span><%= Plot.GetString(Plot.LineSD) %></span>
+					<span class="button white small graph"><span class="hidden plot-type"><%= Plot.LineSDWithCI %></span><%= Plot.GetString(Plot.LineSDWithCI) %></span>
                     <% if (supportsBoxPlot) { %>
-						<span class="button white small graph"><span class="hidden plot-type"><%= Plot.BoxPlot %></span>Boxplot</span>
+						<span class="button white small graph"><span class="hidden plot-type"><%= Plot.BoxPlotMinMax %></span><%= Plot.GetString(Plot.BoxPlotMinMax) %></span>
+						<span class="button white small graph"><span class="hidden plot-type"><%= Plot.BoxPlot %></span><%= Plot.GetString(Plot.BoxPlot) %></span>
 					<% } %>
 					<span class="small">Export all graphs to:</span>
 					<span class="button white small export">
@@ -180,11 +181,12 @@
 							<%= HtmlHelper.Image(imageUrl) %>
 							<div class="action">
 								<span class="small">Change graph to:</span>
-								<span class="button white small graph"><span class="hidden plot-type"><%= Plot.Line %></span>Line</span>
-								<span class="button white small graph"><span class="hidden plot-type"><%= Plot.LineSD %></span>Line (mean ± SD)</span>
-								<span class="button white small graph"><span class="hidden plot-type"><%= Plot.LineSDWithCI %></span>Line (mean ± 1.96 SD)</span>
+								<span class="button white small graph"><span class="hidden plot-type"><%= Plot.Line %></span><%= Plot.GetString(Plot.Line) %></span>
+								<span class="button white small graph"><span class="hidden plot-type"><%= Plot.LineSD %></span><%= Plot.GetString(Plot.LineSD) %></span>
+								<span class="button white small graph"><span class="hidden plot-type"><%= Plot.LineSDWithCI %></span><%= Plot.GetString(Plot.LineSDWithCI) %></span>
                                 <% if (supportsBoxPlot) { %>
-									<span class="button white small graph"><span class="hidden plot-type"><%= Plot.BoxPlot %></span>Boxplot</span>
+									<span class="button white small graph"><span class="hidden plot-type"><%= Plot.BoxPlotMinMax %></span><%= Plot.GetString(Plot.BoxPlotMinMax) %></span>
+                                    <span class="button white small graph"><span class="hidden plot-type"><%= Plot.BoxPlot %></span><%= Plot.GetString(Plot.BoxPlot) %></span>
 								<% } %>
 								<span class="small">Export graph to:</span>
 								<span class="button white small export">

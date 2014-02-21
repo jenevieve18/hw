@@ -233,8 +233,9 @@ namespace HW.Core.Helpers
 		public const int Line = 1;
 		public const int LineSD = 2;
 		public const int LineSDWithCI = 3;
-		public const int BoxPlot = 4;
+		public const int BoxPlotMinMax = 4;
 		public const int Verbose = 5;
+		public const int BoxPlot = 6;
 		
 		public static string GetString(int plot)
 		{
@@ -242,6 +243,7 @@ namespace HW.Core.Helpers
 					case Line: return "Line";
 					case LineSD: return "Line (mean ± SD)";
 					case LineSDWithCI: return "Line (mean ± 1.96 SD)";
+					case BoxPlotMinMax: return "BoxPlot (Min/Max)";
 					case BoxPlot: return "BoxPlot";
 					default: throw new NotSupportedException();
 			}
@@ -374,7 +376,9 @@ namespace HW.Core.Helpers
 				g = new ExtendedGraph(895, 440, "#FFFFFF");
 
 				int t = 2;
-				if (plot == Plot.BoxPlot) {
+				if (plot == Plot.BoxPlotMinMax) {
+					g.Type = new BoxPlotMinMaxGraphType();
+				} else if (plot == Plot.BoxPlot) {
 					g.Type = new BoxPlotGraphType();
 				} else if (plot == Plot.LineSDWithCI) {
 					g.Type = new LineGraphType(2, t);
@@ -632,7 +636,7 @@ namespace HW.Core.Helpers
 
 //				int t = 2 + (!stdev ? 1 : 0);
 //				if (plot == "BOXPLOT") {
-				if (plot == Plot.BoxPlot) {
+				if (plot == Plot.BoxPlotMinMax) {
 //					g.Type = new BoxPlotGraphType();
 				} else {
 //					g.Type = new LineGraphType(stdev, t);
@@ -796,7 +800,7 @@ namespace HW.Core.Helpers
 //				}
 //			}
 			
-			if (plot == Plot.BoxPlot) {
+			if (plot == Plot.BoxPlotMinMax) {
 				return new BoxPlotCsv().ToCsv(departments, weeks);
 			} else if (plot == Plot.LineSDWithCI) {
 				return new ConfidenceIntervalLineCsv().ToCsv(departments, weeks);
@@ -894,7 +898,7 @@ namespace HW.Core.Helpers
 				
 				string groupBy = GroupFactory.GetGroupBy(GB);
 
-				if (plot == Plot.BoxPlot) {
+				if (plot == Plot.BoxPlotMinMax) {
 				} else {
 				}
 				Answer answer = answerRepository.ReadByGroup(groupBy, fy, ty, sortString);
@@ -970,7 +974,7 @@ namespace HW.Core.Helpers
 				}
 			}
 			
-			if (plot == Plot.BoxPlot) {
+			if (plot == Plot.BoxPlotMinMax) {
 				var plotter = new BoxPlotExcel();
 				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
 				plotter.ToExcel(departments, weeks, writer, ref index);

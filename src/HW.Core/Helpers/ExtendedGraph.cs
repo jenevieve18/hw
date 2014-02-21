@@ -460,6 +460,23 @@ namespace HW.Core.Helpers
 		}
 	}
 	
+	public class BoxPlotMinMaxGraphType : IGraphType
+	{
+		public ExtendedGraph Graph { get; set; }
+		
+		public void Draw(List<Series> series)
+		{
+			Series s = series[0];
+			Graph.drawColorExplBox(s.Description, s.Color, s.X, s.Y);
+			foreach (PointV p in s.Points) {
+				HWList l = p.Values;
+				Graph.DrawWhiskers((int)p.X, (int)l.UpperWhisker, (int)l.LowerWhisker);
+				Graph.DrawBar2(s.Color, (int)p.X, (int)l.LowerBox, (int)l.UpperBox);
+				Graph.DrawMedian((int)p.X, (int)l.Median);
+			}
+		}
+	}
+	
 	public class BoxPlotGraphType : IGraphType
 	{
 		public ExtendedGraph Graph { get; set; }
@@ -470,7 +487,6 @@ namespace HW.Core.Helpers
 			Graph.drawColorExplBox(s.Description, s.Color, s.X, s.Y);
 			foreach (PointV p in s.Points) {
 				HWList l = p.Values;
-//				Graph.DrawWhiskers((int)p.X, (int)l.UpperWhisker, (int)l.LowerWhisker);
 				Graph.DrawWhiskers((int)p.X, (int)l.NerdUpperWhisker, (int)l.NerdLowerWhisker);
 				Graph.DrawBar2(s.Color, (int)p.X, (int)l.LowerBox, (int)l.UpperBox);
 				Graph.DrawMedian((int)p.X, (int)l.Median);
