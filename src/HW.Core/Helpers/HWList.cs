@@ -36,7 +36,7 @@ namespace HW.Core.Helpers
 		}
 		
 		public double NerdLowerWhisker {
-			get { return LowerBox - 1.5 * (UpperBox - LowerBox); }
+			get { return Math.Max(LowerWhisker, LowerBox - 1.5 * (UpperBox - LowerBox)); }
 		}
 
 		public double UpperWhisker {
@@ -44,7 +44,7 @@ namespace HW.Core.Helpers
 		}
 		
 		public double NerdUpperWhisker {
-			get { return UpperBox + 1.5 * (UpperBox - LowerBox); }
+			get { return Math.Min(UpperWhisker, UpperBox + 1.5 * (UpperBox - LowerBox)); }
 		}
 
 		public double LowerBox {
