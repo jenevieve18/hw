@@ -186,12 +186,12 @@ namespace HW.Core.Helpers
 			header2.AppendLine();
 			foreach (var w in weeks.Keys) {
 				content.Append(AddComma(w));
-				foreach (var x in weeks[w]) {
-					if (x.Values.Count > 0) {
-						var v = x.GetIntValues();
+				foreach (var a in weeks[w]) {
+					if (a.Values.Count > 0) {
+						var v = a.GetIntValues();
 						content.Append(AddComma(v.Mean.ToString()));
 						content.Append(AddComma(v.ConfidenceInterval.ToString()));
-						content.Append(AddComma(x.Values.Count.ToString()));
+						content.Append(AddComma(a.Values.Count.ToString()));
 					} else {
 						content.Append(",,");
 					}
