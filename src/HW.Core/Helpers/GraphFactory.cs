@@ -241,10 +241,10 @@ namespace HW.Core.Helpers
 		{
 			switch (plot) {
 					case Line: return "Line";
-					case LineSD: return "Line (mean ± SD)";
-					case LineSDWithCI: return "Line (mean ± 1.96 SD)";
+					case LineSD: return "Line (± SD)";
+					case LineSDWithCI: return "Line (± 1.96 SD)";
 					case BoxPlotMinMax: return "BoxPlot (Min/Max)";
-					case BoxPlot: return "BoxPlot";
+					case BoxPlot: return "BoxPlot (Tukey)";
 					default: throw new NotSupportedException();
 			}
 		}
