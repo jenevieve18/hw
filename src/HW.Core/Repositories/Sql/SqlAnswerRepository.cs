@@ -203,9 +203,12 @@ AND a.EndDT < '{2}'
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				if (rs.Read()) {
 					var a = new Answer();
-					a.DummyValue1 = rs.GetInt32(0);
-					a.DummyValue2 = rs.GetInt32(1);
-					a.DummyValue3 = rs.GetInt32(2);
+//					a.DummyValue1 = rs.GetInt32(0);
+//					a.DummyValue2 = rs.GetInt32(1);
+//					a.DummyValue3 = rs.GetInt32(2);
+					a.DummyValue1 = GetInt32(rs, 0, 0);
+					a.DummyValue2 = GetInt32(rs, 1, 0);
+					a.DummyValue3 = GetInt32(rs, 2, 0);
 					return a;
 				}
 			}
