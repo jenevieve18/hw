@@ -361,18 +361,18 @@ namespace HW.Core.Helpers
 			j = 2;
 			i = k;
 			foreach (var w in weeks.Keys) {
-				foreach (var x in weeks[w]) {
-					if (x.Values.Count > 0) {
-						var v = x.GetIntValues();
+				foreach (var a in weeks[w]) {
+					if (a.Values.Count > 0) {
+						var v = a.GetIntValues();
 						writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = v.Mean, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
 						writer.WriteCell(new ExcelCell { Row = i + 1, Column = j, Value = v.StandardDeviation, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
 						writer.WriteCell(new ExcelCell { Row = i + 2, Column = j, Value = v.ConfidenceInterval, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
 						writer.WriteCell(new ExcelCell { Row = i + 3, Column = j, Value = v.LowerBox, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
 						writer.WriteCell(new ExcelCell { Row = i + 4, Column = j, Value = v.Median, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
 						writer.WriteCell(new ExcelCell { Row = i + 5, Column = j, Value = v.UpperBox, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-						writer.WriteCell(new ExcelCell { Row = i + 6, Column = j, Value = x.Values.Count, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-//						writer.WriteCell(new ExcelCell { Row = i + 7, Column = j, Value = x.Min, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-//						writer.WriteCell(new ExcelCell { Row = i + 8, Column = j, Value = x.Max, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+						writer.WriteCell(new ExcelCell { Row = i + 6, Column = j, Value = a.Values.Count, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+//						writer.WriteCell(new ExcelCell { Row = i + 7, Column = j, Value = a.Min, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+//						writer.WriteCell(new ExcelCell { Row = i + 8, Column = j, Value = a.Max, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
 						writer.WriteCell(new ExcelCell { Row = i + 7, Column = j, Value = v.LowerWhisker, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
 						writer.WriteCell(new ExcelCell { Row = i + 8, Column = j, Value = v.UpperWhisker, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
 					} else {
