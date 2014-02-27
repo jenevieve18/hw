@@ -1294,7 +1294,7 @@ d.SponsorID = {4} ORDER BY d.SortString",
 				IX += rs.GetInt32(5);
 				int active = rs.GetInt32(12 + 6 * EScount);
 				totalActive += rs.GetInt32(12 + 6 * EScount + 1);
-				int MIN_SHOW2 = rs.IsDBNull(12 + 6 * EScount + 2) ? MIN_SHOW : rs.GetInt32(12 + 6 * EScount + 2);
+				int deptMinUserCountToDisclose = rs.IsDBNull(12 + 6 * EScount + 2) ? MIN_SHOW : rs.GetInt32(12 + 6 * EScount + 2);
 
 				OrgTree.Text += string.Format(
 					@"
@@ -1337,10 +1337,9 @@ d.SponsorID = {4} ORDER BY d.SortString",
 					(deptID == rs.GetInt32(2) || showDepartmentID == rs.GetInt32(2) ? "</b>" : ""),
 					(Convert.ToInt32(Session["ReadOnly"]) == 0 ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DID=" + rs.GetInt32(2) + "'><img src='img/unt_edt.gif' border='0'/></A>" + "" : ""),
 					(rs.GetInt32(3) > 0 ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&SDID=" + rs.GetInt32(2) + "'><img src='img/usr_on.gif' border='0'/></A>" : (Convert.ToInt32(Session["ReadOnly"]) == 0 ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DeleteDID=" + rs.GetInt32(2) + "'><img src='img/unt_del.gif' border='0'/></a>" : "")),
-					(rs.GetInt32(3) > 0 && rs.GetInt32(8) != rs.GetInt32(4) ? "" + (rs.GetInt32(4) >= MIN_SHOW2 ? rs.GetInt32(4).ToString() : (showReg ? rs.GetInt32(4).ToString() : "")) + "" : ""),
-//					(rs.GetInt32(8) >= MIN_SHOW2 ? rs.GetInt32(12 + 6 * EScount).ToString() + " / " + rs.GetInt32(8).ToString() : "<img src='img/key.gif'/>")
-//					(rs.GetInt32(12 + 6 * EScount) >= MIN_SHOW2 ? rs.GetInt32(12 + 6 * EScount).ToString() : "<img src='img/key.gif'/>")
-					(active >= MIN_SHOW2 ? active.ToString() : "<img src='img/key.gif'/>")
+					(rs.GetInt32(3) > 0 && rs.GetInt32(8) != rs.GetInt32(4) ? "" + (rs.GetInt32(4) >= deptMinUserCountToDisclose ? rs.GetInt32(4).ToString() : (showReg ? rs.GetInt32(4).ToString() : "")) + "" : ""),
+//					(rs.GetInt32(8) >= MIN_SHOW2 ? active.ToString() + " / " + rs.GetInt32(8).ToString() : "<img src='img/key.gif'/>")
+					(active >= deptMinUserCountToDisclose ? active.ToString() : "<img src='img/key.gif'/>")
 				);
 
 				for (int i = 0; i < EScount; i++) {
@@ -1412,7 +1411,7 @@ WHERE d.DepartmentID = {1}",
 						);
 						SqlDataReader rs2 = Db.rs(query);
 						if (rs2.Read() && !rs2.IsDBNull(0)) {
-							OrgTree.Text += (rs2.GetInt32(1) >= MIN_SHOW2 ? rs2.GetValue(0).ToString() : "<img src='img/key.gif'/>");
+							OrgTree.Text += (rs2.GetInt32(1) >= deptMinUserCountToDisclose ? rs2.GetValue(0).ToString() : "<img src='img/key.gif'/>");
 						}
 						rs2.Close();
 						OrgTree.Text += "&nbsp;</td>";
@@ -1641,8 +1640,8 @@ WHERE up.UserID = {1}",
 			}
 			rs.Close();
 			OrgTree.Text += "<tr><td colspan='" + (aggrBQcx + 8 + (showDepartmentID != 0 && BQs != "" ? BQs.Split(':').Length : 0) + EScount) + "' style='border-top:1px solid #333333'>&nbsp;</td></tr>";
-			string header = "<td align='center' style='font-size:9px;'>" + totalActive.ToString() + " / " + (AX >= MIN_SHOW ? AX.ToString() : "<img src='img/key.gif'/>") + "</td>";
-//			string header = "<td align='center' style='font-size:9px;'>" + (AX2 >= MIN_SHOW ? AX2.ToString() : "<img src='img/key.gif'/>") + "</td>";
+//			string header = "<td align='center' style='font-size:9px;'>" + totalActive.ToString() + " / " + (AX >= MIN_SHOW ? AX.ToString() : "<img src='img/key.gif'/>") + "</td>";
+			string header = "<td align='center' style='font-size:9px;'>" + (totalActive >= MIN_SHOW ? AX2.ToString() : "<img src='img/key.gif'/>") + "</td>";
 			for (int i = 0; i < EScount; i++) {
 				header += "<td align='center' style='font-size:9px;'>&nbsp;" +
 					(Convert.ToInt32(ESattr.Split(',')[i].Split(':')[0]) != 0 && Convert.ToInt32(ESattr.Split(',')[i].Split(':')[1]) <= ESanswerCount[i] ? "<a href=\"JavaScript:void(window.open('" + ConfigurationManager.AppSettings["eFormURL"] + "feedback.aspx?" +
