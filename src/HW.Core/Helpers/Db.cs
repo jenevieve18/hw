@@ -11,6 +11,98 @@ namespace HW.Core.Helpers
 {
 	public class Db
 	{
+		public static void connectSPI(int connectSPIID)
+		{
+			int sponsorID = 0, userID = 0, departmentID = 0, fromSponsorID = 0; string email = "";
+			SqlDataReader rs = Db.rs("SELECT SponsorID, Email, DepartmentID FROM SponsorInvite WHERE UserID IS NULL AND SponsorInviteID = " + connectSPIID);
+			if (rs.Read())
+			{
+				sponsorID = rs.GetInt32(0);
+				email = rs.GetString(1);
+				departmentID = rs.GetInt32(2);
+			}
+			rs.Close();
+
+			if (sponsorID != 0)
+			{
+				rs = Db.rs("SELECT " +
+				           "u2.UserID, " +
+				           "u2.SponsorID " +
+				           "FROM [User] u2 " +
+				           "LEFT OUTER JOIN SponsorInvite si ON u2.UserID = si.UserID " +
+				           "WHERE u2.Email = '" + email.Replace("'", "''") + "' OR si.Email = '" + email.Replace("'", "''") + "'" +
+				           "");
+				if (rs.Read())
+				{
+					userID = rs.GetInt32(0);
+					fromSponsorID = rs.GetInt32(1);
+
+					Db.rewritePRU(fromSponsorID, sponsorID, userID);
+					Db.exec("UPDATE SponsorInvite SET SponsorID = -ABS(SponsorID), DepartmentID = -ABS(DepartmentID), UserID = -ABS(UserID) WHERE UserID = " + userID);
+					Db.exec("UPDATE SponsorInvite SET UserID = " + userID + ", Sent = GETDATE() WHERE SponsorInviteID = " + connectSPIID);
+					Db.exec("UPDATE [User] SET DepartmentID = " + departmentID + ", SponsorID = " + sponsorID + " WHERE UserID = " + userID);
+					Db.exec("UPDATE UserProfile SET DepartmentID = " + departmentID + ", SponsorID = " + sponsorID + " WHERE UserID = " + userID);
+					
+					while (rs.Read())
+					{
+						userID = rs.GetInt32(0);
+						Db.exec("UPDATE SponsorInvite SET SponsorID = -ABS(SponsorID), DepartmentID = -ABS(DepartmentID), UserID = -ABS(UserID) WHERE UserID = " + userID);
+						Db.exec("UPDATE [User] SET DepartmentID = NULL, SponsorID = 1 WHERE UserID = " + userID);
+						Db.exec("UPDATE UserProfile SET DepartmentID = NULL, SponsorID = 1 WHERE UserID = " + userID);
+					}
+				}
+				rs.Close();
+
+				Db.exec("UPDATE SponsorInvite SET SponsorID = -ABS(SponsorID), DepartmentID = -ABS(DepartmentID), UserID = -ABS(UserID) WHERE Email = '" + email.Replace("'", "") + "' AND SponsorInviteID <> " + connectSPIID);
+			}
+		}
+		
+		public static void rewritePRU(int fromSponsorID, int sponsorID, int userID)
+		{
+			rewritePRU(fromSponsorID, sponsorID, userID, 0);
+		}
+		
+		public static void rewritePRU(int fromSponsorID, int sponsorID, int fromUserID, int userID)
+		{
+			SqlDataReader rs = Db.rs("SELECT " +
+			                         "spru.ProjectRoundUnitID, " +
+			                         "spru.SurveyID, " +
+			                         (userID != 0 ? "upru.ProjectRoundUserID " : "NULL ") +
+			                         "FROM SponsorProjectRoundUnit spru " +
+			                         (userID != 0 ? "INNER JOIN UserProjectRoundUser upru ON spru.ProjectRoundUnitID = upru.ProjectRoundUnitID AND upru.UserID = " + userID + " " : "") +
+			                         "WHERE spru.SponsorID = " + sponsorID);
+			while (rs.Read())
+			{
+				SqlDataReader rs2 = Db.rs("SELECT " +
+				                          "upru.UserProjectRoundUserID, " +
+				                          "upru.ProjectRoundUserID " +
+				                          "FROM UserProjectRoundUser upru " +
+				                          "INNER JOIN [user] hu ON upru.UserID = hu.UserID " +
+				                          "INNER JOIN [eform]..[ProjectRoundUser] pru ON upru.ProjectRoundUserID = pru.ProjectRoundUserID " +
+				                          "INNER JOIN [eform]..[ProjectRoundUnit] u ON pru.ProjectRoundUnitID = u.ProjectRoundUnitID " +
+				                          "WHERE hu.SponsorID = " + fromSponsorID + " " +
+				                          "AND u.SurveyID = " + rs.GetInt32(1) + " " +
+				                          "AND upru.UserID = " + fromUserID);
+				while (rs2.Read())
+				{
+					if (userID != 0)
+					{
+						Db.exec("UPDATE UserProjectRoundUserAnswer SET ProjectRoundUserID = " + rs.GetInt32(2) + " WHERE ProjectRoundUserID = " + rs2.GetInt32(1));
+					}
+					Db.exec("UPDATE UserProjectRoundUser SET ProjectRoundUnitID = " + rs.GetInt32(0) + " WHERE UserProjectRoundUserID = " + rs2.GetInt32(0));
+					Db.exec("UPDATE [eform]..[ProjectRoundUser] SET ProjectRoundUnitID = " + rs.GetInt32(0) + " WHERE ProjectRoundUserID = " + rs2.GetInt32(1));
+					Db.exec("UPDATE [eform]..[Answer] SET ProjectRoundUnitID = " + rs.GetInt32(0) + (userID != 0 ? ", ProjectRoundUserID = " + rs.GetInt32(2) + "" : "") + " WHERE ProjectRoundUserID = " + rs2.GetInt32(1));
+				}
+				rs2.Close();
+			}
+			rs.Close();
+
+			if (userID != 0)
+			{
+				Db.exec("UPDATE UserProjectRoundUser SET UserID = -ABS(UserID) WHERE UserID = " + fromUserID);
+			}
+		}
+		
 		public static int createProjectRoundUnit(int parentProjectRoundUnitID, string name, int SID, int individualReportID, int reportID)
 		{
 			int ID = 0;
@@ -118,7 +210,7 @@ WHERE ProjectRoundUnitID = {0}",
 		
 		public static SqlDataReader rs(string sqlString, string con)
 		{
-            SqlConnection dataConnection = new SqlConnection(ConfigurationManager.AppSettings[con]);
+			SqlConnection dataConnection = new SqlConnection(ConfigurationManager.AppSettings[con]);
 			dataConnection.Open();
 			SqlCommand dataCommand = new SqlCommand(sqlString, dataConnection);
 			SqlDataReader dataReader = dataCommand.ExecuteReader(CommandBehavior.CloseConnection);
@@ -132,7 +224,7 @@ WHERE ProjectRoundUnitID = {0}",
 		
 		public static void exec(string sqlString, string con)
 		{
-            SqlConnection dataConnection = new SqlConnection(ConfigurationManager.AppSettings[con]);
+			SqlConnection dataConnection = new SqlConnection(ConfigurationManager.AppSettings[con]);
 			dataConnection.Open();
 			SqlCommand dataCommand = new SqlCommand(sqlString, dataConnection);
 			dataCommand.ExecuteNonQuery();
@@ -178,7 +270,7 @@ WHERE ProjectRoundUnitID = {0}",
 //
 //			return sb.ToString();
 //		}
-//		
+//
 //		public static string header2()
 //		{
 //			string ret = "<TITLE>HealthWatch</TITLE>";
@@ -202,7 +294,7 @@ WHERE ProjectRoundUnitID = {0}",
 		public static bool sendMail(string from, string to, string subject, string body)
 		{
 			try {
-                string server = ConfigurationManager.AppSettings["SmtpServer"];
+				string server = ConfigurationManager.AppSettings["SmtpServer"];
 				System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage(from, to, subject, body);
 				System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient(server);
 				client.Send(mail);
@@ -218,10 +310,10 @@ WHERE ProjectRoundUnitID = {0}",
 			if (Db.isEmail(to)) {
 				try {
 					if (body.IndexOf("<LINK/>") >= 0) {
-                        string path = ConfigurationManager.AppSettings["healthWatchURL"];
+						string path = ConfigurationManager.AppSettings["healthWatchURL"];
 						body = body.Replace("<LINK/>", "" + path + "i/" + key + sponsorInviteID.ToString());
 					} else {
-                        string path = ConfigurationManager.AppSettings["healthWatchURL"];
+						string path = ConfigurationManager.AppSettings["healthWatchURL"];
 						body += "\r\n\r\n" + "" + path + "i/" + key + sponsorInviteID.ToString();
 					}
 					sendMail("info@healthwatch.se", to, subject, body);
@@ -240,9 +332,9 @@ WHERE ProjectRoundUnitID = {0}",
 //		{
 //			return ""; // "</div></div>";
 //		}
-//		
+//
 //		static SqlManagerFunctionRepository managerFunctionRepository = new SqlManagerFunctionRepository();
-//		
+//
 //		public static string nav2()
 //		{
 //			SqlDataReader r;
@@ -281,7 +373,7 @@ WHERE ProjectRoundUnitID = {0}",
 //				"</td>";
 //			ret += "</tr>";
 //			ret += "</table>";
-//			
+//
 //			ret += "<div id=\"container\">";
 //
 //			return ret;
@@ -330,29 +422,29 @@ WHERE ProjectRoundUnitID = {0}",
 //				if (HttpContext.Current.Request.Url.AbsolutePath.IndexOf("super") < 0 && HttpContext.Current.Session["SponsorID"] != null) {
 //					sb.Append("<div id=\"submenu\" class=\"grid_16 alpha\">");
 //					string desc = "";
-////					SqlDataReader r = Db.rs("SELECT " +
-////					                        "mf.ManagerFunction, " +
-////					                        "mf.URL, " +
-////					                        "mf.Expl " +
-////					                        "FROM ManagerFunction mf " +
-////					                        (HttpContext.Current.Session["SponsorAdminID"].ToString() != "-1" ?
-////					                         "INNER JOIN SponsorAdminFunction s ON s.ManagerFunctionID = mf.ManagerFunctionID " +
-////					                         "WHERE s.SponsorAdminID = " + HttpContext.Current.Session["SponsorAdminID"] : ""));
-////					while (r.Read())
+		////					SqlDataReader r = Db.rs("SELECT " +
+		////					                        "mf.ManagerFunction, " +
+		////					                        "mf.URL, " +
+		////					                        "mf.Expl " +
+		////					                        "FROM ManagerFunction mf " +
+		////					                        (HttpContext.Current.Session["SponsorAdminID"].ToString() != "-1" ?
+		////					                         "INNER JOIN SponsorAdminFunction s ON s.ManagerFunctionID = mf.ManagerFunctionID " +
+		////					                         "WHERE s.SponsorAdminID = " + HttpContext.Current.Session["SponsorAdminID"] : ""));
+		////					while (r.Read())
 //					int sponsorAdminID = HttpContext.Current.Session["SponsorAdminID"] != null ? Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]) : -1;
 //					foreach (var f in managerFunctionRepository.FindBySponsorAdmin(sponsorAdminID)) {
-////						bool active = HttpContext.Current.Request.Url.AbsolutePath.IndexOf(r.GetString(1)) >= 0;
+		////						bool active = HttpContext.Current.Request.Url.AbsolutePath.IndexOf(r.GetString(1)) >= 0;
 //						bool active = HttpContext.Current.Request.Url.AbsolutePath.IndexOf(f.URL) >= 0;
 //
-////						sb.Append("<a title=\"" + r.GetString(2) + "\" " + (active ? "class=\"active\"" : "") + " href=\"" + r.GetString(1) + "?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">" + r.GetString(0) + "</a>");
+		////						sb.Append("<a title=\"" + r.GetString(2) + "\" " + (active ? "class=\"active\"" : "") + " href=\"" + r.GetString(1) + "?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">" + r.GetString(0) + "</a>");
 //						sb.Append("<a title=\"" + f.Expl + "\" " + (active ? "class=\"active\"" : "") + " href=\"" + f.URL + "?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">" + f.Function + "</a>");
-//						
+//
 //						if (active) {
-////							desc = r.GetString(2);
+		////							desc = r.GetString(2);
 //							desc = f.Expl;
 //						}
 //					}
-////					r.Close();
+		////					r.Close();
 //					sb.Append("<div class=\"description\">" + desc + "</div>");
 //					sb.Append("</div>");
 //					//ret += "<A class=\"unli\" HREF=\"default.aspx?Logout=1&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\"><img src=\"img/logout.gif\" border=\"0\"/>Log out</A><br/>";
@@ -376,7 +468,7 @@ WHERE ProjectRoundUnitID = {0}",
 //			//ret += "</td>";
 //			//ret += "</tr>";
 //			//ret += "</table>";
-//			
+//
 //			//ret += "<div id=\"container\">";
 //			return sb.ToString();
 //		}
