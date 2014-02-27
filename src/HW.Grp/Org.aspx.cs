@@ -1641,7 +1641,7 @@ WHERE up.UserID = {1}",
 			rs.Close();
 			OrgTree.Text += "<tr><td colspan='" + (aggrBQcx + 8 + (showDepartmentID != 0 && BQs != "" ? BQs.Split(':').Length : 0) + EScount) + "' style='border-top:1px solid #333333'>&nbsp;</td></tr>";
 //			string header = "<td align='center' style='font-size:9px;'>" + totalActive.ToString() + " / " + (AX >= MIN_SHOW ? AX.ToString() : "<img src='img/key.gif'/>") + "</td>";
-			string header = "<td align='center' style='font-size:9px;'>" + (totalActive >= MIN_SHOW ? AX2.ToString() : "<img src='img/key.gif'/>") + "</td>";
+			string header = "<td align='center' style='font-size:9px;'>" + (totalActive >= MIN_SHOW ? totalActive.ToString() : "<img src='img/key.gif'/>") + "</td>";
 			for (int i = 0; i < EScount; i++) {
 				header += "<td align='center' style='font-size:9px;'>&nbsp;" +
 					(Convert.ToInt32(ESattr.Split(',')[i].Split(':')[0]) != 0 && Convert.ToInt32(ESattr.Split(',')[i].Split(':')[1]) <= ESanswerCount[i] ? "<a href=\"JavaScript:void(window.open('" + ConfigurationManager.AppSettings["eFormURL"] + "feedback.aspx?" +
