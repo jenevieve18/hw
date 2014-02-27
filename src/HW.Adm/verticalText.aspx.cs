@@ -15,7 +15,7 @@ namespace HW.Adm
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string text = Server.UrlDecode(Request.QueryString["STR"].ToString());
+            string text = Server.UrlDecode(HttpContext.Current.Request.QueryString["STR"].ToString());
             text = Regex.Replace(text, "<(.*?)>", "", RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
             int w = 16;
@@ -23,7 +23,7 @@ namespace HW.Adm
 
             Bitmap objBitmap = new Bitmap(w, h, PixelFormat.Format24bppRgb);
             Graphics objGraphics = Graphics.FromImage(objBitmap);
-            objGraphics.Clear(ColorTranslator.FromHtml("#" + (Request.QueryString["BG"] == null ? "FFFFFF" : Request.QueryString["BG"].ToString())));
+            objGraphics.Clear(ColorTranslator.FromHtml("#" + (HttpContext.Current.Request.QueryString["BG"] == null ? "FFFFFF" : HttpContext.Current.Request.QueryString["BG"].ToString())));
 
             objGraphics.TranslateTransform(0, h);
             objGraphics.RotateTransform(-90F);

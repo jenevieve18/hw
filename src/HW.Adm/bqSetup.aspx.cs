@@ -23,36 +23,36 @@ namespace HW.Adm
             Save.Click += new EventHandler(Save_Click);
             Back.Click += new EventHandler(Back_Click);
 
-            questionID = (Request.QueryString["BQID"] != null ? Convert.ToInt32(Request.QueryString["BQID"]) : 0);
-            answerID = (Request.QueryString["BAID"] != null ? Convert.ToInt32(Request.QueryString["BAID"]) : 0);
+            questionID = (HttpContext.Current.Request.QueryString["BQID"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["BQID"]) : 0);
+            answerID = (HttpContext.Current.Request.QueryString["BAID"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["BAID"]) : 0);
 
             SqlDataReader rs;
 
-            if (Request.QueryString["Delete"] != null)
+            if (HttpContext.Current.Request.QueryString["Delete"] != null)
             {
-                Db.exec("UPDATE BA SET BQID = -" + questionID + " WHERE BAID = " + Request.QueryString["Delete"] + " AND BQID = " + questionID);
-                Response.Redirect("bqSetup.aspx?BQID=" + questionID, true);
+                Db.exec("UPDATE BA SET BQID = -" + questionID + " WHERE BAID = " + HttpContext.Current.Request.QueryString["Delete"] + " AND BQID = " + questionID);
+                HttpContext.Current.Response.Redirect("bqSetup.aspx?BQID=" + questionID, true);
             }
-            if (Request.QueryString["DeleteV"] != null)
+            if (HttpContext.Current.Request.QueryString["DeleteV"] != null)
             {
-                Db.exec("DELETE FROM BQvisibility WHERE BQvisibilityID = " + Request.QueryString["DeleteV"]);
-                Response.Redirect("bqSetup.aspx?BQID=" + questionID, true);
+                Db.exec("DELETE FROM BQvisibility WHERE BQvisibilityID = " + HttpContext.Current.Request.QueryString["DeleteV"]);
+                HttpContext.Current.Response.Redirect("bqSetup.aspx?BQID=" + questionID, true);
             }
-            if (Request.QueryString["MoveUp"] != null)
+            if (HttpContext.Current.Request.QueryString["MoveUp"] != null)
             {
-                rs = Db.rs("SELECT SortOrder FROM BA WHERE BQID = " + questionID + " AND BAID = " + Request.QueryString["MoveUp"]);
+                rs = Db.rs("SELECT SortOrder FROM BA WHERE BQID = " + questionID + " AND BAID = " + HttpContext.Current.Request.QueryString["MoveUp"]);
                 if (rs.Read())
                 {
                     SqlDataReader rs2 = Db.rs("SELECT TOP 1 BAID, SortOrder FROM BA WHERE BQID = " + questionID + " AND SortOrder < " + rs.GetInt32(0) + " ORDER BY SortOrder DESC");
                     if (rs2.Read())
                     {
-                        Db.exec("UPDATE BA SET SortOrder = " + rs2.GetInt32(1) + " WHERE BAID = " + Request.QueryString["MoveUp"]);
+                        Db.exec("UPDATE BA SET SortOrder = " + rs2.GetInt32(1) + " WHERE BAID = " + HttpContext.Current.Request.QueryString["MoveUp"]);
                         Db.exec("UPDATE BA SET SortOrder = " + rs.GetInt32(0) + " WHERE BAID = " + rs2.GetInt32(0));
                     }
                     rs2.Close();
                 }
                 rs.Close();
-                Response.Redirect("bqSetup.aspx?BQID=" + questionID, true);
+                HttpContext.Current.Response.Redirect("bqSetup.aspx?BQID=" + questionID, true);
             }
 
             if (!IsPostBack)
@@ -111,7 +111,7 @@ namespace HW.Adm
 
         void Back_Click(object sender, EventArgs e)
         {
-            Response.Redirect("bq.aspx", true);
+            HttpContext.Current.Response.Redirect("bq.aspx", true);
         }
 
         void Save_Click(object sender, EventArgs e)
@@ -172,7 +172,7 @@ namespace HW.Adm
             {
                 Db.exec("INSERT INTO BQvisibility (ChildBQID,BQID,BAID) VALUES (" + questionID + "," + BQIDBAID.SelectedValue.Split(':')[0] + "," + BQIDBAID.SelectedValue.Split(':')[1] + ")");
             }
-            Response.Redirect("bqSetup.aspx?BQID=" + questionID, true);
+            HttpContext.Current.Response.Redirect("bqSetup.aspx?BQID=" + questionID, true);
         }
 
         void AddAnswer_Click(object sender, EventArgs e)

@@ -40,6 +40,24 @@ namespace HW.Adm {
         protected global::System.Web.UI.WebControls.Label ExtendedSurvey;
         
         /// <summary>
+        /// M1CX control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label M1CX;
+        
+        /// <summary>
+        /// M2CX control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label M2CX;
+        
+        /// <summary>
         /// SurveyName control.
         /// </summary>
         /// <remarks>

@@ -18,9 +18,9 @@ namespace HW.Adm
 
             ExtendedSurvey.Text = "<TR>" +
             "<TD><I>Database total</I></TD>" +
-            "<TD><INPUT TYPE=\"radio\" NAME=\"Measure0\" VALUE=\"1\"" + (Request.Form["Measure0"] != null && Request.Form["Measure0"] == "1" ? " CHECKED" : "") + "/></TD>" +
-            "<TD><INPUT TYPE=\"radio\" NAME=\"Measure0\" VALUE=\"2\"" + (Request.Form["Measure0"] != null && Request.Form["Measure0"] == "2" ? " CHECKED" : "") + "/></TD>" +
-            "<TD><INPUT TYPE=\"radio\" NAME=\"Measure0\" VALUE=\"0\"" + (Request.Form["Measure0"] == null || Request.Form["Measure0"] == "0" ? " CHECKED" : "") + "/></TD>" +
+            "<TD><INPUT TYPE=\"radio\" NAME=\"Measure0\" VALUE=\"1\"" + (HttpContext.Current.Request.Form["Measure0"] != null && HttpContext.Current.Request.Form["Measure0"] == "1" ? " CHECKED" : "") + "/></TD>" +
+            "<TD><INPUT TYPE=\"radio\" NAME=\"Measure0\" VALUE=\"2\"" + (HttpContext.Current.Request.Form["Measure0"] != null && HttpContext.Current.Request.Form["Measure0"] == "2" ? " CHECKED" : "") + "/></TD>" +
+            "<TD><INPUT TYPE=\"radio\" NAME=\"Measure0\" VALUE=\"0\"" + (HttpContext.Current.Request.Form["Measure0"] == null || HttpContext.Current.Request.Form["Measure0"] == "0" ? " CHECKED" : "") + "/></TD>" +
             "</TR>";
 
             int cx = 0;
@@ -31,7 +31,8 @@ namespace HW.Adm
                     "ses.RoundText, " +
                     "ss.SurveyID, " +
                     "ss.Internal, " +
-                    "r.Internal " +
+                    "r.Internal, " +
+                    "(SELECT COUNT(*) FROM eform..Answer a WHERE a.EndDT IS NOT NULL AND a.ProjectRoundID = r.ProjectRoundID) AS CX " +
                     "FROM Sponsor s " +
                     "INNER JOIN SponsorExtendedSurvey ses ON ses.SponsorID = s.SponsorID " +
                     "INNER JOIN eform..ProjectRound r ON ses.ProjectRoundID = r.ProjectRoundID " +
@@ -56,9 +57,10 @@ namespace HW.Adm
                 }
                 ExtendedSurvey.Text += "<TR" + (cx % 2 == 0 ? " style=\"background-color:#cccccc;\"" : "") + ">" +
                     "<TD>" + rs.GetString(0) + (rs.IsDBNull(2) ? ", " + rs.GetString(2) : "") + (!rs.IsDBNull(3) ? ", " + rs.GetString(3) : "") + (!rs.IsDBNull(6) ? ", " + rs.GetString(6) : "") + "</TD>" +
-                    "<TD><INPUT TYPE=\"radio\" NAME=\"Measure" + rs.GetInt32(1) + "\" VALUE=\"1\"" + (Request.Form["Measure" + rs.GetInt32(1) + ""] != null && Request.Form["Measure" + rs.GetInt32(1) + ""] == "1" ? " CHECKED" : "") + "/></TD>" +
-                    "<TD><INPUT TYPE=\"radio\" NAME=\"Measure" + rs.GetInt32(1) + "\" VALUE=\"2\"" + (Request.Form["Measure" + rs.GetInt32(1) + ""] != null && Request.Form["Measure" + rs.GetInt32(1) + ""] == "2" ? " CHECKED" : "") + "/></TD>" +
-                    "<TD><INPUT TYPE=\"radio\" NAME=\"Measure" + rs.GetInt32(1) + "\" VALUE=\"0\"" + (Request.Form["Measure" + rs.GetInt32(1) + ""] == null || Request.Form["Measure" + rs.GetInt32(1) + ""] == "0" ? " CHECKED" : "") + "/></TD>" +
+                    "<TD><INPUT TYPE=\"radio\" NAME=\"Measure" + rs.GetInt32(1) + "\" VALUE=\"1\"" + (HttpContext.Current.Request.Form["Measure" + rs.GetInt32(1) + ""] != null && HttpContext.Current.Request.Form["Measure" + rs.GetInt32(1) + ""] == "1" ? " CHECKED" : "") + "/></TD>" +
+                    "<TD><INPUT TYPE=\"radio\" NAME=\"Measure" + rs.GetInt32(1) + "\" VALUE=\"2\"" + (HttpContext.Current.Request.Form["Measure" + rs.GetInt32(1) + ""] != null && HttpContext.Current.Request.Form["Measure" + rs.GetInt32(1) + ""] == "2" ? " CHECKED" : "") + "/></TD>" +
+                    "<TD><INPUT TYPE=\"radio\" NAME=\"Measure" + rs.GetInt32(1) + "\" VALUE=\"0\"" + (HttpContext.Current.Request.Form["Measure" + rs.GetInt32(1) + ""] == null || HttpContext.Current.Request.Form["Measure" + rs.GetInt32(1) + ""] == "0" ? " CHECKED" : "") + "/></TD>" +
+                    "<TD>" + rs.GetInt32(7) + "</TD>" +
                     "</TR>";
                 cx++;
             }
@@ -103,8 +105,8 @@ namespace HW.Adm
         {
             string qs1 = "", qs2 = "";
 
-            if (Request.Form["Measure0"] != null && Request.Form["Measure0"] == "1") { qs1 = ",0"; }
-            if (Request.Form["Measure0"] != null && Request.Form["Measure0"] == "2") { qs2 = ",0"; }
+            if (HttpContext.Current.Request.Form["Measure0"] != null && HttpContext.Current.Request.Form["Measure0"] == "1") { qs1 = ",0"; }
+            if (HttpContext.Current.Request.Form["Measure0"] != null && HttpContext.Current.Request.Form["Measure0"] == "2") { qs2 = ",0"; }
 
             SqlDataReader rs = Db.rs("SELECT " +
                      "s.Sponsor, " +
@@ -120,13 +122,28 @@ namespace HW.Adm
                      "ORDER BY s.Sponsor, ses.Internal, ses.RoundText");
             while (rs.Read())
             {
-                if (Request.Form["Measure" + rs.GetInt32(1)] != null && Request.Form["Measure" + rs.GetInt32(1)] == "1" && qs1 != ",0") { qs1 += "," + rs.GetInt32(1).ToString(); }
-                if (Request.Form["Measure" + rs.GetInt32(1)] != null && Request.Form["Measure" + rs.GetInt32(1)] == "2" && qs2 != ",0") { qs2 += "," + rs.GetInt32(1).ToString(); }
+                if (HttpContext.Current.Request.Form["Measure" + rs.GetInt32(1)] != null && HttpContext.Current.Request.Form["Measure" + rs.GetInt32(1)] == "1" && qs1 != ",0") { qs1 += "," + rs.GetInt32(1).ToString(); }
+                if (HttpContext.Current.Request.Form["Measure" + rs.GetInt32(1)] != null && HttpContext.Current.Request.Form["Measure" + rs.GetInt32(1)] == "2" && qs2 != ",0") { qs2 += "," + rs.GetInt32(1).ToString(); }
             }
             rs.Close();
 
             if (qs1 != "")
             {
+                rs = Db.rs("SELECT COUNT(DISTINCT u.Email) FROM eform..Answer a INNER JOIN eform..ProjectRoundUser u ON a.ProjectRoundUserID = u.ProjectRoundUserID WHERE a.EndDT IS NOT NULL AND a.ProjectRoundID IN (0" + qs1 + ")");
+                if (rs.Read())
+                {
+                    M1CX.Text = rs.GetInt32(0).ToString();
+                }
+                rs.Close();
+                if (qs2 != "")
+                {
+                    rs = Db.rs("SELECT COUNT(DISTINCT u.Email) FROM eform..Answer a INNER JOIN eform..ProjectRoundUser u ON a.ProjectRoundUserID = u.ProjectRoundUserID WHERE a.EndDT IS NOT NULL AND a.ProjectRoundID IN (0" + qs2 + ")");
+                    if (rs.Read())
+                    {
+                        M2CX.Text = rs.GetInt32(0).ToString();
+                    }
+                    rs.Close();
+                }
                 if (Q.SelectedValue != "")
                 {
                     string q = "";

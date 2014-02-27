@@ -83,6 +83,7 @@
 			<tr><td colspan="3">&nbsp;</td></tr>
 			<tr><td colspan="3"><asp:Button ID=Back Text="Back" runat=server />&nbsp;<asp:Button ID=Save runat=server Text="Save" />&nbsp;<asp:Button ID=AddExtendedSurvey runat=server Text="Add extended survey" />&nbsp;<asp:Button ID=Close runat=server Text="Close down" />&nbsp;<asp:Button ID=Delete runat=server Text="Delete" /></td></tr>
 		</table>
+        <asp:PlaceHolder ID=Departments runat=server />
 		<asp:PlaceHolder ID=SponsorExtendedSurvey runat=server />
 		<table width="500" border="0" cellspacing="0" cellpadding="0">
 			<tr><td style="font-size:16px;" align="center">Surveys</td></tr>
@@ -95,6 +96,8 @@
 				<td valign=bottom><B>Name&nbsp;for&nbsp;this&nbsp;sponsor</B>&nbsp;</td>
 				<td valign=bottom><B>Individual report</B>&nbsp;</td>
 				<td valign=bottom><B>Group report</B>&nbsp;</td>
+                <td valign=bottom><img src="verticalText.aspx?STR=Only%20Every%20Days"></td>
+                <td valign=bottom><img src="verticalText.aspx?STR=Go%20To%20Statistics"></td>
 			</tr>
 			<asp:PlaceHolder ID=Surveys runat=server />
 		</table>

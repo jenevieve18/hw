@@ -556,31 +556,31 @@ namespace HW.Adm
             }
             try
             {
-                if (!System.IO.Directory.Exists(Server.MapPath("tmp")))
-                    System.IO.Directory.CreateDirectory(Server.MapPath("tmp"));
-                System.IO.FileStream fs = new System.IO.FileStream(Server.MapPath("tmp/" + DateTime.Now.Ticks + ".sps"), System.IO.FileMode.Create);
+                if (!System.IO.Directory.Exists(HttpContext.Current.Server.MapPath("tmp")))
+                    System.IO.Directory.CreateDirectory(HttpContext.Current.Server.MapPath("tmp"));
+                System.IO.FileStream fs = new System.IO.FileStream(HttpContext.Current.Server.MapPath("tmp/" + DateTime.Now.Ticks + ".sps"), System.IO.FileMode.Create);
                 System.IO.StreamWriter f = new System.IO.StreamWriter(fs, System.Text.Encoding.Default);
                 f.Write(ret);
                 f.Close();
                 fs.Close();
             }
             catch (Exception) { }
-            Response.Clear();
+            HttpContext.Current.Response.Clear();
 
-            Response.ContentEncoding = System.Text.Encoding.Default;
+            HttpContext.Current.Response.ContentEncoding = System.Text.Encoding.Default;
             if (exportData)
             {
-                Response.ContentType = "text/plain";
-                Response.AddHeader("content-disposition", "attachment; filename=" + DateTime.Now.Ticks + ".txt");
+                HttpContext.Current.Response.ContentType = "text/plain";
+                HttpContext.Current.Response.AddHeader("content-disposition", "attachment; filename=" + DateTime.Now.Ticks + ".txt");
             }
             else
             {
-                Response.ContentType = "text/x-spss-syntax";
-                Response.AddHeader("content-disposition", "attachment; filename=" + DateTime.Now.Ticks + ".sps");
+                HttpContext.Current.Response.ContentType = "text/x-spss-syntax";
+                HttpContext.Current.Response.AddHeader("content-disposition", "attachment; filename=" + DateTime.Now.Ticks + ".sps");
             }
-            Response.Write(ret);
-            Response.Flush();
-            Response.End();
+            HttpContext.Current.Response.Write(ret);
+            HttpContext.Current.Response.Flush();
+            HttpContext.Current.Response.End();
         }
     }
 }

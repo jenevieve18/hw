@@ -15,7 +15,7 @@ namespace HW.Adm
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            sponsorAdminID = (Request.QueryString["SAID"] != null ? Convert.ToInt32(Request.QueryString["SAID"]) : 0);
+            sponsorAdminID = (HttpContext.Current.Request.QueryString["SAID"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["SAID"]) : 0);
 
             if (!IsPostBack)
             {
@@ -51,10 +51,13 @@ namespace HW.Adm
 
                 if (sponsorAdminID != 0)
                 {
-                    rs = Db.rs("SELECT DepartmentID FROM SponsorAdminDepartment WHERE SponsorAdminID = " + sponsorAdminID);
+                    rs = Db.rs("SELECT d.DepartmentID, dd.Department FROM SponsorAdminDepartment d INNER JOIN Department dd ON d.DepartmentID = dd.DepartmentID WHERE d.SponsorAdminID = " + sponsorAdminID);
                     while (rs.Read())
                     {
-                        DepartmentID.Items.FindByValue(rs.GetInt32(0).ToString()).Selected = true;
+                        if (DepartmentID.Items.FindByValue(rs.GetInt32(0).ToString()) != null)
+                            DepartmentID.Items.FindByValue(rs.GetInt32(0).ToString()).Selected = true;
+                        else
+                            errTxt.Text += rs.GetString(1) + " (DepartmentID=" + rs.GetInt32(0) + ") not found in organization. Skipping.<br/>";
                     }
                     rs.Close();
 
@@ -135,7 +138,7 @@ namespace HW.Adm
             }
             rs.Close();
 
-            Response.Redirect("grpUser.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+            HttpContext.Current.Response.Redirect("grpUser.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
         }
     }
 }

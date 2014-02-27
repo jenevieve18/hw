@@ -18,9 +18,9 @@ namespace HW.Adm
             {
                 SqlDataReader rs;
 
-                if (Request.QueryString["SuperAdminID"] != null)
+                if (HttpContext.Current.Request.QueryString["SuperAdminID"] != null)
                 {
-                    int superAdminID = Convert.ToInt32(Request.QueryString["SuperAdminID"]);
+                    int superAdminID = Convert.ToInt32(HttpContext.Current.Request.QueryString["SuperAdminID"]);
                     SponsorAdminChange.Visible = true;
 
                     rs = Db.rs("SELECT s.SponsorID, s.Sponsor FROM Sponsor s WHERE s.Deleted IS NULL AND s.Closed IS NULL ORDER BY s.Sponsor");
@@ -68,7 +68,7 @@ namespace HW.Adm
         void Submit_Click(object sender, EventArgs e)
         {
             SqlDataReader rs;
-            int superAdminID = Convert.ToInt32(Request.QueryString["SuperAdminID"]);
+            int superAdminID = Convert.ToInt32(HttpContext.Current.Request.QueryString["SuperAdminID"]);
 
             if (superAdminID == 0)
             {
@@ -89,7 +89,7 @@ namespace HW.Adm
             }
             rs.Close();
 
-            Response.Redirect("superadmin.aspx", true);
+            HttpContext.Current.Response.Redirect("superadmin.aspx", true);
         }
     }
 }

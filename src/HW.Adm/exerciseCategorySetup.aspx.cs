@@ -16,7 +16,7 @@ namespace HW.Adm
         protected void Page_Load(object sender, EventArgs e)
         {
             Save.Click += new EventHandler(Save_Click);
-            eaid = (Request.QueryString["ExerciseCategoryID"] != null ? Convert.ToInt32(Request.QueryString["ExerciseCategoryID"]) : 0);
+            eaid = (HttpContext.Current.Request.QueryString["ExerciseCategoryID"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["ExerciseCategoryID"]) : 0);
 
             SqlDataReader rs = Db.rs("SELECT LangID FROM Lang");
             while (rs.Read())
@@ -85,7 +85,7 @@ namespace HW.Adm
             }
             rs.Close();
 
-            Response.Redirect("exerciseCategorySetup.aspx?ExerciseCategoryID=" + eaid + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+            HttpContext.Current.Response.Redirect("exerciseCategorySetup.aspx?ExerciseCategoryID=" + eaid + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
         }
     }
 }

@@ -11,6 +11,7 @@
 		    <tr><td>Sponsor&nbsp;</td><td><asp:DropDownList AutoPostBack=true ID="SponsorID" runat=server /></td></tr>
 		    <tr><td valign="top">Departments&nbsp;</td><td><asp:CheckBoxList ID="DepartmentID" runat=server /></td></tr>
 		    <tr><td valign="top">Access&nbsp;</td><td><asp:CheckBoxList ID="AccessID" runat=server /></td></tr>
+            <tr><td valign="top" colspan="2"><asp:Label ID=errTxt runat=server /></td></tr>
 		</table>
 		</div>
 </asp:Content>

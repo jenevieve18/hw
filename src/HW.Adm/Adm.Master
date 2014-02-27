@@ -6,7 +6,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>HealthWatch</title>
-    <link href="main.css?V=<%= Assembly.GetExecutingAssembly().GetName().Version.ToString() %>" rel="stylesheet" type="text/css">
+    <!--<link href="main.css?V=<%= Assembly.GetExecutingAssembly().GetName().Version.ToString() %>" rel="stylesheet" type="text/css">-->
+    <link href="main.css" rel="stylesheet" type="text/css" />
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="-1">
     <meta name="Robots" content="noarchive">

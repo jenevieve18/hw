@@ -26,15 +26,15 @@
    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-		<table width="970" border="0" cellspacing="0" cellpadding="0">
+		<table width="1250" border="0" cellspacing="0" cellpadding="0">
 			<tr><td style="font-size:16px;" align="center">Sponsors</td></tr>
 		</table>
-		<table style="margin:20px;" border="0" cellspacing="0" cellpadding="0">
+		<table width="1250" style="margin:20px;" border="0" cellspacing="0" cellpadding="0">
 			<asp:Label ID=Sponsor runat=server />
 		</table>
-		<span style="margin:20px;"><button onclick="location.href='sponsorSetup.aspx';">Add</button></span>
+		<span style="margin:20px;"><button onclick="location.href='sponsorSetup.aspx';return false;">Add</button></span>
 		<table style="margin:20px;" border="0" cellspacing="0" cellpadding="0">
-		    <asp:Label ID=Merge runat=server Visible=false/>
+		<asp:Label ID=Merge runat=server Visible=false/>
 		</table>
 		<asp:Button ID=ExecMerge runat=server text="Merge" visible=false />
 </asp:Content>
