@@ -1338,7 +1338,7 @@ d.SponsorID = {4} ORDER BY d.SortString",
 					(Convert.ToInt32(Session["ReadOnly"]) == 0 ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DID=" + rs.GetInt32(2) + "'><img src='img/unt_edt.gif' border='0'/></A>" + "" : ""),
 					(rs.GetInt32(3) > 0 ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&SDID=" + rs.GetInt32(2) + "'><img src='img/usr_on.gif' border='0'/></A>" : (Convert.ToInt32(Session["ReadOnly"]) == 0 ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DeleteDID=" + rs.GetInt32(2) + "'><img src='img/unt_del.gif' border='0'/></a>" : "")),
 					(rs.GetInt32(3) > 0 && rs.GetInt32(8) != rs.GetInt32(4) ? "" + (rs.GetInt32(4) >= deptMinUserCountToDisclose ? rs.GetInt32(4).ToString() : (showReg ? rs.GetInt32(4).ToString() : "")) + "" : ""),
-//					(rs.GetInt32(8) >= MIN_SHOW2 ? active.ToString() + " / " + rs.GetInt32(8).ToString() : "<img src='img/key.gif'/>")
+//					(rs.GetInt32(8) >= deptMinUserCountToDisclose ? active.ToString() + " / " + rs.GetInt32(8).ToString() : "<img src='img/key.gif'/>")
 					(active >= deptMinUserCountToDisclose ? active.ToString() : "<img src='img/key.gif'/>")
 				);
 
@@ -1641,16 +1641,20 @@ WHERE up.UserID = {1}",
 			rs.Close();
 			OrgTree.Text += "<tr><td colspan='" + (aggrBQcx + 8 + (showDepartmentID != 0 && BQs != "" ? BQs.Split(':').Length : 0) + EScount) + "' style='border-top:1px solid #333333'>&nbsp;</td></tr>";
 //			string header = "<td align='center' style='font-size:9px;'>" + totalActive.ToString() + " / " + (AX >= MIN_SHOW ? AX.ToString() : "<img src='img/key.gif'/>") + "</td>";
-			string header = "<td align='center' style='font-size:9px;'>" + (totalActive >= MIN_SHOW ? totalActive.ToString() : "<img src='img/key.gif'/>") + "</td>";
+			string header = string.Format("<td align='center' style='font-size:9px;'>{0}</td>", (totalActive >= MIN_SHOW ? totalActive.ToString() : "<img src='img/key.gif'/>"));
 			for (int i = 0; i < EScount; i++) {
-				header += "<td align='center' style='font-size:9px;'>&nbsp;" +
-					(Convert.ToInt32(ESattr.Split(',')[i].Split(':')[0]) != 0 && Convert.ToInt32(ESattr.Split(',')[i].Split(':')[1]) <= ESanswerCount[i] ? "<a href=\"JavaScript:void(window.open('" + ConfigurationManager.AppSettings["eFormURL"] + "feedback.aspx?" +
-					 "R=" + (ESrounds.Split(',')[i]) + "&" +
-					 (ESpreviousRounds.Split(',')[i] != "0" ? "RR=" + ESpreviousRounds.Split(',')[i] + "&" : "") +
-					 (ESpreviousRounds.Split(',')[i] != "0" ? "R1=" + ESroundTexts.Split(',')[i] + "&" : "") +
-					 (ESpreviousRounds.Split(',')[i] != "0" ? "R2=" + ESpreviousRoundTexts.Split(',')[i] + "&" : "") +
-					 "N=" + Server.HtmlEncode(Session["Sponsor"].ToString()).Replace("&", "_0_").Replace("#", "_1_") + "','es" + i + "','scrollbars=1,width=880,height=700,resizable=1,toolbar=0,status=0,menubar=0,location=0'));\"><img src='img/graphIcon2.gif' border='0'/></a>" : "") +
-					"&nbsp;" + ESanswerCount[i] + "&nbsp;</td>";
+				header += string.Format(
+					@"<td align='center' style='font-size:9px;'>&nbsp;{0}&nbsp;{1}&nbsp;</td>",
+					(
+						Convert.ToInt32(ESattr.Split(',')[i].Split(':')[0]) != 0 && Convert.ToInt32(ESattr.Split(',')[i].Split(':')[1]) <= ESanswerCount[i]
+						? string.Format("<a href=\"JavaScript:void(window.open('{0}feedback.aspx?R={1}&", ConfigurationManager.AppSettings["eFormURL"], (ESrounds.Split(',')[i])) +
+						(ESpreviousRounds.Split(',')[i] != "0" ? "RR=" + ESpreviousRounds.Split(',')[i] + "&" : "") +
+						(ESpreviousRounds.Split(',')[i] != "0" ? "R1=" + ESroundTexts.Split(',')[i] + "&" : "") +
+						(ESpreviousRounds.Split(',')[i] != "0" ? "R2=" + ESpreviousRoundTexts.Split(',')[i] + "&" : "") +
+						"N=" + Server.HtmlEncode(Session["Sponsor"].ToString()).Replace("&", "_0_").Replace("#", "_1_") + "','es" + i + "','scrollbars=1,width=880,height=700,resizable=1,toolbar=0,status=0,menubar=0,location=0'));\"><img src='img/graphIcon2.gif' border='0'/></a>" : ""
+					),
+					ESanswerCount[i]
+				);
 			}
 			header += "<td align='center' style='font-size:9px;'>" + UX + "</td>";
 			header += "<td align='center' style='font-size:9px;'>&nbsp;" + Math.Round(((float)IX / (float)UX) * 100, 0) + "%&nbsp;</td>";

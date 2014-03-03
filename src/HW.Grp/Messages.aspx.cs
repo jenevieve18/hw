@@ -267,11 +267,14 @@ namespace HW.Grp
 											body += "\r\n\r\n" + personalLink;
 										}
 
-										Db.sendMail(u.Email, body, LoginSubject.Text);
+//										Db.sendMail(u.Email, body, LoginSubject.Text);
+										success = Db.sendMail(u.Email, LoginSubject.Text, body);
 
-										userRepository.UpdateLastReminderSent(u.Id);
+										if (success) {
+											userRepository.UpdateLastReminderSent(u.Id);
+										}
 
-										success = true;
+//										success = true;
 									} catch (Exception) {
 										badEmail = true;
 									}
@@ -313,9 +316,10 @@ namespace HW.Grp
 											body += "\r\n\r\n" + personalLink;
 										}
 
-										Db.sendMail(u.Email, body, ExtendedSurveySubject.Text);
+//										Db.sendMail(u.Email, body, ExtendedSurveySubject.Text);
+										success = Db.sendMail(u.Email, ExtendedSurveySubject.Text, body);
 
-										success = true;
+//										success = true;
 									} catch (Exception) {
 										badEmail = true;
 									}
@@ -357,9 +361,10 @@ namespace HW.Grp
 											body += "\r\n\r\n" + personalLink;
 										}
 
-										Db.sendMail(u.Email, body, ExtendedSurveyFinishedSubject.Text);
+//										Db.sendMail(u.Email, body, ExtendedSurveyFinishedSubject.Text);
+										success = Db.sendMail(u.Email, ExtendedSurveyFinishedSubject.Text, body);
 
-										success = true;
+//										success = true;
 									} catch (Exception) {
 										badEmail = true;
 									}
@@ -388,9 +393,10 @@ namespace HW.Grp
 								bool badEmail = false;
 								if (Db.isEmail(u.Email)) {
 									try {
-										Db.sendMail(u.Email, AllMessageBody.Text, AllMessageSubject.Text);
+//										Db.sendMail(u.Email, AllMessageBody.Text, AllMessageSubject.Text);
+										success = Db.sendMail(u.Email, AllMessageSubject.Text, AllMessageBody.Text);
 
-										success = true;
+//										success = true;
 									} catch (Exception) {
 										badEmail = true;
 									}
