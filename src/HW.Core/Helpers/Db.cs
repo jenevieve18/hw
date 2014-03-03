@@ -316,12 +316,19 @@ WHERE ProjectRoundUnitID = {0}",
 						string path = ConfigurationManager.AppSettings["healthWatchURL"];
 						body += "\r\n\r\n" + "" + path + "i/" + key + sponsorInviteID.ToString();
 					}
-					sendMail("info@healthwatch.se", to, subject, body);
+//					sendMail("info@healthwatch.se", to, subject, body);
+//
+//					string query = string.Format("UPDATE SponsorInvite SET Sent = GETDATE() WHERE SponsorInviteID = {0}", sponsorInviteID);
+//					Db.exec(query);
+//
+//					return true;
+					
+					if (sendMail("info@healthwatch.se", to, subject, body)) {
+						string query = string.Format("UPDATE SponsorInvite SET Sent = GETDATE() WHERE SponsorInviteID = {0}", sponsorInviteID);
+						Db.exec(query);
 
-					string query = string.Format("UPDATE SponsorInvite SET Sent = GETDATE() WHERE SponsorInviteID = {0}", sponsorInviteID);
-					Db.exec(query);
-
-					return true;
+						return true;
+					}
 				} catch (Exception) {
 				}
 			}
