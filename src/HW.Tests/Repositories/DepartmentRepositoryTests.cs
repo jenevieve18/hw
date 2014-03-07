@@ -67,19 +67,19 @@ namespace HW.Tests.Repositories
 		[Test]
 		public void TestFindBySponsor2()
 		{
-			r.FindBySponsor2(1);
+			r.FindBySponsor(1);
 		}
 		
 		[Test]
 		public void TestFindBySponsor()
 		{
-			r.FindBySponsorOrderedBySortStringIn(1, "0");
+			r.FindBySponsorOrderedBySortStringIn(1, "0", 10);
 		}
 		
 		[Test]
 		public void TestFindBySponsorWithSponsorAdmin()
 		{
-			r.FindBySponsorWithSponsorAdminIn(1, 1, "0");
+			r.FindBySponsorWithSponsorAdminIn(1, 1, "0", 10);
 		}
 		
 		[Test]
