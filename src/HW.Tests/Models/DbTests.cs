@@ -8,9 +8,8 @@ namespace HW.Tests.Models
 	public class DbTests
 	{
 		[Test]
-		public void TestHeader()
+		public void TestMethod()
 		{
-			string s = Db.header();
 		}
 	}
 }
