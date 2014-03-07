@@ -16,4 +16,10 @@ namespace HW.Core.Models
 		public virtual string WiseName { get; set; }
 		public virtual string Owner { get; set; }
 	}
+	
+	public struct WordsOfWisdom
+	{
+		public string words;
+		public string author;
+	}
 }

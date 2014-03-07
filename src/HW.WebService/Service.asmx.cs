@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using HW.Core.Models;
 
 namespace HW.WebService
 {
@@ -257,12 +258,12 @@ namespace HW.WebService
 			public string databaseValue;
 		}
 		
-		public struct WordsOfWisdom
-		{
-			public string words;
-			public string author;
-		}
-		
+//		public struct WordsOfWisdom
+//		{
+//			public string words;
+//			public string author;
+//		}
+//		
 		public enum QuestionTypes { SingleChoiceFewOptions = 1, SingleChoiceManyOptions = 7, FreeText = 2, Numeric = 4, Date = 3, VAS = 9 };
 		public enum Mood { NotSet = 0, DontKnow = 1, Happy = 2, Neutral = 3, Unhappy = 4 };
 		public enum EventType { Form = 1, Measurement = 2, Exercise = 3 };
