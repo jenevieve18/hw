@@ -43,7 +43,7 @@ namespace HW.Tests.Models
 		[Test]
 		public void TestBoxPlot()
 		{
-			g.Type = new BoxPlotGraphType();
+			g.Type = new BoxPlotMinMaxGraphType();
 			g.setMinMax(0, 100);
 			var r =  new Random();
 			for (int i = 0; i < 10; i++) {
