@@ -34,5 +34,33 @@ namespace HW.Tests.Models
 			Assert.AreEqual(2, o.Median);
 			Assert.AreEqual(1.4142135623730952, o.StandardDeviation);
 		}
+		
+		[Test]
+		public void TestValues2()
+		{
+			var e = new HWList(2, 2, 3, 3, 3);
+			Assert.AreEqual(2, e.LowerBox);
+			Assert.AreEqual(3, e.UpperBox);
+		}
+		
+		[Test]
+		public void TestValues3()
+		{
+			var e = new HWList(2, 2, 3, 3, 3, 4);
+			Assert.AreEqual(2.25, e.LowerBox);
+			Assert.AreEqual(3, e.UpperBox);
+		}
+		
+		[Test]
+		public void TestValues4()
+		{
+			var e = new HWList(18, 20, 20, 23, 23, 23, 24, 27, 29);
+			Assert.AreEqual(20, e.LowerBox);
+			Assert.AreEqual(25.5, e.UpperBox);
+			Assert.AreEqual(18, e.LowerWhisker);
+			Assert.AreEqual(29, e.UpperWhisker);
+			Assert.AreEqual(11.75, e.NerdLowerWhisker);
+			Assert.AreEqual(33.75, e.NerdUpperWhisker);
+		}
 	}
 }
