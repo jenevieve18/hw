@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using HW.Core;
 using HW.Core.Models;
 using HW.Core.Repositories.Sql;
@@ -15,6 +16,12 @@ namespace HW.Tests.Repositories
 		public void Setup()
 		{
 			r = new SqlSponsorRepository();
+		}
+		
+		[Test]
+		public void TestFindSuperAdminSponsors()
+		{
+			r.FindSuperAdminSponsors(1);
 		}
 		
 		[Test]
