@@ -99,6 +99,19 @@ namespace HW.Core.Models
 		public virtual string ExtraEmailBody { get; set; }
 	}
 	
+	public class SponsorAdminSession : BaseModel
+	{
+		public SponsorAdmin Admin { get; set; }
+		public DateTime Date { get; set; }
+	}
+	
+	public class SponsorAdminSessionFunction : BaseModel
+	{
+		public SponsorAdminSession Session { get; set; }
+		public ManagerFunction ManagerFunction { get; set; }
+		public DateTime Date { get; set; }
+	}
+	
 	public class SponsorAdminDepartment : BaseModel
 	{
 		public virtual SponsorAdmin Admin { get; set; }

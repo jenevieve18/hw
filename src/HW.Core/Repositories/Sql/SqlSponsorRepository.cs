@@ -254,6 +254,43 @@ AND SponsorID = {7}",
 			Db.exec(query, "healthWatchSqlConnection");
 		}
 		
+		public void UpdateSponsorAdminSession(int sponsorAdminSessionId, DateTime date)
+		{
+			string query = string.Format(
+				@"
+UPDATE SponsorAdminSession SET EndDT = '{0}'
+WHERE SponsorAdminSessionID = {1}",
+				date,
+				sponsorAdminSessionId
+			);
+			Db.exec(query);
+		}
+		
+		public void SaveSponsorAdminSession(int sponsorAdminId, DateTime date)
+		{
+			string query = string.Format(
+				@"
+INSERT INTO SponsorAdminSession(SponsorAdminID, DT)
+VALUES({0}, '{1}')",
+				sponsorAdminId,
+				date
+			);
+			Db.exec(query);
+		}
+		
+		public void SaveSponsorAdminSessionFunction(int sessionId, int functionId, DateTime date)
+		{
+			string query = string.Format(
+				@"
+INSERT INTO SponsorAdminSessionFunction(SponsorAdminSessionID, ManagerFunctionID, DT)
+VALUES({0}, {1}, '{2}')",
+				sessionId,
+				functionId,
+				date
+			);
+			Db.exec(query);
+		}
+		
 		public void SaveSponsorAdminDepartment(SponsorAdminDepartment d)
 		{
 			string query = string.Format(
@@ -622,6 +659,21 @@ WHERE s.SponsorID = {0}",
 				}
 			}
 			return null;
+		}
+		
+		public int ReadLastSponsorAdminSession()
+		{
+			string query = string.Format(
+				@"
+SELECT TOP 1 * FROM SponsorAdminSession ORDER BY SponsorAdminSessionID DESC"
+			);
+			int sessionId = 0;
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				if (rs.Read()) {
+					sessionId = GetInt32(rs, 0);
+				}
+			}
+			return sessionId;
 		}
 		
 		public Sponsor ReadSponsor(int sponsorID)

@@ -35,6 +35,7 @@ namespace HW.Grp
 			ActionNav.Visible = (Convert.ToInt32(Session["ReadOnly"]) == 0);
 			sponsorID = Convert.ToInt32(Session["SponsorID"]);
 
+			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Organization, DateTime.Now);
 			string query = "";
 			if (sponsorID != 0) {
 				if (Request.QueryString["ShowReg"] != null && Convert.ToInt32(Session["ReadOnly"]) == 0) {

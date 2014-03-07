@@ -141,6 +141,7 @@ namespace HW.Grp
 			sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
 			sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 			
+			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Statistics, DateTime.Now);
 			if (sponsorID != 0) {
 				if (!IsPostBack) {
 					Languages = langRepository.FindBySponsor(sponsorID);

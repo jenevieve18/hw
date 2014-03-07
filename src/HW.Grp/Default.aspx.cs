@@ -25,7 +25,6 @@ namespace HW.Grp
 		{
 			adminNews = newsRepository.FindTop3AdminNews();
 			
-			bool superAdmin = false;
 			bool login = false;
 			SponsorAdmin s = null;
 			if ((Request.Form["ANV"] != null && Request.Form["LOS"] != null) || Request.QueryString["SKEY"] != null || Request.QueryString["SAKEY"] != null) {
@@ -38,10 +37,12 @@ namespace HW.Grp
 				string said = sa != null ? (Session["SuperAdminID"] != null ? Session["SuperAdminID"].ToString() : "0") : "";
 				s = sponsorRepository.ReadSponsorAdmin(skey, sakey, sa, said, anv, los);
 				if (s != null) {
+					sponsorRepository.SaveSponsorAdminSession(s.Id, DateTime.Now);
+					Session["SponsorAdminSessionID"] = sponsorRepository.ReadLastSponsorAdminSession();
+					
 					Session["Name"] = s.Name;
 					if (s.SuperAdmin) {
 						Session["SuperAdminID"] = s.SuperAdminId;
-						superAdmin = true;
 					} else {
 						Session["SponsorID"] = s.Sponsor.Id;
 						Session["SponsorAdminID"] = s.Id;
@@ -58,22 +59,25 @@ namespace HW.Grp
 				if (f != null) {
 					firstUrl = f.URL + "?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
 				}
-				if (superAdmin) {
+				if (s.SuperAdmin) {
 					Response.Redirect("superadmin.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 				} else if (Session["SponsorID"] != null) {
 					Response.Redirect(firstUrl, true);
 				}
 			} else if (login && Session["SponsorAdminID"] != null || Request.QueryString["Logout"] != null) {
+				sponsorRepository.UpdateSponsorAdminSession(Convert.ToInt32(Session["SponsorAdminSessionID"]), DateTime.Now);
+				
 				Session.Remove("SponsorID");
 				Session.Remove("SponsorAdminID");
 				Session.Remove("Sponsor");
 				Session.Remove("Anonymized");
 				Session.Remove("SeeUsers");
 				Session.Remove("ReadOnly");
-				ClientScript.RegisterStartupScript(this.GetType(), "CLOSE", "<script language=\"JavaScript\">window.close();</script>");
+				Session.Remove("SponsorAdminSessionID");
+				ClientScript.RegisterStartupScript(this.GetType(), "CLOSE", "<script language='JavaScript'>window.close();</script>");
 			} else if (login && Session["SuperAdminID"] != null || Request.QueryString["SuperLogout"] != null) {
 				Session.Remove("SuperAdminID");
-				ClientScript.RegisterStartupScript(this.GetType(), "CLOSE", "<script language=\"JavaScript\">window.close();</script>");
+				ClientScript.RegisterStartupScript(this.GetType(), "CLOSE", "<script language='JavaScript'>window.close();</script>");
 			}
 		}
 	}

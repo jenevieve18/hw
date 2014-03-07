@@ -20,9 +20,6 @@ namespace HW.Grp
 		bool incorrectPassword = false;
 		bool sent = false;
 		
-//		IUserRepository userRepository = AppContext.GetRepositoryFactory().CreateUserRepository();
-//		ISponsorRepository sponsorRepository = AppContext.GetRepositoryFactory().CreateSponsorRepository();
-//		IProjectRepository projectRepository = AppContext.GetRepositoryFactory().CreateProjectRepository();
 		SqlUserRepository userRepository = new SqlUserRepository();
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		SqlProjectRepository projectRepository = new SqlProjectRepository();
@@ -31,6 +28,7 @@ namespace HW.Grp
 		{
 			sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
 
+			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Messages, DateTime.Now);
 			Save.Click += new EventHandler(Save_Click);
 			Send.Click += new EventHandler(Send_Click);
 
