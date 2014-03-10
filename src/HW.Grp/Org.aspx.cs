@@ -155,7 +155,7 @@ WHERE u.UserID = {1}",
 						}
 
 //						Db2.sendMail(rs.GetString(2).Trim(), body, rs.GetString(1));
-						Db.sendMail(rs.GetString(2).Trim(), body, rs.GetString(1));
+						Db.sendMail(rs.GetString(2).Trim(), rs.GetString(1), body);
 					}
 					rs.Close();
 					#endregion
@@ -202,7 +202,7 @@ WHERE s.SponsorID = {0} AND si.SponsorInviteID = {1}",
 							}
 
 //							Db2.sendMail(rs.GetString(2).Trim(), body, rs.GetString(8));
-							Db.sendMail(rs.GetString(2).Trim(), body, rs.GetString(8));
+							Db.sendMail(rs.GetString(2).Trim(), rs.GetString(8), body);
 						}
 					}
 					rs.Close();
