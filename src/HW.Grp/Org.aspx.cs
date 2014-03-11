@@ -1352,7 +1352,7 @@ d.SponsorID = {4} ORDER BY d.SortString",
 //					(rs.GetInt32(8) >= deptMinUserCountToDisclose ? active.ToString() + " / " + rs.GetInt32(8).ToString() : "<img src='img/key.gif'/>")
 					(active >= deptMinUserCountToDisclose ? active.ToString() : "<img src='img/key.gif'/>"),
 //					(active >= deptMinUserCountToDisclose ? string.Format(" ({0}%)", key) : "")
-					(active > deptMinUserCountToDisclose ? string.Format(" ({0}%)", ((float)active / rs.GetInt32(7) * 100).ToString("0.0")) : "")
+					(active > deptMinUserCountToDisclose ? string.Format(" ({0}%)", Math.Round((float)active / rs.GetInt32(7) * 100)) : "")
 				);
 
 				for (int i = 0; i < EScount; i++) {
@@ -1393,7 +1393,7 @@ d.SponsorID = {4} ORDER BY d.SortString",
 										)
 										: ""
 									),
-									string.Format("{0} ({1}%)", rs.GetInt32(idx).ToString(), (rs.GetInt32(idx) / extendedSurveyTotal * 100).ToString("0.0"))
+									string.Format("{0} ({1}%)", rs.GetInt32(idx).ToString(), Math.Round(rs.GetInt32(idx) / extendedSurveyTotal * 100))
 								)
 								: string.Format("<img src='img/key.gif' title='{0}'/>", (showReg ? rs.GetInt32(idx + 1).ToString() : ""))
 							)
