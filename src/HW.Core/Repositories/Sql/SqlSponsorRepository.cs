@@ -661,6 +661,22 @@ WHERE s.SponsorID = {0}",
 			return null;
 		}
 		
+		public int GetExtendedSurveyTotal(int sponsorID)
+		{
+			string query = string.Format(
+				@"
+SELECT Total FROM SponsorExtendedSurvey
+WHERE SponsorID = {0}",
+				sponsorID
+			);
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				if (rs.Read()) {
+					return GetInt32(rs, 0);
+				}
+			}
+			return 0;
+		}
+		
 		public int ReadLastSponsorAdminSession()
 		{
 			string query = string.Format(
