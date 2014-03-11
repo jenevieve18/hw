@@ -1229,11 +1229,17 @@ SELECT d.Department,
 		AND d.SponsorID = x.SponsorID
 		AND d.SortString < x.SortString
 	),
+	--(
+	--	SELECT COUNT(*)
+	--	FROM SponsorInvite si
+	--	INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID
+	--	WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID
+	--),
 	(
 		SELECT COUNT(*)
 		FROM SponsorInvite si
 		INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID
-		WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID
+		WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID AND (si.StoppedReason IS NULL OR si.StoppedPercent IS NOT NULL)
 	),
 	(
 		SELECT COUNT(*)
@@ -1286,7 +1292,7 @@ d.SponsorID = {4} ORDER BY d.SortString",
 				sponsorID
 			);
 			rs = Db.rs(sql);
-			Dictionary<string, double> actives = new Dictionary<string, double>();
+//			Dictionary<string, double> actives = new Dictionary<string, double>();
 			double extendedSurveyTotal = sponsorRepository.GetExtendedSurveyTotal(sponsorID);
 			while (rs.Read()) {
 				int depth = rs.GetInt32(1);
@@ -1324,7 +1330,7 @@ d.SponsorID = {4} ORDER BY d.SortString",
 					}
 				}
 				string key = Guid.NewGuid().ToString();
-				actives.Add(key, active);
+//				actives.Add(key, active);
 				OrgTree.Text += string.Format(
 					@"
 				</td>
@@ -1345,7 +1351,8 @@ d.SponsorID = {4} ORDER BY d.SortString",
 					(rs.GetInt32(3) > 0 && rs.GetInt32(8) != rs.GetInt32(4) ? "" + (rs.GetInt32(4) >= deptMinUserCountToDisclose ? rs.GetInt32(4).ToString() : (showReg ? rs.GetInt32(4).ToString() : "")) + "" : ""),
 //					(rs.GetInt32(8) >= deptMinUserCountToDisclose ? active.ToString() + " / " + rs.GetInt32(8).ToString() : "<img src='img/key.gif'/>")
 					(active >= deptMinUserCountToDisclose ? active.ToString() : "<img src='img/key.gif'/>"),
-					(active >= deptMinUserCountToDisclose ? string.Format(" ({0}%)", key) : "")
+//					(active >= deptMinUserCountToDisclose ? string.Format(" ({0}%)", key) : "")
+					(active > deptMinUserCountToDisclose ? string.Format(" ({0}%)", ((float)active / rs.GetInt32(7) * 100).ToString("0.0")) : "")
 				);
 
 				for (int i = 0; i < EScount; i++) {
@@ -1689,9 +1696,9 @@ WHERE si.SponsorID = {1}",
 			}
 
 			OrgTree.Text = OrgTree.Text.Replace("[xxx]", header) + "</table>";
-			foreach (string key in actives.Keys) {
-				OrgTree.Text = OrgTree.Text.Replace(key, (actives[key] / totalActive * 100).ToString("0.0"));
-			}
+//			foreach (string key in actives.Keys) {
+//				OrgTree.Text = OrgTree.Text.Replace(key, (actives[key] / totalActive * 100).ToString("0.0"));
+//			}
 			#endregion
 
 			if (Session["SuperAdminID"] != null || Session["SponsorAdminID"] != null && Session["SponsorAdminID"].ToString() == "-1") {
