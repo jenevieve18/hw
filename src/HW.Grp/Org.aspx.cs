@@ -1293,7 +1293,7 @@ d.SponsorID = {4} ORDER BY d.SortString",
 			);
 			rs = Db.rs(sql);
 //			Dictionary<string, double> actives = new Dictionary<string, double>();
-			double extendedSurveyTotal = sponsorRepository.GetExtendedSurveyTotal(sponsorID);
+//			double extendedSurveyTotal = sponsorRepository.GetExtendedSurveyTotal(sponsorID);
 			while (rs.Read()) {
 				int depth = rs.GetInt32(1);
 				DX[depth] = (rs.GetInt32(6) > 0);
@@ -1393,7 +1393,8 @@ d.SponsorID = {4} ORDER BY d.SortString",
 										)
 										: ""
 									),
-									string.Format("{0} ({1}%)", rs.GetInt32(idx).ToString(), Math.Round(rs.GetInt32(idx) / extendedSurveyTotal * 100))
+//									string.Format("{0} ({1}%)", rs.GetInt32(idx).ToString(), Math.Round(rs.GetInt32(idx) / extendedSurveyTotal * 100))
+									string.Format("{0} ({1}%)", rs.GetInt32(idx).ToString(), Math.Round(rs.GetInt32(idx) / (double)rs.GetInt32(7) * 100))
 								)
 								: string.Format("<img src='img/key.gif' title='{0}'/>", (showReg ? rs.GetInt32(idx + 1).ToString() : ""))
 							)
