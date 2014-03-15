@@ -73,11 +73,11 @@ namespace HW.Grp
 								projectRoundID = s.ProjectRound.Id;
 								if (!IsPostBack) {
 									extendedSurvey = s.Internal + s.RoundText;
-									ExtendedSurvey.Text = "Reminder for <B>" + extendedSurvey + "</B> (<span style=\"font-size:9px;\">[x]Last sent: " + (s.EmailLastSent == null ? "Never" : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
+									ExtendedSurvey.Text = "Reminder for <B>" + extendedSurvey + "</B> (<span style='font-size:9px;'>[x]Last sent: " + (s.EmailLastSent == null ? "Never" : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
 									ExtendedSurveyTxt.Text = s.EmailBody;
 									ExtendedSurveySubject.Text = s.EmailSubject;
 
-									ExtendedSurveyFinished.Text = "Thank you mail for <B>" + extendedSurvey + "</B> (<span style=\"font-size:9px;\">[x]Last sent: " + (s.EmailLastSent == null ? "Never" : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
+									ExtendedSurveyFinished.Text = "Thank you mail for <B>" + extendedSurvey + "</B> (<span style='font-size:9px;'>[x]Last sent: " + (s.EmailLastSent == null ? "Never" : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
 									ExtendedSurveyFinishedTxt.Text = s.FinishedEmailBody;
 									ExtendedSurveyFinishedSubject.Text = s.FinishedEmailSubject;
 								}
@@ -404,10 +404,10 @@ namespace HW.Grp
 			base.OnPreRender(e);
 
 			if (incorrectPassword) {
-				Page.RegisterStartupScript("ERROR", "<script language=\"JavaScript\">alert('Incorrect password!');</SCRIPT>");
+				Page.RegisterStartupScript("ERROR", "<script language='JavaScript'>alert('Incorrect password!');</script>");
 			}
 			if (sent) {
-				Page.RegisterStartupScript("SENT", "<script language=\"JavaScript\">alert('" + HttpContext.Current.Request.QueryString["Sent"].ToString() + " messages successfully sent.\\r\\n" + HttpContext.Current.Request.QueryString["Fail"].ToString() + " incorrect email address(es) found.');</SCRIPT>");
+				Page.RegisterStartupScript("SENT", "<script language='JavaScript'>alert('" + HttpContext.Current.Request.QueryString["Sent"].ToString() + " messages successfully sent.\\r\\n" + HttpContext.Current.Request.QueryString["Fail"].ToString() + " incorrect email address(es) found.');</script>");
 			}
 		}
 	}
