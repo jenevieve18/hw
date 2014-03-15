@@ -116,12 +116,7 @@ namespace HW.Grp
 							ExtendedSurvey.Text = ExtendedSurvey.Text.Replace("[x]", "Period: " + (u.Started ==  null ? "?" : u.Started.Value.ToString("yyyy-MM-dd")) + "--" + (u.Closed == null ? "?" : u.Closed.Value.ToString("yyyy-MM-dd")) + ", ");
 							ExtendedSurveyFinished.Text = ExtendedSurveyFinished.Text.Replace("[x]", "Period: " + (u.Started == null ? "?" : u.Started.Value.ToString("yyyy-MM-dd")) + "--" + (u.Closed == null ? "?" : u.Closed.Value.ToString("yyyy-MM-dd")) + ", ");
 						}
-						if (
-							//!rs.IsDBNull(0) && rs.GetDateTime(0) <= DateTime.Now
-							//&&
-							(u.Closed == null || u.Closed >= DateTime.Now)
-						)
-						{
+						if ((u.Closed == null || u.Closed >= DateTime.Now)) {
 							if (!IsPostBack) {
 								ExtendedSurveySubject.Visible = true;
 								ExtendedSurvey.Visible = true;
@@ -213,9 +208,7 @@ namespace HW.Grp
 
 							int sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 							foreach (var i in sponsorRepository.FindInvitesBySponsor(sponsorID, sponsorAdminID)) {
-//								bool success = Db.sendInvitation(i.Id, i.Email, InviteTxt.Text, InviteSubject.Text, i.InvitationKey);
 								bool success = Db.sendInvitation(i.Id, i.Email, InviteSubject.Text, InviteTxt.Text, i.InvitationKey);
-
 								if (success) {
 									cx++;
 								} else {
@@ -230,7 +223,6 @@ namespace HW.Grp
 
 							sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 							foreach (var i in sponsorRepository.FindSentInvitesBySponsor(sponsorID, sponsorAdminID)) {
-//								bool success = Db.sendInvitation(i.Id, i.Email, InviteReminderTxt.Text, InviteReminderSubject.Text, i.InvitationKey);
 								bool success = Db.sendInvitation(i.Id, i.Email, InviteReminderSubject.Text, InviteReminderTxt.Text, i.InvitationKey);
 
 								if (success) {
@@ -265,14 +257,11 @@ namespace HW.Grp
 											body += "\r\n\r\n" + personalLink;
 										}
 
-//										Db.sendMail(u.Email, body, LoginSubject.Text);
 										success = Db.sendMail(u.Email, LoginSubject.Text, body);
 
 										if (success) {
 											userRepository.UpdateLastReminderSent(u.Id);
 										}
-
-//										success = true;
 									} catch (Exception) {
 										badEmail = true;
 									}
@@ -314,10 +303,7 @@ namespace HW.Grp
 											body += "\r\n\r\n" + personalLink;
 										}
 
-//										Db.sendMail(u.Email, body, ExtendedSurveySubject.Text);
 										success = Db.sendMail(u.Email, ExtendedSurveySubject.Text, body);
-
-//										success = true;
 									} catch (Exception) {
 										badEmail = true;
 									}
@@ -359,10 +345,7 @@ namespace HW.Grp
 											body += "\r\n\r\n" + personalLink;
 										}
 
-//										Db.sendMail(u.Email, body, ExtendedSurveyFinishedSubject.Text);
 										success = Db.sendMail(u.Email, ExtendedSurveyFinishedSubject.Text, body);
-
-//										success = true;
 									} catch (Exception) {
 										badEmail = true;
 									}
@@ -391,10 +374,7 @@ namespace HW.Grp
 								bool badEmail = false;
 								if (Db.isEmail(u.Email)) {
 									try {
-//										Db.sendMail(u.Email, AllMessageBody.Text, AllMessageSubject.Text);
 										success = Db.sendMail(u.Email, AllMessageSubject.Text, AllMessageBody.Text);
-
-//										success = true;
 									} catch (Exception) {
 										badEmail = true;
 									}
