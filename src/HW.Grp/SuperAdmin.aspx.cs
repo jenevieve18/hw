@@ -17,29 +17,23 @@ namespace HW.Grp
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			if (Session["SuperAdminID"] == null)
-			{
+			if (Session["SuperAdminID"] == null) {
 				Response.Redirect("default.aspx?SuperLogout=1&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
 			submit.Click += new EventHandler(submit_Click);
 			submit2.Click += new EventHandler(submit2_Click);
 
-			if (!IsPostBack)
-			{
-				for (int i = 2006; i <= DateTime.Now.Year; i++)
-				{
-					for (int j = 1; j <= 12; j++)
-					{
+			if (!IsPostBack) {
+				for (int i = 2006; i <= DateTime.Now.Year; i++) {
+					for (int j = 1; j <= 12; j++) {
 						DateTime dt = new DateTime(i, j, 1);
 						FromDT.Items.Add(new ListItem(i.ToString() + " " + System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[j - 1], dt.ToString("yyyy-MM-dd")));
-						if (i == DateTime.Now.Year - 1 && j == DateTime.Now.Month)
-						{
+						if (i == DateTime.Now.Year - 1 && j == DateTime.Now.Month) {
 							FromDT.SelectedValue = dt.ToString("yyyy-MM-dd");
 						}
 						dt = dt.AddMonths(1);
 						ToDT.Items.Add(new ListItem(i.ToString() + " " + System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[j - 1], dt.ToString("yyyy-MM-dd")));
-						if (i == DateTime.Now.Year && j == DateTime.Now.Month)
-						{
+						if (i == DateTime.Now.Year && j == DateTime.Now.Month) {
 							ToDT.SelectedValue = dt.ToString("yyyy-MM-dd");
 						}
 					}
@@ -78,8 +72,7 @@ namespace HW.Grp
 //			);
 //			SqlDataReader rs = Db.rs(query);
 //			while (rs.Read())
-			foreach (var spru in sponsorRepository.FindSponsorProjectRoundUnits(Convert.ToInt32(Session["SuperAdminID"])))
-			{
+			foreach (var spru in sponsorRepository.FindSponsorProjectRoundUnits(Convert.ToInt32(Session["SuperAdminID"]))) {
 //				not += "," + rs.GetInt32(1);
 				not += "," + spru.ProjectRoundUnit.Id;
 //				if (Request.Form["Measure_" + rs.GetInt32(1)] != null && Request.Form["Measure_" + rs.GetInt32(1)] == "1" && qs1 != ",0") {
@@ -94,19 +87,20 @@ namespace HW.Grp
 				}
 			}
 //			rs.Close();
-			if (qs1 != "")
-			{
+			if (qs1 != "") {
 				//Response.Redirect("http://" + Request.Url.Host + Request.Url.PathAndQuery.Substring(0, Request.Url.PathAndQuery.LastIndexOf("/")) + "/superstats.aspx?" +
 				Response.Redirect(
-					"superstats.aspx?" +
-					"N=" + not.Substring(1) + "" +
-					"&FDT=" + FromDT.SelectedValue + "" +
-					"&TDT=" + ToDT.SelectedValue + "" +
-					"&R1=" + Measure2Txt1.Text + "" +
-					"&R2=" + Measure2Txt2.Text + "" +
-					"&RNDS1=" + qs1.Substring(1) +
-					(qs2 != "" ? "&RNDS2=" + qs2.Substring(1) : "") +
-					"&RID=" + ReportID.SelectedValue,
+					string.Format(
+						@"superstats.aspx?N={0}&FDT={1}&TDT={2}&R1={3}&R2={4}&RNDS1={5}{6}&RID={7}",
+						not.Substring(1),
+						FromDT.SelectedValue,
+						ToDT.SelectedValue,
+						Measure2Txt1.Text,
+						Measure2Txt2.Text,
+						qs1.Substring(1),
+						(qs2 != "" ? "&RNDS2=" + qs2.Substring(1) : ""),
+						ReportID.SelectedValue
+					),
 					true
 				);
 			}
@@ -114,7 +108,9 @@ namespace HW.Grp
 
 		void submit_Click(object sender, EventArgs e)
 		{
-			string qs1 = "", qs2 = "", not = "";
+			string qs1 = "";
+			string qs2 = "";
+			string not = "";
 
 			if (Request.Form["Measure0"] != null && Request.Form["Measure0"] == "1") {
 				qs1 = ",0";
@@ -158,8 +154,7 @@ namespace HW.Grp
 				}
 			}
 //			rs.Close();
-			if (qs1 != "")
-			{
+			if (qs1 != "") {
 				Response.Redirect(
 					"" + ConfigurationManager.AppSettings["eFormURL"] + "feedback.aspx?" +
 					"RNDS=" + not.Substring(1) + "" +
@@ -173,15 +168,17 @@ namespace HW.Grp
 		{
 			base.OnPreRender(e);
 
-			ExtendedSurvey.Text = "" +
-				"<TR>" +
-				"<TD><I>Database, all <B>other</B> organizations</I></TD>" +
-				"<TD><INPUT TYPE=\"radio\" NAME=\"Measure0\" VALUE=\"1\"/></TD>" +
-				"<TD><INPUT TYPE=\"radio\" NAME=\"Measure0\" VALUE=\"2\"/></TD>" +
-				"<TD><INPUT TYPE=\"radio\" NAME=\"Measure0\" VALUE=\"0\" CHECKED/></TD>" +
-				"</TR>";
+			ExtendedSurvey.Text = string.Format(
+				@"
+<tr>
+	<td><i>Database, all <b>other</b> organizations</i></td>
+	<td><input type='radio' name='Measure0' value='1'/></td>
+	<td><input type='radio' name='Measure0' value='2'/></td>
+	<td><input type='radio' name='Measure0' value='0' checked/></td>
+</tr>");
 
-			int cx = 0, bx = 0;
+			int cx = 0;
+			int bx = 0;
 //			string query = string.Format(
 //				@"
 			//SELECT s.Sponsor,
@@ -202,50 +199,63 @@ namespace HW.Grp
 //			);
 //			SqlDataReader rs = Db.rs(query);
 //			while (rs.Read())
-			foreach (var ses in sponsorRepository.FindExtendedSurveysBySuperAdmin(Convert.ToInt32(Session["SuperAdminID"])))
-			{
+			foreach (var ses in sponsorRepository.FindExtendedSurveysBySuperAdmin(Convert.ToInt32(Session["SuperAdminID"]))) {
 //				if (SurveyID.Items.FindByValue(rs.GetInt32(4).ToString()) == null)
-				if (SurveyID.Items.FindByValue(ses.ProjectRound.Survey.Id.ToString()) == null)
-				{
+				if (SurveyID.Items.FindByValue(ses.ProjectRound.Survey.Id.ToString()) == null) {
 //					SurveyID.Items.Add(new ListItem(rs.GetString(5), rs.GetInt32(4).ToString()));
 					SurveyID.Items.Add(new ListItem(ses.ProjectRound.Survey.Internal, ses.ProjectRound.Survey.Id.ToString()));
-					if (SurveyName.Text == "")
-					{
+					if (SurveyName.Text == "") {
 //						SurveyName.Text = rs.GetString(5);
 						SurveyName.Text = ses.ProjectRound.Survey.Internal;
-						if (SurveyName.Text.IndexOf(" ") >= 0)
-						{
+						if (SurveyName.Text.IndexOf(" ") >= 0) {
 							SurveyName.Text = SurveyName.Text.Substring(0, SurveyName.Text.IndexOf(" "));
 						}
 					}
 				}
-//				ExtendedSurvey.Text += "<TR" + (cx % 2 == 0 ? " style=\"background-color:#F2F2F2;\"" : "") + "><TD>" + rs.GetString(0) + (rs.IsDBNull(2) ? ", " + rs.GetString(2) : "") + (!rs.IsDBNull(3) ? ", " + rs.GetString(3) : "") + "</TD><TD><INPUT TYPE=\"radio\" NAME=\"Measure" + rs.GetInt32(1) + "\" VALUE=\"1\"/></TD><TD><INPUT TYPE=\"radio\" NAME=\"Measure" + rs.GetInt32(1) + "\" VALUE=\"2\"/></TD><TD><INPUT TYPE=\"radio\" NAME=\"Measure" + rs.GetInt32(1) + "\" VALUE=\"0\" CHECKED/></TD><TD>" + rs.GetInt32(6) + "</TD></TR>";
-				ExtendedSurvey.Text += "<TR" + (cx % 2 == 0 ? " style=\"background-color:#F2F2F2;\"" : "") + "><TD>" + ses.Sponsor.Name + (ses.Internal != "" ? ", " + ses.Internal : "") + (ses.RoundText != "" ? ", " + ses.RoundText : "") + "</TD><TD><INPUT TYPE=\"radio\" NAME=\"Measure" + ses.ProjectRound.Id + "\" VALUE=\"1\"/></TD><TD><INPUT TYPE=\"radio\" NAME=\"Measure" + ses.ProjectRound.Id + "\" VALUE=\"2\"/></TD><TD><INPUT TYPE=\"radio\" NAME=\"Measure" + ses.ProjectRound.Id + "\" VALUE=\"0\" CHECKED/></TD><TD>" + ses.ProjectRound.Answers.Capacity + "</TD></TR>";
+//				ExtendedSurvey.Text += "<tr" + (cx % 2 == 0 ? " style='background-color:#F2F2F2;'" : "") + "><td>" + rs.GetString(0) + (rs.IsDBNull(2) ? ", " + rs.GetString(2) : "") + (!rs.IsDBNull(3) ? ", " + rs.GetString(3) : "") + "</TD><TD><INPUT TYPE='radio' NAME='Measure" + rs.GetInt32(1) + "' VALUE='1'/></TD><TD><INPUT TYPE='radio' NAME='Measure" + rs.GetInt32(1) + "' VALUE='2'/></TD><TD><INPUT TYPE='radio' NAME='Measure" + rs.GetInt32(1) + "' VALUE='0' CHECKED/></TD><TD>" + rs.GetInt32(6) + "</TD></TR>";
+				ExtendedSurvey.Text += string.Format(
+					@"
+<tr{0}>
+	<td>{1}{2}</TD>
+	<td><input type='radio' name='Measure{3}' value='1'/></td>
+	<td><input type='radio' name='Measure{3}' value='2'/></td>
+	<td><input type='radio' name='Measure{3}' value='0' checked/></td>
+	<td>{4}</td>
+</tr>",
+					(cx % 2 == 0 ? " style='background-color:#F2F2F2;'" : ""),
+					ses.Sponsor.Name + (ses.Internal != "" ? ", " + ses.Internal : ""),
+					(ses.RoundText != "" ? ", " + ses.RoundText : ""),
+					ses.ProjectRound.Id,
+					ses.ProjectRound.Answers.Capacity
+				);
 				cx++;
 //				bx += rs.GetInt32(6);
 				bx += ses.ProjectRound.Answers.Capacity;
 			}
 //			rs.Close();
-			ExtendedSurvey.Text += "" +
-				"<TR style=\"background-color:#cccccc;\">" +
-				"<TD><i>Total for your organization(s)</i></TD>" +
-				"<TD></TD>" +
-				"<TD></TD>" +
-				"<TD></TD>" +
-				"<TD>" + bx + "</TD>" +
-				"</TR>";
+			ExtendedSurvey.Text += string.Format(
+				@"
+<tr style='background-color:#cccccc;'>
+	<td><i>Total for your organization(s)</i></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td>{0}</td>
+</tr>",
+				bx
+			);
 			ESS.Visible = cx > 0;
 
 			SponsorID.Text = "" +
-				"<TR>" +
-				"<TD><B>Name</B></TD>" +
-				"<TD><B># of ext<br/>surveys</B></TD>" +
-				"<TD><B># of added<br/>users</B></TD>" +
-				"<TD><B># of invited<br/>users</B></TD>" +
-				"<TD><B># of activated<br/>users</B></TD>" +
-				"<TD><B>1st invite sent</B></TD>" +
-				"<TD><B>Super privileges</B></TD>" +
-				"</TR>";
+				"<tr>" +
+				"<td><b>Name</b></td>" +
+				"<td><b># of ext<br/>surveys</b></td>" +
+				"<td><b># of added<br/>users</b></td>" +
+				"<td><b># of invited<br/>users</b></td>" +
+				"<td><b># of activated<br/>users</b></td>" +
+				"<td><b>1st invite sent</b></td>" +
+				"<td><b>Super privileges</b></td>" +
+				"</tr>";
 
 			cx = 0;
 			int totInvitees = 0, totNonClosedInvites = 0, totActive = 0, totNonClosedActive = 0;
@@ -287,38 +297,51 @@ namespace HW.Grp
 //					totNonClosedActive += rs.GetInt32(5);
 					totNonClosedActive += sap.Sponsor.ActiveInvites.Capacity;
 				}
-//				SponsorID.Text += "<TR" + (cx % 2 == 0 ? " BGCOLOR=\"#F2F2F2\"" : "") + ">" +
-//					"<TD><A" + (!rs.IsDBNull(9) ? " style=\"text-decoration:line-through;color:#cc0000;\"" : "") + " HREF=\"default.aspx?SA=0&SKEY=" + rs.GetString(2) + rs.GetInt32(0).ToString() + "\" TARGET=\"_blank\">" + rs.GetString(1) + "</A></TD>" +
-//					"<TD>" + rs.GetInt32(3) + "</TD>" +
-//					"<TD>" + rs.GetInt32(8) + "</TD>" +
-//					"<TD>" + rs.GetInt32(4) + "</TD>" +
-//					"<TD>" + rs.GetInt32(5) + "</TD>" +
-//					"<TD>" + (rs.IsDBNull(6) ? "N/A" : rs.GetDateTime(6).ToString("yyyy-MM-dd")) + "</TD>" +
-//					"<TD>" + (rs.IsDBNull(7) ? "No" : "Yes") + "</TD>" +
-//					"<TD>" + (!rs.IsDBNull(6) ? "<A HREF=\"superadmin.aspx?ATSID=" + rs.GetInt32(0) + "\"><img src=\"img/auditTrail.gif\" border=\"0\"/></A>" : "") + (rs.IsDBNull(9) ? "" : " <span style=\"color:#cc0000;\">Closed " + rs.GetDateTime(9).ToString("yyyy-MM-dd") + "</span>") + "</TD>" +
-//					"</TR>";
-				SponsorID.Text += "<TR" + (cx % 2 == 0 ? " BGCOLOR=\"#F2F2F2\"" : "") + ">" +
-					"<TD><A" + (sap.Sponsor.ClosedAt != null ? " style=\"text-decoration:line-through;color:#cc0000;\"" : "") + " HREF=\"default.aspx?SA=0&SKEY=" + sap.Sponsor.SponsorKey + sap.Sponsor.Id.ToString() + "\" TARGET=\"_blank\">" + sap.Sponsor.Name + "</A></TD>" +
-					"<TD>" + sap.Sponsor.ExtendedSurveys.Capacity + "</TD>" +
-					"<TD>" + sap.Sponsor.Invites.Capacity + "</TD>" +
-					"<TD>" + sap.Sponsor.SentInvites.Capacity + "</TD>" +
-					"<TD>" + sap.Sponsor.ActiveInvites.Capacity + "</TD>" +
-					"<TD>" + (sap.Sponsor.MinimumInviteDate == null ? "N/A" : sap.Sponsor.MinimumInviteDate.Value.ToString("yyyy-MM-dd")) + "</TD>" +
-					"<TD>" + (sap.SeeUsers ? "No" : "Yes") + "</TD>" +
-					"<TD>" + (sap.Sponsor.MinimumInviteDate != null ? "<A HREF=\"superadmin.aspx?ATSID=" + sap.Sponsor.Id + "\"><img src=\"img/auditTrail.gif\" border=\"0\"/></A>" : "") + (sap.Sponsor.ClosedAt == null ? "" : " <span style=\"color:#cc0000;\">Closed " + sap.Sponsor.ClosedAt.Value.ToString("yyyy-MM-dd") + "</span>") + "</TD>" +
-					"</TR>";
+//				SponsorID.Text += "<tr" + (cx % 2 == 0 ? " BGCOLOR='#F2F2F2'" : "") + ">" +
+//					"<td><a" + (!rs.IsDBNull(9) ? " style='text-decoration:line-through;color:#cc0000;'" : "") + " HREF='default.aspx?SA=0&SKEY=" + rs.GetString(2) + rs.GetInt32(0).ToString() + "' target='_blank'>" + rs.GetString(1) + "</A></TD>" +
+//					"<td>" + rs.GetInt32(3) + "</TD>" +
+//					"<td>" + rs.GetInt32(8) + "</TD>" +
+//					"<td>" + rs.GetInt32(4) + "</TD>" +
+//					"<td>" + rs.GetInt32(5) + "</TD>" +
+//					"<td>" + (rs.IsDBNull(6) ? "N/A" : rs.GetDateTime(6).ToString("yyyy-MM-dd")) + "</TD>" +
+//					"<td>" + (rs.IsDBNull(7) ? "No" : "Yes") + "</TD>" +
+//					"<td>" + (!rs.IsDBNull(6) ? "<A HREF='superadmin.aspx?ATSID=" + rs.GetInt32(0) + "'><img src='img/auditTrail.gif' border='0'/></a>" : "") + (rs.IsDBNull(9) ? "" : " <span style='color:#cc0000;'>Closed " + rs.GetDateTime(9).ToString("yyyy-MM-dd") + "</span>") + "</td>" +
+//					"</tr>";
+				SponsorID.Text += string.Format(
+					@"
+<tr{0}>
+	<td><a{1} href='default.aspx?SA=0&SKEY={2}{3}' target='_blank'>{4}</a></td>
+	<td>{5}</td>
+	<td>{6}</td>
+	<td>{7}</td>
+	<td>{8}</td>
+	<td>{9}</td>
+	<td>{10}</td>
+	<td>{11}{12}</td>
+</tr>",
+					(cx % 2 == 0 ? " bgcolor='#F2F2F2'" : ""),
+					(sap.Sponsor.ClosedAt != null ? " style='text-decoration:line-through;color:#cc0000;'" : ""),
+					sap.Sponsor.SponsorKey,
+					sap.Sponsor.Id,
+					sap.Sponsor.Name,
+					sap.Sponsor.ExtendedSurveys.Capacity,
+					sap.Sponsor.Invites.Capacity,
+					sap.Sponsor.SentInvites.Capacity,
+					sap.Sponsor.ActiveInvites.Capacity,
+					(sap.Sponsor.MinimumInviteDate == null ? "N/A" : sap.Sponsor.MinimumInviteDate.Value.ToString("yyyy-MM-dd")),
+					(sap.SeeUsers ? "No" : "Yes"),
+					(sap.Sponsor.MinimumInviteDate != null ? "<a href='superadmin.aspx?ATSID=" + sap.Sponsor.Id + "'><img src='img/auditTrail.gif' border='0'/></a>" : ""),
+					(sap.Sponsor.ClosedAt == null ? "" : " <span style='color:#cc0000;'>Closed " + sap.Sponsor.ClosedAt.Value.ToString("yyyy-MM-dd") + "</span>")
+				);
 
-				if (Request.QueryString["ATSID"] != null && Convert.ToInt32(Request.QueryString["ATSID"]) == sap.Sponsor.Id)
-				{
+				if (Request.QueryString["ATSID"] != null && Convert.ToInt32(Request.QueryString["ATSID"]) == sap.Sponsor.Id) {
 					int y = sap.Sponsor.MinimumInviteDate.Value.Year; int m = sap.Sponsor.MinimumInviteDate.Value.Month;
 					int y2 = DateTime.Now.Year; int m2 = DateTime.Now.Month;
-					for (int i = y; i <= y2; i++)
-					{
-						for (int ii = (i == y ? m : 1); ii <= (i == y2 ? m2 : 12); ii++)
-						{
+					for (int i = y; i <= y2; i++) {
+						for (int ii = (i == y ? m : 1); ii <= (i == y2 ? m2 : 12); ii++) {
 							string iii = i.ToString() + "-" + ii.ToString().PadLeft(2, '0');
 
-							SponsorID.Text += "<TR" + (cx % 2 == 0 ? " BGCOLOR=\"#F2F2F2\"" : "") + "><td>" + iii + "</td><td>&nbsp;</td><td>&nbsp;</td><td>";
+							SponsorID.Text += "<tr" + (cx % 2 == 0 ? " BGCOLOR='#F2F2F2'" : "") + "><td>" + iii + "</td><td>&nbsp;</td><td>&nbsp;</td><td>";
 
 							DateTime dt = DateTime.Parse(iii + "-01").AddMonths(1);
 //							query = string.Format(
@@ -329,8 +352,7 @@ namespace HW.Grp
 //							SqlDataReader rs2 = Db.rs(query);
 //							if (rs2.Read())
 							int invites = sponsorRepository.CountSentInvitesBySponsor2(sap.Sponsor.Id, dt);
-							if (invites > 0)
-							{
+							if (invites > 0) {
 //								SponsorID.Text += rs2.GetInt32(0).ToString();
 								SponsorID.Text += invites.ToString();
 							}
@@ -344,8 +366,7 @@ namespace HW.Grp
 //							rs2 = Db.rs(query);
 //							if (rs2.Read())
 							int invites2 = sponsorRepository.CountSentInvitesBySponsor3(sap.Sponsor.Id, dt);
-							if (invites2 > 0)
-							{
+							if (invites2 > 0) {
 //								SponsorID.Text += rs2.GetInt32(0).ToString();
 								SponsorID.Text += invites2.ToString();
 							}
@@ -357,13 +378,26 @@ namespace HW.Grp
 				cx++;
 			}
 //			rs.Close();
-			SponsorID.Text += "<TR>" +
-				"<TD COLSPAN=\"3\">&nbsp;</TD>" +
-				"<TD>" + (totNonClosedInvites != totInvitees ? "<span style=\"text-decoration:line-through;color:#cc0000;\">" + totInvitees + "</span><br/>" : "") + "<b>" + totNonClosedInvites + "</b></TD>" +
-				"<TD>" + (totNonClosedActive != totActive ? "<span style=\"text-decoration:line-through;color:#cc0000;\">" + totActive + "</span><br/>" : "") + "<b>" + totNonClosedActive + "</b></TD>" +
-				"</TR>";
+			SponsorID.Text += string.Format(
+				@"
+<tr>
+	<td colspan='3'>&nbsp;</td>
+	<td>{0}<b>{1}</b></td>
+	<td>{2}<b>{3}</b></td>
+</tr>",
+				(totNonClosedInvites != totInvitees ? "<span style='text-decoration:line-through;color:#cc0000;'>" + totInvitees + "</span><br/>" : ""),
+				totNonClosedInvites,
+				(totNonClosedActive != totActive ? "<span style='text-decoration:line-through;color:#cc0000;'>" + totActive + "</span><br/>" : ""),
+				totNonClosedActive
+			);
 
-			Survey.Text = "<TR><TD><I>Database, all <B>other</B> organizations</I></TD><TD><INPUT TYPE=\"radio\" NAME=\"Measure_0\" VALUE=\"1\"/></TD><TD><INPUT TYPE=\"radio\" NAME=\"Measure_0\" VALUE=\"2\"/></TD><TD><INPUT TYPE=\"radio\" NAME=\"Measure_0\" VALUE=\"0\" CHECKED/></TD></TR>";
+			Survey.Text = @"
+<tr>
+	<td><i>Database, all <b>other</b> organizations</i></td>
+	<td><input type='radio' name='Measure_0' value='1'/></td>
+	<td><input type='radio' name='Measure_0' value='2'/></td>
+	<td><input type='radio' name='Measure_0' value='0' checked/></td>
+</tr>";
 
 			//SqlDataReader rs = Db.rs("SELECT DISTINCT ses.SurveyID, ss.Internal FROM Sponsor s " +
 			//    "INNER JOIN SponsorProjectRoundUnit ses ON s.SponsorID = ses.SponsorID " +
@@ -404,32 +438,43 @@ namespace HW.Grp
 //					ReportID.Items.Add(new ListItem(rs.GetString(4), rs.GetInt32(3).ToString()));
 					ReportID.Items.Add(new ListItem(ss.ProjectRoundUnit.Report.Internal, ss.ProjectRoundUnit.Report.Id.ToString()));
 				}
-//				Survey.Text += "<TR" + (cx % 2 == 0 ? " style=\"background-color:#F2F2F2;\"" : "") + ">" +
-//					"<TD>" + rs.GetString(0) + ", " + rs.GetString(2) + "</TD>" +
-//					"<TD><INPUT TYPE=\"radio\" NAME=\"Measure_" + rs.GetInt32(1) + "\" VALUE=\"1\"/></TD>" +
-//					"<TD><INPUT TYPE=\"radio\" NAME=\"Measure_" + rs.GetInt32(1) + "\" VALUE=\"2\"/></TD>" +
-//					"<TD><INPUT TYPE=\"radio\" NAME=\"Measure_" + rs.GetInt32(1) + "\" VALUE=\"0\" CHECKED/></TD>" +
-//					"<TD>" + rs.GetInt32(5) + "</TD>" +
-//					"</TR>";
-				Survey.Text += "<TR" + (cx % 2 == 0 ? " style=\"background-color:#F2F2F2;\"" : "") + ">" +
-					"<TD>" + ss.Sponsor.Name + ", " + ss.Navigation + "</TD>" +
-					"<TD><INPUT TYPE=\"radio\" NAME=\"Measure_" + ss.ProjectRoundUnit.Id + "\" VALUE=\"1\"/></TD>" +
-					"<TD><INPUT TYPE=\"radio\" NAME=\"Measure_" + ss.ProjectRoundUnit.Id + "\" VALUE=\"2\"/></TD>" +
-					"<TD><INPUT TYPE=\"radio\" NAME=\"Measure_" + ss.ProjectRoundUnit.Id + "\" VALUE=\"0\" CHECKED/></TD>" +
-					"<TD>" + ss.ProjectRoundUnit.Answers.Capacity + "</TD>" +
-					"</TR>";
+//				Survey.Text += "<tr" + (cx % 2 == 0 ? " style='background-color:#F2F2F2;'" : "") + ">" +
+//					"<td>" + rs.GetString(0) + ", " + rs.GetString(2) + "</TD>" +
+//					"<td><input type='radio' name='Measure_" + rs.GetInt32(1) + "' value='1'/></td>" +
+//					"<td><input type='radio' name='Measure_" + rs.GetInt32(1) + "' value='2'/></td>" +
+//					"<td><input type='radio' name='Measure_" + rs.GetInt32(1) + "' value='0' checked/></td>" +
+//					"<td>" + rs.GetInt32(5) + "</td>" +
+//					"</tr>";
+				Survey.Text += string.Format(
+					@"
+<tr{0}>
+	<td>{1}, {2}</td>
+	<td><input type='radio' name='Measure_{3}' value='1'/></td>
+	<td><input type='radio' name='Measure_{3}' value='2'/></td>
+	<td><input type='radio' name='Measure_{3}' value='0' checked/></td>
+	<td>{4}</td>
+</tr>",
+					(cx % 2 == 0 ? " style='background-color:#F2F2F2;'" : ""),
+					ss.Sponsor.Name,
+					ss.Navigation,
+					ss.ProjectRoundUnit.Id,
+					ss.ProjectRoundUnit.Answers.Capacity
+				);
 				cx++;
 //				bx += rs.GetInt32(5);
 				bx += ss.ProjectRoundUnit.Answers.Capacity;
 			}
 //			rs.Close();
-			Survey.Text += "<TR style=\"background-color:#cccccc;\">" +
-				"<TD><i>Total for your organization(s)</i></TD>" +
-				"<TD></TD>" +
-				"<TD></TD>" +
-				"<TD></TD>" +
-				"<TD>" + bx + "</TD>" +
-				"</TR>";
+			Survey.Text += string.Format(
+				@"
+<tr style='background-color:#cccccc;'>
+	<td><i>Total for your organization(s)</i></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td>{0}</td>
+</tr>",
+				bx);
 		}
 	}
 }

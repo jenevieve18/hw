@@ -44,7 +44,7 @@
 					<td><b>Organisation access</b></td>
 				</tr>
 	            <asp:Label ID=OrgTree runat=server />
-				<!--<tr>
+				<%--<tr>
 					<td><%= Session["Sponsor"] %></td>
 				</tr>
 				<% bool[] DX = new bool[8]; %>
@@ -71,7 +71,7 @@
 						</td>
 					</tr>
 					<% } %>
-				<% } %>-->
+				<% } %>--%>
             </table>
         </div>
 

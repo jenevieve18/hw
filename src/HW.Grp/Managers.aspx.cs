@@ -27,16 +27,16 @@ namespace HW.Grp
 				sponsorRepository.UpdateDeletedAdmin(sponsorID, sponsorAdminID);
 			}
 			if (sponsorID != 0) {
-				labelManagers.Text = " <tr><td><B>Name</B>&nbsp;&nbsp;</td><td><b>Roles</b></td></tr>";
+				labelManagers.Text = " <tr><td><b>Name</b>&nbsp;&nbsp;</td><td><b>Roles</b></td></tr>";
 				int sponsorAdminID = Session["SponsorAdminID"] != null ? Convert.ToInt32(Session["SponsorAdminID"]) : -1;
 				sponsorAdmins = sponsorRepository.FindAdminBySponsor(sponsorID, sponsorAdminID);
 				foreach (var s in sponsorAdmins) {
-					labelManagers.Text += "<TR><TD>" + (!s.ReadOnly ? "" : "<img src='img/locked.gif'/> ") + "<A HREF='managerSetup.aspx?SAID=" + s.Id.ToString() + "'>" + (s.Name == "" ? (s.Usr == "" ? "&gt; empty &lt;" : s.Usr) : s.Name) + "</A>&nbsp;&nbsp;</TD><TD>";
+					labelManagers.Text += "<tr><td>" + (!s.ReadOnly ? "" : "<img src='img/locked.gif'/> ") + "<a href='managerSetup.aspx?SAID=" + s.Id.ToString() + "'>" + (s.Name == "" ? (s.Usr == "" ? "&gt; empty &lt;" : s.Usr) : s.Name) + "</a>&nbsp;&nbsp;</td><td>";
 					int cx = 0;
 					foreach (var f in managerRepository.FindBySponsorAdmin(s.Id)) {
 						labelManagers.Text += (cx++ > 0 ? ", " : "") + f.Function;
 					}
-					labelManagers.Text += "</TD><TD><A HREF=\"javascript:if(confirm('Are you sure you want to delete this manager?')){location.href='managers.aspx?Delete=" + s.Id + "';}\"><img src='img/deltoolsmall.gif' border='0'/></TD></TR>";
+					labelManagers.Text += "</td><td><a href=\"javascript:if(confirm('Are you sure you want to delete this manager?')){location.href='managers.aspx?Delete=" + s.Id + "';}\"><img src='img/deltoolsmall.gif' border='0'/></td></tr>";
 				}
 			} else {
 				Response.Redirect("default.aspx", true);

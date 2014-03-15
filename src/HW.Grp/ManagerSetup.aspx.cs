@@ -44,28 +44,42 @@ namespace HW.Grp
 						SuperUser.Visible = false;
 					}
 
-					OrgTree.Text = "<TR><TD>" + Session["Sponsor"] + "</TD></TR>";
+					OrgTree.Text = string.Format("<tr><td>{0}</td></tr>", Session["Sponsor"]);
 					bool[] DX = new bool[8];
 					sponsorAdminDepartments = departmentRepository.a(sponsorID, sponsorAdminID);
 					foreach (var d in sponsorAdminDepartments) {
 						int depth = d.Department.Depth;
 						DX[depth] = (d.Department.Siblings > 0);
 
-						OrgTree.Text += "<TR><TD><TABLE BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\"><TR><TD>";
+						OrgTree.Text += @"
+<tr>
+	<td>
+		<table border='0' cellspacing='0' cellpadding='0'>
+			<tr>
+				<td>";
 						for (int i = 1; i <= depth; i++) {
 							if (i == depth) {
-								OrgTree.Text += "<IMG SRC=\"img/" + (DX[i] ? "T" : "L") + ".gif\" width=\"19\" height=\"20\"/>";
+								OrgTree.Text += string.Format("<img src='img/{0}.gif' width='19' height='20'/>", (DX[i] ? "T" : "L"));
 							} else {
-								OrgTree.Text += "<IMG SRC=\"img/" + (DX[i] ? "I" : "null") + ".gif\" width=\"19\" height=\"20\"/>";
+								OrgTree.Text += string.Format("<img src='img/{0}.gif' width='19' height='20'/>", (DX[i] ? "I" : "null"));
 							}
 						}
-						OrgTree.Text += "</TD>" +
-							"<TD VALIGN=\"MIDDLE\"><input" + (!d.Admin.SuperUser ? " disabled" : "") + " value=\"" + d.Department.Id + "\" name=\"DepartmentID\" type=\"checkbox\"/>&nbsp;" + d.Department.Name + "&nbsp;&nbsp;&nbsp;</TD>" +
-							"</TR>" +
-							"</TABLE>" +
-							"</TD>" +
-							"<TD STYLE=\"font-size:9px;\">&nbsp;" + d.Department.ShortName + "</TD>" +
-							"</TR>";
+						OrgTree.Text += string.Format(
+							@"
+				</td>
+				<td valign='middle'>
+					<input{0} value='{1}' name='DepartmentID' type='checkbox'/>&nbsp;{2}&nbsp;&nbsp;&nbsp;
+				</td>
+			</tr>
+		</table>
+	</td>
+	<td style='font-size:9px;'>&nbsp;{3}</td>
+</tr>",
+							(!d.Admin.SuperUser ? " disabled" : ""),
+							d.Department.Id,
+							d.Department.Name,
+							d.Department.ShortName
+						);
 					}
 				}
 
@@ -89,7 +103,7 @@ namespace HW.Grp
 								}
 							}
 							foreach (var d in sponsorRepository.FindAdminDepartmentBySponsorAdmin(a.Id)) {
-								OrgTree.Text = OrgTree.Text.Replace("value=\"" + d.Department.Id + "\"", "value=\"" + d.Department.Id + "\" checked");
+								OrgTree.Text = OrgTree.Text.Replace("value='" + d.Department.Id + "'", "value='" + d.Department.Id + "' checked");
 							}
 						}
 					}
@@ -159,7 +173,7 @@ namespace HW.Grp
 				}
 				Response.Redirect("managers.aspx", true);
 			} else {
-//				ErrorMsg.Text = "<SPAN STYLE=\"color:#cc0000;\">Error! The username is invalid, please select a different one!</SPAN>";
+//				ErrorMsg.Text = "<SPAN STYLE='color:#cc0000;'>Error! The username is invalid, please select a different one!</SPAN>";
 				errorMessage = "Error! The username is invalid, please select a different one!";
 			}
 		}
