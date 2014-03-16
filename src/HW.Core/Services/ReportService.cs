@@ -103,7 +103,6 @@ namespace HW.Core.Services
 					SortedList all = new SortedList();
 					foreach (ProjectRoundUnit u in projectRepository.FindRoundUnitsBySortString(sortString)) {
 						res = new Hashtable();
-//						if (c.Index.Parts.Count == 0) {
 						if (c.Index.Parts.Capacity == 0) {
 							GetIdxVal(c.Index.Id, u.SortString, langID, fy, ty);
 						} else {
@@ -127,7 +126,6 @@ namespace HW.Core.Services
 			} else if (p.Type == 2) {
 				p.Components = reportRepository.FindComponents(p.Id);
 				foreach (ReportPartComponent c in p.Components) {
-//					if (c.Index.Parts.Count == 0) {
 					if (c.Index.Parts.Capacity == 0) {
 						GetIdxVal(c.Index.Id, sortString, langID, fy, ty);
 					} else {
