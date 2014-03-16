@@ -60,7 +60,6 @@ SELECT BQ.BQID, BQ.Internal FROM BQ WHERE BQ.BQID IN ({0})",
 		{
 			var questions = new List<BackgroundQuestion>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				int j = 0;
 				while (rs.Read()) {
 					var bq = new BackgroundQuestion { Id = rs.GetInt32(2 + 0 * 3) };
 					var answers = new List<BackgroundAnswer>();
