@@ -122,30 +122,6 @@ namespace HW.Tests.Repositories
 		}
 		
 		[Test]
-		public void TestFindAndCountDetailsBySuperAdmin()
-		{
-			var ss = r.FindAndCountDetailsBySuperAdmin(1);
-//			int cx = 0;
-//			string h = "localhost";
-//			string q = "/superadmin.aspx";
-//			int i = 0;
-//			foreach (var s in ss) {
-//				string str = "<TR" + (cx % 2 == 0 ? " BGCOLOR=\"#F2F2F2\"" : "") + ">" +
-//					"<TD><A" + (!s.Closed ? " style=\"text-decoration:line-through;color:#cc0000;\"" : "") + " HREF=\"http://" + h + q.Substring(0, q.LastIndexOf("/")) + "/default.aspx?SA=0&SKEY=" + s.SponsorKey + s.Id.ToString() + "\" TARGET=\"_blank\">" + s.Name + "</A></TD>" +
-//					"<TD>" + s.ExtendedSurveys.Count + "</TD>" +
-//					"<TD>" + s.Invites.Count + "</TD>" +
-//					"<TD>" + s.SentInvites.Count + "</TD>" +
-//					"<TD>" + s.ActiveInvites.Count + "</TD>" +
-//					"<TD>" + (s.MinimumInviteDate == null ? "N/A" : s.MinimumInviteDate.Value.ToString("yyyy-MM-dd")) + "</TD>" +
-//					"<TD>" + (!s.SuperAdminSponsors[0].SeeUsers ? "No" : "Yes") + "</TD>" +
-//					"<TD>" + (s.MinimumInviteDate != null ? "<A HREF=\"superadmin.aspx?ATSID=" + s.Id + "\"><img src=\"img/auditTrail.gif\" border=\"0\"/></A>" : "") + (!s.Closed ? "" : " <span style=\"color:#cc0000;\">Closed " + s.ClosedAt.Value.ToString("yyyy-MM-dd") + "</span>") + "</TD>" +
-//					"</TR>";
-//				Console.WriteLine(str);
-//				Console.WriteLine(i++);
-//			}
-		}
-		
-		[Test]
 		public void TestFindDistinctRoundUnitsWithReportBySuperAdmin()
 		{
 			r.FindDistinctRoundUnitsWithReportBySuperAdmin(1);
