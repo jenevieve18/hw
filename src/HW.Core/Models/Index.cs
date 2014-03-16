@@ -42,7 +42,7 @@ namespace HW.Core.Models
 		public virtual int RequiredAnswerCount { get; set; }
 		public virtual bool AllPartsRequired { get; set; }
 		public virtual int MaxValue { get; set; }
-		public virtual IList<IndexPart> Parts { get; set; }
+		public virtual List<IndexPart> Parts { get; set; }
 		public virtual IList<IndexLanguage> Languages { get; set; }
 		
 		public virtual float AverageAX { get; set; }

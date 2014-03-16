@@ -33,7 +33,8 @@ namespace HW.Core.Helpers
 		
 		public ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point, int sponsorMinUserCountToDisclose)
 		{
-			int cx = p.Components.Count;
+//			int cx = p.Components.Count;
+			int cx = p.Components.Capacity;
 			int answerID = 0;
 			int projectRoundUserID = 0;
 			Answer a = answerRepository.ReadByKey(key);
@@ -124,7 +125,8 @@ namespace HW.Core.Helpers
 		
 		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int SPONS, int SID, string GID, object disabled, int sponsorMinUserCountToDisclose)
 		{
-			int cx = p.Components.Count;
+//			int cx = p.Components.Count;
+			int cx = p.Components.Capacity;
 			int answerID = 0;
 			int projectRoundUserID = 0;
 			Answer a = answerRepository.ReadByKey(key);
@@ -279,7 +281,8 @@ namespace HW.Core.Helpers
 		
 		public ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point, int sponsorMinUserCountToDisclose)
 		{
-			int cx = p.Components.Count;
+//			int cx = p.Components.Count;
+			int cx = p.Components.Capacity;
 			string sortString = "";
 			int minDT = 0;
 			int maxDT = 0;
@@ -327,7 +330,8 @@ namespace HW.Core.Helpers
 					foreach (ProjectRoundUnit u in projectRepository.FindRoundUnitsBySortString(sortString)) {
 						res = new System.Collections.Hashtable();
 
-						if (c.Index.Parts.Count == 0) {
+//						if (c.Index.Parts.Count == 0) {
+						if (c.Index.Parts.Capacity == 0) {
 							GetIdxVal(c.Index.Id, u.SortString, langID, fy, ty);
 						} else {
 							GetOtherIdxVal(c.Index.Id, u.SortString, langID, fy, ty);
@@ -356,7 +360,8 @@ namespace HW.Core.Helpers
 				g = new ExtendedGraph(895, 550, "#FFFFFF");
 				List<Bar> bars = new List<Bar>();
 				foreach (ReportPartComponent c in reportRepository.FindComponents(p.Id)) {
-					if (c.Index.Parts.Count == 0) {
+//					if (c.Index.Parts.Count == 0) {
+					if (c.Index.Parts.Capacity == 0) {
 						GetIdxVal(c.Index.Id, sortString, langID, fy, ty);
 					} else {
 						GetOtherIdxVal(c.Index.Id, sortString, langID, fy, ty);
@@ -536,7 +541,8 @@ namespace HW.Core.Helpers
 		
 		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int SPONS, int SID, string GID, object disabled, int sponsorMinUserCountToDisclose)
 		{
-			int cx = p.Components.Count;
+//			int cx = p.Components.Count;
+			int cx = p.Components.Capacity;
 			string sortString = "";
 			int minDT = 0;
 			int maxDT = 0;
@@ -586,7 +592,8 @@ namespace HW.Core.Helpers
 					foreach (ProjectRoundUnit u in projectRepository.FindRoundUnitsBySortString(sortString)) {
 						res = new System.Collections.Hashtable();
 
-						if (c.Index.Parts.Count == 0) {
+//						if (c.Index.Parts.Count == 0) {
+						if (c.Index.Parts.Capacity == 0) {
 							GetIdxVal(c.Index.Id, u.SortString, langID, fy, ty);
 						} else {
 							GetOtherIdxVal(c.Index.Id, u.SortString, langID, fy, ty);
@@ -615,7 +622,8 @@ namespace HW.Core.Helpers
 //				g = new ExtendedGraph(895, 550, "#FFFFFF");
 //				List<Bar> bars = new List<Bar>();
 				foreach (ReportPartComponent c in reportRepository.FindComponents(p.Id)) {
-					if (c.Index.Parts.Count == 0) {
+//					if (c.Index.Parts.Count == 0) {
+					if (c.Index.Parts.Capacity == 0) {
 						GetIdxVal(c.Index.Id, sortString, langID, fy, ty);
 					} else {
 						GetOtherIdxVal(c.Index.Id, sortString, langID, fy, ty);
@@ -827,7 +835,8 @@ namespace HW.Core.Helpers
 		
 		public void CreateGraph3(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int SPONS, int SID, string GID, object disabled, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose)
 		{
-			int cx = p.Components.Count;
+//			int cx = p.Components.Count;
+			int cx = p.Components.Capacity;
 			string sortString = "";
 			int minDT = 0;
 			int maxDT = 0;
@@ -861,7 +870,8 @@ namespace HW.Core.Helpers
 					foreach (ProjectRoundUnit u in projectRepository.FindRoundUnitsBySortString(sortString)) {
 						res = new System.Collections.Hashtable();
 
-						if (c.Index.Parts.Count == 0) {
+//						if (c.Index.Parts.Count == 0) {
+						if (c.Index.Parts.Capacity == 0) {
 							GetIdxVal(c.Index.Id, u.SortString, langID, fy, ty);
 						} else {
 							GetOtherIdxVal(c.Index.Id, u.SortString, langID, fy, ty);
@@ -884,7 +894,8 @@ namespace HW.Core.Helpers
 				}
 			} else if (p.Type == 2) {
 				foreach (ReportPartComponent c in reportRepository.FindComponents(p.Id)) {
-					if (c.Index.Parts.Count == 0) {
+//					if (c.Index.Parts.Count == 0) {
+					if (c.Index.Parts.Capacity == 0) {
 						GetIdxVal(c.Index.Id, sortString, langID, fy, ty);
 					} else {
 						GetOtherIdxVal(c.Index.Id, sortString, langID, fy, ty);

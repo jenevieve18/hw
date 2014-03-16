@@ -41,7 +41,7 @@ namespace HW.Core.Repositories.NHibernate
 			throw new NotImplementedException();
 		}
 		
-		public IList<ReportPartComponent> FindComponentsByPartAndLanguage2(int reportPartID, int langID)
+		public List<ReportPartComponent> FindComponentsByPartAndLanguage2(int reportPartID, int langID)
 		{
 			throw new NotImplementedException();
 		}
@@ -51,7 +51,7 @@ namespace HW.Core.Repositories.NHibernate
 			throw new NotImplementedException();
 		}
 		
-		public IList<ReportPartComponent> FindComponents(int reportPartID)
+		public List<ReportPartComponent> FindComponents(int reportPartID)
 		{
 			throw new NotImplementedException();
 		}

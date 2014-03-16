@@ -246,7 +246,7 @@ ORDER BY rp.SortOrder",
 			return languages;
 		}
 		
-		public IList<ReportPartComponent> FindComponents(int reportPartID)
+		public List<ReportPartComponent> FindComponents(int reportPartID)
 		{
 			string query = string.Format(
 				@"
@@ -350,7 +350,7 @@ ORDER BY rpc.SortOrder",
 			return components;
 		}
 		
-		public IList<ReportPartComponent> FindComponentsByPartAndLanguage2(int reportPartID, int langID)
+		public List<ReportPartComponent> FindComponentsByPartAndLanguage2(int reportPartID, int langID)
 		{
 			string query = string.Format(
 				@"

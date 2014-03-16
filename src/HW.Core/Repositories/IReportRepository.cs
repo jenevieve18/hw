@@ -18,11 +18,11 @@ namespace HW.Core.Repositories
 		
 		IList<ReportPartComponent> FindComponentsByPartAndLanguage(int reportPartID, int langID);
 		
-		IList<ReportPartComponent> FindComponentsByPartAndLanguage2(int reportPartID, int langID);
+		List<ReportPartComponent> FindComponentsByPartAndLanguage2(int reportPartID, int langID);
 		
 		IList<ReportPartComponent> FindComponentsByPart(int reportPartID);
 		
-		IList<ReportPartComponent> FindComponents(int reportPartID);
+		List<ReportPartComponent> FindComponents(int reportPartID);
 		
 		IList<ReportPartLanguage> FindByProjectAndLanguage(int projectRoundID, int langID);
 		
@@ -51,7 +51,7 @@ namespace HW.Core.Repositories
 			throw new NotImplementedException();
 		}
 		
-		public IList<ReportPartComponent> FindComponentsByPartAndLanguage2(int reportPartID, int langID)
+		public List<ReportPartComponent> FindComponentsByPartAndLanguage2(int reportPartID, int langID)
 		{
 			var components = new List<ReportPartComponent>();
 			for (int i = 0; i < 10; i++) {
@@ -130,7 +130,7 @@ namespace HW.Core.Repositories
 			};
 		}
 		
-		public IList<ReportPartComponent> FindComponents(int reportID)
+		public List<ReportPartComponent> FindComponents(int reportID)
 		{
 			var components = new List<ReportPartComponent>();
 			var r = new Random();

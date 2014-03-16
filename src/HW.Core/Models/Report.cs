@@ -39,7 +39,7 @@ namespace HW.Core.Models
 		public virtual int PartLevel { get; set; }
 		public virtual Question Question { get; set; }
 		public virtual Option Option { get; set; }
-		public virtual IList<ReportPartComponent> Components { get; set; }
+		public virtual List<ReportPartComponent> Components { get; set; }
 		public virtual IList<ReportPartLanguage> Languages { get; set; }
 		
 		public virtual ReportPartLanguage CurrentLanguage { get; set; }

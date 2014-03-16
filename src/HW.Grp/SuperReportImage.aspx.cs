@@ -58,7 +58,7 @@ namespace HW.Grp
 			}
 
 			string join1 = "";
-			string query = "";
+//			string query = "";
 			if (rndsd1 != "") {
 //				query = string.Format(
 //					@"
@@ -117,7 +117,12 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 //				rs2.Close();
 			}
 
-			int cx = 0, type = 0, q = 0, o = 0, rac = 0, pl = 0;
+			int cx = 0;
+			int type = 0;
+			int q = 0;
+			int o = 0;
+			int rac = 0;
+			int pl = 0;
 //			Graph g;
 			ExtendedGraph g;
 
@@ -152,7 +157,7 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 //				rac = (rs.IsDBNull(4) ? 0 : rs.GetInt32(4));
 //				pl = (rs.IsDBNull(5) ? 0 : rs.GetInt32(5));
 				type = r.Type;
-				cx = r.Components.Count;
+				cx = r.Components.Capacity;
 				q = r.Question.Id;
 				o = r.Option.Id;
 				rac = r.RequiredAnswerCount;
@@ -162,7 +167,9 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 
 			#region group stats
 
-			int langID = 1, minDT = 0, maxDT = 0;
+			int langID = 1;
+			int minDT = 0;
+			int maxDT = 0;
 
 			if (type == 8) {
 //				switch (GB) {
