@@ -1207,7 +1207,7 @@ ORDER BY ses.SponsorExtendedSurveyID",
 			//OrgTree.Text += "<TR><TD COLSPAN='" + (aggrBQcx + 8 + (showDepartmentID != 0 && BQs != "" ? BQs.Split(':').Length : 0) + EScount) + "' style='height:1px;line-height:1px;background-color:#333333'><img src='img/null.gif' width='1' height='1'></TD></TR>";
 			OrgTree.Text += string.Format("<tr><td colspan='3'>{0}</td>[xxx]</tr>", Session["Sponsor"]);
 
-			int UX = 0, totalActivated = 0, IX = 0, totalActive = 0;
+			int UX = 0; int totalActivated = 0; int IX = 0; int totalActive = 0;
 
 			int MIN_SHOW = sponsorRepository.ReadSponsor(sponsorID).MinUserCountToDisclose;
 
@@ -1274,14 +1274,14 @@ SELECT d.Department,
 	d.DepartmentShort
 	{1},
 	(
-		SELECT COUNT(*)
-		FROM SponsorInvite si
-		INNER JOIN [User] u ON si.UserID = u.UserID
-		INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID
-		WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString
-		AND si.SponsorID = d.SponsorID
-		AND si.StoppedReason IS NULL
-		AND si.UserID IS NOT NULL
+		SELECT COUNT(*) --SELECT COUNT(*)
+		FROM SponsorInvite si --FROM SponsorInvite si
+		WHERE si.DepartmentID = d.DepartmentID --INNER JOIN [User] u ON si.UserID = u.UserID
+		AND si.SponsorID = d.SponsorID --INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID
+		--WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString
+		--AND si.SponsorID = d.SponsorID
+		--AND si.StoppedReason IS NULL
+		--AND si.UserID IS NOT NULL
 	),
 	(
 		SELECT COUNT(*)
@@ -1312,8 +1312,8 @@ d.SponsorID = {4} ORDER BY d.SortString",
 				UX += rs.GetInt32(3);
 				totalActivated += rs.GetInt32(4);
 				IX += rs.GetInt32(5);
-				int active = rs.GetInt32(12 + 6 * EScount);
-				totalActive += rs.GetInt32(12 + 6 * EScount + 1);
+				int active = rs.GetInt32(8); //rs.GetInt32(12 + 6 * EScount);
+				totalActive += rs.GetInt32(4); //rs.GetInt32(12 + 6 * EScount + 1);
 				int deptMinUserCountToDisclose = rs.IsDBNull(12 + 6 * EScount + 2) ? MIN_SHOW : rs.GetInt32(12 + 6 * EScount + 2);
 
 				OrgTree.Text += string.Format(
@@ -1358,7 +1358,7 @@ d.SponsorID = {4} ORDER BY d.SortString",
 					s,
 					(deptID == rs.GetInt32(2) || showDepartmentID == rs.GetInt32(2) ? "</b>" : ""),
 					(Convert.ToInt32(Session["ReadOnly"]) == 0 ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DID=" + rs.GetInt32(2) + "'><img src='img/unt_edt.gif' border='0'/></A>" + "" : ""),
-					(rs.GetInt32(3) > 0 ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&SDID=" + rs.GetInt32(2) + "'><img src='img/usr_on.gif' border='0'/></A>" : (Convert.ToInt32(Session["ReadOnly"]) == 0 ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DeleteDID=" + rs.GetInt32(2) + "'><img src='img/unt_del.gif' border='0'/></a>" : "")),
+					(rs.GetInt32(12 + 6 * EScount) > 0 /*rs.GetInt32(3) > 0*/ ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&SDID=" + rs.GetInt32(2) + "'><img src='img/usr_on.gif' border='0'/></A>" : (Convert.ToInt32(Session["ReadOnly"]) == 0 ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DeleteDID=" + rs.GetInt32(2) + "'><img src='img/unt_del.gif' border='0'/></a>" : "")),
 					(rs.GetInt32(3) > 0 && rs.GetInt32(8) != rs.GetInt32(4) ? "" + (rs.GetInt32(4) >= deptMinUserCountToDisclose ? rs.GetInt32(4).ToString() : (showReg ? rs.GetInt32(4).ToString() : "")) + "" : ""),
 //					(rs.GetInt32(8) >= deptMinUserCountToDisclose ? active.ToString() + " / " + rs.GetInt32(8).ToString() : "<img src='img/key.gif'/>")
 					(active >= deptMinUserCountToDisclose ? active.ToString() : "<img src='img/key.gif'/>"),
