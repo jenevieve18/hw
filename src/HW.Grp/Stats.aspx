@@ -2,6 +2,7 @@
 <%@ Import Namespace="HW.Core.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
+<link rel="stylesheet" href="css/jquery-ui.css"/>
 <style type="text/css">
 	.button {
 		display: inline-block;
@@ -42,60 +43,57 @@
 	.report-part-content { padding:20px; }
 </style>
 
+<script type="text/javascript" src="js/jquery-ui.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+    	$('#chart-description').dialog({ autoOpen: false });
+    	$('.report-part .report-part-content img').click(function() {
+    		$('#chart-description').dialog('open');
+    	});
         $('.report-part .action .graph').click(function () {
             var partContent = $(this).closest('.report-part-content');
-            //text = $(this).text();
-            text = $(this).find('.plot-type').text();
+            var plotType = $(this).find('.plot-type').text();
 
             var img = partContent.find('img');
             var imageUrl = partContent.find('.hidden-image-url').text();
-            img.attr('src', imageUrl + '&PLOT=' + text);
+            img.attr('src', imageUrl + '&PLOT=' + plotType);
 
             var exportDocXUrl = partContent.find('.hidden-export-docx-url').text();
-            partContent.find('.export-docx-url').attr('href', exportDocXUrl + '&PLOT=' + text);
+            partContent.find('.export-docx-url').attr('href', exportDocXUrl + '&PLOT=' + plotType);
 
             var exportXlsXUrl = partContent.find('.hidden-export-xls-url').text();
-            partContent.find('.export-xls-url').attr('href', exportXlsXUrl + '&PLOT=' + text);
+            partContent.find('.export-xls-url').attr('href', exportXlsXUrl + '&PLOT=' + plotType);
 
             var exportPptXUrl = partContent.find('.hidden-export-pptx-url').text();
-            partContent.find('.export-pptx-url').attr('href', exportPptXUrl + '&PLOT=' + text);
+            partContent.find('.export-pptx-url').attr('href', exportPptXUrl + '&PLOT=' + plotType);
         });
         $('.report-parts > .action .graph').click(function () {
-            //text = $(this).text();
-            text = $(this).find('.plot-type').text();
+            var plotType = $(this).find('.plot-type').text();
 
             var exportAllDocXUrl = $('.hidden-exportall-docx-url').text();
-            $('.exportall-docx-url').attr('href', exportAllDocXUrl + '&PLOT=' + text);
+            $('.exportall-docx-url').attr('href', exportAllDocXUrl + '&PLOT=' + plotType);
 
             var exportAllXlsUrl = $('.hidden-exportall-xls-url').text();
-            $('.exportall-xls-url').attr('href', exportAllXlsUrl + '&PLOT=' + text);
+            $('.exportall-xls-url').attr('href', exportAllXlsUrl + '&PLOT=' + plotType);
 
             var exportAllPptxUrl = $('.hidden-exportall-pptx-url').text();
-            $('.exportall-pptx-url').attr('href', exportAllPptxUrl + '&PLOT=' + text);
+            $('.exportall-pptx-url').attr('href', exportAllPptxUrl + '&PLOT=' + plotType);
 
             $.each($('.report-part-content'), function () {
                 img = $(this).find('img');
                 imageUrl = $(this).find('.hidden-image-url').text();
-                img.attr('src', imageUrl + '&PLOT=' + text);
+                img.attr('src', imageUrl + '&PLOT=' + plotType);
 
                 var exportDocXUrl = $(this).find('.hidden-export-docx-url').text();
-                $(this).find('.export-docx-url').attr('href', exportDocXUrl + '&PLOT=' + text);
+                $(this).find('.export-docx-url').attr('href', exportDocXUrl + '&PLOT=' + plotType);
 
                 var exportXlsXUrl = $(this).find('.hidden-export-xls-url').text();
-                $(this).find('.export-xls-url').attr('href', exportXlsXUrl + '&PLOT=' + text);
+                $(this).find('.export-xls-url').attr('href', exportXlsXUrl + '&PLOT=' + plotType);
 
                 var exportPptXUrl = $(this).find('.hidden-export-pptx-url').text();
-                $(this).find('.export-pptx-url').attr('href', exportPptXUrl + '&PLOT=' + text);
+                $(this).find('.export-pptx-url').attr('href', exportPptXUrl + '&PLOT=' + plotType);
             });
         });
-        /*$('.action .button').mouseover(function () {
-        $(this).parent().next().text($(this).text());
-        });
-        $('.action .button').mouseout(function () {
-        $(this).parent().next().text('');
-        });*/
     });
 </script>
 
@@ -168,13 +166,16 @@
                     </span>
 				</div>
 				<div class="small action-desc"></div>
+				<!--<div id="chart-description">
+					<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
+				</div>-->
 	        	<% foreach (var r in reportParts) { %>
 	       			<div>&nbsp;<br />&nbsp;<br /></div>
 					<div class="report-part">
 						<div class="report-part-subject">
 							<h3><%= r.Subject %></h3>
 						</div>
-						<!--<div class="report-part-header"><%= r.Header %></div>-->
+						<%--<div class="report-part-header"><%= r.Header %></div>--%>
 						<div class="report-part-content">
                             <% string imageUrl = GetReportImageUrl(r.ReportPart.Id, r.Id, additionalQuery); %>
 							<span class="hidden hidden-image-url"><%= imageUrl %></span>
