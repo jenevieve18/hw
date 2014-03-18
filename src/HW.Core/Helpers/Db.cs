@@ -13,27 +13,41 @@ namespace HW.Core.Helpers
 	{
 		public static void connectSPI(int connectSPIID)
 		{
-			int sponsorID = 0, userID = 0, departmentID = 0, fromSponsorID = 0; string email = "";
-			SqlDataReader rs = Db.rs("SELECT SponsorID, Email, DepartmentID FROM SponsorInvite WHERE UserID IS NULL AND SponsorInviteID = " + connectSPIID);
-			if (rs.Read())
-			{
+			int sponsorID = 0;
+			int userID = 0;
+			int departmentID = 0;
+			int fromSponsorID = 0;
+			string email = "";
+			string query = string.Format(
+				@"
+SELECT SponsorID,
+	Email,
+	DepartmentID
+FROM SponsorInvite
+WHERE UserID IS NULL
+AND SponsorInviteID = {0}",
+				connectSPIID
+			);
+			SqlDataReader rs = Db.rs(query);
+			if (rs.Read()) {
 				sponsorID = rs.GetInt32(0);
 				email = rs.GetString(1);
 				departmentID = rs.GetInt32(2);
 			}
 			rs.Close();
 
-			if (sponsorID != 0)
-			{
-				rs = Db.rs("SELECT " +
-				           "u2.UserID, " +
-				           "u2.SponsorID " +
-				           "FROM [User] u2 " +
-				           "LEFT OUTER JOIN SponsorInvite si ON u2.UserID = si.UserID " +
-				           "WHERE u2.Email = '" + email.Replace("'", "''") + "' OR si.Email = '" + email.Replace("'", "''") + "'" +
-				           "");
-				if (rs.Read())
-				{
+			if (sponsorID != 0) {
+				query = string.Format(
+					@"
+SELECT u2.UserID,
+	u2.SponsorID
+FROM [User] u2
+LEFT OUTER JOIN SponsorInvite si ON u2.UserID = si.UserID
+WHERE u2.Email = '{0}' OR si.Email = '{0}'",
+					email.Replace("'", "''")
+				);
+				rs = Db.rs(query);
+				if (rs.Read()) {
 					userID = rs.GetInt32(0);
 					fromSponsorID = rs.GetInt32(1);
 
@@ -43,8 +57,7 @@ namespace HW.Core.Helpers
 					Db.exec("UPDATE [User] SET DepartmentID = " + departmentID + ", SponsorID = " + sponsorID + " WHERE UserID = " + userID);
 					Db.exec("UPDATE UserProfile SET DepartmentID = " + departmentID + ", SponsorID = " + sponsorID + " WHERE UserID = " + userID);
 					
-					while (rs.Read())
-					{
+					while (rs.Read()) {
 						userID = rs.GetInt32(0);
 						Db.exec("UPDATE SponsorInvite SET SponsorID = -ABS(SponsorID), DepartmentID = -ABS(DepartmentID), UserID = -ABS(UserID) WHERE UserID = " + userID);
 						Db.exec("UPDATE [User] SET DepartmentID = NULL, SponsorID = 1 WHERE UserID = " + userID);
@@ -64,29 +77,38 @@ namespace HW.Core.Helpers
 		
 		public static void rewritePRU(int fromSponsorID, int sponsorID, int fromUserID, int userID)
 		{
-			SqlDataReader rs = Db.rs("SELECT " +
-			                         "spru.ProjectRoundUnitID, " +
-			                         "spru.SurveyID, " +
-			                         (userID != 0 ? "upru.ProjectRoundUserID " : "NULL ") +
-			                         "FROM SponsorProjectRoundUnit spru " +
-			                         (userID != 0 ? "INNER JOIN UserProjectRoundUser upru ON spru.ProjectRoundUnitID = upru.ProjectRoundUnitID AND upru.UserID = " + userID + " " : "") +
-			                         "WHERE spru.SponsorID = " + sponsorID);
-			while (rs.Read())
-			{
-				SqlDataReader rs2 = Db.rs("SELECT " +
-				                          "upru.UserProjectRoundUserID, " +
-				                          "upru.ProjectRoundUserID " +
-				                          "FROM UserProjectRoundUser upru " +
-				                          "INNER JOIN [user] hu ON upru.UserID = hu.UserID " +
-				                          "INNER JOIN [eform]..[ProjectRoundUser] pru ON upru.ProjectRoundUserID = pru.ProjectRoundUserID " +
-				                          "INNER JOIN [eform]..[ProjectRoundUnit] u ON pru.ProjectRoundUnitID = u.ProjectRoundUnitID " +
-				                          "WHERE hu.SponsorID = " + fromSponsorID + " " +
-				                          "AND u.SurveyID = " + rs.GetInt32(1) + " " +
-				                          "AND upru.UserID = " + fromUserID);
-				while (rs2.Read())
-				{
-					if (userID != 0)
-					{
+			string query = string.Format(
+				@"
+SELECT spru.ProjectRoundUnitID,
+	spru.SurveyID,
+	{0}
+FROM SponsorProjectRoundUnit spru
+{1}
+WHERE spru.SponsorID = {2}",
+				(userID != 0 ? "upru.ProjectRoundUserID " : "NULL "),
+				(userID != 0 ? "INNER JOIN UserProjectRoundUser upru ON spru.ProjectRoundUnitID = upru.ProjectRoundUnitID AND upru.UserID = " + userID + " " : ""),
+				sponsorID
+			);
+			SqlDataReader rs = Db.rs(query);
+			while (rs.Read()) {
+				query = string.Format(
+					@"
+SELECT upru.UserProjectRoundUserID,
+	upru.ProjectRoundUserID
+FROM UserProjectRoundUser upru
+INNER JOIN [user] hu ON upru.UserID = hu.UserID
+INNER JOIN [eform]..[ProjectRoundUser] pru ON upru.ProjectRoundUserID = pru.ProjectRoundUserID
+INNER JOIN [eform]..[ProjectRoundUnit] u ON pru.ProjectRoundUnitID = u.ProjectRoundUnitID
+WHERE hu.SponsorID = {0}
+AND u.SurveyID = {1}
+AND upru.UserID = {2}",
+					fromSponsorID,
+					rs.GetInt32(1),
+					fromUserID
+				);
+				SqlDataReader rs2 = Db.rs(query);
+				while (rs2.Read()) {
+					if (userID != 0) {
 						Db.exec("UPDATE UserProjectRoundUserAnswer SET ProjectRoundUserID = " + rs.GetInt32(2) + " WHERE ProjectRoundUserID = " + rs2.GetInt32(1));
 					}
 					Db.exec("UPDATE UserProjectRoundUser SET ProjectRoundUnitID = " + rs.GetInt32(0) + " WHERE UserProjectRoundUserID = " + rs2.GetInt32(0));
@@ -97,13 +119,12 @@ namespace HW.Core.Helpers
 			}
 			rs.Close();
 
-			if (userID != 0)
-			{
-				Db.exec("UPDATE UserProjectRoundUser SET UserID = -ABS(UserID) WHERE UserID = " + fromUserID);
+			if (userID != 0) {
+				Db.exec(string.Format("UPDATE UserProjectRoundUser SET UserID = -ABS(UserID) WHERE UserID = {0}", fromUserID));
 			}
 		}
 		
-		public static int createProjectRoundUnit(int parentProjectRoundUnitID, string name, int SID, int individualReportID, int reportID)
+		public static int createProjectRoundUnit(int parentProjectRoundUnitID, string name, int surveyID, int individualReportID, int reportID)
 		{
 			int ID = 0;
 
@@ -115,13 +136,12 @@ WHERE ProjectRoundUnitID = {0}",
 				parentProjectRoundUnitID
 			);
 			SqlDataReader rs = Db.rs(query, "eFormSqlConnection");
-			if (rs.Read())
-			{
+			if (rs.Read()) {
 				query = string.Format(
 					@"
 INSERT INTO ProjectRoundUnit (UserCount, LangID, SurveyID, ProjectRoundID, Unit, ParentProjectRoundUnitID, IndividualReportID, ReportID)
 VALUES (0, 0, {0}, {1}, '{2}', {3}, {4}, {5})",
-					SID,
+					surveyID,
 					rs.GetInt32(0),
 					name.Replace("'", "''"),
 					parentProjectRoundUnitID,
@@ -283,14 +303,11 @@ WHERE ProjectRoundUnitID = {0}",
 //			return ret;
 //		}
 
-//		public static bool sendMail(string email, string body, string subject)
 		public static bool sendMail(string to, string subject, string body)
 		{
-//			return sendMail("reminder@healthwatch.se", email, body, subject);
 			return sendMail("reminder@healthwatch.se", to, subject, body);
 		}
 		
-//		public static bool sendMail(string from, string email, string body, string subject)
 		public static bool sendMail(string from, string to, string subject, string body)
 		{
 			try {
@@ -299,12 +316,11 @@ WHERE ProjectRoundUnitID = {0}",
 				System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient(server);
 				client.Send(mail);
 				return true;
-			} catch (Exception ex) {
+			} catch (Exception) {
 			}
 			return false;
 		}
 
-//		public static bool sendInvitation(int sponsorInviteID, string email, string body, string subject, string key)
 		public static bool sendInvitation(int sponsorInviteID, string to, string subject, string body, string key)
 		{
 			if (Db.isEmail(to)) {
@@ -316,13 +332,6 @@ WHERE ProjectRoundUnitID = {0}",
 						string path = ConfigurationManager.AppSettings["healthWatchURL"];
 						body += "\r\n\r\n" + "" + path + "i/" + key + sponsorInviteID.ToString();
 					}
-//					sendMail("info@healthwatch.se", to, subject, body);
-//
-//					string query = string.Format("UPDATE SponsorInvite SET Sent = GETDATE() WHERE SponsorInviteID = {0}", sponsorInviteID);
-//					Db.exec(query);
-//
-//					return true;
-					
 					if (sendMail("info@healthwatch.se", to, subject, body)) {
 						string query = string.Format("UPDATE SponsorInvite SET Sent = GETDATE() WHERE SponsorInviteID = {0}", sponsorInviteID);
 						Db.exec(query);
