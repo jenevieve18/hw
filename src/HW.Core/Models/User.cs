@@ -54,7 +54,6 @@ namespace HW.Core.Models
 	public class UserProjectRoundUser : BaseModel
 	{
 		public virtual User User { get; set; }
-		public virtual ProjectRoundUnit ProjectRoundUnit { get; set; }
 		public virtual ProjectRoundUser ProjectRoundUser { get; set; }
 	}
 	
@@ -63,7 +62,6 @@ namespace HW.Core.Models
 		public virtual DateTime Date { get; set; }
 		public virtual UserProfile Profile { get; set; }
 		public virtual Answer Answer { get; set; }
-//		public ProjectRoundUser ProjectRoundUser { get; set; }
 		public virtual UserProjectRoundUser ProjectRoundUser { get; set; }
 	}
 	

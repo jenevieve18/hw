@@ -28,8 +28,6 @@ namespace HW.Core.Models
 		public virtual DateTime? AllMessageLastSent { get; set; }
 		public virtual string SponsorKey { get; set; }
 		public virtual IList<SponsorProjectRoundUnit> RoundUnits { get; set; }
-//		public virtual IList<SponsorInvite> Invites { get; set; }
-//		public virtual IList<SponsorExtendedSurvey> ExtendedSurveys { get; set; }
 		public virtual List<SponsorInvite> Invites { get; set; }
 		public virtual List<SponsorExtendedSurvey> ExtendedSurveys { get; set; }
 		public virtual IList<SuperAdminSponsor> SuperAdminSponsors { get; set; }
@@ -51,8 +49,6 @@ namespace HW.Core.Models
 		// FIXME: These are not necessary properties
 		public virtual DateTime? MinimumInviteDate { get; set; }
 		public virtual bool Closed { get { return ClosedAt != null; } }
-//		public virtual IList<SponsorInvite> SentInvites { get; set; }
-//		public virtual IList<SponsorInvite> ActiveInvites { get; set; }
 		public virtual List<SponsorInvite> SentInvites { get; set; }
 		public virtual List<SponsorInvite> ActiveInvites { get; set; }
 	}

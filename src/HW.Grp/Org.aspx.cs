@@ -20,11 +20,16 @@ namespace HW.Grp
 {
 	public partial class Org : System.Web.UI.Page
 	{
-		int deptID = 0, showDepartmentID = 0, deleteDepartmentID;
-		int userID = 0, deleteUserID = 0, sendSponsorInvitationID = 0;
+		int deptID = 0;
+		int showDepartmentID = 0;
+		int deleteDepartmentID;
+		int userID = 0;
+		int deleteUserID = 0;
+		int sendSponsorInvitationID = 0;
 		int sponsorID = 0;
 		bool showReg = false;
-		string hiddenBqJoin = "", hiddenBqWhere = "";
+		string hiddenBqJoin = "";
+		string hiddenBqWhere = "";
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
 
@@ -154,7 +159,6 @@ WHERE u.UserID = {1}",
 							body += "\r\n\r\n" + personalLink;
 						}
 
-//						Db2.sendMail(rs.GetString(2).Trim(), body, rs.GetString(1));
 						Db.sendMail(rs.GetString(2).Trim(), rs.GetString(1), body);
 					}
 					rs.Close();
@@ -184,9 +188,7 @@ WHERE s.SponsorID = {0} AND si.SponsorInviteID = {1}",
 					rs = Db.rs(query);
 					if (rs.Read()) {
 						if (rs.IsDBNull(4)) {
-//							Db2.sendInvitation(sendSponsorInvitationID, rs.GetString(2).Trim(), rs.GetString(0), rs.GetString(1), rs.GetString(3));
 							sponsorRepository.UpdateSponsorInviteSent(sendSponsorInvitationID);
-//							Db.sendInvitation(sendSponsorInvitationID, rs.GetString(2).Trim(), rs.GetString(0), rs.GetString(1), rs.GetString(3));
 							Db.sendInvitation(sendSponsorInvitationID, rs.GetString(2).Trim(), rs.GetString(1), rs.GetString(0), rs.GetString(3));
 						} else {
 							string body = rs.GetString(7);
@@ -201,7 +203,6 @@ WHERE s.SponsorID = {0} AND si.SponsorInviteID = {1}",
 								body += "\r\n\r\n" + personalLink;
 							}
 
-//							Db2.sendMail(rs.GetString(2).Trim(), body, rs.GetString(8));
 							Db.sendMail(rs.GetString(2).Trim(), rs.GetString(8), body);
 						}
 					}
@@ -767,7 +768,7 @@ VALUES ({0},{1},{2})",
 				rs.Close();
 
 				// Add all present IDs
-				query = string.Format("SELECT DepartmentShort FROM Department WHERE DepartmentShort IS NOT NULL AND SponsorID = " + sponsorID);
+				query = string.Format("SELECT DepartmentShort FROM Department WHERE DepartmentShort IS NOT NULL AND SponsorID = {0}", sponsorID);
 				rs = Db.rs(query);
 				while (rs.Read()) {
 					units += ",'" + rs.GetString(0).Replace("'", "") + "'";
@@ -791,28 +792,38 @@ VALUES ({0},{1},{2})",
 							string unit = u[2].Replace("'", "");
 
 							// Insert new department
-							query = "SET NOCOUNT ON;" +
-								"SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;" +
-								"BEGIN TRAN;" +
-								"INSERT INTO Department (" +
-								"SponsorID," +
-								"Department," +
-								"DepartmentShort" +
-								") VALUES (" +
-								"" + sponsorID + "," +
-								"'" + unit + "'," +
-								"'" + id + "'" +
-								");" +
-								"SELECT DepartmentID FROM [Department] WHERE SponsorID=" + sponsorID + " AND DepartmentShort = '" + id + "' ORDER BY DepartmentID DESC;COMMIT;";
+							query = string.Format(
+								@"
+SET NOCOUNT ON;
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+BEGIN TRAN;
+INSERT INTO Department (SponsorID, Department, DepartmentShort)
+VALUES ({0}, '{1}', '{2}');
+SELECT DepartmentID FROM [Department] WHERE SponsorID={0} AND DepartmentShort = '{2}' ORDER BY DepartmentID DESC;
+COMMIT;",
+								sponsorID,
+								unit,
+								id
+							);
 							rs = Db.rs(query);
 							if (rs.Read()) {
 								// Update sort order
-								query = string.Format("UPDATE Department SET SortOrder = " + rs.GetInt32(0) + " WHERE DepartmentID = " + rs.GetInt32(0));
+								query = string.Format(
+									@"
+UPDATE Department SET SortOrder = {0} WHERE DepartmentID = {0}",
+									rs.GetInt32(0)
+								);
 								Db.exec(query);
 
 								if (Session["SponsorAdminID"].ToString() != "-1") {
 									// Add to sponsor admin mapping
-									query = string.Format("INSERT INTO SponsorAdminDepartment (SponsorAdminID,DepartmentID) VALUES (" + Session["SponsorAdminID"] + "," + rs.GetInt32(0) + ")");
+									query = string.Format(
+										@"
+INSERT INTO SponsorAdminDepartment (SponsorAdminID, DepartmentID)
+VALUES ({0}, {1})",
+										Session["SponsorAdminID"],
+										rs.GetInt32(0)
+									);
 									Db.exec(query);
 								}
 							}

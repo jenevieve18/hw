@@ -11,9 +11,6 @@ namespace HW.Grp
 {
 	public partial class Feedback : System.Web.UI.Page
 	{
-//		ISponsorRepository sponsorRepository = AppContext.GetRepositoryFactory().CreateSponsorRepository();
-//		IAnswerRepository answerRepository = AppContext.GetRepositoryFactory().CreateAnswerRepository();
-//		IProjectRepository projectRepository = AppContext.GetRepositoryFactory().CreateProjectRepository();
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		SqlAnswerRepository answerRepository = new SqlAnswerRepository();
 		SqlProjectRepository projectRepository = new SqlProjectRepository();
@@ -717,8 +714,8 @@ namespace HW.Grp
 									Db.sendMail("info@healthwatch.se", x, s.IndividualFeedbackEmailSubject, s.IndividualFeedbackEmailBody);
 								}
 							}
-//							List.Text += "<br/><A HREF=\"feedback.aspx?PRID=" + rs.GetInt32(0) + "&Send=" + x + "\"/>" + x + "</A>";
-							List.Text += "<br/><A HREF=\"feedback.aspx?PRID=" + s.ProjectRound.Id + "&Send=" + x + "\"/>" + x + "</A>";
+//							List.Text += "<br/><a href='feedback.aspx?PRID=" + rs.GetInt32(0) + "&Send=" + x + "'/>" + x + "</a>";
+							List.Text += "<br/><a href='feedback.aspx?PRID=" + s.ProjectRound.Id + "&Send=" + x + "'/>" + x + "</a>";
 						} else {
 							List.Text += "<br/>" + x;
 						}
@@ -740,7 +737,7 @@ namespace HW.Grp
 				var u = answerRepository.ReadByProjectRound(s.ProjectRound.Id);
 //				if (rs2.Read())
 				if (u != null) {
-					List.Text += "<br/><br/><I>Intervju</i><table border=\"1\"><tr><td>Email</td><td>Chef</td></tr>";
+					List.Text += "<br/><br/><I>Intervju</i><table border='1'><tr><td>Email</td><td>Chef</td></tr>";
 //					do
 					foreach (var v in u.Values) {
 //						List.Text += "<tr><td>" + rs2.GetString(0) + "</td><td>" + (rs2.IsDBNull(1) ? "" : rs2.GetString(1)) + "</td></tr>";
