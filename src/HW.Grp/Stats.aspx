@@ -43,7 +43,7 @@
 	.report-part-content { padding:20px; }
 	.ui-dialog {
 		font-family:Arial;
-		font-size:10pt;
+		font-size:11pt;
 	}
 </style>
 
