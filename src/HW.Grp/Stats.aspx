@@ -2,7 +2,7 @@
 <%@ Import Namespace="HW.Core.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-<link rel="stylesheet" href="assets/jquery-ui-1.9.2.custom/css/smoothness/jquery-ui-1.9.2.custom.min.css"/>
+<link rel="stylesheet" href="includes/jquery-ui-1.9.2.custom/css/smoothness/jquery-ui-1.9.2.custom.min.css"/>
 <style type="text/css">
 	.button {
 		display: inline-block;
@@ -47,7 +47,7 @@
 	}
 </style>
 
-<script type="text/javascript" src="assets/jquery-ui-1.9.2.custom/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script type="text/javascript" src="includes/jquery-ui-1.9.2.custom/js/jquery-ui-1.9.2.custom.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $(".chart-description").dialog({ autoOpen: false });
