@@ -2,7 +2,7 @@
 <%@ Import Namespace="HW.Core.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-<link rel="stylesheet" href="~/css/smoothness/jquery-ui-1.9.2.custom.min.css"/>
+<link rel="stylesheet" href="~/css/smoothness/jquery-ui-1.9.2.custom.min.css">
 <style type="text/css">
 	.button {
 		display: inline-block;
