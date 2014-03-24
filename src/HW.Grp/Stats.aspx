@@ -196,8 +196,8 @@
                     </span>
 				</div>
 				<div class="small action-desc"></div>
-				<div class="chart-description" title="Donec id elit non mi porta gravida">
-					<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
+				<div class="chart-description" title="">
+					<p></p>
 				</div>
 	        	<% foreach (var r in reportParts) { %>
 	       			<div>&nbsp;<br />&nbsp;<br /></div>
