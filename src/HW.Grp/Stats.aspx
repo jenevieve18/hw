@@ -2,7 +2,7 @@
 <%@ Import Namespace="HW.Core.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-<link rel="stylesheet" href="css/jquery-ui.css"/>
+<link rel="stylesheet" href="assets/jquery-ui-1.9.2.custom/css/smoothness/jquery-ui-1.9.2.custom.min.css"/>
 <style type="text/css">
 	.button {
 		display: inline-block;
@@ -41,18 +41,48 @@
 	.report-part { border:1px solid #e7e7e7; }
 	.report-part-subject { background:#efefef; padding:5px 0 5px 20px; }
 	.report-part-content { padding:20px; }
+	.ui-dialog {
+		font-family:Arial;
+		font-size:10pt;
+	}
 </style>
 
-<script type="text/javascript" src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="assets/jquery-ui-1.9.2.custom/js/jquery-ui-1.9.2.custom.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-    	$('#chart-description').dialog({ autoOpen: false });
-    	$('.report-part .report-part-content img').click(function() {
-    		$('#chart-description').dialog('open');
-    	});
+        $(".chart-description").dialog({ autoOpen: false });
+        $(".report-part .report-part-content img").click(function () {
+            d = $('.chart-description');
+            if (d.dialog('isOpen') == true) {
+                d.dialog('close');
+            }
+            plotType = $(this).closest('.report-part').find('.selected-plot-type').text();
+            plot = getPlot(plotType);
+            $('.ui-dialog-title').text(plot.title);
+            $('.chart-description p').text(plot.description);
+            d.dialog('open');
+        });
+
+        function getPlot(plotType) {
+            if (plotType == 1) {
+                return { title: 'Line Chart', description: 'chart displaying mean values.' };
+            } else if (plotType == 2) {
+                return { title: 'Line Chart with Standard Deviation', description: 'chart displaying mean values with Standard Deviation whiskers. The SD is a theoretical statistical measure that illustrates the range (variation from the average) in which approximately 67 % of the responses are. A low standard deviation indicates that the responses tend to be very close to the mean (lower variation); a high standard deviation indicates that the responses are spread out over a large range of values.' };
+            } else if (plotType == 3) {
+                return { title: 'Line Chart with Standard Deviation and Confidence Interval', description: 'Line Chart with Standard Deviation and Confidence Interval' };
+            } else if (plotType == 4) {
+                return { title: 'Box Plot Min/Max', description: 'Box Plot Min/Max' };
+            } else if (plotType == 5) {
+                return { title: 'Verbose', description: 'Verbose' };
+            } else if (plotType == 6) {
+                return { title: 'Box Plot', description: 'Box Plot' };
+            }
+        }
+
         $('.report-part .action .graph').click(function () {
             var partContent = $(this).closest('.report-part-content');
             var plotType = $(this).find('.plot-type').text();
+            $(this).closest('.report-part').find('.selected-plot-type').text(plotType);
 
             var img = partContent.find('img');
             var imageUrl = partContent.find('.hidden-image-url').text();
@@ -166,12 +196,13 @@
                     </span>
 				</div>
 				<div class="small action-desc"></div>
-				<!--<div id="chart-description">
+				<div class="chart-description" title="Donec id elit non mi porta gravida">
 					<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
-				</div>-->
+				</div>
 	        	<% foreach (var r in reportParts) { %>
 	       			<div>&nbsp;<br />&nbsp;<br /></div>
 					<div class="report-part">
+                        <div class="hidden selected-plot-type"><%= Plot.Line %></div>
 						<div class="report-part-subject">
 							<h3><%= r.Subject %></h3>
 						</div>
