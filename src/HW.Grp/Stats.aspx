@@ -65,17 +65,17 @@
 
         function getPlot(plotType) {
             if (plotType == 1) {
-                return { title: 'Line Chart', description: 'chart displaying mean values.' };
+                return { title: 'Line Chart', description: 'Chart displaying mean values.' };
             } else if (plotType == 2) {
                 return { title: 'Line Chart with Standard Deviation', description: 'chart displaying mean values with Standard Deviation whiskers. The SD is a theoretical statistical measure that illustrates the range (variation from the average) in which approximately 67 % of the responses are. A low standard deviation indicates that the responses tend to be very close to the mean (lower variation); a high standard deviation indicates that the responses are spread out over a large range of values.' };
             } else if (plotType == 3) {
-                return { title: 'Line Chart with Standard Deviation and Confidence Interval', description: 'Line Chart with Standard Deviation and Confidence Interval' };
+                return { title: 'Line Chart with Standard Deviation and Confidence Interval', description: 'chart displaying mean values, including whiskers that in average covers 1.96 SD, i.e. a theoretical distribution of approximately 95% of observations.' };
             } else if (plotType == 4) {
-                return { title: 'Box Plot Min/Max', description: 'Box Plot Min/Max' };
+                return { title: 'Box Plot Min/Max', description: 'median value chart, including one set of whiskers that covers 50% of observations, and another set of whiskers that captures min and max values' };
             } else if (plotType == 5) {
                 return { title: 'Verbose', description: 'Verbose' };
             } else if (plotType == 6) {
-                return { title: 'Box Plot', description: 'Box Plot' };
+                return { title: 'Box Plot', description: 'median value chart, similar to the min/max BloxPlot but removes outlying extreme values' };
             }
         }
 
@@ -84,7 +84,7 @@
             var plotType = $(this).find('.plot-type').text();
             $(this).closest('.report-part').find('.selected-plot-type').text(plotType);
 
-            var img = partContent.find('img');
+            var img = partContent.find('img.report-part-graph');
             var imageUrl = partContent.find('.hidden-image-url').text();
             img.attr('src', imageUrl + '&PLOT=' + plotType);
 
@@ -110,7 +110,8 @@
             $('.exportall-pptx-url').attr('href', exportAllPptxUrl + '&PLOT=' + plotType);
 
             $.each($('.report-part-content'), function () {
-                img = $(this).find('img');
+                $(this).closest('.report-part').find('.selected-plot-type').text(plotType);
+                img = $(this).find('img.report-part-graph');
                 imageUrl = $(this).find('.hidden-image-url').text();
                 img.attr('src', imageUrl + '&PLOT=' + plotType);
 
@@ -210,8 +211,10 @@
 						<div class="report-part-content">
                             <% string imageUrl = GetReportImageUrl(r.ReportPart.Id, r.Id, additionalQuery); %>
 							<span class="hidden hidden-image-url"><%= imageUrl %></span>
-							<%= HtmlHelper.Image(imageUrl) %>
+                            <img class="report-part-graph" src="<%= imageUrl %>" />
+							<!--<%= HtmlHelper.Image(imageUrl) %>-->
 							<div class="action">
+								<img class="info" src="img/information.png"/>
 								<span class="small">Change graph to:</span>
 								<span class="button white small graph"><span class="hidden plot-type"><%= Plot.Line %></span><%= Plot.GetString(Plot.Line) %></span>
 								<span class="button white small graph"><span class="hidden plot-type"><%= Plot.LineSD %></span><%= Plot.GetString(Plot.LineSD) %></span>
