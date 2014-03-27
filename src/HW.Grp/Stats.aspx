@@ -45,44 +45,65 @@
 		font-family:Arial;
 		font-size:11pt;
 	}
+	.chart-description1 {
+    border:1px solid #efefef;
+    padding:5px;
+    background-color:#fcfcfc;
+    margin-bottom:5px;
+    font-size:9pt;
+}
 </style>
 
 <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $(".chart-description").dialog({ autoOpen: false });
-        $(".report-part .report-part-content img").click(function () {
-            d = $('.chart-description');
-            if (d.dialog('isOpen') == true) {
-                d.dialog('close');
-            }
-            plotType = $(this).closest('.report-part').find('.selected-plot-type').text();
-            plot = getPlot(plotType);
-            $('.ui-dialog-title').text(plot.title);
-            $('.chart-description p').text(plot.description);
-            d.dialog('open');
-        });
-
-        function getPlot(plotType) {
-            if (plotType == 1) {
-                return { title: 'Line Chart', description: 'Chart displaying mean values.' };
-            } else if (plotType == 2) {
-                return { title: 'Line Chart with Standard Deviation', description: 'chart displaying mean values with Standard Deviation whiskers. The SD is a theoretical statistical measure that illustrates the range (variation from the average) in which approximately 67 % of the responses are. A low standard deviation indicates that the responses tend to be very close to the mean (lower variation); a high standard deviation indicates that the responses are spread out over a large range of values.' };
-            } else if (plotType == 3) {
-                return { title: 'Line Chart with Standard Deviation and Confidence Interval', description: 'chart displaying mean values, including whiskers that in average covers 1.96 SD, i.e. a theoretical distribution of approximately 95% of observations.' };
-            } else if (plotType == 4) {
-                return { title: 'Box Plot Min/Max', description: 'median value chart, including one set of whiskers that covers 50% of observations, and another set of whiskers that captures min and max values' };
-            } else if (plotType == 5) {
-                return { title: 'Verbose', description: 'Verbose' };
-            } else if (plotType == 6) {
-                return { title: 'Box Plot', description: 'median value chart, similar to the min/max BloxPlot but removes outlying extreme values' };
-            }
+    String.prototype.format = function () {
+        var formatted = this;
+        for (var arg in arguments) {
+            formatted = formatted.replace("{" + arg + "}", arguments[arg]);
         }
+        return formatted;
+    }
+    function getPlot(plotType) {
+        if (plotType == 1) {
+            return { title: 'Line Chart', description: 'Chart displaying mean values.' };
+        } else if (plotType == 2) {
+            return { title: 'Line Chart with Standard Deviation', description: 'chart displaying mean values with Standard Deviation whiskers. The SD is a theoretical statistical measure that illustrates the range (variation from the average) in which approximately 67 % of the responses are. A low standard deviation indicates that the responses tend to be very close to the mean (lower variation); a high standard deviation indicates that the responses are spread out over a large range of values.' };
+        } else if (plotType == 3) {
+            return { title: 'Line Chart with Standard Deviation and Confidence Interval', description: 'chart displaying mean values, including whiskers that in average covers 1.96 SD, i.e. a theoretical distribution of approximately 95% of observations.' };
+        } else if (plotType == 4) {
+            return { title: 'Box Plot Min/Max', description: 'median value chart, including one set of whiskers that covers 50% of observations, and another set of whiskers that captures min and max values' };
+        } else if (plotType == 5) {
+            return { title: 'Verbose', description: 'Verbose' };
+        } else if (plotType == 6) {
+            return { title: 'Box Plot', description: 'median value chart, similar to the min/max BloxPlot but removes outlying extreme values' };
+        }
+    }
+    function f(plotType) {
+        $(this).closest('.report-part').find('.selected-plot-type').text(plotType);
+        plot = getPlot(plotType);
+        $('.chart-description1').text("{0} - {1}".format(plot.title, plot.description));
+    }
+    $(document).ready(function () {
+        f(1);
+        //$(".chart-description").dialog({ autoOpen: false });
+        $(".report-part .report-part-content img").click(function () {
+            //d = $('.chart-description');
+            //if (d.dialog('isOpen') == true) {
+            //d.dialog('close');
+            //}
+            //plotType = $(this).closest('.report-part').find('.selected-plot-type').text();
+            //plot = getPlot(plotType);
+            //$('.ui-dialog-title').text(plot.title);
+            //$('.chart-description p').text(plot.description);
+            //d.dialog('open');
+            $(this).closest('.report-part').find('.chart-description1').slideToggle();
+        });
 
         $('.report-part .action .graph').click(function () {
             var partContent = $(this).closest('.report-part-content');
             var plotType = $(this).find('.plot-type').text();
-            $(this).closest('.report-part').find('.selected-plot-type').text(plotType);
+            //$(this).closest('.report-part').find('.selected-plot-type').text(plotType);
+            f(plotType);
 
             var img = partContent.find('img.report-part-graph');
             var imageUrl = partContent.find('.hidden-image-url').text();
@@ -110,7 +131,8 @@
             $('.exportall-pptx-url').attr('href', exportAllPptxUrl + '&PLOT=' + plotType);
 
             $.each($('.report-part-content'), function () {
-                $(this).closest('.report-part').find('.selected-plot-type').text(plotType);
+                //$(this).closest('.report-part').find('.selected-plot-type').text(plotType);
+                f(plotType);
                 img = $(this).find('img.report-part-graph');
                 imageUrl = $(this).find('.hidden-image-url').text();
                 img.attr('src', imageUrl + '&PLOT=' + plotType);
@@ -204,6 +226,7 @@
 	       			<div>&nbsp;<br />&nbsp;<br /></div>
 					<div class="report-part">
                         <div class="hidden selected-plot-type"><%= Plot.Line %></div>
+                        
 						<div class="report-part-subject">
 							<h3><%= r.Subject %></h3>
 						</div>
@@ -213,6 +236,7 @@
 							<span class="hidden hidden-image-url"><%= imageUrl %></span>
                             <img class="report-part-graph" src="<%= imageUrl %>" />
 							<!--<%= HtmlHelper.Image(imageUrl) %>-->
+                            <div class="chart-description1" style="display:none"></div>
 							<div class="action">
 								<img class="info" src="img/information.png"/>
 								<span class="small">Change graph to:</span>
