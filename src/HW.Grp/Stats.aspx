@@ -78,13 +78,17 @@
             return { title: 'Box Plot', description: 'median value chart, similar to the min/max BloxPlot but removes outlying extreme values' };
         }
     }
-    function f(plotType) {
-        $(this).closest('.report-part').find('.selected-plot-type').text(plotType);
+    function f(obj, plotType, all) {
+        obj.closest('.report-part').find('.selected-plot-type').text(plotType);
         plot = getPlot(plotType);
-        $('.chart-description1').text("{0} - {1}".format(plot.title, plot.description));
+        if (all) {
+            $('.chart-description1').text("{0} - {1}".format(plot.title, plot.description));
+        } else {
+            obj.closest('.report-part').find('.chart-description1').text("{0} - {1}".format(plot.title, plot.description));
+        }
     }
     $(document).ready(function () {
-        f(1);
+        f($('.report-part'), 1, true);
         //$(".chart-description").dialog({ autoOpen: false });
         $(".report-part .report-part-content img").click(function () {
             //d = $('.chart-description');
@@ -103,7 +107,7 @@
             var partContent = $(this).closest('.report-part-content');
             var plotType = $(this).find('.plot-type').text();
             //$(this).closest('.report-part').find('.selected-plot-type').text(plotType);
-            f(plotType);
+            f($(this), plotType, false);
 
             var img = partContent.find('img.report-part-graph');
             var imageUrl = partContent.find('.hidden-image-url').text();
@@ -132,7 +136,7 @@
 
             $.each($('.report-part-content'), function () {
                 //$(this).closest('.report-part').find('.selected-plot-type').text(plotType);
-                f(plotType);
+                f($(this), plotType, false);
                 img = $(this).find('img.report-part-graph');
                 imageUrl = $(this).find('.hidden-image-url').text();
                 img.attr('src', imageUrl + '&PLOT=' + plotType);
@@ -226,7 +230,6 @@
 	       			<div>&nbsp;<br />&nbsp;<br /></div>
 					<div class="report-part">
                         <div class="hidden selected-plot-type"><%= Plot.Line %></div>
-                        
 						<div class="report-part-subject">
 							<h3><%= r.Subject %></h3>
 						</div>
