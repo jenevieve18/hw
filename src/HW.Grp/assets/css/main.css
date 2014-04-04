@@ -1,0 +1,71 @@
+﻿.detail {
+	width: 32px;
+	height: 16px;
+	background:url(https://healthwatch.se/includes/resources/myhealth_statistics_bar_detail_toggle.gif);
+}
+
+.button {
+	display: inline-block;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	/*font: 14px/100% Arial, Helvetica, sans-serif;*/
+	padding: .5em 2em .55em;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+	-webkit-border-radius: .4em;
+	-moz-border-radius: .4em;
+	border-radius: .4em;
+	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+}
+
+.button:hover {
+	text-decoration: none;
+}
+
+.button:active {
+	position: relative;
+	top: 1px;
+}
+
+.white {
+	color: #606060;
+	border: solid 1px #b7b7b7;
+}
+
+.white:hover {
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#dcdcdc));
+}
+
+.small {
+	font-size: 11px;
+	padding: .2em 1em .275em;
+}
+
+.report-part {
+	border:1px solid #e7e7e7;
+}
+
+.report-part-subject {
+	background:#efefef;
+	padding:5px 0 5px 20px;
+}
+
+.report-part-content {
+	padding:20px;
+}
+
+.ui-dialog {
+	font-family:Arial;
+	font-size:11pt;
+}
+
+.chart-description1 {
+	border:1px solid #efefef;
+	padding:5px;
+	background-color:#fcfcfc;
+	margin-bottom:5px;
+	font-size:9pt;
+}
