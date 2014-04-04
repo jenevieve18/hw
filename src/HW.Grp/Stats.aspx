@@ -4,53 +4,91 @@
 
 <link rel="stylesheet" href="css/smoothness/jquery-ui-1.9.2.custom.min.css">
 <style type="text/css">
-	.button {
-		display: inline-block;
-		outline: none;
-		cursor: pointer;
-		text-align: center;
-		text-decoration: none;
-		/*font: 14px/100% Arial, Helvetica, sans-serif;*/
-		padding: .5em 2em .55em;
-		text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
-		-webkit-border-radius: .4em;
-		-moz-border-radius: .4em;
-		border-radius: .4em;
-		-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
-		-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
-		box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
-	}
-	.button:hover {
-		text-decoration: none;
-	}
-	.button:active {
-		position: relative;
-		top: 1px;
-	}
-	.white {
-		color: #606060;
-		border: solid 1px #b7b7b7;
-	}
-	.white:hover {
-		background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#dcdcdc));
-	}
-	.small {
-		font-size: 11px;
-		padding: .2em 1em .275em;
-	}
-	.report-part { border:1px solid #e7e7e7; }
-	.report-part-subject { background:#efefef; padding:5px 0 5px 20px; }
-	.report-part-content { padding:20px; }
-	.ui-dialog {
-		font-family:Arial;
-		font-size:11pt;
-	}
-	.chart-description1 {
+.button {
+	display: inline-block;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	/*font: 14px/100% Arial, Helvetica, sans-serif;*/
+	padding: .5em 2em .55em;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+	-webkit-border-radius: .4em;
+	-moz-border-radius: .4em;
+	border-radius: .4em;
+	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+}
+.button:hover {
+	text-decoration: none;
+}
+.button:active {
+	position: relative;
+	top: 1px;
+}
+.white {
+	color: #606060;
+	border: solid 1px #b7b7b7;
+}
+.white:hover {
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#dcdcdc));
+}
+.small {
+	font-size: 11px;
+	padding: .2em 1em .275em;
+}
+.report-part {
+	border:1px solid #e7e7e7;
+	padding:10px;
+}
+.report-part:hover {
+	background:#f1f9fd;
+}
+.report-part-subject {
+	/*background:#efefef;
+	padding:5px 0 5px 20px;*/
+	cursor:pointer;
+}
+.report-part-header {
+	padding:5px 0;
+	font-size:13px;
+}
+.report-part-content {
+	background:white;
+	padding:10px;
+	margin-top:5px;
+}
+/*.report-part-subject {
+    height:16px;
+    clear:both;
+    cursor:pointer;
+}
+.report-part-subject h3 {
+    float:left;
+}
+.report-part-subject span {
+    float:right;
+}*/
+.chart-description1 {
     border:1px solid #efefef;
     padding:5px;
     background-color:#fcfcfc;
     margin-bottom:5px;
     font-size:9pt;
+}
+.toggle {
+    width: 32px;
+    height: 16px;
+    background:url(https://healthwatch.se/includes/resources/myhealth_statistics_bar_detail_toggle.gif);
+    display:inline-block;
+    float:right;
+}
+.toggle-active {
+}
+.toggle-active-hover {
+    background:url(https://healthwatch.se/includes/resources/myhealth_statistics_bar_detail_toggle.gif);
+    background-position:0 -16px;
 }
 </style>
 
@@ -89,24 +127,21 @@
     }
     $(document).ready(function () {
         f($('.report-part'), 1, true);
-        //$(".chart-description").dialog({ autoOpen: false });
         $(".report-part .report-part-content img").click(function () {
-            //d = $('.chart-description');
-            //if (d.dialog('isOpen') == true) {
-            //d.dialog('close');
-            //}
-            //plotType = $(this).closest('.report-part').find('.selected-plot-type').text();
-            //plot = getPlot(plotType);
-            //$('.ui-dialog-title').text(plot.title);
-            //$('.chart-description p').text(plot.description);
-            //d.dialog('open');
             $(this).closest('.report-part').find('.chart-description1').slideToggle();
         });
-
+        $('.report-part-subject').mouseover(function() {
+		    $(this).closest('.report-part').find('.toggle').removeClass('toggle-active').addClass('toggle-active-hover');
+		});
+		$('.report-part-subject').mouseleave(function() {
+		    $(this).closest('.report-part').find('.toggle').removeClass('toggle-active-hover').addClass('toggle-active-');
+		});
+		$('.report-part-subject').click(function() {
+		    $(this).closest('.report-part').find('.report-part-header').slideToggle();
+		});
         $('.report-part .action .graph').click(function () {
             var partContent = $(this).closest('.report-part-content');
             var plotType = $(this).find('.plot-type').text();
-            //$(this).closest('.report-part').find('.selected-plot-type').text(plotType);
             f($(this), plotType, false);
 
             var img = partContent.find('img.report-part-graph');
@@ -135,7 +170,6 @@
             $('.exportall-pptx-url').attr('href', exportAllPptxUrl + '&PLOT=' + plotType);
 
             $.each($('.report-part-content'), function () {
-                //$(this).closest('.report-part').find('.selected-plot-type').text(plotType);
                 f($(this), plotType, false);
                 img = $(this).find('img.report-part-graph');
                 imageUrl = $(this).find('.hidden-image-url').text();
@@ -195,7 +229,7 @@
 			<div class="report-parts">
 				<div class="action">
 					<span class="small">Change all graphs to:</span>
-					<span class="button white small graph"><span class="hidden plot-type"><%= Plot.Line %></span><%= Plot.GetString(Plot.Line) %></span>
+					<span id="modal" class="button white small graph"><span class="hidden plot-type"><%= Plot.Line %></span><%= Plot.GetString(Plot.Line) %></span>
 					<span class="button white small graph"><span class="hidden plot-type"><%= Plot.LineSD %></span><%= Plot.GetString(Plot.LineSD) %></span>
 					<span class="button white small graph"><span class="hidden plot-type"><%= Plot.LineSDWithCI %></span><%= Plot.GetString(Plot.LineSDWithCI) %></span>
                     <% if (supportsBoxPlot) { %>
@@ -222,26 +256,21 @@
 						<%= HtmlHelper.Anchor("xls verbose", exportAllXlsUrl + "&PLOT=" + Plot.Verbose, new Dictionary<string, string>() { { "class", "exportall-xls-verbose-url" } }, "_blank")%>
                     </span>
 				</div>
-				<div class="small action-desc"></div>
-				<div class="chart-description" title="">
-					<p></p>
-				</div>
 	        	<% foreach (var r in reportParts) { %>
 	       			<div>&nbsp;<br />&nbsp;<br /></div>
 					<div class="report-part">
                         <div class="hidden selected-plot-type"><%= Plot.Line %></div>
 						<div class="report-part-subject">
-							<h3><%= r.Subject %></h3>
+							<span><%= r.Subject %></span>
+                            <span class="toggle toggle-active"></span>
 						</div>
-						<%--<div class="report-part-header"><%= r.Header %></div>--%>
+						<div class="report-part-header"><%= r.Header %></div>
 						<div class="report-part-content">
                             <% string imageUrl = GetReportImageUrl(r.ReportPart.Id, r.Id, additionalQuery); %>
 							<span class="hidden hidden-image-url"><%= imageUrl %></span>
-                            <img class="report-part-graph" src="<%= imageUrl %>" />
-							<!--<%= HtmlHelper.Image(imageUrl) %>-->
+                            <img class="report-part-graph" src="<%= imageUrl %>" alt="" />
                             <div class="chart-description1" style="display:none"></div>
 							<div class="action">
-								<img class="info" src="img/information.png"/>
 								<span class="small">Change graph to:</span>
 								<span class="button white small graph"><span class="hidden plot-type"><%= Plot.Line %></span><%= Plot.GetString(Plot.Line) %></span>
 								<span class="button white small graph"><span class="hidden plot-type"><%= Plot.LineSD %></span><%= Plot.GetString(Plot.LineSD) %></span>
@@ -250,6 +279,7 @@
 									<span class="button white small graph"><span class="hidden plot-type"><%= Plot.BoxPlotMinMax %></span><%= Plot.GetString(Plot.BoxPlotMinMax) %></span>
                                     <span class="button white small graph"><span class="hidden plot-type"><%= Plot.BoxPlot %></span><%= Plot.GetString(Plot.BoxPlot) %></span>
 								<% } %>
+                                <span class="detail"></span>
 								<span class="small">Export graph to:</span>
 								<span class="button white small export">
                                     <% string exportDocXUrl = GetExportUrl(r.ReportPart.Id, r.Id, "docx", additionalQuery); %>
@@ -270,7 +300,6 @@
 									<%= HtmlHelper.Anchor("xls verbose", exportXlsUrl + "&PLOT=" + Plot.Verbose, new Dictionary<string, string>() { { "class", "export-xls-verbose-url" } }, "_blank")%>
 								</span>
 							</div>
-							<div class="small action-desc"></div>
 						</div>
 						<div class="report-part-bottom">&nbsp;</div>
 					</div>
@@ -279,4 +308,9 @@
 		<% } %>
     </div>
 
+
+
 </asp:Content>
+
+
+
