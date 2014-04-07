@@ -4,6 +4,7 @@
 
 <link rel="stylesheet" href="css/smoothness/jquery-ui-1.9.2.custom.min.css">
 <style type="text/css">
+
 .button {
 	display: inline-block;
 	outline: none;
@@ -40,18 +41,18 @@
 }
 .report-part {
 	border:1px solid #e7e7e7;
+}
+.report-part-subject, .report-part-header, .report-part-content {
 	padding:10px;
 }
-.report-part:hover {
+/*.report-part:hover {
 	background:#f1f9fd;
-}
+}*/
 .report-part-subject {
-	/*background:#efefef;
-	padding:5px 0 5px 20px;*/
+    background:#e7e7e7;
 	cursor:pointer;
 }
 .report-part-header {
-	padding:5px 0;
 	font-size:13px;
 }
 .report-part-content {
@@ -257,14 +258,14 @@
                     </span>
 				</div>
 	        	<% foreach (var r in reportParts) { %>
-	       			<div>&nbsp;<br />&nbsp;<br /></div>
+	       			<div>&nbsp;<br /></div>
 					<div class="report-part">
                         <div class="hidden selected-plot-type"><%= Plot.Line %></div>
 						<div class="report-part-subject">
 							<span><%= r.Subject %></span>
                             <span class="toggle toggle-active"></span>
 						</div>
-						<div class="report-part-header"><%= r.Header %></div>
+						<div class="report-part-header hidden"><%= r.Header %></div>
 						<div class="report-part-content">
                             <% string imageUrl = GetReportImageUrl(r.ReportPart.Id, r.Id, additionalQuery); %>
 							<span class="hidden hidden-image-url"><%= imageUrl %></span>
