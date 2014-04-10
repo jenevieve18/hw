@@ -51,6 +51,8 @@ namespace HW.Grp
 						Session["SeeUsers"] = s.SeeUsers ? 1 : 0;
 						Session["ReadOnly"] = s.ReadOnly ? 1 : 0;
 					}
+				} else {
+					errorMessage = "Invalid user name and password. Please try again.";
 				}
 			}
 			if (login && (Session["SponsorAdminID"] != null || Session["SuperAdminID"] != null)) {
