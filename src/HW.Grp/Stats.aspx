@@ -5,6 +5,10 @@
 <link rel="stylesheet" href="css/smoothness/jquery-ui-1.9.2.custom.min.css">
 <style type="text/css">
 
+.ui-widget {
+    font-family:Arial;
+    font-size:13px;
+}
 .button {
 	display: inline-block;
 	outline: none;
@@ -83,6 +87,9 @@
     height: 16px;
     background:url(https://healthwatch.se/includes/resources/myhealth_statistics_bar_detail_toggle.gif);
     display:inline-block;
+    cursor:pointer;
+}
+.toggle-right {
     float:right;
 }
 .toggle-active {
@@ -123,23 +130,35 @@
         if (all) {
             $('.chart-description1').text("{0} - {1}".format(plot.title, plot.description));
         } else {
-            obj.closest('.report-part').find('.chart-description1').text("{0} - {1}".format(plot.title, plot.description));
+            //obj.closest('.report-part').find('.chart-description1').text("{0} - {1}".format(plot.title, plot.description));
+            obj.closest('.report-part').find('.chart-description').find('p').text(plot.description);
         }
     }
     $(document).ready(function () {
         f($('.report-part'), 1, true);
-        $(".report-part .report-part-content img").click(function () {
-            $(this).closest('.report-part').find('.chart-description1').slideToggle();
+        $('.report-part-header').hide();
+        /*$(".report-part .report-part-content img").click(function () {
+        $(this).closest('.report-part').find('.chart-description1').slideToggle();
+        });*/
+        $('.chart-description').dialog({ autoOpen: false, width: 550, height: 270 });
+        $('.toggle-chart-description').click(function () {
+            $('.chart-description').dialog('open');
         });
-        $('.report-part-subject').mouseover(function() {
-		    $(this).closest('.report-part').find('.toggle').removeClass('toggle-active').addClass('toggle-active-hover');
-		});
-		$('.report-part-subject').mouseleave(function() {
-		    $(this).closest('.report-part').find('.toggle').removeClass('toggle-active-hover').addClass('toggle-active-');
-		});
-		$('.report-part-subject').click(function() {
-		    $(this).closest('.report-part').find('.report-part-header').slideToggle();
-		});
+        $('.report-part-subject').mouseover(function () {
+            $(this).closest('.report-part').find('.toggle-right').removeClass('toggle-active').addClass('toggle-active-hover');
+        });
+        $('.report-part-subject').mouseleave(function () {
+            $(this).closest('.report-part').find('.toggle-right').removeClass('toggle-active-hover').addClass('toggle-active-');
+        });
+        $('.toggle-chart-description').mouseover(function () {
+            $(this).removeClass('toggle-active').addClass('toggle-active-hover');
+        });
+        $('.toggle-chart-description').mouseleave(function () {
+            $(this).removeClass('toggle-active-hover').addClass('toggle-active');
+        });
+        $('.report-part-subject').click(function () {
+            $(this).closest('.report-part').find('.report-part-header').slideToggle();
+        });
         $('.report-part .action .graph').click(function () {
             var partContent = $(this).closest('.report-part-content');
             var plotType = $(this).find('.plot-type').text();
@@ -257,20 +276,23 @@
 						<%= HtmlHelper.Anchor("xls verbose", exportAllXlsUrl + "&PLOT=" + Plot.Verbose, new Dictionary<string, string>() { { "class", "exportall-xls-verbose-url" } }, "_blank")%>
                     </span>
 				</div>
+    <div class="chart-description" title="Basic dialog">
+        <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+    </div>
 	        	<% foreach (var r in reportParts) { %>
 	       			<div>&nbsp;<br /></div>
 					<div class="report-part">
                         <div class="hidden selected-plot-type"><%= Plot.Line %></div>
 						<div class="report-part-subject">
 							<span><%= r.Subject %></span>
-                            <span class="toggle toggle-active"></span>
+                            <span class="toggle toggle-right toggle-active"></span>
 						</div>
-						<div class="report-part-header hidden"><%= r.Header %></div>
+						<div class="report-part-header"><%= r.Header %></div>
 						<div class="report-part-content">
                             <% string imageUrl = GetReportImageUrl(r.ReportPart.Id, r.Id, additionalQuery); %>
 							<span class="hidden hidden-image-url"><%= imageUrl %></span>
                             <img class="report-part-graph" src="<%= imageUrl %>" alt="" />
-                            <div class="chart-description1" style="display:none"></div>
+                            <!--<div class="chart-description1" style="display:none"></div>-->
 							<div class="action">
 								<span class="small">Change graph to:</span>
 								<span class="button white small graph"><span class="hidden plot-type"><%= Plot.Line %></span><%= Plot.GetString(Plot.Line) %></span>
@@ -280,7 +302,7 @@
 									<span class="button white small graph"><span class="hidden plot-type"><%= Plot.BoxPlotMinMax %></span><%= Plot.GetString(Plot.BoxPlotMinMax) %></span>
                                     <span class="button white small graph"><span class="hidden plot-type"><%= Plot.BoxPlot %></span><%= Plot.GetString(Plot.BoxPlot) %></span>
 								<% } %>
-                                <span class="detail"></span>
+                                <span class="toggle toggle-chart-description"></span>
 								<span class="small">Export graph to:</span>
 								<span class="button white small export">
                                     <% string exportDocXUrl = GetExportUrl(r.ReportPart.Id, r.Id, "docx", additionalQuery); %>
