@@ -11,63 +11,67 @@ namespace HW.Core.Helpers
 {
 	public class Db
 	{
-		public static void connectSPI(int connectSPIID)
+		public static void connectSPI(int sponsorInviteID)
 		{
-			int sponsorID = 0;
-			int userID = 0;
-			int departmentID = 0;
-			int fromSponsorID = 0;
-			string email = "";
-			string query = string.Format(
-				@"
-SELECT SponsorID,
-	Email,
-	DepartmentID
-FROM SponsorInvite
-WHERE UserID IS NULL
-AND SponsorInviteID = {0}",
-				connectSPIID
-			);
-			SqlDataReader rs = Db.rs(query);
-			if (rs.Read()) {
-				sponsorID = rs.GetInt32(0);
-				email = rs.GetString(1);
-				departmentID = rs.GetInt32(2);
+//			int sponsorID = 0;
+//			int userID = 0;
+//			int departmentID = 0;
+//			int fromSponsorID = 0;
+//			string email = "";
+//			string query = string.Format(
+//				@"
+//SELECT SponsorID,
+//	Email,
+//	DepartmentID
+//FROM SponsorInvite
+//WHERE UserID IS NULL
+//AND SponsorInviteID = {0}",
+//				sponsorInviteID
+//			);
+//			SqlDataReader rs = Db.rs(query);
+var i = new SqlSponsorRepository().ReadSponsorInvite(sponsorInviteID);
+//			if (rs.Read()) {
+if (i != null) {
+//				sponsorID = i.Sponsor.Id; // rs.GetInt32(0);
+//				email = i.Email; //rs.GetString(1);
+//				departmentID = i.Department.Id; //rs.GetInt32(2);
+				
+				new SqlUserRepository().lalala(sponsorInviteID, i.Sponsor.Id, i.Email, i.Department.Id);
 			}
-			rs.Close();
+//			rs.Close();
 
-			if (sponsorID != 0) {
-				query = string.Format(
-					@"
-SELECT u2.UserID,
-	u2.SponsorID
-FROM [User] u2
-LEFT OUTER JOIN SponsorInvite si ON u2.UserID = si.UserID
-WHERE u2.Email = '{0}' OR si.Email = '{0}'",
-					email.Replace("'", "''")
-				);
-				rs = Db.rs(query);
-				if (rs.Read()) {
-					userID = rs.GetInt32(0);
-					fromSponsorID = rs.GetInt32(1);
-
-					Db.rewritePRU(fromSponsorID, sponsorID, userID);
-					Db.exec("UPDATE SponsorInvite SET SponsorID = -ABS(SponsorID), DepartmentID = -ABS(DepartmentID), UserID = -ABS(UserID) WHERE UserID = " + userID);
-					Db.exec("UPDATE SponsorInvite SET UserID = " + userID + ", Sent = GETDATE() WHERE SponsorInviteID = " + connectSPIID);
-					Db.exec("UPDATE [User] SET DepartmentID = " + departmentID + ", SponsorID = " + sponsorID + " WHERE UserID = " + userID);
-					Db.exec("UPDATE UserProfile SET DepartmentID = " + departmentID + ", SponsorID = " + sponsorID + " WHERE UserID = " + userID);
-					
-					while (rs.Read()) {
-						userID = rs.GetInt32(0);
-						Db.exec("UPDATE SponsorInvite SET SponsorID = -ABS(SponsorID), DepartmentID = -ABS(DepartmentID), UserID = -ABS(UserID) WHERE UserID = " + userID);
-						Db.exec("UPDATE [User] SET DepartmentID = NULL, SponsorID = 1 WHERE UserID = " + userID);
-						Db.exec("UPDATE UserProfile SET DepartmentID = NULL, SponsorID = 1 WHERE UserID = " + userID);
-					}
-				}
-				rs.Close();
-
-				Db.exec("UPDATE SponsorInvite SET SponsorID = -ABS(SponsorID), DepartmentID = -ABS(DepartmentID), UserID = -ABS(UserID) WHERE Email = '" + email.Replace("'", "") + "' AND SponsorInviteID <> " + connectSPIID);
-			}
+//			if (sponsorID != 0) {
+//				query = string.Format(
+//					@"
+//SELECT u2.UserID,
+//	u2.SponsorID
+//FROM [User] u2
+//LEFT OUTER JOIN SponsorInvite si ON u2.UserID = si.UserID
+//WHERE u2.Email = '{0}' OR si.Email = '{0}'",
+//					email.Replace("'", "''")
+//				);
+//				rs = Db.rs(query);
+//				if (rs.Read()) {
+//					userID = rs.GetInt32(0);
+//					fromSponsorID = rs.GetInt32(1);
+//
+//					Db.rewritePRU(fromSponsorID, sponsorID, userID);
+//					Db.exec("UPDATE SponsorInvite SET SponsorID = -ABS(SponsorID), DepartmentID = -ABS(DepartmentID), UserID = -ABS(UserID) WHERE UserID = " + userID);
+//					Db.exec("UPDATE SponsorInvite SET UserID = " + userID + ", Sent = GETDATE() WHERE SponsorInviteID = " + sponsorInviteID);
+//					Db.exec("UPDATE [User] SET DepartmentID = " + departmentID + ", SponsorID = " + sponsorID + " WHERE UserID = " + userID);
+//					Db.exec("UPDATE UserProfile SET DepartmentID = " + departmentID + ", SponsorID = " + sponsorID + " WHERE UserID = " + userID);
+//					
+//					while (rs.Read()) {
+//						userID = rs.GetInt32(0);
+//						Db.exec("UPDATE SponsorInvite SET SponsorID = -ABS(SponsorID), DepartmentID = -ABS(DepartmentID), UserID = -ABS(UserID) WHERE UserID = " + userID);
+//						Db.exec("UPDATE [User] SET DepartmentID = NULL, SponsorID = 1 WHERE UserID = " + userID);
+//						Db.exec("UPDATE UserProfile SET DepartmentID = NULL, SponsorID = 1 WHERE UserID = " + userID);
+//					}
+//				}
+//				rs.Close();
+//
+//				Db.exec("UPDATE SponsorInvite SET SponsorID = -ABS(SponsorID), DepartmentID = -ABS(DepartmentID), UserID = -ABS(UserID) WHERE Email = '" + email.Replace("'", "") + "' AND SponsorInviteID <> " + sponsorInviteID);
+//			}
 		}
 		
 		public static void rewritePRU(int fromSponsorID, int sponsorID, int userID)

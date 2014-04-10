@@ -550,15 +550,20 @@ WHERE s.SponsorID = " + sponsorID + " AND si.SponsorInviteID = " + inviteID
 		{
 			string query = string.Format(
 				@"
-SELECT Email
+SELECT SponsorID,
+	Email,
+	DepartmentID
 FROM SponsorInvite
+WHERE UserID IS NULL
 WHERE SponsorInviteID = {0}",
 				sponsorInviteID
 			);
 			using (SqlDataReader rs = Db.rs(query)) {
 				if (rs.Read()) {
 					var i = new SponsorInvite {
-						Email = rs.GetString(0)
+						Sponsor = new Sponsor { Id = GetInt32(rs, 0) },
+						Email = GetString(rs, 1),
+						Department = new Department { Id = GetInt32(rs, 2) }
 					};
 					return i;
 				}

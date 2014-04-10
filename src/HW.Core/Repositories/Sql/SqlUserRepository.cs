@@ -100,6 +100,39 @@ WHERE u.UserID = {0}",
 			return null;
 		}
 		
+		public void lalala(int sponsorInviteID, int sponsorID, string email, int departmentID)
+		{
+			string query = string.Format(
+				@"
+SELECT u2.UserID,
+	u2.SponsorID
+FROM [User] u2
+LEFT OUTER JOIN SponsorInvite si ON u2.UserID = si.UserID
+WHERE u2.Email = '{0}' OR si.Email = '{0}'",
+				email.Replace("'", "''")
+			);
+			using (SqlDataReader rs = Db.rs(query)) {
+				if (rs.Read()) {
+					int userID = rs.GetInt32(0);
+					int fromSponsorID = rs.GetInt32(1);
+
+					Db.rewritePRU(fromSponsorID, sponsorID, userID);
+					Db.exec("UPDATE SponsorInvite SET SponsorID = -ABS(SponsorID), DepartmentID = -ABS(DepartmentID), UserID = -ABS(UserID) WHERE UserID = " + userID);
+					Db.exec("UPDATE SponsorInvite SET UserID = " + userID + ", Sent = GETDATE() WHERE SponsorInviteID = " + sponsorInviteID);
+					Db.exec("UPDATE [User] SET DepartmentID = " + departmentID + ", SponsorID = " + sponsorID + " WHERE UserID = " + userID);
+					Db.exec("UPDATE UserProfile SET DepartmentID = " + departmentID + ", SponsorID = " + sponsorID + " WHERE UserID = " + userID);
+					
+					while (rs.Read()) {
+						userID = rs.GetInt32(0);
+						Db.exec("UPDATE SponsorInvite SET SponsorID = -ABS(SponsorID), DepartmentID = -ABS(DepartmentID), UserID = -ABS(UserID) WHERE UserID = " + userID);
+						Db.exec("UPDATE [User] SET DepartmentID = NULL, SponsorID = 1 WHERE UserID = " + userID);
+						Db.exec("UPDATE UserProfile SET DepartmentID = NULL, SponsorID = 1 WHERE UserID = " + userID);
+					}
+				}
+				Db.exec("UPDATE SponsorInvite SET SponsorID = -ABS(SponsorID), DepartmentID = -ABS(DepartmentID), UserID = -ABS(UserID) WHERE Email = '" + email.Replace("'", "") + "' AND SponsorInviteID <> " + sponsorInviteID);
+			}
+		}
+		
 		public User ReadById(int userID)
 		{
 			string query = string.Format(
