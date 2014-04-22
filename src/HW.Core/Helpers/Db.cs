@@ -197,23 +197,23 @@ WHERE ProjectRoundUnitID = {0}",
 			return getInt32(sqlString, "SqlConnection");
 		}
 
-		public static int getInt32(string sqlString, string con)
+		public static int getInt32(string query, string con)
 		{
-			int returnValue = 0;
-			SqlConnection dataConnection = new SqlConnection(ConfigurationManager.AppSettings[con]);
-			dataConnection.Open();
-			SqlCommand dataCommand = new SqlCommand(sqlString.Replace("\\", "\\\\"), dataConnection);
-			dataCommand.CommandTimeout = 900;
-			SqlDataReader dataReader = dataCommand.ExecuteReader();
-			if (dataReader.Read()) {
-				if (!dataReader.IsDBNull(0)) {
-					returnValue = Convert.ToInt32(dataReader.GetValue(0));
+			int val = 0;
+			SqlConnection connection = new SqlConnection(ConfigurationManager.AppSettings[con]);
+			connection.Open();
+			SqlCommand cmd = new SqlCommand(query.Replace("\\", "\\\\"), connection);
+			cmd.CommandTimeout = 900;
+			SqlDataReader rs = cmd.ExecuteReader();
+			if (rs.Read()) {
+				if (!rs.IsDBNull(0)) {
+					val = Convert.ToInt32(rs.GetValue(0));
 				}
 			}
-			dataReader.Close();
-			dataConnection.Close();
-			dataConnection.Dispose();
-			return returnValue;
+			rs.Close();
+			connection.Close();
+			connection.Dispose();
+			return val;
 		}
 
 		public static string HashMD5(string str)

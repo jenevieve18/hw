@@ -135,12 +135,13 @@
         }
     }
     $(document).ready(function () {
+        $('#accordion').accordion({ collapsible: true, active: true, heightStyle: 'content' });
         f($('.report-part'), 1, true);
         $('.report-part-header').hide();
         /*$(".report-part .report-part-content img").click(function () {
         $(this).closest('.report-part').find('.chart-description1').slideToggle();
         });*/
-        $('.chart-description').dialog({ autoOpen: false, width: 550, height: 270 });
+        $('.chart-description').dialog({ autoOpen: false, width: 600, height: 480 });
         $('.toggle-chart-description').click(function () {
             $('.chart-description').dialog('open');
         });
@@ -248,42 +249,47 @@
             <% bool supportsBoxPlot = SelectedDepartments.Count == 1 || Grouping.SelectedValue == "0"; %>
 			<div class="report-parts">
 				<div class="action">
-    <div class="chart-description" title="Basic dialog">
-        <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+    <div class="chart-description" title="Chart Descriptions">
+        <div id="accordion">
+        <% foreach (var p in plotTypes) { %>
+            <h3><%= p.Name %></h3>
+            <div><p><%= p.Description %></p></div>
+        <% } %>
+        </div>
     </div>
 					<span class="small">Change all graphs to:</span>
-					<span id="modal" class="button white small graph"><span class="hidden plot-type"><%= Plot.Line %></span><%= Plot.GetString(Plot.Line) %></span>
-					<span class="button white small graph"><span class="hidden plot-type"><%= Plot.LineSD %></span><%= Plot.GetString(Plot.LineSD) %></span>
-					<span class="button white small graph"><span class="hidden plot-type"><%= Plot.LineSDWithCI %></span><%= Plot.GetString(Plot.LineSDWithCI) %></span>
+					<span id="modal" class="button white small graph"><span class="hidden plot-type"><%= PlotType.Line%></span><%= PlotType.GetString(PlotType.Line)%></span>
+					<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.LineSD %></span><%= PlotType.GetString(PlotType.LineSD)%></span>
+					<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.LineSDWithCI %></span><%= PlotType.GetString(PlotType.LineSDWithCI)%></span>
                     <% if (supportsBoxPlot) { %>
-						<span class="button white small graph"><span class="hidden plot-type"><%= Plot.BoxPlotMinMax %></span><%= Plot.GetString(Plot.BoxPlotMinMax) %></span>
-						<span class="button white small graph"><span class="hidden plot-type"><%= Plot.BoxPlot %></span><%= Plot.GetString(Plot.BoxPlot) %></span>
+						<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.BoxPlotMinMax %></span><%= PlotType.GetString(PlotType.BoxPlotMinMax)%></span>
+						<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.BoxPlot %></span><%= PlotType.GetString(PlotType.BoxPlot)%></span>
 					<% } %>
                                 <span class="toggle toggle-chart-description"></span>
 					<span class="small">Export all graphs to:</span>
 					<span class="button white small export">
                         <% string exportAllDocXUrl = GetExportAllUrl("docx", additionalQuery); %>
                         <span class="hidden hidden-exportall-docx-url"><%= exportAllDocXUrl%></span>
-						<%= HtmlHelper.Anchor("docx", exportAllDocXUrl, new Dictionary<string, string>() { { "class", "exportall-docx-url" } }, "_blank")%>
+						<%= HtmlHelper.Anchor("docx", exportAllDocXUrl, "class='exportall-docx-url'", "_blank") %>
                     </span>
 					<span class="button white small export">
                         <% string exportAllPptxUrl = GetExportAllUrl("pptx", additionalQuery); %>
                         <span class="hidden hidden-exportall-pptx-url"><%= exportAllPptxUrl%></span>
-						<%= HtmlHelper.Anchor("pptx", exportAllPptxUrl, new Dictionary<string, string>() { { "class", "exportall-pptx-url" } }, "_blank")%>
+						<%= HtmlHelper.Anchor("pptx", exportAllPptxUrl, "class='exportall-pptx-url'", "_blank") %>
                     </span>
                     <% string exportAllXlsUrl = GetExportAllUrl("xls", additionalQuery); %>
 					<span class="button white small export">
                         <span class="hidden hidden-exportall-xls-url"><%= exportAllXlsUrl%></span>
-						<%= HtmlHelper.Anchor("xls", exportAllXlsUrl, new Dictionary<string, string>() { { "class", "exportall-xls-url" } }, "_blank")%>
+						<%= HtmlHelper.Anchor("xls", exportAllXlsUrl, "class='exportall-xls-url'", "_blank")%>
                     </span>
 					<span class="button white small export">
-						<%= HtmlHelper.Anchor("xls verbose", exportAllXlsUrl + "&PLOT=" + Plot.Verbose, new Dictionary<string, string>() { { "class", "exportall-xls-verbose-url" } }, "_blank")%>
+						<%= HtmlHelper.Anchor("xls verbose", exportAllXlsUrl + "&PLOT=" + PlotType.Verbose, "class='exportall-xls-verbose-url'", "_blank")%>
                     </span>
 				</div>
 	        	<% foreach (var r in reportParts) { %>
 	       			<div>&nbsp;<br /></div>
 					<div class="report-part">
-                        <div class="hidden selected-plot-type"><%= Plot.Line %></div>
+                        <div class="hidden selected-plot-type"><%= PlotType.Line%></div>
 						<div class="report-part-subject">
 							<span><%= r.Subject %></span>
                             <span class="toggle toggle-right toggle-active"></span>
@@ -296,31 +302,31 @@
                             <!--<div class="chart-description1" style="display:none"></div>-->
 							<div class="action">
 								<span class="small">Change graph to:</span>
-								<span class="button white small graph"><span class="hidden plot-type"><%= Plot.Line %></span><%= Plot.GetString(Plot.Line) %></span>
-								<span class="button white small graph"><span class="hidden plot-type"><%= Plot.LineSD %></span><%= Plot.GetString(Plot.LineSD) %></span>
-								<span class="button white small graph"><span class="hidden plot-type"><%= Plot.LineSDWithCI %></span><%= Plot.GetString(Plot.LineSDWithCI) %></span>
+								<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.Line %></span><%= PlotType.GetString(PlotType.Line)%></span>
+								<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.LineSD%></span><%= PlotType.GetString(PlotType.LineSD)%></span>
+								<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.LineSDWithCI%></span><%= PlotType.GetString(PlotType.LineSDWithCI)%></span>
                                 <% if (supportsBoxPlot) { %>
-									<span class="button white small graph"><span class="hidden plot-type"><%= Plot.BoxPlotMinMax %></span><%= Plot.GetString(Plot.BoxPlotMinMax) %></span>
-                                    <span class="button white small graph"><span class="hidden plot-type"><%= Plot.BoxPlot %></span><%= Plot.GetString(Plot.BoxPlot) %></span>
+									<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.BoxPlotMinMax%></span><%= PlotType.GetString(PlotType.BoxPlotMinMax)%></span>
+                                    <span class="button white small graph"><span class="hidden plot-type"><%= PlotType.BoxPlot%></span><%= PlotType.GetString(PlotType.BoxPlot)%></span>
 								<% } %>
 								<span class="small">Export graph to:</span>
 								<span class="button white small export">
                                     <% string exportDocXUrl = GetExportUrl(r.ReportPart.Id, r.Id, "docx", additionalQuery); %>
 							        <span class="hidden hidden-export-docx-url"><%= exportDocXUrl%></span>
-									<%= HtmlHelper.Anchor("docx", exportDocXUrl, new Dictionary<string, string>() { { "class", "export-docx-url" } }, "_blank")%>
+									<%= HtmlHelper.Anchor("docx", exportDocXUrl, "class='export-docx-url'", "_blank")%>
 								</span>
 								<span class="button white small export">
                                     <% string exportPptXUrl = GetExportUrl(r.ReportPart.Id, r.Id, "pptx", additionalQuery); %>
 							        <span class="hidden hidden-export-pptx-url"><%= exportPptXUrl%></span>
-									<%= HtmlHelper.Anchor("pptx", exportPptXUrl, new Dictionary<string, string>() { { "class", "export-pptx-url" } }, "_blank")%>
+									<%= HtmlHelper.Anchor("pptx", exportPptXUrl, "class='export-pptx-url'", "_blank")%>
 								</span>
                                 <% string exportXlsUrl = GetExportUrl(r.ReportPart.Id, r.Id, "xls", additionalQuery); %>
 								<span class="button white small export">
 							        <span class="hidden hidden-export-xls-url"><%= exportXlsUrl%></span>
-									<%= HtmlHelper.Anchor("xls", exportXlsUrl, new Dictionary<string, string>() { { "class", "export-xls-url" } }, "_blank")%>
+									<%= HtmlHelper.Anchor("xls", exportXlsUrl, "class='export-xls-url'", "_blank")%>
 								</span>
 								<span class="button white small export">
-									<%= HtmlHelper.Anchor("xls verbose", exportXlsUrl + "&PLOT=" + Plot.Verbose, new Dictionary<string, string>() { { "class", "export-xls-verbose-url" } }, "_blank")%>
+									<%= HtmlHelper.Anchor("xls verbose", exportXlsUrl + "&PLOT=" + PlotType.Verbose, "class='export-xls-verbose-url'", "_blank")%>
 								</span>
 							</div>
 						</div>

@@ -6,12 +6,12 @@
 <html lang="en">
 <head runat="server">
     <title>HealthWatch.se / Group admin</title>
-	<meta http-equiv="Pragma" content="no-cache">
-	<meta http-equiv="Expires" content="-1">
-	<meta name="Robots" content="noarchive">
-	<script language="JavaScript">window.history.forward(1);</script>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="-1"/>
+	<meta name="Robots" content="noarchive"/>
+	<script type="text/javascript" language="JavaScript">window.history.forward(1);</script>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 	<!--
 	<link type="text/css" rel="stylesheet" href="includes/css/960.css">
 	<link type="text/css" rel="stylesheet" href="includes/css/site.css">
@@ -22,8 +22,8 @@
 	<script type="text/javascript">		$(document).ready(function () { var descriptionS = $("#submenu .description").html(); $("#submenu a").mouseover(function () { $("#submenu .description").html($(this).html()); $("#submenu .active").css('background-position', 'center -80px'); }); $("#submenu a").mouseout(function () { $("#submenu .description").html(descriptionS); $("#submenu .active").css('background-position', 'center -120px'); }); });</script>
 	-->
 
-	<link rel="stylesheet" href="~/css/bootstrap.css">
-	<link rel="stylesheet" href="~/css/bootstrap-responsive.css">
+	<link rel="stylesheet" href="~/css/bootstrap.css"/>
+	<link rel="stylesheet" href="~/css/bootstrap-responsive.css"/>
     <style type="text/css">
         body {
             padding-top: 40px;
@@ -85,7 +85,7 @@
 			</div>
 		</div>-->
 
-		<img src="img/hwlogo.png" alt="HealthWatch group administrator">
+		<img src="img/hwlogo.png" alt="HealthWatch group administrator"/>
         
         <h2><%= R.Str("login.header", "HealthWatch.se<br>Group administration") %></h2>
 
@@ -103,16 +103,16 @@
         </button>
         <hr />
         <% if (adminNews.Count > 0) { %>
-        <div class="news">
-            <h4>News</h4>
-            <% foreach (var n in adminNews) { %>
-                <p>
-                    <span class="date"><%= n.Date.Value.ToString("MMM d, yyyy").ToUpper() %></span>
-                    <%= n.News %>
-                </p>
-                <hr />
-            <% } %>
-        </div>
+            <div class="news">
+                <h4>News</h4>
+                <% foreach (var n in adminNews) { %>
+                    <p>
+                        <span class="date"><%= n.Date.Value.ToString("MMM d, yyyy").ToUpper() %></span>
+                        <%= n.News %>
+                    </p>
+                    <hr />
+                <% } %>
+            </div>
         <% } %>
     </form>
     <div class="footer">

@@ -17,6 +17,7 @@ namespace HW.Grp
 	{
 		protected IList<ReportPartLanguage> reportParts = null;
 		protected IList<BaseModel> urlModels;
+		protected IList<PlotType> plotTypes;
 		IList<Department> departments;
 		IList<SponsorBackgroundQuestion> questions;
 		int sponsorID = 0;
@@ -26,6 +27,7 @@ namespace HW.Grp
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
 		SqlReportRepository reportRepository = new SqlReportRepository();
+		SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
 		
 		public IList<SponsorProjectRoundUnitLanguage> Languages {
 			set {
@@ -140,6 +142,8 @@ namespace HW.Grp
 		{
 			sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
 			sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
+			
+			plotTypes = plotRepository.FindAll();
 			
 			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Statistics, DateTime.Now);
 			if (sponsorID != 0) {

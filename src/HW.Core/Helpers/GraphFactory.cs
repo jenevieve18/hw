@@ -228,8 +228,11 @@ namespace HW.Core.Helpers
 		}
 	}
 	
-	public class Plot
+	public class PlotType : BaseModel
 	{
+		public string Name { get; set; }
+		public string Description { get; set; }
+		
 		public const int Line = 1;
 		public const int LineSD = 2;
 		public const int LineSDWithCI = 3;
@@ -376,13 +379,13 @@ namespace HW.Core.Helpers
 				g = new ExtendedGraph(895, 440, "#FFFFFF");
 
 				int t = 2;
-				if (plot == Plot.BoxPlotMinMax) {
+				if (plot == PlotType.BoxPlotMinMax) {
 					g.Type = new BoxPlotMinMaxGraphType();
-				} else if (plot == Plot.BoxPlot) {
+				} else if (plot == PlotType.BoxPlot) {
 					g.Type = new BoxPlotGraphType();
-				} else if (plot == Plot.LineSDWithCI) {
+				} else if (plot == PlotType.LineSDWithCI) {
 					g.Type = new LineGraphType(2, t);
-				} else if (plot == Plot.LineSD) {
+				} else if (plot == PlotType.LineSD) {
 					g.Type = new LineGraphType(1, t);
 				} else {
 					g.Type = new LineGraphType(0, t);
@@ -636,7 +639,7 @@ namespace HW.Core.Helpers
 
 //				int t = 2 + (!stdev ? 1 : 0);
 //				if (plot == "BOXPLOT") {
-				if (plot == Plot.BoxPlotMinMax) {
+				if (plot == PlotType.BoxPlotMinMax) {
 //					g.Type = new BoxPlotGraphType();
 				} else {
 //					g.Type = new LineGraphType(stdev, t);
@@ -800,11 +803,11 @@ namespace HW.Core.Helpers
 //				}
 //			}
 			
-			if (plot == Plot.BoxPlotMinMax) {
+			if (plot == PlotType.BoxPlotMinMax) {
 				return new BoxPlotCsv().ToCsv(departments, weeks);
-			} else if (plot == Plot.LineSDWithCI) {
+			} else if (plot == PlotType.LineSDWithCI) {
 				return new ConfidenceIntervalLineCsv().ToCsv(departments, weeks);
-			} else if (plot == Plot.LineSD) {
+			} else if (plot == PlotType.LineSD) {
 				return new StandardDeviationLineCsv().ToCsv(departments, weeks);
 			} else {
 				return new LineCsv().ToCsv(departments, weeks);
@@ -898,7 +901,7 @@ namespace HW.Core.Helpers
 				
 				string groupBy = GroupFactory.GetGroupBy(GB);
 
-				if (plot == Plot.BoxPlotMinMax) {
+				if (plot == PlotType.BoxPlotMinMax) {
 				} else {
 				}
 				Answer answer = answerRepository.ReadByGroup(groupBy, fy, ty, sortString);
@@ -974,19 +977,19 @@ namespace HW.Core.Helpers
 				}
 			}
 			
-			if (plot == Plot.BoxPlotMinMax) {
+			if (plot == PlotType.BoxPlotMinMax) {
 				var plotter = new BoxPlotExcel();
 				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
 				plotter.ToExcel(departments, weeks, writer, ref index);
-			} else if (plot == Plot.LineSDWithCI) {
+			} else if (plot == PlotType.LineSDWithCI) {
 				var plotter = new ConfidenceIntervalLineExcel();
 				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
 				plotter.ToExcel(departments, weeks, writer, ref index);
-			} else if (plot == Plot.LineSD) {
+			} else if (plot == PlotType.LineSD) {
 				var plotter = new StandardDeviationLineExcel();
 				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
 				plotter.ToExcel(departments, weeks, writer, ref index);
-			} else if (plot == Plot.Verbose) {
+			} else if (plot == PlotType.Verbose) {
 				var plotter = new EverythingExcel();
 				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
 				plotter.ToExcel(departments, weeks, writer, ref index);
