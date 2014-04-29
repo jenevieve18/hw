@@ -1,0 +1,1 @@
+<%@ Page language="c#" Codebehind="sendMailStatic.aspx.cs" AutoEventWireup="false" Inherits="eform.sendMailStatic" %>

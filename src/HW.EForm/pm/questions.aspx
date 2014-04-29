@@ -1,0 +1,51 @@
+<%@ Page language="c#" Codebehind="questions.aspx.cs" AutoEventWireup="false" Inherits="eform.questions" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" > 
+
+<html>
+  <head>
+    <title>eForm Administration</title>
+    <meta name="GENERATOR" Content="Microsoft Visual Studio .NET 7.1">
+    <meta name="CODE_LANGUAGE" Content="C#">
+    <meta name=vs_defaultClientScript content="JavaScript">
+    <meta name=vs_targetSchema content="http://schemas.microsoft.com/intellisense/ie5">
+    <link rel=stylesheet type=text/css href="survey.css">
+  </head>
+	<body bgcolor="#F3F3F3" background="../img/bg/1.jpg" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" style="background-repeat: no-repeat">
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0" class="text">
+	<tr>
+		<td><img src="../img/null.gif" width="1" height="78"></td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td><div align="right"><img src="../img/logo.gif" width="125" height="51"><img src="../img/null.gif" width="30" height="1"></div></td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr> 
+		<td><img src="../img/null.gif" width="1" height="16"></td>
+		<td>&nbsp;</td>
+		<td background="../img/topNav_bgrL.gif">&nbsp;</td>
+		<td colspan="3" background="../img/topNav_bgr.gif" class="graySmall"><img src="../img/arrow_topNavN.gif" width="5" height="7">&nbsp;eForm Administration</span></td>
+	</tr>
+	<tr> 
+		<td width="185" height="100%" valign="top">
+			<%=eform.Db.printNav()%>
+		</td>
+		<td width="10"><img src="../img/null.gif" width="6" height="1"></td>
+		<td width="25" bgcolor="#FFFFFF" class="mainLeft"><img src="../img/null.gif" width="20" height="1"></td>
+		<td valign="top" bgcolor="#FFFFFF">
+		<br/>
+	
+    <form id="questions" method="post" runat="server">
+		<button onclick="location.href='questionSetup.aspx';return false;">Add new</button><asp:DropDownList ID=QuestionContainerID AutoPostBack=True Runat=server/>
+		<br/><br/>
+		<table border="0" cellspacing="0" cellpadding="0">
+			<tr><td><u>Text/question</u>&nbsp;</td><td><u>Option(s)</u>&nbsp;</td><td>&nbsp;</td></tr>
+			<asp:Label ID=List Runat=server/>
+		</table>
+    </form>
+	
+</td>
+	</tr>
+</table>
+</head>
+</html>
