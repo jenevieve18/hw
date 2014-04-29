@@ -1,0 +1,137 @@
+html, body {
+	margin:0;
+	padding:0;
+	border:0;
+	height:100%;
+	background:#d4d5d7;
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+#height_20px {
+	line-height: 20px;
+	height: 20px;
+}
+P {
+	FONT-SIZE: 12px;
+	COLOR: #333333;
+	font-family: Arial, Helvetica, sans-serif;
+	line-height: 16px;
+}
+#header {
+	background-image: url(img/header_bgr.jpg);
+	background-repeat: no-repeat;
+	height: 74px;
+}
+H1 {
+	FONT-SIZE: 18px;
+	COLOR: #333333;
+	FONT-FAMILY: Arial, Helvetica, sans-serif;
+	margin-top: 0px;
+	margin-bottom: 16px;
+	font-weight: normal;
+}
+H2 {
+	FONT-SIZE: 15px;
+	COLOR: #333333;
+	FONT-FAMILY: Arial, Helvetica, sans-serif;
+}
+H3 {
+	FONT-SIZE: 14px;
+	COLOR: #333333;
+	FONT-FAMILY: Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	font-style: italic;
+}
+A {
+	COLOR: #4A8955;
+	FONT-FAMILY: Arial, Helvetica, sans-serif;
+	text-decoration: underline;
+}
+#menu {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	margin-left: 40px;
+	padding-top: 13px;
+}
+#main {
+	width:100%;
+	display:table;
+	position:relative;
+	margin-top: 30px;
+	margin-bottom: 20px;
+}
+#mainhold {
+	vertical-align:middle;
+	position:relative;
+	display:table-cell;
+	width: 100%;
+}
+#container {
+	margin:auto;
+	position:relative;
+	width:817px;
+	background:#f6f6f6;
+	background-image: url(img/container_bgr.jpg);
+}
+#box_bottom {
+	background-image: url(img/box_bottom.jpg);
+	height: 12px;
+	background-repeat: no-repeat;
+}
+#box_top {
+	background-image: url(img/box_top.jpg);
+	height: 30px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	padding-top: 8px;
+	clear: both;
+}
+.box_top_header {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	padding-left: 30px;
+}
+#box_main P {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	line-height: 14px;
+}
+#box_main {
+	background-image: url(img/box_main.jpg);
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+#navi {
+	height: 40px;
+	background-image: url(img/navi_bgr.jpg);
+}
+#content {
+	margin-top: 30px;
+	margin-left: 50px;
+	margin-right: 40px;
+}
+#content P {
+	color: #333333;
+	padding: 0;
+	margin: 0;
+	padding-bottom: 8px;
+}
+#menu a {
+	margin-right: 24px;
+	color: #333333;
+	text-decoration: none;
+}
+#footer {
+	background-image: url(img/footer_bgr.jpg);
+	background-repeat: no-repeat;
+	height: 70px;
+	padding-left: 38px;
+	padding-right: 30px;
+	padding-top: 9px;
+	background-color: #D4D5D7;
+	font-size: 11px;
+}
