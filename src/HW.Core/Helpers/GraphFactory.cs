@@ -253,6 +253,14 @@ namespace HW.Core.Helpers
 		}
 	}
 	
+	public class PlotTypeLanguage : BaseModel
+	{
+		public PlotType PlotType { get; set; }
+		public Language Language { get; set; }
+		public string Name { get; set; }
+		public string Description { get; set; }
+	}
+	
 	public class GroupStatsGraphFactory : IGraphFactory
 	{
 		SqlProjectRepository projectRepository;
