@@ -62,7 +62,7 @@ et.ExerciseTypeSortOrder ASC",
 			var exercises = new List<Exercise>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
-					var e = new Exercise(); // TODO: Get exercise values!
+					var e = new Exercise();
 					e.Id = rs.GetInt32(6);
 					e.Image = GetString(rs, 5);
 					e.CurrentLanguage = new ExerciseLanguage {

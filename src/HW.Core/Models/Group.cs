@@ -12,7 +12,7 @@ namespace HW.Core.Models
 	{
 		public string Description { get; set; }
 		
-		public class Grouping // TODO: Make this enum, it's awkward having this constant class!
+		public class Grouping
 		{
 			public const int None = 0;
 			public const int UsersOnUnit = 1;

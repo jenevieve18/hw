@@ -9,6 +9,7 @@ using HW.Core;
 using HW.Core.Helpers;
 using HW.Core.Models;
 using HW.Core.Repositories;
+using HW.Core.Repositories.Sql;
 using NUnit.Framework;
 
 namespace HW.Tests.Models
@@ -19,13 +20,13 @@ namespace HW.Tests.Models
 		ExtendedGraph g;
 		Form f;
 		PictureBox p;
-		OptionRepositoryStub optionRepository;
-		AnswerRepositoryStub answerRepository;
-		ReportRepositoryStub reportRepository;
-		ProjectRepositoryStub projectRepository;
-		IndexRepositoryStub indexRepository;
-		DepartmentRepositoryStub departmentRepository;
-		QuestionRepositoryStub questionRepository;
+		SqlOptionRepository optionRepository;
+		SqlAnswerRepository answerRepository;
+		SqlReportRepository reportRepository;
+		SqlProjectRepository projectRepository;
+		SqlIndexRepository indexRepository;
+		SqlDepartmentRepository departmentRepository;
+		SqlQuestionRepository questionRepository;
 		
 		float lastVal = 0;
 		string lastDesc = "";
@@ -46,13 +47,13 @@ namespace HW.Tests.Models
 		[SetUp]
 		public void Setup()
 		{
-			optionRepository = new OptionRepositoryStub();
-			answerRepository = new AnswerRepositoryStub();
-			reportRepository = new ReportRepositoryStub();
-			projectRepository = new ProjectRepositoryStub();
-			indexRepository = new IndexRepositoryStub();
-			departmentRepository = new DepartmentRepositoryStub();
-			questionRepository = new QuestionRepositoryStub();
+			optionRepository = new SqlOptionRepository();
+			answerRepository = new SqlAnswerRepository();
+			reportRepository = new SqlReportRepository();
+			projectRepository = new SqlProjectRepository();
+			indexRepository = new SqlIndexRepository();
+			departmentRepository = new SqlDepartmentRepository();
+			questionRepository = new SqlQuestionRepository();
 			
 			f = new Form();
 			f.Size = new Size(1000, 650);
@@ -179,7 +180,7 @@ namespace HW.Tests.Models
 		[Test]
 		public void TestType9()
 		{
-			g = new ExtendedGraph(895, 550, "#FFFFFF"); // TODO:
+			g = new ExtendedGraph(895, 550, "#FFFFFF");
 		}
 		
 		[Test]

@@ -144,7 +144,7 @@ namespace HW.Grp
 			}
 
 			exercises = exerciseRepository.FindByAreaAndCategory(EAID, ECID, LID, SORT);
-			foreach (var l in exercises) { // TODO:
+			foreach (var l in exercises) {
 				if (l.Id != exerciseID) {
 					BX++;
 					if (AX > 0) {

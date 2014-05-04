@@ -17,21 +17,9 @@ namespace HW.Tests.Repositories
 		}
 		
 		[Test]
-		public void TestUpdateUser()
-		{
-			r.UpdateUser(1, 1, 1);
-		}
-		
-		[Test]
 		public void TestA()
 		{
 			r.a(1, 1);
-		}
-		
-		[Test]
-		public void TestUpdateLastReminderSent()
-		{
-			r.UpdateLastReminderSent(1);
 		}
 		
 		[Test]
@@ -86,24 +74,6 @@ namespace HW.Tests.Repositories
 		public void TestReadById()
 		{
 			r.ReadById(1);
-		}
-		
-		[Test]
-		public void TestReadByIdAndSponsorExtendedSurvey()
-		{
-			r.ReadByIdAndSponsorExtendedSurvey(1, 1);
-		}
-		
-		[Test]
-		public void TestUpdateUserProfile()
-		{
-			r.UpdateUserProfile(1, 1, 1);
-		}
-		
-		[Test]
-		public void TestUpdateUserProjectRoundUser()
-		{
-			r.UpdateUserProjectRoundUser(1, 1);
 		}
 	}
 }

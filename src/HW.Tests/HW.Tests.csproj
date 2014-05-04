@@ -91,7 +91,6 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="GenerateSchemaTests.cs" />
     <Compile Include="Helpers\DocXExporterTests.cs" />
     <Compile Include="Helpers\ExcelExporterTests.cs" />
     <Compile Include="Helpers\ExporterTests.cs" />
@@ -117,7 +116,6 @@
     <Compile Include="Repositories\ProjectRepositoryTests.cs" />
     <Compile Include="Repositories\QuestionRepositoryTests.cs" />
     <Compile Include="Repositories\ReportRepositoryTests.cs" />
-    <Compile Include="Repositories\RepositoryFactoryTests.cs" />
     <Compile Include="Repositories\SponsorRepositoryTests.cs" />
     <Compile Include="Repositories\UserRepositoryTests.cs" />
     <Compile Include="Test1.cs" />
@@ -129,6 +127,7 @@
     <Compile Include="Views\ManagersTests.cs" />
     <Compile Include="Views\MessagesTests.cs" />
     <Compile Include="Views\OrgTests.cs" />
+    <Compile Include="Views\StatsTests.cs" />
     <Compile Include="Views\VerticalTextTests.cs" />
   </ItemGroup>
   <ItemGroup>

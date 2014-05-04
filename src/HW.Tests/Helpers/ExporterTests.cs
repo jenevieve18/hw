@@ -48,7 +48,7 @@ namespace HW.Tests.Helpers
 		{
 			ExcelExporter e = new ExcelExporter(service, false, true, null, 550, 440, "#efefef", r, null);
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\test.xlsx", FileMode.Create)) {
-				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", Plot.Line, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream;
+				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
@@ -59,7 +59,7 @@ namespace HW.Tests.Helpers
 			var parts = service.FindByProjectAndLanguage(2643, 1);
 			ExcelExporter e = new ExcelExporter(service, false, true, null, 550, 440, "#efefef", parts, null);
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\test.xlsx", FileMode.Create)) {
-				MemoryStream s = e.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", Plot.Line, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream;
+				MemoryStream s = e.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
@@ -69,7 +69,7 @@ namespace HW.Tests.Helpers
 		{
 			CsvExporter e = new CsvExporter(service, false, true, null, 550, 440, "#efefef", r, null);
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\test.csv", FileMode.Create)) {
-				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", Plot.Line, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream;
+				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
@@ -79,7 +79,7 @@ namespace HW.Tests.Helpers
 		{
 			WordDocumentExporter2 e = new WordDocumentExporter2(r);
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\test.docx", FileMode.Create)) {
-				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", Plot.Line, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream;
+				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
@@ -89,7 +89,7 @@ namespace HW.Tests.Helpers
 		{
 			SpreadsheetDocumentExporter2 e = new SpreadsheetDocumentExporter2(r);
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\test.xlsx", FileMode.Create, FileAccess.Write)) {
-				(e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", Plot.Line, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream).WriteTo(f);
+				(e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream).WriteTo(f);
 			}
 		}
 		
@@ -98,7 +98,7 @@ namespace HW.Tests.Helpers
 		{
 			PresentationDocumentExporter e = new PresentationDocumentExporter(r);
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\test.pptx", FileMode.Create, FileAccess.Write)) {
-				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", Plot.Line, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream;
+				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream;
 				s.WriteTo(f);
 			}
 		}

@@ -467,33 +467,6 @@ AND SponsorID = {1}",
 			}
 			return null;
 		}
-		
-		public SponsorExtendedSurvey lalalaforever(int sponsorExtendedSurveyId, int userId)
-		{
-			string query = string.Format(
-				@"
-SELECT ses.ExtraEmailBody,
-	ses.ExtraEmailSubject,
-	u.Email,
-	u.UserID,
-	u.ReminderLink,
-	LEFT(REPLACE(CONVERT(VARCHAR(255),u.UserKey),'-',''),12)
-FROM [User] u
-INNER JOIN SponsorExtendedSurvey ses ON ses.SponsorExtendedSurveyID = {0}
-WHERE u.UserID = {1}",
-				sponsorExtendedSurveyId,
-				userId
-			);
-			using (SqlDataReader rs = Db.rs(query)) {
-				if (rs.Read()) {
-					return new SponsorExtendedSurvey {
-						ExtraEmailBody = GetString(rs, 0),
-						ExtraEmailSubject = GetString(rs, 1)
-					};
-				}
-			}
-			return null;
-		}
 
 		public SponsorInviteBackgroundQuestion ReadSponsorInviteBackgroundQuestion(int sponsorId, int userId, int bqId)
 		{
@@ -894,7 +867,6 @@ FROM Sponsor s
 						Sponsor = new Sponsor {Id = GetInt32(rs, 0), Name = GetString(rs, 2)},
 						Anonymized = GetInt32(rs, 3) == 1, //GetBoolean(rs, 3),
 						SeeUsers = GetInt32(rs, 4) == 1, //GetBoolean(rs, 4),
-//						SuperAdmin = GetInt32(rs, 5) != 0, // FIXME: Is this really boolean?
 						SuperAdminId = GetInt32(rs, 5),
 						ReadOnly = GetInt32(rs, 6) == 1, //GetBoolean(rs, 6),
 						Name = GetString(rs, 7)

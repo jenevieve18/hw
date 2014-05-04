@@ -49,18 +49,6 @@ namespace HW.Tests.Repositories
 		}
 		
 		[Test]
-		public void TestUpdateSponsorInviteSent()
-		{
-			r.UpdateSponsorInviteSent(1, 1);
-		}
-		
-		[Test]
-		public void TestUpdateNullUserForUserInvite()
-		{
-			r.UpdateNullUserForUserInvite(1);
-		}
-		
-		[Test]
 		public void TestUpdateExtendedSurveyLastEmailSent()
 		{
 			r.UpdateExtendedSurveyLastEmailSent(1);
@@ -189,7 +177,6 @@ namespace HW.Tests.Repositories
 		public void TestX()
 		{
 			var x = r.X(5);
-//			var s = r.X(1);
 			string s = "test";
 			string h = "test";
 			Console.WriteLine(s.Replace(" ", "").IndexOf(h.Replace(" ", "")));
