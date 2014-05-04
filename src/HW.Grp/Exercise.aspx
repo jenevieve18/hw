@@ -157,7 +157,7 @@
                         <div class="descriptions"><%= l.ToString() %></div>
                         <h2><%= l.CurrentLanguage.ExerciseName %></h2>
                         <p><%= l.CurrentLanguage.Teaser %></p>
-                        <div><%= HtmlHelper.Anchor("Text()", string.Format("javascript:void(window.open(''))"), new Dictionary<string, string>() { })%>
+                        <div><%= HtmlHelper.Anchor("Text()", string.Format("javascript:void(window.open(''))"), "")%>
                             <a class="sidearrow" href="JavaScript:void(window.open('http://localhost/hw/exerciseShow.aspx?SID=83&AUID=514&ExerciseVariantLangID=71','EVLID71','scrollbars=yes,resizable=yes,width=0,height=0'));">Text ()</a>
                         </div>
                         <div class="bottom">&nbsp;</div>
