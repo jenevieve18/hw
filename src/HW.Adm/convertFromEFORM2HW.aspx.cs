@@ -80,11 +80,11 @@ namespace HW.Adm
                 }
                 #endregion
 
-                string pass = Db.HashMD5(usern + "_AUTO_CREATED_PASSWORD");
+                string pass = Db.HashMd5(usern + "_AUTO_CREATED_PASSWORD");
 
                 #region create profilecomparison
                 int profileComparisonID = 0;
-                rs2 = Db.rs("SELECT ProfileComparisonID FROM ProfileComparison WHERE Hash = '" + Db.HashMD5("EMPTY") + "'");
+                rs2 = Db.rs("SELECT ProfileComparisonID FROM ProfileComparison WHERE Hash = '" + Db.HashMd5("EMPTY") + "'");
                 if (rs2.Read())
                 {
                     profileComparisonID = rs2.GetInt32(0);
@@ -92,8 +92,8 @@ namespace HW.Adm
                 rs2.Close();
                 if (profileComparisonID == 0)
                 {
-                    Db.exec("INSERT INTO ProfileComparison (Hash) VALUES ('" + Db.HashMD5("EMPTY") + "')");
-                    rs2 = Db.rs("SELECT TOP 1 ProfileComparisonID FROM ProfileComparison WHERE Hash = '" + Db.HashMD5("EMPTY") + "'");
+                    Db.exec("INSERT INTO ProfileComparison (Hash) VALUES ('" + Db.HashMd5("EMPTY") + "')");
+                    rs2 = Db.rs("SELECT TOP 1 ProfileComparisonID FROM ProfileComparison WHERE Hash = '" + Db.HashMd5("EMPTY") + "'");
                     if (rs2.Read())
                     {
                         profileComparisonID = rs2.GetInt32(0);
