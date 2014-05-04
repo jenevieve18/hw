@@ -216,7 +216,7 @@ WHERE ProjectRoundUnitID = {0}",
 			return val;
 		}
 
-		public static string HashMD5(string str)
+		public static string HashMd5(string str)
 		{
 			System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
 			byte[] hashByteArray = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes("HW" + str + "HW"));
