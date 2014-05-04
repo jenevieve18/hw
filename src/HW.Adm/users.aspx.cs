@@ -157,14 +157,14 @@ namespace HW.Adm
                 rs = Db.rs("SELECT TOP 1000 u.UserID, u.Email FROM [User] u WHERE u.DupeCheck IS NULL AND u.Email IS NOT NULL AND u.Email <> ''");
                 while (rs.Read())
                 {
-                    Db.exec("UPDATE [User] SET DupeCheck = '" + Db.HashMD5(cleanString(rs.GetString(1))) + "' WHERE UserID = " + rs.GetInt32(0));
+                    Db.exec("UPDATE [User] SET DupeCheck = '" + Db.HashMd5(cleanString(rs.GetString(1))) + "' WHERE UserID = " + rs.GetInt32(0));
                 }
                 rs.Close();
 
                 rs = Db.rs("SELECT TOP 1000 u.SponsorInviteID, u.Email FROM [SponsorInvite] u WHERE u.DupeCheck IS NULL AND u.Email IS NOT NULL AND u.Email <> ''");
                 while (rs.Read())
                 {
-                    Db.exec("UPDATE [SponsorInvite] SET DupeCheck = '" + Db.HashMD5(cleanString(rs.GetString(1))) + "' WHERE SponsorInviteID = " + rs.GetInt32(0));
+                    Db.exec("UPDATE [SponsorInvite] SET DupeCheck = '" + Db.HashMd5(cleanString(rs.GetString(1))) + "' WHERE SponsorInviteID = " + rs.GetInt32(0));
                 }
                 rs.Close();
             }
