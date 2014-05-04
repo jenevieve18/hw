@@ -6,7 +6,7 @@ using HW.Core.Models;
 
 namespace HW.Core.Repositories.Sql
 {
-	public class SqlExerciseRepository : BaseSqlRepository<Exercise>, IExerciseRepository
+	public class SqlExerciseRepository : BaseSqlRepository<Exercise>//, IExerciseRepository
 	{
 		public IList<Exercise> FindByAreaAndCategory(int areaID, int categoryID, int langID, int sort)
 		{

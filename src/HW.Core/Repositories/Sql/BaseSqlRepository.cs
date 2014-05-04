@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 
 namespace HW.Core.Repositories.Sql
 {
-	public class BaseSqlRepository<T> : IBaseRepository<T>
+	public class BaseSqlRepository<T> // : IBaseRepository<T>
 	{
 		SqlConnection con;
 		

@@ -8,7 +8,7 @@ using HW.Core.Models;
 
 namespace HW.Core.Repositories.Sql
 {
-	public class SqlAnswerRepository : BaseSqlRepository<Answer>, IAnswerRepository
+	public class SqlAnswerRepository : BaseSqlRepository<Answer>//, IAnswerRepository
 	{
 		public void UpdateAnswer(int projectRoundUnitID, int projectRoundUserID)
 		{

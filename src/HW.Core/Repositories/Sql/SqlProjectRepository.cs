@@ -27,9 +27,28 @@ select * from plottype"
 			}
 			return types;
 		}
+		
+		public IList<PlotTypeLanguage> FindByLanguage(int langID)
+		{
+			string query = string.Format(
+				@"
+select name, description from plottypelang"
+			);
+			var types = new List<PlotTypeLanguage>();
+			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
+				while (rs.Read()) {
+					var t = new PlotTypeLanguage() {
+						Name = GetString(rs, 0),
+						Description = GetString(rs, 1)
+					};
+					types.Add(t);
+				}
+			}
+			return types;
+		}
 	}
 	
-	public class SqlProjectRepository : BaseSqlRepository<Project>, IProjectRepository
+	public class SqlProjectRepository : BaseSqlRepository<Project>//, IProjectRepository
 	{
 		public void UpdateProjectRoundUser(int projectRoundUnitID, int proejctRoundUserID)
 		{

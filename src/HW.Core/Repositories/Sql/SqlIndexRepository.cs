@@ -6,7 +6,7 @@ using HW.Core.Models;
 
 namespace HW.Core.Repositories.Sql
 {
-	public class SqlIndexRepository : BaseSqlRepository<Index>, IIndexRepository
+	public class SqlIndexRepository : BaseSqlRepository<Index>//, IIndexRepository
 	{
 		public IList<Index> FindByLanguage(int idxID, int langID, int yearFrom, int yearTo, string sortString)
 		{

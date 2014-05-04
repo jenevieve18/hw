@@ -6,7 +6,7 @@ using HW.Core.Models;
 
 namespace HW.Core.Repositories.Sql
 {
-	public class SqlQuestionRepository : BaseSqlRepository<Question>, IQuestionRepository
+	public class SqlQuestionRepository : BaseSqlRepository<Question>//, IQuestionRepository
 	{
 		public IList<BackgroundQuestion> FindBackgroundQuestions(int sponsorID)
 		{

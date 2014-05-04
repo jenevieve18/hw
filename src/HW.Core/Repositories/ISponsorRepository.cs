@@ -4,14 +4,13 @@ using HW.Core.Models;
 
 namespace HW.Core.Repositories
 {
-//	public interface ISponsorRepository : IBaseRepository<SponsorAdmin>
 	public interface ISponsorRepository : IBaseRepository<Sponsor>
 	{
 		void UpdateSponsorInviteSent(int userID, int sponsorInviteID);
 		
 		void UpdateNullUserForUserInvite(int userID);
 		
-		void Z(int sponsorInviteID, string previewExtendedSurveys);
+//		void Z(int sponsorInviteID, string previewExtendedSurveys);
 		
 		void SaveSponsorAdminFunction(SponsorAdminFunction f);
 		

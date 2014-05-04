@@ -6,131 +6,97 @@ using HW.Core.Models;
 
 namespace HW.Core.Repositories.Sql
 {
-	public class SqlSponsorRepository : BaseSqlRepository<SponsorAdmin>, ISponsorRepository
+	public class SqlSponsorRepository : BaseSqlRepository<Sponsor>//, ISponsorRepository
 	{
-		public void UpdateSponsorLastLoginSent(int sponsorID)
+		public void UpdateSponsorLastLoginSent(int sponsorId)
 		{
 			string query = string.Format(
 				@"
 UPDATE Sponsor SET LoginLastSent = GETDATE()
 WHERE SponsorID = {0}",
-				sponsorID
+				sponsorId
 			);
-			Db.exec(query, "healthWatchSqlConnection"); // TODO: move to department???
+			Db.exec(query, "healthWatchSqlConnection");
 		}
-		
-		public void UpdateLastAllMessageSent(int sponsorID)
+
+		public void UpdateLastAllMessageSent(int sponsorId)
 		{
 			string query = string.Format(
 				@"
 UPDATE Sponsor SET AllMessageLastSent = GETDATE()
 WHERE SponsorID = {0}",
-				sponsorID
+				sponsorId
 			);
-			Db.exec(query, "healthWatchSqlConnection"); // TODO: move to department???
+			Db.exec(query, "healthWatchSqlConnection");
 		}
-		
-		public void UpdateSponsorLastInviteReminderSent(int sponsorID)
+
+		public void UpdateSponsorLastInviteReminderSent(int sponsorId)
 		{
 			string query = string.Format(
 				@"
 UPDATE Sponsor SET InviteReminderLastSent = GETDATE()
 WHERE SponsorID = {0}",
-				sponsorID
+				sponsorId
 			);
 			Db.exec(query, "healthWatchSqlConnection"); // TODO: move to department???
 		}
-		
-		public void UpdateSponsorLastInviteSent(int sponsorID)
+
+		public void UpdateSponsorLastInviteSent(int sponsorId)
 		{
 			string query = string.Format(
 				@"
 UPDATE Sponsor SET InviteLastSent = GETDATE()
 WHERE SponsorID = {0}",
-				sponsorID
+				sponsorId
 			);
 			Db.exec(query, "healthWatchSqlConnection"); // TODO: move to department???
 		}
 		
-		public void Z(int sponsorInviteID, string previewExtendedSurveys)
-		{
-			string query = string.Format(
-				@"
-UPDATE SponsorInvite SET PreviewExtendedSurveys = {0}
-WHERE SponsorInviteID = {1}",
-				previewExtendedSurveys,
-				sponsorInviteID
-			);
-			Db.exec(query, "healthWatchSqlConnection");
-		}
-		
-		public void UpdateSponsorInviteSent(int userID, int sponsorInviteID)
-		{
-			string query = string.Format(
-				@"
-UPDATE SponsorInvite SET UserID = {0}, Sent = GETDATE()
-WHERE SponsorInviteID = {1}",
-				userID,
-				sponsorInviteID
-			);
-			Db.exec(query, "healthWatchSqlConnection");
-		}
-		
-		public void UpdateSponsorInviteSent(int sponsorInviteID)
-		{
-			string query = string.Format(
-				@"
-UPDATE SponsorInvite SET Sent = GETDATE()
-WHERE SponsorInviteID = {0}",
-				sponsorInviteID
-			);
-			Db.exec(query, "healthWatchSqlConnection");
-		}
-		
-		public void UpdateNullUserForUserInvite(int userID)
-		{
-			string query = string.Format(
-				@"
-UPDATE SponsorInvite SET UserID = NULL
-WHERE UserID = {0}",
-				userID
-			);
-			Db.exec(query, "healthWatchSqlConnection");
-		}
-		
-		public void UpdateExtendedSurveyLastEmailSent(int sponsorExtendedSurveyID)
+//		public void UpdateSponsorInviteSent(int userId, int sponsorInviteId)
+//		{
+//			string query = string.Format(
+//				@"
+//UPDATE SponsorInvite SET UserID = {0}, Sent = GETDATE()
+//WHERE SponsorInviteID = {1}",
+//				userId,
+//				sponsorInviteId
+//			);
+//			Db.exec(query, "healthWatchSqlConnection");
+//		}
+
+//		public void UpdateNullUserForUserInvite(int userId)
+//		{
+//			string query = string.Format(
+//				@"
+//UPDATE SponsorInvite SET UserID = NULL
+//WHERE UserID = {0}",
+//				userId
+//			);
+//			Db.exec(query, "healthWatchSqlConnection");
+//		}
+
+		public void UpdateExtendedSurveyLastEmailSent(int sponsorExtendedSurveyId)
 		{
 			string query = string.Format(
 				@"
 UPDATE SponsorExtendedSurvey SET EmailLastSent = GETDATE()
 WHERE SponsorExtendedSurveyID = {0}",
-				sponsorExtendedSurveyID
+				sponsorExtendedSurveyId
 			);
 			Db.exec(query, "healthWatchSqlConnection");
 		}
-		
-		public void UpdateExtendedSurveyLastFinishedSent(int sponsorExtendedSurveyID)
+
+		public void UpdateExtendedSurveyLastFinishedSent(int sponsorExtendedSurveyId)
 		{
 			string query = string.Format(
 				@"
 UPDATE SponsorExtendedSurvey SET FinishedLastSent = GETDATE()
 WHERE SponsorExtendedSurveyID = {0}",
-				sponsorExtendedSurveyID
+				sponsorExtendedSurveyId
 			);
 			Db.exec(query, "healthWatchSqlConnection");
 		}
-		
-		public void UpdateSponsor(int sponsorID)
-		{
-			string query = string.Format(
-				@"
-UPDATE Sponsor SET AllMessageLastSent = GETDATE()
-WHERE SponsorID = {0}",
-				sponsorID
-			);
-			Db.exec(query, "healthWatchSqlConnection"); // TODO: move to department???
-		}
-		
+
 		public void UpdateSponsorExtendedSurvey(SponsorExtendedSurvey s)
 		{
 			string query = string.Format(
@@ -152,7 +118,7 @@ WHERE SponsorExtendedSurveyID = @SponsorExtendedSurveyID"
 				new SqlParameter("@SponsorExtendedSurveyID", s.Id)
 			);
 		}
-		
+
 		public void UpdateSponsor(Sponsor s)
 		{
 //			string query = string.Format(
@@ -213,18 +179,7 @@ WHERE SponsorID = {10}",
 			);
 			Db.exec(query, "healthWatchSqlConnection");
 		}
-		
-		public void UpdateSponsorAdminPassword(string password, int sponsorAdminID)
-		{
-			string query = string.Format(
-				@"
-UPDATE SponsorAdmin SET Pas = '{0}' WHERE SponsorAdminID = {1}",
-				password,
-				sponsorAdminID
-			);
-			Db.exec(query);
-		}
-		
+
 		public void UpdateSponsorAdmin(SponsorAdmin a)
 		{
 			string p = (a.Password != "Not shown" && a.Password != "")
@@ -253,56 +208,7 @@ AND SponsorID = {7}",
 			);
 			Db.exec(query, "healthWatchSqlConnection");
 		}
-		
-		public void UpdateSponsorAdminSession(int sponsorAdminSessionId, DateTime date)
-		{
-			string query = string.Format(
-				@"
-UPDATE SponsorAdminSession SET EndDT = '{0}'
-WHERE SponsorAdminSessionID = {1}",
-				date,
-				sponsorAdminSessionId
-			);
-			Db.exec(query);
-		}
-		
-		public void SaveSponsorAdminSession(int sponsorAdminId, DateTime date)
-		{
-			string query = string.Format(
-				@"
-INSERT INTO SponsorAdminSession(SponsorAdminID, DT)
-VALUES({0}, '{1}')",
-				sponsorAdminId,
-				date
-			);
-			Db.exec(query);
-		}
-		
-		public void SaveSponsorAdminSessionFunction(int sessionId, int functionId, DateTime date)
-		{
-			string query = string.Format(
-				@"
-INSERT INTO SponsorAdminSessionFunction(SponsorAdminSessionID, ManagerFunctionID, DT)
-VALUES({0}, {1}, '{2}')",
-				sessionId,
-				functionId,
-				date
-			);
-			Db.exec(query);
-		}
-		
-		public void SaveSponsorAdminDepartment(SponsorAdminDepartment d)
-		{
-			string query = string.Format(
-				@"
-INSERT INTO SponsorAdminDepartment (SponsorAdminID,DepartmentID)
-VALUES ({0},{1})",
-				d.Id,
-				d.Department.Id
-			);
-			Db.exec(query);
-		}
-		
+
 		public void SaveSponsorAdmin(SponsorAdmin a)
 		{
 //			string query = string.Format(
@@ -336,6 +242,14 @@ VALUES (@Email, @Name, @Usr, @Pas, @SponsorID, @SuperUser, @ReadOnly)"
 			);
 		}
 		
+		public void lalala(int sponsorId, int userId, int sponsorInviteId, int departmentId)
+		{
+			Db.exec(string.Format("UPDATE SponsorInvite SET UserID = NULL WHERE UserID = {0}", userId));
+			Db.exec(string.Format("UPDATE SponsorInvite SET UserID = {0}, Sent = GETDATE() WHERE SponsorInviteID = {1}", userId, sponsorInviteId));
+			Db.exec(string.Format("UPDATE [User] SET DepartmentID = {0}, SponsorID = {1} WHERE UserID = {2}", departmentId, sponsorId, userId));
+			Db.exec(string.Format("UPDATE UserProfile SET DepartmentID = {0}, SponsorID = {1} WHERE UserID = {2}", departmentId, sponsorId, userId));
+		}
+
 		public void SaveSponsorAdminFunction(SponsorAdminFunction f)
 		{
 //			string query = string.Format(
@@ -358,81 +272,39 @@ VALUES (@SponsorAdminID, @ManagerFunctionID)"
 				new SqlParameter("@ManagerFunctionID", f.Function.Id)
 			);
 		}
-		
-		public void DeleteSponsorAdminFunction(int sponsorAdminID)
+
+		public void DeleteSponsorAdminFunction(int sponsorAdminId)
 		{
-			Db.exec("DELETE FROM SponsorAdminFunction WHERE SponsorAdminID = " + sponsorAdminID, "healthWatchSqlConnection");
+			Db.exec("DELETE FROM SponsorAdminFunction WHERE SponsorAdminID = " + sponsorAdminId,
+			        "healthWatchSqlConnection");
 		}
 		
-		public void UpdateDeletedAdmin(int sponsorID, int sponsorAdminID)
+		public void UpdatePreviewExtendedSurveys(string flip, int pessiid)
+		{
+			string query = string.Format(
+				@"
+UPDATE SponsorInvite SET PreviewExtendedSurveys = {0}
+WHERE SponsorInviteID = {1}",
+				flip == "1" ? "1" : "NULL",
+				pessiid
+			);
+			Db.exec(query);
+		}
+
+		public void UpdateDeletedAdmin(int sponsorId, int sponsorAdminId)
 		{
 			string query = string.Format(
 				@"
 UPDATE SponsorAdmin
 	SET SponsorID = -ABS(SponsorID), Usr = Usr + 'DELETED'
 WHERE SponsorAdminID = {1} AND SponsorID = {0}",
-				sponsorID,
-				sponsorAdminID
+				sponsorId,
+				sponsorAdminId
 			);
 			Db.exec(query, "healthWatchSqlConnection");
 		}
-		
-		public int CountExtendedSurveyBySponsor(int sponsorID)
-		{
-			string query = string.Format(
-				@"
-SELECT COUNT(*)
-FROM SponsorExtendedSurvey ses
-WHERE ses.SponsorID = {0}",
-				sponsorID
-			);
-			using (SqlDataReader rs = Db.rs(query)) {
-				if (rs.Read()) {
-					return rs.GetInt32(0);
-				}
-			}
-			return 0;
-		}
-		
-		public int CountSentInvitesBySponsor3(int sponsorID, DateTime dt)
-		{
-			string query = string.Format(
-				@"
-SELECT COUNT(*)
-FROM SponsorInvite si INNER JOIN [User] u ON si.UserID = u.UserID
-WHERE si.SponsorID = {0} AND u.Created < '{1}'",
-				sponsorID,
-				dt.ToString("yyyy-MM-dd")
-			);
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				if (rs.Read()) {
-					return rs.GetInt32(0);
-				}
-			}
-			return 0;
-		}
-		
-		public int CountSentInvitesBySponsor2(int sponsorID, DateTime dt)
-		{
-			string query = string.Format(
-				@"
-SELECT COUNT(*)
-FROM SponsorInvite si
-LEFT OUTER JOIN [User] u ON si.UserID = u.UserID
-WHERE si.SponsorID = {0}
-AND (ISNULL(u.Created, si.Sent) < '{1}' OR si.Sent < '{1}')",
-				sponsorID,
-				dt.ToString("yyyy-MM-dd")
-			);
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				if (rs.Read()) {
-					return rs.GetInt32(0);
-				}
-			}
-			return 0;
-		}
-		
-		public int CountSentInvitesBySponsor(int sponsorID, DateTime dateSent)
+
+		public int CountSentInvitesBySponsor(int sponsorId, DateTime dateSent)
 		{
 			string query = string.Format(
 				@"
@@ -442,7 +314,7 @@ LEFT OUTER JOIN [User] AS u ON si.UserID = u.UserID
 WHERE (si.SponsorID = {0})
 AND (ISNULL(u.Created, si.Sent) < '{1}')
 OR (si.SponsorID = {0}) AND (si.Sent < '{1}')",
-				sponsorID,
+				sponsorId,
 				dateSent.ToString("yyyy-MM-dd")
 			);
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
@@ -452,8 +324,8 @@ OR (si.SponsorID = {0}) AND (si.Sent < '{1}')",
 			}
 			return 0;
 		}
-		
-		public int CountCreatedInvitesBySponsor(int sponsorID, DateTime dateCreated)
+
+		public int CountCreatedInvitesBySponsor(int sponsorId, DateTime dateCreated)
 		{
 			string query = string.Format(
 				@"
@@ -461,7 +333,7 @@ SELECT COUNT(*)
 FROM SponsorInvite si
 INNER JOIN [User] u ON si.UserID = u.UserID
 WHERE si.SponsorID = {0} AND u.Created < '{1}'",
-				sponsorID,
+				sponsorId,
 				dateCreated.ToString("yyyy-MM-dd")
 			);
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
@@ -471,8 +343,8 @@ WHERE si.SponsorID = {0} AND u.Created < '{1}'",
 			}
 			return 0;
 		}
-		
-		public SponsorInvite ReadSponsorInviteByUser(int userID)
+
+		public SponsorInvite ReadSponsorInviteByUser(int userId)
 		{
 			string query = string.Format(
 				@"
@@ -482,24 +354,24 @@ SELECT Email,
 	Stopped,
 	UserID
 FROM SponsorInvite
-WHERE SponsorInviteID = " + userID
+WHERE SponsorInviteID = " + userId
 			);
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				if (rs.Read()) {
 					var i = new SponsorInvite {
 						Email = GetString(rs, 0),
-						Department = new Department { Id = GetInt32(rs, 1) },
+						Department = new Department {Id = GetInt32(rs, 1)},
 						StoppedReason = GetInt32(rs, 2),
 						Stopped = GetDateTime(rs, 3),
-						User = new User { Id = GetInt32(rs, 4) }
+						User = new User {Id = GetInt32(rs, 4)}
 					};
 					return i;
 				}
 			}
 			return null;
 		}
-		
-		public SponsorInvite ReadSponsorInviteBySponsor(int inviteID, int sponsorID)
+
+		public SponsorInvite ReadSponsorInviteBySponsor(int inviteId, int sponsorId)
 		{
 			string query = string.Format(
 				@"
@@ -515,7 +387,7 @@ SELECT s.InviteTxt,
 FROM Sponsor s
 INNER JOIN SponsorInvite si ON s.SponsorID = si.SponsorID
 LEFT OUTER JOIN [User] u ON u.UserID = si.UserID
-WHERE s.SponsorID = " + sponsorID + " AND si.SponsorInviteID = " + inviteID
+WHERE s.SponsorID = " + sponsorId + " AND si.SponsorInviteID = " + inviteId
 			);
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				if (rs.Read()) {
@@ -527,7 +399,10 @@ WHERE s.SponsorID = " + sponsorID + " AND si.SponsorInviteID = " + inviteID
 							ReminderLink = rs.GetInt32(5),
 							UserKey = rs.GetString(6)
 						},*/
-						User = rs.IsDBNull(4) ? null : new User {
+						User = rs.IsDBNull(4)
+							? null
+							: new User
+						{
 							Id = rs.GetInt32(4),
 							//ReminderLink = rs.GetInt32(5),
 							ReminderLink = GetInt32(rs, 5),
@@ -545,8 +420,8 @@ WHERE s.SponsorID = " + sponsorID + " AND si.SponsorInviteID = " + inviteID
 			}
 			return null;
 		}
-		
-		public SponsorInvite ReadSponsorInvite(int sponsorInviteID)
+
+		public SponsorInvite ReadSponsorInvite(int sponsorInviteId)
 		{
 			string query = string.Format(
 				@"
@@ -556,22 +431,22 @@ SELECT SponsorID,
 FROM SponsorInvite
 WHERE UserID IS NULL
 WHERE SponsorInviteID = {0}",
-				sponsorInviteID
+				sponsorInviteId
 			);
 			using (SqlDataReader rs = Db.rs(query)) {
 				if (rs.Read()) {
 					var i = new SponsorInvite {
-						Sponsor = new Sponsor { Id = GetInt32(rs, 0) },
+						Sponsor = new Sponsor {Id = GetInt32(rs, 0)},
 						Email = GetString(rs, 1),
-						Department = new Department { Id = GetInt32(rs, 2) }
+						Department = new Department {Id = GetInt32(rs, 2)}
 					};
 					return i;
 				}
 			}
 			return null;
 		}
-		
-		public SponsorInvite ReadSponsorInvite(string email, int sponsorID)
+
+		public SponsorInvite ReadSponsorInvite(string email, int sponsorId)
 		{
 			string query = string.Format(
 				@"
@@ -580,19 +455,47 @@ FROM SponsorInvite
 WHERE Email = '{0}'
 AND SponsorID = {1}",
 				email,
-				sponsorID
+				sponsorId
 			);
 			using (SqlDataReader rs = Db.rs(query)) {
 				if (rs.Read()) {
 					var i = new SponsorInvite {
 						Id = rs.GetInt32(0)
 					};
+					return i;
 				}
 			}
 			return null;
 		}
 		
-		public SponsorInviteBackgroundQuestion ReadSponsorInviteBackgroundQuestion(int sponsorID, int userID, int bqID)
+		public SponsorExtendedSurvey lalalaforever(int sponsorExtendedSurveyId, int userId)
+		{
+			string query = string.Format(
+				@"
+SELECT ses.ExtraEmailBody,
+	ses.ExtraEmailSubject,
+	u.Email,
+	u.UserID,
+	u.ReminderLink,
+	LEFT(REPLACE(CONVERT(VARCHAR(255),u.UserKey),'-',''),12)
+FROM [User] u
+INNER JOIN SponsorExtendedSurvey ses ON ses.SponsorExtendedSurveyID = {0}
+WHERE u.UserID = {1}",
+				sponsorExtendedSurveyId,
+				userId
+			);
+			using (SqlDataReader rs = Db.rs(query)) {
+				if (rs.Read()) {
+					return new SponsorExtendedSurvey {
+						ExtraEmailBody = GetString(rs, 0),
+						ExtraEmailSubject = GetString(rs, 1)
+					};
+				}
+			}
+			return null;
+		}
+
+		public SponsorInviteBackgroundQuestion ReadSponsorInviteBackgroundQuestion(int sponsorId, int userId, int bqId)
 		{
 			string query = string.Format(
 				@"
@@ -611,23 +514,23 @@ LEFT OUTER JOIN UserProfileBQ upbq ON up.UserProfileID = upbq.UserProfileID AND 
 WHERE upbq.UserBQID IS NULL
 AND si.UserID = {1}
 AND si.SponsorID = {0}",
-				sponsorID,
-				userID,
-				bqID
+				sponsorId,
+				userId,
+				bqId
 			);
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				if (rs.Read()) {
 					var i = new SponsorInvite {
 						User = new User {
-							Profile = new UserProfile { Id = GetInt32(rs, 5) }
+							Profile = new UserProfile {Id = GetInt32(rs, 5)}
 						}
 					};
 					var sib = new SponsorInviteBackgroundQuestion {
-						Answer = new BackgroundAnswer { Id = rs.GetInt32(0) },
+						Answer = new BackgroundAnswer {Id = rs.GetInt32(0)},
 						ValueInt = GetInt32(rs, 1),
 						ValueText = GetString(rs, 2),
 						ValueDate = GetDateTime(rs, 3),
-						Question = new BackgroundQuestion { Type = GetInt32(rs, 4) },
+						Question = new BackgroundQuestion {Type = GetInt32(rs, 4)},
 						Invite = i
 					};
 					return sib;
@@ -635,8 +538,8 @@ AND si.SponsorID = {0}",
 			}
 			return null;
 		}
-		
-		public Sponsor X(int sponsorID)
+
+		public Sponsor X(int sponsorId)
 		{
 			string query = string.Format(
 				@"
@@ -647,41 +550,29 @@ FROM Sponsor s
 LEFT OUTER JOIN SuperSponsor ss ON s.SuperSponsorID = ss.SuperSponsorID
 LEFT OUTER JOIN SuperSponsorLang ssl ON ss.SuperSponsorID = ssl.SuperSponsorID AND ssl.LangID = 1
 WHERE s.SponsorID = {0}",
-				sponsorID
+				sponsorId
 			);
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				if (rs.Read()) {
-					var s = new Sponsor();
-					s.Name = GetString(rs, 0);
-					var u = new SuperSponsor { Id = GetInt32(rs, 1) };
-					s.SuperSponsor = u;
-					u.Languages = new List<SuperSponsorLanguage>(
-						new SuperSponsorLanguage[] {
-							new SuperSponsorLanguage { Header = GetString(rs, 2) }
-						}
-					);
+					var u = new SuperSponsor {
+						Id = GetInt32(rs, 1),
+						Languages = new List<SuperSponsorLanguage>(
+							new [] {
+								new SuperSponsorLanguage {Header = GetString(rs, 2)}
+							}
+						)
+					};
+					var s = new Sponsor {
+						Name = GetString(rs, 0),
+						SuperSponsor = u
+					};
 					return s;
 				}
 			}
 			return null;
 		}
-		
-		public int ReadLastSponsorAdminSession()
-		{
-			string query = string.Format(
-				@"
-SELECT TOP 1 * FROM SponsorAdminSession ORDER BY SponsorAdminSessionID DESC"
-			);
-			int sessionId = 0;
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				if (rs.Read()) {
-					sessionId = GetInt32(rs, 0);
-				}
-			}
-			return sessionId;
-		}
-		
-		public Sponsor ReadSponsor(int sponsorID)
+
+		public Sponsor ReadSponsor(int sponsorId)
 		{
 			string query = string.Format(
 				@"
@@ -719,7 +610,7 @@ SELECT s.InviteTxt,
 	s.ProjectRoundUnitID
 FROM Sponsor s
 WHERE s.SponsorID = {0}",
-				sponsorID
+				sponsorId
 			);
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				if (rs.Read()) {
@@ -750,26 +641,26 @@ WHERE s.SponsorID = {0}",
 						TreatmentOfferBQmorethan = GetInt32(rs, 23),
 						InfoText = GetString(rs, 24),
 						ConsentText = GetString(rs, 25),
-						SuperSponsor = new SuperSponsor { Id = GetInt32(rs, 26) },
+						SuperSponsor = new SuperSponsor {Id = GetInt32(rs, 26)},
 						AlternativeTreatmentOfferText = GetString(rs, 27),
 						AlternativeTreatmentOfferEmail = GetString(rs, 28),
-						Language = new Language { Id = GetInt32(rs, 29) },
+						Language = new Language {Id = GetInt32(rs, 29)},
 						MinUserCountToDisclose = GetInt32(rs, 30, 10),
-						ProjectRoundUnit = new ProjectRoundUnit { Id = GetInt32(rs, 31) }
+						ProjectRoundUnit = new ProjectRoundUnit {Id = GetInt32(rs, 31)}
 					};
 					return s;
 				}
 			}
 			return null;
 		}
-		
-		public bool SponsorAdminExists(int sponsorAdminID, string usr)
+
+		public bool SponsorAdminExists(int sponsorAdminId, string usr)
 		{
 			string query = string.Format(
 				@"
 SELECT SponsorAdminID FROM SponsorAdmin WHERE Usr = '{0}' {1}",
 				usr.Replace("'", ""),
-				(sponsorAdminID != 0 ? " AND SponsorAdminID != " + sponsorAdminID : "")
+				(sponsorAdminId != 0 ? " AND SponsorAdminID != " + sponsorAdminId : "")
 			);
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				if (rs.Read()) {
@@ -778,8 +669,8 @@ SELECT SponsorAdminID FROM SponsorAdmin WHERE Usr = '{0}' {1}",
 			}
 			return false;
 		}
-		
-		public SponsorAdmin ReadSponsorAdmin(int sponsorID, int sponsorAdminID, int SAID)
+
+		public SponsorAdmin ReadSponsorAdmin(int sponsorId, int sponsorAdminId, int said)
 		{
 			string query = string.Format(
 				@"
@@ -793,9 +684,9 @@ FROM SponsorAdmin
 WHERE (SponsorAdminID <> {1} OR SuperUser = 1)
 AND SponsorAdminID = {2}
 AND SponsorID = {0}",
-				sponsorID,
-				sponsorAdminID,
-				SAID
+				sponsorId,
+				sponsorAdminId,
+				said
 			);
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				if (rs.Read()) {
@@ -812,13 +703,13 @@ AND SponsorID = {0}",
 			}
 			return null;
 		}
-		
-		public SponsorAdmin ReadSponsorAdmin(int sponsorAdminID)
+
+		public SponsorAdmin ReadSponsorAdmin(int sponsorAdminId)
 		{
 			string query = string.Format(
 				@"
 SELECT SuperUser FROM SponsorAdmin WHERE SponsorAdminID = {0}",
-				sponsorAdminID
+				sponsorAdminId
 			);
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				if (rs.Read()) {
@@ -830,8 +721,8 @@ SELECT SuperUser FROM SponsorAdmin WHERE SponsorAdminID = {0}",
 			}
 			return null;
 		}
-		
-		public SponsorAdmin ReadSponsorAdmin(int sponsorID, int sponsorAdminID, string password)
+
+		public SponsorAdmin ReadSponsorAdmin(int sponsorId, int sponsorAdminId, string password)
 		{
 			string query = string.Format(
 				@"
@@ -840,8 +731,8 @@ FROM SponsorAdmin
 WHERE SponsorID = {0}
 AND SponsorAdminID = {1}
 AND Pas = '{2}'",
-				sponsorID,
-				sponsorAdminID,
+				sponsorId,
+				sponsorAdminId,
 				password.Replace("'", "''")
 			);
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
@@ -854,13 +745,13 @@ AND Pas = '{2}'",
 			}
 			return null;
 		}
-		
-		public SponsorAdmin ReadSponsorAdmin(int sponsorAdminID, string usr)
+
+		public SponsorAdmin ReadSponsorAdmin(int sponsorAdminId, string usr)
 		{
 			string query = string.Format(
 				@"
 SELECT SponsorAdminID FROM SponsorAdmin WHERE SponsorID = {0} AND Usr = '{1}'",
-				sponsorAdminID,
+				sponsorAdminId,
 				usr.Replace("'", "")
 			);
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
@@ -873,31 +764,32 @@ SELECT SponsorAdminID FROM SponsorAdmin WHERE SponsorID = {0} AND Usr = '{1}'",
 			}
 			return null;
 		}
-		
-		public SponsorAdmin ReadSponsorAdmin(string SKEY, string SAKEY, string SA, string SAID, string ANV, string LOS)
+
+		public SponsorAdmin ReadSponsorAdmin(string skey, string sakey, string sa, string said, string anv, string los)
 		{
-			string s1 = (SKEY == null ? "sa.SponsorAdminID, " : "-1, ");
-			string s3 = (SKEY == null ? "sa.Anonymized, " : "NULL, ");
-			string s4 = (SKEY == null ? "sa.SeeUsers, " : (SA != null ? "sas.SeeUsers, " : "1, "));
-			string s6 = (SKEY == null ? "sa.ReadOnly, " : "NULL, ");
-			string s7 = (SKEY == null ? "ISNULL(sa.Name,sa.Usr) " : "'Internal administrator' ");
+			string s1 = (skey == null ? "sa.SponsorAdminID, " : "-1, ");
+			string s3 = (skey == null ? "sa.Anonymized, " : "NULL, ");
+			string s4 = (skey == null ? "sa.SeeUsers, " : (sa != null ? "sas.SeeUsers, " : "1, "));
+			string s6 = (skey == null ? "sa.ReadOnly, " : "NULL, ");
+			string s7 = (skey == null ? "ISNULL(sa.Name,sa.Usr) " : "'Internal administrator' ");
 			string j = (
-				ANV != null && LOS != null || SAKEY != null ?
-				"INNER JOIN SponsorAdmin sa ON sa.SponsorID = s.SponsorID " + (
-					SAKEY != null ?
-					"WHERE LEFT(REPLACE(CONVERT(VARCHAR(255),sa.SponsorAdminKey),'-',''),8) = '" + SAKEY.Substring(0, 8).Replace("'", "") + "' " +
-					"AND s.SponsorID = " + SAKEY.Substring(8).Replace("'", "")
-					:
-					"WHERE sa.Usr = '" + ANV.Replace("'", "") + "' " +
-					"AND sa.Pas = '" + LOS.Replace("'", "") + "'")
+				anv != null && los != null || sakey != null
+				? "INNER JOIN SponsorAdmin sa ON sa.SponsorID = s.SponsorID " + (
+					sakey != null
+					? "WHERE LEFT(REPLACE(CONVERT(VARCHAR(255),sa.SponsorAdminKey),'-',''),8) = '" +
+					sakey.Substring(0, 8).Replace("'", "") + "' " +
+					"AND s.SponsorID = " + sakey.Substring(8).Replace("'", "")
+					: "WHERE sa.Usr = '" + anv.Replace("'", "") + "' " +
+					"AND sa.Pas = '" + los.Replace("'", "") + "'")
 				: (
-					SA != null ?
-					"INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID AND sas.SuperAdminID = " + Convert.ToInt32(SAID) + " "
-					:
-					""
+					sa != null
+					? "INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID AND sas.SuperAdminID = " +
+					Convert.ToInt32(said) + " "
+					: ""
 				) +
-				"WHERE LEFT(REPLACE(CONVERT(VARCHAR(255),s.SponsorKey),'-',''),8) = '" + SKEY.Substring(0, 8).Replace("'", "") + "' " +
-				"AND s.SponsorID = " + SKEY.Substring(8).Replace("'", "")
+				"WHERE LEFT(REPLACE(CONVERT(VARCHAR(255),s.SponsorKey),'-',''),8) = '" +
+				skey.Substring(0, 8).Replace("'", "") + "' " +
+				"AND s.SponsorID = " + skey.Substring(8).Replace("'", "")
 			);
 //			string j = ANV != null && LOS != null || SAKEY != null
 //				? string.Format(
@@ -955,7 +847,7 @@ SELECT SponsorAdminID FROM SponsorAdmin WHERE SponsorID = {0} AND Usr = '{1}'",
 //				);
 //			}
 			string u = "";
-			if (SKEY == null && SAKEY == null) {
+			if (skey == null && sakey == null) {
 				u = string.Format(
 					@"
 UNION ALL
@@ -970,8 +862,8 @@ SELECT NULL,
 FROM SuperAdmin sa
 WHERE sa.Username = '{0}'
 AND sa.Password = '{1}'",
-					ANV.Replace("'", ""),
-					LOS.Replace("'", "")
+					anv.Replace("'", ""),
+					los.Replace("'", "")
 				);
 			}
 			string query = string.Format(
@@ -999,7 +891,7 @@ FROM Sponsor s
 				if (rs.Read()) {
 					var a = new SponsorAdmin {
 						Id = GetInt32(rs, 1),
-						Sponsor = new Sponsor { Id = GetInt32(rs, 0), Name = GetString(rs, 2) },
+						Sponsor = new Sponsor {Id = GetInt32(rs, 0), Name = GetString(rs, 2)},
 						Anonymized = GetInt32(rs, 3) == 1, //GetBoolean(rs, 3),
 						SeeUsers = GetInt32(rs, 4) == 1, //GetBoolean(rs, 4),
 //						SuperAdmin = GetInt32(rs, 5) != 0, // FIXME: Is this really boolean?
@@ -1012,8 +904,8 @@ FROM Sponsor s
 			}
 			return null;
 		}
-		
-		public SponsorProjectRoundUnit ReadSponsorProjectRoundUnit(int sponsorID)
+
+		public SponsorProjectRoundUnit ReadSponsorProjectRoundUnit(int sponsorId)
 		{
 			string query = string.Format(
 				@"
@@ -1021,21 +913,21 @@ SELECT spru.ProjectRoundUnitID,
 	spru.SurveyID
 FROM SponsorProjectRoundUnit spru
 WHERE spru.SponsorID = {0}",
-				sponsorID
+				sponsorId
 			);
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				if (rs.Read()) {
 					var u = new SponsorProjectRoundUnit {
 						Id = rs.GetInt32(0),
-						Survey = new Survey { Id = rs.GetInt32(1) }
+						Survey = new Survey {Id = rs.GetInt32(1)}
 					};
 					return u;
 				}
 			}
 			return null;
 		}
-		
-		public IList<SponsorInviteBackgroundQuestion> FindInviteBackgroundQuestionsByUser(int userID)
+
+		public IList<SponsorInviteBackgroundQuestion> FindInviteBackgroundQuestionsByUser(int userId)
 		{
 			string query = string.Format(
 				@"
@@ -1048,14 +940,18 @@ SELECT s.BQID,
 	BQ.Restricted
 FROM SponsorInviteBQ s
 INNER JOIN BQ ON BQ.BQID = s.BQID
-WHERE s.SponsorInviteID = " + userID
+WHERE s.SponsorInviteID = " + userId
 			);
 			var invites = new List<SponsorInviteBackgroundQuestion>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
 					var i = new SponsorInviteBackgroundQuestion {
-						Question = new BackgroundQuestion { Id = rs.GetInt32(0), Type = rs.GetInt32(2), Restricted = rs.GetInt32(6) },
-						Answer = new BackgroundAnswer { Id = rs.GetInt32(1) },
+						Question = new BackgroundQuestion {
+							Id = rs.GetInt32(0),
+							Type = rs.GetInt32(2),
+							Restricted = rs.GetInt32(6)
+						},
+						Answer = new BackgroundAnswer {Id = rs.GetInt32(1)},
 						ValueInt = rs.GetInt32(3),
 						ValueDate = GetDateTime(rs, 4),
 						ValueText = GetString(rs, 5)
@@ -1065,11 +961,13 @@ WHERE s.SponsorInviteID = " + userID
 			}
 			return invites;
 		}
-		
-		public IList<SponsorInvite> FindInvitesBySponsor(int sponsorID, int sponsorAdminID)
+
+		public IList<SponsorInvite> FindInvitesBySponsor(int sponsorId, int sponsorAdminId)
 		{
-			string j = sponsorAdminID != -1
-				? string.Format(@"INNER JOIN SponsorAdminDepartment sad ON si.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
+			string j = sponsorAdminId != -1
+				? string.Format(
+					@"INNER JOIN SponsorAdminDepartment sad ON si.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = {0} AND ",
+					sponsorAdminId)
 				: "WHERE ";
 			string query = string.Format(
 				@"
@@ -1081,7 +979,7 @@ FROM SponsorInvite si
 AND si.UserID IS NULL
 AND si.StoppedReason IS NULL
 AND si.Sent IS NULL",
-				sponsorID,
+				sponsorId,
 				j
 			);
 			var invites = new List<SponsorInvite>();
@@ -1097,11 +995,13 @@ AND si.Sent IS NULL",
 			}
 			return invites;
 		}
-		
-		public IList<SponsorInvite> FindSentInvitesBySponsor(int sponsorID, int sponsorAdminID)
+
+		public IList<SponsorInvite> FindSentInvitesBySponsor(int sponsorId, int sponsorAdminId)
 		{
-			string j = sponsorAdminID != -1
-				? string.Format("INNER JOIN SponsorAdminDepartment sad ON si.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
+			string j = sponsorAdminId != -1
+				? string.Format(
+					"INNER JOIN SponsorAdminDepartment sad ON si.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = {0} AND ",
+					sponsorAdminId)
 				: "WHERE ";
 			string query = string.Format(
 				@"
@@ -1114,7 +1014,7 @@ AND si.UserID IS NULL
 AND si.StoppedReason IS NULL
 AND si.Sent IS NOT NULL
 AND DATEADD(hh,1,si.Sent) < GETDATE()",
-				sponsorID,
+				sponsorId,
 				j
 			);
 			var invites = new List<SponsorInvite>();
@@ -1130,14 +1030,14 @@ AND DATEADD(hh,1,si.Sent) < GETDATE()",
 			}
 			return invites;
 		}
-		
-		public IList<SponsorExtendedSurvey> FindExtendedSurveysBySponsorAdmin(int sponsorID, int sponsorAdminID)
+
+		public IList<SponsorExtendedSurvey> FindExtendedSurveysBySponsorAdmin(int sponsorId, int sponsorAdminId)
 		{
-			string w = sponsorAdminID != -1
+			string w = sponsorAdminId != -1
 				? string.Format(
 					@"INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID
 WHERE sad.SponsorAdminID = {0}
-AND ", sponsorAdminID)
+AND ", sponsorAdminId)
 				: "WHERE ";
 			string query = string.Format(
 				@"
@@ -1158,14 +1058,14 @@ LEFT OUTER JOIN SponsorExtendedSurveyDepartment dd ON dd.SponsorExtendedSurveyID
 {1} ses.SponsorID = {0}
 AND dd.Hide IS NULL
 ORDER BY ses.SponsorExtendedSurveyID DESC",
-				sponsorID,
+				sponsorId,
 				w
 			);
 			var surveys = new List<SponsorExtendedSurvey>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
 					var s = new SponsorExtendedSurvey {
-						ProjectRound = new ProjectRound { Id = rs.GetInt32(0) },
+						ProjectRound = new ProjectRound {Id = rs.GetInt32(0)},
 //						EmailSubject = rs.GetString(1),
 //						EmailBody = rs.GetString(2),
 //						EmailLastSent = rs.GetDateTime(3),
@@ -1187,8 +1087,8 @@ ORDER BY ses.SponsorExtendedSurveyID DESC",
 			}
 			return surveys;
 		}
-		
-		public IList<SponsorExtendedSurvey> FindExtendedSurveysBySponsor(int sponsorID)
+
+		public IList<SponsorExtendedSurvey> FindExtendedSurveysBySponsor(int sponsorId)
 		{
 			string query = string.Format(
 				@"
@@ -1201,13 +1101,13 @@ SELECT ses.ProjectRoundID,
 FROM SponsorExtendedSurvey ses
 WHERE ses.SponsorID = {0}
 ORDER BY ses.SponsorExtendedSurveyID",
-				sponsorID
+				sponsorId
 			);
 			var surveys = new List<SponsorExtendedSurvey>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
 					var s = new SponsorExtendedSurvey {
-						ProjectRound = new ProjectRound { Id = rs.GetInt32(0) },
+						ProjectRound = new ProjectRound {Id = rs.GetInt32(0)},
 						Internal = rs.GetString(1),
 						RoundText = rs.GetString(2),
 						IndividualFeedbackEmailSubject = rs.GetString(3),
@@ -1219,50 +1119,8 @@ ORDER BY ses.SponsorExtendedSurveyID",
 			}
 			return surveys;
 		}
-		
-		public IList<SponsorExtendedSurvey> FindExtendedSurveysBySuperAdmin2(int superAdminID)
-		{
-			string query = string.Format(
-				@"
-SELECT s.Sponsor,
-	ses.ProjectRoundID,
-	ses.Internal,
-	ses.RoundText,
-	ss.SurveyID,
-	ss.Internal
-FROM Sponsor s
-INNER JOIN SponsorExtendedSurvey ses ON ses.SponsorID = s.SponsorID
-INNER JOIN eform..ProjectRound r ON ses.ProjectRoundID = r.ProjectRoundID
-INNER JOIN eform..Survey ss ON r.SurveyID = ss.SurveyID
-INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID
-WHERE sas.SuperAdminID =  {0}
-AND s.Closed IS NOT NULL
-ORDER BY s.Sponsor, ses.Internal, ses.RoundText",
-				superAdminID
-			);
-			var surveys = new List<SponsorExtendedSurvey>();
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				while (rs.Read()) {
-					var s = new SponsorExtendedSurvey {
-						Sponsor = new Sponsor { Name = GetString(rs, 0) },
-						ProjectRound = new ProjectRound {
-							Id = GetInt32(rs, 1),
-							Survey = new Survey {
-								Id = GetInt32(rs, 4),
-								Internal = GetString(rs, 5)
-							}
-						},
-						Internal = GetString(rs, 2),
-						RoundText = GetString(rs, 3)
-					};
-					surveys.Add(s);
-				}
-			}
-			return surveys;
-			
-		}
-		
-		public IList<SponsorExtendedSurvey> FindExtendedSurveysBySuperAdmin(int superAdminID)
+
+		public IList<SponsorExtendedSurvey> FindExtendedSurveysBySuperAdmin(int superAdminId)
 		{
 			string query = string.Format(
 				@"
@@ -1280,13 +1138,13 @@ INNER JOIN eform..Survey ss ON r.SurveyID = ss.SurveyID
 INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID
 WHERE s.Deleted IS NULL AND sas.SuperAdminID = {0}
 ORDER BY s.Sponsor, ses.Internal, ses.RoundText",
-				superAdminID
+				superAdminId
 			);
 			var surveys = new List<SponsorExtendedSurvey>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
 					var s = new SponsorExtendedSurvey {
-						Sponsor = new Sponsor { Name = GetString(rs, 0) },
+						Sponsor = new Sponsor {Name = GetString(rs, 0)},
 						ProjectRound = new ProjectRound {
 							Id = GetInt32(rs, 1),
 							Survey = new Survey {
@@ -1303,152 +1161,50 @@ ORDER BY s.Sponsor, ses.Internal, ses.RoundText",
 			}
 			return surveys;
 		}
-		
-		public IList<SponsorAdminDepartment> FindAdminDepartmentBySponsorAdmin(int sponsorAdminID)
+
+		public IList<SponsorAdminDepartment> FindAdminDepartmentBySponsorAdmin(int sponsorAdminId)
 		{
 			string query = string.Format(
 				@"
 SELECT DepartmentID
 FROM SponsorAdminDepartment
 WHERE SponsorAdminID = {0}",
-				sponsorAdminID
+				sponsorAdminId
 			);
 			var departments = new List<SponsorAdminDepartment>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
-					var d =  new SponsorAdminDepartment {
-						Department = new Department { Id = rs.GetInt32(0) }
+					var d = new SponsorAdminDepartment {
+						Department = new Department {Id = rs.GetInt32(0)}
 					};
 					departments.Add(d);
 				}
 			}
 			return departments;
 		}
-		
-		public IList<SuperSponsor> FindSuperSponsors()
-		{
-			string query = string.Format(
-				@"
-SELECT SuperSponsorID,
-SuperSponsor
-FROM SuperSponsor"
-			);
-			var supers = new List<SuperSponsor>();
-			using (SqlDataReader rs = Db.rs(query)) {
-				while (rs.Read()) {
-					var s = new SuperSponsor {
-						Id = GetInt32(rs, 0),
-						Name = GetString(rs, 1)
-					};
-					supers.Add(s);
-				}
-			}
-			return supers;
-		}
-		
-		public IList<SuperAdminSponsor> FindSuperAdminSponsors(int superAdminID)
-		{
-			string query = string.Format(
-				@"
-SELECT s.SponsorID,
-	s.Sponsor,
-	LEFT(REPLACE(CONVERT(VARCHAR(255),s.SponsorKey),'-',''),8),
-	(SELECT COUNT(*) FROM SponsorExtendedSurvey ses WHERE ses.SponsorID = s.SponsorID),
-	(SELECT COUNT(*) FROM SponsorInvite si WHERE si.Sent IS NOT NULL AND si.SponsorID = s.SponsorID),
-	(SELECT COUNT(*) FROM SponsorInvite si INNER JOIN [User] u ON si.UserID = u.UserID WHERE si.SponsorID = s.SponsorID),
-	(SELECT MIN(si.Sent) FROM SponsorInvite si WHERE si.SponsorID = s.SponsorID),
-	sas.SeeUsers,
-	(SELECT COUNT(*) FROM SponsorInvite si WHERE si.SponsorID = s.SponsorID),
-	s.Closed
-FROM Sponsor s
-INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID
-WHERE s.Deleted IS NULL AND sas.SuperAdminID = {0}
-ORDER BY s.Sponsor",
-				superAdminID
-			);
-			var admins = new List<SuperAdminSponsor>();
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				while (rs.Read()) {
-					var a =  new SuperAdminSponsor {
-						Sponsor = new Sponsor {
-							Id = GetInt32(rs, 0),
-							Name = GetString(rs, 1),
-							SponsorKey = GetString(rs, 2),
-							ExtendedSurveys = new List<SponsorExtendedSurvey>(GetInt32(rs, 3)),
-							SentInvites = new List<SponsorInvite>(GetInt32(rs, 4)),
-							ActiveInvites = new List<SponsorInvite>(GetInt32(rs, 5)),
-							MinimumInviteDate = GetDateTime(rs, 6),
-							Invites = new List<SponsorInvite>(GetInt32(rs, 8)),
-							ClosedAt = GetDateTime(rs, 9)
-						},
-//						SeeUsers = GetBoolean(rs, 7)
-						SeeUsers = GetInt32(rs, 7) == 1
-					};
-					admins.Add(a);
-				}
-			}
-			return admins;
-		}
-		
-		public IList<SponsorAdminFunction> FindAdminFunctionBySponsorAdmin(int sponsorAdminID)
+
+		public IList<SponsorAdminFunction> FindAdminFunctionBySponsorAdmin(int sponsorAdminId)
 		{
 			string query = string.Format(
 				@"
 SELECT ManagerFunctionID
 FROM SponsorAdminFunction
 WHERE SponsorAdminID = {0}",
-				sponsorAdminID
+				sponsorAdminId
 			);
 			var functions = new List<SponsorAdminFunction>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
-					var f =  new SponsorAdminFunction {
-						Function = new ManagerFunction { Id = rs.GetInt32(0) }
+					var f = new SponsorAdminFunction {
+						Function = new ManagerFunction {Id = rs.GetInt32(0)}
 					};
 					functions.Add(f);
 				}
 			}
 			return functions;
 		}
-		
-		public IList<SponsorProjectRoundUnit> FindSponsorProjectRoundUnits(int superAdminID)
-		{
-			string query = string.Format(
-				@"
-SELECT s.Sponsor,
-	ses.ProjectRoundUnitID,
-	ISNULL(r.SurveyID, ss.SurveyID),
-	ss.Internal
-FROM Sponsor s
-INNER JOIN SponsorProjectRoundUnit ses ON ses.SponsorID = s.SponsorID
-INNER JOIN eform..ProjectRoundUnit r ON ses.ProjectRoundUnitID = r.ProjectRoundUnitID
-INNER JOIN eform..ProjectRound rr ON r.ProjectRoundID = rr.ProjectRoundID
-INNER JOIN eform..Survey ss ON ISNULL(r.SurveyID, ss.SurveyID) = ss.SurveyID
-INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID
-WHERE sas.SuperAdminID = {0}
-ORDER BY s.Sponsor, ses.Nav",
-				superAdminID
-			);
-			var units = new List<SponsorProjectRoundUnit>();
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				while (rs.Read()) {
-					var u = new SponsorProjectRoundUnit {
-						Sponsor = new Sponsor { Name = GetString(rs, 0) },
-						ProjectRoundUnit = new ProjectRoundUnit {
-							Id = GetInt32(rs, 1),
-							Survey = new Survey {
-								Id = GetInt32(rs, 2),
-								Internal = GetString(rs, 3)
-							}
-						},
-					};
-					units.Add(u);
-				}
-			}
-			return units;
-		}
-		
-		public IList<SponsorAdmin> FindAdminBySponsor(int sponsorID, int sponsorAdminID)
+
+		public IList<SponsorAdmin> FindAdminBySponsor(int sponsorId, int sponsorAdminId)
 		{
 			string query = string.Format(
 				@"
@@ -1461,9 +1217,12 @@ WHERE (sa.SponsorAdminID <> {1} OR sa.SuperUser = 1)
 {2}
 AND sa.SponsorID = {0}
 ORDER BY sa.Name",
-				sponsorID,
-				sponsorAdminID,
-				sponsorAdminID != -1 ? "AND ((SELECT COUNT(*) FROM SponsorAdminDepartment sad WHERE sad.SponsorAdminID = sa.SponsorAdminID) = 0 OR (SELECT COUNT(*) FROM SponsorAdminDepartment sad INNER JOIN SponsorAdminDepartment sad2 ON sad.DepartmentID = sad2.DepartmentID WHERE sad.SponsorAdminID = sa.SponsorAdminID AND sad2.SponsorAdminID = " + sponsorAdminID + ") > 0) " : ""
+				sponsorId,
+				sponsorAdminId,
+				sponsorAdminId != -1
+				? "AND ((SELECT COUNT(*) FROM SponsorAdminDepartment sad WHERE sad.SponsorAdminID = sa.SponsorAdminID) = 0 OR (SELECT COUNT(*) FROM SponsorAdminDepartment sad INNER JOIN SponsorAdminDepartment sad2 ON sad.DepartmentID = sad2.DepartmentID WHERE sad.SponsorAdminID = sa.SponsorAdminID AND sad2.SponsorAdminID = " +
+				sponsorAdminId + ") > 0) "
+				: ""
 			);
 			var admins = new List<SponsorAdmin>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
@@ -1479,8 +1238,8 @@ ORDER BY sa.Name",
 			}
 			return admins;
 		}
-		
-		public IList<SponsorBackgroundQuestion> FindBySponsor(int sponsorID)
+
+		public IList<SponsorBackgroundQuestion> FindBySponsor(int sponsorId)
 		{
 			string query = string.Format(
 				@"
@@ -1491,21 +1250,22 @@ INNER JOIN BQ ON BQ.BQID = sbq.BQID
 WHERE (BQ.Comparison = 1 OR sbq.Hidden = 1)
 AND BQ.Type IN (1, 7)
 AND sbq.SponsorID = {0}",
-				sponsorID
+				sponsorId
 			);
 			var sponsors = new List<SponsorBackgroundQuestion>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
-					var s = new SponsorBackgroundQuestion();
-					s.Id = rs.GetInt32(0);
-					s.BackgroundQuestion = new BackgroundQuestion { Internal = rs.GetString(1) };
+					var s = new SponsorBackgroundQuestion {
+						Id = rs.GetInt32(0),
+						BackgroundQuestion = new BackgroundQuestion { Internal = rs.GetString(1) }
+					};
 					sponsors.Add(s);
 				}
 			}
 			return sponsors;
 		}
-		
-		public IList<SponsorBackgroundQuestion> FindBackgroundQuestions(int sponsorID)
+
+		public IList<SponsorBackgroundQuestion> FindBackgroundQuestions(int sponsorId)
 		{
 			string query = string.Format(
 				@"
@@ -1515,22 +1275,22 @@ FROM SponsorBQ s
 INNER JOIN BQ b ON s.BQID = b.BQID
 WHERE s.Hidden = 1 AND s.SponsorID = {0}
 ORDER BY s.SortOrder",
-				sponsorID
+				sponsorId
 			);
 			var questions = new List<SponsorBackgroundQuestion>();
 			using (SqlDataReader rs = Db.rs(query)) {
 				while (rs.Read()) {
 					var q = new SponsorBackgroundQuestion {
 						Id = rs.GetInt32(0),
-						BackgroundQuestion = new BackgroundQuestion { Id = rs.GetInt32(1) }
+						BackgroundQuestion = new BackgroundQuestion {Id = rs.GetInt32(1)}
 					};
 					questions.Add(q);
 				}
 			}
 			return questions;
 		}
-		
-		public IList<SponsorProjectRoundUnit> FindBySponsorAndLanguage(int sponsorID, int langID)
+
+		public IList<SponsorProjectRoundUnit> FindBySponsorAndLanguage(int sponsorId, int langId)
 		{
 			string query = string.Format(
 				@"
@@ -1540,22 +1300,23 @@ FROM SponsorProjectRoundUnit spru
 LEFT OUTER JOIN SponsorProjectRoundUnitLang sprul ON spru.SponsorProjectRoundUnitID = sprul.SponsorProjectRoundUnitID
 WHERE spru.SponsorID = {0}
 AND ISNULL(sprul.LangID, 1) = {1}",
-				sponsorID,
-				langID
+				sponsorId,
+				langId
 			);
 			var projects = new List<SponsorProjectRoundUnit>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
-					var p = new SponsorProjectRoundUnit();
-					p.Navigation = rs.GetString(0);
-					p.ProjectRoundUnit = new ProjectRoundUnit { Id = rs.GetInt32(1) };
+					var p = new SponsorProjectRoundUnit {
+						Navigation = rs.GetString(0),
+						ProjectRoundUnit = new ProjectRoundUnit {Id = rs.GetInt32(1)}
+					};
 					projects.Add(p);
 				}
 			}
 			return projects;
 		}
-		
-		public IList<SponsorProjectRoundUnit> FindDistinctRoundUnitsWithReportBySuperAdmin(int superAdminID)
+
+		public IList<SponsorProjectRoundUnit> FindDistinctRoundUnitsWithReportBySuperAdmin(int superAdminId)
 		{
 			string query = string.Format(
 				@"
@@ -1576,7 +1337,7 @@ INNER JOIN eform..Report rep ON rep.ReportID = r.ReportID
 INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID
 WHERE s.Deleted IS NULL AND sas.SuperAdminID = {0}
 ORDER BY s.Sponsor, ses.Nav",
-				superAdminID,
+				superAdminId,
 				DateTime.Now.AddMonths(-1).ToString("yyyy-MM-01"),
 				DateTime.Now.ToString("yyyy-MM-01")
 			);
@@ -1584,7 +1345,7 @@ ORDER BY s.Sponsor, ses.Nav",
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
 					var u = new SponsorProjectRoundUnit {
-						Sponsor = new Sponsor { Name = rs.GetString(0) },
+						Sponsor = new Sponsor {Name = rs.GetString(0)},
 						ProjectRoundUnit = new ProjectRoundUnit {
 							Id = rs.GetInt32(1),
 							Report = new Report {
@@ -1600,8 +1361,8 @@ ORDER BY s.Sponsor, ses.Nav",
 			}
 			return units;
 		}
-		
-		public IList<Sponsor> FindAndCountDetailsBySuperAdmin(int superAdminID)
+
+		public IList<Sponsor> FindAndCountDetailsBySuperAdmin(int superAdminId)
 		{
 			string query = string.Format(
 				@"
@@ -1619,7 +1380,7 @@ FROM Sponsor AS s
 INNER JOIN SuperAdminSponsor AS sas ON s.SponsorID = sas.SponsorID
 WHERE (sas.SuperAdminID = {0}) AND (s.Deleted IS NULL)
 ORDER BY s.Sponsor",
-				superAdminID
+				superAdminId
 			);
 			var sponsors = new List<Sponsor>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
@@ -1629,23 +1390,23 @@ ORDER BY s.Sponsor",
 						Name = rs.GetString(1),
 						SponsorKey = rs.GetString(2),
 						ClosedAt = GetDateTime(rs, 9),
-						MinimumInviteDate = GetDateTime(rs, 6)
+						MinimumInviteDate = GetDateTime(rs, 6),
+						ExtendedSurveys = new List<SponsorExtendedSurvey>(GetInt32(rs, 3)),
+						SentInvites = new List<SponsorInvite>(GetInt32(rs, 4)),
+						ActiveInvites = new List<SponsorInvite>(GetInt32(rs, 5)),
+						SuperAdminSponsors = new List<SuperAdminSponsor>(
+							new [] {
+								new SuperAdminSponsor {SeeUsers = GetInt32(rs, 7) == 1}
+							}
+						),
+						Invites = new List<SponsorInvite>(GetInt32(rs, 8))
 					};
-					s.ExtendedSurveys = new List<SponsorExtendedSurvey>(GetInt32(rs, 3));
-					s.SentInvites = new List<SponsorInvite>(GetInt32(rs, 4));
-					s.ActiveInvites = new List<SponsorInvite>(GetInt32(rs, 5));
-					s.SuperAdminSponsors = new List<SuperAdminSponsor>(
-						new SuperAdminSponsor[] {
-							new SuperAdminSponsor { SeeUsers = GetInt32(rs, 7) == 1 }
-						}
-					);
-					s.Invites = new List<SponsorInvite>(GetInt32(rs, 8));
 					sponsors.Add(s);
 				}
 			}
 			return sponsors;
 		}
-		
+
 //		public IList<Sponsor> Y(int sponsorID)
 //		{
 //			string query = string.Format(
@@ -1685,30 +1446,305 @@ ORDER BY s.Sponsor",
 //			}
 //			return sponsors;
 //		}
-		
-		public void SaveOrUpdate(Sponsor t)
+
+		public SponsorBackgroundQuestion ReadSponsorBackgroundQuestion(int sponsorBqId)
 		{
 			throw new NotImplementedException();
 		}
-		
-		public void Delete(Sponsor t)
+
+		public void UpdateSponsorInviteSent(int sponsorInviteId)
 		{
-			throw new NotImplementedException();
+			string query = string.Format(
+				@"
+UPDATE SponsorInvite SET Sent = GETDATE()
+WHERE SponsorInviteID = {0}",
+				sponsorInviteId
+			);
+			Db.exec(query, "healthWatchSqlConnection");
 		}
-		
-		Sponsor IBaseRepository<Sponsor>.Read(int id)
+
+		public void UpdateSponsor(int sponsorId)
 		{
-			throw new NotImplementedException();
+			string query = string.Format(
+				@"
+UPDATE Sponsor SET AllMessageLastSent = GETDATE()
+WHERE SponsorID = {0}",
+				sponsorId
+			);
+			Db.exec(query, "healthWatchSqlConnection"); // TODO: move to department???
 		}
-		
-		IList<Sponsor> IBaseRepository<Sponsor>.FindAll()
+
+		public void UpdateSponsorAdminPassword(string password, int sponsorAdminId)
 		{
-			throw new NotImplementedException();
+			string query = string.Format(
+				@"
+UPDATE SponsorAdmin SET Pas = '{0}' WHERE SponsorAdminID = {1}",
+				password,
+				sponsorAdminId
+			);
+			Db.exec(query);
 		}
-		
-		public SponsorBackgroundQuestion ReadSponsorBackgroundQuestion(int sponsorBQID)
+
+		public void UpdateSponsorAdminSession(int sponsorAdminSessionId, DateTime date)
 		{
-			throw new NotImplementedException();
+			string query = string.Format(
+				@"
+UPDATE SponsorAdminSession SET EndDT = '{0}'
+WHERE SponsorAdminSessionID = {1}",
+				date,
+				sponsorAdminSessionId
+			);
+			Db.exec(query);
+		}
+
+		public void SaveSponsorAdminSession(int sponsorAdminId, DateTime date)
+		{
+			string query = string.Format(
+				@"
+INSERT INTO SponsorAdminSession(SponsorAdminID, DT)
+VALUES({0}, '{1}')",
+				sponsorAdminId,
+				date
+			);
+			Db.exec(query);
+		}
+
+		public void SaveSponsorAdminSessionFunction(int sessionId, int functionId, DateTime date)
+		{
+			string query = string.Format(
+				@"
+INSERT INTO SponsorAdminSessionFunction(SponsorAdminSessionID, ManagerFunctionID, DT)
+VALUES({0}, {1}, '{2}')",
+				sessionId,
+				functionId,
+				date
+			);
+			Db.exec(query);
+		}
+
+		public void SaveSponsorAdminDepartment(SponsorAdminDepartment d)
+		{
+			string query = string.Format(
+				@"
+INSERT INTO SponsorAdminDepartment (SponsorAdminID,DepartmentID)
+VALUES ({0},{1})",
+				d.Id,
+				d.Department.Id
+			);
+			Db.exec(query);
+		}
+
+		public int CountExtendedSurveyBySponsor(int sponsorId)
+		{
+			string query = string.Format(
+				@"
+SELECT COUNT(*)
+FROM SponsorExtendedSurvey ses
+WHERE ses.SponsorID = {0}",
+				sponsorId
+			);
+			using (SqlDataReader rs = Db.rs(query)) {
+				if (rs.Read()) {
+					return rs.GetInt32(0);
+				}
+			}
+			return 0;
+		}
+
+		public int CountSentInvitesBySponsor3(int sponsorId, DateTime dt)
+		{
+			string query = string.Format(
+				@"
+SELECT COUNT(*)
+FROM SponsorInvite si INNER JOIN [User] u ON si.UserID = u.UserID
+WHERE si.SponsorID = {0} AND u.Created < '{1}'",
+				sponsorId,
+				dt.ToString("yyyy-MM-dd")
+			);
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				if (rs.Read()) {
+					return rs.GetInt32(0);
+				}
+			}
+			return 0;
+		}
+
+		public int CountSentInvitesBySponsor2(int sponsorId, DateTime dt)
+		{
+			string query = string.Format(
+				@"
+SELECT COUNT(*)
+FROM SponsorInvite si
+LEFT OUTER JOIN [User] u ON si.UserID = u.UserID
+WHERE si.SponsorID = {0}
+AND (ISNULL(u.Created, si.Sent) < '{1}' OR si.Sent < '{1}')",
+				sponsorId,
+				dt.ToString("yyyy-MM-dd")
+			);
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				if (rs.Read()) {
+					return rs.GetInt32(0);
+				}
+			}
+			return 0;
+		}
+
+		public int ReadLastSponsorAdminSession()
+		{
+			string query = string.Format(
+				@"
+SELECT TOP 1 * FROM SponsorAdminSession ORDER BY SponsorAdminSessionID DESC"
+			);
+			int sessionId = 0;
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				if (rs.Read()) {
+					sessionId = GetInt32(rs, 0);
+				}
+			}
+			return sessionId;
+		}
+
+		public IList<SponsorExtendedSurvey> FindExtendedSurveysBySuperAdmin2(int superAdminId)
+		{
+			string query = string.Format(
+				@"
+SELECT s.Sponsor,
+	ses.ProjectRoundID,
+	ses.Internal,
+	ses.RoundText,
+	ss.SurveyID,
+	ss.Internal
+FROM Sponsor s
+INNER JOIN SponsorExtendedSurvey ses ON ses.SponsorID = s.SponsorID
+INNER JOIN eform..ProjectRound r ON ses.ProjectRoundID = r.ProjectRoundID
+INNER JOIN eform..Survey ss ON r.SurveyID = ss.SurveyID
+INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID
+WHERE sas.SuperAdminID =  {0}
+AND s.Closed IS NOT NULL
+ORDER BY s.Sponsor, ses.Internal, ses.RoundText",
+				superAdminId
+			);
+			var surveys = new List<SponsorExtendedSurvey>();
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				while (rs.Read()) {
+					var s = new SponsorExtendedSurvey {
+						Sponsor = new Sponsor {Name = GetString(rs, 0)},
+						ProjectRound = new ProjectRound {
+							Id = GetInt32(rs, 1),
+							Survey = new Survey {
+								Id = GetInt32(rs, 4),
+								Internal = GetString(rs, 5)
+							}
+						},
+						Internal = GetString(rs, 2),
+						RoundText = GetString(rs, 3)
+					};
+					surveys.Add(s);
+				}
+			}
+			return surveys;
+		}
+
+		public IList<SuperSponsor> FindSuperSponsors()
+		{
+			string query = string.Format(
+				@"
+SELECT SuperSponsorID,
+SuperSponsor
+FROM SuperSponsor"
+			);
+			var supers = new List<SuperSponsor>();
+			using (SqlDataReader rs = Db.rs(query)) {
+				while (rs.Read()) {
+					var s = new SuperSponsor {
+						Id = GetInt32(rs, 0),
+						Name = GetString(rs, 1)
+					};
+					supers.Add(s);
+				}
+			}
+			return supers;
+		}
+
+		public IList<SuperAdminSponsor> FindSuperAdminSponsors(int superAdminId)
+		{
+			string query = string.Format(
+				@"
+SELECT s.SponsorID,
+	s.Sponsor,
+	LEFT(REPLACE(CONVERT(VARCHAR(255),s.SponsorKey),'-',''),8),
+	(SELECT COUNT(*) FROM SponsorExtendedSurvey ses WHERE ses.SponsorID = s.SponsorID),
+	(SELECT COUNT(*) FROM SponsorInvite si WHERE si.Sent IS NOT NULL AND si.SponsorID = s.SponsorID),
+	(SELECT COUNT(*) FROM SponsorInvite si INNER JOIN [User] u ON si.UserID = u.UserID WHERE si.SponsorID = s.SponsorID),
+	(SELECT MIN(si.Sent) FROM SponsorInvite si WHERE si.SponsorID = s.SponsorID),
+	sas.SeeUsers,
+	(SELECT COUNT(*) FROM SponsorInvite si WHERE si.SponsorID = s.SponsorID),
+	s.Closed
+FROM Sponsor s
+INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID
+WHERE s.Deleted IS NULL AND sas.SuperAdminID = {0}
+ORDER BY s.Sponsor",
+				superAdminId
+			);
+			var admins = new List<SuperAdminSponsor>();
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				while (rs.Read()) {
+					var a = new SuperAdminSponsor {
+						Sponsor = new Sponsor {
+							Id = GetInt32(rs, 0),
+							Name = GetString(rs, 1),
+							SponsorKey = GetString(rs, 2),
+							ExtendedSurveys = new List<SponsorExtendedSurvey>(GetInt32(rs, 3)),
+							SentInvites = new List<SponsorInvite>(GetInt32(rs, 4)),
+							ActiveInvites = new List<SponsorInvite>(GetInt32(rs, 5)),
+							MinimumInviteDate = GetDateTime(rs, 6),
+							Invites = new List<SponsorInvite>(GetInt32(rs, 8)),
+							ClosedAt = GetDateTime(rs, 9)
+						},
+//						SeeUsers = GetBoolean(rs, 7)
+						SeeUsers = GetInt32(rs, 7) == 1
+					};
+					admins.Add(a);
+				}
+			}
+			return admins;
+		}
+
+		public IList<SponsorProjectRoundUnit> FindSponsorProjectRoundUnits(int superAdminId)
+		{
+			string query = string.Format(
+				@"
+SELECT s.Sponsor,
+	ses.ProjectRoundUnitID,
+	ISNULL(r.SurveyID, ss.SurveyID),
+	ss.Internal
+FROM Sponsor s
+INNER JOIN SponsorProjectRoundUnit ses ON ses.SponsorID = s.SponsorID
+INNER JOIN eform..ProjectRoundUnit r ON ses.ProjectRoundUnitID = r.ProjectRoundUnitID
+INNER JOIN eform..ProjectRound rr ON r.ProjectRoundID = rr.ProjectRoundID
+INNER JOIN eform..Survey ss ON ISNULL(r.SurveyID, ss.SurveyID) = ss.SurveyID
+INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID
+WHERE sas.SuperAdminID = {0}
+ORDER BY s.Sponsor, ses.Nav",
+				superAdminId
+			);
+			var units = new List<SponsorProjectRoundUnit>();
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				while (rs.Read()) {
+					var u = new SponsorProjectRoundUnit {
+						Sponsor = new Sponsor {Name = GetString(rs, 0)},
+						ProjectRoundUnit = new ProjectRoundUnit {
+							Id = GetInt32(rs, 1),
+							Survey = new Survey {
+								Id = GetInt32(rs, 2),
+								Internal = GetString(rs, 3)
+							}
+						},
+					};
+					units.Add(u);
+				}
+			}
+			return units;
 		}
 	}
 }

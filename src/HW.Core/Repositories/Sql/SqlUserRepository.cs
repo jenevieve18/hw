@@ -6,7 +6,7 @@ using HW.Core.Models;
 
 namespace HW.Core.Repositories.Sql
 {
-	public class SqlUserRepository : BaseSqlRepository<User>, IUserRepository
+	public class SqlUserRepository : BaseSqlRepository<User>//, IUserRepository
 	{
 		public void SaveUserProfileBackgroundQuestion(UserProfileBackgroundQuestion s)
 		{
@@ -98,6 +98,18 @@ WHERE u.UserID = {0}",
 				}
 			}
 			return null;
+		}
+		
+		public void lalala3(int projectRoundUserId, int answerId)
+		{
+			Db.exec(string.Format("UPDATE UserSponsorExtendedSurvey SET AnswerID = {0} WHERE AnswerID IS NULL AND ProjectRoundUserID = {1}", answerId, projectRoundUserId));
+			Db.exec(string.Format("UPDATE Answer SET EndDT = GETDATE() WHERE ProjectRoundUserID = {0} AND AnswerID = {1}", projectRoundUserId, answerId), "eFormSqlConnection");
+		}
+		
+		public void lalala2(int projectRoundUserId, int answerId)
+		{
+			Db.exec(string.Format("UPDATE UserSponsorExtendedSurvey SET AnswerID = NULL WHERE ProjectRoundUserID = {0} AND AnswerID = {1}", projectRoundUserId, answerId));
+			Db.exec(string.Format("UPDATE Answer SET EndDT = NULL WHERE ProjectRoundUserID = {0} AND AnswerID = {1}", projectRoundUserId, answerId), "eFormSqlConnection");
 		}
 		
 		public void lalala(int sponsorInviteID, int sponsorID, string email, int departmentID)

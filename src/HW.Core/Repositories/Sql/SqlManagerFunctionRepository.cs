@@ -6,7 +6,7 @@ using HW.Core.Models;
 
 namespace HW.Core.Repositories.Sql
 {
-	public class SqlManagerFunctionRepository : BaseSqlRepository<ManagerFunction>, IManagerFunctionRepository
+	public class SqlManagerFunctionRepository : BaseSqlRepository<ManagerFunction>//, IManagerFunctionRepository
 	{
 		public ManagerFunction ReadFirstFunctionBySponsorAdmin(int sponsorAdminID)
 		{

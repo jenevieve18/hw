@@ -6,7 +6,7 @@ using HW.Core.Models;
 
 namespace HW.Core.Repositories.Sql
 {
-	public class SqlDepartmentRepository : BaseSqlRepository<Department>, IDepartmentRepository
+	public class SqlDepartmentRepository : BaseSqlRepository<Department>//, IDepartmentRepository
 	{
 		public override void SaveOrUpdate(Department d)
 		{
@@ -323,6 +323,105 @@ ORDER BY d.SortString",
 //			}
 //			return departments;
 //		}
+		
+		public IList<Department> lalala(int sponsorAdminID, string ESselect, string ESjoin, int sponsorID)
+		{
+			string query = string.Format(
+				@"
+SELECT d.Department,
+	dbo.cf_departmentDepth(d.DepartmentID),
+	d.DepartmentID,
+	(
+		SELECT COUNT(*)
+		FROM SponsorInvite si
+		WHERE si.DepartmentID = d.DepartmentID AND si.SponsorID = d.SponsorID
+	),
+	(
+		SELECT COUNT(*)
+		FROM SponsorInvite si INNER JOIN [User] u ON si.UserID = u.UserID
+		WHERE si.DepartmentID = d.DepartmentID AND si.SponsorID = d.SponsorID
+	),
+	(
+		SELECT COUNT(*)
+		FROM SponsorInvite si
+		WHERE si.DepartmentID = d.DepartmentID AND si.SponsorID = d.SponsorID AND si.Sent IS NOT NULL
+	),
+	(
+		SELECT COUNT(*) FROM Department x
+		{0}
+		WHERE (x.ParentDepartmentID = d.ParentDepartmentID OR x.ParentDepartmentID IS NULL AND d.ParentDepartmentID IS NULL)
+		AND d.SponsorID = x.SponsorID
+		AND d.SortString < x.SortString
+	),
+	(
+		SELECT COUNT(*)
+		FROM SponsorInvite si
+		INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID
+		WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID
+	),
+	(
+		SELECT COUNT(*)
+		FROM SponsorInvite si
+		INNER JOIN [User] u ON si.UserID = u.UserID
+		INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID
+		WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID
+	),
+	(
+		SELECT COUNT(*)
+		FROM SponsorInvite si
+		INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID
+		WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID AND si.Sent IS NOT NULL
+	),
+	(
+		SELECT MIN(si.Sent)
+		FROM SponsorInvite si
+		INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID
+		WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID AND si.Sent IS NOT NULL
+	),
+	d.DepartmentShort
+	{1},
+	(
+		SELECT COUNT(*)
+		FROM SponsorInvite si
+		INNER JOIN [User] u ON si.UserID = u.UserID
+		INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID
+		WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString
+		AND si.SponsorID = d.SponsorID
+		AND si.StoppedReason IS NULL
+		AND si.UserID IS NOT NULL
+	),
+	(
+		SELECT COUNT(*)
+		FROM SponsorInvite si
+		INNER JOIN [User] u ON si.UserID = u.UserID
+		WHERE si.DepartmentID = d.DepartmentID
+		AND si.StoppedReason IS NULL
+	),
+	d.MinUserCountToDisclose
+FROM Department d
+INNER JOIN Sponsor s ON d.SponsorID = s.SponsorID
+{2}
+{3}
+d.SponsorID = {4} ORDER BY d.SortString",
+				(sponsorAdminID != -1 ? "INNER JOIN SponsorAdminDepartment xx ON x.DepartmentID = xx.DepartmentID AND xx.SponsorAdminID = " + sponsorAdminID + " " : ""),
+				ESselect,
+				ESjoin,
+				(sponsorAdminID != -1 ? "INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = " + sponsorAdminID + " AND " : "WHERE "),
+				sponsorID
+			);
+			IList<Department> departments = new List<Department>();
+			using (SqlDataReader rs = Db.rs(query)) {
+				while (rs.Read()) {
+					var d = new Department {
+						Name = GetString(rs, 0),
+						Depth = GetInt32(rs, 1),
+						Id = GetInt32(rs, 2)
+					};
+					departments.Add(d);
+				}
+			}
+			return departments;
+		}
 		
 		public IList<Department> FindBySponsor(int sponsorID)
 		{
