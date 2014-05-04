@@ -26,29 +26,29 @@ VALUES (@UserProfileID, @BQID, @ValueInt, @ValueText, @ValueDate)"
 			);
 		}
 		
-		public void UpdateUser(int userID, int sponsorID, int departmentID)
-		{
-			string query = "UPDATE [User] SET DepartmentID = " + departmentID + ", SponsorID = " + sponsorID + " WHERE UserID = " + userID;
-			Db.exec(query, "healthWatchSqlConnection");
-		}
+//		public void UpdateUser(int userID, int sponsorID, int departmentID)
+//		{
+//			string query = "UPDATE [User] SET DepartmentID = " + departmentID + ", SponsorID = " + sponsorID + " WHERE UserID = " + userID;
+//			Db.exec(query, "healthWatchSqlConnection");
+//		}
 		
-		public void UpdateUserProfile(int userID, int sponsorID, int departmentID)
-		{
-			string query = "UPDATE UserProfile SET DepartmentID = " + departmentID + ", SponsorID = " + sponsorID + " WHERE UserID = " + userID;
-			Db.exec(query, "healthWatchSqlConnection");
-		}
+//		public void UpdateUserProfile(int userID, int sponsorID, int departmentID)
+//		{
+//			string query = "UPDATE UserProfile SET DepartmentID = " + departmentID + ", SponsorID = " + sponsorID + " WHERE UserID = " + userID;
+//			Db.exec(query, "healthWatchSqlConnection");
+//		}
 		
-		public void UpdateUserProjectRoundUser(int projectRoundUnitID, int userProjectRoundUserID)
-		{
-			string query = string.Format(
-				@"
-UPDATE UserProjectRoundUser SET ProjectRoundUnitID = {0}
-WHERE UserProjectRoundUserID = {1}",
-				projectRoundUnitID,
-				userProjectRoundUserID
-			);
-			Db.exec(query, "healthWatchSqlConnection");
-		}
+//		public void UpdateUserProjectRoundUser(int projectRoundUnitID, int userProjectRoundUserID)
+//		{
+//			string query = string.Format(
+//				@"
+//UPDATE UserProjectRoundUser SET ProjectRoundUnitID = {0}
+//WHERE UserProjectRoundUserID = {1}",
+//				projectRoundUnitID,
+//				userProjectRoundUserID
+//			);
+//			Db.exec(query, "healthWatchSqlConnection");
+//		}
 		
 		public void UpdateEmailFailure(int userID)
 		{
@@ -58,8 +58,46 @@ WHERE UserProjectRoundUserID = {1}",
 		
 		public void UpdateLastReminderSent(int userID)
 		{
-			string query = "UPDATE [User] SET ReminderLastSent = GETDATE() WHERE UserID = " + userID;
+			string query = string.Format("UPDATE [User] SET ReminderLastSent = GETDATE() WHERE UserID = {0}", userID);
 			Db.exec(query, "healthWatchSqlConnection");
+		}
+		
+		// TODO: Check the relationship between user and sponsor!
+		public SponsorExtendedSurvey ReadByIdAndSponsorExtendedSurvey2(int userID, int sponsorExtendedSurveyID)
+		{
+			string query = string.Format(
+				@"
+SELECT ses.ExtraEmailBody,
+	ses.ExtraEmailSubject,
+	u.Email,
+	u.UserID,
+	u.ReminderLink,
+	LEFT(REPLACE(CONVERT(VARCHAR(255),u.UserKey),'-',''),12)
+FROM [User] u
+INNER JOIN SponsorExtendedSurvey ses ON ses.SponsorExtendedSurveyID = {1}
+WHERE u.UserID = {0}",
+				userID,
+				sponsorExtendedSurveyID
+			);
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				if (rs.Read()) {
+					var s = new Sponsor();
+					var u = new User {
+						Sponsor = s,
+						Email = rs.GetString(2),
+						Id = rs.GetInt32(3),
+						ReminderLink = GetInt32(rs, 4),
+						UserKey = rs.GetString(5)
+					};
+					var e = new SponsorExtendedSurvey {
+						Sponsor = s,
+						ExtraEmailBody = rs.GetString(0),
+						ExtraEmailSubject = rs.GetString(1)
+					};
+					return e;
+				}
+			}
+			return null;
 		}
 		
 		public User ReadByIdAndSponsorExtendedSurvey(int userID, int sponsorExtendedSurveyID)
@@ -90,7 +128,6 @@ WHERE u.UserID = {0}",
 						Sponsor = s,
 						Email = rs.GetString(2),
 						Id = rs.GetInt32(3),
-//						ReminderLink = rs.GetInt32(4),
 						ReminderLink = GetInt32(rs, 4),
 						UserKey = rs.GetString(5)
 					};
