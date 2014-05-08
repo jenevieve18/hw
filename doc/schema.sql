@@ -13,6 +13,60 @@ CREATE TABLE [dbo].[AdminNews](
 
 GO
 
+USE [healthWatch]
+GO
+
+/****** Object:  Table [dbo].[SponsorAdminSession]    Script Date: 05/08/2014 22:16:26 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[SponsorAdminSession](
+	[SponsorAdminID] [int] NOT NULL,
+	[DT] [datetime] NULL,
+	[SponsorAdminSessionID] [int] IDENTITY(1,1) NOT NULL,
+ CONSTRAINT [PK_SponsorAdminSession] PRIMARY KEY CLUSTERED 
+(
+	[SponsorAdminSessionID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+USE [healthWatch]
+GO
+
+/****** Object:  Table [dbo].[SponsorAdminSessionFunction]    Script Date: 05/08/2014 22:19:12 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[SponsorAdminSessionFunction](
+	[SponsorAdminSessionFunctionID] [int] IDENTITY(1,1) NOT NULL,
+	[ManagerFunctionID] [int] NULL,
+	[DT] [datetime] NULL,
+	[SponsorAdminSessionID] [int] NULL,
+ CONSTRAINT [PK_SponsorAdminSessionFunction] PRIMARY KEY CLUSTERED 
+(
+	[SponsorAdminSessionFunctionID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+use healthWatch;
+alter table Sponsor add MinUserCountToDisclose int;
+
+use healthWatch;
+alter table SponsorInvite add StoppedPercent int;
+
+use healthwatch;
+alter table Department add MinUserCountToDisclose int;
+
 ALTER TABLE dbo.SponsorExtendedSurvey ADD Total int NULL
 GO
 
