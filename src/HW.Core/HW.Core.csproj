@@ -135,6 +135,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Sql\BaseSqlRepository.cs" />
     <Compile Include="Repositories\Sql\SqlNewsRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlPlotTypeRepository.cs" />
     <Compile Include="Repositories\Sql\SqlReportRepository.cs" />
     <Compile Include="Repositories\Sql\SqlProjectRepository.cs" />
     <Compile Include="Repositories\Sql\SqlOptionRepository.cs" />

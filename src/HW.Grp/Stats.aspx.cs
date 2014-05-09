@@ -17,7 +17,7 @@ namespace HW.Grp
 	{
 		protected IList<ReportPartLanguage> reportParts = null;
 		protected IList<BaseModel> urlModels;
-		protected IList<PlotType> plotTypes;
+		protected IList<PlotTypeLanguage> plotTypes = new List<PlotTypeLanguage>();
 		IList<Department> departments;
 		IList<SponsorBackgroundQuestion> questions;
 		int sponsorID = 0;
@@ -143,7 +143,7 @@ namespace HW.Grp
 			sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
 			sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 			
-			plotTypes = plotRepository.FindAll();
+//			plotTypes = plotRepository.FindAll();
 			
 			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Statistics, DateTime.Now);
 			if (sponsorID != 0) {
@@ -242,6 +242,8 @@ namespace HW.Grp
 			int selectedLangID = Convert.ToInt32(LangID.SelectedValue);
 			int selectedProjectRoundUnitID = Convert.ToInt32(ProjectRoundUnitID.SelectedValue);
 			int grouping = Convert.ToInt32(Grouping.SelectedValue);
+			
+			plotTypes = plotRepository.FindByLanguage(selectedLangID);
 			
 			int selectedDepartmentID = departments[0].Id;
 			var reportParts = reportRepository.FindByProjectAndLanguage2(selectedProjectRoundUnitID, selectedLangID, selectedDepartmentID);
