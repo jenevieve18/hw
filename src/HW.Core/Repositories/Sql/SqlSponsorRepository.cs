@@ -580,7 +580,8 @@ SELECT s.InviteTxt,
 	s.AlternativeTreatmentOfferEmail,
 	s.LID,
 	s.MinUserCountToDisclose,
-	s.ProjectRoundUnitID
+	s.ProjectRoundUnitID,
+	s.EmailFrom
 FROM Sponsor s
 WHERE s.SponsorID = {0}",
 				sponsorId
@@ -619,7 +620,8 @@ WHERE s.SponsorID = {0}",
 						AlternativeTreatmentOfferEmail = GetString(rs, 28),
 						Language = new Language {Id = GetInt32(rs, 29)},
 						MinUserCountToDisclose = GetInt32(rs, 30, 10),
-						ProjectRoundUnit = new ProjectRoundUnit {Id = GetInt32(rs, 31)}
+						ProjectRoundUnit = new ProjectRoundUnit { Id = GetInt32(rs, 31) },
+						EmailFrom = GetString(rs, 32)
 					};
 					return s;
 				}

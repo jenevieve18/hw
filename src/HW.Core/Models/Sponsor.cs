@@ -45,12 +45,21 @@ namespace HW.Core.Models
 		public virtual string AlternativeTreatmentOfferEmail { get; set; }
 		public virtual Language Language { get; set; }
 		public virtual int MinUserCountToDisclose { get; set; }
+		public virtual string EmailFrom { get; set; }
 		
 		// FIXME: These are not necessary properties
 		public virtual DateTime? MinimumInviteDate { get; set; }
 		public virtual bool Closed { get { return ClosedAt != null; } }
 		public virtual List<SponsorInvite> SentInvites { get; set; }
 		public virtual List<SponsorInvite> ActiveInvites { get; set; }
+		
+		User user;
+		
+		// HACK: The reference of this is used by SqlUserRepository.ReadByIdAndSponsorExtendedSurvey2
+		public virtual User User {
+			get { return user; }
+			set { user = value; user.Sponsor = this; }
+		}
 	}
 	
 	public class SponsorAdmin : BaseModel

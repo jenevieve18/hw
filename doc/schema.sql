@@ -120,3 +120,9 @@ GO
 use eform;
 insert into plottypelang(plottypeid, langid, name, description)
 select id, 2, name, description from plottype;
+
+
+USE HealthWatch
+GO
+ALTER TABLE Sponsor ADD EmailFrom NVARCHAR(255)
+GO
