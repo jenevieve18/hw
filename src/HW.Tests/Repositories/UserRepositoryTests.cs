@@ -64,12 +64,12 @@ namespace HW.Tests.Repositories
 			r.Find2(1, 1);
 		}
 		
-		[Test]
-		public void TestFindUserProjectRoundUser()
-		{
-			r.FindUserProjectRoundUser(1, 1, 1);
-		}
-		
+//		[Test]
+//		public void TestFindUserProjectRoundUser()
+//		{
+//			r.FindUserProjectRoundUser(1, 1, 1);
+//		}
+//		
 		[Test]
 		public void TestReadById()
 		{

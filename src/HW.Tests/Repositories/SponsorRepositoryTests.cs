@@ -174,9 +174,9 @@ namespace HW.Tests.Repositories
 		}
 		
 		[Test]
-		public void TestX()
+		public void TestReadSponsor2()
 		{
-			var x = r.X(5);
+			var x = r.ReadSponsor2(5);
 			string s = "test";
 			string h = "test";
 			Console.WriteLine(s.Replace(" ", "").IndexOf(h.Replace(" ", "")));
@@ -242,16 +242,16 @@ namespace HW.Tests.Repositories
 			r.SaveSponsorAdminFunction(new SponsorAdminFunction { Admin = new SponsorAdmin(), Function = new ManagerFunction() });
 		}
 		
-		[Test]
-		public void TestReadSponsorProjectRoundUnit()
-		{
-			r.ReadSponsorProjectRoundUnit(1);
-		}
-		
-		[Test]
-		public void TestFindInviteBackgroundQuestionsByUser()
-		{
-			r.FindInviteBackgroundQuestionsByUser(1);
-		}
+//		[Test]
+//		public void TestReadSponsorProjectRoundUnit()
+//		{
+//			r.ReadSponsorProjectRoundUnit(1);
+//		}
+//		
+//		[Test]
+//		public void TestFindInviteBackgroundQuestionsByUser()
+//		{
+//			r.FindInviteBackgroundQuestionsByUser(1);
+//		}
 	}
 }

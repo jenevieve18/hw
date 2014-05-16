@@ -23,19 +23,19 @@ namespace HW.Tests.Repositories
 			r.ReadByIdAndSponsor(1, 1);
 		}
 		
-		[Test]
-		[Ignore("No function cf_departmentTree in test database.")]
-		public void TestFindBySponsorWithSponsorAdminOnTree()
-		{
-			r.FindBySponsorWithSponsorAdminOnTree(1, 1);
-		}
-		
-		[Test]
-		[Ignore("No function cf_departmentTree in test database.")]
-		public void TestFindBySponsorWithSponsorAdminSortStringAndTree()
-		{
-			r.FindBySponsorWithSponsorAdminSortStringAndTree(1, "", 1);
-		}
+//		[Test]
+//		[Ignore("No function cf_departmentTree in test database.")]
+//		public void TestFindBySponsorWithSponsorAdminOnTree()
+//		{
+//			r.FindBySponsorWithSponsorAdminOnTree(1, 1);
+//		}
+//		
+//		[Test]
+//		[Ignore("No function cf_departmentTree in test database.")]
+//		public void TestFindBySponsorWithSponsorAdminSortStringAndTree()
+//		{
+//			r.FindBySponsorWithSponsorAdminSortStringAndTree(1, "", 1);
+//		}
 		
 		[Test]
 		public void TestDeleteSponsorAdminDepartment()
