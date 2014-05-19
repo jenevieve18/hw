@@ -40,12 +40,12 @@ namespace HW.Tests.Repositories
 			var a = r.ReadMinMax("dbo.cf_yearWeek", 1, 1, 2011, 2012, "");
 		}
 		
-		[Test]
-		public void TestFindBackgroundAnswers()
-		{
-			r.FindBackgroundAnswers(2);
-		}
-		
+//		[Test]
+//		public void TestFindBackgroundAnswers()
+//		{
+//			r.FindBackgroundAnswers(2);
+//		}
+//		
 		[Test]
 		public void TestReadByGroup()
 		{
