@@ -253,10 +253,18 @@
 			<div class="report-parts">
 				<div class="action">
                     <div class="chart-description" title="Chart Descriptions">
-                        <div id="accordion">
+                        <div>
                         <% foreach (var p in plotTypes) { %>
-                            <h3><%= p.Name %></h3>
-                            <div><p><%= p.Description %></p></div>
+	       			<div>&nbsp;<br /></div>
+                            <div class="report-part">
+                                <div class="report-part-subject">
+							        <span><%= p.Name %></span>
+                                    <span class="toggle toggle-right toggle-active"></span>
+						        </div>
+                                <div class="report-part-header"><%= p.Description %></div>
+                            </div>
+                            <!--<h3><%= p.Name %></h3>
+                            <div><p><%= p.Description %></p></div>-->
                         <% } %>
                         </div>
                     </div>
