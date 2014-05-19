@@ -82,6 +82,9 @@
     margin-bottom:5px;
     font-size:9pt;
 }
+.chart-description {
+    background:url(https://healthwatch.se/includes/resources/myhealth_statistics_bar_detail_toggle.gif);
+}
 .toggle {
     width: 32px;
     height: 16px;
@@ -249,14 +252,14 @@
             <% bool supportsBoxPlot = SelectedDepartments.Count == 1 || Grouping.SelectedValue == "0"; %>
 			<div class="report-parts">
 				<div class="action">
-    <div class="chart-description" title="Chart Descriptions">
-        <div id="accordion">
-        <% foreach (var p in plotTypes) { %>
-            <h3><%= p.Name %></h3>
-            <div><p><%= p.Description %></p></div>
-        <% } %>
-        </div>
-    </div>
+                    <div class="chart-description" title="Chart Descriptions">
+                        <div id="accordion">
+                        <% foreach (var p in plotTypes) { %>
+                            <h3><%= p.Name %></h3>
+                            <div><p><%= p.Description %></p></div>
+                        <% } %>
+                        </div>
+                    </div>
 					<span class="small">Change all graphs to:</span>
 					<span id="modal" class="button white small graph"><span class="hidden plot-type"><%= PlotType.Line%></span><%= PlotType.GetString(PlotType.Line)%></span>
 					<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.LineSD %></span><%= PlotType.GetString(PlotType.LineSD)%></span>
@@ -265,7 +268,8 @@
 						<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.BoxPlotMinMax %></span><%= PlotType.GetString(PlotType.BoxPlotMinMax)%></span>
 						<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.BoxPlot %></span><%= PlotType.GetString(PlotType.BoxPlot)%></span>
 					<% } %>
-                                <span class="toggle toggle-chart-description"></span>
+                    <span class="toggle toggle-chart-description"></span>
+                    <!--<span class="chart-description"></span>-->
 					<span class="small">Export all graphs to:</span>
 					<span class="button white small export">
                         <% string exportAllDocXUrl = GetExportAllUrl("docx", additionalQuery); %>

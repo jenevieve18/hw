@@ -21,6 +21,31 @@ VALUES ({0}, '{1}', {2})",
 			Db.exec(query);
 		}
 		
+		public Department Save2(int sponsorID, string name, string shortName)
+		{
+			string query = string.Format(
+				@"
+SET NOCOUNT ON;
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+BEGIN TRAN;
+INSERT INTO Department (SponsorID, Department, DepartmentShort)
+VALUES ({0}, '{1}', '{2}');
+SELECT DepartmentID FROM [Department] WHERE SponsorID={0} AND DepartmentShort = '{2}' ORDER BY DepartmentID DESC;
+COMMIT;",
+				sponsorID,
+				name,
+				shortName
+			);
+			using (SqlDataReader rs = Db.rs(query)) {
+				if (rs.Read()) {
+					return new Department {
+						Id = GetInt32(rs, 0)
+					};
+				}
+			}
+			return null;
+		}
+		
 		public void Save(Department d)
 		{
 			string query = string.Format(
@@ -45,12 +70,56 @@ VALUES ({0}, {1})",
 			Db.exec(query, "healthWatchSqlConnection");
 		}
 		
+		public void Update3(int sponsorID, int deleteDepartmentID)
+		{
+			string query = string.Format("UPDATE Department SET SponsorID = -ABS(SponsorID) WHERE SponsorID = " + sponsorID + " AND DepartmentID = " + deleteDepartmentID);
+			Db.exec(query);
+			query = string.Format("UPDATE SponsorAdminDepartment SET DepartmentID = -ABS(DepartmentID) WHERE DepartmentID = " + deleteDepartmentID);
+			Db.exec(query);
+			query = string.Format("UPDATE Department SET SortString = dbo.cf_departmentSortString(DepartmentID) WHERE SponsorID = " + sponsorID + "");
+			Db.exec(query);
+		}
+		
+		public void Update(int deptID, int sponsorAdminID)
+		{
+			string query = string.Format(
+				@"
+UPDATE Department SET SortOrder = {0}
+WHERE DepartmentID = {0}",
+				deptID
+			);
+			Db.exec(query);
+
+			if (sponsorAdminID != -1) {
+				query = string.Format(
+					@"
+INSERT INTO SponsorAdminDepartment (SponsorAdminID, DepartmentID)
+VALUES ({0}, {1})",
+					sponsorAdminID,
+					deptID
+				);
+				Db.exec(query);
+			}
+		}
+		
+		public void Update2(string parentDepartmentID, int deptID)
+		{
+			string query = string.Format(
+				@"
+UPDATE Department SET ParentDepartmentID = {0}
+WHERE DepartmentID = {1}",
+				parentDepartmentID,
+				deptID
+			);
+			Db.exec(query);
+		}
+		
 		public void UpdateDepartment(Department d)
 		{
 			string query = string.Format(
 				@"
 UPDATE Department SET Department = '{0}',
-DepartmentShort = '{1}',
+	DepartmentShort = '{1}',
 ParentDepartmentID = {2}
 WHERE DepartmentID = {3}",
 				d.Name,
@@ -136,6 +205,52 @@ WHERE SponsorID = {0} ORDER BY DepartmentID DESC",
 			return deptID;
 		}
 		
+		public Department Read(int bqID, int deptID)
+		{
+			string query = string.Format(
+				@"
+SELECT AVG(DATEDIFF(year, upbq.ValueDate, GETDATE())),
+	COUNT(upbq.ValueDate)
+FROM Department d
+INNER JOIN Department sid ON LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND sid.SponsorID = d.SponsorID
+INNER JOIN SponsorInvite si ON sid.DepartmentID = si.DepartmentID
+INNER JOIN [User] u ON si.UserID = u.UserID
+INNER JOIN UserProfileBQ upbq ON u.UserProfileID = upbq.UserProfileID AND upbq.BQID = {0}
+WHERE d.DepartmentID = {1}",
+				bqID,
+				deptID
+			);
+			using (SqlDataReader rs = Db.rs(query)) {
+				if (rs.Read()) {
+					return new Department {
+						Average = GetDouble(rs, 0),
+						Count = GetInt32(rs, 1)
+					};
+				}
+			}
+			return null;
+		}
+		
+		public Department Read(string shortName, int sponsorID)
+		{
+			string query = string.Format(
+				@"
+SELECT DepartmentID
+FROM Department
+WHERE DepartmentShort = '{0}' AND SponsorID = {1}",
+				shortName,
+				sponsorID
+			);
+			using (SqlDataReader rs = Db.rs(query)) {
+				if (rs.Read()) {
+					return new Department {
+						Id = GetInt32(rs, 0)
+					};
+				}
+			}
+			return null;
+		}
+		
 		public override Department Read(int id)
 		{
 			string query = string.Format(
@@ -165,13 +280,15 @@ SELECT d.SortString,
 	d.Department,
 	d.DepartmentShort
 FROM Department d
-WHERE d.SponsorID = " + sponsorID + " AND d.DepartmentID = " + departmentID
+WHERE d.SponsorID = {0}
+AND d.DepartmentID = {1}",
+				sponsorID,
+				departmentID
 			);
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				if (rs.Read()) {
 					var d = new Department {
 						SortString = rs.GetString(0),
-//						Parent = new Department { Id = rs.GetInt32(1) },
 						Parent = rs.IsDBNull(1) ? null : new Department { Id = rs.GetInt32(1) },
 						Name = rs.GetString(2),
 						ShortName = rs.GetString(3)
@@ -423,6 +540,128 @@ d.SponsorID = {4} ORDER BY d.SortString",
 			return departments;
 		}
 		
+		public IList<Department> c(int sponsorID, int sponsorAdminID)
+		{
+			string query = string.Format(
+				@"
+SELECT d.DepartmentID,
+	dbo.cf_departmentTree(d.DepartmentID,' » ')
+FROM Department d
+{0} d.SponsorID = {1}
+ORDER BY d.SortString",
+				(sponsorAdminID != -1 ? "INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = " + sponsorAdminID + " AND " : "WHERE "),
+				sponsorID
+			);
+			var departments = new List<Department>();
+			using (SqlDataReader rs = Db.rs(query)) {
+				while (rs.Read()) {
+					var d = new Department {
+						Id = GetInt32(rs, 0),
+						TreeName = GetString(rs, 1)
+					};
+					departments.Add(d);
+				}
+			}
+			return departments;
+		}
+		
+		public List<Department> FindSponsorWithSponsorAdminOnTree(int sponsorID, int sponsorAdminID)
+		{
+			string query = string.Format(
+				@"
+SELECT d.DepartmentID,
+	dbo.cf_departmentTree(d.DepartmentID,' » ')
+FROM Department d
+{0} d.SponsorID = {1}
+ORDER BY d.SortString",
+				(sponsorAdminID != -1 ? "INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = " + sponsorAdminID + " AND " : "WHERE "),
+				sponsorID
+			);
+			var departments = new List<Department>();
+			using (SqlDataReader rs = Db.rs(query)) {
+				while (rs.Read()) {
+					var d = new Department {
+						Id = GetInt32(rs, 0),
+						TreeName = GetString(rs, 1)
+					};
+					departments.Add(d);
+				}
+			}
+			return departments;
+		}
+		
+		public List<Department> FindSponsorWithSponsorAdminOnTree(int sponsorID, int sponsorAdminID, string sortString)
+		{
+			string query = string.Format(
+				@"
+SELECT d.DepartmentID,
+	dbo.cf_departmentTree(d.DepartmentID,' » ')
+FROM Department d
+{0} d.SponsorID = {1}
+AND LEFT(d.SortString,{2}) <> '{3}'
+ORDER BY d.SortString",
+				(sponsorAdminID != -1 ? "INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = " + sponsorAdminID + " AND " : "WHERE "),
+				sponsorID,
+				sortString.Length,
+				sortString
+			);
+			var departments = new List<Department>();
+			using (SqlDataReader rs = Db.rs(query)) {
+				while (rs.Read()) {
+					var d = new Department {
+						Id = GetInt32(rs, 0),
+						TreeName = GetString(rs, 1)
+					};
+					departments.Add(d);
+				}
+			}
+			return departments;
+		}
+		
+		public IList<Department> FindBySponsor2(int sponsorID)
+		{
+			string query = string.Format(
+				@"
+SELECT DepartmentShort,
+	DepartmentID
+FROM Department
+WHERE DepartmentShort IS NOT NULL
+AND SponsorID = {0}",
+				sponsorID
+			);
+			var departments = new List<Department>();
+			using (SqlDataReader rs = Db.rs(query)) {
+				while (rs.Read()) {
+					var d = new Department {
+						ShortName = GetString(rs, 0),
+						Id = GetInt32(rs, 1)
+					};
+					departments.Add(d);
+				}
+			}
+			return departments;
+		}
+		
+		public IList<Department> FindBySponsor(int sponsorID, string units)
+		{
+			string query = string.Format(
+				@"
+SELECT dbo.cf_DepartmentTree(DepartmentID,' » '),
+	DepartmentShort FROM
+Department WHERE SponsorID = {0}
+AND DepartmentShort IN ({1})",
+				sponsorID,
+				units
+			);
+			var departments = new List<Department>();
+			using (SqlDataReader rs = Db.rs(query)) {
+				while (rs.Read()) {
+					departments.Add(new Department { TreeName = GetString(rs, 0), ShortName = GetString(rs, 1) });
+				}
+			}
+			return departments;
+		}
+		
 		public IList<Department> FindBySponsor(int sponsorID)
 		{
 			string query = string.Format(
@@ -453,7 +692,6 @@ ORDER BY dbo.cf_departmentSortString(d.DepartmentID)",
 			return departments;
 		}
 		
-		// TODO: How about anonymized?
 		public IList<Department> FindBySponsorWithSponsorAdminIn(int sponsorID, int sponsorAdminID, string gid, int sponsorMinUserCountToDisclose)
 		{
 			string query = string.Format(
@@ -487,7 +725,6 @@ ORDER BY d.SortString",
 			return departments;
 		}
 		
-		// TODO: How about anonymized?
 		public IList<Department> FindBySponsorOrderedBySortStringIn(int sponsorID, string gid, int sponsorMinUserCountToDisclose)
 		{
 			string query = string.Format(
@@ -520,7 +757,6 @@ ORDER BY d.SortString",
 			return departments;
 		}
 		
-		// TODO: How about anonymized?
 		public IList<Department> FindBySponsorWithSponsorAdmin(int sponsorID, int sponsorAdminID, int sponsorMinUserCountToDisclose)
 		{
 			string query = string.Format(
@@ -552,7 +788,6 @@ ORDER BY LEN(d.SortString)",
 			return departments;
 		}
 		
-		// TODO: How about anonymized?
 		public IList<Department> FindBySponsorOrderedBySortString(int sponsorID, int sponsorMinUserCountToDisclose)
 		{
 			string query = string.Format(
@@ -583,94 +818,94 @@ ORDER BY LEN(d.SortString)",
 			return departments;
 		}
 		
-		public IList<Department> FindBySponsorWithSponsorAdminOnTree(int sponsorID, int sponsorAdminID)
-		{
-			string j = sponsorAdminID != -1
-				? string.Format("INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
-				: "WHERE ";
-			string query = string.Format(
-				@"
-SELECT d.DepartmentID,
-	dbo.cf_departmentTree(d.DepartmentID,' » ')
-FROM Department d
-{1}d.SponsorID = {0}
-ORDER BY d.SortString",
-				sponsorID,
-				j
-			);
-			var departments = new List<Department>();
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				while (rs.Read()) {
-					var d = new Department {
-						Id = rs.GetInt32(0),
-						TreeName = rs.GetString(1)
-					};
-					departments.Add(d);
-				}
-			}
-			return departments;
-		}
-		
-		public IList<Department> FindBySponsorWithSponsorAdminAndTree(int sponsorID, int sponsorAdminID)
-		{
-			string j = sponsorAdminID != -1
-				? string.Format("INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
-				: "WHERE ";
-			string query = string.Format(
-				@"
-SELECT d.DepartmentID,
-	dbo.cf_departmentTree(d.DepartmentID,' » ')
-FROM Department d
-{1}d.SponsorID = {0}
-ORDER BY d.SortString",
-				sponsorID,
-				j
-			);
-			var departments = new List<Department>();
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				while (rs.Read()) {
-					var d = new Department {
-						Id = rs.GetInt32(0),
-						TreeName = rs.GetString(1)
-					};
-					departments.Add(d);
-				}
-			}
-			return departments;
-		}
-		
-		public IList<Department> FindBySponsorWithSponsorAdminSortStringAndTree(int sponsorID, string sortString, int sponsorAdminID)
-		{
-			string j = sponsorAdminID != -1
-				? string.Format("INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
-				: "WHERE ";
-			string query = string.Format(
-				@"
-SELECT d.DepartmentID,
-	Department,
-	dbo.cf_departmentTree(d.DepartmentID,' » ')
-FROM Department d
-{3}d.SponsorID = {0}
-AND LEFT(d.SortString,{2}) <> '{1}'
-ORDER BY d.SortString",
-				sponsorID,
-				sortString,
-				sortString.Length,
-				j
-			);
-			var departments = new List<Department>();
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				while (rs.Read()) {
-					var d = new Department {
-						Id = rs.GetInt32(0),
-						Name = rs.GetString(1),
-						TreeName = rs.GetString(2)
-					};
-					departments.Add(d);
-				}
-			}
-			return departments;
-		}
+//		public IList<Department> FindBySponsorWithSponsorAdminOnTree(int sponsorID, int sponsorAdminID)
+//		{
+//			string j = sponsorAdminID != -1
+//				? string.Format("INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
+//				: "WHERE ";
+//			string query = string.Format(
+//				@"
+		//SELECT d.DepartmentID,
+//	dbo.cf_departmentTree(d.DepartmentID,' » ')
+		//FROM Department d
+		//{1}d.SponsorID = {0}
+		//ORDER BY d.SortString",
+//				sponsorID,
+//				j
+//			);
+//			var departments = new List<Department>();
+//			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+//				while (rs.Read()) {
+//					var d = new Department {
+//						Id = rs.GetInt32(0),
+//						TreeName = rs.GetString(1)
+//					};
+//					departments.Add(d);
+//				}
+//			}
+//			return departments;
+//		}
+//
+//		public IList<Department> FindBySponsorWithSponsorAdminAndTree(int sponsorID, int sponsorAdminID)
+//		{
+//			string j = sponsorAdminID != -1
+//				? string.Format("INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
+//				: "WHERE ";
+//			string query = string.Format(
+//				@"
+		//SELECT d.DepartmentID,
+//	dbo.cf_departmentTree(d.DepartmentID,' » ')
+		//FROM Department d
+		//{1}d.SponsorID = {0}
+		//ORDER BY d.SortString",
+//				sponsorID,
+//				j
+//			);
+//			var departments = new List<Department>();
+//			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+//				while (rs.Read()) {
+//					var d = new Department {
+//						Id = rs.GetInt32(0),
+//						TreeName = rs.GetString(1)
+//					};
+//					departments.Add(d);
+//				}
+//			}
+//			return departments;
+//		}
+//
+//		public IList<Department> FindBySponsorWithSponsorAdminSortStringAndTree(int sponsorID, string sortString, int sponsorAdminID)
+//		{
+//			string j = sponsorAdminID != -1
+//				? string.Format("INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
+//				: "WHERE ";
+//			string query = string.Format(
+//				@"
+		//SELECT d.DepartmentID,
+//	Department,
+//	dbo.cf_departmentTree(d.DepartmentID,' » ')
+		//FROM Department d
+		//{3}d.SponsorID = {0}
+		//AND LEFT(d.SortString,{2}) <> '{1}'
+		//ORDER BY d.SortString",
+//				sponsorID,
+//				sortString,
+//				sortString.Length,
+//				j
+//			);
+//			var departments = new List<Department>();
+//			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+//				while (rs.Read()) {
+//					var d = new Department {
+//						Id = rs.GetInt32(0),
+//						Name = rs.GetString(1),
+//						TreeName = rs.GetString(2)
+//					};
+//					departments.Add(d);
+//				}
+//			}
+//			return departments;
+//		}
 		
 		public IList<Department> FindBySponsorWithSponsorAdminInDepth(int sponsorID, int sponsorAdminID)
 		{

@@ -94,7 +94,7 @@ namespace HW.Grp
 			string key = Request.QueryString["AK"];
 			
 			int grpng = Convert.ToInt32(Request.QueryString["GRPNG"]);
-			int spons = Convert.ToInt32((Request.QueryString["SAID"] != null ? Request.QueryString["SAID"] : Session["SponsorAdminID"]));
+			int sponsorAdminID = Convert.ToInt32((Request.QueryString["SAID"] != null ? Request.QueryString["SAID"] : Session["SponsorAdminID"]));
 			int sid = Convert.ToInt32((Request.QueryString["SID"] != null ? Request.QueryString["SID"] : Session["SponsorID"]));
 			string gid = (Request.QueryString["GID"] != null ? Request.QueryString["GID"].ToString().Replace(" ", "") : "");
 			
@@ -106,7 +106,7 @@ namespace HW.Grp
 			ReportPart r = service.ReadReportPart(rpid, langID);
 
 			var f = service.GetGraphFactory(HasAnswerKey);
-			g = f.CreateGraph(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, Width, Height, Background, grpng, spons, sid, gid, disabled, point, s.MinUserCountToDisclose);
+			g = f.CreateGraph(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, Width, Height, Background, grpng, sponsorAdminID, sid, gid, disabled, point, s.MinUserCountToDisclose);
 			g.render();
 		}
 	}

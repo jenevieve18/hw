@@ -215,6 +215,27 @@ AND a.EndDT < '{2}'
 			return null;
 		}
 		
+		public BackgroundAnswer Read(string bqID, int val)
+		{
+			string query = string.Format(
+				@"
+SELECT BAID
+FROM BA
+WHERE BQID = {0}
+AND Value = {1}",
+				bqID,
+				val
+			);
+			using (SqlDataReader rs = Db.rs(query)) {
+				if (rs.Read()) {
+					return new BackgroundAnswer {
+						Id = GetInt32(rs, 0)
+					};
+				}
+			}
+			return null;
+		}
+		
 		public Answer ReadByGroup(string groupBy, int yearFrom, int yearTo, string sortString)
 		{
 			string query = string.Format(

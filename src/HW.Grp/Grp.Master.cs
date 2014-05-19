@@ -23,7 +23,7 @@ namespace HW.Grp
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			int sponsorID = Convert.ToInt32(Session["SponsorID"]);
-			sponsor = sponsorRepository.X(sponsorID);
+			sponsor = sponsorRepository.ReadSponsor2(sponsorID);
 
 			sponsorName = Session["Name"] != null ? Session["Name"].ToString() : "";
 			sponsorAdminID = Session["SponsorAdminID"] != null ? Convert.ToInt32(Session["SponsorAdminID"]) : -1;

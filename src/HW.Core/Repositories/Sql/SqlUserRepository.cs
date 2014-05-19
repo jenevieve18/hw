@@ -19,11 +19,66 @@ VALUES (@UserProfileID, @BQID, @ValueInt, @ValueText, @ValueDate)"
 				query,
 				"healthWatchSqlConnection",
 				new SqlParameter("@UserProfileID", s.Profile.Id),
-				new SqlParameter("@BQID", s.Question.Id),
+				new SqlParameter("@BQID", s.BackgroundQuestion.Id),
 				new SqlParameter("@ValueInt", s.ValueInt),
 				new SqlParameter("@ValueText", s.ValueText),
 				new SqlParameter("@ValueDate", s.ValueDate)
 			);
+		}
+		
+		public void SaveUserProfileBackgroundQuestion(int profileID, int bqID, int valueInt, string valueText, DateTime? valueDate)
+		{
+			string query = string.Format(
+				@"
+INSERT INTO UserProfileBQ (UserProfileID,BQID,ValueInt,ValueText,ValueDate)
+VALUES ({0},{1},{2},{3},{4})",
+				profileID,
+				bqID,
+				(valueInt == 0 ? "NULL" : valueInt.ToString()),
+				(valueText == "" ? "NULL" : "'" + valueText.Replace("'", "") + "'"),
+				(valueDate == null ? "NULL" : "'" + valueDate.Value.ToString("yyyy-MM-dd") + "'")
+			);
+			Db.exec(query);
+		}
+		
+		public void SaveUserProfile(int userID, int profileComparisonID)
+		{
+			string query = string.Format(
+				@"
+INSERT INTO UserProfile (UserID,SponsorID,DepartmentID,ProfileComparisonID,Created)
+VALUES ({0},1,NULL,{1},GETDATE())",
+				userID,
+				profileComparisonID
+			);
+			Db.exec(query);
+		}
+		
+		public void UpdateProjectRoundUser(int projectRoundUserID, int projectRoundUnitID)
+		{
+			string query = string.Format(
+				@"
+UPDATE UserProjectRoundUser SET ProjectRoundUnitID = {0}
+WHERE UserProjectRoundUserID = {1}",
+				projectRoundUnitID,
+				projectRoundUserID
+			);
+			Db.exec(query);
+			query = string.Format(
+				@"
+UPDATE [eform]..[ProjectRoundUser] SET ProjectRoundUnitID = {0}
+WHERE ProjectRoundUserID = {1}",
+				projectRoundUnitID,
+				projectRoundUserID
+			);
+			Db.exec(query);
+			query = string.Format(
+				@"
+UPDATE [eform]..[Answer] SET ProjectRoundUnitID = {0}
+WHERE ProjectRoundUserID = {1}",
+				projectRoundUnitID,
+				projectRoundUserID
+			);
+			Db.exec(query);
 		}
 		
 //		public void UpdateUser(int userID, int sponsorID, int departmentID)
@@ -42,13 +97,56 @@ VALUES (@UserProfileID, @BQID, @ValueInt, @ValueText, @ValueDate)"
 //		{
 //			string query = string.Format(
 //				@"
-//UPDATE UserProjectRoundUser SET ProjectRoundUnitID = {0}
-//WHERE UserProjectRoundUserID = {1}",
+		//UPDATE UserProjectRoundUser SET ProjectRoundUnitID = {0}
+		//WHERE UserProjectRoundUserID = {1}",
 //				projectRoundUnitID,
 //				userProjectRoundUserID
 //			);
 //			Db.exec(query, "healthWatchSqlConnection");
 //		}
+		
+		public void UpdateWithDepartment(string unit, int userID, int sponsorID)
+		{
+			string query = string.Format("UPDATE [User] SET DepartmentID = {0} WHERE UserID = {1} AND SponsorID = {2}", unit, userID, sponsorID);
+			Db.exec(query);
+			query = string.Format("UPDATE UserProfile SET DepartmentID = {0} WHERE UserID = {1} AND SponsorID = {2}", unit, userID, sponsorID);
+			Db.exec(query);
+		}
+		
+		public void Update3(int profileID, int userID)
+		{
+			string query = string.Format(
+				@"
+UPDATE [User] SET UserProfileID = {0} WHERE UserID = {1}",
+				profileID,
+				userID
+			);
+			Db.exec(query);
+		}
+		
+		public void Update2(int userID, int sponsorID)
+		{
+			string query = string.Format("UPDATE [User] SET DepartmentID = NULL, SponsorID = 1 WHERE UserID = " + userID + " AND SponsorID = " + sponsorID);
+			Db.exec(query);
+		}
+		
+		public void Update(int userID, int sponsorID)
+		{
+			string query = string.Format("UPDATE [User] SET DepartmentID = NULL, SponsorID = 1 WHERE UserID = " + userID + " AND SponsorID = " + sponsorID);
+			Db.exec(query);
+			query = string.Format("UPDATE UserProfile SET DepartmentID = NULL, SponsorID = 1 WHERE UserID = " + userID + " AND SponsorID = " + sponsorID);
+			Db.exec(query);
+		}
+		
+		public void Update(Department d, int sponsorID, int deleteDepartmentID)
+		{
+			string query = string.Format("UPDATE [User] SET DepartmentID = " + (d.Parent == null ? "NULL" : d.Parent.Id.ToString()) + " WHERE SponsorID = " + sponsorID + " AND DepartmentID = " + deleteDepartmentID);
+			Db.exec(query);
+			query = string.Format("UPDATE UserProfile SET DepartmentID = " + (d.Parent == null ? "NULL" : d.Parent.Id.ToString()) + " WHERE SponsorID = " + sponsorID + " AND DepartmentID = " + deleteDepartmentID);
+			Db.exec(query);
+			query = string.Format("UPDATE Department SET ParentDepartmentID = " + (d.Parent == null ? "NULL" : d.Parent.Id.ToString()) + " WHERE SponsorID = " + sponsorID + " AND ParentDepartmentID = " + deleteDepartmentID);
+			Db.exec(query);
+		}
 		
 		public void UpdateEmailFailure(int userID)
 		{
@@ -100,42 +198,42 @@ WHERE u.UserID = {0}",
 			return null;
 		}
 		
-		public User ReadByIdAndSponsorExtendedSurvey(int userID, int sponsorExtendedSurveyID)
-		{
-			string query = string.Format(
-				@"
-SELECT ses.ExtraEmailBody,
-	ses.ExtraEmailSubject,
-	u.Email,
-	u.UserID,
-	u.ReminderLink,
-	LEFT(REPLACE(CONVERT(VARCHAR(255),u.UserKey),'-',''),12)
-FROM [User] u
-INNER JOIN SponsorExtendedSurvey ses ON ses.SponsorExtendedSurveyID = {1}
-WHERE u.UserID = {0}",
-				userID,
-				sponsorExtendedSurveyID
-			);
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				if (rs.Read()) {
-					var s = new Sponsor();
-					s.ExtendedSurveys = new List<SponsorExtendedSurvey>(
-						new SponsorExtendedSurvey[] {
-							new SponsorExtendedSurvey { ExtraEmailBody = rs.GetString(0), ExtraEmailSubject = rs.GetString(1) }
-						}
-					);
-					var u = new User {
-						Sponsor = s,
-						Email = rs.GetString(2),
-						Id = rs.GetInt32(3),
-						ReminderLink = GetInt32(rs, 4),
-						UserKey = rs.GetString(5)
-					};
-					return u;
-				}
-			}
-			return null;
-		}
+//		public User ReadByIdAndSponsorExtendedSurvey(int userID, int sponsorExtendedSurveyID)
+//		{
+//			string query = string.Format(
+//				@"
+		//SELECT ses.ExtraEmailBody,
+//	ses.ExtraEmailSubject,
+//	u.Email,
+//	u.UserID,
+//	u.ReminderLink,
+//	LEFT(REPLACE(CONVERT(VARCHAR(255),u.UserKey),'-',''),12)
+		//FROM [User] u
+		//INNER JOIN SponsorExtendedSurvey ses ON ses.SponsorExtendedSurveyID = {1}
+		//WHERE u.UserID = {0}",
+//				userID,
+//				sponsorExtendedSurveyID
+//			);
+//			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+//				if (rs.Read()) {
+//					var s = new Sponsor();
+//					s.ExtendedSurveys = new List<SponsorExtendedSurvey>(
+//						new SponsorExtendedSurvey[] {
+//							new SponsorExtendedSurvey { ExtraEmailBody = rs.GetString(0), ExtraEmailSubject = rs.GetString(1) }
+//						}
+//					);
+//					var u = new User {
+//						Sponsor = s,
+//						Email = rs.GetString(2),
+//						Id = rs.GetInt32(3),
+//						ReminderLink = GetInt32(rs, 4),
+//						UserKey = rs.GetString(5)
+//					};
+//					return u;
+//				}
+//			}
+//			return null;
+//		}
 		
 		public void lalala3(int projectRoundUserId, int answerId)
 		{
@@ -182,6 +280,25 @@ WHERE u2.Email = '{0}' OR si.Email = '{0}'",
 			}
 		}
 		
+		public UserProfile ReadUserProfile(int userID)
+		{
+			string query = string.Format(
+				@"
+SELECT TOP 1 UserProfileID
+FROM UserProfile
+WHERE UserID = {1} ORDER BY UserProfileID DESC",
+				userID
+			);
+			using (SqlDataReader rs = Db.rs(query)) {
+				if (rs.Read()) {
+					return new UserProfile {
+						Id = GetInt32(rs, 0)
+					};
+				}
+			}
+			return null;
+		}
+		
 		public User ReadById(int userID)
 		{
 			string query = string.Format(
@@ -202,6 +319,127 @@ WHERE UserID = {0}",
 				}
 			}
 			return null;
+		}
+		
+		public IList<User> Find(string email)
+		{
+			string query = string.Format(
+				@"
+SELECT u.UserID,
+	s.Sponsor
+FROM [User] u
+LEFT OUTER JOIN Sponsor s ON u.SponsorID = s.SponsorID
+WHERE u.Email = '{0}'",
+				email.Replace("'", "''")
+			);
+			var users = new List<User>();
+			using (SqlDataReader rs = Db.rs(query)) {
+				while (rs.Read()) {
+					var u = new User {
+						Id = GetInt32(rs, 0),
+						Sponsor = rs.IsDBNull(1) ? null : new Sponsor { Id = GetInt32(rs, 1) }
+					};
+					users.Add(u);
+				}
+			}
+			return users;
+		}
+		
+		public IList<User> Find(int userID, string email)
+		{
+			string query = string.Format(
+				@"
+SELECT u.UserID,
+	s.Sponsor
+FROM [User] u
+LEFT OUTER JOIN Sponsor s ON u.SponsorID = s.SponsorID
+WHERE u.UserID <> {0} AND u.Email = '{1}'",
+				userID,
+				email.Replace("'", "''")
+			);
+			var users = new List<User>();
+			using (SqlDataReader rs = Db.rs(query)) {
+				while (rs.Read()) {
+					var u = new User {
+						Id = GetInt32(rs, 0),
+						Sponsor = rs.IsDBNull(1) ? null : new Sponsor { Id = GetInt32(rs, 1) }
+					};
+					users.Add(u);
+				}
+			}
+			return users;
+		}
+		
+		public IList<User> Find(int userID)
+		{
+			string query = string.Format(
+				@"
+SELECT u.UserProfileID,
+	up.ProfileComparisonID
+FROM [User] u
+INNER JOIN UserProfile up ON u.UserProfileID = up.UserProfileID
+WHERE u.UserID = {0}",
+				userID
+			);
+			var users = new List<User>();
+			using (SqlDataReader rs2 = Db.rs(query)) {
+				while (rs2.Read()) {
+					var u = new User {
+						Profile = new UserProfile {
+							Id = GetInt32(rs2, 0),
+							ProfileComparison = new ProfileComparison { Id =  GetInt32(rs2, 1) }
+						}
+					};
+					users.Add(u);
+				}
+			}
+			return users;
+		}
+		
+		public IList<User> FindBySponsorInvite(int sponsorInviteID)
+		{
+			string query = string.Format(
+				@"
+SELECT u.UserID
+FROM [User] u
+INNER JOIN SponsorInvite si ON u.UserID = si.UserID
+WHERE si.SponsorInviteID = {0}",
+				sponsorInviteID
+			);
+			var users = new List<User>();
+			using (SqlDataReader rs = Db.rs(query)) {
+				while (rs.Read()) {
+					users.Add(new User { Id = GetInt32(rs, 0) });
+				}
+			}
+			return users;
+		}
+		
+		public IList<UserProfileBackgroundQuestion> FindUserProfileBackgroundQuestions(int userProfileID)
+		{
+			string query = string.Format(
+				@"
+SELECT BQID,
+	ValueInt,
+	ValueText,
+	ValueDate
+FROM UserProfileBQ
+WHERE UserProfileID = {0}",
+				userProfileID
+			);
+			var questions = new List<UserProfileBackgroundQuestion>();
+			using (SqlDataReader rs = Db.rs(query)) {
+				while (rs.Read()) {
+					var q = new UserProfileBackgroundQuestion {
+						BackgroundQuestion = new BackgroundQuestion { Id = GetInt32(rs, 0) },
+						ValueInt = GetInt32(rs, 1),
+						ValueText = GetString(rs, 2),
+						ValueDate = GetDateTime(rs, 3)
+					};
+					questions.Add(q);
+				}
+			}
+			return questions;
 		}
 		
 		public IList<UserProjectRoundUser> FindUserProjectRoundUser(int sponsorID, int surveyID, int userID)

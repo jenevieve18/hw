@@ -16,6 +16,8 @@ namespace HW.Core.Models
 		public virtual int Depth { get; set; }
 		public virtual int Siblings { get; set; }
 		public virtual string TreeName { get; set; }
+		public virtual double Average { get; set; }
+		public virtual int Count { get; set; }
 		
 		public override string ToString()
 		{

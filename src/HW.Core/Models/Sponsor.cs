@@ -102,6 +102,12 @@ namespace HW.Core.Models
 		public virtual string FinishedEmailBody { get; set; }
 		public virtual string ExtraEmailSubject { get; set; }
 		public virtual string ExtraEmailBody { get; set; }
+		public virtual int RequiredUserCount { get; set; }
+		public virtual ProjectRound PreviousProjectRound { get; set; }
+		public virtual Feedback Feedback { get; set; }
+		
+		public virtual int WarnIfMissingQID { get; set; }
+		public virtual string RoundText2 { get; set; }
 	}
 	
 	public class SponsorAdminSession : BaseModel
@@ -133,6 +139,9 @@ namespace HW.Core.Models
 	{
 		public virtual Sponsor Sponsor { get; set; }
 		public virtual BackgroundQuestion BackgroundQuestion { get; set; }
+		public virtual int Hidden { get; set; }
+		public virtual int InGrpAdmin { get; set; }
+		public virtual int Fn { get; set; }
 	}
 	
 	public class SponsorInvite : BaseModel
@@ -150,8 +159,8 @@ namespace HW.Core.Models
 	public class SponsorInviteBackgroundQuestion : BaseModel
 	{
 		public virtual SponsorInvite Invite { get; set; }
-		public virtual BackgroundQuestion Question { get; set; }
-		public virtual BackgroundAnswer Answer { get; set; }
+		public virtual BackgroundQuestion BackgroundQuestion { get; set; }
+		public virtual BackgroundAnswer BackgroundAnswer { get; set; }
 		public virtual int ValueInt { get; set; }
 		public virtual DateTime? ValueDate { get; set; }
 		public virtual string ValueText { get; set; }

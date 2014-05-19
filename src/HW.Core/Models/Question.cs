@@ -83,9 +83,11 @@ namespace HW.Core.Models
 		public virtual string DefaultValue { get; set; }
 		public virtual int Comparison { get; set; }
 		public virtual string Variable { get; set; }
-		public virtual int Restricted { get; set; }
+//		public virtual int Restricted { get; set; }
+		public virtual bool Restricted { get; set; }
 		public virtual IList<BackgroundQuestionLanguage> Languages { get; set; }
 		public virtual IList<BackgroundAnswer> Answers { get; set; }
+		public virtual string InternalAggregate { get; set; }
 	}
 	
 	public class BackgroundQuestionLanguage : BaseModel

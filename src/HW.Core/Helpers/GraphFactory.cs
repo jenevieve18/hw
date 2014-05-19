@@ -11,11 +11,11 @@ namespace HW.Core.Helpers
 {
 	public interface IGraphFactory
 	{
-		ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int pruid, int fy, int ty, int GB, bool hasGrouping, int plot, int width, int height, string bg, int grpng, int spons, int sid, string gid, object disabled, int point, int sponsorMinUserCountToDisclose);
+		ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int pruid, int fy, int ty, int GB, bool hasGrouping, int plot, int width, int height, string bg, int grpng, int sponsorAdminID, int sid, string gid, object disabled, int point, int sponsorMinUserCountToDisclose);
 
-		string CreateGraph2(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int spons, int sid, string gid, object disabled, int sponsorMinUserCountToDisclose);
+		string CreateGraph2(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int sponsorAdminID, int sid, string gid, object disabled, int sponsorMinUserCountToDisclose);
 		
-		void CreateGraph3(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int spons, int sid, string gid, object disabled, ExcelWriter w, ref int i, int sponsorMinUserCountToDisclose);
+		void CreateGraph3(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int sponsorAdminID, int sid, string gid, object disabled, ExcelWriter w, ref int i, int sponsorMinUserCountToDisclose);
 		
 		event EventHandler<MergeEventArgs> ForMerge;
 	}
@@ -31,7 +31,7 @@ namespace HW.Core.Helpers
 			this.reportRepository = reportRepository;
 		}
 		
-		public ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point, int sponsorMinUserCountToDisclose)
+		public ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int width, int height, string bg, int GRPNG, int sponsorAdminID, int SID, string GID, object disabled, int point, int sponsorMinUserCountToDisclose)
 		{
 			int cx = p.Components.Capacity;
 			int answerID = 0;
@@ -122,7 +122,7 @@ namespace HW.Core.Helpers
 			return g;
 		}
 		
-		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int SPONS, int SID, string GID, object disabled, int sponsorMinUserCountToDisclose)
+		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int sponsorAdminID, int SID, string GID, object disabled, int sponsorMinUserCountToDisclose)
 		{
 			int cx = p.Components.Capacity;
 			int answerID = 0;
@@ -288,7 +288,7 @@ namespace HW.Core.Helpers
 			this.departmentRepository = departmentRepository;
 		}
 		
-		public ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int width, int height, string bg, int GRPNG, int SPONS, int SID, string GID, object disabled, int point, int sponsorMinUserCountToDisclose)
+		public ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int width, int height, string bg, int GRPNG, int sponsorAdminID, int SID, string GID, object disabled, int point, int sponsorMinUserCountToDisclose)
 		{
 			int cx = p.Components.Capacity;
 			string sortString = "";
@@ -439,7 +439,7 @@ namespace HW.Core.Helpers
 					Dictionary<string, int> mins = new Dictionary<string, int>();
 					string extraDesc = "";
 					
-					count = GroupFactory.GetCount(GRPNG, SPONS, SID, PRUID, GID, ref extraDesc, desc, join, item, mins, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
+					count = GroupFactory.GetCount(GRPNG, sponsorAdminID, SID, PRUID, GID, ref extraDesc, desc, join, item, mins, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
 					
 					int breaker = 6, itemWidth = 120;
 					if (count < 6) {
@@ -545,7 +545,7 @@ namespace HW.Core.Helpers
 			return g;
 		}
 		
-		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int SPONS, int SID, string GID, object disabled, int sponsorMinUserCountToDisclose)
+		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int sponsorAdminID, int SID, string GID, object disabled, int sponsorMinUserCountToDisclose)
 		{
 			int cx = p.Components.Capacity;
 			string sortString = "";
@@ -694,7 +694,7 @@ namespace HW.Core.Helpers
 					Dictionary<string, int> mins = new Dictionary<string, int>();
 					string extraDesc = "";
 					
-					count = GroupFactory.GetCount(GRPNG, SPONS, SID, PRUID, GID, ref extraDesc, desc, join, item, mins, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
+					count = GroupFactory.GetCount(GRPNG, sponsorAdminID, SID, PRUID, GID, ref extraDesc, desc, join, item, mins, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
 					
 //					int breaker = 6, itemWidth = 120;
 //					if (COUNT < 6) {
@@ -836,7 +836,7 @@ namespace HW.Core.Helpers
 			return weeks;
 		}
 		
-		public void CreateGraph3(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int SPONS, int SID, string GID, object disabled, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose)
+		public void CreateGraph3(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int sponsorAdminID, int SID, string GID, object disabled, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose)
 		{
 			int cx = p.Components.Capacity;
 			string sortString = "";
@@ -931,7 +931,7 @@ namespace HW.Core.Helpers
 					Dictionary<string, int> mins = new Dictionary<string, int>();
 					string extraDesc = "";
 					
-					count = GroupFactory.GetCount(GRPNG, SPONS, SID, PRUID, GID, ref extraDesc, desc, join, item, mins, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
+					count = GroupFactory.GetCount(GRPNG, sponsorAdminID, SID, PRUID, GID, ref extraDesc, desc, join, item, mins, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
 					
 					ReportPartComponent c = reportRepository.ReadComponentByPartAndLanguage(p.Id, langID);
 					if (c != null) {

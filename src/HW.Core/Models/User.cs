@@ -40,12 +40,13 @@ namespace HW.Core.Models
 		public virtual Department Department { get; set; }
 		public virtual ProfileComparison Comparison { get; set; }
 		public virtual DateTime Created { get; set; }
+		public virtual ProfileComparison ProfileComparison { get; set; }
 	}
 	
 	public class UserProfileBackgroundQuestion : BaseModel
 	{
 		public virtual UserProfile Profile { get; set; }
-		public virtual BackgroundQuestion Question { get; set; }
+		public virtual BackgroundQuestion BackgroundQuestion { get; set; }
 		public virtual int ValueInt { get; set; }
 		public virtual string ValueText { get; set; }
 		public virtual DateTime? ValueDate { get; set; }

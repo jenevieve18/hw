@@ -36,9 +36,11 @@ namespace HW.Grp
 
 			if (sponsorID != 0) {
 				sent = (HttpContext.Current.Request.QueryString["Sent"] != null);
+				
+				int sponsorAdminID;
 
 				if (!IsPostBack) {
-					int sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
+					sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 					var u = userRepository.a(sponsorID, sponsorAdminID);
 					AllMessageLastSent.Text = "Recipients: " + u + ", ";
 
@@ -65,10 +67,12 @@ namespace HW.Grp
 					}
 				}
 				#region SponsorExtendedSurvey
-				int projectRoundId = 0; string extendedSurvey = ""; bool found = false;
+				int projectRoundId = 0;
+				string extendedSurvey = "";
+				bool found = false;
 				ArrayList seen = new ArrayList();
-				int SAID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
-				foreach (var s in sponsorRepository.FindExtendedSurveysBySponsorAdmin(sponsorID, SAID)) {
+				sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
+				foreach (var s in sponsorRepository.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID)) {
 					if (!seen.Contains(s.Id)) {
 						if (s.ProjectRound != null) {
 							if (!found) {
@@ -87,10 +91,10 @@ namespace HW.Grp
 								found = true;
 
 								if (!IsPostBack) {
-									var r = userRepository.CountBySponsorWithAdminAndExtendedSurvey2(sponsorID, SAID, sponsorExtendedSurveyID);
+									var r = userRepository.CountBySponsorWithAdminAndExtendedSurvey2(sponsorID, sponsorAdminID, sponsorExtendedSurveyID);
 									ExtendedSurvey.Text = ExtendedSurvey.Text.Replace("[x]", "[x]Recipients: " + r + ", ");
 
-									r = userRepository.CountBySponsorWithAdminAndExtendedSurvey(sponsorID, SAID, sponsorExtendedSurveyID);
+									r = userRepository.CountBySponsorWithAdminAndExtendedSurvey(sponsorID, sponsorAdminID, sponsorExtendedSurveyID);
 									ExtendedSurveyFinished.Text = ExtendedSurveyFinished.Text.Replace("[x]", "[x]Recipients: " + r + ", ");
 								}
 							} else {
