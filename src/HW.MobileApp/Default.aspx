@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html class="ui-mobile">
 <head>
-    <base href="http://clients.easyapp.se/healthwatch//account/login.html">
+    <!--<base href="http://clients.easyapp.se/healthwatch//account/login.html">-->
     <title>Health Watch</title>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -38,30 +38,37 @@
             <h1 class="ui-title" role="heading" aria-level="1"></h1>
         </div>
         <div id="content" data-role="content" class="page_login ui-content" role="main">
-            <div class="front_note center" id="loginContent" style="">
-                <img class="front_logo" src="http://clients.easyapp.se/healthwatch//images/hw_logo@2x.png">
-                <div class="front_controls">
-                    <div class="front_header">
-                        <h1 class="text">Login to a better life.</h1>
-                        <h1 class="text error">Sorry, incorrect login details.</h1>
-                        <img class="front_header_img" src="http://clients.easyapp.se/healthwatch//images/divider.gif">
-                    </div>
-                    <input id="loginUsername" type="text" placeholder="Username or Email" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset">
-                    <label id="loginUsernameLabel">Username or Email</label>
-                    <input id="loginPassword" type="password" placeholder="Password" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset">
-                    <label id="loginPasswordLabel">Password</label>
-                    <div id="loginLoader"></div>
-                    <div id="loginButton" class="button button35">
-                        <div class="buttonContent no_icon_btn">Log In</div>
-                    </div>
-                    <div class="forgotButton button button35">
-                        <a href="./forgot_password.html" class="ui-link">
-                            <div class="buttonContent no_icon_btn">Forgot Password</div>
-                        </a>
+        
+            <form id="form1" runat="server">
+                <div class="front_note center" id="loginContent" style="">
+                    <img class="front_logo" src="http://clients.easyapp.se/healthwatch//images/hw_logo@2x.png">
+                
+                    <div class="front_controls">
+                        <div class="front_header">
+                            <h1 class="text">Login to a better life.</h1>
+                            <h1 class="text error">Sorry, incorrect login details.</h1>
+                            <img class="front_header_img" src="http://clients.easyapp.se/healthwatch//images/divider.gif">
+                        </div>
+                        <asp:TextBox ID="loginUsername" runat="server" placeholder="Username or Email" CssClass="ui-input-text ui-body-c ui-corner-all ui-shadow-inset"></asp:TextBox>
+                        <!--<input id="loginUsername" type="text" placeholder="Username or Email" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset">-->
+                        <label id="loginUsernameLabel">Username or Email</label>
+                        <asp:TextBox ID="loginPassword" runat="server" placeholder="Password" CssClass="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" TextMode="Password"></asp:TextBox>
+                        <!--<input id="loginPassword" type="password" placeholder="Password" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset">-->
+                        <label id="loginPasswordLabel">Password</label>
+                        <div id="loginLoader"></div>
+                        <div id="loginButton" class="button button35">
+                            <!--<asp:Button ID="Button1" runat="server" Text="Log In" CssClass="buttonContent no_icon_btn" />-->
+                            <div class="buttonContent no_icon_btn">Log In</div>
+                        </div>
+                        <div class="forgotButton button button35">
+                            <a href="./forgot_password.html" class="ui-link">
+                                <div class="buttonContent no_icon_btn">Forgot Password</div>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <input type="hidden" class="tabbar_name" value="my_health">
+                <input type="hidden" class="tabbar_name" value="my_health">
+            </form>
         </div>
         <div id="footer" data-role="footer" data-position="fixed" class="ui-footer ui-bar-a ui-footer-fixed slideup" role="contentinfo">
             <ul class="tabbar">
