@@ -126,3 +126,15 @@ USE HealthWatch
 GO
 ALTER TABLE Sponsor ADD EmailFrom NVARCHAR(255)
 GO
+
+use eform;
+alter table PlotTypeLang add ShortName nvarchar(255);
+
+update PlotTypeLang set ShortName = 'Line' where PlotTypeLangID = 1;
+update PlotTypeLang set ShortName = 'Line (± SD)' where PlotTypeLangID = 2;
+update PlotTypeLang set ShortName = 'Line (± 1.96 SD)' where PlotTypeLangID = 3;
+update PlotTypeLang set ShortName = 'BoxPlot (Min/Max)' where PlotTypeLangID = 4;
+update PlotTypeLang set ShortName = 'BoxPlot (Tukey)' where PlotTypeLangID = 5;
+
+alter table PlotTypeLang add SupportsMultipleSeries int;
+update PlotTypeLang set SupportsMultipleSeries = 1 where PlotTypeLangID in (1, 2, 3); -- not including 4 and 5 because box plots don't support multiple series for now.
