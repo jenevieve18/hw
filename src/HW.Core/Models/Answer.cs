@@ -26,6 +26,7 @@ namespace HW.Core.Models
 		public virtual DateTime StartDate { get; set; }
 		public virtual DateTime EndDate { get; set; }
 		public virtual IList<AnswerValue> Values { get; set; }
+		public virtual int CurrentPage { get; set; }
 		
 		public virtual HWList GetIntValues()
 		{

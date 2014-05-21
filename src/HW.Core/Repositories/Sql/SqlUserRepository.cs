@@ -299,6 +299,29 @@ WHERE UserID = {1} ORDER BY UserProfileID DESC",
 			return null;
 		}
 		
+		public User Read2(string bqID, int userID)
+		{
+			string query = string.Format(
+				@"
+SELECT b.UserBQID
+FROM [User] u
+INNER JOIN UserProfile up ON u.UserProfileID = up.UserProfileID
+INNER JOIN UserProfileBQ b ON up.UserProfileID = b.UserProfileID AND b.BQID = {0}
+WHERE up.UserID = {1}",
+				bqID,
+				userID
+			);
+			using (SqlDataReader rs = Db.rs(query)) {
+				if (rs.Read()) {
+					return new User {
+						Profile = new UserProfile {
+						}
+					};
+				}
+			}
+			return null;
+		}
+		
 		public User ReadById(int userID)
 		{
 			string query = string.Format(

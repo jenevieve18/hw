@@ -50,6 +50,9 @@ namespace HW.Core.Models
 		public virtual int ValueInt { get; set; }
 		public virtual string ValueText { get; set; }
 		public virtual DateTime? ValueDate { get; set; }
+		
+		public virtual double Average { get; set; }
+		public virtual int Count { get; set; }
 	}
 	
 	public class UserProjectRoundUser : BaseModel
@@ -84,5 +87,11 @@ namespace HW.Core.Models
 		public virtual string Note { get; set; }
 		public virtual DateTime Date { get; set; }
 		public virtual SponsorAdmin SponsorAdmin { get; set; }
+	}
+	
+	public class UserSponsorExtendedSurvey : BaseModel
+	{
+		public virtual User User { get; set; }
+		public virtual Answer Answer { get; set; }
 	}
 }

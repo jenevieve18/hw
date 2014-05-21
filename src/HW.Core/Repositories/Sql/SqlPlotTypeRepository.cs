@@ -12,7 +12,7 @@ namespace HW.Core.Repositories.Sql
 		{
 			string query = string.Format(
 				@"
-	select * from plottype"
+select * from PlotType"
 			);
 			var types = new List<PlotType>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
@@ -32,14 +32,16 @@ namespace HW.Core.Repositories.Sql
 		{
 			string query = string.Format(
 				@"
-	select name, description from plottypelang"
+select PlotTypeID, Name, Description, ShortName from PlotTypeLang"
 			);
 			var types = new List<PlotTypeLanguage>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				while (rs.Read()) {
 					var t = new PlotTypeLanguage() {
-						Name = GetString(rs, 0),
-						Description = GetString(rs, 1)
+						PlotType = new PlotType { Id = GetInt32(rs, 0) },
+						Name = GetString(rs, 1),
+						Description = GetString(rs, 2),
+						ShortName = GetString(rs, 3)
 					};
 					types.Add(t);
 				}

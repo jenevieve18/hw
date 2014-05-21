@@ -1332,6 +1332,117 @@ AND sbq.SponsorID = {0}",
 			return sponsors;
 		}
 		
+		public IList<SponsorInvite> FindInvites(string select, string ESuserSelect, string join, string ESuserJoin, int sponsorID, int deptID)
+		{
+			string query = string.Format(
+				@"
+SELECT s.SponsorInviteID,
+	s.Email,
+	s.Sent,
+	s.UserID,
+	u.ReminderLink,
+	LOWER(LEFT(REPLACE(CONVERT(VARCHAR(255),u.UserKey),'-',''),12)),
+	s.PreviewExtendedSurveys,
+	s.Stopped,
+	s.StoppedReason
+	{0}{1}
+FROM SponsorInvite s{2}{3}
+LEFT OUTER JOIN [User] u ON s.UserID = u.UserID
+WHERE s.SponsorID = {4}
+AND s.DepartmentID = {5}
+ORDER BY s.Email",
+				select,
+				ESuserSelect,
+				join,
+				ESuserJoin,
+				sponsorID,
+				deptID
+			);
+			var invites = new List<SponsorInvite>();
+			using (SqlDataReader rs = Db.rs(query)) {
+				while (rs.Read()) {
+					var i = new SponsorInvite {
+						Id = GetInt32(rs, 0),
+						Email = GetString(rs, 1),
+						Sent = GetDateTime(rs, 2),
+						User = new User {
+							Id = GetInt32(rs, 3),
+							ReminderLink = GetInt32(rs, 4),
+							UserKey = GetString(rs, 5)
+						},
+						PreviewExtendedSurveys = GetInt32(rs, 6),
+						Stopped = GetDateTime(rs, 7),
+						StoppedReason = GetInt32(rs, 8)
+					};
+					invites.Add(i);
+				}
+			}
+			return invites;
+		}
+		
+		public IList<SponsorInvite> FindInvites(string hiddenBqJoin, string hiddenBqWhere, int sponsorAdminID, int sponsorID, string email)
+		{
+			string query = string.Format(
+				@"
+SELECT si.SponsorInviteID,
+	si.DepartmentID,
+	dbo.cf_departmentTree(si.DepartmentID,' » ') + ' » ' + si.Email
+FROM SponsorInvite si
+{0}
+{1}
+si.SponsorID = {2}
+AND (si.Email LIKE '%{3}%'{4})",
+				hiddenBqJoin,
+				(sponsorAdminID != -1 ? "INNER JOIN SponsorAdminDepartment sad ON si.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = " + sponsorAdminID + " AND " : "WHERE "),
+				sponsorID,
+				email.Replace("'", ""),
+				hiddenBqWhere.Replace("[x]", "'%" + email.Replace("'", "") + "%'")
+			);
+			var invites = new List<SponsorInvite>();
+			using (SqlDataReader rs = Db.rs(query)) {
+				while (rs.Read()) {
+					var i = new SponsorInvite {
+						Id = GetInt32(rs, 0),
+						Department = rs.IsDBNull(1) ? null : new Department {
+							Id = GetInt32(rs, 1),
+							TreeName = GetString(rs, 2)
+						}
+					};
+					invites.Add(i);
+				}
+			}
+			return invites;
+		}
+		
+		public IList<UserSponsorExtendedSurvey> Find3(int sponsorExtendedSurveyID, int bqID, int sponsorID, int valueInt)
+		{
+			string query = string.Format(
+				@"
+SELECT usesX.AnswerID
+FROM SponsorInvite si
+INNER JOIN [User] u ON si.UserID = u.UserID
+INNER JOIN UserSponsorExtendedSurvey usesX ON u.UserID = usesX.UserID AND usesX.SponsorExtendedSurveyID = {0}
+LEFT OUTER JOIN SponsorInviteBQ sib ON si.SponsorInviteID = sib.SponsorInviteID AND sib.BQID = {1}
+LEFT OUTER JOIN UserProfile up ON u.UserProfileID = up.UserProfileID
+LEFT OUTER JOIN UserProfileBQ upb ON up.UserProfileID = upb.UserProfileID AND upb.BQID = {2}
+WHERE usesX.AnswerID IS NOT NULL AND si.SponsorID = {3} AND ISNULL(sib.BAID,upb.ValueInt) = {4}",
+				sponsorExtendedSurveyID,
+				bqID,
+				bqID,
+				sponsorID,
+				valueInt
+			);
+			var surveys = new List<UserSponsorExtendedSurvey>();
+			SqlDataReader rs = Db.rs(query);
+			while (rs.Read()) {
+				var s = new UserSponsorExtendedSurvey {
+					Answer = new Answer { Id = GetInt32(rs, 0) }
+				};
+				surveys.Add(s);
+			}
+			return surveys;
+		}
+		
 		public IList<SponsorExtendedSurvey> Find2(int sponsorID)
 		{
 			string query = string.Format(
@@ -1780,6 +1891,30 @@ AND (ISNULL(u.Created, si.Sent) < '{1}' OR si.Sent < '{1}')",
 				}
 			}
 			return 0;
+		}
+		
+		public UserProfileBackgroundQuestion Read3(int bqID, int sponsorID)
+		{
+			string query = string.Format(
+				@"
+SELECT AVG(DATEDIFF(year, upbq.ValueDate, GETDATE())),
+	COUNT(upbq.ValueDate)
+FROM SponsorInvite si
+INNER JOIN [User] u ON si.UserID = u.UserID
+INNER JOIN UserProfileBQ upbq ON u.UserProfileID = upbq.UserProfileID AND upbq.BQID = {0}
+WHERE si.SponsorID = {1}",
+				bqID,
+				sponsorID
+			);
+			using (SqlDataReader rs = Db.rs(query)) {
+				if (rs.Read()) {
+					return new UserProfileBackgroundQuestion {
+						Average = GetDouble(rs, 0),
+						Count = GetInt32(rs, 1)
+					};
+				}
+			}
+			return null;
 		}
 		
 		public SponsorInvite Read2(int deleteUserID)

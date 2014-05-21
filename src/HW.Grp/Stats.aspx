@@ -122,18 +122,17 @@
         } else if (plotType == 4) {
             return { title: 'Box Plot Min/Max', description: 'median value chart, including one set of whiskers that covers 50% of observations, and another set of whiskers that captures min and max values' };
         } else if (plotType == 5) {
-            return { title: 'Verbose', description: 'Verbose' };
-        } else if (plotType == 6) {
             return { title: 'Box Plot', description: 'median value chart, similar to the min/max BloxPlot but removes outlying extreme values' };
+        } else if (plotType == 6) {
+            return { title: 'Verbose', description: 'Verbose' };
         }
     }
     function f(obj, plotType, all) {
         obj.closest('.report-part').find('.selected-plot-type').text(plotType);
-        plot = getPlot(plotType);
+        var plot = getPlot(plotType);
         if (all) {
             $('.chart-description1').text("{0} - {1}".format(plot.title, plot.description));
         } else {
-            //obj.closest('.report-part').find('.chart-description1').text("{0} - {1}".format(plot.title, plot.description));
             obj.closest('.report-part').find('.chart-description').find('p').text(plot.description);
         }
     }
@@ -141,9 +140,6 @@
         $('#accordion').accordion({ collapsible: true, active: true, heightStyle: 'content' });
         f($('.report-part'), 1, true);
         $('.report-part-header').hide();
-        /*$(".report-part .report-part-content img").click(function () {
-        $(this).closest('.report-part').find('.chart-description1').slideToggle();
-        });*/
         $('.chart-description').dialog({ autoOpen: false, width: 600, height: 480 });
         $('.toggle-chart-description').click(function () {
             $('.chart-description').dialog('open');
@@ -163,7 +159,25 @@
         $('.report-part-subject').click(function () {
             $(this).closest('.report-part').find('.report-part-header').slideToggle();
         });
-        $('.report-part .action .graph').click(function () {
+        $('.report-part .action .plotTypes').change(function () {
+            var partContent = $(this).closest('.report-part-content');
+            var plotType = $(this).val();
+            //f($(this), plotType, false);
+
+            var img = partContent.find('img.report-part-graph');
+            var imageUrl = partContent.find('.hidden-image-url').text();
+            img.attr('src', imageUrl + '&PLOT=' + plotType);
+
+            var exportDocXUrl = partContent.find('.hidden-export-docx-url').text();
+            partContent.find('.export-docx-url').attr('href', exportDocXUrl + '&PLOT=' + plotType);
+
+            var exportXlsXUrl = partContent.find('.hidden-export-xls-url').text();
+            partContent.find('.export-xls-url').attr('href', exportXlsXUrl + '&PLOT=' + plotType);
+
+            var exportPptXUrl = partContent.find('.hidden-export-pptx-url').text();
+            partContent.find('.export-pptx-url').attr('href', exportPptXUrl + '&PLOT=' + plotType);
+        });
+        /*$('.report-part .action .graph').click(function () {
             var partContent = $(this).closest('.report-part-content');
             var plotType = $(this).find('.plot-type').text();
             f($(this), plotType, false);
@@ -180,8 +194,39 @@
 
             var exportPptXUrl = partContent.find('.hidden-export-pptx-url').text();
             partContent.find('.export-pptx-url').attr('href', exportPptXUrl + '&PLOT=' + plotType);
+        });*/
+        $('.report-parts > .action .plotTypes').change(function () {
+            var plotType = $(this).val();
+
+            var exportAllDocXUrl = $('.hidden-exportall-docx-url').text();
+            $('.exportall-docx-url').attr('href', exportAllDocXUrl + '&PLOT=' + plotType);
+
+            var exportAllXlsUrl = $('.hidden-exportall-xls-url').text();
+            $('.exportall-xls-url').attr('href', exportAllXlsUrl + '&PLOT=' + plotType);
+
+            var exportAllPptxUrl = $('.hidden-exportall-pptx-url').text();
+            $('.exportall-pptx-url').attr('href', exportAllPptxUrl + '&PLOT=' + plotType);
+
+            $.each($('.report-part-content'), function () {
+                var p = $(this).closest('.report-part').find('.action .plotTypes');
+                p.val(plotType);
+                p.change();
+                //f($(this), plotType, false);
+                /*var img = $(this).find('img.report-part-graph');
+                var imageUrl = $(this).find('.hidden-image-url').text();
+                img.attr('src', imageUrl + '&PLOT=' + plotType);
+
+                var exportDocXUrl = $(this).find('.hidden-export-docx-url').text();
+                $(this).find('.export-docx-url').attr('href', exportDocXUrl + '&PLOT=' + plotType);
+
+                var exportXlsXUrl = $(this).find('.hidden-export-xls-url').text();
+                $(this).find('.export-xls-url').attr('href', exportXlsXUrl + '&PLOT=' + plotType);
+
+                var exportPptXUrl = $(this).find('.hidden-export-pptx-url').text();
+                $(this).find('.export-pptx-url').attr('href', exportPptXUrl + '&PLOT=' + plotType);*/
+            });
         });
-        $('.report-parts > .action .graph').click(function () {
+        /*$('.report-parts > .action .graph').click(function () {
             var plotType = $(this).find('.plot-type').text();
 
             var exportAllDocXUrl = $('.hidden-exportall-docx-url').text();
@@ -208,7 +253,7 @@
                 var exportPptXUrl = $(this).find('.hidden-export-pptx-url').text();
                 $(this).find('.export-pptx-url').attr('href', exportPptXUrl + '&PLOT=' + plotType);
             });
-        });
+        });*/
     });
 </script>
 
@@ -255,29 +300,31 @@
                     <div class="chart-description" title="Chart Descriptions">
                         <div>
                         <% foreach (var p in plotTypes) { %>
-	       			<div>&nbsp;<br /></div>
+	       			        <div>&nbsp;<br /></div>
                             <div class="report-part">
                                 <div class="report-part-subject">
-							        <span><%= p.Name %></span>
+							        <span><%= p.ShortName %> - <%= p.Name %></span>
                                     <span class="toggle toggle-right toggle-active"></span>
 						        </div>
                                 <div class="report-part-header"><%= p.Description %></div>
                             </div>
-                            <!--<h3><%= p.Name %></h3>
-                            <div><p><%= p.Description %></p></div>-->
                         <% } %>
                         </div>
                     </div>
 					<span class="small">Change all graphs to:</span>
-					<span id="modal" class="button white small graph"><span class="hidden plot-type"><%= PlotType.Line%></span><%= PlotType.GetString(PlotType.Line)%></span>
+                    <select class="plotTypes small">
+                        <% foreach (var p in plotTypes) { %>
+                        <option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option>
+                        <% } %>
+                    </select>
+					<!--<span id="modal" class="button white small graph"><span class="hidden plot-type"><%= PlotType.Line%></span><%= PlotType.GetString(PlotType.Line)%></span>
 					<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.LineSD %></span><%= PlotType.GetString(PlotType.LineSD)%></span>
 					<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.LineSDWithCI %></span><%= PlotType.GetString(PlotType.LineSDWithCI)%></span>
                     <% if (supportsBoxPlot) { %>
 						<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.BoxPlotMinMax %></span><%= PlotType.GetString(PlotType.BoxPlotMinMax)%></span>
 						<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.BoxPlot %></span><%= PlotType.GetString(PlotType.BoxPlot)%></span>
-					<% } %>
+					<% } %>-->
                     <span class="toggle toggle-chart-description"></span>
-                    <!--<span class="chart-description"></span>-->
 					<span class="small">Export all graphs to:</span>
 					<span class="button white small export">
                         <% string exportAllDocXUrl = GetExportAllUrl("docx", additionalQuery); %>
@@ -297,6 +344,7 @@
 					<span class="button white small export">
 						<%= HtmlHelper.Anchor("xls verbose", exportAllXlsUrl + "&PLOT=" + PlotType.Verbose, "class='exportall-xls-verbose-url'", "_blank")%>
                     </span>
+
 				</div>
 	        	<% foreach (var r in reportParts) { %>
 	       			<div>&nbsp;<br /></div>
@@ -313,15 +361,20 @@
                             <img class="report-part-graph" src="<%= imageUrl %>" alt="" />
                             <!--<div class="chart-description1" style="display:none"></div>-->
 							<div class="action">
-								<span class="small">Change graph to:</span>
-								<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.Line %></span><%= PlotType.GetString(PlotType.Line)%></span>
+								<span class="small">Change this graph to:</span>
+                                <select class="plotTypes small">
+                                    <% foreach (var p in plotTypes) { %>
+                                    <option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option>
+                                    <% } %>
+                                </select>
+								<!--<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.Line %></span><%= PlotType.GetString(PlotType.Line)%></span>
 								<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.LineSD%></span><%= PlotType.GetString(PlotType.LineSD)%></span>
 								<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.LineSDWithCI%></span><%= PlotType.GetString(PlotType.LineSDWithCI)%></span>
                                 <% if (supportsBoxPlot) { %>
 									<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.BoxPlotMinMax%></span><%= PlotType.GetString(PlotType.BoxPlotMinMax)%></span>
                                     <span class="button white small graph"><span class="hidden plot-type"><%= PlotType.BoxPlot%></span><%= PlotType.GetString(PlotType.BoxPlot)%></span>
-								<% } %>
-								<span class="small">Export graph to:</span>
+								<% } %>-->
+								<span class="small">Export this graph to:</span>
 								<span class="button white small export">
                                     <% string exportDocXUrl = GetExportUrl(r.ReportPart.Id, r.Id, "docx", additionalQuery); %>
 							        <span class="hidden hidden-export-docx-url"><%= exportDocXUrl%></span>

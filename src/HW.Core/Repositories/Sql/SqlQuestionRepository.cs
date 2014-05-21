@@ -8,6 +8,31 @@ namespace HW.Core.Repositories.Sql
 {
 	public class SqlQuestionRepository : BaseSqlRepository<Question>//, IQuestionRepository
 	{
+		public IList<BackgroundQuestion> FindBackgroundQuestions2(int sponsorID)
+		{
+			string query = string.Format(
+				@"
+SELECT BQ.BQID,
+	BQ.Type
+FROM SponsorBQ sbq
+INNER JOIN BQ ON sbq.BQID = BQ.BQID
+WHERE sbq.SponsorID = {0}
+AND sbq.Hidden = 1",
+				sponsorID
+			);
+			var questions = new List<BackgroundQuestion>();
+			using (SqlDataReader rs = Db.rs(query)) {
+				while (rs.Read()) {
+					var q = new BackgroundQuestion {
+						Id = GetInt32(rs, 0),
+						Type = GetInt32(rs, 1)
+					};
+					questions.Add(q);
+				}
+			}
+			return questions;
+		}
+		
 		public IList<BackgroundQuestion> FindBackgroundQuestions(int sponsorID)
 		{
 			string query = string.Format(
@@ -80,15 +105,15 @@ SELECT BQ.BQID, BQ.Internal FROM BQ WHERE BQ.BQID IN ({0})",
 		public IList<BackgroundQuestion> FindAllBackgroundQuestions()
 		{
 			string query = string.Format(
-        		@"
-SELECT BQID, 
-	Internal, 
-	Type, 
-	Comparison, 
-	Variable 
+				@"
+SELECT BQID,
+	Internal,
+	Type,
+	Comparison,
+	Variable
 FROM BQ ORDER BY Internal"
-        	);
-            var questions = new List<BackgroundQuestion>();
+			);
+			var questions = new List<BackgroundQuestion>();
 			using (SqlDataReader rs = Db.rs(query)) {
 				while (rs.Read()) {
 					var q = new BackgroundQuestion {
@@ -98,7 +123,7 @@ FROM BQ ORDER BY Internal"
 						Comparison = GetInt32(rs, 3),
 						Variable = GetString(rs, 4)
 					};
-            		questions.Add(q);
+					questions.Add(q);
 				}
 			}
 			return questions;

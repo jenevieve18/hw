@@ -39,7 +39,7 @@ namespace HW.Grp
 			sponsorID = Convert.ToInt32(Session["SponsorID"]);
 
 			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Organization, DateTime.Now);
-			string query = "";
+//			string query = "";
 			if (sponsorID != 0) {
 				if (Request.QueryString["ShowReg"] != null && Convert.ToInt32(Session["ReadOnly"]) == 0) {
 					showReg = true;
@@ -1786,18 +1786,26 @@ ORDER BY s.Email",
 					);
 					SqlDataReader rs2 = Db.rs(sql);
 					while (rs2.Read()) {
-						usr.Append("<tr style='background-color:#FFF7D6'><td>");
+//					foreach (var si in sponsorRepository.FindInvites(select, ESuserSelect, join, ESuserJoin, sponsorID, rs.GetInt32(2))) {
 						for (int i = 1; i <= depth; i++) {
 							usr.Append(string.Format("<img src='img/{0}.gif' width='19' height='20'/>", (DX[i] ? "I" : "null")));
 						}
-						usr.Append("</td><td style='font-size:9px'>" + (rs2.IsDBNull(1) ? "" : rs2.GetString(1)) + "</td>" +
-						           "<td align='center'>" +
-						           (Convert.ToInt32(Session["ReadOnly"]) == 0 ?
-						            "<a href='org.aspx?SDID=" + showDepartmentID.ToString() + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&UID=" + rs2.GetInt32(0).ToString() + "'><img src='img/usr_edt.gif' border='0'/></a>" +
-						            "<a href='org.aspx?SDID=" + showDepartmentID.ToString() + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DeleteUID=" + rs2.GetInt32(0).ToString() + "'><img src='img/usr_del.gif' border='0'/></a>" +
-						            "" : "") +
-						           "</td>" +
-						           "<td align='center'>");
+						usr.Append(
+							string.Format(
+								@"
+	</td>
+	<td style='font-size:9px'>{0}</td>
+	<td align='center'>{1}</td>
+	<td align='center'>",
+								(rs2.IsDBNull(1) ? "" : rs2.GetString(1)),
+								(
+									Convert.ToInt32(Session["ReadOnly"]) == 0
+									? string.Format("<a href='org.aspx?SDID={0}&Rnd={1}&UID={2}'><img src='img/usr_edt.gif' border='0'/></a>", showDepartmentID.ToString(), (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), rs2.GetInt32(0).ToString()) +
+									string.Format("<a href='org.aspx?SDID={0}&Rnd={1}&DeleteUID={2}'><img src='img/usr_del.gif' border='0'/></a>", showDepartmentID.ToString(), (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), rs2.GetInt32(0).ToString())
+									: ""
+								)
+							)
+						);
 						if (showReg) {
 							if (!rs2.IsDBNull(3) && !rs2.IsDBNull(5)) {
 								usr.Append(string.Format("<a title='Log on to users account' href='{0}a/{1}{2}' target='_blank'>{3}/{4}</a>", ConfigurationManager.AppSettings["healthWatchURL"], rs2.GetString(5), rs2.GetInt32(3), rs2.GetInt32(3), (rs2.IsDBNull(4) ? "0" : rs2.GetInt32(4).ToString())));
@@ -1850,48 +1858,61 @@ ORDER BY s.Email",
 									if (rs2.IsDBNull(idx)) {
 										usr.Append("<img srC='img/star.gif'/>");
 										if (Convert.ToInt32(ESattr.Split(',')[i].Split(':')[3]) != 0) {
-											usr.Append("<a href='org.aspx?" +
-											           "ShowReg=1" +
-											           "&SESID=" + Convert.ToInt32(ESattr.Split(',')[i].Split(':')[4]) + "" +
-											           "&SendExtra=" + rs2.GetInt32(3) + "" +
-											           "&SDID=" + showDepartmentID.ToString() + "" +
-											           "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "" +
-											           "' title='Send extra'>!</a>");
+											usr.Append(
+												string.Format(
+													"<a href='org.aspx?ShowReg=1&SESID={0}&SendExtra={1}&SDID={2}&Rnd={3}' title='Send extra'>!</a>",
+													Convert.ToInt32(ESattr.Split(',')[i].Split(':')[4]),
+													rs2.GetInt32(3),
+													showDepartmentID.ToString(),
+													(new Random(unchecked((int)DateTime.Now.Ticks))).Next()
+												)
+											);
 										}
-										query = string.Format(
-											@"
-SELECT a.AnswerID,
-	a.CurrentPage
-FROM Answer a
-WHERE a.ProjectRoundUserID = {0}",
-											rs2.GetInt32(idx + 1)
-										);
-										SqlDataReader rs3 = Db.rs(query, "eFormSqlConnection");
-										if (rs3.Read() && !rs3.IsDBNull(1)) {
-											usr.Append("<a href='org.aspx?" +
-											           "ShowReg=1" +
-											           "&SubmitAID=" + rs3.GetInt32(0) + "" +
-											           "&SubmitUID=" + rs2.GetInt32(idx + 1) + "" +
-											           "&SDID=" + showDepartmentID.ToString() + "" +
-											           "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "" +
-											           "' title='Submit survey (number indicates what page the user is on)'>" + rs3.GetInt32(1) + "</a>" + "");
+//										query = string.Format(
+//											@"
+										//SELECT a.AnswerID,
+//	a.CurrentPage
+										//FROM Answer a
+										//WHERE a.ProjectRoundUserID = {0}",
+//											rs2.GetInt32(idx + 1)
+//										);
+//										SqlDataReader rs3 = Db.rs(query, "eFormSqlConnection");
+										var a = answerRepository.Read2(rs2.GetInt32(idx + 1));
+//										if (rs3.Read() && !rs3.IsDBNull(1)) {
+										if (a != null && a.CurrentPage > 0) {
+											usr.Append(
+												string.Format(
+													"<a href='org.aspx?ShowReg=1&SubmitAID={0}&SubmitUID={1}&SDID={2}&Rnd={3}' title='Submit survey (number indicates what page the user is on)'>{4}</a>" + "",
+//													rs3.GetInt32(0),
+													a.Id,
+													rs2.GetInt32(idx + 1),
+													showDepartmentID.ToString(),
+													(new Random(unchecked((int)DateTime.Now.Ticks))).Next(),
+//													rs3.GetInt32(1)
+													a.CurrentPage
+												)
+											);
 										}
-										rs3.Close();
+//										rs3.Close();
 									} else {
-										usr.Append("<a href='org.aspx?" +
-										           "ShowReg=1" +
-										           "&ReclaimAID=" + rs2.GetInt32(idx) + "" +
-										           "&ReclaimUID=" + rs2.GetInt32(idx + 1) + "" +
-										           "&SDID=" + showDepartmentID.ToString() + "" +
-										           "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "" +
-										           "' title='Withdraw submission of survey (mark as not submitted and allow changes)'><IMG SRC='img/starOK.gif' BORDER='0'/></a>" + "");
+										usr.Append(
+											string.Format(
+												"<a href='org.aspx?ShowReg=1&ReclaimAID={0}&ReclaimUID={1}&SDID={2}&Rnd={3}' title='Withdraw submission of survey (mark as not submitted and allow changes)'><IMG SRC='img/starOK.gif' BORDER='0'/></a>" + "",
+												rs2.GetInt32(idx),
+												rs2.GetInt32(idx + 1),
+												showDepartmentID.ToString(),
+												(new Random(unchecked((int)DateTime.Now.Ticks))).Next()
+											)
+										);
 										if (Convert.ToInt32(ESattr.Split(',')[i].Split(':')[2]) != 0) {
-											query = string.Format("SELECT COUNT(*) FROM AnswerValue WHERE AnswerID = " + rs2.GetInt32(idx) + " AND QuestionID = " + Convert.ToInt32(ESattr.Split(',')[i].Split(':')[2]) + " AND DeletedSessionID IS NULL AND (ValueInt IS NOT NULL OR ValueDecimal IS NOT NULL OR ValueDateTime IS NOT NULL OR ValueText IS NOT NULL)");
-											SqlDataReader rs3 = Db.rs(query, "eFormSqlConnection");
-											if (!rs3.Read() || rs3.IsDBNull(0) || rs3.GetInt32(0) == 0) {
+//											query = string.Format("SELECT COUNT(*) FROM AnswerValue WHERE AnswerID = " + rs2.GetInt32(idx) + " AND QuestionID = " + Convert.ToInt32(ESattr.Split(',')[i].Split(':')[2]) + " AND DeletedSessionID IS NULL AND (ValueInt IS NOT NULL OR ValueDecimal IS NOT NULL OR ValueDateTime IS NOT NULL OR ValueText IS NOT NULL)");
+//											SqlDataReader rs3 = Db.rs(query, "eFormSqlConnection");
+											var a = answerRepository.Read3(rs2.GetInt32(idx), Convert.ToInt32(ESattr.Split(',')[i].Split(':')[2]));
+//											if (!rs3.Read() || rs3.IsDBNull(0) || rs3.GetInt32(0) == 0) {
+											if (a == null || a.CountV <= 0) {
 												usr.Append("<span style='font-weight:bold;color:#cc0000;'>!</span>");
 											}
-											rs3.Close();
+//											rs3.Close();
 										}
 									}
 								}
@@ -1924,23 +1945,25 @@ WHERE a.ProjectRoundUserID = {0}",
 								} else if (rs2.IsDBNull(3)) {
 									usr.Append("<td align='center' style='font-size:9px;'>&nbsp;" + rs2.GetValue(i + dynamicIdx) + "&nbsp;</td>");
 								} else {
-									query = string.Format(
-										@"
-SELECT b.UserBQID
-FROM [User] u
-INNER JOIN UserProfile up ON u.UserProfileID = up.UserProfileID
-INNER JOIN UserProfileBQ b ON up.UserProfileID = b.UserProfileID AND b.BQID = {0}
-WHERE up.UserID = {1}",
-										BQs.Split(':')[i],
-										rs2.GetInt32(3)
-									);
-									SqlDataReader rs3 = Db.rs(query);
-									if (rs3.Read()) {
+//									query = string.Format(
+//										@"
+									//SELECT b.UserBQID
+									//FROM [User] u
+									//INNER JOIN UserProfile up ON u.UserProfileID = up.UserProfileID
+									//INNER JOIN UserProfileBQ b ON up.UserProfileID = b.UserProfileID AND b.BQID = {0}
+									//WHERE up.UserID = {1}",
+//										BQs.Split(':')[i],
+//										rs2.GetInt32(3)
+//									);
+//									SqlDataReader rs3 = Db.rs(query);
+									var u = userRepository.Read2(BQs.Split(':')[i], rs2.GetInt32(3));
+//									if (rs3.Read()) {
+									if (u != null) {
 										usr.Append(string.Format("<td align='center' style='font-size:9px;'>&nbsp;{0}&nbsp;</td>", rs2.GetValue(i + dynamicIdx)));
 									} else {
 										usr.Append(string.Format("<td align='center' style='font-size:9px;'>&nbsp;<a href='org.aspx?SDID={0}&UID={1}&BQID={2}'>{3}</a>&nbsp;</td>", showDepartmentID, rs2.GetInt32(3), BQs.Split(':')[i], rs2.GetValue(i + dynamicIdx)));
 									}
-									rs3.Close();
+//									rs3.Close();
 								}
 							}
 						}
@@ -1997,29 +2020,29 @@ WHERE up.UserID = {1}",
 			if (aggrBQcx != 0) {
 				foreach (string a in aggrBQ.Split(',')) {
 					header += "<td align='center'>&nbsp;";
-					query = string.Format(
-						@"
-SELECT AVG(DATEDIFF(year, upbq.ValueDate, GETDATE())), COUNT(upbq.ValueDate)
-FROM SponsorInvite si
-INNER JOIN [User] u ON si.UserID = u.UserID
-INNER JOIN UserProfileBQ upbq ON u.UserProfileID = upbq.UserProfileID AND upbq.BQID = {0}
-WHERE si.SponsorID = {1}",
-						Convert.ToInt32(a),
-						sponsorID
-					);
-					SqlDataReader rs2 = Db.rs(query);
-					if (rs2.Read() && !rs2.IsDBNull(0)) {
-						header += (rs2.GetInt32(1) >= MIN_SHOW ? rs2.GetValue(0).ToString() : "<img src='img/key.gif'/>");
+//					query = string.Format(
+//						@"
+					//SELECT AVG(DATEDIFF(year, upbq.ValueDate, GETDATE())), COUNT(upbq.ValueDate)
+					//FROM SponsorInvite si
+					//INNER JOIN [User] u ON si.UserID = u.UserID
+					//INNER JOIN UserProfileBQ upbq ON u.UserProfileID = upbq.UserProfileID AND upbq.BQID = {0}
+					//WHERE si.SponsorID = {1}",
+//						Convert.ToInt32(a),
+//						sponsorID
+//					);
+//					SqlDataReader rs2 = Db.rs(query);
+					var bq = sponsorRepository.Read3(Convert.ToInt32(a), sponsorID);
+//					if (rs2.Read() && !rs2.IsDBNull(0)) {
+					if (bq != null && bq.Average > 0) {
+//						header += (rs2.GetInt32(1) >= MIN_SHOW ? rs2.GetValue(0).ToString() : "<img src='img/key.gif'/>");
+						header += (bq.Count >= MIN_SHOW ? bq.Average.ToString() : "<img src='img/key.gif'/>");
 					}
-					rs2.Close();
+//					rs2.Close();
 					header += "&nbsp;</td>";
 				}
 			}
 
 			OrgTree.Text = OrgTree.Text.Replace("[xxx]", header) + "</table>";
-//			foreach (string key in actives.Keys) {
-//				OrgTree.Text = OrgTree.Text.Replace(key, (actives[key] / totalActive * 100).ToString("0.0"));
-//			}
 			#endregion
 
 			if (Session["SuperAdminID"] != null || Session["SponsorAdminID"] != null && Session["SponsorAdminID"].ToString() == "-1") {
@@ -2037,7 +2060,7 @@ WHERE sbq.SponsorID = {0} AND sbq.Organize = 1",
 				while (rs.Read()) {
 					int cx = 0;
 					OrgTree.Text += "<table border='0' cellspacing='0' cellpadding='0' style='font-size:12px;line-height:1.0;vertical-align:middle;'>";
-					OrgTree.Text += "<tr style='border-bottom:1px solid #333333;'><td><b style='color:#cc0000;'>" + rs.GetString(1) + "</b>&nbsp;</td><td><b>Activated</b>&nbsp;</td>" + ESdesc + "<td><b>Total</b>&nbsp;</td></tr>";
+					OrgTree.Text += string.Format("<tr style='border-bottom:1px solid #333333;'><td><b style='color:#cc0000;'>{0}</b>&nbsp;</td><td><b>Activated</b>&nbsp;</td>{1}<td><b>Total</b>&nbsp;</td></tr>", rs.GetString(1), ESdesc);
 					query = string.Format(
 						@"
 SELECT BA.BAID,
@@ -2068,37 +2091,41 @@ GROUP BY BA.BAID, BA.Internal",
 							int idx = 4 + i;
 							if (!rs2.IsDBNull(idx) && rs2.GetInt32(idx) >= Convert.ToInt32(ESattr.Split(',')[i].Split(':')[1])) {
 								StringBuilder sb = new StringBuilder();
-								query = string.Format(
-									@"
-SELECT usesX.AnswerID
-FROM SponsorInvite si
-INNER JOIN [User] u ON si.UserID = u.UserID
-INNER JOIN UserSponsorExtendedSurvey usesX ON u.UserID = usesX.UserID AND usesX.SponsorExtendedSurveyID = {0}
-LEFT OUTER JOIN SponsorInviteBQ sib ON si.SponsorInviteID = sib.SponsorInviteID AND sib.BQID = {1}
-LEFT OUTER JOIN UserProfile up ON u.UserProfileID = up.UserProfileID
-LEFT OUTER JOIN UserProfileBQ upb ON up.UserProfileID = upb.UserProfileID AND upb.BQID = {2}
-WHERE usesX.AnswerID IS NOT NULL AND si.SponsorID = {3} AND ISNULL(sib.BAID,upb.ValueInt) = {4}",
-									Convert.ToInt32(ESattr.Split(',')[i].Split(':')[4]),
-									rs.GetInt32(0),
-									rs.GetInt32(0),
-									sponsorID,
-									rs2.GetInt32(0)
-								);
-								SqlDataReader rs3 = Db.rs(query);
-								while (rs3.Read()) {
-									sb.Append("," + rs3.GetInt32(0));
+//								query = string.Format(
+//									@"
+								//SELECT usesX.AnswerID
+								//FROM SponsorInvite si
+								//INNER JOIN [User] u ON si.UserID = u.UserID
+								//INNER JOIN UserSponsorExtendedSurvey usesX ON u.UserID = usesX.UserID AND usesX.SponsorExtendedSurveyID = {0}
+								//LEFT OUTER JOIN SponsorInviteBQ sib ON si.SponsorInviteID = sib.SponsorInviteID AND sib.BQID = {1}
+								//LEFT OUTER JOIN UserProfile up ON u.UserProfileID = up.UserProfileID
+								//LEFT OUTER JOIN UserProfileBQ upb ON up.UserProfileID = upb.UserProfileID AND upb.BQID = {2}
+								//WHERE usesX.AnswerID IS NOT NULL AND si.SponsorID = {3} AND ISNULL(sib.BAID,upb.ValueInt) = {4}",
+//									Convert.ToInt32(ESattr.Split(',')[i].Split(':')[4]),
+//									rs.GetInt32(0),
+//									rs.GetInt32(0),
+//									sponsorID,
+//									rs2.GetInt32(0)
+//								);
+//								SqlDataReader rs3 = Db.rs(query);
+//								while (rs3.Read()) {
+								foreach (var si in sponsorRepository.Find3(Convert.ToInt32(ESattr.Split(',')[i].Split(':')[4]), rs.GetInt32(0), sponsorID, rs2.GetInt32(0))) {
+//									sb.Append("," + rs3.GetInt32(0));
+									sb.Append("," + si.Answer.Id);
 								}
-								rs3.Close();
+//								rs3.Close();
 
-								OrgTree.Text += "<td align='center'>&nbsp;" +
-									"<a href=\"JavaScript:void(window.open('" + ConfigurationManager.AppSettings["eFormURL"] + "feedback.aspx?" +
-									"R=" + (ESrounds.Split(',')[i]) + "&" +
-									"AIDS=0" + sb.ToString() + "&" +
-									"UD=" + rs2.GetString(1) + "&" +
-									"RAC=" + Convert.ToInt32(ESattr.Split(',')[i].Split(':')[1]) + "&" +
-									"N=" + Server.HtmlEncode(Session["Sponsor"].ToString()).Replace("&", "_0_").Replace("#", "_1_") + "" +
-									"','esBQ" + i + "','scrollbars=1,width=880,height=700,resizable=1,toolbar=0,status=0,menubar=0,location=0'));\"><img src='img/graphIcon2.gif' border='0'/></A>" +
-									"&nbsp;" + rs2.GetInt32(idx) + "&nbsp;</td>";
+								OrgTree.Text += string.Format(
+									"<td align='center'>&nbsp;<a href=\"JavaScript:void(window.open('{0}feedback.aspx?R={1}&AIDS=0{2}&UD={3}&RAC={4}&N={5}','esBQ{6}','scrollbars=1,width=880,height=700,resizable=1,toolbar=0,status=0,menubar=0,location=0'));\"><img src='img/graphIcon2.gif' border='0'/></A>&nbsp;{7}&nbsp;</td>",
+									ConfigurationManager.AppSettings["eFormURL"],
+									(ESrounds.Split(',')[i]),
+									sb.ToString(),
+									rs2.GetString(1),
+									Convert.ToInt32(ESattr.Split(',')[i].Split(':')[1]),
+									Server.HtmlEncode(Session["Sponsor"].ToString()).Replace("&", "_0_").Replace("#", "_1_"),
+									i,
+									rs2.GetInt32(idx)
+								);
 							} else if (!rs2.IsDBNull(idx)) {
 								OrgTree.Text += "<td align='center' style='color:#EEEEEE'><img src='img/key.gif'/>&nbsp;" + rs2.GetInt32(idx) + "&nbsp;</td>";
 							} else {
@@ -2119,28 +2146,30 @@ WHERE usesX.AnswerID IS NOT NULL AND si.SponsorID = {3} AND ISNULL(sib.BAID,upb.
 			if (SearchEmail.Text != "") {
 				bool found = false;
 
-				string q = string.Format(
-					@"
-SELECT si.SponsorInviteID,
-	si.DepartmentID,
-	dbo.cf_departmentTree(si.DepartmentID,' » ') + ' » ' + si.Email
-FROM SponsorInvite si
-{0}
-{1}
-si.SponsorID = {2}
-AND (si.Email LIKE '%{3}%'{4})",
-					hiddenBqJoin,
-					(Session["SponsorAdminID"].ToString() != "-1" ? "INNER JOIN SponsorAdminDepartment sad ON si.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = " + Session["SponsorAdminID"] + " AND " : "WHERE "),
-					sponsorID,
-					SearchEmail.Text.Replace("'", ""),
-					hiddenBqWhere.Replace("[x]", "'%" + SearchEmail.Text.Replace("'", "") + "%'")
-				);
-				SqlDataReader rs = Db.rs(q);
-				while (rs.Read()) {
+//				string q = string.Format(
+//					@"
+				//SELECT si.SponsorInviteID,
+//	si.DepartmentID,
+//	dbo.cf_departmentTree(si.DepartmentID,' » ') + ' » ' + si.Email
+				//FROM SponsorInvite si
+				//{0}
+				//{1}
+				//si.SponsorID = {2}
+				//AND (si.Email LIKE '%{3}%'{4})",
+//					hiddenBqJoin,
+//					(Session["SponsorAdminID"].ToString() != "-1" ? "INNER JOIN SponsorAdminDepartment sad ON si.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = " + Session["SponsorAdminID"] + " AND " : "WHERE "),
+//					sponsorID,
+//					SearchEmail.Text.Replace("'", ""),
+//					hiddenBqWhere.Replace("[x]", "'%" + SearchEmail.Text.Replace("'", "") + "%'")
+//				);
+//				SqlDataReader rs = Db.rs(q);
+//				while (rs.Read()) {
+				foreach (var si in sponsorRepository.FindInvites(hiddenBqJoin, hiddenBqWhere, Convert.ToInt32(Session["SponsorAdminID"]), sponsorID, SearchEmail.Text)) {
 					found = true;
-					SearchResultList.Text += "<tr><td>" + (rs.IsDBNull(1) ? "Error, please contact <a href='mailto:support@healthwatch.se'>support@healthwatch.se</a>" : "<A HREF='org.aspx?SDID=" + rs.GetInt32(1) + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&UID=" + rs.GetInt32(0).ToString() + "'>" + rs.GetString(2) + "</a>") + "</td></tr>";
+//					SearchResultList.Text += "<tr><td>" + (rs.IsDBNull(1) ? "Error, please contact <a href='mailto:support@healthwatch.se'>support@healthwatch.se</a>" : "<A HREF='org.aspx?SDID=" + rs.GetInt32(1) + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&UID=" + rs.GetInt32(0).ToString() + "'>" + rs.GetString(2) + "</a>") + "</td></tr>";
+					SearchResultList.Text += "<tr><td>" + (si.Department == null ? "Error, please contact <a href='mailto:support@healthwatch.se'>support@healthwatch.se</a>" : "<A HREF='org.aspx?SDID=" + si.Department.Id + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&UID=" + si.Id.ToString() + "'>" + si.Department.TreeName + "</a>") + "</td></tr>";
 				}
-				rs.Close();
+//				rs.Close();
 
 				if (!found) {
 					SearchResultList.Text += "<tr><td><b>No match found!</b></td></tr>";
@@ -2345,31 +2374,15 @@ WHERE sbq.SponsorID = {0} AND sbq.Hidden = 1",
 											case 2:
 												string newVal = ((TextBox)Hidden.FindControl("Hidden" + rs3.GetInt32(0))).Text.Replace("'", "''");
 												if (rs3.IsDBNull(2) || newVal != "*****") {
-													query = string.Format(
-														@"
-DELETE FROM UserProfileBQ WHERE BQID = {0} AND UserProfileID = {1}",
-														rs3.GetInt32(0),
-														profileID
-													);
+													query = string.Format("DELETE FROM UserProfileBQ WHERE BQID = {0} AND UserProfileID = {1}", rs3.GetInt32(0), profileID);
 													Db.exec(query);
-													query = string.Format(
-														@"
-INSERT INTO UserProfileBQ (UserProfileID,BQID,ValueText) VALUES ({0},{1},'{2}')",
-														profileID,
-														rs3.GetInt32(0),
-														newVal.Replace("'", "''")
-													);
+													query = string.Format("INSERT INTO UserProfileBQ (UserProfileID,BQID,ValueText) VALUES ({0},{1},'{2}')", profileID, rs3.GetInt32(0), newVal.Replace("'", "''"));
 													Db.exec(query);
 												}
 												break;
 											case 3:
 												{
-													query = string.Format(
-														@"
-DELETE FROM UserProfileBQ WHERE BQID = {0} AND UserProfileID = {1}",
-														rs3.GetInt32(0),
-														profileID
-													);
+													query = string.Format(@"DELETE FROM UserProfileBQ WHERE BQID = {0} AND UserProfileID = {1}", rs3.GetInt32(0), profileID);
 													Db.exec(query);
 													string y = ((DropDownList)Hidden.FindControl("Hidden" + rs3.GetInt32(0) + "Y")).SelectedValue.Replace("'", "");
 													string m = ((DropDownList)Hidden.FindControl("Hidden" + rs3.GetInt32(0) + "M")).SelectedValue.Replace("'", "");
@@ -2378,13 +2391,7 @@ DELETE FROM UserProfileBQ WHERE BQID = {0} AND UserProfileID = {1}",
 														try {
 															DateTime tempDateTime = Convert.ToDateTime(y + "-" + m.PadLeft(2, '0') + '-' + d.PadLeft(2, '0'));
 															if (tempDateTime < DateTime.Now) {
-																query = string.Format(
-																	@"
-INSERT INTO UserProfileBQ (UserProfileID,BQID,ValueDate) VALUES ({0},{1},'{2}')",
-																	profileID,
-																	rs3.GetInt32(0),
-																	tempDateTime.ToString("yyyy-MM-dd")
-																);
+																query = string.Format("INSERT INTO UserProfileBQ (UserProfileID,BQID,ValueDate) VALUES ({0},{1},'{2}')", profileID, rs3.GetInt32(0), tempDateTime.ToString("yyyy-MM-dd"));
 																Db.exec(query);
 															}
 														} catch (Exception) { }
@@ -2392,38 +2399,16 @@ INSERT INTO UserProfileBQ (UserProfileID,BQID,ValueDate) VALUES ({0},{1},'{2}')"
 												}
 												break;
 											case 4:
-												query = string.Format(
-													@"
-DELETE FROM UserProfileBQ WHERE BQID = {0} AND UserProfileID = {1}",
-													rs3.GetInt32(0),
-													profileID
-												);
+												query = string.Format("DELETE FROM UserProfileBQ WHERE BQID = {0} AND UserProfileID = {1}", rs3.GetInt32(0), profileID);
 												Db.exec(query);
-												query = string.Format(
-													@"
-INSERT INTO UserProfileBQ (UserProfileID,BQID,ValueInt) VALUES ({0},{1},{2})",
-													profileID,
-													rs3.GetInt32(0),
-													Convert.ToInt32("0" + ((TextBox)Hidden.FindControl("Hidden" + rs3.GetInt32(0))).Text)
-												);
+												query = string.Format("INSERT INTO UserProfileBQ (UserProfileID,BQID,ValueInt) VALUES ({0},{1},{2})", profileID, rs3.GetInt32(0), Convert.ToInt32("0" + ((TextBox)Hidden.FindControl("Hidden" + rs3.GetInt32(0))).Text));
 												Db.exec(query);
 												break;
 											case 7:
-												query = string.Format(
-													@"
-DELETE FROM UserProfileBQ WHERE BQID = {0} AND UserProfileID = {1}",
-													rs3.GetInt32(0),
-													profileID
-												);
+												query = string.Format(@"DELETE FROM UserProfileBQ WHERE BQID = {0} AND UserProfileID = {1}", rs3.GetInt32(0), profileID);
 												Db.exec(query);
 												if (((DropDownList)Hidden.FindControl("Hidden" + rs3.GetInt32(0))).SelectedIndex != -1 && ((DropDownList)Hidden.FindControl("Hidden" + rs3.GetInt32(0))).SelectedValue != "NULL") {
-													query = string.Format(
-														@"
-INSERT INTO UserProfileBQ (UserProfileID,BQID,ValueInt) VALUES ({0},{1},{2})",
-														profileID,
-														rs3.GetInt32(0),
-														Convert.ToInt32("0" + ((DropDownList)Hidden.FindControl("Hidden" + rs3.GetInt32(0))).SelectedValue)
-													);
+													query = string.Format(@"INSERT INTO UserProfileBQ (UserProfileID,BQID,ValueInt) VALUES ({0},{1},{2})", profileID, rs3.GetInt32(0), Convert.ToInt32("0" + ((DropDownList)Hidden.FindControl("Hidden" + rs3.GetInt32(0))).SelectedValue));
 													Db.exec(query);
 												}
 												break;
@@ -2435,13 +2420,7 @@ INSERT INTO UserProfileBQ (UserProfileID,BQID,ValueInt) VALUES ({0},{1},{2})",
 								#endregion
 							} else {
 								#region Update from now
-								query = string.Format(
-									@"
-UPDATE [User] SET DepartmentID = {0} WHERE UserID = {1} AND SponsorID = {2}",
-									DepartmentID.SelectedValue,
-									rs.GetInt32(1),
-									sponsorID
-								);
+								query = string.Format(@"UPDATE [User] SET DepartmentID = {0} WHERE UserID = {1} AND SponsorID = {2}", DepartmentID.SelectedValue, rs.GetInt32(1), sponsorID);
 								Db.exec(query);
 
 								query = string.Format(
@@ -2525,9 +2504,9 @@ WHERE sbq.SponsorID = {0} AND sbq.Hidden = 1",
 											case 2:
 												string newVal = ((TextBox)Hidden.FindControl("Hidden" + rs3.GetInt32(0))).Text.Replace("'", "''");
 												if (rs3.IsDBNull(2) || newVal != "*****") {
-													query = string.Format("DELETE FROM UserProfileBQ WHERE BQID = " + rs3.GetInt32(0) + " AND UserProfileID = " + profileID);
+													query = string.Format("DELETE FROM UserProfileBQ WHERE BQID = {0} AND UserProfileID = {1}", rs3.GetInt32(0), profileID);
 													Db.exec(query);
-													query = string.Format("INSERT INTO UserProfileBQ (UserProfileID,BQID,ValueText) VALUES (" + profileID + "," + rs3.GetInt32(0) + ",'" + newVal.Replace("'", "''") + "')");
+													query = string.Format("INSERT INTO UserProfileBQ (UserProfileID,BQID,ValueText) VALUES ({0},{1},'{2}')", profileID, rs3.GetInt32(0), newVal.Replace("'", "''"));
 													Db.exec(query);
 												}
 												break;
@@ -2595,95 +2574,73 @@ DepartmentID = {3} WHERE SponsorInviteID = {4}",
 			}
 			if (!exists) {
 				#region update SponsorInviteBQ
-				query = string.Format(
-					@"
-SELECT BQ.BQID,
-	BQ.Type
-FROM SponsorBQ sbq
-INNER JOIN BQ ON sbq.BQID = BQ.BQID
-WHERE sbq.SponsorID = {0} AND sbq.Hidden = 1",
-					sponsorID
-				);
-				rs = Db.rs(query);
-				while (rs.Read()) {
+//				query = string.Format(
+//					@"
+				//SELECT BQ.BQID,
+//	BQ.Type
+				//FROM SponsorBQ sbq
+				//INNER JOIN BQ ON sbq.BQID = BQ.BQID
+				//WHERE sbq.SponsorID = {0} AND sbq.Hidden = 1",
+//					sponsorID
+//				);
+//				rs = Db.rs(query);
+//				while (rs.Read()) {
+				foreach (var bq in questionRepository.FindBackgroundQuestions2(sponsorID)) {
 					int val = int.MinValue;
 
-					if (rs.GetInt32(1) == 1 || rs.GetInt32(1) == 7) {
-						//if (rs.GetInt32(1) == 7)
-						//{
-						if (((DropDownList)Hidden.FindControl("Hidden" + rs.GetInt32(0))).SelectedIndex != -1 && ((DropDownList)Hidden.FindControl("Hidden" + rs.GetInt32(0))).SelectedValue != "NULL") {
-							val = Convert.ToInt32(((DropDownList)Hidden.FindControl("Hidden" + rs.GetInt32(0))).SelectedValue);
+					if (bq.Type == 1 || bq.Type == 7) {
+						if (((DropDownList)Hidden.FindControl("Hidden" + bq.Id)).SelectedIndex != -1 && ((DropDownList)Hidden.FindControl("Hidden" + bq.Id)).SelectedValue != "NULL") {
+							val = Convert.ToInt32(((DropDownList)Hidden.FindControl("Hidden" + bq.Id)).SelectedValue);
 						}
-						//}
-						//else if (rs.GetInt32(1) == 1)
-						//{
-						//    if (((RadioButtonList)Hidden.FindControl("Hidden" + rs.GetInt32(0))).SelectedIndex != -1 && ((RadioButtonList)Hidden.FindControl("Hidden" + rs.GetInt32(0))).SelectedValue != "NULL")
-						//    {
-						//        val = Convert.ToInt32(((RadioButtonList)Hidden.FindControl("Hidden" + rs.GetInt32(0))).SelectedValue);
-						//    }
-						//}
 						if (val != int.MinValue) {
-							query = string.Format(
-								@"
-DELETE FROM SponsorInviteBQ
-WHERE BQID = {0} AND SponsorInviteID = {1}",
-								rs.GetInt32(0),
-								userID
-							);
+							query = string.Format("DELETE FROM SponsorInviteBQ WHERE BQID = {0} AND SponsorInviteID = {1}", bq.Id, userID);
 							Db.exec(query);
-							query = string.Format(
-								@"
-INSERT INTO SponsorInviteBQ (SponsorInviteID,BQID,BAID)
-VALUES ({0},{1},{2})",
-								userID,
-								rs.GetInt32(0),
-								val
-							);
+							query = string.Format("INSERT INTO SponsorInviteBQ (SponsorInviteID,BQID,BAID) VALUES ({0},{1},{2})", userID, bq.Id, val);
 							Db.exec(query);
 						}
-					} else if (rs.GetInt32(1) == 2) {
+					} else if (bq.Type == 2) {
 						string valText = "*****";
 						try {
-							if (((TextBox)Hidden.FindControl("Hidden" + rs.GetInt32(0))).Text != "") {
-								valText = ((TextBox)Hidden.FindControl("Hidden" + rs.GetInt32(0))).Text;
+							if (((TextBox)Hidden.FindControl("Hidden" + bq.Id)).Text != "") {
+								valText = ((TextBox)Hidden.FindControl("Hidden" + bq.Id)).Text;
 							}
 						} catch (Exception) { }
 						if (valText != "*****") {
-							query = string.Format("DELETE FROM SponsorInviteBQ WHERE BQID = {0} AND SponsorInviteID = {1}", rs.GetInt32(0), userID);
+							query = string.Format("DELETE FROM SponsorInviteBQ WHERE BQID = {0} AND SponsorInviteID = {1}", bq.Id, userID);
 							Db.exec(query);
-							query = string.Format("INSERT INTO SponsorInviteBQ (SponsorInviteID,BQID,ValueText) VALUES ({0},{1},'{2}')", userID, rs.GetInt32(0), valText.Replace("'", "''"));
+							query = string.Format("INSERT INTO SponsorInviteBQ (SponsorInviteID,BQID,ValueText) VALUES ({0},{1},'{2}')", userID, bq.Id, valText.Replace("'", "''"));
 							Db.exec(query);
 						}
-					} else if (rs.GetInt32(1) == 4) {
+					} else if (bq.Type == 4) {
 						try {
-							if (((TextBox)Hidden.FindControl("Hidden" + rs.GetInt32(0))).Text != "") {
-								val = Convert.ToInt32("0" + ((TextBox)Hidden.FindControl("Hidden" + rs.GetInt32(0))).Text);
+							if (((TextBox)Hidden.FindControl("Hidden" + bq.Id)).Text != "") {
+								val = Convert.ToInt32("0" + ((TextBox)Hidden.FindControl("Hidden" + bq.Id)).Text);
 							}
 						} catch (Exception) { }
 						if (val != int.MinValue) {
-							query = string.Format("DELETE FROM SponsorInviteBQ WHERE BQID = {0} AND SponsorInviteID = {1}", rs.GetInt32(0), userID);
+							query = string.Format("DELETE FROM SponsorInviteBQ WHERE BQID = {0} AND SponsorInviteID = {1}", bq.Id, userID);
 							Db.exec(query);
-							query = string.Format("INSERT INTO SponsorInviteBQ (SponsorInviteID,BQID,ValueInt) VALUES ({0},{1},{2})", userID, rs.GetInt32(0), val);
+							query = string.Format("INSERT INTO SponsorInviteBQ (SponsorInviteID,BQID,ValueInt) VALUES ({0},{1},{2})", userID, bq.Id, val);
 							Db.exec(query);
 						}
-					} else if (rs.GetInt32(1) == 3) {
-						string y = ((DropDownList)Hidden.FindControl("Hidden" + rs.GetInt32(0) + "Y")).SelectedValue.Replace("'", "");
-						string m = ((DropDownList)Hidden.FindControl("Hidden" + rs.GetInt32(0) + "M")).SelectedValue.Replace("'", "");
-						string d = ((DropDownList)Hidden.FindControl("Hidden" + rs.GetInt32(0) + "D")).SelectedValue.Replace("'", "");
+					} else if (bq.Type == 3) {
+						string y = ((DropDownList)Hidden.FindControl("Hidden" + bq.Id + "Y")).SelectedValue.Replace("'", "");
+						string m = ((DropDownList)Hidden.FindControl("Hidden" + bq.Id + "M")).SelectedValue.Replace("'", "");
+						string d = ((DropDownList)Hidden.FindControl("Hidden" + bq.Id + "D")).SelectedValue.Replace("'", "");
 						if (y != "0" && m != "0" && d != "0") {
 							try {
 								DateTime tempDateTime = Convert.ToDateTime(y + "-" + m.PadLeft(2, '0') + '-' + d.PadLeft(2, '0'));
 								if (tempDateTime < DateTime.Now) {
-									query = string.Format("DELETE FROM SponsorInviteBQ WHERE BQID = {0} AND SponsorInviteID = {1}", rs.GetInt32(0), userID);
+									query = string.Format("DELETE FROM SponsorInviteBQ WHERE BQID = {0} AND SponsorInviteID = {1}", bq.Id, userID);
 									Db.exec(query);
-									query = string.Format("INSERT INTO SponsorInviteBQ (SponsorInviteID,BQID,ValueDate) VALUES ({0},{1},'{2}')", userID, rs.GetInt32(0), tempDateTime.ToString("yyyy-MM-dd"));
+									query = string.Format("INSERT INTO SponsorInviteBQ (SponsorInviteID,BQID,ValueDate) VALUES ({0},{1},'{2}')", userID, bq.Id, tempDateTime.ToString("yyyy-MM-dd"));
 									Db.exec(query);
 								}
 							} catch (Exception) { }
 						}
 					}
 				}
-				rs.Close();
+//				rs.Close();
 				#endregion
 
 				Response.Redirect("org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + url + (showReg ? "&ShowReg=1" : ""), true);

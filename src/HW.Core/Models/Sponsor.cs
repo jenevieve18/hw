@@ -154,6 +154,8 @@ namespace HW.Core.Models
 		public virtual DateTime? Stopped { get; set; }
 		public virtual IList<SponsorInviteBackgroundQuestion> BackgroundQuestions { get; set; }
 		public virtual string InvitationKey { get; set; }
+		public virtual DateTime? Sent { get; set; }
+		public virtual int PreviewExtendedSurveys { get; set; }
 	}
 	
 	public class SponsorInviteBackgroundQuestion : BaseModel

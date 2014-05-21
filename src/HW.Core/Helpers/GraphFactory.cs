@@ -237,8 +237,8 @@ namespace HW.Core.Helpers
 		public const int LineSD = 2;
 		public const int LineSDWithCI = 3;
 		public const int BoxPlotMinMax = 4;
-		public const int Verbose = 5;
-		public const int BoxPlot = 6;
+		public const int BoxPlot = 5;
+		public const int Verbose = 6;
 		
 		public static string GetString(int plot)
 		{
@@ -259,6 +259,7 @@ namespace HW.Core.Helpers
 		public Language Language { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
+		public string ShortName { get; set; }
 	}
 	
 	public class GroupStatsGraphFactory : IGraphFactory
