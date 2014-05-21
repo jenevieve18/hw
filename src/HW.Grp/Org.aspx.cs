@@ -504,7 +504,7 @@ namespace HW.Grp
 //						while (rs.Read()) {
 						foreach (var si in sponsorRepository.FindInviteBackgroundQuestionsByUser(userID)) {
 //							if (rs.GetInt32(2) == 7 || rs.GetInt32(2) == 1) {
-							if (si.BackgroundQuestion.Type == 7 || si.BackgroundAnswer.Id == 1) {
+                            if (si.BackgroundQuestion.Type == 7 || si.BackgroundQuestion.Type == 1) {
 //								if (Hidden.FindControl("Hidden" + rs.GetInt32(0)) != null && !rs.IsDBNull(1)) {
 								if (Hidden.FindControl("Hidden" + si.BackgroundQuestion.Id) != null && si.BackgroundAnswer != null) {
 //									((DropDownList)Hidden.FindControl("Hidden" + rs.GetInt32(0))).SelectedValue = rs.GetInt32(1).ToString();
@@ -1787,6 +1787,7 @@ ORDER BY s.Email",
 					SqlDataReader rs2 = Db.rs(sql);
 					while (rs2.Read()) {
 //					foreach (var si in sponsorRepository.FindInvites(select, ESuserSelect, join, ESuserJoin, sponsorID, rs.GetInt32(2))) {
+						usr.Append("<TR style=\"background-color:#FFF7D6\"><TD>");
 						for (int i = 1; i <= depth; i++) {
 							usr.Append(string.Format("<img src='img/{0}.gif' width='19' height='20'/>", (DX[i] ? "I" : "null")));
 						}
