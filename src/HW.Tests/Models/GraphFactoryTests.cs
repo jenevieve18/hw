@@ -5,6 +5,7 @@ using HW.Core;
 using HW.Core.Helpers;
 using HW.Core.Repositories;
 using HW.Core.Repositories.Sql;
+using HW.Core.Services;
 using NUnit.Framework;
 
 namespace HW.Tests.Models
@@ -42,8 +43,25 @@ namespace HW.Tests.Models
 //		[Test]
 //		public void a()
 //		{
+//			ReportService service = new ReportService(
+//				new SqlAnswerRepository(),
+//				new SqlReportRepository(),
+//				new SqlProjectRepository(),
+//				new SqlOptionRepository(),
+//				new SqlDepartmentRepository(),
+//				new SqlQuestionRepository(),
+//				new SqlIndexRepository(),
+//				new SqlSponsorRepository()
+//			);
+//			var f = service.GetGraphFactory(false);
+//			var g = f.CreateGraph(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, Width, Height, Background, grpng, sponsorAdminID, sid, gid, disabled, point, s.MinUserCountToDisclose);
+//		}
+//		
+//		[Test]
+//		public void a()
+//		{
 //			var ff = GraphFactory.CreateFactory(
-//				false, 
+//				false,
 //				new SqlAnswerRepository(),
 //				new ReportRepositoryStub(),
 //				new ProjectRepositoryStub(),
@@ -54,12 +72,12 @@ namespace HW.Tests.Models
 //			);
 //			g = ff.CreateGraph(null, 14, 1, 3101, 8, 2012, 2013, 10, 10, 1, 1, 1, false, "BoxPlot", 550, 440, "#FFFFFF", 1, 1, 1, "", new object(), 0);
 //		}
-//		
+//
 //		[Test]
 //		public void b()
 //		{
 //			var ff = GraphFactory.CreateFactory(
-//				false, 
+//				false,
 //				new AnswerRepositoryStub(),
 //				new ReportRepositoryStub(),
 //				new ProjectRepositoryStub(),
@@ -71,12 +89,12 @@ namespace HW.Tests.Models
 //			string s = ff.CreateGraph2(null, 14, 2, 3101, 8, 2012, 2013, 0, 10, 0, 0, 7, false, "LinePlot", 550, 440, "#FFFFFF", 2, 658, 101, "0,1101,1093", null, 0);
 //			Console.WriteLine(s);
 //		}
-//		
+//
 //		[Test]
 //		public void bq()
 //		{
 //			var ff = GraphFactory.CreateFactory(
-//				false, 
+//				false,
 //				new SqlAnswerRepository(),
 //				new SqlReportRepository(),
 //				new SqlProjectRepository(),
@@ -88,12 +106,12 @@ namespace HW.Tests.Models
 //			string s = ff.CreateGraph2(null, 14, 2, 3101, 8, 2012, 2013, 0, 10, 0, 0, 7, false, "LinePlot", 550, 440, "#FFFFFF", 2, 658, 101, "0,1101,1093", null, 0);
 //			Console.WriteLine(s);
 //		}
-//		
+//
 //		[Test]
 //		public void TestHasAnswerKey()
 //		{
 //			var ff = GraphFactory.CreateFactory(
-//				true, 
+//				true,
 //				new AnswerRepositoryStub(),
 //				new ReportRepositoryStub(),
 //				new ProjectRepositoryStub(),
@@ -104,12 +122,12 @@ namespace HW.Tests.Models
 //			);
 //			g = ff.CreateGraph("", 1, 1, 1, 8, 2011, 2012, 10, 10, 1, 1, 1, false, "BoxPlot", 550, 440, "#FFFFFF", 1, 1, 1, "", new object(), 0);
 //		}
-//		
+//
 //		[Test]
 //		public void TestHasNoAnswerKey()
 //		{
 //			var ff = GraphFactory.CreateFactory(
-//				false, 
+//				false,
 //				new AnswerRepositoryStub(),
 //				new ReportRepositoryStub(),
 //				new ProjectRepositoryStub(),
