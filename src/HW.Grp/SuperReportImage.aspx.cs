@@ -16,6 +16,8 @@ namespace HW.Grp
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			Response.ContentType = "image/gif";
+			
 			string rnds1 = (Request.QueryString["RNDS1"] != null ? Request.QueryString["RNDS1"] : "");
 			string rnds2 = (Request.QueryString["RNDS2"] != null ? Request.QueryString["RNDS2"] : "");
 			string rndsd1 = (Request.QueryString["RNDSD1"] != null ? Request.QueryString["RNDSD1"] : "");
