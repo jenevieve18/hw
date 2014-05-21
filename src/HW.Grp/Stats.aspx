@@ -295,6 +295,7 @@
 		<% if (reportParts != null) { %>
 			<% Q additionalQuery = GetGID(urlModels); %>
             <% bool supportsBoxPlot = SelectedDepartments.Count == 1 || Grouping.SelectedValue == "0"; %>
+            <% bool forSingleSeries = SelectedDepartments.Count == 1 || Grouping.SelectedValue == "0"; %>
 			<div class="report-parts">
 				<div class="action">
                     <div class="chart-description" title="Chart Descriptions">
@@ -314,7 +315,8 @@
 					<span class="small">Change all graphs to:</span>
                     <select class="plotTypes small">
                         <% foreach (var p in plotTypes) { %>
-                        <option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option>
+                            <% if (!p.SupportsMultipleSeries && !forSingleSeries) {} %>
+                            <% else { %><option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option><% } %>
                         <% } %>
                     </select>
 					<!--<span id="modal" class="button white small graph"><span class="hidden plot-type"><%= PlotType.Line%></span><%= PlotType.GetString(PlotType.Line)%></span>
@@ -364,7 +366,8 @@
 								<span class="small">Change this graph to:</span>
                                 <select class="plotTypes small">
                                     <% foreach (var p in plotTypes) { %>
-                                    <option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option>
+                                        <% if (!p.SupportsMultipleSeries && !forSingleSeries) {} %>
+                                        <% else { %><option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option><% } %>
                                     <% } %>
                                 </select>
 								<!--<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.Line %></span><%= PlotType.GetString(PlotType.Line)%></span>

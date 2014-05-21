@@ -32,7 +32,12 @@ select * from PlotType"
 		{
 			string query = string.Format(
 				@"
-select PlotTypeID, Name, Description, ShortName from PlotTypeLang"
+select PlotTypeID, 
+	Name, 
+	Description, 
+	ShortName,
+	SupportsMultipleSeries
+from PlotTypeLang"
 			);
 			var types = new List<PlotTypeLanguage>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
@@ -41,7 +46,8 @@ select PlotTypeID, Name, Description, ShortName from PlotTypeLang"
 						PlotType = new PlotType { Id = GetInt32(rs, 0) },
 						Name = GetString(rs, 1),
 						Description = GetString(rs, 2),
-						ShortName = GetString(rs, 3)
+						ShortName = GetString(rs, 3),
+						SupportsMultipleSeries = GetInt32(rs, 4) == 1
 					};
 					types.Add(t);
 				}

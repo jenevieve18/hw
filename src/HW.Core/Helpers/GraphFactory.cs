@@ -260,6 +260,7 @@ namespace HW.Core.Helpers
 		public string Name { get; set; }
 		public string Description { get; set; }
 		public string ShortName { get; set; }
+		public bool SupportsMultipleSeries { get; set; }
 	}
 	
 	public class GroupStatsGraphFactory : IGraphFactory
