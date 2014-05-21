@@ -1923,7 +1923,7 @@ WHERE si.SponsorID = {1}",
 				@"
 SELECT si.UserID
 FROM SponsorInvite si
-WHERE si.SponsorInviteID = {1}",
+WHERE si.SponsorInviteID = {0}",
 				deleteUserID
 			);
 			using (SqlDataReader rs = Db.rs(query)) {
