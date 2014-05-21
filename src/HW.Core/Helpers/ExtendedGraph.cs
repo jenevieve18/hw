@@ -417,7 +417,7 @@ namespace HW.Core.Helpers
 		}
 	}
 	
-	public class BarGraphTYpe : IGraphType
+	public class BarGraphType : IGraphType
 	{
 		public ExtendedGraph Graph { get; set; }
 		

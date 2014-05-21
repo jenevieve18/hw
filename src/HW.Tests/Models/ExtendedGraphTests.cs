@@ -133,7 +133,7 @@ namespace HW.Tests.Models
 			}
 			g = new ExtendedGraph(895, 550, "#FFFFFF");
 			g.Series.Add(s);
-			g.Type = new BarGraphTYpe();
+			g.Type = new BarGraphType();
 			g.Draw();
 		}
 		
