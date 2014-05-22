@@ -85,6 +85,13 @@
 .chart-description {
     background:url(https://healthwatch.se/includes/resources/myhealth_statistics_bar_detail_toggle.gif);
 }
+.chart-descriptions-info {
+    width: 16px;
+    height: 16px;
+	background:url(images/information.png);
+	display:inline-block;
+    cursor:pointer;
+}
 .toggle {
     width: 32px;
     height: 16px;
@@ -140,9 +147,9 @@
         $('#accordion').accordion({ collapsible: true, active: true, heightStyle: 'content' });
         f($('.report-part'), 1, true);
         $('.report-part-header').hide();
-        $('.chart-description').dialog({ autoOpen: false, width: 600, height: 480 });
-        $('.toggle-chart-description').click(function () {
-            $('.chart-description').dialog('open');
+        $('.chart-descriptions').dialog({ autoOpen: false, width: 600, height: 480 });
+        $('.chart-descriptions-info').click(function () {
+            $('.chart-descriptions').dialog('open');
         });
         $('.report-part-subject').mouseover(function () {
             $(this).closest('.report-part').find('.toggle-right').removeClass('toggle-active').addClass('toggle-active-hover');
@@ -159,7 +166,7 @@
         $('.report-part-subject').click(function () {
             $(this).closest('.report-part').find('.report-part-header').slideToggle();
         });
-        $('.report-part .action .plotTypes').change(function () {
+        $('.report-part .action .plot-types').change(function () {
             var partContent = $(this).closest('.report-part-content');
             var plotType = $(this).val();
             //f($(this), plotType, false);
@@ -195,7 +202,7 @@
             var exportPptXUrl = partContent.find('.hidden-export-pptx-url').text();
             partContent.find('.export-pptx-url').attr('href', exportPptXUrl + '&PLOT=' + plotType);
         });*/
-        $('.report-parts > .action .plotTypes').change(function () {
+        $('.report-parts > .action .plot-types').change(function () {
             var plotType = $(this).val();
 
             var exportAllDocXUrl = $('.hidden-exportall-docx-url').text();
@@ -208,7 +215,7 @@
             $('.exportall-pptx-url').attr('href', exportAllPptxUrl + '&PLOT=' + plotType);
 
             $.each($('.report-part-content'), function () {
-                var p = $(this).closest('.report-part').find('.action .plotTypes');
+                var p = $(this).closest('.report-part').find('.action .plot-types');
                 p.val(plotType);
                 p.change();
                 //f($(this), plotType, false);
@@ -298,7 +305,7 @@
             <% bool forSingleSeries = SelectedDepartments.Count == 1 || Grouping.SelectedValue == "0"; %>
 			<div class="report-parts">
 				<div class="action">
-                    <div class="chart-description" title="Chart Descriptions">
+                    <div class="chart-descriptions" title="Chart Descriptions">
                         <div>
                         <% foreach (var p in plotTypes) { %>
 	       			        <div>&nbsp;<br /></div>
@@ -313,7 +320,7 @@
                         </div>
                     </div>
 					<span class="small">Change all graphs to:</span>
-                    <select class="plotTypes small">
+                    <select class="plot-types small">
                         <% foreach (var p in plotTypes) { %>
                             <% if (!p.SupportsMultipleSeries && !forSingleSeries) {} %>
                             <% else { %><option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option><% } %>
@@ -326,7 +333,8 @@
 						<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.BoxPlotMinMax %></span><%= PlotType.GetString(PlotType.BoxPlotMinMax)%></span>
 						<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.BoxPlot %></span><%= PlotType.GetString(PlotType.BoxPlot)%></span>
 					<% } %>-->
-                    <span class="toggle toggle-chart-description"></span>
+                    <!--<span class="toggle toggle-chart-description"></span>-->
+                    <span class="chart-descriptions-info"></span>
 					<span class="small">Export all graphs to:</span>
 					<span class="button white small export">
                         <% string exportAllDocXUrl = GetExportAllUrl("docx", additionalQuery); %>
@@ -364,7 +372,7 @@
                             <!--<div class="chart-description1" style="display:none"></div>-->
 							<div class="action">
 								<span class="small">Change this graph to:</span>
-                                <select class="plotTypes small">
+                                <select class="plot-types small">
                                     <% foreach (var p in plotTypes) { %>
                                         <% if (!p.SupportsMultipleSeries && !forSingleSeries) {} %>
                                         <% else { %><option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option><% } %>

@@ -247,6 +247,7 @@
     <Folder Include="assets\css" />
     <Folder Include="assets\plasm" />
     <Folder Include="assets\plasm\javascript" />
+    <Folder Include="images" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Grp.Master" />
@@ -263,6 +264,7 @@
   <ItemGroup>
     <None Include="assets\css\main.css" />
     <None Include="assets\plasm\javascript\demo1.js" />
+    <None Include="images\information.png" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
