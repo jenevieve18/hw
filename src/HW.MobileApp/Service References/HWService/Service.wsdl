@@ -1,0 +1,3068 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="https://ws.healthwatch.se/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="https://ws.healthwatch.se/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">HealthWatch.se web service. LanguageID 1:Swedish 2:English</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="https://ws.healthwatch.se/">
+      <s:element name="HelloWorld">
+        <s:complexType />
+      </s:element>
+      <s:element name="HelloWorldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TodaysWordsOfWisdom">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TodaysWordsOfWisdomResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="TodaysWordsOfWisdomResult" type="tns:WordsOfWisdom" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="WordsOfWisdom">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="words" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="author" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UserGetFormFeedback">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="formKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="formFeedbackTemplateID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="fromDateTime" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="toDateTime" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserGetFormFeedbackResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserGetFormFeedbackResult" type="tns:ArrayOfFormFeedback" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfFormFeedback">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="FormFeedback" type="tns:FormFeedback" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="FormFeedback">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="feedbackTemplateID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="header" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="formInstanceKey" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="dateTime" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="value" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="profileValue" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="databaseValue" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="FormFeedbackTemplateEnum">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="formKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FormFeedbackTemplateEnumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FormFeedbackTemplateEnumResult" type="tns:ArrayOfFormFeedbackTemplate" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfFormFeedbackTemplate">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="FormFeedbackTemplate" type="tns:FormFeedbackTemplate" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="FormFeedbackTemplate">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="feedbackTemplateID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="header" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UserGetFormInstanceFeedback">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="formKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="formInstanceKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserGetFormInstanceFeedbackResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserGetFormInstanceFeedbackResult" type="tns:FormInstance" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="FormInstance">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="formDisclaimer" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="formInstanceKey" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="dateTime" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="fiv" type="tns:ArrayOfFormInstanceFeedback" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfFormInstanceFeedback">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="FormInstanceFeedback" type="tns:FormInstanceFeedback" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="FormInstanceFeedback">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="feedbackTemplateID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="header" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="value" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="analysis" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="rating" type="tns:Rating" />
+          <s:element minOccurs="0" maxOccurs="1" name="feedback" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="actionPlan" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="yellowLow" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="greenLow" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="greenHigh" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="yellowHigh" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="Rating">
+        <s:restriction base="s:string">
+          <s:enumeration value="NotKnown" />
+          <s:enumeration value="Unhealthy" />
+          <s:enumeration value="Warning" />
+          <s:enumeration value="Healthy" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="UserSetFormInstanceQuestion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="formKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="formInstanceKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="questionID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="optionID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="answer" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserSetFormInstanceQuestionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserSetFormInstanceQuestionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserSetFormInstance">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="formKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="fqa" type="tns:ArrayOfFormQuestionAnswer" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfFormQuestionAnswer">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="FormQuestionAnswer" type="tns:FormQuestionAnswer" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="FormQuestionAnswer">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="questionID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="optionID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="answer" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UserSetFormInstanceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserSetFormInstanceResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserDeleteFormInstance">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="formInstanceKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="eventID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserDeleteFormInstanceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserDeleteFormInstanceResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FormQuestionEnum">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="formKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FormQuestionEnumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FormQuestionEnumResult" type="tns:ArrayOfQuestion" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfQuestion">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Question" type="tns:Question" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Question">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="QuestionID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SortOrder" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="QuestionType" type="tns:QuestionTypes" />
+          <s:element minOccurs="0" maxOccurs="1" name="QuestionText" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MeasurementUnit" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Mandatory" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="DefaultValue" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="RequiredNumberOfCharacters" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="MaximumNumberOfCharacters" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="AnswerOptions" type="tns:ArrayOfAnswer" />
+          <s:element minOccurs="0" maxOccurs="1" name="VisibilityConditions" type="tns:ArrayOfVisibilityConditionOr" />
+          <s:element minOccurs="1" maxOccurs="1" name="OptionID" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="QuestionTypes">
+        <s:restriction base="s:string">
+          <s:enumeration value="SingleChoiceFewOptions" />
+          <s:enumeration value="SingleChoiceManyOptions" />
+          <s:enumeration value="FreeText" />
+          <s:enumeration value="Numeric" />
+          <s:enumeration value="Date" />
+          <s:enumeration value="VAS" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfAnswer">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Answer" type="tns:Answer" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Answer">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="AnswerID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SortOrder" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="AnswerText" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="AnswerValue" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfVisibilityConditionOr">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="VisibilityConditionOr" type="tns:VisibilityConditionOr" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="VisibilityConditionOr">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="QuestionID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="AnswerID" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="FormEnum">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FormEnumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FormEnumResult" type="tns:ArrayOfForm" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfForm">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Form" type="tns:Form" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Form">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="formKey" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="form" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UserDeleteMeasure">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="eventID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserDeleteMeasureResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserDeleteMeasureResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserSetMeasureParameterized">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="dateTime" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="measureID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="measureComponentID_1" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="value_1" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="measureComponentID_2" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="value_2" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserSetMeasureParameterizedResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserSetMeasureParameterizedResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserSetMeasure">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="dateTime" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="measureID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="umc" type="tns:ArrayOfUserMeasureComponent" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfUserMeasureComponent">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="UserMeasureComponent" type="tns:UserMeasureComponent" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="UserMeasureComponent">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="MeasureComponentID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="value" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UserSetMeasureResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserSetMeasureResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserGetReminder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserGetReminderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserGetReminderResult" type="tns:Reminder" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Reminder">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="type" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="autoLoginLink" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="sendAtHour" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="regularity" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="regularityDailyMonday" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="regularityDailyTuesday" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="regularityDailyWednesday" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="regularityDailyThursday" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="regularityDailyFriday" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="regularityDailySaturday" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="regularityDailySunday" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="regularityWeeklyDay" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="regularityWeeklyEvery" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="regularityMonthlyWeekNr" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="regularityMonthlyDay" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="regularityMonthlyEvery" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="inactivityCount" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="inactivityPeriod" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UserSetReminder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="reminder" type="tns:Reminder" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserSetReminderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserSetReminderResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserSetReminderParameterized">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="type" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="autoLoginLink" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="sendAtHour" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="regularity" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="regularityDailyMonday" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="regularityDailyTuesday" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="regularityDailyWednesday" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="regularityDailyThursday" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="regularityDailyFriday" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="regularityDailySaturday" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="regularityDailySunday" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="regularityWeeklyDay" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="regularityWeeklyEvery" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="regularityMonthlyWeekNr" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="regularityMonthlyDay" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="regularityMonthlyEvery" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="inactivityCount" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="inactivityPeriod" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserSetReminderParameterizedResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserSetReminderParameterizedResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MeasureEnum">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="measureCategoryID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MeasureEnumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MeasureEnumResult" type="tns:ArrayOfMeasure" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfMeasure">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Measure" type="tns:Measure" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Measure">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="measure" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="measureID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="measureCategory" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="measureCategoryID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="moreInfo" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="componentCount" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="measureComponents" type="tns:ArrayOfMeasureComponent" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfMeasureComponent">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="MeasureComponent" type="tns:MeasureComponent" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="MeasureComponent">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="measureComponent" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="measureComponentID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="questionType" type="tns:QuestionTypes" />
+          <s:element minOccurs="1" maxOccurs="1" name="inherited" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="hasAutoCalculateChildren" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="isAutoCalculated" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="decimals" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="unit" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="autoCalculateScript" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="triggerScript" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="inheritedValue" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="MeasureCategoryEnum">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="measureTypeID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MeasureCategoryEnumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MeasureCategoryEnumResult" type="tns:ArrayOfMeasureCategory" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfMeasureCategory">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="MeasureCategory" type="tns:MeasureCategory" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="MeasureCategory">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="measureCategory" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="measureCategoryID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="measureType" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="measureTypeID" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="MeasureTypeEnum">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MeasureTypeEnumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MeasureTypeEnumResult" type="tns:ArrayOfMeasureType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfMeasureType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="MeasureType" type="tns:MeasureType" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="MeasureType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="measureType" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="measureTypeID" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CalendarUpdate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="mood" type="tns:Mood" />
+            <s:element minOccurs="0" maxOccurs="1" name="note" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="date" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="Mood">
+        <s:restriction base="s:string">
+          <s:enumeration value="NotSet" />
+          <s:enumeration value="DontKnow" />
+          <s:enumeration value="Happy" />
+          <s:enumeration value="Neutral" />
+          <s:enumeration value="Unhappy" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="CalendarUpdateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CalendarUpdateResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CalendarEnum">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="fromDT" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="toDT" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CalendarEnumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CalendarEnumResult" type="tns:ArrayOfCalendar" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfCalendar">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Calendar" type="tns:Calendar" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Calendar">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="date" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="mood" type="tns:Mood" />
+          <s:element minOccurs="0" maxOccurs="1" name="note" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="events" type="tns:ArrayOfEvent" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfEvent">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Event" type="tns:Event" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Event">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="time" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="description" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="result" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="formInstanceKey" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="type" type="tns:EventType" />
+          <s:element minOccurs="1" maxOccurs="1" name="eventID" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="EventType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Form" />
+          <s:enumeration value="Measurement" />
+          <s:enumeration value="Exercise" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="ExerciseExec">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="exerciseVariantLangID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExerciseExecResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ExerciseExecResult" type="tns:Exercise" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Exercise">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="exerciseHeader" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="exerciseContent" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="exerciseTime" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="exerciseArea" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="exerciseAreaID" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ExerciseEnum">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="exerciseAreaID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="type" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExerciseEnumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ExerciseEnumResult" type="tns:ArrayOfExerciseInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfExerciseInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ExerciseInfo" type="tns:ExerciseInfo" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ExerciseInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="exercise" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="exerciseID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="exerciseTeaser" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="exerciseTime" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="exerciseArea" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="exerciseAreaID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="exerciseImage" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="exerciseVariant" type="tns:ArrayOfExerciseVariant" />
+          <s:element minOccurs="1" maxOccurs="1" name="popularity" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfExerciseVariant">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ExerciseVariant" type="tns:ExerciseVariant" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ExerciseVariant">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="exerciseVariantLangID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="exerciseType" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ExerciseAreaEnum">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="type" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExerciseAreaEnumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ExerciseAreaEnumResult" type="tns:ArrayOfExerciseArea" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfExerciseArea">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ExerciseArea" type="tns:ExerciseArea" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ExerciseArea">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="exerciseArea" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="exerciseAreaID" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UserLogin">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserLoginResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserLoginResult" type="tns:UserData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="UserData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="tokenExpires" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UserUpdateLanguage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserUpdateLanguageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserUpdateLanguageResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserExtendToken">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserExtendTokenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserExtendTokenResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserLogout">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserLogoutResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserLogoutResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserResetPassword">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserResetPasswordResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserResetPasswordResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="NewsCategories">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="lastXdays" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="includeEnglishNews" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="NewsCategoriesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="NewsCategoriesResult" type="tns:ArrayOfNewsCategory" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfNewsCategory">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="NewsCategory" type="tns:NewsCategory" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="NewsCategory">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="newsCategoryID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="newsCategory" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="newsCategoryAlias" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="newsCategoryImage" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="totalCount" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="lastXdaysCount" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="NewsEnum">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="lastXdays" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="startOffset" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="topX" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="includeEnglishNews" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="newsCategoryID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="NewsEnumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="NewsEnumResult" type="tns:ArrayOfNews" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfNews">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="News" type="tns:News" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="News">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="newsCategoryID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="newsCategory" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="newsCategoryAlias" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="newsCategoryImage" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="newsID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="DT" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="headline" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="teaser" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="body" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="link" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="NewsDetail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="newsID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="NewsDetailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="NewsDetailResult" type="tns:News" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ProfileQuestions">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ProfileQuestionsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ProfileQuestionsResult" type="tns:ArrayOfQuestion" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserCreate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="alternateEmail" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="acceptPolicy" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="departmentID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserCreateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserCreateResult" type="tns:UserData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserUpdateInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="alternateEmail" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserUpdateInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserUpdateInfoResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserGetInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserGetInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserGetInfoResult" type="tns:UserInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="UserInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="alternateEmail" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UserUpdatePassword">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserUpdatePasswordResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserUpdatePasswordResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserGetProfileQuestion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="questionID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserGetProfileQuestionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserGetProfileQuestionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserSetProfileQuestion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="questionID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="answer" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserSetProfileQuestionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserSetProfileQuestionResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string" />
+      <s:element name="WordsOfWisdom" type="tns:WordsOfWisdom" />
+      <s:element name="ArrayOfFormFeedback" nillable="true" type="tns:ArrayOfFormFeedback" />
+      <s:element name="ArrayOfFormFeedbackTemplate" nillable="true" type="tns:ArrayOfFormFeedbackTemplate" />
+      <s:element name="FormInstance" type="tns:FormInstance" />
+      <s:element name="boolean" type="s:boolean" />
+      <s:element name="ArrayOfQuestion" nillable="true" type="tns:ArrayOfQuestion" />
+      <s:element name="ArrayOfForm" nillable="true" type="tns:ArrayOfForm" />
+      <s:element name="Reminder" type="tns:Reminder" />
+      <s:element name="ArrayOfMeasure" nillable="true" type="tns:ArrayOfMeasure" />
+      <s:element name="ArrayOfMeasureCategory" nillable="true" type="tns:ArrayOfMeasureCategory" />
+      <s:element name="ArrayOfMeasureType" nillable="true" type="tns:ArrayOfMeasureType" />
+      <s:element name="ArrayOfCalendar" nillable="true" type="tns:ArrayOfCalendar" />
+      <s:element name="Exercise" type="tns:Exercise" />
+      <s:element name="ArrayOfExerciseInfo" nillable="true" type="tns:ArrayOfExerciseInfo" />
+      <s:element name="ArrayOfExerciseArea" nillable="true" type="tns:ArrayOfExerciseArea" />
+      <s:element name="UserData" type="tns:UserData" />
+      <s:element name="ArrayOfNewsCategory" nillable="true" type="tns:ArrayOfNewsCategory" />
+      <s:element name="ArrayOfNews" nillable="true" type="tns:ArrayOfNews" />
+      <s:element name="News" type="tns:News" />
+      <s:element name="UserInfo" type="tns:UserInfo" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HelloWorldSoapIn">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldSoapOut">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="TodaysWordsOfWisdomSoapIn">
+    <wsdl:part name="parameters" element="tns:TodaysWordsOfWisdom" />
+  </wsdl:message>
+  <wsdl:message name="TodaysWordsOfWisdomSoapOut">
+    <wsdl:part name="parameters" element="tns:TodaysWordsOfWisdomResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserGetFormFeedbackSoapIn">
+    <wsdl:part name="parameters" element="tns:UserGetFormFeedback" />
+  </wsdl:message>
+  <wsdl:message name="UserGetFormFeedbackSoapOut">
+    <wsdl:part name="parameters" element="tns:UserGetFormFeedbackResponse" />
+  </wsdl:message>
+  <wsdl:message name="FormFeedbackTemplateEnumSoapIn">
+    <wsdl:part name="parameters" element="tns:FormFeedbackTemplateEnum" />
+  </wsdl:message>
+  <wsdl:message name="FormFeedbackTemplateEnumSoapOut">
+    <wsdl:part name="parameters" element="tns:FormFeedbackTemplateEnumResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserGetFormInstanceFeedbackSoapIn">
+    <wsdl:part name="parameters" element="tns:UserGetFormInstanceFeedback" />
+  </wsdl:message>
+  <wsdl:message name="UserGetFormInstanceFeedbackSoapOut">
+    <wsdl:part name="parameters" element="tns:UserGetFormInstanceFeedbackResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserSetFormInstanceQuestionSoapIn">
+    <wsdl:part name="parameters" element="tns:UserSetFormInstanceQuestion" />
+  </wsdl:message>
+  <wsdl:message name="UserSetFormInstanceQuestionSoapOut">
+    <wsdl:part name="parameters" element="tns:UserSetFormInstanceQuestionResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserSetFormInstanceSoapIn">
+    <wsdl:part name="parameters" element="tns:UserSetFormInstance" />
+  </wsdl:message>
+  <wsdl:message name="UserSetFormInstanceSoapOut">
+    <wsdl:part name="parameters" element="tns:UserSetFormInstanceResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserDeleteFormInstanceSoapIn">
+    <wsdl:part name="parameters" element="tns:UserDeleteFormInstance" />
+  </wsdl:message>
+  <wsdl:message name="UserDeleteFormInstanceSoapOut">
+    <wsdl:part name="parameters" element="tns:UserDeleteFormInstanceResponse" />
+  </wsdl:message>
+  <wsdl:message name="FormQuestionEnumSoapIn">
+    <wsdl:part name="parameters" element="tns:FormQuestionEnum" />
+  </wsdl:message>
+  <wsdl:message name="FormQuestionEnumSoapOut">
+    <wsdl:part name="parameters" element="tns:FormQuestionEnumResponse" />
+  </wsdl:message>
+  <wsdl:message name="FormEnumSoapIn">
+    <wsdl:part name="parameters" element="tns:FormEnum" />
+  </wsdl:message>
+  <wsdl:message name="FormEnumSoapOut">
+    <wsdl:part name="parameters" element="tns:FormEnumResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserDeleteMeasureSoapIn">
+    <wsdl:part name="parameters" element="tns:UserDeleteMeasure" />
+  </wsdl:message>
+  <wsdl:message name="UserDeleteMeasureSoapOut">
+    <wsdl:part name="parameters" element="tns:UserDeleteMeasureResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserSetMeasureParameterizedSoapIn">
+    <wsdl:part name="parameters" element="tns:UserSetMeasureParameterized" />
+  </wsdl:message>
+  <wsdl:message name="UserSetMeasureParameterizedSoapOut">
+    <wsdl:part name="parameters" element="tns:UserSetMeasureParameterizedResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserSetMeasureSoapIn">
+    <wsdl:part name="parameters" element="tns:UserSetMeasure" />
+  </wsdl:message>
+  <wsdl:message name="UserSetMeasureSoapOut">
+    <wsdl:part name="parameters" element="tns:UserSetMeasureResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserGetReminderSoapIn">
+    <wsdl:part name="parameters" element="tns:UserGetReminder" />
+  </wsdl:message>
+  <wsdl:message name="UserGetReminderSoapOut">
+    <wsdl:part name="parameters" element="tns:UserGetReminderResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserSetReminderSoapIn">
+    <wsdl:part name="parameters" element="tns:UserSetReminder" />
+  </wsdl:message>
+  <wsdl:message name="UserSetReminderSoapOut">
+    <wsdl:part name="parameters" element="tns:UserSetReminderResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserSetReminderParameterizedSoapIn">
+    <wsdl:part name="parameters" element="tns:UserSetReminderParameterized" />
+  </wsdl:message>
+  <wsdl:message name="UserSetReminderParameterizedSoapOut">
+    <wsdl:part name="parameters" element="tns:UserSetReminderParameterizedResponse" />
+  </wsdl:message>
+  <wsdl:message name="MeasureEnumSoapIn">
+    <wsdl:part name="parameters" element="tns:MeasureEnum" />
+  </wsdl:message>
+  <wsdl:message name="MeasureEnumSoapOut">
+    <wsdl:part name="parameters" element="tns:MeasureEnumResponse" />
+  </wsdl:message>
+  <wsdl:message name="MeasureCategoryEnumSoapIn">
+    <wsdl:part name="parameters" element="tns:MeasureCategoryEnum" />
+  </wsdl:message>
+  <wsdl:message name="MeasureCategoryEnumSoapOut">
+    <wsdl:part name="parameters" element="tns:MeasureCategoryEnumResponse" />
+  </wsdl:message>
+  <wsdl:message name="MeasureTypeEnumSoapIn">
+    <wsdl:part name="parameters" element="tns:MeasureTypeEnum" />
+  </wsdl:message>
+  <wsdl:message name="MeasureTypeEnumSoapOut">
+    <wsdl:part name="parameters" element="tns:MeasureTypeEnumResponse" />
+  </wsdl:message>
+  <wsdl:message name="CalendarUpdateSoapIn">
+    <wsdl:part name="parameters" element="tns:CalendarUpdate" />
+  </wsdl:message>
+  <wsdl:message name="CalendarUpdateSoapOut">
+    <wsdl:part name="parameters" element="tns:CalendarUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="CalendarEnumSoapIn">
+    <wsdl:part name="parameters" element="tns:CalendarEnum" />
+  </wsdl:message>
+  <wsdl:message name="CalendarEnumSoapOut">
+    <wsdl:part name="parameters" element="tns:CalendarEnumResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExerciseExecSoapIn">
+    <wsdl:part name="parameters" element="tns:ExerciseExec" />
+  </wsdl:message>
+  <wsdl:message name="ExerciseExecSoapOut">
+    <wsdl:part name="parameters" element="tns:ExerciseExecResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExerciseEnumSoapIn">
+    <wsdl:part name="parameters" element="tns:ExerciseEnum" />
+  </wsdl:message>
+  <wsdl:message name="ExerciseEnumSoapOut">
+    <wsdl:part name="parameters" element="tns:ExerciseEnumResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExerciseAreaEnumSoapIn">
+    <wsdl:part name="parameters" element="tns:ExerciseAreaEnum" />
+  </wsdl:message>
+  <wsdl:message name="ExerciseAreaEnumSoapOut">
+    <wsdl:part name="parameters" element="tns:ExerciseAreaEnumResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserLoginSoapIn">
+    <wsdl:part name="parameters" element="tns:UserLogin" />
+  </wsdl:message>
+  <wsdl:message name="UserLoginSoapOut">
+    <wsdl:part name="parameters" element="tns:UserLoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserUpdateLanguageSoapIn">
+    <wsdl:part name="parameters" element="tns:UserUpdateLanguage" />
+  </wsdl:message>
+  <wsdl:message name="UserUpdateLanguageSoapOut">
+    <wsdl:part name="parameters" element="tns:UserUpdateLanguageResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserExtendTokenSoapIn">
+    <wsdl:part name="parameters" element="tns:UserExtendToken" />
+  </wsdl:message>
+  <wsdl:message name="UserExtendTokenSoapOut">
+    <wsdl:part name="parameters" element="tns:UserExtendTokenResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserLogoutSoapIn">
+    <wsdl:part name="parameters" element="tns:UserLogout" />
+  </wsdl:message>
+  <wsdl:message name="UserLogoutSoapOut">
+    <wsdl:part name="parameters" element="tns:UserLogoutResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserResetPasswordSoapIn">
+    <wsdl:part name="parameters" element="tns:UserResetPassword" />
+  </wsdl:message>
+  <wsdl:message name="UserResetPasswordSoapOut">
+    <wsdl:part name="parameters" element="tns:UserResetPasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="NewsCategoriesSoapIn">
+    <wsdl:part name="parameters" element="tns:NewsCategories" />
+  </wsdl:message>
+  <wsdl:message name="NewsCategoriesSoapOut">
+    <wsdl:part name="parameters" element="tns:NewsCategoriesResponse" />
+  </wsdl:message>
+  <wsdl:message name="NewsEnumSoapIn">
+    <wsdl:part name="parameters" element="tns:NewsEnum" />
+  </wsdl:message>
+  <wsdl:message name="NewsEnumSoapOut">
+    <wsdl:part name="parameters" element="tns:NewsEnumResponse" />
+  </wsdl:message>
+  <wsdl:message name="NewsDetailSoapIn">
+    <wsdl:part name="parameters" element="tns:NewsDetail" />
+  </wsdl:message>
+  <wsdl:message name="NewsDetailSoapOut">
+    <wsdl:part name="parameters" element="tns:NewsDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProfileQuestionsSoapIn">
+    <wsdl:part name="parameters" element="tns:ProfileQuestions" />
+  </wsdl:message>
+  <wsdl:message name="ProfileQuestionsSoapOut">
+    <wsdl:part name="parameters" element="tns:ProfileQuestionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserCreateSoapIn">
+    <wsdl:part name="parameters" element="tns:UserCreate" />
+  </wsdl:message>
+  <wsdl:message name="UserCreateSoapOut">
+    <wsdl:part name="parameters" element="tns:UserCreateResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserUpdateInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:UserUpdateInfo" />
+  </wsdl:message>
+  <wsdl:message name="UserUpdateInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:UserUpdateInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserGetInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:UserGetInfo" />
+  </wsdl:message>
+  <wsdl:message name="UserGetInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:UserGetInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserUpdatePasswordSoapIn">
+    <wsdl:part name="parameters" element="tns:UserUpdatePassword" />
+  </wsdl:message>
+  <wsdl:message name="UserUpdatePasswordSoapOut">
+    <wsdl:part name="parameters" element="tns:UserUpdatePasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserGetProfileQuestionSoapIn">
+    <wsdl:part name="parameters" element="tns:UserGetProfileQuestion" />
+  </wsdl:message>
+  <wsdl:message name="UserGetProfileQuestionSoapOut">
+    <wsdl:part name="parameters" element="tns:UserGetProfileQuestionResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserSetProfileQuestionSoapIn">
+    <wsdl:part name="parameters" element="tns:UserSetProfileQuestion" />
+  </wsdl:message>
+  <wsdl:message name="UserSetProfileQuestionSoapOut">
+    <wsdl:part name="parameters" element="tns:UserSetProfileQuestionResponse" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldHttpPostIn" />
+  <wsdl:message name="HelloWorldHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="TodaysWordsOfWisdomHttpPostIn">
+    <wsdl:part name="languageID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="TodaysWordsOfWisdomHttpPostOut">
+    <wsdl:part name="Body" element="tns:WordsOfWisdom" />
+  </wsdl:message>
+  <wsdl:message name="UserGetFormFeedbackHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="formKey" type="s:string" />
+    <wsdl:part name="formFeedbackTemplateID" type="s:string" />
+    <wsdl:part name="fromDateTime" type="s:string" />
+    <wsdl:part name="toDateTime" type="s:string" />
+    <wsdl:part name="languageID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserGetFormFeedbackHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfFormFeedback" />
+  </wsdl:message>
+  <wsdl:message name="FormFeedbackTemplateEnumHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="formKey" type="s:string" />
+    <wsdl:part name="languageID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FormFeedbackTemplateEnumHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfFormFeedbackTemplate" />
+  </wsdl:message>
+  <wsdl:message name="UserGetFormInstanceFeedbackHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="formKey" type="s:string" />
+    <wsdl:part name="formInstanceKey" type="s:string" />
+    <wsdl:part name="languageID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserGetFormInstanceFeedbackHttpPostOut">
+    <wsdl:part name="Body" element="tns:FormInstance" />
+  </wsdl:message>
+  <wsdl:message name="UserSetFormInstanceQuestionHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="formKey" type="s:string" />
+    <wsdl:part name="formInstanceKey" type="s:string" />
+    <wsdl:part name="questionID" type="s:string" />
+    <wsdl:part name="optionID" type="s:string" />
+    <wsdl:part name="answer" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserSetFormInstanceQuestionHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="UserDeleteFormInstanceHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="formInstanceKey" type="s:string" />
+    <wsdl:part name="eventID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserDeleteFormInstanceHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="FormQuestionEnumHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="languageID" type="s:string" />
+    <wsdl:part name="formKey" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FormQuestionEnumHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfQuestion" />
+  </wsdl:message>
+  <wsdl:message name="FormEnumHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="languageID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FormEnumHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfForm" />
+  </wsdl:message>
+  <wsdl:message name="UserDeleteMeasureHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="eventID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserDeleteMeasureHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="UserSetMeasureParameterizedHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="dateTime" type="s:string" />
+    <wsdl:part name="measureID" type="s:string" />
+    <wsdl:part name="measureComponentID_1" type="s:string" />
+    <wsdl:part name="value_1" type="s:string" />
+    <wsdl:part name="measureComponentID_2" type="s:string" />
+    <wsdl:part name="value_2" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserSetMeasureParameterizedHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="UserGetReminderHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserGetReminderHttpPostOut">
+    <wsdl:part name="Body" element="tns:Reminder" />
+  </wsdl:message>
+  <wsdl:message name="UserSetReminderParameterizedHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="type" type="s:string" />
+    <wsdl:part name="autoLoginLink" type="s:string" />
+    <wsdl:part name="sendAtHour" type="s:string" />
+    <wsdl:part name="regularity" type="s:string" />
+    <wsdl:part name="regularityDailyMonday" type="s:string" />
+    <wsdl:part name="regularityDailyTuesday" type="s:string" />
+    <wsdl:part name="regularityDailyWednesday" type="s:string" />
+    <wsdl:part name="regularityDailyThursday" type="s:string" />
+    <wsdl:part name="regularityDailyFriday" type="s:string" />
+    <wsdl:part name="regularityDailySaturday" type="s:string" />
+    <wsdl:part name="regularityDailySunday" type="s:string" />
+    <wsdl:part name="regularityWeeklyDay" type="s:string" />
+    <wsdl:part name="regularityWeeklyEvery" type="s:string" />
+    <wsdl:part name="regularityMonthlyWeekNr" type="s:string" />
+    <wsdl:part name="regularityMonthlyDay" type="s:string" />
+    <wsdl:part name="regularityMonthlyEvery" type="s:string" />
+    <wsdl:part name="inactivityCount" type="s:string" />
+    <wsdl:part name="inactivityPeriod" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserSetReminderParameterizedHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="MeasureEnumHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="measureCategoryID" type="s:string" />
+    <wsdl:part name="languageID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="MeasureEnumHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfMeasure" />
+  </wsdl:message>
+  <wsdl:message name="MeasureCategoryEnumHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="measureTypeID" type="s:string" />
+    <wsdl:part name="languageID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="MeasureCategoryEnumHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfMeasureCategory" />
+  </wsdl:message>
+  <wsdl:message name="MeasureTypeEnumHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="languageID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="MeasureTypeEnumHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfMeasureType" />
+  </wsdl:message>
+  <wsdl:message name="CalendarUpdateHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="mood" type="s:string" />
+    <wsdl:part name="note" type="s:string" />
+    <wsdl:part name="date" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CalendarUpdateHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="CalendarEnumHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="fromDT" type="s:string" />
+    <wsdl:part name="toDT" type="s:string" />
+    <wsdl:part name="languageID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CalendarEnumHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfCalendar" />
+  </wsdl:message>
+  <wsdl:message name="ExerciseExecHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="exerciseVariantLangID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ExerciseExecHttpPostOut">
+    <wsdl:part name="Body" element="tns:Exercise" />
+  </wsdl:message>
+  <wsdl:message name="ExerciseEnumHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="exerciseAreaID" type="s:string" />
+    <wsdl:part name="type" type="s:string" />
+    <wsdl:part name="languageID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ExerciseEnumHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfExerciseInfo" />
+  </wsdl:message>
+  <wsdl:message name="ExerciseAreaEnumHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="type" type="s:string" />
+    <wsdl:part name="languageID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ExerciseAreaEnumHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfExerciseArea" />
+  </wsdl:message>
+  <wsdl:message name="UserLoginHttpPostIn">
+    <wsdl:part name="username" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserLoginHttpPostOut">
+    <wsdl:part name="Body" element="tns:UserData" />
+  </wsdl:message>
+  <wsdl:message name="UserUpdateLanguageHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="languageID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserUpdateLanguageHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="UserExtendTokenHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserExtendTokenHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="UserLogoutHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserLogoutHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="UserResetPasswordHttpPostIn">
+    <wsdl:part name="email" type="s:string" />
+    <wsdl:part name="languageID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserResetPasswordHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="NewsCategoriesHttpPostIn">
+    <wsdl:part name="lastXdays" type="s:string" />
+    <wsdl:part name="languageID" type="s:string" />
+    <wsdl:part name="includeEnglishNews" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="NewsCategoriesHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfNewsCategory" />
+  </wsdl:message>
+  <wsdl:message name="NewsEnumHttpPostIn">
+    <wsdl:part name="lastXdays" type="s:string" />
+    <wsdl:part name="startOffset" type="s:string" />
+    <wsdl:part name="topX" type="s:string" />
+    <wsdl:part name="languageID" type="s:string" />
+    <wsdl:part name="includeEnglishNews" type="s:string" />
+    <wsdl:part name="newsCategoryID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="NewsEnumHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfNews" />
+  </wsdl:message>
+  <wsdl:message name="NewsDetailHttpPostIn">
+    <wsdl:part name="newsID" type="s:string" />
+    <wsdl:part name="languageID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="NewsDetailHttpPostOut">
+    <wsdl:part name="Body" element="tns:News" />
+  </wsdl:message>
+  <wsdl:message name="ProfileQuestionsHttpPostIn">
+    <wsdl:part name="languageID" type="s:string" />
+    <wsdl:part name="sponsorID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ProfileQuestionsHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfQuestion" />
+  </wsdl:message>
+  <wsdl:message name="UserCreateHttpPostIn">
+    <wsdl:part name="username" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+    <wsdl:part name="alternateEmail" type="s:string" />
+    <wsdl:part name="acceptPolicy" type="s:string" />
+    <wsdl:part name="languageID" type="s:string" />
+    <wsdl:part name="sponsorID" type="s:string" />
+    <wsdl:part name="departmentID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserCreateHttpPostOut">
+    <wsdl:part name="Body" element="tns:UserData" />
+  </wsdl:message>
+  <wsdl:message name="UserUpdateInfoHttpPostIn">
+    <wsdl:part name="username" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+    <wsdl:part name="alternateEmail" type="s:string" />
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserUpdateInfoHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="UserGetInfoHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserGetInfoHttpPostOut">
+    <wsdl:part name="Body" element="tns:UserInfo" />
+  </wsdl:message>
+  <wsdl:message name="UserUpdatePasswordHttpPostIn">
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserUpdatePasswordHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="UserGetProfileQuestionHttpPostIn">
+    <wsdl:part name="questionID" type="s:string" />
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserGetProfileQuestionHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="UserSetProfileQuestionHttpPostIn">
+    <wsdl:part name="questionID" type="s:string" />
+    <wsdl:part name="answer" type="s:string" />
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserSetProfileQuestionHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:portType name="ServiceSoap">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input message="tns:HelloWorldSoapIn" />
+      <wsdl:output message="tns:HelloWorldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TodaysWordsOfWisdom">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Todays words of wisdom.</wsdl:documentation>
+      <wsdl:input message="tns:TodaysWordsOfWisdomSoapIn" />
+      <wsdl:output message="tns:TodaysWordsOfWisdomSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserGetFormFeedback">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get user form feedback over time for specific template. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserGetFormFeedbackSoapIn" />
+      <wsdl:output message="tns:UserGetFormFeedbackSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FormFeedbackTemplateEnum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enumerate form feedback templates. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:FormFeedbackTemplateEnumSoapIn" />
+      <wsdl:output message="tns:FormFeedbackTemplateEnumSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserGetFormInstanceFeedback">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get user form feedback. Leave formInstanceKey blank for latest instance. Tag EXID in actionPlan is reference to ExerciseID, should be replaced with hyperlink. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserGetFormInstanceFeedbackSoapIn" />
+      <wsdl:output message="tns:UserGetFormInstanceFeedbackSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserSetFormInstanceQuestion">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Set user form, question by question. Leave formInstanceKey blank on first answer. Returns formInstanceKey if successful. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserSetFormInstanceQuestionSoapIn" />
+      <wsdl:output message="tns:UserSetFormInstanceQuestionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserSetFormInstance">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Set user form. Returns formInstanceKey if successful. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserSetFormInstanceSoapIn" />
+      <wsdl:output message="tns:UserSetFormInstanceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserDeleteFormInstance">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deletes user form. Returns true if successful. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserDeleteFormInstanceSoapIn" />
+      <wsdl:output message="tns:UserDeleteFormInstanceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FormQuestionEnum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enumerates form questions. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:FormQuestionEnumSoapIn" />
+      <wsdl:output message="tns:FormQuestionEnumSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FormEnum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enumerates forms. Note that form keys are not static (same form can have different key for different users). Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:FormEnumSoapIn" />
+      <wsdl:output message="tns:FormEnumSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserDeleteMeasure">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Delete measure. Returns true if successful. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserDeleteMeasureSoapIn" />
+      <wsdl:output message="tns:UserDeleteMeasureSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserSetMeasureParameterized">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Set measure having one or two components (use component ID = 0 if no secondary component). Returns true if successful. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserSetMeasureParameterizedSoapIn" />
+      <wsdl:output message="tns:UserSetMeasureParameterizedSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserSetMeasure">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Set measure. Returns true if successful. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserSetMeasureSoapIn" />
+      <wsdl:output message="tns:UserSetMeasureSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserGetReminder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get user reminder. Type 0 = Never, 1 = Regularly, 2 = Inactivity. AutoLoginLink 0 = No, 1 = Constant, 2 = ExpireWhenUsed. SendAtHour = hour of day to send reminder, expressed as integer between 6-22. Regularity 1 = Daily, 2 = Weekly, 3 = Monthly. RegularityDailyMonday...Sunday = false/true. RegularityWeeklyDay 1 = Monday, ..., 7 = Sunday. RegularityWeeklyEvery 1 = Every week, 2 = Every other week, 3 = Every third week. RegularityMonthlyWeekNr 1 = First, 2 = Second, 3 = Third, 4 = Fourth. RegularityMonthlyDay 1 = Monday, ..., 7 = Sunday. RegularityMonthlyEvery 1 = Every, 2 = Every other, 3 = Every third, 6 = Every sixth. InactivityCount = number of days/weeks/months depending on period, expressed as integer between 1-6. InactivityPeriod 1 = Day, 7 = Week, 30 = Month. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserGetReminderSoapIn" />
+      <wsdl:output message="tns:UserGetReminderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserSetReminder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Set user reminder. Returns true if successful. Type 0 = Never, 1 = Regularly, 2 = Inactivity. AutoLoginLink 0 = No, 1 = Constant, 2 = ExpireWhenUsed. SendAtHour = hour of day to send reminder, expressed as integer between 6-22. Regularity 1 = Daily, 2 = Weekly, 3 = Monthly. RegularityDailyMonday...Sunday = false/true. RegularityWeeklyDay 1 = Monday, ..., 7 = Sunday. RegularityWeeklyEvery 1 = Every week, 2 = Every other week, 3 = Every third week. RegularityMonthlyWeekNr 1 = First, 2 = Second, 3 = Third, 4 = Fourth. RegularityMonthlyDay 1 = Monday, ..., 7 = Sunday. RegularityMonthlyEvery 1 = Every, 2 = Every other, 3 = Every third, 6 = Every sixth. InactivityCount = number of days/weeks/months depending on period, expressed as integer between 1-6. InactivityPeriod 1 = Day, 7 = Week, 30 = Month. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserSetReminderSoapIn" />
+      <wsdl:output message="tns:UserSetReminderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserSetReminderParameterized">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Set user reminder. Returns true if successful. Type 0 = Never, 1 = Regularly, 2 = Inactivity. AutoLoginLink 0 = No, 1 = Constant, 2 = ExpireWhenUsed. SendAtHour = hour of day to send reminder, expressed as integer between 6-22. Regularity 1 = Daily, 2 = Weekly, 3 = Monthly. RegularityDailyMonday...Sunday = false/true. RegularityWeeklyDay 1 = Monday, ..., 7 = Sunday. RegularityWeeklyEvery 1 = Every week, 2 = Every other week, 3 = Every third week. RegularityMonthlyWeekNr 1 = First, 2 = Second, 3 = Third, 4 = Fourth. RegularityMonthlyDay 1 = Monday, ..., 7 = Sunday. RegularityMonthlyEvery 1 = Every, 2 = Every other, 3 = Every third, 6 = Every sixth. InactivityCount = number of days/weeks/months depending on period, expressed as integer between 1-6. InactivityPeriod 1 = Day, 7 = Week, 30 = Month. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserSetReminderParameterizedSoapIn" />
+      <wsdl:output message="tns:UserSetReminderParameterizedSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MeasureEnum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enumerates measurements. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:MeasureEnumSoapIn" />
+      <wsdl:output message="tns:MeasureEnumSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MeasureCategoryEnum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enumerates measurement categories. Set measureTypeID = 0 for all. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:MeasureCategoryEnumSoapIn" />
+      <wsdl:output message="tns:MeasureCategoryEnumSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MeasureTypeEnum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enumerates measurement types. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:MeasureTypeEnumSoapIn" />
+      <wsdl:output message="tns:MeasureTypeEnumSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CalendarUpdate">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Set or update a calendar entry. Returns true if successful. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:CalendarUpdateSoapIn" />
+      <wsdl:output message="tns:CalendarUpdateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CalendarEnum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets calendar info. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:CalendarEnumSoapIn" />
+      <wsdl:output message="tns:CalendarEnumSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExerciseExec">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets exercise info and increments exercise count for user. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:ExerciseExecSoapIn" />
+      <wsdl:output message="tns:ExerciseExecSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExerciseEnum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enumerates exercises. Set ExerciseAreaID = 0 to show all. Type 0 = All, 1 = Containing short exercises, 2 = Containing long exercises. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:ExerciseEnumSoapIn" />
+      <wsdl:output message="tns:ExerciseEnumSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExerciseAreaEnum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enumerates exercise areas. Type 0 = All, 1 = Containing short exercises, 2 = Containing long exercises. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:ExerciseAreaEnumSoapIn" />
+      <wsdl:output message="tns:ExerciseAreaEnumSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserLogin">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Validates a username and password combination and, if there is a match, returns a user data object including token with a variable lifetime (max 20 minutes).</wsdl:documentation>
+      <wsdl:input message="tns:UserLoginSoapIn" />
+      <wsdl:output message="tns:UserLoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserUpdateLanguage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Update the user language. Returns true if successful. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserUpdateLanguageSoapIn" />
+      <wsdl:output message="tns:UserUpdateLanguageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserExtendToken">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Extend the user token. Returns true if successful. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserExtendTokenSoapIn" />
+      <wsdl:output message="tns:UserExtendTokenSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserLogout">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Expire token. Returns true if successful.</wsdl:documentation>
+      <wsdl:input message="tns:UserLogoutSoapIn" />
+      <wsdl:output message="tns:UserLogoutSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserResetPassword">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Provide email address to request a password reset link to be sent by email. Returns false only if malformed email address or email server is unavailable, otherwise true.</wsdl:documentation>
+      <wsdl:input message="tns:UserResetPasswordSoapIn" />
+      <wsdl:output message="tns:UserResetPasswordSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="NewsCategories">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enumerates news categories in specified language.</wsdl:documentation>
+      <wsdl:input message="tns:NewsCategoriesSoapIn" />
+      <wsdl:output message="tns:NewsCategoriesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="NewsEnum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enumerates news in specified category (0 for all or no category) with specified language. LastXdays includes only news published last X days, 0 to disable. StartOffset skips news up to that number. TopX only enumerates that many articles, starting at StartOffset, 0 to disable.</wsdl:documentation>
+      <wsdl:input message="tns:NewsEnumSoapIn" />
+      <wsdl:output message="tns:NewsEnumSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="NewsDetail">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Shows details for a news article.</wsdl:documentation>
+      <wsdl:input message="tns:NewsDetailSoapIn" />
+      <wsdl:output message="tns:NewsDetailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ProfileQuestions">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enumerates profile questions in specified language. Sponsor should be 0 if not known.</wsdl:documentation>
+      <wsdl:input message="tns:ProfileQuestionsSoapIn" />
+      <wsdl:output message="tns:ProfileQuestionsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserCreate">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Creates user. Username and password must be at least five characters. Alternate email is optional. Sponsor and department should be 0 if not known. Returns token if successful, blank if username is too short or already taken, password is too short, policy not accepted or malformed email-address.</wsdl:documentation>
+      <wsdl:input message="tns:UserCreateSoapIn" />
+      <wsdl:output message="tns:UserCreateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserUpdateInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Updates user info. Username must be at least five characters. Alternate email is optional. Returns true if successful, false if token invalid/expired, username is too short or already taken or malformed email-address. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserUpdateInfoSoapIn" />
+      <wsdl:output message="tns:UserUpdateInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserGetInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets user info. Returns username, email, alternate email and language or blank if token invalid/expired. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserGetInfoSoapIn" />
+      <wsdl:output message="tns:UserGetInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserUpdatePassword">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Updates user password. Returns true if successful, false if token invalid/expired or password is too short. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserUpdatePasswordSoapIn" />
+      <wsdl:output message="tns:UserUpdatePasswordSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserGetProfileQuestion">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets a profile question answer of a user. Returns blank if token invalid/expired or no answer exist.</wsdl:documentation>
+      <wsdl:input message="tns:UserGetProfileQuestionSoapIn" />
+      <wsdl:output message="tns:UserGetProfileQuestionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserSetProfileQuestion">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Sets or updates a profile question of a user. Returns false if token invalid/expired or malformed answer else true.</wsdl:documentation>
+      <wsdl:input message="tns:UserSetProfileQuestionSoapIn" />
+      <wsdl:output message="tns:UserSetProfileQuestionSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="ServiceHttpPost">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input message="tns:HelloWorldHttpPostIn" />
+      <wsdl:output message="tns:HelloWorldHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TodaysWordsOfWisdom">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Todays words of wisdom.</wsdl:documentation>
+      <wsdl:input message="tns:TodaysWordsOfWisdomHttpPostIn" />
+      <wsdl:output message="tns:TodaysWordsOfWisdomHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserGetFormFeedback">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get user form feedback over time for specific template. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserGetFormFeedbackHttpPostIn" />
+      <wsdl:output message="tns:UserGetFormFeedbackHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FormFeedbackTemplateEnum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enumerate form feedback templates. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:FormFeedbackTemplateEnumHttpPostIn" />
+      <wsdl:output message="tns:FormFeedbackTemplateEnumHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserGetFormInstanceFeedback">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get user form feedback. Leave formInstanceKey blank for latest instance. Tag EXID in actionPlan is reference to ExerciseID, should be replaced with hyperlink. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserGetFormInstanceFeedbackHttpPostIn" />
+      <wsdl:output message="tns:UserGetFormInstanceFeedbackHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserSetFormInstanceQuestion">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Set user form, question by question. Leave formInstanceKey blank on first answer. Returns formInstanceKey if successful. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserSetFormInstanceQuestionHttpPostIn" />
+      <wsdl:output message="tns:UserSetFormInstanceQuestionHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserDeleteFormInstance">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deletes user form. Returns true if successful. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserDeleteFormInstanceHttpPostIn" />
+      <wsdl:output message="tns:UserDeleteFormInstanceHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FormQuestionEnum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enumerates form questions. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:FormQuestionEnumHttpPostIn" />
+      <wsdl:output message="tns:FormQuestionEnumHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FormEnum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enumerates forms. Note that form keys are not static (same form can have different key for different users). Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:FormEnumHttpPostIn" />
+      <wsdl:output message="tns:FormEnumHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserDeleteMeasure">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Delete measure. Returns true if successful. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserDeleteMeasureHttpPostIn" />
+      <wsdl:output message="tns:UserDeleteMeasureHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserSetMeasureParameterized">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Set measure having one or two components (use component ID = 0 if no secondary component). Returns true if successful. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserSetMeasureParameterizedHttpPostIn" />
+      <wsdl:output message="tns:UserSetMeasureParameterizedHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserGetReminder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get user reminder. Type 0 = Never, 1 = Regularly, 2 = Inactivity. AutoLoginLink 0 = No, 1 = Constant, 2 = ExpireWhenUsed. SendAtHour = hour of day to send reminder, expressed as integer between 6-22. Regularity 1 = Daily, 2 = Weekly, 3 = Monthly. RegularityDailyMonday...Sunday = false/true. RegularityWeeklyDay 1 = Monday, ..., 7 = Sunday. RegularityWeeklyEvery 1 = Every week, 2 = Every other week, 3 = Every third week. RegularityMonthlyWeekNr 1 = First, 2 = Second, 3 = Third, 4 = Fourth. RegularityMonthlyDay 1 = Monday, ..., 7 = Sunday. RegularityMonthlyEvery 1 = Every, 2 = Every other, 3 = Every third, 6 = Every sixth. InactivityCount = number of days/weeks/months depending on period, expressed as integer between 1-6. InactivityPeriod 1 = Day, 7 = Week, 30 = Month. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserGetReminderHttpPostIn" />
+      <wsdl:output message="tns:UserGetReminderHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserSetReminderParameterized">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Set user reminder. Returns true if successful. Type 0 = Never, 1 = Regularly, 2 = Inactivity. AutoLoginLink 0 = No, 1 = Constant, 2 = ExpireWhenUsed. SendAtHour = hour of day to send reminder, expressed as integer between 6-22. Regularity 1 = Daily, 2 = Weekly, 3 = Monthly. RegularityDailyMonday...Sunday = false/true. RegularityWeeklyDay 1 = Monday, ..., 7 = Sunday. RegularityWeeklyEvery 1 = Every week, 2 = Every other week, 3 = Every third week. RegularityMonthlyWeekNr 1 = First, 2 = Second, 3 = Third, 4 = Fourth. RegularityMonthlyDay 1 = Monday, ..., 7 = Sunday. RegularityMonthlyEvery 1 = Every, 2 = Every other, 3 = Every third, 6 = Every sixth. InactivityCount = number of days/weeks/months depending on period, expressed as integer between 1-6. InactivityPeriod 1 = Day, 7 = Week, 30 = Month. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserSetReminderParameterizedHttpPostIn" />
+      <wsdl:output message="tns:UserSetReminderParameterizedHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MeasureEnum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enumerates measurements. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:MeasureEnumHttpPostIn" />
+      <wsdl:output message="tns:MeasureEnumHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MeasureCategoryEnum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enumerates measurement categories. Set measureTypeID = 0 for all. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:MeasureCategoryEnumHttpPostIn" />
+      <wsdl:output message="tns:MeasureCategoryEnumHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MeasureTypeEnum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enumerates measurement types. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:MeasureTypeEnumHttpPostIn" />
+      <wsdl:output message="tns:MeasureTypeEnumHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CalendarUpdate">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Set or update a calendar entry. Returns true if successful. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:CalendarUpdateHttpPostIn" />
+      <wsdl:output message="tns:CalendarUpdateHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CalendarEnum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets calendar info. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:CalendarEnumHttpPostIn" />
+      <wsdl:output message="tns:CalendarEnumHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExerciseExec">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets exercise info and increments exercise count for user. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:ExerciseExecHttpPostIn" />
+      <wsdl:output message="tns:ExerciseExecHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExerciseEnum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enumerates exercises. Set ExerciseAreaID = 0 to show all. Type 0 = All, 1 = Containing short exercises, 2 = Containing long exercises. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:ExerciseEnumHttpPostIn" />
+      <wsdl:output message="tns:ExerciseEnumHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExerciseAreaEnum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enumerates exercise areas. Type 0 = All, 1 = Containing short exercises, 2 = Containing long exercises. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:ExerciseAreaEnumHttpPostIn" />
+      <wsdl:output message="tns:ExerciseAreaEnumHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserLogin">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Validates a username and password combination and, if there is a match, returns a user data object including token with a variable lifetime (max 20 minutes).</wsdl:documentation>
+      <wsdl:input message="tns:UserLoginHttpPostIn" />
+      <wsdl:output message="tns:UserLoginHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserUpdateLanguage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Update the user language. Returns true if successful. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserUpdateLanguageHttpPostIn" />
+      <wsdl:output message="tns:UserUpdateLanguageHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserExtendToken">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Extend the user token. Returns true if successful. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserExtendTokenHttpPostIn" />
+      <wsdl:output message="tns:UserExtendTokenHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserLogout">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Expire token. Returns true if successful.</wsdl:documentation>
+      <wsdl:input message="tns:UserLogoutHttpPostIn" />
+      <wsdl:output message="tns:UserLogoutHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserResetPassword">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Provide email address to request a password reset link to be sent by email. Returns false only if malformed email address or email server is unavailable, otherwise true.</wsdl:documentation>
+      <wsdl:input message="tns:UserResetPasswordHttpPostIn" />
+      <wsdl:output message="tns:UserResetPasswordHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="NewsCategories">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enumerates news categories in specified language.</wsdl:documentation>
+      <wsdl:input message="tns:NewsCategoriesHttpPostIn" />
+      <wsdl:output message="tns:NewsCategoriesHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="NewsEnum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enumerates news in specified category (0 for all or no category) with specified language. LastXdays includes only news published last X days, 0 to disable. StartOffset skips news up to that number. TopX only enumerates that many articles, starting at StartOffset, 0 to disable.</wsdl:documentation>
+      <wsdl:input message="tns:NewsEnumHttpPostIn" />
+      <wsdl:output message="tns:NewsEnumHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="NewsDetail">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Shows details for a news article.</wsdl:documentation>
+      <wsdl:input message="tns:NewsDetailHttpPostIn" />
+      <wsdl:output message="tns:NewsDetailHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ProfileQuestions">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enumerates profile questions in specified language. Sponsor should be 0 if not known.</wsdl:documentation>
+      <wsdl:input message="tns:ProfileQuestionsHttpPostIn" />
+      <wsdl:output message="tns:ProfileQuestionsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserCreate">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Creates user. Username and password must be at least five characters. Alternate email is optional. Sponsor and department should be 0 if not known. Returns token if successful, blank if username is too short or already taken, password is too short, policy not accepted or malformed email-address.</wsdl:documentation>
+      <wsdl:input message="tns:UserCreateHttpPostIn" />
+      <wsdl:output message="tns:UserCreateHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserUpdateInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Updates user info. Username must be at least five characters. Alternate email is optional. Returns true if successful, false if token invalid/expired, username is too short or already taken or malformed email-address. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserUpdateInfoHttpPostIn" />
+      <wsdl:output message="tns:UserUpdateInfoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserGetInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets user info. Returns username, email, alternate email and language or blank if token invalid/expired. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserGetInfoHttpPostIn" />
+      <wsdl:output message="tns:UserGetInfoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserUpdatePassword">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Updates user password. Returns true if successful, false if token invalid/expired or password is too short. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.</wsdl:documentation>
+      <wsdl:input message="tns:UserUpdatePasswordHttpPostIn" />
+      <wsdl:output message="tns:UserUpdatePasswordHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserGetProfileQuestion">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets a profile question answer of a user. Returns blank if token invalid/expired or no answer exist.</wsdl:documentation>
+      <wsdl:input message="tns:UserGetProfileQuestionHttpPostIn" />
+      <wsdl:output message="tns:UserGetProfileQuestionHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserSetProfileQuestion">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Sets or updates a profile question of a user. Returns false if token invalid/expired or malformed answer else true.</wsdl:documentation>
+      <wsdl:input message="tns:UserSetProfileQuestionHttpPostIn" />
+      <wsdl:output message="tns:UserSetProfileQuestionHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServiceSoap" type="tns:ServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap:operation soapAction="https://ws.healthwatch.se/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TodaysWordsOfWisdom">
+      <soap:operation soapAction="https://ws.healthwatch.se/TodaysWordsOfWisdom" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserGetFormFeedback">
+      <soap:operation soapAction="https://ws.healthwatch.se/UserGetFormFeedback" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FormFeedbackTemplateEnum">
+      <soap:operation soapAction="https://ws.healthwatch.se/FormFeedbackTemplateEnum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserGetFormInstanceFeedback">
+      <soap:operation soapAction="https://ws.healthwatch.se/UserGetFormInstanceFeedback" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserSetFormInstanceQuestion">
+      <soap:operation soapAction="https://ws.healthwatch.se/UserSetFormInstanceQuestion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserSetFormInstance">
+      <soap:operation soapAction="https://ws.healthwatch.se/UserSetFormInstance" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserDeleteFormInstance">
+      <soap:operation soapAction="https://ws.healthwatch.se/UserDeleteFormInstance" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FormQuestionEnum">
+      <soap:operation soapAction="https://ws.healthwatch.se/FormQuestionEnum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FormEnum">
+      <soap:operation soapAction="https://ws.healthwatch.se/FormEnum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserDeleteMeasure">
+      <soap:operation soapAction="https://ws.healthwatch.se/UserDeleteMeasure" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserSetMeasureParameterized">
+      <soap:operation soapAction="https://ws.healthwatch.se/UserSetMeasureParameterized" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserSetMeasure">
+      <soap:operation soapAction="https://ws.healthwatch.se/UserSetMeasure" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserGetReminder">
+      <soap:operation soapAction="https://ws.healthwatch.se/UserGetReminder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserSetReminder">
+      <soap:operation soapAction="https://ws.healthwatch.se/UserSetReminder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserSetReminderParameterized">
+      <soap:operation soapAction="https://ws.healthwatch.se/UserSetReminderParameterized" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MeasureEnum">
+      <soap:operation soapAction="https://ws.healthwatch.se/MeasureEnum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MeasureCategoryEnum">
+      <soap:operation soapAction="https://ws.healthwatch.se/MeasureCategoryEnum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MeasureTypeEnum">
+      <soap:operation soapAction="https://ws.healthwatch.se/MeasureTypeEnum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CalendarUpdate">
+      <soap:operation soapAction="https://ws.healthwatch.se/CalendarUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CalendarEnum">
+      <soap:operation soapAction="https://ws.healthwatch.se/CalendarEnum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExerciseExec">
+      <soap:operation soapAction="https://ws.healthwatch.se/ExerciseExec" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExerciseEnum">
+      <soap:operation soapAction="https://ws.healthwatch.se/ExerciseEnum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExerciseAreaEnum">
+      <soap:operation soapAction="https://ws.healthwatch.se/ExerciseAreaEnum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogin">
+      <soap:operation soapAction="https://ws.healthwatch.se/UserLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserUpdateLanguage">
+      <soap:operation soapAction="https://ws.healthwatch.se/UserUpdateLanguage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserExtendToken">
+      <soap:operation soapAction="https://ws.healthwatch.se/UserExtendToken" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogout">
+      <soap:operation soapAction="https://ws.healthwatch.se/UserLogout" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserResetPassword">
+      <soap:operation soapAction="https://ws.healthwatch.se/UserResetPassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NewsCategories">
+      <soap:operation soapAction="https://ws.healthwatch.se/NewsCategories" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NewsEnum">
+      <soap:operation soapAction="https://ws.healthwatch.se/NewsEnum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NewsDetail">
+      <soap:operation soapAction="https://ws.healthwatch.se/NewsDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProfileQuestions">
+      <soap:operation soapAction="https://ws.healthwatch.se/ProfileQuestions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserCreate">
+      <soap:operation soapAction="https://ws.healthwatch.se/UserCreate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserUpdateInfo">
+      <soap:operation soapAction="https://ws.healthwatch.se/UserUpdateInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserGetInfo">
+      <soap:operation soapAction="https://ws.healthwatch.se/UserGetInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserUpdatePassword">
+      <soap:operation soapAction="https://ws.healthwatch.se/UserUpdatePassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserGetProfileQuestion">
+      <soap:operation soapAction="https://ws.healthwatch.se/UserGetProfileQuestion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserSetProfileQuestion">
+      <soap:operation soapAction="https://ws.healthwatch.se/UserSetProfileQuestion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServiceSoap12" type="tns:ServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap12:operation soapAction="https://ws.healthwatch.se/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TodaysWordsOfWisdom">
+      <soap12:operation soapAction="https://ws.healthwatch.se/TodaysWordsOfWisdom" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserGetFormFeedback">
+      <soap12:operation soapAction="https://ws.healthwatch.se/UserGetFormFeedback" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FormFeedbackTemplateEnum">
+      <soap12:operation soapAction="https://ws.healthwatch.se/FormFeedbackTemplateEnum" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserGetFormInstanceFeedback">
+      <soap12:operation soapAction="https://ws.healthwatch.se/UserGetFormInstanceFeedback" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserSetFormInstanceQuestion">
+      <soap12:operation soapAction="https://ws.healthwatch.se/UserSetFormInstanceQuestion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserSetFormInstance">
+      <soap12:operation soapAction="https://ws.healthwatch.se/UserSetFormInstance" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserDeleteFormInstance">
+      <soap12:operation soapAction="https://ws.healthwatch.se/UserDeleteFormInstance" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FormQuestionEnum">
+      <soap12:operation soapAction="https://ws.healthwatch.se/FormQuestionEnum" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FormEnum">
+      <soap12:operation soapAction="https://ws.healthwatch.se/FormEnum" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserDeleteMeasure">
+      <soap12:operation soapAction="https://ws.healthwatch.se/UserDeleteMeasure" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserSetMeasureParameterized">
+      <soap12:operation soapAction="https://ws.healthwatch.se/UserSetMeasureParameterized" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserSetMeasure">
+      <soap12:operation soapAction="https://ws.healthwatch.se/UserSetMeasure" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserGetReminder">
+      <soap12:operation soapAction="https://ws.healthwatch.se/UserGetReminder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserSetReminder">
+      <soap12:operation soapAction="https://ws.healthwatch.se/UserSetReminder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserSetReminderParameterized">
+      <soap12:operation soapAction="https://ws.healthwatch.se/UserSetReminderParameterized" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MeasureEnum">
+      <soap12:operation soapAction="https://ws.healthwatch.se/MeasureEnum" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MeasureCategoryEnum">
+      <soap12:operation soapAction="https://ws.healthwatch.se/MeasureCategoryEnum" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MeasureTypeEnum">
+      <soap12:operation soapAction="https://ws.healthwatch.se/MeasureTypeEnum" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CalendarUpdate">
+      <soap12:operation soapAction="https://ws.healthwatch.se/CalendarUpdate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CalendarEnum">
+      <soap12:operation soapAction="https://ws.healthwatch.se/CalendarEnum" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExerciseExec">
+      <soap12:operation soapAction="https://ws.healthwatch.se/ExerciseExec" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExerciseEnum">
+      <soap12:operation soapAction="https://ws.healthwatch.se/ExerciseEnum" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExerciseAreaEnum">
+      <soap12:operation soapAction="https://ws.healthwatch.se/ExerciseAreaEnum" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogin">
+      <soap12:operation soapAction="https://ws.healthwatch.se/UserLogin" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserUpdateLanguage">
+      <soap12:operation soapAction="https://ws.healthwatch.se/UserUpdateLanguage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserExtendToken">
+      <soap12:operation soapAction="https://ws.healthwatch.se/UserExtendToken" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogout">
+      <soap12:operation soapAction="https://ws.healthwatch.se/UserLogout" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserResetPassword">
+      <soap12:operation soapAction="https://ws.healthwatch.se/UserResetPassword" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NewsCategories">
+      <soap12:operation soapAction="https://ws.healthwatch.se/NewsCategories" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NewsEnum">
+      <soap12:operation soapAction="https://ws.healthwatch.se/NewsEnum" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NewsDetail">
+      <soap12:operation soapAction="https://ws.healthwatch.se/NewsDetail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProfileQuestions">
+      <soap12:operation soapAction="https://ws.healthwatch.se/ProfileQuestions" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserCreate">
+      <soap12:operation soapAction="https://ws.healthwatch.se/UserCreate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserUpdateInfo">
+      <soap12:operation soapAction="https://ws.healthwatch.se/UserUpdateInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserGetInfo">
+      <soap12:operation soapAction="https://ws.healthwatch.se/UserGetInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserUpdatePassword">
+      <soap12:operation soapAction="https://ws.healthwatch.se/UserUpdatePassword" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserGetProfileQuestion">
+      <soap12:operation soapAction="https://ws.healthwatch.se/UserGetProfileQuestion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserSetProfileQuestion">
+      <soap12:operation soapAction="https://ws.healthwatch.se/UserSetProfileQuestion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServiceHttpPost" type="tns:ServiceHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="HelloWorld">
+      <http:operation location="/HelloWorld" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TodaysWordsOfWisdom">
+      <http:operation location="/TodaysWordsOfWisdom" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserGetFormFeedback">
+      <http:operation location="/UserGetFormFeedback" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FormFeedbackTemplateEnum">
+      <http:operation location="/FormFeedbackTemplateEnum" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserGetFormInstanceFeedback">
+      <http:operation location="/UserGetFormInstanceFeedback" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserSetFormInstanceQuestion">
+      <http:operation location="/UserSetFormInstanceQuestion" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserDeleteFormInstance">
+      <http:operation location="/UserDeleteFormInstance" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FormQuestionEnum">
+      <http:operation location="/FormQuestionEnum" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FormEnum">
+      <http:operation location="/FormEnum" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserDeleteMeasure">
+      <http:operation location="/UserDeleteMeasure" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserSetMeasureParameterized">
+      <http:operation location="/UserSetMeasureParameterized" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserGetReminder">
+      <http:operation location="/UserGetReminder" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserSetReminderParameterized">
+      <http:operation location="/UserSetReminderParameterized" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MeasureEnum">
+      <http:operation location="/MeasureEnum" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MeasureCategoryEnum">
+      <http:operation location="/MeasureCategoryEnum" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MeasureTypeEnum">
+      <http:operation location="/MeasureTypeEnum" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CalendarUpdate">
+      <http:operation location="/CalendarUpdate" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CalendarEnum">
+      <http:operation location="/CalendarEnum" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExerciseExec">
+      <http:operation location="/ExerciseExec" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExerciseEnum">
+      <http:operation location="/ExerciseEnum" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExerciseAreaEnum">
+      <http:operation location="/ExerciseAreaEnum" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogin">
+      <http:operation location="/UserLogin" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserUpdateLanguage">
+      <http:operation location="/UserUpdateLanguage" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserExtendToken">
+      <http:operation location="/UserExtendToken" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogout">
+      <http:operation location="/UserLogout" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserResetPassword">
+      <http:operation location="/UserResetPassword" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NewsCategories">
+      <http:operation location="/NewsCategories" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NewsEnum">
+      <http:operation location="/NewsEnum" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NewsDetail">
+      <http:operation location="/NewsDetail" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProfileQuestions">
+      <http:operation location="/ProfileQuestions" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserCreate">
+      <http:operation location="/UserCreate" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserUpdateInfo">
+      <http:operation location="/UserUpdateInfo" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserGetInfo">
+      <http:operation location="/UserGetInfo" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserUpdatePassword">
+      <http:operation location="/UserUpdatePassword" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserGetProfileQuestion">
+      <http:operation location="/UserGetProfileQuestion" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserSetProfileQuestion">
+      <http:operation location="/UserSetProfileQuestion" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">HealthWatch.se web service. LanguageID 1:Swedish 2:English</wsdl:documentation>
+    <wsdl:port name="ServiceSoap" binding="tns:ServiceSoap">
+      <soap:address location="http://localhost:31960/Service.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServiceSoap12" binding="tns:ServiceSoap12">
+      <soap12:address location="http://localhost:31960/Service.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServiceHttpPost" binding="tns:ServiceHttpPost">
+      <http:address location="http://localhost:31960/Service.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
