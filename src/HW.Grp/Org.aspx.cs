@@ -1825,7 +1825,7 @@ ORDER BY s.Email",
 //								while (rs3.Read()) {
 								foreach (var u in userRepository.Find(rs2.GetInt32(3), rs2.GetString(1))) {
 //									usr.Append(string.Format("<br/><span title='{0}'>{1}</span>", (rs3.IsDBNull(1) ? "Private" : rs3.GetString(1)), rs3.GetInt32(0)));
-									usr.Append(string.Format("<br/><span title='{0}'>{1}</span>", (u.Sponsor == null ? "Private" : u.Sponsor.Id.ToString()), u.Id));
+									usr.Append(string.Format("<br/><span title='{0}'>{1}</span>", (u.Sponsor == null ? "Private" : u.Sponsor.Name.ToString()), u.Id));
 								}
 //								rs3.Close();
 							} else {
