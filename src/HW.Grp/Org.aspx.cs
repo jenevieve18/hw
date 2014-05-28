@@ -217,7 +217,7 @@ namespace HW.Grp
 //					if (rs.Read()) {
 					if (si != null) {
 //						if (rs.IsDBNull(4)) {
-						if (si.User.Id > 0) {
+						if (si.User == null) {
 							sponsorRepository.UpdateSponsorInviteSent(sendSponsorInvitationID);
 //							Db.sendInvitation(sendSponsorInvitationID, rs.GetString(2).Trim(), rs.GetString(1), rs.GetString(0), rs.GetString(3));
 							Db.sendInvitation(sendSponsorInvitationID, si.Email.Trim(), si.Sponsor.InviteSubject, si.Sponsor.InviteText, si.InvitationKey);

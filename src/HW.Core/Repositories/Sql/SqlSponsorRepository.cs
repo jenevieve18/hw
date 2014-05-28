@@ -480,7 +480,7 @@ WHERE s.SponsorID = {0} AND si.SponsorInviteID = {1}",
 						Sponsor = s,
 						Email = GetString(rs, 2),
 						InvitationKey = GetString(rs, 3),
-						User = new User { Id = GetInt32(rs, 4), ReminderLink = GetInt32(rs, 5), UserKey = GetString(rs, 6) }
+						User = rs.IsDBNull(4) ? null : new User { Id = GetInt32(rs, 4), ReminderLink = GetInt32(rs, 5), UserKey = GetString(rs, 6) }
 					};
 				}
 			}
