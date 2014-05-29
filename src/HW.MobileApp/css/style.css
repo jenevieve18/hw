@@ -1,0 +1,987 @@
+h1, h2, h3 {
+margin:0;
+}
+.header {
+background:url('images/header.jpg') right repeat-x;
+}
+.ui-header .ui-title, .ui-footer .ui-title {
+margin:.8em 30% .6em;
+}
+#footer {
+background:url('images/footer.jpg') right repeat-x;
+}
+[data-role="page"] {
+min-height:100% !important;
+}
+.listview li img.right_image,
+.exc-listview li img.right_image {
+float:right;
+margin-top:-33px;
+width:15px;
+margin-right:10px;
+}
+.news-listview li img.right_image,
+.allexc-listview li img.right_image
+{
+float:right;
+margin-top:-45px;
+width:15px;
+margin-right:10px;
+}
+.listview li img.left_image {
+width:40px;
+height:40px;
+float:left;
+margin-top:2px;
+margin-left:10px;
+}
+.listview .subtitle {
+color:#999;
+font-weight:normal;
+font-size:14px;
+margin-top:0.3em;
+overflow: hidden;
+text-overflow: ellipsis;
+margin-right: 5px;
+}
+.listview_item {
+color:black;
+font-weight:normal;
+}
+.listview_item.view {
+font-weight:bold;
+}
+.moreListView > li {
+padding:10px;
+}
+.settingsListView > li img.right_image {
+margin-top:-42px;
+}
+/* FRONT /WELCOME OR ABOUT PAGES/ */
+.front_note {
+max-width:560px;
+margin-left:auto;
+margin-right:auto;
+min-width:268px;
+padding:15px 15px 70px 15px;
+}
+.landscape .front_logo {
+display:inline-block;
+vertical-align:bottom;
+margin-right:20px;
+}
+.landscape .front_controls {
+display:inline-block;
+min-width:320px;
+}
+.front_controls {
+max-width:350px;
+margin:0 auto;
+min-height:250px;
+}
+.front_logo {
+width:180px;
+height: 126px;
+margin-bottom:30px;
+}
+.front_text {
+max-width:540px;
+position:relative;
+margin-left:auto;
+margin-right:auto;
+padding-top:0;
+font-size:16px;
+}
+.front_text .text.error,
+.front_text .text.success {
+display:none;
+}
+.front_text_normal {
+font-size:17px;
+}
+.front_text_small {
+font-size:13px;
+margin-top:0px;
+margin-bottom:5px;
+}
+.front_header {
+text-align:center;
+margin:15px 0px 25px 0px;
+font-size:16px;
+}
+.front_header_img {
+width:235px;
+}
+.front_header .text.error {
+display:none;
+color:#DC0066;
+}
+#wrapper .buttonContent {
+font-size:14px;
+font-weight:normal;
+}
+#instructions .text.error {
+display:none;
+color:#DC0066;
+font-size:13px;
+font-style:italic;
+margin:4px 0px -10px 0px;
+}
+.front_header .text.success {
+display:none;
+}.contact_header {
+font-size:24px;
+text-align:left;
+}
+.page_welcome > .sectionContainer {
+    padding-bottom: 54px !important;
+}
+/* LOGIN */
+#loginUsername, #loginPassword, #forgotEmailInput{
+padding-left:6px;
+padding-right:6px;
+height:auto;
+font-size:14px;
+}
+#loginUsernameLabel, #loginPasswordLabel,
+#forgotEmailInputLabel {
+color:#9B9B9B;
+float:left;
+margin-top:-31px;
+margin-left:8px;
+display:none;
+}
+.forgotButton{
+margin-top: 10px;
+}
+.forgotButton a{
+text-decoration: none;
+}
+/* ACOUNT DETAILS */
+.details {
+font-size:14px;
+}
+#personal_info table tr td {
+padding:5px;
+}
+.details table {
+width:300px;
+}
+.details table tr td {
+padding-bottom:15px;
+}
+.details table tr td.input {
+width:250px;
+min-width:200px;
+text-align:left;
+}
+.details table tr td {
+width:250px;
+padding-right:5px !important;
+font-size:12px;
+}
+[data-pageKey="create_account"] [data-role="content"] h1 {
+margin:10px 15px;
+font-size:20px;
+}
+#year {
+width:75px;
+margin-right: 1px;
+}
+#month {
+width:56px;
+margin-right: 1px;
+}
+#day {
+width:56px;
+}
+label {
+font-size:14px;
+}
+#agreement {
+width:300px;
+padding:10px 0px 30px 0px;
+border-top-width:1px;
+border-top-style:solid;
+border-top-color:#cccccc;
+}#agreement label {
+font-size:12px;
+margin-left:5px;
+}
+.show_startpage {
+margin-top:50px;
+}
+/* FORM */
+.listview_form {
+margin-bottom:-6px !important;
+}
+/* STATISTICS */
+.stat_header {
+background:url(http://clients.easyapp.se/healthwatch//images/stat_header.png) top repeat-x;
+height:30px;
+width:100%;
+display:inline-block;
+color:white;
+text-shadow:none;
+font-weight:bold;
+margin-bottom:-5px;
+}
+.stat_header.top_section {
+margin-top:2px !important;
+}
+.stat_header_result, .stat_header_info{
+display:inline-block;
+text-align:left;
+margin-top:8px;
+margin-left:14px;
+float:left;
+font-size:11px;
+}
+.stat_header_compare {
+display:inline-block;
+text-align:right;
+margin-top:8px;
+float:right;
+margin-right:23px;
+font-size:11px;
+}
+.legend_container {
+width:100%;
+}
+.legend_container ul {
+width:100%;
+white-space:nowrap;
+}
+.legend_container ul li {
+display:inline-block;
+font-weight:normal;
+font-size:9px;
+}
+.stat_legend_img {
+width:18px;
+}
+.healthy_level {
+width:30%;
+}
+.imp_level {
+width:38%
+}
+.unhealthy_level {
+min-width:100px;
+width:30%;
+text-align:center !important;
+}
+.stat_list_img {
+width:12px;
+height:16px;
+float:left;
+margin-top:12px;
+margin-left:0px;
+border-radius:5px;
+}
+.stat_list.ui-btn-active {
+text-shadow:none;
+border-color:#A0A0A0;
+border:1px solid #CCC;
+background:#EEE !important;
+font-weight:bold;
+color:#222 !important;
+box-shadow:none;
+-webkit-tap-highlight-color:rgba(0,0,0,0);
+-webkit-touch-callout:none;
+-webkit-user-select:none;
+-khtml-user-select:none;
+-moz-user-select:none;
+-ms-user-select:none;
+user-select:none;
+}
+.stat_list.ui-btn-active a.ui-link-inherit {
+color: #222 !important;
+}
+.stat_list.ui-btn-active a.ui-link-inherit {
+color:#222;
+}
+.listview li.stat_list {
+background:white !important;
+background-image:none !important;
+box-shadow:none;
+}
+.listview_item.stat {
+padding-left:5px !important;
+background:transparent !important;
+background-image:none !important;
+}
+.stat_range {
+padding-bottom:16px;
+}
+.stat_range_holder {
+border:solid 1px #CECECE;
+height:10px;
+border-radius:6px;
+margin:-6px 90px 0px 0px;
+background:url(http://clients.easyapp.se/healthwatch//images/green_range.png) no-repeat;
+}
+.stat_collapse {
+float:right;
+margin-right:25px;
+margin-top:-22px;
+width:46px;
+}
+.stat_content {
+display:none;
+margin-left:0px;
+}
+.stat_content_head {
+color:#007FB5;
+font-size:15px;
+font-weight:bold;
+}
+.stat_content_body {
+font-size:12px;
+white-space:normal !important;
+text-align:justify !important;
+margin-right:25px !important;
+line-height: 14pt;
+}
+.stat_limits {
+margin-right:90px;
+height:7px;
+padding-bottom:5px;
+border:none;
+border-radius:4px;
+}.stat_limits_img {
+height:8px;
+width:100%;
+}
+.stat_limits div {
+float:left;
+margin-right:2px;
+border:none;
+}.stat_limits div.pink_holder {
+border:none;
+height:8px;
+background:url(http://clients.easyapp.se/healthwatch//images/pink_range.png) repeat-x;
+width:100%;
+}
+.stat_limits div.orange_holder {
+border-right:solid 2px white;
+height:8px;
+background:url(http://clients.easyapp.se/healthwatch//images/orange_range.png) repeat-x;
+width:30%;
+border-right:solid 2px white;
+border-left:solid 2px white;
+margin-top:-8px;
+margin-left:30%;
+}
+.stat_limits div.green_holder {
+border-right:solid 2px white;
+height:8px;
+background:url(http://clients.easyapp.se/healthwatch//images/green_range.png) repeat-x;
+width:30%;
+border-right:solid 2px white;
+border-left:solid 2px white;
+margin-top:-8px;
+margin-left:50%;
+}
+.stat_content_list {
+padding-bottom:5px;
+}
+.stat_view_label {
+font-weight:normal;
+color:black;
+float:right;
+margin-right:15px;
+margin-top:-31px;
+}
+#timeframe_option {
+width:98px;
+}
+#compare_option {
+width:74px;
+}
+#timeframe_option,
+#compare_option {
+margin:-28px 14px 0px 0px;
+font-size:12px;
+font-weight:normal;
+border:none;
+background-color:transparent;
+outline:none;
+float:right;
+opacity:0;
+}
+.timeframe_option_label,
+.compare_option_label {
+margin:-28px 6px 0px 0px;
+font-size:14px;
+z-index:0;
+font-weight:normal;
+float:right !important;
+}
+.graph_options {
+margin:5px 0px 0px 35px;
+font-size:12px;
+font-weight:normal;
+width:120px;
+border:none;
+background-color:transparent;
+outline:none;
+opacity:0;
+}
+.graph_label {
+margin:10px 0px 0px 40px;
+font-size:11px;
+position:absolute;
+z-index:0;
+font-weight:normal;
+width:120px;
+}
+.listview_item.view {
+display:none;
+}
+div.measurement {
+width:100%;
+height:41px;
+}
+div.graph_legend {
+border-right:solid 1px #D3CFCF;
+border-bottom:solid 1px #D3CFCF;
+display:inline-block;
+width:24.92%;
+height:40px;
+float:left;
+}
+div.graph_legend.blue {
+background-image:url(http://clients.easyapp.se/healthwatch//images/blue_graph.png);
+background-repeat:no-repeat;
+background-size:25px;
+background-position:8px 5px !important;
+}
+div.graph_legend.orange {
+background-image:url(http://clients.easyapp.se/healthwatch//images/orange_graph.png);
+background-repeat:no-repeat;
+background-size:25px;
+background-position:8px 5px !important;
+}
+div.graph_legend.green {
+background-image:url(http://clients.easyapp.se/healthwatch//images/green_graph.png);
+background-repeat:no-repeat;
+background-size:25px;
+background-position:8px 5px !important;
+}
+div.graph_legend.pink {
+background-image:url(http://clients.easyapp.se/healthwatch//images/pink_graph.png);
+background-repeat:no-repeat;
+background-size:25px;
+background-position:8px 5px !important;
+}
+.graph_legend_img {
+width:40px;
+}
+#chart_holder {
+padding:0px;
+}
+#chart {
+height:220px;
+width:100%;
+margin:0 auto;
+text-align:center;
+}
+#chart_label {
+height:100px;
+width:100%;
+}
+#chart_label label.left{
+float:left;
+margin-left:30px;
+font-size:9px;
+}
+#chart_label label.right {
+float:right;
+margin-right:36px;
+font-size:9px;
+}
+/* REUSABLE STYLES CLASSES */
+.clear {
+clear:both;
+}.center {
+text-align:center;
+}
+.left_align {
+text-align:left;
+}
+.right_align {
+text-align:right;
+}
+.margin_auto {
+margin:auto;
+}
+.float_left {
+float:left;
+}
+.float_right {
+float:right;
+}
+.bold {
+font-weight:bold;
+}
+.gray {
+color:#686767;
+}
+.no_margin {
+margin:0;
+}
+.no_border {
+border:none;
+}
+.required {
+color:#C71313;
+font-weight:bold;
+}
+.red {
+color:#C71313;
+}
+.hidden {
+display:none;
+}
+body.content_only #content {
+padding:0;
+}
+body.content_only #header,
+body.content_only #footer {
+display:none;
+}
+body #splash_image {
+position:absolute;
+background-image:url('../images/hw_logo@2x.png');
+width:100%;
+height:100%;
+background-repeat:no-repeat;
+background-position:50%;
+}
+.ui-header > .ui-btn.navbarBtn,
+.ui-header > .ui-btn.backBtn {
+background-color:transparent !important;
+background:url('../images/button_end.png') no-repeat scroll top right;
+outline:0;
+border:0 solid transparent;
+box-shadow:0 0 0;
+border-radius:0;
+height:30px;
+padding-right:9px;
+top:5px;
+}
+.ui-header > .ui-btn.navbarBtn:hover,
+.ui-header > .ui-btn.backBtn:hover {
+background-position:right bottom;
+}
+.ui-header > .ui-btn.navbarBtn:hover > .ui-btn-inner,
+.ui-header > .ui-btn.backBtn:hover > .ui-btn-inner {
+background-position:left bottom;
+}
+.ui-header > .ui-btn.navbarBtn.ui-btn-active,
+.ui-header > .ui-btn.backBtn.ui-btn-active {
+background-image:url('../images/button_end.png') !important;
+}
+.ui-header > .ui-btn.navbarBtn {
+left:auto;
+right:5px;
+}
+.ui-header > .ui-btn.navbarBtn.leftBtn {
+left:5px;
+right:auto;
+}
+.ui-header > .ui-btn.navbarBtn .gearButton {
+width:14px;
+height:14px;
+vertical-align:top;
+}
+.ui-header > .ui-btn.backBtn > .ui-btn-inner,
+.ui-header > .ui-btn.navbarBtn > .ui-btn-inner {
+line-height:17px;
+border:0;
+background-color:transparent !important;
+border-radius:0;
+padding-right:2px !important;
+padding-top:7px;
+height:17px;
+}
+.ui-header > .ui-btn.backBtn > .ui-btn-inner {
+background-image:url('../images/back_button_start.png');
+padding-left:16px !important;
+}
+.ui-header > .ui-btn.navbarBtn > .ui-btn-inner {
+background-image:url('../images/button_start.png');
+padding-left:12px;
+}
+.news-listview li.news-list{
+border-style:solid;
+border-bottom-color:#cccccc;
+border-bottom-width:1px;
+overflow:hidden;
+}
+.news-list .ui-li-desc{
+font-size:15px;
+overflow:hidden;
+}
+.news-list .ui-link-inherit {
+padding:0.4em 15px !important;
+}
+.allexc-list .ui-link-inherit {
+padding-top:0px !important;
+padding-bottom:0px !important;
+}
+.news-list{
+width:100%;
+color:#9a9a9a;
+margin-bottom:10px;
+}.news-list-content{
+margin-left:0px;
+}
+.news-element{
+margin-top:2px;
+margin-bottom:0px;
+}.news-headline{
+font-weight:bold;
+color:#5E5E5E;
+font-size:20px;
+margin-right:10px;
+}.news-category.news-element{
+color:#9A9A9A;
+}.category-list-item{
+color:#2C2B2B;
+font-weight:bold;
+margin-top:15px;
+}.news-data{
+color:#9a9a9a;
+}.nav_button{
+border-radius:5px;
+}.category-filter-control, .exercise-filter-control{
+padding:10px 15px 10px 15px;
+}.category-filter-control .ui-controlgroup-controls,
+.exercise-filter-control .ui-controlgroup-controls{
+width:100%;
+}.category-filter, .exercise-filter{
+width:100%;
+}.category-filter-control li{
+display:inline-block;
+width:50%;
+}.exercise-filter-control{
+margin-left:15px;
+}.exercise-filter-control li{
+display:inline-block;
+width:33%;
+}.exercise-filter-div{
+padding:1px 0 0px 0;
+border-style:solid;
+border-bottom-color:#cccccc;
+border-bottom-width:1px;
+background-color:#E7E7E7;
+}.exercise-filter span span.ui-btn-text {
+font-size:12px;
+}.exercise-filter span{
+padding-left:0px !important;
+}[data-pageKey='allexc'] .ui-content,
+[data-pageKey='allexc'] .ui-content .ui-listview {
+margin:0px;
+}.filter-divider{
+margin-top:5px;
+background-image:url("../images/category_devider.png");
+height:25px;
+color:white;
+}.filter-divider p{
+margin-left:10px;
+padding:5px;
+font-size:11px;
+text-shadow:none !important;
+}.category-list .ui-li-thumb{
+width:50px;
+height:50px;
+max-width:50px;
+max-height:50px;
+position:relative;
+margin-right:35px;
+}.category-list, .news-category {
+font-size:17px;
+}.category-item{
+padding-left:0px !important;
+}.category-list.view-all-news,
+.exc-list.view-all-exc {
+height:40px !important;
+padding:0px;
+}.exc-listview{
+min-height:35px;
+font-weight:bold;
+}.exc-list{
+color:black;
+font-size:16px;
+font-weight:bold !important;
+}.exc-list img.right_image {
+margin-top:-30px !important;
+}.allexc-list-content p{
+color:#A8A8A8;
+font-size:12px;
+margin-right:7px;
+}.exc-list-content .exc-category {
+margin:0;
+}.exc-image{
+margin-top:8px;
+}.exc-category{
+font-size:12px;
+margin-right:7px;
+}.stat-exc-link{
+color: blue;
+text-decoration: none;
+margin: -8px -5px -8px 3px;
+padding: 8px 5px 8px 20px;
+background-image: url('../images/detail_desk.gif');
+background-repeat: no-repeat;
+background-position: 0 50%;
+}/*JQuery Mobile CSS Hack*/
+.ui-icon{
+background-image:url("../images/lv_right_img.png") !important;
+width:24px;
+height:32px;
+background-position:0;
+background-color:transparent;
+margin-top:-20px !important;
+}
+.ui-content {
+overflow:visible;
+padding:40px 0px 54px 0px;
+}
+.content_container {
+padding:15px 15px 70px 15px;
+text-align:justify;
+}
+.ui-content .ui-listview{
+margin:0!important;
+}
+.ui-content.no_padding {
+padding:0 !important;
+}
+.ui-loader .ui-icon {
+background:none !important;
+}.ui-btn-icon-right .ui-icon{
+right:20px !important;
+}.ui-mobile a img, .ui-mobile fieldset {
+}.ui-btn-inner {
+overflow:visible;
+padding-left:10px !important;
+padding-right:10px !important;
+}.ui-btn-active {
+background-color:#2E77AA !important;
+background-image:-ms-linear-gradient(top, #2E77AA 0%, #2E77AA 100%) !important;
+background-image:-moz-linear-gradient(top, #2E77AA 0%, #2E77AA 100%) !important;
+background-image:-o-linear-gradient(top, #2E77AA 0%, #2E77AA 100%) !important;
+background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0, #2E77AA), color-stop(1, #DFDFDF)) !important;
+background-image:-webkit-linear-gradient(top, #2E77AA 0%, #2E77AA 100%) !important;
+background-image:linear-gradient(to bottom, #2E77AA 0%, #2E77AA 100%) !important;
+} .ui-icon-loader{
+background-image:url("../images/bigloader.gif");
+background-size:64px 64px;
+}.ui-btn-hover-c{
+/* IE10 Consumer Preview */ 
+background-image:-ms-linear-gradient(top, #E9E9E9 0%, #DFDFDF 100%);
+background-image:-moz-linear-gradient(top, #E9E9E9 0%, #DFDFDF 100%);
+background-image:-o-linear-gradient(top, #E9E9E9 0%, #DFDFDF 100%);
+background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0, #E9E9E9), color-stop(1, #DFDFDF));
+background-image:-webkit-linear-gradient(top, #E9E9E9 0%, #DFDFDF 100%);
+background-image:linear-gradient(to bottom, #E9E9E9 0%, #DFDFDF 100%);
+}.ui-btn-up-c{
+background-image:-ms-linear-gradient(top, #FFFFFF 0%, #F4F4F4 100%);
+background-image:-moz-linear-gradient(top, #FFFFFF 0%, #F4F4F4 100%);
+background-image:-o-linear-gradient(top, #FFFFFF 0%, #F4F4F4 100%);
+background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0, #FFFFFF), color-stop(1, #F4F4F4));
+background-image:-webkit-linear-gradient(top, #FFFFFF 0%, #F4F4F4 100%);
+background-image:linear-gradient(to bottom, #FFFFFF 0%, #F4F4F4 100%);
+}div.ui-slider{
+padding:0px;
+}
+/* End of Jquery Hacks*/
+.page_calendar {
+/*padding:0px;*/
+}
+#calendarEventsList .list_item {
+display:table-cell;
+}
+#calendarEventsList .time_col {
+width:45px;
+color:rgb(153, 153, 153);
+font-weight:normal;
+line-height:26px;
+font-size:14px;
+}
+#calendarEventsList .time_col img {
+height:22px;
+width:22px;
+margin-top:-5px;
+padding-right:22px;
+}
+#calendarEventsList .value_col {
+float:right;
+color:#999;
+font-weight:normal;
+right:10px;
+margin-top:-24px;
+}
+#calendarEventsList .value_col img {
+margin-top:-6px !important;
+width:15px;
+float:none;
+margin-right:0;
+}
+.calendarEditDayContainer .calendarDayEventHead,
+#calendarEventsList .calendarDayEventHead {
+height:100%;
+margin:0;
+text-indent:10px;
+padding:6px 0 2px 0px;
+}
+.calendarDayEventList .calendarDayEventHead,
+#calendarEventsList .calendarDayEventHead {
+background:url('images/stat_header.png') top repeat-x;
+}
+.calendarEditDayContainer .calendarDayEventHead p,
+#calendarEventsList .calendarDayEventHead p {
+margin:0;
+}
+#calendarEventsList .subtitle {
+font-weight:normal;
+color:rgb(153, 153, 153);
+white-space:pre-wrap;
+word-break:break-all;
+}
+#measuresCategoryList > li {
+height:40px;
+}
+#measuresCategoryList > li a {
+height:40px !important;
+padding:0;
+line-height:40px;
+}
+.activityMeasurementsList .list_item {
+line-height:14px;
+}
+.activityMeasurementsList .time_col {
+width:45px;
+color:rgb(153, 153, 153);
+font-weight:normal;
+}
+.activityMeasurementsList .form_close {
+cursor:pointer;
+width:22px;
+height:22px;
+padding:4px;
+float:right;
+background-image:url('../images/close_form.png');
+margin-right:-8px;
+background-position:50% 50%;
+background-repeat:no-repeat;
+background-size: 26px;
+}
+.activityMeasurementsList .type_Exercise .form_close {
+display:none;
+}
+.calendarEditDayContainer .calendarDayEvent {
+padding:0;
+}
+.calendarEditDayContainer .calendarDayEvent textarea {
+margin:0;
+padding:10px;
+resize:none;
+border-radius:0;
+font-size:14px;
+height:150px;
+}
+.calendarEditDayContainer .calendarDayEvent .moodSelect {
+width:100%;
+text-align:center;
+}
+.calendarEditDayContainer .calendarDayEvent .calImage{
+width:20px;
+height:21px;
+margin-top:-28px;
+}
+.view_activities.ui-btn-active {
+text-shadow:none;
+border-color:#A0A0A0;
+}
+.activityLink {
+color:#2F3E46 !important;
+}
+.calendarEditDayContainer .calendarDayEvent .moodSelect td {
+vertical-align:bottom;
+height:50px;
+width:25%;
+border-left:1px solid #999;
+padding:5px;
+cursor:pointer;
+}
+.calendarEditDayContainer .calendarDayEvent .moodSelect td:first-child {
+border-left:0px;
+}
+.calendarEditDayContainer .calendarDayEvent .moodSelect td.selected {
+background-image:-ms-linear-gradient(top, #BFBFBF 0%, #D4D4D4 100%);
+background-image:-moz-linear-gradient(top, #BFBFBF 0%, #D4D4D4 100%);
+background-image:-o-linear-gradient(top, #BFBFBF 0%, #D4D4D4 100%);
+background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0, #BFBFBF), color-stop(1, #D4D4D4));
+background-image:-webkit-linear-gradient(top, #BFBFBF 0%, #D4D4D4 100%);
+background-image:linear-gradient(to bottom, #BFBFBF 0%, #D4D4D4 100%);
+}
+.calendarEditDayContainer .calendarDayEvent .moodSelect .mood {
+width:100%;
+background-repeat:no-repeat;
+background-position:50% 5px;
+background-size:32px 31px;
+height:50px;
+}
+.calendarEditDayContainer .calendarDayEvent .moodSelect .mood.dontknow {
+background-image:url('../images/dontKnow@2x.png');
+}
+.calendarEditDayContainer .calendarDayEvent .moodSelect .mood.unhappy {
+background-image:url('../images/unhappy@2x.png');
+}
+.calendarEditDayContainer .calendarDayEvent .moodSelect .mood.neutral {
+background-image:url('../images/neutral@2x.png');
+}
+.calendarEditDayContainer .calendarDayEvent .moodSelect .mood.happy {
+background-image:url('../images/happy@2x.png');
+}
+.ui-btn-inner {
+padding-right:0px !important;
+border:none;
+}
+.ui-popup-container-active {
+top:476px !important;
+}
+.calendarAddForm .sectionContainer #addFormHour,
+.calendarAddForm .sectionContainer #addFormMinute {
+width:auto;
+}
+.calendarEditDayContainer .datePicker {
+margin:-40px 0 0 0;
+text-indent:-500px;
+border:0;
+box-shadow:0 0;
+padding:36px 0px 0px 0px;
+-webkit-box-shadow:0 0;
+opacity:0;
+}
+.calendarAddForm .sectionContainer #addFormHour,
+.calendarAddForm .sectionContainer #addFormMinute {
+width:auto;
+}
+.calendarAddForm .sectionContainer .fieldName span {
+color:#999;
+font-weight:normal;
+line-height:1.5em;
+}
+.calendarAddForm .sectionContainer .field input {
+width:60px;
+}
+.calendarAddForm .sectionContainer .field span {
+margin-left:10px;
+color:#999;
+font-weight:normal;
+}

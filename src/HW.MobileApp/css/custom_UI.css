@@ -1,0 +1,53 @@
+.button47{height:47px;line-height:47px;min-width:140px}
+.button35{height:35px;line-height:35px}
+.button{text-shadow:0 1px 0 rgba(255,255,255,0.8);zoom:1;background-image:-moz-linear-gradient(50% 0 -90deg,#fff 0,#e4e4e4 98%);background-image:-webkit-gradient(linear,50% 0,50% 100%,color-stop(0,#fff),color-stop(0.98,#e4e4e4));background-image:-webkit-linear-gradient(-90deg,#fff 0,#e4e4e4 98%);background-image:-o-linear-gradient(-90deg,#fff 0,#e4e4e4 98%);background-image:-ms-linear-gradient(-90deg,#fff 0,#e4e4e4 98%);background-image:linear-gradient(-90deg,#fff 0,#e4e4e4 98%);-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;-moz-box-shadow:0 1px 3px rgba(0,0,0,0.65);-webkit-box-shadow:0 1px 3px rgba(0,0,0,0.65);box-shadow:0 1px 3px rgba(0,0,0,0.65);-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffffff,endColorstr=#ffe4e4e4,GradientType=0)
+        progid:DXImageTransform.Microsoft.dropshadow(OffX=0,OffY=2,Color=#a6000000,Positive=true)";filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffffff,endColorstr=#ffe4e4e4,GradientType=0) progid:DXImageTransform.Microsoft.dropshadow(OffX=0,OffY=2,Color=#a6000000,Positive=true)}
+.button:active,.button.selected{background-image:-moz-linear-gradient(659% 0 -90deg,#d4d4d4 0,#f4f4f4 98%);background-image:-webkit-gradient(linear,659% 0,659% 100%,color-stop(0,#d4d4d4),color-stop(0.98,#f4f4f4));background-image:-webkit-linear-gradient(-90deg,#d4d4d4 0,#f4f4f4 98%);background-image:-o-linear-gradient(-90deg,#d4d4d4 0,#f4f4f4 98%);background-image:-ms-linear-gradient(-90deg,#d4d4d4 0,#f4f4f4 98%);background-image:linear-gradient(-90deg,#d4d4d4 0,#f4f4f4 98%);-moz-box-shadow:inset 0 1px 3px rgba(0,0,0,0.5);-webkit-box-shadow:inset 0 1px 3px rgba(0,0,0,0.5);box-shadow:inset 0 1px 3px rgba(0,0,0,0.5);-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffd4d4d4,endColorstr=#fff4f4f4,GradientType=0)";filter:progid:DXImageTransform.Microsoft.gradi(startColorstr=#ffd4d4d4,endColorstr=#fff4f4f4,GradientType=0)}
+.buttonContent{font-size:17px;font-weight:bold;color:#333;text-align:center;text-shadow:0 1px 0 rgba(255,255,255,0.8);zoom:1}
+.buttonContent:hover{cursor:default}
+a.buttonlink{display:block;text-decoration:none}
+#loginLoader{display:none;background-image:url('../images/loginLoader.gif');height:64px;width:100%;background-position:50% 50%;background-repeat:no-repeat}
+#buttons{width:100%;display:table;margin-left:auto;margin-right:auto}
+.buttonContainerLeft{width:50%;display:table-cell;padding-right:5px}
+.buttonContainerRight{width:50%;display:table-cell;padding-left:5px}
+.buttonContainerLeft a,.buttonContainerRight a{text-decoration:none}
+.callBtn,.emailBtn{text-align:left;text-indent:46px;background-image:url(http://clients.easyapp.se/healthwatch//images/contact_icons@2x.png);background-repeat:no-repeat;background-size:46px 88px}
+.no_icon_btn{text-align:center;background-repeat:no-repeat;background-size:46px 88px}
+.callBtn{background-position:0 0}
+.emailBtn{background-position:0 -44px}
+select{height:30px;font-size:14px;font-weight:bold;color:#333;text-shadow:0 1px 0 rgba(255,255,255,0.8);-ms-filter:"progid:DXImageTransform.Microsoft.dropshadow(OffX=0,OffY=2,Color=#ccffffff,Positive=true)";zoom:1;filter:progid:DXImageTran;width:100%}
+select option{font-size:14px;font-weight:bold}
+select.year_dropdown{width:37%}
+select.month_dropdown{width:30%}
+select.day_dropdown{width:30%}
+.radio{text-align:left}
+.tabbar{height:52px;min-width:300px}
+.tabbar li{float:left;text-align:center;width:33.33%;height:100%;background-size:38px;background-position:center 2px;background-repeat:no-repeat}
+.tabbar li img{width:35px;vertical-align:top;margin-top:4px}
+.tabbar li a{display:block;float:left;height:100%;text-decoration:none;display:block;width:100%}
+.tabbar li.my_health{background-image:url(../images/my_health.png)}
+.tabbar li.my_health.selected{background-image:url(../images/my_health_selected.png)}
+.tabbar li.news{background-image:url(../images/news.png)}
+.tabbar li.news.selected{background-image:url(../images/news_selected.png)}
+.tabbar li.more{background-image:url(../images/more.png)}
+.tabbar li.more.selected{background-image:url(../images/more_selected.png)}
+.tabbar_text{text-decoration:none;font-size:12px;font-weight:normal;color:white;margin-top:34px}
+.tabbar_mask{height:100%;width:100%;background-color:#cecece;border-radius:6px;opacity:.2;z-index:2;display:none;margin:1px}
+.tabbar li.selected .tabbar_mask{display:block}
+.ui-slider-input{display:none!important}
+div.ui-slider{background:url(images/form_slider_bar2.png) repeat-x;height:9px!important;width:100%!important;margin:0 0 0 14px!important;cursor:pointer}
+#hiddenRange div.ui-slider{position:relative;float:left;margin-top:-40px!important;z-index:300;height:41px!important;opacity:0;cursor:pointer}
+a.ui-slider-handle{display:none;background:url(images/form_slider.png) no-repeat;margin:-18px 0 0 -12px!important;border:none!important;background-size:23px;-moz-border-radius:0;-webkit-border-radius:0;border-radius:0;box-shadow:0 0 0 0!important}
+a.ui-slider-handle .ui-btn-inner:visited{box-shadow:none!important}
+div.slider_container{margin-top:8px;padding-right:65px}
+div.slider_container img.form_close{display:none;width:24px;outline:0;margin-right:-55px;margin-top:-20px!important;float:right}
+@-moz-document url-prefix(){div.slider_container img.form_close{margin-right:-36px}
+}
+.slider_container div.ui-slider{z-index:100}
+ul.slider_option{position:relative;margin:5px 2% 0 10px;width:100%;padding-bottom:5px}
+ul.slider_option li{font-size:10px;font-weight:normal;margin:0;padding:0;list-style:none;white-space:normal;display:inline-block;width:20%;vertical-align:top;overflow:hidden;text-overflow:ellipsis}
+ul.slider_option li.first{text-align:left}
+ul.slider_option li.middle{text-align:center}
+ul.slider_option li.last{text-align:right}
+.listview_item.form_input{font-size:11px;font-weight:bold;cursor:inherit!important;padding-left:0!important;padding-right:0!important}
+

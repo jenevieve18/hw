@@ -1,0 +1,64 @@
+@charset "utf-8";
+
+
+#dashboardContent {
+    margin-top: 40px;
+    width: 100% !important;
+    padding-bottom: 54px;
+}
+
+#logoP {
+    width: 170px;
+    margin: 0px auto 0px auto;
+}
+
+#hwLogo {
+    height: 105px;
+    padding: 0px 0px 5px 0px;
+    background-image: url(../images/hw_logo@2x.png);
+    background-repeat: no-repeat;
+    background-position: center 0px;
+    background-size: 150px 105px;
+}
+
+.iconsContainer {
+    width: 270px;
+    margin: 0px auto 0px auto;
+}
+
+.iconsContainer a {
+    float: left;
+    margin: 0 17px;
+    width: 100px;
+    text-align: center;
+    text-decoration: none;
+    color: gray !important;
+    font-weight: normal;
+}
+
+.icon {
+    padding: 97px 0px 10px 0px;
+    float: none;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: 145px 224px;
+    text-align: center;
+    font-size: 12px;
+    margin: 0 auto;
+}
+
+.form {
+    background-image: url(../images/dash_form.png)
+}
+
+.stats {
+    background-image: url(../images/dash_stats.png)
+}
+
+.cal {
+    background-image: url(../images/dash_cal.png)
+}
+
+.exer {
+    background-image: url(../images/dash_exer.png)
+}

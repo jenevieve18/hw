@@ -1,0 +1,145 @@
+@charset "utf-8";
+
+a#startPageLink {
+    text-decoration: none;
+    color: #2F2F2F;
+}
+
+#content.page_startpage {
+    margin: 0;
+    padding: 0 !important;
+    background-color: #007CB2;
+    width: 100%;
+    position: absolute;
+}
+
+.deviceMode #content.page_startpage {
+    background-color: white;
+}
+
+#startPageContainer {
+    text-align: center;
+    margin: 10px;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #006998;
+    box-shadow: 0px 2px 5px #444;
+    padding-bottom: 20px;
+}
+
+.deviceMode #startPageContainer {
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: 0 0;
+}
+
+.deviceMode.device_ios #startPageContainer {
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: 0 0;
+    width:300px;
+}
+
+#startPageOnStartBox {
+    position: relative;
+    color: white;
+    text-shadow: 0px 0px 0px;
+    font-size: 8pt;
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.deviceMode #startPageOnStartBox {
+    display: none;
+}
+
+
+#startPageOnStartBox .ui-checkbox {
+    position: absolute;
+    top: 3px;
+    left: -15px;
+}
+
+#startPageOnStartText {
+    color: white;
+    text-shadow: 0px 0px 0px;
+    font-size: 8pt;
+    display: inline-block;
+    margin-left: 20px;
+}
+
+#headerImg {
+	text-align: center;
+}
+
+#headerImg img {
+	width: 100%;
+}
+
+.device_ios #headerImg img {
+	width: 300px;
+	height: 225px;
+}
+
+#divider {
+	width: 100%;
+	height: 10px;
+}
+
+#blue,
+#red,
+#green,
+#orange {
+	width: 25%;
+	height: 10px;
+	float: left;
+	padding: 0px;
+	margin: 0px;
+}
+
+#blue {
+	background-color: rgb(0,127,181);
+}
+
+#red {
+	background-color: rgb(220,0,102);
+}
+
+#green {
+	background-color: rgb(189,209,66);
+}
+
+#orange {
+	background-color: rgb(241,136,7);
+}
+
+.content {
+	width: 100%;
+}
+
+#catchPhraseImg {
+	text-align: center;
+	margin-top: 7px;
+	margin-bottom: 7px;
+}
+
+#catchPhraseImg img {
+	width: 100%;
+}
+
+.content p {
+	font-size: 12px;
+	margin-left: 10px;
+	margin-right: 10px;
+	text-align:left;
+	font-weight: normal;
+}
+
+.content h1 {
+	margin-top: 10px;
+	font-size: 20px;
+	text-align: center;
+}
