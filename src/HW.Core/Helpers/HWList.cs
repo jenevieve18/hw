@@ -49,32 +49,32 @@ namespace HW.Core.Helpers
 
 		public double LowerBox {
 			get {
-//				return GetMeanMedian(data.GetRange(0, data.Count / 2));
-				double q = 0.25 * (data.Count);
-				if (q % 1 == 0) {
-					return data[(int)q];
-				} else {
-					int index = (int)q;
-					double a = data[index - 1];
-					double b = data[index];
-					return a + 0.25 * (b - a);
-				}
+				return GetMeanMedian(data.GetRange(0, data.Count / 2));
+//				double q = 0.25 * (data.Count);
+//				if (q % 1 == 0) {
+//					return data[(int)q];
+//				} else {
+//					int index = (int)q;
+//					double a = data[index - 1];
+//					double b = data[index];
+//					return a + 0.25 * (b - a);
+//				}
 			}
 		}
 
 		public double UpperBox {
 			get {
-//				int lower = data.Count % 2 != 0 ? data.Count / 2 + 1 : data.Count / 2;
-//				return GetMeanMedian(data.GetRange(lower, data.Count / 2));
-				double q = 0.75 * (data.Count);
-				if (q % 1 == 0) {
-					return data[(int)q];
-				} else {
-					int index = (int)q;
-					double a = data[index];
-					double b = data[index + 1];
-					return a + 0.5 * (b - a);
-				}
+				int lower = data.Count % 2 != 0 ? data.Count / 2 + 1 : data.Count / 2;
+				return GetMeanMedian(data.GetRange(lower, data.Count / 2));
+//				double q = 0.75 * (data.Count);
+//				if (q % 1 == 0) {
+//					return data[(int)q];
+//				} else {
+//					int index = (int)q;
+//					double a = data[index];
+//					double b = data[index + 1];
+//					return a + 0.5 * (b - a);
+//				}
 			}
 		}
 		
