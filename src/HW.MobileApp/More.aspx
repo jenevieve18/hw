@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Settings.aspx.cs" Inherits="HW.MobileApp.Settings" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="More.aspx.cs" Inherits="HW.MobileApp.More" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -16,15 +16,15 @@
     <form id="form1" runat="server">
         <div data-role="page">
             <div data-role="header" data-theme="b" data-position="fixed">
-                <a href="Dashboard.aspx" data-role="button" data-icon="back">My Health</a>
-                <h1>Settings</h1>
-                <a href="Logout.aspx" data-role="button" class="ui-btn-right">Logout</a>
+                <h1>More</h1>
             </div>
             <div data-role="content">
                 <ul data-role="listview">
-	                <li><a href="#">Change Profile</a></li>
-	                <li><a href="#">Reminders</a></li>
-	                <li><a href="#">Security Settings</a></li>
+	                <li><a href="#">About HealthWatch</a></li>
+	                <li><a href="#">Support</a></li>
+	                <li><a href="#">Contact Us</a></li>
+	                <li><a href="#">Tell a Friend</a></li>
+	                <li><a href="#">Like us on Facebook</a></li>
                 </ul>
             </div>
             <div data-role="footer" dataid="footernav" data-position="fixed">

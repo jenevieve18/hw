@@ -10,7 +10,7 @@
 namespace HW.MobileApp {
     
     
-    public partial class Settings {
+    public partial class More {
         
         /// <summary>
         /// Head1 control.

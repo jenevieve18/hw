@@ -10,7 +10,7 @@
 namespace HW.MobileApp {
     
     
-    public partial class Settings {
+    public partial class Dashboard {
         
         /// <summary>
         /// Head1 control.
