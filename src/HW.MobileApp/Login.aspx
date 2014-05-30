@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="HW.MobileApp.Login" %>
-<%@ Register Src="~/Footer.ascx" TagName="Footer" TagPrefix="ft" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -32,11 +32,11 @@ vertical-align: bottom;
 margin-right: 20px;
 }
 .front_controls {
-max-width: 350px;
+/*max-width: 350px;*/
 margin: 0 auto;
-min-height: 250px;
+/*min-height: 250px;*/
 display: inline-block;
-min-width: 320px;
+/*min-width: 320px;*/
 }
 .center {
     text-align:center;
@@ -63,12 +63,20 @@ width: 235px;
                         </div>
                         <asp:TextBox ID="textBoxUsername" runat="server" placeholder="Username or Email"></asp:TextBox>
                         <asp:TextBox ID="textBoxPassword" runat="server" placeholder="Password" TextMode="Password"></asp:TextBox>
-                        <asp:Button ID="buttonLogin" runat="server" Text="Log In" OnClick="LoginButtonClick" />
-                        <a href="ForgotPassword.aspx" data-role="button">Forgot password?</a>
+                        <asp:Button ID="buttonLogin" runat="server" data-mini="true" Text="Log In" OnClick="LoginButtonClick" />
+                        <a href="ForgotPassword.aspx" data-mini="true" data-role="button">Forgot password?</a>
                     </div>
                 </div>
             </div>
-            <ft:Footer runat="server" />
+            <div data-role="footer" dataid="footernav" data-position="fixed">
+    <div data-role="navbar">
+        <ul>
+            <li><a href="Dashboard.aspx" data-icon="home">My Health</a></li>
+            <li><a href="News.aspx" data-icon="grid">News</a></li>
+            <li><a href="More.aspx" data-icon="info">More</a></li>
+        </ul>
+    </div>
+</div>
         </div>
     </form>
 </body>
