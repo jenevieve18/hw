@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="HW.MobileApp.Dashboard" %>
-<%@ Register Src="~/Footer.ascx" TagName="Footer" TagPrefix="ft" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -29,9 +29,16 @@ height: 126px;
             </div>
             <div data-role="content">
                 <img class="front_logo" src="http://clients.easyapp.se/healthwatch/images/hw_logo@2x.png" />
-                    
             </div>
-            <ft:Footer runat="server" />
+            <div data-role="footer" dataid="footernav" data-position="fixed">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="Dashboard.aspx" data-icon="home">My Health</a></li>
+                        <li><a href="News.aspx" data-icon="grid">News</a></li>
+                        <li><a href="More.aspx" data-icon="info">More</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </form>
 </body>
