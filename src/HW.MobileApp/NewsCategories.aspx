@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="News.aspx.cs" Inherits="HW.MobileApp.News" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="NewsCategories.aspx.cs" Inherits="HW.MobileApp.NewsCategories" %>
 <%@ Register Src="~/Footer.ascx" TagName="Footer" TagPrefix="ft" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -16,15 +16,19 @@
     <form id="form1" runat="server">
         <div data-role="page">
             <div data-role="header" data-theme="b" data-position="fixed">
-                <h1>All News</h1>
-                <a href="NewsCategories.aspx" data-role="button" class="ui-btn-right">Categories</a>
+                <a href="News.aspx" data-role="button" data-icon="back">Back</a>
+                <h1>&nbsp;</h1>
             </div>
             <div data-role="content">
                 <ul data-role="listview">
-	                <li><a href="#">Home walking program may help clogged leg arteries</a></li>
+	                <li><a href="#">Books</a></li>
+	                <li><a href="#">Diabetes</a></li>
+	                <li><a href="#">Environment</a></li>
+	                <li><a href="#">Exercise</a></li>
+	                <li><a href="#">Health</a></li>
                 </ul>
             </div>
-            <ft:Footer runat="server" />
+            <ft:Footer ID="Footer1" runat="server" />
         </div>
     </form>
 </body>

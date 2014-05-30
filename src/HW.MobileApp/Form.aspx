@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Form.aspx.cs" Inherits="HW.MobileApp.Form" %>
-
+<%@ Register Src="~/Footer.ascx" TagName="Footer" TagPrefix="ft" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -21,15 +21,7 @@
             <div data-role="content">
                 
             </div>
-            <div data-role="footer" data-position="fixed" dataid="footernav">
-                <div data-role="navbar">
-                    <ul>
-                        <li><a href="persistent_footer_index.html" class="ui-btnactive ui-state-persist">My Health</a></li>
-                        <li><a href="persistent_footer_credits.html">News</a></li>
-                        <li><a href="persistent_footer_contact.html">More</a></li>
-                    </ul>
-                </div>
-            </div>
+            <ft:Footer runat="server" />
         </div>
     </form>
 </body>

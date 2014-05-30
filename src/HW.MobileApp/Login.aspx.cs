@@ -13,17 +13,19 @@ namespace HW.MobileApp
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (IsPostBack)
+        }
+
+        protected void LoginButtonClick(object sender, EventArgs e)
+        {
+            var u = service.UserLogin(textBoxUsername.Text, textBoxPassword.Text, 10);
+            if (u.token != null && u.token != "")
             {
-                var u = service.UserLogin(textBoxUsername.Text, textBoxPassword.Text, 10);
-                if (u.token != null && u.token != "")
-                {
-                    Response.Redirect("Dashboard.aspx");
-                }
-                else
-                {
-                    labelMessage.Text = "Sorry, incorrect login details.";
-                }
+                Session.Add("token", u.token);
+                Response.Redirect("Dashboard.aspx");
+            }
+            else
+            {
+                labelMessage.Text = "Sorry, incorrect login details.";
             }
         }
     }
