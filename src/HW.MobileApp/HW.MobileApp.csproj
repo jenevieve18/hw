@@ -55,7 +55,6 @@
   <ItemGroup>
     <Content Include="Dashboard.aspx" />
     <Content Include="Default.aspx" />
-    <Content Include="Footer.ascx" />
     <Content Include="ForgotPassword.aspx" />
     <Content Include="Form.aspx" />
     <Content Include="Login.aspx" />
@@ -154,13 +153,6 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Footer.ascx.cs">
-      <DependentUpon>Footer.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Footer.ascx.designer.cs">
-      <DependentUpon>Footer.ascx</DependentUpon>
     </Compile>
     <Compile Include="ForgotPassword.aspx.cs">
       <DependentUpon>ForgotPassword.aspx</DependentUpon>
