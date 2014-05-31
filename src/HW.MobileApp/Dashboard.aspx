@@ -29,6 +29,13 @@ height: 126px;
             </div>
             <div data-role="content">
                 <img class="front_logo" src="http://clients.easyapp.se/healthwatch/images/hw_logo@2x.png" />
+
+                <ul data-role="listview" data-inset="true">
+                    <li><a href="Form.aspx"><img src="http://clients.easyapp.se/healthwatch/images/dash_form.png" />Form</a></li>
+                    <li><a href="Statistics.aspx"><img src="http://clients.easyapp.se/healthwatch/images/dash_stats.png" />Statistics</a></li>
+                    <li><a href="Diary.aspx"><img src="http://clients.easyapp.se/healthwatch/images/dash_cal.png" />Diary</a></li>
+                    <li><a href="Exercises.aspx"><img src="http://clients.easyapp.se/healthwatch/images/dash_exer.png" />Exercises</a></li>
+                </ul>
             </div>
            <div data-role="footer" dataid="footernav" data-position="fixed">
                 <div data-role="navbar">
