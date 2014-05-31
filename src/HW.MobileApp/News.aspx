@@ -21,7 +21,9 @@
             </div>
             <div data-role="content">
                 <ul data-role="listview">
-	                <li><a href="#">Home walking program may help clogged leg arteries</a></li>
+                    <% foreach (var n in news) { %>
+                        <li><a href="#"><%= n.teaser %></a></li>
+                    <% } %>
                 </ul>
             </div>
             <div data-role="footer" dataid="footernav" data-position="fixed">
