@@ -13,7 +13,6 @@
     <style>
         .front_logo 
         {
-            
 width: 180px;
 height: 126px;
         }
@@ -28,7 +27,9 @@ height: 126px;
                 <a href="Settings.aspx" data-role="button" data-icon="gear" class="ui-btn-right" data-iconpos="notext"></a>
             </div>
             <div data-role="content">
-                <img class="front_logo" src="http://clients.easyapp.se/healthwatch/images/hw_logo@2x.png" />
+                <div style="text-align:center">
+                    <img class="front_logo" src="http://clients.easyapp.se/healthwatch/images/hw_logo@2x.png" />
+                </div>
 
                 <ul data-role="listview" data-inset="true">
                     <li><a href="Form.aspx"><img src="http://clients.easyapp.se/healthwatch/images/dash_form.png" />Form</a></li>
