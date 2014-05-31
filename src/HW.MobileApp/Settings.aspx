@@ -22,9 +22,24 @@
             </div>
             <div data-role="content">
                 <ul data-role="listview">
-	                <li><a href="#">Change Profile</a></li>
-	                <li><a href="#">Reminders</a></li>
-	                <li><a href="#">Security Settings</a></li>
+	                <li>
+                        <a href="#">
+                            <h1>Change Profile</h1>
+                            <p>Language, email address and personal information</p>
+                        </a>
+                    </li>
+	                <li>
+                        <a href="#">
+                            <h1>Reminders</h1>
+                            <p>Frequency</p>
+                        </a>
+                    </li>
+	                <li>
+                        <a href="#">
+                            <h1>Security Settings</h1>
+                            <p>Options for automatic login</p>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div data-role="footer" dataid="footernav" data-position="fixed">
