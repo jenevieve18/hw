@@ -30,11 +30,9 @@
             </div>
             <div data-role="content">
                 <ul data-role="listview">
-	                <li><a href="#">Books</a></li>
-	                <li><a href="#">Diabetes</a></li>
-	                <li><a href="#">Environment</a></li>
-	                <li><a href="#">Exercise</a></li>
-	                <li><a href="#">Health</a></li>
+                    <% foreach (var c in categories) { %>
+                        <li><a href="#"><%= c.newsCategory %></a></li>
+                    <% } %>
                 </ul>
             </div>
             <div data-role="footer" dataid="footernav" data-position="fixed">
