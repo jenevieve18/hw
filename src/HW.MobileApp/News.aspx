@@ -22,7 +22,13 @@
             <div data-role="content">
                 <ul data-role="listview">
                     <% foreach (var n in news) { %>
-                        <li><a href="#"><%= n.teaser %></a></li>
+                        <li>
+                            <a href="#">
+                                <h1><%= n.teaser %></h1>
+                                <p><%= n.newsCategory %></p>
+                                <p><%= n.DT.ToString("m") %></p>
+                            </a>
+                        </li>
                     <% } %>
                 </ul>
             </div>
