@@ -165,3 +165,5 @@ CREATE TABLE [dbo].[SponsorProjectRoundUnitDepartment](
 
 GO
 
+use healthWatch;
+alter table SponsorAdminSession add EndDT datetime;
