@@ -269,12 +269,6 @@ namespace HW.WebService
 		public enum EventType { Form = 1, Measurement = 2, Exercise = 3 };
 		public enum Rating { NotKnown = 0, Unhealthy = 1, Warning = 2, Healthy = 3 };
 		
-		[WebMethod]
-		public string HelloWorld()
-		{
-			return "Hello World";
-		}
-		
 		[WebMethod(CacheDuration = 10 * 60, Description = "Todays words of wisdom.")]
 		public WordsOfWisdom TodaysWordsOfWisdom(int languageID)
 		{
