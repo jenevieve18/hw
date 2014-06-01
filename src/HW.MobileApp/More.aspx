@@ -27,9 +27,9 @@
                 <ul data-role="listview">
 	                <li><a href="#"><img class="ui-li-icon" src="http://clients.easyapp.se/healthwatch//images/about_hw.png" />About HealthWatch</a></li>
 	                <li><a href="Support.aspx"><img class="ui-li-icon" src="http://clients.easyapp.se/healthwatch//images/support.png" />Support</a></li>
-	                <li><a href="#"><img class="ui-li-icon" src="http://clients.easyapp.se/healthwatch//images/contact_us.png" />Contact Us</a></li>
-	                <li><a href="#"><img class="ui-li-icon" src="http://clients.easyapp.se/healthwatch//images/tell_a_friend.png" />Tell a Friend</a></li>
-	                <li><a href="#"><img class="ui-li-icon" src="http://clients.easyapp.se/healthwatch//images/fb_like.png" />Like us on Facebook</a></li>
+	                <li><a href="ContactUs.aspx"><img class="ui-li-icon" src="http://clients.easyapp.se/healthwatch//images/contact_us.png" />Contact Us</a></li>
+	                <li><a href="mailto:support@healthwatch.se?Subject=Hello"><img class="ui-li-icon" src="http://clients.easyapp.se/healthwatch//images/tell_a_friend.png" />Tell a Friend</a></li>
+	                <li><a href="https://facebook.com/healthwatch.se"><img class="ui-li-icon" src="http://clients.easyapp.se/healthwatch//images/fb_like.png" />Like us on Facebook</a></li>
                 </ul>
             </div>
             <div data-role="footer" dataid="footernav" data-position="fixed">
