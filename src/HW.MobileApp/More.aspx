@@ -21,8 +21,12 @@
             </div>
             <div data-role="content">
                 <ul data-role="listview">
-	                <li><a href="#"><img class="ul-li-icon" src="http://clients.easyapp.se/healthwatch//images/about_hw.png" />About HealthWatch</a></li>
-	                <li><a href="#"><img class="ul-li-icon" src="http://clients.easyapp.se/healthwatch//images/support.png" />Support</a></li>
+	                <li>
+                        <a href="#">
+                            <img class="ul-li-icon" src="http://clients.easyapp.se/healthwatch//images/about_hw.png" />About HealthWatch
+                        </a>
+                    </li>
+	                <li><a href="Support.aspx"><img class="ul-li-icon" src="http://clients.easyapp.se/healthwatch//images/support.png" />Support</a></li>
 	                <li><a href="#"><img class="ul-li-icon" src="http://clients.easyapp.se/healthwatch//images/contact_us.png" />Contact Us</a></li>
 	                <li><a href="#"><img class="ul-li-icon" src="http://clients.easyapp.se/healthwatch//images/tell_a_friend.png" />Tell a Friend</a></li>
 	                <li><a href="#"><img class="ul-li-icon" src="http://clients.easyapp.se/healthwatch//images/fb_like.png" />Like us on Facebook</a></li>
