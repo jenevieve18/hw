@@ -11,6 +11,10 @@
     <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
     
     <style>
+        .ui-listview .ui-li-icon{
+    height: 40px; 
+    width: 40px;
+}
     </style>
 </head>
 <body>
@@ -21,15 +25,11 @@
             </div>
             <div data-role="content">
                 <ul data-role="listview">
-	                <li>
-                        <a href="#">
-                            <img class="ul-li-icon" src="http://clients.easyapp.se/healthwatch//images/about_hw.png" />About HealthWatch
-                        </a>
-                    </li>
-	                <li><a href="Support.aspx"><img class="ul-li-icon" src="http://clients.easyapp.se/healthwatch//images/support.png" />Support</a></li>
-	                <li><a href="#"><img class="ul-li-icon" src="http://clients.easyapp.se/healthwatch//images/contact_us.png" />Contact Us</a></li>
-	                <li><a href="#"><img class="ul-li-icon" src="http://clients.easyapp.se/healthwatch//images/tell_a_friend.png" />Tell a Friend</a></li>
-	                <li><a href="#"><img class="ul-li-icon" src="http://clients.easyapp.se/healthwatch//images/fb_like.png" />Like us on Facebook</a></li>
+	                <li><a href="#"><img class="ui-li-icon" src="http://clients.easyapp.se/healthwatch//images/about_hw.png" />About HealthWatch</a></li>
+	                <li><a href="Support.aspx"><img class="ui-li-icon" src="http://clients.easyapp.se/healthwatch//images/support.png" />Support</a></li>
+	                <li><a href="#"><img class="ui-li-icon" src="http://clients.easyapp.se/healthwatch//images/contact_us.png" />Contact Us</a></li>
+	                <li><a href="#"><img class="ui-li-icon" src="http://clients.easyapp.se/healthwatch//images/tell_a_friend.png" />Tell a Friend</a></li>
+	                <li><a href="#"><img class="ui-li-icon" src="http://clients.easyapp.se/healthwatch//images/fb_like.png" />Like us on Facebook</a></li>
                 </ul>
             </div>
             <div data-role="footer" dataid="footernav" data-position="fixed">
