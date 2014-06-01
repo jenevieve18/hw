@@ -51,7 +51,7 @@ width: 235px;
     <form id="form1" runat="server">
         <div data-role="page">
             <div data-role="header" data-theme="b" data-position="fixed">
-                <a href="#" data-role="button" data-icon="back">Back</a>
+                <a href="#" data-role="button" data-icon="arrow-l">Back</a>
                 <h1>&nbsp;</h1>
             </div>
             <div data-role="content">
@@ -64,7 +64,7 @@ width: 235px;
                             <img class="front_header_img" src="http://clients.easyapp.se/healthwatch/images/divider.gif">
                         </div>
                         <asp:TextBox ID="textBoxEmailAddress" runat="server" placeholder="Email address"></asp:TextBox>
-                        <asp:Button ID="buttonSubmit" runat="server" Text="Submit" />
+                        <asp:Button ID="buttonSubmit" data-mini="true" runat="server" Text="Submit" />
                     </div>
                 </div>
             </div>
