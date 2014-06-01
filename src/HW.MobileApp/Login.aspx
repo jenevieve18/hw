@@ -59,12 +59,12 @@ width: 235px;
                         <div class="front_header">
                             <h4 class="text">Login to a better life.</h4>
                             <h4 style="color:Red"><asp:Label ID="labelMessage" runat="server"></asp:Label></h4>
-                            <img class="front_header_img" src="http://clients.easyapp.se/healthwatch/images/divider.gif">
+                            <img style="width:235px" class="front_header_img" src="http://clients.easyapp.se/healthwatch/images/divider.gif">
                         </div>
                         <asp:TextBox ID="textBoxUsername" runat="server" placeholder="Username or Email"></asp:TextBox>
                         <asp:TextBox ID="textBoxPassword" runat="server" placeholder="Password" TextMode="Password"></asp:TextBox>
-                        <asp:Button ID="buttonLogin" runat="server" data-mini="true" Text="Log In" OnClick="LoginButtonClick" />
-                        <a href="ForgotPassword.aspx" data-mini="true" data-role="button">Forgot password?</a>
+                        <asp:Button ID="buttonLogin" runat="server" Text="Log In" OnClick="LoginButtonClick" />
+                        <a href="ForgotPassword.aspx" data-role="button">Forgot password?</a>
                     </div>
                 </div>
             </div>
