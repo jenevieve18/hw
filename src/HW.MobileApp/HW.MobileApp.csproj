@@ -130,6 +130,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Content Include="NewsCategories.aspx" />
+    <Content Include="Reminders.aspx" />
     <Content Include="SecuritySettings.aspx" />
     <Content Include="Settings.aspx" />
     <None Include="Properties\Settings.settings">
@@ -238,6 +239,13 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Reminders.aspx.cs">
+      <DependentUpon>Reminders.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reminders.aspx.designer.cs">
+      <DependentUpon>Reminders.aspx</DependentUpon>
     </Compile>
     <Compile Include="SecuritySettings.aspx.cs">
       <DependentUpon>SecuritySettings.aspx</DependentUpon>
