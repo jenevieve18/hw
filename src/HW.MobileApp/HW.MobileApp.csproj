@@ -57,6 +57,8 @@
     <Content Include="ContactUs.aspx" />
     <Content Include="Dashboard.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="Diary.aspx" />
+    <Content Include="Exercises.aspx" />
     <Content Include="ForgotPassword.aspx" />
     <Content Include="Form.aspx" />
     <Content Include="img\dash_cal.png" />
@@ -178,6 +180,20 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Diary.aspx.cs">
+      <DependentUpon>Diary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Diary.aspx.designer.cs">
+      <DependentUpon>Diary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Exercises.aspx.cs">
+      <DependentUpon>Exercises.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Exercises.aspx.designer.cs">
+      <DependentUpon>Exercises.aspx</DependentUpon>
     </Compile>
     <Compile Include="ForgotPassword.aspx.cs">
       <DependentUpon>ForgotPassword.aspx</DependentUpon>
