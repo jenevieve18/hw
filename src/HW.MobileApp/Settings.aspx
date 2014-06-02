@@ -35,7 +35,7 @@
                         </a>
                     </li>
 	                <li>
-                        <a href="#">
+                        <a href="SecuritySettings.aspx">
                             <h1>Security Settings</h1>
                             <p>Options for automatic login</p>
                         </a>
