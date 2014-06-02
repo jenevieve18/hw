@@ -13,13 +13,13 @@ namespace HW.MobileApp {
     public partial class ChangeProfile {
         
         /// <summary>
-        /// textBoxLanguage control.
+        /// dropDownListLanguage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxLanguage;
+        protected global::System.Web.UI.WebControls.DropDownList dropDownListLanguage;
         
         /// <summary>
         /// textBoxUsername control.
@@ -29,5 +29,32 @@ namespace HW.MobileApp {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox textBoxUsername;
+        
+        /// <summary>
+        /// textBoxPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxPassword;
+        
+        /// <summary>
+        /// textBoxEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxEmail;
+        
+        /// <summary>
+        /// textBoxAlternateEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxAlternateEmail;
     }
 }

@@ -10,12 +10,26 @@
 </div>
 <div data-role="content">
     <div data-role="fieldcontain">
-        <label for="textBoxLanguage">Language</label>
-        <asp:TextBox ID="textBoxLanguage" runat="server"></asp:TextBox>
+        <label for="dropDownListLanguage">Language:</label>
+        <asp:DropDownList ID="dropDownListLanguage"
+            runat="server">
+        </asp:DropDownList>
     </div>
     <div data-role="fieldcontain">
-        <label for="textBoxUsername">Username</label>
+        <label for="textBoxUsername">Username:</label>
         <asp:TextBox ID="textBoxUsername" runat="server"></asp:TextBox>
+    </div>
+    <div data-role="fieldcontain">
+        <label for="textBoxPassword">Password:</label>
+        <asp:TextBox ID="textBoxPassword" runat="server"></asp:TextBox>
+    </div>
+    <div data-role="fieldcontain">
+        <label for="textBoxEmail">Email:</label>
+        <asp:TextBox ID="textBoxEmail" runat="server"></asp:TextBox>
+    </div>
+    <div data-role="fieldcontain">
+        <label for="textBoxAlternateEmail">Alternate Email:</label>
+        <asp:TextBox ID="textBoxAlternateEmail" runat="server"></asp:TextBox>
     </div>
 </div>
 
