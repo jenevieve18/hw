@@ -287,10 +287,6 @@
       <Project>{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}</Project>
       <Name>HW.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HW.WebService\HW.WebService.csproj">
-      <Project>{176B8B99-DA73-465A-9A96-9E1A0D500C24}</Project>
-      <Name>HW.WebService</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
