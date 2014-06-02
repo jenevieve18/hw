@@ -21,7 +21,7 @@
             <div data-role="header" data-theme="b" data-position="fixed">
                 <a href="News.aspx" data-role="button" data-icon="arrow-l">Back</a>
                 <h1>&nbsp;</h1>
-                <div class="segmented-control ui-bar-d">
+                <div style="text-align:center" class="ui-bar-d">
                     <div data-role="controlgroup" data-type="horizontal">
                         <a href="#" data-role="button">International</a>
                         <a href="#" data-role="button">Swedish</a>
