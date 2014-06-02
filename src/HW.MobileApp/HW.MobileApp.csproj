@@ -130,6 +130,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Content Include="NewsCategories.aspx" />
+    <Content Include="SecuritySettings.aspx" />
     <Content Include="Settings.aspx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -237,6 +238,13 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="SecuritySettings.aspx.cs">
+      <DependentUpon>SecuritySettings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SecuritySettings.aspx.designer.cs">
+      <DependentUpon>SecuritySettings.aspx</DependentUpon>
     </Compile>
     <Compile Include="Service References\HWService\Reference.cs">
       <AutoGen>True</AutoGen>
