@@ -137,6 +137,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="Statistics.aspx" />
     <Content Include="Support.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -266,6 +267,13 @@
     <Compile Include="Settings.aspx.designer.cs">
       <DependentUpon>Settings.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Statistics.aspx.cs">
+      <DependentUpon>Statistics.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Statistics.aspx.designer.cs">
+      <DependentUpon>Statistics.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Support.aspx.cs">
       <DependentUpon>Support.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -275,6 +283,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HW.Core\HW.Core.csproj">
+      <Project>{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}</Project>
+      <Name>HW.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HW.WebService\HW.WebService.csproj">
       <Project>{176B8B99-DA73-465A-9A96-9E1A0D500C24}</Project>
       <Name>HW.WebService</Name>
