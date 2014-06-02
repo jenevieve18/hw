@@ -54,7 +54,7 @@ width: 235px;
             </div>
             <div data-role="content">
                 <div class="front_note center">
-                    <img class="front_logo" src="http://clients.easyapp.se/healthwatch/images/hw_logo@2x.png" />
+                    <img style="width:180px" class="front_logo" src="http://clients.easyapp.se/healthwatch/images/hw_logo@2x.png" />
                     <div class="front_controls">
                         <div class="front_header">
                             <h4 class="text">Login to a better life.</h4>
