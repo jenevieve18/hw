@@ -29,7 +29,7 @@
                         </a>
                     </li>
 	                <li>
-                        <a href="#">
+                        <a href="Reminders.aspx">
                             <h1>Reminders</h1>
                             <p>Frequency</p>
                         </a>
