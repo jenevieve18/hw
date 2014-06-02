@@ -10,25 +10,25 @@
 </div>
 <div data-role="content">
     <div data-role="fieldcontain">
-        <label for="dropDownListLanguage">Language:</label>
+        <asp:Label ID="Label2" runat="server" Text="Language:" AssociatedControlID="dropDownListLanguage"></asp:Label>
         <asp:DropDownList ID="dropDownListLanguage"
             runat="server">
         </asp:DropDownList>
     </div>
     <div data-role="fieldcontain">
-        <label for="textBoxUsername">Username:</label>
+        <asp:Label ID="Label1" runat="server" Text="Username:" AssociatedControlID="textBoxUsername"></asp:Label>
         <asp:TextBox ID="textBoxUsername" runat="server"></asp:TextBox>
     </div>
     <div data-role="fieldcontain">
-        <label for="textBoxPassword">Password:</label>
+        <asp:Label ID="Label3" runat="server" Text="Password:" AssociatedControlID="textBoxPassword"></asp:Label>
         <asp:TextBox ID="textBoxPassword" runat="server"></asp:TextBox>
     </div>
     <div data-role="fieldcontain">
-        <label for="textBoxEmail">Email:</label>
+        <asp:Label ID="Label4" runat="server" Text="Email:" AssociatedControlID="textBoxEmail"></asp:Label>
         <asp:TextBox ID="textBoxEmail" runat="server"></asp:TextBox>
     </div>
     <div data-role="fieldcontain">
-        <label for="textBoxAlternateEmail">Alternate Email:</label>
+        <asp:Label ID="Label5" runat="server" Text="Alternate Email:" AssociatedControlID="textBoxAlternateEmail"></asp:Label>
         <asp:TextBox ID="textBoxAlternateEmail" runat="server"></asp:TextBox>
     </div>
 </div>
