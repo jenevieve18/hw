@@ -4,7 +4,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <div data-role="header" data-theme="b" data-position="fixed">
-    <a href="Settings.aspx" data-icon="arrow-l">Cancel</a>
+    <a href="Settings.aspx" data-icon="arrow-l">Back</a>
     <h1>Security Settings</h1>
     <a href="#" data-icon="check">Save</a>
 </div>
