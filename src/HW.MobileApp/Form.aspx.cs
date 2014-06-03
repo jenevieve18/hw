@@ -17,8 +17,6 @@ namespace HW.MobileApp
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-            
             if (Session["token"] == null)
             {
                 Response.Redirect("Login.aspx");
@@ -35,19 +33,18 @@ namespace HW.MobileApp
             question = service.FormQuestionEnum(new HW.MobileApp.HWService.FormQuestionEnumRequest(token,lang,formKey,10)).FormQuestionEnumResult;
             questNo = question.Count();
             
-            
-            
-
         }
 
         protected void saveBtnClick(object sender, EventArgs e)
         {
             string data = answers.Value;
             string[] pageAnswers = data.Split('x');
+            
             HWService.FormQuestionAnswer[] formAnswers = new HWService.FormQuestionAnswer[questNo];
             
             for(int i = 0; i < questNo;i++)
             {
+                formAnswers[i] = new HWService.FormQuestionAnswer();
                 formAnswers[i].optionID = question[i].OptionID;
                 formAnswers[i].questionID = question[i].QuestionID;
                 formAnswers[i].answer = pageAnswers[i];

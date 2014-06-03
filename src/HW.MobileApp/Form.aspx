@@ -52,7 +52,8 @@
             {
                 sliderVal+= $("#myslider"+i).val()+"x";
             }
-            alert(sliderVal);
+            
+            $('#answers').val(sliderVal);
             document.getElementById('saveBtn').click();
         }
     </script>
