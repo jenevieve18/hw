@@ -2,27 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-            <div data-role="header" data-theme="b" data-position="fixed">
-                <h1>&nbsp;</h1>
-            </div>
-            <div data-role="content">
-                <div class="front_note center">
-                    <img style="width:180px" class="front_logo" src="http://clients.easyapp.se/healthwatch/images/hw_logo@2x.png" />
-                    <div class="front_controls">
-                        <div class="front_header">
-                            <h4 class="text">Login to a better life.</h4>
-                            <h4 style="color:Red"><asp:Label ID="labelMessage" runat="server"></asp:Label></h4>
-                            <img style="width:235px" class="front_header_img" src="http://clients.easyapp.se/healthwatch/images/divider.gif">
-                        </div>
-                        <asp:TextBox ID="textBoxUsername" runat="server" placeholder="Username or Email"></asp:TextBox>
-                        <asp:TextBox ID="textBoxPassword" runat="server" placeholder="Password" TextMode="Password"></asp:TextBox>
-                        <asp:Button ID="buttonLogin" runat="server" Text="Log In" OnClick="LoginButtonClick" />
-                        <a href="ForgotPassword.aspx" data-role="button">Forgot password?</a>
-                    </div>
-                </div>
-            </div>
 
-    
     <style>
         .front_header {
 text-align: center;
@@ -58,5 +38,27 @@ display: inline-block;
 width: 235px;
 }
     </style>
+
+            <div data-role="header" data-theme="b" data-position="fixed">
+                <h1>&nbsp;</h1>
+            </div>
+            <div data-role="content">
+                <div class="front_note center">
+                    <img style="width:180px" class="front_logo" src="http://clients.easyapp.se/healthwatch/images/hw_logo@2x.png" />
+                    <div class="front_controls">
+                        <div class="front_header">
+                            <h4 class="text">Login to a better life.</h4>
+                            <h4 style="color:Red"><asp:Label ID="labelMessage" runat="server"></asp:Label></h4>
+                            <img style="width:235px" class="front_header_img" src="http://clients.easyapp.se/healthwatch/images/divider.gif">
+                        </div>
+                        <asp:TextBox ID="textBoxUsername" runat="server" placeholder="Username or Email"></asp:TextBox>
+                        <asp:TextBox ID="textBoxPassword" runat="server" placeholder="Password" TextMode="Password"></asp:TextBox>
+                        <asp:Button ID="buttonLogin" runat="server" Text="Log In" OnClick="LoginButtonClick" />
+                        <a href="ForgotPassword.aspx" data-role="button">Forgot password?</a>
+                    </div>
+                </div>
+            </div>
+
+    
 
 </asp:Content>
