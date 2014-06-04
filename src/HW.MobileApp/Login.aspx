@@ -10,6 +10,42 @@
     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
 
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div data-role="page">
+            <div data-role="header" data-theme="b" data-position="fixed">
+                <h1>&nbsp;</h1>
+            </div>
+            <div data-role="content">
+                <div class="front_note center">
+                    <img style="width:180px" class="front_logo" src="http://clients.easyapp.se/healthwatch/images/hw_logo@2x.png" />
+                    <div class="front_controls">
+                        <div class="front_header">
+                            <h4 class="text">Login to a better life.</h4>
+                            <h4 style="color:Red"><asp:Label ID="labelMessage" runat="server"></asp:Label></h4>
+                            <img style="width:235px" class="front_header_img" src="http://clients.easyapp.se/healthwatch/images/divider.gif">
+                        </div>
+                        <asp:TextBox ID="textBoxUsername" runat="server" placeholder="Username or Email"></asp:TextBox>
+                        <asp:TextBox ID="textBoxPassword" runat="server" placeholder="Password" TextMode="Password"></asp:TextBox>
+                        <asp:Button ID="buttonLogin" runat="server" Text="Log In" OnClick="LoginButtonClick" />
+                        <a href="ForgotPassword.aspx" data-role="button">Forgot password?</a>
+                    </div>
+                </div>
+            </div>
+            <div data-role="footer" dataid="footernav" data-position="fixed">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="Dashboard.aspx" data-icon="home">My Health</a></li>
+                        <li><a href="News.aspx" data-icon="grid">News</a></li>
+                        <li><a href="More.aspx" data-icon="info">More</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    
     <style>
         .front_header {
 text-align: center;
@@ -45,39 +81,5 @@ display: inline-block;
 width: 235px;
 }
     </style>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div data-role="page">
-            <div data-role="header" data-theme="b" data-position="fixed">
-                <h1>&nbsp;</h1>
-            </div>
-            <div data-role="content">
-                <div class="front_note center">
-                    <img style="width:180px" class="front_logo" src="http://clients.easyapp.se/healthwatch/images/hw_logo@2x.png" />
-                    <div class="front_controls">
-                        <div class="front_header">
-                            <h4 class="text">Login to a better life.</h4>
-                            <h4 style="color:Red"><asp:Label ID="labelMessage" runat="server"></asp:Label></h4>
-                            <img style="width:235px" class="front_header_img" src="http://clients.easyapp.se/healthwatch/images/divider.gif">
-                        </div>
-                        <asp:TextBox ID="textBoxUsername" runat="server" placeholder="Username or Email"></asp:TextBox>
-                        <asp:TextBox ID="textBoxPassword" runat="server" placeholder="Password" TextMode="Password"></asp:TextBox>
-                        <asp:Button ID="buttonLogin" runat="server" Text="Log In" OnClick="LoginButtonClick" />
-                        <a href="ForgotPassword.aspx" data-role="button">Forgot password?</a>
-                    </div>
-                </div>
-            </div>
-            <div data-role="footer" dataid="footernav" data-position="fixed">
-                <div data-role="navbar">
-                    <ul>
-                        <li><a href="Dashboard.aspx" data-icon="home">My Health</a></li>
-                        <li><a href="News.aspx" data-icon="grid">News</a></li>
-                        <li><a href="More.aspx" data-icon="info">More</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </form>
 </body>
 </html>
