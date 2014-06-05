@@ -11,7 +11,31 @@
     <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
 
    
-    <style type=text/css>
+    
+
+    <script type="text/javascript">
+        
+        function getSliderValue() 
+        {
+            var sliderVal = "";
+            var x = <%= this.questNo %>;
+            
+            for(var i = 0;i<parseInt(x);i++)
+            {
+                sliderVal+= $("#myslider"+i).val()+"x";
+            }
+            
+            $('#answers').val(sliderVal);
+            document.getElementById('saveBtn').click();
+        }
+    </script>
+
+    
+  
+</head>
+<body>
+
+<style type=text/css>
         
     input.ui-slider-input {
         display : none ;
@@ -41,32 +65,11 @@
     
     </style>
 
-    <script type="text/javascript">
-        
-        function getSliderValue() 
-        {
-            var sliderVal = "";
-            var x = <%= this.questNo %>;
-            
-            for(var i = 0;i<parseInt(x);i++)
-            {
-                sliderVal+= $("#myslider"+i).val()+"x";
-            }
-            
-            $('#answers').val(sliderVal);
-            document.getElementById('saveBtn').click();
-        }
-    </script>
-
-    
-  
-</head>
-<body>
     <form id="form1" runat="server">
     
         <div data-role="page">
             <div data-role="header" data-theme="b" data-position="fixed">
-                <a href="Dashboard.aspx" data-icon="arrow-l">Cancel</a>
+                <a href="Dashboard.aspx" data-icon="arrow-l">My Health</a>
                 <h1>Form</h1>
                 
                 <a onClick="getSliderValue()" data-icon="check">Save</a>
