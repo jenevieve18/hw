@@ -286,7 +286,7 @@ WHERE u2.Email = '{0}' OR si.Email = '{0}'",
 				@"
 SELECT TOP 1 UserProfileID
 FROM UserProfile
-WHERE UserID = {1} ORDER BY UserProfileID DESC",
+WHERE UserID = {0} ORDER BY UserProfileID DESC",
 				userID
 			);
 			using (SqlDataReader rs = Db.rs(query)) {
