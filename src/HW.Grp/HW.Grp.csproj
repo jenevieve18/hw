@@ -242,13 +242,7 @@
     <Content Include="App_Browsers\opera.browser" />
     <Content Include="App_Browsers\safari.browser" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="assets" />
-    <Folder Include="assets\css" />
-    <Folder Include="assets\plasm" />
-    <Folder Include="assets\plasm\javascript" />
-    <Folder Include="images" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Grp.Master" />
   </ItemGroup>
@@ -279,7 +273,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>3428</DevelopmentServerPort>
+          <DevelopmentServerPort>25555</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

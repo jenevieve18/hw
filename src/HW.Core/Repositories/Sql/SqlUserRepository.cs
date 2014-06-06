@@ -35,7 +35,7 @@ VALUES ({0},{1},{2},{3},{4})",
 				profileID,
 				bqID,
 				(valueInt == 0 ? "NULL" : valueInt.ToString()),
-				(valueText == "" ? "NULL" : "'" + valueText.Replace("'", "") + "'"),
+				(valueText == null || valueText == "" ? "NULL" : "'" + valueText.Replace("'", "") + "'"),
 				(valueDate == null ? "NULL" : "'" + valueDate.Value.ToString("yyyy-MM-dd") + "'")
 			);
 			Db.exec(query);
@@ -286,7 +286,7 @@ WHERE u2.Email = '{0}' OR si.Email = '{0}'",
 				@"
 SELECT TOP 1 UserProfileID
 FROM UserProfile
-WHERE UserID = {1} ORDER BY UserProfileID DESC",
+WHERE UserID = {0} ORDER BY UserProfileID DESC",
 				userID
 			);
 			using (SqlDataReader rs = Db.rs(query)) {
@@ -498,7 +498,7 @@ AND upru.UserID = {2}",
 		public IList<User> Find2(int sponsorID, int sponsorAdminID)
 		{
 			string j = sponsorAdminID != -1
-				? "INNER JOIN SponsorAdminDepartment sad ON si.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = " + sponsorAdminID + " AND "
+                ? string.Format("INNER JOIN SponsorAdminDepartment sad ON si.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
 				: "WHERE ";
 			string query = string.Format(
 				@"

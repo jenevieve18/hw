@@ -85,7 +85,12 @@ namespace HW.Core.Repositories.Sql
 		
 		protected string GetString(SqlDataReader rs, int index)
 		{
-			return rs.IsDBNull(index) ? null : rs.GetString(index);
+			return GetString(rs, index, null);
+		}
+		
+		protected string GetString(SqlDataReader rs, int index, string def)
+		{
+			return rs.IsDBNull(index) ? def : rs.GetString(index);
 		}
 		
 		protected bool GetBoolean(SqlDataReader rs, int index)
