@@ -1162,7 +1162,6 @@ namespace HW.Grp
 //								")"
 //							);
 //							Db.exec(query);
-							Response.Write(upbq.ToString());
 							userRepository.SaveUserProfileBackgroundQuestion(profileID, upbq.BackgroundQuestion.Id, upbq.ValueInt, upbq.ValueText, upbq.ValueDate);
 						}
 //						rs3.Close();
