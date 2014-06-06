@@ -88,7 +88,7 @@
             %>      
                   <li>
                       <label style="font-size:small;font-weight:700;"><%=questText %></label>
-                      <input type="range" name="myslider" <%=idName%> value="0" min="1" max="101" data-mini="true" />  
+                      <input type="range" name="myslider" <%=idName%> value="0" min="1" max="100" data-mini="true" />  
 
                       <%
                             

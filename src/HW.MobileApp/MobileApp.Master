@@ -11,6 +11,9 @@
     <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
+
+    
+
 </head>
 <body>
     <form id="form1" runat="server">

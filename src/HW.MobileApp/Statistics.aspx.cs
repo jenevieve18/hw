@@ -5,25 +5,78 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Core.Helpers;
+using System.Text.RegularExpressions;
 
 namespace HW.MobileApp
 {
     public partial class Statistics : System.Web.UI.Page
     {
-        HWService.ServiceSoap service = new HWService.ServiceSoapClient();
-        protected List<HWService.Question> questions = new List<HWService.Question>();
+        protected HWService.ServiceSoap service = new HWService.ServiceSoapClient();
+        protected HWService.FormInstance formInstance;
+        protected HWService.FormInstanceFeedback[] fifeedback;
+        protected HWService.ExerciseInfo[] exercises;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            HtmlHelper.RedirectIf(Session["token"] == null, "Login.aspx");
+            
 
-            string token = Session["token"] == null ? "" : Session["token"].ToString();
-            var forms = service.FormEnum(new HWService.FormEnumRequest(token, 1, 10)).FormEnumResult;
-            foreach (var f in forms)
+            if (Session["token"] == null)
             {
-                var q = service.FormQuestionEnum(new HWService.FormQuestionEnumRequest(token, 1, f.formKey, 10)).FormQuestionEnumResult;
-                questions.AddRange(q);
+                Response.Redirect("Login.aspx");
             }
+
+            int language = int.Parse(Session["languageId"].ToString());
+            string token = Session["token"].ToString();
+            string formKey;
+
+            if (Session["formKey"] == null){
+                formKey = service.FormEnum(new HW.MobileApp.HWService.FormEnumRequest(token, language, 10)).FormEnumResult[0].formKey;
+            }
+            else formKey = Session["formKey"].ToString();
+
+            string formInstanceKey;
+            if (Session["formInstanceKey"] == null) formInstanceKey = "";
+            else formInstanceKey = Session["formInstanceKey"].ToString();
+
+            exercises = service.ExerciseEnum(new HWService.ExerciseEnumRequest(token,0,0,language,10)).ExerciseEnumResult;            
+            
+            formInstance = service.UserGetFormInstanceFeedback(token,formKey,formInstanceKey,language,10);
+            fifeedback = formInstance.fiv;
+
         }
+
+        protected string replaceExerciseTags(string actionPlan)
+        {
+            if (actionPlan == null || actionPlan == "") return null;
+            
+            string newString = "";
+            for (int c = 0; c < actionPlan.Length - 5; c++)
+            {
+                if (actionPlan.Substring(c, 5) == "<EXID")
+                {
+                    int id = int.Parse(actionPlan.Substring(c + 5, 3));
+                    newString+= "<a href='#' class='statlink'>"+getExerciseName(id)+"</a>";
+                    c = c + 8;
+                }
+                else newString += actionPlan[c];
+                
+            }
+            newString += actionPlan.Substring(actionPlan.Length - 5, 5);
+            return newString;
+        }
+
+        protected string getExerciseName(int exid)
+        { 
+            foreach(HWService.ExerciseInfo exe in exercises)
+            {
+                if (exid == exe.exerciseID)
+                    return exe.exercise;
+            }
+
+            return null;
+        }
+
     }
+
+
 }

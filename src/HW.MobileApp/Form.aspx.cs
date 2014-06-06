@@ -24,12 +24,14 @@ namespace HW.MobileApp
             else token = Session["token"].ToString();
 
 
-            int lang = service.UserGetInfo(token, 20).languageID;
+            int lang = int.Parse(Session["languageId"].ToString());
             
             try{
             formKey = service.FormEnum(new HW.MobileApp.HWService.FormEnumRequest(token, lang, 10)).FormEnumResult[0].formKey;
             }catch(Exception ex){ Response.Redirect("Login.aspx"); };
 
+            Session.Add("formKey",formKey);
+            
             question = service.FormQuestionEnum(new HW.MobileApp.HWService.FormQuestionEnumRequest(token,lang,formKey,10)).FormQuestionEnumResult;
             questNo = question.Count();
             
@@ -50,10 +52,12 @@ namespace HW.MobileApp
                 formAnswers[i].answer = pageAnswers[i];
             }
 
-
-
-            service.UserSetFormInstance(new HWService.UserSetFormInstanceRequest(token, formKey, formAnswers, 10));
-            Response.Redirect("Statistics.aspx");
+            string fik = service.UserSetFormInstance(new HWService.UserSetFormInstanceRequest(token, formKey, formAnswers, 10)).UserSetFormInstanceResult;
+            if(fik != null || fik != "")
+            {
+                Session.Add("formInstanceKey",fik);
+                Response.Redirect("Statistics.aspx");
+            }
         }
 
         
