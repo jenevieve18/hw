@@ -413,6 +413,8 @@ namespace HW.Grp
 		{
 			base.OnPreRender(e);
 
+            Page.RegisterStartupScript("SENT", "<script language='JavaScript'>alert('" + sponsor.EmailFrom + "');</script>");
+
 			if (incorrectPassword) {
 				Page.RegisterStartupScript("ERROR", "<script language='JavaScript'>alert('Incorrect password!');</script>");
 			}
