@@ -417,8 +417,7 @@ namespace HW.Grp
 				Page.RegisterStartupScript("ERROR", "<script language='JavaScript'>alert('Incorrect password!');</script>");
 			}
 			if (sent) {
-				string s = string.Format(@"<script language='JavaScript'>alert('{0} messages successfully sent.\\r\\n{1} incorrect email address(es) found.');</script>", HttpContext.Current.Request.QueryString["Sent"].ToString(), HttpContext.Current.Request.QueryString["Fail"].ToString());
-				Page.RegisterStartupScript("SENT", s);
+				Page.RegisterStartupScript("SENT", "<script language='JavaScript'>alert('" + HttpContext.Current.Request.QueryString["Sent"].ToString() + " messages successfully sent.\\r\\n" + HttpContext.Current.Request.QueryString["Fail"].ToString() + " incorrect email address(es) found.');</script>");
 			}
 		}
 	}
