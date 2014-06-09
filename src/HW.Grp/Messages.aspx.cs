@@ -384,7 +384,8 @@ namespace HW.Grp
 								if (Db.isEmail(u.Email)) {
 									try {
 //										success = Db.sendMail(u.Email, AllMessageSubject.Text, AllMessageBody.Text);
-										success = Db.sendMail(sponsor.EmailFrom, u.Email, AllMessageSubject.Text, AllMessageBody.Text);
+										//success = Db.sendMail(sponsor.EmailFrom, u.Email, AllMessageSubject.Text, AllMessageBody.Text);
+                                        success = Db.sendMail("reminder@healthwatch.se", u.Email, AllMessageSubject.Text, AllMessageBody.Text);
 									} catch (Exception) {
 										badEmail = true;
 									}
@@ -412,8 +413,6 @@ namespace HW.Grp
 		protected override void OnPreRender(EventArgs e)
 		{
 			base.OnPreRender(e);
-
-            Page.RegisterStartupScript("SENT", "<script language='JavaScript'>alert('" + sponsor.EmailFrom + "');</script>");
 
 			if (incorrectPassword) {
 				Page.RegisterStartupScript("ERROR", "<script language='JavaScript'>alert('Incorrect password!');</script>");
