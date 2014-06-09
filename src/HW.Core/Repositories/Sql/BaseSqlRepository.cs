@@ -93,6 +93,11 @@ namespace HW.Core.Repositories.Sql
 			return rs.IsDBNull(index) ? def : rs.GetString(index);
 		}
 		
+		protected string GetString(SqlDataReader rs, int index, string check, string def)
+		{
+			return GetString(rs, index, check) == check ? def : rs.GetString(index);
+		}
+		
 		protected bool GetBoolean(SqlDataReader rs, int index)
 		{
 			return rs.IsDBNull(index) ? false : rs.GetBoolean(index);

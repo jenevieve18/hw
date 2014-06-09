@@ -716,7 +716,7 @@ WHERE s.SponsorID = {0}",
 						Language = new Language {Id = GetInt32(rs, 29)},
 						MinUserCountToDisclose = GetInt32(rs, 30, 10),
 						ProjectRoundUnit = new ProjectRoundUnit { Id = GetInt32(rs, 31) },
-						EmailFrom = GetString(rs, 32, "info@healthwatch.se")
+						EmailFrom = GetString(rs, 32, "", "info@healthwatch.se")
 					};
 					return s;
 				}
