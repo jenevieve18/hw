@@ -383,9 +383,9 @@ namespace HW.Grp
 								bool badEmail = false;
 								if (Db.isEmail(u.Email)) {
 									try {
-//										success = Db.sendMail(u.Email, AllMessageSubject.Text, AllMessageBody.Text);
+										success = Db.sendMail(u.Email, AllMessageSubject.Text, AllMessageBody.Text);
 										//success = Db.sendMail(sponsor.EmailFrom, u.Email, AllMessageSubject.Text, AllMessageBody.Text);
-                                        success = Db.sendMail("reminder@healthwatch.se", u.Email, AllMessageSubject.Text, AllMessageBody.Text);
+                                        //success = Db.sendMail("reminder@healthwatch.se", u.Email, AllMessageSubject.Text, AllMessageBody.Text);
 									} catch (Exception) {
 										badEmail = true;
 									}
