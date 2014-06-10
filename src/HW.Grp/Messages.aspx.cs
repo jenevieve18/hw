@@ -40,12 +40,13 @@ namespace HW.Grp
 				
 				int sponsorAdminID;
 
+				sponsor = sponsorRepository.ReadSponsor(sponsorID);
 				if (!IsPostBack) {
 					sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 					var u = userRepository.a(sponsorID, sponsorAdminID);
 					AllMessageLastSent.Text = "Recipients: " + u + ", ";
 
-					sponsor = sponsorRepository.ReadSponsor(sponsorID);
+//					sponsor = sponsorRepository.ReadSponsor(sponsorID);
 					if (sponsor != null) {
 						InviteTxt.Text = sponsor.InviteText;
 						InviteReminderTxt.Text = sponsor.InviteReminderText;
