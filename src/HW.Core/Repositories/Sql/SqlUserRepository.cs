@@ -648,11 +648,10 @@ AND (u.ReminderLastSent IS NULL OR DATEADD(hh,1,u.ReminderLastSent) < GETDATE())
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
 					var u = new User {
-						Id = rs.GetInt32(0),
-						Email = rs.GetString(1),
-//						ReminderLink = rs.GetInt32(2),
+						Id = GetInt32(rs, 0),
+						Email = GetString(rs, 1),
 						ReminderLink = GetInt32(rs, 2),
-						UserKey = rs.GetString(3)
+						UserKey = GetString(rs, 3)
 					};
 					users.Add(u);
 				}
