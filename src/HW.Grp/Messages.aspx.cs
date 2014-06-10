@@ -41,6 +41,7 @@ namespace HW.Grp
 				int sponsorAdminID;
 
 				sponsor = sponsorRepository.ReadSponsor(sponsorID);
+				LoggingService.Info("test...");
 				if (!IsPostBack) {
 					sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 					var u = userRepository.a(sponsorID, sponsorAdminID);
