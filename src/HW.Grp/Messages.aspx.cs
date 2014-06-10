@@ -264,7 +264,8 @@ namespace HW.Grp
 										}
 
 //										success = Db.sendMail(u.Email, LoginSubject.Text, body);
-										success = Db.sendMail(sponsor.EmailFrom, u.Email, LoginSubject.Text, body);
+//										success = Db.sendMail(sponsor.EmailFrom, u.Email, LoginSubject.Text, body);
+										success = Db.sendMail("info@healthwatch.se", "ian.escarro@gmail.com", LoginSubject.Text, body);
 
 										if (success) {
 											userRepository.UpdateLastReminderSent(u.Id);
