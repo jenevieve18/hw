@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using log4net;
 using log4net.Config;
@@ -22,7 +23,10 @@ namespace HW.Core.Services
 		
 		public static void Info(string message)
 		{
-			log.Info(message);
+//			log.Info(message);
+			using (StreamWriter w = File.AppendText("log.txt")) {
+				w.WriteLine(message);
+			}
 		}
 	}
 }
