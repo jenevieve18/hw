@@ -11,6 +11,7 @@ using HW.Core.Helpers;
 using HW.Core.Models;
 using HW.Core.Repositories;
 using HW.Core.Repositories.Sql;
+using HW.Core.Services;
 
 namespace HW.Grp
 {
@@ -245,6 +246,7 @@ namespace HW.Grp
 
 							sponsorAdminId = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 							int selectedValue = Convert.ToInt32(LoginDays.SelectedValue);
+                            LoggingService.Info("test");
 							foreach (var u in userRepository.FindBySponsorWithLoginDays(sponsorID, sponsorAdminId, selectedValue)) {
 								bool success = false;
 								bool badEmail = false;
@@ -264,8 +266,9 @@ namespace HW.Grp
 										}
 
 //										success = Db.sendMail(u.Email, LoginSubject.Text, body);
-//										success = Db.sendMail(sponsor.EmailFrom, u.Email, LoginSubject.Text, body);
-										success = Db.sendMail("info@healthwatch.se", "ian.escarro@gmail.com", LoginSubject.Text, body);
+                                        LoggingService.Info(sponsor.EmailFrom);
+                                        LoggingService.Info(u.Email);
+										success = Db.sendMail(sponsor.EmailFrom, u.Email, LoginSubject.Text, body);
 
 										if (success) {
 											userRepository.UpdateLastReminderSent(u.Id);
