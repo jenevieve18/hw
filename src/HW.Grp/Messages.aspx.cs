@@ -251,7 +251,7 @@ namespace HW.Grp
 								bool success = false;
 								bool badEmail = false;
 								LoggingService.Info(Server.MapPath("log.txt"), u.Email);
-								LoggingService.Info(Server.MapPath("log.txt"), sponsor.EmailFrom);
+//								LoggingService.Info(Server.MapPath("log.txt"), sponsor.EmailFrom);
 								if (Db.isEmail(u.Email)) {
 									try {
 										string body = LoginTxt.Text;
