@@ -21,12 +21,16 @@ namespace HW.Core.Services
 			log.Debug(message);
 		}
 		
-		public static void Info(string message)
+		public static void Info(string path, string message)
 		{
-//			log.Info(message);
-			using (StreamWriter w = File.AppendText("log.txt")) {
+			using (StreamWriter w = File.AppendText(path)) {
 				w.WriteLine(message);
 			}
+		}
+		
+		public static void Info(string message)
+		{
+			log.Info(message);
 		}
 	}
 }

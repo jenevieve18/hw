@@ -246,7 +246,7 @@ namespace HW.Grp
 
 							sponsorAdminId = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 							int selectedValue = Convert.ToInt32(LoginDays.SelectedValue);
-                            LoggingService.Info("test");
+							LoggingService.Info(Server.MapPath("log.txt"), "test");
 							foreach (var u in userRepository.FindBySponsorWithLoginDays(sponsorID, sponsorAdminId, selectedValue)) {
 								bool success = false;
 								bool badEmail = false;
@@ -266,8 +266,8 @@ namespace HW.Grp
 										}
 
 //										success = Db.sendMail(u.Email, LoginSubject.Text, body);
-                                        LoggingService.Info(sponsor.EmailFrom);
-                                        LoggingService.Info(u.Email);
+										LoggingService.Info(Server.MapPath("log.txt"), sponsor.EmailFrom);
+										LoggingService.Info(Server.MapPath("log.txt"), u.Email);
 										success = Db.sendMail(sponsor.EmailFrom, u.Email, LoginSubject.Text, body);
 
 										if (success) {
