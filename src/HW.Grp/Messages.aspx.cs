@@ -250,6 +250,8 @@ namespace HW.Grp
 							foreach (var u in userRepository.FindBySponsorWithLoginDays(sponsorID, sponsorAdminId, selectedValue)) {
 								bool success = false;
 								bool badEmail = false;
+								LoggingService.Info(Server.MapPath("log.txt"), u.Email);
+								LoggingService.Info(Server.MapPath("log.txt"), sponsor.EmailFrom);
 								if (Db.isEmail(u.Email)) {
 									try {
 										string body = LoginTxt.Text;
@@ -266,8 +268,6 @@ namespace HW.Grp
 										}
 
 //										success = Db.sendMail(u.Email, LoginSubject.Text, body);
-										LoggingService.Info(Server.MapPath("log.txt"), sponsor.EmailFrom);
-										LoggingService.Info(Server.MapPath("log.txt"), u.Email);
 										success = Db.sendMail(sponsor.EmailFrom, u.Email, LoginSubject.Text, body);
 
 										if (success) {
