@@ -50,7 +50,7 @@ namespace HW.Core.Models
 		public virtual ReportPart ReportPart { get; set; }
 		public virtual Index Index { get; set; }
 		public virtual int SortOrder { get; set; }
-		public virtual WeightedQuestionOption QuestionOption { get; set; }
+		public virtual WeightedQuestionOption WeightedQuestionOption { get; set; }
 	}
 	
 	public class ReportPartLanguage : BaseModel

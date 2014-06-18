@@ -64,16 +64,16 @@ namespace HW.Core.Helpers
 				int bx = 0;
 				foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(p.Id, langID)) {
 					if (bx == 0) {
-						g.drawAxisExpl(c.QuestionOption.Languages[0].Question, bx + 4, false, true);
+						g.drawAxisExpl(c.WeightedQuestionOption.Languages[0].Question, bx + 4, false, true);
 						g.drawAxis(false);
 					} else {
-						g.drawAxisExpl(c.QuestionOption.Languages[0].Question, bx + 4, true, true);
+						g.drawAxisExpl(c.WeightedQuestionOption.Languages[0].Question, bx + 4, true, true);
 						g.drawAxis(true);
 					}
 					float lastVal = -1f;
 					int lastCX = 0;
 					cx = 0;
-					foreach (Answer aa in answerRepository.FindByQuestionAndOptionWithYearSpan(c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty)) {
+					foreach (Answer aa in answerRepository.FindByQuestionAndOptionWithYearSpan(c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, fy, ty)) {
 						if (bx == 0) {
 							g.drawBottomString(aa.SomeString, cx);
 						}
@@ -97,15 +97,15 @@ namespace HW.Core.Helpers
 				bool hasReference = false;
 
 				foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(p.Id, langID)) {
-					a = answerRepository.ReadByQuestionAndOption(answerID, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id);
+					a = answerRepository.ReadByQuestionAndOption(answerID, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id);
 					if (a != null) {
-						int color = c.QuestionOption.GetColor(a.Values[0].ValueInt);
+						int color = c.WeightedQuestionOption.GetColor(a.Values[0].ValueInt);
 						g.drawBar(color, ++cx, a.Values[0].ValueInt);
-						if (c.QuestionOption.TargetValue != 0) {
+						if (c.WeightedQuestionOption.TargetValue != 0) {
 							hasReference = true;
-							g.drawReference(cx, c.QuestionOption.TargetValue);
+							g.drawReference(cx, c.WeightedQuestionOption.TargetValue);
 						}
-						g.drawBottomString(c.QuestionOption.Languages[0].Question, cx, true);
+						g.drawBottomString(c.WeightedQuestionOption.Languages[0].Question, cx, true);
 					}
 				}
 
@@ -165,7 +165,7 @@ namespace HW.Core.Helpers
 					float lastVal = -1f;
 					int lastCX = 0;
 					cx = 0;
-					foreach (Answer aa in answerRepository.FindByQuestionAndOptionWithYearSpan(c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty)) {
+					foreach (Answer aa in answerRepository.FindByQuestionAndOptionWithYearSpan(c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, fy, ty)) {
 						if (bx == 0) {
 //							g.drawBottomString(aa.SomeString, cx);
 						}
@@ -189,11 +189,11 @@ namespace HW.Core.Helpers
 				bool hasReference = false;
 
 				foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(p.Id, langID)) {
-					a = answerRepository.ReadByQuestionAndOption(answerID, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id);
+					a = answerRepository.ReadByQuestionAndOption(answerID, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id);
 					if (a != null) {
-						int color = c.QuestionOption.GetColor(a.Values[0].ValueInt);
+						int color = c.WeightedQuestionOption.GetColor(a.Values[0].ValueInt);
 //						g.drawBar(color, ++cx, a.Values[0].ValueInt);
-						if (c.QuestionOption.TargetValue != 0) {
+						if (c.WeightedQuestionOption.TargetValue != 0) {
 							hasReference = true;
 //							g.drawReference(cx, c.QuestionOption.TargetValue);
 						}
@@ -411,7 +411,7 @@ namespace HW.Core.Helpers
 				List<IMinMax> minMaxes = new List<IMinMax>();
 				foreach (ReportPartComponent c in reportRepository.FindComponentsByPart(p.Id)) {
 					if (!hasGrouping) {
-						Answer a = answerRepository.ReadMinMax(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString);
+						Answer a = answerRepository.ReadMinMax(groupBy, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, fy, ty, sortString);
 						if (a != null) {
 							minMaxes.Add(a);
 						} else {
@@ -420,7 +420,7 @@ namespace HW.Core.Helpers
 					} else {
 						minMaxes.Add(new Answer());
 					}
-					indexes.Add(c.QuestionOption);
+					indexes.Add(c.WeightedQuestionOption);
 				}
 				g.SetMinMaxes(minMaxes);
 				g.DrawBackgroundFromIndexes(indexes);
@@ -476,7 +476,7 @@ namespace HW.Core.Helpers
 							);
 							cx = 1;
 							int lastDT = minDT - 1;
-							var answers = answerRepository.FindByQuestionAndOptionJoinedAndGrouped2(join[i].ToString(), groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty);
+							var answers = answerRepository.FindByQuestionAndOptionJoinedAndGrouped2(join[i].ToString(), groupBy, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, fy, ty);
 							Series s = new Series {
 								Description = (string)desc[i],
 								Color = bx + 4,
@@ -510,7 +510,7 @@ namespace HW.Core.Helpers
 					foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(p.Id, langID)) {
 						g.Explanations.Add(
 							new Explanation {
-								Description = c.QuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (point == Distribution.StandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+								Description = c.WeightedQuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (point == Distribution.StandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
 								Color = bx + 4,
 								Right = bx == 0 ? false : true,
 								Box = bx == 0 ? true : false,
@@ -520,7 +520,7 @@ namespace HW.Core.Helpers
 						cx = 1;
 						int lastDT = minDT - 1;
 						Series s = new Series { Color = bx + 4 };
-						var answers = answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString);
+						var answers = answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, fy, ty, sortString);
 						foreach (Answer a in answers) {
 							if (a.DT < minDT) {
 								continue;
@@ -731,7 +731,7 @@ namespace HW.Core.Helpers
 //							);
 							cx = 1;
 							int lastDT = minDT - 1;
-							var answers = answerRepository.FindByQuestionAndOptionJoinedAndGrouped2(join[i].ToString(), groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty);
+							var answers = answerRepository.FindByQuestionAndOptionJoinedAndGrouped2(join[i].ToString(), groupBy, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, fy, ty);
 //							Series s = new Series {
 //								Description = (string)desc[i],
 //								Color = bx + 4,
@@ -776,7 +776,7 @@ namespace HW.Core.Helpers
 						cx = 1;
 						int lastDT = minDT - 1;
 //						Series s = new Series { Color = bx + 4 };
-						var answers = answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString);
+						var answers = answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, fy, ty, sortString);
 						foreach (Answer a in answers) {
 							if (a.DT < minDT) {
 								continue;
@@ -941,7 +941,7 @@ namespace HW.Core.Helpers
 						foreach(string i in item) {
 							cx = 1;
 							int lastDT = minDT - 1;
-							var answers = answerRepository.FindByQuestionAndOptionJoinedAndGrouped2(join[i].ToString(), groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty);
+							var answers = answerRepository.FindByQuestionAndOptionJoinedAndGrouped2(join[i].ToString(), groupBy, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, fy, ty);
 							departments.Add(new Department { Name = (string)desc[i] });
 							foreach (Answer a in answers) {
 								if (a.DT < minDT) {
@@ -967,7 +967,7 @@ namespace HW.Core.Helpers
 					foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(p.Id, langID)) {
 						cx = 1;
 						int lastDT = minDT - 1;
-						var answers = answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.QuestionOption.Question.Id, c.QuestionOption.Option.Id, fy, ty, sortString);
+						var answers = answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, fy, ty, sortString);
 						foreach (Answer a in answers) {
 							if (a.DT < minDT) {
 								continue;
