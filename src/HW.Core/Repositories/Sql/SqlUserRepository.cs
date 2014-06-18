@@ -385,7 +385,8 @@ WHERE u.UserID <> {0} AND u.Email = '{1}'",
 				while (rs.Read()) {
 					var u = new User {
 						Id = GetInt32(rs, 0),
-						Sponsor = rs.IsDBNull(1) ? null : new Sponsor { Id = GetInt32(rs, 1) }
+//						Sponsor = rs.IsDBNull(1) ? null : new Sponsor { Id = GetInt32(rs, 1) }
+						Sponsor = rs.IsDBNull(1) ? null : new Sponsor { Name = GetString(rs, 1) }
 					};
 					users.Add(u);
 				}
