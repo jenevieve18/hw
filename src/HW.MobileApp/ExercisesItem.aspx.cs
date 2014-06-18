@@ -7,13 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace HW.MobileApp
 {
-    public partial class Exercises : System.Web.UI.Page
+    public partial class ExercisesItem : System.Web.UI.Page
     {
         protected HWService.ServiceSoap service = new HWService.ServiceSoapClient();
-        protected HWService.ExerciseArea[] exerciseArea;
-        
-        protected string token = "";
-        protected int lang = 2;
+        protected HWService.Exercise ex;
+        string token = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -23,10 +21,13 @@ namespace HW.MobileApp
             }
             else token = Session["token"].ToString();
 
+            if (Request.QueryString["varid"] == null) Response.Redirect("Login.aspx");
+
+            
             int lang = int.Parse(Session["languageId"].ToString());
-            exerciseArea = service.ExerciseAreaEnum(new HWService.ExerciseAreaEnumRequest(token,0,lang,10)).ExerciseAreaEnumResult;
+
+            ex = service.ExerciseExec(token, int.Parse(Request.QueryString["varid"]),10);
             
         }
-
     }
 }

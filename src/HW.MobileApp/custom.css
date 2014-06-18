@@ -1,0 +1,28 @@
+    input.ui-slider-input {
+        display : none ;
+    }
+    
+    div.ui-slider{width:95%;}
+    
+    .ui-slider-track {
+    height: 10px;
+    }
+    
+    .ui-slider-handle {
+        background: rgb(0,140,220);
+    }
+
+    div.ui-grid-d{
+        text-align:center;
+        font-size:x-small;
+        width:97%;
+    }
+    
+    div.ui-block-a
+    {   text-align:left;  }
+    div.ui-block-e
+    {   text-align:right;  }
+    
+    .question{ font-size:small;font-weight:700;}
+    
+    

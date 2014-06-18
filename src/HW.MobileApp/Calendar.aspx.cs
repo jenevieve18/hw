@@ -7,26 +7,31 @@ using System.Web.UI.WebControls;
 
 namespace HW.MobileApp
 {
-    public partial class Exercises : System.Web.UI.Page
+    public partial class Calendar : System.Web.UI.Page
     {
+
         protected HWService.ServiceSoap service = new HWService.ServiceSoapClient();
-        protected HWService.ExerciseArea[] exerciseArea;
+        protected HWService.Calendar[] calendar;
         
         protected string token = "";
-        protected int lang = 2;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
             if (Session["token"] == null)
             {
                 Response.Redirect("Login.aspx");
             }
             else token = Session["token"].ToString();
-
             int lang = int.Parse(Session["languageId"].ToString());
-            exerciseArea = service.ExerciseAreaEnum(new HWService.ExerciseAreaEnumRequest(token,0,lang,10)).ExerciseAreaEnumResult;
-            
-        }
 
+            int month = DateTime.Now.Month-1;
+            int year = DateTime.Now.Year;
+            if (month == 1){
+                month = 12;
+                year -= 1;
+            }
+            calendar = service.CalendarEnum(new HWService.CalendarEnumRequest(token, new DateTime(year, month, 1), DateTime.Now, lang, 10)).CalendarEnumResult;
+        }
     }
 }

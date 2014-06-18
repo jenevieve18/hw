@@ -9,10 +9,6 @@
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
-
-   
-    
-
     <script type="text/javascript">
         
         function getSliderValue() 
@@ -30,12 +26,7 @@
         }
     </script>
 
-    
-  
-</head>
-<body>
-
-<style type=text/css>
+    <style type=text/css>
         
     input.ui-slider-input {
         display : none ;
@@ -62,8 +53,14 @@
     div.ui-block-e
     {   text-align:right;  }
     
-    
+    .question{ font-size:small;font-weight:700;}
     </style>
+    
+  
+</head>
+<body>
+
+
 
     <form id="form1" runat="server">
     
@@ -90,7 +87,7 @@
                     var idName = "id='myslider"+ i + "'";
             %>      
                   <li>
-                      <label style="font-size:small;font-weight:700;"><%=questText %></label>
+                      <label class="question"><%=questText %></label>
                       <input type="range" name="myslider" <%=idName%> value="0" min="1" max="100" data-mini="true" />  
 
                       <%

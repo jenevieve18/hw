@@ -53,12 +53,15 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Calendar.aspx" />
     <Content Include="ChangeProfile.aspx" />
     <Content Include="ContactUs.aspx" />
     <Content Include="Dashboard.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Diary.aspx" />
     <Content Include="Exercises.aspx" />
+    <Content Include="ExercisesItem.aspx" />
+    <Content Include="ExercisesList.aspx" />
     <Content Include="ForgotPassword.aspx" />
     <Content Include="Form.aspx" />
     <Content Include="img\dash_cal.png" />
@@ -153,6 +156,13 @@
     <None Include="Service References\HWService\service.wsdl" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calendar.aspx.cs">
+      <DependentUpon>Calendar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Calendar.aspx.designer.cs">
+      <DependentUpon>Calendar.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ChangeProfile.aspx.cs">
       <DependentUpon>ChangeProfile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -194,6 +204,20 @@
     </Compile>
     <Compile Include="Exercises.aspx.designer.cs">
       <DependentUpon>Exercises.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ExercisesItem.aspx.cs">
+      <DependentUpon>ExercisesItem.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExercisesItem.aspx.designer.cs">
+      <DependentUpon>ExercisesItem.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ExercisesList.aspx.cs">
+      <DependentUpon>ExercisesList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExercisesList.aspx.designer.cs">
+      <DependentUpon>ExercisesList.aspx</DependentUpon>
     </Compile>
     <Compile Include="ForgotPassword.aspx.cs">
       <DependentUpon>ForgotPassword.aspx</DependentUpon>
