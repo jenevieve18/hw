@@ -364,6 +364,7 @@ namespace HW.Core.Helpers
 				foreach (var a in weeks[w]) {
 					if (a.Values.Count > 0) {
 						var v = a.GetIntValues();
+//						LoggingService.Info(v.ToStr());
 						writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = v.Mean, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
 						writer.WriteCell(new ExcelCell { Row = i + 1, Column = j, Value = v.StandardDeviation, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
 						writer.WriteCell(new ExcelCell { Row = i + 2, Column = j, Value = v.ConfidenceInterval, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
