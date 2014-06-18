@@ -204,19 +204,21 @@ namespace HW.Core.Helpers
 		{
 			foreach (var i in indexes) {
 				if (i.YellowLow > 0) {
-					drawBgFromString(minVal, Math.Min(maxVal, (float)Convert.ToDouble(i.YellowLow)), "FFA8A8");                             // red
-				}
-				if (i.YellowLow < 100 && i.GreenLow > 0) {
-					drawBgFromString(Math.Max(minVal, (float)Convert.ToDouble(i.YellowLow)), Math.Min(maxVal, (float)Convert.ToDouble(i.GreenLow)), "FFFEBE");    // yellow
-				}
-				if (i.GreenLow < 100 && i.GreenHigh > 0) {
-					drawBgFromString(Math.Max(minVal, (float)Convert.ToDouble(i.GreenLow)), Math.Min(maxVal, (float)Convert.ToDouble(i.GreenHigh)), "CCFFBB");   // green
-				}
-				if (i.GreenHigh < 100 && i.YellowHigh > 0) {
-					drawBgFromString(Math.Max(minVal, (float)Convert.ToDouble(i.GreenHigh)), Math.Min(maxVal, (float)Convert.ToDouble(i.YellowHigh)), "FFFEBE"); // yellow
-				}
-				if (i.YellowHigh < 100) {
-					drawBgFromString(Math.Max(minVal, (float)Convert.ToDouble(i.YellowHigh)), maxVal, "FFA8A8");                           // red
+					if (i.YellowLow > 0) {
+						drawBgFromString(minVal, Math.Min(maxVal, (float)Convert.ToDouble(i.YellowLow)), "FFA8A8");                             // red
+					}
+					if (i.YellowLow < 100 && i.GreenLow > 0) {
+						drawBgFromString(Math.Max(minVal, (float)Convert.ToDouble(i.YellowLow)), Math.Min(maxVal, (float)Convert.ToDouble(i.GreenLow)), "FFFEBE");    // yellow
+					}
+					if (i.GreenLow < 100 && i.GreenHigh > 0) {
+						drawBgFromString(Math.Max(minVal, (float)Convert.ToDouble(i.GreenLow)), Math.Min(maxVal, (float)Convert.ToDouble(i.GreenHigh)), "CCFFBB");   // green
+					}
+					if (i.GreenHigh < 100 && i.YellowHigh > 0) {
+						drawBgFromString(Math.Max(minVal, (float)Convert.ToDouble(i.GreenHigh)), Math.Min(maxVal, (float)Convert.ToDouble(i.YellowHigh)), "FFFEBE"); // yellow
+					}
+					if (i.YellowHigh < 100) {
+						drawBgFromString(Math.Max(minVal, (float)Convert.ToDouble(i.YellowHigh)), maxVal, "FFA8A8");                           // red
+					}
 				}
 			}
 		}
