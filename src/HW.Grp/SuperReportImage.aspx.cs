@@ -274,7 +274,7 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 //						g.setMinMax(0f, 100f);
 //					}
 //					rs2.Close();
-					Answer a = answerRepository.ReadMinMax(groupBy, p.QuestionOption.Question.Id, p.QuestionOption.Option.Id, Request.QueryString["FDT"], Request.QueryString["TDT"], rnds);
+					Answer a = answerRepository.ReadMinMax(groupBy, p.WeightedQuestionOption.Question.Id, p.WeightedQuestionOption.Option.Id, Request.QueryString["FDT"], Request.QueryString["TDT"], rnds);
 					if (a != null) {
 						g.setMinMax((float)Convert.ToDouble(a.Min), (float)Convert.ToDouble(a.Max));
 						g.roundMinMax();
@@ -284,29 +284,29 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 
 //					if (!rs.IsDBNull(3) && !rs.IsDBNull(4) && !rs.IsDBNull(5) && !rs.IsDBNull(6)) {
 //						if (rs.GetInt32(3) > 0) {
-					if (p.QuestionOption.YellowLow > 0) {
+					if (p.WeightedQuestionOption.YellowLow > 0) {
 //							g.drawBgFromString(g.minVal, Math.Min(g.maxVal, (float)Convert.ToDouble(rs.GetInt32(3))), "FFA8A8");                             // red
-						g.drawBgFromString(g.minVal, Math.Min(g.maxVal, (float)Convert.ToDouble(p.QuestionOption.YellowLow)), "FFA8A8");                             // red
+						g.drawBgFromString(g.minVal, Math.Min(g.maxVal, (float)Convert.ToDouble(p.WeightedQuestionOption.YellowLow)), "FFA8A8");                             // red
 					}
 //						if (rs.GetInt32(3) < 100 && rs.GetInt32(4) > 0) {
-					if (p.QuestionOption.YellowLow < 100 && p.QuestionOption.GreenLow > 0) {
+					if (p.WeightedQuestionOption.YellowLow < 100 && p.WeightedQuestionOption.GreenLow > 0) {
 //							g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(rs.GetInt32(3))), Math.Min(g.maxVal, (float)Convert.ToDouble(rs.GetInt32(4))), "FFFEBE");    // yellow
-						g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(p.QuestionOption.YellowLow)), Math.Min(g.maxVal, (float)Convert.ToDouble(p.QuestionOption.GreenLow)), "FFFEBE");    // yellow
+						g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(p.WeightedQuestionOption.YellowLow)), Math.Min(g.maxVal, (float)Convert.ToDouble(p.WeightedQuestionOption.GreenLow)), "FFFEBE");    // yellow
 					}
 //						if (rs.GetInt32(4) < 100 && rs.GetInt32(5) > 0) {
-					if (p.QuestionOption.GreenLow < 100 && p.QuestionOption.GreenHigh > 0) {
+					if (p.WeightedQuestionOption.GreenLow < 100 && p.WeightedQuestionOption.GreenHigh > 0) {
 //							g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(rs.GetInt32(4))), Math.Min(g.maxVal, (float)Convert.ToDouble(rs.GetInt32(5))), "CCFFBB");   // green
-						g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(p.QuestionOption.GreenLow)), Math.Min(g.maxVal, (float)Convert.ToDouble(p.QuestionOption.GreenHigh)), "CCFFBB");   // green
+						g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(p.WeightedQuestionOption.GreenLow)), Math.Min(g.maxVal, (float)Convert.ToDouble(p.WeightedQuestionOption.GreenHigh)), "CCFFBB");   // green
 					}
 //						if (rs.GetInt32(5) < 100 && rs.GetInt32(6) > 0) {
-					if (p.QuestionOption.GreenHigh < 100 && p.QuestionOption.YellowHigh > 0) {
+					if (p.WeightedQuestionOption.GreenHigh < 100 && p.WeightedQuestionOption.YellowHigh > 0) {
 //							g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(rs.GetInt32(5))), Math.Min(g.maxVal, (float)Convert.ToDouble(rs.GetInt32(6))), "FFFEBE"); // yellow
-						g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(p.QuestionOption.GreenHigh)), Math.Min(g.maxVal, (float)Convert.ToDouble(p.QuestionOption.YellowHigh)), "FFFEBE"); // yellow
+						g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(p.WeightedQuestionOption.GreenHigh)), Math.Min(g.maxVal, (float)Convert.ToDouble(p.WeightedQuestionOption.YellowHigh)), "FFFEBE"); // yellow
 					}
 //						if (rs.GetInt32(6) < 100) {
-					if (p.QuestionOption.YellowHigh < 100) {
+					if (p.WeightedQuestionOption.YellowHigh < 100) {
 //							g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(rs.GetInt32(6))), g.maxVal, "FFA8A8");                           // red
-						g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(p.QuestionOption.YellowHigh)), g.maxVal, "FFA8A8");                           // red
+						g.drawBgFromString(Math.Max(g.minVal, (float)Convert.ToDouble(p.WeightedQuestionOption.YellowHigh)), g.maxVal, "FFA8A8");                           // red
 					}
 //					}
 				}
@@ -439,7 +439,7 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 				var p = reportRepository.ReadComponentByPartAndLanguage(ConvertHelper.ToInt32(Request.QueryString["RPID"]), langID);
 				if (p != null) {
 //					g.drawAxisExpl(rs.GetString(1) + ", " + (langID == 1 ? "medelvärde" : "mean value") + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""), 20, false, false);
-					g.drawAxisExpl(p.QuestionOption.Languages[0].Question + ", " + (langID == 1 ? "medelvärde" : "mean value") + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""), 20, false, false);
+					g.drawAxisExpl(p.WeightedQuestionOption.Languages[0].Question + ", " + (langID == 1 ? "medelvärde" : "mean value") + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""), 20, false, false);
 					g.drawAxis(false);
 
 					g.drawColorExplBox(Request.QueryString["R1"].ToString(), 4, 300, 20);
@@ -484,7 +484,7 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 //					);
 //					SqlDataReader rs2 = Db.rs(query, "eFormSqlConnection");
 //					while (rs2.Read()) {
-					foreach (var a in answerRepository.FindByQuestionAndOptionGrouped3(groupBy, p.QuestionOption.Question.Id, p.QuestionOption.Option.Id, join1, yearFrom, yearTo, rnds1)) {
+					foreach (var a in answerRepository.FindByQuestionAndOptionGrouped3(groupBy, p.WeightedQuestionOption.Question.Id, p.WeightedQuestionOption.Option.Id, join1, yearFrom, yearTo, rnds1)) {
 //						while (lastDT + 1 < rs2.GetInt32(0)) {
 						while (lastDT + 1 < a.DT) {
 							lastDT++;
@@ -566,7 +566,7 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 //						);
 //						rs2 = Db.rs(query, "eFormSqlConnection");
 //						while (rs2.Read()) {
-						foreach (var a in answerRepository.FindByQuestionAndOptionGrouped3(groupBy, p.QuestionOption.Question.Id, p.QuestionOption.Option.Id, join2, Request.QueryString["FDT"], Request.QueryString["TDT"], rnds2)) {
+						foreach (var a in answerRepository.FindByQuestionAndOptionGrouped3(groupBy, p.WeightedQuestionOption.Question.Id, p.WeightedQuestionOption.Option.Id, join2, Request.QueryString["FDT"], Request.QueryString["TDT"], rnds2)) {
 //							while (lastDT + 1 < rs2.GetInt32(0)) {
 							while (lastDT + 1 < a.DT) {
 								lastDT++;

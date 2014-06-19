@@ -50,18 +50,20 @@ namespace HW.MobileApp
             if (actionPlan == null || actionPlan == "") return null;
             
             string newString = "";
-            for (int c = 0; c < actionPlan.Length - 5; c++)
+            for (int c = 0; c < actionPlan.Length ; c++)
             {
-                if (actionPlan.Substring(c, 5) == "<EXID")
-                {
-                    int id = int.Parse(actionPlan.Substring(c + 5, 3));
-                    newString+= "<a href='#' class='statlink'>"+getExerciseName(id)+"</a>";
-                    c = c + 8;
-                }
-                else newString += actionPlan[c];
+
+                if (c + 5 < actionPlan.Length - 5 & actionPlan.Substring(c, 5) == "<EXID")
+                    {
+                        int id = int.Parse(actionPlan.Substring(c + 5, 3));
+                        newString += "<a href='ExercisesItem.aspx?varid=" + getExerciseVariant(id) + "' class='statlink'>" + getExerciseName(id) + "</a>";
+                        c = c + 8;
+                    }
+                    else newString += actionPlan[c];
+                
                 
             }
-            newString += actionPlan.Substring(actionPlan.Length - 5, 5);
+          //  newString += actionPlan.Substring(actionPlan.Length - 5, 5);
             return newString;
         }
 
@@ -71,6 +73,17 @@ namespace HW.MobileApp
             {
                 if (exid == exe.exerciseID)
                     return exe.exercise;
+            }
+
+            return null;
+        }
+
+        protected string getExerciseVariant(int exid)
+        {
+            foreach (HWService.ExerciseInfo exe in exercises)
+            {
+                if (exid == exe.exerciseID)
+                    return exe.exerciseVariant[0].exerciseVariantLangID+"" ;
             }
 
             return null;

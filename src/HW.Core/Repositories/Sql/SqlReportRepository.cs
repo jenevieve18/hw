@@ -27,12 +27,12 @@ ORDER BY rpc.SortOrder",
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				if (rs.Read()) {
 					var c = new ReportPartComponent();
-					c.QuestionOption = new WeightedQuestionOption {
+					c.WeightedQuestionOption = new WeightedQuestionOption {
 						Id = GetInt32(rs, 0),
 						Question = new Question { Id = rs.GetInt32(2) },
 						Option = new Option { Id = rs.GetInt32(3) }
 					};
-					c.QuestionOption.Languages = new List<WeightedQuestionOptionLanguage>(
+					c.WeightedQuestionOption.Languages = new List<WeightedQuestionOptionLanguage>(
 						new WeightedQuestionOptionLanguage[] {
 							new WeightedQuestionOptionLanguage { Question = GetString(rs, 1) }
 						}
@@ -270,10 +270,10 @@ ORDER BY rpc.SortOrder",
 					c.Id = rs.GetInt32(0);
 					c.Index = new Index {
 						TargetValue = rs.GetInt32(2),
-						YellowLow = rs.GetInt32(3),
-						GreenLow = rs.GetInt32(4),
-						GreenHigh = rs.GetInt32(5),
-						YellowHigh = rs.GetInt32(6)
+						YellowLow = GetInt32(rs, 3, -1),
+						GreenLow = GetInt32(rs, 4, -1),
+						GreenHigh = GetInt32(rs, 5, -1),
+						YellowHigh = GetInt32(rs, 6, -1)
 					};
 					c.Index.Parts = new List<IndexPart>(rs.GetInt32(1));
 					components.Add(c);
@@ -303,12 +303,12 @@ ORDER BY rpc.SortOrder",
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				while (rs.Read()) {
 					var c = new ReportPartComponent();
-					c.QuestionOption = new WeightedQuestionOption {
+					c.WeightedQuestionOption = new WeightedQuestionOption {
 						Id = rs.GetInt32(0),
-						YellowLow = rs.GetInt32(1),
-						GreenLow = rs.GetInt32(2),
-						GreenHigh = rs.GetInt32(3),
-						YellowHigh = rs.GetInt32(4),
+						YellowLow = GetInt32(rs, 1, -1),
+						GreenLow = GetInt32(rs, 2, -1),
+						GreenHigh = GetInt32(rs, 3, -1),
+						YellowHigh = GetInt32(rs, 4, -1),
 						Question = new Question { Id = rs.GetInt32(5) },
 						Option = new Option { Id = rs.GetInt32(6) }
 					};
@@ -340,7 +340,7 @@ ORDER BY rpc.SortOrder",
 				while (rs.Read()) {
 					var c = new ReportPartComponent();
 					c.Id = rs.GetInt32(0);
-					c.QuestionOption = new WeightedQuestionOption {
+					c.WeightedQuestionOption = new WeightedQuestionOption {
 						Question = new Question { Id = rs.GetInt32(2) },
 						Option = new Option { Id = rs.GetInt32(3) }
 					};
@@ -379,10 +379,10 @@ ORDER BY rpc.SortOrder",
 					var q = new WeightedQuestionOption {
 						Id = rs.GetInt32(0),
 						TargetValue = rs.GetInt32(2),
-						YellowLow = rs.GetInt32(3),
-						GreenLow = rs.GetInt32(4),
-						GreenHigh = rs.GetInt32(5),
-						YellowHigh = rs.GetInt32(6),
+						YellowLow = GetInt32(rs, 3, -1),
+						GreenLow = GetInt32(rs, 4, -1),
+						GreenHigh = GetInt32(rs, 5, -1),
+						YellowHigh = GetInt32(rs, 6, -1),
 						Question = new Question { Id = rs.GetInt32(7) },
 						Option = new Option { Id = rs.GetInt32(8) }
 					};
@@ -391,7 +391,7 @@ ORDER BY rpc.SortOrder",
 							new WeightedQuestionOptionLanguage { Question = rs.GetString(1) }
 						}
 					);
-					c.QuestionOption = q;
+					c.WeightedQuestionOption = q;
 					components.Add(c);
 				}
 			}

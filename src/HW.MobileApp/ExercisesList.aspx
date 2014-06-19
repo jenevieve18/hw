@@ -1,8 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MobileApp.Master" AutoEventWireup="true" CodeBehind="ExercisesList.aspx.cs" Inherits="HW.MobileApp.ExercisesList" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style type="text/css">
-        img {margin-top:13px;}
-    </style>
+    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -49,9 +47,9 @@
             var varid = "href='ExercisesItem.aspx?varid="+ex.exerciseVariant[0].exerciseVariantLangID+"'";%>
     <li>
         <a <%=varid %>>
-        <% var src = "src='" + ex.exerciseImage + "'"; %>
+        <% var src = "src='" + ex.exerciseImage + "'"; if(ex.exerciseImage!=null){ %>
 
-        <img <%=src %>>
+        <img class="exerciseimg" <%=src %>><%} %>
 
         <h2><%=ex.exercise %></h2>
         <p><%=ex.exerciseTeaser %></p>

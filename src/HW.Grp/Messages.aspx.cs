@@ -11,6 +11,7 @@ using HW.Core.Helpers;
 using HW.Core.Models;
 using HW.Core.Repositories;
 using HW.Core.Repositories.Sql;
+using HW.Core.Services;
 
 namespace HW.Grp
 {
@@ -39,12 +40,13 @@ namespace HW.Grp
 				
 				int sponsorAdminID;
 
+				sponsor = sponsorRepository.ReadSponsor(sponsorID);
 				if (!IsPostBack) {
 					sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 					var u = userRepository.a(sponsorID, sponsorAdminID);
 					AllMessageLastSent.Text = "Recipients: " + u + ", ";
 
-					sponsor = sponsorRepository.ReadSponsor(sponsorID);
+//					sponsor = sponsorRepository.ReadSponsor(sponsorID);
 					if (sponsor != null) {
 						InviteTxt.Text = sponsor.InviteText;
 						InviteReminderTxt.Text = sponsor.InviteReminderText;
@@ -383,8 +385,9 @@ namespace HW.Grp
 								bool badEmail = false;
 								if (Db.isEmail(u.Email)) {
 									try {
-//										success = Db.sendMail(u.Email, AllMessageSubject.Text, AllMessageBody.Text);
-										success = Db.sendMail(sponsor.EmailFrom, u.Email, AllMessageSubject.Text, AllMessageBody.Text);
+										success = Db.sendMail(u.Email, AllMessageSubject.Text, AllMessageBody.Text);
+										//success = Db.sendMail(sponsor.EmailFrom, u.Email, AllMessageSubject.Text, AllMessageBody.Text);
+                                        //success = Db.sendMail("reminder@healthwatch.se", u.Email, AllMessageSubject.Text, AllMessageBody.Text);
 									} catch (Exception) {
 										badEmail = true;
 									}

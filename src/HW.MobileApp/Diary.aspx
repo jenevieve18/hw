@@ -7,52 +7,15 @@
 *no measurement and activities page
 
 -->
-  <style type="text/css">
-    .minihead
-    {
-        font-size:x-small;
-        background-color:#494A48;
-        color:White;
-        height:10px;
-        
-    }
+
+
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+<div data-role="header" data-theme="b" data-position="fixed">
+
+
     
-    
-    
-    .mood1 {    background-image:url('http://clients.easyapp.se/healthwatch/images/dontKnow@2x.png');   }
-    .mood2 {    background-image:url('http://clients.easyapp.se/healthwatch/images/unhappy@2x.png');    }
-    .mood3 {    background-image:url('http://clients.easyapp.se/healthwatch/images/neutral@2x.png');    }
-    .mood4 {    background-image:url('http://clients.easyapp.se/healthwatch/images/happy@2x.png');      }
-    .image{ 
-        background-repeat: no-repeat;
-        background-position:center center;
-        background-size:30px;
-        } 
-
-     #mood{border-width:0px;margin:0px 0px 0px 0px;width:100%;}
-
-    table{
-        border-collapse:collapse;
-        
-        height:90px;
-        width:100%;
-        margin:0px 0px 0px 0px;}
-    td{
-        text-align:center;
-        vertical-align:bottom;
-        margin-top:60%;
-        border-right-style: solid;
-        border-left-style: solid;
-        border-width:1px;
-        font-size:small;
-        width:25%;
-        }
-
-        td.select { 
-            background-color:#A3A2A6;
-
-        }
-</style>
 <script type="text/javascript">
     function getMoodValue() {
         var selected = "";
@@ -82,7 +45,7 @@
         document.getElementById('m2').className = 'mood2 image';
         document.getElementById('m3').className = 'mood3 image';
         document.getElementById('m1').className = 'mood1 image';
-     }
+    }
 
     function mood1_onclick() {
         document.getElementById('dontknow').checked = 'true';
@@ -110,10 +73,9 @@
 
 </script>
 
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-<div data-role="header" data-theme="b" data-position="fixed">
+
+
     <a href="Dashboard.aspx" data-icon="arrow-l">My Health</a>
     <h1>Diary</h1>
     <a href="Calendar.aspx" data-icon="grid" data-iconpos="notext" style="position:inherit;right:87px;top:8px;">Delete</a>

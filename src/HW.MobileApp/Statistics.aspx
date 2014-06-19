@@ -6,63 +6,6 @@
 
 -->
 
-<style>
-    
-   #progressbar {
-    
-    border-radius: 10px; /* (height of inner div) / 2 + padding */
-    border:1px solid #D0D0D0;
-    
-    height:8px;
-    }
-
-    #progressbar > div {
-    height: 8px;
-    border-radius: 2px;
-    }
-    
-    
-    
-     
-    
-    
-    .green {background-image:url(http://clients.easyapp.se/healthwatch//images/green.png);background-position:center;}
-    .pink  {background-image:url(http://clients.easyapp.se/healthwatch//images/pink.png);background-position:center;}
-    .orange{background-image:url(http://clients.easyapp.se/healthwatch//images/orange.png);background-position:center;}
-    
-    .holder
-    {
-        position:absolute;       
-        height: 8px; 
-    }
-    
-    .upper
-    {
-        border-right:2px solid #ffffff;
-        border-left:2px solid #ffffff;
-        
-        
-     } 
-    
-    .lower
-    {
-        width:96%;
-        height: 8px;  
-        
-    }
-    
-    .statlink
-    {
-        background-image: url('http://clients.easyapp.se/healthwatch//images/detail_desk.gif');
-        background-repeat: no-repeat;
-        background-position: 0 50%;
-        text-decoration: none;
-        margin: -8px -5px -8px 3px;
-        padding: 8px 5px 8px 20px;
-    }
-    
-    
-</style>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -81,16 +24,16 @@
         <li>
 
             <div class="ui-grid-c" style="width:140%;">  
-                                <div class="ui-block-a" style="font-size:small;">
-                                <img style="height:20px;"
+                                <div class="ui-block-a areas" >
+                                <img class="statimg"
                                 src="http://clients.easyapp.se/healthwatch//images/green.png">&nbsp;Healthy level</div> 
                                 
-                                <div class="ui-block-b" style="font-size:small;">
-                                <img style="height:20px;"  
+                                <div class="ui-block-b areas" >
+                                <img class="statimg"
                                 src="http://clients.easyapp.se/healthwatch//images/orange.png"> &nbsp;Improvement needed</div>
                                 
-                                <div class="ui-block-c" style="font-size:small;">
-                                <img style="height:20px;" 
+                                <div class="ui-block-c areas" >
+                                <img class="statimg"
                                 src="http://clients.easyapp.se/healthwatch//images/pink.png">&nbsp;Unhealthy level</div>
             </div>
         </li>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using HW.Core.Services;
 
 namespace HW.Core.Helpers
 {
@@ -49,7 +50,8 @@ namespace HW.Core.Helpers
 
 		public double LowerBox {
 			get {
-				return GetMeanMedian(data.GetRange(0, data.Count / 2));
+//				return GetMeanMedian(data.GetRange(0, data.Count / 2));
+				return GetMeanMedian(data.GetRange(0, Math.Max(1, data.Count / 2)));
 //				double q = 0.25 * (data.Count);
 //				if (q % 1 == 0) {
 //					return data[(int)q];
@@ -64,8 +66,10 @@ namespace HW.Core.Helpers
 
 		public double UpperBox {
 			get {
-				int lower = data.Count % 2 != 0 ? data.Count / 2 + 1 : data.Count / 2;
-				return GetMeanMedian(data.GetRange(lower, data.Count / 2));
+//				int lower = data.Count % 2 != 0 ? data.Count / 2 + 1 : data.Count / 2;
+//				return GetMeanMedian(data.GetRange(lower, data.Count / 2));
+				int lower = data.Count % 2 != 0 && data.Count > 1 ? data.Count / 2 + 1 : data.Count / 2;
+				return GetMeanMedian(data.GetRange(lower, Math.Max(1, data.Count / 2)));
 //				double q = 0.75 * (data.Count);
 //				if (q % 1 == 0) {
 //					return data[(int)q];
@@ -114,9 +118,24 @@ namespace HW.Core.Helpers
 		{
 			return string.Format("[Lower Whisker: {0}, Lower Box: {1}, Median: {2}, Upper Box: {3}, Upper Whisker: {4}, Mean: {5}]", LowerWhisker, LowerBox, Median, UpperBox, UpperWhisker, Mean);
 		}
+		
+		public string ToStr()
+		{
+			string s = "[";
+			int i = 0;
+			foreach (var d in data) {
+				s += d.ToString();
+				if (i++ < data.Count - 1) {
+					s += ",";
+				}
+			}
+			s += "]";
+			return s;
+		}
 
 		double GetMeanMedian(List<double> data)
 		{
+			LoggingService.Info(ToStr());
 			if (data.Count % 2 != 0) {
 				return data[data.Count / 2];
 			} else {

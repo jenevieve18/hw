@@ -9,8 +9,24 @@ namespace HW.MobileApp
 {
     public partial class Default : System.Web.UI.Page
     {
+        HWService.ServiceSoap service = new HWService.ServiceSoapClient();
+
         protected void Page_Load(object sender, EventArgs e)
         {
+        }
+
+        protected void LoginButtonClick(object sender, EventArgs e)
+        {
+            var u = service.UserLogin(textBoxUsername.Text, textBoxPassword.Text, 10);
+            if (u.token != null && u.token != "")
+            {
+                Session.Add("token", u.token);
+                Response.Redirect("Dashboard.aspx");
+            }
+            else
+            {
+                labelMessage.Text = "Sorry, incorrect login details.";
+            }
         }
     }
 }

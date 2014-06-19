@@ -7,6 +7,7 @@
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
+    <link rel="stylesheet" href="/custom.css" />
     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
     
@@ -17,13 +18,15 @@
         <div data-role="page">
             <div data-role="header" data-theme="b" data-position="fixed">
                 <h1>All News</h1>
-                <a href="NewsCategories.aspx" data-role="button" class="ui-btn-right">Categories</a>
+                <a href="NewsCategories.aspx" rel="external" data-role="button" class="ui-btn-right">Categories</a>
             </div>
             <div data-role="content">
                 <ul data-role="listview">
                     <% foreach (var n in news) { %>
                         <li>
-                            <a href="#">
+                            <%var newslink = "href='NewsSummary.aspx?nid=" + n.newsID + "'"; %>
+                            <a <%=newslink %>>
+                                
                                 <h1><%= n.teaser %></h1>
                                 <p><%= n.newsCategory %></p>
                                 <p><%= n.DT.ToString("m") %></p>

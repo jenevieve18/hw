@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using HW.Core.Services;
 
 namespace HW.Core.Repositories.Sql
 {
@@ -91,6 +92,12 @@ namespace HW.Core.Repositories.Sql
 		protected string GetString(SqlDataReader rs, int index, string def)
 		{
 			return rs.IsDBNull(index) ? def : rs.GetString(index);
+		}
+		
+		protected string GetString(SqlDataReader rs, int index, string check, string def)
+		{
+			bool condition = GetString(rs, index, check) == check;
+			return condition ? def : rs.GetString(index);
 		}
 		
 		protected bool GetBoolean(SqlDataReader rs, int index)

@@ -21,15 +21,24 @@
             <div data-role="header" data-theme="b" data-position="fixed">
                 <a href="News.aspx" data-role="button" data-icon="arrow-l">Back</a>
                 <h1>&nbsp;</h1>
-                <div style="text-align:center" class="ui-bar-d">
-                    <div data-role="controlgroup" data-type="horizontal">
-                        <a href="#" data-role="button">International</a>
-                        <a href="#" data-role="button">Swedish</a>
-                    </div>
-                </div>
+                
             </div>
             <div data-role="content">
                 <ul data-role="listview">
+                    <li>
+                       
+                        <div data-role="navbar">
+                            <ul>
+                            
+                            <li><asp:LinkButton ID="btnInt" runat="server" OnClick="toEnglish">International</asp:LinkButton></li>
+                            <li><asp:LinkButton ID="btnSwe" runat="server" OnClick="toSwedish">Swedish</asp:LinkButton></li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </li>
+
+
                     <% foreach (var c in categories) { %>
                         <li><a href="#"><%= c.newsCategory %></a></li>
                     <% } %>

@@ -7,64 +7,38 @@
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
+    <link rel="stylesheet" href="/custom.css" />
+	
     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
-    <script type="text/javascript">
-        
-        function getSliderValue() 
-        {
-            var sliderVal = "";
-            var x = <%= this.questNo %>;
-            
-            for(var i = 0;i<parseInt(x);i++)
-            {
-                sliderVal+= $("#myslider"+i).val()+"x";
-            }
-            
-            $('#answers').val(sliderVal);
-            document.getElementById('saveBtn').click();
-        }
-    </script>
-
-    <style type=text/css>
-        
-    input.ui-slider-input {
-        display : none ;
-    }
     
-    div.ui-slider{width:95%;}
     
-    .ui-slider-track {
-    height: 10px;
-    }
-    
-    .ui-slider-handle {
-        background: rgb(0,140,220);
-    }
-
-    div.ui-grid-d{
-        text-align:center;
-        font-size:x-small;
-        width:97%;
-    }
-    
-    div.ui-block-a
-    {   text-align:left;  }
-    div.ui-block-e
-    {   text-align:right;  }
-    
-    .question{ font-size:small;font-weight:700;}
-    </style>
     
   
 </head>
 <body>
-
-
-
+    
     <form id="form1" runat="server">
     
         <div data-role="page">
+
+             <script type="text/javascript">
+        
+             function getSliderValue() 
+             {
+                 var sliderVal = "";
+                 var x = <%= this.questNo %>;
+                  
+                 for(var i = 0;i<parseInt(x);i++)
+                {
+                    sliderVal+= $("#myslider"+i).val()+"x";
+                }
+            
+                $('#answers').val(sliderVal);
+                document.getElementById('saveBtn').click();
+            }
+            </script>   
+            
             <div data-role="header" data-theme="b" data-position="fixed">
                 <a href="Dashboard.aspx" data-icon="arrow-l">My Health</a>
                 <h1>Form</h1>
@@ -128,8 +102,10 @@
                     </ul>
                 </div>
             </div>
+            <a id="saveBtn" onServerClick="saveBtnClick" runat="server" style="display:none;"></a>
         </div>
-        <a id="saveBtn" onServerClick="saveBtnClick" runat="server" style="display:none;"></a>
+        
+        
     </form>
 </body>
 </html>

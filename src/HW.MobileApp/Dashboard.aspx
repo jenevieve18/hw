@@ -31,9 +31,9 @@ height: 126px;
                     <img style="width:180px" src="http://clients.easyapp.se/healthwatch/images/hw_logo@2x.png" />
                 </div>
                 <ul data-role="listview" data-inset="true">
-                    <li><a href="Form.aspx"><img class="ui-li-icon" src="img/dash_form.png" />Form</a></li>
+                    <li><a href="Form.aspx" rel="external"><img class="ui-li-icon" src="img/dash_form.png" />Form</a></li>
                     <li><a href="Statistics.aspx"><img class="ui-li-icon" src="img/dash_stats.png" />Statistics</a></li>
-                    <li><a href="Diary.aspx"><img class="ui-li-icon" src="img/dash_cal.png" />Diary</a></li>
+                    <li><a href="Diary.aspx" rel="external"><img class="ui-li-icon" src="img/dash_cal.png" />Diary</a></li>
                     <li><a href="Exercises.aspx"><img class="ui-li-icon" src="img/dash_exer.png" />Exercises</a></li>
                 </ul>
             </div>

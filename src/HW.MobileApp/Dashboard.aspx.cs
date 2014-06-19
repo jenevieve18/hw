@@ -17,7 +17,9 @@ namespace HW.MobileApp
             HtmlHelper.RedirectIf(Session["token"] == null, "Login.aspx");
 
             int lang = service.UserGetInfo(Session["token"].ToString(), 20).languageID;
-            Session.Add("languageId", lang);
+            if (Session["languageId"] == null)
+                Session.Add("languageId", lang);
+            else Session["languageId"] = lang;
         } 
     }
 }
