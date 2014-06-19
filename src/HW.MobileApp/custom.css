@@ -1,28 +1,84 @@
-    input.ui-slider-input {
-        display : none ;
-    }
-    
-    div.ui-slider{width:95%;}
-    
-    .ui-slider-track {
-    height: 10px;
-    }
-    
-    .ui-slider-handle {
-        background: rgb(0,140,220);
-    }
-
-    div.ui-grid-d{
-        text-align:center;
-        font-size:x-small;
-        width:97%;
-    }
-    
-    div.ui-block-a
-    {   text-align:left;  }
-    div.ui-block-e
-    {   text-align:right;  }
-    
+    input.ui-slider-input { display : none ;}
+    div.ui-slider{ width:95%;}
+	div.ui-grid-d{text-align:center;font-size:x-small;width:97%;}
+    div.ui-block-a{text-align:left;  }
+    div.ui-block-e{ text-align:right;  }
     .question{ font-size:small;font-weight:700;}
+    .areas{font-size:small;}
+	.ui-slider-track {height: 10px;}
+    .ui-slider-handle {background: rgb(0,140,220);}
+	.front_header_img {width: 235px;margin-left:0px;}
+	.exheader{ margin:0px 0px 0px 0px; padding:0px 0px 0px 0px;}
+    .padd{ margin-left:30px;}
+    .contentsmaller{font-size:smaller;}
+    .noleftpadding{padding-left:0px;}
+	.exerciseimg {margin-top:13px;}
+	
+	#progressbar {border-radius: 10px; /* (height of inner div) / 2 + padding */
+    border:1px solid #D0D0D0;height:8px;}
+	#progressbar > div {height: 8px;border-radius: 2px;}
+    
+    .green {background-image:url(http://clients.easyapp.se/healthwatch//images/green.png);background-position:center;}
+    .pink  {background-image:url(http://clients.easyapp.se/healthwatch//images/pink.png);background-position:center;}
+    .orange{background-image:url(http://clients.easyapp.se/healthwatch//images/orange.png);background-position:center;}
+    .holder{position:absolute;height: 8px; }
+    .upper{border-right:2px solid #ffffff;border-left:2px solid #ffffff;} 
+    .lower{width:96%;height: 8px;  }
+    .statlink{background-image: url('http://clients.easyapp.se/healthwatch//images/detail_desk.gif');
+        background-repeat: no-repeat;
+        background-position: 0 50%;
+        text-decoration: none;
+        margin: -8px -5px -8px 3px;
+        padding: 8px 5px 8px 20px;
+    }
+	.statimg{height:20px;}
+	 .minihead
+    {
+        font-size:x-small;
+        background-color:#494A48;
+        color:White;
+        height:10px;
+        
+    }
     
     
+    
+    .mood1 {    background-image:url('http://clients.easyapp.se/healthwatch/images/dontKnow@2x.png');   }
+    .mood2 {    background-image:url('http://clients.easyapp.se/healthwatch/images/unhappy@2x.png');    }
+    .mood3 {    background-image:url('http://clients.easyapp.se/healthwatch/images/neutral@2x.png');    }
+    .mood4 {    background-image:url('http://clients.easyapp.se/healthwatch/images/happy@2x.png');      }
+    .image{ 
+        background-repeat: no-repeat;
+        background-position:center center;
+        background-size:30px;
+        } 
+
+     #mood{border-width:0px;margin:0px 0px 0px 0px;width:100%;}
+
+    table{
+        border-collapse:collapse;
+        
+        height:90px;
+        width:100%;
+        margin:0px 0px 0px 0px;}
+    td{
+        text-align:center;
+        vertical-align:bottom;
+        margin-top:60%;
+        border-right-style: solid;
+        border-left-style: solid;
+        border-width:1px;
+        font-size:small;
+        width:25%;
+        }
+
+        td.select { 
+            background-color:#A3A2A6;
+
+        }
+	
+	.moodimg{width:30px;margin:14px 0px 0px 27px;padding: 0px 0px 0px 0px;}
+    .notes{height:60px;}
+    .events{ padding: 0px 0px 0px 0px; margin:0px 0px 0px 31px;display:inline;}
+    .time{ display:inline;margin-left:15px; font-size:small; }
+    .fade{ color:#7A7A7A;}
