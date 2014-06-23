@@ -53,6 +53,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ActivityMeasurement.aspx" />
     <Content Include="Calendar.aspx" />
     <Content Include="ChangeProfile.aspx" />
     <Content Include="ContactUs.aspx" />
@@ -70,6 +71,8 @@
     <Content Include="img\dash_stats.png" />
     <Content Include="Login.aspx" />
     <Content Include="Logout.aspx" />
+    <Content Include="MeasurementForm.aspx" />
+    <Content Include="MeasurementsList.aspx" />
     <Content Include="More.aspx" />
     <Content Include="News.aspx" />
     <Content Include="MobileApp.Master" />
@@ -135,6 +138,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Content Include="NewsCategories.aspx" />
+    <Content Include="NewsCategoriesList.aspx" />
     <Content Include="NewsSummary.aspx" />
     <Content Include="Reminders.aspx" />
     <Content Include="SecuritySettings.aspx" />
@@ -157,6 +161,13 @@
     <None Include="Service References\HWService\service.wsdl" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivityMeasurement.aspx.cs">
+      <DependentUpon>ActivityMeasurement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ActivityMeasurement.aspx.designer.cs">
+      <DependentUpon>ActivityMeasurement.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Calendar.aspx.cs">
       <DependentUpon>Calendar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -248,6 +259,20 @@
     <Compile Include="Logout.aspx.designer.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MeasurementForm.aspx.cs">
+      <DependentUpon>MeasurementForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MeasurementForm.aspx.designer.cs">
+      <DependentUpon>MeasurementForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MeasurementsList.aspx.cs">
+      <DependentUpon>MeasurementsList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MeasurementsList.aspx.designer.cs">
+      <DependentUpon>MeasurementsList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MobileApp.Master.cs">
       <DependentUpon>MobileApp.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -275,6 +300,13 @@
     </Compile>
     <Compile Include="NewsCategories.aspx.designer.cs">
       <DependentUpon>NewsCategories.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NewsCategoriesList.aspx.cs">
+      <DependentUpon>NewsCategoriesList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NewsCategoriesList.aspx.designer.cs">
+      <DependentUpon>NewsCategoriesList.aspx</DependentUpon>
     </Compile>
     <Compile Include="NewsSummary.aspx.cs">
       <DependentUpon>NewsSummary.aspx</DependentUpon>

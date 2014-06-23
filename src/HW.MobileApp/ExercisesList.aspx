@@ -45,6 +45,8 @@
         
         foreach(var ex in exercises){ 
             var varid = "href='ExercisesItem.aspx?varid="+ex.exerciseVariant[0].exerciseVariantLangID+"'";%>
+
+    
     <li>
         <a <%=varid %>>
         <% var src = "src='" + ex.exerciseImage + "'"; if(ex.exerciseImage!=null){ %>

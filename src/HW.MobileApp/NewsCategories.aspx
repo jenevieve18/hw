@@ -7,6 +7,7 @@
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
+    <link rel="stylesheet" href="/custom.css" />
     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
     
@@ -35,12 +36,25 @@
                             
                             </ul>
                         </div>
-                        
+                    <li class="minihead">
+                    Select a category to view
+                    </li>
+                    <li><a href="News.aspx">
+                    View all news
+                    </a></li>
                     </li>
 
 
                     <% foreach (var c in categories) { %>
-                        <li><a href="#"><%= c.newsCategory %></a></li>
+                        <li >
+                        <%var hreflink = "href='NewsCategoriesList.aspx?ncid=" + c.newsCategoryID + "'"; %>
+                        <a <%=hreflink %>>
+                        <% var imgsrc = "src='" + c.newsCategoryImage + "'"; if (c.newsCategoryImage != null)
+                           {%>
+                        
+                        <img class="newsimg" <%=imgsrc %>> <%} %>
+                        <%= c.newsCategory %></a>
+                        </li>
                     <% } %>
                 </ul>
             </div>

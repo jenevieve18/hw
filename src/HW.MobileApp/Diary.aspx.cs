@@ -25,6 +25,7 @@ namespace HW.MobileApp
             else token = Session["token"].ToString();
 
              lang = int.Parse(Session["languageId"].ToString());
+             
 
              if (Request.QueryString["date"] != null) {
                     var temp = Request.QueryString["date"];
@@ -34,14 +35,8 @@ namespace HW.MobileApp
                     int hour = int.Parse(temp.Substring(11, 2));
                     int min = int.Parse(temp.Substring(14, 2));
                     int sec = int.Parse(temp.Substring(17, 2));
-                    setdate = new DateTime(year,month,day,hour,min,sec);                                        
-                   
-                 /*
-                foreach (var i in service.CalendarEnum(new HWService.CalendarEnumRequest(token, setdate, setdate, lang, 10)).CalendarEnumResult)
-                {
-                    calendar = i;
-                }
-                */
+                    setdate = new DateTime(year,month,day,hour,min,sec);
+                    dateset.Value = setdate.ToString("yyyy-MM-ddThh:mm:ss");                     
              }
             
             
@@ -72,6 +67,14 @@ namespace HW.MobileApp
             {
                 Response.Redirect("Calendar.aspx");
             }
+        }
+
+        protected void activitylink_Click(object sender, EventArgs e)
+        {
+            if (dateset.Value != "")
+                Response.Redirect("ActivityMeasurement.aspx?datetime=" + dateset.Value);
+            else
+                Response.Redirect("ActivityMeasurement.aspx?datetime=" + DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss") + "");    
         }
 
 

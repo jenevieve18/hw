@@ -4,7 +4,7 @@
 
 *date greater than present can still be selected
 *previous date notes and moods is not set automatically
-*no measurement and activities page
+*querystring is prioritized over textbox input
 
 -->
 
@@ -66,9 +66,15 @@
     }
 
     function mood4_onclick() {
-        document.getElementById('unhappy').checked = 'true';
+        document.getElementById('happy').checked = 'true';
         default_mood();
         document.getElementById('m4').className = 'mood4 image select';
+    }
+
+    function setdatevalue() {
+        var hd = document.getElementById('<%=dateset.ClientID %>');
+        hd.value = document.getElementById('date').value+"T12:00:00";
+        
     }
 
 </script>
@@ -101,7 +107,7 @@
         <li class="minihead">Date</li>
          <li style="padding:0px 0px 0px 0px;border-width:0px;">
           
-            <input type="date" name="date" id="date" <%=date %> style="margin:0px 0px 0px 0px;"/>
+            <input type="date" onchange="setdatevalue()" name="date" id="date" <%=date %> style="margin:0px 0px 0px 0px;"/>
 
          </li>
          <li class="minihead">Notes</li>
@@ -139,7 +145,8 @@
             
          </li>
          <li class="minihead">Activities & Measurements</li>
-         <li><a href="dashboard.aspx">View Activities & Measurements</a>
+        
+         <li><asp:LinkButton ID=activitylink runat="server" onclick="activitylink_Click">View Activities & Measurements</asp:LinkButton>
          
          </li>
         

@@ -50,16 +50,19 @@ namespace HW.MobileApp
             if (actionPlan == null || actionPlan == "") return null;
             
             string newString = "";
-            for (int c = 0; c < actionPlan.Length ; c++)
+            for (int c = 0; c < actionPlan.Length; c++)
             {
-
-                if (c + 5 < actionPlan.Length - 5 & actionPlan.Substring(c, 5) == "<EXID")
+                if (c < actionPlan.Length - 5)
+                {
+                    if (actionPlan.Substring(c, 5) == "<EXID")
                     {
                         int id = int.Parse(actionPlan.Substring(c + 5, 3));
                         newString += "<a href='ExercisesItem.aspx?varid=" + getExerciseVariant(id) + "' class='statlink'>" + getExerciseName(id) + "</a>";
                         c = c + 8;
                     }
                     else newString += actionPlan[c];
+                }
+                else newString += actionPlan[c];
                 
                 
             }

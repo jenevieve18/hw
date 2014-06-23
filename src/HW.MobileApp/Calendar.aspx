@@ -55,7 +55,7 @@
                 <li >
                 
                     <div class="time fade"><%=cevent.time.ToString("hh:mm")%></div>
-                    <div class="events"><%=cevent.description%></div>
+                    <div class="events"><%=cevent.description%>  <%=cevent.result != null? " - "+cevent.result:"" %></div>
                 
                 </li>
 

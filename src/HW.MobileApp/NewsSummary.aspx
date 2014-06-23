@@ -5,7 +5,14 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
             <div data-role="header" data-theme="b" data-position="fixed">
+            <%if (Request.QueryString["ncid"] != null)
+              { %>
+                <a <%=back %> data-icon="arrow-l">Back</a>
+            <%}
+              else
+              { %>
                 <a href="News.aspx" data-icon="arrow-l">Back</a>
+            <%} %>
                 <h1>Summary</h1>
                 
             </div>

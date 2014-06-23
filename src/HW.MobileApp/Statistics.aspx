@@ -40,7 +40,7 @@
         
         <%
             foreach (var f in fifeedback){
-                if (f.feedbackTemplateID != 0){
+                if (f.feedbackTemplateID != 0 && f.value != "0"){
         %> 
         <li data-role="collapsible" data-content-theme="d" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u" data-inset="false" data-iconpos="right" style="padding:0px 0px 0px 0px;">
                     
@@ -76,8 +76,8 @@
                         var greenl = int.Parse(f.greenLow + "");
                         var yellowl = int.Parse(f.yellowLow + "");
                         
-                        var greenStat = "style='margin-left:" + greenl + "%;width:"+((greenh-greenl)-5)+"%;'";
-                        var orangeStat = "style='margin-left:" + yellowl + "%;width:" + ((yellowh-yellowl)-5) + "%;'";
+                        var greenStat = "style='left:" + (greenl -1) + "%;width:"+((greenh-greenl)-5)+"%;'";
+                        var orangeStat = "style='left:" + (yellowl -1)+ "%;width:" + ((yellowh-yellowl)-5) + "%;'";
                     
                     %>
                     <div data-role="content">
