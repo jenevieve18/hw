@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using HW.Core.Helpers;
 
 namespace HW.MobileApp
 {
@@ -17,12 +18,9 @@ namespace HW.MobileApp
         {
             string token="";
             
-            if (Session["token"] == null)
-            {
-                Response.Redirect("Login.aspx");
-            }
-            else token = Session["token"].ToString();
-
+            HtmlHelper.RedirectIf(Session["token"] == null, "Default.aspx");
+            
+            token = Session["token"].ToString();
 
             if (Request.QueryString["datetime"] != null)
             {

@@ -51,7 +51,7 @@ width: 235px;
     <form id="form1" runat="server">
         <div data-role="page">
             <div data-role="header" data-theme="b" data-position="fixed">
-                <a href="Login.aspx" data-role="button" data-icon="arrow-l">Back</a>
+                <a href="Default.aspx" data-role="button" data-icon="arrow-l">Back</a>
                 <h1>&nbsp;</h1>
             </div>
             <div data-role="content">

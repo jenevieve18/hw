@@ -69,7 +69,6 @@
     <Content Include="img\dash_exer.png" />
     <Content Include="img\dash_form.png" />
     <Content Include="img\dash_stats.png" />
-    <Content Include="Login.aspx" />
     <Content Include="Logout.aspx" />
     <Content Include="MeasurementForm.aspx" />
     <Content Include="MeasurementsList.aspx" />
@@ -244,13 +243,6 @@
     </Compile>
     <Compile Include="Form.aspx.designer.cs">
       <DependentUpon>Form.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Login.aspx.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Login.aspx.designer.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Logout.aspx.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
