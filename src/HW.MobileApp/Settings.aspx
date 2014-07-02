@@ -23,7 +23,7 @@
             <div data-role="content">
                 <ul data-role="listview">
 	                <li>
-                        <a href="ChangeProfile.aspx">
+                        <a href="ChangeProfile.aspx" rel="external">
                             <h1>Change Profile</h1>
                             <p>Language, email address and personal information</p>
                         </a>
