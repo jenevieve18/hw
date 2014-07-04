@@ -7,6 +7,7 @@
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
+    <link rel="stylesheet" href="/custom.css" />
     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
     
@@ -94,6 +95,7 @@ width: 235px;
                         <asp:TextBox ID="textBoxPassword" runat="server" placeholder="Password" TextMode="Password"></asp:TextBox>
                         <asp:Button ID="buttonLogin" runat="server" Text="Log In" OnClick="LoginButtonClick" />
                         <a href="ForgotPassword.aspx" data-role="button">Forgot password?</a>
+                        <a href="Register.aspx" data-role="button" rel="external">Create account</a>
                     </div>
                 </div>
             </div>

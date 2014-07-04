@@ -7,6 +7,7 @@
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
+    <link rel="stylesheet" href="/custom.css" />
     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
     
@@ -32,7 +33,7 @@ height: 126px;
                 </div>
                 <ul data-role="listview" data-inset="true">
                     <li><a href="Form.aspx" rel="external"><img class="ui-li-icon" src="img/dash_form.png" />Form</a></li>
-                    <li><a href="Statistics.aspx"><img class="ui-li-icon" src="img/dash_stats.png" />Statistics</a></li>
+                    <li><a href="Statistics.aspx"  rel="external"><img class="ui-li-icon" src="img/dash_stats.png" />Statistics</a></li>
                     <li><a href="Diary.aspx" rel="external"><img class="ui-li-icon" src="img/dash_cal.png" />Diary</a></li>
                     <li><a href="Exercises.aspx"><img class="ui-li-icon" src="img/dash_exer.png" />Exercises</a></li>
                 </ul>

@@ -28,12 +28,46 @@ namespace HW.MobileApp
             {
                 populateDropDownLists();
                 populateFormAnswers();
-                
+                cbTerms.Checked = true;
                 dropDownListOccupation_SelectedIndexChanged(sender, e);
             }
             
         }
 
+
+        protected void saveChangesBtn_Click(object sender, EventArgs e)
+        {   
+            Boolean flag1 = false;
+            Boolean flag2 = true;
+            Boolean flag3 = false;
+            
+            if (service.UserUpdateInfo(textBoxUsername.Text, textBoxEmail.Text, textBoxAlternateEmail.Text, token, 10)) flag1 = true;
+            if (textBoxPassword.Text != "")
+            { 
+                if(!service.UserUpdatePassword(textBoxPassword.Text,token,10) )flag2=false;
+            }
+            if (service.UserSetProfileQuestion(4,birthYear.SelectedValue+"-"+birthMonth.SelectedValue+"-"+birthDay.SelectedValue,token,10)&&
+                service.UserSetProfileQuestion(2,rdbGender.SelectedValue,token,10)&&
+                service.UserSetProfileQuestion(7,rdbStatus.SelectedValue,token,10)&&
+                service.UserSetProfileQuestion(9,dropDownListOccupation.SelectedValue,token,10)&&
+                service.UserSetProfileQuestion(8,dropDownListAnnualIncome.SelectedValue,token,10)&&
+                service.UserSetProfileQuestion(11,dropDownListEducation.SelectedValue,token,10)&&
+                cbTerms.Checked)
+            { flag3 = true; }
+
+            service.UserSetProfileQuestion(16,rdbOccupationType.SelectedValue,token,10);
+            service.UserSetProfileQuestion(19,rdbManagerial.SelectedValue,token,10);
+            service.UserSetProfileQuestion(10,dropDownListStudyArea.SelectedValue,token,10);
+            service.UserSetProfileQuestion(5,dropDownListIndustry.SelectedValue,token,10);
+            service.UserSetProfileQuestion(6,dropDownListJob.SelectedValue,token,10);
+            service.UserUpdateLanguage(token, int.Parse(dropDownListLanguage.SelectedValue), 10);
+            Session["languageID"] = int.Parse(dropDownListLanguage.SelectedValue);
+
+            if(flag1 && flag2 && flag3)
+                Response.Redirect("Settings.aspx");
+        }
+
+            
 
         public void populateFormAnswers()
         {
@@ -63,11 +97,11 @@ namespace HW.MobileApp
         }
 
         public void populateDropDownLists() {
-            birthYear.DataSource = populateBirthYear();
+            birthYear.DataSource = Enumerable.Range(1990, DateTime.Now.Year);
             birthYear.DataBind();
-            birthMonth.DataSource = populateBirthMonth();
+            birthMonth.DataSource = Enumerable.Range(1,12).Select(i => i.ToString("D2"));
             birthMonth.DataBind();
-            birthDay.DataSource = populateBirthDay();
+            birthDay.DataSource = Enumerable.Range(1, 31).Select(i => i.ToString("D2"));
             birthDay.DataBind();
             
             foreach (var p in profile)
@@ -124,32 +158,7 @@ namespace HW.MobileApp
             }
         }
 
-        public List<string> populateBirthYear() {
-            List<string> year = new List<string>();
-            year.Add("YYYY");
-            for (var i = 1900; i < DateTime.Now.Year; i++) 
-                year.Add(i+"");
-            return year;
-        }
-
-        public List<string> populateBirthMonth()
-        {
-            List<string> m = new List<string>();
-            m.Add("MM");
-            for (var i = 1; i <= 12; i++)
-                m.Add(i.ToString().PadLeft(2, '0'));
-            return m;
-        }
-
-        public List<string> populateBirthDay()
-        {
-            List<string> d = new List<string>();
-            d.Add("DD");
-            for (var i = 1; i <= 31; i++)
-                d.Add(i.ToString().PadLeft(2,'0'));
-            return d;
-        }
-
+       
         protected void dropDownListOccupation_SelectedIndexChanged(object sender, EventArgs e)
         {
            

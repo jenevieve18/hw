@@ -25,16 +25,19 @@
 
             <div class="ui-grid-c" style="width:140%;">  
                                 <div class="ui-block-a areas" >
+                                <div style="float:left;margin-right:5px;">
                                 <img class="statimg"
-                                src="http://clients.easyapp.se/healthwatch//images/green.png">&nbsp;Healthy level</div> 
+                                src="http://clients.easyapp.se/healthwatch//images/green.png"></div><div >Healthy level</div> </div>
                                 
                                 <div class="ui-block-b areas" >
+                                <div style="float:left;margin-right:5px;">
                                 <img class="statimg"
-                                src="http://clients.easyapp.se/healthwatch//images/orange.png"> &nbsp;Improvement needed</div>
+                                src="http://clients.easyapp.se/healthwatch//images/orange.png"></div> <div>Improvement needed</div></div>
                                 
                                 <div class="ui-block-c areas" >
+                                <div style="float:left;margin-right:5px;">
                                 <img class="statimg"
-                                src="http://clients.easyapp.se/healthwatch//images/pink.png">&nbsp;Unhealthy level</div>
+                                src="http://clients.easyapp.se/healthwatch//images/pink.png"></div><div>Unhealthy level</div></div>
             </div>
         </li>
         

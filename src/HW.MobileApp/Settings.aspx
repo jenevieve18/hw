@@ -18,7 +18,7 @@
             <div data-role="header" data-theme="b" data-position="fixed">
                 <a href="Dashboard.aspx" data-role="button" data-icon="arrow-l">My Health</a>
                 <h1>Settings</h1>
-                <a href="Logout.aspx" data-role="button" class="ui-btn-right">Logout</a>
+                <a href="Logout.aspx" data-role="button" class="ui-btn-right" rel="external">Logout</a>
             </div>
             <div data-role="content">
                 <ul data-role="listview">
@@ -29,7 +29,7 @@
                         </a>
                     </li>
 	                <li>
-                        <a href="Reminders.aspx">
+                        <a href="Reminders.aspx" rel="external">
                             <h1>Reminders</h1>
                             <p>Frequency</p>
                         </a>

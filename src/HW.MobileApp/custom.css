@@ -4,7 +4,7 @@
     div.ui-block-a{text-align:left;  }
     div.ui-block-e{ text-align:right;  }
     .question{ font-size:small;font-weight:700;}
-    .areas{font-size:small;}
+    .areas{font-size:x-small;}
 	.ui-slider-track {height: 10px;}
     .ui-slider-handle {background: rgb(0,140,220);}
 	.front_header_img {width: 235px;margin-left:0px;}
@@ -84,4 +84,4 @@
     .fade{ color:#7A7A7A;}
 	.newsimg{margin-top:13px;margin-left:15px;}
 	.center{text-align:center;}
-	
+	.req{ color:red;}

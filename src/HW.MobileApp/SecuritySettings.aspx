@@ -9,8 +9,8 @@
     <a href="#" data-icon="check">Save</a>
 </div>
 <div data-role="content">
-    <label><input type="checkbox" name="checkbox-0" />Stay logged in</label>
-    <label><input type="checkbox" name="checkbox-1" />Show Welcome Page</label>
+    <label><input type="checkbox" id="loggedin" runat="server" name="checkbox-0" />Stay logged in</label>
+    <label><input type="checkbox" id="welcome" runat="server" name="checkbox-1" />Show Welcome Page</label>
 </div>
 
 </asp:Content>
