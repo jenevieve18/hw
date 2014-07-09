@@ -23,10 +23,10 @@ namespace HW.MobileApp
         
         protected void Page_Load(object sender, EventArgs e)
         {
-            HtmlHelper.RedirectIf(Session["token"] == null, "Default.aspx");
+            HtmlHelper.RedirectIf(Session["token"] == null, "Login.aspx");
             token = Session["token"].ToString();
 
-            HtmlHelper.RedirectIf(Request.QueryString["exaid"] == null || Request.QueryString["sort"]==null, "Default.aspx");
+            HtmlHelper.RedirectIf(Request.QueryString["exaid"] == null || Request.QueryString["sort"]==null, "Login.aspx");
 
             int lang = int.Parse(Session["languageId"].ToString());
 

@@ -24,7 +24,7 @@
 
 
 <div data-role="header" data-theme="b" data-position="fixed">
-    <a href="Default.aspx#login" data-icon="arrow-l" rel="external">Cancel</a>
+    <a href="Login.aspx" data-icon="arrow-l" rel="external">Cancel</a>
     <h1>Register</h1>
     <a id="createBtn" onserverclick="createBtn_Click" runat="server" data-icon="check">Create</a>
 

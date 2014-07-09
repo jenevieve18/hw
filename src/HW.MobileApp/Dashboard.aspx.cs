@@ -14,7 +14,7 @@ namespace HW.MobileApp
         
         protected void Page_Load(object sender, EventArgs e)
         {
-            HtmlHelper.RedirectIf(Session["token"] == null, "Default.aspx");
+            HtmlHelper.RedirectIf(Session["token"] == null, "Login.aspx");
 
             int lang = service.UserGetInfo(Session["token"].ToString(), 20).languageID;
             if (Session["languageId"] == null)
