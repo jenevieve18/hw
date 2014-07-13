@@ -43,15 +43,8 @@
     
     
     
-    .mood1 {    background-image:url('http://clients.easyapp.se/healthwatch/images/dontKnow@2x.png');   }
-    .mood2 {    background-image:url('http://clients.easyapp.se/healthwatch/images/unhappy@2x.png');    }
-    .mood3 {    background-image:url('http://clients.easyapp.se/healthwatch/images/neutral@2x.png');    }
-    .mood4 {    background-image:url('http://clients.easyapp.se/healthwatch/images/happy@2x.png');      }
-    .image{ 
-        background-repeat: no-repeat;
-        background-position:center center;
-        background-size:30px;
-        } 
+    
+    .image{ 	width:40px; margin-top:15px} 
 
      #mood{border-width:0px;margin:0px 0px 0px 0px;width:100%;}
 

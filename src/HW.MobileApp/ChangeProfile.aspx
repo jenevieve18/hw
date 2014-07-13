@@ -67,7 +67,7 @@
     <div data-role="fieldcontain">
     <fieldset data-role="controlgroup" data-mini="true" >
     <legend><asp:Label ID="Label13" runat="server" AssociatedControlID="rdbStatus">Status<span class="req">*</span></asp:Label></legend>
-        <asp:RadioButtonList ID="rdbStatus" runat="server" >
+        <asp:RadioButtonList ID="rdbStatus" runat="server">
             <asp:ListItem Text="Married" Value="369" ></asp:ListItem>
             <asp:ListItem Text="Single" Value="370" ></asp:ListItem>
         </asp:RadioButtonList>
@@ -145,5 +145,6 @@
     .header { text-align:center; }
     .header h4 { margin-bottom:0 }
     .header img { width:235px }
+
 </style>
 </asp:Content>

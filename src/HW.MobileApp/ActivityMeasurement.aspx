@@ -4,7 +4,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <div data-role="header" data-theme="b" data-position="fixed">
-    <a href="Diary.aspx" data-icon="arrow-l" rel="external">Back</a>
+    <%var diarylink = "href='Diary.aspx?date="+date.ToString("yyyy-MM-ddTHH:mm:ss")+"'"; %>
+    <a <%=diarylink %> data-icon="arrow-l" rel="external">Back</a>
     <h1>Activities & Measurements</h1>
     <%var measlink = "href='MeasurementsList.aspx?datetime="+date.ToString("yyyy-MM-ddTHH:mm:ss")+"'"; %>
     <a <%=measlink %> data-icon="plus" data-iconpos="notext"></a>

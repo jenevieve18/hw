@@ -13,6 +13,15 @@ namespace HW.MobileApp {
     public partial class MeasurementForm {
         
         /// <summary>
+        /// saveBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor saveBtn;
+        
+        /// <summary>
         /// mcids control.
         /// </summary>
         /// <remarks>
@@ -49,12 +58,39 @@ namespace HW.MobileApp {
         protected global::System.Web.UI.WebControls.HiddenField inmins;
         
         /// <summary>
-        /// saveBtn control.
+        /// Label11 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor saveBtn;
+        protected global::System.Web.UI.WebControls.Label Label11;
+        
+        /// <summary>
+        /// timeHour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList timeHour;
+        
+        /// <summary>
+        /// timeMin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList timeMin;
+        
+        /// <summary>
+        /// placeHolderList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder placeHolderList;
     }
 }
