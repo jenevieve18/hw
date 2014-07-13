@@ -18,7 +18,7 @@ namespace HW.MobileApp
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            HtmlHelper.RedirectIf(Session["token"] == null, "Default.aspx");
+            HtmlHelper.RedirectIf(Session["token"] == null, "Login.aspx");
             token = Session["token"].ToString();
 
 
@@ -26,7 +26,7 @@ namespace HW.MobileApp
             
             try{
             formKey = service.FormEnum(new HW.MobileApp.HWService.FormEnumRequest(token, lang, 10)).FormEnumResult[0].formKey;
-            }catch(Exception ex){ Response.Redirect("Default.aspx"); };
+            }catch(Exception ex){ Response.Redirect("Login.aspx"); };
 
             Session.Add("formKey",formKey);
             
