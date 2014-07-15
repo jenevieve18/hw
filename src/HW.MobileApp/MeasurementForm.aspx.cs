@@ -15,13 +15,8 @@ namespace HW.MobileApp
         protected HWService.Measure[] measure;
         protected DateTime date;
         protected int measureNo;
-        string token;
-        int year ;
-        int month;
-        int day  ;
-        int hrs  ;
-        int min  ;
-        int sec;
+        protected string token;
+        protected int id;
 
         protected TextBox[] measureTextBox;
         protected Label[] measureLabel;
@@ -38,18 +33,18 @@ namespace HW.MobileApp
             if (Request.QueryString["datetime"] != null)
             {
                 var temp = Request.QueryString["datetime"];
-                year = int.Parse(temp.Substring(0, 4));
-                month = int.Parse(temp.Substring(5, 2));
-                day = int.Parse(temp.Substring(8, 2));
-                hrs = int.Parse(temp.Substring(11, 2));
-                min = int.Parse(temp.Substring(14, 2));
-                sec = int.Parse(temp.Substring(17, 2));
+                int year = int.Parse(temp.Substring(0, 4));
+                int month = int.Parse(temp.Substring(5, 2));
+                int day = int.Parse(temp.Substring(8, 2));
+                int hrs = int.Parse(temp.Substring(11, 2));
+                int min = int.Parse(temp.Substring(14, 2));
+                int sec = int.Parse(temp.Substring(17, 2));
 
                 date = new DateTime(year, month, day, hrs, min, sec);
 
             }
 
-            int id = int.Parse(Request.QueryString["mcid"]);
+            id = int.Parse(Request.QueryString["mcid"]);
 
 
 
@@ -92,7 +87,7 @@ namespace HW.MobileApp
 
                     }
 
-                    measureLabel[mc] = new Label() { AssociatedControlID = measureTextBox[mc].ID, Text = m.measureComponents[mc].measureComponent };
+                    measureLabel[mc] = new Label() { AssociatedControlID = measureTextBox[mc].ID, Text = m.measureComponents[mc].measureComponent + " <span style='color:#A0A0A0     ;'>" + m.measureComponents[mc].unit +"</span>"};
 
                     if (measureTextBox[mc].ID == "5" || measureTextBox[mc].ID == "6")
                     {
@@ -102,8 +97,7 @@ namespace HW.MobileApp
 
                     placeHolderList.Controls.Add(measureLabel[mc]);
                     placeHolderList.Controls.Add(measureTextBox[mc]);
-
-                    placeHolderList.Controls.Add(new Literal() { Text = " " + m.measureComponents[mc].unit + " </div>" });
+                    placeHolderList.Controls.Add(new Literal() { Text = "</div>" });
 
                   /*  if(Page.IsPostBack)
                         measureTextBox[mc] = placeHolderList.FindControl(m.measureComponents[mc].measureComponentID.ToString()) as TextBox;*/
@@ -140,7 +134,7 @@ namespace HW.MobileApp
             
             HWService.UserMeasureComponent[] mc = new HWService.UserMeasureComponent[measureNo];
 
-            DateTime newDate = new DateTime(year,month,day,int.Parse(timeHour.SelectedValue),int.Parse(timeMin.SelectedValue),sec);
+            DateTime newDate = new DateTime(date.Year,date.Month,date.Year,int.Parse(timeHour.SelectedValue),int.Parse(timeMin.SelectedValue),date.Second);
 
             foreach(var c in measureTextBox)
             {

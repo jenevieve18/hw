@@ -19,7 +19,7 @@
                 { %>
             <li>
                 <span><%=ev.description%>  <%=ev.result != null? " - "+ev.result:"" %></span>        
-                <p><%=ev.time.ToString("hh:mm")%></p>
+                <span style="font-size:small;"><br /><%=ev.time.ToString("hh:mm")%></span>
             </li>
         <%}
             }

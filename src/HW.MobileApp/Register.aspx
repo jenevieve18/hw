@@ -65,6 +65,100 @@
         <asp:TextBox data-mini="true" ID="textBoxAlternateEmail" runat="server"></asp:TextBox>
     </div>
 
+
+     <div class="header">
+        <h4>Personal Information</h4>
+        <img class="front_header_img" src="http://clients.easyapp.se/healthwatch/images/divider.gif">
+    </div>
+    <div data-role="fieldcontain">
+    
+    <fieldset data-role="controlgroup" data-mini="true" data-type="horizontal" >
+    <legend><asp:Label ID="Label11" runat="server" AssociatedControlID="birthYear">Birthdate<span class="req">*</span></asp:Label></legend>
+        <asp:DropDownList ID="birthYear" runat="server" >
+        </asp:DropDownList>
+        <asp:DropDownList ID="birthMonth" runat="server">
+        </asp:DropDownList>
+        <asp:DropDownList ID="birthDay" runat="server"  >
+        </asp:DropDownList>
+    </fieldset>
+    </div>   
+
+    <div data-role="fieldcontain">
+    <fieldset data-role="controlgroup" data-mini="true" >
+    <legend><asp:Label ID="Label12" runat="server" AssociatedControlID="rdbGender">Gender<span class="req">*</span></asp:Label></legend>
+        <asp:RadioButtonList ID="rdbGender" runat="server" >
+            <asp:ListItem Text="Male" Value="1" ></asp:ListItem>
+            <asp:ListItem Text="Female" Value="2" ></asp:ListItem>
+        </asp:RadioButtonList>
+    </fieldset>
+    </div>
+    <div data-role="fieldcontain">
+    <fieldset data-role="controlgroup" data-mini="true" >
+    <legend><asp:Label ID="Label13" runat="server" AssociatedControlID="rdbStatus">Status<span class="req">*</span></asp:Label></legend>
+        <asp:RadioButtonList ID="rdbStatus" runat="server">
+            <asp:ListItem Text="Married" Value="369" ></asp:ListItem>
+            <asp:ListItem Text="Single" Value="370" ></asp:ListItem>
+        </asp:RadioButtonList>
+    </fieldset>
+    </div>
+
+    <div data-role="fieldcontain">
+        <asp:Label ID="Label6" runat="server" AssociatedControlID="dropDownListOccupation">Occupation<span class="req">*</span></asp:Label>
+        <asp:DropDownList data-mini="true" ID="dropDownListOccupation" runat="server" 
+            onselectedindexchanged="dropDownListOccupation_SelectedIndexChanged"
+            AutoPostBack="true" ViewStateMode="Enabled" EnableViewState="true" >
+        </asp:DropDownList>
+    </div>
+    <div data-role="fieldcontain">
+    <fieldset data-role="controlgroup" data-mini="true" >
+    <legend><asp:Label ID="Label14" runat="server" Text="Occupation Type" AssociatedControlID="rdbOccupationType"></asp:Label></legend>
+        <asp:RadioButtonList ID="rdbOccupationType" runat="server" >
+            <asp:ListItem Text="Full time" Value="405"  ></asp:ListItem>
+            <asp:ListItem Text="Part time" Value="406" ></asp:ListItem>
+        </asp:RadioButtonList>
+    </fieldset>
+    </div>
+
+    
+       
+    <div data-role="fieldcontain" id="divIndustry" style="display:none;" runat="server">
+        <asp:Label ID="LblIndustry" runat="server" Text="Industry" AssociatedControlID="dropDownListIndustry"></asp:Label>
+        <asp:DropDownList data-mini="true" ID="dropDownListIndustry" runat="server">
+        </asp:DropDownList>
+    </div>
+    <div data-role="fieldcontain" id="divJob" style="display:none;" runat="server">
+        <asp:Label ID="LblJob" runat="server" Text="Job"  AssociatedControlID="dropDownListJob"></asp:Label>
+        <asp:DropDownList data-mini="true" ID="dropDownListJob" runat="server">
+        </asp:DropDownList>
+    </div>
+    <div data-role="fieldcontain" id="divManagerial" style="display:none;" runat="server">
+    <fieldset data-role="controlgroup" data-mini="true" >
+    <legend><asp:Label ID="LblManage" runat="server" Text="Managerial post with subordinate staff?" AssociatedControlID="rdbManagerial"></asp:Label></legend>
+        <asp:RadioButtonList ID="rdbManagerial" runat="server"  
+            ViewStateMode="Enabled" >
+            <asp:ListItem Text="Yes" Value="413" ></asp:ListItem>
+            <asp:ListItem Text="No" Value="412" ></asp:ListItem>
+        </asp:RadioButtonList>
+    </fieldset>
+    </div>
+    <div data-role="fieldcontain" id="divStudyArea" style="display:none;" runat="server">
+        <asp:Label ID="LblStudyArea" runat="server" Text="Study Area"  AssociatedControlID="dropDownListStudyArea"></asp:Label>
+        <asp:DropDownList data-mini="true" ID="dropDownListStudyArea"  runat="server">
+        </asp:DropDownList>
+    </div>
+    
+    
+
+    <div data-role="fieldcontain">
+        <asp:Label ID="Label9" runat="server" AssociatedControlID="dropDownListAnnualIncome">Annual Income<span class="req">*</span></asp:Label>
+        <asp:DropDownList data-mini="true" ID="dropDownListAnnualIncome" runat="server">
+        </asp:DropDownList>
+    </div>
+    <div data-role="fieldcontain">
+        <asp:Label ID="Label10" runat="server" AssociatedControlID="dropDownListEducation">Education<span class="req">*</span></asp:Label>
+        <asp:DropDownList data-mini="true" ID="dropDownListEducation" runat="server">
+        </asp:DropDownList>
+
     <div data-role="fieldcontain">
     <fieldset data-role="controlgroup">
         <legend><asp:Label ID="Label7" runat="server"><a target="_blank" href="https://healthwatch.se/policy.aspx?Rnd=876338515">Terms & Conditions of the Service</a>  <span class='req'>*</span></legend></asp:Label>
@@ -135,7 +229,7 @@ width: 235px;
                             
                             <img class="front_header_img" src="http://clients.easyapp.se/healthwatch/images/divider.gif">
                         </div>
-                        <p>You are now a member.</p>
+                        <p>You are now registered. Please login and edit profile.</p>
                     </div>
                 </div>
                 

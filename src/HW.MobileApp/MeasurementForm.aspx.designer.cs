@@ -22,42 +22,6 @@ namespace HW.MobileApp {
         protected global::System.Web.UI.HtmlControls.HtmlAnchor saveBtn;
         
         /// <summary>
-        /// mcids control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField mcids;
-        
-        /// <summary>
-        /// mcidvals control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField mcidvals;
-        
-        /// <summary>
-        /// inhours control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField inhours;
-        
-        /// <summary>
-        /// inmins control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField inmins;
-        
-        /// <summary>
         /// Label11 control.
         /// </summary>
         /// <remarks>

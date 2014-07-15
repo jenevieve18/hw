@@ -19,7 +19,7 @@ namespace HW.MobileApp
         protected void loginBtn_Click(object sender, EventArgs e) 
         {
             if (Session["token"] != null)
-            Response.Redirect("Dashboard.aspx");
+            Response.Redirect("ChangeProfile.aspx");
             
         }
 

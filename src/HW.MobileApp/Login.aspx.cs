@@ -13,6 +13,14 @@ namespace HW.MobileApp
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Request.Cookies["token"] != null)
+            {
+                if (Request.Cookies["token"].Value != null)
+                {
+                    Session.Add("token", Request.Cookies["token"].Value);
+                    Response.Redirect("Dashboard.aspx");
+                }
+            }
         }
 
         protected void LoginButtonClick(object sender, EventArgs e)

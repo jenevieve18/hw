@@ -20,6 +20,8 @@ namespace HW.MobileApp
             if (Session["languageId"] == null)
                 Session.Add("languageId", lang);
             else Session["languageId"] = lang;
+
+            
         } 
     }
 }
