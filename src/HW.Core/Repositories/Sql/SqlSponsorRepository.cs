@@ -403,7 +403,7 @@ WHERE SponsorInviteID = " + userId
 			return null;
 		}
 
-		public SponsorInvite ReadSponsorInviteBySponsor(int inviteId, int sponsorId)
+		public SponsorInvite ReadSponsorInviteBySponsor(int inviteID, int sponsorID)
 		{
 			string query = string.Format(
 				@"
@@ -415,36 +415,32 @@ SELECT s.InviteTxt,
 	u.ReminderLink,
 	LEFT(REPLACE(CONVERT(VARCHAR(255),u.UserKey),'-',''),12),
 	s.LoginTxt,
-	s.LoginSubject
+	s.LoginSubject,
+	s.SponsorID
 FROM Sponsor s
 INNER JOIN SponsorInvite si ON s.SponsorID = si.SponsorID
 LEFT OUTER JOIN [User] u ON u.UserID = si.UserID
-WHERE s.SponsorID = " + sponsorId + " AND si.SponsorInviteID = " + inviteId
+WHERE s.SponsorID = {0} AND si.SponsorInviteID = {1}",
+				sponsorID,
+				inviteID
 			);
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				if (rs.Read()) {
 					var i = new SponsorInvite {
-						Email = rs.GetString(2),
-						InvitationKey = rs.GetString(3),
-						/*User = new User {
-							Id = rs.GetInt32(4),
-							ReminderLink = rs.GetInt32(5),
-							UserKey = rs.GetString(6)
-						},*/
-						User = rs.IsDBNull(4)
-							? null
-							: new User
-						{
-							Id = rs.GetInt32(4),
-							//ReminderLink = rs.GetInt32(5),
+						Email = GetString(rs, 2),
+						InvitationKey = GetString(rs, 3),
+						User = rs.IsDBNull(4) ? null
+							: new User {
+							Id = GetInt32(rs, 4),
 							ReminderLink = GetInt32(rs, 5),
-							UserKey = rs.GetString(6)
+							UserKey = GetString(rs, 6)
 						},
 						Sponsor = new Sponsor {
-							InviteText = rs.GetString(0),
-							InviteSubject = rs.GetString(1),
-							LoginText = rs.GetString(7),
-							LoginSubject = rs.GetString(8)
+							InviteText = GetString(rs, 0),
+							InviteSubject = GetString(rs, 1),
+							LoginText = GetString(rs, 7),
+							LoginSubject = GetString(rs, 8),
+							Id = GetInt32(rs, 9)
 						}
 					};
 					return i;
