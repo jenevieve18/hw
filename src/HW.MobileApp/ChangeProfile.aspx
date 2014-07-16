@@ -57,20 +57,18 @@
 
     <div data-role="fieldcontain">
     <fieldset data-role="controlgroup" data-mini="true" >
-    <legend><asp:Label ID="Label12" runat="server" AssociatedControlID="rdbGender">Gender<span class="req">*</span></asp:Label></legend>
-        <asp:RadioButtonList ID="rdbGender" runat="server" >
-            <asp:ListItem Text="Male" Value="1" ></asp:ListItem>
-            <asp:ListItem Text="Female" Value="2" ></asp:ListItem>
-        </asp:RadioButtonList>
+    <legend><asp:Label ID="Label12" runat="server" >Gender<span class="req">*</span></asp:Label></legend>
+        <asp:RadioButton ID="rdbGenderMale"  GroupName="rdbGender" Text="Male" Value="1" runat="server" />
+        <asp:RadioButton ID="rdbGenderFemale" GroupName="rdbGender" Text="Female" Value="2" runat="server" />
+        
     </fieldset>
     </div>
     <div data-role="fieldcontain">
     <fieldset data-role="controlgroup" data-mini="true" >
-    <legend><asp:Label ID="Label13" runat="server" AssociatedControlID="rdbStatus">Status<span class="req">*</span></asp:Label></legend>
-        <asp:RadioButtonList ID="rdbStatus" runat="server" >
-            <asp:ListItem Text="Married" Value="369" ></asp:ListItem>
-            <asp:ListItem Text="Single" Value="370" ></asp:ListItem>
-        </asp:RadioButtonList>
+    <legend><asp:Label ID="Label13" runat="server" >Status<span class="req">*</span></asp:Label></legend>
+        <asp:RadioButton ID="rdbStatusMarried"  GroupName="rdbStatus" Text="Married" Value="369" runat="server" />
+        <asp:RadioButton ID="rdbStatusSingle" GroupName="rdbStatus" Text="Single" Value="370" runat="server" />
+        
     </fieldset>
     </div>
 
@@ -83,11 +81,10 @@
     </div>
     <div data-role="fieldcontain">
     <fieldset data-role="controlgroup" data-mini="true" >
-    <legend><asp:Label ID="Label14" runat="server" Text="Occupation Type" AssociatedControlID="rdbOccupationType"></asp:Label></legend>
-        <asp:RadioButtonList ID="rdbOccupationType" runat="server" >
-            <asp:ListItem Text="Full time" Value="405"  ></asp:ListItem>
-            <asp:ListItem Text="Part time" Value="406" ></asp:ListItem>
-        </asp:RadioButtonList>
+    <legend><asp:Label ID="Label14" runat="server" Text="Occupation Type" ></asp:Label></legend>
+        <asp:RadioButton ID="rdbOccupationTypeFull"  GroupName="rdbOccupationType" Text="Full time" Value="405" runat="server" />
+        <asp:RadioButton ID="rdbOccupationTypePart" GroupName="rdbOccupationType" Text="Part time" Value="406" runat="server" />
+       
     </fieldset>
     </div>
 
@@ -105,12 +102,10 @@
     </div>
     <div data-role="fieldcontain" id="divManagerial" style="display:none;" runat="server">
     <fieldset data-role="controlgroup" data-mini="true" >
-    <legend><asp:Label ID="LblManage" runat="server" Text="Managerial post with subordinate staff?" AssociatedControlID="rdbManagerial"></asp:Label></legend>
-        <asp:RadioButtonList ID="rdbManagerial" runat="server"  
-            ViewStateMode="Enabled" >
-            <asp:ListItem Text="Yes" Value="413" ></asp:ListItem>
-            <asp:ListItem Text="No" Value="412" ></asp:ListItem>
-        </asp:RadioButtonList>
+    <legend><asp:Label ID="LblManage" runat="server" Text="Managerial post with subordinate staff?" ></asp:Label></legend>
+        <asp:RadioButton ID="rdbMangerialYes"  GroupName="rdbMangerial" Text="Yes" Value="413" runat="server" />
+        <asp:RadioButton ID="rdbMangerialNo" GroupName="rdbMangerial" Text="No" Value="412" runat="server" />
+        
     </fieldset>
     </div>
     <div data-role="fieldcontain" id="divStudyArea" style="display:none;" runat="server">
@@ -145,5 +140,6 @@
     .header { text-align:center; }
     .header h4 { margin-bottom:0 }
     .header img { width:235px }
+
 </style>
 </asp:Content>

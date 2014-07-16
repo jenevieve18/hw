@@ -40,6 +40,24 @@ namespace HW.MobileApp
             Boolean flag1 = false;
             Boolean flag2 = true;
             Boolean flag3 = false;
+
+            var gender = "";
+            var status = "";
+            var occupationtype = "";
+            var managerial = "";
+
+            if (rdbGenderMale.Checked) gender = "1";
+            else if (rdbGenderFemale.Checked) gender = "2";
+
+            if (rdbStatusMarried.Checked) status = "369";
+            else if (rdbStatusSingle.Checked) status = "370";
+
+            if (rdbOccupationTypeFull.Checked) occupationtype = "405";
+            else if (rdbOccupationTypePart.Checked) occupationtype = "406";
+
+            if (rdbMangerialYes.Checked) managerial = "413";
+            else if (rdbMangerialNo.Checked) managerial = "412";
+
             
             if (service.UserUpdateInfo(textBoxUsername.Text, textBoxEmail.Text, textBoxAlternateEmail.Text, token, 10)) flag1 = true;
             if (textBoxPassword.Text != "")
@@ -47,16 +65,16 @@ namespace HW.MobileApp
                 if(!service.UserUpdatePassword(textBoxPassword.Text,token,10) )flag2=false;
             }
             if (service.UserSetProfileQuestion(4,birthYear.SelectedValue+"-"+birthMonth.SelectedValue+"-"+birthDay.SelectedValue,token,10)&&
-                service.UserSetProfileQuestion(2,rdbGender.SelectedValue,token,10)&&
-                service.UserSetProfileQuestion(7,rdbStatus.SelectedValue,token,10)&&
+                service.UserSetProfileQuestion(2,gender,token,10)&&
+                service.UserSetProfileQuestion(7,status,token,10)&&
                 service.UserSetProfileQuestion(9,dropDownListOccupation.SelectedValue,token,10)&&
                 service.UserSetProfileQuestion(8,dropDownListAnnualIncome.SelectedValue,token,10)&&
                 service.UserSetProfileQuestion(11,dropDownListEducation.SelectedValue,token,10)&&
                 cbTerms.Checked)
             { flag3 = true; }
 
-            service.UserSetProfileQuestion(16,rdbOccupationType.SelectedValue,token,10);
-            service.UserSetProfileQuestion(19,rdbManagerial.SelectedValue,token,10);
+            service.UserSetProfileQuestion(16,occupationtype,token,10);
+            service.UserSetProfileQuestion(19,managerial,token,10);
             service.UserSetProfileQuestion(10,dropDownListStudyArea.SelectedValue,token,10);
             service.UserSetProfileQuestion(5,dropDownListIndustry.SelectedValue,token,10);
             service.UserSetProfileQuestion(6,dropDownListJob.SelectedValue,token,10);
@@ -84,16 +102,29 @@ namespace HW.MobileApp
                     birthMonth.SelectedValue = bday.Substring(5, 2);
                     birthDay.SelectedValue = bday.Substring(8, 2);
                 }
-                rdbGender.SelectedValue = service.UserGetProfileQuestion(2, token, 10);
-                rdbStatus.SelectedValue = service.UserGetProfileQuestion(7, token, 10);
+                if (service.UserGetProfileQuestion(2, token, 10) == "1")
+                    rdbGenderMale.Checked = true;
+                else rdbGenderFemale.Checked = true;
+
+                if (service.UserGetProfileQuestion(7, token, 10) == "369")
+                    rdbStatusMarried.Checked = true;
+                else rdbStatusSingle.Checked = true;
+
+                if (service.UserGetProfileQuestion(16, token, 10) == "405")
+                    rdbOccupationTypeFull.Checked = true;
+                else rdbOccupationTypePart.Checked = true;
+
+                if (service.UserGetProfileQuestion(19, token, 10) == "413")
+                    rdbMangerialYes.Checked = true;
+                else rdbMangerialNo.Checked = true;
+            
                 dropDownListOccupation.SelectedValue = service.UserGetProfileQuestion(9, token, 10);
-                rdbOccupationType.SelectedValue = service.UserGetProfileQuestion(16, token, 10);
                 dropDownListAnnualIncome.SelectedValue = service.UserGetProfileQuestion(8, token, 10);
                 dropDownListEducation.SelectedValue = service.UserGetProfileQuestion(11, token, 10);
                 dropDownListStudyArea.SelectedValue = service.UserGetProfileQuestion(10, token, 10);
                 dropDownListIndustry.SelectedValue = service.UserGetProfileQuestion(5, token, 10);
                 dropDownListJob.SelectedValue = service.UserGetProfileQuestion(6, token, 10);
-                rdbManagerial.SelectedValue = service.UserGetProfileQuestion(19, token, 10);                
+                              
         }
 
         public void populateDropDownLists() {

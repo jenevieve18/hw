@@ -11,8 +11,16 @@ namespace HW.MobileApp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Request.Cookies["token"] != null)
+            {
+                Response.Cookies["token"].Value = null;
+                Response.Cookies["token"].Expires = DateTime.Now.AddDays(-1);
+
+            }
+            
             Session.RemoveAll();
-            Response.Redirect("Login.aspx");            
+            Response.Redirect("Default.aspx");
+
         }
     }
 }

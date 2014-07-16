@@ -8,145 +8,81 @@
 
 -->
 
+<style type="text/css">
+        .ui-controlgroup-controls{  width:100% !important; margin-left:3px; }
+        .ui-select {    width:33% !important;   }
+        .ui-radio {     width:25% !important;  }
+        .ui-radio .ui-btn { height:100px !important; }
+        .ui-radio .ui-btn-text { font-size:11px;}
+        .ui-radio .ui-btn-inner{  height:100px !important; text-overflow: initial; padding:3px 0px 0px 0px;}
+        
+     
+    </style>
+    
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <div data-role="header" data-theme="b" data-position="fixed">
-
+    
 
     
-<script type="text/javascript">
-    function getMoodValue() {
-        var selected = "";
-
-        if (document.getElementById('dontknow').checked)
-            selected = "DontKnow";
-        else if (document.getElementById('unhappy').checked)
-            selected = "Unhappy";
-        else if (document.getElementById('neutral').checked)
-            selected = "Neutral";
-        else if (document.getElementById('happy').checked)
-            selected = "Happy";
-        else
-            selected = "NotSet";
-
-        var hd = document.getElementById('<%=moody.ClientID %>');
-        hd.value = selected;
-        hd = document.getElementById('<%=dateset.ClientID %>');
-        hd.value = document.getElementById('date').value;
-
-        document.getElementById('<%=saveBtn.ClientID %>').click();
-
-    }
-
-    function default_mood() {
-        document.getElementById('m4').className = 'mood4 image';
-        document.getElementById('m2').className = 'mood2 image';
-        document.getElementById('m3').className = 'mood3 image';
-        document.getElementById('m1').className = 'mood1 image';
-    }
-
-    function mood1_onclick() {
-        document.getElementById('dontknow').checked = 'true';
-        default_mood();
-        document.getElementById('m1').className = 'mood1 image select';
-    }
-
-    function mood2_onclick() {
-        document.getElementById('unhappy').checked = 'true';
-        default_mood();
-        document.getElementById('m2').className = 'mood2 image select';
-    }
-
-    function mood3_onclick() {
-        document.getElementById('neutral').checked = 'true';
-        default_mood();
-        document.getElementById('m3').className = 'mood3 image select';
-    }
-
-    function mood4_onclick() {
-        document.getElementById('happy').checked = 'true';
-        default_mood();
-        document.getElementById('m4').className = 'mood4 image select';
-    }
-
-    function setdatevalue() {
-        var hd = document.getElementById('<%=dateset.ClientID %>');
-        hd.value = document.getElementById('date').value+"T12:00:00";
-        
-    }
-
-</script>
-
-
-
 
     <a href="Dashboard.aspx" data-icon="arrow-l">My Health</a>
     <h1>Diary</h1>
-    <a href="Calendar.aspx" data-icon="grid" data-iconpos="notext" style="position:inherit;right:87px;top:8px;">Delete</a>
-    <a onClick="getMoodValue()" data-icon="check" class="ui-btn-right">Save</a>
+    <a href="Calendar.aspx" data-icon="grid" data-iconpos="notext" style="position:inherit;right:87px;top:8px;"></a>
+    <a  runat="server" onserverclick="saveBtnClick" data-icon="check" class="ui-btn-right">Save</a>
 </div>
 
-<%
-    var set = DateTime.Now;
-    if (Request.QueryString["date"] != null) {
-        set = setdate;
-       }
-    var date = "value='"+set.ToString("yyyy-MM-dd")+"'";
-                
-%>
 
 <div data-role="content" >
     
     <ul data-role="listview">
-    <a id="saveBtn" onServerClick="saveBtnClick" runat="server" style="display:none;"></a>
-    <asp:HiddenField ID="moody" runat="server" />
-    <asp:HiddenField ID="dateset" runat="server" />
-
         <li class="minihead">Date</li>
          <li style="padding:0px 0px 0px 0px;border-width:0px;">
-          
-            <input type="date" onchange="setdatevalue()" name="date" id="date" <%=date %> style="margin:0px 0px 0px 0px;"/>
+         <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" >
+          <asp:DropDownList ID="dropDownListDateMonth" runat="server" 
+                 onselectedindexchanged="dropDownListDate_SelectedIndexChanged" AutoPostBack="true">
+            <asp:ListItem Text="Jan" Value="01"></asp:ListItem>
+            <asp:ListItem Text="Feb" Value="02"></asp:ListItem>
+            <asp:ListItem Text="Mar" Value="03"></asp:ListItem>
+            <asp:ListItem Text="Apr" Value="04"></asp:ListItem>
+            <asp:ListItem Text="May" Value="05"></asp:ListItem>
+            <asp:ListItem Text="Jun" Value="06"></asp:ListItem>
+            <asp:ListItem Text="Jul" Value="07"></asp:ListItem>
+            <asp:ListItem Text="Aug" Value="08"></asp:ListItem>
+            <asp:ListItem Text="Sep" Value="09"></asp:ListItem>
+            <asp:ListItem Text="Oct" Value="10"></asp:ListItem>
+            <asp:ListItem Text="Nov" Value="11"></asp:ListItem>
+            <asp:ListItem Text="Dec" Value="12"></asp:ListItem>
+          </asp:DropDownList>
 
+          <asp:DropDownList ID="dropDownListDateDay" runat="server"   onselectedindexchanged="dropDownListDate_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+          <asp:DropDownList ID="dropDownListDateYear" runat="server"  onselectedindexchanged="dropDownListDate_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+          </fieldset>
+    
          </li>
          <li class="minihead">Notes</li>
-         <li style="padding:0px 0px 0px 0px;"><asp:TextBox id="diarynote" placeholder="Write here.." 
+         <li style="padding:0px 0px 0px 0px;">
+            <asp:TextBox id="textBoxNote" placeholder="Write here.." 
                     style="border-width:0px;margin:0px 0px 0px 0px;" TextMode="multiline" runat="server"></asp:TextBox></li>
          <li class="minihead">Mood</li>
          <li style="padding:0px 0px 0px 0px;">
-            
-                <table >
-                    <tbody>
-                        <tr>
-                            <td class="mood1 image" id= "m1" 
-                            onclick="mood1_onclick()" >
-                            Don't Know
-                            <input type="radio" id="dontknow" name="mood" value="0" style="display:none;"/></td>
+            <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                <asp:RadioButton runat="server" id="rdbDontKnow" GroupName="rdbMoods" 
+                text="Don't Know<div><img class='image' src='http://clients.easyapp.se/healthwatch/images/dontKnow@2x.png'></div>" value="DontKnow" />
+                <asp:RadioButton runat="server" id="rdbUnhappy"  GroupName="rdbMoods" 
+                text="Unhappy<div><img class='image' src='http://clients.easyapp.se/healthwatch/images/unhappy@2x.png'></div>" value="Unhappy"  />
+                <asp:RadioButton runat="server" id="rdbNeutral"  GroupName="rdbMoods" 
+                text="Neutral<div><img class='image' src='http://clients.easyapp.se/healthwatch/images/neutral@2x.png'></div>" value="Neutral" />
+                <asp:RadioButton runat="server" id="rdbHappy"    GroupName="rdbMoods"
+                text="Happy<div><img class='image' src='http://clients.easyapp.se/healthwatch/images/happy@2x.png'></div>" value="Happy" />
+            </fieldset>
 
-                            <td class="mood2 image" id= "m2" 
-                            onclick="mood2_onclick()" >
-                            Unhappy
-                            <input type="radio" id="unhappy" name="mood" value="1" style="display:none;"/></td>
-
-                            <td class="mood3 image" id= "m3" 
-                            onclick="mood3_onclick()" >
-                            Neutral
-                            <input type="radio" id="neutral" name="mood" value="2" style="display:none;"/></td>
-
-                            <td class="mood4 image" id= "m4"
-                            onclick="mood4_onclick()" >
-                            Happy
-                            <input type="radio" id="happy" name="mood" value="3" style="display:none;"/></td>
-                            
-                        </tr>
-                    </tbody>
-                </table>
-            
          </li>
          <li class="minihead">Activities & Measurements</li>
         
-         <li><asp:LinkButton ID=activitylink runat="server" onclick="activitylink_Click">View Activities & Measurements</asp:LinkButton>
+         <li><asp:LinkButton runat="server" onclick="activitylink_Click">View Activities & Measurements</asp:LinkButton>
          
          </li>
         

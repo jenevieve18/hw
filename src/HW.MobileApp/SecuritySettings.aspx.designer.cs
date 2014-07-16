@@ -13,21 +13,30 @@ namespace HW.MobileApp {
     public partial class SecuritySettings {
         
         /// <summary>
-        /// loggedin control.
+        /// cbLogin control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox loggedin;
+        protected global::System.Web.UI.WebControls.CheckBox cbLogin;
         
         /// <summary>
-        /// welcome control.
+        /// cbSplash control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox welcome;
+        protected global::System.Web.UI.WebControls.CheckBox cbSplash;
+        
+        /// <summary>
+        /// test control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label test;
     }
 }

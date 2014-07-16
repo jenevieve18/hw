@@ -6,11 +6,21 @@
 <div data-role="header" data-theme="b" data-position="fixed">
     <a href="Settings.aspx" data-icon="arrow-l">Back</a>
     <h1>Security Settings</h1>
-    <a href="#" data-icon="check">Save</a>
+    <a runat="server" onserverclick="saveBtnClick" data-icon="check">Save</a> 
 </div>
 <div data-role="content">
-    <label><input type="checkbox" id="loggedin" runat="server" name="checkbox-0" />Stay logged in</label>
-    <label><input type="checkbox" id="welcome" runat="server" name="checkbox-1" />Show Welcome Page</label>
+    </div>
+    <div data-role="fieldcontain">
+    
+        <asp:CheckBox data-mini="true" ID="cbLogin" Text="Stay logged in" 
+            runat="server" 
+             EnableViewState="True" ></asp:CheckBox >
+
+        <asp:CheckBox data-mini="true" ID="cbSplash" Text="Show welcome page" 
+            runat="server" 
+             EnableViewState="True" ></asp:CheckBox >
+        <asp:Label ID="test" runat="server"></asp:Label>
+    </div>
 </div>
 
 </asp:Content>

@@ -65,6 +65,7 @@
         <asp:TextBox data-mini="true" ID="textBoxAlternateEmail" runat="server"></asp:TextBox>
     </div>
 
+
     <div data-role="fieldcontain">
     <fieldset data-role="controlgroup">
         <legend><asp:Label ID="Label7" runat="server"><a target="_blank" href="https://healthwatch.se/policy.aspx?Rnd=876338515">Terms & Conditions of the Service</a>  <span class='req'>*</span></legend></asp:Label>
@@ -135,7 +136,7 @@ width: 235px;
                             
                             <img class="front_header_img" src="http://clients.easyapp.se/healthwatch/images/divider.gif">
                         </div>
-                        <p>You are now a member.</p>
+                        <p>You are now registered. Please login and edit profile.</p>
                     </div>
                 </div>
                 

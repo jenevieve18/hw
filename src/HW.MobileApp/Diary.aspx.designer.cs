@@ -13,48 +13,75 @@ namespace HW.MobileApp {
     public partial class Diary {
         
         /// <summary>
-        /// saveBtn control.
+        /// dropDownListDateMonth control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor saveBtn;
+        protected global::System.Web.UI.WebControls.DropDownList dropDownListDateMonth;
         
         /// <summary>
-        /// moody control.
+        /// dropDownListDateDay control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField moody;
+        protected global::System.Web.UI.WebControls.DropDownList dropDownListDateDay;
         
         /// <summary>
-        /// dateset control.
+        /// dropDownListDateYear control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField dateset;
+        protected global::System.Web.UI.WebControls.DropDownList dropDownListDateYear;
         
         /// <summary>
-        /// diarynote control.
+        /// textBoxNote control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox diarynote;
+        protected global::System.Web.UI.WebControls.TextBox textBoxNote;
         
         /// <summary>
-        /// activitylink control.
+        /// rdbDontKnow control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton activitylink;
+        protected global::System.Web.UI.WebControls.RadioButton rdbDontKnow;
+        
+        /// <summary>
+        /// rdbUnhappy control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rdbUnhappy;
+        
+        /// <summary>
+        /// rdbNeutral control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rdbNeutral;
+        
+        /// <summary>
+        /// rdbHappy control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rdbHappy;
     }
 }

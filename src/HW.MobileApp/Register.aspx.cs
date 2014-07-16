@@ -18,8 +18,20 @@ namespace HW.MobileApp
 
         protected void loginBtn_Click(object sender, EventArgs e) 
         {
+
+
             if (Session["token"] != null)
-            Response.Redirect("Dashboard.aspx");
+            {
+                HttpCookie cToken = new HttpCookie("token");
+                cToken.Value = Session["token"].ToString();
+                cToken.Expires = DateTime.Now.AddMonths(5);
+                Response.Cookies.Add(cToken);
+
+                Response.Cookies["splash"].Value = null;
+                Response.Cookies["splash"].Expires = DateTime.Now.AddDays(-1);
+
+                Response.Redirect("ChangeProfile.aspx");
+            }
             
         }
 
@@ -71,6 +83,7 @@ namespace HW.MobileApp
                 {
                     //goto welcome page
                     Session.Add("token", token);
+                    Session.Add("languageId", dropDownListLanguage.SelectedValue);
                     Response.Redirect("Register.aspx#welcome");
                 }
                 else labelMessage.Text = "Username maybe already be taken or Malformed Email.";

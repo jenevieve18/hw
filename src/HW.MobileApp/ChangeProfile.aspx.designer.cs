@@ -157,13 +157,22 @@ namespace HW.MobileApp {
         protected global::System.Web.UI.WebControls.Label Label12;
         
         /// <summary>
-        /// rdbGender control.
+        /// rdbGenderMale control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rdbGender;
+        protected global::System.Web.UI.WebControls.RadioButton rdbGenderMale;
+        
+        /// <summary>
+        /// rdbGenderFemale control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rdbGenderFemale;
         
         /// <summary>
         /// Label13 control.
@@ -175,13 +184,22 @@ namespace HW.MobileApp {
         protected global::System.Web.UI.WebControls.Label Label13;
         
         /// <summary>
-        /// rdbStatus control.
+        /// rdbStatusMarried control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rdbStatus;
+        protected global::System.Web.UI.WebControls.RadioButton rdbStatusMarried;
+        
+        /// <summary>
+        /// rdbStatusSingle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rdbStatusSingle;
         
         /// <summary>
         /// Label6 control.
@@ -211,13 +229,22 @@ namespace HW.MobileApp {
         protected global::System.Web.UI.WebControls.Label Label14;
         
         /// <summary>
-        /// rdbOccupationType control.
+        /// rdbOccupationTypeFull control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rdbOccupationType;
+        protected global::System.Web.UI.WebControls.RadioButton rdbOccupationTypeFull;
+        
+        /// <summary>
+        /// rdbOccupationTypePart control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rdbOccupationTypePart;
         
         /// <summary>
         /// divIndustry control.
@@ -292,13 +319,22 @@ namespace HW.MobileApp {
         protected global::System.Web.UI.WebControls.Label LblManage;
         
         /// <summary>
-        /// rdbManagerial control.
+        /// rdbMangerialYes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rdbManagerial;
+        protected global::System.Web.UI.WebControls.RadioButton rdbMangerialYes;
+        
+        /// <summary>
+        /// rdbMangerialNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rdbMangerialNo;
         
         /// <summary>
         /// divStudyArea control.

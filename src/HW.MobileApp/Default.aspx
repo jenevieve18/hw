@@ -12,6 +12,9 @@
     <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
  
     
+    
+</head>
+<body>
     <style>
         #blue {
             background-color: rgb(0,127,181);
@@ -26,10 +29,6 @@
             background-color: rgb(241,136,7);
         }
         img { width:100%; }
-    </style>
-</head>
-<body>
-    <style>
         .front_header {
             text-align: center;
             margin: 15px 0px 25px 0px;

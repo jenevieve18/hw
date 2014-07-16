@@ -13,6 +13,13 @@ namespace HW.MobileApp
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Request.Cookies["splash"] != null)
+            {
+                if (Request.Cookies["splash"].Value != null)
+                    Response.Redirect("Login.aspx");                
+            }
+
+           
         }
     }
 }
