@@ -4,6 +4,45 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 	<div class="contentgroup grid_16">
+        <div class="search">
+            Search user by email
+            <asp:TextBox ID="SearchEmail" runat="server" />
+            <asp:Button ID="Search" Text="Search" runat="server" onclick="Search_Click" />
+        </div>
+        
+        <% if (users != null) { %>
+            <% if (users.Count > 0) { %>
+                <div class="smallContent">
+                    <table border="0" cellspacing="0" cellpadding="5">
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Sponsor</th>
+                            <th>Department</th>
+                            <th>Resolve<br />Invitation</th>
+                        </tr>
+                        <% var j = 0; %>
+                        <% foreach (var u in users) { %>
+                            <tr<%= (j % 2 == 0) ? " bgcolor='#F2F2F2'" : "" %>>
+                                <td><%= u.Name%></td>
+                                <td><%= u.Email%></td>
+                                <td><%= u.Sponsor.Name%></td>
+                                <td><%= u.Department.Name%></td>
+                                <td>
+                                    <% var i = u.Sponsor.SentInvites[0]; %>
+                                    <a href="superadmin.aspx?SearchEmail=<%= searchQuery %>&SponsorID=<%= u.Sponsor.Id %>&SendSPIID=<%= i.Id %>&Rnd=<%= (new Random(unchecked((int)DateTime.Now.Ticks))).Next() %>"><%= i.Sent == null ? "Send" : "Resend" %></a>
+                                </td>
+                            </tr>
+                            <% j++; %>
+                        <% } %>
+                    </table>
+                </div>
+            <% } else { %>
+                <p>0 results found.</p>
+            <% } %>
+        <% } %>
+        <hr />
+
         <div class="smallContent">
 		    <h3>Administration</h3>
 		    <table border="0" cellspacing="0" cellpadding="5">

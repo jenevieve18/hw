@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Core.Helpers;
+using HW.Core.Models;
 using HW.Core.Repositories.Sql;
 using System.Configuration;
 
@@ -14,16 +15,49 @@ namespace HW.Grp
 	public partial class SuperAdmin : System.Web.UI.Page
 	{
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
+		int superAdminID;
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			if (Session["SuperAdminID"] == null) {
 				Response.Redirect("default.aspx?SuperLogout=1&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
+			superAdminID = ConvertHelper.ToInt32(Session["SuperAdminID"]);
 			submit.Click += new EventHandler(submit_Click);
 			submit2.Click += new EventHandler(submit2_Click);
+			
+			int sendSponsorInvitationID = ConvertHelper.ToInt32(Request.QueryString["SendSPIID"]);
+			int sponsorID = ConvertHelper.ToInt32(Request.QueryString["SponsorID"]);
+			if (sendSponsorInvitationID != 0) {
+				var i = sponsorRepository.ReadSponsorInviteBySponsor(sendSponsorInvitationID, sponsorID);
+				if (i != null) {
+					if (i.User == null) {
+						sponsorRepository.UpdateSponsorInviteSent(sendSponsorInvitationID);
+						Db.sendInvitation(sendSponsorInvitationID, i.Email.Trim(), i.Sponsor.InviteSubject, i.Sponsor.InviteText, i.InvitationKey);
+					} else {
+						string body = i.Sponsor.LoginText;
+
+						string personalLink = "" + ConfigurationManager.AppSettings["healthWatchURL"] + "";
+						if (i.User.ReminderLink > 0) {
+							personalLink += "c/" + i.User.UserKey.ToLower() + i.User.Id.ToString();
+						}
+						if (body.IndexOf("<LINK/>") >= 0) {
+							body = body.Replace("<LINK/>", personalLink);
+						} else {
+							body += "\r\n\r\n" + personalLink;
+						}
+
+						Db.sendMail(i.Email.Trim(), i.Sponsor.LoginSubject, body);
+					}
+				}
+			}
 
 			if (!IsPostBack) {
+				if (Request.QueryString["SearchEmail"] != null) {
+					SearchEmail.Text = Request.QueryString["SearchEmail"];
+					Search_Click(this, null);
+				}
+				
 				for (int i = 2006; i <= DateTime.Now.Year; i++) {
 					for (int j = 1; j <= 12; j++) {
 						DateTime dt = new DateTime(i, j, 1);
@@ -476,5 +510,18 @@ namespace HW.Grp
 </tr>",
 				bx);
 		}
+		
+		protected IList<User> users;
+        protected string searchQuery;
+		SqlUserRepository userRepository = new SqlUserRepository();
+
+        protected void Search_Click(object sender, EventArgs e)
+        {
+            if (SearchEmail.Text != "")
+            {
+                searchQuery = SearchEmail.Text.Replace("'", "");
+                users = userRepository.FindLikeUsers(superAdminID, searchQuery);
+            }
+        }
 	}
 }

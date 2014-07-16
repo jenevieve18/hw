@@ -167,35 +167,42 @@ WHERE u.UserID = {1}",
 				}
 				if (sendSponsorInvitationID != 0) {
 					#region Resend
-					query = string.Format(
-						@"
-SELECT s.InviteTxt,
-	s.InviteSubject,
-	si.Email,
-	LEFT(REPLACE(CONVERT(VARCHAR(255),si.InvitationKey),'-',''),8),
-	si.UserID,
-	u.ReminderLink,
-	LEFT(REPLACE(CONVERT(VARCHAR(255),u.UserKey),'-',''),12),
-	s.LoginTxt,
-	s.LoginSubject
-FROM Sponsor s
-INNER JOIN SponsorInvite si ON s.SponsorID = si.SponsorID
-LEFT OUTER JOIN [User] u ON u.UserID = si.UserID
-WHERE s.SponsorID = {0} AND si.SponsorInviteID = {1}",
-						sponsorID,
-						sendSponsorInvitationID
-					);
-					rs = Db.rs(query);
-					if (rs.Read()) {
-						if (rs.IsDBNull(4)) {
+//					query = string.Format(
+//						@"
+					//SELECT s.InviteTxt,
+//	s.InviteSubject,
+//	si.Email,
+//	LEFT(REPLACE(CONVERT(VARCHAR(255),si.InvitationKey),'-',''),8),
+//	si.UserID,
+//	u.ReminderLink,
+//	LEFT(REPLACE(CONVERT(VARCHAR(255),u.UserKey),'-',''),12),
+//	s.LoginTxt,
+//	s.LoginSubject
+					//FROM Sponsor s
+					//INNER JOIN SponsorInvite si ON s.SponsorID = si.SponsorID
+					//LEFT OUTER JOIN [User] u ON u.UserID = si.UserID
+					//WHERE s.SponsorID = {0} AND si.SponsorInviteID = {1}",
+//						sponsorID,
+//						sendSponsorInvitationID
+//					);
+//					rs = Db.rs(query);
+					var i = sponsorRepository.ReadSponsorInviteBySponsor(sendSponsorInvitationID, sponsorID);
+//					if (rs.Read()) {
+					if (i != null) {
+//						if (rs.IsDBNull(4)) {
+						if (i.User == null) {
 							sponsorRepository.UpdateSponsorInviteSent(sendSponsorInvitationID);
-							Db.sendInvitation(sendSponsorInvitationID, rs.GetString(2).Trim(), rs.GetString(1), rs.GetString(0), rs.GetString(3));
+//							Db.sendInvitation(sendSponsorInvitationID, rs.GetString(2).Trim(), rs.GetString(1), rs.GetString(0), rs.GetString(3));
+							Db.sendInvitation(sendSponsorInvitationID, i.Email.Trim(), i.Sponsor.InviteSubject, i.Sponsor.InviteText, i.InvitationKey);
 						} else {
-							string body = rs.GetString(7);
+//							string body = rs.GetString(7);
+							string body = i.Sponsor.LoginText;
 
 							string personalLink = "" + ConfigurationManager.AppSettings["healthWatchURL"] + "";
-							if (!rs.IsDBNull(5) && rs.GetInt32(5) > 0) {
-								personalLink += "c/" + rs.GetString(6).ToLower() + rs.GetInt32(4).ToString();
+//							if (!rs.IsDBNull(5) && rs.GetInt32(5) > 0) {
+							if (i.User.ReminderLink > 0) {
+//								personalLink += "c/" + rs.GetString(6).ToLower() + rs.GetInt32(4).ToString();
+								personalLink += "c/" + i.User.UserKey.ToLower() + i.User.Id.ToString();
 							}
 							if (body.IndexOf("<LINK/>") >= 0) {
 								body = body.Replace("<LINK/>", personalLink);
@@ -203,10 +210,11 @@ WHERE s.SponsorID = {0} AND si.SponsorInviteID = {1}",
 								body += "\r\n\r\n" + personalLink;
 							}
 
-							Db.sendMail(rs.GetString(2).Trim(), rs.GetString(8), body);
+//							Db.sendMail(rs.GetString(2).Trim(), rs.GetString(8), body);
+							Db.sendMail(i.Email.Trim(), i.Sponsor.LoginSubject, body);
 						}
 					}
-					rs.Close();
+//					rs.Close();
 					#endregion
 					Response.Redirect("org.aspx?SDID=" + showDepartmentID + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + (showReg ? "&ShowReg=1" : ""), true);
 				}
