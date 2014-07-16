@@ -16,6 +16,7 @@ namespace HW.Grp
 	{
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		int superAdminID;
+		HW.Core.Models.SuperAdmin superAdmin;
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -23,6 +24,7 @@ namespace HW.Grp
 				Response.Redirect("default.aspx?SuperLogout=1&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
 			superAdminID = ConvertHelper.ToInt32(Session["SuperAdminID"]);
+			superAdmin = sponsorRepository.ReadSuperAdmin(superAdminID);
 			submit.Click += new EventHandler(submit_Click);
 			submit2.Click += new EventHandler(submit2_Click);
 			
@@ -313,7 +315,7 @@ namespace HW.Grp
 //			);
 //			rs = Db.rs(query);
 //			while (rs.Read())
-			foreach (var sap in sponsorRepository.FindSuperAdminSponsors(Convert.ToInt32(Session["SuperAdminID"])))
+			foreach (var sap in sponsorRepository.FindSuperAdminSponsors(Convert.ToInt32(Session["SuperAdminID"]), superAdmin.HideClosedSponsors))
 			{
 //				totInvitees += rs.GetInt32(4);
 				totInvitees += sap.Sponsor.SentInvites.Capacity;

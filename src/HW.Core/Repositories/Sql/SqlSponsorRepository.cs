@@ -635,6 +635,29 @@ WHERE s.SponsorID = {0}",
 			}
 			return null;
 		}
+		
+		public SuperAdmin ReadSuperAdmin(int superAdminID)
+		{
+			string query = string.Format(
+				@"
+SELECT SuperAdminID,
+Username,
+Password,
+HideClosedSponsors
+FROM SuperAdmin"
+			);
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				if (rs.Read()) {
+					return new SuperAdmin {
+						Id = GetInt32(rs, 0),
+						Name = GetString(rs, 1),
+						Password = GetString(rs, 2),
+						HideClosedSponsors = GetInt32(rs, 3) == 1
+					};
+				}
+			}
+			return null;
+		}
 
 		public Sponsor ReadSponsor(int sponsorId)
 		{
@@ -1993,7 +2016,7 @@ ORDER BY s.Sponsor, ses.Internal, ses.RoundText",
 			string query = string.Format(
 				@"
 SELECT SuperSponsorID,
-SuperSponsor
+	SuperSponsor
 FROM SuperSponsor"
 			);
 			var supers = new List<SuperSponsor>();
@@ -2009,7 +2032,7 @@ FROM SuperSponsor"
 			return supers;
 		}
 
-		public IList<SuperAdminSponsor> FindSuperAdminSponsors(int superAdminId)
+		public IList<SuperAdminSponsor> FindSuperAdminSponsors(int superAdminId, bool hideClosedSponsors)
 		{
 			string query = string.Format(
 				@"
@@ -2026,8 +2049,10 @@ SELECT s.SponsorID,
 FROM Sponsor s
 INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID
 WHERE s.Deleted IS NULL AND sas.SuperAdminID = {0}
+{1}
 ORDER BY s.Sponsor",
-				superAdminId
+				superAdminId,
+				hideClosedSponsors ? "AND s.Closed IS NULL" : ""
 			);
 			var admins = new List<SuperAdminSponsor>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
@@ -2044,7 +2069,6 @@ ORDER BY s.Sponsor",
 							Invites = new List<SponsorInvite>(GetInt32(rs, 8)),
 							ClosedAt = GetDateTime(rs, 9)
 						},
-//						SeeUsers = GetBoolean(rs, 7)
 						SeeUsers = GetInt32(rs, 7) == 1
 					};
 					admins.Add(a);
