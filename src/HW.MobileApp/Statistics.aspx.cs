@@ -37,6 +37,8 @@ namespace HW.MobileApp
             
             formInstance = service.UserGetFormInstanceFeedback(token,formKey,formInstanceKey,language,10);
             fifeedback = formInstance.fiv;
+            if (fifeedback == null)
+                Response.Redirect("Dashboard.aspx");
 
         }
 

@@ -18,7 +18,7 @@
                 foreach (var ev in activities)
                 { %>
             <li>
-                <span><%=ev.description%>  <%=ev.result != null? " - "+ev.result:"" %></span>        
+                <span><%=ev.description%>  <%=ev.result != null? " - "+ev.result.Replace(',','.'):"" %></span>        
                 <span style="font-size:small;"><br /><%=ev.time.ToString("hh:mm")%></span>
             </li>
         <%}

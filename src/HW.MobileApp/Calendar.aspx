@@ -19,6 +19,7 @@
         <li class="minihead">
             <%=c.date.ToString("ddd, yyyy MMM dd")%>
         </li>
+
         <li data-icon="false" class="notes">
             <%
                 var moodsrc = "";
@@ -55,7 +56,7 @@
                 <li >
                 
                     <div class="time fade"><%=cevent.time.ToString("hh:mm")%></div>
-                    <div class="events"><%=cevent.description%>  <%=cevent.result != null? " - "+cevent.result:"" %></div>
+                    <div class="events"><%=cevent.description%> <span style="color:#A0A0A0;"> <%=cevent.result != null? " "+cevent.result.Replace(',','.'):"" %></span></div>
                 
                 </li>
 

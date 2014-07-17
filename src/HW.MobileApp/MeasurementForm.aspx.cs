@@ -20,6 +20,7 @@ namespace HW.MobileApp
 
         protected TextBox[] measureTextBox;
         protected Label[] measureLabel;
+        protected int componentcount;
 
         
         protected void Page_Load(object sender, EventArgs e)
@@ -49,7 +50,7 @@ namespace HW.MobileApp
 
 
             measure = service.MeasureEnum(new HWService.MeasureEnumRequest(token, id, lang, 10)).MeasureEnumResult;
-            measureNo = measure.Count();
+            //measureNo = measure.Count();
 
 
             timeHour.DataSource = Enumerable.Range(00, 24).Select(x => x.ToString("D2"));
@@ -57,93 +58,51 @@ namespace HW.MobileApp
             timeHour.DataBind();
             timeMin.DataBind();
 
-
+            measureTextBox = new TextBox[measure.Count()];
+            measureLabel = new Label[measure.Count()];
+            componentcount = measure.Count();
+            int mcount = 0;
             foreach (var m in measure)
             {
-                measureTextBox = new TextBox[m.componentCount];
-                measureLabel = new Label[m.componentCount];
-
+               
                 for (var mc = 0; mc < m.componentCount; mc++)
                 {
+                    
                     placeHolderList.Controls.Add(new Literal() { Text = "<div data-role='fieldcontain'>" });
+                    measureTextBox[mcount] = new TextBox() { ID = m.measureComponents[mc].measureComponentID.ToString(), EnableViewState = true };
+                    measureLabel[mcount] = new Label() { AssociatedControlID = measureTextBox[mcount].ID, Text = m.measureComponents[mc].measureComponent + " <span style='color:#A0A0A0     ;'>" + m.measureComponents[mc].unit + "</span>" };
 
-                    measureTextBox[mc] = new TextBox() { ID = m.measureComponents[mc].measureComponentID.ToString(),EnableViewState = true };
-                    if (measureTextBox[mc].ID == "8")
-                    {
-                        if (Session["tb8"] != null)
-                        {
-                            measureTextBox[mc].Text = Session["tb8"].ToString();
-                            timeHour.SelectedValue = "02";
-                        }
-
-                    }
-                    if (measureTextBox[mc].ID == "7")
-                    {
-                        if (Session["tb7"] != null)
-                        {
-                            measureTextBox[mc].Text = Session["tb7"].ToString();
-                            timeMin.SelectedValue = "02";
-                        }
-
-                    }
-
-                    measureLabel[mc] = new Label() { AssociatedControlID = measureTextBox[mc].ID, Text = m.measureComponents[mc].measureComponent + " <span style='color:#A0A0A0     ;'>" + m.measureComponents[mc].unit +"</span>"};
-
-                    if (measureTextBox[mc].ID == "5" || measureTextBox[mc].ID == "6")
-                    {
-                        measureTextBox[mc].TextChanged += new EventHandler(weightHeight_textChanged);
-                        measureTextBox[mc].AutoPostBack = true;
-                    }
-
-                    placeHolderList.Controls.Add(measureLabel[mc]);
-                    placeHolderList.Controls.Add(measureTextBox[mc]);
+                    placeHolderList.Controls.Add(measureLabel[mcount]);
+                    placeHolderList.Controls.Add(measureTextBox[mcount]);
                     placeHolderList.Controls.Add(new Literal() { Text = "</div>" });
 
                   /*  if(Page.IsPostBack)
                         measureTextBox[mc] = placeHolderList.FindControl(m.measureComponents[mc].measureComponentID.ToString()) as TextBox;*/
-
                 }
+                mcount++;
             }
         }
 
         
-        protected void weightHeight_textChanged(object sender, EventArgs e) {
-            TextBox t = sender as TextBox;
-            if (t.ID == "5")
-            {
-                Session.Add("tb8", Math.Pow(double.Parse(t.Text) / 100.0, 2).ToString()) ;
-                
-            }
-            if (t.ID == "6" && Session["tb8"] != null)
-            {
-                double temp = double.Parse(Session["tb8"].ToString());
-                Session.Add("tb7", (double.Parse(t.Text)/temp).ToString());
-                
-            }
-
-            
-           /* if (getTextBox(5) != null)
-                getTextBox(8).Text = Math.Pow(double.Parse(getTextBox(5).Text) / 100.0, 100).ToString();
-            
-            if (getTextBox(5) != null && getTextBox(6) != null)
-                getTextBox(7).Text = (double.Parse(getTextBox(6).Text) / Math.Pow(double.Parse(getTextBox(5).Text) / 100.0, 100)).ToString();*/
-            
-        }
-                
+                      
         protected void saveBtnClick(object sender, EventArgs e){
             
-            HWService.UserMeasureComponent[] mc = new HWService.UserMeasureComponent[measureNo];
-
-            DateTime newDate = new DateTime(date.Year,date.Month,date.Year,int.Parse(timeHour.SelectedValue),int.Parse(timeMin.SelectedValue),date.Second);
-
-            foreach(var c in measureTextBox)
+            DateTime newDate = new DateTime(date.Year,date.Month,date.Day,int.Parse(timeHour.SelectedValue),int.Parse(timeMin.SelectedValue),date.Second);
+            HWService.UserMeasureComponent[] umc = new HWService.UserMeasureComponent[1];
+            for(var c = 0; c < measureTextBox.Length;c++)
             {
-                if (c.Text != "")
+                if (measureTextBox[c].Text != "")
                 {
-                    service.UserSetMeasureParameterized(token, newDate, measure[0].measureID, int.Parse(c.ID), c.Text, 0, "", 10);
+                    
+                    umc[0] = new HWService.UserMeasureComponent();
+                    umc[0].MeasureComponentID = int.Parse(measureTextBox[c].ID);
+                    umc[0].value = measureTextBox[c].Text;
+                    
+                    service.UserSetMeasure(new HWService.UserSetMeasureRequest(token,newDate,measure[c].measureID,umc,10));
                 }
             }
-            Response.Redirect("ActivityMeasurement.aspx?datetime=" + newDate.ToString("yyyy-MM-ddTHH:mm:ss")); 
+            
+           // Response.Redirect("ActivityMeasurement.aspx?datetime=" + newDate.ToString("yyyy-MM-ddTHH:mm:ss")); 
         }
     }
 

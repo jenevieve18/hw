@@ -24,17 +24,17 @@
         <li>
 
             <div class="ui-grid-c" style="width:140%;">  
-                                <div class="ui-block-a areas" >
+                                <div class="ui-block-a statlegend" >
                                 <div style="float:left;margin-right:5px;">
                                 <img class="statimg"
                                 src="http://clients.easyapp.se/healthwatch//images/green.png"></div><div >Healthy level</div> </div>
                                 
-                                <div class="ui-block-b areas" >
+                                <div class="ui-block-b statlegend" >
                                 <div style="float:left;margin-right:5px;">
                                 <img class="statimg"
                                 src="http://clients.easyapp.se/healthwatch//images/orange.png"></div> <div>Improvement needed</div></div>
                                 
-                                <div class="ui-block-c areas" >
+                                <div class="ui-block-c statlegend" >
                                 <div style="float:left;margin-right:5px;">
                                 <img class="statimg"
                                 src="http://clients.easyapp.se/healthwatch//images/pink.png"></div><div>Unhealthy level</div></div>

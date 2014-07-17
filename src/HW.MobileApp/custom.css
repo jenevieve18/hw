@@ -4,7 +4,8 @@
     div.ui-block-a{text-align:left;  }
     div.ui-block-e{ text-align:right;  }
     .question{ font-size:small;font-weight:700;}
-    .areas{font-size:x-small;}
+    .areas{font-size:small;}
+    .statlegend{font-size:x-small;}
 	.ui-slider-track {height: 10px;}
     .ui-slider-handle {background: rgb(0,140,220);}
 	.front_header_img {width: 235px;margin-left:0px;}

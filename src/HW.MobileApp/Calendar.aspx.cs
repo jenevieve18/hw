@@ -28,7 +28,7 @@ namespace HW.MobileApp
                 month = 12;
                 year -= 1;
             }
-            calendar = service.CalendarEnum(new HWService.CalendarEnumRequest(token, new DateTime(year, month, 1), DateTime.Now, lang, 10)).CalendarEnumResult;
+            calendar = service.CalendarEnum(new HWService.CalendarEnumRequest(token, new DateTime(year, month, 1), DateTime.Now.AddDays(1), lang, 10)).CalendarEnumResult;
         }
     }
 }

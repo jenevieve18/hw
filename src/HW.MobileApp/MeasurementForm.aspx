@@ -2,7 +2,65 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<script type="text/javascript">
+   
+   var tb8 = 0;
+   $(document).ready(function(){
+   <% 
+   for(var i = 0; i < componentcount;i++)
+   {
+      if(measureTextBox[i].ID == "5")
+      {
+   %>
+          $('#<%=measureTextBox[i].ClientID %>').keyup(function(){
 
+            var x = $('#<%=measureTextBox[i].ClientID %>').val();
+            if(x != ""){
+                
+            
+            <% 
+            for(var y = 0; y < componentcount;y++)
+            {
+                if(measureTextBox[y].ID == "8")
+                {%>
+                    tb8 = Math.pow(parseFloat(x) / 100.0,2);
+                    $('#<%=measureTextBox[y].ClientID %>').val(tb8);
+                 <% 
+                }
+            }
+            %>
+            }
+          });
+   <%
+      }
+      if(measureTextBox[i].ID == "6")
+      {
+   %>
+          $('#<%=measureTextBox[i].ClientID %>').keyup(function(){
+
+            var x = $('#<%=measureTextBox[i].ClientID %>').val();
+            if(x != ""){
+                
+            
+            <% 
+            for(var y = 0; y < componentcount;y++)
+            {
+                if(measureTextBox[y].ID == "7")
+                {%>
+                    $('#<%=measureTextBox[y].ClientID %>').val(x/tb8);
+                 <% 
+                }
+            }
+            %>
+            }
+          });
+   <%
+      }
+   }
+   %> 
+   });
+
+</script>
 
 <div data-role="header" data-theme="b" data-position="fixed">
     
@@ -25,9 +83,10 @@
         </asp:DropDownList>
     </fieldset>
     </div>
+    
 
     <asp:PlaceHolder runat="server" ID="placeHolderList"></asp:PlaceHolder>
-       
+    
 </div>
     <style type="text/css">
         input { max-width:500px !important; min-width:200px !important}
