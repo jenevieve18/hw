@@ -344,6 +344,52 @@ WHERE UserID = {0}",
 			return null;
 		}
 		
+		public IList<User> FindLikeUsers(int superAdminID, string email)
+		{
+			string query = string.Format(
+				@"
+SELECT u.Username,
+	si.Email,
+	s.Sponsor,
+	d.Department,
+	si.SponsorInviteID,
+	si.Sent,
+	s.SponsorID
+FROM [SponsorInvite] si
+INNER JOIN Sponsor s ON si.SponsorID = s.SponsorID
+INNER JOIN Department d ON si.DepartmentID = d.DepartmentID
+INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID 
+LEFT OUTER JOIN [User] u ON si.UserID = u.UserID
+WHERE s.Closed IS NULL AND s.Deleted IS NULL AND sas.SuperAdminID = {0} AND si.Email LIKE '%{1}%'",
+				superAdminID,
+				email
+			);
+			var users = new List<User>();
+			using (SqlDataReader rs = Db.rs(query)) {
+				while (rs.Read()) {
+					var u = new User {
+						Name = GetString(rs, 0),
+						Email = GetString(rs, 1),
+						Sponsor = new Sponsor {
+							Id = GetInt32(rs, 6),
+							Name = GetString(rs, 2),
+							SentInvites = new List<SponsorInvite>(
+								new SponsorInvite[] {
+									new SponsorInvite {
+										Id = GetInt32(rs, 4),
+										Sent = GetDateTime(rs, 5)
+									}
+								}
+							),
+						},
+						Department = new Department { Name = GetString(rs, 3) }
+					};
+					users.Add(u);
+				}
+			}
+			return users;
+		}
+		
 		public IList<User> Find(string email)
 		{
 			string query = string.Format(

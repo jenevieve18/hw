@@ -13,6 +13,24 @@ namespace HW.Grp {
     public partial class SuperAdmin {
         
         /// <summary>
+        /// SearchEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox SearchEmail;
+        
+        /// <summary>
+        /// Search control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Search;
+        
+        /// <summary>
         /// SponsorID control.
         /// </summary>
         /// <remarks>
