@@ -14,9 +14,10 @@ namespace HW.MobileApp
         protected DateTime date;
         protected HWService.Event[] activities = null;
         HWService.Calendar calendar;
+        protected string token;
         protected void Page_Load(object sender, EventArgs e)
         {
-            string token="";
+            
             
             HtmlHelper.RedirectIf(Session["token"] == null, "Login.aspx");
             
@@ -43,6 +44,28 @@ namespace HW.MobileApp
             }
             if(calendar!=null)
             activities = calendar.events;            
+        }
+
+        protected void deleteActivity(object sender, EventArgs e){
+            string[] delimiter = {"$*#"};
+            string[] value = hdEventId.Value.Split(delimiter, StringSplitOptions.None);
+            if (value.Length > 1 )
+            {
+                if (value[1] != "")
+                {
+                    if (service.UserDeleteFormInstance(token, value[1], int.Parse(value[0]), 10))
+                        Response.Redirect("ActivityMeasurement.aspx?datetime=" + date.ToString("yyyy-MM-ddTHH:mm:ss"));
+                }
+                else
+                {
+                    if (service.UserDeleteMeasure(token, int.Parse(value[0]), 10))
+                        Response.Redirect("ActivityMeasurement.aspx?datetime=" + date.ToString("yyyy-MM-ddTHH:mm:ss"));
+                }
+
+            }
+            
+                
+            
         }
     }
 }

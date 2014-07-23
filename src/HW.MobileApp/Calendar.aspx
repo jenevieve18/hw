@@ -52,12 +52,19 @@
             {
                 foreach (var cevent in c.events)
                 {
-        %>
+        %>  
                 <li >
-                
+                    
+                    <% if (cevent.formInstanceKey != null){
+                            var filink = "href='Statistics.aspx?fik=" + cevent.formInstanceKey + "'"; %>
+                            <a <%=filink %> rel="external" >  <%} %>       
+
                     <div class="time fade"><%=cevent.time.ToString("hh:mm")%></div>
                     <div class="events"><%=cevent.description%> <span style="color:#A0A0A0;"> <%=cevent.result != null? " "+cevent.result.Replace(',','.'):"" %></span></div>
-                
+                    
+                    <% if (cevent.formInstanceKey != null)
+                       { %>
+                            </a>  <%} %>       
                 </li>
 
         <% } } %>

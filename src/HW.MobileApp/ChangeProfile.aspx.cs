@@ -13,17 +13,24 @@ namespace HW.MobileApp
     {
         HWService.ServiceSoap service = new HWService.ServiceSoapClient();
         protected HWService.Question[] profile;
-        string token; 
+        string token;
+        protected string policylink;
+        protected int language;
         
         protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["token"] == null, "Login.aspx");
 
             token = Session["token"].ToString();
-            int language = int.Parse(Session["languageID"].ToString());
+            language = int.Parse(Session["languageID"].ToString());
             
             profile = service.ProfileQuestions(new HWService.ProfileQuestionsRequest(language,0)).ProfileQuestionsResult;
-            
+            policylink = "href='termsEnglish.html'";
+            if (language == 1)
+            {
+                policylink = "href='termsSwedish.html'";
+            }
+
             if (!Page.IsPostBack)
             {
                 populateDropDownLists();

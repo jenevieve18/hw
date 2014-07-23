@@ -17,7 +17,7 @@
 </div>
 <div data-role="content">
     <ul data-role="listview">
-        <li style="font-size:x-small;background-color:black;color:White;padding-top:1px;padding-bottom:1px;">
+        <li class="minihead">
             <label runat="server">Result: <%=formInstance.dateTime %></label>
             <label style="text-align:right;position:absolute;right:2%;">Compare with: </label>
         </li>

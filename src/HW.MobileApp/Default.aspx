@@ -14,7 +14,7 @@
     
     
 </head>
-<body>
+<body >
     <style>
         #blue {
             background-color: rgb(0,127,181);
@@ -59,25 +59,38 @@
         .center {
             text-align:center;
         }
-        .front_header_img {
+        .front_header_img width
+        {
             width: 235px;
         }
+        .nomargin{margin: 0px; padding:0px;display:inline;}
+        
+        .ui-checkbox .ui-btn-text {font-size:12px;}
+        
     </style>
     <form id="form1" runat="server">
-        <div data-role="page">
-            <a href="Login.aspx" data-ajax="false">
-                <div data-role="content">
-                    <img src="http://clients.easyapp.se/healthwatch//images/start_imgHeader@2x.png">
-                    <div id="divider">
-                        <div id="blue">&nbsp;</div>
-                        <div id="red">&nbsp;</div>
-                        <div id="green">&nbsp;</div>
-                        <div id="orange">&nbsp;</div>
+    <a href="Login.aspx" data-ajax="false" >
+    
+        <div data-role="page" >
+            
+                <div data-role="content"  style="height:100% !important;background-color: rgb(0,127,181) !important;">
+                <div style="background-color: white;" class="ui-corner-all ui-shadow">
+                    <img class="nomargin ui-corner-top" src="http://clients.easyapp.se/healthwatch//images/start_imgHeader@2x.png"/><img class="nomargin" style="margin-top:-4px;display:block;height:10px;width:100%;" src="http://clients.easyapp.se/healthwatch/images/divider.gif"/><img class="nomargin" src="http://clients.easyapp.se/healthwatch//images/start_catchPhrase@2x.png"/>
+                    <div style="padding:8px;">
+                    <p class="center" style="font-size:12px;"><asp:Label ID="lblWordsOfWisdom" runat="server"></asp:Label>
+                    <br />-<i> <asp:Label ID="lblAuthor" runat="server"></asp:Label></i>
+                    </p>
+                    <h2 class="center">Tap to Start</h2>
                     </div>
-                    <img src="http://clients.easyapp.se/healthwatch//images/start_catchPhrase@2x.png">
                 </div>
-            </a>
+                
+                <asp:CheckBox runat="server" ID="cbSplash" AutoPostBack="true" 
+                        Text="Always show on start" data-mini="true" 
+                        oncheckedchanged="cbSplash_CheckedChanged" />
+                </div>
+            
         </div>
+        </a>
     </form>
 </body>
 </html>
