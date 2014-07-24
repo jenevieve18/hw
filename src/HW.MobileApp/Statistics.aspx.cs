@@ -33,6 +33,11 @@ namespace HW.MobileApp
             if (Session["formInstanceKey"] == null) formInstanceKey = "";
             else formInstanceKey = Session["formInstanceKey"].ToString();
 
+
+            if (Request.QueryString["fik"] != null)
+            {
+                formInstanceKey = Request.QueryString["fik"];
+            }
             exercises = service.ExerciseEnum(new HWService.ExerciseEnumRequest(token,0,0,language,10)).ExerciseEnumResult;            
             
             formInstance = service.UserGetFormInstanceFeedback(token,formKey,formInstanceKey,language,10);

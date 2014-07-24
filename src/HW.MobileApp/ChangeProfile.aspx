@@ -128,9 +128,10 @@
         
        
     </div>
+    
     <div data-role="fieldcontain">
     <fieldset data-role="controlgroup">
-        <legend><asp:Label ID="Label7" runat="server"><a  href="https://healthwatch.se/policy.aspx?Rnd=876338515" data-rel="dialog">Terms & Conditions of the Service</a>  <span class='req'>*</span></legend></asp:Label>
+        <legend><asp:Label ID="Label7" runat="server"><a <%=policylink %> data-rel="dialog" data-transition="pop">Terms & Conditions of the Service</a>  <span class='req'>*</span></asp:Label></legend>
         <asp:CheckBox data-mini="true" ID="cbTerms" Text=" I accept" runat="server" ></asp:CheckBox >
     </fieldset>
     </div>
