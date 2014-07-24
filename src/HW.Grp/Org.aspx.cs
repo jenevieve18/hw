@@ -2154,7 +2154,7 @@ WHERE u.UserID = {0}",
 									rs.GetInt32(1)
 								);
                                 SqlDataReader rs2 = Db.rs(query);
-                                LoggingService.Debug(query);
+                                LoggingService.Info(query);
 								while (rs2.Read()) {
 									#region Create new profile
 									query = string.Format(
