@@ -15,6 +15,7 @@ using HW.Core.Helpers;
 using HW.Core.Models;
 using HW.Core.Repositories;
 using HW.Core.Repositories.Sql;
+using HW.Core.Services;
 
 namespace HW.Grp
 {
@@ -2152,7 +2153,8 @@ INNER JOIN UserProfile up ON u.UserProfileID = up.UserProfileID
 WHERE u.UserID = {0}",
 									rs.GetInt32(1)
 								);
-								SqlDataReader rs2 = Db.rs(query);
+                                SqlDataReader rs2 = Db.rs(query);
+                                LoggingService.Debug(query);
 								while (rs2.Read()) {
 									#region Create new profile
 									query = string.Format(
