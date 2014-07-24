@@ -942,7 +942,13 @@ VALUES ({0}, {1})",
 					SqlDataReader rs2 = Db.rs(query);
 					while (rs2.Read()) {
 						#region Create new profile
-						query = string.Format("INSERT INTO UserProfile (UserID,SponsorID,DepartmentID,ProfileComparisonID,Created) VALUES (" + rs.GetInt32(0) + ",1,NULL," + rs2.GetInt32(1) + ",GETDATE())");
+						query = string.Format(
+                            @"
+INSERT INTO UserProfile (UserID,SponsorID,DepartmentID,ProfileComparisonID,Created)
+VALUES ({0},1,NULL,{1},GETDATE())",
+                             rs.GetInt32(0),
+                             rs2.IsDBNull(1) ? "NULL" : rs2.GetInt32(1).ToString()
+                        );
 						Db.exec(query);
 						int profileID = 0;
 						query = string.Format("SELECT TOP 1 UserProfileID FROM UserProfile WHERE UserID = " + rs.GetInt32(0) + " ORDER BY UserProfileID DESC");
