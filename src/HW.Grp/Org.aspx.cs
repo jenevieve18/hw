@@ -2154,9 +2154,13 @@ WHERE u.UserID = {0}",
 									rs.GetInt32(1)
 								);
                                 SqlDataReader rs2 = Db.rs(query);
-                                LoggingService.Info(query);
+                                //LoggingService.Info(query);
 								while (rs2.Read()) {
 									#region Create new profile
+                                    LoggingService.Info("rs.GetInt32(1): " + rs.GetInt32(1));
+                                    LoggingService.Info("sponsorID: " + sponsorID);
+                                    LoggingService.Info("DepartmentID.SelectedValue: " + DepartmentID.SelectedValue);
+                                    LoggingService.Info("rs2.GetInt32(1): " + rs2.GetInt32(1));
 									query = string.Format(
 										@"
 INSERT INTO UserProfile (UserID,SponsorID,DepartmentID,ProfileComparisonID,Created)
