@@ -1,0 +1,13 @@
+User-agent: *
+Disallow: /r*
+Disallow: /ex*
+Disallow: /f*
+Disallow: /s*
+Disallow: /my*
+Disallow: /me*
+Disallow: /ca*
+Disallow: /cl*
+Disallow: /w*
+Disallow: /i*
+Disallow: /p*
+Disallow: /deb*
