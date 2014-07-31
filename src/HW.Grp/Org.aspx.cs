@@ -949,6 +949,7 @@ VALUES ({0},1,NULL,{1},GETDATE())",
                              rs.GetInt32(0),
                              rs2.IsDBNull(1) ? "NULL" : rs2.GetInt32(1).ToString()
                         );
+						// TODO: Investigate why ProfileComparisonID is NULL
 						Db.exec(query);
 						int profileID = 0;
 						query = string.Format("SELECT TOP 1 UserProfileID FROM UserProfile WHERE UserID = " + rs.GetInt32(0) + " ORDER BY UserProfileID DESC");
@@ -2171,6 +2172,7 @@ VALUES ({0},{1},{2},{3},GETDATE())",
 										DepartmentID.SelectedValue,
 										rs2.IsDBNull(1) ? "NULL" : rs2.GetInt32(1).ToString()
 									);
+									// TODO: Investigate why ProfileComparisonID is NULL
 									Db.exec(query);
 									int profileID = 0;
 									query = string.Format(

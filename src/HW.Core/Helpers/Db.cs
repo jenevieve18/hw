@@ -237,6 +237,7 @@ WHERE ProjectRoundUnitID = {0}",
 			SqlConnection dataConnection = new SqlConnection(ConfigurationManager.AppSettings[con]);
 			dataConnection.Open();
 			SqlCommand dataCommand = new SqlCommand(sqlString, dataConnection);
+			dataCommand.CommandTimeout = 300;
 			SqlDataReader dataReader = dataCommand.ExecuteReader(CommandBehavior.CloseConnection);
 			return dataReader;
 		}
@@ -251,6 +252,7 @@ WHERE ProjectRoundUnitID = {0}",
 			SqlConnection dataConnection = new SqlConnection(ConfigurationManager.AppSettings[con]);
 			dataConnection.Open();
 			SqlCommand dataCommand = new SqlCommand(sqlString, dataConnection);
+			dataCommand.CommandTimeout = 300;
 			dataCommand.ExecuteNonQuery();
 			dataConnection.Close();
 			dataConnection.Dispose();
