@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 using HW.Core.Models;
 using HW.Core.Repositories.Sql;
 
-namespace HW.Grp2
+namespace HW.Grp3
 {
     public partial class Managers : System.Web.UI.Page
     {

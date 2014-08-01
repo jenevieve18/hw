@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace HW.Grp2
+namespace HW.Grp3
 {
     public partial class ManagerSetup : System.Web.UI.Page
     {

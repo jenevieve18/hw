@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Grp.Master" AutoEventWireup="true" CodeBehind="Managers.aspx.cs" Inherits="HW.Grp2.Managers" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Grp.Master" AutoEventWireup="true" CodeBehind="Managers.aspx.cs" Inherits="HW.Grp3.Managers" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>

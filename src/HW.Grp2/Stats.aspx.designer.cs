@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HW.Grp2 {
+namespace HW.Grp3 {
     
     
     public partial class Stats {
