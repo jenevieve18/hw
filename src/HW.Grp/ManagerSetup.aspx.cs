@@ -29,7 +29,6 @@ namespace HW.Grp
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			sponsorID = Convert.ToInt32(Session["SponsorID"]);
-			sponsorAdminID = Convert.ToInt32(Session["SponsorAdminID"]);
 
 			if (sponsorID != 0) {
 				Save.Click += new EventHandler(Save_Click);
@@ -39,6 +38,7 @@ namespace HW.Grp
 					foreach (var f in managerRepository.FindAll()) {
 						ManagerFunctionID.Items.Add(new ListItem(f.Function + " (" + f.Expl + ")", f.Id.ToString()));
 					}
+					sponsorAdminID = Convert.ToInt32(Session["SponsorAdminID"]);
 					var a = sponsorRepository.ReadSponsorAdmin(sponsorAdminID);
 					if (a != null && !a.SuperUser) {
 						SuperUser.Visible = false;
@@ -82,14 +82,17 @@ namespace HW.Grp
 						);
 					}
 				} else {
-					foreach (var d in departmentRepository.b(sponsorID, sponsorAdminID)) {
-						bool hasDepartmentID = Request.Form["DepartmentID"] != null;
-						if (hasDepartmentID) {
-							string departmentID = Request.Form["DepartmentID"];
-							string ids = string.Format("#{0}#", departmentID.Replace(" ", "").Replace(",", "#"));
-							bool deptIDInIds = ids.IndexOf("#" + d.Department.Id + "#") >= 0;
-							if (deptIDInIds) {
-								OrgTree.Text = OrgTree.Text.Replace("value='" + d.Department.Id + "'", "value='" + d.Department.Id + "' checked");
+					int tempSponsorAdminID = sponsorRepository.SponsorAdminExists(sponsorAdminID, Usr.Text);
+					if (tempSponsorAdminID > 0) {
+						foreach (var d in departmentRepository.a(sponsorID, tempSponsorAdminID)) {
+							bool hasDepartmentID = Request.Form["DepartmentID"] != null;
+							if (hasDepartmentID) {
+								string departmentID = Request.Form["DepartmentID"];
+								string ids = string.Format("#{0}#", departmentID.Replace(" ", "").Replace(",", "#"));
+								bool deptIDInIds = ids.IndexOf("#" + d.Department.Id + "#") >= 0;
+								if (deptIDInIds) {
+									OrgTree.Text = OrgTree.Text.Replace("value='" + d.Department.Id + "'", "value='" + d.Department.Id + "' checked");
+								}
 							}
 						}
 					}
@@ -97,7 +100,7 @@ namespace HW.Grp
 
 				if (HasSAID) {
 					int SAID = Convert.ToInt32(Request.QueryString["SAID"]);
-//					sponsorAdminID = Convert.ToInt32(Session["SponsorAdminID"]);
+					sponsorAdminID = Convert.ToInt32(Session["SponsorAdminID"]);
 					var a = sponsorRepository.ReadSponsorAdmin(sponsorID, sponsorAdminID, SAID);
 					if (a != null) {
 						sponsorAdminID = a.Id;
@@ -144,7 +147,8 @@ namespace HW.Grp
 
 		void Save_Click(object sender, EventArgs e)
 		{
-			if (!sponsorRepository.SponsorAdminExists(sponsorAdminID, Usr.Text)) {
+			int tempSponsorAdminID = sponsorRepository.SponsorAdminExists(sponsorAdminID, Usr.Text);
+			if (tempSponsorAdminID <= 0) {
 				var a = new SponsorAdmin {
 					Id = sponsorAdminID,
 					ReadOnly = ReadOnly.Checked,
