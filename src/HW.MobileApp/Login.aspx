@@ -56,33 +56,62 @@
             /*min-height: 250px;*/
             display: inline-block;
             /*min-width: 320px;*/
+            margin-top:-20px;
+            padding:0px 0px 0px 0px;
         }
         .center {
             text-align:center;
         }
         .front_header_img {
             width: 235px;
+            
         }
+        h4 { margin:0px 0px 0px 0px;}
+        
+        .ui-controlgroup-controls {  min-width:100% !important;}
+        .ui-controlgroup-controls .ui-btn-text { font-size:12px;}
+        .ui-grid-a .ui-block-a{ width:40%; }
+        .ui-grid-a .ui-block-b{ margin-left:20px;width:50%; }
+        .ui-grid-a .ui-block-a .ui-btn{ width:127px; }
+        .ui-grid-a .ui-block-b .ui-btn{ width:143px; }
+        
     </style>
+    
     <form id="form1" runat="server">
         <div data-role="page" id="login">
             <div data-role="header" data-theme="b" data-position="fixed">
                 <h1>&nbsp;</h1>
             </div>
-            <div data-role="content">
+            <div data-role="content" style="padding:0px 0px 0px 0px;">
                 <div class="front_note center">
                     <img style="width:180px" class="front_logo" src="http://clients.easyapp.se/healthwatch/images/hw_logo@2x.png" />
                     <div class="front_controls">
                         <div class="front_header">
-                            <h4 class="text">Login to a better life.</h4>
-                            <h4 style="color:Red"><asp:Label ID="labelMessage" runat="server"></asp:Label></h4>
+                            <h4><asp:Label ID="labelMessage" runat="server"></asp:Label></h4>
                             <img style="width:235px" class="front_header_img" src="http://clients.easyapp.se/healthwatch/images/divider.gif">
                         </div>
                         <asp:TextBox ID="textBoxUsername" runat="server" placeholder="Username or Email"></asp:TextBox>
                         <asp:TextBox ID="textBoxPassword" runat="server" placeholder="Password" TextMode="Password"></asp:TextBox>
-                        <asp:Button ID="buttonLogin" runat="server" Text="Log In" OnClick="LoginButtonClick" />
-                        <a href="ForgotPassword.aspx" data-role="button">Forgot password?</a>
-                        <a href="Register.aspx" data-role="button" rel="external">Create account</a>
+                        <fieldset data-role="controlgroup">
+                           <asp:Button ID="buttonLogin" runat="server" Text="Log In" OnClick="LoginButtonClick" />
+                        </fieldset>
+                        
+                <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <fieldset data-role="controlgroup">
+                    <a href="Register.aspx" data-role="button" rel="external" id="create">Create account</a>
+                    </fieldset>
+                </div>
+                <div class="ui-block-b">
+                    <fieldset data-role="controlgroup">
+                    <a href="ForgotPassword.aspx" data-role="button" id="forget">Forgot password?</a>        
+                    </fieldset>
+                </div>
+                </div>
+          
+        
+                            
+                        
                     </div>
                 </div>
             </div>

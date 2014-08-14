@@ -70,6 +70,7 @@
     <Content Include="img\dash_exer.png" />
     <Content Include="img\dash_form.png" />
     <Content Include="img\dash_stats.png" />
+    <Content Include="LinkSent.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Logout.aspx" />
     <Content Include="MeasurementForm.aspx" />
@@ -77,6 +78,7 @@
     <Content Include="More.aspx" />
     <Content Include="News.aspx" />
     <Content Include="MobileApp.Master" />
+    <Content Include="Welcome.aspx" />
     <None Include="Service References\HWService\HW.MobileApp.HWService.Calendar.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -151,6 +153,7 @@
     </None>
     <Content Include="Statistics.aspx" />
     <Content Include="Support.aspx" />
+    <Content Include="View.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -246,6 +249,13 @@
     </Compile>
     <Compile Include="Form.aspx.designer.cs">
       <DependentUpon>Form.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LinkSent.aspx.cs">
+      <DependentUpon>LinkSent.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LinkSent.aspx.designer.cs">
+      <DependentUpon>LinkSent.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
@@ -370,6 +380,20 @@
     <Compile Include="Support.aspx.designer.cs">
       <DependentUpon>Support.aspx</DependentUpon>
     </Compile>
+    <Compile Include="View.aspx.cs">
+      <DependentUpon>View.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View.aspx.designer.cs">
+      <DependentUpon>View.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Welcome.aspx.cs">
+      <DependentUpon>Welcome.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Welcome.aspx.designer.cs">
+      <DependentUpon>Welcome.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HW.Core\HW.Core.csproj">
@@ -391,7 +415,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>53503</DevelopmentServerPort>
+          <DevelopmentServerPort>27450</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

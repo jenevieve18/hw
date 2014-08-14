@@ -79,6 +79,7 @@
             AutoPostBack="true" ViewStateMode="Enabled" EnableViewState="true" >
         </asp:DropDownList>
     </div>
+
     <div data-role="fieldcontain">
     <fieldset data-role="controlgroup" data-mini="true" >
     <legend><asp:Label ID="Label14" runat="server" Text="Occupation Type" ></asp:Label></legend>
@@ -125,8 +126,6 @@
         <asp:Label ID="Label10" runat="server" AssociatedControlID="dropDownListEducation">Education<span class="req">*</span></asp:Label>
         <asp:DropDownList data-mini="true" ID="dropDownListEducation" runat="server">
         </asp:DropDownList>
-        
-       
     </div>
     
     <div data-role="fieldcontain">

@@ -13,6 +13,7 @@ namespace HW.MobileApp
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            labelMessage.Text = "Login to a better life.";
             if (Request.Cookies["token"] != null)
             {
                 if (Request.Cookies["token"].Value != null)
@@ -20,6 +21,7 @@ namespace HW.MobileApp
                     Session.Add("token", Request.Cookies["token"].Value);
                     if(service.UserExtendToken(Request.Cookies["token"].Value,120))
                         Response.Redirect("Dashboard.aspx");
+                    else Response.Redirect("Default.aspx");
                 }
             }
         }
@@ -35,6 +37,7 @@ namespace HW.MobileApp
             else
             {
                 labelMessage.Text = "Sorry, incorrect login details.";
+                labelMessage.ForeColor = System.Drawing.Color.Red;
             }
         }
     }

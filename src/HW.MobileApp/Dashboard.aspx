@@ -17,6 +17,10 @@
 width: 180px;
 height: 126px;
         }
+        .tile{ width:100px; text-align:center;float:left;  margin: 10px 18px; padding:0px;}
+        .tile a { text-decoration:none; color:#909090 !important; font-size:12px;  }
+        .tile img { width:80%; } 
+        .tileframe {min-width:270px; max-width: 550px; margin: 0px auto 0px auto; padding:0px;}
     </style>
     
 </head>
@@ -27,16 +31,37 @@ height: 126px;
                 <h1></h1>
                 <a href="Settings.aspx" data-role="button" data-icon="gear" class="ui-btn-right" data-iconpos="notext"></a>
             </div>
-            <div data-role="content">
+    <div data-role="content" >
                 <div style="text-align:center">
                     <img style="width:180px" src="http://clients.easyapp.se/healthwatch/images/hw_logo@2x.png" />
                 </div>
-                <ul data-role="listview" data-inset="true">
-                    <li><a href="Form.aspx" rel="external"><img class="ui-li-icon" src="img/dash_form.png" />Form</a></li>
-                    <li><a href="Statistics.aspx"  rel="external"><img class="ui-li-icon" src="img/dash_stats.png" />Statistics</a></li>
-                    <li><a href="Diary.aspx" rel="external"><img class="ui-li-icon" src="img/dash_cal.png" />Diary</a></li>
-                    <li><a href="Exercises.aspx"><img class="ui-li-icon" src="img/dash_exer.png" />Exercises</a></li>
-                </ul>
+    <div class="tileframe">        
+        <div class="tile">
+            <a href="Form.aspx" rel="external">
+                <img src="img/dash_form.png" />
+                <span>Form</span>
+            </a>
+        </div>
+        <div class="tile">
+            <a href="Statistics.aspx"  rel="external">
+                <img src="img/dash_stats.png" />
+                <span>Statistics</span>
+            </a>
+        </div>   
+        <div class="tile">
+            <a href="Diary.aspx" rel="external">
+                <img src="img/dash_cal.png" />
+                <span>Diary</span>
+            </a>
+        </div>
+        <div class="tile">
+            <a href="Exercises.aspx">
+                <img src="img/dash_exer.png" />
+                <span>Exercises</span>
+            </a>
+        </div>
+    </div>        
+                
             </div>
            <div data-role="footer" dataid="footernav" data-position="fixed">
                 <div data-role="navbar">

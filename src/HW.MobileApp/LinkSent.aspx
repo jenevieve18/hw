@@ -1,8 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ForgotPassword.aspx.cs" Inherits="HW.MobileApp.ForgotPassword" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="LinkSent.aspx.cs" Inherits="HW.MobileApp.LinkSent" %>
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -52,13 +52,11 @@
         .ui-controlgroup-controls {  min-width:270px !important;}
         
     </style>
-    
 </head>
 <body>
     <form id="form1" runat="server">
-        <div data-role="page">
+    <div data-role="page">
             <div data-role="header" data-theme="b" data-position="fixed">
-                <a href="Login.aspx" data-role="button" >Cancel</a>
                 <h1>&nbsp;</h1>
             </div>
             <div data-role="content">
@@ -66,14 +64,12 @@
                     <img class="front_logo" src="http://clients.easyapp.se/healthwatch/images/hw_logo@2x.png" />
                     <div class="front_controls">
                         <div class="front_header">
-                            <h4 ><asp:Label ID="labelMessage" runat="server"></asp:Label></h4>
+                            <h4 >Link sent.</h4>
                             <img class="front_header_img" src="http://clients.easyapp.se/healthwatch/images/divider.gif">
-                        <p><asp:Label ID="labelSub" runat="server"></asp:Label></p>
+                        <p>Thank you! The link to create a new password has been sent. Kindly check your email.</p>
                         </div>
-                        <asp:TextBox ID="textBoxEmailAddress" runat="server" placeholder="Email address"></asp:TextBox>
                         <fieldset data-role="controlgroup">
-                            <asp:Button ID="buttonSubmit" runat="server" Text="Submit" 
-                                onclick="buttonSubmit_Click" />
+                            <a href="Login.aspx" data-role="button" >Back to Login Page</a>
                         </fieldset>
                     </div>
                 </div>
@@ -88,8 +84,6 @@
                 </div>
             </div>
         </div>
-        
-        
     </form>
 </body>
 </html>
