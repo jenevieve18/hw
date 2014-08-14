@@ -81,6 +81,21 @@ namespace HW.Grp
 							d.Department.ShortName
 						);
 					}
+				} else {
+					int tempSponsorAdminID = sponsorRepository.SponsorAdminExists(sponsorAdminID, Usr.Text);
+					if (tempSponsorAdminID > 0) {
+						foreach (var d in departmentRepository.a(sponsorID, tempSponsorAdminID)) {
+							bool hasDepartmentID = Request.Form["DepartmentID"] != null;
+							if (hasDepartmentID) {
+								string departmentID = Request.Form["DepartmentID"];
+								string ids = string.Format("#{0}#", departmentID.Replace(" ", "").Replace(",", "#"));
+								bool deptIDInIds = ids.IndexOf("#" + d.Department.Id + "#") >= 0;
+								if (deptIDInIds) {
+									OrgTree.Text = OrgTree.Text.Replace("value='" + d.Department.Id + "'", "value='" + d.Department.Id + "' checked");
+								}
+							}
+						}
+					}
 				}
 
 				if (HasSAID) {
@@ -105,6 +120,18 @@ namespace HW.Grp
 							foreach (var d in sponsorRepository.FindAdminDepartmentBySponsorAdmin(a.Id)) {
 								OrgTree.Text = OrgTree.Text.Replace("value='" + d.Department.Id + "'", "value='" + d.Department.Id + "' checked");
 							}
+						} else {
+							foreach (var d in departmentRepository.b(sponsorID, sponsorAdminID)) {
+								bool hasDepartmentID = Request.Form["DepartmentID"] != null;
+								if (hasDepartmentID) {
+									string departmentID = Request.Form["DepartmentID"];
+									string ids = string.Format("#{0}#", departmentID.Replace(" ", "").Replace(",", "#"));
+									bool deptIDInIds = ids.IndexOf("#" + d.Department.Id + "#") >= 0;
+									if (deptIDInIds) {
+										OrgTree.Text = OrgTree.Text.Replace("value='" + d.Department.Id + "'", "value='" + d.Department.Id + "' checked");
+									}
+								}
+							}
 						}
 					}
 				}
@@ -120,7 +147,8 @@ namespace HW.Grp
 
 		void Save_Click(object sender, EventArgs e)
 		{
-			if (!sponsorRepository.SponsorAdminExists(sponsorAdminID, Usr.Text)) {
+			int tempSponsorAdminID = sponsorRepository.SponsorAdminExists(sponsorAdminID, Usr.Text);
+			if (tempSponsorAdminID <= 0) {
 				var a = new SponsorAdmin {
 					Id = sponsorAdminID,
 					ReadOnly = ReadOnly.Checked,
