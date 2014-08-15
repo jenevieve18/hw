@@ -20,7 +20,7 @@
     
     <form id="form1" runat="server">
     
-        <div data-role="page">
+        <div data-role="page" id="form">
 
              <script type="text/javascript">
         
@@ -102,7 +102,7 @@
                     </ul>
                 </div>
             </div>
-            <a id="saveBtn" onServerClick="saveBtnClick" runat="server" style="display:none;"></a>
+            <a id="saveBtn" onServerClick="saveBtnClick" runat="server" class="hide"></a>
         </div>
         
         

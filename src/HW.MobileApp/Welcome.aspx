@@ -3,14 +3,14 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <style type="text/css">
-    .ui-title { margin: 0.6em 10% 0.8em !important; }
+    
     
 </style>
 <div data-role="header" data-theme="b" data-position="fixed">
     <h1>Welcome to Health Watch!</h1>
     
 </div>
-<div data-role="content">
+<div data-role="content" id="welcomepage">
     <div class="welcome">
         Thank you for creating an account with us! Here are a few things that you need to know in order to get started on a healthier and happier life:
     </div>

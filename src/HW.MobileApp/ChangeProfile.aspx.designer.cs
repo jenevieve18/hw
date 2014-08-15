@@ -13,22 +13,40 @@ namespace HW.MobileApp {
     public partial class ChangeProfile {
         
         /// <summary>
-        /// saveBtn control.
+        /// createBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor saveBtn;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor createBtn;
         
         /// <summary>
-        /// Label2 control.
+        /// lblHeader control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Label lblHeader;
+        
+        /// <summary>
+        /// labelMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelMessage;
+        
+        /// <summary>
+        /// lblLanguage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblLanguage;
         
         /// <summary>
         /// dropDownListLanguage control.
@@ -40,13 +58,13 @@ namespace HW.MobileApp {
         protected global::System.Web.UI.WebControls.DropDownList dropDownListLanguage;
         
         /// <summary>
-        /// Label1 control.
+        /// lblUsername control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label lblUsername;
         
         /// <summary>
         /// textBoxUsername control.
@@ -58,13 +76,13 @@ namespace HW.MobileApp {
         protected global::System.Web.UI.WebControls.TextBox textBoxUsername;
         
         /// <summary>
-        /// Label3 control.
+        /// lblPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::System.Web.UI.WebControls.Label lblPassword;
         
         /// <summary>
         /// textBoxPassword control.
@@ -76,13 +94,31 @@ namespace HW.MobileApp {
         protected global::System.Web.UI.WebControls.TextBox textBoxPassword;
         
         /// <summary>
-        /// Label4 control.
+        /// lblConfirmPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label4;
+        protected global::System.Web.UI.WebControls.Label lblConfirmPassword;
+        
+        /// <summary>
+        /// textBoxConfirmPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxConfirmPassword;
+        
+        /// <summary>
+        /// lblEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEmail;
         
         /// <summary>
         /// textBoxEmail control.
@@ -94,13 +130,13 @@ namespace HW.MobileApp {
         protected global::System.Web.UI.WebControls.TextBox textBoxEmail;
         
         /// <summary>
-        /// Label5 control.
+        /// lblAltEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label5;
+        protected global::System.Web.UI.WebControls.Label lblAltEmail;
         
         /// <summary>
         /// textBoxAlternateEmail control.
@@ -112,13 +148,31 @@ namespace HW.MobileApp {
         protected global::System.Web.UI.WebControls.TextBox textBoxAlternateEmail;
         
         /// <summary>
-        /// Label11 control.
+        /// Label1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label11;
+        protected global::System.Web.UI.WebControls.Label Label1;
+        
+        /// <summary>
+        /// label2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label label2;
+        
+        /// <summary>
+        /// lblBirth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBirth;
         
         /// <summary>
         /// birthYear control.
@@ -148,13 +202,13 @@ namespace HW.MobileApp {
         protected global::System.Web.UI.WebControls.DropDownList birthDay;
         
         /// <summary>
-        /// Label12 control.
+        /// lblGender control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label12;
+        protected global::System.Web.UI.WebControls.Label lblGender;
         
         /// <summary>
         /// rdbGenderMale control.
@@ -175,13 +229,13 @@ namespace HW.MobileApp {
         protected global::System.Web.UI.WebControls.RadioButton rdbGenderFemale;
         
         /// <summary>
-        /// Label13 control.
+        /// lblStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label13;
+        protected global::System.Web.UI.WebControls.Label lblStatus;
         
         /// <summary>
         /// rdbStatusMarried control.
@@ -202,13 +256,13 @@ namespace HW.MobileApp {
         protected global::System.Web.UI.WebControls.RadioButton rdbStatusSingle;
         
         /// <summary>
-        /// Label6 control.
+        /// lblOccupation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label6;
+        protected global::System.Web.UI.WebControls.Label lblOccupation;
         
         /// <summary>
         /// dropDownListOccupation control.
@@ -220,13 +274,13 @@ namespace HW.MobileApp {
         protected global::System.Web.UI.WebControls.DropDownList dropDownListOccupation;
         
         /// <summary>
-        /// Label14 control.
+        /// lblOccupationType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label14;
+        protected global::System.Web.UI.WebControls.Label lblOccupationType;
         
         /// <summary>
         /// rdbOccupationTypeFull control.
@@ -337,6 +391,33 @@ namespace HW.MobileApp {
         protected global::System.Web.UI.WebControls.RadioButton rdbMangerialNo;
         
         /// <summary>
+        /// divSubordinates control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divSubordinates;
+        
+        /// <summary>
+        /// lblSubordinates control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSubordinates;
+        
+        /// <summary>
+        /// dropDownListSubordinates control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList dropDownListSubordinates;
+        
+        /// <summary>
         /// divStudyArea control.
         /// </summary>
         /// <remarks>
@@ -364,13 +445,13 @@ namespace HW.MobileApp {
         protected global::System.Web.UI.WebControls.DropDownList dropDownListStudyArea;
         
         /// <summary>
-        /// Label9 control.
+        /// lblIncome control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label9;
+        protected global::System.Web.UI.WebControls.Label lblIncome;
         
         /// <summary>
         /// dropDownListAnnualIncome control.
@@ -382,13 +463,13 @@ namespace HW.MobileApp {
         protected global::System.Web.UI.WebControls.DropDownList dropDownListAnnualIncome;
         
         /// <summary>
-        /// Label10 control.
+        /// lblEducation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label10;
+        protected global::System.Web.UI.WebControls.Label lblEducation;
         
         /// <summary>
         /// dropDownListEducation control.
@@ -400,13 +481,31 @@ namespace HW.MobileApp {
         protected global::System.Web.UI.WebControls.DropDownList dropDownListEducation;
         
         /// <summary>
-        /// Label7 control.
+        /// lblCoffee control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label7;
+        protected global::System.Web.UI.WebControls.Label lblCoffee;
+        
+        /// <summary>
+        /// dropDownListCoffee control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList dropDownListCoffee;
+        
+        /// <summary>
+        /// lblTerms control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTerms;
         
         /// <summary>
         /// cbTerms control.

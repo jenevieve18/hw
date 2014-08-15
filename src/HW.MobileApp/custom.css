@@ -1,10 +1,4 @@
-    input.ui-slider-input { display : none ;}
-    div.ui-slider{ width:95%;}
-	div.ui-grid-d{text-align:center;font-size:x-small;width:97%;}
-    div.ui-block-a{text-align:left;  }
-    div.ui-block-e{ text-align:right;  }
-    .question{ font-size:small;font-weight:700;}
-    .areas{font-size:small;}
+		.areas{font-size:small;}
     .statlegend{font-size:x-small;}
 	.ui-slider-track {height: 10px;}
     .ui-slider-handle {background: rgb(0,140,220);}
@@ -76,15 +70,138 @@
 	.newsimg{margin-top:13px;margin-left:15px;}
 	.center{text-align:center;}
 	.req{ color:red;}
-	
-	.list img {   float:left;width:65px; margin-right:10px;}
-    .list h5 { margin-bottom: 5px;}
-    .list span{ color:#909090; font-size:13px;}
-    .list { width:100%;height:50px;}
-    .welcome { text-align:center;font-size:13px; }
-	
-	.tile{ width:100px; text-align:center;float:left;  margin: 10px 18px; padding:0px;}
-    .tile a { text-decoration:none; color:#909090 !important; font-size:12px;  }
-    .tile img { width:80%; } 
-    .tileframe {min-width:270px; max-width: 550px; margin: 0px auto 0px auto; padding:0px;}
-	
+		#blue {
+            background-color: rgb(0,127,181);
+        }
+        #red {
+            background-color: rgb(220,0,102);
+        }
+        #green {
+            background-color: rgb(189,209,66);
+        }
+        #orange {
+            background-color: rgb(241,136,7);
+        }
+        .front_header {
+            text-align: center;
+            margin: 15px 0px 25px 0px;
+            font-size: 16px;
+        }
+        .front_note {
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto;
+            min-width: 268px;
+            padding: 15px 15px 70px 15px;
+        }
+        .front_logo {
+            width: 150px;
+            height: 116px;
+            margin-bottom: 30px;
+            display: inline-block;
+            vertical-align: bottom;
+            margin-right: 20px;
+        }
+        .front_controls {
+            margin: 0 auto;
+            display: inline-block;
+            margin-top:-20px;
+            padding:0px 0px 0px 0px;
+        }
+        .front_header_img { width: 235px; }
+		
+		#default .slogan { margin:-4px 0px 0px 0px;display:block;height:10px;width:100%;} 
+		#welcomepage .list img {   float:left;width:65px; margin-right:10px;}
+		#welcomepage .list h5 { margin-bottom: 5px;}
+		#welcomepage .list span{ color:#909090; font-size:13px;}
+		#welcomepage .list { width:100%;height:50px;}
+		#welcomepage .welcome { text-align:center;font-size:13px; }
+		
+        #login .ui-controlgroup-controls .ui-btn-text ,.fsize12{ font-size:12px;}
+        #login .ui-grid-a {width:268px;}
+		#login .ui-grid-a .ui-block-a{ width:40%; }
+        #login .ui-grid-a .ui-block-b{ margin-left:10%;width:40%; }
+		#login .ui-grid-a .ui-btn{ width:100%; }
+		#login .ui-grid-a .ui-block-b .ui-btn-inner{ width:115px; padding: 8px 8px;}
+        #forgotpass .ui-controlgroup-controls .ui-btn { min-width: 130px;}
+        #forgotpass .ui-controlgroup-controls .ui-btn-text { font-size:12px;}
+        #forgotpass .ui-controlgroup-controls {  min-width:270px !important;}
+		#welcome .ui-title { margin: 0.6em 10% 0.8em !important; }
+		#default .ui-content { height:100% !important;background-color: rgb(0,127,181) !important; }
+		#default .frame{ background-color: white;}
+		.question{ font-size:small;font-weight:700;}
+		.tile{ display:inline-block;width:60px;text-align:center;  margin:20px;padding:0px;}
+        .tile a { text-decoration:none; color:#909090 !important; font-size:12px;  }
+        .tile img { width:60px; } 
+		
+		#form .ui-slider-track {height: 10px;}
+		#form .ui-slider-handle {background: rgb(0,140,220);}
+		#form input.ui-slider-input { display : none ;}
+		#form div.ui-slider{ width:95%;}
+		#form div.ui-grid-d{text-align:center;font-size:x-small;width:97%;}
+		#form div.ui-block-a{text-align:left;  }
+		#form div.ui-block-e{ text-align:right;  }
+		#support .ui-content { padding:0px 10px; font-size:13px;}
+		#contact .ui-controlgroup-controls .ui-btn {  min-width:98% !important;}
+		#contact .ui-content { font-size:15px;}
+		
+		
+	#more .ui-li-thumb{
+        max-height: 37px; 
+        max-width: 37px;
+        position: absolute;
+        margin: 0px auto;
+    }
+    #more .ui-page .ui-li-has-thumb .ui-btn-inner a.ui-link-inherit, .ui-page .ui-li-static.ui-li-has-thumb { 
+        min-height: 20px; 
+        padding-left:60px !important;
+        vertical-align:middle;
+    }
+    #more .ui-page .ui-li-has-thumb .ui-btn-inner a.ui-link-inherit img, .ui-page .ui-li-static.ui-li-has-thumb img{ 
+        margin-top:3px;
+        margin-left:10px;
+    }
+    #more .more { text-align:center;}
+    #more .more img {width:180px;} 
+    #more .more > div { margin:40px 0px; font-size:12px;}
+		#view select{
+            background-color:transparent;
+            border:none;
+            width:100%;
+            height:30px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            text-overflow: '';
+            direction:rtl;
+            padding:8px 0px 0px 55%;
+		}
+		#view .selection 
+		{
+			position:absolute; margin:8px 0px 0px 18px;
+		}
+		
+		.hide { display:none;}
+		.ui-title { margin: 0.6em 10% 0.8em !important; }
+		 #default img {width:100%;}
+		.ui-checkbox .ui-btn-text {font-size:12px;}
+		.ui-controlgroup-controls {  min-width:100% !important;}
+		.nopadding { padding:0px;}
+		.padding8 { padding:8px;}
+		.nomargin{margin: 0px; padding:0px;display:inline;}
+		.center {
+            text-align:center;
+        }
+		h4 { margin:0px 0px 0px 0px;}
+		
+		#measurementform .header { text-align:left;margin-top:40px;margin-top:-20px;}
+        #measurementform .header h3 { margin-bottom:0; margin-left:20px; }
+        #measurementform .header img { width:235px; }
+        #measurementform .front_header_img {
+            width: 235px;
+            margin-left:-15px;
+        }
+        #measurementform .ui-content .ui-grid-b label,.ui-grid-b .ui-block-c{font-size:12px;}  
+        #measurementform .ui-content .ui-grid-b .ui-block-a{ width:25%; text-align:right; margin-right:1%;margin-top:15px;}
+        #measurementform .ui-content .ui-grid-b .ui-block-b{ width:48%; }
+        #measurementform .ui-content .ui-grid-b .ui-block-c{ width:25%; text-align:left; margin-left:1%;margin-top:15px;}
+        #measurementform .center fieldset { display:inline-block;}

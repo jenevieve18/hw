@@ -37,7 +37,7 @@
     <h1>Statistics</h1>
     <%=viewlink %>
 </div>
-<div data-role="content">
+<div data-role="content" id="stat">
     <ul data-role="listview">
 
     <%if (Request.QueryString["tf"] != null && Request.QueryString["comp"] != null)
@@ -92,7 +92,7 @@
         </li>
         <li>
             <div>
-                <img src="<%=chartlink %>" style="width:100%;"/>
+                <img src="<%=chartlink %>" style="width:100%;height:200px;"/>
             </div>
 
         </li>

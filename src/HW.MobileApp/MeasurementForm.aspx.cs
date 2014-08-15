@@ -48,10 +48,10 @@ namespace HW.MobileApp
             id = int.Parse(Request.QueryString["mcid"]);
 
 
-
+            
             measure = service.MeasureEnum(new HWService.MeasureEnumRequest(token, id, lang, 10)).MeasureEnumResult;
             //measureNo = measure.Count();
-
+            lblHeader.Text = measure[0].measureCategory;
 
             timeHour.DataSource = Enumerable.Range(00, 24).Select(x => x.ToString("D2"));
             timeMin.DataSource = Enumerable.Range(00, 60).Select(x => x.ToString("D2"));
@@ -68,14 +68,15 @@ namespace HW.MobileApp
                 for (var mc = 0; mc < m.componentCount; mc++)
                 {
                     
-                    placeHolderList.Controls.Add(new Literal() { Text = "<div data-role='fieldcontain'>" });
+                    placeHolderList.Controls.Add(new Literal() { Text = "<div class='ui-grid-b'><div class='ui-block-a'>" });
                     measureTextBox[mcount] = new TextBox() { ID = m.measureComponents[mc].measureComponentID.ToString(), EnableViewState = true };
-                    measureLabel[mcount] = new Label() { AssociatedControlID = measureTextBox[mcount].ID, Text = m.measureComponents[mc].measureComponent + " <span style='color:#A0A0A0     ;'>" + m.measureComponents[mc].unit + "</span>" };
+                    measureLabel[mcount] = new Label() { AssociatedControlID = measureTextBox[mcount].ID, Text = m.measureComponents[mc].measureComponent};
 
                     placeHolderList.Controls.Add(measureLabel[mcount]);
+                    placeHolderList.Controls.Add(new Literal() { Text = "</div><div class='ui-block-b'>" });
                     placeHolderList.Controls.Add(measureTextBox[mcount]);
-                    placeHolderList.Controls.Add(new Literal() { Text = "</div>" });
-
+                    placeHolderList.Controls.Add(new Literal() { Text = "</div><div class='ui-block-c'> <span style='color:#A0A0A0;'>" + m.measureComponents[mc].unit + "</span></div></div>"  });
+                    
                   /*  if(Page.IsPostBack)
                         measureTextBox[mc] = placeHolderList.FindControl(m.measureComponents[mc].measureComponentID.ToString()) as TextBox;*/
                 }

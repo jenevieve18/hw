@@ -1,23 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MobileApp.Master" AutoEventWireup="true" CodeBehind="View.aspx.cs" Inherits="HW.MobileApp.View" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     
-    <style type="text/css">
-        select 
-        {
-            background-color:transparent;
-            border:none;
-            width:100%;
-            height:30px;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            text-overflow: '';
-            direction:rtl;
-            padding:8px 0px 0px 55%;
-            
-            
-            
-        }
-    </style>
+    
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -28,14 +12,14 @@
     <h1>View...</h1>
     <a runat="server" onserverclick="doneBtn_Click" data-icon="check">Done</a>
 </div>
-<div data-role="content">
+<div data-role="content" id="view">
     <ul data-role="listview">
         <li class="minihead">
             Select results to view & compare
         </li>
-        <li data-icon="false" style="padding:0px 0px 0px 0px;">
+        <li data-icon="false" class="nopadding"">
             <div>
-                <div style="position:absolute; margin:8px 0px 0px 18px;">
+                <div class="selection">
                     Timeframe
                 </div>
                 <asp:DropDownList ID="ddlTimeframe" runat="server" data-role="none">
@@ -47,9 +31,9 @@
                 </asp:DropDownList>
             </div>
         </li>
-        <li data-icon="false" style="padding:0px 0px 0px 0px;">
+        <li data-icon="false" class="nopadding">
         <div>
-            <div style="position:absolute; margin:8px 0px 0px 18px;">
+            <div class="selection">
                 Compare with
             </div>
             <asp:DropDownList ID="ddlCompare" runat="server" data-role="none">

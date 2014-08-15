@@ -19,43 +19,7 @@
        
     .header { text-align:left;margin-top:40px;}
     .header h3 { margin-bottom:0; margin-left:20px; }
-    .header img { width:235px }
-    
-    .front_header {
-        text-align: center;
-        margin: 15px 0px 25px 0px;
-        font-size: 16px;
-    }
-    .front_note {
-        max-width: 560px;
-        margin-left: auto;
-        margin-right: auto;
-        min-width: 268px;
-        padding: 15px 15px 70px 15px;
-    }
-    .front_logo {
-        width: 180px;
-        height: 126px;
-        margin-bottom: 30px;
-        display: inline-block;
-        vertical-align: bottom;
-        margin-right: 20px;
-    }
-    .front_controls {
-        max-width: 350px;
-        margin: 0 auto;
-        min-height: 250px;
-        display: inline-block;
-        min-width: 320px;
-    }
-    .center {
-        text-align:center;
-    }
-    .front_header_img {
-        width: 235px;
-        margin-left:-15px;
-    }
-    
+    .header img { width:235px; }
     
     .ui-grid-a label, .ui-grid-a a  {margin:13px 10px 0px 0px;font-size:12px;}  
     .ui-grid-a .ui-block-a{ width:24%; text-align:right; margin-right:1%;}

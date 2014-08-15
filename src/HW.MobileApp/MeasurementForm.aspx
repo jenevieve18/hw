@@ -68,32 +68,38 @@
     <h1></h1>
     <a id="saveBtn" onServerClick="saveBtnClick" runat="server" data-icon="check">Save</a>
 </div>
- <div data-role="content">
-    <div class="header">
-        <h3 class="padd exheader" ><%=measure[0].measureCategory %></h3>
-        <img class="front_header_img" src="http://clients.easyapp.se/healthwatch/images/divider.gif">
+ <div data-role="content" id="measurementform">
+    
+
+     <div class="header">
+        <h3><asp:Label id="lblHeader" runat="server"></asp:Label></h3>
+        <img class="front_header_img" src="http://clients.easyapp.se/healthwatch/images/divider.gif"/>
+        
     </div>
 
-    <div data-role="fieldcontain">
-    <fieldset data-role="controlgroup" data-mini="true" data-type="horizontal" >
-    <legend><asp:Label ID="Label11" runat="server" AssociatedControlID="timeHour">Time</asp:Label></legend>
-        <asp:DropDownList ID="timeHour" runat="server" >
+    
+    
+    <div class="ui-grid-b">
+    <div class="ui-block-a">
+    <asp:Label ID="lblTime" runat="server" Text="Time" AssociatedControlID="timeHour"></asp:Label>
+    </div>
+    <div class="ui-block-b">
+    <div class="center">
+    <fieldset data-role="controlgroup" data-type="horizontal">
+        <asp:DropDownList ID="timeHour" runat="server" data-mini="true">
         </asp:DropDownList>
-        <asp:DropDownList ID="timeMin" runat="server">
+        <asp:DropDownList ID="timeMin" runat="server" data-mini="true">
         </asp:DropDownList>
     </fieldset>
+    </div>
+    </div>
+    <div class="ui-block-c">
+    </div>
     </div>
     
 
     <asp:PlaceHolder runat="server" ID="placeHolderList"></asp:PlaceHolder>
     
 </div>
-    <style type="text/css">
-        input { max-width:500px !important; min-width:200px !important}
-        .ui-controlgroup-controls{  max-width:500px !important;  }
-        .ui-select {    width:50% !important;   }
-        .header { text-align:center; }
-        .header h4 { margin-bottom:0 }
-        .header img { width:235px }
-    </style>
+
 </asp:Content>
