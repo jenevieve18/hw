@@ -1,7 +1,6 @@
 		.areas{font-size:small;}
     .statlegend{font-size:x-small;}
-	.ui-slider-track {height: 10px;}
-    .ui-slider-handle {background: rgb(0,140,220);}
+	
 	.front_header_img {width: 235px;margin-left:0px;}
 	.exheader{ margin:0px 0px 0px 0px; padding:0px 0px 0px 0px;}
     .padd{ margin-left:30px;}
@@ -9,7 +8,7 @@
     .noleftpadding{padding-left:0px;}
 	.exerciseimg {margin-top:13px;}
 	
-	#progressbar {border-radius: 10px; /* (height of inner div) / 2 + padding */
+	#progressbar {border-radius: 10px;
     border:1px solid #D0D0D0;height:8px;}
 	#progressbar > div {height: 8px;border-radius: 2px;}
     
@@ -63,8 +62,9 @@
         }
 	
 	.moodimg{width:30px;margin:14px 0px 0px 27px;padding: 0px 0px 0px 0px;}
-    .notes{height:60px;}
+/*    .notes{height:40px;}*/
     .events{ padding: 0px 0px 0px 0px; margin:0px 0px 0px 31px;display:inline;}
+	.events span {float:right;color:#A0A0A0;}
     .time{ display:inline;margin-left:15px; font-size:small; }
     .fade{ color:#7A7A7A;}
 	.newsimg{margin-top:13px;margin-left:15px;}
@@ -135,12 +135,40 @@
         .tile img { width:60px; } 
 		
 		#form .ui-slider-track {height: 10px;}
-		#form .ui-slider-handle {background: rgb(0,140,220);}
+	/*	#form .ui-slider-handle {background: rgb(0,140,220);}*/
+	    #form .ui-slider .ui-btn:focus {
+            box-shadow: 0 0 0 transparent;
+        }
+        #form .ui-slider .ui-btn {
+            box-shadow: 0 0 0 transparent;
+            border-radius:0px !important;
+        }
+        #form .ui-slider-handle 
+	    {
+	        border: none;
+            width: 20px;
+            height: 20px;
+            margin-left:-10px;
+            margin-top:-13px;
+	        background:transparent url(images/form_slider.png) no-repeat;
+	        background-size:20px 20px;
+	        background-position:0px 0px;
+	        }
+	    
 		#form input.ui-slider-input { display : none ;}
-		#form div.ui-slider{ width:95%;}
-		#form div.ui-grid-d{text-align:center;font-size:x-small;width:97%;}
-		#form div.ui-block-a{text-align:left;  }
-		#form div.ui-block-e{ text-align:right;  }
+		#form div.ui-slider{ width:98%;}
+		#form div.ui-grid-d{text-align:center;font-size:x-small;width:100%;}
+		#form .ui-grid-d .ui-block-a{text-align:left;  }
+		#form .ui-grid-d .ui-block-e{ text-align:right;}
+		.form_button {
+          float: right;
+          width: 20px;
+          margin-top:12px;
+        }
+        .form_slider {
+          width: auto;
+          margin-right: 29px;    
+        }
 		#support .ui-content { padding:0px 10px; font-size:13px;}
 		#contact .ui-controlgroup-controls .ui-btn {  min-width:98% !important;}
 		#contact .ui-content { font-size:15px;}

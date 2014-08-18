@@ -20,7 +20,7 @@
             <%=c.date.ToString("ddd, yyyy MMM dd")%>
         </li>
 
-        <li data-icon="false" class="notes">
+        <li data-icon="false">
             <%
                 var moodsrc = "";
                 if (c.mood == HW.MobileApp.HWService.Mood.DontKnow)
@@ -60,7 +60,7 @@
                             <a <%=filink %> rel="external" >  <%} %>       
 
                     <div class="time fade"><%=cevent.time.ToString("hh:mm")%></div>
-                    <div class="events"><%=cevent.description%> <span style="color:#A0A0A0;"> <%=cevent.result != null? " "+cevent.result.Replace(',','.'):"" %></span></div>
+                    <div class="events"><%=cevent.description%> <span> <%=cevent.result != null? " "+cevent.result.Replace(',','.'):"" %></span></div>
                     
                     <% if (cevent.formInstanceKey != null)
                        { %>

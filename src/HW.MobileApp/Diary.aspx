@@ -9,13 +9,13 @@
 -->
 
 <style type="text/css">
-        .ui-controlgroup-controls{  width:100% !important; margin-left:3px; }
-        .ui-select {    width:33% !important;   }
+        .ui-controlgroup-controls{  width:101% !important; margin:-5px 0px; }
+        .ui-select {    width:33.33% !important;   }
         .ui-radio {     width:25% !important;  }
         .ui-radio .ui-btn { height:100px !important; }
         .ui-radio .ui-btn-text { font-size:11px;}
-        .ui-radio .ui-btn-inner{  height:100px !important; text-overflow: initial; padding:3px 0px 0px 0px;}
-        
+        .ui-radio .ui-btn-inner{  height:100px !important; text-overflow: initial; padding:4px 0px 0px 0px;}
+        textarea { height:130px !important; }
      
     </style>
     
@@ -41,6 +41,7 @@
         <li class="minihead">Date</li>
          <li style="padding:0px 0px 0px 0px;border-width:0px;">
          <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" >
+         <div style="display:none;"><asp:DropDownList runat="server"></asp:DropDownList></div>
           <asp:DropDownList ID="dropDownListDateMonth" runat="server" 
                  onselectedindexchanged="dropDownListDate_SelectedIndexChanged" AutoPostBack="true">
             <asp:ListItem Text="Jan" Value="01"></asp:ListItem>
@@ -59,6 +60,7 @@
 
           <asp:DropDownList ID="dropDownListDateDay" runat="server"   onselectedindexchanged="dropDownListDate_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
           <asp:DropDownList ID="dropDownListDateYear" runat="server"  onselectedindexchanged="dropDownListDate_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+          <div style="display:none;"><asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList></div>
           </fieldset>
     
          </li>
@@ -69,6 +71,7 @@
          <li class="minihead">Mood</li>
          <li style="padding:0px 0px 0px 0px;">
             <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+            <div style="display:none;"><asp:RadioButton text="x" runat="server"></asp:RadioButton></div>
                 <asp:RadioButton runat="server" id="rdbDontKnow" GroupName="rdbMoods" 
                 text="Don't Know<div><img class='image' src='http://clients.easyapp.se/healthwatch/images/dontKnow@2x.png'></div>" value="DontKnow" />
                 <asp:RadioButton runat="server" id="rdbUnhappy"  GroupName="rdbMoods" 
@@ -77,6 +80,7 @@
                 text="Neutral<div><img class='image' src='http://clients.easyapp.se/healthwatch/images/neutral@2x.png'></div>" value="Neutral" />
                 <asp:RadioButton runat="server" id="rdbHappy"    GroupName="rdbMoods"
                 text="Happy<div><img class='image' src='http://clients.easyapp.se/healthwatch/images/happy@2x.png'></div>" value="Happy" />
+                <div style="display:none;"><asp:RadioButton ID="RadioButton1" text="x" runat="server"></asp:RadioButton></div>
             </fieldset>
 
          </li>

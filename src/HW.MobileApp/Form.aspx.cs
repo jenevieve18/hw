@@ -20,9 +20,10 @@ namespace HW.MobileApp
         {
             HtmlHelper.RedirectIf(Session["token"] == null, "Login.aspx");
             token = Session["token"].ToString();
-
-
             int lang = int.Parse(Session["languageId"].ToString());
+            
+
+            
             
             try{
             formKey = service.FormEnum(new HW.MobileApp.HWService.FormEnumRequest(token, lang, 10)).FormEnumResult[0].formKey;

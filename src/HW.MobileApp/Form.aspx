@@ -26,10 +26,10 @@
         
              function getSliderValue() 
              {
-                 var sliderVal = "";
-                 var x = <%= this.questNo %>;
+                var sliderVal = "";
+                var x = <%= this.questNo %>;
                   
-                 for(var i = 0;i<parseInt(x);i++)
+                for(var i = 0;i<parseInt(x);i++)
                 {
                     sliderVal+= $("#myslider"+i).val()+"x";
                 }
@@ -37,6 +37,33 @@
                 $('#answers').val(sliderVal);
                 document.getElementById('saveBtn').click();
             }
+
+            window.onload=function(){
+                var x = <%= this.questNo %>;
+                for(var i = 0;i<parseInt(x);i++)
+                {
+                    $("#myslider"+i).next().find('.ui-slider-handle').hide();
+                    $("#myslider"+i+"button").closest('.ui-btn').hide();
+
+                    $("#myslider"+i).change(function() {
+                    var slider_value = $(this).slider().val();
+                    if(slider_value > 0){
+                        $(this).slider().next().find('.ui-slider-handle').show();
+                        $("#"+$(this).attr("id")+"button").closest('.ui-btn').show();
+                    }
+                    });
+
+                    $("#myslider"+i+"button").click(function(){
+                        $(this).closest('.ui-btn').hide();
+                        var slideid = $(this).attr("id").replace('button','');
+                        $("#"+slideid).slider().val("0");
+                        $("#"+slideid).slider().next().find('.ui-slider-handle').hide();
+                    });  
+                }
+            };
+
+           
+            
             </script>   
             
             <div data-role="header" data-theme="b" data-position="fixed">
@@ -59,11 +86,16 @@
                     var option = question[i].AnswerOptions;
                     var optionNo = question[i].AnswerOptions.Count();
                     var idName = "id='myslider"+ i + "'";
+                    var buttonIdName = "id='myslider" + i + "button'";
             %>      
                   <li>
+                      
                       <label class="question"><%=questText %></label>
+                      <div class="form_button">
+                      <input type="button" <%=buttonIdName%> data-icon="delete" data-mini="true" data-iconpos="notext"/></div>
+                      <div class="form_slider">
                       <input type="range" name="myslider" <%=idName%> value="0" min="1" max="100" data-mini="true" />  
-
+       
                       <%
                             
                          if (optionNo == 2){ 
@@ -86,6 +118,8 @@
                                  <div class="ui-block-e"><%=option[4].AnswerText %></div>
                             </div>                        
                       <% } %>
+                      </div>               
+                      
                   </li>
 
             <% } %>
