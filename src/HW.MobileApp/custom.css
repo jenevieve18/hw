@@ -233,3 +233,53 @@
         #measurementform .ui-content .ui-grid-b .ui-block-b{ width:48%; }
         #measurementform .ui-content .ui-grid-b .ui-block-c{ width:25%; text-align:left; margin-left:1%;margin-top:15px;}
         #measurementform .center fieldset { display:inline-block;}
+		.ui-icon-health {
+        background: url(images/my_health.png) 50% 50% no-repeat;
+        background-size: 30px 30px;
+        width: 30px;
+        height: 30px;
+        
+        margin-left: -15px !important;
+        box-shadow: none;
+        -webkit-box-shadow: none;
+    }
+    .ui-icon-news {
+        background: url(images/news.png) 50% 50% no-repeat;
+        background-size: 30px 30px;
+        width: 30px;
+        height: 30px;
+        
+        margin-left: -15px !important;
+        box-shadow: none;
+        -webkit-box-shadow: none;
+        border-radius: 0px; -webkit-border-radius: 0px; -moz-border-radius: 0px;
+    }
+    .ui-icon-more {
+        background: url(images/more.png) 50% 50% no-repeat;
+        background-size: 30px 30px;
+        width: 30px;
+        height: 30px;
+        
+        margin-left: -15px !important;
+        box-shadow: none;
+        -webkit-box-shadow: none;
+    }
+    .ui-icon-bars {
+        background: url(images/list_icon.png) 50% 50% no-repeat;
+        background-size: 11px 11px;
+        width: 18px;
+        height: 18px;		
+		
+		
+        box-shadow: none;
+        -webkit-box-shadow: none;
+    }
+    .ui-footer .ui-btn-inner {
+        padding: 1px !important;
+        height:60px;
+    }
+    .ui-footer .ui-btn-text 
+    {
+        top:40px;
+        font-weight:lighter;
+    }

@@ -38,9 +38,9 @@
             <div data-role="footer" dataid="footernav" data-position="fixed">
                 <div data-role="navbar">
                     <ul>
-                        <li><a href="Dashboard.aspx" data-icon="home">My Health</a></li>
-                        <li><a href="News.aspx" data-icon="grid">News</a></li>
-                        <li><a href="More.aspx" data-icon="info">More</a></li>
+                        <li><a href="Dashboard.aspx" data-icon="health">My Health</a></li>
+                        <li><a href="News.aspx" data-icon="news">News</a></li>
+                        <li><a href="More.aspx" data-icon="more">More</a></li>
                     </ul>
                 </div>
             </div>

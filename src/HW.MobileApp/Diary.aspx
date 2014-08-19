@@ -30,7 +30,7 @@
 
     <a href="Dashboard.aspx" data-icon="arrow-l">My Health</a>
     <h1>Diary</h1>
-    <a href="Calendar.aspx" data-icon="grid" data-iconpos="notext" style="position:inherit;right:87px;top:8px;"></a>
+    <a href="Calendar.aspx" data-icon="bars" data-iconpos="notext" style="position:inherit;right:87px;top:8px;"></a>
     <a  runat="server" onserverclick="saveBtnClick" data-icon="check" class="ui-btn-right">Save</a>
 </div>
 
