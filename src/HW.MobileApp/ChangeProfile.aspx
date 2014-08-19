@@ -54,8 +54,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <div data-role="header" data-theme="b" data-position="fixed">
-    <a href="Login.aspx" rel="external">Cancel</a>
-    <h1>Register</h1>
+    <a href="Settings.aspx" rel="external">Cancel</a>
+    <h1>Change Profile</h1>
     <a id="createBtn" onserverclick="saveChangesBtn_Click" runat="server">Save</a>
 
 </div>
@@ -311,7 +311,7 @@
     <hr style="width:80%;"/>
 
     <div class="ui-grid-a" style="text-align:center;">
-    <asp:Label ID="lblTerms" runat="server"><a target="_blank" <%=policylink %>>Terms & Conditions of the Service<span class='req'>*</span></a></asp:Label>
+    <asp:Label ID="lblTerms" runat="server"><a <%=policylink %>>Terms & Conditions of the Service<span class='req'>*</span></a></asp:Label>
     <asp:CheckBox ID="cbTerms" Text=" I accept" runat="server" data-mini="true"></asp:CheckBox >
     </div>
 

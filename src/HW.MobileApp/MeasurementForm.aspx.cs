@@ -103,7 +103,7 @@ namespace HW.MobileApp
                 }
             }
             
-           // Response.Redirect("ActivityMeasurement.aspx?datetime=" + newDate.ToString("yyyy-MM-ddTHH:mm:ss")); 
+            Response.Redirect("ActivityMeasurement.aspx?datetime=" + newDate.ToString("yyyy-MM-ddTHH:mm:ss")); 
         }
     }
 

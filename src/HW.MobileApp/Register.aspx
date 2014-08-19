@@ -17,7 +17,7 @@
     <style type="text/css">
         
        
-    .header { text-align:left;margin-top:40px;}
+    .header { text-align:left;margin-top:40px;margin-left:-8px;}
     .header h3 { margin-bottom:0; margin-left:20px; }
     .header img { width:235px; }
     
@@ -293,7 +293,7 @@
     <hr style="width:80%;"/>
 
     <div class="ui-grid-a" style="text-align:center;">
-    <asp:Label ID="lblTerms" runat="server"><a target="_blank" <%=policylink %>>Terms & Conditions of the Service<span class='req'>*</span></a></asp:Label>
+    <asp:Label ID="lblTerms" runat="server"><a <%=policylink %>>Terms & Conditions of the Service<span class='req'>*</span></a></asp:Label>
     <asp:CheckBox ID="cbTerms" Text=" I accept" runat="server" data-mini="true"></asp:CheckBox >
     </div>
 

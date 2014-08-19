@@ -39,8 +39,8 @@ namespace HW.MobileApp
 
             language = int.Parse(dropDownListLanguage.SelectedValue);
             profileQ = service.ProfileQuestions(new HWService.ProfileQuestionsRequest(language, 0)).ProfileQuestionsResult;
-            policylink = "href='termsEnglish.html'";
-            if (language == 1) policylink = "href='termsSwedish.html'";
+            policylink = "href='termsEnglish.html' data-rel='dialog'";
+            if (language == 1) policylink = "href='termsSwedish.html' data-rel='dialog'";
             populateForm();
             if (!Page.IsPostBack) { 
                 dropDownListOccupation_SelectedIndexChanged(sender, e);

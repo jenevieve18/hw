@@ -30,8 +30,8 @@ namespace HW.MobileApp
 
             language = int.Parse(dropDownListLanguage.SelectedValue);
             profileQ = service.ProfileQuestions(new HWService.ProfileQuestionsRequest(language, 0)).ProfileQuestionsResult;
-            policylink = "href='termsEnglish.html'";
-            if (language == 1)  policylink = "href='termsSwedish.html'";
+            policylink = "href='termsEnglish.html ' data-rel='dialog'";
+            if (language == 1) policylink = "href='termsSwedish.html' data-rel='dialog'";
             populateForm();
             if (!Page.IsPostBack) dropDownListOccupation_SelectedIndexChanged(sender, e);
         }
@@ -277,7 +277,7 @@ namespace HW.MobileApp
             }
             if (!cbTerms.Checked)
             {
-                labelMessage.Text = labelMessage.Text + ((labelMessage.Text == "") ? "" : "<br>") + lblTerms.Text;
+                labelMessage.Text = labelMessage.Text + ((labelMessage.Text == "") ? "" : "<br>") + "Terms & Conditions of the Service<span class='req'>*</span>";
                 flag6 = false;
             }
 

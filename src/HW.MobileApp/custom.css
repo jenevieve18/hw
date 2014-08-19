@@ -228,10 +228,13 @@
             width: 235px;
             margin-left:-15px;
         }
-        #measurementform .ui-content .ui-grid-b label,.ui-grid-b .ui-block-c{font-size:12px;}  
-        #measurementform .ui-content .ui-grid-b .ui-block-a{ width:25%; text-align:right; margin-right:1%;margin-top:15px;}
-        #measurementform .ui-content .ui-grid-b .ui-block-b{ width:48%; }
-        #measurementform .ui-content .ui-grid-b .ui-block-c{ width:25%; text-align:left; margin-left:1%;margin-top:15px;}
+        #measurementform .ui-grid-b label,.ui-grid-b .ui-block-c{font-size:12px;}  
+        #measurementform .ui-grid-b .ui-block-a{ width:25%; text-align:right; margin-right:1%;margin-top:15px;}
+        #measurementform .ui-grid-b .ui-block-b{ width:48%; }
+        #measurementform .ui-grid-b .ui-block-c{ width:25%; text-align:left; margin-left:1%;margin-top:15px;}
+        
+        
+        .borders { border:1px solid black;}
         #measurementform .center fieldset { display:inline-block;}
 		.ui-icon-health {
         background: url(images/my_health.png) 50% 50% no-repeat;
