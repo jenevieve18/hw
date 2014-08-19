@@ -1,0 +1,20 @@
+.ui-header 
+{
+    background:url('../img/header.jpg') right repeat-x;
+}
+#footer, .ui-footer 
+{
+    background:url(../img/footer.jpg) right repeat-x;
+}
+.ui-btn, .ui-corner-all
+{
+	-webkit-border-radius: 5px /*{global-radii-blocks}*/;
+	border-radius: 5px /*{global-radii-blocks}*/;
+}
+input.ui-input-text, textarea.ui-input-text 
+{
+    font-size:14px;
+}
+.ui-btn-inner {
+    border-color: rgba(255,255,255,0);
+}

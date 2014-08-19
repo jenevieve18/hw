@@ -57,6 +57,7 @@
     <Content Include="Calendar.aspx" />
     <Content Include="ChangeProfile.aspx" />
     <Content Include="ContactUs.aspx" />
+    <Content Include="css\custom.css" />
     <Content Include="custom.css" />
     <Content Include="Dashboard.aspx" />
     <Content Include="Default.aspx" />

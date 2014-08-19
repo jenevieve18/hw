@@ -5,6 +5,7 @@
 *no view page
 
 -->
+    <link rel="Stylesheet" href="css/custom.css" />
 <style type="text/css">
     .ui-controlgroup-controls{ width:100% !important; margin: -4px 0px -4px 1px;}
     .ui-select {   max-width: 50% !important;    min-width: 50% !important;  }
