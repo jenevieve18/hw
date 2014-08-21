@@ -52,11 +52,13 @@ namespace HW.MobileApp
             measure = service.MeasureEnum(new HWService.MeasureEnumRequest(token, id, lang, 10)).MeasureEnumResult;
             //measureNo = measure.Count();
             lblHeader.Text = measure[0].measureCategory;
-
-            timeHour.DataSource = Enumerable.Range(00, 24).Select(x => x.ToString("D2"));
-            timeMin.DataSource = Enumerable.Range(00, 60).Select(x => x.ToString("D2"));
-            timeHour.DataBind();
-            timeMin.DataBind();
+            if (!Page.IsPostBack)
+            {
+                timeHour.DataSource = Enumerable.Range(00, 24).Select(x => x.ToString("D2"));
+                timeMin.DataSource = Enumerable.Range(00, 60).Select(x => x.ToString("D2"));
+                timeHour.DataBind();
+                timeMin.DataBind();
+            }
 
             measureTextBox = new TextBox[measure.Count()];
             measureLabel = new Label[measure.Count()];

@@ -4,23 +4,23 @@
     <style type="text/css">
         
        
-    .header { text-align:left;margin-top:40px;}
-    .header h3 { margin-bottom:0; margin-left:20px; }
-    .header img { width:235px; }
+    #profileheader .header { text-align:left;margin-top:40px;}
+    #profileheader .header h3 { margin-bottom:0; margin-left:20px; }
+    #profileheader .header img { width:235px; }
     
-    .front_header {
+    #changeprofile .front_header {
         text-align: center;
         margin: 15px 0px 25px 0px;
         font-size: 16px;
     }
-    .front_note {
+    #changeprofile .front_note {
         max-width: 560px;
         margin-left: auto;
         margin-right: auto;
         min-width: 268px;
         padding: 15px 15px 70px 15px;
     }
-    .front_logo {
+    #changeprofile .front_logo {
         width: 180px;
         height: 126px;
         margin-bottom: 30px;
@@ -28,17 +28,17 @@
         vertical-align: bottom;
         margin-right: 20px;
     }
-    .front_controls {
+    #changeprofile .front_controls {
         max-width: 350px;
         margin: 0 auto;
         min-height: 250px;
         display: inline-block;
         min-width: 320px;
     }
-    .center {
+    #changeprofile .center {
         text-align:center;
     }
-    .front_header_img {
+    #changeprofile .front_header_img {
         width: 235px;
         margin-left:-15px;
     }
@@ -53,13 +53,13 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-<div data-role="header" data-theme="b" data-position="fixed">
-    <a href="Settings.aspx" rel="external">Cancel</a>
+<div data-role="header" id="profileheader" data-theme="b" data-position="fixed">
+    <a href="Settings.aspx">Cancel</a>
     <h1>Change Profile</h1>
     <a id="createBtn" onserverclick="saveChangesBtn_Click" runat="server">Save</a>
 
 </div>
-<div data-role="content" style="padding:5px;">
+<div data-role="content" id="changeprofile" style="padding:5px;">
     <div style="left:20px;top:42px;position:absolute;font-size:11px;font-style:italic;color:#909090  ;">
         <p>Fields with <span style="color:Red;">*</span> are required</p>
     </div>
