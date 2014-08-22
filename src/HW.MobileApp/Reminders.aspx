@@ -4,7 +4,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <div data-role="header" data-theme="b" data-position="fixed">
-    <a href="Settings.aspx" data-icon="arrow-l">Back</a>
+    <a href="Settings.aspx">Cancel</a>
     <h1>Reminders</h1>
     <a id="saveBtn" onserverclick="saveChangesBtn_Click" runat="server" data-icon="check">Save</a>
 </div>
