@@ -10,7 +10,7 @@
 </div>
 <div data-role="content" id="support">
     
-         <div data-role="collapsible" data-content-theme="d" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-u"  data-inset="false" data-iconpos="right">
+         <div class="div1" data-role="collapsible" data-content-theme="d" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-u"  data-inset="false" data-iconpos="right" >
             <h1>How do I track my health?</h1>
             <div data-role="content">
             Track your health development over time by responding to the 11 questions in the Form. Once you save, you get immediate individual feedback and an action plan. When clicking the exercises in the action plan you will be directed to Exercises. You may also view your development over time by clicking ‘View’. You can choose to view one question at a time or several in the same graph.

@@ -53,6 +53,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="About.aspx" />
     <Content Include="ActivityMeasurement.aspx" />
     <Content Include="Calendar.aspx" />
     <Content Include="ChangeProfile.aspx" />
@@ -167,6 +168,13 @@
     <None Include="Service References\HWService\service.wsdl" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="About.aspx.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="About.aspx.designer.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ActivityMeasurement.aspx.cs">
       <DependentUpon>ActivityMeasurement.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

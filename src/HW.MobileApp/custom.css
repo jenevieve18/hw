@@ -173,14 +173,21 @@
 		#contact .ui-controlgroup-controls .ui-btn {  min-width:98% !important;}
 		#contact .ui-content { font-size:15px;}
 		
-		
+	
 	#more .ui-li-thumb{
-        max-height: 37px; 
-        max-width: 37px;
+        max-height: 50px; 
+        max-width: 50px;
         position: absolute;
-        margin: 0px auto;
+        margin-top:15px;
+        margin-left:18px;
+        
     }
-    #more .ui-page .ui-li-has-thumb .ui-btn-inner a.ui-link-inherit, .ui-page .ui-li-static.ui-li-has-thumb { 
+/*    #more .ui-li .ui-btn-text{
+        margin:20px 0px 0px -30px;
+        padding:0px;        
+    }
+    
+/*    #more .ui-page .ui-li-has-thumb .ui-btn-inner a.ui-link-inherit, .ui-page .ui-li-static.ui-li-has-thumb { 
         min-height: 20px; 
         padding-left:60px !important;
         vertical-align:middle;
@@ -188,10 +195,10 @@
     #more .ui-page .ui-li-has-thumb .ui-btn-inner a.ui-link-inherit img, .ui-page .ui-li-static.ui-li-has-thumb img{ 
         margin-top:3px;
         margin-left:10px;
-    }
-    #more .more { text-align:center;}
-    #more .more img {width:180px;} 
-    #more .more > div { margin:40px 0px; font-size:12px;}
+    }*/
+    #about{ text-align:center;}
+    #about img {width:180px;} 
+    #about > div { margin:40px 0px; font-size:12px;}
 		#view select{
             background-color:transparent;
             border:none;
@@ -286,3 +293,4 @@
         top:40px;
         font-weight:lighter;
     }
+    #support .div1 { margin-top:-16px;}
