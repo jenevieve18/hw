@@ -26,7 +26,7 @@
                 <asp:ListItem>Latest</asp:ListItem>
                 <asp:ListItem>Past week</asp:ListItem>
                 <asp:ListItem>Past month</asp:ListItem>
-                <asp:ListItem>Past Year</asp:ListItem>
+                <asp:ListItem>Past year</asp:ListItem>
                 <asp:ListItem>Since first measure</asp:ListItem>
                 </asp:DropDownList>
             </div>

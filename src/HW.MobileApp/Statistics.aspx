@@ -163,17 +163,18 @@
         var greenl = int.Parse(f.greenLow + "");
         var yellowl = int.Parse(f.yellowLow + "");
 
-        var greenStat = "style='left:" + (greenl - 1) + "%;width:" + ((greenh - greenl) - 5) + "%;'";
-        var orangeStat = "style='left:" + (yellowl - 1) + "%;width:" + ((yellowh - yellowl) - 5) + "%;'";
+        var greenStat = "style='left:" + (greenl) + "%;width:" + ((greenh-1)-greenl )+ "%;'";
+        var orangeStat = "style='left:" + (yellowl) + "%;width:" +( (yellowh-1)-yellowl )+ "%;'";
                     
                     %>
                     <div data-role="content">
-                        <div >
+                        <div style = "position:relative;margin-right:24px;">
                         <div class="holder lower pink"></div>
                         <div class="holder upper orange" <%=orangeStat%>></div>
                         <div class="holder upper green" <%=greenStat %>></div>
                         </div>
                         <h3 style="color:#1987D1">Interpretation</h3>
+
                         <span style="font-size:small;"><%=f.analysis%></span>
                         <%
         var rating = "";

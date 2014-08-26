@@ -16,7 +16,7 @@
                 HealthWatch provides tools for individuals and organisations to preserve and increase health and quality of life, as well as reduce stress-related problems.
                 </div>
                 
-                <h6>Health Watch © 2012 All Rights Reserved</h6>
+                <h5>Health Watch © 2014<br />All Rights Reserved</h5>
                 
                 </div>
                 

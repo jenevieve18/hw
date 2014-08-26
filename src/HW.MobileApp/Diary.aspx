@@ -86,7 +86,7 @@
          </li>
          <li class="minihead">Activities & Measurements</li>
         
-         <li><asp:LinkButton runat="server" onclick="activitylink_Click">View Activities & Measurements</asp:LinkButton>
+         <li><asp:LinkButton runat="server" onclick="activitylink_Click">View/Add Activities and Measurements</asp:LinkButton>
          
          </li>
         

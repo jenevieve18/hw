@@ -32,7 +32,7 @@
 <div data-role="header" data-theme="b" data-position="fixed">
     <%var diarylink = "href='Diary.aspx?date="+date.ToString("yyyy-MM-ddTHH:mm:ss")+"'"; %>
     <a <%=diarylink %> data-icon="arrow-l" rel="external">Back</a>
-    <h1>Activities & Measurements</h1>
+    <h1>View/Add Activities and Measurements</h1>
     <%var measlink = "href='MeasurementsList.aspx?datetime="+date.ToString("yyyy-MM-ddTHH:mm:ss")+"'"; %>
     <a <%=measlink %> data-icon="plus" data-iconpos="notext"></a>
 

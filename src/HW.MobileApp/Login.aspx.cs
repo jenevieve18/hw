@@ -21,7 +21,7 @@ namespace HW.MobileApp
                     Session.Add("token", Request.Cookies["token"].Value);
                     if(service.UserExtendToken(Request.Cookies["token"].Value,120))
                         Response.Redirect("Dashboard.aspx");
-                    else Response.Redirect("Default.aspx");
+                    
                 }
             }
         }
