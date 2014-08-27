@@ -13,17 +13,30 @@ namespace HW.MobileApp
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            labelMessage.Text = "Login to a better life.";
+            labelMessage.Text = R.Str("login.message", "Login to a better life.");
             if (Request.Cookies["token"] != null)
             {
                 if (Request.Cookies["token"].Value != null)
                 {
                     Session.Add("token", Request.Cookies["token"].Value);
-                    if(service.UserExtendToken(Request.Cookies["token"].Value,120))
+                    if (service.UserExtendToken(Request.Cookies["token"].Value, 120))
+                    {
                         Response.Redirect("Dashboard.aspx");
-                    else Response.Redirect("Default.aspx");
+                    }
+                    else
+                    {
+                        Response.Redirect("Default.aspx");
+                    }
                 }
             }
+        }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+            textBoxUsername.Attributes["placeholder"] = R.Str("user.name");
+            textBoxPassword.Attributes["placeholder"] = R.Str("user.password");
+            buttonLogin.Text = R.Str("user.login");
         }
 
         protected void LoginButtonClick(object sender, EventArgs e)
@@ -36,7 +49,7 @@ namespace HW.MobileApp
             }
             else
             {
-                labelMessage.Text = "Sorry, incorrect login details.";
+                labelMessage.Text = R.Str("user.incorrectLogin", "Sorry, incorrect login details.");
                 labelMessage.ForeColor = System.Drawing.Color.Red;
             }
         }
