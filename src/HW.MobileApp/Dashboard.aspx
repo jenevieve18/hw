@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="HW.MobileApp.Dashboard" %>
-
+<%@ Import Namespace="HW.MobileApp" %>
 <!DOCTYPE html>
 
 <html>
@@ -30,26 +30,26 @@
         <div class="tile">
             <a href="Form.aspx" rel="external">
                 <img src="img/dash_form.png" />
-                <span>Form</span>
+                <span><%= R.Str("dashboard.form") %></span>
             </a>
         </div>
         <div class="tile">
             <a href="Statistics.aspx"  rel="external">
                 <img src="img/dash_stats.png" />
-                <span>Statistics</span>
+                <span><%= R.Str("dashboard.statistics") %></span>
             </a>
         </div>
         
         <div class="tile">
             <a href="Diary.aspx" rel="external">
                 <img src="img/dash_cal.png" />
-                <span>Diary</span>
+                <span><%= R.Str("dashboard.diary") %></span>
             </a>
         </div>
         <div class="tile">
             <a href="Exercises.aspx">
                 <img src="img/dash_exer.png" />
-                <span>Exercises</span>
+                <span><%= R.Str("dashboard.exercises") %></span>
             </a>
         </div>
         
@@ -61,9 +61,9 @@
            <div data-role="footer" dataid="footernav" data-position="fixed">
                 <div data-role="navbar">
                     <ul>
-                        <li><a href="Dashboard.aspx" data-icon="health">My Health</a></li>
-                        <li><a href="News.aspx" data-icon="news">News</a></li>
-                        <li><a href="More.aspx" data-icon="more">More</a></li>
+                        <li><a href="Dashboard.aspx" data-icon="health"><%= R.Str("home.myHealth") %></a></li>
+                        <li><a href="News.aspx" data-icon="news"><%= R.Str("home.news") %></a></li>
+                        <li><a href="More.aspx" data-icon="more"><%= R.Str("home.more") %></a></li>
                     </ul>
                 </div>
             </div>

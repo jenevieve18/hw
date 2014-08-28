@@ -1,0 +1,24 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MobileApp.Master" AutoEventWireup="true" CodeBehind="About.aspx.cs" Inherits="HW.MobileApp.About" %>
+<%@ Import Namespace="HW.MobileApp" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+    <div data-role="header" data-theme="b" data-position="fixed">
+        <a href="More.aspx"><%= R.Str("home.more") %></a>
+        <h1><%= R.Str("about.title") %></h1>
+    </div>
+
+    <div data-role="content" id="about">
+        <div class="more">
+            <img  src="http://clients.easyapp.se/healthwatch/images/hw_logo@2x.png" />
+            <div>
+                <%= R.Str("about.text") %>
+            </div>
+                
+            <h5><%= R.Str("about.copyright") %></h5>
+        </div>
+                
+    </div>
+            
+</asp:Content>

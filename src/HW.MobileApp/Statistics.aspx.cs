@@ -113,7 +113,16 @@ namespace HW.MobileApp
                 }
                 else if(timeframe == "Since first measure")
                 {
-                    tdt = "100805";
+                    foreach(var i in fft){
+                       var s = service.UserGetFormFeedback(new HWService.UserGetFormFeedbackRequest(token, formKey, i.feedbackTemplateID, DateTime.Now.AddYears(-100), DateTime.Now.AddDays(1), language, 10)).UserGetFormFeedbackResult;
+                       foreach (var x in s)
+                       {
+                           tdt = x.dateTime.ToString("yyMMdd");
+                           break;
+                       }
+                       break;
+                    }
+                    //tdt = "100805";
                 }
 
                 chartlink = "https://test.healthwatch.se/lineChart.aspx?FDT="+tdt+"&TDT="+fdt+"&SID=0&LID="+language+"&UID="+user.userID+"&C="+c+"&RP0="+rp0_selected+"&RP1="+rp1_selected+"&RP2="+rp2_selected+"&RP3="+rp3_selected;

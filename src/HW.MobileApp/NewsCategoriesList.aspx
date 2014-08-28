@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MobileApp.Master" AutoEventWireup="true" CodeBehind="NewsCategoriesList.aspx.cs" Inherits="HW.MobileApp.NewsCategoriesList" %>
+<%@ Import Namespace="HW.MobileApp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
 
@@ -16,7 +17,8 @@
                             <%var newslink = "href='NewsSummary.aspx?nid=" + n.newsID + "&ncid="+categ+"'"; %>
                             <a <%=newslink %>>
                                 
-                                <h1><%= n.teaser %></h1>
+                                <!--<h1><%= n.teaser %></h1>-->
+                                <h1><%= n.headline %></h1>
                                 <p><%= n.newsCategory %></p>
                                 <p><%= n.DT.ToString("m") %></p>
                             </a>
@@ -27,9 +29,9 @@
             <div data-role="footer" dataid="footernav" data-position="fixed">
                 <div data-role="navbar">
                     <ul>
-                        <li><a href="Dashboard.aspx" data-icon="health">My Health</a></li>
-                        <li><a href="News.aspx" data-icon="news">News</a></li>
-                        <li><a href="More.aspx" data-icon="more">More</a></li>
+                        <li><a href="Dashboard.aspx" data-icon="health"><%= R.Str("home.myHealth") %></a></li>
+                        <li><a href="News.aspx" data-icon="news"><%= R.Str("home.news") %></a></li>
+                        <li><a href="More.aspx" data-icon="more"><%= R.Str("home.more") %></a></li>
                     </ul>
                 </div>
             </div>

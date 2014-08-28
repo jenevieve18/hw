@@ -29,6 +29,13 @@ namespace HW.MobileApp
             
         }
 
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+            btnInt.Text = R.Str("news.categories.international");
+            btnSwe.Text = R.Str("news.categories.swedish");
+        }
+
         protected void toEnglish(object sender, EventArgs e)
         {
             if (Session["newslanguageid"] != null)

@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="NewsCategories.aspx.cs" Inherits="HW.MobileApp.NewsCategories" %>
-
+<%@ Import Namespace="HW.MobileApp" %>
 <!DOCTYPE html>
 
 <html>
@@ -21,7 +21,7 @@
     <form id="form1" runat="server">
         <div data-role="page">
             <div data-role="header" data-theme="b" data-position="fixed">
-                <a href="News.aspx" data-role="button" data-icon="arrow-l">Back</a>
+                <a href="News.aspx" data-role="button" data-icon="arrow-l"><%= R.Str("button.back") %></a>
                 <h1>&nbsp;</h1>
                 
             </div>
@@ -38,10 +38,10 @@
                             </ul>
                         </div>
                     <li class="minihead">
-                    Select a category to view
+                    <%= R.Str("news.categories.select") %>
                     </li>
                     <li><a href="News.aspx">
-                    View all news
+                   <%= R.Str("news.all") %>
                     </a></li>
                     </li>
 
@@ -62,9 +62,9 @@
             <div data-role="footer" dataid="footernav" data-position="fixed">
                 <div data-role="navbar">
                     <ul>
-                        <li><a href="Dashboard.aspx" data-icon="health">My Health</a></li>
-                        <li><a href="News.aspx" data-icon="news">News</a></li>
-                        <li><a href="More.aspx" data-icon="more">More</a></li>
+                        <li><a href="Dashboard.aspx" data-icon="health"><%= R.Str("home.myHealth") %></a></li>
+                        <li><a href="News.aspx" data-icon="news"><%= R.Str("home.news") %></a></li>
+                        <li><a href="More.aspx" data-icon="more"><%= R.Str("home.more") %></a></li>
                     </ul>
                 </div>
             </div>

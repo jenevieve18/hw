@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="HW.MobileApp.Register" %>
-
+<%@ Import Namespace="HW.MobileApp" %>
 <!DOCTYPE html>
 
 <html>
@@ -37,14 +37,14 @@
 
 
 <div data-role="header" data-theme="b" data-position="fixed">
-    <a href="Login.aspx" rel="external">Cancel</a>
-    <h1>Register</h1>
-    <a id="createBtn" onserverclick="createBtn_Click" runat="server">Create</a>
+    <a href="Login.aspx" rel="external"><%= R.Str("button.cancel") %></a>
+    <h1><%= R.Str("register.title") %></h1>
+    <a id="createBtn" onserverclick="createBtn_Click" runat="server"><%= R.Str("register.create") %></a>
 
 </div>
 <div data-role="content" style="padding:5px;">
     <div style="left:20px;top:42px;position:absolute;font-size:11px;font-style:italic;color:#909090  ;">
-        <p>Fields with <span style="color:Red;">*</span> are required</p>
+        <p><%= R.Str("label.required") %></p>
     </div>
 
     <div class="header">

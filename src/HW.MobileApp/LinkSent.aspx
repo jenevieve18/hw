@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="LinkSent.aspx.cs" Inherits="HW.MobileApp.LinkSent" %>
-
+<%@ Import Namespace="HW.MobileApp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -25,12 +25,12 @@
                     <img class="front_logo" src="http://clients.easyapp.se/healthwatch/images/hw_logo@2x.png" />
                     <div class="front_controls">
                         <div class="front_header">
-                            <h4 >Link sent.</h4>
+                            <h4 ><%= R.Str("link.sent") %></h4>
                             <img class="front_header_img" src="http://clients.easyapp.se/healthwatch/images/divider.gif">
-                        <p>Thank you! The link to create a new password has been sent. Kindly check your email.</p>
+                        <p><%= R.Str("link.message") %></p>
                         </div>
                         <fieldset data-role="controlgroup">
-                            <a href="Login.aspx" data-role="button" >Back to Login Page</a>
+                            <a href="Login.aspx" data-role="button" ><%= R.Str("button.backToLogin") %></a>
                         </fieldset>
                     </div>
                 </div>
@@ -38,9 +38,9 @@
             <div data-role="footer" dataid="footernav" data-position="fixed">
                 <div data-role="navbar">
                     <ul>
-                        <li><a href="Dashboard.aspx" data-icon="health">My Health</a></li>
-                        <li><a href="News.aspx" data-icon="news">News</a></li>
-                        <li><a href="More.aspx" data-icon="more">More</a></li>
+                        <li><a href="Dashboard.aspx" data-icon="health"><%= R.Str("home.myHealth") %></a></li>
+                        <li><a href="News.aspx" data-icon="news"><%= R.Str("home.news") %></a></li>
+                        <li><a href="More.aspx" data-icon="more"><%= R.Str("home.more") %></a></li>
                     </ul>
                 </div>
             </div>
