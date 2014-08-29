@@ -69,7 +69,7 @@
                 <a href="Dashboard.aspx" data-icon="arrow-l"><%= R.Str("home.myHealth") %></a>
                 <h1><%= R.Str("dashboard.form") %></h1>
                 
-                <a onClick="getSliderValue()" data-icon="check"><%= R.Str("button.save") %></a>
+                <a onClick="getSliderValue()"><%= R.Str("button.save") %></a>
             </div>
             <div data-role="content">
             <div class="fieldcontain">

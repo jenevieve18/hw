@@ -7,7 +7,7 @@
 <div data-role="header" data-theme="b" data-position="fixed">
     <a href="Settings.aspx"><%= R.Str("button.cancel") %></a>
     <h1><%= R.Str("reminder.title") %></h1>
-    <a id="saveBtn" onserverclick="saveChangesBtn_Click" runat="server" data-icon="check"><%= R.Str("button.save") %></a>
+    <a id="saveBtn" onserverclick="saveChangesBtn_Click" runat="server"><%= R.Str("button.save") %></a>
 </div>
 <div data-role="content">
 
