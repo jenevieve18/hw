@@ -23,12 +23,10 @@ namespace HW.MobileApp
                     {
                         Response.Redirect("Dashboard.aspx");
                     }
-                    else
-                    {
-                        Response.Redirect("Default.aspx");
-                    }
                 }
             }
+			
+			
         }
 
         protected override void OnPreRender(EventArgs e)

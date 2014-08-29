@@ -26,16 +26,17 @@ namespace HW.MobileApp
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            HtmlHelper.RedirectIf(Session["token"] == null, "Default.aspx");
+            HtmlHelper.RedirectIf(Session["token"] == null, "Login.aspx");
 
             int language = int.Parse(Session["languageId"].ToString());
             string token = Session["token"].ToString();
-            string formKey;
+            string formKey = "";
 
-            if (Session["formKey"] == null){
-                formKey = service.FormEnum(new HW.MobileApp.HWService.FormEnumRequest(token, language, 10)).FormEnumResult[0].formKey;
-            }
-            else formKey = Session["formKey"].ToString();
+            foreach(var n in service.FormEnum(new HW.MobileApp.HWService.FormEnumRequest(token, language, 10)).FormEnumResult)
+            {
+                formKey = n.formKey;
+                break;
+            }  
 
 
             if(Request.QueryString["tf"] != null&&Request.QueryString["comp"] != null)
