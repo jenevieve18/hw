@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using HW.Core.Helpers;
 
 namespace HW.MobileApp
 {
@@ -14,6 +15,7 @@ namespace HW.MobileApp
         protected void Page_Load(object sender, EventArgs e)
         {
             labelMessage.Text = "Login to a better life.";
+            
             if (Request.Cookies["token"] != null)
             {
                 if (Request.Cookies["token"].Value != null)
@@ -24,6 +26,8 @@ namespace HW.MobileApp
                     
                 }
             }
+            HtmlHelper.RedirectIf(Session["token"] != null, "Dashboard.aspx");
+            
         }
 
         protected void LoginButtonClick(object sender, EventArgs e)

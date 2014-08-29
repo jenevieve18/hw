@@ -22,14 +22,13 @@ namespace HW.MobileApp
             token = Session["token"].ToString();
             int lang = int.Parse(Session["languageId"].ToString());
             
-
             
-            
-            try{
-            formKey = service.FormEnum(new HW.MobileApp.HWService.FormEnumRequest(token, lang, 10)).FormEnumResult[0].formKey;
-            }catch(Exception ex){ Response.Redirect("Login.aspx"); };
+            foreach(var n in service.FormEnum(new HW.MobileApp.HWService.FormEnumRequest(token, lang, 10)).FormEnumResult)
+            {
+                formKey = n.formKey;
+                break;
+            }  
 
-            Session.Add("formKey",formKey);
             
             question = service.FormQuestionEnum(new HW.MobileApp.HWService.FormQuestionEnumRequest(token,lang,formKey,10)).FormQuestionEnumResult;
             questNo = question.Count();
