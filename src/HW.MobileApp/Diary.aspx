@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MobileApp.Master" AutoEventWireup="true" CodeBehind="Diary.aspx.cs" Inherits="HW.MobileApp.Diary" %>
+<%@ Import Namespace="HW.MobileApp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 <!--
 
@@ -28,10 +29,10 @@
 
     
 
-    <a href="Dashboard.aspx" data-icon="arrow-l">My Health</a>
-    <h1>Diary</h1>
+    <a href="Dashboard.aspx" data-icon="arrow-l"><%= R.Str("home.myHealth") %></a>
+    <h1><%= R.Str("dashboard.diary") %></h1>
     <a href="Calendar.aspx?b=Diary" data-icon="bars" data-iconpos="notext" style="position:inherit;right:87px;top:8px;"></a>
-    <a  runat="server" onserverclick="saveBtnClick" data-icon="check" class="ui-btn-right">Save</a>
+    <a  runat="server" onserverclick="saveBtnClick" data-icon="check" class="ui-btn-right"><%= R.Str("button.save") %></a>
 </div>
 
 
@@ -84,9 +85,9 @@
             </fieldset>
 
          </li>
-         <li class="minihead">Activities & Measurements</li>
+         <li class="minihead"><%= R.Str("measurement.text") %></li>
         
-         <li><asp:LinkButton runat="server" onclick="activitylink_Click">View/Add Activities and Measurements</asp:LinkButton>
+         <li><asp:LinkButton runat="server" onclick="activitylink_Click"><%= R.Str("measurement.viewAdd") %></asp:LinkButton>
          
          </li>
         

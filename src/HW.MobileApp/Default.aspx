@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="HW.MobileApp.Default" %>
-
+<%@ Import Namespace="HW.MobileApp" %>
 <!DOCTYPE html>
 
 <html>
@@ -28,7 +28,7 @@
                     <p class="center fsize12" ><asp:Label ID="lblWordsOfWisdom" runat="server"></asp:Label>
                     <br />-<i> <asp:Label ID="lblAuthor" runat="server"></asp:Label></i>
                     </p>
-                    <h2 class="center">Tap to Start</h2>
+                    <h2 class="center"><%= R.Str("home.tap") %></h2>
                     </div>
                 </div>
                 

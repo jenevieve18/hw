@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MobileApp.Master" AutoEventWireup="true" CodeBehind="ChangeProfile.aspx.cs" Inherits="HW.MobileApp.ChangeProfile" %>
+<%@ Import Namespace="HW.MobileApp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     
     <style type="text/css">
@@ -54,14 +55,14 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <div data-role="header" id="profileheader" data-theme="b" data-position="fixed">
-    <a href="Settings.aspx">Cancel</a>
-    <h1>Change Profile</h1>
-    <a id="createBtn" onserverclick="saveChangesBtn_Click" runat="server">Save</a>
+    <a href="Settings.aspx"><%= R.Str("button.cancel") %></a>
+    <h1><%= R.Str("profile.title") %></h1>
+    <a id="createBtn" onserverclick="saveChangesBtn_Click" runat="server"><%= R.Str("button.save") %></a>
 
 </div>
 <div data-role="content" id="changeprofile" style="padding:5px;">
     <div style="left:20px;top:42px;position:absolute;font-size:11px;font-style:italic;color:#909090  ;">
-        <p>Fields with <span style="color:Red;">*</span> are required</p>
+        <p><%= R.Str("label.required") %></p>
     </div>
 
     <div class="header">

@@ -1,12 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MobileApp.Master" AutoEventWireup="true" CodeBehind="Reminders.aspx.cs" Inherits="HW.MobileApp.Reminders" %>
+<%@ Import Namespace="HW.MobileApp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <div data-role="header" data-theme="b" data-position="fixed">
-    <a href="Settings.aspx">Cancel</a>
-    <h1>Reminders</h1>
-    <a id="saveBtn" onserverclick="saveChangesBtn_Click" runat="server" data-icon="check">Save</a>
+    <a href="Settings.aspx"><%= R.Str("button.cancel") %></a>
+    <h1><%= R.Str("reminder.title") %></h1>
+    <a id="saveBtn" onserverclick="saveChangesBtn_Click" runat="server"><%= R.Str("button.save") %></a>
 </div>
 <div data-role="content">
 

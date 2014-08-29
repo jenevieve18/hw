@@ -2,6 +2,10 @@
 {
     background:url('../img/header.jpg') right repeat-x;
 }
+.ui-title 
+{
+    text-shadow: 0 -1px 1px #000;
+}
 #footer, .ui-footer 
 {
     background:url(../img/footer.jpg) right repeat-x;

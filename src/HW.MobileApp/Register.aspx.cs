@@ -36,6 +36,19 @@ namespace HW.MobileApp
             if (!Page.IsPostBack) dropDownListOccupation_SelectedIndexChanged(sender, e);
         }
 
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+            lblHeader.Text = R.Str("user.account");
+            lblUsername.Text = R.Str("user.username") + "<span class='req'></span>";
+            lblPassword.Text = R.Str("user.password") + "<span class='req'></span>";
+            lblConfirmPassword.Text = R.Str("user.confirmPassword") + "<span class='req'></span>";
+            lblEmail.Text = R.Str("user.email") + "<span class='req'>*</span>";
+            lblAltEmail.Text = R.Str("user.password") + "<span class='req'></span>";
+            Label1.Text = R.Str("user.info");
+            lblTerms.Text = R.Str("user.terms");
+        }
+
         public HWService.Question getProfileQuestion(int id)
         {
             foreach (var p in profileQ)

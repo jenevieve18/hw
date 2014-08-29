@@ -42,6 +42,13 @@ namespace HW.MobileApp
            
         }
 
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+            cbLogin.Text = R.Str("settings.security.login");
+            cbSplash.Text = R.Str("settings.security.welcome");
+        }
+
         protected void saveBtnClick(object sender, EventArgs e)
         {
             if (cbLogin.Checked)

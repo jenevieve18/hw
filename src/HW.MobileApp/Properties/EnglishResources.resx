@@ -1,0 +1,402 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="about.copyright" xml:space="preserve">
+    <value>Health Watch © 2014&lt;br /&gt;All Rights Reserved</value>
+  </data>
+  <data name="about.text" xml:space="preserve">
+    <value>HealthWatch provides tools for individuals and organisations to preserve and increase health and quality of life, as well as reduce stress-related problems.</value>
+  </data>
+  <data name="about.title" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="button.back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="button.backToLogin" xml:space="preserve">
+    <value>Back to Login Page</value>
+  </data>
+  <data name="button.cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="button.contactUs" xml:space="preserve">
+    <value>Contact Us</value>
+  </data>
+  <data name="button.done" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="button.emailUs" xml:space="preserve">
+    <value>Email Us</value>
+  </data>
+  <data name="button.getStarted" xml:space="preserve">
+    <value>Get started!</value>
+  </data>
+  <data name="button.save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="calendar.title" xml:space="preserve">
+    <value>Calendar</value>
+  </data>
+  <data name="contact.publisher" xml:space="preserve">
+    <value>Publisher</value>
+  </data>
+  <data name="contact.support" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="contact.title" xml:space="preserve">
+    <value>Contact Us</value>
+  </data>
+  <data name="dashboard.diary" xml:space="preserve">
+    <value>Diary</value>
+  </data>
+  <data name="dashboard.exercises" xml:space="preserve">
+    <value>Exercises</value>
+  </data>
+  <data name="dashboard.form" xml:space="preserve">
+    <value>Form</value>
+  </data>
+  <data name="dashboard.statistics" xml:space="preserve">
+    <value>Statistics</value>
+  </data>
+  <data name="exercise.alphabetical" xml:space="preserve">
+    <value>Alphabetical</value>
+  </data>
+  <data name="exercise.popular" xml:space="preserve">
+    <value>Popular</value>
+  </data>
+  <data name="exercise.random" xml:space="preserve">
+    <value>Randome</value>
+  </data>
+  <data name="exercise.viewAll" xml:space="preserve">
+    <value>View all exercises</value>
+  </data>
+  <data name="home.logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="home.more" xml:space="preserve">
+    <value>More</value>
+  </data>
+  <data name="home.myHealth" xml:space="preserve">
+    <value>My Health</value>
+  </data>
+  <data name="home.news" xml:space="preserve">
+    <value>News</value>
+  </data>
+  <data name="home.tap" xml:space="preserve">
+    <value>Tap to Start</value>
+  </data>
+  <data name="label.required" xml:space="preserve">
+    <value>Fields with &lt;span style="color:Red;"&gt;*&lt;/span&gt; are required</value>
+  </data>
+  <data name="link.message" xml:space="preserve">
+    <value>Thank you! The link to create a new password has been sent. Kindly check your email.</value>
+  </data>
+  <data name="link.sent" xml:space="preserve">
+    <value>Link sent</value>
+  </data>
+  <data name="login.message" xml:space="preserve">
+    <value>Login to a better life.</value>
+  </data>
+  <data name="measurement.none" xml:space="preserve">
+    <value>No activities and measurements</value>
+  </data>
+  <data name="measurement.text" xml:space="preserve">
+    <value>Activities &amp; Measurements</value>
+  </data>
+  <data name="measurement.viewAdd" xml:space="preserve">
+    <value>View/Add Activities and Measurements</value>
+  </data>
+  <data name="news.all" xml:space="preserve">
+    <value>View all news</value>
+  </data>
+  <data name="news.categories" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="news.categories.international" xml:space="preserve">
+    <value>International</value>
+  </data>
+  <data name="news.categories.select" xml:space="preserve">
+    <value>Select a category to view</value>
+  </data>
+  <data name="news.categories.swedish" xml:space="preserve">
+    <value>Swedish</value>
+  </data>
+  <data name="news.summary" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="news.text" xml:space="preserve">
+    <value>All News</value>
+  </data>
+  <data name="profile.title" xml:space="preserve">
+    <value>Change Profile</value>
+  </data>
+  <data name="register.create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="register.title" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="reminder.title" xml:space="preserve">
+    <value>Reminders</value>
+  </data>
+  <data name="settings.changeProfile" xml:space="preserve">
+    <value>Change Profile</value>
+  </data>
+  <data name="settings.changeProfile.description" xml:space="preserve">
+    <value>Language, email address and personal information</value>
+  </data>
+  <data name="settings.reminders" xml:space="preserve">
+    <value>Reminders</value>
+  </data>
+  <data name="settings.reminders.description" xml:space="preserve">
+    <value>Frequency</value>
+  </data>
+  <data name="settings.security.login" xml:space="preserve">
+    <value>Stay logged in</value>
+  </data>
+  <data name="settings.security.title" xml:space="preserve">
+    <value>Security Settings</value>
+  </data>
+  <data name="settings.security.welcome" xml:space="preserve">
+    <value>Show welcome page</value>
+  </data>
+  <data name="settings.title" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="support.calendar" xml:space="preserve">
+    <value>What does the Calendar Do?</value>
+  </data>
+  <data name="support.calendar.description" xml:space="preserve">
+    <value>The diary may be used to write down your thoughts and feelings and can have a powerful effect for reducing anxiety and stress. There is both a typing mode and a read mode in the diary. You can also add other activities and measurements, such as physical activity, blood pressure and BMI for example. You may also see which exercises you have done and how you have responded to your forms.</value>
+  </data>
+  <data name="support.changeEmail" xml:space="preserve">
+    <value>How do I change my Email Address?</value>
+  </data>
+  <data name="support.changeEmail.description" xml:space="preserve">
+    <value>You can change your email address by tapping the icon for ‘Settings’ which is placed on the top corner of ‘My Health’. Tap ‘Change Profile’ and fill in your new email address. Thereafter tap ‘Save’.</value>
+  </data>
+  <data name="support.faq" xml:space="preserve">
+    <value>More FAQs</value>
+  </data>
+  <data name="support.faq.descriptioin" xml:space="preserve">
+    <value>More frequently asked questions will be displayed here shortly. Thank you for your patience.</value>
+  </data>
+  <data name="support.healthTrack" xml:space="preserve">
+    <value>How do I track my health?</value>
+  </data>
+  <data name="support.healthTrack.description" xml:space="preserve">
+    <value>Track your health development over time by responding to the 11 questions in the Form. Once you save, you get immediate individual feedback and an action plan. When clicking the exercises in the action plan you will be directed to Exercises. You may also view your development over time by clicking ‘View’. You can choose to view one question at a time or several in the same graph.</value>
+  </data>
+  <data name="support.title" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="user.account" xml:space="preserve">
+    <value>Account Details</value>
+  </data>
+  <data name="user.alternateEmail" xml:space="preserve">
+    <value>Alternate Email</value>
+  </data>
+  <data name="user.confirmPassword" xml:space="preserve">
+    <value>Confirm New Password</value>
+  </data>
+  <data name="user.createAccount" xml:space="preserve">
+    <value>Create account</value>
+  </data>
+  <data name="user.email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="user.forgot.message" xml:space="preserve">
+    <value>Enter your email address below, and we will send you a link that can be used to create a new password.</value>
+  </data>
+  <data name="user.forgot.password" xml:space="preserve">
+    <value>Forgot your password?</value>
+  </data>
+  <data name="user.forgot.wrong" xml:space="preserve">
+    <value>Something is wrong</value>
+  </data>
+  <data name="user.forgot.wrongMessage" xml:space="preserve">
+    <value>There is no such user with that email address. Please enter the email address that is connected to your account</value>
+  </data>
+  <data name="user.forgotPassword" xml:space="preserve">
+    <value>Forgot password?</value>
+  </data>
+  <data name="user.incorrectLogin" xml:space="preserve">
+    <value>Sorry, incorrect login details.</value>
+  </data>
+  <data name="user.info" xml:space="preserve">
+    <value>Personal Information</value>
+  </data>
+  <data name="user.login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="user.name" xml:space="preserve">
+    <value>Username or Email</value>
+  </data>
+  <data name="user.password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="user.terms" xml:space="preserve">
+    <value>Terms &amp; Conditions of the Service</value>
+  </data>
+  <data name="user.username" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="view.compare" xml:space="preserve">
+    <value>Compare with</value>
+  </data>
+  <data name="view.select" xml:space="preserve">
+    <value>Select results to view &amp; compare</value>
+  </data>
+  <data name="view.timeframe" xml:space="preserve">
+    <value>Timeframe</value>
+  </data>
+  <data name="view.title" xml:space="preserve">
+    <value>View...</value>
+  </data>
+  <data name="welcome.diary" xml:space="preserve">
+    <value>Diary</value>
+  </data>
+  <data name="welcome.diary.description" xml:space="preserve">
+    <value>View daily activity and log your thoughts and feelings.</value>
+  </data>
+  <data name="welcome.exercise" xml:space="preserve">
+    <value>Exercises</value>
+  </data>
+  <data name="welcome.exercise.description" xml:space="preserve">
+    <value>Learn exercises that help improve your overall health.</value>
+  </data>
+  <data name="welcome.form" xml:space="preserve">
+    <value>Form</value>
+  </data>
+  <data name="welcome.form.description" xml:space="preserve">
+    <value>Start tracking your health by filling out the form on a regular basis.</value>
+  </data>
+  <data name="welcome.message" xml:space="preserve">
+    <value>Thank you for creating an account with us! Here are a few things that you need to know in order to get started on a healthier and happier life:</value>
+  </data>
+  <data name="welcome.statistics" xml:space="preserve">
+    <value>Statistics</value>
+  </data>
+  <data name="welcome.statistics.description" xml:space="preserve">
+    <value>Check your overall progress and recommended activities.</value>
+  </data>
+  <data name="welcome.title" xml:space="preserve">
+    <value>Welcome to Health Watch!</value>
+  </data>
+</root>

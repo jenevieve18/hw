@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MobileApp.Master" AutoEventWireup="true" CodeBehind="NewsSummary.aspx.cs" Inherits="HW.MobileApp.NewsSummary" %>
+<%@ Import Namespace="HW.MobileApp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
 </asp:Content>
@@ -7,13 +8,13 @@
             <div data-role="header" data-theme="b" data-position="fixed">
             <%if (Request.QueryString["ncid"] != null)
               { %>
-                <a <%=back %> data-icon="arrow-l">Back</a>
+                <a <%=back %> data-icon="arrow-l"><%= R.Str("button.back") %></a>
             <%}
               else
               { %>
-                <a href="News.aspx" data-icon="arrow-l">Back</a>
+                <a href="News.aspx" data-icon="arrow-l"><%= R.Str("button.back") %></a>
             <%} %>
-                <h1>Summary</h1>
+                <h1><%= R.Str("news.summary") %></h1>
                 
             </div>
         

@@ -44,7 +44,7 @@ namespace HW.MobileApp
                 timeframe = Request.QueryString["tf"];
                 compare = Request.QueryString["comp"];
                 var fft = service.FormFeedbackTemplateEnum(new HWService.FormFeedbackTemplateEnumRequest(token,formKey,language,10)).FormFeedbackTemplateEnumResult;
-                viewlink = "<a href='View.aspx?tf=" + timeframe + "&comp=" + compare + "' data-icon='check' rel='external'>View...</a>";
+                viewlink = "<a href='View.aspx?tf=" + timeframe + "&comp=" + compare + "' rel='external'>" + R.Str("view.title") + "</a>";
                 rp0_selected = "";
                 rp1_selected = "";
                 rp2_selected = "";

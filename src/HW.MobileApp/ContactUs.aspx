@@ -1,12 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MobileApp.Master" AutoEventWireup="true" CodeBehind="ContactUs.aspx.cs" Inherits="HW.MobileApp.ContactUs" %>
+<%@ Import Namespace="HW.MobileApp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <div data-role="header" data-theme="b" data-position="fixed">
-    <a href="More.aspx" data-icon="arrow-l">More</a>
-    <h1>Contact Us</h1>
+    <a href="More.aspx" data-icon="arrow-l"><%= R.Str("home.more") %></a>
+    <h1><%= R.Str("contact.title") %></h1>
     
 </div>
 <div data-role="content" id="contact">
@@ -15,11 +16,11 @@
         10261 Stockholm <br />
         Sweden</h3>
     <p>
-        <strong>Publisher</strong><br />
+        <strong><%= R.Str("contact.publisher") %></strong><br />
         <a href="mailto:dan.hasson@healthwatch.se">dan.hasson@healthwatch.se</a>
     </p>
     <p>
-        <strong>Support</strong><br />
+        <strong><%= R.Str("contact.support") %></strong><br />
         <a href="mailto:support@healthwatch.se">support@healthwatch.se</a>
     </p>
     <p>
@@ -31,12 +32,12 @@
          <div class="ui-grid-a">
         <div class="ui-block-a">
         <fieldset data-role="controlgroup">
-        <a href="#" data-role="button" data-inline="true" data-icon="">Contact Us</a>
+        <a href="#" data-role="button" data-inline="true" data-icon=""><%= R.Str("button.contactUs") %></a>
         </fieldset>
         </div>
         <div class="ui-block-b">
         <fieldset data-role="controlgroup">
-        <a href="#" data-role="button" data-inline="true" data-icon="">Email Us</a>
+        <a href="#" data-role="button" data-inline="true" data-icon=""><%= R.Str("button.emailUs") %></a>
         </fieldset>
         </div>
         </div>

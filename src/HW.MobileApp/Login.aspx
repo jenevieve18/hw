@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="HW.MobileApp.Login" %>
-
+<%@ Import Namespace="HW.MobileApp" %>
 <!DOCTYPE html>
 
 <html>
@@ -39,12 +39,12 @@
                 <div class="ui-grid-a">
                 <div class="ui-block-a">
                     <fieldset data-role="controlgroup">
-                    <a href="Register.aspx" data-role="button" rel="external" id="create">Create account</a>
+                    <a href="Register.aspx" data-role="button" rel="external" id="create"><%= R.Str("user.createAccount") %></a>
                     </fieldset>
                 </div>
                 <div class="ui-block-b">
                     <fieldset data-role="controlgroup">
-                    <a href="ForgotPassword.aspx" data-role="button" id="forget">Forgot password?</a>        
+                    <a href="ForgotPassword.aspx" data-role="button" id="forget"><%= R.Str("user.forgotPassword") %></a>        
                     </fieldset>
                 </div>
                 </div>
@@ -58,9 +58,9 @@
             <div data-role="footer" dataid="footernav" data-position="fixed">
                 <div data-role="navbar">
                     <ul>
-                        <li><a href="Dashboard.aspx" data-icon="health">My Health</a></li>
-                        <li><a href="News.aspx" data-icon="news">News</a></li>
-                        <li><a href="More.aspx" data-icon="more">More</a></li>
+                        <li><a href="Dashboard.aspx" data-icon="health"><%= R.Str("home.myHealth") %></a></li>
+                        <li><a href="News.aspx" data-icon="news"><%= R.Str("home.news") %></a></li>
+                        <li><a href="More.aspx" data-icon="more"><%= R.Str("home.more") %></a></li>
                     </ul>
                 </div>
             </div>

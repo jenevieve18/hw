@@ -12,8 +12,8 @@ namespace HW.MobileApp
         HWService.ServiceSoap service = new HWService.ServiceSoapClient();
         protected void Page_Load(object sender, EventArgs e)
         {
-            labelMessage.Text = "Forgot your password?";
-            labelSub.Text = "Enter your email address below, and we will send you a link that can be used to create a new password.";
+            labelMessage.Text = R.Str("user.forgot.password"); //"Forgot your password?";
+            labelSub.Text = R.Str("user.forgot.message"); // "Enter your email address below, and we will send you a link that can be used to create a new password.";
         }
 
         protected void buttonSubmit_Click(object sender, EventArgs e)
@@ -24,9 +24,9 @@ namespace HW.MobileApp
             }
             else
             {
-                labelMessage.Text = "Something is wrong";
+                labelMessage.Text = R.Str("user.forgot.wrong"); // "Something is wrong";
                 labelMessage.ForeColor = System.Drawing.Color.Red;
-                labelSub.Text = "There is no such user with that email address. Please enter the email address that is connected to your account";
+                labelSub.Text = R.Str("user.forgot.wrongMessage"); // "There is no such user with that email address. Please enter the email address that is connected to your account";
             }
         }
     }

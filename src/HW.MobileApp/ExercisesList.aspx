@@ -1,11 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MobileApp.Master" AutoEventWireup="true" CodeBehind="ExercisesList.aspx.cs" Inherits="HW.MobileApp.ExercisesList" %>
+<%@ Import Namespace="HW.MobileApp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <div data-role="header" data-theme="b" data-position="fixed">
-    <a href="Exercises.aspx" data-icon="arrow-l">Back</a>
+    <a href="Exercises.aspx" data-icon="arrow-l"><%= R.Str("button.back") %></a>
     <%var headname = areaname; %>
     <h1><%=headname %></h1>
 </div>
@@ -34,9 +35,9 @@
     %>
         <div data-role="navbar">
         <ul>
-            <li><a <%= random %>>Random</a></li>
-            <li><a <%= popular %>>Popular</a></li>
-            <li><a <%=alpha %>>Alphabetical</a></li>
+            <li><a <%= random %>><%= R.Str("exercise.random") %></a></li>
+            <li><a <%= popular %>><%= R.Str("exercise.popular") %></a></li>
+            <li><a <%=alpha %>><%= R.Str("exercise.alphabetical") %></a></li>
             
         </ul>
         </div>

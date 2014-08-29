@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MobileApp.Master" AutoEventWireup="true" CodeBehind="Statistics.aspx.cs" Inherits="HW.MobileApp.Statistics" %>
+<%@ Import Namespace="HW.MobileApp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 <!-- 
 
@@ -33,8 +34,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <div data-role="header" data-theme="b" data-position="fixed">
-    <a href="Dashboard.aspx" data-icon="arrow-l" rel="external">My Health</a>
-    <h1>Statistics</h1>
+    <a href="Dashboard.aspx" data-icon="arrow-l" rel="external"><%= R.Str("home.myHealth") %></a>
+    <h1><%= R.Str("dashboard.statistics") %></h1>
     <%=viewlink %>
 </div>
 <div data-role="content" id="stat">
