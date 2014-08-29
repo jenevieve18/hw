@@ -8,11 +8,11 @@
             <div data-role="header" data-theme="b" data-position="fixed">
             <%if (Request.QueryString["ncid"] != null)
               { %>
-                <a <%=back %> data-icon="arrow-l"><%= R.Str("button.back") %></a>
+                <a <%=back %> ><%= R.Str("button.back") %></a>
             <%}
               else
               { %>
-                <a href="News.aspx" data-icon="arrow-l"><%= R.Str("button.back") %></a>
+                <a href="News.aspx" ><%= R.Str("button.back") %></a>
             <%} %>
                 <h1><%= R.Str("news.summary") %></h1>
                 
