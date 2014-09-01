@@ -32,12 +32,14 @@ select * from PlotType"
 		{
 			string query = string.Format(
 				@"
-select PlotTypeID, 
+SELECT PlotTypeID, 
 	Name, 
 	Description, 
 	ShortName,
 	SupportsMultipleSeries
-from PlotTypeLang"
+FROM PlotTypeLang
+WHERE LangID = {0}",
+				langID
 			);
 			var types = new List<PlotTypeLanguage>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {

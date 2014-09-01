@@ -743,7 +743,7 @@ WHERE s.SponsorID = {0}",
 			return null;
 		}
 
-		public bool SponsorAdminExists(int sponsorAdminId, string usr)
+		public int SponsorAdminExists(int sponsorAdminId, string usr)
 		{
 			string query = string.Format(
 				@"
@@ -753,10 +753,10 @@ SELECT SponsorAdminID FROM SponsorAdmin WHERE Usr = '{0}' {1}",
 			);
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				if (rs.Read()) {
-					return true;
+					return GetInt32(rs, 0);
 				}
 			}
-			return false;
+			return 0;
 		}
 
 		public SponsorAdmin ReadSponsorAdmin(int sponsorId, int sponsorAdminId, int said)
