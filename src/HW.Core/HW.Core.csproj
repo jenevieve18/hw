@@ -85,6 +85,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FromHW\Chart.cs" />
+    <Compile Include="FromHW\Db.cs" />
+    <Compile Include="FromHW\ErrorHandling.cs" />
+    <Compile Include="FromHW\Graph.cs" />
     <Compile Include="Helpers\BootstrapHelper.cs" />
     <Compile Include="Helpers\GeneratedClass.cs" />
     <Compile Include="Helpers\ConvertHelper.cs" />
