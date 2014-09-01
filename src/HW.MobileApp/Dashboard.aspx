@@ -22,8 +22,11 @@
                 <a href="Settings.aspx" data-role="button" data-icon="gear" class="ui-btn-right" data-iconpos="notext"></a>
             </div>
     <div data-role="content" class="center" >
+
                 <div class="center">
+                    <div class="dashboardlogo">
                     <img class="front_logo" src="http://clients.easyapp.se/healthwatch/images/hw_logo@2x.png" />
+                    </div>
                 </div>
         
     

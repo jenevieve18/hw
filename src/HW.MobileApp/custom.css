@@ -70,6 +70,7 @@
     .fade{ color:#7A7A7A;}
 	.newsimg{margin-top:13px;margin-left:15px;}
 	.center{text-align:center;}
+	
 	.req{ color:red;}
 		#blue {
             background-color: rgb(0,127,181);
@@ -96,12 +97,12 @@
             padding: 15px 15px 70px 15px;
         }
         .front_logo {
-            width: 150px;
-            height: 116px;
-            margin-bottom: 30px;
+            width: 160px;
+            height: 126px;
+            margin-bottom: 15px;
             display: inline-block;
             vertical-align: bottom;
-            margin-right: 20px;
+            
         }
         .front_controls {
             margin: 0 auto;
@@ -131,9 +132,9 @@
 		#default .ui-content { height:100% !important;background-color: rgb(0,127,181) !important; }
 		#default .frame{ background-color: white;}
 		.question{ font-size:small;font-weight:700;}
-		.tile{ display:inline-block;width:60px;text-align:center;  margin:20px;padding:0px;}
-        .tile a { text-decoration:none; color:#909090 !important; font-size:12px;  }
-        .tile img { width:60px; } 
+		.tile{ display:inline-block;width:80px;text-align:center;margin:0px 20px 5px 20px;padding:0px;}
+        .tile a { text-decoration:none; color:#909090 !important; font-size:13.5px;  }
+        .tile img { width:80px; } 
 		
 		#form .ui-slider-track {height: 10px;}
 	/*	#form .ui-slider-handle {background: rgb(0,140,220);}*/

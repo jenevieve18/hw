@@ -10,7 +10,7 @@
     <a runat="server" onserverclick="saveBtnClick"><%= R.Str("button.save") %></a> 
 </div>
 <div data-role="content">
-    </div>
+    
     <div data-role="fieldcontain">
     
         <asp:CheckBox data-mini="true" ID="cbLogin" Text="Stay logged in" 
