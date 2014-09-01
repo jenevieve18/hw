@@ -135,7 +135,7 @@ namespace HW.Core.Helpers
 
 		double GetMeanMedian(List<double> data)
 		{
-			LoggingService.Info(ToStr());
+//			LoggingService.Info(ToStr());
 			if (data.Count % 2 != 0) {
 				return data[data.Count / 2];
 			} else {
