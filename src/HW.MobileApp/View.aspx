@@ -9,9 +9,9 @@
 
 
 <div data-role="header" data-theme="b" data-position="fixed">
-    <a href="Statistics.aspx" data-icon="arrow-l"><%= R.Str("button.cancel") %></a>
+    <a href="Statistics.aspx"><%= R.Str("button.cancel") %></a>
     <h1><%= R.Str("view.title") %></h1>
-    <a runat="server" onserverclick="doneBtn_Click" data-icon="check"><%= R.Str("button.done") %></a>
+    <a runat="server" onserverclick="doneBtn_Click"><%= R.Str("button.done") %></a>
 </div>
 <div data-role="content" id="view">
     <ul data-role="listview">

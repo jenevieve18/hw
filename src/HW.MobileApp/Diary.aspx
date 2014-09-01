@@ -32,7 +32,7 @@
     <a href="Dashboard.aspx" data-icon="arrow-l"><%= R.Str("home.myHealth") %></a>
     <h1><%= R.Str("dashboard.diary") %></h1>
     <a href="Calendar.aspx?b=Diary" data-icon="bars" data-iconpos="notext" style="position:inherit;right:87px;top:8px;"></a>
-    <a  runat="server" onserverclick="saveBtnClick" data-icon="check" class="ui-btn-right"><%= R.Str("button.save") %></a>
+    <a  runat="server" onserverclick="saveBtnClick" class="ui-btn-right"><%= R.Str("button.save") %></a>
 </div>
 
 

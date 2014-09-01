@@ -6,7 +6,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <div data-role="header" data-theme="b" data-position="fixed">
-    <a href="More.aspx" data-icon="arrow-l"><%= R.Str("button.back") %></a>
+    <a href="More.aspx" ><%= R.Str("button.back") %></a>
     <h1><%= R.Str("support.title") %></h1>
 </div>
 <div data-role="content" id="support">
