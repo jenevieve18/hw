@@ -13,7 +13,9 @@
     <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
  
     
-    
+    <script>
+        $.mobile.ajaxEnabled = false;
+    </script>
 </head>
 <body>
     
