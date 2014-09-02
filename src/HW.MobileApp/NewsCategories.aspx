@@ -21,7 +21,7 @@
     <form id="form1" runat="server">
         <div data-role="page">
             <div data-role="header" data-theme="b" data-position="fixed">
-                <a href="News.aspx" data-role="button" data-icon="arrow-l"><%= R.Str("button.back") %></a>
+                <a href="News.aspx" data-role="button"><%= R.Str("button.back") %></a>
                 <h1>&nbsp;</h1>
                 
             </div>
