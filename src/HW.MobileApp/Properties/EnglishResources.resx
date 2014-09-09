@@ -171,6 +171,9 @@
   <data name="dashboard.form" xml:space="preserve">
     <value>Form</value>
   </data>
+  <data name="dashboard.reportIssue" xml:space="preserve">
+    <value>Report an Issue</value>
+  </data>
   <data name="dashboard.statistics" xml:space="preserve">
     <value>Statistics</value>
   </data>

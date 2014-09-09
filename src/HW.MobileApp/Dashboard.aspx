@@ -21,44 +21,41 @@
                 <h1></h1>
                 <a href="Settings.aspx" data-role="button" data-icon="gear" class="ui-btn-right" data-iconpos="notext"></a>
             </div>
-    <div data-role="content" class="center" >
+            <div data-role="content" class="center" >
 
                 <div class="center">
                     <div class="dashboardlogo">
-                    <img class="front_logo" src="http://clients.easyapp.se/healthwatch/images/hw_logo@2x.png" />
+                        <img class="front_logo" src="http://clients.easyapp.se/healthwatch/images/hw_logo@2x.png" />
                     </div>
                 </div>
         
     
-        <div class="tile">
-            <a href="Form.aspx" rel="external">
-                <img src="img/dash_form.png" />
-                <span><%= R.Str("dashboard.form") %></span>
-            </a>
-        </div>
-        <div class="tile">
-            <a href="Statistics.aspx"  rel="external">
-                <img src="img/dash_stats.png" />
-                <span><%= R.Str("dashboard.statistics") %></span>
-            </a>
-        </div>
+                <div class="tile">
+                    <a href="Form.aspx" rel="external">
+                        <img src="img/dash_form.png" />
+                        <span><%= R.Str("dashboard.form") %></span>
+                    </a>
+                </div>
+                <div class="tile">
+                    <a href="Statistics.aspx"  rel="external">
+                        <img src="img/dash_stats.png" />
+                        <span><%= R.Str("dashboard.statistics") %></span>
+                    </a>
+                </div>
         
-        <div class="tile">
-            <a href="Diary.aspx" rel="external">
-                <img src="img/dash_cal.png" />
-                <span><%= R.Str("dashboard.diary") %></span>
-            </a>
-        </div>
-        <div class="tile">
-            <a href="Exercises.aspx">
-                <img src="img/dash_exer.png" />
-                <span><%= R.Str("dashboard.exercises") %></span>
-            </a>
-        </div>
-        
-        
-        
-    
+                <div class="tile">
+                    <a href="Diary.aspx" rel="external">
+                        <img src="img/dash_cal.png" />
+                        <span><%= R.Str("dashboard.diary") %></span>
+                    </a>
+                </div>
+                <div class="tile">
+                    <a href="Exercises.aspx">
+                        <img src="img/dash_exer.png" />
+                        <span><%= R.Str("dashboard.exercises") %></span>
+                    </a>
+                </div>
+
                 
             </div>
            <div data-role="footer" dataid="footernav" data-position="fixed">

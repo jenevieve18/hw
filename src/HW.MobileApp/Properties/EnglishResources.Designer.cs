@@ -223,6 +223,15 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Report an Issue.
+        /// </summary>
+        internal static string dashboard_reportIssue {
+            get {
+                return ResourceManager.GetString("dashboard.reportIssue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Statistics.
         /// </summary>
         internal static string dashboard_statistics {

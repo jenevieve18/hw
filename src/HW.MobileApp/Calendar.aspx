@@ -11,9 +11,7 @@
     </div>
     <div data-role="content" >
         <ul data-role="listview">
-        <%
-        foreach (var c in calendar) { 
-        %>
+        <% foreach (var c in calendar) { %>
             <li class="minihead">
                 <%=c.date.ToString("ddd, yyyy MMM dd")%>
             </li>
@@ -35,41 +33,36 @@
                 %>
 
                 <a <%=linksrc %> rel="external">
-                <%if (c.mood != HW.MobileApp.HWService.Mood.NotSet) { %>
+                    <% if (c.mood != HW.MobileApp.HWService.Mood.NotSet) { %>
             
-                    <img class="moodimg" <%=moodsrc %> />
+                        <img class="moodimg" <%=moodsrc %> />
             
-                <%} %>
+                    <%} %>
                     <span>Notes</span>
                     <p><%=c.note%></p>
                 
                 </a>
             </li>
-            <%
-                if (c.events != null)
-                {
-                    foreach (var cevent in c.events)
-                    {
-            %>  
+            <% if (c.events != null) { %>
+                <% foreach (var cevent in c.events) { %>  
                     <li >
                     
-                        <% if (cevent.formInstanceKey != null){
-                                var filink = "href='Statistics.aspx?fik=" + cevent.formInstanceKey + "'"; %>
-                                <a <%=filink %> rel="external" >  <%} %>       
+                        <% if (cevent.formInstanceKey != null){ %>
+                            <% var filink = "href='Statistics.aspx?fik=" + cevent.formInstanceKey + "'"; %>
+                            <a <%=filink %> rel="external" >
+                        <% } %>       
 
                         <div class="time fade"><%=cevent.time.ToString("hh:mm")%></div>
                         <div class="events"><%=cevent.description%> <span> <%=cevent.result != null? " "+cevent.result.Replace(',','.'):"" %></span></div>
                     
-                        <% if (cevent.formInstanceKey != null)
-                           { %>
-                                </a>  <%} %>       
+                        <% if (cevent.formInstanceKey != null) { %>
+                            </a>
+                        <% } %>       
                     </li>
 
-            <% } } %>
-        
-        
-    
-    
+                <% } %>
+            <% } %>
+
         <% } %>
 
         </ul>

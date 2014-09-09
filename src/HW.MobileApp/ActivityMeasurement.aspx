@@ -40,27 +40,22 @@
         <asp:HiddenField ID="hdEventId" runat="server" />
 
         <ul data-role="listview">
-            <%  if (activities != null)
-                {
-                    foreach (var ev in activities)
-                    { %>
-                <li>
-                    <span><%=ev.description%>  <%=ev.result != null? " - "+ev.result.Replace(',','.'):"" %></span>        
-                    <span style="font-size:small;"><br /><%=ev.time.ToString("hh:mm")%></span>
-                    <div style="position:absolute;right:10px;top:10px;margin:0px;padding:0px;">
-                    <%var buttonid = "id='" + ev.eventID + "$*#"+ev.formInstanceKey+"'"; %>
-                    <%if (ev.eventID != 0)
-                      {%>
-                    <input <%=buttonid %> type="button" onclick="deleteEvent(event)" data-icon="delete" data-iconpos="notext" />
-                    <%} %>
-                    </div>
-                </li>
-            <%}
-                }
-                else
-                {%>
-                <li><%= R.Str("measurement.none") %></li>
+            <% if (activities != null) { %>
+                <% foreach (var ev in activities) { %>
+                    <li>
+                        <span><%= ev.description %>  <%= ev.result != null? " - "+ev.result.Replace(',','.'):"" %></span>        
+                        <span style="font-size:small;"><br /><%=ev.time.ToString("hh:mm")%></span>
+                        <div style="position:absolute;right:10px;top:10px;margin:0px;padding:0px;">
+                        <% var buttonid = "id='" + ev.eventID + "$*#"+ev.formInstanceKey+"'"; %>
+                        <% if (ev.eventID != 0) {%>
+                            <input <%=buttonid %> type="button" onclick="deleteEvent(event)" data-icon="delete" data-iconpos="notext" />
+                        <%} %>
+                        </div>
+                    </li>
                 <%} %>
+            <% } else {%>
+                <li><%= R.Str("measurement.none") %></li>
+            <%} %>
 
         </ul>
     </div>

@@ -17,27 +17,27 @@
 <body >
     
     <form id="form1" runat="server">
-    <a href="Login.aspx" data-ajax="false" >
+        <a href="Login.aspx" data-ajax="false" >
     
-        <div data-role="page" id="default">
+            <div data-role="page" id="default">
             
                 <div data-role="content"  >
-                <div class="frame ui-corner-all ui-shadow">
-                    <img class="nomargin ui-corner-top" src="http://clients.easyapp.se/healthwatch//images/start_imgHeader@2x.png"/><img class="slogan" src="http://clients.easyapp.se/healthwatch/images/divider.gif"/><img class="nomargin" src="http://clients.easyapp.se/healthwatch//images/start_catchPhrase@2x.png"/>
-                    <div class="padding8">
-                    <p class="center fsize12" ><asp:Label ID="lblWordsOfWisdom" runat="server"></asp:Label>
-                    <br />-<i> <asp:Label ID="lblAuthor" runat="server"></asp:Label></i>
-                    </p>
-                    <h2 class="center"><%= R.Str("home.tap") %></h2>
+                    <div class="frame ui-corner-all ui-shadow">
+                        <img class="nomargin ui-corner-top" src="http://clients.easyapp.se/healthwatch//images/start_imgHeader@2x.png"/><img class="slogan" src="http://clients.easyapp.se/healthwatch/images/divider.gif"/><img class="nomargin" src="http://clients.easyapp.se/healthwatch//images/start_catchPhrase@2x.png"/>
+                        <div class="padding8">
+                            <p class="center fsize12" ><asp:Label ID="lblWordsOfWisdom" runat="server"></asp:Label>
+                            <br />-<i> <asp:Label ID="lblAuthor" runat="server"></asp:Label></i>
+                            </p>
+                            <h2 class="center"><%= R.Str("home.tap") %></h2>
+                        </div>
                     </div>
-                </div>
                 
-                <asp:CheckBox runat="server" ID="cbSplash" AutoPostBack="true" 
-                        Text="Always show on start" data-mini="true" 
-                        oncheckedchanged="cbSplash_CheckedChanged" />
+                    <asp:CheckBox runat="server" ID="cbSplash" AutoPostBack="true" 
+                            Text="Always show on start" data-mini="true" 
+                            oncheckedchanged="cbSplash_CheckedChanged" />
                 </div>
             
-        </div>
+            </div>
         </a>
     </form>
 </body>

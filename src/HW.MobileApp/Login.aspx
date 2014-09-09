@@ -38,22 +38,19 @@
                            <asp:Button ID="buttonLogin" runat="server" Text="Log In" OnClick="LoginButtonClick" />
                         </fieldset>
                         
-                <div class="ui-grid-a">
-                <div class="ui-block-a">
-                    <fieldset data-role="controlgroup">
-                    <a href="Register.aspx" data-role="button" rel="external" id="create"><%= R.Str("user.createAccount") %></a>
-                    </fieldset>
-                </div>
-                <div class="ui-block-b">
-                    <fieldset data-role="controlgroup">
-                    <a href="ForgotPassword.aspx" data-role="button" id="forget"><%= R.Str("user.forgotPassword") %></a>        
-                    </fieldset>
-                </div>
-                </div>
-          
-        
-                            
-                        
+                        <div class="ui-grid-a">
+                            <div class="ui-block-a">
+                                <fieldset data-role="controlgroup">
+                                    <a href="Register.aspx" data-role="button" rel="external" id="create"><%= R.Str("user.createAccount") %></a>
+                                </fieldset>
+                            </div>
+                            <div class="ui-block-b">
+                                <fieldset data-role="controlgroup">
+                                    <a href="ForgotPassword.aspx" data-role="button" id="forget"><%= R.Str("user.forgotPassword") %></a>        
+                                </fieldset>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
