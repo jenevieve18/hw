@@ -80,6 +80,7 @@
     <Content Include="More.aspx" />
     <Content Include="News.aspx" />
     <Content Include="MobileApp.Master" />
+    <Content Include="ReportIssue.aspx" />
     <Content Include="Welcome.aspx" />
     <None Include="Service References\HWService\HW.MobileApp.HWService.Calendar.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -366,6 +367,13 @@
     </Compile>
     <Compile Include="Reminders.aspx.designer.cs">
       <DependentUpon>Reminders.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportIssue.aspx.cs">
+      <DependentUpon>ReportIssue.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportIssue.aspx.designer.cs">
+      <DependentUpon>ReportIssue.aspx</DependentUpon>
     </Compile>
     <Compile Include="SecuritySettings.aspx.cs">
       <DependentUpon>SecuritySettings.aspx</DependentUpon>
