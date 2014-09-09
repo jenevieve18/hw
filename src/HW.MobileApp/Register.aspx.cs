@@ -44,7 +44,7 @@ namespace HW.MobileApp
             lblPassword.Text = R.Str("user.password") + "<span class='req'></span>";
             lblConfirmPassword.Text = R.Str("user.confirmPassword") + "<span class='req'></span>";
             lblEmail.Text = R.Str("user.email") + "<span class='req'>*</span>";
-            lblAltEmail.Text = R.Str("user.password") + "<span class='req'></span>";
+            lblAltEmail.Text = R.Str("user.alternateEmail") + "<span class='req'></span>";
             Label1.Text = R.Str("user.info");
             lblTerms.Text = R.Str("user.terms");
         }
@@ -346,7 +346,7 @@ namespace HW.MobileApp
                     Session.Add("languageId", dropDownListLanguage.SelectedValue);
                     Response.Redirect("Welcome.aspx");
                 }
-                else labelMessage.Text = "Username maybe already be taken or Malformed Email.";
+                else labelMessage.Text = "Username may already be taken or Malformed Email.";
             }
             
         }
