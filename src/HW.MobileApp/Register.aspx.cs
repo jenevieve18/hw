@@ -142,8 +142,9 @@ namespace HW.MobileApp
         {
             if (!Page.IsPostBack)
             {
-                birthYear.DataSource = Enumerable.Range(1970, DateTime.Now.AddYears(1).Year-1970);
+                birthYear.DataSource = Enumerable.Range(1900, DateTime.Now.AddYears(1).Year - 1900);
                 birthYear.DataBind();
+                birthYear.SelectedValue = "1970";
                 birthMonth.DataSource = Enumerable.Range(1, 12).Select(i => i.ToString("D2"));
                 birthMonth.DataBind();
                 birthDay.DataSource = Enumerable.Range(1, 31).Select(i => i.ToString("D2"));

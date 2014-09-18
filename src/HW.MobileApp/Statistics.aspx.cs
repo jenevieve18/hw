@@ -131,7 +131,7 @@ namespace HW.MobileApp
             }
             else
             {
-                viewlink = "<a href='View.aspx?' data-icon='check' rel='external'>View...</a>";
+                viewlink = "<a href='View.aspx?' rel='external'>" + R.Str("view.title") + "</a>";
                 string formInstanceKey;
                 if (Session["formInstanceKey"] == null) formInstanceKey = "";
                 else formInstanceKey = Session["formInstanceKey"].ToString();
