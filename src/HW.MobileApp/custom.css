@@ -296,3 +296,9 @@
         font-weight:lighter;
     }
     #support .div1 { margin-top:-16px;}
+    
+    #reportissue .ui-grid-a label, .ui-grid-a a  {margin:13px 10px 0px 0px;font-size:12px;}  
+    #reportissue .ui-grid-a .ui-block-a{ width:24%; text-align:right; margin-right:1%;}
+    #reportissue .ui-grid-a .ui-block-b{ width:75%; }
+    #reportissue .ui-select .ui-btn-text { padding:0px !important;font-size:12px;font-weight:normal;}
+    #reportissue textarea { height:130px !important; }
