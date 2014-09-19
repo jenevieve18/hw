@@ -17,7 +17,7 @@
 <div data-role="content" id="reportissue">
     <div class="ui-grid-a">
     <div class="ui-block-a">
-        <asp:Label ID="lblTitle" runat="server" AssociatedControlID="textBoxTitle">Title</asp:Label>
+        <asp:Label ID="lblTitle" runat="server" AssociatedControlID="textBoxTitle"><%= R.Str("issue.title") %></asp:Label>
     </div>
     <div class="ui-block-b">
         <asp:TextBox data-mini="true" ID="textBoxTitle" runat="server"></asp:TextBox>
@@ -26,7 +26,7 @@
 
     <div class="ui-grid-a">
     <div class="ui-block-a">
-        <asp:Label ID="lblDescription" runat="server" AssociatedControlID="textBoxDescription">Description</asp:Label>
+        <asp:Label ID="lblDescription" runat="server" AssociatedControlID="textBoxDescription"><%= R.Str("issue.description") %></asp:Label>
     </div>
     <div class="ui-block-b">
         <asp:TextBox data-mini="true" ID="textBoxDescription" placeholder="Write here.."  TextMode="MultiLine" runat="server"></asp:TextBox>
