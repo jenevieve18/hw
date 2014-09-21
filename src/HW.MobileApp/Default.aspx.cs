@@ -30,6 +30,12 @@ namespace HW.MobileApp
                        
         }
 
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+            cbSplash.Text = R.Str("default.start");
+        }
+
         protected void cbSplash_CheckedChanged(object sender, EventArgs e)
         {
             if (cbSplash.Checked)
