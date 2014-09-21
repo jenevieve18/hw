@@ -20,7 +20,7 @@
             <a href="mailto:dan.hasson@healthwatch.se">dan.hasson@healthwatch.se</a>
         </p>
         <p>
-            <strong><%= R.Str("contact.support") %></strong><br />
+            <strong><%= R.Str("support.title") %></strong><br />
             <a href="mailto:support@healthwatch.se">support@healthwatch.se</a>
         </p>
         <p>
