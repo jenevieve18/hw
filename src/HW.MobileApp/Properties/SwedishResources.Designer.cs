@@ -61,7 +61,223 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to More.
+        ///   Looks up a localized string similar to Health Watch © 2014&lt;br /&gt;All Rights Reserved.
+        /// </summary>
+        internal static string about_copyright {
+            get {
+                return ResourceManager.GetString("about.copyright", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HealthWatch provides tools for individuals and organisations to preserve and increase health and quality of life, as well as reduce stress-related problems..
+        /// </summary>
+        internal static string about_text {
+            get {
+                return ResourceManager.GetString("about.text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Om Health Watch.
+        /// </summary>
+        internal static string about_title {
+            get {
+                return ResourceManager.GetString("about.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tillbaka.
+        /// </summary>
+        internal static string button_back {
+            get {
+                return ResourceManager.GetString("button.back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tillbaka till inloggningssidan.
+        /// </summary>
+        internal static string button_backToLogin {
+            get {
+                return ResourceManager.GetString("button.backToLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Avbryt.
+        /// </summary>
+        internal static string button_cancel {
+            get {
+                return ResourceManager.GetString("button.cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kontakta oss.
+        /// </summary>
+        internal static string button_contactUs {
+            get {
+                return ResourceManager.GetString("button.contactUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Klar.
+        /// </summary>
+        internal static string button_done {
+            get {
+                return ResourceManager.GetString("button.done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maila Oss.
+        /// </summary>
+        internal static string button_emailUs {
+            get {
+                return ResourceManager.GetString("button.emailUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Komma igång!.
+        /// </summary>
+        internal static string button_getStarted {
+            get {
+                return ResourceManager.GetString("button.getStarted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spara.
+        /// </summary>
+        internal static string button_save {
+            get {
+                return ResourceManager.GetString("button.save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kalender.
+        /// </summary>
+        internal static string calendar_title {
+            get {
+                return ResourceManager.GetString("calendar.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Utgivare.
+        /// </summary>
+        internal static string contact_publisher {
+            get {
+                return ResourceManager.GetString("contact.publisher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kontakta oss.
+        /// </summary>
+        internal static string contact_title {
+            get {
+                return ResourceManager.GetString("contact.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Journal.
+        /// </summary>
+        internal static string dashboard_diary {
+            get {
+                return ResourceManager.GetString("dashboard.diary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Övningar.
+        /// </summary>
+        internal static string dashboard_exercises {
+            get {
+                return ResourceManager.GetString("dashboard.exercises", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Form.
+        /// </summary>
+        internal static string dashboard_form {
+            get {
+                return ResourceManager.GetString("dashboard.form", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Anmäl problem.
+        /// </summary>
+        internal static string dashboard_reportIssue {
+            get {
+                return ResourceManager.GetString("dashboard.reportIssue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Always show on start.
+        /// </summary>
+        internal static string default_start {
+            get {
+                return ResourceManager.GetString("default.start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alfabetisk.
+        /// </summary>
+        internal static string exercise_alphabetical {
+            get {
+                return ResourceManager.GetString("exercise.alphabetical", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Populär.
+        /// </summary>
+        internal static string exercise_popular {
+            get {
+                return ResourceManager.GetString("exercise.popular", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random.
+        /// </summary>
+        internal static string exercise_random {
+            get {
+                return ResourceManager.GetString("exercise.random", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Se alla övningar.
+        /// </summary>
+        internal static string exercise_viewAll {
+            get {
+                return ResourceManager.GetString("exercise.viewAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logga ut.
+        /// </summary>
+        internal static string home_logout {
+            get {
+                return ResourceManager.GetString("home.logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mer.
         /// </summary>
         internal static string home_more {
             get {
@@ -70,7 +286,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to My Health.
+        ///   Looks up a localized string similar to Min Hälsa.
         /// </summary>
         internal static string home_myHealth {
             get {
@@ -79,7 +295,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to News.
+        ///   Looks up a localized string similar to Nyheter.
         /// </summary>
         internal static string home_news {
             get {
@@ -88,7 +304,386 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create account.
+        ///   Looks up a localized string similar to Tryck för att börja.
+        /// </summary>
+        internal static string home_tap {
+            get {
+                return ResourceManager.GetString("home.tap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beskrivning.
+        /// </summary>
+        internal static string issue_description {
+            get {
+                return ResourceManager.GetString("issue.description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Titel.
+        /// </summary>
+        internal static string issue_title {
+            get {
+                return ResourceManager.GetString("issue.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fields with &lt;span style=&quot;color:Red;&quot;&gt;*&lt;/span&gt; are required.
+        /// </summary>
+        internal static string label_required {
+            get {
+                return ResourceManager.GetString("label.required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thank you! The link to create a new password has been sent. Kindly check your email..
+        /// </summary>
+        internal static string link_message {
+            get {
+                return ResourceManager.GetString("link.message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Länken skickas.
+        /// </summary>
+        internal static string link_sent {
+            get {
+                return ResourceManager.GetString("link.sent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logga in för ett bättre liv.
+        /// </summary>
+        internal static string login_message {
+            get {
+                return ResourceManager.GetString("login.message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inga aktiviteter och mätningar.
+        /// </summary>
+        internal static string measurement_none {
+            get {
+                return ResourceManager.GetString("measurement.none", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aktiviteter och mätningar.
+        /// </summary>
+        internal static string measurement_text {
+            get {
+                return ResourceManager.GetString("measurement.text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visa/Lägga till aktiviteter och mätningar.
+        /// </summary>
+        internal static string measurement_viewAdd {
+            get {
+                return ResourceManager.GetString("measurement.viewAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visa nyheter.
+        /// </summary>
+        internal static string news_all {
+            get {
+                return ResourceManager.GetString("news.all", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kategorier.
+        /// </summary>
+        internal static string news_categories {
+            get {
+                return ResourceManager.GetString("news.categories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internationell.
+        /// </summary>
+        internal static string news_categories_international {
+            get {
+                return ResourceManager.GetString("news.categories.international", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Välj kategor.
+        /// </summary>
+        internal static string news_categories_select {
+            get {
+                return ResourceManager.GetString("news.categories.select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Svenska.
+        /// </summary>
+        internal static string news_categories_swedish {
+            get {
+                return ResourceManager.GetString("news.categories.swedish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Översikt.
+        /// </summary>
+        internal static string news_summary {
+            get {
+                return ResourceManager.GetString("news.summary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nyheter.
+        /// </summary>
+        internal static string news_text {
+            get {
+                return ResourceManager.GetString("news.text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ändra Profil.
+        /// </summary>
+        internal static string profile_title {
+            get {
+                return ResourceManager.GetString("profile.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skapa.
+        /// </summary>
+        internal static string register_create {
+            get {
+                return ResourceManager.GetString("register.create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registrera.
+        /// </summary>
+        internal static string register_title {
+            get {
+                return ResourceManager.GetString("register.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Påminnelser.
+        /// </summary>
+        internal static string reminder_title {
+            get {
+                return ResourceManager.GetString("reminder.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ändra Profil.
+        /// </summary>
+        internal static string settings_changeProfile {
+            get {
+                return ResourceManager.GetString("settings.changeProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Språk, e-postadress och personliga 
+        ///information.
+        /// </summary>
+        internal static string settings_changeProfile_description {
+            get {
+                return ResourceManager.GetString("settings.changeProfile.description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Påminnelser.
+        /// </summary>
+        internal static string settings_reminders {
+            get {
+                return ResourceManager.GetString("settings.reminders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Antal.
+        /// </summary>
+        internal static string settings_reminders_description {
+            get {
+                return ResourceManager.GetString("settings.reminders.description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Håll mig inloggad.
+        /// </summary>
+        internal static string settings_security_login {
+            get {
+                return ResourceManager.GetString("settings.security.login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Säkerhetsinställningar.
+        /// </summary>
+        internal static string settings_security_title {
+            get {
+                return ResourceManager.GetString("settings.security.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visar hemsidan.
+        /// </summary>
+        internal static string settings_security_welcome {
+            get {
+                return ResourceManager.GetString("settings.security.welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inställningar.
+        /// </summary>
+        internal static string settings_title {
+            get {
+                return ResourceManager.GetString("settings.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Statistik.
+        /// </summary>
+        internal static string statistics_title {
+            get {
+                return ResourceManager.GetString("statistics.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vad gör kalender?.
+        /// </summary>
+        internal static string support_calendar {
+            get {
+                return ResourceManager.GetString("support.calendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The diary may be used to write down your thoughts and feelings and can have a powerful effect for reducing anxiety and stress. There is both a typing mode and a read mode in the diary. You can also add other activities and measurements, such as physical activity, blood pressure and BMI for example. You may also see which exercises you have done and how you have responded to your forms..
+        /// </summary>
+        internal static string support_calendar_description {
+            get {
+                return ResourceManager.GetString("support.calendar.description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hur ändrar jag min e-postadress?.
+        /// </summary>
+        internal static string support_changeEmail {
+            get {
+                return ResourceManager.GetString("support.changeEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can change your email address by tapping the icon for ‘Settings’ which is placed on the top corner of ‘My Health’. Tap ‘Change Profile’ and fill in your new email address. Thereafter tap ‘Save’..
+        /// </summary>
+        internal static string support_changeEmail_description {
+            get {
+                return ResourceManager.GetString("support.changeEmail.description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frågor &amp; Svar.
+        /// </summary>
+        internal static string support_faq {
+            get {
+                return ResourceManager.GetString("support.faq", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to More frequently asked questions will be displayed here shortly. Thank you for your patience..
+        /// </summary>
+        internal static string support_faq_descriptioin {
+            get {
+                return ResourceManager.GetString("support.faq.descriptioin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How do I track my health?.
+        /// </summary>
+        internal static string support_healthTrack {
+            get {
+                return ResourceManager.GetString("support.healthTrack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Track your health development over time by responding to the 11 questions in the Form. Once you save, you get immediate individual feedback and an action plan. When clicking the exercises in the action plan you will be directed to Exercises. You may also view your development over time by clicking ‘View’. You can choose to view one question at a time or several in the same graph..
+        /// </summary>
+        internal static string support_healthTrack_description {
+            get {
+                return ResourceManager.GetString("support.healthTrack.description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Support.
+        /// </summary>
+        internal static string support_title {
+            get {
+                return ResourceManager.GetString("support.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kontouppgifter.
+        /// </summary>
+        internal static string user_account {
+            get {
+                return ResourceManager.GetString("user.account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alternativ e-postadress.
+        /// </summary>
+        internal static string user_alternateEmail {
+            get {
+                return ResourceManager.GetString("user.alternateEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bekräfta lösenordet.
+        /// </summary>
+        internal static string user_confirmPassword {
+            get {
+                return ResourceManager.GetString("user.confirmPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skapa ett konto.
         /// </summary>
         internal static string user_createAccount {
             get {
@@ -97,7 +692,55 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Forgot password?.
+        ///   Looks up a localized string similar to E-postadress.
+        /// </summary>
+        internal static string user_email {
+            get {
+                return ResourceManager.GetString("user.email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ange din e-postadress nedan så skickar vi 
+        ///dig en länk som kan användas för att 
+        ///skapa ett nytt lösenord.
+        /// </summary>
+        internal static string user_forgot_message {
+            get {
+                return ResourceManager.GetString("user.forgot.message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Glömt lösenord?.
+        /// </summary>
+        internal static string user_forgot_password {
+            get {
+                return ResourceManager.GetString("user.forgot.password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something is wrong.
+        /// </summary>
+        internal static string user_forgot_wrong {
+            get {
+                return ResourceManager.GetString("user.forgot.wrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Det angivna e-postadress stämmer inte. 
+        ///Försök igen..
+        /// </summary>
+        internal static string user_forgot_wrongMessage {
+            get {
+                return ResourceManager.GetString("user.forgot.wrongMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Glömt lösenord?.
         /// </summary>
         internal static string user_forgotPassword {
             get {
@@ -106,7 +749,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sorry, incorrect login details..
+        ///   Looks up a localized string similar to Felaktiga inloggningsuppgifter.
         /// </summary>
         internal static string user_incorrectLogin {
             get {
@@ -115,7 +758,16 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Loggon.
+        ///   Looks up a localized string similar to Personliga Information.
+        /// </summary>
+        internal static string user_info {
+            get {
+                return ResourceManager.GetString("user.info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logga in.
         /// </summary>
         internal static string user_login {
             get {
@@ -124,7 +776,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Username or Email.
+        ///   Looks up a localized string similar to Användarnamn eller E-postadress.
         /// </summary>
         internal static string user_name {
             get {
@@ -133,11 +785,149 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password.
+        ///   Looks up a localized string similar to Lösenord.
         /// </summary>
         internal static string user_password {
             get {
                 return ResourceManager.GetString("user.password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Användarvillkor.
+        /// </summary>
+        internal static string user_terms {
+            get {
+                return ResourceManager.GetString("user.terms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Användarnamn.
+        /// </summary>
+        internal static string user_username {
+            get {
+                return ResourceManager.GetString("user.username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jämför.
+        /// </summary>
+        internal static string view_compare {
+            get {
+                return ResourceManager.GetString("view.compare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Välj resultat att visa och jämföra.
+        /// </summary>
+        internal static string view_select {
+            get {
+                return ResourceManager.GetString("view.select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tidsram.
+        /// </summary>
+        internal static string view_timeframe {
+            get {
+                return ResourceManager.GetString("view.timeframe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View....
+        /// </summary>
+        internal static string view_title {
+            get {
+                return ResourceManager.GetString("view.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Journal.
+        /// </summary>
+        internal static string welcome_diary {
+            get {
+                return ResourceManager.GetString("welcome.diary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visa dagliga aktiviteter och skriva dina 
+        ///tankar och känslor.
+        /// </summary>
+        internal static string welcome_diary_description {
+            get {
+                return ResourceManager.GetString("welcome.diary.description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Övningar.
+        /// </summary>
+        internal static string welcome_exercise {
+            get {
+                return ResourceManager.GetString("welcome.exercise", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lär övningar som hjälper till att förbättra 
+        ///din hälsa.
+        /// </summary>
+        internal static string welcome_exercise_description {
+            get {
+                return ResourceManager.GetString("welcome.exercise.description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Form.
+        /// </summary>
+        internal static string welcome_form {
+            get {
+                return ResourceManager.GetString("welcome.form", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start tracking your health by filling out the form on a regular basis..
+        /// </summary>
+        internal static string welcome_form_description {
+            get {
+                return ResourceManager.GetString("welcome.form.description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thank you for creating an account with us! Here are a few things that you need to know in order to get started on a healthier and happier life:.
+        /// </summary>
+        internal static string welcome_message {
+            get {
+                return ResourceManager.GetString("welcome.message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kontrollera din utveckling och 
+        ///rekommenderade aktiviteter.
+        /// </summary>
+        internal static string welcome_statistics_description {
+            get {
+                return ResourceManager.GetString("welcome.statistics.description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Välkommen till Health Watch!.
+        /// </summary>
+        internal static string welcome_title {
+            get {
+                return ResourceManager.GetString("welcome.title", resourceCulture);
             }
         }
     }
