@@ -167,3 +167,34 @@ GO
 
 use healthWatch;
 alter table SponsorAdminSession add EndDT datetime;
+
+USE [healthWatch]
+GO
+
+/****** Object:  Table [dbo].[Issue]    Script Date: 09/21/2014 17:01:48 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[Issue](
+	[IssueID] [int] IDENTITY(1,1) NOT NULL,
+	[IssueDate] [smalldatetime] NULL,
+	[Title] [varchar](255) NULL,
+	[Description] [text] NULL,
+	[UserID] [int] NULL,
+ CONSTRAINT [PK_Issue] PRIMARY KEY CLUSTERED 
+(
+	[IssueID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
