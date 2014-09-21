@@ -35,7 +35,7 @@
 
 <div data-role="header" data-theme="b" data-position="fixed">
     <a href="Dashboard.aspx" data-icon="arrow-l" rel="external"><%= R.Str("home.myHealth") %></a>
-    <h1><%= R.Str("dashboard.statistics") %></h1>
+    <h1><%= R.Str("statistics.title") %></h1>
     <%=viewlink %>
 </div>
 <div data-role="content" id="stat">

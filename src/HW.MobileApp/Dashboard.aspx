@@ -39,7 +39,7 @@
                 <div class="tile">
                     <a href="Statistics.aspx"  rel="external">
                         <img src="img/dash_stats.png" />
-                        <span><%= R.Str("dashboard.statistics") %></span>
+                        <span><%= R.Str("statistics.title") %></span>
                     </a>
                 </div>
         

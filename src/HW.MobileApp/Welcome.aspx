@@ -23,7 +23,7 @@
     </div>
     <div class="list">
         <img src="img/dash_stats.png" />
-        <h5><%= R.Str("welcome.statistics")%></h5>
+        <h5><%= R.Str("statistics.title")%></h5>
         <span><%= R.Str("welcome.statistics.description")%></span>
     </div>
     <div class="list">
