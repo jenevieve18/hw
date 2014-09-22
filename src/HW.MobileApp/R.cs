@@ -28,6 +28,11 @@ namespace HW.MobileApp
             }
         }
 
+        public static string Str(int langID, string name)
+        {
+            return Str(langID, name, "");
+        }
+
         public static string Str(int langID, string name, string def)
         {
             try
