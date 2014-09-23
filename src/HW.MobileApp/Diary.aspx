@@ -36,7 +36,7 @@
     <div data-role="content" >
     
         <ul data-role="listview">
-            <li class="minihead">Date</li>
+            <li class="minihead"><%= R.Str("diary.date") %></li>
             <li style="padding:0px 0px 0px 0px;border-width:0px;">
                 <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" >
                     <div style="display:none;"><asp:DropDownList runat="server"></asp:DropDownList></div>
@@ -62,23 +62,19 @@
                 </fieldset>
     
             </li>
-            <li class="minihead">Notes</li>
+            <li class="minihead"><%= R.Str("diary.notes") %></li>
             <li style="padding:0px 0px 0px 0px;">
                 <asp:TextBox id="textBoxNote" placeholder="Write here.." 
                         style="border-width:0px;margin:0px 0px 0px 0px;" TextMode="multiline" runat="server"></asp:TextBox>
             </li>
-            <li class="minihead">Mood</li>
+            <li class="minihead"><%= R.Str("diary.mood") %></li>
             <li style="padding:0px 0px 0px 0px;">
                 <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
                     <div style="display:none;"><asp:RadioButton text="x" runat="server"></asp:RadioButton></div>
-                    <asp:RadioButton runat="server" id="rdbDontKnow" GroupName="rdbMoods" 
-                    text="Don't Know<div><img class='image' src='http://clients.easyapp.se/healthwatch/images/dontKnow@2x.png'></div>" value="DontKnow" />
-                    <asp:RadioButton runat="server" id="rdbUnhappy"  GroupName="rdbMoods" 
-                    text="Unhappy<div><img class='image' src='http://clients.easyapp.se/healthwatch/images/unhappy@2x.png'></div>" value="Unhappy"  />
-                    <asp:RadioButton runat="server" id="rdbNeutral"  GroupName="rdbMoods" 
-                    text="Neutral<div><img class='image' src='http://clients.easyapp.se/healthwatch/images/neutral@2x.png'></div>" value="Neutral" />
-                    <asp:RadioButton runat="server" id="rdbHappy"    GroupName="rdbMoods"
-                    text="Happy<div><img class='image' src='http://clients.easyapp.se/healthwatch/images/happy@2x.png'></div>" value="Happy" />
+                    <asp:RadioButton runat="server" id="rdbDontKnow" GroupName="rdbMoods" text="Don't Know<div><img class='image' src='http://clients.easyapp.se/healthwatch/images/dontKnow@2x.png'></div>" value="DontKnow" />
+                    <asp:RadioButton runat="server" id="rdbUnhappy"  GroupName="rdbMoods" text="Unhappy<div><img class='image' src='http://clients.easyapp.se/healthwatch/images/unhappy@2x.png'></div>" value="Unhappy"  />
+                    <asp:RadioButton runat="server" id="rdbNeutral"  GroupName="rdbMoods" text="Neutral<div><img class='image' src='http://clients.easyapp.se/healthwatch/images/neutral@2x.png'></div>" value="Neutral" />
+                    <asp:RadioButton runat="server" id="rdbHappy"    GroupName="rdbMoods" text="Happy<div><img class='image' src='http://clients.easyapp.se/healthwatch/images/happy@2x.png'></div>" value="Happy" />
                     <div style="display:none;"><asp:RadioButton ID="RadioButton1" text="x" runat="server"></asp:RadioButton></div>
                 </fieldset>
 

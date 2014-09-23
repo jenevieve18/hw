@@ -174,6 +174,27 @@
   <data name="default.start" xml:space="preserve">
     <value>Always show on start</value>
   </data>
+  <data name="diary.date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="diary.mood" xml:space="preserve">
+    <value>Mood</value>
+  </data>
+  <data name="diary.mood.dontknow" xml:space="preserve">
+    <value>Don't Know&lt;div&gt;&lt;img class='image' src='http://clients.easyapp.se/healthwatch/images/dontKnow@2x.png'&gt;&lt;/div&gt;</value>
+  </data>
+  <data name="diary.mood.happy" xml:space="preserve">
+    <value>Happy&lt;div&gt;&lt;img class='image' src='http://clients.easyapp.se/healthwatch/images/happy@2x.png'&gt;&lt;/div&gt;</value>
+  </data>
+  <data name="diary.mood.neutral" xml:space="preserve">
+    <value>Neutral&lt;div&gt;&lt;img class='image' src='http://clients.easyapp.se/healthwatch/images/neutral@2x.png'&gt;&lt;/div&gt;</value>
+  </data>
+  <data name="diary.mood.unhappy" xml:space="preserve">
+    <value>Unhappy&lt;div&gt;&lt;img class='image' src='http://clients.easyapp.se/healthwatch/images/unhappy@2x.png'&gt;&lt;/div&gt;</value>
+  </data>
+  <data name="diary.notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
   <data name="exercise.alphabetical" xml:space="preserve">
     <value>Alfabetisk</value>
   </data>
@@ -228,6 +249,15 @@
   <data name="measurement.viewAdd" xml:space="preserve">
     <value>Visa/Lägga till aktiviteter och mätningar</value>
   </data>
+  <data name="more.about" xml:space="preserve">
+    <value>Om Health Watch</value>
+  </data>
+  <data name="more.like" xml:space="preserve">
+    <value>Like us on Facebook</value>
+  </data>
+  <data name="more.tell" xml:space="preserve">
+    <value>Tell a Friend</value>
+  </data>
   <data name="news.all" xml:space="preserve">
     <value>Visa nyheter</value>
   </data>
@@ -249,11 +279,41 @@
   <data name="news.text" xml:space="preserve">
     <value>Nyheter</value>
   </data>
+  <data name="options.choose" xml:space="preserve">
+    <value>Choose one...</value>
+  </data>
+  <data name="options.compare.database" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="options.compare.none" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="options.timeframe.latest" xml:space="preserve">
+    <value>Latest</value>
+  </data>
+  <data name="options.timeframe.pastMonth" xml:space="preserve">
+    <value>Past month</value>
+  </data>
+  <data name="options.timeframe.pastWeek" xml:space="preserve">
+    <value>Past week</value>
+  </data>
+  <data name="options.timeframe.pastYear" xml:space="preserve">
+    <value>Past year</value>
+  </data>
+  <data name="options.timeframe.sinceFirstMeasure" xml:space="preserve">
+    <value>Since first measure</value>
+  </data>
   <data name="profile.title" xml:space="preserve">
     <value>Ändra Profil</value>
   </data>
+  <data name="register.accept" xml:space="preserve">
+    <value>I accept</value>
+  </data>
   <data name="register.create" xml:space="preserve">
     <value>Skapa</value>
+  </data>
+  <data name="register.terms" xml:space="preserve">
+    <value>Terms &amp; Conditions of the Service</value>
   </data>
   <data name="register.title" xml:space="preserve">
     <value>Registrera</value>
@@ -285,6 +345,12 @@ information</value>
   </data>
   <data name="settings.title" xml:space="preserve">
     <value>Inställningar</value>
+  </data>
+  <data name="statistics.compare" xml:space="preserve">
+    <value>Compare with</value>
+  </data>
+  <data name="statistics.result" xml:space="preserve">
+    <value>Result</value>
   </data>
   <data name="statistics.title" xml:space="preserve">
     <value>Statistik</value>
@@ -380,7 +446,7 @@ Försök igen.</value>
     <value>Tidsram</value>
   </data>
   <data name="view.title" xml:space="preserve">
-    <value>View...</value>
+    <value>Visa...</value>
   </data>
   <data name="welcome.diary" xml:space="preserve">
     <value>Journal</value>
@@ -400,14 +466,13 @@ din hälsa</value>
     <value>Form</value>
   </data>
   <data name="welcome.form.description" xml:space="preserve">
-    <value>Start tracking your health by filling out the form on a regular basis.</value>
+    <value>Kartlägg din hälsa genom att fylla i formuläret regelbundet.</value>
   </data>
   <data name="welcome.message" xml:space="preserve">
     <value>Thank you for creating an account with us! Here are a few things that you need to know in order to get started on a healthier and happier life:</value>
   </data>
   <data name="welcome.statistics.description" xml:space="preserve">
-    <value>Kontrollera din utveckling och 
-rekommenderade aktiviteter</value>
+    <value>Följ din utveckling över tid och de rekommenderade övningarna.</value>
   </data>
   <data name="welcome.title" xml:space="preserve">
     <value>Välkommen till Health Watch!</value>

@@ -294,7 +294,7 @@
     <hr style="width:80%;"/>
 
     <div class="ui-grid-a" style="text-align:center;">
-    <asp:Label ID="lblTerms" runat="server"><a <%=policylink %>>Terms & Conditions of the Service<span class='req'>*</span></a></asp:Label>
+    <asp:Label ID="lblTerms" runat="server"><a <%=policylink %>><%= R.Str("register.terms") %><span class='req'>*</span></a></asp:Label>
     <asp:CheckBox ID="cbTerms" Text=" I accept" runat="server" data-mini="true"></asp:CheckBox >
     </div>
 
@@ -304,9 +304,9 @@
  <div data-role="footer" dataid="footernav" data-position="fixed">
                 <div data-role="navbar">
                     <ul>
-                        <li><a href="Dashboard.aspx" data-icon="health"rel="external">My Health</a></li>
-                        <li><a href="News.aspx" data-icon="news">News</a></li>
-                        <li><a href="More.aspx" data-icon="more">More</a></li>
+                        <li><a href="Dashboard.aspx" data-icon="health"><%= R.Str("home.myHealth") %></a></li>
+                        <li><a href="News.aspx" data-icon="news"><%= R.Str("home.news") %></a></li>
+                        <li><a href="More.aspx" data-icon="more"><%= R.Str("home.more") %></a></li>
                     </ul>
                 </div>
             </div>

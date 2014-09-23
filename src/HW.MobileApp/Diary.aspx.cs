@@ -45,6 +45,15 @@ namespace HW.MobileApp
             
         }
 
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+            rdbDontKnow.Text = R.Str("diary.mood.dontknow");
+            rdbUnhappy.Text = R.Str("diary.mood.unhappy");
+            rdbNeutral.Text = R.Str("diary.mood.neutral");
+            rdbHappy.Text = R.Str("diary.mood.happy");
+        }
+
         protected bool unsavedValues()
         {
             if (Session["note"] != null)

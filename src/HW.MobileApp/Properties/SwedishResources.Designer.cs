@@ -232,6 +232,69 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        internal static string diary_date {
+            get {
+                return ResourceManager.GetString("diary.date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mood.
+        /// </summary>
+        internal static string diary_mood {
+            get {
+                return ResourceManager.GetString("diary.mood", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t Know&lt;div&gt;&lt;img class=&apos;image&apos; src=&apos;http://clients.easyapp.se/healthwatch/images/dontKnow@2x.png&apos;&gt;&lt;/div&gt;.
+        /// </summary>
+        internal static string diary_mood_dontknow {
+            get {
+                return ResourceManager.GetString("diary.mood.dontknow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Happy&lt;div&gt;&lt;img class=&apos;image&apos; src=&apos;http://clients.easyapp.se/healthwatch/images/happy@2x.png&apos;&gt;&lt;/div&gt;.
+        /// </summary>
+        internal static string diary_mood_happy {
+            get {
+                return ResourceManager.GetString("diary.mood.happy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Neutral&lt;div&gt;&lt;img class=&apos;image&apos; src=&apos;http://clients.easyapp.se/healthwatch/images/neutral@2x.png&apos;&gt;&lt;/div&gt;.
+        /// </summary>
+        internal static string diary_mood_neutral {
+            get {
+                return ResourceManager.GetString("diary.mood.neutral", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unhappy&lt;div&gt;&lt;img class=&apos;image&apos; src=&apos;http://clients.easyapp.se/healthwatch/images/unhappy@2x.png&apos;&gt;&lt;/div&gt;.
+        /// </summary>
+        internal static string diary_mood_unhappy {
+            get {
+                return ResourceManager.GetString("diary.mood.unhappy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notes.
+        /// </summary>
+        internal static string diary_notes {
+            get {
+                return ResourceManager.GetString("diary.notes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alfabetisk.
         /// </summary>
         internal static string exercise_alphabetical {
@@ -394,6 +457,33 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Om Health Watch.
+        /// </summary>
+        internal static string more_about {
+            get {
+                return ResourceManager.GetString("more.about", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Like us on Facebook.
+        /// </summary>
+        internal static string more_like {
+            get {
+                return ResourceManager.GetString("more.like", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tell a Friend.
+        /// </summary>
+        internal static string more_tell {
+            get {
+                return ResourceManager.GetString("more.tell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Visa nyheter.
         /// </summary>
         internal static string news_all {
@@ -457,6 +547,78 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose one....
+        /// </summary>
+        internal static string options_choose {
+            get {
+                return ResourceManager.GetString("options.choose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database.
+        /// </summary>
+        internal static string options_compare_database {
+            get {
+                return ResourceManager.GetString("options.compare.database", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        internal static string options_compare_none {
+            get {
+                return ResourceManager.GetString("options.compare.none", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latest.
+        /// </summary>
+        internal static string options_timeframe_latest {
+            get {
+                return ResourceManager.GetString("options.timeframe.latest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Past month.
+        /// </summary>
+        internal static string options_timeframe_pastMonth {
+            get {
+                return ResourceManager.GetString("options.timeframe.pastMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Past week.
+        /// </summary>
+        internal static string options_timeframe_pastWeek {
+            get {
+                return ResourceManager.GetString("options.timeframe.pastWeek", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Past year.
+        /// </summary>
+        internal static string options_timeframe_pastYear {
+            get {
+                return ResourceManager.GetString("options.timeframe.pastYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Since first measure.
+        /// </summary>
+        internal static string options_timeframe_sinceFirstMeasure {
+            get {
+                return ResourceManager.GetString("options.timeframe.sinceFirstMeasure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ändra Profil.
         /// </summary>
         internal static string profile_title {
@@ -466,11 +628,29 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to I accept.
+        /// </summary>
+        internal static string register_accept {
+            get {
+                return ResourceManager.GetString("register.accept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Skapa.
         /// </summary>
         internal static string register_create {
             get {
                 return ResourceManager.GetString("register.create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terms &amp; Conditions of the Service.
+        /// </summary>
+        internal static string register_terms {
+            get {
+                return ResourceManager.GetString("register.terms", resourceCulture);
             }
         }
         
@@ -562,6 +742,24 @@ namespace HW.MobileApp.Properties {
         internal static string settings_title {
             get {
                 return ResourceManager.GetString("settings.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compare with.
+        /// </summary>
+        internal static string statistics_compare {
+            get {
+                return ResourceManager.GetString("statistics.compare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Result.
+        /// </summary>
+        internal static string statistics_result {
+            get {
+                return ResourceManager.GetString("statistics.result", resourceCulture);
             }
         }
         
@@ -839,7 +1037,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to View....
+        ///   Looks up a localized string similar to Visa....
         /// </summary>
         internal static string view_title {
             get {
@@ -895,7 +1093,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start tracking your health by filling out the form on a regular basis..
+        ///   Looks up a localized string similar to Kartlägg din hälsa genom att fylla i formuläret regelbundet..
         /// </summary>
         internal static string welcome_form_description {
             get {
@@ -913,8 +1111,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kontrollera din utveckling och 
-        ///rekommenderade aktiviteter.
+        ///   Looks up a localized string similar to Följ din utveckling över tid och de rekommenderade övningarna..
         /// </summary>
         internal static string welcome_statistics_description {
             get {

@@ -47,6 +47,7 @@ namespace HW.MobileApp
             lblAltEmail.Text = R.Str("user.alternateEmail") + "<span class='req'></span>";
             Label1.Text = R.Str("user.info");
             lblTerms.Text = R.Str("user.terms");
+            cbTerms.Text = R.Str("register.accept");
         }
 
         public HWService.Question getProfileQuestion(int id)
@@ -66,7 +67,7 @@ namespace HW.MobileApp
                 if (p.QuestionID == 9)
                 {
                     dropDownListOccupation.Items.Clear();
-                    dropDownListOccupation.Items.Add(new ListItem("Choose one...", "0"));
+                    dropDownListOccupation.Items.Add(new ListItem(R.Str("options.choose"), "0"));
                     foreach (var a in p.AnswerOptions)
                     {
                         dropDownListOccupation.Items.Add(new ListItem(a.AnswerText, a.AnswerID.ToString()));
@@ -75,7 +76,7 @@ namespace HW.MobileApp
                 else if (p.QuestionID == 5)
                 {
                     dropDownListIndustry.Items.Clear();
-                    dropDownListIndustry.Items.Add(new ListItem("Choose one...", "0"));
+                    dropDownListIndustry.Items.Add(new ListItem(R.Str("options.choose"), "0"));
                     foreach (var a in p.AnswerOptions)
                     {
                         dropDownListIndustry.Items.Add(new ListItem(a.AnswerText, a.AnswerID.ToString()));
@@ -84,7 +85,7 @@ namespace HW.MobileApp
                 else if (p.QuestionID == 6)
                 {
                     dropDownListJob.Items.Clear();
-                    dropDownListJob.Items.Add(new ListItem("Choose one...", "0"));
+                    dropDownListJob.Items.Add(new ListItem(R.Str("options.choose"), "0"));
                     foreach (var a in p.AnswerOptions)
                     {
                         dropDownListJob.Items.Add(new ListItem(a.AnswerText, a.AnswerID.ToString()));
@@ -93,7 +94,7 @@ namespace HW.MobileApp
                 else if (p.QuestionID == 10)
                 {
                     dropDownListStudyArea.Items.Clear();
-                    dropDownListStudyArea.Items.Add(new ListItem("Choose one...", "0"));
+                    dropDownListStudyArea.Items.Add(new ListItem(R.Str("options.choose"), "0"));
                     foreach (var a in p.AnswerOptions)
                     {
                         dropDownListStudyArea.Items.Add(new ListItem(a.AnswerText, a.AnswerID.ToString()));
@@ -102,7 +103,7 @@ namespace HW.MobileApp
                 else if (p.QuestionID == 8)
                 {
                     dropDownListAnnualIncome.Items.Clear();
-                    dropDownListAnnualIncome.Items.Add(new ListItem("Choose one...", "0"));
+                    dropDownListAnnualIncome.Items.Add(new ListItem(R.Str("options.choose"), "0"));
                     foreach (var a in p.AnswerOptions)
                     {
                         dropDownListAnnualIncome.Items.Add(new ListItem(a.AnswerText, a.AnswerID.ToString()));
@@ -111,7 +112,7 @@ namespace HW.MobileApp
                 else if (p.QuestionID == 11)
                 {
                     dropDownListEducation.Items.Clear();
-                    dropDownListEducation.Items.Add(new ListItem("Choose one...", "0"));
+                    dropDownListEducation.Items.Add(new ListItem(R.Str("options.choose"), "0"));
                     foreach (var a in p.AnswerOptions)
                     {
                         dropDownListEducation.Items.Add(new ListItem(a.AnswerText, a.AnswerID.ToString()));
@@ -120,7 +121,7 @@ namespace HW.MobileApp
                 else if (p.QuestionID == 20)
                 {
                     dropDownListSubordinates.Items.Clear();
-                    dropDownListSubordinates.Items.Add(new ListItem("Choose one...", "0"));
+                    dropDownListSubordinates.Items.Add(new ListItem(R.Str("options.choose"), "0"));
                     foreach (var a in p.AnswerOptions)
                     {
                         dropDownListSubordinates.Items.Add(new ListItem(a.AnswerText, a.AnswerID.ToString()));
@@ -129,7 +130,7 @@ namespace HW.MobileApp
                 else if (p.QuestionID == 13)
                 {
                     dropDownListCoffee.Items.Clear();
-                    dropDownListCoffee.Items.Add(new ListItem("Choose one...", "0"));
+                    dropDownListCoffee.Items.Add(new ListItem(R.Str("options.choose"), "0"));
                     foreach (var a in p.AnswerOptions)
                     {
                         dropDownListCoffee.Items.Add(new ListItem(a.AnswerText, a.AnswerID.ToString()));

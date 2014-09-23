@@ -24,11 +24,6 @@
                     <%= R.Str("view.timeframe")%>
                 </div>
                 <asp:DropDownList ID="ddlTimeframe" runat="server" data-role="none">
-                <asp:ListItem>Latest</asp:ListItem>
-                <asp:ListItem>Past week</asp:ListItem>
-                <asp:ListItem>Past month</asp:ListItem>
-                <asp:ListItem>Past year</asp:ListItem>
-                <asp:ListItem>Since first measure</asp:ListItem>
                 </asp:DropDownList>
             </div>
         </li>
@@ -38,8 +33,6 @@
                 <%= R.Str("view.compare")%>
             </div>
             <asp:DropDownList ID="ddlCompare" runat="server" data-role="none">
-                <asp:ListItem>None</asp:ListItem>
-                <asp:ListItem>Database</asp:ListItem>
             </asp:DropDownList>
         </div>
         </li>

@@ -29,6 +29,20 @@ namespace HW.MobileApp
             
         }
 
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+
+            ddlTimeframe.Items.Add(new ListItem(R.Str("options.timeframe.latest")));
+            ddlTimeframe.Items.Add(new ListItem(R.Str("options.timeframe.pastWeek")));
+            ddlTimeframe.Items.Add(new ListItem(R.Str("options.timeframe.pastMonth")));
+            ddlTimeframe.Items.Add(new ListItem(R.Str("options.timeframe.pastYear")));
+            ddlTimeframe.Items.Add(new ListItem(R.Str("options.timeframe.sinceFirstMeasure")));
+
+            ddlCompare.Items.Add(new ListItem(R.Str("options.compare.none")));
+            ddlCompare.Items.Add(new ListItem(R.Str("options.compare.database")));
+        }
+
         protected void doneBtn_Click(object sender, EventArgs e){
 
             if (ddlTimeframe.SelectedValue != "Latest")
