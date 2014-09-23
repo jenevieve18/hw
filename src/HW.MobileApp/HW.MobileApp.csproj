@@ -127,6 +127,12 @@
     <None Include="Service References\HWService\HW.MobileApp.HWService.Reminder.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\HWService\HW.MobileApp.HWService.Sponsor.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HWService\HW.MobileApp.HWService.SponsorInvite.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\HWService\HW.MobileApp.HWService.UserData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
