@@ -155,6 +155,10 @@ namespace HW.MobileApp.HWService {
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         bool UserLogout(string token);
         
+        [System.ServiceModel.OperationContractAttribute(Action="https://ws.healthwatch.se/ReportIssue", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        bool ReportIssue(string token, int expirationMinutes, string title, string description);
+        
         [System.ServiceModel.OperationContractAttribute(Action="https://ws.healthwatch.se/UserResetPassword", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         bool UserResetPassword(string email, int languageID);
@@ -198,9 +202,23 @@ namespace HW.MobileApp.HWService {
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         string UserGetProfileQuestion(int questionID, string token, int expirationMinutes);
         
+        [System.ServiceModel.OperationContractAttribute(Action="https://ws.healthwatch.se/UserKeyGetProfileQuestion", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        string UserKeyGetProfileQuestion(int questionID, string userKey);
+        
         [System.ServiceModel.OperationContractAttribute(Action="https://ws.healthwatch.se/UserSetProfileQuestion", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         bool UserSetProfileQuestion(int questionID, string answer, string token, int expirationMinutes);
+        
+        // CODEGEN: Parameter 'SponsorInvitesResult' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlArrayItemAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="https://ws.healthwatch.se/SponsorInvites", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        HW.MobileApp.HWService.SponsorInvitesResponse SponsorInvites(HW.MobileApp.HWService.SponsorInvitesRequest request);
+        
+        // CODEGEN: Parameter 'SuperSponsorSponsorsResult' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlArrayItemAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="https://ws.healthwatch.se/SuperSponsorSponsors", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        HW.MobileApp.HWService.SuperSponsorSponsorsResponse SuperSponsorSponsors(HW.MobileApp.HWService.SuperSponsorSponsorsRequest request);
     }
     
     /// <remarks/>
@@ -236,6 +254,98 @@ namespace HW.MobileApp.HWService {
             set {
                 this.authorField = value;
                 this.RaisePropertyChanged("author");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17929")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://ws.healthwatch.se/")]
+    public partial class Sponsor : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string sponsorField;
+        
+        private string sponsorKeyField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string sponsor {
+            get {
+                return this.sponsorField;
+            }
+            set {
+                this.sponsorField = value;
+                this.RaisePropertyChanged("sponsor");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string sponsorKey {
+            get {
+                return this.sponsorKeyField;
+            }
+            set {
+                this.sponsorKeyField = value;
+                this.RaisePropertyChanged("sponsorKey");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17929")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://ws.healthwatch.se/")]
+    public partial class SponsorInvite : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string emailField;
+        
+        private string userKeyField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string email {
+            get {
+                return this.emailField;
+            }
+            set {
+                this.emailField = value;
+                this.RaisePropertyChanged("email");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string userKey {
+            get {
+                return this.userKeyField;
+            }
+            set {
+                this.userKeyField = value;
+                this.RaisePropertyChanged("userKey");
             }
         }
         
@@ -3534,6 +3644,76 @@ namespace HW.MobileApp.HWService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="SponsorInvites", WrapperNamespace="https://ws.healthwatch.se/", IsWrapped=true)]
+    public partial class SponsorInvitesRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="https://ws.healthwatch.se/", Order=0)]
+        public string sponsorKey;
+        
+        public SponsorInvitesRequest() {
+        }
+        
+        public SponsorInvitesRequest(string sponsorKey) {
+            this.sponsorKey = sponsorKey;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="SponsorInvitesResponse", WrapperNamespace="https://ws.healthwatch.se/", IsWrapped=true)]
+    public partial class SponsorInvitesResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="https://ws.healthwatch.se/", Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable=false)]
+        public HW.MobileApp.HWService.SponsorInvite[] SponsorInvitesResult;
+        
+        public SponsorInvitesResponse() {
+        }
+        
+        public SponsorInvitesResponse(HW.MobileApp.HWService.SponsorInvite[] SponsorInvitesResult) {
+            this.SponsorInvitesResult = SponsorInvitesResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="SuperSponsorSponsors", WrapperNamespace="https://ws.healthwatch.se/", IsWrapped=true)]
+    public partial class SuperSponsorSponsorsRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="https://ws.healthwatch.se/", Order=0)]
+        public string superSponsorKey;
+        
+        public SuperSponsorSponsorsRequest() {
+        }
+        
+        public SuperSponsorSponsorsRequest(string superSponsorKey) {
+            this.superSponsorKey = superSponsorKey;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="SuperSponsorSponsorsResponse", WrapperNamespace="https://ws.healthwatch.se/", IsWrapped=true)]
+    public partial class SuperSponsorSponsorsResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="https://ws.healthwatch.se/", Order=0)]
+        [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable=false)]
+        public HW.MobileApp.HWService.Sponsor[] SuperSponsorSponsorsResult;
+        
+        public SuperSponsorSponsorsResponse() {
+        }
+        
+        public SuperSponsorSponsorsResponse(HW.MobileApp.HWService.Sponsor[] SuperSponsorSponsorsResult) {
+            this.SuperSponsorSponsorsResult = SuperSponsorSponsorsResult;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface ServiceSoapChannel : HW.MobileApp.HWService.ServiceSoap, System.ServiceModel.IClientChannel {
     }
@@ -3825,6 +4005,10 @@ namespace HW.MobileApp.HWService {
             return base.Channel.UserLogout(token);
         }
         
+        public bool ReportIssue(string token, int expirationMinutes, string title, string description) {
+            return base.Channel.ReportIssue(token, expirationMinutes, title, description);
+        }
+        
         public bool UserResetPassword(string email, int languageID) {
             return base.Channel.UserResetPassword(email, languageID);
         }
@@ -3897,8 +4081,36 @@ namespace HW.MobileApp.HWService {
             return base.Channel.UserGetProfileQuestion(questionID, token, expirationMinutes);
         }
         
+        public string UserKeyGetProfileQuestion(int questionID, string userKey) {
+            return base.Channel.UserKeyGetProfileQuestion(questionID, userKey);
+        }
+        
         public bool UserSetProfileQuestion(int questionID, string answer, string token, int expirationMinutes) {
             return base.Channel.UserSetProfileQuestion(questionID, answer, token, expirationMinutes);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        HW.MobileApp.HWService.SponsorInvitesResponse HW.MobileApp.HWService.ServiceSoap.SponsorInvites(HW.MobileApp.HWService.SponsorInvitesRequest request) {
+            return base.Channel.SponsorInvites(request);
+        }
+        
+        public HW.MobileApp.HWService.SponsorInvite[] SponsorInvites(string sponsorKey) {
+            HW.MobileApp.HWService.SponsorInvitesRequest inValue = new HW.MobileApp.HWService.SponsorInvitesRequest();
+            inValue.sponsorKey = sponsorKey;
+            HW.MobileApp.HWService.SponsorInvitesResponse retVal = ((HW.MobileApp.HWService.ServiceSoap)(this)).SponsorInvites(inValue);
+            return retVal.SponsorInvitesResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        HW.MobileApp.HWService.SuperSponsorSponsorsResponse HW.MobileApp.HWService.ServiceSoap.SuperSponsorSponsors(HW.MobileApp.HWService.SuperSponsorSponsorsRequest request) {
+            return base.Channel.SuperSponsorSponsors(request);
+        }
+        
+        public HW.MobileApp.HWService.Sponsor[] SuperSponsorSponsors(string superSponsorKey) {
+            HW.MobileApp.HWService.SuperSponsorSponsorsRequest inValue = new HW.MobileApp.HWService.SuperSponsorSponsorsRequest();
+            inValue.superSponsorKey = superSponsorKey;
+            HW.MobileApp.HWService.SuperSponsorSponsorsResponse retVal = ((HW.MobileApp.HWService.ServiceSoap)(this)).SuperSponsorSponsors(inValue);
+            return retVal.SuperSponsorSponsorsResult;
         }
     }
 }

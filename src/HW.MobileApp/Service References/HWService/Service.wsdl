@@ -816,6 +816,23 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="ReportIssue">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="title" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="description" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReportIssueResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ReportIssueResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="UserResetPassword">
         <s:complexType>
           <s:sequence>
@@ -1028,6 +1045,21 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="UserKeyGetProfileQuestion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="questionID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="userKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserKeyGetProfileQuestionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserKeyGetProfileQuestionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="UserSetProfileQuestion">
         <s:complexType>
           <s:sequence>
@@ -1045,6 +1077,56 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="SponsorInvites">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sponsorKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SponsorInvitesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SponsorInvitesResult" type="tns:ArrayOfSponsorInvite" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfSponsorInvite">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="SponsorInvite" type="tns:SponsorInvite" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SponsorInvite">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="userKey" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="SuperSponsorSponsors">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="superSponsorKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SuperSponsorSponsorsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SuperSponsorSponsorsResult" type="tns:ArrayOfSponsor" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfSponsor">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Sponsor" type="tns:Sponsor" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Sponsor">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="sponsor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sponsorKey" type="s:string" />
+        </s:sequence>
+      </s:complexType>
       <s:element name="WordsOfWisdom" type="tns:WordsOfWisdom" />
       <s:element name="ArrayOfFormFeedback" nillable="true" type="tns:ArrayOfFormFeedback" />
       <s:element name="ArrayOfFormFeedbackTemplate" nillable="true" type="tns:ArrayOfFormFeedbackTemplate" />
@@ -1066,6 +1148,8 @@
       <s:element name="ArrayOfNews" nillable="true" type="tns:ArrayOfNews" />
       <s:element name="News" type="tns:News" />
       <s:element name="UserInfo" type="tns:UserInfo" />
+      <s:element name="ArrayOfSponsorInvite" nillable="true" type="tns:ArrayOfSponsorInvite" />
+      <s:element name="ArrayOfSponsor" nillable="true" type="tns:ArrayOfSponsor" />
     </s:schema>
   </wsdl:types>
   <wsdl:message name="TodaysWordsOfWisdomSoapIn">
@@ -1230,6 +1314,12 @@
   <wsdl:message name="UserLogoutSoapOut">
     <wsdl:part name="parameters" element="tns:UserLogoutResponse" />
   </wsdl:message>
+  <wsdl:message name="ReportIssueSoapIn">
+    <wsdl:part name="parameters" element="tns:ReportIssue" />
+  </wsdl:message>
+  <wsdl:message name="ReportIssueSoapOut">
+    <wsdl:part name="parameters" element="tns:ReportIssueResponse" />
+  </wsdl:message>
   <wsdl:message name="UserResetPasswordSoapIn">
     <wsdl:part name="parameters" element="tns:UserResetPassword" />
   </wsdl:message>
@@ -1290,11 +1380,29 @@
   <wsdl:message name="UserGetProfileQuestionSoapOut">
     <wsdl:part name="parameters" element="tns:UserGetProfileQuestionResponse" />
   </wsdl:message>
+  <wsdl:message name="UserKeyGetProfileQuestionSoapIn">
+    <wsdl:part name="parameters" element="tns:UserKeyGetProfileQuestion" />
+  </wsdl:message>
+  <wsdl:message name="UserKeyGetProfileQuestionSoapOut">
+    <wsdl:part name="parameters" element="tns:UserKeyGetProfileQuestionResponse" />
+  </wsdl:message>
   <wsdl:message name="UserSetProfileQuestionSoapIn">
     <wsdl:part name="parameters" element="tns:UserSetProfileQuestion" />
   </wsdl:message>
   <wsdl:message name="UserSetProfileQuestionSoapOut">
     <wsdl:part name="parameters" element="tns:UserSetProfileQuestionResponse" />
+  </wsdl:message>
+  <wsdl:message name="SponsorInvitesSoapIn">
+    <wsdl:part name="parameters" element="tns:SponsorInvites" />
+  </wsdl:message>
+  <wsdl:message name="SponsorInvitesSoapOut">
+    <wsdl:part name="parameters" element="tns:SponsorInvitesResponse" />
+  </wsdl:message>
+  <wsdl:message name="SuperSponsorSponsorsSoapIn">
+    <wsdl:part name="parameters" element="tns:SuperSponsorSponsors" />
+  </wsdl:message>
+  <wsdl:message name="SuperSponsorSponsorsSoapOut">
+    <wsdl:part name="parameters" element="tns:SuperSponsorSponsorsResponse" />
   </wsdl:message>
   <wsdl:message name="TodaysWordsOfWisdomHttpPostIn">
     <wsdl:part name="languageID" type="s:string" />
@@ -1526,6 +1634,15 @@
   <wsdl:message name="UserLogoutHttpPostOut">
     <wsdl:part name="Body" element="tns:boolean" />
   </wsdl:message>
+  <wsdl:message name="ReportIssueHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+    <wsdl:part name="title" type="s:string" />
+    <wsdl:part name="description" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ReportIssueHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
   <wsdl:message name="UserResetPasswordHttpPostIn">
     <wsdl:part name="email" type="s:string" />
     <wsdl:part name="languageID" type="s:string" />
@@ -1613,6 +1730,13 @@
   <wsdl:message name="UserGetProfileQuestionHttpPostOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
+  <wsdl:message name="UserKeyGetProfileQuestionHttpPostIn">
+    <wsdl:part name="questionID" type="s:string" />
+    <wsdl:part name="userKey" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserKeyGetProfileQuestionHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
   <wsdl:message name="UserSetProfileQuestionHttpPostIn">
     <wsdl:part name="questionID" type="s:string" />
     <wsdl:part name="answer" type="s:string" />
@@ -1621,6 +1745,18 @@
   </wsdl:message>
   <wsdl:message name="UserSetProfileQuestionHttpPostOut">
     <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="SponsorInvitesHttpPostIn">
+    <wsdl:part name="sponsorKey" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SponsorInvitesHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfSponsorInvite" />
+  </wsdl:message>
+  <wsdl:message name="SuperSponsorSponsorsHttpPostIn">
+    <wsdl:part name="superSponsorKey" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SuperSponsorSponsorsHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfSponsor" />
   </wsdl:message>
   <wsdl:portType name="ServiceSoap">
     <wsdl:operation name="TodaysWordsOfWisdom">
@@ -1758,6 +1894,11 @@
       <wsdl:input message="tns:UserLogoutSoapIn" />
       <wsdl:output message="tns:UserLogoutSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="ReportIssue">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Report issue. Returns true if successful.</wsdl:documentation>
+      <wsdl:input message="tns:ReportIssueSoapIn" />
+      <wsdl:output message="tns:ReportIssueSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="UserResetPassword">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Provide email address to request a password reset link to be sent by email. Returns false only if malformed email address or email server is unavailable, otherwise true.</wsdl:documentation>
       <wsdl:input message="tns:UserResetPasswordSoapIn" />
@@ -1808,10 +1949,25 @@
       <wsdl:input message="tns:UserGetProfileQuestionSoapIn" />
       <wsdl:output message="tns:UserGetProfileQuestionSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="UserKeyGetProfileQuestion">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Internal function UserKeyGetProfileQuestion.</wsdl:documentation>
+      <wsdl:input message="tns:UserKeyGetProfileQuestionSoapIn" />
+      <wsdl:output message="tns:UserKeyGetProfileQuestionSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="UserSetProfileQuestion">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Sets or updates a profile question of a user. Returns false if token invalid/expired or malformed answer else true.</wsdl:documentation>
       <wsdl:input message="tns:UserSetProfileQuestionSoapIn" />
       <wsdl:output message="tns:UserSetProfileQuestionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SponsorInvites">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Internal function SponsorInvites.</wsdl:documentation>
+      <wsdl:input message="tns:SponsorInvitesSoapIn" />
+      <wsdl:output message="tns:SponsorInvitesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SuperSponsorSponsors">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Internal function SuperSponsorSponsors.</wsdl:documentation>
+      <wsdl:input message="tns:SuperSponsorSponsorsSoapIn" />
+      <wsdl:output message="tns:SuperSponsorSponsorsSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="ServiceHttpPost">
@@ -1935,6 +2091,11 @@
       <wsdl:input message="tns:UserLogoutHttpPostIn" />
       <wsdl:output message="tns:UserLogoutHttpPostOut" />
     </wsdl:operation>
+    <wsdl:operation name="ReportIssue">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Report issue. Returns true if successful.</wsdl:documentation>
+      <wsdl:input message="tns:ReportIssueHttpPostIn" />
+      <wsdl:output message="tns:ReportIssueHttpPostOut" />
+    </wsdl:operation>
     <wsdl:operation name="UserResetPassword">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Provide email address to request a password reset link to be sent by email. Returns false only if malformed email address or email server is unavailable, otherwise true.</wsdl:documentation>
       <wsdl:input message="tns:UserResetPasswordHttpPostIn" />
@@ -1985,10 +2146,25 @@
       <wsdl:input message="tns:UserGetProfileQuestionHttpPostIn" />
       <wsdl:output message="tns:UserGetProfileQuestionHttpPostOut" />
     </wsdl:operation>
+    <wsdl:operation name="UserKeyGetProfileQuestion">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Internal function UserKeyGetProfileQuestion.</wsdl:documentation>
+      <wsdl:input message="tns:UserKeyGetProfileQuestionHttpPostIn" />
+      <wsdl:output message="tns:UserKeyGetProfileQuestionHttpPostOut" />
+    </wsdl:operation>
     <wsdl:operation name="UserSetProfileQuestion">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Sets or updates a profile question of a user. Returns false if token invalid/expired or malformed answer else true.</wsdl:documentation>
       <wsdl:input message="tns:UserSetProfileQuestionHttpPostIn" />
       <wsdl:output message="tns:UserSetProfileQuestionHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SponsorInvites">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Internal function SponsorInvites.</wsdl:documentation>
+      <wsdl:input message="tns:SponsorInvitesHttpPostIn" />
+      <wsdl:output message="tns:SponsorInvitesHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SuperSponsorSponsors">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Internal function SuperSponsorSponsors.</wsdl:documentation>
+      <wsdl:input message="tns:SuperSponsorSponsorsHttpPostIn" />
+      <wsdl:output message="tns:SuperSponsorSponsorsHttpPostOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="ServiceSoap" type="tns:ServiceSoap">
@@ -2236,6 +2412,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ReportIssue">
+      <soap:operation soapAction="https://ws.healthwatch.se/ReportIssue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="UserResetPassword">
       <soap:operation soapAction="https://ws.healthwatch.se/UserResetPassword" style="document" />
       <wsdl:input>
@@ -2326,8 +2511,35 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="UserKeyGetProfileQuestion">
+      <soap:operation soapAction="https://ws.healthwatch.se/UserKeyGetProfileQuestion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="UserSetProfileQuestion">
       <soap:operation soapAction="https://ws.healthwatch.se/UserSetProfileQuestion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SponsorInvites">
+      <soap:operation soapAction="https://ws.healthwatch.se/SponsorInvites" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SuperSponsorSponsors">
+      <soap:operation soapAction="https://ws.healthwatch.se/SuperSponsorSponsors" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -2581,6 +2793,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ReportIssue">
+      <soap12:operation soapAction="https://ws.healthwatch.se/ReportIssue" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="UserResetPassword">
       <soap12:operation soapAction="https://ws.healthwatch.se/UserResetPassword" style="document" />
       <wsdl:input>
@@ -2671,8 +2892,35 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="UserKeyGetProfileQuestion">
+      <soap12:operation soapAction="https://ws.healthwatch.se/UserKeyGetProfileQuestion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="UserSetProfileQuestion">
       <soap12:operation soapAction="https://ws.healthwatch.se/UserSetProfileQuestion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SponsorInvites">
+      <soap12:operation soapAction="https://ws.healthwatch.se/SponsorInvites" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SuperSponsorSponsors">
+      <soap12:operation soapAction="https://ws.healthwatch.se/SuperSponsorSponsors" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -2899,6 +3147,15 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ReportIssue">
+      <http:operation location="/ReportIssue" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="UserResetPassword">
       <http:operation location="/UserResetPassword" />
       <wsdl:input>
@@ -2989,8 +3246,35 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="UserKeyGetProfileQuestion">
+      <http:operation location="/UserKeyGetProfileQuestion" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="UserSetProfileQuestion">
       <http:operation location="/UserSetProfileQuestion" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SponsorInvites">
+      <http:operation location="/SponsorInvites" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SuperSponsorSponsors">
+      <http:operation location="/SuperSponsorSponsors" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>
