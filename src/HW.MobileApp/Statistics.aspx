@@ -34,8 +34,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <div data-role="header" data-theme="b" data-position="fixed">
-    <a href="Dashboard.aspx" data-icon="arrow-l" rel="external"><%= R.Str("home.myHealth") %></a>
-    <h1><%= R.Str("statistics.title") %></h1>
+    <a href="Dashboard.aspx" data-icon="arrow-l" rel="external"><%= R.Str(language,"home.myHealth") %></a>
+    <h1><%= R.Str(language, "statistics.title")%></h1>
     <%=viewlink %>
 </div>
 <div data-role="content" id="stat">

@@ -11,13 +11,14 @@ namespace HW.MobileApp
     public partial class SecuritySettings : System.Web.UI.Page
     {
         HWService.ServiceSoap service = new HWService.ServiceSoapClient();
-        
+        protected int language;
         protected string token;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["token"] == null, "Default.aspx");
             token = Session["token"].ToString();
+            language = service.UserGetInfo(Session["token"].ToString(), 20).languageID;
             if (!Page.IsPostBack)
             {
                 HttpCookie cToken = Request.Cookies["token"];

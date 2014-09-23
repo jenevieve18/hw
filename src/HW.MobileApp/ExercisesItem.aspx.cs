@@ -13,6 +13,7 @@ namespace HW.MobileApp
         protected HWService.ServiceSoap service = new HWService.ServiceSoapClient();
         protected HWService.Exercise ex;
         string token = "";
+        protected int lang;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -21,7 +22,7 @@ namespace HW.MobileApp
 
             HtmlHelper.RedirectIf(Request.QueryString["varid"] == null, "Login.aspx");
             
-            int lang = int.Parse(Session["languageId"].ToString());
+            lang = int.Parse(Session["languageId"].ToString());
 
             ex = service.ExerciseExec(token, int.Parse(Request.QueryString["varid"]),10);
             

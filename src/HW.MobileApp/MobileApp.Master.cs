@@ -9,9 +9,10 @@ namespace HW.MobileApp
 {
     public partial class MobileApp : System.Web.UI.MasterPage
     {
+        protected int language;
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            language = int.Parse(Session["languageId"].ToString());
         }
     }
 }

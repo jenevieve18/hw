@@ -23,12 +23,13 @@ namespace HW.MobileApp
         protected string rp2_selected;
         protected string rp3_selected;
         protected string chartlink;
+        protected int language;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["token"] == null, "Login.aspx");
 
-            int language = int.Parse(Session["languageId"].ToString());
+            language = int.Parse(Session["languageId"].ToString());
             string token = Session["token"].ToString();
             string formKey = "";
 
@@ -44,7 +45,7 @@ namespace HW.MobileApp
                 timeframe = Request.QueryString["tf"];
                 compare = Request.QueryString["comp"];
                 var fft = service.FormFeedbackTemplateEnum(new HWService.FormFeedbackTemplateEnumRequest(token,formKey,language,10)).FormFeedbackTemplateEnumResult;
-                viewlink = "<a href='View.aspx?tf=" + timeframe + "&comp=" + compare + "' rel='external'>" + R.Str("view.title") + "</a>";
+                viewlink = "<a href='View.aspx?tf=" + timeframe + "&comp=" + compare + "' rel='external'>" + R.Str(language, "view.title") + "</a>";
                 rp0_selected = "";
                 rp1_selected = "";
                 rp2_selected = "";

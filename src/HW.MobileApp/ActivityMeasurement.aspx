@@ -22,15 +22,15 @@
 		<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
 			<h3 class="ui-title">Are you sure you want to delete this activity/measurement?</h3>
 			<p>This action cannot be undone.</p>
-			<a data-role="button" data-inline="true" data-rel="back" data-theme="c"><%= R.Str("button.cancel") %></a>    
+			<a data-role="button" data-inline="true" data-rel="back" data-theme="c"><%= R.Str(lang, "button.cancel") %></a>    
 			<a runat="server" onserverclick="deleteActivity" data-role="button" data-inline="true" action="callserverdelete()" data-transition="flow" data-theme="b">Delete</a>  
 		</div>
 	</div>
 
     <div data-role="header" data-theme="b" data-position="fixed">
         <%var diarylink = "href='Diary.aspx?date="+date.ToString("yyyy-MM-ddTHH:mm:ss")+"'"; %>
-        <a <%=diarylink %> data-icon="arrow-l" rel="external"><%= R.Str("button.back") %></a>
-        <h1><%= R.Str("measurement.viewAdd")%></h1>
+        <a <%=diarylink %> data-icon="arrow-l" rel="external"><%= R.Str(lang, "button.back")%></a>
+        <h1><%= R.Str(lang, "measurement.viewAdd")%></h1>
         <%var measlink = "href='MeasurementsList.aspx?datetime="+date.ToString("yyyy-MM-ddTHH:mm:ss")+"'"; %>
         <a <%=measlink %> data-icon="plus" data-iconpos="notext"></a>
 
@@ -54,7 +54,7 @@
                     </li>
                 <%} %>
             <% } else {%>
-                <li><%= R.Str("measurement.none") %></li>
+                <li><%= R.Str(lang, "measurement.none")%></li>
             <%} %>
 
         </ul>

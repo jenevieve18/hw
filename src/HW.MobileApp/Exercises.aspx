@@ -7,8 +7,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     
     <div data-role="header" data-theme="b" data-position="fixed">
-        <a href="Dashboard.aspx" data-icon="arrow-l"><%= R.Str("home.myHealth") %></a>
-        <h1><%= R.Str("dashboard.exercises") %></h1>
+        <a href="Dashboard.aspx" data-icon="arrow-l"><%= R.Str(lang,"home.myHealth") %></a>
+        <h1><%= R.Str(lang, "dashboard.exercises")%></h1>
     </div>
 
     <div data-role="content">
@@ -17,7 +17,7 @@
     <ul data-role="listview" id="areaselected" >
 
         <li data-icon="false">
-        <a href="ExercisesList.aspx?exaid=0&sort=0"><%= R.Str("exercise.viewAll") %></a> 
+        <a href="ExercisesList.aspx?exaid=0&sort=0"><%= R.Str(lang, "exercise.viewAll")%></a> 
         </li>
 
         <% foreach (var e in exerciseArea){

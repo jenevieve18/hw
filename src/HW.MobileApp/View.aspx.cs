@@ -12,10 +12,11 @@ namespace HW.MobileApp
     {
         protected string timeframe;
         protected string compare;
-        
+        protected int language;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            language = int.Parse(Session["languageId"].ToString());
             HtmlHelper.RedirectIf(Session["token"] == null, "Default.aspx");
             if (!Page.IsPostBack)
             {

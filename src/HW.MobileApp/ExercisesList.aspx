@@ -6,7 +6,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <div data-role="header" data-theme="b" data-position="fixed">
-        <a href="Exercises.aspx" data-icon="arrow-l"><%= R.Str("button.back") %></a>
+        <a href="Exercises.aspx" data-icon="arrow-l"><%= R.Str(lang,"button.back") %></a>
         <%var headname = areaname; %>
         <h1><%=headname %></h1>
     </div>
@@ -35,9 +35,9 @@
             %>
                 <div data-role="navbar">
                 <ul>
-                    <li><a <%= random %>><%= R.Str("exercise.random") %></a></li>
-                    <li><a <%= popular %>><%= R.Str("exercise.popular") %></a></li>
-                    <li><a <%=alpha %>><%= R.Str("exercise.alphabetical") %></a></li>
+                    <li><a <%= random %>><%= R.Str(lang, "exercise.random")%></a></li>
+                    <li><a <%= popular %>><%= R.Str(lang, "exercise.popular")%></a></li>
+                    <li><a <%=alpha %>><%= R.Str(lang, "exercise.alphabetical")%></a></li>
             
                 </ul>
                 </div>

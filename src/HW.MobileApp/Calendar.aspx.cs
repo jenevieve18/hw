@@ -13,14 +13,14 @@ namespace HW.MobileApp
 
         protected HWService.ServiceSoap service = new HWService.ServiceSoapClient();
         protected HWService.Calendar[] calendar;
-        
+        protected int lang;
         protected string token = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["token"] == null, "Login.aspx");
             token = Session["token"].ToString();
-            int lang = int.Parse(Session["languageId"].ToString());
+            lang = int.Parse(Session["languageId"].ToString());
 
             int month = DateTime.Now.Month-1;
             int year = DateTime.Now.Year;

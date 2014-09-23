@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     
 <div data-role="header" data-theme="b" data-position="fixed">
-    <a <%="href='ActivityMeasurement.aspx?datetime="+datetime+"'" %> data-icon="arrow-l">Back</a>
+    <a <%="href='ActivityMeasurement.aspx?datetime="+datetime+"'" %> data-icon="arrow-l"><%= R.Str(lang, "button.back")%></a>
     <h1></h1>
 </div>
 

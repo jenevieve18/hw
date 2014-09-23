@@ -55,14 +55,14 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div data-role="header" id="profileheader" data-theme="b" data-position="fixed">
-        <a href="Settings.aspx"><%= R.Str("button.cancel") %></a>
-        <h1><%= R.Str("profile.title") %></h1>
-        <a id="createBtn" onserverclick="saveChangesBtn_Click" runat="server"><%= R.Str("button.save") %></a>
+        <a href="Settings.aspx"><%= R.Str(language,"button.cancel") %></a>
+        <h1><%= R.Str(language, "profile.title")%></h1>
+        <a id="createBtn" onserverclick="saveChangesBtn_Click" runat="server"><%= R.Str(language, "button.save")%></a>
 
     </div>
     <div data-role="content" id="changeprofile" style="padding:5px;">
         <div style="left:20px;top:42px;position:absolute;font-size:11px;font-style:italic;color:#909090  ;">
-            <p><%= R.Str("label.required") %></p>
+            <p><%= R.Str(language, "label.required")%></p>
         </div>
 
         <div class="header">

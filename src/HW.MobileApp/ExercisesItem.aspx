@@ -7,7 +7,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div data-role="header" data-theme="b" data-position="fixed">
         <%var temp = "href='ExerciseList.aspx?exaid="+(ex.exerciseAreaID)+"&sort=0'"; %>
-        <a href="Exercises.aspx" data-icon="arrow-l"><%= R.Str("button.back") %></a>
+        <a href="Exercises.aspx" data-icon="arrow-l"><%= R.Str(lang, "button.back")%></a>
         <h1><%=ex.exerciseArea %></h1>
     
 

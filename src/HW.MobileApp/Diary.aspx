@@ -26,10 +26,10 @@
 
     <div data-role="header" data-theme="b" data-position="fixed">
 
-        <a href="Dashboard.aspx" data-icon="arrow-l"><%= R.Str("home.myHealth") %></a>
-        <h1><%= R.Str("dashboard.diary") %></h1>
+        <a href="Dashboard.aspx" data-icon="arrow-l"><%= R.Str(lang, "home.myHealth")%></a>
+        <h1><%= R.Str(lang, "dashboard.diary")%></h1>
         <a href="Calendar.aspx?b=Diary" data-icon="bars" data-iconpos="notext" style="position:inherit;right:87px;top:8px;"></a>
-        <a  runat="server" onserverclick="saveBtnClick" class="ui-btn-right"><%= R.Str("button.save") %></a>
+        <a  runat="server" onserverclick="saveBtnClick" class="ui-btn-right"><%= R.Str(lang, "button.save")%></a>
     </div>
 
 
@@ -79,9 +79,9 @@
                 </fieldset>
 
             </li>
-            <li class="minihead"><%= R.Str("measurement.text") %></li>
+            <li class="minihead"><%= R.Str(lang, "measurement.text")%></li>
         
-            <li><asp:LinkButton runat="server" onclick="activitylink_Click"><%= R.Str("measurement.viewAdd") %></asp:LinkButton>
+            <li><asp:LinkButton runat="server" onclick="activitylink_Click"><%= R.Str(lang, "measurement.viewAdd")%></asp:LinkButton>
          
             </li>
         

@@ -5,9 +5,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <div data-role="header" data-theme="b" data-position="fixed">
-    <a href="Settings.aspx"><%= R.Str("button.back") %></a>
-    <h1><%= R.Str("settings.security.title") %></h1>
-    <a runat="server" onserverclick="saveBtnClick"><%= R.Str("button.save") %></a> 
+    <a href="Settings.aspx"><%= R.Str(language,"button.back") %></a>
+    <h1><%= R.Str(language, "settings.security.title")%></h1>
+    <a runat="server" onserverclick="saveBtnClick"><%= R.Str(language, "button.save")%></a> 
 </div>
 <div data-role="content">
     

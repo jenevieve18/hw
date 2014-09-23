@@ -15,6 +15,7 @@ namespace HW.MobileApp
         protected HWService.Event[] activities = null;
         HWService.Calendar calendar;
         protected string token;
+        protected int lang;
         protected void Page_Load(object sender, EventArgs e)
         {
             
@@ -36,7 +37,7 @@ namespace HW.MobileApp
                 date = new DateTime(year, month, day, hrs, min, sec);
                 
             }
-            int lang = int.Parse(Session["languageId"].ToString());
+            lang = int.Parse(Session["languageId"].ToString());
 
             foreach (var c in service.CalendarEnum(new HWService.CalendarEnumRequest(token, date, date, lang, 10)).CalendarEnumResult)
             {

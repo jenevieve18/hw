@@ -65,9 +65,9 @@
 
 <div data-role="header" data-theme="b" data-position="fixed">
     
-    <a <%="href='MeasurementsList.aspx?datetime="+date.ToString("yyyy-MM-ddTHH:mm:ss")+"'" %> data-icon="arrow-l" ><%= R.Str("button.back") %></a>
+    <a <%="href='MeasurementsList.aspx?datetime="+date.ToString("yyyy-MM-ddTHH:mm:ss")+"'" %> data-icon="arrow-l" ><%= R.Str(lang,"button.back") %></a>
     <h1></h1>
-    <a id="saveBtn" onServerClick="saveBtnClick" runat="server" data-icon="check"><%= R.Str("button.save") %></a>
+    <a id="saveBtn" onServerClick="saveBtnClick" runat="server" data-icon="check"><%= R.Str(lang, "button.save")%></a>
 </div>
  <div data-role="content" id="measurementform">
     

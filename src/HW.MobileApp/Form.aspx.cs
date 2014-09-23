@@ -15,12 +15,13 @@ namespace HW.MobileApp
         public int questNo = 0;
         private string formKey = "";
         private string token = "";
+        protected int lang;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["token"] == null, "Login.aspx");
             token = Session["token"].ToString();
-            int lang = int.Parse(Session["languageId"].ToString());
+            lang = int.Parse(Session["languageId"].ToString());
             
             
             foreach(var n in service.FormEnum(new HW.MobileApp.HWService.FormEnumRequest(token, lang, 10)).FormEnumResult)

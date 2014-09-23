@@ -21,7 +21,7 @@
     <form id="form1" runat="server">
         <div data-role="page">
             <div data-role="header" data-theme="b" data-position="fixed">
-                <a href="News.aspx" data-role="button"><%= R.Str("button.back") %></a>
+                <a href="News.aspx" data-role="button"><%= R.Str(lang,"button.back") %></a>
                 <h1>&nbsp;</h1>
                 
             </div>
@@ -38,7 +38,7 @@
                             </ul>
                         </div>
                     <li class="minihead">
-                    <%= R.Str("news.categories.select") %>
+                    <%= R.Str(lang, "news.categories.select")%>
                     </li>
                     <li><a href="News.aspx">
                    <%= R.Str("news.all") %>
@@ -62,9 +62,9 @@
             <div data-role="footer" dataid="footernav" data-position="fixed">
                 <div data-role="navbar">
                     <ul>
-                        <li><a href="Dashboard.aspx" data-icon="health"><%= R.Str("home.myHealth") %></a></li>
-                        <li><a href="News.aspx" data-icon="news"><%= R.Str("home.news") %></a></li>
-                        <li><a href="More.aspx" data-icon="more"><%= R.Str("home.more") %></a></li>
+                        <li><a href="Dashboard.aspx" data-icon="health"><%= R.Str(lang, "home.myHealth")%></a></li>
+                        <li><a href="News.aspx" data-icon="news"><%= R.Str(lang, "home.news")%></a></li>
+                        <li><a href="More.aspx" data-icon="more"><%= R.Str(lang, "home.more")%></a></li>
                     </ul>
                 </div>
             </div>

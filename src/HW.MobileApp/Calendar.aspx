@@ -5,8 +5,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <div data-role="header" data-theme="b" data-position="fixed">
-        <a href="Diary.aspx" data-icon="arrow-l" rel="external"><%= R.Str("button.back") %></a>
-        <h1><%= R.Str("calendar.title") %></h1>
+        <a href="Diary.aspx" data-icon="arrow-l" rel="external"><%= R.Str(lang, "button.back")%></a>
+        <h1><%= R.Str(lang, "calendar.title")%></h1>
 
     </div>
     <div data-role="content" >
