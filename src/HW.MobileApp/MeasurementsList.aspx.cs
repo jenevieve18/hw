@@ -14,13 +14,14 @@ namespace HW.MobileApp
         protected HWService.ServiceSoap service = new HWService.ServiceSoapClient();
         protected HWService.MeasureCategory[] category;
         protected string datetime;
+        protected int lang;
         protected void Page_Load(object sender, EventArgs e)
         {
             string token="";
             HtmlHelper.RedirectIf(Session["token"] == null, "Login.aspx");
             token = Session["token"].ToString();
 
-            int lang = int.Parse(Session["languageId"].ToString());
+            lang = int.Parse(Session["languageId"].ToString());
 
             category = service.MeasureCategoryEnum(new HWService.MeasureCategoryEnumRequest(token, 0, lang, 10)).MeasureCategoryEnumResult;
             datetime = Request.QueryString["datetime"];

@@ -21,14 +21,14 @@ namespace HW.MobileApp
         protected TextBox[] measureTextBox;
         protected Label[] measureLabel;
         protected int componentcount;
-
+        protected int lang;
         
         protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["token"] == null, "Login.aspx");
             token = Session["token"].ToString();
 
-            int lang = int.Parse(Session["languageId"].ToString());
+            lang = int.Parse(Session["languageId"].ToString());
 
 
             if (Request.QueryString["datetime"] != null)

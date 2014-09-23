@@ -33,26 +33,26 @@
                 <div class="tile">
                     <a href="Form.aspx" rel="external">
                         <img src="img/dash_form.png" />
-                        <span><%= R.Str("dashboard.form") %></span>
+                        <span><%= R.Str(lang,"dashboard.form") %></span>
                     </a>
                 </div>
                 <div class="tile">
                     <a href="Statistics.aspx"  rel="external">
                         <img src="img/dash_stats.png" />
-                        <span><%= R.Str("statistics.title") %></span>
+                        <span><%= R.Str(lang,"statistics.title") %></span>
                     </a>
                 </div>
         
                 <div class="tile">
                     <a href="Diary.aspx" rel="external">
                         <img src="img/dash_cal.png" />
-                        <span><%= R.Str("dashboard.diary") %></span>
+                        <span><%= R.Str(lang, "dashboard.diary")%></span>
                     </a>
                 </div>
                 <div class="tile">
                     <a href="Exercises.aspx">
                         <img src="img/dash_exer.png" />
-                        <span><%= R.Str("dashboard.exercises") %></span>
+                        <span><%= R.Str(lang, "dashboard.exercises")%></span>
                     </a>
                 </div>
 
@@ -61,9 +61,9 @@
            <div data-role="footer" dataid="footernav" data-position="fixed">
                 <div data-role="navbar">
                     <ul>
-                        <li><a href="Dashboard.aspx" data-icon="health"><%= R.Str("home.myHealth") %></a></li>
-                        <li><a href="News.aspx" data-icon="news"><%= R.Str("home.news") %></a></li>
-                        <li><a href="More.aspx" data-icon="more"><%= R.Str("home.more") %></a></li>
+                        <li><a href="Dashboard.aspx" data-icon="health"><%= R.Str(lang, "home.myHealth")%></a></li>
+                        <li><a href="News.aspx" data-icon="news"><%= R.Str(lang, "home.news")%></a></li>
+                        <li><a href="More.aspx" data-icon="more"><%= R.Str(lang, "home.more")%></a></li>
                     </ul>
                 </div>
             </div>

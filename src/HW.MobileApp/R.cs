@@ -13,7 +13,7 @@ namespace HW.MobileApp
         static readonly string Swedish = "HW.MobileApp.Properties.SwedishResources";
         const int EnglishID = 2;
         const int SwedishID = 1;
-        const int DefaultID = SwedishID;
+        const int DefaultID = EnglishID;
 
         static string GetLangID(int langID)
         {

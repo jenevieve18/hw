@@ -9,19 +9,19 @@
 
 
 <div data-role="header" data-theme="b" data-position="fixed">
-    <a href="Statistics.aspx"><%= R.Str("button.cancel") %></a>
-    <h1><%= R.Str("view.title") %></h1>
-    <a runat="server" onserverclick="doneBtn_Click"><%= R.Str("button.done") %></a>
+    <a href="Statistics.aspx"><%= R.Str(language,"button.cancel") %></a>
+    <h1><%= R.Str(language, "view.title")%></h1>
+    <a runat="server" onserverclick="doneBtn_Click"><%= R.Str(language, "button.done")%></a>
 </div>
 <div data-role="content" id="view">
     <ul data-role="listview">
         <li class="minihead">
-            <%= R.Str("view.select")%>
+            <%= R.Str(language, "view.select")%>
         </li>
         <li data-icon="false" class="nopadding"">
             <div>
                 <div class="selection">
-                    <%= R.Str("view.timeframe")%>
+                    <%= R.Str(language, "view.timeframe")%>
                 </div>
                 <asp:DropDownList ID="ddlTimeframe" runat="server" data-role="none">
                 <asp:ListItem>Latest</asp:ListItem>
@@ -35,7 +35,7 @@
         <li data-icon="false" class="nopadding">
         <div>
             <div class="selection">
-                <%= R.Str("view.compare")%>
+                <%= R.Str(language, "view.compare")%>
             </div>
             <asp:DropDownList ID="ddlCompare" runat="server" data-role="none">
                 <asp:ListItem>None</asp:ListItem>

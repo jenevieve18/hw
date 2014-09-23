@@ -12,13 +12,13 @@ namespace HW.MobileApp
     public partial class Reminders : System.Web.UI.Page
     {
         protected HWService.ServiceSoap service = new HWService.ServiceSoapClient();
-        protected string token; 
-
+        protected string token;
+        protected int language; 
         protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["token"] == null, "Login.aspx");
             token = Session["token"].ToString();
-
+            language = service.UserGetInfo(Session["token"].ToString(), 20).languageID;
             if (!Page.IsPostBack)
             {
                 populateDropDownTime();

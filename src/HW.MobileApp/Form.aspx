@@ -66,10 +66,10 @@
             </script>   
             
             <div data-role="header" data-theme="b" data-position="fixed">
-                <a href="Dashboard.aspx" data-icon="arrow-l"><%= R.Str("home.myHealth") %></a>
-                <h1><%= R.Str("dashboard.form") %></h1>
+                <a href="Dashboard.aspx" data-icon="arrow-l"><%= R.Str(lang,"home.myHealth") %></a>
+                <h1><%= R.Str(lang, "dashboard.form")%></h1>
                 
-                <a onClick="getSliderValue()"><%= R.Str("button.save") %></a>
+                <a onClick="getSliderValue()"><%= R.Str(lang, "button.save")%></a>
             </div>
             <div data-role="content">
             <div class="fieldcontain">
@@ -129,9 +129,9 @@
             <div data-role="footer" dataid="footernav" data-position="fixed">
                 <div data-role="navbar">
                     <ul>
-                        <li><a href="Dashboard.aspx" data-icon="health"><%= R.Str("home.myHealth") %></a></li>
-                        <li><a href="News.aspx" data-icon="news"><%= R.Str("home.news") %></a></li>
-                        <li><a href="More.aspx" data-icon="more"><%= R.Str("home.more") %></a></li>
+                        <li><a href="Dashboard.aspx" data-icon="health"><%= R.Str(lang, "home.myHealth")%></a></li>
+                        <li><a href="News.aspx" data-icon="news"><%= R.Str(lang, "home.news")%></a></li>
+                        <li><a href="More.aspx" data-icon="more"><%= R.Str(lang, "home.more")%></a></li>
                     </ul>
                 </div>
             </div>

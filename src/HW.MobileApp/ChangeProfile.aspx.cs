@@ -23,7 +23,11 @@ namespace HW.MobileApp
             HtmlHelper.RedirectIf(Session["token"] == null, "Login.aspx");
 
             token = Session["token"].ToString();
-            language = int.Parse(Session["languageID"].ToString());
+            if (!IsPostBack)
+            {
+                language = int.Parse(Session["languageID"].ToString());
+                dropDownListLanguage.SelectedValue = language.ToString();
+            }
 
             if (IsPostBack)
             {
@@ -274,7 +278,8 @@ namespace HW.MobileApp
 
         protected void dropDownListLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            populateDDLs();
+          //  populateDDLs();
+            populateForm();
         }
 
         protected void rdbMangerialYes_CheckedChanged(object sender, EventArgs e)

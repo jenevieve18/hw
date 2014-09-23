@@ -14,14 +14,14 @@ namespace HW.MobileApp
         protected HWService.ExerciseArea[] exerciseArea;
         
         protected string token = "";
-        protected int lang = 2;
+        protected int lang;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["token"] == null, "Login.aspx");
             token = Session["token"].ToString();
 
-            int lang = int.Parse(Session["languageId"].ToString());
+            lang = int.Parse(Session["languageId"].ToString());
             exerciseArea = service.ExerciseAreaEnum(new HWService.ExerciseAreaEnumRequest(token,0,lang,10)).ExerciseAreaEnumResult;
             
         }

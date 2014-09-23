@@ -16,7 +16,11 @@ namespace HW.MobileApp
         protected void Page_Load(object sender, EventArgs e)
         {
             lang = 2;
-            if (Session["newslanguageid"] != null)
+            if (Session["token"] != null)
+            {
+                lang = service.UserGetInfo(Session["token"].ToString(), 20).languageID;
+            }
+            else if (Session["newslanguageid"] != null)
             {
                 lang = int.Parse(Session["newslanguageid"].ToString());
             }
