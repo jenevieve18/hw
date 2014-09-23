@@ -12,6 +12,7 @@ namespace HW.MobileApp
         HWService.ServiceSoap service = new HWService.ServiceSoapClient();
         protected HWService.News news;
         protected string back;
+        protected int lang;
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -22,9 +23,11 @@ namespace HW.MobileApp
             
             if (Request.QueryString["nid"] != null)
             {
-                int lang = 2;
-                if (Session["newslanguageid"] != null) lang = int.Parse(Session["newslanguageid"].ToString());
-
+                if (Session["token"] != null)
+                {
+                    lang = service.UserGetInfo(Session["token"].ToString(), 20).languageID;
+                }
+                else if (Session["newslanguageid"] != null) lang = int.Parse(Session["newslanguageid"].ToString());
                 news = service.NewsDetail(int.Parse(Request.QueryString["nid"]), lang );
             }
             else Response.Redirect("News.aspx");

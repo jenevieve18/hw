@@ -41,7 +41,7 @@
                     <%= R.Str(lang, "news.categories.select")%>
                     </li>
                     <li><a href="News.aspx">
-                   <%= R.Str("news.all") %>
+                   <%= R.Str(lang,"news.all") %>
                     </a></li>
                     </li>
 

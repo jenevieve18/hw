@@ -36,7 +36,7 @@
     <div data-role="content" >
     
         <ul data-role="listview">
-            <li class="minihead"><%= R.Str("diary.date") %></li>
+            <li class="minihead"><%= R.Str(lang,"diary.date") %></li>
             <li style="padding:0px 0px 0px 0px;border-width:0px;">
                 <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" >
                     <div style="display:none;"><asp:DropDownList runat="server"></asp:DropDownList></div>
@@ -62,12 +62,12 @@
                 </fieldset>
     
             </li>
-            <li class="minihead"><%= R.Str("diary.notes") %></li>
+            <li class="minihead"><%= R.Str(lang, "diary.notes")%></li>
             <li style="padding:0px 0px 0px 0px;">
                 <asp:TextBox id="textBoxNote" placeholder="Write here.." 
                         style="border-width:0px;margin:0px 0px 0px 0px;" TextMode="multiline" runat="server"></asp:TextBox>
             </li>
-            <li class="minihead"><%= R.Str("diary.mood") %></li>
+            <li class="minihead"><%= R.Str(lang, "diary.mood")%></li>
             <li style="padding:0px 0px 0px 0px;">
                 <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
                     <div style="display:none;"><asp:RadioButton text="x" runat="server"></asp:RadioButton></div>

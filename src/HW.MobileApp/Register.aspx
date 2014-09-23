@@ -37,14 +37,14 @@
 
 
 <div data-role="header" data-theme="b" data-position="fixed">
-    <a href="Login.aspx" rel="external"><%= R.Str("button.cancel") %></a>
-    <h1><%= R.Str("register.title") %></h1>
-    <a id="createBtn" onserverclick="createBtn_Click" runat="server"><%= R.Str("register.create") %></a>
+    <a href="Login.aspx" rel="external"><%= R.Str(language,"button.cancel") %></a>
+    <h1><%= R.Str(language, "register.title")%></h1>
+    <a id="createBtn" onserverclick="createBtn_Click" runat="server"><%= R.Str(language, "register.create")%></a>
 
 </div>
 <div data-role="content" style="padding:5px;">
     <div style="left:20px;top:42px;position:absolute;font-size:11px;font-style:italic;color:#909090  ;">
-        <p><%= R.Str("label.required") %></p>
+        <p><%= R.Str(language, "label.required")%></p>
     </div>
 
     <div class="header">
@@ -294,7 +294,7 @@
     <hr style="width:80%;"/>
 
     <div class="ui-grid-a" style="text-align:center;">
-    <asp:Label ID="lblTerms" runat="server"><a <%=policylink %>><%= R.Str("register.terms") %><span class='req'>*</span></a></asp:Label>
+    <asp:Label ID="lblTerms" runat="server"><a <%=policylink %>><%= R.Str(language, "register.terms")%><span class='req'>*</span></a></asp:Label>
     <asp:CheckBox ID="cbTerms" Text=" I accept" runat="server" data-mini="true"></asp:CheckBox >
     </div>
 
@@ -304,9 +304,9 @@
  <div data-role="footer" dataid="footernav" data-position="fixed">
                 <div data-role="navbar">
                     <ul>
-                        <li><a href="Dashboard.aspx" data-icon="health"><%= R.Str("home.myHealth") %></a></li>
-                        <li><a href="News.aspx" data-icon="news"><%= R.Str("home.news") %></a></li>
-                        <li><a href="More.aspx" data-icon="more"><%= R.Str("home.more") %></a></li>
+                        <li><a href="Dashboard.aspx" data-icon="health"><%= R.Str(language, "home.myHealth")%></a></li>
+                        <li><a href="News.aspx" data-icon="news"><%= R.Str(language, "home.news")%></a></li>
+                        <li><a href="More.aspx" data-icon="more"><%= R.Str(language, "home.more")%></a></li>
                     </ul>
                 </div>
             </div>

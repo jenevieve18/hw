@@ -6,30 +6,30 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <div data-role="header" data-theme="b" data-position="fixed">
-    <a href="More.aspx" ><%= R.Str("button.back") %></a>
-    <h1><%= R.Str("support.title") %></h1>
+    <a href="More.aspx" ><%= R.Str(language,"button.back") %></a>
+    <h1><%= R.Str(language, "support.title")%></h1>
 </div>
 <div data-role="content" id="support">
     
          <div class="div1" data-role="collapsible" data-content-theme="d" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-u"  data-inset="false" data-iconpos="right" >
-            <h1><%= R.Str("support.healthTrack")%></h1>
+            <h1><%= R.Str(language, "support.healthTrack")%></h1>
             <div data-role="content">
-            <%= R.Str("support.healthTrack.description")%>
+            <%= R.Str(language, "support.healthTrack.description")%>
             </div>
         </div>
         <div data-role="collapsible" data-content-theme="d" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-u" data-inset="false" data-iconpos="right" >
-            <h1><%= R.Str("support.changeEmail")%></h1>
+            <h1><%= R.Str(language, "support.changeEmail")%></h1>
             <div data-role="content">
-                 <%= R.Str("support.changeEmail.description")%>
+                 <%= R.Str(language, "support.changeEmail.description")%>
             </div>
         </div>
         <div data-role="collapsible" data-content-theme="d" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-u" data-inset="false" data-iconpos="right" >
-                    <h1><%= R.Str("support.calendar")%></h1>
-                    <div data-role="content"><%= R.Str("support.calendar.description")%></div>
+                    <h1><%= R.Str(language, "support.calendar")%></h1>
+                    <div data-role="content"><%= R.Str(language, "support.calendar.description")%></div>
         </div>
         <div data-role="collapsible" data-content-theme="d" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-u" data-inset="false" data-iconpos="right" >
-                    <h1><%= R.Str("support.faq")%></h1>
-                    <div data-role="content"><%= R.Str("support.faq.descriptioin")%>
+                    <h1><%= R.Str(language, "support.faq")%></h1>
+                    <div data-role="content"><%= R.Str(language, "support.faq.descriptioin")%>
                 </div>
         </div>
     

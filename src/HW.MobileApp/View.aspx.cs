@@ -34,14 +34,14 @@ namespace HW.MobileApp
         {
             base.OnPreRender(e);
 
-            ddlTimeframe.Items.Add(new ListItem(R.Str("options.timeframe.latest")));
-            ddlTimeframe.Items.Add(new ListItem(R.Str("options.timeframe.pastWeek")));
-            ddlTimeframe.Items.Add(new ListItem(R.Str("options.timeframe.pastMonth")));
-            ddlTimeframe.Items.Add(new ListItem(R.Str("options.timeframe.pastYear")));
-            ddlTimeframe.Items.Add(new ListItem(R.Str("options.timeframe.sinceFirstMeasure")));
+            ddlTimeframe.Items.Add(new ListItem(R.Str(language, "options.timeframe.latest")));
+            ddlTimeframe.Items.Add(new ListItem(R.Str(language, "options.timeframe.pastWeek")));
+            ddlTimeframe.Items.Add(new ListItem(R.Str(language, "options.timeframe.pastMonth")));
+            ddlTimeframe.Items.Add(new ListItem(R.Str(language, "options.timeframe.pastYear")));
+            ddlTimeframe.Items.Add(new ListItem(R.Str(language, "options.timeframe.sinceFirstMeasure")));
 
-            ddlCompare.Items.Add(new ListItem(R.Str("options.compare.none")));
-            ddlCompare.Items.Add(new ListItem(R.Str("options.compare.database")));
+            ddlCompare.Items.Add(new ListItem(R.Str(language, "options.compare.none")));
+            ddlCompare.Items.Add(new ListItem(R.Str(language, "options.compare.database")));
         }
 
         protected void doneBtn_Click(object sender, EventArgs e){

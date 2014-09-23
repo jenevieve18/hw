@@ -48,10 +48,10 @@ namespace HW.MobileApp
         protected override void OnPreRender(EventArgs e)
         {
             base.OnPreRender(e);
-            rdbDontKnow.Text = R.Str("diary.mood.dontknow");
-            rdbUnhappy.Text = R.Str("diary.mood.unhappy");
-            rdbNeutral.Text = R.Str("diary.mood.neutral");
-            rdbHappy.Text = R.Str("diary.mood.happy");
+            rdbDontKnow.Text = R.Str(lang, "diary.mood.dontknow");
+            rdbUnhappy.Text = R.Str(lang, "diary.mood.unhappy");
+            rdbNeutral.Text = R.Str(lang, "diary.mood.neutral");
+            rdbHappy.Text = R.Str(lang, "diary.mood.happy");
         }
 
         protected bool unsavedValues()

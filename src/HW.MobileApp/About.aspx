@@ -5,18 +5,18 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <div data-role="header" data-theme="b" data-position="fixed">
-        <a href="More.aspx"><%= R.Str("home.more") %></a>
-        <h1><%= R.Str("about.title") %></h1>
+        <a href="More.aspx"><%= R.Str(language,"home.more") %></a>
+        <h1><%= R.Str(language, "about.title")%></h1>
     </div>
 
     <div data-role="content" id="about">
         <div class="more">
             <img  src="http://clients.easyapp.se/healthwatch/images/hw_logo@2x.png" />
             <div>
-                <%= R.Str("about.text") %>
+                <%= R.Str(language, "about.text")%>
             </div>
                 
-            <h5><%= R.Str("about.copyright") %></h5>
+            <h5><%= R.Str(language, "about.copyright")%></h5>
         </div>
                 
     </div>

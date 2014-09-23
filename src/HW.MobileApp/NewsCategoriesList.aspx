@@ -7,7 +7,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div data-role="header" data-theme="b" data-position="fixed">
                 <h1><%=head %></h1>
-                <a href="NewsCategories.aspx" rel="external" data-role="button" class="ui-btn-right">Categories</a>
+                <a href="NewsCategories.aspx" rel="external" data-role="button" class="ui-btn-right"><%= R.Str(lang, "news.categories")%></a>
             </div>
             <div data-role="content">
                 <ul data-role="listview">
@@ -29,9 +29,9 @@
             <div data-role="footer" dataid="footernav" data-position="fixed">
                 <div data-role="navbar">
                     <ul>
-                        <li><a href="Dashboard.aspx" data-icon="health"><%= R.Str("home.myHealth") %></a></li>
-                        <li><a href="News.aspx" data-icon="news"><%= R.Str("home.news") %></a></li>
-                        <li><a href="More.aspx" data-icon="more"><%= R.Str("home.more") %></a></li>
+                        <li><a href="Dashboard.aspx" data-icon="health"><%= R.Str(lang,"home.myHealth") %></a></li>
+                        <li><a href="News.aspx" data-icon="news"><%= R.Str(lang, "home.news")%></a></li>
+                        <li><a href="More.aspx" data-icon="more"><%= R.Str(lang, "home.more")%></a></li>
                     </ul>
                 </div>
             </div>

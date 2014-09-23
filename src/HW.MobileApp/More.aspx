@@ -22,19 +22,19 @@
             </div>
             <div data-role="content" id="more">
                 <ul data-role="listview">
-	                <li><a href="About.aspx"><img class="ui-li-thumb" src="http://clients.easyapp.se/healthwatch//images/about_hw.png" /><%= R.Str("more.about") %></a></li>
-	                <li><a href="Support.aspx"><img class="ui-li-thumb" src="http://clients.easyapp.se/healthwatch//images/support.png" /><%= R.Str("support.title") %></a></li>
-	                <li><a href="ContactUs.aspx"><img class="ui-li-thumb" src="http://clients.easyapp.se/healthwatch//images/contact_us.png" /><%= R.Str("contact.title") %></a></li>
-	                <li><a href="mailto:support@healthwatch.se?Subject=Hello"><img class="ui-li-thumb" src="http://clients.easyapp.se/healthwatch//images/tell_a_friend.png" /><%= R.Str("more.tell") %></a></li>
-	                <li><a href="https://facebook.com/healthwatch.se"><img class="ui-li-thumb" src="http://clients.easyapp.se/healthwatch//images/fb_like.png" /><%= R.Str("more.like") %></a></li>
+	                <li><a href="About.aspx"><img class="ui-li-thumb" src="http://clients.easyapp.se/healthwatch//images/about_hw.png" /><%= R.Str(language,"more.about") %></a></li>
+	                <li><a href="Support.aspx"><img class="ui-li-thumb" src="http://clients.easyapp.se/healthwatch//images/support.png" /><%= R.Str(language, "support.title")%></a></li>
+	                <li><a href="ContactUs.aspx"><img class="ui-li-thumb" src="http://clients.easyapp.se/healthwatch//images/contact_us.png" /><%= R.Str(language, "contact.title")%></a></li>
+	                <li><a href="mailto:support@healthwatch.se?Subject=Hello"><img class="ui-li-thumb" src="http://clients.easyapp.se/healthwatch//images/tell_a_friend.png" /><%= R.Str(language, "more.tell")%></a></li>
+	                <li><a href="https://facebook.com/healthwatch.se"><img class="ui-li-thumb" src="http://clients.easyapp.se/healthwatch//images/fb_like.png" /><%= R.Str(language, "more.like")%></a></li>
                 </ul>
             </div>
             <div data-role="footer" dataid="footernav" data-position="fixed">
                 <div data-role="navbar">
                     <ul>
-                        <li><a href="Dashboard.aspx" data-icon="health"><%= R.Str("home.myHealth") %></a></li>
-                        <li><a href="News.aspx" data-icon="news"><%= R.Str("home.news") %></a></li>
-                        <li><a href="More.aspx" data-icon="more"><%= R.Str("home.more") %></a></li>
+                        <li><a href="Dashboard.aspx" data-icon="health"><%= R.Str(language, "home.myHealth")%></a></li>
+                        <li><a href="News.aspx" data-icon="news"><%= R.Str(language, "home.news")%></a></li>
+                        <li><a href="More.aspx" data-icon="more"><%= R.Str(language, "home.more")%></a></li>
                     </ul>
                 </div>
             </div>

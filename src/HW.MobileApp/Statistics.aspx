@@ -88,8 +88,8 @@
         </fieldset>
         </li>
         <li class="minihead">
-            <label style="margin-left:-12px;"><%= R.Str("statistics.result") %>: <%=timeframe %></label>
-            <label style="text-align:right;position:absolute;right:2%;"><%= R.Str("statistics.compare") %>: <%=compare %></label>
+            <label style="margin-left:-12px;"><%= R.Str(language, "statistics.result")%>: <%=timeframe %></label>
+            <label style="text-align:right;position:absolute;right:2%;"><%= R.Str(language, "statistics.compare")%>: <%=compare %></label>
         </li>
         <li>
             <div>
@@ -101,8 +101,8 @@
       else
       { %>
         <li class="minihead">
-            <label runat="server"><%= R.Str("statistics.result") %>: <%=formInstance.dateTime %></label>
-            <label style="text-align:right;position:absolute;right:2%;"><%= R.Str("statistics.compare") %>: </label>
+            <label runat="server"><%= R.Str(language, "statistics.result")%>: <%=formInstance.dateTime %></label>
+            <label style="text-align:right;position:absolute;right:2%;"><%= R.Str(language, "statistics.compare")%>: </label>
         </li>
         <li>
 

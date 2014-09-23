@@ -9,9 +9,15 @@ namespace HW.MobileApp
 {
     public partial class About : System.Web.UI.Page
     {
+        protected int language;
+        HWService.ServiceSoap service = new HWService.ServiceSoapClient();
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            language = 2;
+            if (Session["token"] != null)
+            {
+                language = service.UserGetInfo(Session["token"].ToString(), 20).languageID;
+            }
         }
     }
 }

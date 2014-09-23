@@ -8,13 +8,13 @@
             <div data-role="header" data-theme="b" data-position="fixed">
             <%if (Request.QueryString["ncid"] != null)
               { %>
-                <a <%=back %> ><%= R.Str("button.back") %></a>
+                <a <%=back %> ><%= R.Str(lang,"button.back") %></a>
             <%}
               else
               { %>
-                <a href="News.aspx" ><%= R.Str("button.back") %></a>
+                <a href="News.aspx" ><%= R.Str(lang, "button.back")%></a>
             <%} %>
-                <h1><%= R.Str("news.summary") %></h1>
+                <h1><%= R.Str(lang, "news.summary")%></h1>
                 
             </div>
         

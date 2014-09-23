@@ -99,21 +99,21 @@ namespace HW.MobileApp
                 string fdt = DateTime.Now.AddDays(1).ToString("yyMMdd");
                 string tdt = "";
                 string c = "1";
-                if (compare == "Database") c = "2";
+                if (compare == R.Str(language, "options.compare.database")) c = "2";
                
-                if(timeframe == "Past week")
+                if(timeframe == R.Str(language, "options.timeframe.pastWeek"))
                 {
                     tdt = DateTime.Now.AddDays(-7).ToString("yyMMdd");
                 }
-                else if(timeframe == "Past month")
+                else if (timeframe == R.Str(language, "options.timeframe.pastMonth"))
                 {
                     tdt = DateTime.Now.AddMonths(-1).ToString("yyMMdd");
                 }
-                else if(timeframe == "Past year")
+                else if (timeframe == R.Str(language, "options.timeframe.pastYear"))
                 {
                     tdt = DateTime.Now.AddYears(-1).ToString("yyMMdd");
                 }
-                else if(timeframe == "Since first measure")
+                else if (timeframe == R.Str(language, "options.timeframe.sinceFirstMeasure"))
                 {
                     foreach(var i in fft){
                        var s = service.UserGetFormFeedback(new HWService.UserGetFormFeedbackRequest(token, formKey, i.feedbackTemplateID, DateTime.Now.AddYears(-100), DateTime.Now.AddDays(1), language, 10)).UserGetFormFeedbackResult;
