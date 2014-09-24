@@ -40,11 +40,11 @@ namespace HW.MobileApp
         {
             base.OnPreRender(e);
             lblHeader.Text = R.Str(language, "user.account");
-            lblUsername.Text = R.Str(language, "user.username") + "<span class='req'></span>";
-            lblPassword.Text = R.Str(language, "user.password") + "<span class='req'></span>";
-            lblConfirmPassword.Text = R.Str(language, "user.confirmPassword") + "<span class='req'></span>";
+            lblUsername.Text = R.Str(language, "user.username") + "<span class='req'>*</span>";
+            lblPassword.Text = R.Str(language, "user.password") + "<span class='req'>*</span>";
+            lblConfirmPassword.Text = R.Str(language, "user.confirmPassword") + "<span class='req'>*</span>";
             lblEmail.Text = R.Str(language, "user.email") + "<span class='req'>*</span>";
-            lblAltEmail.Text = R.Str(language, "user.alternateEmail") + "<span class='req'></span>";
+            lblAltEmail.Text = R.Str(language, "user.alternateEmail") ;
             Label1.Text = R.Str(language, "user.info");
             lblTerms.Text = R.Str(language, "user.terms");
             cbTerms.Text = R.Str(language, "register.accept");

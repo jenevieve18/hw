@@ -8,16 +8,19 @@
 
 
 <div data-role="header" data-theme="b" data-position="fixed">
-    <a href="Dashboard.aspx" data-icon="arrow-l"><%= R.Str("home.myHealth") %></a>
-                <h1><%= R.Str("dashboard.reportIssue") %></h1>
+    <a href="Dashboard.aspx" data-icon="arrow-l"><%= R.Str(language,"home.myHealth") %></a>
+                <h1><%= R.Str(language,"dashboard.reportIssue") %></h1>
                 
-                <a onClick="" runat="server"><%= R.Str("button.save") %></a>
+                <a onserverclick="saveBtn_Click" runat="server"><%= R.Str(language, "button.save")%></a>
 </div>
 
 <div data-role="content" id="reportissue">
+    <div class="header">
+        <h3><asp:Label ID="errormsg" runat="server"></asp:Label></h3>
+    </div>
     <div class="ui-grid-a">
     <div class="ui-block-a">
-        <asp:Label ID="lblTitle" runat="server" AssociatedControlID="textBoxTitle"><%= R.Str("issue.title") %></asp:Label>
+        <asp:Label ID="lblTitle" runat="server" AssociatedControlID="textBoxTitle"><%= R.Str(language, "issue.title")%><span class='req'> *</span></asp:Label>
     </div>
     <div class="ui-block-b">
         <asp:TextBox data-mini="true" ID="textBoxTitle" runat="server"></asp:TextBox>
@@ -26,7 +29,7 @@
 
     <div class="ui-grid-a">
     <div class="ui-block-a">
-        <asp:Label ID="lblDescription" runat="server" AssociatedControlID="textBoxDescription"><%= R.Str("issue.description") %></asp:Label>
+        <asp:Label ID="lblDescription" runat="server" AssociatedControlID="textBoxDescription"><%= R.Str(language,"issue.description") %><span class='req'> *</span></asp:Label>
     </div>
     <div class="ui-block-b">
         <asp:TextBox data-mini="true" ID="textBoxDescription" placeholder="Write here.."  TextMode="MultiLine" runat="server"></asp:TextBox>
