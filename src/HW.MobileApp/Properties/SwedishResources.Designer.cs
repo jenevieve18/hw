@@ -61,7 +61,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Health Watch © 2014&lt;br /&gt;All Rights Reserved.
+        ///   Looks up a localized string similar to © HealthWatch 2014&lt;br /&gt;Copyright.
         /// </summary>
         internal static string about_copyright {
             get {
@@ -70,7 +70,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to HealthWatch provides tools for individuals and organisations to preserve and increase health and quality of life, as well as reduce stress-related problems..
+        ///   Looks up a localized string similar to HealthWatch erbjuder verktyg för individer och organisationer för att bevara och öka hälsa och livskvalitet samt motverka stressrelaterade problem..
         /// </summary>
         internal static string about_text {
             get {
@@ -79,7 +79,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Om Health Watch.
+        ///   Looks up a localized string similar to Om HealthWatch.
         /// </summary>
         internal static string about_title {
             get {
@@ -133,7 +133,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maila Oss.
+        ///   Looks up a localized string similar to Maila oss.
         /// </summary>
         internal static string button_emailUs {
             get {
@@ -142,7 +142,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Komma igång!.
+        ///   Looks up a localized string similar to Kom igång!.
         /// </summary>
         internal static string button_getStarted {
             get {
@@ -169,7 +169,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Utgivare.
+        ///   Looks up a localized string similar to Ansvarig utgivare.
         /// </summary>
         internal static string contact_publisher {
             get {
@@ -187,7 +187,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Journal.
+        ///   Looks up a localized string similar to Dagbok.
         /// </summary>
         internal static string dashboard_diary {
             get {
@@ -205,7 +205,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Form.
+        ///   Looks up a localized string similar to Enkät.
         /// </summary>
         internal static string dashboard_form {
             get {
@@ -232,7 +232,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date.
+        ///   Looks up a localized string similar to Datum.
         /// </summary>
         internal static string diary_date {
             get {
@@ -241,7 +241,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mood.
+        ///   Looks up a localized string similar to Humör.
         /// </summary>
         internal static string diary_mood {
             get {
@@ -250,7 +250,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Don&apos;t Know&lt;div&gt;&lt;img class=&apos;image&apos; src=&apos;http://clients.easyapp.se/healthwatch/images/dontKnow@2x.png&apos;&gt;&lt;/div&gt;.
+        ///   Looks up a localized string similar to Vet inte&lt;div&gt;&lt;img class=&apos;image&apos; src=&apos;http://clients.easyapp.se/healthwatch/images/dontKnow@2x.png&apos;&gt;&lt;/div&gt;.
         /// </summary>
         internal static string diary_mood_dontknow {
             get {
@@ -259,7 +259,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Happy&lt;div&gt;&lt;img class=&apos;image&apos; src=&apos;http://clients.easyapp.se/healthwatch/images/happy@2x.png&apos;&gt;&lt;/div&gt;.
+        ///   Looks up a localized string similar to Glad&lt;div&gt;&lt;img class=&apos;image&apos; src=&apos;http://clients.easyapp.se/healthwatch/images/happy@2x.png&apos;&gt;&lt;/div&gt;.
         /// </summary>
         internal static string diary_mood_happy {
             get {
@@ -277,7 +277,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unhappy&lt;div&gt;&lt;img class=&apos;image&apos; src=&apos;http://clients.easyapp.se/healthwatch/images/unhappy@2x.png&apos;&gt;&lt;/div&gt;.
+        ///   Looks up a localized string similar to Ledsen&lt;div&gt;&lt;img class=&apos;image&apos; src=&apos;http://clients.easyapp.se/healthwatch/images/unhappy@2x.png&apos;&gt;&lt;/div&gt;.
         /// </summary>
         internal static string diary_mood_unhappy {
             get {
@@ -286,7 +286,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Notes.
+        ///   Looks up a localized string similar to Anteckningar.
         /// </summary>
         internal static string diary_notes {
             get {
@@ -313,7 +313,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Random.
+        ///   Looks up a localized string similar to Slumpmässig.
         /// </summary>
         internal static string exercise_random {
             get {
@@ -367,7 +367,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tryck för att börja.
+        ///   Looks up a localized string similar to Klicka för att börja.
         /// </summary>
         internal static string home_tap {
             get {
@@ -394,7 +394,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fields with &lt;span style=&quot;color:Red;&quot;&gt;*&lt;/span&gt; are required.
+        ///   Looks up a localized string similar to Fält med &lt;span style=&quot;color:Red;&quot;&gt;*&lt;/span&gt; är obligatoriska.
         /// </summary>
         internal static string label_required {
             get {
@@ -403,7 +403,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thank you! The link to create a new password has been sent. Kindly check your email..
+        ///   Looks up a localized string similar to Tack så mycket! Länken för att skapa ett nytt lösenord har skickats. Var vänlig och sök av din e-post..
         /// </summary>
         internal static string link_message {
             get {
@@ -457,7 +457,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Om Health Watch.
+        ///   Looks up a localized string similar to Om HealthWatch.
         /// </summary>
         internal static string more_about {
             get {
@@ -466,7 +466,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Like us on Facebook.
+        ///   Looks up a localized string similar to Gilla oss på Facebook.
         /// </summary>
         internal static string more_like {
             get {
@@ -475,7 +475,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tell a Friend.
+        ///   Looks up a localized string similar to Berätta för en vän.
         /// </summary>
         internal static string more_tell {
             get {
@@ -511,7 +511,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Välj kategor.
+        ///   Looks up a localized string similar to Välj kategori.
         /// </summary>
         internal static string news_categories_select {
             get {
@@ -538,7 +538,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nyheter.
+        ///   Looks up a localized string similar to Alla nyheter.
         /// </summary>
         internal static string news_text {
             get {
@@ -547,7 +547,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose one....
+        ///   Looks up a localized string similar to Välj en….
         /// </summary>
         internal static string options_choose {
             get {
@@ -556,7 +556,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Database.
+        ///   Looks up a localized string similar to Databas.
         /// </summary>
         internal static string options_compare_database {
             get {
@@ -565,7 +565,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to None.
+        ///   Looks up a localized string similar to Ingen.
         /// </summary>
         internal static string options_compare_none {
             get {
@@ -574,7 +574,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Latest.
+        ///   Looks up a localized string similar to Senaste.
         /// </summary>
         internal static string options_timeframe_latest {
             get {
@@ -583,7 +583,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Past month.
+        ///   Looks up a localized string similar to Senaste månaden.
         /// </summary>
         internal static string options_timeframe_pastMonth {
             get {
@@ -592,7 +592,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Past week.
+        ///   Looks up a localized string similar to Senaste veckan.
         /// </summary>
         internal static string options_timeframe_pastWeek {
             get {
@@ -601,7 +601,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Past year.
+        ///   Looks up a localized string similar to Senaste året.
         /// </summary>
         internal static string options_timeframe_pastYear {
             get {
@@ -610,7 +610,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Since first measure.
+        ///   Looks up a localized string similar to Sedan första mätningen.
         /// </summary>
         internal static string options_timeframe_sinceFirstMeasure {
             get {
@@ -619,7 +619,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ändra Profil.
+        ///   Looks up a localized string similar to Ändra profil.
         /// </summary>
         internal static string profile_title {
             get {
@@ -628,7 +628,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I accept.
+        ///   Looks up a localized string similar to Jag accepterar.
         /// </summary>
         internal static string register_accept {
             get {
@@ -646,7 +646,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Terms &amp; Conditions of the Service.
+        ///   Looks up a localized string similar to Integritetspolicy &amp; användarvillkor.
         /// </summary>
         internal static string register_terms {
             get {
@@ -682,8 +682,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Språk, e-postadress och personliga 
-        ///information.
+        ///   Looks up a localized string similar to Språk, e-postadress och personlig information.
         /// </summary>
         internal static string settings_changeProfile_description {
             get {
@@ -728,7 +727,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Visar hemsidan.
+        ///   Looks up a localized string similar to Visa välkomstsidan.
         /// </summary>
         internal static string settings_security_welcome {
             get {
@@ -746,7 +745,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Compare with.
+        ///   Looks up a localized string similar to Jämför med.
         /// </summary>
         internal static string statistics_compare {
             get {
@@ -755,7 +754,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Result.
+        ///   Looks up a localized string similar to Resultat.
         /// </summary>
         internal static string statistics_result {
             get {
@@ -773,7 +772,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vad gör kalender?.
+        ///   Looks up a localized string similar to Vad kan dagboken användas till?.
         /// </summary>
         internal static string support_calendar {
             get {
@@ -782,7 +781,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The diary may be used to write down your thoughts and feelings and can have a powerful effect for reducing anxiety and stress. There is both a typing mode and a read mode in the diary. You can also add other activities and measurements, such as physical activity, blood pressure and BMI for example. You may also see which exercises you have done and how you have responded to your forms..
+        ///   Looks up a localized string similar to Dagboken kan användas för att skriva ner tankar och känslor vilket är ett dokumenterat effektivt sätt att reducera oro och stress. Det finns både ett läsläge och ett skrivläge i dagboken och du kan lägga till andra aktiviteter och mått såsom exempelvis fysisk aktivitet, blodtryck och BMI. Du kan också se vilka övningar du genomfört och dina enkätsvar vid olika dagar..
         /// </summary>
         internal static string support_calendar_description {
             get {
@@ -800,7 +799,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can change your email address by tapping the icon for ‘Settings’ which is placed on the top corner of ‘My Health’. Tap ‘Change Profile’ and fill in your new email address. Thereafter tap ‘Save’..
+        ///   Looks up a localized string similar to Du kan ändra din e-postadress genom att klicka på ikonen för &apos;Inställningar&apos; som ligger längst upp till höger under &apos;Min hälsa&apos;. Klicka på &apos;Ändra profil&apos; och fyll i din nya e-postadress. Klicka därefter på &apos;Spara&apos;..
         /// </summary>
         internal static string support_changeEmail_description {
             get {
@@ -818,7 +817,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to More frequently asked questions will be displayed here shortly. Thank you for your patience..
+        ///   Looks up a localized string similar to Inom kort kommer fler frågor och svar visas här. Tack för ditt tålamod..
         /// </summary>
         internal static string support_faq_descriptioin {
             get {
@@ -899,9 +898,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ange din e-postadress nedan så skickar vi 
-        ///dig en länk som kan användas för att 
-        ///skapa ett nytt lösenord.
+        ///   Looks up a localized string similar to Ange din e-postadress nedan så skickar vi dig en länk som kan användas för att skapa ett nytt lösenord..
         /// </summary>
         internal static string user_forgot_message {
             get {
@@ -919,7 +916,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Something is wrong.
+        ///   Looks up a localized string similar to Något har blivit fel.
         /// </summary>
         internal static string user_forgot_wrong {
             get {
@@ -956,7 +953,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Personliga Information.
+        ///   Looks up a localized string similar to Personlig information.
         /// </summary>
         internal static string user_info {
             get {
@@ -974,7 +971,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Användarnamn eller E-postadress.
+        ///   Looks up a localized string similar to Användarnamn eller e-postadress.
         /// </summary>
         internal static string user_name {
             get {
@@ -992,7 +989,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Användarvillkor.
+        ///   Looks up a localized string similar to Integritetspolicy &amp; användarvillkor.
         /// </summary>
         internal static string user_terms {
             get {
@@ -1010,7 +1007,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Jämför.
+        ///   Looks up a localized string similar to Jämför med.
         /// </summary>
         internal static string view_compare {
             get {
@@ -1046,7 +1043,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Journal.
+        ///   Looks up a localized string similar to Dagbok.
         /// </summary>
         internal static string welcome_diary {
             get {
@@ -1055,8 +1052,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Visa dagliga aktiviteter och skriva dina 
-        ///tankar och känslor.
+        ///   Looks up a localized string similar to Visa dagliga aktiviteter och skriv ner dina tankar och känslor..
         /// </summary>
         internal static string welcome_diary_description {
             get {
@@ -1074,8 +1070,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lär övningar som hjälper till att förbättra 
-        ///din hälsa.
+        ///   Looks up a localized string similar to Lär dig övningar som hjälper till att förbättra din hälsa..
         /// </summary>
         internal static string welcome_exercise_description {
             get {
@@ -1084,7 +1079,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Form.
+        ///   Looks up a localized string similar to Enkät.
         /// </summary>
         internal static string welcome_form {
             get {
@@ -1093,7 +1088,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kartlägg din hälsa genom att fylla i formuläret regelbundet..
+        ///   Looks up a localized string similar to Mät och följ din hälsa och stressnivå genom att fylla i enkäten regelbundet..
         /// </summary>
         internal static string welcome_form_description {
             get {
@@ -1102,7 +1097,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thank you for creating an account with us! Here are a few things that you need to know in order to get started on a healthier and happier life:.
+        ///   Looks up a localized string similar to Tack för att du skapat ett konto hos oss! Nedan följer några saker som du behöver veta för att börja eller fortsätta med ett hälsosammare och gladare liv..
         /// </summary>
         internal static string welcome_message {
             get {
@@ -1111,7 +1106,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Följ din utveckling över tid och de rekommenderade övningarna..
+        ///   Looks up a localized string similar to Följ din utveckling över tid och genomför de rekommenderade övningarna..
         /// </summary>
         internal static string welcome_statistics_description {
             get {
@@ -1120,7 +1115,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Välkommen till Health Watch!.
+        ///   Looks up a localized string similar to Välkommen till HealthWatch!.
         /// </summary>
         internal static string welcome_title {
             get {

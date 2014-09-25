@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="about.copyright" xml:space="preserve">
-    <value>Health Watch © 2014&lt;br /&gt;All Rights Reserved</value>
+    <value>© HealthWatch 2014&lt;br /&gt;Copyright</value>
   </data>
   <data name="about.text" xml:space="preserve">
-    <value>HealthWatch provides tools for individuals and organisations to preserve and increase health and quality of life, as well as reduce stress-related problems.</value>
+    <value>HealthWatch erbjuder verktyg för individer och organisationer för att bevara och öka hälsa och livskvalitet samt motverka stressrelaterade problem.</value>
   </data>
   <data name="about.title" xml:space="preserve">
-    <value>Om Health Watch</value>
+    <value>Om HealthWatch</value>
   </data>
   <data name="button.back" xml:space="preserve">
     <value>Tillbaka</value>
@@ -142,10 +142,10 @@
     <value>Klar</value>
   </data>
   <data name="button.emailUs" xml:space="preserve">
-    <value>Maila Oss</value>
+    <value>Maila oss</value>
   </data>
   <data name="button.getStarted" xml:space="preserve">
-    <value>Komma igång!</value>
+    <value>Kom igång!</value>
   </data>
   <data name="button.save" xml:space="preserve">
     <value>Spara</value>
@@ -154,19 +154,19 @@
     <value>Kalender</value>
   </data>
   <data name="contact.publisher" xml:space="preserve">
-    <value>Utgivare</value>
+    <value>Ansvarig utgivare</value>
   </data>
   <data name="contact.title" xml:space="preserve">
     <value>Kontakta oss</value>
   </data>
   <data name="dashboard.diary" xml:space="preserve">
-    <value>Journal</value>
+    <value>Dagbok</value>
   </data>
   <data name="dashboard.exercises" xml:space="preserve">
     <value>Övningar</value>
   </data>
   <data name="dashboard.form" xml:space="preserve">
-    <value>Form</value>
+    <value>Enkät</value>
   </data>
   <data name="dashboard.reportIssue" xml:space="preserve">
     <value>Anmäl problem</value>
@@ -175,25 +175,25 @@
     <value>Always show on start</value>
   </data>
   <data name="diary.date" xml:space="preserve">
-    <value>Date</value>
+    <value>Datum</value>
   </data>
   <data name="diary.mood" xml:space="preserve">
-    <value>Mood</value>
+    <value>Humör</value>
   </data>
   <data name="diary.mood.dontknow" xml:space="preserve">
-    <value>Don't Know&lt;div&gt;&lt;img class='image' src='http://clients.easyapp.se/healthwatch/images/dontKnow@2x.png'&gt;&lt;/div&gt;</value>
+    <value>Vet inte&lt;div&gt;&lt;img class='image' src='http://clients.easyapp.se/healthwatch/images/dontKnow@2x.png'&gt;&lt;/div&gt;</value>
   </data>
   <data name="diary.mood.happy" xml:space="preserve">
-    <value>Happy&lt;div&gt;&lt;img class='image' src='http://clients.easyapp.se/healthwatch/images/happy@2x.png'&gt;&lt;/div&gt;</value>
+    <value>Glad&lt;div&gt;&lt;img class='image' src='http://clients.easyapp.se/healthwatch/images/happy@2x.png'&gt;&lt;/div&gt;</value>
   </data>
   <data name="diary.mood.neutral" xml:space="preserve">
     <value>Neutral&lt;div&gt;&lt;img class='image' src='http://clients.easyapp.se/healthwatch/images/neutral@2x.png'&gt;&lt;/div&gt;</value>
   </data>
   <data name="diary.mood.unhappy" xml:space="preserve">
-    <value>Unhappy&lt;div&gt;&lt;img class='image' src='http://clients.easyapp.se/healthwatch/images/unhappy@2x.png'&gt;&lt;/div&gt;</value>
+    <value>Ledsen&lt;div&gt;&lt;img class='image' src='http://clients.easyapp.se/healthwatch/images/unhappy@2x.png'&gt;&lt;/div&gt;</value>
   </data>
   <data name="diary.notes" xml:space="preserve">
-    <value>Notes</value>
+    <value>Anteckningar</value>
   </data>
   <data name="exercise.alphabetical" xml:space="preserve">
     <value>Alfabetisk</value>
@@ -202,7 +202,7 @@
     <value>Populär</value>
   </data>
   <data name="exercise.random" xml:space="preserve">
-    <value>Random</value>
+    <value>Slumpmässig</value>
   </data>
   <data name="exercise.viewAll" xml:space="preserve">
     <value>Se alla övningar</value>
@@ -220,7 +220,7 @@
     <value>Nyheter</value>
   </data>
   <data name="home.tap" xml:space="preserve">
-    <value>Tryck för att börja</value>
+    <value>Klicka för att börja</value>
   </data>
   <data name="issue.description" xml:space="preserve">
     <value>Beskrivning</value>
@@ -229,10 +229,10 @@
     <value>Titel</value>
   </data>
   <data name="label.required" xml:space="preserve">
-    <value>Fields with &lt;span style="color:Red;"&gt;*&lt;/span&gt; are required</value>
+    <value>Fält med &lt;span style="color:Red;"&gt;*&lt;/span&gt; är obligatoriska</value>
   </data>
   <data name="link.message" xml:space="preserve">
-    <value>Thank you! The link to create a new password has been sent. Kindly check your email.</value>
+    <value>Tack så mycket! Länken för att skapa ett nytt lösenord har skickats. Var vänlig och sök av din e-post.</value>
   </data>
   <data name="link.sent" xml:space="preserve">
     <value>Länken skickas</value>
@@ -250,13 +250,13 @@
     <value>Visa/Lägga till aktiviteter och mätningar</value>
   </data>
   <data name="more.about" xml:space="preserve">
-    <value>Om Health Watch</value>
+    <value>Om HealthWatch</value>
   </data>
   <data name="more.like" xml:space="preserve">
-    <value>Like us on Facebook</value>
+    <value>Gilla oss på Facebook</value>
   </data>
   <data name="more.tell" xml:space="preserve">
-    <value>Tell a Friend</value>
+    <value>Berätta för en vän</value>
   </data>
   <data name="news.all" xml:space="preserve">
     <value>Visa nyheter</value>
@@ -268,7 +268,7 @@
     <value>Internationell</value>
   </data>
   <data name="news.categories.select" xml:space="preserve">
-    <value>Välj kategor</value>
+    <value>Välj kategori</value>
   </data>
   <data name="news.categories.swedish" xml:space="preserve">
     <value>Svenska</value>
@@ -277,43 +277,43 @@
     <value>Översikt</value>
   </data>
   <data name="news.text" xml:space="preserve">
-    <value>Nyheter</value>
+    <value>Alla nyheter</value>
   </data>
   <data name="options.choose" xml:space="preserve">
-    <value>Choose one...</value>
+    <value>Välj en…</value>
   </data>
   <data name="options.compare.database" xml:space="preserve">
-    <value>Database</value>
+    <value>Databas</value>
   </data>
   <data name="options.compare.none" xml:space="preserve">
-    <value>None</value>
+    <value>Ingen</value>
   </data>
   <data name="options.timeframe.latest" xml:space="preserve">
-    <value>Latest</value>
+    <value>Senaste</value>
   </data>
   <data name="options.timeframe.pastMonth" xml:space="preserve">
-    <value>Past month</value>
+    <value>Senaste månaden</value>
   </data>
   <data name="options.timeframe.pastWeek" xml:space="preserve">
-    <value>Past week</value>
+    <value>Senaste veckan</value>
   </data>
   <data name="options.timeframe.pastYear" xml:space="preserve">
-    <value>Past year</value>
+    <value>Senaste året</value>
   </data>
   <data name="options.timeframe.sinceFirstMeasure" xml:space="preserve">
-    <value>Since first measure</value>
+    <value>Sedan första mätningen</value>
   </data>
   <data name="profile.title" xml:space="preserve">
-    <value>Ändra Profil</value>
+    <value>Ändra profil</value>
   </data>
   <data name="register.accept" xml:space="preserve">
-    <value>I accept</value>
+    <value>Jag accepterar</value>
   </data>
   <data name="register.create" xml:space="preserve">
     <value>Skapa</value>
   </data>
   <data name="register.terms" xml:space="preserve">
-    <value>Terms &amp; Conditions of the Service</value>
+    <value>Integritetspolicy &amp; användarvillkor</value>
   </data>
   <data name="register.title" xml:space="preserve">
     <value>Registrera</value>
@@ -325,8 +325,7 @@
     <value>Ändra Profil</value>
   </data>
   <data name="settings.changeProfile.description" xml:space="preserve">
-    <value>Språk, e-postadress och personliga 
-information</value>
+    <value>Språk, e-postadress och personlig information</value>
   </data>
   <data name="settings.reminders" xml:space="preserve">
     <value>Påminnelser</value>
@@ -341,37 +340,37 @@ information</value>
     <value>Säkerhetsinställningar</value>
   </data>
   <data name="settings.security.welcome" xml:space="preserve">
-    <value>Visar hemsidan</value>
+    <value>Visa välkomstsidan</value>
   </data>
   <data name="settings.title" xml:space="preserve">
     <value>Inställningar</value>
   </data>
   <data name="statistics.compare" xml:space="preserve">
-    <value>Compare with</value>
+    <value>Jämför med</value>
   </data>
   <data name="statistics.result" xml:space="preserve">
-    <value>Result</value>
+    <value>Resultat</value>
   </data>
   <data name="statistics.title" xml:space="preserve">
     <value>Statistik</value>
   </data>
   <data name="support.calendar" xml:space="preserve">
-    <value>Vad gör kalender?</value>
+    <value>Vad kan dagboken användas till?</value>
   </data>
   <data name="support.calendar.description" xml:space="preserve">
-    <value>The diary may be used to write down your thoughts and feelings and can have a powerful effect for reducing anxiety and stress. There is both a typing mode and a read mode in the diary. You can also add other activities and measurements, such as physical activity, blood pressure and BMI for example. You may also see which exercises you have done and how you have responded to your forms.</value>
+    <value>Dagboken kan användas för att skriva ner tankar och känslor vilket är ett dokumenterat effektivt sätt att reducera oro och stress. Det finns både ett läsläge och ett skrivläge i dagboken och du kan lägga till andra aktiviteter och mått såsom exempelvis fysisk aktivitet, blodtryck och BMI. Du kan också se vilka övningar du genomfört och dina enkätsvar vid olika dagar.</value>
   </data>
   <data name="support.changeEmail" xml:space="preserve">
     <value>Hur ändrar jag min e-postadress?</value>
   </data>
   <data name="support.changeEmail.description" xml:space="preserve">
-    <value>You can change your email address by tapping the icon for ‘Settings’ which is placed on the top corner of ‘My Health’. Tap ‘Change Profile’ and fill in your new email address. Thereafter tap ‘Save’.</value>
+    <value>Du kan ändra din e-postadress genom att klicka på ikonen för 'Inställningar' som ligger längst upp till höger under 'Min hälsa'. Klicka på 'Ändra profil' och fyll i din nya e-postadress. Klicka därefter på 'Spara'.</value>
   </data>
   <data name="support.faq" xml:space="preserve">
     <value>Frågor &amp; Svar</value>
   </data>
   <data name="support.faq.descriptioin" xml:space="preserve">
-    <value>More frequently asked questions will be displayed here shortly. Thank you for your patience.</value>
+    <value>Inom kort kommer fler frågor och svar visas här. Tack för ditt tålamod.</value>
   </data>
   <data name="support.healthTrack" xml:space="preserve">
     <value>How do I track my health?</value>
@@ -398,15 +397,13 @@ information</value>
     <value>E-postadress</value>
   </data>
   <data name="user.forgot.message" xml:space="preserve">
-    <value>Ange din e-postadress nedan så skickar vi 
-dig en länk som kan användas för att 
-skapa ett nytt lösenord</value>
+    <value>Ange din e-postadress nedan så skickar vi dig en länk som kan användas för att skapa ett nytt lösenord.</value>
   </data>
   <data name="user.forgot.password" xml:space="preserve">
     <value>Glömt lösenord?</value>
   </data>
   <data name="user.forgot.wrong" xml:space="preserve">
-    <value>Something is wrong</value>
+    <value>Något har blivit fel</value>
   </data>
   <data name="user.forgot.wrongMessage" xml:space="preserve">
     <value>Det angivna e-postadress stämmer inte. 
@@ -419,25 +416,25 @@ Försök igen.</value>
     <value>Felaktiga inloggningsuppgifter</value>
   </data>
   <data name="user.info" xml:space="preserve">
-    <value>Personliga Information</value>
+    <value>Personlig information</value>
   </data>
   <data name="user.login" xml:space="preserve">
     <value>Logga in</value>
   </data>
   <data name="user.name" xml:space="preserve">
-    <value>Användarnamn eller E-postadress</value>
+    <value>Användarnamn eller e-postadress</value>
   </data>
   <data name="user.password" xml:space="preserve">
     <value>Lösenord</value>
   </data>
   <data name="user.terms" xml:space="preserve">
-    <value>Användarvillkor</value>
+    <value>Integritetspolicy &amp; användarvillkor</value>
   </data>
   <data name="user.username" xml:space="preserve">
     <value>Användarnamn</value>
   </data>
   <data name="view.compare" xml:space="preserve">
-    <value>Jämför</value>
+    <value>Jämför med</value>
   </data>
   <data name="view.select" xml:space="preserve">
     <value>Välj resultat att visa och jämföra</value>
@@ -449,32 +446,30 @@ Försök igen.</value>
     <value>Visa...</value>
   </data>
   <data name="welcome.diary" xml:space="preserve">
-    <value>Journal</value>
+    <value>Dagbok</value>
   </data>
   <data name="welcome.diary.description" xml:space="preserve">
-    <value>Visa dagliga aktiviteter och skriva dina 
-tankar och känslor</value>
+    <value>Visa dagliga aktiviteter och skriv ner dina tankar och känslor.</value>
   </data>
   <data name="welcome.exercise" xml:space="preserve">
     <value>Övningar</value>
   </data>
   <data name="welcome.exercise.description" xml:space="preserve">
-    <value>Lär övningar som hjälper till att förbättra 
-din hälsa</value>
+    <value>Lär dig övningar som hjälper till att förbättra din hälsa.</value>
   </data>
   <data name="welcome.form" xml:space="preserve">
-    <value>Form</value>
+    <value>Enkät</value>
   </data>
   <data name="welcome.form.description" xml:space="preserve">
-    <value>Kartlägg din hälsa genom att fylla i formuläret regelbundet.</value>
+    <value>Mät och följ din hälsa och stressnivå genom att fylla i enkäten regelbundet.</value>
   </data>
   <data name="welcome.message" xml:space="preserve">
-    <value>Thank you for creating an account with us! Here are a few things that you need to know in order to get started on a healthier and happier life:</value>
+    <value>Tack för att du skapat ett konto hos oss! Nedan följer några saker som du behöver veta för att börja eller fortsätta med ett hälsosammare och gladare liv.</value>
   </data>
   <data name="welcome.statistics.description" xml:space="preserve">
-    <value>Följ din utveckling över tid och de rekommenderade övningarna.</value>
+    <value>Följ din utveckling över tid och genomför de rekommenderade övningarna.</value>
   </data>
   <data name="welcome.title" xml:space="preserve">
-    <value>Välkommen till Health Watch!</value>
+    <value>Välkommen till HealthWatch!</value>
   </data>
 </root>

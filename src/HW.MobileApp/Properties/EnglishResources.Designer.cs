@@ -61,7 +61,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Health Watch © 2014&lt;br /&gt;All Rights Reserved.
+        ///   Looks up a localized string similar to © HealthWatch 2014&lt;br /&gt;All Rights Reserved.
         /// </summary>
         internal static string about_copyright {
             get {
@@ -772,7 +772,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to What does the Calendar Do?.
+        ///   Looks up a localized string similar to What can the diary be used for?.
         /// </summary>
         internal static string support_calendar {
             get {
@@ -781,7 +781,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The diary may be used to write down your thoughts and feelings and can have a powerful effect for reducing anxiety and stress. There is both a typing mode and a read mode in the diary. You can also add other activities and measurements, such as physical activity, blood pressure and BMI for example. You may also see which exercises you have done and how you have responded to your forms..
+        ///   Looks up a localized string similar to The diary can be used to write down your thoughts and feelings,which has been shown to efficently reduce anxiety and stress. There is both a typing mode and a read mode in the diary and you can also add other activities and measurements, such as physical activity, blood pressure and BMI for example. You can also see which exercises you have done and how you have responded to your forms at certain days..
         /// </summary>
         internal static string support_calendar_description {
             get {
@@ -1051,7 +1051,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to View daily activity and log your thoughts and feelings..
+        ///   Looks up a localized string similar to View daily activities and log your thoughts and feelings..
         /// </summary>
         internal static string welcome_diary_description {
             get {
@@ -1087,7 +1087,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start tracking your health by filling out the form on a regular basis..
+        ///   Looks up a localized string similar to Monitor your health and stress levels by filling out the form on a regular basis..
         /// </summary>
         internal static string welcome_form_description {
             get {
@@ -1096,7 +1096,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thank you for creating an account with us! Here are a few things that you need to know in order to get started on a healthier and happier life:.
+        ///   Looks up a localized string similar to Thank you for creating an account with us! Here are a few things that you need to know in order to get started on or continue with a healthier and happier life:.
         /// </summary>
         internal static string welcome_message {
             get {
@@ -1105,7 +1105,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check your overall progress and recommended activities..
+        ///   Looks up a localized string similar to Monitor your progress over time and do the recommended exercises..
         /// </summary>
         internal static string welcome_statistics_description {
             get {
@@ -1114,7 +1114,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome to Health Watch!.
+        ///   Looks up a localized string similar to Welcome to HealthWatch!.
         /// </summary>
         internal static string welcome_title {
             get {
