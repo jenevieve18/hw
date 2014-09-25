@@ -38,7 +38,7 @@
                         <img class="moodimg" <%=moodsrc %> />
             
                     <%} %>
-                    <span><%= R.Str("diary.notes") %></span>
+                    <span><%= R.Str(lang,"diary.notes") %></span>
                     <p><%=c.note%></p>
                 
                 </a>
