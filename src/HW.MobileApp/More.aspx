@@ -18,7 +18,7 @@
     <form id="form1" runat="server">
         <div data-role="page" id="main">
             <div data-role="header" data-theme="b" data-position="fixed">
-                <h1><%= R.Str("home.more") %></h1>
+                <h1><%= R.Str(language,"home.more") %></h1>
             </div>
             <div data-role="content" id="more">
                 <ul data-role="listview">
