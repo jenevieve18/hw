@@ -417,6 +417,9 @@
   <data name="user.info" xml:space="preserve">
     <value>Personal Information</value>
   </data>
+  <data name="user.language" xml:space="preserve">
+    <value>Language</value>
+  </data>
   <data name="user.login" xml:space="preserve">
     <value>Login</value>
   </data>

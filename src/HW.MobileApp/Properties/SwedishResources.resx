@@ -418,6 +418,9 @@ Försök igen.</value>
   <data name="user.info" xml:space="preserve">
     <value>Personlig information</value>
   </data>
+  <data name="user.language" xml:space="preserve">
+    <value>Språk</value>
+  </data>
   <data name="user.login" xml:space="preserve">
     <value>Logga in</value>
   </data>

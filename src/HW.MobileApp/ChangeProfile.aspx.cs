@@ -56,14 +56,15 @@ namespace HW.MobileApp
         protected override void OnPreRender(EventArgs e)
         {
             base.OnPreRender(e);
-            lblHeader.Text = R.Str("user.account");
-            lblUsername.Text = R.Str("user.username") + "<span class='req'></span>";
-            lblPassword.Text = R.Str("user.password") + "<span class='req'></span>";
-            lblConfirmPassword.Text = R.Str("user.confirmPassword") + "<span class='req'></span>";
-            lblEmail.Text = R.Str("user.email") + "<span class='req'>*</span>";
-            lblAltEmail.Text = R.Str("user.password") + "<span class='req'></span>";
-            Label1.Text = R.Str("user.info");
-            lblTerms.Text = R.Str("user.terms");
+            lblHeader.Text = R.Str(language, "user.account");
+            lblLanguage.Text = R.Str(language, "user.language");
+            lblUsername.Text = R.Str(language, "user.username") + "<span class='req'></span>";
+            lblPassword.Text = R.Str(language, "user.password") + "<span class='req'></span>";
+            lblConfirmPassword.Text = R.Str(language, "user.confirmPassword") + "<span class='req'></span>";
+            lblEmail.Text = R.Str(language, "user.email") + "<span class='req'>*</span>";
+            lblAltEmail.Text = R.Str(language, "user.password") + "<span class='req'></span>";
+            Label1.Text = R.Str(language, "user.info");
+            lblTerms.Text = R.Str(language, "user.terms");
         }
 
         public HWService.Question getProfileQuestion(int id)

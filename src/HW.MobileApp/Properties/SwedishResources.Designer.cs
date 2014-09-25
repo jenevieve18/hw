@@ -962,6 +962,15 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Språk.
+        /// </summary>
+        internal static string user_language {
+            get {
+                return ResourceManager.GetString("user.language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Logga in.
         /// </summary>
         internal static string user_login {
