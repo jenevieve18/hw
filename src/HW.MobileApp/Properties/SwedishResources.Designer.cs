@@ -709,6 +709,15 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Options for automatic login.
+        /// </summary>
+        internal static string settings_security_description {
+            get {
+                return ResourceManager.GetString("settings.security.description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Håll mig inloggad.
         /// </summary>
         internal static string settings_security_login {

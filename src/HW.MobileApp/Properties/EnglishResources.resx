@@ -333,6 +333,9 @@
   <data name="settings.reminders.description" xml:space="preserve">
     <value>Frequency</value>
   </data>
+  <data name="settings.security.description" xml:space="preserve">
+    <value>Options for automatic login</value>
+  </data>
   <data name="settings.security.login" xml:space="preserve">
     <value>Stay logged in</value>
   </data>

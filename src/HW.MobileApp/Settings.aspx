@@ -39,7 +39,7 @@
 	                <li>
                         <a href="SecuritySettings.aspx"  rel="external">
                             <h1><%= R.Str(language, "settings.security.title")%></h1>
-                            <p>Options for automatic login</p>
+                            <p><%= R.Str(language, "settings.security.description") %></p>
                         </a>
                     </li>
                 </ul>
