@@ -334,7 +334,7 @@
     <value>Antal</value>
   </data>
   <data name="settings.security.description" xml:space="preserve">
-    <value>Options for automatic login</value>
+    <value>Alternativ för automatisk inloggning</value>
   </data>
   <data name="settings.security.login" xml:space="preserve">
     <value>Håll mig inloggad</value>
@@ -379,7 +379,7 @@
     <value>How do I track my health?</value>
   </data>
   <data name="support.healthTrack.description" xml:space="preserve">
-    <value>Track your health development over time by responding to the 11 questions in the Form. Once you save, you get immediate individual feedback and an action plan. When clicking the exercises in the action plan you will be directed to Exercises. You may also view your development over time by clicking ‘View’. You can choose to view one question at a time or several in the same graph.</value>
+    <value>Följ din hälsoutveckling genom att besvara de 11 frågorna i enkäten. Så fort du sparat får du omedelbar återkoppling och förslag på handlingsplan. När du klickar på övningarna i handlingsplanen kopplas du till avsnittet Övningar. Du kan också följa din utveckling över tid genom att klicka på 'Visa'. Du kan välja om du vill se resultatet för en fråga i taget eller fler frågor i samma graf.</value>
   </data>
   <data name="support.title" xml:space="preserve">
     <value>Support</value>

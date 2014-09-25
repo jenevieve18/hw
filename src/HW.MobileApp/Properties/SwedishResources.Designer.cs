@@ -709,7 +709,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Options for automatic login.
+        ///   Looks up a localized string similar to Alternativ för automatisk inloggning.
         /// </summary>
         internal static string settings_security_description {
             get {
@@ -844,7 +844,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Track your health development over time by responding to the 11 questions in the Form. Once you save, you get immediate individual feedback and an action plan. When clicking the exercises in the action plan you will be directed to Exercises. You may also view your development over time by clicking ‘View’. You can choose to view one question at a time or several in the same graph..
+        ///   Looks up a localized string similar to Följ din hälsoutveckling genom att besvara de 11 frågorna i enkäten. Så fort du sparat får du omedelbar återkoppling och förslag på handlingsplan. När du klickar på övningarna i handlingsplanen kopplas du till avsnittet Övningar. Du kan också följa din utveckling över tid genom att klicka på &apos;Visa&apos;. Du kan välja om du vill se resultatet för en fråga i taget eller fler frågor i samma graf..
         /// </summary>
         internal static string support_healthTrack_description {
             get {

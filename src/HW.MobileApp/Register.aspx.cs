@@ -40,6 +40,7 @@ namespace HW.MobileApp
         {
             base.OnPreRender(e);
             lblHeader.Text = R.Str(language, "user.account");
+            lblLanguage.Text = R.Str(language, "user.language");
             lblUsername.Text = R.Str(language, "user.username") + "<span class='req'>*</span>";
             lblPassword.Text = R.Str(language, "user.password") + "<span class='req'>*</span>";
             lblConfirmPassword.Text = R.Str(language, "user.confirmPassword") + "<span class='req'>*</span>";
