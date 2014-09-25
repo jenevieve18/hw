@@ -8,37 +8,37 @@
     
 </style>
 <div data-role="header" data-theme="b" data-position="fixed">
-    <h1><%= R.Str("welcome.title") %></h1>
+    <h1><%= R.Str(language, "welcome.title")%></h1>
     
 </div>
 <div data-role="content" id="welcomepage">
     <div class="welcome">
-        <%= R.Str("welcome.message")%>
+        <%= R.Str(language,"welcome.message")%>
     </div>
     <div class="list">
         <img src="img/dash_form.png" />
-        <h5><%= R.Str("welcome.form")%></h5>
-        <span><%= R.Str("welcome.form.description")%></span>
+        <h5><%= R.Str(language, "welcome.form")%></h5>
+        <span><%= R.Str(language, "welcome.form.description")%></span>
         
     </div>
     <div class="list">
         <img src="img/dash_stats.png" />
-        <h5><%= R.Str("statistics.title")%></h5>
-        <span><%= R.Str("welcome.statistics.description")%></span>
+        <h5><%= R.Str(language, "statistics.title")%></h5>
+        <span><%= R.Str(language, "welcome.statistics.description")%></span>
     </div>
     <div class="list">
         <img src="img/dash_cal.png" />
-        <h5><%= R.Str("welcome.diary")%></h5>
-        <span><%= R.Str("welcome.diary.description")%></span>
+        <h5><%= R.Str(language, "welcome.diary")%></h5>
+        <span><%= R.Str(language, "welcome.diary.description")%></span>
     </div>
     <div class="list">
         <img src="img/dash_exer.png" />
-        <h5><%= R.Str("welcome.exercise")%></h5>
-        <span><%= R.Str("welcome.exercise.description")%></span>
+        <h5><%= R.Str(language, "welcome.exercise")%></h5>
+        <span><%= R.Str(language, "welcome.exercise.description")%></span>
     </div>
     <br />
     <fieldset data-role="controlgroup">
-    <a href="Dashboard.aspx" rel="external" data-role="button"><%= R.Str("button.getStarted") %></a>
+    <a href="Dashboard.aspx" rel="external" data-role="button"><%= R.Str(language, "button.getStarted")%></a>
     </fieldset>
 </div>
 </asp:Content>

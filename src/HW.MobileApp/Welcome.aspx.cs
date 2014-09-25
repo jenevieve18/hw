@@ -10,10 +10,14 @@ namespace HW.MobileApp
 {
     public partial class Welcome : System.Web.UI.Page
     {
+        protected int language;
+        protected HWService.ServiceSoap service = new HWService.ServiceSoapClient();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["token"] == null, "Default.aspx");
             string token = Session["token"].ToString();
+            language = service.UserGetInfo(Session["token"].ToString(), 20).languageID;
             HttpCookie cToken = new HttpCookie("token");
             cToken.Value = token;
             cToken.Expires = DateTime.Now.AddMonths(5);
