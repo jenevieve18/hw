@@ -754,11 +754,47 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Handlingsplan.
+        /// </summary>
+        internal static string statistics_action {
+            get {
+                return ResourceManager.GetString("statistics.action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Jämför med.
         /// </summary>
         internal static string statistics_compare {
             get {
                 return ResourceManager.GetString("statistics.compare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hälsosam nivå.
+        /// </summary>
+        internal static string statistics_healthy {
+            get {
+                return ResourceManager.GetString("statistics.healthy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Förbättringsbehov.
+        /// </summary>
+        internal static string statistics_improvement {
+            get {
+                return ResourceManager.GetString("statistics.improvement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tolkning.
+        /// </summary>
+        internal static string statistics_interpretation {
+            get {
+                return ResourceManager.GetString("statistics.interpretation", resourceCulture);
             }
         }
         
@@ -777,6 +813,15 @@ namespace HW.MobileApp.Properties {
         internal static string statistics_title {
             get {
                 return ResourceManager.GetString("statistics.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ohälsosam nivå.
+        /// </summary>
+        internal static string statistics_unhealthy {
+            get {
+                return ResourceManager.GetString("statistics.unhealthy", resourceCulture);
             }
         }
         

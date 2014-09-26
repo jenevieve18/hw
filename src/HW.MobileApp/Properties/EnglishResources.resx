@@ -348,14 +348,29 @@
   <data name="settings.title" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="statistics.action" xml:space="preserve">
+    <value>Action Plan</value>
+  </data>
   <data name="statistics.compare" xml:space="preserve">
     <value>Compare with</value>
+  </data>
+  <data name="statistics.healthy" xml:space="preserve">
+    <value>Healthy level</value>
+  </data>
+  <data name="statistics.improvement" xml:space="preserve">
+    <value>Improvement needed</value>
+  </data>
+  <data name="statistics.interpretation" xml:space="preserve">
+    <value>Interpretation</value>
   </data>
   <data name="statistics.result" xml:space="preserve">
     <value>Result</value>
   </data>
   <data name="statistics.title" xml:space="preserve">
     <value>Statistics</value>
+  </data>
+  <data name="statistics.unhealthy" xml:space="preserve">
+    <value>Unhealthy level</value>
   </data>
   <data name="support.calendar" xml:space="preserve">
     <value>What can the diary be used for?</value>

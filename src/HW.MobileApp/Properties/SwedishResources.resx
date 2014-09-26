@@ -348,14 +348,29 @@
   <data name="settings.title" xml:space="preserve">
     <value>Inställningar</value>
   </data>
+  <data name="statistics.action" xml:space="preserve">
+    <value>Handlingsplan</value>
+  </data>
   <data name="statistics.compare" xml:space="preserve">
     <value>Jämför med</value>
+  </data>
+  <data name="statistics.healthy" xml:space="preserve">
+    <value>Hälsosam nivå</value>
+  </data>
+  <data name="statistics.improvement" xml:space="preserve">
+    <value>Förbättringsbehov</value>
+  </data>
+  <data name="statistics.interpretation" xml:space="preserve">
+    <value>Tolkning</value>
   </data>
   <data name="statistics.result" xml:space="preserve">
     <value>Resultat</value>
   </data>
   <data name="statistics.title" xml:space="preserve">
     <value>Statistik</value>
+  </data>
+  <data name="statistics.unhealthy" xml:space="preserve">
+    <value>Ohälsosam nivå</value>
   </data>
   <data name="support.calendar" xml:space="preserve">
     <value>Vad kan dagboken användas till?</value>

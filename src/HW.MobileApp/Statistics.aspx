@@ -110,17 +110,17 @@
                                 <div class="ui-block-a statlegend" >
                                 <div style="float:left;margin-right:5px;">
                                 <img class="statimg"
-                                src="http://clients.easyapp.se/healthwatch//images/green.png"></div><div >Healthy level</div> </div>
+                                src="http://clients.easyapp.se/healthwatch//images/green.png"></div><div ><%= R.Str(language, "statistics.healthy") %></div> </div>
                                 
                                 <div class="ui-block-b statlegend" >
                                 <div style="float:left;margin-right:5px;">
                                 <img class="statimg"
-                                src="http://clients.easyapp.se/healthwatch//images/orange.png"></div> <div>Improvement needed</div></div>
+                                src="http://clients.easyapp.se/healthwatch//images/orange.png"></div> <div><%= R.Str(language, "statistics.improvement") %></div></div>
                                 
                                 <div class="ui-block-c statlegend" >
                                 <div style="float:left;margin-right:5px;">
                                 <img class="statimg"
-                                src="http://clients.easyapp.se/healthwatch//images/pink.png"></div><div>Unhealthy level</div></div>
+                                src="http://clients.easyapp.se/healthwatch//images/pink.png"></div><div><%= R.Str(language, "statistics.unhealthy") %></div></div>
             </div>
         </li>
         
@@ -174,7 +174,7 @@
                         <div class="holder upper orange" <%=orangeStat%>></div>
                         <div class="holder upper green" <%=greenStat %>></div>
                         </div>
-                        <h3 style="color:#1987D1">Interpretation</h3>
+                        <h3 style="color:#1987D1"><%= R.Str(language, "statistics.interpretation")%></h3>
 
                         <span style="font-size:small;"><%=f.analysis%></span>
                         <%
@@ -186,7 +186,7 @@
                         <h3 style="color:#1987D1"><%=rating%></h3>
                         <span style="font-size:small;"><%= f.feedback%></span>
 
-                        <h3 style="color:#1987D1">Action Plan</h3>
+                        <h3 style="color:#1987D1"><%= R.Str(language, "statistics.action")%></h3>
                         <span style="font-size:small;"><%=replaceExerciseTags(f.actionPlan)%></span>
                         
                     </div>
