@@ -16,20 +16,26 @@ namespace HW.MobileApp
         protected void Page_Load(object sender, EventArgs e)
         {
             lang = 2;
-            if (Session["token"] != null)
+            if (Session["token"] != null&&!IsPostBack)
             {
                 lang = service.UserGetInfo(Session["token"].ToString(), 20).languageID;
             }
-            else if (Session["newslanguageid"] != null)
+            if (Session["newslanguageid"] != null)
             {
                 lang = int.Parse(Session["newslanguageid"].ToString());
             }
             categories = service.NewsCategories(new HWService.NewsCategoriesRequest(1, lang, true)).NewsCategoriesResult;
-            
+
             if (lang == 1)
+            {
                 btnSwe.CssClass = "ui-btn-active";
+                btnInt.CssClass = "";
+            }
             else if (lang == 2)
+            {
                 btnInt.CssClass = "ui-btn-active";
+                btnSwe.CssClass = "";
+            }
             
         }
 

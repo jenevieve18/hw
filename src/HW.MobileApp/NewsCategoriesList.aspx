@@ -11,19 +11,33 @@
             </div>
             <div data-role="content">
                 <ul data-role="listview">
-                    <% foreach (var n in news) { %>
+                       
+                    <% if (news.Count() > 0)
+                       {
+
+
+                           foreach (var n in news)
+                           { %>
                         <li>
                             
-                            <%var newslink = "href='NewsSummary.aspx?nid=" + n.newsID + "&ncid="+categ+"'"; %>
+                            <%var newslink = "href='NewsSummary.aspx?nid=" + n.newsID + "&ncid=" + categ + "'"; %>
                             <a <%=newslink %>>
                                 
                                 <!--<h1><%= n.teaser %></h1>-->
-                                <h1><%= n.headline %></h1>
-                                <p><%= n.newsCategory %></p>
-                                <p><%= n.DT.ToString("m") %></p>
+                                <h1><%= n.headline%></h1>
+                                <p><%= n.newsCategory%></p>
+                                <p><%= n.DT.ToString("m")%></p>
                             </a>
                         </li>
-                    <% } %>
+                    <% }
+                       }
+                       else { 
+                       %>
+                       <li>
+                            <h1>Category is empty.</h1>
+                       </li>
+                       <%
+                       } %>
                 </ul>
             </div>
             <div data-role="footer" dataid="footernav" data-position="fixed">
