@@ -180,8 +180,12 @@
                         <%
         var rating = "";
         if (f.rating.ToString() == "Warning")
-            rating = "Improvement Needed";
-        else rating = f.rating.ToString() + " Level";
+            rating = R.Str(language, "statistics.improvement");
+        else if (f.rating.ToString() == "Healthy")
+            rating = R.Str(language, "statistics.healthy");
+        else if (f.rating.ToString() == "Unhealthy")
+            rating = R.Str(language, "statistics.unhealthy");                
+        
                         %>
                         <h3 style="color:#1987D1"><%=rating%></h3>
                         <span style="font-size:small;"><%= f.feedback%></span>
