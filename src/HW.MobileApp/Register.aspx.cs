@@ -293,7 +293,7 @@ namespace HW.MobileApp
             }
             if (!cbTerms.Checked)
             {
-                labelMessage.Text = labelMessage.Text + ((labelMessage.Text == "") ? "" : "<br>") + "Terms & Conditions of the Service<span class='req'>*</span>";
+                labelMessage.Text = labelMessage.Text + ((labelMessage.Text == "") ? "" : "<br>") + R.Str(language, "user.terms") + "<span class='req'>*</span>";
                 flag6 = false;
             }
 
