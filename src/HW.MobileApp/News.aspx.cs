@@ -19,7 +19,7 @@ namespace HW.MobileApp
             {
                 lang = service.UserGetInfo(Session["token"].ToString(), 20).languageID;
             }
-            else if (Session["newslanguageid"] != null)
+            if (Session["newslanguageid"] != null)
             {
                 lang = int.Parse(Session["newslanguageid"].ToString());
             }

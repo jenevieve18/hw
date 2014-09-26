@@ -27,7 +27,7 @@ namespace HW.MobileApp
                 {
                     lang = service.UserGetInfo(Session["token"].ToString(), 20).languageID;
                 }
-                else if (Session["newslanguageid"] != null) lang = int.Parse(Session["newslanguageid"].ToString());
+                if (Session["newslanguageid"] != null) lang = int.Parse(Session["newslanguageid"].ToString());
                 news = service.NewsDetail(int.Parse(Request.QueryString["nid"]), lang );
             }
             else Response.Redirect("News.aspx");
