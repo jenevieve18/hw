@@ -312,7 +312,7 @@
         <hr style="width:80%;"/>
 
         <div class="ui-grid-a" style="text-align:center;">
-            <asp:Label ID="lblTerms" runat="server"><a <%=policylink %>>Terms & Conditions of the Service<span class='req'>*</span></a></asp:Label>
+            <asp:Label ID="lblTerms" runat="server"><a <%=policylink %>><%= R.Str(language, "user.terms") %></a></asp:Label>
             <asp:CheckBox ID="cbTerms" Text=" I accept" runat="server" data-mini="true"></asp:CheckBox >
         </div>
 

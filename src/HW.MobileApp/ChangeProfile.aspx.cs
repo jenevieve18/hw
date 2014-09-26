@@ -64,7 +64,8 @@ namespace HW.MobileApp
             lblEmail.Text = R.Str(language, "user.email") + "<span class='req'>*</span>";
             lblAltEmail.Text = R.Str(language, "user.password") + "<span class='req'></span>";
             Label1.Text = R.Str(language, "user.info");
-            lblTerms.Text = R.Str(language, "user.terms");
+            //lblTerms.Text = R.Str(language, "user.terms");
+            cbTerms.Text = R.Str(language, "register.accept");
         }
 
         public HWService.Question getProfileQuestion(int id)
