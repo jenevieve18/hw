@@ -36,9 +36,13 @@ namespace HW.MobileApp
             exercises = service.ExerciseEnum(new HWService.ExerciseEnumRequest(token, areaid, 0, lang, 10)).ExerciseEnumResult;
 
             if (areaid == 0) areaname = R.Str(lang,"dashboard.exercises");
-            else
-            areaname = exerciseArea[areaid - 1].exerciseArea;
-
+            else{
+                foreach(var x in exerciseArea){
+                    if (x.exerciseAreaID == areaid)
+                        areaname = x.exerciseArea;
+                }
+            }
+            
             if (sort == 1)
             {
                 exercises = exercises.OrderByDescending(item => int.Parse(item.popularity.ToString())).ToArray<HWService.ExerciseInfo>();
