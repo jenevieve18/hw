@@ -53,19 +53,6 @@ namespace HW.MobileApp
             rdbNeutral.Text = R.Str(lang, "diary.mood.neutral");
             rdbHappy.Text = R.Str(lang, "diary.mood.happy");
             textBoxNote.Attributes["placeholder"] = R.Str(lang, "diary.notes.default");
-
-            /*dropDownListDateMonth.Items.Add(new ListItem(R.Str(lang, "months.1"), "01"));
-            dropDownListDateMonth.Items.Add(new ListItem(R.Str(lang, "months.2"), "02"));
-            dropDownListDateMonth.Items.Add(new ListItem(R.Str(lang, "months.3"), "03"));
-            dropDownListDateMonth.Items.Add(new ListItem(R.Str(lang, "months.4"), "04"));
-            dropDownListDateMonth.Items.Add(new ListItem(R.Str(lang, "months.5"), "05"));
-            dropDownListDateMonth.Items.Add(new ListItem(R.Str(lang, "months.6"), "06"));
-            dropDownListDateMonth.Items.Add(new ListItem(R.Str(lang, "months.7"), "07"));
-            dropDownListDateMonth.Items.Add(new ListItem(R.Str(lang, "months.8"), "08"));
-            dropDownListDateMonth.Items.Add(new ListItem(R.Str(lang, "months.9"), "09"));
-            dropDownListDateMonth.Items.Add(new ListItem(R.Str(lang, "months.10"), "10"));
-            dropDownListDateMonth.Items.Add(new ListItem(R.Str(lang, "months.11"), "11"));
-            dropDownListDateMonth.Items.Add(new ListItem(R.Str(lang, "months.12"), "12"));*/
         }
 
         protected bool unsavedValues()
@@ -109,6 +96,19 @@ namespace HW.MobileApp
 
         protected void ddlDate()
         {
+            dropDownListDateMonth.Items.Add(new ListItem(R.Str(lang, "months.1"), "01"));
+            dropDownListDateMonth.Items.Add(new ListItem(R.Str(lang, "months.2"), "02"));
+            dropDownListDateMonth.Items.Add(new ListItem(R.Str(lang, "months.3"), "03"));
+            dropDownListDateMonth.Items.Add(new ListItem(R.Str(lang, "months.4"), "04"));
+            dropDownListDateMonth.Items.Add(new ListItem(R.Str(lang, "months.5"), "05"));
+            dropDownListDateMonth.Items.Add(new ListItem(R.Str(lang, "months.6"), "06"));
+            dropDownListDateMonth.Items.Add(new ListItem(R.Str(lang, "months.7"), "07"));
+            dropDownListDateMonth.Items.Add(new ListItem(R.Str(lang, "months.8"), "08"));
+            dropDownListDateMonth.Items.Add(new ListItem(R.Str(lang, "months.9"), "09"));
+            dropDownListDateMonth.Items.Add(new ListItem(R.Str(lang, "months.10"), "10"));
+            dropDownListDateMonth.Items.Add(new ListItem(R.Str(lang, "months.11"), "11"));
+            dropDownListDateMonth.Items.Add(new ListItem(R.Str(lang, "months.12"), "12"));
+
             dropDownListDateDay.DataSource = Enumerable.Range(1, 31).Select(i => i.ToString("D2"));
             dropDownListDateYear.DataSource = Enumerable.Range(1990, DateTime.Now.Year - 1989);
             dropDownListDateDay.DataBind();

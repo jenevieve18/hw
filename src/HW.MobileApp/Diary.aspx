@@ -42,18 +42,6 @@
                     <div style="display:none;"><asp:DropDownList runat="server"></asp:DropDownList></div>
                     <asp:DropDownList ID="dropDownListDateMonth" runat="server" 
                             onselectedindexchanged="dropDownListDate_SelectedIndexChanged" AutoPostBack="true">
-                    <asp:ListItem Text="Jan" Value="01"></asp:ListItem>
-                    <asp:ListItem Text="Feb" Value="02"></asp:ListItem>
-                    <asp:ListItem Text="Mar" Value="03"></asp:ListItem>
-                    <asp:ListItem Text="Apr" Value="04"></asp:ListItem>
-                    <asp:ListItem Text="May" Value="05"></asp:ListItem>
-                    <asp:ListItem Text="Jun" Value="06"></asp:ListItem>
-                    <asp:ListItem Text="Jul" Value="07"></asp:ListItem>
-                    <asp:ListItem Text="Aug" Value="08"></asp:ListItem>
-                    <asp:ListItem Text="Sep" Value="09"></asp:ListItem>
-                    <asp:ListItem Text="Oct" Value="10"></asp:ListItem>
-                    <asp:ListItem Text="Nov" Value="11"></asp:ListItem>
-                    <asp:ListItem Text="Dec" Value="12"></asp:ListItem>
                     </asp:DropDownList>
 
                     <asp:DropDownList ID="dropDownListDateDay" runat="server"   onselectedindexchanged="dropDownListDate_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
