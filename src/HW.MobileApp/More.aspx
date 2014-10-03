@@ -23,10 +23,11 @@
             <div data-role="content" id="more">
                 <ul data-role="listview">
 	                <li><a href="About.aspx"><img class="ui-li-thumb" src="http://clients.easyapp.se/healthwatch//images/about_hw.png" /><%= R.Str(language,"more.about") %></a></li>
-	                <li><a href="Support.aspx"><img class="ui-li-thumb" src="http://clients.easyapp.se/healthwatch//images/support.png" /><%= R.Str(language, "support.title")%></a></li>
+	                <li><a href="Support.aspx"><img class="ui-li-thumb" src="http://clients.easyapp.se/healthwatch//images/support.png" /><%= R.Str(language, "faq.title")%></a></li>
 	                <li><a href="ContactUs.aspx"><img class="ui-li-thumb" src="http://clients.easyapp.se/healthwatch//images/contact_us.png" /><%= R.Str(language, "contact.title")%></a></li>
 	                <li><a href="mailto:support@healthwatch.se?Subject=Hello"><img class="ui-li-thumb" src="http://clients.easyapp.se/healthwatch//images/tell_a_friend.png" /><%= R.Str(language, "more.tell")%></a></li>
 	                <li><a href="https://facebook.com/healthwatch.se"><img class="ui-li-thumb" src="http://clients.easyapp.se/healthwatch//images/fb_like.png" /><%= R.Str(language, "more.like")%></a></li>
+                    <li><a href="ReportIssue.aspx"><%= R.Str(language, "more.report")%></a></li>
                 </ul>
             </div>
             <div data-role="footer" dataid="footernav" data-position="fixed">

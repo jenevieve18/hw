@@ -62,9 +62,8 @@ namespace HW.MobileApp
             lblPassword.Text = R.Str(language, "user.password") + "<span class='req'></span>";
             lblConfirmPassword.Text = R.Str(language, "user.confirmPassword") + "<span class='req'></span>";
             lblEmail.Text = R.Str(language, "user.email") + "<span class='req'>*</span>";
-            lblAltEmail.Text = R.Str(language, "user.password") + "<span class='req'></span>";
+            lblAltEmail.Text = R.Str(language, "user.alternateEmail") + "<span class='req'></span>";
             Label1.Text = R.Str(language, "user.info");
-            //lblTerms.Text = R.Str(language, "user.terms");
             cbTerms.Text = R.Str(language, "register.accept");
         }
 

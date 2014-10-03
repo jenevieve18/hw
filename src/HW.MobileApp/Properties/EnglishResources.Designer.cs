@@ -331,6 +331,15 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FAQ.
+        /// </summary>
+        internal static string faq_title {
+            get {
+                return ResourceManager.GetString("faq.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Logout.
         /// </summary>
         internal static string home_logout {

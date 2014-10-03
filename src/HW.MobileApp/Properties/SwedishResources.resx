@@ -166,7 +166,7 @@
     <value>Övningar</value>
   </data>
   <data name="dashboard.form" xml:space="preserve">
-    <value>Enkät</value>
+    <value>Formulär</value>
   </data>
   <data name="dashboard.reportIssue" xml:space="preserve">
     <value>Anmäl problem</value>
@@ -206,6 +206,9 @@
   </data>
   <data name="exercise.viewAll" xml:space="preserve">
     <value>Se alla övningar</value>
+  </data>
+  <data name="faq.title" xml:space="preserve">
+    <value>FAQ</value>
   </data>
   <data name="home.logout" xml:space="preserve">
     <value>Logga ut</value>
@@ -391,7 +394,7 @@
     <value>Inom kort kommer fler frågor och svar visas här. Tack för ditt tålamod.</value>
   </data>
   <data name="support.healthTrack" xml:space="preserve">
-    <value>How do I track my health?</value>
+    <value>Hur följer jag min hälsa?</value>
   </data>
   <data name="support.healthTrack.description" xml:space="preserve">
     <value>Följ din hälsoutveckling genom att besvara de 11 frågorna i enkäten. Så fort du sparat får du omedelbar återkoppling och förslag på handlingsplan. När du klickar på övningarna i handlingsplanen kopplas du till avsnittet Övningar. Du kan också följa din utveckling över tid genom att klicka på 'Visa'. Du kan välja om du vill se resultatet för en fråga i taget eller fler frågor i samma graf.</value>
@@ -479,7 +482,7 @@ Försök igen.</value>
     <value>Lär dig övningar som hjälper till att förbättra din hälsa.</value>
   </data>
   <data name="welcome.form" xml:space="preserve">
-    <value>Enkät</value>
+    <value>Formulär</value>
   </data>
   <data name="welcome.form.description" xml:space="preserve">
     <value>Mät och följ din hälsa och stressnivå genom att fylla i enkäten regelbundet.</value>

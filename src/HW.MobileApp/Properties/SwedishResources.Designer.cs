@@ -205,7 +205,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enkät.
+        ///   Looks up a localized string similar to Formulär.
         /// </summary>
         internal static string dashboard_form {
             get {
@@ -327,6 +327,15 @@ namespace HW.MobileApp.Properties {
         internal static string exercise_viewAll {
             get {
                 return ResourceManager.GetString("exercise.viewAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FAQ.
+        /// </summary>
+        internal static string faq_title {
+            get {
+                return ResourceManager.GetString("faq.title", resourceCulture);
             }
         }
         
@@ -880,7 +889,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to How do I track my health?.
+        ///   Looks up a localized string similar to Hur följer jag min hälsa?.
         /// </summary>
         internal static string support_healthTrack {
             get {
@@ -1142,7 +1151,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enkät.
+        ///   Looks up a localized string similar to Formulär.
         /// </summary>
         internal static string welcome_form {
             get {

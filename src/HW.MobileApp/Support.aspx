@@ -7,7 +7,7 @@
 
 <div data-role="header" data-theme="b" data-position="fixed">
     <a href="More.aspx" ><%= R.Str(language,"button.back") %></a>
-    <h1><%= R.Str(language, "support.title")%></h1>
+    <h1><%= R.Str(language, "faq.title")%></h1>
 </div>
 <div data-role="content" id="support">
     

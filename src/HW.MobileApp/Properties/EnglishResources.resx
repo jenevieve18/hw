@@ -207,6 +207,9 @@
   <data name="exercise.viewAll" xml:space="preserve">
     <value>View all exercises</value>
   </data>
+  <data name="faq.title" xml:space="preserve">
+    <value>FAQ</value>
+  </data>
   <data name="home.logout" xml:space="preserve">
     <value>Logout</value>
   </data>
