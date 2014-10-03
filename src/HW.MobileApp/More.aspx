@@ -36,9 +36,9 @@
             <div data-role="footer" dataid="footernav" data-position="fixed">
                 <div data-role="navbar">
                     <ul>
-                        <li><a href="Dashboard.aspx" data-icon="health"><%= R.Str(language, "home.myHealth")%></a></li>
-                        <li><a href="News.aspx" data-icon="news"><%= R.Str(language, "home.news")%></a></li>
-                        <li><a href="More.aspx" data-icon="more"><%= R.Str(language, "home.more")%></a></li>
+                        <li><a href="Dashboard.aspx" data-icon="health" rel="external"><%= R.Str(language, "home.myHealth")%></a></li>
+                        <li><a href="News.aspx" data-icon="news" rel="external"><%= R.Str(language, "home.news")%></a></li>
+                        <li><a href="More.aspx" data-icon="more" rel="external"><%= R.Str(language, "home.more")%></a></li>
                     </ul>
                 </div>
             </div>
