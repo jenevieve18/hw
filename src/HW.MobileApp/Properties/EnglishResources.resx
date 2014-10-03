@@ -195,6 +195,9 @@
   <data name="diary.notes" xml:space="preserve">
     <value>Notes</value>
   </data>
+  <data name="diary.notes.default" xml:space="preserve">
+    <value>Write here...</value>
+  </data>
   <data name="exercise.alphabetical" xml:space="preserve">
     <value>Alphabetical</value>
   </data>
@@ -251,6 +254,42 @@
   </data>
   <data name="measurement.viewAdd" xml:space="preserve">
     <value>View/Add Activities and Measurements</value>
+  </data>
+  <data name="months.1" xml:space="preserve">
+    <value>Jan</value>
+  </data>
+  <data name="months.10" xml:space="preserve">
+    <value>Oct</value>
+  </data>
+  <data name="months.11" xml:space="preserve">
+    <value>Nov</value>
+  </data>
+  <data name="months.12" xml:space="preserve">
+    <value>Dec</value>
+  </data>
+  <data name="months.2" xml:space="preserve">
+    <value>Feb</value>
+  </data>
+  <data name="months.3" xml:space="preserve">
+    <value>Mar</value>
+  </data>
+  <data name="months.4" xml:space="preserve">
+    <value>Apr</value>
+  </data>
+  <data name="months.5" xml:space="preserve">
+    <value>May</value>
+  </data>
+  <data name="months.6" xml:space="preserve">
+    <value>Jun</value>
+  </data>
+  <data name="months.7" xml:space="preserve">
+    <value>Jul</value>
+  </data>
+  <data name="months.8" xml:space="preserve">
+    <value>Aug</value>
+  </data>
+  <data name="months.9" xml:space="preserve">
+    <value>Sep</value>
   </data>
   <data name="more.about" xml:space="preserve">
     <value>About HealthWatch</value>

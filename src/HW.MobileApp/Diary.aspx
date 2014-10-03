@@ -64,7 +64,7 @@
             </li>
             <li class="minihead"><%= R.Str(lang, "diary.notes")%></li>
             <li style="padding:0px 0px 0px 0px;">
-                <asp:TextBox id="textBoxNote" placeholder="Write here.." 
+                <asp:TextBox id="textBoxNote" placeholder="Write here..." 
                         style="border-width:0px;margin:0px 0px 0px 0px;" TextMode="multiline" runat="server"></asp:TextBox>
             </li>
             <li class="minihead"><%= R.Str(lang, "diary.mood")%></li>

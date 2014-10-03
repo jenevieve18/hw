@@ -295,6 +295,15 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Skriv här....
+        /// </summary>
+        internal static string diary_notes_default {
+            get {
+                return ResourceManager.GetString("diary.notes.default", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alfabetisk.
         /// </summary>
         internal static string exercise_alphabetical {
@@ -462,6 +471,114 @@ namespace HW.MobileApp.Properties {
         internal static string measurement_viewAdd {
             get {
                 return ResourceManager.GetString("measurement.viewAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jan.
+        /// </summary>
+        internal static string months_1 {
+            get {
+                return ResourceManager.GetString("months.1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Okt.
+        /// </summary>
+        internal static string months_10 {
+            get {
+                return ResourceManager.GetString("months.10", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nov.
+        /// </summary>
+        internal static string months_11 {
+            get {
+                return ResourceManager.GetString("months.11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dec.
+        /// </summary>
+        internal static string months_12 {
+            get {
+                return ResourceManager.GetString("months.12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feb.
+        /// </summary>
+        internal static string months_2 {
+            get {
+                return ResourceManager.GetString("months.2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mar.
+        /// </summary>
+        internal static string months_3 {
+            get {
+                return ResourceManager.GetString("months.3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apr.
+        /// </summary>
+        internal static string months_4 {
+            get {
+                return ResourceManager.GetString("months.4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maj.
+        /// </summary>
+        internal static string months_5 {
+            get {
+                return ResourceManager.GetString("months.5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jun.
+        /// </summary>
+        internal static string months_6 {
+            get {
+                return ResourceManager.GetString("months.6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jul.
+        /// </summary>
+        internal static string months_7 {
+            get {
+                return ResourceManager.GetString("months.7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aug.
+        /// </summary>
+        internal static string months_8 {
+            get {
+                return ResourceManager.GetString("months.8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sep.
+        /// </summary>
+        internal static string months_9 {
+            get {
+                return ResourceManager.GetString("months.9", resourceCulture);
             }
         }
         
