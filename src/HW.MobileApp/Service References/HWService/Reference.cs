@@ -219,6 +219,14 @@ namespace HW.MobileApp.HWService {
         [System.ServiceModel.OperationContractAttribute(Action="https://ws.healthwatch.se/SuperSponsorSponsors", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         HW.MobileApp.HWService.SuperSponsorSponsorsResponse SuperSponsorSponsors(HW.MobileApp.HWService.SuperSponsorSponsorsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://ws.healthwatch.se/InvitationKeyHasTest", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        bool InvitationKeyHasTest(int testID, string invitationKey);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://ws.healthwatch.se/InvitationKeySetTest", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        bool InvitationKeySetTest(int testID, string invitationKey, System.DateTime DT, string sessionSettings, string testName, string testSettings, string testData, string testImage);
     }
     
     /// <remarks/>
@@ -325,6 +333,8 @@ namespace HW.MobileApp.HWService {
         
         private string userKeyField;
         
+        private string invitationKeyField;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public string email {
@@ -346,6 +356,18 @@ namespace HW.MobileApp.HWService {
             set {
                 this.userKeyField = value;
                 this.RaisePropertyChanged("userKey");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string invitationKey {
+            get {
+                return this.invitationKeyField;
+            }
+            set {
+                this.invitationKeyField = value;
+                this.RaisePropertyChanged("invitationKey");
             }
         }
         
@@ -4111,6 +4133,14 @@ namespace HW.MobileApp.HWService {
             inValue.superSponsorKey = superSponsorKey;
             HW.MobileApp.HWService.SuperSponsorSponsorsResponse retVal = ((HW.MobileApp.HWService.ServiceSoap)(this)).SuperSponsorSponsors(inValue);
             return retVal.SuperSponsorSponsorsResult;
+        }
+        
+        public bool InvitationKeyHasTest(int testID, string invitationKey) {
+            return base.Channel.InvitationKeyHasTest(testID, invitationKey);
+        }
+        
+        public bool InvitationKeySetTest(int testID, string invitationKey, System.DateTime DT, string sessionSettings, string testName, string testSettings, string testData, string testImage) {
+            return base.Channel.InvitationKeySetTest(testID, invitationKey, DT, sessionSettings, testName, testSettings, testData, testImage);
         }
     }
 }

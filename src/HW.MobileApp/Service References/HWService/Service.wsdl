@@ -1100,6 +1100,7 @@
         <s:sequence>
           <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="userKey" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="invitationKey" type="s:string" />
         </s:sequence>
       </s:complexType>
       <s:element name="SuperSponsorSponsors">
@@ -1127,6 +1128,42 @@
           <s:element minOccurs="0" maxOccurs="1" name="sponsorKey" type="s:string" />
         </s:sequence>
       </s:complexType>
+      <s:element name="InvitationKeyHasTest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="testID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="invitationKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InvitationKeyHasTestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="InvitationKeyHasTestResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InvitationKeySetTest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="testID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="invitationKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="DT" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="sessionSettings" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="testName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="testSettings" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="testData" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="testImage" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InvitationKeySetTestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="InvitationKeySetTestResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="WordsOfWisdom" type="tns:WordsOfWisdom" />
       <s:element name="ArrayOfFormFeedback" nillable="true" type="tns:ArrayOfFormFeedback" />
       <s:element name="ArrayOfFormFeedbackTemplate" nillable="true" type="tns:ArrayOfFormFeedbackTemplate" />
@@ -1403,6 +1440,18 @@
   </wsdl:message>
   <wsdl:message name="SuperSponsorSponsorsSoapOut">
     <wsdl:part name="parameters" element="tns:SuperSponsorSponsorsResponse" />
+  </wsdl:message>
+  <wsdl:message name="InvitationKeyHasTestSoapIn">
+    <wsdl:part name="parameters" element="tns:InvitationKeyHasTest" />
+  </wsdl:message>
+  <wsdl:message name="InvitationKeyHasTestSoapOut">
+    <wsdl:part name="parameters" element="tns:InvitationKeyHasTestResponse" />
+  </wsdl:message>
+  <wsdl:message name="InvitationKeySetTestSoapIn">
+    <wsdl:part name="parameters" element="tns:InvitationKeySetTest" />
+  </wsdl:message>
+  <wsdl:message name="InvitationKeySetTestSoapOut">
+    <wsdl:part name="parameters" element="tns:InvitationKeySetTestResponse" />
   </wsdl:message>
   <wsdl:message name="TodaysWordsOfWisdomHttpPostIn">
     <wsdl:part name="languageID" type="s:string" />
@@ -1758,6 +1807,26 @@
   <wsdl:message name="SuperSponsorSponsorsHttpPostOut">
     <wsdl:part name="Body" element="tns:ArrayOfSponsor" />
   </wsdl:message>
+  <wsdl:message name="InvitationKeyHasTestHttpPostIn">
+    <wsdl:part name="testID" type="s:string" />
+    <wsdl:part name="invitationKey" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="InvitationKeyHasTestHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="InvitationKeySetTestHttpPostIn">
+    <wsdl:part name="testID" type="s:string" />
+    <wsdl:part name="invitationKey" type="s:string" />
+    <wsdl:part name="DT" type="s:string" />
+    <wsdl:part name="sessionSettings" type="s:string" />
+    <wsdl:part name="testName" type="s:string" />
+    <wsdl:part name="testSettings" type="s:string" />
+    <wsdl:part name="testData" type="s:string" />
+    <wsdl:part name="testImage" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="InvitationKeySetTestHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
   <wsdl:portType name="ServiceSoap">
     <wsdl:operation name="TodaysWordsOfWisdom">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Todays words of wisdom.</wsdl:documentation>
@@ -1969,6 +2038,16 @@
       <wsdl:input message="tns:SuperSponsorSponsorsSoapIn" />
       <wsdl:output message="tns:SuperSponsorSponsorsSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="InvitationKeyHasTest">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Internal function InvitationKeyHasTest.</wsdl:documentation>
+      <wsdl:input message="tns:InvitationKeyHasTestSoapIn" />
+      <wsdl:output message="tns:InvitationKeyHasTestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="InvitationKeySetTest">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Internal function InvitationKeySetTest.</wsdl:documentation>
+      <wsdl:input message="tns:InvitationKeySetTestSoapIn" />
+      <wsdl:output message="tns:InvitationKeySetTestSoapOut" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="ServiceHttpPost">
     <wsdl:operation name="TodaysWordsOfWisdom">
@@ -2165,6 +2244,16 @@
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Internal function SuperSponsorSponsors.</wsdl:documentation>
       <wsdl:input message="tns:SuperSponsorSponsorsHttpPostIn" />
       <wsdl:output message="tns:SuperSponsorSponsorsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="InvitationKeyHasTest">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Internal function InvitationKeyHasTest.</wsdl:documentation>
+      <wsdl:input message="tns:InvitationKeyHasTestHttpPostIn" />
+      <wsdl:output message="tns:InvitationKeyHasTestHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="InvitationKeySetTest">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Internal function InvitationKeySetTest.</wsdl:documentation>
+      <wsdl:input message="tns:InvitationKeySetTestHttpPostIn" />
+      <wsdl:output message="tns:InvitationKeySetTestHttpPostOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="ServiceSoap" type="tns:ServiceSoap">
@@ -2540,6 +2629,24 @@
     </wsdl:operation>
     <wsdl:operation name="SuperSponsorSponsors">
       <soap:operation soapAction="https://ws.healthwatch.se/SuperSponsorSponsors" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InvitationKeyHasTest">
+      <soap:operation soapAction="https://ws.healthwatch.se/InvitationKeyHasTest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InvitationKeySetTest">
+      <soap:operation soapAction="https://ws.healthwatch.se/InvitationKeySetTest" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -2928,6 +3035,24 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="InvitationKeyHasTest">
+      <soap12:operation soapAction="https://ws.healthwatch.se/InvitationKeyHasTest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InvitationKeySetTest">
+      <soap12:operation soapAction="https://ws.healthwatch.se/InvitationKeySetTest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="ServiceHttpPost" type="tns:ServiceHttpPost">
     <http:binding verb="POST" />
@@ -3275,6 +3400,24 @@
     </wsdl:operation>
     <wsdl:operation name="SuperSponsorSponsors">
       <http:operation location="/SuperSponsorSponsors" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InvitationKeyHasTest">
+      <http:operation location="/InvitationKeyHasTest" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InvitationKeySetTest">
+      <http:operation location="/InvitationKeySetTest" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>
