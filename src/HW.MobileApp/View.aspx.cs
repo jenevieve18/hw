@@ -46,7 +46,7 @@ namespace HW.MobileApp
 
         protected void doneBtn_Click(object sender, EventArgs e){
 
-            if (ddlTimeframe.SelectedValue != "Latest")
+            if (ddlTimeframe.SelectedValue != R.Str(language, "options.timeframe.latest"))
                 Response.Redirect("Statistics.aspx?tf=" + ddlTimeframe.SelectedValue + "&comp=" + ddlCompare.SelectedValue);
             else
                 Response.Redirect("Statistics.aspx");
