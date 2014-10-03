@@ -140,13 +140,6 @@
     <Compile Include="Grp.Master.designer.cs">
       <DependentUpon>Grp.Master</DependentUpon>
     </Compile>
-    <Compile Include="GrpMobile.Master.cs">
-      <DependentUpon>GrpMobile.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GrpMobile.Master.designer.cs">
-      <DependentUpon>GrpMobile.Master</DependentUpon>
-    </Compile>
     <Compile Include="Managers.aspx.cs">
       <DependentUpon>Managers.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -245,9 +238,6 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Grp.Master" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="GrpMobile.Master" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Themes\Bootstrap\Controls.skin" />
