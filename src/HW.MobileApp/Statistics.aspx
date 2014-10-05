@@ -110,17 +110,17 @@
                                 <div class="ui-block-a statlegend" >
                                 <div style="float:left;margin-right:5px;">
                                 <img class="statimg"
-                                src="http://clients.easyapp.se/healthwatch//images/green.png"></div><div ><%= R.Str(language, "statistics.healthy") %></div> </div>
+                                src="images/green.png"></div><div ><%= R.Str(language, "statistics.healthy") %></div> </div>
                                 
                                 <div class="ui-block-b statlegend" >
                                 <div style="float:left;margin-right:5px;">
                                 <img class="statimg"
-                                src="http://clients.easyapp.se/healthwatch//images/orange.png"></div> <div><%= R.Str(language, "statistics.improvement") %></div></div>
+                                src="images/orange.png"></div> <div><%= R.Str(language, "statistics.improvement") %></div></div>
                                 
                                 <div class="ui-block-c statlegend" >
                                 <div style="float:left;margin-right:5px;">
                                 <img class="statimg"
-                                src="http://clients.easyapp.se/healthwatch//images/pink.png"></div><div><%= R.Str(language, "statistics.unhealthy") %></div></div>
+                                src="images/pink.png"></div><div><%= R.Str(language, "statistics.unhealthy") %></div></div>
             </div>
         </li>
         
@@ -137,17 +137,17 @@
         var progress = "";
         if (f.rating.ToString() == "Warning")
         {
-            img = "<img style='height:20px;' src='http://clients.easyapp.se/healthwatch//images/orange.png'>";
+            img = "<img style='height:20px;' src='images/orange.png'>";
             progress = "class='orange' style='width:" + f.value + "%;'";
         }
         else if (f.rating.ToString() == "Healthy")
         {
-            img = "<img style='height:20px;' src='http://clients.easyapp.se/healthwatch//images/green.png'>";
+            img = "<img style='height:20px;' src='images/green.png'>";
             progress = "class='green' style='width:" + f.value + "%;'";
         }
         else
         {
-            img = "<img style='height:20px;' src='http://clients.easyapp.se/healthwatch//images/pink.png'>";
+            img = "<img style='height:20px;' src='images/pink.png'>";
             progress = "class='pink' style='width:" + f.value + "%;'";
         }
                 

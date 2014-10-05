@@ -74,7 +74,7 @@
 
      <div class="header">
         <h3><asp:Label id="lblHeader" runat="server"></asp:Label></h3>
-        <img class="front_header_img" src="http://clients.easyapp.se/healthwatch/images/divider.gif"/>
+        <img class="front_header_img" src="images/divider.gif"/>
         
     </div>
 

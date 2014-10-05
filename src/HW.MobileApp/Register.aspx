@@ -49,7 +49,7 @@
 
     <div class="header">
         <h3><asp:Label id="lblHeader" runat="server" text="Account Details"></asp:Label></h3>
-        <img class="front_header_img" src="http://clients.easyapp.se/healthwatch/images/divider.gif">
+        <img class="front_header_img" src="images/divider.gif">
         <h3><asp:Label ID="labelMessage" runat="server"></asp:Label></h3>
     </div>
 
@@ -120,7 +120,7 @@
 
     <div class="header">
         <h3><asp:Label id="Label1" runat="server" text="Personal Information"></asp:Label></h3>
-        <img class="front_header_img" src="http://clients.easyapp.se/healthwatch/images/divider.gif">
+        <img class="front_header_img" src="images/divider.gif">
         <h3><asp:Label ID="label2" runat="server"></asp:Label></h3>
     </div>
 

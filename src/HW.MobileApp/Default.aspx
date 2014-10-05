@@ -23,7 +23,7 @@
             
                 <div data-role="content"  >
                     <div class="frame ui-corner-all ui-shadow">
-                        <img class="nomargin ui-corner-top" src="http://clients.easyapp.se/healthwatch//images/start_imgHeader@2x.png"/><img class="slogan" src="http://clients.easyapp.se/healthwatch/images/divider.gif"/><img class="nomargin" src="http://clients.easyapp.se/healthwatch//images/start_catchPhrase@2x.png"/>
+                        <img class="nomargin ui-corner-top" src="images/start_imgHeader@2x.png"/><img class="slogan" src="images/divider.gif"/><img class="nomargin" src="images/start_catchPhrase@2x.png"/>
                         <div class="padding8">
                             <p class="center fsize12" ><asp:Label ID="lblWordsOfWisdom" runat="server"></asp:Label>
                             <br />-<i> <asp:Label ID="lblAuthor" runat="server"></asp:Label></i>

@@ -11,7 +11,7 @@
 
     <div data-role="content" id="about">
         <div class="more">
-            <img  src="http://clients.easyapp.se/healthwatch/images/hw_logo@2x.png" />
+            <img  src="images/hw_logo@2x.png" />
             <div>
                 <%= R.Str(language, "about.text")%>
             </div>

@@ -59,10 +59,10 @@
             <li style="padding:0px 0px 0px 0px;">
                 <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
                     <div style="display:none;"><asp:RadioButton text="x" runat="server"></asp:RadioButton></div>
-                    <asp:RadioButton runat="server" id="rdbDontKnow" GroupName="rdbMoods" text="Don't Know<div><img class='image' src='http://clients.easyapp.se/healthwatch/images/dontKnow@2x.png'></div>" value="DontKnow" />
-                    <asp:RadioButton runat="server" id="rdbUnhappy"  GroupName="rdbMoods" text="Unhappy<div><img class='image' src='http://clients.easyapp.se/healthwatch/images/unhappy@2x.png'></div>" value="Unhappy"  />
-                    <asp:RadioButton runat="server" id="rdbNeutral"  GroupName="rdbMoods" text="Neutral<div><img class='image' src='http://clients.easyapp.se/healthwatch/images/neutral@2x.png'></div>" value="Neutral" />
-                    <asp:RadioButton runat="server" id="rdbHappy"    GroupName="rdbMoods" text="Happy<div><img class='image' src='http://clients.easyapp.se/healthwatch/images/happy@2x.png'></div>" value="Happy" />
+                    <asp:RadioButton runat="server" id="rdbDontKnow" GroupName="rdbMoods" text="Don't Know<div><img class='image' src='images/dontKnow@2x.png'></div>" value="DontKnow" />
+                    <asp:RadioButton runat="server" id="rdbUnhappy"  GroupName="rdbMoods" text="Unhappy<div><img class='image' src='images/unhappy@2x.png'></div>" value="Unhappy"  />
+                    <asp:RadioButton runat="server" id="rdbNeutral"  GroupName="rdbMoods" text="Neutral<div><img class='image' src='images/neutral@2x.png'></div>" value="Neutral" />
+                    <asp:RadioButton runat="server" id="rdbHappy"    GroupName="rdbMoods" text="Happy<div><img class='image' src='images/happy@2x.png'></div>" value="Happy" />
                     <div style="display:none;"><asp:RadioButton ID="RadioButton1" text="x" runat="server"></asp:RadioButton></div>
                 </fieldset>
 

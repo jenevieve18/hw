@@ -25,7 +25,7 @@
                 <p class="padd">
                 <img <%=imgsrc %> style="width:15px;">
                 <%=news.DT.ToString("MMM d, yyyy") %></p>
-                <img class="front_header_img" src="http://clients.easyapp.se/healthwatch/images/divider.gif">
+                <img class="front_header_img" src="images/divider.gif">
                 <div class="padd contentsmaller">
                     <%=news.body %>
                      <hr />

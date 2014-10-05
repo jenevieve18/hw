@@ -25,7 +25,7 @@
 
                 <div class="center">
                     <div class="dashboardlogo">
-                        <img class="front_logo" src="http://clients.easyapp.se/healthwatch/images/hw_logo@2x.png" />
+                        <img class="front_logo" src="images/hw_logo@2x.png" />
                     </div>
                 </div>
         

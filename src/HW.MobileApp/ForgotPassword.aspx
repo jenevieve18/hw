@@ -23,11 +23,11 @@
             </div>
             <div data-role="content">
                 <div class="front_note center">
-                    <img class="front_logo" src="http://clients.easyapp.se/healthwatch/images/hw_logo@2x.png" />
+                    <img class="front_logo" src="images/hw_logo@2x.png" />
                     <div class="front_controls">
                         <div class="front_header">
                             <h4 ><asp:Label ID="labelMessage" runat="server"></asp:Label></h4>
-                            <img class="front_header_img" src="http://clients.easyapp.se/healthwatch/images/divider.gif">
+                            <img class="front_header_img" src="images/divider.gif">
                         <p><asp:Label ID="labelSub" runat="server"></asp:Label></p>
                         </div>
                         <asp:TextBox ID="textBoxEmailAddress" runat="server" placeholder="Email address"></asp:TextBox>
