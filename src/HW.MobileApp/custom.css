@@ -12,13 +12,13 @@
     border:1px solid #D0D0D0;height:8px;}
 	#progressbar > div {height: 8px;border-radius: 2px;}
     
-    .green {background-image:url(http://clients.easyapp.se/healthwatch//images/green.png);background-position:center;}
-    .pink  {background-image:url(http://clients.easyapp.se/healthwatch//images/pink.png);background-position:center;}
-    .orange{background-image:url(http://clients.easyapp.se/healthwatch//images/orange.png);background-position:center;}
+    .green {background-image:url(images/green.png);background-position:center;}
+    .pink  {background-image:url(images/pink.png);background-position:center;}
+    .orange{background-image:url(images/orange.png);background-position:center;}
     .holder{position:absolute;height: 8px;}
     .upper{border-right:1px solid #ffffff;border-left:1px solid #ffffff;} 
     .lower{width:100%;height: 8px;  }
-    .statlink{background-image: url('http://clients.easyapp.se/healthwatch//images/detail_desk.gif');
+    .statlink{background-image: url('images/detail_desk.gif');
         background-repeat: no-repeat;
         background-position: 0 50%;
         text-decoration: none;
