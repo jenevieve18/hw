@@ -250,7 +250,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vet inte&lt;div&gt;&lt;img class=&apos;image&apos; src=&apos;http://clients.easyapp.se/healthwatch/images/dontKnow@2x.png&apos;&gt;&lt;/div&gt;.
+        ///   Looks up a localized string similar to Vet inte&lt;div&gt;&lt;img class=&apos;image&apos; src=&apos;images/dontKnow@2x.png&apos;&gt;&lt;/div&gt;.
         /// </summary>
         internal static string diary_mood_dontknow {
             get {
@@ -259,7 +259,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Glad&lt;div&gt;&lt;img class=&apos;image&apos; src=&apos;http://clients.easyapp.se/healthwatch/images/happy@2x.png&apos;&gt;&lt;/div&gt;.
+        ///   Looks up a localized string similar to Glad&lt;div&gt;&lt;img class=&apos;image&apos; src=&apos;images/happy@2x.png&apos;&gt;&lt;/div&gt;.
         /// </summary>
         internal static string diary_mood_happy {
             get {
@@ -268,7 +268,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Neutral&lt;div&gt;&lt;img class=&apos;image&apos; src=&apos;http://clients.easyapp.se/healthwatch/images/neutral@2x.png&apos;&gt;&lt;/div&gt;.
+        ///   Looks up a localized string similar to Neutral&lt;div&gt;&lt;img class=&apos;image&apos; src=&apos;images/neutral@2x.png&apos;&gt;&lt;/div&gt;.
         /// </summary>
         internal static string diary_mood_neutral {
             get {
@@ -277,7 +277,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ledsen&lt;div&gt;&lt;img class=&apos;image&apos; src=&apos;http://clients.easyapp.se/healthwatch/images/unhappy@2x.png&apos;&gt;&lt;/div&gt;.
+        ///   Looks up a localized string similar to Ledsen&lt;div&gt;&lt;img class=&apos;image&apos; src=&apos;images/unhappy@2x.png&apos;&gt;&lt;/div&gt;.
         /// </summary>
         internal static string diary_mood_unhappy {
             get {
