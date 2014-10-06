@@ -507,7 +507,8 @@ namespace HW.Core.Helpers
 					}
 				} else {
 					int bx = 0;
-					foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(p.Id, langID)) {
+                    var components = reportRepository.FindComponentsByPartAndLanguage2(p.Id, langID);
+					foreach (ReportPartComponent c in components) {
 						g.Explanations.Add(
 							new Explanation {
 								Description = c.WeightedQuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (point == Distribution.StandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),

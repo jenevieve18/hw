@@ -20,13 +20,13 @@
                 <%
                     var moodsrc = "";
                     if (c.mood == HW.MobileApp.HWService.Mood.DontKnow)
-                        moodsrc = "http://clients.easyapp.se/healthwatch/images/dontKnow@2x.png";
+                        moodsrc = "images/dontKnow@2x.png";
                     else if (c.mood == HW.MobileApp.HWService.Mood.Unhappy)
-                        moodsrc = "http://clients.easyapp.se/healthwatch/images/unhappy@2x.png";
+                        moodsrc = "images/unhappy@2x.png";
                     else if (c.mood == HW.MobileApp.HWService.Mood.Neutral)
-                        moodsrc = "http://clients.easyapp.se/healthwatch/images/neutral@2x.png";
+                        moodsrc = "images/neutral@2x.png";
                     else if (c.mood == HW.MobileApp.HWService.Mood.Happy)
-                        moodsrc = "http://clients.easyapp.se/healthwatch/images/happy@2x.png";
+                        moodsrc = "images/happy@2x.png";
 
                     moodsrc = "src='" + moodsrc + "'";
                     var linksrc = "href='Diary.aspx?date=" + c.date.ToString("yyyy-MM-ddThh:mm:ss") + "'";

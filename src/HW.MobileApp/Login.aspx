@@ -6,11 +6,11 @@
 <head runat="server">
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
+    <link rel="stylesheet" href="css/jquery.mobile-1.2.1.min.css" />
     <link rel="stylesheet" href="/custom.css" />
     <link rel="Stylesheet" href="css/custom.css" />
-    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/jquery.mobile-1.2.1.min.js"></script>
  
     
     <script>
@@ -26,11 +26,11 @@
             </div>
             <div data-role="content" class="nopadding">
                 <div class="front_note center">
-                    <img class="front_logo" src="http://clients.easyapp.se/healthwatch/images/hw_logo@2x.png" />
+                    <img class="front_logo" src="images/hw_logo@2x.png" />
                     <div class="front_controls">
                         <div class="front_header">
                             <h4><asp:Label ID="labelMessage" runat="server"></asp:Label></h4>
-                            <img class="front_header_img" src="http://clients.easyapp.se/healthwatch/images/divider.gif">
+                            <img class="front_header_img" src="images/divider.gif">
                         </div>
                         <asp:TextBox ID="textBoxUsername" runat="server" placeholder="Username or Email"></asp:TextBox>
                         <asp:TextBox ID="textBoxPassword" runat="server" placeholder="Password" TextMode="Password"></asp:TextBox>

@@ -187,16 +187,16 @@
     <value>Mood</value>
   </data>
   <data name="diary.mood.dontknow" xml:space="preserve">
-    <value>Don't Know&lt;div&gt;&lt;img class='image' src='http://clients.easyapp.se/healthwatch/images/dontKnow@2x.png'&gt;&lt;/div&gt;</value>
+    <value>Don't Know&lt;div&gt;&lt;img class='image' src='images/dontKnow@2x.png'&gt;&lt;/div&gt;</value>
   </data>
   <data name="diary.mood.happy" xml:space="preserve">
-    <value>Happy&lt;div&gt;&lt;img class='image' src='http://clients.easyapp.se/healthwatch/images/happy@2x.png'&gt;&lt;/div&gt;</value>
+    <value>Happy&lt;div&gt;&lt;img class='image' src='images/happy@2x.png'&gt;&lt;/div&gt;</value>
   </data>
   <data name="diary.mood.neutral" xml:space="preserve">
-    <value>Neutral&lt;div&gt;&lt;img class='image' src='http://clients.easyapp.se/healthwatch/images/neutral@2x.png'&gt;&lt;/div&gt;</value>
+    <value>Neutral&lt;div&gt;&lt;img class='image' src='images/neutral@2x.png'&gt;&lt;/div&gt;</value>
   </data>
   <data name="diary.mood.unhappy" xml:space="preserve">
-    <value>Unhappy&lt;div&gt;&lt;img class='image' src='http://clients.easyapp.se/healthwatch/images/unhappy@2x.png'&gt;&lt;/div&gt;</value>
+    <value>Unhappy&lt;div&gt;&lt;img class='image' src='images/unhappy@2x.png'&gt;&lt;/div&gt;</value>
   </data>
   <data name="diary.notes" xml:space="preserve">
     <value>Notes</value>

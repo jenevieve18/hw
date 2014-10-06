@@ -6,11 +6,11 @@
 <head runat="server">
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
+    <link rel="stylesheet" href="css/jquery.mobile-1.2.1.min.css" />
     <link rel="stylesheet" href="/custom.css" />
     <link rel="Stylesheet" href="css/custom.css" />
-    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/jquery.mobile-1.2.1.min.js"></script>
     
   
 </head>
@@ -22,11 +22,11 @@
             </div>
             <div data-role="content" id="more">
                 <ul data-role="listview">
-	                <li><a href="About.aspx"><img class="ui-li-thumb" src="http://clients.easyapp.se/healthwatch//images/about_hw.png" /><%= R.Str(language,"more.about") %></a></li>
-	                <li><a href="Support.aspx"><img class="ui-li-thumb" src="http://clients.easyapp.se/healthwatch//images/support.png" /><%= R.Str(language, "faq.title")%></a></li>
-	                <li><a href="ContactUs.aspx"><img class="ui-li-thumb" src="http://clients.easyapp.se/healthwatch//images/contact_us.png" /><%= R.Str(language, "contact.title")%></a></li>
-	                <li><a href="mailto:support@healthwatch.se?Subject=Hello"><img class="ui-li-thumb" src="http://clients.easyapp.se/healthwatch//images/tell_a_friend.png" /><%= R.Str(language, "more.tell")%></a></li>
-	                <li><a href="https://facebook.com/healthwatch.se"><img class="ui-li-thumb" src="http://clients.easyapp.se/healthwatch//images/fb_like.png" /><%= R.Str(language, "more.like")%></a></li>
+	                <li><a href="About.aspx"><img class="ui-li-thumb" src="images/about_hw.png" /><%= R.Str(language,"more.about") %></a></li>
+	                <li><a href="Support.aspx"><img class="ui-li-thumb" src="images/support.png" /><%= R.Str(language, "faq.title")%></a></li>
+	                <li><a href="ContactUs.aspx"><img class="ui-li-thumb" src="images/contact_us.png" /><%= R.Str(language, "contact.title")%></a></li>
+	                <li><a href="mailto:support@healthwatch.se?Subject=Hello"><img class="ui-li-thumb" src="images/tell_a_friend.png" /><%= R.Str(language, "more.tell")%></a></li>
+	                <li><a href="https://facebook.com/healthwatch.se"><img class="ui-li-thumb" src="images/fb_like.png" /><%= R.Str(language, "more.like")%></a></li>
                     <%if (displayReport)
                       { %>
                     <li><a href="ReportIssue.aspx" rel="external"><img class="ui-li-thumb" src="/images/issue.png" /><%= R.Str(language, "dashboard.reportIssue")%></a></li>
