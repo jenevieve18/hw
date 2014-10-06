@@ -29,14 +29,16 @@ namespace HW.MobileApp
             {
                 if (service.ReportIssue(token, 10, textBoxTitle.Text, textBoxDescription.Text))
                 {
-                    errormsg.Text = R.Str(language, "issue.success");
+                    labelMessage.Text = R.Str(language, "issue.success");
+                    labelMessage.ForeColor = System.Drawing.Color.Black;
                     textBoxDescription.Text = "";
                     textBoxTitle.Text = "";
                 }
             }
             else
             {
-                errormsg.Text = R.Str(language, "issue.empty");
+                labelMessage.Text = R.Str(language, "issue.empty");
+                labelMessage.ForeColor = System.Drawing.Color.Red;
             }
         }
     }

@@ -16,7 +16,7 @@
 
 <div data-role="content" id="reportissue">
     <div class="header">
-        <h3><asp:Label ID="errormsg" runat="server"></asp:Label></h3>
+        <h3><asp:Label ID="labelMessage" runat="server"></asp:Label></h3>
     </div>
     <div class="ui-grid-a">
     <div class="ui-block-a">
