@@ -232,7 +232,7 @@
     <value>Beskrivning</value>
   </data>
   <data name="issue.title" xml:space="preserve">
-    <value>Titel</value>
+    <value>Rubrik</value>
   </data>
   <data name="label.required" xml:space="preserve">
     <value>Fält med &lt;span style="color:Red;"&gt;*&lt;/span&gt; är obligatoriska</value>

@@ -403,7 +403,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Titel.
+        ///   Looks up a localized string similar to Rubrik.
         /// </summary>
         internal static string issue_title {
             get {
