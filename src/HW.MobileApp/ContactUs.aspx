@@ -24,8 +24,8 @@
             <a href="mailto:support@healthwatch.se">support@healthwatch.se</a>
         </p>
         <p>
-            <strong>Public relations</strong><br />
-            <a href="mailto:support@healthwatch.se">support@healthwatch.se</a>
+            <strong><%= R.Str(language, "contact.relations")%></strong><br />
+            <a href="mailto:info@healthwatch.se">info@healthwatch.se</a>
         </p>
         <p>
             <!--<a href="tel:" data-role="button" data-inline="true" data-icon="">Contact Us</a> use to call-->

@@ -18,7 +18,7 @@ namespace HW.MobileApp
             HtmlHelper.RedirectIf(Session["token"] == null, "Login.aspx");
             token = Session["token"].ToString();
             language = service.UserGetInfo(Session["token"].ToString(), 20).languageID;
-
+            textBoxDescription.Attributes["placeholder"] = R.Str(language, "diary.notes.default");
 
         }
 
@@ -27,12 +27,16 @@ namespace HW.MobileApp
         {
             if (textBoxDescription.Text!=""&&textBoxTitle.Text!="")
             {
-                if(service.ReportIssue(token, 10, textBoxTitle.Text, textBoxDescription.Text))
-                    Response.Redirect("More.aspx");
+                if (service.ReportIssue(token, 10, textBoxTitle.Text, textBoxDescription.Text))
+                {
+                    errormsg.Text = R.Str(language, "issue.success");
+                    textBoxDescription.Text = "";
+                    textBoxTitle.Text = "";
+                }
             }
             else
             {
-                errormsg.Text = "Title/Description should not be empty.";
+                errormsg.Text = R.Str(language, "issue.empty");
             }
         }
     }
