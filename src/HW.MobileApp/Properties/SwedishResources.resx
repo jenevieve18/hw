@@ -150,11 +150,17 @@
   <data name="button.save" xml:space="preserve">
     <value>Spara</value>
   </data>
+  <data name="button.send" xml:space="preserve">
+    <value>Skicka</value>
+  </data>
   <data name="calendar.title" xml:space="preserve">
     <value>Kalender</value>
   </data>
   <data name="contact.publisher" xml:space="preserve">
     <value>Ansvarig utgivare</value>
+  </data>
+  <data name="contact.relations" xml:space="preserve">
+    <value>Media och övriga frågor</value>
   </data>
   <data name="contact.title" xml:space="preserve">
     <value>Kontakta oss</value>
@@ -230,6 +236,12 @@
   </data>
   <data name="issue.description" xml:space="preserve">
     <value>Beskrivning</value>
+  </data>
+  <data name="issue.empty" xml:space="preserve">
+    <value>Rubrikraden och beskrivningsfältet bör inte vara tomma</value>
+  </data>
+  <data name="issue.success" xml:space="preserve">
+    <value>Tack så mycket för din värdefulla återkoppling som kan hjälpa oss förbättra tjänsten</value>
   </data>
   <data name="issue.title" xml:space="preserve">
     <value>Rubrik</value>

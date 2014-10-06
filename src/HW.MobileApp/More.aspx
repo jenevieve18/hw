@@ -29,7 +29,7 @@
 	                <li><a href="https://facebook.com/healthwatch.se"><img class="ui-li-thumb" src="images/fb_like.png" /><%= R.Str(language, "more.like")%></a></li>
                     <%if (displayReport)
                       { %>
-                    <li><a href="ReportIssue.aspx" rel="external"><%= R.Str(language, "dashboard.reportIssue")%></a></li>
+                    <li><a href="ReportIssue.aspx" rel="external"><img class="ui-li-thumb" src="/images/issue.png" /><%= R.Str(language, "dashboard.reportIssue")%></a></li>
                     <%} %>
                 </ul>
             </div>

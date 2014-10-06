@@ -8,10 +8,10 @@
 
 
 <div data-role="header" data-theme="b" data-position="fixed">
-    <a href="Dashboard.aspx" data-icon="arrow-l"><%= R.Str(language,"home.myHealth") %></a>
+    <a href="More.aspx" data-icon="arrow-l"><%= R.Str(language,"home.more") %></a>
                 <h1><%= R.Str(language,"dashboard.reportIssue") %></h1>
                 
-                <a onserverclick="saveBtn_Click" runat="server"><%= R.Str(language, "button.save")%></a>
+                <a onserverclick="saveBtn_Click" runat="server"><%= R.Str(language, "button.send")%></a>
 </div>
 
 <div data-role="content" id="reportissue">
@@ -32,7 +32,7 @@
         <asp:Label ID="lblDescription" runat="server" AssociatedControlID="textBoxDescription"><%= R.Str(language,"issue.description") %><span class='req'> *</span></asp:Label>
     </div>
     <div class="ui-block-b">
-        <asp:TextBox data-mini="true" ID="textBoxDescription" placeholder="Write here.."  TextMode="MultiLine" runat="server"></asp:TextBox>
+        <asp:TextBox data-mini="true" ID="textBoxDescription" TextMode="MultiLine" runat="server"></asp:TextBox>
     </div>
     </div>
 
