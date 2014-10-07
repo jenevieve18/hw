@@ -69,6 +69,7 @@
     <Content Include="ForgotPassword.aspx" />
     <Content Include="Form.aspx" />
     <Content Include="images\about_hw.png" />
+    <Content Include="images\ajax-loader.gif" />
     <Content Include="images\blue_graph.png" />
     <Content Include="images\contact_us.png" />
     <Content Include="images\detail_desk.gif" />
@@ -80,6 +81,11 @@
     <Content Include="images\green_graph.png" />
     <Content Include="images\happy%402x.png" />
     <Content Include="images\hw_logo%402x.png" />
+    <Content Include="images\icons-18-black.png" />
+    <Content Include="images\icons-18-white.png" />
+    <Content Include="images\icons-36-black.png" />
+    <Content Include="images\icons-36-white.png" />
+    <Content Include="images\issue.png" />
     <Content Include="images\list_icon.png" />
     <Content Include="images\more.png" />
     <Content Include="images\my_health.png" />
@@ -99,6 +105,7 @@
     <Content Include="img\dash_exer.png" />
     <Content Include="img\dash_form.png" />
     <Content Include="img\dash_stats.png" />
+    <Content Include="jquery.mobile-1.2.1.min.css" />
     <Content Include="js\jquery-1.8.3.min.js" />
     <Content Include="js\jquery.mobile-1.2.1.min.js" />
     <Content Include="LinkSent.aspx" />
