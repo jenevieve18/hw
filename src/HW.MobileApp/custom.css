@@ -188,7 +188,7 @@
         overflow: hidden;
     }
     
-    #more .ui-btn,.ui-btn-text
+    #more .ui-btn, #more .ui-btn-text
     {
         height:40px;
         padding:0px;
