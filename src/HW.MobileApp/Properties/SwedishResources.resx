@@ -241,7 +241,7 @@
     <value>Rubrikraden och beskrivningsfältet bör inte vara tomma</value>
   </data>
   <data name="issue.success" xml:space="preserve">
-    <value>Tack så mycket för din värdefulla återkoppling som kan hjälpa oss förbättra tjänsten</value>
+    <value>Tack så mycket för din värdefulla återkoppling som kan hjälpa oss förbättra tjänsten.</value>
   </data>
   <data name="issue.title" xml:space="preserve">
     <value>Rubrik</value>

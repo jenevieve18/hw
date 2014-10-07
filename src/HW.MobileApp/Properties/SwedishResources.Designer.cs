@@ -430,7 +430,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tack så mycket för din värdefulla återkoppling som kan hjälpa oss förbättra tjänsten.
+        ///   Looks up a localized string similar to Tack så mycket för din värdefulla återkoppling som kan hjälpa oss förbättra tjänsten..
         /// </summary>
         internal static string issue_success {
             get {

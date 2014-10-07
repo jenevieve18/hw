@@ -23,14 +23,14 @@
             </div>
             <div data-role="content" id="more">
                 <ul data-role="listview">
-	                <li><a href="About.aspx"><img class="ui-li-thumb" src="images/about_hw.png" /><%= R.Str(language,"more.about") %></a></li>
-	                <li><a href="Support.aspx"><img class="ui-li-thumb" src="images/support.png" /><%= R.Str(language, "faq.title")%></a></li>
-	                <li><a href="ContactUs.aspx"><img class="ui-li-thumb" src="images/contact_us.png" /><%= R.Str(language, "contact.title")%></a></li>
-	                <li><a href="mailto:support@healthwatch.se?Subject=Hello"><img class="ui-li-thumb" src="images/tell_a_friend.png" /><%= R.Str(language, "more.tell")%></a></li>
-	                <li><a href="https://facebook.com/healthwatch.se"><img class="ui-li-thumb" src="images/fb_like.png" /><%= R.Str(language, "more.like")%></a></li>
+	                <li data-icon="false"><a href="About.aspx"><img class="ui-li-thumb" src="images/about_hw.png" /><%= R.Str(language,"more.about") %></a></li>
+	                <li data-icon="false"><a href="Support.aspx"><img class="ui-li-thumb" src="images/support.png" /><%= R.Str(language, "faq.title")%></a></li>
+	                <li data-icon="false"><a href="ContactUs.aspx"><img class="ui-li-thumb" src="images/contact_us.png" /><%= R.Str(language, "contact.title")%></a></li>
+	                <li data-icon="false"><a href="mailto:support@healthwatch.se?Subject=Hello"><img class="ui-li-thumb" src="images/tell_a_friend.png" /><%= R.Str(language, "more.tell")%></a></li>
+	                <li data-icon="false"><a href="https://facebook.com/healthwatch.se"><img class="ui-li-thumb" src="images/fb_like.png" /><%= R.Str(language, "more.like")%></a></li>
                     <%if (displayReport)
                       { %>
-                    <li><a href="ReportIssue.aspx" rel="external"><img class="ui-li-thumb" src="/images/issue.png" /><%= R.Str(language, "dashboard.reportIssue")%></a></li>
+                    <li data-icon="false"><a href="ReportIssue.aspx" rel="external"><img class="ui-li-thumb" src="/images/issue.png" /><%= R.Str(language, "dashboard.reportIssue")%></a></li>
                     <%} %>
                 </ul>
             </div>
