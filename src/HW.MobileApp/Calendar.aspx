@@ -13,7 +13,7 @@
         <ul data-role="listview">
         <% foreach (var c in calendar) { %>
             <li class="minihead">
-                <%=c.date.ToString("ddd, yyyy MMM dd")%>
+                <%=c.date.ToString("ddd, yyyy MMM dd", R.GetCultureInfo(lang))%>
             </li>
 
             <li data-icon="false">
@@ -29,7 +29,7 @@
                         moodsrc = "images/happy@2x.png";
 
                     moodsrc = "src='" + moodsrc + "'";
-                    var linksrc = "href='Diary.aspx?date=" + c.date.ToString("yyyy-MM-ddThh:mm:ss") + "'";
+                    var linksrc = "href='Diary.aspx?date=" + c.date.ToString("yyyy-MM-ddThh:mm:ss", R.GetCultureInfo(lang)) + "'";
                 %>
 
                 <a <%=linksrc %> rel="external">
