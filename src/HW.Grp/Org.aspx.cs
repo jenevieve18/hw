@@ -1227,7 +1227,8 @@ ORDER BY ses.SponsorExtendedSurveyID",
 
 			int MIN_SHOW = sponsorRepository.ReadSponsor(sponsorID).MinUserCountToDisclose;
 
-			bool[] DX = new bool[8];
+//			bool[] DX = new bool[8];
+			bool[] DX = new bool[12];
 
 			string sql = string.Format(
 				@"
