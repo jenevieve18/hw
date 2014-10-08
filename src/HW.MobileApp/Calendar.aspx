@@ -39,7 +39,8 @@
             
                     <%} %>
                     <span><%= R.Str(lang,"diary.notes") %></span>
-                    <p><%=c.note%></p>
+                    <p><br /><%=c.note%></p>
+                    
                 
                 </a>
             </li>
