@@ -24,7 +24,7 @@
                 <%var imgsrc = "src='"+news.newsCategoryImage+"'"; %>
                 <p class="padd">
                 <img <%=imgsrc %> style="width:15px;">
-                <%=news.DT.ToString("MMM d, yyyy") %></p>
+                <%=news.DT.ToString("MMM d, yyyy", R.GetCultureInfo(lang)) %></p>
                 <img class="front_header_img" src="images/divider.gif">
                 <div class="padd contentsmaller">
                     <%=news.body %>

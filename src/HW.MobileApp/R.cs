@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Resources;
@@ -26,6 +27,14 @@ namespace HW.MobileApp
                 default:
                     return English;
             }
+        }
+        
+        public static CultureInfo GetCultureInfo(int langID)
+        {
+        	switch (langID) {
+        			case SwedishID: return CultureInfo.GetCultureInfo("sv-SE");
+        			default: return CultureInfo.GetCultureInfo("en-US");
+        	}
         }
 
         public static string Str(int langID, string name)

@@ -26,7 +26,7 @@
                                 <!--<h1><%= n.teaser %></h1>-->
                                 <h1><%= n.headline%></h1>
                                 <p><%= n.newsCategory%></p>
-                                <p><%= n.DT.ToString("m")%></p>
+                                <p><%= n.DT.ToString("m", R.GetCultureInfo(lang))%></p>
                             </a>
                         </li>
                     <% }
