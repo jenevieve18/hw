@@ -101,16 +101,20 @@
         <button class="btn btn-large btn-info" type="submit">
             <i class="icon-circle-arrow-right"></i><%= R.Str("login.signin", "Sign in") %>
         </button>
-        <hr />
         <% if (adminNews.Count > 0) { %>
+        	<hr />
             <div class="news">
                 <h4>News</h4>
+                <% var i = 0; %>
                 <% foreach (var n in adminNews) { %>
                     <p>
                         <span class="date"><%= n.Date.Value.ToString("MMM d, yyyy").ToUpper() %></span>
                         <%= n.News %>
                     </p>
-                    <hr />
+                    <% if (i < adminNews.Count - 1) { %>
+                    	<hr />
+                    <% } %>
+                    <% i++; %>
                 <% } %>
             </div>
         <% } %>
