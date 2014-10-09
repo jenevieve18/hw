@@ -104,7 +104,7 @@ ORDER BY ns.sourceShort, nc.internal"
 		{
 			string query = string.Format(
 				@"
-SELECT n.AdminNewsID,
+SELECT TOP 3 n.AdminNewsID,
 	n.DT,
 	n.News
 FROM AdminNews n
