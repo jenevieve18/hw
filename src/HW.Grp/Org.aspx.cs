@@ -1228,7 +1228,8 @@ ORDER BY ses.SponsorExtendedSurveyID",
 			int MIN_SHOW = sponsorRepository.ReadSponsor(sponsorID).MinUserCountToDisclose;
 
 //			bool[] DX = new bool[8];
-			bool[] DX = new bool[12];
+//			bool[] DX = new bool[12];
+			Dictionary<int, bool> DX = new Dictionary<int, bool>();
 
 			string sql = string.Format(
 				@"
@@ -1324,7 +1325,9 @@ d.SponsorID = {4} ORDER BY d.SortString",
 //			double extendedSurveyTotal = sponsorRepository.GetExtendedSurveyTotal(sponsorID);
 			while (rs.Read()) {
 				int depth = rs.GetInt32(1);
-				DX[depth] = (rs.GetInt32(6) > 0);
+				if (!DX.ContainsKey(depth)) {
+					DX[depth] = (rs.GetInt32(6) > 0);
+				}
 
 				UX += rs.GetInt32(3);
 				totalActivated += rs.GetInt32(4);
