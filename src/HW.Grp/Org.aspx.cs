@@ -1328,6 +1328,7 @@ d.SponsorID = {4} ORDER BY d.SortString",
 				if (!DX.ContainsKey(depth)) {
 					DX[depth] = (rs.GetInt32(6) > 0);
 				}
+//				DX[depth] = (rs.GetInt32(6) > 0);
 
 				UX += rs.GetInt32(3);
 				totalActivated += rs.GetInt32(4);
