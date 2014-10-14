@@ -45,11 +45,15 @@ namespace HW.Grp
 					}
 
 					OrgTree.Text = string.Format("<tr><td>{0}</td></tr>", Session["Sponsor"]);
-					bool[] DX = new bool[8];
+//					bool[] DX = new bool[8];
+					Dictionary<int, bool> DX = new Dictionary<int, bool>();
 					sponsorAdminDepartments = departmentRepository.a(sponsorID, sponsorAdminID);
 					foreach (var d in sponsorAdminDepartments) {
 						int depth = d.Department.Depth;
-						DX[depth] = (d.Department.Siblings > 0);
+						if (!DX.ContainsKey(depth)) {
+							DX[depth] = (d.Department.Siblings > 0);
+						}
+//						DX[depth] = (d.Department.Siblings > 0);
 
 						OrgTree.Text += @"
 <tr>
