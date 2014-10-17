@@ -27,7 +27,7 @@ namespace HW.Grp
 			
 			bool login = false;
 			SponsorAdmin s = null;
-			if ((Request.Form["ANV"] != null && Request.Form["LOS"] != null) || Request.QueryString["SKEY"] != null || Request.QueryString["SAKEY"] != null) {
+			if (((Request.Form["ANV"] != null && Request.Form["ANV"] != "") && (Request.Form["LOS"] != null || Request.Form["LOS"] != "")) || Request.QueryString["SKEY"] != null || Request.QueryString["SAKEY"] != null) {
 				login = true;
 				string skey = Request.QueryString["SKEY"];
 				string sakey = Request.QueryString["SAKEY"];
