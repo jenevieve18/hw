@@ -1347,6 +1347,9 @@ d.SponsorID = {4} ORDER BY d.SortString",
 					(depth == 1 || depth == 4 ? " style='background-color:#EEEEEE'" : (depth == 2 || depth == 5 ? " style='background-color:#F6F6F6'" : ""))
 				);
 				for (int i = 1; i <= depth; i++) {
+					if (!DX.ContainsKey(i)) {
+						DX[i] = false;
+					}
 					OrgTree.Text += string.Format("<img src='img/{0}.gif' width='19' height='20'/>", (i == depth ? (DX[i] ? "T" : "L") : (DX[i] ? "I" : "null")));
 				}
 				string s = rs.GetString(0);

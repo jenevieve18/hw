@@ -62,6 +62,9 @@ namespace HW.Grp
 			<tr>
 				<td>";
 						for (int i = 1; i <= depth; i++) {
+							if (!DX.ContainsKey(i)) {
+								DX[i] = false;
+							}
 							if (i == depth) {
 								OrgTree.Text += string.Format("<img src='img/{0}.gif' width='19' height='20'/>", (DX[i] ? "T" : "L"));
 							} else {

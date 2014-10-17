@@ -80,6 +80,9 @@ namespace HW.Grp
 
 					IList<Control> images = new List<Control>();
 					for (int i = 1; i <= depth; i++) {
+						if (!DX.ContainsKey(i)) {
+							DX[i] = false;
+						}
 						images.Add(new HtmlImage { Src = string.Format("img/{0}.gif", i == depth ? (DX[i] ? "T" : "L") : (DX[i] ? "I" : "null")), Width = 19, Height = 20 });
 					}
 					IHGHtmlTable imagesTable = new IHGHtmlTable { Border = 0, CellSpacing = 0, CellPadding = 0 };
