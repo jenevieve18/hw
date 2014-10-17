@@ -1325,10 +1325,10 @@ d.SponsorID = {4} ORDER BY d.SortString",
 //			double extendedSurveyTotal = sponsorRepository.GetExtendedSurveyTotal(sponsorID);
 			while (rs.Read()) {
 				int depth = rs.GetInt32(1);
-				if (!DX.ContainsKey(depth)) {
-					DX[depth] = (rs.GetInt32(6) > 0);
-				}
-//				DX[depth] = (rs.GetInt32(6) > 0);
+//				if (!DX.ContainsKey(depth)) {
+//					DX[depth] = (rs.GetInt32(6) > 0);
+//				}
+				DX[depth] = (rs.GetInt32(6) > 0);
 
 				UX += rs.GetInt32(3);
 				totalActivated += rs.GetInt32(4);

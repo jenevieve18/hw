@@ -73,10 +73,10 @@ namespace HW.Grp
 					IHGHtmlTableRow row = new IHGHtmlTableRow(new IHGHtmlTableCell(new CheckBox { ID = "DID" + d.Id }), new IHGHtmlTableCell(d.Name));
 					
 					int depth = d.Depth;
-					if (!DX.ContainsKey(depth)) {
-						DX[depth] = d.Siblings > 0;
-					}
-//					DX[depth] = d.Siblings > 0;
+//					if (!DX.ContainsKey(depth)) {
+//						DX[depth] = d.Siblings > 0;
+//					}
+					DX[depth] = d.Siblings > 0;
 
 					IList<Control> images = new List<Control>();
 					for (int i = 1; i <= depth; i++) {

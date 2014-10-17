@@ -50,10 +50,10 @@ namespace HW.Grp
 					sponsorAdminDepartments = departmentRepository.a(sponsorID, sponsorAdminID);
 					foreach (var d in sponsorAdminDepartments) {
 						int depth = d.Department.Depth;
-						if (!DX.ContainsKey(depth)) {
-							DX[depth] = (d.Department.Siblings > 0);
-						}
-//						DX[depth] = (d.Department.Siblings > 0);
+//						if (!DX.ContainsKey(depth)) {
+//							DX[depth] = (d.Department.Siblings > 0);
+//						}
+						DX[depth] = (d.Department.Siblings > 0);
 
 						OrgTree.Text += @"
 <tr>
