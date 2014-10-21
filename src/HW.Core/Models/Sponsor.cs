@@ -81,6 +81,15 @@ namespace HW.Core.Models
 			return Name == "" ? (Usr == "" ? "&gt; empty &lt;" : Usr) : Name;
 		}
 		
+		public override void Validate()
+		{
+			base.Validate();
+			AddErrorIf(Name == "", "Sponsor admin name is required.");
+			AddErrorIf(Email == "", "Email address name is required.");
+			AddErrorIf(Usr == "", "User name is required.");
+			AddErrorIf(Password == "", "Password is required.");
+		}
+		
 		public virtual bool SuperAdmin { 
 			get { return SuperAdminId > 0; }
 		}
