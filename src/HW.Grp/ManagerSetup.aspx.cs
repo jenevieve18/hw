@@ -166,6 +166,8 @@ namespace HW.Grp
 					SuperUser = SuperUser.Checked,
 					Sponsor = new Sponsor { Id = sponsorID }
 				};
+				a.Validate();
+				if (!a.HasErrors) {
 				if (sponsorAdminID != 0) {
 					sponsorRepository.UpdateSponsorAdmin(a);
 				} else {
@@ -207,6 +209,9 @@ namespace HW.Grp
 //					}
 				}
 				Response.Redirect("managers.aspx", true);
+				} else {
+					errorMessage = a.Errors.ToHtmlUl();
+				}
 			} else {
 //				ErrorMsg.Text = "<SPAN STYLE='color:#cc0000;'>Error! The username is invalid, please select a different one!</SPAN>";
 				errorMessage = "Error! The username is invalid, please select a different one!";
