@@ -35,10 +35,12 @@
                 }
             
                 $('#answers').val(sliderVal);
-                document.getElementById('saveBtn').click();
+                $('#saveBtn').click();
             }
 
             window.onload=function(){
+                $('#saveBtn').closest('.ui-btn').hide();
+
                 var x = <%= this.questNo %>;
                 for(var i = 0;i<parseInt(x);i++)
                 {
@@ -136,7 +138,7 @@
                     </ul>
                 </div>
             </div>
-            <a id="saveBtn" onServerClick="saveBtnClick" runat="server" class="hide"></a>
+            <input type="button" id="saveBtn" onServerClick="saveBtnClick" runat="server" name="saveBtn" />
         </div>
         
         
