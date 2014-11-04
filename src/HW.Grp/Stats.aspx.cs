@@ -67,15 +67,22 @@ namespace HW.Grp
 				Org.Controls.Add(new LiteralControl("<br>"));
 				IHGHtmlTable table = new IHGHtmlTable { Border = 0, CellSpacing = 0, CellPadding = 0 };
 				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(HttpContext.Current.Session["Sponsor"].ToString()) { ColSpan = 3 }));
-				bool[] DX = new bool[8];
+//				bool[] DX = new bool[8];
+				Dictionary<int, bool> DX = new Dictionary<int, bool>();
 				foreach (var d in departments) {
 					IHGHtmlTableRow row = new IHGHtmlTableRow(new IHGHtmlTableCell(new CheckBox { ID = "DID" + d.Id }), new IHGHtmlTableCell(d.Name));
 					
 					int depth = d.Depth;
+//					if (!DX.ContainsKey(depth)) {
+//						DX[depth] = d.Siblings > 0;
+//					}
 					DX[depth] = d.Siblings > 0;
 
 					IList<Control> images = new List<Control>();
 					for (int i = 1; i <= depth; i++) {
+						if (!DX.ContainsKey(i)) {
+							DX[i] = false;
+						}
 						images.Add(new HtmlImage { Src = string.Format("img/{0}.gif", i == depth ? (DX[i] ? "T" : "L") : (DX[i] ? "I" : "null")), Width = 19, Height = 20 });
 					}
 					IHGHtmlTable imagesTable = new IHGHtmlTable { Border = 0, CellSpacing = 0, CellPadding = 0 };

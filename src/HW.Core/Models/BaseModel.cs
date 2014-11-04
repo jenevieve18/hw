@@ -16,6 +16,15 @@ namespace HW.Core.Models
 		public virtual bool HasErrors {
 			get { return Errors.Count > 0; }
 		}
+		
+		public virtual void Validate() {}
+		
+		protected virtual void AddErrorIf(bool condition, string message)
+		{
+			if (condition) {
+				Errors.Add(message);
+			}
+		}
 	}
 	
 	public class ErrorMessages : List<string>
@@ -26,6 +35,17 @@ namespace HW.Core.Models
 			foreach (var s in this) {
 				sb.AppendLine(s);
 			}
+			return sb.ToString();
+		}
+		
+		public string ToHtmlUl()
+		{
+			StringBuilder sb = new StringBuilder();
+			sb.AppendLine("<ul>");
+			foreach (var s in this) {
+				sb.AppendLine("<li>" + s + "</li>");
+			}
+			sb.AppendLine("</ul>");
 			return sb.ToString();
 		}
 	}

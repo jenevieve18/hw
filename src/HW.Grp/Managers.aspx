@@ -15,10 +15,25 @@
 		<div class="smallContent">
 			<br />
 			<table border="0" cellpadding="0" cellspacing="0">
-				<asp:Label ID=labelManagers runat=server/>
-				<%--<tr>
-					<th>Name</th>
-					<th>Roles</th>
+				<%--<asp:Label ID=labelManagers runat=server/>--%>
+				<tr>
+                <style>
+                    .sort 
+                    {
+                        background-repeat:no-repeat;
+                        padding-left:16px;
+                    }
+                    .sort-asc 
+                    {
+                        background-image:url(images/bullet_arrow_down.png);
+                    }
+                    .sort-desc 
+                    {
+                        background-image:url(images/bullet_arrow_up.png);
+                    }
+                </style>
+					<td><b><a class="sort <%= sort == 0 ? "sort-asc" : "sort-desc" %>" href="managers.aspx?sort=<%= sort == 0 ? 1 : 0 %>">Name</a></b></th>
+					<td><b>Roles</b></th>
 				</tr>
 				<% foreach (var s in sponsorAdmins) { %>
 				<tr>
@@ -47,7 +62,7 @@
 						<%= HtmlHelper.AnchorImage(url, "img/deltoolsmall.gif")%>
 					</td>
 				</tr>
-				<% } %>--%>
+				<% } %>
 			</table>
 		</div>
 	</div>

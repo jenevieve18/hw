@@ -165,14 +165,14 @@ UPDATE Sponsor SET
 	LoginDays = {8},
 	LoginWeekday = {9}
 WHERE SponsorID = {10}",
-				s.InviteText,
-				s.InviteReminderText,
-				s.AllMessageSubject,
-				s.LoginText,
-				s.InviteSubject,
-				s.InviteReminderSubject,
-				s.AllMessageBody,
-				s.LoginSubject,
+				s.InviteText.Replace("'", "''"),
+				s.InviteReminderText.Replace("'", "''"),
+				s.AllMessageSubject.Replace("'", "''"),
+				s.LoginText.Replace("'", "''"),
+				s.InviteSubject.Replace("'", "''"),
+				s.InviteReminderSubject.Replace("'", "''"),
+				s.AllMessageBody.Replace("'", "''"),
+				s.LoginSubject.Replace("'", "''"),
 				s.LoginDays,
 				s.LoginWeekday,
 				s.Id
@@ -1293,7 +1293,7 @@ WHERE SponsorAdminID = {0}",
 			return functions;
 		}
 
-		public IList<SponsorAdmin> FindAdminBySponsor(int sponsorId, int sponsorAdminId)
+		public IList<SponsorAdmin> FindAdminBySponsor(int sponsorId, int sponsorAdminId, string sort)
 		{
 			string query = string.Format(
 				@"
@@ -1305,10 +1305,11 @@ FROM SponsorAdmin sa
 WHERE (sa.SponsorAdminID <> {1} OR sa.SuperUser = 1)
 {2}
 AND sa.SponsorID = {0}
-ORDER BY sa.Name",
+ORDER BY sa.Name {3}",
 				sponsorId,
 				sponsorAdminId,
-				sponsorAdminId != -1 ? "AND ((SELECT COUNT(*) FROM SponsorAdminDepartment sad WHERE sad.SponsorAdminID = sa.SponsorAdminID) = 0 OR (SELECT COUNT(*) FROM SponsorAdminDepartment sad INNER JOIN SponsorAdminDepartment sad2 ON sad.DepartmentID = sad2.DepartmentID WHERE sad.SponsorAdminID = sa.SponsorAdminID AND sad2.SponsorAdminID = " + sponsorAdminId + ") > 0) " : ""
+				sponsorAdminId != -1 ? "AND ((SELECT COUNT(*) FROM SponsorAdminDepartment sad WHERE sad.SponsorAdminID = sa.SponsorAdminID) = 0 OR (SELECT COUNT(*) FROM SponsorAdminDepartment sad INNER JOIN SponsorAdminDepartment sad2 ON sad.DepartmentID = sad2.DepartmentID WHERE sad.SponsorAdminID = sa.SponsorAdminID AND sad2.SponsorAdminID = " + sponsorAdminId + ") > 0) " : "",
+				sort
 			);
 			var admins = new List<SponsorAdmin>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {

@@ -45,10 +45,14 @@ namespace HW.Grp
 					}
 
 					OrgTree.Text = string.Format("<tr><td>{0}</td></tr>", Session["Sponsor"]);
-					bool[] DX = new bool[8];
+//					bool[] DX = new bool[8];
+					Dictionary<int, bool> DX = new Dictionary<int, bool>();
 					sponsorAdminDepartments = departmentRepository.a(sponsorID, sponsorAdminID);
 					foreach (var d in sponsorAdminDepartments) {
 						int depth = d.Department.Depth;
+//						if (!DX.ContainsKey(depth)) {
+//							DX[depth] = (d.Department.Siblings > 0);
+//						}
 						DX[depth] = (d.Department.Siblings > 0);
 
 						OrgTree.Text += @"
@@ -58,6 +62,9 @@ namespace HW.Grp
 			<tr>
 				<td>";
 						for (int i = 1; i <= depth; i++) {
+							if (!DX.ContainsKey(i)) {
+								DX[i] = false;
+							}
 							if (i == depth) {
 								OrgTree.Text += string.Format("<img src='img/{0}.gif' width='19' height='20'/>", (DX[i] ? "T" : "L"));
 							} else {
@@ -159,6 +166,8 @@ namespace HW.Grp
 					SuperUser = SuperUser.Checked,
 					Sponsor = new Sponsor { Id = sponsorID }
 				};
+				a.Validate();
+				if (!a.HasErrors) {
 				if (sponsorAdminID != 0) {
 					sponsorRepository.UpdateSponsorAdmin(a);
 				} else {
@@ -200,6 +209,9 @@ namespace HW.Grp
 //					}
 				}
 				Response.Redirect("managers.aspx", true);
+				} else {
+					errorMessage = a.Errors.ToHtmlUl();
+				}
 			} else {
 //				ErrorMsg.Text = "<SPAN STYLE='color:#cc0000;'>Error! The username is invalid, please select a different one!</SPAN>";
 				errorMessage = "Error! The username is invalid, please select a different one!";

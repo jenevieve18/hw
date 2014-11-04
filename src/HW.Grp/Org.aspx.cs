@@ -1228,7 +1228,8 @@ ORDER BY ses.SponsorExtendedSurveyID",
 			int MIN_SHOW = sponsorRepository.ReadSponsor(sponsorID).MinUserCountToDisclose;
 
 //			bool[] DX = new bool[8];
-			bool[] DX = new bool[12];
+//			bool[] DX = new bool[12];
+			Dictionary<int, bool> DX = new Dictionary<int, bool>();
 
 			string sql = string.Format(
 				@"
@@ -1324,6 +1325,9 @@ d.SponsorID = {4} ORDER BY d.SortString",
 //			double extendedSurveyTotal = sponsorRepository.GetExtendedSurveyTotal(sponsorID);
 			while (rs.Read()) {
 				int depth = rs.GetInt32(1);
+//				if (!DX.ContainsKey(depth)) {
+//					DX[depth] = (rs.GetInt32(6) > 0);
+//				}
 				DX[depth] = (rs.GetInt32(6) > 0);
 
 				UX += rs.GetInt32(3);
@@ -1343,6 +1347,9 @@ d.SponsorID = {4} ORDER BY d.SortString",
 					(depth == 1 || depth == 4 ? " style='background-color:#EEEEEE'" : (depth == 2 || depth == 5 ? " style='background-color:#F6F6F6'" : ""))
 				);
 				for (int i = 1; i <= depth; i++) {
+					if (!DX.ContainsKey(i)) {
+						DX[i] = false;
+					}
 					OrgTree.Text += string.Format("<img src='img/{0}.gif' width='19' height='20'/>", (i == depth ? (DX[i] ? "T" : "L") : (DX[i] ? "I" : "null")));
 				}
 				string s = rs.GetString(0);
