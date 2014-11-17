@@ -90,30 +90,30 @@
 
         <div class="ui-grid-a">
             <div class="ui-block-a">
-                <asp:Label ID="lblUsername" runat="server" AssociatedControlID="textBoxUsername">Username<span class="req">*</span>
+                <asp:Label ID="lblUsername" runat="server" AssociatedControlID="textBoxEditUsername">Username<span class="req">*</span>
                         </asp:Label>
             </div>
             <div class="ui-block-b">
-                <asp:TextBox data-mini="true" ID="textBoxUsername" runat="server"></asp:TextBox>
+                <asp:TextBox data-mini="true" ID="textBoxEditUsername" runat="server"></asp:TextBox>
             </div>
         </div>
 
    
         <div class="ui-grid-a">
             <div class="ui-block-a">
-                <asp:Label ID="lblPassword" runat="server" Text="New Password<span class='req'>*</span>" AssociatedControlID="textBoxPassword"></asp:Label>
+                <asp:Label ID="lblPassword" runat="server" Text="New Password<span class='req'>*</span>" AssociatedControlID="textBoxEditPassword"></asp:Label>
             </div>
             <div class="ui-block-b">
-                <asp:TextBox data-mini="true" ID="textBoxPassword" TextMode="Password" EnableViewState="true" runat="server"></asp:TextBox>
+                <asp:TextBox data-mini="true" ID="textBoxEditPassword" TextMode="Password" EnableViewState="true" runat="server"></asp:TextBox>
             </div>
         </div>
 
         <div class="ui-grid-a">
             <div class="ui-block-a">
-                <asp:Label ID="lblConfirmPassword" runat="server" Text="Confirm New Password<span class='req'>*</span>" AssociatedControlID="textBoxConfirmPassword"></asp:Label>
+                <asp:Label ID="lblConfirmPassword" runat="server" Text="Confirm New Password<span class='req'>*</span>" AssociatedControlID="textBoxEditConfirmPassword"></asp:Label>
             </div>
             <div class="ui-block-b">
-                <asp:TextBox data-mini="true" ID="textBoxConfirmPassword" TextMode="Password" EnableViewState="true" runat="server"></asp:TextBox>
+                <asp:TextBox data-mini="true" ID="textBoxEditConfirmPassword" TextMode="Password" EnableViewState="true" runat="server"></asp:TextBox>
             </div>
         </div>
 

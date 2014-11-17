@@ -18,13 +18,13 @@ namespace HW.MobileApp
         {
             if (IsPostBack)
             {
-                if (!(String.IsNullOrEmpty(textBoxPassword.Text.Trim())))
+                if (!(String.IsNullOrEmpty(textBoxNewPassword.Text.Trim())))
                 {
-                    textBoxPassword.Attributes["value"]= textBoxPassword.Text;
+                    textBoxNewPassword.Attributes["value"] = textBoxNewPassword.Text;
                 }
-                if (!(String.IsNullOrEmpty(textBoxConfirmPassword.Text.Trim())))
+                if (!(String.IsNullOrEmpty(textBoxNewConfirmPassword.Text.Trim())))
                 {
-                    textBoxConfirmPassword.Attributes["value"] = textBoxConfirmPassword.Text;
+                    textBoxNewConfirmPassword.Attributes["value"] = textBoxNewConfirmPassword.Text;
                 }
             }
 
@@ -266,22 +266,22 @@ namespace HW.MobileApp
             bool flag6 = true;
 
             labelMessage.Text = "";
-            if (textBoxUsername.Text == "")
+            if (textBoxNewUsername.Text == "")
             {
                 labelMessage.Text = labelMessage.Text + ((labelMessage.Text == "") ? "" : "<br>") + lblUsername.Text;
                 flag1 = false;
             }
-            if (textBoxPassword.Text == "")
+            if (textBoxNewPassword.Text == "")
             {
                 labelMessage.Text = labelMessage.Text + ((labelMessage.Text == "") ? "" : "<br>") + lblPassword.Text;
                 flag2 = false;
             }
-            if (textBoxConfirmPassword.Text == "")
+            if (textBoxNewConfirmPassword.Text == "")
             {
                 labelMessage.Text = labelMessage.Text + ((labelMessage.Text == "") ? "" : "<br>") + lblConfirmPassword.Text;
                 flag3 = false;
             }
-            if (!textBoxPassword.Text.Equals( textBoxConfirmPassword.Text))
+            if (!textBoxNewPassword.Text.Equals(textBoxNewConfirmPassword.Text))
             {
                 labelMessage.Text = labelMessage.Text + ((labelMessage.Text == "") ? "" : "<br>") + lblPassword.Text + " & " + lblConfirmPassword.Text;
                 flag4 = false;
@@ -339,7 +339,7 @@ namespace HW.MobileApp
             if (flag1 && flag2 && flag3 && flag4 && flag5 && flag6
                 && flag7 && flag8 && flag9 && flag10 && flag11 && flag12)
             {
-                token = service.UserCreate(textBoxUsername.Text, textBoxPassword.Text, textBoxEmail.Text, textBoxAlternateEmail.Text, cbTerms.Checked, int.Parse(dropDownListLanguage.SelectedValue), 0, 0, 10).token;
+                token = service.UserCreate(textBoxNewUsername.Text, textBoxNewPassword.Text, textBoxEmail.Text, textBoxAlternateEmail.Text, cbTerms.Checked, int.Parse(dropDownListLanguage.SelectedValue), 0, 0, 10).token;
                 if (token != "" && token !=null)
                 {
                     saveProfile(token);

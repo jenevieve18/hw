@@ -31,13 +31,13 @@ namespace HW.MobileApp
 
             if (IsPostBack)
             {
-                if (!(String.IsNullOrEmpty(textBoxPassword.Text.Trim())))
+                if (!(String.IsNullOrEmpty(textBoxEditPassword.Text.Trim())))
                 {
-                    textBoxPassword.Attributes["value"] = textBoxPassword.Text;
+                    textBoxEditPassword.Attributes["value"] = textBoxEditPassword.Text;
                 }
-                if (!(String.IsNullOrEmpty(textBoxConfirmPassword.Text.Trim())))
+                if (!(String.IsNullOrEmpty(textBoxEditConfirmPassword.Text.Trim())))
                 {
-                    textBoxConfirmPassword.Attributes["value"] = textBoxConfirmPassword.Text;
+                    textBoxEditConfirmPassword.Attributes["value"] = textBoxEditConfirmPassword.Text;
                 }
             }
 
@@ -314,11 +314,11 @@ namespace HW.MobileApp
             if (rdbMangerialYes.Checked) managerial = "413";
             else if (rdbMangerialNo.Checked) managerial = "412";
 
-            
-            if (service.UserUpdateInfo(textBoxUsername.Text, textBoxEmail.Text, textBoxAlternateEmail.Text, token, 10)) flag1 = true;
-            if (textBoxPassword.Text != ""&&textBoxConfirmPassword.Text!="" && textBoxConfirmPassword.Text == textBoxPassword.Text)
-            { 
-                if(!service.UserUpdatePassword(textBoxPassword.Text,token,10) )flag2=false;
+
+            if (service.UserUpdateInfo(textBoxEditUsername.Text, textBoxEmail.Text, textBoxAlternateEmail.Text, token, 10)) flag1 = true;
+            if (textBoxEditPassword.Text != "" && textBoxEditConfirmPassword.Text != "" && textBoxEditConfirmPassword.Text == textBoxEditPassword.Text)
+            {
+                if (!service.UserUpdatePassword(textBoxEditPassword.Text, token, 10)) flag2 = false;
             }
             if (service.UserSetProfileQuestion(4,birthYear.SelectedValue+"-"+birthMonth.SelectedValue+"-"+birthDay.SelectedValue,token,10)&&
                 service.UserSetProfileQuestion(2,gender,token,10)&&
@@ -349,7 +349,7 @@ namespace HW.MobileApp
         {
                 HWService.UserInfo userinfo = service.UserGetInfo(token,10);
                 dropDownListLanguage.SelectedIndex = (userinfo.languageID == 2)? 0:1;
-                textBoxUsername.Text = userinfo.username;
+                textBoxEditUsername.Text = userinfo.username;
                 textBoxEmail.Text = userinfo.email;
                 textBoxAlternateEmail.Text = userinfo.alternateEmail;
 

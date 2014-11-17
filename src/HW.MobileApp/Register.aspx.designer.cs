@@ -85,13 +85,13 @@ namespace HW.MobileApp {
         protected global::System.Web.UI.WebControls.Label lblUsername;
         
         /// <summary>
-        /// textBoxUsername control.
+        /// textBoxNewUsername control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxUsername;
+        protected global::System.Web.UI.WebControls.TextBox textBoxNewUsername;
         
         /// <summary>
         /// lblPassword control.
@@ -103,13 +103,13 @@ namespace HW.MobileApp {
         protected global::System.Web.UI.WebControls.Label lblPassword;
         
         /// <summary>
-        /// textBoxPassword control.
+        /// textBoxNewPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxPassword;
+        protected global::System.Web.UI.WebControls.TextBox textBoxNewPassword;
         
         /// <summary>
         /// lblConfirmPassword control.
@@ -121,13 +121,13 @@ namespace HW.MobileApp {
         protected global::System.Web.UI.WebControls.Label lblConfirmPassword;
         
         /// <summary>
-        /// textBoxConfirmPassword control.
+        /// textBoxNewConfirmPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxConfirmPassword;
+        protected global::System.Web.UI.WebControls.TextBox textBoxNewConfirmPassword;
         
         /// <summary>
         /// lblEmail control.
