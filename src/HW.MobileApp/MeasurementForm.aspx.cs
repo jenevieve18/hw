@@ -58,6 +58,8 @@ namespace HW.MobileApp
                 timeMin.DataSource = Enumerable.Range(00, 60).Select(x => x.ToString("D2"));
                 timeHour.DataBind();
                 timeMin.DataBind();
+                timeHour.SelectedValue = DateTime.Now.Hour.ToString("D2");
+                timeMin.SelectedValue = DateTime.Now.Minute.ToString("D2");
             }
 
             measureTextBox = new TextBox[measure.Count()];

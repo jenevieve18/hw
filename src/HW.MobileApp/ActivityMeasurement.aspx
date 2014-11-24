@@ -15,12 +15,12 @@
 
     </script>
 
-    <div data-role="popup" id="mypopup" data-overlay-theme="a" data-position-to="window" data-theme="c" style="max-width:400px;" class="ui-corner-all">
+    <div data-role="popup" id="mypopup" data-overlay-theme="" data-position-to="window" data-theme="c" style="max-width:400px;" class="ui-corner-all">
 		<div data-role="header" data-theme="a" class="ui-corner-top">
 			<h1>Delete Event?</h1>
 		</div>
 		<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
-			<h3 class="ui-title">Are you sure you want to delete this activity/measurement?</h3>
+			<h3>Are you sure you want to delete this activity/measurement?</h3>
 			<p>This action cannot be undone.</p>
 			<a data-role="button" data-inline="true" data-rel="back" data-theme="c"><%= R.Str(lang, "button.cancel") %></a>    
 			<a runat="server" onserverclick="deleteActivity" data-role="button" data-inline="true" action="callserverdelete()" data-transition="flow" data-theme="b">Delete</a>  
