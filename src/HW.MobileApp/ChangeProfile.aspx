@@ -94,7 +94,7 @@
                         </asp:Label>
             </div>
             <div class="ui-block-b">
-                <asp:TextBox data-mini="true" ID="textBoxEditUsername" runat="server"></asp:TextBox>
+                <asp:TextBox data-mini="true" ID="textBoxEditUsername" runat="server" autocomplete="off"></asp:TextBox>
             </div>
         </div>
 
@@ -104,7 +104,7 @@
                 <asp:Label ID="lblPassword" runat="server" Text="New Password<span class='req'>*</span>" AssociatedControlID="textBoxEditPassword"></asp:Label>
             </div>
             <div class="ui-block-b">
-                <asp:TextBox data-mini="true" ID="textBoxEditPassword" TextMode="Password" EnableViewState="true" runat="server"></asp:TextBox>
+                <asp:TextBox data-mini="true" ID="textBoxEditPassword" TextMode="Password" EnableViewState="true" runat="server" autocomplete="off"></asp:TextBox>
             </div>
         </div>
 

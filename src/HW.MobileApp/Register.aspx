@@ -32,7 +32,7 @@
     
 </head>
 <body>
-    <form id="form1" runat="server">
+    <form id="form1" runat="server" autocomplete="off">
         
         <div data-role="page" id="register">
 
