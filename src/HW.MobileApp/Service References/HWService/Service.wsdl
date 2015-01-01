@@ -1149,11 +1149,8 @@
             <s:element minOccurs="1" maxOccurs="1" name="testID" type="s:int" />
             <s:element minOccurs="0" maxOccurs="1" name="invitationKey" type="s:string" />
             <s:element minOccurs="1" maxOccurs="1" name="DT" type="s:dateTime" />
-            <s:element minOccurs="0" maxOccurs="1" name="sessionSettings" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="testName" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="testSettings" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="testData" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="testImage" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="testTypeID" type="s:int" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -1818,11 +1815,8 @@
     <wsdl:part name="testID" type="s:string" />
     <wsdl:part name="invitationKey" type="s:string" />
     <wsdl:part name="DT" type="s:string" />
-    <wsdl:part name="sessionSettings" type="s:string" />
-    <wsdl:part name="testName" type="s:string" />
-    <wsdl:part name="testSettings" type="s:string" />
     <wsdl:part name="testData" type="s:string" />
-    <wsdl:part name="testImage" type="s:string" />
+    <wsdl:part name="testTypeID" type="s:string" />
   </wsdl:message>
   <wsdl:message name="InvitationKeySetTestHttpPostOut">
     <wsdl:part name="Body" element="tns:boolean" />

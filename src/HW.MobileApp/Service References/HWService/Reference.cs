@@ -226,7 +226,7 @@ namespace HW.MobileApp.HWService {
         
         [System.ServiceModel.OperationContractAttribute(Action="https://ws.healthwatch.se/InvitationKeySetTest", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        bool InvitationKeySetTest(int testID, string invitationKey, System.DateTime DT, string sessionSettings, string testName, string testSettings, string testData, string testImage);
+        bool InvitationKeySetTest(int testID, string invitationKey, System.DateTime DT, string testData, int testTypeID);
     }
     
     /// <remarks/>
@@ -4139,8 +4139,8 @@ namespace HW.MobileApp.HWService {
             return base.Channel.InvitationKeyHasTest(testID, invitationKey);
         }
         
-        public bool InvitationKeySetTest(int testID, string invitationKey, System.DateTime DT, string sessionSettings, string testName, string testSettings, string testData, string testImage) {
-            return base.Channel.InvitationKeySetTest(testID, invitationKey, DT, sessionSettings, testName, testSettings, testData, testImage);
+        public bool InvitationKeySetTest(int testID, string invitationKey, System.DateTime DT, string testData, int testTypeID) {
+            return base.Channel.InvitationKeySetTest(testID, invitationKey, DT, testData, testTypeID);
         }
     }
 }
