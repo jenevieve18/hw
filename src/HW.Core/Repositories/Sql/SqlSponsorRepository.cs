@@ -1315,9 +1315,12 @@ ORDER BY sa.Name {3}",
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
 					var a = new SponsorAdmin {
-						Id = rs.GetInt32(0),
-						Usr = rs.GetString(1),
-						Name = rs.GetString(2),
+//						Id = rs.GetInt32(0),
+//						Usr = rs.GetString(1),
+//						Name = rs.GetString(2),
+						Id = GetInt32(rs, 0),
+						Usr = GetString(rs, 1),
+						Name = GetString(rs, 2),
 						ReadOnly = GetInt32(rs, 3) == 1
 					};
 					admins.Add(a);
