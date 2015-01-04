@@ -127,7 +127,7 @@
         <%
         foreach (var f in fifeedback)
         {
-            if (f.feedbackTemplateID != 0 && f.value != "0")
+            if (f.feedbackTemplateID != 0 && f.value != "0" && f.value != null)
             {
         %> 
         <li data-role="collapsible" data-content-theme="d" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u" data-inset="false" data-iconpos="right" style="padding:0px 0px 0px 0px;">
