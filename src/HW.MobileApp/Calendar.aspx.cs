@@ -24,7 +24,7 @@ namespace HW.MobileApp
 
             int month = DateTime.Now.Month-1;
             int year = DateTime.Now.Year;
-            if (month == 1){
+            if (month <= 1){
                 month = 12;
                 year -= 1;
             }
