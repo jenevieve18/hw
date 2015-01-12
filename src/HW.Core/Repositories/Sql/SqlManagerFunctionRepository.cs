@@ -55,38 +55,38 @@ FROM ManagerFunction"
 			return functions;
 		}
 		
-		public IList<SponsorAdminFunction> FindBySponsorAdmin2(int sponsorAdminID)
-		{
-			string q = sponsorAdminID != -1 ?
-				string.Format(@"
-INNER JOIN SponsorAdminFunction saf ON saf.ManagerFunctionID = mf.ManagerFunctionID
-WHERE saf.SponsorAdminID = {0}", sponsorAdminID)
-				: "";
-			string query = string.Format(
-				@"
-SELECT mf.ManagerFunction,
-	mf.URL,
-	mf.Expl
-FROM ManagerFunction mf
-{0}
-ORDER BY mf.ManagerFunctionID",
-				q
-			);
-			var functions = new List<SponsorAdminFunction>();
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				while (rs.Read()) {
-					var f = new SponsorAdminFunction {
-						Function = new ManagerFunction {
-							Function = GetString(rs, 0),
-							URL = GetString(rs, 1),
-							Expl = GetString(rs, 2)
-						}
-					};
-					functions.Add(f);
-				}
-			}
-			return functions;
-		}
+//		public IList<SponsorAdminFunction> FindBySponsorAdmin2(int sponsorAdminID)
+//		{
+//			string q = sponsorAdminID != -1 ?
+//				string.Format(@"
+//INNER JOIN SponsorAdminFunction saf ON saf.ManagerFunctionID = mf.ManagerFunctionID
+//WHERE saf.SponsorAdminID = {0}", sponsorAdminID)
+//				: "";
+//			string query = string.Format(
+//				@"
+//SELECT mf.ManagerFunction,
+//	mf.URL,
+//	mf.Expl
+//FROM ManagerFunction mf
+//{0}
+//ORDER BY mf.ManagerFunctionID",
+//				q
+//			);
+//			var functions = new List<SponsorAdminFunction>();
+//			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+//				while (rs.Read()) {
+//					var f = new SponsorAdminFunction {
+//						Function = new ManagerFunction {
+//							Function = GetString(rs, 0),
+//							URL = GetString(rs, 1),
+//							Expl = GetString(rs, 2)
+//						}
+//					};
+//					functions.Add(f);
+//				}
+//			}
+//			return functions;
+//		}
 		
 		public IList<ManagerFunction> FindBySponsorAdmin(int sponsorAdminID)
 		{
@@ -105,24 +105,48 @@ FROM ManagerFunction mf
 ORDER BY mf.ManagerFunctionID",
 				q
 			);
-//			string query = string.Format(
-//				@"
-			//SELECT mf.ManagerFunction,
-			//mf.URL,
-			//mf.Expl
-			//FROM SponsorAdminFunction saf
-			//INNER JOIN ManagerFunction mf ON saf.ManagerFunctionID = mf.ManagerFunctionID
-			//WHERE saf.SponsorAdminID = {0}
-			//ORDER BY mf.ManagerFunctionID",
-//				sponsorAdminID
-//			);
 			var functions = new List<ManagerFunction>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
 					var f = new ManagerFunction {
-						Function = rs.GetString(0),
-						URL = rs.GetString(1),
-						Expl = rs.GetString(2)
+						Function = GetString(rs, 0),
+						URL = GetString(rs, 1),
+						Expl = GetString(rs, 2)
+					};
+					functions.Add(f);
+				}
+			}
+			return functions;
+		}
+		
+		public IList<ManagerFunctionLang> FindBySponsorAdmin(int sponsorAdminID, int langID)
+		{
+			string q = sponsorAdminID != -1 ?
+				string.Format(@"
+INNER JOIN SponsorAdminFunction saf ON saf.ManagerFunctionID = mf.ManagerFunctionID
+WHERE saf.SponsorAdminID = {0}", sponsorAdminID)
+				: "";
+			string query = string.Format(
+				@"
+SELECT mf.ManagerFunction,
+mf.URL,
+mf.Expl
+FROM ManagerFunctionLang mf
+{0}
+{1}
+ORDER BY mf.ManagerFunctionID",
+				q,
+				sponsorAdminID != -1 ?
+				string.Format("AND mf.LangID = {0}", langID)
+				: string.Format("WHERE mf.LangID = {0}", langID)
+			);
+			var functions = new List<ManagerFunctionLang>();
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				while (rs.Read()) {
+					var f = new ManagerFunctionLang {
+						Function = GetString(rs, 0),
+						URL = GetString(rs, 1),
+						Expl = GetString(rs, 2)
 					};
 					functions.Add(f);
 				}

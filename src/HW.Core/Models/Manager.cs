@@ -28,4 +28,11 @@ namespace HW.Core.Models
 			return Function;
 		}
 	}
+	
+	public class ManagerFunctionLang : BaseModel
+	{
+		public virtual string Function { get; set; }
+		public virtual string URL { get; set; }
+		public virtual string Expl { get; set; }
+	}
 }
