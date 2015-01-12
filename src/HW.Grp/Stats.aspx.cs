@@ -28,7 +28,8 @@ namespace HW.Grp
 		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
 		SqlReportRepository reportRepository = new SqlReportRepository();
 		SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
-		
+        protected int lid;
+
 		public IList<SponsorProjectRoundUnitLanguage> Languages {
 			set {
 				int pruid = 0;
@@ -148,7 +149,8 @@ namespace HW.Grp
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
-			sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
+            sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
+            lid = ConvertHelper.ToInt32(Session["lid"], 1);
 			
 //			plotTypes = plotRepository.FindAll();
 			
@@ -200,7 +202,9 @@ namespace HW.Grp
 		}
 		
 		protected override void OnPreRender(EventArgs e)
-		{
+        {
+            Execute.Text = R.Str(lid, "execute", "Execute");
+
 			Org.Visible = (Grouping.SelectedValue == "1" || Grouping.SelectedValue == "2");
 			BQ.Visible = (Grouping.SelectedValue == "3");
 		}

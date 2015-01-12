@@ -26,16 +26,25 @@ namespace HW.Grp
 		SqlUserRepository userRepository = new SqlUserRepository();
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		SqlProjectRepository projectRepository = new SqlProjectRepository();
+		protected int lid;
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
+			lid = ConvertHelper.ToInt32(Session["lid"], 1);
 
 			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Messages, DateTime.Now);
 			Save.Click += new EventHandler(Save_Click);
 			Send.Click += new EventHandler(Send_Click);
 
 			if (sponsorID != 0) {
+
+                SendType.Items.Add(new ListItem(R.Str(lid, "select.send.type", "< select send type >"), "0"));
+                SendType.Items.Add(new ListItem(R.Str(lid, "registration", "Registration"), "1"));
+                SendType.Items.Add(new ListItem(R.Str(lid, "registration.reminder", "Registration reminder"), "2"));
+                SendType.Items.Add(new ListItem(R.Str(lid, "login.reminder", "Login reminder"), "3"));
+                SendType.Items.Add(new ListItem(R.Str(lid, "users.activated.all", "All activated users"), "9"));
+
 				sent = (HttpContext.Current.Request.QueryString["Sent"] != null);
 				
 				int sponsorAdminID;
@@ -415,6 +424,8 @@ namespace HW.Grp
 		protected override void OnPreRender(EventArgs e)
 		{
 			base.OnPreRender(e);
+            Save.Text = R.Str(lid, "save", "Save");
+            Send.Text = R.Str(lid, "send", "Send");
 
 			if (incorrectPassword) {
 				Page.RegisterStartupScript("ERROR", "<script language='JavaScript'>alert('Incorrect password!');</script>");

@@ -29,6 +29,7 @@ namespace HW.Grp
 		protected int sponsorID;
 		protected int sponsorAdminID;
 		int AX = 0;
+        protected int lid;
 		
 		public bool HasSelectedArea {
 			get { return SelectedArea != null; }
@@ -73,7 +74,8 @@ namespace HW.Grp
 			if (Convert.ToInt32(Session["SponsorID"]) == 0) {
 				Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
-			
+
+            lid = ConvertHelper.ToInt32(Session["lid"], 1);
 			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Exercises, DateTime.Now);
 			if (Request.QueryString["LID"] != null) {
 				LID = Convert.ToInt32(Request.QueryString["LID"]);

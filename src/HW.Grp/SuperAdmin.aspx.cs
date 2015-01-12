@@ -17,13 +17,15 @@ namespace HW.Grp
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		int superAdminID;
 		HW.Core.Models.SuperAdmin superAdmin;
+        protected int lid;
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			if (Session["SuperAdminID"] == null) {
 				Response.Redirect("default.aspx?SuperLogout=1&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
-			superAdminID = ConvertHelper.ToInt32(Session["SuperAdminID"]);
+            superAdminID = ConvertHelper.ToInt32(Session["SuperAdminID"]);
+            lid = ConvertHelper.ToInt32(Session["lid"], 1);
 			superAdmin = sponsorRepository.ReadSuperAdmin(superAdminID);
 			submit.Click += new EventHandler(submit_Click);
 			submit2.Click += new EventHandler(submit2_Click);

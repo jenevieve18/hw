@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using HW.Core;
+using HW.Core.Helpers;
 using HW.Core.Models;
 using HW.Core.Repositories;
 using HW.Core.Repositories.Sql;
@@ -11,9 +12,9 @@ namespace HW.Grp
 	public partial class Grp : System.Web.UI.MasterPage
 	{
 		protected Sponsor sponsor;
-		protected IList<ManagerFunction> functions;
+		protected IList<ManagerFunctionLang> functions;
 		protected int lid;
-		protected bool swedish;
+//		protected bool swedish;
 		protected int sponsorAdminID;
 		protected string sponsorName;
 		protected bool super;
@@ -30,12 +31,13 @@ namespace HW.Grp
 
 			super = Request.Url.AbsolutePath.Contains("super");
 
-			functions = managerFunctionRepository.FindBySponsorAdmin(sponsorAdminID);
+            lid = ConvertHelper.ToInt32(Session["lid"], 1);
+			functions = managerFunctionRepository.FindBySponsorAdmin(sponsorAdminID, lid);
 
-			lid = Request["LID"] != null ? Convert.ToInt32(Request["LID"]) : 0;
+//			lid = Request["LID"] != null ? Convert.ToInt32(Request["LID"]) : 0;
 
-			swedish = Session["LID"] != null ? Convert.ToInt32(Session["LID"]) != 0 : false;
-			LanguageFactory.SetCurrentCulture2(lid);
+//			swedish = Session["LID"] != null ? Convert.ToInt32(Session["LID"]) != 0 : false;
+//			LanguageFactory.SetCurrentCulture2(lid);
 		}
 	}
 }

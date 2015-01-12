@@ -1,23 +1,18 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Grp.master.cs" Inherits="HW.Grp.Grp" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
+<%@ Import Namespace="HW.Grp" %>
 <!DOCTYPE html>
 
 <html lang="en">
 <head id="Head1" runat="server">
-    <title>HealthWatch.se / Group admin</title>
+    <title>HealthWatch.se / <%= R.Str(lid, "login.header", "Group administration") %></title>
 	<meta http-equiv="Pragma" content="no-cache"/>
 	<meta http-equiv="Expires" content="-1"/>
 	<meta name="Robots" content="noarchive"/>
 	<script language="JavaScript">window.history.forward(1);</script>
 	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-	<!--<link type="text/css" rel="stylesheet" href="includes/css/960.css">
-	<link type="text/css" rel="stylesheet" href="includes/css/site.css">
-	<link type="text/css" rel="stylesheet" href="includes/css/admin.css">-->
-	<!--<link type="text/css" href="includes/ui/css/ui-lightness/jquery-ui-1.8.11.custom.css" rel="Stylesheet">-->
-	<!--<script type="text/javascript" src="includes/ui/js/jquery-1.5.1.min.js"></script>-->
 	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
-	<!--<script type="text/javascript" src="includes/ui/js/jquery-ui-1.8.11.custom.min.js"></script>-->
 	<script type="text/javascript">
 	    $(document).ready(function () {
 	        var descriptionS = $("#submenu .description").html();
@@ -31,11 +26,15 @@
 	        });
 	    });
 	</script>
+    <style type="text/css">
+        .i18n 
+        {
+            background:url(https://healthwatch.se/includes/resources/rsaquo.gif) no-repeat 0 4px;
+            padding-left: 7px;
+        }
+    </style>
 
-	<!--<link rel="stylesheet" href="css/bootstrap.css">
-	<link rel="stylesheet" href="css/bootstrap-responsive.css">-->
-
-    <asp:ContentPlaceHolder ID="head" runat="server">
+	<asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
@@ -46,38 +45,31 @@
 				<img src="img/hwlogo.png" width="186" height="126" alt="HealthWatch group administrator"/>
 			</div>
 			<div class="grid_8 omega p2">
-				<!--HealthWatch.se - Header 1<br>
-				<span style="font-size:14px;">Group administration - test</span><br>
-				<img src="http://localhost:20135/img/partner/1.gif">-->
 				<% if (sponsor != null) { %>
 					HealthWatch.se - <%= sponsor.SuperSponsor.Languages[0].Header %><br />
-					<span style="font-size:14px;">Group administration - <%= sponsor.Name %></span><br />
+					<span style="font-size:14px;">
+                        <%= R.Str(lid, "login.header", "Group administration")%> - <%= sponsor.Name %>
+                        <%= HtmlHelper.Anchor(R.Str(lid, "i18n", "På svenska"), string.Format("default.aspx?lid={1}&r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery), lid == 1 ? 2 : 1), "class='i18n'")%>
+                    </span><br />
 					<%= HtmlHelper.Image(string.Format("/img/partner/{0}.gif", sponsor.SuperSponsor.Id)) %>
 				<% } else { %>
 					HealthWatch.se<br />
-					Group administration<br />
+					<%= R.Str(lid, "login.header", "Group administration")%>
+                    <%= HtmlHelper.Anchor(R.Str(lid, "i18n", "På svenska"), string.Format("default.aspx?lid={1}&r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery), lid == 1 ? 2 : 1), "class='i18n'")%>
+                    <br />
 				<% } %>
+                
 			</div>
 			<div class="logincontainer grid_5 alpha omega">
 				<div class="gears">
-					<!--<span>test</span>
-					<span style="color:white;">0</span><br>
-					<a href="settings.aspx?Rnd=258566570" class="regular">Settings</a>&nbsp;&nbsp;
-					<a href="default.aspx?Logout=1&amp;Rnd=258566570" class="regular">Log out</a>-->
 					<span><%= sponsorName %></span>
 					<span style="color:white;"><%= sponsorAdminID %></span><br>
-					<%= HtmlHelper.Anchor("Settings", "Settings.aspx", "class='active'", "", true)  %>&nbsp;&nbsp;
-					<%= HtmlHelper.Anchor("Log out", "Default.aspx?Logout=1", "class='active'", "", true)  %>
+					<%= HtmlHelper.Anchor(R.Str(lid, "settings", "Settings"), "Settings.aspx", "class='active'", "", true)  %>&nbsp;&nbsp;
+					<%= HtmlHelper.Anchor(R.Str(lid, "logout", "Log out"), "Default.aspx?Logout=1", "class='active'", "", true)  %>
 				</div>
 			</div>
 			<div id="submenu" class="grid_16 alpha">
 				<% if (!super && Session["SponsorID"] != null) { %>
-					<!--<a title="Statistics" class="active" href="stats.aspx?Rnd=258566570">Statistics</a>
-					<a title="Messages" href="messages.aspx?Rnd=258566570">Messages</a>
-					<a title="Managers" href="managers.aspx?Rnd=258566570">Managers</a>
-					<a title="TEST" href="debug.aspx?Rnd=258566570">TEST</a>
-					<a title="Exercises" href="exercise.aspx?Rnd=258566570">Exercises</a>
-					<div class="description">Statistics</div>-->
 					<% string desc = ""; %>
 					<% foreach (var f in functions) { %>
 						<% bool active = Request.Url.AbsolutePath.IndexOf(f.URL) >= 0; %>

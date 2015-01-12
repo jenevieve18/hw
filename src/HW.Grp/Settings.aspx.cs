@@ -12,9 +12,17 @@ namespace HW.Grp
 	public partial class Settings : System.Web.UI.Page
 	{
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
+        protected int lid;
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+            Save.Text = R.Str(lid, "save", "Save");
+        }
 		
 		protected void Page_Load(object sender, EventArgs e)
-		{
+        {
+            lid = ConvertHelper.ToInt32(Session["lid"], 1);
 			Save.Click += new EventHandler(Save_Click);
 			if (Convert.ToInt32(Session["SponsorAdminID"]) <= 0) {
 				Message.Text = "Super administrators cannot change password. Please contact support@healthwatch.se!";

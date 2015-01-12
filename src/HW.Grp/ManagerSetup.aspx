@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Grp.Master" AutoEventWireup="true" CodeBehind="ManagerSetup.aspx.cs" Inherits="HW.Grp.ManagerSetup" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
+<%@ Import Namespace="HW.Grp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -22,17 +23,17 @@
                     <td valign="top">
 	                    <table border="0" cellpadding="0" cellspacing="0">
 		                    <tr><td colspan="2"><b>Credentials</b></td></tr>
-		                    <tr><td>Name&nbsp;</td><td><asp:TextBox ID="Name" Width=200 runat=server /></td></tr>
-		                    <tr><td>Username&nbsp;</td><td><asp:TextBox ID="Usr" Width=200 runat=server /></td></tr>
-		                    <tr><td>Password&nbsp;</td><td><asp:TextBox ID="Pas" TextMode=Password Width=200 runat=server /></td></tr>
-		                    <tr><td>Email&nbsp;</td><td><asp:TextBox ID="Email" Width=200 runat=server /></td></tr>
-                            <tr><td>Organization read only&nbsp;</td><td><asp:CheckBox ID=ReadOnly runat=server /></td></tr>
+		                    <tr><td><%= R.Str(lid, "manager.name", "Name")%>&nbsp;</td><td><asp:TextBox ID="Name" Width=200 runat=server /></td></tr>
+		                    <tr><td><%= R.Str(lid, "manager.username", "Username")%>&nbsp;</td><td><asp:TextBox ID="Usr" Width=200 runat=server /></td></tr>
+		                    <tr><td><%= R.Str(lid, "manager.password", "Password")%>&nbsp;</td><td><asp:TextBox ID="Pas" TextMode=Password Width=200 runat=server /></td></tr>
+		                    <tr><td><%= R.Str(lid, "email") %>&nbsp;</td><td><asp:TextBox ID="Email" Width=200 runat=server /></td></tr>
+                            <tr><td><%= R.Str(lid, "organization.readonly", "Organization read only")%>&nbsp;</td><td><asp:CheckBox ID=ReadOnly runat=server /></td></tr>
                         </table>
                     </td>
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
                     <td valign="top">
 	                    <table border="0" cellpadding="0" cellspacing="0">
-		                    <tr><td><b>Roles</b></td></tr>
+		                    <tr><td><b><%= R.Str(lid, "manager.access", "Roles")%></b></td></tr>
 		                    <tr><td><asp:CheckBox ID="SuperUser" Text="Super user (can administer its own manager account, including all units)" runat=server /></td></tr>
 		                    <tr><td><asp:CheckBoxList CellPadding=0 CellSpacing=0 ID="ManagerFunctionID" runat=server /></td></tr>
                         </table>
@@ -41,7 +42,7 @@
 	        </table>
             <table border="0" cellpadding="0" cellspacing="0">
 	            <tr>
-					<td><b>Organisation access</b></td>
+					<td><b><%= R.Str(lid, "organization.access", "Organisation access")%></b></td>
 				</tr>
 	            <asp:Label ID=OrgTree runat=server />
 				<%--<tr>

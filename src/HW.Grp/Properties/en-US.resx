@@ -117,4 +117,145 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="exercises.area" xml:space="preserve">
+    <value>Choose area</value>
+  </data>
+  <data name="exercises.category" xml:space="preserve">
+    <value>Choose a Category</value>
+  </data>
+  <data name="exercises.group" xml:space="preserve">
+    <value>Group-&lt;br&gt;exercises</value>
+  </data>
+  <data name="exercises.sorting" xml:space="preserve">
+    <value>Exercises - Sorting:</value>
+  </data>
+  <data name="filename" xml:space="preserve">
+    <value>Filename</value>
+  </data>
+  <data name="i18n" xml:space="preserve">
+    <value>På svenska</value>
+  </data>
+  <data name="invitation.received" xml:space="preserve">
+    <value>Received &lt;br&gt; Inivtation</value>
+  </data>
+  <data name="login.header" xml:space="preserve">
+    <value>Group administration</value>
+  </data>
+  <data name="login.name" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="login.password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="login.reminder.subject" xml:space="preserve">
+    <value>Login reminder subject/message</value>
+  </data>
+  <data name="login.signin" xml:space="preserve">
+    <value>Sign in</value>
+  </data>
+  <data name="manager.access" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="manager.add" xml:space="preserve">
+    <value>Add manager</value>
+  </data>
+  <data name="manager.add1" xml:space="preserve">
+    <value>Add manager</value>
+  </data>
+  <data name="manager.name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="manager.password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="manager.username" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="message.activated.all" xml:space="preserve">
+    <value>Message to all activated users</value>
+  </data>
+  <data name="message.confirm" xml:space="preserve">
+    <value>message, confirm with password</value>
+  </data>
+  <data name="news" xml:space="preserve">
+    <value>News</value>
+  </data>
+  <data name="organization.access" xml:space="preserve">
+    <value>Organisation access</value>
+  </data>
+  <data name="organization.readonly" xml:space="preserve">
+    <value>Organization read only</value>
+  </data>
+  <data name="registration.invitation.subject" xml:space="preserve">
+    <value>Registration invitation subject/message *</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="search.email" xml:space="preserve">
+    <value>Search user by email</value>
+  </data>
+  <data name="send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="send.auto.day" xml:space="preserve">
+    <value>The automatic send in every day mode will only execute once/week/user</value>
+  </data>
+  <data name="send.auto.perform" xml:space="preserve">
+    <value>Automatically perform check and send every</value>
+  </data>
+  <data name="send.individuals" xml:space="preserve">
+    <value>Send to individuals who have not logged in during the last</value>
+  </data>
+  <data name="send.once" xml:space="preserve">
+    <value>* Sent only once to each individual (status is reset upon email address change)</value>
+  </data>
+  <data name="send.only" xml:space="preserve">
+    <value>** Sent only to individuals who have received invitation but not activated their account</value>
+  </data>
+  <data name="settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="unit" xml:space="preserve">
+    <value>Unit</value>
+  </data>
+  <data name="unit.add" xml:space="preserve">
+    <value>Add unit</value>
+  </data>
+  <data name="unit.id" xml:space="preserve">
+    <value>Unit ID</value>
+  </data>
+  <data name="unit.import" xml:space="preserve">
+    <value>Import units</value>
+  </data>
+  <data name="unit.parent.default" xml:space="preserve">
+    <value>Default parent unit</value>
+  </data>
+  <data name="user.add" xml:space="preserve">
+    <value>Add user</value>
+  </data>
+  <data name="user.import" xml:space="preserve">
+    <value>Import users</value>
+  </data>
+  <data name="version" xml:space="preserve">
+    <value>Version x.xx published</value>
+  </data>
 </root>

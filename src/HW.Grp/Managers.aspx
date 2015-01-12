@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Grp.Master" AutoEventWireup="true" CodeBehind="Managers.aspx.cs" Inherits="HW.Grp.Managers" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
+<%@ Import Namespace="HW.Grp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -8,7 +9,7 @@
 		<div id="contextbar">
 			<div class="actionPane2">
 				<div class="bottom" id=ActionNav runat=server>
-					<a class="add-user" href="managerSetup.aspx">Add manager</a>
+					<a class="add-user" href="managerSetup.aspx"><%= R.Str(lid, "manager.add", "Add manager")%></a>
 				</div>
 			</div>
 		</div>
@@ -32,8 +33,8 @@
                         background-image:url(images/bullet_arrow_up.png);
                     }
                 </style>
-					<td><b><a class="sort <%= sort == 0 ? "sort-asc" : "sort-desc" %>" href="managers.aspx?sort=<%= sort == 0 ? 1 : 0 %>">Name</a></b></th>
-					<td><b>Roles</b></th>
+					<td><b><a class="sort <%= sort == 0 ? "sort-asc" : "sort-desc" %>" href="managers.aspx?sort=<%= sort == 0 ? 1 : 0 %>"><%= R.Str(lid, "manager.name", "Name")%></a></b></th>
+					<td><b><%= R.Str(lid, "manager.access", "Roles")%></b></th>
 				</tr>
 				<% foreach (var s in sponsorAdmins) { %>
 				<tr>

@@ -18,11 +18,13 @@ namespace HW.Grp
 		protected SqlManagerFunctionRepository managerRepository = new SqlManagerFunctionRepository();
 		protected int sort;
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
+        protected int lid;
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Managers, DateTime.Now);
 			int sponsorID = Convert.ToInt32(Session["SponsorID"]);
+            lid = ConvertHelper.ToInt32(Session["lid"], 1);
 			sort = ConvertHelper.ToInt32(Request.QueryString["sort"]);
 			bool delete = Request.QueryString["Delete"] != null;
 			if (delete) {

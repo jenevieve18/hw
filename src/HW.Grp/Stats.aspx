@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Grp.Master" AutoEventWireup="true" CodeBehind="Stats.aspx.cs" Inherits="HW.Grp.Stats" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
+<%@ Import Namespace="HW.Grp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
 <link rel="stylesheet" href="css/smoothness/jquery-ui-1.9.2.custom.min.css">
@@ -270,11 +271,11 @@
 	<div class="contentgroup grid_16">
         <div id="contextbar">
             <div class="settingsPane">
-	            <span class="desc">Timeframe</span>
+	            <span class="desc"><%= R.Str(lid, "timeframe", "Timeframe")%></span>
                 <asp:DropDownList ID="FromYear" runat="server" />--<asp:DropDownList ID="ToYear" runat="server" />
-                Survey
+                <%= R.Str(lid, "survey", "Survey")%>
                 <asp:DropDownList AutoPostBack="true" ID="ProjectRoundUnitID" runat="server" />
-			    Aggregation
+			    <%= R.Str(lid, "aggregation", "Aggregation")%>
 				<asp:DropDownList AutoPostBack="true" ID="GroupBy" runat="server">
 					<asp:ListItem Value="1" Text="One week" />
 					<asp:ListItem Value="7" Text="Two weeks, start with even" />
@@ -284,14 +285,14 @@
 					<asp:ListItem Value="5" Text="Six months" />
 					<asp:ListItem Value="6" Text="One year" />
 				</asp:DropDownList><br />
-			    <span class="desc">Grouping</span>
+			    <span class="desc"><%= R.Str(lid, "grouping", "Grouping")%></span>
 				<asp:DropDownList AutoPostBack="true" ID="Grouping" runat="server">
 					<asp:ListItem Value="0" Text="< none >" />
 					<asp:ListItem Value="1" Text="Users on unit" />
 					<asp:ListItem Value="2" Text="Users on unit+subunits" />
 					<asp:ListItem Value="3" Text="Background variable" />
 				</asp:DropDownList>
-                Language
+                <%= R.Str(lid, "language", "Language")%>
                 <asp:DropDownList ID="LangID" runat="server" AutoPostBack="true" />
                 <br />
                 <asp:PlaceHolder ID="Org" runat="server" Visible="false" />
@@ -319,7 +320,7 @@
                         <% } %>
                         </div>
                     </div>
-					<span class="small">Change all graphs to:</span>
+					<span class="small"><%= R.Str(lid, "graphs.change.all", "Change all graphs to:")%></span>
                     <select class="plot-types small">
                         <% foreach (var p in plotTypes) { %>
                             <% if (!p.SupportsMultipleSeries && !forSingleSeries) {} %>
@@ -335,7 +336,7 @@
 					<% } %>-->
                     <!--<span class="toggle toggle-chart-description"></span>-->
                     <span class="chart-descriptions-info"></span>
-					<span class="small">Export all graphs to:</span>
+					<span class="small"><%= R.Str(lid, "graphs.export.all", "Export all graphs to:")%></span>
 					<span class="button white small export">
                         <% string exportAllDocXUrl = GetExportAllUrl("docx", additionalQuery); %>
                         <span class="hidden hidden-exportall-docx-url"><%= exportAllDocXUrl%></span>
@@ -371,7 +372,7 @@
                             <img class="report-part-graph" src="<%= imageUrl %>" alt="" />
                             <!--<div class="chart-description1" style="display:none"></div>-->
 							<div class="action">
-								<span class="small">Change this graph to:</span>
+								<span class="small"><%= R.Str(lid, "graphs.change", "Change this graph to:")%></span>
                                 <select class="plot-types small">
                                     <% foreach (var p in plotTypes) { %>
                                         <% if (!p.SupportsMultipleSeries && !forSingleSeries) {} %>
@@ -385,7 +386,7 @@
 									<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.BoxPlotMinMax%></span><%= PlotType.GetString(PlotType.BoxPlotMinMax)%></span>
                                     <span class="button white small graph"><span class="hidden plot-type"><%= PlotType.BoxPlot%></span><%= PlotType.GetString(PlotType.BoxPlot)%></span>
 								<% } %>-->
-								<span class="small">Export this graph to:</span>
+								<span class="small"><%= R.Str(lid, "graphs.export", "Export this graph to:")%></span>
 								<span class="button white small export">
                                     <% string exportDocXUrl = GetExportUrl(r.ReportPart.Id, r.Id, "docx", additionalQuery); %>
 							        <span class="hidden hidden-export-docx-url"><%= exportDocXUrl%></span>

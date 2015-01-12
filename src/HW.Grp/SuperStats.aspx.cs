@@ -10,9 +10,11 @@ namespace HW.Grp
 	public partial class SuperStats : System.Web.UI.Page
 	{
 		SqlReportRepository reportRepository = new SqlReportRepository();
+        protected int lid;
 		
 		protected void Page_Load(object sender, EventArgs e)
-		{
+        {
+            lid = ConvertHelper.ToInt32(Session["lid"], 1);
 		}
 
 		protected override void OnPreRender(EventArgs e)

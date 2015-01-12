@@ -1,4 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Grp.Master" AutoEventWireup="true"
+﻿<%@ Import Namespace="HW.Grp" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Grp.Master" AutoEventWireup="true"
     CodeBehind="Org.aspx.cs" Inherits="HW.Grp.Org" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -8,25 +9,25 @@
         <div id="contextbar">
             <div class="top">
                 <div class="search">
-                    Search user by email
+                    <%= R.Str(lid, "search.email", "Search user by email") %>
                     <asp:TextBox ID="SearchEmail" runat="server" />
                     <asp:Button ID="Search" Text="Search" runat="server" />
                 </div>
             </div>
             <div class="bottom" id="ActionNav" runat="server">
-                <a class="add-unit" href="org.aspx?Action=AddUnit">Add unit</a>
-                <a class="import-unit" href="org.aspx?Action=ImportUnit">Import units</a>
-                <a class="add-user" href="org.aspx?Action=AddUser">Add user</a>
-                <a class="import-users" href="org.aspx?Action=ImportUser">Import users</a>
+                <a class="add-unit" href="org.aspx?Action=AddUnit"><%= R.Str(lid, "unit.add", "Add unit")%></a>
+                <a class="import-unit" href="org.aspx?Action=ImportUnit"><%= R.Str(lid, "unit.import", "Import units")%></a>
+                <a class="add-user" href="org.aspx?Action=AddUser"><%= R.Str(lid, "user.add", "Add user")%></a>
+                <a class="import-users" href="org.aspx?Action=ImportUser"><%= R.Str(lid, "user.import", "Import users")%></a>
             </div>
             <div class="actionPane">
                 <asp:PlaceHolder ID="AddUnit" runat="server" Visible="false">
                     <div class="actionBlock">
-                        <span class="desc">Unit name</span>
+                        <span class="desc"><%= R.Str(lid, "unit.name", "Unit name")%></span>
                         <asp:TextBox CssClass="inpt" ID="Department" runat="server" />(for display in hierarchy)<br />
-                        <span class="desc">Unit ID</span>
+                        <span class="desc"><%= R.Str(lid, "unit.id", "Unit ID")%></span>
                         <asp:TextBox CssClass="inpt" ID="DepartmentShort" runat="server" />(for user import/export, short name, no spaces)<br />
-                        <span class="desc">Parent unit</span>
+                        <span class="desc"><%= R.Str(lid, "unit.parent", "Parent unit")%></span>
                         <asp:DropDownList CssClass="maxInpt" ID="ParentDepartmentID" runat="server" /><br />
                         <asp:Button ID="CancelUnit" CssClass="btn" Text="Cancel" runat="server" />
                         <asp:Button CssClass="btn" ID="SaveUnit" Text="Save" runat="server" />
@@ -34,8 +35,8 @@
                 </asp:PlaceHolder>
                 <asp:PlaceHolder ID="ImportUnits" runat="server" Visible="false">
                     <div class="actionBlock">
-                        <span class="descLong">Filename</span><input type="file" class="inpt" id="UnitsFilename" runat="server" /><br />
-                        <span class="descLong">Default parent unit</span><asp:DropDownList CssClass="maxInpt" ID="ImportUnitsParentDepartmentID" runat="server" /><br />
+                        <span class="descLong"><%= R.Str(lid, "filename", "Filename")%></span><input type="file" class="inpt" id="UnitsFilename" runat="server" /><br />
+                        <span class="descLong"><%= R.Str(lid, "unit.parent.default", "Default parent unit")%></span><asp:DropDownList CssClass="maxInpt" ID="ImportUnitsParentDepartmentID" runat="server" /><br />
                         <span style="color: #CC0000;"><asp:Label ID="ImportUnitsError" runat="server" /></span>
                         <asp:Button ID="CancelImportUnit" Text="Cancel" CssClass="btn" runat="server" />
                         <asp:Button ID="SaveImportUnit" Text="Save" CssClass="btn" runat="server" />
@@ -43,13 +44,13 @@
                 </asp:PlaceHolder>
                 <asp:PlaceHolder ID="AddUser" runat="server" Visible="false">
                     <div class="actionBlock">
-                        <span class="desc">Email</span><asp:TextBox CssClass="inpt" ID="Email" runat="server" /><br />
-                        <span class="desc">Unit</span><asp:DropDownList CssClass="maxInpt" ID="DepartmentID" runat="server" /><br />
+                        <span class="desc"><%= R.Str(lid, "email", "Email")%></span><asp:TextBox CssClass="inpt" ID="Email" runat="server" /><br />
+                        <span class="desc"><%= R.Str(lid, "unit", "Unit")%></span><asp:DropDownList CssClass="maxInpt" ID="DepartmentID" runat="server" /><br />
                         <asp:PlaceHolder ID="Hidden" runat="server" />
                         <asp:PlaceHolder ID="UserUpdate" runat="server">
-                            <span class="desc">Status</span>
+                            <span class="desc"><%= R.Str(lid, "status", "Status")%></span>
                             <asp:DropDownList ID="StoppedReason" runat="server">
-                                <asp:ListItem Value="0">Active</asp:ListItem>
+                                <%-- <asp:ListItem Value="0">Active</asp:ListItem>
                                 <asp:ListItem Value="1">Stopped, work related</asp:ListItem>
                                 <asp:ListItem Value="2">Stopped, education leave</asp:ListItem>
                                 <asp:ListItem Value="14">Stopped, parental leave</asp:ListItem>
@@ -58,7 +59,7 @@
                                 <asp:ListItem Value="44">Stopped, no longer associated</asp:ListItem>
                                 <asp:ListItem Value="4">Stopped, other reason</asp:ListItem>
                                 <asp:ListItem Value="5">Stopped, unknown reason</asp:ListItem>
-                                <asp:ListItem Value="6">Stopped, project completed</asp:ListItem>
+                                <asp:ListItem Value="6">Stopped, project completed</asp:ListItem>--%>
                             </asp:DropDownList>
                             updated on
                             <asp:TextBox Width="80" ID="Stopped" runat="server" />
@@ -82,8 +83,8 @@
                 </asp:PlaceHolder>
                 <asp:PlaceHolder ID="ImportUsers" runat="server" Visible="false">
                     <div class="actionBlock">
-                        <span class="descLong">Filename</span><input type="file" class="inpt" id="UsersFilename" runat="server" /><br />
-                        <span class="descLong">Default parent unit</span><asp:DropDownList CssClass="maxInpt" ID="ImportUsersParentDepartmentID" runat="server" /><br />
+                        <span class="descLong"><%= R.Str(lid, "filename", "Filename")%></span><input type="file" class="inpt" id="UsersFilename" runat="server" /><br />
+                        <span class="descLong"><%= R.Str(lid, "unit.parent.default", "Default parent unit")%></span><asp:DropDownList CssClass="maxInpt" ID="ImportUsersParentDepartmentID" runat="server" /><br />
                         <span style="color: #CC0000;">
                             <asp:Label ID="ImportUsersError" runat="server" />
                         </span>
@@ -93,9 +94,9 @@
                 </asp:PlaceHolder>
                 <asp:PlaceHolder ID="DeleteUser" runat="server" Visible="false">
                     <div class="actionBlock">
-                        <span class="desc">Email</span>
+                        <span class="desc"><%= R.Str(lid, "email", "Email")%></span>
                         <asp:TextBox CssClass="inpt" ReadOnly="true" ID="DeleteUserEmail" runat="server" /><br />
-                        If this user has activated the account, perform the following<br />
+                        <%= R.Str(lid, "user.perform.activated", "If this user has activated the account, perform the following")%><br />
                         <asp:RadioButtonList ID="DeleteUserFrom" runat="server" RepeatDirection="Vertical" RepeatLayout="Flow">
                             <asp:ListItem Value="1" Selected>From today and onwards, disassociate this user with the organization.</asp:ListItem>
                             <asp:ListItem Value="0">Disassociate this user with the organization from start.</asp:ListItem>
@@ -129,7 +130,7 @@
                     </tr>
                     <tr>
                         <td valign="top" id="act1" runat="server">
-                            <b>Action</b><br />
+                            <b><%= R.Str(lid, "action", "Action")%></b><br />
                             <a href=""><img src="img/unt_add.gif" border="0" />&nbsp;Add&nbsp;unit</a><br />
                             <a href=""><img src="img/usr_add.gif" border="0" />&nbsp;Add&nbsp;user</a>
                         </td>

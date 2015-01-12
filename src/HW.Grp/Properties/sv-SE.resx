@@ -117,16 +117,166 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="action" xml:space="preserve">
+    <value>Aktivitet</value>
+  </data>
+  <data name="active" xml:space="preserve">
+    <value>Aktiv</value>
+  </data>
+  <data name="aggregation" xml:space="preserve">
+    <value>Aggregering</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Avbryt</value>
+  </data>
+  <data name="email" xml:space="preserve">
+    <value>E-post</value>
+  </data>
+  <data name="execute" xml:space="preserve">
+    <value>Utför</value>
+  </data>
+  <data name="exercises.area" xml:space="preserve">
+    <value>Välj område</value>
+  </data>
+  <data name="exercises.category" xml:space="preserve">
+    <value>Välj kategori</value>
+  </data>
+  <data name="exercises.group" xml:space="preserve">
+    <value>Grupp-&lt;br&gt;övningar</value>
+  </data>
+  <data name="exercises.sorting" xml:space="preserve">
+    <value>Övningar - Sortering:</value>
+  </data>
+  <data name="filename" xml:space="preserve">
+    <value>Filnamn</value>
+  </data>
+  <data name="graphs.change" xml:space="preserve">
+    <value>Ändra alla grafer till:</value>
+  </data>
+  <data name="grouping" xml:space="preserve">
+    <value>Gruppering</value>
+  </data>
+  <data name="i18n" xml:space="preserve">
+    <value>In English</value>
+  </data>
+  <data name="invitation.received" xml:space="preserve">
+    <value>Fått inbjudan</value>
+  </data>
+  <data name="language" xml:space="preserve">
+    <value>Språk</value>
+  </data>
   <data name="login.header" xml:space="preserve">
-    <value>HealthWatch.se&lt;br&gt;Group administration</value>
+    <value>Gruppadministration</value>
   </data>
-  <data name="user.name" xml:space="preserve">
-    <value>Username</value>
-  </data>
-  <data name="user.password" xml:space="preserve">
-    <value>Password</value>
+  <data name="login.reminder.subject" xml:space="preserve">
+    <value>Inloggningspåminnelse ämne/meddelande</value>
   </data>
   <data name="login.signin" xml:space="preserve">
-    <value>Sign in</value>
+    <value>Logga in</value>
+  </data>
+  <data name="logout" xml:space="preserve">
+    <value>Logga ut</value>
+  </data>
+  <data name="manager.access" xml:space="preserve">
+    <value>Åtkomst</value>
+  </data>
+  <data name="manager.add" xml:space="preserve">
+    <value>Lägg till chef</value>
+  </data>
+  <data name="manager.name" xml:space="preserve">
+    <value>Namn</value>
+  </data>
+  <data name="manager.password" xml:space="preserve">
+    <value>Lösenord</value>
+  </data>
+  <data name="manager.username" xml:space="preserve">
+    <value>Användarnamn</value>
+  </data>
+  <data name="message.activated.all" xml:space="preserve">
+    <value>Meddelande till alla aktiverade användare</value>
+  </data>
+  <data name="message.confirm" xml:space="preserve">
+    <value>meddelande, bekräfta med lösenord</value>
+  </data>
+  <data name="news" xml:space="preserve">
+    <value>Nyheter</value>
+  </data>
+  <data name="organization.access" xml:space="preserve">
+    <value>Organisationsåtkomst</value>
+  </data>
+  <data name="organization.readonly" xml:space="preserve">
+    <value>Organisation, enbart läsbehörighet</value>
+  </data>
+  <data name="registration.invitation.subject" xml:space="preserve">
+    <value>Registreringsinbjudan ämne/meddelande *</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>Spara</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>Sök användare via e-post</value>
+  </data>
+  <data name="search.email" xml:space="preserve">
+    <value>Sök användare via e-post</value>
+  </data>
+  <data name="send" xml:space="preserve">
+    <value>Skicka</value>
+  </data>
+  <data name="send.auto.day" xml:space="preserve">
+    <value>Det automatiska utskicket i dagligen kommer bara att genomföras en gång/vecka/användare</value>
+  </data>
+  <data name="send.auto.perform" xml:space="preserve">
+    <value>Kontrollera och skicka automatiskt varje</value>
+  </data>
+  <data name="send.individuals" xml:space="preserve">
+    <value>Skicka till personer som inte loggat in under den senaste</value>
+  </data>
+  <data name="send.once" xml:space="preserve">
+    <value>* Skickas bara en gång till varje person (status återställs om mejladressen ändras)</value>
+  </data>
+  <data name="send.only" xml:space="preserve">
+    <value>** Skickas bara till personer som redan fått inbjudan men inte har aktiverat sina konton.</value>
+  </data>
+  <data name="settings" xml:space="preserve">
+    <value>Inställningar</value>
+  </data>
+  <data name="survey" xml:space="preserve">
+    <value>Enkät</value>
+  </data>
+  <data name="timeframe" xml:space="preserve">
+    <value>Tidsperiod</value>
+  </data>
+  <data name="total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="unit" xml:space="preserve">
+    <value>Enhet</value>
+  </data>
+  <data name="unit.add" xml:space="preserve">
+    <value>Lägg till enhet</value>
+  </data>
+  <data name="unit.id" xml:space="preserve">
+    <value>Enhets-ID</value>
+  </data>
+  <data name="unit.import" xml:space="preserve">
+    <value>Importera enheter</value>
+  </data>
+  <data name="unit.parent.default" xml:space="preserve">
+    <value>Överordnad enhet, standardvärde</value>
+  </data>
+  <data name="user.add" xml:space="preserve">
+    <value>Lägg till användare</value>
+  </data>
+  <data name="user.import" xml:space="preserve">
+    <value>Importera användare</value>
+  </data>
+  <data name="user.name" xml:space="preserve">
+    <value>Användarnamn</value>
+  </data>
+  <data name="user.password" xml:space="preserve">
+    <value>Lösenord</value>
+  </data>
+  <data name="version" xml:space="preserve">
+    <value>Version x.xx publicerad</value>
   </data>
 </root>

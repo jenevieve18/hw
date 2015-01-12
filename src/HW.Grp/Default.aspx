@@ -87,7 +87,7 @@
 
 		<img src="img/hwlogo.png" alt="HealthWatch group administrator"/>
         
-        <h2><%= R.Str("login.header", "HealthWatch.se<br>Group administration") %></h2>
+        <h2><%= R.Str(lid, "login.header", "HealthWatch.se<br>Group administration") %></h2>
 
 		<% if (errorMessage != "") { %>
 			<div class="alert alert-error">
@@ -95,16 +95,16 @@
 			</div>
 		<% } %>
 
-		<%= FormHelper.Input("ANV", "", R.Str("user.name", "Username"), "input-block-level") %>
-		<%= FormHelper.Password("LOS", "", R.Str("user.password", "Password"), "input-block-level")%>
+		<%= FormHelper.Input("ANV", "", R.Str(lid, "user.name", "Username"), "input-block-level") %>
+		<%= FormHelper.Password("LOS", "", R.Str(lid, "user.password", "Password"), "input-block-level")%>
 		
         <button class="btn btn-large btn-info" type="submit">
-            <i class="icon-circle-arrow-right"></i><%= R.Str("login.signin", "Sign in") %>
+            <i class="icon-circle-arrow-right"></i><%= R.Str(lid, "login.signin", "Sign in") %>
         </button>
         <% if (adminNews.Count > 0) { %>
         	<hr />
             <div class="news">
-                <h4>News</h4>
+                <h4><%= R.Str(lid, "news", "News") %></h4>
                 <% var i = 0; %>
                 <% foreach (var n in adminNews) { %>
                     <p>

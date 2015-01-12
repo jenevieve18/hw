@@ -220,8 +220,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources.en-US.resx" />
-    <EmbeddedResource Include="Resources.sv-SE.resx" />
+    <EmbeddedResource Include="Properties\en-US.resx" />
+    <EmbeddedResource Include="Properties\sv-SE.resx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Browsers\blackberry.browser" />

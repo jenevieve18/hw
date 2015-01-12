@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Core;
+using HW.Core.Helpers;
 using HW.Core.Models;
 using HW.Core.Repositories;
 using HW.Core.Repositories.Sql;
@@ -17,6 +18,7 @@ namespace HW.Grp
 		protected string errorMessage = string.Empty;
 		int sponsorAdminID = 0;
 		int sponsorID = 0;
+		protected int lid;
 
 		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
 		SqlManagerFunctionRepository managerRepository = new SqlManagerFunctionRepository();
@@ -25,10 +27,18 @@ namespace HW.Grp
 		bool HasSAID {
 			get { return Request.QueryString["SAID"] != null; }
 		}
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+            Cancel.Text = R.Str(lid, "cancel", "Cancel");
+            Save.Text = R.Str(lid, "save", "Save");
+        }
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			sponsorID = Convert.ToInt32(Session["SponsorID"]);
+			lid = ConvertHelper.ToInt32(Session["lid"], 1);
 
 			if (sponsorID != 0) {
 				Save.Click += new EventHandler(Save_Click);

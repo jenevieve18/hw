@@ -33,17 +33,31 @@ namespace HW.Grp
 		string hiddenBqWhere = "";
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
+		protected int lid;
 
-		protected void Page_Load(object sender, EventArgs e)
+        protected void Page_Load(object sender, EventArgs e)
 		{
 			SearchResultList.Text = "";
 			SearchResults.Visible = false;
 			ActionNav.Visible = (Convert.ToInt32(Session["ReadOnly"]) == 0);
 			sponsorID = Convert.ToInt32(Session["SponsorID"]);
+			lid = ConvertHelper.ToInt32(Session["lid"], 1);
 
 			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Organization, DateTime.Now);
 			string query = "";
 			if (sponsorID != 0) {
+
+                StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.active", "Active"), "0"));
+                StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.work", "Stopped, work related"), "1"));
+                StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.education", "Stopped, education leave"), "2"));
+                StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.parent", "Stopped, parental leave"), "14"));
+                StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.sick", "Stopped, sick leave"), "24"));
+                StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.not.participate", "Stopped, do not want to participate"), "34"));
+                StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.not.associated", "Stopped, no longer associated"), "44"));
+                StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.other", "Stopped, other reason"), "4"));
+                StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.unknown", "Stopped, unknown reason"), "5"));
+                StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.complete", "Stopped, project completed"), "6"));
+
 				if (Request.QueryString["ShowReg"] != null && Convert.ToInt32(Session["ReadOnly"]) == 0) {
 					showReg = true;
 				} else if (Convert.ToInt32(Session["SeeUsers"]) == 1 && Convert.ToInt32(Session["ReadOnly"]) == 0) {
@@ -1001,6 +1015,8 @@ VALUES ({0},1,NULL,{1},GETDATE())",
 		
 		protected override void OnPreRender(EventArgs e)
 		{
+            Search.Text = R.Str(lid, "search", "Search");
+
 			#region Normal org
 			string select = "";
 			string join = "";
@@ -1205,19 +1221,25 @@ ORDER BY ses.SponsorExtendedSurveyID",
 					@"
 <table border='0' cellspacing='0' cellpadding='0' style='font-size:12px;line-height:1.0;vertical-align:middle;'>
 	<tr style='border-bottom:1px solid #333333;'>
-		<td colspan='2'><b>Unit</b>&nbsp;</td>
-		<td align='center' style='font-size:9px;'>&nbsp;<b>Action</b>&nbsp;</td>
-		<td align='center' style='font-size:9px;'>&nbsp;<b>Active</b>&nbsp;</td>
+		<td colspan='2'><b>{2}</b>&nbsp;</td>
+		<td align='center' style='font-size:9px;'>&nbsp;<b>{3}</b>&nbsp;</td>
+		<td align='center' style='font-size:9px;'>&nbsp;<b>{4}</b>&nbsp;</td>
 		<!--<td align='center' style='font-size:9px;'>&nbsp;<b>Active/<br>Activated</b>&nbsp;</td>-->
 		{0}
-		<td align='center' style='font-size:9px;'>&nbsp;<b>Total</b>&nbsp;</td>
-		<td align='center' style='font-size:9px;'>&nbsp;<b>Received&nbsp;<br/>&nbsp;inivtation</b>&nbsp;</td>
+		<td align='center' style='font-size:9px;'>&nbsp;<b>{5}</b>&nbsp;</td>
+		<td align='center' style='font-size:9px;'>&nbsp;<b>{6}</b>&nbsp;</td>
 		<td align='center' style='font-size:9px;'>&nbsp;<b>1st invite&nbsp;<br/>&nbsp;sent</b>&nbsp;</td>
 		{1}
-		<td align='center' style='font-size:9px;'>&nbsp;<b>Unit ID</b>&nbsp;</td>
+		<td align='center' style='font-size:9px;'>&nbsp;<b>{7}</b>&nbsp;</td>
 	</tr>",
 					ESdesc,
-					aggrBRdesc
+					aggrBRdesc,
+                    R.Str(lid, "unit", "Unit"),
+                    R.Str(lid, "action", "Action"),
+                    R.Str(lid, "active", "Active"),
+                    R.Str(lid, "total", "Total"),
+                    R.Str(lid, "invitation.received", "Received&nbsp;<br/>&nbsp;inivtation"),
+                    R.Str(lid, "unit.id", "Unit ID")
 				);
 			}
 			//OrgTree.Text += "<TR><TD COLSPAN='" + (aggrBQcx + 8 + (showDepartmentID != 0 && BQs != "" ? BQs.Split(':').Length : 0) + EScount) + "' style='height:1px;line-height:1px;background-color:#333333'><img src='img/null.gif' width='1' height='1'></TD></TR>";

@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Grp.Master" AutoEventWireup="true" CodeBehind="Exercise.aspx.cs" Inherits="HW.Grp.Exercise" %>
 <%@ Import Namespace="HW.Core.Models" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
+<%@ Import Namespace="HW.Grp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
 <script type="text/javascript">
@@ -66,12 +67,12 @@
 
     <div class="contentgroup grid_16 exercises">
         <div class="statschosergroup">
-            <h1 class="header"><%= LanguageFactory.GetGroupExercise(LID) %></h1>
+            <h1 class="header"><%= R.Str(lid, "exercises.group", "Group-<br>exercises")%></h1>
             <a name="filter"></a>
 			<div class="statschoser">
 			    <div class="filter misc">
 			        <div class="title">
-                        <%= LanguageFactory.GetChooseArea(LID) %>
+                        <%= R.Str(lid, "exercises.area", "Choose area")%>
                     </div>
 			        <dl class="dropdown">
 						<asp:PlaceHolder ID="AreaID" runat="server" />
@@ -101,7 +102,7 @@
                 </div>
                 <div class="filter misc">
 			        <div class="title">
-                        <%= LanguageFactory.GetChooseCategory(LID) %>
+                        <%= R.Str(lid, "exercises.category", "Choose a Category")%>
                     </div>
 			        <dl class="dropdown">
 						<asp:PlaceHolder ID="CategoryID" runat="server" />
@@ -134,7 +135,7 @@
         <div>
 			<div class="currentform">
 			    <span class="lastform">
-					<%= LanguageFactory.GetSortingOrder(LID, BX) %>
+					<%= R.Str(lid, "exercises.sorting", "Exercises - Sorting:")%>
                 </span>
 			    <div class="forms">
                     <asp:PlaceHolder ID="Sort" runat="server" />

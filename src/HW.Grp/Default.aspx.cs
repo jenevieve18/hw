@@ -10,6 +10,7 @@ using HW.Core;
 using HW.Core.Models;
 using HW.Core.Repositories;
 using HW.Core.Repositories.Sql;
+using HW.Core.Helpers;
 
 namespace HW.Grp
 {
@@ -20,9 +21,17 @@ namespace HW.Grp
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		SqlNewsRepository newsRepository = new SqlNewsRepository();
 		protected IList<AdminNews> adminNews;
+        protected int lid;
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
+            lid = ConvertHelper.ToInt32(Session["lid"], 1);
+
+            SessionHelper.AddIf(Request.QueryString["lid"] != null, "lid", ConvertHelper.ToInt32(Request.QueryString["lid"]));
+            if (Request.QueryString["r"] != null) {
+                Response.Redirect(HttpUtility.UrlDecode(Request.QueryString["r"]));
+            }
+
 			adminNews = newsRepository.FindTop3AdminNews();
 			
 			bool login = false;
