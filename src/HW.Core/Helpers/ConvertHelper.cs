@@ -1,7 +1,18 @@
 ﻿using System;
+using System.Web;
 
 namespace HW.Core.Helpers
 {
+	public class SessionHelper
+	{
+		public static void AddIf(bool condition, string name, object val)
+		{
+			if (condition) {
+				HttpContext.Current.Session[name] = val;
+			}
+		}
+	}
+	
 	public class ConvertHelper
 	{
 		public ConvertHelper()
@@ -16,7 +27,8 @@ namespace HW.Core.Helpers
 		public static int ToInt32(object val, int def)
 		{
 			try {
-				return Convert.ToInt32(val);
+//				return Convert.ToInt32(val);
+				return Int32.Parse(val.ToString());
 			} catch {
 				return def;
 			}
