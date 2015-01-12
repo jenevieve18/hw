@@ -54,9 +54,10 @@
 					<%= HtmlHelper.Image(string.Format("/img/partner/{0}.gif", sponsor.SuperSponsor.Id)) %>
 				<% } else { %>
 					HealthWatch.se<br />
-					<%= R.Str(lid, "login.header", "Group administration")%>
+					<span style="font-size:14px">
+                        <%= R.Str(lid, "login.header", "Group administration")%>
                     <%= HtmlHelper.Anchor(R.Str(lid, "i18n", "På svenska"), string.Format("default.aspx?lid={1}&r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery), lid == 1 ? 2 : 1), "class='i18n'")%>
-                    <br />
+                    </span><br />
 				<% } %>
                 
 			</div>

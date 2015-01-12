@@ -24,9 +24,9 @@
                 <asp:PlaceHolder ID="AddUnit" runat="server" Visible="false">
                     <div class="actionBlock">
                         <span class="desc"><%= R.Str(lid, "unit.name", "Unit name")%></span>
-                        <asp:TextBox CssClass="inpt" ID="Department" runat="server" />(for display in hierarchy)<br />
+                        <asp:TextBox CssClass="inpt" ID="Department" runat="server" /><%= R.Str(lid, "display.hierarchy", "(for display in hierarchy)") %><br />
                         <span class="desc"><%= R.Str(lid, "unit.id", "Unit ID")%></span>
-                        <asp:TextBox CssClass="inpt" ID="DepartmentShort" runat="server" />(for user import/export, short name, no spaces)<br />
+                        <asp:TextBox CssClass="inpt" ID="DepartmentShort" runat="server" /><%= R.Str(lid, "user.import.export", "(for user import/export, short name, no spaces)") %><br />
                         <span class="desc"><%= R.Str(lid, "unit.parent", "Parent unit")%></span>
                         <asp:DropDownList CssClass="maxInpt" ID="ParentDepartmentID" runat="server" /><br />
                         <asp:Button ID="CancelUnit" CssClass="btn" Text="Cancel" runat="server" />
@@ -61,11 +61,11 @@
                                 <asp:ListItem Value="5">Stopped, unknown reason</asp:ListItem>
                                 <asp:ListItem Value="6">Stopped, project completed</asp:ListItem>--%>
                             </asp:DropDownList>
-                            updated on
+                            <%= R.Str(lid, "updated.on", "updated on") %>
                             <asp:TextBox Width="80" ID="Stopped" runat="server" />
                             (future date not allowed)
                             <br />
-                            If this user has activated the account, perform the following<br />
+                            <%= R.Str(lid, "user.active.perform", "If this user has activated the account, perform the following") %><br />
                             <asp:RadioButtonList ID="UserUpdateFrom" runat="server" RepeatDirection="Vertical"
                                 RepeatLayout="table">
                                 <asp:ListItem Value="1" Selected>Update the user profile with these settings from today and onwards.</asp:ListItem>

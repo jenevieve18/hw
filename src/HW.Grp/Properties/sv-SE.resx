@@ -129,6 +129,9 @@
   <data name="cancel" xml:space="preserve">
     <value>Avbryt</value>
   </data>
+  <data name="day.everyday" xml:space="preserve">
+    <value>varje dag</value>
+  </data>
   <data name="email" xml:space="preserve">
     <value>E-post</value>
   </data>
@@ -207,6 +210,9 @@
   <data name="organization.readonly" xml:space="preserve">
     <value>Organisation, enbart läsbehörighet</value>
   </data>
+  <data name="password.change" xml:space="preserve">
+    <value>Ändra lösenord</value>
+  </data>
   <data name="registration.invitation.subject" xml:space="preserve">
     <value>Registreringsinbjudan ämne/meddelande *</value>
   </data>
@@ -240,6 +246,36 @@
   <data name="settings" xml:space="preserve">
     <value>Inställningar</value>
   </data>
+  <data name="status.active" xml:space="preserve">
+    <value>Aktiv</value>
+  </data>
+  <data name="status.stop.complete" xml:space="preserve">
+    <value>Stoppad, projekt slutfört</value>
+  </data>
+  <data name="status.stop.education" xml:space="preserve">
+    <value>Stoppad, studieledigt</value>
+  </data>
+  <data name="status.stop.not.associated" xml:space="preserve">
+    <value>Stoppad, inte anknuten längre</value>
+  </data>
+  <data name="status.stop.not.participate" xml:space="preserve">
+    <value>Stoppad, önskar inte delta</value>
+  </data>
+  <data name="status.stop.other" xml:space="preserve">
+    <value>Stoppad, annat skäl</value>
+  </data>
+  <data name="status.stop.parent" xml:space="preserve">
+    <value>Stoppad, föräldraledigt</value>
+  </data>
+  <data name="status.stop.sick" xml:space="preserve">
+    <value>Stoppad, sjukfrånvaro</value>
+  </data>
+  <data name="status.stop.unknown" xml:space="preserve">
+    <value>Stoppad, okänd anledning</value>
+  </data>
+  <data name="status.stop.work" xml:space="preserve">
+    <value>Stoppad, arbetsrelaterat</value>
+  </data>
   <data name="survey" xml:space="preserve">
     <value>Enkät</value>
   </data>
@@ -264,6 +300,9 @@
   <data name="unit.parent.default" xml:space="preserve">
     <value>Överordnad enhet, standardvärde</value>
   </data>
+  <data name="updated.on" xml:space="preserve">
+    <value>updated on</value>
+  </data>
   <data name="user.add" xml:space="preserve">
     <value>Lägg till användare</value>
   </data>
@@ -278,5 +317,26 @@
   </data>
   <data name="version" xml:space="preserve">
     <value>Version x.xx publicerad</value>
+  </data>
+  <data name="week.disabled" xml:space="preserve">
+    <value>&lt;avaktiverad&gt;</value>
+  </data>
+  <data name="week.everyday" xml:space="preserve">
+    <value>&lt;varje dag&gt;</value>
+  </data>
+  <data name="week.friday" xml:space="preserve">
+    <value>Fredag</value>
+  </data>
+  <data name="week.monday" xml:space="preserve">
+    <value>Måndag</value>
+  </data>
+  <data name="week.thursday" xml:space="preserve">
+    <value>Torsdag</value>
+  </data>
+  <data name="week.tuesday" xml:space="preserve">
+    <value>Tisdag</value>
+  </data>
+  <data name="week.wednesday" xml:space="preserve">
+    <value>Onsdag</value>
   </data>
 </root>

@@ -51,6 +51,22 @@ namespace HW.Grp
 
 				sponsor = sponsorRepository.ReadSponsor(sponsorID);
 				if (!IsPostBack) {
+					
+					LoginDays.Items.Add(new ListItem(R.Str(lid, "day.everyday", "every day"), "1"));
+					LoginDays.Items.Add(new ListItem(R.Str(lid, "week", "week"), "7"));
+					LoginDays.Items.Add(new ListItem(R.Str(lid, "week.two", "2 weeks"), "14"));
+					LoginDays.Items.Add(new ListItem(R.Str(lid, "month", "month"), "30"));
+					LoginDays.Items.Add(new ListItem(R.Str(lid, "month.three", "3 months"), "90"));
+					LoginDays.Items.Add(new ListItem(R.Str(lid, "month.six", "6 months"), "100"));
+					
+		            LoginWeekday.Items.Add(new ListItem(R.Str(lid, "week.disabled", "< disabled >"), "NULL"));
+		            LoginWeekday.Items.Add(new ListItem(R.Str(lid, "week.everyday", "< every day >"), "0"));
+		            LoginWeekday.Items.Add(new ListItem(R.Str(lid, "week.monday", "Monday"), "1"));
+		            LoginWeekday.Items.Add(new ListItem(R.Str(lid, "week.tuesday", "Tuesday"), "2"));
+		            LoginWeekday.Items.Add(new ListItem(R.Str(lid, "week.wednesday", "Wednesday"), "3"));
+		            LoginWeekday.Items.Add(new ListItem(R.Str(lid, "week.thursday", "Thursday"), "4"));
+		            LoginWeekday.Items.Add(new ListItem(R.Str(lid, "week.friday", "Friday"), "5"));
+					
 					sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 					var u = userRepository.a(sponsorID, sponsorAdminID);
 					AllMessageLastSent.Text = "Recipients: " + u + ", ";

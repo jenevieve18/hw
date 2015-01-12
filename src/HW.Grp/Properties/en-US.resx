@@ -126,6 +126,9 @@
   <data name="cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="day.everyday" xml:space="preserve">
+    <value>every day</value>
+  </data>
   <data name="email" xml:space="preserve">
     <value>Email</value>
   </data>
@@ -198,6 +201,9 @@
   <data name="organization.readonly" xml:space="preserve">
     <value>Organization read only</value>
   </data>
+  <data name="password.change" xml:space="preserve">
+    <value>Change password</value>
+  </data>
   <data name="registration.invitation.subject" xml:space="preserve">
     <value>Registration invitation subject/message *</value>
   </data>
@@ -231,6 +237,36 @@
   <data name="settings" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="status.active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="status.stop.complete" xml:space="preserve">
+    <value>Stopped, project completed</value>
+  </data>
+  <data name="status.stop.education" xml:space="preserve">
+    <value>Stopped, education leave</value>
+  </data>
+  <data name="status.stop.not.associated" xml:space="preserve">
+    <value>Stopped, no longer associated</value>
+  </data>
+  <data name="status.stop.not.participate" xml:space="preserve">
+    <value>Stopped, do not want to participate</value>
+  </data>
+  <data name="status.stop.other" xml:space="preserve">
+    <value>Stopped, other reason</value>
+  </data>
+  <data name="status.stop.parent" xml:space="preserve">
+    <value>Stopped, parental leave</value>
+  </data>
+  <data name="status.stop.sick" xml:space="preserve">
+    <value>Stopped, sick leave</value>
+  </data>
+  <data name="status.stop.unknown" xml:space="preserve">
+    <value>Stopped, unknown reason</value>
+  </data>
+  <data name="status.stop.work" xml:space="preserve">
+    <value>Stopped, work related</value>
+  </data>
   <data name="total" xml:space="preserve">
     <value>Total</value>
   </data>
@@ -249,6 +285,9 @@
   <data name="unit.parent.default" xml:space="preserve">
     <value>Default parent unit</value>
   </data>
+  <data name="updated.on" xml:space="preserve">
+    <value>updated on</value>
+  </data>
   <data name="user.add" xml:space="preserve">
     <value>Add user</value>
   </data>
@@ -257,5 +296,26 @@
   </data>
   <data name="version" xml:space="preserve">
     <value>Version x.xx published</value>
+  </data>
+  <data name="week.disabled" xml:space="preserve">
+    <value>&lt; disabled &gt;</value>
+  </data>
+  <data name="week.everyday" xml:space="preserve">
+    <value>&lt; every day &gt;</value>
+  </data>
+  <data name="week.friday" xml:space="preserve">
+    <value>Friday</value>
+  </data>
+  <data name="week.monday" xml:space="preserve">
+    <value>Monday</value>
+  </data>
+  <data name="week.thursday" xml:space="preserve">
+    <value>Thursday</value>
+  </data>
+  <data name="week.tuesday" xml:space="preserve">
+    <value>Tuesday</value>
+  </data>
+  <data name="week.wednesday" xml:space="preserve">
+    <value>Wednesday</value>
   </data>
 </root>

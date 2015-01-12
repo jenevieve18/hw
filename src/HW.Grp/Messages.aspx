@@ -40,21 +40,21 @@
 					<td>
 						<asp:TextBox ID=LoginTxt runat=server TextMode=MultiLine Rows=6 Width=460 /><br />
 						<%= R.Str(lid, "send.individuals", "Send to individuals who have not logged in during the last")%> <asp:DropDownList ID=LoginDays runat=server>
-						<asp:ListItem Value=1 Text="every day" />
+						<%--<asp:ListItem Value=1 Text="every day" />
 						<asp:ListItem Value=7 Text="week" />
 						<asp:ListItem Value=14 Text="2 weeks" />
 						<asp:ListItem Value=30 Text="month" />
 						<asp:ListItem Value=90 Text="3 months" />
-						<asp:ListItem Value=180 Text="6 months" />
+						<asp:ListItem Value=180 Text="6 months" />--%>
 						</asp:DropDownList><br />
 						<%= R.Str(lid, "send.auto.perform", "Automatically perform check and send every")%> <asp:DropDownList ID=LoginWeekday runat=server>
-						<asp:ListItem Value=NULL Text="< disabled >" />
+						<%--<asp:ListItem Value=NULL Text="< disabled >" />
 						<asp:ListItem Value=0 Text="< every day >" />
 						<asp:ListItem Value=1 Text="Monday" />
 						<asp:ListItem Value=2 Text="Tuesday" />
 						<asp:ListItem Value=3 Text="Wednesday" />
 						<asp:ListItem Value=4 Text="Thursday" />
-						<asp:ListItem Value=5 Text="Friday" />
+						<asp:ListItem Value=5 Text="Friday" />--%>
 						</asp:DropDownList><br /><br /><i><%= R.Str(lid, "send.auto.day", "The automatic send in every day mode will only execute once/week/user.")%></i>
 					</td>
 				</tr>
