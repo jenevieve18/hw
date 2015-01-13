@@ -126,8 +126,14 @@
   <data name="aggregation" xml:space="preserve">
     <value>Aggregering</value>
   </data>
+  <data name="background.variable" xml:space="preserve">
+    <value>Bakgrundsvariabel</value>
+  </data>
   <data name="cancel" xml:space="preserve">
     <value>Avbryt</value>
+  </data>
+  <data name="credentials" xml:space="preserve">
+    <value>Uppgifter</value>
   </data>
   <data name="day.everyday" xml:space="preserve">
     <value>varje dag</value>
@@ -155,6 +161,18 @@
   </data>
   <data name="graphs.change" xml:space="preserve">
     <value>Ändra alla grafer till:</value>
+  </data>
+  <data name="graphs.change.all" xml:space="preserve">
+    <value>Ändra alla grafer till:</value>
+  </data>
+  <data name="graphs.change1" xml:space="preserve">
+    <value>Ändra denna graf till:</value>
+  </data>
+  <data name="graphs.export" xml:space="preserve">
+    <value>Exportera denna graf till:</value>
+  </data>
+  <data name="graphs.export.all" xml:space="preserve">
+    <value>Exportera alla grafer till:</value>
   </data>
   <data name="grouping" xml:space="preserve">
     <value>Gruppering</value>
@@ -201,6 +219,15 @@
   <data name="message.confirm" xml:space="preserve">
     <value>meddelande, bekräfta med lösenord</value>
   </data>
+  <data name="month.one" xml:space="preserve">
+    <value>En månad</value>
+  </data>
+  <data name="month.six" xml:space="preserve">
+    <value>Sex månader</value>
+  </data>
+  <data name="month.three" xml:space="preserve">
+    <value>Tre månader</value>
+  </data>
   <data name="news" xml:space="preserve">
     <value>Nyheter</value>
   </data>
@@ -213,8 +240,20 @@
   <data name="password.change" xml:space="preserve">
     <value>Ändra lösenord</value>
   </data>
+  <data name="recipients" xml:space="preserve">
+    <value>Mottagare</value>
+  </data>
   <data name="registration.invitation.subject" xml:space="preserve">
     <value>Registreringsinbjudan ämne/meddelande *</value>
+  </data>
+  <data name="registration.reminder.subject" xml:space="preserve">
+    <value>Registreringspåminnelse ämne/meddelande **</value>
+  </data>
+  <data name="reminder" xml:space="preserve">
+    <value>Påminnelse:</value>
+  </data>
+  <data name="reminder.for" xml:space="preserve">
+    <value>Påminnelse för</value>
   </data>
   <data name="save" xml:space="preserve">
     <value>Spara</value>
@@ -242,6 +281,9 @@
   </data>
   <data name="send.only" xml:space="preserve">
     <value>** Skickas bara till personer som redan fått inbjudan men inte har aktiverat sina konton.</value>
+  </data>
+  <data name="sent.last" xml:space="preserve">
+    <value>Senast skickat</value>
   </data>
   <data name="settings" xml:space="preserve">
     <value>Inställningar</value>
@@ -315,6 +357,24 @@
   <data name="user.password" xml:space="preserve">
     <value>Lösenord</value>
   </data>
+  <data name="user.perform.activated" xml:space="preserve">
+    <value>Om den här användaren har aktiverat kontot, gör följande</value>
+  </data>
+  <data name="user.update.onwards" xml:space="preserve">
+    <value>Uppdatera användarprofilen med dessa inställningar från och med idag och framåt.</value>
+  </data>
+  <data name="user.update.previous" xml:space="preserve">
+    <value>Den tidigare registrerade e-postadessen har aldrig varit korrekt och det skapade kontot bör tas bort från organisationen.</value>
+  </data>
+  <data name="user.update.start" xml:space="preserve">
+    <value>Uppdatera användarprofilen som om dessa inställningar ställdes in från början.</value>
+  </data>
+  <data name="users.unit" xml:space="preserve">
+    <value>Användare på enhet</value>
+  </data>
+  <data name="users.unit.subunit" xml:space="preserve">
+    <value>Användare på enhet och undergrupper</value>
+  </data>
   <data name="version" xml:space="preserve">
     <value>Version x.xx publicerad</value>
   </data>
@@ -330,13 +390,25 @@
   <data name="week.monday" xml:space="preserve">
     <value>Måndag</value>
   </data>
+  <data name="week.one" xml:space="preserve">
+    <value>En vecka</value>
+  </data>
   <data name="week.thursday" xml:space="preserve">
     <value>Torsdag</value>
   </data>
   <data name="week.tuesday" xml:space="preserve">
     <value>Tisdag</value>
   </data>
+  <data name="week.two.even" xml:space="preserve">
+    <value>Två veckor, börja med jämn</value>
+  </data>
+  <data name="week.two.odd" xml:space="preserve">
+    <value>Två veckor, börja med udda</value>
+  </data>
   <data name="week.wednesday" xml:space="preserve">
     <value>Onsdag</value>
+  </data>
+  <data name="year.one" xml:space="preserve">
+    <value>Ett år</value>
   </data>
 </root>

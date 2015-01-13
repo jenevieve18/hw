@@ -123,8 +123,14 @@
   <data name="active" xml:space="preserve">
     <value>Active</value>
   </data>
+  <data name="background.variable" xml:space="preserve">
+    <value>Background variable</value>
+  </data>
   <data name="cancel" xml:space="preserve">
     <value>Cancel</value>
+  </data>
+  <data name="credentials" xml:space="preserve">
+    <value>Credentials</value>
   </data>
   <data name="day.everyday" xml:space="preserve">
     <value>every day</value>
@@ -146,6 +152,18 @@
   </data>
   <data name="filename" xml:space="preserve">
     <value>Filename</value>
+  </data>
+  <data name="graphs.change" xml:space="preserve">
+    <value>Change this graph to:</value>
+  </data>
+  <data name="graphs.change.all" xml:space="preserve">
+    <value>Change all graphs to:</value>
+  </data>
+  <data name="graphs.export" xml:space="preserve">
+    <value>Export this graph to:</value>
+  </data>
+  <data name="graphs.export.all" xml:space="preserve">
+    <value>Export all graphs to:</value>
   </data>
   <data name="i18n" xml:space="preserve">
     <value>På svenska</value>
@@ -192,6 +210,15 @@
   <data name="message.confirm" xml:space="preserve">
     <value>message, confirm with password</value>
   </data>
+  <data name="month.one" xml:space="preserve">
+    <value>One month</value>
+  </data>
+  <data name="month.six" xml:space="preserve">
+    <value>Six months</value>
+  </data>
+  <data name="month.three" xml:space="preserve">
+    <value>Three months</value>
+  </data>
   <data name="news" xml:space="preserve">
     <value>News</value>
   </data>
@@ -204,8 +231,20 @@
   <data name="password.change" xml:space="preserve">
     <value>Change password</value>
   </data>
+  <data name="recipients" xml:space="preserve">
+    <value>Recipients</value>
+  </data>
   <data name="registration.invitation.subject" xml:space="preserve">
     <value>Registration invitation subject/message *</value>
+  </data>
+  <data name="registration.reminder.subject" xml:space="preserve">
+    <value>Registration reminder subject/message **</value>
+  </data>
+  <data name="reminder" xml:space="preserve">
+    <value>Reminder:</value>
+  </data>
+  <data name="reminder.for" xml:space="preserve">
+    <value>Reminder for</value>
   </data>
   <data name="save" xml:space="preserve">
     <value>Save</value>
@@ -233,6 +272,9 @@
   </data>
   <data name="send.only" xml:space="preserve">
     <value>** Sent only to individuals who have received invitation but not activated their account</value>
+  </data>
+  <data name="sent.last" xml:space="preserve">
+    <value>Last sent</value>
   </data>
   <data name="settings" xml:space="preserve">
     <value>Settings</value>
@@ -294,6 +336,24 @@
   <data name="user.import" xml:space="preserve">
     <value>Import users</value>
   </data>
+  <data name="user.perform.activated" xml:space="preserve">
+    <value>If this user has activated the account, perform the following</value>
+  </data>
+  <data name="user.update.onwards" xml:space="preserve">
+    <value>Update the user profile with these settings from today and onwards.</value>
+  </data>
+  <data name="user.update.previous" xml:space="preserve">
+    <value>The previously registered email address has never been correct and the created account should be detached from organization.</value>
+  </data>
+  <data name="user.update.start" xml:space="preserve">
+    <value>Update the user profile as if these settings were set from start.</value>
+  </data>
+  <data name="users.unit" xml:space="preserve">
+    <value>Users on unit</value>
+  </data>
+  <data name="users.unit.subunit" xml:space="preserve">
+    <value>Users on unit+subunits</value>
+  </data>
   <data name="version" xml:space="preserve">
     <value>Version x.xx published</value>
   </data>
@@ -309,13 +369,25 @@
   <data name="week.monday" xml:space="preserve">
     <value>Monday</value>
   </data>
+  <data name="week.one" xml:space="preserve">
+    <value>One week</value>
+  </data>
   <data name="week.thursday" xml:space="preserve">
     <value>Thursday</value>
   </data>
   <data name="week.tuesday" xml:space="preserve">
     <value>Tuesday</value>
   </data>
+  <data name="week.two.even" xml:space="preserve">
+    <value>Two weeks, start with even</value>
+  </data>
+  <data name="week.two.odd" xml:space="preserve">
+    <value>Two weeks, start with odd</value>
+  </data>
   <data name="week.wednesday" xml:space="preserve">
     <value>Wednesday</value>
+  </data>
+  <data name="year.one" xml:space="preserve">
+    <value>One year</value>
   </data>
 </root>

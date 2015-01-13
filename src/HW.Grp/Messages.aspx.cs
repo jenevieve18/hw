@@ -69,7 +69,7 @@ namespace HW.Grp
 					
 					sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 					var u = userRepository.a(sponsorID, sponsorAdminID);
-					AllMessageLastSent.Text = "Recipients: " + u + ", ";
+					AllMessageLastSent.Text = R.Str(lid, "recipients", "Recipients") + ": " + u + ", ";
 
 //					sponsor = sponsorRepository.ReadSponsor(sponsorID);
 					if (sponsor != null) {
@@ -106,7 +106,7 @@ namespace HW.Grp
 								projectRoundId = s.ProjectRound.Id;
 								if (!IsPostBack) {
 									extendedSurvey = s.Internal + s.RoundText;
-									ExtendedSurvey.Text = "Reminder for <B>" + extendedSurvey + "</B> (<span style='font-size:9px;'>[x]Last sent: " + (s.EmailLastSent == null ? "Never" : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
+									ExtendedSurvey.Text = R.Str(lid, "reminder.for", "Reminder for") + " <B>" + extendedSurvey + "</B> (<span style='font-size:9px;'>[x]Last sent: " + (s.EmailLastSent == null ? "Never" : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
 									ExtendedSurveyTxt.Text = s.EmailBody;
 									ExtendedSurveySubject.Text = s.EmailSubject;
 
@@ -154,7 +154,7 @@ namespace HW.Grp
 								ExtendedSurveySubject.Visible = true;
 								ExtendedSurvey.Visible = true;
 								ExtendedSurveyTxt.Visible = true;
-								SendType.Items.Add(new ListItem("Reminder: " + extendedSurvey, "4"));
+								SendType.Items.Add(new ListItem(R.Str(lid, "reminder", "Reminder: ") + extendedSurvey, "4"));
 							}
 						} else {
 							projectRoundId = 0;

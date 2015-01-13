@@ -57,6 +57,10 @@ namespace HW.Grp
                 StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.other", "Stopped, other reason"), "4"));
                 StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.unknown", "Stopped, unknown reason"), "5"));
                 StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.complete", "Stopped, project completed"), "6"));
+                
+                UserUpdateFrom.Items.Add(new ListItem(R.Str(lid, "user.update.onwards", "Update the user profile with these settings from today and onwards."), "1"));
+                UserUpdateFrom.Items.Add(new ListItem(R.Str(lid, "user.update.start", "Update the user profile as if these settings were set from start."), "0"));
+                UserUpdateFrom.Items.Add(new ListItem(R.Str(lid, "user.update.previous", "The previously registered email address has never been correct and the created account should be detached from organization."), "2"));
 
 				if (Request.QueryString["ShowReg"] != null && Convert.ToInt32(Session["ReadOnly"]) == 0) {
 					showReg = true;

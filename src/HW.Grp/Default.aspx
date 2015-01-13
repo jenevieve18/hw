@@ -12,15 +12,6 @@
 	<script type="text/javascript" language="JavaScript">window.history.forward(1);</script>
 	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-	<!--
-	<link type="text/css" rel="stylesheet" href="includes/css/960.css">
-	<link type="text/css" rel="stylesheet" href="includes/css/site.css">
-	<link type="text/css" rel="stylesheet" href="includes/css/admin.css">
-	<link type="text/css" href="includes/ui/css/ui-lightness/jquery-ui-1.8.11.custom.css" rel="Stylesheet">
-	<script type="text/javascript" src="includes/ui/js/jquery-1.5.1.min.js"></script>
-	<script type="text/javascript" src="includes/ui/js/jquery-ui-1.8.11.custom.min.js"></script>
-	<script type="text/javascript">		$(document).ready(function () { var descriptionS = $("#submenu .description").html(); $("#submenu a").mouseover(function () { $("#submenu .description").html($(this).html()); $("#submenu .active").css('background-position', 'center -80px'); }); $("#submenu a").mouseout(function () { $("#submenu .description").html(descriptionS); $("#submenu .active").css('background-position', 'center -120px'); }); });</script>
-	-->
 
 	<link rel="stylesheet" href="~/css/bootstrap.css"/>
 	<link rel="stylesheet" href="~/css/bootstrap-responsive.css"/>
@@ -65,29 +56,21 @@
             padding-bottom:10px;
             font:20px Arial;
         }
+        .i18n {
+            background:url(https://healthwatch.se/includes/resources/rsaquo.gif) no-repeat 0 4px;
+            padding-left: 7px;
+        }
     </style>
 </head>
 <body>
     <form id="form1" runat="server" class="form-signin">
     
-		<!--<div class="container_16" id="admin">
-			<div class="headergroup grid_16">
-				<div class="grid_3 alpha">
-					<img src="img/hwlogo.png" width="186" height="126" alt="HealthWatch group administrator">
-				</div>
-				<div class="grid_8 omega p2">HealthWatch.se<br>Group administration<br></div><br>
-				<table border="0" cellspacing="0" cellpadding="0">
-					<tbody>
-						<tr><td>Username&nbsp;</td><td><input type="text" name="ANV">&nbsp;</td></tr>
-						<tr><td>Password&nbsp;</td><td><input type="password" name="LOS">&nbsp;</td><td><input type="submit" value="OK"></td></tr>
-					</tbody>
-				</table>
-			</div>
-		</div>-->
-
 		<img src="img/hwlogo.png" alt="HealthWatch group administrator"/>
         
-        <h2><%= R.Str(lid, "login.header", "HealthWatch.se<br>Group administration") %></h2>
+        <h2>
+            <%= R.Str(lid, "login.header", "HealthWatch.se<br>Group administration") %>
+        </h2>
+        <p style="font-size:14px"><%= HtmlHelper.Anchor(R.Str(lid, "i18n", "På svenska"), string.Format("default.aspx?lid={0}", lid == 1 ? 2 : 1), "class='i18n'")%></p>
 
 		<% if (errorMessage != "") { %>
 			<div class="alert alert-error">

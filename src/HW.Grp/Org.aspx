@@ -68,9 +68,9 @@
                             <%= R.Str(lid, "user.active.perform", "If this user has activated the account, perform the following") %><br />
                             <asp:RadioButtonList ID="UserUpdateFrom" runat="server" RepeatDirection="Vertical"
                                 RepeatLayout="table">
-                                <asp:ListItem Value="1" Selected>Update the user profile with these settings from today and onwards.</asp:ListItem>
+                                <%--<asp:ListItem Value="1" Selected>Update the user profile with these settings from today and onwards.</asp:ListItem>
                                 <asp:ListItem Value="0">Update the user profile as if these settings were set from start.</asp:ListItem>
-                                <asp:ListItem Value="2">The previously registered email address has never been correct and the created account should be detached from organization.</asp:ListItem>
+                                <asp:ListItem Value="2">The previously registered email address has never been correct and the created account should be detached from organization.</asp:ListItem>--%>
                             </asp:RadioButtonList>
                             <br />
                         </asp:PlaceHolder>

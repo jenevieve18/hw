@@ -157,6 +157,20 @@ namespace HW.Grp
 			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Statistics, DateTime.Now);
 			if (sponsorID != 0) {
 				if (!IsPostBack) {
+					
+					GroupBy.Items.Add(new ListItem(R.Str(lid, "week.one", "One week"), "1"));
+					GroupBy.Items.Add(new ListItem(R.Str(lid, "week.two.even", "Two weeks, start with even"), "7"));
+					GroupBy.Items.Add(new ListItem(R.Str(lid, "week.two.odd", "Two weeks, start with odd"), "2"));
+					GroupBy.Items.Add(new ListItem(R.Str(lid, "month.one", "One month"), "3"));
+					GroupBy.Items.Add(new ListItem(R.Str(lid, "month.three", "Three months"), "4"));
+					GroupBy.Items.Add(new ListItem(R.Str(lid, "month.six", "Six months"), "5"));
+					GroupBy.Items.Add(new ListItem(R.Str(lid, "year.one", "One year"), "6"));
+					
+					Grouping.Items.Add(new ListItem(R.Str(lid, "", "< none >"), "0"));
+					Grouping.Items.Add(new ListItem(R.Str(lid, "users.unit", "Users on unit"), "1"));
+					Grouping.Items.Add(new ListItem(R.Str(lid, "users.unit.subunit", "Users on unit+subunits"), "2"));
+					Grouping.Items.Add(new ListItem(R.Str(lid, "background.variable", "Background variable"), "3"));
+					
 					Languages = langRepository.FindBySponsor(sponsorID);
 
 					int selectedLangID = Convert.ToInt32(LangID.SelectedValue);

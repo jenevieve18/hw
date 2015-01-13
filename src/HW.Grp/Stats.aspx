@@ -277,20 +277,20 @@
                 <asp:DropDownList AutoPostBack="true" ID="ProjectRoundUnitID" runat="server" />
 			    <%= R.Str(lid, "aggregation", "Aggregation")%>
 				<asp:DropDownList AutoPostBack="true" ID="GroupBy" runat="server">
-					<asp:ListItem Value="1" Text="One week" />
+					<%--<asp:ListItem Value="1" Text="One week" />
 					<asp:ListItem Value="7" Text="Two weeks, start with even" />
 					<asp:ListItem Value="2" Text="Two weeks, start with odd" />
 					<asp:ListItem Value="3" Text="One month" />
 					<asp:ListItem Value="4" Text="Three months" />
 					<asp:ListItem Value="5" Text="Six months" />
-					<asp:ListItem Value="6" Text="One year" />
+					<asp:ListItem Value="6" Text="One year" />--%>
 				</asp:DropDownList><br />
 			    <span class="desc"><%= R.Str(lid, "grouping", "Grouping")%></span>
 				<asp:DropDownList AutoPostBack="true" ID="Grouping" runat="server">
-					<asp:ListItem Value="0" Text="< none >" />
+					<%--<asp:ListItem Value="0" Text="< none >" />
 					<asp:ListItem Value="1" Text="Users on unit" />
 					<asp:ListItem Value="2" Text="Users on unit+subunits" />
-					<asp:ListItem Value="3" Text="Background variable" />
+					<asp:ListItem Value="3" Text="Background variable" />--%>
 				</asp:DropDownList>
                 <%= R.Str(lid, "language", "Language")%>
                 <asp:DropDownList ID="LangID" runat="server" AutoPostBack="true" />

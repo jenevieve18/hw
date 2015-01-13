@@ -22,12 +22,14 @@
                 <tr>
                     <td valign="top">
 	                    <table border="0" cellpadding="0" cellspacing="0">
-		                    <tr><td colspan="2"><b>Credentials</b></td></tr>
-		                    <tr><td><%= R.Str(lid, "manager.name", "Name")%>&nbsp;</td><td><asp:TextBox ID="Name" Width=200 runat=server /></td></tr>
+		                    <tr><td colspan="2"><b><%= R.Str(lid, "credentials", "Credentials") %></b></td></tr>
+		                    <tr><td><%= R.Str(lid, "manager.name", "First Name")%>&nbsp;</td><td><asp:TextBox ID="Name" Width=200 runat=server /></td></tr>
+                            <tr><td><%= R.Str(lid, "manager.name.last", "Last Name")%>&nbsp;</td><td><asp:TextBox ID="LastName" Width=200 runat=server /></td></tr>
 		                    <tr><td><%= R.Str(lid, "manager.username", "Username")%>&nbsp;</td><td><asp:TextBox ID="Usr" Width=200 runat=server /></td></tr>
 		                    <tr><td><%= R.Str(lid, "manager.password", "Password")%>&nbsp;</td><td><asp:TextBox ID="Pas" TextMode=Password Width=200 runat=server /></td></tr>
 		                    <tr><td><%= R.Str(lid, "email") %>&nbsp;</td><td><asp:TextBox ID="Email" Width=200 runat=server /></td></tr>
                             <tr><td><%= R.Str(lid, "organization.readonly", "Organization read only")%>&nbsp;</td><td><asp:CheckBox ID=ReadOnly runat=server /></td></tr>
+                            <tr><td>Access to permanently delete users</td><td><asp:CheckBox ID=PermanentlyDeleteUsers runat=server /></td></tr>
                         </table>
                     </td>
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>

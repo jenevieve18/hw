@@ -49,6 +49,15 @@ namespace HW.Grp {
         protected global::System.Web.UI.WebControls.TextBox Name;
         
         /// <summary>
+        /// LastName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox LastName;
+        
+        /// <summary>
         /// Usr control.
         /// </summary>
         /// <remarks>
@@ -83,6 +92,15 @@ namespace HW.Grp {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox ReadOnly;
+        
+        /// <summary>
+        /// PermanentlyDeleteUsers control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox PermanentlyDeleteUsers;
         
         /// <summary>
         /// SuperUser control.

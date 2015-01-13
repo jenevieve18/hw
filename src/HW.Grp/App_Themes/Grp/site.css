@@ -263,7 +263,7 @@ hr {
 .headergroup .logincontainer {
 	margin-top: 30px;
 	font-family: arial, Helvetica, sans-serif;
-	width: 300px;
+	width: 400px;
 }
 .headergroup .logincontainer.loggedin {
 	background: url('resources/myhealth_loggedin.gif');
@@ -694,7 +694,7 @@ form input[type=submit] {
 	/*background: url('resources/myhealth_submit.gif') no-repeat;
 	border: 0;*/
 	height: 32px;
-	width: 99px;
+	/*width: 99px;*/
 	margin-right: 30px;
 }
 .form_footer a {

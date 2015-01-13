@@ -128,6 +128,8 @@ namespace HW.Grp
 							Usr.Text = a.Usr;
 							Pas.Attributes.Add("value", "Not shown");
 							Email.Text = a.Email;
+                            LastName.Text = a.LastName;
+                            PermanentlyDeleteUsers.Checked = a.PermanentlyDeleteUsers;
 
 							foreach (var f in sponsorRepository.FindAdminFunctionBySponsorAdmin(a.Id)) {
 								if (ManagerFunctionID.Items.FindByValue(f.Function.Id.ToString()) != null) {
@@ -174,7 +176,9 @@ namespace HW.Grp
 					Usr = Usr.Text,
 					Password = Pas.Text,
 					SuperUser = SuperUser.Checked,
-					Sponsor = new Sponsor { Id = sponsorID }
+					Sponsor = new Sponsor { Id = sponsorID },
+                    LastName = LastName.Text,
+                    PermanentlyDeleteUsers = PermanentlyDeleteUsers.Checked
 				};
 				a.Validate();
 				if (!a.HasErrors) {
