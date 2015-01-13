@@ -75,6 +75,8 @@ namespace HW.Core.Models
 		public virtual bool Anonymized { get; set; }
 		public virtual IList<SponsorAdminFunction> Functions { get; set; }
 		public virtual IList<SponsorAdminDepartment> Departments { get; set; }
+		public virtual string LastName { get; set; }
+		public virtual bool PermanentlyDeleteUsers { get; set; }
 		
 		public override string ToString()
 		{

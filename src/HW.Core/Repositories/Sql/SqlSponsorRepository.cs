@@ -192,19 +192,21 @@ UPDATE SponsorAdmin SET ReadOnly = {0},
 	Name = '{2}',
 	Usr = '{3}',
 	{4}
-	SuperUser = {5}
+	SuperUser = {5},
+	LastName = '{8}',
+	PermanentlyDeleteUsers = {9}
 WHERE SponsorAdminID = {6}
 AND SponsorID = {7}",
 				a.ReadOnly ? "1" : "0",
-//				a.ReadOnly,
 				a.Email.Replace("'", "''"),
 				a.Name.Replace("'", "''"),
 				a.Usr.Replace("'", ""),
 				p,
 				a.SuperUser ? "1" : "0",
-//				a.SuperUser,
 				a.Id,
-				a.Sponsor.Id
+				a.Sponsor.Id,
+				a.LastName,
+				a.PermanentlyDeleteUsers
 			);
 			Db.exec(query, "healthWatchSqlConnection");
 		}
@@ -266,8 +268,8 @@ VALUES ({0},{1},{2})",
 //			Db.exec(query, "healthWatchSqlConnection");
 			string query = string.Format(
 				@"
-INSERT INTO SponsorAdmin (Email, Name, Usr, Pas, SponsorID, SuperUser, ReadOnly)
-VALUES (@Email, @Name, @Usr, @Pas, @SponsorID, @SuperUser, @ReadOnly)"
+INSERT INTO SponsorAdmin (Email, Name, Usr, Pas, SponsorID, SuperUser, ReadOnly, LastName, PermanentlyDeleteUsers)
+VALUES (@Email, @Name, @Usr, @Pas, @SponsorID, @SuperUser, @ReadOnly, @LastName, @PermanentlyDeleteUsers)"
 			);
 			ExecuteNonQuery(
 				query,
@@ -278,7 +280,9 @@ VALUES (@Email, @Name, @Usr, @Pas, @SponsorID, @SuperUser, @ReadOnly)"
 				new SqlParameter("@Pas", a.Password),
 				new SqlParameter("@SponsorID", a.Sponsor.Id),
 				new SqlParameter("@SuperUser", a.SuperUser),
-				new SqlParameter("@ReadOnly", a.ReadOnly)
+				new SqlParameter("@ReadOnly", a.ReadOnly),
+				new SqlParameter("@LastName", a.LastName),
+				new SqlParameter("@PermanentlyDeleteUsers", a.PermanentlyDeleteUsers)
 			);
 		}
 
@@ -768,7 +772,9 @@ SELECT SponsorAdminID,
 	Usr,
 	Email,
 	SuperUser,
-	ReadOnly
+	ReadOnly,
+	LastName,
+	PermanentlyDeleteUsers
 FROM SponsorAdmin
 WHERE (SponsorAdminID <> {1} OR SuperUser = 1)
 AND SponsorAdminID = {2}
@@ -785,7 +791,9 @@ AND SponsorID = {0}",
 						Usr = rs.GetString(2),
 						Email = rs.GetString(3),
 						SuperUser = !rs.IsDBNull(4) && rs.GetInt32(4) != 0,
-						ReadOnly = !rs.IsDBNull(5) && rs.GetInt32(5) != 0
+						ReadOnly = !rs.IsDBNull(5) && rs.GetInt32(5) != 0,
+						LastName = rs.GetString(6),
+						PermanentlyDeleteUsers = !rs.IsDBNull(7) && rs.GetInt32(7) != 0
 					};
 					return a;
 				}
