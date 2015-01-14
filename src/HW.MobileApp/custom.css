@@ -124,7 +124,7 @@
 		#login .ui-grid-a .ui-block-a{ width:40%; }
         #login .ui-grid-a .ui-block-b{ margin-left:10%;width:40%; }
 		#login .ui-grid-a .ui-btn{ width:100%; }
-		#login .ui-grid-a .ui-block-b .ui-btn-inner{ width:115px; padding: 8px 8px;}
+		#login .ui-grid-a .ui-block-b .ui-btn-inner{ width:115px; padding: 9.5px 8px;}
         #forgotpass .ui-controlgroup-controls .ui-btn { min-width: 130px;}
         #forgotpass .ui-controlgroup-controls .ui-btn-text { font-size:12px;}
         #forgotpass .ui-controlgroup-controls {  min-width:270px !important;}
