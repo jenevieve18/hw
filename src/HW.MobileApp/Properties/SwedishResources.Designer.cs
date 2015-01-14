@@ -61,7 +61,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to © HealthWatch 2014&lt;br /&gt;Copyright.
+        ///   Looks up a localized string similar to © HealthWatch 2015&lt;br /&gt;Copyright.
         /// </summary>
         internal static string about_copyright {
             get {
@@ -1196,7 +1196,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Användarnamn eller e-postadress.
+        ///   Looks up a localized string similar to Användarnamn.
         /// </summary>
         internal static string user_name {
             get {
