@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="about.copyright" xml:space="preserve">
-    <value>© HealthWatch 2014&lt;br /&gt;All Rights Reserved</value>
+    <value>© HealthWatch 2015&lt;br /&gt;All Rights Reserved</value>
   </data>
   <data name="about.text" xml:space="preserve">
     <value>HealthWatch provides tools for individuals and organisations to preserve and increase health and quality of life, as well as reduce stress-related problems.</value>
@@ -496,7 +496,7 @@
     <value>Login</value>
   </data>
   <data name="user.name" xml:space="preserve">
-    <value>Username or Email</value>
+    <value>Username</value>
   </data>
   <data name="user.password" xml:space="preserve">
     <value>Password</value>
