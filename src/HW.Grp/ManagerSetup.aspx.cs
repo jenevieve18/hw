@@ -45,7 +45,7 @@ namespace HW.Grp
 				Cancel.Click += new EventHandler(Cancel_Click);
 
 				if (!IsPostBack) {
-					foreach (var f in managerRepository.FindAll()) {
+					foreach (var f in managerRepository.FindAll(lid)) {
 						ManagerFunctionID.Items.Add(new ListItem(f.Function + " (" + f.Expl + ")", f.Id.ToString()));
 					}
 					sponsorAdminID = Convert.ToInt32(Session["SponsorAdminID"]);

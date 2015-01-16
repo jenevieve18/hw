@@ -46,7 +46,7 @@
 					</td>
 					<td>
 						<% int cx = 0; %>
-						<% foreach (var f in managerRepository.FindBySponsorAdmin(s.Id)) { %>
+						<% foreach (var f in managerRepository.FindBySponsorAdmin(s.Id, lid)) { %>
 							<% if (cx++ > 0) { %>, <% } %>
 							<%= f.Function %>
 						<% } %>
