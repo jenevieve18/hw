@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="access.nodelete" xml:space="preserve">
+    <value>Access to permanently delete users</value>
+  </data>
   <data name="action" xml:space="preserve">
     <value>Action</value>
   </data>
@@ -180,6 +183,9 @@
   <data name="login.password" xml:space="preserve">
     <value>Password</value>
   </data>
+  <data name="login.reminder" xml:space="preserve">
+    <value>Login reminder</value>
+  </data>
   <data name="login.reminder.subject" xml:space="preserve">
     <value>Login reminder subject/message</value>
   </data>
@@ -197,6 +203,9 @@
   </data>
   <data name="manager.name" xml:space="preserve">
     <value>Name</value>
+  </data>
+  <data name="manager.name.last" xml:space="preserve">
+    <value>Last Name</value>
   </data>
   <data name="manager.password" xml:space="preserve">
     <value>Password</value>
@@ -234,8 +243,14 @@
   <data name="recipients" xml:space="preserve">
     <value>Recipients</value>
   </data>
+  <data name="registration" xml:space="preserve">
+    <value>Registration</value>
+  </data>
   <data name="registration.invitation.subject" xml:space="preserve">
     <value>Registration invitation subject/message *</value>
+  </data>
+  <data name="registration.reminder" xml:space="preserve">
+    <value>Registration reminder</value>
   </data>
   <data name="registration.reminder.subject" xml:space="preserve">
     <value>Registration reminder subject/message **</value>
@@ -254,6 +269,9 @@
   </data>
   <data name="search.email" xml:space="preserve">
     <value>Search user by email</value>
+  </data>
+  <data name="select.send.type" xml:space="preserve">
+    <value>&lt;Select send type&gt;</value>
   </data>
   <data name="send" xml:space="preserve">
     <value>Send</value>
@@ -347,6 +365,9 @@
   </data>
   <data name="user.update.start" xml:space="preserve">
     <value>Update the user profile as if these settings were set from start.</value>
+  </data>
+  <data name="users.activated.all" xml:space="preserve">
+    <value>All activated users</value>
   </data>
   <data name="users.unit" xml:space="preserve">
     <value>Users on unit</value>

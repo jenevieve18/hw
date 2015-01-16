@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="access.nodelete" xml:space="preserve">
+    <value>Åtkomst för att radera användare permanent</value>
+  </data>
   <data name="action" xml:space="preserve">
     <value>Aktivitet</value>
   </data>
@@ -189,6 +192,9 @@
   <data name="login.header" xml:space="preserve">
     <value>Gruppadministration</value>
   </data>
+  <data name="login.reminder" xml:space="preserve">
+    <value>Inloggningspåminnelse</value>
+  </data>
   <data name="login.reminder.subject" xml:space="preserve">
     <value>Inloggningspåminnelse ämne/meddelande</value>
   </data>
@@ -206,6 +212,9 @@
   </data>
   <data name="manager.name" xml:space="preserve">
     <value>Namn</value>
+  </data>
+  <data name="manager.name.last" xml:space="preserve">
+    <value>Efternamn</value>
   </data>
   <data name="manager.password" xml:space="preserve">
     <value>Lösenord</value>
@@ -243,8 +252,14 @@
   <data name="recipients" xml:space="preserve">
     <value>Mottagare</value>
   </data>
+  <data name="registration" xml:space="preserve">
+    <value>Registrering</value>
+  </data>
   <data name="registration.invitation.subject" xml:space="preserve">
     <value>Registreringsinbjudan ämne/meddelande *</value>
+  </data>
+  <data name="registration.reminder" xml:space="preserve">
+    <value>Registreringspåminnelse</value>
   </data>
   <data name="registration.reminder.subject" xml:space="preserve">
     <value>Registreringspåminnelse ämne/meddelande **</value>
@@ -259,10 +274,13 @@
     <value>Spara</value>
   </data>
   <data name="search" xml:space="preserve">
-    <value>Sök användare via e-post</value>
+    <value>Sök</value>
   </data>
   <data name="search.email" xml:space="preserve">
     <value>Sök användare via e-post</value>
+  </data>
+  <data name="select.send.type" xml:space="preserve">
+    <value>&lt;Välj och skicka sort&gt;</value>
   </data>
   <data name="send" xml:space="preserve">
     <value>Skicka</value>
@@ -368,6 +386,9 @@
   </data>
   <data name="user.update.start" xml:space="preserve">
     <value>Uppdatera användarprofilen som om dessa inställningar ställdes in från början.</value>
+  </data>
+  <data name="users.activated.all" xml:space="preserve">
+    <value>Alla aktiverade användare</value>
   </data>
   <data name="users.unit" xml:space="preserve">
     <value>Användare på enhet</value>

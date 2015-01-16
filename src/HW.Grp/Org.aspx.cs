@@ -34,6 +34,8 @@ namespace HW.Grp
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
 		protected int lid;
+        SponsorAdmin sponsorAdmin;
+        int sponsorAdminID;
 
         protected void Page_Load(object sender, EventArgs e)
 		{
@@ -41,11 +43,14 @@ namespace HW.Grp
 			SearchResults.Visible = false;
 			ActionNav.Visible = (Convert.ToInt32(Session["ReadOnly"]) == 0);
 			sponsorID = Convert.ToInt32(Session["SponsorID"]);
+			sponsorAdminID = ConvertHelper.ToInt32(Session["SponsorAdminID"]);
 			lid = ConvertHelper.ToInt32(Session["lid"], 1);
 
 			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Organization, DateTime.Now);
 			string query = "";
 			if (sponsorID != 0) {
+
+                sponsorAdmin = sponsorRepository.ReadSponsorAdmin(sponsorID, sponsorAdminID);
 
                 StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.active", "Active"), "0"));
                 StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.work", "Stopped, work related"), "1"));
@@ -1535,11 +1540,14 @@ ORDER BY s.Email",
 						for (int i = 1; i <= depth; i++) {
 							usr.Append(string.Format("<img src='img/{0}.gif' width='19' height='20'/>", (DX[i] ? "I" : "null")));
 						}
+						string d = sponsorAdmin.PermanentlyDeleteUsers ?
+						"<a href='org.aspx?SDID=" + showDepartmentID.ToString() + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DeleteUID=" + rs2.GetInt32(0).ToString() + "'><img src='img/usr_del.gif' border='0'/></a>"
+							: "";
 						usr.Append("</td><td style='font-size:9px'>" + (rs2.IsDBNull(1) ? "" : rs2.GetString(1)) + "</td>" +
 						           "<td align='center'>" +
 						           (Convert.ToInt32(Session["ReadOnly"]) == 0 ?
 						            "<a href='org.aspx?SDID=" + showDepartmentID.ToString() + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&UID=" + rs2.GetInt32(0).ToString() + "'><img src='img/usr_edt.gif' border='0'/></a>" +
-						            "<a href='org.aspx?SDID=" + showDepartmentID.ToString() + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DeleteUID=" + rs2.GetInt32(0).ToString() + "'><img src='img/usr_del.gif' border='0'/></a>" +
+						            d +
 						            "" : "") +
 						           "</td>" +
 						           "<td align='center'>");

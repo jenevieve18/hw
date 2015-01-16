@@ -108,7 +108,7 @@
                 </asp:PlaceHolder>
                 <asp:PlaceHolder ID="DeleteDepartment" runat="server" Visible="false">
                     <div class="actionBlock">
-                        <span class="desc">Unit</span>
+                        <span class="desc"><%= R.Str(lid, "unit", "Unit") %></span>
                         <asp:TextBox ReadOnly="true" ID="DeleteDepartmentName" runat="server" /><br />
                         <asp:Button CssClass="btn" ID="CancelDeleteDepartment" Text="Cancel" runat="server" />
                         <asp:Button CssClass="btn" ID="SaveDeleteDepartment" Text="Execute" runat="server" />

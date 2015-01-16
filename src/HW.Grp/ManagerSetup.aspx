@@ -29,7 +29,7 @@
 		                    <tr><td><%= R.Str(lid, "manager.password", "Password")%>&nbsp;</td><td><asp:TextBox ID="Pas" TextMode=Password Width=200 runat=server /></td></tr>
 		                    <tr><td><%= R.Str(lid, "email") %>&nbsp;</td><td><asp:TextBox ID="Email" Width=200 runat=server /></td></tr>
                             <tr><td><%= R.Str(lid, "organization.readonly", "Organization read only")%>&nbsp;</td><td><asp:CheckBox ID=ReadOnly runat=server /></td></tr>
-                            <tr><td>Access to permanently delete users</td><td><asp:CheckBox ID=PermanentlyDeleteUsers runat=server /></td></tr>
+                            <tr><td><%= R.Str(lid, "access.nodelete", "No access to permanently delete users") %></td><td><asp:CheckBox ID=PermanentlyDeleteUsers runat=server Checked="True" /></td></tr>
                         </table>
                     </td>
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
