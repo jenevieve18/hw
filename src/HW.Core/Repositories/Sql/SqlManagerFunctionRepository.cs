@@ -54,6 +54,36 @@ FROM ManagerFunction"
 			}
 			return functions;
 		}
+
+        public IList<ManagerFunctionLang> FindAll(int langID)
+        {
+            string query = string.Format(
+                @"
+SELECT ManagerFunctionID,
+	ManagerFunction,
+	Expl,
+	URL
+FROM ManagerFunctionLang
+WHERE LangID = {0}",
+                   langID
+            );
+            var functions = new List<ManagerFunctionLang>();
+            using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection"))
+            {
+                while (rs.Read())
+                {
+                    var f = new ManagerFunctionLang
+                    {
+                        Id = GetInt32(rs, 0),
+                        Function = GetString(rs, 1),
+                        Expl = GetString(rs, 2),
+                        URL = GetString(rs, 3)
+                    };
+                    functions.Add(f);
+                }
+            }
+            return functions;
+        }
 		
 //		public IList<SponsorAdminFunction> FindBySponsorAdmin2(int sponsorAdminID)
 //		{
