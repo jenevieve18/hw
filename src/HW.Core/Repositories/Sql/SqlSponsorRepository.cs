@@ -783,22 +783,58 @@ AND SponsorID = {0}",
 				sponsorAdminId,
 				said
 			);
+			SponsorAdmin a = null;
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				if (rs.Read()) {
-					var a = new SponsorAdmin {
+					a = new SponsorAdmin {
 						Id = rs.GetInt32(0),
 						Name = rs.GetString(1),
 						Usr = rs.GetString(2),
 						Email = rs.GetString(3),
 						SuperUser = !rs.IsDBNull(4) && rs.GetInt32(4) != 0,
 						ReadOnly = !rs.IsDBNull(5) && rs.GetInt32(5) != 0,
-						LastName = rs.GetString(6),
-						PermanentlyDeleteUsers = !rs.IsDBNull(7) && rs.GetInt32(7) != 0
+						LastName = GetString(rs, 6),
+						PermanentlyDeleteUsers = GetInt32(rs, 7, 1) != 0
 					};
-					return a;
 				}
 			}
-			return null;
+			return a;
+		}
+
+		public SponsorAdmin ReadSponsorAdmin(int sponsorId, int sponsorAdminId)
+		{
+			string query = string.Format(
+				@"
+SELECT SponsorAdminID,
+	Name,
+	Usr,
+	Email,
+	SuperUser,
+	ReadOnly,
+	LastName,
+	PermanentlyDeleteUsers
+FROM SponsorAdmin
+WHERE SponsorAdminID = {1}
+AND SponsorID = {0}",
+				sponsorId,
+				sponsorAdminId
+			);
+			SponsorAdmin a = null;
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				if (rs.Read()) {
+					a = new SponsorAdmin {
+						Id = rs.GetInt32(0),
+						Name = rs.GetString(1),
+						Usr = rs.GetString(2),
+						Email = rs.GetString(3),
+						SuperUser = !rs.IsDBNull(4) && rs.GetInt32(4) != 0,
+						ReadOnly = !rs.IsDBNull(5) && rs.GetInt32(5) != 0,
+						LastName = GetString(rs, 6),
+						PermanentlyDeleteUsers = GetInt32(rs, 7, 1) != 0
+					};
+				}
+			}
+			return a;
 		}
 
 		public SponsorAdmin ReadSponsorAdmin(int sponsorAdminId)
