@@ -61,7 +61,7 @@ namespace HW.MobileApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to © HealthWatch 2015&lt;br /&gt;All Rights Reserved.
+        ///   Looks up a localized string similar to All Rights Reserved.
         /// </summary>
         internal static string about_copyright {
             get {

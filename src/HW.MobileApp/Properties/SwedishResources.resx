@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="about.copyright" xml:space="preserve">
-    <value>© HealthWatch 2015&lt;br /&gt;Copyright</value>
+    <value>Copyright</value>
   </data>
   <data name="about.text" xml:space="preserve">
     <value>HealthWatch erbjuder verktyg för individer och organisationer för att bevara och öka hälsa och livskvalitet samt motverka stressrelaterade problem.</value>

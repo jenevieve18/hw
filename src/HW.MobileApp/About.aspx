@@ -16,7 +16,11 @@
                 <%= R.Str(language, "about.text")%>
             </div>
                 
-            <h5><%= R.Str(language, "about.copyright")%></h5>
+            <h5>
+                &copy; HealthWatch <%= DateTime.Now.ToString("yyyy") %><br />
+                Version <%= typeof(Default).Assembly.GetName().Version %><br />
+                <%= R.Str(language, "about.copyright")%>
+            </h5>
         </div>
                 
     </div>
