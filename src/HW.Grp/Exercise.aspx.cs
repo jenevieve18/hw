@@ -167,7 +167,8 @@ namespace HW.Grp
 				CategoryID.Controls.Add(new LiteralControl("</ul></dd>"));
 			}
 
-			exercises = exerciseRepository.FindByAreaAndCategory(EAID, ECID, LID, SORT);
+			//exercises = exerciseRepository.FindByAreaAndCategory(EAID, ECID, LID, SORT);
+            exercises = exerciseRepository.FindByAreaAndCategory(EAID, ECID, lid - 1, SORT);
 			foreach (var l in exercises) {
 				if (l.Id != exerciseID) {
 					BX++;
