@@ -198,3 +198,58 @@ GO
 SET ANSI_PADDING OFF
 GO
 
+USE [healthWatch]
+GO
+
+/****** Object:  Table [dbo].[ManagerFunctionLang]    Script Date: 01/08/2015 10:08:27 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[ManagerFunctionLang](
+	[ManagerFunctionLangID] [int] IDENTITY(1,1) NOT NULL,
+	[ManagerFunctionID] [int] NULL,
+	[ManagerFunction] [varchar](64) NULL,
+	[URL] [varchar](128) NULL,
+	[Expl] [varchar](256) NULL,
+	[LangID] [int] NULL,
+ CONSTRAINT [PK_ManagerFunctionLang] PRIMARY KEY CLUSTERED 
+(
+	[ManagerFunctionLangID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+insert into ManagerFunctionLang(ManagerFunctionID, LangID, ManagerFunction, URL, Expl)
+values(1, 1, 'Organisation', 'org.aspx', 'Administrera enheter och användare');
+insert into ManagerFunctionLang(ManagerFunctionID, LangID, ManagerFunction, URL, Expl)
+values(2, 1, 'Statistik', 'stats.aspx', 'Visa resultat och jämför grupper');
+insert into ManagerFunctionLang(ManagerFunctionID, LangID, ManagerFunction, URL, Expl)
+values(3, 1, 'Meddelanden', 'messages.aspx', 'Administrera meddelanden, inbjudningar och påminnelser');
+insert into ManagerFunctionLang(ManagerFunctionID, LangID, ManagerFunction, URL, Expl)
+values(4, 1, 'Chefer', 'managers.aspx', 'Administrera enheternas chefer');
+insert into ManagerFunctionLang(ManagerFunctionID, LangID, ManagerFunction, URL, Expl)
+values(7, 1, 'Övningar', 'exercise.aspx', 'Chefsövningar');
+
+insert into ManagerFunctionLang(ManagerFunctionID, LangID, ManagerFunction, URL, Expl)
+values(1, 2, 'Organization', 'org.aspx', 'administer units and users');
+insert into ManagerFunctionLang(ManagerFunctionID, LangID, ManagerFunction, URL, Expl)
+values(2, 2, 'Statistics', 'stats.aspx', 'view results and compare groups');
+insert into ManagerFunctionLang(ManagerFunctionID, LangID, ManagerFunction, URL, Expl)
+values(3, 2, 'Messages', 'messages.aspx', 'administer messages, invitations and reminders');
+insert into ManagerFunctionLang(ManagerFunctionID, LangID, ManagerFunction, URL, Expl)
+values(4, 2, 'Managers', 'managers.aspx', 'administer unit managers');
+insert into ManagerFunctionLang(ManagerFunctionID, LangID, ManagerFunction, URL, Expl)
+values(7, 2, 'Exercises', 'exercise.aspx', 'manager exercises');
+
+
+use eForm; alter table SponsorAdmin add LastName varchar(255);
