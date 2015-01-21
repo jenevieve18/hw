@@ -34,10 +34,10 @@ namespace HW.Grp
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
 		protected int lid;
-        SponsorAdmin sponsorAdmin;
-        int sponsorAdminID;
+		SponsorAdmin sponsorAdmin;
+		int sponsorAdminID;
 
-        protected void Page_Load(object sender, EventArgs e)
+		protected void Page_Load(object sender, EventArgs e)
 		{
 			SearchResultList.Text = "";
 			SearchResults.Visible = false;
@@ -50,22 +50,22 @@ namespace HW.Grp
 			string query = "";
 			if (sponsorID != 0) {
 
-                sponsorAdmin = sponsorRepository.ReadSponsorAdmin(sponsorID, sponsorAdminID);
+				sponsorAdmin = sponsorRepository.ReadSponsorAdmin(sponsorID, sponsorAdminID);
 
-                StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.active", "Active"), "0"));
-                StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.work", "Stopped, work related"), "1"));
-                StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.education", "Stopped, education leave"), "2"));
-                StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.parent", "Stopped, parental leave"), "14"));
-                StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.sick", "Stopped, sick leave"), "24"));
-                StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.not.participate", "Stopped, do not want to participate"), "34"));
-                StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.not.associated", "Stopped, no longer associated"), "44"));
-                StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.other", "Stopped, other reason"), "4"));
-                StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.unknown", "Stopped, unknown reason"), "5"));
-                StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.complete", "Stopped, project completed"), "6"));
-                
-                UserUpdateFrom.Items.Add(new ListItem(R.Str(lid, "user.update.onwards", "Update the user profile with these settings from today and onwards."), "1"));
-                UserUpdateFrom.Items.Add(new ListItem(R.Str(lid, "user.update.start", "Update the user profile as if these settings were set from start."), "0"));
-                UserUpdateFrom.Items.Add(new ListItem(R.Str(lid, "user.update.previous", "The previously registered email address has never been correct and the created account should be detached from organization."), "2"));
+				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.active", "Active"), "0"));
+				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.work", "Stopped, work related"), "1"));
+				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.education", "Stopped, education leave"), "2"));
+				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.parent", "Stopped, parental leave"), "14"));
+				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.sick", "Stopped, sick leave"), "24"));
+				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.not.participate", "Stopped, do not want to participate"), "34"));
+				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.not.associated", "Stopped, no longer associated"), "44"));
+				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.other", "Stopped, other reason"), "4"));
+				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.unknown", "Stopped, unknown reason"), "5"));
+				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.complete", "Stopped, project completed"), "6"));
+				
+				UserUpdateFrom.Items.Add(new ListItem(R.Str(lid, "user.update.onwards", "Update the user profile with these settings from today and onwards."), "1"));
+				UserUpdateFrom.Items.Add(new ListItem(R.Str(lid, "user.update.start", "Update the user profile as if these settings were set from start."), "0"));
+				UserUpdateFrom.Items.Add(new ListItem(R.Str(lid, "user.update.previous", "The previously registered email address has never been correct and the created account should be detached from organization."), "2"));
 
 				if (Request.QueryString["ShowReg"] != null && Convert.ToInt32(Session["ReadOnly"]) == 0) {
 					showReg = true;
@@ -966,12 +966,12 @@ VALUES ({0}, {1})",
 					while (rs2.Read()) {
 						#region Create new profile
 						query = string.Format(
-                            @"
+							@"
 INSERT INTO UserProfile (UserID,SponsorID,DepartmentID,ProfileComparisonID,Created)
 VALUES ({0},1,NULL,{1},GETDATE())",
-                             rs.GetInt32(0),
-                             rs2.IsDBNull(1) ? "NULL" : rs2.GetInt32(1).ToString()
-                        );
+							rs.GetInt32(0),
+							rs2.IsDBNull(1) ? "NULL" : rs2.GetInt32(1).ToString()
+						);
 						// TODO: Investigate why ProfileComparisonID is NULL
 						Db.exec(query);
 						int profileID = 0;
@@ -1024,7 +1024,7 @@ VALUES ({0},1,NULL,{1},GETDATE())",
 		
 		protected override void OnPreRender(EventArgs e)
 		{
-            Search.Text = R.Str(lid, "search", "Search");
+			Search.Text = R.Str(lid, "search", "Search");
 
 			#region Normal org
 			string select = "";
@@ -1219,7 +1219,7 @@ ORDER BY ses.SponsorExtendedSurveyID",
 		<td align='center' style='font-size:9px;'>&nbsp;<b>1st invite&nbsp;<br/>&nbsp;sent</b>&nbsp;</td>
 		{1}
 		{2}
-		<TD align='center' style='font-size:9px;'>&nbsp;<b>Unit ID&nbsp;<br/>&nbsp;User status</b>&nbsp;</td>
+		<td align='center' style='font-size:9px;'>&nbsp;<b>Unit ID&nbsp;<br/>&nbsp;User status</b>&nbsp;</td>
 	</tr>",
 					ESdesc,
 					aggrBRdesc,
@@ -1240,15 +1240,17 @@ ORDER BY ses.SponsorExtendedSurveyID",
 		<td align='center' style='font-size:9px;'>&nbsp;<b>1st invite&nbsp;<br/>&nbsp;sent</b>&nbsp;</td>
 		{1}
 		<td align='center' style='font-size:9px;'>&nbsp;<b>{7}</b>&nbsp;</td>
+        <td align='center' style='font-size:9px;'>&nbsp;<b>{8}</b>&nbsp;</td>
 	</tr>",
 					ESdesc,
 					aggrBRdesc,
-                    R.Str(lid, "unit", "Unit"),
-                    R.Str(lid, "action", "Action"),
-                    R.Str(lid, "active", "Active"),
-                    R.Str(lid, "total", "Total"),
-                    R.Str(lid, "invitation.received", "Received&nbsp;<br/>&nbsp;inivtation"),
-                    R.Str(lid, "unit.id", "Unit ID")
+					R.Str(lid, "unit", "Unit"),
+					R.Str(lid, "action", "Action"),
+					R.Str(lid, "active", "Active"),
+					R.Str(lid, "total", "Total"),
+					R.Str(lid, "invitation.received", "Received&nbsp;<br/>&nbsp;inivtation"),
+					R.Str(lid, "unit.id", "Unit ID"),
+					R.Str(lid, "reminder.text", "Reminder")
 				);
 			}
 			//OrgTree.Text += "<TR><TD COLSPAN='" + (aggrBQcx + 8 + (showDepartmentID != 0 && BQs != "" ? BQs.Split(':').Length : 0) + EScount) + "' style='height:1px;line-height:1px;background-color:#333333'><img src='img/null.gif' width='1' height='1'></TD></TR>";
@@ -1405,9 +1407,7 @@ d.SponsorID = {4} ORDER BY d.SortString",
 		</table>
 	</td>
 	<td align='center'>{4}{5}</td>
-	<td align='center' style='font-size:9px;'>
-		<span title='{6}'>{7}{8}</span>
-	</td>",
+	<td align='center' style='font-size:9px;'><span title='{6}'>{7}{8}</span></td>",
 					(s.Length > 20 ? "font-size:10px;" : ""),
 					(deptID == rs.GetInt32(2) || showDepartmentID == rs.GetInt32(2) ? "<b>" : ""),
 					s,
@@ -1466,16 +1466,27 @@ d.SponsorID = {4} ORDER BY d.SortString",
 							)
 						);
 					} else {
-						OrgTree.Text += "<td align='center'>&nbsp;</td>";
+						OrgTree.Text += @"
+    <td align='center'>&nbsp;</td>";
 					}
 				}
-				OrgTree.Text += string.Format("<td align='center' style='font-size:9px;'>&nbsp;{0}{1}&nbsp;</td>", rs.GetInt32(7),  (rs.GetInt32(3) > 0 && rs.GetInt32(3) != rs.GetInt32(7) ? " (" + rs.GetInt32(3) + ")" : ""));
+				OrgTree.Text += string.Format(
+					@"
+    <td align='center' style='font-size:9px;'>&nbsp;{0}{1}&nbsp;</td>",
+					rs.GetInt32(7),
+					(rs.GetInt32(3) > 0 && rs.GetInt32(3) != rs.GetInt32(7) ? " (" + rs.GetInt32(3) + ")" : "")
+				);
 				OrgTree.Text += "<td align='center' style='font-size:9px;'>&nbsp;" + (rs.GetInt32(7) > 0 ? Math.Round(((float)rs.GetInt32(9) / (float)rs.GetInt32(7)) * 100, 0).ToString() + "%" : "-") + (rs.GetInt32(3) > 0 && rs.GetInt32(5) != rs.GetInt32(9) && Math.Round(((float)rs.GetInt32(9) / (float)rs.GetInt32(7)) * 100, 0) != Math.Round((float)rs.GetInt32(5) / (float)rs.GetInt32(3) * 100, 0) ? " (" + Math.Round((float)rs.GetInt32(5) / (float)rs.GetInt32(3) * 100, 0).ToString() + "%" + ")" : "") + "&nbsp;</td>";
-				OrgTree.Text += string.Format("<td align='center' style='font-size:9px;'>&nbsp;{0}&nbsp;</td>", (rs.IsDBNull(10) ? "N/A" : rs.GetDateTime(10).ToString("yyMMdd")));
+				OrgTree.Text += string.Format(
+					@"
+	<td align='center' style='font-size:9px;'>&nbsp;{0}&nbsp;</td>",
+					(rs.IsDBNull(10) ? "N/A" : rs.GetDateTime(10).ToString("yyMMdd"))
+				);
 
 				if (aggrBQcx != 0) {
 					foreach (string a in aggrBQ.Split(',')) {
-						OrgTree.Text += "<td align='center'>&nbsp;";
+						OrgTree.Text += @"
+	<td align='center'>&nbsp;";
 						query = string.Format(
 							@"
 SELECT AVG(DATEDIFF(year, upbq.ValueDate, GETDATE())),
@@ -1494,16 +1505,24 @@ WHERE d.DepartmentID = {1}",
 							OrgTree.Text += (rs2.GetInt32(1) >= deptMinUserCountToDisclose ? rs2.GetValue(0).ToString() : "<img src='img/key.gif'/>");
 						}
 						rs2.Close();
-						OrgTree.Text += "&nbsp;</td>";
+						OrgTree.Text += @"&nbsp;
+	</td>";
 					}
 				}
 				if (showDepartmentID != 0 && BQs != "") {
 					for (int i = 0; i < BQs.Split(':').Length; i++) {
-						OrgTree.Text += "<td align='center' style='font-size:9px;'>&nbsp;</td>";
+						OrgTree.Text += @"
+	<td align='center' style='font-size:9px;'>&nbsp;</td>";
 					}
 				}
-				OrgTree.Text += string.Format("<td align='center' style='font-size:9px;'>&nbsp;{0}&nbsp;</td>", (rs.IsDBNull(11) ? "N/A" : rs.GetString(11)));
-				OrgTree.Text += "</tr>";
+				OrgTree.Text += string.Format(
+					@"
+	<td align='center' style='font-size:9px;'>&nbsp;{0}&nbsp;</td>
+	<td align='center' style='font-size:9px;'></td>",
+					(rs.IsDBNull(11) ? "N/A" : rs.GetString(11))
+				);
+				OrgTree.Text += @"
+</tr>";
 
 				if (showDepartmentID == rs.GetInt32(2)) {
 					#region Show department
@@ -1541,7 +1560,7 @@ ORDER BY s.Email",
 							usr.Append(string.Format("<img src='img/{0}.gif' width='19' height='20'/>", (DX[i] ? "I" : "null")));
 						}
 						string d = sponsorAdmin.PermanentlyDeleteUsers ?
-						"<a href='org.aspx?SDID=" + showDepartmentID.ToString() + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DeleteUID=" + rs2.GetInt32(0).ToString() + "'><img src='img/usr_del.gif' border='0'/></a>"
+							"<a href='org.aspx?SDID=" + showDepartmentID.ToString() + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DeleteUID=" + rs2.GetInt32(0).ToString() + "'><img src='img/usr_del.gif' border='0'/></a>"
 							: "";
 						usr.Append("</td><td style='font-size:9px'>" + (rs2.IsDBNull(1) ? "" : rs2.GetString(1)) + "</td>" +
 						           "<td align='center'>" +
@@ -1599,13 +1618,15 @@ WHERE u.Email = '{0}'",
 									if (rs2.IsDBNull(idx)) {
 										usr.Append("<img srC='img/star.gif'/>");
 										if (Convert.ToInt32(ESattr.Split(',')[i].Split(':')[3]) != 0) {
-											usr.Append("<a href='org.aspx?" +
-											           "ShowReg=1" +
-											           "&SESID=" + Convert.ToInt32(ESattr.Split(',')[i].Split(':')[4]) + "" +
-											           "&SendExtra=" + rs2.GetInt32(3) + "" +
-											           "&SDID=" + showDepartmentID.ToString() + "" +
-											           "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "" +
-											           "' title='Send extra'>!</a>");
+											usr.Append(
+												string.Format(
+													"<a href='org.aspx?ShowReg=1&SESID={0}&SendExtra={1}&SDID={2}&Rnd={3}' title='Send extra'>!</a>",
+													Convert.ToInt32(ESattr.Split(',')[i].Split(':')[4]),
+													rs2.GetInt32(3),
+													showDepartmentID.ToString(),
+													(new Random(unchecked((int)DateTime.Now.Ticks))).Next()
+												)
+											);
 										}
 										query = string.Format(
 											@"
@@ -1617,23 +1638,28 @@ WHERE a.ProjectRoundUserID = {0}",
 										);
 										SqlDataReader rs3 = Db.rs(query, "eFormSqlConnection");
 										if (rs3.Read() && !rs3.IsDBNull(1)) {
-											usr.Append("<a href='org.aspx?" +
-											           "ShowReg=1" +
-											           "&SubmitAID=" + rs3.GetInt32(0) + "" +
-											           "&SubmitUID=" + rs2.GetInt32(idx + 1) + "" +
-											           "&SDID=" + showDepartmentID.ToString() + "" +
-											           "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "" +
-											           "' title='Submit survey (number indicates what page the user is on)'>" + rs3.GetInt32(1) + "</a>" + "");
+											usr.Append(
+												string.Format(
+													"<a href='org.aspx?ShowReg=1&SubmitAID={0}&SubmitUID={1}&SDID={2}&Rnd={3}' title='Submit survey (number indicates what page the user is on)'>{4}</a>",
+													rs3.GetInt32(0),
+													rs2.GetInt32(idx + 1),
+													showDepartmentID.ToString(),
+													(new Random(unchecked((int)DateTime.Now.Ticks))).Next(),
+													rs3.GetInt32(1)
+												)
+											);
 										}
 										rs3.Close();
 									} else {
-										usr.Append("<a href='org.aspx?" +
-										           "ShowReg=1" +
-										           "&ReclaimAID=" + rs2.GetInt32(idx) + "" +
-										           "&ReclaimUID=" + rs2.GetInt32(idx + 1) + "" +
-										           "&SDID=" + showDepartmentID.ToString() + "" +
-										           "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "" +
-										           "' title='Withdraw submission of survey (mark as not submitted and allow changes)'><IMG SRC='img/starOK.gif' BORDER='0'/></a>" + "");
+										usr.Append(
+											string.Format(
+												"<a href='org.aspx?ShowReg=1&ReclaimAID={0}&ReclaimUID={1}&SDID={2}&Rnd={3}' title='Withdraw submission of survey (mark as not submitted and allow changes)'><img src='img/starOK.gif' border='0'/></a>",
+												rs2.GetInt32(idx),
+												rs2.GetInt32(idx + 1),
+												showDepartmentID.ToString(),
+												(new Random(unchecked((int)DateTime.Now.Ticks))).Next()
+											)
+										);
 										if (Convert.ToInt32(ESattr.Split(',')[i].Split(':')[2]) != 0) {
 											query = string.Format("SELECT COUNT(*) FROM AnswerValue WHERE AnswerID = " + rs2.GetInt32(idx) + " AND QuestionID = " + Convert.ToInt32(ESattr.Split(',')[i].Split(':')[2]) + " AND DeletedSessionID IS NULL AND (ValueInt IS NOT NULL OR ValueDecimal IS NOT NULL OR ValueDateTime IS NOT NULL OR ValueText IS NOT NULL)");
 											SqlDataReader rs3 = Db.rs(query, "eFormSqlConnection");
@@ -1711,7 +1737,7 @@ WHERE up.UserID = {1}",
 							if (rs2.IsDBNull(8)) {
 								usr.Append("Reactivated");
 							}
-							usr.Append(" (" + rs2.GetDateTime(7).ToString("yyyy-MM-dd") + ")");
+							usr.Append(string.Format(" ({0})", rs2.GetDateTime(7).ToString("yyyy-MM-dd")));
 						}
 						usr.Append("</td>");
 					}
@@ -1722,7 +1748,7 @@ WHERE up.UserID = {1}",
 				}
 			}
 			rs.Close();
-			OrgTree.Text += "<tr><td colspan='" + (aggrBQcx + 8 + (showDepartmentID != 0 && BQs != "" ? BQs.Split(':').Length : 0) + EScount) + "' style='border-top:1px solid #333333'>&nbsp;</td></tr>";
+			OrgTree.Text += "<tr><td colspan='" + (aggrBQcx + 8 + (showDepartmentID != 0 && BQs != "" ? BQs.Split(':').Length : 0) + EScount + 1) + "' style='border-top:1px solid #333333'>&nbsp;</td></tr>";
 //			string header = "<td align='center' style='font-size:9px;'>" + totalActive.ToString() + " / " + (totalActivated >= MIN_SHOW ? totalActivated.ToString() : "<img src='img/key.gif'/>") + "</td>";
 			string header = string.Format("<td align='center' style='font-size:9px;'>{0}</td>", (totalActive >= MIN_SHOW ? totalActive.ToString() : "<img src='img/key.gif'/>"));
 			for (int i = 0; i < EScount; i++) {
@@ -1812,7 +1838,12 @@ GROUP BY BA.BAID, BA.Internal",
 					SqlDataReader rs2 = Db.rs(query);
 					while (rs2.Read()) {
 						cx++;
-						OrgTree.Text += "<tr style='background-color:#EEEEEE'><td><table border='0' cellspacing='0' cellpadding='0'><tr><td><img src='img/" + (cx == rs.GetInt32(2) ? "L" : "T") + ".gif' width='19' height='20'/></td><td>" + (rs2.IsDBNull(1) ? "?" : rs2.GetString(1)) + "&nbsp;</td></tr></table></td><td align='center'>&nbsp;" + rs2.GetInt32(2) + "&nbsp;</td>";
+						OrgTree.Text += @"
+<tr style='background-color:#EEEEEE'>
+    <td>
+        <table border='0' cellspacing='0' cellpadding='0'>
+            <tr>
+                <td><img src='img/" + (cx == rs.GetInt32(2) ? "L" : "T") + ".gif' width='19' height='20'/></td><td>" + (rs2.IsDBNull(1) ? "?" : rs2.GetString(1)) + "&nbsp;</td></tr></table></td><td align='center'>&nbsp;" + rs2.GetInt32(2) + "&nbsp;</td>";
 						for (int i = 0; i < EScount; i++) {
 							int idx = 4 + i;
 							if (!rs2.IsDBNull(idx) && rs2.GetInt32(idx) >= Convert.ToInt32(ESattr.Split(',')[i].Split(':')[1])) {
@@ -2202,7 +2233,7 @@ INNER JOIN UserProfile up ON u.UserProfileID = up.UserProfileID
 WHERE u.UserID = {0}",
 									rs.GetInt32(1)
 								);
-                                SqlDataReader rs2 = Db.rs(query);
+								SqlDataReader rs2 = Db.rs(query);
 								while (rs2.Read()) {
 									#region Create new profile
 									query = string.Format(
