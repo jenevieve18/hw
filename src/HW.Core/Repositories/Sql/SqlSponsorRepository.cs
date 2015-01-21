@@ -206,7 +206,7 @@ AND SponsorID = {7}",
 				a.Id,
 				a.Sponsor.Id,
 				a.LastName,
-				a.PermanentlyDeleteUsers
+				a.PermanentlyDeleteUsers ? "1" : "0"
 			);
 			Db.exec(query, "healthWatchSqlConnection");
 		}
@@ -1020,9 +1020,10 @@ FROM Sponsor s
 				j,
 				u
 			);
+			SponsorAdmin a = null;
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				if (rs.Read()) {
-					var a = new SponsorAdmin {
+					a = new SponsorAdmin {
 						Id = GetInt32(rs, 1),
 						Sponsor = new Sponsor {Id = GetInt32(rs, 0), Name = GetString(rs, 2)},
 						Anonymized = GetInt32(rs, 3) == 1, //GetBoolean(rs, 3),
@@ -1031,10 +1032,9 @@ FROM Sponsor s
 						ReadOnly = GetInt32(rs, 6) == 1, //GetBoolean(rs, 6),
 						Name = GetString(rs, 7)
 					};
-					return a;
 				}
 			}
-			return null;
+			return a;
 		}
 
 		public IList<SponsorProjectRoundUnit> FindSponsorProjectRoundUnitsBySponsor(int sponsorId)
