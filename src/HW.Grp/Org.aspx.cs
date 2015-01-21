@@ -1559,7 +1559,7 @@ ORDER BY s.Email",
 						for (int i = 1; i <= depth; i++) {
 							usr.Append(string.Format("<img src='img/{0}.gif' width='19' height='20'/>", (DX[i] ? "I" : "null")));
 						}
-						string d = sponsorAdmin.PermanentlyDeleteUsers ?
+						string d = sponsorAdmin == null || sponsorAdmin.PermanentlyDeleteUsers ?
 							"<a href='org.aspx?SDID=" + showDepartmentID.ToString() + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DeleteUID=" + rs2.GetInt32(0).ToString() + "'><img src='img/usr_del.gif' border='0'/></a>"
 							: "";
 						usr.Append("</td><td style='font-size:9px'>" + (rs2.IsDBNull(1) ? "" : rs2.GetString(1)) + "</td>" +
