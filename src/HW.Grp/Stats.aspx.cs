@@ -71,7 +71,8 @@ namespace HW.Grp
 //				bool[] DX = new bool[8];
 				Dictionary<int, bool> DX = new Dictionary<int, bool>();
 				foreach (var d in departments) {
-					IHGHtmlTableRow row = new IHGHtmlTableRow(new IHGHtmlTableCell(new CheckBox { ID = "DID" + d.Id }), new IHGHtmlTableCell(d.Name));
+					//IHGHtmlTableRow row = new IHGHtmlTableRow(new IHGHtmlTableCell(new CheckBox { ID = "DID" + d.Id }), new IHGHtmlTableCell(d.Name));
+                    IHGHtmlTableRow row = new IHGHtmlTableRow(new IHGHtmlTableCell(new CheckBox { ID = "DID" + d.Id }), new IHGHtmlTableCell(d.Id.ToString()));
 					
 					int depth = d.Depth;
 //					if (!DX.ContainsKey(depth)) {

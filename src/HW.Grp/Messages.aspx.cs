@@ -22,6 +22,7 @@ namespace HW.Grp
 		bool incorrectPassword = false;
 		bool sent = false;
 		Sponsor sponsor;
+        bool loginWithSkey = false;
 		
 		SqlUserRepository userRepository = new SqlUserRepository();
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
@@ -32,6 +33,7 @@ namespace HW.Grp
 		{
 			sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
 			lid = ConvertHelper.ToInt32(Session["lid"], 1);
+            loginWithSkey = Session["SponsorKey"] != null;
 
 			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Messages, DateTime.Now);
 			Save.Click += new EventHandler(Save_Click);
@@ -51,6 +53,8 @@ namespace HW.Grp
 
 				sponsor = sponsorRepository.ReadSponsor(sponsorID);
 				if (!IsPostBack) {
+
+                    LoginSubject.Enabled = LoginTxt.Enabled = LoginDays.Enabled = LoginWeekday.Enabled = loginWithSkey;
 					
 					LoginDays.Items.Add(new ListItem(R.Str(lid, "day.everyday", "every day"), "1"));
 					LoginDays.Items.Add(new ListItem(R.Str(lid, "week", "week"), "7"));

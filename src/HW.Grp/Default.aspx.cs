@@ -58,6 +58,8 @@ namespace HW.Grp
 						Session["Anonymized"] = s.Anonymized ? 1 : 0;
 						Session["SeeUsers"] = s.SeeUsers ? 1 : 0;
 						Session["ReadOnly"] = s.ReadOnly ? 1 : 0;
+
+                        SessionHelper.AddIf(skey != null, "SponsorKey", skey);
 					}
 				} else {
 					errorMessage = "Invalid user name and password. Please try again.";
@@ -83,7 +85,8 @@ namespace HW.Grp
 				Session.Remove("Anonymized");
 				Session.Remove("SeeUsers");
 				Session.Remove("ReadOnly");
-				Session.Remove("SponsorAdminSessionID");
+                Session.Remove("SponsorAdminSessionID");
+                Session.Remove("SponsorKey");
 				ClientScript.RegisterStartupScript(this.GetType(), "CLOSE", "<script language='JavaScript'>window.close();</script>");
 			} else if (login && Session["SuperAdminID"] != null || Request.QueryString["SuperLogout"] != null) {
 				Session.Remove("SuperAdminID");
