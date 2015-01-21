@@ -270,6 +270,9 @@
   <data name="reminder.for" xml:space="preserve">
     <value>Påminnelse för</value>
   </data>
+  <data name="reminder.text" xml:space="preserve">
+    <value>Påminnelse</value>
+  </data>
   <data name="save" xml:space="preserve">
     <value>Spara</value>
   </data>
