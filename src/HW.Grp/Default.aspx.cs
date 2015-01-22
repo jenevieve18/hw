@@ -36,7 +36,6 @@ namespace HW.Grp
 			bool login = false;
 			SponsorAdmin s = null;
 			if (((Request.Form["ANV"] != null && Request.Form["ANV"] != "") && (Request.Form["LOS"] != null || Request.Form["LOS"] != "")) || Request.QueryString["SKEY"] != null || Request.QueryString["SAKEY"] != null) {
-				login = true;
 				string skey = Request.QueryString["SKEY"];
 				string sakey = Request.QueryString["SAKEY"];
 				string anv = Request.Form["ANV"];
@@ -45,6 +44,7 @@ namespace HW.Grp
 				string said = sa != null ? (Session["SuperAdminID"] != null ? Session["SuperAdminID"].ToString() : "0") : "";
 				s = sponsorRepository.ReadSponsorAdmin(skey, sakey, sa, said, anv, los);
 				if (s != null) {
+				    login = true;
 					sponsorRepository.SaveSponsorAdminSession(s.Id, DateTime.Now);
 					Session["SponsorAdminSessionID"] = sponsorRepository.ReadLastSponsorAdminSession();
 					
