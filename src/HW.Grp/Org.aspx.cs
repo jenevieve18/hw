@@ -1025,6 +1025,14 @@ VALUES ({0},1,NULL,{1},GETDATE())",
 		protected override void OnPreRender(EventArgs e)
 		{
 			Search.Text = R.Str(lid, "search", "Search");
+			CancelUnit.Text = R.Str(lid, "cancel", "Cancel");
+			SaveUnit.Text = R.Str(lid, "save", "Save");
+			CancelImportUnit.Text = R.Str(lid, "cancel", "Cancel");
+			SaveImportUnit.Text = R.Str(lid, "save", "Save");
+			CancelUser.Text = R.Str(lid, "cancel", "Cancel");
+			SaveUser.Text = R.Str(lid, "save", "Save");
+			CancelImportUser.Text = R.Str(lid, "cancel", "Cancel");
+			SaveImportUser.Text = R.Str(lid, "save", "Save");
 
 			#region Normal org
 			string select = "";

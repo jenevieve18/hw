@@ -141,6 +141,9 @@
   <data name="day.everyday" xml:space="preserve">
     <value>varje dag</value>
   </data>
+  <data name="display.hierarchy" xml:space="preserve">
+    <value>(för visning i hierarkin)</value>
+  </data>
   <data name="email" xml:space="preserve">
     <value>E-post</value>
   </data>
@@ -360,6 +363,12 @@
   <data name="unit.import" xml:space="preserve">
     <value>Importera enheter</value>
   </data>
+  <data name="unit.name" xml:space="preserve">
+    <value>Enhetsnamn</value>
+  </data>
+  <data name="unit.parent" xml:space="preserve">
+    <value>Överordnad enhet</value>
+  </data>
   <data name="unit.parent.default" xml:space="preserve">
     <value>Överordnad enhet, standardvärde</value>
   </data>
@@ -371,6 +380,9 @@
   </data>
   <data name="user.import" xml:space="preserve">
     <value>Importera användare</value>
+  </data>
+  <data name="user.import.export" xml:space="preserve">
+    <value>för import/export av användare, kort namn, inga mellanslag</value>
   </data>
   <data name="user.name" xml:space="preserve">
     <value>Användarnamn</value>

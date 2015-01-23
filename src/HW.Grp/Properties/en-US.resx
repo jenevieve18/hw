@@ -138,6 +138,9 @@
   <data name="day.everyday" xml:space="preserve">
     <value>every day</value>
   </data>
+  <data name="display.hierarchy" xml:space="preserve">
+    <value>(for display in hierarchy)</value>
+  </data>
   <data name="email" xml:space="preserve">
     <value>Email</value>
   </data>
@@ -345,6 +348,12 @@
   <data name="unit.import" xml:space="preserve">
     <value>Import units</value>
   </data>
+  <data name="unit.name" xml:space="preserve">
+    <value>Unit name</value>
+  </data>
+  <data name="unit.parent" xml:space="preserve">
+    <value>Parent unit</value>
+  </data>
   <data name="unit.parent.default" xml:space="preserve">
     <value>Default parent unit</value>
   </data>
@@ -356,6 +365,9 @@
   </data>
   <data name="user.import" xml:space="preserve">
     <value>Import users</value>
+  </data>
+  <data name="user.import.export" xml:space="preserve">
+    <value>(for user import/export, short name, no spaces)</value>
   </data>
   <data name="user.perform.activated" xml:space="preserve">
     <value>If this user has activated the account, perform the following</value>
