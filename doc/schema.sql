@@ -251,5 +251,29 @@ values(4, 2, 'Managers', 'managers.aspx', 'administer unit managers');
 insert into ManagerFunctionLang(ManagerFunctionID, LangID, ManagerFunction, URL, Expl)
 values(7, 2, 'Exercises', 'exercise.aspx', 'manager exercises');
 
+use healthWatch;
+alter table SponsorAdmin add LastName varchar(255);
+alter table SponsorAdmin add PermanentlyDeleteUsers int;
 
-use eForm; alter table SponsorAdmin add LastName varchar(255);
+use healthWatch;
+
+alter table SponsorAdmin add InviteSubject text;
+alter table SponsorAdmin add InviteTxt text;
+alter table SponsorAdmin add InviteReminderSubject text;
+alter table SponsorAdmin add InviteReminderTxt text;
+alter table SponsorAdmin add AllMessageSubject text;
+alter table SponsorAdmin add AllMessageBody text;
+
+create table SponsorAdminExtendedSurvey(
+	SponsorAdminExtendedSurveyID int primary key not null identity,
+	SponsorAdminID int,
+	EmailSubject text,
+	EmailBody text,
+	FinishedEmailSubject text,
+	FinishedEmailBody text,
+	InviteReminderLastSent smalldatetime,
+	InviteLastSent smalldatetime,
+	AllMessageLastSent smalldatetime,
+	EmailLastSent smalldatetime,
+	FinishedLastSent smalldatetime
+);
