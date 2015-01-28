@@ -126,6 +126,9 @@
   <data name="active" xml:space="preserve">
     <value>Aktiv</value>
   </data>
+  <data name="active.activated" xml:space="preserve">
+    <value>Aktiv/&lt;br&gt;Aktiverad</value>
+  </data>
   <data name="aggregation" xml:space="preserve">
     <value>Aggregering</value>
   </data>
@@ -140,6 +143,12 @@
   </data>
   <data name="day.everyday" xml:space="preserve">
     <value>varje dag</value>
+  </data>
+  <data name="disassociate.start" xml:space="preserve">
+    <value>Koppla bort den här användaren från organisationen från start.</value>
+  </data>
+  <data name="disassociate.today" xml:space="preserve">
+    <value>Koppla bort denna användare från organisationen från idag och framåt.</value>
   </data>
   <data name="display.hierarchy" xml:space="preserve">
     <value>(för visning i hierarkin)</value>
@@ -188,6 +197,9 @@
   </data>
   <data name="invitation.received" xml:space="preserve">
     <value>Fått inbjudan</value>
+  </data>
+  <data name="invite.first" xml:space="preserve">
+    <value>1:a inbjudan&amp;nbsp;&lt;br/&gt;&amp;nbsp;skickad</value>
   </data>
   <data name="language" xml:space="preserve">
     <value>Språk</value>
@@ -357,6 +369,9 @@
   <data name="unit.add" xml:space="preserve">
     <value>Lägg till enhet</value>
   </data>
+  <data name="unit.email" xml:space="preserve">
+    <value>Enhet/E-post</value>
+  </data>
   <data name="unit.id" xml:space="preserve">
     <value>Enhets-ID</value>
   </data>
@@ -374,6 +389,9 @@
   </data>
   <data name="updated.on" xml:space="preserve">
     <value>updated on</value>
+  </data>
+  <data name="user.active.perform" xml:space="preserve">
+    <value>Om den här användaren har aktiverat kontot, gör följande</value>
   </data>
   <data name="user.add" xml:space="preserve">
     <value>Lägg till användare</value>

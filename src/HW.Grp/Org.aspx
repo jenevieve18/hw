@@ -98,8 +98,8 @@
                         <asp:TextBox CssClass="inpt" ReadOnly="true" ID="DeleteUserEmail" runat="server" /><br />
                         <%= R.Str(lid, "user.perform.activated", "If this user has activated the account, perform the following")%><br />
                         <asp:RadioButtonList ID="DeleteUserFrom" runat="server" RepeatDirection="Vertical" RepeatLayout="Flow">
-                            <asp:ListItem Value="1" Selected>From today and onwards, disassociate this user with the organization.</asp:ListItem>
-                            <asp:ListItem Value="0">Disassociate this user with the organization from start.</asp:ListItem>
+                            <%--<asp:ListItem Value="1" Selected>From today and onwards, disassociate this user with the organization.</asp:ListItem>
+                            <asp:ListItem Value="0">Disassociate this user with the organization from start.</asp:ListItem>--%>
                         </asp:RadioButtonList>
                         <br />
                         <asp:Button CssClass="btn" ID="CancelDeleteUser" Text="Cancel" runat="server" />

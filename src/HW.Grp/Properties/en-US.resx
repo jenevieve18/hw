@@ -126,6 +126,9 @@
   <data name="active" xml:space="preserve">
     <value>Active</value>
   </data>
+  <data name="active.activated" xml:space="preserve">
+    <value>Active/&lt;br&gt;Activated</value>
+  </data>
   <data name="background.variable" xml:space="preserve">
     <value>Background variable</value>
   </data>
@@ -137,6 +140,12 @@
   </data>
   <data name="day.everyday" xml:space="preserve">
     <value>every day</value>
+  </data>
+  <data name="disassociate.start" xml:space="preserve">
+    <value>Disassociate this user with the organization from start.</value>
+  </data>
+  <data name="disassociate.today" xml:space="preserve">
+    <value>From today and onwards, disassociate this user with the organization.</value>
   </data>
   <data name="display.hierarchy" xml:space="preserve">
     <value>(for display in hierarchy)</value>
@@ -179,6 +188,9 @@
   </data>
   <data name="invitation.received" xml:space="preserve">
     <value>Received &lt;br&gt; Inivtation</value>
+  </data>
+  <data name="invite.first" xml:space="preserve">
+    <value>1st invite&amp;nbsp;&lt;br/&gt;&amp;nbsp;sent</value>
   </data>
   <data name="login.header" xml:space="preserve">
     <value>Group administration</value>
@@ -345,6 +357,9 @@
   <data name="unit.add" xml:space="preserve">
     <value>Add unit</value>
   </data>
+  <data name="unit.email" xml:space="preserve">
+    <value>Unit/Email</value>
+  </data>
   <data name="unit.id" xml:space="preserve">
     <value>Unit ID</value>
   </data>
@@ -362,6 +377,9 @@
   </data>
   <data name="updated.on" xml:space="preserve">
     <value>updated on</value>
+  </data>
+  <data name="user.active.perform" xml:space="preserve">
+    <value>If this user has activated the account, perform the following</value>
   </data>
   <data name="user.add" xml:space="preserve">
     <value>Add user</value>

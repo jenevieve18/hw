@@ -68,6 +68,9 @@ namespace HW.Grp
 				UserUpdateFrom.Items.Add(new ListItem(R.Str(lid, "user.update.start", "Update the user profile as if these settings were set from start."), "0"));
 				UserUpdateFrom.Items.Add(new ListItem(R.Str(lid, "user.update.previous", "The previously registered email address has never been correct and the created account should be detached from organization."), "2"));
 
+                DeleteUserFrom.Items.Add(new ListItem(R.Str(lid, "disassociate.today", "From today and onwards, disassociate this user with the organization."), "1"));
+                DeleteUserFrom.Items.Add(new ListItem(R.Str(lid, "disassociate.start", "Disassociate this user with the organization from start."), "0"));
+
 				if (Request.QueryString["ShowReg"] != null && Convert.ToInt32(Session["ReadOnly"]) == 0) {
 					showReg = true;
 				} else if (Convert.ToInt32(Session["SeeUsers"]) == 1 && Convert.ToInt32(Session["ReadOnly"]) == 0) {
@@ -1222,21 +1225,29 @@ ORDER BY ses.SponsorExtendedSurveyID",
 					@"
 <table border='0' cellspacing='0' cellpadding='0' style='font-size:12px;line-height:1.0;vertical-align:middle;'>
 	<tr style='border-bottom:1px solid #333333;'>
-		<td colspan='2'><b>Unit/Email</b>&nbsp;</td>
-		<td align='center' style='font-size:9px;'>&nbsp;<b>Action</b>&nbsp;</td>
-		<td align='center' style='font-size:9px;'>&nbsp;<b>Active</b>&nbsp;</td>
-		<!--<td align='center' style='font-size:9px;'>&nbsp;<b>Active/<br>Activated</b>&nbsp;</td>-->
+		<td colspan='2'><b>{3}</b>&nbsp;</td>
+		<td align='center' style='font-size:9px;'>&nbsp;<b>{4}</b>&nbsp;</td>
+		<td align='center' style='font-size:9px;'>&nbsp;<b>{5}</b>&nbsp;</td>
+		<!--<td align='center' style='font-size:9px;'>&nbsp;<b>{6}</b>&nbsp;</td>-->
 		{0}
-		<td align='center' style='font-size:9px;'>&nbsp;<b>Total</b>&nbsp;</td>
-		<td align='center' style='font-size:9px;'>&nbsp;<b>Received&nbsp;<br/>&nbsp;inivtation</b>&nbsp;</td>
-		<td align='center' style='font-size:9px;'>&nbsp;<b>1st invite&nbsp;<br/>&nbsp;sent</b>&nbsp;</td>
+		<td align='center' style='font-size:9px;'>&nbsp;<b>{7}</b>&nbsp;</td>
+		<td align='center' style='font-size:9px;'>&nbsp;<b>{8}</b>&nbsp;</td>
+		<td align='center' style='font-size:9px;'>&nbsp;<b>{9}</b>&nbsp;</td>
 		{1}
 		{2}
-		<td align='center' style='font-size:9px;'>&nbsp;<b>Unit ID&nbsp;<br/>&nbsp;User status</b>&nbsp;</td>
+		<td align='center' style='font-size:9px;'>&nbsp;<b>{10}</b>&nbsp;</td>
 	</tr>",
 					ESdesc,
 					aggrBRdesc,
-					BQdesc
+					BQdesc,
+					R.Str(lid, "unit.email", "Unit/Email"),
+					R.Str(lid, "action", "Action"),
+					R.Str(lid, "active", "Active"),
+					R.Str(lid, "active.activated", "Active/<br>Activated"),
+					R.Str(lid, "total", "Total"),
+					R.Str(lid, "invitation.received", "Received&nbsp;<br/>&nbsp;inivtation"),
+					R.Str(lid, "invite.first", "1st invite&nbsp;<br/>&nbsp;sent"),
+					R.Str(lid, "unit.id", "Unit ID&nbsp;<br/>&nbsp;User status")
 				);
 			} else {
 				OrgTree.Text += string.Format(
