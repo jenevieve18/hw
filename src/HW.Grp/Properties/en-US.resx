@@ -144,6 +144,9 @@
   <data name="email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="execute" xml:space="preserve">
+    <value>Execute</value>
+  </data>
   <data name="exercises.area" xml:space="preserve">
     <value>Choose area</value>
   </data>

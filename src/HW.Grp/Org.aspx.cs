@@ -45,6 +45,7 @@ namespace HW.Grp
 			sponsorID = Convert.ToInt32(Session["SponsorID"]);
 			sponsorAdminID = ConvertHelper.ToInt32(Session["SponsorAdminID"]);
 			lid = ConvertHelper.ToInt32(Session["lid"], 1);
+            LanguageFactory.SetCurrentCulture(lid);
 
 			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Organization, DateTime.Now);
 			string query = "";
@@ -1033,6 +1034,10 @@ VALUES ({0},1,NULL,{1},GETDATE())",
 			SaveUser.Text = R.Str(lid, "save", "Save");
 			CancelImportUser.Text = R.Str(lid, "cancel", "Cancel");
 			SaveImportUser.Text = R.Str(lid, "save", "Save");
+            CancelDeleteUser.Text = R.Str(lid, "cancel", "Cancel");
+            SaveDeleteUser.Text = R.Str(lid, "execute", "Execute");
+            CancelDeleteDepartment.Text = R.Str(lid, "cancel", "Cancel");
+            SaveDeleteDepartment.Text = R.Str(lid, "execute", "Execute");
 
 			#region Normal org
 			string select = "";
