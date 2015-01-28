@@ -89,14 +89,14 @@ namespace HW.Grp
 //						AllMessageSubject.Text = sponsor.AllMessageSubject;
 //						AllMessageBody.Text = sponsor.AllMessageBody;
 						
-						InviteTxt.Text = sponsorAdmin.InviteText;
-						InviteSubject.Text = sponsorAdmin.InviteSubject;
+						InviteTxt.Text = sponsorAdmin != null ? sponsorAdmin.InviteText : sponsor.InviteText;
+						InviteSubject.Text = sponsorAdmin != null ? sponsorAdmin.InviteSubject : sponsor.InviteSubject;
 						
-						InviteReminderTxt.Text = sponsorAdmin.InviteReminderText;
-						InviteReminderSubject.Text = sponsorAdmin.InviteReminderSubject;
+						InviteReminderTxt.Text = sponsorAdmin != null ? sponsorAdmin.InviteReminderText : sponsor.InviteReminderText;
+						InviteReminderSubject.Text = sponsorAdmin != null ? sponsorAdmin.InviteReminderSubject : sponsor.InviteReminderSubject;
 						
-						AllMessageSubject.Text = sponsorAdmin.AllMessageSubject;
-						AllMessageBody.Text = sponsorAdmin.AllMessageBody;
+						AllMessageSubject.Text = sponsorAdmin != null ? sponsorAdmin.AllMessageSubject : sponsor.AllMessageSubject;
+						AllMessageBody.Text = sponsorAdmin != null ? sponsorAdmin.AllMessageBody : sponsor.AllMessageBody;
 
 						LoginTxt.Text = sponsor.LoginText;
 						LoginSubject.Text = sponsor.LoginSubject;
