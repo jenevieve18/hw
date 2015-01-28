@@ -78,8 +78,10 @@
     <Content Include="ManagerSetup.aspx" />
     <Content Include="Messages.aspx" />
     <Content Include="Org.aspx" />
+    <Content Include="Reminders.aspx" />
     <Content Include="ReportImage.aspx" />
     <Content Include="Settings.aspx" />
+    <Content Include="sql.aspx" />
     <Content Include="Stats.aspx" />
     <Content Include="SuperAdmin.aspx" />
     <Content Include="SuperReportImage.aspx" />
@@ -170,6 +172,13 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="R.cs" />
+    <Compile Include="Reminders.aspx.cs">
+      <DependentUpon>Reminders.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reminders.aspx.designer.cs">
+      <DependentUpon>Reminders.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ReportImage.aspx.cs">
       <DependentUpon>ReportImage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -183,6 +192,13 @@
     </Compile>
     <Compile Include="Settings.aspx.designer.cs">
       <DependentUpon>Settings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="sql.aspx.cs">
+      <DependentUpon>sql.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sql.aspx.designer.cs">
+      <DependentUpon>sql.aspx</DependentUpon>
     </Compile>
     <Compile Include="Stats.aspx.cs">
       <DependentUpon>Stats.aspx</DependentUpon>

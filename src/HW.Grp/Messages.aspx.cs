@@ -17,12 +17,14 @@ namespace HW.Grp
 {
 	public partial class Messages : System.Web.UI.Page
 	{
-	    int sponsorID = 0;
-        int sponsorExtendedSurveyID = 0;
+		int sponsorID = 0;
+		int sponsorAdminID = 0;
+		int sponsorExtendedSurveyID = 0;
 		bool incorrectPassword = false;
 		bool sent = false;
 		Sponsor sponsor;
-        bool loginWithSkey = false;
+		SponsorAdmin sponsorAdmin;
+		bool loginWithSkey = false;
 		
 		SqlUserRepository userRepository = new SqlUserRepository();
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
@@ -31,9 +33,10 @@ namespace HW.Grp
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
+			sponsorID = ConvertHelper.ToInt32(Session["SponsorID"]);
+			sponsorAdminID = ConvertHelper.ToInt32(Session["SponsorAdminID"]);
 			lid = ConvertHelper.ToInt32(Session["lid"], 1);
-            loginWithSkey = Session["SponsorKey"] != null;
+			loginWithSkey = Session["SponsorKey"] != null;
 
 			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Messages, DateTime.Now);
 			Save.Click += new EventHandler(Save_Click);
@@ -41,20 +44,21 @@ namespace HW.Grp
 
 			if (sponsorID != 0) {
 
-                SendType.Items.Add(new ListItem(R.Str(lid, "select.send.type", "< select send type >"), "0"));
-                SendType.Items.Add(new ListItem(R.Str(lid, "registration", "Registration"), "1"));
-                SendType.Items.Add(new ListItem(R.Str(lid, "registration.reminder", "Registration reminder"), "2"));
-                SendType.Items.Add(new ListItem(R.Str(lid, "login.reminder", "Login reminder"), "3"));
-                SendType.Items.Add(new ListItem(R.Str(lid, "users.activated.all", "All activated users"), "9"));
+				SendType.Items.Add(new ListItem(R.Str(lid, "select.send.type", "< select send type >"), "0"));
+				SendType.Items.Add(new ListItem(R.Str(lid, "registration", "Registration"), "1"));
+				SendType.Items.Add(new ListItem(R.Str(lid, "registration.reminder", "Registration reminder"), "2"));
+				SendType.Items.Add(new ListItem(R.Str(lid, "login.reminder", "Login reminder"), "3"));
+				SendType.Items.Add(new ListItem(R.Str(lid, "users.activated.all", "All activated users"), "9"));
 
-				sent = (HttpContext.Current.Request.QueryString["Sent"] != null);
+				sent = (Request.QueryString["Sent"] != null);
 				
-				int sponsorAdminID;
+//				int sponsorAdminID;
 
 				sponsor = sponsorRepository.ReadSponsor(sponsorID);
+				sponsorAdmin = sponsorRepository.ReadSponsorAdmin(sponsorAdminID);
 				if (!IsPostBack) {
 
-                    LoginSubject.Enabled = LoginTxt.Enabled = LoginDays.Enabled = LoginWeekday.Enabled = loginWithSkey;
+					LoginSubject.Enabled = LoginTxt.Enabled = LoginDays.Enabled = LoginWeekday.Enabled = loginWithSkey;
 					
 					LoginDays.Items.Add(new ListItem(R.Str(lid, "day.everyday", "every day"), "1"));
 					LoginDays.Items.Add(new ListItem(R.Str(lid, "week", "week"), "7"));
@@ -63,38 +67,47 @@ namespace HW.Grp
 					LoginDays.Items.Add(new ListItem(R.Str(lid, "month.three", "3 months"), "90"));
 					LoginDays.Items.Add(new ListItem(R.Str(lid, "month.six", "6 months"), "100"));
 					
-		            LoginWeekday.Items.Add(new ListItem(R.Str(lid, "week.disabled", "< disabled >"), "NULL"));
-		            LoginWeekday.Items.Add(new ListItem(R.Str(lid, "week.everyday", "< every day >"), "0"));
-		            LoginWeekday.Items.Add(new ListItem(R.Str(lid, "week.monday", "Monday"), "1"));
-		            LoginWeekday.Items.Add(new ListItem(R.Str(lid, "week.tuesday", "Tuesday"), "2"));
-		            LoginWeekday.Items.Add(new ListItem(R.Str(lid, "week.wednesday", "Wednesday"), "3"));
-		            LoginWeekday.Items.Add(new ListItem(R.Str(lid, "week.thursday", "Thursday"), "4"));
-		            LoginWeekday.Items.Add(new ListItem(R.Str(lid, "week.friday", "Friday"), "5"));
+					LoginWeekday.Items.Add(new ListItem(R.Str(lid, "week.disabled", "< disabled >"), "NULL"));
+					LoginWeekday.Items.Add(new ListItem(R.Str(lid, "week.everyday", "< every day >"), "0"));
+					LoginWeekday.Items.Add(new ListItem(R.Str(lid, "week.monday", "Monday"), "1"));
+					LoginWeekday.Items.Add(new ListItem(R.Str(lid, "week.tuesday", "Tuesday"), "2"));
+					LoginWeekday.Items.Add(new ListItem(R.Str(lid, "week.wednesday", "Wednesday"), "3"));
+					LoginWeekday.Items.Add(new ListItem(R.Str(lid, "week.thursday", "Thursday"), "4"));
+					LoginWeekday.Items.Add(new ListItem(R.Str(lid, "week.friday", "Friday"), "5"));
 					
-					sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
+//					sponsorAdminID = ConvertHelper.ToInt32(Session["SponsorAdminID"]);
 					var u = userRepository.a(sponsorID, sponsorAdminID);
 					AllMessageLastSent.Text = R.Str(lid, "recipients", "Recipients") + ": " + u + ", ";
 
-//					sponsor = sponsorRepository.ReadSponsor(sponsorID);
 					if (sponsor != null) {
-						InviteTxt.Text = sponsor.InviteText;
-						InviteReminderTxt.Text = sponsor.InviteReminderText;
+//						InviteTxt.Text = sponsor.InviteText;
+//						InviteSubject.Text = sponsor.InviteSubject;
+//
+//						InviteReminderTxt.Text = sponsor.InviteReminderText;
+//						InviteReminderSubject.Text = sponsor.InviteReminderSubject;
+//
+//						AllMessageSubject.Text = sponsor.AllMessageSubject;
+//						AllMessageBody.Text = sponsor.AllMessageBody;
+						
+						InviteTxt.Text = sponsorAdmin.InviteText;
+						InviteSubject.Text = sponsorAdmin.InviteSubject;
+						
+						InviteReminderTxt.Text = sponsorAdmin.InviteReminderText;
+						InviteReminderSubject.Text = sponsorAdmin.InviteReminderSubject;
+						
+						AllMessageSubject.Text = sponsorAdmin.AllMessageSubject;
+						AllMessageBody.Text = sponsorAdmin.AllMessageBody;
+
 						LoginTxt.Text = sponsor.LoginText;
-
-						InviteSubject.Text = sponsor.InviteSubject;
-						InviteReminderSubject.Text = sponsor.InviteReminderSubject;
 						LoginSubject.Text = sponsor.LoginSubject;
-
-						InviteLastSent.Text = (sponsor.InviteLastSent ==  null ? "Never" : sponsor.InviteLastSent.Value.ToString("yyyy-MM-dd HH:mm"));
-						InviteReminderLastSent.Text = (sponsor.InviteReminderLastSent == null ? "Never" : sponsor.InviteReminderLastSent.Value.ToString("yyyy-MM-dd HH:mm"));
-						LoginLastSent.Text = (sponsor.LoginLastSent == null ? "Never" : sponsor.LoginLastSent.Value.ToString("yyyy-MM-dd HH:mm"));
 
 						LoginDays.SelectedValue = (sponsor.LoginDays <= 0 ? "14" : sponsor.LoginDays.ToString());
 						LoginWeekday.SelectedValue = (sponsor.LoginWeekday <= -1 ? "NULL" : sponsor.LoginWeekday.ToString());
 
-						AllMessageSubject.Text = sponsor.AllMessageSubject;
-						AllMessageBody.Text = sponsor.AllMessageBody;
+						InviteLastSent.Text = (sponsor.InviteLastSent ==  null ? "Never" : sponsor.InviteLastSent.Value.ToString("yyyy-MM-dd HH:mm"));
+						InviteReminderLastSent.Text = (sponsor.InviteReminderLastSent == null ? "Never" : sponsor.InviteReminderLastSent.Value.ToString("yyyy-MM-dd HH:mm"));
 						AllMessageLastSent.Text += "Last sent: " + (sponsor.AllMessageLastSent == null ? "Never" : sponsor.AllMessageLastSent.Value.ToString("yyyy-MM-dd HH:mm"));
+						LoginLastSent.Text = (sponsor.LoginLastSent == null ? "Never" : sponsor.LoginLastSent.Value.ToString("yyyy-MM-dd HH:mm"));
 					}
 				}
 				#region SponsorExtendedSurvey
@@ -102,7 +115,7 @@ namespace HW.Grp
 				string extendedSurvey = "";
 				bool found = false;
 				ArrayList seen = new ArrayList();
-				sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
+//				sponsorAdminID = ConvertHelper.ToInt32(Session["SponsorAdminID"]);
 				foreach (var s in sponsorRepository.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID)) {
 					if (!seen.Contains(s.Id)) {
 						if (s.ProjectRound != null) {
@@ -111,12 +124,12 @@ namespace HW.Grp
 								if (!IsPostBack) {
 									extendedSurvey = s.Internal + s.RoundText;
 									ExtendedSurvey.Text = R.Str(lid, "reminder.for", "Reminder for") + " <B>" + extendedSurvey + "</B> (<span style='font-size:9px;'>[x]Last sent: " + (s.EmailLastSent == null ? "Never" : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
-									ExtendedSurveyTxt.Text = s.EmailBody;
-									ExtendedSurveySubject.Text = s.EmailSubject;
-
 									ExtendedSurveyFinished.Text = "Thank you mail for <B>" + extendedSurvey + "</B> (<span style='font-size:9px;'>[x]Last sent: " + (s.EmailLastSent == null ? "Never" : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
-									ExtendedSurveyFinishedTxt.Text = s.FinishedEmailBody;
+									
+									ExtendedSurveySubject.Text = s.EmailSubject;
+									ExtendedSurveyTxt.Text = s.EmailBody;
 									ExtendedSurveyFinishedSubject.Text = s.FinishedEmailSubject;
+									ExtendedSurveyFinishedTxt.Text = s.FinishedEmailBody;
 								}
 								sponsorExtendedSurveyID = s.Id;
 								found = true;
@@ -176,7 +189,7 @@ namespace HW.Grp
 				}
 				#endregion
 			} else {
-				HttpContext.Current.Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+				Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
 		}
 
@@ -184,17 +197,32 @@ namespace HW.Grp
 		{
 			sponsorRepository.UpdateSponsor(
 				new Sponsor {
-					InviteText = InviteTxt.Text,
-					InviteReminderText = InviteReminderTxt.Text,
-					AllMessageSubject = AllMessageSubject.Text,
-					LoginText = LoginTxt.Text,
-					InviteSubject = InviteSubject.Text,
-					InviteReminderSubject = InviteReminderSubject.Text,
-					AllMessageBody = AllMessageBody.Text,
+//					InviteSubject = InviteSubject.Text,
+//					InviteText = InviteTxt.Text,
+//					InviteReminderSubject = InviteReminderSubject.Text,
+//					InviteReminderText = InviteReminderTxt.Text,
+//					AllMessageSubject = AllMessageSubject.Text,
+//					AllMessageBody = AllMessageBody.Text,
 					LoginSubject = LoginSubject.Text,
+					LoginText = LoginTxt.Text,
 					LoginDays = Convert.ToInt32(LoginDays.SelectedValue),
 					LoginWeekday = ConvertHelper.ToInt32(LoginWeekday.SelectedValue, -1),
 					Id = sponsorID
+				}
+			);
+			sponsorRepository.UpdateSponsorAdmin2(
+				new SponsorAdmin {
+					InviteSubject = InviteSubject.Text,
+					InviteText = InviteTxt.Text,
+					InviteReminderSubject = InviteReminderSubject.Text,
+					InviteReminderText = InviteReminderTxt.Text,
+					AllMessageSubject = AllMessageSubject.Text,
+					AllMessageBody = AllMessageBody.Text,
+//					LoginText = LoginTxt.Text,
+//					LoginSubject = LoginSubject.Text,
+//					LoginDays = Convert.ToInt32(LoginDays.SelectedValue),
+//					LoginWeekday = ConvertHelper.ToInt32(LoginWeekday.SelectedValue, -1),
+					Id = sponsorAdminID
 				}
 			);
 
@@ -215,7 +243,10 @@ namespace HW.Grp
 		{
 			save();
 
-			HttpContext.Current.Response.Redirect("messages.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+			Response.Redirect(
+				string.Format("messages.aspx?Rnd={0}", (new Random(unchecked((int)DateTime.Now.Ticks))).Next()),
+				true
+			);
 		}
 
 		void Send_Click(object sender, EventArgs e)
@@ -223,9 +254,9 @@ namespace HW.Grp
 			save();
 
 			if (SendType.SelectedIndex != -1) {
-				bool valid = (HttpContext.Current.Session["SponsorAdminID"].ToString() == "-1");
+				bool valid = (Session["SponsorAdminID"].ToString() == "-1");
 				if (!valid) {
-					int sponsorAdminId = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
+					int sponsorAdminId = Convert.ToInt32(Session["SponsorAdminID"]);
 					var a = sponsorRepository.ReadSponsorAdmin(sponsorID, sponsorAdminId, Password.Text);
 					if (a != null && a.Id == sponsorAdminId) {
 						valid = true;
@@ -238,12 +269,12 @@ namespace HW.Grp
 					int cx = 0;
 					int bx = 0;
 
-					switch (Convert.ToInt32(SendType.SelectedValue)) {
+					switch (ConvertHelper.ToInt32(SendType.SelectedValue)) {
 						case 1:
 							#region Invite
 							sponsorRepository.UpdateSponsorLastInviteSent(sponsorID);
 
-							int sponsorAdminId = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
+							int sponsorAdminId = Convert.ToInt32(Session["SponsorAdminID"]);
 							foreach (var i in sponsorRepository.FindInvitesBySponsor(sponsorID, sponsorAdminId)) {
 								bool success = Db.sendInvitation(i.Id, i.Email, InviteSubject.Text, InviteTxt.Text, i.InvitationKey);
 								if (success) {
@@ -258,7 +289,7 @@ namespace HW.Grp
 							#region Invite reminder
 							sponsorRepository.UpdateSponsorLastInviteReminderSent(sponsorID);
 
-							sponsorAdminId = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
+							sponsorAdminId = Convert.ToInt32(Session["SponsorAdminID"]);
 							foreach (var i in sponsorRepository.FindSentInvitesBySponsor(sponsorID, sponsorAdminId)) {
 								bool success = Db.sendInvitation(i.Id, i.Email, InviteReminderSubject.Text, InviteReminderTxt.Text, i.InvitationKey);
 
@@ -274,7 +305,7 @@ namespace HW.Grp
 							#region Login reminder
 							sponsorRepository.UpdateSponsorLastLoginSent(sponsorID);
 
-							sponsorAdminId = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
+							sponsorAdminId = Convert.ToInt32(Session["SponsorAdminID"]);
 							int selectedValue = Convert.ToInt32(LoginDays.SelectedValue);
 							foreach (var u in userRepository.FindBySponsorWithLoginDays(sponsorID, sponsorAdminId, selectedValue)) {
 								bool success = false;
@@ -294,7 +325,6 @@ namespace HW.Grp
 											body += "\r\n\r\n" + personalLink;
 										}
 
-//										success = Db.sendMail(u.Email, LoginSubject.Text, body);
 										success = Db.sendMail(sponsor.EmailFrom, u.Email, LoginSubject.Text, body);
 
 										if (success) {
@@ -322,7 +352,7 @@ namespace HW.Grp
 							#region Extended survey
 							sponsorRepository.UpdateExtendedSurveyLastEmailSent(sponsorExtendedSurveyID);
 
-							sponsorAdminId = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
+							sponsorAdminId = Convert.ToInt32(Session["SponsorAdminID"]);
 							foreach (var u in userRepository.FindBySponsorWithExtendedSurvey2(sponsorID, sponsorAdminId, sponsorExtendedSurveyID)) {
 								bool success = false;
 								bool badEmail = false;
@@ -365,7 +395,7 @@ namespace HW.Grp
 							#region Thank you: Extended survey
 							sponsorRepository.UpdateExtendedSurveyLastFinishedSent(sponsorExtendedSurveyID);
 
-							sponsorAdminId = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
+							sponsorAdminId = Convert.ToInt32(Session["SponsorAdminID"]);
 							foreach (var u in userRepository.FindBySponsorWithExtendedSurvey(sponsorID, sponsorAdminId, sponsorExtendedSurveyID)) {
 								bool success = false;
 								bool badEmail = false;
@@ -408,7 +438,7 @@ namespace HW.Grp
 							#region All activated
 							sponsorRepository.UpdateLastAllMessageSent(sponsorID);
 
-							sponsorAdminId = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
+							sponsorAdminId = Convert.ToInt32(Session["SponsorAdminID"]);
 							foreach (var u in userRepository.Find2(sponsorID, sponsorAdminId)) {
 								bool success = false;
 								bool badEmail = false;
@@ -416,7 +446,7 @@ namespace HW.Grp
 									try {
 										success = Db.sendMail(u.Email, AllMessageSubject.Text, AllMessageBody.Text);
 										//success = Db.sendMail(sponsor.EmailFrom, u.Email, AllMessageSubject.Text, AllMessageBody.Text);
-                                        //success = Db.sendMail("reminder@healthwatch.se", u.Email, AllMessageSubject.Text, AllMessageBody.Text);
+										//success = Db.sendMail("reminder@healthwatch.se", u.Email, AllMessageSubject.Text, AllMessageBody.Text);
 									} catch (Exception) {
 										badEmail = true;
 									}
@@ -436,7 +466,7 @@ namespace HW.Grp
 							#endregion
 							break;
 					}
-					HttpContext.Current.Response.Redirect("messages.aspx?Sent=" + cx + "&Fail=" + bx + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+					Response.Redirect("messages.aspx?Sent=" + cx + "&Fail=" + bx + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 				}
 			}
 		}
@@ -444,14 +474,14 @@ namespace HW.Grp
 		protected override void OnPreRender(EventArgs e)
 		{
 			base.OnPreRender(e);
-            Save.Text = R.Str(lid, "save", "Save");
-            Send.Text = R.Str(lid, "send", "Send");
+			Save.Text = R.Str(lid, "save", "Save");
+			Send.Text = R.Str(lid, "send", "Send");
 
 			if (incorrectPassword) {
 				Page.RegisterStartupScript("ERROR", "<script language='JavaScript'>alert('Incorrect password!');</script>");
 			}
 			if (sent) {
-				Page.RegisterStartupScript("SENT", "<script language='JavaScript'>alert('" + HttpContext.Current.Request.QueryString["Sent"].ToString() + " messages successfully sent.\\r\\n" + HttpContext.Current.Request.QueryString["Fail"].ToString() + " incorrect email address(es) found.');</script>");
+				Page.RegisterStartupScript("SENT", "<script language='JavaScript'>alert('" + Request.QueryString["Sent"].ToString() + " messages successfully sent.\\r\\n" + Request.QueryString["Fail"].ToString() + " incorrect email address(es) found.');</script>");
 			}
 		}
 	}
