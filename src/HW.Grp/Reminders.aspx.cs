@@ -88,7 +88,7 @@ namespace HW.Grp
         	foreach (var d in departments) {
         		var ld = ((DropDownList)Org.FindControl("LDID" + d.Id)).SelectedValue;
         		var lw = ((DropDownList)Org.FindControl("LWID" + d.Id)).SelectedValue;
-        		departmentRepository.X(ld, lw, d.Id);
+        		departmentRepository.UpdateLoginSettings(ld, lw, d.Id);
         	}
         }
 	}
