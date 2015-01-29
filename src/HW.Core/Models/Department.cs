@@ -12,6 +12,8 @@ namespace HW.Core.Models
 		public virtual string ShortName { get; set; }
 		public virtual string AnonymizedName { get; set; }
 		public virtual int MinUserCountToDisclose { get; set; }
+		public virtual int LoginDays { get; set; }
+		public virtual int LoginWeekDay { get; set; }
 		
 		public virtual int Depth { get; set; }
 		public virtual int Siblings { get; set; }

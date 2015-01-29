@@ -80,6 +80,20 @@ VALUES ({0}, {1})",
 			Db.exec(query);
 		}
 		
+		public void UpdateLoginSettings(string loginDays, string loginWeekDay, int departmentID)
+		{
+			string query = string.Format(
+				@"
+UPDATE Department SET LoginDays = {0},
+LoginWeekDay = {1}
+WHERE DepartmentID = {2}",
+				loginDays,
+				loginWeekDay,
+				departmentID
+			);
+			Db.exec(query);
+		}
+		
 		public void Update(int deptID, int sponsorAdminID)
 		{
 			string query = string.Format(
@@ -923,7 +937,9 @@ SELECT d.Department,
 			AND d.ParentDepartmentID IS NULL)
 			AND d.SponsorID = x.SponsorID
 			AND d.SortString < x.SortString
-	)
+	),
+	d.LoginDays,
+	d.LoginWeekDay
 FROM Department d
 {3}
 WHERE {1} d.SponsorID = {0}
@@ -937,11 +953,13 @@ ORDER BY d.SortString",
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
 					var d = new Department {
-						Name = rs.GetString(0),
-						Id = rs.GetInt32(1),
-						ShortName = rs.GetString(2),
-						Depth = rs.GetInt32(3),
-						Siblings = rs.GetInt32(4)
+						Name = GetString(rs, 0),
+						Id = GetInt32(rs, 1),
+						ShortName = GetString(rs, 2),
+						Depth = GetInt32(rs, 3),
+						Siblings = GetInt32(rs, 4),
+						LoginDays = GetInt32(rs, 5, -666),
+						LoginWeekDay = GetInt32(rs, 6, -666)
 					};
 					departments.Add(d);
 				}
