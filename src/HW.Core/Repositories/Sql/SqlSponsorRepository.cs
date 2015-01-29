@@ -51,29 +51,6 @@ WHERE SponsorID = {0}",
 			);
 			Db.exec(query, "healthWatchSqlConnection"); // TODO: move to department???
 		}
-		
-//		public void UpdateSponsorInviteSent(int userId, int sponsorInviteId)
-//		{
-//			string query = string.Format(
-//				@"
-		//UPDATE SponsorInvite SET UserID = {0}, Sent = GETDATE()
-		//WHERE SponsorInviteID = {1}",
-//				userId,
-//				sponsorInviteId
-//			);
-//			Db.exec(query, "healthWatchSqlConnection");
-//		}
-
-//		public void UpdateNullUserForUserInvite(int userId)
-//		{
-//			string query = string.Format(
-//				@"
-		//UPDATE SponsorInvite SET UserID = NULL
-		//WHERE UserID = {0}",
-//				userId
-//			);
-//			Db.exec(query, "healthWatchSqlConnection");
-//		}
 
 		public void UpdateExtendedSurveyLastEmailSent(int sponsorExtendedSurveyId)
 		{
@@ -121,36 +98,6 @@ WHERE SponsorExtendedSurveyID = @SponsorExtendedSurveyID"
 
 		public void UpdateSponsor(Sponsor s)
 		{
-//			string query = string.Format(
-//				@"
-			//UPDATE Sponsor SET
-//	InviteTxt = @InviteTxt,
-//	InviteReminderTxt = @InviteReminderTxt,
-//	AllMessageSubject = @AllMessageSubject,
-//	LoginTxt = @LoginTxt,
-//	InviteSubject = @InviteSubject,
-//	InviteReminderSubject = @InviteReminderSubject,
-//	AllMessageBody = @AllMessageBody,
-//	LoginSubject = @LoginSubject,
-//	LoginDays = @LoginDays,
-//	LoginWeekday = @LoginWeekday
-			//WHERE SponsorID = @SponsorID"
-//			);
-//			ExecuteNonQuery(
-//				query,
-//				"healthWatchSqlConnection",
-//				new SqlParameter("@InviteTxt", s.InviteText),
-//				new SqlParameter("@InviteReminderTxt", s.InviteReminderText),
-//				new SqlParameter("@AllMessageSubject", s.AllMessageSubject),
-//				new SqlParameter("@LoginTxt", s.LoginText),
-//				new SqlParameter("@InviteSubject", s.InviteSubject),
-//				new SqlParameter("@InviteReminderSubject", s.InviteReminderSubject),
-//				new SqlParameter("@AllMessageBody", s.AllMessageBody),
-//				new SqlParameter("@LoginSubject", s.LoginSubject),
-//				new SqlParameter("@LoginDays", s.LoginDays),
-//				new SqlParameter("@LoginWeekday", s.LoginWeekday),
-//				new SqlParameter("@SponsorID", s.Id)
-//			);
 			string query = string.Format(
 				@"
 UPDATE Sponsor SET
@@ -175,6 +122,29 @@ WHERE SponsorID = {10}",
 				s.LoginSubject.Replace("'", "''"),
 				s.LoginDays,
 				s.LoginWeekday,
+				s.Id
+			);
+			Db.exec(query, "healthWatchSqlConnection");
+		}
+		
+		public void UpdateSponsorAdmin2(SponsorAdmin s)
+		{
+			string query = string.Format(
+				@"
+UPDATE SponsorAdmin SET
+	InviteTxt = '{0}',
+	InviteReminderTxt = '{1}',
+	AllMessageSubject = '{2}',
+	InviteSubject = '{3}',
+	InviteReminderSubject = '{4}',
+	AllMessageBody = '{5}'
+WHERE SponsorAdminID = {6}",
+				s.InviteText.Replace("'", "''"),
+				s.InviteReminderText.Replace("'", "''"),
+				s.AllMessageSubject.Replace("'", "''"),
+				s.InviteSubject.Replace("'", "''"),
+				s.InviteReminderSubject.Replace("'", "''"),
+				s.AllMessageBody.Replace("'", "''"),
 				s.Id
 			);
 			Db.exec(query, "healthWatchSqlConnection");
@@ -704,9 +674,10 @@ FROM Sponsor s
 WHERE s.SponsorID = {0}",
 				sponsorId
 			);
+			Sponsor s = null;
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				if (rs.Read()) {
-					var s = new Sponsor {
+					s = new Sponsor {
 						InviteText = GetString(rs, 0),
 						InviteReminderText = GetString(rs, 1),
 						LoginText = GetString(rs, 2),
@@ -741,10 +712,9 @@ WHERE s.SponsorID = {0}",
 						ProjectRoundUnit = new ProjectRoundUnit { Id = GetInt32(rs, 31) },
 						EmailFrom = GetString(rs, 32, "", "info@healthwatch.se")
 					};
-					return s;
 				}
 			}
-			return null;
+			return s;
 		}
 
 		public int SponsorAdminExists(int sponsorAdminId, string usr)
@@ -841,18 +811,41 @@ AND SponsorID = {0}",
 		{
 			string query = string.Format(
 				@"
-SELECT SuperUser FROM SponsorAdmin WHERE SponsorAdminID = {0}",
+
+SELECT a.SuperUser,
+	a.InviteSubject,
+	a.InviteTxt,
+	a.InviteReminderSubject,
+	a.InviteReminderTxt,
+	a.AllMessageSubject,
+	a.AllMessageBody,
+	s.InviteSubject,
+	s.InviteTxt,
+	s.InviteReminderSubject,
+	s.InviteReminderTxt,
+	s.AllMessageSubject,
+	s.AllMessageBody
+FROM SponsorAdmin a,
+Sponsor s
+WHERE s.SponsorID = a.SponsorID
+AND a.SponsorAdminID = {0}",
 				sponsorAdminId
 			);
+			SponsorAdmin a = null;
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				if (rs.Read()) {
-					var a = new SponsorAdmin {
-						SuperUser = !rs.IsDBNull(0) && rs.GetInt32(0) != 0 //GetBoolean(rs, 0)
+					a = new SponsorAdmin {
+						SuperUser = GetInt32(rs, 0) != 0,
+						InviteSubject = GetString(rs, 1, GetString(rs, 7)),
+						InviteText = GetString(rs, 2, GetString(rs, 8)),
+						InviteReminderSubject = GetString(rs, 3, GetString(rs, 9)),
+						InviteReminderText = GetString(rs, 4, GetString(rs, 10)),
+						AllMessageSubject = GetString(rs, 5, GetString(rs, 11)),
+						AllMessageBody = GetString(rs, 6, GetString(rs, 12))
 					};
-					return a;
 				}
 			}
-			return null;
+			return a;
 		}
 
 		public SponsorAdmin ReadSponsorAdmin(int sponsorId, int sponsorAdminId, string password)
@@ -1198,19 +1191,20 @@ ORDER BY ses.SponsorExtendedSurveyID DESC",
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
 					var s = new SponsorExtendedSurvey {
-						ProjectRound = new ProjectRound {Id = rs.GetInt32(0)},
+						ProjectRound = rs.IsDBNull(0) ? null : new ProjectRound { Id = GetInt32(rs, 0) },
 //						EmailSubject = rs.GetString(1),
 //						EmailBody = rs.GetString(2),
 //						EmailLastSent = rs.GetDateTime(3),
 //						Internal = rs.GetString(4),
+//						Id = rs.GetInt32(5),
+//						FinishedEmailSubject = rs.GetString(6),
+//						FinishedEmailBody = rs.GetString(7),
+//						RoundText = rs.GetString(8)
 						EmailSubject = GetString(rs, 1),
 						EmailBody = GetString(rs, 2),
 						EmailLastSent = GetDateTime(rs, 3),
 						Internal = GetString(rs, 4),
-						Id = rs.GetInt32(5),
-//						FinishedEmailSubject = rs.GetString(6),
-//						FinishedEmailBody = rs.GetString(7),
-//						RoundText = rs.GetString(8)
+						Id = GetInt32(rs, 5),
 						FinishedEmailSubject = GetString(rs, 6),
 						FinishedEmailBody = GetString(rs, 7),
 						RoundText = GetString(rs, 8)

@@ -62,42 +62,6 @@ namespace HW.Core.Models
 		}
 	}
 	
-	public class SponsorAdmin : BaseModel
-	{
-		public virtual Sponsor Sponsor { get; set; }
-		public virtual string Name { get; set; }
-		public virtual string Email { get; set; }
-		public virtual string Usr { get; set; }
-		public virtual bool ReadOnly { get; set; }
-		public virtual bool SuperUser { get; set; }
-		public virtual string Password { get; set; }
-		public virtual bool SeeUsers { get; set; }
-		public virtual bool Anonymized { get; set; }
-		public virtual IList<SponsorAdminFunction> Functions { get; set; }
-		public virtual IList<SponsorAdminDepartment> Departments { get; set; }
-		public virtual string LastName { get; set; }
-		public virtual bool PermanentlyDeleteUsers { get; set; }
-		
-		public override string ToString()
-		{
-			return Name == "" ? (Usr == "" ? "&gt; empty &lt;" : Usr) : Name;
-		}
-		
-		public override void Validate()
-		{
-			base.Validate();
-			AddErrorIf(Name == "", "Sponsor admin name is required.");
-			AddErrorIf(Email == "", "Email address name is required.");
-			AddErrorIf(Usr == "", "User name is required.");
-			AddErrorIf(Password == "", "Password is required.");
-		}
-		
-		public virtual bool SuperAdmin { 
-			get { return SuperAdminId > 0; }
-		}
-		public virtual int SuperAdminId { get; set; }
-	}
-	
 	public class SponsorExtendedSurvey : BaseModel
 	{
 		public virtual Sponsor Sponsor { get; set; }
@@ -119,6 +83,59 @@ namespace HW.Core.Models
 		
 		public virtual int WarnIfMissingQID { get; set; }
 		public virtual string RoundText2 { get; set; }
+	}
+	
+	public class SponsorAdmin : BaseModel
+	{
+		public virtual Sponsor Sponsor { get; set; }
+		public virtual string Name { get; set; }
+		public virtual string Email { get; set; }
+		public virtual string Usr { get; set; }
+		public virtual bool ReadOnly { get; set; }
+		public virtual bool SuperUser { get; set; }
+		public virtual string Password { get; set; }
+		public virtual bool SeeUsers { get; set; }
+		public virtual bool Anonymized { get; set; }
+		public virtual IList<SponsorAdminFunction> Functions { get; set; }
+		public virtual IList<SponsorAdminDepartment> Departments { get; set; }
+		public virtual string LastName { get; set; }
+		public virtual bool PermanentlyDeleteUsers { get; set; }
+		public virtual string InviteSubject { get; set; }
+		public virtual string InviteText { get; set; }
+		public virtual string InviteReminderSubject { get; set; }
+		public virtual string InviteReminderText { get; set; }
+		public virtual string AllMessageSubject { get; set; }
+		public virtual string AllMessageBody { get; set; }
+		
+		public override string ToString()
+		{
+			return Name == "" ? (Usr == "" ? "&gt; empty &lt;" : Usr) : Name;
+		}
+		
+		public override void Validate()
+		{
+			base.Validate();
+			AddErrorIf(Name == "", "Sponsor admin name is required.");
+			AddErrorIf(Email == "", "Email address name is required.");
+			AddErrorIf(Usr == "", "User name is required.");
+			AddErrorIf(Password == "", "Password is required.");
+		}
+		
+		public virtual bool SuperAdmin {
+			get { return SuperAdminId > 0; }
+		}
+		public virtual int SuperAdminId { get; set; }
+	}
+	
+	public class SponsorAdminExtendedSurvey : BaseModel
+	{
+		public virtual SponsorAdmin SponsorAdmin { get; set; }
+		public virtual string EmailSubject { get; set; }
+		public virtual string EmailBody { get; set; }
+		public virtual string FinishedEmailSubject { get; set; }
+		public virtual string FinishedEmailBody { get; set; }
+		public virtual string ExtraEmailSubject { get; set; }
+		public virtual string ExtraEmailBody { get; set; }
 	}
 	
 	public class SponsorAdminSession : BaseModel
