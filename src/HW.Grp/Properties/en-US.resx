@@ -237,6 +237,9 @@
   <data name="message.confirm" xml:space="preserve">
     <value>message, confirm with password</value>
   </data>
+  <data name="month" xml:space="preserve">
+    <value>month</value>
+  </data>
   <data name="month.one" xml:space="preserve">
     <value>One month</value>
   </data>
@@ -414,6 +417,9 @@
   <data name="version" xml:space="preserve">
     <value>Version x.xx published</value>
   </data>
+  <data name="week" xml:space="preserve">
+    <value>week</value>
+  </data>
   <data name="week.disabled" xml:space="preserve">
     <value>&lt; disabled &gt;</value>
   </data>
@@ -434,6 +440,9 @@
   </data>
   <data name="week.tuesday" xml:space="preserve">
     <value>Tuesday</value>
+  </data>
+  <data name="week.two" xml:space="preserve">
+    <value>2 weeks</value>
   </data>
   <data name="week.two.even" xml:space="preserve">
     <value>Two weeks, start with even</value>

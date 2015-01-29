@@ -243,6 +243,9 @@
   <data name="message.confirm" xml:space="preserve">
     <value>meddelande, bekräfta med lösenord</value>
   </data>
+  <data name="month" xml:space="preserve">
+    <value>månad</value>
+  </data>
   <data name="month.one" xml:space="preserve">
     <value>En månad</value>
   </data>
@@ -432,6 +435,9 @@
   <data name="version" xml:space="preserve">
     <value>Version x.xx publicerad</value>
   </data>
+  <data name="week" xml:space="preserve">
+    <value>vecka</value>
+  </data>
   <data name="week.disabled" xml:space="preserve">
     <value>&lt;avaktiverad&gt;</value>
   </data>
@@ -452,6 +458,9 @@
   </data>
   <data name="week.tuesday" xml:space="preserve">
     <value>Tisdag</value>
+  </data>
+  <data name="week.two" xml:space="preserve">
+    <value>2 veckor</value>
   </data>
   <data name="week.two.even" xml:space="preserve">
     <value>Två veckor, börja med jämn</value>
