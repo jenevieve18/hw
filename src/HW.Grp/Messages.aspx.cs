@@ -116,15 +116,16 @@ namespace HW.Grp
 				bool found = false;
 				ArrayList seen = new ArrayList();
 //				sponsorAdminID = ConvertHelper.ToInt32(Session["SponsorAdminID"]);
-				foreach (var s in sponsorRepository.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID)) {
+				var surveys = sponsorRepository.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID);
+				foreach (var s in surveys) {
 					if (!seen.Contains(s.Id)) {
 						if (s.ProjectRound != null) {
 							if (!found) {
 								projectRoundId = s.ProjectRound.Id;
 								if (!IsPostBack) {
 									extendedSurvey = s.Internal + s.RoundText;
-									ExtendedSurvey.Text = R.Str(lid, "reminder.for", "Reminder for") + " <B>" + extendedSurvey + "</B> (<span style='font-size:9px;'>[x]Last sent: " + (s.EmailLastSent == null ? "Never" : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
-									ExtendedSurveyFinished.Text = "Thank you mail for <B>" + extendedSurvey + "</B> (<span style='font-size:9px;'>[x]Last sent: " + (s.EmailLastSent == null ? "Never" : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
+									ExtendedSurvey.Text = R.Str(lid, "reminder.for", "Reminder for") + " <b>" + extendedSurvey + "</b> (<span style='font-size:9px;'>[x]Last sent: " + (s.EmailLastSent == null ? "Never" : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
+									ExtendedSurveyFinished.Text = "Thank you mail for <b>" + extendedSurvey + "</b> (<span style='font-size:9px;'>[x]Last sent: " + (s.EmailLastSent == null ? "Never" : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
 									
 									ExtendedSurveySubject.Text = s.EmailSubject;
 									ExtendedSurveyTxt.Text = s.EmailBody;
@@ -197,12 +198,12 @@ namespace HW.Grp
 		{
 			sponsorRepository.UpdateSponsor(
 				new Sponsor {
-//					InviteSubject = InviteSubject.Text,
-//					InviteText = InviteTxt.Text,
-//					InviteReminderSubject = InviteReminderSubject.Text,
-//					InviteReminderText = InviteReminderTxt.Text,
-//					AllMessageSubject = AllMessageSubject.Text,
-//					AllMessageBody = AllMessageBody.Text,
+					InviteSubject = sponsorAdmin != null ? sponsor.InviteSubject : InviteSubject.Text,
+					InviteText = sponsorAdmin != null ? sponsor.InviteText : InviteTxt.Text,
+					InviteReminderSubject = sponsorAdmin != null ? sponsor.InviteReminderSubject : InviteReminderSubject.Text,
+					InviteReminderText = sponsorAdmin != null ? sponsor.InviteReminderText : InviteReminderTxt.Text,
+					AllMessageSubject = sponsorAdmin != null ? sponsor.AllMessageSubject : AllMessageSubject.Text,
+					AllMessageBody = sponsorAdmin != null ? sponsor.AllMessageBody : AllMessageBody.Text,
 					LoginSubject = LoginSubject.Text,
 					LoginText = LoginTxt.Text,
 					LoginDays = Convert.ToInt32(LoginDays.SelectedValue),
@@ -210,21 +211,19 @@ namespace HW.Grp
 					Id = sponsorID
 				}
 			);
-			sponsorRepository.UpdateSponsorAdmin2(
-				new SponsorAdmin {
-					InviteSubject = InviteSubject.Text,
-					InviteText = InviteTxt.Text,
-					InviteReminderSubject = InviteReminderSubject.Text,
-					InviteReminderText = InviteReminderTxt.Text,
-					AllMessageSubject = AllMessageSubject.Text,
-					AllMessageBody = AllMessageBody.Text,
-//					LoginText = LoginTxt.Text,
-//					LoginSubject = LoginSubject.Text,
-//					LoginDays = Convert.ToInt32(LoginDays.SelectedValue),
-//					LoginWeekday = ConvertHelper.ToInt32(LoginWeekday.SelectedValue, -1),
-					Id = sponsorAdminID
-				}
-			);
+			if (sponsorAdmin != null) {
+				sponsorRepository.UpdateSponsorAdmin2(
+					new SponsorAdmin {
+						InviteSubject = InviteSubject.Text,
+						InviteText = InviteTxt.Text,
+						InviteReminderSubject = InviteReminderSubject.Text,
+						InviteReminderText = InviteReminderTxt.Text,
+						AllMessageSubject = AllMessageSubject.Text,
+						AllMessageBody = AllMessageBody.Text,
+						Id = sponsorAdminID
+					}
+				);
+			}
 
 			if ((ExtendedSurveyFinishedSubject.Visible || ExtendedSurveySubject.Visible) && sponsorExtendedSurveyID != 0) {
 				sponsorRepository.UpdateSponsorExtendedSurvey(
