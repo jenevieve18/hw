@@ -67,7 +67,7 @@ namespace HW.Grp
 				this.departments = value;
 				Org.Controls.Add(new LiteralControl("<br>"));
 				IHGHtmlTable table = new IHGHtmlTable { Border = 0, CellSpacing = 0, CellPadding = 0 };
-				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(HttpContext.Current.Session["Sponsor"].ToString()) { ColSpan = 3 }));
+				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(Session["Sponsor"].ToString()) { ColSpan = 3 }));
 //				bool[] DX = new bool[8];
 				Dictionary<int, bool> DX = new Dictionary<int, bool>();
 				foreach (var d in departments) {
@@ -188,7 +188,7 @@ namespace HW.Grp
 				}
 				Departments = departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID);
 			} else {
-				HttpContext.Current.Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+				Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
 			Execute.Click += new EventHandler(Execute_Click);
 		}
