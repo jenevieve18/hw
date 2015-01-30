@@ -286,3 +286,6 @@ use healthWatch;
 insert into ManagerFunction(ManagerFunction, URL, Expl) values('Reminders', 'reminders.aspx', 'reminder settings');
 insert into ManagerFunctionLang(ManagerFunctionID, ManagerFunction, URL, Expl, LangID) values(8, 'Påminnelser', 'reminders.aspx', 'reminders settings', 1);
 insert into ManagerFunctionLang(ManagerFunctionID, ManagerFunction, URL, Expl, LangID) values(8, 'Reminders', 'reminders.aspx', 'reminders settings', 2);
+
+use healthWatch;
+alter table SponsorAdminExtendedSurvey add SponsorExtendedSurveyID int;
