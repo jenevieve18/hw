@@ -31,32 +31,32 @@
                         <img src="img/null.gif" width="25" height="1">
                     </td>
                     <td>
-                        <%= HtmlHelper.Anchor("News", "news.aspx", true, new Dictionary<string, string>() { { "class", "unli" } }) %><br />
-                        <%= HtmlHelper.Anchor("News setup", "rss.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
-                        <%= HtmlHelper.Anchor("Sponsors", "sponsor.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
-                        <%= HtmlHelper.Anchor("Sponsor managers", "grpUser.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
-                        <%= HtmlHelper.Anchor("Sponsor statistics", "sponsorStats.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
-                        <%= HtmlHelper.Anchor("Super managers", "superAdmin.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
+                        <%= HtmlHelper.Anchor("News", "news.aspx", "class='unli'", "", true) %><br />
+                        <%= HtmlHelper.Anchor("News setup", "rss.aspx", "class='unli'", "", true)%><br />
+                        <%= HtmlHelper.Anchor("Sponsors", "sponsor.aspx", "class='unli'", "", true)%><br />
+                        <%= HtmlHelper.Anchor("Sponsor managers", "grpUser.aspx", "class='unli'", "", true)%><br />
+                        <%= HtmlHelper.Anchor("Sponsor statistics", "sponsorStats.aspx", "class='unli'", "", true)%><br />
+                        <%= HtmlHelper.Anchor("Super managers", "superAdmin.aspx", "class='unli'", "", true)%><br />
                     </td>
                     <td>
                         <img src="img/null.gif" width="25" height="1">
                     </td>
                     <td>
-                        <%= HtmlHelper.Anchor("Background questions", "bq.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
-                        <%= HtmlHelper.Anchor("Messages", "messages.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
-                        <%= HtmlHelper.Anchor("Data export", "export.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
-                        <%= HtmlHelper.Anchor("Usage statistics", "stats.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
-                        <%= HtmlHelper.Anchor("File uploads", "tx.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
+                        <%= HtmlHelper.Anchor("Background questions", "bq.aspx", "class='unli'", "", true)%><br />
+                        <%= HtmlHelper.Anchor("Messages", "messages.aspx", "class='unli'", "", true)%><br />
+                        <%= HtmlHelper.Anchor("Data export", "export.aspx", "class='unli'", "", true)%><br />
+                        <%= HtmlHelper.Anchor("Usage statistics", "stats.aspx", "class='unli'", "", true)%><br />
+                        <%= HtmlHelper.Anchor("File uploads", "tx.aspx", "class='unli'", "", true)%><br />
                     </td>
                     <td>
                         <img src="img/null.gif" width="25" height="1">
                     </td>
                     <td>
-                        <%= HtmlHelper.Anchor("Exercises", "exercise.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
-                        <%= HtmlHelper.Anchor("Users", "users.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
-                        <%= HtmlHelper.Anchor("Extended survey statistics", "extendedSurvey.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
-                        <%= HtmlHelper.Anchor("Survey statistics", "survey.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
-                        <%= HtmlHelper.Anchor("Words of wisdom", "wise.aspx", true, new Dictionary<string, string>() { { "class", "unli" } })%><br />
+                        <%= HtmlHelper.Anchor("Exercises", "exercise.aspx", "class='unli'", "", true)%><br />
+                        <%= HtmlHelper.Anchor("Users", "users.aspx", "class='unli'", "", true)%><br />
+                        <%= HtmlHelper.Anchor("Extended survey statistics", "extendedSurvey.aspx", "class='unli'", "", true)%><br />
+                        <%= HtmlHelper.Anchor("Survey statistics", "survey.aspx", "class='unli'", "", true)%><br />
+                        <%= HtmlHelper.Anchor("Words of wisdom", "wise.aspx", "class='unli'", "", true)%><br />
                     </td>
                 </tr>
             </tbody>
