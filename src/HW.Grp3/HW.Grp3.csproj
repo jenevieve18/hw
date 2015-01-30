@@ -53,6 +53,7 @@
     <Content Include="css\bootstrap-responsive.css" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
+    <Content Include="Default.aspx" />
     <Content Include="Exercise.aspx" />
     <Content Include="img\glyphicons-halflings-white.png" />
     <Content Include="img\glyphicons-halflings.png" />
@@ -63,6 +64,7 @@
     <Content Include="ManagerSetup.aspx" />
     <Content Include="Messages.aspx" />
     <Content Include="Org.aspx" />
+    <Content Include="Reminders.aspx" />
     <Content Include="ReportImage.aspx" />
     <Content Include="Settings.aspx" />
     <Content Include="Stats.aspx" />
@@ -75,6 +77,12 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Exercise.aspx.cs">
       <DependentUpon>Exercise.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -118,6 +126,13 @@
       <DependentUpon>Org.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reminders.aspx.cs">
+      <DependentUpon>Reminders.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reminders.aspx.designer.cs">
+      <DependentUpon>Reminders.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ReportImage.aspx.cs">
       <DependentUpon>ReportImage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

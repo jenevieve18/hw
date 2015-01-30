@@ -17,9 +17,9 @@ namespace HW.Grp3
     	
         protected void Page_Load(object sender, EventArgs e)
         {
-        	admins = sponsorRepository.FindAdminBySponsor(83, -1);
+        	admins = sponsorRepository.FindAdminBySponsor(83, -1, "");
         	foreach (var a in admins) {
-        		a.Functions = managerFunctionRepository.FindBySponsorAdmin2(a.Id);
+        		//a.Functions = managerFunctionRepository.FindBySponsorAdmin(a.Id);
         	}
         }
     }
