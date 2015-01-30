@@ -256,7 +256,6 @@ alter table SponsorAdmin add LastName varchar(255);
 alter table SponsorAdmin add PermanentlyDeleteUsers int;
 
 use healthWatch;
-
 alter table SponsorAdmin add InviteSubject text;
 alter table SponsorAdmin add InviteTxt text;
 alter table SponsorAdmin add InviteReminderSubject text;
@@ -264,6 +263,7 @@ alter table SponsorAdmin add InviteReminderTxt text;
 alter table SponsorAdmin add AllMessageSubject text;
 alter table SponsorAdmin add AllMessageBody text;
 
+use healthWatch;
 create table SponsorAdminExtendedSurvey(
 	SponsorAdminExtendedSurveyID int primary key not null identity,
 	SponsorAdminID int,
@@ -277,3 +277,12 @@ create table SponsorAdminExtendedSurvey(
 	EmailLastSent smalldatetime,
 	FinishedLastSent smalldatetime
 );
+
+use healthWatch;
+alter table Department add LoginDays int;
+alter table Department add LoginWeekday int;
+
+use healthWatch;
+insert into ManagerFunction(ManagerFunction, URL, Expl) values('Reminders', 'reminders.aspx', 'reminder settings');
+insert into ManagerFunctionLang(ManagerFunctionID, ManagerFunction, URL, Expl, LangID) values(8, 'Påminnelser', 'reminders.aspx', 'reminders settings', 1);
+insert into ManagerFunctionLang(ManagerFunctionID, ManagerFunction, URL, Expl, LangID) values(8, 'Reminders', 'reminders.aspx', 'reminders settings', 2);
