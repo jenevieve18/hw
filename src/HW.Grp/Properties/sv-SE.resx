@@ -207,6 +207,9 @@
   <data name="login.header" xml:space="preserve">
     <value>Gruppadministration</value>
   </data>
+  <data name="login.invalid" xml:space="preserve">
+    <value>Ogiltigt användarnamn eller lösenord. Var vänlig och försök igen.</value>
+  </data>
   <data name="login.reminder" xml:space="preserve">
     <value>Inloggningspåminnelse</value>
   </data>
@@ -250,10 +253,10 @@
     <value>En månad</value>
   </data>
   <data name="month.six" xml:space="preserve">
-    <value>Sex månader</value>
+    <value>6 månader</value>
   </data>
   <data name="month.three" xml:space="preserve">
-    <value>Tre månader</value>
+    <value>3 månader</value>
   </data>
   <data name="news" xml:space="preserve">
     <value>Nyheter</value>
@@ -452,6 +455,9 @@
   </data>
   <data name="week.one" xml:space="preserve">
     <value>En vecka</value>
+  </data>
+  <data name="week.same" xml:space="preserve">
+    <value>&lt; samma som förälder &gt;</value>
   </data>
   <data name="week.thursday" xml:space="preserve">
     <value>Torsdag</value>

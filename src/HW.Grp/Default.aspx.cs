@@ -62,7 +62,7 @@ namespace HW.Grp
                         SessionHelper.AddIf(skey != null, "SponsorKey", skey);
 					}
 				} else {
-					errorMessage = "Invalid user name and password. Please try again.";
+                    errorMessage = R.Str(lid, "login.invalid", "Invalid user name and password. Please try again.");
 				}
 			}
 			if (login && (Session["SponsorAdminID"] != null || Session["SuperAdminID"] != null)) {
