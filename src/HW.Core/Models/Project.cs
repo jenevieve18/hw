@@ -27,6 +27,10 @@ namespace HW.Core.Models
 		public virtual IList<ProjectRoundUnit> Units { get; set; }
 		public virtual Survey Survey { get; set; }
 		public virtual List<Answer> Answers { get; set; }
+		
+		public bool IsOpen {
+			get { return Closed == null || Closed >= DateTime.Now; }
+		}
 	}
 	
 	public class ProjectRoundLanguage : BaseModel
