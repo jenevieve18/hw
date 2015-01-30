@@ -132,6 +132,7 @@ namespace HW.Core.Models
 		public virtual SponsorAdmin SponsorAdmin { get; set; }
 		public virtual string EmailSubject { get; set; }
 		public virtual string EmailBody { get; set; }
+		public virtual DateTime? EmailLastSent { get; set; }
 		public virtual string FinishedEmailSubject { get; set; }
 		public virtual string FinishedEmailBody { get; set; }
 		public virtual string ExtraEmailSubject { get; set; }

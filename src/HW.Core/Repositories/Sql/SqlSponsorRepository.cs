@@ -74,6 +74,24 @@ WHERE SponsorExtendedSurveyID = {0}",
 			Db.exec(query, "healthWatchSqlConnection");
 		}
 
+		public void InsertSponsorAdminExtendedSurvey(SponsorAdminExtendedSurvey s)
+		{
+			string query = string.Format(
+				@"
+INSERT INTO SponsorAdminExtendedSurvey(SponsorAdminID, EmailSubject, EmailBody, FinishedEmailSubject, FinishedEmailBody)
+VALUES(@SponsorAdminID, @EmailSubject, @EmailBody, @FinishedEmailSubject, @FinishedEmailBody)"
+			);
+			ExecuteNonQuery(
+				query,
+				"healthWatchSqlConnection",
+				new SqlParameter("@SponsorAdminID", s.SponsorAdmin.Id),
+				new SqlParameter("@EmailSubject", s.EmailSubject),
+				new SqlParameter("@EmailBody", s.EmailBody),
+				new SqlParameter("@FinishedEmailSubject", s.FinishedEmailSubject),
+				new SqlParameter("@FinishedEmailBody", s.FinishedEmailBody)
+			);
+		}
+
 		public void UpdateSponsorExtendedSurvey(SponsorExtendedSurvey s)
 		{
 			string query = string.Format(
@@ -1155,6 +1173,35 @@ AND DATEADD(hh,1,si.Sent) < GETDATE()",
 				}
 			}
 			return invites;
+		}
+		
+		public IList<SponsorAdminExtendedSurvey> FindAdminExtendedSurveysBySponsorAdmin(int sponsorAdminID)
+		{
+			string query = string.Format(
+				@"
+SELECT SponsorAdminExtendedSurveyID,
+EmailSubject,
+EmailBody,
+FinishedEmailSubject,
+FinishedEmailBody
+FROM SponsorAdminExtendedSurvey
+WHERE SponsorAdminID = {0}",
+				sponsorAdminID
+			);
+			var surveys = new List<SponsorAdminExtendedSurvey>();
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				while (rs.Read()) {
+					var s = new SponsorAdminExtendedSurvey {
+						Id = GetInt32(rs, 0),
+						EmailSubject = GetString(rs, 1),
+						EmailBody = GetString(rs, 2),
+						FinishedEmailSubject = GetString(rs, 3),
+						FinishedEmailBody = GetString(rs, 4),
+					};
+					surveys.Add(s);
+				}
+			}
+			return surveys;
 		}
 
 		public IList<SponsorExtendedSurvey> FindExtendedSurveysBySponsorAdmin(int sponsorId, int sponsorAdminId)
