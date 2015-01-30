@@ -23,6 +23,7 @@ namespace HW.Grp
 		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
 		SqlManagerFunctionRepository managerRepository = new SqlManagerFunctionRepository();
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
+		SqlSponsorAdminRepository sponsorAdminRepository = new SqlSponsorAdminRepository();
 
 		bool HasSAID {
 			get { return Request.QueryString["SAID"] != null; }
@@ -49,7 +50,7 @@ namespace HW.Grp
 						ManagerFunctionID.Items.Add(new ListItem(f.Function + " (" + f.Expl + ")", f.Id.ToString()));
 					}
 					sponsorAdminID = Convert.ToInt32(Session["SponsorAdminID"]);
-					var a = sponsorRepository.ReadSponsorAdmin(sponsorAdminID);
+					var a = sponsorAdminRepository.ReadSponsor(sponsorAdminID);
 					if (a != null && !a.SuperUser) {
 						SuperUser.Visible = false;
 					}

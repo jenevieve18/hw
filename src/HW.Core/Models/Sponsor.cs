@@ -3,29 +3,50 @@ using System.Collections.Generic;
 
 namespace HW.Core.Models
 {
-	public class Sponsor : BaseModel
+	public interface ISponsor
+	{
+		string InviteSubject { get; set; }
+		string InviteText { get; set; }
+		DateTime? InviteLastSent { get; set; }
+		DateTime? InviteReminderLastSent { get; set; }
+		string InviteReminderSubject { get; set; }
+		string InviteReminderText { get; set; }
+		string AllMessageSubject { get; set; }
+		string AllMessageBody { get; set; }
+		DateTime? AllMessageLastSent { get; set; }
+		string LoginSubject { get; set; }
+		string LoginText { get; set; }
+		int LoginDays { get; set; }
+		int LoginWeekday { get; set; }
+		DateTime? LoginLastSent { get; set; }
+		string EmailFrom { get; set; }
+		int MinUserCountToDisclose { get; set; }
+		bool SuperUser { get; set; }
+	}
+	
+	public class Sponsor : BaseModel, ISponsor
 	{
 		public virtual string Name { get; set; }
 		public virtual string Application { get; set; }
 		public virtual ProjectRoundUnit ProjectRoundUnit { get; set; }
-		public virtual string LoginText { get; set; }
 		public virtual DateTime? ClosedAt { get; set; }
 		public virtual DateTime DeletedAt { get; set; }
 		public virtual string ConsentText { get; set; }
 		public virtual SuperSponsor SuperSponsor { get; set; }
-		public virtual string InviteText { get; set; }
-		public virtual string InviteReminderText { get; set; }
 		public virtual string InviteSubject { get; set; }
-		public virtual string InviteReminderSubject { get; set; }
-		public virtual string LoginSubject { get; set; }
+		public virtual string InviteText { get; set; }
 		public virtual DateTime? InviteLastSent { get; set; }
 		public virtual DateTime? InviteReminderLastSent { get; set; }
-		public virtual DateTime? LoginLastSent { get; set; }
-		public virtual int LoginDays { get; set; }
-		public virtual int LoginWeekday { get; set; }
+		public virtual string InviteReminderSubject { get; set; }
+		public virtual string InviteReminderText { get; set; }
 		public virtual string AllMessageSubject { get; set; }
 		public virtual string AllMessageBody { get; set; }
 		public virtual DateTime? AllMessageLastSent { get; set; }
+		public virtual string LoginSubject { get; set; }
+		public virtual string LoginText { get; set; }
+		public virtual int LoginDays { get; set; }
+		public virtual int LoginWeekday { get; set; }
+		public virtual DateTime? LoginLastSent { get; set; }
 		public virtual string SponsorKey { get; set; }
 		public virtual IList<SponsorProjectRoundUnit> RoundUnits { get; set; }
 		public virtual List<SponsorInvite> Invites { get; set; }
@@ -52,6 +73,7 @@ namespace HW.Core.Models
 		public virtual bool Closed { get { return ClosedAt != null; } }
 		public virtual List<SponsorInvite> SentInvites { get; set; }
 		public virtual List<SponsorInvite> ActiveInvites { get; set; }
+		public virtual bool SuperUser { get; set; }
 		
 		User user;
 		
@@ -62,7 +84,22 @@ namespace HW.Core.Models
 		}
 	}
 	
-	public class SponsorExtendedSurvey : BaseModel
+	public interface IExtendedSurvey : IBaseModel
+	{
+		ProjectRound ProjectRound { get; set; }
+		string EmailSubject { get; set; }
+		string EmailBody { get; set; }
+		DateTime? EmailLastSent { get; set; }
+		string FinishedEmailSubject { get; set; }
+		string FinishedEmailBody { get; set; }
+		string ExtraEmailSubject { get; set; }
+		string ExtraEmailBody { get; set; }
+		string Internal { get; set; }
+		string RoundText { get; set; }
+		int ExtraExtendedSurveyId { get; set; }
+	}
+	
+	public class SponsorExtendedSurvey : BaseModel, IExtendedSurvey
 	{
 		public virtual Sponsor Sponsor { get; set; }
 		public virtual ProjectRound ProjectRound { get; set; }
@@ -83,9 +120,10 @@ namespace HW.Core.Models
 		
 		public virtual int WarnIfMissingQID { get; set; }
 		public virtual string RoundText2 { get; set; }
+		public virtual int ExtraExtendedSurveyId { get; set; }
 	}
 	
-	public class SponsorAdmin : BaseModel
+	public class SponsorAdmin : BaseModel, ISponsor
 	{
 		public virtual Sponsor Sponsor { get; set; }
 		public virtual string Name { get; set; }
@@ -100,12 +138,20 @@ namespace HW.Core.Models
 		public virtual IList<SponsorAdminDepartment> Departments { get; set; }
 		public virtual string LastName { get; set; }
 		public virtual bool PermanentlyDeleteUsers { get; set; }
+		public virtual IList<SponsorAdminExtendedSurvey> ExtendedSurveys { get; set; }
 		public virtual string InviteSubject { get; set; }
 		public virtual string InviteText { get; set; }
+		public virtual DateTime? InviteLastSent { get; set; }
+		public virtual DateTime? InviteReminderLastSent { get; set; }
 		public virtual string InviteReminderSubject { get; set; }
 		public virtual string InviteReminderText { get; set; }
 		public virtual string AllMessageSubject { get; set; }
 		public virtual string AllMessageBody { get; set; }
+		public virtual DateTime? AllMessageLastSent { get; set; }
+		
+		public bool HasExtendedSurveys {
+			get { return ExtendedSurveys.Count > 0; }
+		}
 		
 		public override string ToString()
 		{
@@ -125,9 +171,17 @@ namespace HW.Core.Models
 			get { return SuperAdminId > 0; }
 		}
 		public virtual int SuperAdminId { get; set; }
+		
+		public virtual string LoginSubject { get; set; }
+		public virtual string LoginText { get; set; }
+		public virtual int LoginDays { get; set; }
+		public virtual int LoginWeekday { get; set; }
+		public virtual DateTime? LoginLastSent { get; set; }
+		public virtual string EmailFrom { get; set; }
+		public virtual int MinUserCountToDisclose { get; set; }
 	}
 	
-	public class SponsorAdminExtendedSurvey : BaseModel
+	public class SponsorAdminExtendedSurvey : BaseModel, IExtendedSurvey
 	{
 		public virtual SponsorAdmin SponsorAdmin { get; set; }
 		public virtual string EmailSubject { get; set; }
@@ -137,6 +191,11 @@ namespace HW.Core.Models
 		public virtual string FinishedEmailBody { get; set; }
 		public virtual string ExtraEmailSubject { get; set; }
 		public virtual string ExtraEmailBody { get; set; }
+		public virtual ProjectRound ProjectRound { get; set; }
+		
+		public virtual string Internal { get; set; }
+		public virtual string RoundText { get; set; }
+		public virtual int ExtraExtendedSurveyId { get; set; }
 	}
 	
 	public class SponsorAdminSession : BaseModel

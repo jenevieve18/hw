@@ -102,7 +102,7 @@ namespace HW.Grp
 			
 			int point = Request.QueryString["ExtraPoint"] != null ? Convert.ToInt32(Request.QueryString["ExtraPoint"]) : 0;
 			
-			Sponsor s = service.ReadSponsor(sid);
+			ISponsor s = service.ReadSponsor(sid);
 			ReportPart r = service.ReadReportPart(rpid, langID);
 
 			var f = service.GetGraphFactory(HasAnswerKey);

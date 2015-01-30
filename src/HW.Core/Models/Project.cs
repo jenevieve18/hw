@@ -31,6 +31,11 @@ namespace HW.Core.Models
 		public bool IsOpen {
 			get { return Closed == null || Closed >= DateTime.Now; }
 		}
+		
+		public string ToPeriodString()
+		{
+			return (Started ==  null ? "?" : Started.Value.ToString("yyyy-MM-dd")) + "--" + (Closed == null ? "?" : Closed.Value.ToString("yyyy-MM-dd"));
+		}
 	}
 	
 	public class ProjectRoundLanguage : BaseModel

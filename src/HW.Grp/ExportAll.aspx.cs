@@ -98,7 +98,7 @@ namespace HW.Grp
 			
 			object disabled = Request.QueryString["DISABLED"];
 			
-			Sponsor s = service.ReadSponsor(sid);
+			ISponsor s = service.ReadSponsor(sid);
 			reportParts = service.FindByProjectAndLanguage(pruid, langID);
 
             var exporter = ExportFactory.GetExporter2(service, type, HasAnswerKey, hasGrouping, disabled, Width, Height, Background, reportParts, key, Server.MapPath("HW template for Word.docx"));

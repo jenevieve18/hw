@@ -44,7 +44,7 @@ namespace HW.Core.Services
 			return reportRepository.FindByProjectAndLanguage(projectRoundID, langID);
 		}
 		
-		public Sponsor ReadSponsor(int sponsorID)
+		public ISponsor ReadSponsor(int sponsorID)
 		{
 			return sponsorRepository.ReadSponsor(sponsorID);
 		}
