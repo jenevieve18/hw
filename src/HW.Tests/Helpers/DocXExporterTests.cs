@@ -12,7 +12,7 @@ namespace HW.Tests.Helpers
 	public class DocXExporterTests
 	{
 		ReportPart r;
-		Sponsor x;
+		ISponsor x;
 		ReportService service = new ReportService(
 			new SqlAnswerRepository(),
 			new SqlReportRepository(),

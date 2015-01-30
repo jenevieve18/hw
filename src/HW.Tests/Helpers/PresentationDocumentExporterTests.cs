@@ -13,7 +13,7 @@ namespace HW.Tests.Helpers
 	public class PresentationDocumentExporterTests
 	{
 		ReportPart r;
-		Sponsor x;
+		ISponsor x;
 		ReportService service = new ReportService(
 			new SqlAnswerRepository(),
 			new SqlReportRepository(),

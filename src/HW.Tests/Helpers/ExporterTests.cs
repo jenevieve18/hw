@@ -24,7 +24,7 @@ namespace HW.Tests.Helpers
 	public class ExporterTests
 	{
 		ReportPart r;
-		Sponsor x;
+		ISponsor x;
 		ReportService service = new ReportService(
 			new SqlAnswerRepository(),
 			new SqlReportRepository(),

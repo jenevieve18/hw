@@ -29,7 +29,7 @@ namespace HW.Tests.Helpers
 			
 			ExtendedGraph g = null;
 			
-			Sponsor s = service.ReadSponsor(83);
+			ISponsor s = service.ReadSponsor(83);
 			ReportPart r = service.ReadReportPart(14, 1);
 			
 			var f = service.GetGraphFactory(false);

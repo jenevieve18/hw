@@ -133,7 +133,7 @@ namespace HW.Tests.Repositories
 			r.ReadSponsorAdmin(1, 1, "");
 			r.ReadSponsorAdmin(1, "");
 			r.ReadSponsorAdmin(null, null, null, "", "Usr5", "Pas5");
-			r.ReadSponsorAdmin(1);
+//			r.ReadSponsorAdmin(1);
 			r.ReadSponsorAdmin(1, 1, 1);
 		}
 		
