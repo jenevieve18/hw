@@ -29,9 +29,9 @@ namespace HW.Core.Helpers
 //				sponsorInviteID
 //			);
 //			SqlDataReader rs = Db.rs(query);
-var i = new SqlSponsorRepository().ReadSponsorInvite(sponsorInviteID);
+			var i = new SqlSponsorRepository().ReadSponsorInvite(sponsorInviteID);
 //			if (rs.Read()) {
-if (i != null) {
+			if (i != null) {
 //				sponsorID = i.Sponsor.Id; // rs.GetInt32(0);
 //				email = i.Email; //rs.GetString(1);
 //				departmentID = i.Department.Id; //rs.GetInt32(2);
@@ -237,10 +237,26 @@ WHERE ProjectRoundUnitID = {0}",
 			SqlConnection dataConnection = new SqlConnection(ConfigurationManager.AppSettings[con]);
 			dataConnection.Open();
 			SqlCommand cmd = new SqlCommand(sqlString, dataConnection);
-//			cmd.CommandTimeout = 300;
 			cmd.CommandTimeout = 900;
 			SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
 			return dataReader;
+		}
+
+		public static object exes(string sqlString)
+		{
+			return exes(sqlString, "SqlConnection");
+		}
+
+		public static object exes(string sqlString, string con)
+		{
+			object o = null;
+			using (SqlConnection dataConnection = new SqlConnection(ConfigurationManager.AppSettings[con])) {
+				dataConnection.Open();
+				SqlCommand cmd = new SqlCommand(sqlString, dataConnection);
+				cmd.CommandTimeout = 900;
+				o = cmd.ExecuteScalar();
+			}
+			return o;
 		}
 
 		public static void exec(string sqlString)
@@ -253,7 +269,6 @@ WHERE ProjectRoundUnitID = {0}",
 			SqlConnection dataConnection = new SqlConnection(ConfigurationManager.AppSettings[con]);
 			dataConnection.Open();
 			SqlCommand cmd = new SqlCommand(sqlString, dataConnection);
-//			cmd.CommandTimeout = 300;
 			cmd.CommandTimeout = 900;
 			cmd.ExecuteNonQuery();
 			dataConnection.Close();
