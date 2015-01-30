@@ -9,6 +9,14 @@ namespace HW.Tests
 	public class Test1
 	{
 		[Test]
+		public void a()
+		{
+			Uri baseUri= new Uri("http://www.contoso.com");
+			Uri myUri = new Uri(baseUri,"catalog/shownew.htm?date=today");
+			Console.WriteLine(myUri.AbsoluteUri);
+		}
+		
+		[Test]
 		public void TestMethod()
 		{
 			Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();

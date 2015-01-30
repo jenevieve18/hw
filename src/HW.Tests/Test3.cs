@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using DocumentFormat.OpenXml;
@@ -15,6 +16,12 @@ namespace HW.Tests
 	[TestFixture]
 	public class Test3
 	{
+		[Test]
+		public void a()
+		{
+			Console.WriteLine(DateTime.Now.ToString("m", CultureInfo.GetCultureInfo("sv-SE")));
+		}
+		
 		[Test]
 		public void TestMethod()
 		{

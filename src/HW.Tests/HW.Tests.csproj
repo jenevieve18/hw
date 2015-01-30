@@ -94,6 +94,7 @@
     <Compile Include="Helpers\DocXExporterTests.cs" />
     <Compile Include="Helpers\ExcelExporterTests.cs" />
     <Compile Include="Helpers\ExporterTests.cs" />
+    <Compile Include="Helpers\ExtendedGraphTests.cs" />
     <Compile Include="Helpers\PageTests.cs" />
     <Compile Include="Helpers\PresentationDocumentExporterTests.cs" />
     <Compile Include="Models\DbTests.cs" />

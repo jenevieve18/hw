@@ -19,12 +19,6 @@ namespace HW.Tests.Repositories
 		}
 		
 		[Test]
-		public void TestFindSuperAdminSponsors()
-		{
-			r.FindSuperAdminSponsors(1);
-		}
-		
-		[Test]
 		public void TestUpdateSponsorLastLoginSent()
 		{
 			r.UpdateSponsorLastLoginSent(1);
@@ -124,19 +118,13 @@ namespace HW.Tests.Repositories
 		[Test]
 		public void TestFindAdminBySponsor()
 		{
-			r.FindAdminBySponsor(2, 188);
+			r.FindAdminBySponsor(2, 188, "");
 		}
 		
 		[Test]
 		public void TestFindBySponsor()
 		{
 			r.FindBySponsor(1);
-		}
-		
-		[Test]
-		public void TestReadSponsorInviteBySponsor()
-		{
-			r.ReadSponsorInviteBySponsor(1, 1);
 		}
 		
 		[Test]
