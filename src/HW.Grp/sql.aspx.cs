@@ -18,7 +18,7 @@ namespace HW.Grp
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            if (TextBox1.Text.ToUpper().Contains("DELETE") && !TextBox1.Text.ToUpper().Contains("WHERE"))
+            if ((TextBox1.Text.ToUpper().Contains("DELETE") && !TextBox1.Text.ToUpper().Contains("WHERE")) || (TextBox1.Text.ToUpper().Contains("UPDATE") && !TextBox1.Text.ToUpper().Contains("WHERE")))
             {
                 Label1.Text = "Please provide where clause for delete statement.";
             }
