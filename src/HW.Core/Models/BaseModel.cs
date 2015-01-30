@@ -4,7 +4,12 @@ using System.Text;
 
 namespace HW.Core.Models
 {
-	public class BaseModel
+	public interface IBaseModel
+	{
+		int Id { get; set; }
+	}
+	
+	public class BaseModel : IBaseModel
 	{
         public BaseModel()
         {
