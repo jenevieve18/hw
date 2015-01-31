@@ -231,18 +231,21 @@ namespace HW.Grp
 //						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 2 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=2" + q + "#filter'") + "><span>Alphabethical</span></a>"));
 //						break;
 //				}
-				switch (lid) {
-					case 1:
-						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 0 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=0" + q + "#filter'") + "><span>Slumpmässigt</span></a>"));
-						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 1 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=1" + q + "#filter'") + "><span>Popularitet</span></a>"));
-						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 2 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=2" + q + "#filter'") + "><span>Bokstavsordning</span></a>"));
-						break;
-					case 2:
-						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 0 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=0" + q + "#filter'") + "><span>Random</span></a>"));
-						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 1 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=1" + q + "#filter'") + "><span>Popularity</span></a>"));
-						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 2 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=2" + q + "#filter'") + "><span>Alphabethical</span></a>"));
-						break;
-				}
+//				switch (lid) {
+//					case 1:
+//						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 0 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=0" + q + "#filter'") + "><span>Slumpmässigt</span></a>"));
+//						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 1 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=1" + q + "#filter'") + "><span>Popularitet</span></a>"));
+//						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 2 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=2" + q + "#filter'") + "><span>Bokstavsordning</span></a>"));
+//						break;
+//					case 2:
+//						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 0 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=0" + q + "#filter'") + "><span>" + R.Str(lid, "random", "Random") + "</span></a>"));
+//						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 1 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=1" + q + "#filter'") + "><span>" + R.Str(lid, "popularity", "Popularity") + "</span></a>"));
+//						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 2 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=2" + q + "#filter'") + "><span>" + R.Str(lid, "alphabetical", "Alphabethical") + "</span></a>"));
+//						break;
+//				}
+				Sort.Controls.Add(new LiteralControl("<a" + (SORT == 0 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=0" + q + "#filter'") + "><span>" + R.Str(lid, "random", "Random") + "</span></a>"));
+				Sort.Controls.Add(new LiteralControl("<a" + (SORT == 1 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=1" + q + "#filter'") + "><span>" + R.Str(lid, "popularity", "Popularity") + "</span></a>"));
+				Sort.Controls.Add(new LiteralControl("<a" + (SORT == 2 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=2" + q + "#filter'") + "><span>" + R.Str(lid, "alphabetical", "Alphabethical") + "</span></a>"));
 			}
 		}
 	}

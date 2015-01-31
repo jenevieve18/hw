@@ -132,6 +132,9 @@
   <data name="aggregation" xml:space="preserve">
     <value>Aggregering</value>
   </data>
+  <data name="alphabetical" xml:space="preserve">
+    <value>Alfabetisk</value>
+  </data>
   <data name="background.variable" xml:space="preserve">
     <value>Bakgrundsvariabel</value>
   </data>
@@ -269,6 +272,12 @@
   </data>
   <data name="password.change" xml:space="preserve">
     <value>Ändra lösenord</value>
+  </data>
+  <data name="popularity" xml:space="preserve">
+    <value>Popularitet</value>
+  </data>
+  <data name="random" xml:space="preserve">
+    <value>Slumpmässig</value>
   </data>
   <data name="recipients" xml:space="preserve">
     <value>Mottagare</value>

@@ -129,6 +129,9 @@
   <data name="active.activated" xml:space="preserve">
     <value>Active/&lt;br&gt;Activated</value>
   </data>
+  <data name="alphabetical" xml:space="preserve">
+    <value>Alphabetical</value>
+  </data>
   <data name="background.variable" xml:space="preserve">
     <value>Background variable</value>
   </data>
@@ -263,6 +266,12 @@
   </data>
   <data name="password.change" xml:space="preserve">
     <value>Change password</value>
+  </data>
+  <data name="popularity" xml:space="preserve">
+    <value>Popularity</value>
+  </data>
+  <data name="random" xml:space="preserve">
+    <value>Random</value>
   </data>
   <data name="recipients" xml:space="preserve">
     <value>Recipients</value>
