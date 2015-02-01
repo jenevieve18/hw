@@ -292,8 +292,8 @@
 					<asp:ListItem Value="2" Text="Users on unit+subunits" />
 					<asp:ListItem Value="3" Text="Background variable" />--%>
 				</asp:DropDownList>
-                <%= R.Str(lid, "language", "Language")%>
-                <asp:DropDownList ID="LangID" runat="server" AutoPostBack="true" />
+                <%--<%= R.Str(lid, "language", "Language")%>
+                <asp:DropDownList ID="LangID" runat="server" AutoPostBack="true" />--%>
                 <br />
                 <asp:PlaceHolder ID="Org" runat="server" Visible="false" />
     	        <asp:CheckBoxList RepeatDirection="Vertical" RepeatLayout="table" CellPadding="0" CellSpacing="0" ID="BQ" runat="server" Visible="false" />

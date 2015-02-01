@@ -22,7 +22,7 @@ namespace HW.Grp
 		IList<SponsorBackgroundQuestion> questions;
 		int sponsorID = 0;
 		int sponsorAdminID = 0;
-		SqlLanguageRepository langRepository = new SqlLanguageRepository();
+//		SqlLanguageRepository langRepository = new SqlLanguageRepository();
 		SqlProjectRepository projRepository = new SqlProjectRepository();
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
@@ -30,18 +30,18 @@ namespace HW.Grp
 		SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
         protected int lid;
 
-		public IList<SponsorProjectRoundUnitLanguage> Languages {
-			set {
-				int pruid = 0;
-				foreach (var l in value) {
-					LangID.Items.Add(new ListItem(l.Language.Name, l.Language.Id.ToString()));
-					if (l.Id == 2) {
-						LangID.SelectedValue = l.Language.Id.ToString();
-					}
-					pruid = l.SponsorProjectRoundUnit.ProjectRoundUnit.Id;
-				}
-			}
-		}
+//		public IList<SponsorProjectRoundUnitLanguage> Languages {
+//			set {
+//				int pruid = 0;
+//				foreach (var l in value) {
+//					LangID.Items.Add(new ListItem(l.Language.Name, l.Language.Id.ToString()));
+//					if (l.Id == 2) {
+//						LangID.SelectedValue = l.Language.Id.ToString();
+//					}
+//					pruid = l.SponsorProjectRoundUnit.ProjectRoundUnit.Id;
+//				}
+//			}
+//		}
 		
 		public IList<SponsorProjectRoundUnit> ProjectRoundUnits {
 			set {
@@ -172,10 +172,11 @@ namespace HW.Grp
 					Grouping.Items.Add(new ListItem(R.Str(lid, "users.unit.subunit", "Users on unit+subunits"), "2"));
 					Grouping.Items.Add(new ListItem(R.Str(lid, "background.variable", "Background variable"), "3"));
 					
-					Languages = langRepository.FindBySponsor(sponsorID);
+//					Languages = langRepository.FindBySponsor(sponsorID);
 
-					int selectedLangID = Convert.ToInt32(LangID.SelectedValue);
-					ProjectRoundUnits = sponsorRepository.FindBySponsorAndLanguage(sponsorID, selectedLangID);
+//					int selectedLangID = Convert.ToInt32(LangID.SelectedValue);
+//					ProjectRoundUnits = sponsorRepository.FindBySponsorAndLanguage(sponsorID, selectedLangID);
+					ProjectRoundUnits = sponsorRepository.FindBySponsorAndLanguage(sponsorID, lid);
 
 					for (int i = 2005; i <= DateTime.Now.Year; i++) {
 						FromYear.Items.Add(new ListItem(i.ToString(), i.ToString()));
@@ -248,7 +249,8 @@ namespace HW.Grp
 		P GetPage(string page, int reportID, int reportPartLangID)
 		{
 			P p = new P(page);
-			p.Q.Add("LangID", LangID.SelectedValue);
+//			p.Q.Add("LangID", LangID.SelectedValue);
+			p.Q.Add("LangID", lid);
 			p.Q.Add("FY", FromYear.SelectedValue);
 			p.Q.Add("TY", ToYear.SelectedValue);
 			p.Q.Add("SAID", sponsorAdminID);
@@ -265,16 +267,19 @@ namespace HW.Grp
 
 		void Execute_Click(object sender, EventArgs e)
 		{
-			int selectedLangID = Convert.ToInt32(LangID.SelectedValue);
+//			int selectedLangID = Convert.ToInt32(LangID.SelectedValue);
 			int selectedProjectRoundUnitID = Convert.ToInt32(ProjectRoundUnitID.SelectedValue);
 			int grouping = Convert.ToInt32(Grouping.SelectedValue);
 			
-			plotTypes = plotRepository.FindByLanguage(selectedLangID);
+//			plotTypes = plotRepository.FindByLanguage(selectedLangID);
+			plotTypes = plotRepository.FindByLanguage(lid);
 			
 			int selectedDepartmentID = departments[0].Id;
-			var reportParts = reportRepository.FindByProjectAndLanguage2(selectedProjectRoundUnitID, selectedLangID, selectedDepartmentID);
+//			var reportParts = reportRepository.FindByProjectAndLanguage2(selectedProjectRoundUnitID, selectedLangID, selectedDepartmentID);
+			var reportParts = reportRepository.FindByProjectAndLanguage2(selectedProjectRoundUnitID, lid, selectedDepartmentID);
 			if (reportParts.Count <= 0) {
-				reportParts = reportRepository.FindByProjectAndLanguage(selectedProjectRoundUnitID, selectedLangID);
+//				reportParts = reportRepository.FindByProjectAndLanguage(selectedProjectRoundUnitID, selectedLangID);
+				reportParts = reportRepository.FindByProjectAndLanguage(selectedProjectRoundUnitID, lid);
 			}
 			SetReportPartLanguages(reportParts, GetUrlModels(grouping));
 		}
