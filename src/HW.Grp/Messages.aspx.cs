@@ -124,7 +124,8 @@ namespace HW.Grp
 						if (s.ProjectRound != null) {
 							if (!found) {
 								projectRoundId = s.ProjectRound.Id;
-								if (!IsPostBack) {
+//								if (!IsPostBack) {
+								if (!postBack) {
 									extendedSurvey = s.Internal + s.RoundText;
 									ExtendedSurvey.Text = R.Str(lid, "reminder.for", "Reminder for") + " <b>" + extendedSurvey + "</b> (<span style='font-size:9px;'>[x]Last sent: " + (s.EmailLastSent == null ? "Never" : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
 									ExtendedSurveyFinished.Text = "Thank you mail for <b>" + extendedSurvey + "</b> (<span style='font-size:9px;'>[x]Last sent: " + (s.EmailLastSent == null ? "Never" : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
@@ -138,7 +139,8 @@ namespace HW.Grp
 								sponsorAdminExtendedSurveyID = s.ExtraExtendedSurveyId;
 								found = true;
 
-								if (!IsPostBack) {
+//								if (!IsPostBack) {
+								if (!postBack) {
 									var r = userRepository.CountBySponsorWithAdminAndExtendedSurvey2(sponsorID, sponsorAdminID, sponsorExtendedSurveyID);
 									ExtendedSurvey.Text = ExtendedSurvey.Text.Replace("[x]", "[x]Recipients: " + r + ", ");
 
@@ -166,12 +168,14 @@ namespace HW.Grp
 				if (projectRoundId != 0) {
 					ProjectRound r = projectRepository.ReadRound(projectRoundId);
 					if (r != null) {
-						if (!IsPostBack) {
+//						if (!IsPostBack) {
+						if (!postBack) {
 							ExtendedSurvey.Text = ExtendedSurvey.Text.Replace("[x]", "Period: " + r.ToPeriodString() + ", ");
 							ExtendedSurveyFinished.Text = ExtendedSurveyFinished.Text.Replace("[x]", "Period: " + r.ToPeriodString() + ", ");
 						}
 						if (r.IsOpen) {
-							if (!IsPostBack) {
+//							if (!IsPostBack) {
+							if (!postBack) {
 								ExtendedSurveySubject.Visible = true;
 								ExtendedSurvey.Visible = true;
 								ExtendedSurveyTxt.Visible = true;
@@ -502,6 +506,7 @@ namespace HW.Grp
 			base.OnPreRender(e);
 			Save.Text = R.Str(lid, "save", "Save");
 			Send.Text = R.Str(lid, "send", "Send");
+			buttonRevert.Text = R.Str(lid, "revert.default", "Revert to default");
 
 			if (incorrectPassword) {
 				Page.RegisterStartupScript("ERROR", "<script language='JavaScript'>alert('Incorrect password!');</script>");
