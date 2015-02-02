@@ -150,6 +150,7 @@
     <Compile Include="Repositories\Sql\SqlManagerFunctionRepository.cs" />
     <Compile Include="Repositories\Sql\SqlQuestionRepository.cs" />
     <Compile Include="Repositories\Sql\SqlExerciseRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlSponsorAdminRepository.cs" />
     <Compile Include="Repositories\Sql\SqlSponsorRepository.cs" />
     <Compile Include="Repositories\Sql\SqlUserRepository.cs" />
     <Compile Include="Repositories\Sql\SqlLanguageRepository.cs" />
