@@ -41,7 +41,8 @@ namespace HW.Grp
 
 			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Messages, DateTime.Now);
 			Save.Click += new EventHandler(Save_Click);
-			Send.Click += new EventHandler(Send_Click);
+            Send.Click += new EventHandler(Send_Click);
+            buttonRevert.Click += new EventHandler(RevertClick);
 			
 			repository = sponsorAdminID != -1 ? new SqlSponsorAdminRepository() as IExtendedSurveyRepository : new SqlSponsorRepository() as IExtendedSurveyRepository;
 
@@ -56,7 +57,16 @@ namespace HW.Grp
 				sent = (Request.QueryString["Sent"] != null);
 				
 				sponsor = repository.ReadSponsor(sponsorAdminID != -1 ? sponsorAdminID : sponsorID);
-				if (!IsPostBack) {
+				DisplayMessages(sponsor, repository, IsPostBack);
+			} else {
+				Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+			}
+		}
+		
+		void DisplayMessages(ISponsor sponsor, IExtendedSurveyRepository repository, bool postBack)
+		{
+//				if (!IsPostBack) {
+				if (!postBack) {
 
 					LoginSubject.Enabled = LoginTxt.Enabled = LoginDays.Enabled = LoginWeekday.Enabled = loginWithSkey;
 					
@@ -182,9 +192,6 @@ namespace HW.Grp
 					}
 				}
 				#endregion
-			} else {
-				Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
-			}
 		}
 
 		int save()
@@ -247,6 +254,11 @@ namespace HW.Grp
 			}
 			return sponsorAdminExtendedSurveyID;
 		}
+
+        void RevertClick(object sender, EventArgs e)
+        {
+        	DisplayMessages(sponsorRepository.ReadSponsor(sponsorID), new SqlSponsorRepository(), false);
+        }
 
 		void Save_Click(object sender, EventArgs e)
 		{

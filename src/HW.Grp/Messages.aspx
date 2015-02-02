@@ -18,6 +18,8 @@
 				<asp:ListItem Value=9 Text="All activated users" />--%>
 				</asp:DropDownList>
 				<%= R.Str(lid, "message.confirm", "message, confirm with password")%> <asp:TextBox ID=Password runat=server TextMode=Password /> <asp:Button ID=Send runat=server Text="Send" />
+                <br />
+				<asp:Button ID=buttonRevert CssClass="btn" runat=server Text="Revert to default" />
 			</div>
 		</div>
 
