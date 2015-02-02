@@ -297,6 +297,9 @@
   <data name="reminder.text" xml:space="preserve">
     <value>Reminder</value>
   </data>
+  <data name="revert.default" xml:space="preserve">
+    <value>Revert to default</value>
+  </data>
   <data name="save" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -362,6 +365,9 @@
   </data>
   <data name="status.stop.work" xml:space="preserve">
     <value>Stopped, work related</value>
+  </data>
+  <data name="thanks" xml:space="preserve">
+    <value>Thank you: </value>
   </data>
   <data name="total" xml:space="preserve">
     <value>Total</value>

@@ -192,7 +192,7 @@ namespace HW.Grp
 						ExtendedSurveyFinishedSubject.Visible = true;
 						ExtendedSurveyFinished.Visible = true;
 						ExtendedSurveyFinishedTxt.Visible = true;
-						SendType.Items.Add(new ListItem(R.Str(lid, "", "Thank you: ") + extendedSurvey, "5"));
+						SendType.Items.Add(new ListItem(R.Str(lid, "thanks", "Thank you: ") + extendedSurvey, "5"));
 					}
 				}
 				#endregion

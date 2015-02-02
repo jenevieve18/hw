@@ -303,6 +303,9 @@
   <data name="reminder.text" xml:space="preserve">
     <value>Påminnelse</value>
   </data>
+  <data name="revert.default" xml:space="preserve">
+    <value>Återgå till standard</value>
+  </data>
   <data name="save" xml:space="preserve">
     <value>Spara</value>
   </data>
@@ -371,6 +374,9 @@
   </data>
   <data name="survey" xml:space="preserve">
     <value>Enkät</value>
+  </data>
+  <data name="thanks" xml:space="preserve">
+    <value>Tack: </value>
   </data>
   <data name="timeframe" xml:space="preserve">
     <value>Tidsperiod</value>
