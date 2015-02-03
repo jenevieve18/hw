@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace HW.Core.Models
 {
@@ -20,6 +22,29 @@ namespace HW.Core.Models
 		public virtual string TreeName { get; set; }
 		public virtual double Average { get; set; }
 		public virtual int Count { get; set; }
+		
+		public int Reminder {
+			get {
+				if (LoginWeekDay != -1) {
+					return LoginWeekDay;
+				} else if (LoginDays != -1) {
+					return LoginDays;
+				} else {
+					return Sponsor.LoginDays;
+				}
+			}
+		}
+		
+		public string GetReminder(Dictionary<int, string> loginDays, Dictionary<int, string> loginWeekdays)
+		{
+			if (LoginWeekDay != -1) {
+				return loginWeekdays[LoginWeekDay];
+			} else if (LoginDays != -1) {
+				return loginDays[LoginDays];
+			} else {
+				return loginDays[Sponsor.LoginDays];
+			}
+		}
 		
 		public override string ToString()
 		{

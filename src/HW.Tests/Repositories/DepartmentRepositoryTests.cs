@@ -10,11 +10,13 @@ namespace HW.Tests.Repositories
 	public class DepartmentRepositoryTests
 	{
 		SqlDepartmentRepository r;
+		SqlSponsorRepository sr;
 		
 		[SetUp]
 		public void Setup()
 		{
 			r = new SqlDepartmentRepository();
+			sr = new SqlSponsorRepository();
 		}
 		
 		[Test]
@@ -23,19 +25,13 @@ namespace HW.Tests.Repositories
 			r.ReadByIdAndSponsor(1, 1);
 		}
 		
-//		[Test]
-//		[Ignore("No function cf_departmentTree in test database.")]
-//		public void TestFindBySponsorWithSponsorAdminOnTree()
-//		{
-//			r.FindBySponsorWithSponsorAdminOnTree(1, 1);
-//		}
-//		
-//		[Test]
-//		[Ignore("No function cf_departmentTree in test database.")]
-//		public void TestFindBySponsorWithSponsorAdminSortStringAndTree()
-//		{
-//			r.FindBySponsorWithSponsorAdminSortStringAndTree(1, "", 1);
-//		}
+		[Test]
+		public void TestReadWithReminder()
+		{
+			var d = r.ReadWithReminder(931);
+			d.Sponsor = sr.ReadSponsor(83) as Sponsor;
+			Console.WriteLine(d.Reminder);
+		}
 		
 		[Test]
 		public void TestDeleteSponsorAdminDepartment()

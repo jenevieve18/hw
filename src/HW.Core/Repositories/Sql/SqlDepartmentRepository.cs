@@ -265,6 +265,41 @@ WHERE DepartmentShort = '{0}' AND SponsorID = {1}",
 			return null;
 		}
 		
+		public Department ReadWithReminder(int id)
+		{
+			string query = string.Format(
+				@"
+WITH SelectRecursiveDepartment(DepartmentID, Department, ParentDepartmentID, LoginDays, LoginWeekday, Level) AS (
+	SELECT DepartmentID, Department, ParentDepartmentID, LoginDays, LoginWeekday, 0 AS Level
+	FROM Department
+	WHERE ParentDepartmentID IS NULL
+	OR LoginDays IS NOT NULL
+	OR LoginWeekday IS NOT NULL
+	UNION ALL
+	SELECT d.DepartmentID, d.Department, d.ParentDepartmentID, q.LoginDays, q.LoginWeekday, Level + 1 as Level
+	FROM Department d
+	INNER JOIN SelectRecursiveDepartment q ON d.ParentDepartmentID = q.DepartmentID
+)
+SELECT DepartmentID, Department, ParentDepartmentID, LoginDays, LoginWeekday, Level
+FROM SelectRecursiveDepartment
+WHERE DepartmentID = {0}",
+				id
+			);
+			Department d = null;
+			using (SqlDataReader rs = Db.rs(query)) {
+				if (rs.Read()) {
+					d = new Department {
+						Id = GetInt32(rs, 0),
+						Name = GetString(rs, 1),
+						Parent = new Department { Id = GetInt32(rs, 2) },
+						LoginDays = GetInt32(rs, 3, -1),
+						LoginWeekDay = GetInt32(rs, 4, -1)
+					};
+				}
+			}
+			return d;
+		}
+		
 		public override Department Read(int id)
 		{
 			string query = string.Format(
