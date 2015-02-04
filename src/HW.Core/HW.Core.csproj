@@ -112,7 +112,6 @@
     <Compile Include="Helpers\HtmlControls.cs" />
     <Compile Include="Helpers\SpreadsheetDocumentExporter.cs" />
     <Compile Include="Helpers\SpreadsheetDocumentExporter2.cs" />
-    <Compile Include="Helpers\WordDocumentExporter2.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Affiliate.cs" />

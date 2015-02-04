@@ -35,16 +35,17 @@ namespace HW.Core.Helpers
 		}
 		
 		public override string Type {
-			get { return "application/octet-stream"; }
+//			get { return "application/octet-stream"; }
+			get { return "application/vnd.openxmlformats-officedocument.presentationml.presentation"; }
 		}
 		
 		public override string GetContentDisposition(string file)
 		{
-			return string.Format("attachment;filename=HealthWatch {0} {1}.pptx;", file, DateTime.Now.ToString("yyyyMMdd"));
+			return string.Format("attachment;filename=\"HealthWatch {0} {1}.pptx\";", file, DateTime.Now.ToString("yyyyMMdd"));
 		}
 		
 		public override string ContentDisposition2 {
-			get { return string.Format("attachment;filename=HealthWatch Survey {0}.pptx;", DateTime.Now.ToString("yyyyMMdd")); }
+			get { return string.Format("attachment;filename=\"HealthWatch Survey {0}.pptx\";", DateTime.Now.ToString("yyyyMMdd")); }
 		}
 		
 		public override object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose)

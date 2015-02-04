@@ -101,6 +101,9 @@ namespace HW.Grp
 			ReportPart r = service.ReadReportPart(rpid, langID);
 			
 			var exporter = ExportFactory.GetExporter(service, type, HasAnswerKey, hasGrouping, disabled, Width, Height, Background, r, key, Server.MapPath("HW template for Word.docx"));
+			
+			Response.ClearHeaders();
+			Response.ClearContent();
 			Response.ContentType = exporter.Type;
 			AddHeaderIf(exporter.HasContentDisposition(r.CurrentLanguage.Subject), "content-disposition", exporter.GetContentDisposition(r.CurrentLanguage.Subject));
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;

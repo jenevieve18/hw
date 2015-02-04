@@ -74,15 +74,15 @@ namespace HW.Tests.Helpers
 			}
 		}
 		
-		[Test]
-		public void TestWordDocumentExporter2()
-		{
-			WordDocumentExporter2 e = new WordDocumentExporter2(r);
-			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\test.docx", FileMode.Create)) {
-				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream;
-				s.WriteTo(f);
-			}
-		}
+//		[Test]
+//		public void TestWordDocumentExporter2()
+//		{
+//			WordDocumentExporter2 e = new WordDocumentExporter2(r);
+//			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\test.docx", FileMode.Create)) {
+//				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream;
+//				s.WriteTo(f);
+//			}
+//		}
 		
 		[Test]
 		public void TestSpreadsheetDocumentExporter2()
