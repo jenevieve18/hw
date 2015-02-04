@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace HW.Tests.Models
 {
 	[TestFixture]
-	public class Test1
+	public class PdfWriterTests
 	{
 		[Test]
 		public void TestMethod()

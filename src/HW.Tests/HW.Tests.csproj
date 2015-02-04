@@ -98,13 +98,14 @@
     <Compile Include="Helpers\PageTests.cs" />
     <Compile Include="Helpers\PresentationDocumentExporterTests.cs" />
     <Compile Include="Models\DbTests.cs" />
+    <Compile Include="Models\DepartmentTests.cs" />
     <Compile Include="Models\ExtendedGraphTests.cs" />
     <Compile Include="Models\ExtendedGraphTests2.cs" />
     <Compile Include="Models\GraphFactoryTests.cs" />
     <Compile Include="Models\GraphTests.cs" />
     <Compile Include="Models\GroupFactoryTests.cs" />
     <Compile Include="Models\HWListTests.cs" />
-    <Compile Include="Models\Test1.cs" />
+    <Compile Include="Models\PdfWriterTests.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AnswerRepositoryTests.cs" />
@@ -135,6 +136,10 @@
     <ProjectReference Include="..\HW.Core\HW.Core.csproj">
       <Project>{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}</Project>
       <Name>HW.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HW.Grp\HW.Grp.csproj">
+      <Project>{5772C97E-DD4A-464F-AE9B-9E7F33A4CA81}</Project>
+      <Name>HW.Grp</Name>
     </ProjectReference>
     <ProjectReference Include="..\HW.WebService\HW.WebService.csproj">
       <Project>{176B8B99-DA73-465A-9A96-9E1A0D500C24}</Project>

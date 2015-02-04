@@ -10,27 +10,17 @@ namespace HW.Tests.Repositories
 	public class DepartmentRepositoryTests
 	{
 		SqlDepartmentRepository r;
-		SqlSponsorRepository sr;
 		
 		[SetUp]
 		public void Setup()
 		{
 			r = new SqlDepartmentRepository();
-			sr = new SqlSponsorRepository();
 		}
 		
 		[Test]
 		public void TestReadByIdAndSponsor()
 		{
 			r.ReadByIdAndSponsor(1, 1);
-		}
-		
-		[Test]
-		public void TestReadWithReminder()
-		{
-			var d = r.ReadWithReminder(931);
-			d.Sponsor = sr.ReadSponsor(83) as Sponsor;
-			Console.WriteLine(d.Reminder);
 		}
 		
 		[Test]
