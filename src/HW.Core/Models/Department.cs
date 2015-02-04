@@ -23,26 +23,17 @@ namespace HW.Core.Models
 		public virtual double Average { get; set; }
 		public virtual int Count { get; set; }
 		
-		public int Reminder {
-			get {
-				if (LoginWeekDay != -1) {
-					return LoginWeekDay;
-				} else if (LoginDays != -1) {
-					return LoginDays;
-				} else {
-					return Sponsor.LoginDays;
-				}
-			}
-		}
-		
 		public string GetReminder(Dictionary<int, string> loginDays, Dictionary<int, string> loginWeekdays)
 		{
-			if (LoginWeekDay != -1) {
-				return loginWeekdays[LoginWeekDay];
-			} else if (LoginDays != -1) {
-				return loginDays[LoginDays];
-			} else {
+			if (LoginWeekDay == -1) {
+				if (Sponsor.LoginWeekday == -1) {
+					return loginWeekdays[-1];
+				}
+			}
+			if (LoginDays == -1) {
 				return loginDays[Sponsor.LoginDays];
+			} else {
+				return loginDays[LoginDays];
 			}
 		}
 		

@@ -47,6 +47,8 @@ namespace HW.Grp
 			sponsor = sponsorRepository.ReadSponsor(sponsorID);
 			sponsorAdminID = ConvertHelper.ToInt32(Session["SponsorAdminID"]);
 			lid = ConvertHelper.ToInt32(Session["lid"], 1);
+			
+			ReminderHelper.SetLanguageID(lid);
             LanguageFactory.SetCurrentCulture(lid);
 
 			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Organization, DateTime.Now);
@@ -1028,31 +1030,6 @@ VALUES ({0},1,NULL,{1},GETDATE())",
 			Response.Redirect("org.aspx?SDID=" + showDepartmentID + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + (showReg ? "&ShowReg=1" : ""), true);
 		}
 		
-		Dictionary<int, string> GetLoginDays()
-		{
-			Dictionary<int, string> loginDays = new Dictionary<int, string>();
-			loginDays.Add(1, R.Str(lid, "day.everyday", "every day"));
-			loginDays.Add(7, R.Str(lid, "week", "week"));
-			loginDays.Add(14, R.Str(lid, "week.two", "2 weeks"));
-			loginDays.Add(30, R.Str(lid, "month", "month"));
-			loginDays.Add(90, R.Str(lid, "month.three", "3 months"));
-			loginDays.Add(100, R.Str(lid, "month.six", "6 months"));
-			return loginDays;
-		}
-		
-		Dictionary<int, string> GetLoginWeekdays()
-		{
-			Dictionary<int, string> loginWeekdays = new Dictionary<int, string>();
-			loginWeekdays.Add(-1, R.Str(lid, "week.disabled", "< disabled >"));
-			loginWeekdays.Add(0, R.Str(lid, "week.everyday", "< every day >"));
-			loginWeekdays.Add(1, R.Str(lid, "week.monday", "Monday"));
-			loginWeekdays.Add(2, R.Str(lid, "week.tuesday", "Tuesday"));
-			loginWeekdays.Add(3, R.Str(lid, "week.wednesday", "Wednesday"));
-			loginWeekdays.Add(4, R.Str(lid, "week.thursday", "Thursday"));
-			loginWeekdays.Add(5, R.Str(lid, "week.friday", "Friday"));
-			return loginWeekdays;
-		}
-		
 		protected override void OnPreRender(EventArgs e)
 		{
 			Search.Text = R.Str(lid, "search", "Search");
@@ -1573,7 +1550,7 @@ WHERE d.DepartmentID = {1}",
 	<td align='center' style='font-size:9px;'>&nbsp;{0}&nbsp;</td>
 	<td align='center' style='font-size:9px;'>{1}</td>",
 					(rs.IsDBNull(11) ? "N/A" : rs.GetString(11)),
-					deptWithReminder.GetReminder(GetLoginDays(), GetLoginWeekdays())
+					deptWithReminder.GetReminder(ReminderHelper.GetLoginDays(), ReminderHelper.GetLoginWeekdays())
 					
 				);
 				OrgTree.Text += @"
