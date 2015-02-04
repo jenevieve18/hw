@@ -129,11 +129,17 @@
   <data name="active.activated" xml:space="preserve">
     <value>Aktiv/&lt;br&gt;Aktiverad</value>
   </data>
+  <data name="administration" xml:space="preserve">
+    <value>Administration</value>
+  </data>
   <data name="aggregation" xml:space="preserve">
     <value>Aggregering</value>
   </data>
   <data name="alphabetical" xml:space="preserve">
     <value>Alfabetisk</value>
+  </data>
+  <data name="answer.last" xml:space="preserve">
+    <value>Antal svar&lt;br/&gt;senaste månaden</value>
   </data>
   <data name="background.variable" xml:space="preserve">
     <value>Bakgrundsvariabel</value>
@@ -141,11 +147,17 @@
   <data name="cancel" xml:space="preserve">
     <value>Avbryt</value>
   </data>
+  <data name="count.answer" xml:space="preserve">
+    <value>Antal svar</value>
+  </data>
   <data name="credentials" xml:space="preserve">
     <value>Uppgifter</value>
   </data>
   <data name="day.everyday" xml:space="preserve">
     <value>varje dag</value>
+  </data>
+  <data name="department" xml:space="preserve">
+    <value>Enhet</value>
   </data>
   <data name="disassociate.start" xml:space="preserve">
     <value>Koppla bort den här användaren från organisationen från start.</value>
@@ -177,6 +189,9 @@
   <data name="filename" xml:space="preserve">
     <value>Filnamn</value>
   </data>
+  <data name="found.results" xml:space="preserve">
+    <value>träffar.</value>
+  </data>
   <data name="graphs.change" xml:space="preserve">
     <value>Ändra alla grafer till:</value>
   </data>
@@ -198,11 +213,17 @@
   <data name="i18n" xml:space="preserve">
     <value>In English</value>
   </data>
+  <data name="included.not" xml:space="preserve">
+    <value>Inte inkluderad</value>
+  </data>
   <data name="invitation.received" xml:space="preserve">
     <value>Fått inbjudan</value>
   </data>
   <data name="invite.first" xml:space="preserve">
     <value>1:a inbjudan&amp;nbsp;&lt;br/&gt;&amp;nbsp;skickad</value>
+  </data>
+  <data name="invite.resolve" xml:space="preserve">
+    <value>Inbjudan</value>
   </data>
   <data name="language" xml:space="preserve">
     <value>Språk</value>
@@ -276,6 +297,9 @@
   <data name="popularity" xml:space="preserve">
     <value>Popularitet</value>
   </data>
+  <data name="questions.based" xml:space="preserve">
+    <value>baserat på frågor i enkät</value>
+  </data>
   <data name="random" xml:space="preserve">
     <value>Slumpmässig</value>
   </data>
@@ -342,6 +366,12 @@
   <data name="settings" xml:space="preserve">
     <value>Inställningar</value>
   </data>
+  <data name="sponsor" xml:space="preserve">
+    <value>Organisation</value>
+  </data>
+  <data name="stats.named" xml:space="preserve">
+    <value>Visa statistik som</value>
+  </data>
   <data name="status.active" xml:space="preserve">
     <value>Aktiv</value>
   </data>
@@ -372,8 +402,14 @@
   <data name="status.stop.work" xml:space="preserve">
     <value>Stoppad, arbetsrelaterat</value>
   </data>
+  <data name="submit" xml:space="preserve">
+    <value>Kör</value>
+  </data>
   <data name="survey" xml:space="preserve">
     <value>Enkät</value>
+  </data>
+  <data name="survey.extended.stats" xml:space="preserve">
+    <value>Statistik för utökade enkäter</value>
   </data>
   <data name="thanks" xml:space="preserve">
     <value>Tack: </value>

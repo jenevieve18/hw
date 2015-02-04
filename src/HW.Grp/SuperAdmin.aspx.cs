@@ -206,6 +206,10 @@ namespace HW.Grp
 		{
 			base.OnPreRender(e);
 
+            Search.Text = R.Str(lid, "search", "Search");
+            submit.Text = R.Str(lid, "submit", "Submit");
+            submit2.Text = R.Str(lid, "submit", "Submit");
+
 			ExtendedSurvey.Text = string.Format(
 				@"
 <tr>
@@ -284,16 +288,17 @@ namespace HW.Grp
 			);
 			ESS.Visible = cx > 0;
 
-			SponsorID.Text = "" +
-				"<tr>" +
-				"<td><b>Name</b></td>" +
-				"<td><b># of ext<br/>surveys</b></td>" +
-				"<td><b># of added<br/>users</b></td>" +
-				"<td><b># of invited<br/>users</b></td>" +
-				"<td><b># of activated<br/>users</b></td>" +
-				"<td><b>1st invite sent</b></td>" +
-				"<td><b>Super privileges</b></td>" +
-				"</tr>";
+			SponsorID.Text = string.Format(
+                @"
+<tr>
+    <td><b>Name</b></td>
+    <td><b># of ext<br/>surveys</b></td>
+    <td><b># of added<br/>users</b></td>
+    <td><b># of invited<br/>users</b></td>
+    <td><b># of activated<br/>users</b></td>
+    <td><b>1st invite sent</b></td>
+    <td><b>Super privileges</b></td>
+</tr>");
 
 			cx = 0;
 			int totInvitees = 0, totNonClosedInvites = 0, totActive = 0, totNonClosedActive = 0;

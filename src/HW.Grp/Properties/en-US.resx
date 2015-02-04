@@ -129,8 +129,14 @@
   <data name="active.activated" xml:space="preserve">
     <value>Active/&lt;br&gt;Activated</value>
   </data>
+  <data name="administration" xml:space="preserve">
+    <value>Administration</value>
+  </data>
   <data name="alphabetical" xml:space="preserve">
     <value>Alphabetical</value>
+  </data>
+  <data name="answer.last" xml:space="preserve">
+    <value>Last month&lt;br/&gt;answer count</value>
   </data>
   <data name="background.variable" xml:space="preserve">
     <value>Background variable</value>
@@ -138,11 +144,17 @@
   <data name="cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="count.answer" xml:space="preserve">
+    <value>Answer count</value>
+  </data>
   <data name="credentials" xml:space="preserve">
     <value>Credentials</value>
   </data>
   <data name="day.everyday" xml:space="preserve">
     <value>every day</value>
+  </data>
+  <data name="department" xml:space="preserve">
+    <value>Department</value>
   </data>
   <data name="disassociate.start" xml:space="preserve">
     <value>Disassociate this user with the organization from start.</value>
@@ -174,6 +186,9 @@
   <data name="filename" xml:space="preserve">
     <value>Filename</value>
   </data>
+  <data name="found.results" xml:space="preserve">
+    <value>results found.</value>
+  </data>
   <data name="graphs.change" xml:space="preserve">
     <value>Change this graph to:</value>
   </data>
@@ -189,11 +204,17 @@
   <data name="i18n" xml:space="preserve">
     <value>På svenska</value>
   </data>
+  <data name="included.not" xml:space="preserve">
+    <value>Not included</value>
+  </data>
   <data name="invitation.received" xml:space="preserve">
     <value>Received &lt;br&gt; Inivtation</value>
   </data>
   <data name="invite.first" xml:space="preserve">
     <value>1st invite&amp;nbsp;&lt;br/&gt;&amp;nbsp;sent</value>
+  </data>
+  <data name="invite.resolve" xml:space="preserve">
+    <value>Resolve&lt;br/&gt;Invitation</value>
   </data>
   <data name="login.header" xml:space="preserve">
     <value>Group administration</value>
@@ -270,6 +291,9 @@
   <data name="popularity" xml:space="preserve">
     <value>Popularity</value>
   </data>
+  <data name="questions.based" xml:space="preserve">
+    <value>based on questions in survey</value>
+  </data>
   <data name="random" xml:space="preserve">
     <value>Random</value>
   </data>
@@ -336,6 +360,12 @@
   <data name="settings" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="sponsor" xml:space="preserve">
+    <value>Sponsor</value>
+  </data>
+  <data name="stats.named" xml:space="preserve">
+    <value>Show statistics named</value>
+  </data>
   <data name="status.active" xml:space="preserve">
     <value>Active</value>
   </data>
@@ -365,6 +395,12 @@
   </data>
   <data name="status.stop.work" xml:space="preserve">
     <value>Stopped, work related</value>
+  </data>
+  <data name="submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="survey.extended.stats" xml:space="preserve">
+    <value>Extended survey statistics</value>
   </data>
   <data name="thanks" xml:space="preserve">
     <value>Thank you: </value>
