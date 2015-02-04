@@ -15,8 +15,8 @@ namespace HW.Grp
 {
 	public class ReminderHelper
 	{
-		static Dictionary<int, string> loginDays = new Dictionary<int, string>();
-		static Dictionary<int, string> loginWeekdays = new Dictionary<int, string>();
+//		static Dictionary<int, string> loginDays = new Dictionary<int, string>();
+//		static Dictionary<int, string> loginWeekdays = new Dictionary<int, string>();
 		static int langID;
 		
 		public static void SetLanguageID(int langID)
@@ -26,12 +26,39 @@ namespace HW.Grp
 		
 		static ReminderHelper()
 		{
+//			loginDays.Add(1, R.Str(langID, "day.everyday", "every day"));
+//			loginDays.Add(7, R.Str(langID, "week", "week"));
+//			loginDays.Add(14, R.Str(langID, "week.two", "2 weeks"));
+//			loginDays.Add(30, R.Str(langID, "month", "month"));
+//			loginDays.Add(90, R.Str(langID, "month.three", "3 months"));
+//			loginDays.Add(100, R.Str(langID, "month.six", "6 months"));
+			
+//			loginWeekdays.Add(-1, R.Str(langID, "week.disabled", "< disabled >"));
+//			loginWeekdays.Add(0, R.Str(langID, "week.everyday", "< every day >"));
+//			loginWeekdays.Add(1, R.Str(langID, "week.monday", "Monday"));
+//			loginWeekdays.Add(2, R.Str(langID, "week.tuesday", "Tuesday"));
+//			loginWeekdays.Add(3, R.Str(langID, "week.wednesday", "Wednesday"));
+//			loginWeekdays.Add(4, R.Str(langID, "week.thursday", "Thursday"));
+//			loginWeekdays.Add(5, R.Str(langID, "week.friday", "Friday"));
+		}
+		
+		public static Dictionary<int, string> GetLoginDays()
+		{
+			Dictionary<int, string> loginDays = new Dictionary<int, string>();
+			
 			loginDays.Add(1, R.Str(langID, "day.everyday", "every day"));
 			loginDays.Add(7, R.Str(langID, "week", "week"));
 			loginDays.Add(14, R.Str(langID, "week.two", "2 weeks"));
 			loginDays.Add(30, R.Str(langID, "month", "month"));
 			loginDays.Add(90, R.Str(langID, "month.three", "3 months"));
 			loginDays.Add(100, R.Str(langID, "month.six", "6 months"));
+			
+			return loginDays;
+		}
+		
+		public static Dictionary<int, string> GetLoginWeekdays()
+		{
+			Dictionary<int, string> loginWeekdays = new Dictionary<int, string>();
 			
 			loginWeekdays.Add(-1, R.Str(langID, "week.disabled", "< disabled >"));
 			loginWeekdays.Add(0, R.Str(langID, "week.everyday", "< every day >"));
@@ -40,15 +67,7 @@ namespace HW.Grp
 			loginWeekdays.Add(3, R.Str(langID, "week.wednesday", "Wednesday"));
 			loginWeekdays.Add(4, R.Str(langID, "week.thursday", "Thursday"));
 			loginWeekdays.Add(5, R.Str(langID, "week.friday", "Friday"));
-		}
-		
-		public static Dictionary<int, string> GetLoginDays()
-		{
-			return loginDays;
-		}
-		
-		public static Dictionary<int, string> GetLoginWeekdays()
-		{
+			
 			return loginWeekdays;
 		}
 	}
