@@ -69,7 +69,7 @@
                 <asp:Button Text="Submit" ID=submit runat=server /><br />
 				<hr />
             </asp:PlaceHolder>
-		    <h3>Survey statistics</h3>
+		    <h3><%= R.Str(lid, "survey.stats", "Survey statistics")%></h3>
             <table border="0" cellspacing="0" cellpadding="5">
 				<tr>
 					<td><b><%= R.Str(lid, "unit", "Unit")%></b></td>

@@ -213,11 +213,11 @@ namespace HW.Grp
 			ExtendedSurvey.Text = string.Format(
 				@"
 <tr>
-	<td><i>Database, all <b>other</b> organizations</i></td>
+	<td><i>{0}</i></td>
 	<td><input type='radio' name='Measure0' value='1'/></td>
 	<td><input type='radio' name='Measure0' value='2'/></td>
 	<td><input type='radio' name='Measure0' value='0' checked/></td>
-</tr>");
+</tr>", R.Str(lid, "org.database", "Database, all <b>other</b> organizations"));
 
 			int cx = 0;
 			int bx = 0;
@@ -278,27 +278,36 @@ namespace HW.Grp
 			ExtendedSurvey.Text += string.Format(
 				@"
 <tr style='background-color:#cccccc;'>
-	<td><i>Total for your organization(s)</i></td>
+	<td><i>{1}</i></td>
 	<td></td>
 	<td></td>
 	<td></td>
 	<td>{0}</td>
 </tr>",
-				bx
+				bx,
+                R.Str(lid, "org.total", "Total for your organization(s)")
 			);
 			ESS.Visible = cx > 0;
 
 			SponsorID.Text = string.Format(
                 @"
 <tr>
-    <td><b>Name</b></td>
-    <td><b># of ext<br/>surveys</b></td>
-    <td><b># of added<br/>users</b></td>
-    <td><b># of invited<br/>users</b></td>
-    <td><b># of activated<br/>users</b></td>
-    <td><b>1st invite sent</b></td>
-    <td><b>Super privileges</b></td>
-</tr>");
+    <td><b>{0}</b></td>
+    <td><b>{1}</b></td>
+    <td><b>{2}</b></td>
+    <td><b>{3}</b></td>
+    <td><b>{4}</b></td>
+    <td><b>{5}</b></td>
+    <td><b>{6}</b></td>
+</tr>",
+              R.Str(lid, "manager.name", "Name"),
+              R.Str(lid, "survey.extended.no", "# of ext<br/>surveys"),
+              R.Str(lid, "users.no", "# of added<br/>users"),
+              R.Str(lid, "users.invited.no", "# of invited<br/>users"),
+              R.Str(lid, "users.activated.no", "# of activated<br/>users"),
+              R.Str(lid, "invite.first", "1st invite sent"),
+              R.Str(lid, "privilege.super", "Super privileges")
+          );
 
 			cx = 0;
 			int totInvitees = 0, totNonClosedInvites = 0, totActive = 0, totNonClosedActive = 0;
@@ -511,13 +520,14 @@ namespace HW.Grp
 			Survey.Text += string.Format(
 				@"
 <tr style='background-color:#cccccc;'>
-	<td><i>Total for your organization(s)</i></td>
+	<td><i>{1}</i></td>
 	<td></td>
 	<td></td>
 	<td></td>
 	<td>{0}</td>
 </tr>",
-				bx);
+				bx,
+                R.Str(lid, "org.total", "Total for your organization(s)"));
 		}
 		
 		protected IList<User> users;
