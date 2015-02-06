@@ -279,6 +279,12 @@
   <data name="news" xml:space="preserve">
     <value>News</value>
   </data>
+  <data name="org.database" xml:space="preserve">
+    <value>Database, all &lt;br&gt;other&lt;/b&gt; organizations</value>
+  </data>
+  <data name="org.total" xml:space="preserve">
+    <value>Total for your organization(s)</value>
+  </data>
   <data name="organization.access" xml:space="preserve">
     <value>Organisation access</value>
   </data>
@@ -290,6 +296,9 @@
   </data>
   <data name="popularity" xml:space="preserve">
     <value>Popularity</value>
+  </data>
+  <data name="privilege.super" xml:space="preserve">
+    <value>Super privileges</value>
   </data>
   <data name="questions.based" xml:space="preserve">
     <value>based on questions in survey</value>
@@ -323,6 +332,9 @@
   </data>
   <data name="revert.default" xml:space="preserve">
     <value>Revert to default</value>
+  </data>
+  <data name="role.user.super" xml:space="preserve">
+    <value>Super user (can administer its own manager account, including all units)</value>
   </data>
   <data name="save" xml:space="preserve">
     <value>Save</value>
@@ -399,8 +411,14 @@
   <data name="submit" xml:space="preserve">
     <value>Submit</value>
   </data>
+  <data name="survey.extended.no" xml:space="preserve">
+    <value># of extended&lt;br&gt;surveys</value>
+  </data>
   <data name="survey.extended.stats" xml:space="preserve">
     <value>Extended survey statistics</value>
+  </data>
+  <data name="survey.stats" xml:space="preserve">
+    <value>Survey statistics</value>
   </data>
   <data name="thanks" xml:space="preserve">
     <value>Thank you: </value>
@@ -461,6 +479,15 @@
   </data>
   <data name="users.activated.all" xml:space="preserve">
     <value>All activated users</value>
+  </data>
+  <data name="users.activated.no" xml:space="preserve">
+    <value># of activated&lt;br/&gt;users</value>
+  </data>
+  <data name="users.invited.no" xml:space="preserve">
+    <value># of invited&lt;br&gt;users</value>
+  </data>
+  <data name="users.no" xml:space="preserve">
+    <value># of added&lt;br&gt;users</value>
   </data>
   <data name="users.unit" xml:space="preserve">
     <value>Users on unit</value>

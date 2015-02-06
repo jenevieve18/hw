@@ -285,6 +285,12 @@
   <data name="news" xml:space="preserve">
     <value>Nyheter</value>
   </data>
+  <data name="org.database" xml:space="preserve">
+    <value>Databasen, alla &lt;br&gt;andra&lt;/b&gt; organisationer</value>
+  </data>
+  <data name="org.total" xml:space="preserve">
+    <value>Totalt för din/a organisation/er</value>
+  </data>
   <data name="organization.access" xml:space="preserve">
     <value>Organisationsåtkomst</value>
   </data>
@@ -296,6 +302,9 @@
   </data>
   <data name="popularity" xml:space="preserve">
     <value>Popularitet</value>
+  </data>
+  <data name="privilege.super" xml:space="preserve">
+    <value>Superbehörigheter</value>
   </data>
   <data name="questions.based" xml:space="preserve">
     <value>baserat på frågor i enkät</value>
@@ -329,6 +338,9 @@
   </data>
   <data name="revert.default" xml:space="preserve">
     <value>Återgå till standard</value>
+  </data>
+  <data name="role.user.super" xml:space="preserve">
+    <value>Superanvändare (kan administrera sitt eget chefskonto, inlkusive alla enheter)</value>
   </data>
   <data name="save" xml:space="preserve">
     <value>Spara</value>
@@ -408,8 +420,14 @@
   <data name="survey" xml:space="preserve">
     <value>Enkät</value>
   </data>
+  <data name="survey.extended.no" xml:space="preserve">
+    <value># av utökade&lt;br&gt;enkäter</value>
+  </data>
   <data name="survey.extended.stats" xml:space="preserve">
     <value>Statistik för utökade enkäter</value>
+  </data>
+  <data name="survey.stats" xml:space="preserve">
+    <value>Enkätstatistik</value>
   </data>
   <data name="thanks" xml:space="preserve">
     <value>Tack: </value>
@@ -479,6 +497,15 @@
   </data>
   <data name="users.activated.all" xml:space="preserve">
     <value>Alla aktiverade användare</value>
+  </data>
+  <data name="users.activated.no" xml:space="preserve">
+    <value># av aktiverade&lt;br/&gt;användare</value>
+  </data>
+  <data name="users.invited.no" xml:space="preserve">
+    <value># av inbjudna&lt;br&gt;användare</value>
+  </data>
+  <data name="users.no" xml:space="preserve">
+    <value># av tillagda&lt;br&gt;användare</value>
   </data>
   <data name="users.unit" xml:space="preserve">
     <value>Användare på enhet</value>
