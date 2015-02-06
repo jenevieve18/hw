@@ -34,6 +34,7 @@ namespace HW.Grp
             base.OnPreRender(e);
             Cancel.Text = R.Str(lid, "cancel", "Cancel");
             Save.Text = R.Str(lid, "save", "Save");
+            SuperUser.Text = R.Str(lid, "role.user.super", "Super user (can administer its own manager account, including all units)");
         }
 		
 		protected void Page_Load(object sender, EventArgs e)
