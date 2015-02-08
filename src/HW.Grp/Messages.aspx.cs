@@ -47,13 +47,6 @@ namespace HW.Grp
 			repository = sponsorAdminID != -1 ? new SqlSponsorAdminRepository() as IExtendedSurveyRepository : new SqlSponsorRepository() as IExtendedSurveyRepository;
 
 			if (sponsorID != 0) {
-
-				SendType.Items.Add(new ListItem(R.Str(lid, "select.send.type", "< select send type >"), "0"));
-				SendType.Items.Add(new ListItem(R.Str(lid, "registration", "Registration"), "1"));
-				SendType.Items.Add(new ListItem(R.Str(lid, "registration.reminder", "Registration reminder"), "2"));
-				SendType.Items.Add(new ListItem(R.Str(lid, "login.reminder", "Login reminder"), "3"));
-				SendType.Items.Add(new ListItem(R.Str(lid, "users.activated.all", "All activated users"), "9"));
-
 				sent = (Request.QueryString["Sent"] != null);
 				
 				sponsor = repository.ReadSponsor(sponsorAdminID != -1 ? sponsorAdminID : sponsorID);
@@ -67,6 +60,12 @@ namespace HW.Grp
 		{
 //				if (!IsPostBack) {
 				if (!postBack) {
+					SendType.Items.Add(new ListItem(R.Str(lid, "select.send.type", "< select send type >"), "0"));
+					SendType.Items.Add(new ListItem(R.Str(lid, "registration", "Registration"), "1"));
+					SendType.Items.Add(new ListItem(R.Str(lid, "registration.reminder", "Registration reminder"), "2"));
+					SendType.Items.Add(new ListItem(R.Str(lid, "login.reminder", "Login reminder"), "3"));
+					SendType.Items.Add(new ListItem(R.Str(lid, "users.activated.all", "All activated users"), "9"));
+				
 
 					LoginSubject.Enabled = LoginTxt.Enabled = LoginDays.Enabled = LoginWeekday.Enabled = loginWithSkey;
 					
