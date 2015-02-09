@@ -103,10 +103,10 @@ namespace HW.Grp
 						LoginDays.SelectedValue = (sponsor.LoginDays <= 0 ? "14" : sponsor.LoginDays.ToString());
 						LoginWeekday.SelectedValue = (sponsor.LoginWeekday <= -1 ? "NULL" : sponsor.LoginWeekday.ToString());
 
-						InviteLastSent.Text = (sponsor.InviteLastSent ==  null ? "Never" : sponsor.InviteLastSent.Value.ToString("yyyy-MM-dd HH:mm"));
-						InviteReminderLastSent.Text = (sponsor.InviteReminderLastSent == null ? "Never" : sponsor.InviteReminderLastSent.Value.ToString("yyyy-MM-dd HH:mm"));
-						AllMessageLastSent.Text += "Last sent: " + (sponsor.AllMessageLastSent == null ? "Never" : sponsor.AllMessageLastSent.Value.ToString("yyyy-MM-dd HH:mm"));
-						LoginLastSent.Text = (sponsor.LoginLastSent == null ? "Never" : sponsor.LoginLastSent.Value.ToString("yyyy-MM-dd HH:mm"));
+						InviteLastSent.Text = (sponsor.InviteLastSent ==  null ? R.Str(lid, "never", "Never") : sponsor.InviteLastSent.Value.ToString("yyyy-MM-dd HH:mm"));
+						InviteReminderLastSent.Text = (sponsor.InviteReminderLastSent == null ? R.Str(lid, "never", "Never") : sponsor.InviteReminderLastSent.Value.ToString("yyyy-MM-dd HH:mm"));
+						AllMessageLastSent.Text += R.Str(lid, "sent.last", "Last sent") + ": " + (sponsor.AllMessageLastSent == null ? R.Str(lid, "never", "Never") : sponsor.AllMessageLastSent.Value.ToString("yyyy-MM-dd HH:mm"));
+						LoginLastSent.Text = (sponsor.LoginLastSent == null ? R.Str(lid, "never", "Never") : sponsor.LoginLastSent.Value.ToString("yyyy-MM-dd HH:mm"));
 					}
 				}
 				#region SponsorExtendedSurvey
@@ -126,8 +126,8 @@ namespace HW.Grp
 //								if (!IsPostBack) {
 								if (!postBack) {
 									extendedSurvey = s.Internal + s.RoundText;
-									ExtendedSurvey.Text = R.Str(lid, "reminder.for", "Reminder for") + " <b>" + extendedSurvey + "</b> (<span style='font-size:9px;'>[x]Last sent: " + (s.EmailLastSent == null ? "Never" : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
-									ExtendedSurveyFinished.Text = "Thank you mail for <b>" + extendedSurvey + "</b> (<span style='font-size:9px;'>[x]Last sent: " + (s.EmailLastSent == null ? "Never" : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
+									ExtendedSurvey.Text = R.Str(lid, "reminder.for", "Reminder for") + " <b>" + extendedSurvey + "</b> (<span style='font-size:9px;'>[x]" + R.Str(lid, "sent.last", "Last sent") + ": " + (s.EmailLastSent == null ? R.Str(lid, "never", "Never") : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
+									ExtendedSurveyFinished.Text = "Thank you mail for <b>" + extendedSurvey + "</b> (<span style='font-size:9px;'>[x]" + R.Str(lid, "sent.last", "Last sent") + ": " + (s.EmailLastSent == null ? R.Str(lid, "never", "Never") : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
 									
 									ExtendedSurveySubject.Text = s.EmailSubject;
 									ExtendedSurveyTxt.Text = s.EmailBody;
@@ -141,10 +141,10 @@ namespace HW.Grp
 //								if (!IsPostBack) {
 								if (!postBack) {
 									var r = userRepository.CountBySponsorWithAdminAndExtendedSurvey2(sponsorID, sponsorAdminID, sponsorExtendedSurveyID);
-									ExtendedSurvey.Text = ExtendedSurvey.Text.Replace("[x]", "[x]Recipients: " + r + ", ");
+									ExtendedSurvey.Text = ExtendedSurvey.Text.Replace("[x]", "[x]" + R.Str(lid, "recipients", "Recipients") + ": " + r + ", ");
 
 									r = userRepository.CountBySponsorWithAdminAndExtendedSurvey(sponsorID, sponsorAdminID, sponsorExtendedSurveyID);
-									ExtendedSurveyFinished.Text = ExtendedSurveyFinished.Text.Replace("[x]", "[x]Recipients: " + r + ", ");
+									ExtendedSurveyFinished.Text = ExtendedSurveyFinished.Text.Replace("[x]", "[x]" + R.Str(lid, "recipients", "Recipients") + ": " + r + ", ");
 								}
 							} else {
 								if (ExtendedSurveyTxt.Text == "") {
@@ -169,8 +169,8 @@ namespace HW.Grp
 					if (r != null) {
 //						if (!IsPostBack) {
 						if (!postBack) {
-							ExtendedSurvey.Text = ExtendedSurvey.Text.Replace("[x]", "Period: " + r.ToPeriodString() + ", ");
-							ExtendedSurveyFinished.Text = ExtendedSurveyFinished.Text.Replace("[x]", "Period: " + r.ToPeriodString() + ", ");
+							ExtendedSurvey.Text = ExtendedSurvey.Text.Replace("[x]", R.Str(lid, "period", "Period") + ": " + r.ToPeriodString() + ", ");
+							ExtendedSurveyFinished.Text = ExtendedSurveyFinished.Text.Replace("[x]", R.Str(lid, "period", "Period") + ": " + r.ToPeriodString() + ", ");
 						}
 						if (r.IsOpen) {
 //							if (!IsPostBack) {
