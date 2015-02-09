@@ -14,12 +14,35 @@ namespace HW.Core.Models
 		public virtual string ReplacementHead { get; set; }
 		public virtual IList<ExerciseLanguage> Languages { get; set; }
 		public virtual IList<ExerciseVariant> Variants { get; set; }
+		public virtual bool PrintOnBottom { get; set; }
 		
 		public virtual ExerciseLanguage CurrentLanguage { get; set; }
 		public virtual ExerciseAreaLanguage CurrentArea { get; set; }
 		public virtual ExerciseCategoryLanguage CurrentCategory { get; set; }
 		public virtual ExerciseVariantLanguage CurrentVariant { get; set; }
 		public virtual ExerciseTypeLanguage CurrentType { get; set; }
+		
+		public Exercise()
+		{
+			Languages = new List<ExerciseLanguage>();
+		}
+		
+		public void AddLanguage(string name, string time, string teaser, int langID)
+		{
+			var l = new ExerciseLanguage {
+				ExerciseName = name,
+				Time = time,
+				Teaser = teaser,
+				Language = new Language { Id = langID }
+			};
+			AddLanguage(l);
+		}
+		
+		public void AddLanguage(ExerciseLanguage l)
+		{
+			l.Exercise = this;
+			Languages.Add(l);
+		}
 		
 		public override string ToString()
 		{
@@ -104,6 +127,23 @@ namespace HW.Core.Models
 		public virtual Language Language { get; set; }
 		public virtual string TypeName { get; set; }
 		public virtual string SubTypeName { get; set; }
+		
+		bool HasSubTypeName {
+			get { return SubTypeName != null && SubTypeName != ""; }
+		}
+		
+		string GetSubTypeName()
+		{
+			if (HasSubTypeName) {
+				return string.Format(" ({0})", SubTypeName);
+			}
+			return "";
+		}
+		
+		public override string ToString()
+		{
+			return string.Format("{0} {1}", TypeName, GetSubTypeName());
+		}
 	}
 	
 	public class ExerciseVariant : BaseModel
@@ -122,5 +162,17 @@ namespace HW.Core.Models
 		public virtual int ExerciseWindowX { get; set; }
 		public virtual int ExerciseWindowY { get; set; }
 		public virtual Language Language { get; set; }
+	}
+	
+	public class ExerciseDataInput : BaseModel
+	{
+		public virtual Exercise Exercise { get; set; }
+	}
+	
+	public class ExerciseDataInputLang : BaseModel
+	{
+		public virtual ExerciseDataInput ExerciseDataInput { get; set; }
+		public virtual Language Language { get; set; }
+		public virtual string Content { get; set; }
 	}
 }

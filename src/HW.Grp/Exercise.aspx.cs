@@ -17,7 +17,7 @@ namespace HW.Grp
 	public partial class Exercise : System.Web.UI.Page
 	{
 		protected int BX = 0;
-		protected int LID = 0;
+//		protected int LID = 0;
 		protected int EAID;
 		protected string sortQS;
 		protected int ECID;
@@ -29,7 +29,7 @@ namespace HW.Grp
 		protected int sponsorID;
 		protected int sponsorAdminID;
 		int AX = 0;
-        protected int lid;
+		protected int lid;
 		
 		public bool HasSelectedArea {
 			get { return SelectedArea != null; }
@@ -71,15 +71,13 @@ namespace HW.Grp
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			if (Convert.ToInt32(Session["SponsorID"]) == 0) {
-				Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
-			}
+			HtmlHelper.RedirectIf(Session["SponsorID"] == null, "default.aspx", true);
 
-            lid = ConvertHelper.ToInt32(Session["lid"], 1);
+			lid = ConvertHelper.ToInt32(Session["lid"], 1);
 			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Exercises, DateTime.Now);
-			if (Request.QueryString["LID"] != null) {
-				LID = Convert.ToInt32(Request.QueryString["LID"]);
-			}
+//			if (Request.QueryString["LID"] != null) {
+//				LID = Convert.ToInt32(Request.QueryString["LID"]);
+//			}
 			EAID = ConvertHelper.ToInt32(Request.QueryString["EAID"]);
 			ECID = ConvertHelper.ToInt32(Request.QueryString["ECID"]);
 			int SORT = ConvertHelper.ToInt32(Request.QueryString["SORT"]);
@@ -91,25 +89,16 @@ namespace HW.Grp
 
 			if (!IsPostBack) {
 				if (EAID == 0) {
-//					switch (LID) {
-//							case 0: AreaID.Controls.Add(new LiteralControl("<dt><a href='javascript:;'><span>Visa alla</span></a></dt><dd><ul>")); break;
-//							case 1: AreaID.Controls.Add(new LiteralControl("<dt><a href='javascript:;'><span>Show all</span></a></dt><dd><ul>")); break;
-//					}
 					switch (lid) {
 							case 1: AreaID.Controls.Add(new LiteralControl("<dt><a href='javascript:;'><span>Visa alla</span></a></dt><dd><ul>")); break;
 							case 2: AreaID.Controls.Add(new LiteralControl("<dt><a href='javascript:;'><span>Show all</span></a></dt><dd><ul>")); break;
 					}
 				}
 				string s = "";
-//				areas = exerciseRepository.FindAreas(EAID, LID);
 				areas = exerciseRepository.FindAreas(EAID, lid - 1);
 				foreach (var a in areas) {
 					if (EAID == a.Area.Id) {
 						AreaID.Controls.Add(new LiteralControl("<dt><a href='javascript:;'><span>" + a.AreaName + "</span></a></dt><dd><ul>"));
-//						switch (LID) {
-//								case 0: AreaID.Controls.Add(new LiteralControl("<li id='EAID0'><a href='exercise.aspx?EAID=0" + sortQS + "#filter'>Visa alla</a></li>")); break;
-//								case 1: AreaID.Controls.Add(new LiteralControl("<li id='EAID0'><a href='exercise.aspx?EAID=0" + sortQS + "#filter'>Show all</a></li>")); break;
-//						}
 						switch (lid) {
 								case 1: AreaID.Controls.Add(new LiteralControl("<li id='EAID0'><a href='exercise.aspx?EAID=0" + sortQS + "#filter'>Visa alla</a></li>")); break;
 								case 2: AreaID.Controls.Add(new LiteralControl("<li id='EAID0'><a href='exercise.aspx?EAID=0" + sortQS + "#filter'>Show all</a></li>")); break;
@@ -125,14 +114,6 @@ namespace HW.Grp
 				AreaID.Controls.Add(new LiteralControl("</ul></dd>"));
 
 				if (ECID == 0) {
-//					switch (LID) {
-//						case 0:
-//							CategoryID.Controls.Add(new LiteralControl("<dt><a href='javascript:;'><span>Visa alla</span></a></dt><dd><ul>"));
-//							break;
-//						case 1:
-//							CategoryID.Controls.Add(new LiteralControl("<dt><a href='javascript:;'><span>Show all</span></a></dt><dd><ul>"));
-//							break;
-//					}
 					switch (lid) {
 						case 1:
 							CategoryID.Controls.Add(new LiteralControl("<dt><a href='javascript:;'><span>Visa alla</span></a></dt><dd><ul>"));
@@ -143,15 +124,10 @@ namespace HW.Grp
 					}
 				}
 				s = "";
-//				categories = exerciseRepository.FindCategories(EAID, ECID, LID);
 				categories = exerciseRepository.FindCategories(EAID, ECID, lid - 1);
 				foreach (var c in categories) {
 					if (ECID == c.Category.Id) {
 						CategoryID.Controls.Add(new LiteralControl("<dt><a href='javascript:;'><span>" + c.CategoryName + "</span></a></dt><dd><ul>"));
-//						switch (LID) {
-//								case 0: CategoryID.Controls.Add(new LiteralControl("<li id='ECID0'><a href='exercise.aspx?ECID=0" + sortQS + (EAID != 0 ? "&EAID=" + EAID : "") + "#filter'>Visa alla</a></li>")); break;
-//								case 1: CategoryID.Controls.Add(new LiteralControl("<li id='ECID0'><a href='exercise.aspx?ECID=0" + sortQS + (EAID != 0 ? "&EAID=" + EAID : "") + "#filter'>Show all</a></li>")); break;
-//						}
 						switch (lid) {
 								case 1: CategoryID.Controls.Add(new LiteralControl("<li id='ECID0'><a href='exercise.aspx?ECID=0" + sortQS + (EAID != 0 ? "&EAID=" + EAID : "") + "#filter'>Visa alla</a></li>")); break;
 								case 2: CategoryID.Controls.Add(new LiteralControl("<li id='ECID0'><a href='exercise.aspx?ECID=0" + sortQS + (EAID != 0 ? "&EAID=" + EAID : "") + "#filter'>Show all</a></li>")); break;
@@ -167,8 +143,7 @@ namespace HW.Grp
 				CategoryID.Controls.Add(new LiteralControl("</ul></dd>"));
 			}
 
-			//exercises = exerciseRepository.FindByAreaAndCategory(EAID, ECID, LID, SORT);
-            exercises = exerciseRepository.FindByAreaAndCategory(EAID, ECID, lid - 1, SORT);
+			exercises = exerciseRepository.FindByAreaAndCategory(EAID, ECID, lid - 1, SORT);
 			foreach (var l in exercises) {
 				if (l.Id != exerciseID) {
 					BX++;
@@ -219,30 +194,6 @@ namespace HW.Grp
 				
 				string q = (EAID != 0 ? "&EAID=" + EAID : "") + (ECID != 0 ? "&ECID=" + ECID : "");
 
-//				switch (LID) {
-//					case 0:
-//						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 0 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=0" + q + "#filter'") + "><span>Slumpmässigt</span></a>"));
-//						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 1 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=1" + q + "#filter'") + "><span>Popularitet</span></a>"));
-//						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 2 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=2" + q + "#filter'") + "><span>Bokstavsordning</span></a>"));
-//						break;
-//					case 1:
-//						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 0 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=0" + q + "#filter'") + "><span>Random</span></a>"));
-//						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 1 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=1" + q + "#filter'") + "><span>Popularity</span></a>"));
-//						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 2 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=2" + q + "#filter'") + "><span>Alphabethical</span></a>"));
-//						break;
-//				}
-//				switch (lid) {
-//					case 1:
-//						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 0 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=0" + q + "#filter'") + "><span>Slumpmässigt</span></a>"));
-//						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 1 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=1" + q + "#filter'") + "><span>Popularitet</span></a>"));
-//						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 2 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=2" + q + "#filter'") + "><span>Bokstavsordning</span></a>"));
-//						break;
-//					case 2:
-//						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 0 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=0" + q + "#filter'") + "><span>" + R.Str(lid, "random", "Random") + "</span></a>"));
-//						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 1 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=1" + q + "#filter'") + "><span>" + R.Str(lid, "popularity", "Popularity") + "</span></a>"));
-//						Sort.Controls.Add(new LiteralControl("<a" + (SORT == 2 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=2" + q + "#filter'") + "><span>" + R.Str(lid, "alphabetical", "Alphabethical") + "</span></a>"));
-//						break;
-//				}
 				Sort.Controls.Add(new LiteralControl("<a" + (SORT == 0 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=0" + q + "#filter'") + "><span>" + R.Str(lid, "random", "Random") + "</span></a>"));
 				Sort.Controls.Add(new LiteralControl("<a" + (SORT == 1 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=1" + q + "#filter'") + "><span>" + R.Str(lid, "popularity", "Popularity") + "</span></a>"));
 				Sort.Controls.Add(new LiteralControl("<a" + (SORT == 2 ? " class='active' href='javascript:;'" : " href='exercise.aspx?SORT=2" + q + "#filter'") + "><span>" + R.Str(lid, "alphabetical", "Alphabethical") + "</span></a>"));

@@ -80,13 +80,13 @@
                             <% if (HasSelectedArea) { %>
                                 <a href="javascript:;"><span><%= SelectedArea.AreaName %></span></a>
                             <% } else { %>
-                                <a href="javascript:;"><span><%= LID == 0 ? "Visa alla" : "Show all" %></span></a>
+                                <a href="javascript:;"><span><%= lid == 1 ? "Visa alla" : "Show all" %></span></a>
                             <% } %>
                         </dt>
                         <dd>
                             <ul>
                                 <% if (HasSelectedArea) { %>
-                                    <li><%= HtmlHelper.Anchor(LID == 0 ? "Visa alla" : "Show all", string.Format("exercise.aspx?EAID=0{0}#filter", sortQS))%></li>
+                                    <li><%= HtmlHelper.Anchor(lid == 1 ? "Visa alla" : "Show all", string.Format("exercise.aspx?EAID=0{0}#filter", sortQS))%></li>
                                 <% } %>
                                 <% int i = 0; %>
                                 <% foreach (var a in areas) { %>
@@ -110,13 +110,13 @@
                             <% if (HasSelectedCategory) { %>
                                 <a href="javascript:;"><span><%= SelectedCategory.CategoryName %></span></a>
                             <% } else { %>
-                                <a href="javascript:;"><span><%= LID == 0 ? "Visa alla" : "Show all" %></span></a>
+                                <a href="javascript:;"><span><%= lid == 1 ? "Visa alla" : "Show all" %></span></a>
                             <% } %>
                         </dt>
                         <dd>
                             <ul>
                                 <% if (HasSelectedCategory) { %>
-                                    <li><%= HtmlHelper.Anchor(LID == 0 ? "Visa alla" : "Show all", string.Format("exercise.aspx?ECID=0{0}{1}#filter", sortQS, (EAID != 0 ? "&EAID=" + EAID : "")))%></li>
+                                    <li><%= HtmlHelper.Anchor(lid == 1 ? "Visa alla" : "Show all", string.Format("exercise.aspx?ECID=0{0}{1}#filter", sortQS, (EAID != 0 ? "&EAID=" + EAID : "")))%></li>
                                 <% } %>
                                 <% i = 0; %>
                                 <% foreach (var c in categories) { %>
@@ -144,26 +144,28 @@
 		</div>
 		<div class="results">
 			<div class="largelegend">
-				<%= LanguageFactory.GetLegend(LID) %>
+				<%-- LanguageFactory.GetLegend(LID) --%>
 			</div>
 				  
 			<div class="contentlist">
 				<asp:PlaceHolder ID="ExerciseList" runat="server" />
                 <!--<% foreach (var l in exercises) { %>
-                <div class="item">
-                    <div class="overview"></div>
-                    <div class="detail">
-                        <div class="image"><img src="<%= l.Image %>" width="121" height="100"></div>
-                        <div class="time"><%= l.CurrentLanguage.Time %><span class="time-end"></span></div>
-                        <div class="descriptions"><%= l.ToString() %></div>
-                        <h2><%= l.CurrentLanguage.ExerciseName %></h2>
-                        <p><%= l.CurrentLanguage.Teaser %></p>
-                        <div><%= HtmlHelper.Anchor("Text()", string.Format("javascript:void(window.open(''))"), "")%>
-                            <a class="sidearrow" href="JavaScript:void(window.open('http://localhost/hw/exerciseShow.aspx?SID=83&AUID=514&ExerciseVariantLangID=71','EVLID71','scrollbars=yes,resizable=yes,width=0,height=0'));">Text ()</a>
+                    <div class="item">
+                        <div class="overview"></div>
+                        <div class="detail">
+                            <div class="image"><img src="<%= l.Image %>" width="121" height="100"></div>
+                            <div class="time"><%= l.CurrentLanguage.Time %><span class="time-end"></span></div>
+                            <div class="descriptions"><%= l.ToString() %></div>
+                            <h2><%= l.CurrentLanguage.ExerciseName %></h2>
+                            <p><%= l.CurrentLanguage.Teaser %></p>
+                            <div>
+                                <% string t = string.Format("JavaScript:void(window.open('{0}exerciseShow.aspx?SID={1}&AUID={2}&ExerciseVariantLangID={3}','EVLID{3}','scrollbars=yes,resizable=yes,width={4},height={5}'));", ConfigurationManager.AppSettings["healthWatchURL"], sponsorID, sponsorAdminID, l.CurrentVariant.Id, l.CurrentVariant.ExerciseWindowX, l.CurrentVariant.ExerciseWindowY); %>
+                            	<%-- HtmlHelper.Anchor(l.CurrentType.ToString(), t, "class='sidearrow'") --%>
+                                <a class="sidearrow" href="<%= t %>"><%= l.CurrentType.ToString() %></a>
+                            </div>
+                            <div class="bottom">&nbsp;</div>
                         </div>
-                        <div class="bottom">&nbsp;</div>
                     </div>
-                </div>
                 <% } %>-->
 			</div><!-- end .contentlist -->
             <!--<div class="disclaimer">

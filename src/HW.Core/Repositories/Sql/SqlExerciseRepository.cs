@@ -6,8 +6,29 @@ using HW.Core.Models;
 
 namespace HW.Core.Repositories.Sql
 {
-	public class SqlExerciseRepository : BaseSqlRepository<Exercise>//, IExerciseRepository
+	public class SqlExerciseRepository : BaseSqlRepository<Exercise>
 	{
+		public void SaveExercise(Exercise e)
+		{
+			string query = string.Format(
+				@"
+INSERT INTO Exercise(ExerciseAreaID, ExerciseSortOrder, ExerciseImg, RequiredUserLevel, Minutes, ExerciseCategoryID, PrintOnBottom, ReplacementHead)
+VALUES(@ExerciseAreaID, @ExerciseSortOrder, @ExerciseImg, @RequiredUserLevel, @Minutes, @ExerciseCategoryID, @PrintOnBottom, @ReplacementHead)"
+			);
+			ExecuteNonQuery(
+				query,
+				"healthWatchSqlConnection",
+				new SqlParameter("@ExerciseAreaID", e.Area.Id),
+				new SqlParameter("@ExerciseSortOrder", e.SortOrder),
+				new SqlParameter("@ExerciseImg", e.Image),
+				new SqlParameter("@RequiredUserLevel", e.RequiredUserLevel),
+				new SqlParameter("@Minutes", e.Minutes),
+				new SqlParameter("@ExerciseCategoryID", e.Category.Id),
+				new SqlParameter("@PrintOnBottom", e.PrintOnBottom),
+				new SqlParameter("@ReplacementHead", e.ReplacementHead)
+			);
+		}
+		
 		public IList<Exercise> FindByAreaAndCategory(int areaID, int categoryID, int langID, int sort)
 		{
 			string query = string.Format(
@@ -80,8 +101,8 @@ et.ExerciseTypeSortOrder ASC",
 						File = GetString(rs, 11),
 						Size = GetInt32(rs, 12),
 						Content = GetString(rs, 13),
-						ExerciseWindowX = GetInt32(rs, 14),
-						ExerciseWindowY = GetInt32(rs, 15)
+						ExerciseWindowX = GetInt32(rs, 14, 650),
+						ExerciseWindowY = GetInt32(rs, 15, 580)
 					};
 					e.CurrentType = new ExerciseTypeLanguage {
 						TypeName = GetString(rs, 17),
@@ -177,34 +198,34 @@ ORDER BY CASE eal.ExerciseAreaID WHEN {0} THEN NULL ELSE ea.ExerciseAreaSortOrde
 			return areas;
 		}
 		
-		public IList<ExerciseCategory> FindCategories()
-		{
-			throw new NotImplementedException();
-		}
-		
-		public IList<ExerciseCategoryLanguage> FindCategoryLanguages()
-		{
-			throw new NotImplementedException();
-		}
-		
-		public ExerciseCategoryLanguage ReadCategoryLanguage(int id)
-		{
-			throw new NotImplementedException();
-		}
-		
-		public IList<ExerciseAreaLanguage> FindAreaLanguages()
-		{
-			throw new NotImplementedException();
-		}
-		
-		public IList<ExerciseVariantLanguage> FindVariantLanguages()
-		{
-			throw new NotImplementedException();
-		}
-		
-		public IList<ExerciseTypeLanguage> FindTypeLanguages()
-		{
-			throw new NotImplementedException();
-		}
+//		public IList<ExerciseCategory> FindCategories()
+//		{
+//			throw new NotImplementedException();
+//		}
+//		
+//		public IList<ExerciseCategoryLanguage> FindCategoryLanguages()
+//		{
+//			throw new NotImplementedException();
+//		}
+//		
+//		public ExerciseCategoryLanguage ReadCategoryLanguage(int id)
+//		{
+//			throw new NotImplementedException();
+//		}
+//		
+//		public IList<ExerciseAreaLanguage> FindAreaLanguages()
+//		{
+//			throw new NotImplementedException();
+//		}
+//		
+//		public IList<ExerciseVariantLanguage> FindVariantLanguages()
+//		{
+//			throw new NotImplementedException();
+//		}
+//		
+//		public IList<ExerciseTypeLanguage> FindTypeLanguages()
+//		{
+//			throw new NotImplementedException();
+//		}
 	}
 }
