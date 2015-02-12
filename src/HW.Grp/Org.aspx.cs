@@ -1240,6 +1240,7 @@ ORDER BY ses.SponsorExtendedSurveyID",
 		{1}
 		{2}
 		<td align='center' style='font-size:9px;'>&nbsp;<b>{10}</b>&nbsp;</td>
+		<td align='center' style='font-size:9px;'>&nbsp;<b>{11}</b>&nbsp;</td>
 	</tr>",
 					ESdesc,
 					aggrBRdesc,
@@ -1251,7 +1252,8 @@ ORDER BY ses.SponsorExtendedSurveyID",
 					R.Str(lid, "total", "Total"),
 					R.Str(lid, "invitation.received", "Received&nbsp;<br/>&nbsp;inivtation"),
 					R.Str(lid, "invite.first", "1st invite&nbsp;<br/>&nbsp;sent"),
-					R.Str(lid, "unit.id", "Unit ID&nbsp;<br/>&nbsp;User status")
+					R.Str(lid, "unit.id", "Unit ID&nbsp;<br/>&nbsp;User status"),
+					R.Str(lid, "reminder.text", "Reminder")
 				);
 			} else {
 				OrgTree.Text += string.Format(
@@ -1717,7 +1719,7 @@ WHERE a.ProjectRoundUserID = {0}",
 							usr.Append("Yes, " + rs2.GetDateTime(2).ToString("yyyyMMdd"));
 						}
 						if (Convert.ToInt32(Session["ReadOnly"]) == 0) {
-							usr.Append(", <a href='org.aspx?" + (showReg ? "ShowReg=1&" : "") + "SendSPIID=" + rs2.GetInt32(0) + "&SDID=" + showDepartmentID.ToString() + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "'>" + (rs2.IsDBNull(2) ? "Send" : "Resend") + "</a>");
+							usr.Append(", <a href='org.aspx?" + (showReg ? "ShowReg=1&" : "") + "SendSPIID=" + rs2.GetInt32(0) + "&SDID=" + showDepartmentID.ToString() + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "'>" + (rs2.IsDBNull(2) ? R.Str(lid, "send", "Send") : R.Str(lid, "resend", "Resend")) + "</a>");
 						}
 						usr.Append("&nbsp;</td>");
 						usr.Append("<td align='center'>&nbsp;</td>");
@@ -1771,7 +1773,7 @@ WHERE up.UserID = {1}",
 							}
 							usr.Append(string.Format(" ({0})", rs2.GetDateTime(7).ToString("yyyy-MM-dd")));
 						}
-						usr.Append("</td>");
+						usr.Append("</td><td></td></tr>");
 					}
 					rs2.Close();
 

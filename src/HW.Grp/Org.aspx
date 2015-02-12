@@ -63,7 +63,7 @@
                             </asp:DropDownList>
                             <%= R.Str(lid, "updated.on", "updated on") %>
                             <asp:TextBox Width="80" ID="Stopped" runat="server" />
-                            (future date not allowed)
+                            <%= R.Str(lid, "date.future.no", "(future date not allowed)") %>
                             <br />
                             <%= R.Str(lid, "user.active.perform", "If this user has activated the account, perform the following") %><br />
                             <asp:RadioButtonList ID="UserUpdateFrom" runat="server" RepeatDirection="Vertical"
