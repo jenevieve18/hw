@@ -484,7 +484,7 @@
     <value>Överordnad enhet, standardvärde</value>
   </data>
   <data name="updated.on" xml:space="preserve">
-    <value>updated on</value>
+    <value>uppdaterad den</value>
   </data>
   <data name="user.active.perform" xml:space="preserve">
     <value>Om den här användaren har aktiverat kontot, gör följande</value>

@@ -1267,7 +1267,7 @@ ORDER BY ses.SponsorExtendedSurveyID",
 		{0}
 		<td align='center' style='font-size:9px;'>&nbsp;<b>{5}</b>&nbsp;</td>
 		<td align='center' style='font-size:9px;'>&nbsp;<b>{6}</b>&nbsp;</td>
-		<td align='center' style='font-size:9px;'>&nbsp;<b>1st invite&nbsp;<br/>&nbsp;sent</b>&nbsp;</td>
+		<td align='center' style='font-size:9px;'>&nbsp;<b>{9}</b>&nbsp;</td>
 		{1}
 		<td align='center' style='font-size:9px;'>&nbsp;<b>{7}</b>&nbsp;</td>
         <td align='center' style='font-size:9px;'>&nbsp;<b>{8}</b>&nbsp;</td>
@@ -1280,7 +1280,8 @@ ORDER BY ses.SponsorExtendedSurveyID",
 					R.Str(lid, "total", "Total"),
 					R.Str(lid, "invitation.received", "Received&nbsp;<br/>&nbsp;inivtation"),
 					R.Str(lid, "unit.id", "Unit ID"),
-					R.Str(lid, "reminder.text", "Reminder")
+					R.Str(lid, "reminder.text", "Reminder"),
+					R.Str(lid, "invite.first", "1st invite&nbsp;<br/>&nbsp;sent")
 				);
 			}
 			//OrgTree.Text += "<TR><TD COLSPAN='" + (aggrBQcx + 8 + (showDepartmentID != 0 && BQs != "" ? BQs.Split(':').Length : 0) + EScount) + "' style='height:1px;line-height:1px;background-color:#333333'><img src='img/null.gif' width='1' height='1'></TD></TR>";
@@ -1714,9 +1715,9 @@ WHERE a.ProjectRoundUserID = {0}",
 						}
 						usr.Append("<td>&nbsp;</td><td align='center' style='font-size:9px;'>&nbsp;");
 						if (rs2.IsDBNull(2)) {
-							usr.Append("No");
+							usr.Append(R.Str(lid, "no", "No"));
 						} else {
-							usr.Append("Yes, " + rs2.GetDateTime(2).ToString("yyyyMMdd"));
+							usr.Append(R.Str(lid, "yes", "Yes") + ", " + rs2.GetDateTime(2).ToString("yyyyMMdd"));
 						}
 						if (Convert.ToInt32(Session["ReadOnly"]) == 0) {
 							usr.Append(", <a href='org.aspx?" + (showReg ? "ShowReg=1&" : "") + "SendSPIID=" + rs2.GetInt32(0) + "&SDID=" + showDepartmentID.ToString() + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "'>" + (rs2.IsDBNull(2) ? R.Str(lid, "send", "Send") : R.Str(lid, "resend", "Resend")) + "</a>");
@@ -1755,16 +1756,16 @@ WHERE up.UserID = {1}",
 						}
 						usr.Append("<td align='center' style='font-size:9px;'>");
 						switch ((rs2.IsDBNull(8) ? 0 : rs2.GetInt32(8))) {
-								case 1: usr.Append("Stopped, work related"); break;
-								case 2: usr.Append("Education leave"); break;
-								case 14: usr.Append("Parental leave"); break;
-								case 24: usr.Append("Sick leave"); break;
-								case 54: usr.Append("Retired"); break;
-								case 34: usr.Append("Do not want to participate"); break;
-								case 44: usr.Append("No longer associated"); break;
-								case 4: usr.Append("Stopped, other reason"); break;
-								case 5: usr.Append("Stopped, unknown reason"); break;
-								case 6: usr.Append("Project completed"); break;
+								case 1: usr.Append(R.Str(lid, "status.stop.work", "Stopped, work related")); break;
+								case 2: usr.Append(R.Str(lid, "status.stop.education", "Education leave")); break;
+								case 14: usr.Append(R.Str(lid, "status.stop.parent", "Parental leave")); break;
+								case 24: usr.Append(R.Str(lid, "status.stop.sick", "Sick leave")); break;
+								case 54: usr.Append(R.Str(lid, "", "Retired")); break;
+								case 34: usr.Append(R.Str(lid, "status.stop.not.participate", "Do not want to participate")); break;
+								case 44: usr.Append(R.Str(lid, "status.stop.not.associated", "No longer associated")); break;
+								case 4: usr.Append(R.Str(lid, "status.stop.other", "Stopped, other reason")); break;
+								case 5: usr.Append(R.Str(lid, "status.stop.unknown", "Stopped, unknown reason")); break;
+								case 6: usr.Append(R.Str(lid, "status.stop.complete", "Project completed")); break;
 								default: break;
 						}
 						if (!rs2.IsDBNull(7)) {
@@ -2504,7 +2505,7 @@ VALUES ({0},{1},{2})",
 				Response.Redirect("org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + url + (showReg ? "&ShowReg=1" : ""), true);
 			}
 			if (exists) {
-				AddUserError.Text = "A user with this email address already exist!<br/>";
+				AddUserError.Text = R.Str(lid, "user.exists", "A user with this email address already exist!") + "<br/>";
 			}
 		}
 
