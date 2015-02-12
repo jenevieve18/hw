@@ -150,6 +150,9 @@
   <data name="credentials" xml:space="preserve">
     <value>Credentials</value>
   </data>
+  <data name="date.future.no" xml:space="preserve">
+    <value>(future date not allowed)</value>
+  </data>
   <data name="day.everyday" xml:space="preserve">
     <value>every day</value>
   </data>
@@ -246,6 +249,9 @@
   <data name="manager.add1" xml:space="preserve">
     <value>Add manager</value>
   </data>
+  <data name="manager.invalid" xml:space="preserve">
+    <value>Error! The username is invalid, please select a different one!</value>
+  </data>
   <data name="manager.name" xml:space="preserve">
     <value>Name</value>
   </data>
@@ -276,8 +282,14 @@
   <data name="month.three" xml:space="preserve">
     <value>3 months</value>
   </data>
+  <data name="never" xml:space="preserve">
+    <value>Never</value>
+  </data>
   <data name="news" xml:space="preserve">
     <value>News</value>
+  </data>
+  <data name="no" xml:space="preserve">
+    <value>No</value>
   </data>
   <data name="org.database" xml:space="preserve">
     <value>Database, all &lt;br&gt;other&lt;/b&gt; organizations</value>
@@ -293,6 +305,9 @@
   </data>
   <data name="password.change" xml:space="preserve">
     <value>Change password</value>
+  </data>
+  <data name="period" xml:space="preserve">
+    <value>Period</value>
   </data>
   <data name="popularity" xml:space="preserve">
     <value>Popularity</value>
@@ -330,6 +345,9 @@
   <data name="reminder.text" xml:space="preserve">
     <value>Reminder</value>
   </data>
+  <data name="resend" xml:space="preserve">
+    <value>Resend</value>
+  </data>
   <data name="revert.default" xml:space="preserve">
     <value>Revert to default</value>
   </data>
@@ -365,6 +383,9 @@
   </data>
   <data name="send.only" xml:space="preserve">
     <value>** Sent only to individuals who have received invitation but not activated their account</value>
+  </data>
+  <data name="send1" xml:space="preserve">
+    <value>Send</value>
   </data>
   <data name="sent.last" xml:space="preserve">
     <value>Last sent</value>
@@ -537,7 +558,13 @@
   <data name="week.wednesday" xml:space="preserve">
     <value>Wednesday</value>
   </data>
+  <data name="xls.verbose" xml:space="preserve">
+    <value>xls verbose</value>
+  </data>
   <data name="year.one" xml:space="preserve">
     <value>One year</value>
+  </data>
+  <data name="yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

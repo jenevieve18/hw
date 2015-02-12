@@ -153,6 +153,9 @@
   <data name="credentials" xml:space="preserve">
     <value>Uppgifter</value>
   </data>
+  <data name="date.future.no" xml:space="preserve">
+    <value>(framtida datum inte tillåtet)</value>
+  </data>
   <data name="day.everyday" xml:space="preserve">
     <value>varje dag</value>
   </data>
@@ -252,6 +255,9 @@
   <data name="manager.add" xml:space="preserve">
     <value>Lägg till chef</value>
   </data>
+  <data name="manager.invalid" xml:space="preserve">
+    <value>Fel! Användarnamnet är ogiltigt, vänligen välj ett annat!</value>
+  </data>
   <data name="manager.name" xml:space="preserve">
     <value>Namn</value>
   </data>
@@ -282,8 +288,14 @@
   <data name="month.three" xml:space="preserve">
     <value>3 månader</value>
   </data>
+  <data name="never" xml:space="preserve">
+    <value>Aldrig</value>
+  </data>
   <data name="news" xml:space="preserve">
     <value>Nyheter</value>
+  </data>
+  <data name="no" xml:space="preserve">
+    <value>Nej</value>
   </data>
   <data name="org.database" xml:space="preserve">
     <value>Databasen, alla &lt;br&gt;andra&lt;/b&gt; organisationer</value>
@@ -299,6 +311,9 @@
   </data>
   <data name="password.change" xml:space="preserve">
     <value>Ändra lösenord</value>
+  </data>
+  <data name="period" xml:space="preserve">
+    <value>Period</value>
   </data>
   <data name="popularity" xml:space="preserve">
     <value>Popularitet</value>
@@ -336,6 +351,9 @@
   <data name="reminder.text" xml:space="preserve">
     <value>Påminnelse</value>
   </data>
+  <data name="resend" xml:space="preserve">
+    <value>Skicka igen</value>
+  </data>
   <data name="revert.default" xml:space="preserve">
     <value>Återgå till standard</value>
   </data>
@@ -371,6 +389,9 @@
   </data>
   <data name="send.only" xml:space="preserve">
     <value>** Skickas bara till personer som redan fått inbjudan men inte har aktiverat sina konton.</value>
+  </data>
+  <data name="send1" xml:space="preserve">
+    <value>Skicka</value>
   </data>
   <data name="sent.last" xml:space="preserve">
     <value>Senast skickat</value>
@@ -555,7 +576,13 @@
   <data name="week.wednesday" xml:space="preserve">
     <value>Onsdag</value>
   </data>
+  <data name="xls.verbose" xml:space="preserve">
+    <value>xls omfattande</value>
+  </data>
   <data name="year.one" xml:space="preserve">
     <value>Ett år</value>
+  </data>
+  <data name="yes" xml:space="preserve">
+    <value>Ja</value>
   </data>
 </root>
