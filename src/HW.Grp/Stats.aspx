@@ -353,7 +353,7 @@
 						<%= HtmlHelper.Anchor("xls", exportAllXlsUrl, "class='exportall-xls-url'", "_blank")%>
                     </span>
 					<span class="button white small export">
-						<%= HtmlHelper.Anchor("xls verbose", exportAllXlsUrl + "&PLOT=" + PlotType.Verbose, "class='exportall-xls-verbose-url'", "_blank")%>
+						<%= HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportAllXlsUrl + "&PLOT=" + PlotType.Verbose, "class='exportall-xls-verbose-url'", "_blank")%>
                     </span>
 
 				</div>
@@ -403,7 +403,7 @@
 									<%= HtmlHelper.Anchor("xls", exportXlsUrl, "class='export-xls-url'", "_blank")%>
 								</span>
 								<span class="button white small export">
-									<%= HtmlHelper.Anchor("xls verbose", exportXlsUrl + "&PLOT=" + PlotType.Verbose, "class='export-xls-verbose-url'", "_blank")%>
+									<%= HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportXlsUrl + "&PLOT=" + PlotType.Verbose, "class='export-xls-verbose-url'", "_blank")%>
 								</span>
 							</div>
 						</div>
