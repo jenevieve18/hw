@@ -297,7 +297,8 @@ namespace HW.Grp
 						case 1:
 							#region Invite
 //							sponsorRepository.UpdateSponsorLastInviteSent(sponsorID);
-							repository.UpdateSponsorLastInviteSent(sponsorAdminID != -1 ? sponsorAdminExtendedSurveyID : sponsorID);
+//							repository.UpdateSponsorLastInviteSent(sponsorAdminID != -1 ? sponsorAdminExtendedSurveyID : sponsorID);
+							repository.UpdateSponsorLastInviteSent(sponsorAdminID != -1 ? sponsorAdminID : sponsorID);
 
 //							int sponsorAdminId = Convert.ToInt32(Session["SponsorAdminID"]);
 							foreach (var i in sponsorRepository.FindInvitesBySponsor(sponsorID, sponsorAdminID)) {
@@ -313,7 +314,8 @@ namespace HW.Grp
 						case 2:
 							#region Invite reminder
 //							sponsorRepository.UpdateSponsorLastInviteReminderSent(sponsorID);
-							repository.UpdateSponsorLastInviteReminderSent(sponsorAdminID != -1 ? sponsorAdminExtendedSurveyID : sponsorID);
+//							repository.UpdateSponsorLastInviteReminderSent(sponsorAdminID != -1 ? sponsorAdminExtendedSurveyID : sponsorID);
+							repository.UpdateSponsorLastInviteReminderSent(sponsorAdminID != -1 ? sponsorAdminID : sponsorID);
 
 //							sponsorAdminId = Convert.ToInt32(Session["SponsorAdminID"]);
 							foreach (var i in sponsorRepository.FindSentInvitesBySponsor(sponsorID, sponsorAdminID)) {
@@ -465,7 +467,8 @@ namespace HW.Grp
 						case 9:
 							#region All activated
 //							sponsorRepository.UpdateLastAllMessageSent(sponsorID);
-							repository.UpdateLastAllMessageSent(sponsorID != -1 ? sponsorAdminExtendedSurveyID : sponsorID);
+//							repository.UpdateLastAllMessageSent(sponsorAdminID != -1 ? sponsorAdminExtendedSurveyID : sponsorID);
+							repository.UpdateLastAllMessageSent(sponsorAdminID != -1 ? sponsorAdminID : sponsorID);
 
 //							sponsorAdminId = Convert.ToInt32(Session["SponsorAdminID"]);
 							foreach (var u in userRepository.Find2(sponsorID, sponsorAdminID)) {

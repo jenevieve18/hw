@@ -10,9 +10,14 @@ namespace HW.Core.Repositories.Sql
 	{
 		public void UpdateLastAllMessageSent(int sponsorAdminExtendedSurveyId)
 		{
+//			string query = string.Format(
+//				@"
+//UPDATE SponsorAdminExtendedSurvey SET AllMessageLastSent = GETDATE() WHERE SponsorAdminExtendedSurveyID = {0}",
+//				sponsorAdminExtendedSurveyId
+//			);
 			string query = string.Format(
 				@"
-	UPDATE SponsorAdminExtendedSurvey SET AllMessageLastSent = GETDATE() WHERE SponsorAdminExtendedSurveyID = {0}",
+UPDATE SponsorAdmin SET AllMessageLastSent = GETDATE() WHERE SponsorAdminID = {0}",
 				sponsorAdminExtendedSurveyId
 			);
 			Db.exec(query, "healthWatchSqlConnection");
@@ -22,7 +27,7 @@ namespace HW.Core.Repositories.Sql
 		{
 			string query = string.Format(
 				@"
-	UPDATE SponsorAdminExtendedSurvey SET FinishedLastSent = GETDATE() WHERE SponsorAdminExtendedSurveyID = {0}",
+UPDATE SponsorAdminExtendedSurvey SET FinishedLastSent = GETDATE() WHERE SponsorAdminExtendedSurveyID = {0}",
 				sponsorAdminExtendedSurveyId
 			);
 			Db.exec(query, "healthWatchSqlConnection");
@@ -32,7 +37,7 @@ namespace HW.Core.Repositories.Sql
 		{
 			string query = string.Format(
 				@"
-	UPDATE SponsorAdminExtendedSurvey SET EmailLastSent = GETDATE() WHERE SponsorAdminExtendedSurveyID = {0}",
+UPDATE SponsorAdminExtendedSurvey SET EmailLastSent = GETDATE() WHERE SponsorAdminExtendedSurveyID = {0}",
 				sponsorAdminExtendedSurveyId
 			);
 			Db.exec(query, "healthWatchSqlConnection");
@@ -40,9 +45,14 @@ namespace HW.Core.Repositories.Sql
 		
 		public void UpdateSponsorLastInviteReminderSent(int sponsorAdminExtendedSurveyId)
 		{
+//			string query = string.Format(
+//				@"
+//UPDATE SponsorAdminExtendedSurvey SET InviteReminderLastSent = GETDATE() WHERE SponsorAdminExtendedSurveyID = {0}",
+//				sponsorAdminExtendedSurveyId
+//			);
 			string query = string.Format(
 				@"
-	UPDATE SponsorAdminExtendedSurvey SET InviteReminderLastSent = GETDATE() WHERE SponsorAdminExtendedSurveyID = {0}",
+UPDATE SponsorAdmin SET InviteReminderLastSent = GETDATE() WHERE SponsorAdminID = {0}",
 				sponsorAdminExtendedSurveyId
 			);
 			Db.exec(query, "healthWatchSqlConnection");
@@ -50,9 +60,14 @@ namespace HW.Core.Repositories.Sql
 		
 		public void UpdateSponsorLastInviteSent(int sponsorAdminExtendedSurveyId)
 		{
+//			string query = string.Format(
+//				@"
+//UPDATE SponsorAdminExtendedSurvey SET InviteLastSent = GETDATE() WHERE SponsorAdminExtendedSurveyID = {0}",
+//				sponsorAdminExtendedSurveyId
+//			);
 			string query = string.Format(
 				@"
-	UPDATE SponsorAdminExtendedSurvey SET InviteLastSent = GETDATE() WHERE SponsorAdminExtendedSurveyID = {0}",
+UPDATE SponsorAdmin SET InviteLastSent = GETDATE() WHERE SponsorAdminID = {0}",
 				sponsorAdminExtendedSurveyId
 			);
 			Db.exec(query, "healthWatchSqlConnection");
@@ -62,7 +77,7 @@ namespace HW.Core.Repositories.Sql
 		{
 			string query = string.Format(
 				@"
-	SELECT a.SuperUser,
+SELECT a.SuperUser,
 	a.InviteSubject,
 	a.InviteTxt,
 	a.InviteReminderSubject,
@@ -83,10 +98,10 @@ namespace HW.Core.Repositories.Sql
 	s.InviteReminderLastSent,
 	s.AllMessageLastSent,
 	s.LoginLastSent
-	FROM SponsorAdmin a,
-	Sponsor s
-	WHERE s.SponsorID = a.SponsorID
-	AND a.SponsorAdminID = {0}",
+FROM SponsorAdmin a,
+Sponsor s
+WHERE s.SponsorID = a.SponsorID
+AND a.SponsorAdminID = {0}",
 				sponsorAdminId
 			);
 			SponsorAdmin a = null;
@@ -118,7 +133,7 @@ namespace HW.Core.Repositories.Sql
 		{
 			string query = string.Format(
 				@"
-	SELECT SponsorAdminExtendedSurveyID,
+SELECT SponsorAdminExtendedSurveyID,
 	sae.EmailSubject,
 	sae.EmailBody,
 	sae.FinishedEmailSubject,
@@ -127,11 +142,11 @@ namespace HW.Core.Repositories.Sql
 	pr.ProjectRoundID,
 	se.Internal,
 	se.RoundText
-	FROM SponsorAdminExtendedSurvey sae
-	INNER JOIN SponsorExtendedSurvey se ON sae.SponsorExtendedSurveyID = se.SponsorExtendedSurveyID
-	INNER JOIN eForm..ProjectRound pr ON se.ProjectRoundID = pr.ProjectRoundID
-	WHERE SponsorAdminID = {0}
-	ORDER BY SponsorAdminExtendedSurveyID DESC",
+FROM SponsorAdminExtendedSurvey sae
+INNER JOIN SponsorExtendedSurvey se ON sae.SponsorExtendedSurveyID = se.SponsorExtendedSurveyID
+INNER JOIN eForm..ProjectRound pr ON se.ProjectRoundID = pr.ProjectRoundID
+WHERE SponsorAdminID = {0}
+ORDER BY SponsorAdminExtendedSurveyID DESC",
 				sponsorAdminID
 			);
 			var surveys = new List<IExtendedSurvey>();
@@ -154,28 +169,27 @@ namespace HW.Core.Repositories.Sql
 			return surveys;
 		}
 		
-	//		public void UpdateEmailTexts(int ID, int sponsorAdminID, int sponsorAdminExtendedSurveyID, string emailSubject, string emailBody, string finishedEmailSubject, string finishedEmailBody)
 		public int UpdateEmailTexts(int ID, int sponsorAdminID, int sponsorAdminExtendedSurveyID, string emailSubject, string emailBody, string finishedEmailSubject, string finishedEmailBody)
 		{
 			string query = string.Format(
-	@"
-	DECLARE @key INT
-	SELECT @key = SponsorAdminExtendedSurveyID
-	FROM SponsorAdminExtendedSurvey
-	WHERE SponsorAdminExtendedSurveyID = @SponsorAdminExtendedSurveyID
-	IF (@key IS NOT NULL)
-	    UPDATE SponsorAdminExtendedSurvey SET
-		EmailSubject = @EmailSubject,
-		EmailBody = @EmailBody,
-		FinishedEmailSubject = @FinishedEmailSubject,
-		FinishedEmailBody = @FinishedEmailBody,
-		SponsorExtendedSurveyID = @SponsorExtendedSurveyID
-	WHERE SponsorAdminID = @SponsorAdminID
-	AND SponsorAdminExtendedSurveyID = @SponsorAdminExtendedSurveyID
-	ELSE
-	    INSERT SponsorAdminExtendedSurvey(EmailSubject, EmailBody, FinishedEmailSubject, FinishedEmailBody, SponsorExtendedSurveyID, SponsorAdminID)
-	    VALUES(@EmailSubject, @EmailBody, @FinishedEmailSubject, @FinishedEmailBody, @SponsorExtendedSurveyID, @SponsorAdminID)");
-	    		ExecuteNonQuery(
+				@"
+DECLARE @key INT
+SELECT @key = SponsorAdminExtendedSurveyID
+FROM SponsorAdminExtendedSurvey
+WHERE SponsorAdminExtendedSurveyID = @SponsorAdminExtendedSurveyID
+IF (@key IS NOT NULL)
+    UPDATE SponsorAdminExtendedSurvey SET
+	EmailSubject = @EmailSubject,
+	EmailBody = @EmailBody,
+	FinishedEmailSubject = @FinishedEmailSubject,
+	FinishedEmailBody = @FinishedEmailBody,
+	SponsorExtendedSurveyID = @SponsorExtendedSurveyID
+WHERE SponsorAdminID = @SponsorAdminID
+AND SponsorAdminExtendedSurveyID = @SponsorAdminExtendedSurveyID
+ELSE
+    INSERT SponsorAdminExtendedSurvey(EmailSubject, EmailBody, FinishedEmailSubject, FinishedEmailBody, SponsorExtendedSurveyID, SponsorAdminID)
+    VALUES(@EmailSubject, @EmailBody, @FinishedEmailSubject, @FinishedEmailBody, @SponsorExtendedSurveyID, @SponsorAdminID)");
+			ExecuteNonQuery(
 				query,
 				"healthWatchSqlConnection",
 				new SqlParameter("@EmailSubject", emailSubject),
@@ -196,14 +210,14 @@ namespace HW.Core.Repositories.Sql
 		{
 			string query = string.Format(
 				@"
-	UPDATE SponsorAdmin SET
+UPDATE SponsorAdmin SET
 	InviteSubject = @InviteSubject,
 	InviteTxt = @InviteTxt,
 	InviteReminderSubject = @InviteReminderSubject,
 	InviteReminderTxt = @InviteReminderTxt,
 	AllMessageSubject = @AllMessageSubject,
 	AllMessageBody = @AllMessageBody
-	WHERE SponsorAdminID = @SponsorAdminID");
+WHERE SponsorAdminID = @SponsorAdminID");
 			ExecuteNonQuery(
 				query,
 				"healthWatchSqlConnection",

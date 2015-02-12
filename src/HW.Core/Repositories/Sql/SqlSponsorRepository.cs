@@ -9,15 +9,14 @@ namespace HW.Core.Repositories.Sql
 	public interface IExtendedSurveyRepository
 	{
 		void UpdateInviteTexts(int ID, string inviteSubject, string inviteText, string inviteReminderSubject, string inviteReminderText, string allMessageSubject, string allMessageBody);
-//		void UpdateEmailTexts(int ID, int sponsorAdminID, int extraExtendedSurveyID, string emailSubject, string emailBody, string finishedEmailSubject, string finishedEmailBody);
 		int UpdateEmailTexts(int ID, int sponsorAdminID, int extraExtendedSurveyID, string emailSubject, string emailBody, string finishedEmailSubject, string finishedEmailBody);
 		IList<IExtendedSurvey> FindExtendedSurveysBySponsorAdmin(int sponsorId, int sponsorAdminId);
 		ISponsor ReadSponsor(int sponsorAdminId);
 		void UpdateSponsorLastInviteSent(int sponsorID);
 		void UpdateSponsorLastInviteReminderSent(int sponsorId);
+		void UpdateLastAllMessageSent(int sponsorId);
 		void UpdateExtendedSurveyLastEmailSent(int sponsorExtendedSurveyId);
 		void UpdateExtendedSurveyLastFinishedSent(int sponsorExtendedSurveyId);
-		void UpdateLastAllMessageSent(int sponsorId);
 	}
 	
 	public class SqlSponsorRepository : BaseSqlRepository<Sponsor>, IExtendedSurveyRepository
@@ -133,7 +132,6 @@ WHERE SponsorExtendedSurveyID = @SponsorExtendedSurveyID"
 			);
 		}
 		
-//		public void UpdateEmailTexts(int ID, int sponsorAdminID, int sponsorAdminExtendedSurveyID, string emailSubject, string emailBody, string finishedEmailSubject, string finishedEmailBody)
 		public int UpdateEmailTexts(int ID, int sponsorAdminID, int sponsorAdminExtendedSurveyID, string emailSubject, string emailBody, string finishedEmailSubject, string finishedEmailBody)
 		{
 			string query = string.Format(
