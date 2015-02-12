@@ -230,7 +230,7 @@ namespace HW.Grp
 				}
 			} else {
 //				ErrorMsg.Text = "<SPAN STYLE='color:#cc0000;'>Error! The username is invalid, please select a different one!</SPAN>";
-				errorMessage = "Error! The username is invalid, please select a different one!";
+				errorMessage = R.Str(lid, "manager.invalid", "Error! The username is invalid, please select a different one!");
 			}
 		}
 	}
