@@ -58,7 +58,6 @@ namespace HW.Grp
 		
 		void DisplayMessages(ISponsor sponsor, IExtendedSurveyRepository repository, bool postBack)
 		{
-//				if (!IsPostBack) {
 			if (!postBack) {
 				SendType.Items.Add(new ListItem(R.Str(lid, "select.send.type", "< select send type >"), "0"));
 				SendType.Items.Add(new ListItem(R.Str(lid, "registration", "Registration"), "1"));
@@ -66,7 +65,6 @@ namespace HW.Grp
 				SendType.Items.Add(new ListItem(R.Str(lid, "login.reminder", "Login reminder"), "3"));
 				SendType.Items.Add(new ListItem(R.Str(lid, "users.activated.all", "All activated users"), "9"));
 				
-
 				LoginSubject.Enabled = LoginTxt.Enabled = LoginDays.Enabled = LoginWeekday.Enabled = loginWithSkey;
 				
 				LoginDays.Items.Add(new ListItem(R.Str(lid, "day.everyday", "every day"), "1"));
@@ -123,7 +121,6 @@ namespace HW.Grp
 					if (s.ProjectRound != null) {
 						if (!found) {
 							projectRoundId = s.ProjectRound.Id;
-//								if (!IsPostBack) {
 							if (!postBack) {
 								extendedSurvey = s.Internal + s.RoundText;
 								ExtendedSurvey.Text = R.Str(lid, "reminder.for", "Reminder for") + " <b>" + extendedSurvey + "</b> (<span style='font-size:9px;'>[x]" + R.Str(lid, "sent.last", "Last sent") + ": " + (s.EmailLastSent == null ? R.Str(lid, "never", "Never") : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
@@ -138,7 +135,6 @@ namespace HW.Grp
 							sponsorAdminExtendedSurveyID = s.ExtraExtendedSurveyId;
 							found = true;
 
-//								if (!IsPostBack) {
 							if (!postBack) {
 								var r = userRepository.CountBySponsorWithAdminAndExtendedSurvey2(sponsorID, sponsorAdminID, sponsorExtendedSurveyID);
 								ExtendedSurvey.Text = ExtendedSurvey.Text.Replace("[x]", "[x]" + R.Str(lid, "recipients", "Recipients") + ": " + r + ", ");
@@ -167,13 +163,11 @@ namespace HW.Grp
 			if (projectRoundId != 0) {
 				ProjectRound r = projectRepository.ReadRound(projectRoundId);
 				if (r != null) {
-//						if (!IsPostBack) {
 					if (!postBack) {
 						ExtendedSurvey.Text = ExtendedSurvey.Text.Replace("[x]", R.Str(lid, "period", "Period") + ": " + r.ToPeriodString() + ", ");
 						ExtendedSurveyFinished.Text = ExtendedSurveyFinished.Text.Replace("[x]", R.Str(lid, "period", "Period") + ": " + r.ToPeriodString() + ", ");
 					}
 					if (r.IsOpen) {
-//							if (!IsPostBack) {
 						if (!postBack) {
 							ExtendedSurveySubject.Visible = true;
 							ExtendedSurvey.Visible = true;
@@ -187,7 +181,7 @@ namespace HW.Grp
 					projectRoundId = 0;
 				}
 
-				if (!ExtendedSurvey.Visible && ExtendedSurveyFinished.Text != "") {
+				if (!ExtendedSurvey.Visible && ExtendedSurveyFinished.Text != "" && !postBack) {
 					ExtendedSurveyFinishedSubject.Visible = true;
 					ExtendedSurveyFinished.Visible = true;
 					ExtendedSurveyFinishedTxt.Visible = true;
@@ -260,7 +254,7 @@ namespace HW.Grp
 
 		void RevertClick(object sender, EventArgs e)
 		{
-			DisplayMessages(sponsorRepository.ReadSponsor(sponsorID), new SqlSponsorRepository(), false);
+			DisplayMessages(sponsorRepository.ReadSponsor(sponsorID), new SqlSponsorRepository(), IsPostBack);
 		}
 
 		void Save_Click(object sender, EventArgs e)

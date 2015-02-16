@@ -94,9 +94,9 @@ SELECT a.SuperUser,
 	s.LoginSubject,
 	s.LoginDays,
 	s.LoginWeekday,
-	s.InviteLastSent,
-	s.InviteReminderLastSent,
-	s.AllMessageLastSent,
+	a.InviteLastSent,
+	a.InviteReminderLastSent,
+	a.AllMessageLastSent,
 	s.LoginLastSent
 FROM SponsorAdmin a,
 Sponsor s
