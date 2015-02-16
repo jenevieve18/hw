@@ -170,3 +170,15 @@ use healthWatch;
 alter table SponsorAdmin add InviteLastSent smalldatetime;
 alter table SponsorAdmin add InviteReminderLastSent smalldatetime;
 alter table SponsorAdmin add AllMessageLastSent smalldatetime;
+
+-- Inserting initial Swedish plot types from English ones.
+use eform;
+insert into plottypelang(plottypeid, langid, name, description)
+select id, 1, name, description from plottype;
+
+use eForm;
+update PlotTypeLang set ShortName = 'Line' where PlotTypeLangID = 6;
+update PlotTypeLang set ShortName = 'Line (± SD)' where PlotTypeLangID = 7;
+update PlotTypeLang set ShortName = 'Line (± 1.96 SD)' where PlotTypeLangID = 8;
+update PlotTypeLang set ShortName = 'BoxPlot (Min/Max)' where PlotTypeLangID = 9;
+update PlotTypeLang set ShortName = 'BoxPlot (Tukey)' where PlotTypeLangID = 10;
