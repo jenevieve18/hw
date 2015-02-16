@@ -115,10 +115,10 @@ VALUES(@SponsorAdminID, @EmailSubject, @EmailBody, @FinishedEmailSubject, @Finis
 			string query = string.Format(
 				@"
 UPDATE SponsorExtendedSurvey SET
-EmailSubject = @EmailSubject,
-EmailBody = @EmailBody,
-FinishedEmailSubject = @FinishedEmailSubject,
-FinishedEmailBody = @FinishedEmailBody
+	EmailSubject = @EmailSubject,
+	EmailBody = @EmailBody,
+	FinishedEmailSubject = @FinishedEmailSubject,
+	FinishedEmailBody = @FinishedEmailBody
 WHERE SponsorExtendedSurveyID = @SponsorExtendedSurveyID"
 			);
 			ExecuteNonQuery(
@@ -406,8 +406,8 @@ WHERE SponsorInviteID = {1}",
 		{
 			string query = string.Format(
 				@"
-UPDATE SponsorAdmin
-	SET SponsorID = -ABS(SponsorID), Usr = Usr + 'DELETED'
+UPDATE SponsorAdmin SET SponsorID = -ABS(SponsorID),
+	Usr = Usr + 'DELETED'
 WHERE SponsorAdminID = {1} AND SponsorID = {0}",
 				sponsorId,
 				sponsorAdminId
@@ -720,9 +720,9 @@ WHERE s.SponsorID = {0}",
 			string query = string.Format(
 				@"
 SELECT SuperAdminID,
-Username,
-Password,
-HideClosedSponsors
+	Username,
+	Password,
+	HideClosedSponsors
 FROM SuperAdmin"
 			);
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
@@ -1083,10 +1083,10 @@ FROM Sponsor s
 					a = new SponsorAdmin {
 						Id = GetInt32(rs, 1),
 						Sponsor = new Sponsor {Id = GetInt32(rs, 0), Name = GetString(rs, 2)},
-						Anonymized = GetInt32(rs, 3) == 1, //GetBoolean(rs, 3),
-						SeeUsers = GetInt32(rs, 4) == 1, //GetBoolean(rs, 4),
+						Anonymized = GetInt32(rs, 3) == 1,
+						SeeUsers = GetInt32(rs, 4) == 1,
 						SuperAdminId = GetInt32(rs, 5),
-						ReadOnly = GetInt32(rs, 6) == 1, //GetBoolean(rs, 6),
+						ReadOnly = GetInt32(rs, 6) == 1,
 						Name = GetString(rs, 7)
 					};
 				}
@@ -1409,9 +1409,6 @@ ORDER BY sa.Name {3}",
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
 					var a = new SponsorAdmin {
-//						Id = rs.GetInt32(0),
-//						Usr = rs.GetString(1),
-//						Name = rs.GetString(2),
 						Id = GetInt32(rs, 0),
 						Usr = GetString(rs, 1),
 						Name = GetString(rs, 2),
@@ -1656,7 +1653,8 @@ SELECT s.BQID,
 	b.Type
 FROM SponsorBQ s
 INNER JOIN BQ b ON s.BQID = b.BQID
-WHERE s.Hidden = 1 AND s.SponsorID = {0}
+WHERE s.Hidden = 1
+AND s.SponsorID = {0}
 ORDER BY s.SortOrder",
 				sponsorID
 			);
@@ -1791,46 +1789,6 @@ ORDER BY s.Sponsor",
 			}
 			return sponsors;
 		}
-
-//		public IList<Sponsor> Y(int sponsorID)
-//		{
-//			string query = string.Format(
-//				@"
-		//SELECT DISTINCT s.Sponsor,
-//	ses.ProjectRoundUnitID,
-//	ses.Nav,
-//	rep.ReportID,
-//	rep.Internal,
-//	(
-//		SELECT COUNT(DISTINCT a.ProjectRoundUserID)
-//		FROM eform.dbo.Answer AS a
-//		WHERE (a.ProjectRoundUnitID = r.ProjectRoundUnitID)
-//			AND (a.EndDT >= '{1}')
-//			AND (a.EndDT < '{2}')
-//	) AS CX
-		//FROM Sponsor AS s
-		//INNER JOIN SponsorProjectRoundUnit AS ses ON ses.SponsorID = s.SponsorID
-		//INNER JOIN eform.dbo.ProjectRoundUnit AS r ON ses.ProjectRoundUnitID = r.ProjectRoundUnitID
-		//INNER JOIN eform.dbo.Report AS rep ON rep.ReportID = r.ReportID
-		//INNER JOIN SuperAdminSponsor AS sas ON s.SponsorID = sas.SponsorID
-		//WHERE (s.Deleted IS NULL) AND (sas.SuperAdminID = {0})
-		//ORDER BY s.Sponsor, ses.Nav",
-//				sponsorID,
-//				DateTime.Now.AddMonths(-1).ToString("yyyy-MM-01"),
-//				DateTime.Now.ToString("yyyy-MM-01")
-//			);
-//			var sponsors = new List<Sponsor>();
-//			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-//				while (rs.Read()) {
-//					var s = new Sponsor();
-//					s.Name = rs.GetString(0);
-//					s.ProjectRoundUnit = new ProjectRoundUnit {
-//						Report = new Report { Id = rs.GetInt32(3), Internal = rs.GetString(4) }
-//					};
-//				}
-//			}
-//			return sponsors;
-//		}
 
 		public SponsorBackgroundQuestion ReadSponsorBackgroundQuestion(int sponsorBqId)
 		{

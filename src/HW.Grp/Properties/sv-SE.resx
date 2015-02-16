@@ -174,6 +174,9 @@
   <data name="email" xml:space="preserve">
     <value>E-post</value>
   </data>
+  <data name="email.incorrect" xml:space="preserve">
+    <value>Felaktig/a mejladress/er har hittats.</value>
+  </data>
   <data name="execute" xml:space="preserve">
     <value>Utför</value>
   </data>
@@ -255,6 +258,9 @@
   <data name="manager.add" xml:space="preserve">
     <value>Lägg till chef</value>
   </data>
+  <data name="manager.delete" xml:space="preserve">
+    <value>Är du säker på att du vill radera denna chef?</value>
+  </data>
   <data name="manager.invalid" xml:space="preserve">
     <value>Fel! Användarnamnet är ogiltigt, vänligen välj ett annat!</value>
   </data>
@@ -270,11 +276,17 @@
   <data name="manager.username" xml:space="preserve">
     <value>Användarnamn</value>
   </data>
+  <data name="match.no" xml:space="preserve">
+    <value>Sökningen gav inget resultat!</value>
+  </data>
   <data name="message.activated.all" xml:space="preserve">
     <value>Meddelande till alla aktiverade användare</value>
   </data>
   <data name="message.confirm" xml:space="preserve">
     <value>meddelande, bekräfta med lösenord</value>
+  </data>
+  <data name="message.sent" xml:space="preserve">
+    <value>Meddelandena har skickats med framgång!</value>
   </data>
   <data name="month" xml:space="preserve">
     <value>månad</value>
@@ -311,6 +323,9 @@
   </data>
   <data name="password.change" xml:space="preserve">
     <value>Ändra lösenord</value>
+  </data>
+  <data name="password.incorrect" xml:space="preserve">
+    <value>Fel lösenord!</value>
   </data>
   <data name="period" xml:space="preserve">
     <value>Period</value>
@@ -491,6 +506,9 @@
   </data>
   <data name="user.add" xml:space="preserve">
     <value>Lägg till användare</value>
+  </data>
+  <data name="user.exists" xml:space="preserve">
+    <value>En användare med den här e-postadressen existerar redan!</value>
   </data>
   <data name="user.import" xml:space="preserve">
     <value>Importera användare</value>

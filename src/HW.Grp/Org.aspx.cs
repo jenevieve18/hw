@@ -1958,7 +1958,7 @@ AND (si.Email LIKE '%{3}%'{4})",
 				rs.Close();
 
 				if (!found) {
-					SearchResultList.Text += "<tr><td><b>No match found!</b></td></tr>";
+					SearchResultList.Text += string.Format("<tr><td><b>{0}</b></td></tr>", R.Str(lid, "match.no", "The search yielded no results!"));
 				}
 				SearchResults.Visible = true;
 			}

@@ -54,10 +54,11 @@
 					<td>
 						<%
 							string url = string.Format(
-								@"javascript:if(confirm(""Are you sure you want to delete this manager?"")) {{
+								@"javascript:if(confirm(""{1}"")) {{
 									location.href=""managers.aspx?Delete={0}"";
 								}}",
-								s.Id
+								s.Id,
+								R.Str(lid, "manager.delete", "Are you sure you want to delete this manager?")
 							);
 						%>
 						<%= HtmlHelper.AnchorImage(url, "img/deltoolsmall.gif")%>
