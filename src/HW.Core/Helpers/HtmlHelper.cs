@@ -9,6 +9,11 @@ namespace HW.Core.Helpers
 {
 	public static class HtmlHelper
 	{
+		public static string ToHtml(string text)
+		{
+			return text.Replace("<", "&lt;").Replace(">", "&gt;");
+		}
+		
 		public static string Anchor(string text, string url)
 		{
 			return Anchor(text, url, "");
