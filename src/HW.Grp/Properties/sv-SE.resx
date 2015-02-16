@@ -385,7 +385,7 @@
     <value>Sök användare via e-post</value>
   </data>
   <data name="select.send.type" xml:space="preserve">
-    <value>&lt;Välj och skicka sort&gt;</value>
+    <value>&lt; Välj och skicka sort &gt;</value>
   </data>
   <data name="send" xml:space="preserve">
     <value>Skicka</value>
@@ -559,10 +559,10 @@
     <value>vecka</value>
   </data>
   <data name="week.disabled" xml:space="preserve">
-    <value>&lt;avaktiverad&gt;</value>
+    <value>&lt; avaktiverad &gt;</value>
   </data>
   <data name="week.everyday" xml:space="preserve">
-    <value>&lt;varje dag&gt;</value>
+    <value>&lt; varje dag &gt;</value>
   </data>
   <data name="week.friday" xml:space="preserve">
     <value>Fredag</value>

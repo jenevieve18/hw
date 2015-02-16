@@ -379,7 +379,7 @@
     <value>Search user by email</value>
   </data>
   <data name="select.send.type" xml:space="preserve">
-    <value>&lt;Select send type&gt;</value>
+    <value>&lt; Select send type &gt;</value>
   </data>
   <data name="send" xml:space="preserve">
     <value>Send</value>
