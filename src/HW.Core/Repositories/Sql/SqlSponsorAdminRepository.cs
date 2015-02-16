@@ -97,7 +97,10 @@ SELECT a.SuperUser,
 	a.InviteLastSent,
 	a.InviteReminderLastSent,
 	a.AllMessageLastSent,
-	s.LoginLastSent
+	s.LoginLastSent,
+	s.InviteLastSent,
+	s.InviteReminderLastSent,
+	s.AllMessageLastSent
 FROM SponsorAdmin a,
 Sponsor s
 WHERE s.SponsorID = a.SponsorID
@@ -119,14 +122,29 @@ AND a.SponsorAdminID = {0}",
 						LoginSubject = GetString(rs, 14),
 						LoginDays = GetInt32(rs, 15),
 						LoginWeekday = GetInt32(rs, 16),
-						InviteLastSent = GetDateTime(rs, 17),
-						InviteReminderLastSent = GetDateTime(rs, 18),
-						AllMessageLastSent = GetDateTime(rs, 19),
+//						InviteLastSent = GetDateTime(rs, 21) > GetDateTime(rs, 17) ? GetDateTime(rs, 21) : GetDateTime(rs, 17),
+//						InviteReminderLastSent = GetDateTime(rs, 22) > GetDateTime(rs, 18) ? GetDateTime(rs, 22) : GetDateTime(rs, 18),
+//						AllMessageLastSent = GetDateTime(rs, 23) > GetDateTime(rs, 19) ? GetDateTime(rs, 23) : GetDateTime(rs, 19),
+						InviteLastSent = lalala(GetDateTime(rs, 17), GetDateTime(rs, 21)),
+						InviteReminderLastSent = lalala(GetDateTime(rs, 18), GetDateTime(rs, 22)),
+						AllMessageLastSent = lalala(GetDateTime(rs, 19), GetDateTime(rs, 23)),
 						LoginLastSent = GetDateTime(rs, 20)
 					};
 				}
 			}
 			return a;
+		}
+		
+		DateTime? lalala(DateTime? d1, DateTime? d2)
+		{
+			if (d1 == null) {
+				return d2;
+			}
+			if (d2 > d1) {
+				return d2;
+			} else {
+				return d1;
+			}
 		}
 		
 		public IList<IExtendedSurvey> FindExtendedSurveysBySponsorAdmin(int sponsorID, int sponsorAdminID)
