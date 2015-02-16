@@ -126,3 +126,6 @@ USE HealthWatch
 GO
 ALTER TABLE Sponsor ADD EmailFrom NVARCHAR(255)
 GO
+
+use healthWatch;
+alter table SuperAdmin add HideClosedSponsors int;
