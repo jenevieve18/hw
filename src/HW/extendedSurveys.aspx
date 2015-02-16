@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="extendedSurveys.aspx.cs" Inherits="HW.extendedSurveys" %>
+<%@ Import Namespace="HW.Core.FromHW" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
@@ -24,12 +25,11 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
   <form id="Form1" method="post" runat="server">
-  <div class="container_16 myhealth two-sides about<%=healthWatch.Db.cobranded() %>">
+  <div class="container_16 myhealth two-sides about<%=Db.cobranded() %>">
       <div class="headergroup grid_16">
 		<%=Db.nav2()%>
 		</div> <!-- end .headergroup -->
       <div class="contentgroup grid_16">
-        <div class="statschosergroup">
           <h1 class="header"><asp:Label ID=PageHeader runat=server /></h1>
           <div class="content">
 					<div class="main">
@@ -50,7 +50,8 @@
 		    <asp:Button ID=Send runat=server />
             </div>
 		</asp:PlaceHolder>
-		<asp:Label ID=Sent Visible=false runat=server/><br /><br /><a href="submit.aspx" class="lnk"><asp:Label ID=Continue runat=server /> &gt;&gt;</a>
+		<asp:Label ID=Sent Visible=false runat=server/><br /><br /><a href="submit.aspx" class="lnk"><asp:Label ID=Continue runat=server /></a>
+        <div class="bottom"></div>
 		</div> <!-- end .main -->
 					<div class="sidebar">
 						<h3><%

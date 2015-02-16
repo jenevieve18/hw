@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Collections;
 using System.Data.SqlClient;
+using HW.Core.FromHW;
 
 namespace HW
 {

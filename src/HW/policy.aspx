@@ -1,12 +1,13 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="policy.aspx.cs" Inherits="HW.policy" %>
+<%@ Import Namespace="HW.Core.FromHW" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
     <%
       switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
       {
-          case 1: HttpContext.Current.Response.Write(healthWatch.Db.header2("Integritetspolicy, användarvillkor, forskning och PUL","Integritetspolicy, användarvillkor, forskning och PUL")); break;
-          case 2: HttpContext.Current.Response.Write(healthWatch.Db.header2("Privacy policy, terms of use, research and PUL", "Privacy policy, terms of use, research and PUL")); break;
+          case 1: HttpContext.Current.Response.Write(Db.header2("Integritetspolicy, användarvillkor, forskning och PUL","Integritetspolicy, användarvillkor, forskning och PUL")); break;
+          case 2: HttpContext.Current.Response.Write(Db.header2("Privacy policy, terms of use, research and PUL", "Privacy policy, terms of use, research and PUL")); break;
           }
           %>
 </head>
@@ -62,4 +63,3 @@
 </div>
   </body>
 </html>
-

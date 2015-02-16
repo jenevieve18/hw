@@ -1,12 +1,13 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="statistics.aspx.cs" Inherits="HW.statistics" %>
+<%@ Import Namespace="HW.Core.FromHW" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
    <%
        switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
        {
-           case 1: HttpContext.Current.Response.Write(healthWatch.Db.header2("Statistik", "Statistik")); break;
-           case 2: HttpContext.Current.Response.Write(healthWatch.Db.header2("Statistics", "Statistics")); break;
+           case 1: HttpContext.Current.Response.Write(Db.header2("Statistik", "Statistik")); break;
+           case 2: HttpContext.Current.Response.Write(Db.header2("Statistics", "Statistics")); break;
        }
            %>
            <script type="text/javascript">
@@ -220,9 +221,9 @@
   <form id="Form1" method="post" runat="server">
   <input type="hidden" id="ShowSettings" name="ShowSettings" value="0" runat=server />
   <input type="hidden" id="Refresh" name="Refresh" value="0" />
-  <div class="container_16 myhealth statistics<%=healthWatch.Db.cobranded() %>">
+  <div class="container_16 myhealth statistics<%=Db.cobranded() %>">
       <div class="headergroup grid_16">
-		<%=healthWatch.Db.nav2()%>
+		<%=Db.nav2()%>
 		</div> <!-- end .headergroup -->
       <div class="contentgroup grid_16">
         <div class="statschosergroup">
@@ -475,7 +476,7 @@
 				</div><!-- end .results -->
 				<div class="bottom"></div>
 		</div><!-- end .contentgroup	-->
-		<%=healthWatch.Db.bottom2()%>
+		<%=Db.bottom2()%>
 		<!--<script language="javascript">toggleSettings(false);toggleIndex();</script>
 		<asp:Label ID="ExplWins" runat=server />-->
 		</div> <!-- end .container_12 -->

@@ -1,12 +1,13 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="reminder.aspx.cs" Inherits="HW.reminder" %>
+<%@ Import Namespace="HW.Core.FromHW" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
    <%
        switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
        {
-           case 1: HttpContext.Current.Response.Write(healthWatch.Db.header2("Påminnelser", "Påminnelser")); break;
-           case 2: HttpContext.Current.Response.Write(healthWatch.Db.header2("Reminders", "Reminders")); break;
+           case 1: HttpContext.Current.Response.Write(Db.header2("Påminnelser", "Påminnelser")); break;
+           case 2: HttpContext.Current.Response.Write(Db.header2("Reminders", "Reminders")); break;
        }
            %>
            <script type="text/javascript">
@@ -81,9 +82,9 @@
 <!--[if IE 9 ]>    <body class="ie9" onload="self.updateReminder();"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body onload="self.updateReminder();"> <!--<![endif]-->
 	    <form id="Form1" method="post" runat="server">
-        <div class="container_16 myhealth two-sides remind<%=healthWatch.Db.cobranded() %>">
+        <div class="container_16 myhealth two-sides remind<%=Db.cobranded() %>">
 			<div class="headergroup grid_16">
-		<%=healthWatch.Db.nav2()%>
+		<%=Db.nav2()%>
 		</div> <!-- end .headergroup -->
 			<div class="contentgroup grid_16">
 			 
@@ -300,7 +301,7 @@
 				</div>
 
 		</div><!-- end .contentgroup	-->
-		<%=healthWatch.Db.bottom2()%>
+		<%=Db.bottom2()%>
         </div> <!-- end .container_12 -->
 		</form>
   </body>

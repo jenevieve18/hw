@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
+using HW.Core.FromHW;
 
 namespace HW
 {
@@ -22,11 +23,28 @@ namespace HW
                 HttpContext.Current.Response.Redirect("inactivity.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
             }
 
+            string nextForm = "";
+            SqlDataReader rs = Db.rs("SELECT TOP 1 " +
+                "ISNULL(sprul.Nav,spru.Nav) AS Nav " +
+                "FROM [User] u " +
+                "INNER JOIN Sponsor s ON u.SponsorID = s.SponsorID " +
+                "INNER JOIN SponsorProjectRoundUnit spru ON s.SponsorID = spru.SponsorID " +
+                "LEFT OUTER JOIN SponsorProjectRoundUnitLang sprul ON spru.SponsorProjectRoundUnitID = sprul.SponsorProjectRoundUnitID AND sprul.LangID = " + Convert.ToInt32(HttpContext.Current.Session["LID"]) + " " +
+                "LEFT OUTER JOIN UserProjectRoundUser upru ON spru.ProjectRoundUnitID = upru.ProjectRoundUnitID AND upru.UserID = u.UserID " +
+                "WHERE u.UserID = " + HttpContext.Current.Session["UserID"] + " " +
+                "AND (spru.OnlyEveryDays IS NULL OR DATEADD(d,spru.OnlyEveryDays,dbo.cf_lastSubmission(spru.ProjectRoundUnitID,u.UserID)) < GETDATE()) " +
+                "ORDER BY spru.SortOrder");
+            if (rs.Read())
+            {
+                nextForm = rs.GetString(0);
+            }
+            rs.Close();
+
             switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
             {
                 case 1:
                     PageHeader.Text = "Enkäter";
-                    Continue.Text = "Gå vidare till formulär";
+                    Continue.Text = "Klicka här för formuläret <b>" + nextForm + " &gt;&gt;</b> (tar ca 15 sekunder att besvara)";
                     Send.Text = "Skicka";
                     NameTxt.Text = "Namn";
                     EmailTxt.Text = "E-post";
@@ -35,7 +53,7 @@ namespace HW
                     break;
                 case 2:
                     PageHeader.Text = "Surveys";
-                    Continue.Text = "Continue to forms";
+                    Continue.Text = "Click here for the <b>" + nextForm + " form &gt;&gt;</b> (takes about 15 seconds to complete)";
                     Send.Text = "Send";
                     NameTxt.Text = "Name";
                     EmailTxt.Text = "Email";
@@ -49,7 +67,7 @@ namespace HW
             Survey.Text = "";
 
             Send.Click += new EventHandler(Send_Click);
-            SqlDataReader rs = Db.rs("SELECT " +
+            rs = Db.rs("SELECT " +
                 "ses.SponsorExtendedSurveyID, " +       // 0
                 "ses.ProjectRoundID, " +                // 1
                 "u.ProjectRoundUserID, " +              // 2
@@ -67,7 +85,8 @@ namespace HW
                 "a.FeedbackAlert, " +                   // 14
                 "ISNULL(d.PreviewExtendedSurveys, si.PreviewExtendedSurveys), " +                   // 15
                 "ISNULL(sl.AlternativeTreatmentOfferText, s.AlternativeTreatmentOfferText), " +     // 16
-                "s.AlternativeTreatmentOfferEmail " +                                               // 17
+                "s.AlternativeTreatmentOfferEmail, " +                                              // 17
+                "s.TreatmentOfferNoAttach " +           // 18
                 "FROM SponsorExtendedSurvey ses " +
                 "INNER JOIN Sponsor s ON ses.SponsorID = s.SponsorID " +
                 "INNER JOIN [User] x ON x.UserID = " + Convert.ToInt32(HttpContext.Current.Session["UserID"]) + " " +
@@ -83,6 +102,12 @@ namespace HW
                 "ORDER BY ses.SponsorExtendedSurveyID");
             while (rs.Read())
             {
+                if (!rs.IsDBNull(18))
+                {
+                    Include.Checked = false;
+                    Include.Visible = false;
+                    IncludeTxt.Visible = false;
+                }
                 treatmentOfferEmail = (!rs.IsDBNull(9) ? rs.GetString(9) : "");
                 alternativeTreatmentOfferEmail = (!rs.IsDBNull(17) ? rs.GetString(17) : "");
 
@@ -232,7 +257,7 @@ namespace HW
                         }
 
                         name += rs3.GetString(2);
-                        string url = "https://eform.healthwatch.se/submit.aspx" +
+                        string url = System.Configuration.ConfigurationSettings.AppSettings["eFormURL"] + "/submit.aspx" +
                            "?Domain=healthwatch.se" +
                            "&LID=" + Convert.ToInt32(HttpContext.Current.Session["LID"]) +
                            "&RL=1" +
@@ -284,7 +309,7 @@ namespace HW
 
                         if (!rs.IsDBNull(5) && answered)
                         {
-                            string feedbackURL = "https://eform.healthwatch.se/downloadPDF.aspx?AK=" + rs3.GetString(7) + "";
+                            string feedbackURL = System.Configuration.ConfigurationSettings.AppSettings["eFormURL"] + "/downloadPDF.aspx?AK=" + rs3.GetString(7) + "";
                             switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                             {
                                 case 1:

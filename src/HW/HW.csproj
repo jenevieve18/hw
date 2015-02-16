@@ -62,9 +62,11 @@
     <Content Include="chart.aspx" />
     <Content Include="chartCompact.aspx" />
     <Content Include="closed.aspx" />
+    <Content Include="code.aspx" />
     <Content Include="contact.aspx" />
     <Content Include="debugInfo.aspx" />
     <Content Include="default.aspx" />
+    <Content Include="diaryHelp.aspx" />
     <Content Include="error.aspx" />
     <Content Include="exercise.aspx" />
     <Content Include="exerciseShow.aspx" />
@@ -75,9 +77,6 @@
     <Content Include="favicon.ico" />
     <Content Include="flash_banner.swf" />
     <Content Include="forgot.aspx" />
-    <Content Include="form.html" />
-    <Content Include="form_co1.html" />
-    <Content Include="form_co2.html" />
     <Content Include="Global.asax" />
     <Content Include="google09f166792da71247.html" />
     <Content Include="home.aspx" />
@@ -433,6 +432,8 @@
     <Content Include="statistics.aspx" />
     <Content Include="statisticsImage.aspx" />
     <Content Include="stats.aspx" />
+    <Content Include="stats\Default.aspx" />
+    <Content Include="submit.aspx" />
     <Content Include="submitImages\null.gif" />
     <Content Include="submitImages\VASdot_l.gif" />
     <Content Include="submitImages\VASdot_r.gif" />
@@ -505,6 +506,13 @@
     <Compile Include="closed.aspx.designer.cs">
       <DependentUpon>closed.aspx</DependentUpon>
     </Compile>
+    <Compile Include="code.aspx.cs">
+      <DependentUpon>code.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="code.aspx.designer.cs">
+      <DependentUpon>code.aspx</DependentUpon>
+    </Compile>
     <Compile Include="contact.aspx.cs">
       <DependentUpon>contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -525,6 +533,13 @@
     </Compile>
     <Compile Include="default.aspx.designer.cs">
       <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="diaryHelp.aspx.cs">
+      <DependentUpon>diaryHelp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="diaryHelp.aspx.designer.cs">
+      <DependentUpon>diaryHelp.aspx</DependentUpon>
     </Compile>
     <Compile Include="error.aspx.cs">
       <DependentUpon>error.aspx</DependentUpon>
@@ -732,6 +747,20 @@
     </Compile>
     <Compile Include="stats.aspx.designer.cs">
       <DependentUpon>stats.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="stats\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="stats\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="submit.aspx.cs">
+      <DependentUpon>submit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="submit.aspx.designer.cs">
+      <DependentUpon>submit.aspx</DependentUpon>
     </Compile>
     <Compile Include="upload.aspx.cs">
       <DependentUpon>upload.aspx</DependentUpon>

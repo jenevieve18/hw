@@ -8,6 +8,7 @@
     <style type="text/css">
         .datagroup {background:url();}
         .datagroup .metadata {width:130px;}
+        .datagroup .metadata .label {margin-right:3px;}
         .datagroup .landing_graph {padding:30px 5px 0 0;}
     </style>
 </head>

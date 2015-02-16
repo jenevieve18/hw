@@ -1,12 +1,13 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="exerciseShow.aspx.cs" Inherits="HW.exerciseShow" %>
+<%@ Import Namespace="HW.Core.FromHW" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
    <%
        switch (LID)
        {
-           case 1: HttpContext.Current.Response.Write(healthWatch.Db.header2("Övningar", "Övningar", replacementHead)); break;
-           case 2: HttpContext.Current.Response.Write(healthWatch.Db.header2("Exercises", "Exercises", replacementHead)); break;
+           case 1: HttpContext.Current.Response.Write(Db.header2("Övningar", "Övningar", replacementHead)); break;
+           case 2: HttpContext.Current.Response.Write(Db.header2("Exercises", "Exercises", replacementHead)); break;
        }
 %>
         <script type="text/javascript">            $("body").addClass("popup"); $(document).ready(function () { $("body").addClass("popup"); });</script>
@@ -39,4 +40,3 @@
 </form>
 </body>
 </html>
-

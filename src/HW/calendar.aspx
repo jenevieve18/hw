@@ -1,12 +1,13 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="calendar.aspx.cs" Inherits="HW.calendar" %>
+<%@ Import Namespace="HW.Core.FromHW" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
    <%
        switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
        {
-           case 1: HttpContext.Current.Response.Write(healthWatch.Db.header2("Kalender", "Kalender")); break;
-           case 2: HttpContext.Current.Response.Write(healthWatch.Db.header2("Calendar", "Calendar")); break;
+           case 1: HttpContext.Current.Response.Write(Db.header2("Kalender", "Kalender")); break;
+           case 2: HttpContext.Current.Response.Write(Db.header2("Calendar", "Calendar")); break;
        }
            %>
 	<script type="text/javascript">
@@ -330,7 +331,7 @@
         <input type="hidden" name="MCID" id="MCID" value="0" />
 	    <input type="hidden" name="DeleteUMID" id="DeleteUMID" value="0" />
 	    <input type="hidden" name="DeleteUPRUA" id="DeleteUPRUA" value="0" />
-		<div class="container_16 myhealth diary<%=healthWatch.Db.cobranded() %>">
+		<div class="container_16 myhealth diary<%=Db.cobranded() %>">
 			<div class="headergroup grid_16">
 		<%=Db.nav2()%>
         </div> <!-- end .headergroup -->
@@ -581,9 +582,8 @@
 		</table>
         -->
 		
-		<%=healthWatch.Db.bottom2()%>
+		<%=Db.bottom2()%>
         </div> <!-- end .container_12 -->
 		</form>
   </body>
 </html>
-

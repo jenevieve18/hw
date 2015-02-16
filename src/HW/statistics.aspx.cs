@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data.SqlClient;
 using HW.Core.FromHW;
+using System.Collections;
 
 namespace HW
 {
@@ -16,7 +16,7 @@ namespace HW
         private string surveyName = "";
         private string[] rpt = { "", "", "", "" };
         private int measurementType = 0;
-        private int compare = 0;
+        private int compare1 = 0;
         int[] rp = { -1, -1, 0, 0 };
         DateTime highDT = DateTime.Now, lowDT = DateTime.Now;
 
@@ -78,7 +78,7 @@ namespace HW
                 if (rp[0] > 0)
                 {
                     s += "<div class=\"var1\">" + rpt[0] + "</div>";
-                    if (compare > 1)
+                    if (compare1 > 1)
                     {
                         if (rp[0] > 0)
                         {
@@ -89,7 +89,7 @@ namespace HW
                 if (rp[1] > 0)
                 {
                     s += "<div class=\"var2\">" + rpt[1] + "</div>";
-                    if (compare > 1)
+                    if (compare1 > 1)
                     {
                         if (rp[1] > 0)
                         {
@@ -100,7 +100,7 @@ namespace HW
                 if (rp[2] > 0)
                 {
                     s += "<div class=\"var3\">" + rpt[2] + "</div>";
-                    if (compare > 1)
+                    if (compare1 > 1)
                     {
                         if (rp[2] > 0)
                         {
@@ -111,7 +111,7 @@ namespace HW
                 if (rp[3] > 0)
                 {
                     s += "<div class=\"var4\">" + rpt[3] + "</div>";
-                    if (compare > 1)
+                    if (compare1 > 1)
                     {
                         if (rp[3] > 0)
                         {
@@ -341,9 +341,9 @@ namespace HW
             }
             string rpQ = "&RP0=" + rp[0] + "&RP1=" + rp[1] + "&RP2=" + rp[2] + "&RP3=" + rp[3];
 
-            compare = (HttpContext.Current.Request.QueryString["C"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["C"]) : 1);
+            compare1 = (HttpContext.Current.Request.QueryString["C"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["C"]) : 1);
             measurementType = (HttpContext.Current.Request.QueryString["MT"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["MT"]) : 0);
-            if (compare > 1 && measurementType == 0) { measurementType = 2; }
+            if (compare1 > 1 && measurementType == 0) { measurementType = 2; }
 
             if (!IsPostBack)
             {
@@ -508,12 +508,12 @@ namespace HW
                     case 1:
                         availableCompare.Controls.Add(new LiteralControl("<li id=\"compare0\"><a href=\"statistics.aspx?MT=" + measurementType + "&C=1" + rpQ + "\">Ingen</a></li>"));
                         availableCompare.Controls.Add(new LiteralControl("<li id=\"compare1\"><a href=\"statistics.aspx?MT=" + measurementType + "&C=2" + rpQ + "\">Databasen</a></li>"));
-                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe0\"><a href=\"statistics.aspx?C=" + compare + "&MT=0\">Specifik mätning</a></li>"));
-                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe1\"><a href=\"statistics.aspx?C=" + compare + "&MT=1" + rpQ + "\">Senaste veckan</a></li>"));
-                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe2\"><a href=\"statistics.aspx?C=" + compare + "&MT=2" + rpQ + "\">Senaste månaden</a></li>"));
-                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe3\"><a href=\"statistics.aspx?C=" + compare + "&MT=3" + rpQ + "\">Senaste året</a></li>"));
-                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe4\" class=\"last\"><a href=\"statistics.aspx?C=" + compare + "&MT=4" + rpQ + "\">Sen första mätning</a></li>"));
-                        if (compare == 2)
+                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe0\"><a href=\"statistics.aspx?C=" + compare1 + "&MT=0\">Specifik mätning</a></li>"));
+                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe1\"><a href=\"statistics.aspx?C=" + compare1 + "&MT=1" + rpQ + "\">Senaste veckan</a></li>"));
+                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe2\"><a href=\"statistics.aspx?C=" + compare1 + "&MT=2" + rpQ + "\">Senaste månaden</a></li>"));
+                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe3\"><a href=\"statistics.aspx?C=" + compare1 + "&MT=3" + rpQ + "\">Senaste året</a></li>"));
+                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe4\" class=\"last\"><a href=\"statistics.aspx?C=" + compare1 + "&MT=4" + rpQ + "\">Sen första mätning</a></li>"));
+                        if (compare1 == 2)
                         {
                             selectedCompare.Controls.Add(new LiteralControl("Databasen"));
                             selectedCompare2.Controls.Add(new LiteralControl("Databasen"));
@@ -552,12 +552,12 @@ namespace HW
                     case 2:
                         availableCompare.Controls.Add(new LiteralControl("<li id=\"compare0\"><a href=\"statistics.aspx?MT=" + measurementType + "&C=1" + rpQ + "\">None</a></li>"));
                         availableCompare.Controls.Add(new LiteralControl("<li id=\"compare1\" class=\"last\"><a href=\"statistics.aspx?MT=" + measurementType + "&C=2" + rpQ + "\">Database</a></li>"));
-                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe0\"><a href=\"statistics.aspx?C=" + compare + "&MT=0\">Specific measurement</a></li>"));
-                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe1\"><a href=\"statistics.aspx?C=" + compare + "&MT=1" + rpQ + "\">Last week</a></li>"));
-                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe2\"><a href=\"statistics.aspx?C=" + compare + "&MT=2" + rpQ + "\">Last month</a></li>"));
-                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe3\"><a href=\"statistics.aspx?C=" + compare + "&MT=3" + rpQ + "\">Last year</a></li>"));
-                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe4\" class=\"last\"><a href=\"statistics.aspx?C=" + compare + "&MT=4" + rpQ + "\">Since first measurement</a></li>"));
-                        if (compare == 2)
+                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe0\"><a href=\"statistics.aspx?C=" + compare1 + "&MT=0\">Specific measurement</a></li>"));
+                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe1\"><a href=\"statistics.aspx?C=" + compare1 + "&MT=1" + rpQ + "\">Last week</a></li>"));
+                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe2\"><a href=\"statistics.aspx?C=" + compare1 + "&MT=2" + rpQ + "\">Last month</a></li>"));
+                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe3\"><a href=\"statistics.aspx?C=" + compare1 + "&MT=3" + rpQ + "\">Last year</a></li>"));
+                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe4\" class=\"last\"><a href=\"statistics.aspx?C=" + compare1 + "&MT=4" + rpQ + "\">Since first measurement</a></li>"));
+                        if (compare1 == 2)
                         {
                             selectedCompare.Controls.Add(new LiteralControl("Database"));
                             selectedCompare2.Controls.Add(new LiteralControl("Database"));
@@ -1104,7 +1104,7 @@ namespace HW
                         {
                             sb.Append("<li" + s);
                         }
-                        s = "><a href=\"statistics.aspx?C=" + compare + "&MT=" + measurementType + "&RPx=" + cx + "x\">" + rs.GetString(1) + "</a></li>";
+                        s = "><a href=\"statistics.aspx?C=" + compare1 + "&MT=" + measurementType + "&RPx=" + cx + "x\">" + rs.GetString(1) + "</a></li>";
                         ht2.Add(rs.GetInt32(3), s);
                         if (rp[0] == -1 || rp[0] == rs.GetInt32(3))
                         {
@@ -1180,8 +1180,8 @@ namespace HW
                     {
                         switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                         {
-                            case 1: q = "<li><a href=\"statistics.aspx?C=" + compare + "&MT=" + measurementType + ss + "&RP" + i + "=0\">Ingen</a></li>"; break;
-                            case 2: q = "<li><a href=\"statistics.aspx?C=" + compare + "&MT=" + measurementType + ss + "&RP" + i + "=0\">None</a></li>"; break;
+                            case 1: q = "<li><a href=\"statistics.aspx?C=" + compare1 + "&MT=" + measurementType + ss + "&RP" + i + "=0\">Ingen</a></li>"; break;
+                            case 2: q = "<li><a href=\"statistics.aspx?C=" + compare1 + "&MT=" + measurementType + ss + "&RP" + i + "=0\">None</a></li>"; break;
                         }
                     }
 
@@ -1220,8 +1220,10 @@ namespace HW
                         "<img src=\"lineChart.aspx" +
                         "?TDT=" + highDT.ToString("yyMMdd") +
                         "&FDT=" + lowDT.ToString("yyMMdd") +
+                        "&SID=" + Convert.ToInt32(HttpContext.Current.Session["SponsorID"]) +
                         "&LID=" + Convert.ToInt32(HttpContext.Current.Session["LID"]) +
-                        "&C=" + compare +
+                        "&UID=" + Convert.ToInt32(HttpContext.Current.Session["UserID"]) +
+                        "&C=" + compare1 +
                         "&S=" + Convert.ToInt32(SurveyKey.SelectedValue.Split(':')[1]) +
                         "&RP0=" + rp[0] +
                         "&RP1=" + rp[1] +

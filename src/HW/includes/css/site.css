@@ -485,7 +485,8 @@ hr {
 
 /*	Footer specific styles	*/
 .footergroup {
-	height: 291px;
+	/*height: 291px;*/
+	height: 221px;
 	font-family: arial, helvetica, arial, sans-serif;
 	background: #fff;
 	margin-top: 80px;
@@ -513,7 +514,8 @@ hr {
 .footergroup .newsgroup, .footergroup .healthgroup, .footergroup .aboutgroup, .footergroup .eugroup {
 	padding-top: 26px;
 	padding-left: 30px;
-	height: 220px;
+	/*height: 220px;*/
+	height: 150px;
 }
 .footergroup .logogroup {
 	width: 178px;
@@ -523,8 +525,10 @@ hr {
 	padding-left: 40px;
 	font-size: 11px;
 	line-height: 1.9em;
-	height: 220px;
+	/*height: 220px;*/
+	height: 150px;
 }
+/*
 .footergroup .newsgroup {
 	width: 105px;
 	float: left;
@@ -542,6 +546,18 @@ hr {
 }
 .footergroup .eugroup {
 	width: 265px;
+	float: left;
+	font-size: 12px;
+	padding-top: 27px;
+}
+*/
+.footergroup .newsgroup, .footergroup .healthgroup, .footergroup .aboutgroup {
+	width: 155px;
+	float: left;
+	border-right: 1px solid #e0e0e0;
+}
+.footergroup .eugroup {
+	width: 164px;
 	float: left;
 	font-size: 12px;
 	padding-top: 27px;

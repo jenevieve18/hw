@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="calendarRead.aspx.cs" Inherits="HW.calendarRead" %>
+<%@ Import Namespace="HW.Core.FromHW" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
@@ -157,7 +158,7 @@
         <input type="hidden" name="MCID" id="MCID" value="0" />
 	    <input type="hidden" name="DeleteUMID" id="DeleteUMID" value="0" />
 	    <input type="hidden" name="DeleteUPRUA" id="DeleteUPRUA" value="0" />
-		<div class="container_16 myhealth diary read<%=healthWatch.Db.cobranded() %>">
+		<div class="container_16 myhealth diary read<%=Db.cobranded() %>">
 			<div class="headergroup grid_16">
 		<%=Db.nav2()%>
         </div> <!-- end .headergroup -->
@@ -208,4 +209,3 @@
 		</form>
   </body>
 </html>
-

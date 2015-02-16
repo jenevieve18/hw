@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="about.aspx.cs" Inherits="HW.about" %>
+<%@ Import Namespace="HW.Core.FromHW" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
@@ -16,7 +17,7 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 	    <form id="Form1" method="post" runat="server">
-        <div class="container_16 myhealth two-sides about<%=healthWatch.Db.cobranded() %>">
+        <div class="container_16 myhealth two-sides about<%=Db.cobranded() %>">
 			<div class="headergroup grid_16">
 		<%=Db.nav2()%>
 			</div> <!-- end .headergroup -->

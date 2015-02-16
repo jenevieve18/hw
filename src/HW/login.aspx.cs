@@ -4,11 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using HW.Core.FromHW;
 
 namespace HW
 {
     public partial class login : System.Web.UI.Page
     {
+
         protected void Page_Load(object sender, System.EventArgs e)
         {
             string homeURL = HttpContext.Current.Session["HomeURL"].ToString();

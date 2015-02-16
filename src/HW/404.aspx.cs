@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
+using HW.Core.FromHW;
 
 namespace HW
 {
@@ -37,6 +38,20 @@ namespace HW
             else if (HttpContext.Current.Request.RawUrl.EndsWith("/contact"))
             {
                 HttpContext.Current.Server.Transfer("/contact.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+            }
+            else if (HttpContext.Current.Request.RawUrl.EndsWith("/code"))
+            {
+                HttpContext.Current.Server.Transfer("/code.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+            }
+            else if (HttpContext.Current.Request.RawUrl.IndexOf("/code/") >= 0)
+            {
+                string code = "";
+                try
+                {
+                    code = "&Code=" + HttpContext.Current.Request.RawUrl.Substring(HttpContext.Current.Request.RawUrl.IndexOf("/code/") + 6);
+                }
+                catch (Exception) { }
+                HttpContext.Current.Server.Transfer("/code.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + code, true);
             }
             else if (HttpContext.Current.Request.RawUrl.IndexOf("/news/") >= 0)
             {

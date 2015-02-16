@@ -1,12 +1,13 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="stats.aspx.cs" Inherits="HW.stats" %>
+<%@ Import Namespace="HW.Core.FromHW" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-   <%=healthWatch.Db.header()%>
+   <%=Db.header()%>
   </head>
   <body>
 	    <form id="Form1" method="post" runat="server">
-		<%=healthWatch.Db.nav()%>
+		<%=Db.nav()%>
 		<h1 id="mainHeader">Exempelåterkoppling</h1>
 		<asp:Label ID="Stats" runat=server />
 		<ul>
@@ -21,8 +22,7 @@
 		<li><a href="HW.pdf">PDF</a></li>
 		</ul>
 
-		<%=healthWatch.Db.bottom()%>
+		<%=Db.bottom()%>
 		</form>
   </body>
 </html>
-

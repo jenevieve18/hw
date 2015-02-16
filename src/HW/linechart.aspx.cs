@@ -102,8 +102,12 @@ namespace HW
             //}
             //string[] so = ("0," + HttpContext.Current.Request.QueryString["RPO"].ToString()).Split(',');
 
+            int SID = (HttpContext.Current.Request.QueryString["SID"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["SID"]) : 1);
+            int LID = (HttpContext.Current.Request.QueryString["LID"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["LID"]) : 1);
+            int UID = (HttpContext.Current.Request.QueryString["UID"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["UID"]) : 0);
+
             bool compare = (HttpContext.Current.Request.QueryString["C"] != null && Convert.ToInt32(HttpContext.Current.Request.QueryString["C"]) == 2);
-            bool sponsored = (Convert.ToInt32(HttpContext.Current.Session["SponsorID"]) > 1);
+            bool sponsored = (SID > 1);
             DateTime TDT = DateTime.ParseExact(HttpContext.Current.Request.QueryString["TDT"].ToString(), "yyMMdd", System.Globalization.CultureInfo.CurrentCulture);
             DateTime FDT = DateTime.ParseExact(HttpContext.Current.Request.QueryString["FDT"].ToString(), "yyMMdd", System.Globalization.CultureInfo.CurrentCulture);
             //string answer = "";
@@ -414,7 +418,7 @@ namespace HW
                 "INNER JOIN ReportPart rp ON r.ReportID = rp.ReportID " +
                 "INNER JOIN ReportPartComponent rpc ON rp.ReportPartID = rpc.ReportPartID " +
                 "INNER JOIN WeightedQuestionOption wqo ON rpc.WeightedQuestionOptionID = wqo.WeightedQuestionOptionID " +
-                "INNER JOIN WeightedQuestionOptionLang wqol ON wqo.WeightedQuestionOptionID = wqol.WeightedQuestionOptionID AND wqol.LangID = " + Convert.ToInt32(HttpContext.Current.Session["LID"]) + " " +
+                "INNER JOIN WeightedQuestionOptionLang wqol ON wqo.WeightedQuestionOptionID = wqol.WeightedQuestionOptionID AND wqol.LangID = " + LID + " " +
                 "WHERE rpc.ReportPartID IN (" + rp + ") " +
                 "ORDER BY rp.SortOrder, rpc.SortOrder", "eFormSqlConnection");
             while (rs.Read())
@@ -441,7 +445,7 @@ namespace HW
                     "AND a.EndDT >= '" + FDT.ToString("yyyy-MM-dd") + "' " +
                     //"AND a.AnswerID " + answer + " " +
                     //"AND a.ProjectRoundUserID = " + userID + " " +
-                    "AND u.UserID = " + Convert.ToInt32(HttpContext.Current.Session["UserID"]) + " " +
+                    "AND u.UserID = " + UID + " " +
                     "AND av.QuestionID = " + rs.GetInt32(2) + " " +
                     "AND av.OptionID = " + rs.GetInt32(3) + " " +
                     "ORDER BY a.EndDT", "eFormSqlConnection");

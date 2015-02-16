@@ -4,9 +4,12 @@ using System.Web.SessionState;
 
 namespace HW.Core.FromHW
 {
-	public class ErrorHandling
-	{
-		private string cutAt(int i, string s)
+	/// <summary>
+    /// Summary description for ErrorHandling
+    /// </summary>
+    public class ErrorHandling
+    {
+        private string cutAt(int i, string s)
         {
             return (s.Length <= i ? s : s.Substring(0, i));
         }
@@ -59,5 +62,5 @@ namespace HW.Core.FromHW
             }
             catch (Exception x) { err += x.Message + x.Source + x.StackTrace + x.TargetSite + "\r\n\r\n"; }
         }
-	}
+    }
 }

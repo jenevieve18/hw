@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Collections;
+using HW.Core.FromHW;
 
 namespace HW
 {
@@ -100,7 +101,8 @@ namespace HW
                                 mainHeader.InnerText = rs3.GetString(2);
                                 string body = rs3.GetString(3).Replace("\r\n", "<BR>").Replace("\n\r", "<BR>").Replace("\n", "<BR>");
                                 string link = "<A HREF=\"JavaScript:;\" ONCLICK=\"pop=window.open('" +
-                                            "https://eform.healthwatch.se/submit.aspx" +
+                                            System.Configuration.ConfigurationSettings.AppSettings["eFormURL"] +
+                                            "/submit.aspx" +
                                             "?Domain=healthwatch.se" +
                                             "&LID=" + Convert.ToInt32(HttpContext.Current.Session["LID"]) +
                                             "&RL=1" +

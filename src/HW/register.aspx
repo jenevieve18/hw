@@ -1,12 +1,13 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="register.aspx.cs" Inherits="HW.register" %>
+<%@ Import Namespace="HW.Core.FromHW" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
    <%
        switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
        {
-           case 1: HttpContext.Current.Response.Write(healthWatch.Db.header2("Skapa konto", "Skapa konto")); break;
-           case 2: HttpContext.Current.Response.Write(healthWatch.Db.header2("Create account", "Create account")); break;
+           case 1: HttpContext.Current.Response.Write(Db.header2("Skapa konto", "Skapa konto")); break;
+           case 2: HttpContext.Current.Response.Write(Db.header2("Create account", "Create account")); break;
        }
            %>
            <script type="text/javascript" src="profile.js"></script>
@@ -27,9 +28,9 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 	    <form id="Form1" method="post" runat="server">
-        <div class="container_16 myhealth two-sides about<%=healthWatch.Db.cobranded() %>">
+        <div class="container_16 myhealth two-sides about<%=Db.cobranded() %>">
 			<div class="headergroup grid_16">
-		<%=healthWatch.Db.nav2()%>
+		<%=Db.nav2()%>
 			</div> <!-- end .headergroup -->
         <div class="contentgroup grid_16">
 			 
@@ -79,7 +80,7 @@ Skapa ditt konto
 				</div>
 
 		</div><!-- end .contentgroup	-->
-		<%=healthWatch.Db.bottom2()%>
+		<%=Db.bottom2()%>
 	</div> <!-- end .container_12 -->
     </form>
 </body>

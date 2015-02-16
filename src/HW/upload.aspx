@@ -1,8 +1,9 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="upload.aspx.cs" Inherits="HW.upload" %>
+<%@ Import Namespace="HW.Core.FromHW" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
-   <%=healthWatch.Db.header2("Filuppladdning", "Ladda upp filer till HealthWatch teamet")%>
+   <%=Db.header2("Filuppladdning", "Ladda upp filer till HealthWatch teamet")%>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
 <!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
@@ -10,9 +11,9 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 	    <form id="Form1" method="post" runat="server">
-        <div class="container_16 myhealth two-sides about<%=healthWatch.Db.cobranded() %>">
+        <div class="container_16 myhealth two-sides about<%=Db.cobranded() %>">
 			<div class="headergroup grid_16">
-		<%=healthWatch.Db.nav2()%>
+		<%=Db.nav2()%>
         </div> <!-- end .headergroup -->
         <div class="contentgroup grid_16">
 			 
@@ -56,7 +57,7 @@
 				</div>
 
 		</div><!-- end .contentgroup	-->
-		<%=healthWatch.Db.bottom2()%>
+		<%=Db.bottom2()%>
 	</div> <!-- end .container_12 -->
     </form>
 </body>

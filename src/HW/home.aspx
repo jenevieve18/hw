@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="home.aspx.cs" Inherits="HW.home" %>
+<%@ Import Namespace="HW.Core.FromHW" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
@@ -11,7 +12,7 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 	    <form id="form1" method="post" runat="server">
 
-<div class="container_16 index<%=healthWatch.Db.cobranded() %>">
+<div class="container_16 index<%=Db.cobranded() %>">
 		<div class="headergroup grid_16">
 	   <%=Db.nav2()%>
 		</div> <!-- end .headergroup -->
@@ -53,4 +54,3 @@
 		</form>
 </body>
 </html>
-
