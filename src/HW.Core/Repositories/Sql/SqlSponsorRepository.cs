@@ -17,6 +17,7 @@ namespace HW.Core.Repositories.Sql
 		void UpdateLastAllMessageSent(int sponsorId);
 		void UpdateExtendedSurveyLastEmailSent(int sponsorExtendedSurveyId);
 		void UpdateExtendedSurveyLastFinishedSent(int sponsorExtendedSurveyId);
+		void UpdateSponsorLastLoginSent(int sponsorId);
 	}
 	
 	public class SqlSponsorRepository : BaseSqlRepository<Sponsor>, IExtendedSurveyRepository

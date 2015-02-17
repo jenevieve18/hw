@@ -182,3 +182,6 @@ update PlotTypeLang set ShortName = 'Line (± SD)' where PlotTypeLangID = 7;
 update PlotTypeLang set ShortName = 'Line (± 1.96 SD)' where PlotTypeLangID = 8;
 update PlotTypeLang set ShortName = 'BoxPlot (Min/Max)' where PlotTypeLangID = 9;
 update PlotTypeLang set ShortName = 'BoxPlot (Tukey)' where PlotTypeLangID = 10;
+
+use healthwatch;
+alter table SponsorAdmin add LoginLastSent smalldatetime;

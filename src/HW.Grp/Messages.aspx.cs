@@ -325,7 +325,8 @@ namespace HW.Grp
 							break;
 						case 3:
 							#region Login reminder
-							sponsorRepository.UpdateSponsorLastLoginSent(sponsorID);
+//							sponsorRepository.UpdateSponsorLastLoginSent(sponsorID);
+							repository.UpdateSponsorLastLoginSent(sponsorAdminID != -1 ? sponsorAdminID : sponsorID);
 
 //							sponsorAdminId = Convert.ToInt32(Session["SponsorAdminID"]);
 							int selectedValue = Convert.ToInt32(LoginDays.SelectedValue);
