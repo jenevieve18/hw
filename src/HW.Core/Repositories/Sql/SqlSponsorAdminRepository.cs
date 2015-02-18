@@ -8,13 +8,18 @@ namespace HW.Core.Repositories.Sql
 {
 	public class SqlSponsorAdminRepository : BaseSqlRepository<SponsorAdmin>, IExtendedSurveyRepository
 	{
+		public void UpdateSponsorLastLoginSent(int sponsorAdminId)
+		{
+			string query = string.Format(
+				@"
+UPDATE SponsorAdmin SET LoginLastSent = GETDATE() WHERE SponsorAdminID = {0}",
+				sponsorAdminId
+			);
+			Db.exec(query, "healthWatchSqlConnection");
+		}
+		
 		public void UpdateLastAllMessageSent(int sponsorAdminExtendedSurveyId)
 		{
-//			string query = string.Format(
-//				@"
-//UPDATE SponsorAdminExtendedSurvey SET AllMessageLastSent = GETDATE() WHERE SponsorAdminExtendedSurveyID = {0}",
-//				sponsorAdminExtendedSurveyId
-//			);
 			string query = string.Format(
 				@"
 UPDATE SponsorAdmin SET AllMessageLastSent = GETDATE() WHERE SponsorAdminID = {0}",
@@ -97,10 +102,11 @@ SELECT a.SuperUser,
 	a.InviteLastSent,
 	a.InviteReminderLastSent,
 	a.AllMessageLastSent,
-	s.LoginLastSent,
+	a.LoginLastSent,
 	s.InviteLastSent,
 	s.InviteReminderLastSent,
-	s.AllMessageLastSent
+	s.AllMessageLastSent,
+	s.LoginLastSent
 FROM SponsorAdmin a,
 Sponsor s
 WHERE s.SponsorID = a.SponsorID
@@ -122,20 +128,17 @@ AND a.SponsorAdminID = {0}",
 						LoginSubject = GetString(rs, 14),
 						LoginDays = GetInt32(rs, 15),
 						LoginWeekday = GetInt32(rs, 16),
-//						InviteLastSent = GetDateTime(rs, 21) > GetDateTime(rs, 17) ? GetDateTime(rs, 21) : GetDateTime(rs, 17),
-//						InviteReminderLastSent = GetDateTime(rs, 22) > GetDateTime(rs, 18) ? GetDateTime(rs, 22) : GetDateTime(rs, 18),
-//						AllMessageLastSent = GetDateTime(rs, 23) > GetDateTime(rs, 19) ? GetDateTime(rs, 23) : GetDateTime(rs, 19),
-						InviteLastSent = lalala(GetDateTime(rs, 17), GetDateTime(rs, 21)),
-						InviteReminderLastSent = lalala(GetDateTime(rs, 18), GetDateTime(rs, 22)),
-						AllMessageLastSent = lalala(GetDateTime(rs, 19), GetDateTime(rs, 23)),
-						LoginLastSent = GetDateTime(rs, 20)
+						InviteLastSent = GetLaterDate(GetDateTime(rs, 17), GetDateTime(rs, 21)),
+						InviteReminderLastSent = GetLaterDate(GetDateTime(rs, 18), GetDateTime(rs, 22)),
+						AllMessageLastSent = GetLaterDate(GetDateTime(rs, 19), GetDateTime(rs, 23)),
+						LoginLastSent = GetLaterDate(GetDateTime(rs, 20), GetDateTime(rs, 24))
 					};
 				}
 			}
 			return a;
 		}
 		
-		DateTime? lalala(DateTime? d1, DateTime? d2)
+		DateTime? GetLaterDate(DateTime? d1, DateTime? d2)
 		{
 			if (d1 == null) {
 				return d2;
