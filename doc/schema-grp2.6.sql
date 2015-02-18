@@ -185,3 +185,23 @@ update PlotTypeLang set ShortName = 'BoxPlot (Tukey)' where PlotTypeLangID = 10;
 
 use healthwatch;
 alter table SponsorAdmin add LoginLastSent smalldatetime;
+
+CREATE FUNCTION FindDepartmentWithReminder(@DepartmentID INTEGER)
+RETURNS TABLE
+AS
+RETURN (
+	WITH SelectRecursiveDepartment(DepartmentID, Department, ParentDepartmentID, LoginDays, LoginWeekday, Level) AS (
+		SELECT DepartmentID, Department, ParentDepartmentID, LoginDays, LoginWeekday, 0 AS Level
+		FROM Department
+		WHERE ParentDepartmentID IS NULL
+		OR LoginDays IS NOT NULL
+		OR LoginWeekday IS NOT NULL
+		UNION ALL
+		SELECT d.DepartmentID, d.Department, d.ParentDepartmentID, q.LoginDays, q.LoginWeekday, Level + 1 as Level
+		FROM Department d
+		INNER JOIN SelectRecursiveDepartment q ON d.ParentDepartmentID = q.DepartmentID
+	)
+	SELECT DepartmentID, Department, ParentDepartmentID, LoginDays, LoginWeekday, Level
+	FROM SelectRecursiveDepartment
+	WHERE DepartmentID = @DepartmentID
+)
