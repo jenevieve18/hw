@@ -267,22 +267,28 @@ WHERE DepartmentShort = '{0}' AND SponsorID = {1}",
 		
 		public Department ReadWithReminder(int id)
 		{
+//			string query = string.Format(
+//				@"
+//WITH SelectRecursiveDepartment(DepartmentID, Department, ParentDepartmentID, LoginDays, LoginWeekday, Level) AS (
+//	SELECT DepartmentID, Department, ParentDepartmentID, LoginDays, LoginWeekday, 0 AS Level
+//	FROM Department
+//	WHERE ParentDepartmentID IS NULL
+//	OR LoginDays IS NOT NULL
+//	OR LoginWeekday IS NOT NULL
+//	UNION ALL
+//	SELECT d.DepartmentID, d.Department, d.ParentDepartmentID, q.LoginDays, q.LoginWeekday, Level + 1 as Level
+//	FROM Department d
+//	INNER JOIN SelectRecursiveDepartment q ON d.ParentDepartmentID = q.DepartmentID
+//)
+//SELECT DepartmentID, Department, ParentDepartmentID, LoginDays, LoginWeekday, Level
+//FROM SelectRecursiveDepartment
+//WHERE DepartmentID = {0}",
+//				id
+//			);
 			string query = string.Format(
 				@"
-WITH SelectRecursiveDepartment(DepartmentID, Department, ParentDepartmentID, LoginDays, LoginWeekday, Level) AS (
-	SELECT DepartmentID, Department, ParentDepartmentID, LoginDays, LoginWeekday, 0 AS Level
-	FROM Department
-	WHERE ParentDepartmentID IS NULL
-	OR LoginDays IS NOT NULL
-	OR LoginWeekday IS NOT NULL
-	UNION ALL
-	SELECT d.DepartmentID, d.Department, d.ParentDepartmentID, q.LoginDays, q.LoginWeekday, Level + 1 as Level
-	FROM Department d
-	INNER JOIN SelectRecursiveDepartment q ON d.ParentDepartmentID = q.DepartmentID
-)
 SELECT DepartmentID, Department, ParentDepartmentID, LoginDays, LoginWeekday, Level
-FROM SelectRecursiveDepartment
-WHERE DepartmentID = {0}",
+FROM FindDepartmentWithReminder({0})",
 				id
 			);
 			Department d = null;
