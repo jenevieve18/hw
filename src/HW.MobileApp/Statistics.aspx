@@ -159,10 +159,14 @@
                         </div>
                     </h1>
                     <%
-        var greenh = int.Parse(f.greenHigh + "");
-        var yellowh = int.Parse(f.yellowHigh + "");
-        var greenl = int.Parse(f.greenLow + "");
-        var yellowl = int.Parse(f.yellowLow + "");
+        var greenh = 0;
+        int.TryParse(f.greenHigh + "",out greenh);
+        var yellowh = 0;
+        int.TryParse(f.yellowHigh + "", out yellowh);
+        var greenl = 0;
+        int.TryParse(f.greenLow + "", out greenl);
+        var yellowl = 0;
+        int.TryParse(f.yellowLow + "", out yellowl);
 
         var greenStat = "style='left:" + (greenl) + "%;width:" + ((greenh-1)-greenl )+ "%;'";
         var orangeStat = "style='left:" + (yellowl) + "%;width:" +( (yellowh-1)-yellowl )+ "%;'";

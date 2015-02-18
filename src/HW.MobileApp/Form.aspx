@@ -79,8 +79,18 @@
                 <ul data-role="listview">
 
                 <asp:HiddenField ID="answers" runat="server" />
-                
+
+               <%if (formCount > 1)
+                 { %> 
+
+                <li><label class="question">Select form type:</label>
+                     <asp:DropDownList data-mini="true" ID="dropDownListFormType" runat="server" AutoPostBack="true" ViewStateMode="Enabled" EnableViewState="true">
+                     </asp:DropDownList>
+                </li>
+
             <%
+                 }
+                
                 
                 for (var i = 0; i < questNo ; i++)
                 { 

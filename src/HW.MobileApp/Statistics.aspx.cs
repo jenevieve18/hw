@@ -24,6 +24,7 @@ namespace HW.MobileApp
         protected string rp3_selected;
         protected string chartlink;
         protected int language;
+        private HW.MobileApp.HWService.Form[] forms = null;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -33,10 +34,12 @@ namespace HW.MobileApp
             string token = Session["token"].ToString();
             string formKey = "";
 
-            foreach(var n in service.FormEnum(new HW.MobileApp.HWService.FormEnumRequest(token, language, 10)).FormEnumResult)
+            forms = service.FormEnum(new HW.MobileApp.HWService.FormEnumRequest(token, language, 10)).FormEnumResult;
+            
+            foreach(var n in forms)
             {
-                formKey = n.formKey;
-                break;
+                if(n.form.Equals("Health & Stress"))
+                    formKey = n.formKey;
             }  
 
 
@@ -142,11 +145,14 @@ namespace HW.MobileApp
                 {
                     formInstanceKey = Request.QueryString["fik"];
                 }
-                exercises = service.ExerciseEnum(new HWService.ExerciseEnumRequest(token,0,0,language,10)).ExerciseEnumResult;            
+                exercises = service.ExerciseEnum(new HWService.ExerciseEnumRequest(token,0,0,language,10)).ExerciseEnumResult;
+
                 
-                formInstance = service.UserGetFormInstanceFeedback(token,formKey,formInstanceKey,language,10);
-                //Session.Add("latest",formInstance.dateTime.ToString("yyMMdd"));
+                formInstance = service.UserGetFormInstanceFeedback(token, formKey, formInstanceKey, language, 10);
+                
+
                 fifeedback = formInstance.fiv;
+                
                 if (fifeedback == null)
                     Response.Redirect("Dashboard.aspx");
             }
