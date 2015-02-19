@@ -62,7 +62,8 @@ namespace HW.Grp
                 lw.SelectedValue = d.LoginWeekDay.ToString();
                 boxes.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(ld), new IHGHtmlTableCell(lw)));
                 
-                IHGHtmlTableRow row = new IHGHtmlTableRow(new IHGHtmlTableCell(boxes), new IHGHtmlTableCell(d.Id.ToString()));
+//                IHGHtmlTableRow row = new IHGHtmlTableRow(new IHGHtmlTableCell(boxes), new IHGHtmlTableCell(d.Id.ToString()));
+				IHGHtmlTableRow row = new IHGHtmlTableRow(new IHGHtmlTableCell(boxes), new IHGHtmlTableCell(d.ShortName.ToString()));
 				int depth = d.Depth;
 				DX[depth] = d.Siblings > 0;
 
