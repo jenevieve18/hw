@@ -459,6 +459,9 @@
   <data name="thanks" xml:space="preserve">
     <value>Thank you: </value>
   </data>
+  <data name="thanks.mail" xml:space="preserve">
+    <value>Thank you mail for</value>
+  </data>
   <data name="total" xml:space="preserve">
     <value>Total</value>
   </data>

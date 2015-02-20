@@ -63,7 +63,7 @@ UPDATE SponsorAdmin SET InviteReminderLastSent = GETDATE() WHERE SponsorAdminID 
 			Db.exec(query, "healthWatchSqlConnection");
 		}
 		
-		public void UpdateSponsorLastInviteSent(int sponsorAdminExtendedSurveyId)
+		public void UpdateSponsorLastInviteSent(int sponsorAdminID)
 		{
 //			string query = string.Format(
 //				@"
@@ -73,7 +73,7 @@ UPDATE SponsorAdmin SET InviteReminderLastSent = GETDATE() WHERE SponsorAdminID 
 			string query = string.Format(
 				@"
 UPDATE SponsorAdmin SET InviteLastSent = GETDATE() WHERE SponsorAdminID = {0}",
-				sponsorAdminExtendedSurveyId
+				sponsorAdminID
 			);
 			Db.exec(query, "healthWatchSqlConnection");
 		}

@@ -20,6 +20,18 @@ namespace HW.Core.Repositories.Sql
 		void UpdateSponsorLastLoginSent(int sponsorId);
 	}
 	
+	public class ExtendedSurveyRepositoryFactory
+	{
+		public static IExtendedSurveyRepository CreateRepository(int sponsorAdminID)
+		{
+			if (sponsorAdminID != -1) {
+				return new SqlSponsorAdminRepository();
+			} else {
+				return new SqlSponsorRepository();
+			}
+		}
+	}
+	
 	public class SqlSponsorRepository : BaseSqlRepository<Sponsor>, IExtendedSurveyRepository
 	{
 		public void UpdateSponsorLastLoginSent(int sponsorId)

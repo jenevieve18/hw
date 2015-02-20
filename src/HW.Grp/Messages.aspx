@@ -7,7 +7,7 @@
 	<div class="contentgroup grid_16">
 		<div id="contextbar">
 			<div class="settingsPane">
-				<asp:Button ID=Save CssClass="btn" runat=server Text="Save" />
+				<asp:Button ID=buttonSave CssClass="btn" runat=server Text="Save" />
                         
 				<%= R.Str(lid, "send", "Send")%>
 				<asp:DropDownList ID=SendType runat=server>
@@ -17,7 +17,7 @@
 				<asp:ListItem Value=3 Text="Login reminder" />
 				<asp:ListItem Value=9 Text="All activated users" />--%>
 				</asp:DropDownList>
-				<%= R.Str(lid, "message.confirm", "message, confirm with password")%> <asp:TextBox ID=Password runat=server TextMode=Password /> <asp:Button ID=Send runat=server Text="Send" />
+				<%= R.Str(lid, "message.confirm", "message, confirm with password")%> <asp:TextBox ID=Password runat=server TextMode=Password /> <asp:Button ID=buttonSend runat=server Text="Send" />
                 <br />
 				<asp:Button ID=buttonRevert CssClass="btn" runat=server Text="Revert to default" />
 			</div>

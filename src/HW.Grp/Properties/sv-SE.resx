@@ -468,6 +468,9 @@
   <data name="thanks" xml:space="preserve">
     <value>Tack: </value>
   </data>
+  <data name="thanks.mail" xml:space="preserve">
+    <value>Tackmejl för</value>
+  </data>
   <data name="timeframe" xml:space="preserve">
     <value>Tidsperiod</value>
   </data>
