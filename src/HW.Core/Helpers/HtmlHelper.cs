@@ -3,12 +3,20 @@ using System.Collections;
 using System.Text;
 using System.Collections.Generic;
 using System.Web;
+using System.Web.UI.WebControls;
 using HW.Core.Models;
 
 namespace HW.Core.Helpers
 {
 	public static class HtmlHelper
 	{
+		public static void SetTextIfEmpty(TextBox textBox, string text)
+		{
+			if (textBox.Text == "") {
+				textBox.Text = text;
+			}
+		}
+		
 		public static string ToHtml(string text)
 		{
 			return text.Replace("<", "&lt;").Replace(">", "&gt;");
