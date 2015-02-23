@@ -49,7 +49,7 @@ namespace HW.Grp
 			lid = ConvertHelper.ToInt32(Session["lid"], 1);
 			
 			ReminderHelper.SetLanguageID(lid);
-            LanguageFactory.SetCurrentCulture(lid);
+			LanguageFactory.SetCurrentCulture(lid);
 
 			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Organization, DateTime.Now);
 			string query = "";
@@ -57,6 +57,7 @@ namespace HW.Grp
 
 				sponsorAdmin = sponsorRepository.ReadSponsorAdmin(sponsorID, sponsorAdminID);
 
+				StoppedReason.Items.Clear();
 				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.active", "Active"), "0"));
 				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.work", "Stopped, work related"), "1"));
 				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.education", "Stopped, education leave"), "2"));
@@ -68,12 +69,14 @@ namespace HW.Grp
 				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.unknown", "Stopped, unknown reason"), "5"));
 				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.complete", "Stopped, project completed"), "6"));
 				
+				UserUpdateFrom.Items.Clear();
 				UserUpdateFrom.Items.Add(new ListItem(R.Str(lid, "user.update.onwards", "Update the user profile with these settings from today and onwards."), "1"));
 				UserUpdateFrom.Items.Add(new ListItem(R.Str(lid, "user.update.start", "Update the user profile as if these settings were set from start."), "0"));
 				UserUpdateFrom.Items.Add(new ListItem(R.Str(lid, "user.update.previous", "The previously registered email address has never been correct and the created account should be detached from organization."), "2"));
 
-                DeleteUserFrom.Items.Add(new ListItem(R.Str(lid, "disassociate.today", "From today and onwards, disassociate this user with the organization."), "1"));
-                DeleteUserFrom.Items.Add(new ListItem(R.Str(lid, "disassociate.start", "Disassociate this user with the organization from start."), "0"));
+				DeleteUserFrom.Items.Clear();
+				DeleteUserFrom.Items.Add(new ListItem(R.Str(lid, "disassociate.today", "From today and onwards, disassociate this user with the organization."), "1"));
+				DeleteUserFrom.Items.Add(new ListItem(R.Str(lid, "disassociate.start", "Disassociate this user with the organization from start."), "0"));
 
 				if (Request.QueryString["ShowReg"] != null && Convert.ToInt32(Session["ReadOnly"]) == 0) {
 					showReg = true;
@@ -1041,10 +1044,10 @@ VALUES ({0},1,NULL,{1},GETDATE())",
 			SaveUser.Text = R.Str(lid, "save", "Save");
 			CancelImportUser.Text = R.Str(lid, "cancel", "Cancel");
 			SaveImportUser.Text = R.Str(lid, "save", "Save");
-            CancelDeleteUser.Text = R.Str(lid, "cancel", "Cancel");
-            SaveDeleteUser.Text = R.Str(lid, "execute", "Execute");
-            CancelDeleteDepartment.Text = R.Str(lid, "cancel", "Cancel");
-            SaveDeleteDepartment.Text = R.Str(lid, "execute", "Execute");
+			CancelDeleteUser.Text = R.Str(lid, "cancel", "Cancel");
+			SaveDeleteUser.Text = R.Str(lid, "execute", "Execute");
+			CancelDeleteDepartment.Text = R.Str(lid, "cancel", "Cancel");
+			SaveDeleteDepartment.Text = R.Str(lid, "execute", "Execute");
 
 			#region Normal org
 			string select = "";
@@ -1548,7 +1551,7 @@ WHERE d.DepartmentID = {1}",
 				}
 				var deptWithReminder = departmentRepository.ReadWithReminder(rs.GetInt32(2));
 				deptWithReminder.Sponsor = sponsor as Sponsor;
-                string reminder = deptWithReminder.GetReminder(ReminderHelper.GetLoginDays(), ReminderHelper.GetLoginWeekdays());
+				string reminder = deptWithReminder.GetReminder(ReminderHelper.GetLoginDays(), ReminderHelper.GetLoginWeekdays());
 				OrgTree.Text += string.Format(
 					@"
 	<td align='center' style='font-size:9px;'>&nbsp;{0}&nbsp;</td>
