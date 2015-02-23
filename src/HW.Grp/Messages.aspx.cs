@@ -76,6 +76,10 @@ namespace HW.Grp
 		public ISponsor Sponsor {
 			set {
 				var sponsor = value;
+				
+				var u = service.a(sponsorID, sponsorAdminID);
+				AllMessageLastSent.Text = R.Str(lid, "recipients", "Recipients") + ": " + u + ", ";
+				
 				if (sponsor != null) {
 					InviteTxt.Text = sponsor.InviteText;
 					InviteSubject.Text = sponsor.InviteSubject;
