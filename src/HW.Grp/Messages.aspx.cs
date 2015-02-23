@@ -23,7 +23,6 @@ namespace HW.Grp
 		int sponsorAdminExtendedSurveyID;
 		bool incorrectPassword = false;
 		bool sent = false;
-//		ISponsor sponsor;
 		bool loginWithSkey = false;
 		
 		protected int lid;
@@ -106,12 +105,14 @@ namespace HW.Grp
 		
 		void PopulateDropDownLists()
 		{
+			SendType.Items.Clear();
 			SendType.Items.Add(new ListItem(R.Str(lid, "select.send.type", "< select send type >"), "0"));
 			SendType.Items.Add(new ListItem(R.Str(lid, "registration", "Registration"), "1"));
 			SendType.Items.Add(new ListItem(R.Str(lid, "registration.reminder", "Registration reminder"), "2"));
 			SendType.Items.Add(new ListItem(R.Str(lid, "login.reminder", "Login reminder"), "3"));
 			SendType.Items.Add(new ListItem(R.Str(lid, "users.activated.all", "All activated users"), "9"));
 			
+			LoginDays.Items.Clear();
 			LoginDays.Items.Add(new ListItem(R.Str(lid, "day.everyday", "every day"), "1"));
 			LoginDays.Items.Add(new ListItem(R.Str(lid, "week", "week"), "7"));
 			LoginDays.Items.Add(new ListItem(R.Str(lid, "week.two", "2 weeks"), "14"));
@@ -119,6 +120,7 @@ namespace HW.Grp
 			LoginDays.Items.Add(new ListItem(R.Str(lid, "month.three", "3 months"), "90"));
 			LoginDays.Items.Add(new ListItem(R.Str(lid, "month.six", "6 months"), "100"));
 			
+			LoginWeekday.Items.Clear();
 			LoginWeekday.Items.Add(new ListItem(R.Str(lid, "week.disabled", "< disabled >"), "NULL"));
 			LoginWeekday.Items.Add(new ListItem(R.Str(lid, "week.everyday", "< every day >"), "0"));
 			LoginWeekday.Items.Add(new ListItem(R.Str(lid, "week.monday", "Monday"), "1"));
@@ -206,6 +208,7 @@ namespace HW.Grp
 
 		void RevertClick(object sender, EventArgs e)
 		{
+			PopulateDropDownLists();
 			var r = new SqlSponsorRepository();
 			Sponsor = r.ReadSponsor(sponsorID);
 			ExtendedSurveys = r.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID);
@@ -239,10 +242,12 @@ namespace HW.Grp
 				if (valid) {
 					int sendType = ConvertHelper.ToInt32(SendType.SelectedValue);
 					MessageSendType t = MessageSendType.CreateSendType(service, sendType);
-					t.Message = CreateMessage(sendType);
-					t.Send(sponsorID, sponsorAdminID);
-					
-					Response.Redirect("messages.aspx?Sent=" + t.Message.Sent + "&Fail=" + t.Message.Failed + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+					if (t != null) {
+						t.Message = CreateMessage(sendType);
+						t.Send(sponsorID, sponsorAdminID);
+						
+						Response.Redirect("messages.aspx?Sent=" + t.Message.Sent + "&Fail=" + t.Message.Failed + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+					}
 				}
 			}
 		}
@@ -263,7 +268,7 @@ namespace HW.Grp
 				case MessageSendType.AllActivatedUsersSendType:
 					return new Message { Subject = AllMessageSubject.Text, Body = AllMessageBody.Text };
 				default:
-					throw new NotImplementedException();
+					return null;
 			}
 		}
 
