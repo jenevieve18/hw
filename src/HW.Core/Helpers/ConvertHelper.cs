@@ -5,6 +5,13 @@ namespace HW.Core.Helpers
 {
 	public class SessionHelper
 	{
+		public static void RemoveIf(bool condition, string name)
+		{
+			if (condition) {
+				HttpContext.Current.Session.Remove(name);
+			}
+		}
+		
 		public static void AddIf(bool condition, string name, object val)
 		{
 			if (condition) {

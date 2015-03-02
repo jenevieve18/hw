@@ -64,11 +64,17 @@ namespace HW.Core.Repositories.Sql
 			return ExecuteReader(query, "SqlConnection");
 		}
 		
-		protected SqlDataReader ExecuteReader(string query, string connectionName)
+		protected SqlDataReader ExecuteReader(string query, string connectionName, params SqlParameter[] parameters)
 		{
 			con = new SqlConnection(ConfigurationManager.AppSettings[connectionName]);
 			OpenConnection();
 			SqlCommand cmd = new SqlCommand(query, con);
+			foreach (var p in parameters) {
+				if (p.Value == null) {
+					p.Value = DBNull.Value;
+				}
+				cmd.Parameters.Add(p);
+			}
 			return cmd.ExecuteReader(CommandBehavior.CloseConnection);
 		}
 		

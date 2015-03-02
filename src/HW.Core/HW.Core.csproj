@@ -125,6 +125,7 @@
     <Compile Include="Models\Language.cs" />
     <Compile Include="Models\Manager.cs" />
     <Compile Include="Models\Measure.cs" />
+    <Compile Include="Models\MessageSendType.cs" />
     <Compile Include="Models\Navigation.cs" />
     <Compile Include="Models\News.cs" />
     <Compile Include="Models\Option.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Repositories\Sql\SqlDepartmentRepository.cs" />
     <Compile Include="Repositories\Sql\SqlAnswerRepository.cs" />
     <Compile Include="Services\LoggingService.cs" />
+    <Compile Include="Services\MessageService.cs" />
     <Compile Include="Services\ReportService.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -59,7 +59,8 @@ namespace HW.Grp
 						Session["SeeUsers"] = s.SeeUsers ? 1 : 0;
 						Session["ReadOnly"] = s.ReadOnly ? 1 : 0;
 
-                        SessionHelper.AddIf(skey != null, "SponsorKey", skey);
+                        SessionHelper.AddIf(skey != null, "Sponsor" + s.Sponsor.Id + "Key", skey);
+                        SessionHelper.RemoveIf(skey == null, "SponsorKey");
 					}
 				} else {
                     errorMessage = R.Str(lid, "login.invalid", "Invalid user name and password. Please try again.");

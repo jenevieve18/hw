@@ -321,7 +321,7 @@ namespace HW.Core.Models
 					case ExtendedSurveySendType: return new ExtendedSurveySendType(service);
 					case ThankYouSendType: return new ThankYouSendType(service);
 					case AllActivatedUsersSendType: return new AllActivatedUsersSendType(service);
-					default: throw new NotImplementedException();
+					default: return null;
 			}
 		}
 	}
