@@ -1600,7 +1600,7 @@ ORDER BY s.Email",
 						string d = sponsorAdmin == null || sponsorAdmin.PermanentlyDeleteUsers ?
 							"<a href='org.aspx?SDID=" + showDepartmentID.ToString() + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DeleteUID=" + rs2.GetInt32(0).ToString() + "'><img src='img/usr_del.gif' border='0'/></a>"
 							: "";
-						usr.Append("</td><td style='font-size:9px'>" + (rs2.IsDBNull(1) ? "" : rs2.GetString(1)) + "</td>" +
+						usr.Append("</td><td style='font-size:9px' nowrap>" + (rs2.IsDBNull(1) ? "" : rs2.GetString(1)) + "</td>" +
 						           "<td align='center'>" +
 						           (Convert.ToInt32(Session["ReadOnly"]) == 0 ?
 						            "<a href='org.aspx?SDID=" + showDepartmentID.ToString() + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&UID=" + rs2.GetInt32(0).ToString() + "'><img src='img/usr_edt.gif' border='0'/></a>" +
@@ -1716,7 +1716,8 @@ WHERE a.ProjectRoundUserID = {0}",
 							}
 							usr.Append("</td>");
 						}
-						usr.Append("<td>&nbsp;</td><td align='center' style='font-size:9px;'>&nbsp;");
+//						usr.Append("<td>&nbsp;</td><td align='center' style='font-size:9px;'>&nbsp;");
+						usr.Append("<td>&nbsp;</td><td align='center' style='font-size:9px;' colspan='2'>&nbsp;");
 						if (rs2.IsDBNull(2)) {
 							usr.Append(R.Str(lid, "no", "No"));
 						} else {
@@ -1726,7 +1727,7 @@ WHERE a.ProjectRoundUserID = {0}",
 							usr.Append(", <a href='org.aspx?" + (showReg ? "ShowReg=1&" : "") + "SendSPIID=" + rs2.GetInt32(0) + "&SDID=" + showDepartmentID.ToString() + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "'>" + (rs2.IsDBNull(2) ? R.Str(lid, "send", "Send") : R.Str(lid, "resend", "Resend")) + "</a>");
 						}
 						usr.Append("&nbsp;</td>");
-						usr.Append("<td align='center'>&nbsp;</td>");
+//						usr.Append("<td align='center'>&nbsp;</td>");
 						if (aggrBQcx != 0) {
 							usr.Append("<td colspan='" + aggrBQcx + "'>&nbsp;</td>");
 						}
@@ -1757,7 +1758,7 @@ WHERE up.UserID = {1}",
 								}
 							}
 						}
-						usr.Append("<td align='center' style='font-size:9px;'>");
+						usr.Append("<td align='center' style='font-size:9px;' colspan='2'>");
 						switch ((rs2.IsDBNull(8) ? 0 : rs2.GetInt32(8))) {
 								case 1: usr.Append(R.Str(lid, "status.stop.work", "Stopped, work related")); break;
 								case 2: usr.Append(R.Str(lid, "status.stop.education", "Education leave")); break;
@@ -1777,7 +1778,8 @@ WHERE up.UserID = {1}",
 							}
 							usr.Append(string.Format(" ({0})", rs2.GetDateTime(7).ToString("yyyy-MM-dd")));
 						}
-						usr.Append("</td><td></td></tr>");
+//						usr.Append("</td><td></td></tr>");
+						usr.Append("</td></tr>");
 					}
 					rs2.Close();
 
