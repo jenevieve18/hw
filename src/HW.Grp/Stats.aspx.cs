@@ -45,6 +45,7 @@ namespace HW.Grp
 		
 		public IList<SponsorProjectRoundUnit> ProjectRoundUnits {
 			set {
+        		ProjectRoundUnitID.Items.Clear();
 				foreach (var p in value) {
 					ProjectRoundUnitID.Items.Add(new ListItem(p.Navigation, p.ProjectRoundUnit.Id.ToString()));
 				}
@@ -55,6 +56,7 @@ namespace HW.Grp
 		public IList<SponsorBackgroundQuestion> BackgroundQuestions {
 			set {
 				this.questions = value;
+				BQ.Items.Clear();
 				foreach (var s in questions) {
 					BQ.Items.Add(new ListItem(s.BackgroundQuestion.Internal, s.Id.ToString()));
 				}
@@ -159,6 +161,7 @@ namespace HW.Grp
 			if (sponsorID != 0) {
 				if (!IsPostBack) {
 					
+					GroupBy.Items.Clear();
 					GroupBy.Items.Add(new ListItem(R.Str(lid, "week.one", "One week"), "1"));
 					GroupBy.Items.Add(new ListItem(R.Str(lid, "week.two.even", "Two weeks, start with even"), "7"));
 					GroupBy.Items.Add(new ListItem(R.Str(lid, "week.two.odd", "Two weeks, start with odd"), "2"));
@@ -167,6 +170,7 @@ namespace HW.Grp
 					GroupBy.Items.Add(new ListItem(R.Str(lid, "month.six", "Six months"), "5"));
 					GroupBy.Items.Add(new ListItem(R.Str(lid, "year.one", "One year"), "6"));
 					
+					Grouping.Items.Clear();
 					Grouping.Items.Add(new ListItem(R.Str(lid, "", "< none >"), "0"));
 					Grouping.Items.Add(new ListItem(R.Str(lid, "users.unit", "Users on unit"), "1"));
 					Grouping.Items.Add(new ListItem(R.Str(lid, "users.unit.subunit", "Users on unit+subunits"), "2"));
@@ -178,6 +182,8 @@ namespace HW.Grp
 //					ProjectRoundUnits = sponsorRepository.FindBySponsorAndLanguage(sponsorID, selectedLangID);
 					ProjectRoundUnits = sponsorRepository.FindBySponsorAndLanguage(sponsorID, lid);
 
+					FromYear.Items.Clear();
+					ToYear.Items.Clear();
 					for (int i = 2005; i <= DateTime.Now.Year; i++) {
 						FromYear.Items.Add(new ListItem(i.ToString(), i.ToString()));
 						ToYear.Items.Add(new ListItem(i.ToString(), i.ToString()));
