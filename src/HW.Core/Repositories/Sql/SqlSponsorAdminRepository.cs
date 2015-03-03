@@ -106,7 +106,8 @@ SELECT a.SuperUser,
 	s.InviteLastSent,
 	s.InviteReminderLastSent,
 	s.AllMessageLastSent,
-	s.LoginLastSent
+	s.LoginLastSent,
+	s.EmailFrom
 FROM SponsorAdmin a,
 Sponsor s
 WHERE s.SponsorID = a.SponsorID
@@ -131,7 +132,9 @@ AND a.SponsorAdminID = {0}",
 						InviteLastSent = GetLaterDate(GetDateTime(rs, 17), GetDateTime(rs, 21)),
 						InviteReminderLastSent = GetLaterDate(GetDateTime(rs, 18), GetDateTime(rs, 22)),
 						AllMessageLastSent = GetLaterDate(GetDateTime(rs, 19), GetDateTime(rs, 23)),
-						LoginLastSent = GetLaterDate(GetDateTime(rs, 20), GetDateTime(rs, 24))
+						LoginLastSent = GetLaterDate(GetDateTime(rs, 20), GetDateTime(rs, 24)),
+//						EmailFrom = GetString(rs, 25)
+						EmailFrom = GetString(rs, 25, "", "info@healthwatch.se")
 					};
 				}
 			}
@@ -162,7 +165,9 @@ SELECT SponsorAdminExtendedSurveyID,
 	sae.SponsorExtendedSurveyID,
 	pr.ProjectRoundID,
 	se.Internal,
-	se.RoundText
+	se.RoundText,
+	sae.FinishedLastSent,
+	sae.EmailLastSent
 FROM SponsorAdminExtendedSurvey sae
 INNER JOIN SponsorExtendedSurvey se ON sae.SponsorExtendedSurveyID = se.SponsorExtendedSurveyID
 INNER JOIN eForm..ProjectRound pr ON se.ProjectRoundID = pr.ProjectRoundID
@@ -182,7 +187,9 @@ ORDER BY SponsorAdminExtendedSurveyID DESC",
 						Id = GetInt32(rs, 5),
 						ProjectRound = rs.IsDBNull(6) ? null : new ProjectRound { Id = GetInt32(rs, 6) },
 						Internal = GetString(rs, 7),
-						RoundText = GetString(rs, 8)
+						RoundText = GetString(rs, 8),
+						FinishedLastSent = GetDateTime(rs, 9),
+						EmailLastSent = GetDateTime(rs, 10)
 					};
 					surveys.Add(s);
 				}

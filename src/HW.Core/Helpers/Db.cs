@@ -339,7 +339,7 @@ WHERE ProjectRoundUnitID = {0}",
 				System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient(server);
 				client.Send(mail);
 				return true;
-			} catch (Exception) {
+			} catch (Exception ex) {
 			}
 			return false;
 		}

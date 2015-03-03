@@ -119,9 +119,9 @@ namespace HW.Core.Services
 			return u.FindBySponsorWithLoginDays(sponsorID, sponsorAdminID, selectedValue);
 		}
 		
-		public void UpdateExtendedSurveyLastFinishedSent(int sponsorID, int sponsorExtendedSurveyID, int sponsorAdminExtendedSurveyID)
+		public void UpdateExtendedSurveyLastFinishedSent(int sponsorExtendedSurveyID, int sponsorAdminExtendedSurveyID)
 		{
-			r.UpdateExtendedSurveyLastFinishedSent(sponsorExtendedSurveyID != -1 ? sponsorAdminExtendedSurveyID : sponsorID);
+			r.UpdateExtendedSurveyLastFinishedSent(sponsorAdminExtendedSurveyID != -1 ? sponsorAdminExtendedSurveyID : sponsorExtendedSurveyID);
 		}
 		
 		public void UpdateLastAllMessageSent(int sponsorID, int sponsorAdminID)
@@ -143,9 +143,9 @@ namespace HW.Core.Services
 			r.UpdateSponsorLastLoginSent(sponsorAdminID != -1 ? sponsorAdminID : sponsorID);
 		}
 		
-		public void UpdateExtendedSurveyLastEmailSent(int sponsorID, int sponsorExtendedSurveyID, int sponsorAdminExtendedSurveyID)
+		public void UpdateExtendedSurveyLastEmailSent(int sponsorExtendedSurveyID, int sponsorAdminExtendedSurveyID)
 		{
-			r.UpdateExtendedSurveyLastEmailSent(sponsorExtendedSurveyID != -1 ? sponsorAdminExtendedSurveyID : sponsorID);
+			r.UpdateExtendedSurveyLastEmailSent(sponsorAdminExtendedSurveyID != -1 ? sponsorAdminExtendedSurveyID : sponsorExtendedSurveyID);
 		}
 	}
 }

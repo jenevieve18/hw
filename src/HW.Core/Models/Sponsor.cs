@@ -97,6 +97,7 @@ namespace HW.Core.Models
 		string Internal { get; set; }
 		string RoundText { get; set; }
 		int ExtraExtendedSurveyId { get; set; }
+		DateTime? FinishedLastSent { get; set; }
 	}
 	
 	public class SponsorExtendedSurvey : BaseModel, IExtendedSurvey
@@ -117,6 +118,7 @@ namespace HW.Core.Models
 		public virtual int RequiredUserCount { get; set; }
 		public virtual ProjectRound PreviousProjectRound { get; set; }
 		public virtual Feedback Feedback { get; set; }
+		public virtual DateTime? FinishedLastSent { get; set; }
 		
 		public virtual int WarnIfMissingQID { get; set; }
 		public virtual string RoundText2 { get; set; }
@@ -192,6 +194,7 @@ namespace HW.Core.Models
 		public virtual string ExtraEmailSubject { get; set; }
 		public virtual string ExtraEmailBody { get; set; }
 		public virtual ProjectRound ProjectRound { get; set; }
+		public virtual DateTime? FinishedLastSent { get; set; }
 		
 		public virtual string Internal { get; set; }
 		public virtual string RoundText { get; set; }

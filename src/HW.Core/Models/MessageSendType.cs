@@ -8,6 +8,12 @@ namespace HW.Core.Models
 	public class ExtendedSurveyMessage : Message
 	{
 		int sponsorExtendedSurveyID;
+		int sponsorAdminExtendedSurveyID;
+		
+		public int SponsorAdminExtendedSurveyID {
+			get { return sponsorAdminExtendedSurveyID; }
+			set { sponsorAdminExtendedSurveyID = value; }
+		}
 		
 		public int SponsorExtendedSurveyID {
 			get { return sponsorExtendedSurveyID; }
@@ -167,7 +173,8 @@ namespace HW.Core.Models
 		public override void Send(int sponsorID, int sponsorAdminID)
 		{
 			var m = Message as ExtendedSurveyMessage;
-			service.UpdateExtendedSurveyLastFinishedSent(sponsorID, m.SponsorExtendedSurveyID, sponsorAdminID);
+//			service.UpdateExtendedSurveyLastFinishedSent(sponsorID, m.SponsorExtendedSurveyID, m.SponsorAdminExtendedSurveyID);
+			service.UpdateExtendedSurveyLastFinishedSent(m.SponsorExtendedSurveyID, m.SponsorAdminExtendedSurveyID);
 			foreach (var u in service.FindBySponsorWithExtendedSurvey(sponsorID, sponsorAdminID, m.SponsorExtendedSurveyID)) {
 				bool success = false;
 				bool badEmail = false;
@@ -249,7 +256,8 @@ namespace HW.Core.Models
 		public override void Send(int sponsorID, int sponsorAdminID)
 		{
 			var m = Message as ExtendedSurveyMessage;
-			service.UpdateExtendedSurveyLastEmailSent(sponsorID, m.SponsorExtendedSurveyID, sponsorAdminID);
+//			service.UpdateExtendedSurveyLastEmailSent(sponsorID, m.SponsorExtendedSurveyID, m.SponsorAdminExtendedSurveyID);
+			service.UpdateExtendedSurveyLastEmailSent(m.SponsorExtendedSurveyID, m.SponsorAdminExtendedSurveyID);
 			foreach (var u in service.FindBySponsorWithExtendedSurvey2(sponsorID, sponsorAdminID, m.SponsorExtendedSurveyID)) {
 				bool success = false;
 				bool badEmail = false;

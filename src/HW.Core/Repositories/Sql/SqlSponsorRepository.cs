@@ -1252,7 +1252,8 @@ SELECT ses.ProjectRoundID,
 	ses.SponsorExtendedSurveyID,
 	ses.FinishedEmailSubject,
 	ses.FinishedEmailBody,
-	ses.RoundText
+	ses.RoundText,
+	ses.FinishedLastSent
 FROM SponsorExtendedSurvey ses
 INNER JOIN Sponsor s ON ses.SponsorID = s.SponsorID
 INNER JOIN Department d ON s.SponsorID = d.SponsorID
@@ -1276,7 +1277,8 @@ ORDER BY ses.SponsorExtendedSurveyID DESC",
 						Id = GetInt32(rs, 5),
 						FinishedEmailSubject = GetString(rs, 6),
 						FinishedEmailBody = GetString(rs, 7),
-						RoundText = GetString(rs, 8)
+						RoundText = GetString(rs, 8),
+						FinishedLastSent = GetDateTime(rs, 9)
 					};
 					surveys.Add(s);
 				}
