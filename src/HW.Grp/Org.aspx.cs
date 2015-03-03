@@ -57,26 +57,28 @@ namespace HW.Grp
 
 				sponsorAdmin = sponsorRepository.ReadSponsorAdmin(sponsorID, sponsorAdminID);
 
-				StoppedReason.Items.Clear();
-				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.active", "Active"), "0"));
-				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.work", "Stopped, work related"), "1"));
-				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.education", "Stopped, education leave"), "2"));
-				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.parent", "Stopped, parental leave"), "14"));
-				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.sick", "Stopped, sick leave"), "24"));
-				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.not.participate", "Stopped, do not want to participate"), "34"));
-				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.not.associated", "Stopped, no longer associated"), "44"));
-				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.other", "Stopped, other reason"), "4"));
-				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.unknown", "Stopped, unknown reason"), "5"));
-				StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.complete", "Stopped, project completed"), "6"));
-				
-				UserUpdateFrom.Items.Clear();
-				UserUpdateFrom.Items.Add(new ListItem(R.Str(lid, "user.update.onwards", "Update the user profile with these settings from today and onwards."), "1"));
-				UserUpdateFrom.Items.Add(new ListItem(R.Str(lid, "user.update.start", "Update the user profile as if these settings were set from start."), "0"));
-				UserUpdateFrom.Items.Add(new ListItem(R.Str(lid, "user.update.previous", "The previously registered email address has never been correct and the created account should be detached from organization."), "2"));
+                if (!IsPostBack) {
+                    StoppedReason.Items.Clear();
+                    StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.active", "Active"), "0"));
+                    StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.work", "Stopped, work related"), "1"));
+                    StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.education", "Stopped, education leave"), "2"));
+                    StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.parent", "Stopped, parental leave"), "14"));
+                    StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.sick", "Stopped, sick leave"), "24"));
+                    StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.not.participate", "Stopped, do not want to participate"), "34"));
+                    StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.not.associated", "Stopped, no longer associated"), "44"));
+                    StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.other", "Stopped, other reason"), "4"));
+                    StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.unknown", "Stopped, unknown reason"), "5"));
+                    StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.complete", "Stopped, project completed"), "6"));
 
-				DeleteUserFrom.Items.Clear();
-				DeleteUserFrom.Items.Add(new ListItem(R.Str(lid, "disassociate.today", "From today and onwards, disassociate this user with the organization."), "1"));
-				DeleteUserFrom.Items.Add(new ListItem(R.Str(lid, "disassociate.start", "Disassociate this user with the organization from start."), "0"));
+                    UserUpdateFrom.Items.Clear();
+                    UserUpdateFrom.Items.Add(new ListItem(R.Str(lid, "user.update.onwards", "Update the user profile with these settings from today and onwards."), "1"));
+                    UserUpdateFrom.Items.Add(new ListItem(R.Str(lid, "user.update.start", "Update the user profile as if these settings were set from start."), "0"));
+                    UserUpdateFrom.Items.Add(new ListItem(R.Str(lid, "user.update.previous", "The previously registered email address has never been correct and the created account should be detached from organization."), "2"));
+
+                    DeleteUserFrom.Items.Clear();
+                    DeleteUserFrom.Items.Add(new ListItem(R.Str(lid, "disassociate.today", "From today and onwards, disassociate this user with the organization."), "1"));
+                    DeleteUserFrom.Items.Add(new ListItem(R.Str(lid, "disassociate.start", "Disassociate this user with the organization from start."), "0"));
+                }
 
 				if (Request.QueryString["ShowReg"] != null && Convert.ToInt32(Session["ReadOnly"]) == 0) {
 					showReg = true;
