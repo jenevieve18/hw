@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using HW.Core.Helpers;
 using HW.Core.Models;
+using HW.Core.Services;
 
 namespace HW.Core.Repositories.Sql
 {
@@ -562,6 +563,7 @@ AND u.Email NOT LIKE '%DELETED'",
 				j
 			);
 			var users = new List<User>();
+			LoggingService.Info(query);
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
 					var u = new User {

@@ -229,11 +229,9 @@ namespace HW.Core.Models
 					try {
 						success = Db.sendMail(u.Email, Message.Subject, Message.Body);
 					} catch (Exception ex) {
-						throw ex;
 						badEmail = true;
 					}
 				} else {
-					throw new Exception(string.Format("{0} is exception.", u.Email));
 					badEmail = true;
 				}
 				if (badEmail) {
