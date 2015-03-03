@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using HW.Core.Repositories.Sql;
+using HW.Core.Services;
 
 namespace HW.Core.Helpers
 {
@@ -340,6 +341,7 @@ WHERE ProjectRoundUnitID = {0}",
 				client.Send(mail);
 				return true;
 			} catch (Exception ex) {
+				LoggingService.Info(ex.Message);
 			}
 			return false;
 		}
