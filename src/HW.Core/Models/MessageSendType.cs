@@ -230,12 +230,15 @@ namespace HW.Core.Models
 						success = Db.sendMail(u.Email, Message.Subject, Message.Body);
 					} catch (Exception ex) {
 						badEmail = true;
+						LoggingService.Info(ex.Message);
 					}
 				} else {
 					badEmail = true;
+					LoggingService.Info(string.Format("{0} is bad email", u.Email));
 				}
 				if (badEmail) {
 					service.UpdateEmailFailure(u.Id);
+					LoggingService.Info(string.Format("Bad email, updating email failure"));
 				}
 
 				if (success) {
