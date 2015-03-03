@@ -27,7 +27,7 @@
 			<br />
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td><b><%= R.Str(lid, "registration.invitation.subject", "Registration invitation subject/message *")%></b> (<span style="font-size:9px;"><%= R.Str(lid, "sent.last", "Last sent") %>: <asp:Label ID=InviteLastSent runat=server /></span>)</td>
+                    <td><b><%= R.Str(lid, "registration.invitation.subject", "Registration invitation subject/message *")%></b> (<span style="font-size:9px;"><%= R.Str(lid, "sent.last", "Last sent") %>: <asp:Label ID=InviteLastSent runat=server /></span>)</td>
 					<td rowspan="9">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<td bgcolor="#CCCCCC" rowspan="9"><img src="img/null.gif" width="1" height="1" /></td>
 					<td rowspan="9">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -63,15 +63,24 @@
 				<tr><td colspan=2>&nbsp;</td></tr>
 				<tr>
 					<td><b><%= R.Str(lid, "registration.reminder.subject", "Registration reminder subject/message **")%></b> (<span style="font-size:9px;"><%= R.Str(lid, "sent.last", "Last sent") %>: <asp:Label ID=InviteReminderLastSent runat=server /></span>)</td>
-					<td><asp:Label Visible=false ID="ExtendedSurvey" runat=server/><asp:Label Visible=false ID="ExtendedSurveyFinished" runat=server/></td>
+					<td>
+                        <asp:Label Visible=false ID="ExtendedSurvey" runat=server/>
+                        <asp:Label Visible=false ID="ExtendedSurveyFinished" runat=server/>
+                    </td>
 				</tr>
 				<tr>
 					<td><asp:TextBox ID=InviteReminderSubject runat=server Width=460 /></td>
-					<td><asp:TextBox Visible=false ID=ExtendedSurveySubject runat=server Width=460 /><asp:TextBox Visible=false ID=ExtendedSurveyFinishedSubject runat=server Width=460 /></td>
+					<td>
+                        <asp:TextBox Visible=false ID=ExtendedSurveySubject runat=server Width=460 />
+                        <asp:TextBox Visible=false ID=ExtendedSurveyFinishedSubject runat=server Width=460 />
+                    </td>
 				</tr>
 				<tr>
 					<td><asp:TextBox ID=InviteReminderTxt runat=server TextMode=MultiLine Rows=10 Width=460 /></td>
-					<td><asp:TextBox Visible=false ID=ExtendedSurveyTxt runat=server TextMode=MultiLine Rows=10 Width=460 /><asp:TextBox Visible=false ID=ExtendedSurveyFinishedTxt runat=server TextMode=MultiLine Rows=10 Width=460 /></td>
+					<td>
+                        <asp:TextBox Visible=false ID=ExtendedSurveyTxt runat=server TextMode=MultiLine Rows=10 Width=460 />
+                        <asp:TextBox Visible=false ID=ExtendedSurveyFinishedTxt runat=server TextMode=MultiLine Rows=10 Width=460 />
+                    </td>
 				</tr>
 				<tr><td colspan=2>&nbsp;</td></tr>
 				<tr>

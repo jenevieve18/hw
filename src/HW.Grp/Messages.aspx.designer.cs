@@ -13,7 +13,7 @@ namespace HW.Grp {
     public partial class Messages {
         
         /// <summary>
-        /// Save control.
+        /// buttonSave control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
@@ -40,7 +40,7 @@ namespace HW.Grp {
         protected global::System.Web.UI.WebControls.TextBox Password;
         
         /// <summary>
-        /// Send control.
+        /// buttonSend control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.

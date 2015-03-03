@@ -24,6 +24,7 @@ namespace HW.Grp
 		bool incorrectPassword = false;
 		bool sent = false;
 		bool loginWithSkey = false;
+		ISponsor sponsor;
 		
 		protected int lid;
 		
@@ -64,17 +65,32 @@ namespace HW.Grp
 				
 				if (!IsPostBack) {
 					PopulateDropDownLists();
-					Sponsor = service.ReadSponsor(SponsorAndSponsorAdminID);
-					ExtendedSurveys = service.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID);
+//				}
+//				bool revert = ConvertHelper.ToInt32(Request.QueryString["Revert"]) == 1;
+//				if (revert) {
+//					var r = new SqlSponsorRepository();
+//					Sponsor = r.ReadSponsor(sponsorID);
+//					ExtendedSurveys = r.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID);
+//				} else {
+//					Sponsor = service.ReadSponsor(SponsorAndSponsorAdminID);
+//					ExtendedSurveys = service.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID);
+					LoadMessages(service.ReadSponsor(SponsorAndSponsorAdminID), service.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID));
 				}
 			} else {
 				Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
 		}
 		
+		void LoadMessages(ISponsor sponsor, IList<IExtendedSurvey> surveys)
+		{
+			Sponsor = sponsor;
+			ExtendedSurveys = surveys;
+		}
+		
 		public ISponsor Sponsor {
+			get { return sponsor; }
 			set {
-				var sponsor = value;
+				sponsor = value;
 				
 				var u = service.a(sponsorID, sponsorAdminID);
 				AllMessageLastSent.Text = R.Str(lid, "recipients", "Recipients") + ": " + u + ", ";
@@ -99,6 +115,67 @@ namespace HW.Grp
 					InviteReminderLastSent.Text = (sponsor.InviteReminderLastSent == null ? R.Str(lid, "never", "Never") : sponsor.InviteReminderLastSent.Value.ToString("yyyy-MM-dd HH:mm"));
 					AllMessageLastSent.Text += R.Str(lid, "sent.last", "Last sent") + ": " + (sponsor.AllMessageLastSent == null ? R.Str(lid, "never", "Never") : sponsor.AllMessageLastSent.Value.ToString("yyyy-MM-dd HH:mm"));
 					LoginLastSent.Text = (sponsor.LoginLastSent == null ? R.Str(lid, "never", "Never") : sponsor.LoginLastSent.Value.ToString("yyyy-MM-dd HH:mm"));
+				}
+			}
+		}
+		
+		public IList<IExtendedSurvey> ExtendedSurveys
+		{
+			set {
+				int projectRoundID = 0;
+				string extendedSurvey = "";
+				bool found = false;
+				IList<int> seen = new List<int>();
+				foreach (var s in value) {
+					if (!seen.Contains(s.ExtraExtendedSurveyId != 0 ? s.ExtraExtendedSurveyId : s.Id)) {
+						if (s.ProjectRound != null) {
+							if (!found) {
+								projectRoundID = s.ProjectRound.Id;
+								extendedSurvey = s.Internal + s.RoundText;
+								
+								ExtendedSurvey.Text = R.Str(lid, "reminder.for", "Reminder for") + " <b>" + extendedSurvey + "</b> (<span style='font-size:9px;'>[x]" + R.Str(lid, "sent.last", "Last sent") + ": " + (s.EmailLastSent == null ? R.Str(lid, "never", "Never") : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
+								ExtendedSurveySubject.Text = s.EmailSubject;
+								ExtendedSurveyTxt.Text = s.EmailBody;
+
+								ExtendedSurveyFinished.Text = R.Str(lid, "thanks.mail", "Thank you mail for") + " <b>" + extendedSurvey + "</b> (<span style='font-size:9px;'>[x]" + R.Str(lid, "sent.last", "Last sent") + ": " + (s.FinishedLastSent == null ? R.Str(lid, "never", "Never") : s.FinishedLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
+								ExtendedSurveyFinishedSubject.Text = s.FinishedEmailSubject;
+								ExtendedSurveyFinishedTxt.Text = s.FinishedEmailBody;
+								
+								sponsorExtendedSurveyID = s.Id;
+								sponsorAdminExtendedSurveyID = s.ExtraExtendedSurveyId;
+								
+								found = true;
+
+								var count = service.CountBySponsorWithAdminAndExtendedSurvey2(sponsorID, sponsorAdminID, sponsorExtendedSurveyID);
+								ExtendedSurvey.Text = ExtendedSurvey.Text.Replace("[x]", "[x]" + R.Str(lid, "recipients", "Recipients") + ": " + count + ", ");
+
+								count = service.CountBySponsorWithAdminAndExtendedSurvey(sponsorID, sponsorAdminID, sponsorExtendedSurveyID);
+								ExtendedSurveyFinished.Text = ExtendedSurveyFinished.Text.Replace("[x]", "[x]" + R.Str(lid, "recipients", "Recipients") + ": " + count + ", ");
+							} else {
+								HtmlHelper.SetTextIfEmpty(ExtendedSurveyTxt, s.EmailBody);
+								HtmlHelper.SetTextIfEmpty(ExtendedSurveySubject, s.EmailSubject);
+								HtmlHelper.SetTextIfEmpty(ExtendedSurveyFinishedTxt, s.FinishedEmailBody);
+								HtmlHelper.SetTextIfEmpty(ExtendedSurveyFinishedSubject, s.FinishedEmailSubject);
+							}
+						}
+						seen.Add(s.ExtraExtendedSurveyId != 0 ? s.ExtraExtendedSurveyId : s.Id);
+					}
+				}
+				if (projectRoundID != 0) {
+					ProjectRound r = service.ReadRound(projectRoundID);
+					if (r != null) {
+						ExtendedSurvey.Text = ExtendedSurvey.Text.Replace("[x]", R.Str(lid, "period", "Period") + ": " + r.ToPeriodString() + ", ");
+						ExtendedSurveyFinished.Text = ExtendedSurveyFinished.Text.Replace("[x]", R.Str(lid, "period", "Period") + ": " + r.ToPeriodString() + ", ");
+						if (r.IsOpen) {
+							ExtendedSurveySubject.Visible = ExtendedSurvey.Visible = ExtendedSurveyTxt.Visible = true;
+							SendType.Items.Add(new ListItem(R.Str(lid, "reminder", "Reminder: ") + extendedSurvey, "4"));
+						}
+					}
+
+					if (!ExtendedSurvey.Visible && ExtendedSurveyFinished.Text != "") {
+						ExtendedSurveyFinishedSubject.Visible = ExtendedSurveyFinished.Visible = ExtendedSurveyFinishedTxt.Visible = true;
+						SendType.Items.Add(new ListItem(R.Str(lid, "thanks", "Thank you: ") + extendedSurvey, "5"));
+					}
 				}
 			}
 		}
@@ -131,67 +208,6 @@ namespace HW.Grp
 			
 			LoginSubject.Enabled = LoginTxt.Enabled = LoginDays.Enabled = LoginWeekday.Enabled = loginWithSkey;
 		}
-		
-		public IList<IExtendedSurvey> ExtendedSurveys
-		{
-			set {
-				int projectRoundID = 0;
-				string extendedSurvey = "";
-				bool found = false;
-				IList<int> seen = new List<int>();
-				foreach (var s in value) {
-					if (!seen.Contains(s.Id)) {
-						if (s.ProjectRound != null) {
-							if (!found) {
-								projectRoundID = s.ProjectRound.Id;
-								extendedSurvey = s.Internal + s.RoundText;
-								
-								ExtendedSurvey.Text = R.Str(lid, "reminder.for", "Reminder for") + " <b>" + extendedSurvey + "</b> (<span style='font-size:9px;'>[x]" + R.Str(lid, "sent.last", "Last sent") + ": " + (s.EmailLastSent == null ? R.Str(lid, "never", "Never") : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
-								ExtendedSurveySubject.Text = s.EmailSubject;
-								ExtendedSurveyTxt.Text = s.EmailBody;
-
-								ExtendedSurveyFinished.Text = R.Str(lid, "thanks.mail", "Thank you mail for") + " <b>" + extendedSurvey + "</b> (<span style='font-size:9px;'>[x]" + R.Str(lid, "sent.last", "Last sent") + ": " + (s.EmailLastSent == null ? R.Str(lid, "never", "Never") : s.EmailLastSent.Value.ToString("yyyy-MM-dd")) + "</span>)";
-								ExtendedSurveyFinishedSubject.Text = s.FinishedEmailSubject;
-								ExtendedSurveyFinishedTxt.Text = s.FinishedEmailBody;
-								
-								sponsorExtendedSurveyID = s.Id;
-								sponsorAdminExtendedSurveyID = s.ExtraExtendedSurveyId;
-								
-								found = true;
-
-								var count = service.CountBySponsorWithAdminAndExtendedSurvey2(sponsorID, sponsorAdminID, sponsorExtendedSurveyID);
-								ExtendedSurvey.Text = ExtendedSurvey.Text.Replace("[x]", "[x]" + R.Str(lid, "recipients", "Recipients") + ": " + count + ", ");
-
-								count = service.CountBySponsorWithAdminAndExtendedSurvey(sponsorID, sponsorAdminID, sponsorExtendedSurveyID);
-								ExtendedSurveyFinished.Text = ExtendedSurveyFinished.Text.Replace("[x]", "[x]" + R.Str(lid, "recipients", "Recipients") + ": " + count + ", ");
-							} else {
-								HtmlHelper.SetTextIfEmpty(ExtendedSurveyTxt, s.EmailBody);
-								HtmlHelper.SetTextIfEmpty(ExtendedSurveySubject, s.EmailSubject);
-								HtmlHelper.SetTextIfEmpty(ExtendedSurveyFinishedTxt, s.FinishedEmailBody);
-								HtmlHelper.SetTextIfEmpty(ExtendedSurveyFinishedSubject, s.FinishedEmailSubject);
-							}
-						}
-						seen.Add(s.Id);
-					}
-				}
-				if (projectRoundID != 0) {
-					ProjectRound r = service.ReadRound(projectRoundID);
-					if (r != null) {
-						ExtendedSurvey.Text = ExtendedSurvey.Text.Replace("[x]", R.Str(lid, "period", "Period") + ": " + r.ToPeriodString() + ", ");
-						ExtendedSurveyFinished.Text = ExtendedSurveyFinished.Text.Replace("[x]", R.Str(lid, "period", "Period") + ": " + r.ToPeriodString() + ", ");
-						if (r.IsOpen) {
-							ExtendedSurveySubject.Visible = ExtendedSurvey.Visible = ExtendedSurveyTxt.Visible = true;
-							SendType.Items.Add(new ListItem(R.Str(lid, "reminder", "Reminder: ") + extendedSurvey, "4"));
-						}
-					}
-
-					if (!ExtendedSurvey.Visible && ExtendedSurveyFinished.Text != "") {
-						ExtendedSurveyFinishedSubject.Visible = ExtendedSurveyFinished.Visible = ExtendedSurveyFinishedTxt.Visible = true;
-						SendType.Items.Add(new ListItem(R.Str(lid, "thanks", "Thank you: ") + extendedSurvey, "5"));
-					}
-				}
-			}
-		}
 
 		int Save()
 		{
@@ -208,10 +224,14 @@ namespace HW.Grp
 
 		void RevertClick(object sender, EventArgs e)
 		{
-			PopulateDropDownLists();
 			var r = new SqlSponsorRepository();
-			Sponsor = r.ReadSponsor(sponsorID);
-			ExtendedSurveys = r.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID);
+//			Sponsor = r.ReadSponsor(sponsorID);
+//			ExtendedSurveys = r.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID);
+			LoadMessages(r.ReadSponsor(sponsorID), r.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID));
+//			Response.Redirect(
+//				string.Format("messages.aspx?Rnd={0}&Revert=1", (new Random(unchecked((int)DateTime.Now.Ticks))).Next()),
+//				true
+//			);
 		}
 
 		void SaveClick(object sender, EventArgs e)
@@ -226,7 +246,8 @@ namespace HW.Grp
 
 		void SendClick(object sender, EventArgs e)
 		{
-			sponsorExtendedSurveyID = Save();
+			sponsorAdminExtendedSurveyID = Save();
+            LoadMessages(service.ReadSponsor(SponsorAndSponsorAdminID), service.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID));
 
 			if (SendType.SelectedIndex != -1) {
 				bool valid = (Session["SponsorAdminID"].ToString() == "-1");
@@ -262,9 +283,9 @@ namespace HW.Grp
 				case MessageSendType.LoginReminderSendType:
 					return new LoginReminderMessage { Subject = LoginSubject.Text, Body = LoginTxt.Text, LoginDays = ConvertHelper.ToInt32(LoginDays.SelectedValue) };
 				case MessageSendType.ExtendedSurveySendType:
-					return new ExtendedSurveyMessage { Subject = ExtendedSurveyTxt.Text, Body = ExtendedSurveySubject.Text, SponsorExtendedSurveyID = sponsorExtendedSurveyID };
+					return new ExtendedSurveyMessage { From = sponsor.EmailFrom, Subject = ExtendedSurveyTxt.Text, Body = ExtendedSurveySubject.Text, SponsorExtendedSurveyID = sponsorExtendedSurveyID, SponsorAdminExtendedSurveyID = sponsorAdminExtendedSurveyID };
 				case MessageSendType.ThankYouSendType:
-					return new ExtendedSurveyMessage{ Subject = ExtendedSurveyFinishedSubject.Text, Body = ExtendedSurveyFinishedTxt.Text, SponsorExtendedSurveyID = sponsorExtendedSurveyID };
+					return new ExtendedSurveyMessage { From = sponsor.EmailFrom, Subject = ExtendedSurveyFinishedSubject.Text, Body = ExtendedSurveyFinishedTxt.Text, SponsorExtendedSurveyID = sponsorExtendedSurveyID, SponsorAdminExtendedSurveyID = sponsorAdminExtendedSurveyID };
 				case MessageSendType.AllActivatedUsersSendType:
 					return new Message { Subject = AllMessageSubject.Text, Body = AllMessageBody.Text };
 				default:
