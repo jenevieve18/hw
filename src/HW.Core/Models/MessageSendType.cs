@@ -233,6 +233,7 @@ namespace HW.Core.Models
 						badEmail = true;
 					}
 				} else {
+					throw new Exception(string.Format("{0} is exception.", u.Email));
 					badEmail = true;
 				}
 				if (badEmail) {
