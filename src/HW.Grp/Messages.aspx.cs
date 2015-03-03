@@ -81,10 +81,9 @@ namespace HW.Grp
 		}
 		
 		public void SetSponsor(ISponsor sponsor, bool postBack)
-		{
+        {
+            this.sponsor = sponsor;
 			if (!postBack) {
-				this.sponsor = sponsor;
-				
 				var u = service.a(sponsorID, sponsorAdminID);
 				AllMessageLastSent.Text = R.Str(lid, "recipients", "Recipients") + ": " + u + ", ";
 				
