@@ -173,7 +173,6 @@ namespace HW.Core.Models
 		public override void Send(int sponsorID, int sponsorAdminID)
 		{
 			var m = Message as ExtendedSurveyMessage;
-//			service.UpdateExtendedSurveyLastFinishedSent(sponsorID, m.SponsorExtendedSurveyID, m.SponsorAdminExtendedSurveyID);
 			service.UpdateExtendedSurveyLastFinishedSent(m.SponsorExtendedSurveyID, m.SponsorAdminExtendedSurveyID);
 			foreach (var u in service.FindBySponsorWithExtendedSurvey(sponsorID, sponsorAdminID, m.SponsorExtendedSurveyID)) {
 				bool success = false;
@@ -230,15 +229,12 @@ namespace HW.Core.Models
 						success = Db.sendMail(u.Email, Message.Subject, Message.Body);
 					} catch (Exception ex) {
 						badEmail = true;
-						LoggingService.Info(ex.Message);
 					}
 				} else {
 					badEmail = true;
-					LoggingService.Info(string.Format("{0} is bad email", u.Email));
 				}
 				if (badEmail) {
 					service.UpdateEmailFailure(u.Id);
-					LoggingService.Info(string.Format("Bad email, updating email failure"));
 				}
 
 				if (success) {
@@ -259,7 +255,6 @@ namespace HW.Core.Models
 		public override void Send(int sponsorID, int sponsorAdminID)
 		{
 			var m = Message as ExtendedSurveyMessage;
-//			service.UpdateExtendedSurveyLastEmailSent(sponsorID, m.SponsorExtendedSurveyID, m.SponsorAdminExtendedSurveyID);
 			service.UpdateExtendedSurveyLastEmailSent(m.SponsorExtendedSurveyID, m.SponsorAdminExtendedSurveyID);
 			foreach (var u in service.FindBySponsorWithExtendedSurvey2(sponsorID, sponsorAdminID, m.SponsorExtendedSurveyID)) {
 				bool success = false;

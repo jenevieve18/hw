@@ -197,7 +197,7 @@ ORDER BY SponsorAdminExtendedSurveyID DESC",
 			return surveys;
 		}
 		
-		public int UpdateEmailTexts(int ID, int sponsorAdminID, int sponsorAdminExtendedSurveyID, string emailSubject, string emailBody, string finishedEmailSubject, string finishedEmailBody)
+		public int UpdateEmailTexts(int sponsorExtendedSurveyID, int sponsorAdminID, int sponsorAdminExtendedSurveyID, string emailSubject, string emailBody, string finishedEmailSubject, string finishedEmailBody)
 		{
 			string query = string.Format(
 				@"
@@ -224,7 +224,7 @@ ELSE
 				new SqlParameter("@EmailBody", emailBody),
 				new SqlParameter("@FinishedEmailSubject", finishedEmailSubject),
 				new SqlParameter("@FinishedEmailBody", finishedEmailBody),
-				new SqlParameter("@SponsorExtendedSurveyID", ID),
+				new SqlParameter("@SponsorExtendedSurveyID", sponsorExtendedSurveyID),
 				new SqlParameter("@SponsorAdminID", sponsorAdminID),
 				new SqlParameter("@SponsorAdminExtendedSurveyID", sponsorAdminExtendedSurveyID)
 			);
