@@ -65,15 +65,6 @@ namespace HW.Grp
 				
 				if (!IsPostBack) {
 					PopulateDropDownLists();
-//				}
-//				bool revert = ConvertHelper.ToInt32(Request.QueryString["Revert"]) == 1;
-//				if (revert) {
-//					var r = new SqlSponsorRepository();
-//					Sponsor = r.ReadSponsor(sponsorID);
-//					ExtendedSurveys = r.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID);
-//				} else {
-//					Sponsor = service.ReadSponsor(SponsorAndSponsorAdminID);
-//					ExtendedSurveys = service.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID);
 					LoadMessages(service.ReadSponsor(SponsorAndSponsorAdminID), service.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID));
 				}
 			} else {
@@ -225,13 +216,7 @@ namespace HW.Grp
 		void RevertClick(object sender, EventArgs e)
 		{
 			var r = new SqlSponsorRepository();
-//			Sponsor = r.ReadSponsor(sponsorID);
-//			ExtendedSurveys = r.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID);
 			LoadMessages(r.ReadSponsor(sponsorID), r.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID));
-//			Response.Redirect(
-//				string.Format("messages.aspx?Rnd={0}&Revert=1", (new Random(unchecked((int)DateTime.Now.Ticks))).Next()),
-//				true
-//			);
 		}
 
 		void SaveClick(object sender, EventArgs e)
