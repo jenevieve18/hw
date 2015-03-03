@@ -229,7 +229,7 @@ namespace HW.Core.Models
 					try {
 						success = Db.sendMail(u.Email, Message.Subject, Message.Body);
 					} catch (Exception ex) {
-						LoggingService.Info(ex.Message);
+						throw ex;
 						badEmail = true;
 					}
 				} else {
