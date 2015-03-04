@@ -341,7 +341,7 @@ WHERE ProjectRoundUnitID = {0}",
 				client.Send(mail);
 				return true;
 			} catch (Exception ex) {
-				LoggingService.Info(ex.Message);
+				LoggingService.Error(ex.Message);
 			}
 			return false;
 		}
@@ -363,7 +363,8 @@ WHERE ProjectRoundUnitID = {0}",
 
 						return true;
 					}
-				} catch (Exception) {
+				} catch (Exception ex) {
+					LoggingService.Error(ex.Message);
 				}
 			}
 			return false;

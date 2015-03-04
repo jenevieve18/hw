@@ -16,16 +16,14 @@ namespace HW.Core.Services
 			log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 		}
 		
+		public static void Error(string message)
+		{
+			log.Error(message);
+		}
+		
 		public static void Debug(string message)
 		{
 			log.Debug(message);
-		}
-		
-		public static void Info(string path, string message)
-		{
-			using (StreamWriter w = File.AppendText(path)) {
-				w.WriteLine(message);
-			}
 		}
 		
 		public static void Info(string message)

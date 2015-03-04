@@ -227,7 +227,7 @@ namespace HW.Core.Models
 				if (Db.isEmail(u.Email)) {
 					try {
 						success = Db.sendMail(u.Email, Message.Subject, Message.Body);
-					} catch (Exception ex) {
+					} catch (Exception) {
 						badEmail = true;
 					}
 				} else {
