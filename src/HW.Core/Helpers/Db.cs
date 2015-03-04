@@ -342,6 +342,7 @@ WHERE ProjectRoundUnitID = {0}",
 				return true;
 			} catch (Exception ex) {
 				LoggingService.Error(ex.Message);
+				throw ex;
 			}
 			return false;
 		}
@@ -365,6 +366,7 @@ WHERE ProjectRoundUnitID = {0}",
 					}
 				} catch (Exception ex) {
 					LoggingService.Error(ex.Message);
+					throw ex;
 				}
 			}
 			return false;
