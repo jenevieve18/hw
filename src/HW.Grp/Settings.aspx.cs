@@ -22,8 +22,6 @@ namespace HW.Grp
 		
 		protected void Page_Load(object sender, EventArgs e)
         {
-			HtmlHelper.RedirectIf(Session["SponsorID"] == null, "default.aspx", true);
-			
             lid = ConvertHelper.ToInt32(Session["lid"], 1);
 			Save.Click += new EventHandler(Save_Click);
 			if (Convert.ToInt32(Session["SponsorAdminID"]) <= 0) {

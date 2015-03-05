@@ -75,8 +75,6 @@ namespace HW.Grp
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			HtmlHelper.RedirectIf(Session["SponsorID"] == null, "default.aspx", true);
-			
 			int gb = (Request.QueryString["GB"] != null ? Convert.ToInt32(Request.QueryString["GB"].ToString()) : 0);
 			int stdev = Convert.ToInt32(Request.QueryString["STDEV"]);
 			
