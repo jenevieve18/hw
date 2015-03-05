@@ -66,16 +66,16 @@ namespace HW.Grp
 				if (!IsPostBack) {
 					PopulateDropDownLists();
 				}
-				LoadMessages(service.ReadSponsor(SponsorAndSponsorAdminID), service.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID), IsPostBack);
+				LoadMessages(service.ReadSponsor(SponsorAndSponsorAdminID), service.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID), IsPostBack, false);
 			} else {
 				Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
 		}
 		
-		void LoadMessages(ISponsor sponsor, IList<IExtendedSurvey> surveys, bool postBack)
+		void LoadMessages(ISponsor sponsor, IList<IExtendedSurvey> surveys, bool postBack, bool revert)
 		{
 			SetSponsor(sponsor, postBack);
-			SetExtendedSurveys(surveys, postBack);
+			SetExtendedSurveys(surveys, postBack, revert);
 		}
 		
 		public void SetSponsor(ISponsor sponsor, bool postBack)
@@ -109,7 +109,7 @@ namespace HW.Grp
 			}
 		}
 		
-		public void SetExtendedSurveys(IList<IExtendedSurvey> surveys, bool postBack)
+		public void SetExtendedSurveys(IList<IExtendedSurvey> surveys, bool postBack, bool revert)
 		{
 			int projectRoundID = 0;
 			string extendedSurvey = "";
@@ -155,7 +155,7 @@ namespace HW.Grp
 			if (projectRoundID != 0) {
 				ProjectRound r = service.ReadRound(projectRoundID);
 				if (r != null) {
-					if (!postBack) {
+					if (!postBack && !revert) {
 						ExtendedSurvey.Text = ExtendedSurvey.Text.Replace("[x]", R.Str(lid, "period", "Period") + ": " + r.ToPeriodString() + ", ");
 						ExtendedSurveyFinished.Text = ExtendedSurveyFinished.Text.Replace("[x]", R.Str(lid, "period", "Period") + ": " + r.ToPeriodString() + ", ");
 						if (r.IsOpen) {
@@ -165,7 +165,7 @@ namespace HW.Grp
 					}
 				}
 
-				if (!ExtendedSurvey.Visible && ExtendedSurveyFinished.Text != "") {
+				if (!ExtendedSurvey.Visible && ExtendedSurveyFinished.Text != "" && !revert) {
 					ExtendedSurveyFinishedSubject.Visible = ExtendedSurveyFinished.Visible = ExtendedSurveyFinishedTxt.Visible = true;
 					SendType.Items.Add(new ListItem(R.Str(lid, "thanks", "Thank you: ") + extendedSurvey, "5"));
 				}
@@ -217,7 +217,7 @@ namespace HW.Grp
 		void RevertClick(object sender, EventArgs e)
 		{
 			var r = new SqlSponsorRepository();
-			LoadMessages(r.ReadSponsor(sponsorID), r.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID), false);
+			LoadMessages(r.ReadSponsor(sponsorID), r.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID), false, true);
 		}
 
 		void SaveClick(object sender, EventArgs e)
