@@ -73,6 +73,8 @@ namespace HW.Grp
 
 		private void Page_Load(object sender, System.EventArgs e)
 		{
+			HtmlHelper.RedirectIf(Session["SponsorID"] == null, "default.aspx", true);
+			
             Response.ContentType = "image/gif";
 
 			ExtendedGraph g = null;
