@@ -328,7 +328,7 @@
     <value>New password saved!</value>
   </data>
   <data name="password.short" xml:space="preserve">
-    <value>Password too short!</value>
+    <value>Password too short! It needs to be at least 8 characters.</value>
   </data>
   <data name="period" xml:space="preserve">
     <value>Period</value>

@@ -334,7 +334,7 @@
     <value>Nytt lösenord sparat!</value>
   </data>
   <data name="password.short" xml:space="preserve">
-    <value>Lösenordet är för kort!</value>
+    <value>Lösenordet är för kort! Det behöver vara minst 8 tecken.</value>
   </data>
   <data name="period" xml:space="preserve">
     <value>Period</value>
