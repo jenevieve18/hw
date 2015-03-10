@@ -129,6 +129,9 @@
   <data name="active.activated" xml:space="preserve">
     <value>Aktiv/&lt;br&gt;Aktiverad</value>
   </data>
+  <data name="admin.error" xml:space="preserve">
+    <value>Superanvändare kan inte ändra lösenord. Vänligen kontakta support@healthwatch.se.</value>
+  </data>
   <data name="administration" xml:space="preserve">
     <value>Administration</value>
   </data>
@@ -327,6 +330,12 @@
   <data name="password.incorrect" xml:space="preserve">
     <value>Fel lösenord!</value>
   </data>
+  <data name="password.saved" xml:space="preserve">
+    <value>Nytt lösenord sparat!</value>
+  </data>
+  <data name="password.short" xml:space="preserve">
+    <value>Lösenordet är för kort!</value>
+  </data>
   <data name="period" xml:space="preserve">
     <value>Period</value>
   </data>
@@ -370,7 +379,7 @@
     <value>Skicka igen</value>
   </data>
   <data name="revert.default" xml:space="preserve">
-    <value>Återgå till standard</value>
+    <value>Återställ till standardmeddelanden</value>
   </data>
   <data name="role.user.super" xml:space="preserve">
     <value>Superanvändare (kan administrera sitt eget chefskonto, inlkusive alla enheter)</value>

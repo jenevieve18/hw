@@ -25,7 +25,7 @@ namespace HW.Grp
             lid = ConvertHelper.ToInt32(Session["lid"], 1);
 			Save.Click += new EventHandler(Save_Click);
 			if (Convert.ToInt32(Session["SponsorAdminID"]) <= 0) {
-				Message.Text = "Super administrators cannot change password. Please contact support@healthwatch.se!";
+				Message.Text = R.Str(lid, "admin.error", "Super administrators cannot change password. Please contact support@healthwatch.se!");
 				Save.Visible = false;
 				Password.Visible = false;
 				Txt.Visible = false;
@@ -36,9 +36,9 @@ namespace HW.Grp
 		{
 			if (Password.Text.Length > 1) {
 				sponsorRepository.UpdateSponsorAdminPassword(Password.Text.Replace("'", "''"), Convert.ToInt32(Session["SponsorAdminID"]));
-				Message.Text = "New password saved!";
+				Message.Text = R.Str(lid, "password.saved", "New password saved!");
 			} else {
-				Message.Text = "Password too short!";
+				Message.Text = R.Str(lid, "password.short", "Password too short!");
 			}
 		}
 	}

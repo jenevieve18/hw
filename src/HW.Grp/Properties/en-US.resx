@@ -129,6 +129,9 @@
   <data name="active.activated" xml:space="preserve">
     <value>Active/&lt;br&gt;Activated</value>
   </data>
+  <data name="admin.error" xml:space="preserve">
+    <value>Super administrators cannot change password. Please contact support@healthwatch.se.</value>
+  </data>
   <data name="administration" xml:space="preserve">
     <value>Administration</value>
   </data>
@@ -321,6 +324,12 @@
   <data name="password.incorrect" xml:space="preserve">
     <value>Incorrect password!</value>
   </data>
+  <data name="password.saved" xml:space="preserve">
+    <value>New password saved!</value>
+  </data>
+  <data name="password.short" xml:space="preserve">
+    <value>Password too short!</value>
+  </data>
   <data name="period" xml:space="preserve">
     <value>Period</value>
   </data>
@@ -364,7 +373,7 @@
     <value>Resend</value>
   </data>
   <data name="revert.default" xml:space="preserve">
-    <value>Revert to default</value>
+    <value>Revert to default messages</value>
   </data>
   <data name="role.user.super" xml:space="preserve">
     <value>Super user (can administer its own manager account, including all units)</value>
