@@ -72,9 +72,9 @@ namespace HW.Core.Helpers
 		
 		bool HasContentDisposition2 { get; }
 		
-		object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose);
+		object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm);
 		
-		object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose);
+		object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm);
 	}
 	
 	public abstract class AbstractExporter : IExporter
@@ -94,16 +94,18 @@ namespace HW.Core.Helpers
 		
 		public abstract string ContentDisposition2 { get; }
 		
-		public abstract object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose);
+		public abstract object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm);
 		
-		public abstract object Export2(int gb, int fy, int ty, int langID, int pruid, int GRPNG, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose);
+		public abstract object Export2(int gb, int fy, int ty, int langID, int pruid, int GRPNG, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm);
 		
-		protected string GetUrl(string path, int langID, int fy, int ty, int spons, int sid, int gb, int rpid, int pruid, string gid, int grpng, int plot)
+		protected string GetUrl(string path, int langID, int fy, int ty, int spons, int sid, int gb, int rpid, int pruid, string gid, int grpng, int plot, int fm, int tm)
 		{
 			P p = new P(path, "reportImage.aspx");
 			p.Q.Add("LangID", langID);
 			p.Q.Add("FY", fy);
 			p.Q.Add("TY", ty);
+			p.Q.Add("FM", fm);
+			p.Q.Add("TM", tm);
 			p.Q.Add("SAID", spons);
 			p.Q.Add("SID", sid);
 			p.Q.Add("GB", gb);

@@ -3,7 +3,7 @@
 <%@ Import Namespace="HW.Grp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-<link rel="stylesheet" href="css/smoothness/jquery-ui-1.9.2.custom.min.css">
+<link rel="stylesheet" href="css/smoothness/jquery-ui-1.9.2.custom.min.css"/>
 <style type="text/css">
 
 .ui-widget {
@@ -84,7 +84,7 @@
     font-size:9pt;
 }
 .chart-description {
-    background:url(https://healthwatch.se/includes/resources/myhealth_statistics_bar_detail_toggle.gif);
+    background:url(img/myhealth_statistics_bar_detail_toggle.gif);
 }
 .chart-descriptions-info {
     width: 16px;
@@ -96,7 +96,7 @@
 .toggle {
     width: 32px;
     height: 16px;
-    background:url(https://healthwatch.se/includes/resources/myhealth_statistics_bar_detail_toggle.gif);
+    background:url(img/myhealth_statistics_bar_detail_toggle.gif);
     display:inline-block;
     cursor:pointer;
 }
@@ -106,7 +106,7 @@
 .toggle-active {
 }
 .toggle-active-hover {
-    background:url(https://healthwatch.se/includes/resources/myhealth_statistics_bar_detail_toggle.gif);
+    background:url(img/myhealth_statistics_bar_detail_toggle.gif);
     background-position:0 -16px;
 }
 </style>
@@ -265,6 +265,12 @@
     });
 </script>
 
+<!--<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>-->
+<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet"/>
+<link href="bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet"/>
+
+<script type="text/javascript" src="bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -272,7 +278,16 @@
         <div id="contextbar">
             <div class="settingsPane">
 	            <span class="desc"><%= R.Str(lid, "timeframe", "Timeframe")%></span>
-                <asp:DropDownList ID="FromYear" runat="server" />--<asp:DropDownList ID="ToYear" runat="server" />
+
+                <!--<div class="input-daterange" id="datepicker">-->
+                <span class="input-daterange">
+                    <input readonly type="text" class="input-small" name="startDate" value="<%= startDate.ToString("yyyy MMM") %>" />
+                    <span>--</span>
+                    <input readonly type="text" class="input-small" name="endDate" value="<%= endDate.ToString("yyyy MMM") %>" />
+                </span>
+                <!--</div>-->
+
+                <!--<asp:DropDownList ID="FromYear" runat="server" />--<asp:DropDownList ID="ToYear" runat="server" />-->
                 <%= R.Str(lid, "survey", "Survey")%>
                 <asp:DropDownList AutoPostBack="true" ID="ProjectRoundUnitID" runat="server" />
 			    <%= R.Str(lid, "aggregation", "Aggregation")%>
@@ -414,7 +429,11 @@
 		<% } %>
     </div>
 
-
+    <script type="text/javascript">
+        $('.input-daterange').datepicker({
+            format: "yyyy M",
+        });
+    </script>
 
 </asp:Content>
 

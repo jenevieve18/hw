@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -29,6 +30,8 @@ namespace HW.Grp
 		SqlReportRepository reportRepository = new SqlReportRepository();
 		SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
         protected int lid;
+        protected DateTime startDate;
+        protected DateTime endDate;
 
 //		public IList<SponsorProjectRoundUnitLanguage> Languages {
 //			set {
@@ -156,10 +159,16 @@ namespace HW.Grp
             lid = ConvertHelper.ToInt32(Session["lid"], 1);
 			
 //			plotTypes = plotRepository.FindAll();
+            plotTypes = plotRepository.FindByLanguage(lid);
 			
 			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Statistics, DateTime.Now);
 			if (sponsorID != 0) {
 				if (!IsPostBack) {
+					
+//					startDate = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day).ToString("yyyy MMM");
+//					endDate = DateTime.Now.ToString("yyyy MMM");
+					startDate = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day);
+					endDate = DateTime.Now;
 					
 					GroupBy.Items.Clear();
 					GroupBy.Items.Add(new ListItem(R.Str(lid, "week.one", "One week"), "1"));
@@ -182,16 +191,21 @@ namespace HW.Grp
 //					ProjectRoundUnits = sponsorRepository.FindBySponsorAndLanguage(sponsorID, selectedLangID);
 					ProjectRoundUnits = sponsorRepository.FindBySponsorAndLanguage(sponsorID, lid);
 
-					FromYear.Items.Clear();
-					ToYear.Items.Clear();
-					for (int i = 2005; i <= DateTime.Now.Year; i++) {
-						FromYear.Items.Add(new ListItem(i.ToString(), i.ToString()));
-						ToYear.Items.Add(new ListItem(i.ToString(), i.ToString()));
-					}
-					FromYear.SelectedValue = (DateTime.Now.Year - 1).ToString();
-					ToYear.SelectedValue = DateTime.Now.Year.ToString();
+//					FromYear.Items.Clear();
+//					ToYear.Items.Clear();
+//					for (int i = 2005; i <= DateTime.Now.Year; i++) {
+//						FromYear.Items.Add(new ListItem(i.ToString(), i.ToString()));
+//						ToYear.Items.Add(new ListItem(i.ToString(), i.ToString()));
+//					}
+//					FromYear.SelectedValue = (DateTime.Now.Year - 1).ToString();
+//					ToYear.SelectedValue = DateTime.Now.Year.ToString();
 					
 					BackgroundQuestions = sponsorRepository.FindBySponsor(sponsorID);
+				} else {
+//					startDate = Request.Form["startDate"];
+//					endDate = Request.Form["endDate"];
+					startDate = GetDateFromString(Request.Form["startDate"]);
+					endDate = GetDateFromString(Request.Form["endDate"]);
 				}
 				Departments = departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID);
 			} else {
@@ -200,23 +214,38 @@ namespace HW.Grp
 			Execute.Click += new EventHandler(Execute_Click);
 		}
 		
+		DateTime GetDateFromString(string s)
+		{
+			DateTime d = DateTime.Now;
+			try {
+				d = DateTime.ParseExact(s, "yyyy MMM", CultureInfo.InvariantCulture);
+			} catch {}
+			return d;
+		}
+		
+//		protected string GetReportImageUrl(int reportID, int reportPartLangID, Q additionalQuery, int startYear, int endYear)
 		protected string GetReportImageUrl(int reportID, int reportPartLangID, Q additionalQuery)
 		{
+//			var p = GetPage("reportImage.aspx", reportID, reportPartLangID, startYear, endYear);
 			var p = GetPage("reportImage.aspx", reportID, reportPartLangID);
 			p.Add(additionalQuery);
 			return p.ToString();
 		}
 		
+//		protected string GetExportUrl(int reportID, int reportPartID, string type, Q additionalQuery, int startYear, int endYear)
 		protected string GetExportUrl(int reportID, int reportPartID, string type, Q additionalQuery)
 		{
+//			var p = GetPage("Export.aspx", reportID, reportPartID, startYear, endYear);
 			var p = GetPage("Export.aspx", reportID, reportPartID);
 			p.Q.Add("TYPE", type);
 			p.Add(additionalQuery);
 			return p.ToString();
 		}
 		
+//		protected string GetExportAllUrl(string type, Q additionalQuery, int startYear, int endYear)
 		protected string GetExportAllUrl(string type, Q additionalQuery)
 		{
+//			var p = GetPage("ExportAll.aspx", 0, 0, startYear, endYear);
 			var p = GetPage("ExportAll.aspx", 0, 0);
 			p.Q.Add("TYPE", type);
 			p.Add(additionalQuery);
@@ -252,13 +281,18 @@ namespace HW.Grp
 			return q;
 		}
 		
+//		P GetPage(string page, int reportID, int reportPartLangID, int startYear, int endYear)
 		P GetPage(string page, int reportID, int reportPartLangID)
 		{
 			P p = new P(page);
 //			p.Q.Add("LangID", LangID.SelectedValue);
 			p.Q.Add("LangID", lid);
-			p.Q.Add("FY", FromYear.SelectedValue);
-			p.Q.Add("TY", ToYear.SelectedValue);
+//			p.Q.Add("FY", FromYear.SelectedValue);
+//			p.Q.Add("TY", ToYear.SelectedValue);
+			p.Q.Add("FY", startDate.Year);
+			p.Q.Add("TY", endDate.Year);
+			p.Q.Add("FM", startDate.Month);
+			p.Q.Add("TM", endDate.Month);
 			p.Q.Add("SAID", sponsorAdminID);
 			p.Q.Add("SID", sponsorID);
 			p.Q.AddIf(Convert.ToInt32(Session["Anonymized"]) == 1, "Anonymized", 1);
@@ -278,7 +312,7 @@ namespace HW.Grp
 			int grouping = Convert.ToInt32(Grouping.SelectedValue);
 			
 //			plotTypes = plotRepository.FindByLanguage(selectedLangID);
-			plotTypes = plotRepository.FindByLanguage(lid);
+//			plotTypes = plotRepository.FindByLanguage(lid);
 			
 			int selectedDepartmentID = departments[0].Id;
 //			var reportParts = reportRepository.FindByProjectAndLanguage2(selectedProjectRoundUnitID, selectedLangID, selectedDepartmentID);

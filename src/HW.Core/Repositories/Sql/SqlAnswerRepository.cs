@@ -8,20 +8,20 @@ using HW.Core.Models;
 
 namespace HW.Core.Repositories.Sql
 {
-	public class SqlAnswerRepository : BaseSqlRepository<Answer>//, IAnswerRepository
+	public class SqlAnswerRepository : BaseSqlRepository<Answer>
 	{
-		public void UpdateAnswer(int projectRoundUnitID, int projectRoundUserID)
-		{
-			string query = string.Format(
-				@"
-UPDATE [eform]..[Answer] SET ProjectRoundUnitID = {0} WHERE ProjectRoundUserID = {1}",
-				projectRoundUnitID,
-				projectRoundUserID
-			);
-			Db.exec(query, "eFormSqlConnection");
-		}
-		
-		public int CountByValueWithDateOptionAndQuestion(int val, int yearFrom, int yearTo, int optionID, int questionID, string sortString)
+//		public void UpdateAnswer(int projectRoundUnitID, int projectRoundUserID)
+//		{
+//			string query = string.Format(
+//				@"
+//UPDATE [eform]..[Answer] SET ProjectRoundUnitID = {0} WHERE ProjectRoundUserID = {1}",
+//				projectRoundUnitID,
+//				projectRoundUserID
+//			);
+//			Db.exec(query, "eFormSqlConnection");
+//		}
+//		
+		public int CountByValueWithDateOptionAndQuestion(int val, int yearFrom, int yearTo, int optionID, int questionID, string sortString, int fm, int tm)
 		{
 			string query = string.Format(
 				@"
@@ -30,8 +30,10 @@ INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID
 INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
 WHERE a.EndDT IS NOT NULL
 AND av.ValueInt = {0}
-AND YEAR(a.EndDT) >= {1}
-AND YEAR(a.EndDT) <= {2}
+--AND YEAR(a.EndDT) >= {1}
+--AND YEAR(a.EndDT) <= {2}
+AND (YEAR(a.EndDT) = {1} AND MONTH(a.EndDT) >= {7} OR YEAR(a.EndDT) > {1})
+AND (YEAR(a.EndDT) = {2} AND MONTH(a.EndDT) <= {8} OR YEAR(a.EndDT) < {2})
 AND av.OptionID = {3}
 AND av.QuestionID = {4}
 AND LEFT(pru.SortString, {5}) = '{6}'",
@@ -41,7 +43,9 @@ AND LEFT(pru.SortString, {5}) = '{6}'",
 				optionID,
 				questionID,
 				sortString.Length,
-				sortString
+				sortString,
+				fm,
+				tm
 			);
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				if (rs.Read()) {
@@ -51,19 +55,23 @@ AND LEFT(pru.SortString, {5}) = '{6}'",
 			return 0;
 		}
 		
-		public int CountByProject(int projectRoundUserID, int yearFrom, int yearTo)
+		public int CountByProject(int projectRoundUserID, int yearFrom, int yearTo, int fm, int tm)
 		{
 			string query = string.Format(
 				@"
 SELECT COUNT(DISTINCT dbo.cf_yearMonthDay(a.EndDT))
 FROM Answer a
 WHERE a.EndDT IS NOT NULL
-AND YEAR(a.EndDT) >= {1}
-AND YEAR(a.EndDT) <= {2}
+--AND YEAR(a.EndDT) >= {1}
+--AND YEAR(a.EndDT) <= {2}
+AND (YEAR(a.EndDT) = {1} AND MONTH(a.EndDT) >= {3} OR YEAR(a.EndDT) > {1})
+AND (YEAR(a.EndDT) = {2} AND MONTH(a.EndDT) <= {4} OR YEAR(a.EndDT) < {2})
 AND a.ProjectRoundUserID = {0}",
 				projectRoundUserID,
 				yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
-				yearTo //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : ""
+				yearTo, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
+				fm,
+				tm
 			);
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				if (rs.Read()) {
@@ -73,20 +81,24 @@ AND a.ProjectRoundUserID = {0}",
 			return 0;
 		}
 		
-		public int CountByDate(int yearFrom, int yearTo, string sortString)
+		public int CountByDate(int yearFrom, int yearTo, string sortString, int fm, int tm)
 		{
 			string query = string.Format(
 				@"
 SELECT COUNT(*) FROM Answer a
 INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
 WHERE a.EndDT IS NOT NULL
-AND YEAR(a.EndDT) >= {0}
-AND YEAR(a.EndDT) <= {1}
+--AND YEAR(a.EndDT) >= {0}
+--AND YEAR(a.EndDT) <= {1}
+AND (YEAR(a.EndDT) = {0} AND MONTH(a.EndDT) >= {4} OR YEAR(a.EndDT) > {0})
+AND (YEAR(a.EndDT) = {1} AND MONTH(a.EndDT) <= {5} OR YEAR(a.EndDT) < {1})
 AND LEFT(pru.SortString, {2}) = '{3}'",
 				yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
 				yearTo, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
 				sortString.Length,
-				sortString
+				sortString,
+				fm,
+				tm
 			);
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				if (rs.Read()) {
@@ -182,6 +194,14 @@ AND av.OptionID = {2}",
 			return null;
 		}
 		
+		/// <summary>
+		/// Used in SuperReportImage thus no MonthFrom and MonthTo!
+		/// </summary>
+		/// <param name="groupBy"></param>
+		/// <param name="yearFrom"></param>
+		/// <param name="yearTo"></param>
+		/// <param name="rnds"></param>
+		/// <returns></returns>
 		public Answer ReadByGroup(string groupBy, string yearFrom, string yearTo, string rnds)
 		{
 			string query = string.Format(
@@ -203,9 +223,6 @@ AND a.EndDT < '{2}'
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				if (rs.Read()) {
 					var a = new Answer();
-//					a.DummyValue1 = rs.GetInt32(0);
-//					a.DummyValue2 = rs.GetInt32(1);
-//					a.DummyValue3 = rs.GetInt32(2);
 					a.DummyValue1 = GetInt32(rs, 0, 0);
 					a.DummyValue2 = GetInt32(rs, 1, 0);
 					a.DummyValue3 = GetInt32(rs, 2, 0);
@@ -279,10 +296,10 @@ AND Value = {1}",
 			return null;
 		}
 		
-		public Answer ReadByGroup(string groupBy, int yearFrom, int yearTo, string sortString)
+		public Answer ReadByGroup(string groupBy, int yearFrom, int yearTo, string sortString, int fm, int tm)
 		{
 			string query = string.Format(
-				@"
+                @"
 SELECT {0}(MAX(a.EndDT)) - {0}(MIN(a.EndDT)),
 	{0}(MIN(a.EndDT)),
 	{0}(MAX(a.EndDT))
@@ -291,21 +308,20 @@ INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
 INNER JOIN ProjectRound pr ON pru.ProjectRoundID = pr.ProjectRoundID
 WHERE a.EndDT IS NOT NULL
 AND a.EndDT >= pr.Started
-AND YEAR(a.EndDT) >= {1}
-AND YEAR(a.EndDT) <= {2}
+AND (YEAR(a.EndDT) = {1} AND MONTH(a.EndDT) >= {5} OR YEAR(a.EndDT) > {1})
+AND (YEAR(a.EndDT) = {2} AND MONTH(a.EndDT) <= {6} OR YEAR(a.EndDT) < {2})
 AND LEFT(pru.SortString, {3}) = '{4}'",
 				groupBy,
-				yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
+                yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
 				yearTo, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
 				sortString.Length,
-				sortString
+				sortString,
+                fm,
+                tm
 			);
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				if (rs.Read()) {
 					var a = new Answer();
-//					a.DummyValue1 = rs.GetInt32(0);
-//					a.DummyValue2 = rs.GetInt32(1);
-//					a.DummyValue3 = rs.GetInt32(2);
 					a.DummyValue1 = GetInt32(rs, 0, 0);
 					a.DummyValue2 = GetInt32(rs, 1, 0);
 					a.DummyValue3 = GetInt32(rs, 2, 0);
@@ -315,6 +331,16 @@ AND LEFT(pru.SortString, {3}) = '{4}'",
 			return null;
 		}
 		
+		/// <summary>
+		/// Used in SuperReportImage thus no MonthFrom and MonthTo!
+		/// </summary>
+		/// <param name="groupBy"></param>
+		/// <param name="questionID"></param>
+		/// <param name="optionID"></param>
+		/// <param name="yearFrom"></param>
+		/// <param name="yearTo"></param>
+		/// <param name="rnds"></param>
+		/// <returns></returns>
 		public Answer ReadMinMax(string groupBy, int questionID, int optionID, string yearFrom, string yearTo, string rnds)
 		{
 			string query = string.Format(
@@ -357,7 +383,7 @@ FROM (
 			return null;
 		}
 		
-		public Answer ReadMinMax(string groupBy, int questionID, int optionID, int yearFrom, int yearTo, string sortString)
+		public Answer ReadMinMax(string groupBy, int questionID, int optionID, int yearFrom, int yearTo, string sortString, int fm, int tm)
 		{
 			string query = string.Format(
 				@"
@@ -374,8 +400,8 @@ FROM (
 		INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
 		INNER JOIN ProjectRound pr ON pru.ProjectRoundID = pr.ProjectRoundID
 		WHERE a.EndDT IS NOT NULL
-		AND YEAR(a.EndDT) >= {3}
-		AND YEAR(a.EndDT) <= {4}
+		{3}
+		{4}
 		AND LEFT(pru.SortString, {5}) = '{6}'
 		GROUP BY a.ProjectRoundUserID, {0}(a.EndDT)
 	) tmp
@@ -384,16 +410,14 @@ FROM (
 				groupBy,
 				questionID,
 				optionID,
-				yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
-				yearTo, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
+				yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
+				yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
 				sortString.Length,
 				sortString
 			);
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				if (rs.Read()) {
 					var a = new Answer() {
-//						Max = GetInt32(rs, 0),
-//						Min = GetInt32(rs, 1)
 						Max = (float)GetDouble(rs, 0),
 						Min = (float)GetDouble(rs, 1)
 					};
@@ -853,7 +877,7 @@ WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = {0}",
 			return answers;
 		}
 		
-		public IList<Answer> FindByQuestionAndOptionWithYearSpan(int questionID, int optionID, int yearFrom, int yearTo)
+		public IList<Answer> FindByQuestionAndOptionWithYearSpan(int questionID, int optionID, int yearFrom, int yearTo, int fm, int tm)
 		{
 			string query = string.Format(
 				@"
@@ -861,14 +885,18 @@ SELECT dbo.cf_yearMonthDay(a.EndDT), AVG(av.ValueInt)
 FROM Answer a
 LEFT OUTER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = {0} AND av.OptionID = {1}
 WHERE a.EndDT IS NOT NULL AND a.ProjectRoundUserID = 1
-AND YEAR(a.EndDT) >= {2}
-AND YEAR(a.EndDT) <= {3}
+--AND YEAR(a.EndDT) >= {2}
+--AND YEAR(a.EndDT) <= {3}
+AND (YEAR(a.EndDT) = {2} AND MONTH(a.EndDT) >= {4} OR YEAR(a.EndDT) > {2})
+AND (YEAR(a.EndDT) = {3} AND MONTH(a.EndDT) <= {5} OR YEAR(a.EndDT) < {3})
 GROUP BY 1 dbo.cf_yearMonthDay(a.EndDT)
 ORDER BY 1 dbo.cf_yearMonthDay(a.EndDT)",
 				questionID,
 				optionID,
 				yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
-				yearTo //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : ""
+				yearTo, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
+				fm,
+				tm
 			);
 			var answers = new List<Answer>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
@@ -883,50 +911,50 @@ ORDER BY 1 dbo.cf_yearMonthDay(a.EndDT)",
 			return answers;
 		}
 		
-		public IList<Answer> FindByQuestionAndOptionJoinedAndGrouped(string join, string groupBy, int questionID, int optionID, int yearFrom, int yearTo)
-		{
-			string query = string.Format(
-				@"
-SELECT tmp.DT,
-	AVG(tmp.V),
-	COUNT(tmp.V),
-	STDEV(tmp.V)
-FROM (
-	SELECT {1}(a.EndDT) AS DT,
-		AVG(av.ValueInt) AS V
-	FROM Answer a
-	{0}
-	INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = {2} AND av.OptionID = {3}
-	WHERE a.EndDT IS NOT NULL
-	AND YEAR(a.EndDT) >= {4}
-	AND YEAR(a.EndDT) <= {5}
-	GROUP BY a.ProjectRoundUserID, {1}(a.EndDT)
-) tmp
-GROUP BY tmp.DT
-ORDER BY tmp.DT",
-				join,
-				groupBy,
-				questionID,
-				optionID,
-				yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
-				yearTo //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : ""
-			);
-			var answers = new List<Answer>();
-			using (SqlDataReader rs = Db.rs(query, "eFormSqlconnection")) {
-				while (rs.Read()) {
-					var a = new Answer {
-						DT = rs.GetInt32(0),
-						AverageV = rs.GetInt32(1),
-						CountV = GetInt32(rs, 2),
-						StandardDeviation = (float)GetDouble(rs, 3)
-					};
-					answers.Add(a);
-				}
-			}
-			return answers;
-		}
+//		public IList<Answer> FindByQuestionAndOptionJoinedAndGrouped(string join, string groupBy, int questionID, int optionID, int yearFrom, int yearTo)
+//		{
+//			string query = string.Format(
+//				@"
+//SELECT tmp.DT,
+//	AVG(tmp.V),
+//	COUNT(tmp.V),
+//	STDEV(tmp.V)
+//FROM (
+//	SELECT {1}(a.EndDT) AS DT,
+//		AVG(av.ValueInt) AS V
+//	FROM Answer a
+//	{0}
+//	INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = {2} AND av.OptionID = {3}
+//	WHERE a.EndDT IS NOT NULL
+//	{4}
+//	{5}
+//	GROUP BY a.ProjectRoundUserID, {1}(a.EndDT)
+//) tmp
+//GROUP BY tmp.DT
+//ORDER BY tmp.DT",
+//				join,
+//				groupBy,
+//				questionID,
+//				optionID,
+//				yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
+//				yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : ""
+//			);
+//			var answers = new List<Answer>();
+//			using (SqlDataReader rs = Db.rs(query, "eFormSqlconnection")) {
+//				while (rs.Read()) {
+//					var a = new Answer {
+//						DT = rs.GetInt32(0),
+//						AverageV = rs.GetInt32(1),
+//						CountV = GetInt32(rs, 2),
+//						StandardDeviation = (float)GetDouble(rs, 3)
+//					};
+//					answers.Add(a);
+//				}
+//			}
+//			return answers;
+//		}
 		
-		public IList<Answer> FindByQuestionAndOptionJoinedAndGrouped2(string join, string groupBy, int questionID, int optionID, int yearFrom, int yearTo)
+		public IList<Answer> FindByQuestionAndOptionJoinedAndGrouped2(string join, string groupBy, int questionID, int optionID, int yearFrom, int yearTo, int fm, int tm)
 		{
 			string query = string.Format(
 				@"
@@ -935,15 +963,19 @@ FROM Answer a
 {0}
 INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = {2} AND av.OptionID = {3}
 WHERE a.EndDT IS NOT NULL
-AND YEAR(a.EndDT) >= {4}
-AND YEAR(a.EndDT) <= {5}
+--AND YEAR(a.EndDT) >= {4}
+--AND YEAR(a.EndDT) <= {5}
+AND (YEAR(a.EndDT) = {4} AND MONTH(a.EndDT) >= {6} OR YEAR(a.EndDT) > {4})
+AND (YEAR(a.EndDT) = {5} AND MONTH(a.EndDT) <= {7} OR YEAR(a.EndDT) < {5})
 GROUP BY a.ProjectRoundUserID, {1}(a.EndDT)",
 				join,
 				groupBy,
 				questionID,
 				optionID,
 				yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
-				yearTo //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : ""
+				yearTo, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : ""
+				fm,
+				tm
 			);
 			var answers = new List<Answer>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlconnection")) {
@@ -963,6 +995,17 @@ GROUP BY a.ProjectRoundUserID, {1}(a.EndDT)",
 			return answers;
 		}
 		
+		/// <summary>
+		/// Used in SuperReportImage thus no MonthFrom and MonthTo!
+		/// </summary>
+		/// <param name="groupBy"></param>
+		/// <param name="questionID"></param>
+		/// <param name="optionID"></param>
+		/// <param name="join1"></param>
+		/// <param name="yearFrom"></param>
+		/// <param name="yearTo"></param>
+		/// <param name="rnds1"></param>
+		/// <returns></returns>
 		public IList<Answer> FindByQuestionAndOptionGrouped3(string groupBy, int questionID, int optionID, string join1, string yearFrom, string yearTo, string rnds1)
 		{
 			string query = string.Format(
@@ -1009,7 +1052,7 @@ ORDER BY tmp.DT",
 			return answers;
 		}
 		
-		public IList<Answer> FindByQuestionAndOptionGrouped(string groupBy, int questionID, int optionID, int yearFrom, int yearTo, string sortString)
+		public IList<Answer> FindByQuestionAndOptionGrouped(string groupBy, int questionID, int optionID, int yearFrom, int yearTo, string sortString, int fm, int tm)
 		{
 			string query = string.Format(
 				@"
@@ -1026,8 +1069,10 @@ FROM (
 	INNER JOIN ProjectRound pr ON pru.ProjectRoundID = pr.ProjectRoundID
 	WHERE a.EndDT IS NOT NULL
 		AND a.EndDT >= pr.Started
-		AND YEAR(a.EndDT) >= {3}
-		AND YEAR(a.EndDT) <= {4}
+		--AND YEAR(a.EndDT) >= {3}
+		--AND YEAR(a.EndDT) <= {4}
+		AND (YEAR(a.EndDT) = {3} AND MONTH(a.EndDT) >= {7} OR YEAR(a.EndDT) > {3})
+		AND (YEAR(a.EndDT) = {4} AND MONTH(a.EndDT) <= {8} OR YEAR(a.EndDT) < {4})
 		AND LEFT(pru.SortString, {5}) = '{6}'
 	GROUP BY a.ProjectRoundUserID, {0}(a.EndDT)
 ) tmp
@@ -1039,7 +1084,9 @@ ORDER BY tmp.DT",
 				yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
 				yearTo, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
 				sortString.Length,
-				sortString
+				sortString,
+				fm,
+				tm
 			);
 			var answers = new List<Answer>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlconnection")) {
@@ -1056,47 +1103,47 @@ ORDER BY tmp.DT",
 			return answers;
 		}
 		
-		public IList<Answer> FindByQuestionAndOptionGrouped2(string groupBy, int questionID, int optionID, int yearFrom, int yearTo, string sortString)
-		{
-			string query = string.Format(
-				@"
-SELECT {0}(a.EndDT) AS DT, AVG(av.ValueInt) AS V
-FROM Answer a
-INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID
-	AND av.QuestionID = {1}
-	AND av.OptionID = {2}
-INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
-INNER JOIN ProjectRound pr ON pru.ProjectRoundID = pr.ProjectRoundID
-WHERE a.EndDT IS NOT NULL
-	AND a.EndDT >= pr.Started
-	AND YEAR(a.EndDT) >= {3}
-	AND YEAR(a.EndDT) <= {4}
-	AND LEFT(pru.SortString, {5}) = '{6}'
-GROUP BY a.ProjectRoundUserID, {0}(a.EndDT)",
-				groupBy,
-				questionID,
-				optionID,
-				yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
-				yearTo, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
-				sortString.Length,
-				sortString
-			);
-			var answers = new List<Answer>();
-			using (SqlDataReader rs = Db.rs(query, "eFormSqlconnection")) {
-				if (rs.Read()) {
-					bool done = false;
-					while (!done) {
-						var a = new Answer { };
-						do {
-							a.DT = rs.GetInt32(0);
-							a.Values.Add(new AnswerValue { ValueInt = rs.GetInt32(1) });
-							done = !rs.Read();
-						} while (!done && rs.GetInt32(0) == a.DT);
-						answers.Add(a);
-					}
-				}
-			}
-			return answers;
-		}
+//		public IList<Answer> FindByQuestionAndOptionGrouped2(string groupBy, int questionID, int optionID, int yearFrom, int yearTo, string sortString)
+//		{
+//			string query = string.Format(
+//				@"
+//SELECT {0}(a.EndDT) AS DT, AVG(av.ValueInt) AS V
+//FROM Answer a
+//INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID
+//	AND av.QuestionID = {1}
+//	AND av.OptionID = {2}
+//INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
+//INNER JOIN ProjectRound pr ON pru.ProjectRoundID = pr.ProjectRoundID
+//WHERE a.EndDT IS NOT NULL
+//	AND a.EndDT >= pr.Started
+//	{3}
+//	{4}
+//	AND LEFT(pru.SortString, {5}) = '{6}'
+//GROUP BY a.ProjectRoundUserID, {0}(a.EndDT)",
+//				groupBy,
+//				questionID,
+//				optionID,
+//				yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
+//				yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
+//				sortString.Length,
+//				sortString
+//			);
+//			var answers = new List<Answer>();
+//			using (SqlDataReader rs = Db.rs(query, "eFormSqlconnection")) {
+//				if (rs.Read()) {
+//					bool done = false;
+//					while (!done) {
+//						var a = new Answer { };
+//						do {
+//							a.DT = rs.GetInt32(0);
+//							a.Values.Add(new AnswerValue { ValueInt = rs.GetInt32(1) });
+//							done = !rs.Read();
+//						} while (!done && rs.GetInt32(0) == a.DT);
+//						answers.Add(a);
+//					}
+//				}
+//			}
+//			return answers;
+//		}
 	}
 }

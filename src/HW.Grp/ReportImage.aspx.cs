@@ -83,6 +83,9 @@ namespace HW.Grp
 			int fy = Request.QueryString["FY"] != null ? Convert.ToInt32(Request.QueryString["FY"]) : 0;
 			int ty = Request.QueryString["TY"] != null ? Convert.ToInt32(Request.QueryString["TY"]) : 0;
 			
+			int fm = ConvertHelper.ToInt32(Request.QueryString["FM"]);
+			int tm = ConvertHelper.ToInt32(Request.QueryString["TM"]);
+			
 			int langID = (Request.QueryString["LangID"] != null ? Convert.ToInt32(Request.QueryString["LangID"]) : 0);
 
 			int rpid = Convert.ToInt32(Request.QueryString["RPID"]);
@@ -106,7 +109,7 @@ namespace HW.Grp
 			ReportPart r = service.ReadReportPart(rpid, langID);
 
 			var f = service.GetGraphFactory(HasAnswerKey);
-			g = f.CreateGraph(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, Width, Height, Background, grpng, sponsorAdminID, sid, gid, disabled, point, s.MinUserCountToDisclose);
+			g = f.CreateGraph(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, Width, Height, Background, grpng, sponsorAdminID, sid, gid, disabled, point, s.MinUserCountToDisclose, fm, tm);
 			g.render();
 		}
 	}

@@ -100,11 +100,13 @@
     <Compile Include="Helpers\ExtendedGraph.cs" />
     <Compile Include="Helpers\Graph.cs" />
     <Compile Include="Helpers\Graph2.cs" />
-    <Compile Include="Helpers\GraphFactory.cs" />
+    <Compile Include="Helpers\UserLevelGraphFactory.cs" />
+    <Compile Include="Helpers\GroupStatsGraphFactory.cs" />
     <Compile Include="Helpers\HtmlHelper.cs" />
     <Compile Include="Helpers\HWList.cs" />
     <Compile Include="Helpers\OctreeQuantizer.cs" />
     <Compile Include="Helpers\PdfExporter.cs" />
+    <Compile Include="Helpers\PlotType.cs" />
     <Compile Include="Helpers\PresentationDocumentExporter.cs" />
     <Compile Include="Helpers\PresentationDocumentGeneratedCode.cs" />
     <Compile Include="Helpers\Quantizer.cs" />

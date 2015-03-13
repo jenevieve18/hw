@@ -80,6 +80,9 @@ namespace HW.Grp
 			int fy = Request.QueryString["FY"] != null ? Convert.ToInt32(Request.QueryString["FY"]) : 0;
 			int ty = Request.QueryString["TY"] != null ? Convert.ToInt32(Request.QueryString["TY"]) : 0;
 			
+			int fm = ConvertHelper.ToInt32(Request.QueryString["FM"]);
+			int tm = ConvertHelper.ToInt32(Request.QueryString["TM"]);
+			
 			int langID = (Request.QueryString["LangID"] != null ? Convert.ToInt32(Request.QueryString["LangID"]) : 0);
 
 			int rpid = Convert.ToInt32(Request.QueryString["RPID"]);
@@ -107,7 +110,7 @@ namespace HW.Grp
 			Response.ContentType = exporter.Type;
 			AddHeaderIf(exporter.HasContentDisposition(r.CurrentLanguage.Subject), "content-disposition", exporter.GetContentDisposition(r.CurrentLanguage.Subject));
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
-			Write(exporter.Export(gb, fy, ty, langID, pruid, grpng, spons, sid, gid, plot, path, s.MinUserCountToDisclose));
+			Write(exporter.Export(gb, fy, ty, langID, pruid, grpng, spons, sid, gid, plot, path, s.MinUserCountToDisclose, fm, tm));
 		}
 		
 		void Write(object obj)

@@ -6,9 +6,9 @@ using HW.Core.Models;
 
 namespace HW.Core.Repositories.Sql
 {
-	public class SqlIndexRepository : BaseSqlRepository<Index>//, IIndexRepository
+	public class SqlIndexRepository : BaseSqlRepository<Index>
 	{
-		public IList<Index> FindByLanguage(int idxID, int langID, int yearFrom, int yearTo, string sortString)
+		public IList<Index> FindByLanguage(int idxID, int langID, int yearFrom, int yearTo, string sortString, int fm, int tm)
 		{
 			string query = string.Format(
 				@"
@@ -36,8 +36,10 @@ FROM (
 	WHERE a.EndDT IS NOT NULL
 		AND i.IdxID = {0}
 		AND LEFT(pru.SortString, {5}) = '{4}'
-		AND YEAR(a.EndDT) >= {2}
-		AND YEAR(a.EndDT) <= {3}
+		--AND YEAR(a.EndDT) >= {2}
+		--AND YEAR(a.EndDT) <= {3}
+		AND (YEAR(a.EndDT) = {2} AND MONTH(a.EndDT) >= {6} OR YEAR(a.EndDT) > {2})
+		AND (YEAR(a.EndDT) = {3} AND MONTH(a.EndDT) <= {7} OR YEAR(a.EndDT) < {3})
 	GROUP BY i.IdxID,
 		a.AnswerID,
 		i.MaxVal,
@@ -50,9 +52,11 @@ GROUP BY tmp.IdxID, tmp.Idx",
 				idxID,
 				langID,
 				yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
-				yearTo, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
+				yearFrom, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
 				sortString,
-				sortString.Length
+				sortString.Length,
+				fm,
+				tm
 			);
 			var indexes = new List<Index>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {

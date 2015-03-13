@@ -197,9 +197,9 @@ namespace HW.Core.Services
 //			}
 //		}
 		
-		void GetIdxVal(int idx, string sortString, int langID, int fy, int ty)
+		void GetIdxVal(int idx, string sortString, int langID, int fy, int ty, int fm, int tm)
 		{
-			foreach (Index i in indexRepository.FindByLanguage(idx, langID, fy, ty, sortString)) {
+			foreach (Index i in indexRepository.FindByLanguage(idx, langID, fy, ty, sortString, fm, tm)) {
 				lastCount = i.CountDX;
 				lastVal = i.AverageAX;
 				lastDesc = i.Languages[0].IndexName;
@@ -212,7 +212,7 @@ namespace HW.Core.Services
 			}
 		}
 
-		void GetOtherIdxVal(int idx, string sortString, int langID, int fy, int ty)
+		void GetOtherIdxVal(int idx, string sortString, int langID, int fy, int ty, int fm, int tm)
 		{
 			float tot = 0;
 			int max = 0;
@@ -226,7 +226,7 @@ namespace HW.Core.Services
 						tot += (float)res[p.OtherIndex.Id] * p.Multiple;
 						minCnt = Math.Min((int)cnt[p.OtherIndex.Id], minCnt);
 					} else {
-						GetIdxVal(p.OtherIndex.Id, sortString, langID, fy, ty);
+						GetIdxVal(p.OtherIndex.Id, sortString, langID, fy, ty, fm, tm);
 						tot += lastVal * p.Multiple;
 						minCnt = Math.Min(lastCount, minCnt);
 					}

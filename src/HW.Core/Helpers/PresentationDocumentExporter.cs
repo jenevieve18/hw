@@ -48,22 +48,22 @@ namespace HW.Core.Helpers
 			get { return string.Format("attachment;filename=\"HealthWatch Survey {0}.pptx\";", DateTime.Now.ToString("yyyyMMdd")); }
 		}
 		
-		public override object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose)
+		public override object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
 		{
 			MemoryStream output = new MemoryStream();
 			using (PresentationDocument package = PresentationDocument.Create(output, PresentationDocumentType.Presentation)) {
-				gc.UrlSet += delegate(object sender, ReportPartLanguageEventArgs e) { e.Url =  GetUrl(path, langID, fy, ty, spons, sid, gb, e.ReportPart.Id, pruid, gid, grpng, plot); };
+				gc.UrlSet += delegate(object sender, ReportPartLanguageEventArgs e) { e.Url =  GetUrl(path, langID, fy, ty, spons, sid, gb, e.ReportPart.Id, pruid, gid, grpng, plot, fm, tm); };
 				r.CurrentLanguage.ReportPart = r; // HACK: Report part should be assigned to the language because upon querying from database it's not set.
 				gc.CreateParts(package, new List<ReportPartLanguage>(new ReportPartLanguage[] { r.CurrentLanguage }));
 			}
 			return output;
 		}
 		
-		public override object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose)
+		public override object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
 		{
 			MemoryStream output = new MemoryStream();
 			using (PresentationDocument package = PresentationDocument.Create(output, PresentationDocumentType.Presentation)) {
-				gc.UrlSet += delegate(object sender, ReportPartLanguageEventArgs e) { e.Url =  GetUrl(path, langID, fy, ty, spons, sid, gb, e.ReportPart.Id, pruid, gid, grpng, plot); };
+				gc.UrlSet += delegate(object sender, ReportPartLanguageEventArgs e) { e.Url =  GetUrl(path, langID, fy, ty, spons, sid, gb, e.ReportPart.Id, pruid, gid, grpng, plot, fm, tm); };
 				gc.CreateParts(package, parts);
 			}
 			return output;

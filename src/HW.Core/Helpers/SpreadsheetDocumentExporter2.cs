@@ -44,17 +44,17 @@ namespace HW.Core.Helpers
 			get { return string.Format("attachment;filename=HealthWatch Survey {0}.xlsx;", DateTime.Now.ToString("yyyyMMdd")); }
 		}
 		
-		public override object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose)
+		public override object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
 		{
 			MemoryStream output = new MemoryStream();
 			using (SpreadsheetDocument  package = SpreadsheetDocument.Create(output, SpreadsheetDocumentType.Workbook)) {
-				string url = GetUrl(path, langID, fy, ty, spons, sid, gb, r.Id, pruid, gid, grpng, plot);
+				string url = GetUrl(path, langID, fy, ty, spons, sid, gb, r.Id, pruid, gid, grpng, plot, fm, tm);
 				CreateParts(package, r.CurrentLanguage, url);
 			}
 			return output;
 		}
 		
-		public override object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose)
+		public override object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
 		{
 			throw new NotImplementedException();
 		}
