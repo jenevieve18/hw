@@ -41,7 +41,7 @@ namespace HW.Tests.Helpers
 		public void TestLinePlot()
 		{
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\line.xlsx", FileMode.Create)) {
-				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream;
+				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:3428/", x.MinUserCountToDisclose, 3, 3) as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
@@ -50,7 +50,7 @@ namespace HW.Tests.Helpers
 		public void TestLinePlot2()
 		{
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\line2.xlsx", FileMode.Create)) {
-				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream;
+				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:3428/", x.MinUserCountToDisclose, 3, 3) as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
@@ -59,7 +59,7 @@ namespace HW.Tests.Helpers
 		public void TestLineWithSD()
 		{
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\linesd.xlsx", FileMode.Create)) {
-				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.LineSD, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream;
+				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.LineSD, "http://localhost:3428/", x.MinUserCountToDisclose, 3, 3) as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
@@ -68,7 +68,7 @@ namespace HW.Tests.Helpers
 		public void TestLineWithSD2()
 		{
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\linesd2.xlsx", FileMode.Create)) {
-				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.LineSD, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream;
+				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.LineSD, "http://localhost:3428/", x.MinUserCountToDisclose, 3, 3) as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
@@ -77,7 +77,7 @@ namespace HW.Tests.Helpers
 		public void TestLinePlotWithCI()
 		{
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\lineci.xlsx", FileMode.Create)) {
-				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.LineSDWithCI, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream;
+				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.LineSDWithCI, "http://localhost:3428/", x.MinUserCountToDisclose, 3, 3) as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
@@ -86,7 +86,7 @@ namespace HW.Tests.Helpers
 		public void TestLinePlotWithCI2()
 		{
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\lineci2.xlsx", FileMode.Create)) {
-				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.LineSDWithCI, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream;
+				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.LineSDWithCI, "http://localhost:3428/", x.MinUserCountToDisclose, 3, 3) as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
@@ -95,7 +95,7 @@ namespace HW.Tests.Helpers
 		public void TestBoxPlot()
 		{
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\boxplot.xlsx", FileMode.Create)) {
-				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.BoxPlotMinMax, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream;
+				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.BoxPlotMinMax, "http://localhost:3428/", x.MinUserCountToDisclose, 3, 3) as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
@@ -104,7 +104,7 @@ namespace HW.Tests.Helpers
 		public void TestBoxPlot2()
 		{
 			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\boxplot2.xlsx", FileMode.Create)) {
-				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.BoxPlotMinMax, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream;
+				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.BoxPlotMinMax, "http://localhost:3428/", x.MinUserCountToDisclose, 3, 3) as MemoryStream;
 				s.WriteTo(f);
 			}
 		}

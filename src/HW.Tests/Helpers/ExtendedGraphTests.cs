@@ -33,7 +33,7 @@ namespace HW.Tests.Helpers
 			ReportPart r = service.ReadReportPart(14, 1);
 			
 			var f = service.GetGraphFactory(false);
-			g = f.CreateGraph(null, r, 1, 2643, 2011, 2014, 7, true, 0, 550, 440, "#efefef", 2, 514, 83, "0,923,925,927,928,929,930", null, 0, s.MinUserCountToDisclose);
+			g = f.CreateGraph(null, r, 1, 2643, 2011, 2014, 7, true, 0, 550, 440, "#efefef", 2, 514, 83, "0,923,925,927,928,929,930", null, 0, s.MinUserCountToDisclose, 3, 3);
 			
 			var v = new Form();
 			var p = new PictureBox();

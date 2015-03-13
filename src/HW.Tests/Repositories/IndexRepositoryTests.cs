@@ -19,7 +19,7 @@ namespace HW.Tests.Repositories
 		[Test]
 		public void TestFindByLanguage()
 		{
-			r.FindByLanguage(1, 1, 2011, 2012, "");
+			r.FindByLanguage(1, 1, 2011, 2012, "", 3, 3);
 		}
 		
 		[Test]

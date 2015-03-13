@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Reflection;
 using Microsoft.Office.Interop.Excel;
 using NUnit.Framework;
@@ -14,6 +15,15 @@ namespace HW.Tests
 			Uri baseUri= new Uri("http://www.contoso.com");
 			Uri myUri = new Uri(baseUri,"catalog/shownew.htm?date=today");
 			Console.WriteLine(myUri.AbsoluteUri);
+		}
+		
+		[Test]
+		public void b()
+		{
+			string s = DateTime.Now.ToString("yyyy MMM");
+			Console.WriteLine(s);
+			DateTime d = DateTime.ParseExact(s, "yyyy MMM", CultureInfo.InvariantCulture);
+			Console.WriteLine(d);
 		}
 		
 		[Test]

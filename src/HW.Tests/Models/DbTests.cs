@@ -8,8 +8,9 @@ namespace HW.Tests.Models
 	public class DbTests
 	{
 		[Test]
-		public void TestMethod()
+		public void TestIsEmail()
 		{
+			Assert.IsTrue(Db.isEmail("info13971@eform.se"));
 		}
 	}
 }

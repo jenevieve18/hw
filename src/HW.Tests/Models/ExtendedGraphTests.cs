@@ -101,7 +101,7 @@ namespace HW.Tests.Models
 			int tot = 10;
 //			foreach (OptionComponentLanguage c in optionRepository.FindComponentsByLanguage(1, 1)) {
 			foreach (OptionComponents c in optionRepository.FindComponentsByLanguage(1, 1)) {
-				var x = answerRepository.CountByValueWithDateOptionAndQuestion(c.Component.Id, 2011, 2012, 1, 1, "");
+				var x = answerRepository.CountByValueWithDateOptionAndQuestion(c.Component.Id, 2011, 2012, 1, 1, "", 3, 3);
 				var b = new Bar {
 //					Description = c.Text,
 					Description = c.Component.CurrentLanguage.Text,
@@ -122,7 +122,7 @@ namespace HW.Tests.Models
 			int tot = 10;
 //			foreach (OptionComponentLanguage c in optionRepository.FindComponentsByLanguage(1, 1)) {
 			foreach (OptionComponents c in optionRepository.FindComponentsByLanguage(1, 1)) {
-				var x = answerRepository.CountByValueWithDateOptionAndQuestion(c.Component.Id, 2011, 2012, 1, 1, "");
+				var x = answerRepository.CountByValueWithDateOptionAndQuestion(c.Component.Id, 2011, 2012, 1, 1, "", 3, 3);
 				s.Points.Add(
 					new PointV {
 //						Description = c.Text,

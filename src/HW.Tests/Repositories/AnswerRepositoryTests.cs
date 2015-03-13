@@ -37,7 +37,7 @@ namespace HW.Tests.Repositories
 		[Test]
 		public void TestReadMinMax()
 		{
-			var a = r.ReadMinMax("dbo.cf_yearWeek", 1, 1, 2011, 2012, "");
+			var a = r.ReadMinMax("dbo.cf_yearWeek", 1, 1, 2011, 2012, "", 3, 3);
 		}
 		
 //		[Test]
@@ -49,7 +49,7 @@ namespace HW.Tests.Repositories
 		[Test]
 		public void TestReadByGroup()
 		{
-			var a = r.ReadByGroup("dbo.cf_yearWeek", 2011, 2012, "");
+			var a = r.ReadByGroup("dbo.cf_yearWeek", 2011, 2012, "", 3, 3);
 		}
 		
 		[Test]
@@ -61,26 +61,26 @@ namespace HW.Tests.Repositories
 		[Test]
 		public void TestCountByDate()
 		{
-			r.CountByDate(2011, 2012, "");
+			r.CountByDate(2011, 2012, "", 3, 3);
 		}
 		
 		[Test]
 		public void TestCountByProject()
 		{
-			r.CountByProject(1, 2011, 2012);
+			r.CountByProject(1, 2011, 2012, 3, 3);
 		}
 		
 		[Test]
 		public void TestCountByValueWithDateOptionAndQuestion()
 		{
-			r.CountByValueWithDateOptionAndQuestion(1, 2011, 2012, 1, 1, "");
+			r.CountByValueWithDateOptionAndQuestion(1, 2011, 2012, 1, 1, "", 3, 3);
 		}
 		
-		[Test]
-		public void TestUpdateAnswer()
-		{
-			r.UpdateAnswer(1, 1);
-		}
+//		[Test]
+//		public void TestUpdateAnswer()
+//		{
+//			r.UpdateAnswer(1, 1);
+//		}
 		
 		[Test]
 		public void TestG()
