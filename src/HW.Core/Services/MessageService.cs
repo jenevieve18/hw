@@ -121,7 +121,7 @@ namespace HW.Core.Services
 		
 		public void UpdateExtendedSurveyLastFinishedSent(int sponsorExtendedSurveyID, int sponsorAdminExtendedSurveyID)
 		{
-			r.UpdateExtendedSurveyLastFinishedSent(sponsorAdminExtendedSurveyID != -1 ? sponsorAdminExtendedSurveyID : sponsorExtendedSurveyID);
+			r.UpdateExtendedSurveyLastFinishedSent(sponsorAdminExtendedSurveyID != 0 ? sponsorAdminExtendedSurveyID : sponsorExtendedSurveyID);
 		}
 		
 		public void UpdateLastAllMessageSent(int sponsorID, int sponsorAdminID)
@@ -145,7 +145,7 @@ namespace HW.Core.Services
 		
 		public void UpdateExtendedSurveyLastEmailSent(int sponsorExtendedSurveyID, int sponsorAdminExtendedSurveyID)
 		{
-			r.UpdateExtendedSurveyLastEmailSent(sponsorAdminExtendedSurveyID != -1 ? sponsorAdminExtendedSurveyID : sponsorExtendedSurveyID);
+			r.UpdateExtendedSurveyLastEmailSent(sponsorAdminExtendedSurveyID != 0 ? sponsorAdminExtendedSurveyID : sponsorExtendedSurveyID);
 		}
 	}
 }
