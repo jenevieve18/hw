@@ -265,8 +265,7 @@
     });
 </script>
 
-<!--<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>-->
-<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet"/>
+<link href="bootstrap-datepicker/css/bootstrap-combined.min.css" rel="stylesheet"/>
 <link href="bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet"/>
 
 <script type="text/javascript" src="bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
