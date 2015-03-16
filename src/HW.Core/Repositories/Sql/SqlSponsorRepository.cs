@@ -1412,7 +1412,12 @@ SELECT sa.SponsorAdminID,
 	sa.Name,
 	sa.ReadOnly,
 	sa.Pas,
-	(SELECT TOP 1 DATEDIFF(DAY, sas.DT, GETDATE()) FROM SponsorAdminSession sas WHERE sas.SponsorAdminID = sa.SponsorAdminID) LoginDays
+	(
+		SELECT TOP 1 DATEDIFF(DAY, sas.DT, GETDATE())
+		FROM SponsorAdminSession sas
+		WHERE sas.SponsorAdminID = sa.SponsorAdminID
+		ORDER BY DT DESC
+	) LoginDays
 FROM SponsorAdmin sa
 WHERE (sa.SponsorAdminID <> {1} OR sa.SuperUser = 1)
 {2}
