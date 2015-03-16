@@ -431,6 +431,9 @@
     <script type="text/javascript">
         $('.input-daterange').datepicker({
             format: "yyyy M",
+            minViewMode: 1,
+            language: "<%= GetLang(lid) %>",
+            autoclose: true
         });
     </script>
 

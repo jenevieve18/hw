@@ -414,9 +414,6 @@
   <data name="send.only" xml:space="preserve">
     <value>** Skickas bara till personer som redan fått inbjudan men inte har aktiverat sina konton.</value>
   </data>
-  <data name="send1" xml:space="preserve">
-    <value>Skicka</value>
-  </data>
   <data name="sent.last" xml:space="preserve">
     <value>Senast skickat</value>
   </data>

@@ -1433,7 +1433,7 @@ d.SponsorID = {4} ORDER BY d.SortString",
 						s += s1.Substring(i1);
 					}
 				}
-				string key = Guid.NewGuid().ToString();
+//				string key = Guid.NewGuid().ToString();
 //				actives.Add(key, active);
 				OrgTree.Text += string.Format(
 					@"

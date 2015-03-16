@@ -152,6 +152,11 @@ namespace HW.Grp
 			var selectedDepartments = SelectedDepartments;
 		}
 
+        protected string GetLang(int lid)
+        {
+            return lid == 1 ? "sv" : "en";
+        }
+
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);

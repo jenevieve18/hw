@@ -8,6 +8,34 @@ namespace HW.Core.Repositories.Sql
 {
 	public class SqlSponsorAdminRepository : BaseSqlRepository<SponsorAdmin>, IExtendedSurveyRepository
 	{
+		public void SavePassword(string password, string uid)
+		{
+			string query = string.Format(
+				@"
+UPDATE SponsorAdmin SET Pas = @Password
+WHERE UniqueKey = @UniqueKey");
+			ExecuteNonQuery(
+				query,
+				"healthWatchSqlConnection",
+				new SqlParameter("@Password", password),
+				new SqlParameter("@UniqueKey", uid)
+			);
+		}
+		
+		public void UpdateUniqueKey(string uid, int sponsorAdminID)
+		{
+			string query = string.Format(
+				@"
+UPDATE SponsorAdmin SET UniqueKey = @UniqueKey
+WHERE SponsorAdminID = @SponsorAdminID");
+			ExecuteNonQuery(
+				query,
+				"healthWatchSqlConnection",
+				new SqlParameter("@UniqueKey", uid),
+				new SqlParameter("@SponsorAdminID", sponsorAdminID)
+			);
+		}
+		
 		public void UpdateSponsorLastLoginSent(int sponsorAdminId)
 		{
 			string query = string.Format(

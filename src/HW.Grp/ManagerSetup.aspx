@@ -10,6 +10,8 @@
             <div class="settingsPane">
 			    <asp:Button CssClass="btn" ID="Cancel" runat=server Text="Cancel" />
 			    <asp:Button CssClass="btn" ID="Save" runat=server Text="Save" />
+                <asp:Button ID="buttonSend" runat="server" Text="Send" CssClass="btn" 
+                    onclick="buttonSend_Click" Visible="False" />
 			    <!--<asp:Label ID=ErrorMsg runat=server />-->
 			    <% if (errorMessage != "") { %>
 			    	<span style="color:#cc0000;"><%= errorMessage %></span>
@@ -26,7 +28,7 @@
 		                    <tr><td><%= R.Str(lid, "manager.name", "First Name")%>&nbsp;</td><td><asp:TextBox ID="Name" Width=200 runat=server /></td></tr>
                             <tr><td><%= R.Str(lid, "manager.name.last", "Last Name")%>&nbsp;</td><td><asp:TextBox ID="LastName" Width=200 runat=server /></td></tr>
 		                    <tr><td><%= R.Str(lid, "manager.username", "Username")%>&nbsp;</td><td><asp:TextBox ID="Usr" Width=200 runat=server /></td></tr>
-		                    <tr><td><%= R.Str(lid, "manager.password", "Password")%>&nbsp;</td><td><asp:TextBox ID="Pas" TextMode=Password Width=200 runat=server /></td></tr>
+		                    <%-- <tr><td><%= R.Str(lid, "manager.password", "Password")%>&nbsp;</td><td><asp:TextBox ID="Pas" TextMode=Password Width=200 runat=server /></td></tr>--%>
 		                    <tr><td><%= R.Str(lid, "email") %>&nbsp;</td><td><asp:TextBox ID="Email" Width=200 runat=server /></td></tr>
                             <tr><td><%= R.Str(lid, "organization.readonly", "Organization read only")%>&nbsp;</td><td><asp:CheckBox ID=ReadOnly runat=server /></td></tr>
                             <tr><td><%= R.Str(lid, "access.nodelete", "No access to permanently delete users") %></td><td><asp:CheckBox ID=PermanentlyDeleteUsers runat=server Checked="True" /></td></tr>

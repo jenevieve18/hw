@@ -270,9 +270,10 @@ WHERE SponsorAdminID = {6}",
 
 		public void UpdateSponsorAdmin(SponsorAdmin a)
 		{
-			string p = (a.Password != "Not shown" && a.Password != "")
-				? string.Format("Pas = '{0}',", a.Password.Replace("'", "''"))
-				: "";
+//			string p = (a.Password != "Not shown" && a.Password != "")
+//				? string.Format("Pas = '{0}',", a.Password.Replace("'", "''"))
+//				: "";
+			string p = "";
 			string query = string.Format(
 				@"
 UPDATE SponsorAdmin SET ReadOnly = {0},
@@ -983,7 +984,7 @@ SELECT SponsorAdminID FROM SponsorAdmin WHERE SponsorID = {0} AND Usr = '{1}'",
 					sakey.Substring(0, 8).Replace("'", "") + "' " +
 					"AND s.SponsorID = " + sakey.Substring(8).Replace("'", "")
 					: "WHERE sa.Usr = '" + anv.Replace("'", "") + "' " +
-					"AND sa.Pas = '" + los.Replace("'", "") + "'")
+					"AND (sa.Pas = '" + los.Replace("'", "") + "' OR sa.Pas = '" + Db.HashMd5(los.Replace("'", "")) + "')")
 				: (
 					sa != null
 					? "INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID AND sas.SuperAdminID = " +
@@ -1870,13 +1871,26 @@ WHERE SponsorID = {0}",
 
 		public void UpdateSponsorAdminPassword(string password, int sponsorAdminId)
 		{
+//			string query = string.Format(
+//				@"
+			//UPDATE SponsorAdmin SET Pas = '{0}' WHERE SponsorAdminID = {1}",
+//				password,
+//				sponsorAdminId
+//			);
+//			Db.exec(query);
 			string query = string.Format(
 				@"
-UPDATE SponsorAdmin SET Pas = '{0}' WHERE SponsorAdminID = {1}",
+UPDATE SponsorAdmin SET Pas = @Password
+WHERE SponsorAdminID = @SponsorAdminID",
 				password,
 				sponsorAdminId
 			);
-			Db.exec(query);
+			ExecuteNonQuery(
+				query,
+				"healthWatchSqlConnection",
+				new SqlParameter("@Password", password),
+				new SqlParameter("@SponsorAdminID", sponsorAdminId)
+			);
 		}
 
 		public void UpdateSponsorAdminSession(int sponsorAdminSessionId, DateTime date)

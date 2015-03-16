@@ -22,6 +22,8 @@ namespace HW.Grp
 		
 		protected void Page_Load(object sender, EventArgs e)
         {
+			HtmlHelper.RedirectIf(Session["SponsorAdminID"] == null, "default.aspx", true);
+			
             lid = ConvertHelper.ToInt32(Session["lid"], 1);
 			Save.Click += new EventHandler(Save_Click);
 			if (Convert.ToInt32(Session["SponsorAdminID"]) <= 0) {
@@ -36,7 +38,8 @@ namespace HW.Grp
 		{
 //			if (Password.Text.Length > 1) {
 			if (Password.Text.Length > 8) {
-				sponsorRepository.UpdateSponsorAdminPassword(Password.Text.Replace("'", "''"), Convert.ToInt32(Session["SponsorAdminID"]));
+//				sponsorRepository.UpdateSponsorAdminPassword(Password.Text.Replace("'", "''"), Convert.ToInt32(Session["SponsorAdminID"]));
+				sponsorRepository.UpdateSponsorAdminPassword(Db.HashMd5(Password.Text), Convert.ToInt32(Session["SponsorAdminID"]));
 				Message.Text = R.Str(lid, "password.saved", "New password saved!");
 			} else {
 				Message.Text = R.Str(lid, "password.short", "Password too short!");

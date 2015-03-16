@@ -29,13 +29,13 @@ namespace HW.Grp
 			get { return Request.QueryString["SAID"] != null; }
 		}
 
-        protected override void OnPreRender(EventArgs e)
-        {
-            base.OnPreRender(e);
-            Cancel.Text = R.Str(lid, "cancel", "Cancel");
-            Save.Text = R.Str(lid, "save", "Save");
-            SuperUser.Text = R.Str(lid, "role.user.super", "Super user (can administer its own manager account, including all units)");
-        }
+		protected override void OnPreRender(EventArgs e)
+		{
+			base.OnPreRender(e);
+			Cancel.Text = R.Str(lid, "cancel", "Cancel");
+			Save.Text = R.Str(lid, "save", "Save");
+			SuperUser.Text = R.Str(lid, "role.user.super", "Super user (can administer its own manager account, including all units)");
+		}
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -57,14 +57,10 @@ namespace HW.Grp
 					}
 
 					OrgTree.Text = string.Format("<tr><td>{0}</td></tr>", Session["Sponsor"]);
-//					bool[] DX = new bool[8];
 					Dictionary<int, bool> DX = new Dictionary<int, bool>();
 					sponsorAdminDepartments = departmentRepository.a(sponsorID, sponsorAdminID);
 					foreach (var d in sponsorAdminDepartments) {
 						int depth = d.Department.Depth;
-//						if (!DX.ContainsKey(depth)) {
-//							DX[depth] = (d.Department.Siblings > 0);
-//						}
 						DX[depth] = (d.Department.Siblings > 0);
 
 						OrgTree.Text += @"
@@ -118,6 +114,8 @@ namespace HW.Grp
 				}
 
 				if (HasSAID) {
+					buttonSend.Visible = true;
+					
 					int SAID = Convert.ToInt32(Request.QueryString["SAID"]);
 					sponsorAdminID = Convert.ToInt32(Session["SponsorAdminID"]);
 					var a = sponsorRepository.ReadSponsorAdmin(sponsorID, sponsorAdminID, SAID);
@@ -128,10 +126,10 @@ namespace HW.Grp
 							SuperUser.Checked = a.SuperUser;
 							Name.Text = (a.Name == "" ? a.Usr : a.Name);
 							Usr.Text = a.Usr;
-							Pas.Attributes.Add("value", "Not shown");
+//							Pas.Attributes.Add("value", "Not shown");
 							Email.Text = a.Email;
-                            LastName.Text = a.LastName;
-                            PermanentlyDeleteUsers.Checked = a.PermanentlyDeleteUsers;
+							LastName.Text = a.LastName;
+							PermanentlyDeleteUsers.Checked = a.PermanentlyDeleteUsers;
 
 							foreach (var f in sponsorRepository.FindAdminFunctionBySponsorAdmin(a.Id)) {
 								if (ManagerFunctionID.Items.FindByValue(f.Function.Id.ToString()) != null) {
@@ -176,37 +174,36 @@ namespace HW.Grp
 					Email = Email.Text,
 					Name = Name.Text,
 					Usr = Usr.Text,
-					Password = Pas.Text,
+//					Password = Pas.Text,
 					SuperUser = SuperUser.Checked,
 					Sponsor = new Sponsor { Id = sponsorID },
-                    LastName = LastName.Text,
-                    PermanentlyDeleteUsers = PermanentlyDeleteUsers.Checked
+					LastName = LastName.Text,
+					PermanentlyDeleteUsers = PermanentlyDeleteUsers.Checked
 				};
 				a.Validate();
 				if (!a.HasErrors) {
-				if (sponsorAdminID != 0) {
-					sponsorRepository.UpdateSponsorAdmin(a);
-				} else {
-					sponsorRepository.SaveSponsorAdmin(a);
-					a = sponsorRepository.ReadSponsorAdmin(sponsorID, Usr.Text);
-					if (a != null) {
-						sponsorAdminID = a.Id;
-					}
-				}
-				sponsorRepository.DeleteSponsorAdminFunction(sponsorAdminID);
-				foreach (var f in managerRepository.FindAll()) {
-					if (ManagerFunctionID.Items.FindByValue(f.Id.ToString()) != null) {
-						if (ManagerFunctionID.Items.FindByValue(f.Id.ToString()).Selected) {
-							var x = new SponsorAdminFunction {
-								Admin = new SponsorAdmin { Id = sponsorAdminID },
-								Function = new ManagerFunction { Id = f.Id }
-							};
-							sponsorRepository.SaveSponsorAdminFunction(x);
+					if (sponsorAdminID != 0) {
+						sponsorRepository.UpdateSponsorAdmin(a);
+					} else {
+						sponsorRepository.SaveSponsorAdmin(a);
+						a = sponsorRepository.ReadSponsorAdmin(sponsorID, Usr.Text);
+						if (a != null) {
+							sponsorAdminID = a.Id;
 						}
 					}
-				}
-				foreach (var d in departmentRepository.b(sponsorID, sponsorAdminID)) {
-//					if (!d.Admin.SuperUser) {
+					sponsorRepository.DeleteSponsorAdminFunction(sponsorAdminID);
+					foreach (var f in managerRepository.FindAll()) {
+						if (ManagerFunctionID.Items.FindByValue(f.Id.ToString()) != null) {
+							if (ManagerFunctionID.Items.FindByValue(f.Id.ToString()).Selected) {
+								var x = new SponsorAdminFunction {
+									Admin = new SponsorAdmin { Id = sponsorAdminID },
+									Function = new ManagerFunction { Id = f.Id }
+								};
+								sponsorRepository.SaveSponsorAdminFunction(x);
+							}
+						}
+					}
+					foreach (var d in departmentRepository.b(sponsorID, sponsorAdminID)) {
 						departmentRepository.DeleteSponsorAdminDepartment(sponsorAdminID, d.Department.Id);
 						bool hasDepartmentID = Request.Form["DepartmentID"] != null;
 						if (hasDepartmentID) {
@@ -214,7 +211,6 @@ namespace HW.Grp
 							string ids = string.Format("#{0}#", departmentID.Replace(" ", "").Replace(",", "#"));
 							bool deptIDInIds = ids.IndexOf("#" + d.Department.Id + "#") >= 0;
 							if (deptIDInIds) {
-//							if (("#" + departmentID.Replace(" ", "").Replace(",", "#") + "#").IndexOf("#" + d.Department.Id + "#") >= 0) {
 								var x = new SponsorAdminDepartment {
 									Id = sponsorAdminID,
 									Department = new Department { Id = d.Department.Id }
@@ -222,16 +218,22 @@ namespace HW.Grp
 								departmentRepository.SaveSponsorAdminDepartment(x);
 							}
 						}
-//					}
-				}
-				Response.Redirect("managers.aspx", true);
+					}
+					Response.Redirect("managers.aspx", true);
 				} else {
 					errorMessage = a.Errors.ToHtmlUl();
 				}
 			} else {
-//				ErrorMsg.Text = "<SPAN STYLE='color:#cc0000;'>Error! The username is invalid, please select a different one!</SPAN>";
 				errorMessage = R.Str(lid, "manager.invalid", "Error! The username is invalid, please select a different one!");
 			}
 		}
+
+        protected void buttonSend_Click(object sender, EventArgs e)
+        {
+        	string uid = Guid.NewGuid().ToString().ToUpper().Replace("-", "");
+        	sponsorAdminRepository.UpdateUniqueKey(uid, sponsorAdminID);
+        	new PasswordActivationLink().Send(Email.Text, uid, Name.Text, Usr.Text);
+        	errorMessage = "Password activation link sent!";
+        }
 	}
 }

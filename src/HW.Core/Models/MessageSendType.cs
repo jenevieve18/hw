@@ -331,4 +331,25 @@ namespace HW.Core.Models
 			}
 		}
 	}
+	
+	public class PasswordActivationLink
+	{
+		public void Send(string to, string uid, string name, string username)
+		{
+			string body = string.Format(
+				@"Dear {0},
+
+A manager account has been set up for you to the HealthWatch group administration interface. Please click the link below to choose a password.
+
+{1}PasswordActivation.aspx?KEY={2}
+
+{3}",
+				name,
+				ConfigurationManager.AppSettings["grpURL"],
+				uid,
+				username != "" ? string.Format("Your username is '{0}'", username) : ""
+			);
+			Db.sendMail("info@healthwatch.se", to, "Your HealthWatch Group Administration account", body);
+		}
+	}
 }
