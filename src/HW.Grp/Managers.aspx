@@ -29,7 +29,7 @@
 		</div>
 		<div class="smallContent">
 			<br />
-			<table border="0" cellpadding="0" cellspacing="0">
+			<table border="0" cellpadding="3" cellspacing="0">
 				<%--<asp:Label ID=labelManagers runat=server/>--%>
 				<tr>
                     <th><a class="sort <%= sort == 0 ? "sort-asc" : "sort-desc" %>" href="managers.aspx?sort=<%= sort == 0 ? 1 : 0 %>"><%= R.Str(lid, "manager.name", "Name")%></a></th>
@@ -54,7 +54,7 @@
 							<%= f.Function %>
 						<% } %>
 					</td>
-                    <td></td>
+                    <td style="text-align:center"><%= s.GetLoginDays() %></td>
 					<td>
 						<%
 							string url = string.Format(

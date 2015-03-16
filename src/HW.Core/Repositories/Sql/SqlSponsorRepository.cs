@@ -1410,7 +1410,9 @@ WHERE SponsorAdminID = {0}",
 SELECT sa.SponsorAdminID,
 	sa.Usr,
 	sa.Name,
-	sa.ReadOnly
+	sa.ReadOnly,
+	sa.Pas,
+	(SELECT TOP 1 DATEDIFF(DAY, sas.DT, GETDATE()) FROM SponsorAdminSession sas WHERE sas.SponsorAdminID = sa.SponsorAdminID) LoginDays
 FROM SponsorAdmin sa
 WHERE (sa.SponsorAdminID <> {1} OR sa.SuperUser = 1)
 {2}
@@ -1428,7 +1430,9 @@ ORDER BY sa.Name {3}",
 						Id = GetInt32(rs, 0),
 						Usr = GetString(rs, 1),
 						Name = GetString(rs, 2),
-						ReadOnly = GetInt32(rs, 3) == 1
+						ReadOnly = GetInt32(rs, 3) == 1,
+						Password = GetString(rs, 4),
+						LoginDays = GetInt32(rs, 5, -1)
 					};
 					admins.Add(a);
 				}

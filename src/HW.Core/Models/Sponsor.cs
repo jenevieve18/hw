@@ -155,6 +155,17 @@ namespace HW.Core.Models
 			get { return ExtendedSurveys.Count > 0; }
 		}
 		
+		public string GetLoginDays()
+		{
+			if (Password == "") {
+				return "Not activated";
+			} else if (LoginDays == -1) {
+				return "Not on record";
+			} else {
+				return LoginDays.ToString();
+			}
+		}
+		
 		public override string ToString()
 		{
 			return Name == "" ? (Usr == "" ? "&gt; empty &lt;" : Usr) : Name;
