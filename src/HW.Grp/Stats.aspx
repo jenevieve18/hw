@@ -280,9 +280,9 @@
 
                 <!--<div class="input-daterange" id="datepicker">-->
                 <span class="input-daterange">
-                    <input readonly type="text" class="input-small" name="startDate" value="<%= startDate.ToString("yyyy MMM") %>" />
+                    <input readonly style="cursor:pointer" type="text" class="input-small date" name="startDate" value="<%= startDate.ToString("yyyy MMM") %>" />
                     <span>--</span>
-                    <input readonly type="text" class="input-small" name="endDate" value="<%= endDate.ToString("yyyy MMM") %>" />
+                    <input readonly style="cursor:pointer" type="text" class="input-small date" name="endDate" value="<%= endDate.ToString("yyyy MMM") %>" />
                 </span>
                 <!--</div>-->
 
