@@ -414,9 +414,6 @@
   <data name="send.only" xml:space="preserve">
     <value>** Sent only to individuals who have received invitation but not activated their account</value>
   </data>
-  <data name="send1" xml:space="preserve">
-    <value>Send</value>
-  </data>
   <data name="sent.last" xml:space="preserve">
     <value>Last sent</value>
   </data>
