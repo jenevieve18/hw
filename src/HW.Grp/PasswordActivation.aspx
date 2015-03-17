@@ -42,8 +42,8 @@
     }
 </style>
 <script type="text/javascript">
-    function openWindow() {
-        alert('Password successfully updated!');
+    function openWindow(str) {
+        alert(str);
         window.location = 'default.aspx';
     }
 </script>
@@ -91,10 +91,10 @@
     <div id="contextbar">
         <div class="actionPane">
             <div class="actionBlock">
-                <span style="width:150px" class="desc">New Password</span><asp:TextBox 
-                    ID="textBoxPassword" runat="server" TextMode="Password"></asp:TextBox><br />
-                <span style="width:150px" class="desc">Confirm Password</span><asp:TextBox 
-                    ID="textBoxConfirmPassword" runat="server" TextMode="Password"></asp:TextBox><br />
+                <span style="width:150px" class="desc"><%= R.Str(lid, "password.new", "New Password") %></span>
+                <asp:TextBox ID="textBoxPassword" runat="server" TextMode="Password"></asp:TextBox><br />
+                <span style="width:150px" class="desc"><%= R.Str(lid, "password.confirm", "Confirm Password") %></span>
+                <asp:TextBox ID="textBoxConfirmPassword" runat="server" TextMode="Password"></asp:TextBox><br />
                 <span style="color: #CC0000;">
                     <asp:Label ID="labelErrorMessage" runat="server" /><br />
                 </span>

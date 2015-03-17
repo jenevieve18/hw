@@ -37,12 +37,13 @@ namespace HW.Grp
 		protected override void OnPreRender(EventArgs e)
 		{
 			base.OnPreRender(e);
+            buttonActivate.Text = R.Str(lid, "password.activate", "Activate Password");
 			if (Saved) {
 				/*string script = string.Format(
 					"<script language='JavaScript'>alert('{0}');</script>",
 					"Password successfully saved!"
 				);*/
-				string script = "<script>openWindow()</script>";
+				string script = string.Format("<script>openWindow('{0}')</script>", R.Str(lid, "password.saved", "New password saved!"));
 				ClientScript.RegisterStartupScript(this.GetType(), "SENT", script);
 			}
 		}
@@ -50,9 +51,9 @@ namespace HW.Grp
 		protected void buttonActivate_Click(object sender, EventArgs e)
 		{
 			if (textBoxPassword.Text != textBoxConfirmPassword.Text) {
-				labelErrorMessage.Text = "Password does not match";
+				labelErrorMessage.Text = R.Str(lid, "password.nomatch", "Passwords do not match!");
 			} else if (textBoxPassword.Text.Length < 8) {
-				labelErrorMessage.Text = "Password must be at least 8 characters";
+				labelErrorMessage.Text = R.Str(lid, "password.short", "Password too short! It needs to be at least 8 characters.");
 			} else {
 				r.SavePassword(Db.HashMd5(textBoxPassword.Text), UniqueKey);
 				Response.Redirect(string.Format("passwordactivation.aspx?KEY={0}&Saved=true", UniqueKey), true);

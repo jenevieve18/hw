@@ -324,11 +324,23 @@
   <data name="organization.readonly" xml:space="preserve">
     <value>Organisation, enbart läsbehörighet</value>
   </data>
+  <data name="password.activate" xml:space="preserve">
+    <value>Aktivera lösenord</value>
+  </data>
   <data name="password.change" xml:space="preserve">
     <value>Ändra lösenord</value>
   </data>
+  <data name="password.confirm" xml:space="preserve">
+    <value>Bekräfta lösenord</value>
+  </data>
   <data name="password.incorrect" xml:space="preserve">
     <value>Fel lösenord!</value>
+  </data>
+  <data name="password.new" xml:space="preserve">
+    <value>Nytt lösenord</value>
+  </data>
+  <data name="password.nomatch" xml:space="preserve">
+    <value>Lösenorden matchar inte!</value>
   </data>
   <data name="password.saved" xml:space="preserve">
     <value>Nytt lösenord sparat!</value>

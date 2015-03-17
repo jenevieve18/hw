@@ -312,11 +312,23 @@
   <data name="organization.readonly" xml:space="preserve">
     <value>Organization read only</value>
   </data>
+  <data name="password.activate" xml:space="preserve">
+    <value>Activate Password</value>
+  </data>
   <data name="password.change" xml:space="preserve">
     <value>Change password</value>
   </data>
+  <data name="password.confirm" xml:space="preserve">
+    <value>Confirm Password</value>
+  </data>
   <data name="password.incorrect" xml:space="preserve">
     <value>Incorrect password!</value>
+  </data>
+  <data name="password.new" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="password.nomatch" xml:space="preserve">
+    <value>Passwords do not match!</value>
   </data>
   <data name="password.saved" xml:space="preserve">
     <value>New password saved!</value>
