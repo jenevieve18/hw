@@ -124,6 +124,23 @@ AND SponsorAdminID != @SponsorAdminID"
 			return exists;
 		}
 		
+		public bool SponsorAdminUniqueKeyExists(string uid)
+		{
+			string query = string.Format(
+				@"
+SELECT UniqueKey
+FROM SponsorAdmin
+WHERE UniqueKey = @UniqueKey"
+			);
+			bool exists = false;
+			using (SqlDataReader r = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@UniqueKey", uid))) {
+				if (r.Read()) {
+					exists = true;
+				}
+			}
+			return exists;
+		}
+		
 		public ISponsor ReadSponsor(int sponsorAdminId)
 		{
 			string query = string.Format(

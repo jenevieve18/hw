@@ -29,6 +29,7 @@ namespace HW.Grp
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			HtmlHelper.RedirectIf(!HasUniqueKey, "default.aspx", true);
+			HtmlHelper.RedirectIf(!r.SponsorAdminUniqueKeyExists(UniqueKey), "default.aspx", true);
 			
 			lid = ConvertHelper.ToInt32(Session["lid"], 1);
 		}
