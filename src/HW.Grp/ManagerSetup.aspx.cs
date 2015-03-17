@@ -181,7 +181,7 @@ namespace HW.Grp
 					PermanentlyDeleteUsers = PermanentlyDeleteUsers.Checked
 				};
 				a.Validate();
-				a.AddErrorIf(sponsorAdminRepository.SponsorAdminEmailExists(a.Email), "Please choose a unique email address!");
+				a.AddErrorIf(sponsorAdminRepository.SponsorAdminEmailExists(a.Email, sponsorAdminID), "Please choose a unique email address!");
 				if (!a.HasErrors) {
 					if (sponsorAdminID != 0) {
 						sponsorRepository.UpdateSponsorAdmin(a);
