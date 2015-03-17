@@ -113,7 +113,8 @@ UPDATE SponsorAdmin SET InviteLastSent = GETDATE() WHERE SponsorAdminID = {0}",
 SELECT Email
 FROM SponsorAdmin
 WHERE Email = @Email
-AND SponsorAdminID != @SponsorAdminID"
+AND SponsorAdminID != @SponsorAdminID
+AND Usr NOT LIKE '%DELETED'"
 			);
 			bool exists = false;
 			using (SqlDataReader r = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@Email", email), new SqlParameter("@SponsorAdminID", sponsorAdminID))) {
@@ -122,6 +123,25 @@ AND SponsorAdminID != @SponsorAdminID"
 				}
 			}
 			return exists;
+		}
+		
+		public bool SponsorAdminHasAccess(int sponsorAdminID, int function)
+		{
+			string query = string.Format(
+				@"
+SELECT sa.SponsorAdminID
+FROM SponsorAdmin sa
+INNER JOIN SponsorAdminFunction saf ON saf.SponsorAdminID = sa.SponsorAdminID
+WHERE sa.SponsorAdminID = @SponsorAdminID
+AND saf.ManagerFunctionID = @ManagerFunctionID"
+			);
+			bool hasAccess = false;
+			using (SqlDataReader r = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@SponsorAdminID", sponsorAdminID), new SqlParameter("@ManagerFunctionID", function))) {
+				if (r.Read()) {
+					hasAccess = true;
+				}
+			}
+			return hasAccess;
 		}
 		
 		public bool SponsorAdminUniqueKeyExists(string uid)
