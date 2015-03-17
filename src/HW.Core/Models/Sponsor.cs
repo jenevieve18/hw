@@ -162,7 +162,7 @@ namespace HW.Core.Models
 			} else if (LoginDays == -1) {
 				return "Not on record";
 			} else {
-				return LoginDays.ToString();
+				return string.Format("{0} day(s)", LoginDays);
 			}
 		}
 		

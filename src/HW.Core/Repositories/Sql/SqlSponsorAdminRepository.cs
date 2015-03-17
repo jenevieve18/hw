@@ -106,6 +106,23 @@ UPDATE SponsorAdmin SET InviteLastSent = GETDATE() WHERE SponsorAdminID = {0}",
 			Db.exec(query, "healthWatchSqlConnection");
 		}
 		
+		public bool SponsorAdminEmailExists(string email)
+		{
+			string query = string.Format(
+				@"
+SELECT Email
+FROM SponsorAdmin
+WHERE Email = @Email"
+			);
+			bool exists = false;
+			using (SqlDataReader r = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@Email", email))) {
+				if (r.Read()) {
+					exists = true;
+				}
+			}
+			return true;
+		}
+		
 		public ISponsor ReadSponsor(int sponsorAdminId)
 		{
 			string query = string.Format(

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using HW.Core.Helpers;
 using HW.Core.Models;
+using HW.Core.Services;
 
 namespace HW.Core.Repositories.Sql
 {

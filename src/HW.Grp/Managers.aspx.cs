@@ -19,33 +19,38 @@ namespace HW.Grp
 		protected int sort;
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
         protected int lid;
+        
+        bool ForDelete {
+        	get { return SponsorAdminIDToBeDeleted != -1; }
+        }
+        
+        int SponsorAdminIDToBeDeleted {
+        	get { return ConvertHelper.ToInt32(Request.QueryString["Delete"], -1); }
+        }
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			HtmlHelper.RedirectIf(Session["SponsorID"] == null, "default.aspx", true);
+			
 			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Managers, DateTime.Now);
-			int sponsorID = Convert.ToInt32(Session["SponsorID"]);
+//			int sponsorID = Convert.ToInt32(Session["SponsorID"]);
+			int sponsorID = ConvertHelper.ToInt32(Session["SponsorID"]);
             lid = ConvertHelper.ToInt32(Session["lid"], 1);
 			sort = ConvertHelper.ToInt32(Request.QueryString["sort"]);
-			bool delete = Request.QueryString["Delete"] != null;
-			if (delete) {
-				int sponsorAdminID = Convert.ToInt32(Request.QueryString["Delete"]);
-				sponsorRepository.UpdateDeletedAdmin(sponsorID, sponsorAdminID);
+//			bool delete = Request.QueryString["Delete"] != null;
+//			if (delete) {
+			if (ForDelete) {
+//				int sponsorAdminIDToBeDeleted = Convert.ToInt32(Request.QueryString["Delete"]);
+//				sponsorRepository.UpdateDeletedAdmin(sponsorID, sponsorAdminIDToBeDeleted);
+				sponsorRepository.UpdateDeletedAdmin(sponsorID, SponsorAdminIDToBeDeleted);
 			}
-			if (sponsorID != 0) {
-//				labelManagers.Text = " <tr><td><b>Name</b>&nbsp;&nbsp;</td><td><b>Roles</b></td></tr>";
-				int sponsorAdminID = Session["SponsorAdminID"] != null ? Convert.ToInt32(Session["SponsorAdminID"]) : -1;
-				sponsorAdmins = sponsorRepository.FindAdminBySponsor(sponsorID, sponsorAdminID, sort == 0 ? "ASC" : "DESC");
-//				foreach (var s in sponsorAdmins) {
-//					labelManagers.Text += "<tr><td>" + (!s.ReadOnly ? "" : "<img src='img/locked.gif'/> ") + "<a href='managerSetup.aspx?SAID=" + s.Id.ToString() + "'>" + (s.Name == "" ? (s.Usr == "" ? "&gt; empty &lt;" : s.Usr) : s.Name) + "</a>&nbsp;&nbsp;</td><td>";
-//					int cx = 0;
-//					foreach (var f in managerRepository.FindBySponsorAdmin(s.Id)) {
-//						labelManagers.Text += (cx++ > 0 ? ", " : "") + f.Function;
-//					}
-//					labelManagers.Text += "</td><td><a href=\"javascript:if(confirm('Are you sure you want to delete this manager?')){location.href='managers.aspx?Delete=" + s.Id + "';}\"><img src='img/deltoolsmall.gif' border='0'/></td></tr>";
-//				}
-			} else {
-				Response.Redirect("default.aspx", true);
-			}
+//			if (sponsorID != 0) {
+//				int sponsorAdminID = Session["SponsorAdminID"] != null ? Convert.ToInt32(Session["SponsorAdminID"]) : -1;
+			int sponsorAdminID = ConvertHelper.ToInt32(Session["SponsorAdminID"], -1);
+			sponsorAdmins = sponsorRepository.FindAdminBySponsor(sponsorID, sponsorAdminID, sort == 0 ? "ASC" : "DESC");
+//			} else {
+//				Response.Redirect("default.aspx", true);
+//			}
 		}
 	}
 }

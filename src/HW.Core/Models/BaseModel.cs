@@ -24,7 +24,7 @@ namespace HW.Core.Models
 		
 		public virtual void Validate() {}
 		
-		protected virtual void AddErrorIf(bool condition, string message)
+		public virtual void AddErrorIf(bool condition, string message)
 		{
 			if (condition) {
 				Errors.Add(message);
