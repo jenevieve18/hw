@@ -15,7 +15,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
-<script type="text/javascript">
+<!--<script type="text/javascript">
     $(document).ready(function () {
         var descriptionS = $("#submenu .description").html();
         $("#submenu a").mouseover(function () {
@@ -27,7 +27,7 @@
             $("#submenu .active").css('background-position', 'center -120px');
         });
     });
-	</script>
+	</script>-->
     <style type="text/css">
         .i18n 
         {
@@ -41,6 +41,12 @@
         border-top: 1px solid #b0e1f3;
     }
 </style>
+<script type="text/javascript">
+    function openWindow() {
+        alert('Password successfully updated!');
+        window.location = 'default.aspx';
+    }
+</script>
 <link href="App_Themes/Grp/960.css" type="text/css" rel="stylesheet">
 <link href="App_Themes/Grp/admin.css" type="text/css" rel="stylesheet">
 <link href="App_Themes/Grp/site.css" type="text/css" rel="stylesheet">
