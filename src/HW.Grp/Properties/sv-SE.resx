@@ -327,6 +327,9 @@
   <data name="password.activate" xml:space="preserve">
     <value>Aktivera lösenord</value>
   </data>
+  <data name="password.activate.sent" xml:space="preserve">
+    <value>Aktiveringslänk för lösenord skickad!</value>
+  </data>
   <data name="password.change" xml:space="preserve">
     <value>Ändra lösenord</value>
   </data>

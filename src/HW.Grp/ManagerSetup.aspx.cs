@@ -235,7 +235,7 @@ namespace HW.Grp
         	string uid = Guid.NewGuid().ToString().ToUpper().Replace("-", "");
         	sponsorAdminRepository.UpdateUniqueKey(uid, sponsorAdminID);
         	new PasswordActivationLink().Send(Email.Text, uid, Name.Text, Usr.Text);
-        	errorMessage = "Password activation link sent!";
+        	errorMessage = R.Str(lid, "password.activate.sent", "Password activation link sent!");
         }
 	}
 }
