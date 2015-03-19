@@ -84,7 +84,7 @@
     font-size:9pt;
 }
 .chart-description {
-    background:url(img/myhealth_statistics_bar_detail_toggle.gif);
+    background:url(img/myhealth_statistics_bar_detail_toggle.png);
 }
 .chart-descriptions-info {
     width: 16px;
@@ -96,7 +96,7 @@
 .toggle {
     width: 32px;
     height: 16px;
-    background:url(img/myhealth_statistics_bar_detail_toggle.gif);
+    background:url(img/myhealth_statistics_bar_detail_toggle.png);
     display:inline-block;
     cursor:pointer;
 }
@@ -106,7 +106,7 @@
 .toggle-active {
 }
 .toggle-active-hover {
-    background:url(img/myhealth_statistics_bar_detail_toggle.gif);
+    background:url(img/myhealth_statistics_bar_detail_toggle.png);
     background-position:0 -16px;
 }
 </style>
