@@ -22,6 +22,7 @@ namespace HW.Core.Models
 		public const int Managers = 4;
 		public const int TEST = 6;
 		public const int Exercises = 7;
+		public const int Reminders = 8;
 		
 		public override string ToString()
 		{
