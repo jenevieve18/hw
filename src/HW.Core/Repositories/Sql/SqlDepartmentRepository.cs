@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using HW.Core.Helpers;
 using HW.Core.Models;
+using HW.Core.Services;
 
 namespace HW.Core.Repositories.Sql
 {
@@ -283,6 +284,7 @@ SELECT TOP 1 LoginWeekday
 FROM SelectRecursiveDepartment
 WHERE DepartmentID = @DepartmentID"
 			);
+			LoggingService.Info(query);
 			Department d = new Department();
 			using (SqlDataReader rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@DepartmentID", id))) {
 				if (rs.Read()) {
@@ -306,6 +308,7 @@ SELECT TOP 1 LoginDays
 FROM SelectRecursiveDepartment
 WHERE DepartmentID = @DepartmentID"
 			);
+			LoggingService.Info(query);
 			using (SqlDataReader rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@DepartmentID", id))) {
 				if (rs.Read()) {
 					d.LoginDays = GetInt32(rs, 0, -1);
