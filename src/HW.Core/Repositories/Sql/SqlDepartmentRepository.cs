@@ -284,11 +284,11 @@ SELECT TOP 1 LoginWeekday
 FROM SelectRecursiveDepartment
 WHERE DepartmentID = @DepartmentID"
 			);
-			LoggingService.Info(query);
+//			LoggingService.Info(query);
 			Department d = new Department();
 			using (SqlDataReader rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@DepartmentID", id))) {
 				if (rs.Read()) {
-					d.LoginWeekDay = GetInt32(rs, 0, -1);
+					d.LoginWeekDay = GetInt32(rs, 0, -666);
 				}
 			}
 			
@@ -308,7 +308,7 @@ SELECT TOP 1 LoginDays
 FROM SelectRecursiveDepartment
 WHERE DepartmentID = @DepartmentID"
 			);
-			LoggingService.Info(query);
+//			LoggingService.Info(query);
 			using (SqlDataReader rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@DepartmentID", id))) {
 				if (rs.Read()) {
 					d.LoginDays = GetInt32(rs, 0, -1);
