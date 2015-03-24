@@ -26,9 +26,12 @@ namespace HW.Core.Models
 		public string GetReminder(Dictionary<int, string> loginDays, Dictionary<int, string> loginWeekdays)
 		{
 			if (LoginWeekDay == -1) {
-				if (Sponsor.LoginWeekday == -1) {
-					return "OFF";
-				}
+				return "OFF";
+//				if (Sponsor.LoginWeekday == -1) {
+//					return "OFF";
+//				}
+			} else if (Sponsor.LoginWeekday == -1) {
+				return "OFF";
 			}
 			if (LoginDays == -1) {
 				if (Sponsor.LoginDays == -1) {
