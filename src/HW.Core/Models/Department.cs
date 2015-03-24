@@ -27,14 +27,12 @@ namespace HW.Core.Models
 		{
 			if (LoginWeekDay == -1) {
 				if (Sponsor.LoginWeekday == -1) {
-//					return loginWeekdays[-1];
-//					return "OFF";
+					return "OFF";
 				}
 			}
 			if (LoginDays == -1) {
 				if (Sponsor.LoginDays == -1) {
 					return "OFF";
-//					return loginWeekdays[-1];
 				} else {
 					return loginDays[Sponsor.LoginDays];
 				}
