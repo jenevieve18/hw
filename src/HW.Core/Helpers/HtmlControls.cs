@@ -46,9 +46,14 @@ namespace HW.Core.Helpers
 	
 	public class IHGHtmlTableCell : HtmlTableCell
 	{
-		public IHGHtmlTableCell(string text)
+		public IHGHtmlTableCell(string text) : this("td", text)
 		{
-			InnerText = text;
+//			InnerText = text;
+		}
+		
+		public IHGHtmlTableCell(string tagName, string text): base(tagName)
+		{
+			this.InnerText = text;
 		}
 		
 		public IHGHtmlTableCell(IList<Control> cc)

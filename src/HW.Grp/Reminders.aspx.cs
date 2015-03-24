@@ -34,6 +34,11 @@ namespace HW.Grp
 			Org.Controls.Add(new LiteralControl("<br>"));
 			IHGHtmlTable table = new IHGHtmlTable { Border = 0, CellSpacing = 0, CellPadding = 0 };
 			table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(Session["Sponsor"].ToString()) { ColSpan = 3 }));
+			
+//			IHGHtmlTable t = new IHGHtmlTable();
+//			t.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell("th", "Login Day"), new IHGHtmlTableCell("th", "Login Weekday")));
+//			table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(t), new IHGHtmlTableCell("")));
+			
 			Dictionary<int, bool> DX = new Dictionary<int, bool>();
 
 			departments = departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID);
@@ -62,7 +67,6 @@ namespace HW.Grp
                 lw.SelectedValue = d.LoginWeekDay.ToString();
                 boxes.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(ld), new IHGHtmlTableCell(lw)));
                 
-//                IHGHtmlTableRow row = new IHGHtmlTableRow(new IHGHtmlTableCell(boxes), new IHGHtmlTableCell(d.Id.ToString()));
 				IHGHtmlTableRow row = new IHGHtmlTableRow(new IHGHtmlTableCell(boxes), new IHGHtmlTableCell(d.ShortName.ToString()));
 				int depth = d.Depth;
 				DX[depth] = d.Siblings > 0;

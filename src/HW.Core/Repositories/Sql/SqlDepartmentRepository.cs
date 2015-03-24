@@ -265,34 +265,66 @@ WHERE DepartmentShort = '{0}' AND SponsorID = {1}",
 			return null;
 		}
 		
+		public Department ReadWithReminder2(int id)
+		{
+			string query = string.Format(
+				@"
+WITH SelectRecursiveDepartment(DepartmentID, LoginWeekday, Level) AS (
+	SELECT DepartmentID, LoginWeekday, 0 AS Level
+	FROM Department
+	WHERE ParentDepartmentID IS NULL
+	OR LoginWeekday IS NOT NULL
+	UNION ALL
+	SELECT d.DepartmentID, q.LoginWeekday, Level + 1 as Level
+	FROM Department d
+	INNER JOIN SelectRecursiveDepartment q ON d.ParentDepartmentID = q.DepartmentID
+)
+SELECT TOP 1 LoginWeekday
+FROM SelectRecursiveDepartment
+WHERE DepartmentID = @DepartmentID"
+			);
+			Department d = new Department();
+			using (SqlDataReader rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@DepartmentID", id))) {
+				if (rs.Read()) {
+					d.LoginWeekDay = GetInt32(rs, 0, -1);
+				}
+			}
+			
+			query = string.Format(
+				@"
+WITH SelectRecursiveDepartment(DepartmentID, LoginDays, Level) AS (
+	SELECT DepartmentID, LoginDays, 0 AS Level
+	FROM Department
+	WHERE ParentDepartmentID IS NULL
+	OR LoginDays IS NOT NULL
+	UNION ALL
+	SELECT d.DepartmentID, q.LoginDays, Level + 1 as Level
+	FROM Department d
+	INNER JOIN SelectRecursiveDepartment q ON d.ParentDepartmentID = q.DepartmentID
+)
+SELECT TOP 1 LoginDays
+FROM SelectRecursiveDepartment
+WHERE DepartmentID = @DepartmentID"
+			);
+			using (SqlDataReader rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@DepartmentID", id))) {
+				if (rs.Read()) {
+					d.LoginDays = GetInt32(rs, 0, -1);
+				}
+			}
+			
+			return d;
+		}
+		
 		public Department ReadWithReminder(int id)
 		{
-//			string query = string.Format(
-//				@"
-//WITH SelectRecursiveDepartment(DepartmentID, Department, ParentDepartmentID, LoginDays, LoginWeekday, Level) AS (
-//	SELECT DepartmentID, Department, ParentDepartmentID, LoginDays, LoginWeekday, 0 AS Level
-//	FROM Department
-//	WHERE ParentDepartmentID IS NULL
-//	OR LoginDays IS NOT NULL
-//	OR LoginWeekday IS NOT NULL
-//	UNION ALL
-//	SELECT d.DepartmentID, d.Department, d.ParentDepartmentID, q.LoginDays, q.LoginWeekday, Level + 1 as Level
-//	FROM Department d
-//	INNER JOIN SelectRecursiveDepartment q ON d.ParentDepartmentID = q.DepartmentID
-//)
-//SELECT DepartmentID, Department, ParentDepartmentID, LoginDays, LoginWeekday, Level
-//FROM SelectRecursiveDepartment
-//WHERE DepartmentID = {0}",
-//				id
-//			);
 			string query = string.Format(
 				@"
 SELECT DepartmentID, Department, ParentDepartmentID, LoginDays, LoginWeekday, Level
-FROM FindDepartmentWithReminder({0})",
+FROM FindDepartmentWithReminder(@DepartmentID)",
 				id
 			);
 			Department d = null;
-			using (SqlDataReader rs = Db.rs(query)) {
+			using (SqlDataReader rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@DepartmentID", id))) {
 				if (rs.Read()) {
 					d = new Department {
 						Id = GetInt32(rs, 0),
