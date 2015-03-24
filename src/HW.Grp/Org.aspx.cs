@@ -47,7 +47,7 @@ namespace HW.Grp
 			sponsor = sponsorRepository.ReadSponsor(sponsorID);
 			sponsorAdminID = ConvertHelper.ToInt32(Session["SponsorAdminID"]);
 
-			HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Organization), "default.aspx", true);
+//			HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Organization), "default.aspx", true);
 
 			lid = ConvertHelper.ToInt32(Session["lid"], 1);
 			
