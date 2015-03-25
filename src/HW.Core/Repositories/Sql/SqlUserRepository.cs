@@ -7,7 +7,7 @@ using HW.Core.Services;
 
 namespace HW.Core.Repositories.Sql
 {
-	public class SqlUserRepository : BaseSqlRepository<User>//, IUserRepository
+	public class SqlUserRepository : BaseSqlRepository<User>
 	{
 		public void SaveUserProfileBackgroundQuestion(UserProfileBackgroundQuestion s)
 		{
@@ -359,7 +359,7 @@ SELECT u.Username,
 FROM [SponsorInvite] si
 INNER JOIN Sponsor s ON si.SponsorID = s.SponsorID
 INNER JOIN Department d ON si.DepartmentID = d.DepartmentID
-INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID 
+INNER JOIN SuperAdminSponsor sas ON s.SponsorID = sas.SponsorID
 LEFT OUTER JOIN [User] u ON si.UserID = u.UserID
 WHERE s.Closed IS NULL AND s.Deleted IS NULL AND sas.SuperAdminID = {0} AND si.Email LIKE '%{1}%'",
 				superAdminID,
@@ -546,7 +546,7 @@ AND upru.UserID = {2}",
 		public IList<User> Find2(int sponsorID, int sponsorAdminID)
 		{
 			string j = sponsorAdminID != -1
-                ? string.Format("INNER JOIN SponsorAdminDepartment sad ON si.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
+				? string.Format("INNER JOIN SponsorAdminDepartment sad ON si.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
 				: "WHERE ";
 			string query = string.Format(
 				@"
@@ -602,7 +602,6 @@ AND si.StoppedReason IS NULL
 AND sesd.Hide IS NULL
 AND u.Email NOT LIKE '%DELETED'",
 				sponsorID,
-//				sponsorAdminID,
 				sponsorExtendedSurveyID,
 				j
 			);
@@ -613,7 +612,6 @@ AND u.Email NOT LIKE '%DELETED'",
 					var u = new User {
 						Id = rs.GetInt32(0),
 						Email = rs.GetString(1),
-//						ReminderLink = rs.GetInt32(2),
 						ReminderLink = GetInt32(rs, 2),
 						UserKey = rs.GetString(3)
 					};
@@ -659,7 +657,6 @@ AND u.Email NOT LIKE '%DELETED'",
 					var u = new User {
 						Id = rs.GetInt32(0),
 						Email = rs.GetString(1),
-//						ReminderLink = rs.GetInt32(2),
 						ReminderLink = GetInt32(rs, 2),
 						UserKey = rs.GetString(3)
 					};
