@@ -167,3 +167,4 @@ partcover.driver.log
 
 #OpenCover
 OpenCover**
+/src/HW.Grp/bin/log.txt
