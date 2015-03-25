@@ -35,6 +35,10 @@ namespace HW.Grp
 			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Managers, DateTime.Now);
 //			int sponsorID = Convert.ToInt32(Session["SponsorID"]);
 			int sponsorID = ConvertHelper.ToInt32(Session["SponsorID"]);
+			int sponsorAdminID = ConvertHelper.ToInt32(Session["SponsorAdminID"], -1);
+			
+			HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Managers), "default.aspx", true);
+			
             lid = ConvertHelper.ToInt32(Session["lid"], 1);
 			sort = ConvertHelper.ToInt32(Request.QueryString["sort"]);
 //			bool delete = Request.QueryString["Delete"] != null;
@@ -46,7 +50,7 @@ namespace HW.Grp
 			}
 //			if (sponsorID != 0) {
 //				int sponsorAdminID = Session["SponsorAdminID"] != null ? Convert.ToInt32(Session["SponsorAdminID"]) : -1;
-			int sponsorAdminID = ConvertHelper.ToInt32(Session["SponsorAdminID"], -1);
+			
 			sponsorAdmins = sponsorRepository.FindAdminBySponsor(sponsorID, sponsorAdminID, sort == 0 ? "ASC" : "DESC");
 //			} else {
 //				Response.Redirect("default.aspx", true);

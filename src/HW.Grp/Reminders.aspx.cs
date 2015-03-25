@@ -29,6 +29,9 @@ namespace HW.Grp
 			
 			int sponsorID = ConvertHelper.ToInt32(Session["SponsorID"]);
 			int sponsorAdminID = ConvertHelper.ToInt32(Session["SponsorAdminID"]);
+			
+			HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Reminders), "default.aspx", true);
+			
 			lid = ConvertHelper.ToInt32(Session["lid"], 1);
 			
 			Org.Controls.Add(new LiteralControl("<br>"));

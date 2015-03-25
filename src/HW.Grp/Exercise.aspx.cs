@@ -72,6 +72,10 @@ namespace HW.Grp
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			HtmlHelper.RedirectIf(Session["SponsorID"] == null, "default.aspx", true);
+			
+			sponsorAdminID = ConvertHelper.ToInt32(Session["SponsorAdminID"], -1);
+			
+			HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Exercises), "default.aspx", true);
 
 			lid = ConvertHelper.ToInt32(Session["lid"], 1);
 			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Exercises, DateTime.Now);

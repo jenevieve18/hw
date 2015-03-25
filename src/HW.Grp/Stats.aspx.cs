@@ -161,6 +161,9 @@ namespace HW.Grp
 		{
 			sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
             sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
+            
+            HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Statistics), "default.aspx", true);
+            
             lid = ConvertHelper.ToInt32(Session["lid"], 1);
 			
 //			plotTypes = plotRepository.FindAll();

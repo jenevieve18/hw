@@ -48,6 +48,8 @@ namespace HW.Grp
 			sponsorID = ConvertHelper.ToInt32(Session["SponsorID"]);
 			sponsorAdminID = ConvertHelper.ToInt32(Session["SponsorAdminID"], -1);
 			
+			HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Messages), "default.aspx", true);
+			
 			lid = ConvertHelper.ToInt32(Session["lid"], 1);
 			loginWithSkey = Session["SponsorKey"] != null;
 			

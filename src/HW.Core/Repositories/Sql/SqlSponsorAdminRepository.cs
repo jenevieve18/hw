@@ -78,11 +78,6 @@ UPDATE SponsorAdminExtendedSurvey SET EmailLastSent = GETDATE() WHERE SponsorAdm
 		
 		public void UpdateSponsorLastInviteReminderSent(int sponsorAdminExtendedSurveyId)
 		{
-//			string query = string.Format(
-//				@"
-//UPDATE SponsorAdminExtendedSurvey SET InviteReminderLastSent = GETDATE() WHERE SponsorAdminExtendedSurveyID = {0}",
-//				sponsorAdminExtendedSurveyId
-//			);
 			string query = string.Format(
 				@"
 UPDATE SponsorAdmin SET InviteReminderLastSent = GETDATE() WHERE SponsorAdminID = {0}",
@@ -93,11 +88,6 @@ UPDATE SponsorAdmin SET InviteReminderLastSent = GETDATE() WHERE SponsorAdminID 
 		
 		public void UpdateSponsorLastInviteSent(int sponsorAdminID)
 		{
-//			string query = string.Format(
-//				@"
-//UPDATE SponsorAdminExtendedSurvey SET InviteLastSent = GETDATE() WHERE SponsorAdminExtendedSurveyID = {0}",
-//				sponsorAdminExtendedSurveyId
-//			);
 			string query = string.Format(
 				@"
 UPDATE SponsorAdmin SET InviteLastSent = GETDATE() WHERE SponsorAdminID = {0}",
@@ -127,13 +117,19 @@ AND Usr NOT LIKE '%DELETED'"
 		
 		public bool SponsorAdminHasAccess(int sponsorAdminID, int function)
 		{
+			string q = sponsorAdminID != -1 ?
+				string.Format(
+				@"
+INNER JOIN SponsorAdminFunction saf ON saf.ManagerFunctionID = f.ManagerFunctionID
+WHERE saf.SponsorAdminID = @SponsorAdminID
+AND") :
+				"WHERE";
 			string query = string.Format(
 				@"
-SELECT sa.SponsorAdminID
-FROM SponsorAdmin sa
-INNER JOIN SponsorAdminFunction saf ON saf.SponsorAdminID = sa.SponsorAdminID
-WHERE sa.SponsorAdminID = @SponsorAdminID
-AND saf.ManagerFunctionID = @ManagerFunctionID"
+SELECT f.ManagerFunctionID
+FROM ManagerFunction f
+{0} f.ManagerFunctionID = @ManagerFunctionID",
+				q
 			);
 			bool hasAccess = false;
 			using (SqlDataReader r = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@SponsorAdminID", sponsorAdminID), new SqlParameter("@ManagerFunctionID", function))) {
@@ -216,7 +212,6 @@ AND a.SponsorAdminID = {0}",
 						InviteReminderLastSent = GetLaterDate(GetDateTime(rs, 18), GetDateTime(rs, 22)),
 						AllMessageLastSent = GetLaterDate(GetDateTime(rs, 19), GetDateTime(rs, 23)),
 						LoginLastSent = GetLaterDate(GetDateTime(rs, 20), GetDateTime(rs, 24)),
-//						EmailFrom = GetString(rs, 25)
 						EmailFrom = GetString(rs, 25, "", "info@healthwatch.se")
 					};
 				}

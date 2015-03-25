@@ -52,6 +52,9 @@ namespace HW.Grp
 						ManagerFunctionID.Items.Add(new ListItem(f.Function + " (" + f.Expl + ")", f.Id.ToString()));
 					}
 					sponsorAdminID = Convert.ToInt32(Session["SponsorAdminID"]);
+					
+					HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Managers), "default.aspx", true);
+					
 					var a = sponsorAdminRepository.ReadSponsor(sponsorAdminID);
 					if (a != null && !a.SuperUser) {
 						SuperUser.Visible = false;

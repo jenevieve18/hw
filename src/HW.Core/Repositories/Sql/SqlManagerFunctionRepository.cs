@@ -166,9 +166,7 @@ FROM ManagerFunctionLang mf
 {1}
 ORDER BY mf.ManagerFunctionID",
 				q,
-				sponsorAdminID != -1 ?
-				string.Format("AND mf.LangID = {0}", langID)
-				: string.Format("WHERE mf.LangID = {0}", langID)
+				sponsorAdminID != -1 ? string.Format("AND mf.LangID = {0}", langID) : string.Format("WHERE mf.LangID = {0}", langID)
 			);
 			var functions = new List<ManagerFunctionLang>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
