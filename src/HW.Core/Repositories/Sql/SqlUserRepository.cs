@@ -607,6 +607,7 @@ AND u.Email NOT LIKE '%DELETED'",
 				j
 			);
 			var users = new List<User>();
+			LoggingService.Info(query);
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
 					var u = new User {
