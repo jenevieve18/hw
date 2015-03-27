@@ -22,22 +22,22 @@ namespace HW.Grp {
         protected global::System.Web.UI.WebControls.Button buttonSave;
         
         /// <summary>
-        /// SendType control.
+        /// dropDownSendType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList SendType;
+        protected global::System.Web.UI.WebControls.DropDownList dropDownSendType;
         
         /// <summary>
-        /// Password control.
+        /// textBoxPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Password;
+        protected global::System.Web.UI.WebControls.TextBox textBoxPassword;
         
         /// <summary>
         /// buttonSend control.
@@ -76,58 +76,58 @@ namespace HW.Grp {
         protected global::System.Web.UI.WebControls.Label LoginLastSent;
         
         /// <summary>
-        /// InviteSubject control.
+        /// textBoxInviteSubject control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox InviteSubject;
+        protected global::System.Web.UI.WebControls.TextBox textBoxInviteSubject;
         
         /// <summary>
-        /// LoginSubject control.
+        /// textBoxLoginSubject control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox LoginSubject;
+        protected global::System.Web.UI.WebControls.TextBox textBoxLoginSubject;
         
         /// <summary>
-        /// InviteTxt control.
+        /// textBoxInviteTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox InviteTxt;
+        protected global::System.Web.UI.WebControls.TextBox textBoxInviteTxt;
         
         /// <summary>
-        /// LoginTxt control.
+        /// textBoxLoginTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox LoginTxt;
+        protected global::System.Web.UI.WebControls.TextBox textBoxLoginTxt;
         
         /// <summary>
-        /// LoginDays control.
+        /// dropDownLoginDays control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList LoginDays;
+        protected global::System.Web.UI.WebControls.DropDownList dropDownLoginDays;
         
         /// <summary>
-        /// LoginWeekday control.
+        /// dropDownLoginWeekday control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList LoginWeekday;
+        protected global::System.Web.UI.WebControls.DropDownList dropDownLoginWeekday;
         
         /// <summary>
         /// InviteReminderLastSent control.
@@ -139,76 +139,76 @@ namespace HW.Grp {
         protected global::System.Web.UI.WebControls.Label InviteReminderLastSent;
         
         /// <summary>
-        /// ExtendedSurvey control.
+        /// labelExtendedSurvey control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ExtendedSurvey;
+        protected global::System.Web.UI.WebControls.Label labelExtendedSurvey;
         
         /// <summary>
-        /// ExtendedSurveyFinished control.
+        /// labelExtendedSurveyFinished control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ExtendedSurveyFinished;
+        protected global::System.Web.UI.WebControls.Label labelExtendedSurveyFinished;
         
         /// <summary>
-        /// InviteReminderSubject control.
+        /// textBoxInviteReminderSubject control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox InviteReminderSubject;
+        protected global::System.Web.UI.WebControls.TextBox textBoxInviteReminderSubject;
         
         /// <summary>
-        /// ExtendedSurveySubject control.
+        /// textBoxExtendedSurveySubject control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ExtendedSurveySubject;
+        protected global::System.Web.UI.WebControls.TextBox textBoxExtendedSurveySubject;
         
         /// <summary>
-        /// ExtendedSurveyFinishedSubject control.
+        /// textBoxExtendedSurveyFinishedSubject control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ExtendedSurveyFinishedSubject;
+        protected global::System.Web.UI.WebControls.TextBox textBoxExtendedSurveyFinishedSubject;
         
         /// <summary>
-        /// InviteReminderTxt control.
+        /// textBoxInviteReminderTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox InviteReminderTxt;
+        protected global::System.Web.UI.WebControls.TextBox textBoxInviteReminderTxt;
         
         /// <summary>
-        /// ExtendedSurveyTxt control.
+        /// textBoxExtendedSurveyTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ExtendedSurveyTxt;
+        protected global::System.Web.UI.WebControls.TextBox textBoxExtendedSurveyTxt;
         
         /// <summary>
-        /// ExtendedSurveyFinishedTxt control.
+        /// textBoxExtendedSurveyFinishedTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ExtendedSurveyFinishedTxt;
+        protected global::System.Web.UI.WebControls.TextBox textBoxExtendedSurveyFinishedTxt;
         
         /// <summary>
         /// AllMessageLastSent control.
@@ -220,21 +220,21 @@ namespace HW.Grp {
         protected global::System.Web.UI.WebControls.Label AllMessageLastSent;
         
         /// <summary>
-        /// AllMessageSubject control.
+        /// textBoxAllMessageSubject control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox AllMessageSubject;
+        protected global::System.Web.UI.WebControls.TextBox textBoxAllMessageSubject;
         
         /// <summary>
-        /// AllMessageBody control.
+        /// textBoxAllMessageBody control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox AllMessageBody;
+        protected global::System.Web.UI.WebControls.TextBox textBoxAllMessageBody;
     }
 }
