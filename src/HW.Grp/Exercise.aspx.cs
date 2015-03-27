@@ -17,7 +17,6 @@ namespace HW.Grp
 	public partial class Exercise : System.Web.UI.Page
 	{
 		protected int BX = 0;
-//		protected int LID = 0;
 		protected int EAID;
 		protected string sortQS;
 		protected int ECID;
@@ -79,9 +78,7 @@ namespace HW.Grp
 
 			lid = ConvertHelper.ToInt32(Session["lid"], 1);
 			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Exercises, DateTime.Now);
-//			if (Request.QueryString["LID"] != null) {
-//				LID = Convert.ToInt32(Request.QueryString["LID"]);
-//			}
+
 			EAID = ConvertHelper.ToInt32(Request.QueryString["EAID"]);
 			ECID = ConvertHelper.ToInt32(Request.QueryString["ECID"]);
 			int SORT = ConvertHelper.ToInt32(Request.QueryString["SORT"]);

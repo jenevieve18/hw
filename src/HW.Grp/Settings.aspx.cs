@@ -36,9 +36,7 @@ namespace HW.Grp
 
 		void Save_Click(object sender, EventArgs e)
 		{
-//			if (Password.Text.Length > 1) {
 			if (Password.Text.Length > 8) {
-//				sponsorRepository.UpdateSponsorAdminPassword(Password.Text.Replace("'", "''"), Convert.ToInt32(Session["SponsorAdminID"]));
 				sponsorRepository.UpdateSponsorAdminPassword(Db.HashMd5(Password.Text), Convert.ToInt32(Session["SponsorAdminID"]));
 				Message.Text = R.Str(lid, "password.saved", "New password saved!");
 			} else {
