@@ -1000,7 +1000,7 @@ SELECT SponsorAdminID FROM SponsorAdmin WHERE SponsorID = {0} AND Usr = '{1}'",
 					? "WHERE LEFT(REPLACE(CONVERT(VARCHAR(255),sa.SponsorAdminKey),'-',''),8) = '" +
 					sakey.Substring(0, 8).Replace("'", "") + "' " +
 					"AND s.SponsorID = " + sakey.Substring(8).Replace("'", "")
-					: "WHERE sa.Usr = '" + anv.Replace("'", "") + "' " +
+					: "WHERE (sa.Usr = '" + anv.Replace("'", "") + "' OR sa.Email = '" + anv.Replace("'", "") + "')" +
 					"AND (sa.Pas = '" + los.Replace("'", "") + "' OR sa.Pas = '" + Db.HashMd5(los.Replace("'", "")) + "')")
 				: (
 					sa != null
@@ -1082,10 +1082,9 @@ SELECT NULL,
 	sa.Username
 FROM SuperAdmin sa
 WHERE sa.Username = '{0}'
-AND (sa.Password = '{1}' OR sa.Password = '{2}')",
+AND sa.Password = '{1}'",
 					anv.Replace("'", ""),
-					los.Replace("'", ""),
-					Db.HashMd5(los.Replace("'", ""))
+					los.Replace("'", "")
 				);
 			}
 			string query = string.Format(
@@ -1902,13 +1901,6 @@ WHERE SponsorID = {0}",
 
 		public void UpdateSponsorAdminPassword(string password, int sponsorAdminId)
 		{
-//			string query = string.Format(
-//				@"
-			//UPDATE SponsorAdmin SET Pas = '{0}' WHERE SponsorAdminID = {1}",
-//				password,
-//				sponsorAdminId
-//			);
-//			Db.exec(query);
 			string query = string.Format(
 				@"
 UPDATE SponsorAdmin SET Pas = @Password
