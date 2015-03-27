@@ -39,10 +39,6 @@ namespace HW.Grp
 			base.OnPreRender(e);
             buttonActivate.Text = R.Str(lid, "password.activate", "Activate Password");
 			if (Saved) {
-				/*string script = string.Format(
-					"<script language='JavaScript'>alert('{0}');</script>",
-					"Password successfully saved!"
-				);*/
 				string script = string.Format("<script>openWindow('{0}')</script>", R.Str(lid, "password.saved", "New password saved!"));
 				ClientScript.RegisterStartupScript(this.GetType(), "SENT", script);
 			}
