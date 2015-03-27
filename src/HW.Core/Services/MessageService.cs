@@ -35,19 +35,19 @@ namespace HW.Core.Services
 			return p.ReadRound(projectRoundID);
 		}
 		
-		public int CountBySponsorWithAdminAndExtendedSurvey(int sponsorID, int sponsorAdminID, int sponsorExtendedSurveyID)
+		public int CountThankYouMessageRecipients(int sponsorID, int sponsorAdminID, int sponsorExtendedSurveyID)
 		{
-			return u.CountBySponsorWithAdminAndExtendedSurvey(sponsorID, sponsorAdminID, sponsorExtendedSurveyID);
+			return u.CountThankYouMessageRecipients(sponsorID, sponsorAdminID, sponsorExtendedSurveyID);
 		}
 		
-		public int CountBySponsorWithAdminAndExtendedSurvey2(int sponsorID, int sponsorAdminID, int sponsorExtendedSurveyID)
+		public int CountBySponsorExtendedSurveyReminderRecipients(int sponsorID, int sponsorAdminID, int sponsorExtendedSurveyID)
 		{
-			return u.CountBySponsorWithAdminAndExtendedSurvey2(sponsorID, sponsorAdminID, sponsorExtendedSurveyID);
+			return u.CountBySponsorExtendedSurveyReminderRecipients(sponsorID, sponsorAdminID, sponsorExtendedSurveyID);
 		}
 		
-		public int a(int sponsorID, int sponsorAdminID)
+		public int CountAllActivatedUsersRecipients(int sponsorID, int sponsorAdminID)
 		{
-			return u.a(sponsorID, sponsorAdminID);
+			return u.CountAllActivatedUsersRecipients(sponsorID, sponsorAdminID);
 		}
 		
 		public int UpdateEmailTexts(int sponsorExtendedSurveyID, int sponsorAdminID, int sponsorAdminExtendedSurveyID, string extendedSurveySubject, string extendedSurveyTxt, string extendedSurveyFinishedSubject, string extendedSurveyFinishedTxt)

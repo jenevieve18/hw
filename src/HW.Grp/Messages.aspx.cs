@@ -62,16 +62,16 @@ namespace HW.Grp
 			
 			service.SaveSponsorAdminSessionFunction(ConvertHelper.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Messages, DateTime.Now);
 
-			if (sponsorID != 0) {
+//			if (sponsorID != 0) {
 				sent = (Request.QueryString["Sent"] != null);
 				
 				if (!IsPostBack) {
 					PopulateDropDownLists();
 				}
 				LoadMessages(service.ReadSponsor(SponsorAndSponsorAdminID), service.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID), IsPostBack, false);
-			} else {
-				Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
-			}
+//			} else {
+//				Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+//			}
 		}
 		
 		void LoadMessages(ISponsor sponsor, IList<IExtendedSurvey> surveys, bool postBack, bool revert)
@@ -84,7 +84,7 @@ namespace HW.Grp
 		{
 			this.sponsor = sponsor;
 			if (!postBack) {
-				var u = service.a(sponsorID, sponsorAdminID);
+				var u = service.CountAllActivatedUsersRecipients(sponsorID, sponsorAdminID);
 				AllMessageLastSent.Text = R.Str(lid, "recipients", "Recipients") + ": " + u + ", ";
 				
 				if (sponsor != null) {
@@ -143,10 +143,10 @@ namespace HW.Grp
 							found = true;
 
 							if (!postBack && !revert) {
-								var count = service.CountBySponsorWithAdminAndExtendedSurvey2(sponsorID, sponsorAdminID, sponsorExtendedSurveyID);
+								var count = service.CountBySponsorExtendedSurveyReminderRecipients(sponsorID, sponsorAdminID, sponsorExtendedSurveyID);
 								ExtendedSurvey.Text = ExtendedSurvey.Text.Replace("[x]", "[x]" + R.Str(lid, "recipients", "Recipients") + ": " + count + ", ");
 
-								count = service.CountBySponsorWithAdminAndExtendedSurvey(sponsorID, sponsorAdminID, sponsorExtendedSurveyID);
+								count = service.CountThankYouMessageRecipients(sponsorID, sponsorAdminID, sponsorExtendedSurveyID);
 								ExtendedSurveyFinished.Text = ExtendedSurveyFinished.Text.Replace("[x]", "[x]" + R.Str(lid, "recipients", "Recipients") + ": " + count + ", ");
 							}
 						} else {
