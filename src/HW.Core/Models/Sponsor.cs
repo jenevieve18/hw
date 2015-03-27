@@ -74,14 +74,6 @@ namespace HW.Core.Models
 		public virtual List<SponsorInvite> SentInvites { get; set; }
 		public virtual List<SponsorInvite> ActiveInvites { get; set; }
 		public virtual bool SuperUser { get; set; }
-		
-		User user;
-		
-		// HACK: The reference of this is used by SqlUserRepository.ReadByIdAndSponsorExtendedSurvey2
-		public virtual User User {
-			get { return user; }
-			set { user = value; user.Sponsor = this; }
-		}
 	}
 	
 	public interface IExtendedSurvey : IBaseModel

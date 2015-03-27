@@ -32,7 +32,6 @@ namespace HW.Core.Models
 		
 //		public static string GetChooseArea(int lid)
 //		{
-//			// FIXME: Why 0 on Swedish? See setculture where Swedish is 1.
 //			switch (lid) {
 //					case 0: return "Välj område";
 //					case 1: return "Choose area";
@@ -42,7 +41,6 @@ namespace HW.Core.Models
 		
 //		public static string GetChooseCategory(int lid)
 //		{
-//			// FIXME: Why 0 on Swedish? See setculture where Swedish is 1.
 //			switch (lid) {
 //					case 0: return "Välj kategori";
 //					case 1: return "Choose category";
@@ -52,7 +50,6 @@ namespace HW.Core.Models
 		
 //		public static string GetSortingOrder(int lid, int bx)
 //		{
-//			// FIXME: Why 0 on Swedish? See setculture where Swedish is 1.
 //			switch (lid) {
 //					case 0: return bx + " övningar - Sortering:";
 //					case 1: return bx + " exercises - Order:";

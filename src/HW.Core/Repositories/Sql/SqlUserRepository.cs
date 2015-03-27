@@ -9,79 +9,79 @@ namespace HW.Core.Repositories.Sql
 {
 	public class SqlUserRepository : BaseSqlRepository<User>
 	{
-		public void SaveUserProfileBackgroundQuestion(UserProfileBackgroundQuestion s)
-		{
-			string query = string.Format(
-				@"
-INSERT INTO UserProfileBQ (UserProfileID, BQID, ValueInt, ValueText, ValueDate)
-VALUES (@UserProfileID, @BQID, @ValueInt, @ValueText, @ValueDate)"
-			);
-			ExecuteNonQuery(
-				query,
-				"healthWatchSqlConnection",
-				new SqlParameter("@UserProfileID", s.Profile.Id),
-				new SqlParameter("@BQID", s.BackgroundQuestion.Id),
-				new SqlParameter("@ValueInt", s.ValueInt),
-				new SqlParameter("@ValueText", s.ValueText),
-				new SqlParameter("@ValueDate", s.ValueDate)
-			);
-		}
-		
-		public void SaveUserProfileBackgroundQuestion(int profileID, int bqID, int valueInt, string valueText, DateTime? valueDate)
-		{
-			string query = string.Format(
-				@"
-INSERT INTO UserProfileBQ (UserProfileID,BQID,ValueInt,ValueText,ValueDate)
-VALUES ({0},{1},{2},{3},{4})",
-				profileID,
-				bqID,
-				(valueInt == 0 ? "NULL" : valueInt.ToString()),
-				(valueText == null || valueText == "" ? "NULL" : "'" + valueText.Replace("'", "") + "'"),
-				(valueDate == null ? "NULL" : "'" + valueDate.Value.ToString("yyyy-MM-dd") + "'")
-			);
-			Db.exec(query);
-		}
-		
-		public void SaveUserProfile(int userID, int profileComparisonID)
-		{
-			string query = string.Format(
-				@"
-INSERT INTO UserProfile (UserID,SponsorID,DepartmentID,ProfileComparisonID,Created)
-VALUES ({0},1,NULL,{1},GETDATE())",
-				userID,
-				profileComparisonID
-			);
-			Db.exec(query);
-		}
-		
-		public void UpdateProjectRoundUser(int projectRoundUserID, int projectRoundUnitID)
-		{
-			string query = string.Format(
-				@"
-UPDATE UserProjectRoundUser SET ProjectRoundUnitID = {0}
-WHERE UserProjectRoundUserID = {1}",
-				projectRoundUnitID,
-				projectRoundUserID
-			);
-			Db.exec(query);
-			query = string.Format(
-				@"
-UPDATE [eform]..[ProjectRoundUser] SET ProjectRoundUnitID = {0}
-WHERE ProjectRoundUserID = {1}",
-				projectRoundUnitID,
-				projectRoundUserID
-			);
-			Db.exec(query);
-			query = string.Format(
-				@"
-UPDATE [eform]..[Answer] SET ProjectRoundUnitID = {0}
-WHERE ProjectRoundUserID = {1}",
-				projectRoundUnitID,
-				projectRoundUserID
-			);
-			Db.exec(query);
-		}
-		
+//		public void SaveUserProfileBackgroundQuestion(UserProfileBackgroundQuestion s)
+//		{
+//			string query = string.Format(
+//				@"
+//INSERT INTO UserProfileBQ (UserProfileID, BQID, ValueInt, ValueText, ValueDate)
+//VALUES (@UserProfileID, @BQID, @ValueInt, @ValueText, @ValueDate)"
+//			);
+//			ExecuteNonQuery(
+//				query,
+//				"healthWatchSqlConnection",
+//				new SqlParameter("@UserProfileID", s.Profile.Id),
+//				new SqlParameter("@BQID", s.BackgroundQuestion.Id),
+//				new SqlParameter("@ValueInt", s.ValueInt),
+//				new SqlParameter("@ValueText", s.ValueText),
+//				new SqlParameter("@ValueDate", s.ValueDate)
+//			);
+//		}
+//		
+//		public void SaveUserProfileBackgroundQuestion(int profileID, int bqID, int valueInt, string valueText, DateTime? valueDate)
+//		{
+//			string query = string.Format(
+//				@"
+//INSERT INTO UserProfileBQ (UserProfileID,BQID,ValueInt,ValueText,ValueDate)
+//VALUES ({0},{1},{2},{3},{4})",
+//				profileID,
+//				bqID,
+//				(valueInt == 0 ? "NULL" : valueInt.ToString()),
+//				(valueText == null || valueText == "" ? "NULL" : "'" + valueText.Replace("'", "") + "'"),
+//				(valueDate == null ? "NULL" : "'" + valueDate.Value.ToString("yyyy-MM-dd") + "'")
+//			);
+//			Db.exec(query);
+//		}
+//		
+//		public void SaveUserProfile(int userID, int profileComparisonID)
+//		{
+//			string query = string.Format(
+//				@"
+//INSERT INTO UserProfile (UserID,SponsorID,DepartmentID,ProfileComparisonID,Created)
+//VALUES ({0},1,NULL,{1},GETDATE())",
+//				userID,
+//				profileComparisonID
+//			);
+//			Db.exec(query);
+//		}
+//		
+//		public void UpdateProjectRoundUser(int projectRoundUserID, int projectRoundUnitID)
+//		{
+//			string query = string.Format(
+//				@"
+//UPDATE UserProjectRoundUser SET ProjectRoundUnitID = {0}
+//WHERE UserProjectRoundUserID = {1}",
+//				projectRoundUnitID,
+//				projectRoundUserID
+//			);
+//			Db.exec(query);
+//			query = string.Format(
+//				@"
+//UPDATE [eform]..[ProjectRoundUser] SET ProjectRoundUnitID = {0}
+//WHERE ProjectRoundUserID = {1}",
+//				projectRoundUnitID,
+//				projectRoundUserID
+//			);
+//			Db.exec(query);
+//			query = string.Format(
+//				@"
+//UPDATE [eform]..[Answer] SET ProjectRoundUnitID = {0}
+//WHERE ProjectRoundUserID = {1}",
+//				projectRoundUnitID,
+//				projectRoundUserID
+//			);
+//			Db.exec(query);
+//		}
+//		
 //		public void UpdateUser(int userID, int sponsorID, int departmentID)
 //		{
 //			string query = "UPDATE [User] SET DepartmentID = " + departmentID + ", SponsorID = " + sponsorID + " WHERE UserID = " + userID;
@@ -105,50 +105,50 @@ WHERE ProjectRoundUserID = {1}",
 //			);
 //			Db.exec(query, "healthWatchSqlConnection");
 //		}
-		
-		public void UpdateWithDepartment(string unit, int userID, int sponsorID)
-		{
-			string query = string.Format("UPDATE [User] SET DepartmentID = {0} WHERE UserID = {1} AND SponsorID = {2}", unit, userID, sponsorID);
-			Db.exec(query);
-			query = string.Format("UPDATE UserProfile SET DepartmentID = {0} WHERE UserID = {1} AND SponsorID = {2}", unit, userID, sponsorID);
-			Db.exec(query);
-		}
-		
-		public void Update3(int profileID, int userID)
-		{
-			string query = string.Format(
-				@"
-UPDATE [User] SET UserProfileID = {0} WHERE UserID = {1}",
-				profileID,
-				userID
-			);
-			Db.exec(query);
-		}
-		
-		public void Update2(int userID, int sponsorID)
-		{
-			string query = string.Format("UPDATE [User] SET DepartmentID = NULL, SponsorID = 1 WHERE UserID = " + userID + " AND SponsorID = " + sponsorID);
-			Db.exec(query);
-		}
-		
-		public void Update(int userID, int sponsorID)
-		{
-			string query = string.Format("UPDATE [User] SET DepartmentID = NULL, SponsorID = 1 WHERE UserID = " + userID + " AND SponsorID = " + sponsorID);
-			Db.exec(query);
-			query = string.Format("UPDATE UserProfile SET DepartmentID = NULL, SponsorID = 1 WHERE UserID = " + userID + " AND SponsorID = " + sponsorID);
-			Db.exec(query);
-		}
-		
-		public void Update(Department d, int sponsorID, int deleteDepartmentID)
-		{
-			string query = string.Format("UPDATE [User] SET DepartmentID = " + (d.Parent == null ? "NULL" : d.Parent.Id.ToString()) + " WHERE SponsorID = " + sponsorID + " AND DepartmentID = " + deleteDepartmentID);
-			Db.exec(query);
-			query = string.Format("UPDATE UserProfile SET DepartmentID = " + (d.Parent == null ? "NULL" : d.Parent.Id.ToString()) + " WHERE SponsorID = " + sponsorID + " AND DepartmentID = " + deleteDepartmentID);
-			Db.exec(query);
-			query = string.Format("UPDATE Department SET ParentDepartmentID = " + (d.Parent == null ? "NULL" : d.Parent.Id.ToString()) + " WHERE SponsorID = " + sponsorID + " AND ParentDepartmentID = " + deleteDepartmentID);
-			Db.exec(query);
-		}
-		
+//		
+//		public void UpdateWithDepartment(string unit, int userID, int sponsorID)
+//		{
+//			string query = string.Format("UPDATE [User] SET DepartmentID = {0} WHERE UserID = {1} AND SponsorID = {2}", unit, userID, sponsorID);
+//			Db.exec(query);
+//			query = string.Format("UPDATE UserProfile SET DepartmentID = {0} WHERE UserID = {1} AND SponsorID = {2}", unit, userID, sponsorID);
+//			Db.exec(query);
+//		}
+//		
+//		public void Update3(int profileID, int userID)
+//		{
+//			string query = string.Format(
+//				@"
+//UPDATE [User] SET UserProfileID = {0} WHERE UserID = {1}",
+//				profileID,
+//				userID
+//			);
+//			Db.exec(query);
+//		}
+//		
+//		public void Update2(int userID, int sponsorID)
+//		{
+//			string query = string.Format("UPDATE [User] SET DepartmentID = NULL, SponsorID = 1 WHERE UserID = " + userID + " AND SponsorID = " + sponsorID);
+//			Db.exec(query);
+//		}
+//		
+//		public void Update(int userID, int sponsorID)
+//		{
+//			string query = string.Format("UPDATE [User] SET DepartmentID = NULL, SponsorID = 1 WHERE UserID = " + userID + " AND SponsorID = " + sponsorID);
+//			Db.exec(query);
+//			query = string.Format("UPDATE UserProfile SET DepartmentID = NULL, SponsorID = 1 WHERE UserID = " + userID + " AND SponsorID = " + sponsorID);
+//			Db.exec(query);
+//		}
+//		
+//		public void Update(Department d, int sponsorID, int deleteDepartmentID)
+//		{
+//			string query = string.Format("UPDATE [User] SET DepartmentID = " + (d.Parent == null ? "NULL" : d.Parent.Id.ToString()) + " WHERE SponsorID = " + sponsorID + " AND DepartmentID = " + deleteDepartmentID);
+//			Db.exec(query);
+//			query = string.Format("UPDATE UserProfile SET DepartmentID = " + (d.Parent == null ? "NULL" : d.Parent.Id.ToString()) + " WHERE SponsorID = " + sponsorID + " AND DepartmentID = " + deleteDepartmentID);
+//			Db.exec(query);
+//			query = string.Format("UPDATE Department SET ParentDepartmentID = " + (d.Parent == null ? "NULL" : d.Parent.Id.ToString()) + " WHERE SponsorID = " + sponsorID + " AND ParentDepartmentID = " + deleteDepartmentID);
+//			Db.exec(query);
+//		}
+//		
 		public void UpdateEmailFailure(int userID)
 		{
 			string query = "UPDATE [User] SET EmailFailure = GETDATE() WHERE UserID = " + userID;
@@ -235,19 +235,19 @@ WHERE u.UserID = {0}",
 //			}
 //			return null;
 //		}
-		
-		public void lalala3(int projectRoundUserId, int answerId)
-		{
-			Db.exec(string.Format("UPDATE UserSponsorExtendedSurvey SET AnswerID = {0} WHERE AnswerID IS NULL AND ProjectRoundUserID = {1}", answerId, projectRoundUserId));
-			Db.exec(string.Format("UPDATE Answer SET EndDT = GETDATE() WHERE ProjectRoundUserID = {0} AND AnswerID = {1}", projectRoundUserId, answerId), "eFormSqlConnection");
-		}
-		
-		public void lalala2(int projectRoundUserId, int answerId)
-		{
-			Db.exec(string.Format("UPDATE UserSponsorExtendedSurvey SET AnswerID = NULL WHERE ProjectRoundUserID = {0} AND AnswerID = {1}", projectRoundUserId, answerId));
-			Db.exec(string.Format("UPDATE Answer SET EndDT = NULL WHERE ProjectRoundUserID = {0} AND AnswerID = {1}", projectRoundUserId, answerId), "eFormSqlConnection");
-		}
-		
+//		
+//		public void lalala3(int projectRoundUserId, int answerId)
+//		{
+//			Db.exec(string.Format("UPDATE UserSponsorExtendedSurvey SET AnswerID = {0} WHERE AnswerID IS NULL AND ProjectRoundUserID = {1}", answerId, projectRoundUserId));
+//			Db.exec(string.Format("UPDATE Answer SET EndDT = GETDATE() WHERE ProjectRoundUserID = {0} AND AnswerID = {1}", projectRoundUserId, answerId), "eFormSqlConnection");
+//		}
+//		
+//		public void lalala2(int projectRoundUserId, int answerId)
+//		{
+//			Db.exec(string.Format("UPDATE UserSponsorExtendedSurvey SET AnswerID = NULL WHERE ProjectRoundUserID = {0} AND AnswerID = {1}", projectRoundUserId, answerId));
+//			Db.exec(string.Format("UPDATE Answer SET EndDT = NULL WHERE ProjectRoundUserID = {0} AND AnswerID = {1}", projectRoundUserId, answerId), "eFormSqlConnection");
+//		}
+//		
 		public void lalala(int sponsorInviteID, int sponsorID, string email, int departmentID)
 		{
 			string query = string.Format(
@@ -546,7 +546,10 @@ AND upru.UserID = {2}",
 		public IList<User> Find2(int sponsorID, int sponsorAdminID)
 		{
 			string j = sponsorAdminID != -1
-				? string.Format("INNER JOIN SponsorAdminDepartment sad ON si.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
+				? string.Format(
+					@"
+INNER JOIN SponsorAdminDepartment sad ON si.DepartmentID = sad.DepartmentID
+WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
 				: "WHERE ";
 			string query = string.Format(
 				@"
@@ -578,7 +581,10 @@ AND u.Email NOT LIKE '%DELETED'",
 		public IList<User> FindBySponsorWithExtendedSurvey2(int sponsorID, int sponsorAdminID, int sponsorExtendedSurveyID)
 		{
 			string j = sponsorAdminID != -1
-				? "INNER JOIN SponsorAdminDepartment sad ON u.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = " + sponsorAdminID + " AND "
+				? string.Format(
+					@"
+INNER JOIN SponsorAdminDepartment sad ON u.DepartmentID = sad.DepartmentID
+WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
 				: "WHERE ";
 			string query = string.Format(
 				@"
@@ -605,6 +611,7 @@ AND u.Email NOT LIKE '%DELETED'",
 				sponsorExtendedSurveyID,
 				j
 			);
+			LoggingService.Info(query);
 			var users = new List<User>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
@@ -623,7 +630,10 @@ AND u.Email NOT LIKE '%DELETED'",
 		public IList<User> FindBySponsorWithExtendedSurvey(int sponsorID, int sponsorAdminID, int sponsorExtendedSurveyID)
 		{
 			string j = sponsorAdminID != -1
-				? "INNER JOIN SponsorAdminDepartment sad ON u.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = " + sponsorAdminID + " AND "
+				? string.Format(
+					@"
+INNER JOIN SponsorAdminDepartment sad ON u.DepartmentID = sad.DepartmentID
+WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
 				: "WHERE ";
 			string query = string.Format(
 				@"
@@ -668,7 +678,10 @@ AND u.Email NOT LIKE '%DELETED'",
 		public IList<User> FindBySponsorWithLoginDays(int sponsorID, int sponsorAdminID, int loginDays)
 		{
 			string j = sponsorAdminID != -1
-				? string.Format("INNER JOIN SponsorAdminDepartment sad ON u.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
+				? string.Format(
+					@"
+INNER JOIN SponsorAdminDepartment sad ON u.DepartmentID = sad.DepartmentID
+WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
 				: "WHERE ";
 			string query = string.Format(
 				@"
@@ -704,10 +717,13 @@ AND (u.ReminderLastSent IS NULL OR DATEADD(hh,1,u.ReminderLastSent) < GETDATE())
 			return users;
 		}
 		
-		public int CountBySponsorWithAdminAndExtendedSurvey(int sponsorID, int sponsorAdminID, int sponsorExtendedSurveyID)
+		public int CountThankYouMessageRecipients(int sponsorID, int sponsorAdminID, int sponsorExtendedSurveyID)
 		{
 			string j = sponsorAdminID != -1
-				? string.Format(@"INNER JOIN SponsorAdminDepartment sad ON u.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
+				? string.Format(
+					@"
+INNER JOIN SponsorAdminDepartment sad ON u.DepartmentID = sad.DepartmentID
+WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
 				: "WHERE ";
 			string query = string.Format(
 				@"
@@ -739,10 +755,13 @@ AND u.Email NOT LIKE '%DELETED'",
 			return 0;
 		}
 		
-		public int CountBySponsorWithAdminAndExtendedSurvey2(int sponsorID, int sponsorAdminID, int sponsorExtendedSurveyID)
+		public int CountBySponsorExtendedSurveyReminderRecipients(int sponsorID, int sponsorAdminID, int sponsorExtendedSurveyID)
 		{
 			string j = sponsorAdminID != -1
-				? string.Format(@"INNER JOIN SponsorAdminDepartment sad ON u.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
+				? string.Format(
+					@"
+INNER JOIN SponsorAdminDepartment sad ON u.DepartmentID = sad.DepartmentID
+WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
 				: "WHERE ";
 			string query = string.Format(
 				@"
@@ -768,16 +787,19 @@ AND u.Email NOT LIKE '%DELETED'",
 			);
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				if (rs.Read()) {
-					return rs.GetInt32(0);
+					return GetInt32(rs, 0);
 				}
 			}
 			return 0;
 		}
 		
-		public int a(int sponsorID, int sponsorAdminID)
+		public int CountAllActivatedUsersRecipients(int sponsorID, int sponsorAdminID)
 		{
 			string q = sponsorAdminID != -1
-				? string.Format(@"INNER JOIN SponsorAdminDepartment sad ON si.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
+				? string.Format(
+					@"
+INNER JOIN SponsorAdminDepartment sad ON si.DepartmentID = sad.DepartmentID
+WHERE sad.SponsorAdminID = {0} AND ", sponsorAdminID)
 				: "WHERE ";
 			string query = string.Format(
 				@"
