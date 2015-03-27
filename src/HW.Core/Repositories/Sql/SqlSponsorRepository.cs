@@ -930,21 +930,36 @@ AND SponsorID = {0}",
 
 		public SponsorAdmin ReadSponsorAdmin(int sponsorId, int sponsorAdminId, string password)
 		{
+//			string query = string.Format(
+//				@"
+			//SELECT SponsorAdminID
+			//FROM SponsorAdmin
+			//WHERE SponsorID = {0}
+			//AND SponsorAdminID = {1}
+			//AND Pas = '{2}'",
+//				sponsorId,
+//				sponsorAdminId,
+//				password.Replace("'", "''")
+//			);
 			string query = string.Format(
 				@"
 SELECT SponsorAdminID
 FROM SponsorAdmin
-WHERE SponsorID = {0}
-AND SponsorAdminID = {1}
-AND Pas = '{2}'",
-				sponsorId,
-				sponsorAdminId,
-				password.Replace("'", "''")
+WHERE SponsorID = @SponsorID
+AND SponsorAdminID = @SponsorAdminID
+AND (Pas = @Pas OR Pas = @HashedPas)"
 			);
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+//			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+			using (SqlDataReader rs = ExecuteReader(
+				query,
+				"healthWatchSqlConnection",
+				new SqlParameter("@SponsorID", sponsorId),
+				new SqlParameter("@SponsorAdminID", sponsorAdminId),
+				new SqlParameter("@Pas", password),
+				new SqlParameter("@HashedPas", Db.HashMd5(password)))) {
 				if (rs.Read()) {
 					var a = new SponsorAdmin {
-						Id = rs.GetInt32(0)
+						Id = GetInt32(rs, 0)
 					};
 					return a;
 				}
@@ -1067,9 +1082,10 @@ SELECT NULL,
 	sa.Username
 FROM SuperAdmin sa
 WHERE sa.Username = '{0}'
-AND sa.Password = '{1}'",
+AND (sa.Password = '{1}' OR sa.Password = '{2}')",
 					anv.Replace("'", ""),
-					los.Replace("'", "")
+					los.Replace("'", ""),
+					Db.HashMd5(los.Replace("'", ""))
 				);
 			}
 			string query = string.Format(
@@ -1206,7 +1222,9 @@ AND si.Sent IS NULL",
 		{
 			string j = sponsorAdminId != -1
 				? string.Format(
-					"INNER JOIN SponsorAdminDepartment sad ON si.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = {0} AND ",
+					@"
+INNER JOIN SponsorAdminDepartment sad ON si.DepartmentID = sad.DepartmentID
+WHERE sad.SponsorAdminID = {0} AND ",
 					sponsorAdminId)
 				: "WHERE ";
 			string query = string.Format(
@@ -1215,7 +1233,7 @@ SELECT DISTINCT si.SponsorInviteID,
 	si.Email,
 	LEFT(REPLACE(CONVERT(VARCHAR(255),si.InvitationKey),'-',''),8)
 FROM SponsorInvite si
-{1}si.SponsorID = {0}
+{1} si.SponsorID = {0}
 AND si.UserID IS NULL
 AND si.StoppedReason IS NULL
 AND si.Sent IS NOT NULL
@@ -1241,9 +1259,10 @@ AND DATEADD(hh,1,si.Sent) < GETDATE()",
 		{
 			string w = sponsorAdminId != -1
 				? string.Format(
-					@"INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID
-WHERE sad.SponsorAdminID = {0}
-AND ", sponsorAdminId)
+					@"
+INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID
+WHERE sad.SponsorAdminID = {0} AND ",
+					sponsorAdminId)
 				: "WHERE ";
 			string query = string.Format(
 				@"
@@ -1272,7 +1291,8 @@ ORDER BY ses.SponsorExtendedSurveyID DESC",
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
 					var s = new SponsorExtendedSurvey {
-						ProjectRound = rs.IsDBNull(0) ? null : new ProjectRound { Id = GetInt32(rs, 0) },
+//						ProjectRound = rs.IsDBNull(0) ? null : new ProjectRound { Id = GetInt32(rs, 0) },
+						ProjectRound = GetObject<ProjectRound>(rs, 0),
 						EmailSubject = GetString(rs, 1),
 						EmailBody = GetString(rs, 2),
 						EmailLastSent = GetDateTime(rs, 3),

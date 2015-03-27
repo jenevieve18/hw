@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using HW.Core.Models;
 using HW.Core.Services;
 
 namespace HW.Core.Repositories.Sql
@@ -121,6 +122,28 @@ namespace HW.Core.Repositories.Sql
 			return rs.IsDBNull(index) ? def : rs.GetFloat(index);
 		}
 		
+		protected T GetObject<T>(SqlDataReader rs, int index) where T : BaseModel, new()
+		{
+			if (!rs.IsDBNull(index)) {
+				T m = new T();
+				m.Id = GetInt32(rs, index);
+				return m;
+			} else {
+				return null;
+			}
+		}
+		
+//		protected object GetObject(SqlDataReader rs, int index, Type type)
+//		{
+//			if (!rs.IsDBNull(index)) {
+//				BaseModel m = (BaseModel)Activator.CreateInstance(type);
+//				m.Id = GetInt32(rs, index);
+//				return m;
+//			} else {
+//				return null;
+//			}
+//		}
+//		
 		protected int GetInt32(SqlDataReader rs, int index)
 		{
 			return GetInt32(rs, index, 0);
