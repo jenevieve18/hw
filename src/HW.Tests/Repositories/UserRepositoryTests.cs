@@ -19,7 +19,7 @@ namespace HW.Tests.Repositories
 		[Test]
 		public void TestA()
 		{
-			r.a(1, 1);
+			r.CountAllActivatedUsersRecipients(1, 1);
 		}
 		
 		[Test]
@@ -31,13 +31,13 @@ namespace HW.Tests.Repositories
 		[Test]
 		public void TestCountBySponsorWithAdminAndExtendedSurvey2()
 		{
-			r.CountBySponsorWithAdminAndExtendedSurvey2(1, 1, 1);
+			r.CountBySponsorExtendedSurveyReminderRecipients(1, 1, 1);
 		}
 		
 		[Test]
 		public void TestCountBySponsorWithAdminAndExtendedSurvey()
 		{
-			r.CountBySponsorWithAdminAndExtendedSurvey(1, 1, 1);
+			r.CountThankYouMessageRecipients(1, 1, 1);
 		}
 		
 		[Test]

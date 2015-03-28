@@ -21,6 +21,16 @@ namespace HW.Tests.Models
 		}
 		
 		[Test]
+		public void TestReminder2Weeks()
+		{
+			var d = new Department {
+				LoginDays = 14,
+				LoginWeekDay = -1
+			};
+			Assert.AreEqual(d.GetReminder(loginDays, loginWeekdays), loginDays[14]);
+		}
+		
+		[Test]
 		public void TestReminderOff()
 		{
 			var d = new Department {
