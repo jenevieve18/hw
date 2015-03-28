@@ -23,11 +23,13 @@
 			<br />
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
-                    <td><b><%= R.Str(lid, "registration.invitation.subject", "Registration invitation subject/message *")%></b> (<span style="font-size:9px;"><%= R.Str(lid, "sent.last", "Last sent") %>: <asp:Label ID=InviteLastSent runat=server /></span>)</td>
+                    <td><b><%= R.Str(lid, "registration.invitation.subject", "Registration invitation subject/message *")%></b> (<span style="font-size:9px;"><%= R.Str(lid, "sent.last", "Last sent") %>: 
+                        <asp:Label ID=labelInviteLastSent runat=server /></span>)</td>
 					<td rowspan="9">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<td bgcolor="#CCCCCC" rowspan="9"><img src="img/null.gif" width="1" height="1" /></td>
 					<td rowspan="9">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<td><b><%= R.Str(lid, "login.reminder.subject", "Login reminder subject/message")%></B> (<span style="font-size:9px;"><%= R.Str(lid, "sent.last", "Last sent") %>: <asp:Label ID=LoginLastSent runat=server /></span>)</td>
+					<td><b><%= R.Str(lid, "login.reminder.subject", "Login reminder subject/message")%></B> (<span style="font-size:9px;"><%= R.Str(lid, "sent.last", "Last sent") %>: 
+                        <asp:Label ID=labelLoginLastSent runat=server /></span>)</td>
 				</tr>
 				<tr>
 					<td><asp:TextBox ID=textBoxInviteSubject runat=server Width=460 /></td>
@@ -49,7 +51,8 @@
 				</tr>
 				<tr><td colspan=2>&nbsp;</td></tr>
 				<tr>
-					<td><b><%= R.Str(lid, "registration.reminder.subject", "Registration reminder subject/message **")%></b> (<span style="font-size:9px;"><%= R.Str(lid, "sent.last", "Last sent") %>: <asp:Label ID=InviteReminderLastSent runat=server /></span>)</td>
+					<td><b><%= R.Str(lid, "registration.reminder.subject", "Registration reminder subject/message **")%></b> (<span style="font-size:9px;"><%= R.Str(lid, "sent.last", "Last sent") %>: 
+                        <asp:Label ID=labelInviteReminderLastSent runat=server /></span>)</td>
 					<td>
                         <asp:Label Visible=False ID="labelExtendedSurvey" runat=server/>
                         <asp:Label Visible=False ID="labelExtendedSurveyFinished" runat=server/>
@@ -76,7 +79,8 @@
 				</tr>
 				<tr><td colspan=2>&nbsp;</td></tr>
 				<tr>
-					<td><b><%= R.Str(lid, "message.activated.all", "Message to all activated users")%></b> (<span style="font-size:9px;"><asp:Label ID=AllMessageLastSent runat=server /></span>)</td>
+					<td><b><%= R.Str(lid, "message.activated.all", "Message to all activated users")%></b> (<span style="font-size:9px;"><asp:Label 
+                            ID=labelAllMessageLastSent runat=server /></span>)</td>
 				</tr>
 				<tr>
 					<td><asp:TextBox ID=textBoxAllMessageSubject runat=server Width=460 /></td>
