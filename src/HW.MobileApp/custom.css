@@ -114,9 +114,9 @@
 		
 		#default .slogan { margin:-4px 0px 0px 0px;display:block;height:10px;width:100%;} 
 		#welcomepage .list img {   float:left;width:65px; margin-right:10px;}
-		#welcomepage .list h5 { margin-bottom: 5px;}
+		#welcomepage .list h5 { margin-bottom: 0px;}
 		#welcomepage .list span{ color:#909090; font-size:13px;}
-		#welcomepage .list { width:100%;height:50px;}
+		#welcomepage .list { width:100%;height:55px;}
 		#welcomepage .welcome { text-align:center;font-size:13px; }
 		
         #login .ui-controlgroup-controls .ui-btn-text ,.fsize12{ font-size:12px;}
