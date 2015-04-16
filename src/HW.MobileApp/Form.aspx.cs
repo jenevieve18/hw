@@ -30,7 +30,7 @@ namespace HW.MobileApp
 
             foreach (var n in forms)
             {
-                if (n.form.Equals("Health & Stress"))
+                if (n.form.Equals("Health & Stress") ||n.form.Equals("Hälsa & Stress"))
                     formKey = n.formKey;
 
             }
@@ -52,7 +52,7 @@ namespace HW.MobileApp
 
             question = service.FormQuestionEnum(new HW.MobileApp.HWService.FormQuestionEnumRequest(token,lang,formKey,10)).FormQuestionEnumResult;
             questNo = question.Count();
-            
+
         }
 
         protected void saveBtnClick(object sender, EventArgs e)

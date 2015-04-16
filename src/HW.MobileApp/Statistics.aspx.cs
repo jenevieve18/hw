@@ -38,7 +38,7 @@ namespace HW.MobileApp
             
             foreach(var n in forms)
             {
-                if(n.form.Equals("Health & Stress"))
+                if(n.form.Equals("Health & Stress")||n.form.Equals("Hälsa & Stress"))
                     formKey = n.formKey;
             }  
 
