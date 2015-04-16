@@ -65,7 +65,7 @@
         <div id="divScheduleDaily" runat="server" style="display:none;">
             <div data-role="fieldcontain">
  	            <fieldset data-role="controlgroup">
-		           <legend>Every</legend>
+		           <legend><%= R.Str(language, "every", "Every") %></legend>
 		            <asp:CheckBox data-mini="true" id="cbMonday" text="Monday" runat="server" />
                     <asp:CheckBox ID="cbTuesday" data-mini="true" text="Tuesday" runat="server" />
                     <asp:CheckBox ID="cbWednesday" data-mini="true"  text="Wednesday" runat="server" />
