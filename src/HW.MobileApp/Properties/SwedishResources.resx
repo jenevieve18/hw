@@ -204,6 +204,15 @@
   <data name="diary.notes.default" xml:space="preserve">
     <value>Skriv här...</value>
   </data>
+  <data name="every" xml:space="preserve">
+    <value>Varje</value>
+  </data>
+  <data name="every.for" xml:space="preserve">
+    <value>För varje</value>
+  </data>
+  <data name="every.of" xml:space="preserve">
+    <value>Av varje</value>
+  </data>
   <data name="exercise.alphabetical" xml:space="preserve">
     <value>Alfabetisk</value>
   </data>
@@ -218,6 +227,12 @@
   </data>
   <data name="faq.title" xml:space="preserve">
     <value>FAQ</value>
+  </data>
+  <data name="first" xml:space="preserve">
+    <value>1:a</value>
+  </data>
+  <data name="fourth" xml:space="preserve">
+    <value>4:e</value>
   </data>
   <data name="home.logout" xml:space="preserve">
     <value>Logga ut</value>
@@ -372,8 +387,44 @@
   <data name="register.title" xml:space="preserve">
     <value>Registrera</value>
   </data>
+  <data name="reminder.at" xml:space="preserve">
+    <value>Vid</value>
+  </data>
+  <data name="reminder.daily" xml:space="preserve">
+    <value>Veckodagsbasis</value>
+  </data>
+  <data name="reminder.days" xml:space="preserve">
+    <value>Dagar</value>
+  </data>
+  <data name="reminder.inactivity" xml:space="preserve">
+    <value>Inaktivitet</value>
+  </data>
+  <data name="reminder.monthly" xml:space="preserve">
+    <value>Månadsbasis</value>
+  </data>
+  <data name="reminder.months" xml:space="preserve">
+    <value>Månader</value>
+  </data>
+  <data name="reminder.never" xml:space="preserve">
+    <value>Aldrig</value>
+  </data>
+  <data name="reminder.regularly" xml:space="preserve">
+    <value>Regelbundet</value>
+  </data>
+  <data name="reminder.schedule" xml:space="preserve">
+    <value>Schema</value>
+  </data>
   <data name="reminder.title" xml:space="preserve">
     <value>Påminnelser</value>
+  </data>
+  <data name="reminder.weekly" xml:space="preserve">
+    <value>Veckobasis</value>
+  </data>
+  <data name="reminder.weeks" xml:space="preserve">
+    <value>Veckor</value>
+  </data>
+  <data name="second" xml:space="preserve">
+    <value>2:a</value>
   </data>
   <data name="settings.changeProfile" xml:space="preserve">
     <value>Ändra Profil</value>
@@ -453,6 +504,9 @@
   <data name="support.title" xml:space="preserve">
     <value>Support</value>
   </data>
+  <data name="third" xml:space="preserve">
+    <value>3:e</value>
+  </data>
   <data name="user.account" xml:space="preserve">
     <value>Kontouppgifter</value>
   </data>
@@ -520,6 +574,39 @@ Försök igen.</value>
   </data>
   <data name="view.title" xml:space="preserve">
     <value>Visa...</value>
+  </data>
+  <data name="week" xml:space="preserve">
+    <value>Vecka</value>
+  </data>
+  <data name="week.1" xml:space="preserve">
+    <value>Måndag</value>
+  </data>
+  <data name="week.2" xml:space="preserve">
+    <value>Tisdag</value>
+  </data>
+  <data name="week.3" xml:space="preserve">
+    <value>Onsdag</value>
+  </data>
+  <data name="week.4" xml:space="preserve">
+    <value>Torsdag</value>
+  </data>
+  <data name="week.5" xml:space="preserve">
+    <value>Fredag</value>
+  </data>
+  <data name="week.6" xml:space="preserve">
+    <value>Lördag</value>
+  </data>
+  <data name="week.7" xml:space="preserve">
+    <value>Söndag</value>
+  </data>
+  <data name="week.other" xml:space="preserve">
+    <value>Varannan vecka</value>
+  </data>
+  <data name="week.sixth" xml:space="preserve">
+    <value>Sjätte vecka</value>
+  </data>
+  <data name="week.third" xml:space="preserve">
+    <value>Var tredje vecka</value>
   </data>
   <data name="welcome.diary" xml:space="preserve">
     <value>Dagbok</value>

@@ -204,6 +204,15 @@
   <data name="diary.notes.default" xml:space="preserve">
     <value>Write here...</value>
   </data>
+  <data name="every" xml:space="preserve">
+    <value>Every</value>
+  </data>
+  <data name="every.for" xml:space="preserve">
+    <value>For Every</value>
+  </data>
+  <data name="every.of" xml:space="preserve">
+    <value>Of Every</value>
+  </data>
   <data name="exercise.alphabetical" xml:space="preserve">
     <value>Alphabetical</value>
   </data>
@@ -218,6 +227,12 @@
   </data>
   <data name="faq.title" xml:space="preserve">
     <value>FAQ</value>
+  </data>
+  <data name="first" xml:space="preserve">
+    <value>1st</value>
+  </data>
+  <data name="fourth" xml:space="preserve">
+    <value>4th</value>
   </data>
   <data name="home.logout" xml:space="preserve">
     <value>Logout</value>
@@ -372,8 +387,44 @@
   <data name="register.title" xml:space="preserve">
     <value>Register</value>
   </data>
+  <data name="reminder.at" xml:space="preserve">
+    <value>At</value>
+  </data>
+  <data name="reminder.daily" xml:space="preserve">
+    <value>Daily</value>
+  </data>
+  <data name="reminder.days" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="reminder.inactivity" xml:space="preserve">
+    <value>Inactivity</value>
+  </data>
+  <data name="reminder.monthly" xml:space="preserve">
+    <value>Monthly</value>
+  </data>
+  <data name="reminder.months" xml:space="preserve">
+    <value>Months</value>
+  </data>
+  <data name="reminder.never" xml:space="preserve">
+    <value>Never</value>
+  </data>
+  <data name="reminder.regularly" xml:space="preserve">
+    <value>Regularly</value>
+  </data>
+  <data name="reminder.schedule" xml:space="preserve">
+    <value>Schedule</value>
+  </data>
   <data name="reminder.title" xml:space="preserve">
     <value>Reminders</value>
+  </data>
+  <data name="reminder.weekly" xml:space="preserve">
+    <value>Weekly</value>
+  </data>
+  <data name="reminder.weeks" xml:space="preserve">
+    <value>Weeks</value>
+  </data>
+  <data name="second" xml:space="preserve">
+    <value>2nd</value>
   </data>
   <data name="settings.changeProfile" xml:space="preserve">
     <value>Change Profile</value>
@@ -453,6 +504,9 @@
   <data name="support.title" xml:space="preserve">
     <value>Support</value>
   </data>
+  <data name="third" xml:space="preserve">
+    <value>3rd</value>
+  </data>
   <data name="user.account" xml:space="preserve">
     <value>Account Details</value>
   </data>
@@ -518,6 +572,39 @@
   </data>
   <data name="view.title" xml:space="preserve">
     <value>View...</value>
+  </data>
+  <data name="week" xml:space="preserve">
+    <value>Week</value>
+  </data>
+  <data name="week.1" xml:space="preserve">
+    <value>Monday</value>
+  </data>
+  <data name="week.2" xml:space="preserve">
+    <value>Tuesday</value>
+  </data>
+  <data name="week.3" xml:space="preserve">
+    <value>Wednesday</value>
+  </data>
+  <data name="week.4" xml:space="preserve">
+    <value>Thursday</value>
+  </data>
+  <data name="week.5" xml:space="preserve">
+    <value>Friday</value>
+  </data>
+  <data name="week.6" xml:space="preserve">
+    <value>Saturday</value>
+  </data>
+  <data name="week.7" xml:space="preserve">
+    <value>Sunday</value>
+  </data>
+  <data name="week.other" xml:space="preserve">
+    <value>Other Week</value>
+  </data>
+  <data name="week.sixth" xml:space="preserve">
+    <value>Sixth Week</value>
+  </data>
+  <data name="week.third" xml:space="preserve">
+    <value>Third Week</value>
   </data>
   <data name="welcome.diary" xml:space="preserve">
     <value>Diary</value>

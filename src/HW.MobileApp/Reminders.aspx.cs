@@ -21,6 +21,70 @@ namespace HW.MobileApp
             language = service.UserGetInfo(Session["token"].ToString(), 20).languageID;
             if (!Page.IsPostBack)
             {
+                dropDownListReminder.Items.Add(new ListItem(R.Str(language, "reminder.never", "Never"), "0"));
+                dropDownListReminder.Items.Add(new ListItem(R.Str(language, "reminder.regularly", "Regularly"), "1"));
+                dropDownListReminder.Items.Add(new ListItem(R.Str(language, "reminder.inactivity", "Inactivity"), "2"));
+
+                Label6.Text = R.Str(language, "reminder.at", "At");
+
+                dropDownListInactivityPeriod.Items.Add(new ListItem(R.Str(language, "reminder.days", "Days"), "1"));
+                dropDownListInactivityPeriod.Items.Add(new ListItem(R.Str(language, "reminder.weeks", "Weeks"), "7"));
+                dropDownListInactivityPeriod.Items.Add(new ListItem(R.Str(language, "reminder.months", "Months"), "30"));
+
+                LblSchedule.Text = R.Str(language, "reminder.schedule", "Schedule");
+
+                dropDownListRegularSchedule.Items.Add(new ListItem(R.Str(language, "reminder.daily", "Daily"), "1"));
+                dropDownListRegularSchedule.Items.Add(new ListItem(R.Str(language, "reminder.weekly", "Weekly"), "2"));
+                dropDownListRegularSchedule.Items.Add(new ListItem(R.Str(language, "reminder.monthly", "Monthly"), "3"));
+
+                LblTime.Text = R.Str(language, "reminder.at", "At");
+
+                cbMonday.Text = R.Str(language, "week.1", "Monday");
+                cbTuesday.Text = R.Str(language, "week.2", "Tuesday");
+                cbWednesday.Text = R.Str(language, "week.3", "Wednesday");
+                cbThursday.Text = R.Str(language, "week.4", "Thursday");
+                cbFriday.Text = R.Str(language, "week.5", "Friday");
+                cbSaturday.Text = R.Str(language, "week.6", "Saturday");
+                cbSunday.Text = R.Str(language, "week.7", "Sunday");
+
+                Label2.Text = R.Str(language, "every", "Every");
+                
+                dropDownListWeeklyDay.Items.Add(new ListItem(R.Str(language, "week.1", "Monday"), "1"));
+                dropDownListWeeklyDay.Items.Add(new ListItem(R.Str(language, "week.2", "Tuesday"), "2"));
+                dropDownListWeeklyDay.Items.Add(new ListItem(R.Str(language, "week.3", "Wednesday"), "3"));
+                dropDownListWeeklyDay.Items.Add(new ListItem(R.Str(language, "week.4", "Thursday"), "4"));
+                dropDownListWeeklyDay.Items.Add(new ListItem(R.Str(language, "week.5", "Friday"), "5"));
+                dropDownListWeeklyDay.Items.Add(new ListItem(R.Str(language, "week.6", "Saturday"), "6"));
+                dropDownListWeeklyDay.Items.Add(new ListItem(R.Str(language, "week.7", "Sunday"), "7"));
+
+                Label3.Text = R.Str(language, "every.for", "For Every");
+
+                dropDownListWeeklyForEvery.Items.Add(new ListItem(R.Str(language, "week", "Week"), "1"));
+                dropDownListWeeklyForEvery.Items.Add(new ListItem(R.Str(language, "week.other", "Other Week"), "2"));
+                dropDownListWeeklyForEvery.Items.Add(new ListItem(R.Str(language, "week.third", "Third Week"), "3"));
+
+                Label4.Text = R.Str(language, "every", "Every");
+
+                dropDownListMonthlyDayNo.Items.Add(new ListItem(R.Str(language, "first", "1st"), "1"));
+                dropDownListMonthlyDayNo.Items.Add(new ListItem(R.Str(language, "second", "2nd"), "2"));
+                dropDownListMonthlyDayNo.Items.Add(new ListItem(R.Str(language, "third", "3rd"), "3"));
+                dropDownListMonthlyDayNo.Items.Add(new ListItem(R.Str(language, "fourth", "4th"), "4"));
+
+                dropDownListMonthlyDay.Items.Add(new ListItem(R.Str(language, "week.1", "Monday"), "1"));
+                dropDownListMonthlyDay.Items.Add(new ListItem(R.Str(language, "week.2", "Tuesday"), "2"));
+                dropDownListMonthlyDay.Items.Add(new ListItem(R.Str(language, "week.3", "Wednesday"), "3"));
+                dropDownListMonthlyDay.Items.Add(new ListItem(R.Str(language, "week.4", "Thursday"), "4"));
+                dropDownListMonthlyDay.Items.Add(new ListItem(R.Str(language, "week.5", "Friday"), "5"));
+                dropDownListMonthlyDay.Items.Add(new ListItem(R.Str(language, "week.6", "Saturday"), "6"));
+                dropDownListMonthlyDay.Items.Add(new ListItem(R.Str(language, "week.7", "Sunday"), "7"));
+
+                Label5.Text = R.Str(language, "every.of", "Of Every");
+
+                dropDownListMonthlyOfEvery.Items.Add(new ListItem(R.Str(language, "week", "Week"), "1"));
+                dropDownListMonthlyOfEvery.Items.Add(new ListItem(R.Str(language, "week.other", "Other Week"), "2"));
+                dropDownListMonthlyOfEvery.Items.Add(new ListItem(R.Str(language, "week.third", "Third Week"), "3"));
+                dropDownListMonthlyOfEvery.Items.Add(new ListItem(R.Str(language, "week.sixth", "Sixth Week"), "6"));
+
                 populateDropDownTime();
 
                 HWService.Reminder reminder = service.UserGetReminder(token, 10);
