@@ -34,7 +34,11 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <div data-role="header" data-theme="b" data-position="fixed">
-    <a href="Dashboard.aspx" data-icon="arrow-l" rel="external"><%= R.Str(language,"home.myHealth") %></a>
+    <% if (Request.QueryString["fromCal"]!=null&&Request.QueryString["fromCal"].Equals("true")) { %>
+        <a href="Calendar.aspx" data-icon="arrow-l" rel="external"><%= R.Str(language, "button.back")%></a>
+    <%}else { %>
+        <a href="Dashboard.aspx" data-icon="arrow-l" rel="external"><%= R.Str(language, "home.myHealth")%></a>
+    <%} %>
     <h1><%= R.Str(language, "statistics.title")%></h1>
     <%=viewlink %>
 </div>

@@ -49,7 +49,7 @@
                     <li >
                     
                         <% if (cevent.formInstanceKey != null){ %>
-                            <% var filink = "href='Statistics.aspx?fik=" + cevent.formInstanceKey + "'"; %>
+                            <% var filink = "href='Statistics.aspx?fik=" + cevent.formInstanceKey + "&fromCal=true'"; %>
                             <a <%=filink %> rel="external" >
                         <% } %>       
 
