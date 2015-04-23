@@ -118,14 +118,20 @@ namespace HW.MobileApp
                 }
                 else if (timeframe == R.Str(language, "options.timeframe.sinceFirstMeasure"))
                 {
+                    bool tdtset = false;
                     foreach(var i in fft){
                        var s = service.UserGetFormFeedback(new HWService.UserGetFormFeedbackRequest(token, formKey, i.feedbackTemplateID, DateTime.Now.AddYears(-100), DateTime.Now.AddDays(1), language, 10)).UserGetFormFeedbackResult;
                        foreach (var x in s)
                        {
-                           tdt = x.dateTime.ToString("yyMMdd");
-                           break;
+                           if (!tdtset)
+                           {
+                               tdt = x.dateTime.ToString("yyMMdd");
+                               tdtset = true;
+                           }
+
+                           fdt = x.dateTime.ToString("yyMMdd");
                        }
-                       break;
+                       
                     }
                     //tdt = "100805";
                 }

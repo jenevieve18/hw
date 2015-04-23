@@ -15,20 +15,16 @@ namespace HW.MobileApp
         protected HWService.Calendar[] calendar;
         protected int lang;
         protected string token = "";
-
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["token"] == null, "Login.aspx");
             token = Session["token"].ToString();
             lang = int.Parse(Session["languageId"].ToString());
 
-            int month = DateTime.Now.Month-1;
-            int year = DateTime.Now.Year;
-            if (month <= 1){
-                month = 12;
-                year -= 1;
-            }
-            calendar = service.CalendarEnum(new HWService.CalendarEnumRequest(token, new DateTime(year, month, 1), DateTime.Now.AddDays(1), lang, 10)).CalendarEnumResult;
+            DateTime fromDT = new DateTime(2000, 1, 1);
+            
+            calendar = service.CalendarEnum(new HWService.CalendarEnumRequest(token,fromDT, DateTime.Now.AddDays(1), lang, 10)).CalendarEnumResult;
         }
     }
 }
