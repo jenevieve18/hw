@@ -136,7 +136,7 @@ namespace HW.MobileApp
                     //tdt = "100805";
                 }
 
-                chartlink = "https://test.healthwatch.se/lineChart.aspx?FDT="+tdt+"&TDT="+fdt+"&SID=0&LID="+language+"&UID="+user.userID+"&C="+c+"&RP0="+rp0_selected+"&RP1="+rp1_selected+"&RP2="+rp2_selected+"&RP3="+rp3_selected;
+                chartlink = "https://" + System.Configuration.ConfigurationManager.AppSettings["lineChartSite"] + "/lineChart.aspx?FDT=" + tdt + "&TDT=" + fdt + "&SID=0&LID=" + language + "&UID=" + user.userID + "&C=" + c + "&RP0=" + rp0_selected + "&RP1=" + rp1_selected + "&RP2=" + rp2_selected + "&RP3=" + rp3_selected;
                 
             }
             else
