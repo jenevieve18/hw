@@ -1,3 +1,5 @@
-use healthWatch;
+use healthWatch
+go
 
-alter table SponsorAdmin add UniqueKey varchar(255);
+alter table SponsorAdmin add UniqueKey varchar(255)
+go

@@ -58,14 +58,23 @@ CREATE TABLE [dbo].[SponsorAdminSessionFunction](
 
 GO
 
-use healthWatch;
-alter table Sponsor add MinUserCountToDisclose int;
+use healthWatch
+go
 
-use healthWatch;
-alter table SponsorInvite add StoppedPercent int;
+alter table Sponsor add MinUserCountToDisclose int
+go
 
-use healthwatch;
-alter table Department add MinUserCountToDisclose int;
+use healthWatch
+go
+
+alter table SponsorInvite add StoppedPercent int
+go
+
+use healthwatch
+go
+
+alter table Department add MinUserCountToDisclose int
+go
 
 ALTER TABLE dbo.SponsorExtendedSurvey ADD Total int NULL
 GO
@@ -77,20 +86,23 @@ WHERE SponsorExtendedSurvey.Total IS NULL OR SponsorExtendedSurvey.SponsorExtend
 (SELECT s.SponsorExtendedSurveyID FROM SponsorExtendedSurvey s INNER JOIN eform..ProjectRound p ON s.ProjectRoundID = p.ProjectRoundID WHERE p.Closed IS NULL)
 
 -- 04/10/2014
-use eform;
+use eform
+go
 
 create table PlotType(
 	Id int not null primary key identity(1, 1),
 	Name nvarchar(max),
 	Description nvarchar(max)
-);
+)
+go
 
 insert into PlotType(Name, Description) values
 ('Line Chart', 'chart displaying mean values.'),
 ('Line Chart with Standard Deviation', 'chart displaying mean values with Standard Deviation whiskers. The SD is a theoretical statistical measure that illustrates the range (variation from the average) in which approximately 67 % of the responses are. A low standard deviation indicates that the responses tend to be very close to the mean (lower variation); a high standard deviation indicates that the responses are spread out over a large range of values.'),
 ('Line Chart with Standard Deviation and Confidence Interval', 'chart displaying mean values, including whiskers that in average covers 1.96 SD, i.e. a theoretical distribution of approximately 95% of observations.'),
 ('Box Plot Min/Max', 'median value chart, including one set of whiskers that covers 50% of observations, and another set of whiskers that captures min and max values'),
-('Box Plot', 'median value chart, similar to the min/max BloxPlot but removes outlying extreme values');
+('Box Plot', 'median value chart, similar to the min/max BloxPlot but removes outlying extreme values')
+go
 
 USE [eForm]
 GO
@@ -117,9 +129,12 @@ CREATE TABLE [dbo].[PlotTypeLang](
 GO
 
 -- 04/27/2014: insert default plot types to english
-use eform;
+use eform
+go
+
 insert into plottypelang(plottypeid, langid, name, description)
-select id, 2, name, description from plottype;
+select id, 2, name, description from plottype
+go
 
 
 USE HealthWatch
@@ -127,5 +142,7 @@ GO
 ALTER TABLE Sponsor ADD EmailFrom NVARCHAR(255)
 GO
 
-use healthWatch;
-alter table SuperAdmin add HideClosedSponsors int;
+use healthWatch
+go
+alter table SuperAdmin add HideClosedSponsors int
+go

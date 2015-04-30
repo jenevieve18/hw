@@ -1,16 +1,26 @@
-use eform;
-alter table PlotTypeLang add ShortName nvarchar(255);
+use eform
+go
+alter table PlotTypeLang add ShortName nvarchar(255)
+go
 
-update PlotTypeLang set ShortName = 'Line' where PlotTypeLangID = 1;
-update PlotTypeLang set ShortName = 'Line (± SD)' where PlotTypeLangID = 2;
-update PlotTypeLang set ShortName = 'Line (± 1.96 SD)' where PlotTypeLangID = 3;
-update PlotTypeLang set ShortName = 'BoxPlot (Min/Max)' where PlotTypeLangID = 4;
-update PlotTypeLang set ShortName = 'BoxPlot (Tukey)' where PlotTypeLangID = 5;
+update PlotTypeLang set ShortName = 'Line' where PlotTypeLangID = 1
+go
+update PlotTypeLang set ShortName = 'Line (± SD)' where PlotTypeLangID = 2
+go
+update PlotTypeLang set ShortName = 'Line (± 1.96 SD)' where PlotTypeLangID = 3
+go
+update PlotTypeLang set ShortName = 'BoxPlot (Min/Max)' where PlotTypeLangID = 4
+go
+update PlotTypeLang set ShortName = 'BoxPlot (Tukey)' where PlotTypeLangID = 5
+go
 
-use eForm;
-alter table PlotTypeLang add SupportsMultipleSeries int;
+use eForm
+go
+alter table PlotTypeLang add SupportsMultipleSeries int
+go
 
-update PlotTypeLang set SupportsMultipleSeries = 1 where PlotTypeLangID in (1, 2, 3); -- not including 4 and 5 because box plots don't support multiple series for now.
+update PlotTypeLang set SupportsMultipleSeries = 1 where PlotTypeLangID in (1, 2, 3) -- not including 4 and 5 because box plots don't support multiple series for now.
+go
 
 -- Missing Table when running new instance
 USE [healthWatch]
@@ -36,8 +46,10 @@ CREATE TABLE [dbo].[SponsorProjectRoundUnitDepartment](
 
 GO
 
-use healthWatch;
-alter table SponsorAdminSession add EndDT datetime;
+use healthWatch
+go
+alter table SponsorAdminSession add EndDT datetime
+go
 
 USE [healthWatch]
 GO
@@ -101,40 +113,61 @@ SET ANSI_PADDING OFF
 GO
 
 insert into ManagerFunctionLang(ManagerFunctionID, LangID, ManagerFunction, URL, Expl)
-values(1, 1, 'Organisation', 'org.aspx', 'Administrera enheter och användare');
+values(1, 1, 'Organisation', 'org.aspx', 'Administrera enheter och användare')
+go
 insert into ManagerFunctionLang(ManagerFunctionID, LangID, ManagerFunction, URL, Expl)
-values(2, 1, 'Statistik', 'stats.aspx', 'Visa resultat och jämför grupper');
+values(2, 1, 'Statistik', 'stats.aspx', 'Visa resultat och jämför grupper')
+go
 insert into ManagerFunctionLang(ManagerFunctionID, LangID, ManagerFunction, URL, Expl)
-values(3, 1, 'Meddelanden', 'messages.aspx', 'Administrera meddelanden, inbjudningar och påminnelser');
+values(3, 1, 'Meddelanden', 'messages.aspx', 'Administrera meddelanden, inbjudningar och påminnelser')
+go
 insert into ManagerFunctionLang(ManagerFunctionID, LangID, ManagerFunction, URL, Expl)
-values(4, 1, 'Chefer', 'managers.aspx', 'Administrera enheternas chefer');
+values(4, 1, 'Chefer', 'managers.aspx', 'Administrera enheternas chefer')
+go
 insert into ManagerFunctionLang(ManagerFunctionID, LangID, ManagerFunction, URL, Expl)
-values(7, 1, 'Övningar', 'exercise.aspx', 'Chefsövningar');
+values(7, 1, 'Övningar', 'exercise.aspx', 'Chefsövningar')
+go
 
 insert into ManagerFunctionLang(ManagerFunctionID, LangID, ManagerFunction, URL, Expl)
-values(1, 2, 'Organization', 'org.aspx', 'administer units and users');
+values(1, 2, 'Organization', 'org.aspx', 'administer units and users')
+go
 insert into ManagerFunctionLang(ManagerFunctionID, LangID, ManagerFunction, URL, Expl)
-values(2, 2, 'Statistics', 'stats.aspx', 'view results and compare groups');
+values(2, 2, 'Statistics', 'stats.aspx', 'view results and compare groups')
+go
 insert into ManagerFunctionLang(ManagerFunctionID, LangID, ManagerFunction, URL, Expl)
-values(3, 2, 'Messages', 'messages.aspx', 'administer messages, invitations and reminders');
+values(3, 2, 'Messages', 'messages.aspx', 'administer messages, invitations and reminders')
+go
 insert into ManagerFunctionLang(ManagerFunctionID, LangID, ManagerFunction, URL, Expl)
-values(4, 2, 'Managers', 'managers.aspx', 'administer unit managers');
+values(4, 2, 'Managers', 'managers.aspx', 'administer unit managers')
+go
 insert into ManagerFunctionLang(ManagerFunctionID, LangID, ManagerFunction, URL, Expl)
-values(7, 2, 'Exercises', 'exercise.aspx', 'manager exercises');
+values(7, 2, 'Exercises', 'exercise.aspx', 'manager exercises')
+go
 
-use healthWatch;
-alter table SponsorAdmin add LastName varchar(255);
-alter table SponsorAdmin add PermanentlyDeleteUsers int;
+use healthWatch
+go
+alter table SponsorAdmin add LastName varchar(255)
+go
+alter table SponsorAdmin add PermanentlyDeleteUsers int
+go
 
-use healthWatch;
-alter table SponsorAdmin add InviteSubject text;
-alter table SponsorAdmin add InviteTxt text;
-alter table SponsorAdmin add InviteReminderSubject text;
-alter table SponsorAdmin add InviteReminderTxt text;
-alter table SponsorAdmin add AllMessageSubject text;
-alter table SponsorAdmin add AllMessageBody text;
+use healthWatch
+go
+alter table SponsorAdmin add InviteSubject text
+go
+alter table SponsorAdmin add InviteTxt text
+go
+alter table SponsorAdmin add InviteReminderSubject text
+go
+alter table SponsorAdmin add InviteReminderTxt text
+go
+alter table SponsorAdmin add AllMessageSubject text
+go
+alter table SponsorAdmin add AllMessageBody text
+go
 
-use healthWatch;
+use healthWatch
+go
 create table SponsorAdminExtendedSurvey(
 	SponsorAdminExtendedSurveyID int primary key not null identity,
 	SponsorAdminID int,
@@ -147,44 +180,72 @@ create table SponsorAdminExtendedSurvey(
 	AllMessageLastSent smalldatetime,
 	EmailLastSent smalldatetime,
 	FinishedLastSent smalldatetime
-);
+)
+go
 
-use healthWatch;
-alter table Department add LoginDays int;
-alter table Department add LoginWeekday int;
+use healthWatch
+go
+alter table Department add LoginDays int
+go
+alter table Department add LoginWeekday int
+go
 
-use healthWatch;
-insert into ManagerFunction(ManagerFunction, URL, Expl) values('Reminders', 'reminders.aspx', 'reminder settings');
-insert into ManagerFunctionLang(ManagerFunctionID, ManagerFunction, URL, Expl, LangID) values(8, 'Påminnelser', 'reminders.aspx', 'reminders settings', 1);
-insert into ManagerFunctionLang(ManagerFunctionID, ManagerFunction, URL, Expl, LangID) values(8, 'Reminders', 'reminders.aspx', 'reminders settings', 2);
+use healthWatch
+go
+insert into ManagerFunction(ManagerFunction, URL, Expl) values('Reminders', 'reminders.aspx', 'reminder settings')
+go
+insert into ManagerFunctionLang(ManagerFunctionID, ManagerFunction, URL, Expl, LangID) values(8, 'Påminnelser', 'reminders.aspx', 'reminders settings', 1)
+go
+insert into ManagerFunctionLang(ManagerFunctionID, ManagerFunction, URL, Expl, LangID) values(8, 'Reminders', 'reminders.aspx', 'reminders settings', 2)
+go
 
-use healthWatch;
-alter table SponsorAdminExtendedSurvey add SponsorExtendedSurveyID int;
+use healthWatch
+go
+alter table SponsorAdminExtendedSurvey add SponsorExtendedSurveyID int
+go
 
-use healthWatch;
-alter table SponsorAdminExtendedSurvey drop column InviteLastSent;
-alter table SponsorAdminExtendedSurvey drop column InviteReminderLastSent;
-alter table SponsorAdminExtendedSurvey drop column AllMessageLastSent;
+use healthWatch
+go
+alter table SponsorAdminExtendedSurvey drop column InviteLastSent
+go
+alter table SponsorAdminExtendedSurvey drop column InviteReminderLastSent
+go
+alter table SponsorAdminExtendedSurvey drop column AllMessageLastSent
+go
 
-use healthWatch;
-alter table SponsorAdmin add InviteLastSent smalldatetime;
-alter table SponsorAdmin add InviteReminderLastSent smalldatetime;
-alter table SponsorAdmin add AllMessageLastSent smalldatetime;
+use healthWatch
+go
+alter table SponsorAdmin add InviteLastSent smalldatetime
+go
+alter table SponsorAdmin add InviteReminderLastSent smalldatetime
+go
+alter table SponsorAdmin add AllMessageLastSent smalldatetime
+go
 
 -- Inserting initial Swedish plot types from English ones.
-use eform;
+use eform
+go
 insert into plottypelang(plottypeid, langid, name, description)
-select id, 1, name, description from plottype;
+select id, 1, name, description from plottype
+go
 
-use eForm;
-update PlotTypeLang set ShortName = 'Line' where PlotTypeLangID = 6;
-update PlotTypeLang set ShortName = 'Line (± SD)' where PlotTypeLangID = 7;
-update PlotTypeLang set ShortName = 'Line (± 1.96 SD)' where PlotTypeLangID = 8;
-update PlotTypeLang set ShortName = 'BoxPlot (Min/Max)' where PlotTypeLangID = 9;
-update PlotTypeLang set ShortName = 'BoxPlot (Tukey)' where PlotTypeLangID = 10;
+use eForm
+go
+update PlotTypeLang set ShortName = 'Line' where PlotTypeLangID = 6
+go
+update PlotTypeLang set ShortName = 'Line (± SD)' where PlotTypeLangID = 7
+go
+update PlotTypeLang set ShortName = 'Line (± 1.96 SD)' where PlotTypeLangID = 8
+go
+update PlotTypeLang set ShortName = 'BoxPlot (Min/Max)' where PlotTypeLangID = 9
+go
+update PlotTypeLang set ShortName = 'BoxPlot (Tukey)' where PlotTypeLangID = 10
+go
 
-use healthwatch;
-alter table SponsorAdmin add LoginLastSent smalldatetime;
+use healthwatch
+go
+alter table SponsorAdmin add LoginLastSent smalldatetime
+go
 
 CREATE FUNCTION FindDepartmentWithReminder(@DepartmentID INTEGER)
 RETURNS TABLE
@@ -205,3 +266,4 @@ RETURN (
 	FROM SelectRecursiveDepartment
 	WHERE DepartmentID = @DepartmentID
 )
+go
