@@ -31,17 +31,17 @@ namespace HW.Tests.Helpers
 		{
 			x = service.ReadSponsor(101);
 			r = new SqlReportRepository().ReadReportPart(14, 1);
-			e = new DocXExporter(r, "HW template for Word.docx");
+			e = new DocXExporter(r, @"..\..\HW template for Word.docx");
 			
 			var parts = service.FindByProjectAndLanguage(2643, 1);
-            e2 = new DocXExporter(service, parts, "HW template for Word.docx");
+			e2 = new DocXExporter(service, parts, @"..\..\HW template for Word.docx");
 		}
 		
 		[Test]
 		public void TestLinePlot()
 		{
-			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\test.docx", FileMode.Create)) {
-				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:3428/", x.MinUserCountToDisclose, 3, 3) as MemoryStream;
+			using (FileStream f = new FileStream(@"test.docx", FileMode.Create)) {
+				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:25555/", x.MinUserCountToDisclose, 3, 3) as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
@@ -49,8 +49,8 @@ namespace HW.Tests.Helpers
 		[Test]
 		public void TestLinePlot2()
 		{
-			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\test2.docx", FileMode.Create)) {
-				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:3428/", x.MinUserCountToDisclose, 3, 3) as MemoryStream;
+			using (FileStream f = new FileStream(@"test2.docx", FileMode.Create)) {
+				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:25555/", x.MinUserCountToDisclose, 3, 3) as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
