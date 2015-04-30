@@ -6,7 +6,7 @@ using HW.Core.Models;
 
 namespace HW.Core.Repositories.Sql
 {
-	public class SqlExerciseRepository : BaseSqlRepository<Exercise>
+	public class SqlExerciseRepository : BaseSqlRepository<Exercise>, IExerciseRepository
 	{
 		public void SaveExercise(Exercise e)
 		{
@@ -27,6 +27,122 @@ VALUES(@ExerciseAreaID, @ExerciseSortOrder, @ExerciseImg, @RequiredUserLevel, @M
 				new SqlParameter("@PrintOnBottom", e.PrintOnBottom),
 				new SqlParameter("@ReplacementHead", e.ReplacementHead)
 			);
+		}
+		
+		public List<ExerciseVariantLanguage> FindExerciseVariants(int langID)
+		{
+			string query = string.Format(
+				@"
+SELECT el.Exercise,
+	evl.ExerciseFile,
+	et.ExerciseTypeID,
+	evl.ExerciseContent,
+	e.PrintOnBottom,
+	e.ReplacementHead,
+	evl.Lang
+FROM [ExerciseVariantLang] evl
+INNER JOIN [ExerciseVariant] ev ON evl.ExerciseVariantID = ev.ExerciseVariantID
+INNER JOIN [ExerciseType] et ON ev.ExerciseTypeID = et.ExerciseTypeID
+INNER JOIN [ExerciseLang] el ON ev.ExerciseID = el.ExerciseID AND el.Lang = evl.Lang
+INNER JOIN [Exercise] e ON el.ExerciseID = e.ExerciseID
+WHERE el.Lang = {0}",
+				langID
+			);
+			List<ExerciseVariantLanguage> exercises = new List<ExerciseVariantLanguage>();
+			using (SqlDataReader rs = Db.rs(query)) {
+				while (rs.Read()) {
+					var evl = new ExerciseVariantLanguage {
+						Variant = new ExerciseVariant {
+							Exercise = new Exercise {
+								Languages = new [] { new ExerciseLanguage { ExerciseName = GetString(rs, 0) }},
+								PrintOnBottom = GetInt32(rs, 4) == 1,
+								ReplacementHead = GetString(rs, 5),
+							},
+							Type = GetObject<ExerciseType>(rs, 2)
+						},
+						File = GetString(rs, 1),
+						Content = GetString(rs, 3),
+						Language = GetObject<Language>(rs, 6)
+					};
+					exercises.Add(evl);
+				}
+			}
+			return exercises;
+		}
+		
+		public ExerciseVariantLanguage ReadExerciseVariant(int exerciseVariantLangID)
+		{
+			string query = string.Format(
+				@"
+SELECT el.Exercise,
+	evl.ExerciseFile,
+	et.ExerciseTypeID,
+	evl.ExerciseContent,
+	e.PrintOnBottom,
+	e.ReplacementHead,
+	evl.Lang
+FROM [ExerciseVariantLang] evl
+INNER JOIN [ExerciseVariant] ev ON evl.ExerciseVariantID = ev.ExerciseVariantID
+INNER JOIN [ExerciseType] et ON ev.ExerciseTypeID = et.ExerciseTypeID
+INNER JOIN [ExerciseLang] el ON ev.ExerciseID = el.ExerciseID AND el.Lang = evl.Lang
+INNER JOIN [Exercise] e ON el.ExerciseID = e.ExerciseID
+WHERE evl.ExerciseVariantLangID = {0}",
+				exerciseVariantLangID
+			);
+			ExerciseVariantLanguage evl = null;
+			using (SqlDataReader rs = Db.rs(query)) {
+				if (rs.Read()) {
+					evl = new ExerciseVariantLanguage {
+						Variant = new ExerciseVariant {
+							Exercise = new Exercise {
+								Languages = new [] { new ExerciseLanguage { ExerciseName = GetString(rs, 0) }},
+								PrintOnBottom = GetInt32(rs, 4) == 1,
+								ReplacementHead = GetString(rs, 5),
+							},
+							Type = GetObject<ExerciseType>(rs, 2)
+						},
+						File = GetString(rs, 1),
+						Content = GetString(rs, 3),
+						Language = GetObject<Language>(rs, 6)
+					};
+				}
+			}
+			return evl;
+		}
+		
+		public ExerciseLanguage Read(int id, int langID)
+		{
+			string query = string.Format(
+				@"
+SELECT e.ExerciseImg,
+	e.Minutes,
+	e.ReplacementHead,
+	el.Exercise,
+	el.ExerciseTeaser --,
+	--el.ExerciseContent
+FROM Exercise e
+INNER JOIN ExerciseLang el ON el.ExerciseID = e.ExerciseID
+WHERE e.ExerciseID = {0}
+AND el.Lang = {1}",
+				id,
+				langID
+			);
+			ExerciseLanguage e = null;
+			using (SqlDataReader rs = ExecuteReader(query)) {
+				if (rs.Read()) {
+					e = new ExerciseLanguage {
+						Exercise = new Exercise {
+							Image = GetString(rs, 0),
+							Minutes = GetInt32(rs, 1),
+							ReplacementHead = GetString(rs, 2)
+						},
+						ExerciseName = GetString(rs, 3),
+						Teaser = GetString(rs, 4) //,
+//						Content = GetString(rs, 5)
+					};
+				}
+			}
+			return e;
 		}
 		
 		public IList<Exercise> FindByAreaAndCategory(int areaID, int categoryID, int langID, int sort)
@@ -197,35 +313,5 @@ ORDER BY CASE eal.ExerciseAreaID WHEN {0} THEN NULL ELSE ea.ExerciseAreaSortOrde
 			}
 			return areas;
 		}
-		
-//		public IList<ExerciseCategory> FindCategories()
-//		{
-//			throw new NotImplementedException();
-//		}
-//		
-//		public IList<ExerciseCategoryLanguage> FindCategoryLanguages()
-//		{
-//			throw new NotImplementedException();
-//		}
-//		
-//		public ExerciseCategoryLanguage ReadCategoryLanguage(int id)
-//		{
-//			throw new NotImplementedException();
-//		}
-//		
-//		public IList<ExerciseAreaLanguage> FindAreaLanguages()
-//		{
-//			throw new NotImplementedException();
-//		}
-//		
-//		public IList<ExerciseVariantLanguage> FindVariantLanguages()
-//		{
-//			throw new NotImplementedException();
-//		}
-//		
-//		public IList<ExerciseTypeLanguage> FindTypeLanguages()
-//		{
-//			throw new NotImplementedException();
-//		}
 	}
 }

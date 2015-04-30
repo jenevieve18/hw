@@ -96,6 +96,7 @@
     <Compile Include="Helpers\ExporterTests.cs" />
     <Compile Include="Helpers\ExtendedGraphTests.cs" />
     <Compile Include="Helpers\PageTests.cs" />
+    <Compile Include="Helpers\PdfExporterTests.cs" />
     <Compile Include="Helpers\PresentationDocumentExporterTests.cs" />
     <Compile Include="Models\DbTests.cs" />
     <Compile Include="Models\DepartmentTests.cs" />
@@ -120,9 +121,6 @@
     <Compile Include="Repositories\ReportRepositoryTests.cs" />
     <Compile Include="Repositories\SponsorRepositoryTests.cs" />
     <Compile Include="Repositories\UserRepositoryTests.cs" />
-    <Compile Include="Test1.cs" />
-    <Compile Include="Test2.cs" />
-    <Compile Include="Test3.cs" />
     <Compile Include="Views\ExerciseTests.cs" />
     <Compile Include="Views\FeedbackTests.cs" />
     <Compile Include="Views\ManagerSetupTests.cs" />
@@ -130,7 +128,6 @@
     <Compile Include="Views\MessagesTests.cs" />
     <Compile Include="Views\OrgTests.cs" />
     <Compile Include="Views\StatsTests.cs" />
-    <Compile Include="Views\VerticalTextTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HW.Core\HW.Core.csproj">

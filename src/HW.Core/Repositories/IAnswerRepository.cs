@@ -6,33 +6,33 @@ namespace HW.Core.Repositories
 {
 	public interface IAnswerRepository : IBaseRepository<Answer>
 	{
-		void UpdateAnswer(int projectRoundUnitID, int projectRoundUserID);
-		
-		Answer ReadByKey(string key);
-		
-		Answer ReadByQuestionAndOption(int answerID, int questionID, int optionID);
-		
-		Answer ReadByGroup(string groupBy, int yearFrom, int yearTo, string sortString);
-		
-		Answer ReadMinMax(string groupBy, int questionID, int optionID, int yearFrom, int yearTO, string sortString);
-
-		int CountByValueWithDateOptionAndQuestion(int val, int yearFrom, int yearTo, int optionID, int questionID, string sortString);
-		
-		int CountByProject(int projectRoundUserID, int yearFrom, int yearTo);
-		
-		int CountByDate(int yearFrom, int yearTo, string sortString);
-		
-		IList<Answer> FindByProjectRound(int projectRoundID);
-		
-		IList<Answer> FindByQuestionAndOptionGrouped(string groupBy, int questionID, int optionID, int yearFrom, int yearTo, string sortString);
-		
-		IList<Answer> FindByQuestionAndOptionJoinedAndGrouped(string join, string groupBy, int questionID, int optionID, int yearFrom, int yearTo);
-		
-		IList<Answer> FindByQuestionAndOptionJoinedAndGrouped2(string join, string groupBy, int questionID, int optionID, int yearFrom, int yearTo);
-		
-		IList<BackgroundAnswer> FindBackgroundAnswers(int bqID);
-		
-		IList<Answer> FindByQuestionAndOptionWithYearSpan(int questionID, int optionID, int yearFrom, int yearTo);
+//		void UpdateAnswer(int projectRoundUnitID, int projectRoundUserID);
+//		
+//		Answer ReadByKey(string key);
+//		
+//		Answer ReadByQuestionAndOption(int answerID, int questionID, int optionID);
+//		
+//		Answer ReadByGroup(string groupBy, int yearFrom, int yearTo, string sortString);
+//		
+//		Answer ReadMinMax(string groupBy, int questionID, int optionID, int yearFrom, int yearTO, string sortString);
+//
+//		int CountByValueWithDateOptionAndQuestion(int val, int yearFrom, int yearTo, int optionID, int questionID, string sortString);
+//		
+//		int CountByProject(int projectRoundUserID, int yearFrom, int yearTo);
+//		
+//		int CountByDate(int yearFrom, int yearTo, string sortString);
+//		
+//		IList<Answer> FindByProjectRound(int projectRoundID);
+//		
+//		IList<Answer> FindByQuestionAndOptionGrouped(string groupBy, int questionID, int optionID, int yearFrom, int yearTo, string sortString);
+//		
+//		IList<Answer> FindByQuestionAndOptionJoinedAndGrouped(string join, string groupBy, int questionID, int optionID, int yearFrom, int yearTo);
+//		
+//		IList<Answer> FindByQuestionAndOptionJoinedAndGrouped2(string join, string groupBy, int questionID, int optionID, int yearFrom, int yearTo);
+//		
+//		IList<BackgroundAnswer> FindBackgroundAnswers(int bqID);
+//		
+//		IList<Answer> FindByQuestionAndOptionWithYearSpan(int questionID, int optionID, int yearFrom, int yearTo);
 	}
 	
 	public class AnswerRepositoryStub : BaseRepositoryStub<Answer>, IAnswerRepository

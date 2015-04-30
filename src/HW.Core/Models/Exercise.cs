@@ -21,6 +21,14 @@ namespace HW.Core.Models
 		public virtual ExerciseCategoryLanguage CurrentCategory { get; set; }
 		public virtual ExerciseVariantLanguage CurrentVariant { get; set; }
 		public virtual ExerciseTypeLanguage CurrentType { get; set; }
+		public virtual ExerciseLanguage FirstLanguage {
+			get {
+				if (Languages != null && Languages.Count > 0) {
+					return Languages[0];
+				}
+				return null;
+			}
+		}
 		
 		public Exercise()
 		{
@@ -93,6 +101,7 @@ namespace HW.Core.Models
 		public virtual string ExerciseName { get; set; }
 		public virtual string Time { get; set; }
 		public virtual string Teaser { get; set; }
+		public virtual string Content { get; set; }
 		public virtual Language Language { get; set; }
 		public virtual bool IsNew { get; set; }
 	}

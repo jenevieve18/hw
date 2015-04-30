@@ -36,6 +36,12 @@ namespace HW.Tests.Repositories
 		}
 		
 		[Test]
+		public void TestReadExerciseVariant()
+		{
+			var e = r.ReadExerciseVariant(81);
+		}
+		
+		[Test]
 		public void a()
 		{
 			var e = new Exercise {

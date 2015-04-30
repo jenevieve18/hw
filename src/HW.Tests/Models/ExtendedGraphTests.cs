@@ -28,11 +28,11 @@ namespace HW.Tests.Models
 		SqlDepartmentRepository departmentRepository;
 		SqlQuestionRepository questionRepository;
 		
-		float lastVal = 0;
-		string lastDesc = "";
+//		float lastVal = 0;
+//		string lastDesc = "";
 		System.Collections.Hashtable res = new System.Collections.Hashtable();
 		System.Collections.Hashtable cnt = new System.Collections.Hashtable();
-		int lastCount = 0;
+//		int lastCount = 0;
 		
 		bool HasGrouping {
 			get { return true; }

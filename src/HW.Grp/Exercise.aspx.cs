@@ -47,6 +47,26 @@ namespace HW.Grp
 		
 		public IList<ExerciseAreaLanguage> Areas {
 			get { return areas; }
+			set {
+				areas = value;
+				string s = "";
+				foreach (var a in areas) {
+					if (EAID == a.Area.Id) {
+						AreaID.Controls.Add(new LiteralControl("<dt><a href='javascript:;'><span>" + a.AreaName + "</span></a></dt><dd><ul>"));
+						switch (lid) {
+								case 1: AreaID.Controls.Add(new LiteralControl("<li id='EAID0'><a href='exercise.aspx?EAID=0" + sortQS + "#filter'>Visa alla</a></li>")); break;
+								case 2: AreaID.Controls.Add(new LiteralControl("<li id='EAID0'><a href='exercise.aspx?EAID=0" + sortQS + "#filter'>Show all</a></li>")); break;
+						}
+					} else {
+						if (s != "") {
+							AreaID.Controls.Add(new LiteralControl("<li" + s));
+						}
+						s = " id='EAID" + a.Area.Id + "'><a href='exercise.aspx?EAID=" + a.Area.Id + "" + sortQS + "#filter'>" + a.AreaName + "</a></li>";
+					}
+				}
+				AreaID.Controls.Add(new LiteralControl("<li class='last'" + s));
+				AreaID.Controls.Add(new LiteralControl("</ul></dd>"));
+			}
 		}
 		
 		public bool HasSelectedCategory {
@@ -66,6 +86,26 @@ namespace HW.Grp
 		
 		public IList<ExerciseCategoryLanguage> Categories {
 			get { return categories; }
+			set {
+				categories = value;
+				string s = "";
+				foreach (var c in categories) {
+					if (ECID == c.Category.Id) {
+						CategoryID.Controls.Add(new LiteralControl("<dt><a href='javascript:;'><span>" + c.CategoryName + "</span></a></dt><dd><ul>"));
+						switch (lid) {
+								case 1: CategoryID.Controls.Add(new LiteralControl("<li id='ECID0'><a href='exercise.aspx?ECID=0" + sortQS + (EAID != 0 ? "&EAID=" + EAID : "") + "#filter'>Visa alla</a></li>")); break;
+								case 2: CategoryID.Controls.Add(new LiteralControl("<li id='ECID0'><a href='exercise.aspx?ECID=0" + sortQS + (EAID != 0 ? "&EAID=" + EAID : "") + "#filter'>Show all</a></li>")); break;
+						}
+					} else {
+						if (s != "") {
+							CategoryID.Controls.Add(new LiteralControl("<li" + s));
+						}
+						s = " id='ECID" + c.Category.Id + "'><a href='exercise.aspx?ECID=" + c.Category.Id + "" + sortQS + (EAID != 0 ? "&EAID=" + EAID : "") + "#filter'>" + c.CategoryName + "</a></li>";
+					}
+				}
+				CategoryID.Controls.Add(new LiteralControl("<li class='last'" + s));
+				CategoryID.Controls.Add(new LiteralControl("</ul></dd>"));
+			}
 		}
 
 		protected void Page_Load(object sender, EventArgs e)
@@ -95,24 +135,25 @@ namespace HW.Grp
 							case 2: AreaID.Controls.Add(new LiteralControl("<dt><a href='javascript:;'><span>Show all</span></a></dt><dd><ul>")); break;
 					}
 				}
-				string s = "";
-				areas = exerciseRepository.FindAreas(EAID, lid - 1);
-				foreach (var a in areas) {
-					if (EAID == a.Area.Id) {
-						AreaID.Controls.Add(new LiteralControl("<dt><a href='javascript:;'><span>" + a.AreaName + "</span></a></dt><dd><ul>"));
-						switch (lid) {
-								case 1: AreaID.Controls.Add(new LiteralControl("<li id='EAID0'><a href='exercise.aspx?EAID=0" + sortQS + "#filter'>Visa alla</a></li>")); break;
-								case 2: AreaID.Controls.Add(new LiteralControl("<li id='EAID0'><a href='exercise.aspx?EAID=0" + sortQS + "#filter'>Show all</a></li>")); break;
-						}
-					} else {
-						if (s != "") {
-							AreaID.Controls.Add(new LiteralControl("<li" + s));
-						}
-						s = " id='EAID" + a.Area.Id + "'><a href='exercise.aspx?EAID=" + a.Area.Id + "" + sortQS + "#filter'>" + a.AreaName + "</a></li>";
-					}
-				}
-				AreaID.Controls.Add(new LiteralControl("<li class='last'" + s));
-				AreaID.Controls.Add(new LiteralControl("</ul></dd>"));
+				Areas = exerciseRepository.FindAreas(EAID, lid - 1);
+//				string s = "";
+//				areas = exerciseRepository.FindAreas(EAID, lid - 1);
+//				foreach (var a in areas) {
+//					if (EAID == a.Area.Id) {
+//						AreaID.Controls.Add(new LiteralControl("<dt><a href='javascript:;'><span>" + a.AreaName + "</span></a></dt><dd><ul>"));
+//						switch (lid) {
+//								case 1: AreaID.Controls.Add(new LiteralControl("<li id='EAID0'><a href='exercise.aspx?EAID=0" + sortQS + "#filter'>Visa alla</a></li>")); break;
+//								case 2: AreaID.Controls.Add(new LiteralControl("<li id='EAID0'><a href='exercise.aspx?EAID=0" + sortQS + "#filter'>Show all</a></li>")); break;
+//						}
+//					} else {
+//						if (s != "") {
+//							AreaID.Controls.Add(new LiteralControl("<li" + s));
+//						}
+//						s = " id='EAID" + a.Area.Id + "'><a href='exercise.aspx?EAID=" + a.Area.Id + "" + sortQS + "#filter'>" + a.AreaName + "</a></li>";
+//					}
+//				}
+//				AreaID.Controls.Add(new LiteralControl("<li class='last'" + s));
+//				AreaID.Controls.Add(new LiteralControl("</ul></dd>"));
 
 				if (ECID == 0) {
 					switch (lid) {
@@ -124,24 +165,26 @@ namespace HW.Grp
 							break;
 					}
 				}
-				s = "";
-				categories = exerciseRepository.FindCategories(EAID, ECID, lid - 1);
-				foreach (var c in categories) {
-					if (ECID == c.Category.Id) {
-						CategoryID.Controls.Add(new LiteralControl("<dt><a href='javascript:;'><span>" + c.CategoryName + "</span></a></dt><dd><ul>"));
-						switch (lid) {
-								case 1: CategoryID.Controls.Add(new LiteralControl("<li id='ECID0'><a href='exercise.aspx?ECID=0" + sortQS + (EAID != 0 ? "&EAID=" + EAID : "") + "#filter'>Visa alla</a></li>")); break;
-								case 2: CategoryID.Controls.Add(new LiteralControl("<li id='ECID0'><a href='exercise.aspx?ECID=0" + sortQS + (EAID != 0 ? "&EAID=" + EAID : "") + "#filter'>Show all</a></li>")); break;
-						}
-					} else {
-						if (s != "") {
-							CategoryID.Controls.Add(new LiteralControl("<li" + s));
-						}
-						s = " id='ECID" + c.Category.Id + "'><a href='exercise.aspx?ECID=" + c.Category.Id + "" + sortQS + (EAID != 0 ? "&EAID=" + EAID : "") + "#filter'>" + c.CategoryName + "</a></li>";
-					}
-				}
-				CategoryID.Controls.Add(new LiteralControl("<li class='last'" + s));
-				CategoryID.Controls.Add(new LiteralControl("</ul></dd>"));
+//				s = "";
+//				string s = "";
+				Categories = exerciseRepository.FindCategories(EAID, ECID, lid - 1);
+//				categories = exerciseRepository.FindCategories(EAID, ECID, lid - 1);
+//				foreach (var c in categories) {
+//					if (ECID == c.Category.Id) {
+//						CategoryID.Controls.Add(new LiteralControl("<dt><a href='javascript:;'><span>" + c.CategoryName + "</span></a></dt><dd><ul>"));
+//						switch (lid) {
+//								case 1: CategoryID.Controls.Add(new LiteralControl("<li id='ECID0'><a href='exercise.aspx?ECID=0" + sortQS + (EAID != 0 ? "&EAID=" + EAID : "") + "#filter'>Visa alla</a></li>")); break;
+//								case 2: CategoryID.Controls.Add(new LiteralControl("<li id='ECID0'><a href='exercise.aspx?ECID=0" + sortQS + (EAID != 0 ? "&EAID=" + EAID : "") + "#filter'>Show all</a></li>")); break;
+//						}
+//					} else {
+//						if (s != "") {
+//							CategoryID.Controls.Add(new LiteralControl("<li" + s));
+//						}
+//						s = " id='ECID" + c.Category.Id + "'><a href='exercise.aspx?ECID=" + c.Category.Id + "" + sortQS + (EAID != 0 ? "&EAID=" + EAID : "") + "#filter'>" + c.CategoryName + "</a></li>";
+//					}
+//				}
+//				CategoryID.Controls.Add(new LiteralControl("<li class='last'" + s));
+//				CategoryID.Controls.Add(new LiteralControl("</ul></dd>"));
 			}
 
 			exercises = exerciseRepository.FindByAreaAndCategory(EAID, ECID, lid - 1, SORT);
