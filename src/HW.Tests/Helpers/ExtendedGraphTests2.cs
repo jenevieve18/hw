@@ -6,7 +6,7 @@ using HW.Core;
 using HW.Core.Helpers;
 using NUnit.Framework;
 
-namespace HW.Tests.Models
+namespace HW.Tests.Helpers
 {
 	[TestFixture]
 	public class ExtendedGraphTests2
@@ -37,7 +37,7 @@ namespace HW.Tests.Models
 		{
 			p.Image = g.objBitmap;
 			f.Controls.Add(p);
-			f.ShowDialog();
+//			f.ShowDialog();
 		}
 		
 		[Test]

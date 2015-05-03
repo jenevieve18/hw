@@ -38,6 +38,7 @@ namespace HW.Tests.Helpers
 		}
 		
 		[Test]
+		[Ignore("Finding a way to test without the fetch of GRP image from website.")]
 		public void TestLinePlot()
 		{
 			using (FileStream f = new FileStream(@"test.docx", FileMode.Create)) {
@@ -47,6 +48,7 @@ namespace HW.Tests.Helpers
 		}
 		
 		[Test]
+		[Ignore("Finding a way to test without the fetch of GRP image from website.")]
 		public void TestLinePlot2()
 		{
 			using (FileStream f = new FileStream(@"test2.docx", FileMode.Create)) {

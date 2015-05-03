@@ -2,7 +2,7 @@
 using HW.Core.Helpers;
 using NUnit.Framework;
 
-namespace HW.Tests.Models
+namespace HW.Tests.Helpers
 {
 	[TestFixture]
 	public class DbTests
@@ -11,6 +11,12 @@ namespace HW.Tests.Models
 		public void TestIsEmail()
 		{
 			Assert.IsTrue(Db.isEmail("info13971@eform.se"));
+		}
+		
+		[Test]
+		public void TestSendMail()
+		{
+			Db.sendMail("ian.escarro@gmail.com", "", "");
 		}
 	}
 }

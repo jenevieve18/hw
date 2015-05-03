@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using HW.Core;
 using HW.Core.Helpers;
+using HW.Core.Repositories;
+using HW.Core.Repositories.Sql;
+using HW.Core.Services;
 using NUnit.Framework;
 
-namespace HW.Tests.Models
+namespace HW.Tests.Helpers
 {
 	[TestFixture]
-	public class GraphTests
+	public class GraphFactoryTests
 	{
 		Form f;
 		PictureBox p;
-		Graph2 g;
+		ExtendedGraph g;
 		
 		[SetUp]
 		public void Setup()
 		{
-			g = new Graph2(895, 440, "#FFFFFF");
-			g.Margin = new Margin(50, 50, 50, 50);
-			
 			f = new Form();
 			f.Size = new Size(1000, 650);
 			f.KeyDown += delegate(object sender, KeyEventArgs e) {
@@ -34,21 +35,9 @@ namespace HW.Tests.Models
 		[TearDown]
 		public void Teardown()
 		{
-			p.Image = g.Bitmap;
+			p.Image = g.objBitmap;
 			f.Controls.Add(p);
-			f.ShowDialog();
-		}
-		
-		[Test]
-		public void a()
-		{
-			var s = new Series();
-			var r = new Random();
-			for (int i = 0; i < 10; i++) {
-				s.Points.Add(new PointV() { Y = r.Next(1, 100) });
-			}
-			g.Series.Add(s);
-			g.Draw();
+//			f.ShowDialog();
 		}
 	}
 }

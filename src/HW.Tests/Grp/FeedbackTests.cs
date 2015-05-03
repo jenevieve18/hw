@@ -1,10 +1,10 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace HW.Tests.Views
+namespace HW.Tests.Grp
 {
 	[TestFixture]
-	public class ManagerSetupTests
+	public class FeedbackTests
 	{
 		[Test]
 		public void TestMethod()

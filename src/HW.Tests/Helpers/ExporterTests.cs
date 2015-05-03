@@ -44,60 +44,55 @@ namespace HW.Tests.Helpers
 		}
 		
 		[Test]
+		[Ignore("Finding a way to test without the fetch of GRP image from website.")]
 		public void TestExcelExporter()
 		{
 			ExcelExporter e = new ExcelExporter(service, false, true, null, 550, 440, "#efefef", r, null);
-			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\test.xlsx", FileMode.Create)) {
+			using (FileStream f = new FileStream(@"test.xlsx", FileMode.Create)) {
 				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:3428/", x.MinUserCountToDisclose, 3, 3) as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
 		
 		[Test]
+		[Ignore("Finding a way to test without the fetch of GRP image from website.")]
 		public void TestExcelExporter2()
 		{
 			var parts = service.FindByProjectAndLanguage(2643, 1);
 			ExcelExporter e = new ExcelExporter(service, false, true, null, 550, 440, "#efefef", parts, null);
-			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\test.xlsx", FileMode.Create)) {
+			using (FileStream f = new FileStream(@"test.xlsx", FileMode.Create)) {
 				MemoryStream s = e.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:3428/", x.MinUserCountToDisclose, 3, 3) as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
 		
 		[Test]
+		[Ignore("Finding a way to test without the fetch of GRP image from website.")]
 		public void TestCsvExporter()
 		{
 			CsvExporter e = new CsvExporter(service, false, true, null, 550, 440, "#efefef", r, null);
-			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\test.csv", FileMode.Create)) {
+			using (FileStream f = new FileStream(@"test.csv", FileMode.Create)) {
 				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:3428/", x.MinUserCountToDisclose, 3, 3) as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
 		
-//		[Test]
-//		public void TestWordDocumentExporter2()
-//		{
-//			WordDocumentExporter2 e = new WordDocumentExporter2(r);
-//			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\test.docx", FileMode.Create)) {
-//				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream;
-//				s.WriteTo(f);
-//			}
-//		}
-		
 		[Test]
+		[Ignore("Finding a way to test without the fetch of GRP image from website.")]
 		public void TestSpreadsheetDocumentExporter2()
 		{
 			SpreadsheetDocumentExporter2 e = new SpreadsheetDocumentExporter2(r);
-			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\test.xlsx", FileMode.Create, FileAccess.Write)) {
+			using (FileStream f = new FileStream(@"test.xlsx", FileMode.Create, FileAccess.Write)) {
 				(e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:3428/", x.MinUserCountToDisclose, 3, 3) as MemoryStream).WriteTo(f);
 			}
 		}
 		
 		[Test]
+		[Ignore("Finding a way to test without the fetch of GRP image from website.")]
 		public void TestPresentationDocumentExporter()
 		{
 			PresentationDocumentExporter e = new PresentationDocumentExporter(r);
-			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\test.pptx", FileMode.Create, FileAccess.Write)) {
+			using (FileStream f = new FileStream(@"test.pptx", FileMode.Create, FileAccess.Write)) {
 				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:3428/", x.MinUserCountToDisclose, 3, 3) as MemoryStream;
 				s.WriteTo(f);
 			}

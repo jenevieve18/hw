@@ -91,22 +91,23 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Grp\DefaultTests.cs" />
+    <Compile Include="Helpers\ConvertHelperTests.cs" />
+    <Compile Include="Helpers\DbTests.cs" />
     <Compile Include="Helpers\DocXExporterTests.cs" />
     <Compile Include="Helpers\ExcelExporterTests.cs" />
     <Compile Include="Helpers\ExporterTests.cs" />
     <Compile Include="Helpers\ExtendedGraphTests.cs" />
+    <Compile Include="Helpers\ExtendedGraphTests2.cs" />
+    <Compile Include="Helpers\GraphFactoryTests.cs" />
+    <Compile Include="Helpers\GraphTests.cs" />
+    <Compile Include="Helpers\HtmlHelperTests.cs" />
     <Compile Include="Helpers\PageTests.cs" />
     <Compile Include="Helpers\PdfExporterTests.cs" />
     <Compile Include="Helpers\PresentationDocumentExporterTests.cs" />
-    <Compile Include="Models\DbTests.cs" />
     <Compile Include="Models\DepartmentTests.cs" />
-    <Compile Include="Models\ExtendedGraphTests.cs" />
-    <Compile Include="Models\ExtendedGraphTests2.cs" />
-    <Compile Include="Models\GraphFactoryTests.cs" />
-    <Compile Include="Models\GraphTests.cs" />
     <Compile Include="Models\GroupFactoryTests.cs" />
     <Compile Include="Models\HWListTests.cs" />
-    <Compile Include="Models\PdfWriterTests.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AnswerRepositoryTests.cs" />
@@ -121,13 +122,13 @@
     <Compile Include="Repositories\ReportRepositoryTests.cs" />
     <Compile Include="Repositories\SponsorRepositoryTests.cs" />
     <Compile Include="Repositories\UserRepositoryTests.cs" />
-    <Compile Include="Views\ExerciseTests.cs" />
-    <Compile Include="Views\FeedbackTests.cs" />
-    <Compile Include="Views\ManagerSetupTests.cs" />
-    <Compile Include="Views\ManagersTests.cs" />
-    <Compile Include="Views\MessagesTests.cs" />
-    <Compile Include="Views\OrgTests.cs" />
-    <Compile Include="Views\StatsTests.cs" />
+    <Compile Include="Grp\ExerciseTests.cs" />
+    <Compile Include="Grp\FeedbackTests.cs" />
+    <Compile Include="Grp\ManagerSetupTests.cs" />
+    <Compile Include="Grp\ManagersTests.cs" />
+    <Compile Include="Grp\MessagesTests.cs" />
+    <Compile Include="Grp\OrgTests.cs" />
+    <Compile Include="Grp\StatsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HW.Core\HW.Core.csproj">
@@ -147,7 +148,9 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Services" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

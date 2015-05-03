@@ -108,23 +108,5 @@ namespace HW.Tests.Helpers
 				s.WriteTo(f);
 			}
 		}
-		
-//		[Test]
-//		public void TestVerbose()
-//		{
-//			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\verbose.xlsx", FileMode.Create)) {
-//				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923,925", PlotType.Verbose, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream;
-//				s.WriteTo(f);
-//			}
-//		}
-//		
-//		[Test]
-//		public void TestVerbose2()
-//		{
-//			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\verbose2.xlsx", FileMode.Create)) {
-//				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923,925", PlotType.Verbose, "http://localhost:3428/", x.MinUserCountToDisclose) as MemoryStream;
-//				s.WriteTo(f);
-//			}
-//		}
 	}
 }

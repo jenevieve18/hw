@@ -21,17 +21,5 @@ namespace HW.Tests.Repositories
 		{
 			r.FindAll();
 		}
-		
-		[Test]
-		public void TestFindBySponsorAdmin()
-		{
-			r.FindBySponsorAdmin(5);
-		}
-		
-		[Test]
-		public void TestReadFirstFunctionBySponsorAdmin()
-		{
-			r.ReadFirstFunctionBySponsorAdmin(742);
-		}
 	}
 }

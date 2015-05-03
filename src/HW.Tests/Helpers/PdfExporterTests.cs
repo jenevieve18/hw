@@ -44,10 +44,10 @@ namespace HW.Tests.Helpers
 			string dir = @"pdf";
 			CreateDirectory(dir);
 			var evl = er.ReadExerciseVariant(1);
-			string file = evl.Variant.Exercise.FirstLanguage.ExerciseName + ".pdf";
+			string file = evl.Variant.Exercise.SelectedLanguage.ExerciseName + ".pdf";
 			e.Save(Path.Combine(dir, file), e.Export(evl));
 			
-			Process.Start(Path.Combine(dir, file));
+//			Process.Start(Path.Combine(dir, file));
 		}
 		
 		[Test]
@@ -56,7 +56,7 @@ namespace HW.Tests.Helpers
 			string dir = @"pdf\en";
 			CreateDirectory(dir);
 			foreach (var evl in er.FindExerciseVariants(1)) {
-				string file = evl.Variant.Exercise.FirstLanguage.ExerciseName + ".pdf";
+				string file = evl.Variant.Exercise.SelectedLanguage.ExerciseName + ".pdf";
 				Console.WriteLine(file);
 				e.Save(Path.Combine(dir, file), e.Export(evl));
 			}
@@ -68,7 +68,7 @@ namespace HW.Tests.Helpers
 			string dir = @"pdf\sv";
 			CreateDirectory(dir);
 			foreach (var evl in er.FindExerciseVariants(0)) {
-				string file = evl.Variant.Exercise.FirstLanguage.ExerciseName + ".pdf";
+				string file = evl.Variant.Exercise.SelectedLanguage.ExerciseName + ".pdf";
 				Console.WriteLine(file);
 				e.Save(Path.Combine(dir, file), e.Export(evl));
 			}
@@ -82,6 +82,7 @@ namespace HW.Tests.Helpers
 		}
 		
 		[Test]
+		[Ignore("Finding a way to test without the fetch of GRP image from website.")]
 		public void TestPdfExporter()
 		{
 			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create, FileAccess.Write)) {
@@ -132,7 +133,6 @@ namespace HW.Tests.Helpers
 		
 		public class PDFFooter : PdfPageEventHelper
 		{
-			// write on top of document
 			public override void OnOpenDocument(PdfWriter writer, Document document)
 			{
 				base.OnOpenDocument(writer, document);

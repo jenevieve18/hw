@@ -39,18 +39,20 @@ namespace HW.Tests.Helpers
 		}
 		
 		[Test]
+		[Ignore("Finding a way to test without the fetch of GRP image from website.")]
 		public void TestPresentationDocumentExporter()
 		{
-			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\test.pptx", FileMode.Create, FileAccess.Write)) {
+			using (FileStream f = new FileStream(@"test.pptx", FileMode.Create, FileAccess.Write)) {
 				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:3428/", x.MinUserCountToDisclose, 3, 3) as MemoryStream;
 				s.WriteTo(f);
 			}
 		}
 		
 		[Test]
+		[Ignore("Finding a way to test without the fetch of GRP image from website.")]
 		public void TestPresentationDocumentExporter2()
 		{
-			using (FileStream f = new FileStream(@"C:\Users\ultra\Downloads\test2.pptx", FileMode.Create, FileAccess.Write)) {
+			using (FileStream f = new FileStream(@"test2.pptx", FileMode.Create, FileAccess.Write)) {
 				MemoryStream s = e2.Export2(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:3428/", x.MinUserCountToDisclose, 3, 3) as MemoryStream;
 				s.WriteTo(f);
 			}
