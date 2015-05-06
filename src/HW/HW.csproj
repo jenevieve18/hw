@@ -155,6 +155,7 @@
     <Content Include="img\graphIcon2.gif" />
     <Content Include="img\graphIcon3.gif" />
     <Content Include="img\graphIcon4.gif" />
+    <Content Include="img\hwlogosmall.gif" />
     <Content Include="img\line01.gif" />
     <Content Include="img\login.gif" />
     <Content Include="img\login_escreen.gif" />
