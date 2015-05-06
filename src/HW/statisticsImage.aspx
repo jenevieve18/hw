@@ -1,1 +1,1 @@
-﻿<%@ Page ContentType="image/gif" Language="C#" AutoEventWireup="true" CodeBehind="statisticsImage.aspx.cs" Inherits="HW.statisticsImage" %>
+<%@ Page ContentType="image/gif" Language="C#" AutoEventWireup="true" Inherits="healthWatch.statisticsImage" Codebehind="statisticsImage.aspx.cs" %>

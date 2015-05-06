@@ -1,9 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="submit.aspx.cs" Inherits="HW.submit" %>
-<%@ Import Namespace="HW.Core.FromHW" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="submit.aspx.cs" Inherits="healthWatch.submit" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
-  <%=Db.header2("","")%>
+  <%=healthWatch.Db.header2("","")%>
      <script type="text/JavaScript">
          //		function showAll()
          //		{
@@ -220,9 +219,9 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 	    <form id="form1" method="post" runat="server">
-        <div class="container_16 myhealth<%=Db.cobranded() %>">
+        <div class="container_16 myhealth<%=healthWatch.Db.cobranded() %>">
 		<div class="headergroup grid_16">
-	   <%=Db.nav2()%>
+	   <%=healthWatch.Db.nav2()%>
 		</div> <!-- end .headergroup -->
         <!--
 		<h1 id="mainHeader"></h1>
@@ -263,7 +262,7 @@
 						<!--<a href="#" onclick="javascript:location.reload();">Eller klicka h&auml;r om du vill avbryta.</a>-->
 					</div>
 		</div><!-- end .contentgroup	-->
-		<%=Db.bottom2() %>
+		<%=healthWatch.Db.bottom2() %>
 	  <div class="hidden"><img src="includes/ui/resources/VASeraseA.gif" width="22" height="22" alt="VASeraseA"></div>
     </div> <!-- end .container_12 -->
     </form>

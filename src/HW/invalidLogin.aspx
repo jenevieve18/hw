@@ -1,13 +1,12 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="invalidLogin.aspx.cs" Inherits="HW.invalidLogin" %>
-<%@ Import Namespace="HW.Core.FromHW" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="healthWatch.invalidLogin" Codebehind="invalidLogin.aspx.cs" %>
   <!doctype html>
 <html lang="en" class="no-js">
 <head>
    <%
        switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
        {
-           case 1: HttpContext.Current.Response.Write(Db.header2("Felaktig inloggning", "Hälsonyheter, självhjälp inom stress och hälsa samt arbetsmiljökartläggningar")); break;
-           case 2: HttpContext.Current.Response.Write(Db.header2("Incorrect login", "Health news, self-help in stress management and health promotion, and work environment surveys")); break;
+           case 1: HttpContext.Current.Response.Write(healthWatch.Db.header2("Felaktig inloggning", "Hälsonyheter, självhjälp inom stress och hälsa samt arbetsmiljökartläggningar")); break;
+           case 2: HttpContext.Current.Response.Write(healthWatch.Db.header2("Incorrect login", "Health news, self-help in stress management and health promotion, and work environment surveys")); break;
        }
            %>
 </head>
@@ -17,9 +16,9 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 	    <form id="Form1" method="post" runat="server">
-        <div class="container_16 myhealth two-sides about<%=Db.cobranded() %>">
+        <div class="container_16 myhealth two-sides about<%=healthWatch.Db.cobranded() %>">
 			<div class="headergroup grid_16">
-		<%=Db.nav2()%>
+		<%=healthWatch.Db.nav2()%>
 			</div> <!-- end .headergroup -->
         <div class="contentgroup grid_16">
 			 
@@ -62,7 +61,7 @@
 				</div>
 
 		</div><!-- end .contentgroup	-->
-		<%=Db.bottom2()%>
+		<%=healthWatch.Db.bottom2()%>
 	</div> <!-- end .container_12 -->
     </form>
 </body>

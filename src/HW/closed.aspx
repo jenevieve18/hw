@@ -1,13 +1,12 @@
-ï»¿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="closed.aspx.cs" Inherits="HW.closed" %>
-<%@ Import Namespace="HW.Core.FromHW" %>
+<%@ Page language="c#" Inherits="healthWatch.closed" Codebehind="closed.aspx.cs" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
    <%
        switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
        {
-           case 1: HttpContext.Current.Response.Write(Db.header2("Nytt lÃ¶senord", "Fyll i nytt lÃ¶senord hÃ¤r")); break;
-           case 2: HttpContext.Current.Response.Write(Db.header2("New password", "Fill in a new password here")); break;
+           case 1: HttpContext.Current.Response.Write(healthWatch.Db.header2("Nytt lösenord", "Fyll i nytt lösenord här")); break;
+           case 2: HttpContext.Current.Response.Write(healthWatch.Db.header2("New password", "Fill in a new password here")); break;
        }
            %>
 </head>
@@ -17,16 +16,16 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 	    <form id="Form1" method="post" runat="server">
-        <div class="container_16 myhealth two-sides about<%=Db.cobranded() %>">
+        <div class="container_16 myhealth two-sides about<%=healthWatch.Db.cobranded() %>">
 			<div class="headergroup grid_16">
-		<%=Db.nav2()%>
+		<%=healthWatch.Db.nav2()%>
 			</div> <!-- end .headergroup -->
         <div class="contentgroup grid_16">
 			 
 				<h1 class="header"><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("Kontot avstÃ¤ngt"); break;
+                    case 1: HttpContext.Current.Response.Write("Kontot avstängt"); break;
                     case 2: HttpContext.Current.Response.Write("Account closed"); break;
                 }
              %></h1>
@@ -36,7 +35,7 @@
 			<p><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("Ditt konto Ã¤r nu avstÃ¤ngt och kommer att tas bort om 30 dagar. Om du vill Ã¥ngra denna Ã¥tgÃ¤rd innan dess, skicka ett e-postmeddelande till <A ID=RecallLink HREF=\"mailto:recall@healthwatch.se?Subject=Avbryt borttagning och aktivering av konto. Referens X" + HttpContext.Current.Request.QueryString["Xref"] + "\"><script language=\"javascript\">de('865 459 124 98 255 272 436 66 487 664 86 634 98 272 272 49 364 86 98 272 436 364 139 98 436 634 364 456 205 86')</script></A>. Ange <B>referens X" + HttpContext.Current.Request.QueryString["Xref"] + "</B> i Ã¤mnesraden."); break;
+                    case 1: HttpContext.Current.Response.Write("Ditt konto är nu avstängt och kommer att tas bort om 30 dagar. Om du vill ångra denna åtgärd innan dess, skicka ett e-postmeddelande till <A ID=RecallLink HREF=\"mailto:recall@healthwatch.se?Subject=Avbryt borttagning och aktivering av konto. Referens X" + HttpContext.Current.Request.QueryString["Xref"] + "\"><script language=\"javascript\">de('865 459 124 98 255 272 436 66 487 664 86 634 98 272 272 49 364 86 98 272 436 364 139 98 436 634 364 456 205 86')</script></A>. Ange <B>referens X" + HttpContext.Current.Request.QueryString["Xref"] + "</B> i ämnesraden."); break;
                     case 2: HttpContext.Current.Response.Write("Your account is now closed and will be deleted within 30 days. If you wish to reverse this action before then, please send an email to <A ID=RecallLink HREF=\"mailto:recall@healthwatch.se?Subject=Cancel account deletion. Reference X" + HttpContext.Current.Request.QueryString["Xref"] + "\"><script language=\"javascript\">de('865 459 124 98 255 272 436 66 487 664 86 634 98 272 272 49 364 86 98 272 436 364 139 98 436 634 364 456 205 86')</script></A>. State <B>reference X" + HttpContext.Current.Request.QueryString["Xref"] + "</B> in the subject."); break;
                 }
              %></p><br>
@@ -46,14 +45,14 @@
                     <h3><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("HjÃ¤lp oss bli bÃ¤ttre"); break;
+                    case 1: HttpContext.Current.Response.Write("Hjälp oss bli bättre"); break;
                     case 2: HttpContext.Current.Response.Write("Help us improve"); break;
                 }
              %></h3><br />
 						<p><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("Du Ã¤r varmt vÃ¤lkommen att skicka synpunkter och fÃ¶rbÃ¤ttringsfÃ¶rslag till oss."); break;
+                    case 1: HttpContext.Current.Response.Write("Du är varmt välkommen att skicka synpunkter och förbättringsförslag till oss."); break;
                     case 2: HttpContext.Current.Response.Write("You are most welcome to send your feedback and improvement suggestions to us."); break;
                 }
              %></p>
@@ -63,7 +62,7 @@
 				</div>
 
 		</div><!-- end .contentgroup	-->
-		<%=Db.bottom2()%>
+		<%=healthWatch.Db.bottom2()%>
 	</div> <!-- end .container_12 -->
     </form>
 </body>

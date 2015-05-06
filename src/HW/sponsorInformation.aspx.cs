@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using HW.Core.FromHW;
 
-namespace HW
+namespace healthWatch
 {
     public partial class sponsorInformation : System.Web.UI.Page
     {
@@ -24,14 +22,14 @@ namespace HW
                     "INNER JOIN Sponsor s ON i.SponsorID = s.SponsorID " +
                     "WHERE i.SponsorInviteID = " + Convert.ToInt32(HttpContext.Current.Session["SponsorInviteID"]));
             }
-            else if (HttpContext.Current.Request.QueryString["SponsorID"] != null)
+            else if(HttpContext.Current.Request.QueryString["SponsorID"] != null)
             {
                 rs = Db.rs("SELECT " +
                     "s.InfoText " +
                     "FROM Sponsor s " +
                     "WHERE s.SponsorID = " + Convert.ToInt32(HttpContext.Current.Request.QueryString["SponsorID"]));
             }
-            if (rs != null)
+            if(rs != null)
             {
                 if (rs.Read())
                 {

@@ -1,1 +1,1 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="linechart.aspx.cs" Inherits="HW.linechart" %>
+﻿<%@ Page ContentType="image/gif" Language="C#" AutoEventWireup="true" Inherits="healthWatch.linechart" Codebehind="linechart.aspx.cs" %>

@@ -1,25 +1,30 @@
-Ôªøusing System;
-using System.Collections.Generic;
+using System;
+using System.Collections;
+using System.ComponentModel;
 using System.Data.SqlClient;
-using System.Linq;
+using System.Drawing;
 using System.Web;
+using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using HW.Core.FromHW;
+using System.Web.UI.HtmlControls;
 
-namespace HW
+namespace healthWatch
 {
-    public partial class profile : System.Web.UI.Page
-    {
-        public bool guest = false;
+	/// <summary>
+	/// Summary description for profile.
+	/// </summary>
+	public partial class profile : System.Web.UI.Page
+	{
+		public bool guest = false;
 
-        protected void Page_Load(object sender, System.EventArgs e)
-        {
-            if (HttpContext.Current.Session["UserID"] == null)
-            {
-                HttpContext.Current.Response.Redirect("inactivity.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
-            }
-
+		protected void Page_Load(object sender, System.EventArgs e)
+		{
+			if(HttpContext.Current.Session["UserID"] == null)
+			{
+				HttpContext.Current.Response.Redirect("inactivity.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(),true);
+			}
+            
             #region Remove account
             if (!guest)
             {
@@ -27,7 +32,7 @@ namespace HW
                 switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
                     case 1:
-                        DeleteAccount.Controls.Add(new LiteralControl("√Ñr du s√§ker p√• att du vill ta bort ditt konto?"));
+                        DeleteAccount.Controls.Add(new LiteralControl("ƒr du s‰ker pÂ att du vill ta bort ditt konto?"));
                         break;
                     case 2:
                         DeleteAccount.Controls.Add(new LiteralControl("Are you sure you want to delete your account?"));
@@ -37,10 +42,10 @@ namespace HW
                 switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
                     case 1:
-                        DeleteAccount.Controls.Add(new LiteralControl("Klicka h√§r."));
+                        DeleteAccount.Controls.Add(new LiteralControl("Klicka h‰r."));
                         break;
                     case 2:
-                        DeleteAccount.Controls.Add(new LiteralControl("Klicka h√§r"));
+                        DeleteAccount.Controls.Add(new LiteralControl("Klicka h‰r"));
                         break;
                 }
                 DeleteAccount.Controls.Add(new LiteralControl("</a>"));
@@ -51,17 +56,17 @@ namespace HW
             string startScript = "";
             string script = "";
 
-            SqlDataReader rs = Db.rs("SELECT Username, Email, AltEmail FROM [User] WHERE UserID = " + HttpContext.Current.Session["UserID"]);
-            if (rs.Read())
-            {
-                guest = (rs.GetString(0).IndexOf("AUTO_CREATED_GUEST") >= 0);
+			SqlDataReader rs = Db.rs("SELECT Username, Email, AltEmail FROM [User] WHERE UserID = " + HttpContext.Current.Session["UserID"]);
+			if(rs.Read())
+			{
+				guest = (rs.GetString(0).IndexOf("AUTO_CREATED_GUEST") >= 0);
 
                 #region Username
                 contents.Controls.Add(new LiteralControl("<div style=\"float:left;width:220px;\">"));
                 switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
                     case 1:
-                        contents.Controls.Add(new LiteralControl((guest ? "√ñnskat anv√§ndarnamn" : "Anv√§ndarnamn")));
+                        contents.Controls.Add(new LiteralControl((guest ? "÷nskat anv‰ndarnamn" : "Anv‰ndarnamn")));
                         break;
                     case 2:
                         contents.Controls.Add(new LiteralControl((guest ? "Desired username" : "Username")));
@@ -69,18 +74,18 @@ namespace HW
                 }
                 contents.Controls.Add(new LiteralControl("</div><div style=\"float:left;width:270px;\">"));
 
-                TextBox username = new TextBox();
-                username.Width = Unit.Pixel(250);
+				TextBox username = new TextBox();
+				username.Width = Unit.Pixel(250);
                 username.CssClass = "regularTB";
-                username.ID = "username";
-                script = "chkTxt('username',5);";
-                username.Attributes["onkeyup"] += script;
+				username.ID = "username";
+				script = "chkTxt('username',5);";
+				username.Attributes["onkeyup"] += script;
                 startScript += script;
-                if (!IsPostBack && !guest)
-                {
-                    username.Text = rs.GetString(0);
-                }
-                contents.Controls.Add(username);
+				if(!IsPostBack && !guest)
+				{
+					username.Text = rs.GetString(0);
+				}
+				contents.Controls.Add(username);
 
                 contents.Controls.Add(new LiteralControl("</div>"));
                 contents.Controls.Add(new LiteralControl("<div style=\"float:left;\"><IMG id=\"Starusername\" SRC=\"img/star.gif\"></div>"));
@@ -92,7 +97,7 @@ namespace HW
                 switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
                     case 1:
-                        contents.Controls.Add(new LiteralControl((guest ? "L√∂senord" : "Ev. nytt l√∂senord")));
+                        contents.Controls.Add(new LiteralControl((guest ? "Lˆsenord" : "Ev. nytt lˆsenord")));
                         break;
                     case 2:
                         contents.Controls.Add(new LiteralControl((guest ? "Password" : "Opt. new password")));
@@ -100,18 +105,18 @@ namespace HW
                 }
                 contents.Controls.Add(new LiteralControl("</div><div style=\"float:left;width:270px;\">"));
 
-                TextBox password = new TextBox();
-                password.Width = Unit.Pixel(250);
+				TextBox password = new TextBox();
+				password.Width = Unit.Pixel(250);
                 password.CssClass = "regularTB";
-                password.ID = "password";
-                password.TextMode = TextBoxMode.Password;
-                if (guest)
-                {
-                    script = "chkTxt('password',5);";
-                    password.Attributes["onkeyup"] += script;
+				password.ID = "password";
+				password.TextMode = TextBoxMode.Password;
+				if(guest)
+				{
+					script = "chkTxt('password',5);";
+					password.Attributes["onkeyup"] += script;
                     startScript += script;
-                }
-                contents.Controls.Add(password);
+				}
+				contents.Controls.Add(password);
 
                 contents.Controls.Add(new LiteralControl("</div>"));
                 contents.Controls.Add(new LiteralControl("<div style=\"float:left;\">" + (guest ? "<IMG id=\"Starpassword\" SRC=\"img/star.gif\">" : "") + "</div>"));
@@ -131,18 +136,18 @@ namespace HW
                 }
                 contents.Controls.Add(new LiteralControl("</div><div style=\"float:left;width:270px;\">"));
 
-                TextBox email = new TextBox();
-                email.Width = Unit.Pixel(250);
+				TextBox email = new TextBox();
+				email.Width = Unit.Pixel(250);
                 email.CssClass = "regularTB";
-                email.ID = "email";
+				email.ID = "email";
                 script = "chkEmail();";
                 email.Attributes["onkeyup"] += script;
                 startScript += script;
-                if (!IsPostBack && !guest && !rs.IsDBNull(1))
-                {
-                    email.Text = rs.GetString(1);
-                }
-                contents.Controls.Add(email);
+				if(!IsPostBack && !guest && !rs.IsDBNull(1))
+				{
+					email.Text = rs.GetString(1);
+				}
+				contents.Controls.Add(email);
 
                 contents.Controls.Add(new LiteralControl("</div>"));
                 contents.Controls.Add(new LiteralControl("<div style=\"float:left;\"><IMG id=\"Staremail\" SRC=\"img/star.gif\"></div>"));
@@ -172,31 +177,31 @@ namespace HW
 
                 contents.Controls.Add(new LiteralControl("</div>"));
                 #endregion
-            }
-            rs.Close();
+			}
+			rs.Close();
 
             Db.renderBQ(true, guest, IsPostBack, contents, ref functionScript, ref startScript);
 
             #region Approve
             contents.Controls.Add(new LiteralControl("<div style=\"clear:both;\"></div>"));
             contents.Controls.Add(new LiteralControl("<div style=\"float:left;width:490px;\">"));
-
-            CheckBox cb = new CheckBox();
-            cb.ID = "Approve";
-            script = "chkChk('Approve');";
-            cb.Attributes["onclick"] += script;
+			
+			CheckBox cb = new CheckBox();
+			cb.ID = "Approve";
+			script = "chkChk('Approve');";
+			cb.Attributes["onclick"] += script;
             startScript += script;
-            contents.Controls.Add(cb);
-            if (!IsPostBack && !guest)
-            {
-                ((CheckBox)contents.FindControl("Approve")).Checked = true;
-            }
+			contents.Controls.Add(cb);
+			if(!IsPostBack && !guest)
+			{
+				((CheckBox)contents.FindControl("Approve")).Checked = true;
+			}
 
             contents.Controls.Add(new LiteralControl(""));
             switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
             {
                 case 1:
-                    contents.Controls.Add(new LiteralControl("Jag accepterar tj√§nstens "));
+                    contents.Controls.Add(new LiteralControl("Jag accepterar tj‰nstens "));
                     break;
                 case 2:
                     contents.Controls.Add(new LiteralControl("I accept the "));
@@ -206,7 +211,7 @@ namespace HW
             switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
             {
                 case 1:
-                    contents.Controls.Add(new LiteralControl("integritetspolicy & anv√§ndarvillkor"));
+                    contents.Controls.Add(new LiteralControl("integritetspolicy & anv‰ndarvillkor"));
                     break;
                 case 2:
                     contents.Controls.Add(new LiteralControl("terms & conditions of the service"));
@@ -242,71 +247,71 @@ namespace HW
             }
             error.Controls.Add(new LiteralControl("</div>"));
 
-            submit.Click += new EventHandler(submit_Click);
+			submit.Click += new EventHandler(submit_Click);
 
-            ClientScript.RegisterStartupScript(this.GetType(), "START_SCRIPT", "<script language=\"JavaScript\">" + startScript + "</script>");
-            ClientScript.RegisterClientScriptBlock(this.GetType(), "FN_SCRIPT", "<script language=\"JavaScript\">" + functionScript + "</script>");
-        }
+            ClientScript.RegisterStartupScript(this.GetType(),"START_SCRIPT", "<script language=\"JavaScript\">" + startScript + "</script>");
+            ClientScript.RegisterClientScriptBlock(this.GetType(),"FN_SCRIPT", "<script language=\"JavaScript\">" + functionScript + "</script>");
+		}
 
-        private void submit_Click(object sender, EventArgs e)
-        {
+		private void submit_Click(object sender, EventArgs e)
+		{
             string errorMsg = "";
-            if (((TextBox)contents.FindControl("username")).Text.Length < 5)
-            {
-                errorMsg = "<SPAN STYLE=\"color:#CC0000;\">";
+			if(((TextBox)contents.FindControl("username")).Text.Length < 5)
+			{
+				errorMsg = "<SPAN STYLE=\"color:#CC0000;\">";
                 switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
                     case 1:
-                        errorMsg += "Anv√§ndarnamnet m√•ste vara minst 5 tecken l√•ngt!";
+                        errorMsg += "Anv‰ndarnamnet mÂste vara minst 5 tecken lÂngt!";
                         break;
                     case 2:
                         errorMsg += "The username must be at least 5 characters long!";
                         break;
                 }
                 errorMsg += "</SPAN>";
-            }
-            else if ((guest || ((TextBox)contents.FindControl("password")).Text != "") && ((TextBox)contents.FindControl("password")).Text.Length < 5)
-            {
+			}
+			else if((guest || ((TextBox)contents.FindControl("password")).Text != "") && ((TextBox)contents.FindControl("password")).Text.Length < 5)
+			{
                 errorMsg = "<SPAN STYLE=\"color:#CC0000;\">";
                 switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
                     case 1:
-                        errorMsg += "L√∂senordet m√•ste vara minst 5 tecken l√•ngt!";
+                        errorMsg += "Lˆsenordet mÂste vara minst 5 tecken lÂngt!";
                         break;
                     case 2:
                         errorMsg += "The password must be at least 5 characters long!";
                         break;
                 }
                 errorMsg += "</SPAN>";
-            }
-            else
-            {
+			}
+			else
+			{
                 string errorText = "";
                 bool allForced = Db.checkForced(ref errorText, contents);
 
-                if (!((CheckBox)contents.FindControl("Approve")).Checked)
-                {
-                    allForced = false;
-                }
+				if(!((CheckBox)contents.FindControl("Approve")).Checked)
+				{
+					allForced = false;
+				}
 
-                if (allForced)
-                {
-                    bool valid = false;
+				if(allForced)
+				{
+					bool valid = false;
 
                     SqlDataReader rs = Db.rs("SELECT " +
                             "COUNT(*) " +
                             "FROM [User] " +
                             "WHERE UserID <> " + HttpContext.Current.Session["UserID"] + " " +
                             "AND LOWER(Username) = '" + ((TextBox)contents.FindControl("username")).Text.Replace("'", "").ToLower() + "'");
-                    if (rs.Read() && rs.GetInt32(0) == 0)
-                    {
-                        valid = true;
-                    }
-                    rs.Close();
+					if(rs.Read() && rs.GetInt32(0) == 0)
+					{
+						valid = true;
+					}
+					rs.Close();
 
-                    if (valid)
-                    {
-                        Db.exec("UPDATE [User] SET " +
+					if(valid)
+					{
+						Db.exec("UPDATE [User] SET " +
                             "Username = '" + ((TextBox)contents.FindControl("username")).Text.Replace("'", "") + "', " +
                             "Email = '" + ((TextBox)contents.FindControl("email")).Text.Replace("'", "") + "'," +
                             "AltEmail = '" + ((TextBox)contents.FindControl("aemail")).Text.Replace("'", "") + "'" + (((TextBox)contents.FindControl("password")).Text != "" ? ", " +
@@ -315,17 +320,17 @@ namespace HW
 
                         Db.saveBQ(contents);
 
-                        Db.loadUserSession(Convert.ToInt32(HttpContext.Current.Session["UserID"]));
+						Db.loadUserSession(Convert.ToInt32(HttpContext.Current.Session["UserID"]));
 
-                        HttpContext.Current.Response.Redirect("profile.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
-                    }
-                    else
-                    {
+						HttpContext.Current.Response.Redirect("profile.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(),true);
+					}
+					else
+					{
                         errorMsg = "<SPAN STYLE=\"color:#CC0000;\">";
                         switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                         {
                             case 1:
-                                errorMsg += "Detta anv√§ndarnamn √§r upptaget!";
+                                errorMsg += "Detta anv‰ndarnamn ‰r upptaget!";
                                 break;
                             case 2:
                                 errorMsg += "This username is already taken!";
@@ -335,52 +340,52 @@ namespace HW
                         switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                         {
                             case 1:
-                                errorMsg += "V√§nligen prova ett annat";
+                                errorMsg += "V‰nligen prova ett annat";
                                 break;
                             case 2:
                                 errorMsg += "Please try a different one";
                                 break;
                         }
                         errorMsg += ".";
-                    }
-                }
-                else
-                {
+					}
+				}
+				else
+				{
                     errorMsg = "<SPAN STYLE=\"color:#CC0000;\">";
                     switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                     {
                         case 1:
-                            errorMsg = (errorText != "" ? errorText : "Alla obligatoriska fr√•gor m√•ste besvaras.");
+                            errorMsg = (errorText != "" ? errorText : "Alla obligatoriska frÂgor mÂste besvaras.");
                             break;
                         case 2:
                             errorMsg = (errorText != "" ? errorText : "All required fields must be filled in.");
                             break;
                     }
                     errorMsg += "</SPAN>";
-                }
-            }
+				}
+			}
 
             error.Controls.Clear();
             error.Controls.Add(new LiteralControl("<div style=\"clear:both;\">&nbsp;</div><div style=\"float:left;\">" + errorMsg + "</div>"));
-        }
+		}
 
-        #region Web Form Designer generated code
-        override protected void OnInit(EventArgs e)
-        {
-            //
-            // CODEGEN: This call is required by the ASP.NET Web Form Designer.
-            //
-            InitializeComponent();
-            base.OnInit(e);
-        }
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
-        }
-        #endregion
-    }
+		#region Web Form Designer generated code
+		override protected void OnInit(EventArgs e)
+		{
+			//
+			// CODEGEN: This call is required by the ASP.NET Web Form Designer.
+			//
+			InitializeComponent();
+			base.OnInit(e);
+		}
+		
+		/// <summary>
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
+		/// </summary>
+		private void InitializeComponent()
+		{    
+		}
+		#endregion
+	}
 }

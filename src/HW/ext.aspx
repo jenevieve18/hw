@@ -1,1 +1,1 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ext.aspx.cs" Inherits="HW.ext" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="healthWatch.ext" Codebehind="ext.aspx.cs" %>

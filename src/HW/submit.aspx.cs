@@ -1,17 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿//===========================================================================
+// This file was modified as part of an ASP.NET 2.0 Web project conversion.
+// The class name was changed and the class modified to inherit from the abstract base class 
+// in file 'App_Code\Migrated\Stub_submit_aspx_cs.cs'.
+// During runtime, this allows other classes in your web application to bind and access 
+// the code-behind page using the abstract base class.
+// The associated content page 'submit.aspx' was also modified to refer to the new class name.
+// For more information on this code pattern, please refer to http://go.microsoft.com/fwlink/?LinkId=46995 
+//===========================================================================
+using System;
+using System.Collections;
+using System.ComponentModel;
 using System.Data.SqlClient;
-using System.Linq;
+using System.Drawing;
 using System.Web;
+using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using HW.Core.FromHW;
+using System.Web.UI.HtmlControls;
 
-namespace HW
+namespace healthWatch
 {
     public partial class submit : System.Web.UI.Page
     {
-
         int cCX = 0;
         int surveyID = 0;
         int langID = 0;
@@ -31,7 +41,7 @@ namespace HW
         int sessionID = 0;
 
         string surveyIntro = "";
-        
+
         public static int createSurveyUser(int untID, string eml)
         {
             int usrID = 0;

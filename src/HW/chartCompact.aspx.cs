@@ -4,10 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data;
 using System.Data.SqlClient;
-using HW.Core.FromHW;
 
-namespace HW
+namespace healthWatch
 {
     public partial class chartCompact : System.Web.UI.Page
     {

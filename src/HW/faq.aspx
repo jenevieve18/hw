@@ -1,13 +1,12 @@
-ï»¿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="faq.aspx.cs" Inherits="HW.faq" %>
-<%@ Import Namespace="HW.Core.FromHW" %>
+<%@ Page Language="C#" AutoEventWireup="true" Inherits="healthWatch.faq" Codebehind="faq.aspx.cs" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
    <%
        switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
        {
-           case 1: HttpContext.Current.Response.Write(Db.header2("FAQ", "Vanliga frÃ¥gor och hjÃ¤lp med tjÃ¤nsten")); break;
-           case 2: HttpContext.Current.Response.Write(Db.header2("FAQ", "Frequently asked questions")); break;
+           case 1: HttpContext.Current.Response.Write(healthWatch.Db.header2("FAQ", "Vanliga frågor och hjälp med tjänsten")); break;
+           case 2: HttpContext.Current.Response.Write(healthWatch.Db.header2("FAQ", "Frequently asked questions")); break;
        }
            %>
 </head>
@@ -17,16 +16,16 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 	    <form id="Form1" method="post" runat="server">
-        <div class="container_16 myhealth two-sides about<%=Db.cobranded() %>">
+        <div class="container_16 myhealth two-sides about<%=healthWatch.Db.cobranded() %>">
 			<div class="headergroup grid_16">
-		<%=Db.nav2()%>
+		<%=healthWatch.Db.nav2()%>
 			</div> <!-- end .headergroup -->
         <div class="contentgroup grid_16">
 			 
 				<h1 class="header"><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("HjÃ¤lp med tjÃ¤nsten"); break;
+                    case 1: HttpContext.Current.Response.Write("Hjälp med tjänsten"); break;
                     case 2: HttpContext.Current.Response.Write("Support"); break;
                 }
              %></h1>
@@ -37,14 +36,14 @@
 			<p style="font-weight:bold;"><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("GlÃ¶mt anvÃ¤ndarnamn och/eller lÃ¶senord"); break;
+                    case 1: HttpContext.Current.Response.Write("Glömt användarnamn och/eller lösenord"); break;
                     case 2: HttpContext.Current.Response.Write("Forgotten username and/or password"); break;
                 }
              %></p><br />
 			<p><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("GÃ¥ till sidan <a href=\"forgot.aspx\" class=\"lnk\">GlÃ¶mt ditt lÃ¶senord?</a>. Fyll i den e-postadress du anvÃ¤nde nÃ¤r du skapade kontot sÃ¥ skickar vi en lÃ¤nk till dig som du kan anvÃ¤nda fÃ¶r att skapa ett nytt lÃ¶senord."); break;
+                    case 1: HttpContext.Current.Response.Write("Gå till sidan <a href=\"forgot.aspx\" class=\"lnk\">Glömt ditt lösenord?</a>. Fyll i den e-postadress du använde när du skapade kontot så skickar vi en länk till dig som du kan använda för att skapa ett nytt lösenord."); break;
                     case 2: HttpContext.Current.Response.Write("Please visit the page <a href=\"forgot.aspx\" class=\"lnk\">Forgot your password?</a>. Input the email address used to create the account and we will send you a link to reset your password."); break;
                 }
              %></p><br />
@@ -54,17 +53,17 @@
                 switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
                     case 1: %>
-			<p style="font-weight:bold;">StÃ¤nga av pÃ¥minnelser eller Ã„ndra pÃ¥minnelseintervall</p><br />
+			<p style="font-weight:bold;">Stänga av påminnelser eller Ändra påminnelseintervall</p><br />
 			<p><% if (HttpContext.Current.Session["UserID"] != null)
-                     { %>GÃ¥ till <a href="reminder.aspx" class="lnk">PÃ¥minnelser</a> som finns under menyalternativet <A HREF="#" class="lnk">Min hÃ¤lsa</A>.<% }
+                     { %>Gå till <a href="reminder.aspx" class="lnk">Påminnelser</a> som finns under menyalternativet <A HREF="#" class="lnk">Min hälsa</A>.<% }
                      else
-                     { %>Logga in hÃ¤r upptill. I menyn under rubriken <A HREF="#" class="lnk">Min hÃ¤lsa</A>, klicka pÃ¥ <A HREF="#" class="lnk">PÃ¥minnelser</A>.<% } %> VÃ¤l dÃ¤r kan du Ã¤ndra intervall eller stÃ¤nga av pÃ¥minnelsefunktionen. Kom ihÃ¥g att spara efter valt alternativ.</p><br />
+                     { %>Logga in här upptill. I menyn under rubriken <A HREF="#" class="lnk">Min hälsa</A>, klicka på <A HREF="#" class="lnk">Påminnelser</A>.<% } %> Väl där kan du ändra intervall eller stänga av påminnelsefunktionen. Kom ihåg att spara efter valt alternativ.</p><br />
 
 			<p style="font-weight:bold;">Radera konto</p><br />
 			<p><% if (HttpContext.Current.Session["UserID"] != null)
-                     { %>GÃ¥ till <a href="profile.aspx" class="lnk">Ã„ndra profil</a> hÃ¤r ovan.<% }
+                     { %>Gå till <a href="profile.aspx" class="lnk">Ändra profil</a> här ovan.<% }
                      else
-                     { %>FÃ¶r att radera ditt konto behÃ¶ver du logga in och sedan klicka pÃ¥ <a href="#" class="lnk">Ã„ndra profil</a> (till vÃ¤nster om logga ut lÃ¤nken i menyn upptill).<% } %> LÃ¤ngst ned pÃ¥ sidan finns dÃ¥ alternativet <A href="#" class="lnk">Ta bort mitt konto</A>. NÃ¤r du tar bort ditt konto stÃ¤ngs kontot av men uppgifterna finns kvar i 30 dagar utifall du skulle Ã¥ngra dig. Under denna tid kan du Ã¥teraktivera ditt konto genom att skicka ett e-postmeddelande till <A class="lnk" HREF="javascript:dm('865 459 124 98 255 272 436 66 487 664 86 634 98 272 272 49 364 86 98 272 436 364 139 98 436 634 364 456 205 86')"><script language="javascript">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           de('865 459 124 98 255 272 436 66 487 664 86 634 98 272 272 49 364 86 98 272 436 364 139 98 436 634 364 456 205 86')</script></A>. Om du inte har kvar ditt referensnummer som visas direkt efter att kontot togs bort, ange det anvÃ¤ndarnamn och den e-postadressen som gÃ¤llde fÃ¶r kontot.</p>
+                     { %>För att radera ditt konto behöver du logga in och sedan klicka på <a href="#" class="lnk">Ändra profil</a> (till vänster om logga ut länken i menyn upptill).<% } %> Längst ned på sidan finns då alternativet <A href="#" class="lnk">Ta bort mitt konto</A>. När du tar bort ditt konto stängs kontot av men uppgifterna finns kvar i 30 dagar utifall du skulle ångra dig. Under denna tid kan du återaktivera ditt konto genom att skicka ett e-postmeddelande till <A class="lnk" HREF="javascript:dm('865 459 124 98 255 272 436 66 487 664 86 634 98 272 272 49 364 86 98 272 436 364 139 98 436 634 364 456 205 86')"><script language="javascript">de('865 459 124 98 255 272 436 66 487 664 86 634 98 272 272 49 364 86 98 272 436 364 139 98 436 634 364 456 205 86')</script></A>. Om du inte har kvar ditt referensnummer som visas direkt efter att kontot togs bort, ange det användarnamn och den e-postadressen som gällde för kontot.</p>
             <% break;
                 } %>
                 <div class="bottom"></div>
@@ -73,14 +72,14 @@
                     <h3><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("HjÃ¤lp oss bli bÃ¤ttre"); break;
+                    case 1: HttpContext.Current.Response.Write("Hjälp oss bli bättre"); break;
                     case 2: HttpContext.Current.Response.Write("Help us improve"); break;
                 }
              %></h3><br />
 						<p><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("Du Ã¤r varmt vÃ¤lkommen att skicka synpunkter och fÃ¶rbÃ¤ttringsfÃ¶rslag till oss."); break;
+                    case 1: HttpContext.Current.Response.Write("Du är varmt välkommen att skicka synpunkter och förbättringsförslag till oss."); break;
                     case 2: HttpContext.Current.Response.Write("You are most welcome to send your feedback and improvement suggestions to us."); break;
                 }
              %></p>
@@ -90,7 +89,7 @@
 				</div>
 
 		</div><!-- end .contentgroup	-->
-		<%=Db.bottom2()%>
+		<%=healthWatch.Db.bottom2()%>
 	</div> <!-- end .container_12 -->
     </form>
 </body>

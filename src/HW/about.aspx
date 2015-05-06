@@ -1,13 +1,12 @@
-ï»¿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="about.aspx.cs" Inherits="HW.about" %>
-<%@ Import Namespace="HW.Core.FromHW" %>
+<%@ Page Language="C#" AutoEventWireup="true" Inherits="healthWatch.about" Codebehind="about.aspx.cs" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
    <%
        switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
        {
-           case 1: HttpContext.Current.Response.Write(Db.header2("Om vÃ¥ra tjÃ¤nster","HÃ¤lsonyheter, sjÃ¤lvhjÃ¤lp inom stress och hÃ¤lsa samt arbetsmiljÃ¶kartlÃ¤ggningar.")); break;
-           case 2: HttpContext.Current.Response.Write(Db.header2("About our services","Health news, self-help in stress management and health promotion and work environment surveys.")); break;
+           case 1: HttpContext.Current.Response.Write(healthWatch.Db.header2("Om våra tjänster","Hälsonyheter, självhjälp inom stress och hälsa samt arbetsmiljökartläggningar.")); break;
+           case 2: HttpContext.Current.Response.Write(healthWatch.Db.header2("About our services","Health news, self-help in stress management and health promotion and work environment surveys.")); break;
        }
            %>
 </head>
@@ -17,9 +16,9 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 	    <form id="Form1" method="post" runat="server">
-        <div class="container_16 myhealth two-sides about<%=Db.cobranded() %>">
+        <div class="container_16 myhealth two-sides about<%=healthWatch.Db.cobranded() %>">
 			<div class="headergroup grid_16">
-		<%=Db.nav2()%>
+		<%=healthWatch.Db.nav2()%>
 			</div> <!-- end .headergroup -->
         <div class="contentgroup grid_16">
 			 
@@ -35,15 +34,15 @@
 						<div class="top"></div><p><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("HealthWatch har som mÃ¥l Ã¤r att bidra med konkreta och praktiska verktyg fÃ¶r " +
-			                    "individer, organisationer och fÃ¶retag fÃ¶r att bevara och Ã¶ka hÃ¤lsa och " +
-			                    "livskvalitet samt motverka stressrelaterad ohÃ¤lsa. TjÃ¤nsten bestÃ¥r " +
-			                    "huvudsakligen av tre delar: hÃ¤lsonyheter, sjÃ¤lvhjÃ¤lp och " +
-			                    "arbetsmiljÃ¶kartlÃ¤ggningar. SjÃ¤lvhjÃ¤lpsdelen Ã¤r en vidareutvecklad " +
-			                    "version av ett vetenskapligt utvÃ¤rderat system med dokumenterat vÃ¤lgÃ¶rande " +
-			                    "effekter pÃ¥ psykologiska och biologiska variabler. Verktyget baserar sig pÃ¥ dagens " +
-			                    "samlade kunskap och pÃ¥ flera Ã¥rs forskning. TjÃ¤nsterna Ã¤r kostnadsfria fÃ¶r " +
-			                    "privatpersoner och grupper om max 25 personer. Vid stÃ¶rre grupper " +
+                    case 1: HttpContext.Current.Response.Write("HealthWatch har som mål är att bidra med konkreta och praktiska verktyg för " +
+			                    "individer, organisationer och företag för att bevara och öka hälsa och " +
+			                    "livskvalitet samt motverka stressrelaterad ohälsa. Tjänsten består " +
+			                    "huvudsakligen av tre delar: hälsonyheter, självhjälp och " +
+			                    "arbetsmiljökartläggningar. Självhjälpsdelen är en vidareutvecklad " +
+			                    "version av ett vetenskapligt utvärderat system med dokumenterat välgörande " +
+			                    "effekter på psykologiska och biologiska variabler. Verktyget baserar sig på dagens " +
+			                    "samlade kunskap och på flera års forskning. Tjänsterna är kostnadsfria för " +
+			                    "privatpersoner och grupper om max 25 personer. Vid större grupper " +
 			                    "debiteras drifts- och administrationskostnader."); break;
                     case 2: HttpContext.Current.Response.Write("HealthWatch provides tools for individuals and organisations to preserve and increase health and quality of life, as well as reduce stress-releated problems."); break;
                 }
@@ -52,12 +51,12 @@
 			<p><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("TjÃ¤nsterna i HealthWatch Ã¤r Ã¤mnade att ge fÃ¶rutsÃ¤ttningar fÃ¶r enskilda " +
-			                    "individer att kunna arbeta med sin hÃ¤lsoutveckling Ã¶ver tid. Samtidigt vill " +
-			                    "vi bidra till att underlÃ¤tta fÃ¶r organisationer och fÃ¶retag att genomfÃ¶ra sitt " +
-			                    "systematiska arbetsmiljÃ¶arbete genom konkreta och enkla verktyg. PÃ¥ ett " +
-			                    "enkelt sÃ¤tt kan man fÃ¶lja variabler som hÃ¤lsa, stress, effektivitet och " +
-			                    "arbetsglÃ¤dje pÃ¥ en eller flera grupper, avdelningar och sektioner Ã¶ver tid."); break;
+                    case 1: HttpContext.Current.Response.Write("Tjänsterna i HealthWatch är ämnade att ge förutsättningar för enskilda " +
+			                    "individer att kunna arbeta med sin hälsoutveckling över tid. Samtidigt vill " +
+			                    "vi bidra till att underlätta för organisationer och företag att genomföra sitt " +
+			                    "systematiska arbetsmiljöarbete genom konkreta och enkla verktyg. På ett " +
+			                    "enkelt sätt kan man följa variabler som hälsa, stress, effektivitet och " +
+			                    "arbetsglädje på en eller flera grupper, avdelningar och sektioner över tid."); break;
                     case 2: HttpContext.Current.Response.Write(""); break;
                 }
              %></p>
@@ -74,7 +73,7 @@
 						<p><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("HealthWatch drivs av Interactive Health Group in Stockholm AB.<br/><br/>VÃ¥rt motto: FÃ¶r medmÃ¤nsklighet, omtanke och samhÃ¤llsnytta!"); break;
+                    case 1: HttpContext.Current.Response.Write("HealthWatch drivs av Interactive Health Group in Stockholm AB.<br/><br/>Vårt motto: För medmänsklighet, omtanke och samhällsnytta!"); break;
                     case 2: HttpContext.Current.Response.Write("HealthWatch is run by Interactive Health Group in Stockholm AB."); break;
                 }
              %></p>
@@ -82,7 +81,7 @@
 			<p><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("Ansvarig utgivare och chefredaktÃ¶r fÃ¶r HealthWatch Ã¤r med dr <A class=\"lnk\" href=\"http://www.danhasson.se\">Dan Hasson</A>, e-post <A class=\"lnk\" HREF=\"javascript:dm('6179 4781 4334 859 4619 1866 757 3663 4851 5264 859 6104 4548 3876 859 25 25 3663 6104 4636 3876 4599 859 1866 757 3876 3797 859 757 5506 3876 4548 25 4599')\"><script language=\"javascript\">de('6179 4781 4334 859 4619 1866 757 3663 4851 5264 859 6104 4548 3876 859 25 25 3663 6104 4636 3876 4599 859 1866 757 3876 3797 859 757 5506 3876 4548 25 4599')</script></A>."); break;
+                    case 1: HttpContext.Current.Response.Write("Ansvarig utgivare och chefredaktör för HealthWatch är med dr <A class=\"lnk\" href=\"http://www.danhasson.se\">Dan Hasson</A>, e-post <A class=\"lnk\" HREF=\"javascript:dm('6179 4781 4334 859 4619 1866 757 3663 4851 5264 859 6104 4548 3876 859 25 25 3663 6104 4636 3876 4599 859 1866 757 3876 3797 859 757 5506 3876 4548 25 4599')\"><script language=\"javascript\">de('6179 4781 4334 859 4619 1866 757 3663 4851 5264 859 6104 4548 3876 859 25 25 3663 6104 4636 3876 4599 859 1866 757 3876 3797 859 757 5506 3876 4548 25 4599')</script></A>."); break;
                     case 2: HttpContext.Current.Response.Write(""); break;
                 }
              %></p>
@@ -90,7 +89,7 @@
 			<p><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("LÃ¤s mer om <A class=\"lnk\" href=\"javascript:void(window.open('policy.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "','','width=600,height=600,scrollbars=yes'));\">integritetspolicy, anvÃ¤ndarvillkor, forskning och PUL</A>."); break;
+                    case 1: HttpContext.Current.Response.Write("Läs mer om <A class=\"lnk\" href=\"javascript:void(window.open('policy.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "','','width=600,height=600,scrollbars=yes'));\">integritetspolicy, användarvillkor, forskning och PUL</A>."); break;
                     case 2: HttpContext.Current.Response.Write(""); break;
                 }
              %></p>
@@ -100,7 +99,7 @@
 				</div>
 
 		</div><!-- end .contentgroup	-->
-		<%=Db.bottom2()%>
+		<%=healthWatch.Db.bottom2()%>
 	</div> <!-- end .container_12 -->
     </form>
 </body>

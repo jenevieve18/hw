@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System;
+using System.Data.SqlClient;
+using System.Configuration;
+using System.Collections;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data.SqlClient;
-using HW.Core.FromHW;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
 
-namespace HW
+namespace healthWatch
 {
     public partial class measureInfo : System.Web.UI.Page
     {

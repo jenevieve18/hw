@@ -1,28 +1,33 @@
-Ôªøusing System;
-using System.Collections.Generic;
+using System;
+using System.Collections;
+using System.ComponentModel;
 using System.Data.SqlClient;
-using System.Linq;
+using System.Drawing;
 using System.Web;
+using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using HW.Core.FromHW;
+using System.Web.UI.HtmlControls;
 
-namespace HW
+namespace healthWatch
 {
-    public partial class register : System.Web.UI.Page
-    {
+	/// <summary>
+	/// Summary description for register.
+	/// </summary>
+	public partial class register : System.Web.UI.Page
+	{
         int sponsorInviteID = 0;
         string[,] lang;
 
-        protected void Page_Load(object sender, System.EventArgs e)
-        {
+		protected void Page_Load(object sender, System.EventArgs e)
+		{
             if (HttpContext.Current.Request.QueryString["Consent"] != null && Convert.ToInt32(HttpContext.Current.Request.QueryString["Consent"]) == 1)
             {
                 HttpContext.Current.Session["SponsorInviteConsent"] = "1";
             }
             if (HttpContext.Current.Request.QueryString["SendPass"] != null)
             {
-                Db.sendPasswordReminder("", Convert.ToInt32(HttpContext.Current.Request.QueryString["SendPass"]), false);
+                Db.sendPasswordReminder("", Convert.ToInt32(HttpContext.Current.Request.QueryString["SendPass"]),false);
             }
             //string changeLang = "<a class=\"subheaderLink\" HREF=\"/home.aspx?LID=";
             //switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
@@ -34,39 +39,39 @@ namespace HW
             //switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
             //{
             //    case 1: { changeLang += "In english"; break; }
-            //    case 2: { changeLang += "P√• svenska"; break; }
+            //    case 2: { changeLang += "PÂ svenska"; break; }
             //}
             //changeLang += "</a>";
             //ChangeLang.Text = changeLang;
 
-            lang = new string[2, 27] { 
+            lang = new string[2,27] { 
                 { 
                     "E-postadressen", 
                     "finns redan i HealthWatch databas.", 
                     "Jag vill skapa ett nytt konto", 
-                    "Jag vill anv√§nda mitt befintliga konto, med anv√§ndarnamn", 
+                    "Jag vill anv‰nda mitt befintliga konto, med anv‰ndarnamn", 
                     "", 
-                    "L√∂senord till markerat konto ovan", 
-                    "Felaktigt l√∂senord!", 
-                    "N√§sta", 
-                    "Du √§r redan inloggad.", 
-                    "L√§nken som du anv√§nde f√∂r att komma till denna sida √§r felaktig eller har redan anv√§nts!<br/>Om du anv√§nt l√§nken och skapat ett konto kan du logga in p√•",
+                    "Lˆsenord till markerat konto ovan", 
+                    "Felaktigt lˆsenord!", 
+                    "N‰sta", 
+                    "Du ‰r redan inloggad.", 
+                    "L‰nken som du anv‰nde fˆr att komma till denna sida ‰r felaktig eller har redan anv‰nts!<br/>Om du anv‰nt l‰nken och skapat ett konto kan du logga in pÂ",
                     "startsidan",
-                    "√ñnskat anv√§ndarnamn",
+                    "÷nskat anv‰ndarnamn",
                     "minst 5 tecken",
-                    "L√∂senord",
+                    "Lˆsenord",
                     "E-postadress",
-                    "Jag accepterar tj√§nstens",
-                    "integritetspolicy & anv√§ndarvillkor",
-                    "Slutf√∂r",
+                    "Jag accepterar tj‰nstens",
+                    "integritetspolicy & anv‰ndarvillkor",
+                    "Slutfˆr",
                     "Obligatoriskt",
-                    "Anv√§ndarnamnet m√•ste vara minst 5 tecken l√•ngt!",
-                    "L√∂senordet m√•ste vara minst 5 tecken l√•ngt!",
-                    "Detta anv√§ndarnamn finns redan registrerat!",
-                    "V√§nligen prova ett annat",
-                    "Alla obligatoriska fr√•gor m√•ste besvaras",
-                    "Om du gl√∂mt ditt l√∂senord, ",
-                    "klicka h√§r f√∂r att f√• ett mail med √•terst√§llningsinstruktioner.",
+                    "Anv‰ndarnamnet mÂste vara minst 5 tecken lÂngt!",
+                    "Lˆsenordet mÂste vara minst 5 tecken lÂngt!",
+                    "Detta anv‰ndarnamn finns redan registrerat!",
+                    "V‰nligen prova ett annat",
+                    "Alla obligatoriska frÂgor mÂste besvaras",
+                    "Om du glˆmt ditt lˆsenord, ",
+                    "klicka h‰r fˆr att fÂ ett mail med Âterst‰llningsinstruktioner.",
                     "Alternativ e-postadress"
                 }, { 
                     "The email address", 
@@ -150,8 +155,8 @@ namespace HW
                         if (dupeAction == -1) { dupeAction = rs.GetInt32(0); }
 
                         sponsorInvitedEmailAddressExistBuffer += "" +
-                            "<br/><input type=\"radio\" onclick=\"document.getElementById('DupePasswordBox').style.display='';\" name=\"DupeAction\" value=\"" + rs.GetInt32(0) + "\"" +
-                            (dupeAction == rs.GetInt32(0) ? " checked" : "") + "> " + lang[Convert.ToInt32(HttpContext.Current.Session["LID"]) - 1, 3] + " \"" + rs.GetString(1) + "\"<!-- (" + rs.GetString(3) + ")-->.";
+                            "<br/><input type=\"radio\" onclick=\"document.getElementById('DupePasswordBox').style.display='';\" name=\"DupeAction\" value=\"" + rs.GetInt32(0) + "\"" + 
+                            (dupeAction == rs.GetInt32(0) ? " checked" : "") + "> " + lang[Convert.ToInt32(HttpContext.Current.Session["LID"])-1,3] + " \"" + rs.GetString(1) + "\"<!-- (" + rs.GetString(3) + ")-->.";
                     }
                     while (rs.Read());
 
@@ -166,24 +171,24 @@ namespace HW
 
             next.Visible = false;
             submit.Visible = true;
-            if (sponsorInvitedEmailAddressExistBuffer != "")
+            if(sponsorInvitedEmailAddressExistBuffer != "")
             {
                 next.Visible = true;
                 submit.Visible = false;
                 contents.Controls.Add(new LiteralControl(sponsorInvitedEmailAddressExistBuffer));
 
-                next.Text = lang[Convert.ToInt32(HttpContext.Current.Session["LID"]) - 1, 7];
+                next.Text = lang[Convert.ToInt32(HttpContext.Current.Session["LID"])-1,7];
                 next.Click += new EventHandler(next_Click);
             }
             else if (sponsorInviteID == -2)
             {
                 error.Controls.Clear();
-                error.Controls.Add(new LiteralControl("<span STYLE=\"color:#CC0000;\">" + lang[Convert.ToInt32(HttpContext.Current.Session["LID"]) - 1, 8] + "</span>"));
-            }
+                error.Controls.Add(new LiteralControl("<span STYLE=\"color:#CC0000;\">" + lang[Convert.ToInt32(HttpContext.Current.Session["LID"])-1,8] + "</span>"));
+            } 
             else if (sponsorInviteID == -1)
             {
                 error.Controls.Clear();
-                error.Controls.Add(new LiteralControl("<span STYLE=\"color:#CC0000;\">" + lang[Convert.ToInt32(HttpContext.Current.Session["LID"]) - 1, 9] + " <A HREF=\"home.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">" + lang[Convert.ToInt32(HttpContext.Current.Session["LID"]) - 1, 10] + "</A>.</span>"));
+                error.Controls.Add(new LiteralControl("<span STYLE=\"color:#CC0000;\">" + lang[Convert.ToInt32(HttpContext.Current.Session["LID"])-1,9] + " <A HREF=\"home.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">" + lang[Convert.ToInt32(HttpContext.Current.Session["LID"])-1,10] + "</A>.</span>"));
                 HttpContext.Current.Session["SponsorInviteID"] = null;
             }
             else
@@ -300,7 +305,7 @@ namespace HW
 
                 submit.Click += new EventHandler(submit_Click);
 
-                ClientScript.RegisterStartupScript(this.GetType(), "START_SCRIPT", "<script language=\"JavaScript\">" + startScript + "</script>");
+                ClientScript.RegisterStartupScript(this.GetType(),"START_SCRIPT", "<script language=\"JavaScript\">" + startScript + "</script>");
                 ClientScript.RegisterClientScriptBlock(this.GetType(), "FN_SCRIPT", "<script language=\"JavaScript\">" + functionScript + "</script>");
             }
         }
@@ -373,7 +378,7 @@ namespace HW
                                 "WHERE s.SponsorID = " + Convert.ToInt32(HttpContext.Current.Session["SponsorID"]));
                             while (rs.Read())
                             {
-                                if (!rs.IsDBNull(3) && rs.GetInt32(3) == 1 && Convert.ToInt32(HttpContext.Current.Session["SponsorInviteID"]) > 0)
+                                if(!rs.IsDBNull(3) && rs.GetInt32(3) == 1 && Convert.ToInt32(HttpContext.Current.Session["SponsorInviteID"]) > 0)
                                 {
                                     rs3 = Db.rs("SELECT " +
                                         "BAID, " +
@@ -399,12 +404,12 @@ namespace HW
                                         }
                                         if (!rs3.IsDBNull(3))
                                         {
-                                            Db.exec("INSERT INTO UserProfileBQ (UserProfileID, BQID, ValueText) VALUES (" + profileID + "," + rs.GetInt32(0) + ",'" + rs3.GetString(3).Replace("'", "''") + "')");
+                                            Db.exec("INSERT INTO UserProfileBQ (UserProfileID, BQID, ValueText) VALUES (" + profileID + "," + rs.GetInt32(0) + ",'" + rs3.GetString(3).Replace("'","''") + "')");
                                         }
                                     }
                                     rs3.Close();
                                 }
-                                else if (!rs.IsDBNull(4) || !rs.IsDBNull(5) || !rs.IsDBNull(6))
+                                else if(!rs.IsDBNull(4) || !rs.IsDBNull(5) || !rs.IsDBNull(6))
                                 {
                                     Db.exec("INSERT INTO UserProfileBQ (UserProfileID,BQID,ValueInt,ValueText,ValueDate) VALUES (" + profileID + "," + rs.GetInt32(0) + "," +
                                         (rs.IsDBNull(4) ? "NULL" : rs.GetInt32(4).ToString()) + "," +
@@ -443,67 +448,67 @@ namespace HW
             }
         }
 
-        #region Web Form Designer generated code
-        override protected void OnInit(EventArgs e)
-        {
-            //
-            // CODEGEN: This call is required by the ASP.NET Web Form Designer.
-            //
-            InitializeComponent();
-            base.OnInit(e);
-        }
+		#region Web Form Designer generated code
+		override protected void OnInit(EventArgs e)
+		{
+			//
+			// CODEGEN: This call is required by the ASP.NET Web Form Designer.
+			//
+			InitializeComponent();
+			base.OnInit(e);
+		}
+		
+		/// <summary>
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
+		/// </summary>
+		private void InitializeComponent()
+		{    
+		}
+		#endregion
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
-        }
-        #endregion
-
-        private void submit_Click(object sender, EventArgs e)
-        {
-            string errorMsg = "";
-            if (((TextBox)contents.FindControl("username")).Text.Length < 5)
-            {
+		private void submit_Click(object sender, EventArgs e)
+		{
+			string errorMsg = "";
+			if(((TextBox)contents.FindControl("username")).Text.Length < 5)
+			{
                 errorMsg = "<SPAN STYLE=\"color:#CC0000;\">" + lang[Convert.ToInt32(HttpContext.Current.Session["LID"]) - 1, 19] + "</SPAN>";
-            }
-            else if (((TextBox)contents.FindControl("password")).Text.Length < 5)
-            {
+			}
+			else if(((TextBox)contents.FindControl("password")).Text.Length < 5)
+			{
                 errorMsg = "<SPAN STYLE=\"color:#CC0000;\">" + lang[Convert.ToInt32(HttpContext.Current.Session["LID"]) - 1, 20] + "</SPAN>";
-            }
-            else
-            {
+			}
+			else
+			{
                 string errorText = "";
                 bool allForced = Db.checkForced(ref errorText, contents);
+				
+				if(!((CheckBox)contents.FindControl("Approve")).Checked)
+				{
+					allForced = false;
+				}
 
-                if (!((CheckBox)contents.FindControl("Approve")).Checked)
-                {
-                    allForced = false;
-                }
+				if(allForced)
+				{
+					bool valid = false;
 
-                if (allForced)
-                {
-                    bool valid = false;
+					SqlDataReader rs = Db.rs("SELECT COUNT(*) FROM [User] WHERE LOWER(Username) = '" + ((TextBox)contents.FindControl("username")).Text.Replace("'","").ToLower() + "'");
+					if(rs.Read() && rs.GetInt32(0) == 0)
+					{
+						valid = true;
+					}
+					rs.Close();
 
-                    SqlDataReader rs = Db.rs("SELECT COUNT(*) FROM [User] WHERE LOWER(Username) = '" + ((TextBox)contents.FindControl("username")).Text.Replace("'", "").ToLower() + "'");
-                    if (rs.Read() && rs.GetInt32(0) == 0)
-                    {
-                        valid = true;
-                    }
-                    rs.Close();
-
-                    if (valid)
-                    {
-                        int userID = Db.createAccount(
-                            ((TextBox)contents.FindControl("username")).Text.Replace("'", ""),
-                            ((TextBox)contents.FindControl("email")).Text.Replace("'", ""),
+					if(valid)
+					{
+						int userID = Db.createAccount(
+                            ((TextBox)contents.FindControl("username")).Text.Replace("'",""),
+                            ((TextBox)contents.FindControl("email")).Text.Replace("'",""),
                             ((TextBox)contents.FindControl("password")).Text,
                             Convert.ToInt32(HttpContext.Current.Session["SponsorID"]),
                             (HttpContext.Current.Session["DepartmentID"] != null ? HttpContext.Current.Session["DepartmentID"].ToString() : "NULL"),
                             0,
-                            ((TextBox)contents.FindControl("aemail")).Text.Replace("'", ""));
+                            ((TextBox)contents.FindControl("aemail")).Text.Replace("'",""));
                         Db.saveBQ(contents);
 
                         if (Convert.ToInt32(HttpContext.Current.Session["SponsorInviteID"]) > 0)
@@ -515,20 +520,20 @@ namespace HW
                         HttpContext.Current.Session["SponsorInviteID"] = null;
 
                         Db.checkAndLogin(userID);
-                    }
-                    else
-                    {
+					}
+					else
+					{
                         errorMsg = "<SPAN STYLE=\"color:#CC0000;\">" + lang[Convert.ToInt32(HttpContext.Current.Session["LID"]) - 1, 21] + "</SPAN> " + lang[Convert.ToInt32(HttpContext.Current.Session["LID"]) - 1, 22] + ".";
-                    }
-                }
-                else
-                {
+					}
+				}
+				else
+				{
                     errorMsg = "<SPAN STYLE=\"color:#CC0000;\">" + (errorText != "" ? errorText : "" + lang[Convert.ToInt32(HttpContext.Current.Session["LID"]) - 1, 23] + ".") + "</SPAN>";
-                }
-            }
+				}
+			}
 
             error.Controls.Clear();
             error.Controls.Add(new LiteralControl("<div style=\"clear:both;\">&nbsp;</div><div style=\"float:left;\">" + errorMsg + "</div>"));
-        }
-    }
+		}
+	}
 }

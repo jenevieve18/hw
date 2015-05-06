@@ -1,18 +1,20 @@
-Ôªøusing System;
-using System.Collections.Generic;
+using System;
 using System.Data.SqlClient;
-using System.Linq;
+using System.Configuration;
+using System.Collections;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using HW.Core.FromHW;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
 
-namespace HW
+namespace healthWatch
 {
-    public partial class statisticsImage : System.Web.UI.Page
-    {
-        #region removed
-        /*
+	public partial class statisticsImage : System.Web.UI.Page
+	{
+		#region removed
+		/*
 		int lastCount = 0;
 		float lastVal = 0;
 		string lastDesc = "";
@@ -102,270 +104,270 @@ namespace HW
 			lastCount = minCnt;
 		}
 		*/
-        #endregion
+		#endregion
 
-        private int getDatabaseVal(int QID, int OID, DateTime dt)
-        {
-            int ret = -1;
-            SqlDataReader rs2 = Db.rs("SELECT " +
-                "AVG(tmp.AX) " +
-                "FROM " +
-                "(" +
-                "SELECT " +
-                "AVG(av.ValueInt) AS AX " +
-                "FROM Answer a " +
-                "INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID " +
-                "WHERE av.DeletedSessionID IS NULL " +
-                "AND av.ValueInt IS NOT NULL " +
-                "AND a.EndDT IS NOT NULL " +
+		private int getDatabaseVal(int QID, int OID, DateTime dt)
+		{
+			int ret = -1;
+			SqlDataReader rs2 = Db.rs("SELECT " +
+				"AVG(tmp.AX) " +
+				"FROM " +
+				"(" +
+				"SELECT " +
+				"AVG(av.ValueInt) AS AX " +
+				"FROM Answer a " +
+				"INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID " +
+				"WHERE av.DeletedSessionID IS NULL " +
+				"AND av.ValueInt IS NOT NULL " +
+				"AND a.EndDT IS NOT NULL " +
                 "AND YEAR(a.EndDT) = " + dt.AddMonths(-1).Year + " " +
                 "AND MONTH(a.EndDT) = " + dt.AddMonths(-1).Month + " " +
-                "AND av.QuestionID = " + QID + " " +
-                "AND av.OptionID = " + OID + " " +
-                "GROUP BY a.ProjectRoundUserID " +
-                ") tmp", "eFormSqlConnection");
-            if (rs2.Read() && !rs2.IsDBNull(0))
-            {
-                ret = Convert.ToInt32(rs2.GetValue(0));
-            }
-            rs2.Close();
+				"AND av.QuestionID = " + QID + " " +
+				"AND av.OptionID = " + OID + " " +
+				"GROUP BY a.ProjectRoundUserID " +
+				") tmp", "eFormSqlConnection");
+			if (rs2.Read() && !rs2.IsDBNull(0))
+			{
+				ret = Convert.ToInt32(rs2.GetValue(0));
+			}
+			rs2.Close();
 
-            return ret;
-        }
-        private int getProfileVal(int QID, int OID, int AID, int UID, DateTime dt)
-        {
-            int ret = -1;
+			return ret;
+		}
+		private int getProfileVal(int QID, int OID, int AID, int UID, DateTime dt)
+		{
+			int ret = -1;
 
-            SqlDataReader rs2 = Db.rs("SELECT " +
-                "AVG(tmp.AX) " +
-                "FROM " +
-                "(" +
-                "SELECT " +
-                "AVG(av.ValueInt) AS AX " +
-                "FROM Answer a " +
-                "INNER JOIN healthWatch..UserProjectRoundUserAnswer ha ON a.AnswerID = ha.AnswerID " +
-                "INNER JOIN healthWatch..UserProfile hu ON ha.UserProfileID = hu.UserProfileID " +
-                "INNER JOIN healthWatch..UserProfile xhu ON hu.ProfileComparisonID = xhu.ProfileComparisonID " +
-                "INNER JOIN healthWatch..UserProjectRoundUserAnswer xha ON xhu.UserProfileID = xha.UserProfileID " +
-                "INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID " +
-                "WHERE av.DeletedSessionID IS NULL " +
-                "AND av.ValueInt IS NOT NULL " +
-                "AND a.EndDT IS NOT NULL " +
+			SqlDataReader rs2 = Db.rs("SELECT " +
+				"AVG(tmp.AX) " +
+				"FROM " +
+				"(" +
+				"SELECT " +
+				"AVG(av.ValueInt) AS AX " +
+				"FROM Answer a " +
+				"INNER JOIN healthWatch..UserProjectRoundUserAnswer ha ON a.AnswerID = ha.AnswerID " +
+				"INNER JOIN healthWatch..UserProfile hu ON ha.UserProfileID = hu.UserProfileID " +
+				"INNER JOIN healthWatch..UserProfile xhu ON hu.ProfileComparisonID = xhu.ProfileComparisonID " +
+				"INNER JOIN healthWatch..UserProjectRoundUserAnswer xha ON xhu.UserProfileID = xha.UserProfileID " +
+				"INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID " +
+				"WHERE av.DeletedSessionID IS NULL " +
+				"AND av.ValueInt IS NOT NULL " +
+				"AND a.EndDT IS NOT NULL " +
                 "AND YEAR(a.EndDT) = " + dt.AddMonths(-1).Year + " " +
                 "AND MONTH(a.EndDT) = " + dt.AddMonths(-1).Month + " " +
-                "AND xha.AnswerID = " + AID + " " +
-                "AND xha.ProjectRoundUserID = " + UID + " " +
-                "AND av.QuestionID = " + QID + " " +
-                "AND av.OptionID = " + OID + " " +
-                "GROUP BY a.ProjectRoundUserID " +
-                ") tmp", "eFormSqlConnection");
-            if (rs2.Read() && !rs2.IsDBNull(0))
-            {
-                ret = Convert.ToInt32(rs2.GetValue(0));
-            }
-            rs2.Close();
+				"AND xha.AnswerID = " + AID + " " +
+				"AND xha.ProjectRoundUserID = " + UID + " " +
+				"AND av.QuestionID = " + QID + " " +
+				"AND av.OptionID = " + OID + " " +
+				"GROUP BY a.ProjectRoundUserID " +
+				") tmp", "eFormSqlConnection");
+			if (rs2.Read() && !rs2.IsDBNull(0))
+			{
+				ret = Convert.ToInt32(rs2.GetValue(0));
+			}
+			rs2.Close();
 
-            return ret;
-        }
+			return ret;
+		}
 
-        private void Page_Load(object sender, System.EventArgs e)
-        {
-            #region Init
-            string rp = "";
-            foreach (string s in ("0," + HttpContext.Current.Request.QueryString["RPID"].ToString()).Split(','))
-            {
-                try
-                {
-                    rp += (rp != "" ? "," : "") + Convert.ToInt32(s).ToString();
-                }
-                catch (Exception) { }
-            }
-            string[] so = ("0," + HttpContext.Current.Request.QueryString["RPO"].ToString()).Split(',');
+		private void Page_Load(object sender, System.EventArgs e)
+		{
+			#region Init
+			string rp = "";
+			foreach(string s in ("0," + HttpContext.Current.Request.QueryString["RPID"].ToString()).Split(','))
+			{
+				try
+				{
+					rp += (rp != "" ? "," : "") + Convert.ToInt32(s).ToString();
+				}
+				catch(Exception){}
+			}
+			string[] so = ("0," + HttpContext.Current.Request.QueryString["RPO"].ToString()).Split(',');
 
-            bool compare = (HttpContext.Current.Request.QueryString["C"] != null && Convert.ToInt32(HttpContext.Current.Request.QueryString["C"]) == 2);
-            bool sponsored = (Convert.ToInt32(HttpContext.Current.Session["SponsorID"]) > 1);
-            DateTime TDT = DateTime.ParseExact(HttpContext.Current.Request.QueryString["TDT"].ToString(), "yyMMdd", System.Globalization.CultureInfo.CurrentCulture);
-            DateTime FDT = DateTime.ParseExact(HttpContext.Current.Request.QueryString["FDT"].ToString(), "yyMMdd", System.Globalization.CultureInfo.CurrentCulture);
-            string answer = "";
-            if (HttpContext.Current.Request.QueryString["E"] != null)
-            {
-                foreach (string s in ("0," + HttpContext.Current.Request.QueryString["E"].ToString()).Split(','))
-                {
-                    try
-                    {
-                        answer += (answer != "" ? "," : "") + Convert.ToInt32(s).ToString();
-                    }
-                    catch (Exception) { }
-                }
-                answer = "NOT IN (" + answer + ")";
-            }
-            else
-            {
-                foreach (string s in ("0," + HttpContext.Current.Request.QueryString["I"].ToString()).Split(','))
-                {
-                    try
-                    {
-                        answer += (answer != "" ? "," : "") + Convert.ToInt32(s).ToString();
-                    }
-                    catch (Exception) { }
-                }
-                answer = "IN (" + answer + ")";
-            }
-            #endregion
-            #region Count answers, get min/max date and calculate steps
-            int cx = 0, userID = 0;
-            SqlDataReader rs = Db.rs("SELECT " +
-                "COUNT(*), " +
-                "MIN(DT), " +
-                "MAX(DT), " +
-                "uprua.ProjectRoundUserID " +
-                "FROM UserProjectRoundUser upru " +
-                "INNER JOIN UserProjectRoundUserAnswer uprua ON upru.ProjectRoundUserID = uprua.ProjectRoundUserID " +
-                "WHERE upru.UserID = " + Convert.ToInt32(HttpContext.Current.Session["UserID"]) + " " +
-                "AND upru.ProjectRoundUnitID = " + Convert.ToInt32(HttpContext.Current.Request.QueryString["S"]) + " " +
-                "AND uprua.DT < '" + TDT.AddDays(1).ToString("yyyy-MM-dd") + "' " +
-                "AND uprua.DT >= '" + FDT.ToString("yyyy-MM-dd") + "' " +
-                "AND uprua.AnswerID " + answer + " " +
-                "GROUP BY uprua.ProjectRoundUserID");
-            if (rs.Read())
-            {
-                cx = rs.GetInt32(0);
-                FDT = rs.GetDateTime(1).Date;
-                TDT = rs.GetDateTime(2).Date;
-                userID = rs.GetInt32(3);
-            }
-            rs.Close();
+			bool compare = (HttpContext.Current.Request.QueryString["C"] != null && Convert.ToInt32(HttpContext.Current.Request.QueryString["C"]) == 2);
+			bool sponsored = (Convert.ToInt32(HttpContext.Current.Session["SponsorID"]) > 1);
+			DateTime TDT = DateTime.ParseExact(HttpContext.Current.Request.QueryString["TDT"].ToString(), "yyMMdd", System.Globalization.CultureInfo.CurrentCulture);
+			DateTime FDT = DateTime.ParseExact(HttpContext.Current.Request.QueryString["FDT"].ToString(), "yyMMdd", System.Globalization.CultureInfo.CurrentCulture);
+			string answer = "";
+			if(HttpContext.Current.Request.QueryString["E"] != null)
+			{
+				foreach(string s in ("0," + HttpContext.Current.Request.QueryString["E"].ToString()).Split(','))
+				{
+					try
+					{
+						answer += (answer != "" ? "," : "") + Convert.ToInt32(s).ToString();
+					}
+					catch(Exception){}
+				}
+				answer = "NOT IN (" + answer + ")";
+			}
+			else
+			{
+				foreach(string s in ("0," + HttpContext.Current.Request.QueryString["I"].ToString()).Split(','))
+				{
+					try
+					{
+						answer += (answer != "" ? "," : "") + Convert.ToInt32(s).ToString();
+					}
+					catch(Exception){}
+				}
+				answer = "IN (" + answer + ")";
+			}
+			#endregion
+			#region Count answers, get min/max date and calculate steps
+			int cx = 0, userID = 0;
+			SqlDataReader rs = Db.rs("SELECT " +
+				"COUNT(*), " +
+				"MIN(DT), " +
+				"MAX(DT), " +
+				"uprua.ProjectRoundUserID " +
+				"FROM UserProjectRoundUser upru " +
+				"INNER JOIN UserProjectRoundUserAnswer uprua ON upru.ProjectRoundUserID = uprua.ProjectRoundUserID " +
+				"WHERE upru.UserID = " + Convert.ToInt32(HttpContext.Current.Session["UserID"]) + " " +
+				"AND upru.ProjectRoundUnitID = " + Convert.ToInt32(HttpContext.Current.Request.QueryString["S"]) + " " +
+				"AND uprua.DT < '" + TDT.AddDays(1).ToString("yyyy-MM-dd") + "' " +
+				"AND uprua.DT >= '" + FDT.ToString("yyyy-MM-dd") + "' " +
+				"AND uprua.AnswerID " + answer + " " +
+				"GROUP BY uprua.ProjectRoundUserID");
+			if (rs.Read())
+			{
+				cx = rs.GetInt32(0);
+				FDT = rs.GetDateTime(1).Date;
+				TDT = rs.GetDateTime(2).Date;
+				userID = rs.GetInt32(3);
+			}
+			rs.Close();
 
-            bool oneDay = false;
-            int steps = ((TimeSpan)(TDT - FDT)).Days + 1;
-            if (steps == 1 && cx > 1)
-            {
-                oneDay = true;
-                steps = 24 * 6;
-            }
-            #endregion
+			bool oneDay = false;
+			int steps = ((TimeSpan)(TDT - FDT)).Days + 1;
+			if (steps == 1 && cx > 1)
+			{
+				oneDay = true;
+				steps = 24*6;
+			}
+			#endregion
 
-            if (cx <= 1)
-            {
-                #region Bars
-                Graph g = new Graph(520, (rp.Split(',').Length < 5 ? 350 : 440), "#FFFFFF");
-                g.setMinMax(0f, 100f);
-                if (compare && sponsored && 1 == 0)
-                {
-                    g.computeSteping(6);
-                    g.drawOutlines(6);
-                }
-                else if (compare)
-                {
-                    g.computeSteping(5);
-                    g.drawOutlines(5);
-                }
-                else
-                {
-                    g.computeSteping(rp.Split(',').Length + 1);
-                    g.drawOutlines(rp.Split(',').Length + 1);
-                }
-                g.drawAxis();
+			if (cx <= 1)
+			{
+				#region Bars
+				Graph g = new Graph(520, (rp.Split(',').Length < 5 ? 350 : 440), "#FFFFFF");
+				g.setMinMax(0f, 100f);
+				if (compare && sponsored && 1==0)
+				{
+					g.computeSteping(6);
+					g.drawOutlines(6);
+				}
+				else if (compare)
+				{
+					g.computeSteping(5);
+					g.drawOutlines(5);
+				}
+				else
+				{
+					g.computeSteping(rp.Split(',').Length + 1);
+					g.drawOutlines(rp.Split(',').Length + 1);
+				}
+				g.drawAxis();
 
-                int pos = 1;
+				int pos = 1;
 
-                bool hasReference = false;
-                bool hasColors = false;
+				bool hasReference = false;
+				bool hasColors = false;
 
-                rs = Db.rs("SELECT " +
-                    "rpc.WeightedQuestionOptionID, " +	// 0
-                    "wqol.WeightedQuestionOption, " +
-                    "wqo.TargetVal, " +
-                    "wqo.YellowLow, " +
-                    "wqo.GreenLow, " +
-                    "wqo.GreenHigh, " +					// 5
-                    "wqo.YellowHigh, " +
-                    "wqo.QuestionID, " +
-                    "wqo.OptionID " +
-                    "FROM Report r " +
-                    "INNER JOIN ReportPart rp ON r.ReportID = rp.ReportID " +
-                    "INNER JOIN ReportPartComponent rpc ON rp.ReportPartID = rpc.ReportPartID " +
-                    "INNER JOIN WeightedQuestionOption wqo ON rpc.WeightedQuestionOptionID = wqo.WeightedQuestionOptionID " +
+				rs = Db.rs("SELECT " +
+					"rpc.WeightedQuestionOptionID, " +	// 0
+					"wqol.WeightedQuestionOption, " +
+					"wqo.TargetVal, " +
+					"wqo.YellowLow, " +
+					"wqo.GreenLow, " +
+					"wqo.GreenHigh, " +					// 5
+					"wqo.YellowHigh, " +
+					"wqo.QuestionID, " +
+					"wqo.OptionID " +
+					"FROM Report r " +
+					"INNER JOIN ReportPart rp ON r.ReportID = rp.ReportID " +
+					"INNER JOIN ReportPartComponent rpc ON rp.ReportPartID = rpc.ReportPartID " +
+					"INNER JOIN WeightedQuestionOption wqo ON rpc.WeightedQuestionOptionID = wqo.WeightedQuestionOptionID " +
                     "INNER JOIN WeightedQuestionOptionLang wqol ON wqo.WeightedQuestionOptionID = wqol.WeightedQuestionOptionID AND wqol.LangID = " + Convert.ToInt32(HttpContext.Current.Session["LID"]) + " " +
-                    "WHERE rpc.ReportPartID IN (" + rp + ") " +
-                    "ORDER BY rp.SortOrder, rpc.SortOrder", "eFormSqlConnection");
-                while (rs.Read())
-                {
-                    SqlDataReader rs2 = Db.rs("SELECT " +
-                        "av.ValueInt, " +
-                        "a.EndDT, " +
-                        "a.AnswerID " +
-                        "FROM Answer a " +
+					"WHERE rpc.ReportPartID IN (" + rp + ") " +
+					"ORDER BY rp.SortOrder, rpc.SortOrder", "eFormSqlConnection");
+				while (rs.Read())
+				{
+					SqlDataReader rs2 = Db.rs("SELECT " +
+						"av.ValueInt, " +
+						"a.EndDT, " +
+						"a.AnswerID " +
+						"FROM Answer a " +
 
                         "INNER JOIN healthWatch..UserProjectRoundUserAnswer ha ON a.AnswerID = ha.AnswerID AND ha.ProjectRoundUserID = a.ProjectRoundUserID " +
 
                         "LEFT OUTER JOIN AnswerValue av ON a.AnswerID = av.AnswerID " +
-                        "AND av.DeletedSessionID IS NULL " +
-                        "AND av.QuestionID = " + rs.GetInt32(7) + " " +
-                        "AND av.OptionID = " + rs.GetInt32(8) + " " +
-                        "WHERE a.EndDT IS NOT NULL " +
-                        "AND a.EndDT < '" + TDT.AddDays(1).ToString("yyyy-MM-dd") + "' " +
-                        "AND a.EndDT >= '" + FDT.ToString("yyyy-MM-dd") + "' " +
-                        "AND a.AnswerID " + answer + " " +
-                        "AND a.ProjectRoundUserID = " + userID, "eFormSqlConnection");
-                    if (rs2.Read())
-                    {
-                        int color = 19;
-                        if (!compare && !rs2.IsDBNull(0))
-                        {
-                            color = 30;
+						"AND av.DeletedSessionID IS NULL " +
+						"AND av.QuestionID = " + rs.GetInt32(7) + " " +
+						"AND av.OptionID = " + rs.GetInt32(8) + " " +
+						"WHERE a.EndDT IS NOT NULL " +
+						"AND a.EndDT < '" + TDT.AddDays(1).ToString("yyyy-MM-dd") + "' " +
+						"AND a.EndDT >= '" + FDT.ToString("yyyy-MM-dd") + "' " +
+						"AND a.AnswerID " + answer + " " +
+						"AND a.ProjectRoundUserID = " + userID, "eFormSqlConnection");
+					if (rs2.Read())
+					{
+						int color = 19;
+						if (!compare && !rs2.IsDBNull(0))
+						{
+							color = 30;
 
-                            if (!rs.IsDBNull(3))
-                            {
-                                hasColors = true;
+							if (!rs.IsDBNull(3))
+							{
+								hasColors = true;
 
-                                if (rs.GetInt32(3) >= 0 && rs.GetInt32(3) <= 100 && rs2.GetInt32(0) >= rs.GetInt32(3))
-                                {
-                                    color = 1;
-                                }
-                            }
-                            if (!rs.IsDBNull(4))
-                            {
-                                hasColors = true;
+								if (rs.GetInt32(3) >= 0 && rs.GetInt32(3) <= 100 && rs2.GetInt32(0) >= rs.GetInt32(3))
+								{
+									color = 1;
+								}
+							}
+							if (!rs.IsDBNull(4))
+							{
+								hasColors = true;
 
-                                if (rs.GetInt32(4) >= 0 && rs.GetInt32(4) <= 100 && rs2.GetInt32(0) >= rs.GetInt32(4))
-                                {
-                                    color = 0;
-                                }
-                            }
-                            if (!rs.IsDBNull(5))
-                            {
-                                hasColors = true;
+								if (rs.GetInt32(4) >= 0 && rs.GetInt32(4) <= 100 && rs2.GetInt32(0) >= rs.GetInt32(4))
+								{
+									color = 0;
+								}
+							}
+							if (!rs.IsDBNull(5))
+							{
+								hasColors = true;
 
-                                if (rs.GetInt32(5) >= 0 && rs.GetInt32(5) <= 100 && rs2.GetInt32(0) >= rs.GetInt32(5))
-                                {
-                                    color = 1;
-                                }
-                            }
-                            if (!rs.IsDBNull(6))
-                            {
-                                hasColors = true;
+								if (rs.GetInt32(5) >= 0 && rs.GetInt32(5) <= 100 && rs2.GetInt32(0) >= rs.GetInt32(5))
+								{
+									color = 1;
+								}
+							}
+							if (!rs.IsDBNull(6))
+							{
+								hasColors = true;
 
-                                if (rs.GetInt32(6) >= 0 && rs.GetInt32(6) <= 100 && rs2.GetInt32(0) >= rs.GetInt32(6))
-                                {
-                                    color = 2;
-                                }
-                            }
-                            if (hasColors && color == 30)
-                            {
-                                color = 2;
-                            }
-                        }
+								if (rs.GetInt32(6) >= 0 && rs.GetInt32(6) <= 100 && rs2.GetInt32(0) >= rs.GetInt32(6))
+								{
+									color = 2;
+								}
+							}
+							if (hasColors && color == 30)
+							{
+								color = 2;
+							}
+						}
 
-                        g.drawBar(color, pos, (rs2.IsDBNull(0) ? -1 : rs2.GetInt32(0)), true, false);
-                        g.drawAxisExpl((compare ? rs.GetString(1) + ", " : "") + rs2.GetDateTime(1).ToString("yyyy-MM-dd HH:mm"), 0, false, false);
+						g.drawBar(color, pos, (rs2.IsDBNull(0) ? -1 : rs2.GetInt32(0)), true, false);
+						g.drawAxisExpl((compare ? rs.GetString(1) + ", " : "") + rs2.GetDateTime(1).ToString("yyyy-MM-dd HH:mm"), 0, false, false);
 
-                        if (compare)
-                        {
+						if (compare)
+						{
                             switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                             {
                                 case 1:
-                                    g.drawBottomString("Mitt v√§rde", pos, false);
+                                    g.drawBottomString("Mitt v‰rde", pos, false);
                                     g.drawBar(18, ++pos, getProfileVal(rs.GetInt32(7), rs.GetInt32(8), rs2.GetInt32(2), userID, rs2.GetDateTime(1)), true, false);
                                     g.drawBottomString("Samma profil", pos, false);
                                     g.drawBar(28, ++pos, getDatabaseVal(rs.GetInt32(7), rs.GetInt32(8), rs2.GetDateTime(1)), true, false);
@@ -380,44 +382,44 @@ namespace HW
                                     g.drawBottomString("Complete database", pos, false);
                                     break;
                             }
-                        }
-                    }
-                    rs2.Close();
+						}
+					}
+					rs2.Close();
 
-                    if (!rs.IsDBNull(2))
-                    {
-                        hasReference = true;
-                        g.drawReference(pos, rs.GetInt32(2));
-                    }
-                    if (!compare)
-                    {
-                        g.drawBottomString(rs.GetString(1), pos, !(rp.Split(',').Length < 5));
-                    }
-                    pos++;
-                }
-                rs.Close();
+					if (!rs.IsDBNull(2))
+					{
+						hasReference = true;
+						g.drawReference(pos, rs.GetInt32(2));
+					}
+					if (!compare)
+					{
+						g.drawBottomString(rs.GetString(1), pos, !(rp.Split(',').Length < 5));
+					}
+					pos++;
+				}
+				rs.Close();
 
-                if (hasReference)
-                {
+				if (hasReference)
+				{
                     switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                     {
                         case 1:
-                            g.drawReference(433, 10, " = riktv√§rde");
+                            g.drawReference(433, 10, " = riktv‰rde");
                             break;
                         case 2:
                             g.drawReference(433, 10, " = target value");
                             break;
                     }
-                }
+				}
 
-                if (hasColors)
-                {
+				if (hasColors)
+				{
                     switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                     {
                         case 1:
-                            g.drawColorExplBox("H√§lsosam niv√•", 0, 150, 30);
-                            g.drawColorExplBox("F√∂rb√§ttringsbehov", 1, 270, 30);
-                            g.drawColorExplBox("Oh√§lsosam niv√•", 2, 400, 30);
+                            g.drawColorExplBox("H‰lsosam nivÂ", 0, 150, 30);
+                            g.drawColorExplBox("Fˆrb‰ttringsbehov", 1, 270, 30);
+                            g.drawColorExplBox("Oh‰lsosam nivÂ", 2, 400, 30);
                             break;
                         case 2:
                             g.drawColorExplBox("Healthy level", 0, 150, 30);
@@ -425,97 +427,97 @@ namespace HW
                             g.drawColorExplBox("Unhealthy level", 2, 400, 30);
                             break;
                     }
-                }
+				}
 
-                #endregion
+				#endregion
 
-                g.render();
-            }
-            else if (cx > 1)
-            {
-                #region Line
-                Graph g = new Graph(520, 350, "#FFFFFF");
-                g.setMinMax(0f, 100f);
+				g.render();
+			}
+			else if (cx > 1)
+			{
+				#region Line
+				Graph g = new Graph(520, 350, "#FFFFFF");
+				g.setMinMax(0f, 100f);
 
-                if (oneDay)
-                {
-                    g.computeSteping(steps);
-                    g.drawOutlines(steps, false);
+				if (oneDay)
+				{
+					g.computeSteping(steps);
+					g.drawOutlines(steps, false);
 
-                    g.drawBottomString("00:00", 0);
-                    g.drawBottomString("06:00", 6 * 6);
-                    g.drawBottomString("12:00", 12 * 6);
-                    g.drawBottomString("18:00", 18 * 6);
-                    g.drawBottomString("23:59", 24 * 6);
-                }
-                else
-                {
-                    g.computeSteping(steps + 2);
-                    g.drawOutlines(steps + 2, false);
+					g.drawBottomString("00:00", 0);
+					g.drawBottomString("06:00", 6 * 6);
+					g.drawBottomString("12:00", 12 * 6);
+					g.drawBottomString("18:00", 18 * 6);
+					g.drawBottomString("23:59", 24 * 6);
+				}
+				else
+				{
+					g.computeSteping(steps + 2);
+					g.drawOutlines(steps + 2, false);
 
-                    g.drawBottomString(FDT.ToString("yyyy-MM-dd"), 1);
-                    g.drawBottomString(TDT.ToString("yyyy-MM-dd"), steps);
-                    if (steps > 2)
-                    {
-                        if ((steps - 5) % 4 == 0)
-                        {
-                            g.drawBottomString(FDT.AddDays((steps - 1) / 4 * 1).ToString("yyyy-MM-dd"), (steps - 1) / 4 * 1 + 1);
-                            g.drawBottomString(FDT.AddDays((steps - 1) / 4 * 2).ToString("yyyy-MM-dd"), (steps - 1) / 4 * 2 + 1);
-                            g.drawBottomString(FDT.AddDays((steps - 1) / 4 * 3).ToString("yyyy-MM-dd"), (steps - 1) / 4 * 3 + 1);
-                        }
-                        else if ((steps - 4) % 3 == 0)
-                        {
-                            g.drawBottomString(FDT.AddDays((steps - 1) / 3 * 1).ToString("yyyy-MM-dd"), (steps - 1) / 3 * 1 + 1);
-                            g.drawBottomString(FDT.AddDays((steps - 1) / 3 * 2).ToString("yyyy-MM-dd"), (steps - 1) / 3 * 2 + 1);
-                        }
-                        else if ((steps - 3) % 2 == 0)
-                        {
-                            g.drawBottomString(FDT.AddDays((steps - 1) / 2).ToString("yyyy-MM-dd"), ((steps - 1) / 2) + 1);
-                        }
-                    }
-                }
-                g.drawAxis();
+					g.drawBottomString(FDT.ToString("yyyy-MM-dd"), 1);
+					g.drawBottomString(TDT.ToString("yyyy-MM-dd"), steps);
+					if (steps > 2)
+					{
+						if ((steps - 5) % 4 == 0)
+						{
+							g.drawBottomString(FDT.AddDays((steps - 1) / 4 * 1).ToString("yyyy-MM-dd"), (steps - 1) / 4 * 1 + 1);
+							g.drawBottomString(FDT.AddDays((steps - 1) / 4 * 2).ToString("yyyy-MM-dd"), (steps - 1) / 4 * 2 + 1);
+							g.drawBottomString(FDT.AddDays((steps - 1) / 4 * 3).ToString("yyyy-MM-dd"), (steps - 1) / 4 * 3 + 1);
+						}
+						else if ((steps - 4) % 3 == 0)
+						{
+							g.drawBottomString(FDT.AddDays((steps - 1) / 3 * 1).ToString("yyyy-MM-dd"), (steps - 1) / 3 * 1 + 1);
+							g.drawBottomString(FDT.AddDays((steps - 1) / 3 * 2).ToString("yyyy-MM-dd"), (steps - 1) / 3 * 2 + 1);
+						}
+						else if ((steps - 3) % 2 == 0)
+						{
+							g.drawBottomString(FDT.AddDays((steps - 1) / 2).ToString("yyyy-MM-dd"), ((steps - 1) / 2) + 1);
+						}
+					}
+				}
+				g.drawAxis();
 
-                int bx = 0, answerID = 0;
+				int bx = 0, answerID = 0;
 
-                string axisDesc = "Resultat";
-                rs = Db.rs("SELECT " +
-                    "rpc.WeightedQuestionOptionID, " +	// 0
-                    "wqol.WeightedQuestionOption, " +
-                    "wqo.QuestionID, " +
-                    "wqo.OptionID " +
-                    "FROM Report r " +
-                    "INNER JOIN ReportPart rp ON r.ReportID = rp.ReportID " +
-                    "INNER JOIN ReportPartComponent rpc ON rp.ReportPartID = rpc.ReportPartID " +
-                    "INNER JOIN WeightedQuestionOption wqo ON rpc.WeightedQuestionOptionID = wqo.WeightedQuestionOptionID " +
+				string axisDesc = "Resultat";
+				rs = Db.rs("SELECT " +
+					"rpc.WeightedQuestionOptionID, " +	// 0
+					"wqol.WeightedQuestionOption, " +
+					"wqo.QuestionID, " +
+					"wqo.OptionID " +
+					"FROM Report r " +
+					"INNER JOIN ReportPart rp ON r.ReportID = rp.ReportID " +
+					"INNER JOIN ReportPartComponent rpc ON rp.ReportPartID = rpc.ReportPartID " +
+					"INNER JOIN WeightedQuestionOption wqo ON rpc.WeightedQuestionOptionID = wqo.WeightedQuestionOptionID " +
                     "INNER JOIN WeightedQuestionOptionLang wqol ON wqo.WeightedQuestionOptionID = wqol.WeightedQuestionOptionID AND wqol.LangID = " + Convert.ToInt32(HttpContext.Current.Session["LID"]) + " " +
-                    "WHERE rpc.ReportPartID IN (" + rp + ") " +
-                    "ORDER BY rp.SortOrder, rpc.SortOrder", "eFormSqlConnection");
-                while (rs.Read())
-                {
-                    float lastVal = -1f;//, compareVal = -1f;
-                    int lastPos = 0;
-                    SqlDataReader rs2 = Db.rs("SELECT " +
-                        "a.EndDT, " +
-                        "av.ValueInt, " +
-                        "a.AnswerID " +
-                        "FROM Answer a " +
-                        "INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID " +
+					"WHERE rpc.ReportPartID IN (" + rp + ") " +
+					"ORDER BY rp.SortOrder, rpc.SortOrder", "eFormSqlConnection");
+				while (rs.Read())
+				{
+					float lastVal = -1f;//, compareVal = -1f;
+					int lastPos = 0;
+					SqlDataReader rs2 = Db.rs("SELECT " +
+						"a.EndDT, " +
+						"av.ValueInt, " +
+						"a.AnswerID " +
+						"FROM Answer a " +
+						"INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID " +
 
                         "INNER JOIN healthWatch..UserProjectRoundUserAnswer ha ON a.AnswerID = ha.AnswerID AND ha.ProjectRoundUserID = a.ProjectRoundUserID " +
 
-                        "WHERE av.DeletedSessionID IS NULL " +
-                        "AND av.ValueInt IS NOT NULL " +
-                        "AND a.EndDT IS NOT NULL " +
-                        "AND a.EndDT < '" + TDT.AddDays(1).ToString("yyyy-MM-dd") + "' " +
-                        "AND a.EndDT >= '" + FDT.ToString("yyyy-MM-dd") + "' " +
-                        "AND a.AnswerID " + answer + " " +
-                        "AND a.ProjectRoundUserID = " + userID + " " +
-                        "AND av.QuestionID = " + rs.GetInt32(2) + " " +
-                        "AND av.OptionID = " + rs.GetInt32(3) + " " +
-                        "ORDER BY a.EndDT", "eFormSqlConnection");
-                    while (rs2.Read())
-                    {
+						"WHERE av.DeletedSessionID IS NULL " +
+						"AND av.ValueInt IS NOT NULL " +
+						"AND a.EndDT IS NOT NULL " +
+						"AND a.EndDT < '" + TDT.AddDays(1).ToString("yyyy-MM-dd") + "' " +
+						"AND a.EndDT >= '" + FDT.ToString("yyyy-MM-dd") + "' " +
+						"AND a.AnswerID " + answer + " " +
+						"AND a.ProjectRoundUserID = " + userID + " " +
+						"AND av.QuestionID = " + rs.GetInt32(2) + " " +
+						"AND av.OptionID = " + rs.GetInt32(3) + " " +
+						"ORDER BY a.EndDT", "eFormSqlConnection");
+					while (rs2.Read())
+					{
                         answerID = rs2.GetInt32(2);
                         //if (compare && compareVal == -1f)
                         //{
@@ -526,22 +528,22 @@ namespace HW
                         //    g.drawStepLine(28, 0, compareVal, steps + 1, compareVal);
                         //}
 
-                        if (lastPos == 0 && oneDay)
-                        {
-                            g.drawStringInGraph(rs2.GetDateTime(0).ToString("yyyy-MM-dd"), 195, 280);
-                        }
-                        int pos = (oneDay ? rs2.GetDateTime(0).Hour * 6 + Convert.ToInt32(rs2.GetDateTime(0).Minute / 10) : ((TimeSpan)(rs2.GetDateTime(0).Date - FDT)).Days + 1);
-                        float newVal = (float)Convert.ToDouble(rs2.GetInt32(1));
-                        int color = (compare ? 19 : Convert.ToInt32(so[bx + 1]) + 3);
-                        if (lastVal != -1f)
-                        {
-                            g.drawStepLine(color, lastPos, lastVal, pos, newVal);
-                        }
-                        g.drawDot(color, pos, newVal, lastPos, lastVal, 3);
-                        lastPos = pos;
-                        lastVal = newVal;
-                    }
-                    rs2.Close();
+						if (lastPos == 0 && oneDay)
+						{
+							g.drawStringInGraph(rs2.GetDateTime(0).ToString("yyyy-MM-dd"), 195, 280);
+						}
+						int pos = (oneDay ? rs2.GetDateTime(0).Hour * 6 + Convert.ToInt32(rs2.GetDateTime(0).Minute / 10) : ((TimeSpan)(rs2.GetDateTime(0).Date - FDT)).Days + 1);
+						float newVal = (float)Convert.ToDouble(rs2.GetInt32(1));
+						int color = (compare ? 19 : Convert.ToInt32(so[bx + 1]) + 3);
+						if (lastVal != -1f)
+						{
+							g.drawStepLine(color, lastPos, lastVal, pos, newVal);
+						}
+						g.drawDot(color, pos, newVal, lastPos, lastVal, 3);
+						lastPos = pos;
+						lastVal = newVal;
+					}
+					rs2.Close();
 
                     if (compare)
                     {
@@ -578,12 +580,12 @@ namespace HW
                             }
                             else
                             {
-                                int pos = ((TimeSpan)((new DateTime(rs2.GetInt32(0), rs2.GetInt32(1), 15)).Date - FDT)).Days + 1;
+                                int pos = ((TimeSpan)((new DateTime(rs2.GetInt32(0),rs2.GetInt32(1),15)).Date - FDT)).Days + 1;
                                 if (pos < 0) { pos = 0; }
                                 if (pos > steps + 1) { pos = steps + 1; }
                                 compareValue = (float)Convert.ToDouble(rs2.GetValue(2));
                                 if (lastCompareValue != -1f)
-                                {
+                                {                                    
                                     g.drawStepLine(28, lastComparePosition, lastCompareValue, pos, compareValue);
                                 }
                                 lastComparePosition = pos;
@@ -618,7 +620,7 @@ namespace HW
                             "AND a.EndDT IS NOT NULL " +
                             "AND a.EndDT < '" + TDT.AddDays(1).ToString("yyyy-MM") + "-01' " +
                             "AND a.EndDT >= '" + FDT.AddMonths(1).ToString("yyyy-MM") + "-01' " +
-
+                            
                             "AND xha.AnswerID = " + answerID + " " +
                             "AND xha.ProjectRoundUserID = " + userID + " " +
 
@@ -650,17 +652,17 @@ namespace HW
                         rs2.Close();
                     }
 
-                    if (lastVal != -1f && !compare)
-                    {
-                        g.drawColorExplBox(rs.GetString(1), Convert.ToInt32(so[bx + 1]) + 3, 100 + (140 * (bx % 3)), (so.Length > 4 ? (so.Length > 7 ? 5 : 10) : 15) + (13 * Convert.ToInt32(Math.Floor((float)bx / 3))));
-                    }
-                    else if (compare)
-                    {
-                        axisDesc = rs.GetString(1);
+					if (lastVal != -1f && !compare)
+					{
+						g.drawColorExplBox(rs.GetString(1), Convert.ToInt32(so[bx + 1]) + 3, 100 + (140 * (bx % 3)), (so.Length > 4 ? (so.Length > 7 ? 5 : 10) : 15) + (13 * Convert.ToInt32(Math.Floor((float)bx / 3))));
+					}
+					else if (compare)
+					{
+						axisDesc = rs.GetString(1);
                         switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                         {
                             case 1:
-                                g.drawColorExplBox("Mina v√§rden", 19, 140, 15);
+                                g.drawColorExplBox("Mina v‰rden", 19, 140, 15);
                                 g.drawColorExplBox("Samma profil", 18, 260, 15);
                                 g.drawColorExplBox("Hela databasen", 28, 380, 15);
                                 break;
@@ -670,19 +672,19 @@ namespace HW
                                 g.drawColorExplBox("Complete database", 28, 380, 15);
                                 break;
                         }
-                    }
+					}
 
-                    bx++;
-                }
-                rs.Close();
-                #endregion
+					bx++;
+				}
+				rs.Close();
+				#endregion
 
-                g.drawAxisExpl(axisDesc, 0, false, false);
-                g.render();
-            }
+				g.drawAxisExpl(axisDesc, 0, false, false);
+				g.render();
+			}
 
-            #region group stats
-            /*
+			#region group stats
+			/*
 				string sortString = "";
 				int langID = 0;
 				rs = Db.recordSet("SELECT SortString, dbo.cf_unitLangID(ProjectRoundUnitID) FROM ProjectRoundUnit WHERE ProjectRoundUnitID = " + HttpContext.Current.Request.QueryString["PRUID"]);
@@ -839,7 +841,7 @@ namespace HW
 					if (rac > Convert.ToInt32(tot))
 					{
 						g = new Graph(895, 50, "#FFFFFF");
-						g.drawStringInGraph("Ingen √•terkoppling pga otillr√§ckligt underlag", 300, -30);
+						g.drawStringInGraph("Ingen Âterkoppling pga otillr‰ckligt underlag", 300, -30);
 					}
 					else
 					{
@@ -894,7 +896,7 @@ namespace HW
 					{
 						System.Collections.SortedList all = new System.Collections.SortedList();
 
-						OdbcDataReader rs2 = Db.recordSet("SELECT dbo.cf_projectUnitTree(pru.ProjectRoundUnitID,' ¬ª '), SortString FROM ProjectRoundUnit pru " +
+						OdbcDataReader rs2 = Db.recordSet("SELECT dbo.cf_projectUnitTree(pru.ProjectRoundUnitID,' ª '), SortString FROM ProjectRoundUnit pru " +
 							"WHERE LEFT(pru.SortString," + sortString.Length + ") = '" + sortString + "'");
 						while (rs2.Read())
 						{
@@ -942,13 +944,13 @@ namespace HW
 							}
 						}
 
-						g.drawReferenceLine(rs.GetInt32(2), " = riktv√§rde");
+						g.drawReferenceLine(rs.GetInt32(2), " = riktv‰rde");
 					}
 					rs.Close();
 
-					g.drawAxisExpl("po√§ng", 0, false, false);
+					g.drawAxisExpl("po‰ng", 0, false, false);
 
-					//g.drawReferenceLineExpl(770,25," = riktv√§rde");
+					//g.drawReferenceLineExpl(770,25," = riktv‰rde");
 					#endregion
 				}
 				else if (type == 2)
@@ -994,9 +996,9 @@ namespace HW
 					}
 					rs.Close();
 
-					g.drawAxisExpl("po√§ng", 0, false, false);
+					g.drawAxisExpl("po‰ng", 0, false, false);
 
-					g.drawReference(780, 25, " = riktv√§rde");
+					g.drawReference(780, 25, " = riktv‰rde");
 					#endregion
 				}
 				else if (type == 8)
@@ -1030,7 +1032,7 @@ namespace HW
 								if (bx == 0)
 								{
 									g.drawAxis(false);
-									g.drawAxisExpl((langID == 1 ? "Medelv√§rde" : "Mean value") + " " + HttpUtility.HtmlDecode("&plusmn;") + "SD", 0, false, false);
+									g.drawAxisExpl((langID == 1 ? "Medelv‰rde" : "Mean value") + " " + HttpUtility.HtmlDecode("&plusmn;") + "SD", 0, false, false);
 								}
 								g.drawColorExplBox(rs3.GetString(1), bx + 4, 130 + (int)((bx % 6) * 120), 15 + (int)Math.Ceiling(bx / 6) * 15);
 								float lastVal = -1f;
@@ -1202,12 +1204,12 @@ namespace HW
 						{
 							if (bx == 0)
 							{
-								g.drawAxisExpl(rs.GetString(1) + ", " + (langID == 1 ? "medelv√§rde" : "mean value") + " " + HttpUtility.HtmlDecode("&plusmn;") + "SD", bx + 4, false, true);
+								g.drawAxisExpl(rs.GetString(1) + ", " + (langID == 1 ? "medelv‰rde" : "mean value") + " " + HttpUtility.HtmlDecode("&plusmn;") + "SD", bx + 4, false, true);
 								g.drawAxis(false);
 							}
 							else
 							{
-								g.drawAxisExpl(rs.GetString(1) + ", " + (langID == 1 ? "medelv√§rde" : "mean value") + " " + HttpUtility.HtmlDecode("&plusmn;") + "SD", bx + 4, true, true);
+								g.drawAxisExpl(rs.GetString(1) + ", " + (langID == 1 ? "medelv‰rde" : "mean value") + " " + HttpUtility.HtmlDecode("&plusmn;") + "SD", bx + 4, true, true);
 								g.drawAxis(true);
 							}
 							float lastVal = -1f;
@@ -1361,7 +1363,7 @@ namespace HW
 					}
 				}
 				*/
-            #endregion
-        }
-    }
+				#endregion
+		}
+	}
 }

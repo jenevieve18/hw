@@ -1,9 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="home.aspx.cs" Inherits="HW.home" %>
-<%@ Import Namespace="HW.Core.FromHW" %>
+<%@ Page language="c#" Inherits="healthWatch.home" Codebehind="home.aspx.cs" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
-  <%=Db.header2(getTitle(), getDesc())%>
+  <%=healthWatch.Db.header2(getTitle(), getDesc())%>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
 <!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
@@ -12,9 +11,9 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 	    <form id="form1" method="post" runat="server">
 
-<div class="container_16 index<%=Db.cobranded() %>">
+<div class="container_16 index<%=healthWatch.Db.cobranded() %>">
 		<div class="headergroup grid_16">
-	   <%=Db.nav2()%>
+	   <%=healthWatch.Db.nav2()%>
 		</div> <!-- end .headergroup -->
         <% if (!categorySupplied)
            { %>
@@ -38,16 +37,16 @@
 			
 			<div class="sidebar grid_4 omega">
 				<div class="box" id="wisdom">
-					<%=Db.wiseOfToday() %>
+					<%=healthWatch.Db.wiseOfToday() %>
 				</div>
 				<%=splash() %>
 				<div class="box">
-					<%=Db.mostRead()%>
+					<%=healthWatch.Db.mostRead()%>
 				</div>
 			</div>
 		</div>
 		
-		<%=Db.bottom2() %>
+		<%=healthWatch.Db.bottom2() %>
 	</div> <!-- end .container_12 -->
 	<!--<img style="position: absolute; top: 0; left: 46px; z-index: -1" id="underlay" src="/01.png" />-->
 	<!--<button id="hide" style="position: absolute; top: 0; left: 0; z-index: 99">Hide image</button><button id="hide_ol" style="position: absolute; top: 0; left: 100px; z-index: 99">Hide html</button>-->

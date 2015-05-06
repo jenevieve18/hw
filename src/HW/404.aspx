@@ -1,1 +1,1 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="404.aspx.cs" Inherits="HW._404" %>
+<%@ Page Language="C#" AutoEventWireup="true" Inherits="healthWatch._404" Codebehind="404.aspx.cs" %>

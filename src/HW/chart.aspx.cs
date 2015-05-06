@@ -4,10 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data;
 using System.Data.SqlClient;
-using HW.Core.FromHW;
 
-namespace HW
+namespace healthWatch
 {
     public partial class chart : System.Web.UI.Page
     {
@@ -26,7 +26,7 @@ namespace HW
             }
             int LID = (HttpContext.Current.Request.QueryString["LID"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["LID"].ToString()) : 1);
 
-            charts.Controls.Add(new LiteralControl(Db.rightNow(sponsorID, LID)));
+            charts.Controls.Add(new LiteralControl(Db.rightNow(sponsorID,LID)));
         }
     }
 }

@@ -1,20 +1,25 @@
-ï»¿using System;
-using System.Collections.Generic;
+using System;
+using System.Collections;
+using System.ComponentModel;
 using System.Data.SqlClient;
-using System.Linq;
+using System.Drawing;
 using System.Web;
+using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using HW.Core.FromHW;
+using System.Web.UI.HtmlControls;
 
-namespace HW
+namespace healthWatch
 {
-    public partial class password : System.Web.UI.Page
-    {
-        protected void Page_Load(object sender, System.EventArgs e)
-        {
-            if (HttpContext.Current.Request.QueryString["K"] != null && HttpContext.Current.Request.QueryString["K"].ToString().Length >= 9)
-            {
+	/// <summary>
+	/// Summary description for password.
+	/// </summary>
+	public partial class password : System.Web.UI.Page
+	{
+		protected void Page_Load(object sender, System.EventArgs e)
+		{
+			if(HttpContext.Current.Request.QueryString["K"] != null && HttpContext.Current.Request.QueryString["K"].ToString().Length >= 9)
+			{
                 int userID = 0;
                 try
                 {
@@ -38,16 +43,16 @@ namespace HW
                 }
 
                 if (HttpContext.Current.Request.Form["ForgotPassword"] != null)
-                {
-                    if (HttpContext.Current.Request.Form["ForgotPassword"].ToString().Length >= 5)
-                    {
+				{
+					if(HttpContext.Current.Request.Form["ForgotPassword"].ToString().Length >= 5)
+					{
                         if (userID != 0)
                         {
                             Db.exec("UPDATE [User] SET Password = '" + Db.HashMD5(HttpContext.Current.Request.Form["ForgotPassword"].ToString()) + "', " +
                                 "UserKey = NEWID() " +
                                 "WHERE UserID = " + userID);
                         }
-
+                        
                         if (HttpContext.Current.Request.QueryString["NL"] != null)
                         {
                             HttpContext.Current.Response.Redirect("register.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
@@ -57,35 +62,35 @@ namespace HW
                             Db.checkAndLogin(userID);
                         }
                     }
-                    else
-                    {
-                        error.Text = "LÃ¶senordet mÃ¥ste vara minst 5 tecken.";
-                    }
-                }
-            }
-            else
-            {
-                HttpContext.Current.Response.Redirect("home.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
-            }
-        }
+					else
+					{
+						error.Text = "Lösenordet måste vara minst 5 tecken.";
+					}
+				}
+			}
+			else
+			{
+				HttpContext.Current.Response.Redirect("home.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(),true);
+			}
+		}
 
-        #region Web Form Designer generated code
-        override protected void OnInit(EventArgs e)
-        {
-            //
-            // CODEGEN: This call is required by the ASP.NET Web Form Designer.
-            //
-            InitializeComponent();
-            base.OnInit(e);
-        }
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
-        }
-        #endregion
-    }
+		#region Web Form Designer generated code
+		override protected void OnInit(EventArgs e)
+		{
+			//
+			// CODEGEN: This call is required by the ASP.NET Web Form Designer.
+			//
+			InitializeComponent();
+			base.OnInit(e);
+		}
+		
+		/// <summary>
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
+		/// </summary>
+		private void InitializeComponent()
+		{    
+		}
+		#endregion
+	}
 }

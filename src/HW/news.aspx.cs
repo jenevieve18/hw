@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
+using System.Collections;
+using System.ComponentModel;
 using System.Data.SqlClient;
-using System.Linq;
+using System.Drawing;
 using System.Web;
+using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using HW.Core.FromHW;
+using System.Web.UI.HtmlControls;
 
-namespace HW
+namespace healthWatch
 {
     public partial class news : System.Web.UI.Page
     {
@@ -26,11 +28,11 @@ namespace HW
         {
             Db.checkAndLogin();
 
-            ClientScript.RegisterClientScriptBlock(this.GetType(), "UPDATE_FORM_ACTION", "<script language=\"javascript\">document.forms[0].action = '/' + document.forms[0].action.substr(document.forms[0].action.lastIndexOf('/')+1);</script>");
+            ClientScript.RegisterClientScriptBlock(this.GetType(),"UPDATE_FORM_ACTION", "<script language=\"javascript\">document.forms[0].action = '/' + document.forms[0].action.substr(document.forms[0].action.lastIndexOf('/')+1);</script>");
 
             System.Text.StringBuilder buf = new System.Text.StringBuilder();
 
-            bool bodySameAsTeaser = false;
+            bool bodySameAsTeaser = false; 
             string url = "";
 
             SqlDataReader rs = Db.rs("SELECT " +
@@ -56,9 +58,9 @@ namespace HW
             {
                 Db.exec("INSERT INTO NewsRead (NewsID, SessionID) VALUES (" + rs.GetInt32(0) + "," + Convert.ToInt32(HttpContext.Current.Session["SessionID"]) + ")", "newsSqlConnection");
 
-                buf.Append("<h1>" + rs.GetString(3) + "</h1>");
+   				buf.Append("<h1>" + rs.GetString(3) + "</h1>");
                 buf.Append("<div class=\"taxonomy\">");
-                if (!rs.IsDBNull(2))
+                if(!rs.IsDBNull(2))
                 {
                     buf.Append(rs.GetString(2).ToUpper() + " / ");
                 }
@@ -71,11 +73,11 @@ namespace HW
                 buf.Append("<div class=\"content\">");
 
                 if (rs.GetInt32(5) != 0)
-                {
+				{
                     buf.Append("<div class=\"imgcontainer\"><img src=\"/img/news/" + rs.GetInt32(5) + "/" + rs.GetString(6) + "\" alt=\"" + HttpUtility.HtmlEncode(rs.GetString(3)) + "\" /></div>");
-                }
+				}
 
-                if (!rs.IsDBNull(2))
+                if(!rs.IsDBNull(2))
                 {
                     buf.Append("<div class=\"category " + rs.GetString(10) + "\">&nbsp;</div>");
                 }
@@ -90,7 +92,7 @@ namespace HW
                 //}
                 //buf.Append("</a>");
 
-                if (!rs.IsDBNull(8))
+                if(!rs.IsDBNull(8))
                 {
                     //buf.Append("&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;");
                     buf.Append("<a href=\"" + rs.GetString(8) + "\" class=\"more external\"> ");
@@ -99,11 +101,11 @@ namespace HW
                         //case 1: { buf.Append(rs.GetString(7)); break; }
                         case 1: { buf.Append("Till artikeln"); break; }
                         case 2: { buf.Append("To the article"); break; }
-                    }
+                    } 
                     buf.Append("</a>");
                 }
 
-                title = rs.GetString(3).Replace("\r", "").Replace("\n", "").Replace("\"", "");
+                title = rs.GetString(3).Replace("\r","").Replace("\n","").Replace("\"","");
                 teaser = rs.GetString(11).Replace("\r", "").Replace("\n", "").Replace("\"", "");
 
                 bodySameAsTeaser = (!rs.IsDBNull(12) || rs.GetString(11) == rs.GetString(4));

@@ -1,13 +1,12 @@
-Ôªø<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="calendar.aspx.cs" Inherits="HW.calendar" %>
-<%@ Import Namespace="HW.Core.FromHW" %>
+<%@ Page language="c#" Inherits="healthWatch.calendar" Codebehind="calendar.aspx.cs" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
    <%
        switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
        {
-           case 1: HttpContext.Current.Response.Write(Db.header2("Kalender", "Kalender")); break;
-           case 2: HttpContext.Current.Response.Write(Db.header2("Calendar", "Calendar")); break;
+           case 1: HttpContext.Current.Response.Write(healthWatch.Db.header2("Kalender", "Kalender")); break;
+           case 2: HttpContext.Current.Response.Write(healthWatch.Db.header2("Calendar", "Calendar")); break;
        }
            %>
 	<script type="text/javascript">
@@ -75,12 +74,12 @@
 //	            /* like this:
 //	            <div class="message">
 //	            <div class="mood happy"></div> <-- mood
-//	            <p>K√§ra dagboken... idag var igen en j√§ttebra dag. Barnen var sn√§lla och solen sken... hoppas det blir mera s√•dana dagar i framtiden!</p> <-- post body
+//	            <p>K‰ra dagboken... idag var igen en j‰ttebra dag. Barnen var sn‰lla och solen sken... hoppas det blir mera sÂdana dagar i framtiden!</p> <-- post body
 //	            </div>
 //	            */
 
 //	            if ($("#messagetext").val()) {
-//	                if (confirm("Du har ett osparat inl√§gg \n\nF√∂rkasta inl√§gget och redigera detta ist√§llet?")) {
+//	                if (confirm("Du har ett osparat inl‰gg \n\nFˆrkasta inl‰gget och redigera detta ist‰llet?")) {
 //	                    $("#messagetext").val(post.find(".message").find("p").html());
 //	                    $("#moodchoser").find("." + (post.find(".message").find(".mood").attr("class").split("mood ")[1])).find("input").click();
 //	                }
@@ -148,7 +147,7 @@
 
 	        /*
 	        $(".activity .remove").click(function () {
-	        if (confirm("√Ñr du s√§ker p√• att du vill ta bort aktiviteten?\n\nDetta g√•r inte att √•ngra")) {
+	        if (confirm("ƒr du s‰ker pÂ att du vill ta bort aktiviteten?\n\nDetta gÂr inte att Ângra")) {
 	        $(this).parent().remove();
 	        }
 	        });  */
@@ -171,7 +170,7 @@
 //	                $(this).parent().parent().find(".message").animate({ height: newMessageHeight }, 200)
 //	                $(this).parent().parent().find(".activities").animate({ height: newActivitiesHeight }, 200)
 //	                $(this).parent().parent().addClass("expanded");
-//	                $(this).parent().parent().find(".moretoggle").html("Visa f√§rre")
+//	                $(this).parent().parent().find(".moretoggle").html("Visa f‰rre")
 //	                $(this).parent().parent().find(".moretoggle").css("background", "url('../includes/resources/greyarrow_reverse.png') no-repeat center right")
 //	            }
 
@@ -226,100 +225,100 @@
 	  }
 	</style>
     <script language=javascript>
-        /*
-        function c(id)
-        {
+    /*
+    function c(id)
+    {
         if(id < document.forms[0].a1.value)
         {
-        switch(id)
-        {
-        case 0 : actS(0,0,0); break;
-        case 1 : actS(1,document.forms[0].a2.value,0); break;
-        case 2 : actS(2,document.forms[0].a2.value,document.forms[0].a3.value); break;
-        case 3 : actS(3,document.forms[0].a2.value,document.forms[0].a3.value); break;
-        }
-        }
-        }
-        function setDDL(id,i)
-        {
-        eval('document.forms[0].'+id+'.selectedIndex = '+i);
-        }
-        function d(id)
-        {
+			switch(id)
+			{
+				case 0 : actS(0,0,0); break;
+				case 1 : actS(1,document.forms[0].a2.value,0); break;
+				case 2 : actS(2,document.forms[0].a2.value,document.forms[0].a3.value); break;
+				case 3 : actS(3,document.forms[0].a2.value,document.forms[0].a3.value); break;
+			}
+		}
+    }
+    function setDDL(id,i)
+    {
+		eval('document.forms[0].'+id+'.selectedIndex = '+i);
+    }
+    function d(id)
+    {
         return document.getElementById(id);
-        }
-        function actA(i1)
-        {
+    }
+    function actA(i1)
+    {
         for(i = 0; i <= 3; i++)
         {
-        d('act'+i).className = 'actHead' + (i == 0 ? 'First' : '') + (i == i1 ? 'A' : '');
+            d('act'+i).className = 'actHead' + (i == 0 ? 'First' : '') + (i == i1 ? 'A' : '');
         }
-        }
-        function actH(i1,i2,i3)
-        {
+    }
+    function actH(i1,i2,i3)
+    {
         obj = null;
         if(obj = d('act'+i1+'_'+i2+'_'+i3))
         {
-        obj.style.display = 'none';
-        }
+			obj.style.display = 'none';
+		}
         return (obj != null);
-        }
-        function actG(m,i2,i3,t)
-        {
+    }
+    function actG(m,i2,i3,t)
+    {
         d('act3_0_0').innerHTML = '';
         if(m.indexOf(':') == -1)
         {
-        d('act3_0_0').innerHTML += '<A HREF="JavaScript:void(window.open(\'calendarGraphOverTime.aspx?MUID=' + m + '&R=' + Math.random() + '&T=' + t + '&W=960&H=480\',\'\',\'width=1000,height=520\'));"><img border="0" alt="<%
-        switch(Convert.ToInt32(HttpContext.Current.Session["LID"]))
-        {
-        case 1: HttpContext.Current.Response.Write("Klicka f√∂r st√∂rre bild..."); break;
-        case 2: HttpContext.Current.Response.Write("Click for larger image..."); break;
-        }
-        %>" id="GraphImg" src="calendarGraphOverTime.aspx?MUID=' + m + '&R=' + Math.random() + '&T=' + t + '" /></A>';
-        }
-        else
-        {
-        x = m.split(':');
-        for(i=0; i < x.length; i++)
-        {
-        if(i != 0)
-        {
-        d('act3_0_0').innerHTML += '<br/>';
-        }
-        d('act3_0_0').innerHTML += '<A HREF="JavaScript:void(window.open(\'calendarGraphOverTime.aspx?MUID=' + x[i] + '&R=' + Math.random() + '&T=' + t + '&W=960&H=480\',\'\',\'width=1000,height=520\'));"><img border="0" alt="<%
-        switch(Convert.ToInt32(HttpContext.Current.Session["LID"]))
-        {
-        case 1: HttpContext.Current.Response.Write("Klicka f√∂r st√∂rre bild..."); break;
-        case 2: HttpContext.Current.Response.Write("Click for larger image..."); break;
-        }
-        %>" id="GraphImg' + i + '" src="calendarGraphOverTime.aspx?MUID=' + x[i] + '&R=' + Math.random() + '&T=' + t + '" /></A>';
-        }
-        }
+			d('act3_0_0').innerHTML += '<A HREF="JavaScript:void(window.open(\'calendarGraphOverTime.aspx?MUID=' + m + '&R=' + Math.random() + '&T=' + t + '&W=960&H=480\',\'\',\'width=1000,height=520\'));"><img border="0" alt="<%
+				switch(Convert.ToInt32(HttpContext.Current.Session["LID"]))
+				{
+                    case 1: HttpContext.Current.Response.Write("Klicka fˆr stˆrre bild..."); break;
+                    case 2: HttpContext.Current.Response.Write("Click for larger image..."); break;
+				}
+				%>" id="GraphImg" src="calendarGraphOverTime.aspx?MUID=' + m + '&R=' + Math.random() + '&T=' + t + '" /></A>';
+		}
+		else
+		{
+			x = m.split(':');
+			for(i=0; i < x.length; i++)
+			{
+				if(i != 0)
+				{
+					d('act3_0_0').innerHTML += '<br/>';
+				}
+				d('act3_0_0').innerHTML += '<A HREF="JavaScript:void(window.open(\'calendarGraphOverTime.aspx?MUID=' + x[i] + '&R=' + Math.random() + '&T=' + t + '&W=960&H=480\',\'\',\'width=1000,height=520\'));"><img border="0" alt="<%
+				switch(Convert.ToInt32(HttpContext.Current.Session["LID"]))
+				{
+                    case 1: HttpContext.Current.Response.Write("Klicka fˆr stˆrre bild..."); break;
+                    case 2: HttpContext.Current.Response.Write("Click for larger image..."); break;
+				}
+				%>" id="GraphImg' + i + '" src="calendarGraphOverTime.aspx?MUID=' + x[i] + '&R=' + Math.random() + '&T=' + t + '" /></A>';
+			}
+		}
         actS(3,i2,i3);
-        }
-        function actS(i1,i2,i3)
-        {
+    }
+    function actS(i1,i2,i3)
+    {
         actA(i1);
 
         if(document.forms[0].a1.value < 3)
         {
-        actH(document.forms[0].a1.value,document.forms[0].a2.value,document.forms[0].a3.value);
-        }
-        else
-        {
-        actH(3,0,0);			
-        }
+			actH(document.forms[0].a1.value,document.forms[0].a2.value,document.forms[0].a3.value);
+		}
+		else
+		{
+			actH(3,0,0);			
+		}
         document.forms[0].a1.value = i1; 
-        document.forms[0].a2.value = i2; 
-        document.forms[0].a3.value = i3;
+		document.forms[0].a2.value = i2; 
+		document.forms[0].a3.value = i3;
         if(i1 == 3)
         {
-        i2 = 0; i3 = 0;
-        }
+			i2 = 0; i3 = 0;
+		}
         d('act'+i1+'_'+i2+'_'+i3).style.display = '';
-        d('actInnerBoxTopContainer').style.display = (i1 == 2 ? '' : 'none');
-        }
-        */
+		d('actInnerBoxTopContainer').style.display = (i1 == 2 ? '' : 'none');
+    }
+   */
    </script>
   </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
@@ -331,9 +330,9 @@
         <input type="hidden" name="MCID" id="MCID" value="0" />
 	    <input type="hidden" name="DeleteUMID" id="DeleteUMID" value="0" />
 	    <input type="hidden" name="DeleteUPRUA" id="DeleteUPRUA" value="0" />
-		<div class="container_16 myhealth diary<%=Db.cobranded() %>">
+		<div class="container_16 myhealth diary<%=healthWatch.Db.cobranded() %>">
 			<div class="headergroup grid_16">
-		<%=Db.nav2()%>
+		<%=healthWatch.Db.nav2()%>
         </div> <!-- end .headergroup -->
         <div class="contentgroup grid_16">
 			  <div id="newentrygroup">
@@ -439,34 +438,34 @@
 				      <div class="activities">
 				        <div class="title">Dagens aktiviteter/m&auml;tningar</div>
 				        <div class="activity">
-				          <span><span>9:19 H√§lsa & Stress</span></span> <a class="remove"></a><a class="statstoggle"></a>
+				          <span><span>9:19 H‰lsa & Stress</span></span> <a class="remove"></a><a class="statstoggle"></a>
 				        </div>
 				        <div class="activity">
-				          <span><span>9:19 H√§lsa & Stress</span></span> <a class="remove"></a><a class="statstoggle"></a>
+				          <span><span>9:19 H‰lsa & Stress</span></span> <a class="remove"></a><a class="statstoggle"></a>
 				        </div>
 				        <div class="activity">
-				          <span><span>9:19 H√§lsa & Stress</span></span> <a class="remove"></a><a class="statstoggle"></a>
+				          <span><span>9:19 H‰lsa & Stress</span></span> <a class="remove"></a><a class="statstoggle"></a>
 				        </div>
 				        <div class="activity">
-				          <span><span>9:19 H√§lsa & Stress</span></span> <a class="remove"></a><a class="statstoggle"></a>
+				          <span><span>9:19 H‰lsa & Stress</span></span> <a class="remove"></a><a class="statstoggle"></a>
 				        </div>
 				        <div class="activity">
-				          <span><span>9:19 H√§lsa & Stress</span></span> <a class="remove"></a><a class="statstoggle"></a>
+				          <span><span>9:19 H‰lsa & Stress</span></span> <a class="remove"></a><a class="statstoggle"></a>
 				        </div>
 				        <div class="activity">
-				          <span><span>9:19 H√§lsa & Stress</span></span> <a class="remove"></a><a class="statstoggle"></a>
+				          <span><span>9:19 H‰lsa & Stress</span></span> <a class="remove"></a><a class="statstoggle"></a>
 				        </div>
 				        <div class="activity">
-				          <span><span>9:19 H√§lsa & Stress</span></span> <a class="remove"></a><a class="statstoggle"></a>
+				          <span><span>9:19 H‰lsa & Stress</span></span> <a class="remove"></a><a class="statstoggle"></a>
 				        </div>
 				        <div class="activity">
-				          <span><span>9:19 H√§lsa & Stress</span></span> <a class="remove"></a><a class="statstoggle"></a>
+				          <span><span>9:19 H‰lsa & Stress</span></span> <a class="remove"></a><a class="statstoggle"></a>
 				        </div>
 				        <div class="activity">
-				          <span><span>9:19 H√§lsa & Stress</span></span> <a class="remove"></a><a class="statstoggle"></a>
+				          <span><span>9:19 H‰lsa & Stress</span></span> <a class="remove"></a><a class="statstoggle"></a>
 				        </div>
 				        <div class="activity">
-				          <span><span>9:19 H√§lsa & Stress</span></span> <a class="remove"></a><a class="statstoggle"></a>
+				          <span><span>9:19 H‰lsa & Stress</span></span> <a class="remove"></a><a class="statstoggle"></a>
 				        </div>
 				      </div>
 				      <span>
@@ -489,13 +488,13 @@
 				      <div class="messagegroup">
 				        <div class="message">
 				          <div class="mood happy"></div>
-				          <p>K√§ra dagboken... idag var igen en j√§ttebra dag. Barnen var sn√§lla och solen sken... hoppas det blir mera s√•dana dagar i framtiden!</p>
+				          <p>K‰ra dagboken... idag var igen en j‰ttebra dag. Barnen var sn‰lla och solen sken... hoppas det blir mera sÂdana dagar i framtiden!</p>
 				        </div>
 				      </div>
 				      <div class="activities">
 				        <div class="title">Dagens aktiviteter/m&auml;tningar</div>
 				        <div class="activity">
-				          <span><span>9:19 H√§lsa & Stress</span></span> <a class="remove"></a><a class="statstoggle"></a>
+				          <span><span>9:19 H‰lsa & Stress</span></span> <a class="remove"></a><a class="statstoggle"></a>
 				        </div>
 				      </div>
 				      <span><span>
@@ -572,7 +571,7 @@
 					<div class="boxTitle" style="width:270px;"><%
 				switch(Convert.ToInt32(HttpContext.Current.Session["LID"]))
 				{
-                    case 1: HttpContext.Current.Response.Write("Dagens aktiviteter/m√§tningar"); break;
+                    case 1: HttpContext.Current.Response.Write("Dagens aktiviteter/m‰tningar"); break;
                     case 2: HttpContext.Current.Response.Write("Todays notes/measures"); break;
 				}
 				%></div>
@@ -582,7 +581,7 @@
 		</table>
         -->
 		
-		<%=Db.bottom2()%>
+		<%=healthWatch.Db.bottom2()%>
         </div> <!-- end .container_12 -->
 		</form>
   </body>

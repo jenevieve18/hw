@@ -1,17 +1,22 @@
-ï»¿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System;
+using System.Collections;
+using System.ComponentModel;
+using System.Data.SqlClient;
+using System.Drawing;
 using System.Web;
+using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data.SqlClient;
-using HW.Core.FromHW;
+using System.Web.UI.HtmlControls;
 
-namespace HW
+namespace healthWatch
 {
-    public partial class home : System.Web.UI.Page
+	/// <summary>
+	/// Summary description for home.
+	/// </summary>
+	public partial class home : System.Web.UI.Page
     {
-        private string title = "", desc = "Verktyg fÃ¶r sjÃ¤lvhjÃ¤lp samt nyheter inom hÃ¤lsa, stress, sÃ¶mn och diabetes. Self-help tools and news within health, stress, sleep and diabetes.";
+        private string title = "", desc = "Verktyg för självhjälp samt nyheter inom hälsa, stress, sömn och diabetes. Self-help tools and news within health, stress, sleep and diabetes.";
         public bool categorySupplied = false;
 
         public string getTitle()
@@ -27,14 +32,14 @@ namespace HW
         {
             return "<a href=\"/register.aspx\"><img src=\"/images/stock" + Convert.ToInt32(HttpContext.Current.Session["LID"]) + ".jpg\" width=\"228\" height=\"300\" alt=\"Stock\"></a>";
         }
-
+        
         public string rightNow()
         {
             return Db.rightNow(0, Convert.ToInt32(HttpContext.Current.Session["LID"]));
         }
 
-        protected void Page_Load(object sender, System.EventArgs e)
-        {
+		protected void Page_Load(object sender, System.EventArgs e)
+		{
             if (HttpContext.Current.Request.QueryString["LID"] != null && HttpContext.Current.Session["ForceLID"] == null)
             {
                 int LID = Convert.ToInt32("0" + HttpContext.Current.Request.QueryString["LID"]);
@@ -65,19 +70,19 @@ namespace HW
                 }
             }
 
-            Db.checkAndLogin();
+			Db.checkAndLogin();
 
             ClientScript.RegisterClientScriptBlock(this.GetType(), "UPDATE_FORM_ACTION", "<script language=\"javascript\">document.forms[0].action = '/' + document.forms[0].action.substr(document.forms[0].action.lastIndexOf('/')+1);</script>");
-        }
+		}
 
         int cxL = 0;
         int cxR = 0;
         int cx = 0;
-
+        
         protected override void OnPreRender(EventArgs e)
         {
             base.OnPreRender(e);
-
+            
             left.Text = "";
             right.Text = "";
 
@@ -307,12 +312,12 @@ namespace HW
             {
                 switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: { buf += "DIREKT FRÃ…N NÃ„TET"; break; }
+                    case 1: { buf += "DIREKT FRÅN NÄTET"; break; }
                     case 2: { buf += "FROM THE NET"; break; }
                 }
-            }
+            } 
             buf += " / <span class=\"date\">";
-            switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
+			switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
             {
                 case 1: { buf += dt.ToString("yyyy-MM-dd"); break; }
                 case 2: { buf += dt.ToString("MMM dd, yyyy"); break; }
@@ -337,7 +342,7 @@ namespace HW
             {
                 switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: { buf += " LÃ¤s mer"; break; }
+                    case 1: { buf += " Läs mer"; break; }
                     case 2: { buf += " Read more"; break; }
                 }
             }
@@ -357,21 +362,21 @@ namespace HW
 
         #region Web Form Designer generated code
         override protected void OnInit(EventArgs e)
-        {
-            //
-            // CODEGEN: This call is required by the ASP.NET Web Form Designer.
-            //
-            InitializeComponent();
-            base.OnInit(e);
-        }
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
-        }
-        #endregion
-    }
+		{
+			//
+			// CODEGEN: This call is required by the ASP.NET Web Form Designer.
+			//
+			InitializeComponent();
+			base.OnInit(e);
+		}
+		
+		/// <summary>
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
+		/// </summary>
+		private void InitializeComponent()
+		{    
+		}
+		#endregion
+	}
 }

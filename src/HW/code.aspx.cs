@@ -1,13 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
+using System.ComponentModel;
 using System.Data.SqlClient;
-using System.Linq;
+using System.Drawing;
 using System.Web;
+using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using HW.Core.FromHW;
+using System.Web.UI.HtmlControls;
 
-namespace HW
+namespace healthWatch
 {
     public partial class code : System.Web.UI.Page
     {
@@ -51,7 +53,7 @@ namespace HW
 
                 if (sponsorID != 0 && departmentID != 0)
                 {
-                    int userID = Db.createAccount("AUTO_CREATED_GUEST_" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), Email.Text.Replace("'", ""), "AUTO_CREATED_PASS_" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), sponsorID, departmentID.ToString(), 0, "");
+                    int userID = Db.createAccount("AUTO_CREATED_GUEST_" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), Email.Text.Replace("'",""), "AUTO_CREATED_PASS_" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), sponsorID, departmentID.ToString(), 0, "");
                     Db.exec("INSERT INTO SponsorInvite (SponsorID,DepartmentID,Email,UserID,Sent,DupeCheck) VALUES (" +
                         sponsorID + "," +
                         departmentID + "," +

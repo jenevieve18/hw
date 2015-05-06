@@ -1,9 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="rssImport.aspx.cs" Inherits="HW.rssImport" %>
+<%@ Page language="c#" Inherits="healthWatch.rssImport" Codebehind="rssImport.aspx.cs" %>
 <html>
 	<head>
 	</head>
 	<body>
-		<form id="Form1" method="post" runat="server">
+		<form method="post" runat="server">
 		</form>
 	</body>
 </html>

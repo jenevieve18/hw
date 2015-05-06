@@ -1,16 +1,15 @@
-ï»¿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="exerciseShow.aspx.cs" Inherits="HW.exerciseShow" %>
-<%@ Import Namespace="HW.Core.FromHW" %>
+<%@ Page Language="C#" Inherits="healthWatch.exerciseShow" Codebehind="exerciseShow.aspx.cs" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
    <%
        switch (LID)
        {
-           case 1: HttpContext.Current.Response.Write(Db.header2("Ã–vningar", "Ã–vningar", replacementHead)); break;
-           case 2: HttpContext.Current.Response.Write(Db.header2("Exercises", "Exercises", replacementHead)); break;
+           case 1: HttpContext.Current.Response.Write(healthWatch.Db.header2("Övningar", "Övningar", replacementHead)); break;
+           case 2: HttpContext.Current.Response.Write(healthWatch.Db.header2("Exercises", "Exercises", replacementHead)); break;
        }
 %>
-        <script type="text/javascript">            $("body").addClass("popup"); $(document).ready(function () { $("body").addClass("popup"); });</script>
+        <script type="text/javascript">$("body").addClass("popup"); $(document).ready(function () { $("body").addClass("popup"); });</script>
         <script src="AC_ActiveX.js" type="text/javascript"></script>
     </head>
 <!--[if lt IE 7 ]> <body class="ie6" class="popup"> <![endif]-->

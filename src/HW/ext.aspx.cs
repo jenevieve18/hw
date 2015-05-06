@@ -4,9 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using HW.Core.FromHW;
 
-namespace HW
+namespace healthWatch
 {
     public partial class ext : System.Web.UI.Page
     {
@@ -35,7 +34,7 @@ namespace HW
                                 ret += s + " = " + HttpContext.Current.Request.QueryString[s] + "&";
                             foreach (string s in HttpContext.Current.Request.Form.Keys)
                                 ret += s + " = " + HttpContext.Current.Request.Form[s] + "&";
-                            Db.exec("INSERT INTO Debug (DebugTxt) VALUES ('" + ret.Replace("'", "''") + "')", "eFormSqlConnection");
+                            Db.exec("INSERT INTO Debug (DebugTxt) VALUES ('" + ret.Replace("'", "''") + "')","eFormSqlConnection");
                             HttpContext.Current.Response.Write("1");
                             break;
                         }

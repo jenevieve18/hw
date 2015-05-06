@@ -1,13 +1,12 @@
-ï»¿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="exercise.aspx.cs" Inherits="HW.exercise" %>
-<%@ Import Namespace="HW.Core.FromHW" %>
+<%@ Page Language="C#" Inherits="healthWatch.exercise" Codebehind="exercise.aspx.cs" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
    <%
        switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
        {
-           case 1: HttpContext.Current.Response.Write(Db.header2("Ã–vningar", "Ã–vningar")); break;
-           case 2: HttpContext.Current.Response.Write(Db.header2("Exercises", "Exercises")); break;
+           case 1: HttpContext.Current.Response.Write(healthWatch.Db.header2("Övningar", "Övningar")); break;
+           case 2: HttpContext.Current.Response.Write(healthWatch.Db.header2("Exercises", "Exercises")); break;
        }
            %>
            <script type="text/javascript">
@@ -74,16 +73,16 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 	    <form id="Form1" method="post" runat="server">
-        <div class="container_16 myhealth two-sides exercises<%=Db.cobranded() %>">
+        <div class="container_16 myhealth two-sides exercises<%=healthWatch.Db.cobranded() %>">
 			<div class="headergroup grid_16">
-		<%=Db.nav2()%>
+		<%=healthWatch.Db.nav2()%>
         </div> <!-- end .headergroup -->
       <div class="contentgroup grid_16">
         <div class="statschosergroup">
           <h1 class="header"><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("Ã–vningar"); break;
+                    case 1: HttpContext.Current.Response.Write("Övningar"); break;
                     case 2: HttpContext.Current.Response.Write("Exercises"); break;
                 }
              %></h1><a name=filter></a>
@@ -92,7 +91,7 @@
 			        <div class="title"><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("VÃ¤lj kategori"); break;
+                    case 1: HttpContext.Current.Response.Write("Välj kategori"); break;
                     case 2: HttpContext.Current.Response.Write("Choose category"); break;
                 }
              %></div>
@@ -102,7 +101,7 @@
 			        <div class="title"><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("VÃ¤lj typ"); break;
+                    case 1: HttpContext.Current.Response.Write("Välj typ"); break;
                     case 2: HttpContext.Current.Response.Write("Choose type"); break;
                 }
              %></div>
@@ -115,7 +114,7 @@
 			      <span class="lastform"><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write(BX + " Ã¶vningar - Sortering:"); break;
+                    case 1: HttpContext.Current.Response.Write(BX + " övningar - Sortering:"); break;
                     case 2: HttpContext.Current.Response.Write(BX + " exercises - Order:"); break;
                 }
              %></span>
@@ -129,14 +128,14 @@
 				  	<%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("<!--Ã–vningsdelen Ã¤r tÃ¤nkt att kunna erbjuda ett brett urval av Ã¶vningar som " +
-			                    "syftar till att hantera skadlig stress samt frÃ¤mja hÃ¤lsa och vÃ¤lbefinnande. " +
+                    case 1: HttpContext.Current.Response.Write("<!--Övningsdelen är tänkt att kunna erbjuda ett brett urval av övningar som " +
+			                    "syftar till att hantera skadlig stress samt främja hälsa och välbefinnande. " +
 			                    "<br /><br />-->" +
-			                    "FÃ¶r att uppnÃ¥ resultat Ã¤r det viktigt att inte bara titta igenom Ã¶vningarna " +
-			                    "utan ocksÃ¥ genomfÃ¶ra dem regelbundet. Om du helhjÃ¤rtat utfÃ¶r Ã¶vningarna " +
-			                    "nÃ¥gra gÃ¥nger brukar det vara tillrÃ¤ckligt fÃ¶r att de ska integreras i " +
-			                    "dig som ett automatiskt beteende. PÃ¥ sÃ¥ vis kan du pÃ¥verka ditt beteende, " +
-			                    "vÃ¤rderingar och annat som kan bidra till att Ã¶ka din livskvalitet."); break;
+			                    "För att uppnå resultat är det viktigt att inte bara titta igenom övningarna " +
+			                    "utan också genomföra dem regelbundet. Om du helhjärtat utför övningarna " +
+			                    "några gånger brukar det vara tillräckligt för att de ska integreras i " +
+			                    "dig som ett automatiskt beteende. På så vis kan du påverka ditt beteende, " +
+			                    "värderingar och annat som kan bidra till att öka din livskvalitet."); break;
                     case 2: HttpContext.Current.Response.Write("<!--This section offers a broad selection of exercises " +
                                 "that aim to manage and prevent harmful stress, and promote health and well-being. " +
                                 "<br /><br />-->" +
@@ -164,7 +163,7 @@
 				<div class="bottom"></div>
 		</div><!-- end .contentgroup	-->
         
-		<%=Db.bottom2()%>
+		<%=healthWatch.Db.bottom2()%>
         </div> <!-- end .container_12 -->
 		</form>
   </body>

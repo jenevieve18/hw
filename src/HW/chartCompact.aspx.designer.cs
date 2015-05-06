@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HW {
+namespace healthWatch {
     
     
     public partial class chartCompact {

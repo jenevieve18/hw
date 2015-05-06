@@ -1,0 +1,18 @@
+﻿using System;
+using HW.Core.Helpers;
+using NUnit.Framework;
+
+namespace HW.Tests.Helpers
+{
+	[TestFixture]
+	public class SessionHelperTests
+	{
+		[Test]
+		public void TestMethod()
+		{
+			SessionHelper.AddIf(true, "Hello", "World");
+			Assert.AreEqual("World", SessionHelper.Get("Hello").ToString());
+			SessionHelper.RemoveIf(true, "Test");
+		}
+	}
+}

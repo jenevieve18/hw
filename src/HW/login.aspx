@@ -1,15 +1,14 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="login.aspx.cs" Inherits="HW.login" %>
-<%@ Import Namespace="HW.Core.FromHW" %>
+<%@ Page language="c#" Inherits="healthWatch.login" Codebehind="login.aspx.cs" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" > 
 
 <html>
   <head>
-   <%=Db.header()%>
+   <%=healthWatch.Db.header()%>
   </head>
   <body>
 	    <form id="Form1" method="post" runat="server">
-		<%=Db.nav()%>
-		<%=Db.bottom()%>
+		<%=healthWatch.Db.nav()%>
+		<%=healthWatch.Db.bottom()%>
 		</form>
   </body>
 </html>

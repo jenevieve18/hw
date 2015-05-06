@@ -1,13 +1,12 @@
-ï»¿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="profile.aspx.cs" Inherits="HW.profile" %>
-<%@ Import Namespace="HW.Core.FromHW" %>
+<%@ Page language="c#" Inherits="healthWatch.profile" Codebehind="profile.aspx.cs" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
    <%
        switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
        {
-           case 1: HttpContext.Current.Response.Write(Db.header2("Konto och jÃ¤mfÃ¶relseprofil", "Konto och jÃ¤mfÃ¶relseprofil")); break;
-           case 2: HttpContext.Current.Response.Write(Db.header2("Account and comparison profile", "Account and comparison profile")); break;
+           case 1: HttpContext.Current.Response.Write(healthWatch.Db.header2("Konto och jämförelseprofil", "Konto och jämförelseprofil")); break;
+           case 2: HttpContext.Current.Response.Write(healthWatch.Db.header2("Account and comparison profile", "Account and comparison profile")); break;
        }
            %>
            <script type="text/javascript" src="profile.js"></script>
@@ -18,16 +17,16 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 	    <form id="Form1" method="post" runat="server">
-        <div class="container_16 myhealth two-sides about<%=Db.cobranded() %>">
+        <div class="container_16 myhealth two-sides about<%=healthWatch.Db.cobranded() %>">
 			<div class="headergroup grid_16">
-		<%=Db.nav2()%>
+		<%=healthWatch.Db.nav2()%>
 			</div> <!-- end .headergroup -->
         <div class="contentgroup grid_16">
 			 
 				<h1 class="header">
 		<% switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
      {
-         case 1: HttpContext.Current.Response.Write((guest ? "GÃ¶r detta till ditt konto" : "Konto och jÃ¤mfÃ¶relseprofil"));
+         case 1: HttpContext.Current.Response.Write((guest ? "Gör detta till ditt konto" : "Konto och jämförelseprofil"));
     break;
          case 2: HttpContext.Current.Response.Write((guest ? "Turn this into your account" : "Account and comparison profile"));
     break;
@@ -58,7 +57,7 @@
 				</div>
 
 		</div><!-- end .contentgroup	-->
-		<%=Db.bottom2()%>
+		<%=healthWatch.Db.bottom2()%>
 	</div> <!-- end .container_12 -->
     </form>
 </body>

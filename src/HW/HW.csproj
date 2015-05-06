@@ -6,11 +6,11 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{25D1609B-F24C-4BC7-A24C-68CEEC1DB201}</ProjectGuid>
+    <ProjectGuid>{24292052-F47B-4375-99F7-D8DACA114D49}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HW</RootNamespace>
+    <RootNamespace>healthWatch</RootNamespace>
     <AssemblyName>HW</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -70,6 +71,27 @@
     <Content Include="error.aspx" />
     <Content Include="exercise.aspx" />
     <Content Include="exerciseShow.aspx" />
+    <Content Include="exercise\HW_ad.swf" />
+    <Content Include="exercise\HW_ad_auto.swf" />
+    <Content Include="exercise\HW_ad_nosound.swf" />
+    <Content Include="exercise\HW_airballoon.swf" />
+    <Content Include="exercise\HW_airballoon_auto.swf" />
+    <Content Include="exercise\HW_airballoon_nosound.swf" />
+    <Content Include="exercise\HW_desktop.swf" />
+    <Content Include="exercise\HW_emotionrefresh.asp" />
+    <Content Include="exercise\HW_excellency.swf" />
+    <Content Include="exercise\HW_excellency_auto.swf" />
+    <Content Include="exercise\HW_excellency_nosound.swf" />
+    <Content Include="exercise\HW_eyerelax.swf" />
+    <Content Include="exercise\HW_lookback.asp" />
+    <Content Include="exercise\HW_lookbackBlueBox.asp" />
+    <Content Include="exercise\HW_miracle.asp" />
+    <Content Include="exercise\HW_perspective.swf" />
+    <Content Include="exercise\HW_perspective_auto.swf" />
+    <Content Include="exercise\HW_perspective_nosound.swf" />
+    <Content Include="exercise\HW_phobia.asp" />
+    <Content Include="exercise\HW_statue.swf" />
+    <Content Include="exercise\HW_words.swf" />
     <Content Include="ext.aspx" />
     <Content Include="extendedSurvey.aspx" />
     <Content Include="extendedSurveys.aspx" />
@@ -77,6 +99,9 @@
     <Content Include="favicon.ico" />
     <Content Include="flash_banner.swf" />
     <Content Include="forgot.aspx" />
+    <Content Include="form.html" />
+    <Content Include="form_co1.html" />
+    <Content Include="form_co2.html" />
     <Content Include="Global.asax" />
     <Content Include="google09f166792da71247.html" />
     <Content Include="home.aspx" />
@@ -193,6 +218,14 @@
     <Content Include="includes\css\site.css" />
     <Content Include="includes\iepngfix.htc" />
     <Content Include="includes\jquery-1.4.min.js" />
+    <Content Include="includes\resources\admin\folderImport.png" />
+    <Content Include="includes\resources\admin\gears.gif" />
+    <Content Include="includes\resources\admin\organization_sprites.gif" />
+    <Content Include="includes\resources\admin\organization_sprites.png" />
+    <Content Include="includes\resources\admin\search.png" />
+    <Content Include="includes\resources\admin\submenu.gif" />
+    <Content Include="includes\resources\admin\userImport.png" />
+    <Content Include="includes\resources\admin\user_add.png" />
     <Content Include="includes\resources\arrow.gif" />
     <Content Include="includes\resources\arrow_external.gif" />
     <Content Include="includes\resources\article_Diabetes.gif" />
@@ -251,6 +284,27 @@
     <Content Include="includes\resources\footer_border.gif" />
     <Content Include="includes\resources\justnu1.gif" />
     <Content Include="includes\resources\justnu2.gif" />
+    <Content Include="includes\resources\landing_articles\arrow.gif" />
+    <Content Include="includes\resources\landing_articles\arrow_external.gif" />
+    <Content Include="includes\resources\landing_articles\article_pain.gif" />
+    <Content Include="includes\resources\landing_articles\article_psych.gif" />
+    <Content Include="includes\resources\landing_articles\article_science.gif" />
+    <Content Include="includes\resources\landing_articles\document.gif" />
+    <Content Include="includes\resources\landing_articles\justnu.gif" />
+    <Content Include="includes\resources\landing_articles\landing_graph1.png" />
+    <Content Include="includes\resources\landing_articles\landing_graph2.png" />
+    <Content Include="includes\resources\landing_articles\landing_graph3.png" />
+    <Content Include="includes\resources\landing_articles\landing_menu_about.gif" />
+    <Content Include="includes\resources\landing_articles\landing_menu_about_arrow.gif" />
+    <Content Include="includes\resources\landing_articles\landing_menu_arrow.gif" />
+    <Content Include="includes\resources\landing_articles\landing_menu_home.gif" />
+    <Content Include="includes\resources\landing_articles\landing_menu_myhealth.gif" />
+    <Content Include="includes\resources\landing_articles\landing_menu_myhealth_arrow.gif" />
+    <Content Include="includes\resources\landing_articles\landing_submenu.gif" />
+    <Content Include="includes\resources\landing_articles\landing_submenu_active_a.gif" />
+    <Content Include="includes\resources\landing_articles\landing_submenu_active_span.gif" />
+    <Content Include="includes\resources\landing_articles\landing_submenu_home.gif" />
+    <Content Include="includes\resources\landing_articles\landing_submenu_home_active.gif" />
     <Content Include="includes\resources\landing_graph1.png" />
     <Content Include="includes\resources\landing_graph2.png" />
     <Content Include="includes\resources\landing_graph3.png" />
@@ -268,6 +322,48 @@
     <Content Include="includes\resources\login_button.gif" />
     <Content Include="includes\resources\login_button.png" />
     <Content Include="includes\resources\login_key.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_add.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_addgroup.png" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_add_button_a.png" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_add_button_span.png" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_add_dropdown_a.png" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_add_dropdown_span.png" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_add_topbottom.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_add_underline.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_messages.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_moods.png" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_moods_3.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_nav_a.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_nav_active_a.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_nav_active_span.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_nav_span.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_new_add.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_new_addgroup.png" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_new_calendar.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_page.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_post.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_post_acivity.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_post_acivity_buttons.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_post_acivity_remove.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_post_acivity_statistics.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_post_bottom.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_post_date.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_post_date_buttons.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_post_edit.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_post_top.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_print.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_read_dropdown_a.gif" />
+    <Content Include="includes\resources\myhealth\diary\myhealth_diary_read_dropdown_span.gif" />
+    <Content Include="includes\resources\myhealth\diary\Untitled-12.png" />
+    <Content Include="includes\resources\myhealth\form\myhealth_formchoser_active_a.gif" />
+    <Content Include="includes\resources\myhealth\form\myhealth_formchoser_active_span.gif" />
+    <Content Include="includes\resources\myhealth\form\myhealth_formchoser_arrow.gif" />
+    <Content Include="includes\resources\myhealth\form\myhealth_formchoser_arrow_down.gif" />
+    <Content Include="includes\resources\myhealth\form\myhealth_formchoser_bgr.gif" />
+    <Content Include="includes\resources\myhealth\form\myhealth_formchoser_passive_a.gif" />
+    <Content Include="includes\resources\myhealth\form\myhealth_formchoser_passive_span.gif" />
+    <Content Include="includes\resources\myhealth\form\myhealth_form_footer.gif" />
+    <Content Include="includes\resources\myhealth\statistics\myhealth_statistics_bar_bgr.gif" />
     <Content Include="includes\resources\myhealth_formchoser_active_a.gif" />
     <Content Include="includes\resources\myhealth_formchoser_active_span.gif" />
     <Content Include="includes\resources\myhealth_formchoser_arrow.gif" />
@@ -315,6 +411,12 @@
     <Content Include="includes\resources\myhealth_submenu.gif" />
     <Content Include="includes\resources\myhealth_submenu_active_a.gif" />
     <Content Include="includes\resources\myhealth_submenu_active_span.gif" />
+    <Content Include="includes\resources\ovningar\clock_1.png" />
+    <Content Include="includes\resources\ovningar\clock_2.png" />
+    <Content Include="includes\resources\ovningar\myhealth_excersises_bottom.gif" />
+    <Content Include="includes\resources\ovningar\myhealth_statistics_statschoser_icons.gif" />
+    <Content Include="includes\resources\ovningar\numeral_base.gif" />
+    <Content Include="includes\resources\ovningar\Untitled-4.gif" />
     <Content Include="includes\resources\rsaquo.gif" />
     <Content Include="includes\resources\side_label.png" />
     <Content Include="includes\ui\css\exercise\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -432,7 +534,6 @@
     <Content Include="statistics.aspx" />
     <Content Include="statisticsImage.aspx" />
     <Content Include="stats.aspx" />
-    <Content Include="stats\Default.aspx" />
     <Content Include="submit.aspx" />
     <Content Include="submitImages\null.gif" />
     <Content Include="submitImages\VASdot_l.gif" />
@@ -464,197 +565,198 @@
     <Compile Include="about.aspx.designer.cs">
       <DependentUpon>about.aspx</DependentUpon>
     </Compile>
+    <Compile Include="calendar.aspx.designer.cs">
+      <DependentUpon>calendar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="calendarGraphOverTime.aspx.designer.cs">
+      <DependentUpon>calendarGraphOverTime.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="calendarRead.aspx.designer.cs">
+      <DependentUpon>calendarRead.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="chart.aspx.designer.cs">
+      <DependentUpon>chart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="chartCompact.aspx.designer.cs">
+      <DependentUpon>chartCompact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="closed.aspx.designer.cs">
+      <DependentUpon>closed.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="code.aspx.designer.cs">
+      <DependentUpon>code.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="contact.aspx.designer.cs">
+      <DependentUpon>contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="debugInfo.aspx.designer.cs">
+      <DependentUpon>debugInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="error.aspx.designer.cs">
+      <DependentUpon>error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="exercise.aspx.designer.cs">
+      <DependentUpon>exercise.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="exerciseShow.aspx.designer.cs">
+      <DependentUpon>exerciseShow.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ext.aspx.designer.cs">
+      <DependentUpon>ext.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="extendedSurvey.aspx.designer.cs">
+      <DependentUpon>extendedSurvey.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="extendedSurveys.aspx.designer.cs">
+      <DependentUpon>extendedSurveys.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="faq.aspx.designer.cs">
+      <DependentUpon>faq.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="forgot.aspx.designer.cs">
+      <DependentUpon>forgot.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="home.aspx.designer.cs">
+      <DependentUpon>home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="inactivity.aspx.designer.cs">
+      <DependentUpon>inactivity.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="invalidLogin.aspx.designer.cs">
+      <DependentUpon>invalidLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="linechart.aspx.designer.cs">
+      <DependentUpon>linechart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="login.aspx.designer.cs">
+      <DependentUpon>login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="measureInfo.aspx.designer.cs">
+      <DependentUpon>measureInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="myhealth.aspx.designer.cs">
+      <DependentUpon>myhealth.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="news.aspx.designer.cs">
+      <DependentUpon>news.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Old_App_Code\Chart.cs" />
+    <Compile Include="Old_App_Code\CustomCalendar.cs" />
+    <Compile Include="Old_App_Code\Db.cs" />
+    <Compile Include="Old_App_Code\diaryHelp.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Old_App_Code\ErrorHandling.cs" />
+    <Compile Include="Old_App_Code\Global.asax.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Old_App_Code\Graph.cs" />
     <Compile Include="calendar.aspx.cs">
       <DependentUpon>calendar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="calendar.aspx.designer.cs">
-      <DependentUpon>calendar.aspx</DependentUpon>
     </Compile>
     <Compile Include="calendarGraphOverTime.aspx.cs">
       <DependentUpon>calendarGraphOverTime.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="calendarGraphOverTime.aspx.designer.cs">
-      <DependentUpon>calendarGraphOverTime.aspx</DependentUpon>
-    </Compile>
     <Compile Include="calendarRead.aspx.cs">
       <DependentUpon>calendarRead.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="calendarRead.aspx.designer.cs">
-      <DependentUpon>calendarRead.aspx</DependentUpon>
     </Compile>
     <Compile Include="chart.aspx.cs">
       <DependentUpon>chart.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="chart.aspx.designer.cs">
-      <DependentUpon>chart.aspx</DependentUpon>
-    </Compile>
     <Compile Include="chartCompact.aspx.cs">
       <DependentUpon>chartCompact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="chartCompact.aspx.designer.cs">
-      <DependentUpon>chartCompact.aspx</DependentUpon>
     </Compile>
     <Compile Include="closed.aspx.cs">
       <DependentUpon>closed.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="closed.aspx.designer.cs">
-      <DependentUpon>closed.aspx</DependentUpon>
-    </Compile>
     <Compile Include="code.aspx.cs">
       <DependentUpon>code.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="code.aspx.designer.cs">
-      <DependentUpon>code.aspx</DependentUpon>
     </Compile>
     <Compile Include="contact.aspx.cs">
       <DependentUpon>contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="contact.aspx.designer.cs">
-      <DependentUpon>contact.aspx</DependentUpon>
-    </Compile>
     <Compile Include="debugInfo.aspx.cs">
       <DependentUpon>debugInfo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="debugInfo.aspx.designer.cs">
-      <DependentUpon>debugInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="default.aspx.cs">
       <DependentUpon>default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="default.aspx.designer.cs">
-      <DependentUpon>default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="diaryHelp.aspx.cs">
-      <DependentUpon>diaryHelp.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="diaryHelp.aspx.designer.cs">
-      <DependentUpon>diaryHelp.aspx</DependentUpon>
-    </Compile>
     <Compile Include="error.aspx.cs">
       <DependentUpon>error.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="error.aspx.designer.cs">
-      <DependentUpon>error.aspx</DependentUpon>
     </Compile>
     <Compile Include="exercise.aspx.cs">
       <DependentUpon>exercise.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="exercise.aspx.designer.cs">
-      <DependentUpon>exercise.aspx</DependentUpon>
-    </Compile>
     <Compile Include="exerciseShow.aspx.cs">
       <DependentUpon>exerciseShow.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="exerciseShow.aspx.designer.cs">
-      <DependentUpon>exerciseShow.aspx</DependentUpon>
     </Compile>
     <Compile Include="ext.aspx.cs">
       <DependentUpon>ext.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ext.aspx.designer.cs">
-      <DependentUpon>ext.aspx</DependentUpon>
-    </Compile>
     <Compile Include="extendedSurvey.aspx.cs">
       <DependentUpon>extendedSurvey.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="extendedSurvey.aspx.designer.cs">
-      <DependentUpon>extendedSurvey.aspx</DependentUpon>
     </Compile>
     <Compile Include="extendedSurveys.aspx.cs">
       <DependentUpon>extendedSurveys.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="extendedSurveys.aspx.designer.cs">
-      <DependentUpon>extendedSurveys.aspx</DependentUpon>
-    </Compile>
     <Compile Include="faq.aspx.cs">
       <DependentUpon>faq.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="faq.aspx.designer.cs">
-      <DependentUpon>faq.aspx</DependentUpon>
     </Compile>
     <Compile Include="forgot.aspx.cs">
       <DependentUpon>forgot.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="forgot.aspx.designer.cs">
-      <DependentUpon>forgot.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
     <Compile Include="home.aspx.cs">
       <DependentUpon>home.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="home.aspx.designer.cs">
-      <DependentUpon>home.aspx</DependentUpon>
     </Compile>
     <Compile Include="inactivity.aspx.cs">
       <DependentUpon>inactivity.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="inactivity.aspx.designer.cs">
-      <DependentUpon>inactivity.aspx</DependentUpon>
-    </Compile>
     <Compile Include="invalidLogin.aspx.cs">
       <DependentUpon>invalidLogin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="invalidLogin.aspx.designer.cs">
-      <DependentUpon>invalidLogin.aspx</DependentUpon>
     </Compile>
     <Compile Include="linechart.aspx.cs">
       <DependentUpon>linechart.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="linechart.aspx.designer.cs">
-      <DependentUpon>linechart.aspx</DependentUpon>
-    </Compile>
     <Compile Include="login.aspx.cs">
       <DependentUpon>login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="login.aspx.designer.cs">
-      <DependentUpon>login.aspx</DependentUpon>
     </Compile>
     <Compile Include="measureInfo.aspx.cs">
       <DependentUpon>measureInfo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="measureInfo.aspx.designer.cs">
-      <DependentUpon>measureInfo.aspx</DependentUpon>
-    </Compile>
     <Compile Include="myhealth.aspx.cs">
       <DependentUpon>myhealth.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="myhealth.aspx.designer.cs">
-      <DependentUpon>myhealth.aspx</DependentUpon>
-    </Compile>
     <Compile Include="news.aspx.cs">
       <DependentUpon>news.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="news.aspx.designer.cs">
-      <DependentUpon>news.aspx</DependentUpon>
     </Compile>
     <Compile Include="password.aspx.cs">
       <DependentUpon>password.aspx</DependentUpon>
@@ -674,9 +776,6 @@
       <DependentUpon>policy.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="policy.aspx.designer.cs">
-      <DependentUpon>policy.aspx</DependentUpon>
-    </Compile>
     <Compile Include="profile.aspx.cs">
       <DependentUpon>profile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -684,45 +783,20 @@
     <Compile Include="profile.aspx.designer.cs">
       <DependentUpon>profile.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="register.aspx.cs">
-      <DependentUpon>register.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="register.aspx.designer.cs">
       <DependentUpon>register.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="reminder.aspx.cs">
-      <DependentUpon>reminder.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="reminder.aspx.designer.cs">
       <DependentUpon>reminder.aspx</DependentUpon>
     </Compile>
-    <Compile Include="reportImageStatic.aspx.cs">
-      <DependentUpon>reportImageStatic.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="reportImageStatic.aspx.designer.cs">
       <DependentUpon>reportImageStatic.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="rssImport.aspx.cs">
-      <DependentUpon>rssImport.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="rssImport.aspx.designer.cs">
       <DependentUpon>rssImport.aspx</DependentUpon>
     </Compile>
-    <Compile Include="sponsorConsent.aspx.cs">
-      <DependentUpon>sponsorConsent.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="sponsorConsent.aspx.designer.cs">
       <DependentUpon>sponsorConsent.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="sponsorInformation.aspx.cs">
-      <DependentUpon>sponsorInformation.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="sponsorInformation.aspx.designer.cs">
       <DependentUpon>sponsorInformation.aspx</DependentUpon>
@@ -734,26 +808,11 @@
     <Compile Include="statistics.aspx.designer.cs">
       <DependentUpon>statistics.aspx</DependentUpon>
     </Compile>
-    <Compile Include="statisticsImage.aspx.cs">
-      <DependentUpon>statisticsImage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="statisticsImage.aspx.designer.cs">
       <DependentUpon>statisticsImage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="stats.aspx.cs">
-      <DependentUpon>stats.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="stats.aspx.designer.cs">
       <DependentUpon>stats.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="stats\Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="stats\Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="submit.aspx.cs">
       <DependentUpon>submit.aspx</DependentUpon>
@@ -762,27 +821,85 @@
     <Compile Include="submit.aspx.designer.cs">
       <DependentUpon>submit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="upload.aspx.designer.cs">
+      <DependentUpon>upload.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="welcome.aspx.designer.cs">
+      <DependentUpon>welcome.aspx</DependentUpon>
+    </Compile>
+    <None Include="exercise\HW_ad.old.pdf" />
+    <None Include="exercise\HW_ad.pdf" />
+    <None Include="exercise\HW_airballoon.old.pdf" />
+    <None Include="exercise\HW_airballoon.pdf" />
+    <None Include="exercise\HW_desktop.old.pdf" />
+    <None Include="exercise\HW_desktop.org.pdf" />
+    <None Include="exercise\HW_desktop.pdf" />
+    <None Include="exercise\HW_excellency.old.pdf" />
+    <None Include="exercise\HW_excellency.org.pdf" />
+    <None Include="exercise\HW_excellency.pdf" />
+    <None Include="exercise\HW_eyerelax.old.pdf" />
+    <None Include="exercise\HW_eyerelax.org.pdf" />
+    <None Include="exercise\HW_eyerelax.pdf" />
+    <None Include="exercise\HW_helicopter.old.pdf" />
+    <None Include="exercise\HW_helicopter.pdf" />
+    <None Include="exercise\HW_perspective.old.pdf" />
+    <None Include="exercise\HW_perspective.org.pdf" />
+    <None Include="exercise\HW_perspective.pdf" />
+    <None Include="exercise\HW_resourcefeeling.old.pdf" />
+    <None Include="exercise\HW_resourcefeeling.pdf" />
+    <None Include="exercise\HW_statue.old.pdf" />
+    <None Include="exercise\HW_statue.pdf" />
+    <None Include="exercise\HW_words.old.pdf" />
+    <None Include="exercise\HW_words.org.pdf" />
+    <None Include="exercise\HW_words.pdf" />
+    <None Include="includes\resources\myhealth_statistics_bar_legends.png.old" />
+    <None Include="includes\resources\ovningar\clock_2.psd" />
+    <None Include="Properties\AssemblyInfo.cs.orig" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="register.aspx.cs">
+      <DependentUpon>register.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="reminder.aspx.cs">
+      <DependentUpon>reminder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="reportImageStatic.aspx.cs">
+      <DependentUpon>reportImageStatic.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="rssImport.aspx.cs">
+      <DependentUpon>rssImport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sponsorConsent.aspx.cs">
+      <DependentUpon>sponsorConsent.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sponsorInformation.aspx.cs">
+      <DependentUpon>sponsorInformation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="statisticsImage.aspx.cs">
+      <DependentUpon>statisticsImage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="stats.aspx.cs">
+      <DependentUpon>stats.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="upload.aspx.cs">
       <DependentUpon>upload.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="upload.aspx.designer.cs">
-      <DependentUpon>upload.aspx</DependentUpon>
     </Compile>
     <Compile Include="welcome.aspx.cs">
       <DependentUpon>welcome.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="welcome.aspx.designer.cs">
-      <DependentUpon>welcome.aspx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="includes\resources\myhealth_statistics_bar_legends.png.old" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="exercise\" />
     <Folder Include="includes\ui\css\ui-lightness\images\" />
+    <Folder Include="Old_App_Code\Migrated\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HW.Core\HW.Core.csproj">
@@ -798,7 +915,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>47373</DevelopmentServerPort>
+          <DevelopmentServerPort>47375</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

@@ -1,18 +1,24 @@
-ï»¿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System;
+using System.Collections;
+using System.ComponentModel;
+using System.Data.SqlClient;
+using System.Drawing;
 using System.Web;
+using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using HW.Core.FromHW;
+using System.Web.UI.HtmlControls;
 
-namespace HW
+namespace healthWatch
 {
-    public partial class forgot : System.Web.UI.Page
-    {
-        protected void Page_Load(object sender, System.EventArgs e)
-        {
-            Db.checkAndLogin();
+	/// <summary>
+	/// Summary description for forgot.
+	/// </summary>
+	public partial class forgot : System.Web.UI.Page
+	{
+		protected void Page_Load(object sender, System.EventArgs e)
+		{
+			Db.checkAndLogin();
 
             if (Convert.ToInt32(HttpContext.Current.Session["UserID"]) == 0)
             {
@@ -25,7 +31,7 @@ namespace HW
                         switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                         {
                             case 1:
-                                sent.Text = "<BR>Om denna e-postadress fanns registrerad sÃ¥ fÃ¥r du ett mail inom ett par minuter.";
+                                sent.Text = "<BR>Om denna e-postadress fanns registrerad så får du ett mail inom ett par minuter.";
                                 break;
                             case 2:
                                 sent.Text = "<BR>You will receive an email shortly, if the email address was in our records.";
@@ -54,25 +60,25 @@ namespace HW
             {
                 HttpContext.Current.Response.Redirect("home.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
             }
-        }
+		}
 
-        #region Web Form Designer generated code
-        override protected void OnInit(EventArgs e)
-        {
-            //
-            // CODEGEN: This call is required by the ASP.NET Web Form Designer.
-            //
-            InitializeComponent();
-            base.OnInit(e);
-        }
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
-        }
-        #endregion
-    }
+		#region Web Form Designer generated code
+		override protected void OnInit(EventArgs e)
+		{
+			//
+			// CODEGEN: This call is required by the ASP.NET Web Form Designer.
+			//
+			InitializeComponent();
+			base.OnInit(e);
+		}
+		
+		/// <summary>
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
+		/// </summary>
+		private void InitializeComponent()
+		{    
+		}
+		#endregion
+	}
 }

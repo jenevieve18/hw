@@ -1,27 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Data.SqlClient;
-using System.Linq;
+using System.Configuration;
+using System.Collections;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using HW.Core.FromHW;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
 
-namespace HW
+namespace healthWatch
 {
     public partial class reminder : System.Web.UI.Page
     {
-        public int sponsorLoginDays = 0;
-        public string email = "";
+		public int sponsorLoginDays = 0;
+		public string email = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (HttpContext.Current.Session["UserID"] == null)
             {
-                HttpContext.Current.Response.Redirect("inactivity.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+				HttpContext.Current.Response.Redirect("inactivity.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
             }
 
-            if (!IsPostBack)
+            if(!IsPostBack)
             {
                 switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
@@ -77,89 +79,89 @@ namespace HW
 
             bool guest = false;
             SqlDataReader rs = Db.rs("SELECT " +
-                "u.Username, " +		// 0
-                "s.LoginDays, " +		// 1
-                "u.Reminder, " +		// 2
-                "u.ReminderType, " +	// 3
-                "u.ReminderLink, " +	// 4
-                "u.ReminderSettings, " +// 5
-                "u.Email " +			// 6
-                "FROM [User] u " +
-                "LEFT OUTER JOIN Sponsor s ON u.SponsorID = s.SponsorID " +
-                "WHERE u.UserID = " + HttpContext.Current.Session["UserID"]);
+				"u.Username, " +		// 0
+				"s.LoginDays, " +		// 1
+				"u.Reminder, " +		// 2
+				"u.ReminderType, " +	// 3
+				"u.ReminderLink, " +	// 4
+				"u.ReminderSettings, " +// 5
+				"u.Email " +			// 6
+				"FROM [User] u " +
+				"LEFT OUTER JOIN Sponsor s ON u.SponsorID = s.SponsorID " +
+				"WHERE u.UserID = " + HttpContext.Current.Session["UserID"]);
             if (rs.Read())
             {
                 guest = (rs.GetString(0).IndexOf("AUTO_CREATED_GUEST") >= 0);
-                if (!guest)
-                {
-                    sponsorLoginDays = (!rs.IsDBNull(1) ? rs.GetInt32(1) : 0);
-                    email = (!rs.IsDBNull(6) ? rs.GetString(6) : "[e-postadress saknas]");
+				if (!guest)
+				{
+					sponsorLoginDays = (!rs.IsDBNull(1) ? rs.GetInt32(1) : 0);
+					email = (!rs.IsDBNull(6) ? rs.GetString(6) : "[e-postadress saknas]");
 
-                    if (!IsPostBack)
-                    {
-                        reminderType.Attributes["onclick"] += "self.updateReminder();";
-                        reminderRepeat.Attributes["onclick"] += "self.updateReminder();";
+					if (!IsPostBack)
+					{
+						reminderType.Attributes["onclick"] += "self.updateReminder();";
+						reminderRepeat.Attributes["onclick"] += "self.updateReminder();";
 
-                        if (!rs.IsDBNull(2))
-                        {
-                            // Reminder previously set
+						if (!rs.IsDBNull(2))
+						{
+							// Reminder previously set
 
-                            reminderType.SelectedValue = (rs.GetInt32(2) == 0 || rs.IsDBNull(3) ? "0" : rs.GetInt32(3).ToString());
-                            reminderLink.SelectedValue = (rs.IsDBNull(4) ? "0" : rs.GetInt32(4).ToString());
+							reminderType.SelectedValue = (rs.GetInt32(2) == 0 || rs.IsDBNull(3) ? "0" : rs.GetInt32(3).ToString());
+							reminderLink.SelectedValue = (rs.IsDBNull(4) ? "0" : rs.GetInt32(4).ToString());
 
-                            string[] settings = (rs.IsDBNull(5) ? "" : rs.GetString(5)).Split(':');
+							string[] settings = (rs.IsDBNull(5) ? "" : rs.GetString(5)).Split(':');
 
-                            switch (rs.IsDBNull(3) ? 0 : rs.GetInt32(3))
-                            {
-                                case 1:
-                                    reminderHour.SelectedValue = settings[0];
-                                    reminderRepeat.SelectedValue = settings[1];
-                                    switch (Convert.ToInt32(settings[1]))
-                                    {
-                                        case 1:
-                                            string[] days = settings[2].Split(',');
-                                            for (int i = 1; i <= 7; i++)
-                                            {
-                                                reminderRepeatDay.Items.FindByValue(i.ToString()).Selected = false;
-                                            }
-                                            foreach (string day in days)
-                                            {
-                                                reminderRepeatDay.Items.FindByValue(day).Selected = true;
-                                            }
-                                            break;
-                                        case 2:
-                                            reminderRepeatWeekDay.SelectedValue = settings[2];
-                                            reminderRepeatWeek.SelectedValue = settings[3];
-                                            break;
-                                        case 3:
-                                            reminderRepeatMonthWeek.SelectedValue = settings[2];
-                                            reminderRepeatMonthDay.SelectedValue = settings[3];
-                                            reminderRepeatMonth.SelectedValue = settings[4];
-                                            break;
-                                    }
-                                    break;
-                                case 2:
-                                    reminderHour.SelectedValue = settings[0];
-                                    reminderInactivityCount.SelectedValue = settings[1];
-                                    reminderInactivityPeriod.SelectedValue = settings[2];
-                                    break;
-                            }
-                        }
-                        else
-                        {
-                            reminderHour.SelectedValue = (new Random(unchecked((int)DateTime.Now.Ticks))).Next(8, 11).ToString();
-                            for (int i = 1; i <= 7; i++)
-                            {
-                                reminderRepeatDay.Items.FindByValue(i.ToString()).Selected = false;
-                            }
-                            reminderRepeatDay.Items.FindByValue((new Random(unchecked((int)DateTime.Now.Ticks))).Next(1, 5).ToString()).Selected = true;
-                        }
-                    }
-                    else
-                    {
-                        // Posted values
-                    }
-                }
+							switch(rs.IsDBNull(3) ? 0 : rs.GetInt32(3))
+							{
+								case 1:
+									reminderHour.SelectedValue = settings[0];
+									reminderRepeat.SelectedValue = settings[1];
+									switch (Convert.ToInt32(settings[1]))
+									{
+										case 1:
+											string[] days = settings[2].Split(',');
+											for (int i = 1; i <= 7; i++)
+											{
+												reminderRepeatDay.Items.FindByValue(i.ToString()).Selected = false;
+											}
+											foreach (string day in days)
+											{
+												reminderRepeatDay.Items.FindByValue(day).Selected = true;
+											}
+											break;
+										case 2:
+											reminderRepeatWeekDay.SelectedValue = settings[2];
+											reminderRepeatWeek.SelectedValue = settings[3];
+											break;
+										case 3:
+											reminderRepeatMonthWeek.SelectedValue = settings[2];
+											reminderRepeatMonthDay.SelectedValue = settings[3];
+											reminderRepeatMonth.SelectedValue = settings[4];
+											break;
+									}
+									break;
+								case 2:
+									reminderHour.SelectedValue = settings[0];
+									reminderInactivityCount.SelectedValue = settings[1];
+									reminderInactivityPeriod.SelectedValue = settings[2];
+									break;
+							}
+						}
+						else
+						{
+							reminderHour.SelectedValue = (new Random(unchecked((int)DateTime.Now.Ticks))).Next(8, 11).ToString();
+							for (int i = 1; i <= 7; i++)
+							{
+								reminderRepeatDay.Items.FindByValue(i.ToString()).Selected = false;
+							}
+							reminderRepeatDay.Items.FindByValue((new Random(unchecked((int)DateTime.Now.Ticks))).Next(1,5).ToString()).Selected = true;
+						}
+					}
+					else
+					{
+						// Posted values
+					}
+				}
             }
             rs.Close();
 
@@ -173,70 +175,70 @@ namespace HW
 
         private void submit_Click(object sender, EventArgs e)
         {
-            if (reminderType.SelectedValue == "0")
-            {
-                Db.exec("UPDATE [User] SET " +
-                    "Reminder = 0, " +
+			if (reminderType.SelectedValue == "0")
+			{
+				Db.exec("UPDATE [User] SET " +
+					"Reminder = 0, " +
                     "ReminderLink = " + Convert.ToInt32(reminderLink.SelectedValue) + ", " +
                     "ReminderType = " + Convert.ToInt32(reminderType.SelectedValue) + ", " +
                     "ReminderNextSend = NULL " +
-                    "WHERE UserID = " + Convert.ToInt32(HttpContext.Current.Session["UserID"]));
-            }
-            else
-            {
-                string settings = reminderHour.SelectedValue;
-                switch (Convert.ToInt32(reminderType.SelectedValue))
-                {
-                    case 1:
-                        settings += ":" + reminderRepeat.SelectedValue;
-                        switch (Convert.ToInt32(reminderRepeat.SelectedValue))
-                        {
-                            case 1:
-                                string days = "";
-                                for (int i = 1; i <= 7; i++)
-                                {
-                                    if (reminderRepeatDay.Items.FindByValue(i.ToString()).Selected)
-                                    {
-                                        days += (days != "" ? "," : "") + i.ToString();
-                                    }
-                                }
-                                settings += ":" + (days != "" ? days : "1");
-                                break;
-                            case 2:
-                                settings += ":" + reminderRepeatWeekDay.SelectedValue;
-                                settings += ":" + reminderRepeatWeek.SelectedValue;
-                                break;
-                            case 3:
-                                settings += ":" + reminderRepeatMonthWeek.SelectedValue;
-                                settings += ":" + reminderRepeatMonthDay.SelectedValue;
-                                settings += ":" + reminderRepeatMonth.SelectedValue;
-                                break;
-                        }
-                        break;
-                    case 2:
-                        settings += ":" + reminderInactivityCount.SelectedValue;
-                        settings += ":" + reminderInactivityPeriod.SelectedValue;
-                        break;
+					"WHERE UserID = " + Convert.ToInt32(HttpContext.Current.Session["UserID"]));
+			}
+			else
+			{
+				string settings = reminderHour.SelectedValue;
+				switch (Convert.ToInt32(reminderType.SelectedValue))
+				{
+					case 1:
+						settings += ":" + reminderRepeat.SelectedValue;
+						switch (Convert.ToInt32(reminderRepeat.SelectedValue))
+						{
+							case 1:
+								string days = "";
+								for (int i = 1; i <= 7; i++)
+								{
+									if (reminderRepeatDay.Items.FindByValue(i.ToString()).Selected)
+									{
+										days += (days != "" ? "," : "") + i.ToString();
+									}
+								}
+								settings += ":" + (days != "" ? days : "1");
+								break;
+							case 2:
+								settings += ":" + reminderRepeatWeekDay.SelectedValue;
+								settings += ":" + reminderRepeatWeek.SelectedValue;
+								break;
+							case 3:
+								settings += ":" + reminderRepeatMonthWeek.SelectedValue;
+								settings += ":" + reminderRepeatMonthDay.SelectedValue;
+								settings += ":" + reminderRepeatMonth.SelectedValue;
+								break;
+						}
+						break;
+					case 2:
+						settings += ":" + reminderInactivityCount.SelectedValue;
+						settings += ":" + reminderInactivityPeriod.SelectedValue;
+						break;
 
-                }
-                Db.exec("UPDATE [User] SET " +
-                    (reminderLink.SelectedValue == "2" ? "UserKey = NEWID(), " : "") +
-                    "Reminder = 1, " +
-                    "ReminderLink = " + Convert.ToInt32(reminderLink.SelectedValue) + ", " +
-                    "ReminderType = " + Convert.ToInt32(reminderType.SelectedValue) + ", " +
-                    "ReminderSettings = '" + settings.Replace("'", "") + "', " +
-                    "ReminderNextSend = '" + Db.nextReminderSend(Convert.ToInt32(reminderType.SelectedValue), settings.Split(':'), DateTime.Now, DateTime.Now) + "' " +
-                    "WHERE UserID = " + Convert.ToInt32(HttpContext.Current.Session["UserID"]));
-            }
-            if (Convert.ToInt32(HttpContext.Current.Session["NoReminderSet"]) == 1)
-            {
-                HttpContext.Current.Session["NoReminderSet"] = null;
-                HttpContext.Current.Response.Redirect("submit.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
-            }
-            else
-            {
-                HttpContext.Current.Response.Redirect("calendar.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
-            }
+				}
+				Db.exec("UPDATE [User] SET " +
+					(reminderLink.SelectedValue == "2" ? "UserKey = NEWID(), " : "") +
+					"Reminder = 1, " +
+					"ReminderLink = " + Convert.ToInt32(reminderLink.SelectedValue) + ", " +
+					"ReminderType = " + Convert.ToInt32(reminderType.SelectedValue) + ", " +
+					"ReminderSettings = '" + settings.Replace("'","") + "', " +
+					"ReminderNextSend = '" + Db.nextReminderSend(Convert.ToInt32(reminderType.SelectedValue), settings.Split(':'), DateTime.Now, DateTime.Now) + "' " +
+					"WHERE UserID = " + Convert.ToInt32(HttpContext.Current.Session["UserID"]));
+			}
+			if (Convert.ToInt32(HttpContext.Current.Session["NoReminderSet"]) == 1)
+			{
+				HttpContext.Current.Session["NoReminderSet"] = null;
+				HttpContext.Current.Response.Redirect("submit.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+			}
+			else
+			{
+				HttpContext.Current.Response.Redirect("calendar.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+			}
         }
     }
 }

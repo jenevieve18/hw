@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.DataVisualization.Charting;
 using System.Web.UI.WebControls;
+using System.Web.UI.DataVisualization.Charting;
 
-namespace HW
+namespace healthWatch
 {
     public partial class piechart : System.Web.UI.Page
     {
@@ -23,7 +23,7 @@ namespace HW
 
             //ChartArea3DStyle w = new ChartArea3DStyle();
             //w.Enable3D = true;
-
+            
             c.ChartAreas.Add("pie");
             c.ChartAreas["pie"].Position = new ElementPosition(-3, -3, 106, 106);
             //c.ChartAreas["pie"].BorderWidth = 0;
@@ -92,12 +92,12 @@ namespace HW
                 }
             }
             //c.Series["pie"].Points[0]["Exploded"] = "True";
-            c.Series["pie"].Points.AddY(100 - val);
+            c.Series["pie"].Points.AddY(100-val);
             c.Series["pie"].Points[1].BackGradientStyle = GradientStyle.TopBottom;
             c.Series["pie"].Points[1].Color = System.Drawing.ColorTranslator.FromHtml("#ececec");
             c.Series["pie"].Points[1].BackSecondaryColor = System.Drawing.ColorTranslator.FromHtml("#d3d3d3");
             //c.Series["pie"].Points[1]["Exploded"] = "True";
-
+            
             //c.ChartAreas["pie"].Area3DStyle.Enable3D = true;// Draw chart as 3D Cylinder
             //c.Series["pie"]["DrawingStyle"] = "Cylinder";
 

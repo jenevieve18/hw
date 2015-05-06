@@ -1,13 +1,12 @@
-ï»¿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="reminder.aspx.cs" Inherits="HW.reminder" %>
-<%@ Import Namespace="HW.Core.FromHW" %>
+<%@ Page Language="C#" AutoEventWireup="true" Inherits="healthWatch.reminder" Codebehind="reminder.aspx.cs" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
    <%
        switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
        {
-           case 1: HttpContext.Current.Response.Write(Db.header2("PÃ¥minnelser", "PÃ¥minnelser")); break;
-           case 2: HttpContext.Current.Response.Write(Db.header2("Reminders", "Reminders")); break;
+           case 1: HttpContext.Current.Response.Write(healthWatch.Db.header2("Påminnelser", "Påminnelser")); break;
+           case 2: HttpContext.Current.Response.Write(healthWatch.Db.header2("Reminders", "Reminders")); break;
        }
            %>
            <script type="text/javascript">
@@ -82,16 +81,16 @@
 <!--[if IE 9 ]>    <body class="ie9" onload="self.updateReminder();"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body onload="self.updateReminder();"> <!--<![endif]-->
 	    <form id="Form1" method="post" runat="server">
-        <div class="container_16 myhealth two-sides remind<%=Db.cobranded() %>">
+        <div class="container_16 myhealth two-sides remind<%=healthWatch.Db.cobranded() %>">
 			<div class="headergroup grid_16">
-		<%=Db.nav2()%>
+		<%=healthWatch.Db.nav2()%>
 		</div> <!-- end .headergroup -->
 			<div class="contentgroup grid_16">
 			 
 				<h1 class="header"><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("PÃ¥minnelser"); break;
+                    case 1: HttpContext.Current.Response.Write("Påminnelser"); break;
                     case 2: HttpContext.Current.Response.Write("Reminders"); break;
                 }
              %></h1>
@@ -102,7 +101,7 @@
             %><p><%
 		        switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                     {
-                        case 1: HttpContext.Current.Response.Write("<strong>Observera!</strong> UtÃ¶ver den instÃ¤llning du sjÃ¤lv gÃ¶r pÃ¥ denna sida har ditt fÃ¶retag/organisation stÃ¤llt in att en pÃ¥minnelse skall skickas till alla som varit inaktiva mer Ã¤n " + sponsorLoginDays + " dagar. InstÃ¤llningen lÃ¤ngst ner pÃ¥ denna sida gÃ¤ller Ã¤ven denna pÃ¥minnelse."); break;
+                        case 1: HttpContext.Current.Response.Write("<strong>Observera!</strong> Utöver den inställning du själv gör på denna sida har ditt företag/organisation ställt in att en påminnelse skall skickas till alla som varit inaktiva mer än " + sponsorLoginDays + " dagar. Inställningen längst ner på denna sida gäller även denna påminnelse."); break;
                         case 2: HttpContext.Current.Response.Write("<strong>Please note!</strong> In addition to this setting, your company/organisation have a global reminder to everyone that has been inactive for more than " + sponsorLoginDays + " days. The setting on the bottom of this page is valid for that reminder as well."); break;
                     }%></p><br /><%
                  }
@@ -110,7 +109,7 @@
                  <p><strong><%
 					switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("Hur ofta vill du fÃ¥ en pÃ¥minnelse med e-post om att logga in pÃ¥ HealthWatch?"); break;
+                    case 1: HttpContext.Current.Response.Write("Hur ofta vill du få en påminnelse med e-post om att logga in på HealthWatch?"); break;
                     case 2: HttpContext.Current.Response.Write("How often do you want a reminder to log on to HealthWatch?"); break;
                 }%></strong></p>
 					<asp:RadioButtonList ID=reminderType CellPadding=0 CellSpacing=0 RepeatDirection=vertical cssclass="bg" RepeatLayout=table runat=server>
@@ -130,7 +129,7 @@
              %></strong></p><asp:RadioButtonList ID=reminderRepeat CellPadding=0 CellSpacing=0 RepeatDirection=vertical cssclass="bg" RepeatLayout=table runat=server>
 						<asp:ListItem Text="Veckodagsbasis" Value="1" selected />
 						<asp:ListItem Text="Veckobasis" Value="2" />
-						<asp:ListItem Text="MÃ¥nadsbasis" Value="3" />
+						<asp:ListItem Text="Månadsbasis" Value="3" />
 					</asp:RadioButtonList><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
@@ -174,30 +173,30 @@
                     case 2: HttpContext.Current.Response.Write(" every "); break;
                 }
              %><asp:CheckBoxList ID=reminderRepeatDay CellPadding=0 CellSpacing=0 RepeatDirection=horizontal RepeatLayout=Flow runat=server>
-									<asp:ListItem Text="mÃ¥ndag" Value="1" selected />
+									<asp:ListItem Text="måndag" Value="1" selected />
 									<asp:ListItem Text="tisdag" Value="2" />
 									<asp:ListItem Text="onsdag" Value="3" selected />
 									<asp:ListItem Text="torsdag" Value="4" />
 									<asp:ListItem Text="fredag" Value="5" selected />
-									<asp:ListItem Text="lÃ¶rdag" Value="6" />
-									<asp:ListItem Text="sÃ¶ndag" Value="7" />
+									<asp:ListItem Text="lördag" Value="6" />
+									<asp:ListItem Text="söndag" Value="7" />
 								</asp:CheckBoxList>
 							</div>
 							<div id="dReminderRepeatWeek" style="float:left;display:none;">
 								<%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write(" pÃ¥ "); break;
+                    case 1: HttpContext.Current.Response.Write(" på "); break;
                     case 2: HttpContext.Current.Response.Write(" on "); break;
                 }
              %><asp:DropDownList ID=reminderRepeatWeekDay runat=server>
-									<asp:ListItem Text="mÃ¥ndagar" Value="1" selected />
+									<asp:ListItem Text="måndagar" Value="1" selected />
 									<asp:ListItem Text="tisdagar" Value="2" />
 									<asp:ListItem Text="onsdagar" Value="3" />
 									<asp:ListItem Text="torsdagar" Value="4" />
 									<asp:ListItem Text="fredagar" Value="5" />
-									<asp:ListItem Text="lÃ¶rdagar" Value="6" />
-									<asp:ListItem Text="sÃ¶ndagar" Value="7" />
+									<asp:ListItem Text="lördagar" Value="6" />
+									<asp:ListItem Text="söndagar" Value="7" />
 								</asp:DropDownList><asp:DropDownList ID=reminderRepeatWeek CellPadding=0 CellSpacing=0 RepeatDirection=horizontal RepeatLayout=Flow runat=server>
 									<asp:ListItem Text="varje vecka" Value="1" selected />
 									<asp:ListItem Text="varannan vecka" Value="2" />
@@ -212,27 +211,27 @@
                     case 2: HttpContext.Current.Response.Write(" the "); break;
                 }
              %><asp:DropDownList ID=reminderRepeatMonthWeek runat=server>
-									<asp:ListItem Text="fÃ¶rsta" Value="1" selected/>
+									<asp:ListItem Text="första" Value="1" selected/>
 									<asp:ListItem Text="andra" Value="2" />
 									<asp:ListItem Text="tredje" Value="3" />
-									<asp:ListItem Text="fjÃ¤rde" Value="4" />
+									<asp:ListItem Text="fjärde" Value="4" />
 								</asp:DropDownList><asp:DropDownList ID=reminderRepeatMonthDay runat=server>
-									<asp:ListItem Text="mÃ¥ndagen" Value="1" selected />
+									<asp:ListItem Text="måndagen" Value="1" selected />
 									<asp:ListItem Text="tisdagen" Value="2" />
 									<asp:ListItem Text="onsdagen" Value="3" />
 									<asp:ListItem Text="torsdagen" Value="4" />
 									<asp:ListItem Text="fredagen" Value="5" />
-									<asp:ListItem Text="lÃ¶rdagen" Value="6" />
-									<asp:ListItem Text="sÃ¶ndagen" Value="7" />
+									<asp:ListItem Text="lördagen" Value="6" />
+									<asp:ListItem Text="söndagen" Value="7" />
 								</asp:DropDownList><asp:DropDownList ID=reminderRepeatMonth runat=server>
 									<asp:ListItem Text="i varje" Value="1" selected />
 									<asp:ListItem Text="varannan" Value="2" />
 									<asp:ListItem Text="var tredje" Value="3" />
-									<asp:ListItem Text="var sjÃ¤tte" Value="6" />
+									<asp:ListItem Text="var sjätte" Value="6" />
 								</asp:DropDownList> <%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("mÃ¥nad."); break;
+                    case 1: HttpContext.Current.Response.Write("månad."); break;
                     case 2: HttpContext.Current.Response.Write("month."); break;
                 }
              %>
@@ -248,11 +247,11 @@
 								</asp:DropDownList><asp:DropDownList ID=reminderInactivityPeriod runat=server>
 									<asp:ListItem Text="dag/dagar" Value="1" selected />
 									<asp:ListItem Text="vecka/veckor" Value="7" />
-									<asp:ListItem Text="mÃ¥nad/mÃ¥nader" Value="30" />
+									<asp:ListItem Text="månad/månader" Value="30" />
 								</asp:DropDownList><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write(" efter senaste inloggning, dÃ¤refter en gÃ¥ng i veckan."); break;
+                    case 1: HttpContext.Current.Response.Write(" efter senaste inloggning, därefter en gång i veckan."); break;
                     case 2: HttpContext.Current.Response.Write(" after last login, and after that once a week."); break;
                 }
              %>
@@ -264,13 +263,13 @@
 					<%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("I e-postpÃ¥minnelsen finns en lÃ¤nk till HealthWatch. Vill du att denna prepareras sÃ¥ att du loggas in utan att ange anvÃ¤ndardnamn och lÃ¶senord nÃ¤r du klickar pÃ¥ den?"); break;
+                    case 1: HttpContext.Current.Response.Write("I e-postpåminnelsen finns en länk till HealthWatch. Vill du att denna prepareras så att du loggas in utan att ange användardnamn och lösenord när du klickar på den?"); break;
                     case 2: HttpContext.Current.Response.Write("In the reminder there is a link to HealthWatch. Do you want it to be prepared so that you are logged in without prompt for username and password when you click on it?"); break;
                 }
              %></strong></p>
 					<asp:RadioButtonList ID=reminderLink CellPadding=0 CellSpacing=0 RepeatDirection=vertical cssclass="bg" RepeatLayout=table runat=server>
-						<asp:ListItem Text="Ja, med en lÃ¤nk som Ã¤ndras varje gÃ¥ng och som endast kan anvÃ¤ndas en gÃ¥ng (rekommenderas)" Value="2" Selected />
-						<asp:ListItem Text="Ja, med en lÃ¤nk som Ã¤r likadan varje gÃ¥ng och som kan sparas som bokmÃ¤rke" Value="1" />
+						<asp:ListItem Text="Ja, med en länk som ändras varje gång och som endast kan användas en gång (rekommenderas)" Value="2" Selected />
+						<asp:ListItem Text="Ja, med en länk som är likadan varje gång och som kan sparas som bokmärke" Value="1" />
 						<asp:ListItem Text="Nej" Value="0" />
 					</asp:RadioButtonList>
 				</div>
@@ -284,14 +283,14 @@
 						<h3><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("Om pÃ¥minnelser"); break;
+                    case 1: HttpContext.Current.Response.Write("Om påminnelser"); break;
                     case 2: HttpContext.Current.Response.Write("About reminders"); break;
                 }
              %></h3><br />
 						<p><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("HÃ¤r vÃ¤ljer du om du vill att en pÃ¥minnelse skall skickas med e-post till <a href=\"profile.aspx\">" + email + "</a>. Ã„ndringar av denna e-postadress gÃ¶r du i din profil. Du kan nÃ¤r som helst gÃ¥ tillbaka hit och Ã¤ndra ditt val."); break;
+                    case 1: HttpContext.Current.Response.Write("Här väljer du om du vill att en påminnelse skall skickas med e-post till <a href=\"profile.aspx\">" + email + "</a>. Ändringar av denna e-postadress gör du i din profil. Du kan när som helst gå tillbaka hit och ändra ditt val."); break;
                     case 2: HttpContext.Current.Response.Write("Please select whether or not you want a reminder to be sent by email to <a href=\"profile.aspx\">" + email + "</a>. This email address can be changed in your profile. You can visit this page at any time to change your selection."); break;
                 }
              %></p>
@@ -301,7 +300,7 @@
 				</div>
 
 		</div><!-- end .contentgroup	-->
-		<%=Db.bottom2()%>
+		<%=healthWatch.Db.bottom2()%>
         </div> <!-- end .container_12 -->
 		</form>
   </body>

@@ -1,13 +1,12 @@
-ï»¿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="register.aspx.cs" Inherits="HW.register" %>
-<%@ Import Namespace="HW.Core.FromHW" %>
+<%@ Page language="c#" Inherits="healthWatch.register" Codebehind="register.aspx.cs" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
    <%
        switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
        {
-           case 1: HttpContext.Current.Response.Write(Db.header2("Skapa konto", "Skapa konto")); break;
-           case 2: HttpContext.Current.Response.Write(Db.header2("Create account", "Create account")); break;
+           case 1: HttpContext.Current.Response.Write(healthWatch.Db.header2("Skapa konto", "Skapa konto")); break;
+           case 2: HttpContext.Current.Response.Write(healthWatch.Db.header2("Create account", "Create account")); break;
        }
            %>
            <script type="text/javascript" src="profile.js"></script>
@@ -28,9 +27,9 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 	    <form id="Form1" method="post" runat="server">
-        <div class="container_16 myhealth two-sides about<%=Db.cobranded() %>">
+        <div class="container_16 myhealth two-sides about<%=healthWatch.Db.cobranded() %>">
 			<div class="headergroup grid_16">
-		<%=Db.nav2()%>
+		<%=healthWatch.Db.nav2()%>
 			</div> <!-- end .headergroup -->
         <div class="contentgroup grid_16">
 			 
@@ -63,14 +62,14 @@ Skapa ditt konto
                     <h3><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("Kom igÃ¥ng pÃ¥ en minut!"); break;
+                    case 1: HttpContext.Current.Response.Write("Kom igång på en minut!"); break;
                     case 2: HttpContext.Current.Response.Write("Get going in one minute!"); break;
                 }
              %></h3><br />
 						<p><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("Genom att skapa ett konto fÃ¥r du fri tillgÃ¥ng till verktyg fÃ¶r stresshantering och hÃ¤lsopromotion. BÃ¶rja med att fylla i uppgifterna hÃ¤r till vÃ¤nster fÃ¶r att skapa dig en jÃ¤mfÃ¶relseprofil."); break;
+                    case 1: HttpContext.Current.Response.Write("Genom att skapa ett konto får du fri tillgång till verktyg för stresshantering och hälsopromotion. Börja med att fylla i uppgifterna här till vänster för att skapa dig en jämförelseprofil."); break;
                     case 2: HttpContext.Current.Response.Write("By creating an account you will have free access to tools for stress management and health promotion. Start by filling in the information below to create your comparison profile."); break;
                 }
              %></p>
@@ -80,7 +79,7 @@ Skapa ditt konto
 				</div>
 
 		</div><!-- end .contentgroup	-->
-		<%=Db.bottom2()%>
+		<%=healthWatch.Db.bottom2()%>
 	</div> <!-- end .container_12 -->
     </form>
 </body>

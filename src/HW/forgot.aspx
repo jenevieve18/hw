@@ -1,13 +1,12 @@
-ï»¿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="forgot.aspx.cs" Inherits="HW.forgot" %>
-<%@ Import Namespace="HW.Core.FromHW" %>
+<%@ Page language="c#" Inherits="healthWatch.forgot" Codebehind="forgot.aspx.cs" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
    <%
        switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
        {
-           case 1: HttpContext.Current.Response.Write(Db.header2("GlÃ¶mt lÃ¶senord?", "Fyll i din e-postadress hÃ¤r fÃ¶r att Ã¥terstÃ¤lla ditt lÃ¶senord")); break;
-           case 2: HttpContext.Current.Response.Write(Db.header2("Forgot your password?", "Fill in your email here to reset your password")); break;
+           case 1: HttpContext.Current.Response.Write(healthWatch.Db.header2("Glömt lösenord?", "Fyll i din e-postadress här för att återställa ditt lösenord")); break;
+           case 2: HttpContext.Current.Response.Write(healthWatch.Db.header2("Forgot your password?", "Fill in your email here to reset your password")); break;
        }
            %>
 </head>
@@ -17,16 +16,16 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 	    <form id="Form1" method="post" runat="server">
-        <div class="container_16 myhealth two-sides about<%=Db.cobranded() %>">
+        <div class="container_16 myhealth two-sides about<%=healthWatch.Db.cobranded() %>">
 			<div class="headergroup grid_16">
-		<%=Db.nav2()%>
+		<%=healthWatch.Db.nav2()%>
 			</div> <!-- end .headergroup -->
         <div class="contentgroup grid_16">
 			 
 				<h1 class="header"><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("GlÃ¶mt ditt anvÃ¤ndarnamn eller lÃ¶senord?"); break;
+                    case 1: HttpContext.Current.Response.Write("Glömt ditt användarnamn eller lösenord?"); break;
                     case 2: HttpContext.Current.Response.Write("Did you forgot your username or password?"); break;
                 }
              %></h1>
@@ -36,7 +35,7 @@
 			<p><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("Fyll i din e-postadress nedan sÃ¥ skickar vi en lÃ¤nk till dig som du kan anvÃ¤nda fÃ¶r att skapa ett nytt lÃ¶senord."); break;
+                    case 1: HttpContext.Current.Response.Write("Fyll i din e-postadress nedan så skickar vi en länk till dig som du kan använda för att skapa ett nytt lösenord."); break;
                     case 2: HttpContext.Current.Response.Write("Fill in your email address below and we will send you a link that can be used to create a new password."); break;
                 }
              %></p>
@@ -62,7 +61,7 @@
 						<p><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("Det troliga Ã¤r att du skrev fel eller att ditt konto skapades med en annan e-postadress. VÃ¤nligen prova igen."); break;
+                    case 1: HttpContext.Current.Response.Write("Det troliga är att du skrev fel eller att ditt konto skapades med en annan e-postadress. Vänligen prova igen."); break;
                     case 2: HttpContext.Current.Response.Write("The most likely reason is that you misspelled the address or that your account was created with a different email address. Please try again."); break;
                 }
              %></p>
@@ -72,7 +71,7 @@
 				</div>
 
 		</div><!-- end .contentgroup	-->
-		<%=Db.bottom2()%>
+		<%=healthWatch.Db.bottom2()%>
 	</div> <!-- end .container_12 -->
     </form>
 </body>

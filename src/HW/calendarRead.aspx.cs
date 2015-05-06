@@ -1,13 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Collections;
+using System.ComponentModel;
+using System.Data.SqlClient;
+using System.Drawing;
 using System.Web;
+using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data.SqlClient;
-using HW.Core.FromHW;
+using System.Web.UI.HtmlControls;
 
-namespace HW
+namespace healthWatch
 {
     public partial class calendarRead : System.Web.UI.Page
     {
@@ -48,7 +50,7 @@ namespace HW
                            "<a class=\"button\" id=\"updateDate\" href=\"#\"><span>Update</span></a>";
                 default: return "<span>Fr&aring;n </span>" +
                            "<div id=\"\" class=\"var from year\"><dl class=\"dropdown\"><dt><a><span>" + fromDT.Year + "</span></a></dt></dl></div>" +
-                           "<div id=\"\" class=\"var from month\"><dl class=\"dropdown\"><dt><a><span>" + fromDT.Month.ToString().PadLeft(2, '0') + "</span></a></dt></dl></div>" +
+                           "<div id=\"\" class=\"var from month\"><dl class=\"dropdown\"><dt><a><span>" + fromDT.Month.ToString().PadLeft(2,'0') + "</span></a></dt></dl></div>" +
                            "<div id=\"\" class=\"var from day\"><dl class=\"dropdown\"><dt><a><span>" + fromDT.Day.ToString().PadLeft(2, '0') + "</span></a></dt></dl></div>" +
                            "<span> Till </span>" +
                            "<div id=\"\" class=\"var to year\"><dl class=\"dropdown\"><dt><a><span>" + toDT.Year + "</span></a></dt></dl></div>" +
@@ -89,7 +91,7 @@ namespace HW
                 default: return "Välj tidsperiod du vill läsa";
             }
         }
-
+        
         public string menu()
         {
             switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
@@ -120,7 +122,7 @@ namespace HW
                     System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("sv-SE");
                     break;
             }
-
+            
             if (HttpContext.Current.Request.QueryString["FD"] != null)
             {
                 System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo("en-US");
@@ -153,7 +155,7 @@ namespace HW
                 "INNER JOIN ExerciseVariantLang evl ON es.ExerciseVariantLangID = evl.ExerciseVariantLangID " +
                 "INNER JOIN ExerciseVariant ev ON evl.ExerciseVariantID = ev.ExerciseVariantID " +
                 "INNER JOIN Exercise e ON ev.ExerciseID = e.ExerciseID " +
-                "LEFT OUTER JOIN ExerciseLang el ON e.ExerciseID = el.ExerciseID AND el.Lang = " + (Convert.ToInt32(HttpContext.Current.Session["LID"]) - 1) + " " +
+                "LEFT OUTER JOIN ExerciseLang el ON e.ExerciseID = el.ExerciseID AND el.Lang = " + (Convert.ToInt32(HttpContext.Current.Session["LID"])-1) + " " +
                 "WHERE es.UserID = " + HttpContext.Current.Session["UserID"] + " " +
                 "AND dbo.cf_yearMonthDay(es.DateTime) >= '" + fromDT.ToString("yyyy-MM-dd") + "' " +
                 "AND dbo.cf_yearMonthDay(es.DateTime) <= '" + toDT.ToString("yyyy-MM-dd") + "' " +
@@ -213,27 +215,27 @@ namespace HW
                               "<div class=\"messagegroup\">" +
                               "<div class=\"message\">");
                     SqlDataReader rs2 = Db.rs("SELECT DiaryNote, Mood FROM Diary WHERE DeletedDT IS NULL AND UserID = " + Convert.ToInt32(HttpContext.Current.Session["UserID"]) + " AND DiaryDate = '" + dt.ToString("yyyy-MM-dd") + "'");
-                    while (rs2.Read())
+                    while(rs2.Read())
                     {
                         sb.Append("" +
                             (!rs2.IsDBNull(1) && rs2.GetInt32(1) != 0 ? "<div class=\"mood " + renderMood(rs2.GetInt32(1)) + "\"></div>" : "") +
                             (!rs2.IsDBNull(0) && rs2.GetString(0) != "" ? "<p>" + rs2.GetString(0) + "</p>" : ""));
                     }
                     rs2.Close();
-                    sb.Append("" +
-                          "</div>" +
-                          "<a href=\"#!\" class=\"2 moretoggle\">" + showMore() + "</a>" +
-                          "</div>" +
-                          "<div class=\"activities\">" +
-                          "<div class=\"title\">" + todaysActivities() + "</div>" +
-                          Db.fetchActs(dt.ToString("yyyy-MM-dd"), Convert.ToInt32(HttpContext.Current.Session["LID"]), Convert.ToInt32(HttpContext.Current.Session["UserID"]), false) +
-                          "</div>" +
-                          "<span>" +
-                          "<a href=\"#!\" class=\"2 moretoggle\">" + showMore() + "</a>" +
-                          "<span>" +
-                          "<div class=\"bottomcontainer\"></div>" +
-                          "<div class=\"bottom\"></div>" +
-                          "</div><!-- end .post -->");
+                        sb.Append("" +
+                              "</div>" +
+                              "<a href=\"#!\" class=\"2 moretoggle\">" + showMore() + "</a>" +
+                              "</div>" +
+                              "<div class=\"activities\">" +
+                              "<div class=\"title\">" + todaysActivities() + "</div>" +
+                              Db.fetchActs(dt.ToString("yyyy-MM-dd"), Convert.ToInt32(HttpContext.Current.Session["LID"]), Convert.ToInt32(HttpContext.Current.Session["UserID"]), false) +
+                              "</div>" +
+                              "<span>" +
+                              "<a href=\"#!\" class=\"2 moretoggle\">" + showMore() + "</a>" +
+                              "<span>" +
+                              "<div class=\"bottomcontainer\"></div>" +
+                              "<div class=\"bottom\"></div>" +
+                              "</div><!-- end .post -->");
                 }
                 oldDT = dt;
             }

@@ -1,13 +1,15 @@
-ï»¿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System;
+using System.Data.SqlClient;
+using System.Configuration;
+using System.Collections;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data.SqlClient;
-using HW.Core.FromHW;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
 
-namespace HW
+namespace healthWatch
 {
     public partial class exercise : System.Web.UI.Page
     {
@@ -15,7 +17,7 @@ namespace HW
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (HttpContext.Current.Session["UserID"] == null)
+            if(HttpContext.Current.Session["UserID"] == null)
             {
                 HttpContext.Current.Response.Redirect("home.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
             }
@@ -23,7 +25,7 @@ namespace HW
             int TYPE = (HttpContext.Current.Request.QueryString["TYPE"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["TYPE"]) : 0);
             int SORT = (HttpContext.Current.Request.QueryString["SORT"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["SORT"]) : 0);
             string sortQS = "&SORT=" + SORT;
-
+            
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
             SqlDataReader rs;
             int rExerciseAreaID = 0, rExerciseID = 0;//, BX = 0, CX = 0, rVariantCount = 0;
@@ -74,7 +76,7 @@ namespace HW
                     }
                     else
                     {
-                        if (s != "")
+                        if(s != "")
                         {
                             CategoryID.Controls.Add(new LiteralControl("<li" + s));
                         }
@@ -91,8 +93,8 @@ namespace HW
                     {
                         case 1:
                             TypeID.Controls.Add(new LiteralControl("<dt><a href=\"javascript:;\"><span>Visa alla</span></a></dt><dd><ul>"));
-                            TypeID.Controls.Add(new LiteralControl("<li id=\"TYPE1\"><a href=\"exercise.aspx?TYPE=1" + sortQS + "#filter\">Korta Ã¶vningar</a></li>"));
-                            TypeID.Controls.Add(new LiteralControl("<li id=\"TYPE2\"><a href=\"exercise.aspx?TYPE=2" + sortQS + "#filter\">LÃ¤ngre Ã¶vningar</a></li>"));
+                            TypeID.Controls.Add(new LiteralControl("<li id=\"TYPE1\"><a href=\"exercise.aspx?TYPE=1" + sortQS + "#filter\">Korta övningar</a></li>"));
+                            TypeID.Controls.Add(new LiteralControl("<li id=\"TYPE2\"><a href=\"exercise.aspx?TYPE=2" + sortQS + "#filter\">Längre övningar</a></li>"));
                             break;
                         case 2:
                             TypeID.Controls.Add(new LiteralControl("<dt><a href=\"javascript:;\"><span>Show all</span></a></dt><dd><ul>"));
@@ -106,9 +108,9 @@ namespace HW
                     switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                     {
                         case 1:
-                            TypeID.Controls.Add(new LiteralControl("<dt><a href=\"javascript:;\"><span>Korta Ã¶vningar</span></a></dt><dd><ul>"));
+                            TypeID.Controls.Add(new LiteralControl("<dt><a href=\"javascript:;\"><span>Korta övningar</span></a></dt><dd><ul>"));
                             TypeID.Controls.Add(new LiteralControl("<li id=\"TYPE0\"><a href=\"exercise.aspx?TYPE=0" + sortQS + "#filter\">Visa alla</a></li>"));
-                            TypeID.Controls.Add(new LiteralControl("<li id=\"TYPE2\"><a href=\"exercise.aspx?TYPE=2" + sortQS + "#filter\">LÃ¤ngre Ã¶vningar</a></li>"));
+                            TypeID.Controls.Add(new LiteralControl("<li id=\"TYPE2\"><a href=\"exercise.aspx?TYPE=2" + sortQS + "#filter\">Längre övningar</a></li>"));
                             break;
                         case 2:
                             TypeID.Controls.Add(new LiteralControl("<dt><a href=\"javascript:;\"><span>Short exercises</span></a></dt><dd><ul>"));
@@ -122,9 +124,9 @@ namespace HW
                     switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                     {
                         case 1:
-                            TypeID.Controls.Add(new LiteralControl("<dt><a href=\"javascript:;\"><span>LÃ¤ngre Ã¶vningar</span></a></dt><dd><ul>"));
+                            TypeID.Controls.Add(new LiteralControl("<dt><a href=\"javascript:;\"><span>Längre övningar</span></a></dt><dd><ul>"));
                             TypeID.Controls.Add(new LiteralControl("<li id=\"TYPE0\"><a href=\"exercise.aspx?TYPE=0" + sortQS + "#filter\">Visa alla</a></li>"));
-                            TypeID.Controls.Add(new LiteralControl("<li id=\"TYPE1\"><a href=\"exercise.aspx?TYPE=1" + sortQS + "#filter\">Korta Ã¶vningar</a></li>"));
+                            TypeID.Controls.Add(new LiteralControl("<li id=\"TYPE1\"><a href=\"exercise.aspx?TYPE=1" + sortQS + "#filter\">Korta övningar</a></li>"));
                             break;
                         case 2:
                             TypeID.Controls.Add(new LiteralControl("<dt><a href=\"javascript:;\"><span>Longer exercises</span></a></dt><dd><ul>"));
@@ -139,14 +141,14 @@ namespace HW
             rs = Db.rs("SELECT " +
                     "el.New, " +                    // 0
                     "NULL, " +
-                //"(" +
-                //    "SELECT COUNT(*) FROM [ExerciseVariantLang] evlTmp " +
-                //    "INNER JOIN [ExerciseVariant] evTmp ON evlTmp.ExerciseVariantID = evTmp.ExerciseVariantID " +
-                //    "WHERE evTmp.ExerciseTypeID >= 3 " +
-                //    "AND evTmp.ExerciseTypeID <= 4 " +
-                //    "AND Lang = evl.Lang " +
-                //    "AND evTmp.ExerciseID = ev.ExerciseID" +
-                //") AS VariantCount, " +         // 1
+                    //"(" +
+                    //    "SELECT COUNT(*) FROM [ExerciseVariantLang] evlTmp " +
+                    //    "INNER JOIN [ExerciseVariant] evTmp ON evlTmp.ExerciseVariantID = evTmp.ExerciseVariantID " +
+                    //    "WHERE evTmp.ExerciseTypeID >= 3 " +
+                    //    "AND evTmp.ExerciseTypeID <= 4 " +
+                    //    "AND Lang = evl.Lang " +
+                    //    "AND evTmp.ExerciseID = ev.ExerciseID" +
+                    //") AS VariantCount, " +         // 1
                     "evl.ExerciseVariantLangID, " + // 2
                     "eal.ExerciseArea, " +          // 3
                     "eal.ExerciseAreaID, " +        // 4
@@ -185,7 +187,7 @@ namespace HW
                     (SORT == 1 ? "(SELECT COUNT(*) FROM ExerciseStats esX INNER JOIN ExerciseVariantLang evlX ON esX.ExerciseVariantLangID = evlX.ExerciseVariantLangID INNER JOIN ExerciseVariant evX ON evlX.ExerciseVariantID = evX.ExerciseVariantID WHERE evX.ExerciseID = e.ExerciseID) DESC, " : (SORT == 2 ? "el.Exercise ASC, " : "")) +
                     "HASHBYTES('MD2',CAST(RAND(" + DateTime.Now.Second * DateTime.Now.Minute + ")*e.ExerciseID AS VARCHAR(16))) ASC, " +
                     "et.ExerciseTypeSortOrder ASC");
-            while (rs.Read())
+            while(rs.Read())
             {
                 //if(rs.GetInt32(4) != rExerciseAreaID)
                 //{
@@ -197,7 +199,7 @@ namespace HW
                 //    ExerciseList.Text += "\r\n<div class=\"box\" style=\"width:707px;\">";
                 //}
 
-                if (rs.GetInt32(6) != rExerciseID)
+	            if(rs.GetInt32(6) != rExerciseID)
                 {
                     BX++;
                     if (AX > 0)
@@ -216,8 +218,8 @@ namespace HW
                     //    }
                     //}
 
-                    //rVariantCount = rs.GetInt32(1);
-                    //rExerciseImg = (rs.IsDBNull(5) ? "" : rs.GetString(5));
+        		    //rVariantCount = rs.GetInt32(1);
+		            //rExerciseImg = (rs.IsDBNull(5) ? "" : rs.GetString(5));
 
                     sb.Append("<div class=\"item\"><div class=\"overview\"></div><div class=\"detail\">");
 
@@ -234,24 +236,24 @@ namespace HW
                     //}
 
 
-                    // time
-                    if (!rs.IsDBNull(9) && rs.GetString(9) != "")
+		            // time
+                    if(!rs.IsDBNull(9) && rs.GetString(9) != "")
                     {
-                        sb.Append("<div class=\"time\">" + rs.GetString(9) + "<span class=\"time-end\"></span></div>");
-                    }
+			            sb.Append("<div class=\"time\">" + rs.GetString(9) + "<span class=\"time-end\"></span></div>");
+		            }
 
                     // exercise
                     sb.Append("<div class=\"descriptions\">" + rs.GetString(3) + "</div><h2>" + rs.GetString(8) + "</h2>");
 
-                    // teaser
-                    if (!rs.IsDBNull(10) && rs.GetString(10) != "")
+		            // teaser
+                    if(!rs.IsDBNull(10) && rs.GetString(10) != "")
                     {
-                        sb.Append("<p>" + rs.GetString(10) + "</p>");
-                    }
+			            sb.Append("<p>" + rs.GetString(10) + "</p>");
+		            }
                     //ExerciseList.Text += "<img src=\"img/null.gif\" width=\"1\" height=\"6\"><br><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">";
                     sb.Append("<div>");
                     //CX = 0;
-                }
+	            }
                 //BX = 3;
 
                 /*
@@ -265,8 +267,8 @@ namespace HW
 
                 //if(!rs.IsDBNull(5) && rs.GetInt32(1) > 0)
                 //{
-                //    BX = 2;
-                //}
+		        //    BX = 2;
+	            //}
 
                 //if(CX % BX == 0)
                 //{
@@ -286,17 +288,17 @@ namespace HW
                 //}
 
                 sb.Append("<a class=\"sidearrow\" href=\"JavaScript:void(window.open('exerciseShow.aspx?ExerciseVariantLangID=" + rs.GetInt32(2) + "','EVLID" + rs.GetInt32(2) + "','scrollbars=yes,resizable=yes,");
-
-                if (rs.IsDBNull(14))
+	                
+                if(rs.IsDBNull(14))
                 {
-                    sb.Append("width=650,height=580");
-                }
+		            sb.Append("width=650,height=580");
+	            }
                 else
                 {
-                    sb.Append("width=" + rs.GetInt32(14) + ",height=" + rs.GetInt32(15));
-                }
-                sb.Append("'));\">" + rs.GetString(17) + (!rs.IsDBNull(18) && rs.GetString(18) != "" ? " (" + rs.GetString(18) + ")" : "") + "</a>");
-
+		            sb.Append("width=" + rs.GetInt32(14) + ",height=" + rs.GetInt32(15));
+	            }
+	            sb.Append("'));\">" + rs.GetString(17) + (!rs.IsDBNull(18) && rs.GetString(18) != "" ? " (" + rs.GetString(18) + ")" : "") + "</a>");
+	                
                 //if(!rs.IsDBNull(18) && rs.GetString(18) != "" || !rs.IsDBNull(12))
                 //{
                 //    ExerciseList.Text += "&nbsp;[";
@@ -315,8 +317,8 @@ namespace HW
                 //    ExerciseList.Text += "]";
                 //}
                 //ExerciseList.Text += "</td>";
-                rExerciseAreaID = rs.GetInt32(4);
-                rExerciseID = rs.GetInt32(6);
+	            rExerciseAreaID = rs.GetInt32(4);
+	            rExerciseID = rs.GetInt32(6);
                 //CX = CX + 1;
                 AX++;
             }
@@ -337,7 +339,7 @@ namespace HW
                 switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
                     case 1:
-                        Sort.Controls.Add(new LiteralControl("<a" + (SORT == 0 ? " class=\"active\" href=\"javascript:;\"" : " href=\"exercise.aspx?SORT=0" + q + "#filter\"") + "><span>SlumpmÃ¤ssigt</span></a>"));
+                        Sort.Controls.Add(new LiteralControl("<a" + (SORT == 0 ? " class=\"active\" href=\"javascript:;\"" : " href=\"exercise.aspx?SORT=0" + q + "#filter\"") + "><span>Slumpmässigt</span></a>"));
                         Sort.Controls.Add(new LiteralControl("<a" + (SORT == 1 ? " class=\"active\" href=\"javascript:;\"" : " href=\"exercise.aspx?SORT=1" + q + "#filter\"") + "><span>Popularitet</span></a>"));
                         Sort.Controls.Add(new LiteralControl("<a" + (SORT == 2 ? " class=\"active\" href=\"javascript:;\"" : " href=\"exercise.aspx?SORT=2" + q + "#filter\"") + "><span>Bokstavsordning</span></a>"));
                         break;

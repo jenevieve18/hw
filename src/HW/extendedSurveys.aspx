@@ -1,19 +1,19 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="extendedSurveys.aspx.cs" Inherits="HW.extendedSurveys" %>
-<%@ Import Namespace="HW.Core.FromHW" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="healthWatch.extendedSurveys" Codebehind="extendedSurveys.aspx.cs" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
    <%
        switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
        {
-           case 1: HttpContext.Current.Response.Write(Db.header2("Enkät", "Enkät")); break;
-           case 2: HttpContext.Current.Response.Write(Db.header2("Survey", "Survey")); break;
+           case 1: HttpContext.Current.Response.Write(healthWatch.Db.header2("Enkät", "Enkät")); break;
+           case 2: HttpContext.Current.Response.Write(healthWatch.Db.header2("Survey", "Survey")); break;
        }
            %>
    <script language="javascript">
        var pop = null;
        document.domain = 'healthwatch.se';
-       function updateChecks() {
+       function updateChecks() 
+       {
            var obj;
            if (obj = document.getElementById('SendPH')) { obj.style.display = (document.getElementById('Offer0').checked ? 'none' : '') };
        }
@@ -25,9 +25,9 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
   <form id="Form1" method="post" runat="server">
-  <div class="container_16 myhealth two-sides about<%=Db.cobranded() %>">
+  <div class="container_16 myhealth two-sides about<%=healthWatch.Db.cobranded() %>">
       <div class="headergroup grid_16">
-		<%=Db.nav2()%>
+		<%=healthWatch.Db.nav2()%>
 		</div> <!-- end .headergroup -->
       <div class="contentgroup grid_16">
           <h1 class="header"><asp:Label ID=PageHeader runat=server /></h1>
@@ -74,7 +74,7 @@
 				</div>
 
 		</div><!-- end .contentgroup	-->
-		<%=Db.bottom2()%>
+		<%=healthWatch.Db.bottom2()%>
         </div> <!-- end .container_12 -->
 		</form>
   </body>

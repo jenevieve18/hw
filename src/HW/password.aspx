@@ -1,13 +1,12 @@
-ï»¿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="password.aspx.cs" Inherits="HW.password" %>
-<%@ Import Namespace="HW.Core.FromHW" %>
+<%@ Page language="c#" Inherits="healthWatch.password" Codebehind="password.aspx.cs" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
    <%
        switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
        {
-           case 1: HttpContext.Current.Response.Write(Db.header2("Nytt lÃ¶senord", "Fyll i nytt lÃ¶senord hÃ¤r")); break;
-           case 2: HttpContext.Current.Response.Write(Db.header2("New password", "Fill in a new password here")); break;
+           case 1: HttpContext.Current.Response.Write(healthWatch.Db.header2("Nytt lösenord", "Fyll i nytt lösenord här")); break;
+           case 2: HttpContext.Current.Response.Write(healthWatch.Db.header2("New password", "Fill in a new password here")); break;
        }
            %>
 </head>
@@ -17,16 +16,16 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 	    <form id="Form1" method="post" runat="server">
-        <div class="container_16 myhealth two-sides about<%=Db.cobranded() %>">
+        <div class="container_16 myhealth two-sides about<%=healthWatch.Db.cobranded() %>">
 			<div class="headergroup grid_16">
-		<%=Db.nav2()%>
+		<%=healthWatch.Db.nav2()%>
 			</div> <!-- end .headergroup -->
         <div class="contentgroup grid_16">
 			 
 				<h1 class="header"><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("Nytt lÃ¶senord"); break;
+                    case 1: HttpContext.Current.Response.Write("Nytt lösenord"); break;
                     case 2: HttpContext.Current.Response.Write("New password"); break;
                 }
              %></h1>
@@ -36,7 +35,7 @@
 			<p><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("Fyll i nytt lÃ¶senord hÃ¤r"); break;
+                    case 1: HttpContext.Current.Response.Write("Fyll i nytt lösenord här"); break;
                     case 2: HttpContext.Current.Response.Write("Fill in a new password here"); break;
                 }
              %></p><input type="password" name="ForgotPassword" style="width:120px;"><input type="submit" value="OK">
@@ -48,14 +47,14 @@
                     <h3><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("HjÃ¤lp oss bli bÃ¤ttre"); break;
+                    case 1: HttpContext.Current.Response.Write("Hjälp oss bli bättre"); break;
                     case 2: HttpContext.Current.Response.Write("Help us improve"); break;
                 }
              %></h3><br />
 						<p><%
 		    switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                 {
-                    case 1: HttpContext.Current.Response.Write("Du Ã¤r varmt vÃ¤lkommen att skicka synpunkter och fÃ¶rbÃ¤ttringsfÃ¶rslag till oss."); break;
+                    case 1: HttpContext.Current.Response.Write("Du är varmt välkommen att skicka synpunkter och förbättringsförslag till oss."); break;
                     case 2: HttpContext.Current.Response.Write("You are most welcome to send your feedback and improvement suggestions to us."); break;
                 }
              %></p>
@@ -65,7 +64,7 @@
 				</div>
 
 		</div><!-- end .contentgroup	-->
-		<%=Db.bottom2()%>
+		<%=healthWatch.Db.bottom2()%>
 	</div> <!-- end .container_12 -->
     </form>
 </body>

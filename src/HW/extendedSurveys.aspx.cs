@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Data.SqlClient;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data.SqlClient;
-using HW.Core.FromHW;
 
-namespace HW
+namespace healthWatch
 {
+
     public partial class extendedSurveys : System.Web.UI.Page
     {
         string treatmentOfferEmail = "", alternativeTreatmentOfferEmail = "", treatmentOfferLinks = "";
@@ -113,93 +112,93 @@ namespace HW
 
                 //if (!rs.IsDBNull(5) && rs.GetInt32(5) == 1)         // IndividualFeedbackID
                 //{
-                if (!IsPostBack && !rs.IsDBNull(6) && SESID == 0)
-                {
-                    #region Treatment offer
-                    bool qualify = false;
-                    if (!rs.IsDBNull(8))
+                    if (!IsPostBack && !rs.IsDBNull(6) && SESID == 0)
                     {
-                        #region TreatmentOfferText
-                        if (!rs.IsDBNull(11))
+                        #region Treatment offer
+                        bool qualify = false;
+                        if (!rs.IsDBNull(8))
                         {
-                            #region TreatmentOfferBQ
-                            SqlDataReader rs2 = Db.rs("SELECT " +
-                                "TOP 1 " +
-                                "b.ValueDate " +
-                                "FROM UserProfile u " +
-                                "INNER JOIN UserProfileBQ b ON u.UserProfileID = b.UserProfileID " +
-                                "WHERE b.BQID = " + rs.GetInt32(11) + " " +
-                                "AND u.UserID = " + Convert.ToInt32(HttpContext.Current.Session["UserID"]) + " " +
-                                "ORDER BY u.UserProfileID DESC");
-                            if (rs2.Read() && !rs2.IsDBNull(0))
+                            #region TreatmentOfferText
+                            if (!rs.IsDBNull(11))
                             {
-                                if (!rs.IsDBNull(12) && rs.GetInt32(12) == 1)   // Age
+                                #region TreatmentOfferBQ
+                                SqlDataReader rs2 = Db.rs("SELECT " +
+                                    "TOP 1 " +
+                                    "b.ValueDate " +
+                                    "FROM UserProfile u " +
+                                    "INNER JOIN UserProfileBQ b ON u.UserProfileID = b.UserProfileID " +
+                                    "WHERE b.BQID = " + rs.GetInt32(11) + " " +
+                                    "AND u.UserID = " + Convert.ToInt32(HttpContext.Current.Session["UserID"]) + " " +
+                                    "ORDER BY u.UserProfileID DESC");
+                                if (rs2.Read() && !rs2.IsDBNull(0))
                                 {
-                                    DateTime d = rs2.GetDateTime(0);
-                                    int t = DateTime.Now.Year - d.Year;
-                                    d = d.AddYears(t);
-                                    if (DateTime.Now.CompareTo(d) < 0) { t--; }
-
-                                    if (t > rs.GetInt32(13))
+                                    if (!rs.IsDBNull(12) && rs.GetInt32(12) == 1)   // Age
                                     {
-                                        qualify = true;
-                                        TreatmentOfferText.Text += "<INPUT ID=\"Offer1a\" ONCLICK=\"updateChecks();\" NAME=\"Offer\"" + (HttpContext.Current.Request.Form["Offer"] != null && HttpContext.Current.Request.Form["Offer"] == rs.GetString(8) ? " CHECKED" : "") + " TYPE=\"radio\" VALUE=\"a_" + rs.GetString(8) + "\"/>" + rs.GetString(8) + "<br/>";
-                                        if (!rs.IsDBNull(16) && !rs.IsDBNull(17))
+                                        DateTime d = rs2.GetDateTime(0);
+                                        int t = DateTime.Now.Year - d.Year;
+                                        d = d.AddYears(t);
+                                        if (DateTime.Now.CompareTo(d) < 0) { t--; }
+
+                                        if (t > rs.GetInt32(13))
                                         {
-                                            TreatmentOfferText.Text += "<INPUT ID=\"Offer1b\" ONCLICK=\"updateChecks();\" NAME=\"Offer\"" + (HttpContext.Current.Request.Form["Offer"] != null && HttpContext.Current.Request.Form["Offer"] == rs.GetString(16) ? " CHECKED" : "") + " TYPE=\"radio\" VALUE=\"b_" + rs.GetString(16) + "\"/>" + rs.GetString(16) + "<br/>";
+                                            qualify = true;
+                                            TreatmentOfferText.Text += "<INPUT ID=\"Offer1a\" ONCLICK=\"updateChecks();\" NAME=\"Offer\"" + (HttpContext.Current.Request.Form["Offer"] != null && HttpContext.Current.Request.Form["Offer"] == rs.GetString(8) ? " CHECKED" : "") + " TYPE=\"radio\" VALUE=\"a_" + rs.GetString(8) + "\"/>" + rs.GetString(8) + "<br/>";
+                                            if (!rs.IsDBNull(16) && !rs.IsDBNull(17))
+                                            {
+                                                TreatmentOfferText.Text += "<INPUT ID=\"Offer1b\" ONCLICK=\"updateChecks();\" NAME=\"Offer\"" + (HttpContext.Current.Request.Form["Offer"] != null && HttpContext.Current.Request.Form["Offer"] == rs.GetString(16) ? " CHECKED" : "") + " TYPE=\"radio\" VALUE=\"b_" + rs.GetString(16) + "\"/>" + rs.GetString(16) + "<br/>";
+                                            }
                                         }
                                     }
                                 }
+                                rs2.Close();
+                                #endregion
                             }
-                            rs2.Close();
+                            else
+                            {
+                                #region Always
+                                qualify = true;
+                                TreatmentOfferText.Text += "<INPUT ID=\"Offer1\" ONCLICK=\"updateChecks();\" NAME=\"Offer\"" + (HttpContext.Current.Request.Form["Offer"] != null && HttpContext.Current.Request.Form["Offer"] == rs.GetString(8) ? " CHECKED" : "") + " TYPE=\"radio\" VALUE=\"a_" + rs.GetString(8) + "\"/>" + rs.GetString(8) + "<br/>";
+                                if (!rs.IsDBNull(16) && !rs.IsDBNull(17))
+                                {
+                                    TreatmentOfferText.Text += "<INPUT ID=\"Offer1b\" ONCLICK=\"updateChecks();\" NAME=\"Offer\"" + (HttpContext.Current.Request.Form["Offer"] != null && HttpContext.Current.Request.Form["Offer"] == rs.GetString(16) ? " CHECKED" : "") + " TYPE=\"radio\" VALUE=\"b_" + rs.GetString(16) + "\"/>" + rs.GetString(16) + "<br/>";
+                                }
+                                #endregion
+                            }
                             #endregion
                         }
-                        else
+                        if (!rs.IsDBNull(10) && !rs.IsDBNull(14))
                         {
-                            #region Always
+                            #region TreatmentOfferIfNeededText
+                            TreatmentOfferText.Text += "<INPUT ID=\"Offer2\" ONCLICK=\"updateChecks();\" NAME=\"Offer\"" + (HttpContext.Current.Request.Form["Offer"] != null && HttpContext.Current.Request.Form["Offer"] == rs.GetString(10) ? " CHECKED" : "") + " TYPE=\"radio\" VALUE=\"a_" + rs.GetString(10) + "\"/>" + rs.GetString(10) + "<br/>";
                             qualify = true;
-                            TreatmentOfferText.Text += "<INPUT ID=\"Offer1\" ONCLICK=\"updateChecks();\" NAME=\"Offer\"" + (HttpContext.Current.Request.Form["Offer"] != null && HttpContext.Current.Request.Form["Offer"] == rs.GetString(8) ? " CHECKED" : "") + " TYPE=\"radio\" VALUE=\"a_" + rs.GetString(8) + "\"/>" + rs.GetString(8) + "<br/>";
-                            if (!rs.IsDBNull(16) && !rs.IsDBNull(17))
-                            {
-                                TreatmentOfferText.Text += "<INPUT ID=\"Offer1b\" ONCLICK=\"updateChecks();\" NAME=\"Offer\"" + (HttpContext.Current.Request.Form["Offer"] != null && HttpContext.Current.Request.Form["Offer"] == rs.GetString(16) ? " CHECKED" : "") + " TYPE=\"radio\" VALUE=\"b_" + rs.GetString(16) + "\"/>" + rs.GetString(16) + "<br/>";
-                            }
                             #endregion
                         }
-                        #endregion
-                    }
-                    if (!rs.IsDBNull(10) && !rs.IsDBNull(14))
-                    {
-                        #region TreatmentOfferIfNeededText
-                        TreatmentOfferText.Text += "<INPUT ID=\"Offer2\" ONCLICK=\"updateChecks();\" NAME=\"Offer\"" + (HttpContext.Current.Request.Form["Offer"] != null && HttpContext.Current.Request.Form["Offer"] == rs.GetString(10) ? " CHECKED" : "") + " TYPE=\"radio\" VALUE=\"a_" + rs.GetString(10) + "\"/>" + rs.GetString(10) + "<br/>";
-                        qualify = true;
-                        #endregion
-                    }
-                    if (qualify)
-                    {
-                        TreatmentOfferText.Text = "<INPUT ID=\"Offer0\" ONCLICK=\"updateChecks();\" NAME=\"Offer\"" + (HttpContext.Current.Request.Form["Offer"] == null || HttpContext.Current.Request.Form["Offer"] == "Ingen kontakt önskas" ? " CHECKED" : "") + " TYPE=\"radio\" VALUE=\"Ingen kontakt önskas\"/>Ingen kontakt önskas<br/>" + TreatmentOfferText.Text;
-                        if (HttpContext.Current.Session["TreatmentRequest"] != null)
+                        if (qualify)
                         {
-                            TreatmentOffer.Visible = false;
-                            Sent.Visible = true;
-                            switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
+                            TreatmentOfferText.Text = "<INPUT ID=\"Offer0\" ONCLICK=\"updateChecks();\" NAME=\"Offer\"" + (HttpContext.Current.Request.Form["Offer"] == null || HttpContext.Current.Request.Form["Offer"] == "Ingen kontakt önskas" ? " CHECKED" : "") + " TYPE=\"radio\" VALUE=\"Ingen kontakt önskas\"/>Ingen kontakt önskas<br/>" + TreatmentOfferText.Text;
+                            if (HttpContext.Current.Session["TreatmentRequest"] != null)
                             {
-                                case 1:
-                                    Sent.Text = "Förfrågan om kontakt skickad!";
-                                    break;
-                                case 2:
-                                    Sent.Text = "Request for contact sent!";
-                                    break;
+                                TreatmentOffer.Visible = false;
+                                Sent.Visible = true;
+                                switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
+                                {
+                                    case 1:
+                                        Sent.Text = "Förfrågan om kontakt skickad!";
+                                        break;
+                                    case 2:
+                                        Sent.Text = "Request for contact sent!";
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                TreatmentOffer.Visible = true;
+                                Email.Text = rs.GetString(7);
+                                //TreatmentOfferText.Text = rs.GetString(8);
                             }
                         }
-                        else
-                        {
-                            TreatmentOffer.Visible = true;
-                            Email.Text = rs.GetString(7);
-                            //TreatmentOfferText.Text = rs.GetString(8);
-                        }
+                        #endregion
                     }
-                    #endregion
-                }
                 //}
                 if (!rs.IsDBNull(2))
                 {
@@ -293,7 +292,7 @@ namespace HW
                                     break;
                             }
                         }
-                        else if (ongoing)
+                        else if(ongoing)
                         {
                             switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                             {
@@ -380,7 +379,7 @@ namespace HW
                     "Email: " + Email.Text + "\r\n" +
                     "Telefon: " + Phone.Text + "\r\n" +
                     extra +
-                    (Include.Checked ? treatmentOfferLinks.Replace("&bull;", "") + "\r\n" : "") +
+                    (Include.Checked ? treatmentOfferLinks.Replace("&bull;","") + "\r\n" : "") +
                     "\r\n" +
                     "Sent through HealthWatch"
                     );
@@ -398,7 +397,7 @@ namespace HW
                     "AND UserID = " + Convert.ToInt32(HttpContext.Current.Session["UserID"]));
                 HttpContext.Current.Session["TreatmentRequest"] = 1;
             }
-            catch (Exception ex)
+            catch (Exception ex) 
             {
                 System.Net.Mail.SmtpClient mailClient = new System.Net.Mail.SmtpClient(System.Configuration.ConfigurationManager.AppSettings["SmtpServer"]);
                 System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage(
@@ -406,7 +405,7 @@ namespace HW
                     "jens@healthwatch.se",
                     "COULD NOT SEND TREATMENT REQUEST",
                     "FOR USERID: " + HttpContext.Current.Session["UserID"].ToString() +
-                    "\r\n\r\n" + ex.Message +
+                    "\r\n\r\n" + ex.Message + 
                     "\r\n\r\n" + ex.StackTrace
                     );
                 mailClient.Send(mail);

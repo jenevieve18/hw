@@ -1,1 +1,1 @@
-﻿<%@ Page ContentType="image/png" Language="C#" AutoEventWireup="true" CodeBehind="piechart.aspx.cs" Inherits="HW.piechart" %>
+﻿<%@ Page ContentType="image/png" Language="C#" AutoEventWireup="true" Inherits="healthWatch.piechart" Codebehind="piechart.aspx.cs" %>
