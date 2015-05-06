@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace HW.Core.Models
 {
@@ -12,9 +13,13 @@ namespace HW.Core.Models
 	
 	public class ManagerFunction : BaseModel
 	{
-		public virtual string Function { get; set; }
+//		public virtual string Function { get; set; }
 		public virtual string URL { get; set; }
-		public virtual string Expl { get; set; }
+//		public virtual string Expl { get; set; }
+		public virtual IList<ManagerFunctionLang> Languages { get; set; }
+		public virtual ManagerFunctionLang SelectedLanguage {
+			get { return Languages[0]; }
+		}
 		
 		public const int Organization = 1;
 		public const int Statistics = 2;
@@ -24,10 +29,19 @@ namespace HW.Core.Models
 		public const int Exercises = 7;
 		public const int Reminders = 8;
 		
-		public override string ToString()
+		public ManagerFunction()
 		{
-			return Function;
 		}
+		
+		public ManagerFunction(IList<ManagerFunctionLang> languages)
+		{
+			Languages = languages;
+		}
+		
+//		public override string ToString()
+//		{
+//			return Function;
+//		}
 	}
 	
 	public class ManagerFunctionLang : BaseModel
@@ -35,5 +49,10 @@ namespace HW.Core.Models
 		public virtual string Function { get; set; }
 		public virtual string URL { get; set; }
 		public virtual string Expl { get; set; }
+		
+		public override string ToString()
+		{
+			return Function;
+		}
 	}
 }

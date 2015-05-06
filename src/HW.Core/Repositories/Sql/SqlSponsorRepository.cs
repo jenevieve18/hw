@@ -21,7 +21,7 @@ namespace HW.Core.Repositories.Sql
 		void UpdateSponsorLastLoginSent(int sponsorId);
 	}
 	
-	public class ExtendedSurveyRepositoryFactory
+	public static class ExtendedSurveyRepositoryFactory
 	{
 		public static IExtendedSurveyRepository CreateRepository(int sponsorAdminID)
 		{
@@ -33,7 +33,7 @@ namespace HW.Core.Repositories.Sql
 		}
 	}
 	
-	public class SqlSponsorRepository : BaseSqlRepository<Sponsor>, IExtendedSurveyRepository
+	public class SqlSponsorRepository : BaseSqlRepository<Sponsor>, ISponsorRepository, IExtendedSurveyRepository
 	{
 		public void UpdateSponsorLastLoginSent(int sponsorId)
 		{
@@ -697,6 +697,38 @@ AND si.SponsorID = {0}",
 			return null;
 		}
 
+		public Sponsor ReadSponsor3(int sponsorId)
+		{
+			string query = string.Format(
+				@"
+SELECT s.Sponsor,
+	ss.SuperSponsorID,
+	ssl.Header
+FROM Sponsor s
+LEFT OUTER JOIN SuperSponsor ss ON s.SuperSponsorID = ss.SuperSponsorID
+LEFT OUTER JOIN SuperSponsorLang ssl ON ss.SuperSponsorID = ssl.SuperSponsorID AND ssl.LangID = 1
+WHERE s.SponsorID = {0}",
+				sponsorId
+			);
+			Sponsor s = null;
+			using (SqlDataReader rs = Db.rs(query)) {
+				if (rs.Read()) {
+					var u = GetObject<SuperSponsor>(rs, 1);
+					if (u != null) {
+						u.Languages = new [] {
+							new SuperSponsorLanguage { Header = GetString(rs, 2) }
+						};
+					}
+					s = new Sponsor {
+						Name = GetString(rs, 0),
+						SuperSponsor = u
+					};
+				}
+			}
+			return s;
+		}
+
+		// FIXME: Please check ReadSponsor3 for the finalized ReadSponsor method.
 		public Sponsor ReadSponsor2(int sponsorId)
 		{
 			string query = string.Format(

@@ -45,16 +45,22 @@ namespace HW.Core.Repositories
 		
 		public IList<Exercise> FindByAreaAndCategory(int areaID, int categoryID, int langID, int sort)
 		{
-			throw new NotImplementedException();
+			return new List<Exercise>(
+				new [] {
+					new Exercise { },
+					new Exercise { },
+					new Exercise { },
+				}
+			);
 		}
 		
 		public IList<ExerciseCategoryLanguage> FindCategories(int areaID, int categoryID, int langID)
 		{
 			return new List<ExerciseCategoryLanguage>(
 				new [] {
-					new ExerciseCategoryLanguage {},
-					new ExerciseCategoryLanguage {},
-					new ExerciseCategoryLanguage {},
+					new ExerciseCategoryLanguage { Category = new ExerciseCategory { Id = 1 } },
+					new ExerciseCategoryLanguage { Category = new ExerciseCategory { Id = 2 } },
+					new ExerciseCategoryLanguage { Category = new ExerciseCategory { Id = 3 } },
 				}
 			);
 		}

@@ -15,13 +15,20 @@ namespace HW.Core.Models
 		public virtual IList<ExerciseLanguage> Languages { get; set; }
 		public virtual IList<ExerciseVariant> Variants { get; set; }
 		public virtual bool PrintOnBottom { get; set; }
+		public virtual string CurrentAreaCategoryName {
+			get {
+//				return string.Format("{0}{1}", CurrentArea.AreaName, CurrentCategory.CategoryName != "" ? " - " + CurrentCategory.CategoryName : "");
+				return string.Format("{0}{1}", Area.SelectedLanguage.AreaName, Category.SelectedLanguage.CategoryName != "" ? " - " + Category.SelectedLanguage.CategoryName : "");
+			}
+		}
 		
 		public virtual ExerciseLanguage CurrentLanguage { get; set; }
-		public virtual ExerciseAreaLanguage CurrentArea { get; set; }
-		public virtual ExerciseCategoryLanguage CurrentCategory { get; set; }
+//		public virtual ExerciseAreaLanguage CurrentArea { get; set; }
+//		public virtual ExerciseCategoryLanguage CurrentCategory { get; set; }
 		public virtual ExerciseVariantLanguage CurrentVariant { get; set; }
 		public virtual ExerciseTypeLanguage CurrentType { get; set; }
-		public virtual ExerciseLanguage FirstLanguage {
+		
+		public virtual ExerciseLanguage SelectedLanguage {
 			get {
 				if (Languages != null && Languages.Count > 0) {
 					return Languages[0];
@@ -51,11 +58,6 @@ namespace HW.Core.Models
 			l.Exercise = this;
 			Languages.Add(l);
 		}
-		
-		public override string ToString()
-		{
-			return string.Format("{0} - {1}", CurrentArea.AreaName, CurrentCategory.CategoryName);
-		}
 	}
 	
 	public class ExerciseArea : BaseModel
@@ -63,6 +65,24 @@ namespace HW.Core.Models
 		public virtual string Image { get; set; }
 		public virtual int SortOrder { get; set; }
 		public virtual IList<ExerciseAreaLanguage> Languages { get; set; }
+		public virtual ExerciseAreaLanguage SelectedLanguage {
+			get {
+				if (Languages != null && Languages.Count > 0) {
+					return Languages[0];
+				}
+				return null;
+			}
+		}
+		
+		public ExerciseArea()
+		{
+		}
+		
+		public ExerciseArea(int id, params ExerciseAreaLanguage[] languages)
+		{
+			this.Id = id;
+			this.Languages = new List<ExerciseAreaLanguage>(languages);
+		}
 	}
 	
 	public class ExerciseAreaLanguage : BaseModel
@@ -70,6 +90,15 @@ namespace HW.Core.Models
 		public virtual ExerciseArea Area { get; set; }
 		public virtual Language Language { get; set; }
 		public virtual string AreaName { get; set; }
+		
+		public ExerciseAreaLanguage()
+		{
+		}
+		
+		public ExerciseAreaLanguage(string name)
+		{
+			this.AreaName = name;
+		}
 		
 		public override string ToString()
 		{
@@ -81,6 +110,19 @@ namespace HW.Core.Models
 	{
 		public virtual int SortOrder { get; set; }
 		public virtual IList<ExerciseCategoryLanguage> Languages { get; set; }
+		public virtual ExerciseCategoryLanguage SelectedLanguage {
+			get {
+				if (Languages != null && Languages.Count > 0) {
+					return Languages[0];
+				}
+				return null;
+			}
+		}
+		
+		public ExerciseCategory(params ExerciseCategoryLanguage[] languages)
+		{
+			this.Languages = new List<ExerciseCategoryLanguage>(languages);
+		}
 	}
 	
 	public class ExerciseCategoryLanguage : BaseModel
@@ -88,6 +130,15 @@ namespace HW.Core.Models
 		public virtual Language Language { get; set; }
 		public virtual ExerciseCategory Category { get; set; }
 		public virtual string CategoryName { get; set; }
+		
+		public ExerciseCategoryLanguage()
+		{
+		}
+		
+		public ExerciseCategoryLanguage(string name)
+		{
+			this.CategoryName = name;
+		}
 		
 		public override string ToString()
 		{
@@ -128,6 +179,31 @@ namespace HW.Core.Models
 	{
 		public virtual int SortOrder { get; set; }
 		public virtual IList<ExerciseTypeLanguage> Languages { get; set; }
+		public virtual ExerciseTypeLanguage SelectedLanguage {
+			get {
+				if (Languages != null && Languages.Count > 0) {
+					return Languages[0];
+				}
+				return null;
+			}
+		}
+		
+		public const int Text = 1;
+		public const int Animation = 2;
+		public const int AnimationMute = 3;
+		public const int AnimationNonStop = 4;
+		public const int Pdf = 5;
+		public const int Sortable = 6;
+		
+		public bool HasContent()
+		{
+			return Id == Text || Id == Pdf;
+		}
+		
+		public bool IsText()
+		{
+			return Id == Text;
+		}
 	}
 	
 	public class ExerciseTypeLanguage : BaseModel

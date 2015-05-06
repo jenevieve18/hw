@@ -6,31 +6,29 @@ namespace HW.Core.Repositories
 {
 	public interface IManagerFunctionRepository : IBaseRepository<ManagerFunction>
 	{
-		ManagerFunction ReadFirstFunctionBySponsorAdmin(int sponsorAdminID);
+		IList<ManagerFunctionLang> FindBySponsorAdmin(int sponsorAdminID, int langID);
 		
-		IList<ManagerFunction> FindBySponsorAdmin(int sponsorAdminID);
+		IList<ManagerFunction> FindBySponsorAdminX(int sponsorAdminID, int langID);
 	}
 	
 	public class ManagerFunctionRepositoryStub : BaseRepositoryStub<ManagerFunction>, IManagerFunctionRepository
 	{
-		public ManagerFunctionRepositoryStub()
+		public IList<ManagerFunctionLang> FindBySponsorAdmin(int sponsorAdminID, int langID)
 		{
-//			data.Add(new ManagerFunction { URL = "org.aspx", Function = "Organization", Expl = "Organization" });
-			data.Add(new ManagerFunction { URL = "stats.aspx", Function = "Statistics", Expl = "Statistics" });
-			data.Add(new ManagerFunction { URL = "messages.aspx", Function = "Messages", Expl = "Messages" });
-			data.Add(new ManagerFunction { URL = "managers.aspx", Function = "Managers", Expl = "Managers" });
-			data.Add(new ManagerFunction { URL = "debug.aspx", Function = "TEST", Expl = "TEST" });
-			data.Add(new ManagerFunction { URL = "exercise.aspx", Function = "Exercises", Expl = "Exercises" });
+            return new[] {
+				new ManagerFunctionLang {},
+				new ManagerFunctionLang {},
+				new ManagerFunctionLang {},
+			};
 		}
 		
-		public ManagerFunction ReadFirstFunctionBySponsorAdmin(int sponsorAdminID)
+		public IList<ManagerFunction> FindBySponsorAdminX(int sponsorAdminID, int langID)
 		{
-			return data[0];
-		}
-		
-		public IList<ManagerFunction> FindBySponsorAdmin(int sponsorAdminID)
-		{
-			return data;
+            return new[] {
+				new ManagerFunction(new [] { new ManagerFunctionLang { Function = "org.aspx" }}),
+				new ManagerFunction(new [] { new ManagerFunctionLang { Function = "stats.aspx" }}),
+				new ManagerFunction(new [] { new ManagerFunctionLang { Function = "managers.aspx" }}),
+			};
 		}
 	}
 }

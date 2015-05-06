@@ -67,7 +67,7 @@ namespace HW.Core.Helpers
 			Image jpg = Image.GetInstance(@"img/hwlogosmall.gif");
 			doc.Add(jpg);
 			
-			var header = new Paragraph(evl.Variant.Exercise.FirstLanguage.ExerciseName, h1);
+			var header = new Paragraph(evl.Variant.Exercise.SelectedLanguage.ExerciseName, h1);
 			header.SpacingAfter = 10;
 			doc.Add(header);
 			

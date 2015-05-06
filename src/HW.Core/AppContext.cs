@@ -2,7 +2,6 @@
 using System.Web;
 using System.Web.SessionState;
 using HW.Core.Repositories;
-using HW.Core.Repositories.NHibernate;
 using HW.Core.Repositories.Sql;
 
 namespace HW.Core
@@ -15,8 +14,6 @@ namespace HW.Core
 		{
 			if (name == "SQL") {
 				SetRepositoryFactory(new SqlRepositoryFactory());
-			} else if (name == "NHIBERNATE") {
-				SetRepositoryFactory(new NHibernateRepositoryFactory());
 			} else if (name == "STUB") {
 				SetRepositoryFactory(new RepositoryFactoryStub());
 			} else {

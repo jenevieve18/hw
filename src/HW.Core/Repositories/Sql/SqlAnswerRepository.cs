@@ -10,17 +10,6 @@ namespace HW.Core.Repositories.Sql
 {
 	public class SqlAnswerRepository : BaseSqlRepository<Answer>
 	{
-//		public void UpdateAnswer(int projectRoundUnitID, int projectRoundUserID)
-//		{
-//			string query = string.Format(
-//				@"
-//UPDATE [eform]..[Answer] SET ProjectRoundUnitID = {0} WHERE ProjectRoundUserID = {1}",
-//				projectRoundUnitID,
-//				projectRoundUserID
-//			);
-//			Db.exec(query, "eFormSqlConnection");
-//		}
-//		
 		public int CountByValueWithDateOptionAndQuestion(int val, int yearFrom, int yearTo, int optionID, int questionID, string sortString, int fm, int tm)
 		{
 			string query = string.Format(
@@ -232,70 +221,70 @@ AND a.EndDT < '{2}'
 			return null;
 		}
 		
-		public Answer Read3(int answerID, int questionID)
-		{
-			string query = string.Format(
-				@"
-SELECT COUNT(*)
-FROM AnswerValue WHERE AnswerID = {0}
-AND QuestionID = {1}
-AND DeletedSessionID IS NULL
-AND (ValueInt IS NOT NULL OR ValueDecimal IS NOT NULL OR ValueDateTime IS NOT NULL OR ValueText IS NOT NULL)",
-				answerID,
-				questionID
-			);
-			using (SqlDataReader rs3 = Db.rs(query, "eFormSqlConnection")) {
-				if (rs3.Read()) {
-					return new Answer {
-						CountV = GetInt32(rs3, 0)
-					};
-				}
-			}
-			return null;
-		}
-		
-		public Answer Read2(int projectRoundUserID)
-		{
-			string query = string.Format(
-				@"
-SELECT a.AnswerID,
-	a.CurrentPage
-FROM Answer a
-WHERE a.ProjectRoundUserID = {0}",
-				projectRoundUserID
-			);
-			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
-				if (rs.Read()) {
-					return new Answer {
-						Id = GetInt32(rs, 0),
-						CurrentPage = GetInt32(rs, 1)
-					};
-				}
-			}
-			return null;
-		}
-		
-		public BackgroundAnswer Read(string bqID, int val)
-		{
-			string query = string.Format(
-				@"
-SELECT BAID
-FROM BA
-WHERE BQID = {0}
-AND Value = {1}",
-				bqID,
-				val
-			);
-			using (SqlDataReader rs = Db.rs(query)) {
-				if (rs.Read()) {
-					return new BackgroundAnswer {
-						Id = GetInt32(rs, 0)
-					};
-				}
-			}
-			return null;
-		}
-		
+//		public Answer Read3(int answerID, int questionID)
+//		{
+//			string query = string.Format(
+//				@"
+//SELECT COUNT(*)
+//FROM AnswerValue WHERE AnswerID = {0}
+//AND QuestionID = {1}
+//AND DeletedSessionID IS NULL
+//AND (ValueInt IS NOT NULL OR ValueDecimal IS NOT NULL OR ValueDateTime IS NOT NULL OR ValueText IS NOT NULL)",
+//				answerID,
+//				questionID
+//			);
+//			using (SqlDataReader rs3 = Db.rs(query, "eFormSqlConnection")) {
+//				if (rs3.Read()) {
+//					return new Answer {
+//						CountV = GetInt32(rs3, 0)
+//					};
+//				}
+//			}
+//			return null;
+//		}
+//		
+//		public Answer Read2(int projectRoundUserID)
+//		{
+//			string query = string.Format(
+//				@"
+//SELECT a.AnswerID,
+//	a.CurrentPage
+//FROM Answer a
+//WHERE a.ProjectRoundUserID = {0}",
+//				projectRoundUserID
+//			);
+//			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
+//				if (rs.Read()) {
+//					return new Answer {
+//						Id = GetInt32(rs, 0),
+//						CurrentPage = GetInt32(rs, 1)
+//					};
+//				}
+//			}
+//			return null;
+//		}
+//		
+//		public BackgroundAnswer Read(string bqID, int val)
+//		{
+//			string query = string.Format(
+//				@"
+//SELECT BAID
+//FROM BA
+//WHERE BQID = {0}
+//AND Value = {1}",
+//				bqID,
+//				val
+//			);
+//			using (SqlDataReader rs = Db.rs(query)) {
+//				if (rs.Read()) {
+//					return new BackgroundAnswer {
+//						Id = GetInt32(rs, 0)
+//					};
+//				}
+//			}
+//			return null;
+//		}
+//		
 		public Answer ReadByGroup(string groupBy, int yearFrom, int yearTo, string sortString, int fm, int tm)
 		{
 			string query = string.Format(
@@ -427,30 +416,30 @@ FROM (
 			return null;
 		}
 		
-		public IList<BackgroundAnswer> FindBackgroundAnswers(int bqID)
-		{
-			string query = string.Format(
-				@"
-SELECT BAID,
-	Internal
-FROM BA
-WHERE BQID = {0}
-ORDER BY SortOrder",
-				bqID
-			);
-			var answers = new List<BackgroundAnswer>();
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				while (rs.Read()) {
-					var a = new BackgroundAnswer {
-						Id = rs.GetInt32(0),
-						Internal = rs.GetString(1)
-					};
-					answers.Add(a);
-				}
-			}
-			return answers;
-		}
-		
+//		public IList<BackgroundAnswer> FindBackgroundAnswers(int bqID)
+//		{
+//			string query = string.Format(
+//				@"
+//SELECT BAID,
+//	Internal
+//FROM BA
+//WHERE BQID = {0}
+//ORDER BY SortOrder",
+//				bqID
+//			);
+//			var answers = new List<BackgroundAnswer>();
+//			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+//				while (rs.Read()) {
+//					var a = new BackgroundAnswer {
+//						Id = rs.GetInt32(0),
+//						Internal = rs.GetString(1)
+//					};
+//					answers.Add(a);
+//				}
+//			}
+//			return answers;
+//		}
+//		
 //		public IList<Answer> e(int projectRoundID)
 //		{
 //			string query = string.Format(

@@ -6,7 +6,7 @@ using HW.Core.Models;
 
 namespace HW.Core.Repositories.Sql
 {
-	public class SqlSponsorAdminRepository : BaseSqlRepository<SponsorAdmin>, IExtendedSurveyRepository
+	public class SqlSponsorAdminRepository : BaseSqlRepository<SponsorAdmin>, IExtendedSurveyRepository, ISponsorAdminRepository
 	{
 		public void SavePassword(string password, string uid)
 		{

@@ -29,49 +29,54 @@ namespace HW.Core.Helpers
 		
 		public static string Anchor(string text, string url, string attributes)
 		{
-			return Anchor(text, url, attributes, "", false);
+//			return Anchor(text, url, attributes, "", false);
+			return Anchor(text, url, attributes, false);
 		}
 		
-		public static string Anchor(string text, string url, string attributes, string target)
-		{
-			return Anchor(text, url, attributes, target, false);
-		}
-		
-		public static string Anchor(string text, string url, string attributes, string target, bool random)
-		{
-//			return Anchor(text, url, new Dictionary<string, string>());
-			if (random) {
-				url = string.Format("{0}?Rnd={1}", url, GetRandomInt());
-				return string.Format("<a href='{0}' {1} target='{2}'>{3}</a>", url, attributes, target, text);
-			} else {
-				return string.Format("<a href='{0}' {1} target='{2}'>{3}</a>", url, attributes, target, text);
-			}
-		}
-		
-//		public static string Anchor(string text, string url, Dictionary<string, string> attributes)
+//		public static string Anchor(string text, string url, string attributes, string target)
 //		{
-//			return Anchor(text, url, false, attributes, "");
+//			return Anchor(text, url, attributes, target, false);
 //		}
 //		
-//		public static string Anchor(string text, string url, Dictionary<string, string> attributes, string target)
-//		{
-//			return Anchor(text, url, false, attributes, target);
-//		}
-//		
-//		public static string Anchor(string text, string url, bool random, Dictionary<string, string> attributes)
-//		{
-//			return Anchor(text, url, random, attributes, "");
-//		}
-//		
-//		public static string Anchor(string text, string url, bool random, Dictionary<string, string> attributes, string target)
+//		public static string Anchor(string text, string url, string attributes, string target, bool random)
 //		{
 //			if (random) {
 //				url = string.Format("{0}?Rnd={1}", url, GetRandomInt());
-//				return string.Format("<a href='{1}'{2} target='{3}'>{0}</a>", text, url, GetAttributes(attributes), target);
+//				return string.Format("<a href='{0}' {1} {2}>{3}</a>", url, attributes, ToAttribute("target", target), text);
 //			} else {
-//				return string.Format("<a href='{1}'{2} target='{3}'>{0}</a>", text, url, GetAttributes(attributes), target);
+//				return string.Format("<a href='{0}' {1} {2}>{3}</a>", url, attributes, ToAttribute("target", target), text);
 //			}
 //		}
+		
+		public static string Anchor(string text, string url, string attributes, bool random)
+		{
+			if (random) {
+				url = string.Format("{0}?Rnd={1}", url, GetRandomInt());
+				return string.Format("<a href='{0}' {1}>{2}</a>", url, attributes, text);
+			} else {
+				return string.Format("<a href='{0}' {1}>{2}</a>", url, attributes, text);
+			}
+		}
+		
+		public static string AnchorSpan(string text, string url)
+		{
+			return AnchorSpan(text, url, "");
+		}
+		
+		public static string AnchorSpan(string text, string url, string attributes)
+		{
+			return AnchorSpan(text, url, attributes, false);
+		}
+		
+		public static string AnchorSpan(string text, string url, string attributes, bool random)
+		{
+			if (random) {
+				url = string.Format("{0}?Rnd={1}", url, GetRandomInt());
+				return string.Format("<a href='{0}' {1}><span>{2}</span></a>", url, attributes, text);
+			} else {
+				return string.Format("<a href='{0}' {1}><span>{2}</span></a>", url, attributes, text);
+			}
+		}
 		
 		public static string AnchorImage(string url, string image)
 		{

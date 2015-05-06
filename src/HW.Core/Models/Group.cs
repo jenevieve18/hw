@@ -20,7 +20,7 @@ namespace HW.Core.Models
 			public const int BackgroundVariable = 3;
 		}
 		
-		public class GroupBy // TODO: Make this enum, it's awkward having this constant class!
+		public static class GroupBy // TODO: Make this enum, it's awkward having this constant class!
 		{
 			public const int OneWeek = 1;
 			public const int TwoWeeksStartWithOdd = 2;

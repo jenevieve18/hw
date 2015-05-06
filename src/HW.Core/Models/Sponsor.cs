@@ -68,6 +68,10 @@ namespace HW.Core.Models
 		public virtual int MinUserCountToDisclose { get; set; }
 		public virtual string EmailFrom { get; set; }
 		
+		public virtual bool HasSuperSponsor {
+			get { return SuperSponsor != null; }
+		}
+		
 		// FIXME: These are not necessary properties
 		public virtual DateTime? MinimumInviteDate { get; set; }
 		public virtual bool Closed { get { return ClosedAt != null; } }
@@ -128,11 +132,8 @@ namespace HW.Core.Models
 		public virtual string Password { get; set; }
 		public virtual bool SeeUsers { get; set; }
 		public virtual bool Anonymized { get; set; }
-		public virtual IList<SponsorAdminFunction> Functions { get; set; }
-		public virtual IList<SponsorAdminDepartment> Departments { get; set; }
 		public virtual string LastName { get; set; }
 		public virtual bool PermanentlyDeleteUsers { get; set; }
-		public virtual IList<SponsorAdminExtendedSurvey> ExtendedSurveys { get; set; }
 		public virtual string InviteSubject { get; set; }
 		public virtual string InviteText { get; set; }
 		public virtual DateTime? InviteLastSent { get; set; }
@@ -142,9 +143,35 @@ namespace HW.Core.Models
 		public virtual string AllMessageSubject { get; set; }
 		public virtual string AllMessageBody { get; set; }
 		public virtual DateTime? AllMessageLastSent { get; set; }
+		public virtual IList<SponsorAdminFunction> Functions { get; set; }
+		public virtual IList<SponsorAdminDepartment> Departments { get; set; }
+		public virtual IList<SponsorAdminExtendedSurvey> ExtendedSurveys { get; set; }
+		
+		public SponsorAdmin()
+		{
+			Functions = new List<SponsorAdminFunction>();
+		}
 		
 		public bool HasExtendedSurveys {
 			get { return ExtendedSurveys.Count > 0; }
+		}
+		
+		public void AddFunctions(IList<ManagerFunction> functions)
+		{
+			foreach (var f in functions) {
+				AddFunction(f);
+			}
+		}
+		
+		public void AddFunction(ManagerFunction f)
+		{
+			AddFunction(new SponsorAdminFunction { Function = f });
+		}
+		
+		public void AddFunction(SponsorAdminFunction f)
+		{
+			f.Admin = this;
+			Functions.Add(f);
 		}
 		
 		public string GetLoginDays()

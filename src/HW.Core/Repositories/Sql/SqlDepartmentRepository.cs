@@ -7,7 +7,7 @@ using HW.Core.Services;
 
 namespace HW.Core.Repositories.Sql
 {
-	public class SqlDepartmentRepository : BaseSqlRepository<Department>//, IDepartmentRepository
+	public class SqlDepartmentRepository : BaseSqlRepository<Department>, IDepartmentRepository
 	{
 		public override void SaveOrUpdate(Department d)
 		{

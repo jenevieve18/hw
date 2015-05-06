@@ -3,8 +3,13 @@ using System.Web;
 
 namespace HW.Core.Helpers
 {
-	public class SessionHelper
+	public static class SessionHelper
 	{
+		public static object Get(string name)
+		{
+			return HttpContext.Current.Session[name];
+		}
+		
 		public static void RemoveIf(bool condition, string name)
 		{
 			if (condition) {
@@ -20,12 +25,8 @@ namespace HW.Core.Helpers
 		}
 	}
 	
-	public class ConvertHelper
+	public static class ConvertHelper
 	{
-		public ConvertHelper()
-		{
-		}
-		
 		public static int ToInt32(object val)
 		{
 			return ToInt32(val, 0);
