@@ -105,6 +105,7 @@
     <Compile Include="Helpers\PageTests.cs" />
     <Compile Include="Helpers\PdfExporterTests.cs" />
     <Compile Include="Helpers\PresentationDocumentExporterTests.cs" />
+    <Compile Include="Helpers\SessionHelperTests.cs" />
     <Compile Include="Models\DepartmentTests.cs" />
     <Compile Include="Models\GroupFactoryTests.cs" />
     <Compile Include="Models\HWListTests.cs" />

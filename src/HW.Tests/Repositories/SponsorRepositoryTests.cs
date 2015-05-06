@@ -21,19 +21,19 @@ namespace HW.Tests.Repositories
 		[Test]
 		public void TestUpdateSponsorLastLoginSent()
 		{
-			r.UpdateSponsorLastLoginSent(1);
+			r.UpdateSponsorLastLoginSent(-1);
 		}
 		
 		[Test]
 		public void TestUpdateLastAllMessageSent()
 		{
-			r.UpdateLastAllMessageSent(1);
+			r.UpdateLastAllMessageSent(-1);
 		}
 		
 		[Test]
 		public void TestUpdateSponsorLastInviteReminderSent()
 		{
-			r.UpdateSponsorLastInviteReminderSent(1);
+			r.UpdateSponsorLastInviteReminderSent(-1);
 		}
 		
 		[Test]
@@ -45,26 +45,26 @@ namespace HW.Tests.Repositories
 		[Test]
 		public void TestUpdateExtendedSurveyLastEmailSent()
 		{
-			r.UpdateExtendedSurveyLastEmailSent(1);
+			r.UpdateExtendedSurveyLastEmailSent(-1);
 		}
 		
 		[Test]
 		public void TestUpdateExtendedSurveyLastFinishedSent()
 		{
-			r.UpdateExtendedSurveyLastFinishedSent(1);
+			r.UpdateExtendedSurveyLastFinishedSent(-1);
 		}
 		
 		[Test]
 		public void TestUpdateSponsor()
 		{
-			r.UpdateSponsor(1);
+			r.UpdateSponsor(-1);
 			r.UpdateSponsor(new Sponsor { });
 		}
 		
 		[Test]
 		public void TestUpdateSponsorAdmin()
 		{
-			r.UpdateSponsorAdmin(new SponsorAdmin());
+			r.UpdateSponsorAdmin(new SponsorAdmin { Id = -1 });
 		}
 		
 		[Test]
@@ -197,7 +197,7 @@ namespace HW.Tests.Repositories
 		[Test]
 		public void TestUpdateDeletedAdmin()
 		{
-			r.UpdateDeletedAdmin(1, 1);
+			r.UpdateDeletedAdmin(-1, -1);
 		}
 		
 		[Test]

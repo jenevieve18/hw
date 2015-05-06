@@ -21,38 +21,58 @@ namespace HW.Tests.Models
 		}
 		
 		[Test]
+		public void TestName()
+		{
+			var d = new Department { Name = "Department1" };
+			Assert.AreEqual("Department1", d.ToString());
+		}
+		
+		[Test]
 		public void TestReminder2Weeks()
 		{
 			var d = new Department {
-				LoginDays = 14,
-				LoginWeekDay = -1
+				LoginWeekDay = 1, LoginDays = 14,
+				Sponsor = new Sponsor { LoginWeekday = 1 },
 			};
-			Assert.AreEqual(d.GetReminder(loginDays, loginWeekdays), loginDays[14]);
+			Assert.AreEqual("2 weeks", d.GetReminder(loginDays, loginWeekdays));
 		}
 		
 		[Test]
 		public void TestReminderOff()
 		{
 			var d = new Department {
-				LoginWeekDay = -1,
-				Sponsor = new Sponsor {
-					LoginWeekday = -1
-				}
+				LoginWeekDay = -1
 			};
-			Assert.AreEqual(d.GetReminder(loginDays, loginWeekdays), loginWeekdays[-1]);
+			Assert.AreEqual("OFF", d.GetReminder(loginDays, loginWeekdays));
+		}
+		
+		[Test]
+		public void TestReminderOffForSponsor()
+		{
+			var d = new Department {
+				Sponsor = new Sponsor { LoginWeekday = -1 }
+			};
+			Assert.AreEqual("OFF", d.GetReminder(loginDays, loginWeekdays));
+		}
+		
+		[Test]
+		public void TestReminderOffForSponsor2()
+		{
+			var d = new Department {
+				LoginWeekDay = 1, LoginDays = -1,
+				Sponsor = new Sponsor { LoginWeekday = 1, LoginDays = -1 }
+			};
+			Assert.AreEqual("OFF", d.GetReminder(loginDays, loginWeekdays));
 		}
 		
 		[Test]
 		public void TestReminderWithSponsorLoginWeekday()
 		{
 			var d = new Department {
-				LoginWeekDay = -1,
 				LoginDays = -1,
-				Sponsor = new Sponsor {
-					LoginDays = 1
-				}
+				Sponsor = new Sponsor { LoginDays = 1 }
 			};
-			Assert.AreEqual(d.GetReminder(loginDays, loginWeekdays), loginDays[d.Sponsor.LoginDays]);
+			Assert.AreEqual("every day", d.GetReminder(loginDays, loginWeekdays));
 		}
 	}
 }

@@ -32,6 +32,11 @@ namespace HW.Tests.Helpers
 			p.Dock = DockStyle.Fill;
 		}
 		
+		[Test]
+		public void TestMethod()
+		{
+		}
+		
 		[TearDown]
 		public void Teardown()
 		{

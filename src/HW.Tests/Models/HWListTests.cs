@@ -47,7 +47,8 @@ namespace HW.Tests.Models
 		public void TestValues3()
 		{
 			var e = new HWList(2, 2, 3, 3, 3, 4);
-			Assert.AreEqual(2.25, e.LowerBox);
+//			Assert.AreEqual(2.25, e.LowerBox);
+			Assert.AreEqual(2, e.LowerBox);
 			Assert.AreEqual(3, e.UpperBox);
 		}
 		
@@ -59,8 +60,10 @@ namespace HW.Tests.Models
 			Assert.AreEqual(25.5, e.UpperBox);
 			Assert.AreEqual(18, e.LowerWhisker);
 			Assert.AreEqual(29, e.UpperWhisker);
-			Assert.AreEqual(11.75, e.NerdLowerWhisker);
-			Assert.AreEqual(33.75, e.NerdUpperWhisker);
+//			Assert.AreEqual(11.75, e.NerdLowerWhisker);
+			Assert.AreEqual(18, e.NerdLowerWhisker);
+//			Assert.AreEqual(33.75, e.NerdUpperWhisker);
+			Assert.AreEqual(29, e.NerdUpperWhisker);
 		}
 	}
 }
