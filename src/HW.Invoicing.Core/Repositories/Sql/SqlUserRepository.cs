@@ -20,18 +20,29 @@ namespace HW.Invoicing.Core.Repositories.Sql
 INSERT INTO [User](Name, [Password])
 VALUES(@Name, @Password)"
 			);
-			ExecuteNonQuery(query, "invoicing", new SqlParameter("@Name", u.Name), new SqlParameter("@Password", u.Password));
+			ExecuteNonQuery(
+				query,
+				"invoicing",
+				new SqlParameter("@Name", u.Name),
+				new SqlParameter("@Password", u.Password)
+			);
 		}
 		
-		public void Update(User u)
+		public void Update(User u, int id)
 		{
 			string query = string.Format(
 				@"
-UPDATE [User] SET = @Name,
+UPDATE [User] SET Name = @Name,
 [Password] = @Password
 WHERE Id = @Id"
 			);
-			ExecuteNonQuery(query, "invoicing", new SqlParameter("@Name", u.Name), new SqlParameter("@Password", u.Password), new SqlParameter("@Id", u.Id));
+			ExecuteNonQuery(
+				query,
+				"invoicing",
+				new SqlParameter("@Name", u.Name),
+				new SqlParameter("@Password", u.Password),
+				new SqlParameter("@Id", id)
+			);
 		}
 		
 		public override IList<User> FindAll()
@@ -39,13 +50,18 @@ WHERE Id = @Id"
 			string query = string.Format(
 				@"
 SELECT Id, Name, [Password]
-FROM [User]"
+FROM [User]
+ORDER BY Name"
 			);
 			IList<User> users = new List<User>();
 			using (SqlDataReader rs = Db.rs(query, "invoicing")) {
 				while (rs.Read()) {
 					users.Add(
-						new User { Id = GetInt32(rs, 0), Name = GetString(rs, 1), Password = GetString(rs, 2) }
+						new User {
+							Id = GetInt32(rs, 0),
+							Name = GetString(rs, 1),
+							Password = GetString(rs, 2)
+						}
 					);
 				}
 			}

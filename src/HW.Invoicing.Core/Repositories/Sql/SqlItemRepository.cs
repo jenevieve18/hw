@@ -18,7 +18,7 @@ namespace HW.Invoicing.Core.Repositories.Sql
 			
 			string query = string.Format(
 				@"
-SELECT ItemID, Name
+SELECT Id, Name
 FROM Item
 WHERE Id = @Id"
 			);
@@ -31,12 +31,11 @@ WHERE Id = @Id"
 			return i;
 		}
 		
-		public void Update(Item i)
+		public void Update(Item i, int id)
 		{
 			string query = string.Format(
 				@"
-UPDATE Item SET Name = @Name,
-Description = @Description
+UPDATE Item SET Name = @Name
 WHERE Id = @Id"
 			);
 			ExecuteNonQuery(
@@ -44,7 +43,7 @@ WHERE Id = @Id"
 				"invoicing",
 				new SqlParameter("@Name", i.Name),
 				new SqlParameter("@Description", i.Description),
-				new SqlParameter("@Id", i.Id)
+				new SqlParameter("@Id", id)
 			);
 		}
 		
