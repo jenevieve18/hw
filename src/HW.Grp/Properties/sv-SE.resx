@@ -435,6 +435,9 @@
   <data name="settings" xml:space="preserve">
     <value>Inställningar</value>
   </data>
+  <data name="show.all" xml:space="preserve">
+    <value>Visa alla</value>
+  </data>
   <data name="sponsor" xml:space="preserve">
     <value>Organisation</value>
   </data>
