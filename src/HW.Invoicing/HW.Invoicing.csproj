@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CustomerAdd.aspx" />
+    <Content Include="CustomerEdit.aspx" />
     <Content Include="Customers.aspx" />
     <Content Include="Dashboard.aspx" />
     <Content Include="Default.aspx" />
@@ -62,6 +63,7 @@
     <Content Include="Logout.aspx" />
     <Content Include="sql.aspx" />
     <Content Include="UserAdd.aspx" />
+    <Content Include="UserEdit.aspx" />
     <Content Include="Users.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -78,6 +80,13 @@
     </Compile>
     <Compile Include="CustomerAdd.aspx.designer.cs">
       <DependentUpon>CustomerAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerEdit.aspx.cs">
+      <DependentUpon>CustomerEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomerEdit.aspx.designer.cs">
+      <DependentUpon>CustomerEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="Customers.aspx.cs">
       <DependentUpon>Customers.aspx</DependentUpon>
@@ -163,6 +172,13 @@
     </Compile>
     <Compile Include="UserAdd.aspx.designer.cs">
       <DependentUpon>UserAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UserEdit.aspx.cs">
+      <DependentUpon>UserEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserEdit.aspx.designer.cs">
+      <DependentUpon>UserEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="Users.aspx.cs">
       <DependentUpon>Users.aspx</DependentUpon>

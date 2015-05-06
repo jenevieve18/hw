@@ -43,10 +43,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="brand" href="#">HW Invoicing</a>
+                <a class="brand" href="Dashboard.aspx">HW Invoicing</a>
                 <div class="nav-collapse collapse">
                     <ul class="nav">
-                        <li class="active"><%= HtmlHelper.Anchor("Dashboard", "dashboard.aspx") %></li>
+                        <li><%= HtmlHelper.Anchor("Dashboard", "dashboard.aspx") %></li>
                         <li><%= HtmlHelper.Anchor("Items", "items.aspx") %></li>
                         <li><%= HtmlHelper.Anchor("Customers", "customers.aspx") %></li>
                         <li><%= HtmlHelper.Anchor("Invoices", "invoices.aspx") %></li>
@@ -61,6 +61,12 @@
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         
         </asp:ContentPlaceHolder>
+    </div>
+    <div class="container">
+        <footer>
+            <hr />
+            &copy; 2015. Interactive Health Group. All rights reserved.
+        </footer>
     </div>
     </form>
 

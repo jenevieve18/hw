@@ -7,7 +7,7 @@
 <h3>Users</h3>
 <p><%= HtmlHelper.Anchor("Add a user", "useradd.aspx", "class='btn btn-info'") %></p>
 <div class="alert alert-info">
-	<strong>User list!</strong> User is a person who uses or operates something, especially a computer or other machine.
+	<strong>User</strong> is a person who uses or operates something, especially a computer or other machine.
 </div>
 <table class="table table-hover">
     <tr>
@@ -18,6 +18,8 @@
     <tr>
         <td><%= u.Name %></td>
         <td>
+            <%= HtmlHelper.Anchor("", "useredit.aspx?UserID=" + u.Id, "class='icon-edit'") %>
+            <%= HtmlHelper.Anchor("", "userdelete.aspx?UserID=" + u.Id, "class='icon-remove'")%>
         </td>
     </tr>
     <% } %>

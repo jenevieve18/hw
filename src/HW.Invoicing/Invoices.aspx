@@ -7,7 +7,7 @@
 <h3>Invoices</h3>
 <p><%= HtmlHelper.Anchor("Add an invoice", "invoiceadd.aspx", "class='btn btn-info'") %></p>
 <div class="alert alert-info">
-	<strong>Invoice list!</strong> These are lists of goods sent or services provided, with a statement of the sum due for these; a bill.
+	<strong>Invoices</strong> are lists of goods sent or services provided, with a statement of the sum due for these; a bill.
 </div>
 <table class="table table-hover">
     <tr>
@@ -18,7 +18,7 @@
     <tr>
         <td><%= i.Date %></td>
         <td>
-            <%= HtmlHelper.Anchor("Edit", "invoiceedit.aspx?ItemID=" + i.Id) %>
+            <%= HtmlHelper.Anchor("Edit", "invoiceedit.aspx?ItemID=" + i.Id, "class='icon-edit'") %>
         </td>
     </tr>
     <% } %>

@@ -7,7 +7,7 @@
 <h3>Items</h3>
 <p><%= HtmlHelper.Anchor("Add an item", "itemadd.aspx", "class='btn btn-info'") %></p>
 <div class="alert alert-info">
-	<strong>Item list!</strong> Item is an individual article or unit, especially one that is part of a list, collection, or set.
+	<strong>Item</strong> is an individual article or unit, especially one that is part of a list, collection, or set.
 </div>
 <table class="table table-hover">
     <tr>
@@ -18,8 +18,8 @@
     <tr>
         <td><%= i.Name %></td>
         <td>
-            <%= HtmlHelper.Anchor("Edit", "itemedit.aspx?ItemID=" + i.Id) %>
-            <%= HtmlHelper.Anchor("Delete", "itemdelete.aspx?ItemID=" + i.Id) %>
+            <%= HtmlHelper.Anchor("", "itemedit.aspx?ItemID=" + i.Id, "class='icon-edit'") %>
+            <%= HtmlHelper.Anchor("", "itemdelete.aspx?ItemID=" + i.Id, "class='icon-remove'") %>
         </td>
     </tr>
     <% } %>

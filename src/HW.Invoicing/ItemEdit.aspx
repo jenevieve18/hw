@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="ItemEdit.aspx.cs" Inherits="HW.Invoicing.ItemEdit" %>
+<%@ Import Namespace="HW.Core.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -13,8 +14,9 @@
     <asp:TextBox ID="textBoxDescription" runat="server"></asp:TextBox>
 </p>
 <p>
-    <asp:Button ID="buttonSave" runat="server" Text="Save item" 
+    <asp:Button ID="buttonSave" CssClass="btn btn-success" runat="server" Text="Save item" 
         onclick="buttonSave_Click" />
+        or <i><%= HtmlHelper.Anchor("cancel", "items.aspx") %></i>
 </p>
 
 </asp:Content>
