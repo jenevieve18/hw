@@ -65,8 +65,8 @@
 				<div class="gears">
 					<span><%= sponsorName %></span>
 					<span style="color:white;"><%= sponsorAdminID %></span><br>
-					<%= HtmlHelper.Anchor(R.Str(lid, "settings", "Settings"), "Settings.aspx", "class='active'", "", true)  %>&nbsp;&nbsp;
-					<%= HtmlHelper.Anchor(R.Str(lid, "logout", "Log out"), "Default.aspx?Logout=1", "class='active'", "", true)  %>
+					<%= HtmlHelper.Anchor(R.Str(lid, "settings", "Settings"), "Settings.aspx", "class='active'", true)  %>&nbsp;&nbsp;
+					<%= HtmlHelper.Anchor(R.Str(lid, "logout", "Log out"), "Default.aspx?Logout=1", "class='active'", true)  %>
 				</div>
 			</div>
 			<div id="submenu" class="grid_16 alpha">
@@ -75,10 +75,10 @@
 					<% foreach (var f in functions) { %>
 						<% bool active = Request.Url.AbsolutePath.IndexOf(f.URL) >= 0; %>
 						<% if (active) { %>
-							<%= HtmlHelper.Anchor(f.Function, f.URL, "class='active' title='" + f.Expl + "'", "", true) %>
+							<%= HtmlHelper.Anchor(f.Function, f.URL, "class='active' title='" + f.Expl + "'", true) %>
 							<% desc = f.Expl; %>
 						<% } else { %>
-							<%= HtmlHelper.Anchor(f.Function, f.URL, "class='' title='" + f.Expl + "'", "", true) %>
+							<%= HtmlHelper.Anchor(f.Function, f.URL, "class='' title='" + f.Expl + "'", true) %>
 						<% } %>
 					<% } %>
 					<div class="description"><%= desc %></div>

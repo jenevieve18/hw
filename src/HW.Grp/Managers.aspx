@@ -49,9 +49,9 @@
 					</td>
 					<td>
 						<% int cx = 0; %>
-						<% foreach (var f in managerRepository.FindBySponsorAdmin(s.Id, lid)) { %>
+						<% foreach (var f in s.Functions) { %>
 							<% if (cx++ > 0) { %>, <% } %>
-							<%= f.Function %>
+							<%= f.Function.SelectedLanguage.Function %>
 						<% } %>
 					</td>
                     <td style="text-align:center"><%= s.GetLoginDays() %></td>

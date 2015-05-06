@@ -18,7 +18,7 @@ namespace HW.Grp
 		
 		protected void Application_Start(object sender, EventArgs e)
 		{
-//			AppContext.SetRepositoryFactory(ConfigurationManager.AppSettings["RepositoryFactory"]);
+			AppContext.SetRepositoryFactory(ConfigurationManager.AppSettings["RepositoryFactory"]);
 		}
 
 		protected void Session_Start(object sender, EventArgs e)

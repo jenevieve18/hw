@@ -75,18 +75,18 @@
                         <%= R.Str(lid, "exercises.area", "Choose area")%>
                     </div>
 			        <dl class="dropdown">
-						<asp:PlaceHolder ID="AreaID" runat="server" />
-                        <!--<dt>
+						<%-- <asp:PlaceHolder ID="AreaID" runat="server" />--%>
+                        <dt>
                             <% if (HasSelectedArea) { %>
                                 <a href="javascript:;"><span><%= SelectedArea.AreaName %></span></a>
                             <% } else { %>
-                                <a href="javascript:;"><span><%= lid == 1 ? "Visa alla" : "Show all" %></span></a>
+                                <a href="javascript:;"><span><%= R.Str(lid, "show.all", "Show all") %></span></a>
                             <% } %>
                         </dt>
                         <dd>
                             <ul>
                                 <% if (HasSelectedArea) { %>
-                                    <li><%= HtmlHelper.Anchor(lid == 1 ? "Visa alla" : "Show all", string.Format("exercise.aspx?EAID=0{0}#filter", sortQS))%></li>
+                                    <li><%= HtmlHelper.Anchor(R.Str(lid, "show.all", "Show all"), string.Format("exercise.aspx?EAID=0{0}#filter", sortQS))%></li>
                                 <% } %>
                                 <% int i = 0; %>
                                 <% foreach (var a in areas) { %>
@@ -97,7 +97,7 @@
                                     <% } %>
                                 <% } %>
                             </ul>
-                        </dd>-->
+                        </dd>
 					</dl>
                 </div>
                 <div class="filter misc">
@@ -105,18 +105,18 @@
                         <%= R.Str(lid, "exercises.category", "Choose a Category")%>
                     </div>
 			        <dl class="dropdown">
-						<asp:PlaceHolder ID="CategoryID" runat="server" />
-                        <!--<dt>
+						<%-- <asp:PlaceHolder ID="CategoryID" runat="server" />--%>
+                        <dt>
                             <% if (HasSelectedCategory) { %>
                                 <a href="javascript:;"><span><%= SelectedCategory.CategoryName %></span></a>
                             <% } else { %>
-                                <a href="javascript:;"><span><%= lid == 1 ? "Visa alla" : "Show all" %></span></a>
+                                <a href="javascript:;"><span><%= R.Str(lid, "show.all", "Show all") %></span></a>
                             <% } %>
                         </dt>
                         <dd>
                             <ul>
                                 <% if (HasSelectedCategory) { %>
-                                    <li><%= HtmlHelper.Anchor(lid == 1 ? "Visa alla" : "Show all", string.Format("exercise.aspx?ECID=0{0}{1}#filter", sortQS, (EAID != 0 ? "&EAID=" + EAID : "")))%></li>
+                                    <li><%= HtmlHelper.Anchor(R.Str(lid, "show.all", "Show all"), string.Format("exercise.aspx?ECID=0{0}{1}#filter", sortQS, (EAID != 0 ? "&EAID=" + EAID : "")))%></li>
                                 <% } %>
                                 <% i = 0; %>
                                 <% foreach (var c in categories) { %>
@@ -127,7 +127,7 @@
                                     <% } %>
                                 <% } %>
                             </ul>
-                        </dd>-->
+                        </dd>
 					</dl>
                 </div>
 			</div>
@@ -139,6 +139,9 @@
                 </span>
 			    <div class="forms">
                     <asp:PlaceHolder ID="Sort" runat="server" />
+                    <%= HtmlHelper.AnchorSpan(R.Str(lid, "random", "Random"), SORTX == 0 ? "javascript:;" : "exercise.aspx?SORT=0" + AdditionalSortQuery + "#filter", SORTX == 0 ? "class='active'" : "")%>
+                    <%= HtmlHelper.AnchorSpan(R.Str(lid, "popularity", "Popularity"), SORTX == 1 ? "javascript:;" : "exercise.aspx?SORT=1" + AdditionalSortQuery + "#filter", SORTX == 1 ? "class='active'" : "")%>
+                    <%= HtmlHelper.AnchorSpan(R.Str(lid, "alphabetical", "Alphabethical"), SORTX == 2 ? "javascript:;" : "exercise.aspx?SORT=2" + AdditionalSortQuery + "#filter", SORTX == 2 ? "class='active'" : "")%>
 			    </div>
 			</div>
 		</div>
@@ -159,7 +162,16 @@
                             <h2><%= l.CurrentLanguage.ExerciseName %></h2>
                             <p><%= l.CurrentLanguage.Teaser %></p>
                             <div>
-                                <% string t = string.Format("JavaScript:void(window.open('{0}exerciseShow.aspx?SID={1}&AUID={2}&ExerciseVariantLangID={3}','EVLID{3}','scrollbars=yes,resizable=yes,width={4},height={5}'));", ConfigurationManager.AppSettings["healthWatchURL"], sponsorID, sponsorAdminID, l.CurrentVariant.Id, l.CurrentVariant.ExerciseWindowX, l.CurrentVariant.ExerciseWindowY); %>
+                                <% string t = string.Format(
+                                        "JavaScript:void(window.open('{0}exerciseShow.aspx?SID={1}&AUID={2}&ExerciseVariantLangID={3}','EVLID{3}','scrollbars=yes,resizable=yes,width={4},height={5}'));",
+                                        ConfigurationManager.AppSettings["healthWatchURL"],
+                                        sponsorID,
+                                        sponsorAdminID,
+                                        l.CurrentVariant.Id,
+                                        l.CurrentVariant.ExerciseWindowX,
+                                        l.CurrentVariant.ExerciseWindowY
+                                    );
+                                %>
                             	<%-- HtmlHelper.Anchor(l.CurrentType.ToString(), t, "class='sidearrow'") --%>
                                 <a class="sidearrow" href="<%= t %>"><%= l.CurrentType.ToString() %></a>
                             </div>

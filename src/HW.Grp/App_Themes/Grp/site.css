@@ -971,7 +971,7 @@ form input[type=submit] {
 }
 .exercises .results .contentlist .item .detail .bottom {
 	width: 110%;
-	background: url('resources/ovningar/myhealth_excersises_bottom.gif') no-repeat;
+	background: url('resources/myhealth_excersises_bottom.gif') no-repeat;
 	height: 4px;
 	margin-left: -1px;
 	margin-top: 20px;
