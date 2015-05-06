@@ -1,8 +1,12 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Adm.Master" AutoEventWireup="true" CodeBehind="grpUserSetup.aspx.cs" Inherits="HW.Adm.grpUserSetup" %>
-<%@ Import Namespace="HW.Core.Helpers" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<%@ Page Language="C#" AutoEventWireup="true" Inherits="grpUserSetup" Codebehind="grpUserSetup.aspx.cs" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" > 
+<html>
+  <head>
+   <%=Db.header()%>
+  </head>
+  <body>
+	    <form id="Form1" method="post" runat="server">
+		<%=Db.nav()%>
 		<div style="padding:20px;">
 		<a href="grpUser.aspx?Rnd=<%=(new Random(unchecked((int)DateTime.Now.Ticks))).Next()%>">Back</a><br /><br />
 		<table border="0" cellpadding="0" cellspacing="0">
@@ -14,4 +18,7 @@
             <tr><td valign="top" colspan="2"><asp:Label ID=errTxt runat=server /></td></tr>
 		</table>
 		</div>
-</asp:Content>
+		<%=Db.bottom()%>
+		</form>
+  </body>
+</html>

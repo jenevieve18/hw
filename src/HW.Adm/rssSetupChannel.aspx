@@ -1,8 +1,12 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Adm.Master" AutoEventWireup="true" CodeBehind="rssSetupChannel.aspx.cs" Inherits="HW.Adm.rssSetupChannel" %>
-<%@ Import Namespace="HW.Core.Helpers" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<%@ Page Language="C#" AutoEventWireup="true" Inherits="rssSetupChannel" Codebehind="rssSetupChannel.aspx.cs" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" > 
+<html>
+  <head>
+   <%=Db.header()%>
+  </head>
+  <body>
+	    <form id="Form1" method="post" runat="server">
+		<%=Db.nav()%>
 		<table width="500" border="0" cellspacing="0" cellpadding="0">
 			<tr><td style="font-size:16px;" align="center">RSS Feed setup</td></tr>
 		</table>
@@ -15,5 +19,7 @@
 			<tr><td>News category&nbsp;</td><td><asp:DropDownList ID=NewsCategoryID runat=server Width="400" /></td></tr>
 			<tr><td><asp:Button ID=Save runat=server Text=Save /></td></tr>
 		</table>
-</asp:Content>
-
+		<%=Db.bottom()%>
+		</form>
+  </body>
+</html>

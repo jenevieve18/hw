@@ -1,16 +1,21 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Adm.Master" AutoEventWireup="true" CodeBehind="sponsorSetup.aspx.cs" Inherits="HW.Adm.sponsorSetup" %>
-<%@ Import Namespace="HW.Core.Helpers" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<%@ Page Language="C#" AutoEventWireup="true" Inherits="sponsorSetup" ValidateRequest=false Codebehind="sponsorSetup.aspx.cs" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" > 
+<html>
+  <head>
+   <%=Db.header()%>
+  </head>
+  <body>
+	    <form id="Form1" method="post" runat="server">
+		<%=Db.nav()%>
 		<table width="800" border="0" cellspacing="0" cellpadding="0">
 			<tr><td style="font-size:16px;" align="center">Sponsor</td></tr>
 		</table>
+        <iframe height="166" width="830" id=chart runat=server seamless frameborder=0 scrolling="no"></iframe>
 		<table style="margin:20px;" width="800" border="0" cellspacing="0" cellpadding="0">
             <tr>
 				<td><B>Sponsor key</B>&nbsp;</td>
 				<td><asp:Label ID=SponsorKey Width=200 runat=server /></td>
-				<td align=right rowspan=4><asp:Label ID="Logotype" runat="server" /></td>
+				<td align=right rowspan=5><asp:Label ID="Logotype" runat="server" /></td>
 			</tr>
 			<tr>
 				<td><B>Sponsor</B>&nbsp;</td>
@@ -19,6 +24,10 @@
 			<tr>
 				<td><B>Application&nbsp;name</B>&nbsp;</td>
 				<td><asp:TextBox ID=App Width=200 runat=server /></td>
+			</tr>
+            <tr>
+				<td><B>Email&nbsp;from-address</B>&nbsp;</td>
+				<td><asp:TextBox ID=EmailFrom Width=200 runat=server /></td>
 			</tr>
 			<tr>
 				<td><B>Logotype</B>&nbsp;</td>
@@ -30,11 +39,11 @@
 			</tr>
             <tr>
 				<td><B>Info text</B>&nbsp;</td>
-				<td colspan="2"><asp:TextBox ID=InfoText Rows=5 TextMode=MultiLine Width=400 runat=server /></td>
+				<td colspan="2"><asp:TextBox ID=InfoText Rows=5 TextMode=MultiLine Width=400 runat=server /><asp:Label ID=TestInfoText runat=server /></td>
 			</tr>
             <tr>
 				<td><B>Consent text</B>&nbsp;</td>
-				<td colspan="2"><asp:TextBox ID=ConsentText Rows=5 TextMode=MultiLine Width=400 runat=server /></td>
+				<td colspan="2"><asp:TextBox ID=ConsentText Rows=5 TextMode=MultiLine Width=400 runat=server /><asp:Label ID=TestConsentText runat=server /></td>
 			</tr>
             <tr>
 				<td><B>Treatment offer</B>&nbsp;</td>
@@ -81,7 +90,7 @@
 				<td colspan="2"><asp:TextBox ID=MinUserCountToDisclose Width=30 runat=server /></td>
 			</tr>
 			<tr><td colspan="3">&nbsp;</td></tr>
-			<tr><td colspan="3"><asp:Button ID=Back Text="Back" runat=server />&nbsp;<asp:Button ID=Save runat=server Text="Save" />&nbsp;<asp:Button ID=AddExtendedSurvey runat=server Text="Add extended survey" />&nbsp;<asp:Button ID=Close runat=server Text="Close down" />&nbsp;<asp:Button ID=Delete runat=server Text="Delete" /></td></tr>
+			<tr><td colspan="3"><asp:Button ID=Back Text="Back" runat=server />&nbsp;<asp:Button ID=Save runat=server Text="Save" />&nbsp;<asp:Button ID=AddExtendedSurvey runat=server Text="Add extended survey" />&nbsp;<asp:Button ID=Close runat=server Text="Close down" />&nbsp;<asp:Button ID=Delete runat=server Text="Delete" />&nbsp;<asp:Button ID=DisconnectAll runat=server Text="Disconnect all" /></td></tr>
 		</table>
         <asp:PlaceHolder ID=Departments runat=server />
 		<asp:PlaceHolder ID=SponsorExtendedSurvey runat=server />
@@ -117,4 +126,7 @@
 			</tr>
 			<asp:PlaceHolder ID=BQ runat=server />
 		</table>
-</asp:Content>
+		<%=Db.bottom()%>
+		</form>
+  </body>
+</html>

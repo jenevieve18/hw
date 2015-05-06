@@ -1,1 +1,1 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="verticalText.aspx.cs" Inherits="HW.Adm.verticalText" %>
+<%@ Page Language="C#" AutoEventWireup="true" ContentType="image/gif" Inherits="verticalText" Codebehind="verticalText.aspx.cs" %>

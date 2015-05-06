@@ -29,6 +29,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -57,158 +58,127 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bq.aspx" />
-    <Content Include="bqSetup.aspx" />
-    <Content Include="convertFromEFORM2HW.aspx" />
-    <Content Include="Default.aspx" />
-    <Content Include="exercise.aspx" />
-    <Content Include="exerciseAreaSetup.aspx" />
-    <Content Include="exerciseCategorySetup.aspx" />
-    <Content Include="exerciseSetup.aspx" />
-    <Content Include="export.aspx" />
-    <Content Include="extendedSurvey.aspx" />
-    <Content Include="grpUser.aspx" />
-    <Content Include="grpUserSetup.aspx" />
-    <Content Include="insertSponsorInviteBQ.aspx" />
-    <Content Include="main.css" />
-    <Content Include="messages.aspx" />
-    <Content Include="news.aspx" />
-    <Content Include="rss.aspx" />
-    <Content Include="rssSetupChannel.aspx" />
-    <Content Include="rssSetupNewsCategory.aspx" />
-    <Content Include="rssSetupSource.aspx" />
-    <Content Include="sponsor.aspx" />
-    <Content Include="sponsorSetup.aspx" />
-    <Content Include="sponsorStats.aspx" />
-    <Content Include="stats.aspx" />
-    <Content Include="superadmin.aspx" />
-    <Content Include="survey.aspx" />
-    <Content Include="tx.aspx" />
-    <Content Include="users.aspx" />
-    <Content Include="verticalText.aspx" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="wise.aspx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Adm.Master.cs">
-      <DependentUpon>Adm.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
+    <Compile Include="bq.aspx.designer.cs">
+      <DependentUpon>bq.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Adm.Master.designer.cs">
-      <DependentUpon>Adm.Master</DependentUpon>
+    <Compile Include="bqSetup.aspx.designer.cs">
+      <DependentUpon>bqSetup.aspx</DependentUpon>
     </Compile>
+    <Compile Include="convertFromEFORM2HW.aspx.designer.cs">
+      <DependentUpon>convertFromEFORM2HW.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="exercise.aspx.designer.cs">
+      <DependentUpon>exercise.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="exerciseAreaSetup.aspx.designer.cs">
+      <DependentUpon>exerciseAreaSetup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="exerciseCategorySetup.aspx.designer.cs">
+      <DependentUpon>exerciseCategorySetup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="exerciseSetup.aspx.designer.cs">
+      <DependentUpon>exerciseSetup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="export.aspx.designer.cs">
+      <DependentUpon>export.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="extendedSurvey.aspx.designer.cs">
+      <DependentUpon>extendedSurvey.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grpUser.aspx.designer.cs">
+      <DependentUpon>grpUser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grpUserSetup.aspx.designer.cs">
+      <DependentUpon>grpUserSetup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="insertSponsorInviteBQ.aspx.designer.cs">
+      <DependentUpon>insertSponsorInviteBQ.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="issue.aspx.designer.cs">
+      <DependentUpon>issue.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="mailSubmission.aspx.designer.cs">
+      <DependentUpon>mailSubmission.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="messages.aspx.designer.cs">
+      <DependentUpon>messages.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="news.aspx.designer.cs">
+      <DependentUpon>news.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Old_App_Code\Db.cs" />
+    <Compile Include="Old_App_Code\OctreeQuantizer.cs" />
+    <Compile Include="Old_App_Code\Quantizer.cs" />
     <Compile Include="bq.aspx.cs">
       <DependentUpon>bq.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="bq.aspx.designer.cs">
-      <DependentUpon>bq.aspx</DependentUpon>
     </Compile>
     <Compile Include="bqSetup.aspx.cs">
       <DependentUpon>bqSetup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="bqSetup.aspx.designer.cs">
-      <DependentUpon>bqSetup.aspx</DependentUpon>
-    </Compile>
     <Compile Include="convertFromEFORM2HW.aspx.cs">
       <DependentUpon>convertFromEFORM2HW.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="convertFromEFORM2HW.aspx.designer.cs">
-      <DependentUpon>convertFromEFORM2HW.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
     <Compile Include="exercise.aspx.cs">
       <DependentUpon>exercise.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="exercise.aspx.designer.cs">
-      <DependentUpon>exercise.aspx</DependentUpon>
     </Compile>
     <Compile Include="exerciseAreaSetup.aspx.cs">
       <DependentUpon>exerciseAreaSetup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="exerciseAreaSetup.aspx.designer.cs">
-      <DependentUpon>exerciseAreaSetup.aspx</DependentUpon>
-    </Compile>
     <Compile Include="exerciseCategorySetup.aspx.cs">
       <DependentUpon>exerciseCategorySetup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="exerciseCategorySetup.aspx.designer.cs">
-      <DependentUpon>exerciseCategorySetup.aspx</DependentUpon>
     </Compile>
     <Compile Include="exerciseSetup.aspx.cs">
       <DependentUpon>exerciseSetup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="exerciseSetup.aspx.designer.cs">
-      <DependentUpon>exerciseSetup.aspx</DependentUpon>
-    </Compile>
     <Compile Include="export.aspx.cs">
       <DependentUpon>export.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="export.aspx.designer.cs">
-      <DependentUpon>export.aspx</DependentUpon>
     </Compile>
     <Compile Include="extendedSurvey.aspx.cs">
       <DependentUpon>extendedSurvey.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="extendedSurvey.aspx.designer.cs">
-      <DependentUpon>extendedSurvey.aspx</DependentUpon>
-    </Compile>
     <Compile Include="grpUser.aspx.cs">
       <DependentUpon>grpUser.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="grpUser.aspx.designer.cs">
-      <DependentUpon>grpUser.aspx</DependentUpon>
     </Compile>
     <Compile Include="grpUserSetup.aspx.cs">
       <DependentUpon>grpUserSetup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="grpUserSetup.aspx.designer.cs">
-      <DependentUpon>grpUserSetup.aspx</DependentUpon>
-    </Compile>
     <Compile Include="insertSponsorInviteBQ.aspx.cs">
       <DependentUpon>insertSponsorInviteBQ.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="insertSponsorInviteBQ.aspx.designer.cs">
-      <DependentUpon>insertSponsorInviteBQ.aspx</DependentUpon>
+    <Compile Include="issue.aspx.cs">
+      <DependentUpon>issue.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="mailSubmission.aspx.cs">
+      <DependentUpon>mailSubmission.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="messages.aspx.cs">
       <DependentUpon>messages.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="messages.aspx.designer.cs">
-      <DependentUpon>messages.aspx</DependentUpon>
-    </Compile>
     <Compile Include="news.aspx.cs">
       <DependentUpon>news.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="news.aspx.designer.cs">
-      <DependentUpon>news.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="rss.aspx.cs">
@@ -311,13 +281,62 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Adm.Master" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\HW.Core\HW.Core.csproj">
       <Project>{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}</Project>
       <Name>HW.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bq.aspx" />
+    <Content Include="bqSetup.aspx" />
+    <Content Include="convertFromEFORM2HW.aspx" />
+    <Content Include="Default.aspx" />
+    <Content Include="exercise.aspx" />
+    <Content Include="exerciseAreaSetup.aspx" />
+    <Content Include="exerciseCategorySetup.aspx" />
+    <Content Include="exerciseSetup.aspx" />
+    <Content Include="export.aspx" />
+    <Content Include="extendedSurvey.aspx" />
+    <Content Include="grpUser.aspx" />
+    <Content Include="grpUserSetup.aspx" />
+    <Content Include="img\DelToolSmall.gif" />
+    <Content Include="img\LangID_0.gif" />
+    <Content Include="img\LangID_1.gif" />
+    <Content Include="img\null.gif" />
+    <Content Include="img\top_healthWatch.jpg" />
+    <Content Include="img\UpToolSmall.gif" />
+    <Content Include="insertSponsorInviteBQ.aspx" />
+    <Content Include="issue.aspx" />
+    <Content Include="mailSubmission.aspx" />
+    <Content Include="main.css" />
+    <Content Include="messages.aspx" />
+    <Content Include="news.aspx" />
+    <Content Include="rss.aspx" />
+    <Content Include="rssSetupChannel.aspx" />
+    <Content Include="rssSetupNewsCategory.aspx" />
+    <Content Include="rssSetupSource.aspx" />
+    <Content Include="sponsor.aspx" />
+    <Content Include="sponsorSetup.aspx" />
+    <Content Include="sponsorStats.aspx" />
+    <Content Include="stats.aspx" />
+    <Content Include="superadmin.aspx" />
+    <Content Include="survey.aspx" />
+    <Content Include="tx.aspx" />
+    <Content Include="users.aspx" />
+    <Content Include="verticalText.aspx" />
+    <Content Include="wise.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="tmp\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

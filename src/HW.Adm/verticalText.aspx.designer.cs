@@ -7,9 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HW.Adm {
-    
-    
-    public partial class verticalText {
-    }
+
+
+public partial class verticalText {
 }

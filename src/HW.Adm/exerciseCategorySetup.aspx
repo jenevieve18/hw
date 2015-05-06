@@ -1,8 +1,12 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Adm.Master" AutoEventWireup="true" CodeBehind="exerciseCategorySetup.aspx.cs" Inherits="HW.Adm.exerciseCategorySetup" %>
-<%@ Import Namespace="HW.Core.Helpers" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="exerciseCategorySetup" Codebehind="exerciseCategorySetup.aspx.cs" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" > 
+<html>
+  <head>
+   <%=Db.header()%>
+  </head>
+  <body>
+	    <form id="Form1" method="post" runat="server">
+		<%=Db.nav()%>
 		<table width="500" border="0" cellspacing="0" cellpadding="0">
 			<tr><td style="font-size:16px;" align="center">Exercise category setup</td></tr>
 		</table>
@@ -10,4 +14,7 @@
             <asp:PlaceHolder ID="ExerciseLang" runat=server />
 		</table>
         <button onclick="location.href='exercise.aspx';">Cancel</button><asp:Button ID=Save runat=server Text="Save" />
-</asp:Content>
+		<%=Db.bottom()%>
+		</form>
+  </body>
+</html>

@@ -1,94 +1,117 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Adm.Master" AutoEventWireup="true" CodeBehind="news.aspx.cs" Inherits="HW.Adm.news" %>
-<%@ Import Namespace="HW.Core.Helpers" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<%@ Page ValidateRequest="false" Language="C#" AutoEventWireup="true" Inherits="news" Codebehind="news.aspx.cs" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" > 
+<html>
+  <head>
+   <%=Db.header()%>
    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
-   <script type="text/javascript">       google.load("language", "1");</script>
+   <script type="text/javascript">google.load("language", "1");</script>
    <script language="Javascript">
-       var check = false;
-       function translate() {
-           var langFrom = document.forms[0].transLangFrom[document.forms[0].transLangFrom.selectedIndex].value, langTo = document.forms[0].transLangTo[document.forms[0].transLangTo.selectedIndex].value;
-           google.language.translate(document.forms[0].Header.value, langFrom, langTo, function (result) { if (!result.error) { document.forms[0].Header.value = result.translation; } });
-           google.language.translate(document.forms[0].Teaser.value, langFrom, langTo, function (result) { if (!result.error) { document.forms[0].Teaser.value = result.translation; } });
-           google.language.translate(document.forms[0].Body.value, langFrom, langTo, function (result) { if (!result.error) { document.forms[0].Body.value = result.translation; } });
-       }
-       function toggleNews() {
-           for (var i = 0; i < document.forms[0].rssID.length; i++) {
-               document.getElementById('h' + document.forms[0].rssID[i].value).style.backgroundColor = (document.forms[0].rssID[i].checked ? '#f2f2f2' : '');
-               document.getElementById('d' + document.forms[0].rssID[i].value).style.backgroundColor = (document.forms[0].rssID[i].checked ? '#f2f2f2' : '');
-               document.getElementById('l' + document.forms[0].rssID[i].value).style.backgroundColor = (document.forms[0].rssID[i].checked ? '#f2f2f2' : '');
-               if (document.getElementById('a' + document.forms[0].rssID[i].value))
-                   document.getElementById('a' + document.forms[0].rssID[i].value).style.backgroundColor = (document.forms[0].rssID[i].checked ? '#f2f2f2' : '');
-               document.getElementById('t' + document.forms[0].rssID[i].value).style.fontWeight = (document.forms[0].rssID[i].checked ? 'bold' : '');
-               document.getElementById('d' + document.forms[0].rssID[i].value).style.display = (document.forms[0].rssID[i].checked ? '' : 'none');
-               document.getElementById('l' + document.forms[0].rssID[i].value).style.display = (document.forms[0].rssID[i].checked ? '' : 'none');
-               if (document.getElementById('a' + document.forms[0].rssID[i].value))
-                   document.getElementById('a' + document.forms[0].rssID[i].value).style.display = (document.forms[0].rssID[i].checked ? '' : 'none');
-           }
-       }
-       function copyAll() {
-           copyHeader();
-           copyArticle(true);
-           copyArticle(false);
-           copyDT();
-           copyLink();
-           document.forms[0].DirectFromFeed.checked = true;
-           document.forms[0].Published.checked = true;
-           return false;
-       }
-       function copyLink() {
-           for (var i = 0; i < document.forms[0].rssID.length; i++) {
-               if (document.forms[0].rssID[i].checked) {
-                   if (document.getElementById('rssLinkAlt' + document.forms[0].rssID[i].value))
-                       document.forms[0].Link.value = document.getElementById('rssLinkAlt' + document.forms[0].rssID[i].value).href;
-                   else
-                       document.forms[0].Link.value = document.getElementById('rssLink' + document.forms[0].rssID[i].value).href;
-                   s = document.getElementById('i' + document.forms[0].rssID[i].value).src.replace('.gif', '');
-                   s = s.substr(s.length - 1, 1);
-                   document.forms[0].LinkLangID[s].checked = true;
-               }
-           }
-       }
-       function copyHeader() {
-           for (var i = 0; i < document.forms[0].rssID.length; i++) {
-               if (document.forms[0].rssID[i].checked) {
-                   document.forms[0].Header.value = document.getElementById('t' + document.forms[0].rssID[i].value).innerHTML;
-               }
-           }
-       }
-       function copyArticle(targ) {
-           for (var i = 0; i < document.forms[0].rssID.length; i++) {
-               if (document.forms[0].rssID[i].checked) {
-                   if (targ)
-                       document.forms[0].Teaser.value = document.getElementById('rssArt' + document.forms[0].rssID[i].value).innerHTML;
-                   else
-                       document.forms[0].Body.value = document.getElementById('rssArt' + document.forms[0].rssID[i].value).innerHTML;
-               }
-           }
-       }
-       function copyDT() {
-           for (var i = 0; i < document.forms[0].rssID.length; i++) {
-               if (document.forms[0].rssID[i].checked) {
-                   document.forms[0].DT.value = eval('document.forms[0].rssDT' + document.forms[0].rssID[i].value + '.value');
-               }
-           }
-       }
-       function selectAll() {
-           check = !check;
-           for (var i = 0; i < document.forms[0].rssIDdelete.length; i++) {
-               document.forms[0].rssIDdelete[i].checked = check;
-           }
-       }
-       function toggleLang() {
-           document.forms[0].NewsLangID.value = (document.forms[0].NewsLangID.value == '0' ? '1' : '0');
-           document.forms[0].submit();
-       }
+		var check = false;
+		function translate()
+		{
+		    var langFrom = document.forms[0].transLangFrom[document.forms[0].transLangFrom.selectedIndex].value, langTo = document.forms[0].transLangTo[document.forms[0].transLangTo.selectedIndex].value;
+		    google.language.translate(document.forms[0].Header.value, langFrom, langTo, function(result) { if (!result.error) { document.forms[0].Header.value = result.translation; } });
+		    google.language.translate(document.forms[0].Teaser.value, langFrom, langTo, function(result) { if (!result.error) { document.forms[0].Teaser.value = result.translation; } });
+		    google.language.translate(document.forms[0].Body.value, langFrom, langTo, function(result) { if (!result.error) { document.forms[0].Body.value = result.translation; } });
+		}
+		function toggleNews()
+		{
+			for (var i = 0; i < document.forms[0].rssID.length; i++)
+			{
+				document.getElementById('h'+document.forms[0].rssID[i].value).style.backgroundColor = (document.forms[0].rssID[i].checked ? '#f2f2f2' : '');
+				document.getElementById('d'+document.forms[0].rssID[i].value).style.backgroundColor = (document.forms[0].rssID[i].checked ? '#f2f2f2' : '');
+				document.getElementById('l'+document.forms[0].rssID[i].value).style.backgroundColor = (document.forms[0].rssID[i].checked ? '#f2f2f2' : '');
+				if(document.getElementById('a'+document.forms[0].rssID[i].value))
+					document.getElementById('a'+document.forms[0].rssID[i].value).style.backgroundColor = (document.forms[0].rssID[i].checked ? '#f2f2f2' : '');
+				document.getElementById('t'+document.forms[0].rssID[i].value).style.fontWeight = (document.forms[0].rssID[i].checked ? 'bold' : '');
+				document.getElementById('d'+document.forms[0].rssID[i].value).style.display = (document.forms[0].rssID[i].checked ? '' : 'none');
+				document.getElementById('l'+document.forms[0].rssID[i].value).style.display = (document.forms[0].rssID[i].checked ? '' : 'none');
+				if(document.getElementById('a'+document.forms[0].rssID[i].value))
+					document.getElementById('a'+document.forms[0].rssID[i].value).style.display = (document.forms[0].rssID[i].checked ? '' : 'none');
+			}
+		}
+		function copyAll()
+		{
+			copyHeader();
+			copyArticle(true);
+			copyArticle(false);
+			copyDT();
+			copyLink();
+			document.forms[0].DirectFromFeed.checked = true;
+			document.forms[0].Published.checked = true;
+			return false;
+		}
+		function copyLink()
+		{
+			for (var i = 0; i < document.forms[0].rssID.length; i++)
+			{
+				if(document.forms[0].rssID[i].checked)
+				{
+					if(document.getElementById('rssLinkAlt'+document.forms[0].rssID[i].value))
+						document.forms[0].Link.value = document.getElementById('rssLinkAlt'+document.forms[0].rssID[i].value).href;
+					else
+						document.forms[0].Link.value = document.getElementById('rssLink'+document.forms[0].rssID[i].value).href;
+					s = document.getElementById('i'+document.forms[0].rssID[i].value).src.replace('.gif','');
+					s = s.substr(s.length-1,1);
+					document.forms[0].LinkLangID[s].checked = true;
+				}
+			}
+		}
+		function copyHeader()
+		{
+			for (var i = 0; i < document.forms[0].rssID.length; i++)
+			{
+				if(document.forms[0].rssID[i].checked)
+				{
+					document.forms[0].Header.value = document.getElementById('t'+document.forms[0].rssID[i].value).innerHTML;
+				}
+			}
+		}
+		function copyArticle(targ)
+		{
+			for (var i = 0; i < document.forms[0].rssID.length; i++)
+			{
+				if(document.forms[0].rssID[i].checked)
+				{
+					if(targ)
+						document.forms[0].Teaser.value = document.getElementById('rssArt'+document.forms[0].rssID[i].value).innerHTML;
+					else
+						document.forms[0].Body.value = document.getElementById('rssArt'+document.forms[0].rssID[i].value).innerHTML;
+				}
+			}
+		}
+		function copyDT()
+		{
+			for (var i = 0; i < document.forms[0].rssID.length; i++)
+			{
+				if(document.forms[0].rssID[i].checked)
+				{
+					document.forms[0].DT.value = eval('document.forms[0].rssDT'+document.forms[0].rssID[i].value+'.value');
+				}
+			}
+		}
+		function selectAll()
+		{
+			check = !check;
+			for (var i = 0; i < document.forms[0].rssIDdelete.length; i++)
+			{
+				document.forms[0].rssIDdelete[i].checked = check;
+			}
+		}
+		function toggleLang()
+		{
+			document.forms[0].NewsLangID.value = (document.forms[0].NewsLangID.value == '0' ? '1' : '0');
+			document.forms[0].submit();
+		}
    </script>
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+  </head>
+  <body>
+	    <form id="Form1" method="post" runat="server">
 	    <input id="NewsID" type="hidden" name="NewsID" value="0" runat="server" />
 	    <input id="LoadNews" type="hidden" name="LoadNews" value="0" runat="server" />
 	    <input id="DeleteImage" type="hidden" name="DeleteImage" value="0" runat="server" />
 	    <input id="NewsLangID" type="hidden" name="NewsLangID" value="0" runat="server" />
+		<%=Db.nav()%>
 		<div id="img1" style="display:none;position:absolute;top:100px;left:110px;border: solid 1px #333333;"></div>
 		<div id="img2" style="display:none;position:absolute;top:300px;left:60px;border: solid 1px #333333;"></div>
 		<table border="0" cellpadding="0" cellspacing="0">
@@ -137,4 +160,7 @@
 				</td>
 			</tr>
 		</table>
-</asp:Content>
+		<%=Db.bottom()%>
+		</form>
+  </body>
+</html>

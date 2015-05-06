@@ -1,8 +1,12 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Adm.Master" AutoEventWireup="true" CodeBehind="exercise.aspx.cs" Inherits="HW.Adm.exercise" %>
-<%@ Import Namespace="HW.Core.Helpers" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<%@ Page Language="C#" AutoEventWireup="true" Inherits="exercise" Codebehind="exercise.aspx.cs" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" > 
+<html>
+  <head>
+   <%=Db.header()%>
+  </head>
+  <body>
+	    <form id="Form1" method="post" runat="server">
+		<%=Db.nav()%>
 		<table width="500" border="0" cellspacing="0" cellpadding="0">
 			<tr><td style="font-size:16px;" align="center">Exercises</td></tr>
 		</table>
@@ -20,4 +24,7 @@
 			<asp:Label ID=Exercise runat=server />
 		</table>
 		<span style="margin:20px;">[<a href="exerciseSetup.aspx">Add exercise</a>] [<a href="exerciseAreaSetup.aspx">Add exercise area</a>] [<a href="exerciseCategorySetup.aspx">Add exercise category</a>]</span>
-</asp:Content>
+		<%=Db.bottom()%>
+		</form>
+  </body>
+</html>
