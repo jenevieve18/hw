@@ -40,7 +40,7 @@ namespace healthWatch
 
         int sessionID = 0;
 
-        string surveyIntro = "";
+        string surveyIntroX = "";
 
         public static int createSurveyUser(int untID, string eml)
         {
@@ -477,7 +477,7 @@ namespace healthWatch
                 "WHERE pr.ProjectRoundID = " + projectRoundID, "eFormSqlConnection");
             if (rs.Read())
             {
-                surveyIntro = (rs.IsDBNull(0) || rs.GetString(0) == "" ? surveyIntro : rs.GetString(0).Replace("\r\n", "<br/>").Replace("\n", "<br/>"));
+                surveyIntroX = (rs.IsDBNull(0) || rs.GetString(0) == "" ? surveyIntroX : rs.GetString(0).Replace("\r\n", "<br/>").Replace("\n", "<br/>"));
                 //surveyName = (rs.IsDBNull(1) ? surveyName : rs.GetString(1));
                 totalCX = rs.GetInt32(2);
             }
@@ -485,7 +485,7 @@ namespace healthWatch
 
             if (SurveyIntro.Text == "")
             {
-                SurveyIntro.Text = surveyIntro;
+                SurveyIntro.Text = surveyIntroX;
             }
 
             #region Render survey
