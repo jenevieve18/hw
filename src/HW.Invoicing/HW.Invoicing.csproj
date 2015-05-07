@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CustomerAdd.aspx" />
+    <Content Include="CustomerDelete.aspx" />
     <Content Include="CustomerEdit.aspx" />
     <Content Include="Customers.aspx" />
     <Content Include="Dashboard.aspx" />
@@ -58,11 +59,13 @@
     <Content Include="InvoiceAdd.aspx" />
     <Content Include="Invoices.aspx" />
     <Content Include="ItemAdd.aspx" />
+    <Content Include="ItemDelete.aspx" />
     <Content Include="ItemEdit.aspx" />
     <Content Include="Items.aspx" />
     <Content Include="Logout.aspx" />
     <Content Include="sql.aspx" />
     <Content Include="UserAdd.aspx" />
+    <Content Include="UserDelete.aspx" />
     <Content Include="UserEdit.aspx" />
     <Content Include="Users.aspx" />
     <Content Include="Web.config" />
@@ -80,6 +83,13 @@
     </Compile>
     <Compile Include="CustomerAdd.aspx.designer.cs">
       <DependentUpon>CustomerAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerDelete.aspx.cs">
+      <DependentUpon>CustomerDelete.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomerDelete.aspx.designer.cs">
+      <DependentUpon>CustomerDelete.aspx</DependentUpon>
     </Compile>
     <Compile Include="CustomerEdit.aspx.cs">
       <DependentUpon>CustomerEdit.aspx</DependentUpon>
@@ -137,6 +147,13 @@
     <Compile Include="ItemAdd.aspx.designer.cs">
       <DependentUpon>ItemAdd.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ItemDelete.aspx.cs">
+      <DependentUpon>ItemDelete.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ItemDelete.aspx.designer.cs">
+      <DependentUpon>ItemDelete.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ItemEdit.aspx.cs">
       <DependentUpon>ItemEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -172,6 +189,13 @@
     </Compile>
     <Compile Include="UserAdd.aspx.designer.cs">
       <DependentUpon>UserAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UserDelete.aspx.cs">
+      <DependentUpon>UserDelete.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserDelete.aspx.designer.cs">
+      <DependentUpon>UserDelete.aspx</DependentUpon>
     </Compile>
     <Compile Include="UserEdit.aspx.cs">
       <DependentUpon>UserEdit.aspx</DependentUpon>

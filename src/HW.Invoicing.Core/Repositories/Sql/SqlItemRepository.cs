@@ -7,15 +7,10 @@ using HW.Invoicing.Core.Models;
 
 namespace HW.Invoicing.Core.Repositories.Sql
 {
-	public class SqlItemRepository : BaseSqlRepository<Item>
+	public class SqlItemRepository : BaseSqlRepository<Item>, IItemRepository
 	{
-		public SqlItemRepository()
-		{
-		}
-		
 		public override Item Read(int id)
 		{
-			
 			string query = string.Format(
 				@"
 SELECT Id, Name
@@ -31,7 +26,21 @@ WHERE Id = @Id"
 			return i;
 		}
 		
-		public void Update(Item i, int id)
+		public override void Delete(int id)
+		{
+			string query = string.Format(
+				@"
+DELETE FROM Item
+WHERE Id = @Id"
+			);
+			ExecuteNonQuery(
+				query,
+				"invoicing",
+				new SqlParameter("@Id", id)
+			);
+		}
+		
+		public override void Update(Item i, int id)
 		{
 			string query = string.Format(
 				@"
@@ -47,7 +56,7 @@ WHERE Id = @Id"
 			);
 		}
 		
-		public void Save(Item i)
+		public override void Save(Item i)
 		{
 			string query = string.Format(
 				@"

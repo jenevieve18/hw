@@ -7,10 +7,19 @@ using HW.Invoicing.Core.Models;
 
 namespace HW.Invoicing.Core.Repositories.Sql
 {
-	public class SqlCustomerRepository : BaseSqlRepository<Customer>
+	public class SqlCustomerRepository : BaseSqlRepository<Customer>, ICustomerRepository
 	{
-		public SqlCustomerRepository()
+		public void Delete(int id)
 		{
+			string query = string.Format(
+				@"
+DELETE FROM Customer WHERE Id = @Id"
+			);
+			ExecuteNonQuery(
+				query,
+				"invoicing",
+				new SqlParameter("@Id", id)
+			);
 		}
 		
 		public void Save(Customer c)

@@ -7,13 +7,13 @@ using HW.Core.Repositories.Sql;
 
 namespace HW.Invoicing.Core.Repositories.Sql
 {
-	public class SqlUserRepository : BaseSqlRepository<User>
+	public class SqlUserRepository : BaseSqlRepository<User>, IUserRepository
 	{
 		public SqlUserRepository()
 		{
 		}
 		
-		public void Save(User u)
+		public override void Save(User u)
 		{
 			string query = string.Format(
 				@"
@@ -28,7 +28,7 @@ VALUES(@Name, @Password)"
 			);
 		}
 		
-		public void Update(User u, int id)
+		public override void Update(User u, int id)
 		{
 			string query = string.Format(
 				@"
@@ -41,6 +41,20 @@ WHERE Id = @Id"
 				"invoicing",
 				new SqlParameter("@Name", u.Name),
 				new SqlParameter("@Password", u.Password),
+				new SqlParameter("@Id", id)
+			);
+		}
+		
+		public override void Delete(int id)
+		{
+			string query = string.Format(
+				@"
+DELETE FROM [User]
+WHERE Id = @Id"
+			);
+			ExecuteNonQuery(
+				query,
+				"invoicing",
 				new SqlParameter("@Id", id)
 			);
 		}

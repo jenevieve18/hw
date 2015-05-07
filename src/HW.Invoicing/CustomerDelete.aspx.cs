@@ -4,34 +4,34 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using HW.Invoicing.Core.Models;
+using HW.Core.Helpers;
 using HW.Invoicing.Core.Repositories;
 using HW.Invoicing.Core.Repositories.Sql;
 
 namespace HW.Invoicing
 {
-    public partial class Invoices : System.Web.UI.Page
+    public partial class CustomerDelete : System.Web.UI.Page
     {
-    	IInvoiceRepository r;
-    	protected IList<Invoice> invoices;
+    	ICustomerRepository r;
     	
-    	public Invoices() : this(new SqlInvoiceRepository())
+    	public CustomerDelete() : this(new SqlCustomerRepository())
     	{
     	}
     	
-    	public Invoices(IInvoiceRepository r)
+    	public CustomerDelete(ICustomerRepository r)
     	{
     		this.r = r;
     	}
     	
-    	public void Index()
+    	public void Delete(int id)
     	{
-    		invoices = r.FindAll();
+    		r.Delete(id);
+        	Response.Redirect("customers.aspx");
     	}
     	
         protected void Page_Load(object sender, EventArgs e)
         {
-        	Index();
+        	Delete(ConvertHelper.ToInt32(Request.QueryString["CustomerID"]));
         }
     }
 }

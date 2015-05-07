@@ -6,13 +6,13 @@ using HW.Invoicing.Core.Models;
 
 namespace HW.Invoicing.Core.Repositories.Sql
 {
-	public class SqlInvoiceRepository : BaseSqlRepository<Invoice>
+	public class SqlInvoiceRepository : BaseSqlRepository<Invoice>, IInvoiceRepository
 	{
 		public SqlInvoiceRepository()
 		{
 		}
 		
-		public void Save(Invoice i)
+		public override void Save(Invoice i)
 		{
 			string query = string.Format(
 				@"
