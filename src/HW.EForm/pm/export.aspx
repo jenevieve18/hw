@@ -35,7 +35,7 @@
 				<td width="780" valign="top" bgcolor="#FFFFFF">
 				<br/>
 					<form id="Form1" method="post" runat="server">
-						<b>Survey</b> <asp:DropDownList ID=SurveyID Runat=server/>
+						<b>Survey</b> <asp:DropDownList ID=SurveyID Runat=server/><asp:DropDownList ID="LangID" Runat=server/>
 						<br/>
 						<b>Project round</b>
 						<asp:CheckBoxList ID=ProjectRoundID Runat=server/>

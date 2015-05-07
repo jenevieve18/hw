@@ -29,7 +29,7 @@ namespace eform
 		protected Button AddPRQO;
 		protected Button SaveRound;
 		protected Button CancelRound;
-		protected PlaceHolder RoundTextElements;
+		protected PlaceHolder RoundTextElements, Mapping;
 		protected PlaceHolder SendAll;
 		protected PlaceHolder Units;
 		protected PlaceHolder Rounds;
@@ -72,12 +72,109 @@ namespace eform
 
 			SqlDataReader rs;
 
+			if(HttpContext.Current.Request.QueryString["ResetAID"] != null)
+			{
+				Db.execute("UPDATE Answer SET ProjectRoundID = -ABS(ProjectRoundID), ProjectRoundUnitID = -ABS(ProjectRoundUnitID), ProjectRoundUserID = -ABS(ProjectRoundUserID) WHERE AnswerID = " + Convert.ToInt32(HttpContext.Current.Request.QueryString["ResetAID"]));
+			}
+			if(projectRoundID != 0 && HttpContext.Current.Request.QueryString["SalvageFromDebug"] != null)
+			{
+				#region SalvageFromDebug
+				int a = 0;
+
+				rs = Db.sqlRecordSet("select a.AnswerID, d.DebugTxt, pr.SurveyID, REPLACE(CONVERT(VARCHAR(255),a.AnswerKey),'-',''), d.debugid from answer a inner join projectround pr on a.projectroundid = pr.projectroundid inner join debug d on abs(datediff(minute,d.dt,a.enddt)) <= 1 where a.enddt is not null and a.projectroundid = " + projectRoundID + " order by a.answerid,abs(datediff(minute,d.dt,a.enddt)) asc");
+				while(rs.Read())
+				{
+//					HttpContext.Current.Response.Write(rs.GetInt32(0) + "\r\n");
+
+					if(a != rs.GetInt32(0) && !rs.IsDBNull(1) && rs.GetString(1) != "")
+					{
+						string d = rs.GetString(1).Replace("\r","").Replace(" = ","=");
+						if(d.IndexOf(rs.GetString(3)) >= 0)
+						{
+							string[] dd = d.Split('\n');
+//							HttpContext.Current.Response.Write("Found " + rs.GetInt32(0) + " in " + rs.GetInt32(4) + "! " + dd.Length + " rows\r\n");
+//							for(int i=0; i<dd.Length; i++)
+//							{
+//								HttpContext.Current.Response.Write(dd[i] + "\r\n");
+//							}
+
+							SqlDataReader rs2 = Db.sqlRecordSet("SELECT sq.QuestionID, qo.OptionID, o.OptionType FROM SurveyQuestion sq INNER JOIN SurveyQuestionOption sqo ON sq.SurveyQuestionID = sqo.SurveyQuestionID INNER JOIN QuestionOption qo ON sqo.QuestionOptionID = qo.QuestionOptionID INNER JOIN [Option] o ON qo.OptionID = o.OptionID WHERE sq.SurveyID = " + rs.GetInt32(2));
+							while(rs2.Read())
+							{
+								for(int i=0; i<dd.Length; i++)
+								{
+									if(dd[i].IndexOf("=") >= 0)
+									{
+										string[] ddd = dd[i].Split('=');
+										if(ddd[0] == "Q" + rs2.GetInt32(0) + "O" + rs2.GetInt32(1) && ddd[1] != "")
+										{
+											Db.sqlExecute("UPDATE AnswerValue SET DeletedSessionID = 0 WHERE AnswerID = " + rs.GetInt32(0) + " AND QuestionID = " + rs2.GetInt32(0) + " AND OptionID = " + rs2.GetInt32(1) + " AND DeletedSessionID IS NULL");
+
+											switch(rs2.GetInt32(2))
+											{
+												case 1: // radio, ValueInt
+												case 9:	// VAS, ValueInt
+													try
+													{
+														int v = Convert.ToInt32(ddd[1]);
+														Db.sqlExecute("INSERT INTO AnswerValue (AnswerID,QuestionID,OptionID,ValueInt,CreatedSessionID) VALUES (" + rs.GetInt32(0) + "," + rs2.GetInt32(0) + "," + rs2.GetInt32(1) + "," + v + ",0)");
+													}
+													catch(Exception){}
+													break;
+												case 2:	// free, ValueText
+													Db.sqlExecute("INSERT INTO AnswerValue (AnswerID,QuestionID,OptionID,ValueText,CreatedSessionID,ValueTextJapaneseUnicode) VALUES (" + rs.GetInt32(0) + "," + rs2.GetInt32(0) + "," + rs2.GetInt32(1) + ",'" + ddd[1].Replace("'","''") + "',0,N'" + ddd[1].Replace("'","''") + "')");
+													break;
+												case 3:	// check, ValueInt
+													if(ddd[1].IndexOf(",") >= 0)
+													{
+														string[] dddd = ddd[1].Split(',');
+														for(int ii=0; ii<dddd.Length; ii++)
+														{
+															try
+															{
+																int v = Convert.ToInt32(dddd[ii]);
+																Db.sqlExecute("INSERT INTO AnswerValue (AnswerID,QuestionID,OptionID,ValueInt,CreatedSessionID) VALUES (" + rs.GetInt32(0) + "," + rs2.GetInt32(0) + "," + rs2.GetInt32(1) + "," + v + ",0)");
+															}
+															catch(Exception){}
+														}
+													}
+													else
+													{
+														goto case 1;
+													}
+													break;
+												case 4:	// numeric, ValueDecimal
+													try
+													{
+														decimal newValIns = Convert.ToDecimal(submit.strFloatToStr(ddd[1]));
+														Db.sqlExecute("INSERT INTO AnswerValue (AnswerID,QuestionID,OptionID,ValueDecimal,CreatedSessionID) VALUES (" + rs.GetInt32(0) + "," + rs2.GetInt32(0) + "," + rs2.GetInt32(1) + "," + newValIns.ToString().Replace(",",".") + ",0)");
+													}
+													catch(Exception){}
+													break;
+											}
+
+//											HttpContext.Current.Response.Write(rs.GetInt32(0) + ":" + "Q" + rs2.GetInt32(0) + "O" + rs2.GetInt32(1) + ":" + ddd[1] + "\r\n");
+										}
+									}
+								}
+							}
+							rs2.Close();
+							a = rs.GetInt32(0);
+						}
+					}					
+				}
+				rs.Close();
+
+				//HttpContext.Current.Response.Redirect("projectSetup.aspx?ProjectRoundID=" + projectRoundID + "&ProjectID=" + projectID, true);
+				#endregion
+			}
 			if(HttpContext.Current.Request.QueryString["ExportSurveyID"] != null)
 			{
 				exportSpssDataOneNew = true;
 			}
 			if(HttpContext.Current.Request.QueryString["MovePRQO"] != null)
 			{
+				#region MovePRQO
 				int SO = 0;
 				rs = Db.sqlRecordSet("SELECT SortOrder FROM ProjectRoundQO WHERE ProjectRoundQOID = " + Convert.ToInt32(HttpContext.Current.Request.QueryString["MovePRQO"]));
 				if(rs.Read())
@@ -99,6 +196,7 @@ namespace eform
 					Db.execute("UPDATE ProjectRoundQO SET SortOrder = " + SO + " WHERE ProjectRoundQOID = " + PRQOID2);
 				}
 				HttpContext.Current.Response.Redirect("projectSetup.aspx?ProjectRoundID=" + projectRoundID + "&ProjectID=" + projectID, true);
+				#endregion
 			}
 
 			LogoImg.Text = "";
@@ -150,37 +248,75 @@ namespace eform
 					rs.Close();
 				}
 
-				rs = Db.sqlRecordSet("SELECT ProjectRoundID, Internal FROM ProjectRound WHERE ProjectID = " + projectID);
+				int axx = 0, cxx = 0;
+				System.Text.StringBuilder t = new StringBuilder(); string furl = "", r1 = "";
+				rs = Db.sqlRecordSet("SELECT " +
+					"pr.ProjectRoundID, " +
+					"pr.Internal, " +
+					"(SELECT COUNT(*) FROM ProjectRoundUser pru WHERE pru.ProjectRoundID = pr.ProjectRoundID) AS CX, " +
+					"(SELECT COUNT(*) FROM Answer a WHERE a.EndDT IS NOT NULL AND a.ProjectRoundUserID IS NOT NULL AND a.ProjectRoundID = pr.ProjectRoundID) AS AX, " +
+					"pr.Closed, " +
+					"pr.SurveyID, " +
+					"(SELECT TOP 1 pru2.Unit FROM ProjectRoundUnit pru2 WHERE pru2.ProjectRoundID = pr.ProjectRoundID ORDER BY pru2.SortString), " +
+					"s.Internal, " +
+					"f.Feedback, " +
+					"(SELECT SUM(LEN(prl.SurveyName))+SUM(LEN(prl.InvitationSubject))+SUM(LEN(CAST(prl.InvitationBody AS NVARCHAR(MAX)))) FROM ProjectRoundLang prl WHERE prl.ProjectRoundID = pr.ProjectRoundID) AS DX, " +
+					"pr.RoundKey " +
+					"FROM ProjectRound pr " +
+					"LEFT OUTER JOIN Survey s ON pr.SurveyID = s.SurveyID " +
+					"LEFT OUTER JOIN Feedback f ON pr.FeedbackID = f.FeedbackID " +
+					"WHERE pr.ProjectID = " + projectID + " ORDER BY pr.Started");
 				if(rs.Read())
 				{
-					Rounds.Controls.Add(new LiteralControl("<TR><TD COLSPAN=\"4\"><TABLE BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">"));
+					t.Append("<TR><TD COLSPAN=\"4\"><TABLE BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">");
 					do
 					{
-						Rounds.Controls.Add(new LiteralControl("<TR><TD>&nbsp;&bull;&nbsp;"));
+						cxx += rs.GetInt32(2);
+						axx += rs.GetInt32(3);
+
+						t.Append("<TR" + (rs.IsDBNull(4) ? " style=\"background-color:#CCFF99;\"" : "") + "><TD>&nbsp;&bull;&nbsp;");
 						if(rs.GetInt32(0) == projectRoundID)
 						{
-							Rounds.Controls.Add(new LiteralControl("<B>"));
+							t.Append("<B>");
 						}
-						Rounds.Controls.Add(new LiteralControl(rs.GetString(1)));
+						t.Append(rs.GetString(1));
 						if(rs.GetInt32(0) == projectRoundID)
 						{
-							Rounds.Controls.Add(new LiteralControl("</B>"));
+							t.Append("</B>");
 						}
-						Rounds.Controls.Add(new LiteralControl("&nbsp;&nbsp;</TD><TD>"));
+						t.Append("&nbsp;&nbsp;</TD><TD>");
 						if(rs.GetInt32(0) == projectRoundID)
 						{
-							Rounds.Controls.Add(new LiteralControl("<B>&lt;--</B>"));
+							t.Append("<B>&lt;--</B>");
 						}
 						else
 						{
-							Rounds.Controls.Add(new LiteralControl("<button onclick=\"location.href='projectSetup.aspx?ProjectID=" + projectID + "&ProjectRoundID=" + rs.GetInt32(0) + "';return false;\">Edit</button>"));
+							t.Append("<button onclick=\"location.href='projectSetup.aspx?ProjectID=" + projectID + "&ProjectRoundID=" + rs.GetInt32(0) + "';return false;\">Edit</button>");
 						}
-						Rounds.Controls.Add(new LiteralControl("</td></tr>"));
+						t.Append("</td><td>&nbsp;" + rs.GetInt32(3) + "/" + rs.GetInt32(2) + "</td><td>&nbsp;" + (!rs.IsDBNull(7) ? "<span title=\"" + rs.GetString(7) + "\">(SurveyID: <a href=\"javascript:void(window.open('/submit.aspx?SID=" + rs.GetInt32(5) + "&LID=1','',''));\">" + rs.GetInt32(5) + "</a>)</span>" : "") + "</td><td>&nbsp;");
+						
+						if(projectRoundID != 0)
+						{
+							if(rs.GetInt32(0) == projectRoundID)
+							{
+								r1 = rs.GetString(1);
+								furl = System.Configuration.ConfigurationSettings.AppSettings["InstanceURL"] + "/feedback.aspx?R=" + projectRoundID + "&SID=" + rs.GetInt32(5) + "&ShowN=1";
+
+								t.Append("<a href=\"" + (furl + "&N=" + r1).Replace(" ","%20") + "\" target=\"_blank\">Feedback</a> <a href=\"/feedbackDashboard.aspx?RK=" + rs.GetGuid(10).ToString() + "\" target=\"_blank\">dashboard</a>");
+							}
+							else
+							{
+								string r2 = rs.GetString(1);
+								t.Append("<a href=\"[x]&RR=" + rs.GetInt32(0) + "&R2=" + r2 + "\" target=\"_blank\">Compare</a>");
+							}
+						}
+						t.Append("</td><td>&nbsp;" + (rs.IsDBNull(8) ? "Hardcoded" : rs.GetString(8)) + "</td><td>&nbsp;" + (rs.IsDBNull(9) ? "No texts" : rs.GetValue(9).ToString() + " chars") + "</td></tr>");
 					}
 					while(rs.Read());
-					Rounds.Controls.Add(new LiteralControl("</TABLE></TD></TR><TR><TD COLSPAN=\"4\">&nbsp;</td></tr>"));
+					t.Append("</TABLE></TD></TR><TR><TD COLSPAN=\"4\" align=\"right\">&nbsp;" + axx + "/" + cxx + "</td></tr>");
 				}
 				rs.Close();
+				Rounds.Controls.Add(new LiteralControl(t.ToString().Replace("[x]",furl.Replace(" ","%20")+ "&R1=" + r1)));
 
 				if(HttpContext.Current.Request.QueryString["AddRound"] != null || projectRoundID != 0)
 				{
@@ -215,6 +351,13 @@ namespace eform
 					RoundExtendedSurvey.ID = "RoundExtendedSurvey";
 					RoundExtendedSurvey.Width = Unit.Pixel(300);
 					Rounds.Controls.Add(RoundExtendedSurvey);
+					Rounds.Controls.Add(new LiteralControl("</TD></TR>"));
+
+					Rounds.Controls.Add(new LiteralControl("<TR><TD>Feedback&nbsp;</TD><TD>"));
+					DropDownList Feedback = new DropDownList();
+					Feedback.ID = "Feedback";
+					Feedback.Width = Unit.Pixel(300);
+					Rounds.Controls.Add(Feedback);
 					Rounds.Controls.Add(new LiteralControl("</TD></TR>"));
 
 					Rounds.Controls.Add(new LiteralControl("<TR><TD>Logo&nbsp;</TD><TD>"));
@@ -377,6 +520,14 @@ namespace eform
 						}
 						rs.Close();
 
+						Feedback.Items.Add(new ListItem("< hardcoded >","NULL"));
+						rs = Db.sqlRecordSet("SELECT FeedbackID, Feedback FROM Feedback");
+						while(rs.Read())
+						{
+							Feedback.Items.Add(new ListItem(rs.GetString(1),rs.GetInt32(0).ToString()));
+						}
+						rs.Close();
+
 						rs = Db.sqlRecordSet("SELECT LangID FROM Lang");
 						while(rs.Read())
 						{
@@ -404,7 +555,8 @@ namespace eform
 								"ReminderInterval, " +
 								"Layout, " +
 								"UseCode, " +				// 10
-								"ExtendedSurveyID " +		
+								"ExtendedSurveyID, " +		
+								"FeedbackID " +
 								"FROM ProjectRound " +
 								"WHERE ProjectRoundID = " + projectRoundID);
 							if(rs.Read())
@@ -439,6 +591,7 @@ namespace eform
 									Layout.SelectedValue = rs.GetInt32(9).ToString();
 								}
 								Login.SelectedValue = (rs.IsDBNull(10) ? "0" : rs.GetInt32(10).ToString());
+								Feedback.SelectedValue = (rs.IsDBNull(12) ? "NULL" : rs.GetInt32(12).ToString());
 							}
 							rs.Close();
 						}
@@ -525,7 +678,7 @@ namespace eform
 									Units.Controls.Add(new LiteralControl("</B>"));
 								}
 								Units.Controls.Add(new LiteralControl("</A>&nbsp;</TD><TD STYLE=\"color:#999999;\">"));
-								Units.Controls.Add(new LiteralControl(rs.GetString(8)));
+								Units.Controls.Add(new LiteralControl((rs.IsDBNull(8) ? "?" : rs.GetString(8))));
 								Units.Controls.Add(new LiteralControl("&nbsp;</TD><TD>"));
 								int maxCount = Math.Max(rs.GetInt32(10),rs.GetInt32(9));
 								Units.Controls.Add(new LiteralControl(rs.GetInt32(10).ToString() + (maxCount == 0 ? "" : (maxCount == rs.GetInt32(10) ? "" : "/" + (maxCount.ToString())))));
@@ -551,18 +704,43 @@ namespace eform
 								Units.Controls.Add(new LiteralControl("&nbsp;</TD><TD>"));
 								Units.Controls.Add(new LiteralControl("<button onclick=\"location.href='projectSetup.aspx?ProjectID=" + projectID + "&ProjectRoundID=" + projectRoundID + "&AddUnit=" + rs.GetInt32(0) + "';return false;\">Subunit</button>"));
 								Units.Controls.Add(new LiteralControl("<button onclick=\"location.href='projectSetup.aspx?ProjectID=" + projectID + "&ProjectRoundID=" + projectRoundID + "&AddUser=" + rs.GetInt32(0) + "';return false;\">User</button>"));
-								Units.Controls.Add(new LiteralControl("</TD></TR>"));
+								Units.Controls.Add(new LiteralControl("</TD><td>" +
+									"&nbsp;<a href=\"" + (furl + "&N=" + r1).Replace(" ","%20") + "&AB=1&U=" + rs.GetInt32(0) + "&UD=" + rs.GetString(1).Replace(" ","%20") + "\" target=\"_blank\" title=\"top vs. this and below\">Feedback 1</a>" +
+									"&nbsp;<a href=\"" + (furl + "&N=" + r1).Replace(" ","%20") + "&U=" + rs.GetInt32(0) + "&UD=" + rs.GetString(1).Replace(" ","%20") + "\" target=\"_blank\" title=\"top vs. this only\">2</a>" +
+									"&nbsp;<a href=\"" + (furl + "&N=" + r1).Replace(" ","%20") + "&ST=0&AB=1&U=" + rs.GetInt32(0) + "&UD=" + rs.GetString(1).Replace(" ","%20") + "\" target=\"_blank\" title=\"this and below\">3</a>" +
+									"&nbsp;<a href=\"" + (furl + "&N=" + r1).Replace(" ","%20") + "&ST=0&U=" + rs.GetInt32(0) + "&UD=" + rs.GetString(1).Replace(" ","%20") + "\" target=\"_blank\" title=\"this only\">4</a>" +
+									"</td></TR>"));
 								if(showUsers || rs.GetInt32(0) == projectRoundUnitID)
 								{
-									SqlDataReader rs2 = Db.sqlRecordSet("SELECT ProjectRoundUserID, Email FROM ProjectRoundUser WHERE ProjectRoundUnitID = " + rs.GetInt32(0));
+									SqlDataReader rs2 = Db.sqlRecordSet("SELECT " +
+										"u.ProjectRoundUserID, " +		// 0
+										"u.Email, " +
+										"u.Extended, " +
+										"u.UserKey, " +
+										"REPLACE(CONVERT(VARCHAR(255),a.AnswerKey),'-',''), " +
+										"a.EndDT, " +					// 5
+										"a.AnswerID " +
+										"FROM ProjectRoundUser u " +
+										"LEFT OUTER JOIN Answer a ON u.ProjectRoundUserID = a.ProjectRoundUserID AND a.EndDT IS NOT NULL " +
+										"WHERE u.ProjectRoundUnitID = " + rs.GetInt32(0));
 									if(rs2.Read())
 									{
 										Units.Controls.Add(new LiteralControl("<TR><TD COLSPAN=\"6\" BGCOLOR=\"#DDDDDD\"><IMG SRC=\"../img/null.gif\" width=\"1\" height=\"1\"></TD></TR>"));
 										do
 										{
+											string UK = System.Configuration.ConfigurationSettings.AppSettings["InstanceURL"] + "/submit.aspx?K=" + rs2.GetGuid(3).ToString().Substring(0,8) + rs2.GetInt32(0).ToString();
+											string AK = (!rs2.IsDBNull(4) ? rs2.GetString(4) : "");
+
 											Units.Controls.Add(new LiteralControl("<TR>"));
-											Units.Controls.Add(new LiteralControl("<td>&nbsp;</td>"));
-											Units.Controls.Add(new LiteralControl("<td colspan=\"5\">" + rs2.GetString(1) + "&nbsp;</td>"));
+											//Units.Controls.Add(new LiteralControl("<td>&nbsp;</td>"));
+											Units.Controls.Add(new LiteralControl("<td colspan=\"4\">"));
+											for(int i = 0; i < rs.GetInt32(2); i++)
+											{
+												Units.Controls.Add(new LiteralControl("&nbsp;&nbsp;&nbsp;&nbsp;"));
+											}
+											Units.Controls.Add(new LiteralControl(rs2.GetString(1) + "&nbsp;</td>"));
+											Units.Controls.Add(new LiteralControl("<td>&nbsp;" + (AK == "" ? "<A HREF=\"JavaScript:void(window.open('" + UK + "','',''));\">open</A>" : "<A HREF=\"JavaScript:void(window.open('" + UK + "&AIOP=1&SM=" + AK.Substring(0,8) + "','',''));\">" + rs2.GetDateTime(5).ToString("yyyy-MM-dd HH:mm") + "</A> <a href=\"projectSetup.aspx?ProjectRoundID=" + projectRoundID + "&ProjectID=" + projectID + "&ResetAID=" + rs2.GetInt32(6) + "\">reset</a>") + "&nbsp;</td>"));
+											Units.Controls.Add(new LiteralControl("<td>&nbsp;" + (rs2.IsDBNull(2) ? "" : "Extended") + "&nbsp;</td>"));
 											Units.Controls.Add(new LiteralControl("<td><button onclick=\"location.href='projectSetup.aspx?ProjectID=" + projectID + "&ProjectRoundID=" + projectRoundID + "&ProjectRoundUserID=" + rs2.GetInt32(0) + "';return false;\">Edit</button>"));
 											if(StartDate.Text != "")
 											{
@@ -687,10 +865,10 @@ namespace eform
 							ParentUnit.ID = "ParentProjectRoundUnitID";
 							ParentUnit.Width = Unit.Pixel(300);
 							ParentUnit.Items.Add(new ListItem("< top level >","0"));
-							rs = Db.sqlRecordSet("SELECT ProjectRoundUnitID, dbo.cf_ProjectUnitTree(ProjectRoundUnitID,' » ') AS Unit FROM ProjectRoundUnit WHERE ProjectRoundID = " + projectRoundID + " AND ProjectRoundUnitID <> " + projectRoundUnitID + " ORDER BY SortString");
+							rs = Db.sqlRecordSet("SELECT ProjectRoundUnitID, dbo.cf_ProjectUnitTree(ProjectRoundUnitID,' » ') AS Unit, ID FROM ProjectRoundUnit WHERE ProjectRoundID = " + projectRoundID + " AND ProjectRoundUnitID <> " + projectRoundUnitID + " ORDER BY SortString");
 							while(rs.Read())
 							{
-								ParentUnit.Items.Add(new ListItem(rs.GetString(1),rs.GetInt32(0).ToString()));
+								ParentUnit.Items.Add(new ListItem(rs.GetString(2) + " " + rs.GetString(1),rs.GetInt32(0).ToString()));
 							}
 							rs.Close();
 							Units.Controls.Add(ParentUnit);
@@ -1036,9 +1214,18 @@ namespace eform
 							DefaultUnit.Width = Unit.Pixel(300);
 							DefaultUnit.Items.Add(new ListItem("< none >","0"));
 							rs = Db.sqlRecordSet("SELECT ProjectRoundUnitID, dbo.cf_ProjectUnitTree(ProjectRoundUnitID,' » ') AS Unit FROM ProjectRoundUnit WHERE ProjectRoundID = " + projectRoundID + " ORDER BY SortString");
-							while(rs.Read())
+							if(rs.Read())
 							{
-								DefaultUnit.Items.Add(new ListItem(rs.GetString(1),rs.GetInt32(0).ToString()));
+								do
+								{
+									DefaultUnit.Items.Add(new ListItem(rs.GetString(1),rs.GetInt32(0).ToString()));
+								}
+								while(rs.Read());
+
+								if(!IsPostBack)
+								{
+									DefaultUnit.SelectedIndex = 1;
+								}
 							}
 							rs.Close();
 							Units.Controls.Add(DefaultUnit);
@@ -1065,13 +1252,24 @@ namespace eform
 							hiddenImport.ID = "hiddenImport";
 							Units.Controls.Add(hiddenImport);
 
-							PlaceHolder Mapping = new PlaceHolder();
-							Mapping.ID = "Mapping";
-							Mapping.Visible = false;
-							Units.Controls.Add(Mapping);
+//							PlaceHolder Mapping = new PlaceHolder();
+//							Mapping.ID = "Mapping";
+//							Mapping.Visible = false;
+//							Units.Controls.Add(Mapping);
+
+							Mapping.Controls.Add(new LiteralControl("<TR><TD>EMAIL&nbsp;</TD><TD>"));
+							DropDownList ddl = new DropDownList();
+							ddl.ID = "colEmail";
+							ddl.Width = Unit.Pixel(150);
+							Mapping.Controls.Add(ddl);
+							Mapping.Controls.Add(new LiteralControl("</TD></TR>"));
+							if(!IsPostBack)
+							{
+								ddl.Items.Add(new ListItem("< ignore, anon import >","-1"));
+							}
 
 							Mapping.Controls.Add(new LiteralControl("<TR><TD>UNIT&nbsp;</TD><TD>"));
-							DropDownList ddl = new DropDownList();
+							ddl = new DropDownList();
 							ddl.ID = "colUnit";
 							ddl.Width = Unit.Pixel(150);
 							Mapping.Controls.Add(ddl);
@@ -1081,34 +1279,35 @@ namespace eform
 								ddl.Items.Add(new ListItem("< ignore, use default >","-1"));
 							}
 
-							Mapping.Controls.Add(new LiteralControl("<TR><TD>EXTID&nbsp;</TD><TD>"));
-							ddl = new DropDownList();
-							ddl.ID = "colExtID";
-							ddl.Width = Unit.Pixel(150);
-							Mapping.Controls.Add(ddl);
-							Mapping.Controls.Add(new LiteralControl("</TD></TR>"));
-							if(!IsPostBack)
-							{
-								ddl.Items.Add(new ListItem("< ignore, anon import >","-1"));
-							}
-
-							Mapping.Controls.Add(new LiteralControl("<TR><TD>NAME&nbsp;</TD><TD>"));
-							ddl = new DropDownList();
-							ddl.ID = "colName";
-							ddl.Width = Unit.Pixel(150);
-							Mapping.Controls.Add(ddl);
-							Mapping.Controls.Add(new LiteralControl("</TD></TR>"));
-							if(!IsPostBack)
-							{
-								ddl.Items.Add(new ListItem("< ignore, anon import >","-1"));
-							}
+//							Mapping.Controls.Add(new LiteralControl("<TR><TD>EXTID&nbsp;</TD><TD>"));
+//							ddl = new DropDownList();
+//							ddl.ID = "colExtID";
+//							ddl.Width = Unit.Pixel(150);
+//							Mapping.Controls.Add(ddl);
+//							Mapping.Controls.Add(new LiteralControl("</TD></TR>"));
+//							if(!IsPostBack)
+//							{
+//								ddl.Items.Add(new ListItem("< ignore, anon import >","-1"));
+//							}
+//
+//							Mapping.Controls.Add(new LiteralControl("<TR><TD>NAME&nbsp;</TD><TD>"));
+//							ddl = new DropDownList();
+//							ddl.ID = "colName";
+//							ddl.Width = Unit.Pixel(150);
+//							Mapping.Controls.Add(ddl);
+//							Mapping.Controls.Add(new LiteralControl("</TD></TR>"));
+//							if(!IsPostBack)
+//							{
+//								ddl.Items.Add(new ListItem("< ignore, anon import >","-1"));
+//							}
 
 							rs = Db.sqlRecordSet("SELECT DISTINCT " +
 								"sq.QuestionID, " +		// 0
 								"qo.OptionID, " +		// 1
 								"o.OptionType, " +		// 2
 								"sq.Variablename, " +	// 3
-								"sqo.Variablename " +	// 4
+								"sqo.Variablename, " +	// 4
+								"(SELECT COUNT(*) FROM SurveyQuestionOption w WHERE sq.SurveyQuestionID = w.SurveyQuestionID) " + // 5
 								"FROM SurveyQuestion sq " +
 								"INNER JOIN SurveyQuestionOption sqo ON sq.SurveyQuestionID = sqo.SurveyQuestionID " + 
 								"INNER JOIN QuestionOption qo ON sqo.QuestionOptionID = qo.QuestionOptionID " + 
@@ -1147,10 +1346,12 @@ namespace eform
 									while(rs2.Read());
 								}
 								rs2.Close();
-								Mapping.Controls.Add(new LiteralControl("\">" + (rs.IsDBNull(3) || rs.GetString(3) == "" ? "Q" + rs.GetInt32(0) + (rs.IsDBNull(4) || rs.GetString(4) == "" ? "O" + rs.GetInt32(1) : "") : rs.GetString(3) + (rs.IsDBNull(4) || rs.GetString(4) == "" ? "" : rs.GetString(4))) + "</SPAN>&nbsp;</TD><TD>"));
+								string s = (rs.IsDBNull(3) || rs.GetString(3) == "" ? "Q" + rs.GetInt32(0) : rs.GetString(3)) + (rs.GetInt32(5) > 1 ? (rs.IsDBNull(4) || rs.GetString(4) == "" ? "O" + rs.GetInt32(1) : ", " + rs.GetString(4)) : "");
+								Mapping.Controls.Add(new LiteralControl("\">" + s + "</SPAN>&nbsp;</TD><TD>"));
 								ddl = new DropDownList();
 								ddl.ID = "colQ" + rs.GetInt32(0) + "O" + rs.GetInt32(1);
-								ddl.Width = Unit.Pixel(150);
+								//ddl.Width = Unit.Pixel(150);
+								ddl.Attributes["style"] = "width:150px;";
 								Mapping.Controls.Add(ddl);
 								if(rs.GetInt32(2) == 1)
 								{
@@ -1158,7 +1359,7 @@ namespace eform
 									rs2 = Db.sqlRecordSet("SELECT ocs.OptionComponentID, ocs.ExportValue FROM OptionComponents ocs WHERE ocs.OptionID = " + rs.GetInt32(1) + " ORDER BY ocs.SortOrder");
 									while(rs2.Read())
 									{
-										Mapping.Controls.Add(new LiteralControl("&nbsp;&nbsp;<SPAN TITLE=\"Translation"));
+										Mapping.Controls.Add(new LiteralControl("&nbsp;&nbsp;<span title=\"Translation"));
 										SqlDataReader rs3 = Db.sqlRecordSet("SELECT ocl.Text, l.Lang FROM OptionComponentLang ocl INNER JOIN Lang l ON ocl.LangID = l.LangID WHERE ocl.OptionComponentID = " + rs2.GetInt32(0));
 										while(rs3.Read())
 										{
@@ -1172,13 +1373,14 @@ namespace eform
 
 										TextBox ocEV = new TextBox();
 										ocEV.ID = "Q" + rs.GetInt32(0) + "O" + rs.GetInt32(1) + "C" + rs2.GetInt32(0);
-										ocEV.Width = Unit.Pixel(20);
-										Mapping.Controls.Add(ocEV);
-
+										//ocEV.Width = Unit.Pixel(20);
+										ocEV.Attributes["style"] = "width:30px;";
 										if(!IsPostBack)
 										{
 											ocEV.Text = (rs2.IsDBNull(1) ? rs2.GetInt32(0) : rs2.GetInt32(1)).ToString();
 										}
+										Mapping.Controls.Add(ocEV);
+										Mapping.Controls.Add(new LiteralControl("</span>"));
 									}
 									rs2.Close();
 								}
@@ -1259,6 +1461,7 @@ namespace eform
 							}
 							rs.Close();
 							Units.Controls.Add(new LiteralControl("<tr><td colspan=\"4\"><a href=\"exporttexts.aspx?ProjectRoundID=" + projectRoundID + "\">Export all texts</A></td></tr>"));
+							Units.Controls.Add(new LiteralControl("<tr><td colspan=\"4\"><a href=\"#\" style=\"color:#cc0000;\" onclick=\"if(confirm('Are you sure?')){location.href='projectSetup.aspx?ProjectID=" + projectID + "&ProjectRoundID=" + projectRoundID + "&SalvageFromDebug=1';}\">Salvage data from debug table</A> (takes a while)</td></tr>"));
 						}
 					}
 					else
@@ -1389,6 +1592,7 @@ namespace eform
 					"LangID = " + ((RadioButtonList)Rounds.FindControl("RoundLangID")).SelectedValue + ", " +
 					"SurveyID = " + ((DropDownList)Rounds.FindControl("RoundSurvey")).SelectedValue + ", " +
 					"ExtendedSurveyID = " + ((DropDownList)Rounds.FindControl("RoundExtendedSurvey")).SelectedValue + ", " +
+					"FeedbackID = " + ((DropDownList)Rounds.FindControl("Feedback")).SelectedValue + ", " +
 					"TransparencyLevel = " + ((RadioButtonList)Rounds.FindControl("RoundTransparencyLevel")).SelectedValue + ", " +
 					"ProjectID=" + projectID + ", " +
 					"Internal = '" + ((TextBox)Rounds.FindControl("RoundInternal")).Text.Replace("'","") + "' " +
@@ -1407,6 +1611,7 @@ namespace eform
 					"LangID," +
 					"SurveyID," +
 					"ExtendedSurveyID," +
+					"FeedbackID, " +
 					"Internal," +
 					"ProjectID," +
 					"TransparencyLevel," +
@@ -1420,6 +1625,7 @@ namespace eform
 					"" + ((RadioButtonList)Rounds.FindControl("RoundLangID")).SelectedValue + "," +
 					"" + ((DropDownList)Rounds.FindControl("RoundSurvey")).SelectedValue + "," +
 					"" + ((DropDownList)Rounds.FindControl("RoundExtendedSurvey")).SelectedValue + "," +
+					"" + ((DropDownList)Rounds.FindControl("Feedback")).SelectedValue + "," +
 					"'" + ((TextBox)Rounds.FindControl("RoundInternal")).Text.Replace("'","") + "'," +
 					"" + projectID + "," +
 					"" + ((RadioButtonList)Rounds.FindControl("RoundTransparencyLevel")).SelectedValue + "," +
@@ -1666,9 +1872,26 @@ namespace eform
 					"surveyID" +
 					"\t" +
 					"langID" +
+					"\t" +
+					"URL" +
+					"\t" +
+					"Code" +
 					"\r\n";
 
-				SqlDataReader rs = Db.sqlRecordSet("SELECT u.ID, p.ID, u.Unit, u.UserCount, u.SurveyID, u.LangID FROM ProjectRoundUnit u LEFT OUTER JOIN ProjectRoundUnit p ON u.ParentProjectRoundUnitID = p.ProjectRoundUnitID WHERE u.ProjectRoundID = " + projectRoundID + " ORDER BY u.SortString");
+				SqlDataReader rs = Db.sqlRecordSet("SELECT " +
+					"u.ID, " +
+					"p.ID, " +
+					"u.Unit, " +
+					"u.UserCount, " +
+					"u.SurveyID, " +
+					"u.LangID, " +
+					"u.UnitKey, " +											// 6
+					"u.UniqueID, " +
+					"u.ProjectRoundUnitID " +
+					"FROM ProjectRoundUnit u " +
+					"LEFT OUTER JOIN ProjectRoundUnit p ON u.ParentProjectRoundUnitID = p.ProjectRoundUnitID " +
+					"WHERE u.ProjectRoundID = " + projectRoundID + " " +
+					"ORDER BY u.SortString");
 				while(rs.Read())
 				{
 					output += "" +
@@ -1683,6 +1906,10 @@ namespace eform
 						rs.GetInt32(4).ToString() +
 						"\t" +
 						rs.GetInt32(5).ToString() +
+						"\t" +
+						System.Configuration.ConfigurationSettings.AppSettings["InstanceURL"] + "/submit.aspx?K=U" + rs.GetGuid(6).ToString().Substring(0,8) + rs.GetInt32(8).ToString() +
+						"\t" +
+						(rs.IsDBNull(7) ? "" : rs.GetString(7)) +
 						"\r\n";
 				}
 				rs.Close();
@@ -1788,104 +2015,6 @@ namespace eform
 				int caseCounter = 0;
 				int userCaseCounter = 0;
 
-				#region old
-				/*OdbcDataReader rs = Db.recordSet("SELECT DISTINCT " +
-					"sq.QuestionID, " +			// 0
-					"qo.OptionID, " +			// 1
-					"o.OptionType, " +			// 2
-					"dbo.cf_isBlank(sq.QuestionID,q.Variablename,sq.Variablename), " +		// 3
-					"dbo.cf_isBlank(qo.OptionID,o.Variablename,sqo.Variablename), " +		// 4
-					"pru.ID, " +				// 5
-					"a.AnswerID, " +			// 6
-					"ISNULL(a.ProjectRoundUserID,-a.AnswerID), " +	// 7
-					//"CAST(ISNULL(sql.Question,ql.Question) AS VARCHAR(255)), " +	// 8
-					"CAST(ql.Question AS VARCHAR(255)), " +	// 8
-					"(SELECT COUNT(*) FROM [SurveyQuestionOption] x WHERE x.SurveyQuestionID = sq.SurveyQuestionID), " + // 9
-					"pr.LangID, " +				// 10
-					"usr.Extended, " +			// 11
-					"a.StartDT, " +				// 12
-					"a.EndDT, " +				// 13
-					"usr.Extra, " +				// 14
-					"(SELECT COUNT(*) FROM [OptionComponents] x WHERE x.OptionID = o.OptionID), " + // 15
-					"a.ProjectRoundUserID, " +	// 16
-					"usr.NoSend, " +			// 17
-					"usr.Terminated, " +		// 18
-					"usr.SendCount, " +			// 19
-					"usr.ReminderCount, " +		// 20
-					"pru.ProjectRoundUnitID " +	// 21
-					"FROM SurveyQuestion sq " +
-					"INNER JOIN SurveyQuestionOption sqo ON sq.SurveyQuestionID = sqo.SurveyQuestionID " + 
-					"INNER JOIN QuestionOption qo ON sqo.QuestionOptionID = qo.QuestionOptionID " + 
-					"INNER JOIN [Option] o ON qo.OptionID = o.OptionID " + 
-					"INNER JOIN ProjectSurvey ps ON ps.SurveyID = sq.SurveyID " +
-					"INNER JOIN ProjectRound pr ON ps.ProjectID = pr.ProjectID " +
-					"INNER JOIN Answer a ON a.ProjectRoundID = pr.ProjectRoundID " +
-					"INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID " +
-					"INNER JOIN Question q ON sq.QuestionID = q.QuestionID " +
-					"INNER JOIN QuestionLang ql ON q.QuestionID = ql.QuestionID AND ql.LangID = pr.LangID " +
-					"LEFT OUTER JOIN ProjectRoundUser usr ON a.ProjectRoundUserID = usr.ProjectRoundUserID " +
-					"LEFT OUTER JOIN SurveyQuestionLang sql ON sq.SurveyQuestionID = sql.SurveyQuestionID AND sql.LangID = pr.LangID " + 
-					"WHERE pru.Terminated IS NULL " + 
-					"AND (usr.ProjectRoundUserID IS NULL OR (usr.Terminated IS NULL AND usr.NoSend IS NULL)) " + 
-					"AND a.EndDT IS NOT NULL " + 
-					"AND a.ProjectRoundID = " + HttpContext.Current.Request.QueryString["ProjectRoundID"] + " " +
-					"AND ps.ProjectID = " + HttpContext.Current.Request.QueryString["ProjectID"] + " " +
-					"ORDER BY a.ProjectRoundUserID, a.AnswerID, dbo.cf_isBlank(sq.QuestionID,q.Variablename,sq.Variablename), sq.QuestionID, dbo.cf_isBlank(qo.OptionID,o.Variablename,sqo.Variablename), qo.OptionID");*/
-					/* Answer is base
-					string SQL = "SELECT DISTINCT " +
-					"sq.QuestionID, " +			// 0
-					"qo.OptionID, " +			// 1
-					"o.OptionType, " +			// 2
-					"dbo.cf_isBlank(q.QuestionID,q.Variablename,xq.Variablename) AS s3, " +		// 3
-					"dbo.cf_isBlank(qo.OptionID,o.Variablename,xo.Variablename) AS s4, " +		// 4
-					"pru.ID, " +				// 5
-					"a.AnswerID, " +			// 6
-					"ISNULL(a.ProjectRoundUserID,-a.AnswerID), " +	// 7
-					"CAST(ql.Question AS VARCHAR(255)), " +	// 8
-					"(SELECT COUNT(*) FROM [SurveyQuestionOption] x WHERE x.SurveyQuestionID = sq.SurveyQuestionID), " +					 // 9
-					"pr.LangID, " +				// 10
-					"usr.Extended, " +			// 11
-					"a.StartDT, " +				// 12
-					"a.EndDT, " +				// 13
-					"usr.Extra, " +				// 14
-					"(SELECT COUNT(*) FROM [OptionComponents] x WHERE x.OptionID = o.OptionID), " + // 15
-					"a.ProjectRoundUserID, " +	// 16
-					"usr.NoSend, " +			// 17
-					"usr.Terminated, " +		// 18
-					"usr.SendCount, " +			// 19
-					"usr.ReminderCount, " +		// 20
-					"pru.ProjectRoundUnitID, " +// 21
-					"pru.Terminated, " +		// 22
-					"ISNULL(xq.SortOrder,999999) AS s1, " +
-					"ISNULL(xo.SortOrder,999999) AS s2 " +
-					"FROM SurveyQuestion sq " +
-					"INNER JOIN SurveyQuestionOption sqo ON sq.SurveyQuestionID = sqo.SurveyQuestionID " + 
-					"INNER JOIN QuestionOption qo ON sqo.QuestionOptionID = qo.QuestionOptionID " + 
-					"INNER JOIN [Option] o ON qo.OptionID = o.OptionID " + 
-					"INNER JOIN ProjectSurvey ps ON ps.SurveyID = sq.SurveyID " +
-					"INNER JOIN ProjectRound pr ON ps.ProjectID = pr.ProjectID " +//AND pr.SurveyID = ps.SurveyID " +
-					"INNER JOIN Answer a ON a.ProjectRoundID = pr.ProjectRoundID " +
-					"INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID " +
-					"INNER JOIN Question q ON sq.QuestionID = q.QuestionID " +
-					"INNER JOIN QuestionLang ql ON q.QuestionID = ql.QuestionID AND ql.LangID = pr.LangID " +
-					"LEFT OUTER JOIN ProjectRoundUser usr ON a.ProjectRoundUserID = usr.ProjectRoundUserID " +
-					"LEFT OUTER JOIN SurveyQuestion xq ON q.QuestionID = xq.QuestionID AND xq.SurveyID = pr.SurveyID " +
-					"LEFT OUTER JOIN SurveyQuestionOption xo ON xq.SurveyQuestionID = xo.SurveyQuestionID AND xo.QuestionOptionID = qo.QuestionOptionID " +
-					//"LEFT OUTER JOIN SurveyQuestionLang sql ON sq.SurveyQuestionID = sql.SurveyQuestionID AND sql.LangID = pr.LangID " + 
-					"WHERE a.ProjectRoundID = " + HttpContext.Current.Request.QueryString["ProjectRoundID"] + " " +
-					//"AND pru.Terminated IS NULL " + 
-					//"AND (usr.ProjectRoundUserID IS NULL OR (usr.Terminated IS NULL AND usr.NoSend IS NULL)) " + 
-					//"AND a.EndDT IS NOT NULL " + 
-					"AND ps.ProjectID = " + HttpContext.Current.Request.QueryString["ProjectID"] + " " +
-					"ORDER BY " +
-					"a.ProjectRoundUserID, " +
-					"a.AnswerID, " +
-					"s1, " +
-					"s2, " +
-					"s3, " +
-					"s4" +
-					"";*/
-				#endregion
 				int tmpcx = 0;
 				string SQL = "SELECT DISTINCT " +
 					"sq.QuestionID, " +			// 0
@@ -1902,9 +2031,9 @@ namespace eform
 					"usr.Extended, " +			// 11
 					"a.StartDT, " +				// 12
 					"a.EndDT, " +				// 13
-					"usr.Extra, " +				// 14
+					"usr.Extra AS USREXTRA, " +				// 14
 					"(SELECT COUNT(*) FROM [OptionComponents] x WHERE x.OptionID = o.OptionID), " + // 15
-					"usr.ProjectRoundUserID, " +	// 16
+					"usr.ProjectRoundUserID AS USRPRUID, " +	// 16
 					"usr.NoSend, " +			// 17
 					"usr.Terminated, " +		// 18
 					"usr.SendCount, " +			// 19
@@ -1935,6 +2064,7 @@ namespace eform
 
 					"UNION ALL " +
 
+					"SELECT DISTINCT " +
 					"sq.QuestionID, " +			// 0
 					"qo.OptionID, " +			// 1
 					"o.OptionType, " +			// 2
@@ -1946,24 +2076,24 @@ namespace eform
 					"LTRIM(RTRIM(CAST(ql.Question AS VARCHAR(8000)))), " +	// 8
 					"(SELECT COUNT(*) FROM [SurveyQuestionOption] x WHERE x.SurveyQuestionID = sq.SurveyQuestionID), " +					 // 9
 					"pr.LangID, " +				// 10
-					"usr.Extended, " +			// 11
+					"NULL, " +			// 11
 					"a.StartDT, " +				// 12
 					"a.EndDT, " +				// 13
-					"usr.Extra, " +				// 14
+					"NULL AS USREXTRA, " +				// 14
 					"(SELECT COUNT(*) FROM [OptionComponents] x WHERE x.OptionID = o.OptionID), " + // 15
-					"-pru.ProjectRoundUnitID, " +	// 16
-					"usr.NoSend, " +			// 17
-					"usr.Terminated, " +		// 18
-					"usr.SendCount, " +			// 19
-					"usr.ReminderCount, " +		// 20
+					"-pru.ProjectRoundUnitID AS USRPRUID, " +	// 16
+					"NULL, " +			// 17
+					"NULL, " +		// 18
+					"NULL, " +			// 19
+					"NULL, " +		// 20
 					"pru.ProjectRoundUnitID, " +// 21
 					"pru.Terminated, " +		// 22
 					"ISNULL(xq.SortOrder,999999) AS s1, " +	// 23
 					"ISNULL(xo.SortOrder,999999) AS s2, " +	// 24
 					"pru.SortString, " +		// 25
-					"usr.ExternalID, " +		// 26
-					"usr.GroupID, " +			// 27
-					"usr.ExtendedTag " +		// 28
+					"NULL, " +		// 26
+					"NULL, " +			// 27
+					"NULL " +		// 28
 					"FROM SurveyQuestion sq " +
 					"INNER JOIN SurveyQuestionOption sqo ON sq.SurveyQuestionID = sqo.SurveyQuestionID " + 
 					"INNER JOIN QuestionOption qo ON sqo.QuestionOptionID = qo.QuestionOptionID " + 
@@ -1981,8 +2111,8 @@ namespace eform
 
 					"ORDER BY " +
 					"pru.SortString, " +
-					"usr.Extra, " +
-					"usr.ProjectRoundUserID, " +
+					"USREXTRA, " +
+					"USRPRUID, " +
 					"a.AnswerID, " +
 					"s1, " +
 					"s2, " +
@@ -3014,10 +3144,24 @@ namespace eform
 			f.Close();
 			string[] firstRowElements = firstRow.Split('\t');
 			
-			DropDownList var = ((DropDownList)Mapping.FindControl("colUnit"));
+			DropDownList var = ((DropDownList)Mapping.FindControl("colEmail"));
 			var.Items.Clear();
 			var.Items.Add(new ListItem("< ignore, use default >","-1"));
 			int cx = 0;
+			foreach(string s in firstRowElements)
+			{
+				var.Items.Add(new ListItem(s,cx.ToString()));
+				if(s.ToUpper() == "EMAIL")
+				{
+					var.SelectedValue = cx.ToString();
+				}
+				cx++;
+			}
+
+			var = ((DropDownList)Mapping.FindControl("colUnit"));
+			var.Items.Clear();
+			var.Items.Add(new ListItem("< ignore, use default >","-1"));
+			cx = 0;
 			foreach(string s in firstRowElements)
 			{
 				var.Items.Add(new ListItem(s,cx.ToString()));
@@ -3028,52 +3172,54 @@ namespace eform
 				cx++;
 			}
 
-			var = ((DropDownList)Mapping.FindControl("colExtID"));
-			var.Items.Clear();
-			var.Items.Add(new ListItem("< ignore, anon import >","-1"));
-			cx = 0;
-			foreach(string s in firstRowElements)
-			{
-				var.Items.Add(new ListItem(s,cx.ToString()));
-				if(s.ToUpper() == "EXTID")
-				{
-					var.SelectedValue = cx.ToString();
-				}
-				cx++;
-			}
-
-			var = ((DropDownList)Mapping.FindControl("colName"));
-			var.Items.Clear();
-			var.Items.Add(new ListItem("< ignore, anon import >","-1"));
-			cx = 0;
-			foreach(string s in firstRowElements)
-			{
-				var.Items.Add(new ListItem(s,cx.ToString()));
-				if(s.ToUpper() == "NAME")
-				{
-					var.SelectedValue = cx.ToString();
-				}
-				cx++;
-			}
+//			var = ((DropDownList)Mapping.FindControl("colExtID"));
+//			var.Items.Clear();
+//			var.Items.Add(new ListItem("< ignore, anon import >","-1"));
+//			cx = 0;
+//			foreach(string s in firstRowElements)
+//			{
+//				var.Items.Add(new ListItem(s,cx.ToString()));
+//				if(s.ToUpper() == "EXTID")
+//				{
+//					var.SelectedValue = cx.ToString();
+//				}
+//				cx++;
+//			}
+//
+//			var = ((DropDownList)Mapping.FindControl("colName"));
+//			var.Items.Clear();
+//			var.Items.Add(new ListItem("< ignore, anon import >","-1"));
+//			cx = 0;
+//			foreach(string s in firstRowElements)
+//			{
+//				var.Items.Add(new ListItem(s,cx.ToString()));
+//				if(s.ToUpper() == "NAME")
+//				{
+//					var.SelectedValue = cx.ToString();
+//				}
+//				cx++;
+//			}
 
 			string sql = "SELECT DISTINCT " +
-								"sq.QuestionID, " +		// 0
-								"qo.OptionID, " +		// 1
-								"o.OptionType, " +		// 2
-								"sq.Variablename, " +	// 3
-								"sqo.Variablename " +	// 4
-								"FROM SurveyQuestion sq " +
-								"INNER JOIN SurveyQuestionOption sqo ON sq.SurveyQuestionID = sqo.SurveyQuestionID " + 
-								"INNER JOIN QuestionOption qo ON sqo.QuestionOptionID = qo.QuestionOptionID " + 
-								"INNER JOIN [Option] o ON qo.OptionID = o.OptionID " + 
-								"INNER JOIN ProjectRound pr ON pr.SurveyID = sq.SurveyID " +
-								"WHERE pr.ProjectRoundID = " + HttpContext.Current.Request.QueryString["ProjectRoundID"] + " " +
-								"ORDER BY sq.QuestionID, qo.OptionID";
+				"sq.QuestionID, " +		// 0
+				"qo.OptionID, " +		// 1
+				"o.OptionType, " +		// 2
+				"sq.Variablename, " +	// 3
+				"sqo.Variablename, " +	// 4
+				"(SELECT COUNT(*) FROM SurveyQuestionOption w WHERE sq.SurveyQuestionID = w.SurveyQuestionID) " + // 5
+				"FROM SurveyQuestion sq " +
+				"INNER JOIN SurveyQuestionOption sqo ON sq.SurveyQuestionID = sqo.SurveyQuestionID " + 
+				"INNER JOIN QuestionOption qo ON sqo.QuestionOptionID = qo.QuestionOptionID " + 
+				"INNER JOIN [Option] o ON qo.OptionID = o.OptionID " + 
+				"INNER JOIN ProjectRound pr ON pr.SurveyID = sq.SurveyID " +
+				"WHERE pr.ProjectRoundID = " + HttpContext.Current.Request.QueryString["ProjectRoundID"] + " " +
+				"ORDER BY sq.QuestionID, qo.OptionID";
 			//HttpContext.Current.Response.Write(sql);
 			SqlDataReader rs = Db.sqlRecordSet(sql);
 			while(rs.Read())
 			{
-				string varname = (rs.IsDBNull(3) || rs.GetString(3) == "" ? "Q" + rs.GetInt32(0) + (rs.IsDBNull(4) || rs.GetString(4) == "" ? "O" + rs.GetInt32(1) : "") : rs.GetString(3) + (rs.IsDBNull(4) || rs.GetString(4) == "" ? "" : rs.GetString(4)));
+				string varname = (rs.IsDBNull(3) || rs.GetString(3) == "" ? "Q" + rs.GetInt32(0) : rs.GetString(3)) + (rs.GetInt32(5) > 1 ? (rs.IsDBNull(4) || rs.GetString(4) == "" ? "O" + rs.GetInt32(1) : ", " + rs.GetString(4)) : "");				
+				//string varname = (rs.IsDBNull(3) || rs.GetString(3) == "" ? "Q" + rs.GetInt32(0) + (rs.IsDBNull(4) || rs.GetString(4) == "" ? "O" + rs.GetInt32(1) : "") : rs.GetString(3) + (rs.IsDBNull(4) || rs.GetString(4) == "" ? "" : rs.GetString(4)));
 
 				var = ((DropDownList)Mapping.FindControl("colQ" + rs.GetInt32(0) + "O" + rs.GetInt32(1)));
 				var.Items.Clear();
@@ -3091,7 +3237,7 @@ namespace eform
 			}
 			rs.Close();
 
-			Mapping.Visible = true;
+//			Mapping.Visible = true;
 		}
 
 		private void ExecImport_Click(object sender, EventArgs e)
@@ -3107,15 +3253,13 @@ namespace eform
 			SqlDataReader rs = Db.sqlRecordSet("SELECT DISTINCT " +
 				"sq.QuestionID, " +		// 0
 				"qo.OptionID, " +		// 1
-				"o.OptionType, " +		// 2
-				"sq.Variablename, " +	// 3
-				"sqo.Variablename " +	// 4
+				"o.OptionType " +		// 2
 				"FROM SurveyQuestion sq " +
 				"INNER JOIN SurveyQuestionOption sqo ON sq.SurveyQuestionID = sqo.SurveyQuestionID " + 
 				"INNER JOIN QuestionOption qo ON sqo.QuestionOptionID = qo.QuestionOptionID " + 
 				"INNER JOIN [Option] o ON qo.OptionID = o.OptionID " + 
 				"INNER JOIN ProjectRound pr ON pr.SurveyID = sq.SurveyID " +
-				"WHERE pr.ProjectRoundID = " + HttpContext.Current.Request.QueryString["ProjectRoundID"] + " " +
+				"WHERE pr.ProjectRoundID = " + Convert.ToInt32(HttpContext.Current.Request.QueryString["ProjectRoundID"]) + " " +
 				"ORDER BY sq.QuestionID, qo.OptionID");
 			while(rs.Read())
 			{
@@ -3176,9 +3320,9 @@ namespace eform
 				
 				if(projectRoundUnitID != 0)
 				{
-					string extID = "NULL", name = "NULL";
+					string email = "NULL", extID = "NULL", name = "NULL";
 
-					string tmp = ((DropDownList)Mapping.FindControl("colExtID")).SelectedValue;
+					string tmp = ((DropDownList)Mapping.FindControl("colEmail")).SelectedValue;
 					if(tmp != "-1")
 					{
 						atPos = Convert.ToInt32(tmp);
@@ -3186,80 +3330,110 @@ namespace eform
 						{
 							if(col[atPos].Trim() != "")
 							{
-								extID = col[atPos].Trim();
+								email = "'" + col[atPos].Trim().Replace("'","") + "'";
 							}
 						}
 					}
-					tmp = ((DropDownList)Mapping.FindControl("colName")).SelectedValue;
-					if(tmp != "-1")
-					{
-						atPos = Convert.ToInt32(tmp);
-						if(col.Length > atPos)
-						{
-							if(col[atPos].Trim() != "")
-							{
-								name = "'" + col[atPos].Trim().Replace("'","") + "'";
-							}
-						}
-					}
+//					tmp = ((DropDownList)Mapping.FindControl("colExtID")).SelectedValue;
+//					if(tmp != "-1")
+//					{
+//						atPos = Convert.ToInt32(tmp);
+//						if(col.Length > atPos)
+//						{
+//							if(col[atPos].Trim() != "")
+//							{
+//								extID = col[atPos].Trim();
+//							}
+//						}
+//					}
+//					tmp = ((DropDownList)Mapping.FindControl("colName")).SelectedValue;
+//					if(tmp != "-1")
+//					{
+//						atPos = Convert.ToInt32(tmp);
+//						if(col.Length > atPos)
+//						{
+//							if(col[atPos].Trim() != "")
+//							{
+//								name = "'" + col[atPos].Trim().Replace("'","") + "'";
+//							}
+//						}
+//					}
 
-					if(extID != "NULL" || name != "NULL")
+					if(extID != "NULL" || name != "NULL" || email != "NULL")
 					{
-						int uid = Db.getInt32("SET NOCOUNT ON;SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;BEGIN TRAN;INSERT INTO ProjectRoundUser (" +
+						Db.execute("INSERT INTO ProjectRoundUser (" +
 							"ProjectRoundID," +
 							"ProjectRoundUnitID," +
 							"Name," +
-							"ExternalID" +
+							"ExternalID," +
+							"Email"+
 							") VALUES (" +
 							"" + HttpContext.Current.Request.QueryString["ProjectRoundID"] + "," + 
 							"" + projectRoundUnitID + "," +
 							"" + name + "," +
-							"" + extID + "" +
-							");SELECT ProjectRoundUserID FROM [ProjectRoundUser] WHERE ProjectRoundUnitID=" + projectRoundUnitID + " ORDER BY ProjectRoundUserID DESC;COMMIT;");
-                        Db.execute("UPDATE ProjectRoundUser SET Email = 'anon" + uid + "@eform.se' WHERE ProjectRoundUserID = " + uid);
+							"" + extID + "," +
+							"" + email + "" +
+							")");
+						int uid = Db.getInt32("SELECT TOP 1 ProjectRoundUserID FROM [ProjectRoundUser] WHERE ProjectRoundUnitID=" + projectRoundUnitID + " ORDER BY ProjectRoundUserID DESC");
+						if(email == "NULL")
+						{
+							Db.execute("UPDATE ProjectRoundUser SET Email = 'anon" + uid + "@eform.se' WHERE ProjectRoundUserID = " + uid);
+						}
 						Db.execute("INSERT INTO Answer (ProjectRoundUserID,ProjectRoundID,ProjectRoundUnitID,StartDT,EndDT) VALUES (" + uid + "," + HttpContext.Current.Request.QueryString["ProjectRoundID"] + "," + projectRoundUnitID + ",GETDATE(),GETDATE())");
 					}
 					else
 					{
 						Db.execute("INSERT INTO Answer (ProjectRoundID,ProjectRoundUnitID,StartDT,EndDT) VALUES (" + HttpContext.Current.Request.QueryString["ProjectRoundID"] + "," + projectRoundUnitID + ",GETDATE(),GETDATE())");
 					}
-					rs = Db.sqlRecordSet("SELECT TOP 1 AnswerID FROM Answer ORDER BY AnswerID DESC");
-					if(rs.Read())
+					int aid = Db.getInt32("SELECT TOP 1 AnswerID FROM Answer ORDER BY AnswerID DESC");
+					
+					foreach(DictionaryEntry i in mapVar) 
 					{
-						foreach(DictionaryEntry i in mapVar) 
+						//HttpContext.Current.Response.Write(i.Key.ToString() + ":" + i.Value.ToString());
+
+						int oStart = i.Key.ToString().IndexOf("O");
+						bool found = false;
+						if(col.Length > Convert.ToInt32(i.Value))
 						{
-							int oStart = i.Key.ToString().IndexOf("O");
-							bool found = false;
-							if(col.Length > Convert.ToInt32(i.Value))
+							string val = col[Convert.ToInt32(i.Value)];
+
+							//HttpContext.Current.Response.Write(":" + val);
+							
+							foreach(DictionaryEntry v in mapOpt)
 							{
-								string val = col[Convert.ToInt32(i.Value)];
-								foreach(DictionaryEntry v in mapOpt)
+								int cStart = v.Key.ToString().IndexOf("C");
+								if(v.Key.ToString().IndexOf(i.Key + "C") >= 0 && v.Value.ToString().Trim().ToUpper() == val.Trim().ToUpper())
 								{
-									int cStart = v.Key.ToString().IndexOf("C");
-									if(v.Key.ToString().IndexOf(i.Key + "C") >= 0 && v.Value.ToString() == val)
-									{
-										found = true;
-										Db.execute("INSERT INTO AnswerValue (AnswerID,QuestionID,OptionID,ValueInt,CreatedDateTime,CreatedSessionID) VALUES (" + rs.GetInt32(0) + "," + i.Key.ToString().Substring(1,oStart-1) + "," + i.Key.ToString().Substring(oStart+1) + "," + v.Key.ToString().Substring(cStart+1) + ",GETDATE(),0)");
-										break;
-									}
-								}
-							}
-							if(!found)
-							{
-								if(col.Length > Convert.ToInt32(i.Value))
-								{
-									string val = col[Convert.ToInt32(i.Value)];
-									if(val != "")
-									{
-										Db.execute("INSERT INTO AnswerValue (AnswerID,QuestionID,OptionID,ValueText,CreatedDateTime,CreatedSessionID) VALUES (" + rs.GetInt32(0) + "," + i.Key.ToString().Substring(1,oStart-1) + "," + i.Key.ToString().Substring(oStart+1) + ",'" + val + "',GETDATE(),0)");
-									}
+									found = true;
+									Db.execute("INSERT INTO AnswerValue (AnswerID,QuestionID,OptionID,ValueInt,CreatedDateTime,CreatedSessionID) VALUES (" + aid + "," + i.Key.ToString().Substring(1,oStart-1) + "," + i.Key.ToString().Substring(oStart+1) + "," + v.Key.ToString().Substring(cStart+1) + ",GETDATE(),0)");
+
+									//HttpContext.Current.Response.Write(":match");
+									break;
 								}
 							}
 						}
+						if(!found)
+						{
+							if(col.Length > Convert.ToInt32(i.Value))
+							{
+								string val = col[Convert.ToInt32(i.Value)];
+								if(val != "")
+								{
+									Db.execute("INSERT INTO AnswerValue (AnswerID,QuestionID,OptionID,ValueText,CreatedDateTime,CreatedSessionID) VALUES (" + aid + "," + i.Key.ToString().Substring(1,oStart-1) + "," + i.Key.ToString().Substring(oStart+1) + ",'" + val + "',GETDATE(),0)");
+
+									//HttpContext.Current.Response.Write(":free");
+								}
+								else
+								{
+									//HttpContext.Current.Response.Write(":empty");
+								}
+							}
+						}
+						//HttpContext.Current.Response.Write("\r\n");
 					}
-					rs.Close();
 				}
 			}
+			//HttpContext.Current.Response.Redirect("projectSetup.aspx?ProjectRoundID=" + projectRoundID + "&ProjectID=" + projectID, true);
 		}
 
 		public static int createUnit(int userCount, int langID, int surveyID, int projectRoundID, string unitName, string parentProjectRoundUnitID, string extID)

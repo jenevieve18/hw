@@ -17,7 +17,7 @@ namespace eform
 	/// </summary>
 	public class export : System.Web.UI.Page
 	{
-		protected DropDownList SurveyID;
+		protected DropDownList SurveyID, LangID;
 		protected CheckBoxList ProjectRoundID;
 		protected Button Execute;
 
@@ -36,6 +36,13 @@ namespace eform
 				while(rs.Read())
 				{
 					SurveyID.Items.Add(new ListItem(rs.GetString(0),rs.GetInt32(1).ToString()));
+				}
+				rs.Close();
+
+				rs = Db.sqlRecordSet("SELECT l.Lang, l.LangID FROM Lang l ORDER BY l.LangID");
+				while(rs.Read())
+				{
+					LangID.Items.Add(new ListItem(rs.GetString(0),rs.GetInt32(1).ToString()));
 				}
 				rs.Close();
 			}
@@ -76,7 +83,7 @@ namespace eform
 			}
 			rs.Close();
 
-			Db.execExport(s,0,Convert.ToInt32(SurveyID.SelectedValue),1,0,0,0,0,0,0,false);
+			Db.execExport(s,0,Convert.ToInt32(SurveyID.SelectedValue),Convert.ToInt32(LangID.SelectedValue),0,0,0,0,0,0,false);
 		}
 	}
 }

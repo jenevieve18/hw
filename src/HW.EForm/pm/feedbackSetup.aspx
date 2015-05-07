@@ -43,9 +43,12 @@
 			<tr><td colspan="4">&nbsp;</td></tr>-->
 			<tr><td colspan="4"><u>Feedback setup</u></td></tr>
 			<tr><td colspan="4">&nbsp;</td></tr>
-			<tr><td colspan="4"><asp:DropDownList ID=SurveyID AutoPostBack=true runat=server/></td></tr>
+			<tr><td colspan="4"><asp:Label ID=FeedbackID runat=server/></td></tr>
 			<tr><td colspan="4">&nbsp;</td></tr>
-			<tr><td colspan="4"><asp:CheckBoxList ID=QuestionID Runat=server/></td></tr>
+			<tr><td colspan="4"><asp:DropDownList ID="SurveyID" AutoPostBack=true runat=server/></td></tr>
+			<tr><td colspan="4"><asp:DropDownList ID="FeedbackTemplateID" AutoPostBack=true runat=server/></td></tr>
+			<tr><td colspan="4">&nbsp;</td></tr>
+			<asp:PlaceHolder ID=QuestionID EnableViewState=true Runat=server/>
 			<tr><td colspan="4">&nbsp;</td></tr>
 			<tr><td colspan="4" align="right"><asp:Button ID="Save" Text="Save" Runat=server/></td></tr>
 		</table>

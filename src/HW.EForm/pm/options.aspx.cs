@@ -71,7 +71,20 @@ namespace eform
 				OdbcDataReader rs2 = Db.recordSet("SELECT ocs.OptionComponentID, oc.Internal FROM OptionComponents ocs INNER JOIN OptionComponent oc ON ocs.OptionComponentID = oc.OptionComponentID WHERE ocs.OptionID = " + rs.GetInt32(0));
 				while(rs2.Read())
 				{
-					List.Text += "<a href=\"optionComponentSetup.aspx?OptionComponentID=" + rs2.GetInt32(0) + "\">" + HttpUtility.HtmlEncode(rs2.GetString(1)) + "</a> ";
+					List.Text += "<a href=\"optionComponentSetup.aspx?OptionComponentID=" + rs2.GetInt32(0) + "\">" + HttpUtility.HtmlDecode(HttpUtility.HtmlEncode(rs2.GetString(1))) + "</a> ";
+				}
+				rs2.Close();
+				List.Text += "</td><td>";
+				rs2 = Db.recordSet("SELECT DISTINCT s.SurveyID, s.Internal " +
+					"FROM SurveyQuestion sq " +
+					"INNER JOIN Survey s ON sq.SurveyID = s.SurveyID " +
+					"INNER JOIN SurveyQuestionOption sqo ON sq.SurveyQuestionID = sqo.SurveyQuestionID " +
+					"INNER JOIN QuestionOption qo ON sqo.QuestionOptionID = qo.QuestionOptionID " +
+					"INNER JOIN [Option] o ON qo.OptionID = o.OptionID " +
+					"WHERE o.OptionID = " + rs.GetInt32(0));
+				while(rs2.Read())
+				{
+					List.Text += "<a href=\"surveySetup.aspx?SurveyID=" + rs2.GetInt32(0) + "\" title=\"" + HttpUtility.UrlEncode(rs2.GetString(1)) + "\">" + rs2.GetInt32(0) + "</a> ";
 				}
 				rs2.Close();
 				List.Text += "</td></tr>";

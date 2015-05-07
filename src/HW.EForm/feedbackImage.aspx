@@ -1,0 +1,1 @@
+<%@ Page language="c#" Codebehind="feedbackImage.aspx.cs" ContentType="image/gif" AutoEventWireup="false" Inherits="eform.feedbackImage" %>

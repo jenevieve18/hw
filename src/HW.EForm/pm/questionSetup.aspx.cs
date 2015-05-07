@@ -83,7 +83,8 @@ namespace eform
 			{
 				QuestionLang.Controls.Add(new LiteralControl("<tr><td valign=\"top\" align=\"right\">Question&nbsp;<img SRC=\"../img/lang/" + rs.GetInt32(0) + ".gif\"></td><td colspan=\"3\">&nbsp;"));
 				TextBox text = new TextBox();
-				text.Width = Unit.Pixel(470);
+				//text.Width = Unit.Pixel(470);
+				text.Attributes["style"] = "width:470px;";
 				text.Rows = 2;
 				text.TextMode = TextBoxMode.MultiLine;
 				text.ID = "Text" + rs.GetInt32(0);
@@ -92,8 +93,17 @@ namespace eform
 
 				QuestionLang.Controls.Add(new LiteralControl("<tr><td valign=\"top\" align=\"right\">Area&nbsp;</td><td colspan=\"3\">&nbsp;"));
 				text = new TextBox();
-				text.Width = Unit.Pixel(470);
+				//text.Width = Unit.Pixel(470);
+				text.Attributes["style"] = "width:470px;";
 				text.ID = "AreaText" + rs.GetInt32(0);
+				QuestionLang.Controls.Add(text);
+				QuestionLang.Controls.Add(new LiteralControl("</td></tr>"));
+
+				QuestionLang.Controls.Add(new LiteralControl("<tr><td valign=\"top\" align=\"right\">For report&nbsp;</td><td colspan=\"3\">&nbsp;"));
+				text = new TextBox();
+				//text.Width = Unit.Pixel(470);
+				text.Attributes["style"] = "width:470px;";
+				text.ID = "ReportQuestion" + rs.GetInt32(0);
 				QuestionLang.Controls.Add(text);
 				QuestionLang.Controls.Add(new LiteralControl("</td></tr>"));
 			}
@@ -117,11 +127,12 @@ namespace eform
 				}
 				rs.Close();
 
-				rs = Db.sqlRecordSet("SELECT LangID, ISNULL(QuestionJapaneseUnicode,Question), ISNULL(QuestionAreaJapaneseUnicode,QuestionArea) FROM QuestionLang WHERE QuestionID = " + questionID);
+				rs = Db.sqlRecordSet("SELECT LangID, ISNULL(QuestionJapaneseUnicode,Question), ISNULL(QuestionAreaJapaneseUnicode,QuestionArea), ReportQuestion FROM QuestionLang WHERE QuestionID = " + questionID);
 				while(rs.Read())
 				{
 					((TextBox)QuestionLang.FindControl("Text" + rs.GetInt32(0))).Text = rs.GetString(1);
 					((TextBox)QuestionLang.FindControl("AreaText" + rs.GetInt32(0))).Text = (rs.IsDBNull(2) ? "" : rs.GetString(2));
+					((TextBox)QuestionLang.FindControl("ReportQuestion" + rs.GetInt32(0))).Text = (rs.IsDBNull(3) ? "" : rs.GetString(3));
 				}
 				rs.Close();
 			}
@@ -285,7 +296,7 @@ namespace eform
 			SqlDataReader rs = Db.sqlRecordSet("SELECT LangID FROM Lang ORDER BY LangID ASC");
 			while(rs.Read())
 			{
-				Db.sqlExecute("INSERT INTO [QuestionLang] (QuestionID,LangID,Question,QuestionArea,QuestionJapaneseUnicode,QuestionAreaJapaneseUnicode) VALUES (" + questionID + "," + rs.GetInt32(0) + ",'" + ((TextBox)QuestionLang.FindControl("Text" + rs.GetInt32(0))).Text.Replace("'","''") + "','" + ((TextBox)QuestionLang.FindControl("AreaText" + rs.GetInt32(0))).Text.Replace("'","''") + "',N'" + ((TextBox)QuestionLang.FindControl("Text" + rs.GetInt32(0))).Text.Replace("'","''") + "',N'" + ((TextBox)QuestionLang.FindControl("AreaText" + rs.GetInt32(0))).Text.Replace("'","''") + "')");
+				Db.sqlExecute("INSERT INTO [QuestionLang] (QuestionID,LangID,Question,QuestionArea,QuestionJapaneseUnicode,QuestionAreaJapaneseUnicode,ReportQuestion) VALUES (" + questionID + "," + rs.GetInt32(0) + ",'" + ((TextBox)QuestionLang.FindControl("Text" + rs.GetInt32(0))).Text.Replace("'","''") + "','" + ((TextBox)QuestionLang.FindControl("AreaText" + rs.GetInt32(0))).Text.Replace("'","''") + "',N'" + ((TextBox)QuestionLang.FindControl("Text" + rs.GetInt32(0))).Text.Replace("'","''") + "',N'" + ((TextBox)QuestionLang.FindControl("AreaText" + rs.GetInt32(0))).Text.Replace("'","''") + "',N'" + ((TextBox)QuestionLang.FindControl("ReportQuestion" + rs.GetInt32(0))).Text.Replace("'","''") + "')");
 			}
 			rs.Close();
 

@@ -1,0 +1,11 @@
+body {
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	background-color: #ffffff;
+}
+body, td
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}

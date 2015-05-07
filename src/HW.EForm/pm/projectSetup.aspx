@@ -32,8 +32,8 @@
 				</td>
 				<td width="10"><img src="../img/null.gif" width="6" height="1"></td>
 				<td width="25" bgcolor="#FFFFFF" class="mainLeft"><img src="../img/null.gif" width="20" height="1"></td>
-				<td width="780" valign="top" bgcolor="#FFFFFF">
-					<div style="position:absolute;left:700;top:185;"><asp:Label ID=LogoImg Runat=server/></div>
+				<td width="1280" valign="top" bgcolor="#FFFFFF">
+					<div style="position:absolute;left:900;top:185;"><asp:Label ID=LogoImg Runat=server/></div>
 					<br/>
 					<form id="projectSetup" method="post" runat="server">
 						<table border="0" cellspacing="0" cellpadding="0">
@@ -53,6 +53,7 @@
 							<asp:PlaceHolder ID="Rounds" Runat=server/>
 							<tr><td colspan="4"><table border="0" cellspacing="0" cellpadding="0"><tr><td><asp:Button ID=AddRound Runat=server Text="Add survey round"/><asp:Button ID="SaveRound" Runat=server Text="Save"/><asp:PlaceHolder ID="RoundTextElements" Runat=server/><asp:Button ID="CancelRound" Runat=server Text="Cancel"/><asp:Button ID=AddPRQO Runat=server Visible=false/></td><td align="right" width="100%"><asp:PlaceHolder ID="SendAll" Runat=server/></td></tr></table></td></tr>
 							<asp:PlaceHolder ID="Units" Runat=server/>
+							<asp:PlaceHolder ID="Mapping" Runat=server/>
 						</table>
 					</form>
 					

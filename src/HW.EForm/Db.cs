@@ -93,6 +93,16 @@ namespace eform
 
 			System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
 
+			System.IO.FileStream fs = null;
+			System.IO.StreamWriter f = null;
+			string fname = HttpContext.Current.Server.MapPath("tmp/" + DateTime.Now.Ticks + ".sps");
+
+			if(rToScreen == 0)
+			{
+				fs = new System.IO.FileStream(fname, System.IO.FileMode.Create);
+				f = new System.IO.StreamWriter(fs, System.Text.Encoding.UTF8);
+			}
+
 			string def = "", syn = "";
 			bool nextShouldBreak = true;
 			int caseCounter = 0, recordCount = 0, ax = 0;
@@ -106,108 +116,127 @@ namespace eform
 			SqlDataReader rs3;
 			//if(rBase == 0)
 			//{
-				if(sponsorID != 0)
+			if(sponsorID != 0)
+			{
+				rs3 = Db.sqlRecordSet("SELECT " +
+					"UserIdent1, " +	// 0
+					"UserIdent2, " +	// 1
+					"UserIdent3, " +	// 2
+					"UserIdent4, " +	// 3
+					"UserIdent5, " +	// 4
+					"UserIdent6, " +	// 5
+					"UserIdent7, " +	// 6
+					"UserIdent8, " +	// 7
+					"UserIdent9, " +	// 8
+					"UserIdent10, " +	// 9
+					"UserCheck1, " +	// 10
+					"UserCheck2, " +	// 11
+					"UserCheck3, " +	// 12
+					"UserNr " +			// 13
+					"FROM Sponsor WHERE SponsorID = " + sponsorID);
+				if(rs3.Read())
 				{
-					rs3 = Db.sqlRecordSet("SELECT " +
-						"UserIdent1, " +	// 0
-						"UserIdent2, " +	// 1
-						"UserIdent3, " +	// 2
-						"UserIdent4, " +	// 3
-						"UserIdent5, " +	// 4
-						"UserIdent6, " +	// 5
-						"UserIdent7, " +	// 6
-						"UserIdent8, " +	// 7
-						"UserIdent9, " +	// 8
-						"UserIdent10, " +	// 9
-						"UserCheck1, " +	// 10
-						"UserCheck2, " +	// 11
-						"UserCheck3, " +	// 12
-						"UserNr " +			// 13
-						"FROM Sponsor WHERE SponsorID = " + sponsorID);
-					if(rs3.Read())
+					caseCounter++;
+					def += (nextShouldBreak ? rowDelim + "/" + (++recordCount) : "") + " " +
+						"V" + (caseCounter) + "(F6.0)";
+					syn += "RENAME VARIABLES (V" + (caseCounter) + "=sysUserID)." + rowDelim;
+					syn += "VARIABLE LABELS sysUserID 'User ID'." + rowDelim;
+					nextShouldBreak = false;
+
+					if(!rs3.IsDBNull(13))
 					{
 						caseCounter++;
 						def += (nextShouldBreak ? rowDelim + "/" + (++recordCount) : "") + " " +
 							"V" + (caseCounter) + "(F6.0)";
-						syn += "RENAME VARIABLES (V" + (caseCounter) + "=sysUserID)." + rowDelim;
-						syn += "VARIABLE LABELS sysUserID 'User ID'." + rowDelim;
+						syn += "RENAME VARIABLES (V" + (caseCounter) + "=sysUserNr)." + rowDelim;
+						syn += "VARIABLE LABELS sysUserNr '" + rs3.GetString(13) + "'." + rowDelim;
 						nextShouldBreak = false;
-
-						if(!rs3.IsDBNull(13))
-						{
-							caseCounter++;
-							def += (nextShouldBreak ? rowDelim + "/" + (++recordCount) : "") + " " +
-								"V" + (caseCounter) + "(F6.0)";
-							syn += "RENAME VARIABLES (V" + (caseCounter) + "=sysUserNr)." + rowDelim;
-							syn += "VARIABLE LABELS sysUserNr '" + rs3.GetString(13) + "'." + rowDelim;
-							nextShouldBreak = false;
-						}
-						if(IDS)
-						{
-							for(int i=0; i<=9; i++)
-							{
-								if(!rs3.IsDBNull(i))
-								{
-									nextShouldBreak = true;
-									caseCounter++;
-									def += (nextShouldBreak ? rowDelim + "/" + (++recordCount) : "") + " " +
-										"V" + (caseCounter) + "(A250)";
-									syn += "RENAME VARIABLES (V" + (caseCounter) + "=sysUserIdent" + i + ")." + rowDelim;
-									syn += "VARIABLE LABELS sysUserIdent" + i + " '" + rs3.GetString(i) + "'." + rowDelim;
-									nextShouldBreak = true;
-								}
-							}
-							for(int i=10; i<=12; i++)
-							{
-								if(!rs3.IsDBNull(i))
-								{
-									caseCounter++;
-									def += (nextShouldBreak ? rowDelim + "/" + (++recordCount) : "") + " " +
-										"V" + (caseCounter) + "(F6.0)";
-									syn += "RENAME VARIABLES (V" + (caseCounter) + "=sysUserCheck" + (i-9) + ")." + rowDelim;
-									syn += "VARIABLE LABELS sysUserCheck" + (i-9) + " '" + rs3.GetString(i) + "'." + rowDelim;
-									syn += "VALUE LABELS sysUserCheck" + (i-9) + "";
-									ax = 0;
-									SqlDataReader rs4 = Db.sqlRecordSet("" +
-										"SELECT " +
-										"SponsorUserCheckID, " +
-										"Txt " +
-										"FROM SponsorUserCheck " +
-										"WHERE SponsorID = " + sponsorID + " AND UserCheckNr = " + (i-9));
-									while(rs4.Read())
-									{
-										ax += rs4.GetString(1).Length;
-										if(ax > 115)
-										{
-											ax = 0;
-											syn += rowDelim;
-										}
-										syn += " " + rs4.GetInt32(0) + " '" + trunc(rs4.GetString(1),115) + "'";
-									}
-									rs4.Close();
-									syn += "." + rowDelim;
-									nextShouldBreak = false;
-								}
-							}
-						}
-						nextShouldBreak = true;
-							caseCounter++;
-							def += (nextShouldBreak ? rowDelim + "/" + (++recordCount) : "") + " " +
-								"V" + (caseCounter) + "(A250)";
-							syn += "RENAME VARIABLES (V" + (caseCounter) + "=sysNote)." + rowDelim;
-							syn += "VARIABLE LABELS sysNote 'Notering'." + rowDelim;
-							nextShouldBreak = true;
 					}
-					rs3.Close();
+					if(IDS)
+					{
+						for(int i=0; i<=9; i++)
+						{
+							if(!rs3.IsDBNull(i))
+							{
+								nextShouldBreak = true;
+								caseCounter++;
+								def += (nextShouldBreak ? rowDelim + "/" + (++recordCount) : "") + " " +
+									"V" + (caseCounter) + "(A250)";
+								syn += "RENAME VARIABLES (V" + (caseCounter) + "=sysUserIdent" + i + ")." + rowDelim;
+								syn += "VARIABLE LABELS sysUserIdent" + i + " '" + rs3.GetString(i) + "'." + rowDelim;
+								nextShouldBreak = true;
+							}
+						}
+						for(int i=10; i<=12; i++)
+						{
+							if(!rs3.IsDBNull(i))
+							{
+								caseCounter++;
+								def += (nextShouldBreak ? rowDelim + "/" + (++recordCount) : "") + " " +
+									"V" + (caseCounter) + "(F6.0)";
+								syn += "RENAME VARIABLES (V" + (caseCounter) + "=sysUserCheck" + (i-9) + ")." + rowDelim;
+								syn += "VARIABLE LABELS sysUserCheck" + (i-9) + " '" + rs3.GetString(i) + "'." + rowDelim;
+								syn += "VALUE LABELS sysUserCheck" + (i-9) + "";
+								ax = 0;
+								SqlDataReader rs4 = Db.sqlRecordSet("" +
+									"SELECT " +
+									"SponsorUserCheckID, " +
+									"Txt " +
+									"FROM SponsorUserCheck " +
+									"WHERE SponsorID = " + sponsorID + " AND UserCheckNr = " + (i-9));
+								while(rs4.Read())
+								{
+									ax += rs4.GetString(1).Length;
+									if(ax > 115)
+									{
+										ax = 0;
+										syn += rowDelim;
+									}
+									syn += " " + rs4.GetInt32(0) + " '" + trunc(rs4.GetString(1),115) + "'";
+								}
+								rs4.Close();
+								syn += "." + rowDelim;
+								nextShouldBreak = false;
+							}
+						}
+					}
+					nextShouldBreak = true;
+						caseCounter++;
+						def += (nextShouldBreak ? rowDelim + "/" + (++recordCount) : "") + " " +
+							"V" + (caseCounter) + "(A250)";
+						syn += "RENAME VARIABLES (V" + (caseCounter) + "=sysNote)." + rowDelim;
+						syn += "VARIABLE LABELS sysNote 'Notering'." + rowDelim;
+						nextShouldBreak = true;
 				}
+				rs3.Close();
+			}
 
-				caseCounter++;
-				def += (nextShouldBreak ? rowDelim + "/" + (++recordCount) : "") + " " +
-					"V" + (caseCounter) + "(F8.0)";
-				syn += "RENAME VARIABLES (V" + (caseCounter) + "=sysUser)." + rowDelim;
-				syn += "VARIABLE LABELS sysUser 'User identification'." + rowDelim;
-				nextShouldBreak = false;
+			caseCounter++;
+			def += (nextShouldBreak ? rowDelim + "/" + (++recordCount) : "") + " " +
+				"V" + (caseCounter) + "(F8.0)";
+			syn += "RENAME VARIABLES (V" + (caseCounter) + "=sysUser)." + rowDelim;
+			syn += "VARIABLE LABELS sysUser 'User identification'." + rowDelim;
+			nextShouldBreak = false;
 			//}
+
+			caseCounter++;
+			def += (nextShouldBreak ? rowDelim + "/" + (++recordCount) : "") + " " +
+				"V" + (caseCounter) + "(F8.0)";
+			syn += "RENAME VARIABLES (V" + (caseCounter) + "=sysRoundDescription)." + rowDelim;
+			syn += "VARIABLE LABELS sysRoundDescription 'Round description'." + rowDelim;
+			syn += "VALUE LABELS sysRoundDescription";
+			rs3 = Db.sqlRecordSet("SELECT " +
+				"pr.ProjectRoundID, " +
+				"pr.Internal " +
+				"FROM ProjectRound pr " +
+				"WHERE pr.ProjectRoundID IN (" + rPRID + ")");
+			while(rs3.Read())
+			{
+				syn += " " + rs3.GetInt32(0) + " '" + trunc(rs3.GetString(1),115) + "'";
+			}
+			rs3.Close();
+			syn += "." + rowDelim;
+			nextShouldBreak = false;
 
 			caseCounter++;
 			def += (nextShouldBreak ? rowDelim + "/" + (++recordCount) : "") + " " +
@@ -243,19 +272,19 @@ namespace eform
 
 			//if(rBase == 0)
 			//{
-				caseCounter++;
-				def += (nextShouldBreak ? rowDelim + "/" + (++recordCount) : "") + " " +
-					"V" + (caseCounter) + "(F1.0)";
-				syn += "RENAME VARIABLES (V" + (caseCounter) + "=sysRound)." + rowDelim;
-				syn += "VARIABLE LABELS sysRound 'Round'." + rowDelim;
-				nextShouldBreak = false;
+			caseCounter++;
+			def += (nextShouldBreak ? rowDelim + "/" + (++recordCount) : "") + " " +
+				"V" + (caseCounter) + "(F1.0)";
+			syn += "RENAME VARIABLES (V" + (caseCounter) + "=sysRound)." + rowDelim;
+			syn += "VARIABLE LABELS sysRound 'Round'." + rowDelim;
+			nextShouldBreak = false;
 
-				caseCounter++;
-				def += (nextShouldBreak ? rowDelim + "/" + (++recordCount) : "") + " " +
-					"V" + (caseCounter) + "(F3.0)";
-				syn += "RENAME VARIABLES (V" + (caseCounter) + "=sysCase)." + rowDelim;
-				syn += "VARIABLE LABELS sysCase 'User case counter'." + rowDelim;
-				nextShouldBreak = false;
+			caseCounter++;
+			def += (nextShouldBreak ? rowDelim + "/" + (++recordCount) : "") + " " +
+				"V" + (caseCounter) + "(F3.0)";
+			syn += "RENAME VARIABLES (V" + (caseCounter) + "=sysCase)." + rowDelim;
+			syn += "VARIABLE LABELS sysCase 'User case counter'." + rowDelim;
+			nextShouldBreak = false;
 			//}
 
 			caseCounter++;
@@ -1222,6 +1251,7 @@ namespace eform
 							//(rBase == 0 ? 
 							userID.ToString().PadRight(8,' ') +
 							//: "") + 
+							rs.GetInt32(2).ToString().PadRight(8,' ') + 
 							rs.GetInt32(1).ToString().PadRight(6,' ') + 
 							//(rBase == 0 ? 
 							round + 
@@ -1324,19 +1354,12 @@ namespace eform
 				mergedOutput.Append(rowDelim);
 			}
 			
-			string ret = "DATA LIST FIXED RECORDS=" + recordCount + def + "." + rowDelim + "BEGIN DATA" + rowDelim + mergedOutput.ToString() + "END DATA." + rowDelim + syn + rowDelim;
-
 			if(rToScreen == 0)
 			{
-				try
-				{
-					System.IO.FileStream fs = new System.IO.FileStream(HttpContext.Current.Server.MapPath("tmp/" + DateTime.Now.Ticks + ".sps"), System.IO.FileMode.Create);
-					System.IO.StreamWriter f = new System.IO.StreamWriter(fs, System.Text.Encoding.Default);
-					f.Write(ret);
-					f.Close();
-					fs.Close();
-				}
-				catch(Exception){}
+				f.Write("DATA LIST FIXED RECORDS=" + recordCount + def + "." + rowDelim + "BEGIN DATA" + rowDelim + mergedOutput.ToString() + "END DATA." + rowDelim + syn + rowDelim);
+				f.Close();
+				fs.Close();
+
 				HttpContext.Current.Response.Clear();
 				HttpContext.Current.Response.ClearHeaders();
 				//HttpContext.Current.Response.ContentEncoding = System.Text.Encoding.Default;
@@ -1344,7 +1367,7 @@ namespace eform
 				HttpContext.Current.Response.ContentEncoding = System.Text.Encoding.UTF8;
 				HttpContext.Current.Response.ContentType = "text/x-spss-syntax";
 				HttpContext.Current.Response.AddHeader("content-disposition","attachment; filename=" + DateTime.Now.Ticks + ".sps");
-				HttpContext.Current.Response.Write(ret);
+				HttpContext.Current.Response.WriteFile(fname);
 			}
 			HttpContext.Current.Response.Flush();
 			HttpContext.Current.Response.End();

@@ -1,0 +1,1 @@
+<%@ Page ContentType="image/gif" language="c#" Codebehind="reportImageStatic.aspx.cs" AutoEventWireup="false" Inherits="eform.reportImageStatic" %>

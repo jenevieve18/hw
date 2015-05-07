@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ABCpdf">
+      <HintPath>..\..\lib\ABCpdf.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -49,9 +53,382 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Tamir.SharpSSH">
+      <HintPath>..\..\lib\Tamir.SharpSSH.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="controlPanel.aspx" />
+    <Content Include="customFeedback.aspx" />
+    <Content Include="dashboard.aspx" />
     <Content Include="default.aspx" />
+    <Content Include="downloadPDF.aspx" />
+    <Content Include="feedback.aspx" />
+    <Content Include="feedbackDashboard.aspx" />
+    <Content Include="feedbackImage.aspx" />
+    <Content Include="feedbackOrg.aspx" />
+    <Content Include="feedbackQuestion.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="graphSixGreenRed.aspx" />
+    <Content Include="graphTwoBarWithReference.aspx" />
+    <Content Include="img\arrow_topNavA.gif" />
+    <Content Include="img\arrow_topNavN.gif" />
+    <Content Include="img\bullet1.gif" />
+    <Content Include="img\bullet2.gif" />
+    <Content Include="img\CancelBox.gif" />
+    <Content Include="img\cancel_off.gif" />
+    <Content Include="img\cancel_on.gif" />
+    <Content Include="img\colorRange.gif" />
+    <Content Include="img\content1_bgr.gif" />
+    <Content Include="img\content2_bgr.gif" />
+    <Content Include="img\delete.gif" />
+    <Content Include="img\DelToolSmall.gif" />
+    <Content Include="img\DownToolSmall.gif" />
+    <Content Include="img\edit.gif" />
+    <Content Include="img\extraRed.gif" />
+    <Content Include="img\extraYellow.gif" />
+    <Content Include="img\gear.gif" />
+    <Content Include="img\green.gif" />
+    <Content Include="img\lang\1.gif" />
+    <Content Include="img\lang\2.gif" />
+    <Content Include="img\lang\3.gif" />
+    <Content Include="img\lang\4.gif" />
+    <Content Include="img\lang\5.gif" />
+    <Content Include="img\lang\_1.gif" />
+    <Content Include="img\lang\_2.gif" />
+    <Content Include="img\lang\_3.gif" />
+    <Content Include="img\lang\_4.gif" />
+    <Content Include="img\lang\_5.gif" />
+    <Content Include="img\logo.gif" />
+    <Content Include="img\magnify_off.gif" />
+    <Content Include="img\magnify_on.gif" />
+    <Content Include="img\null.gif" />
+    <Content Include="img\pdfSmall.gif" />
+    <Content Include="img\project\alkoholbildmtext.jpg" />
+    <Content Include="img\project\glas.gif" />
+    <Content Include="img\project\glas2.gif" />
+    <Content Include="img\project\logo12.gif" />
+    <Content Include="img\project\logo13.gif" />
+    <Content Include="img\project\logo14.gif" />
+    <Content Include="img\project\logo15.gif" />
+    <Content Include="img\project\logo16.gif" />
+    <Content Include="img\project\logo17.gif" />
+    <Content Include="img\project\logo18.gif" />
+    <Content Include="img\project\logo19.gif" />
+    <Content Include="img\project\logo20.gif" />
+    <Content Include="img\project\logo22.gif" />
+    <Content Include="img\project\logo23.gif" />
+    <Content Include="img\project\logo23_36.gif" />
+    <Content Include="img\project\logo24.gif" />
+    <Content Include="img\project\logo25.gif" />
+    <Content Include="img\project\logo26.gif" />
+    <Content Include="img\project\logo27.gif" />
+    <Content Include="img\project\logo28.gif" />
+    <Content Include="img\project\logo29.gif" />
+    <Content Include="img\project\logo30.gif" />
+    <Content Include="img\project\logo33.gif" />
+    <Content Include="img\project\logo34.gif" />
+    <Content Include="img\project\logo35.gif" />
+    <Content Include="img\project\logo36.gif" />
+    <Content Include="img\project\logo40.gif" />
+    <Content Include="img\project\logo41.gif" />
+    <Content Include="img\project\logo42.gif" />
+    <Content Include="img\project\logo45.gif" />
+    <Content Include="img\project\logo48.gif" />
+    <Content Include="img\project\logo50.gif" />
+    <Content Include="img\project\logo51.gif" />
+    <Content Include="img\project\logo53.gif" />
+    <Content Include="img\project\logo54.gif" />
+    <Content Include="img\project\logo55.gif" />
+    <Content Include="img\project\logo56.gif" />
+    <Content Include="img\project\logo57.gif" />
+    <Content Include="img\project\logo58.gif" />
+    <Content Include="img\project\logo59.gif" />
+    <Content Include="img\project\logo60.gif" />
+    <Content Include="img\project\logo61.gif" />
+    <Content Include="img\project\logo64.gif" />
+    <Content Include="img\project\logo65.gif" />
+    <Content Include="img\project\logo66.gif" />
+    <Content Include="img\project\logo67.gif" />
+    <Content Include="img\project\logo8.gif" />
+    <Content Include="img\project\logo9.gif" />
+    <Content Include="img\project\webbqps.gif" />
+    <Content Include="img\project\WHR-english.gif" />
+    <Content Include="img\project\WHR-sida.gif" />
+    <Content Include="img\red.gif" />
+    <Content Include="img\refresh.gif" />
+    <Content Include="img\refresh_off.gif" />
+    <Content Include="img\reject.gif" />
+    <Content Include="img\remind.gif" />
+    <Content Include="img\saveTool.gif" />
+    <Content Include="img\status01_01.gif" />
+    <Content Include="img\status01_02.gif" />
+    <Content Include="img\status01_03.gif" />
+    <Content Include="img\status02_01.gif" />
+    <Content Include="img\status02_02.gif" />
+    <Content Include="img\status02_03.gif" />
+    <Content Include="img\units1_bgr.gif" />
+    <Content Include="img\units2_bgr.gif" />
+    <Content Include="img\unit_on.gif" />
+    <Content Include="img\UpToolSmall.gif" />
+    <Content Include="img\UpToolSmallTop.gif" />
+    <Content Include="img\users_off.gif" />
+    <Content Include="img\users_on.gif" />
+    <Content Include="img\user_on.gif" />
+    <Content Include="img\view.gif" />
+    <Content Include="img\warning.gif" />
+    <Content Include="img\yellow.gif" />
+    <Content Include="info\default.aspx" />
+    <Content Include="info\img\box_bottom.jpg" />
+    <Content Include="info\img\box_main.jpg" />
+    <Content Include="info\img\box_top.jpg" />
+    <Content Include="info\img\container_bgr.jpg" />
+    <Content Include="info\img\doc.gif" />
+    <Content Include="info\img\eForm.gif" />
+    <Content Include="info\img\footer_bgr.jpg" />
+    <Content Include="info\img\header_bgr.jpg" />
+    <Content Include="info\img\loggar.gif" />
+    <Content Include="info\img\navi_bgr.jpg" />
+    <Content Include="info\img\navi_bulletA.gif" />
+    <Content Include="info\img\navi_bulletN.gif" />
+    <Content Include="info\img\pdf.gif" />
+    <Content Include="info\img\ppt.gif" />
+    <Content Include="info\img\webbQPS_logga.gif" />
+    <Content Include="info\img\xls.gif" />
+    <Content Include="info\page-id-10.aspx" />
+    <Content Include="info\page-id-11.aspx" />
+    <Content Include="info\page-id-2.aspx" />
+    <Content Include="info\page-id-3.aspx" />
+    <Content Include="info\page-id-4.aspx" />
+    <Content Include="info\page-id-5.aspx" />
+    <Content Include="info\page-id-6.aspx" />
+    <Content Include="info\page-id-7.aspx" />
+    <Content Include="info\page-id-8.aspx" />
+    <Content Include="info\page-id-9.aspx" />
+    <Content Include="info\webbqps.css" />
+    <Content Include="md5.aspx" />
+    <Content Include="pm\calculateIntervention30.aspx" />
+    <Content Include="pm\containers.aspx" />
+    <Content Include="pm\default.aspx" />
+    <Content Include="pm\export.aspx" />
+    <Content Include="pm\exportTexts.aspx" />
+    <Content Include="pm\feedbackSetup.aspx" />
+    <Content Include="pm\findrisk.aspx" />
+    <Content Include="pm\idx.aspx" />
+    <Content Include="pm\idxSetup.aspx" />
+    <Content Include="pm\mailQueue.aspx" />
+    <Content Include="pm\managers.aspx" />
+    <Content Include="pm\managerSetup.aspx" />
+    <Content Include="pm\optionComponents.aspx" />
+    <Content Include="pm\optionComponentSetup.aspx" />
+    <Content Include="pm\options.aspx" />
+    <Content Include="pm\optionSetup.aspx" />
+    <Content Include="pm\projectRoundText.aspx" />
+    <Content Include="pm\projects.aspx" />
+    <Content Include="pm\projectSetup.aspx" />
+    <Content Include="pm\questions.aspx" />
+    <Content Include="pm\questionSetup.aspx" />
+    <Content Include="pm\reGenStats.aspx" />
+    <Content Include="pm\reGenStats2.aspx" />
+    <Content Include="pm\reGenStats30.aspx" />
+    <Content Include="pm\reports.aspx" />
+    <Content Include="pm\reportSetup.aspx" />
+    <Content Include="pm\sendFollowup.aspx" />
+    <Content Include="pm\sendMailStatic.aspx" />
+    <Content Include="pm\survey.css" />
+    <Content Include="pm\surveyQuestionIf.aspx" />
+    <Content Include="pm\surveyQuestionOptionSetup.aspx" />
+    <Content Include="pm\surveyQuestionSetup.aspx" />
+    <Content Include="pm\surveys.aspx" />
+    <Content Include="pm\surveySetup.aspx" />
+    <Content Include="pm\surveyStatistics.aspx" />
+    <Content Include="pm\weightedQuestionOption.aspx" />
+    <Content Include="pm\weightedQuestionOptionSetup.aspx" />
+    <Content Include="projectInfo.aspx" />
+    <Content Include="report.aspx" />
+    <Content Include="report.css" />
+    <Content Include="reportImage.aspx" />
+    <Content Include="reportImageStatic.aspx" />
+    <Content Include="sendLink.aspx" />
+    <Content Include="sendPDF.aspx" />
+    <Content Include="sent.aspx" />
+    <Content Include="sponsoradmin.aspx" />
+    <Content Include="submit.aspx" />
+    <Content Include="submit.css" />
+    <Content Include="submit.js" />
+    <Content Include="submit2.css" />
+    <Content Include="submit2print.css" />
+    <Content Include="submitImages\area_bgr.gif" />
+    <Content Include="submitImages\bgr.jpg" />
+    <Content Include="submitImages\bgr_info.jpg" />
+    <Content Include="submitImages\button_cancel0.gif" />
+    <Content Include="submitImages\button_cancel1.gif" />
+    <Content Include="submitImages\button_cancel2.gif" />
+    <Content Include="submitImages\button_close0.gif" />
+    <Content Include="submitImages\button_close1.gif" />
+    <Content Include="submitImages\button_close2.gif" />
+    <Content Include="submitImages\button_download_PDF.gif" />
+    <Content Include="submitImages\button_download_PDF_1.gif" />
+    <Content Include="submitImages\button_download_PDF_2.gif" />
+    <Content Include="submitImages\button_excel.gif" />
+    <Content Include="submitImages\button_info0.gif" />
+    <Content Include="submitImages\button_lang_1.gif" />
+    <Content Include="submitImages\button_lang_2.gif" />
+    <Content Include="submitImages\button_later.gif" />
+    <Content Include="submitImages\button_later0.gif" />
+    <Content Include="submitImages\button_later1.gif" />
+    <Content Include="submitImages\button_later2.gif" />
+    <Content Include="submitImages\button_next0.gif" />
+    <Content Include="submitImages\button_next0_0.gif" />
+    <Content Include="submitImages\button_next0_1.gif" />
+    <Content Include="submitImages\button_next1.gif" />
+    <Content Include="submitImages\button_next1_0.gif" />
+    <Content Include="submitImages\button_next1_1.gif" />
+    <Content Include="submitImages\button_next2_0.gif" />
+    <Content Include="submitImages\button_next2_1.gif" />
+    <Content Include="submitImages\button_powerpoint.gif" />
+    <Content Include="submitImages\button_previous.gif" />
+    <Content Include="submitImages\button_previous0.gif" />
+    <Content Include="submitImages\button_previous1.gif" />
+    <Content Include="submitImages\button_previous2.gif" />
+    <Content Include="submitImages\button_print.gif" />
+    <Content Include="submitImages\button_print_1.gif" />
+    <Content Include="submitImages\button_print_2.gif" />
+    <Content Include="submitImages\button_save0_0.gif" />
+    <Content Include="submitImages\button_save0_1.gif" />
+    <Content Include="submitImages\button_send0.gif" />
+    <Content Include="submitImages\button_send0_0.gif" />
+    <Content Include="submitImages\button_send0_1.gif" />
+    <Content Include="submitImages\button_send1.gif" />
+    <Content Include="submitImages\button_send1_0.gif" />
+    <Content Include="submitImages\button_send1_1.gif" />
+    <Content Include="submitImages\button_send2_0.gif" />
+    <Content Include="submitImages\button_send2_1.gif" />
+    <Content Include="submitImages\button_send_email.gif" />
+    <Content Include="submitImages\eForm_logga.gif" />
+    <Content Include="submitImages\header_bgr.gif" />
+    <Content Include="submitImages\info_bgr2.gif" />
+    <Content Include="submitImages\logga.gif" />
+    <Content Include="submitImages\null.gif" />
+    <Content Include="submitImages\Processing_ani.gif" />
+    <Content Include="submitImages\processing_bg.gif" />
+    <Content Include="submitImages\progress\progress_bar_01.gif" />
+    <Content Include="submitImages\progress\progress_bar_02.gif" />
+    <Content Include="submitImages\progress\progress_bar_03.gif" />
+    <Content Include="submitImages\progress\progress_bar_04.gif" />
+    <Content Include="submitImages\progress\progress_bar_05.gif" />
+    <Content Include="submitImages\progress\progress_bar_06.gif" />
+    <Content Include="submitImages\progress\progress_bar_07.gif" />
+    <Content Include="submitImages\progress\progress_bar_08.gif" />
+    <Content Include="submitImages\progress\progress_bar_09.gif" />
+    <Content Include="submitImages\progress\progress_bar_1.gif" />
+    <Content Include="submitImages\progress\progress_bar_10.gif" />
+    <Content Include="submitImages\progress\progress_bar_100.gif" />
+    <Content Include="submitImages\progress\progress_bar_11.gif" />
+    <Content Include="submitImages\progress\progress_bar_12.gif" />
+    <Content Include="submitImages\progress\progress_bar_13.gif" />
+    <Content Include="submitImages\progress\progress_bar_14.gif" />
+    <Content Include="submitImages\progress\progress_bar_15.gif" />
+    <Content Include="submitImages\progress\progress_bar_16.gif" />
+    <Content Include="submitImages\progress\progress_bar_17.gif" />
+    <Content Include="submitImages\progress\progress_bar_18.gif" />
+    <Content Include="submitImages\progress\progress_bar_19.gif" />
+    <Content Include="submitImages\progress\progress_bar_2.gif" />
+    <Content Include="submitImages\progress\progress_bar_20.gif" />
+    <Content Include="submitImages\progress\progress_bar_21.gif" />
+    <Content Include="submitImages\progress\progress_bar_22.gif" />
+    <Content Include="submitImages\progress\progress_bar_23.gif" />
+    <Content Include="submitImages\progress\progress_bar_24.gif" />
+    <Content Include="submitImages\progress\progress_bar_25.gif" />
+    <Content Include="submitImages\progress\progress_bar_26.gif" />
+    <Content Include="submitImages\progress\progress_bar_27.gif" />
+    <Content Include="submitImages\progress\progress_bar_28.gif" />
+    <Content Include="submitImages\progress\progress_bar_29.gif" />
+    <Content Include="submitImages\progress\progress_bar_3.gif" />
+    <Content Include="submitImages\progress\progress_bar_30.gif" />
+    <Content Include="submitImages\progress\progress_bar_31.gif" />
+    <Content Include="submitImages\progress\progress_bar_32.gif" />
+    <Content Include="submitImages\progress\progress_bar_33.gif" />
+    <Content Include="submitImages\progress\progress_bar_34.gif" />
+    <Content Include="submitImages\progress\progress_bar_35.gif" />
+    <Content Include="submitImages\progress\progress_bar_36.gif" />
+    <Content Include="submitImages\progress\progress_bar_37.gif" />
+    <Content Include="submitImages\progress\progress_bar_38.gif" />
+    <Content Include="submitImages\progress\progress_bar_39.gif" />
+    <Content Include="submitImages\progress\progress_bar_4.gif" />
+    <Content Include="submitImages\progress\progress_bar_40.gif" />
+    <Content Include="submitImages\progress\progress_bar_41.gif" />
+    <Content Include="submitImages\progress\progress_bar_42.gif" />
+    <Content Include="submitImages\progress\progress_bar_43.gif" />
+    <Content Include="submitImages\progress\progress_bar_44.gif" />
+    <Content Include="submitImages\progress\progress_bar_45.gif" />
+    <Content Include="submitImages\progress\progress_bar_46.gif" />
+    <Content Include="submitImages\progress\progress_bar_47.gif" />
+    <Content Include="submitImages\progress\progress_bar_48.gif" />
+    <Content Include="submitImages\progress\progress_bar_49.gif" />
+    <Content Include="submitImages\progress\progress_bar_5.gif" />
+    <Content Include="submitImages\progress\progress_bar_50.gif" />
+    <Content Include="submitImages\progress\progress_bar_51.gif" />
+    <Content Include="submitImages\progress\progress_bar_52.gif" />
+    <Content Include="submitImages\progress\progress_bar_53.gif" />
+    <Content Include="submitImages\progress\progress_bar_54.gif" />
+    <Content Include="submitImages\progress\progress_bar_55.gif" />
+    <Content Include="submitImages\progress\progress_bar_56.gif" />
+    <Content Include="submitImages\progress\progress_bar_57.gif" />
+    <Content Include="submitImages\progress\progress_bar_58.gif" />
+    <Content Include="submitImages\progress\progress_bar_59.gif" />
+    <Content Include="submitImages\progress\progress_bar_6.gif" />
+    <Content Include="submitImages\progress\progress_bar_60.gif" />
+    <Content Include="submitImages\progress\progress_bar_61.gif" />
+    <Content Include="submitImages\progress\progress_bar_62.gif" />
+    <Content Include="submitImages\progress\progress_bar_63.gif" />
+    <Content Include="submitImages\progress\progress_bar_64.gif" />
+    <Content Include="submitImages\progress\progress_bar_65.gif" />
+    <Content Include="submitImages\progress\progress_bar_66.gif" />
+    <Content Include="submitImages\progress\progress_bar_67.gif" />
+    <Content Include="submitImages\progress\progress_bar_68.gif" />
+    <Content Include="submitImages\progress\progress_bar_69.gif" />
+    <Content Include="submitImages\progress\progress_bar_7.gif" />
+    <Content Include="submitImages\progress\progress_bar_70.gif" />
+    <Content Include="submitImages\progress\progress_bar_71.gif" />
+    <Content Include="submitImages\progress\progress_bar_72.gif" />
+    <Content Include="submitImages\progress\progress_bar_73.gif" />
+    <Content Include="submitImages\progress\progress_bar_74.gif" />
+    <Content Include="submitImages\progress\progress_bar_75.gif" />
+    <Content Include="submitImages\progress\progress_bar_76.gif" />
+    <Content Include="submitImages\progress\progress_bar_77.gif" />
+    <Content Include="submitImages\progress\progress_bar_78.gif" />
+    <Content Include="submitImages\progress\progress_bar_79.gif" />
+    <Content Include="submitImages\progress\progress_bar_8.gif" />
+    <Content Include="submitImages\progress\progress_bar_80.gif" />
+    <Content Include="submitImages\progress\progress_bar_81.gif" />
+    <Content Include="submitImages\progress\progress_bar_82.gif" />
+    <Content Include="submitImages\progress\progress_bar_83.gif" />
+    <Content Include="submitImages\progress\progress_bar_84.gif" />
+    <Content Include="submitImages\progress\progress_bar_85.gif" />
+    <Content Include="submitImages\progress\progress_bar_86.gif" />
+    <Content Include="submitImages\progress\progress_bar_87.gif" />
+    <Content Include="submitImages\progress\progress_bar_88.gif" />
+    <Content Include="submitImages\progress\progress_bar_89.gif" />
+    <Content Include="submitImages\progress\progress_bar_9.gif" />
+    <Content Include="submitImages\progress\progress_bar_90.gif" />
+    <Content Include="submitImages\progress\progress_bar_91.gif" />
+    <Content Include="submitImages\progress\progress_bar_92.gif" />
+    <Content Include="submitImages\progress\progress_bar_93.gif" />
+    <Content Include="submitImages\progress\progress_bar_94.gif" />
+    <Content Include="submitImages\progress\progress_bar_95.gif" />
+    <Content Include="submitImages\progress\progress_bar_96.gif" />
+    <Content Include="submitImages\progress\progress_bar_97.gif" />
+    <Content Include="submitImages\progress\progress_bar_98.gif" />
+    <Content Include="submitImages\progress\progress_bar_99.gif" />
+    <Content Include="submitImages\VASdot_l.gif" />
+    <Content Include="submitImages\VASdot_r.gif" />
+    <Content Include="submitImages\VASknob4.gif" />
+    <Content Include="submitImages\VASline.gif" />
+    <Content Include="submitJs.aspx" />
+    <Content Include="submit_old.js" />
+    <Content Include="testFeedback.aspx" />
+    <Content Include="usermgr.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -61,17 +438,389 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="controlPanel.aspx.cs">
+      <DependentUpon>controlPanel.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="customFeedback.aspx.cs">
+      <DependentUpon>customFeedback.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="dashboard.aspx.cs">
+      <DependentUpon>dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Db.cs" />
     <Compile Include="default.aspx.cs">
       <DependentUpon>default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="downloadPDF.aspx.cs">
+      <DependentUpon>downloadPDF.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ErrorHandling.cs" />
+    <Compile Include="feedback.aspx.cs">
+      <DependentUpon>feedback.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="feedbackDashboard.aspx.cs">
+      <DependentUpon>feedbackDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="feedbackImage.aspx.cs">
+      <DependentUpon>feedbackImage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="feedbackOrg.aspx.cs">
+      <DependentUpon>feedbackOrg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="feedbackQuestion.aspx.cs">
+      <DependentUpon>feedbackQuestion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Graph.cs" />
+    <Compile Include="graphSixGreenRed.aspx.cs">
+      <DependentUpon>graphSixGreenRed.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="graphTwoBarWithReference.aspx.cs">
+      <DependentUpon>graphTwoBarWithReference.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="md5.aspx.cs">
+      <DependentUpon>md5.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OctreeQuantizer.cs" />
+    <Compile Include="pm\calculateIntervention30.aspx.cs">
+      <DependentUpon>calculateIntervention30.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\containers.aspx.cs">
+      <DependentUpon>containers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\export.aspx.cs">
+      <DependentUpon>export.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\exportTexts.aspx.cs">
+      <DependentUpon>exportTexts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\feedbackSetup.aspx.cs">
+      <DependentUpon>feedbackSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\findrisk.aspx.cs">
+      <DependentUpon>findrisk.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\idx.aspx.cs">
+      <DependentUpon>idx.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\idxSetup.aspx.cs">
+      <DependentUpon>idxSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\mailQueue.aspx.cs">
+      <DependentUpon>mailQueue.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\managers.aspx.cs">
+      <DependentUpon>managers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\managerSetup.aspx.cs">
+      <DependentUpon>managerSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\optionComponents.aspx.cs">
+      <DependentUpon>optionComponents.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\optionComponentSetup.aspx.cs">
+      <DependentUpon>optionComponentSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\options.aspx.cs">
+      <DependentUpon>options.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\optionSetup.aspx.cs">
+      <DependentUpon>optionSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\projectRoundText.aspx.cs">
+      <DependentUpon>projectRoundText.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\projects.aspx.cs">
+      <DependentUpon>projects.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\projectSetup.aspx.cs">
+      <DependentUpon>projectSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\questions.aspx.cs">
+      <DependentUpon>questions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\questionSetup.aspx.cs">
+      <DependentUpon>questionSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\reGenStats.aspx.cs">
+      <DependentUpon>reGenStats.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\reGenStats2.aspx.cs">
+      <DependentUpon>reGenStats2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\reGenStats30.aspx.cs">
+      <DependentUpon>reGenStats30.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\reports.aspx.cs">
+      <DependentUpon>reports.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\reportSetup.aspx.cs">
+      <DependentUpon>reportSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\sendFollowup.aspx.cs">
+      <DependentUpon>sendFollowup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\sendMailStatic.aspx.cs">
+      <DependentUpon>sendMailStatic.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\surveyQuestionIf.aspx.cs">
+      <DependentUpon>surveyQuestionIf.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\surveyQuestionOptionSetup.aspx.cs">
+      <DependentUpon>surveyQuestionOptionSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\surveyQuestionSetup.aspx.cs">
+      <DependentUpon>surveyQuestionSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\surveys.aspx.cs">
+      <DependentUpon>surveys.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\surveySetup.aspx.cs">
+      <DependentUpon>surveySetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\surveyStatistics.aspx.cs">
+      <DependentUpon>surveyStatistics.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\weightedQuestionOption.aspx.cs">
+      <DependentUpon>weightedQuestionOption.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pm\weightedQuestionOptionSetup.aspx.cs">
+      <DependentUpon>weightedQuestionOptionSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Quantizer.cs" />
+    <Compile Include="report.aspx.cs">
+      <DependentUpon>report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="reportImage.aspx.cs">
+      <DependentUpon>reportImage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="reportImageStatic.aspx.cs">
+      <DependentUpon>reportImageStatic.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sendLink.aspx.cs">
+      <DependentUpon>sendLink.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sendPDF.aspx.cs">
+      <DependentUpon>sendPDF.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sent.aspx.cs">
+      <DependentUpon>sent.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sponsoradmin.aspx.cs">
+      <DependentUpon>sponsoradmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="submit.aspx.cs">
+      <DependentUpon>submit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="submitJs.aspx.cs">
+      <DependentUpon>submitJs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="testFeedback.aspx.cs">
+      <DependentUpon>testFeedback.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="usermgr.aspx.cs">
+      <DependentUpon>usermgr.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="customFeedback.aspx.resx">
+      <DependentUpon>customFeedback.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dashboard.aspx.resx">
+      <DependentUpon>dashboard.aspx.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="default.aspx.resx">
       <DependentUpon>default.aspx.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="downloadPDF.aspx.resx">
+      <DependentUpon>downloadPDF.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="feedback.aspx.resx">
+      <DependentUpon>feedback.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="feedbackDashboard.aspx.resx">
+      <DependentUpon>feedbackDashboard.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="feedbackImage.aspx.resx">
+      <DependentUpon>feedbackImage.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="feedbackOrg.aspx.resx">
+      <DependentUpon>feedbackOrg.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="feedbackQuestion.aspx.resx">
+      <DependentUpon>feedbackQuestion.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Global.asax.resx">
+      <DependentUpon>Global.asax.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="graphSixGreenRed.aspx.resx">
+      <DependentUpon>graphSixGreenRed.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="graphTwoBarWithReference.aspx.resx">
+      <DependentUpon>graphTwoBarWithReference.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="md5.aspx.resx">
+      <DependentUpon>md5.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pm\calculateIntervention30.aspx.resx">
+      <DependentUpon>calculateIntervention30.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pm\containers.aspx.resx">
+      <DependentUpon>containers.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pm\export.aspx.resx">
+      <DependentUpon>export.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pm\exportTexts.aspx.resx">
+      <DependentUpon>exportTexts.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pm\feedbackSetup.aspx.resx">
+      <DependentUpon>feedbackSetup.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pm\findrisk.aspx.resx">
+      <DependentUpon>findrisk.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pm\managers.aspx.resx">
+      <DependentUpon>managers.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pm\managerSetup.aspx.resx">
+      <DependentUpon>managerSetup.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pm\reGenStats.aspx.resx">
+      <DependentUpon>reGenStats.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pm\reGenStats2.aspx.resx">
+      <DependentUpon>reGenStats2.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pm\reGenStats30.aspx.resx">
+      <DependentUpon>reGenStats30.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pm\sendFollowup.aspx.resx">
+      <DependentUpon>sendFollowup.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pm\sendMailStatic.aspx.resx">
+      <DependentUpon>sendMailStatic.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pm\surveyQuestionIf.aspx.resx">
+      <DependentUpon>surveyQuestionIf.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pm\surveyQuestionOptionSetup.aspx.resx">
+      <DependentUpon>surveyQuestionOptionSetup.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pm\surveySetup.aspx.resx">
+      <DependentUpon>surveySetup.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pm\surveyStatistics.aspx.resx">
+      <DependentUpon>surveyStatistics.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pm\weightedQuestionOption.aspx.resx">
+      <DependentUpon>weightedQuestionOption.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pm\weightedQuestionOptionSetup.aspx.resx">
+      <DependentUpon>weightedQuestionOptionSetup.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="reportImageStatic.aspx.resx">
+      <DependentUpon>reportImageStatic.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="sendLink.aspx.resx">
+      <DependentUpon>sendLink.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="sendPDF.aspx.resx">
+      <DependentUpon>sendPDF.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="sent.aspx.resx">
+      <DependentUpon>sent.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="sponsoradmin.aspx.resx">
+      <DependentUpon>sponsoradmin.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="submit.aspx.resx">
+      <DependentUpon>submit.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="submitJs.aspx.resx">
+      <DependentUpon>submitJs.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="testFeedback.aspx.resx">
+      <DependentUpon>testFeedback.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="usermgr.aspx.resx">
+      <DependentUpon>usermgr.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="img\sponsor\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="info\chefsutveckling_ki_lime_slutv28feb.ppt" />
+    <None Include="info\Information_om_forskning_till_de_deltagande_cheferna.doc" />
+    <None Include="info\Information_om_forskning_till_de_deltagande_chefernas_medarbetare.doc" />
+    <None Include="info\Samtalsledare_DU.xls" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
