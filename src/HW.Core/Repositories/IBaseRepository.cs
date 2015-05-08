@@ -6,6 +6,10 @@ namespace HW.Core.Repositories
 {
 	public interface IBaseRepository<T>
 	{
+		void Save(T t);
+		
+		void Update(T t, int id);
+		
 		void SaveOrUpdate(T t);
 		
 		void SaveOrUpdate<U>(U u);
@@ -13,6 +17,8 @@ namespace HW.Core.Repositories
 		void Delete(T t);
 		
 		void Delete<U>(U t);
+		
+		void Delete(int id);
 		
 		T Read(int id);
 		
@@ -28,6 +34,14 @@ namespace HW.Core.Repositories
 			data = new List<T>();
 		}
 		
+		public void Save(T t)
+		{
+		}
+		
+		public void Update(T t, int id)
+		{
+		}
+		
 		public void SaveOrUpdate(T t)
 		{
 			data.Add(t);
@@ -36,6 +50,10 @@ namespace HW.Core.Repositories
 		public void SaveOrUpdate<U>(U t)
 		{
 //			data.Add(t);
+		}
+		
+		public void Delete(int id)
+		{
 		}
 		
 		public void Delete(T t)

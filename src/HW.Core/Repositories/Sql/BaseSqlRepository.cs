@@ -16,6 +16,16 @@ namespace HW.Core.Repositories.Sql
 		{
 		}
 		
+		public virtual void Save(T t)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public virtual void Update(T t, int id)
+		{
+			throw new NotImplementedException();
+		}
+		
 		public virtual void SaveOrUpdate(T t)
 		{
 			throw new NotImplementedException();
@@ -26,12 +36,17 @@ namespace HW.Core.Repositories.Sql
 			throw new NotImplementedException();
 		}
 		
-		public void Delete(T t)
+		public virtual void Delete(int id)
 		{
 			throw new NotImplementedException();
 		}
 		
-		public void Delete<U>(U t)
+		public virtual void Delete(T t)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public virtual void Delete<U>(U t)
 		{
 			throw new NotImplementedException();
 		}
