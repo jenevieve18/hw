@@ -342,13 +342,13 @@ et.ExerciseTypeSortOrder ASC",
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
 					var e = new Exercise();
-					e.Id = rs.GetInt32(6);
+					e.Id = GetInt32(rs, 6);
 					e.Image = GetString(rs, 5);
 					e.CurrentLanguage = new ExerciseLanguage {
-						IsNew = rs.GetBoolean(0),
-						ExerciseName = rs.GetString(8),
-						Time = rs.GetString(9),
-						Teaser = rs.GetString(10)
+						IsNew = GetBoolean(rs, 0),
+						ExerciseName = GetString(rs, 8),
+						Time = GetString(rs, 9),
+						Teaser = GetString(rs, 10)
 					};
 					e.Area = new ExerciseArea(GetInt32(rs, 4), new ExerciseAreaLanguage(GetString(rs, 3)));
 //					e.CurrentArea = new ExerciseAreaLanguage {
