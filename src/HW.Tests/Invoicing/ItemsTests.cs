@@ -1,5 +1,6 @@
 ﻿using System;
 using HW.Invoicing.Core.Repositories;
+using HW.Invoicing.Core.Repositories.Sql;
 using NUnit.Framework;
 
 namespace HW.Tests.Invoicing
@@ -7,6 +8,12 @@ namespace HW.Tests.Invoicing
 	[TestFixture]
 	public class ItemsTests
 	{
+		[SetUp]
+		public void Setup()
+		{
+			var v = new HW.Invoicing.Items(new SqlItemRepository());
+		}
+		
 		[Test]
 		public void TestIndex()
 		{

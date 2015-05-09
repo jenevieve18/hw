@@ -1,6 +1,7 @@
 ﻿
 using System;
 using HW.Invoicing.Core.Repositories;
+using HW.Invoicing.Core.Repositories.Sql;
 using NUnit.Framework;
 
 namespace HW.Tests.Invoicing
@@ -8,11 +9,37 @@ namespace HW.Tests.Invoicing
 	[TestFixture]
 	public class UsersTests
 	{
+		[SetUp]
+		public void Setup()
+		{
+			var v = new HW.Invoicing.Users(new SqlUserRepository());
+		}
+		
 		[Test]
 		public void TestIndex()
 		{
 			var v = new HW.Invoicing.Users(new UserRepositoryStub());
 			v.Index();
+		}
+		
+		[Test]
+		public void TestLogout()
+		{
+			var v = new HW.Invoicing.Logout();
+			v.LogOff();
+		}
+		
+		[Test]
+		public void TestDashboard()
+		{
+			var v = new HW.Invoicing.Dashboard(new UserRepositoryStub());
+		}
+		
+		[Test]
+		public void TestLogin()
+		{
+			var v = new HW.Invoicing.Default(new UserRepositoryStub());
+			v.Login();
 		}
 		
 		[Test]

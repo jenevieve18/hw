@@ -106,6 +106,10 @@
     <Compile Include="Helpers\PdfExporterTests.cs" />
     <Compile Include="Helpers\PresentationDocumentExporterTests.cs" />
     <Compile Include="Helpers\SessionHelperTests.cs" />
+    <Compile Include="Invoicing\CustomersTests.cs" />
+    <Compile Include="Invoicing\InvoicesTests.cs" />
+    <Compile Include="Invoicing\ItemsTests.cs" />
+    <Compile Include="Invoicing\UsersTests.cs" />
     <Compile Include="Models\DepartmentTests.cs" />
     <Compile Include="Models\GroupFactoryTests.cs" />
     <Compile Include="Models\HWListTests.cs" />
@@ -140,6 +144,14 @@
       <Project>{5772C97E-DD4A-464F-AE9B-9E7F33A4CA81}</Project>
       <Name>HW.Grp</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HW.Invoicing.Core\HW.Invoicing.Core.csproj">
+      <Project>{A6716128-0C54-400B-89E1-9A1FF89FD7D5}</Project>
+      <Name>HW.Invoicing.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HW.Invoicing\HW.Invoicing.csproj">
+      <Project>{25D9E7B1-76F4-4741-9CB2-FE5E364C126A}</Project>
+      <Name>HW.Invoicing</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HW.WebService\HW.WebService.csproj">
       <Project>{176B8B99-DA73-465A-9A96-9E1A0D500C24}</Project>
       <Name>HW.WebService</Name>
@@ -150,6 +162,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Invoicing" />
     <Folder Include="Services" />
   </ItemGroup>
   <ItemGroup>
