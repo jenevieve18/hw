@@ -8,6 +8,19 @@ namespace HW.Core.Repositories.Sql
 {
 	public class SqlExerciseRepository : BaseSqlRepository<Exercise>, IExerciseRepository
 	{
+		public void UpdateVariant(int id, string content)
+		{
+			string query = @"
+UPDATE ExerciseVariantLang SET ExerciseContent = @ExerciseContent 
+WHERE ExerciseVariantLangID = @ExerciseVariantLangID";
+			ExecuteNonQuery(
+				query,
+				"healthWatchSqlConnection",
+				new SqlParameter("@ExerciseContent", content),
+				new SqlParameter("@ExerciseVariantLangID", id)
+			);
+		}
+		
 		public void SaveStats(int ExerciseVariantLangID, int UID, int UPID)
 		{
 			string query = string.Format(
@@ -110,7 +123,7 @@ WHERE evl.ExerciseVariantLangID = {0}",
 							Exercise = new Exercise {
 								Languages = new [] { new ExerciseLanguage { ExerciseName = GetString(rs, 0) }},
 								PrintOnBottom = GetInt32(rs, 4) == 1,
-								ReplacementHead = GetString(rs, 5),
+								ReplacementHead = GetString(rs, 5, ""),
 							},
 							Type = GetObject<ExerciseType>(rs, 2)
 						},

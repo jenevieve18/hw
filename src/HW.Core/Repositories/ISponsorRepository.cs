@@ -11,6 +11,12 @@ namespace HW.Core.Repositories
 		void UpdateDeletedAdmin(int sponsorId, int sponsorAdminId);
 		
 		void SaveSponsorAdminSessionFunction(int sessionId, int functionId, DateTime date);
+		
+		Sponsor ReadSponsor3(int sponsorID);
+		
+		IList<SponsorBackgroundQuestion> FindBySponsor(int sponsorId);
+		
+		IList<SponsorProjectRoundUnit> FindBySponsorAndLanguage(int sponsorId, int langId);
 	}
 	
 	public interface ISponsorAdminRepository : IBaseRepository<SponsorAdmin>
@@ -35,6 +41,35 @@ namespace HW.Core.Repositories
 		
 		public void SaveSponsorAdminSessionFunction(int sessionId, int functionId, DateTime date)
 		{
+		}
+		
+		public Sponsor ReadSponsor3(int sponsorID)
+		{
+			return new Sponsor {
+				SuperSponsor = new SuperSponsor {
+					Languages = new [] {
+						new SuperSponsorLanguage { Header = "Header1" }
+					}
+				}
+			};
+		}
+		
+		public IList<SponsorBackgroundQuestion> FindBySponsor(int sponsorId)
+		{
+			return new[] {
+				new SponsorBackgroundQuestion {},
+				new SponsorBackgroundQuestion {},
+				new SponsorBackgroundQuestion {}
+			};
+		}
+		
+		public IList<SponsorProjectRoundUnit> FindBySponsorAndLanguage(int sponsorId, int langId)
+		{
+			return new[] {
+				new SponsorProjectRoundUnit {},
+				new SponsorProjectRoundUnit {},
+				new SponsorProjectRoundUnit {}
+			};
 		}
 	}
 	

@@ -15,18 +15,11 @@ namespace HW.Core.Models
 		public virtual IList<ExerciseLanguage> Languages { get; set; }
 		public virtual IList<ExerciseVariant> Variants { get; set; }
 		public virtual bool PrintOnBottom { get; set; }
-		public virtual string CurrentAreaCategoryName {
+		public virtual string AreaCategoryName {
 			get {
-//				return string.Format("{0}{1}", CurrentArea.AreaName, CurrentCategory.CategoryName != "" ? " - " + CurrentCategory.CategoryName : "");
-				return string.Format("{0}{1}", Area.SelectedLanguage.AreaName, Category.SelectedLanguage.CategoryName != "" ? " - " + Category.SelectedLanguage.CategoryName : "");
+				return string.Format("{0}{1}", Area.AreaName, Category.CategoryName != "" ? " - " + Category.SelectedLanguage.CategoryName : "");
 			}
 		}
-		
-		public virtual ExerciseLanguage CurrentLanguage { get; set; }
-//		public virtual ExerciseAreaLanguage CurrentArea { get; set; }
-//		public virtual ExerciseCategoryLanguage CurrentCategory { get; set; }
-		public virtual ExerciseVariantLanguage CurrentVariant { get; set; }
-		public virtual ExerciseTypeLanguage CurrentType { get; set; }
 		
 		public virtual ExerciseLanguage SelectedLanguage {
 			get {
@@ -36,6 +29,10 @@ namespace HW.Core.Models
 				return null;
 			}
 		}
+		
+		public virtual ExerciseLanguage CurrentLanguage { get; set; }
+		public virtual ExerciseVariantLanguage CurrentVariant { get; set; }
+		public virtual ExerciseTypeLanguage CurrentType { get; set; }
 		
 		public Exercise()
 		{
@@ -71,6 +68,14 @@ namespace HW.Core.Models
 					return Languages[0];
 				}
 				return null;
+			}
+		}
+		public string AreaName {
+			get {
+				if (SelectedLanguage != null) {
+					return SelectedLanguage.AreaName;
+				}
+				return "";
 			}
 		}
 		
@@ -116,6 +121,14 @@ namespace HW.Core.Models
 					return Languages[0];
 				}
 				return null;
+			}
+		}
+		public virtual string CategoryName {
+			get {
+				if (SelectedLanguage != null) {
+					return SelectedLanguage.CategoryName;
+				}
+				return "";
 			}
 		}
 		

@@ -6,7 +6,7 @@ using HW.Core.Models;
 
 namespace HW.Core.Repositories.Sql
 {
-	public class SqlPlotTypeRepository : BaseSqlRepository<PlotType>
+	public class SqlPlotTypeRepository : BaseSqlRepository<PlotType>, IPlotTypeRepository
 	{
 		public override IList<PlotType> FindAll()
 		{

@@ -6,7 +6,7 @@ using HW.Core.Models;
 
 namespace HW.Core.Repositories.Sql
 {
-	public class SqlReportRepository : BaseSqlRepository<Report>//, IReportRepository
+	public class SqlReportRepository : BaseSqlRepository<Report>, IReportRepository
 	{
 		public ReportPartComponent ReadComponentByPartAndLanguage(int reportPartID, int langID)
 		{

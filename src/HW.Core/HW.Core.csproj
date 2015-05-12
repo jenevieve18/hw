@@ -86,10 +86,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppContext.cs" />
-    <Compile Include="FromHW\Chart.cs" />
-    <Compile Include="FromHW\Db.cs" />
-    <Compile Include="FromHW\ErrorHandling.cs" />
-    <Compile Include="FromHW\Graph.cs" />
     <Compile Include="Helpers\BootstrapHelper.cs" />
     <Compile Include="Helpers\GeneratedClass.cs" />
     <Compile Include="Helpers\ConvertHelper.cs" />
@@ -147,6 +143,9 @@
     <Compile Include="Repositories\IDepartmentRepository.cs" />
     <Compile Include="Repositories\IExerciseRepository.cs" />
     <Compile Include="Repositories\IManagerFunctionRepository.cs" />
+    <Compile Include="Repositories\IPlotTypeRepository.cs" />
+    <Compile Include="Repositories\IProjectRepository.cs" />
+    <Compile Include="Repositories\IReportRepository.cs" />
     <Compile Include="Repositories\IRepositoryFactory.cs" />
     <Compile Include="Repositories\ISponsorRepository.cs" />
     <Compile Include="Repositories\Sql\BaseSqlRepository.cs" />

@@ -19,6 +19,8 @@ namespace HW.Core.Repositories
 		IList<ExerciseCategoryLanguage> FindCategories(int areaID, int categoryID, int langID);
 		
 		IList<ExerciseAreaLanguage> FindAreas(int areaID, int langID);
+		
+		void SaveStats(int ExerciseVariantLangID, int UID, int UPID);
 	}
 	
 	public class ExerciseRepositoryStub : BaseRepositoryStub<Exercise>, IExerciseRepository
@@ -35,7 +37,12 @@ namespace HW.Core.Repositories
 		
 		public ExerciseVariantLanguage ReadExerciseVariant(int exerciseVariantLangID)
 		{
-			throw new NotImplementedException();
+			return new ExerciseVariantLanguage {
+				Variant = new ExerciseVariant {
+					Exercise = new Exercise { },
+					Type = new ExerciseType { }
+				}
+			};
 		}
 		
 		public ExerciseLanguage Read(int id, int langID)
@@ -74,6 +81,10 @@ namespace HW.Core.Repositories
 					new ExerciseAreaLanguage { Area = new ExerciseArea { Id = 3 }, AreaName = "Name3" },
 				}
 			);
+		}
+		
+		public void SaveStats(int ExerciseVariantLangID, int UID, int UPID)
+		{
 		}
 	}
 }

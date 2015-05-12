@@ -6,7 +6,7 @@ using HW.Core.Models;
 
 namespace HW.Core.Repositories.Sql
 {
-	public class SqlProjectRepository : BaseSqlRepository<Project>//, IProjectRepository
+	public class SqlProjectRepository : BaseSqlRepository<Project>, IProjectRepository
 	{
 		public void UpdateProjectRoundUser(int projectRoundUnitID, int proejctRoundUserID)
 		{
