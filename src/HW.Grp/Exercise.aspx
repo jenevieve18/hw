@@ -138,7 +138,7 @@
 					<%= R.Str(lid, "exercises.sorting", "Exercises - Sorting:")%>
                 </span>
 			    <div class="forms">
-                    <asp:PlaceHolder ID="Sort" runat="server" />
+                    <%-- <asp:PlaceHolder ID="Sort" runat="server" /> --%>
                     <%= HtmlHelper.AnchorSpan(R.Str(lid, "random", "Random"), SORTX == 0 ? "javascript:;" : "exercise.aspx?SORT=0" + AdditionalSortQuery + "#filter", SORTX == 0 ? "class='active'" : "")%>
                     <%= HtmlHelper.AnchorSpan(R.Str(lid, "popularity", "Popularity"), SORTX == 1 ? "javascript:;" : "exercise.aspx?SORT=1" + AdditionalSortQuery + "#filter", SORTX == 1 ? "class='active'" : "")%>
                     <%= HtmlHelper.AnchorSpan(R.Str(lid, "alphabetical", "Alphabethical"), SORTX == 2 ? "javascript:;" : "exercise.aspx?SORT=2" + AdditionalSortQuery + "#filter", SORTX == 2 ? "class='active'" : "")%>
@@ -151,14 +151,14 @@
 			</div>
 				  
 			<div class="contentlist">
-				<asp:PlaceHolder ID="ExerciseList" runat="server" />
-                <!--<% foreach (var l in exercises) { %>
+				<%--<asp:PlaceHolder ID="ExerciseList" runat="server" />--%>
+                <% foreach (var l in exercises) { %>
                     <div class="item">
                         <div class="overview"></div>
                         <div class="detail">
                             <div class="image"><img src="<%= l.Image %>" width="121" height="100"></div>
                             <div class="time"><%= l.CurrentLanguage.Time %><span class="time-end"></span></div>
-                            <div class="descriptions"><%= l.ToString() %></div>
+                            <div class="descriptions"><%= l.AreaCategoryName %></div>
                             <h2><%= l.CurrentLanguage.ExerciseName %></h2>
                             <p><%= l.CurrentLanguage.Teaser %></p>
                             <div>
@@ -178,7 +178,7 @@
                             <div class="bottom">&nbsp;</div>
                         </div>
                     </div>
-                <% } %>-->
+                <% } %>
 			</div><!-- end .contentlist -->
             <!--<div class="disclaimer">
 				<div class="paginationgroup">Sida 1 av 13
