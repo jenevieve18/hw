@@ -106,6 +106,7 @@
     <Compile Include="Helpers\PdfExporterTests.cs" />
     <Compile Include="Helpers\PresentationDocumentExporterTests.cs" />
     <Compile Include="Helpers\SessionHelperTests.cs" />
+    <Compile Include="HWSite\ExerciseShowTests.cs" />
     <Compile Include="Invoicing\CustomersTests.cs" />
     <Compile Include="Invoicing\InvoicesTests.cs" />
     <Compile Include="Invoicing\ItemsTests.cs" />
@@ -156,6 +157,10 @@
       <Project>{176B8B99-DA73-465A-9A96-9E1A0D500C24}</Project>
       <Name>HW.WebService</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HW\HW.csproj">
+      <Project>{24292052-F47B-4375-99F7-D8DACA114D49}</Project>
+      <Name>HW</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -163,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Invoicing" />
+    <Folder Include="HWSite" />
     <Folder Include="Services" />
   </ItemGroup>
   <ItemGroup>

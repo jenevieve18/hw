@@ -1,6 +1,7 @@
 ﻿using System;
 using HW.Core;
 using HW.Core.Repositories;
+using HW.Core.Services;
 using NUnit.Framework;
 
 namespace HW.Tests.Grp
@@ -9,15 +10,17 @@ namespace HW.Tests.Grp
 	public class ManagersTests
 	{
 		HW.Grp.Managers v;
-		ISponsorRepository r;
+//		ISponsorRepository r;
 		
 		[SetUp]
 		public void Setup()
 		{
-			AppContext.SetRepositoryFactory(new RepositoryFactoryStub());
+//			AppContext.SetRepositoryFactory(new RepositoryFactoryStub());
 			
 			v = new HW.Grp.Managers();
-			r = new SponsorRepositoryStub();
+			
+			v = new HW.Grp.Managers(new ManagerService(new ManagerFunctionRepositoryStub(), new SponsorRepositoryStub(), new SponsorAdminRepositoryStub()));
+//			r = new SponsorRepositoryStub();
 		}
 		
 		[Test]
@@ -33,17 +36,18 @@ namespace HW.Tests.Grp
 		}
 		
 		[Test]
-		public void TestTryDelete()
+		public void TestDelete()
 		{
-			v.TryDelete(-1, -1);
-			v.TryDelete(1, 1);
+			v.Delete(-1, -1);
+			v.Delete(1, 1);
 		}
 		
 		[Test]
-		public void TestListSponsorAdmins()
+		public void TestIndex()
 		{
-			v.SponsorAdmins = r.FindAdminBySponsor(1, 1, "ASC");
-			Assert.AreEqual(3, v.SponsorAdmins.Count);
+//			v.SponsorAdmins = r.FindAdminBySponsor(1, 1, "ASC");
+			v.Index(1, 1, 1, 1);
+//			Assert.AreEqual(3, v.SponsorAdmins.Count);
 		}
 	}
 }

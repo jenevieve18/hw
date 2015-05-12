@@ -18,6 +18,13 @@ namespace HW.Tests.Repositories
 		}
 		
 		[Test]
+		public void a()
+		{
+			var f = new Form1();
+			f.ShowDialog();
+		}
+		
+		[Test]
 		public void TestFindByAreaAndCategory()
 		{
 			r.FindByAreaAndCategory(1, 1, 1, 1);

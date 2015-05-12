@@ -8,23 +8,21 @@ namespace HW.Tests.Invoicing
 	[TestFixture]
 	public class InvoicesTests
 	{
-		[SetUp]
-		public void Setup()
-		{
-			var v = new HW.Invoicing.Invoices(new SqlInvoiceRepository());
-		}
-		
 		[Test]
 		public void TestIndex()
 		{
-			var v = new HW.Invoicing.Invoices(new InvoiceRepositoryStub());
+			var v = new HW.Invoicing.Invoices();
+			
+			v = new HW.Invoicing.Invoices(new InvoiceRepositoryStub());
 			v.Index();
 		}
 		
 		[Test]
 		public void TestAdd()
 		{
-			var v = new HW.Invoicing.InvoiceAdd(new InvoiceRepositoryStub());
+			var v = new HW.Invoicing.InvoiceAdd();
+			
+			v = new HW.Invoicing.InvoiceAdd(new InvoiceRepositoryStub());
 			v.Add();
 		}
 		

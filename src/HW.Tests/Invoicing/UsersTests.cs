@@ -9,16 +9,12 @@ namespace HW.Tests.Invoicing
 	[TestFixture]
 	public class UsersTests
 	{
-		[SetUp]
-		public void Setup()
-		{
-			var v = new HW.Invoicing.Users(new SqlUserRepository());
-		}
-		
 		[Test]
 		public void TestIndex()
 		{
-			var v = new HW.Invoicing.Users(new UserRepositoryStub());
+			var v = new HW.Invoicing.Users();
+			
+			v = new HW.Invoicing.Users(new UserRepositoryStub());
 			v.Index();
 		}
 		
@@ -32,34 +28,44 @@ namespace HW.Tests.Invoicing
 		[Test]
 		public void TestDashboard()
 		{
-			var v = new HW.Invoicing.Dashboard(new UserRepositoryStub());
+			var v = new HW.Invoicing.Dashboard();
+			
+			v = new HW.Invoicing.Dashboard(new UserRepositoryStub());
 		}
 		
 		[Test]
 		public void TestLogin()
 		{
-			var v = new HW.Invoicing.Default(new UserRepositoryStub());
+			var v = new HW.Invoicing.Default();
+			
+			v = new HW.Invoicing.Default(new UserRepositoryStub());
 			v.Login();
 		}
 		
 		[Test]
 		public void TestAdd()
 		{
-			var v = new HW.Invoicing.UserAdd(new UserRepositoryStub());
+			var v = new HW.Invoicing.UserAdd();
+			
+			v = new HW.Invoicing.UserAdd(new UserRepositoryStub());
 			v.Add();
 		}
 		
 		[Test]
 		public void TestEdit()
 		{
-			var v = new HW.Invoicing.UserEdit(new UserRepositoryStub());
+			var v = new HW.Invoicing.UserEdit();
+			
+			v = new HW.Invoicing.UserEdit(new UserRepositoryStub());
 			v.Edit(1);
 		}
 		
 		[Test]
 		public void TestDelete()
 		{
-			var v = new HW.Invoicing.UserDelete(new UserRepositoryStub());
+			var v = new HW.Invoicing.UserDelete();
+			
+			v = new HW.Invoicing.UserDelete(new UserRepositoryStub());
 			v.Delete(1);
 		}
 	}
