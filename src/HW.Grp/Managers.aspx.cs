@@ -18,18 +18,28 @@ namespace HW.Grp
 		protected IList<SponsorAdmin> sponsorAdmins;
 		protected int lid;
 		protected int sort;
-		ManagerService service = new ManagerService(
-			AppContext.GetRepositoryFactory().CreateManagerFunctionRepository(),
-			AppContext.GetRepositoryFactory().CreateSponsorRepository(),
-			AppContext.GetRepositoryFactory().CreateSponsorAdminRepository()
-		);
+//		ManagerService service = new ManagerService(
+//			AppContext.GetRepositoryFactory().CreateManagerFunctionRepository(),
+//			AppContext.GetRepositoryFactory().CreateSponsorRepository(),
+//			AppContext.GetRepositoryFactory().CreateSponsorAdminRepository()
+//		);
+		ManagerService service;
 		
-		public IList<SponsorAdmin> SponsorAdmins {
-			get { return sponsorAdmins; }
-			set { sponsorAdmins = value; }
+		public Managers() : this(new ManagerService(new SqlManagerFunctionRepository(), new SqlSponsorRepository(), new SqlSponsorAdminRepository()))
+		{
 		}
 		
-		public void TryDelete(int sponsorID, int sponsorAdminIDToBeDeleted)
+		public Managers(ManagerService service)
+		{
+			this.service = service;
+		}
+		
+//		public IList<SponsorAdmin> SponsorAdmins {
+//			get { return sponsorAdmins; }
+//			set { sponsorAdmins = value; }
+//		}
+//
+		public void Delete(int sponsorID, int sponsorAdminIDToBeDeleted)
 		{
 			if (sponsorAdminIDToBeDeleted != -1) {
 				service.UpdateDeletedAdmin(sponsorID, sponsorAdminIDToBeDeleted);
@@ -60,9 +70,16 @@ namespace HW.Grp
 			lid = ConvertHelper.ToInt32(Session["lid"], 1);
 			sort = ConvertHelper.ToInt32(Request.QueryString["sort"]);
 			
-			TryDelete(sponsorID, ConvertHelper.ToInt32(Request.QueryString["Delete"], -1));
+			Delete(sponsorID, ConvertHelper.ToInt32(Request.QueryString["Delete"], -1));
 			
-			SponsorAdmins = service.FindAdminBySponsor(sponsorID, sponsorAdminID, sort, lid);
+//			SponsorAdmins = service.FindAdminBySponsor(sponsorID, sponsorAdminID, sort, lid);
+			
+			Index(sponsorID, sponsorAdminID, sort, lid);
+		}
+		
+		public void Index(int sponsorID, int sponsorAdminID, int sort, int lid)
+		{
+			sponsorAdmins = service.FindAdminBySponsor(sponsorID, sponsorAdminID, sort, lid);
 		}
 	}
 }

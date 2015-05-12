@@ -23,14 +23,32 @@ namespace HW.Grp
 		IList<SponsorBackgroundQuestion> questions;
 		int sponsorID = 0;
 		int sponsorAdminID = 0;
-		SqlProjectRepository projRepository = new SqlProjectRepository();
-		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
-		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
-		SqlReportRepository reportRepository = new SqlReportRepository();
-		SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
+//		SqlProjectRepository projRepository = new SqlProjectRepository();
+//		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
+//		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
+//		SqlReportRepository reportRepository = new SqlReportRepository();
+//		SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
+		IProjectRepository projRepository;
+		ISponsorRepository sponsorRepository;
+		IDepartmentRepository departmentRepository;
+		IReportRepository reportRepository;
+		IPlotTypeRepository plotRepository;
         protected int lid;
         protected DateTime startDate;
         protected DateTime endDate;
+        
+        public Stats() : this(new SqlProjectRepository(), new SqlSponsorRepository(), new SqlDepartmentRepository(), new SqlReportRepository(), new SqlPlotTypeRepository())
+        {
+        }
+        
+        public Stats(IProjectRepository projRepository, ISponsorRepository sponsorRepository, IDepartmentRepository departmentRepository, IReportRepository reportRepository, IPlotTypeRepository plotRepository)
+        {
+        	this.projRepository = projRepository;
+        	this.sponsorRepository = sponsorRepository;
+        	this.departmentRepository = departmentRepository;
+        	this.reportRepository = reportRepository;
+        	this.plotRepository = plotRepository;
+        }
         
 		public IList<SponsorProjectRoundUnit> ProjectRoundUnits {
 			set {
@@ -135,20 +153,15 @@ namespace HW.Grp
         {
             return lid == 1 ? "sv" : "en";
         }
-
-		protected void Page_Load(object sender, EventArgs e)
-		{
-			sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
-            sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
-            
-            HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Statistics), "default.aspx", true);
-            
-            lid = ConvertHelper.ToInt32(Session["lid"], 1);
-			
-            plotTypes = plotRepository.FindByLanguage(lid);
-			
-			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Statistics, DateTime.Now);
-			if (sponsorID != 0) {
+        
+        public void SaveAdminSession(int SponsorAdminSessionID, int ManagerFunction, DateTime date)
+        {
+        	sponsorRepository.SaveSponsorAdminSessionFunction(SponsorAdminSessionID, ManagerFunction, date);
+        }
+        
+        public void Index(int sponsorID, int sponsorAdminID)
+        {
+        	if (sponsorID != 0) {
 				if (!IsPostBack) {
 					
 					startDate = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day);
@@ -180,6 +193,54 @@ namespace HW.Grp
 			} else {
 				Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
+        }
+
+		protected void Page_Load(object sender, EventArgs e)
+		{
+			sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
+            sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
+            
+            HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Statistics), "default.aspx", true);
+            
+            lid = ConvertHelper.ToInt32(Session["lid"], 1);
+			
+            plotTypes = plotRepository.FindByLanguage(lid);
+			
+            SaveAdminSession(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Statistics, DateTime.Now);
+            Index(sponsorID, sponsorAdminID);
+//			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Statistics, DateTime.Now);
+//			if (sponsorID != 0) {
+//				if (!IsPostBack) {
+//					
+//					startDate = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day);
+//					endDate = DateTime.Now;
+//					
+//					GroupBy.Items.Clear();
+//					GroupBy.Items.Add(new ListItem(R.Str(lid, "week.one", "One week"), "1"));
+//					GroupBy.Items.Add(new ListItem(R.Str(lid, "week.two.even", "Two weeks, start with even"), "7"));
+//					GroupBy.Items.Add(new ListItem(R.Str(lid, "week.two.odd", "Two weeks, start with odd"), "2"));
+//					GroupBy.Items.Add(new ListItem(R.Str(lid, "month.one", "One month"), "3"));
+//					GroupBy.Items.Add(new ListItem(R.Str(lid, "month.three", "Three months"), "4"));
+//					GroupBy.Items.Add(new ListItem(R.Str(lid, "month.six", "Six months"), "5"));
+//					GroupBy.Items.Add(new ListItem(R.Str(lid, "year.one", "One year"), "6"));
+//					
+//					Grouping.Items.Clear();
+//					Grouping.Items.Add(new ListItem(R.Str(lid, "", "< none >"), "0"));
+//					Grouping.Items.Add(new ListItem(R.Str(lid, "users.unit", "Users on unit"), "1"));
+//					Grouping.Items.Add(new ListItem(R.Str(lid, "users.unit.subunit", "Users on unit+subunits"), "2"));
+//					Grouping.Items.Add(new ListItem(R.Str(lid, "background.variable", "Background variable"), "3"));
+//					
+//					ProjectRoundUnits = sponsorRepository.FindBySponsorAndLanguage(sponsorID, lid);
+//
+//					BackgroundQuestions = sponsorRepository.FindBySponsor(sponsorID);
+//				} else {
+//					startDate = GetDateFromString(Request.Form["startDate"]);
+//					endDate = GetDateFromString(Request.Form["endDate"]);
+//				}
+//				Departments = departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID);
+//			} else {
+//				Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+//			}
 			Execute.Click += new EventHandler(Execute_Click);
 		}
 		
