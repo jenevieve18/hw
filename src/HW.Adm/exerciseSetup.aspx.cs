@@ -54,7 +54,7 @@ public partial class exerciseSetup : System.Web.UI.Page
                 {
                     case 1:
                 		CKEditorControl tb = new CKEditorControl();
-//                        TextBox tb = new TextBox();
+//                        TextBox tb = new TextBox(); 
                         tb.ID = "EV" + rs.GetInt32(0) + "L" + rs2.GetInt32(0);
 //                        tb.TextMode = TextBoxMode.MultiLine;
                         tb.Rows = 20;
