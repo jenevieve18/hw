@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using CKEditor.NET;
 
 public partial class exerciseSetup : System.Web.UI.Page
 {
@@ -52,9 +53,10 @@ public partial class exerciseSetup : System.Web.UI.Page
                 switch (rs.GetInt32(1))
                 {
                     case 1:
-                        TextBox tb = new TextBox();
+                		CKEditorControl tb = new CKEditorControl();
+//                        TextBox tb = new TextBox();
                         tb.ID = "EV" + rs.GetInt32(0) + "L" + rs2.GetInt32(0);
-                        tb.TextMode = TextBoxMode.MultiLine;
+//                        tb.TextMode = TextBoxMode.MultiLine;
                         tb.Rows = 20;
                         tb.Width = 800;
                         ExerciseVariant.Controls.Add(tb);
