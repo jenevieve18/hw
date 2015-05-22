@@ -13,8 +13,8 @@
 	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 
-	<link rel="stylesheet" href="~/css/bootstrap.css"/>
-	<link rel="stylesheet" href="~/css/bootstrap-responsive.css"/>
+	<link rel="stylesheet" href="css/bootstrap.css"/>
+	<link rel="stylesheet" href="css/bootstrap-responsive.css"/>
     <style type="text/css">
         body {
             padding-top: 40px;

@@ -14,7 +14,7 @@
 <script language="JavaScript">    window.history.forward(1);</script>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="assets/js/jquery-1.10.2.js"></script>
 <!--<script type="text/javascript">
     $(document).ready(function () {
         var descriptionS = $("#submenu .description").html();
@@ -47,9 +47,9 @@
         window.location = 'default.aspx';
     }
 </script>
-<link href="App_Themes/Grp/960.css" type="text/css" rel="stylesheet">
-<link href="App_Themes/Grp/admin.css" type="text/css" rel="stylesheet">
-<link href="App_Themes/Grp/site.css" type="text/css" rel="stylesheet">
+<link href="assets/css/960.css" type="text/css" rel="stylesheet">
+<link href="assets/css/admin.css" type="text/css" rel="stylesheet">
+<link href="assets/css/site.css" type="text/css" rel="stylesheet">
 
 </head>
 <body>

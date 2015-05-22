@@ -18,10 +18,25 @@ namespace HW.Grp
 	{
 		protected string errorMessage = "";
 		SqlManagerFunctionRepository functionRepository = new SqlManagerFunctionRepository();
-		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
-		SqlNewsRepository newsRepository = new SqlNewsRepository();
+		ISponsorRepository sponsorRepository;
+		INewsRepository newsRepository;
 		protected IList<AdminNews> adminNews;
         protected int lid;
+        
+        public Default() : this(new SqlSponsorRepository(), new SqlNewsRepository())
+        {
+        }
+        
+        public Default(ISponsorRepository sponsorRepository, INewsRepository newsRepository)
+        {
+        	this.sponsorRepository = sponsorRepository;
+        	this.newsRepository = newsRepository;
+        }
+        
+        public void Index()
+        {
+        	adminNews = newsRepository.FindTop3AdminNews();
+        }
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -31,7 +46,7 @@ namespace HW.Grp
             }
             lid = ConvertHelper.ToInt32(Session["lid"], 1);
 
-			adminNews = newsRepository.FindTop3AdminNews();
+            Index();
 			
 			bool login = false;
 			SponsorAdmin s = null;

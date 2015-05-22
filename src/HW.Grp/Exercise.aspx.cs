@@ -23,8 +23,6 @@ namespace HW.Grp
 		protected int EAID;
 		protected string sortQS;
 		protected int ECID;
-//		protected SqlExerciseRepository exerciseRepository = new SqlExerciseRepository();
-//		protected SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		protected IList<ExerciseCategoryLanguage> categories;
 		protected IList<ExerciseAreaLanguage> areas;
 		protected IList<HW.Core.Models.Exercise> exercises;

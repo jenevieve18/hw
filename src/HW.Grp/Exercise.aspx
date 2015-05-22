@@ -163,7 +163,7 @@
                             <p><%= l.CurrentLanguage.Teaser %></p>
                             <div>
                                 <% string t = string.Format(
-                                        "JavaScript:void(window.open('{0}exerciseShow.aspx?SID={1}&AUID={2}&ExerciseVariantLangID={3}','EVLID{3}','scrollbars=yes,resizable=yes,width={4},height={5}'));",
+                                        "JavaScript:void(window.open('ExerciseShow.aspx?SID={1}&AUID={2}&ExerciseVariantLangID={3}','EVLID{3}','scrollbars=yes,resizable=yes,width={4},height={5}'));",
                                         ConfigurationManager.AppSettings["healthWatchURL"],
                                         sponsorID,
                                         sponsorAdminID,
