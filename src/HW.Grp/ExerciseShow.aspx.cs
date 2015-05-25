@@ -2,29 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Services;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Core.Helpers;
 using HW.Core.Models;
 using HW.Core.Repositories;
 using HW.Core.Repositories.Sql;
+using HW.Core.Services;
+using Newtonsoft.Json;
 
 namespace HW.Grp
 {
-    public partial class ExerciseShow : System.Web.UI.Page
-    {
-        protected string replacementHead = "";
-        protected string headerText = "";
-        protected string logos = "";
-        protected int LID = 2;
-        protected ExerciseVariantLanguage evl;
+	public partial class ExerciseShow : System.Web.UI.Page
+	{
+		protected string replacementHead = "";
+		protected string headerText = "";
+		protected string logos = "";
+		protected int LID = 2;
+		protected ExerciseVariantLanguage evl;
+		protected int EVLID;
+		protected int SID;
 
-        ISponsorRepository sr;
-        IExerciseRepository er;
-        
-        public ExerciseShow() : this(new SqlSponsorRepository(), new SqlExerciseRepository())
-        {
-        }
+		ISponsorRepository sr;
+		IExerciseRepository er;
+		
+		public ExerciseShow() : this(new SqlSponsorRepository(), new SqlExerciseRepository())
+		{
+		}
 		
 		public ExerciseShow(ISponsorRepository sr, IExerciseRepository er)
 		{
@@ -32,9 +38,9 @@ namespace HW.Grp
 			this.er = er;
 		}
 
-        protected void Page_Load(object sender, EventArgs e)
-        {
-        	LID = ConvertHelper.ToInt32(Session["LID"], ConvertHelper.ToInt32(Request.QueryString["LID"], 2));
+		protected void Page_Load(object sender, EventArgs e)
+		{
+			LID = ConvertHelper.ToInt32(Session["LID"], ConvertHelper.ToInt32(Request.QueryString["LID"], 2));
 
 			int UID = 0, UPID = 0;
 			if (HttpContext.Current.Request.QueryString["AUID"] != null) {
@@ -55,13 +61,45 @@ namespace HW.Grp
 				UPID = Convert.ToInt32(HttpContext.Current.Session["UserProfileID"]);
 			}
 
+			EVLID = HW.Core.Helpers.ConvertHelper.ToInt32(Request.QueryString["ExerciseVariantLangID"]);
 			if (UID == 0 || HttpContext.Current.Request.QueryString["ExerciseVariantLangID"] == null) {
 				ClientScript.RegisterStartupScript(this.GetType(), "CLOSE_WINDOW", "<script language='JavaScript'>window.close();</script>");
+			} else {
+				Show(EVLID, UID, UPID);
 			}
-			else {
-				Show(HW.Core.Helpers.ConvertHelper.ToInt32(Request.QueryString["ExerciseVariantLangID"]), UID, UPID);
+		}
+		
+		
+		[WebMethod]
+		public static string Save(string[] dataInputs, int sponsorID, int exerciseVariantLangID)
+		{
+			try {
+				var r = new SqlSponsorRepository();
+				r.SaveExerciseDataInputs(dataInputs, sponsorID, exerciseVariantLangID);
+				return "Exercise Data Inputs Saved.";
+			} catch (Exception ex) {
+				LoggingService.Error(ex.Message);
+				throw ex;
 			}
-        }
+		}
+		
+		[WebMethod]
+		[ScriptMethod(UseHttpGet = true)]
+		public static IList<object> Read(int sponsorID, int exerciseVariantLangID)
+		{
+			try {
+				var r = new SqlSponsorRepository();
+				var inputs = r.FindSponsorExerciseDataInputs(sponsorID, exerciseVariantLangID);
+				var data = new List<object>();
+				foreach (var i in inputs) {
+					data.Add(new { content = i.Content });
+				}
+				return data;
+			} catch (Exception ex) {
+				LoggingService.Error(ex.Message);
+				throw ex;
+			}
+		}
 		
 		public void Show(int ExerciseVariantLangID, int UID, int UPID)
 		{
@@ -81,6 +119,7 @@ namespace HW.Grp
 		
 		public void SetSponsor(int SID)
 		{
+			this.SID = SID;
 			var s = sr.ReadSponsor3(SID);
 			if (s != null) {
 				if (s.HasSuperSponsor) {
@@ -132,5 +171,5 @@ namespace HW.Grp
 				);
 			}
 		}
-    }
+	}
 }
