@@ -31,7 +31,7 @@ namespace HW.Core.Models
 //				if (Sponsor.LoginWeekday == -1) {
 //					return "OFF";
 //				}
-			} else if (Sponsor.LoginWeekday == -1) {
+			} else if (Sponsor != null && Sponsor.LoginWeekday == -1) {
 //				return "OFF";
 				return loginWeekdays[Sponsor.LoginWeekday];
 			}
