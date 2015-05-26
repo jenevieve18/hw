@@ -7,7 +7,7 @@ using HW.Core.Models;
 
 namespace HW.Core.Repositories.Sql
 {
-	public class SqlNewsRepository : BaseSqlRepository<News>//, INewsRepository
+	public class SqlNewsRepository : BaseSqlRepository<News>, INewsRepository
 	{
 		public SqlNewsRepository()
 		{
