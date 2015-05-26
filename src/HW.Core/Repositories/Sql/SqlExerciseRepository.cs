@@ -363,11 +363,7 @@ et.ExerciseTypeSortOrder ASC",
 						Time = GetString(rs, 9),
 						Teaser = GetString(rs, 10)
 					};
-					e.Area = new ExerciseArea(GetInt32(rs, 4), new ExerciseAreaLanguage(GetString(rs, 3)));
-//					e.CurrentArea = new ExerciseAreaLanguage {
-//						Id = rs.GetInt32(4),
-//						AreaName = rs.GetString(3)
-//					};
+					e.Area = new ExerciseArea(GetInt32(rs, 4), new ExerciseAreaLanguage(GetString(rs, 3, "")));
 					e.CurrentVariant = new ExerciseVariantLanguage {
 						Id = GetInt32(rs, 2),
 						File = GetString(rs, 11),
@@ -380,10 +376,7 @@ et.ExerciseTypeSortOrder ASC",
 						TypeName = GetString(rs, 17),
 						SubTypeName = GetString(rs, 18)
 					};
-					e.Category = new ExerciseCategory(new ExerciseCategoryLanguage(GetString(rs, 19)));
-//					e.CurrentCategory = new ExerciseCategoryLanguage {
-//						CategoryName = GetString(rs, 19)
-//					};
+					e.Category = new ExerciseCategory(new ExerciseCategoryLanguage(GetString(rs, 19, "")));
 					exercises.Add(e);
 				}
 			}

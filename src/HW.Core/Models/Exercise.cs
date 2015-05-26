@@ -17,7 +17,7 @@ namespace HW.Core.Models
 		public virtual bool PrintOnBottom { get; set; }
 		public virtual string AreaCategoryName {
 			get {
-				return string.Format("{0}{1}", Area.AreaName, Category.CategoryName != "" ? " - " + Category.SelectedLanguage.CategoryName : "");
+				return string.Format("{0}{1}", Area.AreaName, Category.CategoryName != "" ? " - " + Category.CategoryName : "");
 			}
 		}
 		
