@@ -104,6 +104,84 @@ UPDATE SponsorExtendedSurvey SET FinishedLastSent = GETDATE() WHERE SponsorExten
 			);
 			Db.exec(query, "healthWatchSqlConnection");
 		}
+		
+		public void SaveExerciseDataInputs(string[] dataInputs, int sponsorID, int exerciseVariantLangID)
+		{
+			string query = string.Format(
+				@"
+SELECT TOP 1 *
+FROM SponsorExerciseDataInput
+WHERE SponsorID = @SponsorID
+AND ExerciseVariantLangID = @ExerciseVariantLangID"
+			);
+			bool shouldClearFirst = false;
+			using (SqlDataReader rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@SponsorID", sponsorID), new SqlParameter("@ExerciseVariantLangID", exerciseVariantLangID))) {
+				if (rs.Read()) {
+					shouldClearFirst = true;
+				}
+			}
+			
+			if (shouldClearFirst) {
+				// Clear input items
+				query = string.Format(
+					@"
+DELETE FROM SponsorExerciseDataInput
+WHERE SponsorID = @SponsorID
+AND ExerciseVariantLangID = @ExerciseVariantLangID"
+				);
+				ExecuteNonQuery(
+					query,
+					"healthWatchSqlConnection",
+					new SqlParameter("@SponsorID", sponsorID),
+					new SqlParameter("@ExerciseVariantLangID", exerciseVariantLangID)
+				);
+			}
+			
+			query = string.Format(
+				@"
+INSERT SponsorExerciseDataInput([Content], SponsorID, [Order], ExerciseVariantLangID)
+VALUES(@Content, @SponsorID, @Order, @ExerciseVariantLangID)");
+			int i = 0;
+			foreach (var data in dataInputs) {
+				ExecuteNonQuery(
+					query,
+					"healthWatchSqlConnection",
+					new SqlParameter("@Content", data),
+					new SqlParameter("@SponsorID", sponsorID),
+					new SqlParameter("@Order", i++),
+					new SqlParameter("@ExerciseVariantLangID", exerciseVariantLangID)
+				);
+			}
+		}
+		
+		public IList<SponsorExerciseDataInput> FindSponsorExerciseDataInputs(int sponsorID, int exerciseVariantLangID)
+		{
+			string query = string.Format(
+				@"
+SELECT SponsorExerciseDataInputID,
+	[Content],
+	SponsorID,
+	[Order]
+FROM SponsorExerciseDataInput
+WHERE SponsorID = {0}
+AND ExerciseVariantLangID = {1}",
+				sponsorID,
+				exerciseVariantLangID
+			);
+			var inputs = new List<SponsorExerciseDataInput>();
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				while (rs.Read()) {
+					var i = new SponsorExerciseDataInput {
+						Id = GetInt32(rs, 0),
+						Content = GetString(rs, 1),
+						Sponsor = new Sponsor { Id = GetInt32(rs, 2) },
+						Order = GetInt32(rs, 3)
+					};
+					inputs.Add(i);
+				}
+			}
+			return inputs;
+		}
 
 		public void InsertSponsorAdminExtendedSurvey(SponsorAdminExtendedSurvey s)
 		{
@@ -240,7 +318,7 @@ WHERE SponsorID = {10}",
 				s.AllMessageBody.Replace("'", "''"),
 				s.LoginSubject.Replace("'", "''"),
 				s.LoginDays,
-				s.LoginWeekday,
+				s.LoginWeekDay,
 				s.Id
 			);
 			Db.exec(query, "healthWatchSqlConnection");
@@ -841,7 +919,7 @@ WHERE s.SponsorID = {0}",
 						LoginLastSent = GetDateTime(rs, 8),
 //						LoginDays = GetInt32(rs, 9),
 						LoginDays = GetInt32(rs, 9, -1),
-						LoginWeekday = GetInt32(rs, 10, -1),
+						LoginWeekDay = GetInt32(rs, 10, -1),
 						AllMessageSubject = GetString(rs, 11),
 						AllMessageBody = GetString(rs, 12),
 						AllMessageLastSent = GetDateTime(rs, 13),

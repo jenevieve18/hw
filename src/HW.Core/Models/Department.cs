@@ -23,26 +23,30 @@ namespace HW.Core.Models
 		public virtual double Average { get; set; }
 		public virtual int Count { get; set; }
 		
-		public string GetReminder(Dictionary<int, string> loginDays, Dictionary<int, string> loginWeekdays)
+		public string GetReminder(Dictionary<int, string> loginDays, Dictionary<int, string> loginWeekDays)
 		{
-			if (LoginWeekDay == -1) {
-//				return "OFF";
-				return loginWeekdays[LoginWeekDay];
-//				if (Sponsor.LoginWeekday == -1) {
+//			if (LoginWeekDay == -1) {
+//				return loginWeekdays[LoginWeekDay];
+//			} else if (Sponsor != null && Sponsor.LoginWeekday == -1) {
+//				return loginWeekdays[Sponsor.LoginWeekday];
+//			}
+//			if (LoginDays == -1) {
+//				if (Sponsor.LoginDays == -1) {
 //					return "OFF";
+//				} else {
+//					return loginDays[Sponsor.LoginDays];
 //				}
-			} else if (Sponsor != null && Sponsor.LoginWeekday == -1) {
-//				return "OFF";
-				return loginWeekdays[Sponsor.LoginWeekday];
-			}
-			if (LoginDays == -1) {
-				if (Sponsor.LoginDays == -1) {
-					return "OFF";
-				} else {
-					return loginDays[Sponsor.LoginDays];
-				}
-			} else {
+//			} else {
+//				return loginDays[LoginDays];
+//			}
+			if (LoginWeekDay == -1) {
+				return loginWeekDays[LoginWeekDay];
+			} else if (LoginDays != -1) {
 				return loginDays[LoginDays];
+			} else if (Sponsor != null && Sponsor.LoginWeekDay == -1) {
+				return loginWeekDays[Sponsor.LoginWeekDay];
+			} else {
+				return loginDays[Sponsor.LoginDays];
 			}
 		}
 		

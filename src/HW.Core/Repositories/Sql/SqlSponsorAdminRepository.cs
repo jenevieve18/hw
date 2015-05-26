@@ -22,6 +22,25 @@ WHERE UniqueKey = @UniqueKey");
 			);
 		}
 		
+//		public void SaveAdminExerciseDataInputs(string[] dataInputs, int sponsorAdminID, int exerciseVariantLangID)
+//		{
+//			string query = string.Format(
+//				@"
+//INSERT SponsorAdminExerciseDataInput([Content], SponsorAdminID, [Order], ExerciseVariantLangID)
+//VALUES(@Content, @SponsorAdminID, @Order, @ExerciseVariantLangID)");
+//			int i = 0;
+//			foreach (var data in dataInputs) {
+//				ExecuteNonQuery(
+//					query,
+//					"healthWatchSqlConnection",
+//					new SqlParameter("@Content", data),
+//					new SqlParameter("@SponsorAdminID", sponsorAdminID),
+//					new SqlParameter("@Order", i++),
+//					new SqlParameter("@ExerciseVariantLangID", exerciseVariantLangID)
+//				);
+//			}
+//		}
+		
 		public void UpdateUniqueKey(string uid, int sponsorAdminID)
 		{
 			string query = string.Format(
@@ -119,7 +138,7 @@ AND Usr NOT LIKE '%DELETED'"
 		{
 			string q = sponsorAdminID != -1 ?
 				string.Format(
-				@"
+					@"
 INNER JOIN SponsorAdminFunction saf ON saf.ManagerFunctionID = f.ManagerFunctionID
 WHERE saf.SponsorAdminID = @SponsorAdminID
 AND") :
@@ -207,7 +226,7 @@ AND a.SponsorAdminID = {0}",
 						LoginText = GetString(rs, 13),
 						LoginSubject = GetString(rs, 14),
 						LoginDays = GetInt32(rs, 15),
-						LoginWeekday = GetInt32(rs, 16),
+						LoginWeekDay = GetInt32(rs, 16),
 						InviteLastSent = GetLaterDate(GetDateTime(rs, 17), GetDateTime(rs, 21)),
 						InviteReminderLastSent = GetLaterDate(GetDateTime(rs, 18), GetDateTime(rs, 22)),
 						AllMessageLastSent = GetLaterDate(GetDateTime(rs, 19), GetDateTime(rs, 23)),
@@ -230,6 +249,35 @@ AND a.SponsorAdminID = {0}",
 				return d1;
 			}
 		}
+		
+//		public IList<SponsorAdminExerciseDataInput> FindSponsorAdminExerciseDataInputs(int sponsorAdminID, int exerciseVariantLangID)
+//		{
+//			string query = string.Format(
+//				@"
+//SELECT SponsorAdminExerciseDataInputID,
+//	[Content],
+//	SponsorAdminID,
+//	[Order]
+//FROM SponsorAdminExerciseDataInput
+//WHERE SponsorAdminID = {0}
+//AND ExerciseVariantLangID = {1}",
+//				sponsorAdminID,
+//				exerciseVariantLangID
+//			);
+//			var inputs = new List<SponsorAdminExerciseDataInput>();
+//			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+//				while (rs.Read()) {
+//					var i = new SponsorAdminExerciseDataInput {
+//						Id = GetInt32(rs, 0),
+//						Content = GetString(rs, 1),
+//						SponsorAdmin = new SponsorAdmin { Id = GetInt32(rs, 2) },
+//						Order = GetInt32(rs, 3)
+//					};
+//					inputs.Add(i);
+//				}
+//			}
+//			return inputs;
+//		}
 		
 		public IList<IExtendedSurvey> FindExtendedSurveysBySponsorAdmin(int sponsorID, int sponsorAdminID)
 		{

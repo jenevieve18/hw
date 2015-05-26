@@ -17,6 +17,14 @@ namespace HW.Core.Repositories
 		IList<SponsorBackgroundQuestion> FindBySponsor(int sponsorId);
 		
 		IList<SponsorProjectRoundUnit> FindBySponsorAndLanguage(int sponsorId, int langId);
+		
+		SponsorAdmin ReadSponsorAdmin(string skey, string sakey, string sa, string said, string anv, string los);
+		
+		void SaveSponsorAdminSession(int sponsorAdminId, DateTime date);
+		
+		int ReadLastSponsorAdminSession();
+		
+		void UpdateSponsorAdminSession(int sponsorAdminSessionId, DateTime date);
 	}
 	
 	public interface ISponsorAdminRepository : IBaseRepository<SponsorAdmin>
@@ -70,6 +78,24 @@ namespace HW.Core.Repositories
 				new SponsorProjectRoundUnit {},
 				new SponsorProjectRoundUnit {}
 			};
+		}
+		
+		public SponsorAdmin ReadSponsorAdmin(string skey, string sakey, string sa, string said, string anv, string los)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public void SaveSponsorAdminSession(int sponsorAdminId, DateTime date)
+		{
+		}
+		
+		public int ReadLastSponsorAdminSession()
+		{
+			return 1;
+		}
+		
+		public void UpdateSponsorAdminSession(int sponsorAdminSessionId, DateTime date)
+		{
 		}
 	}
 	

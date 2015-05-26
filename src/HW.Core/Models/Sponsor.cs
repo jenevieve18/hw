@@ -17,7 +17,7 @@ namespace HW.Core.Models
 		string LoginSubject { get; set; }
 		string LoginText { get; set; }
 		int LoginDays { get; set; }
-		int LoginWeekday { get; set; }
+		int LoginWeekDay { get; set; }
 		DateTime? LoginLastSent { get; set; }
 		string EmailFrom { get; set; }
 		int MinUserCountToDisclose { get; set; }
@@ -45,7 +45,7 @@ namespace HW.Core.Models
 		public virtual string LoginSubject { get; set; }
 		public virtual string LoginText { get; set; }
 		public virtual int LoginDays { get; set; }
-		public virtual int LoginWeekday { get; set; }
+		public virtual int LoginWeekDay { get; set; }
 		public virtual DateTime? LoginLastSent { get; set; }
 		public virtual string SponsorKey { get; set; }
 		public virtual IList<SponsorProjectRoundUnit> RoundUnits { get; set; }
@@ -207,7 +207,7 @@ namespace HW.Core.Models
 		public virtual string LoginSubject { get; set; }
 		public virtual string LoginText { get; set; }
 		public virtual int LoginDays { get; set; }
-		public virtual int LoginWeekday { get; set; }
+		public virtual int LoginWeekDay { get; set; }
 		public virtual DateTime? LoginLastSent { get; set; }
 		public virtual string EmailFrom { get; set; }
 		public virtual int MinUserCountToDisclose { get; set; }
@@ -318,6 +318,13 @@ namespace HW.Core.Models
 		{
 			return Language.ToString();
 		}
+	}
+	
+	public class SponsorExerciseDataInput : BaseModel
+	{
+		public Sponsor Sponsor { get; set; }
+		public string Content { get; set; }
+		public int Order { get; set; }
 	}
 	
 	public class SuperAdmin : BaseModel
