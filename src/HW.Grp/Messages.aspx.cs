@@ -97,7 +97,7 @@ namespace HW.Grp
 					textBoxLoginSubject.Text = sponsor.LoginSubject;
 
 					dropDownLoginDays.SelectedValue = (sponsor.LoginDays <= 0 ? "14" : sponsor.LoginDays.ToString());
-					dropDownLoginWeekday.SelectedValue = (sponsor.LoginWeekday <= -1 ? "NULL" : sponsor.LoginWeekday.ToString());
+					dropDownLoginWeekday.SelectedValue = (sponsor.LoginWeekDay <= -1 ? "NULL" : sponsor.LoginWeekDay.ToString());
 
 					if (!revert) {
 						labelInviteLastSent.Text = (sponsor.InviteLastSent ==  null ? R.Str(lid, "never", "Never") : sponsor.InviteLastSent.Value.ToString("yyyy-MM-dd HH:mm"));
