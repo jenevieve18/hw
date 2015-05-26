@@ -86,7 +86,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppContext.cs" />
+    <Compile Include="FromHW\Db.cs" />
     <Compile Include="Helpers\BootstrapHelper.cs" />
+    <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Helpers\GeneratedClass.cs" />
     <Compile Include="Helpers\ConvertHelper.cs" />
     <Compile Include="Helpers\CsvExporter.cs" />
@@ -143,6 +145,7 @@
     <Compile Include="Repositories\IDepartmentRepository.cs" />
     <Compile Include="Repositories\IExerciseRepository.cs" />
     <Compile Include="Repositories\IManagerFunctionRepository.cs" />
+    <Compile Include="Repositories\INewsRepository.cs" />
     <Compile Include="Repositories\IPlotTypeRepository.cs" />
     <Compile Include="Repositories\IProjectRepository.cs" />
     <Compile Include="Repositories\IReportRepository.cs" />
@@ -170,7 +173,6 @@
     <Compile Include="Services\MessageService.cs" />
     <Compile Include="Services\ReportService.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Models\Mappings\Report.hbm.xml" />
     <EmbeddedResource Include="Models\Mappings\Question.hbm.xml" />
@@ -186,6 +188,9 @@
     <EmbeddedResource Include="Models\Mappings\ManagerFunction.hbm.xml" />
     <EmbeddedResource Include="Models\Mappings\Exercise.hbm.xml" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="FromHW" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>
