@@ -51,7 +51,7 @@ namespace HW.Grp
 			loginDays.Add(14, R.Str(langID, "week.two", "2 weeks"));
 			loginDays.Add(30, R.Str(langID, "month", "month"));
 			loginDays.Add(90, R.Str(langID, "month.three", "3 months"));
-			loginDays.Add(100, R.Str(langID, "month.six", "6 months"));
+			loginDays.Add(180, R.Str(langID, "month.six", "6 months"));
 			
 			return loginDays;
 		}
