@@ -494,18 +494,6 @@
     <EmbeddedResource Include="Properties\sv-SE.resx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Browsers\blackberry.browser" />
-    <Content Include="App_Browsers\chrome.browser" />
-    <Content Include="App_Browsers\firefox.browser" />
-    <Content Include="App_Browsers\gateway.browser" />
-    <Content Include="App_Browsers\generic.browser" />
-    <Content Include="App_Browsers\ie.browser" />
-    <Content Include="App_Browsers\iemobile.browser" />
-    <Content Include="App_Browsers\iphone.browser" />
-    <Content Include="App_Browsers\opera.browser" />
-    <Content Include="App_Browsers\safari.browser" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="assets\js\" />
   </ItemGroup>
   <ItemGroup>
