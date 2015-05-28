@@ -7,15 +7,25 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using HW.Core.Helpers;
 using HW.Core.Models;
+using HW.Core.Repositories;
 using HW.Core.Repositories.Sql;
 
 namespace HW.Grp
 {
 	public partial class Reminders : System.Web.UI.Page
 	{
-		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
+		IDepartmentRepository departmentRepository;
 		IList<Department> departments;
 		int lid;
+		
+		public Reminders() : this(new SqlDepartmentRepository())
+		{
+		}
+		
+		public Reminders(IDepartmentRepository departmentRepository)
+		{
+			this.departmentRepository = departmentRepository;
+		}
 		
 		protected override void OnPreRender(EventArgs e)
 		{
@@ -27,24 +37,28 @@ namespace HW.Grp
 		{
 			HtmlHelper.RedirectIf(Session["SponsorID"] == null, "default.aspx", true);
 			
-			int sponsorID = ConvertHelper.ToInt32(Session["SponsorID"]);
-			int sponsorAdminID = ConvertHelper.ToInt32(Session["SponsorAdminID"]);
-			
-			HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Reminders), "default.aspx", true);
+			HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(ConvertHelper.ToInt32(Session["SponsorAdminID"]), ManagerFunction.Reminders), "default.aspx", true);
 			
 			lid = ConvertHelper.ToInt32(Session["lid"], 1);
 			
+			Index(ConvertHelper.ToInt32(Session["SponsorID"]), ConvertHelper.ToInt32(Session["SponsorAdminID"]));
+		}
+		
+		public void Index(int sponsorID, int sponsorAdminID)
+		{
+			departments = departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID);
+
 			Org.Controls.Add(new LiteralControl("<br>"));
+			
 			IHGHtmlTable table = new IHGHtmlTable { Border = 0, CellSpacing = 0, CellPadding = 0 };
 			table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(Session["Sponsor"].ToString()) { ColSpan = 3 }));
 			
 //			IHGHtmlTable t = new IHGHtmlTable();
 //			t.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell("th", "Login Day"), new IHGHtmlTableCell("th", "Login Weekday")));
 //			table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(t), new IHGHtmlTableCell("")));
-			
+
 			Dictionary<int, bool> DX = new Dictionary<int, bool>();
 
-			departments = departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID);
 			foreach (var d in departments) {
                 IHGHtmlTable boxes = new IHGHtmlTable();
                 var ld = new DropDownList { ID = "LDID" + d.Id };
@@ -92,6 +106,11 @@ namespace HW.Grp
 		}
 
         protected void buttonSave_Click(object sender, EventArgs e)
+        {
+        	Save();
+        }
+        
+        public void Save()
         {
         	foreach (var d in departments) {
         		var ld = ((DropDownList)Org.FindControl("LDID" + d.Id)).SelectedValue;
