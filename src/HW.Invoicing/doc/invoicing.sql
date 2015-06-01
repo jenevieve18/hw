@@ -31,3 +31,6 @@ create table InvoiceItem(
 	Quantity decimal,
 	Price decimal
 );
+
+alter table Item add Description varchar(255);
+alter table Item add Price decimal;

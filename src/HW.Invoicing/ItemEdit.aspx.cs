@@ -30,7 +30,7 @@ namespace HW.Invoicing
 				var d = new Item {
 					Name = textBoxName.Text,
 					Description = textBoxDescription.Text,
-                    Price = ConvertHelper.ToDouble(textBoxPrice.Text)
+                    Price = ConvertHelper.ToDecimal(textBoxPrice.Text)
 				};
 				r.Update(d, id);
 				Response.Redirect("items.aspx");
