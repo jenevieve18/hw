@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using HW.Core.Helpers;
 using HW.Invoicing.Core.Models;
 using HW.Invoicing.Core.Repositories;
 using HW.Invoicing.Core.Repositories.Sql;
@@ -27,7 +28,8 @@ namespace HW.Invoicing
     	{
     		var i = new Item {
         		Name = textBoxName.Text,
-        		Description = textBoxDescription.Text
+        		Description = textBoxDescription.Text,
+        		Price = ConvertHelper.ToDecimal(textBoxPrice.Text)
         	};
         	r.Save(i);
         	Response.Redirect("items.aspx");
