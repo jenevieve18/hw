@@ -28,7 +28,7 @@ namespace HW.Invoicing
             {
                 try
                 {
-                    SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["invoicing"]);
+                    SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["invoicing"].ConnectionString);
                     SqlDataAdapter da = new SqlDataAdapter(TextBox1.Text, con);
                     DataSet ds = new DataSet();
                     da.Fill(ds);
