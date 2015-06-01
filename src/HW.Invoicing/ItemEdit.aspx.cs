@@ -29,7 +29,8 @@ namespace HW.Invoicing
 			if (IsPostBack) {
 				var d = new Item {
 					Name = textBoxName.Text,
-					Description = textBoxDescription.Text
+					Description = textBoxDescription.Text,
+                    Price = ConvertHelper.ToDouble(textBoxPrice.Text)
 				};
 				r.Update(d, id);
 				Response.Redirect("items.aspx");
@@ -38,6 +39,7 @@ namespace HW.Invoicing
 			if (i != null) {
 				textBoxName.Text = i.Name;
 				textBoxDescription.Text = i.Description;
+                textBoxPrice.Text = i.Price.ToString();
 			}
 		}
 		

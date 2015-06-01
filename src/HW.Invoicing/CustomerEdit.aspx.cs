@@ -11,43 +11,42 @@ using HW.Invoicing.Core.Repositories.Sql;
 
 namespace HW.Invoicing
 {
-    public partial class CustomerEdit : System.Web.UI.Page
-    {
-    	ICustomerRepository r;
-    	
-    	public CustomerEdit() : this(new SqlCustomerRepository())
-    	{
-    	}
-    	
-    	public CustomerEdit(ICustomerRepository r)
-    	{
-    		this.r = r;
-    	}
-    	
-    	public void Edit(int id)
-    	{
-    		Page_Load(this, null);
-    	}
-    	
-        protected void Page_Load(object sender, EventArgs e)
-        {
-        	var id = ConvertHelper.ToInt32(Request.QueryString["CustomerID"]);
-        	if (!IsPostBack) {
-        		var c = r.Read(id);
-        		if (c != null) {
-        			textBoxName.Text = c.Name;
-        		}
-        	}
-        }
+	public partial class CustomerEdit : System.Web.UI.Page
+	{
+		ICustomerRepository r;
+		
+		public CustomerEdit() : this(new SqlCustomerRepository())
+		{
+		}
+		
+		public CustomerEdit(ICustomerRepository r)
+		{
+			this.r = r;
+		}
+		
+		public void Edit(int id)
+		{
+			if (IsPostBack) {
+				var d = new Customer {
+					Name = textBoxName.Text
+				};
+				r.Update(d, id);
+				Response.Redirect("customers.aspx");
+			}
+			var c = r.Read(id);
+			if (c != null) {
+				textBoxName.Text = c.Name;
+			}
+		}
+		
+		protected void Page_Load(object sender, EventArgs e)
+		{
+			Edit(ConvertHelper.ToInt32(Request.QueryString["CustomerID"]));
+		}
 
-        protected void buttonSave_Click(object sender, EventArgs e)
-        {
-        	var id = ConvertHelper.ToInt32(Request.QueryString["CustomerID"]);
-        	var c = new Customer {
-        		Name = textBoxName.Text
-        	};
-        	r.Update(c, id);
-        	Response.Redirect("customers.aspx");
-        }
-    }
+		protected void buttonSave_Click(object sender, EventArgs e)
+		{
+			Edit(ConvertHelper.ToInt32(Request.QueryString["CustomerID"]));
+		}
+	}
 }

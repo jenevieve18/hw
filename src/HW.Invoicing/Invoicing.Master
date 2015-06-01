@@ -12,6 +12,7 @@
 
     <!-- Le styles -->
     <link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet" type="text/css" />
     <style>
         body {
             padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -62,12 +63,50 @@
         
         </asp:ContentPlaceHolder>
     </div>
-    <div class="container">
-        <footer>
-            <hr />
-            &copy; 2015. Interactive Health Group. All rights reserved.
-        </footer>
-    </div>
+    <footer>
+        <div class="container">
+            <div class="row">
+					<div class="span2">
+					<h6>Copyright © 2013 Interactive Health Group</h6>
+					</div><!-- end col-sm-2 -->
+					
+					<div class="span4">
+						<h6>About Us</h6>
+						<p>HealthWatch is run by Interactive Health Group in Stockholm AB. We provide tools for individuals and organisations to preserve and increase health and quality of life, as well as reduce stress-releated problems.</p>
+                        <address>
+                            <strong>Interactive Health Group</strong><br />
+                            Box 4047<br />
+                            10261 Stockholm<br />
+                            Sweden<br />
+                            <abbr title="Phone">P:</abbr> (123) 456-7890
+                        </address>
+					</div><!-- end col-sm-4 -->
+					
+					<div class="span2">
+						<h6>Navigation</h6>
+						<ul class="unstyled">
+							<li><a href="#">Home</a></li>
+							<li><a href="#">Services</a></li>
+							<li><a href="#">Links</a></li>
+							<li><a href="#">Contact</a></li>
+						</ul>
+					</div><!-- end col-sm-2 -->
+					
+					<div class="span2">
+						<h6>Follow Us</h6>
+						<ul class="unstyled">
+							<li><a href="#">Twitter</a></li>
+							<li><a href="#">Facebook</a></li>
+							<li><a href="#">Google Plus</a></li>
+						</ul>
+					</div><!-- end col-sm-2 -->
+					
+					<div class="span2">
+						<h6></h6>
+					</div><!-- end col-sm-2 -->
+				</div>
+        </div>
+    </footer>
     </form>
 
     <!-- Le javascript
