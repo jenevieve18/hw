@@ -1,4 +1,4 @@
-2.8
+GRP 2.8
 
 * added new ExerciseShow page
 * update web.config (commented out themes)
