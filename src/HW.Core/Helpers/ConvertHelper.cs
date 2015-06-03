@@ -55,5 +55,19 @@ namespace HW.Core.Helpers
 				return def;
 			}
 		}
+		
+		public static decimal ToDecimal(object val)
+		{
+			return ToDecimal(val, 0);
+		}
+		
+		public static decimal ToDecimal(object val, decimal def)
+		{
+			try {
+				return Convert.ToDecimal(val);
+			} catch {
+				return def;
+			}
+		}
 	}
 }
