@@ -12,13 +12,15 @@
 <table class="table table-hover">
     <tr>
         <th>Date</th>
+        <th>Customers</th>
         <th>Actions</th>
     </tr>
     <% foreach (var i in invoices) { %>
     <tr>
         <td><%= i.Date %></td>
+        <td><%= i.Customer.Name %></td>
         <td>
-            <%= HtmlHelper.Anchor("Edit", "invoiceedit.aspx?ItemID=" + i.Id, "class='icon-edit'") %>
+            <%= HtmlHelper.Anchor("", "invoiceedit.aspx?ItemID=" + i.Id, "class='glyphicon glyphicon-edit'")%>
         </td>
     </tr>
     <% } %>

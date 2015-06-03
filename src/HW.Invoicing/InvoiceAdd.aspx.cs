@@ -12,19 +12,30 @@ namespace HW.Invoicing
 {
     public partial class InvoiceAdd : System.Web.UI.Page
     {
-    	IInvoiceRepository r;
+    	IInvoiceRepository ir;
+    	ICustomerRepository cr;
+        protected IList<Item> items;
+        IItemRepository jr;
     	
-    	public InvoiceAdd() : this(new SqlInvoiceRepository())
+    	public InvoiceAdd() : this(new SqlInvoiceRepository(), new SqlCustomerRepository(), new SqlItemRepository())
     	{
     	}
     	
-    	public InvoiceAdd(IInvoiceRepository r)
+    	public InvoiceAdd(IInvoiceRepository ir, ICustomerRepository cr, IItemRepository jr)
     	{
-    		this.r = r;
+    		this.ir = ir;
+    		this.cr = cr;
+            this.jr = jr;
     	}
     	
         protected void Page_Load(object sender, EventArgs e)
         {
+        	if (!IsPostBack) {
+        		foreach (var c in cr.FindAll()) {
+        			dropDownListCustomer.Items.Add(new ListItem(c.Name, c.Id.ToString()));
+        		}
+                items = jr.FindAll();
+        	}
         }
         
         public void Add()
@@ -32,7 +43,7 @@ namespace HW.Invoicing
         	var i = new Invoice {
         		Date = DateTime.Now
         	};
-        	r.Save(i);
+        	ir.Save(i);
         	Response.Redirect("invoices.aspx");
         }
 

@@ -12,16 +12,18 @@
 <table class="table table-hover">
     <tr>
         <th>Name</th>
+        <th>Description</th>
         <th>Price</th>
         <th>Actions</th>
     </tr>
     <% foreach (var i in items) { %>
     <tr>
         <td><%= i.Name %></td>
+        <td><%= i.Description %></td>
         <td><%= i.Price.ToString("0.00") %></td>
         <td>
-            <%= HtmlHelper.Anchor("", "itemedit.aspx?ItemID=" + i.Id, "class='icon-edit'") %>
-            <%= HtmlHelper.Anchor("", "itemdelete.aspx?ItemID=" + i.Id, "class='icon-remove'") %>
+            <%= HtmlHelper.Anchor("", "itemedit.aspx?ItemID=" + i.Id, "class='glyphicon glyphicon-edit'")%>
+            <%= HtmlHelper.Anchor("", "itemdelete.aspx?ItemID=" + i.Id, "class='glyphicon glyphicon-remove'")%>
         </td>
     </tr>
     <% } %>

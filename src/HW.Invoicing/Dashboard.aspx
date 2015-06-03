@@ -56,7 +56,7 @@
 <h3>Dashboard</h3>
 
 <div class="row">
-    <div class="span6">
+    <div class="col-sm-6">
         <h4>Settings</h4>
         <div class="well">
             <p>Bellow are the most common tasks</p>
@@ -66,7 +66,7 @@
             </ul>
         </div>
     </div>
-    <div class="span6">
+    <div class="col-sm-6">
         <h4>Income and Expenses</h4>
         <div class="well">
             <div id="curve_chart"></div>

@@ -18,8 +18,8 @@
     <tr>
         <td><%= c.Name %></td>
         <td>
-            <%= HtmlHelper.Anchor("", "customeredit.aspx?CustomerID=" + c.Id, "class='icon-edit'") %>
-            <%= HtmlHelper.Anchor("", "customerdelete.aspx?CustomerID=" + c.Id, "class='icon-remove'")%>
+            <%= HtmlHelper.Anchor("", "customeredit.aspx?CustomerID=" + c.Id, "class='glyphicon glyphicon-edit'") %>
+            <%= HtmlHelper.Anchor("", "customerdelete.aspx?CustomerID=" + c.Id, "class='glyphicon glyphicon-remove'")%>
         </td>
     </tr>
     <% } %>

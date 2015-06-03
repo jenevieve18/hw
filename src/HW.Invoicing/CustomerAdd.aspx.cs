@@ -32,7 +32,9 @@ namespace HW.Invoicing
 		{
 			if (IsPostBack) {
 				var c = new Customer {
-					Name = textBoxName.Text
+					Name = textBoxName.Text,
+                    Phone = textBoxPhone.Text,
+                    Email = textBoxEmail.Text
 				};
 				r.Save(c);
 				Response.Redirect("customers.aspx");

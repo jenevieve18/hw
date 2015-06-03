@@ -8,10 +8,12 @@
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="Interactive Health Group">
 
     <!-- Le styles -->
-    <link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css" rel="stylesheet">
+    <!--<link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css" rel="stylesheet">-->
+    <!--<link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css" rel="stylesheet">-->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
         body {
             padding-top: 40px;
@@ -45,7 +47,6 @@
         }
 
     </style>
-    <link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -61,21 +62,21 @@
   </head>
 <body>
     <div class="container">
-    <form id="form1" runat="server" class="form-signin">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <% if (errorMessage != null && errorMessage != "") { %>
-            <div class="alert alert-danger">
-	            <%= errorMessage %>
-            </div>
-        <% } %>
-        <asp:TextBox CssClass="input-block-level" placeholder="User name" ID="textBoxName" runat="server"></asp:TextBox>
-        <asp:TextBox CssClass="input-block-level" ID="textBoxPassword" placeholder="Password" runat="server" TextMode="Password"></asp:TextBox>
-        <label class="checkbox">
-            <input type="checkbox" value="remember-me"> Remember me
-        </label>
-        <asp:Button ID="buttonLogin" CssClass="btn btn-large btn-primary" runat="server" 
-            Text="Sign in" onclick="buttonLogin_Click" />
-    </form>
+        <form id="form1" runat="server" class="form-signin">
+            <h2 class="form-signin-heading">Please sign in</h2>
+            <% if (errorMessage != null && errorMessage != "") { %>
+                <div class="alert alert-danger">
+	                <%= errorMessage %>
+                </div>
+            <% } %>
+            <asp:TextBox CssClass="input-block-level" placeholder="User name" ID="textBoxName" runat="server"></asp:TextBox>
+            <asp:TextBox CssClass="input-block-level" ID="textBoxPassword" placeholder="Password" runat="server" TextMode="Password"></asp:TextBox>
+            <label class="checkbox">
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+            <asp:Button ID="buttonLogin" CssClass="btn btn-large btn-primary" runat="server" 
+                Text="Sign in" onclick="buttonLogin_Click" />
+        </form>
     </div>
 </body>
 </html>
