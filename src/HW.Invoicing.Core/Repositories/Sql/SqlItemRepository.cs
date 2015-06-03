@@ -13,14 +13,19 @@ namespace HW.Invoicing.Core.Repositories.Sql
 		{
 			string query = string.Format(
 				@"
-SELECT Id, Name
+SELECT Id, Name, Description, Price
 FROM Item
 WHERE Id = @Id"
 			);
 			Item i = null;
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", id))) {
 				while (rs.Read()) {
-					i = new Item { Id = GetInt32(rs, 0), Name = GetString(rs, 1) };
+					i = new Item {
+						Id = GetInt32(rs, 0),
+						Name = GetString(rs, 1),
+						Description = GetString(rs, 2),
+						Price = GetDecimal(rs, 3)
+					};
 				}
 			}
 			return i;
@@ -44,7 +49,7 @@ WHERE Id = @Id"
 		{
 			string query = string.Format(
 				@"
-UPDATE Item SET Name = @Name
+UPDATE Item SET Name = @Name, Description = @Description, Price = @Price
 WHERE Id = @Id"
 			);
 			ExecuteNonQuery(
@@ -52,6 +57,7 @@ WHERE Id = @Id"
 				"invoicing",
 				new SqlParameter("@Name", i.Name),
 				new SqlParameter("@Description", i.Description),
+				new SqlParameter("@Price", i.Price),
 				new SqlParameter("@Id", id)
 			);
 		}
@@ -60,13 +66,15 @@ WHERE Id = @Id"
 		{
 			string query = string.Format(
 				@"
-INSERT INTO Item(Name)
-VALUES(@Name)"
+INSERT INTO Item(Name, Description, Price)
+VALUES(@Name, @Description, @Price)"
 			);
 			ExecuteNonQuery(
 				query,
 				"invoicing",
-				new SqlParameter("@Name", i.Name)
+				new SqlParameter("@Name", i.Name),
+				new SqlParameter("@Description", i.Description),
+				new SqlParameter("@Price", i.Price)
 			);
 		}
 		
@@ -74,14 +82,19 @@ VALUES(@Name)"
 		{
 			string query = string.Format(
 				@"
-SELECT Id, Name
+SELECT Id, Name, Description, Price
 FROM Item"
 			);
 			var items = new List<Item>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {
 				while (rs.Read()) {
 					items.Add(
-						new Item { Id = GetInt32(rs, 0), Name = GetString(rs, 1) }
+						new Item {
+							Id = GetInt32(rs, 0),
+							Name = GetString(rs, 1),
+							Description = GetString(rs, 2),
+							Price = GetDecimal(rs, 3)
+						}
 					);
 				}
 			}

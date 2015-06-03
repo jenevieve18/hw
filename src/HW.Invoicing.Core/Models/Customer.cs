@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using HW.Core.Models;
 
 namespace HW.Invoicing.Core.Models
 {

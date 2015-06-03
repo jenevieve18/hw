@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\HW.Invoicing\packages\Newtonsoft.Json.6.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Helpers\ItemHelper.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\Item.cs" />
@@ -56,6 +59,8 @@
     <Compile Include="Repositories\Sql\SqlUserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Helpers" />
+    <Folder Include="Services" />
     <Folder Include="Repositories" />
     <Folder Include="Repositories\Sql" />
   </ItemGroup>
@@ -64,6 +69,9 @@
       <Project>{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}</Project>
       <Name>HW.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

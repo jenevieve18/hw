@@ -68,7 +68,7 @@ FROM [User]
 ORDER BY Name"
 			);
 			IList<User> users = new List<User>();
-			using (SqlDataReader rs = Db.rs(query, "invoicing")) {
+			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {
 				while (rs.Read()) {
 					users.Add(
 						new User {
