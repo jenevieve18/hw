@@ -60,6 +60,7 @@
     <Content Include="Dashboard.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="InvoiceAdd.aspx" />
+    <Content Include="InvoiceEdit.aspx" />
     <Content Include="Invoices.aspx" />
     <Content Include="ItemAdd.aspx" />
     <Content Include="ItemDelete.aspx" />
@@ -129,6 +130,13 @@
     </Compile>
     <Compile Include="InvoiceAdd.aspx.designer.cs">
       <DependentUpon>InvoiceAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InvoiceEdit.aspx.cs">
+      <DependentUpon>InvoiceEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InvoiceEdit.aspx.designer.cs">
+      <DependentUpon>InvoiceEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="Invoices.aspx.cs">
       <DependentUpon>Invoices.aspx</DependentUpon>

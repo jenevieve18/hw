@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using HW.Invoicing.Core.Models;
 using HW.Invoicing.Core.Repositories;
 using HW.Invoicing.Core.Repositories.Sql;
+using HW.Core.Helpers;
 
 namespace HW.Invoicing
 {
@@ -40,9 +41,11 @@ namespace HW.Invoicing
         
         public void Add()
         {
-        	var i = new Invoice {
-        		Date = DateTime.Now
-        	};
+            var i = new Invoice
+            {
+                Date = DateTime.Now,
+                Customer = new Customer { Id = ConvertHelper.ToInt32(dropDownListCustomer.SelectedValue) }
+            };
         	ir.Save(i);
         	Response.Redirect("invoices.aspx");
         }
