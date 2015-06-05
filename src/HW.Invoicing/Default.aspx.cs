@@ -27,6 +27,7 @@ namespace HW.Invoicing
         {
         	var u = r.ReadByNameAndPassword(textBoxName.Text, textBoxPassword.Text);
             if (u != null) {
+        		Session["UserID"] = u.Id;
                 Response.Redirect("dashboard.aspx");
             } else {
                 errorMessage = "Invalid user name or password, please try again!";

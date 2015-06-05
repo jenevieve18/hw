@@ -22,8 +22,8 @@
         <td><%= i.Description %></td>
         <td><%= i.Price.ToString("0.00") %></td>
         <td>
-            <%= HtmlHelper.Anchor("", "itemedit.aspx?ItemID=" + i.Id, "class='glyphicon glyphicon-edit'")%>
-            <%= HtmlHelper.Anchor("", "itemdelete.aspx?ItemID=" + i.Id, "class='glyphicon glyphicon-remove'")%>
+            <%= HtmlHelper.Anchor("Edit", "itemedit.aspx?ItemID=" + i.Id)%>
+            <%= HtmlHelper.Anchor("Delete", "itemdelete.aspx?ItemID=" + i.Id)%>
         </td>
     </tr>
     <% } %>
