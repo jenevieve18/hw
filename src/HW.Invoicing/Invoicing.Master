@@ -4,11 +4,11 @@
 
 <html lang="en">
 <head runat="server">
-  <meta charset="utf-8">
+    <meta charset="utf-8">
     <title></title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="">
-  <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
 	<!--link rel="stylesheet/less" href="less/bootstrap.less" type="text/css" /-->
 	<!--link rel="stylesheet/less" href="less/responsive.less" type="text/css" /-->
@@ -38,215 +38,148 @@
 	}
 	</style>
 
-  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-  <!--[if lt IE 9]>
-    <script src="js/html5shiv.js"></script>
-  <![endif]-->
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+    <![endif]-->
 
-  <!-- Fav and touch icons -->
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/apple-touch-icon-144-precomposed.png">
-  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/apple-touch-icon-114-precomposed.png">
-  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/apple-touch-icon-72-precomposed.png">
-  <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png">
-  <link rel="shortcut icon" href="img/favicon.png">
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="img/favicon.png">
   
-	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<script type="text/javascript" src="js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/scripts.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/scripts.js"></script>
 
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
     <form id="form1" runat="server" role="form">
-
     
-<div class="container">
-	<div class="row clearfix">
-		<div class="col-md-12 column">
-			<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
-				<div class="navbar-header">
-					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-					 	<span class="sr-only">Toggle navigation</span>
-					 	<span class="icon-bar"></span>
-					 	<span class="icon-bar"></span>
-					 	<span class="icon-bar"></span>
-					 </button>
-                     <%= HtmlHelper.Anchor("IHG Invoicing", "dashboard.aspx", "class='navbar-brand'")%>
-				</div>
+        <div class="container">
+	        <div class="row clearfix">
+		        <div class="col-md-12 column">
+			        <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+				        <div class="navbar-header">
+					         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					 	        <span class="sr-only">Toggle navigation</span>
+					 	        <span class="icon-bar"></span>
+					 	        <span class="icon-bar"></span>
+					 	        <span class="icon-bar"></span>
+					         </button>
+                             <%= HtmlHelper.Anchor("IHG Invoicing", "dashboard.aspx", "class='navbar-brand'")%>
+				        </div>
 				
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav">
-						<!--<li class="dropdown">
-							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Companies<strong class="caret"></strong></a>
-							<ul class="dropdown-menu">
-								<li>
-									<a href="#">Link</a>
-								</li>
-								<li>
-									<a href="#">Another link</a>
-								</li>
-								<li>
-									<a href="#">One more link</a>
-								</li>
-							</ul>
-						</li>-->
-						<li>
-                            <%= HtmlHelper.Anchor("Dashboard", "dashboard.aspx") %>
-						</li>
-						<li>
-                            <%= HtmlHelper.Anchor("Customers", "customers.aspx") %>
-						</li>
-						<li>
-                            <%= HtmlHelper.Anchor("Items", "items.aspx") %>
-						</li>
-						<li>
-                            <%= HtmlHelper.Anchor("Invoices", "invoices.aspx") %>
-						</li>
-						<!--<li class="dropdown">
-							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<strong class="caret"></strong></a>
-							<ul class="dropdown-menu">
-								<li>
-									<a href="#">One more separated link</a>
-								</li>
-								<li>
-									<a href="#">Separated link</a>
-								</li>
-								<li>
-									<a href="#">Separated link</a>
-								</li>
-								 <li class="divider">
-								</li>
-								<li>
-									<a href="#">Separated link</a>
-								</li>
-								<li class="divider">
-								</li>
-								<li>
-									<a href="#">One more separated link</a>
-								</li>
-							</ul>
-						</li>-->
-					</ul>
-					<!--<form class="navbar-form navbar-left" role="search">
-						<div class="form-group">
-							<input type="text" class="form-control" />
-						</div> <button type="submit" class="btn btn-default">Search</button>
-					</form>-->
-					<ul class="nav navbar-nav navbar-right">
-						<li class="dropdown">
-							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account<strong class="caret"></strong></a>
-							<ul class="dropdown-menu">
-								<li>
-                                    <%= HtmlHelper.Anchor("Settings.aspx", "settings.aspx") %>
-								</li>
-								<li>
-                                    <%= HtmlHelper.Anchor("Profile", "profile.aspx") %>
-								</li>
-								<li class="divider">
-								</li>
-								<li>
-                                    <%= HtmlHelper.Anchor("Log out", "logout.aspx") %>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-				
-			</nav>
+				        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					        <ul class="nav navbar-nav">
+						        <!--<li class="dropdown">
+							        <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Companies<strong class="caret"></strong></a>
+							        <ul class="dropdown-menu">
+								        <li><a href="#">Link</a></li>
+								        <li><a href="#">Another link</a></li>
+								        <li><a href="#">One more link</a></li>
+							        </ul>
+						        </li>-->
+						        <li><%= HtmlHelper.Anchor("Dashboard", "dashboard.aspx") %></li>
+						        <li><%= HtmlHelper.Anchor("Customers", "customers.aspx") %></li>
+						        <li><%= HtmlHelper.Anchor("Items", "items.aspx") %></li>
+						        <li><%= HtmlHelper.Anchor("Invoices", "invoices.aspx") %></li>
+						        <li><%= HtmlHelper.Anchor("Users", "users.aspx") %></li>
+						        <!--<li class="dropdown">
+							        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<strong class="caret"></strong></a>
+							        <ul class="dropdown-menu">
+								        <li><a href="#">One more separated link</a></li>
+								        <li><a href="#">Separated link</a></li>
+								        <li><a href="#">Separated link</a></li>
+								        <li class="divider"></li>
+								        <li><a href="#">Separated link</a></li>
+								        <li class="divider"></li>
+								        <li><a href="#">One more separated link</a></li>
+							        </ul>
+						        </li>-->
+					        </ul>
+					        <!--<form class="navbar-form navbar-left" role="search">
+						        <div class="form-group">
+							        <input type="text" class="form-control" />
+						        </div> <button type="submit" class="btn btn-default">Search</button>
+					        </form>-->
+					        <ul class="nav navbar-nav navbar-right">
+						        <li class="dropdown">
+							         <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account<strong class="caret"></strong></a>
+							        <ul class="dropdown-menu">
+								        <li><%= HtmlHelper.Anchor("Settings.aspx", "settings.aspx") %></li>
+								        <li><%= HtmlHelper.Anchor("Profile", "profile.aspx") %></li>
+								        <li class="divider"></li>
+								        <li><%= HtmlHelper.Anchor("Log out", "logout.aspx") %></li>
+							        </ul>
+						        </li>
+					        </ul>
+				        </div>
+			        </nav>
 
-			<asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-        
-                </asp:ContentPlaceHolder>
-		</div>
-	</div>
-</div>
+			        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+		        </div>
+	        </div>
+        </div>
 
     </form>
 
     <footer>
-	<div class="container">
-	<div class="row clearfix">
-		<div class="col-md-2 column">
-			<h6>Copyright &copy; 2015</h6>
-			<p>
-				Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small>
-			</p>
-		</div>
-		<div class="col-md-4 column">
-			<h6>About Us</h6>
-			<p>
-				Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small>
-			</p>
-            <address>
-                <strong>Interacive HealthWatch</strong><br />
-                795 Folsom Ave, Suite 600<br />
-                San Francisco, CA 94107<br />
-                <abbr title="Phone">P:</abbr> (123) 456-7890
-            </address>
-		</div>
-		<div class="col-md-2 column">
-			<h6>Navigation</h6>
-			<ul>
-				<li>
-					Lorem ipsum dolor sit amet
-				</li>
-				<li>
-					Consectetur adipiscing elit
-				</li>
-				<li>
-					Integer molestie lorem at massa
-				</li>
-				<li>
-					Facilisis in pretium nisl aliquet
-				</li>
-				<li>
-					Nulla volutpat aliquam velit
-				</li>
-				<li>
-					Faucibus porta lacus fringilla vel
-				</li>
-				<li>
-					Aenean sit amet erat nunc
-				</li>
-				<li>
-					Eget porttitor lorem
-				</li>
-			</ul>
-		</div>
-		<div class="col-md-2 column">
-			<h6>Follow Us
-			<ul>
-				<li>
-					Lorem ipsum dolor sit amet
-				</li>
-				<li>
-					Consectetur adipiscing elit
-				</li>
-				<li>
-					Integer molestie lorem at massa
-				</li>
-				<li>
-					Facilisis in pretium nisl aliquet
-				</li>
-				<li>
-					Nulla volutpat aliquam velit
-				</li>
-				<li>
-					Faucibus porta lacus fringilla vel
-				</li>
-				<li>
-					Aenean sit amet erat nunc
-				</li>
-				<li>
-					Eget porttitor lorem
-				</li>
-			</ul>
-		</div>
-		<div class="col-md-2 column">
-		</div>
-	</div>
-</div>
+	    <div class="container">
+	        <div class="row clearfix">
+		        <div class="col-md-2 column">
+			        <h6>Copyright &copy; 2015</h6>
+			        <p>
+				        Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small>
+			        </p>
+		        </div>
+		        <div class="col-md-4 column">
+			        <h6>About Us</h6>
+			        <p>
+				        Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small>
+			        </p>
+                    <address>
+                        <strong>Interacive HealthWatch</strong><br />
+                        795 Folsom Ave, Suite 600<br />
+                        San Francisco, CA 94107<br />
+                        <abbr title="Phone">P:</abbr> (123) 456-7890
+                    </address>
+		        </div>
+		        <div class="col-md-2 column">
+			        <h6>Navigation</h6>
+			        <ul>
+				        <li>Lorem ipsum dolor sit amet</li>
+				        <li>Consectetur adipiscing elit</li>
+				        <li>Integer molestie lorem at massa</li>
+				        <li>Facilisis in pretium nisl aliquet</li>
+				        <li>Nulla volutpat aliquam velit</li>
+				        <li>Faucibus porta lacus fringilla vel</li>
+				        <li>Aenean sit amet erat nunc</li>
+				        <li>Eget porttitor lorem</li>
+			        </ul>
+		        </div>
+		        <div class="col-md-2 column">
+			        <h6>Follow Us
+			        <ul>
+				        <li>Lorem ipsum dolor sit amet</li>
+				        <li>Consectetur adipiscing elit</li>
+				        <li>Integer molestie lorem at massa</li>
+				        <li>Facilisis in pretium nisl aliquet</li>
+				        <li>Nulla volutpat aliquam velit</li>
+				        <li>Faucibus porta lacus fringilla vel</li>
+				        <li>Aenean sit amet erat nunc</li>
+				        <li>Eget porttitor lorem</li>
+			        </ul>
+		        </div>
+		        <div class="col-md-2 column">
+		        </div>
+	        </div>
+        </div>
 	</footer>
 </body>
 </html>
