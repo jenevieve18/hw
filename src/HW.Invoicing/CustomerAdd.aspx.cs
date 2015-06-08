@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using HW.Invoicing.Core.Models;
 using HW.Invoicing.Core.Repositories;
 using HW.Invoicing.Core.Repositories.Sql;
+using HW.Core.Helpers;
 
 namespace HW.Invoicing
 {
@@ -25,6 +26,8 @@ namespace HW.Invoicing
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
+        	HtmlHelper.RedirectIf(Session["UserId"] == null, "default.aspx");
+        	
 			Add();
 		}
 		

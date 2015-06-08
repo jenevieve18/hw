@@ -1,5 +1,6 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Invoicing.master.cs" Inherits="HW.Invoicing.Invoicing" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
+<%@ Register TagPrefix="hw" TagName="Footer" Src="~/Footer.ascx" %>
 <!DOCTYPE html>
 
 <html lang="en">
@@ -109,7 +110,7 @@
 					        </form>-->
 					        <ul class="nav navbar-nav navbar-right">
 						        <li class="dropdown">
-							         <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account<strong class="caret"></strong></a>
+							        <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account<strong class="caret"></strong></a>
 							        <ul class="dropdown-menu">
 								        <li><%= HtmlHelper.Anchor("Settings.aspx", "settings.aspx") %></li>
 								        <li><%= HtmlHelper.Anchor("Profile", "profile.aspx") %></li>
@@ -129,7 +130,8 @@
 
     </form>
 
-    <footer>
+    <hw:Footer runat="server" />
+    <!--<footer>
 	    <div class="container">
 	        <div class="row clearfix">
 		        <div class="col-md-2 column">
@@ -182,6 +184,6 @@
 		        </div>
 	        </div>
         </div>
-	</footer>
+	</footer>-->
 </body>
 </html>
