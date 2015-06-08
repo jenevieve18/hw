@@ -20,7 +20,7 @@
     <tr>
         <td><%= i.Name %></td>
         <td><%= i.Description %></td>
-        <td><%= i.Price.ToString("0.00") %></td>
+        <td><%= i.Price.ToString("# ##0.00") %></td>
         <td>
             <%= HtmlHelper.Anchor("Edit", "itemedit.aspx?ItemID=" + i.Id)%>
             <%= HtmlHelper.Anchor("Delete", "itemdelete.aspx?ItemID=" + i.Id)%>
