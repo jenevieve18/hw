@@ -49,3 +49,12 @@ create table CustomerNotes(
 	CreatedAt datetime,
 	CreatedBy integer
 );
+
+create table CustomerContact(
+	Id integer not null primary key identity,
+	CustomerId integer,
+	Contact varchar(255),
+	Phone varchar(255),
+	Mobile varchar(255),
+	Email varchar(255)
+);

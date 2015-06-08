@@ -13,19 +13,14 @@ namespace HW.Invoicing
 {
 	public partial class CustomerEdit : System.Web.UI.Page
 	{
-//		ICustomerRepository r;
 		SqlCustomerRepository r = new SqlCustomerRepository();
 		SqlItemRepository ir = new SqlItemRepository();
 		protected IList<CustomerNotes> notes;
 		protected IList<CustomerPrice> prices;
+		protected IList<CustomerContact> contacts;
 		
-		public CustomerEdit() // : this(new SqlCustomerRepository())
+		public CustomerEdit()
 		{
-//		}
-//		
-//		public CustomerEdit(SqlCustomerRepository r)
-//		{
-//			this.r = r;
 		}
 		
 		public void Edit(int id)
@@ -51,9 +46,17 @@ namespace HW.Invoicing
 					DropDownListItems.Items.Add(new ListItem(i.Name, i.Id.ToString()));
 				}
 			}
-			notes = r.FindNotes(customerId);
-			prices = r.FindPrices(customerId);
 		}
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+
+            int customerId = ConvertHelper.ToInt32(Request.QueryString["CustomerID"]);
+            notes = r.FindNotes(customerId);
+            prices = r.FindPrices(customerId);
+            contacts = r.FindContacts(customerId);
+        }
 
 		protected void buttonSave_Click(object sender, EventArgs e)
 		{
@@ -76,7 +79,27 @@ namespace HW.Invoicing
             r.SaveNotes(n, ConvertHelper.ToInt32(Request.QueryString["CustomerID"]));
 		}
 
+		protected void buttonSaveContact_Click(object sender, EventArgs e)
+		{
+			var c = new CustomerContact {
+				Contact = textBoxContact.Text,
+				Phone = textBoxPhone.Text,
+				Mobile = textBoxMobile.Text,
+				Email = textBoxEmail.Text
+			};
+            r.SaveContact(c, ConvertHelper.ToInt32(Request.QueryString["CustomerID"]));
+		}
+
 		protected void buttonSavePrice_Click(object sender, EventArgs e)
+		{
+			var p = new CustomerPrice {
+				Item = new Item { Id = ConvertHelper.ToInt32(DropDownListItems.SelectedValue) },
+				Price = ConvertHelper.ToDecimal(textBoxPrice.Text)
+			};
+            r.SavePrice(p, ConvertHelper.ToInt32(Request.QueryString["CustomerID"]));
+		}
+
+		protected void buttonSaveTimebook_Click(object sender, EventArgs e)
 		{
 			var p = new CustomerPrice {
 				Item = new Item { Id = ConvertHelper.ToInt32(DropDownListItems.SelectedValue) },

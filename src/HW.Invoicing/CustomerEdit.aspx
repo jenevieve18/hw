@@ -101,24 +101,24 @@
 						            <div class="modal-body">
                                         <div class="form-group">
 	                                        <label for="<%= textBoxEmail.ClientID %>">Contact person</label>
-                                            <asp:TextBox ID="textBox6" runat="server" CssClass="form-control"></asp:TextBox>
+                                            <asp:TextBox ID="textBoxContact" runat="server" CssClass="form-control"></asp:TextBox>
                                         </div>
                                         <div class="form-group">
-	                                        <label for="<%= textBoxEmail.ClientID %>">Phone</label>
-                                            <asp:TextBox ID="textBox7" runat="server" CssClass="form-control"></asp:TextBox>
+	                                        <label for="<%= textBoxPhone.ClientID %>">Phone</label>
+                                            <asp:TextBox ID="textBoxContactPhone" runat="server" CssClass="form-control"></asp:TextBox>
                                         </div>
                                         <div class="form-group">
-	                                        <label for="<%= textBoxEmail.ClientID %>">Mobile</label>
-                                            <asp:TextBox ID="textBox8" runat="server" CssClass="form-control"></asp:TextBox>
+	                                        <label for="<%= textBoxMobile.ClientID %>">Mobile</label>
+                                            <asp:TextBox ID="textBoxMobile" runat="server" CssClass="form-control"></asp:TextBox>
                                         </div>
                                         <div class="form-group">
 	                                        <label for="<%= textBoxEmail.ClientID %>">Email</label>
-                                            <asp:TextBox ID="textBox9" runat="server" CssClass="form-control"></asp:TextBox>
+                                            <asp:TextBox ID="textBoxContactEmail" runat="server" CssClass="form-control"></asp:TextBox>
                                         </div>
 						            </div>
 						            <div class="modal-footer">
 							            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <asp:Button ID="ButtonSaveCustomerContact" runat="server" Text="Save contact" CssClass="btn btn-primary" OnClick="buttonSaveNotes_Click" />
+                                        <asp:Button ID="ButtonSaveCustomerContact" runat="server" Text="Save contact" CssClass="btn btn-primary" OnClick="buttonSaveContact_Click" />
 						            </div>
 					            </div>
 				            </div>
@@ -132,19 +132,21 @@
                     <th>Email</th>
                     <th></th>
                 </tr>
+                <% foreach (var c in contacts) { %>
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td><%= c.Contact %></td>
+                    <td><%= c.Phone %></td>
+                    <td><%= c.Mobile %></td>
+                    <td><%= c.Email %></td>
                     <td></td>
                 </tr>
+                <% } %>
             </table>
 		</div>
 		<div class="tab-pane" id="customer-prices">
 			<br />
 			<div class="alert alert-info">
-				<strong>Customer item prices</strong> are lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                In ordinary usage, <strong>price</strong> is the quantity of payment or compensation given by one party to another in return for goods or services.
 			</div>
             <table class="table table-hover">
                 <tr>
@@ -161,7 +163,7 @@
 						            </div>
 						            <div class="modal-body">
                                         <div class="form-group">
-	                                        <label for="<%= DropDownListItems.ClientID %>">Price</label>
+	                                        <label for="<%= DropDownListItems.ClientID %>">Item</label>
                                             <asp:DropDownList ID="DropDownListItems" runat="server" CssClass="form-control">
                                             </asp:DropDownList>
                                         </div>
@@ -172,7 +174,7 @@
 						            </div>
 						            <div class="modal-footer">
 							            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <asp:Button ID="ButtonSavePrice" runat="server" Text="Button" />
+                                        <asp:Button ID="ButtonSavePrice" runat="server" Text="Save price" OnClick="buttonSavePrice_Click" CssClass="btn btn-primary" />
 						            </div>
 					            </div>
 				            </div>
@@ -184,9 +186,10 @@
                     <th>Price</th>
                     <th></th>
                 </tr>
+                <% foreach (var p in prices) { %>
                 <tr>
-                    <td>Sample Item 1</td>
-                    <td>12.00</td>
+                    <td><%= p.Item.Name %></td>
+                    <td>SEK<%= p.Price.ToString("0.00") %></td>
                     <td>
                         <%= HtmlHelper.Anchor("Edit", "") %>
                         <%= HtmlHelper.Anchor("Delete", "") %>
@@ -194,6 +197,7 @@
                         <%= HtmlHelper.Anchor("Move Down", "") %>
                     </td>
                 </tr>
+                <% } %>
             </table>
 		</div>
 		<div class="tab-pane" id="timebook">
@@ -220,28 +224,29 @@
                                             <asp:TextBox ID="textBoxDate" runat="server" CssClass="form-control"></asp:TextBox>
                                         </div>
                                         <div class="form-group">
-	                                        <label for="<%= textBoxDate.ClientID %>">Contact Person</label>
-                                            <asp:TextBox ID="textBox1" runat="server" CssClass="form-control"></asp:TextBox>
+	                                        <label for="<%= textBoxTimebookContact.ClientID %>">Contact Person</label>
+                                            <asp:TextBox ID="textBoxTimebookContact" runat="server" CssClass="form-control"></asp:TextBox>
                                         </div>
                                         <div class="form-group">
-	                                        <label for="<%= textBoxDate.ClientID %>">Time</label>
-                                            <asp:TextBox ID="textBox2" runat="server" CssClass="form-control"></asp:TextBox>
+	                                        <label for="<%= textBoxTime.ClientID %>">Time</label>
+                                            <asp:TextBox ID="textBoxTime" runat="server" CssClass="form-control"></asp:TextBox>
                                         </div>
                                         <div class="form-group">
-	                                        <label for="<%= textBoxDate.ClientID %>">Price</label>
-                                            <asp:TextBox ID="textBox3" runat="server" CssClass="form-control"></asp:TextBox>
+	                                        <label for="<%= textBoxTimebookPrice.ClientID %>">Price</label>
+                                            <asp:TextBox ID="textBoxTimebookPrice" runat="server" CssClass="form-control"></asp:TextBox>
                                         </div>
                                         <div class="form-group">
-	                                        <label for="<%= textBoxDate.ClientID %>">Consultant</label>
-                                            <asp:TextBox ID="textBox4" runat="server" CssClass="form-control"></asp:TextBox>
+	                                        <label for="<%= textBoxConsultant.ClientID %>">Consultant</label>
+                                            <asp:TextBox ID="textBoxConsultant" runat="server" CssClass="form-control"></asp:TextBox>
                                         </div>
                                         <div class="form-group">
-	                                        <label for="<%= textBoxDate.ClientID %>">Comments</label>
-                                            <asp:TextBox ID="textBox5" runat="server" CssClass="form-control"></asp:TextBox>
+	                                        <label for="<%= textBoxComments.ClientID %>">Comments</label>
+                                            <asp:TextBox ID="textBoxComments" runat="server" CssClass="form-control"></asp:TextBox>
                                         </div>
 						            </div>
 						            <div class="modal-footer">
-							             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> <button type="button" class="btn btn-primary">Save changes</button>
+							             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <asp:Button ID="ButtonCustomerTimebook" runat="server" Text="Save timebook" OnClick="buttonSaveTimebook_Click" CssClass="btn btn-primary" />
 						            </div>
 					            </div>
 				            </div>
