@@ -233,7 +233,7 @@
                                         </div>
                                         <div class="form-group">
 	                                        <label for="<%= textBoxTimebookContact.ClientID %>">Contact Person</label>
-                                            <asp:DropDownList ID="DropDownListContacts" runat="server">
+                                            <asp:DropDownList ID="DropDownListContacts" runat="server" CssClass="form-control">
                                             </asp:DropDownList>
                                             <!--<asp:TextBox ID="textBoxTimebookContact" runat="server" CssClass="form-control"></asp:TextBox>-->
                                         </div>
