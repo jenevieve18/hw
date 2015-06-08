@@ -31,6 +31,8 @@ namespace HW.Invoicing
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			HtmlHelper.RedirectIf(Session["UserId"] == null, "default.aspx");
+			
 			if (!IsPostBack) {
 				foreach (var c in cr.FindAll()) {
 					dropDownListCustomer.Items.Add(new ListItem(c.Name, c.Id.ToString()));

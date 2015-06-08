@@ -45,6 +45,8 @@ namespace HW.Invoicing
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
+        	HtmlHelper.RedirectIf(Session["UserId"] == null, "default.aspx");
+        	
 			Edit(ConvertHelper.ToInt32(Request.QueryString["ItemID"]));
 		}
 

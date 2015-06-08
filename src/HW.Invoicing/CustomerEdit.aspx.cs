@@ -18,6 +18,7 @@ namespace HW.Invoicing
 		protected IList<CustomerNotes> notes;
 		protected IList<CustomerPrice> prices;
 		protected IList<CustomerContact> contacts;
+		protected IList<Item> items;
 		
 		public CustomerEdit()
 		{
@@ -59,15 +60,22 @@ namespace HW.Invoicing
 			notes = r.FindNotes(customerId);
 			prices = r.FindPrices(customerId);
 			contacts = r.FindContacts(customerId);
-			
+			items = ir.FindAllWithCustomerPrices();
+
+            DropDownListContacts.Items.Clear();
 			foreach (var c in contacts) {
 				DropDownListContacts.Items.Add(new ListItem(c.Contact, c.Id.ToString()));
 			}
+            DropDownListTimebookItems.Items.Clear();
+            foreach (var i in items) {
+            	DropDownListTimebookItems.Items.Add(new ListItem(i.Name, i.Id.ToString()));
+            }
 		}
 
 		protected void buttonSave_Click(object sender, EventArgs e)
 		{
 			var d = new Customer {
+				Number = textBoxNumber.Text,
 				Name = textBoxName.Text,
 				Phone = textBoxPhone.Text,
 				Email = textBoxEmail.Text

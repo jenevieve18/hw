@@ -11,6 +11,7 @@
 </div>
 <table class="table table-hover">
     <tr>
+        <th>Number</th>
         <th>Name</th>
         <th>Phone</th>
         <th>Email</th>
@@ -18,28 +19,13 @@
     </tr>
     <% foreach (var c in customers) { %>
     <tr>
+        <td><%= c.Number %></td>
         <td><%= c.Name %></td>
         <td><%= c.Phone %></td>
         <td><%= c.Email %></td>
         <td>
             <%= HtmlHelper.Anchor("Edit", "customeredit.aspx?CustomerID=" + c.Id) %>
             <%= HtmlHelper.Anchor("Delete", "customerdelete.aspx?CustomerID=" + c.Id) %>
-            <!--<div class="btn-group">
-				<button class="btn btn-default">Action</button> <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
-				<ul class="dropdown-menu">
-					<li>
-						<a href="#">Action</a>
-					</li>
-					<li class="disabled">
-						<a href="#">Another action</a>
-					</li>
-					<li class="divider">
-					</li>
-					<li>
-						<a href="#">Something else here</a>
-					</li>
-				</ul>
-			</div>-->
         </td>
     </tr>
     <% } %>

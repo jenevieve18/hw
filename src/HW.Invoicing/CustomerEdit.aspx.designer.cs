@@ -175,13 +175,13 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.DropDownList DropDownListContacts;
         
         /// <summary>
-        /// textBoxTimebookContact control.
+        /// DropDownListTimebookItems control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxTimebookContact;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListTimebookItems;
         
         /// <summary>
         /// textBoxTime control.

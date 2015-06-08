@@ -72,17 +72,19 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Date</th>
+                    <th width="20%">Date</th>
                     <th>Creator</th>
                     <th>Notes</th>
                     <th></th>
                 </tr>
                 <% foreach (var n in notes) { %>
                 <tr>
-                    <td><%= n.CreatedAt.Value.ToString("yyyy-MM-dd") %></td>
+                    <td><%= n.CreatedAt.Value.ToString("yyyy-MM-dd H:mm:ss") %></td>
                     <td><%= n.CreatedBy.Name %></td>
                     <td><%= n.Notes %></td>
                     <td>
+                        <%= HtmlHelper.Anchor("Edit", "") %>
+                        <%= HtmlHelper.Anchor("Delete", "") %>
                     </td>
                 </tr>
                 <% } %>
@@ -146,7 +148,10 @@
                     <td><%= c.Phone %></td>
                     <td><%= c.Mobile %></td>
                     <td><%= c.Email %></td>
-                    <td></td>
+                    <td>
+                        <%= HtmlHelper.Anchor("Edit", "") %>
+                        <%= HtmlHelper.Anchor("Delete", "") %>
+                    </td>
                 </tr>
                 <% } %>
             </table>
@@ -197,7 +202,7 @@
                 <% foreach (var p in prices) { %>
                 <tr>
                     <td><%= p.Item.Name %></td>
-                    <td>SEK<%= p.Price.ToString("0.00") %></td>
+                    <td><%= p.Price.ToString("0.00") %></td>
                     <td>
                         <%= HtmlHelper.Anchor("Edit", "") %>
                         <%= HtmlHelper.Anchor("Delete", "") %>
@@ -232,10 +237,14 @@
                                             <asp:TextBox ID="textBoxDate" runat="server" CssClass="form-control"></asp:TextBox>
                                         </div>
                                         <div class="form-group">
-	                                        <label for="<%= textBoxTimebookContact.ClientID %>">Contact Person</label>
+	                                        <label for="<%= DropDownListContacts.ClientID %>">Contact Person</label>
                                             <asp:DropDownList ID="DropDownListContacts" runat="server" CssClass="form-control">
                                             </asp:DropDownList>
-                                            <!--<asp:TextBox ID="textBoxTimebookContact" runat="server" CssClass="form-control"></asp:TextBox>-->
+                                        </div>
+                                        <div class="form-group">
+	                                        <label for="<%= DropDownListTimebookItems.ClientID %>">Item</label>
+                                            <asp:DropDownList ID="DropDownListTimebookItems" runat="server" CssClass="form-control">
+                                            </asp:DropDownList>
                                         </div>
                                         <div class="form-group">
 	                                        <label for="<%= textBoxTime.ClientID %>">Time</label>
