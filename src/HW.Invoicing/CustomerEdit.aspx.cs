@@ -33,12 +33,13 @@ namespace HW.Invoicing
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
-        	HtmlHelper.RedirectIf(Session["UserId"] == null, "default.aspx");
-        	
+			HtmlHelper.RedirectIf(Session["UserId"] == null, "default.aspx");
+			
 			int customerId = ConvertHelper.ToInt32(Request.QueryString["CustomerID"]);
 			if (!IsPostBack) {
 				var c = r.Read(customerId);
 				if (c != null) {
+                    textBoxNumber.Text = c.Number;
 					textBoxName.Text = c.Name;
 					textBoxAddress.Text = c.Address;
 					textBoxEmail.Text = c.Email;
@@ -50,15 +51,19 @@ namespace HW.Invoicing
 			}
 		}
 
-        protected override void OnPreRender(EventArgs e)
-        {
-            base.OnPreRender(e);
+		protected override void OnPreRender(EventArgs e)
+		{
+			base.OnPreRender(e);
 
-            int customerId = ConvertHelper.ToInt32(Request.QueryString["CustomerID"]);
-            notes = r.FindNotes(customerId);
-            prices = r.FindPrices(customerId);
-            contacts = r.FindContacts(customerId);
-        }
+			int customerId = ConvertHelper.ToInt32(Request.QueryString["CustomerID"]);
+			notes = r.FindNotes(customerId);
+			prices = r.FindPrices(customerId);
+			contacts = r.FindContacts(customerId);
+			
+			foreach (var c in contacts) {
+				DropDownListContacts.Items.Add(new ListItem(c.Contact, c.Id.ToString()));
+			}
+		}
 
 		protected void buttonSave_Click(object sender, EventArgs e)
 		{
@@ -67,7 +72,7 @@ namespace HW.Invoicing
 				Phone = textBoxPhone.Text,
 				Email = textBoxEmail.Text
 			};
-            r.Update(d, ConvertHelper.ToInt32(Request.QueryString["CustomerID"]));
+			r.Update(d, ConvertHelper.ToInt32(Request.QueryString["CustomerID"]));
 			Response.Redirect("customers.aspx");
 		}
 
@@ -78,18 +83,18 @@ namespace HW.Invoicing
 				CreatedAt = DateTime.Now,
 				CreatedBy = new User { Id = ConvertHelper.ToInt32(Session["UserId"]) }
 			};
-            r.SaveNotes(n, ConvertHelper.ToInt32(Request.QueryString["CustomerID"]));
+			r.SaveNotes(n, ConvertHelper.ToInt32(Request.QueryString["CustomerID"]));
 		}
 
 		protected void buttonSaveContact_Click(object sender, EventArgs e)
 		{
 			var c = new CustomerContact {
 				Contact = textBoxContact.Text,
-				Phone = textBoxPhone.Text,
-				Mobile = textBoxMobile.Text,
-				Email = textBoxEmail.Text
+				Phone = textBoxContactPhone.Text,
+				Mobile = textBoxContactMobile.Text,
+				Email = textBoxContactEmail.Text
 			};
-            r.SaveContact(c, ConvertHelper.ToInt32(Request.QueryString["CustomerID"]));
+			r.SaveContact(c, ConvertHelper.ToInt32(Request.QueryString["CustomerID"]));
 		}
 
 		protected void buttonSavePrice_Click(object sender, EventArgs e)
@@ -98,7 +103,7 @@ namespace HW.Invoicing
 				Item = new Item { Id = ConvertHelper.ToInt32(DropDownListItems.SelectedValue) },
 				Price = ConvertHelper.ToDecimal(textBoxPrice.Text)
 			};
-            r.SavePrice(p, ConvertHelper.ToInt32(Request.QueryString["CustomerID"]));
+			r.SavePrice(p, ConvertHelper.ToInt32(Request.QueryString["CustomerID"]));
 		}
 
 		protected void buttonSaveTimebook_Click(object sender, EventArgs e)
@@ -107,7 +112,7 @@ namespace HW.Invoicing
 				Item = new Item { Id = ConvertHelper.ToInt32(DropDownListItems.SelectedValue) },
 				Price = ConvertHelper.ToDecimal(textBoxPrice.Text)
 			};
-            r.SavePrice(p, ConvertHelper.ToInt32(Request.QueryString["CustomerID"]));
+			r.SavePrice(p, ConvertHelper.ToInt32(Request.QueryString["CustomerID"]));
 		}
 	}
 }

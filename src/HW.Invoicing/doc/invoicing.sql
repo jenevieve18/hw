@@ -58,3 +58,7 @@ create table CustomerContact(
 	Mobile varchar(255),
 	Email varchar(255)
 );
+
+alter table Customer add Number varchar(255);
+
+alter table Customer add Mobile varchar(255);

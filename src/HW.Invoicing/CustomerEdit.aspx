@@ -6,6 +6,10 @@
 
 <h3>Edit a customer</h3>
 <div class="form-group">
+	<label for="<%= textBoxNumber.ClientID %>">Customer number</label>
+    <asp:TextBox ID="textBoxNumber" runat="server" CssClass="form-control"></asp:TextBox>
+</div>
+<div class="form-group">
 	<label for="<%= textBoxName.ClientID %>">Customer name</label>
     <asp:TextBox ID="textBoxName" runat="server" CssClass="form-control"></asp:TextBox>
 </div>
@@ -14,12 +18,16 @@
     <asp:TextBox ID="textBoxAddress" runat="server" CssClass="form-control"></asp:TextBox>
 </div>
 <div class="form-group">
-	<label for="<%= textBoxEmail.ClientID %>">Email</label>
-    <asp:TextBox ID="textBoxEmail" runat="server" CssClass="form-control"></asp:TextBox>
-</div>
-<div class="form-group">
 	<label for="<%= textBoxPhone.ClientID %>">Phone</label>
     <asp:TextBox ID="textBoxPhone" runat="server" CssClass="form-control"></asp:TextBox>
+</div>
+<div class="form-group">
+	<label for="<%= textBoxMobile.ClientID %>">Mobile</label>
+    <asp:TextBox ID="textBoxMobile" runat="server" CssClass="form-control"></asp:TextBox>
+</div>
+<div class="form-group">
+	<label for="<%= textBoxEmail.ClientID %>">Email</label>
+    <asp:TextBox ID="textBoxEmail" runat="server" CssClass="form-control"></asp:TextBox>
 </div>
 
 <div class="tabbable" id="Div1">
@@ -38,7 +46,7 @@
             <table class="table table-hover">
                 <tr>
                     <td colspan="4">
-                        <a id="modal-625558" href="#customer-notes-form" role="button" class="btn btn-primary" data-toggle="modal">Create Notes</a>
+                        <a id="modal-625558" href="#customer-notes-form" role="button" class="btn btn-info" data-toggle="modal">Create Notes</a>
 			            <div class="modal fade" id="customer-notes-form" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				            <div class="modal-dialog">
 					            <div class="modal-content">
@@ -88,7 +96,7 @@
             <table class="table table-hover">
                 <tr>
                     <td colspan="5">
-                        <a id="modal-240447" href="#modal-container-240447" role="button" class="btn btn-primary" data-toggle="modal">Add new contact person</a>
+                        <a id="modal-240447" href="#modal-container-240447" role="button" class="btn btn-info" data-toggle="modal">Add new contact person</a>
 			            <div class="modal fade" id="modal-container-240447" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				            <div class="modal-dialog">
 					            <div class="modal-content">
@@ -109,7 +117,7 @@
                                         </div>
                                         <div class="form-group">
 	                                        <label for="<%= textBoxMobile.ClientID %>">Mobile</label>
-                                            <asp:TextBox ID="textBoxMobile" runat="server" CssClass="form-control"></asp:TextBox>
+                                            <asp:TextBox ID="textBoxContactMobile" runat="server" CssClass="form-control"></asp:TextBox>
                                         </div>
                                         <div class="form-group">
 	                                        <label for="<%= textBoxEmail.ClientID %>">Email</label>
@@ -151,7 +159,7 @@
             <table class="table table-hover">
                 <tr>
                     <td colspan="3">
-                        <a id="modal-692185" href="#customer-prices-form" role="button" class="btn btn-primary" data-toggle="modal">Add Customer Price</a>
+                        <a id="modal-692185" href="#customer-prices-form" role="button" class="btn btn-info" data-toggle="modal">Add Customer Price</a>
 			            <div class="modal fade" id="customer-prices-form" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				            <div class="modal-dialog">
 					            <div class="modal-content">
@@ -225,7 +233,9 @@
                                         </div>
                                         <div class="form-group">
 	                                        <label for="<%= textBoxTimebookContact.ClientID %>">Contact Person</label>
-                                            <asp:TextBox ID="textBoxTimebookContact" runat="server" CssClass="form-control"></asp:TextBox>
+                                            <asp:DropDownList ID="DropDownListContacts" runat="server">
+                                            </asp:DropDownList>
+                                            <!--<asp:TextBox ID="textBoxTimebookContact" runat="server" CssClass="form-control"></asp:TextBox>-->
                                         </div>
                                         <div class="form-group">
 	                                        <label for="<%= textBoxTime.ClientID %>">Time</label>

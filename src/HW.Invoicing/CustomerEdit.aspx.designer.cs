@@ -13,6 +13,15 @@ namespace HW.Invoicing {
     public partial class CustomerEdit {
         
         /// <summary>
+        /// textBoxNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxNumber;
+        
+        /// <summary>
         /// textBoxName control.
         /// </summary>
         /// <remarks>
@@ -31,15 +40,6 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxAddress;
         
         /// <summary>
-        /// textBoxEmail control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxEmail;
-        
-        /// <summary>
         /// textBoxPhone control.
         /// </summary>
         /// <remarks>
@@ -47,6 +47,24 @@ namespace HW.Invoicing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox textBoxPhone;
+        
+        /// <summary>
+        /// textBoxMobile control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxMobile;
+        
+        /// <summary>
+        /// textBoxEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxEmail;
         
         /// <summary>
         /// textBoxNotes control.
@@ -85,13 +103,13 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxContactPhone;
         
         /// <summary>
-        /// textBoxMobile control.
+        /// textBoxContactMobile control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxMobile;
+        protected global::System.Web.UI.WebControls.TextBox textBoxContactMobile;
         
         /// <summary>
         /// textBoxContactEmail control.
@@ -146,6 +164,15 @@ namespace HW.Invoicing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox textBoxDate;
+        
+        /// <summary>
+        /// DropDownListContacts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListContacts;
         
         /// <summary>
         /// textBoxTimebookContact control.
