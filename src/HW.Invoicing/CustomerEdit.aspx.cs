@@ -68,7 +68,9 @@ namespace HW.Invoicing
 			}
             DropDownListTimebookItems.Items.Clear();
             foreach (var i in items) {
-            	DropDownListTimebookItems.Items.Add(new ListItem(i.Name, i.Id.ToString()));
+            	var li = new ListItem(i.Name, i.Id.ToString());
+            	li.Attributes.Add("data-price", i.Price.ToString());
+            	DropDownListTimebookItems.Items.Add(li);
             }
 		}
 

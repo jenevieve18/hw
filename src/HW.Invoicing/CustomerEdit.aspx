@@ -1,6 +1,18 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="CustomerEdit.aspx.cs" Inherits="HW.Invoicing.CustomerEdit" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#<%= DropDownListTimebookItems.ClientID %>').change(function () {
+            var selected = $(this).find('option:selected');
+            var selectedPrice = selected.data('price');
+            $('#<%= textBoxTimebookPrice.ClientID %>').val(selectedPrice);
+        });
+        $('#<%= DropDownListTimebookItems.ClientID %>').change();
+    });
+</script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
