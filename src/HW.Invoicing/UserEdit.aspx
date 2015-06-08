@@ -5,18 +5,18 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <h3>Edit a user</h3>
-<p>
-    User name<br />
-    <asp:TextBox ID="textBoxName" runat="server"></asp:TextBox>
-</p>
-<p>
-    Password<br />
-    <asp:TextBox ID="textBoxPassword" runat="server" TextMode="Password"></asp:TextBox>
-</p>
-<p>
+<div class="form-group">
+	<label for="<%= textBoxName.ClientID %>">User name</label>
+    <asp:TextBox ID="textBoxName" runat="server" CssClass="form-control"></asp:TextBox>
+</div>
+<div class="form-group">
+	<label for="<%= textBoxPassword.ClientID %>">Password</label>
+    <asp:TextBox ID="textBoxPassword" runat="server" CssClass="form-control" TextMode="Password"></asp:TextBox>
+</div>
+<div>
     <asp:Button ID="buttonSave" runat="server" Text="Save user" 
         onclick="buttonSave_Click" CssClass="btn btn-success" />
         or <i><%= HtmlHelper.Anchor("cancel", "users.aspx") %></i>
-</p>
+</div>
 
 </asp:Content>

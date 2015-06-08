@@ -26,6 +26,7 @@ namespace HW.Invoicing
     	
         protected void Page_Load(object sender, EventArgs e)
         {
+            HtmlHelper.RedirectIf(Session["UserId"] == null, "default.aspx");
         }
 
         protected void buttonSave_Click(object sender, EventArgs e)

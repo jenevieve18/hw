@@ -4,8 +4,6 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-
-
 <h3>Log In</h3>
 <div class="form-group">
 	<label for="<%= textBoxName.ClientID %>">User name</label>
