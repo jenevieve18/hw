@@ -12,6 +12,8 @@ namespace HW.Invoicing
 {
     public partial class sql : System.Web.UI.Page
     {
+        protected string message;
+
         protected void Page_Load(object sender, EventArgs e)
         {
         }
@@ -20,7 +22,8 @@ namespace HW.Invoicing
         {
             if ((TextBox1.Text.ToUpper().Contains("DELETE") && !TextBox1.Text.ToUpper().Contains("WHERE")) || (TextBox1.Text.ToUpper().Contains("UPDATE") && !TextBox1.Text.ToUpper().Contains("WHERE")))
             {
-                Label1.Text = "Please provide where clause for delete statement.";
+                //Label1.Text = "Please provide where clause for delete statement.";
+                message = "Please provide where clause for delete statement.";
                 //        	} else if (TextBox1.Text.ToUpper().Contains("DROP")) {
                 //        		Label1.Text = "Please don't use drop statement in this utility page.";
             }
@@ -40,7 +43,8 @@ namespace HW.Invoicing
                 }
                 catch (Exception ex)
                 {
-                    Label1.Text = ex.Message;
+                    //Label1.Text = ex.Message;
+                    message = ex.Message;
                 }
             }
         }
