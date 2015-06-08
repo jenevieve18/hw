@@ -10,7 +10,7 @@
 namespace HW.Invoicing {
     
     
-    public partial class CustomerAdd {
+    public partial class Login {
         
         /// <summary>
         /// textBoxName control.
@@ -22,39 +22,21 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxName;
         
         /// <summary>
-        /// textBoxAddress control.
+        /// textBoxPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxAddress;
+        protected global::System.Web.UI.WebControls.TextBox textBoxPassword;
         
         /// <summary>
-        /// textBoxPhone control.
+        /// buttonLogin control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxPhone;
-        
-        /// <summary>
-        /// textBoxEmail control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxEmail;
-        
-        /// <summary>
-        /// buttonSave control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button buttonSave;
+        protected global::System.Web.UI.WebControls.Button buttonLogin;
     }
 }

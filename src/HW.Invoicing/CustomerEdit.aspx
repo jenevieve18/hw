@@ -49,6 +49,8 @@
                                 <td>
                                     <%= HtmlHelper.Anchor("Edit", "") %>
                                     <%= HtmlHelper.Anchor("Delete", "") %>
+                                    <%= HtmlHelper.Anchor("Move Up", "") %>
+                                    <%= HtmlHelper.Anchor("Move Down", "") %>
                                 </td>
                             </tr>
                         </table>
@@ -111,7 +113,57 @@
 			</div>
 
 
-                                <button type="button" class="btn btn-default">Create invoice</button>
+                                <!--<button type="button" class="btn btn-default">Create invoice</button>-->
+
+<a id="modal-607147" href="#modal-container-607147" role="button" class="btn btn-default" data-toggle="modal">Create invoice</a>
+			
+			<div class="modal fade" id="modal-container-607147" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h4 class="modal-title" id="H1">
+								Create invoice for the timebook below
+							</h4>
+						</div>
+						<div class="modal-body">
+							<table>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Contact</th>
+                                    <th width="10%">Time</th>
+                                    <th width="10%">Price</th>
+                                    <th>Amount</th>
+                                    <th>Comments</th>
+                                </tr>
+                                <tr>
+                                    <td>2015-06-14</td>
+                                    <td>Andrea Bocelli</td>
+                                    <td><input type="text" class="form-control input-sm" value="5" /></td>
+                                    <td><input type="text" class="form-control input-sm" value="13" /></td>
+                                    <td>123.00</td>
+                                    <td><input type="text" class="form-control input-sm" value="I created a new survey aftaer talking to Ian. " /></td>
+                                </tr>
+                                <tr>
+                                    <td>2015-06-14</td>
+                                    <td>Andrea Bocelli</td>
+                                    <td><input type="text" class="form-control input-sm" value="5" /></td>
+                                    <td><input type="text" class="form-control input-sm" value="13" /></td>
+                                    <td>123.00</td>
+                                    <td><input type="text" class="form-control input-sm" value="I created a new survey aftaer talking to Ian. " /></td>
+                                </tr>
+                            </table>
+						</div>
+						<div class="modal-footer">
+							 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                             <%= HtmlHelper.Anchor("Save changes", "invoices.aspx", "class='btn btn-primary'") %>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+
                                 </td>
                             </tr>
                             <tr>
