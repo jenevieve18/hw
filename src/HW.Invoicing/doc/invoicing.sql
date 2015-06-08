@@ -34,3 +34,18 @@ create table InvoiceItem(
 
 alter table Item add Description varchar(255);
 alter table Item add Price decimal;
+
+create table CustomerPrice(
+	Id integer not null primary key identity,
+	CustomerId integer,
+	ItemId integer,
+	Price decimal
+);
+
+create table CustomerNotes(
+	Id integer not null primary key identity,
+	CustomerId integer,
+	Notes varchar(255),
+	CreatedAt datetime,
+	CreatedBy integer
+);

@@ -25,7 +25,7 @@
             <%= HtmlHelper.Anchor("Edit", "customeredit.aspx?CustomerID=" + c.Id) %>
             <%= HtmlHelper.Anchor("Delete", "customerdelete.aspx?CustomerID=" + c.Id) %>
             <!--<div class="btn-group">
-				 <button class="btn btn-default">Action</button> <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
+				<button class="btn btn-default">Action</button> <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
 				<ul class="dropdown-menu">
 					<li>
 						<a href="#">Action</a>
