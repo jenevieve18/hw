@@ -42,6 +42,13 @@
     <asp:TextBox ID="textBoxEmail" runat="server" CssClass="form-control"></asp:TextBox>
 </div>
 
+<div>
+    <asp:Button CssClass="btn btn-success" ID="buttonSave" runat="server" Text="Save customer" 
+        onclick="buttonSave_Click" />
+        or <i><%= HtmlHelper.Anchor("cancel", "customers.aspx") %></i>
+</div>
+<br />
+
 <div class="tabbable" id="Div1">
     <ul class="nav nav-tabs">
 	    <li class="active"><a href="#notes" data-toggle="tab">Notes</a></li>
@@ -369,12 +376,6 @@
             </table>
 		</div>
 	</div>
-</div>
-
-<div>
-    <asp:Button CssClass="btn btn-success" ID="buttonSave" runat="server" Text="Save customer" 
-        onclick="buttonSave_Click" />
-        or <i><%= HtmlHelper.Anchor("cancel", "customers.aspx") %></i>
 </div>
 
 </asp:Content>

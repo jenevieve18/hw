@@ -72,7 +72,7 @@
             <asp:TextBox CssClass="input-block-level" placeholder="User name" ID="textBoxName" runat="server"></asp:TextBox>
             <asp:TextBox CssClass="input-block-level" ID="textBoxPassword" placeholder="Password" runat="server" TextMode="Password"></asp:TextBox>
             <label class="checkbox">
-                <input type="checkbox" value="remember-me"> Remember me
+                <asp:CheckBox ID="CheckBoxRememberMe" runat="server" /> Remember me
             </label>
             <asp:Button ID="buttonLogin" CssClass="btn btn-large btn-primary" runat="server" 
                 Text="Sign in" onclick="buttonLogin_Click" />
