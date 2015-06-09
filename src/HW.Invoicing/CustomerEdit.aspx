@@ -301,7 +301,7 @@
 							            </h4>
 						            </div>
 						            <div class="modal-body">
-							            <table>
+							            <table class="table table-hover">
                                             <tr>
                                                 <th>Date</th>
                                                 <th>Contact</th>
@@ -318,7 +318,7 @@
                                                 <td>123.00</td>
                                                 <td><input type="text" class="form-control input-sm" value="I created a new survey aftaer talking to Ian. " /></td>
                                             </tr>
-                                            <tr>
+                                            <!--<tr>
                                                 <td>2015-06-14</td>
                                                 <td>Andrea Bocelli</td>
                                                 <td><input type="text" class="form-control input-sm" value="5" /></td>
@@ -326,6 +326,14 @@
                                                 <td>123.00</td>
                                                 <td><input type="text" class="form-control input-sm" value="I created a new survey aftaer talking to Ian. " /></td>
                                             </tr>
+                                            <tr>
+                                                <td>2015-06-14</td>
+                                                <td>Andrea Bocelli</td>
+                                                <td><input type="text" class="form-control input-sm" value="5" /></td>
+                                                <td><input type="text" class="form-control input-sm" value="13" /></td>
+                                                <td>123.00</td>
+                                                <td><input type="text" class="form-control input-sm" value="I created a new survey aftaer talking to Ian. " /></td>
+                                            </tr>-->
                                         </table>
 						            </div>
 						            <div class="modal-footer">
@@ -347,20 +355,22 @@
                     <th>Status</th>
                     <th></th>
                 </tr>
+                <% foreach (var t in timebooks) { %>
                 <tr>
                     <td></td>
-                    <td>2015-06-14</td>
-                    <td>Andrea Bocelli</td>
-                    <td>5hours</td>
-                    <td>SEK13.00</td>
-                    <td>SEK123.00</td>
+                    <td><%= t.Date.ToString("yyyy-MM-dd") %></td>
+                    <td><%= t.Contact.Contact %></td>
+                    <td><%= t.Quantity.ToString() %></td>
+                    <td><%= t.Price.ToString("# ##0.00") %></td>
+                    <td><%= t.Price.ToString("# ##0.00") %></td>
                     <td><span class="label label-success">INVOICED</span></td>
                     <td>
                         <%= HtmlHelper.Anchor("Edit", "") %>
                         <%= HtmlHelper.Anchor("Delete", "") %>
                     </td>
                 </tr>
-                <tr>
+                <% } %>
+                <!--<tr>
                     <td><input type="checkbox" /></td>
                     <td>2015-06-14</td>
                     <td>Andrea Bocelli</td>
@@ -372,7 +382,7 @@
                         <%= HtmlHelper.Anchor("Edit", "") %>
                         <%= HtmlHelper.Anchor("Delete", "") %>
                     </td>
-                </tr>
+                </tr>-->
             </table>
 		</div>
 	</div>

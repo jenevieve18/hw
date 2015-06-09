@@ -1,82 +1,70 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="HW.Invoicing.Default" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Home.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="HW.Invoicing.Default" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-<!DOCTYPE html>
+<div class="carousel slide" id="carousel-861880">
+	<ol class="carousel-indicators">
+		<li class="active" data-slide-to="0" data-target="#carousel-861880"></li>
+		<li data-slide-to="1" data-target="#carousel-861880"></li>
+		<li data-slide-to="2" data-target="#carousel-861880"></li>
+	</ol>
+	<div class="carousel-inner">
+		<div class="item active">
+			<img alt="" src="http://lorempixel.com/1600/500/sports/1" />
+			<div class="carousel-caption">
+				<h4>First Thumbnail label</h4>
+				<p>
+					Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+				</p>
+			</div>
+		</div>
+		<div class="item">
+			<img alt="" src="http://lorempixel.com/1600/500/sports/2" />
+			<div class="carousel-caption">
+				<h4>Second Thumbnail label</h4>
+				<p>
+					Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+				</p>
+			</div>
+		</div>
+		<div class="item">
+			<img alt="" src="http://lorempixel.com/1600/500/sports/3" />
+			<div class="carousel-caption">
+				<h4>Third Thumbnail label</h4>
+				<p>
+					Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+				</p>
+			</div>
+		</div>
+	</div> <a class="left carousel-control" href="#carousel-861880" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-861880" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+</div>
 
-<html lang="en">
-<head runat="server">
-    <meta charset="utf-8">
-    <title></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="Interactive Health Group">
-
-    <!-- Le styles -->
-    <!--<link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css" rel="stylesheet">-->
-    <!--<link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css" rel="stylesheet">-->
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <style type="text/css">
-        body {
-            padding-top: 40px;
-            padding-bottom: 40px;
-            background-color: #f5f5f5;
-        }
-
-        .form-signin {
-            max-width: 300px;
-            padding: 19px 29px 29px;
-            margin: 0 auto 20px;
-            background-color: #fff;
-            border: 1px solid #e5e5e5;
-            -webkit-border-radius: 5px;
-            -moz-border-radius: 5px;
-            border-radius: 5px;
-            -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-            -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-            box-shadow: 0 1px 2px rgba(0,0,0,.05);
-        }
-        .form-signin .form-signin-heading,
-        .form-signin .checkbox {
-            margin-bottom: 10px;
-        }
-        .form-signin input[type="text"],
-        .form-signin input[type="password"] {
-            font-size: 16px;
-            height: auto;
-            margin-bottom: 15px;
-            padding: 7px 9px;
-        }
-
-    </style>
-
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-        <script src="../assets/js/html5shiv.js"></script>
-    <![endif]-->
-
-    <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="../assets/ico/favicon.png">
-  </head>
-<body>
-    <div class="container">
-        <form id="form1" runat="server" class="form-signin">
-            <h2 class="form-signin-heading">Please sign in</h2>
-            <% if (errorMessage != null && errorMessage != "") { %>
-                <div class="alert alert-danger">
-	                <%= errorMessage %>
-                </div>
+<div class="row clearfix">
+	<div class="col-md-4 column">
+		<h2>Welcome</h2>
+		<p>
+			Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+		</p>
+		<p><a class="btn" href="#">View details »</a></p>
+	</div>
+	<div class="col-md-4 column">
+		<h2>News</h2>
+		<p>
+			<% if (latestNews != null) { %>
+                <%= latestNews.Content %>
             <% } %>
-            <asp:TextBox CssClass="input-block-level" placeholder="User name" ID="textBoxName" runat="server"></asp:TextBox>
-            <asp:TextBox CssClass="input-block-level" ID="textBoxPassword" placeholder="Password" runat="server" TextMode="Password"></asp:TextBox>
-            <label class="checkbox">
-                <asp:CheckBox ID="CheckBoxRememberMe" runat="server" /> Remember me
-            </label>
-            <asp:Button ID="buttonLogin" CssClass="btn btn-large btn-primary" runat="server" 
-                Text="Sign in" onclick="buttonLogin_Click" />
-        </form>
-    </div>
-</body>
-</html>
+		</p>
+		<p><a class="btn" href="#">View details »</a></p>
+	</div>
+	<div class="col-md-4 column">
+		<h2>About Us</h2>
+		<p>
+			Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+		</p>
+		<p><a class="btn" href="#">View details »</a></p>
+	</div>
+</div>
+
+
+</asp:Content>

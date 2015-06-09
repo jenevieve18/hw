@@ -19,6 +19,7 @@ namespace HW.Invoicing
 		protected IList<CustomerPrice> prices;
 		protected IList<CustomerContact> contacts;
 		protected IList<Item> items;
+		protected IList<CustomerTimebook> timebooks;
 		protected int id;
 		
 		public CustomerEdit()
@@ -61,6 +62,7 @@ namespace HW.Invoicing
 			notes = r.FindNotes(id);
 			prices = r.FindPrices(id);
 			contacts = r.FindContacts(id);
+			timebooks = r.FindTimebooks(id);
 			items = ir.FindAllWithCustomerPrices();
 
 			DropDownListContacts.Items.Clear();
@@ -119,11 +121,15 @@ namespace HW.Invoicing
 
 		protected void buttonSaveTimebook_Click(object sender, EventArgs e)
 		{
-			var p = new CustomerPrice {
+			var p = new CustomerTimebook {
+				Contact = new CustomerContact { Id = ConvertHelper.ToInt32(DropDownListContacts.SelectedValue) },
 				Item = new Item { Id = ConvertHelper.ToInt32(DropDownListItems.SelectedValue) },
-				Price = ConvertHelper.ToDecimal(textBoxPrice.Text)
+				Quantity = ConvertHelper.ToDecimal(textBoxTime.Text),
+				Price = ConvertHelper.ToDecimal(textBoxTimebookPrice.Text),
+				Consultant = textBoxConsultant.Text,
+				Comments = textBoxComments.Text
 			};
-			r.SavePrice(p, ConvertHelper.ToInt32(Request.QueryString["CustomerID"]));
+			r.SaveTimebook(p, ConvertHelper.ToInt32(Request.QueryString["CustomerID"]));
 		}
 	}
 }

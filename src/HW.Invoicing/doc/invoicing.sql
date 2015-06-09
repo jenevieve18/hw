@@ -62,3 +62,21 @@ create table CustomerContact(
 alter table Customer add Number varchar(255);
 
 alter table Customer add Mobile varchar(255);
+
+create table CustomerTimebook(
+	Id integer not null primary key identity,
+	CustomerId integer,
+	CustomerContactId integer,
+	ItemId integer,
+	Quantity decimal,
+	Price decimal,
+	Consultant varchar(255),
+	Comments varchar(255)
+);
+
+create table News(
+	Id integer not null primary key identity,
+	Content text
+);
+
+alter table News add Date datetime;

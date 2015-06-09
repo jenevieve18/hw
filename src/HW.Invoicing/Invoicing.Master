@@ -37,6 +37,10 @@
 		  font-size: 11px;
 		  padding:20px 0px;
 	}
+	footer ul 
+	{
+	    padding-left: 20px;
+	}
 	</style>
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
