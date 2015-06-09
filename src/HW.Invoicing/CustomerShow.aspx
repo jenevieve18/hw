@@ -9,97 +9,12 @@
 
 <div class="tabbable" id="tabs-179602">
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="#customer-info" data-toggle="tab">Customer Information</a></li>
-		<li><a href="#contact-persons" data-toggle="tab">Contact Persons</a></li>
-	</ul>
-	<div class="tab-content">
-		<div class="tab-pane active" id="customer-info">
-            <br />
-			<div class="alert alert-info">
-				<strong>Customer information</strong> is lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-			</div>
-            <table class="table">
-                <tr>
-                    <td><strong>Customer name</strong></td>
-                    <td>
-                        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label></td>
-                </tr>
-                <tr>
-                    <td><strong>Address</strong></td>
-                    <td>
-                        <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label></td>
-                </tr>
-                <tr>
-                    <td><strong>Customer number</strong></td>
-                    <td>
-                        <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label></td>
-                </tr>
-                <tr>
-                    <td><strong>Phone</strong></td>
-                    <td>
-                        <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label></td>
-                </tr>
-                <tr>
-                    <td><strong>Mobile</strong></td>
-                    <td>
-                        <asp:Label ID="Label5" runat="server" Text="Label"></asp:Label></td>
-                </tr>
-                <tr>
-                    <td><strong>Email</strong></td>
-                    <td>
-                        <asp:Label ID="Label6" runat="server" Text="Label"></asp:Label></td>
-                </tr>
-            </table>
-		</div>
-        <div class="tab-pane" id="contact-persons">
-			<br />
-			<div class="alert alert-info">
-				<strong>Customer contact information</strong> are people serving as a go-between, messenger, connection, or source of special information. Business contacts.
-			</div>
-            <table class="table">
-                <tr>
-                    <td><strong>Primary Contact</strong></td>
-                    <td>
-                        <asp:Label ID="Label7" runat="server" Text="Label"></asp:Label></td>
-                </tr>
-                <tr>
-                    <td><strong>Secondary Contact</strong></td>
-                    <td>
-                        <asp:Label ID="Label8" runat="server" Text="Label"></asp:Label></td>
-                </tr>
-            </table>
-            <h4>Other Contacts</h4>
-            <table class="table table-hover">
-                <tr>
-                    <th>Contact Person</th>
-                    <th>Phone</th>
-                    <th>Mobile</th>
-                    <th>Email</th>
-                </tr>
-                <% foreach (var c in contacts) { %>
-                <tr>
-                    <td><%= c.Contact %></td>
-                    <td><%= c.Phone %></td>
-                    <td><%= c.Mobile %></td>
-                    <td><%= c.Email %></td>
-                </tr>
-                <% } %>
-            </table>
-		</div>
-	</div>
-</div>
-
-
-
-
-<br />
-
-<div class="tabbable" id="Div1">
-    <ul class="nav nav-tabs">
 	    <li class="active"><a href="#notes" data-toggle="tab">Notes</a></li>
 	    <li><a href="#timebook" data-toggle="tab">Timebook</a></li>
 	    <li><a href="#customer-prices" data-toggle="tab">Customer Prices</a></li>
-    </ul>
+		<li><a href="#customer-info" data-toggle="tab">Customer Info</a></li>
+		<li><a href="#contact-persons" data-toggle="tab">Contact Persons</a></li>
+	</ul>
 	<div class="tab-content">
         <div class="tab-pane active" id="notes">
 			<br />
@@ -169,6 +84,79 @@
                 <tr>
                     <td><%= p.Item.Name %></td>
                     <td><%= p.Price.ToString("0.00") %></td>
+                </tr>
+                <% } %>
+            </table>
+		</div>
+		<div class="tab-pane" id="customer-info">
+            <br />
+			<div class="alert alert-info">
+				<strong>Customer information</strong> is lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+			</div>
+            <table class="table">
+                <tr>
+                    <td><strong>Customer name</strong></td>
+                    <td>
+                        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label></td>
+                </tr>
+                <tr>
+                    <td><strong>Address</strong></td>
+                    <td>
+                        <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label></td>
+                </tr>
+                <tr>
+                    <td><strong>Customer number</strong></td>
+                    <td>
+                        <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label></td>
+                </tr>
+                <tr>
+                    <td><strong>Phone</strong></td>
+                    <td>
+                        <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label></td>
+                </tr>
+                <tr>
+                    <td><strong>Mobile</strong></td>
+                    <td>
+                        <asp:Label ID="Label5" runat="server" Text="Label"></asp:Label></td>
+                </tr>
+                <tr>
+                    <td><strong>Email</strong></td>
+                    <td>
+                        <asp:Label ID="Label6" runat="server" Text="Label"></asp:Label></td>
+                </tr>
+            </table>
+		</div>
+        <div class="tab-pane" id="contact-persons">
+			<br />
+			<div class="alert alert-info">
+				<strong>Customer contact information</strong> are people serving as a go-between, messenger, connection, or source of special information. Business contacts.
+			</div>
+            <table class="table">
+                <tr>
+                    <td><strong>Primary Contact</strong></td>
+                    <td>
+                        <asp:Label ID="Label7" runat="server" Text="Label"></asp:Label></td>
+                </tr>
+                <tr>
+                    <td><strong>Secondary Contact</strong></td>
+                    <td>
+                        <asp:Label ID="Label8" runat="server" Text="Label"></asp:Label></td>
+                </tr>
+            </table>
+            <h4>Other Contacts</h4>
+            <table class="table table-hover">
+                <tr>
+                    <th>Contact Person</th>
+                    <th>Phone</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+                </tr>
+                <% foreach (var c in contacts) { %>
+                <tr>
+                    <td><%= c.Contact %></td>
+                    <td><%= c.Phone %></td>
+                    <td><%= c.Mobile %></td>
+                    <td><%= c.Email %></td>
                 </tr>
                 <% } %>
             </table>
