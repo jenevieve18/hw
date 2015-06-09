@@ -19,13 +19,13 @@
     </tr>
     <% foreach (var c in customers) { %>
     <tr>
-        <td><%= HtmlHelper.Anchor(c.Name, "customeredit.aspx?CustomerId=" + c.Id) %></td>
+        <td><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></td>
         <td></td>
         <td><%= c.Phone %></td>
         <td><%= c.Email %></td>
         <!--<td>
-            <%= HtmlHelper.Anchor("Edit", "customeredit.aspx?CustomerId=" + c.Id)%>
-            <%= HtmlHelper.Anchor("Delete", "customerdelete.aspx?CustomerId=" + c.Id)%>
+            <%= HtmlHelper.Anchor("Edit", "customeredit.aspx?Id=" + c.Id)%>
+            <%= HtmlHelper.Anchor("Delete", "customerdelete.aspx?Id=" + c.Id)%>
         </td>-->
     </tr>
     <% } %>

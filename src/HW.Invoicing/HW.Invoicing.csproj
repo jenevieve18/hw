@@ -60,6 +60,7 @@
     <Content Include="CustomerEdit.aspx" />
     <Content Include="CustomerNotesDelete.aspx" />
     <Content Include="Customers.aspx" />
+    <Content Include="CustomerShow.aspx" />
     <Content Include="Dashboard.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Footer.ascx" />
@@ -139,6 +140,13 @@
     </Compile>
     <Compile Include="Customers.aspx.designer.cs">
       <DependentUpon>Customers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerShow.aspx.cs">
+      <DependentUpon>CustomerShow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomerShow.aspx.designer.cs">
+      <DependentUpon>CustomerShow.aspx</DependentUpon>
     </Compile>
     <Compile Include="Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>

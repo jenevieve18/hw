@@ -38,7 +38,7 @@ namespace HW.Invoicing
 		{
 			HtmlHelper.RedirectIf(Session["UserId"] == null, "default.aspx");
 			
-			id = ConvertHelper.ToInt32(Request.QueryString["CustomerId"]);
+			id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
 			if (!IsPostBack) {
 				var c = r.Read(id);
 				if (c != null) {

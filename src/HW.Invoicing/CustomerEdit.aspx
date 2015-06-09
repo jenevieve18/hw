@@ -14,36 +14,33 @@
 </script>
 
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-<h3>Customer Information</h3>
+<h3>Customer name: <asp:Label ID="labelCustomer" runat="server" Text="Label"></asp:Label></h3>
 
 <div class="tabbable" id="tabs-179602">
 	<ul class="nav nav-tabs">
-		<li class="active">
-			<a href="#panel-246785" data-toggle="tab"><asp:Label ID="labelCustomer" runat="server" Text="Label"></asp:Label></a>
-		</li>
-		<li>
-			<a href="#panel-499951" data-toggle="tab">Contact Details</a>
-		</li>
+		<li class="active"><a href="#customer-info" data-toggle="tab">Customer Information</a></li>
+		<li><a href="#contact-persons" data-toggle="tab">Contact Persons</a></li>
 	</ul>
 	<div class="tab-content">
-		<div class="tab-pane active" id="panel-246785">
-            <h4></h4>
+		<div class="tab-pane active" id="customer-info">
+            <br />
+			<div class="alert alert-info">
+				<strong>Customer information</strong> is lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+			</div>
             <div class="form-group">
 	            <label for="<%= textBoxName.ClientID %>">Customer name</label>
                 <asp:TextBox ID="textBoxName" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
-		</div>
-		<div class="tab-pane" id="panel-499951">
-			<br />
-            <div class="form-group">
-	            <label for="<%= textBoxNumber.ClientID %>">Customer number</label>
-                <asp:TextBox ID="textBoxNumber" runat="server" CssClass="form-control"></asp:TextBox>
-            </div>
             <div class="form-group">
 	            <label for="<%= textBoxAddress.ClientID %>">Address</label>
                 <asp:TextBox ID="textBoxAddress" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="form-group">
+	            <label for="<%= textBoxNumber.ClientID %>">Customer number</label>
+                <asp:TextBox ID="textBoxNumber" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="form-group">
 	            <label for="<%= textBoxPhone.ClientID %>">Phone</label>
@@ -57,20 +54,85 @@
 	            <label for="<%= textBoxEmail.ClientID %>">Email</label>
                 <asp:TextBox ID="textBoxEmail" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
+		</div>
+        <div class="tab-pane" id="contact-persons">
+			<br />
+			<div class="alert alert-info">
+				<strong>Customer contact information</strong> are people serving as a go-between, messenger, connection, or source of special information. Business contacts.
+			</div>
             <div class="form-group">
-	            <label for="<%= textBoxEmail.ClientID %>">Contact Person</label>
+	            <label for="<%= textBoxEmail.ClientID %>">Primary Contact</label>
                 <asp:TextBox ID="textBox1" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="form-group">
-	            <label for="<%= textBoxEmail.ClientID %>">Contact Person Email</label>
+	            <label for="<%= textBoxEmail.ClientID %>">Secondary Contact</label>
                 <asp:TextBox ID="textBox2" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
+            <table class="table table-hover">
+                <tr>
+                    <td colspan="5">
+                        <a id="modal-240447" href="#modal-container-240447" role="button" class="btn btn-info" data-toggle="modal">Add new contact person</a>
+			            <div class="modal fade" id="modal-container-240447" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				            <div class="modal-dialog">
+					            <div class="modal-content">
+						            <div class="modal-header">
+							            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							            <h4 class="modal-title" id="H4">
+								            New customer contact
+							            </h4>
+						            </div>
+						            <div class="modal-body">
+                                        <div class="form-group">
+	                                        <label for="<%= textBoxEmail.ClientID %>">Contact person</label>
+                                            <asp:TextBox ID="textBoxContact" runat="server" CssClass="form-control"></asp:TextBox>
+                                        </div>
+                                        <div class="form-group">
+	                                        <label for="<%= textBoxPhone.ClientID %>">Phone</label>
+                                            <asp:TextBox ID="textBoxContactPhone" runat="server" CssClass="form-control"></asp:TextBox>
+                                        </div>
+                                        <div class="form-group">
+	                                        <label for="<%= textBoxMobile.ClientID %>">Mobile</label>
+                                            <asp:TextBox ID="textBoxContactMobile" runat="server" CssClass="form-control"></asp:TextBox>
+                                        </div>
+                                        <div class="form-group">
+	                                        <label for="<%= textBoxEmail.ClientID %>">Email</label>
+                                            <asp:TextBox ID="textBoxContactEmail" runat="server" CssClass="form-control"></asp:TextBox>
+                                        </div>
+						            </div>
+						            <div class="modal-footer">
+							            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <asp:Button ID="ButtonSaveCustomerContact" runat="server" Text="Save contact" CssClass="btn btn-primary" OnClick="buttonSaveContact_Click" />
+						            </div>
+					            </div>
+				            </div>
+			            </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Contact Person</th>
+                    <th>Phone</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+                    <th></th>
+                </tr>
+                <% foreach (var c in contacts) { %>
+                <tr>
+                    <td><%= c.Contact %></td>
+                    <td><%= c.Phone %></td>
+                    <td><%= c.Mobile %></td>
+                    <td><%= c.Email %></td>
+                    <td>
+                        <%= HtmlHelper.Anchor("Edit", "customercontactedit.aspx?Id=" + c.Id + "&CustomerId=" + id) %>
+                        <%= HtmlHelper.Anchor("Deactivate", "customercontactdelete.aspx?Id=" + c.Id + "&CustomerId=" + id) %>
+                    </td>
+                </tr>
+                <% } %>
+            </table>
 		</div>
 	</div>
 </div>
 
-
-
+<br />
 <div>
     <asp:Button CssClass="btn btn-success" ID="buttonSave" runat="server" Text="Save customer" 
         onclick="buttonSave_Click" />
@@ -83,7 +145,6 @@
     <ul class="nav nav-tabs">
 	    <li class="active"><a href="#notes" data-toggle="tab">Notes</a></li>
 	    <li><a href="#timebook" data-toggle="tab">Timebook</a></li>
-		<li><a href="#panel-368875" data-toggle="tab">Contacts</a></li>
 	    <li><a href="#customer-prices" data-toggle="tab">Customer Prices</a></li>
     </ul>
 	<div class="tab-content">
@@ -226,22 +287,6 @@
                                                 <td>123.00</td>
                                                 <td><input type="text" class="form-control input-sm" value="I created a new survey aftaer talking to Ian. " /></td>
                                             </tr>
-                                            <!--<tr>
-                                                <td>2015-06-14</td>
-                                                <td>Andrea Bocelli</td>
-                                                <td><input type="text" class="form-control input-sm" value="5" /></td>
-                                                <td><input type="text" class="form-control input-sm" value="13" /></td>
-                                                <td>123.00</td>
-                                                <td><input type="text" class="form-control input-sm" value="I created a new survey aftaer talking to Ian. " /></td>
-                                            </tr>
-                                            <tr>
-                                                <td>2015-06-14</td>
-                                                <td>Andrea Bocelli</td>
-                                                <td><input type="text" class="form-control input-sm" value="5" /></td>
-                                                <td><input type="text" class="form-control input-sm" value="13" /></td>
-                                                <td>123.00</td>
-                                                <td><input type="text" class="form-control input-sm" value="I created a new survey aftaer talking to Ian. " /></td>
-                                            </tr>-->
                                         </table>
 						            </div>
 						            <div class="modal-footer">
@@ -281,72 +326,6 @@
                     <td>
                         <%= HtmlHelper.Anchor("Edit", "") %>
                         <%= HtmlHelper.Anchor("Deactivate", "") %>
-                    </td>
-                </tr>
-                <% } %>
-            </table>
-		</div>
-        <div class="tab-pane" id="panel-368875">
-			<br />
-			<div class="alert alert-info">
-				<strong>Customer contact information</strong> are people serving as a go-between, messenger, connection, or source of special information. Business contacts.
-			</div>
-            <table class="table table-hover">
-                <tr>
-                    <td colspan="5">
-                        <a id="modal-240447" href="#modal-container-240447" role="button" class="btn btn-info" data-toggle="modal">Add new contact person</a>
-			            <div class="modal fade" id="modal-container-240447" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				            <div class="modal-dialog">
-					            <div class="modal-content">
-						            <div class="modal-header">
-							             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-							            <h4 class="modal-title" id="H4">
-								            New customer contact
-							            </h4>
-						            </div>
-						            <div class="modal-body">
-                                        <div class="form-group">
-	                                        <label for="<%= textBoxEmail.ClientID %>">Contact person</label>
-                                            <asp:TextBox ID="textBoxContact" runat="server" CssClass="form-control"></asp:TextBox>
-                                        </div>
-                                        <div class="form-group">
-	                                        <label for="<%= textBoxPhone.ClientID %>">Phone</label>
-                                            <asp:TextBox ID="textBoxContactPhone" runat="server" CssClass="form-control"></asp:TextBox>
-                                        </div>
-                                        <div class="form-group">
-	                                        <label for="<%= textBoxMobile.ClientID %>">Mobile</label>
-                                            <asp:TextBox ID="textBoxContactMobile" runat="server" CssClass="form-control"></asp:TextBox>
-                                        </div>
-                                        <div class="form-group">
-	                                        <label for="<%= textBoxEmail.ClientID %>">Email</label>
-                                            <asp:TextBox ID="textBoxContactEmail" runat="server" CssClass="form-control"></asp:TextBox>
-                                        </div>
-						            </div>
-						            <div class="modal-footer">
-							            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <asp:Button ID="ButtonSaveCustomerContact" runat="server" Text="Save contact" CssClass="btn btn-primary" OnClick="buttonSaveContact_Click" />
-						            </div>
-					            </div>
-				            </div>
-			            </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Contact Person</th>
-                    <th>Phone</th>
-                    <th>Mobile</th>
-                    <th>Email</th>
-                    <th></th>
-                </tr>
-                <% foreach (var c in contacts) { %>
-                <tr>
-                    <td><%= c.Contact %></td>
-                    <td><%= c.Phone %></td>
-                    <td><%= c.Mobile %></td>
-                    <td><%= c.Email %></td>
-                    <td>
-                        <%= HtmlHelper.Anchor("Edit", "customercontactedit.aspx?Id=" + c.Id + "&CustomerId=" + id) %>
-                        <%= HtmlHelper.Anchor("Deactivate", "customercontactdelete.aspx?Id=" + c.Id + "&CustomerId=" + id) %>
                     </td>
                 </tr>
                 <% } %>
