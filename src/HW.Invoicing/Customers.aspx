@@ -24,8 +24,8 @@
         <td><%= c.Phone %></td>
         <td><%= c.Email %></td>
         <td>
-            <%= HtmlHelper.Anchor("Edit", "customeredit.aspx?CustomerID=" + c.Id) %>
-            <%= HtmlHelper.Anchor("Delete", "customerdelete.aspx?CustomerID=" + c.Id) %>
+            <%= HtmlHelper.Anchor("Edit", "customeredit.aspx?CustomerId=" + c.Id)%>
+            <%= HtmlHelper.Anchor("Delete", "customerdelete.aspx?CustomerId=" + c.Id)%>
         </td>
     </tr>
     <% } %>

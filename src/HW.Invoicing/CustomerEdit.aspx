@@ -60,7 +60,7 @@
         <div class="tab-pane active" id="notes">
 			<br />
 			<div class="alert alert-info">
-				<strong>Customer notes</strong> are lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+				<strong>Customer notes</strong> are brief records of facts, topics, or thoughts, written down as an aid to memory.
 			</div>
             <table class="table table-hover">
                 <tr>
@@ -91,8 +91,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <th width="20%">Date</th>
-                    <th>Creator</th>
+                    <th style="width:20%">Date</th>
+                    <th style="width:10%">Creator</th>
                     <th>Notes</th>
                     <th></th>
                 </tr>
@@ -103,7 +103,7 @@
                     <td><%= n.Notes %></td>
                     <td>
                         <%= HtmlHelper.Anchor("Edit", "") %>
-                        <%= HtmlHelper.Anchor("Delete", "") %>
+                        <%= HtmlHelper.Anchor("Delete", "customernotesdelete.aspx?Id=" + n.Id + "&CustomerId=" + id) %>
                     </td>
                 </tr>
                 <% } %>
@@ -112,7 +112,7 @@
         <div class="tab-pane" id="panel-368875">
 			<br />
 			<div class="alert alert-info">
-				<strong>Customer contact information</strong> are lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+				<strong>Customer contact information</strong> are people serving as a go-between, messenger, connection, or source of special information. Business contacts.
 			</div>
             <table class="table table-hover">
                 <tr>
@@ -169,7 +169,7 @@
                     <td><%= c.Email %></td>
                     <td>
                         <%= HtmlHelper.Anchor("Edit", "") %>
-                        <%= HtmlHelper.Anchor("Delete", "") %>
+                        <%= HtmlHelper.Anchor("Delete", "customercontactdelete.aspx?Id=" + c.Id + "&CustomerId=" + id) %>
                     </td>
                 </tr>
                 <% } %>
@@ -235,7 +235,7 @@
 		<div class="tab-pane" id="timebook">
 			<br />
 			<div class="alert alert-info">
-				<strong>Time book</strong> is lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+				<strong>Time book</strong> is a sheet for recording the time of arrival and departure of workers and for recording the amount of time spent on each job.
 			</div>
             <table class="table table-hover">
                 <tr>

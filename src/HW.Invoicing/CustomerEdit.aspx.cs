@@ -19,6 +19,7 @@ namespace HW.Invoicing
 		protected IList<CustomerPrice> prices;
 		protected IList<CustomerContact> contacts;
 		protected IList<Item> items;
+		protected int id;
 		
 		public CustomerEdit()
 		{
@@ -36,11 +37,11 @@ namespace HW.Invoicing
 		{
 			HtmlHelper.RedirectIf(Session["UserId"] == null, "default.aspx");
 			
-			int customerId = ConvertHelper.ToInt32(Request.QueryString["CustomerID"]);
+			id = ConvertHelper.ToInt32(Request.QueryString["CustomerId"]);
 			if (!IsPostBack) {
-				var c = r.Read(customerId);
+				var c = r.Read(id);
 				if (c != null) {
-                    textBoxNumber.Text = c.Number;
+					textBoxNumber.Text = c.Number;
 					textBoxName.Text = c.Name;
 					textBoxAddress.Text = c.Address;
 					textBoxEmail.Text = c.Email;
@@ -56,22 +57,22 @@ namespace HW.Invoicing
 		{
 			base.OnPreRender(e);
 
-			int customerId = ConvertHelper.ToInt32(Request.QueryString["CustomerID"]);
-			notes = r.FindNotes(customerId);
-			prices = r.FindPrices(customerId);
-			contacts = r.FindContacts(customerId);
+//			int customerId = ConvertHelper.ToInt32(Request.QueryString["CustomerID"]);
+			notes = r.FindNotes(id);
+			prices = r.FindPrices(id);
+			contacts = r.FindContacts(id);
 			items = ir.FindAllWithCustomerPrices();
 
-            DropDownListContacts.Items.Clear();
+			DropDownListContacts.Items.Clear();
 			foreach (var c in contacts) {
 				DropDownListContacts.Items.Add(new ListItem(c.Contact, c.Id.ToString()));
 			}
-            DropDownListTimebookItems.Items.Clear();
-            foreach (var i in items) {
-            	var li = new ListItem(i.Name, i.Id.ToString());
-            	li.Attributes.Add("data-price", i.Price.ToString());
-            	DropDownListTimebookItems.Items.Add(li);
-            }
+			DropDownListTimebookItems.Items.Clear();
+			foreach (var i in items) {
+				var li = new ListItem(i.Name, i.Id.ToString());
+				li.Attributes.Add("data-price", i.Price.ToString());
+				DropDownListTimebookItems.Items.Add(li);
+			}
 		}
 
 		protected void buttonSave_Click(object sender, EventArgs e)
