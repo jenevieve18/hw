@@ -55,6 +55,7 @@
   <ItemGroup>
     <Content Include="CustomerAdd.aspx" />
     <Content Include="CustomerContactDelete.aspx" />
+    <Content Include="CustomerContactEdit.aspx" />
     <Content Include="CustomerDelete.aspx" />
     <Content Include="CustomerEdit.aspx" />
     <Content Include="CustomerNotesDelete.aspx" />
@@ -103,6 +104,13 @@
     </Compile>
     <Compile Include="CustomerContactDelete.aspx.designer.cs">
       <DependentUpon>CustomerContactDelete.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerContactEdit.aspx.cs">
+      <DependentUpon>CustomerContactEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomerContactEdit.aspx.designer.cs">
+      <DependentUpon>CustomerContactEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="CustomerDelete.aspx.cs">
       <DependentUpon>CustomerDelete.aspx</DependentUpon>

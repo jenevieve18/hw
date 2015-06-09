@@ -80,3 +80,5 @@ create table News(
 );
 
 alter table News add Date datetime;
+
+alter table CustomerNotes alter column Notes text; 

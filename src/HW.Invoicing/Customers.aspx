@@ -11,22 +11,22 @@
 </div>
 <table class="table table-hover">
     <tr>
-        <th>Number</th>
         <th>Name</th>
+        <th>Contact Person</th>
         <th>Phone</th>
         <th>Email</th>
         <th></th>
     </tr>
     <% foreach (var c in customers) { %>
     <tr>
-        <td><%= c.Number %></td>
-        <td><%= c.Name %></td>
+        <td><%= HtmlHelper.Anchor(c.Name, "customeredit.aspx?CustomerId=" + c.Id) %></td>
+        <td></td>
         <td><%= c.Phone %></td>
         <td><%= c.Email %></td>
-        <td>
+        <!--<td>
             <%= HtmlHelper.Anchor("Edit", "customeredit.aspx?CustomerId=" + c.Id)%>
             <%= HtmlHelper.Anchor("Delete", "customerdelete.aspx?CustomerId=" + c.Id)%>
-        </td>
+        </td>-->
     </tr>
     <% } %>
 </table>

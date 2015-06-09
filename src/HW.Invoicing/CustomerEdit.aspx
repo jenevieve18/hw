@@ -16,35 +16,65 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-<h3>Edit a customer</h3>
-<div class="form-group">
-	<label for="<%= textBoxNumber.ClientID %>">Customer number</label>
-    <asp:TextBox ID="textBoxNumber" runat="server" CssClass="form-control"></asp:TextBox>
+<h3>Customer Information</h3>
+
+<div class="tabbable" id="tabs-179602">
+	<ul class="nav nav-tabs">
+		<li class="active">
+			<a href="#panel-246785" data-toggle="tab"><asp:Label ID="labelCustomer" runat="server" Text="Label"></asp:Label></a>
+		</li>
+		<li>
+			<a href="#panel-499951" data-toggle="tab">Contact Details</a>
+		</li>
+	</ul>
+	<div class="tab-content">
+		<div class="tab-pane active" id="panel-246785">
+            <h4></h4>
+            <div class="form-group">
+	            <label for="<%= textBoxName.ClientID %>">Customer name</label>
+                <asp:TextBox ID="textBoxName" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+		</div>
+		<div class="tab-pane" id="panel-499951">
+			<br />
+            <div class="form-group">
+	            <label for="<%= textBoxNumber.ClientID %>">Customer number</label>
+                <asp:TextBox ID="textBoxNumber" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="form-group">
+	            <label for="<%= textBoxAddress.ClientID %>">Address</label>
+                <asp:TextBox ID="textBoxAddress" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="form-group">
+	            <label for="<%= textBoxPhone.ClientID %>">Phone</label>
+                <asp:TextBox ID="textBoxPhone" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="form-group">
+	            <label for="<%= textBoxMobile.ClientID %>">Mobile</label>
+                <asp:TextBox ID="textBoxMobile" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="form-group">
+	            <label for="<%= textBoxEmail.ClientID %>">Email</label>
+                <asp:TextBox ID="textBoxEmail" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="form-group">
+	            <label for="<%= textBoxEmail.ClientID %>">Contact Person</label>
+                <asp:TextBox ID="textBox1" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="form-group">
+	            <label for="<%= textBoxEmail.ClientID %>">Contact Person Email</label>
+                <asp:TextBox ID="textBox2" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+		</div>
+	</div>
 </div>
-<div class="form-group">
-	<label for="<%= textBoxName.ClientID %>">Customer name</label>
-    <asp:TextBox ID="textBoxName" runat="server" CssClass="form-control"></asp:TextBox>
-</div>
-<div class="form-group">
-	<label for="<%= textBoxAddress.ClientID %>">Address</label>
-    <asp:TextBox ID="textBoxAddress" runat="server" CssClass="form-control"></asp:TextBox>
-</div>
-<div class="form-group">
-	<label for="<%= textBoxPhone.ClientID %>">Phone</label>
-    <asp:TextBox ID="textBoxPhone" runat="server" CssClass="form-control"></asp:TextBox>
-</div>
-<div class="form-group">
-	<label for="<%= textBoxMobile.ClientID %>">Mobile</label>
-    <asp:TextBox ID="textBoxMobile" runat="server" CssClass="form-control"></asp:TextBox>
-</div>
-<div class="form-group">
-	<label for="<%= textBoxEmail.ClientID %>">Email</label>
-    <asp:TextBox ID="textBoxEmail" runat="server" CssClass="form-control"></asp:TextBox>
-</div>
+
+
 
 <div>
     <asp:Button CssClass="btn btn-success" ID="buttonSave" runat="server" Text="Save customer" 
         onclick="buttonSave_Click" />
+    <asp:Button ID="Button1" runat="server" Text="Deactivate" CssClass="btn btn-warning" />
         or <i><%= HtmlHelper.Anchor("cancel", "customers.aspx") %></i>
 </div>
 <br />
@@ -52,9 +82,9 @@
 <div class="tabbable" id="Div1">
     <ul class="nav nav-tabs">
 	    <li class="active"><a href="#notes" data-toggle="tab">Notes</a></li>
+	    <li><a href="#timebook" data-toggle="tab">Timebook</a></li>
 		<li><a href="#panel-368875" data-toggle="tab">Contacts</a></li>
 	    <li><a href="#customer-prices" data-toggle="tab">Customer Prices</a></li>
-	    <li><a href="#timebook" data-toggle="tab">Timebook</a></li>
     </ul>
 	<div class="tab-content">
         <div class="tab-pane active" id="notes">
@@ -104,129 +134,6 @@
                     <td>
                         <%= HtmlHelper.Anchor("Edit", "") %>
                         <%= HtmlHelper.Anchor("Delete", "customernotesdelete.aspx?Id=" + n.Id + "&CustomerId=" + id) %>
-                    </td>
-                </tr>
-                <% } %>
-            </table>
-		</div>
-        <div class="tab-pane" id="panel-368875">
-			<br />
-			<div class="alert alert-info">
-				<strong>Customer contact information</strong> are people serving as a go-between, messenger, connection, or source of special information. Business contacts.
-			</div>
-            <table class="table table-hover">
-                <tr>
-                    <td colspan="5">
-                        <a id="modal-240447" href="#modal-container-240447" role="button" class="btn btn-info" data-toggle="modal">Add new contact person</a>
-			            <div class="modal fade" id="modal-container-240447" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				            <div class="modal-dialog">
-					            <div class="modal-content">
-						            <div class="modal-header">
-							             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-							            <h4 class="modal-title" id="H4">
-								            New customer contact
-							            </h4>
-						            </div>
-						            <div class="modal-body">
-                                        <div class="form-group">
-	                                        <label for="<%= textBoxEmail.ClientID %>">Contact person</label>
-                                            <asp:TextBox ID="textBoxContact" runat="server" CssClass="form-control"></asp:TextBox>
-                                        </div>
-                                        <div class="form-group">
-	                                        <label for="<%= textBoxPhone.ClientID %>">Phone</label>
-                                            <asp:TextBox ID="textBoxContactPhone" runat="server" CssClass="form-control"></asp:TextBox>
-                                        </div>
-                                        <div class="form-group">
-	                                        <label for="<%= textBoxMobile.ClientID %>">Mobile</label>
-                                            <asp:TextBox ID="textBoxContactMobile" runat="server" CssClass="form-control"></asp:TextBox>
-                                        </div>
-                                        <div class="form-group">
-	                                        <label for="<%= textBoxEmail.ClientID %>">Email</label>
-                                            <asp:TextBox ID="textBoxContactEmail" runat="server" CssClass="form-control"></asp:TextBox>
-                                        </div>
-						            </div>
-						            <div class="modal-footer">
-							            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <asp:Button ID="ButtonSaveCustomerContact" runat="server" Text="Save contact" CssClass="btn btn-primary" OnClick="buttonSaveContact_Click" />
-						            </div>
-					            </div>
-				            </div>
-			            </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Contact Person</th>
-                    <th>Phone</th>
-                    <th>Mobile</th>
-                    <th>Email</th>
-                    <th></th>
-                </tr>
-                <% foreach (var c in contacts) { %>
-                <tr>
-                    <td><%= c.Contact %></td>
-                    <td><%= c.Phone %></td>
-                    <td><%= c.Mobile %></td>
-                    <td><%= c.Email %></td>
-                    <td>
-                        <%= HtmlHelper.Anchor("Edit", "") %>
-                        <%= HtmlHelper.Anchor("Delete", "customercontactdelete.aspx?Id=" + c.Id + "&CustomerId=" + id) %>
-                    </td>
-                </tr>
-                <% } %>
-            </table>
-		</div>
-		<div class="tab-pane" id="customer-prices">
-			<br />
-			<div class="alert alert-info">
-                In ordinary usage, <strong>price</strong> is the quantity of payment or compensation given by one party to another in return for goods or services.
-			</div>
-            <table class="table table-hover">
-                <tr>
-                    <td colspan="3">
-                        <a id="modal-692185" href="#customer-prices-form" role="button" class="btn btn-info" data-toggle="modal">Add Customer Price</a>
-			            <div class="modal fade" id="customer-prices-form" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				            <div class="modal-dialog">
-					            <div class="modal-content">
-						            <div class="modal-header">
-							            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-							            <h4 class="modal-title" id="H2">
-								            New Customer Price
-							            </h4>
-						            </div>
-						            <div class="modal-body">
-                                        <div class="form-group">
-	                                        <label for="<%= DropDownListItems.ClientID %>">Item</label>
-                                            <asp:DropDownList ID="DropDownListItems" runat="server" CssClass="form-control">
-                                            </asp:DropDownList>
-                                        </div>
-                                        <div class="form-group">
-	                                        <label for="<%= textBoxPrice.ClientID %>">Price</label>
-                                            <asp:TextBox ID="textBoxPrice" runat="server" CssClass="form-control"></asp:TextBox>
-                                        </div>
-						            </div>
-						            <div class="modal-footer">
-							            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <asp:Button ID="ButtonSavePrice" runat="server" Text="Save price" OnClick="buttonSavePrice_Click" CssClass="btn btn-primary" />
-						            </div>
-					            </div>
-				            </div>
-			            </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Item</th>
-                    <th>Price</th>
-                    <th></th>
-                </tr>
-                <% foreach (var p in prices) { %>
-                <tr>
-                    <td><%= p.Item.Name %></td>
-                    <td><%= p.Price.ToString("0.00") %></td>
-                    <td>
-                        <%= HtmlHelper.Anchor("Edit", "") %>
-                        <%= HtmlHelper.Anchor("Delete", "") %>
-                        <%= HtmlHelper.Anchor("Move Up", "") %>
-                        <%= HtmlHelper.Anchor("Move Down", "") %>
                     </td>
                 </tr>
                 <% } %>
@@ -304,6 +211,7 @@
 							            <table class="table table-hover">
                                             <tr>
                                                 <th>Date</th>
+                                                <th>Department</th>
                                                 <th>Contact</th>
                                                 <th width="10%">Time</th>
                                                 <th width="10%">Price</th>
@@ -348,41 +256,157 @@
                 <tr>
                     <th></th>
                     <th>Date</th>
+                    <th>Department</th>
                     <th>Contact</th>
                     <th>Time</th>
                     <th>Price</th>
                     <th>Amount</th>
+                    <th>Consultant</th>
                     <th>Status</th>
+                    <th>Comments</th>
                     <th></th>
                 </tr>
                 <% foreach (var t in timebooks) { %>
                 <tr>
                     <td></td>
                     <td><%= t.Date.ToString("yyyy-MM-dd") %></td>
+                    <td><%= t.Department %></td>
                     <td><%= t.Contact.Contact %></td>
                     <td><%= t.Quantity.ToString() %></td>
                     <td><%= t.Price.ToString("# ##0.00") %></td>
                     <td><%= t.Price.ToString("# ##0.00") %></td>
+                    <td><%= t.Consultant %></td>
                     <td><span class="label label-success">INVOICED</span></td>
+                    <td><%= t.Comments %></td>
                     <td>
                         <%= HtmlHelper.Anchor("Edit", "") %>
-                        <%= HtmlHelper.Anchor("Delete", "") %>
+                        <%= HtmlHelper.Anchor("Deactivate", "") %>
                     </td>
                 </tr>
                 <% } %>
-                <!--<tr>
-                    <td><input type="checkbox" /></td>
-                    <td>2015-06-14</td>
-                    <td>Andrea Bocelli</td>
-                    <td>5hours</td>
-                    <td>SEK13.00</td>
-                    <td>SEK123.00</td>
-                    <td></td>
+            </table>
+		</div>
+        <div class="tab-pane" id="panel-368875">
+			<br />
+			<div class="alert alert-info">
+				<strong>Customer contact information</strong> are people serving as a go-between, messenger, connection, or source of special information. Business contacts.
+			</div>
+            <table class="table table-hover">
+                <tr>
+                    <td colspan="5">
+                        <a id="modal-240447" href="#modal-container-240447" role="button" class="btn btn-info" data-toggle="modal">Add new contact person</a>
+			            <div class="modal fade" id="modal-container-240447" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				            <div class="modal-dialog">
+					            <div class="modal-content">
+						            <div class="modal-header">
+							             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							            <h4 class="modal-title" id="H4">
+								            New customer contact
+							            </h4>
+						            </div>
+						            <div class="modal-body">
+                                        <div class="form-group">
+	                                        <label for="<%= textBoxEmail.ClientID %>">Contact person</label>
+                                            <asp:TextBox ID="textBoxContact" runat="server" CssClass="form-control"></asp:TextBox>
+                                        </div>
+                                        <div class="form-group">
+	                                        <label for="<%= textBoxPhone.ClientID %>">Phone</label>
+                                            <asp:TextBox ID="textBoxContactPhone" runat="server" CssClass="form-control"></asp:TextBox>
+                                        </div>
+                                        <div class="form-group">
+	                                        <label for="<%= textBoxMobile.ClientID %>">Mobile</label>
+                                            <asp:TextBox ID="textBoxContactMobile" runat="server" CssClass="form-control"></asp:TextBox>
+                                        </div>
+                                        <div class="form-group">
+	                                        <label for="<%= textBoxEmail.ClientID %>">Email</label>
+                                            <asp:TextBox ID="textBoxContactEmail" runat="server" CssClass="form-control"></asp:TextBox>
+                                        </div>
+						            </div>
+						            <div class="modal-footer">
+							            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <asp:Button ID="ButtonSaveCustomerContact" runat="server" Text="Save contact" CssClass="btn btn-primary" OnClick="buttonSaveContact_Click" />
+						            </div>
+					            </div>
+				            </div>
+			            </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Contact Person</th>
+                    <th>Phone</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+                    <th></th>
+                </tr>
+                <% foreach (var c in contacts) { %>
+                <tr>
+                    <td><%= c.Contact %></td>
+                    <td><%= c.Phone %></td>
+                    <td><%= c.Mobile %></td>
+                    <td><%= c.Email %></td>
+                    <td>
+                        <%= HtmlHelper.Anchor("Edit", "customercontactedit.aspx?Id=" + c.Id + "&CustomerId=" + id) %>
+                        <%= HtmlHelper.Anchor("Deactivate", "customercontactdelete.aspx?Id=" + c.Id + "&CustomerId=" + id) %>
+                    </td>
+                </tr>
+                <% } %>
+            </table>
+		</div>
+		<div class="tab-pane" id="customer-prices">
+			<br />
+			<div class="alert alert-info">
+                In ordinary usage, <strong>price</strong> is the quantity of payment or compensation given by one party to another in return for goods or services.
+			</div>
+            <table class="table table-hover">
+                <tr>
+                    <td colspan="3">
+                        <a id="modal-692185" href="#customer-prices-form" role="button" class="btn btn-info" data-toggle="modal">Add Customer Price</a>
+			            <div class="modal fade" id="customer-prices-form" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				            <div class="modal-dialog">
+					            <div class="modal-content">
+						            <div class="modal-header">
+							            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							            <h4 class="modal-title" id="H2">
+								            New Customer Price
+							            </h4>
+						            </div>
+						            <div class="modal-body">
+                                        <div class="form-group">
+	                                        <label for="<%= DropDownListItems.ClientID %>">Item</label>
+                                            <asp:DropDownList ID="DropDownListItems" runat="server" CssClass="form-control">
+                                            </asp:DropDownList>
+                                        </div>
+                                        <div class="form-group">
+	                                        <label for="<%= textBoxPrice.ClientID %>">Price</label>
+                                            <asp:TextBox ID="textBoxPrice" runat="server" CssClass="form-control"></asp:TextBox>
+                                        </div>
+						            </div>
+						            <div class="modal-footer">
+							            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <asp:Button ID="ButtonSavePrice" runat="server" Text="Save price" OnClick="buttonSavePrice_Click" CssClass="btn btn-primary" />
+						            </div>
+					            </div>
+				            </div>
+			            </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th></th>
+                </tr>
+                <% foreach (var p in prices) { %>
+                <tr>
+                    <td><%= p.Item.Name %></td>
+                    <td><%= p.Price.ToString("0.00") %></td>
                     <td>
                         <%= HtmlHelper.Anchor("Edit", "") %>
-                        <%= HtmlHelper.Anchor("Delete", "") %>
+                        <%= HtmlHelper.Anchor("Deactivate", "") %>
+                        <%= HtmlHelper.Anchor("Move Up", "") %>
+                        <%= HtmlHelper.Anchor("Move Down", "") %>
                     </td>
-                </tr>-->
+                </tr>
+                <% } %>
             </table>
 		</div>
 	</div>

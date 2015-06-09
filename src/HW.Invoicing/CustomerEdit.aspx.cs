@@ -42,6 +42,7 @@ namespace HW.Invoicing
 			if (!IsPostBack) {
 				var c = r.Read(id);
 				if (c != null) {
+                    labelCustomer.Text = c.Name;
 					textBoxNumber.Text = c.Number;
 					textBoxName.Text = c.Name;
 					textBoxAddress.Text = c.Address;
