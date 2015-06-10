@@ -1,0 +1,8 @@
+1.x
+
+* added ckeditor (copy ckeditor directory, add CKEditor.NET.dll & CkEditor.dll)
+* added HW.Core.dll & HW.Adm.dll to bin
+* changed TextBox reference for Text Exercise Variant to CKEditorControl
+* updated web.config (added <httpRuntime requestValidationMode="2.0" />)
+* changed appSettings Connection String
+* added ValidateRequest="false" to exerciseSetup.aspx
