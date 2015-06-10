@@ -42,12 +42,20 @@ namespace HW.Invoicing
             contacts = r.FindContacts(id);
             timebooks = r.FindTimebooks(id);
             items = ir.FindAllWithCustomerItems();
+
+            dropDownListTimebookItems.Items.Clear();
             foreach (var i in items)
             {
                 var li = new ListItem(i.Name, i.Id.ToString());
                 li.Attributes.Add("data-price", i.Price.ToString());
                 li.Attributes.Add("data-unit", i.Unit.Name);
                 dropDownListTimebookItems.Items.Add(li);
+            }
+
+            dropDownListTimebookContacts.Items.Clear();
+            foreach (var c in contacts)
+            {
+                dropDownListTimebookContacts.Items.Add(new ListItem(c.Contact, c.Id.ToString()));
             }
         }
     }

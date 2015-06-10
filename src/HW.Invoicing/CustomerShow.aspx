@@ -93,12 +93,16 @@
 						</div>
 						<div class="modal-body">
                             <div class="form-group">
-	                            <label for="<%= textBoxDate.ClientID %>">Date</label>
-                                <asp:TextBox ID="textBoxDate" runat="server" CssClass="form-control"></asp:TextBox>
+	                            <label for="<%= textBoxTimebookDate.ClientID %>">Date</label>
+                                <asp:TextBox ID="textBoxTimebookDate" runat="server" CssClass="form-control"></asp:TextBox>
                             </div>
                             <div class="form-group">
-	                            <label for="<%= DropDownListContacts.ClientID %>">Contact Person</label>
-                                <asp:DropDownList ID="DropDownListContacts" runat="server" CssClass="form-control">
+	                            <label for="<%= textBoxTimebookDepartment.ClientID %>">Department</label>
+                                <asp:TextBox ID="textBoxTimebookDepartment" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                            <div class="form-group">
+	                            <label for="<%= dropDownListTimebookContacts.ClientID %>">Contact Person</label>
+                                <asp:DropDownList ID="dropDownListTimebookContacts" runat="server" CssClass="form-control">
                                 </asp:DropDownList>
                             </div>
                             <div class="form-group">
@@ -118,16 +122,16 @@
                                 <asp:TextBox ID="textBoxTimebookPrice" runat="server" CssClass="form-control"></asp:TextBox>
                             </div>
                             <div class="form-group">
-	                            <label for="<%= textBoxConsultant.ClientID %>">Consultant</label>
-                                <asp:TextBox ID="textBoxConsultant" runat="server" CssClass="form-control"></asp:TextBox>
+	                            <label for="<%= textBoxTimebookConsultant.ClientID %>">Consultant</label>
+                                <asp:TextBox ID="textBoxTimebookConsultant" runat="server" CssClass="form-control"></asp:TextBox>
                             </div>
                             <div class="form-group">
-	                            <label for="<%= textBoxComments.ClientID %>">Comments</label>
-                                <asp:TextBox ID="textBoxComments" runat="server" CssClass="form-control"></asp:TextBox>
+	                            <label for="<%= textBoxTimebookComments.ClientID %>">Comments</label>
+                                <asp:TextBox ID="textBoxTimebookComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
                             </div>
 						</div>
 						<div class="modal-footer">
-							    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             <asp:Button ID="buttonCustomerTimebook" runat="server" Text="Save timebook" CssClass="btn btn-primary" />
 						</div>
 					</div>

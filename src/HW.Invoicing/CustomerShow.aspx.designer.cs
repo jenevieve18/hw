@@ -40,22 +40,31 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.Button buttonSaveNotes;
         
         /// <summary>
-        /// textBoxDate control.
+        /// textBoxTimebookDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxDate;
+        protected global::System.Web.UI.WebControls.TextBox textBoxTimebookDate;
         
         /// <summary>
-        /// DropDownListContacts control.
+        /// textBoxTimebookDepartment control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListContacts;
+        protected global::System.Web.UI.WebControls.TextBox textBoxTimebookDepartment;
+        
+        /// <summary>
+        /// dropDownListTimebookContacts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList dropDownListTimebookContacts;
         
         /// <summary>
         /// dropDownListTimebookItems control.
@@ -94,22 +103,22 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxTimebookPrice;
         
         /// <summary>
-        /// textBoxConsultant control.
+        /// textBoxTimebookConsultant control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxConsultant;
+        protected global::System.Web.UI.WebControls.TextBox textBoxTimebookConsultant;
         
         /// <summary>
-        /// textBoxComments control.
+        /// textBoxTimebookComments control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxComments;
+        protected global::System.Web.UI.WebControls.TextBox textBoxTimebookComments;
         
         /// <summary>
         /// buttonCustomerTimebook control.
