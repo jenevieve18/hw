@@ -59,7 +59,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <asp:Button ID="buttonSaveNotes" runat="server" Text="Save note" CssClass="btn btn-primary" />
+                            <asp:Button ID="buttonSaveNotes" runat="server" Text="Save note" CssClass="btn btn-primary" OnClick="buttonSaveNotes_Click" />
 						</div>
 					</div>
 				</div>
@@ -138,7 +138,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <asp:Button ID="buttonCustomerTimebook" runat="server" Text="Save timebook" CssClass="btn btn-primary" />
+                            <asp:Button ID="buttonCustomerTimebook" runat="server" Text="Save timebook" CssClass="btn btn-primary" OnClick="buttonCustomerTimebook_Click" />
 						</div>
 					</div>
 				</div>
@@ -164,8 +164,8 @@
                 </tr>
                 <% foreach (var t in timebooks) { %>
                 <tr>
-                    <td></td>
-                    <td><%= t.Date.ToString("yyyy-MM-dd") %></td>
+                    <td><input type="checkbox"" /></td>
+                    <td><%= t.Date.Value.ToString("yyyy-MM-dd") %></td>
                     <td><%= t.Department %></td>
                     <td><%= t.Contact.Contact %></td>
                     <td><%= t.Item.Name %></td>
@@ -198,18 +198,18 @@
 						</div>
 						<div class="modal-body">
                             <div class="form-group">
-	                            <label for="<%= DropDownListItems.ClientID %>">Item</label>
-                                <asp:DropDownList ID="DropDownListItems" runat="server" CssClass="form-control">
+	                            <label for="<%= dropDownListItems.ClientID %>">Item</label>
+                                <asp:DropDownList ID="dropDownListItems" runat="server" CssClass="form-control">
                                 </asp:DropDownList>
                             </div>
                             <div class="form-group">
-	                            <label for="<%= textBoxPrice.ClientID %>">Price</label>
-                                <asp:TextBox ID="textBoxPrice" runat="server" CssClass="form-control"></asp:TextBox>
+	                            <label for="<%= textBoxItemPrice.ClientID %>">Price</label>
+                                <asp:TextBox ID="textBoxItemPrice" runat="server" CssClass="form-control"></asp:TextBox>
                             </div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <asp:Button ID="buttonSavePrice" runat="server" Text="Save price" CssClass="btn btn-primary" />
+                            <asp:Button ID="buttonSaveItem" runat="server" Text="Save price" CssClass="btn btn-primary" OnClick="buttonSaveItem_Click" />
 						</div>
 					</div>
 				</div>

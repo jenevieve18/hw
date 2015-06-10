@@ -17,6 +17,7 @@ namespace HW.Invoicing
         protected IList<CustomerNotes> notes;
         protected IList<CustomerItem> prices;
         protected IList<CustomerContact> contacts;
+        protected IList<Item> timebookItems;
         protected IList<Item> items;
         protected IList<CustomerTimebook> timebooks;
     	protected int id;
@@ -33,6 +34,43 @@ namespace HW.Invoicing
             }
         }
 
+        protected void buttonCustomerTimebook_Click(object sender, EventArgs e)
+        {
+            var t = new CustomerTimebook
+            {
+                Date = ConvertHelper.ToDateTime(textBoxTimebookDate.Text),
+                Department = textBoxTimebookDepartment.Text,
+                Contact = new CustomerContact { Id = ConvertHelper.ToInt32(dropDownListTimebookContacts.SelectedValue) },
+                Item = new Item { Id = ConvertHelper.ToInt32(dropDownListTimebookItems.SelectedValue) },
+                Quantity = ConvertHelper.ToDecimal(textBoxTimebookQty.Text),
+                Price = ConvertHelper.ToDecimal(textBoxTimebookPrice.Text),
+                Consultant = textBoxTimebookConsultant.Text,
+                Comments = textBoxTimebookComments.Text
+            };
+            r.SaveTimebook(t, ConvertHelper.ToInt32(Request.QueryString["Id"]));
+        }
+
+        protected void buttonSaveNotes_Click(object sender, EventArgs e)
+        {
+            var t = new CustomerNotes
+            {
+                Notes = textBoxNotes.Text,
+                CreatedBy = new User { Id = ConvertHelper.ToInt32(Session["UserId"]) },
+                CreatedAt = DateTime.Now,
+            };
+            r.SaveNotes(t, ConvertHelper.ToInt32(Request.QueryString["Id"]));
+        }
+
+        protected void buttonSaveItem_Click(object sender, EventArgs e)
+        {
+            var t = new CustomerItem
+            {
+                Item = new Item { Id = ConvertHelper.ToInt32(dropDownListItems.SelectedValue) },
+                Price = ConvertHelper.ToInt32(textBoxItemPrice.Text)
+            };
+            r.SaveItem(t, ConvertHelper.ToInt32(Request.QueryString["Id"]));
+        }
+
         protected override void OnPreRender(EventArgs e)
         {
             base.OnPreRender(e);
@@ -41,10 +79,17 @@ namespace HW.Invoicing
             prices = r.FindItems(id);
             contacts = r.FindContacts(id);
             timebooks = r.FindTimebooks(id);
-            items = ir.FindAllWithCustomerItems();
+            timebookItems = ir.FindAllWithCustomerItems();
+            items = ir.FindAll();
+
+            dropDownListItems.Items.Clear();
+            foreach (var i in items)
+            {
+                dropDownListItems.Items.Add(new ListItem(i.Name, i.Id.ToString()));
+            }
 
             dropDownListTimebookItems.Items.Clear();
-            foreach (var i in items)
+            foreach (var i in timebookItems)
             {
                 var li = new ListItem(i.Name, i.Id.ToString());
                 li.Attributes.Add("data-price", i.Price.ToString());

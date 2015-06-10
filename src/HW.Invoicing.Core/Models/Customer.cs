@@ -46,7 +46,7 @@ namespace HW.Invoicing.Core.Models
 	
 	public class CustomerTimebook : BaseModel
 	{
-		public DateTime Date { get; set; }
+		public DateTime? Date { get; set; }
 		public CustomerContact Contact { get; set; }
 		public Item Item { get; set; }
 		public decimal Quantity { get; set; }

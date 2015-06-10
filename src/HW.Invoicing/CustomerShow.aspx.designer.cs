@@ -130,31 +130,31 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.Button buttonCustomerTimebook;
         
         /// <summary>
-        /// DropDownListItems control.
+        /// dropDownListItems control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListItems;
+        protected global::System.Web.UI.WebControls.DropDownList dropDownListItems;
         
         /// <summary>
-        /// textBoxPrice control.
+        /// textBoxItemPrice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxPrice;
+        protected global::System.Web.UI.WebControls.TextBox textBoxItemPrice;
         
         /// <summary>
-        /// buttonSavePrice control.
+        /// buttonSaveItem control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button buttonSavePrice;
+        protected global::System.Web.UI.WebControls.Button buttonSaveItem;
         
         /// <summary>
         /// labelCustomerNumber control.

@@ -81,8 +81,8 @@ VALUES(@CustomerId, @Notes, @CreatedAt, @CreatedBy)"
 		{
 			string query = string.Format(
 				@"
-INSERT INTO CustomerTimebook(CustomerId, CustomerContactId, ItemId, Quantity, Price, Consultant, Comments)
-VALUES(@CustomerId, @CustomerContactId, @ItemId, @Quantity, @Price, @Consultant, @Comments)"
+INSERT INTO CustomerTimebook(CustomerId, CustomerContactId, ItemId, Quantity, Price, Consultant, Comments, Department, Date)
+VALUES(@CustomerId, @CustomerContactId, @ItemId, @Quantity, @Price, @Consultant, @Comments, @Department, @Date)"
 			);
 			ExecuteNonQuery(
 				query,
@@ -93,7 +93,9 @@ VALUES(@CustomerId, @CustomerContactId, @ItemId, @Quantity, @Price, @Consultant,
 				new SqlParameter("@Quantity", time.Quantity),
 				new SqlParameter("@Price", time.Price),
 				new SqlParameter("@Consultant", time.Consultant),
-				new SqlParameter("@Comments", time.Comments)
+				new SqlParameter("@Comments", time.Comments),
+				new SqlParameter("@Department", time.Department),
+				new SqlParameter("@Date", time.Date)
 			);
 		}
 		
@@ -236,7 +238,18 @@ ORDER BY n.CreatedAt DESC"
 		{
 			string query = string.Format(
 				@"
-SELECT t.CustomerContactId, t.ItemId, t.Quantity, t.Price, t.Consultant, t.Comments, c.Contact, i.Name, u.Id, u.Name
+SELECT t.CustomerContactId,
+	t.ItemId,
+	t.Quantity,
+	t.Price,
+	t.Consultant,
+	t.Comments,
+	c.Contact,
+	i.Name,
+	u.Id,
+	u.Name,
+	t.Date,
+	t.Department
 FROM CustomerTimebook t
 INNER JOIN CustomerContact c ON c.Id = t.CustomerContactId
 INNER JOIN Item i ON i.Id = t.ItemId
@@ -260,7 +273,9 @@ WHERE t.CustomerId = @CustomerId"
 							Quantity = GetDecimal(rs, 2),
 							Price = GetDecimal(rs, 3),
 							Consultant = GetString(rs, 4),
-							Comments = GetString(rs, 5)
+							Comments = GetString(rs, 5),
+							Date = GetDateTime(rs, 10),
+							Department = GetString(rs, 11)
 						}
 					);
 				}
