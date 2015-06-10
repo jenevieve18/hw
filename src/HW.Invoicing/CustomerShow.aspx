@@ -18,6 +18,11 @@
             $('#<%= labelCustomerNumber.ClientID %>').click(function () {
                 $(this).hide();
                 $('#<%= textBoxCustomerNumber.ClientID %>').show();
+                $('#<%= textBoxCustomerNumber.ClientID %>').focus();
+            });
+            $('#<%= textBoxCustomerNumber.ClientID %>').focusout(function () {
+                $(this).hide();
+                $('#<%= labelCustomerNumber.ClientID %>').show();
             });
 
             $('#<%= textBoxTimebookDate.ClientID %>').datepicker({
