@@ -98,34 +98,28 @@
 			</div>
             <table class="table">
                 <tr>
-                    <td><strong>Customer name</strong></td>
-                    <td>
-                        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label></td>
-                </tr>
-                <tr>
-                    <td><strong>Address</strong></td>
-                    <td>
-                        <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label></td>
-                </tr>
-                <tr>
                     <td><strong>Customer number</strong></td>
-                    <td>
-                        <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label></td>
+                    <td><asp:Label ID="labelCustomerNumber" runat="server" Text="Label"></asp:Label></td>
                 </tr>
                 <tr>
-                    <td><strong>Phone</strong></td>
-                    <td>
-                        <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label></td>
+                    <td><strong>Billing address</strong></td>
+                    <td><asp:Label ID="labelBillingAddress" runat="server" Text="Label"></asp:Label></td>
                 </tr>
                 <tr>
-                    <td><strong>Mobile</strong></td>
-                    <td>
-                        <asp:Label ID="Label5" runat="server" Text="Label"></asp:Label></td>
+                    <td><strong>Invoice address</strong></td>
+                    <td><asp:Label ID="labelInvoiceAddress" runat="server" Text="Label"></asp:Label></td>
                 </tr>
                 <tr>
-                    <td><strong>Email</strong></td>
-                    <td>
-                        <asp:Label ID="Label6" runat="server" Text="Label"></asp:Label></td>
+                    <td><strong>Purchase order number</strong></td>
+                    <td><asp:Label ID="labelPurchaseOrderNumber" runat="server" Text="Label"></asp:Label></td>
+                </tr>
+                <tr>
+                    <td><strong>Reference person</strong></td>
+                    <td><asp:Label ID="labelReferencePerson" runat="server" Text="Label"></asp:Label></td>
+                </tr>
+                <tr>
+                    <td><strong>Our reference person</strong></td>
+                    <td><asp:Label ID="labelOurReferencePerson" runat="server" Text="Label"></asp:Label></td>
                 </tr>
             </table>
 		</div>

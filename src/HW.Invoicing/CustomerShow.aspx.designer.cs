@@ -22,58 +22,58 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.Label labelCustomer;
         
         /// <summary>
-        /// Label1 control.
+        /// labelCustomerNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label labelCustomerNumber;
         
         /// <summary>
-        /// Label2 control.
+        /// labelBillingAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Label labelBillingAddress;
         
         /// <summary>
-        /// Label3 control.
+        /// labelInvoiceAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::System.Web.UI.WebControls.Label labelInvoiceAddress;
         
         /// <summary>
-        /// Label4 control.
+        /// labelPurchaseOrderNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label4;
+        protected global::System.Web.UI.WebControls.Label labelPurchaseOrderNumber;
         
         /// <summary>
-        /// Label5 control.
+        /// labelReferencePerson control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label5;
+        protected global::System.Web.UI.WebControls.Label labelReferencePerson;
         
         /// <summary>
-        /// Label6 control.
+        /// labelOurReferencePerson control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label6;
+        protected global::System.Web.UI.WebControls.Label labelOurReferencePerson;
         
         /// <summary>
         /// Label7 control.
