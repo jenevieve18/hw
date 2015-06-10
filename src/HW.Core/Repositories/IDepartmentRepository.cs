@@ -7,6 +7,8 @@ namespace HW.Core.Repositories
 	public interface IDepartmentRepository : IBaseRepository<Department>
 	{
 		IList<Department> FindBySponsorWithSponsorAdminInDepth(int sponsorID, int sponsorAdminID);
+		
+		void UpdateLoginSettings(string loginDays, string loginWeekDay, int departmentID);
 	}
 	
 	public class DepartmentRepositoryStub : BaseRepositoryStub<Department>, IDepartmentRepository
@@ -18,6 +20,10 @@ namespace HW.Core.Repositories
 				new Department {},
 				new Department {}
 			};
+		}
+		
+		public void UpdateLoginSettings(string loginDays, string loginWeekDay, int departmentID)
+		{
 		}
 	}
 }

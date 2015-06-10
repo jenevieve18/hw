@@ -61,9 +61,19 @@ namespace HW.Core.Repositories.Sql
 			throw new NotImplementedException();
 		}
 		
+		SqlConnection CreateConnection(string connectionName)
+		{
+			if (ConfigurationManager.ConnectionStrings[connectionName] != null) {
+				con = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionName].ConnectionString);
+			} else {
+				con = new SqlConnection(ConfigurationManager.AppSettings[connectionName]);
+			}
+			return con;
+		}
+		
 		protected void ExecuteNonQuery(string query, string connectionName, params SqlParameter[] parameters)
 		{
-			con = new SqlConnection(ConfigurationManager.AppSettings[connectionName]);
+			con = CreateConnection(connectionName);
 			OpenConnection();
 			SqlCommand cmd = new SqlCommand(query, con);
 			foreach (var p in parameters) {
@@ -82,7 +92,7 @@ namespace HW.Core.Repositories.Sql
 		
 		protected SqlDataReader ExecuteReader(string query, string connectionName, params SqlParameter[] parameters)
 		{
-			con = new SqlConnection(ConfigurationManager.AppSettings[connectionName]);
+			con = CreateConnection(connectionName);
 			OpenConnection();
 			SqlCommand cmd = new SqlCommand(query, con);
 			foreach (var p in parameters) {
@@ -158,7 +168,7 @@ namespace HW.Core.Repositories.Sql
 //				return null;
 //			}
 //		}
-//		
+//
 		protected int GetInt32(SqlDataReader rs, int index)
 		{
 			return GetInt32(rs, index, 0);
@@ -177,6 +187,16 @@ namespace HW.Core.Repositories.Sql
 		protected double GetDouble(SqlDataReader rs, int index, double def)
 		{
 			return rs.IsDBNull(index) ? def : rs.GetDouble(index);
+		}
+		
+		protected decimal GetDecimal(SqlDataReader rs, int index)
+		{
+			return GetDecimal(rs, index, 0);
+		}
+		
+		protected decimal GetDecimal(SqlDataReader rs, int index, decimal def)
+		{
+			return rs.IsDBNull(index) ? def : rs.GetDecimal(index);
 		}
 		
 		void CloseConnection()
