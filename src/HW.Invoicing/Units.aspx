@@ -18,7 +18,7 @@
     <tr>
         <td><%= u.Name %></td>
         <td>
-            <%= HtmlHelper.Anchor("Edit", "") %>
+            <%= HtmlHelper.Anchor("Edit", "unitedit.aspx?Id=" + u.Id) %>
             <%= HtmlHelper.Anchor("Deactivate", "") %>
         </td>
     </tr>

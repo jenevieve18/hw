@@ -81,6 +81,7 @@
     <Content Include="SignOut.aspx" />
     <Content Include="sql.aspx" />
     <Content Include="UnitAdd.aspx" />
+    <Content Include="UnitEdit.aspx" />
     <Content Include="Units.aspx" />
     <Content Include="UserAdd.aspx" />
     <Content Include="UserDelete.aspx" />
@@ -305,6 +306,13 @@
     </Compile>
     <Compile Include="UnitAdd.aspx.designer.cs">
       <DependentUpon>UnitAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UnitEdit.aspx.cs">
+      <DependentUpon>UnitEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UnitEdit.aspx.designer.cs">
+      <DependentUpon>UnitEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="Units.aspx.cs">
       <DependentUpon>Units.aspx</DependentUpon>
