@@ -7,8 +7,6 @@ using HW.Invoicing.Core.Models;
 
 namespace HW.Invoicing.Core.Repositories.Sql
 {
-
-	
 	public class SqlItemRepository : BaseSqlRepository<Item>, IItemRepository
 	{
 		public override Item Read(int id)
@@ -112,8 +110,9 @@ INNER JOIN Unit u ON u.Id = i.UnitId"
 		{
 			string query = string.Format(
 				@"
-SELECT i.Id, i.Name, i.Description, ISNULL(p.Price, i.Price)
+SELECT i.Id, i.Name, i.Description, ISNULL(p.Price, i.Price), i.UnitId, u.Name
 FROM Item i
+INNER JOIN Unit u ON u.Id = i.UnitId
 LEFT OUTER JOIN CustomerItem p ON p.ItemId = i.Id"
 			);
 			var items = new List<Item>();
@@ -124,7 +123,8 @@ LEFT OUTER JOIN CustomerItem p ON p.ItemId = i.Id"
 							Id = GetInt32(rs, 0),
 							Name = GetString(rs, 1),
 							Description = GetString(rs, 2),
-							Price = GetDecimal(rs, 3)
+							Price = GetDecimal(rs, 3),
+							Unit = new Unit { Id = GetInt32(rs, 4), Name = GetString(rs, 5) }
 						}
 					);
 				}

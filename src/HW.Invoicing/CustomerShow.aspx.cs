@@ -29,12 +29,24 @@ namespace HW.Invoicing
                 var c = r.Read(id);
                 labelCustomer.Text = c.Name;
             }
+        }
 
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+            
             notes = r.FindNotes(id);
             prices = r.FindItems(id);
             contacts = r.FindContacts(id);
             timebooks = r.FindTimebooks(id);
             items = ir.FindAllWithCustomerItems();
+            foreach (var i in items)
+            {
+                var li = new ListItem(i.Name, i.Id.ToString());
+                li.Attributes.Add("data-price", i.Price.ToString());
+                li.Attributes.Add("data-unit", i.Unit.Name);
+                dropDownListTimebookItems.Items.Add(li);
+            }
         }
     }
 }

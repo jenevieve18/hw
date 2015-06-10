@@ -1,6 +1,20 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="CustomerShow.aspx.cs" Inherits="HW.Invoicing.CustomerShow" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#<%= dropDownListTimebookItems.ClientID %>').change(function () {
+            var selected = $(this).find('option:selected');
+            var selectedPrice = selected.data('price');
+            var selectedUnit = selected.data('unit');
+            $('#<%= textBoxTimebookPrice.ClientID %>').val(selectedPrice);
+            $('#<%= labelTimebookUnit.ClientID %>').text(selectedUnit);
+        });
+        $('#<%= dropDownListTimebookItems.ClientID %>').change();
+    });
+</script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -82,16 +96,17 @@
                                 </asp:DropDownList>
                             </div>
                             <div class="form-group">
-	                            <label for="<%= DropDownListTimebookItems.ClientID %>">Item</label>
-                                <asp:DropDownList ID="DropDownListTimebookItems" runat="server" CssClass="form-control"></asp:DropDownList>
+	                            <label for="<%= dropDownListTimebookItems.ClientID %>">Item</label>
+                                <asp:DropDownList ID="dropDownListTimebookItems" runat="server" CssClass="form-control"></asp:DropDownList>
                             </div>
                             <div class="form-group">
-	                            <label for="<%= DropDownListTimebookItems.ClientID %>">Unit</label>
-                                <asp:DropDownList ID="DropDownList1" runat="server" CssClass="form-control"></asp:DropDownList>
+	                            <label for="<%= labelTimebookUnit.ClientID %>">Unit</label>
+                                <asp:Label ID="labelTimebookUnit" runat="server" Text="" CssClass="form-control"></asp:Label>
+                                <!--<asp:DropDownList ID="DropDownList1" runat="server" CssClass="form-control"></asp:DropDownList>-->
                             </div>
                             <div class="form-group">
-	                            <label for="<%= textBoxTime.ClientID %>">Qty</label>
-                                <asp:TextBox ID="textBoxTime" runat="server" CssClass="form-control"></asp:TextBox>
+	                            <label for="<%= textBoxTimebookQty.ClientID %>">Qty</label>
+                                <asp:TextBox ID="textBoxTimebookQty" runat="server" CssClass="form-control"></asp:TextBox>
                             </div>
                             <div class="form-group">
 	                            <label for="<%= textBoxTimebookPrice.ClientID %>">Price</label>
@@ -231,9 +246,14 @@
                 </tr>
                 <tr>
                     <td><strong>Our Reference Person</strong></td>
-                    <td><asp:Label ID="labelOurReferencePerson" runat="server" Text="Label"></asp:Label></td>
+                    <td>
+                        <asp:Label ID="labelOurReferencePerson" runat="server" Text="Label"></asp:Label>
+                    </td>
                 </tr>
             </table>
+            <div>
+                <asp:Button ID="buttonDeactivate" runat="server" Text="Deactivate this customer" CssClass="btn btn-warning" />
+            </div>
 		</div>
         <div class="tab-pane" id="contact-persons">
 			<br />
