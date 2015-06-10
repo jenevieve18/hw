@@ -205,7 +205,6 @@
 		</div>
 		<div class="tab-pane" id="customer-info">
             <br />
-            <p><%= HtmlHelper.Anchor("Edit this customer", "customeredit.aspx?Id=" + id, "class='btn btn-info'") %></p>
 			<div class="alert alert-info">
 				<strong>Customer information</strong> is lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 			</div>

@@ -24,6 +24,11 @@ namespace HW.Invoicing
         protected void Page_Load(object sender, EventArgs e)
         {
         	id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
+            if (!IsPostBack)
+            {
+                var c = r.Read(id);
+                labelCustomer.Text = c.Name;
+            }
 
             notes = r.FindNotes(id);
             prices = r.FindItems(id);
