@@ -310,7 +310,7 @@
                 <asp:TextBox ID="textBox5" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="form-group">
-	            <label for="<%= textBoxAddress.ClientID %>"></label>
+	            <label for="<%= textBoxAddress.ClientID %>">Our reference person</label>
                 <asp:TextBox ID="textBox6" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
 		</div>
@@ -396,7 +396,7 @@
 <div>
     <asp:Button CssClass="btn btn-success" ID="buttonSave" runat="server" Text="Save customer" 
         onclick="buttonSave_Click" />
-    <asp:Button ID="Button1" runat="server" Text="Deactivate" CssClass="btn btn-warning" OnClientClick="return confirm('Are you sure you want to de-active this customer?')" />
+    <asp:Button ID="buttonDeactivate" OnClick="buttonDeactivate_Click" runat="server" Text="Deactivate" CssClass="btn btn-warning" OnClientClick="return confirm('Are you sure you want to de-active this customer?')" />
         or <i><%= HtmlHelper.Anchor("cancel", "customers.aspx") %></i>
 </div>
 <br />
