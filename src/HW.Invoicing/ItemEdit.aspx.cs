@@ -8,12 +8,14 @@ using HW.Core.Helpers;
 using HW.Invoicing.Core.Models;
 using HW.Invoicing.Core.Repositories;
 using HW.Invoicing.Core.Repositories.Sql;
+using m = HW.Invoicing.Core.Models;
 
 namespace HW.Invoicing
 {
 	public partial class ItemEdit : System.Web.UI.Page
 	{
 		IItemRepository r;
+        SqlUnitRepository ur = new SqlUnitRepository();
 		
 		public ItemEdit() : this(new SqlItemRepository())
 		{
@@ -27,11 +29,13 @@ namespace HW.Invoicing
 		public void Edit(int id)
 		{
 			if (IsPostBack) {
-				var d = new Item {
-					Name = textBoxName.Text,
-					Description = textBoxDescription.Text,
-                    Price = ConvertHelper.ToDecimal(textBoxPrice.Text)
-				};
+                var d = new Item
+                {
+                    Name = textBoxName.Text,
+                    Description = textBoxDescription.Text,
+                    Price = ConvertHelper.ToDecimal(textBoxPrice.Text),
+                    Unit = new m.Unit { Id = ConvertHelper.ToInt32(dropDownListUnits.SelectedValue) }
+                };
 				r.Update(d, id);
 				Response.Redirect("items.aspx");
 			}
@@ -40,15 +44,27 @@ namespace HW.Invoicing
 				textBoxName.Text = i.Name;
 				textBoxDescription.Text = i.Description;
                 textBoxPrice.Text = i.Price.ToString();
+                dropDownListUnits.SelectedValue = i.Unit.Id.ToString();
 			}
 		}
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
-        	HtmlHelper.RedirectIf(Session["UserId"] == null, "default.aspx");
+        	//HtmlHelper.RedirectIf(Session["UserId"] == null, "default.aspx");
         	
 			Edit(ConvertHelper.ToInt32(Request.QueryString["ItemID"]));
 		}
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+            dropDownListUnits.Items.Clear();
+            foreach (var u in ur.FindAll())
+            {
+                var li = new ListItem(u.Name, u.Id.ToString());
+                dropDownListUnits.Items.Add(li);
+            }
+        }
 
 		protected void buttonSave_Click(object sender, EventArgs e)
 		{

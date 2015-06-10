@@ -40,6 +40,15 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxPrice;
         
         /// <summary>
+        /// dropDownListUnits control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList dropDownListUnits;
+        
+        /// <summary>
         /// buttonSave control.
         /// </summary>
         /// <remarks>

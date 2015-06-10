@@ -91,3 +91,7 @@ create table Unit(
 	Id integer not null primary key identity,
 	Name varchar(255)
 );
+
+alter table Item add UnitId integer;
+
+update Item set UnitId = 1;

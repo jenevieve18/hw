@@ -14,6 +14,7 @@
         <th>Name</th>
         <th>Description</th>
         <th>Price</th>
+        <th>Unit</th>
         <th>Actions</th>
     </tr>
     <% foreach (var i in items) { %>
@@ -21,9 +22,10 @@
         <td><%= i.Name %></td>
         <td><%= i.Description %></td>
         <td><%= i.Price.ToString("# ##0.00") %></td>
+        <td><%= i.Unit.Name %></td>
         <td>
             <%= HtmlHelper.Anchor("Edit", "itemedit.aspx?ItemID=" + i.Id)%>
-            <%= HtmlHelper.Anchor("Delete", "itemdelete.aspx?ItemID=" + i.Id)%>
+            <%= HtmlHelper.Anchor("Deactivate", "itemdelete.aspx?ItemID=" + i.Id)%>
         </td>
     </tr>
     <% } %>

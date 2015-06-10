@@ -18,6 +18,11 @@
 	<label for="<%= textBoxPrice.ClientID %>">Price</label>
     <asp:TextBox ID="textBoxPrice" runat="server" CssClass="form-control"></asp:TextBox>
 </div>
+<div class="form-group">
+	<label for="<%= dropDownListUnits.ClientID %>">Unit</label>
+    <asp:DropDownList ID="dropDownListUnits" runat="server" CssClass="form-control">
+    </asp:DropDownList>
+</div>
 <div>
     <asp:Button ID="buttonSave" CssClass="btn btn-success" runat="server" Text="Save item" 
         onclick="buttonSave_Click" />
