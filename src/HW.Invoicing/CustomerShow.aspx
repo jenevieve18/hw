@@ -1,25 +1,31 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="CustomerShow.aspx.cs" Inherits="HW.Invoicing.CustomerShow" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+    <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#<%= dropDownListTimebookItems.ClientID %>').change(function () {
+                var selected = $(this).find('option:selected');
+                var selectedPrice = selected.data('price');
+                var selectedUnit = selected.data('unit');
+                $('#<%= textBoxTimebookPrice.ClientID %>').val(selectedPrice);
+                $('#<%= labelTimebookUnit.ClientID %>').text(selectedUnit);
+            });
+            $('#<%= dropDownListTimebookItems.ClientID %>').change();
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#<%= dropDownListTimebookItems.ClientID %>').change(function () {
-            var selected = $(this).find('option:selected');
-            var selectedPrice = selected.data('price');
-            var selectedUnit = selected.data('unit');
-            $('#<%= textBoxTimebookPrice.ClientID %>').val(selectedPrice);
-            $('#<%= labelTimebookUnit.ClientID %>').text(selectedUnit);
-        });
-        $('#<%= dropDownListTimebookItems.ClientID %>').change();
+            $('#<%= textBoxCustomerNumber.ClientID %>').hide();
+            $('#<%= labelCustomerNumber.ClientID %>').click(function () {
+                $(this).hide();
+                $('#<%= textBoxCustomerNumber.ClientID %>').show();
+            });
 
-        $('#<%= textBoxCustomerNumber.ClientID %>').hide();
-        $('#<%= labelCustomerNumber.ClientID %>').click(function () {
-            $(this).hide();
-            $('#<%= textBoxCustomerNumber.ClientID %>').show();
+            $('#<%= textBoxTimebookDate.ClientID %>').datepicker({
+                format: "yyyy-mm-dd",
+                autoclose: true
+            });
         });
-    });
-</script>
+    </script>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
