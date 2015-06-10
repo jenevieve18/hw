@@ -23,10 +23,9 @@
         <td></td>
         <td><%= c.Phone %></td>
         <td><%= c.Email %></td>
-        <!--<td>
-            <%= HtmlHelper.Anchor("Edit", "customeredit.aspx?Id=" + c.Id)%>
-            <%= HtmlHelper.Anchor("Delete", "customerdelete.aspx?Id=" + c.Id)%>
-        </td>-->
+        <td>
+            <%= HtmlHelper.Anchor("Deactivate", "")%>
+        </td>
     </tr>
     <% } %>
 </table>
