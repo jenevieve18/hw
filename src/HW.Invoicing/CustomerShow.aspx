@@ -252,7 +252,7 @@
                 </tr>
             </table>
             <div>
-                <asp:Button ID="buttonDeactivate" runat="server" Text="Deactivate this customer" CssClass="btn btn-warning" />
+                <asp:Button ID="buttonDeactivate" runat="server" Text="Deactivate this customer" CssClass="btn btn-warning" OnClientClick="return confirm('Are you sure you want to de-activate this customer?')" />
             </div>
 		</div>
         <div class="tab-pane" id="contact-persons">
