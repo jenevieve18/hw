@@ -15,6 +15,11 @@ namespace HW.Invoicing.Core.Models
 		public string Number { get; set; }
 	}
 	
+	public class Unit : BaseModel
+	{
+		public string Name { get; set; }
+	}
+	
 	public class CustomerItem : BaseModel
 	{
 		public Customer Customer { get; set; }

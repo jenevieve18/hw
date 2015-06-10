@@ -80,6 +80,8 @@
     <Content Include="Settings.aspx" />
     <Content Include="SignOut.aspx" />
     <Content Include="sql.aspx" />
+    <Content Include="UnitAdd.aspx" />
+    <Content Include="Units.aspx" />
     <Content Include="UserAdd.aspx" />
     <Content Include="UserDelete.aspx" />
     <Content Include="UserEdit.aspx" />
@@ -289,6 +291,20 @@
     </Compile>
     <Compile Include="sql.aspx.designer.cs">
       <DependentUpon>sql.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UnitAdd.aspx.cs">
+      <DependentUpon>UnitAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UnitAdd.aspx.designer.cs">
+      <DependentUpon>UnitAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Units.aspx.cs">
+      <DependentUpon>Units.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Units.aspx.designer.cs">
+      <DependentUpon>Units.aspx</DependentUpon>
     </Compile>
     <Compile Include="UserAdd.aspx.cs">
       <DependentUpon>UserAdd.aspx</DependentUpon>

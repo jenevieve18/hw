@@ -85,4 +85,9 @@ alter table CustomerNotes alter column Notes text;
 
 alter table CustomerTimebook add Department varchar(255);
 
-sp_rename 'CustomerPrice', 'CustomerItem'
+sp_rename 'CustomerPrice', 'CustomerItem';
+
+create table Unit(
+	Id integer not null primary key identity,
+	Name varchar(255)
+);

@@ -8,7 +8,7 @@
 
 <div class="tabbable" id="tabs-179602">
 	<ul class="nav nav-tabs">
-	    <li class="active"><a href="#notes" data-toggle="tab">Notes</a></li>
+	    <li class="active"><a href="#notes" data-toggle="tab">Note</a></li>
 	    <li><a href="#timebook" data-toggle="tab">Timebook</a></li>
 	    <li><a href="#customer-prices" data-toggle="tab">Customer Prices</a></li>
 		<li><a href="#customer-info" data-toggle="tab">Customer Info</a></li>
@@ -17,35 +17,35 @@
 	<div class="tab-content">
         <div class="tab-pane active" id="notes">
 			<br />
-            <p><a id="modal-625558" href="#customer-notes-form" role="button" class="btn btn-info" data-toggle="modal">Create notes</a></p>
+            <p><a id="modal-625558" href="#customer-notes-form" role="button" class="btn btn-info" data-toggle="modal">Create note</a></p>
 			<div class="modal fade" id="customer-notes-form" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-							<h4 class="modal-title" id="H3">Create notes</h4>
+							<h4 class="modal-title" id="H3">Create note</h4>
 						</div>
 						<div class="modal-body">
                             <div class="form-group">
-	                            <label for="<%= textBoxNotes.ClientID %>">Notes</label>
+	                            <label for="<%= textBoxNotes.ClientID %>">Note</label>
                                 <asp:TextBox ID="textBoxNotes" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
                             </div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <asp:Button ID="buttonSaveNotes" runat="server" Text="Save notes" CssClass="btn btn-primary" />
+                            <asp:Button ID="buttonSaveNotes" runat="server" Text="Save note" CssClass="btn btn-primary" />
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="alert alert-info">
-				<strong>Customer notes</strong> are brief records of facts, topics, or thoughts, written down as an aid to memory.
+				<strong>Customer note</strong> is a brief records of facts, topics, or thoughts, written down as an aid to memory.
 			</div>
             <table class="table table-hover">
                 <tr>
                     <th style="width:20%">Date</th>
                     <th style="width:10%">Creator</th>
-                    <th>Notes</th>
+                    <th>Note</th>
                     <th></th>
                 </tr>
                 <% foreach (var n in notes) { %>
@@ -285,6 +285,7 @@
                     <th>Phone</th>
                     <th>Mobile</th>
                     <th>Email</th>
+                    <th></th>
                 </tr>
                 <% foreach (var c in contacts) { %>
                 <tr>
@@ -293,6 +294,10 @@
                     <td><%= c.Phone %></td>
                     <td><%= c.Mobile %></td>
                     <td><%= c.Email %></td>
+                    <td>
+                        <%= HtmlHelper.Anchor("Edit", "") %>
+                        <%= HtmlHelper.Anchor("Deactivate", "") %>
+                    </td>
                 </tr>
                 <% } %>
             </table>
