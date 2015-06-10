@@ -274,16 +274,12 @@
 				<strong>Customer information</strong> is lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 			</div>
             <div class="form-group">
-	            <label for="<%= textBoxName.ClientID %>">Customer name</label>
-                <asp:TextBox ID="textBoxName" runat="server" CssClass="form-control"></asp:TextBox>
-            </div>
-            <div class="form-group">
-	            <label for="<%= textBoxAddress.ClientID %>">Address</label>
-                <asp:TextBox ID="textBoxAddress" runat="server" CssClass="form-control"></asp:TextBox>
-            </div>
-            <div class="form-group">
 	            <label for="<%= textBoxNumber.ClientID %>">Customer number</label>
                 <asp:TextBox ID="textBoxNumber" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <!--<div class="form-group">
+	            <label for="<%= textBoxName.ClientID %>">Customer name</label>
+                <asp:TextBox ID="textBoxName" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="form-group">
 	            <label for="<%= textBoxPhone.ClientID %>">Phone</label>
@@ -296,6 +292,26 @@
             <div class="form-group">
 	            <label for="<%= textBoxEmail.ClientID %>">Email</label>
                 <asp:TextBox ID="textBoxEmail" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>-->
+            <div class="form-group">
+	            <label for="<%= textBoxAddress.ClientID %>">Billing Address</label>
+                <asp:TextBox ID="textBoxAddress" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="form-group">
+	            <label for="<%= textBoxAddress.ClientID %>">Invoice address</label>
+                <asp:TextBox ID="textBox3" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="form-group">
+	            <label for="<%= textBoxAddress.ClientID %>">Purchase order number</label>
+                <asp:TextBox ID="textBox4" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="form-group">
+	            <label for="<%= textBoxAddress.ClientID %>">Reference person</label>
+                <asp:TextBox ID="textBox5" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="form-group">
+	            <label for="<%= textBoxAddress.ClientID %>"></label>
+                <asp:TextBox ID="textBox6" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
 		</div>
         <div class="tab-pane" id="contact-persons">
