@@ -16,7 +16,7 @@ namespace HW.Invoicing
 		SqlCustomerRepository r = new SqlCustomerRepository();
 		SqlItemRepository ir = new SqlItemRepository();
 		protected IList<CustomerNotes> notes;
-		protected IList<CustomerPrice> prices;
+		protected IList<CustomerItem> prices;
 		protected IList<CustomerContact> contacts;
 		protected IList<Item> items;
 		protected IList<CustomerTimebook> timebooks;
@@ -61,10 +61,10 @@ namespace HW.Invoicing
 
 //			int customerId = ConvertHelper.ToInt32(Request.QueryString["CustomerID"]);
 			notes = r.FindNotes(id);
-			prices = r.FindPrices(id);
+			prices = r.FindItems(id);
 			contacts = r.FindContacts(id);
 			timebooks = r.FindTimebooks(id);
-			items = ir.FindAllWithCustomerPrices();
+			items = ir.FindAllWithCustomerItems();
 
 			DropDownListContacts.Items.Clear();
 			foreach (var c in contacts) {
@@ -113,11 +113,11 @@ namespace HW.Invoicing
 
 		protected void buttonSavePrice_Click(object sender, EventArgs e)
 		{
-			var p = new CustomerPrice {
+			var p = new CustomerItem {
 				Item = new Item { Id = ConvertHelper.ToInt32(DropDownListItems.SelectedValue) },
 				Price = ConvertHelper.ToDecimal(textBoxPrice.Text)
 			};
-			r.SavePrice(p, ConvertHelper.ToInt32(Request.QueryString["CustomerID"]));
+			r.SaveItem(p, ConvertHelper.ToInt32(Request.QueryString["CustomerID"]));
 		}
 
 		protected void buttonSaveTimebook_Click(object sender, EventArgs e)

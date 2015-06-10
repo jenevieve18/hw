@@ -5,7 +5,6 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <h3>Customer name: <asp:Label ID="labelCustomer" runat="server" Text="Label"></asp:Label></h3>
-<p><%= HtmlHelper.Anchor("Edit this customer", "customeredit.aspx?Id=" + id, "class='btn btn-info'") %></p>
 
 <div class="tabbable" id="tabs-179602">
 	<ul class="nav nav-tabs">
@@ -18,6 +17,7 @@
 	<div class="tab-content">
         <div class="tab-pane active" id="notes">
 			<br />
+            <p><%= HtmlHelper.Anchor("Edit notes", "customeredit.aspx?Id=" + id, "class='btn btn-info'") %></p>
 			<div class="alert alert-info">
 				<strong>Customer notes</strong> are brief records of facts, topics, or thoughts, written down as an aid to memory.
 			</div>
@@ -38,6 +38,7 @@
 		</div>
 		<div class="tab-pane" id="timebook">
 			<br />
+            <p><%= HtmlHelper.Anchor("Edit timebook", "customeredit.aspx?Id=" + id, "class='btn btn-info'") %></p>
 			<div class="alert alert-info">
 				<strong>Time book</strong> is a sheet for recording the time of arrival and departure of workers and for recording the amount of time spent on each job.
 			</div>
@@ -72,6 +73,7 @@
 		</div>
 		<div class="tab-pane" id="customer-prices">
 			<br />
+            <p><%= HtmlHelper.Anchor("Edit customer price", "customeredit.aspx?Id=" + id, "class='btn btn-info'") %></p>
 			<div class="alert alert-info">
                 In ordinary usage, <strong>price</strong> is the quantity of payment or compensation given by one party to another in return for goods or services.
 			</div>
@@ -90,6 +92,7 @@
 		</div>
 		<div class="tab-pane" id="customer-info">
             <br />
+            <p><%= HtmlHelper.Anchor("Edit this customer", "customeredit.aspx?Id=" + id, "class='btn btn-info'") %></p>
 			<div class="alert alert-info">
 				<strong>Customer information</strong> is lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 			</div>
@@ -128,6 +131,7 @@
 		</div>
         <div class="tab-pane" id="contact-persons">
 			<br />
+            <p><%= HtmlHelper.Anchor("Edit contact persons", "customeredit.aspx?Id=" + id, "class='btn btn-info'") %></p>
 			<div class="alert alert-info">
 				<strong>Customer contact information</strong> are people serving as a go-between, messenger, connection, or source of special information. Business contacts.
 			</div>

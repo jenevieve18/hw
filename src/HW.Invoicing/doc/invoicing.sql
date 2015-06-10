@@ -81,4 +81,8 @@ create table News(
 
 alter table News add Date datetime;
 
-alter table CustomerNotes alter column Notes text; 
+alter table CustomerNotes alter column Notes text;
+
+alter table CustomerTimebook add Department varchar(255);
+
+sp_rename 'CustomerPrice', 'CustomerItem'
