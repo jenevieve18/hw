@@ -90,7 +90,7 @@ namespace HW.Invoicing
 			Response.Redirect("customers.aspx");
 		}
 
-		protected void buttonDeactivate_Click(object sender, EventArgs e)
+        protected void buttonDeactivate_Click(object sender, EventArgs e)
 		{
 			r.Deactivate(ConvertHelper.ToInt32(Request.QueryString["CustomerID"]));
 			Response.Redirect("customers.aspx");

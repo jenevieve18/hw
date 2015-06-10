@@ -144,7 +144,7 @@ WHERE Id = @Id"
 			);
 		}
 		
-		public override void Deactivate(int id)
+		public void Deactivate(int id)
 		{
 			string query = string.Format(
 				@"
