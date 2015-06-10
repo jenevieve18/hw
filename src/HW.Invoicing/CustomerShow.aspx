@@ -12,6 +12,12 @@
             $('#<%= labelTimebookUnit.ClientID %>').text(selectedUnit);
         });
         $('#<%= dropDownListTimebookItems.ClientID %>').change();
+
+        $('#<%= textBoxCustomerNumber.ClientID %>').hide();
+        $('#<%= labelCustomerNumber.ClientID %>').click(function () {
+            $(this).hide();
+            $('#<%= textBoxCustomerNumber.ClientID %>').show();
+        });
     });
 </script>
 
@@ -102,7 +108,6 @@
                             <div class="form-group">
 	                            <label for="<%= labelTimebookUnit.ClientID %>">Unit</label>
                                 <asp:Label ID="labelTimebookUnit" runat="server" Text="" CssClass="form-control"></asp:Label>
-                                <!--<asp:DropDownList ID="DropDownList1" runat="server" CssClass="form-control"></asp:DropDownList>-->
                             </div>
                             <div class="form-group">
 	                            <label for="<%= textBoxTimebookQty.ClientID %>">Qty</label>
@@ -137,7 +142,9 @@
                     <th>Date</th>
                     <th>Department</th>
                     <th>Contact</th>
-                    <th>Time</th>
+                    <th>Item</th>
+                    <th>Unit</th>
+                    <th>Qty</th>
                     <th>Price</th>
                     <th>Amount</th>
                     <th>Consultant</th>
@@ -151,9 +158,11 @@
                     <td><%= t.Date.ToString("yyyy-MM-dd") %></td>
                     <td><%= t.Department %></td>
                     <td><%= t.Contact.Contact %></td>
+                    <td><%= t.Item.Name %></td>
+                    <td><%= t.Item.Unit.Name %></td>
                     <td><%= t.Quantity.ToString() %></td>
                     <td><%= t.Price.ToString("# ##0.00") %></td>
-                    <td><%= t.Price.ToString("# ##0.00") %></td>
+                    <td><%= t.Amount.ToString("# ##0.00") %></td>
                     <td><%= t.Consultant %></td>
                     <td><span class="label label-success">INVOICED</span></td>
                     <td><%= t.Comments %></td>
@@ -225,8 +234,11 @@
 			</div>
             <table class="table">
                 <tr>
-                    <td><strong>Customer Number</strong></td>
-                    <td><asp:Label ID="labelCustomerNumber" runat="server" Text="Label"></asp:Label></td>
+                    <td style="width: 30%;"><strong>Customer Number</strong></td>
+                    <td>
+                        <asp:Label ID="labelCustomerNumber" runat="server" Text="Label"></asp:Label>
+                        <asp:TextBox ID="textBoxCustomerNumber" runat="server" CssClass="form-control"></asp:TextBox>
+                    </td>
                 </tr>
                 <tr>
                     <td><strong>Postal Address</strong></td>

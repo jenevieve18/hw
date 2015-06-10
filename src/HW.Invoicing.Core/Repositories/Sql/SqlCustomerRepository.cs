@@ -7,36 +7,6 @@ using HW.Invoicing.Core.Models;
 
 namespace HW.Invoicing.Core.Repositories.Sql
 {
-	public class SqlUnitRepository : BaseSqlRepository<Unit>
-	{
-		public override void Save(Unit t)
-		{
-			string query = @"
-INSERT INTO Unit(Name)
-VALUES(@Name)";
-			ExecuteNonQuery(
-				query,
-				"invoicing",
-				new SqlParameter("@Name", t.Name)
-			);
-		}
-		
-		public override IList<Unit> FindAll()
-		{
-			string query = @"
-SELECT Id, Name FROM Unit";
-			var units = new List<Unit>();
-			using (var rs = ExecuteReader(query, "invoicing")) {
-				while (rs.Read()) {
-					units.Add(
-						new Unit { Id = GetInt32(rs, 0), Name = GetString(rs, 1) }
-					);
-				}
-			}
-			return units;
-		}
-	}
-	
 	public class SqlCustomerRepository : BaseSqlRepository<Customer>, ICustomerRepository
 	{
 		public override void Delete(int id)
@@ -266,9 +236,11 @@ ORDER BY n.CreatedAt DESC"
 		{
 			string query = string.Format(
 				@"
-SELECT t.CustomerContactId, t.ItemId, t.Quantity, t.Price, t.Consultant, t.Comments, c.Contact 
+SELECT t.CustomerContactId, t.ItemId, t.Quantity, t.Price, t.Consultant, t.Comments, c.Contact, i.Name, u.Id, u.Name
 FROM CustomerTimebook t
 INNER JOIN CustomerContact c ON c.Id = t.CustomerContactId
+INNER JOIN Item i ON i.Id = t.ItemId
+INNER JOIN UNit u ON u.Id = i.UnitId
 WHERE t.CustomerId = @CustomerId"
 			);
 			var timebooks = new List<CustomerTimebook>();
@@ -276,8 +248,15 @@ WHERE t.CustomerId = @CustomerId"
 				while (rs.Read()) {
 					timebooks.Add(
 						new CustomerTimebook {
-							Contact = new CustomerContact { Id = GetInt32(rs, 0), Contact = GetString(rs, 6) },
-							Item = new Item { Id = GetInt32(rs, 1) },
+							Contact = new CustomerContact {
+								Id = GetInt32(rs, 0),
+								Contact = GetString(rs, 6)
+							},
+							Item = new Item {
+								Id = GetInt32(rs, 1),
+								Name = GetString(rs, 7),
+								Unit = new Unit { Id = GetInt32(rs, 8), Name = GetString(rs, 9) }
+							},
 							Quantity = GetDecimal(rs, 2),
 							Price = GetDecimal(rs, 3),
 							Consultant = GetString(rs, 4),

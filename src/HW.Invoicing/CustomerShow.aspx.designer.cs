@@ -76,15 +76,6 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.Label labelTimebookUnit;
         
         /// <summary>
-        /// DropDownList1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
-        
-        /// <summary>
         /// textBoxTimebookQty control.
         /// </summary>
         /// <remarks>
@@ -164,6 +155,15 @@ namespace HW.Invoicing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label labelCustomerNumber;
+        
+        /// <summary>
+        /// textBoxCustomerNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxCustomerNumber;
         
         /// <summary>
         /// labelInvoiceAddress control.

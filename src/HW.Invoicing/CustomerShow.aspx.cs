@@ -28,6 +28,8 @@ namespace HW.Invoicing
             {
                 var c = r.Read(id);
                 labelCustomer.Text = c.Name;
+
+                labelCustomerNumber.Text = textBoxCustomerNumber.Text = c.Number;
             }
         }
 

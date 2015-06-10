@@ -59,6 +59,7 @@
     <Compile Include="Repositories\Sql\SqlIssueRepository.cs" />
     <Compile Include="Repositories\Sql\SqlItemRepository.cs" />
     <Compile Include="Repositories\Sql\SqlNewsRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlUnitRepository.cs" />
     <Compile Include="Repositories\Sql\SqlUserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
