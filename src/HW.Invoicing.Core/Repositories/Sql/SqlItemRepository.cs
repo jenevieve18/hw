@@ -100,5 +100,29 @@ FROM Item"
 			}
 			return items;
 		}
+		
+		public IList<Item> FindAllWithCustomerItems()
+		{
+			string query = string.Format(
+				@"
+SELECT i.Id, i.Name, i.Description, ISNULL(p.Price, i.Price)
+FROM Item i
+LEFT OUTER JOIN CustomerItem p ON p.ItemId = i.Id"
+			);
+			var items = new List<Item>();
+			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {
+				while (rs.Read()) {
+					items.Add(
+						new Item {
+							Id = GetInt32(rs, 0),
+							Name = GetString(rs, 1),
+							Description = GetString(rs, 2),
+							Price = GetDecimal(rs, 3)
+						}
+					);
+				}
+			}
+			return items;
+		}
 	}
 }

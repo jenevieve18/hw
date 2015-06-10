@@ -16,13 +16,14 @@ namespace HW.Invoicing.Core.Repositories.Sql
 		{
 			string query = string.Format(
 				@"
-INSERT INTO Invoice(Date)
-VALUES(@Date)"
+INSERT INTO Invoice(Date, CustomerId)
+VALUES(@Date, @CustomerId)"
 			);
 			ExecuteNonQuery(
 				query,
 				"invoicing",
-				new SqlParameter("@Date", i.Date)
+				new SqlParameter("@Date", i.Date),
+				new SqlParameter("@CustomerId", i.Customer.Id)
 			);
 		}
 		
@@ -47,14 +48,22 @@ WHERE Id = @id"
 		{
 			string query = string.Format(
 				@"
-SELECT Id, Date, CustomerId
-FROM Invoice"
+SELECT i.Id, i.Date, c.Id, c.Name
+FROM Invoice i
+INNER JOIN Customer c ON i.CustomerId = c.Id"
 			);
 			var invoices = new List<Invoice>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {
 				while (rs.Read()) {
 					invoices.Add(
-						new Invoice { Id = GetInt32(rs, 0), Date = GetDateTime(rs, 1) }
+						new Invoice {
+							Id = GetInt32(rs, 0),
+							Date = GetDateTime(rs, 1),
+							Customer = new Customer {
+								Id = GetInt32(rs, 2),
+								Name = GetString(rs, 3)
+							}
+						}
 					);
 				}
 			}

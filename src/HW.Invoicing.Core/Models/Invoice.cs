@@ -12,8 +12,20 @@ namespace HW.Invoicing.Core.Models
 		public DateTime? Date { get; set; }
 		public Customer Customer { get; set; }
 		public IList<InvoiceItem> Items { get; set; }
+		public IList<InvoicePayment> Payments { get; set; }
 		
-		public void AddItem(Item item)
+		public Invoice()
+		{
+			Items = new List<InvoiceItem>();
+			Payments = new List<InvoicePayment>();
+		}
+		
+		public void AddItem(int id, double quantity, double price)
+		{
+			AddItem(new Item { Id = id }, quantity, price);
+		}
+		
+		public void AddItem(Item item, double quantity, double price)
 		{
 			AddItem(new InvoiceItem { Item = item });
 		}
@@ -22,6 +34,14 @@ namespace HW.Invoicing.Core.Models
 		{
 			item.Invoice = this;
 			Items.Add(item);
+		}
+		
+		public double AmountDue {
+			get { return TotalAmount - Payments.Sum(x => x.Amount); }
+		}
+		
+		public double TotalAmount {
+			get { return Items.Sum(x => x.Amount); }
 		}
 	}
 	
