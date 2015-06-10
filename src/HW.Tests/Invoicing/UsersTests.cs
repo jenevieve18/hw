@@ -38,8 +38,8 @@ namespace HW.Tests.Invoicing
 		{
 			var v = new HW.Invoicing.Default();
 			
-			v = new HW.Invoicing.Default(new UserRepositoryStub());
-			v.Login();
+//			v = new HW.Invoicing.Default(new UserRepositoryStub());
+//			v.Login();
 		}
 		
 		[Test]

@@ -19,6 +19,20 @@ namespace HW.Tests.Repositories
 		}
 		
 		[Test]
+		public void TestSaveExerciseDataInputs()
+		{
+			r.SaveExerciseDataInputs(new[] { "life", "box", "chocolate" }, 84, 135);
+		}
+		
+		[Test]
+		public void TestFindSponsorExerciseDataInputs()
+		{
+			foreach (var i in r.FindSponsorExerciseDataInputs(514, 135)) {
+				Console.WriteLine(i.Content);
+			}
+		}
+		
+		[Test]
 		public void TestUpdateSponsorLastLoginSent()
 		{
 			r.UpdateSponsorLastLoginSent(-1);
@@ -143,12 +157,6 @@ namespace HW.Tests.Repositories
 			r.ReadSponsorAdmin("FB8CC11083", null, null, "", null, null);
 		}
 		
-//		[Test]
-//		public void TestReadSponsorAdmin2()
-//		{
-//			r.ReadSponsorAdmin2(1, "");
-//		}
-//		
 		[Test]
 		public void TestSponsorAdminExists()
 		{

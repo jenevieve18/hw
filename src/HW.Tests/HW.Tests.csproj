@@ -56,6 +56,9 @@
     <Reference Include="Microsoft.Office.Interop.Excel">
       <HintPath>..\..\lib\Microsoft.Office.Interop.Excel.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate">
       <HintPath>..\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
@@ -92,6 +95,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Grp\DefaultTests.cs" />
+    <Compile Include="Grp\RemindersTests.cs" />
     <Compile Include="Helpers\ConvertHelperTests.cs" />
     <Compile Include="Helpers\DbTests.cs" />
     <Compile Include="Helpers\DocXExporterTests.cs" />
@@ -110,7 +114,10 @@
     <Compile Include="Invoicing\CustomersTests.cs" />
     <Compile Include="Invoicing\InvoicesTests.cs" />
     <Compile Include="Invoicing\ItemsTests.cs" />
+    <Compile Include="Invoicing\Repositories\CustomerRepositoryTests.cs" />
+    <Compile Include="Invoicing\Repositories\InvoiceRepositoryTests.cs" />
     <Compile Include="Invoicing\UsersTests.cs" />
+    <Compile Include="JsonConvertTests.cs" />
     <Compile Include="Models\DepartmentTests.cs" />
     <Compile Include="Models\GroupFactoryTests.cs" />
     <Compile Include="Models\HWListTests.cs" />
@@ -126,6 +133,7 @@
     <Compile Include="Repositories\ProjectRepositoryTests.cs" />
     <Compile Include="Repositories\QuestionRepositoryTests.cs" />
     <Compile Include="Repositories\ReportRepositoryTests.cs" />
+    <Compile Include="Repositories\SponsorAdminRepositoryTests.cs" />
     <Compile Include="Repositories\SponsorRepositoryTests.cs" />
     <Compile Include="Repositories\UserRepositoryTests.cs" />
     <Compile Include="Grp\ExerciseTests.cs" />
@@ -165,10 +173,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Repositories\HW.Invoicing.sln" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Invoicing" />
     <Folder Include="HWSite" />
+    <Folder Include="Invoicing\Repositories" />
     <Folder Include="Services" />
   </ItemGroup>
   <ItemGroup>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web;
 using HW.Core;
+using HW.Core.Repositories;
 using HW.Core.Repositories.Sql;
 using NUnit.Framework;
 
@@ -10,14 +11,20 @@ namespace HW.Tests.Grp
 	[TestFixture]
 	public class DefaultTests
 	{
-		HW.Grp.Default p;
+		HW.Grp.Default v;
 		
 		[SetUp]
 		public void Setup()
 		{
-			AppContext.SetRepositoryFactory(new SqlRepositoryFactory());
-			
-			p = new HW.Grp.Default();
+			v = new HW.Grp.Default();
+
+			v = new HW.Grp.Default(new SponsorRepositoryStub(), new NewsRepositoryStub());
+		}
+		
+		[Test]
+		public void TestIndex()
+		{
+			v.Index();
 		}
 		
 		[Test]

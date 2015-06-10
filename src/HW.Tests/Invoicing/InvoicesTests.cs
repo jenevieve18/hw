@@ -22,7 +22,7 @@ namespace HW.Tests.Invoicing
 		{
 			var v = new HW.Invoicing.InvoiceAdd();
 			
-			v = new HW.Invoicing.InvoiceAdd(new InvoiceRepositoryStub());
+			v = new HW.Invoicing.InvoiceAdd(new InvoiceRepositoryStub(), new CustomerRepositoryStub(), new ItemRepositoryStub());
 			v.Add();
 		}
 		

@@ -31,8 +31,8 @@ namespace HW.Tests.Invoicing
 		{
 			var v = new HW.Invoicing.CustomerEdit();
 			
-			v = new HW.Invoicing.CustomerEdit(new CustomerRepositoryStub());
-			v.Edit(1);
+//			v = new HW.Invoicing.CustomerEdit(new CustomerRepositoryStub());
+//			v.Edit(1);
 		}
 		
 		[Test]
