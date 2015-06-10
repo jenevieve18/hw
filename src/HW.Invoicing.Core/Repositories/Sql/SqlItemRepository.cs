@@ -7,6 +7,8 @@ using HW.Invoicing.Core.Models;
 
 namespace HW.Invoicing.Core.Repositories.Sql
 {
+
+	
 	public class SqlItemRepository : BaseSqlRepository<Item>, IItemRepository
 	{
 		public override Item Read(int id)

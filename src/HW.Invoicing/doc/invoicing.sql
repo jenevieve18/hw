@@ -95,3 +95,9 @@ create table Unit(
 alter table Item add UnitId integer;
 
 update Item set UnitId = 1;
+
+create table Issue(
+	Id integer not null primary key identity,
+	Title varchar(255),
+	Description text
+);

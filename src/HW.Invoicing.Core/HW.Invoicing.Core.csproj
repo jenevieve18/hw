@@ -56,6 +56,7 @@
     <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Repositories\Sql\SqlCustomerRepository.cs" />
     <Compile Include="Repositories\Sql\SqlInvoiceRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlIssueRepository.cs" />
     <Compile Include="Repositories\Sql\SqlItemRepository.cs" />
     <Compile Include="Repositories\Sql\SqlNewsRepository.cs" />
     <Compile Include="Repositories\Sql\SqlUserRepository.cs" />

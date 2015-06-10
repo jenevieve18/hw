@@ -9,14 +9,24 @@ using HW.Invoicing.Core.Repositories.Sql;
 
 namespace HW.Invoicing
 {
-    public partial class Issues : System.Web.UI.Page
+    public partial class IssueAdd : System.Web.UI.Page
     {
     	SqlIssueRepository r = new SqlIssueRepository();
-    	protected IList<Issue> issues;
-
+    	
         protected void Page_Load(object sender, EventArgs e)
         {
-        	issues = r.FindAll();
         }
+
+		protected void buttonSave_Click(object sender, EventArgs e)
+		{
+			if (IsPostBack) {
+				var i = new Issue {
+					Title = textBoxTitle.Text,
+					Description = textBoxDescription.Text
+				};
+				r.Save(i);
+				Response.Redirect("issues.aspx");
+			}
+		}
     }
 }

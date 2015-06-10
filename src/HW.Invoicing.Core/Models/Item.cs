@@ -6,6 +6,12 @@ using HW.Core.Models;
 
 namespace HW.Invoicing.Core.Models
 {
+	public class Issue : BaseModel
+	{
+		public string Title { get; set; }
+		public string Description { get; set; }
+	}
+	
 	public class Item : BaseModel
     {
 		public string Name { get; set; }
