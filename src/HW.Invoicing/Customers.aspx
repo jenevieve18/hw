@@ -15,7 +15,6 @@
         <th>Contact Person</th>
         <th>Phone</th>
         <th>Email</th>
-        <th></th>
     </tr>
     <% foreach (var c in customers) { %>
     <tr>
@@ -23,9 +22,6 @@
         <td></td>
         <td><%= c.Phone %></td>
         <td><%= c.Email %></td>
-        <td>
-            <%= HtmlHelper.Anchor("Deactivate", "")%>
-        </td>
     </tr>
     <% } %>
 </table>

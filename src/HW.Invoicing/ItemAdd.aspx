@@ -6,7 +6,7 @@
 
 <h3>Add an item</h3>
 <div class="form-group">
-	<label for="<%= textBoxName.ClientID %>">Item name</label>
+	<label for="<%= textBoxName.ClientID %>">Item Name</label>
     <asp:TextBox ID="textBoxName" runat="server" CssClass="form-control"></asp:TextBox>
 </div>
 <div class="form-group">
