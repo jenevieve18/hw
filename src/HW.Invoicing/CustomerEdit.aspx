@@ -17,7 +17,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-<h3>Customer name: <asp:Label ID="labelCustomer" runat="server" Text="Label"></asp:Label></h3>
+<h3><asp:Label ID="labelCustomer" runat="server" Text="Label"></asp:Label></h3>
 
 <div class="tabbable" id="tabs-179602">
 	<ul class="nav nav-tabs">
@@ -74,7 +74,7 @@
                     <td><%= n.Notes %></td>
                     <td>
                         <%= HtmlHelper.Anchor("Edit", "") %>
-                        <%= HtmlHelper.Anchor("Delete", "customernotesdelete.aspx?Id=" + n.Id + "&CustomerId=" + id) %>
+                        <%= HtmlHelper.Anchor("Deactivate", "customernotesdeacivate.aspx?Id=" + n.Id + "&CustomerId=" + id) %>
                     </td>
                 </tr>
                 <% } %>
@@ -154,7 +154,9 @@
                                                 <th>Date</th>
                                                 <th>Department</th>
                                                 <th>Contact</th>
-                                                <th width="10%">Time</th>
+                                                <th>Item</th>
+                                                <th width="10%">Qty</th>
+                                                <th>Unit</th>
                                                 <th width="10%">Price</th>
                                                 <th>Amount</th>
                                                 <th>Comments</th>
@@ -277,22 +279,6 @@
 	            <label for="<%= textBoxNumber.ClientID %>">Customer number</label>
                 <asp:TextBox ID="textBoxNumber" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
-            <!--<div class="form-group">
-	            <label for="<%= textBoxName.ClientID %>">Customer name</label>
-                <asp:TextBox ID="textBoxName" runat="server" CssClass="form-control"></asp:TextBox>
-            </div>
-            <div class="form-group">
-	            <label for="<%= textBoxPhone.ClientID %>">Phone</label>
-                <asp:TextBox ID="textBoxPhone" runat="server" CssClass="form-control"></asp:TextBox>
-            </div>
-            <div class="form-group">
-	            <label for="<%= textBoxMobile.ClientID %>">Mobile</label>
-                <asp:TextBox ID="textBoxMobile" runat="server" CssClass="form-control"></asp:TextBox>
-            </div>
-            <div class="form-group">
-	            <label for="<%= textBoxEmail.ClientID %>">Email</label>
-                <asp:TextBox ID="textBoxEmail" runat="server" CssClass="form-control"></asp:TextBox>
-            </div>-->
             <div class="form-group">
 	            <label for="<%= textBoxAddress.ClientID %>">Billing Address</label>
                 <asp:TextBox ID="textBoxAddress" runat="server" CssClass="form-control"></asp:TextBox>
@@ -302,15 +288,15 @@
                 <asp:TextBox ID="textBox3" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="form-group">
-	            <label for="<%= textBoxAddress.ClientID %>">Purchase order number</label>
+	            <label for="<%= textBoxAddress.ClientID %>">Purchase Order Number</label>
                 <asp:TextBox ID="textBox4" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="form-group">
-	            <label for="<%= textBoxAddress.ClientID %>">Reference person</label>
+	            <label for="<%= textBoxAddress.ClientID %>">Your Reference Person</label>
                 <asp:TextBox ID="textBox5" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="form-group">
-	            <label for="<%= textBoxAddress.ClientID %>">Our reference person</label>
+	            <label for="<%= textBoxAddress.ClientID %>">Our Reference Person</label>
                 <asp:TextBox ID="textBox6" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
 		</div>
@@ -320,11 +306,11 @@
 				<strong>Customer contact information</strong> are people serving as a go-between, messenger, connection, or source of special information. Business contacts.
 			</div>
             <div class="form-group">
-	            <label for="<%= textBoxEmail.ClientID %>">Primary Contact</label>
+	            <label for="<%= textBox1.ClientID %>">Primary Contact</label>
                 <asp:TextBox ID="textBox1" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="form-group">
-	            <label for="<%= textBoxEmail.ClientID %>">Secondary Contact</label>
+	            <label for="<%= textBox2.ClientID %>">Secondary Contact</label>
                 <asp:TextBox ID="textBox2" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <h4>Other Contacts</h4>
@@ -343,19 +329,19 @@
 						            </div>
 						            <div class="modal-body">
                                         <div class="form-group">
-	                                        <label for="<%= textBoxEmail.ClientID %>">Contact person</label>
+	                                        <label for="<%= textBox2.ClientID %>">Contact person</label>
                                             <asp:TextBox ID="textBoxContact" runat="server" CssClass="form-control"></asp:TextBox>
                                         </div>
                                         <div class="form-group">
-	                                        <label for="<%= textBoxPhone.ClientID %>">Phone</label>
+	                                        <label for="<%= textBox2.ClientID %>">Phone</label>
                                             <asp:TextBox ID="textBoxContactPhone" runat="server" CssClass="form-control"></asp:TextBox>
                                         </div>
                                         <div class="form-group">
-	                                        <label for="<%= textBoxMobile.ClientID %>">Mobile</label>
+	                                        <label for="<%= textBox2.ClientID %>">Mobile</label>
                                             <asp:TextBox ID="textBoxContactMobile" runat="server" CssClass="form-control"></asp:TextBox>
                                         </div>
                                         <div class="form-group">
-	                                        <label for="<%= textBoxEmail.ClientID %>">Email</label>
+	                                        <label for="<%= textBox2.ClientID %>">Email</label>
                                             <asp:TextBox ID="textBoxContactEmail" runat="server" CssClass="form-control"></asp:TextBox>
                                         </div>
 						            </div>

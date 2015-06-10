@@ -30,7 +30,6 @@ namespace HW.Invoicing
 		{
 			var c = r.Read(id);
 			if (c != null) {
-				textBoxName.Text = c.Name;
 			}
 		}
 		
@@ -44,10 +43,7 @@ namespace HW.Invoicing
 				if (c != null) {
                     labelCustomer.Text = c.Name;
 					textBoxNumber.Text = c.Number;
-					textBoxName.Text = c.Name;
 					textBoxAddress.Text = c.Address;
-					textBoxEmail.Text = c.Email;
-					textBoxPhone.Text = c.Phone;
 				}
 				foreach (var i in ir.FindAll()) {
 					DropDownListItems.Items.Add(new ListItem(i.Name, i.Id.ToString()));
@@ -81,10 +77,7 @@ namespace HW.Invoicing
 		protected void buttonSave_Click(object sender, EventArgs e)
 		{
 			var d = new Customer {
-				Number = textBoxNumber.Text,
-				Name = textBoxName.Text,
-				Phone = textBoxPhone.Text,
-				Email = textBoxEmail.Text
+				Number = textBoxNumber.Text
 			};
 			r.Update(d, ConvertHelper.ToInt32(Request.QueryString["CustomerID"]));
 			Response.Redirect("customers.aspx");
