@@ -11,6 +11,7 @@
 </div>
 <table class="table table-hover">
     <tr>
+        <th>Number</th>
         <th>Title</th>
         <th>Description</th>
         <th></th>
@@ -18,6 +19,7 @@
     <% foreach (var i in issues) { %>
         <% if (i.Inactive) { %>
             <tr>
+                <td><strike>#<%= i.Id %></strike></td>
                 <td><strike><%= i.Title %></strike></td>
                 <td><strike><%= i.Description %></strike></td>
                 <td>
@@ -27,6 +29,7 @@
             </tr>
         <% } else { %>
             <tr>
+                <td>#<%= i.Id %></td>
                 <td><%= i.Title %></td>
                 <td><%= i.Description %></td>
                 <td>
