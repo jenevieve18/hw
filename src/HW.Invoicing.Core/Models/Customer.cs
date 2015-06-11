@@ -44,7 +44,7 @@ namespace HW.Invoicing.Core.Models
 			switch (Type) {
 					case 1: return "<span class='label label-success'>Primary</span>";
 					case 2: return "<span class='label label-warning'>Secondary</span>";
-					default: return "<span class='label'>Other</span>";
+					default: return "<span class='label label-default'>Other</span>";
 			}
 		}
 	}

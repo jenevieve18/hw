@@ -105,7 +105,7 @@
                             <td><strike><%= n.Notes %></strike></td>
                             <td>
                                 <%= HtmlHelper.Anchor("Edit", "") %>
-                                <%= HtmlHelper.Anchor("Delete", string.Format("customernotesdelete.aspx?Id={0}&CustomerId={1}", n.Id, id)) %>
+                                <%= HtmlHelper.Anchor("Delete", string.Format("customernotesdelete.aspx?Id={0}&CustomerId={1}", n.Id, id), "onclick=\"return confirm('Are you sure you want to delete this customer note?')\"") %>
                             </td>
                         </tr>
                     <% } else { %>
@@ -393,7 +393,7 @@
                         </tr>
                     <% } else { %>
                         <tr>
-                            <td><span class="label label-success">PRIMARY</span></td>
+                            <td><%= c.GetContactType() %></td>
                             <td><%= c.Contact %></td>
                             <td><%= c.Phone %></td>
                             <td><%= c.Mobile %></td>

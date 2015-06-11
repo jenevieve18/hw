@@ -20,7 +20,7 @@
                 <td><strike><%= u.Name %></strike></td>
                 <td>
                     <%= HtmlHelper.Anchor("Edit", "unitedit.aspx?Id=" + u.Id) %>
-                    <%= HtmlHelper.Anchor("Delete", "unitdelete.aspx?Id=" + u.Id) %>
+                    <%= HtmlHelper.Anchor("Delete", "unitdelete.aspx?Id=" + u.Id, "onclick=\"return confirm('Are you sure you want to delete this unit?')\"")%>
                 </td>
             </tr>
         <% } else { %>
