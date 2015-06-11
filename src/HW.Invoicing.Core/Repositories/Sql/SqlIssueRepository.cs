@@ -25,14 +25,17 @@ VALUES(@Title, @Description)";
 		public override void Update(Issue t, int id)
 		{
 			string query = @"
-UPDATE Issue SET Title = @Title, Description = @Description
+UPDATE Issue SET Title = @Title,
+	Description = @Description,
+	Status = @Status
 WHERE Id = @Id";
 			ExecuteNonQuery(
 				query,
 				"invoicing",
 				new SqlParameter("@Title", t.Title),
 				new SqlParameter("@Description", t.Description),
-				new SqlParameter("@Id", id)
+				new SqlParameter("@Id", id),
+				new SqlParameter("@Status", t.Status)
 			);
 		}
 		
@@ -61,8 +64,12 @@ WHERE Id = @Id"
 		{
 			string query = string.Format(
 				@"
-SELECT Id, Title, Description
-FROM Issue"
+SELECT Id,
+	Title,
+	Description,
+	Status
+FROM Issue
+WHERE Status is null or status = 1"
 			);
 			var issues = new List<Issue>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {
@@ -71,7 +78,8 @@ FROM Issue"
 						new Issue {
 							Id = GetInt32(rs, 0),
 							Title = GetString(rs, 1),
-							Description = GetString(rs, 2)
+							Description = GetString(rs, 2),
+							Status = GetInt32(rs, 3)
 						}
 					);
 				}
