@@ -117,3 +117,14 @@ alter table Issue add Inactive integer;
 alter table CustomerNotes add Inactive integer;
 
 alter table CustomerItem add Inactive integer;
+
+alter table CustomerContact add Inactive integer;
+
+alter table Issue add CreatedAt datetime,
+CreatedBy integer,
+UpdatedAt datetime,
+UpdatedBy integer;
+
+update Issue set CreatedAt = GETDATE();
+
+alter table CustomerContact add Type integer;

@@ -173,7 +173,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <asp:Button ID="buttonCustomerTimebook" runat="server" Text="Save timebook" CssClass="btn btn-primary" OnClick="buttonCustomerTimebook_Click" />
+                            <asp:Button ID="buttonSaveTimebook" runat="server" Text="Save timebook" CssClass="btn btn-primary" OnClick="buttonSaveTimebook_Click" />
 						</div>
 					</div>
 				</div>
@@ -355,14 +355,16 @@
                                 <asp:TextBox ID="textBoxContactEmail" runat="server" CssClass="form-control"></asp:TextBox>
                             </div>
                             <div class="form-group">
-                                <label class="radio-inline"><input type="radio" name="optradio">Primary</label>
+                                <asp:RadioButtonList ID="radioButtonListContactType" runat="server">
+                                </asp:RadioButtonList>
+                                <!--<label class="radio-inline"><input type="radio" name="optradio">Primary</label>
                                 <label class="radio-inline"><input type="radio" name="optradio">Secondary</label>
-                                <label class="radio-inline"><input type="radio" name="optradio">Other</label>
+                                <label class="radio-inline"><input type="radio" name="optradio">Other</label>-->
                             </div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <asp:Button ID="buttonSaveCustomerContact" runat="server" Text="Save contact" CssClass="btn btn-primary" />
+                            <asp:Button ID="buttonSaveContact" runat="server" Text="Save contact" CssClass="btn btn-primary" OnClick="buttonSaveContact_Click" />
 						</div>
 					</div>
 				</div>
@@ -380,17 +382,31 @@
                     <th></th>
                 </tr>
                 <% foreach (var c in contacts) { %>
-                <tr>
-                    <td><span class="label label-success">PRIMARY</span></td>
-                    <td><%= c.Contact %></td>
-                    <td><%= c.Phone %></td>
-                    <td><%= c.Mobile %></td>
-                    <td><%= c.Email %></td>
-                    <td>
-                        <%= HtmlHelper.Anchor("Edit", "") %>
-                        <%= HtmlHelper.Anchor("Deactivate", "") %>
-                    </td>
-                </tr>
+                    <% if (c.Inactive) { %>
+                        <tr>
+                            <td><span class="label label-success">PRIMARY</span></td>
+                            <td><strike><%= c.Contact %></strike></td>
+                            <td><strike><%= c.Phone %></strike></td>
+                            <td><strike><%= c.Mobile %></strike></td>
+                            <td><strike><%= c.Email %></strike></td>
+                            <td>
+                                <%= HtmlHelper.Anchor("Edit", "") %>
+                                <%= HtmlHelper.Anchor("Delete", "") %>
+                            </td>
+                        </tr>
+                    <% } else { %>
+                        <tr>
+                            <td><span class="label label-success">PRIMARY</span></td>
+                            <td><%= c.Contact %></td>
+                            <td><%= c.Phone %></td>
+                            <td><%= c.Mobile %></td>
+                            <td><%= c.Email %></td>
+                            <td>
+                                <%= HtmlHelper.Anchor("Edit", "") %>
+                                <%= HtmlHelper.Anchor("Deactivate", string.Format("customercontactdeactivate.aspx?Id={0}&CustomerId={1}", c.Id, id)) %>
+                            </td>
+                        </tr>
+                    <% } %>
                 <% } %>
             </table>
 		</div>

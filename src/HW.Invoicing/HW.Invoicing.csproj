@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CustomerAdd.aspx" />
+    <Content Include="CustomerContactDeactivate.aspx" />
     <Content Include="CustomerContactDelete.aspx" />
     <Content Include="CustomerContactEdit.aspx" />
     <Content Include="CustomerDelete.aspx" />
@@ -71,6 +72,7 @@
     <Content Include="Invoices.aspx" />
     <Content Include="IssueAdd.aspx" />
     <Content Include="IssueDeactivate.aspx" />
+    <Content Include="IssueDelete.aspx" />
     <Content Include="IssueEdit.aspx" />
     <Content Include="Issues.aspx" />
     <Content Include="ItemAdd.aspx" />
@@ -106,6 +108,13 @@
     </Compile>
     <Compile Include="CustomerAdd.aspx.designer.cs">
       <DependentUpon>CustomerAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerContactDeactivate.aspx.cs">
+      <DependentUpon>CustomerContactDeactivate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomerContactDeactivate.aspx.designer.cs">
+      <DependentUpon>CustomerContactDeactivate.aspx</DependentUpon>
     </Compile>
     <Compile Include="CustomerContactDelete.aspx.cs">
       <DependentUpon>CustomerContactDelete.aspx</DependentUpon>
@@ -239,6 +248,13 @@
     </Compile>
     <Compile Include="IssueDeactivate.aspx.designer.cs">
       <DependentUpon>IssueDeactivate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IssueDelete.aspx.cs">
+      <DependentUpon>IssueDelete.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IssueDelete.aspx.designer.cs">
+      <DependentUpon>IssueDelete.aspx</DependentUpon>
     </Compile>
     <Compile Include="IssueEdit.aspx.cs">
       <DependentUpon>IssueEdit.aspx</DependentUpon>

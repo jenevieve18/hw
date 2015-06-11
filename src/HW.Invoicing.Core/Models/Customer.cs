@@ -35,6 +35,7 @@ namespace HW.Invoicing.Core.Models
 		public string Phone { get; set; }
 		public string Mobile { get; set; }
 		public string Email { get; set; }
+		public bool Inactive { get; set; }
 	}
 	
 	public class CustomerNotes : BaseModel

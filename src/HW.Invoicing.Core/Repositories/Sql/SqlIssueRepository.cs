@@ -21,16 +21,29 @@ where id = @Id";
 			);
 		}
 		
+		public override void Delete(int id)
+		{
+			string query = @"
+delete from issue
+where id = @Id";
+			ExecuteNonQuery(
+				query,
+				"invoicing",
+				new SqlParameter("@Id", id)
+			);
+		}
+		
 		public override void Save(Issue t)
 		{
 			string query = @"
-INSERT INTO Issue(Title, Description)
-VALUES(@Title, @Description)";
+INSERT INTO Issue(Title, Description, CreatedAt)
+VALUES(@Title, @Description, @CreatedAt)";
 			ExecuteNonQuery(
 				query,
 				"invoicing",
 				new SqlParameter("@Title", t.Title),
-				new SqlParameter("@Description", t.Description)
+				new SqlParameter("@Description", t.Description),
+				new SqlParameter("@CreatedAt", DateTime.Now)
 			);
 		}
 		
@@ -82,7 +95,8 @@ SELECT Id,
 	Status,
 	Inactive
 FROM Issue
-WHERE Status is null or status = 1"
+WHERE Status is null or status = 1
+ORDER BY CreatedAt DESC"
 			);
 			var issues = new List<Issue>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {

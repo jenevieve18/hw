@@ -34,7 +34,7 @@ namespace HW.Invoicing
             }
         }
 
-        protected void buttonCustomerTimebook_Click(object sender, EventArgs e)
+        protected void buttonSaveTimebook_Click(object sender, EventArgs e)
         {
             var t = new CustomerTimebook
             {
@@ -59,6 +59,18 @@ namespace HW.Invoicing
                 CreatedAt = DateTime.Now,
             };
             r.SaveNotes(t, ConvertHelper.ToInt32(Request.QueryString["Id"]));
+        }
+
+        protected void buttonSaveContact_Click(object sender, EventArgs e)
+        {
+            var t = new CustomerContact
+            {
+                Contact = textBoxContact.Text,
+                Phone = textBoxContactPhone.Text,
+                Mobile = textBoxContactMobile.Text,
+                Email = textBoxContactEmail.Text
+            };
+            r.SaveContact(t, ConvertHelper.ToInt32(Request.QueryString["Id"]));
         }
 
         protected void buttonSaveItem_Click(object sender, EventArgs e)
@@ -101,6 +113,12 @@ namespace HW.Invoicing
             foreach (var c in contacts)
             {
                 dropDownListTimebookContacts.Items.Add(new ListItem(c.Contact, c.Id.ToString()));
+            }
+            
+            foreach (var t in new[] { new { id = 1, name = "Primary" }, new { id = 2, name = "Secondary" }, new { id = 3, name = "Other" }}) {
+            	var li = new ListItem(t.name, t.id.ToString());
+            	li.Attributes.Add("class", "radio-inline");
+            	radioButtonListContactType.Items.Add(li);
             }
         }
     }

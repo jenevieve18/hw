@@ -9,6 +9,18 @@ namespace HW.Invoicing.Core.Repositories.Sql
 {
 	public class SqlCustomerRepository : BaseSqlRepository<Customer>, ICustomerRepository
 	{
+		public void DeactivateContact(int id)
+		{
+			string query = @"
+update customercontact set inactive = 1
+WHERE Id = @Id";
+			ExecuteNonQuery(
+				query,
+				"invoicing",
+				new SqlParameter("@Id", id)
+			);
+		}
+		
 		public void DeactivateItem(int id)
 		{
 			string query = @"
@@ -326,7 +338,12 @@ WHERE t.CustomerId = @CustomerId"
 		{
 			string query = string.Format(
 				@"
-SELECT Contact, Phone, Mobile, Email, Id
+SELECT Contact,
+	Phone,
+	Mobile,
+	Email,
+	Id,
+	Inactive
 FROM CustomerContact
 WHERE CustomerId = @CustomerId"
 			);
@@ -339,7 +356,8 @@ WHERE CustomerId = @CustomerId"
 							Phone = GetString(rs, 1),
 							Mobile = GetString(rs, 2),
 							Email = GetString(rs, 3),
-							Id = GetInt32(rs, 4)
+							Id = GetInt32(rs, 4),
+							Inactive = GetInt32(rs, 5) == 1
 						}
 					);
 				}

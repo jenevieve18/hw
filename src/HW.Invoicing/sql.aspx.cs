@@ -20,15 +20,15 @@ namespace HW.Invoicing
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            if ((TextBox1.Text.ToUpper().Contains("DELETE") && !TextBox1.Text.ToUpper().Contains("WHERE")) || (TextBox1.Text.ToUpper().Contains("UPDATE") && !TextBox1.Text.ToUpper().Contains("WHERE")))
-            {
+            //if ((TextBox1.Text.ToUpper().Contains("DELETE") && !TextBox1.Text.ToUpper().Contains("WHERE")) || (TextBox1.Text.ToUpper().Contains("UPDATE") && !TextBox1.Text.ToUpper().Contains("WHERE")))
+            //{
                 //Label1.Text = "Please provide where clause for delete statement.";
-                message = "Please provide where clause for delete statement.";
+                //message = "Please provide where clause for delete statement.";
                 //        	} else if (TextBox1.Text.ToUpper().Contains("DROP")) {
                 //        		Label1.Text = "Please don't use drop statement in this utility page.";
-            }
-            else
-            {
+            //}
+            //else
+            //{
                 try
                 {
                     SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["invoicing"].ConnectionString);
@@ -46,7 +46,7 @@ namespace HW.Invoicing
                     //Label1.Text = ex.Message;
                     message = ex.Message;
                 }
-            }
+            //}
         }
     }
 }

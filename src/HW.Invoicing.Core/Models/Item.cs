@@ -12,6 +12,7 @@ namespace HW.Invoicing.Core.Models
 		public string Description { get; set; }
 		public int Status { get; set; }
 		public bool Inactive { get; set; }
+		public DateTime? CreatedAt { get; set; }
 	}
 	
 	public class Item : BaseModel

@@ -121,13 +121,13 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxTimebookComments;
         
         /// <summary>
-        /// buttonCustomerTimebook control.
+        /// buttonSaveTimebook control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button buttonCustomerTimebook;
+        protected global::System.Web.UI.WebControls.Button buttonSaveTimebook;
         
         /// <summary>
         /// dropDownListItems control.
@@ -265,12 +265,21 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxContactEmail;
         
         /// <summary>
-        /// buttonSaveCustomerContact control.
+        /// radioButtonListContactType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button buttonSaveCustomerContact;
+        protected global::System.Web.UI.WebControls.RadioButtonList radioButtonListContactType;
+        
+        /// <summary>
+        /// buttonSaveContact control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button buttonSaveContact;
     }
 }
