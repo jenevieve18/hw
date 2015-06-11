@@ -98,15 +98,27 @@
                     <th></th>
                 </tr>
                 <% foreach (var n in notes) { %>
-                <tr>
-                    <td><%= n.CreatedAt.Value.ToString("yyyy-MM-dd H:mm:ss") %></td>
-                    <td><%= n.CreatedBy.Name %></td>
-                    <td><%= n.Notes %></td>
-                    <td>
-                        <%= HtmlHelper.Anchor("Edit", "") %>
-                        <%= HtmlHelper.Anchor("Deactivate", "") %>
-                    </td>
-                </tr>
+                    <% if (n.Inactive) { %>
+                        <tr>
+                            <td><strike><%= n.CreatedAt.Value.ToString("yyyy-MM-dd H:mm:ss") %></strike></td>
+                            <td><strike><%= n.CreatedBy.Name %></strike></td>
+                            <td><strike><%= n.Notes %></strike></td>
+                            <td>
+                                <%= HtmlHelper.Anchor("Edit", "") %>
+                                <%= HtmlHelper.Anchor("Delete", string.Format("customernotesdelete.aspx?Id={0}&CustomerId={1}", n.Id, id)) %>
+                            </td>
+                        </tr>
+                    <% } else { %>
+                        <tr>
+                            <td><%= n.CreatedAt.Value.ToString("yyyy-MM-dd H:mm:ss") %></td>
+                            <td><%= n.CreatedBy.Name %></td>
+                            <td><%= n.Notes %></td>
+                            <td>
+                                <%= HtmlHelper.Anchor("Edit", "") %>
+                                <%= HtmlHelper.Anchor("Deactivate", string.Format("customernotesdeactivate.aspx?Id={0}&CustomerId={1}", n.Id, id))%>
+                            </td>
+                        </tr>
+                    <% } %>
                 <% } %>
             </table>
 		</div>

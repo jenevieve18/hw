@@ -9,6 +9,18 @@ namespace HW.Invoicing.Core.Repositories.Sql
 {
 	public class SqlCustomerRepository : BaseSqlRepository<Customer>, ICustomerRepository
 	{
+		public void DeactivateNote(int id)
+		{
+			string query = @"
+update customernotes set inactive = 1
+WHERE Id = @Id";
+			ExecuteNonQuery(
+				query,
+				"invoicing",
+				new SqlParameter("@Id", id)
+			);
+		}
+		
 		public override void Delete(int id)
 		{
 			string query = @"
@@ -211,7 +223,12 @@ AND CustomerId = @CustomerId"
 		{
 			string query = string.Format(
 				@"
-SELECT n.Id, Notes, CreatedAt, CreatedBy, u.Name
+SELECT n.Id,
+	Notes,
+	CreatedAt,
+	CreatedBy,
+	u.Name,
+	Inactive
 FROM CustomerNotes n,
 [User] u
 WHERE CustomerId = @CustomerId
@@ -226,7 +243,11 @@ ORDER BY n.CreatedAt DESC"
 							Id = GetInt32(rs, 0),
 							Notes = GetString(rs, 1),
 							CreatedAt = GetDateTime(rs, 2),
-							CreatedBy = new User { Id = GetInt32(rs, 3), Name = GetString(rs, 4) }
+							CreatedBy = new User {
+								Id = GetInt32(rs, 3),
+								Name = GetString(rs, 4)
+							},
+							Inactive = GetInt32(rs, 5) == 1
 						}
 					);
 				}

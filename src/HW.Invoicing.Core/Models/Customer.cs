@@ -42,6 +42,7 @@ namespace HW.Invoicing.Core.Models
 		public string Notes { get; set; }
 		public DateTime? CreatedAt { get; set; }
 		public User CreatedBy { get; set; }
+		public bool Inactive { get; set; }
 	}
 	
 	public class CustomerTimebook : BaseModel
