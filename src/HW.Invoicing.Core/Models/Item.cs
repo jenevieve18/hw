@@ -18,5 +18,6 @@ namespace HW.Invoicing.Core.Models
 		public string Description { get; set; }
 		public decimal Price { get; set; }
 		public Unit Unit { get; set; }
+		public bool Inactive { get; set; }
     }
 }

@@ -9,6 +9,16 @@ namespace HW.Invoicing.Core.Repositories.Sql
 {
 	public class SqlItemRepository : BaseSqlRepository<Item>, IItemRepository
 	{
+		public void Deactivate(int id)
+		{
+			string query = string.Format(
+				@"
+update item set inactive = 1
+where id = @Id"
+			);
+			ExecuteNonQuery(query, "invoicing", new SqlParameter("@Id", id));
+		}
+		
 		public override Item Read(int id)
 		{
 			string query = string.Format(
@@ -85,7 +95,13 @@ VALUES(@Name, @Description, @Price, @UnitId)"
 		{
 			string query = string.Format(
 				@"
-SELECT i.Id, i.Name, i.Description, i.Price, i.UnitId, u.Name
+SELECT i.Id,
+	i.Name,
+	i.Description,
+	i.Price,
+	i.UnitId,
+	u.Name,
+	i.Inactive
 FROM Item i
 INNER JOIN Unit u ON u.Id = i.UnitId"
 			);
@@ -98,7 +114,11 @@ INNER JOIN Unit u ON u.Id = i.UnitId"
 							Name = GetString(rs, 1),
 							Description = GetString(rs, 2),
 							Price = GetDecimal(rs, 3),
-							Unit = new Unit { Id = GetInt32(rs, 4), Name = GetString(rs, 5) }
+							Unit = new Unit {
+								Id = GetInt32(rs, 4),
+								Name = GetString(rs, 5)
+							},
+							Inactive = GetInt32(rs, 6) == 1
 						}
 					);
 				}

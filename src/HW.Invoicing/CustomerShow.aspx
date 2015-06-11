@@ -14,7 +14,7 @@
             });
             $('#<%= dropDownListTimebookItems.ClientID %>').change();
 
-            $('#<%= textBoxCustomerNumber.ClientID %>').hide();
+            /*$('#<%= textBoxCustomerNumber.ClientID %>').hide();
             $('#<%= labelCustomerNumber.ClientID %>').click(function () {
                 $(this).hide();
                 $('#<%= textBoxCustomerNumber.ClientID %>').show();
@@ -23,13 +23,31 @@
             $('#<%= textBoxCustomerNumber.ClientID %>').focusout(function () {
                 $(this).hide();
                 $('#<%= labelCustomerNumber.ClientID %>').show();
-            });
+            });*/
+
+            turnEditable('#<%= labelCustomerNumber.ClientID %>', '#<%= textBoxCustomerNumber.ClientID %>');
 
             $('#<%= textBoxTimebookDate.ClientID %>').datepicker({
                 format: "yyyy-mm-dd",
                 autoclose: true
             });
         });
+
+        function turnEditable(labelId, textBoxId) {
+            var label = $(labelId);
+            var textBox = $(textBoxId);
+            textBox.hide();
+
+            label.click(function () {
+                $(this).hide();
+                textBox.show();
+                textBox.focus();
+            });
+            textBox.focusout(function () {
+                $(this).hide();
+                label.show();
+            });
+        }
     </script>
 
 </asp:Content>
@@ -251,13 +269,15 @@
                 <tr>
                     <td style="width: 30%;"><strong>Customer Number</strong></td>
                     <td>
-                        <asp:Label ID="labelCustomerNumber" runat="server" Text="Label"></asp:Label>
+                        <asp:Label ID="labelCustomerNumber" runat="server" Text="" CssClass="form-control"></asp:Label>
                         <asp:TextBox ID="textBoxCustomerNumber" runat="server" CssClass="form-control"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
                     <td><strong>Postal Address</strong></td>
-                    <td><asp:Label ID="labelInvoiceAddress" runat="server" Text="Label"></asp:Label></td>
+                    <td>
+                        <asp:Label ID="labelInvoiceAddress" runat="server" Text="Label"></asp:Label>
+                    </td>
                 </tr>
                 <tr>
                     <td><strong>Invoicing Address</strong></td>

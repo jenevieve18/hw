@@ -31,7 +31,7 @@ namespace HW.Invoicing
     	
         protected void Page_Load(object sender, EventArgs e)
         {
-        	Delete(ConvertHelper.ToInt32(Request.QueryString["ItemID"]));
+        	Delete(ConvertHelper.ToInt32(Request.QueryString["Id"]));
         }
     }
 }

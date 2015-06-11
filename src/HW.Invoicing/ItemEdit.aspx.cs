@@ -52,7 +52,7 @@ namespace HW.Invoicing
 		{
         	//HtmlHelper.RedirectIf(Session["UserId"] == null, "default.aspx");
         	
-			Edit(ConvertHelper.ToInt32(Request.QueryString["ItemID"]));
+			Edit(ConvertHelper.ToInt32(Request.QueryString["Id"]));
 		}
 
         protected override void OnPreRender(EventArgs e)
@@ -68,7 +68,7 @@ namespace HW.Invoicing
 
 		protected void buttonSave_Click(object sender, EventArgs e)
 		{
-			Edit(ConvertHelper.ToInt32(Request.QueryString["ItemID"]));
+			Edit(ConvertHelper.ToInt32(Request.QueryString["Id"]));
 		}
 	}
 }

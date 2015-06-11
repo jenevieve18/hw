@@ -1,6 +1,32 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="Items.aspx.cs" Inherits="HW.Invoicing.Items" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+<style>
+    table { border-collapse: collapse; empty-cells: show; }
+
+td { position: relative; }
+
+tr.strikeout td:before {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  border-bottom: 1px solid #111;
+  width: 100%;
+}
+
+tr.strikeout td:after {
+  content: "\00B7";
+  font-size: 1px;
+}
+
+/* Extra styling */
+td { width: 100px; }
+th { text-align: left; }
+
+</style>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -18,14 +44,22 @@
         <th>Actions</th>
     </tr>
     <% foreach (var i in items) { %>
+    <% if (i.Inactive) { %>
+    <tr class="strikeout">
+    <% } else { %>
     <tr>
+    <% } %>
         <td><%= i.Name %></td>
         <td><%= i.Description %></td>
         <td><%= i.Price.ToString("# ##0.00") %></td>
         <td><%= i.Unit.Name %></td>
         <td>
-            <%= HtmlHelper.Anchor("Edit", "itemedit.aspx?ItemID=" + i.Id)%>
-            <%= HtmlHelper.Anchor("Deactivate", "itemdelete.aspx?ItemID=" + i.Id)%>
+            <%= HtmlHelper.Anchor("Edit", "itemedit.aspx?Id=" + i.Id)%>
+            <% if (i.Inactive) { %>
+                <%= HtmlHelper.Anchor("Delete", "itemdelete.aspx?Id=" + i.Id, "onclick=\"return confirm('Are you sure you want to delete this item?')\"")%>
+            <% } else { %>
+                <%= HtmlHelper.Anchor("Deactivate", "itemdeactivate.aspx?Id=" + i.Id)%>
+            <% } %>
         </td>
     </tr>
     <% } %>
