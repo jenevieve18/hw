@@ -68,7 +68,8 @@ namespace HW.Invoicing
                 Contact = textBoxContact.Text,
                 Phone = textBoxContactPhone.Text,
                 Mobile = textBoxContactMobile.Text,
-                Email = textBoxContactEmail.Text
+                Email = textBoxContactEmail.Text,
+                Type = ConvertHelper.ToInt32(radioButtonListContactType.SelectedValue)
             };
             r.SaveContact(t, ConvertHelper.ToInt32(Request.QueryString["Id"]));
         }

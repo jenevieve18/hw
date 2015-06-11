@@ -15,13 +15,23 @@
         <th></th>
     </tr>
     <% foreach (var u in units) { %>
-    <tr>
-        <td><%= u.Name %></td>
-        <td>
-            <%= HtmlHelper.Anchor("Edit", "unitedit.aspx?Id=" + u.Id) %>
-            <%= HtmlHelper.Anchor("Deactivate", "") %>
-        </td>
-    </tr>
+        <% if (u.Inactive) { %>
+            <tr>
+                <td><strike><%= u.Name %></strike></td>
+                <td>
+                    <%= HtmlHelper.Anchor("Edit", "unitedit.aspx?Id=" + u.Id) %>
+                    <%= HtmlHelper.Anchor("Delete", "unitdelete.aspx?Id=" + u.Id) %>
+                </td>
+            </tr>
+        <% } else { %>
+            <tr>
+                <td><%= u.Name %></td>
+                <td>
+                    <%= HtmlHelper.Anchor("Edit", "unitedit.aspx?Id=" + u.Id) %>
+                    <%= HtmlHelper.Anchor("Deactivate", "unitdeactivate.aspx?Id=" + u.Id) %>
+                </td>
+            </tr>
+        <% } %>
     <% } %>
 </table>
 

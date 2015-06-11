@@ -82,8 +82,8 @@ DELETE FROM CustomerContact WHERE Id = @Id";
 		{
 			string query = string.Format(
 				@"
-INSERT INTO CustomerContact(CustomerId, Contact, Phone, Mobile, Email)
-VALUES(@CustomerId, @Contact, @Phone, @Mobile, @Email)"
+INSERT INTO CustomerContact(CustomerId, Contact, Phone, Mobile, Email, Type)
+VALUES(@CustomerId, @Contact, @Phone, @Mobile, @Email, @Type)"
 			);
 			ExecuteNonQuery(
 				query,
@@ -92,7 +92,8 @@ VALUES(@CustomerId, @Contact, @Phone, @Mobile, @Email)"
 				new SqlParameter("@Contact", contact.Contact),
 				new SqlParameter("@Phone", contact.Phone),
 				new SqlParameter("@Mobile", contact.Mobile),
-				new SqlParameter("@Email", contact.Email)
+				new SqlParameter("@Email", contact.Email),
+				new SqlParameter("@Type", contact.Type)
 			);
 		}
 		
@@ -343,7 +344,8 @@ SELECT Contact,
 	Mobile,
 	Email,
 	Id,
-	Inactive
+	Inactive,
+	Type
 FROM CustomerContact
 WHERE CustomerId = @CustomerId"
 			);
@@ -357,7 +359,8 @@ WHERE CustomerId = @CustomerId"
 							Mobile = GetString(rs, 2),
 							Email = GetString(rs, 3),
 							Id = GetInt32(rs, 4),
-							Inactive = GetInt32(rs, 5) == 1
+							Inactive = GetInt32(rs, 5) == 1,
+							Type = GetInt32(rs, 6)
 						}
 					);
 				}

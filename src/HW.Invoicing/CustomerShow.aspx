@@ -357,9 +357,6 @@
                             <div class="form-group">
                                 <asp:RadioButtonList ID="radioButtonListContactType" runat="server">
                                 </asp:RadioButtonList>
-                                <!--<label class="radio-inline"><input type="radio" name="optradio">Primary</label>
-                                <label class="radio-inline"><input type="radio" name="optradio">Secondary</label>
-                                <label class="radio-inline"><input type="radio" name="optradio">Other</label>-->
                             </div>
 						</div>
 						<div class="modal-footer">
@@ -384,14 +381,14 @@
                 <% foreach (var c in contacts) { %>
                     <% if (c.Inactive) { %>
                         <tr>
-                            <td><span class="label label-success">PRIMARY</span></td>
+                            <td><%= c.GetContactType() %></td>
                             <td><strike><%= c.Contact %></strike></td>
                             <td><strike><%= c.Phone %></strike></td>
                             <td><strike><%= c.Mobile %></strike></td>
                             <td><strike><%= c.Email %></strike></td>
                             <td>
                                 <%= HtmlHelper.Anchor("Edit", "") %>
-                                <%= HtmlHelper.Anchor("Delete", "") %>
+                                <%= HtmlHelper.Anchor("Delete", string.Format("customercontactdelete.aspx?Id={0}&CustomerId={1}", c.Id, id)) %>
                             </td>
                         </tr>
                     <% } else { %>

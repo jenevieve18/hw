@@ -18,6 +18,7 @@ namespace HW.Invoicing.Core.Models
 	public class Unit : BaseModel
 	{
 		public string Name { get; set; }
+		public bool Inactive { get; set; }
 	}
 	
 	public class CustomerItem : BaseModel
@@ -36,6 +37,16 @@ namespace HW.Invoicing.Core.Models
 		public string Mobile { get; set; }
 		public string Email { get; set; }
 		public bool Inactive { get; set; }
+		public int Type { get; set; }
+		
+		public string GetContactType()
+		{
+			switch (Type) {
+					case 1: return "<span class='label label-success'>Primary</span>";
+					case 2: return "<span class='label label-warning'>Secondary</span>";
+					default: return "<span class='label'>Other</span>";
+			}
+		}
 	}
 	
 	public class CustomerNotes : BaseModel

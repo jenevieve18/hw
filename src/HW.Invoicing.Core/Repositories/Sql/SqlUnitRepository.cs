@@ -9,6 +9,30 @@ namespace HW.Invoicing.Core.Repositories.Sql
 {
 	public class SqlUnitRepository : BaseSqlRepository<Unit>
 	{
+		public void Deactivate(int id)
+		{
+			string query = @"
+update unit set inactive = 1
+where id = @Id";
+			ExecuteNonQuery(
+				query,
+				"invoicing",
+				new SqlParameter("@Id", id)
+			);
+		}
+		
+		public override void Delete(int id)
+		{
+			string query = @"
+delete from unit
+where id = @Id";
+			ExecuteNonQuery(
+				query,
+				"invoicing",
+				new SqlParameter("@Id", id)
+			);
+		}
+		
 		public override void Save(Unit t)
 		{
 			string query = @"
@@ -51,12 +75,19 @@ WHERE Id = @Id";
 		public override IList<Unit> FindAll()
 		{
 			string query = @"
-SELECT Id, Name FROM Unit";
+SELECT Id,
+	Name,
+	Inactive
+FROM Unit";
 			var units = new List<Unit>();
 			using (var rs = ExecuteReader(query, "invoicing")) {
 				while (rs.Read()) {
 					units.Add(
-						new Unit { Id = GetInt32(rs, 0), Name = GetString(rs, 1) }
+						new Unit {
+							Id = GetInt32(rs, 0),
+							Name = GetString(rs, 1),
+							Inactive = GetInt32(rs, 2) == 1
+						}
 					);
 				}
 			}

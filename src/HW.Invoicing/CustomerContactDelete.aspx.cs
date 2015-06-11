@@ -18,7 +18,7 @@ namespace HW.Invoicing
         	int id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
         	int customerId = ConvertHelper.ToInt32(Request.QueryString["CustomerId"]);
         	r.DeleteContact(id);
-            Response.Redirect("customeredit.aspx?Id=" + customerId);
+            Response.Redirect("customershow.aspx?Id=" + customerId);
         }
     }
 }
