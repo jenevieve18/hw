@@ -12,14 +12,24 @@
 <table class="table table-hover">
     <tr>
         <th>Title</th>
+        <th>Description</th>
         <th></th>
     </tr>
     <% foreach (var i in issues) { %>
+    <% if (i.Inactive) { %>
+    <tr class="strikeout">
+    <% } else { %>
     <tr>
+    <% } %>
         <td><%= i.Title %></td>
+        <td><%= i.Description %></td>
         <td>
             <%= HtmlHelper.Anchor("Edit", "issueedit.aspx?Id=" + i.Id) %>
-            <%= HtmlHelper.Anchor("Deactivate", "") %>
+            <% if (i.Inactive) { %>
+            <%= HtmlHelper.Anchor("Delete", "issuedelete.aspx?Id=" + i.Id) %>
+            <% } else { %>
+            <%= HtmlHelper.Anchor("Deactivate", "issuedeactivate.aspx?Id=" + i.Id) %>
+            <% } %>
         </td>
     </tr>
     <% } %>

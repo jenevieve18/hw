@@ -9,6 +9,18 @@ namespace HW.Invoicing.Core.Repositories.Sql
 {
 	public class SqlIssueRepository : BaseSqlRepository<Issue>
 	{
+		public void Deactivate(int id)
+		{
+			string query = @"
+update issue set inactive = 1
+where id = @Id";
+			ExecuteNonQuery(
+				query,
+				"invoicing",
+				new SqlParameter("@Id", id)
+			);
+		}
+		
 		public override void Save(Issue t)
 		{
 			string query = @"
@@ -67,7 +79,8 @@ WHERE Id = @Id"
 SELECT Id,
 	Title,
 	Description,
-	Status
+	Status,
+	Inactive
 FROM Issue
 WHERE Status is null or status = 1"
 			);
@@ -79,7 +92,8 @@ WHERE Status is null or status = 1"
 							Id = GetInt32(rs, 0),
 							Title = GetString(rs, 1),
 							Description = GetString(rs, 2),
-							Status = GetInt32(rs, 3)
+							Status = GetInt32(rs, 3),
+							Inactive = GetInt32(rs, 4) == 1
 						}
 					);
 				}

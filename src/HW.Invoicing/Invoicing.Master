@@ -43,6 +43,31 @@
 	}
 	</style>
 
+    <style>
+        
+    table { border-collapse: collapse; empty-cells: show; }
+
+td { position: relative; }
+
+tr.strikeout td:before {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  border-bottom: 1px solid #111;
+  width: 100%;
+}
+
+tr.strikeout td:after {
+  content: "\00B7";
+  font-size: 1px;
+}
+
+/* Extra styling */
+td { width: 100px; }
+th { text-align: left; }
+    </style>
+
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
         <script src="js/html5shiv.js"></script>
