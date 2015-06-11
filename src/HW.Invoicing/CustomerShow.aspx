@@ -259,16 +259,29 @@
                     <th></th>
                 </tr>
                 <% foreach (var p in prices) { %>
-                <tr>
-                    <td><%= p.Item.Name %></td>
-                    <td><%= p.Price.ToString("0.00") %></td>
-                    <td>
-                        <%= HtmlHelper.Anchor("Edit", "") %>
-                        <%= HtmlHelper.Anchor("Deactivate", "") %>
-                        <%= HtmlHelper.Anchor("Move Up", "") %>
-                        <%= HtmlHelper.Anchor("Move Down", "") %>
-                    </td>
-                </tr>
+                    <% if (p.Inactive) { %>
+                        <tr>
+                            <td><strike><%= p.Item.Name %></strike></td>
+                            <td><strike><%= p.Price.ToString("0.00") %></strike></td>
+                            <td>
+                                <%= HtmlHelper.Anchor("Edit", "") %>
+                                <%= HtmlHelper.Anchor("Delete", "") %>
+                                <%= HtmlHelper.Anchor("Move Up", "") %>
+                                <%= HtmlHelper.Anchor("Move Down", "") %>
+                            </td>
+                        </tr>
+                    <% } else { %>
+                        <tr>
+                            <td><%= p.Item.Name %></td>
+                            <td><%= p.Price.ToString("0.00") %></td>
+                            <td>
+                                <%= HtmlHelper.Anchor("Edit", "") %>
+                                <%= HtmlHelper.Anchor("Deactivate", string.Format("customerpricedeactivate.aspx?Id={0}&CustomerId={1}", p.Id, id)) %>
+                                <%= HtmlHelper.Anchor("Move Up", "") %>
+                                <%= HtmlHelper.Anchor("Move Down", "") %>
+                            </td>
+                        </tr>
+                    <% } %>
                 <% } %>
             </table>
 		</div>

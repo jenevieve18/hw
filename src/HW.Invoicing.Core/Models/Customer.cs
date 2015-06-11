@@ -25,6 +25,7 @@ namespace HW.Invoicing.Core.Models
 		public Customer Customer { get; set; }
 		public Item Item { get; set; }
 		public decimal Price { get; set; }
+		public bool Inactive { get; set; }
 	}
 	
 	public class CustomerContact : BaseModel

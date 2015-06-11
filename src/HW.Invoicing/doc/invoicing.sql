@@ -94,10 +94,26 @@ create table Unit(
 
 alter table Item add UnitId integer;
 
-update Item set UnitId = 1;
+update Item set UnitId = 1 where Id in (1, 2, 3, 4, 5);
 
 create table Issue(
 	Id integer not null primary key identity,
 	Title varchar(255),
 	Description text
 );
+
+alter table Customer alter Address PostalAddress varchar(255);
+
+alter table CustomerTimebook add Date datetime;
+
+alter table Item add Inactive tinyint;
+
+alter table Item alter column Inactive integer;
+
+alter table Issue add Status integer;
+
+alter table Issue add Inactive integer;
+
+alter table CustomerNotes add Inactive integer;
+
+alter table CustomerItem add Inactive integer;
