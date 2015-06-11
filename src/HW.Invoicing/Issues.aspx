@@ -11,7 +11,7 @@
 </div>
 <table class="table table-hover">
     <tr>
-        <th>Number</th>
+        <th style="width: 10%;">Number</th>
         <th>Title</th>
         <th>Description</th>
         <th></th>
