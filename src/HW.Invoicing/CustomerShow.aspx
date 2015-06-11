@@ -181,7 +181,7 @@
 			<div class="alert alert-info">
 				<strong>Time book</strong> is a sheet for recording the time of arrival and departure of workers and for recording the amount of time spent on each job.
 			</div>
-            <table class="table table-hover">
+            <table class="table table-hover small">
                 <tr>
                     <th></th>
                     <th>Date</th>
