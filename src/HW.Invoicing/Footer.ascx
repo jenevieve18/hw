@@ -32,7 +32,7 @@
 				    <li><%= HtmlHelper.Anchor("About Us", "") %></li>
 			    </ul>
                 <ul>
-				    <li><%= HtmlHelper.Anchor("Report an Issue", "") %></li>
+				    <li><%= HtmlHelper.Anchor("Report an Issue", "issueadd.aspx") %></li>
                 </ul>
 		    </div>
 		    <div class="col-md-2 column">
