@@ -209,6 +209,27 @@ WHERE Id = @Id"
             );
         }
 
+        public void UpdateContact(CustomerContact c, int id)
+        {
+            string query = string.Format(
+                @"
+UPDATE CustomerContact SET Contact = @Contact,
+Phone = @Phone,
+Mobile = @Mobile,
+Email = @Email
+WHERE Id = @Id"
+            );
+            ExecuteNonQuery(
+                query,
+                "invoicing",
+                new SqlParameter("@Contact", c.Contact),
+                new SqlParameter("@Phone", c.Phone),
+                new SqlParameter("@Mobile", c.Mobile),
+                new SqlParameter("@Email", c.Email),
+                new SqlParameter("@Id", id)
+            );
+        }
+
         public void UpdateItem(CustomerItem c, int id)
         {
             string query = string.Format(
@@ -280,6 +301,36 @@ WHERE Id = @Id"
                     {
                         Id = GetInt32(rs, 0),
                         Notes = GetString(rs, 1)
+                    };
+                }
+            }
+            return c;
+        }
+
+        public CustomerContact ReadContact(int id)
+        {
+            string query = string.Format(
+                @"
+SELECT Id,
+    Contact,
+    Phone,
+    Mobile,
+    Email
+FROM CustomerContact
+WHERE Id = @Id"
+            );
+            CustomerContact c = null;
+            using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", id)))
+            {
+                if (rs.Read())
+                {
+                    c = new CustomerContact
+                    {
+                        Id = GetInt32(rs, 0),
+                        Contact = GetString(rs, 1),
+                        Phone = GetString(rs, 2),
+                        Mobile = GetString(rs, 3),
+                        Email = GetString(rs, 4)
                     };
                 }
             }

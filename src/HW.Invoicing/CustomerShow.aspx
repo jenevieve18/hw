@@ -387,7 +387,7 @@
                             <td><strike><%= c.Mobile %></strike></td>
                             <td><strike><%= c.Email %></strike></td>
                             <td>
-                                <%= HtmlHelper.Anchor("Edit", "") %>
+                                <%= HtmlHelper.Anchor("Edit", string.Format("customercontactedit.aspx?Id={0}&CustomerId={1}", c.Id, id)) %>
                                 <%= HtmlHelper.Anchor("Delete", string.Format("customercontactdelete.aspx?Id={0}&CustomerId={1}", c.Id, id)) %>
                             </td>
                         </tr>
@@ -399,7 +399,7 @@
                             <td><%= c.Mobile %></td>
                             <td><%= c.Email %></td>
                             <td>
-                                <%= HtmlHelper.Anchor("Edit", "") %>
+                                <%= HtmlHelper.Anchor("Edit", string.Format("customercontactedit.aspx?Id={0}&CustomerId={1}", c.Id, id)) %>
                                 <%= HtmlHelper.Anchor("Deactivate", string.Format("customercontactdeactivate.aspx?Id={0}&CustomerId={1}", c.Id, id)) %>
                             </td>
                         </tr>
