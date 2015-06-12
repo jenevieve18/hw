@@ -60,6 +60,7 @@
     <Content Include="CustomerDelete.aspx" />
     <Content Include="CustomerNotesDeactivate.aspx" />
     <Content Include="CustomerNotesDelete.aspx" />
+    <Content Include="CustomerNotesEdit.aspx" />
     <Content Include="CustomerPriceDeactivate.aspx" />
     <Content Include="CustomerPriceDelete.aspx" />
     <Content Include="Customers.aspx" />
@@ -153,6 +154,13 @@
     </Compile>
     <Compile Include="CustomerNotesDelete.aspx.designer.cs">
       <DependentUpon>CustomerNotesDelete.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerNotesEdit.aspx.cs">
+      <DependentUpon>CustomerNotesEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomerNotesEdit.aspx.designer.cs">
+      <DependentUpon>CustomerNotesEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="CustomerPriceDeactivate.aspx.cs">
       <DependentUpon>CustomerPriceDeactivate.aspx</DependentUpon>

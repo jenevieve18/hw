@@ -104,7 +104,7 @@
                             <td><strike><%= n.CreatedBy.Name %></strike></td>
                             <td><strike><%= n.Notes %></strike></td>
                             <td>
-                                <%= HtmlHelper.Anchor("Edit", "") %>
+                                <%= HtmlHelper.Anchor("Edit", string.Format("customernotesedit.aspx?Id={0}&CustomerId={1}", n.Id, id)) %>
                                 <%= HtmlHelper.Anchor("Delete", string.Format("customernotesdelete.aspx?Id={0}&CustomerId={1}", n.Id, id), "onclick=\"return confirm('Are you sure you want to delete this customer note?')\"") %>
                             </td>
                         </tr>
@@ -114,7 +114,7 @@
                             <td><%= n.CreatedBy.Name %></td>
                             <td><%= n.Notes %></td>
                             <td>
-                                <%= HtmlHelper.Anchor("Edit", "") %>
+                                <%= HtmlHelper.Anchor("Edit", string.Format("customernotesedit.aspx?Id={0}&CustomerId={1}", n.Id, id)) %>
                                 <%= HtmlHelper.Anchor("Deactivate", string.Format("customernotesdeactivate.aspx?Id={0}&CustomerId={1}", n.Id, id))%>
                             </td>
                         </tr>

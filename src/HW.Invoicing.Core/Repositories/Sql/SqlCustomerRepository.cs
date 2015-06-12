@@ -193,6 +193,21 @@ WHERE Id = @Id"
 				new SqlParameter("@Number", c.Number)
 			);
 		}
+
+        public void UpdateNotes(CustomerNotes c, int id)
+        {
+            string query = string.Format(
+                @"
+UPDATE CustomerNotes SET Notes = @Notes
+WHERE Id = @Id"
+            );
+            ExecuteNonQuery(
+                query,
+                "invoicing",
+                new SqlParameter("@Notes", c.Notes),
+                new SqlParameter("@Id", id)
+            );
+        }
 		
 		public void Deactivate(int id)
 		{
@@ -229,6 +244,30 @@ WHERE Id = @Id"
 			}
 			return c;
 		}
+
+        public CustomerNotes ReadNote(int id)
+        {
+            string query = string.Format(
+                @"
+SELECT Id,
+    Notes
+FROM CustomerNotes
+WHERE Id = @Id"
+            );
+            CustomerNotes c = null;
+            using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", id)))
+            {
+                if (rs.Read())
+                {
+                    c = new CustomerNotes
+                    {
+                        Id = GetInt32(rs, 0),
+                        Notes = GetString(rs, 1)
+                    };
+                }
+            }
+            return c;
+        }
 		
 		public IList<CustomerItem> FindItems(int customerId)
 		{
