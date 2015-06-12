@@ -67,6 +67,17 @@ DELETE FROM CustomerNotes WHERE Id = @Id";
 			);
 		}
 		
+		public void DeleteItem(int id)
+		{
+			string query = @"
+DELETE FROM CustomerItem WHERE Id = @Id";
+			ExecuteNonQuery(
+				query,
+				"invoicing",
+				new SqlParameter("@Id", id)
+			);
+		}
+		
 		public void DeleteContact(int id)
 		{
 			string query = @"

@@ -57,14 +57,14 @@
 
 <div class="tabbable" id="tabs-179602">
 	<ul class="nav nav-tabs">
-	    <li class="active"><a href="#notes" data-toggle="tab">Note</a></li>
-	    <li><a href="#timebook" data-toggle="tab">Timebook</a></li>
-	    <li><a href="#customer-prices" data-toggle="tab">Customer Prices</a></li>
-		<li><a href="#customer-info" data-toggle="tab">Customer Info</a></li>
-		<li><a href="#contact-persons" data-toggle="tab">Contact Persons</a></li>
+	    <li <%= selectedTab == "notes" ? "class='active'" : "" %>><a href="#notes" data-toggle="tab">Note</a></li>
+	    <li <%= selectedTab == "timebook" ? "class='active'" : "" %>><a href="#timebook" data-toggle="tab">Timebook</a></li>
+	    <li <%= selectedTab == "customer-prices" ? "class='active'" : "" %>><a href="#customer-prices" data-toggle="tab">Customer Prices</a></li>
+		<li <%= selectedTab == "customer-info" ? "class='active'" : "" %>><a href="#customer-info" data-toggle="tab">Customer Info</a></li>
+		<li <%= selectedTab == "contact-persons" ? "class='active'" : "" %>><a href="#contact-persons" data-toggle="tab">Contact Persons</a></li>
 	</ul>
 	<div class="tab-content">
-        <div class="tab-pane active" id="notes">
+        <div class="tab-pane <%= selectedTab == "notes" ? "active" : "" %>                                                                                                                                                                                                                                                                                       " id="notes">
 			<br />
             <p><a id="modal-625558" href="#customer-notes-form" role="button" class="btn btn-info" data-toggle="modal">Create note</a></p>
 			<div class="modal fade" id="customer-notes-form" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -122,7 +122,7 @@
                 <% } %>
             </table>
 		</div>
-		<div class="tab-pane" id="timebook">
+		<div class="tab-pane <%= selectedTab == "timebook" ? "active" : "" %>" id="timebook">
 			<br />
             <p><a id="modal-717670" href="#timebook-form" role="button" class="btn btn-info" data-toggle="modal">Add a timebook</a></p>
 			<div class="modal fade" id="timebook-form" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -219,7 +219,7 @@
                 <% } %>
             </table>
 		</div>
-		<div class="tab-pane" id="customer-prices">
+		<div class="tab-pane <%= selectedTab == "customer-prices" ? "active" : "" %>" id="customer-prices">
 			<br />
             <p><a id="modal-692185" href="#customer-prices-form" role="button" class="btn btn-info" data-toggle="modal">Add customer price</a></p>
 			<div class="modal fade" id="customer-prices-form" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -265,7 +265,7 @@
                             <td><strike><%= p.Price.ToString("0.00") %></strike></td>
                             <td>
                                 <%= HtmlHelper.Anchor("Edit", "") %>
-                                <%= HtmlHelper.Anchor("Delete", "") %>
+                                <%= HtmlHelper.Anchor("Delete", string.Format("customerpricedelete.aspx?Id={0}&CUstomerId={1}", p.Id, id), "onclick=\"return confirm('Are you sure you want to delete this customer price?')\"")%>
                                 <%= HtmlHelper.Anchor("Move Up", "") %>
                                 <%= HtmlHelper.Anchor("Move Down", "") %>
                             </td>
@@ -285,7 +285,7 @@
                 <% } %>
             </table>
 		</div>
-		<div class="tab-pane" id="customer-info">
+		<div class="tab-pane <%= selectedTab == "customer-info" ? "active" : "" %>" id="customer-info">
             <br />
 			<div class="alert alert-info">
 				<strong>Customer information</strong> is lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -327,7 +327,7 @@
                 <asp:Button ID="buttonDeactivate" runat="server" Text="Deactivate this customer" CssClass="btn btn-warning" OnClientClick="return confirm('Are you sure you want to de-activate this customer?')" />
             </div>
 		</div>
-        <div class="tab-pane" id="contact-persons">
+        <div class="tab-pane <%= selectedTab == "contact-persons" ? "active" : "" %>" id="contact-persons">
 			<br />
             <p><a id="modal-240447" href="#modal-container-240447" role="button" class="btn btn-info" data-toggle="modal">Add new contact person</a></p>
 			<div class="modal fade" id="modal-container-240447" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

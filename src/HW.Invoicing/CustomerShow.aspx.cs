@@ -21,10 +21,12 @@ namespace HW.Invoicing
         protected IList<Item> items;
         protected IList<CustomerTimebook> timebooks;
     	protected int id;
+        protected string selectedTab;
     	
         protected void Page_Load(object sender, EventArgs e)
         {
         	id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
+            selectedTab = Request.QueryString["SelectedTab"] == null ? "notes" : Request.QueryString["SelectedTab"];
             if (!IsPostBack)
             {
                 var c = r.Read(id);
@@ -48,6 +50,7 @@ namespace HW.Invoicing
                 Comments = textBoxTimebookComments.Text
             };
             r.SaveTimebook(t, ConvertHelper.ToInt32(Request.QueryString["Id"]));
+            Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=timebook", id));
         }
 
         protected void buttonSaveNotes_Click(object sender, EventArgs e)
@@ -59,6 +62,7 @@ namespace HW.Invoicing
                 CreatedAt = DateTime.Now,
             };
             r.SaveNotes(t, ConvertHelper.ToInt32(Request.QueryString["Id"]));
+            Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=notes", id));
         }
 
         protected void buttonSaveContact_Click(object sender, EventArgs e)
@@ -72,6 +76,7 @@ namespace HW.Invoicing
                 Type = ConvertHelper.ToInt32(radioButtonListContactType.SelectedValue)
             };
             r.SaveContact(t, ConvertHelper.ToInt32(Request.QueryString["Id"]));
+            Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=contact-persons", id));
         }
 
         protected void buttonSaveItem_Click(object sender, EventArgs e)
@@ -82,6 +87,7 @@ namespace HW.Invoicing
                 Price = ConvertHelper.ToInt32(textBoxItemPrice.Text)
             };
             r.SaveItem(t, ConvertHelper.ToInt32(Request.QueryString["Id"]));
+            Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=customer-prices", id));
         }
 
         protected override void OnPreRender(EventArgs e)
