@@ -208,6 +208,23 @@ WHERE Id = @Id"
                 new SqlParameter("@Id", id)
             );
         }
+
+        public void UpdateItem(CustomerItem c, int id)
+        {
+            string query = string.Format(
+                @"
+UPDATE CustomerItem SET ItemId = @ItemId,
+    Price = @Price
+WHERE Id = @Id"
+            );
+            ExecuteNonQuery(
+                query,
+                "invoicing",
+                new SqlParameter("@ItemId", c.Item.Id),
+                new SqlParameter("@Price", c.Price),
+                new SqlParameter("@Id", id)
+            );
+        }
 		
 		public void Deactivate(int id)
 		{
@@ -263,6 +280,32 @@ WHERE Id = @Id"
                     {
                         Id = GetInt32(rs, 0),
                         Notes = GetString(rs, 1)
+                    };
+                }
+            }
+            return c;
+        }
+
+        public CustomerItem ReadItem(int id)
+        {
+            string query = string.Format(
+                @"
+SELECT Id,
+    Price,
+    ItemId
+FROM CustomerItem
+WHERE Id = @Id"
+            );
+            CustomerItem c = null;
+            using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", id)))
+            {
+                if (rs.Read())
+                {
+                    c = new CustomerItem
+                    {
+                        Id = GetInt32(rs, 0),
+                        Price = GetDecimal(rs, 1),
+                        Item = new Item { Id = GetInt32(rs, 2) },
                     };
                 }
             }
