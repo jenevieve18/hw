@@ -23,7 +23,12 @@ where id = @Id"
 		{
 			string query = string.Format(
 				@"
-SELECT i.Id, i.Name, i.Description, i.Price, i.UnitId
+SELECT i.Id,
+    i.Name,
+    i.Description,
+    i.Price,
+    i.UnitId,
+    i.Inactive
 FROM Item i
 WHERE i.Id = @Id"
 			);
@@ -35,7 +40,8 @@ WHERE i.Id = @Id"
 						Name = GetString(rs, 1),
 						Description = GetString(rs, 2),
 						Price = GetDecimal(rs, 3),
-						Unit = new Unit { Id = GetInt32(rs, 4) }
+						Unit = new Unit { Id = GetInt32(rs, 4) },
+                        Inactive = GetInt32(rs, 5) == 1
 					};
 				}
 			}
@@ -60,7 +66,11 @@ WHERE Id = @Id"
 		{
 			string query = string.Format(
 				@"
-UPDATE Item SET Name = @Name, Description = @Description, Price = @Price, UnitId = @UnitId
+UPDATE Item SET Name = @Name,
+    Description = @Description,
+    Price = @Price,
+    UnitId = @UnitId,
+    Inactive = @Inactive
 WHERE Id = @Id"
 			);
 			ExecuteNonQuery(
@@ -70,7 +80,8 @@ WHERE Id = @Id"
 				new SqlParameter("@Description", i.Description),
 				new SqlParameter("@Price", i.Price),
 				new SqlParameter("@Id", id),
-				new SqlParameter("@UnitId", i.Unit.Id)
+                new SqlParameter("@UnitId", i.Unit.Id),
+                new SqlParameter("@Inactive", i.Inactive)
 			);
 		}
 		

@@ -19,24 +19,29 @@
         <th>Actions</th>
     </tr>
     <% foreach (var i in items) { %>
-    <% if (i.Inactive) { %>
-    <tr class="strikeout">
-    <% } else { %>
-    <tr>
-    <% } %>
-        <td><%= i.Name %></td>
-        <td><%= i.Description %></td>
-        <td><%= i.Price.ToString("# ##0.00") %></td>
-        <td><%= i.Unit.Name %></td>
-        <td>
-            <%= HtmlHelper.Anchor("Edit", "itemedit.aspx?Id=" + i.Id)%>
-            <% if (i.Inactive) { %>
-                <%= HtmlHelper.Anchor("Delete", "itemdelete.aspx?Id=" + i.Id, "onclick=\"return confirm('Are you sure you want to delete this item?')\"")%>
-            <% } else { %>
-                <%= HtmlHelper.Anchor("Deactivate", "itemdeactivate.aspx?Id=" + i.Id)%>
-            <% } %>
-        </td>
-    </tr>
+        <% if (i.Inactive) { %>
+            <tr>
+                <td><strike><%= i.Name %></strike></td>
+                <td><strike><%= i.Description %></strike></td>
+                <td><strike><%= i.Price.ToString("# ##0.00") %></strike></td>
+                <td><strike><%= i.Unit.Name %></strike></td>
+                <td>
+                    <%= HtmlHelper.Anchor("Edit", "itemedit.aspx?Id=" + i.Id)%>
+                    <%= HtmlHelper.Anchor("Delete", "itemdelete.aspx?Id=" + i.Id, "onclick=\"return confirm('Are you sure you want to delete this item?')\"")%>
+                </td>
+            </tr>
+        <% } else { %>
+            <tr>
+                <td><%= i.Name %></td>
+                <td><%= i.Description %></td>
+                <td><%= i.Price.ToString("# ##0.00") %></td>
+                <td><%= i.Unit.Name %></td>
+                <td>
+                    <%= HtmlHelper.Anchor("Edit", "itemedit.aspx?Id=" + i.Id)%>
+                    <%= HtmlHelper.Anchor("Deactivate", "itemdeactivate.aspx?Id=" + i.Id)%>
+                </td>
+            </tr>
+        <% } %>
     <% } %>
 </table>
 

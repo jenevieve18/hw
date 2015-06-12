@@ -14,17 +14,8 @@ namespace HW.Invoicing
 {
 	public partial class ItemEdit : System.Web.UI.Page
 	{
-		IItemRepository r;
+		SqlItemRepository r = new SqlItemRepository();
         SqlUnitRepository ur = new SqlUnitRepository();
-		
-		public ItemEdit() : this(new SqlItemRepository())
-		{
-		}
-		
-		public ItemEdit(IItemRepository r)
-		{
-			this.r = r;
-		}
 		
 		public void Edit(int id)
 		{
@@ -45,6 +36,8 @@ namespace HW.Invoicing
 				textBoxDescription.Text = i.Description;
                 textBoxPrice.Text = i.Price.ToString();
                 dropDownListUnits.SelectedValue = i.Unit.Id.ToString();
+                checkBoxReactivate.Checked = !i.Inactive;
+                placeHolderReactivate.Visible = i.Inactive;
 			}
 		}
 		
