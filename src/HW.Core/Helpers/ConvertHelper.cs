@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Web;
 
 namespace HW.Core.Helpers
@@ -37,6 +38,40 @@ namespace HW.Core.Helpers
 			try {
 //				return Convert.ToInt32(val);
 				return Int32.Parse(val.ToString());
+			} catch {
+				return def;
+			}
+		}
+		
+		public static bool ToBoolean(object val)
+		{
+			return ToBoolean(val, false);
+		}
+		
+		public static bool ToBoolean(object val, bool def)
+		{
+			try {
+				return bool.Parse(val.ToString());
+			} catch {
+				return def;
+			}
+		}
+		
+		public static DateTime ToDateTime(string val)
+		{
+			return ToDateTime(val, DateTime.Now);
+		}
+		
+		public static DateTime ToDateTime(string val, DateTime def)
+		{
+			try {
+				DateTime dt;
+				if (DateTime.TryParseExact(val.ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dt)) {
+					return dt;
+				} else {
+					return def;
+				}
+				
 			} catch {
 				return def;
 			}
