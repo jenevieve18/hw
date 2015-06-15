@@ -78,6 +78,17 @@ DELETE FROM CustomerNotes WHERE Id = @Id";
 				new SqlParameter("@Id", id)
 			);
 		}
+
+        public void DeleteTimebook(int id)
+        {
+            string query = @"
+DELETE FROM CustomerTimebook WHERE Id = @Id";
+            ExecuteNonQuery(
+                query,
+                "invoicing",
+                new SqlParameter("@Id", id)
+            );
+        }
 		
 		public void DeleteItem(int id)
 		{

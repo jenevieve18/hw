@@ -67,6 +67,7 @@
     <Content Include="Customers.aspx" />
     <Content Include="CustomerShow.aspx" />
     <Content Include="CustomerTimebookDeactivate.aspx" />
+    <Content Include="CustomerTimebookDelete.aspx" />
     <Content Include="CustomerTimebookEdit.aspx" />
     <Content Include="Dashboard.aspx" />
     <Content Include="Default.aspx" />
@@ -206,6 +207,13 @@
     </Compile>
     <Compile Include="CustomerTimebookDeactivate.aspx.designer.cs">
       <DependentUpon>CustomerTimebookDeactivate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerTimebookDelete.aspx.cs">
+      <DependentUpon>CustomerTimebookDelete.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomerTimebookDelete.aspx.designer.cs">
+      <DependentUpon>CustomerTimebookDelete.aspx</DependentUpon>
     </Compile>
     <Compile Include="CustomerTimebookEdit.aspx.cs">
       <DependentUpon>CustomerTimebookEdit.aspx</DependentUpon>
