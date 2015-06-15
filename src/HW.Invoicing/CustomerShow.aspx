@@ -113,7 +113,10 @@
 		</div>
 		<div class="tab-pane <%= selectedTab == "timebook" ? "active" : "" %>" id="timebook">
 			<br />
-            <p><a id="modal-717670" href="#timebook-form" role="button" class="btn btn-info" data-toggle="modal">Add a timebook</a></p>
+            <p>
+                <a id="modal-717670" href="#timebook-form" role="button" class="btn btn-info" data-toggle="modal">Add a timebook</a>
+                <a id="modal-701809" href="#modal-container-701809" role="button" class="btn btn-default" data-toggle="modal">Create Invoice</a>
+            </p>
 			<div class="modal fade" id="timebook-form" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -166,6 +169,26 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="modal fade" id="modal-container-701809" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h4 class="modal-title" id="H1">
+								Modal title
+							</h4>
+						</div>
+						<div class="modal-body">
+							...
+						</div>
+						<div class="modal-footer">
+							 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> <button type="button" class="btn btn-primary">Save changes</button>
+						</div>
+					</div>
+					
+				</div>
+				
 			</div>
 			<div class="alert alert-info">
 				<strong>Time book</strong> is a sheet for recording the time of arrival and departure of workers and for recording the amount of time spent on each job.
