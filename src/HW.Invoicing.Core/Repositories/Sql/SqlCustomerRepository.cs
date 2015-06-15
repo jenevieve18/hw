@@ -287,7 +287,8 @@ WHERE Id = @Id"
             string query = string.Format(
                 @"
 UPDATE CustomerItem SET ItemId = @ItemId,
-    Price = @Price
+    Price = @Price,
+Inactive = @Inactive
 WHERE Id = @Id"
             );
             ExecuteNonQuery(
@@ -295,7 +296,8 @@ WHERE Id = @Id"
                 "invoicing",
                 new SqlParameter("@ItemId", c.Item.Id),
                 new SqlParameter("@Price", c.Price),
-                new SqlParameter("@Id", id)
+                new SqlParameter("@Id", id),
+                new SqlParameter("@Inactive", c.Inactive)
             );
         }
 		
@@ -434,7 +436,8 @@ WHERE Id = @Id"
                 @"
 SELECT Id,
     Price,
-    ItemId
+    ItemId,
+    Inactive
 FROM CustomerItem
 WHERE Id = @Id"
             );
@@ -448,6 +451,7 @@ WHERE Id = @Id"
                         Id = GetInt32(rs, 0),
                         Price = GetDecimal(rs, 1),
                         Item = new Item { Id = GetInt32(rs, 2) },
+                        Inactive = GetInt32(rs, 3) == 1
                     };
                 }
             }

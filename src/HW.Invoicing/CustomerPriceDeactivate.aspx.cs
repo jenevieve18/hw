@@ -18,7 +18,7 @@ namespace HW.Invoicing
         	int id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
         	int customerId = ConvertHelper.ToInt32(Request.QueryString["CustomerId"]);
         	r.DeactivateItem(id);
-        	Response.Redirect(string.Format("customershow.aspx?Id={0}", customerId));
+        	Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=customer-prices", customerId));
         }
     }
 }

@@ -33,6 +33,8 @@ namespace HW.Invoicing
                 {
                     dropDownListItems.SelectedValue = c.Item.Id.ToString();
                     textBoxItemPrice.Text = c.Price.ToString();
+                    checkBoxReactivate.Checked = !c.Inactive;
+                    placeHolderReactivate.Visible = c.Inactive;
                 }
             }
         }
@@ -42,7 +44,8 @@ namespace HW.Invoicing
             var c = new CustomerItem
             {
                 Item = new Item { Id = ConvertHelper.ToInt32(dropDownListItems.SelectedValue) },
-                Price = ConvertHelper.ToDecimal(textBoxItemPrice.Text)
+                Price = ConvertHelper.ToDecimal(textBoxItemPrice.Text),
+                Inactive = !checkBoxReactivate.Checked
             };
             r.UpdateItem(c, id);
             Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=customer-prices", customerId));

@@ -14,6 +14,11 @@
 	<label for="<%= textBoxItemPrice.ClientID %>">Price</label>
     <asp:TextBox ID="textBoxItemPrice" runat="server" CssClass="form-control"></asp:TextBox>
 </div>
+<asp:PlaceHolder ID="placeHolderReactivate" runat="server">
+    <div class="form-group">
+        <asp:CheckBox ID="checkBoxReactivate" runat="server" CssClass="form-control" Text="&nbsp;Re-activate this customer price" />
+    </div>
+</asp:PlaceHolder>
 <div>
     <asp:Button CssClass="btn btn-success" ID="buttonSave" runat="server" Text="Save customer price" 
         onclick="buttonSave_Click" />

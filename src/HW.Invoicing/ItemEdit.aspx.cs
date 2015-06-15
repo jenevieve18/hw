@@ -25,7 +25,8 @@ namespace HW.Invoicing
                     Name = textBoxName.Text,
                     Description = textBoxDescription.Text,
                     Price = ConvertHelper.ToDecimal(textBoxPrice.Text),
-                    Unit = new m.Unit { Id = ConvertHelper.ToInt32(dropDownListUnits.SelectedValue) }
+                    Unit = new m.Unit { Id = ConvertHelper.ToInt32(dropDownListUnits.SelectedValue) },
+                    Inactive = !checkBoxReactivate.Checked
                 };
 				r.Update(d, id);
 				Response.Redirect("items.aspx");
