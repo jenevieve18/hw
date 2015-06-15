@@ -242,7 +242,8 @@ UPDATE CustomerContact SET Contact = @Contact,
 Phone = @Phone,
 Mobile = @Mobile,
 Email = @Email,
-Inactive = @Inactive
+Inactive = @Inactive,
+Type = @Type
 WHERE Id = @Id"
             );
             ExecuteNonQuery(
@@ -253,7 +254,8 @@ WHERE Id = @Id"
                 new SqlParameter("@Mobile", c.Mobile),
                 new SqlParameter("@Email", c.Email),
                 new SqlParameter("@Id", id),
-                new SqlParameter("@Inactive", c.Inactive)
+                new SqlParameter("@Inactive", c.Inactive),
+                new SqlParameter("@Type", c.Type)
             );
         }
 
@@ -415,7 +417,8 @@ SELECT Id,
     Phone,
     Mobile,
     Email,
-Inactive
+Inactive,
+Type
 FROM CustomerContact
 WHERE Id = @Id"
             );
@@ -431,7 +434,8 @@ WHERE Id = @Id"
                         Phone = GetString(rs, 2),
                         Mobile = GetString(rs, 3),
                         Email = GetString(rs, 4),
-                        Inactive = GetInt32(rs, 5) == 1
+                        Inactive = GetInt32(rs, 5) == 1,
+                        Type = GetInt32(rs, 6, 3)
                     };
                 }
             }

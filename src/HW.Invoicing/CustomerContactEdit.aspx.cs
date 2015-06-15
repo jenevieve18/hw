@@ -22,6 +22,14 @@ namespace HW.Invoicing
             customerId = ConvertHelper.ToInt32(Request.QueryString["CustomerId"]);
             if (!IsPostBack)
             {
+                radioButtonListContactType.Items.Clear();
+                foreach (var t in new[] { new { id = 1, name = "Primary" }, new { id = 2, name = "Secondary" }, new { id = 3, name = "Other" } })
+                {
+                    var li = new ListItem(t.name, t.id.ToString());
+                    li.Attributes.Add("class", "radio-inline");
+                    radioButtonListContactType.Items.Add(li);
+                }
+
                 var c = r.ReadContact(id);
                 if (c != null)
                 {
@@ -29,10 +37,16 @@ namespace HW.Invoicing
                     textBoxPhone.Text = c.Phone;
                     textBoxMobile.Text = c.Mobile;
                     textBoxEmail.Text = c.Email;
+                    radioButtonListContactType.SelectedValue = c.Type.ToString();
                     checkBoxReactivate.Checked = !c.Inactive;
                     placeHolderReactivate.Visible = c.Inactive;
                 }
             }
+        }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
         }
 
         protected void buttonSave_Click(object sender, EventArgs e)
@@ -42,7 +56,8 @@ namespace HW.Invoicing
                 Phone = textBoxPhone.Text,
                 Mobile = textBoxMobile.Text,
                 Email = textBoxEmail.Text,
-                Inactive = !checkBoxReactivate.Checked
+                Inactive = !checkBoxReactivate.Checked,
+                Type = ConvertHelper.ToInt32(radioButtonListContactType.SelectedValue)
             };
             r.UpdateContact(c, id);
             Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=contact-persons", customerId));
