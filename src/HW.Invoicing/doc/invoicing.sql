@@ -132,3 +132,5 @@ alter table CustomerContact add Type integer;
 alter table Unit add Inactive integer;
 
 alter table CustomerTimebook add Inactive integer;
+
+alter table CustomerTimebook add Status integer;

@@ -222,7 +222,7 @@
                             <td><strike><%= t.Price.ToString("# ##0.00") %></strike></td>
                             <td><strike><%= t.Amount.ToString("# ##0.00") %></strike></td>
                             <td><strike><%= t.Consultant %></strike></td>
-                            <td><span class="label label-success">INVOICED</span></td>
+                            <td><%= t.GetStatus() %></td>
                             <td><strike><%= t.Comments %></strike></td>
                             <td>
                                 <%= HtmlHelper.Anchor("Edit", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id)) %>
@@ -241,7 +241,7 @@
                             <td><%= t.Price.ToString("# ##0.00") %></td>
                             <td><%= t.Amount.ToString("# ##0.00") %></td>
                             <td><%= t.Consultant %></td>
-                            <td><span class="label label-success">INVOICED</span></td>
+                            <td><%= t.GetStatus() %></td>
                             <td><%= t.Comments %></td>
                             <td>
                                 <%= HtmlHelper.Anchor("Edit", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id)) %>

@@ -69,8 +69,19 @@ namespace HW.Invoicing.Core.Models
 		public string Comments { get; set; }
 		public string Department { get; set; }
         public bool Inactive { get; set; }
+        public int Status { get; set; }
 		public decimal Amount {
 			get { return Price * Quantity; }
 		}
+
+        public string GetStatus()
+        {
+            switch (Status)
+            {
+                case 1: return "<span class='label label-warning'>INVOICED</span>";
+                case 2: return "<span class='label label-success'>PAID</span>";
+                default: return "";
+            }
+        }
 	}
 }
