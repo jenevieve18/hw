@@ -13,7 +13,7 @@ namespace HW.Invoicing
     public partial class CustomerNotesEdit : System.Web.UI.Page
     {
         SqlCustomerRepository r = new SqlCustomerRepository();
-        int customerId;
+        protected int customerId;
         int id;
 
         protected void Page_Load(object sender, EventArgs e)

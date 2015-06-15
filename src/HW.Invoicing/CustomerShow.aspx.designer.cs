@@ -220,6 +220,15 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.Label labelOurReferencePerson;
         
         /// <summary>
+        /// buttonEdit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button buttonEdit;
+        
+        /// <summary>
         /// buttonDeactivate control.
         /// </summary>
         /// <remarks>
