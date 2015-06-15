@@ -130,3 +130,5 @@ update Issue set CreatedAt = GETDATE();
 alter table CustomerContact add Type integer;
 
 alter table Unit add Inactive integer;
+
+alter table CustomerTimebook add Inactive integer;

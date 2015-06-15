@@ -14,17 +14,6 @@
             });
             $('#<%= dropDownListTimebookItems.ClientID %>').change();
 
-            /*$('#<%= textBoxCustomerNumber.ClientID %>').hide();
-            $('#<%= labelCustomerNumber.ClientID %>').click(function () {
-                $(this).hide();
-                $('#<%= textBoxCustomerNumber.ClientID %>').show();
-                $('#<%= textBoxCustomerNumber.ClientID %>').focus();
-            });
-            $('#<%= textBoxCustomerNumber.ClientID %>').focusout(function () {
-                $(this).hide();
-                $('#<%= labelCustomerNumber.ClientID %>').show();
-            });*/
-
             turnEditable('#<%= labelCustomerNumber.ClientID %>', '#<%= textBoxCustomerNumber.ClientID %>');
 
             $('#<%= textBoxTimebookDate.ClientID %>').datepicker({
@@ -198,24 +187,45 @@
                     <th></th>
                 </tr>
                 <% foreach (var t in timebooks) { %>
-                <tr>
-                    <td><input type="checkbox"" /></td>
-                    <td><%= t.Date.Value.ToString("yyyy-MM-dd") %></td>
-                    <td><%= t.Department %></td>
-                    <td><%= t.Contact.Contact %></td>
-                    <td><%= t.Item.Name %></td>
-                    <td><%= t.Item.Unit.Name %></td>
-                    <td><%= t.Quantity.ToString() %></td>
-                    <td><%= t.Price.ToString("# ##0.00") %></td>
-                    <td><%= t.Amount.ToString("# ##0.00") %></td>
-                    <td><%= t.Consultant %></td>
-                    <td><span class="label label-success">INVOICED</span></td>
-                    <td><%= t.Comments %></td>
-                    <td>
-                        <%= HtmlHelper.Anchor("Edit", "") %>
-                        <%= HtmlHelper.Anchor("Deactivate", "") %>
-                    </td>
-                </tr>
+                    <% if (t.Inactive) { %>
+                        <tr>
+                            <td><input type="checkbox"" /></td>
+                            <td><strike><%= t.Date.Value.ToString("yyyy-MM-dd") %></strike></td>
+                            <td><strike><%= t.Department %></strike></td>
+                            <td><strike><%= t.Contact.Contact %></strike></td>
+                            <td><strike><%= t.Item.Name %></strike></td>
+                            <td><strike><%= t.Item.Unit.Name %></strike></td>
+                            <td><strike><%= t.Quantity.ToString() %></strike></td>
+                            <td><strike><%= t.Price.ToString("# ##0.00") %></strike></td>
+                            <td><strike><%= t.Amount.ToString("# ##0.00") %></strike></td>
+                            <td><strike><%= t.Consultant %></strike></td>
+                            <td><span class="label label-success">INVOICED</span></td>
+                            <td><strike><%= t.Comments %></strike></td>
+                            <td>
+                                <%= HtmlHelper.Anchor("Edit", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id)) %>
+                                <%= HtmlHelper.Anchor("Deactivate", string.Format("customertimebookdeactivate.aspx?Id={0}&CustomerId={1}", t.Id, id)) %>
+                            </td>
+                        </tr>
+                    <% } else { %>
+                        <tr>
+                            <td><input type="checkbox"" /></td>
+                            <td><%= t.Date.Value.ToString("yyyy-MM-dd") %></td>
+                            <td><%= t.Department %></td>
+                            <td><%= t.Contact.Contact %></td>
+                            <td><%= t.Item.Name %></td>
+                            <td><%= t.Item.Unit.Name %></td>
+                            <td><%= t.Quantity.ToString() %></td>
+                            <td><%= t.Price.ToString("# ##0.00") %></td>
+                            <td><%= t.Amount.ToString("# ##0.00") %></td>
+                            <td><%= t.Consultant %></td>
+                            <td><span class="label label-success">INVOICED</span></td>
+                            <td><%= t.Comments %></td>
+                            <td>
+                                <%= HtmlHelper.Anchor("Edit", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id)) %>
+                                <%= HtmlHelper.Anchor("Delete", string.Format("customertimebookdelete.aspx?Id={0}&CustomerId={1}", t.Id, id)) %>
+                            </td>
+                        </tr>
+                    <% } %>
                 <% } %>
             </table>
 		</div>

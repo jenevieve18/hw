@@ -66,6 +66,8 @@
     <Content Include="CustomerPriceEdit.aspx" />
     <Content Include="Customers.aspx" />
     <Content Include="CustomerShow.aspx" />
+    <Content Include="CustomerTimebookDeactivate.aspx" />
+    <Content Include="CustomerTimebookEdit.aspx" />
     <Content Include="Dashboard.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Footer.ascx" />
@@ -197,6 +199,20 @@
     </Compile>
     <Compile Include="CustomerShow.aspx.designer.cs">
       <DependentUpon>CustomerShow.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerTimebookDeactivate.aspx.cs">
+      <DependentUpon>CustomerTimebookDeactivate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomerTimebookDeactivate.aspx.designer.cs">
+      <DependentUpon>CustomerTimebookDeactivate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerTimebookEdit.aspx.cs">
+      <DependentUpon>CustomerTimebookEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomerTimebookEdit.aspx.designer.cs">
+      <DependentUpon>CustomerTimebookEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>

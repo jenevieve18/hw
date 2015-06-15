@@ -68,6 +68,7 @@ namespace HW.Invoicing.Core.Models
 		public string Consultant { get; set; }
 		public string Comments { get; set; }
 		public string Department { get; set; }
+        public bool Inactive { get; set; }
 		public decimal Amount {
 			get { return Price * Quantity; }
 		}
