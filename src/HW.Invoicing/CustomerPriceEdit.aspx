@@ -17,7 +17,7 @@
 <div>
     <asp:Button CssClass="btn btn-success" ID="buttonSave" runat="server" Text="Save customer price" 
         onclick="buttonSave_Click" />
-        or <i><%= HtmlHelper.Anchor("cancel", "customershow.aspx?Id=" + id) %></i>
+        or <i><%= HtmlHelper.Anchor("cancel", string.Format("customershow.aspx?Id={0}&SelectedTab=customer-prices", customerId))%></i>
 </div>
 
 </asp:Content>
