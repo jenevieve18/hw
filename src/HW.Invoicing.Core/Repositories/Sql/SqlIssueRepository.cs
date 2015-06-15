@@ -52,7 +52,8 @@ VALUES(@Title, @Description, @CreatedAt)";
 			string query = @"
 UPDATE Issue SET Title = @Title,
 	Description = @Description,
-	Status = @Status
+	Status = @Status,
+Inactive = @Inactive
 WHERE Id = @Id";
 			ExecuteNonQuery(
 				query,
@@ -60,7 +61,8 @@ WHERE Id = @Id";
 				new SqlParameter("@Title", t.Title),
 				new SqlParameter("@Description", t.Description),
 				new SqlParameter("@Id", id),
-				new SqlParameter("@Status", t.Status)
+                new SqlParameter("@Status", t.Status),
+                new SqlParameter("@Inactive", t.Inactive)
 			);
 		}
 		
@@ -68,7 +70,7 @@ WHERE Id = @Id";
 		{
 			string query = string.Format(
 				@"
-SELECT Id, Title, Description
+SELECT Id, Title, Description,Inactive
 FROM Issue
 WHERE Id = @Id"
 			);
@@ -78,7 +80,8 @@ WHERE Id = @Id"
 					issue = new Issue {
 						Id = GetInt32(rs, 0),
 						Title = GetString(rs, 1),
-						Description = GetString(rs, 2)
+						Description = GetString(rs, 2),
+                        Inactive = GetInt32(rs, 3) == 1
 					};
 				}
 			}

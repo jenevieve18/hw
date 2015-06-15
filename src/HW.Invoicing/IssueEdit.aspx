@@ -18,6 +18,11 @@
     <asp:DropDownList ID="dropDownListStatus" runat="server" CssClass="form-control">
     </asp:DropDownList>
 </div>
+<asp:PlaceHolder ID="placeHolderReactivate" runat="server">
+    <div class="form-group">
+        <asp:CheckBox ID="checkBoxReactivate" runat="server" CssClass="form-control" Text="&nbsp;Reactivate this item" />
+    </div>
+</asp:PlaceHolder>
 <div>
     <asp:Button CssClass="btn btn-success" ID="buttonSave" runat="server" Text="Save issue" 
         onclick="buttonSave_Click" />
