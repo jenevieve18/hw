@@ -26,6 +26,8 @@ namespace HW.Invoicing
                 if (n != null)
                 {
                     textBoxNotes.Text = n.Notes;
+                    checkBoxReactivate.Checked = !n.Inactive;
+                    placeHolderReactivate.Visible = n.Inactive;
                 }
             }
         }
@@ -34,7 +36,8 @@ namespace HW.Invoicing
         {
             var n = new CustomerNotes
             {
-                Notes = textBoxNotes.Text
+                Notes = textBoxNotes.Text,
+                Inactive = !checkBoxReactivate.Checked
             };
             r.UpdateNotes(n, id);
             Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=notes", customerId));

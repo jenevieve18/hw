@@ -9,6 +9,11 @@
 	<label for="<%= textBoxNotes.ClientID %>">Note</label>
     <asp:TextBox ID="textBoxNotes" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
 </div>
+<asp:PlaceHolder ID="placeHolderReactivate" runat="server">
+    <div class="form-group">
+        <asp:CheckBox ID="checkBoxReactivate" runat="server" CssClass="form-control" Text="&nbsp;Re-activate this customer notes" />
+    </div>
+</asp:PlaceHolder>
 <div>
     <asp:Button CssClass="btn btn-success" ID="buttonSave" runat="server" Text="Save customer note" 
         onclick="buttonSave_Click" />

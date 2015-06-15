@@ -221,14 +221,16 @@ WHERE Id = @Id"
         {
             string query = string.Format(
                 @"
-UPDATE CustomerNotes SET Notes = @Notes
+UPDATE CustomerNotes SET Notes = @Notes,
+Inactive = @Inactive
 WHERE Id = @Id"
             );
             ExecuteNonQuery(
                 query,
                 "invoicing",
                 new SqlParameter("@Notes", c.Notes),
-                new SqlParameter("@Id", id)
+                new SqlParameter("@Id", id),
+                new SqlParameter("@Inactive", c.Inactive)
             );
         }
 
@@ -342,7 +344,8 @@ WHERE Id = @Id"
             string query = string.Format(
                 @"
 SELECT Id,
-    Notes
+    Notes,
+Inactive
 FROM CustomerNotes
 WHERE Id = @Id"
             );
@@ -354,7 +357,8 @@ WHERE Id = @Id"
                     c = new CustomerNotes
                     {
                         Id = GetInt32(rs, 0),
-                        Notes = GetString(rs, 1)
+                        Notes = GetString(rs, 1),
+                        Inactive = GetInt32(rs, 2) == 1
                     };
                 }
             }
