@@ -21,6 +21,11 @@
 	<label for="<%= textBoxEmail.ClientID %>">Email</label>
     <asp:TextBox ID="textBoxEmail" runat="server" CssClass="form-control"></asp:TextBox>
 </div>
+<asp:PlaceHolder ID="placeHolderReactivate" runat="server">
+    <div class="form-group">
+        <asp:CheckBox ID="checkBoxReactivate" runat="server" CssClass="form-control" Text="&nbsp;Re-activate this customer contact" />
+    </div>
+</asp:PlaceHolder>
 <div>
     <asp:Button CssClass="btn btn-success" ID="buttonSave" runat="server" Text="Save customer contact" 
         onclick="buttonSave_Click" />

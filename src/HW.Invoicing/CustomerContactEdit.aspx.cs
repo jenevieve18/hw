@@ -29,6 +29,8 @@ namespace HW.Invoicing
                     textBoxPhone.Text = c.Phone;
                     textBoxMobile.Text = c.Mobile;
                     textBoxEmail.Text = c.Email;
+                    checkBoxReactivate.Checked = !c.Inactive;
+                    placeHolderReactivate.Visible = c.Inactive;
                 }
             }
         }
@@ -39,7 +41,8 @@ namespace HW.Invoicing
                 Contact = textBoxContact.Text,
                 Phone = textBoxPhone.Text,
                 Mobile = textBoxMobile.Text,
-                Email = textBoxEmail.Text
+                Email = textBoxEmail.Text,
+                Inactive = !checkBoxReactivate.Checked
             };
             r.UpdateContact(c, id);
             Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=contact-persons", customerId));
