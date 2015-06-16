@@ -13,6 +13,11 @@ namespace HW.Invoicing.Core.Models
 		public string Phone { get; set; }
 		public string Email { get; set; }
 		public string Number { get; set; }
+        public string InvoiceAddress { get; set; }
+        public string PostalAddress { get; set; }
+        public string PurchaseOrderNumber { get; set; }
+        public string YourReferencePerson { get; set; }
+        public string OurReferencePerson { get; set; }
 	}
 	
 	public class Unit : BaseModel

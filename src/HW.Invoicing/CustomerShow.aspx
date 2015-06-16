@@ -14,12 +14,30 @@
             });
             $('#<%= dropDownListTimebookItems.ClientID %>').change();
 
-            turnEditable('#<%= labelCustomerNumber.ClientID %>', '#<%= textBoxCustomerNumber.ClientID %>');
-
             $('#<%= textBoxTimebookDate.ClientID %>').datepicker({
                 format: "yyyy-mm-dd",
                 autoclose: true
             });
+
+            /*$('#<%= textBoxCustomerNumber.ClientID %>').hide();
+            $('#<%= textBoxInvoiceAddress.ClientID %>').hide();
+            $('#<%= textBoxPostalAddress.ClientID %>').hide();
+            $('#<%= textBoxPurchaseOrderNumber.ClientID %>').hide();
+            $('#<%= textBoxYourReferencePerson.ClientID %>').hide();
+            $('#<%= textBoxOurReferencePerson.ClientID %>').hide();
+            $('#<%= buttonSave.ClientID %>').hide();*/
+            $('.info').hide();
+
+            $('#buttonEdit').click(function () {
+                $('.info-text').hide();
+                $('.info').show();
+            });
+            $('#buttonCancelEdit').click(function () {
+                $('.info-text').show();
+                $('.info').hide();
+            });
+
+            //turnEditable('#<%= labelCustomerNumber.ClientID %>', '#<%= textBoxCustomerNumber.ClientID %>');
         });
 
         function turnEditable(labelId, textBoxId) {
@@ -174,13 +192,29 @@
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-							<h4 class="modal-title" id="H1">
-								Modal title
-							</h4>
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h4 class="modal-title" id="H1">Create an invoice</h4>
 						</div>
 						<div class="modal-body">
-							...
+							<div class="col-md-6 column">
+                                <div class="form-group">
+	                                <label for="<%= textBox1.ClientID %>">Invoicing Address</label>
+                                    <asp:TextBox ID="textBox1" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+		                    </div>
+		                    <div class="col-md-6 column">
+                                <h3>Invoice</h3>
+                                <table>
+                                    <tr>
+                                        <td>Customer number</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Invoice number</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+		                    </div>
 						</div>
 						<div class="modal-footer">
 							 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> <button type="button" class="btn btn-primary">Save changes</button>
@@ -327,38 +361,51 @@
                 <tr>
                     <td style="width: 30%;"><strong>Customer Number</strong></td>
                     <td>
-                        <asp:Label ID="labelCustomerNumber" runat="server" Text="" CssClass="form-control"></asp:Label>
-                        <asp:TextBox ID="textBoxCustomerNumber" runat="server" CssClass="form-control"></asp:TextBox>
+                        <asp:Label ID="labelCustomerNumber" runat="server" Text="" CssClass="info-text"></asp:Label>
+                        <asp:TextBox ID="textBoxCustomerNumber" runat="server" CssClass="info form-control"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
                     <td><strong>Postal Address</strong></td>
                     <td>
-                        <asp:Label ID="labelInvoiceAddress" runat="server" Text="Label"></asp:Label>
+                        <asp:Label ID="labelPostalAddress" runat="server" Text="" CssClass="info-text"></asp:Label>
+                        <asp:TextBox ID="textBoxPostalAddress" runat="server" CssClass="info form-control"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
                     <td><strong>Invoicing Address</strong></td>
-                    <td><asp:Label ID="label1" runat="server" Text="Label"></asp:Label></td>
+                    <td>
+                        <asp:Label ID="labelInvoiceAddress" runat="server" Text="" CssClass="info-text"></asp:Label>
+                        <asp:TextBox ID="textBoxInvoiceAddress" runat="server" CssClass="info form-control"></asp:TextBox>
+                    </td>
                 </tr>
                 <tr>
                     <td><strong>Reference / Purchase Order Number</strong></td>
-                    <td><asp:Label ID="labelPurchaseOrderNumber" runat="server" Text="Label"></asp:Label></td>
+                    <td>
+                        <asp:Label ID="labelPurchaseOrderNumber" runat="server" Text="" CssClass="info-text"></asp:Label>
+                        <asp:TextBox ID="textBoxPurchaseOrderNumber" runat="server" CssClass=" info form-control"></asp:TextBox>
+                    </td>
                 </tr>
                 <tr>
                     <td><strong>Your Reference Person</strong></td>
-                    <td><asp:Label ID="labelReferencePerson" runat="server" Text="Label"></asp:Label></td>
+                    <td>
+                        <asp:Label ID="labelYourReferencePerson" runat="server" Text="" CssClass="info-text"></asp:Label>
+                        <asp:TextBox ID="textBoxYourReferencePerson" runat="server" CssClass="info form-control"></asp:TextBox>
+                    </td>
                 </tr>
                 <tr>
                     <td><strong>Our Reference Person</strong></td>
                     <td>
-                        <asp:Label ID="labelOurReferencePerson" runat="server" Text="Label"></asp:Label>
+                        <asp:Label ID="labelOurReferencePerson" runat="server" Text="" CssClass="info-text"></asp:Label>
+                        <asp:TextBox ID="textBoxOurReferencePerson" runat="server" CssClass="info form-control"></asp:TextBox>
                     </td>
                 </tr>
             </table>
             <div>
-                <asp:Button ID="buttonEdit" runat="server" Text="Edit this customer" CssClass="btn btn-info" />
+                <a id="buttonEdit" href="javascript:;" class="btn btn-info">Edit this customer</a>
+                <asp:Button ID="buttonSave" runat="server" Text="Save this customer" CssClass="info btn btn-info" OnClick="buttonSave_Click" />
                 <asp:Button ID="buttonDeactivate" runat="server" Text="Deactivate this customer" CssClass="btn btn-warning" OnClientClick="return confirm('Are you sure you want to de-activate this customer?')" />
+                <span class="info">or <i><a id="buttonCancelEdit" href="javascript:;">cancel</a></i></span>
             </div>
 		</div>
         <div class="tab-pane <%= selectedTab == "contact-persons" ? "active" : "" %>" id="contact-persons">

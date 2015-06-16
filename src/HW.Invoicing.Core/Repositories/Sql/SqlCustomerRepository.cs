@@ -204,16 +204,25 @@ VALUES(@Name, @Number)"
 		public override void Update(Customer c, int id)
 		{
 			string query = string.Format(
-				@"
-UPDATE Customer SET Name = @Name, Number = @Number
+                @"
+UPDATE Customer SET Number = @Number,
+InvoiceAddress = @InvoiceAddress,
+PostalAddress = @PostalAddress,
+PurchaseOrderNumber = @PurchaseOrderNumber,
+YourReferencePerson = @YourReferencePerson,
+OurReferencePerson = @OurReferencePerson
 WHERE Id = @Id"
-			);
+            );
 			ExecuteNonQuery(
 				query,
 				"invoicing",
-				new SqlParameter("@Name", c.Name),
-				new SqlParameter("@Id", id),
-				new SqlParameter("@Number", c.Number)
+                new SqlParameter("@Number", c.Number),
+                new SqlParameter("@InvoiceAddress", c.InvoiceAddress),
+                new SqlParameter("@PostalAddress", c.PostalAddress),
+                new SqlParameter("@PurchaseOrderNumber", c.PurchaseOrderNumber),
+                new SqlParameter("@YourReferencePerson", c.YourReferencePerson),
+                new SqlParameter("@OurReferencePerson", c.OurReferencePerson),
+                new SqlParameter("@Id", id)
 			);
 		}
 
@@ -325,18 +334,30 @@ WHERE Id = @Id"
 		public override Customer Read(int id)
 		{
 			string query = string.Format(
-				@"
-SELECT Id, Name, Number
+                @"
+SELECT Id,
+Name,
+Number,
+InvoiceAddress,
+PostalAddress,
+PurchaseOrderNumber,
+YourReferencePerson,
+OurReferencePerson
 FROM Customer
 WHERE Id = @Id"
-			);
+            );
 			Customer c = null;
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", id))) {
 				if (rs.Read()) {
 					c = new Customer {
 						Id = GetInt32(rs, 0),
 						Name = GetString(rs, 1),
-						Number = GetString(rs, 2)
+						Number = GetString(rs, 2),
+                        InvoiceAddress = GetString(rs, 3),
+                        PostalAddress = GetString(rs, 4),
+                        PurchaseOrderNumber = GetString(rs, 5),
+                        YourReferencePerson = GetString(rs, 6),
+                        OurReferencePerson = GetString(rs, 7)
 					};
 				}
 			}

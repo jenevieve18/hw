@@ -33,6 +33,11 @@ namespace HW.Invoicing
                 labelCustomer.Text = c.Name;
 
                 labelCustomerNumber.Text = textBoxCustomerNumber.Text = c.Number;
+                labelInvoiceAddress.Text = textBoxInvoiceAddress.Text = c.InvoiceAddress;
+                labelPostalAddress.Text = textBoxPostalAddress.Text = c.PostalAddress;
+                labelPurchaseOrderNumber.Text = textBoxPurchaseOrderNumber.Text = c.PurchaseOrderNumber;
+                labelYourReferencePerson.Text = textBoxYourReferencePerson.Text = c.YourReferencePerson;
+                labelOurReferencePerson.Text = textBoxOurReferencePerson.Text = c.OurReferencePerson;
             }
         }
 
@@ -51,6 +56,21 @@ namespace HW.Invoicing
             };
             r.SaveTimebook(t, ConvertHelper.ToInt32(Request.QueryString["Id"]));
             Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=timebook", id));
+        }
+
+        protected void buttonSave_Click(object sender, EventArgs e)
+        {
+            var c = new Customer
+            {
+                Number = textBoxCustomerNumber.Text,
+                PostalAddress = textBoxPostalAddress.Text,
+                InvoiceAddress = textBoxInvoiceAddress.Text,
+                PurchaseOrderNumber = textBoxPurchaseOrderNumber.Text,
+                YourReferencePerson = textBoxYourReferencePerson.Text,
+                OurReferencePerson = textBoxOurReferencePerson.Text
+            };
+            r.Update(c, ConvertHelper.ToInt32(Request.QueryString["Id"]));
+            Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=customer-info", id));
         }
 
         protected void buttonSaveNotes_Click(object sender, EventArgs e)

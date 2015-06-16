@@ -130,6 +130,15 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.Button buttonSaveTimebook;
         
         /// <summary>
+        /// textBox1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBox1;
+        
+        /// <summary>
         /// dropDownListItems control.
         /// </summary>
         /// <remarks>
@@ -175,6 +184,24 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxCustomerNumber;
         
         /// <summary>
+        /// labelPostalAddress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelPostalAddress;
+        
+        /// <summary>
+        /// textBoxPostalAddress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxPostalAddress;
+        
+        /// <summary>
         /// labelInvoiceAddress control.
         /// </summary>
         /// <remarks>
@@ -184,13 +211,13 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.Label labelInvoiceAddress;
         
         /// <summary>
-        /// label1 control.
+        /// textBoxInvoiceAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label label1;
+        protected global::System.Web.UI.WebControls.TextBox textBoxInvoiceAddress;
         
         /// <summary>
         /// labelPurchaseOrderNumber control.
@@ -202,13 +229,31 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.Label labelPurchaseOrderNumber;
         
         /// <summary>
-        /// labelReferencePerson control.
+        /// textBoxPurchaseOrderNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label labelReferencePerson;
+        protected global::System.Web.UI.WebControls.TextBox textBoxPurchaseOrderNumber;
+        
+        /// <summary>
+        /// labelYourReferencePerson control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelYourReferencePerson;
+        
+        /// <summary>
+        /// textBoxYourReferencePerson control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxYourReferencePerson;
         
         /// <summary>
         /// labelOurReferencePerson control.
@@ -220,13 +265,22 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.Label labelOurReferencePerson;
         
         /// <summary>
-        /// buttonEdit control.
+        /// textBoxOurReferencePerson control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button buttonEdit;
+        protected global::System.Web.UI.WebControls.TextBox textBoxOurReferencePerson;
+        
+        /// <summary>
+        /// buttonSave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button buttonSave;
         
         /// <summary>
         /// buttonDeactivate control.

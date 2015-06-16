@@ -134,3 +134,5 @@ alter table Unit add Inactive integer;
 alter table CustomerTimebook add Inactive integer;
 
 alter table CustomerTimebook add Status integer;
+
+alter table Customer alter 
