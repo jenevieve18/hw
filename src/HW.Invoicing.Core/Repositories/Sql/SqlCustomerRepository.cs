@@ -279,7 +279,8 @@ Price = @Price,
 Consultant = @Consultant,
 Comments = @Comments,
 Department = @Department,
-Date = @Date
+Date = @Date,
+Inactive = @Inactive
 WHERE Id = @Id"
             );
             ExecuteNonQuery(
@@ -293,6 +294,7 @@ WHERE Id = @Id"
                 new SqlParameter("@Comments", c.Comments),
                 new SqlParameter("@Department", c.Department),
                 new SqlParameter("@Date", c.Date),
+                new SqlParameter("@Inactive", c.Inactive),
                 new SqlParameter("@Id", id)
             );
         }
@@ -403,7 +405,8 @@ SELECT Id,
     Consultant,
     Comments,
     Department,
-    Date
+    Date,
+Inactive
 FROM CustomerTimebook
 WHERE Id = @Id"
             );
@@ -422,7 +425,8 @@ WHERE Id = @Id"
                         Consultant = GetString(rs, 6),
                         Comments = GetString(rs, 7),
                         Department = GetString(rs, 8),
-                        Date = GetDateTime(rs, 9)
+                        Date = GetDateTime(rs, 9),
+                        Inactive = GetInt32(rs, 10) == 1
                     };
                 }
             }

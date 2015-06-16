@@ -49,6 +49,8 @@ namespace HW.Invoicing
                     textBoxTimebookPrice.Text = t.Price.ToString();
                     textBoxTimebookConsultant.Text = t.Consultant;
                     textBoxTimebookComments.Text = t.Comments;
+                    checkBoxReactivate.Checked = !t.Inactive;
+                    placeHolderReactivate.Visible = t.Inactive;
                 }
             }
         }
@@ -63,7 +65,8 @@ namespace HW.Invoicing
                 Quantity = ConvertHelper.ToDecimal(textBoxTimebookQty.Text),
                 Price = ConvertHelper.ToDecimal(textBoxTimebookPrice.Text),
                 Consultant = textBoxTimebookConsultant.Text,
-                Comments = textBoxTimebookComments.Text
+                Comments = textBoxTimebookComments.Text,
+                Inactive = !checkBoxReactivate.Checked
             };
             r.UpdateTimebook(t, id);
             Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=timebook", customerId));
