@@ -142,3 +142,5 @@ YourReferencePerson varchar(255),
 OurReferencePerson varchar(255);
 
 alter table [User] add Color varchar(255);
+
+alter table Customer add Inactive integer;

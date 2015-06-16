@@ -36,7 +36,9 @@ namespace HW.Invoicing
                     InvoiceAddress = textBoxInvoiceAddress.Text,
                     PurchaseOrderNumber = textBoxPurchaseOrderNumber.Text,
                     YourReferencePerson = textBoxYourReferencePerson.Text,
-                    OurReferencePerson = textBoxOurReferencePerson.Text
+                    OurReferencePerson = textBoxOurReferencePerson.Text,
+                    Phone = textBoxPhone.Text,
+                    Email = textBoxEmail.Text
 				};
 				r.Save(c);
 				Response.Redirect("customers.aspx");

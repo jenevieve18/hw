@@ -17,16 +17,29 @@
         <th>Email</th>
     </tr>
     <% foreach (var c in customers) { %>
-    <tr>
-        <td><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></td>
-        <td>
-            <% if (c.FirstPrimaryContact != null) { %>
-                <%= c.FirstPrimaryContact.Contact %>
-            <% } %>
-        </td>
-        <td><%= c.Phone %></td>
-        <td><%= c.Email %></td>
-    </tr>
+        <% if (c.Inactive) { %>
+            <tr>
+                <td><strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike></td>
+                <td>
+                    <% if (c.FirstPrimaryContact != null) { %>
+                        <strike><%= c.FirstPrimaryContact.Contact %></strike>
+                    <% } %>
+                </td>
+                <td><strike><%= c.Phone %></strike></td>
+                <td><strike><%= c.Email %></strike></td>
+            </tr>
+        <% } else { %>
+            <tr>
+                <td><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></td>
+                <td>
+                    <% if (c.FirstPrimaryContact != null) { %>
+                        <%= c.FirstPrimaryContact.Contact %>
+                    <% } %>
+                </td>
+                <td><%= c.Phone %></td>
+                <td><%= c.Email %></td>
+            </tr>
+        <% } %>
     <% } %>
 </table>
 

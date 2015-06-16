@@ -43,6 +43,12 @@ namespace HW.Invoicing
             }
         }
 
+        protected void buttonDeactivate_Click(object sender, EventArgs e)
+        {
+            r.Deactivate(ConvertHelper.ToInt32(Request.QueryString["Id"]));
+            Response.Redirect(string.Format("customers.aspx"));
+        }
+
         protected void buttonSaveTimebook_Click(object sender, EventArgs e)
         {
             var t = new CustomerTimebook

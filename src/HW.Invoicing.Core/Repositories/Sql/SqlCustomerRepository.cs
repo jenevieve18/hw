@@ -190,8 +190,8 @@ VALUES(@CustomerId, @ItemId, @Price)"
 		{
 			string query = string.Format(
                 @"
-INSERT INTO Customer(Name, Number, PostalAddress, InvoiceAddress, PurchaseOrderNumber, YourReferencePerson, OurReferencePerson)
-VALUES(@Name, @Number, @PostalAddress, @InvoiceAddress, @PurchaseOrderNumber, @YourReferencePerson, @OurReferencePerson)"
+INSERT INTO Customer(Name, Number, PostalAddress, InvoiceAddress, PurchaseOrderNumber, YourReferencePerson, OurReferencePerson, Phone, Email)
+VALUES(@Name, @Number, @PostalAddress, @InvoiceAddress, @PurchaseOrderNumber, @YourReferencePerson, @OurReferencePerson, @Phone, @Email)"
             );
 			ExecuteNonQuery(
 				query,
@@ -202,7 +202,9 @@ VALUES(@Name, @Number, @PostalAddress, @InvoiceAddress, @PurchaseOrderNumber, @Y
                 new SqlParameter("@InvoiceAddress", c.InvoiceAddress),
                 new SqlParameter("@PurchaseOrderNumber", c.PurchaseOrderNumber),
                 new SqlParameter("@YourReferencePerson", c.YourReferencePerson),
-                new SqlParameter("@OurReferencePerson", c.OurReferencePerson)
+                new SqlParameter("@OurReferencePerson", c.OurReferencePerson),
+                new SqlParameter("@Phone", c.Phone),
+                new SqlParameter("@Email", c.Email)
 			);
 		}
 		
@@ -667,7 +669,7 @@ WHERE CustomerId = @CustomerId"
 		{
 			string query = string.Format(
 				@"
-SELECT Id, Name, Number
+SELECT Id, Name, Number, Phone, Email, Inactive
 FROM Customer"
 			);
 			var customers = new List<Customer>();
@@ -677,7 +679,10 @@ FROM Customer"
 						new Customer {
 							Id = GetInt32(rs, 0),
 							Name = GetString(rs, 1),
-							Number = GetString(rs, 2)
+							Number = GetString(rs, 2),
+                            Phone = GetString(rs, 3),
+                            Email = GetString(rs, 4),
+                            Inactive = GetInt32(rs, 5) == 1
 						}
 					);
 				}

@@ -421,7 +421,7 @@
             <div>
                 <a id="buttonEdit" href="javascript:;" class="info-text btn btn-info">Edit this customer</a>
                 <asp:Button ID="buttonSave" runat="server" Text="Save this customer" CssClass="info btn btn-info" OnClick="buttonSave_Click" />
-                <asp:Button ID="buttonDeactivate" runat="server" Text="Deactivate this customer" CssClass="btn btn-warning" OnClientClick="return confirm('Are you sure you want to de-activate this customer?')" />
+                <asp:Button ID="buttonDeactivate" runat="server" Text="Deactivate this customer" CssClass="btn btn-warning" OnClick="buttonDeactivate_Click" OnClientClick="return confirm('Are you sure you want to de-activate this customer?')" />
                 <span class="info">or <i><a id="buttonCancelEdit" href="javascript:;">cancel</a></i></span>
             </div>
 		</div>

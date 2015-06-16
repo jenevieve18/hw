@@ -18,6 +18,7 @@ namespace HW.Invoicing.Core.Models
         public string PurchaseOrderNumber { get; set; }
         public string YourReferencePerson { get; set; }
         public string OurReferencePerson { get; set; }
+        public bool Inactive { get; set; }
 
         public IList<CustomerContact> Contacts { get; set; }
 

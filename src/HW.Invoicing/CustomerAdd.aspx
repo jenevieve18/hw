@@ -33,6 +33,14 @@
 	<label for="<%= textBoxOurReferencePerson.ClientID %>">Our Reference Person</label>
     <asp:TextBox ID="textBoxOurReferencePerson" runat="server" CssClass="form-control"></asp:TextBox>
 </div>
+<div class="form-group">
+	<label for="<%= textBoxPhone.ClientID %>">Phone</label>
+    <asp:TextBox ID="textBoxPhone" runat="server" CssClass="form-control"></asp:TextBox>
+</div>
+<div class="form-group">
+	<label for="<%= textBoxEmail.ClientID %>">Email</label>
+    <asp:TextBox ID="textBoxEmail" runat="server" CssClass="form-control"></asp:TextBox>
+</div>
 <div>
     <asp:Button CssClass="btn btn-success" ID="buttonSave" runat="server" Text="Save customer" 
         onclick="buttonSave_Click" />
