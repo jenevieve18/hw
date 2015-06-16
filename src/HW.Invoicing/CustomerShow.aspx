@@ -118,7 +118,7 @@
                     <% } else { %>
                         <tr>
                             <td><%= n.CreatedAt.Value.ToString("yyyy-MM-dd H:mm:ss") %></td>
-                            <td><%= n.CreatedBy.Name %></td>
+                            <td><span class="label" style="background:<%= n.CreatedBy.Color %>"><%= n.CreatedBy.Name %></span></td>
                             <td><%= n.Notes %></td>
                             <td>
                                 <%= HtmlHelper.Anchor("Edit", string.Format("customernotesedit.aspx?Id={0}&CustomerId={1}", n.Id, id)) %>

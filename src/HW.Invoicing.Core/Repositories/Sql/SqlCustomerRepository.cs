@@ -535,7 +535,8 @@ SELECT n.Id,
 	CreatedAt,
 	CreatedBy,
 	u.Name,
-	Inactive
+	Inactive,
+u.Color
 FROM CustomerNotes n,
 [User] u
 WHERE CustomerId = @CustomerId
@@ -552,7 +553,8 @@ ORDER BY n.CreatedAt DESC"
 							CreatedAt = GetDateTime(rs, 2),
 							CreatedBy = new User {
 								Id = GetInt32(rs, 3),
-								Name = GetString(rs, 4)
+								Name = GetString(rs, 4),
+                                Color = GetString(rs, 6)
 							},
 							Inactive = GetInt32(rs, 5) == 1
 						}
