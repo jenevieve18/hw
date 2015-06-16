@@ -26,7 +26,7 @@
 }
 .hw-invoice-header {
     text-transform: uppercase;
-    font-size:small;
+    font-size:x-small;
     font-weight:bold;
 }
 </style>
