@@ -111,7 +111,7 @@ namespace HW.Invoicing.Core.Models
             {
                 case 1: return "<span class='label label-warning'>INVOICED</span>";
                 case 2: return "<span class='label label-success'>PAID</span>";
-                default: return "";
+                default: return "<span class='label label-default'>OPEN</span>";
             }
         }
 	}

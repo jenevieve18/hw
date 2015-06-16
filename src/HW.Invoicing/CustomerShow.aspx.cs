@@ -38,6 +38,8 @@ namespace HW.Invoicing
                 labelPurchaseOrderNumber.Text = textBoxPurchaseOrderNumber.Text = c.PurchaseOrderNumber;
                 labelYourReferencePerson.Text = textBoxYourReferencePerson.Text = c.YourReferencePerson;
                 labelOurReferencePerson.Text = textBoxOurReferencePerson.Text = c.OurReferencePerson;
+                labelEmail.Text = textBoxEmail.Text = c.Email;
+                labelPhone.Text = textBoxPhone.Text = c.Phone;
             }
         }
 
@@ -67,7 +69,9 @@ namespace HW.Invoicing
                 InvoiceAddress = textBoxInvoiceAddress.Text,
                 PurchaseOrderNumber = textBoxPurchaseOrderNumber.Text,
                 YourReferencePerson = textBoxYourReferencePerson.Text,
-                OurReferencePerson = textBoxOurReferencePerson.Text
+                OurReferencePerson = textBoxOurReferencePerson.Text,
+                Phone = textBoxPhone.Text,
+                Email = textBoxEmail.Text
             };
             r.Update(c, ConvertHelper.ToInt32(Request.QueryString["Id"]));
             Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=customer-info", id));

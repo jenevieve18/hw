@@ -189,32 +189,35 @@
 				</div>
 			</div>
 			<div class="modal fade" id="modal-container-701809" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
+				<div class="modal-dialog" style="width:80%">
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 							<h4 class="modal-title" id="H1">Create an invoice</h4>
 						</div>
 						<div class="modal-body">
-							<div class="col-md-6 column">
-                                <div class="form-group">
-	                                <label for="<%= textBox1.ClientID %>">Invoicing Address</label>
-                                    <asp:TextBox ID="textBox1" runat="server" CssClass="form-control"></asp:TextBox>
-                                </div>
-		                    </div>
-		                    <div class="col-md-6 column">
-                                <h3>Invoice</h3>
-                                <table>
-                                    <tr>
-                                        <td>Customer number</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Invoice number</td>
-                                        <td></td>
-                                    </tr>
-                                </table>
-		                    </div>
+                            <table style="width:100%">
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+	                                        <label for="<%= textBox1.ClientID %>">Invoicing Address</label>
+                                            <asp:TextBox ID="textBox1" runat="server" CssClass="form-control"></asp:TextBox>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>Customer number</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Invoice number</td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
 						</div>
 						<div class="modal-footer">
 							 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> <button type="button" class="btn btn-primary">Save changes</button>
@@ -369,14 +372,14 @@
                     <td><strong>Postal Address</strong></td>
                     <td>
                         <asp:Label ID="labelPostalAddress" runat="server" Text="" CssClass="info-text"></asp:Label>
-                        <asp:TextBox ID="textBoxPostalAddress" runat="server" CssClass="info form-control"></asp:TextBox>
+                        <asp:TextBox ID="textBoxPostalAddress" runat="server" CssClass="info form-control" TextMode="MultiLine"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
                     <td><strong>Invoicing Address</strong></td>
                     <td>
                         <asp:Label ID="labelInvoiceAddress" runat="server" Text="" CssClass="info-text"></asp:Label>
-                        <asp:TextBox ID="textBoxInvoiceAddress" runat="server" CssClass="info form-control"></asp:TextBox>
+                        <asp:TextBox ID="textBoxInvoiceAddress" runat="server" CssClass="info form-control" TextMode="MultiLine"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
@@ -398,6 +401,20 @@
                     <td>
                         <asp:Label ID="labelOurReferencePerson" runat="server" Text="" CssClass="info-text"></asp:Label>
                         <asp:TextBox ID="textBoxOurReferencePerson" runat="server" CssClass="info form-control"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Phone</strong></td>
+                    <td>
+                        <asp:Label ID="labelPhone" runat="server" Text="" CssClass="info-text"></asp:Label>
+                        <asp:TextBox ID="textBoxPhone" runat="server" CssClass="info form-control"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Email</strong></td>
+                    <td>
+                        <asp:Label ID="labelEmail" runat="server" Text="" CssClass="info-text"></asp:Label>
+                        <asp:TextBox ID="textBoxEmail" runat="server" CssClass="info form-control"></asp:TextBox>
                     </td>
                 </tr>
             </table>

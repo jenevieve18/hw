@@ -215,7 +215,9 @@ InvoiceAddress = @InvoiceAddress,
 PostalAddress = @PostalAddress,
 PurchaseOrderNumber = @PurchaseOrderNumber,
 YourReferencePerson = @YourReferencePerson,
-OurReferencePerson = @OurReferencePerson
+OurReferencePerson = @OurReferencePerson,
+Email = @Email,
+Phone = @Phone
 WHERE Id = @Id"
             );
 			ExecuteNonQuery(
@@ -227,6 +229,8 @@ WHERE Id = @Id"
                 new SqlParameter("@PurchaseOrderNumber", c.PurchaseOrderNumber),
                 new SqlParameter("@YourReferencePerson", c.YourReferencePerson),
                 new SqlParameter("@OurReferencePerson", c.OurReferencePerson),
+                new SqlParameter("@Phone", c.Phone),
+                new SqlParameter("@Email", c.Email),
                 new SqlParameter("@Id", id)
 			);
 		}
@@ -349,7 +353,9 @@ InvoiceAddress,
 PostalAddress,
 PurchaseOrderNumber,
 YourReferencePerson,
-OurReferencePerson
+OurReferencePerson,
+Email,
+Phone
 FROM Customer
 WHERE Id = @Id"
             );
@@ -364,7 +370,9 @@ WHERE Id = @Id"
                         PostalAddress = GetString(rs, 4),
                         PurchaseOrderNumber = GetString(rs, 5),
                         YourReferencePerson = GetString(rs, 6),
-                        OurReferencePerson = GetString(rs, 7)
+                        OurReferencePerson = GetString(rs, 7),
+                        Email = GetString(rs, 8),
+                        Phone = GetString(rs, 9)
 					};
 				}
 			}
