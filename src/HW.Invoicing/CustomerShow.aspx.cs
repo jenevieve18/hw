@@ -22,6 +22,7 @@ namespace HW.Invoicing
         protected IList<CustomerTimebook> timebooks;
     	protected int id;
         protected string selectedTab;
+        protected Customer customer;
     	
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -29,17 +30,22 @@ namespace HW.Invoicing
             selectedTab = Request.QueryString["SelectedTab"] == null ? "notes" : Request.QueryString["SelectedTab"];
             if (!IsPostBack)
             {
-                var c = r.Read(id);
-                labelCustomer.Text = c.Name;
+                customer = r.Read(id);
+                labelCustomer.Text = customer.Name;
 
-                labelCustomerNumber.Text = textBoxCustomerNumber.Text = c.Number;
-                labelInvoiceAddress.Text = textBoxInvoiceAddress.Text = c.InvoiceAddress;
-                labelPostalAddress.Text = textBoxPostalAddress.Text = c.PostalAddress;
-                labelPurchaseOrderNumber.Text = textBoxPurchaseOrderNumber.Text = c.PurchaseOrderNumber;
-                labelYourReferencePerson.Text = textBoxYourReferencePerson.Text = c.YourReferencePerson;
-                labelOurReferencePerson.Text = textBoxOurReferencePerson.Text = c.OurReferencePerson;
-                labelEmail.Text = textBoxEmail.Text = c.Email;
-                labelPhone.Text = textBoxPhone.Text = c.Phone;
+                labelCustomerNumber.Text = textBoxCustomerNumber.Text = customer.Number;
+                labelInvoiceAddress.Text = textBoxInvoiceAddress.Text = customer.InvoiceAddress;
+                labelPostalAddress.Text = textBoxPostalAddress.Text = customer.PostalAddress;
+                labelPurchaseOrderNumber.Text = textBoxPurchaseOrderNumber.Text = customer.PurchaseOrderNumber;
+                labelYourReferencePerson.Text = textBoxYourReferencePerson.Text = customer.YourReferencePerson;
+                labelOurReferencePerson.Text = textBoxOurReferencePerson.Text = customer.OurReferencePerson;
+                labelEmail.Text = textBoxEmail.Text = customer.Email;
+                labelPhone.Text = textBoxPhone.Text = customer.Phone;
+
+                labelCustomerNumber.Font.Strikeout = labelInvoiceAddress.Font.Strikeout =
+                    labelPostalAddress.Font.Strikeout = labelPurchaseOrderNumber.Font.Strikeout =
+                    labelYourReferencePerson.Font.Strikeout = labelOurReferencePerson.Font.Strikeout =
+                    labelEmail.Font.Strikeout = labelPhone.Font.Strikeout = customer.Inactive;
             }
         }
 
@@ -47,6 +53,12 @@ namespace HW.Invoicing
         {
             r.Deactivate(ConvertHelper.ToInt32(Request.QueryString["Id"]));
             Response.Redirect(string.Format("customers.aspx"));
+        }
+
+        protected void buttonReactivate_Click(object sender, EventArgs e)
+        {
+            r.Reactivate(id);
+            Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=customer-info", id));
         }
 
         protected void buttonSaveTimebook_Click(object sender, EventArgs e)

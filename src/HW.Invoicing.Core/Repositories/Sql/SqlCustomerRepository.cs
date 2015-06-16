@@ -343,6 +343,21 @@ WHERE Id = @Id"
 				new SqlParameter("@Id", id)
 			);
 		}
+
+        public void Reactivate(int id)
+        {
+            string query = string.Format(
+                @"
+UPDATE Customer SET Inactive = @Inactive
+WHERE Id = @Id"
+            );
+            ExecuteNonQuery(
+                query,
+                "invoicing",
+                new SqlParameter("@Inactive", false),
+                new SqlParameter("@Id", id)
+            );
+        }
 		
 		public override Customer Read(int id)
 		{
@@ -357,7 +372,8 @@ PurchaseOrderNumber,
 YourReferencePerson,
 OurReferencePerson,
 Email,
-Phone
+Phone,
+Inactive
 FROM Customer
 WHERE Id = @Id"
             );
@@ -374,7 +390,8 @@ WHERE Id = @Id"
                         YourReferencePerson = GetString(rs, 6),
                         OurReferencePerson = GetString(rs, 7),
                         Email = GetString(rs, 8),
-                        Phone = GetString(rs, 9)
+                        Phone = GetString(rs, 9),
+                        Inactive = GetInt32(rs, 10) == 1
 					};
 				}
 			}
