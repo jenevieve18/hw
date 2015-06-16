@@ -40,7 +40,7 @@
 		<div class="modal-body">
             <table width="100%" cellpadding="5px">
                 <tr>
-                    <td rowspan="3">
+                    <td rowspan="4" valign="bottom">
                         <img src="http://s16.postimg.org/vkxh59d5h/ihg.png"><br />
                     </td>
                     <td></td>
@@ -58,7 +58,6 @@
                     <td class="hw-border-top"><strong>IHGF-134</strong></td>
                 </tr>
                 <tr>
-                    <td></td>
                     <td></td>
                     <td class="hw-border-top">Invoice Date</td>
                     <td class="hw-border-top"><strong>2012-05-31</strong></td>
