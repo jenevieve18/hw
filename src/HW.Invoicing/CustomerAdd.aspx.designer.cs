@@ -31,49 +31,49 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxName;
         
         /// <summary>
-        /// textBoxAddress control.
+        /// textBoxPostalAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxAddress;
+        protected global::System.Web.UI.WebControls.TextBox textBoxPostalAddress;
         
         /// <summary>
-        /// textBoxPhone control.
+        /// textBoxInvoiceAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxPhone;
+        protected global::System.Web.UI.WebControls.TextBox textBoxInvoiceAddress;
         
         /// <summary>
-        /// textBoxEmail control.
+        /// textBoxPurchaseOrderNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxEmail;
+        protected global::System.Web.UI.WebControls.TextBox textBoxPurchaseOrderNumber;
         
         /// <summary>
-        /// textBox1 control.
+        /// textBoxYourReferencePerson control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBox1;
+        protected global::System.Web.UI.WebControls.TextBox textBoxYourReferencePerson;
         
         /// <summary>
-        /// textBox2 control.
+        /// textBoxOurReferencePerson control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBox2;
+        protected global::System.Web.UI.WebControls.TextBox textBoxOurReferencePerson;
         
         /// <summary>
         /// buttonSave control.

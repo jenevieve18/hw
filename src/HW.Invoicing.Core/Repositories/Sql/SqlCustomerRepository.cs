@@ -189,15 +189,20 @@ VALUES(@CustomerId, @ItemId, @Price)"
 		public override void Save(Customer c)
 		{
 			string query = string.Format(
-				@"
-INSERT INTO Customer(Name, Number)
-VALUES(@Name, @Number)"
-			);
+                @"
+INSERT INTO Customer(Name, Number, PostalAddress, InvoiceAddress, PurchaseOrderNumber, YourReferencePerson, OurReferencePerson)
+VALUES(@Name, @Number, @PostalAddress, @InvoiceAddress, @PurchaseOrderNumber, @YourReferencePerson, @OurReferencePerson)"
+            );
 			ExecuteNonQuery(
 				query,
 				"invoicing",
 				new SqlParameter("@Name", c.Name),
-				new SqlParameter("@Number", c.Number)
+                new SqlParameter("@Number", c.Number),
+                new SqlParameter("@PostalAddress", c.PostalAddress),
+                new SqlParameter("@InvoiceAddress", c.InvoiceAddress),
+                new SqlParameter("@PurchaseOrderNumber", c.PurchaseOrderNumber),
+                new SqlParameter("@YourReferencePerson", c.YourReferencePerson),
+                new SqlParameter("@OurReferencePerson", c.OurReferencePerson)
 			);
 		}
 		

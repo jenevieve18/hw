@@ -13,20 +13,15 @@ namespace HW.Invoicing
 {
 	public partial class CustomerAdd : System.Web.UI.Page
 	{
-		ICustomerRepository r;
+		SqlCustomerRepository r = new SqlCustomerRepository();
 		
-		public CustomerAdd() : this(new SqlCustomerRepository())
+		public CustomerAdd()
 		{
-		}
-		
-		public CustomerAdd(ICustomerRepository r)
-		{
-			this.r = r;
 		}
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
-        	HtmlHelper.RedirectIf(Session["UserId"] == null, "default.aspx");
+        	//HtmlHelper.RedirectIf(Session["UserId"] == null, "default.aspx");
         	
 			Add();
 		}
@@ -35,9 +30,13 @@ namespace HW.Invoicing
 		{
 			if (IsPostBack) {
 				var c = new Customer {
+                    Number = textBoxNumber.Text,
 					Name = textBoxName.Text,
-                    Phone = textBoxPhone.Text,
-                    Email = textBoxEmail.Text
+                    PostalAddress = textBoxPostalAddress.Text,
+                    InvoiceAddress = textBoxInvoiceAddress.Text,
+                    PurchaseOrderNumber = textBoxPurchaseOrderNumber.Text,
+                    YourReferencePerson = textBoxYourReferencePerson.Text,
+                    OurReferencePerson = textBoxOurReferencePerson.Text
 				};
 				r.Save(c);
 				Response.Redirect("customers.aspx");
