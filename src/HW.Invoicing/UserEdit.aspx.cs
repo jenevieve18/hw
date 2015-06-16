@@ -13,15 +13,10 @@ namespace HW.Invoicing
 {
 	public partial class UserEdit : System.Web.UI.Page
 	{
-		IUserRepository r;
+		SqlUserRepository r = new SqlUserRepository();
 		
-		public UserEdit() : this(new SqlUserRepository())
-		{
-		}
-		
-		public UserEdit(IUserRepository r)
-		{
-			this.r = r;
+		public UserEdit()
+        {
 		}
 		
 		public void Edit(int id)
@@ -29,7 +24,8 @@ namespace HW.Invoicing
 			if (IsPostBack) {
 				var d = new User {
 					Name = textBoxName.Text,
-					Password = textBoxPassword.Text
+					Password = textBoxPassword.Text,
+                    Color = textBoxColor.Text
 				};
 				r.Update(d, id);
 				Response.Redirect("users.aspx");
@@ -38,6 +34,7 @@ namespace HW.Invoicing
 			if (u != null) {
 				textBoxName.Text = u.Name;
 				textBoxPassword.Text = u.Password;
+                textBoxColor.Text = u.Color;
 			}
 		}
 		

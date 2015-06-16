@@ -135,4 +135,10 @@ alter table CustomerTimebook add Inactive integer;
 
 alter table CustomerTimebook add Status integer;
 
-alter table Customer alter 
+alter table Customer add InvoiceAddress varchar(255),
+PostalAddress varchar(255),
+PurchaseOrderNumber varchar(255),
+YourReferencePerson varchar(255),
+OurReferencePerson varchar(255);
+
+alter table [User] add Color varchar(255);

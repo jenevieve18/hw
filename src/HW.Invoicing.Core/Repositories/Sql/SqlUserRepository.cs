@@ -17,14 +17,15 @@ namespace HW.Invoicing.Core.Repositories.Sql
 		{
 			string query = string.Format(
 				@"
-INSERT INTO [User](Name, [Password])
-VALUES(@Name, @Password)"
+INSERT INTO [User](Name, [Password], Color)
+VALUES(@Name, @Password, @Color)"
 			);
 			ExecuteNonQuery(
 				query,
 				"invoicing",
 				new SqlParameter("@Name", u.Name),
-				new SqlParameter("@Password", u.Password)
+                new SqlParameter("@Password", u.Password),
+                new SqlParameter("@Color", u.Color)
 			);
 		}
 		
@@ -33,7 +34,8 @@ VALUES(@Name, @Password)"
 			string query = string.Format(
 				@"
 UPDATE [User] SET Name = @Name,
-[Password] = @Password
+[Password] = @Password,
+Color = @Color
 WHERE Id = @Id"
 			);
 			ExecuteNonQuery(
@@ -41,6 +43,7 @@ WHERE Id = @Id"
 				"invoicing",
 				new SqlParameter("@Name", u.Name),
 				new SqlParameter("@Password", u.Password),
+                new SqlParameter("@Color", u.Color),
 				new SqlParameter("@Id", id)
 			);
 		}
@@ -63,7 +66,7 @@ WHERE Id = @Id"
 		{
 			string query = string.Format(
 				@"
-SELECT Id, Name, [Password]
+SELECT Id, Name, [Password], Color
 FROM [User]
 ORDER BY Name"
 			);
@@ -74,7 +77,8 @@ ORDER BY Name"
 						new User {
 							Id = GetInt32(rs, 0),
 							Name = GetString(rs, 1),
-							Password = GetString(rs, 2)
+							Password = GetString(rs, 2),
+                            Color = GetString(rs, 3)
 						}
 					);
 				}
@@ -86,7 +90,7 @@ ORDER BY Name"
 		{
 			string query = string.Format(
 				@"
-SELECT Id, Name, [Password]
+SELECT Id, Name, [Password], Color
 FROM [User]
 WHERE Id = @Id"
 			);
@@ -96,7 +100,8 @@ WHERE Id = @Id"
 					u = new User {
 						Id = GetInt32(rs, 0),
 						Name = GetString(rs, 1),
-						Password = GetString(rs, 2)
+						Password = GetString(rs, 2),
+                        Color = GetString(rs, 3)
 					};
 				}
 			}
