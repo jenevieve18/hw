@@ -12,22 +12,18 @@ namespace HW.Invoicing
 {
     public partial class UserAdd : System.Web.UI.Page
     {
-    	IUserRepository r;
+    	SqlUserRepository r = new SqlUserRepository();
     	
-    	public UserAdd() : this(new SqlUserRepository())
+    	public UserAdd()
     	{
-    	}
-    	
-    	public UserAdd(IUserRepository r)
-    	{
-    		this.r = r;
     	}
     	
     	public void Add()
     	{
     		var u = new User {
                 Name = textBoxName.Text,
-                Password = textBoxPassword.Text
+                Password = textBoxPassword.Text,
+                Color = textBoxColor.Text
         	};
             r.Save(u);
             Response.Redirect("users.aspx");
