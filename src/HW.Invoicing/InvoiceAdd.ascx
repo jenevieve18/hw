@@ -12,6 +12,9 @@
 .hw-border-bottom {
     border-bottom:1px solid;
 }
+.hw-border-top {
+    border-top:1px solid;
+}
 .hw-border-last {
     border-top:1px solid;
     border-left:1px solid;
@@ -35,25 +38,48 @@
 			<h4 class="modal-title" id="H1">Create an invoice</h4>
 		</div>
 		<div class="modal-body">
-            <table class="hw-table" style="">
+            <table width="100%" cellpadding="5px">
+                <tr>
+                    <td rowspan="3">
+                        <img src="http://s16.postimg.org/vkxh59d5h/ihg.png"><br />
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td><h3>INVOICE</h3></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="hw-border-top">Customer Number</td>
+                    <td class="hw-border-top"><strong>812000-5650</strong></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="hw-border-top">Invoice Number</td>
+                    <td class="hw-border-top"><strong>IHGF-134</strong></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td class="hw-border-top">Invoice Date</td>
+                    <td class="hw-border-top"><strong>2012-05-31</strong></td>
+                </tr>
                 <tr>
                     <td>
-                        <img src="http://s16.postimg.org/vkxh59d5h/ihg.png"><br>
-                        <strong>Customer/Postal Address/Invoice Address</strong><br>
-                        <textarea class="form-control"></textarea><br>
-                        <strong>Purchase Order Number:</strong>
-                        <input type="text" class="form-control">
+                        Customer/Postal Address/Invoice Address
                     </td>
+                    <td></td>
+                    <td class="hw-border-top">Maturity Date</td>
+                    <td class="hw-border-top"><strong>2012-06-30</strong></td>
+                </tr>
+                <tr>
                     <td>
-                        <div class="input-group">
-                            <div class="hw-control input-group-addon">Customer Number</div>
-                            <input type="text" class="form-control" id="exampleInputAmount">
-                        </div>
-                        <div class="input-group">
-                            <div class="hw-control input-group-addon">Invoice Number</div>
-                            <input type="text" class="form-control" id="exampleInputAmount">
-                        </div>
+                        <strong>Company Address<br />
+                        P.O. Box 1234<br />
+                        111 35 Stockholm</strong>
                     </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
             </table>
             <p>Payment terms: 30 days net. At the settlement after the due date will be charged interest of 2% per month.</p>
