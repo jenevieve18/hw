@@ -8,21 +8,18 @@ using HW.Core.Helpers;
 using HW.Invoicing.Core.Models;
 using HW.Invoicing.Core.Repositories;
 using HW.Invoicing.Core.Repositories.Sql;
+using HW.Invoicing.Core.Services;
 
 namespace HW.Invoicing
 {
     public partial class Customers : System.Web.UI.Page
     {
-    	ICustomerRepository r;
+    	//SqlCustomerRepository r = new SqlCustomerRepository();
     	protected IList<Customer> customers;
+        CustomerService s = new CustomerService(new SqlCustomerRepository());
     	
-    	public Customers() : this(new SqlCustomerRepository())
+    	public Customers()
     	{
-    	}
-    	
-    	public Customers(ICustomerRepository r)
-    	{
-    		this.r = r;
     	}
     	
     	public void Index()
@@ -34,7 +31,8 @@ namespace HW.Invoicing
         {
         	//HtmlHelper.RedirectIf(Session["UserId"] == null, "default.aspx");
         	
-        	customers = r.FindAll();
+        	//customers = r.FindAll();
+            customers = s.FindAll();
         }
     }
 }

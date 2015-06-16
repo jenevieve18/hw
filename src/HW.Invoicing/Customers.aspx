@@ -19,7 +19,11 @@
     <% foreach (var c in customers) { %>
     <tr>
         <td><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></td>
-        <td></td>
+        <td>
+            <% if (c.FirstPrimaryContact != null) { %>
+                <%= c.FirstPrimaryContact.Contact %>
+            <% } %>
+        </td>
         <td><%= c.Phone %></td>
         <td><%= c.Email %></td>
     </tr>

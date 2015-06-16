@@ -18,6 +18,32 @@ namespace HW.Invoicing.Core.Models
         public string PurchaseOrderNumber { get; set; }
         public string YourReferencePerson { get; set; }
         public string OurReferencePerson { get; set; }
+
+        public IList<CustomerContact> Contacts { get; set; }
+
+        public CustomerContact FirstPrimaryContact
+        {
+            get
+            {
+                if (HasPrimaryContacts)
+                {
+                    return PrimaryContacts[0];
+                }
+                return null;
+            }
+        }
+
+        public bool HasPrimaryContacts
+        {
+            get { return PrimaryContacts.Count > 0; }
+        }
+
+        public IList<CustomerContact> PrimaryContacts
+        {
+            get {
+                return (from c in Contacts where c.Type == 1 select c).ToList();
+            }
+        }
 	}
 	
 	public class Unit : BaseModel

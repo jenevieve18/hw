@@ -61,13 +61,9 @@
     <Compile Include="Repositories\Sql\SqlNewsRepository.cs" />
     <Compile Include="Repositories\Sql\SqlUnitRepository.cs" />
     <Compile Include="Repositories\Sql\SqlUserRepository.cs" />
+    <Compile Include="Services\CustomerService.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers" />
-    <Folder Include="Services" />
-    <Folder Include="Repositories" />
-    <Folder Include="Repositories\Sql" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\HW.Core\HW.Core.csproj">
       <Project>{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}</Project>
