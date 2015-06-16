@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="CustomerShow.aspx.cs" Inherits="HW.Invoicing.CustomerShow" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
+<%@ Register TagPrefix="hw" TagName="InvoiceAdd" Src="~/InvoiceAdd.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
     <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>
@@ -196,42 +197,7 @@
 				</div>
 			</div>
 			<div class="modal fade" id="modal-container-701809" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog" style="width:80%">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-							<h4 class="modal-title" id="H1">Create an invoice</h4>
-						</div>
-						<div class="modal-body">
-                            <table style="width:100%">
-                                <tr>
-                                    <td>
-                                        <div class="form-group">
-	                                        <label for="<%= textBox1.ClientID %>">Invoicing Address</label>
-                                            <asp:TextBox ID="textBox1" runat="server" CssClass="form-control"></asp:TextBox>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <table>
-                                            <tr>
-                                                <td>Customer number</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Invoice number</td>
-                                                <td></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-						</div>
-						<div class="modal-footer">
-							 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> <button type="button" class="btn btn-primary">Save changes</button>
-						</div>
-					</div>
-					
-				</div>
+				<hw:InvoiceAdd runat="server" />
 				
 			</div>
 			<div class="alert alert-info">
