@@ -14,7 +14,7 @@ namespace HW.Invoicing
     {
     	SqlCustomerRepository r = new SqlCustomerRepository();
         protected int id;
-        int customerId;
+        protected int customerId;
     	
         protected void Page_Load(object sender, EventArgs e)
         {
