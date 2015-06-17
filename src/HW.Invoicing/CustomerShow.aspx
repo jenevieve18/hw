@@ -378,7 +378,7 @@
             <table class="table table-hover small">
                 <tr>
                     <th></th>
-                    <th>Date</th>
+                    <th style="width:10%">Date</th>
                     <th>Department</th>
                     <th>Contact</th>
                     <th>Item</th>
