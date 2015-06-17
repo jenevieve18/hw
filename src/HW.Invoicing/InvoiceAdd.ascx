@@ -4,6 +4,7 @@
     width:100%;
     margin-bottom:40px;
     padding:5px;
+    font-weight:bold;
 }
 .hw-border-left {
     border-top:1px solid;
@@ -64,7 +65,7 @@
                 </tr>
                 <tr>
                     <td>
-                        Customer/Postal Address/Invoice Address
+                        <small><strong>Customer/Postal Address/Invoice Address</strong></small>
                     </td>
                     <td></td>
                     <td class="hw-border-top">Maturity Date</td>
@@ -79,8 +80,8 @@
                     <td></td>
                     <td colspan="2">
                         <small>
-                            Your Reference: First Name + Surname<br />
-                            Our Reference: Dan Hasson
+                            Your Reference: <strong>First Name + Surname</strong><br />
+                            Our Reference: <strong>Dan Hasson</strong>
                         </small>
                     </td>
                 </tr>
