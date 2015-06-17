@@ -62,7 +62,8 @@
             <p>Bellow are the most common tasks</p>
             <ul>
                 <li>Add a <%= HtmlHelper.Anchor("customer", "customeradd.aspx") %> or an <%= HtmlHelper.Anchor("item", "itemadd.aspx") %>.</li>
-                <li>Create an <%= HtmlHelper.Anchor("invoice", "invoiceadd.aspx") %>.</li>
+                <li>Show <%= HtmlHelper.Anchor("customers", "customers.aspx")%> and add timebook.</li>
+                <li>List <%= HtmlHelper.Anchor("invoices", "invoices.aspx") %> and check receivables.</li>
             </ul>
         </div>
     </div>
