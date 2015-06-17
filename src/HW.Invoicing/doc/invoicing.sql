@@ -144,3 +144,12 @@ OurReferencePerson varchar(255);
 alter table [User] add Color varchar(255);
 
 alter table Customer add Inactive integer;
+
+create table Company(
+	Id integer not null primary key identity,
+	Name varchar(255),
+	Address varchar(255),
+	Phone varchar(255),
+	BankAccountNumber varchar(255),
+	TIN varchar(255)
+);

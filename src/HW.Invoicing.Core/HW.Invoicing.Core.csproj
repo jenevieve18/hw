@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\ItemHelper.cs" />
+    <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\Item.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="Repositories\IInvoiceRepository.cs" />
     <Compile Include="Repositories\IItemRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlCompanyRepository.cs" />
     <Compile Include="Repositories\Sql\SqlCustomerRepository.cs" />
     <Compile Include="Repositories\Sql\SqlInvoiceRepository.cs" />
     <Compile Include="Repositories\Sql\SqlIssueRepository.cs" />
@@ -63,7 +65,6 @@
     <Compile Include="Repositories\Sql\SqlUserRepository.cs" />
     <Compile Include="Services\CustomerService.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\HW.Core\HW.Core.csproj">
       <Project>{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}</Project>

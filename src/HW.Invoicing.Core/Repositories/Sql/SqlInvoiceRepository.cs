@@ -48,7 +48,7 @@ WHERE Id = @id"
 		{
 			string query = string.Format(
 				@"
-SELECT i.Id, i.Date, c.Id, c.Name
+SELECT i.Id, i.Date, c.Id, c.Name, c.Number
 FROM Invoice i
 INNER JOIN Customer c ON i.CustomerId = c.Id"
 			);
@@ -58,10 +58,11 @@ INNER JOIN Customer c ON i.CustomerId = c.Id"
 					invoices.Add(
 						new Invoice {
 							Id = GetInt32(rs, 0),
-							Date = GetDateTime(rs, 1),
+							Date = GetDateTime(rs, 1, DateTime.Now),
 							Customer = new Customer {
 								Id = GetInt32(rs, 2),
-								Name = GetString(rs, 3)
+								Name = GetString(rs, 3),
+                                Number = GetString(rs, 4)
 							}
 						}
 					);
