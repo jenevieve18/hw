@@ -54,7 +54,7 @@ where id = @Id";
 				new SqlParameter("@Address", t.Address),
 				new SqlParameter("@Phone", t.Phone),
 				new SqlParameter("@BankAccountNumber", t.BankAccountNumber),
-				new SqlParameter("@TIN", t.Name),
+				new SqlParameter("@TIN", t.TIN),
 				new SqlParameter("@Id", id)
 			);
 		}
