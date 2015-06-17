@@ -13,16 +13,11 @@ namespace HW.Invoicing
 {
     public partial class Invoices : System.Web.UI.Page
     {
-    	IInvoiceRepository r;
+    	SqlInvoiceRepository r = new SqlInvoiceRepository();
     	protected IList<Invoice> invoices;
     	
-    	public Invoices() : this(new SqlInvoiceRepository())
+    	public Invoices()
     	{
-    	}
-    	
-    	public Invoices(IInvoiceRepository r)
-    	{
-    		this.r = r;
     	}
     	
     	public void Index()

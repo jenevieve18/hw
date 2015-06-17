@@ -16,6 +16,7 @@ namespace HW.Invoicing.Core.Models
 		
 		public Invoice()
 		{
+            Date = DateTime.Now;
 			Items = new List<InvoiceItem>();
 			Payments = new List<InvoicePayment>();
 		}
