@@ -113,20 +113,6 @@
                     <td class="text-right">1.000,00</td>
                 </tr>
                 <% } %>
-                <!--<tr>
-                    <td>2015-05-20 Preparations of reports and questionaire surveys. (Dan)</td>
-                    <td>2</td>
-                    <td>hours</td>
-                    <td class="text-right">400,00</td>
-                    <td class="text-right">800,00</td>
-                </tr>
-                <tr>
-                    <td>2015-05-20 Preparations of reports and questionaire surveys. (Dan)</td>
-                    <td>2</td>
-                    <td>hours</td>
-                    <td class="text-right">400,00</td>
-                    <td class="text-right">800,00</td>
-                </tr>-->
                 <tr>
                     <td>&nbsp;</td>
                 </tr>
@@ -191,8 +177,8 @@
             </small>
 		</div>
 		<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button> <button type="button" class="btn btn-primary">Save changes</button>
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <asp:Button ID="buttonSave" runat="server" Text="Save invoice" CssClass="btn btn-primary" />
 		</div>
-	</div>
-					
+	</div>		
 </div>

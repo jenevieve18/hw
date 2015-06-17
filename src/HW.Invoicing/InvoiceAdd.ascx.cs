@@ -11,7 +11,16 @@ namespace HW.Invoicing
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+        }
 
+        public event EventHandler Save;
+
+        protected virtual void OnSave(EventArgs e)
+        {
+            if (Save != null)
+            {
+                Save(this, e);
+            }
         }
     }
 }
