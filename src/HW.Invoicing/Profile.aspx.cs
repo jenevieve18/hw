@@ -13,20 +13,15 @@ namespace HW.Invoicing
 {
     public partial class Profile : System.Web.UI.Page
     {
-    	IUserRepository r;
+    	SqlUserRepository r = new SqlUserRepository();
     	
-    	public Profile() : this(new SqlUserRepository())
+    	public Profile()
     	{
-    	}
-    	
-    	public Profile(IUserRepository r)
-    	{
-    		this.r = r;
     	}
     	
         protected void Page_Load(object sender, EventArgs e)
         {
-            HtmlHelper.RedirectIf(Session["UserId"] == null, "default.aspx");
+            //HtmlHelper.RedirectIf(Session["UserId"] == null, "default.aspx");
         }
 
         protected void buttonSave_Click(object sender, EventArgs e)
