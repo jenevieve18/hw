@@ -103,10 +103,16 @@ namespace HW.Core.Repositories.Sql
 			}
 			return cmd.ExecuteReader(CommandBehavior.CloseConnection);
 		}
+
+        protected DateTime? GetDateTime(SqlDataReader rs, int index, DateTime? def)
+        {
+            return rs.IsDBNull(index) ? def : (DateTime?)rs.GetDateTime(index);
+        }
 		
 		protected DateTime? GetDateTime(SqlDataReader rs, int index)
 		{
-			return rs.IsDBNull(index) ? null : (DateTime?)rs.GetDateTime(index);
+			//return rs.IsDBNull(index) ? null : (DateTime?)rs.GetDateTime(index);
+            return GetDateTime(rs, index, null);
 		}
 		
 		protected void SetDateTime(DateTime date, SqlDataReader rs, int index)
