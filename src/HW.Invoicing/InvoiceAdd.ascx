@@ -77,10 +77,23 @@
                         111 35 Stockholm</strong>
                     </td>
                     <td></td>
+                    <td colspan="2">
+                        <small>
+                            Your Reference: First Name + Surname<br />
+                            Our Reference: Dan Hasson
+                        </small>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Purchase order number: XX6279292</strong>
+                    </td>
+                    <td></td>
                     <td></td>
                     <td></td>
                 </tr>
             </table>
+            <br />
             <p>Payment terms: 30 days net. At the settlement after the due date will be charged interest of 2% per month.</p>
             <table class="hw-invoice-items" cellpadding="5px">
                 <tr class="hw-invoice-header">
