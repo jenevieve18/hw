@@ -14,6 +14,7 @@ namespace HW.Invoicing
     {
         SqlCustomerRepository r = new SqlCustomerRepository();
         SqlItemRepository ir = new SqlItemRepository();
+        SqlInvoiceRepository vr = new SqlInvoiceRepository();
         protected IList<CustomerNotes> notes;
         protected IList<CustomerItem> prices;
         protected IList<CustomerContact> contacts;
@@ -78,6 +79,16 @@ namespace HW.Invoicing
             };
             r.SaveTimebook(t, ConvertHelper.ToInt32(Request.QueryString["Id"]));
             Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=timebook", id));
+        }
+
+        protected void buttonSaveInvoice_Click(object sender, EventArgs e)
+        {
+            var i = new Invoice
+            {
+                Customer = new Customer { Id = id }
+            };
+            vr.Save(i);
+            Response.Redirect(string.Format("invoices.aspx"));
         }
 
         protected void buttonSave_Click(object sender, EventArgs e)

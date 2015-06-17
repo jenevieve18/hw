@@ -1,6 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="CustomerShow.aspx.cs" Inherits="HW.Invoicing.CustomerShow" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
-<%@ Register TagPrefix="hw" TagName="InvoiceAdd" Src="~/InvoiceAdd.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
     <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>
@@ -367,7 +366,7 @@
 		                </div>
 		                <div class="modal-footer">
 			                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <asp:Button ID="buttonSaveInvoice" runat="server" Text="Save invoice" CssClass="btn btn-primary" />
+                            <asp:Button ID="buttonSaveInvoice" runat="server" Text="Save invoice" CssClass="btn btn-primary" OnClick="buttonSaveInvoice_Click" />
 		                </div>
 	                </div>
                 </div>
