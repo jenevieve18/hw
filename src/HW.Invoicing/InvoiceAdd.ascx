@@ -104,6 +104,7 @@
                     <td class="hw-border-left" style="width:10%"><strong>Price/Unit</strong></td>
                     <td class="hw-border-last" style="width:10%"><strong>Amount</strong></td>
                 </tr>
+                <% for (int i = 0; i < 20; i++) { %>
                 <tr>
                     <td>Usage HealthWatch 2012.01.01 - 2012.06.30</td>
                     <td>10</td>
@@ -111,7 +112,8 @@
                     <td class="text-right">100,00</td>
                     <td class="text-right">1.000,00</td>
                 </tr>
-                <tr>
+                <% } %>
+                <!--<tr>
                     <td>2015-05-20 Preparations of reports and questionaire surveys. (Dan)</td>
                     <td>2</td>
                     <td>hours</td>
@@ -124,7 +126,7 @@
                     <td>hours</td>
                     <td class="text-right">400,00</td>
                     <td class="text-right">800,00</td>
-                </tr>
+                </tr>-->
                 <tr>
                     <td>&nbsp;</td>
                 </tr>
