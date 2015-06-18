@@ -99,7 +99,7 @@ SELECT Id,
 	Inactive
 FROM Issue
 WHERE Status is null or status = 1
-ORDER BY CreatedAt DESC"
+ORDER BY Inactive, CreatedAt DESC"
 			);
 			var issues = new List<Issue>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {
