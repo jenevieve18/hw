@@ -130,6 +130,60 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.Button buttonSaveTimebook;
         
         /// <summary>
+        /// labelInvoiceCustomerNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelInvoiceCustomerNumber;
+        
+        /// <summary>
+        /// labelInvoiceNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelInvoiceNumber;
+        
+        /// <summary>
+        /// labelInvoiceCustomerAddress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelInvoiceCustomerAddress;
+        
+        /// <summary>
+        /// labelInvoiceYourReferencePerson control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelInvoiceYourReferencePerson;
+        
+        /// <summary>
+        /// labelInvoiceOurReferencePerson control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelInvoiceOurReferencePerson;
+        
+        /// <summary>
+        /// labelInvoicePurchaseOrderNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelInvoicePurchaseOrderNumber;
+        
+        /// <summary>
         /// labelCompanyName control.
         /// </summary>
         /// <remarks>

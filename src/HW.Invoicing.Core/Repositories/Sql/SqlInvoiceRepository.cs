@@ -14,17 +14,25 @@ namespace HW.Invoicing.Core.Repositories.Sql
 		
 		public override void Save(Invoice i)
 		{
-			string query = string.Format(
-				@"
+			string query = @"
 INSERT INTO Invoice(Date, CustomerId)
-VALUES(@Date, @CustomerId)"
-			);
+VALUES(@Date, @CustomerId)";
 			ExecuteNonQuery(
 				query,
 				"invoicing",
 				new SqlParameter("@Date", i.Date),
 				new SqlParameter("@CustomerId", i.Customer.Id)
 			);
+			query = @"
+insert into invoicetimebook(customertimebookid)
+values(@CustomerTimebookId)";
+			foreach (var t in i.Timebooks) {
+				ExecuteNonQuery(
+					query,
+					"invoicing",
+					new SqlParameter("@CustomerTimebookId", t.Timebook.Id)
+				);
+			}
 		}
 		
 		public override Invoice Read(int id)

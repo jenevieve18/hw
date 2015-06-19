@@ -56,6 +56,14 @@ namespace HW.Invoicing
 
                 company = cr.Read(companyId);
 
+                labelInvoiceAddress.Text = customer.Address;
+                labelInvoiceCustomerNumber.Text = customer.Number;
+                labelInvoiceCustomerAddress.Text = customer.InvoiceAddress.Replace("\n", "<br>");
+                labelInvoiceNumber.Text = "IHG-001";
+                labelInvoiceOurReferencePerson.Text = customer.OurReferencePerson;
+                labelInvoicePurchaseOrderNumber.Text = customer.PurchaseOrderNumber;
+                labelInvoiceYourReferencePerson.Text = customer.YourReferencePerson;
+
                 labelCompanyName.Text = company.Name;
                 labelCompanyAddress.Text = company.Address;
                 labelCompanyPhone.Text = company.Phone;
@@ -96,8 +104,14 @@ namespace HW.Invoicing
         {
             var i = new Invoice
             {
+                Date = DateTime.Now,
                 Customer = new Customer { Id = id }
             };
+            string[] timebooks = Request.Form.GetValues("invoice-timebooks");
+            foreach (var t in timebooks)
+            {
+                i.AddTimebook(ConvertHelper.ToInt32(t));
+            }
             vr.Save(i);
             Response.Redirect(string.Format("invoices.aspx"));
         }

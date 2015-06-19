@@ -153,3 +153,11 @@ create table Company(
 	BankAccountNumber varchar(255),
 	TIN varchar(255)
 );
+
+create table InvoiceTimebook(
+	Id integer not null primary key identity,
+	InvoiceId integer,
+	CustomerTimebookId integer
+);
+
+drop table InvoiceItem;

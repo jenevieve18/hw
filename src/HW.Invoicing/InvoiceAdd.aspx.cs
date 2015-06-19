@@ -60,7 +60,7 @@ namespace HW.Invoicing
 			string[] quantities = Request.Form.GetValues("quantity");
 			string[] prices = Request.Form.GetValues("price");
 			for (int j = 0; j < items.Length; j++) {
-				i.AddItem(ConvertHelper.ToInt32(items[j]), ConvertHelper.ToInt32(quantities[j]), ConvertHelper.ToInt32(prices[j]));
+//				i.AddItem(ConvertHelper.ToInt32(items[j]), ConvertHelper.ToInt32(quantities[j]), ConvertHelper.ToInt32(prices[j]));
 			}
 			return i;
 		}

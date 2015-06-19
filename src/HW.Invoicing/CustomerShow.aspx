@@ -4,7 +4,6 @@
     <link href="css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
     <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script type="text/javascript">
-        var timebooks = '{}';
         $(document).ready(function () {
             $('#<%= dropDownListTimebookItems.ClientID %>').change(function () {
                 var selected = $(this).find('option:selected');
@@ -19,6 +18,7 @@
                 format: "yyyy-mm-dd",
                 autoclose: true
             });
+            var invoiceItems = [];
             $('.timebook-item').click(function() {
                 if ($(this).is(':checked')) {
                     var selected = $(this);
@@ -30,23 +30,20 @@
                     var amount = selected.data('amount');
                     var invoiceItem = { 'id': id, 'item': item, 'unit': unit, 'qty': qty, 'price': price, 'amount': amount};
                     invoiceItems.push(invoiceItem);
-                    //alert(JSON.stringify(invoiceItems));
                 } else {
                     var selected = $(this);
                     var id = selected.data('id');
                     findAndRemove(invoiceItems, 'id', id);
-                    //alert(JSON.stringify(invoiceItems));
                 }
             });
             $('#modal-701809').click(function() {
-                //alert(invoiceItems);
                 var items = $('.hw-invoice-items tbody');
                 var subTotal = 0;
                 items.html('');
                 invoiceItems.forEach(function(e) {
                     items.append('' + 
                         '<tr>' + 
-                        '   <td>' + e.item + '</td>' + 
+                        '   <td>' + e.item + '<input type="hidden" id="invoice-timebooks[]" value="' + e.id + '"></td>' + 
                         '   <td>' + e.qty + '</td>' + 
                         '   <td>' + e.unit + '</td>' + 
                         '   <td class="text-right">' + e.price + '</td>' + 
@@ -305,17 +302,32 @@
                                 <tr>
                                     <td></td>
                                     <td class="hw-border-top">Customer Number</td>
-                                    <td class="hw-border-top"><strong>812000-5650</strong></td>
+                                    <td class="hw-border-top">
+                                        <strong>
+                                            <asp:Label ID="labelInvoiceCustomerNumber" runat="server" Text=""></asp:Label>
+                                            <!--812000-5650-->
+                                        </strong>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td class="hw-border-top">Invoice Number</td>
-                                    <td class="hw-border-top"><strong>IHGF-134</strong></td>
+                                    <td class="hw-border-top">
+                                        <strong>
+                                            <asp:Label ID="labelInvoiceNumber" runat="server" Text=""></asp:Label>
+                                            <!--IHGF-134-->
+                                        </strong>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td class="hw-border-top">Invoice Date</td>
-                                    <td class="hw-border-top"><strong>2012-05-31</strong></td>
+                                    <td class="hw-border-top">
+                                        <strong>
+                                            <%= DateTime.Now.ToString("yyyy-MM-dd") %>
+                                            <!--2012-05-31-->
+                                        </strong>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>
@@ -323,25 +335,33 @@
                                     </td>
                                     <td></td>
                                     <td class="hw-border-top">Maturity Date</td>
-                                    <td class="hw-border-top"><strong>2012-06-30</strong></td>
+                                    <td class="hw-border-top">
+                                        <strong>2012-06-30</strong>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <strong>Company Address<br />
+                                        <strong>
+                                            <asp:Label ID="labelInvoiceCustomerAddress" runat="server" Text=""></asp:Label>
+                                            <!--Company Address<br />
                                         P.O. Box 1234<br />
-                                        111 35 Stockholm</strong>
+                                        111 35 Stockholm-->
+                                        </strong>
                                     </td>
                                     <td></td>
                                     <td colspan="2">
                                         <small>
-                                            Your Reference: <strong>First Name + Surname</strong><br />
-                                            Our Reference: <strong>Dan Hasson</strong>
+                                            Your Reference: <strong>
+                                                <asp:Label ID="labelInvoiceYourReferencePerson" runat="server" Text=""></asp:Label><!--First Name + Surname--></strong><br />
+                                            Our Reference: <strong>
+                                                <asp:Label ID="labelInvoiceOurReferencePerson" runat="server" Text=""></asp:Label><!--Dan Hasson--></strong>
                                         </small>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <strong>Purchase order number: XX6279292</strong>
+                                        <strong>Purchase order number: 
+                                            <asp:Label ID="labelInvoicePurchaseOrderNumber" runat="server" Text="Label"></asp:Label><!--XX6279292--></strong>
                                     </td>
                                     <td></td>
                                     <td></td>
