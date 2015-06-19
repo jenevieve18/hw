@@ -15,6 +15,7 @@ namespace HW.Invoicing
         SqlCustomerRepository r = new SqlCustomerRepository();
         SqlItemRepository ir = new SqlItemRepository();
         SqlInvoiceRepository vr = new SqlInvoiceRepository();
+        SqlCompanyRepository cr = new SqlCompanyRepository();
         protected IList<CustomerNotes> notes;
         protected IList<CustomerItem> prices;
         protected IList<CustomerContact> contacts;
@@ -24,16 +25,19 @@ namespace HW.Invoicing
     	protected int id;
         protected string selectedTab;
         protected Customer customer;
+        protected int companyId;
+        protected Company company;
     	
         protected void Page_Load(object sender, EventArgs e)
         {
         	id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
+            companyId = ConvertHelper.ToInt32(Session["CompanyId"], 1);
             selectedTab = Request.QueryString["SelectedTab"] == null ? "notes" : Request.QueryString["SelectedTab"];
             if (!IsPostBack)
             {
                 customer = r.Read(id);
-                labelCustomer.Text = customer.Name;
 
+                labelCustomer.Text = customer.Name;
                 labelCustomerNumber.Text = textBoxCustomerNumber.Text = customer.Number;
                 labelInvoiceAddress.Text = customer.InvoiceAddress.Replace("\n", "<br>");
                 textBoxInvoiceAddress.Text = customer.InvoiceAddress;
@@ -49,6 +53,13 @@ namespace HW.Invoicing
                     labelPostalAddress.Font.Strikeout = labelPurchaseOrderNumber.Font.Strikeout =
                     labelYourReferencePerson.Font.Strikeout = labelOurReferencePerson.Font.Strikeout =
                     labelEmail.Font.Strikeout = labelPhone.Font.Strikeout = customer.Inactive;
+
+                company = cr.Read(companyId);
+
+                labelCompanyName.Text = company.Name;
+                labelCompanyAddress.Text = company.Address;
+                labelCompanyPhone.Text = company.Phone;
+                labelCompanyBankAccountNumber.Text = company.BankAccountNumber;
             }
         }
 

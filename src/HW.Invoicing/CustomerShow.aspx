@@ -4,6 +4,7 @@
     <link href="css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
     <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script type="text/javascript">
+        var timebooks = '{}';
         $(document).ready(function () {
             $('#<%= dropDownListTimebookItems.ClientID %>').change(function () {
                 var selected = $(this).find('option:selected');
@@ -18,9 +19,65 @@
                 format: "yyyy-mm-dd",
                 autoclose: true
             });
+            $('.timebook-item').click(function() {
+                if ($(this).is(':checked')) {
+                    var selected = $(this);
+                    var id = selected.data('id');
+                    var item = selected.data('item');
+                    var unit = selected.data('unit');
+                    var qty = selected.data('qty');
+                    var price = selected.data('price');
+                    var amount = selected.data('amount');
+                    var invoiceItem = { 'id': id, 'item': item, 'unit': unit, 'qty': qty, 'price': price, 'amount': amount};
+                    invoiceItems.push(invoiceItem);
+                    //alert(JSON.stringify(invoiceItems));
+                } else {
+                    var selected = $(this);
+                    var id = selected.data('id');
+                    findAndRemove(invoiceItems, 'id', id);
+                    //alert(JSON.stringify(invoiceItems));
+                }
+            });
+            $('#modal-701809').click(function() {
+                //alert(invoiceItems);
+                var items = $('.hw-invoice-items tbody');
+                var subTotal = 0;
+                items.html('');
+                invoiceItems.forEach(function(e) {
+                    items.append('' + 
+                        '<tr>' + 
+                        '   <td>' + e.item + '</td>' + 
+                        '   <td>' + e.qty + '</td>' + 
+                        '   <td>' + e.unit + '</td>' + 
+                        '   <td class="text-right">' + e.price + '</td>' + 
+                        '   <td class="text-right">' + e.amount + '</td>' + 
+                        '</tr>' + 
+                    '');
+                    subTotal += e.amount;
+                });
+                var momsPercentage = 25;
+                var moms = (momsPercentage / 100) * subTotal;
+                var totalAmount = subTotal + moms;
+                items.append('' +
+                    '<tr><td>&nbsp;</td></tr>' +
+                    '<tr><td colspan="4"></td><td class="hw-border-last">Subtotal</td></tr>' +
+                    '<tr><td colspan="4"></td><td class="hw-border-last">' + subTotal + '</td></tr>' +
+                    '<tr class="hw-invoice-header">' + 
+                    '   <td colspan="2"></td>' +
+                    '   <td class="hw-border-left">Moms %</td>' +
+                    '   <td class="hw-border-left">Moms</td>' +
+                    '   <td class="hw-border-last">Total Amount</td>' +
+                    '</tr>' +
+                    '<tr class="hw-border-bottom">' +
+                    '   <td colspan="2"></td>' +
+                    '   <td class="hw-border-left">' + momsPercentage + '</td>' +
+                    '   <td class="hw-border-left">' + moms + '</td>' +
+                    '   <td class="hw-border-last">' + totalAmount + '</td>' +
+                    ''
+                );
+            });
 
             $('.info').hide();
-
             $('#buttonEdit').click(function () {
                 $('.info-text').hide();
                 $('.info').show();
@@ -37,6 +94,15 @@
                 $('#<%= buttonReactivate.ClientID %>').hide();
             }
         });
+
+        function findAndRemove(array, property, value) {
+           $.each(array, function(index, result) {
+              if(result[property] == value) {
+                  //Remove from array
+                  array.splice(index, 1);
+              }    
+           });
+        }
 
         function turnEditable(labelId, textBoxId) {
             var label = $(labelId);
@@ -55,7 +121,7 @@
         }
     </script>
 
-    <style>
+    <style type="text/css">
         .hw-invoice-items {
             width:100%;
             margin-bottom:40px;
@@ -285,6 +351,7 @@
                             <br />
                             <p>Payment terms: 30 days net. At the settlement after the due date will be charged interest of 2% per month.</p>
                             <table class="hw-invoice-items" cellpadding="5px">
+                                <thead>
                                 <tr class="hw-invoice-header">
                                     <td class="hw-border-left">Item</td>
                                     <td class="hw-border-left" style="width:5%">Qty</td>
@@ -292,7 +359,10 @@
                                     <td class="hw-border-left" style="width:10%">Price/Unit</td>
                                     <td class="hw-border-last" style="width:10%">Amount</td>
                                 </tr>
-                                <% for (int i = 0; i < 20; i++) { %>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <!--<% for (int i = 0; i < 20; i++) { %>
                                 <tr>
                                     <td>Usage HealthWatch 2012.01.01 - 2012.06.30</td>
                                     <td>10</td>
@@ -319,26 +389,30 @@
                                     <td class="hw-border-last">3.200,00</td>
                                 </tr>
                                 <tr class="hw-invoice-header">
-                                    <td></td>
-                                    <td></td>
+                                    <td colspan="2"></td>
                                     <td class="hw-border-left">Moms %</td>
                                     <td class="hw-border-left">Moms</td>
                                     <td class="hw-border-last">Total Amount</td>
                                 </tr>
                                 <tr class="hw-border-bottom">
-                                    <td></td>
-                                    <td></td>
+                                    <td colspan="2"></td>
                                     <td class="hw-border-left">25,00</td>
                                     <td class="hw-border-left">800,00</td>
                                     <td class="hw-border-last">4.000,00</td>
-                                </tr>
+                                </tr>-->
                             </table>
                             <small class="hw-footer">
                                 <table style="width:100%">
                                     <tr>
-                                        <td colspan="4">Interactive Health Group in Stockholm AB</td>
+                                        <td colspan="4">
+                                            <asp:Label ID="labelCompanyName" runat="server" Text=""></asp:Label>
+                                            <!--Interactive Health Group in Stockholm AB-->
+                                        </td>
                                         <td>Bankgiro</td>
-                                        <td>5091 – 8853</td>
+                                        <td>
+                                            <asp:Label ID="labelCompanyBankAccountNumber" runat="server" Text=""></asp:Label>
+                                            <!--5091 – 8853-->
+                                        </td>
                                         <td></td>
                                     </tr>
                                     <tr>
@@ -346,16 +420,25 @@
                                     </tr>
                                     <tr>
                                         <td>Phone</td>
-                                        <td>+46-70-7284298</td>
+                                        <td>
+                                            <asp:Label ID="labelCompanyPhone" runat="server" Text=""></asp:Label>
+                                            <!--+46-70-7284298-->
+                                        </td>
                                         <td></td>
                                         <td></td>
                                         <td>VAT/Momsreg.nr</td>
-                                        <td>SE556712369901</td>
+                                        <td>
+                                            <asp:Label ID="labelTIN" runat="server" Text=""></asp:Label>
+                                            <!--SE556712369901-->
+                                        </td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <td>Postal Address</td>
-                                        <td colspan="2">Rörstrandsgatan 36, 113 40 Stockholm, Sweden</td>
+                                        <td colspan="2">
+                                            <asp:Label ID="labelCompanyAddress" runat="server" Text=""></asp:Label>
+                                            <!--Rörstrandsgatan 36, 113 40 Stockholm, Sweden-->
+                                        </td>
                                         <td></td>
                                         <td>F-skattebevis</td>
                                         <td></td>
@@ -394,7 +477,7 @@
                 <% foreach (var t in timebooks) { %>
                     <% if (t.Inactive) { %>
                         <tr>
-                            <td><input type="checkbox"" /></td>
+                            <td><input type="checkbox" class="timebook-item" data-id="<%= t.Id %>" id="timebook-<%= t.Id %>" /></td>
                             <td><strike><%= t.Date.Value.ToString("yyyy-MM-dd") %></strike></td>
                             <td><strike><%= t.Department %></strike></td>
                             <td><strike><%= t.Contact.Contact %></strike></td>
@@ -413,7 +496,15 @@
                         </tr>
                     <% } else { %>
                         <tr>
-                            <td><input type="checkbox"" /></td>
+                            <td>
+                                <input type="checkbox" class="timebook-item" id="timebook-<%= t.Id %>"
+                                     data-id="<%= t.Id %>"
+                                     data-item="<%= t.Item.Name %>"
+                                     data-unit="<%= t.Item.Unit.Name %>"
+                                     data-qty="<%= t.Quantity %>"
+                                     data-price="<%= t.Price %>"
+                                     data-amount="<%= t.Amount %>" />
+                            </td>
                             <td><%= t.Date.Value.ToString("yyyy-MM-dd") %></td>
                             <td><%= t.Department %></td>
                             <td><%= t.Contact.Contact %></td>

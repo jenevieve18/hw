@@ -130,6 +130,51 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.Button buttonSaveTimebook;
         
         /// <summary>
+        /// labelCompanyName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelCompanyName;
+        
+        /// <summary>
+        /// labelCompanyBankAccountNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelCompanyBankAccountNumber;
+        
+        /// <summary>
+        /// labelCompanyPhone control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelCompanyPhone;
+        
+        /// <summary>
+        /// labelTIN control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelTIN;
+        
+        /// <summary>
+        /// labelCompanyAddress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelCompanyAddress;
+        
+        /// <summary>
         /// buttonSaveInvoice control.
         /// </summary>
         /// <remarks>
