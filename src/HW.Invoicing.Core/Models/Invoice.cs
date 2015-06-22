@@ -49,7 +49,7 @@ namespace HW.Invoicing.Core.Models
 		
 		public void AddTimebook(int id)
 		{
-			AddTimebook(new InvoiceTimebook { Timebook = { Id = id }});
+			AddTimebook(new InvoiceTimebook { Timebook = new CustomerTimebook { Id = id }});
 		}
 		
 		public void AddTimebook(InvoiceTimebook t)

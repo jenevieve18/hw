@@ -43,7 +43,7 @@
                 invoiceItems.forEach(function(e) {
                     items.append('' + 
                         '<tr>' + 
-                        '   <td>' + e.item + '<input type="hidden" id="invoice-timebooks[]" value="' + e.id + '"></td>' + 
+                        '   <td>' + e.item + '<input type="hidden" id="invoice-timebooks" name="invoice-timebooks" value="' + e.id + '"></td>' + 
                         '   <td>' + e.qty + '</td>' + 
                         '   <td>' + e.unit + '</td>' + 
                         '   <td class="text-right">' + e.price + '</td>' + 
