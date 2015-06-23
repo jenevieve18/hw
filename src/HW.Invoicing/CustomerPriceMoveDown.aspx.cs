@@ -5,15 +5,25 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Core.Helpers;
+using HW.Invoicing.Core.Repositories.Sql;
 
 namespace HW.Invoicing
 {
     public partial class CustomerPriceMoveDown : System.Web.UI.Page
     {
+        SqlCustomerRepository r = new SqlCustomerRepository();
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            int id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
+            int sortOrder = ConvertHelper.ToInt32(Request.QueryString["SortOrder"]);
             int customerId = ConvertHelper.ToInt32(Request.QueryString["CustomerId"]);
+
+            var items = r.lololo(sortOrder, customerId);
+            if (items.Count == 2)
+            {
+                r.Swap(items[0], items[1]);
+            }
+
             Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=customer-prices", customerId));
         }
     }

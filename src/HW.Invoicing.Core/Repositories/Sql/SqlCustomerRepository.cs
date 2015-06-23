@@ -9,6 +9,15 @@ namespace HW.Invoicing.Core.Repositories.Sql
 {
 	public class SqlCustomerRepository : BaseSqlRepository<Customer>, ICustomerRepository
 	{
+        public void Swap(CustomerItem item1, CustomerItem item2)
+        {
+            string query = @"
+update customeritem set sortorder = @SortOrder
+where Id = @Id";
+            ExecuteNonQuery(query, "invoicing", new SqlParameter("@SortOrder", item1.SortOrder), new SqlParameter("@Id", item2.Id));
+            ExecuteNonQuery(query, "invoicing", new SqlParameter("@SortOrder", item2.SortOrder), new SqlParameter("@Id", item1.Id));
+        }
+
 		public void DeactivateContact(int id)
 		{
 			string query = @"
@@ -173,17 +182,32 @@ VALUES(@CustomerId, @CustomerContactId, @ItemId, @Quantity, @Price, @Consultant,
 		
 		public void SaveItem(CustomerItem price, int customerId)
 		{
-			string query = string.Format(
+            string query = @"
+select sortorder
+from customeritem where
+customerid = @CustomerId";
+            int order = 0;
+            using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerId", customerId)))
+            {
+                if (rs.Read())
+                {
+                    order = GetInt32(rs, 0);
+                    order += 1;
+                }
+            }
+
+			query = string.Format(
 				@"
-INSERT INTO CustomerItem(CustomerId, ItemId, Price)
-VALUES(@CustomerId, @ItemId, @Price)"
+INSERT INTO CustomerItem(CustomerId, ItemId, Price, SortOrder)
+VALUES(@CustomerId, @ItemId, @Price, @SortOrder)"
 			);
 			ExecuteNonQuery(
 				query,
 				"invoicing",
 				new SqlParameter("@CustomerId", customerId),
 				new SqlParameter("@ItemId", price.Item.Id),
-				new SqlParameter("@Price", price.Price)
+                new SqlParameter("@Price", price.Price),
+                new SqlParameter("@SortOrder", order)
 			);
 		}
 		
@@ -531,6 +555,72 @@ WHERE Id = @Id"
             }
             return c;
         }
+        
+        public IList<CustomerItem> lalala(int sortOrder, int customerId)
+        {
+        	string query = @"
+select top 2 id,
+price,
+itemid,
+inactive,
+sortorder
+from customeritem
+where sortorder <= @SortOrder
+and customerid = @CustomerId
+order by sortorder desc";
+        	var prices = new List<CustomerItem>();
+        	using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@SortOrder", sortOrder), new SqlParameter("@CustomerId", customerId))) {
+				while (rs.Read()) {
+					prices.Add(
+						new CustomerItem {
+							Id = GetInt32(rs, 0),
+							Price = GetDecimal(rs, 1),
+							Item = new Item {
+								Id = GetInt32(rs, 2)
+							},
+							Inactive = GetInt32(rs, 3) == 1,
+                            SortOrder = GetInt32(rs, 4)
+						}
+					);
+				}
+			}
+			return prices;
+        }
+
+        public IList<CustomerItem> lololo(int sortOrder, int customerId)
+        {
+            string query = @"
+select top 2 id,
+price,
+itemid,
+inactive,
+sortorder
+from customeritem p
+where sortorder >= @SortOrder
+and customerid = @CustomerId
+order by sortorder";
+            var prices = new List<CustomerItem>();
+            using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@SortOrder", sortOrder), new SqlParameter("@CustomerId", customerId)))
+            {
+                while (rs.Read())
+                {
+                    prices.Add(
+                        new CustomerItem
+                        {
+                            Id = GetInt32(rs, 0),
+                            Price = GetDecimal(rs, 1),
+                            Item = new Item
+                            {
+                                Id = GetInt32(rs, 2)
+                            },
+                            Inactive = GetInt32(rs, 3) == 1,
+                            SortOrder = GetInt32(rs, 4)
+                        }
+                    );
+                }
+            }
+            return prices;
+        }
 		
 		public IList<CustomerItem> FindItems(int customerId)
 		{
@@ -539,11 +629,13 @@ WHERE Id = @Id"
 SELECT p.Id,
 	p.Price,
 	i.Name,
-	p.Inactive
+	p.Inactive,
+p.SortOrder
 FROM CustomerItem p,
 Item i
 WHERE p.ItemId = i.Id 
-AND CustomerId = @CustomerId"
+AND CustomerId = @CustomerId
+order by p.sortorder"
 			);
 			var prices = new List<CustomerItem>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerId", customerId))) {
@@ -555,7 +647,8 @@ AND CustomerId = @CustomerId"
 							Item = new Item {
 								Name = GetString(rs, 2)
 							},
-							Inactive = GetInt32(rs, 3) == 1
+							Inactive = GetInt32(rs, 3) == 1,
+                            SortOrder = GetInt32(rs, 4)
 						}
 					);
 				}

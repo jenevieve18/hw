@@ -59,6 +59,7 @@ namespace HW.Invoicing.Core.Models
 		public Item Item { get; set; }
 		public decimal Price { get; set; }
 		public bool Inactive { get; set; }
+        public int SortOrder { get; set; }
 	}
 	
 	public class CustomerContact : BaseModel

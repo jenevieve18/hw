@@ -598,8 +598,8 @@
                             <td>
                                 <%= HtmlHelper.Anchor("Edit", string.Format("customerpriceedit.aspx?Id={0}&CustomerId={1}", p.Id, id)) %>
                                 <%= HtmlHelper.Anchor("Delete", string.Format("customerpricedelete.aspx?Id={0}&CUstomerId={1}", p.Id, id), "onclick=\"return confirm('Are you sure you want to delete this customer price?')\"")%>
-                                <%= HtmlHelper.Anchor("Move Up", string.Format("customerpricemoveup.aspx?Id={0}&CustomerId={1}", p.Id, id))%>
-                                <%= HtmlHelper.Anchor("Move Down", string.Format("customerpricemovedown.aspx?Id={0}&CustomerId={1}", p.Id, id))%>
+                                <%= HtmlHelper.Anchor("Move Up", string.Format("customerpricemoveup.aspx?SortOrder={0}&CustomerId={1}", p.SortOrder, id))%>
+                                <%= HtmlHelper.Anchor("Move Down", string.Format("customerpricemovedown.aspx?SortOrder={0}&CustomerId={1}", p.SortOrder, id))%>
                             </td>
                         </tr>
                     <% } else { %>
@@ -609,8 +609,8 @@
                             <td>
                                 <%= HtmlHelper.Anchor("Edit", string.Format("customerpriceedit.aspx?Id={0}&CustomerId={1}", p.Id, id)) %>
                                 <%= HtmlHelper.Anchor("Deactivate", string.Format("customerpricedeactivate.aspx?Id={0}&CustomerId={1}", p.Id, id)) %>
-                                <%= HtmlHelper.Anchor("Move Up", string.Format("customerpricemoveup.aspx?Id={0}&CustomerId={1}", p.Id, id))%>
-                                <%= HtmlHelper.Anchor("Move Down", string.Format("customerpricemovedown.aspx?Id={0}&CustomerId={1}", p.Id, id))%>
+                                <%= HtmlHelper.Anchor("Move Up", string.Format("customerpricemoveup.aspx?SortOrder={0}&CustomerId={1}", p.SortOrder, id))%>
+                                <%= HtmlHelper.Anchor("Move Down", string.Format("customerpricemovedown.aspx?SortOrder={0}&CustomerId={1}", p.SortOrder, id))%>
                             </td>
                         </tr>
                     <% } %>
