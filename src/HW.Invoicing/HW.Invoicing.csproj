@@ -64,6 +64,8 @@
     <Content Include="CustomerPriceDeactivate.aspx" />
     <Content Include="CustomerPriceDelete.aspx" />
     <Content Include="CustomerPriceEdit.aspx" />
+    <Content Include="CustomerPriceMoveDown.aspx" />
+    <Content Include="CustomerPriceMoveUp.aspx" />
     <Content Include="Customers.aspx" />
     <Content Include="CustomerShow.aspx" />
     <Content Include="CustomerTimebookDeactivate.aspx" />
@@ -186,6 +188,20 @@
     </Compile>
     <Compile Include="CustomerPriceEdit.aspx.designer.cs">
       <DependentUpon>CustomerPriceEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerPriceMoveDown.aspx.cs">
+      <DependentUpon>CustomerPriceMoveDown.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomerPriceMoveDown.aspx.designer.cs">
+      <DependentUpon>CustomerPriceMoveDown.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerPriceMoveUp.aspx.cs">
+      <DependentUpon>CustomerPriceMoveUp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomerPriceMoveUp.aspx.designer.cs">
+      <DependentUpon>CustomerPriceMoveUp.aspx</DependentUpon>
     </Compile>
     <Compile Include="Customers.aspx.cs">
       <DependentUpon>Customers.aspx</DependentUpon>

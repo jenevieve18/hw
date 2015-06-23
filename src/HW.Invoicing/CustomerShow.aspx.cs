@@ -61,7 +61,6 @@ namespace HW.Invoicing
 
                 company = cr.Read(companyId);
 
-                //labelInvoiceAddress.Text = customer.InvoiceAddress;
                 labelInvoiceCustomerNumber.Text = customer.Number;
                 labelInvoiceCustomerAddress.Text = customer.InvoiceAddress.Replace("\n", "<br>");
                 labelInvoiceNumber.Text = "IHG-001";
