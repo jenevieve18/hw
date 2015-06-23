@@ -206,8 +206,14 @@ namespace HW.Invoicing
             {
                 dropDownListTimebookContacts.Items.Add(new ListItem(c.Contact, c.Id.ToString()));
             }
+
+            customer.Contacts = contacts;
             
             foreach (var t in new[] { new { id = 1, name = "Primary" }, new { id = 2, name = "Secondary" }, new { id = 3, name = "Other" }}) {
+                if ((t.id == 1 && customer.HasPrimaryContacts) || (t.id == 2 && customer.HasSecondaryContacts))
+                {
+                    continue;
+                }
             	var li = new ListItem(t.name, t.id.ToString());
             	li.Attributes.Add("class", "radio-inline");
             	radioButtonListContactType.Items.Add(li);

@@ -39,10 +39,22 @@ namespace HW.Invoicing.Core.Models
             get { return PrimaryContacts.Count > 0; }
         }
 
+        public bool HasSecondaryContacts
+        {
+            get { return SecondaryContacts.Count > 0; }
+        }
+
         public IList<CustomerContact> PrimaryContacts
         {
             get {
                 return (from c in Contacts where c.Type == 1 select c).ToList();
+            }
+        }
+
+        public IList<CustomerContact> SecondaryContacts
+        {
+            get {
+                return (from c in Contacts where c.Type == 2 select c).ToList();
             }
         }
 	}
