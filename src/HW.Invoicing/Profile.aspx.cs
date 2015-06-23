@@ -23,6 +23,8 @@ namespace HW.Invoicing
         {
             HtmlHelper.RedirectIf(Session["UserId"] == null, "login.aspx");
 
+            textBoxPassword.Attributes["type"] = "password";
+
             Update(ConvertHelper.ToInt32(Session["UserID"]));
         }
 

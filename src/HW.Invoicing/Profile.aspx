@@ -11,7 +11,7 @@
 </div>
 <div class="form-group">
 	<label for="<%= textBoxPassword.ClientID %>">Password</label>
-    <asp:TextBox ID="textBoxPassword" runat="server" CssClass="form-control" TextMode="Password"></asp:TextBox>
+    <asp:TextBox ID="textBoxPassword" runat="server" CssClass="form-control" TextMode="SingleLine"></asp:TextBox>
 </div>
 <div>
     <asp:Button ID="buttonSave" CssClass="btn btn-success" runat="server" Text="Save profile" 
