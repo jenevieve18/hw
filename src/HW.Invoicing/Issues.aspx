@@ -13,8 +13,8 @@
     <tr>
         <th style="width: 10%;">Number</th>
         <th>Title</th>
-        <th>Status</th>
         <th>Description</th>
+        <th>Status</th>
         <th></th>
     </tr>
     <% foreach (var i in issues) { %>
