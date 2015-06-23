@@ -12,7 +12,7 @@ namespace HW.Invoicing.Core.Repositories.Sql
 		public void DeactivateContact(int id)
 		{
 			string query = @"
-update customercontact set inactive = 1
+UPDATE CustomerContact SET Inactive = 1
 WHERE Id = @Id";
 			ExecuteNonQuery(
 				query,
@@ -24,7 +24,7 @@ WHERE Id = @Id";
         public void DeactivateTimebook(int id)
         {
             string query = @"
-update CustomerTimebook set inactive = 1
+UPDATE CustomerTimebook SET Inactive = 1
 WHERE Id = @Id";
             ExecuteNonQuery(
                 query,
@@ -36,7 +36,7 @@ WHERE Id = @Id";
 		public void DeactivateItem(int id)
 		{
 			string query = @"
-update customeritem set inactive = 1
+UPDATE CustomerItem SET Inactive = 1
 WHERE Id = @Id";
 			ExecuteNonQuery(
 				query,
@@ -619,7 +619,8 @@ SELECT t.CustomerContactId,
 	t.Department,
     t.Id,
     t.Inactive,
-    t.InternalComments
+    t.InternalComments,
+    (SELECT 1 FROM InvoiceTimebook it WHERE it.CustomerTimebookId = t.Id) Status
 FROM CustomerTimebook t
 INNER JOIN CustomerContact c ON c.Id = t.CustomerContactId
 INNER JOIN Item i ON i.Id = t.ItemId
@@ -649,7 +650,8 @@ ORDER BY t.Date DESC"
 							Department = GetString(rs, 11),
                             Id = GetInt32(rs, 12),
                             Inactive = GetInt32(rs, 13) == 1,
-                            InternalComments = GetString(rs, 14)
+                            InternalComments = GetString(rs, 14),
+                            Status = GetInt32(rs, 15)
 						}
 					);
 				}

@@ -322,7 +322,6 @@
                                     <td class="hw-border-top">
                                         <strong>
                                             <asp:Label ID="labelInvoiceCustomerNumber" runat="server" Text=""></asp:Label>
-                                            <!--812000-5650-->
                                         </strong>
                                     </td>
                                 </tr>
@@ -332,7 +331,6 @@
                                     <td class="hw-border-top">
                                         <strong>
                                             <asp:Label ID="labelInvoiceNumber" runat="server" Text=""></asp:Label>
-                                            <!--IHGF-134-->
                                         </strong>
                                     </td>
                                 </tr>
@@ -342,7 +340,6 @@
                                     <td class="hw-border-top">
                                         <strong>
                                             <%= DateTime.Now.ToString("yyyy-MM-dd") %>
-                                            <!--2012-05-31-->
                                         </strong>
                                     </td>
                                 </tr>
@@ -360,9 +357,6 @@
                                     <td>
                                         <strong>
                                             <asp:Label ID="labelInvoiceCustomerAddress" runat="server" Text=""></asp:Label>
-                                            <!--Company Address<br />
-                                        P.O. Box 1234<br />
-                                        111 35 Stockholm-->
                                         </strong>
                                     </td>
                                     <td></td>
@@ -443,12 +437,10 @@
                                     <tr>
                                         <td colspan="4">
                                             <asp:Label ID="labelCompanyName" runat="server" Text=""></asp:Label>
-                                            <!--Interactive Health Group in Stockholm AB-->
                                         </td>
                                         <td>Bankgiro</td>
                                         <td>
                                             <asp:Label ID="labelCompanyBankAccountNumber" runat="server" Text=""></asp:Label>
-                                            <!--5091 – 8853-->
                                         </td>
                                         <td></td>
                                     </tr>
@@ -459,14 +451,12 @@
                                         <td>Phone</td>
                                         <td>
                                             <asp:Label ID="labelCompanyPhone" runat="server" Text=""></asp:Label>
-                                            <!--+46-70-7284298-->
                                         </td>
                                         <td></td>
                                         <td></td>
                                         <td>VAT/Momsreg.nr</td>
                                         <td>
                                             <asp:Label ID="labelTIN" runat="server" Text=""></asp:Label>
-                                            <!--SE556712369901-->
                                         </td>
                                         <td></td>
                                     </tr>
@@ -474,7 +464,6 @@
                                         <td>Postal Address</td>
                                         <td colspan="2">
                                             <asp:Label ID="labelCompanyAddress" runat="server" Text=""></asp:Label>
-                                            <!--Rörstrandsgatan 36, 113 40 Stockholm, Sweden-->
                                         </td>
                                         <td></td>
                                         <td>F-skattebevis</td>
