@@ -19,7 +19,8 @@
                 autoclose: true
             });
             var invoiceItems = [];
-            $('.timebook-item').click(function() {
+            //$('.timebook-item').click(function() {
+            $('.timebook-item').change(function() {
                 if ($(this).is(':checked')) {
                     var selected = $(this);
                     var id = selected.data('id');
@@ -34,6 +35,15 @@
                     var selected = $(this);
                     var id = selected.data('id');
                     findAndRemove(invoiceItems, 'id', id);
+                }
+            });
+            $('#checkbox-timebook-all').click(function() {
+                if ($(this).is(':checked')) {
+                    $('.timebook-item').prop('checked', true);
+                    $('.timebook-item').change();
+                } else {
+                    $('.timebook-item').prop('checked', false);
+                    invoiceItems = [];
                 }
             });
             $('#modal-701809').click(function() {
@@ -480,7 +490,7 @@
 			</div>
             <table class="table table-hover small">
                 <tr>
-                    <th></th>
+                    <th><input type="checkbox" id="checkbox-timebook-all" /></th>
                     <th style="width:10%">Date</th>
                     <th>Department</th>
                     <th>Contact</th>

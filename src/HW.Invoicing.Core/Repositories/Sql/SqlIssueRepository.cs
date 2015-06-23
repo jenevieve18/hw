@@ -36,14 +36,15 @@ where id = @Id";
 		public override void Save(Issue t)
 		{
 			string query = @"
-INSERT INTO Issue(Title, Description, CreatedAt)
-VALUES(@Title, @Description, @CreatedAt)";
+INSERT INTO Issue(Title, Description, CreatedAt, Inactive)
+VALUES(@Title, @Description, @CreatedAt, @Inactive)";
 			ExecuteNonQuery(
 				query,
 				"invoicing",
 				new SqlParameter("@Title", t.Title),
 				new SqlParameter("@Description", t.Description),
-				new SqlParameter("@CreatedAt", DateTime.Now)
+				new SqlParameter("@CreatedAt", DateTime.Now),
+				new SqlParameter("@Inactive", t.Inactive)
 			);
 		}
 		
