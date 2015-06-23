@@ -6,6 +6,9 @@
 
 <h3>Edit customer note</h3>
 <div class="form-group">
+	<label>Created By: <%= Session["UserName"] %></label>
+</div>
+<div class="form-group">
 	<label for="<%= textBoxNotes.ClientID %>">Note</label>
     <asp:TextBox ID="textBoxNotes" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
 </div>
