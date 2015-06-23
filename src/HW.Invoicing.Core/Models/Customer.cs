@@ -34,6 +34,17 @@ namespace HW.Invoicing.Core.Models
             }
         }
 
+        public CustomerContact SecondaryContact
+        {
+            get {
+                if (HasSecondaryContacts)
+                {
+                    return SecondaryContacts[0];
+                }
+                return null;
+            }
+        }
+
         public bool HasPrimaryContacts
         {
             get { return PrimaryContacts.Count > 0; }

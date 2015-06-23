@@ -24,14 +24,21 @@ namespace HW.Invoicing
             customerId = ConvertHelper.ToInt32(Request.QueryString["CustomerId"]);
             if (!IsPostBack)
             {
+                var customer = r.Read(customerId);
+                customer.Contacts = r.FindContacts(customerId);
+
                 radioButtonListContactType.Items.Clear();
                 foreach (var t in new[] { new { id = 1, name = "Primary" }, new { id = 2, name = "Secondary" }, new { id = 3, name = "Other" } })
                 {
+                    if ((t.id == 1 && customer.HasPrimaryContacts && customer.FirstPrimaryContact.Id != id) || (t.id == 2 && customer.HasSecondaryContacts && customer.SecondaryContact.Id != id))
+                    {
+                        continue;
+                    }
                     var li = new ListItem(t.name, t.id.ToString());
                     li.Attributes.Add("class", "radio-inline");
                     radioButtonListContactType.Items.Add(li);
                 }
-
+                
                 var c = r.ReadContact(id);
                 if (c != null)
                 {
