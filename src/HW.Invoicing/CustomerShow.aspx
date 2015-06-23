@@ -503,7 +503,7 @@
                 <% foreach (var t in timebooks) { %>
                     <% if (t.Inactive) { %>
                         <tr>
-                            <td><input type="checkbox" class="timebook-item" data-id="<%= t.Id %>" id="timebook-<%= t.Id %>" /></td>
+                            <td></td>
                             <td><strike><%= t.Date.Value.ToString("yyyy-MM-dd") %></strike></td>
                             <td><strike><%= t.Department %></strike></td>
                             <td><strike><%= t.Contact.Contact %></strike></td>
@@ -523,6 +523,7 @@
                     <% } else { %>
                         <tr>
                             <td>
+                                <% if (t.Status == 0) { %>
                                 <input type="checkbox" class="timebook-item" id="timebook-<%= t.Id %>"
                                      data-id="<%= t.Id %>"
                                      data-item="<%= t.Item.Name %>"
@@ -530,6 +531,7 @@
                                      data-qty="<%= t.Quantity %>"
                                      data-price="<%= t.Price %>"
                                      data-amount="<%= t.Amount %>" />
+                                <% } %>
                             </td>
                             <td><%= t.Date.Value.ToString("yyyy-MM-dd") %></td>
                             <td><%= t.Department %></td>
