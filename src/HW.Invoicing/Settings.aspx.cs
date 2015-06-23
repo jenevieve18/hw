@@ -17,6 +17,8 @@ namespace HW.Invoicing
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            HtmlHelper.RedirectIf(Session["UserId"] == null, "login.aspx");
+
             id = ConvertHelper.ToInt32(Session["CompanyId"], 1);
             if (!IsPostBack)
             {

@@ -17,6 +17,8 @@ namespace HW.Invoicing
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            HtmlHelper.RedirectIf(Session["UserId"] == null, "login.aspx");
+
             id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
             customerId = ConvertHelper.ToInt32(Request.QueryString["CustomerId"]);
             r.DeactivateTimebook(id);

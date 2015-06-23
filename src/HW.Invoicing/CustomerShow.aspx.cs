@@ -30,6 +30,8 @@ namespace HW.Invoicing
     	
         protected void Page_Load(object sender, EventArgs e)
         {
+            HtmlHelper.RedirectIf(Session["UserId"] == null, "login.aspx");
+
         	id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
             companyId = ConvertHelper.ToInt32(Session["CompanyId"], 1);
             selectedTab = Request.QueryString["SelectedTab"] == null ? "notes" : Request.QueryString["SelectedTab"];
