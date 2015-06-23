@@ -84,6 +84,22 @@ namespace HW.Core.Repositories.Sql
 			}
 			cmd.ExecuteNonQuery();
 		}
+
+        protected object ExecuteScalar(string query, string connectionName, params SqlParameter[] parameters)
+        {
+            con = CreateConnection(connectionName);
+            OpenConnection();
+            SqlCommand cmd = new SqlCommand(query, con);
+            foreach (var p in parameters)
+            {
+                if (p.Value == null)
+                {
+                    p.Value = DBNull.Value;
+                }
+                cmd.Parameters.Add(p);
+            }
+            return cmd.ExecuteScalar();
+        }
 		
 		protected SqlDataReader ExecuteReader(string query)
 		{

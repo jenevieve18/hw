@@ -163,3 +163,5 @@ create table InvoiceTimebook(
 drop table InvoiceItem;
 
 alter table CustomerTimebook add InternalComments text;
+
+alter table CustomerItem add SortOrder integer;

@@ -14,23 +14,39 @@ namespace HW.Invoicing.Core.Repositories.Sql
 		
 		public override void Save(Invoice i)
 		{
-			string query = @"
+            /*string query = @"
 INSERT INTO Invoice(Date, CustomerId)
 VALUES(@Date, @CustomerId)";
-			ExecuteNonQuery(
-				query,
-				"invoicing",
-				new SqlParameter("@Date", i.Date),
-				new SqlParameter("@CustomerId", i.Customer.Id)
-			);
+            ExecuteNonQuery(
+                query,
+                "invoicing",
+                new SqlParameter("@Date", i.Date),
+                new SqlParameter("@CustomerId", i.Customer.Id)
+            );
+            query = @"select ident_current('Invoice')";
+            int id = 0;
+            using (SqlDataReader rs = ExecuteReader(query, "invoicing"))
+            {
+                if (rs.Read())
+                {
+                    id = GetInt32(rs, 0);
+                }
+            }*/
+            string query = @"
+INSERT INTO Invoice(Date, CustomerId)
+VALUES(@Date, @CustomerId);
+SELECT CAST(scope_identity() AS int)";
+            int id = (int)ExecuteScalar(query, "invoicing", new SqlParameter("@Date", i.Date), new SqlParameter("@CustomerId", i.Customer.Id));
+            
 			query = @"
-insert into invoicetimebook(customertimebookid)
-values(@CustomerTimebookId)";
+insert into invoicetimebook(invoiceid, customertimebookid)
+values(@InvoiceId, @CustomerTimebookId)";
 			foreach (var t in i.Timebooks) {
 				ExecuteNonQuery(
 					query,
 					"invoicing",
-					new SqlParameter("@CustomerTimebookId", t.Timebook.Id)
+					new SqlParameter("@CustomerTimebookId", t.Timebook.Id),
+                    new SqlParameter("@InvoiceId", id)
 				);
 			}
 		}
@@ -51,6 +67,33 @@ WHERE Id = @id"
 			}
 			return i;
 		}
+
+        public List<InvoiceTimebook> FindTimebooks(int invoiceId)
+        {
+            string query = @"
+select it.id, it.customertimebookid, ct.quantity, ct.price
+from invoicetimebook it
+inner join customertimebook ct on ct.id = it.customertimebookid
+where it.invoiceid = @InvoiceId";
+            var timebooks = new List<InvoiceTimebook>();
+            using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@InvoiceId", invoiceId)))
+            {
+                while (rs.Read())
+                {
+                    timebooks.Add(new InvoiceTimebook
+                    {
+                        Id = GetInt32(rs, 0),
+                        Timebook = new CustomerTimebook
+                        {
+                            Id = GetInt32(rs, 1),
+                            Quantity = GetDecimal(rs, 2),
+                            Price = GetDecimal(rs, 3)
+                        }
+                    });
+                }
+            }
+            return timebooks;
+        }
 		
 		public override IList<Invoice> FindAll()
 		{
@@ -76,6 +119,10 @@ INNER JOIN Customer c ON i.CustomerId = c.Id"
 					);
 				}
 			}
+            foreach (var i in invoices)
+            {
+                i.Timebooks = FindTimebooks(i.Id);
+            }
 			return invoices;
 		}
 	}
