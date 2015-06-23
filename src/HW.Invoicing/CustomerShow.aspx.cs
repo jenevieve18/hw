@@ -41,10 +41,13 @@ namespace HW.Invoicing
 
                 labelCustomer.Text = customer.Name;
                 labelCustomerNumber.Text = textBoxCustomerNumber.Text = customer.Number;
-                labelInvoiceAddress.Text = customer.InvoiceAddress.Replace("\n", "<br>");
-                textBoxInvoiceAddress.Text = customer.InvoiceAddress;
+                
                 labelPostalAddress.Text = customer.PostalAddress.Replace("\n", "<br>");
                 textBoxPostalAddress.Text = customer.PostalAddress;
+
+                labelInvoiceAddress.Text = customer.InvoiceAddress.Replace("\n", "<br>");
+                textBoxInvoiceAddress.Text = customer.InvoiceAddress;
+                
                 labelPurchaseOrderNumber.Text = textBoxPurchaseOrderNumber.Text = customer.PurchaseOrderNumber;
                 labelYourReferencePerson.Text = textBoxYourReferencePerson.Text = customer.YourReferencePerson;
                 labelOurReferencePerson.Text = textBoxOurReferencePerson.Text = customer.OurReferencePerson;
@@ -58,7 +61,7 @@ namespace HW.Invoicing
 
                 company = cr.Read(companyId);
 
-                labelInvoiceAddress.Text = customer.Address;
+                //labelInvoiceAddress.Text = customer.InvoiceAddress;
                 labelInvoiceCustomerNumber.Text = customer.Number;
                 labelInvoiceCustomerAddress.Text = customer.InvoiceAddress.Replace("\n", "<br>");
                 labelInvoiceNumber.Text = "IHG-001";
