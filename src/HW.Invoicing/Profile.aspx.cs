@@ -22,6 +22,8 @@ namespace HW.Invoicing
         protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["UserId"] == null, "login.aspx");
+
+            Update(ConvertHelper.ToInt32(Session["UserID"]));
         }
 
         protected void buttonSave_Click(object sender, EventArgs e)
@@ -37,10 +39,13 @@ namespace HW.Invoicing
         			Password = textBoxPassword.Text
         		};
         		r.Update(d, id);
+                Session["UserName"] = d.Name;
+                Response.Redirect("dashboard.aspx");
         	}
         	var u = r.Read(id);
         	if (u != null) {
         		textBoxName.Text = u.Name;
+                textBoxPassword.Text = u.Password;
         	}
         }
     }
