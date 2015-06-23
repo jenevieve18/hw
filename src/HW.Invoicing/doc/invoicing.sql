@@ -161,3 +161,5 @@ create table InvoiceTimebook(
 );
 
 drop table InvoiceItem;
+
+alter table CustomerTimebook add InternalComments text;

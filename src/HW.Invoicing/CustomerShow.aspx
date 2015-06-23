@@ -283,6 +283,10 @@
 	                            <label for="<%= textBoxTimebookComments.ClientID %>">Comments</label>
                                 <asp:TextBox ID="textBoxTimebookComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
                             </div>
+                            <div class="form-group">
+	                            <label for="<%= textBoxTimebookInternalComments.ClientID %>">Internal Comments</label>
+                                <asp:TextBox ID="textBoxTimebookInternalComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+                            </div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

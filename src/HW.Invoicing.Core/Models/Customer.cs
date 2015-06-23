@@ -102,6 +102,7 @@ namespace HW.Invoicing.Core.Models
 		public string Department { get; set; }
         public bool Inactive { get; set; }
         public int Status { get; set; }
+        public string InternalComments { get; set; }
 		public decimal Amount {
 			get { return Price * Quantity; }
 		}

@@ -152,8 +152,8 @@ VALUES(@CustomerId, @Notes, @CreatedAt, @CreatedBy)"
 		{
 			string query = string.Format(
 				@"
-INSERT INTO CustomerTimebook(CustomerId, CustomerContactId, ItemId, Quantity, Price, Consultant, Comments, Department, Date)
-VALUES(@CustomerId, @CustomerContactId, @ItemId, @Quantity, @Price, @Consultant, @Comments, @Department, @Date)"
+INSERT INTO CustomerTimebook(CustomerId, CustomerContactId, ItemId, Quantity, Price, Consultant, Comments, Department, Date, InternalComments)
+VALUES(@CustomerId, @CustomerContactId, @ItemId, @Quantity, @Price, @Consultant, @Comments, @Department, @Date, @InternalComments)"
 			);
 			ExecuteNonQuery(
 				query,
@@ -166,7 +166,8 @@ VALUES(@CustomerId, @CustomerContactId, @ItemId, @Quantity, @Price, @Consultant,
 				new SqlParameter("@Consultant", time.Consultant),
 				new SqlParameter("@Comments", time.Comments),
 				new SqlParameter("@Department", time.Department),
-				new SqlParameter("@Date", time.Date)
+                new SqlParameter("@Date", time.Date),
+                new SqlParameter("@InternalComments", time.InternalComments)
 			);
 		}
 		
@@ -284,14 +285,15 @@ WHERE Id = @Id"
             string query = string.Format(
                 @"
 UPDATE CustomerTimebook SET CustomerContactId = @CustomerContactId,
-ItemId = @ItemId,
-Quantity = @Quantity,
-Price = @Price,
-Consultant = @Consultant,
-Comments = @Comments,
-Department = @Department,
-Date = @Date,
-Inactive = @Inactive
+    ItemId = @ItemId,
+    Quantity = @Quantity,
+    Price = @Price,
+    Consultant = @Consultant,
+    Comments = @Comments,
+    Department = @Department,
+    Date = @Date,
+    Inactive = @Inactive,
+    InternalComments = @InternalComments
 WHERE Id = @Id"
             );
             ExecuteNonQuery(
@@ -306,7 +308,8 @@ WHERE Id = @Id"
                 new SqlParameter("@Department", c.Department),
                 new SqlParameter("@Date", c.Date),
                 new SqlParameter("@Inactive", c.Inactive),
-                new SqlParameter("@Id", id)
+                new SqlParameter("@Id", id),
+                new SqlParameter("@InternalComments", c.InternalComments)
             );
         }
 
@@ -438,7 +441,8 @@ SELECT Id,
     Comments,
     Department,
     Date,
-Inactive
+    Inactive,
+    InternalComments
 FROM CustomerTimebook
 WHERE Id = @Id"
             );
@@ -458,7 +462,8 @@ WHERE Id = @Id"
                         Comments = GetString(rs, 7),
                         Department = GetString(rs, 8),
                         Date = GetDateTime(rs, 9),
-                        Inactive = GetInt32(rs, 10) == 1
+                        Inactive = GetInt32(rs, 10) == 1,
+                        InternalComments = GetString(rs, 11)
                     };
                 }
             }
@@ -613,7 +618,8 @@ SELECT t.CustomerContactId,
 	t.Date,
 	t.Department,
     t.Id,
-    t.Inactive
+    t.Inactive,
+    t.InternalComments
 FROM CustomerTimebook t
 INNER JOIN CustomerContact c ON c.Id = t.CustomerContactId
 INNER JOIN Item i ON i.Id = t.ItemId
@@ -642,7 +648,8 @@ ORDER BY t.Date DESC"
 							Date = GetDateTime(rs, 10),
 							Department = GetString(rs, 11),
                             Id = GetInt32(rs, 12),
-                            Inactive = GetInt32(rs, 13) == 1
+                            Inactive = GetInt32(rs, 13) == 1,
+                            InternalComments = GetString(rs, 14)
 						}
 					);
 				}

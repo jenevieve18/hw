@@ -99,7 +99,8 @@ namespace HW.Invoicing
                 Quantity = ConvertHelper.ToDecimal(textBoxTimebookQty.Text),
                 Price = ConvertHelper.ToDecimal(textBoxTimebookPrice.Text),
                 Consultant = textBoxTimebookConsultant.Text,
-                Comments = textBoxTimebookComments.Text
+                Comments = textBoxTimebookComments.Text,
+                InternalComments = textBoxTimebookInternalComments.Text
             };
             r.SaveTimebook(t, ConvertHelper.ToInt32(Request.QueryString["Id"]));
             Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=timebook", id));

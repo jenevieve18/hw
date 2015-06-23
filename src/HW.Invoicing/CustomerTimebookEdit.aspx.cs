@@ -51,6 +51,7 @@ namespace HW.Invoicing
                     textBoxTimebookPrice.Text = t.Price.ToString();
                     textBoxTimebookConsultant.Text = t.Consultant;
                     textBoxTimebookComments.Text = t.Comments;
+                    textBoxTimebookInternalComments.Text = t.InternalComments;
                     checkBoxReactivate.Checked = !t.Inactive;
                     placeHolderReactivate.Visible = t.Inactive;
                 }
@@ -68,6 +69,7 @@ namespace HW.Invoicing
                 Price = ConvertHelper.ToDecimal(textBoxTimebookPrice.Text),
                 Consultant = textBoxTimebookConsultant.Text,
                 Comments = textBoxTimebookComments.Text,
+                InternalComments = textBoxTimebookInternalComments.Text,
                 Inactive = !checkBoxReactivate.Checked
             };
             r.UpdateTimebook(t, id);
