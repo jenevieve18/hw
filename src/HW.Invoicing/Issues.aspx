@@ -22,8 +22,8 @@
             <tr>
                 <td><strike>#<%= i.Id %></strike></td>
                 <td><strike><%= i.Title %></strike></td>
-                <td><%= i.GetStatus() %></td>
                 <td><strike><%= i.Description %></strike></td>
+                <td><%= i.GetStatus() %></td>
                 <td>
                     <%= HtmlHelper.Anchor("Edit", "issueedit.aspx?Id=" + i.Id) %>
                     <%= HtmlHelper.Anchor("Delete", "issuedelete.aspx?Id=" + i.Id) %>
@@ -33,8 +33,8 @@
             <tr>
                 <td>#<%= i.Id %></td>
                 <td><%= i.Title %></td>
-                <td><%= i.GetStatus() %></td>
                 <td><%= i.Description %></td>
+                <td><%= i.GetStatus() %></td>
                 <td>
                     <%= HtmlHelper.Anchor("Edit", "issueedit.aspx?Id=" + i.Id) %>
                     <%= HtmlHelper.Anchor("Deactivate", "issuedeactivate.aspx?Id=" + i.Id) %>
