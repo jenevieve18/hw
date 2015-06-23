@@ -12,7 +12,8 @@ namespace HW.Invoicing.Core.Repositories.Sql
 		public void Deactivate(int id)
 		{
 			string query = @"
-update issue set inactive = 1
+--update issue set inactive = 1
+update issue set status = 3
 where id = @Id";
 			ExecuteNonQuery(
 				query,
@@ -36,15 +37,14 @@ where id = @Id";
 		public override void Save(Issue t)
 		{
 			string query = @"
-INSERT INTO Issue(Title, Description, CreatedAt, Inactive)
-VALUES(@Title, @Description, @CreatedAt, @Inactive)";
+INSERT INTO Issue(Title, Description, CreatedAt, Status)
+VALUES(@Title, @Description, @CreatedAt, @Status)";
 			ExecuteNonQuery(
 				query,
 				"invoicing",
 				new SqlParameter("@Title", t.Title),
 				new SqlParameter("@Description", t.Description),
-				new SqlParameter("@CreatedAt", DateTime.Now),
-				new SqlParameter("@Inactive", t.Inactive)
+				new SqlParameter("@CreatedAt", DateTime.Now)
 			);
 		}
 		
@@ -53,8 +53,7 @@ VALUES(@Title, @Description, @CreatedAt, @Inactive)";
 			string query = @"
 UPDATE Issue SET Title = @Title,
 	Description = @Description,
-	Status = @Status,
-Inactive = @Inactive
+	Status = @Status
 WHERE Id = @Id";
 			ExecuteNonQuery(
 				query,
@@ -62,8 +61,7 @@ WHERE Id = @Id";
 				new SqlParameter("@Title", t.Title),
 				new SqlParameter("@Description", t.Description),
 				new SqlParameter("@Id", id),
-                new SqlParameter("@Status", t.Status),
-                new SqlParameter("@Inactive", t.Inactive)
+                new SqlParameter("@Status", t.Status)
 			);
 		}
 		
@@ -71,7 +69,7 @@ WHERE Id = @Id";
 		{
 			string query = string.Format(
 				@"
-SELECT Id, Title, Description,Inactive
+SELECT Id, Title, Description, Status
 FROM Issue
 WHERE Id = @Id"
 			);
@@ -82,7 +80,7 @@ WHERE Id = @Id"
 						Id = GetInt32(rs, 0),
 						Title = GetString(rs, 1),
 						Description = GetString(rs, 2),
-                        Inactive = GetInt32(rs, 3) == 1
+						Status = GetInt32(rs, 3)
 					};
 				}
 			}
@@ -96,11 +94,9 @@ WHERE Id = @Id"
 SELECT Id,
 	Title,
 	Description,
-	Status,
-	Inactive
+	Status
 FROM Issue
-WHERE Status is null or status = 1
-ORDER BY Inactive, CreatedAt DESC"
+ORDER BY Status, CreatedAt DESC"
 			);
 			var issues = new List<Issue>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {
@@ -110,8 +106,7 @@ ORDER BY Inactive, CreatedAt DESC"
 							Id = GetInt32(rs, 0),
 							Title = GetString(rs, 1),
 							Description = GetString(rs, 2),
-							Status = GetInt32(rs, 3),
-							Inactive = GetInt32(rs, 4) == 1
+							Status = GetInt32(rs, 3)
 						}
 					);
 				}

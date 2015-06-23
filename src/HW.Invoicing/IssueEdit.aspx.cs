@@ -19,18 +19,19 @@ namespace HW.Invoicing
             int id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
             if (!IsPostBack)
             {
+                dropDownListStatus.Items.Clear();
+                foreach (var s in Issue.GetStatuses())
+                {
+                    dropDownListStatus.Items.Add(new ListItem(s.Name, s.Id.ToString()));
+                }
                 var i = r.Read(id);
                 if (i != null)
                 {
                     textBoxTitle.Text = i.Title;
                     textBoxDescription.Text = i.Description;
-                    checkBoxReactivate.Checked = !i.Inactive;
-                    placeHolderReactivate.Visible = i.Inactive;
-                }
-                dropDownListStatus.Items.Clear();
-                foreach (var s in new[] { new { id = 1, name = "Open" }, new { id = 2, name = "Fixed" } })
-                {
-                    dropDownListStatus.Items.Add(new ListItem(s.name, s.id.ToString()));
+//                    checkBoxReactivate.Checked = !i.Inactive;
+//                    placeHolderReactivate.Visible = i.Inactive;
+                    dropDownListStatus.SelectedValue = i.Status.ToString();
                 }
             }
         }
@@ -44,7 +45,7 @@ namespace HW.Invoicing
                     Title = textBoxTitle.Text,
                     Description = textBoxDescription.Text,
                     Status = ConvertHelper.ToInt32(dropDownListStatus.SelectedValue),
-                    Inactive = !checkBoxReactivate.Checked
+//                    Inactive = !checkBoxReactivate.Checked
                 };
                 r.Update(i, ConvertHelper.ToInt32(Request.QueryString["Id"]));
                 Response.Redirect("issues.aspx");
