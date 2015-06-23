@@ -44,7 +44,8 @@ VALUES(@Title, @Description, @CreatedAt, @Status)";
 				"invoicing",
 				new SqlParameter("@Title", t.Title),
 				new SqlParameter("@Description", t.Description),
-				new SqlParameter("@CreatedAt", DateTime.Now)
+				new SqlParameter("@CreatedAt", DateTime.Now),
+				new SqlParameter("@Status", t.Status)
 			);
 		}
 		
