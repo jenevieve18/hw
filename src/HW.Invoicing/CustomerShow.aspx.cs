@@ -110,7 +110,8 @@ namespace HW.Invoicing
             var i = new Invoice
             {
                 Date = DateTime.Now,
-                Customer = new Customer { Id = id }
+                Customer = new Customer { Id = id },
+                Comments = textBoxInvoiceComments.Text
             };
             string[] timebooks = Request.Form.GetValues("invoice-timebooks");
             foreach (var t in timebooks)

@@ -165,3 +165,5 @@ drop table InvoiceItem;
 alter table CustomerTimebook add InternalComments text;
 
 alter table CustomerItem add SortOrder integer;
+
+alter table Invoice add Comments text;

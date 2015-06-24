@@ -14,29 +14,17 @@ namespace HW.Invoicing.Core.Repositories.Sql
 		
 		public override void Save(Invoice i)
 		{
-            /*string query = @"
-INSERT INTO Invoice(Date, CustomerId)
-VALUES(@Date, @CustomerId)";
-            ExecuteNonQuery(
-                query,
+            string query = @"
+INSERT INTO Invoice(Date, CustomerId, Comments)
+VALUES(@Date, @CustomerId, @Comments);
+SELECT CAST(scope_identity() AS int)";
+            int id = (int)ExecuteScalar(
+                query, 
                 "invoicing",
                 new SqlParameter("@Date", i.Date),
-                new SqlParameter("@CustomerId", i.Customer.Id)
+                new SqlParameter("@CustomerId", i.Customer.Id),
+                new SqlParameter("@Comments", i.Comments)
             );
-            query = @"select ident_current('Invoice')";
-            int id = 0;
-            using (SqlDataReader rs = ExecuteReader(query, "invoicing"))
-            {
-                if (rs.Read())
-                {
-                    id = GetInt32(rs, 0);
-                }
-            }*/
-            string query = @"
-INSERT INTO Invoice(Date, CustomerId)
-VALUES(@Date, @CustomerId);
-SELECT CAST(scope_identity() AS int)";
-            int id = (int)ExecuteScalar(query, "invoicing", new SqlParameter("@Date", i.Date), new SqlParameter("@CustomerId", i.Customer.Id));
             
 			query = @"
 insert into invoicetimebook(invoiceid, customertimebookid)

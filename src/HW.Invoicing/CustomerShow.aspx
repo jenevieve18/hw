@@ -473,6 +473,11 @@
                                     </tr>
                                 </table>
                             </small>
+                            <br />
+                            <div class="form-group">
+	                            <label for="<%= textBoxInvoiceComments.ClientID %>">Comments</label>
+                                <asp:TextBox CssClass="form-control" ID="textBoxInvoiceComments" runat="server" TextMode="MultiLine"></asp:TextBox>
+                            </div>
 		                </div>
 		                <div class="modal-footer">
 			                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

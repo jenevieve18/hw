@@ -14,6 +14,7 @@ namespace HW.Invoicing.Core.Models
 //		public IList<InvoiceItem> Items { get; set; }
 //		public IList<InvoicePayment> Payments { get; set; }
         public IList<InvoiceTimebook> Timebooks { get; set; }
+        public string Comments { get; set; }
 		
 		public Invoice()
 		{
