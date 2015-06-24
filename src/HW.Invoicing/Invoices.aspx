@@ -22,7 +22,7 @@
         <td><%= i.Date.Value.ToString("yyyy-MM-dd") %></td>
         <td><%= i.Customer.Number %></td>
         <td><%= i.Customer.Name %></td>
-        <td><%= i.TotalAmount.ToString("0.00") %></td>
+        <td><%= i.TotalAmount.ToString("### ##0.00") %></td>
         <td><span class="label label-danger">NOT PAID</span></td>
         <td>
             <%= HtmlHelper.Anchor("Edit", "invoiceedit.aspx?Id=" + i.Id)%>
