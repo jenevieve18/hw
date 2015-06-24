@@ -5,6 +5,11 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <h3>Add an item</h3>
+<% if (message != null && message != "") { %>
+<div class="alert alert-warning">
+    <%= message %>
+</div>
+<% } %>
 <div class="form-group">
 	<label for="<%= textBoxName.ClientID %>">Item Name</label>
     <asp:TextBox ID="textBoxName" runat="server" CssClass="form-control"></asp:TextBox>

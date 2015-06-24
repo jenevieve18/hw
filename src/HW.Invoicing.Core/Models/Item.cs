@@ -48,5 +48,13 @@ namespace HW.Invoicing.Core.Models
 		public decimal Price { get; set; }
 		public Unit Unit { get; set; }
 		public bool Inactive { get; set; }
+
+        public override void Validate()
+        {
+            base.Validate();
+            Errors.Clear();
+            AddErrorIf(Name == "", "Item name shouldn't be empty.");
+            AddErrorIf(Price <= 0, "Price should be at least greater than zero.");
+        }
 	}
 }

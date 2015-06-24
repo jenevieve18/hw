@@ -16,6 +16,7 @@ namespace HW.Invoicing
     {
     	SqlItemRepository ir = new SqlItemRepository();
     	SqlUnitRepository ur = new SqlUnitRepository();
+        protected string message;
     	
     	public ItemAdd()
     	{
@@ -45,8 +46,16 @@ namespace HW.Invoicing
                 Price = ConvertHelper.ToDecimal(textBoxPrice.Text),
                 Unit = new m.Unit { Id = ConvertHelper.ToInt32(dropDownListUnits.SelectedValue) }
             };
-        	ir.Save(i);
-        	Response.Redirect("items.aspx");
+            i.Validate();
+            if (!i.HasErrors)
+            {
+                ir.Save(i);
+                Response.Redirect("items.aspx");
+            }
+            else
+            {
+                message = i.Errors.ToHtmlUl();
+            }
         }
     }
 }

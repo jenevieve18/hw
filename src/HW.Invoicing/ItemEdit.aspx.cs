@@ -16,10 +16,11 @@ namespace HW.Invoicing
 	{
 		SqlItemRepository r = new SqlItemRepository();
         SqlUnitRepository ur = new SqlUnitRepository();
+        protected string message;
 		
 		public void Edit(int id)
 		{
-			if (IsPostBack) {
+			/*if (IsPostBack) {
                 var d = new Item
                 {
                     Name = textBoxName.Text,
@@ -28,9 +29,17 @@ namespace HW.Invoicing
                     Unit = new m.Unit { Id = ConvertHelper.ToInt32(dropDownListUnits.SelectedValue) },
                     Inactive = !checkBoxReactivate.Checked
                 };
-				r.Update(d, id);
-				Response.Redirect("items.aspx");
-			}
+                d.Validate();
+                if (!d.HasErrors)
+                {
+                    r.Update(d, id);
+                    Response.Redirect("items.aspx");
+                }
+                else
+                {
+                    message = d.Errors.ToHtmlUl();
+                }
+			}*/
 			var i = r.Read(id);
 			if (i != null) {
 				textBoxName.Text = i.Name;
@@ -46,7 +55,20 @@ namespace HW.Invoicing
 		{
         	HtmlHelper.RedirectIf(Session["UserId"] == null, "login.aspx");
         	
-			Edit(ConvertHelper.ToInt32(Request.QueryString["Id"]));
+			//Edit(ConvertHelper.ToInt32(Request.QueryString["Id"]));
+            if (!IsPostBack)
+            {
+                var i = r.Read(ConvertHelper.ToInt32(Request.QueryString["Id"]));
+                if (i != null)
+                {
+                    textBoxName.Text = i.Name;
+                    textBoxDescription.Text = i.Description;
+                    textBoxPrice.Text = i.Price.ToString();
+                    dropDownListUnits.SelectedValue = i.Unit.Id.ToString();
+                    checkBoxReactivate.Checked = !i.Inactive;
+                    placeHolderReactivate.Visible = i.Inactive;
+                }
+            }
 		}
 
         protected override void OnPreRender(EventArgs e)
@@ -62,7 +84,25 @@ namespace HW.Invoicing
 
 		protected void buttonSave_Click(object sender, EventArgs e)
 		{
-			Edit(ConvertHelper.ToInt32(Request.QueryString["Id"]));
+			//Edit(ConvertHelper.ToInt32(Request.QueryString["Id"]));
+            var d = new Item
+            {
+                Name = textBoxName.Text,
+                Description = textBoxDescription.Text,
+                Price = ConvertHelper.ToDecimal(textBoxPrice.Text),
+                Unit = new m.Unit { Id = ConvertHelper.ToInt32(dropDownListUnits.SelectedValue) },
+                Inactive = !checkBoxReactivate.Checked
+            };
+            d.Validate();
+            if (!d.HasErrors)
+            {
+                r.Update(d, ConvertHelper.ToInt32(Request.QueryString["Id"]));
+                Response.Redirect("items.aspx");
+            }
+            else
+            {
+                message = d.Errors.ToHtmlUl();
+            }
 		}
 	}
 }
