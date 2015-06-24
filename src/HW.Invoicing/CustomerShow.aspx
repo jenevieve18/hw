@@ -3,6 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
     <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script src="js/jquery.number.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('#<%= dropDownListTimebookItems.ClientID %>').change(function () {
@@ -56,8 +57,8 @@
                         '   <td>' + e.item + '<input type="hidden" id="invoice-timebooks" name="invoice-timebooks" value="' + e.id + '"></td>' + 
                         '   <td>' + e.qty + '</td>' + 
                         '   <td>' + e.unit + '</td>' + 
-                        '   <td class="text-right">' + e.price + '</td>' + 
-                        '   <td class="text-right">' + e.amount + '</td>' + 
+                        '   <td class="text-right">' + $.number(e.price, 2, ',', ' ') + '</td>' + 
+                        '   <td class="text-right">' + $.number(e.amount, 2, ',', ' ') + '</td>' + 
                         '</tr>' + 
                     '');
                     subTotal += e.amount;
@@ -68,7 +69,7 @@
                 items.append('' +
                     '<tr><td>&nbsp;</td></tr>' +
                     '<tr><td colspan="4"></td><td class="hw-border-last">Subtotal</td></tr>' +
-                    '<tr><td colspan="4"></td><td class="hw-border-last">' + subTotal + '</td></tr>' +
+                    '<tr><td colspan="4"></td><td class="hw-border-last">' + $.number(subTotal, 2, ',', ' ') + '</td></tr>' +
                     '<tr class="hw-invoice-header">' + 
                     '   <td colspan="2"></td>' +
                     '   <td class="hw-border-left">Moms %</td>' +
@@ -77,9 +78,9 @@
                     '</tr>' +
                     '<tr class="hw-border-bottom">' +
                     '   <td colspan="2"></td>' +
-                    '   <td class="hw-border-left">' + momsPercentage + '</td>' +
-                    '   <td class="hw-border-left">' + moms + '</td>' +
-                    '   <td class="hw-border-last">' + totalAmount + '</td>' +
+                    '   <td class="hw-border-left">' + $.number(momsPercentage, 2, ',', ' ') + '</td>' +
+                    '   <td class="hw-border-left">' + $.number(moms, 2, ',', ' ') + '</td>' +
+                    '   <td class="hw-border-last">' + $.number(totalAmount, 2, ',', ' ') + '</td>' +
                     ''
                 );
             });
