@@ -14,6 +14,7 @@ namespace HW.Invoicing
 	public partial class CustomerAdd : System.Web.UI.Page
 	{
 		SqlCustomerRepository r = new SqlCustomerRepository();
+        protected string message;
 		
 		public CustomerAdd()
 		{
@@ -23,10 +24,10 @@ namespace HW.Invoicing
 		{
         	HtmlHelper.RedirectIf(Session["UserId"] == null, "login.aspx");
         	
-			Add();
+			//Add();
 		}
 		
-		public void Add()
+		/*public void Add()
 		{
 			if (IsPostBack) {
 				var c = new Customer {
@@ -43,11 +44,33 @@ namespace HW.Invoicing
 				r.Save(c);
 				Response.Redirect("customers.aspx");
 			}
-		}
+		}*/
 
 		protected void buttonSave_Click(object sender, EventArgs e)
 		{
-			Add();
+			//Add();
+            var c = new Customer
+            {
+                Number = textBoxNumber.Text,
+                Name = textBoxName.Text,
+                PostalAddress = textBoxPostalAddress.Text,
+                InvoiceAddress = textBoxInvoiceAddress.Text,
+                PurchaseOrderNumber = textBoxPurchaseOrderNumber.Text,
+                YourReferencePerson = textBoxYourReferencePerson.Text,
+                OurReferencePerson = textBoxOurReferencePerson.Text,
+                Phone = textBoxPhone.Text,
+                Email = textBoxEmail.Text
+            };
+            c.Validate();
+            if (!c.HasErrors)
+            {
+                r.Save(c);
+                Response.Redirect("customers.aspx");
+            }
+            else
+            {
+                message = c.Errors.ToHtmlUl();
+            }
 		}
 	}
 }
