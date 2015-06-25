@@ -393,10 +393,6 @@
                                 </tr>
                             </table>
                             <br />
-                            <div class="form-group">
-	                            <label for="<%= textBoxInvoiceComments.ClientID %>">Comments</label>
-                                <asp:TextBox CssClass="form-control" ID="textBoxInvoiceComments" runat="server" TextMode="MultiLine"></asp:TextBox>
-                            </div>
                             <p>Payment terms: 30 days net. At the settlement after the due date will be charged interest of 2% per month.</p>
                             <table class="hw-invoice-items" cellpadding="5px">
                                 <thead>
@@ -449,6 +445,10 @@
                                     <td class="hw-border-last">4.000,00</td>
                                 </tr>-->
                             </table>
+                            <div class="form-group">
+	                            <label for="<%= textBoxInvoiceComments.ClientID %>">Comments</label>
+                                <asp:TextBox CssClass="form-control" ID="textBoxInvoiceComments" runat="server" TextMode="MultiLine"></asp:TextBox>
+                            </div>
                             <small class="hw-footer">
                                 <table style="width:100%">
                                     <tr>
