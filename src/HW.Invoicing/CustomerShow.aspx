@@ -55,7 +55,8 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function(msg) {
-                        alert(msg.d);
+                        //alert(msg.d);
+                        $('#<%= labelInvoiceNumber.ClientID %>').text('IHGF-' + ('000' + msg.d).slice(-3));
                     }
                 });
 
@@ -106,7 +107,7 @@
                 $('.info').hide();
             });
 
-            var inactive = <%= customer.Inactive ? "true" : "false" %>;
+            var inactive = <%= customer != null && customer.Inactive ? "true" : "false" %>;
             if (inactive) {
                 $('#<%= buttonDeactivate.ClientID %>').hide();
             } else {
@@ -392,6 +393,10 @@
                                 </tr>
                             </table>
                             <br />
+                            <div class="form-group">
+	                            <label for="<%= textBoxInvoiceComments.ClientID %>">Comments</label>
+                                <asp:TextBox CssClass="form-control" ID="textBoxInvoiceComments" runat="server" TextMode="MultiLine"></asp:TextBox>
+                            </div>
                             <p>Payment terms: 30 days net. At the settlement after the due date will be charged interest of 2% per month.</p>
                             <table class="hw-invoice-items" cellpadding="5px">
                                 <thead>
@@ -484,11 +489,6 @@
                                     </tr>
                                 </table>
                             </small>
-                            <br />
-                            <div class="form-group">
-	                            <label for="<%= textBoxInvoiceComments.ClientID %>">Comments</label>
-                                <asp:TextBox CssClass="form-control" ID="textBoxInvoiceComments" runat="server" TextMode="MultiLine"></asp:TextBox>
-                            </div>
 		                </div>
 		                <div class="modal-footer">
 			                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

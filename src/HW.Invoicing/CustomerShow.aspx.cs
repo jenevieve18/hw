@@ -8,6 +8,7 @@ using HW.Core.Helpers;
 using HW.Invoicing.Core.Models;
 using HW.Invoicing.Core.Repositories.Sql;
 using System.Web.Services;
+using System.Web.Script.Services;
 
 namespace HW.Invoicing
 {
@@ -40,39 +41,45 @@ namespace HW.Invoicing
             {
                 customer = r.Read(id);
 
-                labelCustomer.Text = customer.Name;
-                labelCustomerNumber.Text = textBoxCustomerNumber.Text = customer.Number;
-                
-                labelPostalAddress.Text = customer.PostalAddress.Replace("\n", "<br>");
-                textBoxPostalAddress.Text = customer.PostalAddress;
+                if (customer != null)
+                {
+                    labelCustomer.Text = customer.Name;
+                    labelCustomerNumber.Text = textBoxCustomerNumber.Text = customer.Number;
 
-                labelInvoiceAddress.Text = customer.InvoiceAddress.Replace("\n", "<br>");
-                textBoxInvoiceAddress.Text = customer.InvoiceAddress;
-                
-                labelPurchaseOrderNumber.Text = textBoxPurchaseOrderNumber.Text = customer.PurchaseOrderNumber;
-                labelYourReferencePerson.Text = textBoxYourReferencePerson.Text = customer.YourReferencePerson;
-                labelOurReferencePerson.Text = textBoxOurReferencePerson.Text = customer.OurReferencePerson;
-                labelEmail.Text = textBoxEmail.Text = customer.Email;
-                labelPhone.Text = textBoxPhone.Text = customer.Phone;
+                    labelPostalAddress.Text = customer.PostalAddress.Replace("\n", "<br>");
+                    textBoxPostalAddress.Text = customer.PostalAddress;
 
-                labelCustomerNumber.Font.Strikeout = labelInvoiceAddress.Font.Strikeout =
-                    labelPostalAddress.Font.Strikeout = labelPurchaseOrderNumber.Font.Strikeout =
-                    labelYourReferencePerson.Font.Strikeout = labelOurReferencePerson.Font.Strikeout =
-                    labelEmail.Font.Strikeout = labelPhone.Font.Strikeout = customer.Inactive;
+                    labelInvoiceAddress.Text = customer.InvoiceAddress.Replace("\n", "<br>");
+                    textBoxInvoiceAddress.Text = customer.InvoiceAddress;
+
+                    labelPurchaseOrderNumber.Text = textBoxPurchaseOrderNumber.Text = customer.PurchaseOrderNumber;
+                    labelYourReferencePerson.Text = textBoxYourReferencePerson.Text = customer.YourReferencePerson;
+                    labelOurReferencePerson.Text = textBoxOurReferencePerson.Text = customer.OurReferencePerson;
+                    labelEmail.Text = textBoxEmail.Text = customer.Email;
+                    labelPhone.Text = textBoxPhone.Text = customer.Phone;
+
+                    labelCustomerNumber.Font.Strikeout = labelInvoiceAddress.Font.Strikeout =
+                        labelPostalAddress.Font.Strikeout = labelPurchaseOrderNumber.Font.Strikeout =
+                        labelYourReferencePerson.Font.Strikeout = labelOurReferencePerson.Font.Strikeout =
+                        labelEmail.Font.Strikeout = labelPhone.Font.Strikeout = customer.Inactive;
+                    
+                    labelInvoiceCustomerNumber.Text = customer.Number;
+                    labelInvoiceCustomerAddress.Text = customer.InvoiceAddress.Replace("\n", "<br>");
+                    labelInvoiceNumber.Text = "IHG-001";
+                    labelInvoiceOurReferencePerson.Text = customer.OurReferencePerson;
+                    labelInvoicePurchaseOrderNumber.Text = customer.PurchaseOrderNumber;
+                    labelInvoiceYourReferencePerson.Text = customer.YourReferencePerson;
+                }
 
                 company = cr.Read(companyId);
 
-                labelInvoiceCustomerNumber.Text = customer.Number;
-                labelInvoiceCustomerAddress.Text = customer.InvoiceAddress.Replace("\n", "<br>");
-                labelInvoiceNumber.Text = "IHG-001";
-                labelInvoiceOurReferencePerson.Text = customer.OurReferencePerson;
-                labelInvoicePurchaseOrderNumber.Text = customer.PurchaseOrderNumber;
-                labelInvoiceYourReferencePerson.Text = customer.YourReferencePerson;
-
-                labelCompanyName.Text = company.Name;
-                labelCompanyAddress.Text = company.Address;
-                labelCompanyPhone.Text = company.Phone;
-                labelCompanyBankAccountNumber.Text = company.BankAccountNumber;
+                if (company != null)
+                {
+                    labelCompanyName.Text = company.Name;
+                    labelCompanyAddress.Text = company.Address;
+                    labelCompanyPhone.Text = company.Phone;
+                    labelCompanyBankAccountNumber.Text = company.BankAccountNumber;
+                }
             }
         }
 
@@ -107,6 +114,7 @@ namespace HW.Invoicing
         }
 
         [WebMethod]
+        [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
         public static int GetLatestInvoiceNumber()
         {
             return new SqlInvoiceRepository().GetLatestInvoiceNumber();
@@ -218,16 +226,20 @@ namespace HW.Invoicing
                 dropDownListTimebookContacts.Items.Add(new ListItem(c.Contact, c.Id.ToString()));
             }
 
-            customer.Contacts = contacts;
-            
-            foreach (var t in new[] { new { id = 1, name = "Primary" }, new { id = 2, name = "Secondary" }, new { id = 3, name = "Other" }}) {
-                if ((t.id == 1 && customer.HasPrimaryContacts) || (t.id == 2 && customer.HasSecondaryContacts))
+            if (customer != null)
+            {
+                customer.Contacts = contacts;
+
+                foreach (var t in new[] { new { id = 1, name = "Primary" }, new { id = 2, name = "Secondary" }, new { id = 3, name = "Other" } })
                 {
-                    continue;
+                    if ((t.id == 1 && customer.HasPrimaryContacts) || (t.id == 2 && customer.HasSecondaryContacts))
+                    {
+                        continue;
+                    }
+                    var li = new ListItem(t.name, t.id.ToString());
+                    li.Attributes.Add("class", "radio-inline");
+                    radioButtonListContactType.Items.Add(li);
                 }
-            	var li = new ListItem(t.name, t.id.ToString());
-            	li.Attributes.Add("class", "radio-inline");
-            	radioButtonListContactType.Items.Add(li);
             }
         }
     }
