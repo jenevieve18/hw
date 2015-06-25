@@ -48,6 +48,17 @@
                 }
             });
             $('#modal-701809').click(function() {
+                $.ajax({
+                    type: "GET",
+                    url: "CustomerShow.aspx/GetLatestInvoiceNumber",
+                    data: "{}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(msg) {
+                        alert(msg.d);
+                    }
+                });
+
                 var items = $('.hw-invoice-items tbody');
                 var subTotal = 0;
                 items.html('');

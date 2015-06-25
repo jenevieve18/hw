@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using HW.Core.Helpers;
 using HW.Invoicing.Core.Models;
 using HW.Invoicing.Core.Repositories.Sql;
+using System.Web.Services;
 
 namespace HW.Invoicing
 {
@@ -105,10 +106,19 @@ namespace HW.Invoicing
             Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=timebook", id));
         }
 
+        [WebMethod]
+        public static int GetLatestInvoiceNumber()
+        {
+            return new SqlInvoiceRepository().GetLatestInvoiceNumber();
+        }
+
         protected void buttonSaveInvoice_Click(object sender, EventArgs e)
         {
+            int n = vr.GetLatestInvoiceNumber();
             var i = new Invoice
             {
+                Id = n,
+                Number = string.Format("IHGF-{0}", n.ToString("000")),
                 Date = DateTime.Now,
                 Customer = new Customer { Id = id },
                 Comments = textBoxInvoiceComments.Text

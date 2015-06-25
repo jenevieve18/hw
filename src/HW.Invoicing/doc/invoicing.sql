@@ -167,3 +167,8 @@ alter table CustomerTimebook add InternalComments text;
 alter table CustomerItem add SortOrder integer;
 
 alter table Invoice add Comments text;
+
+create table GeneratedNumber(
+	Id integer not null primary key identity,
+	Invoice integer
+);

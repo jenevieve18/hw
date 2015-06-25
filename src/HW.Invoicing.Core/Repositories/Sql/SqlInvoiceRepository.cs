@@ -11,20 +11,47 @@ namespace HW.Invoicing.Core.Repositories.Sql
 		public SqlInvoiceRepository()
 		{
 		}
+
+        public int GetLatestInvoiceNumber()
+        {
+            string query = @"
+select top 1 invoice from generatednumber";
+            int id = 0;
+            using (SqlDataReader rs = ExecuteReader(query, "invoicing"))
+            {
+                if (rs.Read())
+                {
+                    id = GetInt32(rs, 0);
+                }
+            }
+            return id + 1;
+        }
 		
 		public override void Save(Invoice i)
 		{
             string query = @"
-INSERT INTO Invoice(Date, CustomerId, Comments)
-VALUES(@Date, @CustomerId, @Comments);
+INSERT INTO Invoice(Date, CustomerId, Comments, Number)
+VALUES(@Date, @CustomerId, @Comments, @Number);
 SELECT CAST(scope_identity() AS int)";
             int id = (int)ExecuteScalar(
                 query, 
                 "invoicing",
                 new SqlParameter("@Date", i.Date),
                 new SqlParameter("@CustomerId", i.Customer.Id),
-                new SqlParameter("@Comments", i.Comments)
+                new SqlParameter("@Comments", i.Comments),
+                new SqlParameter("@Number", i.Number)
             );
+
+            query = @"
+declare @key int
+
+select top 1 @key = id from generatednumber
+
+if (@key is not null)
+    update generatednumber set invoice = @Invoice
+else
+    insert into generatednumber(invoice) values(@Invoice)";
+            ExecuteNonQuery(query, "invoicing", new SqlParameter("@Invoice", i.Id));
             
 			query = @"
 insert into invoicetimebook(invoiceid, customertimebookid)
@@ -87,7 +114,7 @@ where it.invoiceid = @InvoiceId";
 		{
 			string query = string.Format(
 				@"
-SELECT i.Id, i.Date, c.Id, c.Name, c.Number
+SELECT i.Id, i.Date, c.Id, c.Name, c.Number, i.Number
 FROM Invoice i
 INNER JOIN Customer c ON i.CustomerId = c.Id"
 			);
@@ -102,7 +129,8 @@ INNER JOIN Customer c ON i.CustomerId = c.Id"
 								Id = GetInt32(rs, 2),
 								Name = GetString(rs, 3),
                                 Number = GetString(rs, 4)
-							}
+							},
+                            Number = GetString(rs, 5)
 						}
 					);
 				}
