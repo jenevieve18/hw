@@ -106,6 +106,12 @@ namespace HW.Invoicing.Core.Models
 		public string Email { get; set; }
 		public bool Inactive { get; set; }
 		public int Type { get; set; }
+
+        public override void Validate()
+        {
+            base.Validate();
+            AddErrorIf(Contact == "", "Contact person name shouldn't be empty.");
+        }
 		
 		public string GetContactType()
 		{

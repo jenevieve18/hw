@@ -15,6 +15,7 @@ namespace HW.Invoicing
     	SqlCustomerRepository r = new SqlCustomerRepository();
         protected int id;
         protected int customerId;
+        protected string message;
     	
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -68,8 +69,16 @@ namespace HW.Invoicing
                 Inactive = !checkBoxReactivate.Checked,
                 Type = ConvertHelper.ToInt32(radioButtonListContactType.SelectedValue)
             };
-            r.UpdateContact(c, id);
-            Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=contact-persons", customerId));
+            c.Validate();
+            if (!c.HasErrors)
+            {
+                r.UpdateContact(c, id);
+                Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=contact-persons", customerId));
+            }
+            else
+            {
+                message = c.Errors.ToHtmlUl();
+            }
         }
     }
 }

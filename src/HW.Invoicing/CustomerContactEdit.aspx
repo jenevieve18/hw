@@ -5,6 +5,11 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <h3>Edit customer contact details</h3>
+<% if (message != null && message != "") { %>
+<div class="alert alert-warning">
+    <%= message %>
+</div>
+<% } %>
 <div class="form-group">
 	<label for="<%= textBoxContact.ClientID %>">Contact person</label>
     <asp:TextBox ID="textBoxContact" runat="server" CssClass="form-control"></asp:TextBox>
