@@ -164,6 +164,9 @@
         }
 
         function validateContactPerson() {
+            var errors = [];
+            addErrorIf(errors, $('#<%= textBoxContact.ClientID %>').val() == '', "Contact person name shouldn't be empty.");
+            return displayMessage(errors, '#contact-person-message');
         }
 
         function displayMessage(errors, box) {
@@ -768,6 +771,7 @@
 							<h4 class="modal-title" id="H4">New customer contact</h4>
 						</div>
 						<div class="modal-body">
+                            <span id="contact-person-message"></span>
                             <div class="form-group">
 	                            <label for="">Contact person</label>
                                 <asp:TextBox ID="textBoxContact" runat="server" CssClass="form-control"></asp:TextBox>
@@ -791,7 +795,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <asp:Button ID="buttonSaveContact" runat="server" Text="Save contact" CssClass="btn btn-primary" OnClick="buttonSaveContact_Click" />
+                            <asp:Button ID="buttonSaveContact" OnClientClick="return validateContactPerson()" runat="server" Text="Save contact" CssClass="btn btn-primary" OnClick="buttonSaveContact_Click" />
 						</div>
 					</div>
 				</div>
