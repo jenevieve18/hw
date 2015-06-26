@@ -540,7 +540,7 @@
                                         <td colspan="4">
                                             <asp:Label ID="labelCompanyName" runat="server" Text=""></asp:Label>
                                         </td>
-                                        <td>Bankgiro</td>
+                                        <td><span>Bankgiro</span></td>
                                         <td>
                                             <asp:Label ID="labelCompanyBankAccountNumber" runat="server" Text=""></asp:Label>
                                         </td>
@@ -550,25 +550,25 @@
                                         <td colspan="7">&nbsp;</td>
                                     </tr>
                                     <tr>
-                                        <td>Phone</td>
-                                        <td>
+                                        <td><span>Phone</span></td>
+                                        <td colspan="3">
                                             <asp:Label ID="labelCompanyPhone" runat="server" Text=""></asp:Label>
                                         </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>VAT/Momsreg.nr</td>
+                                        <!--<td></td>
+                                        <td></td>-->
+                                        <td><span>VAT/Momsreg.nr</span></td>
                                         <td>
                                             <asp:Label ID="labelCompanyTIN" runat="server" Text=""></asp:Label>
                                         </td>
                                         <td></td>
                                     </tr>
                                     <tr>
-                                        <td>Postal Address</td>
-                                        <td colspan="2">
+                                        <td><span>Postal Address</span></td>
+                                        <td colspan="3">
                                             <asp:Label ID="labelCompanyAddress" runat="server" Text=""></asp:Label>
                                         </td>
-                                        <td></td>
-                                        <td>F-skattebevis</td>
+                                        <!--<td></td>-->
+                                        <td><span>F-skattebevis</span></td>
                                         <td></td>
                                         <td></td>
                                     </tr>

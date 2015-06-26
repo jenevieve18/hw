@@ -176,3 +176,5 @@ create table GeneratedNumber(
 alter table Invoice add Number varchar(255);
 
 alter table CustomerTimebook add VAT decimal;
+
+alter table CustomerTimebook alter column Comments text;
