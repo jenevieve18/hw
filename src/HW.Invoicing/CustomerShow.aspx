@@ -169,6 +169,30 @@
             return displayMessage(errors, '#contact-person-message');
         }
 
+        function validateTimebook() {
+            var errors = [];
+            addErrorIf(errors, $('#<%= textBoxTimebookDepartment.ClientID %>').val() == '', "Department name shouldn't be empty.");
+            addErrorIf(errors, $('#<%= textBoxTimebookConsultant.ClientID %>').val() == '', "Consultant shouldn't be empty.");
+            addErrorIf(errors, $('#<%= textBoxTimebookComments.ClientID %>').val() == '', "Comments shouldn't be empty.");
+
+            var price = $('#<%= textBoxTimebookPrice.ClientID %>').val();
+            addErrorIf(errors, price == '', "Price shouldn't be empty.");
+            addErrorIf(errors, isNaN(price), "Price should be a number.");
+            addErrorIf(errors, !isNaN(price) && parseFloat(price) <= 0, "Price should be greater than zero.");
+            
+            var qty = $('#<%= textBoxTimebookQty.ClientID %>').val();
+            addErrorIf(errors, qty == '', "Quantity shouldn't be empty.");
+            addErrorIf(errors, isNaN(qty), "Quantity should be a number.");
+            addErrorIf(errors, !isNaN(qty) && parseFloat(qty) <= 0, "Quantity should be greater than zero.");
+
+            var vat = $('#<%= textBoxTimebookVAT.ClientID %>').val();
+            addErrorIf(errors, vat == '', "VAT shouldn't be empty.");
+            addErrorIf(errors, isNaN(vat), "VAT should be a number.");
+            addErrorIf(errors, !isNaN(vat) && parseFloat(vat) <= 0, "VAT should be greater than zero.");
+            
+            return displayMessage(errors, '#timebook-message');
+        }
+
         function displayMessage(errors, box) {
             if (errors.length > 0) {
                 s = '';
@@ -307,6 +331,7 @@
 							<h4 class="modal-title" id="myModalLabel">Add a timebook</h4>
 						</div>
 						<div class="modal-body">
+                            <span id="timebook-message"></span>
                             <div class="form-group">
 	                            <label for="<%= textBoxTimebookDate.ClientID %>">Date</label>
                                 <asp:TextBox ID="textBoxTimebookDate" runat="server" CssClass="form-control"></asp:TextBox>
@@ -355,7 +380,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <asp:Button ID="buttonSaveTimebook" runat="server" Text="Save timebook" CssClass="btn btn-primary" OnClientClick="" OnClick="buttonSaveTimebook_Click" />
+                            <asp:Button ID="buttonSaveTimebook" OnClientClick="return validateTimebook()" runat="server" Text="Save timebook" CssClass="btn btn-primary" OnClick="buttonSaveTimebook_Click" />
 						</div>
 					</div>
 				</div>

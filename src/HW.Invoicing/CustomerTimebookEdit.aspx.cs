@@ -16,6 +16,7 @@ namespace HW.Invoicing
         SqlItemRepository ir = new SqlItemRepository();
         protected int customerId;
         protected int id;
+        protected string message;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -74,8 +75,16 @@ namespace HW.Invoicing
                 InternalComments = textBoxTimebookInternalComments.Text,
                 Inactive = !checkBoxReactivate.Checked
             };
-            r.UpdateTimebook(t, id);
-            Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=timebook", customerId));
+            t.Validate();
+            if (!t.HasErrors)
+            {
+                r.UpdateTimebook(t, id);
+                Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=timebook", customerId));
+            }
+            else
+            {
+                message = t.Errors.ToHtmlUl();
+            }
         }
     }
 }
