@@ -145,15 +145,37 @@
             if ($('#<%= textBoxNotes.ClientID %>').val() == '') {
                 errors.push("Notes shouldn't be empty");
             }
+            return displayMessage(errors, '#notes-message');
+        }
+
+        function addErrorIf(errors, condition, message) {
+            if (condition) {
+                errors.push(message);
+            }
+        }
+
+        function validateCustomerPrice() {
+            var errors = [];
+            var price = $('#<%= textBoxItemPrice.ClientID %>').val();
+            addErrorIf(errors, price == '', "Price shouldn't be empty.");
+            addErrorIf(errors, isNaN(price), "Price should be a number.");
+            addErrorIf(errors, !isNaN(price) && parseFloat(price) <= 0, "Price should be greater than zero.");
+            return displayMessage(errors, '#customer-price-message');
+        }
+
+        function validateContactPerson() {
+        }
+
+        function displayMessage(errors, box) {
             if (errors.length > 0) {
-                s = "";
+                s = '';
                 for (var i = 0; i < errors.length; i++) {
                     s += '<li>' + errors[i] + '</li>';
                 }
                 var message = '<div class="alert alert-warning">' +
                     '<ul>' + s + '</ul>' + 
                     '</div>';
-                $('#notesMessage').html(message);
+                $(box).html(message);
                 return false;
             }
             return true;
@@ -217,7 +239,7 @@
 							<h4 class="modal-title" id="H3">Create note</h4>
 						</div>
 						<div class="modal-body">
-                            <span id="notesMessage"></span>
+                            <span id="notes-message"></span>
                             <div class="form-group">
 	                            <label>Created By: <%= Session["UserName"] %></label>
                             </div>
@@ -610,6 +632,7 @@
 							</h4>
 						</div>
 						<div class="modal-body">
+                            <span id="customer-price-message"></span>
                             <div class="form-group">
 	                            <label for="<%= dropDownListItems.ClientID %>">Item</label>
                                 <asp:DropDownList ID="dropDownListItems" runat="server" CssClass="form-control">
@@ -622,7 +645,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <asp:Button ID="buttonSaveItem" runat="server" Text="Save price" CssClass="btn btn-primary" OnClick="buttonSaveItem_Click" />
+                            <asp:Button ID="buttonSaveItem" OnClientClick="return validateCustomerPrice()" runat="server" Text="Save price" CssClass="btn btn-primary" OnClick="buttonSaveItem_Click" />
 						</div>
 					</div>
 				</div>
