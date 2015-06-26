@@ -533,7 +533,7 @@
                             <td><strike><%= t.Item.Unit.Name %></strike></td>
                             <td><strike><%= t.Quantity.ToString() %></strike></td>
                             <td><strike><%= t.Price.ToString("# ##0.00") %></strike></td>
-                            <td><strike><%= t.VAT.ToString("# ##0.00") %></strike></td>
+                            <td><strike><%= t.VAT %>%</strike></td>
                             <td><strike><%= t.Amount.ToString("# ##0.00") %></strike></td>
                             <td><strike><%= t.Consultant %></strike></td>
                             <td><%= t.GetStatus() %></td>
@@ -563,7 +563,7 @@
                             <td><%= t.Item.Unit.Name %></td>
                             <td><%= t.Quantity.ToString() %></td>
                             <td><%= t.Price.ToString("# ##0.00") %></td>
-                            <td><%= t.VAT.ToString("# ##0.00") %></td>
+                            <td><%= t.VAT %>%</td>
                             <td><%= t.Amount.ToString("# ##0.00") %></td>
                             <td><%= t.Consultant %></td>
                             <td><%= t.GetStatus() %></td>
