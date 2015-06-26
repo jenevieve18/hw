@@ -141,7 +141,10 @@ namespace HW.Invoicing.Core.Models
         public string InternalComments { get; set; }
         public decimal VAT { get; set; }
 		public decimal Amount {
-			get { return Price * Quantity; }
+			get {
+                decimal a = Price * Quantity;
+                return a + (a * VAT / 100);
+            }
 		}
 
         public string GetStatus()
