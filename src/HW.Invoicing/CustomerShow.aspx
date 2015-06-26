@@ -139,6 +139,25 @@
                 label.show();
             });
         }
+
+        function validateNotes() {
+            var errors = [];
+            if ($('#<%= textBoxNotes.ClientID %>').val() == '') {
+                errors.push("Notes shouldn't be empty");
+            }
+            if (errors.length > 0) {
+                s = "";
+                for (var i = 0; i < errors.length; i++) {
+                    s += '<li>' + errors[i] + '</li>';
+                }
+                var message = '<div class="alert alert-warning">' +
+                    '<ul>' + s + '</ul>' + 
+                    '</div>';
+                $('#notesMessage').html(message);
+                return false;
+            }
+            return true;
+        }
     </script>
 
     <style type="text/css">
@@ -198,6 +217,7 @@
 							<h4 class="modal-title" id="H3">Create note</h4>
 						</div>
 						<div class="modal-body">
+                            <span id="notesMessage"></span>
                             <div class="form-group">
 	                            <label>Created By: <%= Session["UserName"] %></label>
                             </div>
@@ -208,7 +228,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <asp:Button ID="buttonSaveNotes" runat="server" Text="Save note" CssClass="btn btn-primary" OnClick="buttonSaveNotes_Click" />
+                            <asp:Button ID="buttonSaveNotes" OnClientClick="return validateNotes()" runat="server" Text="Save note" CssClass="btn btn-primary" OnClick="buttonSaveNotes_Click" />
 						</div>
 					</div>
 				</div>
@@ -310,7 +330,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <asp:Button ID="buttonSaveTimebook" runat="server" Text="Save timebook" CssClass="btn btn-primary" OnClick="buttonSaveTimebook_Click" />
+                            <asp:Button ID="buttonSaveTimebook" runat="server" Text="Save timebook" CssClass="btn btn-primary" OnClientClick="" OnClick="buttonSaveTimebook_Click" />
 						</div>
 					</div>
 				</div>
