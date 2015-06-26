@@ -547,7 +547,7 @@
                                         <td></td>
                                         <td>VAT/Momsreg.nr</td>
                                         <td>
-                                            <asp:Label ID="labelTIN" runat="server" Text=""></asp:Label>
+                                            <asp:Label ID="labelCompanyTIN" runat="server" Text=""></asp:Label>
                                         </td>
                                         <td></td>
                                     </tr>

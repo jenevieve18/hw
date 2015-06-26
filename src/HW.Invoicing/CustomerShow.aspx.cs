@@ -82,6 +82,7 @@ namespace HW.Invoicing
                     labelCompanyAddress.Text = company.Address;
                     labelCompanyPhone.Text = company.Phone;
                     labelCompanyBankAccountNumber.Text = company.BankAccountNumber;
+                    labelCompanyTIN.Text = company.TIN;
                 }
             }
         }
