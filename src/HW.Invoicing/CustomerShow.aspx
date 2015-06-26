@@ -30,7 +30,18 @@
                     var qty = selected.data('qty');
                     var price = selected.data('price');
                     var amount = selected.data('amount');
-                    var invoiceItem = { 'id': id, 'item': item, 'unit': unit, 'qty': qty, 'price': price, 'amount': amount};
+                    var consultant = selected.data('consultant');
+                    var comments = selected.data('comments');
+                    var invoiceItem = {
+                        'id': id,
+                        'item': item,
+                        'unit': unit,
+                        'qty': qty,
+                        'price': price,
+                        'amount': amount,
+                        'consultant': consultant,
+                        'comments': comments
+                    };
                     invoiceItems.push(invoiceItem);
                 } else {
                     var selected = $(this);
@@ -66,7 +77,7 @@
                 invoiceItems.forEach(function(e) {
                     items.append('' + 
                         '<tr>' + 
-                        '   <td>' + e.item + '<input type="hidden" id="invoice-timebooks" name="invoice-timebooks" value="' + e.id + '"></td>' + 
+                        '   <td>' + e.comments + ' (' + e.consultant + ')' + '<input type="hidden" id="invoice-timebooks" name="invoice-timebooks" value="' + e.id + '"></td>' + 
                         '   <td>' + e.qty + '</td>' + 
                         '   <td>' + e.unit + '</td>' + 
                         '   <td class="text-right">' + $.number(e.price, 2, ',', ' ') + '</td>' + 
@@ -623,7 +634,10 @@
                                      data-unit="<%= t.Item.Unit.Name %>"
                                      data-qty="<%= t.Quantity %>"
                                      data-price="<%= t.Price %>"
-                                     data-amount="<%= t.Amount %>" />
+                                     data-amount="<%= t.Amount %>"
+                                     data-consultant="<%= t.Consultant %>"
+                                     data-comments="<%= t.Comments %>"
+                                />
                                 <% } %>
                             </td>
                             <td><%= t.Date.Value.ToString("yyyy-MM-dd") %></td>
