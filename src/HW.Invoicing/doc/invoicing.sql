@@ -172,3 +172,7 @@ create table GeneratedNumber(
 	Id integer not null primary key identity,
 	Invoice integer
 );
+
+alter table Invoice add Number varchar(255);
+
+alter table CustomerTimebook add VAT decimal;

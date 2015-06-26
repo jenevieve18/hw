@@ -292,6 +292,10 @@
                                 <asp:TextBox ID="textBoxTimebookPrice" runat="server" CssClass="form-control"></asp:TextBox>
                             </div>
                             <div class="form-group">
+	                            <label for="<%= textBoxTimebookVAT.ClientID %>">VAT</label>
+                                <asp:TextBox ID="textBoxTimebookVAT" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                            <div class="form-group">
 	                            <label for="<%= textBoxTimebookConsultant.ClientID %>">Consultant</label>
                                 <asp:TextBox ID="textBoxTimebookConsultant" runat="server" CssClass="form-control"></asp:TextBox>
                             </div>

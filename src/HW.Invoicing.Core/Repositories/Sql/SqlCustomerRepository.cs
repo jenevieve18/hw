@@ -161,8 +161,8 @@ VALUES(@CustomerId, @Notes, @CreatedAt, @CreatedBy)"
 		{
 			string query = string.Format(
 				@"
-INSERT INTO CustomerTimebook(CustomerId, CustomerContactId, ItemId, Quantity, Price, Consultant, Comments, Department, Date, InternalComments)
-VALUES(@CustomerId, @CustomerContactId, @ItemId, @Quantity, @Price, @Consultant, @Comments, @Department, @Date, @InternalComments)"
+INSERT INTO CustomerTimebook(CustomerId, CustomerContactId, ItemId, Quantity, Price, Consultant, Comments, Department, Date, InternalComments, VAT)
+VALUES(@CustomerId, @CustomerContactId, @ItemId, @Quantity, @Price, @Consultant, @Comments, @Department, @Date, @InternalComments, @VAT)"
 			);
 			ExecuteNonQuery(
 				query,
@@ -176,7 +176,8 @@ VALUES(@CustomerId, @CustomerContactId, @ItemId, @Quantity, @Price, @Consultant,
 				new SqlParameter("@Comments", time.Comments),
 				new SqlParameter("@Department", time.Department),
                 new SqlParameter("@Date", time.Date),
-                new SqlParameter("@InternalComments", time.InternalComments)
+                new SqlParameter("@InternalComments", time.InternalComments),
+                new SqlParameter("@VAT", time.VAT)
 			);
 		}
 		
@@ -317,7 +318,8 @@ UPDATE CustomerTimebook SET CustomerContactId = @CustomerContactId,
     Department = @Department,
     Date = @Date,
     Inactive = @Inactive,
-    InternalComments = @InternalComments
+    InternalComments = @InternalComments,
+    VAT = @VAT
 WHERE Id = @Id"
             );
             ExecuteNonQuery(
@@ -333,7 +335,8 @@ WHERE Id = @Id"
                 new SqlParameter("@Date", c.Date),
                 new SqlParameter("@Inactive", c.Inactive),
                 new SqlParameter("@Id", id),
-                new SqlParameter("@InternalComments", c.InternalComments)
+                new SqlParameter("@InternalComments", c.InternalComments),
+                new SqlParameter("@VAT", c.VAT)
             );
         }
 
@@ -466,7 +469,8 @@ SELECT Id,
     Department,
     Date,
     Inactive,
-    InternalComments
+    InternalComments,
+    VAT
 FROM CustomerTimebook
 WHERE Id = @Id"
             );
@@ -487,7 +491,8 @@ WHERE Id = @Id"
                         Department = GetString(rs, 8),
                         Date = GetDateTime(rs, 9),
                         Inactive = GetInt32(rs, 10) == 1,
-                        InternalComments = GetString(rs, 11)
+                        InternalComments = GetString(rs, 11),
+                        VAT = GetDecimal(rs, 12)
                     };
                 }
             }

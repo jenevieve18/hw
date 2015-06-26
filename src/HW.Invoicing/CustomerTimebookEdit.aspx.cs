@@ -49,6 +49,7 @@ namespace HW.Invoicing
                     dropDownListTimebookItems.SelectedValue = t.Item.Id.ToString();
                     textBoxTimebookQty.Text = t.Quantity.ToString();
                     textBoxTimebookPrice.Text = t.Price.ToString();
+                    textBoxTimebookVAT.Text = t.VAT.ToString();
                     textBoxTimebookConsultant.Text = t.Consultant;
                     textBoxTimebookComments.Text = t.Comments;
                     textBoxTimebookInternalComments.Text = t.InternalComments;
@@ -67,6 +68,7 @@ namespace HW.Invoicing
                 Item = new Item { Id = ConvertHelper.ToInt32(dropDownListTimebookItems.SelectedValue) },
                 Quantity = ConvertHelper.ToDecimal(textBoxTimebookQty.Text),
                 Price = ConvertHelper.ToDecimal(textBoxTimebookPrice.Text),
+                VAT = ConvertHelper.ToDecimal(textBoxTimebookVAT.Text),
                 Consultant = textBoxTimebookConsultant.Text,
                 Comments = textBoxTimebookComments.Text,
                 InternalComments = textBoxTimebookInternalComments.Text,

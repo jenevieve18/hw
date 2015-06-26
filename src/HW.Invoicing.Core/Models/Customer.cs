@@ -139,6 +139,7 @@ namespace HW.Invoicing.Core.Models
         public bool Inactive { get; set; }
         public int Status { get; set; }
         public string InternalComments { get; set; }
+        public decimal VAT { get; set; }
 		public decimal Amount {
 			get { return Price * Quantity; }
 		}

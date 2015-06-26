@@ -69,6 +69,8 @@ namespace HW.Invoicing
                     labelInvoiceOurReferencePerson.Text = customer.OurReferencePerson;
                     labelInvoicePurchaseOrderNumber.Text = customer.PurchaseOrderNumber;
                     labelInvoiceYourReferencePerson.Text = customer.YourReferencePerson;
+
+                    textBoxTimebookDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
                 }
 
                 company = cr.Read(companyId);
@@ -106,6 +108,7 @@ namespace HW.Invoicing
                 Quantity = ConvertHelper.ToDecimal(textBoxTimebookQty.Text),
                 Price = ConvertHelper.ToDecimal(textBoxTimebookPrice.Text),
                 Consultant = textBoxTimebookConsultant.Text,
+                VAT = ConvertHelper.ToDecimal(textBoxTimebookVAT.Text),
                 Comments = textBoxTimebookComments.Text,
                 InternalComments = textBoxTimebookInternalComments.Text
             };

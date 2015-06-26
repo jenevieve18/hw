@@ -103,6 +103,15 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxTimebookPrice;
         
         /// <summary>
+        /// textBoxTimebookVAT control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxTimebookVAT;
+        
+        /// <summary>
         /// textBoxTimebookConsultant control.
         /// </summary>
         /// <remarks>
