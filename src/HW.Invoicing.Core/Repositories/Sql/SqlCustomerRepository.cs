@@ -492,7 +492,7 @@ WHERE Id = @Id"
                         Date = GetDateTime(rs, 9),
                         Inactive = GetInt32(rs, 10) == 1,
                         InternalComments = GetString(rs, 11),
-                        VAT = GetDecimal(rs, 12)
+                        VAT = GetDecimal(rs, 12, 25)
                     };
                 }
             }
@@ -718,7 +718,8 @@ SELECT t.CustomerContactId,
     t.Id,
     t.Inactive,
     t.InternalComments,
-    (SELECT 1 FROM InvoiceTimebook it WHERE it.CustomerTimebookId = t.Id) Status
+    (SELECT 1 FROM InvoiceTimebook it WHERE it.CustomerTimebookId = t.Id) Status,
+    t.VAT
 FROM CustomerTimebook t
 INNER JOIN CustomerContact c ON c.Id = t.CustomerContactId
 INNER JOIN Item i ON i.Id = t.ItemId
@@ -749,7 +750,8 @@ ORDER BY t.Date DESC"
                             Id = GetInt32(rs, 12),
                             Inactive = GetInt32(rs, 13) == 1,
                             InternalComments = GetString(rs, 14),
-                            Status = GetInt32(rs, 15)
+                            Status = GetInt32(rs, 15),
+                            VAT = GetDecimal(rs, 16, 25)
 						}
 					);
 				}
