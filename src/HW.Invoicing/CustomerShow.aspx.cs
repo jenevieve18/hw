@@ -71,6 +71,7 @@ namespace HW.Invoicing
                     labelInvoiceYourReferencePerson.Text = customer.YourReferencePerson;
 
                     textBoxTimebookDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
+                    textBoxTimebookVAT.Text = 25.ToString();
                 }
 
                 company = cr.Read(companyId);
@@ -242,6 +243,14 @@ namespace HW.Invoicing
                     var li = new ListItem(t.name, t.id.ToString());
                     li.Attributes.Add("class", "radio-inline");
                     radioButtonListContactType.Items.Add(li);
+                }
+                if (!customer.HasPrimaryContacts)
+                {
+                    radioButtonListContactType.SelectedValue = 1.ToString();
+                } else if (!customer.HasSecondaryContacts) {
+                    radioButtonListContactType.SelectedValue = 2.ToString();
+                } else {
+                    radioButtonListContactType.SelectedValue = 3.ToString();
                 }
             }
         }

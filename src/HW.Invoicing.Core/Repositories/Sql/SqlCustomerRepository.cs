@@ -769,7 +769,8 @@ SELECT Contact,
 	Inactive,
 	Type
 FROM CustomerContact
-WHERE CustomerId = @CustomerId"
+WHERE CustomerId = @CustomerId
+ORDER BY Type"
 			);
 			var contacts = new List<CustomerContact>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerId", customerId))) {
