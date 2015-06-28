@@ -22,7 +22,10 @@ namespace HW.Core.Models
 			get { return Errors.Count > 0; }
 		}
 		
-		public virtual void Validate() {}
+		public virtual void Validate()
+        {
+            Errors.Clear();
+        }
 		
 		public virtual void AddErrorIf(bool condition, string message)
 		{
