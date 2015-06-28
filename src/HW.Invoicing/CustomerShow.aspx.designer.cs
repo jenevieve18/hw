@@ -40,6 +40,15 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.Button buttonSaveNotes;
         
         /// <summary>
+        /// panelCustomerTimebook control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel panelCustomerTimebook;
+        
+        /// <summary>
         /// textBoxTimebookDate control.
         /// </summary>
         /// <remarks>
@@ -265,6 +274,15 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.Button buttonSaveInvoice;
         
         /// <summary>
+        /// panelCustomerPrice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel panelCustomerPrice;
+        
+        /// <summary>
         /// dropDownListItems control.
         /// </summary>
         /// <remarks>
@@ -290,6 +308,15 @@ namespace HW.Invoicing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button buttonSaveItem;
+        
+        /// <summary>
+        /// panelCustomerInfo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel panelCustomerInfo;
         
         /// <summary>
         /// labelCustomerNumber control.
@@ -461,6 +488,15 @@ namespace HW.Invoicing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button buttonReactivate;
+        
+        /// <summary>
+        /// panelContactPerson control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel panelContactPerson;
         
         /// <summary>
         /// textBoxContact control.

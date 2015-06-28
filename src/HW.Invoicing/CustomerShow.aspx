@@ -269,7 +269,7 @@
         <div class="tab-pane <%= selectedTab == "notes" ? "active" : "" %>                                                                                                                                                                                                                                                                                       " id="notes">
 			<br />
             <p><a id="modal-625558" href="#customer-notes-form" role="button" class="btn btn-info" data-toggle="modal">Create note</a></p>
-			<div class="modal fade" id="customer-notes-form" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal fade" id="customer-notes-form" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -334,6 +334,7 @@
                 <a id="modal-717670" href="#timebook-form" role="button" class="btn btn-info" data-toggle="modal">Add a timebook</a>
                 <a id="modal-701809" href="#modal-container-701809" role="button" class="btn btn-default" data-toggle="modal">Create Invoice</a>
             </p>
+			<asp:Panel ID="panelCustomerTimebook" DefaultButton="buttonSaveTimebook" runat="server">
 			<div class="modal fade" id="timebook-form" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -396,6 +397,7 @@
 					</div>
 				</div>
 			</div>
+            </asp:Panel>
 			<div class="modal fade" id="modal-container-701809" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				
                 <div class="modal-dialog" style="width:80%">
@@ -664,6 +666,7 @@
 		<div class="tab-pane <%= selectedTab == "customer-prices" ? "active" : "" %>" id="customer-prices">
 			<br />
             <p><a id="modal-692185" href="#customer-prices-form" role="button" class="btn btn-info" data-toggle="modal">Add customer price</a></p>
+			<asp:Panel ID="panelCustomerPrice" DefaultButton="buttonSaveItem" runat="server">
 			<div class="modal fade" id="customer-prices-form" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -692,6 +695,7 @@
 					</div>
 				</div>
 			</div>
+            </asp:Panel>
 			<div class="alert alert-info">
                 In ordinary usage, <strong>price</strong> is the quantity of payment or compensation given by one party to another in return for goods or services.
 			</div>
@@ -733,7 +737,8 @@
 			<div class="alert alert-info">
 				<strong>Customer information</strong> is lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 			</div>
-            <table class="table">
+            <asp:Panel ID="panelCustomerInfo" DefaultButton="buttonSave" runat="server">
+			<table class="table">
                 <tr>
                     <td style="width: 30%;"><strong>Customer Number</strong></td>
                     <td>
@@ -791,6 +796,7 @@
                     </td>
                 </tr>
             </table>
+            </asp:Panel>
             <div>
                 <a id="buttonEdit" href="javascript:;" class="info-text btn btn-info">Edit this customer</a>
                 <asp:Button ID="buttonSave" runat="server" Text="Save this customer" CssClass="info btn btn-info" OnClick="buttonSave_Click" />
@@ -802,6 +808,7 @@
         <div class="tab-pane <%= selectedTab == "contact-persons" ? "active" : "" %>" id="contact-persons">
 			<br />
             <p><a id="modal-240447" href="#modal-container-240447" role="button" class="btn btn-info" data-toggle="modal">Add new contact person</a></p>
+			<asp:Panel ID="panelContactPerson" DefaultButton="buttonSaveContact" runat="server">
 			<div class="modal fade" id="modal-container-240447" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -839,6 +846,7 @@
 					</div>
 				</div>
 			</div>
+            </asp:Panel>
 			<div class="alert alert-info">
 				<strong>Customer contact information</strong> are people serving as a go-between, messenger, connection, or source of special information. Business contacts.
 			</div>
