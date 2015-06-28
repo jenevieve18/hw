@@ -145,7 +145,8 @@ ORDER BY i.Name"
 SELECT i.Id, i.Name, i.Description, ISNULL(p.Price, i.Price), i.UnitId, u.Name
 FROM Item i
 INNER JOIN Unit u ON u.Id = i.UnitId
-LEFT OUTER JOIN CustomerItem p ON p.ItemId = i.Id AND p.CustomerId = @CustomerId"
+LEFT OUTER JOIN CustomerItem p ON p.ItemId = i.Id AND p.CustomerId = @CustomerId AND p.Inactive != 1
+ORDER BY i.Name"
 			);
 			var items = new List<Item>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerId", customerId))) {
