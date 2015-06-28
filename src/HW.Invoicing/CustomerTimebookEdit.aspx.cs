@@ -27,7 +27,7 @@ namespace HW.Invoicing
             if (!IsPostBack)
             {
                 dropDownListTimebookItems.Items.Clear();
-                foreach (var i in ir.FindAllWithCustomerItems())
+                foreach (var i in ir.FindAllWithCustomerItems(customerId))
                 {
                     var li = new ListItem(i.Name, i.Id.ToString());
                     li.Attributes.Add("data-price", i.Price.ToString());

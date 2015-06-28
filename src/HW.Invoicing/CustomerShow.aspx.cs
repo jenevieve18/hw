@@ -207,7 +207,7 @@ namespace HW.Invoicing
             prices = r.FindItems(id);
             contacts = r.FindContacts(id);
             timebooks = r.FindTimebooks(id);
-            timebookItems = ir.FindAllWithCustomerItems();
+            timebookItems = ir.FindAllWithCustomerItems(id);
             items = ir.FindAll();
 
             dropDownListItems.Items.Clear();

@@ -78,7 +78,8 @@ WHERE Id = @Id";
 SELECT Id,
 	Name,
 	Inactive
-FROM Unit";
+FROM Unit
+ORDER BY Name";
 			var units = new List<Unit>();
 			using (var rs = ExecuteReader(query, "invoicing")) {
 				while (rs.Read()) {

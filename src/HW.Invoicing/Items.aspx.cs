@@ -13,17 +13,8 @@ namespace HW.Invoicing
 {
 	public partial class Items : System.Web.UI.Page
 	{
-		IItemRepository r;
+        SqlItemRepository r = new SqlItemRepository();
 		protected IList<Item> items;
-		
-		public Items() : this(new SqlItemRepository())
-		{
-		}
-		
-		public Items(IItemRepository r)
-		{
-			this.r = r;
-		}
 		
 		public void Index()
 		{

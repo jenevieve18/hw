@@ -114,7 +114,8 @@ SELECT i.Id,
 	u.Name,
 	i.Inactive
 FROM Item i
-INNER JOIN Unit u ON u.Id = i.UnitId"
+INNER JOIN Unit u ON u.Id = i.UnitId
+ORDER BY i.Name"
 			);
 			var items = new List<Item>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {
@@ -137,17 +138,17 @@ INNER JOIN Unit u ON u.Id = i.UnitId"
 			return items;
 		}
 		
-		public IList<Item> FindAllWithCustomerItems()
+		public IList<Item> FindAllWithCustomerItems(int customerId)
 		{
 			string query = string.Format(
 				@"
 SELECT i.Id, i.Name, i.Description, ISNULL(p.Price, i.Price), i.UnitId, u.Name
 FROM Item i
 INNER JOIN Unit u ON u.Id = i.UnitId
-LEFT OUTER JOIN CustomerItem p ON p.ItemId = i.Id"
+LEFT OUTER JOIN CustomerItem p ON p.ItemId = i.Id AND p.CustomerId = @CustomerId"
 			);
 			var items = new List<Item>();
-			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {
+			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerId", customerId))) {
 				while (rs.Read()) {
 					items.Add(
 						new Item {

@@ -869,7 +869,7 @@
                             <td><strike><%= c.Email %></strike></td>
                             <td>
                                 <%= HtmlHelper.Anchor("Edit", string.Format("customercontactedit.aspx?Id={0}&CustomerId={1}", c.Id, id)) %>
-                                <%= HtmlHelper.Anchor("Delete", string.Format("customercontactdelete.aspx?Id={0}&CustomerId={1}", c.Id, id)) %>
+                                <%= HtmlHelper.Anchor("Delete", string.Format("customercontactdelete.aspx?Id={0}&CustomerId={1}", c.Id, id), "onclick=\"return confirm('Are you sure you want to delete this contact person?')\"")%>
                             </td>
                         </tr>
                     <% } else { %>

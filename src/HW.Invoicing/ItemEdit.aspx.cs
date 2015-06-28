@@ -67,6 +67,14 @@ namespace HW.Invoicing
                     dropDownListUnits.SelectedValue = i.Unit.Id.ToString();
                     checkBoxReactivate.Checked = !i.Inactive;
                     placeHolderReactivate.Visible = i.Inactive;
+                
+                    dropDownListUnits.Items.Clear();
+                    foreach (var u in ur.FindAll())
+                    {
+                        var li = new ListItem(u.Name, u.Id.ToString());
+                        dropDownListUnits.Items.Add(li);
+                    }
+                    dropDownListUnits.SelectedValue = i.Unit.Id.ToString();
                 }
             }
 		}
@@ -74,12 +82,6 @@ namespace HW.Invoicing
         protected override void OnPreRender(EventArgs e)
         {
             base.OnPreRender(e);
-            dropDownListUnits.Items.Clear();
-            foreach (var u in ur.FindAll())
-            {
-                var li = new ListItem(u.Name, u.Id.ToString());
-                dropDownListUnits.Items.Add(li);
-            }
         }
 
 		protected void buttonSave_Click(object sender, EventArgs e)
