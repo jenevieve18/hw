@@ -119,7 +119,7 @@
                     '   <td colspan="' + (4 - Object.size(vats)) + '"></td>' +
                     //'   <td class="hw-border-left">VAT %</td>' +
                     strVatLabel +
-                    '   <td class="hw-border-left">Moms</td>' +
+                    '   <td class="hw-border-left">VAT</td>' +
                     '   <td class="hw-border-last">Total Amount</td>' +
                     '</tr>' +
                     '<tr class="hw-border-bottom">' +
