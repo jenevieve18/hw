@@ -215,7 +215,7 @@
             var qty = $('#<%= textBoxTimebookQty.ClientID %>').val();
             addErrorIf(errors, qty == '', "Quantity shouldn't be empty.");
             addErrorIf(errors, isNaN(qty), "Quantity should be a number.");
-            addErrorIf(errors, !isNaN(qty) && parseFloat(qty) <= 0, "Quantity should be greater than zero.");
+            //addErrorIf(errors, !isNaN(qty) && parseFloat(qty) <= 0, "Quantity should be greater than zero.");
 
             var vat = $('#<%= textBoxTimebookVAT.ClientID %>').val();
             addErrorIf(errors, vat == '', "VAT shouldn't be empty.");
