@@ -13,6 +13,24 @@ namespace HW.Invoicing {
     public partial class InvoiceAdd {
         
         /// <summary>
+        /// labelInvoiceCustomerNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelInvoiceCustomerNumber;
+        
+        /// <summary>
+        /// labelInvoiceNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelInvoiceNumber;
+        
+        /// <summary>
         /// dropDownListCustomer control.
         /// </summary>
         /// <remarks>
@@ -22,22 +40,121 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.DropDownList dropDownListCustomer;
         
         /// <summary>
-        /// textBoxDate control.
+        /// labelInvoiceCustomerAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxDate;
+        protected global::System.Web.UI.WebControls.Label labelInvoiceCustomerAddress;
         
         /// <summary>
-        /// textBoxDueDate control.
+        /// labelInvoiceYourReferencePerson control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxDueDate;
+        protected global::System.Web.UI.WebControls.Label labelInvoiceYourReferencePerson;
+        
+        /// <summary>
+        /// labelInvoiceOurReferencePerson control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelInvoiceOurReferencePerson;
+        
+        /// <summary>
+        /// labelInvoicePurchaseOrderNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelInvoicePurchaseOrderNumber;
+        
+        /// <summary>
+        /// dropDownListItem control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList dropDownListItem;
+        
+        /// <summary>
+        /// TextBox1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        
+        /// <summary>
+        /// TextBox2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBox2;
+        
+        /// <summary>
+        /// textBoxComments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxComments;
+        
+        /// <summary>
+        /// labelCompanyName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelCompanyName;
+        
+        /// <summary>
+        /// labelCompanyBankAccountNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelCompanyBankAccountNumber;
+        
+        /// <summary>
+        /// labelCompanyPhone control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelCompanyPhone;
+        
+        /// <summary>
+        /// labelCompanyTIN control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelCompanyTIN;
+        
+        /// <summary>
+        /// labelCompanyAddress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelCompanyAddress;
         
         /// <summary>
         /// buttonSave control.

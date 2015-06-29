@@ -53,6 +53,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\style.css" />
     <Content Include="CustomerAdd.aspx" />
     <Content Include="CustomerContactDeactivate.aspx" />
     <Content Include="CustomerContactDelete.aspx" />
@@ -492,7 +493,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="css\" />
     <Folder Include="img\" />
     <Folder Include="js\" />
     <Folder Include="less\" />

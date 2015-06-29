@@ -1,0 +1,30 @@
+
+        .hw-invoice-items {
+            width:100%;
+            margin-bottom:40px;
+            padding:5px;
+            font-weight:bold;
+        }
+        .hw-border-left {
+            border-top:1px solid;
+            border-left:1px solid;
+        }
+        .hw-border-bottom {
+            border-bottom:1px solid;
+        }
+        .hw-border-top {
+            border-top:1px solid;
+        }
+        .hw-border-last {
+            border-top:1px solid;
+            border-left:1px solid;
+            border-right:1px solid;
+        }
+        .hw-footer {
+            font-weight:bold;
+        }
+        .hw-invoice-header {
+            text-transform: uppercase;
+            font-size:x-small;
+            font-weight:bold;
+        }
