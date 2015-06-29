@@ -5,6 +5,14 @@
     <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script src="js/jquery.number.min.js" type="text/javascript"></script>
     <script type="text/javascript">
+        Object.size = function(obj) {
+            var size = 0, key;
+            for (key in obj) {
+                if (obj.hasOwnProperty(key)) size++;
+            }
+            return size;
+        };
+
         $(document).ready(function () {
             $('#<%= dropDownListTimebookItems.ClientID %>').change(function () {
                 var selected = $(this).find('option:selected');
@@ -32,6 +40,7 @@
                     var amount = selected.data('amount');
                     var consultant = selected.data('consultant');
                     var comments = selected.data('comments');
+                    var vat = selected.data('vat');
                     var invoiceItem = {
                         'id': id,
                         'item': item,
@@ -40,7 +49,8 @@
                         'price': price,
                         'amount': amount,
                         'consultant': consultant,
-                        'comments': comments
+                        'comments': comments,
+                        'vat': vat
                     };
                     invoiceItems.push(invoiceItem);
                 } else {
@@ -66,43 +76,57 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function(msg) {
-                        //alert(msg.d);
                         $('#<%= labelInvoiceNumber.ClientID %>').text('IHGF-' + ('000' + msg.d).slice(-3));
                     }
                 });
 
                 var items = $('.hw-invoice-items tbody');
                 var subTotal = 0;
+                var totalVat = 0;
+                var vats = Array();
                 items.html('');
                 invoiceItems.forEach(function(e) {
+                    var vatAmount = e.vat / 100.0 * e.amount;
                     items.append('' + 
                         '<tr>' + 
                         '   <td>' + e.comments + ' (' + e.consultant + ')' + '<input type="hidden" id="invoice-timebooks" name="invoice-timebooks" value="' + e.id + '"></td>' + 
                         '   <td>' + e.qty + '</td>' + 
                         '   <td>' + e.unit + '</td>' + 
                         '   <td class="text-right">' + $.number(e.price, 2, ',', ' ') + '</td>' + 
+                        '   <td class="text-right">' + $.number(vatAmount, 2, ',', ' ') + '</td>' + 
                         '   <td class="text-right">' + $.number(e.amount, 2, ',', ' ') + '</td>' + 
                         '</tr>' + 
                     '');
                     subTotal += e.amount;
+                    totalVat += vatAmount;
+                    vats[e.vat] = 0;
                 });
-                var momsPercentage = 25;
-                var moms = (momsPercentage / 100) * subTotal;
-                var totalAmount = subTotal + moms;
+                //var momsPercentage = 25;
+                //var moms = (momsPercentage / 100) * subTotal;
+                //var totalAmount = subTotal + moms;
+                var totalAmount = subTotal + totalVat;
+                var momsPercentage = 0;
+                var strVat = '', strVatLabel = '';
+                for (var v in vats) {
+                    strVat += '   <td class="hw-border-left">' + $.number(v, 2, ',', ' ') + '</td>';
+                    strVatLabel += '   <td class="hw-border-left">VAT %</td>';
+                }
                 items.append('' +
                     '<tr><td>&nbsp;</td></tr>' +
-                    '<tr><td colspan="4"></td><td class="hw-border-last">Subtotal</td></tr>' +
-                    '<tr><td colspan="4"></td><td class="hw-border-last">' + $.number(subTotal, 2, ',', ' ') + '</td></tr>' +
+                    '<tr class="hw-invoice-header"><td colspan="5"></td><td class="hw-border-last">Subtotal</td></tr>' +
+                    '<tr><td colspan="5"></td><td class="hw-border-last">' + $.number(subTotal, 2, ',', ' ') + '</td></tr>' +
                     '<tr class="hw-invoice-header">' + 
-                    '   <td colspan="2"></td>' +
-                    '   <td class="hw-border-left">Moms %</td>' +
+                    '   <td colspan="' + (4 - Object.size(vats)) + '"></td>' +
+                    //'   <td class="hw-border-left">VAT %</td>' +
+                    strVatLabel +
                     '   <td class="hw-border-left">Moms</td>' +
                     '   <td class="hw-border-last">Total Amount</td>' +
                     '</tr>' +
                     '<tr class="hw-border-bottom">' +
-                    '   <td colspan="2"></td>' +
-                    '   <td class="hw-border-left">' + $.number(momsPercentage, 2, ',', ' ') + '</td>' +
-                    '   <td class="hw-border-left">' + $.number(moms, 2, ',', ' ') + '</td>' +
+                    '   <td colspan="' + (4 - Object.size(vats)) + '"></td>' +
+                    //'   <td class="hw-border-left">' + $.number(momsPercentage, 2, ',', ' ') + '</td>' +
+                    strVat +
+                    '   <td class="hw-border-left">' + $.number(totalVat, 2, ',', ' ') + '</td>' +
                     '   <td class="hw-border-last">' + $.number(totalAmount, 2, ',', ' ') + '</td>' +
                     ''
                 );
@@ -488,6 +512,7 @@
                                     <td class="hw-border-left" style="width:5%">Qty</td>
                                     <td class="hw-border-left" style="width:10%">Unit</td>
                                     <td class="hw-border-left" style="width:10%">Price/Unit</td>
+                                    <td class="hw-border-left" style="width:10%">VAT</td>
                                     <td class="hw-border-last" style="width:10%">Amount</td>
                                 </tr>
                                 </thead>
@@ -598,7 +623,7 @@
                     <th>Unit</th>
                     <th>Qty</th>
                     <th>Price</th>
-                    <th>VAT</th>
+                    <th>VAT %</th>
                     <th>Amount</th>
                     <th>Consultant</th>
                     <th>Status</th>
@@ -639,6 +664,7 @@
                                      data-amount="<%= t.Amount %>"
                                      data-consultant="<%= t.Consultant %>"
                                      data-comments="<%= t.Comments %>"
+                                     data-vat="<%= t.VAT %>"
                                 />
                                 <% } %>
                             </td>

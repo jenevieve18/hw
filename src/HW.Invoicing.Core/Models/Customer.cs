@@ -174,8 +174,9 @@ namespace HW.Invoicing.Core.Models
         public decimal VAT { get; set; }
 		public decimal Amount {
 			get {
-                decimal a = Price * Quantity;
-                return a + (a * VAT / 100);
+                //decimal a = Price * Quantity;
+                //return a + (a * VAT / 100);
+                return Price * Quantity;
             }
 		}
 
