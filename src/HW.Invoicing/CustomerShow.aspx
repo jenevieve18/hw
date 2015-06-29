@@ -437,7 +437,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <small><strong>Customer/Postal Address/Invoice Address</strong></small>
+                                        <small><strong>Customer/Address/Invoice Address</strong></small>
                                     </td>
                                     <td></td>
                                     <td class="hw-border-top">Maturity Date</td>
