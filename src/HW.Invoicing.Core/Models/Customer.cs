@@ -6,6 +6,16 @@ using HW.Core.Models;
 
 namespace HW.Invoicing.Core.Models
 {
+    public class Currency : BaseModel
+    {
+        public string Name { get; set; }
+        public string Code { get; set; }
+        public override string ToString()
+        {
+            return string.Format("{0} - {1}", Name, Code);
+        }
+    }
+
 	public class Customer : BaseModel
 	{
 		public string Name { get; set; }
@@ -19,6 +29,17 @@ namespace HW.Invoicing.Core.Models
         public string YourReferencePerson { get; set; }
         public string OurReferencePerson { get; set; }
         public bool Inactive { get; set; }
+        public Language Language { get; set; }
+
+        public static List<Currency> GetCurrencies()
+        {
+            return new List<Currency>(
+                new[] {
+                    new Currency { Name = "Pound Sterling", Code = "GBP" },
+                    new Currency { Name = "US Dollar", Code = "USD" }
+                }
+            );
+        }
 
         public override void Validate()
         {
@@ -87,6 +108,11 @@ namespace HW.Invoicing.Core.Models
 		public string Name { get; set; }
 		public bool Inactive { get; set; }
 	}
+
+    public class Language : BaseModel
+    {
+        public string Name { get; set; }
+    }
 	
 	public class CustomerItem : BaseModel
 	{

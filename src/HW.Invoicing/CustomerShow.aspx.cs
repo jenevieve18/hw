@@ -18,12 +18,14 @@ namespace HW.Invoicing
         SqlItemRepository ir = new SqlItemRepository();
         SqlInvoiceRepository vr = new SqlInvoiceRepository();
         SqlCompanyRepository cr = new SqlCompanyRepository();
+        SqlLanguageRepository lr = new SqlLanguageRepository();
         protected IList<CustomerNotes> notes;
         protected IList<CustomerItem> prices;
         protected IList<CustomerContact> contacts;
         protected IList<Item> timebookItems;
         protected IList<Item> items;
         protected IList<CustomerTimebook> timebooks;
+        protected IList<Language> languages;
     	protected int id;
         protected string selectedTab;
         protected Customer customer;
@@ -55,13 +57,15 @@ namespace HW.Invoicing
                     labelPurchaseOrderNumber.Text = textBoxPurchaseOrderNumber.Text = customer.PurchaseOrderNumber;
                     labelYourReferencePerson.Text = textBoxYourReferencePerson.Text = customer.YourReferencePerson;
                     labelOurReferencePerson.Text = textBoxOurReferencePerson.Text = customer.OurReferencePerson;
-                    labelEmail.Text = textBoxEmail.Text = customer.Email;
                     labelPhone.Text = textBoxPhone.Text = customer.Phone;
-
+                    labelEmail.Text = textBoxEmail.Text = customer.Email;
+                    labelLanguage.Text = customer.Language.Name;
+                    
                     labelCustomerNumber.Font.Strikeout = labelInvoiceAddress.Font.Strikeout =
                         labelPostalAddress.Font.Strikeout = labelPurchaseOrderNumber.Font.Strikeout =
                         labelYourReferencePerson.Font.Strikeout = labelOurReferencePerson.Font.Strikeout =
-                        labelEmail.Font.Strikeout = labelPhone.Font.Strikeout = customer.Inactive;
+                        labelEmail.Font.Strikeout = labelPhone.Font.Strikeout =
+                        labelLanguage.Font.Strikeout = customer.Inactive;
                     
                     labelInvoiceCustomerNumber.Text = customer.Number;
                     labelInvoiceCustomerAddress.Text = customer.InvoiceAddress.Replace("\n", "<br>");
@@ -156,7 +160,8 @@ namespace HW.Invoicing
                 YourReferencePerson = textBoxYourReferencePerson.Text,
                 OurReferencePerson = textBoxOurReferencePerson.Text,
                 Phone = textBoxPhone.Text,
-                Email = textBoxEmail.Text
+                Email = textBoxEmail.Text,
+                Language = new Language { Id = ConvertHelper.ToInt32(dropDownListLanguage.SelectedValue) }
             };
             r.Update(c, ConvertHelper.ToInt32(Request.QueryString["Id"]));
             Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=customer-info", id));
@@ -209,6 +214,7 @@ namespace HW.Invoicing
             timebooks = r.FindTimebooks(id);
             timebookItems = ir.FindAllWithCustomerItems(id);
             items = ir.FindAll();
+            languages = lr.FindAll();
 
             dropDownListItems.Items.Clear();
             foreach (var i in items)
@@ -231,9 +237,22 @@ namespace HW.Invoicing
                 dropDownListTimebookContacts.Items.Add(new ListItem(c.Contact, c.Id.ToString()));
             }
 
+            dropDownListLanguage.Items.Clear();
+            foreach (var l in languages)
+            {
+                dropDownListLanguage.Items.Add(new ListItem(l.Name, l.Id.ToString()));
+            }
+
+            dropDownListCurrency.Items.Clear();
+            foreach (var c in Customer.GetCurrencies())
+            {
+                dropDownListCurrency.Items.Add(new ListItem(c.ToString(), c.Id.ToString()));
+            }
+
             if (customer != null)
             {
                 customer.Contacts = contacts;
+                dropDownListLanguage.SelectedValue = customer.Language.Id.ToString();
 
                 foreach (var t in new[] { new { id = 1, name = "Primary" }, new { id = 2, name = "Secondary" }, new { id = 3, name = "Other" } })
                 {

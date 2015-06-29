@@ -7,6 +7,47 @@ using HW.Invoicing.Core.Models;
 
 namespace HW.Invoicing.Core.Repositories.Sql
 {
+    public class SqlCurrencyRepository : BaseSqlRepository<Currency>
+    {
+        public List<Currency> FindAll()
+        {
+            string query = @"
+select id, code, name from currency";
+            var currencies = new List<Currency>();
+            using (var rs = ExecuteReader(query, "invoicing"))
+            {
+                while (rs.Read())
+                {
+                    currencies.Add(
+                        new Currency { Id = GetInt32(rs, 0), Code = GetString(rs, 1), Name = GetString(rs, 2) }
+                        );
+                }
+            }
+            return currencies;
+        }
+    }
+
+    public class SqlLanguageRepository : BaseSqlRepository<Language>
+    {
+        public override IList<Language> FindAll()
+        {
+            string query = @"
+select id, name from lang";
+            var l = new List<Language>();
+            using (var rs = ExecuteReader(query, "invoicing")) 
+            {
+                while (rs.Read())
+                {
+                    l.Add(new Language { 
+                        Id = GetInt32(rs, 0),
+                        Name = GetString(rs, 1)
+                    });
+                }
+            }
+            return l;
+        }
+    }
+
 	public class SqlCustomerRepository : BaseSqlRepository<Customer>, ICustomerRepository
 	{
         public void Swap(CustomerItem item1, CustomerItem item2)
@@ -239,13 +280,14 @@ VALUES(@Name, @Number, @PostalAddress, @InvoiceAddress, @PurchaseOrderNumber, @Y
 			string query = string.Format(
                 @"
 UPDATE Customer SET Number = @Number,
-InvoiceAddress = @InvoiceAddress,
-PostalAddress = @PostalAddress,
-PurchaseOrderNumber = @PurchaseOrderNumber,
-YourReferencePerson = @YourReferencePerson,
-OurReferencePerson = @OurReferencePerson,
-Email = @Email,
-Phone = @Phone
+    InvoiceAddress = @InvoiceAddress,
+    PostalAddress = @PostalAddress,
+    PurchaseOrderNumber = @PurchaseOrderNumber,
+    YourReferencePerson = @YourReferencePerson,
+    OurReferencePerson = @OurReferencePerson,
+    Email = @Email,
+    Phone = @Phone,
+    LangId = @LangId
 WHERE Id = @Id"
             );
 			ExecuteNonQuery(
@@ -259,6 +301,7 @@ WHERE Id = @Id"
                 new SqlParameter("@OurReferencePerson", c.OurReferencePerson),
                 new SqlParameter("@Phone", c.Phone),
                 new SqlParameter("@Email", c.Email),
+                new SqlParameter("@LangId", c.Language.Id),
                 new SqlParameter("@Id", id)
 			);
 		}
@@ -393,27 +436,31 @@ WHERE Id = @Id"
 		{
 			string query = string.Format(
                 @"
-SELECT Id,
-Name,
-Number,
-InvoiceAddress,
-PostalAddress,
-PurchaseOrderNumber,
-YourReferencePerson,
-OurReferencePerson,
-Email,
-Phone,
-Inactive
-FROM Customer
-WHERE Id = @Id"
+SELECT c.Id,
+    c.Name,
+    c.Number,
+    c.InvoiceAddress,
+    c.PostalAddress,
+    c.PurchaseOrderNumber,
+    c.YourReferencePerson,
+    c.OurReferencePerson,
+    c.Email,
+    c.Phone,
+    c.Inactive,
+    c.LangId,
+    l.Name
+FROM Customer c
+INNER JOIN Lang l ON c.LangId = l.Id
+WHERE c.Id = @Id"
             );
 			Customer c = null;
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", id))) {
 				if (rs.Read()) {
-					c = new Customer {
-						Id = GetInt32(rs, 0),
-						Name = GetString(rs, 1),
-						Number = GetString(rs, 2),
+                    c = new Customer
+                    {
+                        Id = GetInt32(rs, 0),
+                        Name = GetString(rs, 1),
+                        Number = GetString(rs, 2),
                         InvoiceAddress = GetString(rs, 3, ""),
                         PostalAddress = GetString(rs, 4, ""),
                         PurchaseOrderNumber = GetString(rs, 5),
@@ -421,8 +468,12 @@ WHERE Id = @Id"
                         OurReferencePerson = GetString(rs, 7),
                         Email = GetString(rs, 8),
                         Phone = GetString(rs, 9),
-                        Inactive = GetInt32(rs, 10) == 1
-					};
+                        Inactive = GetInt32(rs, 10) == 1,
+                        Language = new Language {
+                            Id = GetInt32(rs, 11),
+                            Name = GetString(rs, 12)
+                        }
+                    };
 				}
 			}
 			return c;

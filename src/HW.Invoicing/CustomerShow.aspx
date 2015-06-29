@@ -795,6 +795,22 @@
                         <asp:TextBox ID="textBoxEmail" runat="server" CssClass="info form-control"></asp:TextBox>
                     </td>
                 </tr>
+                <tr>
+                    <td><strong>Language</strong></td>
+                    <td>
+                        <asp:Label ID="labelLanguage" runat="server" Text="" CssClass="info-text"></asp:Label>
+                        <asp:DropDownList ID="dropDownListLanguage" runat="server" CssClass="info form-control">
+                        </asp:DropDownList>
+                    </td>
+                </tr>
+                <!--<tr>
+                    <td><strong>Currency</strong></td>
+                    <td>
+                        <asp:Label ID="labelCurrency" runat="server" Text="" CssClass="info-text"></asp:Label>
+                        <asp:DropDownList ID="dropDownListCurrency" runat="server" CssClass="info form-control">
+                        </asp:DropDownList>
+                    </td>
+                </tr>-->
             </table>
             </asp:Panel>
             <div>

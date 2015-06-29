@@ -14,7 +14,6 @@ namespace HW.Invoicing
 {
     public partial class Customers : System.Web.UI.Page
     {
-    	//SqlCustomerRepository r = new SqlCustomerRepository();
     	protected IList<Customer> customers;
         CustomerService s = new CustomerService(new SqlCustomerRepository());
     	

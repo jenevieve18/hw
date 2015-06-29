@@ -53,6 +53,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Currencies.aspx" />
+    <Content Include="CurrencyAdd.aspx" />
     <Content Include="CustomerAdd.aspx" />
     <Content Include="CustomerContactDeactivate.aspx" />
     <Content Include="CustomerContactDelete.aspx" />
@@ -112,6 +114,20 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Currencies.aspx.cs">
+      <DependentUpon>Currencies.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Currencies.aspx.designer.cs">
+      <DependentUpon>Currencies.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CurrencyAdd.aspx.cs">
+      <DependentUpon>CurrencyAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CurrencyAdd.aspx.designer.cs">
+      <DependentUpon>CurrencyAdd.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CustomerAdd.aspx.cs">
       <DependentUpon>CustomerAdd.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

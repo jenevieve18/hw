@@ -463,6 +463,42 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxEmail;
         
         /// <summary>
+        /// labelLanguage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelLanguage;
+        
+        /// <summary>
+        /// dropDownListLanguage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList dropDownListLanguage;
+        
+        /// <summary>
+        /// labelCurrency control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelCurrency;
+        
+        /// <summary>
+        /// dropDownListCurrency control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList dropDownListCurrency;
+        
+        /// <summary>
         /// buttonSave control.
         /// </summary>
         /// <remarks>
