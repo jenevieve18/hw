@@ -82,51 +82,48 @@
 
                 var items = $('.hw-invoice-items tbody');
                 var subTotal = 0;
-                var totalVat = 0;
                 var vats = Array();
                 items.html('');
                 invoiceItems.forEach(function(e) {
                     var vatAmount = e.vat / 100.0 * e.amount;
                     items.append('' + 
                         '<tr>' + 
-                        '   <td>' + e.comments + ' (' + e.consultant + ')' + '<input type="hidden" id="invoice-timebooks" name="invoice-timebooks" value="' + e.id + '"></td>' + 
+                        '   <td colspan="4">' + e.comments + ' (' + e.consultant + ')' + '<input type="hidden" id="invoice-timebooks" name="invoice-timebooks" value="' + e.id + '"></td>' + 
                         '   <td>' + e.qty + '</td>' + 
                         '   <td>' + e.unit + '</td>' + 
                         '   <td class="text-right">' + $.number(e.price, 2, ',', ' ') + '</td>' + 
-                        '   <td class="text-right">' + $.number(vatAmount, 2, ',', ' ') + '</td>' + 
                         '   <td class="text-right">' + $.number(e.amount, 2, ',', ' ') + '</td>' + 
                         '</tr>' + 
                     '');
                     subTotal += e.amount;
-                    totalVat += vatAmount;
-                    vats[e.vat] = 0;
+                    if (vats.hasOwnProperty(e.vat)) {
+                        vats[e.vat] += vatAmount;
+                    } else {
+                        vats[e.vat] = vatAmount;
+                    }
                 });
-                //var momsPercentage = 25;
-                //var moms = (momsPercentage / 100) * subTotal;
-                //var totalAmount = subTotal + moms;
-                var totalAmount = subTotal + totalVat;
-                var momsPercentage = 0;
                 var strVat = '', strVatLabel = '';
+                var totalVat = 0;
                 for (var v in vats) {
-                    strVat += '   <td class="hw-border-left">' + $.number(v, 2, ',', ' ') + '</td>';
-                    strVatLabel += '   <td class="hw-border-left">VAT %</td>';
+                    strVat += '   <td style="width:10%" class="hw-border-left">' + v + '%</td>';
+                    strVat += '   <td style="width:10%" class="hw-border-left">' + $.number(vats[v], 2, ',', ' ') + '</td>';
+                    strVatLabel += '   <td style="width:10%" class="hw-border-left">VAT %</td>';
+                    strVatLabel += '   <td style="width:10%" class="hw-border-left">VAT</td>';
+                    totalVat += vats[v];
                 }
+                totalAmount = subTotal + totalVat;
                 items.append('' +
                     '<tr><td>&nbsp;</td></tr>' +
-                    '<tr class="hw-invoice-header"><td colspan="5"></td><td class="hw-border-last">Subtotal</td></tr>' +
-                    '<tr><td colspan="5"></td><td class="hw-border-last">' + $.number(subTotal, 2, ',', ' ') + '</td></tr>' +
+                    '<tr class="hw-invoice-header"><td colspan="7"></td><td class="hw-border-last">Subtotal</td></tr>' +
+                    '<tr><td colspan="7"></td><td class="hw-border-last">' + $.number(subTotal, 2, ',', ' ') + '</td></tr>' +
                     '<tr class="hw-invoice-header">' + 
-                    '   <td colspan="' + (4 - Object.size(vats)) + '"></td>' +
-                    //'   <td class="hw-border-left">VAT %</td>' +
+                    '   <td colspan="' + (7 - (Object.size(vats) * 2)) + '"></td>' +
                     strVatLabel +
-                    '   <td class="hw-border-left">VAT</td>' +
                     '   <td class="hw-border-last">Total Amount</td>' +
                     '</tr>' +
                     '<tr class="hw-border-bottom">' +
-                    '   <td colspan="' + (4 - Object.size(vats)) + '"></td>' +
-                    //'   <td class="hw-border-left">' + $.number(momsPercentage, 2, ',', ' ') + '</td>' +
+                    '   <td colspan="' + (7 - (Object.size(vats) * 2)) + '"></td>' +
                     strVat +
-                    '   <td class="hw-border-left">' + $.number(totalVat, 2, ',', ' ') + '</td>' +
                     '   <td class="hw-border-last">' + $.number(totalAmount, 2, ',', ' ') + '</td>' +
                     ''
                 );
@@ -508,11 +505,10 @@
                             <table class="hw-invoice-items" cellpadding="5px">
                                 <thead>
                                 <tr class="hw-invoice-header">
-                                    <td class="hw-border-left">Item</td>
-                                    <td class="hw-border-left" style="width:5%">Qty</td>
+                                    <td class="hw-border-left" colspan="4">Item</td>
+                                    <td class="hw-border-left" style="width:10%">Qty</td>
                                     <td class="hw-border-left" style="width:10%">Unit</td>
                                     <td class="hw-border-left" style="width:10%">Price/Unit</td>
-                                    <td class="hw-border-left" style="width:10%">VAT</td>
                                     <td class="hw-border-last" style="width:10%">Amount</td>
                                 </tr>
                                 </thead>
