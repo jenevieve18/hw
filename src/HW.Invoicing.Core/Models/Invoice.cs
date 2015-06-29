@@ -20,9 +20,24 @@ namespace HW.Invoicing.Core.Models
             Date = DateTime.Now;
             Timebooks = new List<InvoiceTimebook>();
 		}
+
+        public decimal TotalVAT
+        {
+            get {
+                decimal t = 0;
+                foreach (var x in Timebooks)
+                {
+                    t += (x.Timebook.VAT / 100) * x.Timebook.Amount;
+                }
+                return t;
+            }
+        }
 		
 		public decimal TotalAmount {
-			get { return Timebooks.Sum(x => x.Timebook.Amount); }
+			get {
+                decimal t = Timebooks.Sum(x => x.Timebook.Amount);
+                return t + TotalVAT;
+            }
 		}
 		
 		public void AddTimebook(int id)

@@ -86,7 +86,7 @@ WHERE Id = @id"
         public List<InvoiceTimebook> FindTimebooks(int invoiceId)
         {
             string query = @"
-select it.id, it.customertimebookid, ct.quantity, ct.price
+select it.id, it.customertimebookid, ct.quantity, ct.price, ct.vat
 from invoicetimebook it
 inner join customertimebook ct on ct.id = it.customertimebookid
 where it.invoiceid = @InvoiceId";
@@ -102,7 +102,8 @@ where it.invoiceid = @InvoiceId";
                         {
                             Id = GetInt32(rs, 1),
                             Quantity = GetDecimal(rs, 2),
-                            Price = GetDecimal(rs, 3)
+                            Price = GetDecimal(rs, 3),
+                            VAT = GetDecimal(rs, 4)
                         }
                     });
                 }
@@ -116,7 +117,8 @@ where it.invoiceid = @InvoiceId";
 				@"
 SELECT i.Id, i.Date, c.Id, c.Name, c.Number, i.Number
 FROM Invoice i
-INNER JOIN Customer c ON i.CustomerId = c.Id"
+INNER JOIN Customer c ON i.CustomerId = c.Id
+ORDER BY i.Date DESC"
 			);
 			var invoices = new List<Invoice>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {
