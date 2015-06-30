@@ -30,7 +30,7 @@ namespace HW.Invoicing
                 labelInvoicePurchaseOrderNumber.Text = invoice.Customer.PurchaseOrderNumber;
                 labelInvoiceYourReferencePerson.Text = invoice.Customer.YourReferencePerson;
                 labelInvoiceOurReferencePerson.Text = invoice.Customer.OurReferencePerson;
-                labelInvoiceComments.Text = invoice.Comments;
+                //labelInvoiceComments.Text = invoice.Comments;
 
                 var company = cr.Read(1);
 

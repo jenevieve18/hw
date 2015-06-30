@@ -137,11 +137,14 @@
         <td class="hw-border-last"><%= (subTotal + totalVat).ToString("### ### ##0.00") %></td>
     </tr>
 </table>
+<% if (invoice.Comments != "") { %>
 <div class="form-group">
-	<label for="<%= labelInvoiceComments.ClientID %>">Comments</label>
-    <asp:Label ID="labelInvoiceComments" runat="server" Text="Label"></asp:Label>
-    
+    <label for="labelInvoiceComments">Comments</label>
+    <span id="labelInvoiceComments"><%= invoice.Comments %></span>
+	<%-- <label for="<%= labelInvoiceComments.ClientID %>">Comments</label>
+    <asp:Label ID="labelInvoiceComments" runat="server" Text=""></asp:Label>--%>
 </div>
+<% } %>
 <small class="hw-footer">
     <table style="width:100%">
         <tr>
@@ -162,8 +165,6 @@
             <td colspan="3">
                 <asp:Label ID="labelCompanyPhone" runat="server" Text=""></asp:Label>
             </td>
-            <!--<td></td>
-            <td></td>-->
             <td><span>VAT/Momsreg.nr</span></td>
             <td>
                 <asp:Label ID="labelCompanyTIN" runat="server" Text=""></asp:Label>
@@ -175,7 +176,6 @@
             <td colspan="3">
                 <asp:Label ID="labelCompanyAddress" runat="server" Text=""></asp:Label>
             </td>
-            <!--<td></td>-->
             <td><span>F-skattebevis</span></td>
             <td></td>
             <td></td>

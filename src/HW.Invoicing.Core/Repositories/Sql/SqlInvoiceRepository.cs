@@ -82,16 +82,17 @@ values(@InvoiceId, @CustomerTimebookId)";
 			string query = string.Format(
 				@"
 SELECT i.Id,
-i.Date,
-i.CustomerId,
-c.Name,
-c.invoiceaddress,
-c.purchaseordernumber,
-c.yourreferenceperson,
-c.ourreferenceperson,
-i.number,
-c.number,
-i.status
+    i.Date,
+    i.CustomerId,
+    c.Name,
+    c.invoiceaddress,
+    c.purchaseordernumber,
+    c.yourreferenceperson,
+    c.ourreferenceperson,
+    i.number,
+    c.number,
+    i.status,
+    i.comments
 FROM Invoice i
 INNER JOIN Customer c ON c.Id = i.CustomerId
 WHERE i.Id = @Id"
@@ -113,7 +114,8 @@ WHERE i.Id = @Id"
                             OurReferencePerson = GetString(rs, 7),
                             Number = GetString(rs, 9)
                         },
-                        Status = GetInt32(rs, 10)
+                        Status = GetInt32(rs, 10),
+                        Comments = GetString(rs, 11)
                     };
 				}
 			}
