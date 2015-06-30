@@ -17,8 +17,8 @@
         <th>VAT</th>
         <th>Total Amount</th>
         <th>Status</th>
+        <th>Actions</th>
         <th>Comments</th>
-        <th></th>
     </tr>
     <% decimal totalSubTotal = 0, totalVAT = 0, totalAmount = 0; %>
     <% foreach (var i in invoices) { %>
@@ -34,7 +34,6 @@
         <td><%= i.TotalVAT.ToString("### ### ##0.00") %></td>
         <td><%= i.TotalAmount.ToString("### ### ##0.00") %></td>
         <td><%= i.GetStatus() %></td>
-        <td><%= i.Comments %></td>
         <td>
             <div class="btn-group">
 				<button class="btn btn-default">Action</button> 
@@ -52,6 +51,7 @@
 				</ul>
 			</div>
         </td>
+        <td><%= i.Comments %></td>
     </tr>
     <% } %>
     <!--<tr><td colspan="8">&nbsp;</td></tr>-->
