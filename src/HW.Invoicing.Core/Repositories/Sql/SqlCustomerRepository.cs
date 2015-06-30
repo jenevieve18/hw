@@ -740,7 +740,7 @@ ORDER BY n.CreatedAt DESC"
 							CreatedBy = new User {
 								Id = GetInt32(rs, 3),
 								Name = GetString(rs, 4),
-                                Color = GetString(rs, 6)
+                                Color = GetString(rs, 6, "")
 							},
 							Inactive = GetInt32(rs, 5) == 1
 						}
