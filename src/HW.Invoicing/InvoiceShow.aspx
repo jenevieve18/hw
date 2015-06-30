@@ -82,7 +82,7 @@
 <table class="hw-invoice-items" cellpadding="5px">
     <thead>
     <tr class="hw-invoice-header">
-        <td class="hw-border-left" colspan="4">Item</td>
+        <td class="hw-border-left" colspan="4"><%= HtmlHelper.Anchor("Item", string.Format("customershow.aspx?Id={0}&SelectedTab=timebook", invoice.Customer.Id)) %></td>
         <td class="hw-border-left" style="width:10%">Qty</td>
         <td class="hw-border-left" style="width:10%">Unit</td>
         <td class="hw-border-left" style="width:10%">Price/Unit</td>
@@ -94,7 +94,7 @@
     <% Dictionary<decimal, decimal> vats = new Dictionary<decimal, decimal>(); %>
     <% foreach (var t in invoice.Timebooks) { %>
     <tr>
-        <td colspan="4"><%= t.Timebook.Item.Name %></td>
+        <td colspan="4"><%= t.Timebook.ToString() %></td>
         <td><%= t.Timebook.Quantity %></td>
         <td><%= t.Timebook.Item.Unit.Name %></td>
         <td class="text-right"><%= t.Timebook.Price.ToString("### ### ##0.00") %></td>

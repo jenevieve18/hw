@@ -189,6 +189,11 @@ namespace HW.Invoicing.Core.Models
             }
 		}
 
+        public override string ToString()
+        {
+            return string.Format("{0} ({1})", Comments, Consultant);
+        }
+
         public override void Validate()
         {
             base.Validate();
