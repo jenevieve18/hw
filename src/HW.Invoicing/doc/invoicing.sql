@@ -203,5 +203,5 @@ alter table Invoice add Status integer;
 
 update Invoice set Status = 1;
 
-alter table Invoice add FinancialMonthStart datetime,
+alter table Company add FinancialMonthStart datetime,
 FinancialMonthEnd datetime;

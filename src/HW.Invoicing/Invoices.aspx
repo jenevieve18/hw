@@ -18,6 +18,7 @@
         <th>Total Amount</th>
         <th>Status</th>
         <th>Actions</th>
+        <th style="width:16px"></th>
         <th>Comments</th>
     </tr>
     <% decimal totalSubTotal = 0, totalVAT = 0, totalAmount = 0; %>
@@ -51,6 +52,7 @@
 				</ul>
 			</div>
         </td>
+        <td style="width:16px"><%= HtmlHelper.AnchorImage("invoiceexport.aspx?Id=" + i.Id, "img/page_white_acrobat.png")%></td>
         <td><%= i.Comments %></td>
     </tr>
     <% } %>
@@ -60,7 +62,7 @@
         <td><strong><%= totalSubTotal.ToString("### ### ##0.00") %></strong></td>
         <td><strong><%= totalVAT.ToString("### ### ##0.00") %></strong></td>
         <td><strong><%= totalAmount.ToString("### ### ##0.00") %></strong></td>
-        <td colspan="3"></td>
+        <td colspan="4"></td>
     </tr>
 </table>
 

@@ -42,12 +42,12 @@ namespace HW.Invoicing.Core.Models
 			set { date = value; MaturityDate = date.Value.AddDays(30); }
 		}
 		public DateTime? MaturityDate { get; set; }
-//		public DateTime? Date { get; set; }
 		public Customer Customer { get; set; }
 		public IList<InvoiceTimebook> Timebooks { get; set; }
 		public string Comments { get; set; }
 		public string Number { get; set; }
         public int Status { get; set; }
+        public string InternalComments { get; set; }
 
         public string GetStatus()
         {
