@@ -1,6 +1,25 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="Settings.aspx.cs" Inherits="HW.Invoicing.Settings" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+<link href="css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+    <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#<%= textBoxFinancialMonthStart.ClientID %>').datepicker({
+            format: "MM dd",
+            autoclose: true
+        });
+        $('#<%= textBoxFinancialMonthEnd.ClientID %>').datepicker({
+            format: "MM dd",
+            autoclose: true
+        });
+    });
+    
+</script>
+
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -24,6 +43,14 @@
 <div class="form-group">
 	<label for="<%= textBoxTIN.ClientID %>">TIN</label>
     <asp:TextBox ID="textBoxTIN" runat="server" CssClass="form-control"></asp:TextBox>
+</div>
+<div class="form-group">
+	<label for="<%= textBoxFinancialMonthStart.ClientID %>">Start Financial Month</label>
+    <asp:TextBox ID="textBoxFinancialMonthStart" runat="server" CssClass="form-control"></asp:TextBox>
+</div>
+<div class="form-group">
+	<label for="<%= textBoxFinancialMonthEnd.ClientID %>">End Financial Month</label>
+    <asp:TextBox ID="textBoxFinancialMonthEnd" runat="server" CssClass="form-control"></asp:TextBox>
 </div>
 <div>
     <asp:Button ID="buttonSave" CssClass="btn btn-success" runat="server" Text="Save settings" 

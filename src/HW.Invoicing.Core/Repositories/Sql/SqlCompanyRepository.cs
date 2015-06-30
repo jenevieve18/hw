@@ -19,7 +19,14 @@ namespace HW.Invoicing.Core.Repositories.Sql
 		public override Company Read(int id)
 		{
 			string query = @"
-select Id, Name, Address, Phone, BankAccountNumber, TIN
+select Id,
+Name,
+Address,
+Phone,
+BankAccountNumber,
+TIN,
+FinancialMonthStart,
+FinancialMonthEnd
 from Company
 where Id = @Id";
 			Company c = null;
@@ -31,7 +38,9 @@ where Id = @Id";
 						Address = GetString(rs, 2),
 						Phone = GetString(rs, 3),
 						BankAccountNumber = GetString(rs, 4),
-						TIN = GetString(rs, 5)
+						TIN = GetString(rs, 5),
+                        FinancialMonthStart = GetDateTime(rs, 6),
+                        FinancialMonthEnd = GetDateTime(rs, 7)
 					};
 				}
 			}
@@ -45,7 +54,9 @@ update company set name = @Name,
 Address = @Address,
 Phone = @Phone,
 BankAccountNumber = @BankAccountNumber,
-TIN = @TIN
+TIN = @TIN,
+FinancialMonthStart = @FinancialMonthStart,
+FinancialMonthEnd = @FinancialMonthEnd
 where id = @Id";
 			ExecuteNonQuery(
 				query,
@@ -54,7 +65,9 @@ where id = @Id";
 				new SqlParameter("@Address", t.Address),
 				new SqlParameter("@Phone", t.Phone),
 				new SqlParameter("@BankAccountNumber", t.BankAccountNumber),
-				new SqlParameter("@TIN", t.TIN),
+                new SqlParameter("@TIN", t.TIN),
+                new SqlParameter("@FinancialMonthStart", t.FinancialMonthStart),
+                new SqlParameter("@FinancialMonthEnd", t.FinancialMonthEnd),
 				new SqlParameter("@Id", id)
 			);
 		}

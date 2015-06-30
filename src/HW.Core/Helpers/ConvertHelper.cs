@@ -61,12 +61,19 @@ namespace HW.Core.Helpers
 		{
 			return ToDateTime(val, DateTime.Now);
 		}
+
+        public static DateTime ToDateTime(string val, DateTime def)
+        {
+            return ToDateTime(val, def, "yyyy-MM-dd");
+        }
 		
-		public static DateTime ToDateTime(string val, DateTime def)
+		public static DateTime ToDateTime(string val, DateTime def, string format)
 		{
 			try {
 				DateTime dt;
-				if (DateTime.TryParseExact(val.ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dt)) {
+				//if (DateTime.TryParseExact(val.ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dt)) {
+                if (DateTime.TryParseExact(val.ToString(), format, CultureInfo.InvariantCulture, DateTimeStyles.None, out dt))
+                {
 					return dt;
 				} else {
 					return def;

@@ -198,3 +198,10 @@ create table Currency(
 );
 
 alter table Invoice add MaturityDate datetime;
+
+alter table Invoice add Status integer;
+
+update Invoice set Status = 1;
+
+alter table Invoice add FinancialMonthStart datetime,
+FinancialMonthEnd datetime;

@@ -30,6 +30,8 @@ namespace HW.Invoicing
                     textBoxPhone.Text = c.Phone;
                     textBoxBankAccountNumber.Text = c.BankAccountNumber;
                     textBoxTIN.Text = c.TIN;
+                    textBoxFinancialMonthStart.Text = c.FinancialMonthStart.Value.ToString("MMMM dd");
+                    textBoxFinancialMonthEnd.Text = c.FinancialMonthEnd.Value.ToString("MMMM dd");
                 }
             }
         }
@@ -41,7 +43,9 @@ namespace HW.Invoicing
                 Address = textBoxAddress.Text,
                 Phone = textBoxPhone.Text,
                 BankAccountNumber = textBoxBankAccountNumber.Text,
-                TIN = textBoxTIN.Text
+                TIN = textBoxTIN.Text,
+                FinancialMonthStart = ConvertHelper.ToDateTime(textBoxFinancialMonthStart.Text, DateTime.Now, "MMMM dd"),
+                FinancialMonthEnd = ConvertHelper.ToDateTime(textBoxFinancialMonthEnd.Text, DateTime.Now, "MMMM dd"),
             };
             r.Update(c, id);
         }

@@ -10,6 +10,8 @@ namespace HW.Invoicing.Core.Models
 		public string Phone { get; set; }
 		public string BankAccountNumber { get; set; }
 		public string TIN { get; set; }
+        public DateTime? FinancialMonthStart { get; set; }
+        public DateTime? FinancialMonthEnd { get; set; }
 		
 		public Company()
 		{
