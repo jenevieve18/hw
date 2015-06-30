@@ -30,8 +30,14 @@ namespace HW.Invoicing
                     textBoxPhone.Text = c.Phone;
                     textBoxBankAccountNumber.Text = c.BankAccountNumber;
                     textBoxTIN.Text = c.TIN;
-                    textBoxFinancialMonthStart.Text = c.FinancialMonthStart.Value.ToString("MMMM dd");
-                    textBoxFinancialMonthEnd.Text = c.FinancialMonthEnd.Value.ToString("MMMM dd");
+                    if (c.FinancialMonthStart != null)
+                    {
+                        textBoxFinancialMonthStart.Text = c.FinancialMonthStart.Value.ToString("MMMM dd");
+                    }
+                    if (c.FinancialMonthEnd != null)
+                    {
+                        textBoxFinancialMonthEnd.Text = c.FinancialMonthEnd.Value.ToString("MMMM dd");
+                    }
                 }
             }
         }
