@@ -179,15 +179,15 @@ where it.invoiceid = @InvoiceId";
 			string query = string.Format(
 				@"
 SELECT i.Id,
-i.Date,
-c.Id,
-c.Name,
-c.Number,
-i.Number,
-i.Status
+    i.Date,
+    c.Id,
+    c.Name,
+    c.Number,
+    i.Number,
+    i.Status
 FROM Invoice i
 INNER JOIN Customer c ON i.CustomerId = c.Id
-ORDER BY i.status, i.Date DESC"
+ORDER BY i.number desc"
 			);
 			var invoices = new List<Invoice>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {

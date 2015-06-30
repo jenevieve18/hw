@@ -10,7 +10,7 @@
 </div>
 <table class="table table-hover">
     <tr>
-        <th>Date</th>
+        <!--<th>Date</th>-->
         <th>Number</th>
         <th>Customer</th>
         <th>Amount</th>
@@ -19,7 +19,7 @@
     </tr>
     <% foreach (var i in invoices) { %>
     <tr>
-        <td><%= i.Date.Value.ToString("yyyy-MM-dd") %></td>
+        <!--<td><%= i.Date.Value.ToString("yyyy-MM-dd") %></td>-->
         <td><%= i.Number %></td>
         <td><%= i.Customer.Name %></td>
         <td><%= i.TotalAmount.ToString("### ### ##0.00") %></td>

@@ -16,10 +16,6 @@ namespace HW.Invoicing
     	SqlInvoiceRepository r = new SqlInvoiceRepository();
     	protected IList<Invoice> invoices;
     	
-    	public Invoices()
-    	{
-    	}
-    	
     	public void Index()
     	{
     		invoices = r.FindAll();

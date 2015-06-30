@@ -37,7 +37,6 @@
                 $('#<%= labelMaturityDate.ClientID %>').text(d.toISOString().slice(0, 10));
             });
             var invoiceItems = [];
-            //$('.timebook-item').click(function() {
             $('.timebook-item').change(function() {
                 if ($(this).is(':checked')) {
                     var selected = $(this);
