@@ -14,7 +14,10 @@
         <th>Number</th>
         <th>Customer</th>
         <th>Amount</th>
+        <th>VAT</th>
+        <th>Total Amount</th>
         <th>Status</th>
+        <th>Comments</th>
         <th></th>
     </tr>
     <% foreach (var i in invoices) { %>
@@ -22,8 +25,11 @@
         <!--<td><%= i.Date.Value.ToString("yyyy-MM-dd") %></td>-->
         <td><%= i.Number %></td>
         <td><%= i.Customer.Name %></td>
+        <td><%= i.SubTotal.ToString("### ### ##0.00") %></td>
+        <td><%= i.TotalVAT.ToString("### ### ##0.00") %></td>
         <td><%= i.TotalAmount.ToString("### ### ##0.00") %></td>
         <td><%= i.GetStatus() %></td>
+        <td><%= i.Comments %></td>
         <td>
             <div class="btn-group">
 				<button class="btn btn-default">Action</button> 

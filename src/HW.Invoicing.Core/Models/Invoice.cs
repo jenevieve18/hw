@@ -75,11 +75,20 @@ namespace HW.Invoicing.Core.Models
 				return t;
 			}
 		}
+
+        public decimal SubTotal
+        {
+            get
+            {
+                return Timebooks.Sum(x => x.Timebook.Amount);
+            }
+        }
 		
 		public decimal TotalAmount {
 			get {
-				decimal t = Timebooks.Sum(x => x.Timebook.Amount);
-				return t + TotalVAT;
+				//decimal t = Timebooks.Sum(x => x.Timebook.Amount);
+				//return t + TotalVAT;
+                return SubTotal + TotalVAT;
 			}
 		}
 		

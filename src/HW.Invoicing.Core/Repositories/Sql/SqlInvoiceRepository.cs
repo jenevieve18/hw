@@ -184,7 +184,8 @@ SELECT i.Id,
     c.Name,
     c.Number,
     i.Number,
-    i.Status
+    i.Status,
+i.Comments
 FROM Invoice i
 INNER JOIN Customer c ON i.CustomerId = c.Id
 ORDER BY i.number desc"
@@ -202,7 +203,8 @@ ORDER BY i.number desc"
                                 Number = GetString(rs, 4)
 							},
                             Number = GetString(rs, 5),
-                            Status = GetInt32(rs, 6)
+                            Status = GetInt32(rs, 6),
+                            Comments = GetString(rs, 7)
 						}
 					);
 				}
