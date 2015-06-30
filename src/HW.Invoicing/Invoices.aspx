@@ -25,7 +25,28 @@
         <td><%= i.TotalAmount.ToString("### ### ##0.00") %></td>
         <td><span class="label label-danger">NOT PAID</span></td>
         <td>
-            <%= HtmlHelper.Anchor("Show", "invoiceshow.aspx?Id=" + i.Id)%>
+            <div class="btn-group">
+				<button class="btn btn-default">
+					Action
+				</button> 
+				<button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li>
+						<a href="#">Action</a>
+					</li>
+					<li class="divider"></li>
+					<li>
+                        <%= HtmlHelper.Anchor("Show", "invoiceshow.aspx?Id=" + i.Id) %>
+					</li>
+					<li>
+                        <%= HtmlHelper.Anchor("Receive Payment", "invoicereceivepayment.aspx?Id=" + i.Id) %>
+					</li>
+				</ul>
+			</div>
+
+            <!--<%= HtmlHelper.Anchor("Show", "invoiceshow.aspx?Id=" + i.Id)%>-->
         </td>
     </tr>
     <% } %>
