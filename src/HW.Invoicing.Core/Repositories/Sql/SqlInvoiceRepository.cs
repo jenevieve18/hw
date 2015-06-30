@@ -15,6 +15,13 @@ update invoice set status = 2 where id = @Id";
             ExecuteNonQuery(query, "invoicing", new SqlParameter("@Id", id));
         }
 
+        public void RevertPayment(int id)
+        {
+            string query = @"
+update invoice set status = 1 where id = @Id";
+            ExecuteNonQuery(query, "invoicing", new SqlParameter("@Id", id));
+        }
+
         public int GetLatestInvoiceNumber()
         {
             string query = @"

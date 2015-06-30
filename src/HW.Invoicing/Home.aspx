@@ -23,7 +23,7 @@
 	<div class="col-md-4 column">
 		<h2>About Us</h2>
 		<p>
-			Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+			HealthWatch provides tools for individuals and organisations to preserve and increase health and quality of life, as well as reduce stress-releated problems. HealthWatch is run by Interactive Health Group in Stockholm AB.
 		</p>
 		<p><a class="btn" href="#">View details »</a></p>
 	</div>

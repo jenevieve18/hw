@@ -183,8 +183,6 @@ namespace HW.Invoicing.Core.Models
         }
 		public decimal Amount {
 			get {
-                //decimal a = Price * Quantity;
-                //return a + (a * VAT / 100);
                 return Price * Quantity;
             }
 		}

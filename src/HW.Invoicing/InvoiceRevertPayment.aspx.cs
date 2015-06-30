@@ -5,21 +5,20 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Core.Helpers;
-using HW.Invoicing.Core.Models;
 using HW.Invoicing.Core.Repositories.Sql;
 
 namespace HW.Invoicing
 {
-    public partial class Issues : System.Web.UI.Page
+    public partial class InvoiceRevertPayment : System.Web.UI.Page
     {
-    	SqlIssueRepository r = new SqlIssueRepository();
-    	protected IList<Issue> issues;
+        SqlInvoiceRepository r = new SqlInvoiceRepository();
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            HtmlHelper.RedirectIf(Session["UserId"] == null, "login.aspx?r=issues.aspx");
+            int id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
+            r.RevertPayment(id);
 
-        	issues = r.FindAll();
+            Response.Redirect("invoices.aspx");
         }
     }
 }

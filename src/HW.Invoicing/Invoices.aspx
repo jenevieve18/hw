@@ -35,9 +35,9 @@
                         <%= HtmlHelper.Anchor("Show", "invoiceshow.aspx?Id=" + i.Id) %>
 					</li>
                     <% if (i.Status != 2) { %>
-					<li>
-                        <%= HtmlHelper.Anchor("Receive Payment", "invoicereceivepayment.aspx?Id=" + i.Id) %>
-					</li>
+					<li><%= HtmlHelper.Anchor("Receive Payment", "invoicereceivepayment.aspx?Id=" + i.Id) %></li>
+                    <% } else { %>
+                    <li><%= HtmlHelper.Anchor("Revert Payment", "invoicerevertpayment.aspx?Id=" + i.Id) %></li>
                     <% } %>
 				</ul>
 			</div>
