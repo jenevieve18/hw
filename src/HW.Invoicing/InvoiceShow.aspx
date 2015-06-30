@@ -139,7 +139,7 @@
 </table>
 <% if (invoice.Comments != "") { %>
 <div class="form-group">
-    <label for="labelInvoiceComments">Comments</label>
+    <label for="labelInvoiceComments">Comments</label><br />
     <span id="labelInvoiceComments"><%= invoice.Comments %></span>
 	<%-- <label for="<%= labelInvoiceComments.ClientID %>">Comments</label>
     <asp:Label ID="labelInvoiceComments" runat="server" Text=""></asp:Label>--%>
