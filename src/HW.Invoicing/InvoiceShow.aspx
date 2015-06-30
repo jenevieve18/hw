@@ -7,7 +7,7 @@
 <table width="100%" cellpadding="5px">
     <tr>
         <td rowspan="4" valign="bottom">
-            <img src="http://s16.postimg.org/vkxh59d5h/ihg.png"><br />
+            <img src="img/ihg.png"><br />
         </td>
         <td></td>
         <td></td>
@@ -182,5 +182,9 @@
         </tr>
     </table>
 </small>
+
+<br />
+
+    <asp:Button CssClass="btn btn-success" ID="buttonPrint" runat="server" Text="Print this invoice" OnClick="buttonPrint_Click" />
 
 </asp:Content>

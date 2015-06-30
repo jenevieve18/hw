@@ -25,7 +25,8 @@ namespace HW.Invoicing
             {
                 labelInvoiceNumber.Text = invoice.Number;
                 labelInvoiceCustomerNumber.Text = invoice.Customer.Number;
-                labelInvoiceCustomerAddress.Text = invoice.Customer.InvoiceAddress.Replace("\n", "<br>");
+                //labelInvoiceCustomerAddress.Text = invoice.Customer.InvoiceAddress.Replace("\n", "<br>");
+                labelInvoiceCustomerAddress.Text = invoice.Customer.ToString().Replace("\n", "<br>");
                 labelInvoicePurchaseOrderNumber.Text = invoice.Customer.PurchaseOrderNumber;
                 labelInvoiceYourReferencePerson.Text = invoice.Customer.YourReferencePerson;
                 labelInvoiceOurReferencePerson.Text = invoice.Customer.OurReferencePerson;
@@ -44,6 +45,10 @@ namespace HW.Invoicing
         protected void labelInvoiceCustomerNumber_Click(object sender, EventArgs e)
         {
             Response.Redirect(string.Format("customershow.aspx?Id={}&SelectedTab=customer-info", invoice.Customer.Id));
+        }
+
+        protected void buttonPrint_Click(object sender, EventArgs e)
+        {
         }
     }
 }

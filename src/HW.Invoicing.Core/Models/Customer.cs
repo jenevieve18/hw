@@ -41,6 +41,11 @@ namespace HW.Invoicing.Core.Models
             );
         }
 
+        public override string ToString()
+        {
+            return string.Format("{0}\n{1}", Name, InvoiceAddress);
+        }
+
         public override void Validate()
         {
             base.Validate();

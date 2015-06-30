@@ -399,7 +399,7 @@
                             <table width="100%" cellpadding="5px">
                                 <tr>
                                     <td rowspan="4" valign="bottom">
-                                        <img src="http://s16.postimg.org/vkxh59d5h/ihg.png"><br />
+                                        <img src="img/ihg.png"><br />
                                     </td>
                                     <td></td>
                                     <td></td>
