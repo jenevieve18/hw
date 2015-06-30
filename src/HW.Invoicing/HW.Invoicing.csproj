@@ -81,6 +81,7 @@
     <Content Include="Home.aspx" />
     <Content Include="InvoiceAdd.aspx" />
     <Content Include="InvoiceEdit.aspx" />
+    <Content Include="InvoiceReceivePayment.aspx" />
     <Content Include="Invoices.aspx" />
     <Content Include="InvoiceShow.aspx" />
     <Content Include="IssueAdd.aspx" />
@@ -291,6 +292,13 @@
     </Compile>
     <Compile Include="InvoiceEdit.aspx.designer.cs">
       <DependentUpon>InvoiceEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InvoiceReceivePayment.aspx.cs">
+      <DependentUpon>InvoiceReceivePayment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InvoiceReceivePayment.aspx.designer.cs">
+      <DependentUpon>InvoiceReceivePayment.aspx</DependentUpon>
     </Compile>
     <Compile Include="Invoices.aspx.cs">
       <DependentUpon>Invoices.aspx</DependentUpon>

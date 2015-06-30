@@ -753,7 +753,7 @@ ORDER BY n.CreatedAt DESC"
 		public IList<CustomerTimebook> FindTimebooks(int customerId)
 		{
 			string query = string.Format(
-				@"
+                @"
 SELECT t.CustomerContactId,
 	t.ItemId,
 	t.Quantity,
@@ -769,15 +769,22 @@ SELECT t.CustomerContactId,
     t.Id,
     t.Inactive,
     t.InternalComments,
-    (SELECT 1 FROM InvoiceTimebook it WHERE it.CustomerTimebookId = t.Id) Status,
-    t.VAT
+    (
+        SELECT 1 FROM InvoiceTimebook it WHERE it.CustomerTimebookId = t.Id
+    ) Status,
+    t.VAT,
+    (
+		SELECT i.Status FROM InvoiceTimebook it
+		INNER JOIN Invoice i ON i.Id = it.InvoiceId
+		WHERE it.CustomerTimebookId = t.Id
+	) InvoiceStatus
 FROM CustomerTimebook t
 INNER JOIN CustomerContact c ON c.Id = t.CustomerContactId
 INNER JOIN Item i ON i.Id = t.ItemId
 INNER JOIN UNit u ON u.Id = i.UnitId
 WHERE t.CustomerId = @CustomerId
 ORDER BY Status, t.Date DESC"
-			);
+            );
 			var timebooks = new List<CustomerTimebook>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerId", customerId))) {
 				while (rs.Read()) {
@@ -801,7 +808,7 @@ ORDER BY Status, t.Date DESC"
                             Id = GetInt32(rs, 12),
                             Inactive = GetInt32(rs, 13) == 1,
                             InternalComments = GetString(rs, 14),
-                            Status = GetInt32(rs, 15),
+                            Status = GetInt32(rs, 17, 0) != 0 ? GetInt32(rs, 17) : GetInt32(rs, 15),
                             VAT = GetDecimal(rs, 16, 25)
 						}
 					);

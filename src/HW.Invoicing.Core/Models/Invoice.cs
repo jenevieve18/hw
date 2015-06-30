@@ -47,6 +47,16 @@ namespace HW.Invoicing.Core.Models
 		public IList<InvoiceTimebook> Timebooks { get; set; }
 		public string Comments { get; set; }
 		public string Number { get; set; }
+        public int Status { get; set; }
+
+        public string GetStatus()
+        {
+            switch (Status)
+            {
+                case 2: return "<span class='label label-success'>PAID</span>";
+                default: return "<span class='label label-danger'>NOT PAID</span>";
+            }
+        }
 		
 		public Invoice()
 		{

@@ -8,9 +8,12 @@ namespace HW.Invoicing.Core.Repositories.Sql
 {
 	public class SqlInvoiceRepository : BaseSqlRepository<Invoice>, IInvoiceRepository
 	{
-		public SqlInvoiceRepository()
-		{
-		}
+        public void ReceivePayment(int id)
+        {
+            string query = @"
+update invoice set status = 2 where id = @Id";
+            ExecuteNonQuery(query, "invoicing", new SqlParameter("@Id", id));
+        }
 
         public int GetLatestInvoiceNumber()
         {
@@ -30,8 +33,8 @@ select top 1 invoice from generatednumber";
 		public override void Save(Invoice i)
 		{
             string query = @"
-INSERT INTO Invoice(Date, CustomerId, Comments, Number, MaturityDate)
-VALUES(@Date, @CustomerId, @Comments, @Number, @MaturityDate);
+INSERT INTO Invoice(Date, CustomerId, Comments, Number, MaturityDate, Status)
+VALUES(@Date, @CustomerId, @Comments, @Number, @MaturityDate, 1);
 SELECT CAST(scope_identity() AS int)";
             int id = (int)ExecuteScalar(
                 query, 
@@ -80,7 +83,8 @@ c.purchaseordernumber,
 c.yourreferenceperson,
 c.ourreferenceperson,
 i.number,
-c.number
+c.number,
+i.status
 FROM Invoice i
 INNER JOIN Customer c ON c.Id = i.CustomerId
 WHERE i.Id = @Id"
@@ -101,7 +105,8 @@ WHERE i.Id = @Id"
                             YourReferencePerson = GetString(rs, 6),
                             OurReferencePerson = GetString(rs, 7),
                             Number = GetString(rs, 9)
-                        }
+                        },
+                        Status = GetInt32(rs, 10)
                     };
 				}
 			}
@@ -164,10 +169,16 @@ where it.invoiceid = @InvoiceId";
 		{
 			string query = string.Format(
 				@"
-SELECT i.Id, i.Date, c.Id, c.Name, c.Number, i.Number
+SELECT i.Id,
+i.Date,
+c.Id,
+c.Name,
+c.Number,
+i.Number,
+i.Status
 FROM Invoice i
 INNER JOIN Customer c ON i.CustomerId = c.Id
-ORDER BY i.Date DESC"
+ORDER BY i.status, i.Date DESC"
 			);
 			var invoices = new List<Invoice>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {
@@ -181,7 +192,8 @@ ORDER BY i.Date DESC"
 								Name = GetString(rs, 3),
                                 Number = GetString(rs, 4)
 							},
-                            Number = GetString(rs, 5)
+                            Number = GetString(rs, 5),
+                            Status = GetInt32(rs, 6)
 						}
 					);
 				}
