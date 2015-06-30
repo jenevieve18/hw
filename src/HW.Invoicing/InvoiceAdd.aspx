@@ -159,7 +159,7 @@
                 <td></td>
             </tr>
             <tr>
-                <td><span>Postal Address</span></td>
+                <td><span>Address</span></td>
                 <td colspan="3">
                     <asp:Label ID="labelCompanyAddress" runat="server" Text=""></asp:Label>
                 </td>
