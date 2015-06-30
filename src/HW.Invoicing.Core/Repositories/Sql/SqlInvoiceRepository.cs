@@ -123,7 +123,9 @@ ct.vat,
 ct.itemid,
 i.name,
 i.unitid,
-u.name
+u.name,
+ct.comments,
+ct.consultant
 from invoicetimebook it
 inner join customertimebook ct on ct.id = it.customertimebookid
 inner join item i on i.id = ct.itemid
@@ -148,7 +150,9 @@ where it.invoiceid = @InvoiceId";
                                 Id = GetInt32(rs, 5),
                                 Name = GetString(rs, 6),
                                 Unit = new Unit { Id = GetInt32(rs, 7), Name = GetString(rs, 8) }
-                            }
+                            },
+                            Comments = GetString(rs, 9),
+                            Consultant = GetString(rs, 10)
                         }
                     });
                 }
