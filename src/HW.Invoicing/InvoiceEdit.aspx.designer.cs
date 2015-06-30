@@ -31,13 +31,22 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.Label labelInvoiceNumber;
         
         /// <summary>
-        /// dropDownListCustomer control.
+        /// textBoxInvoiceDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dropDownListCustomer;
+        protected global::System.Web.UI.WebControls.TextBox textBoxInvoiceDate;
+        
+        /// <summary>
+        /// labelMaturityDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelMaturityDate;
         
         /// <summary>
         /// labelInvoiceCustomerAddress control.
@@ -103,13 +112,13 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox TextBox2;
         
         /// <summary>
-        /// textBoxComments control.
+        /// textBoxInvoiceComments control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxComments;
+        protected global::System.Web.UI.WebControls.TextBox textBoxInvoiceComments;
         
         /// <summary>
         /// labelCompanyName control.

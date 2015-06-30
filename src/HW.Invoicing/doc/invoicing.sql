@@ -205,3 +205,5 @@ update Invoice set Status = 1;
 
 alter table Company add FinancialMonthStart datetime,
 FinancialMonthEnd datetime;
+
+alter table Invoice add InternalComments text;

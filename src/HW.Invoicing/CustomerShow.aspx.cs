@@ -138,7 +138,6 @@ namespace HW.Invoicing
             {
                 Id = n,
                 Number = string.Format("IHGF-{0}", n.ToString("000")),
-                //Date = DateTime.Now,
                 Date = ConvertHelper.ToDateTime(textBoxInvoiceDate.Text),
                 MaturityDate = ConvertHelper.ToDateTime(labelMaturityDate.Text),
                 Customer = new Customer { Id = id },

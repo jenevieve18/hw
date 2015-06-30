@@ -8,6 +8,21 @@ namespace HW.Invoicing.Core.Repositories.Sql
 {
 	public class SqlInvoiceRepository : BaseSqlRepository<Invoice>, IInvoiceRepository
 	{
+        public void Update(Invoice i, int id)
+        {
+            string query = @"
+update invoice set date = @date, maturitydate = @maturitydate, comments = @comments
+where id = @id";
+            ExecuteNonQuery(
+                query, 
+                "invoicing",
+                new SqlParameter("@date", i.Date),
+                new SqlParameter("@maturitydate", i.MaturityDate),
+                new SqlParameter("@comments", i.Comments),
+                new SqlParameter("@id", id)
+            );
+        }
+
         public void ReceivePayment(int id)
         {
             string query = @"

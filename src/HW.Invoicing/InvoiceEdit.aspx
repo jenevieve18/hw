@@ -2,6 +2,23 @@
 <%@ Import Namespace="HW.Core.Helpers" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+    <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+         $(document).ready(function () {
+            $('#<%= textBoxInvoiceDate.ClientID %>').datepicker({
+                format: "yyyy-mm-dd",
+                autoclose: true
+            });
+            $('#<%= textBoxInvoiceDate.ClientID %>').change(function() {
+                var d = new Date($('#<%= textBoxInvoiceDate.ClientID %>').val());
+                d.setDate(d.getDate() + 30);
+                $('#<%= labelMaturityDate.ClientID %>').text(d.toISOString().slice(0, 10));
+            });
+         });
+     </script>
+
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -38,21 +55,22 @@
             <td></td>
             <td class="hw-border-top">Invoice Date</td>
             <td class="hw-border-top">
-                <strong>
+                <asp:TextBox ID="textBoxInvoiceDate" runat="server" CssClass="form-control"></asp:TextBox>
+                <!--<strong>
                     <%= DateTime.Now.ToString("yyyy-MM-dd") %>
-                </strong>
+                </strong>-->
             </td>
         </tr>
         <tr>
             <td>
                 <small><strong>Customer/Postal Address/Invoice Address</strong></small>
-                <asp:DropDownList ID="dropDownListCustomer" runat="server" CssClass="form-control">
-                </asp:DropDownList>
+                
             </td>
             <td></td>
             <td style="vertical-align: top" class="hw-border-top">Maturity Date</td>
             <td style="vertical-align: top" class="hw-border-top">
-                <strong>2012-06-30</strong>
+                <strong>
+                    <asp:Label ID="labelMaturityDate" runat="server" Text=""></asp:Label></strong>
             </td>
         </tr>
         <tr>
@@ -96,7 +114,7 @@
         </thead>
         <tbody>
         <tr>
-            <td colspan="4">
+            <!--<td colspan="4">
                 <asp:DropDownList ID="dropDownListItem" runat="server" CssClass="form-control">
                 </asp:DropDownList>
             </td>
@@ -107,10 +125,29 @@
             <td>
                 <asp:TextBox ID="TextBox2" runat="server" CssClass="form-control"></asp:TextBox>
             </td>
-            <td></td>
+            <td></td>-->
+            
+            <% decimal subTotal = 0; %>
+            <% Dictionary<decimal, decimal> vats = new Dictionary<decimal, decimal>(); %>
+            <% foreach (var t in invoice.Timebooks) { %>
+            <tr>
+                <td colspan="4"><%= t.Timebook.ToString() %></td>
+                <td><%= t.Timebook.Quantity %></td>
+                <td><%= t.Timebook.Item.Unit.Name %></td>
+                <td class="text-right"><%= t.Timebook.Price.ToString("### ### ##0.00") %></td>
+                <td class="text-right"><%= t.Timebook.Amount.ToString("### ### ##0.00") %></td>
+                <% subTotal += t.Timebook.Amount; %>
+                <% if (vats.ContainsKey(t.Timebook.VAT)) { %>
+                    <% vats[t.Timebook.VAT] += t.Timebook.VATAmount; %>
+                <% } else { %>
+                    <% vats[t.Timebook.VAT] = t.Timebook.VATAmount; %>
+                <% } %>
+            </tr>
+            <% } %>
         </tr>
+        </tbody>
 
-        <tr><td>&nbsp;</td></tr>
+        <!--<tr><td>&nbsp;</td></tr>
         <tr class="hw-invoice-header"><td colspan="7"></td><td class="hw-border-last">Subtotal</td></tr>
         <tr><td colspan="7"></td><td class="hw-border-last">50 000,00</td></tr>
         <tr class="hw-invoice-header">
@@ -124,13 +161,43 @@
             <td style="width:10%" class="hw-border-left">25%</td>
             <td style="width:10%" class="hw-border-left">12 500,00</td>
             <td class="hw-border-last">62 500,00</td>
+        </tr>-->
+        
+
+        <% var strVat = ""; var strVatLabel = ""; %>
+        <% decimal totalVat = 0; %>
+        <% foreach (var k in vats.Keys) { %>
+            <% strVatLabel += "<td style='width:10%' class='hw-border-left'>VAT %</td>"; %>
+            <% strVatLabel += "<td style='width:10%' class='hw-border-left'>VAT</td>"; %>
+
+            <% strVat += "<td style='width:10%' class='hw-border-left'>" + k + "%</td>"; %>
+            <% strVat += "<td style='width:10%' class='hw-border-left'>" + vats[k].ToString("### ### ##0.00") + "</td>"; %>
+            <% totalVat += vats[k]; %>
+        <% } %>
+        <tfoot>
+        <tr><td>&nbsp;</td></tr>
+        <tr class="hw-invoice-header"><td colspan="7"></td><td class="hw-border-last">Subtotal</td></tr>
+        <tr><td colspan="7"></td><td class="hw-border-last"><%= subTotal.ToString("### ### ##0.00") %></td></tr>
+        <tr class="hw-invoice-header">
+            <td colspan="<%= (7 - vats.Count * 2) %>"></td>
+            <!--<td style="width:10%" class="hw-border-left">VAT %</td>
+            <td style="width:10%" class="hw-border-left">VAT</td>-->
+            <%= strVatLabel %>
+            <td class="hw-border-last">Total Amount</td>
         </tr>
-        </tbody>
+        <tr class="hw-border-bottom">
+            <td colspan="<%= (7 - vats.Count * 2) %>"></td>
+            <%= strVat %>
+            <!--<td style="width:10%" class="hw-border-left">25%</td>
+            <td style="width:10%" class="hw-border-left">12 500,00</td>-->
+            <td class="hw-border-last"><%= (subTotal + totalVat).ToString("### ### ##0.00") %></td>
+        </tr>
+        </tfoot>
     </table>
 
     <div class="form-group">
-        <label for="<%= textBoxComments.ClientID %>">Comments</label>
-        <asp:TextBox ID="textBoxComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+        <label for="<%= textBoxInvoiceComments.ClientID %>">Comments</label>
+        <asp:TextBox ID="textBoxInvoiceComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
     </div>
 
     <small class="hw-footer">
@@ -172,7 +239,7 @@
     </small>
 
     <br />
-    <asp:Button ID="buttonSave" runat="server" Text="Save invoice" CssClass="btn btn-success" />
+    <asp:Button ID="buttonSave" OnClick="buttonSave_Click" runat="server" Text="Save invoice" CssClass="btn btn-success" />
     or <i><%= HtmlHelper.Anchor("cancel", "invoices.aspx") %></i>
 
 </asp:Content>

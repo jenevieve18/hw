@@ -53,7 +53,7 @@
 			</div>
         </td>
         <td style="width:16px"><%= HtmlHelper.AnchorImage("invoiceexport.aspx?Id=" + i.Id, "img/page_white_acrobat.png")%></td>
-        <td><%= i.Comments %></td>
+        <td><%= i.InternalComments %></td>
     </tr>
     <% } %>
     <!--<tr><td colspan="8">&nbsp;</td></tr>-->
