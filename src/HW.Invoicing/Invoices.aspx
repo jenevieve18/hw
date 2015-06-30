@@ -20,8 +20,13 @@
         <th>Comments</th>
         <th></th>
     </tr>
+    <% decimal totalSubTotal = 0, totalVAT = 0, totalAmount = 0; %>
     <% foreach (var i in invoices) { %>
     <tr>
+        <% totalSubTotal += i.SubTotal; %>
+        <% totalVAT += i.TotalVAT; %>
+        <% totalAmount += i.TotalAmount; %>
+
         <!--<td><%= i.Date.Value.ToString("yyyy-MM-dd") %></td>-->
         <td><%= i.Number %></td>
         <td><%= i.Customer.Name %></td>
@@ -37,19 +42,26 @@
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
-					<li>
-                        <%= HtmlHelper.Anchor("Show", "invoiceshow.aspx?Id=" + i.Id) %>
-					</li>
+					<li><%= HtmlHelper.Anchor("Show", "invoiceshow.aspx?Id=" + i.Id) %></li>
+					<li><%= HtmlHelper.Anchor("Edit", "invoiceedit.aspx?Id=" + i.Id) %></li>
                     <% if (i.Status != 2) { %>
-					<li><%= HtmlHelper.Anchor("Receive Payment", "invoicereceivepayment.aspx?Id=" + i.Id) %></li>
+					    <li><%= HtmlHelper.Anchor("Paid", "invoicereceivepayment.aspx?Id=" + i.Id) %></li>
                     <% } else { %>
-                    <li><%= HtmlHelper.Anchor("Revert Payment", "invoicerevertpayment.aspx?Id=" + i.Id) %></li>
+                        <li><%= HtmlHelper.Anchor("Revert Payment", "invoicerevertpayment.aspx?Id=" + i.Id) %></li>
                     <% } %>
 				</ul>
 			</div>
         </td>
     </tr>
     <% } %>
+    <!--<tr><td colspan="8">&nbsp;</td></tr>-->
+    <tr>
+        <td colspan="2"><strong>TOTAL</strong></td>
+        <td><strong><%= totalSubTotal.ToString("### ### ##0.00") %></strong></td>
+        <td><strong><%= totalVAT.ToString("### ### ##0.00") %></strong></td>
+        <td><strong><%= totalAmount.ToString("### ### ##0.00") %></strong></td>
+        <td colspan="3"></td>
+    </tr>
 </table>
 
 </asp:Content>
