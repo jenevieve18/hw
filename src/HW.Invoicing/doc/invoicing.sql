@@ -197,3 +197,4 @@ create table Currency(
 	Name varchar(255)
 );
 
+alter table Invoice add MaturityDate datetime;

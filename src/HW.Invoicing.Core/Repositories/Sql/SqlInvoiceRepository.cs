@@ -30,8 +30,8 @@ select top 1 invoice from generatednumber";
 		public override void Save(Invoice i)
 		{
             string query = @"
-INSERT INTO Invoice(Date, CustomerId, Comments, Number)
-VALUES(@Date, @CustomerId, @Comments, @Number);
+INSERT INTO Invoice(Date, CustomerId, Comments, Number, MaturityDate)
+VALUES(@Date, @CustomerId, @Comments, @Number, @MaturityDate);
 SELECT CAST(scope_identity() AS int)";
             int id = (int)ExecuteScalar(
                 query, 
@@ -39,7 +39,8 @@ SELECT CAST(scope_identity() AS int)";
                 new SqlParameter("@Date", i.Date),
                 new SqlParameter("@CustomerId", i.Customer.Id),
                 new SqlParameter("@Comments", i.Comments),
-                new SqlParameter("@Number", i.Number)
+                new SqlParameter("@Number", i.Number),
+                new SqlParameter("@MaturityDate", i.MaturityDate)
             );
 
             query = @"

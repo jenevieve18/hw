@@ -68,6 +68,8 @@ namespace HW.Invoicing
                         labelLanguage.Font.Strikeout = customer.Inactive;
                     
                     labelInvoiceCustomerNumber.Text = customer.Number;
+                    textBoxInvoiceDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
+                    labelMaturityDate.Text = DateTime.Now.AddDays(30).ToString("yyyy-MM-dd");
                     labelInvoiceCustomerAddress.Text = customer.InvoiceAddress.Replace("\n", "<br>");
                     labelInvoiceNumber.Text = "IHG-001";
                     labelInvoiceOurReferencePerson.Text = customer.OurReferencePerson;
@@ -136,7 +138,9 @@ namespace HW.Invoicing
             {
                 Id = n,
                 Number = string.Format("IHGF-{0}", n.ToString("000")),
-                Date = DateTime.Now,
+                //Date = DateTime.Now,
+                Date = ConvertHelper.ToDateTime(textBoxInvoiceDate.Text),
+                MaturityDate = ConvertHelper.ToDateTime(labelMaturityDate.Text),
                 Customer = new Customer { Id = id },
                 Comments = textBoxInvoiceComments.Text
             };

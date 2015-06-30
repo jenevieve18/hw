@@ -27,6 +27,15 @@
                 format: "yyyy-mm-dd",
                 autoclose: true
             });
+            $('#<%= textBoxInvoiceDate.ClientID %>').datepicker({
+                format: "yyyy-mm-dd",
+                autoclose: true
+            });
+            $('#<%= textBoxInvoiceDate.ClientID %>').change(function() {
+                var d = new Date($('#<%= textBoxInvoiceDate.ClientID %>').val());
+                d.setDate(d.getDate() + 30);
+                $('#<%= labelMaturityDate.ClientID %>').text(d.toISOString().slice(0, 10));
+            });
             var invoiceItems = [];
             //$('.timebook-item').click(function() {
             $('.timebook-item').change(function() {
@@ -427,9 +436,10 @@
                                     <td></td>
                                     <td class="hw-border-top">Invoice Date</td>
                                     <td class="hw-border-top">
-                                        <strong>
+                                        <asp:TextBox ID="textBoxInvoiceDate" runat="server" CssClass="form-control"></asp:TextBox>
+                                        <!--<strong>
                                             <%= DateTime.Now.ToString("yyyy-MM-dd") %>
-                                        </strong>
+                                        </strong>-->
                                     </td>
                                 </tr>
                                 <tr>
@@ -439,7 +449,9 @@
                                     <td></td>
                                     <td class="hw-border-top">Maturity Date</td>
                                     <td class="hw-border-top">
-                                        <strong>2012-06-30</strong>
+                                        <strong>
+                                            <asp:Label ID="labelMaturityDate" runat="server" Text=""></asp:Label>
+                                        </strong>
                                     </td>
                                 </tr>
                                 <tr>
