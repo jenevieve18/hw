@@ -27,7 +27,7 @@ namespace HW.Invoicing
     	
         protected void Page_Load(object sender, EventArgs e)
         {
-			HtmlHelper.RedirectIf(Session["UserId"] == null, "login.aspx");
+			HtmlHelper.RedirectIf(Session["UserId"] == null, "login.aspx?r=" + HttpUtility.UrlEncode("invoices.aspx"));
 			
         	Index();
         }

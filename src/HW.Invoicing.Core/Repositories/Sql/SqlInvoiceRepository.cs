@@ -70,25 +70,63 @@ values(@InvoiceId, @CustomerTimebookId)";
 		{
 			string query = string.Format(
 				@"
-SELECT Id, Date, CustomerId
-FROM Invoice
-WHERE Id = @id"
+SELECT i.Id,
+i.Date,
+i.CustomerId,
+c.Name,
+c.invoiceaddress,
+c.purchaseordernumber,
+c.yourreferenceperson,
+c.ourreferenceperson,
+i.number,
+c.number
+FROM Invoice i
+INNER JOIN Customer c ON c.Id = i.CustomerId
+WHERE i.Id = @Id"
 			);
 			Invoice i = null;
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", id))) {
-				while (rs.Read()) {
-					i = new Invoice { Id = GetInt32(rs, 0), Date = GetDateTime(rs, 1) };
+				if (rs.Read()) {
+                    i = new Invoice
+                    {
+                        Id = GetInt32(rs, 0),
+                        Date = GetDateTime(rs, 1),
+                        Number = GetString(rs, 8),
+                        Customer = new Customer {
+                            Id = GetInt32(rs, 2),
+                            Name = GetString(rs, 3),
+                            InvoiceAddress = GetString(rs, 4),
+                            PurchaseOrderNumber = GetString(rs, 5),
+                            YourReferencePerson = GetString(rs, 6),
+                            OurReferencePerson = GetString(rs, 7),
+                            Number = GetString(rs, 9)
+                        }
+                    };
 				}
 			}
+            if (i != null)
+            {
+                i.Timebooks = FindTimebooks(id);
+            }
 			return i;
 		}
 
         public List<InvoiceTimebook> FindTimebooks(int invoiceId)
         {
             string query = @"
-select it.id, it.customertimebookid, ct.quantity, ct.price, ct.vat
+select it.id,
+it.customertimebookid,
+ct.quantity,
+ct.price,
+ct.vat,
+ct.itemid,
+i.name,
+i.unitid,
+u.name
 from invoicetimebook it
 inner join customertimebook ct on ct.id = it.customertimebookid
+inner join item i on i.id = ct.itemid
+inner join unit u on u.id = i.unitid
 where it.invoiceid = @InvoiceId";
             var timebooks = new List<InvoiceTimebook>();
             using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@InvoiceId", invoiceId)))
@@ -103,7 +141,13 @@ where it.invoiceid = @InvoiceId";
                             Id = GetInt32(rs, 1),
                             Quantity = GetDecimal(rs, 2),
                             Price = GetDecimal(rs, 3),
-                            VAT = GetDecimal(rs, 4)
+                            VAT = GetDecimal(rs, 4),
+                            Item = new Item
+                            {
+                                Id = GetInt32(rs, 5),
+                                Name = GetString(rs, 6),
+                                Unit = new Unit { Id = GetInt32(rs, 7), Name = GetString(rs, 8) }
+                            }
                         }
                     });
                 }

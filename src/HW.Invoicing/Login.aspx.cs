@@ -49,7 +49,14 @@ namespace HW.Invoicing
             {
                 Session["UserID"] = u.Id;
                 Session["UserName"] = u.Name;
-                Response.Redirect("dashboard.aspx");
+                if (Request.QueryString["r"] != null)
+                {
+                    Response.Redirect(HttpUtility.UrlDecode(Request.QueryString["r"]));
+                }
+                else
+                {
+                    Response.Redirect("dashboard.aspx");
+                }
             }
             else
             {

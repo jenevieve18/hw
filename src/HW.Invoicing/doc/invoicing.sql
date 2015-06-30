@@ -178,3 +178,22 @@ alter table Invoice add Number varchar(255);
 alter table CustomerTimebook add VAT decimal;
 
 alter table CustomerTimebook alter column Comments text;
+
+create table Lang(
+	Id integer not null primary key identity,
+	Name varchar(255)
+);
+
+insert into Lang(Name) values('SE');
+insert into Lang(Name) values('EN');
+
+alter table Customer add LangId integer;
+
+update Customer set LangId = 2;
+
+create table Currency(
+	Id integer not null primary key identity,
+	Code varchar(255),
+	Name varchar(255)
+);
+
