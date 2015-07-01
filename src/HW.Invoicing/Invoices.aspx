@@ -43,6 +43,11 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <h3>Invoices</h3>
+<p>
+    <asp:DropDownList ID="dropDownListFinancialYear" CssClass="form-control" runat="server">
+    </asp:DropDownList><br />
+    <asp:Button ID="buttonGetInvoices" CssClass="btn btn-success" runat="server" Text="Get invoices" />
+</p>
 <div class="alert alert-info">
 	<strong>Invoices</strong> are lists of goods sent or services provided, with a statement of the sum due for these; a bill.
 </div>
@@ -59,47 +64,49 @@
         <th>Comments</th>
     </tr>
     <% decimal totalSubTotal = 0, totalVAT = 0, totalAmount = 0; %>
-    <% foreach (var i in invoices) { %>
-    <tr>
-        <% totalSubTotal += i.SubTotal; %>
-        <% totalVAT += i.TotalVAT; %>
-        <% totalAmount += i.TotalAmount; %>
+    <% if (invoices != null) { %>
+        <% foreach (var i in invoices) { %>
+        <tr>
+            <% totalSubTotal += i.SubTotal; %>
+            <% totalVAT += i.TotalVAT; %>
+            <% totalAmount += i.TotalAmount; %>
 
-        <td><%= i.Number %></td>
-        <td><%= i.Customer.Name %></td>
-        <td><%= i.SubTotal.ToString("### ### ##0.00") %></td>
-        <td><%= i.TotalVAT.ToString("### ### ##0.00") %></td>
-        <td><%= i.TotalAmount.ToString("### ### ##0.00") %></td>
-        <td><%= i.GetStatus() %></td>
-        <td>
-            <div class="btn-group">
-				<button class="btn btn-default">Action</button> 
-				<button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
-					<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu">
-					<li><%= HtmlHelper.Anchor("Show", "invoiceshow.aspx?Id=" + i.Id) %></li>
-					<li><%= HtmlHelper.Anchor("Edit", "invoiceedit.aspx?Id=" + i.Id) %></li>
-                    <% if (i.Status != 2) { %>
-					    <li><%= HtmlHelper.Anchor("Paid", "invoicereceivepayment.aspx?Id=" + i.Id) %></li>
-                    <% } else { %>
-                        <li><%= HtmlHelper.Anchor("Revert Payment", "invoicerevertpayment.aspx?Id=" + i.Id) %></li>
-                    <% } %>
-                    <li><%= HtmlHelper.Anchor("PDF", "invoiceexport.aspx?Id=" + i.Id) %></li>
-				</ul>
-			</div>
-        </td>
-        <td style="width:16px">
-            <% if (i.Exported) { %>
-                <img src="img/page_white_acrobat.png" />
-            <% } %>
-        </td>
-        <td class="internal-comments">
-            <span class="internal-comments-label"><%= i.InternalComments %></span>
-            <textarea data-id="<%= i.Id %>" type="text" class="form-control internal-comments-text"><%= i.InternalComments %></textarea>
-            <img alt="" class="spinner" src="img/spiffygif_30x30.gif" />
-        </td>
-    </tr>
+            <td><%= i.Number %></td>
+            <td><%= i.Customer.Name %></td>
+            <td><%= i.SubTotal.ToString("### ### ##0.00") %></td>
+            <td><%= i.TotalVAT.ToString("### ### ##0.00") %></td>
+            <td><%= i.TotalAmount.ToString("### ### ##0.00") %></td>
+            <td><%= i.GetStatus() %></td>
+            <td>
+                <div class="btn-group">
+				    <button class="btn btn-default">Action</button> 
+				    <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
+					    <span class="caret"></span>
+				    </button>
+				    <ul class="dropdown-menu">
+					    <li><%= HtmlHelper.Anchor("Show", "invoiceshow.aspx?Id=" + i.Id) %></li>
+					    <li><%= HtmlHelper.Anchor("Edit", "invoiceedit.aspx?Id=" + i.Id) %></li>
+                        <% if (i.Status != 2) { %>
+					        <li><%= HtmlHelper.Anchor("Paid", "invoicereceivepayment.aspx?Id=" + i.Id) %></li>
+                        <% } else { %>
+                            <li><%= HtmlHelper.Anchor("Revert Payment", "invoicerevertpayment.aspx?Id=" + i.Id) %></li>
+                        <% } %>
+                        <li><%= HtmlHelper.Anchor("PDF", "invoiceexport.aspx?Id=" + i.Id) %></li>
+				    </ul>
+			    </div>
+            </td>
+            <td style="width:16px">
+                <% if (i.Exported) { %>
+                    <img src="img/page_white_acrobat.png" />
+                <% } %>
+            </td>
+            <td class="internal-comments">
+                <span class="internal-comments-label"><%= i.InternalComments %></span>
+                <textarea data-id="<%= i.Id %>" type="text" class="form-control internal-comments-text"><%= i.InternalComments %></textarea>
+                <img alt="" class="spinner" src="img/spiffygif_30x30.gif" />
+            </td>
+        </tr>
+        <% } %>
     <% } %>
     <tr>
         <td colspan="2"><strong>TOTAL</strong></td>

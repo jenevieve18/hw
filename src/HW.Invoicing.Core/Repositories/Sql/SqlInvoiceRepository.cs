@@ -216,6 +216,55 @@ where it.invoiceid = @InvoiceId";
             }
             return timebooks;
         }
+
+        public IList<Invoice> FindByDate(DateTime dateFrom, DateTime dateTo)
+        {
+            string query = @"
+SELECT i.Id,
+    i.Date,
+    c.Id,
+    c.Name,
+    c.Number,
+    i.Number,
+    i.Status,
+    i.Comments,
+    i.Exported,
+    i.InternalComments
+FROM Invoice i
+INNER JOIN Customer c ON i.CustomerId = c.Id
+WHERE i.Date BETWEEN @DateFrom and @DateTo
+ORDER BY i.number desc";
+            var invoices = new List<Invoice>();
+            using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@DateFrom", dateFrom), new SqlParameter("@DateTo", dateTo)))
+            {
+                while (rs.Read())
+                {
+                    invoices.Add(
+                        new Invoice
+                        {
+                            Id = GetInt32(rs, 0),
+                            Date = GetDateTime(rs, 1, DateTime.Now),
+                            Customer = new Customer
+                            {
+                                Id = GetInt32(rs, 2),
+                                Name = GetString(rs, 3),
+                                Number = GetString(rs, 4)
+                            },
+                            Number = GetString(rs, 5),
+                            Status = GetInt32(rs, 6),
+                            Comments = GetString(rs, 7),
+                            Exported = GetInt32(rs, 8) == 1,
+                            InternalComments = GetString(rs, 9)
+                        }
+                    );
+                }
+            }
+            foreach (var i in invoices)
+            {
+                i.Timebooks = FindTimebooks(i.Id);
+            }
+            return invoices;
+        }
 		
 		public override IList<Invoice> FindAll()
 		{
@@ -228,9 +277,9 @@ SELECT i.Id,
     c.Number,
     i.Number,
     i.Status,
-i.Comments,
-i.Exported,
-i.InternalComments
+    i.Comments,
+    i.Exported,
+    i.InternalComments
 FROM Invoice i
 INNER JOIN Customer c ON i.CustomerId = c.Id
 ORDER BY i.number desc"
