@@ -49,10 +49,15 @@
                     <% } else { %>
                         <li><%= HtmlHelper.Anchor("Revert Payment", "invoicerevertpayment.aspx?Id=" + i.Id) %></li>
                     <% } %>
+                    <li><%= HtmlHelper.Anchor("PDF", "invoiceexport.aspx?Id=" + i.Id) %></li>
 				</ul>
 			</div>
         </td>
-        <td style="width:16px"><%= HtmlHelper.AnchorImage("invoiceexport.aspx?Id=" + i.Id, "img/page_white_acrobat.png")%></td>
+        <td style="width:16px">
+            <% if (i.Exported) { %>
+                <%= HtmlHelper.AnchorImage("invoiceexport.aspx?Id=" + i.Id, "img/page_white_acrobat.png")%>
+            <% } %>
+        </td>
         <td><%= i.InternalComments %></td>
     </tr>
     <% } %>

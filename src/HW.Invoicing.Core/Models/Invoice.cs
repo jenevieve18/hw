@@ -48,6 +48,7 @@ namespace HW.Invoicing.Core.Models
 		public string Number { get; set; }
         public int Status { get; set; }
         public string InternalComments { get; set; }
+        public bool Exported { get; set; }
 
         public string GetStatus()
         {
