@@ -143,11 +143,7 @@ namespace HW.Invoicing
                 Customer = new Customer { Id = id },
                 Comments = textBoxInvoiceComments.Text
             };
-            string[] timebooks = Request.Form.GetValues("invoice-timebooks");
-            foreach (var t in timebooks)
-            {
-                i.AddTimebook(ConvertHelper.ToInt32(t));
-            }
+            i.AddTimebook(Request.Form.GetValues("invoice-timebooks"));
             vr.Save(i);
             Response.Redirect(string.Format("invoices.aspx"));
         }

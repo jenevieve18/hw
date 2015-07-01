@@ -37,6 +37,18 @@ where id = @id";
                 new SqlParameter("@comments", i.Comments),
                 new SqlParameter("@id", id)
             );
+            query = @"
+delete from invoicetimebook
+where invoiceid = @invoiceid";
+            ExecuteNonQuery(query, "invoicing", new SqlParameter("@invoiceid", id));
+
+            query = @"
+insert into invoicetimebook(invoiceid, customertimebookid)
+values(@invoiceid, @customertimebookid)";
+            foreach (var t in i.Timebooks)
+            {
+                ExecuteNonQuery(query, "invoicing", new SqlParameter("@customertimebookid", t.Timebook.Id), new SqlParameter("@invoiceid", id));
+            }
         }
 
         public void ReceivePayment(int id)

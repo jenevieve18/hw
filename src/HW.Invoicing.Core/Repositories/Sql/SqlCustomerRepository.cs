@@ -749,6 +749,66 @@ ORDER BY n.CreatedAt DESC"
 			}
 			return notes;
 		}
+
+        public IList<CustomerTimebook> FindOpenTimebooks(int customerId)
+        {
+            string query = @"
+select t.CustomerContactId,
+	t.ItemId,
+	t.Quantity,
+	t.Price,
+	t.Consultant,
+	t.Comments,
+	c.Contact,
+	i.Name,
+	u.Id,
+	u.Name,
+	t.Date,
+	t.Department,
+    t.Id,
+    t.Inactive,
+    t.InternalComments,
+t.VAT
+from CustomerTimebook t
+inner join CustomerContact c on c.Id = t.CustomerContactId
+inner join Item i on i.Id = t.ItemId
+inner join Unit u on u.Id = i.UnitId
+where t.Customerid = @CustomerId
+and not exists (select 1 from invoicetimebook it where it.customertimebookid = t.id)";
+            var t = new List<CustomerTimebook>();
+            using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerId", customerId)))
+            {
+                while (rs.Read())
+                {
+                    t.Add(
+                        new CustomerTimebook {
+                            Contact = new CustomerContact
+                            {
+                                Id = GetInt32(rs, 0),
+                                Contact = GetString(rs, 6)
+                            },
+                            Item = new Item
+                            {
+                                Id = GetInt32(rs, 1),
+                                Name = GetString(rs, 7),
+                                Unit = new Unit { Id = GetInt32(rs, 8), Name = GetString(rs, 9) }
+                            },
+                            Quantity = GetDecimal(rs, 2),
+                            Price = GetDecimal(rs, 3),
+                            Consultant = GetString(rs, 4),
+                            Comments = GetString(rs, 5),
+                            Date = GetDateTime(rs, 10),
+                            Department = GetString(rs, 11),
+                            Id = GetInt32(rs, 12),
+                            Inactive = GetInt32(rs, 13) == 1,
+                            InternalComments = GetString(rs, 14),
+                            VAT = GetDecimal(rs, 15)
+                        }
+                    );
+                }
+            }
+            return t;
+        }
 		
 		public IList<CustomerTimebook> FindTimebooks(int customerId)
 		{

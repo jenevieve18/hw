@@ -7,6 +7,7 @@ using HW.Core.Models;
 using HW.Invoicing.Core.Models;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using HW.Core.Helpers;
 
 namespace HW.Invoicing.Core.Models
 {
@@ -87,11 +88,17 @@ namespace HW.Invoicing.Core.Models
 		
 		public decimal TotalAmount {
 			get {
-				//decimal t = Timebooks.Sum(x => x.Timebook.Amount);
-				//return t + TotalVAT;
                 return SubTotal + TotalVAT;
 			}
 		}
+
+        public void AddTimebook(string[] timebooks)
+        {
+            foreach (var t in timebooks)
+            {
+                AddTimebook(ConvertHelper.ToInt32(t));
+            }
+        }
 		
 		public void AddTimebook(int id)
 		{

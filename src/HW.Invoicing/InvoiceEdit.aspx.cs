@@ -15,7 +15,9 @@ namespace HW.Invoicing
         protected Invoice invoice;
         SqlInvoiceRepository r = new SqlInvoiceRepository();
         SqlCompanyRepository cr = new SqlCompanyRepository();
+        SqlCustomerRepository ur = new SqlCustomerRepository();
         protected int id;
+        protected IList<CustomerTimebook> timebooks;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -25,6 +27,7 @@ namespace HW.Invoicing
             if (!IsPostBack)
             {
                 invoice = r.Read(id);
+                timebooks = ur.FindOpenTimebooks(invoice.Customer.Id);
                 if (invoice != null)
                 {
                     labelInvoiceNumber.Text = invoice.Number;
@@ -56,6 +59,7 @@ namespace HW.Invoicing
                 MaturityDate = ConvertHelper.ToDateTime(labelMaturityDate.Text),
                 Comments = textBoxInvoiceComments.Text
             };
+            i.AddTimebook(Request.Form.GetValues("invoice-timebooks"));
             r.Update(i, id);
             Response.Redirect("invoices.aspx");
         }

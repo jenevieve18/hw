@@ -5,14 +5,6 @@
     <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script src="js/jquery.number.min.js" type="text/javascript"></script>
     <script type="text/javascript">
-        Object.size = function(obj) {
-            var size = 0, key;
-            for (key in obj) {
-                if (obj.hasOwnProperty(key)) size++;
-            }
-            return size;
-        };
-
         $(document).ready(function () {
             $('#<%= dropDownListTimebookItems.ClientID %>').change(function () {
                 var selected = $(this).find('option:selected');
@@ -155,13 +147,21 @@
             }
         });
 
+        Object.size = function (obj) {
+            var size = 0, key;
+            for (key in obj) {
+                if (obj.hasOwnProperty(key)) size++;
+            }
+            return size;
+        };
+
         function findAndRemove(array, property, value) {
-           $.each(array, function(index, result) {
-              if(result[property] == value) {
-                  //Remove from array
-                  array.splice(index, 1);
-              }    
-           });
+            $.each(array, function (index, result) {
+                if (result[property] == value) {
+                    //Remove from array
+                    array.splice(index, 1);
+                }
+            });
         }
 
         function turnEditable(labelId, textBoxId) {
@@ -180,18 +180,33 @@
             });
         }
 
+        function addErrorIf(errors, condition, message) {
+            if (condition) {
+                errors.push(message);
+            }
+        }
+
+        function displayMessage(errors, box) {
+            if (errors.length > 0) {
+                s = '';
+                for (var i = 0; i < errors.length; i++) {
+                    s += '<li>' + errors[i] + '</li>';
+                }
+                var message = '<div class="alert alert-warning">' +
+                            '<ul>' + s + '</ul>' +
+                            '</div>';
+                $(box).html(message);
+                return false;
+            }
+            return true;
+        }
+
         function validateNotes() {
             var errors = [];
             if ($('#<%= textBoxNotes.ClientID %>').val() == '') {
                 errors.push("Notes shouldn't be empty");
             }
             return displayMessage(errors, '#notes-message');
-        }
-
-        function addErrorIf(errors, condition, message) {
-            if (condition) {
-                errors.push(message);
-            }
         }
 
         function validateCustomerPrice() {
@@ -231,21 +246,6 @@
             addErrorIf(errors, !isNaN(vat) && parseFloat(vat) <= 0, "VAT should be greater than zero.");
             
             return displayMessage(errors, '#timebook-message');
-        }
-
-        function displayMessage(errors, box) {
-            if (errors.length > 0) {
-                s = '';
-                for (var i = 0; i < errors.length; i++) {
-                    s += '<li>' + errors[i] + '</li>';
-                }
-                var message = '<div class="alert alert-warning">' +
-                    '<ul>' + s + '</ul>' + 
-                    '</div>';
-                $(box).html(message);
-                return false;
-            }
-            return true;
         }
     </script>
 
@@ -442,9 +442,6 @@
                                     <td class="hw-border-top">Invoice Date</td>
                                     <td class="hw-border-top">
                                         <asp:TextBox ID="textBoxInvoiceDate" runat="server" CssClass="form-control"></asp:TextBox>
-                                        <!--<strong>
-                                            <%= DateTime.Now.ToString("yyyy-MM-dd") %>
-                                        </strong>-->
                                     </td>
                                 </tr>
                                 <tr>

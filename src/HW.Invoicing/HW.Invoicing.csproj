@@ -96,6 +96,7 @@
     <Content Include="ItemDelete.aspx" />
     <Content Include="ItemEdit.aspx" />
     <Content Include="Items.aspx" />
+    <Content Include="js\scripts.js" />
     <Content Include="Login.aspx" />
     <Content Include="Logout.aspx" />
     <Content Include="Profile.aspx" />
@@ -529,7 +530,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="img\" />
-    <Folder Include="js\" />
     <Folder Include="less\" />
   </ItemGroup>
   <ItemGroup>
