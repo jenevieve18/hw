@@ -8,6 +8,7 @@ using HW.Core.Helpers;
 using HW.Invoicing.Core.Models;
 using HW.Invoicing.Core.Repositories;
 using HW.Invoicing.Core.Repositories.Sql;
+using System.Web.Services;
 
 namespace HW.Invoicing
 {
@@ -15,17 +16,20 @@ namespace HW.Invoicing
     {
     	SqlInvoiceRepository r = new SqlInvoiceRepository();
     	protected IList<Invoice> invoices;
-    	
-    	public void Index()
-    	{
-    		invoices = r.FindAll();
-    	}
+
+        [WebMethod]
+        public static string UpdateInternalComments(string comments, int id)
+        {
+            var d = new SqlInvoiceRepository();
+            d.UpdateInternalComments(comments, id);
+            return comments;
+        }
     	
         protected void Page_Load(object sender, EventArgs e)
         {
 			HtmlHelper.RedirectIf(Session["UserId"] == null, "login.aspx?r=" + HttpUtility.UrlEncode("invoices.aspx"));
-			
-        	Index();
+
+            invoices = r.FindAll();
         }
     }
 }

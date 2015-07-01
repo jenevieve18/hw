@@ -1,6 +1,44 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="Invoices.aspx.cs" Inherits="HW.Invoicing.Invoices" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.internal-comments-text').hide();
+            $('.spinner').hide();
+            //$('.internal-comments-label').click(function () {
+            $('.internal-comments').click(function () {
+                //var text = $(this).closest('td').find('.internal-comments-text');
+                var text = $(this).find('.internal-comments-text');
+                //$(this).hide();
+                $(this).find('.internal-comments-label').hide();
+                text.show();
+                text.focus();
+            });
+            $('.internal-comments-text').focusout(function () {
+                var comments = $(this).val();
+                var id = $(this).data('id');
+                var label = $(this).closest('td').find('.internal-comments-label');
+                label.text(comments);
+
+                var spinner = $(this).closest('td').find('.spinner');
+                spinner.show();
+                $.ajax({
+                    type: 'POST',
+                    url: 'Invoices.aspx/UpdateInternalComments',
+                    data: JSON.stringify({ comments: comments, id: id }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json',
+                    success: function (msg) {
+                        spinner.hide();
+                    }
+                });
+                $(this).hide();
+                label.show();
+            });
+        });
+    </script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -10,7 +48,6 @@
 </div>
 <table class="table table-hover">
     <tr>
-        <!--<th>Date</th>-->
         <th>Number</th>
         <th>Customer</th>
         <th>Amount</th>
@@ -28,7 +65,6 @@
         <% totalVAT += i.TotalVAT; %>
         <% totalAmount += i.TotalAmount; %>
 
-        <!--<td><%= i.Date.Value.ToString("yyyy-MM-dd") %></td>-->
         <td><%= i.Number %></td>
         <td><%= i.Customer.Name %></td>
         <td><%= i.SubTotal.ToString("### ### ##0.00") %></td>
@@ -55,13 +91,16 @@
         </td>
         <td style="width:16px">
             <% if (i.Exported) { %>
-                <%= HtmlHelper.AnchorImage("invoiceexport.aspx?Id=" + i.Id, "img/page_white_acrobat.png")%>
+                <img src="img/page_white_acrobat.png" />
             <% } %>
         </td>
-        <td><%= i.InternalComments %></td>
+        <td class="internal-comments">
+            <span class="internal-comments-label"><%= i.InternalComments %></span>
+            <textarea data-id="<%= i.Id %>" type="text" class="form-control internal-comments-text"><%= i.InternalComments %></textarea>
+            <img alt="" class="spinner" src="img/spiffygif_30x30.gif" />
+        </td>
     </tr>
     <% } %>
-    <!--<tr><td colspan="8">&nbsp;</td></tr>-->
     <tr>
         <td colspan="2"><strong>TOTAL</strong></td>
         <td><strong><%= totalSubTotal.ToString("### ### ##0.00") %></strong></td>

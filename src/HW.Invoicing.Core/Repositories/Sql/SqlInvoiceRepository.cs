@@ -8,6 +8,14 @@ namespace HW.Invoicing.Core.Repositories.Sql
 {
 	public class SqlInvoiceRepository : BaseSqlRepository<Invoice>, IInvoiceRepository
 	{
+        public void UpdateInternalComments(string comments, int id)
+        {
+            string query = @"
+update invoice set internalcomments = @InternalComments
+where id = @Id";
+            ExecuteNonQuery(query, "invoicing", new SqlParameter("@InternalComments", comments), new SqlParameter("@Id", id));
+        }
+
         public void Exported(int id)
         {
             string query = @"
@@ -209,7 +217,8 @@ SELECT i.Id,
     i.Number,
     i.Status,
 i.Comments,
-i.Exported
+i.Exported,
+i.InternalComments
 FROM Invoice i
 INNER JOIN Customer c ON i.CustomerId = c.Id
 ORDER BY i.number desc"
@@ -229,7 +238,8 @@ ORDER BY i.number desc"
                             Number = GetString(rs, 5),
                             Status = GetInt32(rs, 6),
                             Comments = GetString(rs, 7),
-                            Exported = GetInt32(rs, 8) == 1
+                            Exported = GetInt32(rs, 8) == 1,
+                            InternalComments = GetString(rs, 9)
 						}
 					);
 				}
