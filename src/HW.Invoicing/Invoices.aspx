@@ -44,9 +44,10 @@
 
 <h3>Invoices</h3>
 <p>
-    <asp:DropDownList ID="dropDownListFinancialYear" CssClass="form-control" runat="server">
+    <asp:DropDownList ID="dropDownListFinancialYear" CssClass="form-control" 
+        runat="server" AutoPostBack="true"
+        onselectedindexchanged="dropDownListFinancialYear_SelectedIndexChanged">
     </asp:DropDownList><br />
-    <asp:Button ID="buttonGetInvoices" CssClass="btn btn-success" runat="server" Text="Get invoices" />
 </p>
 <div class="alert alert-info">
 	<strong>Invoices</strong> are lists of goods sent or services provided, with a statement of the sum due for these; a bill.
@@ -54,6 +55,7 @@
 <table class="table table-hover">
     <tr>
         <th>Number</th>
+        <th>Date</th>
         <th>Customer</th>
         <th>Amount</th>
         <th>VAT</th>
@@ -72,6 +74,7 @@
             <% totalAmount += i.TotalAmount; %>
 
             <td><%= i.Number %></td>
+            <td><%= i.Date.Value.ToString("yyyy-MM-dd") %></td>
             <td><%= i.Customer.Name %></td>
             <td><%= i.SubTotal.ToString("### ### ##0.00") %></td>
             <td><%= i.TotalVAT.ToString("### ### ##0.00") %></td>

@@ -17,6 +17,7 @@ namespace HW.Invoicing
     	SqlInvoiceRepository r = new SqlInvoiceRepository();
     	protected IList<Invoice> invoices;
         SqlCompanyRepository cr = new SqlCompanyRepository();
+        protected Company company;
 
         [WebMethod]
         public static string UpdateInternalComments(string comments, int id)
@@ -25,12 +26,12 @@ namespace HW.Invoicing
             d.UpdateInternalComments(comments, id);
             return comments;
         }
-    	
+
         protected void Page_Load(object sender, EventArgs e)
         {
 			HtmlHelper.RedirectIf(Session["UserId"] == null, "login.aspx?r=" + HttpUtility.UrlEncode("invoices.aspx"));
 
-            var company = cr.Read(1);
+            company = cr.Read(1);
             if (!IsPostBack)
             {
                 dropDownListFinancialYear.Items.Clear();
@@ -42,13 +43,14 @@ namespace HW.Invoicing
                 var dateTo = new DateTime(year + 1, company.FinancialMonthEnd.Value.Month, company.FinancialMonthEnd.Value.Day, 23, 59, 59);
                 invoices = r.FindByDate(dateFrom, dateTo);
             }
-            else
-            {
-                int year = ConvertHelper.ToInt32(dropDownListFinancialYear.SelectedValue);
-                var dateFrom = new DateTime(year, company.FinancialMonthStart.Value.Month, company.FinancialMonthStart.Value.Day, 0, 0, 0);
-                var dateTo = new DateTime(year + 1, company.FinancialMonthEnd.Value.Month, company.FinancialMonthEnd.Value.Day, 23, 59, 59);
-                invoices = r.FindByDate(dateFrom, dateTo);
-            }
+        }
+
+        protected void dropDownListFinancialYear_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int year = ConvertHelper.ToInt32(dropDownListFinancialYear.SelectedValue);
+            var dateFrom = new DateTime(year, company.FinancialMonthStart.Value.Month, company.FinancialMonthStart.Value.Day, 0, 0, 0);
+            var dateTo = new DateTime(year + 1, company.FinancialMonthEnd.Value.Month, company.FinancialMonthEnd.Value.Day, 23, 59, 59);
+            invoices = r.FindByDate(dateFrom, dateTo);
         }
     }
 }
