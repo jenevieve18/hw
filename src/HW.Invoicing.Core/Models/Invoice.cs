@@ -54,10 +54,22 @@ namespace HW.Invoicing.Core.Models
 				form.SetField("Text13", invoice.TotalAmount.ToString());
 				
 				string items = "";
+				string quantities = "";
+				string units = "";
+				string prices = "";
+				string amounts = "";
 				foreach (var t in invoice.Timebooks) {
 					items += t.ToString() + "\n\n";
+					quantities += t.Timebook.Quantity.ToString() + "\n\n";
+					units += t.Timebook.Item.Unit.Name + "\n\n";
+					prices += t.Timebook.Price.ToString() + "\n\n";
+					amounts += t.Timebook.Amount.ToString() + "\n\n";
 				}
 				form.SetField("Text7", items);
+				form.SetField("Text8", quantities);
+				form.SetField("Text9", units);
+				form.SetField("Text9b", prices);
+				form.SetField("Text9c", amounts);
 
 				// "Flatten" the form so it wont be editable/usable anymore
 				// stamper.FormFlattening = true;
