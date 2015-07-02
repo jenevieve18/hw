@@ -13,24 +13,100 @@ namespace HW.Invoicing.Core.Models
 {
 	public class InvoiceExporter
 	{
-		public void Export(Invoice invoice)
+		public string Type {
+			get { return "application/pdf"; }
+		}
+		
+		public string GetContentDisposition(string file)
 		{
-			Document document = new Document(PageSize.A4);
-			PdfWriter writer = PdfWriter.GetInstance(document, new FileStream("Chap1002.pdf", FileMode.Open));
-			
-			document.Open();
-			
-			PdfContentByte cb = writer.DirectContent;
-			
-			BaseFont bf = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
-			cb.BeginText();
-			cb.SetFontAndSize(bf, 12);
-			
-			cb.SetTextMatrix(100, 400);
-			cb.ShowText("Text at position 100,400.");
-			
-			cb.EndText();
-			document.Close();
+			return "";
+		}
+		
+		public bool HasContentDisposition2 {
+			get { return ContentDisposition2.Length > 0; }
+		}
+		
+		public string ContentDisposition2 {
+			get { return ""; }
+		}
+		
+		public MemoryStream Export(Invoice invoice, string existingFileName)
+		{
+//			string existingFileName = ;
+			MemoryStream output = new MemoryStream();
+
+			using (var existingFileStream = new FileStream(existingFileName, FileMode.Open)) {
+				var reader = new PdfReader(existingFileStream);
+				var stamper = new PdfStamper(reader, output, '\0', true);
+				var form = stamper.AcroFields;
+				var fieldKeys = form.Fields.Keys;
+				
+				form.SetField("Text1", invoice.Customer.Number);
+				form.SetField("Text2", invoice.Number);
+				form.SetField("Text3", invoice.Date.Value.ToString("yyyy-MM-dd"));
+				
+				form.SetField("Text5", invoice.Customer.YourReferencePerson);
+				form.SetField("Text6", invoice.Customer.OurReferencePerson);
+				
+				form.SetField("Text6B", invoice.Customer.ToString());
+				
+				form.SetField("Text10b", invoice.SubTotal.ToString());
+				form.SetField("Text13", invoice.TotalAmount.ToString());
+				
+				string items = "";
+				foreach (var t in invoice.Timebooks) {
+					items += t.ToString() + "\n\n";
+				}
+				form.SetField("Text7", items);
+
+				// "Flatten" the form so it wont be editable/usable anymore
+				// stamper.FormFlattening = true;
+
+				// You can also specify fields to be flattened, which
+				// leaves the rest of the form still be editable/usable
+				// stamper.PartialFormFlattening("field1");
+				stamper.Close();
+				reader.Close();
+			}
+			return output;
+		}
+		
+		public void Export2(Invoice i)
+		{
+			string existingFileName = @"IHG faktura MALL Ian without comments.pdf";
+			string newFileName = @"test.pdf";
+
+			using (var existingFileStream = new FileStream(existingFileName, FileMode.Open)) {
+				using (var newFileStream = new FileStream(newFileName, FileMode.Create)) {
+					var pdfReader = new PdfReader(existingFileStream);
+
+					var stamper = new PdfStamper(pdfReader, newFileStream);
+
+					var form = stamper.AcroFields;
+					var fieldKeys = form.Fields.Keys;
+					
+					form.SetField("Text1", i.Customer.Number);
+					form.SetField("Text2", i.Number);
+					form.SetField("Text3", i.Date.Value.ToString("yyyy-MM-dd"));
+					
+					form.SetField("Text5", i.Customer.YourReferencePerson);
+					form.SetField("Text6", i.Customer.OurReferencePerson);
+					
+					form.SetField("Text6B", i.Customer.ToString());
+					
+					form.SetField("Text13", (i.TotalAmount + i.TotalVAT).ToString());
+
+					// "Flatten" the form so it wont be editable/usable anymore
+					stamper.FormFlattening = true;
+
+					// You can also specify fields to be flattened, which
+					// leaves the rest of the form still be editable/usable
+					stamper.PartialFormFlattening("field1");
+
+					stamper.Close();
+					pdfReader.Close();
+				}
+			}
 		}
 	}
 	
@@ -47,18 +123,18 @@ namespace HW.Invoicing.Core.Models
 		public IList<InvoiceTimebook> Timebooks { get; set; }
 		public string Comments { get; set; }
 		public string Number { get; set; }
-        public int Status { get; set; }
-        public string InternalComments { get; set; }
-        public bool Exported { get; set; }
+		public int Status { get; set; }
+		public string InternalComments { get; set; }
+		public bool Exported { get; set; }
 
-        public string GetStatus()
-        {
-            switch (Status)
-            {
-                case 2: return "<span class='label label-success'>PAID</span>";
-                default: return "<span class='label label-danger'>NOT PAID</span>";
-            }
-        }
+		public string GetStatus()
+		{
+			switch (Status)
+			{
+					case 2: return "<span class='label label-success'>PAID</span>";
+					default: return "<span class='label label-danger'>NOT PAID</span>";
+			}
+		}
 		
 		public Invoice()
 		{
@@ -78,27 +154,27 @@ namespace HW.Invoicing.Core.Models
 			}
 		}
 
-        public decimal SubTotal
-        {
-            get
-            {
-                return Timebooks.Sum(x => x.Timebook.Amount);
-            }
-        }
+		public decimal SubTotal
+		{
+			get
+			{
+				return Timebooks.Sum(x => x.Timebook.Amount);
+			}
+		}
 		
 		public decimal TotalAmount {
 			get {
-                return SubTotal + TotalVAT;
+				return SubTotal + TotalVAT;
 			}
 		}
 
-        public void AddTimebook(string[] timebooks)
-        {
-            foreach (var t in timebooks)
-            {
-                AddTimebook(ConvertHelper.ToInt32(t));
-            }
-        }
+		public void AddTimebook(string[] timebooks)
+		{
+			foreach (var t in timebooks)
+			{
+				AddTimebook(ConvertHelper.ToInt32(t));
+			}
+		}
 		
 		public void AddTimebook(int id)
 		{
@@ -115,5 +191,10 @@ namespace HW.Invoicing.Core.Models
 	{
 		public Invoice Invoice { get; set; }
 		public CustomerTimebook Timebook { get; set; }
+		
+		public override string ToString()
+		{
+			return Timebook.ToString();
+		}
 	}
 }
