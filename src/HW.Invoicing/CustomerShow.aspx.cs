@@ -109,6 +109,7 @@ namespace HW.Invoicing
                 SubscriptionEndDate = ConvertHelper.ToDateTime(textBoxSubscriptionEndDate.Text)
             };
             r.UpdateSubscription(c, id);
+            Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=subscription", id));
         }
 
         protected void buttonDeactivate_Click(object sender, EventArgs e)
