@@ -16,23 +16,24 @@ namespace HW.Invoicing.Core.Models
 		public string Type {
 			get { return "application/pdf"; }
 		}
+
+        string contentDisposition;
 		
-		public string GetContentDisposition(string file)
+		public void SetContentDisposition(string file)
 		{
-			return "";
+			contentDisposition = string.Format("", file);
 		}
 		
-		public bool HasContentDisposition2 {
-			get { return ContentDisposition2.Length > 0; }
+		public bool HasContentDisposition {
+            get { return ContentDisposition.Length > 0; }
 		}
 		
-		public string ContentDisposition2 {
-			get { return ""; }
+		public string ContentDisposition {
+            get { return contentDisposition; }
 		}
 		
 		public MemoryStream Export(Invoice invoice, string existingFileName)
 		{
-//			string existingFileName = ;
 			MemoryStream output = new MemoryStream();
 
 			using (var existingFileStream = new FileStream(existingFileName, FileMode.Open)) {
@@ -81,44 +82,6 @@ namespace HW.Invoicing.Core.Models
 				reader.Close();
 			}
 			return output;
-		}
-		
-		public void Export2(Invoice i)
-		{
-			string existingFileName = @"IHG faktura MALL Ian without comments.pdf";
-			string newFileName = @"test.pdf";
-
-			using (var existingFileStream = new FileStream(existingFileName, FileMode.Open)) {
-				using (var newFileStream = new FileStream(newFileName, FileMode.Create)) {
-					var pdfReader = new PdfReader(existingFileStream);
-
-					var stamper = new PdfStamper(pdfReader, newFileStream);
-
-					var form = stamper.AcroFields;
-					var fieldKeys = form.Fields.Keys;
-					
-					form.SetField("Text1", i.Customer.Number);
-					form.SetField("Text2", i.Number);
-					form.SetField("Text3", i.Date.Value.ToString("yyyy-MM-dd"));
-					
-					form.SetField("Text5", i.Customer.YourReferencePerson);
-					form.SetField("Text6", i.Customer.OurReferencePerson);
-					
-					form.SetField("Text6B", i.Customer.ToString());
-					
-					form.SetField("Text13", (i.TotalAmount + i.TotalVAT).ToString());
-
-					// "Flatten" the form so it wont be editable/usable anymore
-					stamper.FormFlattening = true;
-
-					// You can also specify fields to be flattened, which
-					// leaves the rest of the form still be editable/usable
-					stamper.PartialFormFlattening("field1");
-
-					stamper.Close();
-					pdfReader.Close();
-				}
-			}
 		}
 	}
 	

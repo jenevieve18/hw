@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using HW.Core.Models;
+using HW.Core.Helpers;
 
 namespace HW.Invoicing.Core.Models
 {
@@ -208,7 +209,7 @@ namespace HW.Invoicing.Core.Models
         {
             switch (Status)
             {
-                case 1: return "<span class='label label-warning'>INVOICED</span>";
+                case 1: return string.Format("<span class='label label-warning'>INVOICED {0}</span>", HtmlHelper.Anchor(InvoiceTimebook.Invoice.Number, "invoiceshow.aspx?Id=" + InvoiceTimebook.Invoice.Id));
                 case 2: return "<span class='label label-success'>PAID</span>";
                 default: return "<span class='label label-default'>OPEN</span>";
             }

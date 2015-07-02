@@ -875,7 +875,7 @@ ORDER BY Status, t.Date DESC"
 			}
 
             query = @"
-select i.status
+select i.status, i.id, i.number
 from invoicetimebook it
 inner join invoice i on i.id = it.invoiceid
 and it.customertimebookid = @customertimebookid";
@@ -887,6 +887,13 @@ and it.customertimebookid = @customertimebookid";
                     if (rs.Read())
                     {
                         status = GetInt32(rs, 0);
+                        t.InvoiceTimebook = new InvoiceTimebook
+                        {
+                            Invoice = new Invoice {
+                                Id = GetInt32(rs, 1),
+                                Number = GetString(rs, 2)
+                            }
+                        };
                     }
                 }
                 t.Status = status;
