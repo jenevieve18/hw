@@ -207,3 +207,5 @@ alter table Company add FinancialMonthStart datetime,
 FinancialMonthEnd datetime;
 
 alter table Invoice add InternalComments text;
+
+alter table Invoice add Exported integer;

@@ -177,6 +177,7 @@ namespace HW.Invoicing.Core.Models
         public int Status { get; set; }
         public string InternalComments { get; set; }
         public decimal VAT { get; set; }
+        public InvoiceTimebook InvoiceTimebook { get; set; }
         public decimal VATAmount
         {
             get { return Amount * VAT / 100;  }

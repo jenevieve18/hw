@@ -173,16 +173,16 @@ WHERE i.Id = @Id"
         {
             string query = @"
 select it.id,
-it.customertimebookid,
-ct.quantity,
-ct.price,
-ct.vat,
-ct.itemid,
-i.name,
-i.unitid,
-u.name,
-ct.comments,
-ct.consultant
+    it.customertimebookid,
+    ct.quantity,
+    ct.price,
+    ct.vat,
+    ct.itemid,
+    i.name,
+    i.unitid,
+    u.name,
+    ct.comments,
+    ct.consultant
 from invoicetimebook it
 inner join customertimebook ct on ct.id = it.customertimebookid
 inner join item i on i.id = ct.itemid

@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using HW.Core.Helpers;
 using HW.Core.Repositories.Sql;
 using HW.Invoicing.Core.Models;
+using System.Linq;
 
 namespace HW.Invoicing.Core.Repositories.Sql
 {
@@ -829,15 +830,13 @@ SELECT t.CustomerContactId,
     t.Id,
     t.Inactive,
     t.InternalComments,
-    (
-        SELECT 1 FROM InvoiceTimebook it WHERE it.CustomerTimebookId = t.Id
-    ) Status,
-    t.VAT,
-    (
-		SELECT i.Status FROM InvoiceTimebook it
-		INNER JOIN Invoice i ON i.Id = it.InvoiceId
-		WHERE it.CustomerTimebookId = t.Id
-	) InvoiceStatus
+    t.VAT
+    --(SELECT 1 FROM InvoiceTimebook it WHERE it.CustomerTimebookId = t.Id) Status,
+    --(
+	--	SELECT i.Status FROM InvoiceTimebook it
+	--	INNER JOIN Invoice i ON i.Id = it.InvoiceId
+	--	WHERE it.CustomerTimebookId = t.Id
+	--) InvoiceStatus
 FROM CustomerTimebook t
 INNER JOIN CustomerContact c ON c.Id = t.CustomerContactId
 INNER JOIN Item i ON i.Id = t.ItemId
@@ -868,12 +867,31 @@ ORDER BY Status, t.Date DESC"
                             Id = GetInt32(rs, 12),
                             Inactive = GetInt32(rs, 13) == 1,
                             InternalComments = GetString(rs, 14),
-                            Status = GetInt32(rs, 17, 0) != 0 ? GetInt32(rs, 17) : GetInt32(rs, 15),
-                            VAT = GetDecimal(rs, 16, 25)
-						}
+                            VAT = GetDecimal(rs, 15, 25),
+                            //Status = GetInt32(rs, 17, 0) != 0 ? GetInt32(rs, 17) : GetInt32(rs, 15),
+                        }
 					);
 				}
 			}
+
+            query = @"
+select i.status
+from invoicetimebook it
+inner join invoice i on i.id = it.invoiceid
+and it.customertimebookid = @customertimebookid";
+            foreach (var t in timebooks)
+            {
+                int status = 0;
+                using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@customertimebookid", t.Id)))
+                {
+                    if (rs.Read())
+                    {
+                        status = GetInt32(rs, 0);
+                    }
+                }
+                t.Status = status;
+            }
+            timebooks = timebooks.OrderBy(x => x.Status).ToList();
 			return timebooks;
 		}
 		
