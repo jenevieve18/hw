@@ -94,7 +94,7 @@
                         <% } else { %>
                             <li><%= HtmlHelper.Anchor("Revert Payment", "invoicerevertpayment.aspx?Id=" + i.Id) %></li>
                         <% } %>
-                        <li><%= HtmlHelper.Anchor("PDF", "invoiceexport.aspx?Id=" + i.Id) %></li>
+                        <li><%= HtmlHelper.Anchor("PDF", "invoiceexport.aspx?Id=" + i.Id, "target='_blank'")%></li>
 				    </ul>
 			    </div>
             </td>

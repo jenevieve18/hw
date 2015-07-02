@@ -14,6 +14,7 @@ namespace HW.Invoicing
     public partial class InvoiceExport : System.Web.UI.Page
     {
         SqlInvoiceRepository r = new SqlInvoiceRepository();
+        SqlCompanyRepository cr = new SqlCompanyRepository();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -22,12 +23,16 @@ namespace HW.Invoicing
             r.Exported(id);
 
             var invoice = r.Read(id);
-            
+            var company = cr.Read(1);
+
             var exporter = new InvoiceExporter();
-//            exporter.Export(invoice);
+            
+            Response.ClearHeaders();
+            Response.ClearContent();
 			Response.ContentType = exporter.Type;
-			
-			AddHeaderIf(exporter.HasContentDisposition2, "content-disposition", exporter.ContentDisposition2);
+
+            string file = string.Format("{0} {1} {2} {3}", invoice.Number, company.Name, invoice.Customer.YourReferencePerson, DateTime.Now.ToString("MMM yyyy"));
+			AddHeaderIf(exporter.HasContentDisposition(file), "content-disposition", exporter.GetContentDisposition(file));
 			Write(exporter.Export(invoice, Server.MapPath(@"IHG faktura MALL Ian without comments.pdf")));
 		}
 		

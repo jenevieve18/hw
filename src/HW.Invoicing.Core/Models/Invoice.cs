@@ -17,20 +17,15 @@ namespace HW.Invoicing.Core.Models
 			get { return "application/pdf"; }
 		}
 
-        string contentDisposition;
-		
-		public void SetContentDisposition(string file)
-		{
-			contentDisposition = string.Format("", file);
-		}
-		
-		public bool HasContentDisposition {
-            get { return ContentDisposition.Length > 0; }
-		}
-		
-		public string ContentDisposition {
-            get { return contentDisposition; }
-		}
+        public string GetContentDisposition(string file)
+        {
+            return string.Format("attachment;filename=\"{0}.pdf\";", file);
+        }
+
+        public bool HasContentDisposition(string file)
+        {
+            return GetContentDisposition(file).Length > 0;
+        }
 		
 		public MemoryStream Export(Invoice invoice, string existingFileName)
 		{
