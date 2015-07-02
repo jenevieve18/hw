@@ -209,3 +209,15 @@ FinancialMonthEnd datetime;
 alter table Invoice add InternalComments text;
 
 alter table Invoice add Exported integer;
+
+alter table Lang add Code varchar(255);
+
+update Lang set Code = Name;
+update Lang set Name = 'Svenska' where Id = 1;
+update Lang set Name = 'English' where Id = 2;
+
+alter table Customer add HasSubscription integer;
+
+alter table Customer add SubscriptionItemId integer,
+SubscriptionStartDate datetime,
+SubscriptionEndDate datetime;

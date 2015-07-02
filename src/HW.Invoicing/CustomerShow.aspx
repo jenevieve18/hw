@@ -23,6 +23,14 @@
                 format: "yyyy-mm-dd",
                 autoclose: true
             });
+            $('#<%= textBoxSubscriptionStartDate.ClientID %>').datepicker({
+                format: "yyyy-mm-dd",
+                autoclose: true
+            });
+            $('#<%= textBoxSubscriptionEndDate.ClientID %>').datepicker({
+                format: "yyyy-mm-dd",
+                autoclose: true
+            });
             $('#<%= textBoxInvoiceDate.ClientID %>').change(function() {
                 var d = new Date($('#<%= textBoxInvoiceDate.ClientID %>').val());
                 d.setDate(d.getDate() + 30);
@@ -145,6 +153,17 @@
             } else {
                 $('#<%= buttonReactivate.ClientID %>').hide();
             }
+
+            var subscriptionPanel = $('#<%= panelCustomerSubscription.ClientID %>');
+            subscriptionPanel.hide();
+            $('#<%= checkBoxSubscribe.ClientID %>').change(function() {
+                if ($(this).is(':checked')) {
+                    subscriptionPanel.show();
+                } else {
+                    subscriptionPanel.hide();
+                }
+            });
+            $('#<%= checkBoxSubscribe.ClientID %>').change();
         });
 
         Object.size = function (obj) {
@@ -160,6 +179,7 @@
                 if (result[property] == value) {
                     //Remove from array
                     array.splice(index, 1);
+                    return false;
                 }
             });
         }
@@ -261,9 +281,10 @@
 	    <li <%= selectedTab == "customer-prices" ? "class='active'" : "" %>><a href="#customer-prices" data-toggle="tab">Customer Prices</a></li>
 		<li <%= selectedTab == "customer-info" ? "class='active'" : "" %>><a href="#customer-info" data-toggle="tab">Customer Info</a></li>
 		<li <%= selectedTab == "contact-persons" ? "class='active'" : "" %>><a href="#contact-persons" data-toggle="tab">Contact Persons</a></li>
+        <li <%= selectedTab == "subscription" ? "class='active'" : "" %>><a href="#subscription" data-toggle="tab">Subscription</a></li>
 	</ul>
 	<div class="tab-content">
-        <div class="tab-pane <%= selectedTab == "notes" ? "active" : "" %>                                                                                                                                                                                                                                                                                       " id="notes">
+        <div class="tab-pane <%= selectedTab == "notes" ? "active" : "" %>" id="notes">
 			<br />
             <p><a id="modal-625558" href="#customer-notes-form" role="button" class="btn btn-info" data-toggle="modal">Create note</a></p>
             <div class="modal fade" id="customer-notes-form" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -907,6 +928,39 @@
                     <% } %>
                 <% } %>
             </table>
+		</div>
+        <div class="tab-pane <%= selectedTab == "subscription" ? "active" : "" %>" id="subscription">
+			<br />
+			<div class="alert alert-info">
+				<strong>Subscription</strong> is the action of making or agreeing to make an advance payment in order to receive or participate in something.
+			</div>
+            <div class="form-group">
+                <asp:CheckBox ID="checkBoxSubscribe" runat="server" CssClass="form-control" Text="&nbsp;This customer has subscription" />
+            </div>
+            <asp:Panel runat="server" DefaultButton="buttonSaveSubscription" ID="panelCustomerSubscription">
+            <table class="table">
+                <tr>
+                    <td><strong>Subscription Item</strong></td>
+                    <td>
+                        <asp:DropDownList ID="dropDownListSubscriptionItem" runat="server" CssClass="form-control">
+                        </asp:DropDownList>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Start Date</strong></td>
+                    <td>
+                        <asp:TextBox CssClass="form-control" ID="textBoxSubscriptionStartDate" runat="server"></asp:TextBox></td>
+                </tr>
+                <tr>
+                    <td><strong>End Date</strong></td>
+                    <td>
+                        <asp:TextBox CssClass="form-control" ID="textBoxSubscriptionEndDate" runat="server"></asp:TextBox></td>
+                </tr>
+            </table>
+            <div>
+                <asp:Button ID="buttonSaveSubscription" runat="server" Text="Save customer subscription" CssClass="btn btn-info" OnClick="buttonSaveSubscription_Click" />
+            </div>
+            </asp:Panel>
 		</div>
 	</div>
 </div>

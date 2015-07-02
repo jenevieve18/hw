@@ -402,6 +402,25 @@ WHERE Id = @Id"
                 new SqlParameter("@Inactive", c.Inactive)
             );
         }
+
+        public void UpdateSubscription(Customer c, int id)
+        {
+            string query = @"
+update customer set hassubscription = @hassubscription,
+subscriptionitemid = @subscriptionitemid,
+subscriptionstartdate = @subscriptionstartdate,
+subscriptionenddate = @subscriptionenddate
+where id = @id";
+            ExecuteNonQuery(
+                query,
+                "invoicing",
+                new SqlParameter("@hassubscription", c.HasSubscription),
+                new SqlParameter("@subscriptionitemid", c.SubscriptionItem.Id),
+                new SqlParameter("@subscriptionstartdate", c.SubscriptionStartDate),
+                new SqlParameter("@subscriptionenddate", c.SubscriptionEndDate),
+                new SqlParameter("@id", id)
+            );
+        }
 		
 		public void Deactivate(int id)
 		{
@@ -449,7 +468,11 @@ SELECT c.Id,
     c.Phone,
     c.Inactive,
     c.LangId,
-    l.Name
+    l.Name,
+c.HasSubscription,
+c.SubscriptionItemId,
+c.SubscriptionStartDate,
+c.SubscriptionEndDate
 FROM Customer c
 INNER JOIN Lang l ON c.LangId = l.Id
 WHERE c.Id = @Id"
@@ -470,10 +493,15 @@ WHERE c.Id = @Id"
                         Email = GetString(rs, 8),
                         Phone = GetString(rs, 9),
                         Inactive = GetInt32(rs, 10) == 1,
-                        Language = new Language {
+                        Language = new Language
+                        {
                             Id = GetInt32(rs, 11),
                             Name = GetString(rs, 12)
-                        }
+                        },
+                        HasSubscription = GetInt32(rs, 13) == 1,
+                        SubscriptionItem = new Item { Id = GetInt32(rs, 14) },
+                        SubscriptionStartDate = GetDateTime(rs, 15),
+                        SubscriptionEndDate = GetDateTime(rs, 16)
                     };
 				}
 			}

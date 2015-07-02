@@ -19,6 +19,10 @@ namespace HW.Invoicing.Core.Models
 
 	public class Customer : BaseModel
 	{
+        public bool HasSubscription { get; set; }
+        public Item SubscriptionItem { get; set; }
+        public DateTime? SubscriptionStartDate { get; set; }
+        public DateTime? SubscriptionEndDate { get; set; }
 		public string Name { get; set; }
 		public string Address { get; set; }
 		public string Phone { get; set; }

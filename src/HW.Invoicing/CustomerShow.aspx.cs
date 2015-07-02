@@ -78,6 +78,13 @@ namespace HW.Invoicing
 
                     textBoxTimebookDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
                     textBoxTimebookVAT.Text = 25.ToString();
+
+                    checkBoxSubscribe.Checked = customer.HasSubscription;
+                    if (customer.HasSubscription)
+                    {
+                        textBoxSubscriptionStartDate.Text = customer.SubscriptionStartDate.Value.ToString("yyyy-MM-dd");
+                        textBoxSubscriptionEndDate.Text = customer.SubscriptionEndDate.Value.ToString("yyyy-MM-dd");
+                    }
                 }
 
                 company = cr.Read(companyId);
@@ -91,6 +98,17 @@ namespace HW.Invoicing
                     labelCompanyTIN.Text = company.TIN;
                 }
             }
+        }
+
+        protected void buttonSaveSubscription_Click(object sender, EventArgs e)
+        {
+            var c = new Customer {
+                HasSubscription = checkBoxSubscribe.Checked,
+                SubscriptionItem = new Item { Id = ConvertHelper.ToInt32(dropDownListSubscriptionItem.SelectedValue) },
+                SubscriptionStartDate = ConvertHelper.ToDateTime(textBoxSubscriptionStartDate.Text),
+                SubscriptionEndDate = ConvertHelper.ToDateTime(textBoxSubscriptionEndDate.Text)
+            };
+            r.UpdateSubscription(c, id);
         }
 
         protected void buttonDeactivate_Click(object sender, EventArgs e)
@@ -215,6 +233,12 @@ namespace HW.Invoicing
             items = ir.FindAll();
             languages = lr.FindAll();
 
+            dropDownListSubscriptionItem.Items.Clear();
+            foreach (var i in items)
+            {
+                dropDownListSubscriptionItem.Items.Add(new ListItem(i.Name, i.Id.ToString()));
+            }
+
             dropDownListItems.Items.Clear();
             foreach (var i in items)
             {
@@ -252,6 +276,10 @@ namespace HW.Invoicing
             {
                 customer.Contacts = contacts;
                 dropDownListLanguage.SelectedValue = customer.Language.Id.ToString();
+                if (customer.SubscriptionItem != null)
+                {
+                    dropDownListSubscriptionItem.SelectedValue = customer.SubscriptionItem.Id.ToString();
+                }
 
                 foreach (var t in new[] { new { id = 1, name = "Primary" }, new { id = 2, name = "Secondary" }, new { id = 3, name = "Other" } })
                 {
