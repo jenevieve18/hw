@@ -198,7 +198,29 @@ VALUES(@CustomerId, @Notes, @CreatedAt, @CreatedBy)"
 				new SqlParameter("@CreatedBy", notes.CreatedBy.Id)
 			);
 		}
-		
+
+        public void SaveTimebooks(List<CustomerTimebook> timebooks)
+        {
+            string query = string.Format(
+                @"
+INSERT INTO CustomerTimebook(CustomerId, ItemId, Quantity, Price, Comments, VAT)
+VALUES(@CustomerId, @ItemId, @Quantity, @Price, @Comments, @VAT)"
+            );
+            foreach (var time in timebooks)
+            {
+                ExecuteNonQuery(
+                    query,
+                    "invoicing",
+                    new SqlParameter("@CustomerId", time.Customer.Id),
+                    new SqlParameter("@ItemId", time.Item.Id),
+                    new SqlParameter("@Quantity", time.Quantity),
+                    new SqlParameter("@Price", time.Price),
+                    new SqlParameter("@Comments", time.Comments),
+                    new SqlParameter("@VAT", time.VAT)
+                );
+            }
+        }
+
 		public void SaveTimebook(CustomerTimebook time, int customerId)
 		{
 			string query = string.Format(
@@ -478,8 +500,8 @@ SELECT c.Id,
     c.SubscriptionHasEndDate
 FROM Customer c
 INNER JOIN Lang l ON c.LangId = l.Id
-INNER JOIN Item i ON i.Id = c.SubscriptionItemId
-INNER JOIN Unit u ON u.Id = i.UnitId
+--INNER JOIN Item i ON i.Id = c.SubscriptionItemId
+--INNER JOIN Unit u ON u.Id = i.UnitId
 WHERE c.Id = @Id"
             );
 			Customer c = null;

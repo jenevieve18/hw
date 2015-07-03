@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Invoicing.Core.Models;
 using HW.Invoicing.Core.Repositories.Sql;
+using HW.Core.Helpers;
 
 namespace HW.Invoicing
 {
@@ -13,6 +14,30 @@ namespace HW.Invoicing
     {
         protected IList<Customer> customers;
         SqlCustomerRepository r = new SqlCustomerRepository();
+
+        protected void buttonSave_Click(object sender, EventArgs e)
+        {
+            var quantities = Request.Form.GetValues("subscription-quantities");
+            var comments = Request.Form.GetValues("subscription-comments");
+            var timebooks = new List<CustomerTimebook>();
+            int i = 0;
+            foreach (var c in customers)
+            {
+                timebooks.Add(
+                    new CustomerTimebook
+                    {
+                        Customer = c,
+                        Item = new Item { Id = c.SubscriptionItem.Id },
+                        Quantity = ConvertHelper.ToInt32(quantities[i]),
+                        Price = c.SubscriptionItem.Price,
+                        VAT = 25,
+                        Comments = comments[i]
+                    }
+                );
+                i++;
+            }
+            r.SaveTimebooks(timebooks);
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
