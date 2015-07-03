@@ -56,6 +56,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CreateSubscriptionTimebooks.aspx" />
     <Content Include="css\style.css" />
     <Content Include="CustomerAdd.aspx" />
     <Content Include="CustomerContactDeactivate.aspx" />
@@ -121,6 +122,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateSubscriptionTimebooks.aspx.cs">
+      <DependentUpon>CreateSubscriptionTimebooks.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CreateSubscriptionTimebooks.aspx.designer.cs">
+      <DependentUpon>CreateSubscriptionTimebooks.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CustomerAdd.aspx.cs">
       <DependentUpon>CustomerAdd.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

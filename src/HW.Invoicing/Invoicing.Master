@@ -115,6 +115,7 @@
 						        </li>-->
 						        <li><%= HtmlHelper.Anchor("Dashboard", "dashboard.aspx") %></li>
 						        <li><%= HtmlHelper.Anchor("Customers", "customers.aspx") %></li>
+                                <li><%= HtmlHelper.Anchor("Create Subscription Timebooks", "createsubscriptiontimebooks.aspx") %></li>
 						        <li><%= HtmlHelper.Anchor("Invoices", "invoices.aspx") %></li>
 						        <li><%= HtmlHelper.Anchor("Items", "items.aspx") %></li>
 						        <li><%= HtmlHelper.Anchor("Units", "units.aspx") %></li>

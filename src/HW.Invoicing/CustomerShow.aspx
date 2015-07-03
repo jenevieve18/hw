@@ -624,7 +624,9 @@
                                         ids[5] = qty;
                                         $(this).closest('tr').find('.timebook-item').data('qty', qty);
                                         var price = $(this).closest('tr').find('.timebook-item').data('price');
-                                        $(this).closest('tr').find('.timebook-item').data('amount', price * qty);
+                                        var amount = price * qty;
+                                        $(this).closest('tr').find('.timebook-item').data('amount', amount);
+                                        $('#subscription-amount').text($.number(amount, 2, ',', ' '));
                                         $(this).closest('tr').find('.timebook-item').data('id', ids.join('|'));
                                         labelSubscriptionQuantity.text(qty);
                                         textSubscriptionQuantity.hide();
