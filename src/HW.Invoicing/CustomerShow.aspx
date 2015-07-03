@@ -585,7 +585,8 @@
                     <th>Comments</th>
                     <th></th>
                 </tr>
-                <% if (customer.HasSubscription && customer.SubscriptionStartDate.Value < DateTime.Now) { %>
+                <% if (customer.HasSubscription && customer.SubscriptionStartDate.Value <= DateTime.Now) { %>
+                <% if (!customer.SubscriptionHasEndDate || (customer.SubscriptionHasEndDate && customer.SubscriptionEndDate.Value >= DateTime.Now)) { %>
                     <tr>
                         <td>
                             <input type="checkbox" class="timebook-item"
@@ -608,12 +609,13 @@
                         <td>1</td>
                         <td><%= customer.SubscriptionItem.Price.ToString("### ### ##0.00") %></td>
                         <td><%= customer.SubscriptionItem.Price.ToString("### ### ##0.00") %></td>
-                        <td></td>
+                        <td>25%</td>
                         <td></td>
                         <td><span class="label label-info">SUBSCRIPTION</span></td>
                         <td></td>
                         <td></td>
                     </tr>
+                <% } %>
                 <% } %>
                 <% foreach (var t in timebooks) { %>
                     <% if (t.Inactive) { %>
