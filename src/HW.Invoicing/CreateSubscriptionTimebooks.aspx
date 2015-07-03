@@ -35,9 +35,13 @@
                 var endDate = $('#<%= textBoxEndDate.ClientID %>').datepicker('getDate');
                 var generatedText = text + ' ' + $('#<%= textBoxStartDate.ClientID %>').val() + ' - ' + $('#<%= textBoxEndDate.ClientID %>').val();
                 textGeneratedComments.val(generatedText);
+                $('#<%= textBoxComments.ClientID %>').change();
             });
             $('#<%= textBoxQuantity.ClientID %>').change(function () {
                 $('.subscription-quantity').val($(this).val());
+            });
+            $('#<%= textBoxComments.ClientID %>').change(function () {
+                $('.subscription-comments').val($(this).val());
             });
         });
     </script>
@@ -51,25 +55,37 @@
 	<strong>Subscription</strong> is the action of making or agreeing to make an advance payment in order to receive or participate in something.
 </div>
 
+<table>
+    <tr>
+        <td>
 <div class="form-group">
 	<label for="<%= textBoxStartDate.ClientID %>">Start Date</label>
     <asp:TextBox ID="textBoxStartDate" runat="server" CssClass="date form-control"></asp:TextBox>
 </div>
+        </td>
+        <td>
 <div class="form-group">
 	<label for="<%= textBoxEndDate.ClientID %>">End Date</label>
     <asp:TextBox ID="textBoxEndDate" runat="server" CssClass="date form-control"></asp:TextBox>
 </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+<div class="form-group">
+	<label for="<%= textBoxQuantity.ClientID %>">Quantity</label>
+    <asp:TextBox ID="textBoxQuantity" runat="server" CssClass="form-control"></asp:TextBox>
+</div>
+        </td>
+    </tr>
+</table>
 <div class="form-group">
 	<label for="<%= textBoxText.ClientID %>">Text</label>
     <asp:TextBox ID="textBoxText" runat="server" CssClass="form-control"></asp:TextBox>
 </div>
 <div class="form-group">
-	<label for="<%= textBoxQuantity.ClientID %>">Quantity</label>
-    <asp:TextBox ID="textBoxQuantity" runat="server" CssClass="form-control"></asp:TextBox>
-</div>
-<div class="form-group">
 	<label for="<%= textBoxComments.ClientID %>">Generated Comments</label>
-    <asp:TextBox ID="textBoxComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+    <asp:TextBox style="height:100px" ID="textBoxComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
 </div>
 
 <br />
@@ -89,7 +105,7 @@
         <td><%= c.SubscriptionItem.Unit.Name %></td>
         <td><%= c.SubscriptionItem.Price.ToString("### ### ##0.00") %></td>
         <td>
-            <input class="subscription-quantity form-control" type="text" />
+            <input class="subscription-quantity form-control" type="text" value="1" />
         </td>
         <td>
             <textarea class="subscription-comments form-control"></textarea>

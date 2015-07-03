@@ -31,15 +31,6 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxEndDate;
         
         /// <summary>
-        /// textBoxText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxText;
-        
-        /// <summary>
         /// textBoxQuantity control.
         /// </summary>
         /// <remarks>
@@ -47,6 +38,15 @@ namespace HW.Invoicing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox textBoxQuantity;
+        
+        /// <summary>
+        /// textBoxText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxText;
         
         /// <summary>
         /// textBoxComments control.
