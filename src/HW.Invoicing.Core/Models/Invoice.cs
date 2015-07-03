@@ -142,7 +142,7 @@ namespace HW.Invoicing.Core.Models
 		{
 			foreach (var t in timebooks)
 			{
-                var s = t.Split(';');
+                var s = t.Split('|');
                 if (s.Length > 1)
                 {
                     AddTimebook(
@@ -154,8 +154,9 @@ namespace HW.Invoicing.Core.Models
                                 Customer = new Customer { Id = ConvertHelper.ToInt32(s[1]) },
                                 Item = new Item { Id = ConvertHelper.ToInt32(s[2]) },
                                 Price = ConvertHelper.ToDecimal(s[3]),
-                                Quantity = ConvertHelper.ToDecimal(s[4]),
-                                VAT = ConvertHelper.ToDecimal(s[5])
+                                VAT = ConvertHelper.ToDecimal(s[4]),
+                                Quantity = ConvertHelper.ToDecimal(s[5]),
+                                Comments = s[6]
                             }
                         }
                     );

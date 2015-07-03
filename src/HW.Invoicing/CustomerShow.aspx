@@ -95,7 +95,8 @@
                 items.html('');
                 invoiceItems.forEach(function(e) {
                     var vatAmount = e.vat / 100.0 * e.amount;
-                    var item = e.comments == '' ? e.item : e.comments + ' (' + e.consultant + ')';
+                    var consultant = e.consultant == '' ? '' : ' (' + e.consultant + ')';
+                    var item = e.comments == '' ? e.item : e.comments + consultant;
                     items.append('' + 
                         '<tr>' + 
                         '   <td colspan="4">' + item + '<input type="hidden" id="invoice-timebooks" name="invoice-timebooks" value="' + e.id + '"></td>' + 
@@ -586,36 +587,85 @@
                     <th></th>
                 </tr>
                 <% if (customer.HasSubscription && customer.SubscriptionStartDate.Value <= DateTime.Now) { %>
-                <% if (!customer.SubscriptionHasEndDate || (customer.SubscriptionHasEndDate && customer.SubscriptionEndDate.Value >= DateTime.Now)) { %>
-                    <tr>
-                        <td>
-                            <input type="checkbox" class="timebook-item"
-                                data-id="0;<%= customer.Id %>;<%= customer.SubscriptionItem.Id %>;<%= customer.SubscriptionItem.Price %>;1;25"
-                                data-item="<%= customer.SubscriptionItem.Name %>"
-                                data-unit="<%= customer.SubscriptionItem.Unit.Name %>"
-                                data-qty="1"
-                                data-price="<%= customer.SubscriptionItem.Price %>"
-                                data-amount="<%= customer.SubscriptionItem.Price %>"
-                                data-consultant=""
-                                data-comments=""
-                                data-vat="25"
-                            />
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><%= customer.SubscriptionItem.Name %></td>
-                        <td><%= customer.SubscriptionItem.Unit.Name %></td>
-                        <td>1</td>
-                        <td><%= customer.SubscriptionItem.Price.ToString("### ### ##0.00") %></td>
-                        <td><%= customer.SubscriptionItem.Price.ToString("### ### ##0.00") %></td>
-                        <td>25%</td>
-                        <td></td>
-                        <td><span class="label label-info">SUBSCRIPTION</span></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                <% } %>
+                    <% if (!customer.SubscriptionHasEndDate || (customer.SubscriptionHasEndDate && customer.SubscriptionEndDate.Value >= DateTime.Now)) { %>
+                        <tr class="warning">
+                            <td>
+                                <input type="checkbox" class="timebook-item"
+                                    data-id="0|<%= customer.Id %>|<%= customer.SubscriptionItem.Id %>|<%= customer.SubscriptionItem.Price %>|25|1|"
+                                    data-item="<%= customer.SubscriptionItem.Name %>"
+                                    data-unit="<%= customer.SubscriptionItem.Unit.Name %>"
+                                    data-qty="1"
+                                    data-price="<%= customer.SubscriptionItem.Price %>"
+                                    data-amount="<%= customer.SubscriptionItem.Price %>"
+                                    data-consultant=""
+                                    data-comments=""
+                                    data-vat="25"
+                                />
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><%= customer.SubscriptionItem.Name %></td>
+                            <td><%= customer.SubscriptionItem.Unit.Name %></td>
+                            <script type="text/javascript">
+                                $(document).ready(function () {
+                                    $('.subscription').hide();
+                                    var labelSubscriptionQuantity = $('.subscription-quantity-label');
+                                    var textSubscriptionQuantity = $('#subscription-quantity-text');
+                                    $('#subscription-quantity').click(function () {
+                                        labelSubscriptionQuantity.hide();
+                                        textSubscriptionQuantity.show();
+                                        textSubscriptionQuantity.select();
+                                    });
+                                    textSubscriptionQuantity.focusout(function () {
+                                        var qty = $(this).val();
+                                        var id = $(this).closest('tr').find('.timebook-item').data('id');
+                                        var ids = id.split('|');
+                                        ids[5] = qty;
+                                        $(this).closest('tr').find('.timebook-item').data('qty', qty);
+                                        var price = $(this).closest('tr').find('.timebook-item').data('price');
+                                        $(this).closest('tr').find('.timebook-item').data('amount', price * qty);
+                                        $(this).closest('tr').find('.timebook-item').data('id', ids.join('|'));
+                                        labelSubscriptionQuantity.text(qty);
+                                        textSubscriptionQuantity.hide();
+                                        labelSubscriptionQuantity.show();
+                                    });
+                                    var labelSubscriptionComments = $('.subscription-comments-label');
+                                    var textSubscriptionComments = $('#subscription-comments-text');
+                                    $('#subscription-comments').click(function () {
+                                        labelSubscriptionComments.hide();
+                                        textSubscriptionComments.show();
+                                        textSubscriptionComments.select();
+                                    });
+                                    textSubscriptionComments.focusout(function () {
+                                        var comments = $(this).val();
+                                        var id = $(this).closest('tr').find('.timebook-item').data('id');
+                                        var ids = id.split('|');
+                                        ids[6] = comments;
+                                        $(this).closest('tr').find('.timebook-item').data('comments', comments);
+                                        $(this).closest('tr').find('.timebook-item').data('id', ids.join('|'));
+                                        labelSubscriptionComments.text(comments);
+                                        textSubscriptionComments.hide();
+                                        labelSubscriptionComments.show();
+                                    });
+                                });
+                            </script>
+                            <td id="subscription-quantity">
+                                <span class="subscription-quantity-label">1</span>
+                                <input style="width:40px" id="subscription-quantity-text" type="text" class="input-sm form-control subscription" value="1" />
+                            </td>
+                            <td><%= customer.SubscriptionItem.Price.ToString("### ### ##0.00") %></td>
+                            <td><%= customer.SubscriptionItem.Price.ToString("### ### ##0.00") %></td>
+                            <td>25%</td>
+                            <td></td>
+                            <td><span class="label label-info">SUBSCRIPTION</span></td>
+                            <td id="subscription-comments">
+                                <span class="subscription-comments-label"></span>
+                                <textarea style="width:150px" id="subscription-comments-text" class="form-control input-sm subscription"></textarea>
+                            </td>
+                            <td></td>
+                        </tr>
+                    <% } %>
                 <% } %>
                 <% foreach (var t in timebooks) { %>
                     <% if (t.Inactive) { %>
