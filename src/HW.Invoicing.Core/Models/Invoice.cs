@@ -142,7 +142,28 @@ namespace HW.Invoicing.Core.Models
 		{
 			foreach (var t in timebooks)
 			{
-				AddTimebook(ConvertHelper.ToInt32(t));
+                var s = t.Split(';');
+                if (s.Length > 1)
+                {
+                    AddTimebook(
+                        new InvoiceTimebook
+                        {
+                            Timebook = new CustomerTimebook
+                            {
+                                Id = ConvertHelper.ToInt32(s[0]),
+                                Customer = new Customer { Id = ConvertHelper.ToInt32(s[1]) },
+                                Item = new Item { Id = ConvertHelper.ToInt32(s[2]) },
+                                Price = ConvertHelper.ToDecimal(s[3]),
+                                Quantity = ConvertHelper.ToDecimal(s[4]),
+                                VAT = ConvertHelper.ToDecimal(s[5])
+                            }
+                        }
+                    );
+                }
+                else
+                {
+                    AddTimebook(ConvertHelper.ToInt32(t));
+                }
 			}
 		}
 		

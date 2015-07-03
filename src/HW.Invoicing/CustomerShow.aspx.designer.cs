@@ -643,6 +643,15 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxSubscriptionStartDate;
         
         /// <summary>
+        /// checkBoxSubscriptionHasEndDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox checkBoxSubscriptionHasEndDate;
+        
+        /// <summary>
         /// textBoxSubscriptionEndDate control.
         /// </summary>
         /// <remarks>

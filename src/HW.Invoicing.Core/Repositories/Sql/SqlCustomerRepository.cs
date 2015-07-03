@@ -409,7 +409,8 @@ WHERE Id = @Id"
 update customer set hassubscription = @hassubscription,
 subscriptionitemid = @subscriptionitemid,
 subscriptionstartdate = @subscriptionstartdate,
-subscriptionenddate = @subscriptionenddate
+subscriptionenddate = @subscriptionenddate,
+subscriptionhasenddate = @subscriptionhasenddate
 where id = @id";
             ExecuteNonQuery(
                 query,
@@ -418,6 +419,7 @@ where id = @id";
                 new SqlParameter("@subscriptionitemid", c.SubscriptionItem.Id),
                 new SqlParameter("@subscriptionstartdate", c.SubscriptionStartDate),
                 new SqlParameter("@subscriptionenddate", c.SubscriptionEndDate),
+                new SqlParameter("@subscriptionhasenddate", c.SubscriptionHasEndDate),
                 new SqlParameter("@id", id)
             );
         }
@@ -469,12 +471,15 @@ SELECT c.Id,
     c.Inactive,
     c.LangId,
     l.Name,
-c.HasSubscription,
-c.SubscriptionItemId,
-c.SubscriptionStartDate,
-c.SubscriptionEndDate
+    c.HasSubscription,
+    c.SubscriptionItemId,
+    c.SubscriptionStartDate,
+    c.SubscriptionEndDate,
+    c.SubscriptionHasEndDate
 FROM Customer c
 INNER JOIN Lang l ON c.LangId = l.Id
+INNER JOIN Item i ON i.Id = c.SubscriptionItemId
+INNER JOIN Unit u ON u.Id = i.UnitId
 WHERE c.Id = @Id"
             );
 			Customer c = null;
@@ -499,12 +504,41 @@ WHERE c.Id = @Id"
                             Name = GetString(rs, 12)
                         },
                         HasSubscription = GetInt32(rs, 13) == 1,
-                        SubscriptionItem = new Item { Id = GetInt32(rs, 14) },
+                        SubscriptionItem = new Item
+                        {
+                            Id = GetInt32(rs, 14)
+                        },
                         SubscriptionStartDate = GetDateTime(rs, 15),
-                        SubscriptionEndDate = GetDateTime(rs, 16)
+                        SubscriptionEndDate = GetDateTime(rs, 16),
+                        SubscriptionHasEndDate = GetInt32(rs, 17) == 1
                     };
 				}
 			}
+            if (c.HasSubscription)
+            {
+                query = @"
+select i.id, i.name, u.id, u.name, i.price
+from item i
+inner join unit u on u.id = i.unitid
+where i.id = @id";
+                using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@id", c.SubscriptionItem.Id)))
+                {
+                    if (rs.Read())
+                    {
+                        c.SubscriptionItem = new Item
+                        {
+                            Id = GetInt32(rs, 0),
+                            Name = GetString(rs, 1),
+                            Unit = new Unit
+                            {
+                                Id = GetInt32(rs, 2),
+                                Name = GetString(rs, 3)
+                            },
+                            Price = GetDecimal(rs, 4)
+                        };
+                    }
+                }
+            }
 			return c;
 		}
 
@@ -859,14 +893,8 @@ SELECT t.CustomerContactId,
     t.Inactive,
     t.InternalComments,
     t.VAT
-    --(SELECT 1 FROM InvoiceTimebook it WHERE it.CustomerTimebookId = t.Id) Status,
-    --(
-	--	SELECT i.Status FROM InvoiceTimebook it
-	--	INNER JOIN Invoice i ON i.Id = it.InvoiceId
-	--	WHERE it.CustomerTimebookId = t.Id
-	--) InvoiceStatus
 FROM CustomerTimebook t
-INNER JOIN CustomerContact c ON c.Id = t.CustomerContactId
+LEFT OUTER JOIN CustomerContact c ON c.Id = t.CustomerContactId
 INNER JOIN Item i ON i.Id = t.ItemId
 INNER JOIN UNit u ON u.Id = i.UnitId
 WHERE t.CustomerId = @CustomerId
@@ -895,8 +923,7 @@ ORDER BY Status, t.Date DESC"
                             Id = GetInt32(rs, 12),
                             Inactive = GetInt32(rs, 13) == 1,
                             InternalComments = GetString(rs, 14),
-                            VAT = GetDecimal(rs, 15, 25),
-                            //Status = GetInt32(rs, 17, 0) != 0 ? GetInt32(rs, 17) : GetInt32(rs, 15),
+                            VAT = GetDecimal(rs, 15, 25)
                         }
 					);
 				}

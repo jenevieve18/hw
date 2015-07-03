@@ -111,6 +111,10 @@ else
 insert into invoicetimebook(invoiceid, customertimebookid)
 values(@InvoiceId, @CustomerTimebookId)";
 			foreach (var t in i.Timebooks) {
+                if (t.Timebook.Id == 0)
+                {
+                    t.Timebook.Id = SaveTimebook(t.Timebook);
+                }
 				ExecuteNonQuery(
 					query,
 					"invoicing",
@@ -119,6 +123,25 @@ values(@InvoiceId, @CustomerTimebookId)";
 				);
 			}
 		}
+
+        int SaveTimebook(CustomerTimebook i)
+        {
+            string query = @"
+INSERT INTO CustomerTimebook(CustomerId, ItemId, Quantity, Price, Date, VAT)
+VALUES(@CustomerId, @ItemId, @Quantity, @Price, @Date, @VAT);
+SELECT CAST(scope_identity() AS int)";
+            int id = (int)ExecuteScalar(
+                query,
+                "invoicing",
+                new SqlParameter("@CustomerId", i.Customer.Id),
+                new SqlParameter("@ItemId", i.Item.Id),
+                new SqlParameter("@Quantity", i.Quantity),
+                new SqlParameter("@Price", i.Price),
+                new SqlParameter("@Date", i.Date),
+                new SqlParameter("@VAT", i.VAT)
+            );
+            return id;
+        }
 		
 		public override Invoice Read(int id)
 		{

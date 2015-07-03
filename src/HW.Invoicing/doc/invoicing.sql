@@ -221,3 +221,5 @@ alter table Customer add HasSubscription integer;
 alter table Customer add SubscriptionItemId integer,
 SubscriptionStartDate datetime,
 SubscriptionEndDate datetime;
+
+alter table Customer add SubscriptionHasEndDate integer;

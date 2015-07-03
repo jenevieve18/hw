@@ -5,6 +5,7 @@
     <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script src="js/jquery.number.min.js" type="text/javascript"></script>
     <script type="text/javascript">
+        var invoiceItems = [];
         $(document).ready(function () {
             $('#<%= dropDownListTimebookItems.ClientID %>').change(function () {
                 var selected = $(this).find('option:selected');
@@ -36,7 +37,7 @@
                 d.setDate(d.getDate() + 30);
                 $('#<%= labelMaturityDate.ClientID %>').text(d.toISOString().slice(0, 10));
             });
-            var invoiceItems = [];
+            //var invoiceItems = [];
             $('.timebook-item').change(function() {
                 if ($(this).is(':checked')) {
                     var selected = $(this);
@@ -94,9 +95,10 @@
                 items.html('');
                 invoiceItems.forEach(function(e) {
                     var vatAmount = e.vat / 100.0 * e.amount;
+                    var item = e.comments == '' ? e.item : e.comments + ' (' + e.consultant + ')';
                     items.append('' + 
                         '<tr>' + 
-                        '   <td colspan="4">' + e.comments + ' (' + e.consultant + ')' + '<input type="hidden" id="invoice-timebooks" name="invoice-timebooks" value="' + e.id + '"></td>' + 
+                        '   <td colspan="4">' + item + '<input type="hidden" id="invoice-timebooks" name="invoice-timebooks" value="' + e.id + '"></td>' + 
                         '   <td>' + e.qty + '</td>' + 
                         '   <td>' + e.unit + '</td>' + 
                         '   <td class="text-right">' + $.number(e.price, 2, ',', ' ') + '</td>' + 
@@ -164,63 +166,17 @@
                 }
             });
             $('#<%= checkBoxSubscribe.ClientID %>').change();
+            $('#<%= checkBoxSubscriptionHasEndDate.ClientID %>').change(function() {
+                if ($(this).is(':checked')) {
+                    $('#subscription-end-date').show();
+                } else {
+                    $('#subscription-end-date').hide();
+                }
+            });
+            $('#<%= checkBoxSubscriptionHasEndDate.ClientID %>').change();
         });
-
-        Object.size = function (obj) {
-            var size = 0, key;
-            for (key in obj) {
-                if (obj.hasOwnProperty(key)) size++;
-            }
-            return size;
-        };
-
-        function findAndRemove(array, property, value) {
-            $.each(array, function (index, result) {
-                if (result[property] == value) {
-                    //Remove from array
-                    array.splice(index, 1);
-                    return false;
-                }
-            });
-        }
-
-        function turnEditable(labelId, textBoxId) {
-            var label = $(labelId);
-            var textBox = $(textBoxId);
-            textBox.hide();
-
-            label.click(function () {
-                $(this).hide();
-                textBox.show();
-                textBox.focus();
-            });
-            textBox.focusout(function () {
-                $(this).hide();
-                label.show();
-            });
-        }
-
-        function addErrorIf(errors, condition, message) {
-            if (condition) {
-                errors.push(message);
-            }
-        }
-
-        function displayMessage(errors, box) {
-            if (errors.length > 0) {
-                s = '';
-                for (var i = 0; i < errors.length; i++) {
-                    s += '<li>' + errors[i] + '</li>';
-                }
-                var message = '<div class="alert alert-warning">' +
-                            '<ul>' + s + '</ul>' +
-                            '</div>';
-                $(box).html(message);
-                return false;
-            }
-            return true;
-        }
-
+    </script>
+    <script type="text/javascript">
         function validateNotes() {
             var errors = [];
             if ($('#<%= textBoxNotes.ClientID %>').val() == '') {
@@ -629,6 +585,36 @@
                     <th>Comments</th>
                     <th></th>
                 </tr>
+                <% if (customer.HasSubscription) { %>
+                    <tr>
+                        <td>
+                            <input type="checkbox" class="timebook-item"
+                                data-id="0;<%= customer.Id %>;<%= customer.SubscriptionItem.Id %>;<%= customer.SubscriptionItem.Price %>;1;25"
+                                data-item="<%= customer.SubscriptionItem.Name %>"
+                                data-unit="<%= customer.SubscriptionItem.Unit.Name %>"
+                                data-qty="1"
+                                data-price="<%= customer.SubscriptionItem.Price %>"
+                                data-amount="<%= customer.SubscriptionItem.Price %>"
+                                data-consultant=""
+                                data-comments=""
+                                data-vat="25"
+                            />
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><%= customer.SubscriptionItem.Name %></td>
+                        <td><%= customer.SubscriptionItem.Unit.Name %></td>
+                        <td>1</td>
+                        <td><%= customer.SubscriptionItem.Price.ToString("### ### ##0.00") %></td>
+                        <td><%= customer.SubscriptionItem.Price.ToString("### ### ##0.00") %></td>
+                        <td></td>
+                        <td></td>
+                        <td><span class="label label-info">SUBSCRIPTION</span></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                <% } %>
                 <% foreach (var t in timebooks) { %>
                     <% if (t.Inactive) { %>
                         <tr>
@@ -667,7 +653,11 @@
                                 />
                                 <% } %>
                             </td>
-                            <td><%= t.Date.Value.ToString("yyyy-MM-dd") %></td>
+                            <td>
+                                <% if (t.Date != null) { %>
+                                    <%= t.Date.Value.ToString("yyyy-MM-dd") %>
+                                <% } %>
+                            </td>
                             <td><%= t.Department %></td>
                             <td><%= t.Contact.Contact %></td>
                             <td><%= t.Item.Name %></td>
@@ -680,8 +670,10 @@
                             <td><%= t.GetStatus() %></td>
                             <td><%= t.Comments %></td>
                             <td>
+                                <% if (!t.IsPaid) { %>
                                 <%= HtmlHelper.Anchor("Edit", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id)) %>
                                 <%= HtmlHelper.Anchor("Deactivate", string.Format("customertimebookdeactivate.aspx?Id={0}&CustomerId={1}", t.Id, id)) %>
+                                <% } %>
                             </td>
                         </tr>
                     <% } %>
@@ -952,6 +944,11 @@
                         <asp:TextBox CssClass="form-control" ID="textBoxSubscriptionStartDate" runat="server"></asp:TextBox></td>
                 </tr>
                 <tr>
+                    <td colspan="2">
+                        <asp:CheckBox ID="checkBoxSubscriptionHasEndDate" runat="server" CssClass="form-control" Text="&nbsp;This subscription has end date" />
+                    </td>
+                </tr>
+                <tr id="subscription-end-date">
                     <td><strong>End Date</strong></td>
                     <td>
                         <asp:TextBox CssClass="form-control" ID="textBoxSubscriptionEndDate" runat="server"></asp:TextBox></td>

@@ -20,6 +20,7 @@ namespace HW.Invoicing.Core.Models
 	public class Customer : BaseModel
 	{
         public bool HasSubscription { get; set; }
+        public bool SubscriptionHasEndDate { get; set; }
         public Item SubscriptionItem { get; set; }
         public DateTime? SubscriptionStartDate { get; set; }
         public DateTime? SubscriptionEndDate { get; set; }
@@ -170,6 +171,7 @@ namespace HW.Invoicing.Core.Models
 	
 	public class CustomerTimebook : BaseModel
 	{
+        public Customer Customer { get; set; }
 		public DateTime? Date { get; set; }
 		public CustomerContact Contact { get; set; }
 		public Item Item { get; set; }
@@ -196,6 +198,11 @@ namespace HW.Invoicing.Core.Models
         public override string ToString()
         {
             return string.Format("{0} ({1})", Comments, Consultant);
+        }
+
+        public bool IsPaid
+        {
+            get { return Status == 2;  }
         }
 
         public override void Validate()

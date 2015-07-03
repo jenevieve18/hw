@@ -83,7 +83,11 @@ namespace HW.Invoicing
                     if (customer.HasSubscription)
                     {
                         textBoxSubscriptionStartDate.Text = customer.SubscriptionStartDate.Value.ToString("yyyy-MM-dd");
-                        textBoxSubscriptionEndDate.Text = customer.SubscriptionEndDate.Value.ToString("yyyy-MM-dd");
+                        checkBoxSubscriptionHasEndDate.Checked = customer.SubscriptionHasEndDate;
+                        if (customer.SubscriptionHasEndDate)
+                        {
+                            textBoxSubscriptionEndDate.Text = customer.SubscriptionEndDate.Value.ToString("yyyy-MM-dd");
+                        }
                     }
                 }
 
@@ -106,7 +110,8 @@ namespace HW.Invoicing
                 HasSubscription = checkBoxSubscribe.Checked,
                 SubscriptionItem = new Item { Id = ConvertHelper.ToInt32(dropDownListSubscriptionItem.SelectedValue) },
                 SubscriptionStartDate = ConvertHelper.ToDateTime(textBoxSubscriptionStartDate.Text),
-                SubscriptionEndDate = ConvertHelper.ToDateTime(textBoxSubscriptionEndDate.Text)
+                SubscriptionEndDate = ConvertHelper.ToDateTime(textBoxSubscriptionEndDate.Text),
+                SubscriptionHasEndDate = checkBoxSubscriptionHasEndDate.Checked
             };
             r.UpdateSubscription(c, id);
             Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=subscription", id));
