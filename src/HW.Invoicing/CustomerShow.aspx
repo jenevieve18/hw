@@ -585,7 +585,7 @@
                     <th>Comments</th>
                     <th></th>
                 </tr>
-                <% if (customer.HasSubscription) { %>
+                <% if (customer.HasSubscription && customer.SubscriptionStartDate.Value < DateTime.Now) { %>
                     <tr>
                         <td>
                             <input type="checkbox" class="timebook-item"

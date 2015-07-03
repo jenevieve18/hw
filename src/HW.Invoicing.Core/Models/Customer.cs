@@ -197,7 +197,14 @@ namespace HW.Invoicing.Core.Models
 
         public override string ToString()
         {
-            return string.Format("{0} ({1})", Comments, Consultant);
+            if (Contact != null && Contact.Id != 0)
+            {
+                return string.Format("{0} ({1})", Comments, Consultant);
+            }
+            else
+            {
+                return Item.Name;
+            }
         }
 
         public bool IsPaid
