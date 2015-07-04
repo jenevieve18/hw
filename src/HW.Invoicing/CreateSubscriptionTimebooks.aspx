@@ -5,7 +5,7 @@
     <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script src="js/jquery.number.min.js" type="text/javascript"></script>
     <script type="text/javascript">
-        var month = new Array();
+        /*var month = new Array();
         month[0] = "January";
         month[1] = "February";
         month[2] = "March";
@@ -17,7 +17,7 @@
         month[8] = "September";
         month[9] = "October";
         month[10] = "November";
-        month[11] = "December";
+        month[11] = "December";*/
         $(document).ready(function () {
             /*$('#<%= textBoxStartDate.ClientID %>').datepicker({
             format: "yyyy-mm-dd",
@@ -57,22 +57,22 @@
 <table>
     <tr>
         <td>
-<div class="form-group">
-	<label for="<%= textBoxStartDate.ClientID %>">Start Date</label>
-    <asp:TextBox ID="textBoxStartDate" runat="server" CssClass="date form-control"></asp:TextBox>
-</div>
+            <div class="form-group">
+	            <label for="<%= textBoxStartDate.ClientID %>">Start Date</label>
+                <asp:TextBox ID="textBoxStartDate" runat="server" CssClass="date form-control"></asp:TextBox>
+            </div>
         </td>
         <td>
-<div class="form-group">
-	<label for="<%= textBoxEndDate.ClientID %>">End Date</label>
-    <asp:TextBox ID="textBoxEndDate" runat="server" CssClass="date form-control"></asp:TextBox>
-</div>
+            <div class="form-group">
+	            <label for="<%= textBoxEndDate.ClientID %>">End Date</label>
+                <asp:TextBox ID="textBoxEndDate" runat="server" CssClass="date form-control"></asp:TextBox>
+            </div>
         </td>
         <td>
-<div class="form-group">
-	<label for="<%= textBoxQuantity.ClientID %>">Quantity</label>
-    <asp:TextBox ID="textBoxQuantity" runat="server" CssClass="form-control"></asp:TextBox>
-</div>
+            <div class="form-group">
+	            <label for="<%= textBoxQuantity.ClientID %>">Quantity</label>
+                <asp:TextBox ID="textBoxQuantity" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
         </td>
     </tr>
 </table>
@@ -92,7 +92,7 @@
         <th>Subscription Item</th>
         <th>Unit</th>
         <th>Price</th>
-        <th style="width:10%">Qty</th>
+        <th class="col-md-1">Qty</th>
         <th>Comments</th>
     </tr>
     <% foreach (var c in customers) { %>
@@ -101,7 +101,7 @@
         <td><%= c.SubscriptionItem.Name %></td>
         <td><%= c.SubscriptionItem.Unit.Name %></td>
         <td><%= c.SubscriptionItem.Price.ToString("### ### ##0.00") %></td>
-        <td>
+        <td class="col-md-1">
             <input id="subscription-quantities" name="subscription-quantities" class="subscription-quantity form-control" type="text" value="1" />
         </td>
         <td>

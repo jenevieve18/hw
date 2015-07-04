@@ -17,6 +17,8 @@ namespace HW.Invoicing
 
         protected void buttonSave_Click(object sender, EventArgs e)
         {
+            HtmlHelper.RedirectIf(Session["UserId"] == null, "login.aspx");
+
             var quantities = Request.Form.GetValues("subscription-quantities");
             var comments = Request.Form.GetValues("subscription-comments");
             var timebooks = new List<CustomerTimebook>();
