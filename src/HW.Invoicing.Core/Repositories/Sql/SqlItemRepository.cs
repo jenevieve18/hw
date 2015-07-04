@@ -142,10 +142,14 @@ ORDER BY i.Name"
 		{
 			string query = string.Format(
 				@"
-SELECT i.Id, i.Name, i.Description, ISNULL(p.Price, i.Price), i.UnitId, u.Name
+SELECT i.Id,
+    i.Name,
+    i.Description,
+    i.Price,
+    i.UnitId,
+    u.Name
 FROM Item i
 INNER JOIN Unit u ON u.Id = i.UnitId
-LEFT OUTER JOIN CustomerItem p ON p.ItemId = i.Id AND p.CustomerId = @CustomerId AND p.Inactive != 1
 ORDER BY i.Name"
 			);
 			var items = new List<Item>();
@@ -157,11 +161,29 @@ ORDER BY i.Name"
 							Name = GetString(rs, 1),
 							Description = GetString(rs, 2),
 							Price = GetDecimal(rs, 3),
-							Unit = new Unit { Id = GetInt32(rs, 4), Name = GetString(rs, 5) }
+							Unit = new Unit {
+                                Id = GetInt32(rs, 4),
+                                Name = GetString(rs, 5)
+                            }
 						}
 					);
 				}
 			}
+            query = @"
+SELECT Price
+FROM CustomerItem
+WHERE CustomerId = @CustomerId
+AND ItemId = @ItemId";
+            foreach (var i in items)
+            {
+                using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerId", customerId), new SqlParameter("@ItemId", i.Id)))
+                {
+                    if (rs.Read())
+                    {
+                        i.Price = GetDecimal(rs, 0);
+                    }
+                }
+            }
 			return items;
 		}
 	}
