@@ -10,7 +10,7 @@
 namespace HW.Invoicing {
     
     
-    public partial class CreateSubscriptionTimebooks {
+    public partial class CustomerTimebookSubscriptionAdd {
         
         /// <summary>
         /// textBoxStartDate control.

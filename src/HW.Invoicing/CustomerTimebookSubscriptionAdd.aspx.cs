@@ -10,10 +10,11 @@ using HW.Core.Helpers;
 
 namespace HW.Invoicing
 {
-    public partial class CreateSubscriptionTimebooks : System.Web.UI.Page
+    public partial class CustomerTimebookSubscriptionAdd : System.Web.UI.Page
     {
         protected IList<Customer> customers;
         SqlCustomerRepository r = new SqlCustomerRepository();
+        protected string message;
 
         protected void buttonSave_Click(object sender, EventArgs e)
         {
@@ -39,6 +40,7 @@ namespace HW.Invoicing
                 i++;
             }
             r.SaveTimebooks(timebooks);
+            message = "Saved! customer timebooks for subscription items are now saved.";
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -52,6 +54,9 @@ namespace HW.Invoicing
                 textBoxEndDate.Text = endDate.ToString("yyyy-MM-dd");
 
                 textBoxQuantity.Text = ((endDate.Month - startDate.Month) + 12 * (endDate.Year - startDate.Year)).ToString();
+
+                textBoxText.Text = "Subscription fee for HealthWatch.se";
+                textBoxComments.Text = textBoxText.Text + " " + textBoxStartDate.Text.Replace('-', '.') + " - " + textBoxEndDate.Text.Replace('-', '.');
             }
         }
     }

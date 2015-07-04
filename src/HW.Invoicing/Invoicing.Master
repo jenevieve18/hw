@@ -19,52 +19,51 @@
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
 
-    
 	<!--<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>-->
 
 	<style type="text/css">
-	body {
-		padding-top:60px;
-		/*font-family: 'Open Sans', sans-serif;*/
-	}
-	 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-	 	font-family: 'Open Sans', sans-serif;
-	 }
-	footer {
-		margin-top:40px;
-		  background: #333;
-		  color: #eee;
-		  font-size: 11px;
-		  padding:20px 0px;
-	}
-	footer ul 
-	{
-	    padding-left: 20px;
-	}
+	    body {
+		    padding-top:60px;
+		    /*font-family: 'Open Sans', sans-serif;*/
+	    }
+	     h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+	 	    font-family: 'Open Sans', sans-serif;
+	     }
+	    footer {
+		    margin-top:40px;
+		      background: #333;
+		      color: #eee;
+		      font-size: 11px;
+		      padding:20px 0px;
+	    }
+	    footer ul 
+	    {
+	        padding-left: 20px;
+	    }
 	</style>
 
-    <style>
-    table { border-collapse: collapse; empty-cells: show; }
+    <style type="text/css">
+        table { border-collapse: collapse; empty-cells: show; }
 
-    td { position: relative; }
+        td { position: relative; }
 
-    tr.strikeout td:before {
-        content: " ";
-        position: absolute;
-        top: 50%;
-        left: 0;
-        border-bottom: 1px solid red;
-        width: 100%;
-    }
+        tr.strikeout td:before {
+            content: " ";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            border-bottom: 1px solid red;
+            width: 100%;
+        }
 
-    tr.strikeout td:after {
-        content: "\00B7";
-        font-size: 1px;
-    }
+        tr.strikeout td:after {
+            content: "\00B7";
+            font-size: 1px;
+        }
 
-    /* Extra styling */
-    td { width: 100px; }
-    th { text-align: left; }
+        /* Extra styling */
+        td { width: 100px; }
+        th { text-align: left; }
     </style>
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -115,7 +114,7 @@
 						        </li>-->
 						        <li><%= HtmlHelper.Anchor("Dashboard", "dashboard.aspx") %></li>
 						        <li><%= HtmlHelper.Anchor("Customers", "customers.aspx") %></li>
-                                <li><%= HtmlHelper.Anchor("Create Subscription Timebooks", "createsubscriptiontimebooks.aspx") %></li>
+                                <li><%= HtmlHelper.Anchor("Create Subscription Timebooks", "customertimebooksubscriptionadd.aspx")%></li>
 						        <li><%= HtmlHelper.Anchor("Invoices", "invoices.aspx") %></li>
 						        <li><%= HtmlHelper.Anchor("Items", "items.aspx") %></li>
 						        <li><%= HtmlHelper.Anchor("Units", "units.aspx") %></li>

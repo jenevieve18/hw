@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="CreateSubscriptionTimebooks.aspx.cs" Inherits="HW.Invoicing.CreateSubscriptionTimebooks" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="CustomerTimebookSubscriptionAdd.aspx.cs" Inherits="HW.Invoicing.CustomerTimebookSubscriptionAdd" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
@@ -32,6 +32,12 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <h3>Create Timebooks for Subscribed Customers</h3>
+
+<% if (message  != null) { %>
+    <div class="alert alert-success">
+	    <%= message %>
+    </div>
+<% } %>
 
 <div class="alert alert-info">
 	<strong>Subscription</strong> is the action of making or agreeing to make an advance payment in order to receive or participate in something.
