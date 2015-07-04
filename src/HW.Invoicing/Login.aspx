@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <div class="row clearfix">
-	<div class="col-md-6 column">
+	<div class="col-md-4 column">
         <h3>Log In</h3>
 
         <% if (errorMessage != null && errorMessage != "") { %>
@@ -33,7 +33,7 @@
                 onclick="buttonLogin_Click" />
         </div>
 	</div>
-	<div class="col-md-6 column">
+	<div class="col-md-8 column">
 	</div>
 </div>
 

@@ -20,23 +20,23 @@
 	<link href="css/style.css" rel="stylesheet">
 
     
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<!--<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>-->
 
 	<style type="text/css">
-	body {
-		padding-top:60px;
-		font-family: 'Open Sans', sans-serif;
-	}
-	 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-	 	font-family: 'Open Sans', sans-serif;
-	 }
-	footer {
-		margin-top:40px;
-		  background: #333;
-		  color: #eee;
-		  font-size: 11px;
-		  padding:20px 0px;
-	}
+	    body {
+		    padding-top:60px;
+		    /*font-family: 'Open Sans', sans-serif;*/
+	    }
+	     h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+	 	    /*font-family: 'Open Sans', sans-serif;*/
+	     }
+	    footer {
+		    margin-top:40px;
+		      background: #333;
+		      color: #eee;
+		      font-size: 11px;
+		      padding:20px 0px;
+	    }
 	</style>
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
