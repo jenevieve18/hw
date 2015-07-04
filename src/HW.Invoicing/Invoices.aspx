@@ -1,16 +1,15 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="Invoices.aspx.cs" Inherits="HW.Invoicing.Invoices" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
+<%@ Import Namespace="HW.Invoicing.Core.Models" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
     <script type="text/javascript">
         $(document).ready(function () {
             $('.internal-comments-text').hide();
             $('.spinner').hide();
-            //$('.internal-comments-label').click(function () {
             $('.internal-comments').click(function () {
-                //var text = $(this).closest('td').find('.internal-comments-text');
                 var text = $(this).find('.internal-comments-text');
-                //$(this).hide();
                 $(this).find('.internal-comments-label').hide();
                 text.show();
                 text.focus();
@@ -75,7 +74,7 @@
 
             <td><%= i.Number %></td>
             <td><%= i.Date.Value.ToString("yyyy-MM-dd") %></td>
-            <td><%= i.Customer.Name %></td>
+            <td><%= HtmlHelper.Anchor(i.Customer.Name, string.Format("customershow.aspx?Id={0}&SelectedTab=timebook", i.Customer.Id)) %></td>
             <td><%= i.SubTotal.ToString("### ### ##0.00") %></td>
             <td><%= i.TotalVAT.ToString("### ### ##0.00") %></td>
             <td><%= i.TotalAmount.ToString("### ### ##0.00") %></td>
@@ -88,11 +87,11 @@
 				    </button>
 				    <ul class="dropdown-menu">
 					    <li><%= HtmlHelper.Anchor("Show", "invoiceshow.aspx?Id=" + i.Id) %></li>
-					    <li><%= HtmlHelper.Anchor("Edit", "invoiceedit.aspx?Id=" + i.Id) %></li>
-                        <% if (i.Status != 2) { %>
-					        <li><%= HtmlHelper.Anchor("Paid", "invoicereceivepayment.aspx?Id=" + i.Id) %></li>
-                        <% } else { %>
+                        <% if (i.Status == Invoice.PAID) { %>
                             <li><%= HtmlHelper.Anchor("Revert Payment", "invoicerevertpayment.aspx?Id=" + i.Id) %></li>
+                        <% } else { %>
+					        <li><%= HtmlHelper.Anchor("Edit", "invoiceedit.aspx?Id=" + i.Id) %></li>
+                            <li><%= HtmlHelper.Anchor("Paid", "invoicereceivepayment.aspx?Id=" + i.Id) %></li>
                         <% } %>
                         <li><%= HtmlHelper.Anchor("PDF", "invoiceexport.aspx?Id=" + i.Id, "target='_blank'")%></li>
 				    </ul>

@@ -82,6 +82,8 @@ namespace HW.Invoicing.Core.Models
 	
 	public class Invoice : BaseModel
 	{
+        public const int PAID = 2;
+
 		DateTime? date;
 		
 		public Nullable<DateTime> Date {
@@ -101,7 +103,7 @@ namespace HW.Invoicing.Core.Models
 		{
 			switch (Status)
 			{
-					case 2: return "<span class='label label-success'>PAID</span>";
+					case PAID: return "<span class='label label-success'>PAID</span>";
 					default: return "<span class='label label-danger'>NOT PAID</span>";
 			}
 		}

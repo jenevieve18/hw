@@ -37,7 +37,6 @@
                 d.setDate(d.getDate() + 30);
                 $('#<%= labelMaturityDate.ClientID %>').text(d.toISOString().slice(0, 10));
             });
-            //var invoiceItems = [];
             $('.timebook-item').change(function() {
                 if ($(this).is(':checked')) {
                     var selected = $(this);
@@ -586,6 +585,7 @@
                     <th>Comments</th>
                     <th></th>
                 </tr>
+                <!--
                 <% if (customer.HasSubscription && customer.SubscriptionStartDate.Value <= DateTime.Now) { %>
                     <% if (!customer.SubscriptionHasEndDate || (customer.SubscriptionHasEndDate && customer.SubscriptionEndDate.Value >= DateTime.Now)) { %>
                         <tr class="warning">
@@ -669,6 +669,7 @@
                         </tr>
                     <% } %>
                 <% } %>
+                -->
                 <% foreach (var t in timebooks) { %>
                     <% if (t.Inactive) { %>
                         <tr>
