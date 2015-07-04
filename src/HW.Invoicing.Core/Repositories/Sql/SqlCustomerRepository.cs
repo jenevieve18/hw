@@ -248,9 +248,10 @@ VALUES(@CustomerId, @CustomerContactId, @ItemId, @Quantity, @Price, @Consultant,
 		public void SaveItem(CustomerItem price, int customerId)
 		{
             string query = @"
-select sortorder
-from customeritem where
-customerid = @CustomerId";
+SELECT SortOrder
+FROM CustomerItem WHERE
+CustomerId = @CustomerId
+ORDER BY SortOrder DESC";
             int order = 0;
             using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerId", customerId)))
             {
