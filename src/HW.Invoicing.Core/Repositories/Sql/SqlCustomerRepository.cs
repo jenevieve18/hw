@@ -1028,7 +1028,8 @@ SELECT Id,
     HasSubscription
 FROM Customer
 WHERE HasSubscription != 1
-OR HasSubscription IS NULL"
+OR HasSubscription IS NULL
+ORDER BY Inactive, Name"
             );
             var customers = new List<Customer>();
             using (SqlDataReader rs = ExecuteReader(query, "invoicing"))
@@ -1069,7 +1070,8 @@ SELECT c.Id,
 FROM Customer c
 INNER JOIN Item i on i.Id = c.SubscriptionItemId
 INNER JOIN Unit u on u.Id = i.UnitId
-WHERE c.HasSubscription = 1"
+WHERE c.HasSubscription = 1
+ORDER BY c.Inactive, c.Name"
             );
             var customers = new List<Customer>();
             using (SqlDataReader rs = ExecuteReader(query, "invoicing"))

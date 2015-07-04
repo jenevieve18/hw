@@ -31,8 +31,6 @@ namespace HW.Invoicing
                 {
                     textBoxTitle.Text = i.Title;
                     textBoxDescription.Text = i.Description;
-//                    checkBoxReactivate.Checked = !i.Inactive;
-//                    placeHolderReactivate.Visible = i.Inactive;
                     dropDownListStatus.SelectedValue = i.Status.ToString();
                 }
             }
@@ -46,8 +44,7 @@ namespace HW.Invoicing
                 {
                     Title = textBoxTitle.Text,
                     Description = textBoxDescription.Text,
-                    Status = ConvertHelper.ToInt32(dropDownListStatus.SelectedValue),
-//                    Inactive = !checkBoxReactivate.Checked
+                    Status = ConvertHelper.ToInt32(dropDownListStatus.SelectedValue)
                 };
                 r.Update(i, ConvertHelper.ToInt32(Request.QueryString["Id"]));
                 Response.Redirect("issues.aspx");
