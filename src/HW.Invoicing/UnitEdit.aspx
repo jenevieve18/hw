@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-<h3>Add a unit</h3>
+<h3>Edit a unit</h3>
 <div class="form-group">
 	<label for="<%= textBoxName.ClientID %>">Unit name</label>
     <asp:TextBox ID="textBoxName" runat="server" CssClass="form-control"></asp:TextBox>
