@@ -112,7 +112,7 @@
         <% } %>
     <% } %>
     <tr>
-        <td colspan="2"><strong>TOTAL</strong></td>
+        <td colspan="3"><strong>TOTAL</strong></td>
         <td><strong><%= totalSubTotal.ToString("### ### ##0.00") %></strong></td>
         <td><strong><%= totalVAT.ToString("### ### ##0.00") %></strong></td>
         <td><strong><%= totalAmount.ToString("### ### ##0.00") %></strong></td>

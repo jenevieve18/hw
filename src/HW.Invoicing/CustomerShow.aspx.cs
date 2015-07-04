@@ -46,6 +46,8 @@ namespace HW.Invoicing
                 if (customer != null)
                 {
                     labelCustomer.Text = customer.Name;
+
+                    // Customer Info Panel
                     labelCustomerNumber.Text = textBoxCustomerNumber.Text = customer.Number;
 
                     labelPostalAddress.Text = customer.PostalAddress.Replace("\n", "<br>");
@@ -66,7 +68,13 @@ namespace HW.Invoicing
                         labelYourReferencePerson.Font.Strikeout = labelOurReferencePerson.Font.Strikeout =
                         labelEmail.Font.Strikeout = labelPhone.Font.Strikeout =
                         labelLanguage.Font.Strikeout = customer.Inactive;
+
+                    // Timebook Panel
+                    textBoxTimebookDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
+                    textBoxTimebookQty.Text = 1.ToString();
+                    textBoxTimebookVAT.Text = 25.ToString();
                     
+                    // Invoice Panel
                     labelInvoiceCustomerNumber.Text = customer.Number;
                     textBoxInvoiceDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
                     labelMaturityDate.Text = DateTime.Now.AddDays(30).ToString("yyyy-MM-dd");
@@ -76,9 +84,7 @@ namespace HW.Invoicing
                     labelInvoicePurchaseOrderNumber.Text = customer.PurchaseOrderNumber;
                     labelInvoiceYourReferencePerson.Text = customer.YourReferencePerson;
 
-                    textBoxTimebookDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
-                    textBoxTimebookVAT.Text = 25.ToString();
-
+                    // Subscription Panel
                     checkBoxSubscribe.Checked = customer.HasSubscription;
                     if (customer.HasSubscription)
                     {
@@ -88,6 +94,10 @@ namespace HW.Invoicing
                         {
                             textBoxSubscriptionEndDate.Text = customer.SubscriptionEndDate.Value.ToString("yyyy-MM-dd");
                         }
+                    }
+                    else
+                    {
+                        textBoxSubscriptionStartDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
                     }
                 }
 
