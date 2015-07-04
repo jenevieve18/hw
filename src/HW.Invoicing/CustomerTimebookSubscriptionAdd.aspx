@@ -31,7 +31,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-<h3>Create Timebooks for Subscribed Customers</h3>
+<h3>Subscription Timebooks</h3>
 
 <% if (message  != null) { %>
     <div class="alert alert-success">
