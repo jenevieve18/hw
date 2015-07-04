@@ -25,6 +25,8 @@
             $('#<%= textBoxComments.ClientID %>').change(function () {
                 $('.subscription-comments').val($(this).val());
             });
+
+            $('#<%= textBoxText.ClientID %>').change();
         });
     </script>
 

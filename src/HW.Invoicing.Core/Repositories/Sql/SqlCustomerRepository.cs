@@ -203,8 +203,8 @@ VALUES(@CustomerId, @Notes, @CreatedAt, @CreatedBy)"
         {
             string query = string.Format(
                 @"
-INSERT INTO CustomerTimebook(CustomerId, ItemId, Quantity, Price, Comments, VAT)
-VALUES(@CustomerId, @ItemId, @Quantity, @Price, @Comments, @VAT)"
+INSERT INTO CustomerTimebook(CustomerId, ItemId, Quantity, Price, Comments, VAT, SubscriptionStartDate, SubscriptionEndDate)
+VALUES(@CustomerId, @ItemId, @Quantity, @Price, @Comments, @VAT, @SubscriptionStartDate, @SubscriptionEndDate)"
             );
             foreach (var time in timebooks)
             {
@@ -216,7 +216,9 @@ VALUES(@CustomerId, @ItemId, @Quantity, @Price, @Comments, @VAT)"
                     new SqlParameter("@Quantity", time.Quantity),
                     new SqlParameter("@Price", time.Price),
                     new SqlParameter("@Comments", time.Comments),
-                    new SqlParameter("@VAT", time.VAT)
+                    new SqlParameter("@VAT", time.VAT),
+                    new SqlParameter("@SubscriptionStartDate", time.SubscriptionStartDate),
+                    new SqlParameter("@SubscriptionEndDate", time.SubscriptionEndDate)
                 );
             }
         }
@@ -922,7 +924,7 @@ LEFT OUTER JOIN CustomerContact c ON c.Id = t.CustomerContactId
 INNER JOIN Item i ON i.Id = t.ItemId
 INNER JOIN UNit u ON u.Id = i.UnitId
 WHERE t.CustomerId = @CustomerId
-ORDER BY Status, t.Date DESC"
+ORDER BY Status, t.CustomerContactId, t.Date DESC"
             );
 			var timebooks = new List<CustomerTimebook>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerId", customerId))) {

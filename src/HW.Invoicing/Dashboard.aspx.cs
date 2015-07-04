@@ -12,17 +12,8 @@ namespace HW.Invoicing
 {
     public partial class Dashboard : System.Web.UI.Page
     {
-    	IUserRepository r;
-    	
-    	public Dashboard() : this(new SqlUserRepository())
-    	{
-    	}
-    	
-    	public Dashboard(IUserRepository r)
-    	{
-    		this.r = r;
-    	}
-    	
+    	SqlUserRepository r = new SqlUserRepository();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["UserId"] == null, "login.aspx");

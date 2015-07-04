@@ -24,17 +24,17 @@ namespace HW.Invoicing
 
             id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
             customerId = ConvertHelper.ToInt32(Request.QueryString["CustomerId"]);
+            dropDownListTimebookItems.Items.Clear();
+            foreach (var i in ir.FindAllWithCustomerItems(customerId))
+            {
+                var li = new ListItem(i.Name, i.Id.ToString());
+                li.Attributes.Add("data-price", i.Price.ToString());
+                li.Attributes.Add("data-unit", i.Unit.Name);
+                dropDownListTimebookItems.Items.Add(li);
+            }
+
             if (!IsPostBack)
             {
-                dropDownListTimebookItems.Items.Clear();
-                foreach (var i in ir.FindAllWithCustomerItems(customerId))
-                {
-                    var li = new ListItem(i.Name, i.Id.ToString());
-                    li.Attributes.Add("data-price", i.Price.ToString());
-                    li.Attributes.Add("data-unit", i.Unit.Name);
-                    dropDownListTimebookItems.Items.Add(li);
-                }
-
                 dropDownListTimebookContacts.Items.Clear();
                 foreach (var c in r.FindContacts(customerId))
                 {
@@ -65,7 +65,9 @@ namespace HW.Invoicing
             var t = new CustomerTimebook {
                 Date = ConvertHelper.ToDateTime(textBoxTimebookDate.Text),
                 Department = textBoxTimebookDepartment.Text,
-                Contact = new CustomerContact { Id = ConvertHelper.ToInt32(dropDownListTimebookContacts.SelectedValue) },
+                Contact = new CustomerContact {
+                    Id = ConvertHelper.ToInt32(dropDownListTimebookContacts.SelectedValue)
+                },
                 Item = new Item { Id = ConvertHelper.ToInt32(dropDownListTimebookItems.SelectedValue) },
                 Quantity = ConvertHelper.ToDecimal(textBoxTimebookQty.Text),
                 Price = ConvertHelper.ToDecimal(textBoxTimebookPrice.Text),

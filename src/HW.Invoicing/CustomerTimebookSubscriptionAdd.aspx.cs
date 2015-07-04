@@ -16,10 +16,27 @@ namespace HW.Invoicing
         SqlCustomerRepository r = new SqlCustomerRepository();
         protected string message;
 
-        protected void buttonSave_Click(object sender, EventArgs e)
+        protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["UserId"] == null, "login.aspx");
 
+            customers = r.FindSubscribers();
+            if (!IsPostBack)
+            {
+                var startDate = DateTime.Now;
+                var endDate = DateTime.Now.AddMonths(1);
+                textBoxStartDate.Text = startDate.ToString("yyyy-MM-dd");
+                textBoxEndDate.Text = endDate.ToString("yyyy-MM-dd");
+
+                textBoxQuantity.Text = ((endDate.Month - startDate.Month) + 12 * (endDate.Year - startDate.Year)).ToString();
+
+                textBoxText.Text = "Subscription fee for HealthWatch.se";
+                textBoxComments.Text = textBoxText.Text + " " + textBoxStartDate.Text.Replace('-', '.') + " - " + textBoxEndDate.Text.Replace('-', '.');
+            }
+        }
+
+        protected void buttonSave_Click(object sender, EventArgs e)
+        {
             var quantities = Request.Form.GetValues("subscription-quantities");
             var comments = Request.Form.GetValues("subscription-comments");
             var timebooks = new List<CustomerTimebook>();
@@ -34,30 +51,15 @@ namespace HW.Invoicing
                         Quantity = ConvertHelper.ToInt32(quantities[i]),
                         Price = c.SubscriptionItem.Price,
                         VAT = 25,
-                        Comments = comments[i]
+                        Comments = comments[i],
+                        SubscriptionStartDate = ConvertHelper.ToDateTime(textBoxStartDate.Text),
+                        SubscriptionEndDate = ConvertHelper.ToDateTime(textBoxEndDate.Text)
                     }
                 );
                 i++;
             }
             r.SaveTimebooks(timebooks);
             message = "Saved! customer timebooks for subscription items are now saved.";
-        }
-
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            customers = r.FindSubscribers();
-            if (!IsPostBack)
-            {
-                var startDate = DateTime.Now;
-                var endDate = DateTime.Now.AddMonths(1);
-                textBoxStartDate.Text = startDate.ToString("yyyy-MM-dd");
-                textBoxEndDate.Text = endDate.ToString("yyyy-MM-dd");
-
-                textBoxQuantity.Text = ((endDate.Month - startDate.Month) + 12 * (endDate.Year - startDate.Year)).ToString();
-
-                textBoxText.Text = "Subscription fee for HealthWatch.se";
-                textBoxComments.Text = textBoxText.Text + " " + textBoxStartDate.Text.Replace('-', '.') + " - " + textBoxEndDate.Text.Replace('-', '.');
-            }
         }
     }
 }

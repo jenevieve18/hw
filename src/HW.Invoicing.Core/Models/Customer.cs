@@ -172,7 +172,9 @@ namespace HW.Invoicing.Core.Models
 	public class CustomerTimebook : BaseModel
 	{
         public Customer Customer { get; set; }
-		public DateTime? Date { get; set; }
+        public DateTime? Date { get; set; }
+        public DateTime? SubscriptionStartDate { get; set; }
+        public DateTime? SubscriptionEndDate { get; set; }
 		public CustomerContact Contact { get; set; }
 		public Item Item { get; set; }
 		public decimal Quantity { get; set; }
