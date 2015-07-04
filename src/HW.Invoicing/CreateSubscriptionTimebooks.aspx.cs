@@ -43,7 +43,7 @@ namespace HW.Invoicing
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            customers = r.FindSubscribed();
+            customers = r.FindSubscribers();
             if (!IsPostBack)
             {
                 var startDate = DateTime.Now;

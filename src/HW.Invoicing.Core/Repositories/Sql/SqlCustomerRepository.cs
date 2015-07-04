@@ -953,14 +953,15 @@ ORDER BY Status, t.Date DESC"
 			}
 
             query = @"
-select i.status, i.id, i.number
-from invoicetimebook it
-inner join invoice i on i.id = it.invoiceid
-and it.customertimebookid = @customertimebookid";
+SELECT i.Status,
+    i.Id,
+    i.Number
+FROM InvoiceTimebook it
+INNER JOIN Invoice i ON i.Id = it.InvoiceId AND it.CustomerTimebookId = @CustomerTimebookId";
             foreach (var t in timebooks)
             {
                 int status = 0;
-                using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@customertimebookid", t.Id)))
+                using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerTimebookId", t.Id)))
                 {
                     if (rs.Read())
                     {
@@ -1013,51 +1014,62 @@ ORDER BY Type"
 			}
 			return contacts;
 		}
-		
-		public override IList<Customer> FindAll()
-		{
-			string query = string.Format(
-				@"
-SELECT Id, Name, Number, Phone, Email, Inactive
-FROM Customer"
-			);
-			var customers = new List<Customer>();
-			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {
-				while (rs.Read()) {
-					customers.Add(
-						new Customer {
-							Id = GetInt32(rs, 0),
-							Name = GetString(rs, 1),
-							Number = GetString(rs, 2),
+
+        public IList<Customer> FindNonSubscribers()
+        {
+            string query = string.Format(
+                @"
+SELECT Id,
+    Name,
+    Number,
+    Phone,
+    Email,
+    Inactive,
+    HasSubscription
+FROM Customer
+WHERE HasSubscription != 1
+OR HasSubscription IS NULL"
+            );
+            var customers = new List<Customer>();
+            using (SqlDataReader rs = ExecuteReader(query, "invoicing"))
+            {
+                while (rs.Read())
+                {
+                    customers.Add(
+                        new Customer
+                        {
+                            Id = GetInt32(rs, 0),
+                            Name = GetString(rs, 1),
+                            Number = GetString(rs, 2),
                             Phone = GetString(rs, 3),
                             Email = GetString(rs, 4),
                             Inactive = GetInt32(rs, 5) == 1
-						}
-					);
-				}
-			}
-			return customers;
-		}
+                        }
+                    );
+                }
+            }
+            return customers;
+        }
 
-        public IList<Customer> FindSubscribed()
+        public IList<Customer> FindSubscribers()
         {
             string query = string.Format(
                 @"
 SELECT c.Id, 
-c.Name, 
-c.Number, 
-c.Phone, 
-c.Email, 
-c.Inactive,
-i.id,
-i.name,
-u.id,
-u.name,
-i.price
+    c.Name, 
+    c.Number, 
+    c.Phone, 
+    c.Email, 
+    c.Inactive,
+    i.id,
+    i.name,
+    u.id,
+    u.name,
+    i.price
 FROM Customer c
-inner join item i on i.id = c.subscriptionitemid
-inner join unit u on u.id = i.unitid
-WHERE HasSubscription = 1"
+INNER JOIN Item i on i.Id = c.SubscriptionItemId
+INNER JOIN Unit u on u.Id = i.UnitId
+WHERE c.HasSubscription = 1"
             );
             var customers = new List<Customer>();
             using (SqlDataReader rs = ExecuteReader(query, "invoicing"))

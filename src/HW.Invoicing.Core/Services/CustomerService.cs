@@ -16,14 +16,26 @@ namespace HW.Invoicing.Core.Services
             this.r = r;
         }
 
-        public IList<Customer> FindAll()
+        public IList<Customer> FindSubscribers()
         {
-            var customers = r.FindAll();
+            var customers = r.FindSubscribers();
+            AssignContacts(customers);
+            return customers;
+        }
+
+        public IList<Customer> FindNonSubscribers()
+        {
+            var customers = r.FindNonSubscribers();
+            AssignContacts(customers);
+            return customers;
+        }
+
+        void AssignContacts(IList<Customer> customers)
+        {
             foreach (var c in customers)
             {
                 c.Contacts = r.FindContacts(c.Id);
             }
-            return customers;
         }
     }
 }

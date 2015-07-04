@@ -14,7 +14,8 @@ namespace HW.Invoicing
 {
     public partial class Customers : System.Web.UI.Page
     {
-    	protected IList<Customer> customers;
+    	protected IList<Customer> subscribers;
+        protected IList<Customer> nonSubscribers;
         CustomerService s = new CustomerService(new SqlCustomerRepository());
     	
     	public Customers()
@@ -29,8 +30,9 @@ namespace HW.Invoicing
         protected void Page_Load(object sender, EventArgs e)
         {
         	HtmlHelper.RedirectIf(Session["UserId"] == null, "login.aspx?r=customers.aspx");
-        	
-            customers = s.FindAll();
+
+            subscribers = s.FindSubscribers();
+            nonSubscribers = s.FindNonSubscribers();
         }
     }
 }
