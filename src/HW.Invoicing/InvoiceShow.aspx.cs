@@ -46,9 +46,5 @@ namespace HW.Invoicing
         {
             Response.Redirect(string.Format("customershow.aspx?Id={}&SelectedTab=customer-info", invoice.Customer.Id));
         }
-
-        protected void buttonPrint_Click(object sender, EventArgs e)
-        {
-        }
     }
 }

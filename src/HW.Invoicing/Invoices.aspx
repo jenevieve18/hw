@@ -81,7 +81,9 @@
             <td><%= i.GetStatus() %></td>
             <td>
                 <div class="btn-group">
-				    <button onclick="javascript:;return false;" class="btn btn-default">Action</button> 
+				    <button onclick="javascript:;return false;" class="btn btn-default">
+                        <i class="glyphicon glyphicon-cog"></i>&nbsp;
+                    </button> 
 				    <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
 					    <span class="caret"></span>
 				    </button>

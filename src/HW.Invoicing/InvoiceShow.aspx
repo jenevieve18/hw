@@ -185,6 +185,7 @@
 
 <br />
 
-    <asp:Button CssClass="btn btn-success" ID="buttonPrint" runat="server" Text="Print this invoice" OnClick="buttonPrint_Click" />
+<%= HtmlHelper.Anchor("Export this invoice to PDF", string.Format("invoiceexport.aspx?Id={0}", invoice.Id), "class='btn btn-success'") %>
+or <i><%= HtmlHelper.Anchor("go back to invoice list", "invoices.aspx") %></i>
 
 </asp:Content>
