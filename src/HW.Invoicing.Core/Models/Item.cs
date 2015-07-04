@@ -49,6 +49,11 @@ namespace HW.Invoicing.Core.Models
 		public Unit Unit { get; set; }
 		public bool Inactive { get; set; }
 
+        public override string ToString()
+        {
+            return string.Format("{0} - {1}", Name, Price);
+        }
+
         public override void Validate()
         {
             base.Validate();

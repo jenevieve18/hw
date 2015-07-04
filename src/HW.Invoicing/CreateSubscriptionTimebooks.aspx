@@ -5,24 +5,7 @@
     <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script src="js/jquery.number.min.js" type="text/javascript"></script>
     <script type="text/javascript">
-        /*var month = new Array();
-        month[0] = "January";
-        month[1] = "February";
-        month[2] = "March";
-        month[3] = "April";
-        month[4] = "May";
-        month[5] = "June";
-        month[6] = "July";
-        month[7] = "August";
-        month[8] = "September";
-        month[9] = "October";
-        month[10] = "November";
-        month[11] = "December";*/
         $(document).ready(function () {
-            /*$('#<%= textBoxStartDate.ClientID %>').datepicker({
-            format: "yyyy-mm-dd",
-            autoclose: true
-            });*/
             $('.date').datepicker({
                 format: "yyyy-mm-dd",
                 autoclose: true
@@ -32,7 +15,7 @@
                 var text = $(this).val();
                 var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
                 var endDate = $('#<%= textBoxEndDate.ClientID %>').datepicker('getDate');
-                var generatedText = text + ' ' + $('#<%= textBoxStartDate.ClientID %>').val() + ' - ' + $('#<%= textBoxEndDate.ClientID %>').val();
+                var generatedText = text + ' ' + $('#<%= textBoxStartDate.ClientID %>').val().replace(/-/g, ".") + ' - ' + $('#<%= textBoxEndDate.ClientID %>').val().replace(/-/g, ".");
                 textGeneratedComments.val(generatedText);
                 $('#<%= textBoxComments.ClientID %>').change();
             });
@@ -82,7 +65,7 @@
 </div>
 <div class="form-group">
 	<label for="<%= textBoxComments.ClientID %>">Generated Comments</label>
-    <asp:TextBox style="height:100px" ID="textBoxComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+    <asp:TextBox ID="textBoxComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
 </div>
 
 <br />
@@ -93,7 +76,7 @@
         <th>Unit</th>
         <th>Price</th>
         <th class="col-md-1">Qty</th>
-        <th>Comments</th>
+        <th class="col-md-4">Comments</th>
     </tr>
     <% foreach (var c in customers) { %>
     <tr>
@@ -104,7 +87,7 @@
         <td class="col-md-1">
             <input id="subscription-quantities" name="subscription-quantities" class="subscription-quantity form-control" type="text" value="1" />
         </td>
-        <td>
+        <td class="col-md-4">
             <textarea id="subscription-comments" name="subscription-comments" class="subscription-comments form-control"></textarea>
         </td>
     </tr>

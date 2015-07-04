@@ -248,7 +248,7 @@ namespace HW.Invoicing
             dropDownListItems.Items.Clear();
             foreach (var i in items)
             {
-                dropDownListItems.Items.Add(new ListItem(i.Name, i.Id.ToString()));
+                dropDownListItems.Items.Add(new ListItem(i.ToString(), i.Id.ToString()));
             }
 
             dropDownListTimebookItems.Items.Clear();

@@ -10,7 +10,7 @@
     <asp:TextBox ID="textBoxName" runat="server" CssClass="form-control"></asp:TextBox>
 </div>
 <div>
-    <asp:Button CssClass="btn btn-success" ID="buttonSave" runat="server" Text="Save customer" 
+    <asp:Button CssClass="btn btn-success" ID="buttonSave" runat="server" Text="Save unit" 
         onclick="buttonSave_Click" />
         or <i><%= HtmlHelper.Anchor("cancel", "customers.aspx") %></i>
 </div>

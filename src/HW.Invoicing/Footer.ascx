@@ -21,7 +21,7 @@
                     Box 4047<br />
                     10261 Stockholm<br />
                     Sweden<br />
-                    <abbr title="Phone">P:</abbr> (123) 456-7890
+                    <abbr title="Phone">P:</abbr> +46-70-7284298
                 </address>
 		    </div>
 		    <div class="col-md-2 column">
