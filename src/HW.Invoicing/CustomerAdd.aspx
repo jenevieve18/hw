@@ -46,6 +46,11 @@
 	<label for="<%= textBoxEmail.ClientID %>">Email</label>
     <asp:TextBox ID="textBoxEmail" runat="server" CssClass="form-control"></asp:TextBox>
 </div>
+<div class="form-group">
+	<label for="<%= textBoxEmail.ClientID %>">Language</label>
+    <asp:DropDownList ID="dropDownListLanguage" runat="server" CssClass="info form-control">
+                        </asp:DropDownList>
+</div>
 <div>
     <asp:Button CssClass="btn btn-success" ID="buttonSave" runat="server" Text="Save customer" 
         onclick="buttonSave_Click" />
