@@ -203,8 +203,8 @@ VALUES(@CustomerId, @Notes, @CreatedAt, @CreatedBy)"
         {
             string query = string.Format(
                 @"
-INSERT INTO CustomerTimebook(CustomerId, ItemId, Quantity, Price, Comments, VAT, SubscriptionStartDate, SubscriptionEndDate)
-VALUES(@CustomerId, @ItemId, @Quantity, @Price, @Comments, @VAT, @SubscriptionStartDate, @SubscriptionEndDate)"
+INSERT INTO CustomerTimebook(CustomerId, ItemId, Quantity, Price, Comments, VAT, SubscriptionStartDate, SubscriptionEndDate, IsSubscription)
+VALUES(@CustomerId, @ItemId, @Quantity, @Price, @Comments, @VAT, @SubscriptionStartDate, @SubscriptionEndDate, @IsSubscription)"
             );
             foreach (var time in timebooks)
             {
@@ -218,7 +218,8 @@ VALUES(@CustomerId, @ItemId, @Quantity, @Price, @Comments, @VAT, @SubscriptionSt
                     new SqlParameter("@Comments", time.Comments),
                     new SqlParameter("@VAT", time.VAT),
                     new SqlParameter("@SubscriptionStartDate", time.SubscriptionStartDate),
-                    new SqlParameter("@SubscriptionEndDate", time.SubscriptionEndDate)
+                    new SqlParameter("@SubscriptionEndDate", time.SubscriptionEndDate),
+                    new SqlParameter("@IsSubscription", time.IsSubscription)
                 );
             }
         }
