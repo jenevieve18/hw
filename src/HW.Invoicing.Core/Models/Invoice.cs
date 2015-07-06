@@ -67,6 +67,12 @@ namespace HW.Invoicing.Core.Models
 				form.SetField("Text9b", prices);
 				form.SetField("Text9c", amounts);
 
+                if (invoice.VATs.ContainsKey(25))
+                {
+                    form.SetField("Text11b", 25.ToString());
+                    form.SetField("Text12", invoice.VATs[25].ToString());
+                }
+
 				// "Flatten" the form so it wont be editable/usable anymore
 				// stamper.FormFlattening = true;
 
@@ -113,6 +119,25 @@ namespace HW.Invoicing.Core.Models
 			Date = DateTime.Now;
 			Timebooks = new List<InvoiceTimebook>();
 		}
+
+        public IDictionary<decimal, decimal> VATs
+        {
+            get {
+                var v = new Dictionary<decimal, decimal>();
+                foreach (var t in Timebooks)
+                {
+                    if (v.ContainsKey(t.Timebook.VAT))
+                    {
+                        v[t.Timebook.VAT] += t.Timebook.VATAmount;
+                    }
+                    else
+                    {
+                        v[t.Timebook.VAT] = t.Timebook.VATAmount;
+                    }
+                }
+                return v;
+            }
+        }
 
 		public decimal TotalVAT
 		{
