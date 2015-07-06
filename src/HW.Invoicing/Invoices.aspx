@@ -101,7 +101,7 @@
             </td>
             <td style="width:16px">
                 <% if (i.Exported) { %>
-                    <img src="img/page_white_acrobat.png" />
+                    <%= HtmlHelper.AnchorImage("invoiceexport.aspx?Id=" + i.Id, "img/page_white_acrobat.png", "target='_blank'")%>
                 <% } %>
             </td>
             <td class="internal-comments">
