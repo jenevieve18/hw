@@ -821,7 +821,8 @@ SELECT p.Id,
 	p.Price,
 	i.Name,
 	p.Inactive,
-p.SortOrder
+    p.SortOrder,
+    i.Price
 FROM CustomerItem p,
 Item i
 WHERE p.ItemId = i.Id 
@@ -836,7 +837,8 @@ order by p.sortorder"
 							Id = GetInt32(rs, 0),
 							Price = GetDecimal(rs, 1),
 							Item = new Item {
-								Name = GetString(rs, 2)
+								Name = GetString(rs, 2),
+                                Price = GetDecimal(rs, 5)
 							},
 							Inactive = GetInt32(rs, 3) == 1,
                             SortOrder = GetInt32(rs, 4)

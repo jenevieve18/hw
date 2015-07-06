@@ -82,6 +82,11 @@ namespace HW.Core.Helpers
 		{
 			return AnchorImage(url, image, false);
 		}
+
+        public static string AnchorImage(string url, string image, string attributes)
+        {
+            return string.Format("<a href='{0}' {2}><img src='{1}'></a>", url, image, attributes);
+        }
 		
 		public static string AnchorImage(string url, string image, bool random)
 		{
