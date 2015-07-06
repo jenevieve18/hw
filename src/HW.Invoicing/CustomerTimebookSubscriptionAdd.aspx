@@ -5,13 +5,6 @@
     <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script src="js/jquery.number.min.js" type="text/javascript"></script>
     <script type="text/javascript">
-        function monthDiff(d1, d2) {
-            var months;
-            months = (d2.getFullYear() - d1.getFullYear()) * 12;
-            months -= d1.getMonth(); // + 1;
-            months += d2.getMonth();
-            return months <= 0 ? 0 : months;
-        }
         $(document).ready(function () {
             $('.date').datepicker({
                 format: "yyyy-mm-dd",

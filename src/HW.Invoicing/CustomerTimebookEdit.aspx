@@ -16,12 +16,23 @@
             $('#<%= dropDownListTimebookItems.ClientID %>').change();
 
             /*$('#<%= textBoxTimebookDate.ClientID %>').datepicker({
-                format: "yyyy-mm-dd",
-                autoclose: true
+            format: "yyyy-mm-dd",
+            autoclose: true
             });*/
             $('.date').datepicker({
                 format: "yyyy-mm-dd",
                 autoclose: true
+            });
+            var textGeneratedComments = $('#<%= textBoxSubscriptionTimebookComments.ClientID %>');
+            $('.date').change(function () {
+                var startDate = $('#<%= textBoxSubscriptionTimebookStartDate.ClientID %>').datepicker('getDate');
+                var endDate = $('#<%= textBoxSubscriptionTimebookEndDate.ClientID %>').datepicker('getDate');
+                var months = monthDiff(startDate, endDate);
+                $('#<%= textBoxSubscriptionTimebookQuantity.ClientID %>').val(months);
+                //$('.subscription-quantity').val(months);
+                var text = 'Subscription fee for HealthWatch.se';
+                var generatedText = text + ' ' + $('#<%= textBoxSubscriptionTimebookStartDate.ClientID %>').val().replace(/-/g, ".") + ' - ' + $('#<%= textBoxSubscriptionTimebookEndDate.ClientID %>').val().replace(/-/g, ".");
+                textGeneratedComments.val(generatedText);
             });
         });
     </script>
