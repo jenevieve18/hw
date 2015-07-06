@@ -199,7 +199,7 @@ VALUES(@CustomerId, @Notes, @CreatedAt, @CreatedBy)"
 			);
 		}
 
-        public void SaveTimebooks(List<CustomerTimebook> timebooks)
+        public void SaveSubscriptionTimebooks(List<CustomerTimebook> timebooks)
         {
             string query = string.Format(
                 @"
@@ -373,6 +373,27 @@ WHERE Id = @Id"
                 new SqlParameter("@Id", id),
                 new SqlParameter("@Inactive", c.Inactive),
                 new SqlParameter("@Type", c.Type)
+            );
+        }
+
+        public void UpdateSubscriptionTimebook(CustomerTimebook c, int id)
+        {
+            string query = string.Format(
+                @"
+UPDATE CustomerTimebook SET SubscriptionStartDate = @SubscriptionStartDate,
+    SubscriptionEndDate = @SubscriptionEndDate,
+    Quantity = @Quantity,
+    Comments = @Comments
+WHERE Id = @Id"
+            );
+            ExecuteNonQuery(
+                query,
+                "invoicing",
+                new SqlParameter("@SubscriptionStartDate", c.SubscriptionStartDate),
+                new SqlParameter("@SubscriptionEndDate", c.SubscriptionEndDate),
+                new SqlParameter("@Quantity", c.Quantity),
+                new SqlParameter("@Comments", c.Comments),
+                new SqlParameter("@Id", id)
             );
         }
 
@@ -629,7 +650,10 @@ SELECT Id,
     Date,
     Inactive,
     InternalComments,
-    VAT
+    VAT,
+    SubscriptionStartDate,
+    SubscriptionEndDate,
+    IsSubscription
 FROM CustomerTimebook
 WHERE Id = @Id"
             );
@@ -651,7 +675,10 @@ WHERE Id = @Id"
                         Date = GetDateTime(rs, 9),
                         Inactive = GetInt32(rs, 10) == 1,
                         InternalComments = GetString(rs, 11),
-                        VAT = GetDecimal(rs, 12, 25)
+                        VAT = GetDecimal(rs, 12, 25),
+                        SubscriptionStartDate = GetDateTime(rs, 13),
+                        SubscriptionEndDate = GetDateTime(rs, 14),
+                        IsSubscription = GetInt32(rs, 15) == 1
                     };
                 }
             }

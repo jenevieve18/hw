@@ -13,6 +13,15 @@ namespace HW.Invoicing {
     public partial class CustomerTimebookEdit {
         
         /// <summary>
+        /// panelTimebook control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel panelTimebook;
+        
+        /// <summary>
         /// textBoxTimebookDate control.
         /// </summary>
         /// <remarks>
@@ -128,6 +137,51 @@ namespace HW.Invoicing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox checkBoxReactivate;
+        
+        /// <summary>
+        /// panelSubscriptionTimebook control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel panelSubscriptionTimebook;
+        
+        /// <summary>
+        /// textBoxSubscriptionTimebookStartDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxSubscriptionTimebookStartDate;
+        
+        /// <summary>
+        /// textBoxSubscriptionTimebookEndDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxSubscriptionTimebookEndDate;
+        
+        /// <summary>
+        /// textBoxSubscriptionTimebookQuantity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxSubscriptionTimebookQuantity;
+        
+        /// <summary>
+        /// textBoxSubscriptionTimebookComments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxSubscriptionTimebookComments;
         
         /// <summary>
         /// buttonSave control.

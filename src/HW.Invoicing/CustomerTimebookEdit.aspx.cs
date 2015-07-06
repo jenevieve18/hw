@@ -44,24 +44,43 @@ namespace HW.Invoicing
                 var t = r.ReadTimebook(id);
                 if (t != null)
                 {
-                    textBoxTimebookDate.Text = t.Date.Value.ToString("yyyy-MM-dd");
-                    textBoxTimebookDepartment.Text = t.Department;
-                    dropDownListTimebookContacts.SelectedValue = t.Contact.Id.ToString();
-                    dropDownListTimebookItems.SelectedValue = t.Item.Id.ToString();
-                    textBoxTimebookQty.Text = t.Quantity.ToString();
-                    textBoxTimebookPrice.Text = t.Price.ToString();
-                    textBoxTimebookVAT.Text = t.VAT.ToString();
-                    textBoxTimebookConsultant.Text = t.Consultant;
-                    textBoxTimebookComments.Text = t.Comments;
-                    textBoxTimebookInternalComments.Text = t.InternalComments;
-                    checkBoxReactivate.Checked = !t.Inactive;
-                    placeHolderReactivate.Visible = t.Inactive;
+                    panelSubscriptionTimebook.Visible = t.IsSubscription;
+                    panelTimebook.Visible = !panelSubscriptionTimebook.Visible;
+                    if (t.IsSubscription)
+                    {
+                        textBoxSubscriptionTimebookStartDate.Text = t.SubscriptionStartDate.Value.ToString("yyyy-MM-dd");
+                        textBoxSubscriptionTimebookEndDate.Text = t.SubscriptionEndDate.Value.ToString("yyyy-MM-dd");
+                        textBoxSubscriptionTimebookQuantity.Text = t.Quantity.ToString();
+                        textBoxSubscriptionTimebookComments.Text = t.Comments;
+                    }
+                    else
+                    {
+                        textBoxTimebookDate.Text = t.Date.Value.ToString("yyyy-MM-dd");
+                        textBoxTimebookDepartment.Text = t.Department;
+                        dropDownListTimebookContacts.SelectedValue = t.Contact.Id.ToString();
+                        dropDownListTimebookItems.SelectedValue = t.Item.Id.ToString();
+                        textBoxTimebookQty.Text = t.Quantity.ToString();
+                        textBoxTimebookPrice.Text = t.Price.ToString();
+                        textBoxTimebookVAT.Text = t.VAT.ToString();
+                        textBoxTimebookConsultant.Text = t.Consultant;
+                        textBoxTimebookComments.Text = t.Comments;
+                        textBoxTimebookInternalComments.Text = t.InternalComments;
+                        checkBoxReactivate.Checked = !t.Inactive;
+                        placeHolderReactivate.Visible = t.Inactive;
+                    }
                 }
             }
         }
 
         protected void buttonSave_Click(object sender, EventArgs e)
         {
+            decimal quantity = panelSubscriptionTimebook.Visible
+                ? ConvertHelper.ToDecimal(textBoxSubscriptionTimebookQuantity.Text)
+                : ConvertHelper.ToDecimal(textBoxTimebookQty.Text);
+            string comments = panelSubscriptionTimebook.Visible
+                ? textBoxSubscriptionTimebookComments.Text
+                : textBoxTimebookComments.Text;
+
             var t = new CustomerTimebook {
                 Date = ConvertHelper.ToDateTime(textBoxTimebookDate.Text),
                 Department = textBoxTimebookDepartment.Text,
@@ -69,18 +88,36 @@ namespace HW.Invoicing
                     Id = ConvertHelper.ToInt32(dropDownListTimebookContacts.SelectedValue)
                 },
                 Item = new Item { Id = ConvertHelper.ToInt32(dropDownListTimebookItems.SelectedValue) },
-                Quantity = ConvertHelper.ToDecimal(textBoxTimebookQty.Text),
+                Quantity = quantity,
                 Price = ConvertHelper.ToDecimal(textBoxTimebookPrice.Text),
                 VAT = ConvertHelper.ToDecimal(textBoxTimebookVAT.Text),
                 Consultant = textBoxTimebookConsultant.Text,
-                Comments = textBoxTimebookComments.Text,
+                Comments = comments,
                 InternalComments = textBoxTimebookInternalComments.Text,
-                Inactive = !checkBoxReactivate.Checked
+                Inactive = !checkBoxReactivate.Checked,
+                
+                SubscriptionStartDate = ConvertHelper.ToDateTime(textBoxSubscriptionTimebookStartDate.Text),
+                SubscriptionEndDate = ConvertHelper.ToDateTime(textBoxSubscriptionTimebookEndDate.Text),
             };
-            t.Validate();
+            if (panelSubscriptionTimebook.Visible)
+            {
+                t.ValidateSubscription();
+            }
+            else
+            {
+                t.Validate();
+            }
+            //t.Validate();
             if (!t.HasErrors)
             {
-                r.UpdateTimebook(t, id);
+                if (panelSubscriptionTimebook.Visible)
+                {
+                    r.UpdateSubscriptionTimebook(t, id);
+                }
+                else
+                {
+                    r.UpdateTimebook(t, id);
+                }
                 Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=timebook", customerId));
             }
             else

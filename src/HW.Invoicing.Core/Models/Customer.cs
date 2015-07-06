@@ -218,6 +218,12 @@ namespace HW.Invoicing.Core.Models
             get { return Status == 2;  }
         }
 
+        public void ValidateSubscription()
+        {
+            base.Validate();
+            AddErrorIf(Comments == "", "Comments shouldn't be empty.");
+        }
+
         public override void Validate()
         {
             base.Validate();

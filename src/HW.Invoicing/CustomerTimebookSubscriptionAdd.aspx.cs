@@ -66,7 +66,7 @@ namespace HW.Invoicing
                     );
                     i++;
                 }
-                r.SaveTimebooks(timebooks);
+                r.SaveSubscriptionTimebooks(timebooks);
                 message = "<div class='alert alert-success'>Saved! customer timebooks for subscription items are now saved.</div>";
             }
         }
