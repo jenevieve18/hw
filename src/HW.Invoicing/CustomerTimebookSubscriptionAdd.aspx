@@ -5,10 +5,24 @@
     <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script src="js/jquery.number.min.js" type="text/javascript"></script>
     <script type="text/javascript">
+        function monthDiff(d1, d2) {
+            var months;
+            months = (d2.getFullYear() - d1.getFullYear()) * 12;
+            months -= d1.getMonth(); // + 1;
+            months += d2.getMonth();
+            return months <= 0 ? 0 : months;
+        }
         $(document).ready(function () {
             $('.date').datepicker({
                 format: "yyyy-mm-dd",
                 autoclose: true
+            });
+            $('.date').change(function () {
+                var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
+                var endDate = $('#<%= textBoxEndDate.ClientID %>').datepicker('getDate');
+                var months = monthDiff(startDate, endDate);
+                $('#<%= textBoxQuantity.ClientID %>').val(months);
+                $('.subscription-quantity').val(months);
             });
             var textGeneratedComments = $('#<%= textBoxComments.ClientID %>');
             $('#<%= textBoxText.ClientID %>').change(function () {
@@ -21,6 +35,11 @@
             });
             $('#<%= textBoxQuantity.ClientID %>').change(function () {
                 $('.subscription-quantity').val($(this).val());
+                var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
+                var months = $(this).val();
+                var d = new Date(startDate);
+                d = new Date(d.setMonth(d.getMonth() + months));
+                $('#<%= textBoxEndDate.ClientID %>').datepicker('update', d);
             });
             $('#<%= textBoxComments.ClientID %>').change(function () {
                 $('.subscription-comments').val($(this).val());
@@ -36,9 +55,10 @@
 <h3>Subscription Timebooks</h3>
 
 <% if (message  != null) { %>
-    <div class="alert alert-success">
+    <%= message %>
+    <!--<div class="alert alert-success">
 	    <%= message %>
-    </div>
+    </div>-->
 <% } %>
 
 <div class="alert alert-info">

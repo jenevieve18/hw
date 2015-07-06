@@ -595,6 +595,24 @@ WHERE Id = @Id"
             return c;
         }
 
+        public bool HasSubscriptionTimebookWithDate(DateTime startDate)
+        {
+            string query = @"
+SELECT 1
+FROM CustomerTimebook
+WHERE SubscriptionStartDate = @SubscriptionStartDate
+AND IsSubscription = 1";
+            bool found = false;
+            using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@SubscriptionStartDate", startDate)))
+            {
+                if (rs.Read())
+                {
+                    found = true;
+                }
+            }
+            return found;
+        }
+
         public CustomerTimebook ReadTimebook(int id)
         {
             string query = string.Format(
