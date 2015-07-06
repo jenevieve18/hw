@@ -20,7 +20,7 @@ namespace HW.Invoicing
         {
             HtmlHelper.RedirectIf(Session["UserId"] == null, "login.aspx");
 
-            customers = r.FindSubscribers();
+            customers = r.FindActiveSubscribers();
             if (!IsPostBack)
             {
                 var startDate = DateTime.Now;
@@ -52,6 +52,7 @@ namespace HW.Invoicing
                         Price = c.SubscriptionItem.Price,
                         VAT = 25,
                         Comments = comments[i],
+                        IsSubscription = true,
                         SubscriptionStartDate = ConvertHelper.ToDateTime(textBoxStartDate.Text),
                         SubscriptionEndDate = ConvertHelper.ToDateTime(textBoxEndDate.Text)
                     }
