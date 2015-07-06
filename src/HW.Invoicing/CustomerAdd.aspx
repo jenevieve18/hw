@@ -20,11 +20,11 @@
 </div>
 <div class="form-group">
 	<label for="<%= textBoxPostalAddress.ClientID %>">Postal Address</label>
-    <asp:TextBox ID="textBoxPostalAddress" runat="server" CssClass="form-control"></asp:TextBox>
+    <asp:TextBox ID="textBoxPostalAddress" TextMode="MultiLine" runat="server" CssClass="form-control"></asp:TextBox>
 </div>
 <div class="form-group">
 	<label for="<%= textBoxInvoiceAddress.ClientID %>">Invoicing Address</label>
-    <asp:TextBox ID="textBoxInvoiceAddress" runat="server" CssClass="form-control"></asp:TextBox>
+    <asp:TextBox ID="textBoxInvoiceAddress" TextMode="MultiLine" runat="server" CssClass="form-control"></asp:TextBox>
 </div>
 <div class="form-group">
 	<label for="<%= textBoxPurchaseOrderNumber.ClientID %>">Reference / Purchase Order Number</label>

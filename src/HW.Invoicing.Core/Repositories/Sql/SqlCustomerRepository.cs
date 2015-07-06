@@ -1106,5 +1106,59 @@ ORDER BY c.Inactive, c.Name"
             }
             return customers;
         }
+
+        public IList<Customer> FindActiveSubscribers()
+        {
+            string query = string.Format(
+                @"
+SELECT c.Id, 
+    c.Name, 
+    c.Number, 
+    c.Phone, 
+    c.Email, 
+    c.Inactive,
+    i.id,
+    i.name,
+    u.id,
+    u.name,
+    i.price
+FROM Customer c
+INNER JOIN Item i on i.Id = c.SubscriptionItemId
+INNER JOIN Unit u on u.Id = i.UnitId
+WHERE c.HasSubscription = 1
+AND ISNULL(c.Inactive, 0) != 1
+ORDER BY c.Inactive, c.Name"
+            );
+            var customers = new List<Customer>();
+            using (SqlDataReader rs = ExecuteReader(query, "invoicing"))
+            {
+                while (rs.Read())
+                {
+                    customers.Add(
+                        new Customer
+                        {
+                            Id = GetInt32(rs, 0),
+                            Name = GetString(rs, 1),
+                            Number = GetString(rs, 2),
+                            Phone = GetString(rs, 3),
+                            Email = GetString(rs, 4),
+                            Inactive = GetInt32(rs, 5) == 1,
+                            SubscriptionItem = new Item
+                            {
+                                Id = GetInt32(rs, 6),
+                                Name = GetString(rs, 7),
+                                Unit = new Unit
+                                {
+                                    Id = GetInt32(rs, 8),
+                                    Name = GetString(rs, 9)
+                                },
+                                Price = GetDecimal(rs, 10)
+                            }
+                        }
+                    );
+                }
+            }
+            return customers;
+        }
 	}
 }

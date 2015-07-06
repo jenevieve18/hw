@@ -171,10 +171,14 @@ namespace HW.Invoicing.Core.Models
 	
 	public class CustomerTimebook : BaseModel
 	{
-        public Customer Customer { get; set; }
-        public DateTime? Date { get; set; }
+        public const int INVOICED = 1;
+        public const int PAID = 2;
+
+        public bool IsSubscription { get; set; }
         public DateTime? SubscriptionStartDate { get; set; }
         public DateTime? SubscriptionEndDate { get; set; }
+        public Customer Customer { get; set; }
+        public DateTime? Date { get; set; }
 		public CustomerContact Contact { get; set; }
 		public Item Item { get; set; }
 		public decimal Quantity { get; set; }
@@ -221,7 +225,6 @@ namespace HW.Invoicing.Core.Models
             AddErrorIf(Consultant == "", "Consultant shouldn't be empty.");
             AddErrorIf(Comments == "", "Comments shouldn't be empty.");
             AddErrorIf(Price <= 0, "Price should be greater than zero.");
-            //AddErrorIf(Quantity <= 0, "Quantity should be greater than zero.");
             AddErrorIf(VAT <= 0, "VAT should be greater than zero.");
         }
 
@@ -229,8 +232,8 @@ namespace HW.Invoicing.Core.Models
         {
             switch (Status)
             {
-                case 1: return string.Format("<span class='label label-warning'>INVOICED {0}</span>", HtmlHelper.Anchor(InvoiceTimebook.Invoice.Number, "invoiceshow.aspx?Id=" + InvoiceTimebook.Invoice.Id));
-                case 2: return "<span class='label label-success'>PAID</span>";
+                case INVOICED: return string.Format("<span class='label label-warning'>INVOICED {0}</span>", HtmlHelper.Anchor(InvoiceTimebook.Invoice.Number, "invoiceshow.aspx?Id=" + InvoiceTimebook.Invoice.Id));
+                case PAID: return "<span class='label label-success'>PAID</span>";
                 default: return "<span class='label label-default'>OPEN</span>";
             }
         }
