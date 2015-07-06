@@ -966,13 +966,14 @@ SELECT t.CustomerContactId,
     t.Id,
     t.Inactive,
     t.InternalComments,
-    t.VAT
+    t.VAT,
+    t.IsSubscription
 FROM CustomerTimebook t
 LEFT OUTER JOIN CustomerContact c ON c.Id = t.CustomerContactId
 INNER JOIN Item i ON i.Id = t.ItemId
 INNER JOIN UNit u ON u.Id = i.UnitId
 WHERE t.CustomerId = @CustomerId
-ORDER BY Status, t.CustomerContactId, t.Date DESC"
+ORDER BY Status, t.Date DESC"
             );
 			var timebooks = new List<CustomerTimebook>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerId", customerId))) {
@@ -997,7 +998,8 @@ ORDER BY Status, t.CustomerContactId, t.Date DESC"
                             Id = GetInt32(rs, 12),
                             Inactive = GetInt32(rs, 13) == 1,
                             InternalComments = GetString(rs, 14),
-                            VAT = GetDecimal(rs, 15, 25)
+                            VAT = GetDecimal(rs, 15, 25),
+                            IsSubscription = GetInt32(rs, 16) == 1
                         }
 					);
 				}
@@ -1028,7 +1030,7 @@ INNER JOIN Invoice i ON i.Id = it.InvoiceId AND it.CustomerTimebookId = @Custome
                 }
                 t.Status = status;
             }
-            timebooks = timebooks.OrderBy(x => x.Status).ToList();
+            timebooks = timebooks.OrderBy(x => x.Status).ThenByDescending(x => x.IsSubscription).ThenByDescending(x => x.Date).ToList();
 			return timebooks;
 		}
 		
