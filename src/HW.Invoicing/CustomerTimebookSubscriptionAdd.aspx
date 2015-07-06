@@ -23,6 +23,7 @@
                 var months = monthDiff(startDate, endDate);
                 $('#<%= textBoxQuantity.ClientID %>').val(months);
                 $('.subscription-quantity').val(months);
+                $('#<%= textBoxText.ClientID %>').change();
             });
             var textGeneratedComments = $('#<%= textBoxComments.ClientID %>');
             $('#<%= textBoxText.ClientID %>').change(function () {
