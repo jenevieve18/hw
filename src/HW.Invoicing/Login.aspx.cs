@@ -16,6 +16,9 @@ namespace HW.Invoicing
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            var url = Request.QueryString["r"] != null ? HttpUtility.UrlDecode(Request.QueryString["r"]) : "dashboard.aspx";
+            HtmlHelper.RedirectIf(Session["UserId"] != null, url);
+
             if (!IsPostBack)
             {
                 if (Request.Cookies["UserName"] != null && Request.Cookies["Password"] != null && Request.Cookies["RememberMe"] != null)
