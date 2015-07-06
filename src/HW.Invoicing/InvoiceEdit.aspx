@@ -156,7 +156,8 @@
             <td class="hw-border-top">Customer Number</td>
             <td class="hw-border-top">
                 <strong>
-                    <asp:Label ID="labelInvoiceCustomerNumber" runat="server" Text=""></asp:Label>
+                    <%= HtmlHelper.Anchor(invoice.Customer.Number, string.Format("customershow.aspx?Id={0}&SelectedTab=customer-info", invoice.Customer.Id)) %>
+                    <!-- <asp:Label ID="labelInvoiceCustomerNumber" runat="server" Text=""></asp:Label> -->
                 </strong>
             </td>
         </tr>
@@ -226,7 +227,7 @@
             <td class="hw-border-left" style="width:16px">
                 <input type="checkbox" id="checkbox-timebook-all" />
             </td>
-            <td class="hw-border-left" colspan="3">Item</td>
+            <td class="hw-border-left" colspan="3"><%= HtmlHelper.Anchor("Item", string.Format("customershow.aspx?Id={0}&SelectedTab=timebook", invoice.Customer.Id)) %></td>
             <td class="hw-border-left" style="width:10%">Qty</td>
             <td class="hw-border-left" style="width:10%">Unit</td>
             <td class="hw-border-left" style="width:10%">Price/Unit</td>
