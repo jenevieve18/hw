@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using HW.Core.Helpers;
 
 namespace HW.Invoicing
 {
@@ -16,37 +17,27 @@ namespace HW.Invoicing
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode("sql.aspx")));
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
+        protected void buttonExecute_Click(object sender, EventArgs e)
         {
-            //if ((TextBox1.Text.ToUpper().Contains("DELETE") && !TextBox1.Text.ToUpper().Contains("WHERE")) || (TextBox1.Text.ToUpper().Contains("UPDATE") && !TextBox1.Text.ToUpper().Contains("WHERE")))
-            //{
-                //Label1.Text = "Please provide where clause for delete statement.";
-                //message = "Please provide where clause for delete statement.";
-                //        	} else if (TextBox1.Text.ToUpper().Contains("DROP")) {
-                //        		Label1.Text = "Please don't use drop statement in this utility page.";
-            //}
-            //else
-            //{
-                try
+            try
+            {
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["invoicing"].ConnectionString);
+                SqlDataAdapter da = new SqlDataAdapter(textBoxSqlStatement.Text, con);
+                DataSet ds = new DataSet();
+                da.Fill(ds);
+                if (ds.Tables.Count > 0)
                 {
-                    SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["invoicing"].ConnectionString);
-                    SqlDataAdapter da = new SqlDataAdapter(TextBox1.Text, con);
-                    DataSet ds = new DataSet();
-                    da.Fill(ds);
-                    if (ds.Tables.Count > 0)
-                    {
-                        GridView1.DataSource = ds;
-                        GridView1.DataBind();
-                    }
+                    gridViewResult.DataSource = ds;
+                    gridViewResult.DataBind();
                 }
-                catch (Exception ex)
-                {
-                    //Label1.Text = ex.Message;
-                    message = ex.Message;
-                }
-            //}
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+            }
         }
     }
 }

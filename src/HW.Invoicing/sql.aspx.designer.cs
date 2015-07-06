@@ -13,30 +13,30 @@ namespace HW.Invoicing {
     public partial class sql {
         
         /// <summary>
-        /// TextBox1 control.
+        /// textBoxSqlStatement control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.WebControls.TextBox textBoxSqlStatement;
         
         /// <summary>
-        /// Button1 control.
+        /// buttonExecute control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button buttonExecute;
         
         /// <summary>
-        /// GridView1 control.
+        /// gridViewResult control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView1;
+        protected global::System.Web.UI.WebControls.GridView gridViewResult;
     }
 }

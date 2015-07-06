@@ -9,13 +9,13 @@
 <% } %>
 <%-- <asp:Label ID="Label1" runat="server" Text="" CssClass="alert alert-danger"></asp:Label>--%>
 <div class="form-group">
-    <asp:TextBox ID="TextBox1" runat="server" TextMode="MultiLine" Height="160px" Width="440px" CssClass="form-control"></asp:TextBox>
+    <asp:TextBox ID="textBoxSqlStatement" runat="server" TextMode="MultiLine" Height="160px" Width="440px" CssClass="form-control"></asp:TextBox>
 </div>
 <div>
-    <asp:Button ID="Button1" runat="server" Text="Execute" onclick="Button1_Click" CssClass="btn btn-success" />
+    <asp:Button ID="buttonExecute" runat="server" Text="Execute" onclick="buttonExecute_Click" CssClass="btn btn-success" />
 </div>
 
 <br />
-<asp:GridView ID="GridView1" runat="server" CssClass="table table-hover"></asp:GridView>
+<asp:GridView ID="gridViewResult" runat="server" CssClass="table table-hover"></asp:GridView>
 
 </asp:Content>
