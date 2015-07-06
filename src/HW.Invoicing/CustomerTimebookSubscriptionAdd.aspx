@@ -39,7 +39,7 @@
                 var months = $(this).val();
                 var d = new Date(startDate);
                 d = new Date(d.setMonth(d.getMonth() + months));
-                $('#<%= textBoxEndDate.ClientID %>').datepicker('update', d);
+                //$('#<%= textBoxEndDate.ClientID %>').datepicker('update', d);
             });
             $('#<%= textBoxComments.ClientID %>').change(function () {
                 $('.subscription-comments').val($(this).val());
@@ -56,9 +56,6 @@
 
 <% if (message  != null) { %>
     <%= message %>
-    <!--<div class="alert alert-success">
-	    <%= message %>
-    </div>-->
 <% } %>
 
 <div class="alert alert-info">
