@@ -11,12 +11,8 @@ namespace HW.Invoicing
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-        	LogOff();
-        }
-        
-        public void LogOff()
-        {
-        	Response.Redirect("default.aspx");
+            Session.Clear();
+            Response.Redirect("login.aspx");
         }
     }
 }
