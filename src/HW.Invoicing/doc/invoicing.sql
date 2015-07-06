@@ -226,3 +226,5 @@ alter table Customer add SubscriptionHasEndDate integer;
 
 alter table CustomerTimebook add SubscriptionStartDate date,
 SubscriptionEndDate date;
+
+alter table CustomerTimebook add IsSubscription integer;
