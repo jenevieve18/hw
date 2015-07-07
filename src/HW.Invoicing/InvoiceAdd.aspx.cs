@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Invoicing.Core.Repositories.Sql;
 using HW.Invoicing.Core.Models;
+using HW.Core.Helpers;
 
 namespace HW.Invoicing
 {
