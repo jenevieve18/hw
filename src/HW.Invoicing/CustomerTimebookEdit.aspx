@@ -15,10 +15,6 @@
             });
             $('#<%= dropDownListTimebookItems.ClientID %>').change();
 
-            /*$('#<%= textBoxTimebookDate.ClientID %>').datepicker({
-            format: "yyyy-mm-dd",
-            autoclose: true
-            });*/
             $('.date').datepicker({
                 format: "yyyy-mm-dd",
                 autoclose: true
@@ -29,10 +25,19 @@
                 var endDate = $('#<%= textBoxSubscriptionTimebookEndDate.ClientID %>').datepicker('getDate');
                 var months = monthDiff(startDate, endDate);
                 $('#<%= textBoxSubscriptionTimebookQuantity.ClientID %>').val(months);
-                //$('.subscription-quantity').val(months);
                 var text = 'Subscription fee for HealthWatch.se';
                 var generatedText = text + ' ' + $('#<%= textBoxSubscriptionTimebookStartDate.ClientID %>').val().replace(/-/g, ".") + ' - ' + $('#<%= textBoxSubscriptionTimebookEndDate.ClientID %>').val().replace(/-/g, ".");
                 textGeneratedComments.val(generatedText);
+            });
+            $('#<%= textBoxSubscriptionTimebookQuantity.ClientID %>').change(function () {
+                $('#<%= textBoxSubscriptionTimebookQuantity.ClientID %>').val($(this).val());
+                var startDate = $('#<%= textBoxSubscriptionTimebookStartDate.ClientID %>').datepicker('getDate');
+                var months = parseInt($(this).val());
+                var d = new Date(startDate);
+                var currentMonth = d.getMonth();
+                var newMonth = currentMonth + months;
+                d = new Date(d.setMonth(newMonth));
+                $('#<%= textBoxSubscriptionTimebookEndDate.ClientID %>').datepicker('update', d);
             });
         });
     </script>

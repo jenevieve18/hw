@@ -31,7 +31,6 @@
                 $('.subscription-quantity').val($(this).val());
                 var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
                 var months = parseInt($(this).val());
-                //alert(months);
                 var d = new Date(startDate);
                 var currentMonth = d.getMonth();
                 var newMonth = currentMonth + months;
