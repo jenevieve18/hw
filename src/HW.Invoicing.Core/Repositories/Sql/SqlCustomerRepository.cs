@@ -1167,11 +1167,13 @@ SELECT c.Id,
     c.Phone, 
     c.Email, 
     c.Inactive,
-    i.id,
-    i.name,
-    u.id,
-    u.name,
-    i.price
+    i.Id,
+    i.Name,
+    u.Id,
+    u.Name,
+    i.Price,
+    c.HasSubscription,
+    c.SubscriptionStartDate
 FROM Customer c
 INNER JOIN Item i on i.Id = c.SubscriptionItemId
 INNER JOIN Unit u on u.Id = i.UnitId
@@ -1203,7 +1205,9 @@ ORDER BY c.Inactive, c.Name"
                                     Name = GetString(rs, 9)
                                 },
                                 Price = GetDecimal(rs, 10)
-                            }
+                            },
+                            HasSubscription = GetInt32(rs, 11) == 1,
+                            SubscriptionStartDate = GetDateTime(rs, 12)
                         }
                     );
                 }

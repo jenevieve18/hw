@@ -50,20 +50,23 @@ namespace HW.Invoicing
                 int i = 0;
                 foreach (var c in customers)
                 {
-                    timebooks.Add(
-                        new CustomerTimebook
-                        {
-                            Customer = c,
-                            Item = new Item { Id = c.SubscriptionItem.Id },
-                            Quantity = ConvertHelper.ToInt32(quantities[i]),
-                            Price = c.SubscriptionItem.Price,
-                            VAT = 25,
-                            Comments = comments[i],
-                            IsSubscription = true,
-                            SubscriptionStartDate = ConvertHelper.ToDateTime(textBoxStartDate.Text),
-                            SubscriptionEndDate = ConvertHelper.ToDateTime(textBoxEndDate.Text)
-                        }
-                    );
+                    if (c.HasSubscription && c.SubscriptionStartDate > startDate)
+                    {
+                        timebooks.Add(
+                            new CustomerTimebook
+                            {
+                                Customer = c,
+                                Item = new Item { Id = c.SubscriptionItem.Id },
+                                Quantity = ConvertHelper.ToInt32(quantities[i]),
+                                Price = c.SubscriptionItem.Price,
+                                VAT = 25,
+                                Comments = comments[i],
+                                IsSubscription = true,
+                                SubscriptionStartDate = ConvertHelper.ToDateTime(textBoxStartDate.Text),
+                                SubscriptionEndDate = ConvertHelper.ToDateTime(textBoxEndDate.Text)
+                            }
+                        );
+                    }
                     i++;
                 }
                 r.SaveSubscriptionTimebooks(timebooks);
