@@ -50,7 +50,7 @@ namespace HW.Invoicing
                 int i = 0;
                 foreach (var c in customers)
                 {
-                    if (c.HasSubscription && c.SubscriptionStartDate > startDate)
+                    if (c.HasSubscription && c.SubscriptionStartDate < startDate)
                     {
                         timebooks.Add(
                             new CustomerTimebook
