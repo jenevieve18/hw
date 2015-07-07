@@ -31,29 +31,33 @@ namespace HW.Invoicing
             
             Response.ClearHeaders();
             Response.ClearContent();
-			Response.ContentType = exporter.Type;
+            //Response.ContentType = "application/pdf";
+            Response.ContentType = System.Net.Mime.MediaTypeNames.Application.Pdf;
 
             string file = string.Format("{0} {1} {2} {3}", invoice.Number, company.Name, invoice.Customer.YourReferencePerson, DateTime.Now.ToString("MMM yyyy"));
-			AddHeaderIf(exporter.HasContentDisposition(file), "content-disposition", exporter.GetContentDisposition(file));
-			Write(exporter.Export(invoice, Server.MapPath(@"IHG faktura MALL Ian without comments.pdf")));
-		}
-		
-		void Write(object obj)
-		{
-			if (obj is MemoryStream) {
-				Response.BinaryWrite(((MemoryStream)obj).ToArray());
-				Response.End();
-			} else if (obj is string) {
-				Response.Write((string)obj);
-			}
-		}
+            Response.AddHeader("content-disposition", string.Format("attachment;filename=\"{0}.pdf\";", file));
 
-        void AddHeaderIf(bool condition, string name, string value)
-        {
-            if (condition)
+            /*using (FileStream f = new FileStream(Server.MapPath(@"test.pdf"), FileMode.Create, FileAccess.Write))
             {
-                Response.AddHeader(name, value);
+                var s = exporter.Export(invoice, Server.MapPath(@"IHG faktura MALL Ian without comments.pdf"));
+                s.WriteTo(f);
             }
-        }
+
+            var output = new MemoryStream();
+            using (FileStream f = new FileStream(Server.MapPath(@"test.pdf"), FileMode.Open))
+            {
+                f.CopyTo(output);
+            }*/
+
+            var exported = exporter.Export(invoice, Server.MapPath(@"IHG faktura MALL Ian without comments.pdf"));
+            /*var output = new MemoryStream();
+            output.Write(exported, 0, exported.Length);
+            output.WriteTo(Response.OutputStream);*/
+            exported.WriteTo(Response.OutputStream);
+
+            Response.Flush();
+            Response.Close();
+            Response.End();
+		}
     }
 }
