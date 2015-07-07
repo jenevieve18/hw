@@ -15,6 +15,8 @@ namespace HW.Invoicing
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
+
             int sortOrder = ConvertHelper.ToInt32(Request.QueryString["SortOrder"]);
             int customerId = ConvertHelper.ToInt32(Request.QueryString["CustomerId"]);
 

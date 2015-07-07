@@ -14,8 +14,8 @@ namespace HW.Invoicing
 		SqlCustomerRepository r = new SqlCustomerRepository();
 
 		protected void Page_Load(object sender, EventArgs e)
-		{
-            HtmlHelper.RedirectIf(Session["UserId"] == null, "login.aspx");
+        {
+            HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
 
 			int id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
 			int customerID = ConvertHelper.ToInt32(Request.QueryString["CustomerId"]);

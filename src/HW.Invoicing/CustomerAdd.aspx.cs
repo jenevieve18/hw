@@ -18,8 +18,9 @@ namespace HW.Invoicing
         protected string message;
 		
 		protected void Page_Load(object sender, EventArgs e)
-		{
-        	HtmlHelper.RedirectIf(Session["UserId"] == null, "login.aspx");
+        {
+            HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
+
             if (!IsPostBack)
             {
                 dropDownListLanguage.Items.Clear();

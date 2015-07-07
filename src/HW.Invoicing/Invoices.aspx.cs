@@ -29,7 +29,7 @@ namespace HW.Invoicing
 
         protected void Page_Load(object sender, EventArgs e)
         {
-			HtmlHelper.RedirectIf(Session["UserId"] == null, "login.aspx?r=" + HttpUtility.UrlEncode("invoices.aspx"));
+            HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
 
             company = cr.Read(1);
             if (!IsPostBack)
