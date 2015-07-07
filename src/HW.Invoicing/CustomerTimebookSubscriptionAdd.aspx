@@ -30,12 +30,13 @@
             $('#<%= textBoxQuantity.ClientID %>').change(function () {
                 $('.subscription-quantity').val($(this).val());
                 var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
-                var months = $(this).val();
+                var months = parseInt($(this).val());
                 //alert(months);
                 var d = new Date(startDate);
-                d = new Date(d.setMonth(d.getMonth() + months));
-                //alert(d);
-                //$('#<%= textBoxEndDate.ClientID %>').datepicker('update', d);
+                var currentMonth = d.getMonth();
+                var newMonth = currentMonth + months;
+                d = new Date(d.setMonth(newMonth));
+                $('#<%= textBoxEndDate.ClientID %>').datepicker('update', d);
             });
             $('#<%= textBoxComments.ClientID %>').change(function () {
                 $('.subscription-comments').val($(this).val());
