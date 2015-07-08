@@ -142,6 +142,15 @@ namespace HW.Invoicing.Core.Helpers
 				stamper.PartialFormFlattening(s);
 			}
 			
+//			PdfContentByte cb = stamper.GetOverContent(1);
+//			float y = 87.5f;
+//			float height = 27f;
+//			cb.Rectangle(400, y, 64, height);cb.Stroke();
+//			cb.Rectangle(358.5, y, 41.5, height);cb.Stroke();
+			
+			var b = new VATBox(stamper.GetOverContent(1), invoice.VATs);
+			b.Draw();
+			
 			stamper.Writer.CloseStream = false;
 			stamper.Close();
 			reader.Close();
@@ -155,6 +164,56 @@ namespace HW.Invoicing.Core.Helpers
 			var stamper = new PdfStamper(reader, output) { FormFlattening = true };
 			stamper.Close();
 			return output.ToArray();
+		}
+		
+		class VATBox
+		{
+			PdfContentByte cb;
+			float y = 87.5f;
+			float height = 27f;
+			IDictionary<decimal, decimal> vats;
+			
+			public VATBox(PdfContentByte cb, IDictionary<decimal, decimal> vats)
+			{
+				this.cb = cb;
+				this.vats = vats;
+			}
+			
+			public void Draw()
+			{
+				vats.Remove(25);
+				
+				float x = 358.5f;
+				foreach (var v in vats.Keys) {
+					x -= 64f;
+					cb.Rectangle(x, y, 64, height);cb.Stroke();
+					SetTexts("MOMS, SEK", vats[v].ToString(), x + 20, y + 19, y + 5);
+					
+					x -= 41.5f;
+					cb.Rectangle(x, y, 41.5, height);cb.Stroke();
+					SetTexts("MOMS %", v.ToString(), x + 17, y + 19, y + 5);
+					
+//					cb.Rectangle(400, y, 64, height);cb.Stroke();
+//					cb.Rectangle(358.5, y, 41.5, height);cb.Stroke();
+				}
+			}
+			
+			void SetTexts(string label, string val, float x, float y, float y2)
+			{
+				BaseFont bf = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
+				cb.SetColorFill(BaseColor.DARK_GRAY);
+				cb.SetFontAndSize(bf, 6);
+
+				cb.BeginText();
+				cb.ShowTextAligned(1, label, x, y, 0);
+				cb.EndText();
+				
+//				bf = BaseFont.CreateFont("Calibri", BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
+				cb.SetFontAndSize(bf, 9);
+				cb.BeginText();
+				cb.ShowTextAligned(1, val, x, y2, 0);
+				cb.EndText();
+			}
 		}
 	}
 }

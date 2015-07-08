@@ -5,7 +5,36 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
     <script type="text/javascript">
+        var invoices = [];
         $(document).ready(function () {
+            $('#button-download-pdf-selected').click(function () {
+                invoices.forEach(function (e) {
+                    window.open('invoiceexport.aspx?Id=' + e.id, '_blank');
+                });
+            });
+            $('#checkbox-invoice-all').click(function () {
+                invoices = [];
+                if ($(this).is(':checked')) {
+                    $('.checkbox-invoice').prop('checked', true);
+                    $('.checkbox-invoice').change();
+                } else {
+                    $('.checkbox-invoice').prop('checked', false);
+                }
+            });
+            $('.checkbox-invoice').change(function () {
+                if ($(this).is(':checked')) {
+                    var selected = $(this);
+                    var id = selected.data('id');
+                    var invoice = {
+                        'id': id
+                    };
+                    invoices.push(invoice);
+                } else {
+                    var selected = $(this);
+                    var id = selected.data('id');
+                    findAndRemove(invoices, 'id', id);
+                }
+            });
             $('.internal-comments-text').hide();
             $('.spinner').hide();
             $('.internal-comments').click(function () {
@@ -48,11 +77,15 @@
         onselectedindexchanged="dropDownListFinancialYear_SelectedIndexChanged">
     </asp:DropDownList><br />
 </p>
+<p>
+    <span id="button-download-pdf-selected" class="btn btn-info">Export Selected PDF</span>
+</p>
 <div class="alert alert-info">
 	<strong>Invoices</strong> are lists of goods sent or services provided, with a statement of the sum due for these; a bill.
 </div>
 <table class="table table-hover">
     <tr>
+        <th><input type="checkbox" id="checkbox-invoice-all" /></th>
         <th>Number</th>
         <th>Date</th>
         <th>Customer</th>
@@ -68,6 +101,11 @@
     <% if (invoices != null) { %>
         <% foreach (var i in invoices) { %>
         <tr>
+            <td>
+                <input type="checkbox" class="checkbox-invoice"
+                    data-id="<%= i.Id %>"
+                 />
+            </td>
             <% totalSubTotal += i.SubTotal; %>
             <% totalVAT += i.TotalVAT; %>
             <% totalAmount += i.TotalAmount; %>
