@@ -85,7 +85,6 @@
 </div>
 <table class="table table-hover">
     <tr>
-        <th><input type="checkbox" id="checkbox-invoice-all" /></th>
         <th>Number</th>
         <th>Date</th>
         <th>Customer</th>
@@ -94,6 +93,7 @@
         <th>Total Amount</th>
         <th>Status</th>
         <th>Actions</th>
+        <th><input type="checkbox" id="checkbox-invoice-all" /></th>
         <th style="width:16px"></th>
         <th>Comments</th>
     </tr>
@@ -101,11 +101,6 @@
     <% if (invoices != null) { %>
         <% foreach (var i in invoices) { %>
         <tr>
-            <td>
-                <input type="checkbox" class="checkbox-invoice"
-                    data-id="<%= i.Id %>"
-                 />
-            </td>
             <% totalSubTotal += i.SubTotal; %>
             <% totalVAT += i.TotalVAT; %>
             <% totalAmount += i.TotalAmount; %>
@@ -136,6 +131,11 @@
                         <li><%= HtmlHelper.Anchor("PDF", "invoiceexport.aspx?Id=" + i.Id, "target='_blank'")%></li>
 				    </ul>
 			    </div>
+            </td>
+            <td>
+                <input type="checkbox" class="checkbox-invoice"
+                    data-id="<%= i.Id %>"
+                 />
             </td>
             <td style="width:16px">
                 <% if (i.Exported) { %>
