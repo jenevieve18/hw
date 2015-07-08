@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using HW.Core.Models;
+using HW.Core.Repositories.Sql;
 using HW.Grp;
 using NUnit.Framework;
 
@@ -18,6 +19,17 @@ namespace HW.Tests.Models
 		{
 			loginDays = ReminderHelper.GetLoginDays();
 			loginWeekdays = ReminderHelper.GetLoginWeekdays();
+		}
+		
+		[Test]
+		public void c()
+		{
+			var dr = new SqlDepartmentRepository();
+			var sr = new SqlSponsorRepository();
+			
+			var d = dr.ReadWithReminder3(923);
+			d.Sponsor = sr.ReadSponsor(83) as Sponsor;
+			Console.WriteLine(d.GetReminder2(loginDays, loginWeekdays));
 		}
 		
 		[Test]

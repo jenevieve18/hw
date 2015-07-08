@@ -1,12 +1,8 @@
-﻿/*
- * Created by SharpDevelop.
- * User: Ian
- * Date: 7/8/2015
- * Time: 2:05 PM
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-using System;
+﻿using System;
+using System.IO;
+using HW.Invoicing.Core.Models;
+using HW.Invoicing.Core.Repositories.Sql;
+using iTextSharp.text.pdf;
 using NUnit.Framework;
 
 namespace HW.Tests.Helpers
@@ -14,10 +10,29 @@ namespace HW.Tests.Helpers
 	[TestFixture]
 	public class InvoiceExporterTests
 	{
-		[Test]
-		public void TestMethod()
+		Invoice i;
+		InvoiceExporter e;
+		
+		[SetUp]
+		public void Setup()
 		{
-			// TODO: Add your test.
+			i = new SqlInvoiceRepository().Read(47);
+			e = new InvoiceExporter();
+		}
+		
+		[Test]
+		public void TestExport()
+		{
+			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create, FileAccess.Write)) {
+				MemoryStream s = e.Export(i, @"IHG faktura MALL Ian without comments.pdf");
+				s.WriteTo(f);
+			}
+		}
+		
+		[Test]
+		public void TestExport2()
+		{
+			e.Export2(i, @"IHG faktura MALL Ian without comments.pdf");
 		}
 	}
 }
