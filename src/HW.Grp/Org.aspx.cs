@@ -1556,7 +1556,7 @@ WHERE d.DepartmentID = {1}",
 				}
 				var deptWithReminder = departmentRepository.ReadWithReminder3(rs.GetInt32(2));
 				deptWithReminder.Sponsor = sponsor as Sponsor;
-//				LoggingService.Info(deptWithReminder.Id.ToString());
+				LoggingService.Info(deptWithReminder.Id.ToString());
 				string reminder = deptWithReminder.GetReminder2(ReminderHelper.GetLoginDays(), ReminderHelper.GetLoginWeekdays());
 				OrgTree.Text += string.Format(
 					@"
