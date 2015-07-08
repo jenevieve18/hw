@@ -273,14 +273,22 @@ WHERE DepartmentShort = '{0}' AND SponsorID = {1}",
 WITH Rec_CTE 
     AS(
         SELECT 1 AS Level, 
-               tChild.*
+               tChild.DepartmentID,
+               tChild.ParentDepartmentID,
+               tChild.SponsorID,
+               tChild.LoginDays,
+               tChild.LoginWeekday
         FROM dbo.Department tChild
         WHERE tChild.DepartmentID = @DepartmentID
 
         UNION ALL
 
         SELECT Level + 1 AS Level, 
-               parent.*
+               parent.DepartmentID,
+               parent.ParentDepartmentID,
+               parent.SponsorID,
+               parent.LoginDays,
+               parent.LoginWeekday
         FROM Rec_CTE tParent
         INNER JOIN  dbo.Department parent 
           ON parent.DepartmentID = tParent.ParentDepartmentID
@@ -292,8 +300,8 @@ ORDER BY Level";
 				while (rs.Read()) {
 					var p = new Department {
 						Id = GetInt32(rs, 1),
-						LoginDays = GetInt32Nullable(rs, 11),
-						LoginWeekDay = GetInt32Nullable(rs, 12)
+						LoginDays = GetInt32Nullable(rs, 4),
+						LoginWeekDay = GetInt32Nullable(rs, 5)
 					};
 					d.Parents.Add(p);
 				}
