@@ -1554,10 +1554,10 @@ WHERE d.DepartmentID = {1}",
 	<td align='center' style='font-size:9px;'>&nbsp;</td>";
 					}
 				}
-				var deptWithReminder = departmentRepository.ReadWithReminder2(rs.GetInt32(2));
+				var deptWithReminder = departmentRepository.ReadWithReminder3(rs.GetInt32(2));
 				deptWithReminder.Sponsor = sponsor as Sponsor;
-//				LoggingService.Info(string.Format("[ LoginWeekDay: {0}, LoginDays: {1}, Sponsor.LoginWeekDay: {2}, Sponsor.LoginDays: {3} ]", deptWithReminder.LoginWeekDay, deptWithReminder.LoginDays, sponsor.LoginWeekDay, sponsor.LoginDays));
-				string reminder = deptWithReminder.GetReminder(ReminderHelper.GetLoginDays(), ReminderHelper.GetLoginWeekdays());
+//				LoggingService.Info(deptWithReminder.Id.ToString());
+				string reminder = deptWithReminder.GetReminder2(ReminderHelper.GetLoginDays(), ReminderHelper.GetLoginWeekdays());
 				OrgTree.Text += string.Format(
 					@"
 	<td align='center' style='font-size:9px;'>&nbsp;{0}&nbsp;</td>

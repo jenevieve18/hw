@@ -16,8 +16,8 @@ namespace HW.Core.Models
 		DateTime? AllMessageLastSent { get; set; }
 		string LoginSubject { get; set; }
 		string LoginText { get; set; }
-		int LoginDays { get; set; }
-		int LoginWeekDay { get; set; }
+		int? LoginDays { get; set; }
+		int? LoginWeekDay { get; set; }
 		DateTime? LoginLastSent { get; set; }
 		string EmailFrom { get; set; }
 		int MinUserCountToDisclose { get; set; }
@@ -44,8 +44,8 @@ namespace HW.Core.Models
 		public virtual DateTime? AllMessageLastSent { get; set; }
 		public virtual string LoginSubject { get; set; }
 		public virtual string LoginText { get; set; }
-		public virtual int LoginDays { get; set; }
-		public virtual int LoginWeekDay { get; set; }
+		public virtual int? LoginDays { get; set; }
+		public virtual int? LoginWeekDay { get; set; }
 		public virtual DateTime? LoginLastSent { get; set; }
 		public virtual string SponsorKey { get; set; }
 		public virtual IList<SponsorProjectRoundUnit> RoundUnits { get; set; }
@@ -206,8 +206,8 @@ namespace HW.Core.Models
 		
 		public virtual string LoginSubject { get; set; }
 		public virtual string LoginText { get; set; }
-		public virtual int LoginDays { get; set; }
-		public virtual int LoginWeekDay { get; set; }
+		public virtual int? LoginDays { get; set; }
+		public virtual int? LoginWeekDay { get; set; }
 		public virtual DateTime? LoginLastSent { get; set; }
 		public virtual string EmailFrom { get; set; }
 		public virtual int MinUserCountToDisclose { get; set; }

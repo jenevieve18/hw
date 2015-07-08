@@ -266,6 +266,41 @@ WHERE DepartmentShort = '{0}' AND SponsorID = {1}",
 			return null;
 		}
 		
+		public Department ReadWithReminder3(int id)
+		{
+			var d = new Department { Id = id };
+			string query = @"
+WITH Rec_CTE 
+    AS(
+        SELECT 1 AS Level, 
+               tChild.*
+        FROM dbo.Department tChild
+        WHERE tChild.DepartmentID = @DepartmentID
+
+        UNION ALL
+
+        SELECT Level + 1 AS Level, 
+               parent.*
+        FROM Rec_CTE tParent
+        INNER JOIN  dbo.Department parent 
+          ON parent.DepartmentID = tParent.ParentDepartmentID
+    )
+SELECT * FROM Rec_CTE
+ORDER BY Level";
+			d.Parents = new List<Department>();
+			using (var rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@DepartmentID", id))) {
+				while (rs.Read()) {
+					var p = new Department {
+						Id = GetInt32(rs, 1),
+						LoginDays = GetInt32Nullable(rs, 11),
+						LoginWeekDay = GetInt32Nullable(rs, 12)
+					};
+					d.Parents.Add(p);
+				}
+			}
+			return d;
+		}
+		
 		public Department ReadWithReminder2(int id)
 		{
 			string query = string.Format(
@@ -316,28 +351,28 @@ WHERE DepartmentID = @DepartmentID"
 			return d;
 		}
 		
-		public Department ReadWithReminder(int id)
-		{
-			string query = string.Format(
-				@"
-SELECT DepartmentID, Department, ParentDepartmentID, LoginDays, LoginWeekday, Level
-FROM FindDepartmentWithReminder(@DepartmentID)",
-				id
-			);
-			Department d = null;
-			using (SqlDataReader rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@DepartmentID", id))) {
-				if (rs.Read()) {
-					d = new Department {
-						Id = GetInt32(rs, 0),
-						Name = GetString(rs, 1),
-						Parent = new Department { Id = GetInt32(rs, 2) },
-						LoginDays = GetInt32(rs, 3, -1),
-						LoginWeekDay = GetInt32(rs, 4, -1)
-					};
-				}
-			}
-			return d;
-		}
+//		public Department ReadWithReminder(int id)
+//		{
+//			string query = string.Format(
+//				@"
+//SELECT DepartmentID, Department, ParentDepartmentID, LoginDays, LoginWeekday, Level
+//FROM FindDepartmentWithReminder(@DepartmentID)",
+//				id
+//			);
+//			Department d = null;
+//			using (SqlDataReader rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@DepartmentID", id))) {
+//				if (rs.Read()) {
+//					d = new Department {
+//						Id = GetInt32(rs, 0),
+//						Name = GetString(rs, 1),
+//						Parent = new Department { Id = GetInt32(rs, 2) },
+//						LoginDays = GetInt32(rs, 3, -1),
+//						LoginWeekDay = GetInt32(rs, 4, -1)
+//					};
+//				}
+//			}
+//			return d;
+//		}
 		
 		public override Department Read(int id)
 		{

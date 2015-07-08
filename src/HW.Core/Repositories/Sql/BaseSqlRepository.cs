@@ -201,6 +201,16 @@ namespace HW.Core.Repositories.Sql
 			return rs.IsDBNull(index) ? def : rs.GetInt32(index);
 		}
 		
+		protected int? GetInt32Nullable(SqlDataReader rs, int index)
+		{
+			return GetInt32Nullable(rs, index, null);
+		}
+		
+		protected int? GetInt32Nullable(SqlDataReader rs, int index, int? def)
+		{
+			return rs.IsDBNull(index) ? def : rs.GetInt32(index);
+		}
+		
 		protected double GetDouble(SqlDataReader rs, int index)
 		{
 			return GetDouble(rs, index, 0);
