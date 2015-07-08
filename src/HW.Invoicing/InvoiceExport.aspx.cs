@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using HW.Invoicing.Core.Helpers;
 using HW.Invoicing.Core.Repositories.Sql;
 using HW.Core.Helpers;
 using HW.Invoicing.Core.Models;
@@ -31,28 +32,12 @@ namespace HW.Invoicing
             
             Response.ClearHeaders();
             Response.ClearContent();
-            //Response.ContentType = "application/pdf";
             Response.ContentType = System.Net.Mime.MediaTypeNames.Application.Pdf;
 
             string file = string.Format("{0} {1} {2} {3}", invoice.Number, company.Name, invoice.Customer.YourReferencePerson, DateTime.Now.ToString("MMM yyyy"));
             Response.AddHeader("content-disposition", string.Format("attachment;filename=\"{0}.pdf\";", file));
 
-            /*using (FileStream f = new FileStream(Server.MapPath(@"test.pdf"), FileMode.Create, FileAccess.Write))
-            {
-                var s = exporter.Export(invoice, Server.MapPath(@"IHG faktura MALL Ian without comments.pdf"));
-                s.WriteTo(f);
-            }
-
-            var output = new MemoryStream();
-            using (FileStream f = new FileStream(Server.MapPath(@"test.pdf"), FileMode.Open))
-            {
-                f.CopyTo(output);
-            }*/
-
             var exported = exporter.Export(invoice, Server.MapPath(@"IHG faktura MALL Ian without comments.pdf"));
-            /*var output = new MemoryStream();
-            output.Write(exported, 0, exported.Length);
-            output.WriteTo(Response.OutputStream);*/
             exported.WriteTo(Response.OutputStream);
 
             Response.Flush();
