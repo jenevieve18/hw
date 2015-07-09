@@ -37,7 +37,7 @@ namespace HW.Invoicing
             string file = string.Format("{0} {1} {2} {3}", invoice.Number, company.Name, invoice.Customer.YourReferencePerson, DateTime.Now.ToString("MMM yyyy"));
             Response.AddHeader("content-disposition", string.Format("attachment;filename=\"{0}.pdf\";", file));
 
-            var exported = exporter.Export(invoice, Server.MapPath(@"IHG faktura MALL Ian without comments.pdf"));
+            var exported = exporter.Export(invoice, Server.MapPath(@"IHG faktura MALL Ian without comments.pdf"), Server.MapPath(@"calibri.ttf"));
             exported.WriteTo(Response.OutputStream);
 
             Response.Flush();

@@ -205,7 +205,8 @@ select it.id,
     i.unitid,
     u.name,
     ct.comments,
-    ct.consultant
+    ct.consultant,
+    ct.IsSubscription
 from invoicetimebook it
 inner join customertimebook ct on ct.id = it.customertimebookid
 inner join item i on i.id = ct.itemid
@@ -232,7 +233,8 @@ where it.invoiceid = @InvoiceId";
                                 Unit = new Unit { Id = GetInt32(rs, 7), Name = GetString(rs, 8) }
                             },
                             Comments = GetString(rs, 9),
-                            Consultant = GetString(rs, 10)
+                            Consultant = GetString(rs, 10),
+                            IsSubscription = GetInt32(rs, 11) == 1
                         }
                     });
                 }

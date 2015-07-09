@@ -16,7 +16,7 @@
             });
             $('#<%= dropDownListTimebookItems.ClientID %>').change();
 
-            $('#<%= textBoxTimebookDate.ClientID %>').datepicker({
+            /*$('#<%= textBoxTimebookDate.ClientID %>').datepicker({
                 format: "yyyy-mm-dd",
                 autoclose: true
             });
@@ -29,6 +29,10 @@
                 autoclose: true
             });
             $('#<%= textBoxSubscriptionEndDate.ClientID %>').datepicker({
+                format: "yyyy-mm-dd",
+                autoclose: true
+            });*/
+            $('.date').datepicker({
                 format: "yyyy-mm-dd",
                 autoclose: true
             });
@@ -326,7 +330,7 @@
                             <span id="timebook-message"></span>
                             <div class="form-group">
 	                            <label for="<%= textBoxTimebookDate.ClientID %>">Date</label>
-                                <asp:TextBox ID="textBoxTimebookDate" runat="server" CssClass="form-control"></asp:TextBox>
+                                <asp:TextBox ID="textBoxTimebookDate" runat="server" CssClass="form-control date"></asp:TextBox>
                             </div>
                             <div class="form-group">
 	                            <label for="<%= textBoxTimebookDepartment.ClientID %>">Department</label>
@@ -418,7 +422,7 @@
                                     <td></td>
                                     <td class="hw-border-top">Invoice Date</td>
                                     <td class="hw-border-top">
-                                        <asp:TextBox ID="textBoxInvoiceDate" runat="server" CssClass="form-control"></asp:TextBox>
+                                        <asp:TextBox ID="textBoxInvoiceDate" runat="server" CssClass="form-control date"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1001,7 +1005,7 @@
                 <tr>
                     <td><strong>Start Date</strong></td>
                     <td>
-                        <asp:TextBox CssClass="form-control" ID="textBoxSubscriptionStartDate" runat="server"></asp:TextBox></td>
+                        <asp:TextBox CssClass="form-control date" ID="textBoxSubscriptionStartDate" runat="server"></asp:TextBox></td>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -1011,7 +1015,7 @@
                 <tr id="subscription-end-date">
                     <td><strong>End Date</strong></td>
                     <td>
-                        <asp:TextBox CssClass="form-control" ID="textBoxSubscriptionEndDate" runat="server"></asp:TextBox></td>
+                        <asp:TextBox CssClass="date form-control" ID="textBoxSubscriptionEndDate" runat="server"></asp:TextBox></td>
                 </tr>
             </table>
             <div>

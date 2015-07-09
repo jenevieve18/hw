@@ -13,20 +13,6 @@ namespace HW.Invoicing.Core.Helpers
 {
 	public class InvoiceExporter
 	{
-//		public string Type {
-//			get { return "application/pdf"; }
-//		}
-//
-//		public string GetContentDisposition(string file)
-//		{
-//			return string.Format("attachment;filename=\"{0}.pdf\";", file);
-//		}
-//
-//		public bool HasContentDisposition(string file)
-//		{
-//			return GetContentDisposition(file).Length > 0;
-//		}
-//
 		public void Export2(Invoice invoice, string existingFileName)
 		{
 			string newFile = @"test.pdf";
@@ -86,7 +72,7 @@ namespace HW.Invoicing.Core.Helpers
 			reader.Close();
 		}
 		
-		public MemoryStream Export(Invoice invoice, string templateFileName)
+		public MemoryStream Export(Invoice invoice, string templateFileName, string calibriFont)
 		{
 			MemoryStream output = new MemoryStream();
 			
@@ -109,8 +95,8 @@ namespace HW.Invoicing.Core.Helpers
 			
 			form.SetField("Text6B", invoice.Customer.ToString());
 			
-			form.SetField("Text10b", invoice.SubTotal.ToString());
-			form.SetField("Text13", invoice.TotalAmount.ToString());
+			form.SetField("Text10b", invoice.SubTotal.ToString("0.00"));
+			form.SetField("Text13", invoice.TotalAmount.ToString("0.00"));
 			
 			string items = "";
 			string quantities = "";
@@ -118,11 +104,11 @@ namespace HW.Invoicing.Core.Helpers
 			string prices = "";
 			string amounts = "";
 			foreach (var t in invoice.Timebooks) {
-				items += t.ToString() + "\n\n";
+				items += t.Timebook.ToString() + "\n\n";
 				quantities += t.Timebook.Quantity.ToString() + "\n\n";
 				units += t.Timebook.Item.Unit.Name + "\n\n";
-				prices += t.Timebook.Price.ToString() + "\n\n";
-				amounts += t.Timebook.Amount.ToString() + "\n\n";
+				prices += t.Timebook.Price.ToString("0.00") + "\n\n";
+				amounts += t.Timebook.Amount.ToString("0.00") + "\n\n";
 			}
 			form.SetField("Text7", items);
 			form.SetField("Text8", quantities);
@@ -133,7 +119,7 @@ namespace HW.Invoicing.Core.Helpers
 			if (invoice.VATs.ContainsKey(25))
 			{
 				form.SetField("Text11b", 25.ToString());
-				form.SetField("Text12", invoice.VATs[25].ToString());
+				form.SetField("Text12", invoice.VATs[25].ToString("0.00"));
 			}
 			
 			stamper.FormFlattening = true;
@@ -142,13 +128,7 @@ namespace HW.Invoicing.Core.Helpers
 				stamper.PartialFormFlattening(s);
 			}
 			
-//			PdfContentByte cb = stamper.GetOverContent(1);
-//			float y = 87.5f;
-//			float height = 27f;
-//			cb.Rectangle(400, y, 64, height);cb.Stroke();
-//			cb.Rectangle(358.5, y, 41.5, height);cb.Stroke();
-			
-			var b = new VATBox(stamper.GetOverContent(1), invoice.VATs);
+			var b = new VATBox(stamper.GetOverContent(1), invoice.VATs, calibriFont);
 			b.Draw();
 			
 			stamper.Writer.CloseStream = false;
@@ -172,46 +152,59 @@ namespace HW.Invoicing.Core.Helpers
 			float y = 87.5f;
 			float height = 27f;
 			IDictionary<decimal, decimal> vats;
+			string calibriFont;
 			
-			public VATBox(PdfContentByte cb, IDictionary<decimal, decimal> vats)
+			public VATBox(PdfContentByte cb, IDictionary<decimal, decimal> vats, string calibriFont)
 			{
 				this.cb = cb;
 				this.vats = vats;
+				this.calibriFont = calibriFont;
 			}
 			
 			public void Draw()
 			{
-				vats.Remove(25);
+				if (vats.ContainsKey(25)) {
+					vats.Remove(25);
+				}
 				
 				float x = 358.5f;
 				foreach (var v in vats.Keys) {
 					x -= 64f;
-					cb.Rectangle(x, y, 64, height);cb.Stroke();
-					SetTexts("MOMS, SEK", vats[v].ToString(), x + 20, y + 19, y + 5);
+					DrawRectangle(x, y, 64f, height);
+					SetTexts("MOMS, SEK", vats[v].ToString("0.00"), x + 3, y + 19, y + 4.5f);
 					
 					x -= 41.5f;
-					cb.Rectangle(x, y, 41.5, height);cb.Stroke();
-					SetTexts("MOMS %", v.ToString(), x + 17, y + 19, y + 5);
-					
-//					cb.Rectangle(400, y, 64, height);cb.Stroke();
-//					cb.Rectangle(358.5, y, 41.5, height);cb.Stroke();
+					DrawRectangle(x, y, 41.5f, height);
+					SetTexts("MOMS %", v.ToString(), x + 3, y + 19, y + 4.5f);
 				}
+			}
+			
+			void DrawRectangle(float x, float y, float width, float height)
+			{
+				cb.Rectangle(x, y, width, height);
+				cb.SaveState();
+				cb.SetColorFill(new BaseColor(241, 241, 242));
+				cb.Fill();
+				cb.RestoreState();
+				
+				cb.Rectangle(x, y, width, height);
+				cb.Stroke();
 			}
 			
 			void SetTexts(string label, string val, float x, float y, float y2)
 			{
-				BaseFont bf = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
+				BaseFont bf = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
 				cb.SetColorFill(BaseColor.DARK_GRAY);
 				cb.SetFontAndSize(bf, 6);
 
 				cb.BeginText();
-				cb.ShowTextAligned(1, label, x, y, 0);
+				cb.ShowTextAligned(Element.ALIGN_LEFT, label, x, y, 0);
 				cb.EndText();
 				
-//				bf = BaseFont.CreateFont("Calibri", BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
-				cb.SetFontAndSize(bf, 9);
+				bf = BaseFont.CreateFont(calibriFont, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+				cb.SetFontAndSize(bf, 10);
 				cb.BeginText();
-				cb.ShowTextAligned(1, val, x, y2, 0);
+				cb.ShowTextAligned(Element.ALIGN_LEFT, val, x + 1, y2, 0);
 				cb.EndText();
 			}
 		}
