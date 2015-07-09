@@ -38,7 +38,7 @@ function monthDiff(d1, d2) {
     days += d2.getDate();
     days -= daysOfMonth1;
     var extraMonth = parseFloat(days) / daysOfMonth1;
-    extraMonth = Math.ceil(extraMonth * 2) / 2;
+    //extraMonth = Math.ceil(extraMonth * 2) / 2;
 
     months += extraMonth;
     return months;

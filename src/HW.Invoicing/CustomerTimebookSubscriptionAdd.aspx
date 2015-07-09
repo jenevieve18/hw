@@ -14,8 +14,8 @@
                 var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
                 var endDate = $('#<%= textBoxEndDate.ClientID %>').datepicker('getDate');
                 var months = monthDiff(startDate, endDate);
-                $('#<%= textBoxQuantity.ClientID %>').val(months);
-                $('.subscription-quantity').val(months);
+                $('#<%= textBoxQuantity.ClientID %>').val($.number(months, 2, '.', ''));
+                $('.subscription-quantity').val($.number(months, 2, '.', ''));
                 $('#<%= textBoxText.ClientID %>').change();
             });
             var textGeneratedComments = $('#<%= textBoxComments.ClientID %>');
