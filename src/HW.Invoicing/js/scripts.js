@@ -1,12 +1,4 @@
 
-/*function monthDiff(d1, d2) {
-    var months;
-    months = (d2.getFullYear() - d1.getFullYear()) * 12;
-    months -= d1.getMonth();
-    months += d2.getMonth();
-    return months <= 0 ? 0 : months;
-}*/
-
 function getDaysInAMonth(month, year) {
     var isLeapYear = year % 4 == 0 && (year % 100 != 0 && year % 400 == 0);
     var febDays = isLeapYear ? 29 : 28;
@@ -36,7 +28,7 @@ function monthDiff(d1, d2) {
     var daysOfMonth1 = getDaysInAMonth(d1.getMonth(), d1.getFullYear());
     var days = daysOfMonth1 - d1.getDate();
     days += d2.getDate();
-    days -= daysOfMonth1;
+    days -= daysOfMonth1 - 1;
     var extraMonth = parseFloat(days) / daysOfMonth1;
     //extraMonth = Math.ceil(extraMonth * 2) / 2;
 
