@@ -93,7 +93,7 @@
         <th>Total Amount</th>
         <th>Status</th>
         <th>Actions</th>
-        <th><input type="checkbox" id="checkbox-invoice-all" /></th>
+        <th style="width:16px"><input type="checkbox" id="checkbox-invoice-all" /></th>
         <th style="width:16px"></th>
         <th>Comments</th>
     </tr>
@@ -132,7 +132,7 @@
 				    </ul>
 			    </div>
             </td>
-            <td>
+            <td style="width:16px">
                 <input type="checkbox" class="checkbox-invoice"
                     data-id="<%= i.Id %>"
                  />

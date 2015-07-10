@@ -24,7 +24,7 @@ namespace HW.Invoicing
             if (!IsPostBack)
             {
                 var startDate = DateTime.Now;
-                var endDate = DateTime.Now.AddMonths(1);
+                var endDate = DateTime.Now.AddMonths(1).AddDays(-1);
                 textBoxStartDate.Text = startDate.ToString("yyyy-MM-dd");
                 textBoxEndDate.Text = endDate.ToString("yyyy-MM-dd");
 
