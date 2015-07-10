@@ -24,15 +24,32 @@ function monthDiff(d1, d2) {
     var months = (d2.getFullYear() - d1.getFullYear()) * 12;
     months -= d1.getMonth();
     months += d2.getMonth();
+    months--;
+    
+    var daysOfMonth1 = getDaysInAMonth(d1.getMonth(), d1.getFullYear());
+    months += (daysOfMonth1-d1.getDate()+1) / daysOfMonth1;
+    
+    var daysOfMonth2 = getDaysInAMonth(d2.getMonth(), d2.getFullYear());
+    months += d2.getDate() / daysOfMonth2;  
+
+    return Math.round(months*100)/100; 
+}
+
+function monthDiffX(d1, d2) {
+    var months = (d2.getFullYear() - d1.getFullYear()) * 12;
+    months -= d1.getMonth();
+    months += d2.getMonth();
 
     var daysOfMonth1 = getDaysInAMonth(d1.getMonth(), d1.getFullYear());
-    var days = daysOfMonth1 - d1.getDate();
-    days += d2.getDate();
-    days -= daysOfMonth1 - 1;
-    var extraMonth = parseFloat(days) / daysOfMonth1;
-    //extraMonth = Math.ceil(extraMonth * 2) / 2;
+    var daysOfMonth2 = getDaysInAMonth(d2.getMonth(), d2.getFullYear());
 
-    months += extraMonth;
+    var days1 = daysOfMonth1 - d1.getDate() + 1;
+    var extraMonth1 = parseFloat(days1) / daysOfMonth1;
+
+    var days2 = daysOfMonth2 - d2.getDate();
+    var extraMonth2 = parseFloat(days2) / daysOfMonth2;
+
+    months += (extraMonth1 + extraMonth2);
     return months;
 }
 
