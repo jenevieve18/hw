@@ -56,6 +56,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Companies.aspx" />
+    <Content Include="CompanyAdd.aspx" />
+    <Content Include="CompanyEdit.aspx" />
+    <Content Include="CompanySelect.aspx" />
     <Content Include="CustomerTimebookSubscriptionAdd.aspx" />
     <Content Include="css\style.css" />
     <Content Include="CustomerAdd.aspx" />
@@ -122,6 +126,34 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Companies.aspx.cs">
+      <DependentUpon>Companies.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Companies.aspx.designer.cs">
+      <DependentUpon>Companies.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CompanyAdd.aspx.cs">
+      <DependentUpon>CompanyAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CompanyAdd.aspx.designer.cs">
+      <DependentUpon>CompanyAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CompanyEdit.aspx.cs">
+      <DependentUpon>CompanyEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CompanyEdit.aspx.designer.cs">
+      <DependentUpon>CompanyEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CompanySelect.aspx.cs">
+      <DependentUpon>CompanySelect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CompanySelect.aspx.designer.cs">
+      <DependentUpon>CompanySelect.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CustomerTimebookSubscriptionAdd.aspx.cs">
       <DependentUpon>CustomerTimebookSubscriptionAdd.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

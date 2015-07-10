@@ -12,6 +12,7 @@ namespace HW.Invoicing
     public partial class Login : System.Web.UI.Page
     {
     	SqlUserRepository r = new SqlUserRepository();
+        SqlCompanyRepository cr = new SqlCompanyRepository();
     	protected string errorMessage;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -50,6 +51,8 @@ namespace HW.Invoicing
             var u = r.ReadByNameAndPassword(textBoxName.Text, textBoxPassword.Text);
             if (u != null)
             {
+                //var c = cr.ReadFirstCompanyByUser(u.Id);
+                //Session["CompanyId"] = c.Id;
                 Session["UserID"] = u.Id;
                 Session["UserName"] = u.Name;
                 if (Request.QueryString["r"] != null)
