@@ -94,7 +94,7 @@
             <input type="checkbox" id="checkbox-invoice-all" />
         </th>
         <th style="width:16px">
-            <span id="button-download-pdf-selected" class="btn btn-xs btn-info">PDFs</span>
+            <span id="button-download-pdf-selected" class="btn btn-xs btn-info">Export</span>
         </th>
         <th class="col-md-2">Comments</th>
     </tr>
