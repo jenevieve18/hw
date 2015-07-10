@@ -109,9 +109,9 @@
             <td><%= i.Number %></td>
             <td><%= i.Date.Value.ToString("yyyy-MM-dd") %></td>
             <td><%= HtmlHelper.Anchor(i.Customer.Name, string.Format("customershow.aspx?Id={0}&SelectedTab=timebook", i.Customer.Id)) %></td>
-            <td><%= i.SubTotal.ToString("### ### ##0.00") %></td>
-            <td><%= i.TotalVAT.ToString("### ### ##0.00") %></td>
-            <td><%= i.TotalAmount.ToString("### ### ##0.00") %></td>
+            <td class="text-right"><%= i.SubTotal.ToString("### ### ##0.00") %></td>
+            <td class="text-right"><%= i.TotalVAT.ToString("### ### ##0.00") %></td>
+            <td class="text-right"><%= i.TotalAmount.ToString("### ### ##0.00") %></td>
             <td><%= i.GetStatus() %></td>
             <td>
                 <div class="btn-group">
@@ -138,7 +138,7 @@
                     data-id="<%= i.Id %>"
                  />
             </td>
-            <td style="width:16px">
+            <td style="width:16px" class="text-center">
                 <% if (i.Exported) { %>
                     <%= HtmlHelper.AnchorImage("invoiceexport.aspx?Id=" + i.Id, "img/page_white_acrobat.png", "target='_blank'")%>
                 <% } %>
@@ -153,9 +153,9 @@
     <% } %>
     <tr>
         <td colspan="3"><strong>TOTAL</strong></td>
-        <td><strong><%= totalSubTotal.ToString("### ### ##0.00") %></strong></td>
-        <td><strong><%= totalVAT.ToString("### ### ##0.00") %></strong></td>
-        <td><strong><%= totalAmount.ToString("### ### ##0.00") %></strong></td>
+        <td class="text-right"><strong><%= totalSubTotal.ToString("### ### ##0.00") %></strong></td>
+        <td class="text-right"><strong><%= totalVAT.ToString("### ### ##0.00") %></strong></td>
+        <td class="text-right"><strong><%= totalAmount.ToString("### ### ##0.00") %></strong></td>
         <td colspan="4"></td>
     </tr>
 </table>
