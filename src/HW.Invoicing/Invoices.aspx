@@ -85,9 +85,9 @@
         <th>Number</th>
         <th>Date</th>
         <th>Customer</th>
-        <th>Amount</th>
-        <th>VAT</th>
-        <th>Total Amount</th>
+        <th class="text-right">Amount</th>
+        <th class="text-right">VAT</th>
+        <th class="text-right">Total Amount</th>
         <th>Status</th>
         <th>Actions</th>
         <th style="width:16px">
