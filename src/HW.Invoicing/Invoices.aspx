@@ -82,12 +82,6 @@
 </div>
 <table class="table table-hover">
     <tr>
-        <th colspan="8"></th>
-        <th colspan="3">
-            <span id="button-download-pdf-selected" class="btn btn-sm btn-info">Export Selected PDF</span>
-        </th>
-    </tr>
-    <tr>
         <th>Number</th>
         <th>Date</th>
         <th>Customer</th>
@@ -96,9 +90,13 @@
         <th>Total Amount</th>
         <th>Status</th>
         <th>Actions</th>
-        <th style="width:16px"><input type="checkbox" id="checkbox-invoice-all" /></th>
-        <th style="width:16px"></th>
-        <th>Comments</th>
+        <th style="width:16px">
+            <input type="checkbox" id="checkbox-invoice-all" />
+        </th>
+        <th style="width:16px">
+            <span id="button-download-pdf-selected" class="btn btn-xs btn-info">Export PDFs</span>
+        </th>
+        <th class="col-md-2">Comments</th>
     </tr>
     <% decimal totalSubTotal = 0, totalVAT = 0, totalAmount = 0; %>
     <% if (invoices != null) { %>
