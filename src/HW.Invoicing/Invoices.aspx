@@ -77,13 +77,16 @@
         onselectedindexchanged="dropDownListFinancialYear_SelectedIndexChanged">
     </asp:DropDownList><br />
 </p>
-<p>
-    <span id="button-download-pdf-selected" class="btn btn-info">Export Selected PDF</span>
-</p>
 <div class="alert alert-info">
 	<strong>Invoices</strong> are lists of goods sent or services provided, with a statement of the sum due for these; a bill.
 </div>
 <table class="table table-hover">
+    <tr>
+        <th colspan="8"></th>
+        <th colspan="3">
+            <span id="button-download-pdf-selected" class="btn btn-sm btn-info">Export Selected PDF</span>
+        </th>
+    </tr>
     <tr>
         <th>Number</th>
         <th>Date</th>

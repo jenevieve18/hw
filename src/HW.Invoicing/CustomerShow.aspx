@@ -15,23 +15,6 @@
                 $('#<%= labelTimebookUnit.ClientID %>').text(selectedUnit);
             });
             $('#<%= dropDownListTimebookItems.ClientID %>').change();
-
-            /*$('#<%= textBoxTimebookDate.ClientID %>').datepicker({
-                format: "yyyy-mm-dd",
-                autoclose: true
-            });
-            $('#<%= textBoxInvoiceDate.ClientID %>').datepicker({
-                format: "yyyy-mm-dd",
-                autoclose: true
-            });
-            $('#<%= textBoxSubscriptionStartDate.ClientID %>').datepicker({
-                format: "yyyy-mm-dd",
-                autoclose: true
-            });
-            $('#<%= textBoxSubscriptionEndDate.ClientID %>').datepicker({
-                format: "yyyy-mm-dd",
-                autoclose: true
-            });*/
             $('.date').datepicker({
                 format: "yyyy-mm-dd",
                 autoclose: true
