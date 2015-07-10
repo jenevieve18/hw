@@ -32,11 +32,13 @@
             $('#<%= textBoxSubscriptionTimebookQuantity.ClientID %>').change(function () {
                 $('#<%= textBoxSubscriptionTimebookQuantity.ClientID %>').val($(this).val());
                 var startDate = $('#<%= textBoxSubscriptionTimebookStartDate.ClientID %>').datepicker('getDate');
-                var months = parseInt($(this).val());
+                //var months = parseInt($(this).val());
+                /*var months = parseFloat($(this).val());
                 var d = new Date(startDate);
                 var currentMonth = d.getMonth();
                 var newMonth = currentMonth + months;
-                d = new Date(d.setMonth(newMonth));
+                d = new Date(d.setMonth(newMonth));*/
+                var d = addMonth(startDate, $(this).val());
                 $('#<%= textBoxSubscriptionTimebookEndDate.ClientID %>').datepicker('update', d);
             });
         });

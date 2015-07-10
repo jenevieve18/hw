@@ -30,11 +30,12 @@
             $('#<%= textBoxQuantity.ClientID %>').change(function () {
                 $('.subscription-quantity').val($(this).val());
                 var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
-                var months = parseInt($(this).val());
+                /*var months = parseInt($(this).val());
                 var d = new Date(startDate);
                 var currentMonth = d.getMonth();
                 var newMonth = currentMonth + months;
-                d = new Date(d.setMonth(newMonth));
+                d = new Date(d.setMonth(newMonth));*/
+                var d = addMonth(startDate, $(this).val());
                 $('#<%= textBoxEndDate.ClientID %>').datepicker('update', d);
             });
             $('#<%= textBoxComments.ClientID %>').change(function () {

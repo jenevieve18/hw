@@ -1,4 +1,14 @@
 
+function addMonth(startDate, months) {
+    months = parseFloat(months);
+    var d = new Date(startDate);
+    var currentMonth = d.getMonth();
+    var newMonth = currentMonth + months;
+    d = new Date(d.setMonth(newMonth));
+    d = new Date(d.setDate(d.getDate() - 1));
+    return d;
+}
+
 function getDaysInAMonth(month, year) {
     var isLeapYear = year % 4 == 0 && (year % 100 != 0 && year % 400 == 0);
     var febDays = isLeapYear ? 29 : 28;
