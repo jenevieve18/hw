@@ -16,7 +16,10 @@
     </tr>
     <% foreach (var c in companies) { %>
     <tr>
-        <td><%= HtmlHelper.Anchor(c.Name, "companyselect.aspx?Id=" + c.Id) %></td>
+        <td>
+            <%= c.Name %>
+            <!--<%= HtmlHelper.Anchor(c.Name, "companyselect.aspx?Id=" + c.Id) %>-->
+        </td>
         <td>
             <%= HtmlHelper.Anchor("Edit", "companyedit.aspx?Id=" + c.Id) %>
         </td>

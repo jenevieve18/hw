@@ -50,7 +50,7 @@
 <div>
     <asp:Button ID="buttonSave" CssClass="btn btn-success" runat="server" Text="Save company info" 
         onclick="buttonSave_Click" />
-        or <i><%= HtmlHelper.Anchor("cancel", "dashboard.aspx") %></i>
+        or <i><%= HtmlHelper.Anchor("cancel", "companies.aspx") %></i>
 </div>
 
 </asp:Content>

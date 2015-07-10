@@ -145,7 +145,8 @@
                                         <strong class="caret"></strong>
                                     </a>
 							        <ul class="dropdown-menu">
-								        <li><%= HtmlHelper.Anchor("Settings.aspx", "settings.aspx") %></li>
+								        <li><%= HtmlHelper.Anchor("My Companies", "companies.aspx") %></li>
+                                        <li><%= HtmlHelper.Anchor("Settings", "settings.aspx") %></li>
 								        <li><%= HtmlHelper.Anchor("Profile", "profile.aspx") %></li>
 								        <li class="divider"></li>
 								        <li><%= HtmlHelper.Anchor("Log out", "logout.aspx") %></li>
