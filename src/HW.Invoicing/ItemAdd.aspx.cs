@@ -17,6 +17,7 @@ namespace HW.Invoicing
     	SqlItemRepository ir = new SqlItemRepository();
     	SqlUnitRepository ur = new SqlUnitRepository();
         protected string message;
+        int companyId;
     	
     	public ItemAdd()
     	{
@@ -25,13 +26,15 @@ namespace HW.Invoicing
         protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
+
+            companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
         }
         
 		protected override void OnPreRender(EventArgs e)
 		{
 			base.OnPreRender(e);
 			dropDownListUnits.Items.Clear();
-			foreach (var u in ur.FindAll()) {
+			foreach (var u in ur.FindByCompany(companyId)) {
 				var li = new ListItem(u.Name, u.Id.ToString());
                 dropDownListUnits.Items.Add(li);
 			}

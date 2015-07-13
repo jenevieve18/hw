@@ -246,7 +246,7 @@ namespace HW.Invoicing
             contacts = r.FindContacts(id);
             timebooks = r.FindTimebooks(id);
             timebookItems = ir.FindAllWithCustomerItems(id);
-            items = ir.FindAll();
+            items = ir.FindByCompany(companyId);
             languages = lr.FindAll();
 
             dropDownListSubscriptionItem.Items.Clear();
