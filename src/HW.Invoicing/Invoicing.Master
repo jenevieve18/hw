@@ -113,7 +113,9 @@
 							        </ul>
 						        </li>-->
 						        <!--<li><%= HtmlHelper.Anchor("Dashboard", "dashboard.aspx") %></li>-->
+                                <% if (Session["CompanyName"] != null) { %>
                                 <li><%= HtmlHelper.Anchor(Session["CompanyName"].ToString(), "dashboard.aspx") %></li>
+                                <% } %>
 						        <li><%= HtmlHelper.Anchor("Customers", "customers.aspx") %></li>
                                 <li><%= HtmlHelper.Anchor("Subscription Timebooks", "customertimebooksubscriptionadd.aspx")%></li>
 						        <li><%= HtmlHelper.Anchor("Invoices", "invoices.aspx") %></li>
