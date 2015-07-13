@@ -18,21 +18,12 @@ namespace HW.Invoicing
         protected IList<Customer> nonSubscribers;
         CustomerService s = new CustomerService(new SqlCustomerRepository());
     	
-    	public Customers()
-    	{
-    	}
-    	
-    	public void Index()
-    	{
-    		Page_Load(this, null);
-    	}
-    	
         protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
 
-            subscribers = s.FindSubscribers();
-            nonSubscribers = s.FindNonSubscribers();
+            subscribers = s.FindSubscribersByCompany(ConvertHelper.ToInt32(Session["CompanyId"]));
+            nonSubscribers = s.FindNonSubscribersByCompany(ConvertHelper.ToInt32(Session["CompanyId"]));
         }
     }
 }

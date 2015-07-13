@@ -47,6 +47,10 @@
 	<label for="<%= textBoxFinancialMonthEnd.ClientID %>">End Financial Month</label>
     <asp:TextBox ID="textBoxFinancialMonthEnd" runat="server" CssClass="date form-control"></asp:TextBox>
 </div>
+<div class="form-group">
+	<label for="<%= textBoxInvoicePrefix.ClientID %>">Invoice Prefix</label>
+    <asp:TextBox ID="textBoxInvoicePrefix" runat="server" CssClass="form-control"></asp:TextBox>
+</div>
 <div>
     <asp:Button ID="buttonSave" CssClass="btn btn-success" runat="server" Text="Save company info" 
         onclick="buttonSave_Click" />

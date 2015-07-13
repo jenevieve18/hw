@@ -58,7 +58,8 @@ SELECT Id,
     BankAccountNumber,
     TIN,
     FinancialMonthStart,
-    FinancialMonthEnd
+    FinancialMonthEnd,
+    InvoicePrefix
 FROM Company
 WHERE Id = @Id";
 			Company c = null;
@@ -72,14 +73,15 @@ WHERE Id = @Id";
 						BankAccountNumber = GetString(rs, 4),
 						TIN = GetString(rs, 5),
                         FinancialMonthStart = GetDateTime(rs, 6),
-                        FinancialMonthEnd = GetDateTime(rs, 7)
+                        FinancialMonthEnd = GetDateTime(rs, 7),
+                        InvoicePrefix = GetString(rs, 8)
 					};
 				}
 			}
 			return c;
 		}
 
-        public Company ReadFirstCompanyByUser(int userId)
+        public Company ReadSelectedCompanyByUser(int userId)
         {
             string query = @"
 SELECT TOP 1 Id,

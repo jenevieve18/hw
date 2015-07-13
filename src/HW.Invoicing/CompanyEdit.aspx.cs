@@ -30,6 +30,7 @@ namespace HW.Invoicing
                     textBoxTIN.Text = c.TIN;
                     textBoxFinancialMonthStart.Text = c.FinancialMonthStart.Value.ToString("yyyy-MM-dd");
                     textBoxFinancialMonthEnd.Text = c.FinancialMonthEnd.Value.ToString("yyyy-MM-dd");
+                    textBoxInvoicePrefix.Text = c.InvoicePrefix;
                 }
             }
         }
@@ -43,7 +44,8 @@ namespace HW.Invoicing
                 BankAccountNumber = textBoxBankAccountNumber.Text,
                 TIN = textBoxTIN.Text,
                 FinancialMonthStart = ConvertHelper.ToDateTime(textBoxFinancialMonthStart.Text),
-                FinancialMonthEnd = ConvertHelper.ToDateTime(textBoxFinancialMonthEnd.Text)
+                FinancialMonthEnd = ConvertHelper.ToDateTime(textBoxFinancialMonthEnd.Text),
+                InvoicePrefix = textBoxInvoicePrefix.Text
             };
             r.Update(c, id);
             Response.Redirect("companies.aspx");

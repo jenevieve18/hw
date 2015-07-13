@@ -112,7 +112,8 @@
 								        <li><a href="#">One more link</a></li>
 							        </ul>
 						        </li>-->
-						        <li><%= HtmlHelper.Anchor("Dashboard", "dashboard.aspx") %></li>
+						        <!--<li><%= HtmlHelper.Anchor("Dashboard", "dashboard.aspx") %></li>-->
+                                <li><%= HtmlHelper.Anchor(Session["CompanyName"].ToString(), "dashboard.aspx") %></li>
 						        <li><%= HtmlHelper.Anchor("Customers", "customers.aspx") %></li>
                                 <li><%= HtmlHelper.Anchor("Subscription Timebooks", "customertimebooksubscriptionadd.aspx")%></li>
 						        <li><%= HtmlHelper.Anchor("Invoices", "invoices.aspx") %></li>
@@ -146,7 +147,7 @@
                                     </a>
 							        <ul class="dropdown-menu">
 								        <li><%= HtmlHelper.Anchor("My Companies", "companies.aspx") %></li>
-                                        <li><%= HtmlHelper.Anchor("Settings", "settings.aspx") %></li>
+                                        <!--<li><%= HtmlHelper.Anchor("Settings", "settings.aspx") %></li>-->
 								        <li><%= HtmlHelper.Anchor("Profile", "profile.aspx") %></li>
 								        <li class="divider"></li>
 								        <li><%= HtmlHelper.Anchor("Log out", "logout.aspx") %></li>

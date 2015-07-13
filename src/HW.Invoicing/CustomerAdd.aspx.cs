@@ -44,7 +44,8 @@ namespace HW.Invoicing
                 OurReferencePerson = textBoxOurReferencePerson.Text,
                 Phone = textBoxPhone.Text,
                 Email = textBoxEmail.Text,
-                Language = new Language { Id = ConvertHelper.ToInt32(dropDownListLanguage.SelectedValue) }
+                Language = new Language { Id = ConvertHelper.ToInt32(dropDownListLanguage.SelectedValue) },
+                Company = new Company { Id = ConvertHelper.ToInt32(Session["CompanyId"]) }
             };
             c.Validate();
             if (!c.HasErrors)

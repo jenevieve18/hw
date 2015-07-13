@@ -61,14 +61,14 @@ update invoice set status = 2 where id = @Id";
         public void RevertPayment(int id)
         {
             string query = @"
-update invoice set status = 1 where id = @Id";
+UPDATE Invoice SET Status = 1 WHERE Id = @Id";
             ExecuteNonQuery(query, "invoicing", new SqlParameter("@Id", id));
         }
 
         public int GetLatestInvoiceNumber()
         {
             string query = @"
-select top 1 invoice from generatednumber";
+SELECT TOP 1 Invoice FROM GeneratedNumber";
             int id = 0;
             using (SqlDataReader rs = ExecuteReader(query, "invoicing"))
             {

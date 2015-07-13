@@ -234,3 +234,8 @@ alter table Company add UserId integer;
 update Issue set Status = 4 where Status = 3;
 update Issue set Status = 3 where Status = 2;
 update Issue set Status = 2 where Status = 1;
+
+alter table Company add InvoicePrefix varchar(255);
+
+alter table Customer add CompanyId integer;
+update Customer set CompanyId = 1;

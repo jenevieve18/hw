@@ -284,8 +284,8 @@ VALUES(@CustomerId, @ItemId, @Price, @SortOrder)"
 		{
 			string query = string.Format(
                 @"
-INSERT INTO Customer(Name, Number, PostalAddress, InvoiceAddress, PurchaseOrderNumber, YourReferencePerson, OurReferencePerson, Phone, Email, LangId)
-VALUES(@Name, @Number, @PostalAddress, @InvoiceAddress, @PurchaseOrderNumber, @YourReferencePerson, @OurReferencePerson, @Phone, @Email, @LangId)"
+INSERT INTO Customer(Name, Number, PostalAddress, InvoiceAddress, PurchaseOrderNumber, YourReferencePerson, OurReferencePerson, Phone, Email, LangId, CompanyId)
+VALUES(@Name, @Number, @PostalAddress, @InvoiceAddress, @PurchaseOrderNumber, @YourReferencePerson, @OurReferencePerson, @Phone, @Email, @LangId, @CompanyId)"
             );
 			ExecuteNonQuery(
 				query,
@@ -299,7 +299,8 @@ VALUES(@Name, @Number, @PostalAddress, @InvoiceAddress, @PurchaseOrderNumber, @Y
                 new SqlParameter("@OurReferencePerson", c.OurReferencePerson),
                 new SqlParameter("@Phone", c.Phone),
                 new SqlParameter("@Email", c.Email),
-                new SqlParameter("@LangId", c.Language.Id)
+                new SqlParameter("@LangId", c.Language.Id),
+                new SqlParameter("@CompanyId", c.Company.Id)
 			);
 		}
 		
@@ -1068,24 +1069,24 @@ ORDER BY Type"
 			return contacts;
 		}
 
-        public IList<Customer> FindNonSubscribers()
+        public IList<Customer> FindNonSubscribers(int companyId)
         {
             string query = string.Format(
                 @"
-SELECT Id,
-    Name,
-    Number,
-    Phone,
-    Email,
-    Inactive,
-    HasSubscription
-FROM Customer
-WHERE HasSubscription != 1
-OR HasSubscription IS NULL
-ORDER BY Inactive, Name"
+SELECT c.Id,
+    c.Name,
+    c.Number,
+    c.Phone,
+    c.Email,
+    c.Inactive,
+    c.HasSubscription
+FROM Customer c
+WHERE (c.HasSubscription != 1 OR c.HasSubscription IS NULL)
+AND c.CompanyId = @CompanyId
+ORDER BY c.Inactive, Name"
             );
             var customers = new List<Customer>();
-            using (SqlDataReader rs = ExecuteReader(query, "invoicing"))
+            using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@CompanyId", companyId)))
             {
                 while (rs.Read())
                 {
@@ -1105,7 +1106,7 @@ ORDER BY Inactive, Name"
             return customers;
         }
 
-        public IList<Customer> FindSubscribers()
+        public IList<Customer> FindSubscribers(int companyId)
         {
             string query = string.Format(
                 @"
@@ -1124,10 +1125,11 @@ FROM Customer c
 INNER JOIN Item i on i.Id = c.SubscriptionItemId
 INNER JOIN Unit u on u.Id = i.UnitId
 WHERE c.HasSubscription = 1
+AND c.CompanyId = @CompanyId
 ORDER BY c.Inactive, c.Name"
             );
             var customers = new List<Customer>();
-            using (SqlDataReader rs = ExecuteReader(query, "invoicing"))
+            using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@CompanyId", companyId)))
             {
                 while (rs.Read())
                 {

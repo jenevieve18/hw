@@ -51,8 +51,12 @@ namespace HW.Invoicing
             var u = r.ReadByNameAndPassword(textBoxName.Text, textBoxPassword.Text);
             if (u != null)
             {
-                //var c = cr.ReadFirstCompanyByUser(u.Id);
-                //Session["CompanyId"] = c.Id;
+                var c = cr.ReadSelectedCompanyByUser(u.Id);
+                if (c != null)
+                {
+                    Session["CompanyId"] = c.Id;
+                    Session["CompanyName"] = c.Name;
+                }
                 Session["UserID"] = u.Id;
                 Session["UserName"] = u.Name;
                 if (Request.QueryString["r"] != null)
