@@ -21,9 +21,11 @@ namespace HW.Invoicing
 
 		protected void buttonSave_Click(object sender, EventArgs e)
 		{
-			var u = new m.Unit {
-				Name = textBoxName.Text
-			};
+            var u = new m.Unit
+            {
+                Name = textBoxName.Text,
+                Company = new m.Company { Id = ConvertHelper.ToInt32(Session["CompanyId"]) }
+            };
 			r.Save(u);
 			Response.Redirect("units.aspx");
 		}

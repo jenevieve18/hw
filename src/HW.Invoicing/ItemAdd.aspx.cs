@@ -44,7 +44,8 @@ namespace HW.Invoicing
                 Name = textBoxName.Text,
                 Description = textBoxDescription.Text,
                 Price = ConvertHelper.ToDecimal(textBoxPrice.Text),
-                Unit = new m.Unit { Id = ConvertHelper.ToInt32(dropDownListUnits.SelectedValue) }
+                Unit = new m.Unit { Id = ConvertHelper.ToInt32(dropDownListUnits.SelectedValue) },
+                Company = new Company { Id = ConvertHelper.ToInt32(Session["CompanyId"]) }
             };
             i.Validate();
             if (!i.HasErrors)

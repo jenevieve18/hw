@@ -89,8 +89,8 @@ WHERE Id = @Id"
 		{
 			string query = string.Format(
 				@"
-INSERT INTO Item(Name, Description, Price, UnitId)
-VALUES(@Name, @Description, @Price, @UnitId)"
+INSERT INTO Item(Name, Description, Price, UnitId, CompanyId)
+VALUES(@Name, @Description, @Price, @UnitId, @CompanyId)"
 			);
 			ExecuteNonQuery(
 				query,
@@ -98,11 +98,12 @@ VALUES(@Name, @Description, @Price, @UnitId)"
 				new SqlParameter("@Name", i.Name),
 				new SqlParameter("@Description", i.Description),
 				new SqlParameter("@Price", i.Price),
-				new SqlParameter("@UnitId", i.Unit.Id)
+                new SqlParameter("@UnitId", i.Unit.Id),
+                new SqlParameter("@CompanyId", i.Company.Id)
 			);
 		}
 		
-		public override IList<Item> FindAll()
+		public IList<Item> FindByCompany(int companyId)
 		{
 			string query = string.Format(
 				@"
@@ -115,10 +116,11 @@ SELECT i.Id,
 	i.Inactive
 FROM Item i
 INNER JOIN Unit u ON u.Id = i.UnitId
+WHERE i.CompanyId = @CompanyId
 ORDER BY i.Name"
 			);
 			var items = new List<Item>();
-			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {
+			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@CompanyId", companyId))) {
 				while (rs.Read()) {
 					items.Add(
 						new Item {

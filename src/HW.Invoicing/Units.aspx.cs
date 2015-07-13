@@ -19,7 +19,7 @@ namespace HW.Invoicing
         {
             HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
 
-        	units = r.FindAll();
+        	units = r.FindByCompany(ConvertHelper.ToInt32(Session["CompanyId"]));
         }
     }
 }

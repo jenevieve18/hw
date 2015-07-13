@@ -18,14 +18,14 @@ namespace HW.Invoicing.Core.Services
 
         public IList<Customer> FindSubscribersByCompany(int companyId)
         {
-            var customers = r.FindSubscribers(companyId);
+            var customers = r.FindSubscribersByCompany(companyId);
             AssignContacts(customers);
             return customers;
         }
 
         public IList<Customer> FindNonSubscribersByCompany(int companyId)
         {
-            var customers = r.FindNonSubscribers(companyId);
+            var customers = r.FindNonSubscribersByCompany(companyId);
             AssignContacts(customers);
             return customers;
         }

@@ -36,12 +36,13 @@ where id = @Id";
 		public override void Save(Unit t)
 		{
 			string query = @"
-INSERT INTO Unit(Name)
-VALUES(@Name)";
+INSERT INTO Unit(Name, CompanyId)
+VALUES(@Name, @CompanyId)";
 			ExecuteNonQuery(
 				query,
 				"invoicing",
-				new SqlParameter("@Name", t.Name)
+				new SqlParameter("@Name", t.Name),
+                new SqlParameter("@CompanyId", t.Company.Id)
 			);
 		}
 		
@@ -72,16 +73,17 @@ WHERE Id = @Id";
 			return unit;
 		}
 		
-		public override IList<Unit> FindAll()
+		public IList<Unit> FindByCompany(int companyId)
 		{
 			string query = @"
 SELECT Id,
 	Name,
 	Inactive
 FROM Unit
+WHERE CompanyId = @CompanyId
 ORDER BY Name";
 			var units = new List<Unit>();
-			using (var rs = ExecuteReader(query, "invoicing")) {
+			using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@CompanyId", companyId))) {
 				while (rs.Read()) {
 					units.Add(
 						new Unit {

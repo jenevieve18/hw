@@ -1069,7 +1069,7 @@ ORDER BY Type"
 			return contacts;
 		}
 
-        public IList<Customer> FindNonSubscribers(int companyId)
+        public IList<Customer> FindNonSubscribersByCompany(int companyId)
         {
             string query = string.Format(
                 @"
@@ -1106,7 +1106,7 @@ ORDER BY c.Inactive, Name"
             return customers;
         }
 
-        public IList<Customer> FindSubscribers(int companyId)
+        public IList<Customer> FindSubscribersByCompany(int companyId)
         {
             string query = string.Format(
                 @"
@@ -1116,11 +1116,11 @@ SELECT c.Id,
     c.Phone, 
     c.Email, 
     c.Inactive,
-    i.id,
-    i.name,
-    u.id,
-    u.name,
-    i.price
+    i.Id,
+    i.Name,
+    u.Id,
+    u.Name,
+    i.Price
 FROM Customer c
 INNER JOIN Item i on i.Id = c.SubscriptionItemId
 INNER JOIN Unit u on u.Id = i.UnitId

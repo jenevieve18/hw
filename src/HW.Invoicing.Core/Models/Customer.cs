@@ -117,6 +117,7 @@ namespace HW.Invoicing.Core.Models
 	
 	public class Unit : BaseModel
 	{
+        public Company Company { get; set; }
 		public string Name { get; set; }
 		public bool Inactive { get; set; }
 	}

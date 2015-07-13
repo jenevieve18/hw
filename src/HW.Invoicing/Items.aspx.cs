@@ -16,16 +16,11 @@ namespace HW.Invoicing
         SqlItemRepository r = new SqlItemRepository();
 		protected IList<Item> items;
 		
-		public void Index()
-		{
-			items = r.FindAll();
-		}
-		
 		protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
-        	
-			Index();
+
+            items = r.FindByCompany(ConvertHelper.ToInt32(Session["CompanyId"]));
 		}
 	}
 }
