@@ -12,21 +12,21 @@ namespace HW.Invoicing.Core.Repositories.Sql
 		public void Deactivate(int id)
 		{
 			string query = @"
---update issue set inactive = 1
-update issue set status = 3
-where id = @Id";
+UPDATE Issue SET Status = @Deactivated
+WHERE Id = @Id";
 			ExecuteNonQuery(
 				query,
 				"invoicing",
-				new SqlParameter("@Id", id)
+				new SqlParameter("@Id", id),
+                new SqlParameter("@Deactivated", Issue.DEACTIVATED)
 			);
 		}
 		
 		public override void Delete(int id)
 		{
 			string query = @"
-delete from issue
-where id = @Id";
+DELETE FROM Issue
+WHERE Id = @Id";
 			ExecuteNonQuery(
 				query,
 				"invoicing",

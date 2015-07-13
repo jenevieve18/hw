@@ -228,3 +228,9 @@ alter table CustomerTimebook add SubscriptionStartDate date,
 SubscriptionEndDate date;
 
 alter table CustomerTimebook add IsSubscription integer;
+
+alter table Company add UserId integer;
+
+update Issue set Status = 4 where Status = 3;
+update Issue set Status = 3 where Status = 2;
+update Issue set Status = 2 where Status = 1;

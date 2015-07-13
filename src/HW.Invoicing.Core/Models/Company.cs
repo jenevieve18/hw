@@ -12,6 +12,7 @@ namespace HW.Invoicing.Core.Models
 		public string TIN { get; set; }
         public DateTime? FinancialMonthStart { get; set; }
         public DateTime? FinancialMonthEnd { get; set; }
+        public string InvoicePrefix { get; set; }
 		
 		public Company()
 		{

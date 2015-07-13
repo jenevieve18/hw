@@ -12,15 +12,22 @@ namespace HW.Invoicing.Core.Models
 		public string Description { get; set; }
 		public int Status { get; set; }
 		public DateTime? CreatedAt { get; set; }
+
+        public const int OPEN = 0;
+        public const int INPROGRESS = 1;
+        public const int FIXED = 2;
+        public const int TESTED = 3;
+        public const int DEACTIVATED = 4;
 		
 		public static List<Status> GetStatuses()
 		{
 			return new List<Status>(
 				new[] {
-					new Status { Id = 0, Name = "Open" },
-					new Status { Id = 1, Name = "Fixed" },
-					new Status { Id = 2, Name = "Tested" },
-					new Status { Id = 3, Name = "Deactivated" }
+					new Status { Id = OPEN, Name = "Open" },
+                    new Status { Id = INPROGRESS, Name = "In Progress" },
+					new Status { Id = FIXED, Name = "Fixed" },
+					new Status { Id = TESTED, Name = "Tested" },
+					new Status { Id = DEACTIVATED, Name = "Deactivated" },
 				}
 			);
 		}
@@ -28,9 +35,10 @@ namespace HW.Invoicing.Core.Models
 		public string GetStatus()
 		{
 			switch (Status) {
-					case 0: return "<span class='label label-default'>OPEN</span>";
-					case 1: return "<span class='label label-success'>FIXED</span>";
-					case 2: return "<span class='label label-warning'>TESTED</span>";
+					case OPEN: return "<span class='label label-default'>OPEN</span>";
+					case FIXED: return "<span class='label label-success'>FIXED</span>";
+					case TESTED: return "<span class='label label-warning'>TESTED</span>";
+                    case INPROGRESS: return "<span class='label label-info'>IN PROGRESS</span>";
 					default: return "<span class='label label-danger'>DEACTIVATED</span>";
 			}
 		}

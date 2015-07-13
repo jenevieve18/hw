@@ -122,7 +122,8 @@ UPDATE Company set Name = @Name,
     BankAccountNumber = @BankAccountNumber,
     TIN = @TIN,
     FinancialMonthStart = @FinancialMonthStart,
-    FinancialMonthEnd = @FinancialMonthEnd
+    FinancialMonthEnd = @FinancialMonthEnd,
+    InvoicePrefix = @InvoicePrefix
 WHERE Id = @Id";
 			ExecuteNonQuery(
 				query,
@@ -134,6 +135,7 @@ WHERE Id = @Id";
                 new SqlParameter("@TIN", t.TIN),
                 new SqlParameter("@FinancialMonthStart", t.FinancialMonthStart),
                 new SqlParameter("@FinancialMonthEnd", t.FinancialMonthEnd),
+                new SqlParameter("@InvoicePrefix", t.InvoicePrefix),
 				new SqlParameter("@Id", id)
 			);
 		}

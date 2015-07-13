@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="Issues.aspx.cs" Inherits="HW.Invoicing.Issues" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
+<%@ Import Namespace="HW.Invoicing.Core.Models" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -18,7 +19,7 @@
         <th></th>
     </tr>
     <% foreach (var i in issues) { %>
-        <% if (i.Status == 3) { %>
+        <% if (i.Status == Issue.DEACTIVATED) { %>
             <tr>
                 <td><strike>#<%= i.Id %></strike></td>
                 <td><strike><%= i.Title %></strike></td>
