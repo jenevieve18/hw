@@ -71,7 +71,7 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function(msg) {
-                        $('#<%= labelInvoiceNumber.ClientID %>').text('IHGF-' + ('000' + msg.d).slice(-3));
+                        $('#<%= labelInvoiceNumber.ClientID %>').text('<%= company.InvoicePrefix %>-' + ('000' + msg.d).slice(-3));
                     }
                 });
 

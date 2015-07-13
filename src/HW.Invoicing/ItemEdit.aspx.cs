@@ -18,28 +18,8 @@ namespace HW.Invoicing
         SqlUnitRepository ur = new SqlUnitRepository();
         protected string message;
 		
-		public void Edit(int id)
+		/*public void Edit(int id)
 		{
-			/*if (IsPostBack) {
-                var d = new Item
-                {
-                    Name = textBoxName.Text,
-                    Description = textBoxDescription.Text,
-                    Price = ConvertHelper.ToDecimal(textBoxPrice.Text),
-                    Unit = new m.Unit { Id = ConvertHelper.ToInt32(dropDownListUnits.SelectedValue) },
-                    Inactive = !checkBoxReactivate.Checked
-                };
-                d.Validate();
-                if (!d.HasErrors)
-                {
-                    r.Update(d, id);
-                    Response.Redirect("items.aspx");
-                }
-                else
-                {
-                    message = d.Errors.ToHtmlUl();
-                }
-			}*/
 			var i = r.Read(id);
 			if (i != null) {
 				textBoxName.Text = i.Name;
@@ -49,7 +29,7 @@ namespace HW.Invoicing
                 checkBoxReactivate.Checked = !i.Inactive;
                 placeHolderReactivate.Visible = i.Inactive;
 			}
-		}
+		}*/
 		
 		protected void Page_Load(object sender, EventArgs e)
         {
@@ -69,7 +49,7 @@ namespace HW.Invoicing
                     placeHolderReactivate.Visible = i.Inactive;
                 
                     dropDownListUnits.Items.Clear();
-                    foreach (var u in ur.FindAll())
+                    foreach (var u in ur.FindByCompany(ConvertHelper.ToInt32(Session["CompanyId"])))
                     {
                         var li = new ListItem(u.Name, u.Id.ToString());
                         dropDownListUnits.Items.Add(li);
@@ -79,10 +59,10 @@ namespace HW.Invoicing
             }
 		}
 
-        protected override void OnPreRender(EventArgs e)
+        /*protected override void OnPreRender(EventArgs e)
         {
             base.OnPreRender(e);
-        }
+        }*/
 
 		protected void buttonSave_Click(object sender, EventArgs e)
 		{

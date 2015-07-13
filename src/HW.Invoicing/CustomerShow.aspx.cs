@@ -171,7 +171,8 @@ namespace HW.Invoicing
             var i = new Invoice
             {
                 Id = n,
-                Number = string.Format("IHGF-{0}", n.ToString("000")),
+                //Number = string.Format("IHGF-{0}", n.ToString("000")),
+                Number = string.Format("{0}-{0}", company.InvoicePrefix, n.ToString("000")),
                 Date = ConvertHelper.ToDateTime(textBoxInvoiceDate.Text),
                 MaturityDate = ConvertHelper.ToDateTime(labelMaturityDate.Text),
                 Customer = new Customer { Id = id },
