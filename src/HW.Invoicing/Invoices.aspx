@@ -106,7 +106,7 @@
             <% totalVAT += i.TotalVAT; %>
             <% totalAmount += i.TotalAmount; %>
 
-            <td><%= i.Number %></td>
+            <td><%= HtmlHelper.Anchor(i.Number, "invoiceshow.aspx?Id=" + i.Id) %></td>
             <td><%= i.Date.Value.ToString("yyyy-MM-dd") %></td>
             <td><%= HtmlHelper.Anchor(i.Customer.Name, string.Format("customershow.aspx?Id={0}&SelectedTab=timebook", i.Customer.Id)) %></td>
             <td class="text-right"><%= i.SubTotal.ToString("### ### ##0.00") %></td>

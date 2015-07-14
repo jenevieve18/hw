@@ -186,6 +186,7 @@
 <br />
 
 <%= HtmlHelper.Anchor("Export this invoice to PDF", string.Format("invoiceexport.aspx?Id={0}", invoice.Id), "class='btn btn-success'") %>
+<%= HtmlHelper.Anchor("Edit this invoice", string.Format("invoiceedit.aspx?Id={0}", invoice.Id), "class='btn btn-default'") %>
 or <i><%= HtmlHelper.Anchor("go back to invoice list", "invoices.aspx") %></i>
 
 </asp:Content>
