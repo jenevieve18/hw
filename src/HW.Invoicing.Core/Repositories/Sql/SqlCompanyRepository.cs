@@ -8,6 +8,22 @@ namespace HW.Invoicing.Core.Repositories.Sql
 {
 	public class SqlCompanyRepository : BaseSqlRepository<Company>
 	{
+        public void UnselectByUser(int userId)
+        {
+            string query = @"
+UPDATE Company SET Selected = NULL
+WHERE UserId = @UserId";
+            ExecuteNonQuery(query, "invoicing", new SqlParameter("@UserId", userId));
+        }
+
+        public void SelectCompany(int companyId)
+        {
+            string query = @"
+UPDATE Company SET Selected = 1
+WHERE Id = @Id";
+            ExecuteNonQuery(query, "invoicing", new SqlParameter("@Id", companyId));
+        }
+
         public override IList<Company> FindAll()
         {
             string query = @"
@@ -91,9 +107,11 @@ SELECT TOP 1 Id,
     BankAccountNumber,
     TIN,
     FinancialMonthStart,
-    FinancialMonthEnd
+    FinancialMonthEnd,
+    ISNULL(Selected, 0) IsSelected
 FROM Company
-WHERE UserId = @UserId";
+WHERE UserId = @UserId
+ORDER BY IsSelected DESC";
             Company c = null;
             using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@UserId", userId)))
             {

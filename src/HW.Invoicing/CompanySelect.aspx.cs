@@ -15,7 +15,11 @@ namespace HW.Invoicing
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            int userId = ConvertHelper.ToInt32(Session["UserId"]);
+            r.UnselectByUser(userId);
+
             int id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
+            r.SelectCompany(id);
             var c = r.Read(id);
             Session["CompanyId"] = c.Id;
             Session["CompanyName"] = c.Name;
