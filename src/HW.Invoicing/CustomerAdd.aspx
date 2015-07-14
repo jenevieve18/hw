@@ -1,6 +1,37 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="CustomerAdd.aspx.cs" Inherits="HW.Invoicing.CustomerAdd" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    
+    <link href="css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+    <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script src="js/jquery.number.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.date').datepicker({
+                format: "yyyy-mm-dd",
+                autoclose: true
+            });
+            var subscriptionPanel = $('#<%= panelCustomerSubscription.ClientID %>');
+            subscriptionPanel.hide();
+            $('#<%= checkBoxSubscribe.ClientID %>').change(function () {
+                if ($(this).is(':checked')) {
+                    subscriptionPanel.show();
+                } else {
+                    subscriptionPanel.hide();
+                }
+            });
+            $('#<%= checkBoxSubscribe.ClientID %>').change();
+            $('#<%= checkBoxSubscriptionHasEndDate.ClientID %>').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#subscription-end-date').show();
+                } else {
+                    $('#subscription-end-date').hide();
+                }
+            });
+            $('#<%= checkBoxSubscriptionHasEndDate.ClientID %>').change();
+        });
+    </script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -51,6 +82,27 @@
     <asp:DropDownList ID="dropDownListLanguage" runat="server" CssClass="info form-control">
                         </asp:DropDownList>
 </div>
+<div class="form-group">
+    <asp:CheckBox ID="checkBoxSubscribe" runat="server" CssClass="form-control" Text="&nbsp;This customer has subscription" />
+</div>
+<asp:Panel runat="server" DefaultButton="buttonSave" ID="panelCustomerSubscription">
+    <div class="form-group">
+	    <label for="<%= dropDownListSubscriptionItem.ClientID %>">Subscription Item</label>
+        <asp:DropDownList ID="dropDownListSubscriptionItem" runat="server" CssClass="info form-control">
+                            </asp:DropDownList>
+    </div>
+    <div class="form-group">
+	    <label for="<%= textBoxSubscriptionStartDate.ClientID %>">Start Date</label>
+        <asp:TextBox CssClass="form-control date" ID="textBoxSubscriptionStartDate" runat="server"></asp:TextBox>
+    </div>
+    <div class="form-group">
+        <asp:CheckBox ID="checkBoxSubscriptionHasEndDate" runat="server" CssClass="form-control" Text="&nbsp;This subscription has end date" />
+    </div>
+    <div id="subscription-end-date" class="form-group">
+	    <label for="<%= textBoxSubscriptionEndDate.ClientID %>">End Date</label>
+        <asp:TextBox CssClass="date form-control" ID="textBoxSubscriptionEndDate" runat="server"></asp:TextBox>
+    </div>
+</asp:Panel>
 <div>
     <asp:Button CssClass="btn btn-success" ID="buttonSave" runat="server" Text="Save customer" 
         onclick="buttonSave_Click" />

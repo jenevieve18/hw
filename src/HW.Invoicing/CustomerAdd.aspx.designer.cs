@@ -103,6 +103,60 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.DropDownList dropDownListLanguage;
         
         /// <summary>
+        /// checkBoxSubscribe control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox checkBoxSubscribe;
+        
+        /// <summary>
+        /// panelCustomerSubscription control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel panelCustomerSubscription;
+        
+        /// <summary>
+        /// dropDownListSubscriptionItem control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList dropDownListSubscriptionItem;
+        
+        /// <summary>
+        /// textBoxSubscriptionStartDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxSubscriptionStartDate;
+        
+        /// <summary>
+        /// checkBoxSubscriptionHasEndDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox checkBoxSubscriptionHasEndDate;
+        
+        /// <summary>
+        /// textBoxSubscriptionEndDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxSubscriptionEndDate;
+        
+        /// <summary>
         /// buttonSave control.
         /// </summary>
         /// <remarks>

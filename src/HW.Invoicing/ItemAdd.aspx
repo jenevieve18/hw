@@ -23,7 +23,7 @@
     <asp:TextBox ID="textBoxPrice" runat="server" CssClass="form-control"></asp:TextBox>
 </div>
 <div class="form-group">
-	<label for="<%= dropDownListUnits.ClientID %>">Unit</label>
+	<label for="<%= dropDownListUnits.ClientID %>">Unit <%= HtmlHelper.Anchor("+", "unitadd.aspx") %></label>
     <asp:DropDownList ID="dropDownListUnits" runat="server" CssClass="form-control">
     </asp:DropDownList>
 </div>

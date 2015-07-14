@@ -15,11 +15,15 @@ namespace HW.Invoicing
 	{
 		SqlCustomerRepository r = new SqlCustomerRepository();
         SqlLanguageRepository lr = new SqlLanguageRepository();
+        SqlItemRepository ir = new SqlItemRepository();
+        int companyId;
         protected string message;
 		
 		protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
+
+            companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
 
             if (!IsPostBack)
             {
@@ -27,6 +31,14 @@ namespace HW.Invoicing
                 foreach (var l in lr.FindAll())
                 {
                     dropDownListLanguage.Items.Add(new ListItem(l.Name, l.Id.ToString()));
+                }
+
+                var items = ir.FindByCompany(companyId);
+
+                dropDownListSubscriptionItem.Items.Clear();
+                foreach (var i in items)
+                {
+                    dropDownListSubscriptionItem.Items.Add(new ListItem(i.Name, i.Id.ToString()));
                 }
             }
 		}
@@ -45,7 +57,12 @@ namespace HW.Invoicing
                 Phone = textBoxPhone.Text,
                 Email = textBoxEmail.Text,
                 Language = new Language { Id = ConvertHelper.ToInt32(dropDownListLanguage.SelectedValue) },
-                Company = new Company { Id = ConvertHelper.ToInt32(Session["CompanyId"]) }
+                Company = new Company { Id = ConvertHelper.ToInt32(Session["CompanyId"]) },
+                HasSubscription = checkBoxSubscribe.Checked,
+                SubscriptionItem = new Item { Id = ConvertHelper.ToInt32(dropDownListSubscriptionItem.SelectedValue) },
+                SubscriptionStartDate = ConvertHelper.ToDateTime(textBoxSubscriptionStartDate.Text),
+                SubscriptionHasEndDate = checkBoxSubscriptionHasEndDate.Checked,
+                SubscriptionEndDate = ConvertHelper.ToDateTime(textBoxSubscriptionEndDate.Text)
             };
             c.Validate();
             if (!c.HasErrors)

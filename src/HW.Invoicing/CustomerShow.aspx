@@ -77,7 +77,7 @@
 
                 var items = $('.hw-invoice-items tbody');
                 var subTotal = 0;
-                var vats = Array();
+                var vats = new Array();
                 items.html('');
                 invoiceItems.forEach(function(e) {
                     var vatAmount = e.vat / 100.0 * e.amount;
@@ -101,7 +101,15 @@
                 });
                 var strVat = '', strVatLabel = '';
                 var totalVat = 0;
+                var vatKeys = new Array();
                 for (var v in vats) {
+                    vatKeys.push(v);
+                    //console.log(v);
+                }
+                vatKeys.sort();
+                //for (var v in vats) {
+                for (var i = 0; i < vatKeys.length; i++) {
+                    var v = vatKeys[i];
                     strVat += '   <td style="width:10%" class="hw-border-left">' + v + '%</td>';
                     strVat += '   <td style="width:10%" class="hw-border-left">' + $.number(vats[v], 2, ',', ' ') + '</td>';
                     strVatLabel += '   <td style="width:10%" class="hw-border-left">VAT %</td>';
