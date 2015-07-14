@@ -6,9 +6,46 @@
 
 <h3>Customers</h3>
 <p><%= HtmlHelper.Anchor("Add a customer", "customeradd.aspx", "class='btn btn-info'") %></p>
-<!--<div class="alert alert-info">
+
+<% if (!HasSubscribers) { %>
+<div class="alert alert-info">
 	<strong>Customers</strong> are people or organization that buys goods or services from a store or business.
-</div>-->
+</div>
+<table class="table table-hover">
+    <tr>
+        <th>Name</th>
+        <th>Contact Person</th>
+        <th>Phone</th>
+        <th>Email</th>
+    </tr>
+    <% foreach (var c in nonSubscribers) { %>
+        <% if (c.Inactive) { %>
+            <tr>
+                <td><strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike></td>
+                <td>
+                    <% if (c.FirstPrimaryContact != null) { %>
+                        <strike><%= c.FirstPrimaryContact.Contact %></strike>
+                    <% } %>
+                </td>
+                <td><strike><%= c.Phone %></strike></td>
+                <td><strike><%= c.Email %></strike></td>
+            </tr>
+        <% } else { %>
+            <tr>
+                <td><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></td>
+                <td>
+                    <% if (c.FirstPrimaryContact != null) { %>
+                        <%= c.FirstPrimaryContact.Contact %>
+                    <% } %>
+                </td>
+                <td><%= c.Phone %></td>
+                <td><%= c.Email %></td>
+            </tr>
+        <% } %>
+    <% } %>
+</table>
+
+<% } else { %>
 
 <div class="tabbable" id="tabs-789614">
 	<ul class="nav nav-tabs">
@@ -101,5 +138,6 @@
 	</div>
 </div>
 
+<% } %>
 
 </asp:Content>

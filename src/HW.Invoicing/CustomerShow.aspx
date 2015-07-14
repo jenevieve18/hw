@@ -1009,10 +1009,10 @@
                         <asp:TextBox CssClass="date form-control" ID="textBoxSubscriptionEndDate" runat="server"></asp:TextBox></td>
                 </tr>
             </table>
+            </asp:Panel>
             <div>
                 <asp:Button ID="buttonSaveSubscription" runat="server" Text="Save customer subscription" CssClass="btn btn-info" OnClick="buttonSaveSubscription_Click" />
             </div>
-            </asp:Panel>
 		</div>
 	</div>
 </div>

@@ -25,5 +25,10 @@ namespace HW.Invoicing
             subscribers = s.FindSubscribersByCompany(ConvertHelper.ToInt32(Session["CompanyId"]));
             nonSubscribers = s.FindNonSubscribersByCompany(ConvertHelper.ToInt32(Session["CompanyId"]));
         }
+
+        public bool HasSubscribers
+        {
+            get { return subscribers.Count() > 0; }
+        }
     }
 }
