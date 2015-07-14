@@ -7,7 +7,7 @@
 <h3>Customers</h3>
 <p><%= HtmlHelper.Anchor("Add a customer", "customeradd.aspx", "class='btn btn-info'") %></p>
 
-<% if (!HasSubscribers) { %>
+<% if (!company.HasSubscriber) { %>
 <div class="alert alert-info">
 	<strong>Customers</strong> are people or organization that buys goods or services from a store or business.
 </div>

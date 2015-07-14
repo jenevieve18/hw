@@ -49,8 +49,8 @@ FROM Company";
 		public override void Save(Company t)
 		{
             string query = @"
-INSERT INTO Company(Name, Address, Phone, BankAccountNumber, TIN, FinancialMonthStart, FinancialMonthEnd)
-VALUES(@Name, @Address, @Phone, @BankAccountNumber, @TIN, @FinancialMonthStart, @FinancialMonthEnd)";
+INSERT INTO Company(Name, Address, Phone, BankAccountNumber, TIN, FinancialMonthStart, FinancialMonthEnd, HasSubscriber)
+VALUES(@Name, @Address, @Phone, @BankAccountNumber, @TIN, @FinancialMonthStart, @FinancialMonthEnd, @HasSubscriber)";
             ExecuteNonQuery(
                 query,
                 "invoicing",
@@ -60,7 +60,8 @@ VALUES(@Name, @Address, @Phone, @BankAccountNumber, @TIN, @FinancialMonthStart, 
                 new SqlParameter("@BankAccountNumber", t.BankAccountNumber),
                 new SqlParameter("@TIN", t.TIN),
                 new SqlParameter("@FinancialMonthStart", t.FinancialMonthStart),
-                new SqlParameter("@FinancialMonthEnd", t.FinancialMonthEnd)
+                new SqlParameter("@FinancialMonthEnd", t.FinancialMonthEnd),
+                new SqlParameter("@HasSubscriber", t.HasSubscriber)
             );
 		}
 		
@@ -75,7 +76,8 @@ SELECT Id,
     TIN,
     FinancialMonthStart,
     FinancialMonthEnd,
-    InvoicePrefix
+    InvoicePrefix,
+    HasSubscriber
 FROM Company
 WHERE Id = @Id";
 			Company c = null;
@@ -90,7 +92,8 @@ WHERE Id = @Id";
 						TIN = GetString(rs, 5),
                         FinancialMonthStart = GetDateTime(rs, 6),
                         FinancialMonthEnd = GetDateTime(rs, 7),
-                        InvoicePrefix = GetString(rs, 8)
+                        InvoicePrefix = GetString(rs, 8),
+                        HasSubscriber = GetInt32(rs, 9) == 1
 					};
 				}
 			}
@@ -143,7 +146,8 @@ UPDATE Company set Name = @Name,
     TIN = @TIN,
     FinancialMonthStart = @FinancialMonthStart,
     FinancialMonthEnd = @FinancialMonthEnd,
-    InvoicePrefix = @InvoicePrefix
+    InvoicePrefix = @InvoicePrefix,
+    HasSubscriber = @HasSubscriber
 WHERE Id = @Id";
 			ExecuteNonQuery(
 				query,
@@ -156,7 +160,8 @@ WHERE Id = @Id";
                 new SqlParameter("@FinancialMonthStart", t.FinancialMonthStart),
                 new SqlParameter("@FinancialMonthEnd", t.FinancialMonthEnd),
                 new SqlParameter("@InvoicePrefix", t.InvoicePrefix),
-				new SqlParameter("@Id", id)
+				new SqlParameter("@Id", id),
+                new SqlParameter("@HasSubscriber", t.HasSubscriber)
 			);
 		}
 	}

@@ -82,6 +82,7 @@
     <asp:DropDownList ID="dropDownListLanguage" runat="server" CssClass="info form-control">
                         </asp:DropDownList>
 </div>
+<% if (company.HasSubscriber) { %>
 <div class="form-group">
     <asp:CheckBox ID="checkBoxSubscribe" runat="server" CssClass="form-control" Text="&nbsp;This customer has subscription" />
 </div>
@@ -103,6 +104,7 @@
         <asp:TextBox CssClass="date form-control" ID="textBoxSubscriptionEndDate" runat="server"></asp:TextBox>
     </div>
 </asp:Panel>
+<% } %>
 <div>
     <asp:Button CssClass="btn btn-success" ID="buttonSave" runat="server" Text="Save customer" 
         onclick="buttonSave_Click" />

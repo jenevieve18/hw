@@ -16,14 +16,17 @@ namespace HW.Invoicing
 		SqlCustomerRepository r = new SqlCustomerRepository();
         SqlLanguageRepository lr = new SqlLanguageRepository();
         SqlItemRepository ir = new SqlItemRepository();
+        SqlCompanyRepository cr = new SqlCompanyRepository();
         int companyId;
         protected string message;
+        protected Company company;
 		
 		protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
 
             companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
+            company = cr.Read(companyId);
 
             if (!IsPostBack)
             {

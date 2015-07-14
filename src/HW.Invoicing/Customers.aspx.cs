@@ -17,10 +17,15 @@ namespace HW.Invoicing
     	protected IList<Customer> subscribers;
         protected IList<Customer> nonSubscribers;
         CustomerService s = new CustomerService(new SqlCustomerRepository());
+        protected Company company;
+        SqlCompanyRepository cr = new SqlCompanyRepository();
     	
         protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
+
+            int companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
+            company = cr.Read(companyId);
 
             subscribers = s.FindSubscribersByCompany(ConvertHelper.ToInt32(Session["CompanyId"]));
             nonSubscribers = s.FindNonSubscribersByCompany(ConvertHelper.ToInt32(Session["CompanyId"]));
