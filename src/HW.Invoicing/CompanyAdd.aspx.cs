@@ -32,7 +32,8 @@ namespace HW.Invoicing
                 BankAccountNumber = textBoxBankAccountNumber.Text,
                 TIN = textBoxTIN.Text,
                 FinancialMonthStart = ConvertHelper.ToDateTime(textBoxFinancialMonthStart.Text),
-                FinancialMonthEnd = ConvertHelper.ToDateTime(textBoxFinancialMonthEnd.Text)
+                FinancialMonthEnd = ConvertHelper.ToDateTime(textBoxFinancialMonthEnd.Text),
+                HasSubscriber = checkBoxHasSubscriber.Checked
             };
             r.Save(c);
             Response.Redirect("companies.aspx");

@@ -232,7 +232,9 @@
 	    <li <%= selectedTab == "customer-prices" ? "class='active'" : "" %>><a href="#customer-prices" data-toggle="tab">Customer Prices</a></li>
 		<li <%= selectedTab == "customer-info" ? "class='active'" : "" %>><a href="#customer-info" data-toggle="tab">Customer Info</a></li>
 		<li <%= selectedTab == "contact-persons" ? "class='active'" : "" %>><a href="#contact-persons" data-toggle="tab">Contact Persons</a></li>
-        <li <%= selectedTab == "subscription" ? "class='active'" : "" %>><a href="#subscription" data-toggle="tab">Subscription</a></li>
+        <% if (company.HasSubscriber) { %>
+            <li <%= selectedTab == "subscription" ? "class='active'" : "" %>><a href="#subscription" data-toggle="tab">Subscription</a></li>
+        <% } %>
 	</ul>
 	<div class="tab-content">
         <div class="tab-pane <%= selectedTab == "notes" ? "active" : "" %>" id="notes">
@@ -976,6 +978,7 @@
                 <% } %>
             </table>
 		</div>
+        <% if (company.HasSubscriber) { %>
         <div class="tab-pane <%= selectedTab == "subscription" ? "active" : "" %>" id="subscription">
 			<br />
 			<div class="alert alert-info">
@@ -1014,6 +1017,7 @@
                 <asp:Button ID="buttonSaveSubscription" runat="server" Text="Save customer subscription" CssClass="btn btn-info" OnClick="buttonSaveSubscription_Click" />
             </div>
 		</div>
+        <% } %>
 	</div>
 </div>
 

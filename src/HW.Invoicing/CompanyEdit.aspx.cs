@@ -31,6 +31,7 @@ namespace HW.Invoicing
                     textBoxFinancialMonthStart.Text = c.FinancialMonthStart.Value.ToString("yyyy-MM-dd");
                     textBoxFinancialMonthEnd.Text = c.FinancialMonthEnd.Value.ToString("yyyy-MM-dd");
                     textBoxInvoicePrefix.Text = c.InvoicePrefix;
+                    checkBoxHasSubscriber.Checked = c.HasSubscriber;
                 }
             }
         }
@@ -45,7 +46,8 @@ namespace HW.Invoicing
                 TIN = textBoxTIN.Text,
                 FinancialMonthStart = ConvertHelper.ToDateTime(textBoxFinancialMonthStart.Text),
                 FinancialMonthEnd = ConvertHelper.ToDateTime(textBoxFinancialMonthEnd.Text),
-                InvoicePrefix = textBoxInvoicePrefix.Text
+                InvoicePrefix = textBoxInvoicePrefix.Text,
+                HasSubscriber = checkBoxHasSubscriber.Checked
             };
             r.Update(c, id);
             Response.Redirect("companies.aspx");

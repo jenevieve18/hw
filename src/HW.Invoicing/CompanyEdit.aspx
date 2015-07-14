@@ -51,6 +51,9 @@
 	<label for="<%= textBoxInvoicePrefix.ClientID %>">Invoice Prefix</label>
     <asp:TextBox ID="textBoxInvoicePrefix" runat="server" CssClass="form-control"></asp:TextBox>
 </div>
+<div class="form-group">
+    <asp:CheckBox ID="checkBoxHasSubscriber" runat="server" CssClass="form-control" Text="&nbsp;This company has subscribers." />
+</div>
 <div>
     <asp:Button ID="buttonSave" CssClass="btn btn-success" runat="server" Text="Save company info" 
         onclick="buttonSave_Click" />

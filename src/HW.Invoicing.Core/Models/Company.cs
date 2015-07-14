@@ -13,6 +13,7 @@ namespace HW.Invoicing.Core.Models
         public DateTime? FinancialMonthStart { get; set; }
         public DateTime? FinancialMonthEnd { get; set; }
         public string InvoicePrefix { get; set; }
+        public bool HasSubscriber { get; set; }
 		
 		public Company()
 		{
