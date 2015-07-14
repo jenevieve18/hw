@@ -563,7 +563,7 @@ WHERE c.Id = @Id"
                     };
 				}
 			}
-            if (c.HasSubscription)
+            if (c != null && c.HasSubscription)
             {
                 query = @"
 select i.id, i.name, u.id, u.name, i.price

@@ -38,23 +38,23 @@ where id = @id";
                 new SqlParameter("@id", id)
             );
             query = @"
-delete from invoicetimebook
-where invoiceid = @invoiceid";
+DELETE FROM InvoiceTimebook
+WHERE InvoiceId = @InvoiceId";
             ExecuteNonQuery(query, "invoicing", new SqlParameter("@invoiceid", id));
 
             query = @"
-insert into invoicetimebook(invoiceid, customertimebookid)
-values(@invoiceid, @customertimebookid)";
+INSERT INTO InvoiceTimebook(InvoiceId, CustomerTimebookId)
+VALUES(@InvoiceId, @CustomerTimebookId)";
             foreach (var t in i.Timebooks)
             {
-                ExecuteNonQuery(query, "invoicing", new SqlParameter("@customertimebookid", t.Timebook.Id), new SqlParameter("@invoiceid", id));
+                ExecuteNonQuery(query, "invoicing", new SqlParameter("@CustomerTimebookId", t.Timebook.Id), new SqlParameter("@InvoiceId", id));
             }
         }
 
         public void ReceivePayment(int id)
         {
             string query = @"
-update invoice set status = 2 where id = @Id";
+UPDATE Invoice SET Status = 2 WHERE Id = @Id";
             ExecuteNonQuery(query, "invoicing", new SqlParameter("@Id", id));
         }
 
@@ -65,12 +65,14 @@ UPDATE Invoice SET Status = 1 WHERE Id = @Id";
             ExecuteNonQuery(query, "invoicing", new SqlParameter("@Id", id));
         }
 
-        public int GetLatestInvoiceNumber()
+        public int GetLatestInvoiceNumber(int companyId)
         {
             string query = @"
-SELECT TOP 1 Invoice FROM GeneratedNumber";
+SELECT TOP 1 Invoice
+FROM GeneratedNumber
+WHERE CompanyId = @CompanyId";
             int id = 0;
-            using (SqlDataReader rs = ExecuteReader(query, "invoicing"))
+            using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@CompanyId", companyId)))
             {
                 if (rs.Read())
                 {
@@ -100,12 +102,14 @@ SELECT CAST(scope_identity() AS int)";
 declare @key int
 
 select top 1 @key = id from generatednumber
+WHERE CompanyId = @CompanyId
 
 if (@key is not null)
     update generatednumber set invoice = @Invoice
+    WHERE CompanyId = @CompanyId
 else
-    insert into generatednumber(invoice) values(@Invoice)";
-            ExecuteNonQuery(query, "invoicing", new SqlParameter("@Invoice", i.Id));
+    insert into generatednumber(invoice, CompanyId) values(@Invoice, @CompanyId)";
+            ExecuteNonQuery(query, "invoicing", new SqlParameter("@Invoice", i.Id), new SqlParameter("@CompanyId", i.Customer.Company.Id));
             
 			query = @"
 insert into invoicetimebook(invoiceid, customertimebookid)
@@ -242,7 +246,7 @@ where it.invoiceid = @InvoiceId";
             return timebooks;
         }
 
-        public IList<Invoice> FindByDate(DateTime dateFrom, DateTime dateTo)
+        public IList<Invoice> FindByDateAndCompany(DateTime dateFrom, DateTime dateTo, int companyId)
         {
             string query = @"
 SELECT i.Id,
@@ -258,9 +262,10 @@ SELECT i.Id,
 FROM Invoice i
 INNER JOIN Customer c ON i.CustomerId = c.Id
 WHERE i.Date BETWEEN @DateFrom and @DateTo
+AND c.CompanyId = @CompanyId
 ORDER BY i.number desc";
             var invoices = new List<Invoice>();
-            using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@DateFrom", dateFrom), new SqlParameter("@DateTo", dateTo)))
+            using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@DateFrom", dateFrom), new SqlParameter("@DateTo", dateTo), new SqlParameter("@CompanyId", companyId)))
             {
                 while (rs.Read())
                 {

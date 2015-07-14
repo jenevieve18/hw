@@ -16,11 +16,13 @@ namespace HW.Invoicing
         SqlCompanyRepository or = new SqlCompanyRepository();
         SqlInvoiceRepository ir = new SqlInvoiceRepository();
         SqlItemRepository tr = new SqlItemRepository();
+        int companyId;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
 
+            companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
             if (!IsPostBack)
             {
                 dropDownListCustomer.Items.Clear();
@@ -34,7 +36,7 @@ namespace HW.Invoicing
                     dropDownListItem.Items.Add(new ListItem(i.Name, i.Id.ToString()));
                 }
 
-                labelInvoiceNumber.Text = string.Format("IHGF-{0}", ir.GetLatestInvoiceNumber().ToString("000"));
+                labelInvoiceNumber.Text = string.Format("IHGF-{0}", ir.GetLatestInvoiceNumber(companyId).ToString("000"));
 
                 var company = or.Read(1);
                 if (company != null)

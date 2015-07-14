@@ -18,6 +18,7 @@ namespace HW.Invoicing
     	protected IList<Invoice> invoices;
         SqlCompanyRepository cr = new SqlCompanyRepository();
         protected Company company;
+        int companyId;
 
         [WebMethod]
         public static string UpdateInternalComments(string comments, int id)
@@ -31,7 +32,10 @@ namespace HW.Invoicing
         {
             HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
 
-            company = cr.Read(1);
+            //company = cr.Read(1);
+            companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
+            company = cr.Read(companyId);
+
             if (!IsPostBack)
             {
                 dropDownListFinancialYear.Items.Clear();
@@ -41,7 +45,7 @@ namespace HW.Invoicing
                 }
                 var dateFrom = new DateTime(year, company.FinancialMonthStart.Value.Month, company.FinancialMonthStart.Value.Day, 0, 0, 0);
                 var dateTo = new DateTime(year + 1, company.FinancialMonthEnd.Value.Month, company.FinancialMonthEnd.Value.Day, 23, 59, 59);
-                invoices = r.FindByDate(dateFrom, dateTo);
+                invoices = r.FindByDateAndCompany(dateFrom, dateTo, companyId);
             }
         }
 
@@ -50,7 +54,7 @@ namespace HW.Invoicing
             int year = ConvertHelper.ToInt32(dropDownListFinancialYear.SelectedValue);
             var dateFrom = new DateTime(year, company.FinancialMonthStart.Value.Month, company.FinancialMonthStart.Value.Day, 0, 0, 0);
             var dateTo = new DateTime(year + 1, company.FinancialMonthEnd.Value.Month, company.FinancialMonthEnd.Value.Day, 23, 59, 59);
-            invoices = r.FindByDate(dateFrom, dateTo);
+            invoices = r.FindByDateAndCompany(dateFrom, dateTo, companyId);
         }
     }
 }

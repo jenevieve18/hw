@@ -248,3 +248,7 @@ update Item set CompanyId = 1;
 alter table Unit add CompanyId integer;
 
 update Unit set CompanyId = 1;
+
+alter table GeneratedNumber add CompanyId integer;
+
+update GeneratedNumber set CompanyId = 1;

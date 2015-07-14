@@ -18,24 +18,10 @@ namespace HW.Invoicing
         SqlUnitRepository ur = new SqlUnitRepository();
         protected string message;
 		
-		/*public void Edit(int id)
-		{
-			var i = r.Read(id);
-			if (i != null) {
-				textBoxName.Text = i.Name;
-				textBoxDescription.Text = i.Description;
-                textBoxPrice.Text = i.Price.ToString();
-                dropDownListUnits.SelectedValue = i.Unit.Id.ToString();
-                checkBoxReactivate.Checked = !i.Inactive;
-                placeHolderReactivate.Visible = i.Inactive;
-			}
-		}*/
-		
 		protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
         	
-			//Edit(ConvertHelper.ToInt32(Request.QueryString["Id"]));
             if (!IsPostBack)
             {
                 var i = r.Read(ConvertHelper.ToInt32(Request.QueryString["Id"]));
@@ -59,14 +45,8 @@ namespace HW.Invoicing
             }
 		}
 
-        /*protected override void OnPreRender(EventArgs e)
-        {
-            base.OnPreRender(e);
-        }*/
-
 		protected void buttonSave_Click(object sender, EventArgs e)
 		{
-			//Edit(ConvertHelper.ToInt32(Request.QueryString["Id"]));
             var d = new Item
             {
                 Name = textBoxName.Text,

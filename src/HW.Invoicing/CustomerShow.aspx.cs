@@ -100,17 +100,16 @@ namespace HW.Invoicing
                         textBoxSubscriptionStartDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
                     }
                 }
+            }
 
-                company = cr.Read(companyId);
-
-                if (company != null)
-                {
-                    labelCompanyName.Text = company.Name;
-                    labelCompanyAddress.Text = company.Address;
-                    labelCompanyPhone.Text = company.Phone;
-                    labelCompanyBankAccountNumber.Text = company.BankAccountNumber;
-                    labelCompanyTIN.Text = company.TIN;
-                }
+            company = cr.Read(companyId);
+            if (company != null)
+            {
+                labelCompanyName.Text = company.Name;
+                labelCompanyAddress.Text = company.Address;
+                labelCompanyPhone.Text = company.Phone;
+                labelCompanyBankAccountNumber.Text = company.BankAccountNumber;
+                labelCompanyTIN.Text = company.TIN;
             }
         }
 
@@ -158,24 +157,29 @@ namespace HW.Invoicing
             Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=timebook", id));
         }
 
-        [WebMethod]
+        [WebMethod(EnableSession = true)]
         [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
         public static int GetLatestInvoiceNumber()
         {
-            return new SqlInvoiceRepository().GetLatestInvoiceNumber();
+            int companyId = ConvertHelper.ToInt32(HttpContext.Current.Session["CompanyId"]);
+            return new SqlInvoiceRepository().GetLatestInvoiceNumber(companyId);
         }
 
         protected void buttonSaveInvoice_Click(object sender, EventArgs e)
         {
-            int n = vr.GetLatestInvoiceNumber();
+            int n = vr.GetLatestInvoiceNumber(companyId);
             var i = new Invoice
             {
                 Id = n,
                 //Number = string.Format("IHGF-{0}", n.ToString("000")),
-                Number = string.Format("{0}-{0}", company.InvoicePrefix, n.ToString("000")),
+                Number = string.Format("{0}-{1}", company.InvoicePrefix, n.ToString("000")),
                 Date = ConvertHelper.ToDateTime(textBoxInvoiceDate.Text),
                 MaturityDate = ConvertHelper.ToDateTime(labelMaturityDate.Text),
-                Customer = new Customer { Id = id },
+                Customer = new Customer
+                {
+                    Id = id,
+                    Company = new Company { Id = companyId }
+                },
                 Comments = textBoxInvoiceComments.Text
             };
             i.AddTimebook(Request.Form.GetValues("invoice-timebooks"));
