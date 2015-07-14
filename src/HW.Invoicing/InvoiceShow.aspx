@@ -111,7 +111,9 @@
 
     <% var strVat = ""; var strVatLabel = ""; %>
     <% decimal totalVat = 0; %>
-    <% foreach (var k in vats.Keys) { %>
+    <% var keys = vats.Keys.ToList(); %>
+    <% keys.Sort(); %>
+    <% foreach (var k in keys) { %>
         <% strVatLabel += "<td style='width:10%' class='hw-border-left'>VAT %</td>"; %>
         <% strVatLabel += "<td style='width:10%' class='hw-border-left'>VAT</td>"; %>
 
