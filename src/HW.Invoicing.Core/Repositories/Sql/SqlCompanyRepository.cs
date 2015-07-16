@@ -77,7 +77,9 @@ SELECT Id,
     FinancialMonthStart,
     FinancialMonthEnd,
     InvoicePrefix,
-    HasSubscriber
+    HasSubscriber,
+    InvoiceLogo,
+    InvoiceTemplate
 FROM Company
 WHERE Id = @Id";
 			Company c = null;
@@ -93,7 +95,9 @@ WHERE Id = @Id";
                         FinancialMonthStart = GetDateTime(rs, 6),
                         FinancialMonthEnd = GetDateTime(rs, 7),
                         InvoicePrefix = GetString(rs, 8),
-                        HasSubscriber = GetInt32(rs, 9) == 1
+                        HasSubscriber = GetInt32(rs, 9) == 1,
+                        InvoiceLogo = GetString(rs, 10),
+                        InvoiceTemplate = GetString(rs, 11)
 					};
 				}
 			}
@@ -147,7 +151,9 @@ UPDATE Company set Name = @Name,
     FinancialMonthStart = @FinancialMonthStart,
     FinancialMonthEnd = @FinancialMonthEnd,
     InvoicePrefix = @InvoicePrefix,
-    HasSubscriber = @HasSubscriber
+    HasSubscriber = @HasSubscriber,
+    InvoiceLogo = @InvoiceLogo,
+    InvoiceTemplate = @InvoiceTemplate
 WHERE Id = @Id";
 			ExecuteNonQuery(
 				query,
@@ -161,7 +167,9 @@ WHERE Id = @Id";
                 new SqlParameter("@FinancialMonthEnd", t.FinancialMonthEnd),
                 new SqlParameter("@InvoicePrefix", t.InvoicePrefix),
 				new SqlParameter("@Id", id),
-                new SqlParameter("@HasSubscriber", t.HasSubscriber)
+                new SqlParameter("@HasSubscriber", t.HasSubscriber),
+                new SqlParameter("@InvoiceLogo", t.InvoiceLogo),
+                new SqlParameter("@InvoiceTemplate", t.InvoiceTemplate)
 			);
 		}
 	}

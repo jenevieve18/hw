@@ -387,7 +387,11 @@
                             <table width="100%" cellpadding="5px">
                                 <tr>
                                     <td rowspan="4" valign="bottom">
-                                        <img src="img/ihg.png"><br />
+                                        <% if (company.HasInvoiceLogo) { %>
+                                            <img src="uploads/<%= company.InvoiceLogo %>" />
+                                        <% } else { %>
+                                            <img src="img/ihg.png"><br />
+                                        <% } %>
                                     </td>
                                     <td></td>
                                     <td></td>

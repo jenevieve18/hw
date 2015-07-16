@@ -14,6 +14,18 @@ namespace HW.Invoicing.Core.Models
         public DateTime? FinancialMonthEnd { get; set; }
         public string InvoicePrefix { get; set; }
         public bool HasSubscriber { get; set; }
+        public string InvoiceLogo { get; set; }
+        public string InvoiceTemplate { get; set; }
+
+        public bool HasInvoiceTemplate
+        {
+            get { return InvoiceTemplate != null && InvoiceTemplate != "";  }
+        }
+
+        public bool HasInvoiceLogo
+        {
+            get { return InvoiceLogo != null && InvoiceLogo != "";  }
+        }
 		
 		public Company()
 		{

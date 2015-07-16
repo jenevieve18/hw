@@ -52,6 +52,20 @@
     <asp:TextBox ID="textBoxInvoicePrefix" runat="server" CssClass="form-control"></asp:TextBox>
 </div>
 <div class="form-group">
+    <label for="<%= fileUploadInvoiceLogo.ClientID %>">Invoice Logo</label>
+    <% if (company.HasInvoiceLogo) { %>
+        <br /><img src="uploads/<%= company.InvoiceLogo %>" />
+    <% } %>
+    <asp:FileUpload ID="fileUploadInvoiceLogo" runat="server" />
+</div>
+<div class="form-group">
+    <label for="<%= fileUploadInvoiceTemplate.ClientID %>">Invoice Template</label>
+    <% if (company.HasInvoiceTemplate) { %>
+        <br /><%= HtmlHelper.Anchor(company.InvoiceTemplate, "uploads/" + company.InvoiceTemplate, "target='_blank'") %>
+    <% } %>
+    <asp:FileUpload ID="fileUploadInvoiceTemplate" runat="server" />
+</div>
+<div class="form-group">
     <asp:CheckBox ID="checkBoxHasSubscriber" runat="server" CssClass="form-control" Text="&nbsp;This company has subscribers." />
 </div>
 <div>

@@ -18,6 +18,7 @@ namespace HW.Invoicing
         SqlCustomerRepository ur = new SqlCustomerRepository();
         protected int id;
         protected IList<CustomerTimebook> timebooks;
+        protected Company company;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -39,9 +40,11 @@ namespace HW.Invoicing
                     labelInvoiceYourReferencePerson.Text = invoice.Customer.YourReferencePerson;
                     labelInvoiceOurReferencePerson.Text = invoice.Customer.OurReferencePerson;
                     textBoxInvoiceComments.Text = invoice.Comments;
+                }
 
-                    var company = cr.Read(1);
-
+                company = cr.Read(ConvertHelper.ToInt32(Session["CompanyId"]));
+                if (company != null)
+                {
                     labelCompanyName.Text = company.Name;
                     labelCompanyAddress.Text = company.Address;
                     labelCompanyBankAccountNumber.Text = company.BankAccountNumber;

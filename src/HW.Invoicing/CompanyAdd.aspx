@@ -48,6 +48,10 @@
     <asp:TextBox ID="textBoxFinancialMonthEnd" runat="server" CssClass="date form-control"></asp:TextBox>
 </div>
 <div class="form-group">
+    <label for="<%= fileUploadInvoiceLogo.ClientID %>">Invoice Logo</label>
+    <asp:FileUpload ID="fileUploadInvoiceLogo" runat="server" />
+</div>
+<div class="form-group">
     <asp:CheckBox ID="checkBoxHasSubscriber" runat="server" CssClass="form-control" Text="&nbsp;This company has subscribers." />
 </div>
 <div>

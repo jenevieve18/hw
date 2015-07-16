@@ -256,3 +256,7 @@ update GeneratedNumber set CompanyId = 1;
 alter table Company add Selected integer;
 
 alter table Company add HasSubscriber integer;
+
+alter table Company add InvoiceLogo varchar(255);
+
+alter table Company add InvoiceTemplate varchar(255);
