@@ -680,7 +680,6 @@
                                     <% if (t.Date != null) { %>
                                         <%= t.Date.Value.ToString("yyyy-MM-dd") %>
                                     <% } %>
-                                    <!--<%= t.Date.Value.ToString("yyyy-MM-dd") %>-->
                                 </strike>
                             </td>
                             <td><strike><%= t.Department %></strike></td>
