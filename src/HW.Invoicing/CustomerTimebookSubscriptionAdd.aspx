@@ -6,7 +6,7 @@
     <script src="js/jquery.number.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $('.date').datepicker({
+            $('.date, .subscription-start-date, .subscription-end-date').datepicker({
                 format: "yyyy-mm-dd",
                 autoclose: true
             });
@@ -17,7 +17,27 @@
                 $('#<%= textBoxQuantity.ClientID %>').val($.number(months, 2, '.', ''));
                 $('.subscription-quantity').val($.number(months, 2, '.', ''));
                 $('#<%= textBoxText.ClientID %>').change();
+
+                $('.subscription-start-date').each(function () {
+                    $(this).datepicker('update', $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate'));
+                });
+                $('.subscription-end-date').each(function () {
+                    $(this).datepicker('update', $('#<%= textBoxEndDate.ClientID %>').datepicker('getDate'));
+                });
             });
+            $('.date').change();
+            $('.subscription-date').change(function () {
+                var textBoxStartDate = $(this).closest('tr').find('.subscription-start-date');
+                var startDate = textBoxStartDate.datepicker('getDate');
+                var textBoxEndDate = $(this).closest('tr').find('.subscription-end-date');
+                var endDate = textBoxEndDate.datepicker('getDate');
+                var months = monthDiff(startDate, endDate);
+                $(this).closest('tr').find('.subscription-quantity').val($.number(months, 2, '.', ''));
+                var comments = $('#<%= textBoxText.ClientID %>').val();
+                comments = comments + ' ' + textBoxStartDate.val().replace(/-/g, ".") + ' - ' + textBoxEndDate.val().replace(/-/g, ".");
+                $(this).closest('tr').find('.subscription-comments').val(comments);
+            });
+
             var textGeneratedComments = $('#<%= textBoxComments.ClientID %>');
             $('#<%= textBoxText.ClientID %>').change(function () {
                 var text = $(this).val();
@@ -27,22 +47,22 @@
                 textGeneratedComments.val(generatedText);
                 $('#<%= textBoxComments.ClientID %>').change();
             });
-            $('#<%= textBoxQuantity.ClientID %>').change(function () {
-                $('.subscription-quantity').val($(this).val());
-                var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
-                /*var months = parseInt($(this).val());
-                var d = new Date(startDate);
-                var currentMonth = d.getMonth();
-                var newMonth = currentMonth + months;
-                d = new Date(d.setMonth(newMonth));*/
-                var d = addMonth(startDate, $(this).val());
-                $('#<%= textBoxEndDate.ClientID %>').datepicker('update', d);
-            });
             $('#<%= textBoxComments.ClientID %>').change(function () {
                 $('.subscription-comments').val($(this).val());
             });
-
+            $('#<%= textBoxQuantity.ClientID %>').change(function () {
+                $('.subscription-quantity').val($(this).val());
+                var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
+                var d = addMonth(startDate, $(this).val());
+                $('#<%= textBoxEndDate.ClientID %>').datepicker('update', d);
+            });
             $('#<%= textBoxText.ClientID %>').change();
+
+            $('.subscription-quantity').change(function () {
+                var startDate = $(this).closest('tr').find('.subscription-start-date').datepicker('getDate');
+                var d = addMonth(startDate, $(this).val());
+                $(this).closest('tr').find('.subscription-end-date').datepicker('update', d);
+            });
         });
     </script>
 
@@ -97,6 +117,8 @@
         <th>Subscription Item</th>
         <th>Unit</th>
         <th>Price</th>
+        <th class="col-md-2">Start Date</th>
+        <th class="col-md-2">End Date</th>
         <th class="col-md-1">Qty</th>
         <th class="col-md-4">Comments</th>
     </tr>
@@ -106,6 +128,12 @@
         <td><%= c.SubscriptionItem.Name %></td>
         <td><%= c.SubscriptionItem.Unit.Name %></td>
         <td><%= c.SubscriptionItem.Price.ToString("### ### ##0.00") %></td>
+        <td class="col-md-2">
+            <input id="subscription-start-date" name="subscription-start-date" type="text" class="form-control subscription-start-date subscription-date" />
+        </td>
+        <td class="col-md-2">
+            <input id="subscription-end-date" name="subscription-end-date" type="text" class="form-control subscription-end-date subscription-date" />
+        </td>
         <td class="col-md-1">
             <input id="subscription-quantities" name="subscription-quantities" class="subscription-quantity form-control" type="text" value="1" />
         </td>
