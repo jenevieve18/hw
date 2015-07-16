@@ -17,7 +17,7 @@ namespace HW.Invoicing
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            int companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
+            //int companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
             //company = r.Read(companyId);
         }
     }
