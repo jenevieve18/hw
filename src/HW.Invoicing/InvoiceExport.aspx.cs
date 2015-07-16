@@ -40,7 +40,7 @@ namespace HW.Invoicing
 
             string templateFileName = company.HasInvoiceTemplate ? string.Format(Server.MapPath("~/uploads/{0}"), company.InvoiceTemplate) : Server.MapPath(@"IHG faktura MALL Ian without comments.pdf");
             
-            var exporter = InvoiceExporterFactory.GetExporter(companyId);
+            var exporter = InvoiceExporterFactory.GetExporter(company.HasInvoiceTemplate ? companyId : InvoiceExporterFactory.IHGF);
             
             var exported = exporter.Export(invoice, templateFileName, Server.MapPath(@"calibri.ttf"));
             exported.WriteTo(Response.OutputStream);
