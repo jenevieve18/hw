@@ -675,7 +675,14 @@
                     <% if (t.Inactive) { %>
                         <tr>
                             <td></td>
-                            <td><strike><%= t.Date.Value.ToString("yyyy-MM-dd") %></strike></td>
+                            <td>
+                                <strike>
+                                    <% if (t.Date != null) { %>
+                                        <%= t.Date.Value.ToString("yyyy-MM-dd") %>
+                                    <% } %>
+                                    <!--<%= t.Date.Value.ToString("yyyy-MM-dd") %>-->
+                                </strike>
+                            </td>
                             <td><strike><%= t.Department %></strike></td>
                             <td><strike><%= t.Contact.Contact %></strike></td>
                             <td><strike><%= t.Item.Name %></strike></td>
@@ -687,7 +694,6 @@
                             <td><strike><%= t.Consultant %></strike></td>
                             <td><%= t.GetStatus() %></td>
                             <td><strike><%= t.Comments %></strike></td>
-                            <!--<td><strike><%= t.ToString() %></strike></td>-->
                             <td>
                                 <%= HtmlHelper.Anchor("Edit", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id)) %>
                                 <%= HtmlHelper.Anchor("Delete", string.Format("customertimebookdelete.aspx?Id={0}&CustomerId={1}", t.Id, id)) %>
@@ -726,7 +732,6 @@
                             <td><%= t.Consultant %></td>
                             <td><%= t.GetStatus() %></td>
                             <td><%= t.Comments %></td>
-                            <!--<td><%= t.ToString() %></td>-->
                             <td>
                                 <% if (!t.IsPaid) { %>
                                 <%= HtmlHelper.Anchor("Edit", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id)) %>
