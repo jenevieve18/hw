@@ -26,9 +26,10 @@ namespace HW.Invoicing
             r.Exported(id);
 
             var invoice = r.Read(id);
-            var company = cr.Read(1);
+            int companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
+            var company = cr.Read(companyId);
 
-            var exporter = new InvoiceExporter();
+//            var exporter = new IHGFInvoiceExporter();
             
             Response.ClearHeaders();
             Response.ClearContent();
@@ -38,6 +39,8 @@ namespace HW.Invoicing
             Response.AddHeader("content-disposition", string.Format("attachment;filename=\"{0}.pdf\";", file));
 
             string templateFileName = company.HasInvoiceTemplate ? string.Format(Server.MapPath("~/uploads/{0}"), company.InvoiceTemplate) : Server.MapPath(@"IHG faktura MALL Ian without comments.pdf");
+            
+            var exporter = InvoiceExporterFactory.GetExporter(companyId);
             
             var exported = exporter.Export(invoice, templateFileName, Server.MapPath(@"calibri.ttf"));
             exported.WriteTo(Response.OutputStream);
