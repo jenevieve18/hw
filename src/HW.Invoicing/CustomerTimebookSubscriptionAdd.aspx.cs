@@ -20,7 +20,8 @@ namespace HW.Invoicing
         {
             HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
 
-            customers = r.FindActiveSubscribers();
+            int companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
+            customers = r.FindActiveSubscribersByCompany(companyId);
             if (!IsPostBack)
             {
                 var startDate = DateTime.Now;
@@ -46,26 +47,27 @@ namespace HW.Invoicing
             {
                 var quantities = Request.Form.GetValues("subscription-quantities");
                 var comments = Request.Form.GetValues("subscription-comments");
+                var startDates = Request.Form.GetValues("subscription-start-date");
+                var endDates = Request.Form.GetValues("subscription-end-date");
                 var timebooks = new List<CustomerTimebook>();
                 int i = 0;
                 foreach (var c in customers)
                 {
                     if (c.HasSubscription && c.SubscriptionStartDate < startDate)
                     {
-                        timebooks.Add(
-                            new CustomerTimebook
-                            {
-                                Customer = c,
-                                Item = new Item { Id = c.SubscriptionItem.Id },
-                                Quantity = ConvertHelper.ToInt32(quantities[i]),
-                                Price = c.SubscriptionItem.Price,
-                                VAT = 25,
-                                Comments = comments[i],
-                                IsSubscription = true,
-                                SubscriptionStartDate = ConvertHelper.ToDateTime(textBoxStartDate.Text),
-                                SubscriptionEndDate = ConvertHelper.ToDateTime(textBoxEndDate.Text)
-                            }
-                        );
+                        var t = new CustomerTimebook
+                        {
+                            Customer = c,
+                            Item = new Item { Id = c.SubscriptionItem.Id },
+                            Quantity = ConvertHelper.ToDecimal(quantities[i]),
+                            Price = c.SubscriptionItem.Price,
+                            VAT = 25,
+                            Comments = comments[i],
+                            IsSubscription = true,
+                            SubscriptionStartDate = ConvertHelper.ToDateTime(startDates[i]),
+                            SubscriptionEndDate = ConvertHelper.ToDateTime(endDates[i])
+                        };
+                        timebooks.Add(t);
                     }
                     i++;
                 }

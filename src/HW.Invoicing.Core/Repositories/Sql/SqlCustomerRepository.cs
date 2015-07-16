@@ -1164,7 +1164,7 @@ ORDER BY c.Inactive, c.Name"
             return customers;
         }
 
-        public IList<Customer> FindActiveSubscribers()
+        public IList<Customer> FindActiveSubscribersByCompany(int companyId)
         {
             string query = string.Format(
                 @"
@@ -1186,10 +1186,11 @@ INNER JOIN Item i on i.Id = c.SubscriptionItemId
 INNER JOIN Unit u on u.Id = i.UnitId
 WHERE c.HasSubscription = 1
 AND ISNULL(c.Inactive, 0) != 1
+AND c.CompanyId = @CompanyId
 ORDER BY c.Inactive, c.Name"
             );
             var customers = new List<Customer>();
-            using (SqlDataReader rs = ExecuteReader(query, "invoicing"))
+            using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@CompanyId", companyId)))
             {
                 while (rs.Read())
                 {
