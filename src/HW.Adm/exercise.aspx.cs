@@ -137,7 +137,7 @@ where exerciseid = {1}",
             var categories = new[] {
                 new { id = 0, name = "Not done" },
                 new { id = 1, name = "In progress" },
-                new { id = 2, name = "Done" }
+                new { id = 2, name = "Finalized" }
             };
             foreach (var t in categories)
             {
