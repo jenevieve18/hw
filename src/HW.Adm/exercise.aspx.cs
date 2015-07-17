@@ -117,21 +117,7 @@ where exerciseid = {1}",
                 EAID = rs.GetInt32(1);
                 cx = 0;
             }
-            string todo = "<select id='exercise-status' name='exercise-status'>";
-            var categories = new[] {
-                new { id = 0, name = "Open" },
-                new { id = 1, name = "In progress" },
-                new { id = 2, name = "Done" }
-            };
-            foreach (var t in categories)
-            {
-                string selected = (!rs.IsDBNull(13) && rs.GetInt32(13) == t.id) ? " selected" : ""; ;
-                todo += string.Format("<option value='{2}|{0}'{3}>{1}", t.id.ToString(), t.name, rs.GetInt32(0), selected);
-                todo += "</option>";
-            }
-            todo += "</select>";
             Exercise.Text += "<TR" + (cx % 2 == 0 ? " BGCOLOR=\"#F2F2F2\"" : "") + ">" +
-                "<td>" + todo + "</td>" +
                 "<TD>&nbsp;&nbsp;&nbsp;" + (cx != 0 ? "<A HREF=\"exercise.aspx?MoveUp=" + rs.GetInt32(0) + "\"><img src=\"img/UpToolSmall.gif\" border=\"0\"></A>" : "<img src=\"img/null.gif\" width=\"10\" height=\"0\" border=\"0\">") + (rs.IsDBNull(11) || rs.IsDBNull(12) ? "" : "<A" + (rs.GetInt32(5) == 0 ? " STYLE=\"color:#cccccc;\" " : "") + " HREF=\"exerciseCategorySetup.aspx?ExerciseCategoryID=" + rs.GetInt32(12) + "\">" + rs.GetString(11) + "</A> &gt; ") + "&nbsp;<A" + (rs.GetInt32(5) == 0 ? " STYLE=\"color:#cccccc;\" " : "") + " HREF=\"exerciseSetup.aspx?ExerciseID=" + rs.GetInt32(0) + "\">" + rs.GetString(2) + "</A>&nbsp;&nbsp;</TD>" +
                 "<TD>" + rs.GetInt32(4) + "&nbsp;&nbsp;</TD>" +
                 "<TD>" + rs.GetInt32(6) + "&nbsp;&nbsp;</TD>" +
@@ -146,7 +132,22 @@ where exerciseid = {1}",
                 Exercise.Text += "<img src=\"img/langID_" + rs2.GetInt32(0) + ".gif\"/>";
             }
             rs2.Close();
+
+            string str = "<select id='exercise-status' name='exercise-status'>";
+            var categories = new[] {
+                new { id = 0, name = "Not done" },
+                new { id = 1, name = "In progress" },
+                new { id = 2, name = "Done" }
+            };
+            foreach (var t in categories)
+            {
+                string selected = (!rs.IsDBNull(13) && rs.GetInt32(13) == t.id) ? " selected" : ""; ;
+                str += string.Format("<option value='{2}|{0}'{3}>{1}", t.id.ToString(), t.name, rs.GetInt32(0), selected);
+                str += "</option>";
+            }
+            str += "</select>";
             Exercise.Text += "</TD>" +
+                "<td>" + str + "</td>" +
                 "</TR>";
             cx++;
         }
