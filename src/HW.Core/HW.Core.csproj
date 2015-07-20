@@ -71,9 +71,6 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.SQLite">
-      <HintPath>..\..\lib\System.Data.SQLite.dll</HintPath>
-    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
@@ -168,6 +165,7 @@
     <Compile Include="Repositories\Sql\SqlLanguageRepository.cs" />
     <Compile Include="Repositories\Sql\SqlDepartmentRepository.cs" />
     <Compile Include="Repositories\Sql\SqlAnswerRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlWiseRepository.cs" />
     <Compile Include="Services\LoggingService.cs" />
     <Compile Include="Services\ManagerService.cs" />
     <Compile Include="Services\MessageService.cs" />

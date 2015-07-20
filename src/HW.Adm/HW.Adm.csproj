@@ -108,6 +108,13 @@
     <Compile Include="faqadd.aspx.designer.cs">
       <DependentUpon>faqadd.aspx</DependentUpon>
     </Compile>
+    <Compile Include="faqedit.aspx.cs">
+      <DependentUpon>faqedit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="faqedit.aspx.designer.cs">
+      <DependentUpon>faqedit.aspx</DependentUpon>
+    </Compile>
     <Compile Include="grpUser.aspx.designer.cs">
       <DependentUpon>grpUser.aspx</DependentUpon>
     </Compile>
@@ -1211,6 +1218,7 @@
     <Content Include="extendedSurvey.aspx" />
     <Content Include="faq.aspx" />
     <Content Include="faqadd.aspx" />
+    <Content Include="faqedit.aspx" />
     <Content Include="grpUser.aspx" />
     <Content Include="grpUserSetup.aspx" />
     <Content Include="img\DelToolSmall.gif" />

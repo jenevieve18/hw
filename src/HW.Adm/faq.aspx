@@ -10,17 +10,22 @@
         <table width="970" border="0" cellspacing="0" cellpadding="0">
 			<tr><td style="font-size:16px;" align="center">FAQ</td></tr>
 		</table>
-        <table style="margin:20px;" border="1" cellspacing="0" cellpadding="5">
+        <table style="margin:20px;" border="0" cellspacing="0" cellpadding="0">
             <tr>
-                <td><i>Question</i></td>
-                <td><i>Answer</i></td>
+                <td><i>FAQ</i></td>
+                <td><i>Lang</i></td>
                 <td></td>
             </tr>
             <% foreach (var f in faqs) { %>
             <tr>
-                <td></td>
-                <td></td>
+                <td><%= f.Name %></td>
                 <td>
+                    <% foreach (var l in f.Languages) { %>
+                        <img align='right' src='img/langID_<%= l.Language.Id %>.gif'>
+                    <% } %>
+                </td>
+                <td>
+                    <%= HW.Core.Helpers.HtmlHelper.Anchor("Edit", "faqedit.aspx?FAQID=" + f.Id) %>
                 </td>
             </tr>
             <% } %>

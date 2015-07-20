@@ -12,11 +12,11 @@ namespace HW.Adm
     public partial class faq : System.Web.UI.Page
     {
         SqlFAQRepository r = new SqlFAQRepository();
-        protected IList<FAQLanguage> faqs;
+        protected IList<FAQ> faqs;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            faqs = r.FindLanguages();
+            faqs = r.FindAll();
         }
     }
 }
