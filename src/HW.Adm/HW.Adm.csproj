@@ -94,6 +94,20 @@
     <Compile Include="extendedSurvey.aspx.designer.cs">
       <DependentUpon>extendedSurvey.aspx</DependentUpon>
     </Compile>
+    <Compile Include="faq.aspx.cs">
+      <DependentUpon>faq.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="faq.aspx.designer.cs">
+      <DependentUpon>faq.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="faqadd.aspx.cs">
+      <DependentUpon>faqadd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="faqadd.aspx.designer.cs">
+      <DependentUpon>faqadd.aspx</DependentUpon>
+    </Compile>
     <Compile Include="grpUser.aspx.designer.cs">
       <DependentUpon>grpUser.aspx</DependentUpon>
     </Compile>
@@ -235,6 +249,13 @@
     </Compile>
     <Compile Include="sponsorStats.aspx.designer.cs">
       <DependentUpon>sponsorStats.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="sql.aspx.cs">
+      <DependentUpon>sql.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sql.aspx.designer.cs">
+      <DependentUpon>sql.aspx</DependentUpon>
     </Compile>
     <Compile Include="stats.aspx.cs">
       <DependentUpon>stats.aspx</DependentUpon>
@@ -1188,6 +1209,8 @@
     <Content Include="exerciseSetup.aspx" />
     <Content Include="export.aspx" />
     <Content Include="extendedSurvey.aspx" />
+    <Content Include="faq.aspx" />
+    <Content Include="faqadd.aspx" />
     <Content Include="grpUser.aspx" />
     <Content Include="grpUserSetup.aspx" />
     <Content Include="img\DelToolSmall.gif" />
@@ -1209,6 +1232,7 @@
     <Content Include="sponsor.aspx" />
     <Content Include="sponsorSetup.aspx" />
     <Content Include="sponsorStats.aspx" />
+    <Content Include="sql.aspx" />
     <Content Include="stats.aspx" />
     <Content Include="superadmin.aspx" />
     <Content Include="survey.aspx" />
@@ -1218,7 +1242,9 @@
     <Content Include="wise.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
