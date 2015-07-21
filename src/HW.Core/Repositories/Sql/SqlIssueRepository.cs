@@ -72,7 +72,7 @@ VALUES(GETDATE(), @Title, @Description, @UserID)";
 SELECT i.Title, i.Description, i.IssueDate, u.Email, i.IssueID, i.Status
 FROM Issue i
 LEFT OUTER JOIN [User] u ON i.UserID = u.UserID
-ORDER BY i.IssueDate DESC";
+ORDER BY i.Status, i.IssueDate DESC";
             var i = new List<Issue>();
             using (var rs = ExecuteReader(query, "SqlConnection"))
             {
