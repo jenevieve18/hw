@@ -134,6 +134,27 @@
     <Compile Include="issue.aspx.designer.cs">
       <DependentUpon>issue.aspx</DependentUpon>
     </Compile>
+    <Compile Include="issueadd.aspx.cs">
+      <DependentUpon>issueadd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="issueadd.aspx.designer.cs">
+      <DependentUpon>issueadd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="issuedelete.aspx.cs">
+      <DependentUpon>issuedelete.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="issuedelete.aspx.designer.cs">
+      <DependentUpon>issuedelete.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="issueedit.aspx.cs">
+      <DependentUpon>issueedit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="issueedit.aspx.designer.cs">
+      <DependentUpon>issueedit.aspx</DependentUpon>
+    </Compile>
     <Compile Include="mailSubmission.aspx.designer.cs">
       <DependentUpon>mailSubmission.aspx</DependentUpon>
     </Compile>
@@ -1258,6 +1279,9 @@
     <Content Include="img\UpToolSmall.gif" />
     <Content Include="insertSponsorInviteBQ.aspx" />
     <Content Include="issue.aspx" />
+    <Content Include="issueadd.aspx" />
+    <Content Include="issuedelete.aspx" />
+    <Content Include="issueedit.aspx" />
     <Content Include="mailSubmission.aspx" />
     <Content Include="main.css" />
     <Content Include="messages.aspx" />

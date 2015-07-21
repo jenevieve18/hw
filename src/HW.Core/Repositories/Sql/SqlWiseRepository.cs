@@ -21,7 +21,8 @@ DELETE FROM FAQLang WHERE FAQID = @FAQID";
         {
             string query = @"
 SELECT FAQID, Name
-FROM FAQ";
+FROM FAQ
+ORDER BY Name";
             var f = new List<FAQ>();
             using (var rs = ExecuteReader(query, "SqlConnection"))
             {
