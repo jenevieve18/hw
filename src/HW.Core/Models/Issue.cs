@@ -31,7 +31,8 @@ namespace HW.Core.Models
         public const int OPEN = 0;
         public const int INPROGRESS = 1;
         public const int FIXED = 2;
-        public const int DEACTIVATED = 3;
+        public const int TESTED = 3;
+        public const int DEACTIVATED = 4;
 
         public static List<IssueStatus> GetStatuses()
         {
@@ -39,6 +40,7 @@ namespace HW.Core.Models
             s.Add(new IssueStatus { Id = OPEN, Name = "Open" });
             s.Add(new IssueStatus { Id = INPROGRESS, Name = "In Progress" });
             s.Add(new IssueStatus { Id = FIXED, Name = "Fixed" });
+            s.Add(new IssueStatus { Id = TESTED, Name = "Tested" });
             s.Add(new IssueStatus { Id = DEACTIVATED, Name = "Deactivated" });
             return s;
         }

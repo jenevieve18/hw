@@ -14,3 +14,5 @@ create table FAQLang(
 	Question varchar(255),
 	Answer text
 );
+
+alter table Issue add Status integer;
