@@ -12,7 +12,7 @@
 		</table>
         <table style="margin:20px;" border="0" cellspacing="0" cellpadding="0">
             <tr>
-                <td><i>FAQ</i></td>
+                <td width="600"><i>FAQ</i></td>
                 <td><i>Lang</i></td>
                 <td></td>
             </tr>
@@ -21,11 +21,12 @@
                 <td><%= f.Name %></td>
                 <td>
                     <% foreach (var l in f.Languages) { %>
-                        <img align='right' src='img/langID_<%= l.Language.Id %>.gif'>
+                        <img src='img/langID_<%= l.Language.Id %>.gif'>
                     <% } %>
                 </td>
                 <td>
                     <%= HW.Core.Helpers.HtmlHelper.Anchor("Edit", "faqedit.aspx?FAQID=" + f.Id) %>
+                    <%= HW.Core.Helpers.HtmlHelper.Anchor("Delete", string.Format("faqdelete.aspx?FAQID={0}", f.Id), "onclick=\"return confirm('Are you sure you want to delete this customer price?')\"")%>
                 </td>
             </tr>
             <% } %>

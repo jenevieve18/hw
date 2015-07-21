@@ -108,6 +108,13 @@
     <Compile Include="faqadd.aspx.designer.cs">
       <DependentUpon>faqadd.aspx</DependentUpon>
     </Compile>
+    <Compile Include="faqdelete.aspx.cs">
+      <DependentUpon>faqdelete.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="faqdelete.aspx.designer.cs">
+      <DependentUpon>faqdelete.aspx</DependentUpon>
+    </Compile>
     <Compile Include="faqedit.aspx.cs">
       <DependentUpon>faqedit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -312,6 +319,20 @@
     </Compile>
     <Compile Include="wise.aspx.designer.cs">
       <DependentUpon>wise.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="wiseadd.aspx.cs">
+      <DependentUpon>wiseadd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wiseadd.aspx.designer.cs">
+      <DependentUpon>wiseadd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="wiseedit.aspx.cs">
+      <DependentUpon>wiseedit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wiseedit.aspx.designer.cs">
+      <DependentUpon>wiseedit.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -1218,6 +1239,7 @@
     <Content Include="extendedSurvey.aspx" />
     <Content Include="faq.aspx" />
     <Content Include="faqadd.aspx" />
+    <Content Include="faqdelete.aspx" />
     <Content Include="faqedit.aspx" />
     <Content Include="grpUser.aspx" />
     <Content Include="grpUserSetup.aspx" />
@@ -1248,6 +1270,8 @@
     <Content Include="users.aspx" />
     <Content Include="verticalText.aspx" />
     <Content Include="wise.aspx" />
+    <Content Include="wiseadd.aspx" />
+    <Content Include="wiseedit.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config">

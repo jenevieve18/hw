@@ -39,7 +39,6 @@ namespace HW.Adm
                 if (f != null)
                 {
                     textBoxName.Text = f.Name;
-
                     foreach (var l in languages)
                     {
                         TextBox q = placeHolderLanguages.FindControl("textBoxQuestion" + l.Id) as TextBox;

@@ -43,7 +43,36 @@ namespace HW.Core.Models
 	public class Wise : BaseModel
 	{
 		public virtual DateTime? LastShown { get; set; }
-		public virtual IList<WiseLanguage> Languages { get; set; }
+		public virtual List<WiseLanguage> Languages { get; set; }
+        public string WiseName
+        {
+            get
+            {
+                if (HasLanguages)
+                {
+                    return Languages[0].WiseName;
+                }
+                return "";
+            }
+        }
+        public WiseLanguage FindLanguage(int langID)
+        {
+            foreach (var l in Languages)
+            {
+                if (l.Language.Id == langID)
+                {
+                    return l;
+                }
+            }
+            return null;
+        }
+        public bool HasLanguages
+        {
+            get
+            {
+                return Languages != null && Languages.Count > 0;
+            }
+        }
 	}
 	
 	public class WiseLanguage : BaseModel

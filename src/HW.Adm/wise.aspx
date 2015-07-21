@@ -13,19 +13,34 @@
 		<!--<table style="margin:20px;" border="1" cellspacing="0" cellpadding="5">
 			<asp:Label ID=Wisdom runat=server />
 		</table>-->
-        <table style="margin:20px;" border="1" cellspacing="0" cellpadding="5">
+        <table style="margin:20px;" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td width="600"><i>Words of Wisdom</i></td>
+                <td><i>Last Shown</i></td>
+                <td><i>Lang</i></td>
+            </tr>
             <% foreach (var w in words) { %>
             <tr>
                 <td width="600"><%= w.WiseName %></td>
-                <td valign="top"><%= w.WiseBy %></td>
-                <td valign="top">
-                    <% if (w.Wise.LastShown != null) { %>
-                        <%= w.Wise.LastShown.Value.ToString("yyyy-MM-dd") %>
+                <td>
+                    <% if (w.LastShown != null) { %>
+                        <%= w.LastShown.Value.ToString("yyyy-MM-dd") %>
                     <% } %>
+                </td>
+                <td>
+                    <% foreach (var l in w.Languages) { %>
+                        <img align='right' src='img/langID_<%= l.Language.Id - 1 %>.gif'>
+                    <% } %>
+                </td>
+                <td>
+                    <%= HW.Core.Helpers.HtmlHelper.Anchor("Edit", "wiseedit.aspx?WiseID=" + w.Id) %>
                 </td>
             </tr>
             <% } %>
         </table>
+		<span style="margin:20px;">
+            [<a href="wiseadd.aspx">Add Words of Wisdom</a>]
+        </span>
 		<%=Db.bottom()%>
 		</form>
   </body>

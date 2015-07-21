@@ -15,11 +15,13 @@ using System.Collections.Generic;
 public partial class wise : System.Web.UI.Page
 {
     SqlWiseRepository r = new SqlWiseRepository();
-    protected IList<WiseLanguage> words;
+    //protected IList<WiseLanguage> words;
+    protected IList<Wise> words;
 
     protected void Page_Load(object sender, EventArgs e)
     {
-    	words = r.FindLanguages();
+    	//words = r.FindLanguages();
+        words = r.FindAll();
 //    	SqlDataReader rs = Db.rs("SELECT wl.Wise, wl.WiseBy, w.LastShown FROM Wise w INNER JOIN WiseLang wl ON w.WiseID = wl.WiseID ORDER BY w.LastShown DESC");
 //    	while (rs.Read())
 //    	{

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="faqedit.aspx.cs" Inherits="HW.Adm.faqedit" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="wiseedit.aspx.cs" Inherits="HW.Adm.wiseedit" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" > 
 <html>
   <head>
@@ -8,11 +8,11 @@
     <form id="form1" runat="server">
 		<%=Db.nav()%>
         <table width="500" border="0" cellspacing="0" cellpadding="0">
-			<tr><td style="font-size:16px;" align="center">Edit FAQ</td></tr>
+			<tr><td style="font-size:16px;" align="center">Edit Words of wisdom</td></tr>
 		</table>
         <table style="margin:20px;" border="0" cellspacing="0" cellpadding="0">
-            <tr><td>Name</td><td>
-                <asp:TextBox ID="textBoxName" runat="server"></asp:TextBox></td></tr>
+            <!--<tr><td>Name</td><td>
+                <asp:TextBox ID="textBoxName" runat="server"></asp:TextBox></td></tr>-->
             <asp:PlaceHolder ID="placeHolderLanguages" runat="server"></asp:PlaceHolder>
 		</table>
         <button onclick="location.href='faq.aspx';">Cancel</button>
