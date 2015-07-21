@@ -20,11 +20,18 @@ namespace HW.Adm
             id = ConvertHelper.ToInt32(Request.QueryString["IssueID"]);
             if (!IsPostBack)
             {
-                var i = r.Read(id);
+                Issue i = r.Read(id);
+                
+                dropDownListStatus.Items.Clear();
+                foreach (var s in Issue.GetStatuses())
+                {
+                    dropDownListStatus.Items.Add(new ListItem(s.Name, s.Id.ToString()));
+                }
                 if (i != null)
                 {
                     textBoxTitle.Text = i.Title;
                     textBoxDescrption.Text = i.Description;
+                    dropDownListStatus.SelectedValue = i.Status.ToString();
                 }
             }
         }
@@ -34,7 +41,8 @@ namespace HW.Adm
             var i = new Issue
             {
                 Title = textBoxTitle.Text,
-                Description = textBoxDescrption.Text
+                Description = textBoxDescrption.Text,
+                Status = ConvertHelper.ToInt32(dropDownListStatus.SelectedValue)
             };
             r.Update(i, id);
             Response.Redirect("issue.aspx");

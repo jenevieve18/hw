@@ -16,6 +16,7 @@
                 <td><b>Description</b></td>
                 <td><b>Date/time</b></td>
                 <td><b>User</b></td>
+                <td><b>Status</b></td>
                 <td></td>
             </tr>
 		    <!--<asp:Label ID="list" EnableViewState=false runat=server />-->
@@ -29,6 +30,7 @@
                     <% } %>
                 </td>
                 <td><%= i.User.Name %></td>
+                <td><%= i.GetStatus() %></td>
                 <td>
                     <%= HW.Core.Helpers.HtmlHelper.Anchor("Edit", "issueedit.aspx?IssueID=" + i.Id) %>
                     <%= HW.Core.Helpers.HtmlHelper.Anchor("Delete", "issuedelete.aspx?IssueID=" + i.Id, "onclick=\"return confirm('Are you sure you want to delete this issue?')\"")%>

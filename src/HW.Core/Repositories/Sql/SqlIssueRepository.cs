@@ -10,21 +10,22 @@ namespace HW.Core.Repositories.Sql
         public override void Update(Issue t, int id)
         {
             string query = @"
-UPDATE Issue SET Title = @Title, Description = @Description
+UPDATE Issue SET Title = @Title, Description = @Description, Status = @Status
 WHERE IssueID = @IssueID";
             ExecuteNonQuery(
                 query,
                 "SqlConnection",
                 new SqlParameter("@Title", t.Title),
                 new SqlParameter("@Description", t.Description),
-                new SqlParameter("@IssueID", id)
-                );
+                new SqlParameter("@IssueID", id),
+                new SqlParameter("@Status", t.Status)
+            );
         }
 
         public override Issue Read(int id)
         {
             string query = @"
-SELECT IssueID, Title, Description
+SELECT IssueID, Title, Description, Status
 FROM Issue
 WHERE IssueID = @IssueID";
             Issue i = null;
@@ -36,7 +37,8 @@ WHERE IssueID = @IssueID";
                     {
                         Id = GetInt32(rs, 0),
                         Title = GetString(rs, 1),
-                        Description = GetString(rs, 2)
+                        Description = GetString(rs, 2),
+                        Status = GetInt32(rs, 3)
                     };
                 }
             }
@@ -67,7 +69,7 @@ VALUES(GETDATE(), @Title, @Description, @UserID)";
         public override IList<Issue> FindAll()
         {
             string query = @"
-SELECT i.Title, i.Description, i.IssueDate, u.Email, i.IssueID
+SELECT i.Title, i.Description, i.IssueDate, u.Email, i.IssueID, i.Status
 FROM Issue i
 LEFT OUTER JOIN [User] u ON i.UserID = u.UserID
 ORDER BY i.IssueDate DESC";
@@ -82,7 +84,8 @@ ORDER BY i.IssueDate DESC";
                         Description = GetString(rs, 1),
                         Date = GetDateTime(rs, 2),
                         User = new User { Email = GetString(rs, 3) },
-                        Id = GetInt32(rs, 4)
+                        Id = GetInt32(rs, 4),
+                        Status = GetInt32(rs, 5)
                     });
                 }
             }

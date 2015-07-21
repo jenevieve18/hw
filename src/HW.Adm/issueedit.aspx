@@ -20,7 +20,14 @@
             <tr>
                 <td valign="top">Description</td>
                 <td>
-                    <asp:TextBox ID="textBoxDescrption" runat="server" TextMode="MultiLine" Width="400" Height="300"></asp:TextBox>
+                    <asp:TextBox ID="textBoxDescrption" runat="server" TextMode="MultiLine" Width="400" Height="200"></asp:TextBox>
+                </td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>
+                    <asp:DropDownList ID="dropDownListStatus" runat="server">
+                    </asp:DropDownList>
                 </td>
             </tr>
             <!--<asp:PlaceHolder ID="placeHolderLanguages" runat="server"></asp:PlaceHolder>-->
