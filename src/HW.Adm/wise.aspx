@@ -34,6 +34,7 @@
                 </td>
                 <td>
                     <%= HW.Core.Helpers.HtmlHelper.Anchor("Edit", "wiseedit.aspx?WiseID=" + w.Id) %>
+                    <%= HW.Core.Helpers.HtmlHelper.Anchor("Delete", "wisedelete.aspx?WiseID=" + w.Id, "onclick=\"return confirm('Are you sure you want to delete this words of wisdom?')\"")%>
                 </td>
             </tr>
             <% } %>

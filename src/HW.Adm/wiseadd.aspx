@@ -8,7 +8,7 @@
     <form id="form1" runat="server">
 		<%=Db.nav()%>
         <table width="500" border="0" cellspacing="0" cellpadding="0">
-			<tr><td style="font-size:16px;" align="center">Add FAQ</td></tr>
+			<tr><td style="font-size:16px;" align="center">Add Words of Wisdom</td></tr>
 		</table>
         <table style="margin:20px;" border="0" cellspacing="0" cellpadding="0">
             <!--<tr><td>Name</td><td>

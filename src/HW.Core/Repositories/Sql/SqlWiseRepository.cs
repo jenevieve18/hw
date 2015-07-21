@@ -197,6 +197,16 @@ INNER JOIN FAQLang fl ON fl.FAQID = f.FAQID";
 
 	public class SqlWiseRepository : BaseSqlRepository<Wise>
     {
+        public void Delete(int id)
+        {
+            string query = @"
+DELETE FROM Wise WHERE WiseID = @WiseID";
+            ExecuteNonQuery(query, "SqlConnection", new SqlParameter("@WiseID", id));
+            query = @"
+DELETE FROM WiseLang WHERE WiseID = @WiseID";
+            ExecuteNonQuery(query, "SqlConnection", new SqlParameter("@WiseID", id));
+        }
+
         public int SaveWise(Wise w)
         {
             string query = @"
@@ -224,7 +234,7 @@ VALUES(@WiseID, @LangID, @Wise, @WiseBy)";
                 "SqlConnection",
                 new SqlParameter("@WiseID", w.Wise.Id),
                 new SqlParameter("@LangID", w.Language.Id),
-                new SqlParameter("@Wise", w.Wise),
+                new SqlParameter("@Wise", w.WiseName),
                 new SqlParameter("@WiseBy", w.WiseBy)
             );
         }

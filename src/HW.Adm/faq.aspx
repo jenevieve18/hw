@@ -26,7 +26,7 @@
                 </td>
                 <td>
                     <%= HW.Core.Helpers.HtmlHelper.Anchor("Edit", "faqedit.aspx?FAQID=" + f.Id) %>
-                    <%= HW.Core.Helpers.HtmlHelper.Anchor("Delete", string.Format("faqdelete.aspx?FAQID={0}", f.Id), "onclick=\"return confirm('Are you sure you want to delete this customer price?')\"")%>
+                    <%= HW.Core.Helpers.HtmlHelper.Anchor("Delete", string.Format("faqdelete.aspx?FAQID={0}", f.Id), "onclick=\"return confirm('Are you sure you want to delete this frequently asked question?')\"")%>
                 </td>
             </tr>
             <% } %>

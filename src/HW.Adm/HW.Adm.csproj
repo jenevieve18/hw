@@ -327,6 +327,13 @@
     <Compile Include="wiseadd.aspx.designer.cs">
       <DependentUpon>wiseadd.aspx</DependentUpon>
     </Compile>
+    <Compile Include="wisedelete.aspx.cs">
+      <DependentUpon>wisedelete.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wisedelete.aspx.designer.cs">
+      <DependentUpon>wisedelete.aspx</DependentUpon>
+    </Compile>
     <Compile Include="wiseedit.aspx.cs">
       <DependentUpon>wiseedit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1271,6 +1278,7 @@
     <Content Include="verticalText.aspx" />
     <Content Include="wise.aspx" />
     <Content Include="wiseadd.aspx" />
+    <Content Include="wisedelete.aspx" />
     <Content Include="wiseedit.aspx" />
   </ItemGroup>
   <ItemGroup>
