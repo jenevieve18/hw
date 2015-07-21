@@ -301,7 +301,6 @@ public class Db
             "<A class=\"unli\" HREF=\"survey.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Survey statistics</A><br/>" +
             "<A class=\"unli\" HREF=\"wise.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Words of wisdom</A><br/>" +
             "<A class=\"unli\" HREF=\"faq.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">FAQ</A><br/>" +
-            "<br/>" +
             "</td>";
         ret += "</tr>";
         ret += "</table>";
