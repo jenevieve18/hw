@@ -120,6 +120,7 @@
     <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\Index.cs" />
+    <Compile Include="Models\Issue.cs" />
     <Compile Include="Models\Language.cs" />
     <Compile Include="Models\Manager.cs" />
     <Compile Include="Models\Measure.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="Repositories\IRepositoryFactory.cs" />
     <Compile Include="Repositories\ISponsorRepository.cs" />
     <Compile Include="Repositories\Sql\BaseSqlRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlIssueRepository.cs" />
     <Compile Include="Repositories\Sql\SqlNewsRepository.cs" />
     <Compile Include="Repositories\Sql\SqlPlotTypeRepository.cs" />
     <Compile Include="Repositories\Sql\SqlReportRepository.cs" />
