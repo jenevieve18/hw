@@ -168,3 +168,9 @@ partcover.driver.log
 #OpenCover
 OpenCover**
 /src/HW.Grp/bin/log.txt
+/src/HW.Grp/bin/log-file.txt
+/src/HW.Invoicing/uploads/HCG Fakturamall tom without comments.pdf
+/src/HW.Invoicing/uploads/IHG faktura MALL Ian without comments.pdf
+/src/HW.Invoicing/uploads/hcg.png
+/src/HW.Invoicing/uploads/ihg.png
+/src/HW.Invoicing/uploads/paynpark.jpg
