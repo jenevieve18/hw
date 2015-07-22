@@ -13,15 +13,17 @@
 		<!--<table style="margin:20px;" border="1" cellspacing="0" cellpadding="5">
 			<asp:Label ID=Wisdom runat=server />
 		</table>-->
-        <table style="margin:20px;" border="0" cellspacing="0" cellpadding="0">
+        <table style="margin:20px;" border="0" cellspacing="0" cellpadding="3">
             <tr>
-                <td width="600"><i>Words of Wisdom</i></td>
-                <td><i>Last Shown</i></td>
-                <td><i>Lang</i></td>
+                <td width="600"><b>Words of Wisdom</b></td>
+                <td><b>Last Shown</b></td>
+                <td><b>Lang</b></td>
             </tr>
+            <% int j = 0; %>
             <% foreach (var w in words) { %>
-            <tr>
-                <td width="600"><%= w.WiseName %></td>
+            <% string c = j++ % 2 == 0 ? " style='background:#efefef'" : ""; %>
+            <tr<%= c %>>
+                <td width="600" valign="top"><%= w.WiseName %></td>
                 <td>
                     <% if (w.LastShown != null) { %>
                         <%= w.LastShown.Value.ToString("yyyy-MM-dd") %>

@@ -19,7 +19,6 @@
                 <td><b>Status</b></td>
                 <td></td>
             </tr>
-		    <!--<asp:Label ID="list" EnableViewState=false runat=server />-->
             <% int j = 0; %>
             <% foreach (var i in issues) { %>
             <% string c = j++ % 2 == 0 ? " style='background:#efefef'" : ""; %>
