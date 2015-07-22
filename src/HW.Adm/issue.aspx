@@ -10,7 +10,7 @@
 		<table width="500" border="0" cellspacing="0" cellpadding="0">
 			<tr><td style="font-size:16px;" align="center">Issues</td></tr>
 		</table>
-		<table style="margin:20px;" width="900" border="0" cellspacing="5" cellpadding="0">
+		<table style="margin:20px;" width="900" border="0" cellspacing="0" cellpadding="3">
             <tr>
                 <td><b>Title</b></td>
                 <td><b>Description</b></td>
@@ -20,18 +20,20 @@
                 <td></td>
             </tr>
 		    <!--<asp:Label ID="list" EnableViewState=false runat=server />-->
+            <% int j = 0; %>
             <% foreach (var i in issues) { %>
-            <tr>
-                <td><%= i.Title %></td>
-                <td><%= i.Description %></td>
-                <td>
+            <% string c = j++ % 2 == 0 ? " style='background:#efefef'" : ""; %>
+            <tr<%= c %>>
+                <td valign="top"><%= i.Title %></td>
+                <td valign="top"><%= i.Description %></td>
+                <td width="80">
                     <% if (i.Date != null) { %>
                         <%= i.Date.Value.ToString("yyyy-MM-dd") %>
                     <% } %>
                 </td>
                 <td><%= i.User.Name %></td>
-                <td><%= i.GetStatus() %></td>
-                <td>
+                <td width="80"><%= i.GetStatus() %></td>
+                <td width="80">
                     <%= HW.Core.Helpers.HtmlHelper.Anchor("Edit", "issueedit.aspx?IssueID=" + i.Id) %>
                     <%= HW.Core.Helpers.HtmlHelper.Anchor("Delete", "issuedelete.aspx?IssueID=" + i.Id, "onclick=\"return confirm('Are you sure you want to delete this issue?')\"")%>
                 </td>
