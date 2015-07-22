@@ -48,6 +48,15 @@ public partial class exerciseAreaSetup {
     protected global::System.Web.UI.WebControls.PlaceHolder ExerciseLang;
     
     /// <summary>
+    /// buttonCancel control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.Button buttonCancel;
+    
+    /// <summary>
     /// Save control.
     /// </summary>
     /// <remarks>

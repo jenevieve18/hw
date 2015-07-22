@@ -15,7 +15,9 @@
                 <asp:TextBox ID="textBoxName" runat="server"></asp:TextBox></td></tr>
             <asp:PlaceHolder ID="placeHolderLanguages" runat="server"></asp:PlaceHolder>
 		</table>
-        <button onclick="location.href='faq.aspx';">Cancel</button>
+        <asp:Button runat="server" Text="Cancel" id="buttonCancel"
+     OnClientClick="window.location='faq.aspx'; return false;">   </asp:Button>
+        <!--<button onclick="location.href='faq.aspx';">Cancel</button>-->
         <asp:Button ID="buttonSave" runat="server" Text="Save" OnClick="buttonSaveClick" />
 		<%=Db.bottom()%>
     </form>

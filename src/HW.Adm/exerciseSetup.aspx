@@ -19,7 +19,10 @@
             <asp:PlaceHolder ID="ExerciseLang" runat=server />
             <asp:PlaceHolder ID="ExerciseVariant" runat=server />
 		</table>
-        <button onclick="location.href='exercise.aspx';">Cancel</button><asp:Button ID=Save runat=server Text="Save" /> Add <asp:DropDownList ID=ExerciseTypeID runat=server />
+        <asp:Button runat="server" Text="Cancel" id="buttonCancel"
+     OnClientClick="window.location='exercise.aspx'; return false;">   </asp:Button>
+        <!--<button onclick="location.href='exercise.aspx';">Cancel</button>-->
+        <asp:Button ID=Save runat=server Text="Save" /> Add <asp:DropDownList ID=ExerciseTypeID runat=server />
 		<%=Db.bottom()%>
 		</form>
   </body>

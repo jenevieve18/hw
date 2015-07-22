@@ -14,7 +14,10 @@
             <tr><td>Image (optional)&nbsp;</td><td><input type="file" runat=server id=ExerciseImg /></td><td><asp:Label ID=ExerciseImgUploaded runat=server /></td></tr>
             <asp:PlaceHolder ID="ExerciseLang" runat=server />
 		</table>
-        <button onclick="location.href='exercise.aspx';">Cancel</button><asp:Button ID=Save runat=server Text="Save" />
+        <asp:Button runat="server" Text="Cancel" id="buttonCancel"
+     OnClientClick="window.location='exercise.aspx'; return false;">   </asp:Button>
+        <!--<button onclick="location.href='exercise.aspx';">Cancel</button>-->
+        <asp:Button ID=Save runat=server Text="Save" />
 		<%=Db.bottom()%>
 		</form>
   </body>

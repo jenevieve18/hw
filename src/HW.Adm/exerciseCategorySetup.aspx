@@ -13,7 +13,10 @@
 		<table style="margin:20px;" width="800" border="0" cellspacing="0" cellpadding="0">
             <asp:PlaceHolder ID="ExerciseLang" runat=server />
 		</table>
-        <button onclick="location.href='exercise.aspx';">Cancel</button><asp:Button ID=Save runat=server Text="Save" />
+        <asp:Button runat="server" Text="Cancel" id="buttonCancel"
+     OnClientClick="window.location='exercise.aspx'; return false;">   </asp:Button>
+        <!--<button onclick="location.href='exercise.aspx';">Cancel</button>-->
+        <asp:Button ID=Save runat=server Text="Save" />
 		<%=Db.bottom()%>
 		</form>
   </body>
