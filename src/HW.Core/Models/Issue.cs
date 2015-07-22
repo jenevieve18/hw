@@ -18,14 +18,30 @@ namespace HW.Core.Models
 
         public string GetStatus()
         {
-            foreach (var s in GetStatuses())
+            /*foreach (var s in GetStatuses())
             {
                 if (s.Id == Status)
                 {
                     return s.Name;
                 }
             }
-            return "";
+            return "";*/
+            /*switch (Status)
+            {
+                case INPROGRESS: return "<span style='background:#5bc0de'>In Progress</span>";
+                case FIXED: return "<span style='background:#5cb85c'>Fixed</span>";
+                case TESTED: return "<span style='background:#f0ad4e'>Tested</span>";
+                case DEACTIVATED: return "<span style='background:#d9534f'>Deactivated</span>";
+                default: return "<span style='background:#777'>Opan</span>";
+            }*/
+            switch (Status)
+            {
+                case INPROGRESS: return "<span class='label label-info'>In Progress</span>";
+                case FIXED: return "<span class='label label-success'>Fixed</span>";
+                case TESTED: return "<span class='label label-warning'>Tested</span>";
+                case DEACTIVATED: return "<span class='label label-danger'>Deactivated</span>";
+                default: return "<span class='label label-default'>Open</span>";
+            }
         }
 
         public const int OPEN = 0;

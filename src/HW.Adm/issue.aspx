@@ -3,6 +3,37 @@
 <html>
   <head>
    <%=Db.header()%>
+   <style type="text/css">
+      .label 
+      {
+          display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+      }
+      .label-danger 
+      {
+          background-color: #d9534f;
+      }
+      .label-info {
+  background-color: #5bc0de;
+}
+.label-warning {
+  background-color: #f0ad4e;
+}
+.label-success {
+  background-color: #5cb85c;
+}
+.label-default {
+  background-color: #777;
+}
+   </style>
   </head>
   <body>
 	    <form id="Form1" method="post" runat="server">
