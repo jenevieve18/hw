@@ -61,7 +61,7 @@ VALUES(GETDATE(), @Title, @Description, @UserID)";
                 query,
                 "SqlConnection",
                 new SqlParameter("@Title", t.Title),
-                new SqlParameter("@Description", t.Title),
+                new SqlParameter("@Description", t.Description),
                 new SqlParameter("@UserID", null)
                 );
         }
