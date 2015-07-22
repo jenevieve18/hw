@@ -14,8 +14,8 @@ namespace HW.Tests.Invoicing
 		{
 			var v = new HW.Invoicing.Users();
 			
-			v = new HW.Invoicing.Users(new UserRepositoryStub());
-			v.Index();
+			//v = new HW.Invoicing.Users(new UserRepositoryStub());
+			//v.Index();
 		}
 		
 		[Test]

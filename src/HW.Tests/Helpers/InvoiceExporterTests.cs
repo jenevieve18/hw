@@ -13,13 +13,13 @@ namespace HW.Tests.Helpers
 	public class InvoiceExporterTests
 	{
 		Invoice i;
-		InvoiceExporter e;
+		IHGFInvoiceExporter e;
 		
 		[SetUp]
 		public void Setup()
 		{
-			i = new SqlInvoiceRepository().Read(47);
-			e = new InvoiceExporter();
+			i = new SqlInvoiceRepository().Read(52);
+			e = new IHGFInvoiceExporter();
 		}
 		
 		[Test]
@@ -36,6 +36,17 @@ namespace HW.Tests.Helpers
 		public void TestExport2()
 		{
 			e.Export2(i, @"IHG faktura MALL Ian without comments.pdf");
+			Process.Start("test.pdf");
+		}
+		
+		[Test]
+		public void a()
+		{
+			var x = new HCGFInvoiceExporter();
+			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create, FileAccess.Write)) {
+				MemoryStream s = x.Export(i, @"HCG Fakturamall tom without comments.pdf", @"calibri.ttf");
+				s.WriteTo(f);
+			}
 			Process.Start("test.pdf");
 		}
 	}
