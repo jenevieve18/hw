@@ -43,6 +43,7 @@
 		</table>
 		<table style="margin:20px;" width="900" border="0" cellspacing="0" cellpadding="3">
             <tr>
+                <td><b>Number</b></td>
                 <td><b>Title</b></td>
                 <td><b>Description</b></td>
                 <td><b>Date/time</b></td>
@@ -54,6 +55,7 @@
             <% foreach (var i in issues) { %>
             <% string c = j++ % 2 == 0 ? " style='background:#efefef'" : ""; %>
             <tr<%= c %>>
+                <td valign="top">#<%= i.Id.ToString() %></td>
                 <td valign="top"><%= i.Title %></td>
                 <td valign="top"><%= i.Description %></td>
                 <td width="80">
