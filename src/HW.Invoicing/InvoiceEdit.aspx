@@ -336,7 +336,7 @@
             <% strVatLabel += "<td style='width:10%' class='hw-border-left'>VAT %</td>"; %>
             <% strVatLabel += "<td style='width:10%' class='hw-border-left'>VAT</td>"; %>
 
-            <% strVat += "<td style='width:10%' class='hw-border-left'>" + k + "%</td>"; %>
+            <% strVat += "<td style='width:10%' class='hw-border-left'>" + k + "</td>"; %>
             <% strVat += "<td style='width:10%' class='hw-border-left'>" + vats[k].ToString("### ### ##0.00") + "</td>"; %>
             <% totalVat += vats[k]; %>
         <% } %>
