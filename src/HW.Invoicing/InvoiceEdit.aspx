@@ -64,7 +64,7 @@
                 var strVat = '', strVatLabel = '';
                 var totalVat = 0;
                 for (var v in vats) {
-                    strVat += '   <td style="width:10%" class="hw-border-left">' + v + '%</td>';
+                    strVat += '   <td style="width:10%" class="hw-border-left">' + v + '</td>';
                     strVat += '   <td style="width:10%" class="hw-border-left">' + $.number(vats[v], 2, ',', ' ') + '</td>';
                     strVatLabel += '   <td style="width:10%" class="hw-border-left">VAT %</td>';
                     strVatLabel += '   <td style="width:10%" class="hw-border-left">VAT</td>';
