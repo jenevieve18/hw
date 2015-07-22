@@ -92,13 +92,14 @@
                         '   <td class="text-right">' + $.number(e.amount, 2, ',', ' ') + '</td>' + 
                         '</tr>' + 
                     '');
-                    subTotal += e.amount;
+                    subTotal += parseFloat(e.amount);
                     if (vats.hasOwnProperty(e.vat)) {
                         vats[e.vat] += vatAmount;
                     } else {
                         vats[e.vat] = vatAmount;
                     }
                 });
+                console.log(subTotal);
                 var strVat = '', strVatLabel = '';
                 var totalVat = 0;
                 var vatKeys = new Array();
@@ -116,7 +117,7 @@
                     strVatLabel += '   <td style="width:10%" class="hw-border-left">VAT</td>';
                     totalVat += vats[v];
                 }
-                totalAmount = subTotal + totalVat;
+                var totalAmount = subTotal + totalVat;
                 items.append('' +
                     '<tr><td>&nbsp;</td></tr>' +
                     '<tr class="hw-invoice-header"><td colspan="7"></td><td class="hw-border-last">Subtotal</td></tr>' +
