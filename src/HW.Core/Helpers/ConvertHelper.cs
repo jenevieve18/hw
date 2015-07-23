@@ -111,5 +111,14 @@ namespace HW.Core.Helpers
 				return def;
 			}
 		}
+		
+		public static decimal ToDecimal(object val, CultureInfo culture)
+		{
+			try {
+				return Convert.ToDecimal(val, culture);
+			} catch {
+				return 0;
+			}
+		}
 	}
 }

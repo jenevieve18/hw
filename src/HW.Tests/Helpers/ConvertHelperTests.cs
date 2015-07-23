@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using HW.Core.Helpers;
 using NUnit.Framework;
 
@@ -11,6 +12,12 @@ namespace HW.Tests.Helpers
 		public void TestToInt32()
 		{
 			Assert.AreEqual(0, ConvertHelper.ToInt32(null));
+		}
+		
+		[Test]
+		public void TestToDecimal()
+		{
+			Assert.AreEqual(3.0, ConvertHelper.ToDecimal("3.00", new CultureInfo("en-US")));
 		}
 		
 		[Test]

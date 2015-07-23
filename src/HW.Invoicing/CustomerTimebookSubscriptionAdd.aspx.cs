@@ -8,6 +8,7 @@ using HW.Invoicing.Core.Models;
 using HW.Invoicing.Core.Repositories.Sql;
 using HW.Core.Helpers;
 using HW.Core.Services;
+using System.Globalization;
 
 namespace HW.Invoicing
 {
@@ -61,7 +62,7 @@ namespace HW.Invoicing
                         {
                             Customer = c,
                             Item = new Item { Id = c.SubscriptionItem.Id },
-                            Quantity = ConvertHelper.ToDecimal(quantities[i]),
+                            Quantity = ConvertHelper.ToDecimal(quantities[i], new CultureInfo("en-US")),
                             Price = c.SubscriptionItem.Price,
                             VAT = 25,
                             Comments = comments[i],
