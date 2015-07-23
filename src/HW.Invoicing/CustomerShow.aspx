@@ -696,7 +696,7 @@
                             <td><strike><%= t.Comments %></strike></td>
                             <td>
                                 <%= HtmlHelper.Anchor("Edit", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id)) %>
-                                <%= HtmlHelper.Anchor("Delete", string.Format("customertimebookdelete.aspx?Id={0}&CustomerId={1}", t.Id, id)) %>
+                                <%= HtmlHelper.Anchor("Delete", string.Format("customertimebookdelete.aspx?Id={0}&CustomerId={1}", t.Id, id), "onclick=\"return confirm('Are you sure you want to delete this timebook?')\"")%>
                             </td>
                         </tr>
                     <% } else { %>
