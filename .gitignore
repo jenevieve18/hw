@@ -175,3 +175,4 @@ OpenCover**
 /src/HW.Invoicing/uploads/ihg.png
 /src/HW.Invoicing/uploads/paynpark.jpg
 src/HW.Invoicing/log.txt
+src/HW/bin/log-file.txt
