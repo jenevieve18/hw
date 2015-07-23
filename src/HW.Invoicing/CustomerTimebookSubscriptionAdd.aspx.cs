@@ -57,7 +57,7 @@ namespace HW.Invoicing
                 {
                     if (c.HasSubscription && c.SubscriptionStartDate < startDate)
                     {
-                        LoggingService.Info(quantities[i]);
+                        //LoggingService.Info(quantities[i]);
                         var t = new CustomerTimebook
                         {
                             Customer = c,
