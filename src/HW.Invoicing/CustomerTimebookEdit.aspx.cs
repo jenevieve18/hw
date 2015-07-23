@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using HW.Core.Helpers;
 using HW.Invoicing.Core.Repositories.Sql;
 using HW.Invoicing.Core.Models;
+using System.Globalization;
 
 namespace HW.Invoicing
 {
@@ -75,8 +76,8 @@ namespace HW.Invoicing
         protected void buttonSave_Click(object sender, EventArgs e)
         {
             decimal quantity = panelSubscriptionTimebook.Visible
-                ? ConvertHelper.ToDecimal(textBoxSubscriptionTimebookQuantity.Text)
-                : ConvertHelper.ToDecimal(textBoxTimebookQty.Text);
+                ? ConvertHelper.ToDecimal(textBoxSubscriptionTimebookQuantity.Text, new CultureInfo("en-US"))
+                : ConvertHelper.ToDecimal(textBoxTimebookQty.Text, new CultureInfo("en-US"));
             string comments = panelSubscriptionTimebook.Visible
                 ? textBoxSubscriptionTimebookComments.Text
                 : textBoxTimebookComments.Text;
