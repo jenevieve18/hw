@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using HW.Invoicing.Core.Models;
 using HW.Invoicing.Core.Repositories.Sql;
 using HW.Core.Helpers;
+using HW.Core.Services;
 
 namespace HW.Invoicing
 {
@@ -55,6 +56,7 @@ namespace HW.Invoicing
                 {
                     if (c.HasSubscription && c.SubscriptionStartDate < startDate)
                     {
+                        LoggingService.Info(quantities[i]);
                         var t = new CustomerTimebook
                         {
                             Customer = c,

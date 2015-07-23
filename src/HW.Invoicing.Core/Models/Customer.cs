@@ -242,7 +242,7 @@ namespace HW.Invoicing.Core.Models
 		{
 			switch (Status)
 			{
-					case INVOICED: return string.Format("<span class='label label-warning'>INVOICED {0}</span>", HtmlHelper.Anchor(InvoiceTimebook.Invoice.Number, "invoiceshow.aspx?Id=" + InvoiceTimebook.Invoice.Id));
+					case INVOICED: return string.Format("<span class='label label-warning'>INVOICED<br>{0}</span>", HtmlHelper.Anchor(InvoiceTimebook.Invoice.Number, "invoiceshow.aspx?Id=" + InvoiceTimebook.Invoice.Id));
 					case PAID: return "<span class='label label-success'>PAID</span>";
 					default: return "<span class='label label-default'>OPEN</span>";
 			}
