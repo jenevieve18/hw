@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="CustomerTimebookSubscriptionAdd.aspx.cs" Inherits="HW.Invoicing.CustomerTimebookSubscriptionAdd" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
+<%@ Import Namespace="HW.Invoicing.Core.Models" %>
+<%@ Import Namespace="System.Globalization" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
     <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>
@@ -11,6 +13,7 @@
                 autoclose: true
             });
             $('.date').change(function () {
+                console.log('.date.change()');
                 var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
                 var endDate = $('#<%= textBoxEndDate.ClientID %>').datepicker('getDate');
                 var months = monthDiff(startDate, endDate);
@@ -25,8 +28,11 @@
                     $(this).datepicker('update', $('#<%= textBoxEndDate.ClientID %>').datepicker('getDate'));
                 });
             });
+            <% if (!IsPostBack) { %>
             $('.date').change();
+            <% } %>
             $('.subscription-date').change(function () {
+                console.log('.subscription-date.change()');
                 //var hiddenSubscriptionStartDate = $(this).closest('tr').find('.customer-subscription-start-date');
                 //console.log(hiddenSubscriptionStartDate.val());
                 var textBoxStartDate = $(this).closest('tr').find('.subscription-start-date');
@@ -35,8 +41,8 @@
                 var customerSubscriptionStartDate = textBoxStartDate.data('subscriptionstartdate');
                 var d = new Date(customerSubscriptionStartDate);
                 d.setHours(0, 0, 0, 0);
-                console.log(startDate);
-                console.log(d);
+                //console.log(startDate);
+                //console.log(d);
                 if (startDate < d) {
                     //console.log("whoa!");
                     $(this).closest('tr').addClass('danger');
@@ -55,6 +61,7 @@
 
             var textGeneratedComments = $('#<%= textBoxComments.ClientID %>');
             $('#<%= textBoxText.ClientID %>').change(function () {
+                console.log('.textBoxText.change()');
                 var text = $(this).val();
                 var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
                 var endDate = $('#<%= textBoxEndDate.ClientID %>').datepicker('getDate');
@@ -63,17 +70,22 @@
                 $('#<%= textBoxComments.ClientID %>').change();
             });
             $('#<%= textBoxComments.ClientID %>').change(function () {
+                console.log('.textBoxComments.change()');
                 $('.subscription-comments').val($(this).val());
             });
             $('#<%= textBoxQuantity.ClientID %>').change(function () {
+                console.log('.textBoxQuantity.change()');
                 $('.subscription-quantities').val($(this).val());
                 var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
                 var d = addMonth(startDate, $(this).val());
                 $('#<%= textBoxEndDate.ClientID %>').datepicker('update', d);
             });
+            <% if (!IsPostBack) { %>
             $('#<%= textBoxText.ClientID %>').change();
+            <% } %>
 
             $('.subscription-quantities').change(function () {
+                console.log('.subscription-quantities.change()');
                 var startDate = $(this).closest('tr').find('.subscription-start-date').datepicker('getDate');
                 var d = addMonth(startDate, $(this).val());
                 $(this).closest('tr').find('.subscription-end-date').datepicker('update', d);
@@ -146,43 +158,75 @@
         <th>Subscription Item</th>
         <th>Unit</th>
         <th>Price</th>
-        <!--<th class="col-md-2">Start Date</th>
-        <th class="col-md-2">End Date</th>
-        <th class="col-md-1">Qty</th>
-        <th class="col-md-4">Comments</th>-->
         <th class='date-width'>Start Date</th>
         <th class='date-width'>End Date</th>
         <th class='quantity-width'>Qty</th>
         <th class='comments-width'>Comments</th>
     </tr>
-    <% foreach (var c in customers) { %>
-    <tr>
-        <td>
-            <%= c.Name %><br />
-            ( <%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %> )
-            <input type="hidden" class="customer-subscription-start-date" value="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>" />
-        </td>
-        <td><%= c.SubscriptionItem.Name %></td>
-        <td><%= c.SubscriptionItem.Unit.Name %></td>
-        <td><%= c.SubscriptionItem.Price.ToString("### ### ##0.00") %></td>
-        <!--<td class="col-md-2">-->
-        <td class='date-width'>
-            <input id="subscription-start-date" name="subscription-start-date" type="text" class="form-control subscription-start-date subscription-date"
-                data-subscriptionstartdate="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>"/>
-        </td>
-        <!--<td class="col-md-2">-->
-        <td class='date-width'>
-            <input id="subscription-end-date" name="subscription-end-date" type="text" class="form-control subscription-end-date subscription-date" />
-        </td>
-        <!--<td class="col-md-1">-->
-        <td class='quantity-width'>
-            <input id="subscription-quantities" name="subscription-quantities" class="subscription-quantities form-control" type="text" value="1" />
-        </td>
-        <!--<td class="col-md-4">-->
-        <td class='comments-width'>
-            <textarea id="subscription-comments" name="subscription-comments" class="subscription-comments form-control"></textarea>
-        </td>
-    </tr>
+    <% if (!IsPostBack) { %>
+        <% foreach (var c in customers) { %>
+        <tr>
+            <td>
+                <%= c.Name %><br />
+                ( <%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %> )
+                <input type="hidden" class="customer-subscription-start-date" value="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>" />
+            </td>
+            <td><%= c.SubscriptionItem.Name %></td>
+            <td><%= c.SubscriptionItem.Unit.Name %></td>
+            <td><%= c.SubscriptionItem.Price.ToString("### ### ##0.00") %></td>
+            <td class='date-width'>
+                <input id="subscription-start-date" name="subscription-start-date" type="text" class="form-control subscription-start-date subscription-date"
+                    data-subscriptionstartdate="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>"/>
+            </td>
+            <td class='date-width'>
+                <input id="subscription-end-date" name="subscription-end-date" type="text" class="form-control subscription-end-date subscription-date" />
+            </td>
+            <td class='quantity-width'>
+                <input id="subscription-quantities" name="subscription-quantities" class="subscription-quantities form-control" type="text" value="1" />
+            </td>
+            <td class='comments-width'>
+                <textarea id="subscription-comments" name="subscription-comments" class="subscription-comments form-control"></textarea>
+            </td>
+        </tr>
+        <% } %>
+    <% } else { %>
+        <%
+            var quantities = Request.Form.GetValues("subscription-quantities");
+            var comments = Request.Form.GetValues("subscription-comments");
+            var startDates = Request.Form.GetValues("subscription-start-date");
+            var endDates = Request.Form.GetValues("subscription-end-date");
+            var timebooks = new List<CustomerTimebook>();
+            int i = 0;
+        %>
+        <% foreach (var c in customers) { %>
+            <tr>
+                <td>
+                    <%= c.Name %><br />
+                    ( <%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %> )
+                    <input type="hidden" class="customer-subscription-start-date" value="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>" />
+                </td>
+                <td><%= c.SubscriptionItem.Name %></td>
+                <td><%= c.SubscriptionItem.Unit.Name %></td>
+                <td><%= c.SubscriptionItem.Price.ToString("### ### ##0.00") %></td>
+                <td class='date-width'>
+                    <input id="subscription-start-date" name="subscription-start-date" type="text" class="form-control subscription-start-date subscription-date"
+                        data-subscriptionstartdate="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>"
+                        value="<%= startDates[i] %>"/>
+                </td>
+                <td class='date-width'>
+                    <input id="subscription-end-date" name="subscription-end-date" type="text" class="form-control subscription-end-date subscription-date"
+                        value="<%= endDates[i] %>"/>
+                </td>
+                <td class='quantity-width'>
+                    <input id="subscription-quantities" name="subscription-quantities" class="subscription-quantities form-control" type="text"
+                        value="<%= ConvertHelper.ToDecimal(quantities[i], new CultureInfo("en-US")).ToString("0.00") %>"/>
+                </td>
+                <td class='comments-width'>
+                    <textarea id="subscription-comments" name="subscription-comments" class="subscription-comments form-control"><%= comments[i] %></textarea>
+                </td>
+            </tr>
+            <% i++; %>
+        <% } %>
     <% } %>
 </table>
 
