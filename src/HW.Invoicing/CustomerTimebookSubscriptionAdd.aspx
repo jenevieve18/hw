@@ -28,6 +28,7 @@
             $('.date').change();
             $('.subscription-date').change(function () {
                 var textBoxStartDate = $(this).closest('tr').find('.subscription-start-date');
+                var d = textBoxStartDate.data('start-date');
                 var startDate = textBoxStartDate.datepicker('getDate');
                 var textBoxEndDate = $(this).closest('tr').find('.subscription-end-date');
                 var endDate = textBoxEndDate.datepicker('getDate');
@@ -124,12 +125,16 @@
     </tr>
     <% foreach (var c in customers) { %>
     <tr>
-        <td><%= c.Name %></td>
+        <td>
+            <%= c.Name %><br />
+            ( <%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %> )
+        </td>
         <td><%= c.SubscriptionItem.Name %></td>
         <td><%= c.SubscriptionItem.Unit.Name %></td>
         <td><%= c.SubscriptionItem.Price.ToString("### ### ##0.00") %></td>
         <td class="col-md-2">
-            <input id="subscription-start-date" name="subscription-start-date" type="text" class="form-control subscription-start-date subscription-date" />
+            <input id="subscription-start-date" name="subscription-start-date" type="text" class="form-control subscription-start-date subscription-date"
+                data-subscription-start-date="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>"/>
         </td>
         <td class="col-md-2">
             <input id="subscription-end-date" name="subscription-end-date" type="text" class="form-control subscription-end-date subscription-date" />
