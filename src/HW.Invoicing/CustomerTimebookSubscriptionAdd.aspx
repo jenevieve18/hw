@@ -27,16 +27,30 @@
             });
             $('.date').change();
             $('.subscription-date').change(function () {
+                //var hiddenSubscriptionStartDate = $(this).closest('tr').find('.customer-subscription-start-date');
+                //console.log(hiddenSubscriptionStartDate.val());
                 var textBoxStartDate = $(this).closest('tr').find('.subscription-start-date');
-                var d = textBoxStartDate.data('start-date');
                 var startDate = textBoxStartDate.datepicker('getDate');
-                var textBoxEndDate = $(this).closest('tr').find('.subscription-end-date');
-                var endDate = textBoxEndDate.datepicker('getDate');
-                var months = monthDiff(startDate, endDate);
-                $(this).closest('tr').find('.subscription-quantities').val($.number(months, 2, '.', ''));
-                var comments = $('#<%= textBoxText.ClientID %>').val();
-                comments = comments + ' ' + textBoxStartDate.val().replace(/-/g, ".") + ' - ' + textBoxEndDate.val().replace(/-/g, ".");
-                $(this).closest('tr').find('.subscription-comments').val(comments);
+
+                var customerSubscriptionStartDate = textBoxStartDate.data('subscriptionstartdate');
+                var d = new Date(customerSubscriptionStartDate);
+                d.setHours(0, 0, 0, 0);
+                console.log(startDate);
+                console.log(d);
+                if (startDate < d) {
+                    //console.log("whoa!");
+                    $(this).closest('tr').addClass('danger');
+                    //alert("Subscription start date you selected is lesser than the customer's subscription start date.");
+                } else {
+                    $(this).closest('tr').removeClass('danger');
+                    var textBoxEndDate = $(this).closest('tr').find('.subscription-end-date');
+                    var endDate = textBoxEndDate.datepicker('getDate');
+                    var months = monthDiff(startDate, endDate);
+                    $(this).closest('tr').find('.subscription-quantities').val($.number(months, 2, '.', ''));
+                    var comments = $('#<%= textBoxText.ClientID %>').val();
+                    comments = comments + ' ' + textBoxStartDate.val().replace(/-/g, ".") + ' - ' + textBoxEndDate.val().replace(/-/g, ".");
+                    $(this).closest('tr').find('.subscription-comments').val(comments);
+                }
             });
 
             var textGeneratedComments = $('#<%= textBoxComments.ClientID %>');
@@ -146,6 +160,7 @@
         <td>
             <%= c.Name %><br />
             ( <%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %> )
+            <input type="hidden" class="customer-subscription-start-date" value="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>" />
         </td>
         <td><%= c.SubscriptionItem.Name %></td>
         <td><%= c.SubscriptionItem.Unit.Name %></td>
@@ -153,7 +168,7 @@
         <!--<td class="col-md-2">-->
         <td class='date-width'>
             <input id="subscription-start-date" name="subscription-start-date" type="text" class="form-control subscription-start-date subscription-date"
-                data-subscription-start-date="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>"/>
+                data-subscriptionstartdate="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>"/>
         </td>
         <!--<td class="col-md-2">-->
         <td class='date-width'>

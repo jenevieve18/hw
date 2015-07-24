@@ -26,8 +26,10 @@ namespace HW.Invoicing
             customers = r.FindActiveSubscribersByCompany(companyId);
             if (!IsPostBack)
             {
-                var startDate = DateTime.Now;
-                var endDate = DateTime.Now.AddMonths(1).AddDays(-1);
+                var now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                var startDate = now;
+                //var endDate = DateTime.Now.AddMonths(1).AddDays(-1);
+                var endDate = now.AddMonths(1).AddDays(-1);
                 textBoxStartDate.Text = startDate.ToString("yyyy-MM-dd");
                 textBoxEndDate.Text = endDate.ToString("yyyy-MM-dd");
 
