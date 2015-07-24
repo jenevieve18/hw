@@ -16,6 +16,7 @@
             <tr><td>Category&nbsp;</td><td><asp:DropDownList ID=ExerciseCategoryID runat=server /></td></tr>
             <tr><td>Image (optional)&nbsp;</td><td><input type="file" runat=server id=ExerciseImg /></td></tr>
             <tr><td>Time (statistics)&nbsp;</td><td><asp:TextBox ID=Minutes runat=server Width=35 />minutes</td></tr>
+            <tr><td valign="top">Javascript (for exercise)</td><td><asp:TextBox ID=textBoxJavascript runat=server Width="800" Height="150" ViewStateMode="Inherit" TextMode="MultiLine" /></td></tr>
             <asp:PlaceHolder ID="ExerciseLang" runat=server />
             <asp:PlaceHolder ID="ExerciseVariant" runat=server />
 		</table>

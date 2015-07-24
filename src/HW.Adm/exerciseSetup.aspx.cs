@@ -131,7 +131,14 @@ public partial class exerciseSetup : System.Web.UI.Page
 
             if(eid != 0)
             {
-                rs = Db.rs("SELECT e.ExerciseAreaID, e.ExerciseImg, e.RequiredUserLevel, e.Minutes, e.ExerciseCategoryID FROM Exercise e WHERE e.ExerciseID = " + eid);
+                rs = Db.rs(
+@"SELECT e.ExerciseAreaID,
+e.ExerciseImg,
+e.RequiredUserLevel,
+e.Minutes,
+e.ExerciseCategoryID,
+e.Script
+FROM Exercise e WHERE e.ExerciseID = " + eid);
                 if(rs.Read())
                 {
                     ExerciseAreaID.SelectedValue = rs.GetInt32(0).ToString();
@@ -144,6 +151,10 @@ public partial class exerciseSetup : System.Web.UI.Page
                     if (!rs.IsDBNull(4))
                     {
                         ExerciseCategoryID.SelectedValue = rs.GetInt32(4).ToString();
+                    }
+                    if (!rs.IsDBNull(5))
+                    {
+                        textBoxJavascript.Text = rs.GetString(5);
                     }
                 }
                 rs.Close();
@@ -169,12 +180,13 @@ public partial class exerciseSetup : System.Web.UI.Page
                 "ExerciseAreaID = " + Convert.ToInt32(ExerciseAreaID.SelectedValue) + ", " +
                 "ExerciseCategoryID = " + (Convert.ToInt32(ExerciseCategoryID.SelectedValue) != 0 ? Convert.ToInt32(ExerciseCategoryID.SelectedValue).ToString() : "NULL") + ", " +
                 "RequiredUserLevel = " + Convert.ToInt32(RequiredUserLevel.SelectedValue) + ", " +
-                "Minutes = " + Convert.ToInt32(Minutes.Text) + " " +
+                "Minutes = " + Convert.ToInt32(Minutes.Text) + ", " +
+                "Script = '" + textBoxJavascript.Text.Replace("'", "''") + "'" + " " +
                 "WHERE ExerciseID = " + eid);
         }
         else
         {
-            Db.exec("INSERT INTO Exercise (ExerciseCategoryID,ExerciseAreaID,RequiredUserLevel,Minutes) VALUES (" + (Convert.ToInt32(ExerciseCategoryID.SelectedValue) != 0 ? Convert.ToInt32(ExerciseCategoryID.SelectedValue).ToString() : "NULL") + "," + Convert.ToInt32(ExerciseAreaID.SelectedValue) + "," + Convert.ToInt32(RequiredUserLevel.SelectedValue) + "," + Convert.ToInt32(Minutes.Text) + ")");
+            Db.exec("INSERT INTO Exercise (ExerciseCategoryID,ExerciseAreaID,RequiredUserLevel,Minutes,Script) VALUES (" + (Convert.ToInt32(ExerciseCategoryID.SelectedValue) != 0 ? Convert.ToInt32(ExerciseCategoryID.SelectedValue).ToString() : "NULL") + "," + Convert.ToInt32(ExerciseAreaID.SelectedValue) + "," + Convert.ToInt32(RequiredUserLevel.SelectedValue) + "," + Convert.ToInt32(Minutes.Text) + ", '" + textBoxJavascript.Text.Replace("'", "''") + "')");
             rs = Db.rs("SELECT TOP 1 ExerciseID FROM Exercise ORDER BY ExerciseID DESC");
             if (rs.Read())
             {

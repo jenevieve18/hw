@@ -16,3 +16,5 @@ create table FAQLang(
 );
 
 alter table Issue add Status integer;
+
+alter table Exercise add Script text;

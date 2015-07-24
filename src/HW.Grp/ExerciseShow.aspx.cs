@@ -25,10 +25,12 @@ namespace HW.Grp
 		protected int EVLID;
 		protected int SID;
 
-		ISponsorRepository sr;
-		IExerciseRepository er;
+		//ISponsorRepository sr;
+		//IExerciseRepository er;
+        SqlSponsorRepository sr = new SqlSponsorRepository();
+        SqlExerciseRepository er = new SqlExerciseRepository();
 		
-		public ExerciseShow() : this(new SqlSponsorRepository(), new SqlExerciseRepository())
+		/*public ExerciseShow() : this(new SqlSponsorRepository(), new SqlExerciseRepository())
 		{
 		}
 		
@@ -36,7 +38,7 @@ namespace HW.Grp
 		{
 			this.sr = sr;
 			this.er = er;
-		}
+		}*/
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -145,10 +147,12 @@ namespace HW.Grp
         margin:0 2em;
     }}
 </style>
+{2}
 <h1>{0}</h1>
 {1}",
 						evl.Variant.Exercise.Languages[0].ExerciseName,
-						evl.Content
+						evl.Content,
+                        evl.Variant.Exercise.Script
 					)
 				);
 			} else {

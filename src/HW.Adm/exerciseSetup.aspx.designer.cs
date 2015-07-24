@@ -75,6 +75,15 @@ public partial class exerciseSetup {
     protected global::System.Web.UI.WebControls.TextBox Minutes;
     
     /// <summary>
+    /// textBoxJavascript control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.TextBox textBoxJavascript;
+    
+    /// <summary>
     /// ExerciseLang control.
     /// </summary>
     /// <remarks>

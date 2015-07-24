@@ -5,6 +5,7 @@ namespace HW.Core.Models
 {
 	public class Exercise : BaseModel
 	{
+        public string Script { get; set; }
 		public virtual string Image { get; set; }
 		public virtual ExerciseCategory Category { get; set; }
 		public virtual ExerciseArea Area { get; set; }

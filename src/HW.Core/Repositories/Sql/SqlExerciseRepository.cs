@@ -106,7 +106,8 @@ SELECT el.Exercise,
 	evl.ExerciseContent,
 	e.PrintOnBottom,
 	e.ReplacementHead,
-	evl.Lang
+	evl.Lang,
+    e.Script
 FROM [ExerciseVariantLang] evl
 INNER JOIN [ExerciseVariant] ev ON evl.ExerciseVariantID = ev.ExerciseVariantID
 INNER JOIN [ExerciseType] et ON ev.ExerciseTypeID = et.ExerciseTypeID
@@ -124,6 +125,7 @@ WHERE evl.ExerciseVariantLangID = {0}",
 								Languages = new [] { new ExerciseLanguage { ExerciseName = GetString(rs, 0) }},
 								PrintOnBottom = GetInt32(rs, 4) == 1,
 								ReplacementHead = GetString(rs, 5, ""),
+                                Script = GetString(rs, 7)
 							},
 							Type = GetObject<ExerciseType>(rs, 2)
 						},
