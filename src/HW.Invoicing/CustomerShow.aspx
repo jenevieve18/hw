@@ -573,7 +573,7 @@
             <table class="table table-hover small">
                 <tr>
                     <th><input type="checkbox" id="checkbox-timebook-all" /></th>
-                    <th style="width:10%">Date</th>
+                    <th style="width:80px">Date</th>
                     <th>Department</th>
                     <th>Contact</th>
                     <th>Item</th>
@@ -675,8 +675,8 @@
                 <% foreach (var t in timebooks) { %>
                     <% if (t.Inactive) { %>
                         <tr>
-                            <td></td>
-                            <td>
+                            <td style="width:16px"></td>
+                            <td style="width:120px">
                                 <strike>
                                     <% if (t.Date != null) { %>
                                         <%= t.Date.Value.ToString("yyyy-MM-dd") %>
@@ -692,16 +692,18 @@
                             <td><strike><%= t.Amount.ToString("# ##0.00") %></strike></td>
                             <td><strike><%= t.VAT %>%</strike></td>
                             <td><strike><%= t.Consultant %></strike></td>
-                            <td><%= t.GetStatus() %></td>
+                            <td align="center"><%= t.GetStatus() %></td>
                             <td><strike><%= t.Comments %></strike></td>
                             <td>
-                                <%= HtmlHelper.Anchor("Edit", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id)) %>
-                                <%= HtmlHelper.Anchor("Delete", string.Format("customertimebookdelete.aspx?Id={0}&CustomerId={1}", t.Id, id), "onclick=\"return confirm('Are you sure you want to delete this timebook?')\"")%>
+                                <!--<%= HtmlHelper.Anchor("Edit", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id)) %>
+                                <%= HtmlHelper.Anchor("Delete", string.Format("customertimebookdelete.aspx?Id={0}&CustomerId={1}", t.Id, id), "onclick=\"return confirm('Are you sure you want to delete this timebook?')\"")%>-->
+                                <%= HtmlHelper.Anchor(" ", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id), "class='glyphicon glyphicon-edit'")%>
+                                <%= HtmlHelper.Anchor(" ", string.Format("customertimebookdelete.aspx?Id={0}&CustomerId={1}", t.Id, id), "class='glyphicon glyphicon-remove-circle' onclick=\"return confirm('Are you sure you want to delete this timebook?')\"")%>
                             </td>
                         </tr>
                     <% } else { %>
                         <tr>
-                            <td>
+                            <td style="width:16px">
                                 <% if (t.Status == 0) { %>
                                 <input type="checkbox" class="timebook-item" id="timebook-<%= t.Id %>"
                                      data-id="<%= t.Id %>"
@@ -716,7 +718,7 @@
                                 />
                                 <% } %>
                             </td>
-                            <td>
+                            <td style="width:120px">
                                 <% if (t.Date != null) { %>
                                     <%= t.Date.Value.ToString("yyyy-MM-dd") %>
                                 <% } %>
@@ -730,12 +732,12 @@
                             <td><%= t.Amount.ToString("# ##0.00") %></td>
                             <td><%= t.VAT %>%</td>
                             <td><%= t.Consultant %></td>
-                            <td><%= t.GetStatus() %></td>
+                            <td align="center"><%= t.GetStatus() %></td>
                             <td><%= t.Comments %></td>
                             <td>
                                 <% if (!t.IsPaid) { %>
-                                <%= HtmlHelper.Anchor("Edit", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id)) %>
-                                <%= HtmlHelper.Anchor("Deactivate", string.Format("customertimebookdeactivate.aspx?Id={0}&CustomerId={1}", t.Id, id)) %>
+                                    <%= HtmlHelper.Anchor(" ", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id), "class='glyphicon glyphicon-edit'")%>
+                                    <%= HtmlHelper.Anchor(" ", string.Format("customertimebookdeactivate.aspx?Id={0}&CustomerId={1}", t.Id, id), "class='glyphicon glyphicon-minus'")%>
                                 <% } %>
                             </td>
                         </tr>

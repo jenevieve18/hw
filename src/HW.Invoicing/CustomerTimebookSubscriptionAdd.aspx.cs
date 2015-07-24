@@ -55,7 +55,8 @@ namespace HW.Invoicing
                 int i = 0;
                 foreach (var c in customers)
                 {
-                    if (c.HasSubscription && c.SubscriptionStartDate < startDate)
+                    var sDate = ConvertHelper.ToDateTime(startDates[i]);
+                    if (c.HasSubscription && c.SubscriptionStartDate < sDate)
                     {
                         //LoggingService.Info(quantities[i]);
                         var t = new CustomerTimebook
@@ -67,7 +68,7 @@ namespace HW.Invoicing
                             VAT = 25,
                             Comments = comments[i],
                             IsSubscription = true,
-                            SubscriptionStartDate = ConvertHelper.ToDateTime(startDates[i]),
+                            SubscriptionStartDate = sDate,
                             SubscriptionEndDate = ConvertHelper.ToDateTime(endDates[i])
                         };
                         timebooks.Add(t);
