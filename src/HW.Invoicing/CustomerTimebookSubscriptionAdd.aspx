@@ -66,6 +66,20 @@
             });
         });
     </script>
+    <style type="text/css">
+        .date-width 
+        {
+            width:100px;
+        }
+        .quantity-width 
+        {
+            width:60px;
+        }
+        .comments-width 
+        {
+            width:300px;
+        }
+    </style>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -85,19 +99,19 @@
         <td>
             <div class="form-group">
 	            <label for="<%= textBoxStartDate.ClientID %>">Start Date</label>
-                <asp:TextBox ID="textBoxStartDate" runat="server" CssClass="date form-control"></asp:TextBox>
+                <asp:TextBox ID="textBoxStartDate" runat="server" CssClass="date form-control date-width"></asp:TextBox>
             </div>
         </td>
         <td>
             <div class="form-group">
 	            <label for="<%= textBoxEndDate.ClientID %>">End Date</label>
-                <asp:TextBox ID="textBoxEndDate" runat="server" CssClass="date form-control"></asp:TextBox>
+                <asp:TextBox ID="textBoxEndDate" runat="server" CssClass="date form-control date-width"></asp:TextBox>
             </div>
         </td>
         <td>
             <div class="form-group">
 	            <label for="<%= textBoxQuantity.ClientID %>">Quantity</label>
-                <asp:TextBox ID="textBoxQuantity" runat="server" CssClass="form-control"></asp:TextBox>
+                <asp:TextBox ID="textBoxQuantity" runat="server" CssClass="form-control quantity-width"></asp:TextBox>
             </div>
         </td>
     </tr>
@@ -118,10 +132,14 @@
         <th>Subscription Item</th>
         <th>Unit</th>
         <th>Price</th>
-        <th class="col-md-2">Start Date</th>
+        <!--<th class="col-md-2">Start Date</th>
         <th class="col-md-2">End Date</th>
         <th class="col-md-1">Qty</th>
-        <th class="col-md-4">Comments</th>
+        <th class="col-md-4">Comments</th>-->
+        <th class='date-width'>Start Date</th>
+        <th class='date-width'>End Date</th>
+        <th class='quantity-width'>Qty</th>
+        <th class='comments-width'>Comments</th>
     </tr>
     <% foreach (var c in customers) { %>
     <tr>
@@ -132,17 +150,21 @@
         <td><%= c.SubscriptionItem.Name %></td>
         <td><%= c.SubscriptionItem.Unit.Name %></td>
         <td><%= c.SubscriptionItem.Price.ToString("### ### ##0.00") %></td>
-        <td class="col-md-2">
+        <!--<td class="col-md-2">-->
+        <td class='date-width'>
             <input id="subscription-start-date" name="subscription-start-date" type="text" class="form-control subscription-start-date subscription-date"
                 data-subscription-start-date="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>"/>
         </td>
-        <td class="col-md-2">
+        <!--<td class="col-md-2">-->
+        <td class='date-width'>
             <input id="subscription-end-date" name="subscription-end-date" type="text" class="form-control subscription-end-date subscription-date" />
         </td>
-        <td class="col-md-1">
+        <!--<td class="col-md-1">-->
+        <td class='quantity-width'>
             <input id="subscription-quantities" name="subscription-quantities" class="subscription-quantities form-control" type="text" value="1" />
         </td>
-        <td class="col-md-4">
+        <!--<td class="col-md-4">-->
+        <td class='comments-width'>
             <textarea id="subscription-comments" name="subscription-comments" class="subscription-comments form-control"></textarea>
         </td>
     </tr>
