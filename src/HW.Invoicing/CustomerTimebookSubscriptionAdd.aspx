@@ -217,7 +217,7 @@
                             Latest: <%= c.SubscriptionTimebooks[0].ToString() %>
                         </span>
                     <% } else { %>
-                        <span class='label label-default'>NONE</span>
+                        <span class='label label-default'>None</span>
                     <% } %>
                     <input type="hidden" class="customer-subscription-start-date" value="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>" />
                 </td>
