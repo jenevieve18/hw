@@ -107,6 +107,12 @@
 
 <h3>Subscription Timebooks</h3>
 
+<div class='alert alert-warning'>
+    <h4>Testing Purposes Only</h4>
+    <p>This will delete all subscription timebooks. This will be removed on production.</p>
+    <p><asp:Button ID="buttonClear" runat="server" Text="Click here!" CssClass="btn btn-warning" OnClick="buttonClear_Click" /></p>
+</div>
+
 <% if (message  != null) { %>
     <%= message %>
 <% } %>

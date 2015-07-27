@@ -622,6 +622,14 @@ WHERE Id = @Id"
             return c;
         }
 
+        public void ClearSubscriptionTimebooks()
+        {
+            string query = @"
+DELETE FROM CustomerTimebook
+WHERE IsSubscription = 1";
+            ExecuteNonQuery(query, "invoicing");
+        }
+
         public bool HasSubscriptionTimebookWithDate(DateTime startDate)
         {
             string query = @"

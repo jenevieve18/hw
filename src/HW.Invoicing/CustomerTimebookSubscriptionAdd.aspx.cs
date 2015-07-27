@@ -41,6 +41,12 @@ namespace HW.Invoicing
             }
         }
 
+        protected void buttonClear_Click(object sender, EventArgs e)
+        {
+            r.ClearSubscriptionTimebooks();
+            message = "<div class='alert alert-danger'>Subscription timebooks deleted.</div>";
+        }
+
         protected void buttonSave_Click(object sender, EventArgs e)
         {
             var startDate = ConvertHelper.ToDateTime(textBoxStartDate.Text);
