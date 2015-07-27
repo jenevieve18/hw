@@ -29,7 +29,6 @@ namespace HW.Invoicing
             {
                 var now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
                 startDate = now;
-                //var endDate = DateTime.Now.AddMonths(1).AddDays(-1);
                 var endDate = now.AddMonths(1).AddDays(-1);
                 textBoxStartDate.Text = startDate.ToString("yyyy-MM-dd");
                 textBoxEndDate.Text = endDate.ToString("yyyy-MM-dd");

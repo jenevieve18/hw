@@ -60,9 +60,6 @@ namespace HW.Invoicing.Core.Models
 						v[t.Timebook.VAT] = t.Timebook.VATAmount;
 					}
 				}
-                /*var keys = v.Keys.ToList();
-                keys.Sort();*/
-                //v.Keys.ToList().Sort();
 				return v;
 			}
 		}

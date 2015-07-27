@@ -170,7 +170,14 @@
             <tr<%= a %>>
                 <td>
                     <%= c.Name %><br />
-                    ( <%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %> )
+                    ( <%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %> )<br />
+                    <% if (c.HasSubscriptionTimebooks) { %>
+                        <span class='label label-success'>
+                            Latest: <%= c.SubscriptionTimebooks[0].ToString() %>
+                        </span>
+                    <% } else { %>
+                        <span class='label label-default'>NONE</span>
+                    <% } %>
                     <input type="hidden" class="customer-subscription-start-date" value="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>" />
                 </td>
                 <td><%= c.SubscriptionItem.Name %></td>
@@ -205,6 +212,13 @@
                 <td>
                     <%= c.Name %><br />
                     ( <%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %> )
+                    <% if (c.HasSubscriptionTimebooks) { %>
+                        <span class='label label-success'>
+                            Latest: <%= c.SubscriptionTimebooks[0].ToString() %>
+                        </span>
+                    <% } else { %>
+                        <span class='label label-default'>NONE</span>
+                    <% } %>
                     <input type="hidden" class="customer-subscription-start-date" value="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>" />
                 </td>
                 <td><%= c.SubscriptionItem.Name %></td>

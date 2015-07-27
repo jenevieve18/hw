@@ -1228,6 +1228,10 @@ ORDER BY c.Inactive, c.Name"
                     );
                 }
             }
+            foreach (var c in customers)
+            {
+                c.Timebooks = FindTimebooks(c.Id);
+            }
             return customers;
         }
 	}

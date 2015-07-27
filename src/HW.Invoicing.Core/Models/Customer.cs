@@ -38,6 +38,21 @@ namespace HW.Invoicing.Core.Models
 		public bool Inactive { get; set; }
 		public Language Language { get; set; }
 
+        public bool HasSubscriptionTimebooks
+        {
+            get { return SubscriptionTimebooks.Count > 0;  }
+        }
+
+        public IList<CustomerTimebook> SubscriptionTimebooks
+        {
+            get
+            {
+                return Timebooks.Where(x => x.IsSubscription).Select(x => x).ToList();
+            }
+        }
+
+        public IList<CustomerTimebook> Timebooks { get; set; }
+
 		public static List<Currency> GetCurrencies()
 		{
 			return new List<Currency>(
@@ -205,8 +220,7 @@ namespace HW.Invoicing.Core.Models
 
 		public override string ToString()
 		{
-//			if (Contact != null && Contact.Id != 0)
-			if (!IsSubscription)
+			/*if (!IsSubscription)
 			{
 				string c = Consultant != "" ? string.Format(" ({0})", Consultant) : "";
 				return string.Format("{0}{1}", Comments, c);
@@ -214,7 +228,9 @@ namespace HW.Invoicing.Core.Models
 			else
 			{
 				return Item.Name;
-			}
+			}*/
+            string c = Consultant != null && Consultant != "" ? string.Format(" ({0})", Consultant) : "";
+            return string.Format("{0}{1}", Comments, c);
 		}
 
 		public bool IsPaid
