@@ -13,7 +13,7 @@
                 autoclose: true
             });
             $('.date').change(function () {
-                console.log('.date.change()');
+                //console.log('.date.change()');
                 var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
                 var endDate = $('#<%= textBoxEndDate.ClientID %>').datepicker('getDate');
                 var months = monthDiff(startDate, endDate);
@@ -32,19 +32,14 @@
             $('.date').change();
             <% } %>
             $('.subscription-date').change(function () {
-                console.log('.subscription-date.change()');
-                //var hiddenSubscriptionStartDate = $(this).closest('tr').find('.customer-subscription-start-date');
-                //console.log(hiddenSubscriptionStartDate.val());
+                //console.log('.subscription-date.change()');
                 var textBoxStartDate = $(this).closest('tr').find('.subscription-start-date');
                 var startDate = textBoxStartDate.datepicker('getDate');
 
                 var customerSubscriptionStartDate = textBoxStartDate.data('subscriptionstartdate');
                 var d = new Date(customerSubscriptionStartDate);
                 d.setHours(0, 0, 0, 0);
-                //console.log(startDate);
-                //console.log(d);
                 if (startDate < d) {
-                    //console.log("whoa!");
                     $(this).closest('tr').addClass('danger');
                     //alert("Subscription start date you selected is lesser than the customer's subscription start date.");
                 } else {
@@ -61,7 +56,7 @@
 
             var textGeneratedComments = $('#<%= textBoxComments.ClientID %>');
             $('#<%= textBoxText.ClientID %>').change(function () {
-                console.log('.textBoxText.change()');
+                //console.log('.textBoxText.change()');
                 var text = $(this).val();
                 var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
                 var endDate = $('#<%= textBoxEndDate.ClientID %>').datepicker('getDate');
@@ -70,11 +65,11 @@
                 $('#<%= textBoxComments.ClientID %>').change();
             });
             $('#<%= textBoxComments.ClientID %>').change(function () {
-                console.log('.textBoxComments.change()');
+                //console.log('.textBoxComments.change()');
                 $('.subscription-comments').val($(this).val());
             });
             $('#<%= textBoxQuantity.ClientID %>').change(function () {
-                console.log('.textBoxQuantity.change()');
+                //console.log('.textBoxQuantity.change()');
                 $('.subscription-quantities').val($(this).val());
                 var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
                 var d = addMonth(startDate, $(this).val());
@@ -165,29 +160,30 @@
     </tr>
     <% if (!IsPostBack) { %>
         <% foreach (var c in customers) { %>
-        <tr>
-            <td>
-                <%= c.Name %><br />
-                ( <%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %> )
-                <input type="hidden" class="customer-subscription-start-date" value="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>" />
-            </td>
-            <td><%= c.SubscriptionItem.Name %></td>
-            <td><%= c.SubscriptionItem.Unit.Name %></td>
-            <td><%= c.SubscriptionItem.Price.ToString("### ### ##0.00") %></td>
-            <td class='date-width'>
-                <input id="subscription-start-date" name="subscription-start-date" type="text" class="form-control subscription-start-date subscription-date"
-                    data-subscriptionstartdate="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>"/>
-            </td>
-            <td class='date-width'>
-                <input id="subscription-end-date" name="subscription-end-date" type="text" class="form-control subscription-end-date subscription-date" />
-            </td>
-            <td class='quantity-width'>
-                <input id="subscription-quantities" name="subscription-quantities" class="subscription-quantities form-control" type="text" value="1" />
-            </td>
-            <td class='comments-width'>
-                <textarea id="subscription-comments" name="subscription-comments" class="subscription-comments form-control"></textarea>
-            </td>
-        </tr>
+            <% string a = startDate < c.SubscriptionStartDate ? " class='danger'" : ""; %>
+            <tr<%= a %>>
+                <td>
+                    <%= c.Name %><br />
+                    ( <%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %> )
+                    <input type="hidden" class="customer-subscription-start-date" value="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>" />
+                </td>
+                <td><%= c.SubscriptionItem.Name %></td>
+                <td><%= c.SubscriptionItem.Unit.Name %></td>
+                <td><%= c.SubscriptionItem.Price.ToString("### ### ##0.00") %></td>
+                <td class='date-width'>
+                    <input id="subscription-start-date" name="subscription-start-date" type="text" class="form-control subscription-start-date subscription-date"
+                        data-subscriptionstartdate="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>"/>
+                </td>
+                <td class='date-width'>
+                    <input id="subscription-end-date" name="subscription-end-date" type="text" class="form-control subscription-end-date subscription-date" />
+                </td>
+                <td class='quantity-width'>
+                    <input id="subscription-quantities" name="subscription-quantities" class="subscription-quantities form-control" type="text" value="1" />
+                </td>
+                <td class='comments-width'>
+                    <textarea id="subscription-comments" name="subscription-comments" class="subscription-comments form-control"></textarea>
+                </td>
+            </tr>
         <% } %>
     <% } else { %>
         <%

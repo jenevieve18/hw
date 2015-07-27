@@ -17,6 +17,7 @@ namespace HW.Invoicing
         protected IList<Customer> customers;
         SqlCustomerRepository r = new SqlCustomerRepository();
         protected string message;
+        protected DateTime startDate;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -27,7 +28,7 @@ namespace HW.Invoicing
             if (!IsPostBack)
             {
                 var now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-                var startDate = now;
+                startDate = now;
                 //var endDate = DateTime.Now.AddMonths(1).AddDays(-1);
                 var endDate = now.AddMonths(1).AddDays(-1);
                 textBoxStartDate.Text = startDate.ToString("yyyy-MM-dd");
@@ -58,9 +59,8 @@ namespace HW.Invoicing
                 foreach (var c in customers)
                 {
                     var sDate = ConvertHelper.ToDateTime(startDates[i]);
-                    if (c.HasSubscription && c.SubscriptionStartDate < sDate)
+                    if (c.HasSubscription && c.SubscriptionStartDate <= sDate)
                     {
-                        //LoggingService.Info(quantities[i]);
                         var t = new CustomerTimebook
                         {
                             Customer = c,
