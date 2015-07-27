@@ -7,6 +7,37 @@
     <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script src="js/jquery.number.min.js" type="text/javascript"></script>
     <script type="text/javascript">
+        var customers = [];
+        <% foreach (var c in customers) { %>
+            var c = {
+                'id': <%= c.Id %>,
+                'startDate': '<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>'
+            };
+            c.timebooks = [];
+            <% foreach (var t in c.SubscriptionTimebooks) { %>
+                var t = {
+                    'startDate': '<%= t.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>'
+                };
+                c.timebooks.push(t);
+            <% } %>
+            customers.push(c);
+        <% } %>
+        function inTimebook(customerId, startDate) {
+            var found = false;
+            $.each(customers, function(i, c) {
+                if (c['id'] == customerId) {
+                    //console.log(customerId);
+                    $.each(c.timebooks, function(j, t) {
+                        var d = new Date(t['startDate']);
+                        d.setHours(0, 0, 0);
+                        if (d.getTime() == startDate.getTime()) {
+                            found = true;
+                        }
+                    });
+                }
+            });
+            return found;
+        }
         $(document).ready(function () {
             $('.date, .subscription-start-date, .subscription-end-date').datepicker({
                 format: "yyyy-mm-dd",
@@ -39,12 +70,16 @@
                 var customerSubscriptionStartDate = textBoxStartDate.data('subscriptionstartdate');
                 var d = new Date(customerSubscriptionStartDate);
                 d.setHours(0, 0, 0, 0);
-                var customerLatestSubscriptionTimebookStartDate = textBoxStartDate.data('latestsubscriptiontimebookstartdate');
-                var dd = new Date(customerLatestSubscriptionTimebookStartDate);
-                dd.setHours(0, 0, 0, 0);
+
+                var customerId = textBoxStartDate.data('customerid');
+
+                //var customerLatestSubscriptionTimebookStartDate = textBoxStartDate.data('latestsubscriptiontimebookstartdate');
+                //var dd = new Date(customerLatestSubscriptionTimebookStartDate);
+                //dd.setHours(0, 0, 0, 0);
                 //console.log(startDate);
                 //console.log(dd);
-                if (startDate < d || startDate.getTime() == dd.getTime()) {
+                //if (startDate < d || startDate.getTime() == dd.getTime()) {
+                if (startDate < d || inTimebook(customerId, startDate)) {
                     $(this).closest('tr').addClass('danger');
                     //alert("Subscription start date you selected is lesser than the customer's subscription start date.");
                 } else {
@@ -200,7 +235,8 @@
                 <td class='date-width'>
                     <input id="subscription-start-date" name="subscription-start-date" type="text" class="form-control subscription-start-date subscription-date"
                         data-subscriptionstartdate="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>"
-                        data-latestsubscriptiontimebookstartdate="<%= c.GetLatestSubscriptionTimebookStartDate() %>"/>
+                        data-latestsubscriptiontimebookstartdate="<%= c.GetLatestSubscriptionTimebookStartDate() %>"
+                        data-customerid="<%= c.Id %>"/>
                 </td>
                 <td class='date-width'>
                     <input id="subscription-end-date" name="subscription-end-date" type="text" class="form-control subscription-end-date subscription-date" />
@@ -245,6 +281,8 @@
                 <td class='date-width'>
                     <input id="subscription-start-date" name="subscription-start-date" type="text" class="form-control subscription-start-date subscription-date"
                         data-subscriptionstartdate="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>"
+                        data-latestsubscriptiontimebookstartdate="<%= c.GetLatestSubscriptionTimebookStartDate() %>"
+                        data-customerid="<%= c.Id %>"
                         value="<%= startDates[i] %>"/>
                 </td>
                 <td class='date-width'>

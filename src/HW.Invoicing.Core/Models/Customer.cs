@@ -58,12 +58,19 @@ namespace HW.Invoicing.Core.Models
 
         public bool HasSubscriptionTimebook(DateTime d)
         {
+            bool found = false;
             if (HasSubscriptionTimebooks) {
-                var t = SubscriptionTimebooks[0];
-                return t.SubscriptionStartDate.Value.Date == d.Date;
-            } else {
-                return false;
+                foreach (var t in SubscriptionTimebooks)
+                {
+                    if (t.SubscriptionStartDate.Value.Date == d.Date)
+                    {
+                        found = true;
+                    }
+                }
+                //var t = SubscriptionTimebooks[0];
+                //return t.SubscriptionStartDate.Value.Date == d.Date;
             }
+            return found;
         }
 
         public bool HasSubscriptionTimebooks
@@ -75,7 +82,7 @@ namespace HW.Invoicing.Core.Models
         {
             get
             {
-                return Timebooks.Where(x => x.IsSubscription).Select(x => x).ToList();
+                return Timebooks.OrderByDescending(x => x.SubscriptionStartDate).Where(x => x.IsSubscription).Select(x => x).ToList();
             }
         }
 
