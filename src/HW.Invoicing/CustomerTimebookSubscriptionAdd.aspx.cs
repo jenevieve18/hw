@@ -48,7 +48,8 @@ namespace HW.Invoicing
 
         protected void buttonSave_Click(object sender, EventArgs e)
         {
-            var startDate = ConvertHelper.ToDateTime(textBoxStartDate.Text);
+            //var startDate = ConvertHelper.ToDateTime(textBoxStartDate.Text);
+            startDate = ConvertHelper.ToDateTime(textBoxStartDate.Text);
             if (r.HasSubscriptionTimebookWithDate(startDate))
             {
                 message = "<div class='alert alert-danger'>Invalid subscription timebook. Start date selected is in the database. Please check and try again.</div>";

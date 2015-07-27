@@ -170,7 +170,7 @@
             <tr<%= a %>>
                 <td>
                     <%= c.Name %><br />
-                    ( <%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %> )<br />
+                    <small>(<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>)</small><br />
                     <% if (c.HasSubscriptionTimebooks) { %>
                         <!--<span class='label label-success'>-->
                         <span class='small'>
@@ -213,7 +213,7 @@
             <tr<%= a %>>
                 <td>
                     <%= c.Name %><br />
-                    ( <%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %> )
+                    <small>(<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>)</small><br />
                     <% if (c.HasSubscriptionTimebooks) { %>
                         <!--<span class='label label-success'>-->
                         <span class="small">
