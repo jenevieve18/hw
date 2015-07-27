@@ -209,7 +209,8 @@
             int i = 0;
         %>
         <% foreach (var c in customers) { %>
-            <tr>
+            <% string a = startDate < c.SubscriptionStartDate ? " class='danger'" : ""; %>
+            <tr<%= a %>>
                 <td>
                     <%= c.Name %><br />
                     ( <%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %> )
