@@ -172,8 +172,9 @@
                     <%= c.Name %><br />
                     ( <%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %> )<br />
                     <% if (c.HasSubscriptionTimebooks) { %>
-                        <span class='label label-success'>
-                            Latest: <%= c.SubscriptionTimebooks[0].ToString() %>
+                        <!--<span class='label label-success'>-->
+                        <span class='small'>
+                            <i><%= c.SubscriptionTimebooks[0].ToString() %></i>
                         </span>
                     <% } else { %>
                         <span class='label label-default'>NONE</span>
@@ -214,7 +215,7 @@
                     ( <%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %> )
                     <% if (c.HasSubscriptionTimebooks) { %>
                         <span class='label label-success'>
-                            Latest: <%= c.SubscriptionTimebooks[0].ToString() %>
+                            <%= c.SubscriptionTimebooks[0].ToString() %>
                         </span>
                     <% } else { %>
                         <span class='label label-default'>None</span>
