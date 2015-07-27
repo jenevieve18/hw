@@ -38,6 +38,34 @@ namespace HW.Invoicing.Core.Models
 		public bool Inactive { get; set; }
 		public Language Language { get; set; }
 
+        public string GetLatestSubscriptionTimebookStartDate()
+        {
+            if (HasSubscriptionTimebooks)
+            {
+                var t = SubscriptionTimebooks[0];
+                return t.SubscriptionStartDate.Value.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        public bool CantCreateTimebook(DateTime d)
+        {
+            return d.Date < SubscriptionStartDate.Value.Date || HasSubscriptionTimebook(d);
+        }
+
+        public bool HasSubscriptionTimebook(DateTime d)
+        {
+            if (HasSubscriptionTimebooks) {
+                var t = SubscriptionTimebooks[0];
+                return t.SubscriptionStartDate.Value.Date == d.Date;
+            } else {
+                return false;
+            }
+        }
+
         public bool HasSubscriptionTimebooks
         {
             get { return SubscriptionTimebooks.Count > 0;  }

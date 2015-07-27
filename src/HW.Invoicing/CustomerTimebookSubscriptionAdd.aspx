@@ -39,19 +39,31 @@
                 var customerSubscriptionStartDate = textBoxStartDate.data('subscriptionstartdate');
                 var d = new Date(customerSubscriptionStartDate);
                 d.setHours(0, 0, 0, 0);
-                if (startDate < d) {
+                var customerLatestSubscriptionTimebookStartDate = textBoxStartDate.data('latestsubscriptiontimebookstartdate');
+                var dd = new Date(customerLatestSubscriptionTimebookStartDate);
+                dd.setHours(0, 0, 0, 0);
+                //console.log(startDate);
+                //console.log(dd);
+                if (startDate < d || startDate.getTime() == dd.getTime()) {
                     $(this).closest('tr').addClass('danger');
                     //alert("Subscription start date you selected is lesser than the customer's subscription start date.");
                 } else {
                     $(this).closest('tr').removeClass('danger');
-                    var textBoxEndDate = $(this).closest('tr').find('.subscription-end-date');
+                    /*var textBoxEndDate = $(this).closest('tr').find('.subscription-end-date');
                     var endDate = textBoxEndDate.datepicker('getDate');
                     var months = monthDiff(startDate, endDate);
                     $(this).closest('tr').find('.subscription-quantities').val($.number(months, 2, '.', ''));
                     var comments = $('#<%= textBoxText.ClientID %>').val();
                     comments = comments + ' ' + textBoxStartDate.val().replace(/-/g, ".") + ' - ' + textBoxEndDate.val().replace(/-/g, ".");
-                    $(this).closest('tr').find('.subscription-comments').val(comments);
+                    $(this).closest('tr').find('.subscription-comments').val(comments);*/
                 }
+                var textBoxEndDate = $(this).closest('tr').find('.subscription-end-date');
+                var endDate = textBoxEndDate.datepicker('getDate');
+                var months = monthDiff(startDate, endDate);
+                $(this).closest('tr').find('.subscription-quantities').val($.number(months, 2, '.', ''));
+                var comments = $('#<%= textBoxText.ClientID %>').val();
+                comments = comments + ' ' + textBoxStartDate.val().replace(/-/g, ".") + ' - ' + textBoxEndDate.val().replace(/-/g, ".");
+                $(this).closest('tr').find('.subscription-comments').val(comments);
             });
 
             var textGeneratedComments = $('#<%= textBoxComments.ClientID %>');
@@ -166,7 +178,8 @@
     </tr>
     <% if (!IsPostBack) { %>
         <% foreach (var c in customers) { %>
-            <% string a = startDate < c.SubscriptionStartDate ? " class='danger'" : ""; %>
+            <!--<% string a = startDate < c.SubscriptionStartDate ? " class='danger'" : ""; %>-->
+            <% a = c.CantCreateTimebook(startDate) ? " class='danger'" : ""; %>
             <tr<%= a %>>
                 <td>
                     <%= c.Name %><br />
@@ -186,7 +199,8 @@
                 <td><%= c.SubscriptionItem.Price.ToString("### ### ##0.00") %></td>
                 <td class='date-width'>
                     <input id="subscription-start-date" name="subscription-start-date" type="text" class="form-control subscription-start-date subscription-date"
-                        data-subscriptionstartdate="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>"/>
+                        data-subscriptionstartdate="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>"
+                        data-latestsubscriptiontimebookstartdate="<%= c.GetLatestSubscriptionTimebookStartDate() %>"/>
                 </td>
                 <td class='date-width'>
                     <input id="subscription-end-date" name="subscription-end-date" type="text" class="form-control subscription-end-date subscription-date" />
@@ -209,7 +223,8 @@
             int i = 0;
         %>
         <% foreach (var c in customers) { %>
-            <% string a = startDate < c.SubscriptionStartDate ? " class='danger'" : ""; %>
+            <!--<% string a = startDate < c.SubscriptionStartDate ? " class='danger'" : ""; %>-->
+            <% a = c.CantCreateTimebook(startDate) ? " class='danger'" : ""; %>
             <tr<%= a %>>
                 <td>
                     <%= c.Name %><br />

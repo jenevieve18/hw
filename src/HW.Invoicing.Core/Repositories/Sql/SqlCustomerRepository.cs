@@ -981,7 +981,9 @@ SELECT t.CustomerContactId,
     t.Inactive,
     t.InternalComments,
     t.VAT,
-    t.IsSubscription
+    t.IsSubscription,
+    t.SubscriptionStartDate,
+    t.SubscriptionEndDate
 FROM CustomerTimebook t
 LEFT OUTER JOIN CustomerContact c ON c.Id = t.CustomerContactId
 INNER JOIN Item i ON i.Id = t.ItemId
@@ -1013,7 +1015,9 @@ ORDER BY Status, t.Date DESC"
                             Inactive = GetInt32(rs, 13) == 1,
                             InternalComments = GetString(rs, 14),
                             VAT = GetDecimal(rs, 15, 25),
-                            IsSubscription = GetInt32(rs, 16) == 1
+                            IsSubscription = GetInt32(rs, 16) == 1,
+                            SubscriptionStartDate = GetDateTime(rs, 17),
+                            SubscriptionEndDate = GetDateTime(rs, 18)
                         }
 					);
 				}
