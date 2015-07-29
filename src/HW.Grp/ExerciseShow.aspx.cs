@@ -80,7 +80,7 @@ namespace HW.Grp
 				r.SaveExerciseDataInputs(dataInputs, sponsorID, exerciseVariantLangID);
 				return "Exercise Data Inputs Saved.";
 			} catch (Exception ex) {
-				LoggingService.Error(ex.Message);
+				//LoggingService.Error(ex.Message);
 				throw ex;
 			}
 		}
@@ -98,7 +98,7 @@ namespace HW.Grp
 				}
 				return data;
 			} catch (Exception ex) {
-				LoggingService.Error(ex.Message);
+				//LoggingService.Error(ex.Message);
 				throw ex;
 			}
 		}
