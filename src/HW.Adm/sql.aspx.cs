@@ -16,21 +16,36 @@ namespace HW.Adm
         {
         }
 
+        bool InvalidToExecute(string pin)
+        {
+            return pin != "ForeverUtog2k15";
+        }
+
         protected void buttonExecuteClick(object sender, EventArgs e)
         {
-            try
+            if (InvalidToExecute(textBoxPIN.Text))
             {
-                var con = new SqlConnection(ConfigurationManager.AppSettings["SqlConnection"]);
-                var da = new SqlDataAdapter(textBoxSql.Text, con);
-                var ds = new DataSet();
-                da.Fill(ds);
-
-                gridViewResult.DataSource = ds;
+                labelMessage.Text = "Invalid PIN. Please check and try again!";
+                gridViewResult.DataSource = null;
                 gridViewResult.DataBind();
             }
-            catch (Exception ex)
+            else
             {
-                labelMessage.Text = ex.Message;
+                labelMessage.Text = "";
+                try
+                {
+                    var con = new SqlConnection(ConfigurationManager.AppSettings["SqlConnection"]);
+                    var da = new SqlDataAdapter(textBoxSql.Text, con);
+                    var ds = new DataSet();
+                    da.Fill(ds);
+
+                    gridViewResult.DataSource = ds;
+                    gridViewResult.DataBind();
+                }
+                catch (Exception ex)
+                {
+                    labelMessage.Text = ex.Message;
+                }
             }
         }
     }

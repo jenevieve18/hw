@@ -9,6 +9,9 @@
 <body>
     <form id="form1" runat="server">
     <div>
+        PIN: 
+        <asp:TextBox ID="textBoxPIN" runat="server" TextMode="Password"></asp:TextBox>
+        <br />
         <asp:TextBox ID="textBoxSql" runat="server" TextMode="MultiLine" Width="400px" 
             Height="200px"></asp:TextBox>
         <br />
