@@ -1170,7 +1170,8 @@ ORDER BY ses.SponsorExtendedSurveyID",
 	--INNER JOIN [User] xu ON x.UserID = xu.UserID
 	INNER JOIN SponsorInvite xsi ON x.UserID = xsi.UserID
 	INNER JOIN Department xd ON xsi.DepartmentID = xd.DepartmentID
-	WHERE LEFT(xd.SortString,LEN(d.SortString)) = d.SortString
+	--WHERE LEFT(xd.SortString,LEN(d.SortString)) = d.SortString
+	WHERE LEFT(xd.SortString,d.SortStringLength) = d.SortString
 	AND x.SponsorExtendedSurveyID = {0}
 	AND xsi.SponsorID = d.SponsorID
 	AND x.AnswerID IS NOT NULL
@@ -1340,26 +1341,30 @@ SELECT d.Department,
 		SELECT COUNT(*)
 		FROM SponsorInvite si
 		INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID
-		WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID AND (si.StoppedReason IS NULL OR si.StoppedPercent IS NOT NULL)
+		--WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID AND (si.StoppedReason IS NULL OR si.StoppedPercent IS NOT NULL)
+		WHERE LEFT(sid.SortString,d.SortStringLength) = d.SortString AND si.SponsorID = d.SponsorID AND (si.StoppedReason IS NULL OR si.StoppedPercent IS NOT NULL)
 	),
 	(
 		SELECT COUNT(*)
 		FROM SponsorInvite si
 		INNER JOIN [User] u ON si.UserID = u.UserID
 		INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID
-		WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID AND (si.StoppedReason IS NULL OR si.StoppedPercent IS NOT NULL)
+		--WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID AND (si.StoppedReason IS NULL OR si.StoppedPercent IS NOT NULL)
+		WHERE LEFT(sid.SortString,d.SortStringLength) = d.SortString AND si.SponsorID = d.SponsorID AND (si.StoppedReason IS NULL OR si.StoppedPercent IS NOT NULL)
 	),
 	(
 		SELECT COUNT(*)
 		FROM SponsorInvite si
 		INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID
-		WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID AND si.Sent IS NOT NULL AND (si.StoppedReason IS NULL OR si.StoppedPercent IS NOT NULL)
+		--WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID AND si.Sent IS NOT NULL AND (si.StoppedReason IS NULL OR si.StoppedPercent IS NOT NULL)
+		WHERE LEFT(sid.SortString,d.SortStringLength) = d.SortString AND si.SponsorID = d.SponsorID AND si.Sent IS NOT NULL AND (si.StoppedReason IS NULL OR si.StoppedPercent IS NOT NULL)
 	),
 	(
 		SELECT MIN(si.Sent)
 		FROM SponsorInvite si
 		INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID
-		WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID AND si.Sent IS NOT NULL
+		--WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID AND si.Sent IS NOT NULL
+		WHERE LEFT(sid.SortString,d.SortStringLength) = d.SortString AND si.SponsorID = d.SponsorID AND si.Sent IS NOT NULL
 	),
 	d.DepartmentShort
 	{1},
@@ -1531,7 +1536,8 @@ d.SponsorID = {4} ORDER BY d.SortString",
 SELECT AVG(DATEDIFF(year, upbq.ValueDate, GETDATE())),
 	COUNT(upbq.ValueDate)
 FROM Department d
-INNER JOIN Department sid ON LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND sid.SponsorID = d.SponsorID
+--INNER JOIN Department sid ON LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND sid.SponsorID = d.SponsorID
+INNER JOIN Department sid ON LEFT(sid.SortString,d.SortStringLength) = d.SortString AND sid.SponsorID = d.SponsorID
 INNER JOIN SponsorInvite si ON sid.DepartmentID = si.DepartmentID
 INNER JOIN [User] u ON si.UserID = u.UserID
 INNER JOIN UserProfileBQ upbq ON u.UserProfileID = upbq.UserProfileID AND upbq.BQID = {0}

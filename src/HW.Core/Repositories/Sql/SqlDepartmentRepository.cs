@@ -227,7 +227,8 @@ WHERE SponsorID = {0} ORDER BY DepartmentID DESC",
 SELECT AVG(DATEDIFF(year, upbq.ValueDate, GETDATE())),
 	COUNT(upbq.ValueDate)
 FROM Department d
-INNER JOIN Department sid ON LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND sid.SponsorID = d.SponsorID
+--INNER JOIN Department sid ON LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND sid.SponsorID = d.SponsorID
+INNER JOIN Department sid ON LEFT(sid.SortString,d.SortStringLength) = d.SortString AND sid.SponsorID = d.SponsorID
 INNER JOIN SponsorInvite si ON sid.DepartmentID = si.DepartmentID
 INNER JOIN [User] u ON si.UserID = u.UserID
 INNER JOIN UserProfileBQ upbq ON u.UserProfileID = upbq.UserProfileID AND upbq.BQID = {0}
@@ -605,26 +606,30 @@ SELECT d.Department,
 		SELECT COUNT(*)
 		FROM SponsorInvite si
 		INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID
-		WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID
+		--WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID
+		WHERE LEFT(sid.SortString,d.SortStringLength) = d.SortString AND si.SponsorID = d.SponsorID
 	),
 	(
 		SELECT COUNT(*)
 		FROM SponsorInvite si
 		INNER JOIN [User] u ON si.UserID = u.UserID
 		INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID
-		WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID
+		--WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID
+		WHERE LEFT(sid.SortString,d.SortStringLength) = d.SortString AND si.SponsorID = d.SponsorID
 	),
 	(
 		SELECT COUNT(*)
 		FROM SponsorInvite si
 		INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID
-		WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID AND si.Sent IS NOT NULL
+		--WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID AND si.Sent IS NOT NULL
+		WHERE LEFT(sid.SortString,d.SortStringLength) = d.SortString AND si.SponsorID = d.SponsorID AND si.Sent IS NOT NULL
 	),
 	(
 		SELECT MIN(si.Sent)
 		FROM SponsorInvite si
 		INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID
-		WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID AND si.Sent IS NOT NULL
+		--WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID AND si.Sent IS NOT NULL
+		WHERE LEFT(sid.SortString,d.SortStringLength) = d.SortString AND si.SponsorID = d.SponsorID AND si.Sent IS NOT NULL
 	),
 	d.DepartmentShort
 	{1},
@@ -633,7 +638,8 @@ SELECT d.Department,
 		FROM SponsorInvite si
 		INNER JOIN [User] u ON si.UserID = u.UserID
 		INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID
-		WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString
+		--WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString
+		WHERE LEFT(sid.SortString,d.SortStringLength) = d.SortString
 		AND si.SponsorID = d.SponsorID
 		AND si.StoppedReason IS NULL
 		AND si.UserID IS NOT NULL
@@ -900,7 +906,8 @@ FROM Department d
 INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID
 WHERE sad.SponsorAdminID = {1}
 AND d.SponsorID = {0}
-ORDER BY LEN(d.SortString)",
+--ORDER BY LEN(d.SortString)
+ORDER BY d.SortStringLength",
 				sponsorID,
 				sponsorAdminID
 			);
@@ -930,7 +937,8 @@ SELECT d.Department,
 	d.MinUserCountToDisclose
 FROM Department d
 WHERE d.SponsorID = {0}
-ORDER BY LEN(d.SortString)",
+--ORDER BY LEN(d.SortString)
+ORDER BY d.SortStringLength",
 				sponsorID
 			);
 			var departments = new List<Department>();
