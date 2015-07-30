@@ -18,9 +18,6 @@ namespace HW.Invoicing
         SqlCustomerRepository r = new SqlCustomerRepository();
         protected string message;
         protected DateTime startDate;
-        protected DateTime endDate;
-        protected decimal quantity;
-        protected string generatedComments;
         int companyId;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -29,31 +26,30 @@ namespace HW.Invoicing
 
             companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
             customers = r.FindActiveSubscribersByCompany(companyId);
-
-            var now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            startDate = now;
-            endDate = now.AddMonths(1).AddDays(-1);
-            quantity = 1;
-            string text = "Subscription fee for HealthWatch.se";
-            generatedComments = text + " " + startDate.ToString("yyyy.MM.dd") + " - " + endDate.ToString("yyyy.MM.dd");
-
             if (!IsPostBack)
             {
+                var now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                startDate = now;
+                var endDate = now.AddMonths(1).AddDays(-1);
                 textBoxStartDate.Text = startDate.ToString("yyyy-MM-dd");
                 textBoxEndDate.Text = endDate.ToString("yyyy-MM-dd");
 
-                textBoxQuantity.Text = quantity.ToString("0.00") ;
+                textBoxQuantity.Text = ((endDate.Month - startDate.Month) + 12 * (endDate.Year - startDate.Year)).ToString();
 
-                textBoxText.Text = text;
-                textBoxComments.Text = generatedComments;
+                textBoxText.Text = "Subscription fee for HealthWatch.se";
+                textBoxComments.Text = textBoxText.Text + " " + textBoxStartDate.Text.Replace('-', '.') + " - " + textBoxEndDate.Text.Replace('-', '.');
             }
+        }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreInit(e);
         }
 
         protected void buttonClear_Click(object sender, EventArgs e)
         {
             r.ClearSubscriptionTimebooks();
             message = "<div class='alert alert-danger'>Subscription timebooks deleted.</div>";
-            
             customers = r.FindActiveSubscribersByCompany(companyId);
         }
 

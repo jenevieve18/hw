@@ -1100,7 +1100,7 @@ SELECT c.Id,
 FROM Customer c
 WHERE (c.HasSubscription != 1 OR c.HasSubscription IS NULL)
 AND c.CompanyId = @CompanyId
-ORDER BY c.Inactive, Name"
+ORDER BY c.Inactive, c.Name"
             );
             var customers = new List<Customer>();
             using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@CompanyId", companyId)))
@@ -1192,7 +1192,9 @@ SELECT c.Id,
     u.Name,
     i.Price,
     c.HasSubscription,
-    c.SubscriptionStartDate
+    c.SubscriptionStartDate,
+    c.SubscriptionEndDate,
+    c.SubscriptionHasEndDate
 FROM Customer c
 INNER JOIN Item i on i.Id = c.SubscriptionItemId
 INNER JOIN Unit u on u.Id = i.UnitId
@@ -1227,7 +1229,9 @@ ORDER BY c.Inactive, c.Name"
                                 Price = GetDecimal(rs, 10)
                             },
                             HasSubscription = GetInt32(rs, 11) == 1,
-                            SubscriptionStartDate = GetDateTime(rs, 12)
+                            SubscriptionStartDate = GetDateTime(rs, 12),
+                            SubscriptionEndDate = GetDateTime(rs, 13),
+                            SubscriptionHasEndDate = GetInt32(rs, 14) == 1
                         }
                     );
                 }

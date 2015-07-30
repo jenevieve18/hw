@@ -51,6 +51,22 @@ namespace HW.Invoicing.Core.Models
             }
         }
 
+        public string GetSubscriptionTimebookAvailability(DateTime d)
+        {
+            if (d.Date < SubscriptionStartDate.Value.Date)
+            {
+                return " class='warning'";
+            }
+            else if (HasSubscriptionTimebook(d))
+            {
+                return " class='danger'";
+            }
+            else
+            {
+                return "";
+            }
+        }
+
         public bool CantCreateTimebook(DateTime d)
         {
             return d.Date < SubscriptionStartDate.Value.Date || HasSubscriptionTimebook(d);
@@ -67,10 +83,28 @@ namespace HW.Invoicing.Core.Models
                         found = true;
                     }
                 }
-                //var t = SubscriptionTimebooks[0];
-                //return t.SubscriptionStartDate.Value.Date == d.Date;
             }
             return found;
+        }
+
+        public bool HasLatestSubscriptionTimebook
+        {
+            get
+            {
+                return LatestSubscriptionTimebook != null;
+            }
+        }
+
+        public CustomerTimebook LatestSubscriptionTimebook
+        {
+            get
+            {
+                if (HasSubscriptionTimebooks)
+                {
+                    return SubscriptionTimebooks[0];
+                }
+                return null;
+            }
         }
 
         public bool HasSubscriptionTimebooks
