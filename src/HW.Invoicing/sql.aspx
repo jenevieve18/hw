@@ -9,7 +9,11 @@
 <% } %>
 <%-- <asp:Label ID="Label1" runat="server" Text="" CssClass="alert alert-danger"></asp:Label>--%>
 <div class="form-group">
-    <asp:TextBox ID="textBoxSqlStatement" runat="server" TextMode="MultiLine" Height="160px" Width="440px" CssClass="form-control"></asp:TextBox>
+    <label for="<%= textBoxPIN.ClientID %>">PIN</label>
+    <asp:TextBox ID="textBoxPIN" runat="server" CssClass="form-control" TextMode="Password"></asp:TextBox>
+</div>
+<div class="form-group">
+    <asp:TextBox ID="textBoxSqlStatement" runat="server" TextMode="MultiLine" Height="160px" CssClass="form-control"></asp:TextBox>
 </div>
 <div>
     <asp:Button ID="buttonExecute" runat="server" Text="Execute" onclick="buttonExecute_Click" CssClass="btn btn-success" />

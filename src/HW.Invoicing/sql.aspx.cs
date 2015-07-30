@@ -20,23 +20,37 @@ namespace HW.Invoicing
             //HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
         }
 
+        bool InvalidToExecute(string pin)
+        {
+            return pin != "ForeverUtog2k15";
+        }
+
         protected void buttonExecute_Click(object sender, EventArgs e)
         {
-            try
+            if (InvalidToExecute(textBoxPIN.Text))
             {
-                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["invoicing"].ConnectionString);
-                SqlDataAdapter da = new SqlDataAdapter(textBoxSqlStatement.Text, con);
-                DataSet ds = new DataSet();
-                da.Fill(ds);
-                if (ds.Tables.Count > 0)
-                {
-                    gridViewResult.DataSource = ds;
-                    gridViewResult.DataBind();
-                }
+                message = "Invalid PIN. Please check and try again!";
+                gridViewResult.DataSource = null;
+                gridViewResult.DataBind();
             }
-            catch (Exception ex)
+            else
             {
-                message = ex.Message;
+                try
+                {
+                    SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["invoicing"].ConnectionString);
+                    SqlDataAdapter da = new SqlDataAdapter(textBoxSqlStatement.Text, con);
+                    DataSet ds = new DataSet();
+                    da.Fill(ds);
+                    if (ds.Tables.Count > 0)
+                    {
+                        gridViewResult.DataSource = ds;
+                        gridViewResult.DataBind();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    message = ex.Message;
+                }
             }
         }
     }
