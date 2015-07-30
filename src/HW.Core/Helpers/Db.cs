@@ -341,7 +341,8 @@ WHERE ProjectRoundUnitID = {0}",
 				client.Send(mail);
 				return true;
 			} catch (Exception ex) {
-				LoggingService.Error(ex.Message);
+				// TODO: Commented for now, it doesn't work with SMTP logging because if it fails it triggers another exception.
+				//LoggingService.Error(ex.Message);
 			}
 			return false;
 		}
@@ -364,7 +365,8 @@ WHERE ProjectRoundUnitID = {0}",
 						return true;
 					}
 				} catch (Exception ex) {
-					LoggingService.Error(ex.Message);
+					// TODO: Commented for now, it doesn't work with SMTP logging because if it fails it triggers another exception.
+					//LoggingService.Error(ex.Message);
 				}
 			}
 			return false;
