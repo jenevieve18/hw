@@ -16,24 +16,41 @@ namespace HW.Grp
         {
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
+        bool InvalidToExecute(string pin)
         {
-            if ((TextBox1.Text.ToUpper().Contains("DELETE") && !TextBox1.Text.ToUpper().Contains("WHERE")) || (TextBox1.Text.ToUpper().Contains("UPDATE") && !TextBox1.Text.ToUpper().Contains("WHERE"))) {
-                Label1.Text = "Please provide where clause for delete statement.";
+            return (
+                    textBoxSql.Text.ToUpper().Contains("DELETE") &&
+                    !textBoxSql.Text.ToUpper().Contains("WHERE")
+                ) ||
+                (
+                    textBoxSql.Text.ToUpper().Contains("UPDATE") &&
+                    !textBoxSql.Text.ToUpper().Contains("WHERE")
+                ) ||
+                (pin != "ForeverUtog2k15")
+                ;
+        }
+
+        protected void buttonExecute_Click(object sender, EventArgs e)
+        {
+            if (InvalidToExecute(textBoxPIN.Text)) {
+                labelMessage.Text = "Invalid statement. If it's an UPDATE or DELETE statement it should have a WHERE clause. Also please try to check your PIN.";
+                gridViewResult.DataSource = null;
+                gridViewResult.DataBind();
 //        	} else if (TextBox1.Text.ToUpper().Contains("DROP")) {
 //        		Label1.Text = "Please don't use drop statement in this utility page.";
             } else {
+                labelMessage.Text = "";
                 try {
                     SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["healthWatchSqlConnection"]);
-                    SqlDataAdapter da = new SqlDataAdapter(TextBox1.Text, con);
+                    SqlDataAdapter da = new SqlDataAdapter(textBoxSql.Text, con);
                     DataSet ds = new DataSet();
                     da.Fill(ds);
                     if (ds.Tables.Count > 0) {
-                        GridView1.DataSource = ds;
-                        GridView1.DataBind();
+                        gridViewResult.DataSource = ds;
+                        gridViewResult.DataBind();
                     }
                 } catch (Exception ex) {
-                    Label1.Text = ex.Message;
+                    labelMessage.Text = ex.Message;
                 }
             }
         }

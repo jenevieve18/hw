@@ -7,13 +7,17 @@
 		<div id="contextbar">
 			<div class="settingsPane">
                 <h3>Enter SQL Command</h3>
-                <span style="font-style:italic;color:#ff5b2b"><asp:Label ID="Label1" runat="server" Text=""></asp:Label></span>
-                <p><asp:TextBox ID="TextBox1" runat="server" TextMode="MultiLine" Height="160px" 
+                <span style="font-style:italic;color:#ff5b2b">
+                    <asp:Label ID="labelMessage" runat="server" Text=""></asp:Label>
+                </span>
+                
+                <p>PIN: <asp:TextBox ID="textBoxPIN" runat="server" TextMode="Password"></asp:TextBox></p>
+                <p><asp:TextBox ID="textBoxSql" runat="server" TextMode="MultiLine" Height="160px" 
                     Width="440px"></asp:TextBox></p>
-                <p><asp:Button ID="Button1" runat="server" Text="Execute" 
-                    onclick="Button1_Click" /></p>
+                <p><asp:Button ID="buttonExecute" runat="server" Text="Execute" 
+                    onclick="buttonExecute_Click" /></p>
             </div>
-            <asp:GridView ID="GridView1" runat="server">
+            <asp:GridView ID="gridViewResult" runat="server">
             </asp:GridView>
         </div>
     </div>
