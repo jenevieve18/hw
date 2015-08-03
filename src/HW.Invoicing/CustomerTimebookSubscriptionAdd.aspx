@@ -253,7 +253,7 @@
                     <% if (c.HasLatestSubscriptionTimebook) { %>
                         value="<%= c.LatestSubscriptionTimebook.Quantity.ToString() %>"
                     <% } else { %>
-                        value=<%= quantity %>
+                        value=<%= quantity.ToString("0.00", new CultureInfo("en-US")) %>
                     <% } %>
                     />
             </td>
