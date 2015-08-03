@@ -201,26 +201,59 @@ VALUES(@CustomerId, @Notes, @CreatedAt, @CreatedBy)"
 
         public void SaveSubscriptionTimebooks(List<CustomerTimebook> timebooks)
         {
-            string query = string.Format(
+            string saveQuery = string.Format(
                 @"
 INSERT INTO CustomerTimebook(CustomerId, ItemId, Quantity, Price, Comments, VAT, SubscriptionStartDate, SubscriptionEndDate, IsSubscription)
 VALUES(@CustomerId, @ItemId, @Quantity, @Price, @Comments, @VAT, @SubscriptionStartDate, @SubscriptionEndDate, @IsSubscription)"
             );
-            foreach (var time in timebooks)
+            string updateQuery = string.Format(
+                @"
+UPDATE CustomerTimebook SET CustomerId = @CustomerId,
+ItemId = @ItemId,
+Quantity = @Quantity,
+Price = @Price,
+Comments = @Comments,
+VAT = @VAT,
+SubscriptionStartDate = @SubscriptionStartDate,
+SubscriptionEndDate = @SubscriptionEndDate,
+IsSubscription = @IsSubscription
+WHERE Id = @Id"
+            );
+            foreach (var t in timebooks)
             {
-                ExecuteNonQuery(
-                    query,
-                    "invoicing",
-                    new SqlParameter("@CustomerId", time.Customer.Id),
-                    new SqlParameter("@ItemId", time.Item.Id),
-                    new SqlParameter("@Quantity", time.Quantity),
-                    new SqlParameter("@Price", time.Price),
-                    new SqlParameter("@Comments", time.Comments),
-                    new SqlParameter("@VAT", time.VAT),
-                    new SqlParameter("@SubscriptionStartDate", time.SubscriptionStartDate),
-                    new SqlParameter("@SubscriptionEndDate", time.SubscriptionEndDate),
-                    new SqlParameter("@IsSubscription", time.IsSubscription)
-                );
+                if (t.Id <= 0)
+                {
+                    ExecuteNonQuery(
+                        saveQuery,
+                        "invoicing",
+                        new SqlParameter("@CustomerId", t.Customer.Id),
+                        new SqlParameter("@ItemId", t.Item.Id),
+                        new SqlParameter("@Quantity", t.Quantity),
+                        new SqlParameter("@Price", t.Price),
+                        new SqlParameter("@Comments", t.Comments),
+                        new SqlParameter("@VAT", t.VAT),
+                        new SqlParameter("@SubscriptionStartDate", t.SubscriptionStartDate),
+                        new SqlParameter("@SubscriptionEndDate", t.SubscriptionEndDate),
+                        new SqlParameter("@IsSubscription", t.IsSubscription)
+                    );
+                }
+                else
+                {
+                    ExecuteNonQuery(
+                        updateQuery,
+                        "invoicing",
+                        new SqlParameter("@CustomerId", t.Customer.Id),
+                        new SqlParameter("@ItemId", t.Item.Id),
+                        new SqlParameter("@Quantity", t.Quantity),
+                        new SqlParameter("@Price", t.Price),
+                        new SqlParameter("@Comments", t.Comments),
+                        new SqlParameter("@VAT", t.VAT),
+                        new SqlParameter("@SubscriptionStartDate", t.SubscriptionStartDate),
+                        new SqlParameter("@SubscriptionEndDate", t.SubscriptionEndDate),
+                        new SqlParameter("@IsSubscription", t.IsSubscription),
+                        new SqlParameter("@Id", t.Id)
+                    );
+                }
             }
         }
 

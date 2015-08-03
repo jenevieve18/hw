@@ -42,7 +42,7 @@ namespace HW.Invoicing
                 textBoxStartDate.Text = startDate.ToString("yyyy-MM-dd");
                 textBoxEndDate.Text = endDate.ToString("yyyy-MM-dd");
 
-                textBoxQuantity.Text = quantity.ToString("0.00") ;
+                textBoxQuantity.Text = quantity.ToString(); //quantity.ToString("0.00") ;
 
                 textBoxText.Text = text;
                 textBoxComments.Text = generatedComments;
@@ -59,26 +59,29 @@ namespace HW.Invoicing
 
         protected void buttonSave_Click(object sender, EventArgs e)
         {
-            startDate = ConvertHelper.ToDateTime(textBoxStartDate.Text);
+            /*startDate = ConvertHelper.ToDateTime(textBoxStartDate.Text);
             if (r.HasSubscriptionTimebookWithDate(startDate))
             {
                 message = "<div class='alert alert-danger'>Invalid subscription timebook. Start date selected is in the database. Please check and try again.</div>";
             }
             else
-            {
-                var quantities = Request.Form.GetValues("subscription-quantities");
-                var comments = Request.Form.GetValues("subscription-comments");
+            {*/
+                var ids = Request.Form.GetValues("subscription-id");
                 var startDates = Request.Form.GetValues("subscription-start-date");
                 var endDates = Request.Form.GetValues("subscription-end-date");
+                var quantities = Request.Form.GetValues("subscription-quantities");
+                var comments = Request.Form.GetValues("subscription-comments");
                 var timebooks = new List<CustomerTimebook>();
                 int i = 0;
                 foreach (var c in customers)
                 {
                     var sDate = ConvertHelper.ToDateTime(startDates[i]);
-                    if (c.HasSubscription && !c.CantCreateTimebook(sDate))
+                    //if (c.HasSubscription && !c.CantCreateTimebook(sDate))
+                    if (c.HasSubscription)
                     {
                         var t = new CustomerTimebook
                         {
+                            Id = ConvertHelper.ToInt32(ids[i]),
                             Customer = c,
                             Item = new Item { Id = c.SubscriptionItem.Id },
                             Quantity = ConvertHelper.ToDecimal(quantities[i], new CultureInfo("en-US")),
@@ -95,7 +98,7 @@ namespace HW.Invoicing
                 }
                 r.SaveSubscriptionTimebooks(timebooks);
                 message = "<div class='alert alert-success'>Saved! customer timebooks for subscription items are now saved.</div>";
-            }
+            //}
 
             customers = r.FindActiveSubscribersByCompany(companyId);
         }
