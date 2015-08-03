@@ -253,7 +253,7 @@
                     <% if (c.HasLatestSubscriptionTimebook) { %>
                         value="<%= c.LatestSubscriptionTimebook.Quantity.ToString() %>"
                     <% } else { %>
-                        value=<%= quantity.ToString() %>
+                        value=<%= quantity %>
                     <% } %>
                     />
             </td>
