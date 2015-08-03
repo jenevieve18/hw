@@ -251,7 +251,7 @@
                     class="subscription-quantities form-control"
                     type="text"
                     <% if (c.HasLatestSubscriptionTimebook) { %>
-                        value="<%= c.LatestSubscriptionTimebook.Quantity.ToString() %>"
+                        value="<%= c.LatestSubscriptionTimebook.Quantity.ToString("0.00", new CultureInfo("en-US")) %>"
                     <% } else { %>
                         value=<%= quantity.ToString("0.00", new CultureInfo("en-US")) %>
                     <% } %>
