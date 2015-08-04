@@ -53,13 +53,13 @@ namespace HW.Invoicing.Core.Models
 
         public string GetSubscriptionTimebookAvailability(DateTime d)
         {
-            if (d.Date < SubscriptionStartDate.Value.Date)
-            {
-                return " class='warning'";
-            }
-            else if (HasSubscriptionTimebook(d))
+            if (HasSubscriptionTimebook(d))
             {
                 return " class='danger'";
+            }
+            else if (d.Date < SubscriptionStartDate.Value.Date)
+            {
+                return " class='warning'";
             }
             else
             {
@@ -75,7 +75,7 @@ namespace HW.Invoicing.Core.Models
 
         public bool HasSubscriptionTimebook(DateTime d)
         {
-            bool found = false;
+            /*bool found = false;
             if (HasSubscriptionTimebooks) {
                 foreach (var t in SubscriptionTimebooks)
                 {
@@ -85,7 +85,18 @@ namespace HW.Invoicing.Core.Models
                     }
                 }
             }
+            return found;*/
+            bool found = false;
+            if (HasSubscriptionTimebooks && HasOpenSubscriptionTimebooks)
+            {
+                found = true;
+            }
             return found;
+        }
+
+        public bool HasOpenSubscriptionTimebooks
+        {
+            get { return OpenSubscriptionTimebooks.Count > 0;  }
         }
 
         public bool HasLatestSubscriptionTimebook
@@ -118,6 +129,15 @@ namespace HW.Invoicing.Core.Models
             get
             {
                 return Timebooks.OrderByDescending(x => x.SubscriptionStartDate).Where(x => x.IsSubscription).Select(x => x).ToList();
+            }
+        }
+
+        public IList<CustomerTimebook> OpenSubscriptionTimebooks
+        {
+            get
+            {
+                //return Timebooks.OrderByDescending(x => x.SubscriptionStartDate).Where(x => x.IsSubscription && x.IsInvoiced).Select(x => x).ToList();
+                return Timebooks.OrderByDescending(x => x.SubscriptionStartDate).Where(x => x.IsSubscription && x.IsOpen).Select(x => x).ToList();
             }
         }
 
@@ -260,6 +280,7 @@ namespace HW.Invoicing.Core.Models
 	{
 		public const int INVOICED = 1;
 		public const int PAID = 2;
+		public const int OPEN = 0;
 
 		public bool IsSubscription { get; set; }
 		public DateTime? SubscriptionStartDate { get; set; }
@@ -305,8 +326,17 @@ namespace HW.Invoicing.Core.Models
 
 		public bool IsPaid
 		{
-			get { return Status == 2;  }
+			get { return Status == PAID;  }
 		}
+		
+		public bool IsOpen {
+			get { return Status == OPEN; }
+		}
+
+        public bool IsInvoiced
+        {
+            get { return Status == INVOICED; }
+        }
 
 		public void ValidateSubscription()
 		{
