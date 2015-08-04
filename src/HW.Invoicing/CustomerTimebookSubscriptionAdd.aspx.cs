@@ -77,7 +77,7 @@ namespace HW.Invoicing
                 {
                     var sDate = ConvertHelper.ToDateTime(startDates[i]);
                     //if (c.HasSubscription && !c.CantCreateTimebook(sDate))
-                    if (c.HasSubscription)
+                    if (c.HasSubscription && !c.CantCreateTimebook(sDate))
                     {
                         var t = new CustomerTimebook
                         {

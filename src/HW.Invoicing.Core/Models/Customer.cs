@@ -69,7 +69,8 @@ namespace HW.Invoicing.Core.Models
 
         public bool CantCreateTimebook(DateTime d)
         {
-            return d.Date < SubscriptionStartDate.Value.Date || HasSubscriptionTimebook(d);
+            //return d.Date < SubscriptionStartDate.Value.Date || HasSubscriptionTimebook(d);
+            return d.Date < SubscriptionStartDate.Value.Date;
         }
 
         public bool HasSubscriptionTimebook(DateTime d)
