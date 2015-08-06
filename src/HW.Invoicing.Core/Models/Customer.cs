@@ -46,7 +46,7 @@ namespace HW.Invoicing.Core.Models
                 if (t.IsInvoiced)
                 {
                     //return t.SubscriptionEndDate.Value.AddDays(1).ToString("yyyy-MM-dd");
-                    return t.SubscriptionEndDate.Value;
+                    return t.SubscriptionEndDate.Value.AddDays(1);
                 }
                 else
                 {
