@@ -236,6 +236,15 @@ WHERE Id = @Id"
                         new SqlParameter("@SubscriptionEndDate", t.SubscriptionEndDate),
                         new SqlParameter("@IsSubscription", t.IsSubscription)
                     );
+                    if (t.SubscriptionEndDate.Value == t.Customer.SubscriptionEndDate.Value.Date)
+                    {
+                        ExecuteNonQuery(
+                            "UPDATE CUSTOMER SET HasSubscription = @HasSubscription WHERE Id = @Id ",
+                            "invoicing",
+                            new SqlParameter("@HasSubscription", false),
+                            new SqlParameter("@Id", t.Customer.Id)
+                        );
+                    }
                 }
                 else
                 {
