@@ -208,6 +208,7 @@
             <td><%= c.SubscriptionItem.Name %></td>
             <td><%= c.SubscriptionItem.Unit.Name %></td>
             <td><%= c.SubscriptionItem.Price.ToString("### ### ##0,00") %></td>
+            <% DateTime sDate = c.GetLatestSubscriptionTimebookStartDate(startDate); %>
             <td class='date-width'>
                 <input id="subscription-start-date"
                     name="subscription-start-date"
@@ -215,70 +216,33 @@
                     class="form-control subscription-start-date subscription-date"
                     data-subscriptionstartdate="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>"
                     data-customerid="<%= c.Id %>"
-                    value="<%= c.GetLatestSubscriptionTimebookStartDate(startDate) %>"
-                    "/>
-                <!--<input id="subscription-start-date"
-                    name="subscription-start-date"
-                    type="text"
-                    class="form-control subscription-start-date subscription-date"
-                    data-subscriptionstartdate="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>"
-                    data-latestsubscriptiontimebookstartdate="<%= c.GetLatestSubscriptionTimebookStartDate(startDate) %>"
-                    data-customerid="<%= c.Id %>"
-                    <% if (c.HasLatestSubscriptionTimebook) { %>
-                        data-subscriptiontimebookid="<%= c.LatestSubscriptionTimebook.Id %>"
-                        value="<%= c.LatestSubscriptionTimebook.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>"
-                    <% } else { %>
-                        value="<%= startDate.ToString("yyyy-MM-dd") %>"
-                    <% } %>
-                    />-->
+                    value="<%= sDate.ToString("yyyy-MM-dd") %>"
+                    />
             </td>
+            <% DateTime eDate = c.GetLatestSubscriptionTimebookEndDate(endDate); %>
             <td class='date-width'>
                 <input id="subscription-end-date"
                     name="subscription-end-date"
                     type="text"
                     class="form-control subscription-end-date subscription-date"
                     data-customerid="<%= c.Id %>"
-                    value="<%= c.GetLatestSubscriptionTimebookEndDate(endDate) %>"
+                    value="<%= eDate.ToString("yyyy-MM-dd") %>"
                     />
-                <!--<input id="subscription-end-date"
-                    name="subscription-end-date"
-                    type="text"
-                    class="form-control subscription-end-date subscription-date"
-                    data-subscriptionstartdate="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>"
-                    data-latestsubscriptiontimebookstartdate="<%= c.GetLatestSubscriptionTimebookStartDate(startDate) %>"
-                    data-customerid="<%= c.Id %>"
-                    <% if (c.HasLatestSubscriptionTimebook) { %>
-                        value="<%= c.LatestSubscriptionTimebook.SubscriptionEndDate.Value.ToString("yyyy-MM-dd") %>"
-                    <% } else { %>
-                        value="<%= endDate.ToString("yyyy-MM-dd") %>"
-                    <% } %>
-                    />-->
             </td>
+            <% decimal quantity = c.GetLatestSubscriptionTimebookQuantity(startDate); %>
             <td class='quantity-width'>
                 <input id="subscription-quantities"
                     name="subscription-quantities"
                     class="subscription-quantities form-control"
                     type="text"
-                    value="<%= c.GetLatestSubscriptionTimebookQuantity().ToString("0.00", new CultureInfo("en-US")) %>"
+                    value="<%= quantity.ToString("0.00", new CultureInfo("en-US")) %>"
                     />
-                <!--<input id="subscription-quantities"
-                    name="subscription-quantities"
-                    class="subscription-quantities form-control"
-                    type="text"
-                    <% if (c.HasLatestSubscriptionTimebook) { %>
-                        value="<%= c.LatestSubscriptionTimebook.Quantity.ToString("0.00", new CultureInfo("en-US")) %>"
-                    <% } else { %>
-                        value=<%= quantity.ToString("0.00", new CultureInfo("en-US")) %>
-                    <% } %>
-                    />-->
             </td>
+            <% string comments = c.GetLatestSubscriptionTimebookComments(sDate, eDate, generatedComments); %>
             <td class='comments-width'>
                 <textarea id="subscription-comments"
                     name="subscription-comments"
-                    class="subscription-comments form-control"><%= c.GetLatestSubscriptionTimebookComments(generatedComments)%></textarea>
-                <!--<textarea id="subscription-comments"
-                    name="subscription-comments"
-                    class="subscription-comments form-control"><%= c.HasLatestSubscriptionTimebook ? c.LatestSubscriptionTimebook.Comments : generatedComments %></textarea>-->
+                    class="subscription-comments form-control"><%= comments %></textarea>
             </td>
         </tr>
     <% } %>

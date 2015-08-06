@@ -38,23 +38,26 @@ namespace HW.Invoicing.Core.Models
 		public bool Inactive { get; set; }
 		public Language Language { get; set; }
 
-        public string GetLatestSubscriptionTimebookStartDate(DateTime d)
+        public DateTime GetLatestSubscriptionTimebookStartDate(DateTime d)
         {
             if (HasSubscriptionTimebooks)
             {
                 var t = SubscriptionTimebooks[0];
                 if (t.IsInvoiced)
                 {
-                    return t.SubscriptionEndDate.Value.AddDays(1).ToString("yyyy-MM-dd");
+                    //return t.SubscriptionEndDate.Value.AddDays(1).ToString("yyyy-MM-dd");
+                    return t.SubscriptionEndDate.Value;
                 }
                 else
                 {
-                    return t.SubscriptionStartDate.Value.ToString("yyyy-MM-dd");
+                    //return t.SubscriptionStartDate.Value.ToString("yyyy-MM-dd");
+                    return t.SubscriptionStartDate.Value;
                 }
             }
             else
             {
-                return d.ToString("yyyy-MM-dd");
+                //return d.ToString("yyyy-MM-dd");
+                return d;
             }
         }
 
@@ -70,7 +73,7 @@ namespace HW.Invoicing.Core.Models
             }
         }
 
-        public string GetLatestSubscriptionTimebookComments(string generatedComments)
+        public string GetLatestSubscriptionTimebookComments(DateTime startDate, DateTime endDate, string generatedComments)
         {
             if (HasLatestSubscriptionTimebook)
             {
@@ -78,13 +81,18 @@ namespace HW.Invoicing.Core.Models
             }
             else
             {
-                return generatedComments;
+                //return generatedComments;
+                return string.Format("Subscription fee for HealthWatch.se {0} - {1}", startDate.ToString("yyyy.MM.dd"), endDate.ToString("yyyy.MM.dd"));
             }
         }
 
-        public decimal GetLatestSubscriptionTimebookQuantity()
+        public decimal GetLatestSubscriptionTimebookQuantity(DateTime startDate)
         {
-            if (HasLatestSubscriptionTimebook)
+            if (SubscriptionHasEndDate)
+            {
+                return (decimal)DateHelper.MonthDiff(startDate, SubscriptionEndDate.Value);
+            }
+            else if (HasLatestSubscriptionTimebook)
             {
                 var t = SubscriptionTimebooks[0];
                 if (t.IsInvoiced)
@@ -102,23 +110,31 @@ namespace HW.Invoicing.Core.Models
             }
         }
 
-        public string GetLatestSubscriptionTimebookEndDate(DateTime d)
+        public DateTime GetLatestSubscriptionTimebookEndDate(DateTime d)
         {
-            if (HasLatestSubscriptionTimebook)
+            if (SubscriptionHasEndDate)
+            {
+                //return SubscriptionEndDate.Value.ToString("yyyy-MM-dd");
+                return SubscriptionEndDate.Value;
+            }
+            else if (HasLatestSubscriptionTimebook)
             {
                 var t = SubscriptionTimebooks[0];
                 if (t.IsInvoiced)
                 {
-                    return d.AddMonths(1).ToString("yyyy-MM-dd");
+                    //return d.AddMonths(1).ToString("yyyy-MM-dd");
+                    return d.AddMonths(1);
                 }
                 else
                 {
-                    return SubscriptionTimebooks[0].SubscriptionEndDate.Value.ToString("yyyy-MM-dd");
+                    //return SubscriptionTimebooks[0].SubscriptionEndDate.Value.ToString("yyyy-MM-dd");
+                    return SubscriptionTimebooks[0].SubscriptionEndDate.Value;
                 }
             }
             else
             {
-                return d.ToString("yyyy-MM-dd");
+                //return d.ToString("yyyy-MM-dd");
+                return d;
             }
         }
 
