@@ -8,47 +8,6 @@ using System.Linq;
 
 namespace HW.Invoicing.Core.Repositories.Sql
 {
-    public class SqlCurrencyRepository : BaseSqlRepository<Currency>
-    {
-        public List<Currency> FindAll()
-        {
-            string query = @"
-select id, code, name from currency";
-            var currencies = new List<Currency>();
-            using (var rs = ExecuteReader(query, "invoicing"))
-            {
-                while (rs.Read())
-                {
-                    currencies.Add(
-                        new Currency { Id = GetInt32(rs, 0), Code = GetString(rs, 1), Name = GetString(rs, 2) }
-                        );
-                }
-            }
-            return currencies;
-        }
-    }
-
-    public class SqlLanguageRepository : BaseSqlRepository<Language>
-    {
-        public override IList<Language> FindAll()
-        {
-            string query = @"
-select id, name from lang";
-            var l = new List<Language>();
-            using (var rs = ExecuteReader(query, "invoicing")) 
-            {
-                while (rs.Read())
-                {
-                    l.Add(new Language { 
-                        Id = GetInt32(rs, 0),
-                        Name = GetString(rs, 1)
-                    });
-                }
-            }
-            return l;
-        }
-    }
-
 	public class SqlCustomerRepository : BaseSqlRepository<Customer>, ICustomerRepository
 	{
         public void Swap(CustomerItem item1, CustomerItem item2)
@@ -236,7 +195,7 @@ WHERE Id = @Id"
                         new SqlParameter("@SubscriptionEndDate", t.SubscriptionEndDate),
                         new SqlParameter("@IsSubscription", t.IsSubscription)
                     );
-                    if (t.SubscriptionEndDate.Value == t.Customer.SubscriptionEndDate.Value.Date)
+                    /*if (t.SubscriptionEndDate.Value == t.Customer.SubscriptionEndDate.Value.Date)
                     {
                         ExecuteNonQuery(
                             "UPDATE CUSTOMER SET HasSubscription = @HasSubscription WHERE Id = @Id ",
@@ -244,7 +203,7 @@ WHERE Id = @Id"
                             new SqlParameter("@HasSubscription", false),
                             new SqlParameter("@Id", t.Customer.Id)
                         );
-                    }
+                    }*/
                 }
                 else
                 {

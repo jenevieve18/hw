@@ -99,21 +99,24 @@ SELECT CAST(scope_identity() AS int)";
             );
 
             query = @"
-declare @key int
+DECLARE @key INT
 
-select top 1 @key = id from generatednumber
+SELECT TOP 1 @key = Id FROM GeneratedNumber
 WHERE CompanyId = @CompanyId
 
-if (@key is not null)
-    update generatednumber set invoice = @Invoice
+IF (@key IS NOT NULL)
+    UPDATE GeneratedNumber SET Invoice = @Invoice
     WHERE CompanyId = @CompanyId
-else
-    insert into generatednumber(invoice, CompanyId) values(@Invoice, @CompanyId)";
+ELSE
+    INSERT INTO GeneratedNumber(Invoice, CompanyId) VALUES(@Invoice, @CompanyId)";
             ExecuteNonQuery(query, "invoicing", new SqlParameter("@Invoice", i.Id), new SqlParameter("@CompanyId", i.Customer.Company.Id));
             
 			query = @"
-insert into invoicetimebook(invoiceid, customertimebookid)
-values(@InvoiceId, @CustomerTimebookId)";
+INSERT INTO InvoiceTimebook(InvoiceId, CustomerTimebookId)
+VALUES(@InvoiceId, @CustomerTimebookId)";
+			
+			var cr = new SqlCustomerRepository();
+			var c = cr.Read(i.Customer.Id);
 			foreach (var t in i.Timebooks) {
                 if (t.Timebook.Id == 0)
                 {
@@ -125,6 +128,18 @@ values(@InvoiceId, @CustomerTimebookId)";
 					new SqlParameter("@CustomerTimebookId", t.Timebook.Id),
                     new SqlParameter("@InvoiceId", id)
 				);
+
+                // Unscribe customer when subscription timebook end date equals to it's subscription end date is invoiced.
+                var ti = cr.ReadTimebook(t.Timebook.Id);
+                if (ti.IsSubscription && c.SubscriptionHasEndDate && ti.SubscriptionEndDate.Value.Date == c.SubscriptionEndDate.Value.Date)
+                {
+                	ExecuteNonQuery(
+                		"UPDATE Customer SET HasSubscription = @HasSubscription WHERE Id = @Id",
+                		"invoicing",
+                		new SqlParameter("@HasSubscription", false),
+                		new SqlParameter("@Id", c.Id)
+                	);
+                }
 			}
 		}
 
