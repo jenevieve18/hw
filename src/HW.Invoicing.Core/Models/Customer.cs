@@ -129,18 +129,26 @@ namespace HW.Invoicing.Core.Models
 
         public DateTime GetLatestSubscriptionTimebookEndDate(DateTime d)
         {
-            if (SubscriptionHasEndDate)
+            /*if (SubscriptionHasEndDate)
             {
                 //return SubscriptionEndDate.Value.ToString("yyyy-MM-dd");
                 return SubscriptionEndDate.Value;
             }
-            else if (HasLatestSubscriptionTimebook)
+            else*/
+            if (HasLatestSubscriptionTimebook)
             {
                 var t = SubscriptionTimebooks[0];
                 if (t.IsInvoiced)
                 {
                     //return d.AddMonths(1).ToString("yyyy-MM-dd");
-                    return d.AddMonths(1);
+                    if (SubscriptionHasEndDate)
+                    {
+                        return SubscriptionEndDate.Value;
+                    }
+                    else
+                    {
+                        return d.AddMonths(1);
+                    }
                 }
                 else
                 {
@@ -151,7 +159,14 @@ namespace HW.Invoicing.Core.Models
             else
             {
                 //return d.ToString("yyyy-MM-dd");
-                return d;
+                if (SubscriptionHasEndDate)
+                {
+                    return SubscriptionEndDate.Value;
+                }
+                else
+                {
+                    return d;
+                }
             }
         }
 
