@@ -229,7 +229,7 @@
                     value="<%= eDate.ToString("yyyy-MM-dd") %>"
                     />
             </td>
-            <% decimal quantity = c.GetLatestSubscriptionTimebookQuantity(startDate); %>
+            <% decimal quantity = c.GetLatestSubscriptionTimebookQuantity(sDate); %>
             <td class='quantity-width'>
                 <input id="subscription-quantities"
                     name="subscription-quantities"

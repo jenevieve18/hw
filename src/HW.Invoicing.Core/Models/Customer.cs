@@ -77,7 +77,15 @@ namespace HW.Invoicing.Core.Models
         {
             if (HasLatestSubscriptionTimebook)
             {
-                return SubscriptionTimebooks[0].Comments;
+                var t = SubscriptionTimebooks[0];
+                if (t.IsInvoiced)
+                {
+                    return string.Format("Subscription fee for HealthWatch.se {0} - {1}", startDate.ToString("yyyy.MM.dd"), endDate.ToString("yyyy.MM.dd"));
+                }
+                else
+                {
+                    return SubscriptionTimebooks[0].Comments;
+                }
             }
             else
             {
@@ -88,16 +96,18 @@ namespace HW.Invoicing.Core.Models
 
         public decimal GetLatestSubscriptionTimebookQuantity(DateTime startDate)
         {
-            if (SubscriptionHasEndDate)
+            /*if (SubscriptionHasEndDate)
             {
                 return (decimal)DateHelper.MonthDiff(startDate, SubscriptionEndDate.Value);
             }
-            else if (HasLatestSubscriptionTimebook)
+            else*/
+            if (HasLatestSubscriptionTimebook)
             {
                 var t = SubscriptionTimebooks[0];
                 if (t.IsInvoiced)
                 {
-                    return 1;
+                    //return 1;
+                    return (decimal)DateHelper.MonthDiff(startDate, SubscriptionEndDate.Value);
                 }
                 else
                 {
@@ -106,7 +116,14 @@ namespace HW.Invoicing.Core.Models
             }
             else
             {
-                return 1;
+                if (SubscriptionHasEndDate)
+                {
+                    return (decimal)DateHelper.MonthDiff(startDate, SubscriptionEndDate.Value);
+                }
+                else
+                {
+                    return 1;
+                }
             }
         }
 
@@ -142,7 +159,15 @@ namespace HW.Invoicing.Core.Models
         {
             if (HasLatestSubscriptionTimebook)
             {
-                return LatestSubscriptionTimebook.Id;
+                var t = SubscriptionTimebooks[0];
+                if (t.IsInvoiced)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return LatestSubscriptionTimebook.Id;
+                }
             }
             else
             {
