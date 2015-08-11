@@ -101,7 +101,7 @@
         </div>
         <asp:PlaceHolder ID="placeHolderReactivate" runat="server">
             <div class="form-group">
-                <asp:CheckBox ID="checkBoxReactivate" runat="server" CssClass="form-control" Text="&nbsp;Re-activate this customer price" />
+                <asp:CheckBox ID="checkBoxReactivate" runat="server" CssClass="form-control" Text="&nbsp;Re-activate this customer timebook" />
             </div>
         </asp:PlaceHolder>
     </asp:Panel>

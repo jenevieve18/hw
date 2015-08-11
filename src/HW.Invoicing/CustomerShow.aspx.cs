@@ -43,7 +43,11 @@ namespace HW.Invoicing
             {
                 customer = r.Read(id);
 
-                if (customer != null)
+                if (customer == null)
+                {
+                    Response.Redirect("customers.aspx");
+                }
+                else
                 {
                     labelCustomer.Text = customer.Name;
 
