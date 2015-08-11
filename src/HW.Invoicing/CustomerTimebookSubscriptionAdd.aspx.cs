@@ -28,7 +28,7 @@ namespace HW.Invoicing
             HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
 
             companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
-            customers = r.FindActiveSubscribersByCompany(companyId);
+            customers = r.FindActiveSubscribersByCompany(companyId, DateTime.Now);
 
             var now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             startDate = now;
@@ -54,7 +54,7 @@ namespace HW.Invoicing
             r.ClearSubscriptionTimebooks();
             message = "<div class='alert alert-danger'>Subscription timebooks deleted.</div>";
             
-            customers = r.FindActiveSubscribersByCompany(companyId);
+            customers = r.FindActiveSubscribersByCompany(companyId, DateTime.Now);
         }
 
         protected void buttonSave_Click(object sender, EventArgs e)
@@ -100,7 +100,7 @@ namespace HW.Invoicing
                 message = "<div class='alert alert-success'>Saved! customer timebooks for subscription items are now saved.</div>";
             //}
 
-            customers = r.FindActiveSubscribersByCompany(companyId);
+            customers = r.FindActiveSubscribersByCompany(companyId, DateTime.Now);
         }
     }
 }

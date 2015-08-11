@@ -220,7 +220,16 @@
             return displayMessage(errors, '#timebook-message');
         }
     </script>
-
+    <style type="text/css">
+        .timebook-list td, .timebook-list th
+        {
+            padding:5px;
+        }
+        .comments-width 
+        {
+            width:300px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -570,12 +579,12 @@
 			<div class="alert alert-info">
 				<strong>Time book</strong> is a sheet for recording the time of arrival and departure of workers and for recording the amount of time spent on each job.
 			</div>
-            <table class="table table-hover small">
+            <table class="table table-hover small timebook-list">
                 <tr>
                     <th><input type="checkbox" id="checkbox-timebook-all" /></th>
                     <th style="width:80px">Date</th>
-                    <th>Department<br /><i>Contact</i></th>
-                    <!--<th>Contact</th>-->
+                    <th>Department</th>
+                    <th>Contact</th>
                     <th>Item</th>
                     <th>Unit</th>
                     <th>Qty</th>
@@ -587,6 +596,7 @@
                     <th>Comments</th>
                     <th></th>
                 </tr>
+
                 <!--
                 <% if (customer.HasSubscription && customer.SubscriptionStartDate.Value <= DateTime.Now) { %>
                     <% if (!customer.SubscriptionHasEndDate || (customer.SubscriptionHasEndDate && customer.SubscriptionEndDate.Value >= DateTime.Now)) { %>
@@ -672,6 +682,7 @@
                     <% } %>
                 <% } %>
                 -->
+
                 <% foreach (var t in timebooks) { %>
                     <% if (t.Inactive) { %>
                         <tr>
@@ -683,8 +694,8 @@
                                     <% } %>
                                 </strike>
                             </td>
-                            <td><strike><%= t.Department %></strike><br /><i><%= t.Contact.Contact %></i></td>
-                            <!--<td><strike><%= t.Contact.Contact %></strike></td>-->
+                            <td><strike><%= t.Department %></strike></td>
+                            <td><strike><%= t.Contact.Contact %></strike></td>
                             <td><strike><%= t.Item.Name %></strike></td>
                             <td><strike><%= t.Item.Unit.Name %></strike></td>
                             <td><strike><%= t.Quantity.ToString() %></strike></td>
@@ -693,10 +704,8 @@
                             <td><strike><%= t.VAT %>%</strike></td>
                             <td><strike><%= t.Consultant %></strike></td>
                             <td align="center"><%= t.GetStatus() %></td>
-                            <td><strike><%= t.Comments %></strike></td>
+                            <td class="comments-width"><strike><%= t.Comments %></strike></td>
                             <td>
-                                <!--<%= HtmlHelper.Anchor("Edit", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id)) %>
-                                <%= HtmlHelper.Anchor("Delete", string.Format("customertimebookdelete.aspx?Id={0}&CustomerId={1}", t.Id, id), "onclick=\"return confirm('Are you sure you want to delete this timebook?')\"")%>-->
                                 <%= HtmlHelper.Anchor(" ", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id), "class='glyphicon glyphicon-edit'")%>
                                 <%= HtmlHelper.Anchor(" ", string.Format("customertimebookdelete.aspx?Id={0}&CustomerId={1}", t.Id, id), "class='glyphicon glyphicon-remove-circle' onclick=\"return confirm('Are you sure you want to delete this timebook?')\"")%>
                             </td>
@@ -723,8 +732,8 @@
                                     <%= t.Date.Value.ToString("yyyy-MM-dd") %>
                                 <% } %>
                             </td>
-                            <td><%= t.Department %><br /><i><%= t.Contact.Contact %></i></td>
-                            <!--<td><%= t.Contact.Contact %></td>-->
+                            <td><%= t.Department %></td>
+                            <td><%= t.Contact.Contact %></td>
                             <td><%= t.Item.Name %></td>
                             <td><%= t.Item.Unit.Name %></td>
                             <td><%= t.Quantity.ToString() %></td>
@@ -733,7 +742,7 @@
                             <td><%= t.VAT %>%</td>
                             <td><%= t.Consultant %></td>
                             <td align="center"><%= t.GetStatus() %></td>
-                            <td><%= t.Comments %></td>
+                            <td class="comments-width"><%= t.Comments %></td>
                             <td>
                                 <% if (!t.IsPaid) { %>
                                     <%= HtmlHelper.Anchor(" ", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id), "class='glyphicon glyphicon-edit'")%>
