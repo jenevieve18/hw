@@ -285,8 +285,8 @@ VALUES(@CustomerId, @ItemId, @Price, @SortOrder)"
 		{
 			string query = string.Format(
                 @"
-INSERT INTO Customer(Name, Number, PostalAddress, InvoiceAddress, PurchaseOrderNumber, YourReferencePerson, OurReferencePerson, Phone, Email, LangId, CompanyId, HasSubscription, SubscriptionItemId, SubscriptionStartDate, SubscriptionEndDate, SubscriptionHasEndDate)
-VALUES(@Name, @Number, @PostalAddress, @InvoiceAddress, @PurchaseOrderNumber, @YourReferencePerson, @OurReferencePerson, @Phone, @Email, @LangId, @CompanyId, @HasSubscription, @SubscriptionItemId, @SubscriptionStartDate, @SubscriptionEndDate, @SubscriptionHasEndDate)"
+INSERT INTO Customer(Name, Number, PostalAddress, InvoiceAddress, PurchaseOrderNumber, YourReferencePerson, OurReferencePerson, Phone, Email, LangId, CompanyId, HasSubscription, SubscriptionItemId, SubscriptionStartDate, SubscriptionEndDate, SubscriptionHasEndDate, Inactive)
+VALUES(@Name, @Number, @PostalAddress, @InvoiceAddress, @PurchaseOrderNumber, @YourReferencePerson, @OurReferencePerson, @Phone, @Email, @LangId, @CompanyId, @HasSubscription, @SubscriptionItemId, @SubscriptionStartDate, @SubscriptionEndDate, @SubscriptionHasEndDate, @Inactive)"
             );
 			ExecuteNonQuery(
 				query,
@@ -306,7 +306,8 @@ VALUES(@Name, @Number, @PostalAddress, @InvoiceAddress, @PurchaseOrderNumber, @Y
                 new SqlParameter("@SubscriptionItemId", c.SubscriptionItem.Id),
                 new SqlParameter("@SubscriptionStartDate", c.SubscriptionStartDate),
                 new SqlParameter("@SubscriptionEndDate", c.SubscriptionEndDate),
-                new SqlParameter("@SubscriptionHasEndDate", c.SubscriptionHasEndDate)
+                new SqlParameter("@SubscriptionHasEndDate", c.SubscriptionHasEndDate),
+                new SqlParameter("@Inactive", c.Inactive)
 			);
 		}
 		

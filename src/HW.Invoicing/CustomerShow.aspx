@@ -574,8 +574,8 @@
                 <tr>
                     <th><input type="checkbox" id="checkbox-timebook-all" /></th>
                     <th style="width:80px">Date</th>
-                    <th>Department</th>
-                    <th>Contact</th>
+                    <th>Department<br /><i>Contact</i></th>
+                    <!--<th>Contact</th>-->
                     <th>Item</th>
                     <th>Unit</th>
                     <th>Qty</th>
@@ -683,8 +683,8 @@
                                     <% } %>
                                 </strike>
                             </td>
-                            <td><strike><%= t.Department %></strike></td>
-                            <td><strike><%= t.Contact.Contact %></strike></td>
+                            <td><strike><%= t.Department %></strike><br /><i><%= t.Contact.Contact %></i></td>
+                            <!--<td><strike><%= t.Contact.Contact %></strike></td>-->
                             <td><strike><%= t.Item.Name %></strike></td>
                             <td><strike><%= t.Item.Unit.Name %></strike></td>
                             <td><strike><%= t.Quantity.ToString() %></strike></td>
@@ -723,8 +723,8 @@
                                     <%= t.Date.Value.ToString("yyyy-MM-dd") %>
                                 <% } %>
                             </td>
-                            <td><%= t.Department %></td>
-                            <td><%= t.Contact.Contact %></td>
+                            <td><%= t.Department %><br /><i><%= t.Contact.Contact %></i></td>
+                            <!--<td><%= t.Contact.Contact %></td>-->
                             <td><%= t.Item.Name %></td>
                             <td><%= t.Item.Unit.Name %></td>
                             <td><%= t.Quantity.ToString() %></td>
