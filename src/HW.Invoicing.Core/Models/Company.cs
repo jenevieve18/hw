@@ -16,6 +16,7 @@ namespace HW.Invoicing.Core.Models
         public bool HasSubscriber { get; set; }
         public string InvoiceLogo { get; set; }
         public string InvoiceTemplate { get; set; }
+        public string Terms { get; set; }
 
         public bool HasInvoiceTemplate
         {

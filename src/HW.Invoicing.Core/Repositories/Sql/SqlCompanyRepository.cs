@@ -79,7 +79,8 @@ SELECT Id,
     InvoicePrefix,
     HasSubscriber,
     InvoiceLogo,
-    InvoiceTemplate
+    InvoiceTemplate,
+    Terms
 FROM Company
 WHERE Id = @Id";
 			Company c = null;
@@ -97,7 +98,8 @@ WHERE Id = @Id";
                         InvoicePrefix = GetString(rs, 8),
                         HasSubscriber = GetInt32(rs, 9) == 1,
                         InvoiceLogo = GetString(rs, 10),
-                        InvoiceTemplate = GetString(rs, 11)
+                        InvoiceTemplate = GetString(rs, 11),
+                        Terms = GetString(rs, 12)
 					};
 				}
 			}
@@ -138,6 +140,13 @@ ORDER BY IsSelected DESC";
                 }
             }
             return c;
+        }
+
+        public void SaveTerms(string terms, int id)
+        {
+            string query = @"
+UPDATE Company SET Terms = @Terms WHERE Id = @Id";
+            ExecuteNonQuery(query, "invoicing", new SqlParameter("@Terms", terms), new SqlParameter("@Id", id));
         }
 		
 		public override void Update(Company t, int id)

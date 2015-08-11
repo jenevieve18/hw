@@ -35,8 +35,16 @@ namespace HW.Invoicing
                     textBoxFinancialMonthEnd.Text = company.FinancialMonthEnd.Value.ToString("yyyy-MM-dd");
                     textBoxInvoicePrefix.Text = company.InvoicePrefix;
                     checkBoxHasSubscriber.Checked = company.HasSubscriber;
+                    
+                    textBoxTerms.Text = company.Terms;
                 }
             }
+        }
+
+        protected void buttonSaveTerms_Click(object sender, EventArgs e)
+        {
+            r.SaveTerms(textBoxTerms.Text, id);
+            Response.Redirect("companies.aspx");
         }
 
         protected void buttonSave_Click(object sender, EventArgs e)
