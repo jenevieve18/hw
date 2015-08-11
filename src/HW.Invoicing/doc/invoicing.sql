@@ -262,3 +262,5 @@ alter table Company add InvoiceLogo varchar(255);
 alter table Company add InvoiceTemplate varchar(255);
 
 alter table CustomerTimebook alter column Quantity decimal(16, 2);
+
+alter table Company add Terms text;
