@@ -51,6 +51,8 @@
                 $('#<%= textBoxQuantity.ClientID %>').val($.number(months, 2, '.', ''));
                 $('#<%= textBoxText.ClientID %>').change();
 
+                //$('#customer-list-body').html('');
+
                 $('.subscription-quantities').val($.number(months, 2, '.', ''));
                 $('.subscription-start-date').each(function () {
                     $(this).datepicker('update', startDate);
@@ -59,7 +61,6 @@
                     $(this).datepicker('update', endDate);
                 });
             });
-            //$('.date').change();
             $('.subscription-date').change(function () {
                 var textBoxStartDate = $(this).closest('tr').find('.subscription-start-date');
                 var startDate = textBoxStartDate.datepicker('getDate');
@@ -72,7 +73,6 @@
 
                 if (startDate < customerSubscriptionStartDate || inTimebook(customerId, startDate)) {
                     $(this).closest('tr').addClass('danger');
-                    //textBoxStartDate.datepicker('update', startDate);
                 } else {
                     $(this).closest('tr').removeClass('danger');
                     $(this).closest('tr').removeClass('warning');
@@ -104,7 +104,6 @@
                 var d = addMonth(startDate, $(this).val());
                 $('#<%= textBoxEndDate.ClientID %>').datepicker('update', d);
             });
-            //$('#<%= textBoxText.ClientID %>').change();
 
             $('.subscription-quantities').change(function () {
                 var startDate = $(this).closest('tr').find('.subscription-start-date').datepicker('getDate');
@@ -179,17 +178,20 @@
 </div>
 
 <br />
-<table class="table table-hover">
-    <tr>
-        <th>Customer</th>
-        <th>Subscription Item</th>
-        <th>Unit</th>
-        <th>Price</th>
-        <th class='date-width'>Start Date</th>
-        <th class='date-width'>End Date</th>
-        <th class='quantity-width'>Qty</th>
-        <th class='comments-width'>Comments</th>
-    </tr>
+<table class="table table-hover" id="cusotmer-list">
+    <thead>
+        <tr>
+            <th>Customer</th>
+            <th>Subscription Item</th>
+            <th>Unit</th>
+            <th>Price</th>
+            <th class='date-width'>Start Date</th>
+            <th class='date-width'>End Date</th>
+            <th class='quantity-width'>Qty</th>
+            <th class='comments-width'>Comments</th>
+        </tr>
+    </thead>
+    <tbody id="customer-list-body">
     <% foreach (var c in customers) { %>
         <% int subscriptionId = c.GetLatestSubscriptionTimebookId(); %>
         <tr<%= c.GetSubscriptionTimebookAvailability(startDate) %>>
@@ -227,7 +229,7 @@
                     value="<%= eDate.ToString("yyyy-MM-dd") %>"
                     />
             </td>
-            <% decimal quantity = c.GetLatestSubscriptionTimebookQuantity(sDate); %>
+            <% decimal quantity = c.GetLatestSubscriptionTimebookQuantity(sDate, eDate); %>
             <td class='quantity-width'>
                 <input id="subscription-quantities"
                     name="subscription-quantities"
@@ -244,6 +246,7 @@
             </td>
         </tr>
     <% } %>
+    </tbody>
 </table>
 
 <br />

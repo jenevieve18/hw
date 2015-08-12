@@ -70,7 +70,7 @@ namespace HW.Invoicing.Core.Models
             }
         }
 
-        public decimal GetLatestSubscriptionTimebookQuantity(DateTime startDate)
+        public decimal GetLatestSubscriptionTimebookQuantity(DateTime startDate, DateTime endDate)
         {
             if (HasLatestSubscriptionTimebook)
             {
@@ -78,6 +78,14 @@ namespace HW.Invoicing.Core.Models
                 if (t.IsInvoiced)
                 {
                     return (decimal)DateHelper.MonthDiff(startDate, SubscriptionEndDate.Value);
+                    /*if (SubscriptionHasEndDate)
+                    {
+                        return (decimal)DateHelper.MonthDiff(startDate, SubscriptionEndDate.Value);
+                    }
+                    else
+                    {
+                        return 1;
+                    }*/
                 }
                 else
                 {
@@ -88,11 +96,13 @@ namespace HW.Invoicing.Core.Models
             {
                 if (SubscriptionHasEndDate)
                 {
-                    return (decimal)DateHelper.MonthDiff(startDate, SubscriptionEndDate.Value);
+                    //return (decimal)DateHelper.MonthDiff(startDate, SubscriptionEndDate.Value);
+                    return (decimal)DateHelper.MonthDiff(startDate, endDate);
                 }
                 else
                 {
-                    return 1;
+                    //return 1;
+                    return (decimal)DateHelper.MonthDiff(startDate, endDate);
                 }
             }
         }
