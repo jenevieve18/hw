@@ -1203,8 +1203,8 @@ INNER JOIN Unit u on u.Id = i.UnitId
 WHERE c.HasSubscription = 1
 AND ISNULL(c.Inactive, 0) != 1
 AND c.CompanyId = @CompanyId
-AND MONTH(c.SubscriptionStartDate) = @Month
-AND YEAR(c.SubscriptionStartDate) = @Year
+AND MONTH(c.SubscriptionStartDate) <= @Month
+AND YEAR(c.SubscriptionStartDate) <= @Year
 ORDER BY c.Inactive, c.Name"
             );
             var customers = new List<Customer>();
