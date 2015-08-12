@@ -203,7 +203,7 @@
                 <input id="subscription-id"
                     name="subscription-id"
                     type="hidden" value="<%= c.GetLatestSubscriptionTimebookId() %>" />
-                <%= c.GetLatestSubscriptionTimebookEndDate() %>
+                <%= c.GetLatestSubscriptionTimebookEndDateLabel() %>
             </td>
             <td><%= c.SubscriptionItem.Name %></td>
             <td><%= c.SubscriptionItem.Unit.Name %></td>
