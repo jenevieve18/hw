@@ -11,7 +11,7 @@ namespace HW.Invoicing
 {
 
 
-    public partial class Advice
+    public partial class Terms
     {
 
         /// <summary>

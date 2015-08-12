@@ -56,7 +56,6 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Advice.aspx" />
     <Content Include="Companies.aspx" />
     <Content Include="CompanyAdd.aspx" />
     <Content Include="CompanyEdit.aspx" />
@@ -110,6 +109,7 @@
     <Content Include="SignOut.aspx" />
     <Content Include="sql.aspx" />
     <Content Include="sql2.aspx" />
+    <Content Include="Terms.aspx" />
     <Content Include="UnitAdd.aspx" />
     <Content Include="UnitDeactivate.aspx" />
     <Content Include="UnitDelete.aspx" />
@@ -128,13 +128,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Advice.aspx.cs">
-      <DependentUpon>Advice.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Advice.aspx.designer.cs">
-      <DependentUpon>Advice.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Companies.aspx.cs">
       <DependentUpon>Companies.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -506,6 +499,13 @@
     </Compile>
     <Compile Include="sql2.aspx.designer.cs">
       <DependentUpon>sql2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Terms.aspx.cs">
+      <DependentUpon>Terms.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Terms.aspx.designer.cs">
+      <DependentUpon>Terms.aspx</DependentUpon>
     </Compile>
     <Compile Include="UnitAdd.aspx.cs">
       <DependentUpon>UnitAdd.aspx</DependentUpon>

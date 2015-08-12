@@ -53,11 +53,9 @@
 
                 $('.subscription-quantities').val($.number(months, 2, '.', ''));
                 $('.subscription-start-date').each(function () {
-                    //$(this).datepicker('update', $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate'));
                     $(this).datepicker('update', startDate);
                 });
                 $('.subscription-end-date').each(function () {
-                    //$(this).datepicker('update', $('#<%= textBoxEndDate.ClientID %>').datepicker('getDate'));
                     $(this).datepicker('update', endDate);
                 });
             });
@@ -65,16 +63,16 @@
             $('.subscription-date').change(function () {
                 var textBoxStartDate = $(this).closest('tr').find('.subscription-start-date');
                 var startDate = textBoxStartDate.datepicker('getDate');
-                //console.log(startDate);
 
-                var customerSubscriptionStartDate = textBoxStartDate.data('subscriptionstartdate');
-                var d = new Date(customerSubscriptionStartDate);
-                d.setHours(0, 0, 0, 0);
+                var customerSubscriptionStartDateTime = textBoxStartDate.data('subscriptionstartdate');
+                var customerSubscriptionStartDate = new Date(customerSubscriptionStartDateTime);
+                customerSubscriptionStartDate.setHours(0, 0, 0, 0);
 
                 var customerId = textBoxStartDate.data('customerid');
 
-                if (startDate < d || inTimebook(customerId, startDate)) {
+                if (startDate < customerSubscriptionStartDate || inTimebook(customerId, startDate)) {
                     $(this).closest('tr').addClass('danger');
+                    //textBoxStartDate.datepicker('update', startDate);
                 } else {
                     $(this).closest('tr').removeClass('danger');
                     $(this).closest('tr').removeClass('warning');
