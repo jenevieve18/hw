@@ -38,6 +38,11 @@ namespace HW.Invoicing.Core.Models
 		public bool Inactive { get; set; }
 		public Language Language { get; set; }
 
+        public string GetSubscriptionStartAndEndDate()
+        {
+            return SubscriptionStartDate.Value.ToString("yyyy.MM.dd") + (SubscriptionHasEndDate ? " - " + SubscriptionEndDate.Value.ToString("yyyy.MM.dd") : "");
+        }
+
         public string GetLatestSubscriptionTimebookEndDateLabel()
         {
             if (HasLatestSubscriptionTimebook)

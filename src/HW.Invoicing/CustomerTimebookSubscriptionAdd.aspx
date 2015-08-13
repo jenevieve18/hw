@@ -39,28 +39,86 @@
         }
     </script>
     <script type="text/javascript">
+        function dateChange() {
+            var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
+            //alert(startDate);
+            var endDate = $('#<%= textBoxEndDate.ClientID %>').datepicker('getDate');
+            var months = monthDiff(startDate, endDate);
+            $('#<%= textBoxQuantity.ClientID %>').val($.number(months, 2, '.', ''));
+            $('#<%= textBoxText.ClientID %>').change();
+
+            $.ajax({
+                type: "POST",
+                url: "CustomerTimebookSubscriptionAdd.aspx/FindActiveSubscribersByCompany",
+                //data: JSON.stringify({ sDate: $('#<%= textBoxStartDate.ClientID %>').val(), eDate: $('#<%= textBoxEndDate.ClientID %>').val() }),
+                data: JSON.stringify({ 'startDate': startDate, 'endDate': endDate }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    $('#customer-list-body').empty();
+                    var customerList = '';
+                    var customers = data.d;
+                    $.each(customers, function (i, c) {
+                        customerList += "" +
+                            "<tr>" +
+                                "<td>" +
+                                    "<a href='customershow.aspx?Id=" + c.id + "&SelectedTab=timebook'>" + c.name + "</a><br>" +
+                                    "<small>(" + c.subscriptionStartAndEndDate + ")</small><br>" +
+                                    c.subscriptionTimebookEndDateLabel +
+                                "</td>" +
+                                "<td>" + c.subscriptionItem + "</td>" +
+                                "<td>" + c.subscriptionItemUnit + "</td>" +
+                                "<td>" + c.subscriptionItemPrice + "</td>" +
+                                "<td class='date-width'>" +
+                                    "<input id='subscription-start-date'" +
+                                    "   name='subscription-start-date'" +
+                                    "   type='text'" +
+                                    "   class='form-control subscription-start-date subscription-date'" +
+                                    "   data-subscriptionstartdate=''" +
+                                    "   data-customerid='" + c.id + "'" +
+                                    "   value='" + c.latestSubscriptionTimebookStartDate + "'" +
+                                    "   />" +
+                                "</td>" +
+                                "<td class='date-width'>" +
+                                    "<input id='subscription-end-date'" +
+                                    "   name='subscription-end-date'" +
+                                    "   type='text'" +
+                                    "   class='form-control subscription-end-date subscription-date'" +
+                                    "   data-customerid='" + c.Id + "'" +
+                                    "   value='" + c.latestSubscriptionTimebookEndDate + "'" +
+                                    "   />" +
+                                "</td>" +
+                                "<td class='quantity-width'>" +
+                                    "<input id='subscription-quantities'" +
+                                    "   name='subscription-quantities'" +
+                                    "   class='subscription-quantities form-control'" +
+                                    "   type='text'" +
+                                    "   value='" + c.latestSubscriptionTimebookQuantity + "'" +
+                                    "   />" +
+                                "</td>" +
+                                "<td class='comments-width'>" +
+                                    "   <textarea id='subscription-comments'" +
+                                    "       name='subscription-comments'" +
+                                    "       class='subscription-comments form-control'>" + c.comments + "</textarea>" +
+                                "</td>" +
+                            "</tr>";
+                    });
+                    $('#customer-list-body').html(customerList);
+                    init();
+                }
+            });
+        }
+    </script>
+    <script type="text/javascript">
         $(document).ready(function () {
+            init();
+        });
+        function init() {
             $('.date, .subscription-start-date, .subscription-end-date').datepicker({
                 format: "yyyy-mm-dd",
                 autoclose: true
             });
-            $('.date').change(function () {
-                var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
-                var endDate = $('#<%= textBoxEndDate.ClientID %>').datepicker('getDate');
-                var months = monthDiff(startDate, endDate);
-                $('#<%= textBoxQuantity.ClientID %>').val($.number(months, 2, '.', ''));
-                $('#<%= textBoxText.ClientID %>').change();
-
-                //$('#customer-list-body').html('');
-
-                $('.subscription-quantities').val($.number(months, 2, '.', ''));
-                $('.subscription-start-date').each(function () {
-                    $(this).datepicker('update', startDate);
-                });
-                $('.subscription-end-date').each(function () {
-                    $(this).datepicker('update', endDate);
-                });
-            });
+            $('.date').change(dateChange);
             $('.subscription-date').change(function () {
                 var textBoxStartDate = $(this).closest('tr').find('.subscription-start-date');
                 var startDate = textBoxStartDate.datepicker('getDate');
@@ -110,9 +168,19 @@
                 var d = addMonth(startDate, $(this).val());
                 $(this).closest('tr').find('.subscription-end-date').datepicker('update', d);
             });
-        });
+        }
     </script>
     <style type="text/css">
+        .label-hastimebook 
+        {
+            background:#f2dede;
+            color:#333;
+        }
+        .label-notimebook 
+        {
+            background:white;
+            color:#333;
+        }
         .date-width 
         {
             width:100px;
@@ -198,7 +266,8 @@
             <td>
                 <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id + "&SelectedTab=timebook") %><br />
                 <small>
-                    (<%= c.SubscriptionStartDate.Value.ToString("yyyy.MM.dd") %><%= c.SubscriptionHasEndDate ? " - " + c.SubscriptionEndDate.Value.ToString("yyyy.MM.dd") : "" %>)
+                    (<%= c.GetSubscriptionStartAndEndDate() %>)
+                    <!--(<%= c.SubscriptionStartDate.Value.ToString("yyyy.MM.dd") %><%= c.SubscriptionHasEndDate ? " - " + c.SubscriptionEndDate.Value.ToString("yyyy.MM.dd") : "" %>)-->
                 </small>
                 <input id="subscription-id"
                     name="subscription-id"
@@ -256,5 +325,12 @@
         onclick="buttonSave_Click" />
         or go to <i><%= HtmlHelper.Anchor("customer list", "customers.aspx") %></i>
 </div>
+
+<br /><br /><br />
+<strong>Legends:</strong>
+<ul>
+    <li><span class="label label-hastimebook">Row colored red</span> - customer has created a timebook.</li>
+    <li><span class="label label-notimebook">Row colored white</span> - customer has either invoiced the timebook or ready to create a timebook.</li>
+</ul>
 
 </asp:Content>
