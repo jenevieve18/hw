@@ -135,7 +135,8 @@ namespace HW.Invoicing.Core.Models
                     }
                     else
                     {
-                        return endDate.AddMonths(1);
+                        //return endDate.AddMonths(1);
+                        return t.SubscriptionEndDate.Value.AddMonths(1);
                     }
                 }
                 else
