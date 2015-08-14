@@ -331,11 +331,11 @@
         or go to <i><%= HtmlHelper.Anchor("customer list", "customers.aspx") %></i>
 </div>
 
-<!--<br /><br /><br />
+<br /><br /><br />
 <strong>Legends:</strong>
 <ul>
     <li><span class="label label-hastimebook">Row colored red</span> - customer has created a timebook.</li>
     <li><span class="label label-notimebook">Row colored white</span> - customer has either invoiced the timebook or ready to create a timebook.</li>
-</ul>-->
+</ul>
 
 </asp:Content>
