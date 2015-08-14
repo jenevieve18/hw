@@ -40,7 +40,7 @@
     </script>
     <script type="text/javascript">
         function dateChange() {
-            //console.log('date change on ' + $(this).val() + '...');
+            console.log('date change on ' + $(this).val() + '...');
             $('.spinner').show();
             var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
             var endDate = $('#<%= textBoxEndDate.ClientID %>').datepicker('getDate');
@@ -166,7 +166,6 @@
                 comments = comments + ' ' + textBoxStartDate.val().replace(/-/g, ".") + ' - ' + textBoxEndDate.val().replace(/-/g, ".");
                 $(this).closest('tr').find('.subscription-comments').val(comments);
             });
-
             $('.subscription-quantities').change(function () {
                 var startDate = $(this).closest('tr').find('.subscription-start-date').datepicker('getDate');
                 var d = addMonth(startDate, $(this).val());
