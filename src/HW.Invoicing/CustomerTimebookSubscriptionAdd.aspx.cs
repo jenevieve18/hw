@@ -95,6 +95,10 @@ namespace HW.Invoicing
 
         protected void buttonSave_Click(object sender, EventArgs e)
         {
+            startDate = ConvertHelper.ToDateTime(textBoxStartDate.Text);
+            endDate = ConvertHelper.ToDateTime(textBoxEndDate.Text);
+            customers = r.FindActiveSubscribersByCompany(companyId, startDate, endDate);
+
             var ids = Request.Form.GetValues("subscription-id");
             var startDates = Request.Form.GetValues("subscription-start-date");
             var endDates = Request.Form.GetValues("subscription-end-date");

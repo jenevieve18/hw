@@ -51,7 +51,8 @@
             $.ajax({
                 type: "POST",
                 url: "CustomerTimebookSubscriptionAdd.aspx/FindActiveSubscribersByCompany",
-                data: JSON.stringify({ startDate: startDate, endDate: endDate }),
+                data: JSON.stringify({ startDate: $('#<%= textBoxStartDate.ClientID %>').val(), endDate: $('#<%= textBoxEndDate.ClientID %>').val() }),
+                //data: JSON.stringify({ startDate: startDate, endDate: endDate }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
@@ -64,11 +65,11 @@
                                 "<td>" +
                                 "   <a href='customershow.aspx?Id=" + c.id + "&SelectedTab=timebook'>" + c.name + "</a><br>" +
                                 "   <small>(" + c.subscriptionStartAndEndDate + ")</small><br>" +
+                                "   " + c.subscriptionTimebookEndDateLabel +
                                 "   <input id='subscription-id'" +
-                                "       name='subscription-id'" + 
+                                "       name='subscription-id'" +
                                 "       type='hidden' value='" + c.latestSubscriptionTimebookId + "'" +
                                 "       />" +
-                                "   " + c.subscriptionTimebookEndDateLabel +
                                 "</td>" +
                                 "<td>" + c.subscriptionItem + "</td>" +
                                 "<td>" + c.subscriptionItemUnit + "</td>" +
@@ -272,12 +273,11 @@
                 <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id + "&SelectedTab=timebook") %><br />
                 <small>
                     (<%= c.GetSubscriptionStartAndEndDate() %>)
-                    <!--(<%= c.SubscriptionStartDate.Value.ToString("yyyy.MM.dd") %><%= c.SubscriptionHasEndDate ? " - " + c.SubscriptionEndDate.Value.ToString("yyyy.MM.dd") : "" %>)-->
-                </small>
+                </small><br />
+                <%= c.GetLatestSubscriptionTimebookEndDateLabel() %>
                 <input id="subscription-id"
                     name="subscription-id"
                     type="hidden" value="<%= c.GetLatestSubscriptionTimebookId() %>" />
-                <%= c.GetLatestSubscriptionTimebookEndDateLabel() %>
             </td>
             <td><%= c.SubscriptionItem.Name %></td>
             <td><%= c.SubscriptionItem.Unit.Name %></td>
