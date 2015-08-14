@@ -116,6 +116,25 @@
             //$('.spinner').hide();
             init();
             $('.date').change(dateChange);
+
+            var textGeneratedComments = $('#<%= textBoxComments.ClientID %>');
+            $('#<%= textBoxText.ClientID %>').change(function () {
+                var text = $(this).val();
+                var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
+                var endDate = $('#<%= textBoxEndDate.ClientID %>').datepicker('getDate');
+                var generatedText = text + ' ' + $('#<%= textBoxStartDate.ClientID %>').val().replace(/-/g, ".") + ' - ' + $('#<%= textBoxEndDate.ClientID %>').val().replace(/-/g, ".");
+                textGeneratedComments.val(generatedText);
+                $('#<%= textBoxComments.ClientID %>').change();
+            });
+            $('#<%= textBoxComments.ClientID %>').change(function () {
+                $('.subscription-comments').val($(this).val());
+            });
+            $('#<%= textBoxQuantity.ClientID %>').change(function () {
+                $('.subscription-quantities').val($(this).val());
+                var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
+                var d = addMonth(startDate, $(this).val());
+                $('#<%= textBoxEndDate.ClientID %>').datepicker('update', d);
+            });
         });
         function init() {
             $('.date, .subscription-start-date, .subscription-end-date').datepicker({
@@ -146,25 +165,6 @@
                 var comments = $('#<%= textBoxText.ClientID %>').val();
                 comments = comments + ' ' + textBoxStartDate.val().replace(/-/g, ".") + ' - ' + textBoxEndDate.val().replace(/-/g, ".");
                 $(this).closest('tr').find('.subscription-comments').val(comments);
-            });
-
-            var textGeneratedComments = $('#<%= textBoxComments.ClientID %>');
-            $('#<%= textBoxText.ClientID %>').change(function () {
-                var text = $(this).val();
-                var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
-                var endDate = $('#<%= textBoxEndDate.ClientID %>').datepicker('getDate');
-                var generatedText = text + ' ' + $('#<%= textBoxStartDate.ClientID %>').val().replace(/-/g, ".") + ' - ' + $('#<%= textBoxEndDate.ClientID %>').val().replace(/-/g, ".");
-                textGeneratedComments.val(generatedText);
-                $('#<%= textBoxComments.ClientID %>').change();
-            });
-            $('#<%= textBoxComments.ClientID %>').change(function () {
-                $('.subscription-comments').val($(this).val());
-            });
-            $('#<%= textBoxQuantity.ClientID %>').change(function () {
-                $('.subscription-quantities').val($(this).val());
-                var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
-                var d = addMonth(startDate, $(this).val());
-                $('#<%= textBoxEndDate.ClientID %>').datepicker('update', d);
             });
 
             $('.subscription-quantities').change(function () {
