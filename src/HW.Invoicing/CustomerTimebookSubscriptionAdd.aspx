@@ -40,6 +40,7 @@
     </script>
     <script type="text/javascript">
         function dateChange() {
+            console.log('date change...');
             $('.spinner').show();
             var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
             //alert(startDate);
@@ -266,7 +267,8 @@
     <tbody id="customer-list-body">
     <% foreach (var c in customers) { %>
         <% int subscriptionId = c.GetLatestSubscriptionTimebookId(); %>
-        <tr<%= c.GetSubscriptionTimebookAvailability(startDate) %>>
+        <!--<tr<%= c.GetSubscriptionTimebookAvailability(startDate) %>>-->
+        <tr>
             <td>
                 <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id + "&SelectedTab=timebook") %><br />
                 <small>
