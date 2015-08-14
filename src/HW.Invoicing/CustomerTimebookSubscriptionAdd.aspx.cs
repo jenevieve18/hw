@@ -26,8 +26,6 @@ namespace HW.Invoicing
         protected string generatedComments;
         int companyId;
 
-        //[WebMethod(EnableSession = true)]
-        //[ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
         [WebMethod]
         public static List<object> FindActiveSubscribersByCompany(DateTime startDate, DateTime endDate)
         {
@@ -47,6 +45,7 @@ namespace HW.Invoicing
                     subscriptionItem = c.SubscriptionItem.Name,
                     subscriptionItemUnit = c.SubscriptionItem.Unit.Name,
                     subscriptionItemPrice = c.SubscriptionItem.Price,
+                    latestSubscriptionTimebookId = c.GetLatestSubscriptionTimebookId(),
                     latestSubscriptionTimebookStartDate = sDate.ToString("yyyy-MM-dd"),
                     latestSubscriptionTimebookEndDate = eDate.ToString("yyyy-MM-dd"),
                     latestSubscriptionTimebookQuantity = c.GetLatestSubscriptionTimebookQuantity(sDate, eDate),

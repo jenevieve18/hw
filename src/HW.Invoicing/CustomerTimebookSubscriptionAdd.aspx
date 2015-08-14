@@ -40,10 +40,9 @@
     </script>
     <script type="text/javascript">
         function dateChange() {
-            console.log('date change on ' + $(this).val() + '...');
+            //console.log('date change on ' + $(this).val() + '...');
             $('.spinner').show();
             var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
-            //alert(startDate);
             var endDate = $('#<%= textBoxEndDate.ClientID %>').datepicker('getDate');
             var months = monthDiff(startDate, endDate);
             $('#<%= textBoxQuantity.ClientID %>').val($.number(months, 2, '.', ''));
@@ -65,6 +64,10 @@
                                 "<td>" +
                                 "   <a href='customershow.aspx?Id=" + c.id + "&SelectedTab=timebook'>" + c.name + "</a><br>" +
                                 "   <small>(" + c.subscriptionStartAndEndDate + ")</small><br>" +
+                                "   <input id='subscription-id'" +
+                                "       name='subscription-id'" + 
+                                "       type='hidden' value='" + c.latestSubscriptionTimebookId + "'" +
+                                "       />" +
                                 "   " + c.subscriptionTimebookEndDateLabel +
                                 "</td>" +
                                 "<td>" + c.subscriptionItem + "</td>" +
@@ -105,7 +108,6 @@
                             "</tr>";
                     });
                     $('#customer-list-body').html(customerList);
-                    //$('.spinner').hide();
                     init();
                 }
             });
@@ -113,10 +115,8 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
-            //$('.spinner').hide();
             init();
             $('.date').change(dateChange);
-
             var textGeneratedComments = $('#<%= textBoxComments.ClientID %>');
             $('#<%= textBoxText.ClientID %>').change(function () {
                 var text = $(this).val();
@@ -152,12 +152,12 @@
 
                 var customerId = textBoxStartDate.data('customerid');
 
-                if (startDate < customerSubscriptionStartDate || inTimebook(customerId, startDate)) {
+                /*if (startDate < customerSubscriptionStartDate || inTimebook(customerId, startDate)) {
                     $(this).closest('tr').addClass('danger');
                 } else {
                     $(this).closest('tr').removeClass('danger');
                     $(this).closest('tr').removeClass('warning');
-                }
+                }*/
                 var textBoxEndDate = $(this).closest('tr').find('.subscription-end-date');
                 var endDate = textBoxEndDate.datepicker('getDate');
                 var months = monthDiff(startDate, endDate);
