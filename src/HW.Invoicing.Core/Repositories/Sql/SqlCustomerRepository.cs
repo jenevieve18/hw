@@ -1203,10 +1203,11 @@ INNER JOIN Unit u on u.Id = i.UnitId
 WHERE c.HasSubscription = 1
 AND ISNULL(c.Inactive, 0) != 1
 AND c.CompanyId = @CompanyId
-AND MONTH(c.SubscriptionStartDate) <= @StartMonth
-AND YEAR(c.SubscriptionStartDate) <= @StartYear
-AND MONTH(c.SubscriptionEndDate) <= @EndMonth
-AND YEAR(c.SubscriptionEndDate) <= @EndYear
+--AND MONTH(c.SubscriptionStartDate) <= @StartMonth
+--AND YEAR(c.SubscriptionStartDate) <= @StartYear
+--AND MONTH(c.SubscriptionEndDate) <= @EndMonth
+--AND YEAR(c.SubscriptionEndDate) <= @EndYear
+AND c.SubscriptionStartDate BETWEEN @StartDate AND @EndDate
 ORDER BY c.Inactive, c.Name"
             );
             var customers = new List<Customer>();
@@ -1214,10 +1215,13 @@ ORDER BY c.Inactive, c.Name"
                 query,
                 "invoicing",
                 new SqlParameter("@CompanyId", companyId),
-                new SqlParameter("@StartMonth", startDate.Month),
+                new SqlParameter("@StartDate", startDate),
+                new SqlParameter("@EndDate", endDate)
+                /*new SqlParameter("@StartMonth", startDate.Month),
                 new SqlParameter("@StartYear", startDate.Year),
                 new SqlParameter("@EndMonth", endDate.Month),
-                new SqlParameter("@EndYear", endDate.Year)))
+                new SqlParameter("@EndYear", endDate.Year)*/
+            ))
             {
                 while (rs.Read())
                 {
