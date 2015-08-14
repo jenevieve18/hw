@@ -40,7 +40,7 @@
     </script>
     <script type="text/javascript">
         function dateChange() {
-            console.log('date change...');
+            console.log('date change on ' + $(this).val() + '...');
             $('.spinner').show();
             var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
             //alert(startDate);
@@ -115,6 +115,7 @@
         $(document).ready(function () {
             //$('.spinner').hide();
             init();
+            $('.date').change(dateChange);
         });
         function init() {
             $('.date, .subscription-start-date, .subscription-end-date').datepicker({
@@ -122,7 +123,6 @@
                 autoclose: true
             });
             $('.spinner').hide();
-            $('.date').change(dateChange);
             $('.subscription-date').change(function () {
                 var textBoxStartDate = $(this).closest('tr').find('.subscription-start-date');
                 var startDate = textBoxStartDate.datepicker('getDate');
@@ -332,11 +332,11 @@
         or go to <i><%= HtmlHelper.Anchor("customer list", "customers.aspx") %></i>
 </div>
 
-<br /><br /><br />
+<!--<br /><br /><br />
 <strong>Legends:</strong>
 <ul>
     <li><span class="label label-hastimebook">Row colored red</span> - customer has created a timebook.</li>
     <li><span class="label label-notimebook">Row colored white</span> - customer has either invoiced the timebook or ready to create a timebook.</li>
-</ul>
+</ul>-->
 
 </asp:Content>
