@@ -50,6 +50,7 @@ namespace HW.Invoicing
                     latestSubscriptionTimebookEndDate = eDate.ToString("yyyy-MM-dd"),
                     latestSubscriptionTimebookQuantity = c.GetLatestSubscriptionTimebookQuantity(sDate, eDate),
                     comments = c.GetLatestSubscriptionTimebookComments(sDate, eDate, generatedComments),
+                    subscriptionTimebookAvailability = c.GetSubscriptionTimebookAvailability(startDate)
             	};
             	customers.Add(cc);
             }

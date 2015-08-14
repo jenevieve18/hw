@@ -61,7 +61,7 @@
                     var customers = data.d;
                     $.each(customers, function (i, c) {
                         customerList += "" +
-                            "<tr>" +
+                            "<tr" + c.subscriptionTimebookAvailability + ">" +
                                 "<td>" +
                                 "   <a href='customershow.aspx?Id=" + c.id + "&SelectedTab=timebook'>" + c.name + "</a><br>" +
                                 "   <small>(" + c.subscriptionStartAndEndDate + ")</small><br>" +
@@ -266,9 +266,9 @@
     </thead>
     <tbody id="customer-list-body">
     <% foreach (var c in customers) { %>
-        <% int subscriptionId = c.GetLatestSubscriptionTimebookId(); %>
-        <!--<tr<%= c.GetSubscriptionTimebookAvailability(startDate) %>>-->
-        <tr>
+        <!--<% int subscriptionId = c.GetLatestSubscriptionTimebookId(); %>-->
+        <tr<%= c.GetSubscriptionTimebookAvailability(startDate) %>>
+        <!--<tr>-->
             <td>
                 <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id + "&SelectedTab=timebook") %><br />
                 <small>
