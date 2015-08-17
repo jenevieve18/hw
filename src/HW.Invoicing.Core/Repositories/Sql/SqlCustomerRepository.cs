@@ -991,7 +991,7 @@ LEFT OUTER JOIN CustomerContact c ON c.Id = t.CustomerContactId
 INNER JOIN Item i ON i.Id = t.ItemId
 INNER JOIN UNit u ON u.Id = i.UnitId
 WHERE t.CustomerId = @CustomerId
-ORDER BY Status, t.Date DESC"
+ORDER BY Status, t.Date DESC, t.Id DESC"
             );
 			var timebooks = new List<CustomerTimebook>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerId", customerId))) {
