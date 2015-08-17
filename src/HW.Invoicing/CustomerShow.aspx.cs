@@ -253,7 +253,7 @@ namespace HW.Invoicing
             prices = r.FindItems(id);
             contacts = r.FindContacts(id);
             timebooks = r.FindTimebooks(id);
-            timebookItems = ir.FindAllWithCustomerItems(id);
+            timebookItems = ir.FindAllWithCustomerItems(companyId, id);
             items = ir.FindByCompany(companyId);
             languages = lr.FindAll();
 

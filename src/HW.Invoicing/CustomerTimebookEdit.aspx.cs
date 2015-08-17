@@ -25,26 +25,36 @@ namespace HW.Invoicing
 
             id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
             customerId = ConvertHelper.ToInt32(Request.QueryString["CustomerId"]);
-            dropDownListTimebookItems.Items.Clear();
+            int companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
+            /*dropDownListTimebookItems.Items.Clear();
             foreach (var i in ir.FindAllWithCustomerItems(customerId))
             {
                 var li = new ListItem(i.Name, i.Id.ToString());
                 li.Attributes.Add("data-price", i.Price.ToString());
                 li.Attributes.Add("data-unit", i.Unit.Name);
                 dropDownListTimebookItems.Items.Add(li);
-            }
+            }*/
 
             if (!IsPostBack)
             {
-                dropDownListTimebookContacts.Items.Clear();
-                foreach (var c in r.FindContacts(customerId))
-                {
-                    dropDownListTimebookContacts.Items.Add(new ListItem(c.Contact, c.Id.ToString()));
-                }
-
                 var t = r.ReadTimebook(id);
                 if (t != null)
                 {
+                    dropDownListTimebookItems.Items.Clear();
+                    foreach (var i in ir.FindAllWithCustomerItems(companyId, customerId))
+                    {
+                        var li = new ListItem(i.Name, i.Id.ToString());
+                        li.Attributes.Add("data-price", i.Price.ToString());
+                        li.Attributes.Add("data-unit", i.Unit.Name);
+                        dropDownListTimebookItems.Items.Add(li);
+                    }
+
+                    dropDownListTimebookContacts.Items.Clear();
+                    foreach (var c in r.FindContacts(customerId))
+                    {
+                        dropDownListTimebookContacts.Items.Add(new ListItem(c.Contact, c.Id.ToString()));
+                    }
+
                     panelSubscriptionTimebook.Visible = t.IsSubscription;
                     panelTimebook.Visible = !panelSubscriptionTimebook.Visible;
                     if (t.IsSubscription)
@@ -69,6 +79,10 @@ namespace HW.Invoicing
                         checkBoxReactivate.Checked = !t.Inactive;
                         placeHolderReactivate.Visible = t.Inactive;
                     }
+                }
+                else
+                {
+                    Response.Redirect("customers.aspx");
                 }
             }
         }

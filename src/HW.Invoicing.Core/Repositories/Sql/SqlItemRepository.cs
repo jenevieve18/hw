@@ -140,7 +140,7 @@ ORDER BY i.Name"
 			return items;
 		}
 		
-		public IList<Item> FindAllWithCustomerItems(int customerId)
+		public IList<Item> FindAllWithCustomerItems(int companyId, int customerId)
 		{
 			string query = string.Format(
 				@"
@@ -152,10 +152,16 @@ SELECT i.Id,
     u.Name
 FROM Item i
 INNER JOIN Unit u ON u.Id = i.UnitId
+WHERE i.CompanyId = @CompanyId
 ORDER BY i.Name"
 			);
 			var items = new List<Item>();
-			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerId", customerId))) {
+			using (SqlDataReader rs = ExecuteReader(
+                query, 
+                "invoicing", 
+                new SqlParameter("@CustomerId", customerId),
+                new SqlParameter("@CompanyId", companyId)
+            )) {
 				while (rs.Read()) {
 					items.Add(
 						new Item {
