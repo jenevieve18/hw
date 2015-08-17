@@ -302,9 +302,9 @@
                             <td><%= n.CreatedAt.Value.ToString("yyyy-MM-dd H:mm:ss") %></td>
                             <td>
                                 <% if (n.CreatedBy.Color != "") { %>
-                                <span class="label" style="background:<%= n.CreatedBy.Color %>"><%= n.CreatedBy.Name %></span>
+                                    <span class="label" style="background:<%= n.CreatedBy.Color %>"><%= n.CreatedBy.Name %></span>
                                 <% } else { %>
-                                <span><%= n.CreatedBy.Name %></span>
+                                    <span><%= n.CreatedBy.Name %></span>
                                 <% } %>
                             </td>
                             <td><%= n.Notes %></td>
@@ -623,8 +623,8 @@
                             <td align="center"><%= t.GetStatus() %></td>
                             <td class="comments-width"><strike><%= t.Comments %></strike></td>
                             <td>
-                                <%= HtmlHelper.Anchor(" ", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id), "class='glyphicon glyphicon-edit'")%>
-                                <%= HtmlHelper.Anchor(" ", string.Format("customertimebookdelete.aspx?Id={0}&CustomerId={1}", t.Id, id), "class='glyphicon glyphicon-remove-circle' onclick=\"return confirm('Are you sure you want to delete this timebook?')\"")%>
+                                <%= HtmlHelper.Anchor(" ", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id), "title='Edit' class='glyphicon glyphicon-edit'")%>
+                                <%= HtmlHelper.Anchor(" ", string.Format("customertimebookdelete.aspx?Id={0}&CustomerId={1}", t.Id, id), "title='Delete' class='glyphicon glyphicon-remove-circle' onclick=\"return confirm('Are you sure you want to delete this timebook?')\"")%>
                             </td>
                         </tr>
                     <% } else { %>
@@ -663,8 +663,8 @@
                             <td class="comments-width"><%= t.Comments %></td>
                             <td>
                                 <% if (!t.IsPaid) { %>
-                                    <%= HtmlHelper.Anchor(" ", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id), "class='glyphicon glyphicon-edit'")%>
-                                    <%= HtmlHelper.Anchor(" ", string.Format("customertimebookdeactivate.aspx?Id={0}&CustomerId={1}", t.Id, id), "class='glyphicon glyphicon-minus'")%>
+                                    <%= HtmlHelper.Anchor(" ", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id), "title='Edit' class='glyphicon glyphicon-edit'")%>
+                                    <%= HtmlHelper.Anchor(" ", string.Format("customertimebookdeactivate.aspx?Id={0}&CustomerId={1}", t.Id, id), "title='Deactivate' class='glyphicon glyphicon-minus'")%>
                                 <% } %>
                             </td>
                         </tr>
