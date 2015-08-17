@@ -43,6 +43,16 @@ namespace HW.Invoicing.Core.Models
             return SubscriptionStartDate.Value.ToString("yyyy.MM.dd") + (SubscriptionHasEndDate ? " - " + SubscriptionEndDate.Value.ToString("yyyy.MM.dd") : "");
         }
 
+        public string GetSubscriptionStartDate()
+        {
+            return SubscriptionStartDate.Value.ToString("yyyy.MM.dd");
+        }
+
+        public string GetSubscriptionEndDate()
+        {
+            return SubscriptionEndDate.Value.ToString("yyyy.MM.dd");
+        }
+
         public string GetLatestSubscriptionTimebookEndDateLabel()
         {
             if (HasLatestSubscriptionTimebook)

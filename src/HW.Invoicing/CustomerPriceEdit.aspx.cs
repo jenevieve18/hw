@@ -23,10 +23,12 @@ namespace HW.Invoicing
 
             id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
             customerId = ConvertHelper.ToInt32(Request.QueryString["CustomerId"]);
+            int companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
             if (!IsPostBack)
             {
                 dropDownListItems.Items.Clear();
-                foreach (var i in ir.FindAll())
+                //foreach (var i in ir.FindAll())
+                foreach (var i in ir.FindByCompany(companyId))
                 {
                     dropDownListItems.Items.Add(new ListItem(i.Name, i.Id.ToString()));
                 }

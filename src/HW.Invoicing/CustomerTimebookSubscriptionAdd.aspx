@@ -60,20 +60,25 @@
                     var customerList = '';
                     var customers = data.d;
                     $.each(customers, function (i, c) {
+                        var strEndDate = '';
+                        if (c.subscriptionHasEndDate) {
+                            strEndDate = "<small>End: " + c.subscriptionEndDate + "</small><br>";
+                        }
                         customerList += "" +
                             "<tr" + c.subscriptionTimebookAvailability + ">" +
                                 "<td>" +
                                 "   <a href='customershow.aspx?Id=" + c.id + "&SelectedTab=timebook'>" + c.name + "</a><br>" +
-                                "   <small>(" + c.subscriptionStartAndEndDate + ")</small><br>" +
-                                "   " + c.subscriptionTimebookEndDateLabel +
+                                "   <small>Start: " + c.subscriptionStartDate + "</small><br>" +
+                                "   " + strEndDate +
+                                "   <small>Latest Timebook: " + c.subscriptionTimebookEndDateLabel + "</small>" +
                                 "   <input id='subscription-id'" +
                                 "       name='subscription-id'" +
                                 "       type='hidden' value='" + c.latestSubscriptionTimebookId + "'" +
                                 "       />" +
                                 "</td>" +
                                 "<td>" + c.subscriptionItem + "</td>" +
-                                "<td>" + c.subscriptionItemUnit + "</td>" +
-                                "<td>" + c.subscriptionItemPrice + "</td>" +
+                                "<td class='unit-width'>" + c.subscriptionItemUnit + "</td>" +
+                                "<td class='price-width'>" + c.subscriptionItemPrice + "</td>" +
                                 "<td class='date-width'>" +
                                 "   <input id='subscription-start-date'" +
                                 "       name='subscription-start-date'" +
@@ -197,6 +202,14 @@
         {
             width:300px;
         }
+        .unit-width 
+        {
+            width:60px;
+        }
+        .price-width 
+        {
+            width:50px;
+        }
     </style>
 
 </asp:Content>
@@ -256,8 +269,8 @@
         <tr>
             <th>Customer</th>
             <th>Subscription Item</th>
-            <th>Unit</th>
-            <th>Price</th>
+            <th class='unit-width'>Unit</th>
+            <th class='price-width'>Price</th>
             <th class='date-width'>Start Date</th>
             <th class='date-width'>End Date</th>
             <th class='quantity-width'>Qty</th>
@@ -268,20 +281,20 @@
     <% foreach (var c in customers) { %>
         <!--<% int subscriptionId = c.GetLatestSubscriptionTimebookId(); %>-->
         <tr<%= c.GetSubscriptionTimebookAvailability(startDate) %>>
-        <!--<tr>-->
             <td>
                 <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id + "&SelectedTab=timebook") %><br />
-                <small>
-                    (<%= c.GetSubscriptionStartAndEndDate() %>)
-                </small><br />
-                <%= c.GetLatestSubscriptionTimebookEndDateLabel() %>
+                <small>Start: <%= c.GetSubscriptionStartDate() %></small><br />
+                <% if (c.SubscriptionHasEndDate) { %>
+                    <small>End: <%= c.GetSubscriptionEndDate() %></small><br />
+                <% } %>
+                <small>Latest Timebook: <%= c.GetLatestSubscriptionTimebookEndDateLabel() %></small>
                 <input id="subscription-id"
                     name="subscription-id"
                     type="hidden" value="<%= c.GetLatestSubscriptionTimebookId() %>" />
             </td>
             <td><%= c.SubscriptionItem.Name %></td>
-            <td><%= c.SubscriptionItem.Unit.Name %></td>
-            <td><%= c.SubscriptionItem.Price.ToString("### ### ##0,00") %></td>
+            <td class='unit-width'><%= c.SubscriptionItem.Unit.Name %></td>
+            <td class='price-width'><%= c.SubscriptionItem.Price.ToString("### ### ##0,00") %></td>
             <% DateTime sDate = c.GetLatestSubscriptionTimebookStartDate(startDate); %>
             <td class='date-width'>
                 <input id="subscription-start-date"
