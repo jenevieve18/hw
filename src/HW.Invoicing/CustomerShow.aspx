@@ -235,6 +235,8 @@
 
 <h3><asp:Label ID="labelCustomer" runat="server" Text=""></asp:Label></h3>
 
+<p><%= HtmlHelper.Anchor("<< Back to customer listing", "customers.aspx") %></p>
+
 <div class="tabbable" id="tabs-179602">
 	<ul class="nav nav-tabs">
 	    <li <%= selectedTab == "notes" ? "class='active'" : "" %>><a href="#notes" data-toggle="tab">Note</a></li>
