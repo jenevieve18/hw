@@ -38,6 +38,10 @@ namespace HW.Invoicing
                 //labelInvoiceComments.Text = invoice.Comments;
 
             }
+            else
+            {
+                Response.Redirect("invoices.aspx");
+            }
 
             int companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
             company = cr.Read(companyId);

@@ -97,19 +97,19 @@
     <% decimal subTotal = 0; %>
     <% Dictionary<decimal, decimal> vats = new Dictionary<decimal, decimal>(); %>
     <% foreach (var t in invoice.Timebooks) { %>
-    <tr>
-        <td colspan="4"><%= t.Timebook.ToString() %></td>
-        <td><%= t.Timebook.Quantity %></td>
-        <td><%= t.Timebook.Item.Unit.Name %></td>
-        <td class="text-right"><%= t.Timebook.Price.ToString("### ### ##0.00") %></td>
-        <td class="text-right"><%= t.Timebook.Amount.ToString("### ### ##0.00") %></td>
-        <% subTotal += t.Timebook.Amount; %>
-        <% if (vats.ContainsKey(t.Timebook.VAT)) { %>
-            <% vats[t.Timebook.VAT] += t.Timebook.VATAmount; %>
-        <% } else { %>
-            <% vats[t.Timebook.VAT] = t.Timebook.VATAmount; %>
-        <% } %>
-    </tr>
+        <tr>
+            <td colspan="4"><%= t.Timebook.ToString() %></td>
+            <td><%= t.Timebook.Quantity.ToString("# ##0.00") %></td>
+            <td><%= t.Timebook.Item.Unit.Name %></td>
+            <td class="text-right"><%= t.Timebook.Price.ToString("### ### ##0.00") %></td>
+            <td class="text-right"><%= t.Timebook.Amount.ToString("### ### ##0.00") %></td>
+            <% subTotal += t.Timebook.Amount; %>
+            <% if (vats.ContainsKey(t.Timebook.VAT)) { %>
+                <% vats[t.Timebook.VAT] += t.Timebook.VATAmount; %>
+            <% } else { %>
+                <% vats[t.Timebook.VAT] = t.Timebook.VATAmount; %>
+            <% } %>
+        </tr>
     <% } %>
     </tbody>
 
