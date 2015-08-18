@@ -85,7 +85,7 @@ namespace HW.Invoicing.Core.Helpers
 			
 			if (invoice.VATs.ContainsKey(25))
 			{
-				form.SetField("Text11", 25.ToString());
+				form.SetField("Text11", 25.ToString("0.00"));
 				form.SetField("Text12", invoice.VATs[25].ToString("0.00"));
 			}
 			
@@ -126,8 +126,8 @@ namespace HW.Invoicing.Core.Helpers
 			
 			form.SetField("Text6B", invoice.Customer.ToString());
 			
-			form.SetField("Text10b", invoice.SubTotal.ToString());
-			form.SetField("Text13", invoice.TotalAmount.ToString());
+			form.SetField("Text10b", invoice.SubTotal.ToString("### ##0.00"));
+			form.SetField("Text13", invoice.TotalAmount.ToString("### ##0.00"));
 			
 			string items = "";
 			string quantities = "";
@@ -202,8 +202,8 @@ namespace HW.Invoicing.Core.Helpers
 				items += t.Timebook.ToString() + "\n\n";
 				quantities += t.Timebook.Quantity.ToString() + "\n\n";
 				units += t.Timebook.Item.Unit.Name + "\n\n";
-				prices += t.Timebook.Price.ToString("0.00") + "\n\n";
-				amounts += t.Timebook.Amount.ToString("0.00") + "\n\n";
+				prices += t.Timebook.Price.ToString("### ##0.00") + "\n\n";
+				amounts += t.Timebook.Amount.ToString("### ##0.00") + "\n\n";
 			}
 			form.SetField("Text7", items);
 			form.SetField("Text8", quantities);
@@ -214,7 +214,7 @@ namespace HW.Invoicing.Core.Helpers
 			if (invoice.VATs.ContainsKey(25))
 			{
 				form.SetField("Text11b", 25.ToString());
-				form.SetField("Text12", invoice.VATs[25].ToString("0.00"));
+				form.SetField("Text12", invoice.VATs[25].ToString("### ##0.00"));
 			}
 			
 			stamper.FormFlattening = true;
