@@ -24,12 +24,12 @@ namespace HW.Invoicing
             {
                 if (Request.Cookies["UserName"] != null && Request.Cookies["Password"] != null && Request.Cookies["RememberMe"] != null)
                 {
-                    textBoxName.Text = Request.Cookies["UserName"].Value;
-                    textBoxPassword.Text = Request.Cookies["Password"].Value;
+                    textBoxLoginName.Text = Request.Cookies["UserName"].Value;
+                    textBoxLoginPassword.Text = Request.Cookies["Password"].Value;
                     CheckBoxRememberMe.Checked = ConvertHelper.ToBoolean(Request.Cookies["RememberMe"].Value);
 
-                    textBoxName.Attributes.Add("value", Request.Cookies["UserName"].Value);
-                    textBoxPassword.Attributes.Add("value", Request.Cookies["Password"].Value);
+                    textBoxLoginName.Attributes.Add("value", Request.Cookies["UserName"].Value);
+                    textBoxLoginPassword.Attributes.Add("value", Request.Cookies["Password"].Value);
                 }
             }
         }
@@ -44,11 +44,11 @@ namespace HW.Invoicing
             {
                 Response.Cookies["UserName"].Expires = Response.Cookies["Password"].Expires = Response.Cookies["RememberMe"].Expires = DateTime.Now.AddDays(-1);
             }
-            Response.Cookies["UserName"].Value = textBoxName.Text.Trim();
-            Response.Cookies["Password"].Value = textBoxPassword.Text.Trim();
+            Response.Cookies["UserName"].Value = textBoxLoginName.Text.Trim();
+            Response.Cookies["Password"].Value = textBoxLoginPassword.Text.Trim();
             Response.Cookies["RememberMe"].Value = CheckBoxRememberMe.Checked.ToString();
 
-            var u = r.ReadByNameAndPassword(textBoxName.Text, textBoxPassword.Text);
+            var u = r.ReadByNameAndPassword(textBoxLoginName.Text, textBoxLoginPassword.Text);
             if (u != null)
             {
                 var c = cr.ReadSelectedCompanyByUser(u.Id);

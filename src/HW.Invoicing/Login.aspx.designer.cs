@@ -13,22 +13,22 @@ namespace HW.Invoicing {
     public partial class Login {
         
         /// <summary>
-        /// textBoxName control.
+        /// textBoxLoginName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxName;
+        protected global::System.Web.UI.WebControls.TextBox textBoxLoginName;
         
         /// <summary>
-        /// textBoxPassword control.
+        /// textBoxLoginPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxPassword;
+        protected global::System.Web.UI.WebControls.TextBox textBoxLoginPassword;
         
         /// <summary>
         /// CheckBoxRememberMe control.

@@ -15,12 +15,12 @@
         <% } %>
 
         <div class="form-group">
-	        <label for="<%= textBoxName.ClientID %>">User name</label>
-            <asp:TextBox ID="textBoxName" runat="server" CssClass="form-control"></asp:TextBox>
+	        <label for="<%= textBoxLoginName.ClientID %>">User name</label>
+            <asp:TextBox ID="textBoxLoginName" runat="server" CssClass="form-control"></asp:TextBox>
         </div>
         <div class="form-group">
-	        <label for="<%= textBoxPassword.ClientID %>">Password</label>
-            <asp:TextBox ID="textBoxPassword" runat="server" CssClass="form-control" TextMode="Password"></asp:TextBox>
+	        <label for="<%= textBoxLoginPassword.ClientID %>">Password</label>
+            <asp:TextBox ID="textBoxLoginPassword" runat="server" CssClass="form-control" TextMode="Password"></asp:TextBox>
         </div>
         <div class="form-group">
             <label>
