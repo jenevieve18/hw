@@ -9,6 +9,7 @@ using HW.Invoicing.Core.Models;
 using HW.Invoicing.Core.Repositories.Sql;
 using System.Web.Services;
 using System.Web.Script.Services;
+using System.Globalization;
 
 namespace HW.Invoicing
 {
@@ -150,7 +151,8 @@ namespace HW.Invoicing
                 Department = textBoxTimebookDepartment.Text,
                 Contact = new CustomerContact { Id = ConvertHelper.ToInt32(dropDownListTimebookContacts.SelectedValue) },
                 Item = new Item { Id = ConvertHelper.ToInt32(dropDownListTimebookItems.SelectedValue) },
-                Quantity = ConvertHelper.ToDecimal(textBoxTimebookQty.Text),
+                //Quantity = ConvertHelper.ToDecimal(textBoxTimebookQty.Text),
+                Quantity = ConvertHelper.ToDecimal(textBoxTimebookQty.Text, new CultureInfo("en-US")),
                 Price = ConvertHelper.ToDecimal(textBoxTimebookPrice.Text),
                 Consultant = textBoxTimebookConsultant.Text,
                 VAT = ConvertHelper.ToDecimal(textBoxTimebookVAT.Text),

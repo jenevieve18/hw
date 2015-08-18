@@ -22,6 +22,7 @@
         </td>
         <td>
             <%= HtmlHelper.Anchor("Edit", "companyedit.aspx?Id=" + c.Id) %>
+            <%= HtmlHelper.Anchor("Terms", "companyterms.aspx?Id=" + c.Id) %>
         </td>
     </tr>
     <% } %>
