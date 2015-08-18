@@ -33,7 +33,8 @@ namespace HW.Invoicing
 			var u = r.Read(id);
 			if (u != null) {
 				textBoxName.Text = u.Name;
-				textBoxPassword.Text = u.Password;
+				//textBoxPassword.Text = u.Password;
+                textBoxPassword.Attributes["value"] = u.Password;
                 textBoxColor.Text = u.Color;
 			}
 		}
@@ -41,7 +42,8 @@ namespace HW.Invoicing
 		protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
-
+            
+            //textBoxPassword.Attributes["type"] = "password";
 			Edit(ConvertHelper.ToInt32(Request.QueryString["UserID"]));
 		}
 
