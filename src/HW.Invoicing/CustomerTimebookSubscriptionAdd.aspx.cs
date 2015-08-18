@@ -27,12 +27,13 @@ namespace HW.Invoicing
         int companyId;
 
         [WebMethod]
-        public static List<object> FindActiveSubscribersByCompany(DateTime startDate, DateTime endDate)
+        public static List<object> FindActiveSubscribersByCompany(int companyId, DateTime startDate, DateTime endDate)
         {
             var generatedComments = string.Format("Subscription fee for HealthWatch.se {0} - {1}", startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"));
 
             var r = new SqlCustomerRepository();
-            var d = r.FindActiveSubscribersByCompany(1, startDate, endDate);
+            //var d = r.FindActiveSubscribersByCompany(1, startDate, endDate);
+            var d = r.FindActiveSubscribersByCompany(companyId, startDate, endDate);
             var customers = new List<object>();
             foreach (var c in d) {
                 var sDate = c.GetLatestSubscriptionTimebookStartDate(startDate);

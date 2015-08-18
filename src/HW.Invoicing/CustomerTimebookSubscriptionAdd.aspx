@@ -51,8 +51,7 @@
             $.ajax({
                 type: "POST",
                 url: "CustomerTimebookSubscriptionAdd.aspx/FindActiveSubscribersByCompany",
-                data: JSON.stringify({ startDate: $('#<%= textBoxStartDate.ClientID %>').val(), endDate: $('#<%= textBoxEndDate.ClientID %>').val() }),
-                //data: JSON.stringify({ startDate: startDate, endDate: endDate }),
+                data: JSON.stringify({ companyId: <%= Session["CompanyId"] %>, startDate: $('#<%= textBoxStartDate.ClientID %>').val(), endDate: $('#<%= textBoxEndDate.ClientID %>').val() }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
