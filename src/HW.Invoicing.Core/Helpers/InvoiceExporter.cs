@@ -190,8 +190,8 @@ namespace HW.Invoicing.Core.Helpers
 			
 			form.SetField("Text6B", invoice.Customer.ToString());
 			
-			form.SetField("Text10b", invoice.SubTotal.ToString("0.00"));
-			form.SetField("Text13", invoice.TotalAmount.ToString("0.00"));
+			form.SetField("Text10b", invoice.SubTotal.ToString("### ##0.00"));
+			form.SetField("Text13", invoice.TotalAmount.ToString("### ##0.00"));
 			
 			string items = "";
 			string quantities = "";
@@ -213,7 +213,7 @@ namespace HW.Invoicing.Core.Helpers
 			
 			if (invoice.VATs.ContainsKey(25))
 			{
-				form.SetField("Text11b", 25.ToString());
+				form.SetField("Text11b", 25.ToString("0.00"));
 				form.SetField("Text12", invoice.VATs[25].ToString("### ##0.00"));
 			}
 			
