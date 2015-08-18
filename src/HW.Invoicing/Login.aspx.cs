@@ -52,11 +52,15 @@ namespace HW.Invoicing
             if (u != null)
             {
                 var c = cr.ReadSelectedCompanyByUser(u.Id);
-                if (c != null)
+                if (c == null)
                 {
-                    Session["CompanyId"] = c.Id;
-                    Session["CompanyName"] = c.Name;
+                    //Session["CompanyId"] = c.Id;
+                    //Session["CompanyName"] = c.Name;
+                    c = cr.ReadFirstCompanyAndSelect(u.Id);
+                    cr.SelectCompany(c.Id);
                 }
+                Session["CompanyId"] = c.Id;
+                Session["CompanyName"] = c.Name;
                 Session["UserID"] = u.Id;
                 Session["UserName"] = u.Name;
                 if (Request.QueryString["r"] != null)

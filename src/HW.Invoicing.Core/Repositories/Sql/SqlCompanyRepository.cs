@@ -106,6 +106,42 @@ WHERE Id = @Id";
 			return c;
 		}
 
+        public Company ReadFirstCompanyAndSelect(int userId)
+        {
+            string query = @"
+SELECT TOP 1 Id,
+    Name,
+    Address,
+    Phone,
+    BankAccountNumber,
+    TIN,
+    FinancialMonthStart,
+    FinancialMonthEnd,
+    ISNULL(Selected, 0) IsSelected
+FROM Company
+WHERE UserId = @UserId
+ORDER BY Id";
+            Company c = null;
+            using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@UserId", userId)))
+            {
+                if (rs.Read())
+                {
+                    c = new Company
+                    {
+                        Id = GetInt32(rs, 0),
+                        Name = GetString(rs, 1),
+                        Address = GetString(rs, 2),
+                        Phone = GetString(rs, 3),
+                        BankAccountNumber = GetString(rs, 4),
+                        TIN = GetString(rs, 5),
+                        FinancialMonthStart = GetDateTime(rs, 6),
+                        FinancialMonthEnd = GetDateTime(rs, 7)
+                    };
+                }
+            }
+            return c;
+        }
+
         public Company ReadSelectedCompanyByUser(int userId)
         {
             string query = @"
