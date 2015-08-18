@@ -90,8 +90,10 @@ namespace HW.Invoicing
         protected void buttonSave_Click(object sender, EventArgs e)
         {
             decimal quantity = panelSubscriptionTimebook.Visible
-                ? ConvertHelper.ToDecimal(textBoxSubscriptionTimebookQuantity.Text, new CultureInfo("en-US"))
-                : ConvertHelper.ToDecimal(textBoxTimebookQty.Text, new CultureInfo("en-US"));
+                //? ConvertHelper.ToDecimal(textBoxSubscriptionTimebookQuantity.Text, new CultureInfo("en-US"))
+                //: ConvertHelper.ToDecimal(textBoxTimebookQty.Text, new CultureInfo("en-US"));
+                ? ConvertHelper.ToDecimal(textBoxSubscriptionTimebookQuantity.Text)
+                : ConvertHelper.ToDecimal(textBoxTimebookQty.Text);
             string comments = panelSubscriptionTimebook.Visible
                 ? textBoxSubscriptionTimebookComments.Text
                 : textBoxTimebookComments.Text;
