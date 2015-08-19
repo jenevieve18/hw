@@ -57,6 +57,8 @@ namespace HW.Invoicing
                     //Session["CompanyId"] = c.Id;
                     //Session["CompanyName"] = c.Name;
                     c = cr.ReadFirstCompanyAndSelect(u.Id);
+                    
+                    cr.UnselectByUser(u.Id);
                     cr.SelectCompany(c.Id);
                 }
                 Session["CompanyId"] = c.Id;
