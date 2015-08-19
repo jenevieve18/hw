@@ -22,9 +22,11 @@ namespace HW.Invoicing
 
             int id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
             r.SelectCompany(id);
+            
             var c = r.Read(id);
             Session["CompanyId"] = c.Id;
             Session["CompanyName"] = c.Name;
+
             Response.Redirect("dashboard.aspx");
         }
     }
