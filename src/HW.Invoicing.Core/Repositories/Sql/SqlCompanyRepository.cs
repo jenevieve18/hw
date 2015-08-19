@@ -28,7 +28,8 @@ WHERE Id = @Id";
         {
             string query = @"
 SELECT Id,
-Name
+Name,
+Terms
 FROM Company";
             var companies = new List<Company>();
             using (var rs = ExecuteReader(query, "invoicing"))
@@ -38,7 +39,8 @@ FROM Company";
                     companies.Add(
                         new Company {
                             Id = GetInt32(rs, 0),
-                            Name = GetString(rs, 1)
+                            Name = GetString(rs, 1),
+                            Terms = GetString(rs, 2)
                         }
                     );
                 }
@@ -80,7 +82,8 @@ SELECT Id,
     HasSubscriber,
     InvoiceLogo,
     InvoiceTemplate,
-    Terms
+    Terms,
+    Signature
 FROM Company
 WHERE Id = @Id";
 			Company c = null;
@@ -99,7 +102,8 @@ WHERE Id = @Id";
                         HasSubscriber = GetInt32(rs, 9) == 1,
                         InvoiceLogo = GetString(rs, 10),
                         InvoiceTemplate = GetString(rs, 11),
-                        Terms = GetString(rs, 12)
+                        Terms = GetString(rs, 12),
+                        Signature = GetString(rs, 13)
 					};
 				}
 			}
@@ -198,7 +202,8 @@ UPDATE Company set Name = @Name,
     InvoicePrefix = @InvoicePrefix,
     HasSubscriber = @HasSubscriber,
     InvoiceLogo = @InvoiceLogo,
-    InvoiceTemplate = @InvoiceTemplate
+    InvoiceTemplate = @InvoiceTemplate,
+    Signature = @Signature
 WHERE Id = @Id";
 			ExecuteNonQuery(
 				query,
@@ -214,7 +219,8 @@ WHERE Id = @Id";
 				new SqlParameter("@Id", id),
                 new SqlParameter("@HasSubscriber", t.HasSubscriber),
                 new SqlParameter("@InvoiceLogo", t.InvoiceLogo),
-                new SqlParameter("@InvoiceTemplate", t.InvoiceTemplate)
+                new SqlParameter("@InvoiceTemplate", t.InvoiceTemplate),
+                new SqlParameter("@Signature", t.Signature)
 			);
 		}
 	}

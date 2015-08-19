@@ -35,8 +35,12 @@ namespace HW.Invoicing
                     textBoxFinancialMonthEnd.Text = company.FinancialMonthEnd.Value.ToString("yyyy-MM-dd");
                     textBoxInvoicePrefix.Text = company.InvoicePrefix;
                     checkBoxHasSubscriber.Checked = company.HasSubscriber;
-                    
+
                     textBoxTerms.Text = company.Terms;
+                }
+                else
+                {
+                    Response.Redirect("companies.aspx");
                 }
             }
         }
@@ -49,6 +53,16 @@ namespace HW.Invoicing
 
         protected void buttonSave_Click(object sender, EventArgs e)
         {
+            string signature;
+            if (fileUploadSignature.HasFile)
+            {
+                signature = fileUploadSignature.FileName;
+                fileUploadSignature.SaveAs(Server.MapPath("~/uploads/" + signature));
+            }
+            else
+            {
+                signature = company.Signature;
+            }
             string logo;
             if (fileUploadInvoiceLogo.HasFile)
             {
@@ -80,7 +94,8 @@ namespace HW.Invoicing
                 InvoicePrefix = textBoxInvoicePrefix.Text,
                 HasSubscriber = checkBoxHasSubscriber.Checked,
                 InvoiceLogo = logo,
-                InvoiceTemplate = template
+                InvoiceTemplate = template,
+                Signature = signature
             };
             r.Update(c, id);
             Response.Redirect("companies.aspx");

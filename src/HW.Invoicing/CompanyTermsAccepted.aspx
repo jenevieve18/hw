@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CompanyTerms.aspx.cs" Inherits="HW.Invoicing.CompanyTerms" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CompanyTermsAccepted.aspx.cs" Inherits="HW.Invoicing.CompanyTermsAccepted" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
 <!DOCTYPE html>
 
@@ -87,8 +87,8 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div class="container">
-
+    <div>
+    
         <img src="uploads/<%= company.InvoiceLogo %>" />
         <table style="width:100%;" cellpadding="3">
             <tr>
@@ -97,10 +97,12 @@
             </tr>
             <tr>
                 <td>
-                    <asp:TextBox ID="TextBox12" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
+                    <%--<asp:TextBox ID="TextBox12" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>--%>
+                    <%= Session["TextBox12"]%>
                 </td>
                 <td>
-                    <asp:TextBox ID="TextBox13" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
+                    <%--<asp:TextBox ID="TextBox13" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>--%>
+                    <%= Session["TextBox13"]%>
                 </td>
             </tr>
         </table>
@@ -110,68 +112,85 @@
             <tr>
                 <td class="label-width"><b>Föreläsare:</b></td>
                 <td colspan="3">
-                    <asp:TextBox ID="TextBox2" CssClass="form-control" runat="server"></asp:TextBox>
+                    <%--<asp:TextBox ID="TextBox2" CssClass="form-control" runat="server"></asp:TextBox>--%>
+                    <%= Session["TextBox2"]%>
                 </td>
             </tr>
             <tr>
                 <td><b>Datum för föreläsningen:</b></td>
                 <td colspan="3">
-                    <asp:TextBox ID="TextBox3" CssClass="form-control" runat="server"></asp:TextBox>
+                    <%--<asp:TextBox ID="TextBox3" CssClass="form-control" runat="server"></asp:TextBox>--%>
+                    <%= Session["TextBox3"]%>
                 </td>
             </tr>
             <tr>
                 <td><b>Speltid:</b></td>
-                <td colspan="3"><asp:TextBox ID="TextBox4" CssClass="form-control" runat="server"></asp:TextBox></td>
+                <td colspan="3">
+                    <%--<asp:TextBox ID="TextBox4" CssClass="form-control" runat="server"></asp:TextBox>--%>
+                    <%= Session["TextBox4"]%>
+                </td>
             </tr>
             <tr>
                 <td><b>Föreläsningstitel:</b></td>
                 <td colspan="3">
-                    <asp:TextBox ID="TextBox5" CssClass="form-control" runat="server"></asp:TextBox>
+                    <%--<asp:TextBox ID="TextBox5" CssClass="form-control" runat="server"></asp:TextBox>--%>
+                    <%= Session["TextBox5"]%>
                 </td>
             </tr>
             <tr>
                 <td><b>Plats:</b></td>
                 <td colspan="3">
-                    <asp:TextBox ID="TextBox6" CssClass="form-control" runat="server"></asp:TextBox>
+                    <%--<asp:TextBox ID="TextBox6" CssClass="form-control" runat="server"></asp:TextBox>--%>
+                    <%= Session["TextBox6"]%>
                 </td>
             </tr>
             <tr>
                 <td><b>Kontaktperson:</b></td>
                 <td>
-                    <asp:TextBox ID="TextBox7" CssClass="form-control" runat="server"></asp:TextBox>
+                    <%--<asp:TextBox ID="TextBox7" CssClass="form-control" runat="server"></asp:TextBox>--%>
+                    <%= Session["TextBox7"]%>
                 </td>
                 <td><b>Mobil:</b></td>
                 <td>
-                    <asp:TextBox ID="TextBox14" CssClass="form-control" runat="server"></asp:TextBox>
+                    <%--<asp:TextBox ID="TextBox14" CssClass="form-control" runat="server"></asp:TextBox>--%>
+                    <%= Session["TextBox14"]%>
                 </td>
             </tr>
             <tr>
                 <td><b>E-post kontaktperson:</b></td>
-                <td colspan="3"><asp:TextBox ID="TextBox8" CssClass="form-control" runat="server"></asp:TextBox></td>
+                <td colspan="3">
+                    <%--<asp:TextBox ID="TextBox8" CssClass="form-control" runat="server"></asp:TextBox>--%>
+                    <%= Session["TextBox8"]%>
+                </td>
             </tr>
             <tr>
                 <td><b>Ersättning:</b></td>
                 <td colspan="3">
-                    <asp:TextBox ID="TextBox9" CssClass="form-control" runat="server"></asp:TextBox>
+                    <%--<asp:TextBox ID="TextBox9" CssClass="form-control" runat="server"></asp:TextBox>--%>
+                    <%= Session["TextBox9"]%>
                 </td>
             </tr>
             <tr>
                 <td><b>Betalningsvillkor:</b></td>
                 <td colspan="3">
-                    <asp:TextBox ID="TextBox10" CssClass="form-control" runat="server"></asp:TextBox>
+                    <%--<asp:TextBox ID="TextBox10" CssClass="form-control" runat="server"></asp:TextBox>--%>
+                    <%= Session["TextBox10"]%>
                 </td>
             </tr>
             <tr>
                 <td><b>Faktureringsadress och eventuellt referensnummer:</b></td>
                 <td colspan="3">
-                    <asp:TextBox ID="TextBox11" CssClass="form-control" runat="server"></asp:TextBox>
+                    <%--<asp:TextBox ID="TextBox11" CssClass="form-control" runat="server"></asp:TextBox>--%>
+                    <%= Session["TextBox11"]%>
                 </td>
             </tr>
         </table>
 
         <br />
-        <p><b>Övrig information</b><br />
-        <asp:TextBox ID="TextBox1" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox><br />
+        <p>
+            <b>Övrig information</b><br />
+            <%--<asp:TextBox ID="TextBox1" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox><br />--%>
+            <%= Session["TextBox1"]%>
         </p>
         
         <p>Detta engagemangavtal (Huvudavtal) är en skriftlig bekräftelse på en redan muntlig överenskommelse mellan ovan nämnda Agentur och Kund. Detta Huvudavtal skall tillsammans med tillhörande bilaga returneras till Agenturen inom 14 dagar från att beställningen gjorts. Vid engagemangsdatum inom 14 dagar från beställningen krävs omgående retur till Agenturen.</p>
@@ -205,10 +224,11 @@
         <br />
 
         <%= company.Terms.Replace("\n", "<br>") %>
-
+                
         <br />
         <p>
-            <asp:Button ID="buttonNext" runat="server" Text="Next, proceed to contract preview >>" CssClass="btn btn-success" OnClick="buttonNextClick" />
+            <asp:Button ID="buttonBack" runat="server" Text="<< Back to edit contract" CssClass="btn btn-warning" OnClick="buttonBackClick" />
+            <asp:Button ID="buttonNext" runat="server" Text="Finish >>" CssClass="btn btn-success" OnClick="buttonNextClick" />
         </p>
 
     </div>

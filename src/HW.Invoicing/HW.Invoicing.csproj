@@ -60,6 +60,8 @@
     <Content Include="CompanyAdd.aspx" />
     <Content Include="CompanyEdit.aspx" />
     <Content Include="CompanySelect.aspx" />
+    <Content Include="CompanyTermsAccepted.aspx" />
+    <Content Include="CompanyTermsThanks.aspx" />
     <Content Include="CustomerTimebookSubscriptionAdd.aspx" />
     <Content Include="css\style.css" />
     <Content Include="CustomerAdd.aspx" />
@@ -155,6 +157,20 @@
     </Compile>
     <Compile Include="CompanySelect.aspx.designer.cs">
       <DependentUpon>CompanySelect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CompanyTermsAccepted.aspx.cs">
+      <DependentUpon>CompanyTermsAccepted.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CompanyTermsAccepted.aspx.designer.cs">
+      <DependentUpon>CompanyTermsAccepted.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CompanyTermsThanks.aspx.cs">
+      <DependentUpon>CompanyTermsThanks.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CompanyTermsThanks.aspx.designer.cs">
+      <DependentUpon>CompanyTermsThanks.aspx</DependentUpon>
     </Compile>
     <Compile Include="CustomerTimebookSubscriptionAdd.aspx.cs">
       <DependentUpon>CustomerTimebookSubscriptionAdd.aspx</DependentUpon>

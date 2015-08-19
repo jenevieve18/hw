@@ -17,6 +17,17 @@ namespace HW.Invoicing.Core.Models
         public string InvoiceLogo { get; set; }
         public string InvoiceTemplate { get; set; }
         public string Terms { get; set; }
+        public string Signature { get; set; }
+
+        public bool HasSignature
+        {
+            get { return Signature != null && Signature != "";  }
+        }
+        
+        public bool HasTerms
+        {
+        	get { return Terms != null && Terms != ""; }
+        }
 
         public bool HasInvoiceTemplate
         {

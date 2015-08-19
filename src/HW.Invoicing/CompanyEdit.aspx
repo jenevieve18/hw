@@ -52,6 +52,13 @@
                 <asp:TextBox ID="textBoxTIN" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="form-group">
+                <label for="<%= fileUploadSignature.ClientID %>">Signature</label>
+                <% if (company.HasSignature) { %>
+                    <br /><img src="uploads/<%= company.Signature %>" />
+                <% } %>
+                <asp:FileUpload ID="fileUploadSignature" runat="server" />
+            </div>
+            <div class="form-group">
 	            <label for="<%= textBoxFinancialMonthStart.ClientID %>">Start Financial Month</label>
                 <asp:TextBox ID="textBoxFinancialMonthStart" runat="server" CssClass="date form-control"></asp:TextBox>
             </div>
