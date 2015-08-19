@@ -106,7 +106,7 @@ WHERE Id = @Id";
 			return c;
 		}
 
-        public Company ReadFirstCompanyAndSelect(int userId)
+        public Company ReadFirstCompany(int userId)
         {
             string query = @"
 SELECT TOP 1 Id,
