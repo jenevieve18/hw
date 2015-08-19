@@ -92,32 +92,35 @@ namespace HW.Invoicing.Core.Models
 
 		public void AddTimebook(string[] timebooks)
 		{
-			foreach (var t in timebooks)
-			{
-				var s = t.Split('|');
-				if (s.Length > 1)
-				{
-					AddTimebook(
-						new InvoiceTimebook
-						{
-							Timebook = new CustomerTimebook
-							{
-								Id = ConvertHelper.ToInt32(s[0]),
-								Customer = new Customer { Id = ConvertHelper.ToInt32(s[1]) },
-								Item = new Item { Id = ConvertHelper.ToInt32(s[2]) },
-								Price = ConvertHelper.ToDecimal(s[3]),
-								VAT = ConvertHelper.ToDecimal(s[4]),
-								Quantity = ConvertHelper.ToDecimal(s[5]),
-								Comments = s[6]
-							}
-						}
-					);
-				}
-				else
-				{
-					AddTimebook(ConvertHelper.ToInt32(t));
-				}
-			}
+            if (timebooks != null)
+            {
+                foreach (var t in timebooks)
+                {
+                    var s = t.Split('|');
+                    if (s.Length > 1)
+                    {
+                        AddTimebook(
+                            new InvoiceTimebook
+                            {
+                                Timebook = new CustomerTimebook
+                                {
+                                    Id = ConvertHelper.ToInt32(s[0]),
+                                    Customer = new Customer { Id = ConvertHelper.ToInt32(s[1]) },
+                                    Item = new Item { Id = ConvertHelper.ToInt32(s[2]) },
+                                    Price = ConvertHelper.ToDecimal(s[3]),
+                                    VAT = ConvertHelper.ToDecimal(s[4]),
+                                    Quantity = ConvertHelper.ToDecimal(s[5]),
+                                    Comments = s[6]
+                                }
+                            }
+                        );
+                    }
+                    else
+                    {
+                        AddTimebook(ConvertHelper.ToInt32(t));
+                    }
+                }
+            }
 		}
 		
 		public void AddTimebook(int id)

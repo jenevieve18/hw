@@ -90,35 +90,50 @@
     <div class="container">
 
         <img src="uploads/<%= company.InvoiceLogo %>" />
+        <table class="table">
+            <tr>
+                <td><b>Kund (Ange: Företagsnamn, Postadress och Org.nr)</b></td>
+                <td><b>Agentur</b></td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:TextBox ID="TextBox12" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox></td>
+                <td><asp:TextBox ID="TextBox13" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox></td>
+            </tr>
+        </table>
         <p></p>
+        <p>Mellan ovanstående parter har avtal om engagemang träffats enligt följande:</p>
         <table class="table">
             <tr>
                 <td class="label-width"><b>Föreläsare:</b></td>
-                <td>
+                <td colspan="3">
                     <asp:TextBox ID="TextBox2" CssClass="form-control" runat="server"></asp:TextBox></td>
             </tr>
             <tr>
                 <td><b>Datum för föreläsningen:</b></td>
-                <td><asp:TextBox ID="TextBox3" CssClass="form-control" runat="server"></asp:TextBox></td>
+                <td colspan="3"><asp:TextBox ID="TextBox3" CssClass="form-control" runat="server"></asp:TextBox></td>
             </tr>
             <tr>
                 <td><b>Speltid:</b></td>
-                <td><asp:TextBox ID="TextBox4" CssClass="form-control" runat="server"></asp:TextBox></td>
+                <td colspan="3"><asp:TextBox ID="TextBox4" CssClass="form-control" runat="server"></asp:TextBox></td>
             </tr>
             <tr>
                 <td><b>Föreläsningstitel:</b></td>
-                <td><asp:TextBox ID="TextBox5" CssClass="form-control" runat="server"></asp:TextBox></td>
+                <td colspan="3"><asp:TextBox ID="TextBox5" CssClass="form-control" runat="server"></asp:TextBox></td>
             </tr>
             <tr>
                 <td><b>Plats:</b></td>
-                <td><asp:TextBox ID="TextBox6" CssClass="form-control" runat="server"></asp:TextBox></td>
+                <td colspan="3"><asp:TextBox ID="TextBox6" CssClass="form-control" runat="server"></asp:TextBox></td>
             </tr>
             <tr>
                 <td><b>Kontaktperson:</b></td>
                 <td><asp:TextBox ID="TextBox7" CssClass="form-control" runat="server"></asp:TextBox></td>
+                <td><b>Mobil:</b></td>
+                <td>
+                    <asp:TextBox ID="TextBox14" runat="server"></asp:TextBox></td>
             </tr>
             <tr>
-                <td><b>E-post kontaktperson:</b></td>
+                <td colspan="3"><b>E-post kontaktperson:</b></td>
                 <td><asp:TextBox ID="TextBox8" CssClass="form-control" runat="server"></asp:TextBox></td>
             </tr>
             <tr>
