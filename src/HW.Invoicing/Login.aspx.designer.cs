@@ -31,13 +31,13 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxLoginPassword;
         
         /// <summary>
-        /// CheckBoxRememberMe control.
+        /// checkBoxRememberMe control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox CheckBoxRememberMe;
+        protected global::System.Web.UI.WebControls.CheckBox checkBoxRememberMe;
         
         /// <summary>
         /// buttonLogin control.

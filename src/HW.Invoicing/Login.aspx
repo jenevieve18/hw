@@ -24,7 +24,7 @@
         </div>
         <div class="form-group">
             <label>
-                <asp:CheckBox ID="CheckBoxRememberMe" runat="server" />
+                <asp:CheckBox ID="checkBoxRememberMe" runat="server" />
                 Remember me
             </label>
         </div>

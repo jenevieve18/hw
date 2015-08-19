@@ -26,7 +26,7 @@ namespace HW.Invoicing
                 {
                     textBoxLoginName.Text = Request.Cookies["UserName"].Value;
                     textBoxLoginPassword.Text = Request.Cookies["Password"].Value;
-                    CheckBoxRememberMe.Checked = ConvertHelper.ToBoolean(Request.Cookies["RememberMe"].Value);
+                    checkBoxRememberMe.Checked = ConvertHelper.ToBoolean(Request.Cookies["RememberMe"].Value);
 
                     textBoxLoginName.Attributes.Add("value", Request.Cookies["UserName"].Value);
                     textBoxLoginPassword.Attributes.Add("value", Request.Cookies["Password"].Value);
@@ -36,7 +36,7 @@ namespace HW.Invoicing
 
         protected void buttonLogin_Click(object sender, EventArgs e)
         {
-            if (CheckBoxRememberMe.Checked)
+            if (checkBoxRememberMe.Checked)
             {
                 Response.Cookies["UserName"].Expires = Response.Cookies["Password"].Expires = Response.Cookies["RememberMe"].Expires = DateTime.Now.AddDays(30);
             }
@@ -46,7 +46,7 @@ namespace HW.Invoicing
             }
             Response.Cookies["UserName"].Value = textBoxLoginName.Text.Trim();
             Response.Cookies["Password"].Value = textBoxLoginPassword.Text.Trim();
-            Response.Cookies["RememberMe"].Value = CheckBoxRememberMe.Checked.ToString();
+            Response.Cookies["RememberMe"].Value = checkBoxRememberMe.Checked.ToString();
 
             var u = r.ReadByNameAndPassword(textBoxLoginName.Text, textBoxLoginPassword.Text);
             if (u != null)
