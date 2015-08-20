@@ -87,7 +87,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
+    <div class="container">
     
         <img src="uploads/<%= company.InvoiceLogo %>" />
         <table style="width:100%;" cellpadding="3">
@@ -204,7 +204,7 @@
 
         <table style="width:100%" cellpadding="3">
             <tr>
-                <td>Ort och Datum</td>
+                <td colspan="3">Ort och Datum</td>
             </tr>
             <tr>
                 <td>Signatur</td>

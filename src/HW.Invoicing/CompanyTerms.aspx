@@ -89,7 +89,12 @@
     <form id="form1" runat="server">
     <div class="container">
 
-        <img src="uploads/<%= company.InvoiceLogo %>" />
+        <table style="width:100%">
+            <tr>
+                <td valign="bottom"><img src="uploads/<%= company.InvoiceLogo %>" /></td>
+                <td valign="bottom"><b>Engagemangsavtal nummer HCGE-</b></td>
+            </tr>
+        </table>
         <table style="width:100%;" cellpadding="3">
             <tr>
                 <td><b>Kund (Ange: Företagsnamn, Postadress och Org.nr)</b></td>
