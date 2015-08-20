@@ -18,6 +18,7 @@ namespace HW.Invoicing
         protected int customerId;
         protected int id;
         protected string message;
+        IList<Item> items;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -26,22 +27,15 @@ namespace HW.Invoicing
             id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
             customerId = ConvertHelper.ToInt32(Request.QueryString["CustomerId"]);
             int companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
-            /*dropDownListTimebookItems.Items.Clear();
-            foreach (var i in ir.FindAllWithCustomerItems(customerId))
-            {
-                var li = new ListItem(i.Name, i.Id.ToString());
-                li.Attributes.Add("data-price", i.Price.ToString());
-                li.Attributes.Add("data-unit", i.Unit.Name);
-                dropDownListTimebookItems.Items.Add(li);
-            }*/
-
+            items = ir.FindAllWithCustomerItems(companyId, customerId);
+            
             if (!IsPostBack)
             {
                 var t = r.ReadTimebook(id);
                 if (t != null)
                 {
                     dropDownListTimebookItems.Items.Clear();
-                    foreach (var i in ir.FindAllWithCustomerItems(companyId, customerId))
+                    foreach (var i in items)
                     {
                         var li = new ListItem(i.Name, i.Id.ToString());
                         li.Attributes.Add("data-price", i.Price.ToString());
@@ -90,8 +84,6 @@ namespace HW.Invoicing
         protected void buttonSave_Click(object sender, EventArgs e)
         {
             decimal quantity = panelSubscriptionTimebook.Visible
-                //? ConvertHelper.ToDecimal(textBoxSubscriptionTimebookQuantity.Text, new CultureInfo("en-US"))
-                //: ConvertHelper.ToDecimal(textBoxTimebookQty.Text, new CultureInfo("en-US"));
                 ? ConvertHelper.ToDecimal(textBoxSubscriptionTimebookQuantity.Text)
                 : ConvertHelper.ToDecimal(textBoxTimebookQty.Text);
             string comments = panelSubscriptionTimebook.Visible
@@ -124,7 +116,6 @@ namespace HW.Invoicing
             {
                 t.Validate();
             }
-            //t.Validate();
             if (!t.HasErrors)
             {
                 if (panelSubscriptionTimebook.Visible)
@@ -140,6 +131,17 @@ namespace HW.Invoicing
             else
             {
                 message = t.Errors.ToHtmlUl();
+                var selectedValue = dropDownListTimebookItems.SelectedValue;
+                // HACK: This is for javascript when reflecting changes of the price and unit textboxes.
+                dropDownListTimebookItems.Items.Clear();
+                foreach (var i in items)
+                {
+                    var li = new ListItem(i.Name, i.Id.ToString());
+                    li.Attributes.Add("data-price", i.Price.ToString());
+                    li.Attributes.Add("data-unit", i.Unit.Name);
+                    dropDownListTimebookItems.Items.Add(li);
+                }
+                dropDownListTimebookItems.SelectedValue = selectedValue;
             }
         }
     }
