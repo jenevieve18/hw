@@ -14,13 +14,19 @@ namespace HW.Invoicing
     {
         SqlCompanyRepository r = new SqlCompanyRepository();
         protected Company company;
+        SqlCustomerRepository cr = new SqlCustomerRepository();
+        Customer customer;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             company = r.Read(ConvertHelper.ToInt32(Request["Id"]));
-            if (company == null)
+            HtmlHelper.RedirectIf(company == null, "companies.aspx");
+
+            customer = cr.Read(ConvertHelper.ToInt32(Request["CustomerId"]));
+            
+            if (customer != null)
             {
-                Response.Redirect("companies.aspx");
+
             }
         }
 

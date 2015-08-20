@@ -183,9 +183,9 @@
 
         <b>Övriga villkor och önskemål</b>
         <ol>
-        <li>Inga ändringar får göras i detta avtal efter utskrift.</li>
-        <li>Teknik: Föreläsaren tar med sig egen dator (Mac) och behöver tillgång till projektor med VGA-, Thunderbolt- eller HDMI-sladd. Headsetmikrofon och ljudsladd till datorn så att ljud kan spelas upp därifrån önskas.</li>
-        <li>Till detta Huvudavtal tillkommer, förutom Rider, även tillhörande bilaga om Avtalsvillkor. Genom undertecknandet av detta Huvudavtal godkänner Parterna, förutom Huvudavtalet, även tillhörande Avtalsvillkor.</li>
+            <li>Inga ändringar får göras i detta avtal efter utskrift.</li>
+            <li>Teknik: Föreläsaren tar med sig egen dator (Mac) och behöver tillgång till projektor med VGA-, Thunderbolt- eller HDMI-sladd. Headsetmikrofon och ljudsladd till datorn så att ljud kan spelas upp därifrån önskas.</li>
+            <li>Till detta Huvudavtal tillkommer, förutom Rider, även tillhörande bilaga om Avtalsvillkor. Genom undertecknandet av detta Huvudavtal godkänner Parterna, förutom Huvudavtalet, även tillhörande Avtalsvillkor.</li>
         </ol>
 
         <table style="width:100%" cellpadding="3">
