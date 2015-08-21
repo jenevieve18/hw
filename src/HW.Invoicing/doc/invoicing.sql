@@ -266,3 +266,5 @@ alter table CustomerTimebook alter column Quantity decimal(16, 2);
 alter table Company add Terms text;
 
 alter table Company add Signature varchar(255);
+
+alter table Company add AgreementEmailText text;

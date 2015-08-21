@@ -90,6 +90,12 @@ namespace HW.Invoicing.Core.Models
 			}
 		}
 
+        public override void Validate()
+        {
+            base.Validate();
+            AddErrorIf(Timebooks.Count <= 0, "There should be at least one timebook in an invoice.");
+        }
+
 		public void AddTimebook(string[] timebooks)
 		{
             if (timebooks != null)

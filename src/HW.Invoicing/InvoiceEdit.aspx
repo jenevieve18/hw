@@ -141,6 +141,11 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <h3>Edit an invoice</h3>
+    <% if (message != null && message != "") { %>
+    <div class="alert alert-warning">
+        <%= message %>
+    </div>
+    <% } %>
     
     <table width="100%" cellpadding="5px">
         <tr>
@@ -161,7 +166,6 @@
             <td class="hw-border-top">
                 <strong>
                     <%= HtmlHelper.Anchor(invoice.Customer.Number, string.Format("customershow.aspx?Id={0}&SelectedTab=customer-info", invoice.Customer.Id)) %>
-                    <!-- <asp:Label ID="labelInvoiceCustomerNumber" runat="server" Text=""></asp:Label> -->
                 </strong>
             </td>
         </tr>
@@ -179,21 +183,18 @@
             <td class="hw-border-top">Invoice Date</td>
             <td class="hw-border-top">
                 <asp:TextBox ID="textBoxInvoiceDate" runat="server" CssClass="form-control"></asp:TextBox>
-                <!--<strong>
-                    <%= DateTime.Now.ToString("yyyy-MM-dd") %>
-                </strong>-->
             </td>
         </tr>
         <tr>
             <td>
                 <small><strong>Customer/Postal Address/Invoice Address</strong></small>
-                
             </td>
             <td></td>
             <td style="vertical-align: top" class="hw-border-top">Maturity Date</td>
             <td style="vertical-align: top" class="hw-border-top">
                 <strong>
-                    <asp:Label ID="labelMaturityDate" runat="server" Text=""></asp:Label></strong>
+                    <asp:Label ID="labelMaturityDate" runat="server" Text=""></asp:Label>
+                </strong>
             </td>
         </tr>
         <tr>
@@ -205,17 +206,23 @@
             <td></td>
             <td colspan="2">
                 <small>
-                    Your Reference: <strong>
-                        <asp:Label ID="labelInvoiceYourReferencePerson" runat="server" Text=""></asp:Label><!--First Name + Surname--></strong><br />
-                    Our Reference: <strong>
-                        <asp:Label ID="labelInvoiceOurReferencePerson" runat="server" Text=""></asp:Label><!--Dan Hasson--></strong>
+                    Your Reference:
+                        <strong>
+                            <asp:Label ID="labelInvoiceYourReferencePerson" runat="server" Text=""></asp:Label>
+                        </strong><br />
+                    Our Reference:
+                        <strong>
+                            <asp:Label ID="labelInvoiceOurReferencePerson" runat="server" Text=""></asp:Label>
+                        </strong>
                 </small>
             </td>
         </tr>
         <tr>
             <td>
-                <strong>Purchase order number: 
-                    <asp:Label ID="labelInvoicePurchaseOrderNumber" runat="server" Text="Label"></asp:Label><!--XX6279292--></strong>
+                <strong>
+                    Purchase order number: 
+                    <asp:Label ID="labelInvoicePurchaseOrderNumber" runat="server" Text="Label"></asp:Label>
+                </strong>
             </td>
             <td></td>
             <td></td>
@@ -227,106 +234,90 @@
                             
     <table class="hw-invoice-items" cellpadding="5px">
         <thead>
-        <tr class="hw-invoice-header">
-            <td class="hw-border-left" style="width:16px">
-                <input type="checkbox" id="checkbox-timebook-all" />
-            </td>
-            <td class="hw-border-left" colspan="3"><%= HtmlHelper.Anchor("Item", string.Format("customershow.aspx?Id={0}&SelectedTab=timebook", invoice.Customer.Id)) %></td>
-            <td class="hw-border-left" style="width:10%">Qty</td>
-            <td class="hw-border-left" style="width:10%">Unit</td>
-            <td class="hw-border-left" style="width:10%">Price/Unit</td>
-            <td class="hw-border-last" style="width:10%">Amount</td>
-        </tr>
+            <tr class="hw-invoice-header">
+                <td class="hw-border-left" style="width:16px">
+                    <input type="checkbox" id="checkbox-timebook-all" />
+                </td>
+                <td class="hw-border-left" colspan="3"><%= HtmlHelper.Anchor("Item", string.Format("customershow.aspx?Id={0}&SelectedTab=timebook", invoice.Customer.Id)) %></td>
+                <td class="hw-border-left" style="width:10%">Qty</td>
+                <td class="hw-border-left" style="width:10%">Unit</td>
+                <td class="hw-border-left" style="width:10%">Price/Unit</td>
+                <td class="hw-border-last" style="width:10%">Amount</td>
+            </tr>
         </thead>
         <tbody>
             
-        <% decimal subTotal = 0; %>
-        <% Dictionary<decimal, decimal> vats = new Dictionary<decimal, decimal>(); %>
+            <% decimal subTotal = 0; %>
+            <% Dictionary<decimal, decimal> vats = new Dictionary<decimal, decimal>(); %>
 
-        <% foreach (var t in invoice.Timebooks) { %>
-        <tr class="grayed">
-            <td style="width:16px">
-                <input type="checkbox" class="timebook-item" checked
-                    data-id="<%= t.Timebook.Id %>"
-                    data-item="<%= t.Timebook.Item.Name %>"
-                    data-unit="<%= t.Timebook.Item.Unit.Name %>"
-                    data-qty="<%= t.Timebook.Quantity %>"
-                    data-price="<%= t.Timebook.Price %>"
-                    data-amount="<%= t.Timebook.Amount %>"
-                    data-consultant="<%= t.Timebook.Consultant %>"
-                    data-comments="<%= t.Timebook.Comments %>"
-                    data-vat="<%= t.Timebook.VAT %>"
-                />
-                <script type="text/javascript">
-                    invoiceItems.push({
-                        'id': <%= t.Timebook.Id %>,
-                        'item': "<%= t.Timebook.Item.Name %>",
-                        'unit': "<%= t.Timebook.Item.Unit.Name %>",
-                        'qty': <%= t.Timebook.Quantity %>,
-                        'price': <%= t.Timebook.Price %>,
-                        'amount': <%= t.Timebook.Amount %>,
-                        'consultant': "<%= t.Timebook.Consultant %>",
-                        'comments': "<%= t.Timebook.Comments %>",
-                        'vat': <%= t.Timebook.VAT %>
-                    });
-                </script>
-                <input type="hidden" id="invoice-timebooks" name="invoice-timebooks" value="<%= t.Timebook.Id %>" />
-            </td>
-            <td colspan="3"><%= t.Timebook.ToString() %></td>
-            <td><%= t.Timebook.Quantity %></td>
-            <td><%= t.Timebook.Item.Unit.Name %></td>
-            <td class="text-right"><%= t.Timebook.Price.ToString("### ### ##0.00") %></td>
-            <td class="text-right"><%= t.Timebook.Amount.ToString("### ### ##0.00") %></td>
+            <% foreach (var t in invoice.Timebooks) { %>
+                <tr class="grayed">
+                    <td style="width:16px">
+                        <input type="checkbox" class="timebook-item" checked
+                            data-id="<%= t.Timebook.Id %>"
+                            data-item="<%= t.Timebook.Item.Name %>"
+                            data-unit="<%= t.Timebook.Item.Unit.Name %>"
+                            data-qty="<%= t.Timebook.Quantity %>"
+                            data-price="<%= t.Timebook.Price %>"
+                            data-amount="<%= t.Timebook.Amount %>"
+                            data-consultant="<%= t.Timebook.Consultant %>"
+                            data-comments="<%= t.Timebook.Comments %>"
+                            data-vat="<%= t.Timebook.VAT %>"
+                        />
+                        <script type="text/javascript">
+                            invoiceItems.push({
+                                'id': <%= t.Timebook.Id %>,
+                                'item': "<%= t.Timebook.Item.Name %>",
+                                'unit': "<%= t.Timebook.Item.Unit.Name %>",
+                                'qty': <%= t.Timebook.Quantity %>,
+                                'price': <%= t.Timebook.Price %>,
+                                'amount': <%= t.Timebook.Amount %>,
+                                'consultant': "<%= t.Timebook.Consultant %>",
+                                'comments': "<%= t.Timebook.Comments %>",
+                                'vat': <%= t.Timebook.VAT %>
+                            });
+                        </script>
+                        <input type="hidden" id="invoice-timebooks" name="invoice-timebooks" value="<%= t.Timebook.Id %>" />
+                    </td>
+                    <td colspan="3"><%= t.Timebook.ToString() %></td>
+                    <td><%= t.Timebook.Quantity %></td>
+                    <td><%= t.Timebook.Item.Unit.Name %></td>
+                    <td class="text-right"><%= t.Timebook.Price.ToString("### ### ##0.00") %></td>
+                    <td class="text-right"><%= t.Timebook.Amount.ToString("### ### ##0.00") %></td>
 
-            <% subTotal += t.Timebook.Amount; %>
-            <% if (vats.ContainsKey(t.Timebook.VAT)) { %>
-                <% vats[t.Timebook.VAT] += t.Timebook.VATAmount; %>
-            <% } else { %>
-                <% vats[t.Timebook.VAT] = t.Timebook.VATAmount; %>
+                    <% subTotal += t.Timebook.Amount; %>
+                    <% if (vats.ContainsKey(t.Timebook.VAT)) { %>
+                        <% vats[t.Timebook.VAT] += t.Timebook.VATAmount; %>
+                    <% } else { %>
+                        <% vats[t.Timebook.VAT] = t.Timebook.VATAmount; %>
+                    <% } %>
+                </tr>
             <% } %>
-        </tr>
-        <% } %>
 
-        <% foreach (var t in timebooks) { %>
-        <tr>
-            <td style="width:16px">
-                <input type="checkbox" class="timebook-item"
-                    data-id="<%= t.Id %>"
-                    data-item="<%= t.Item.Name %>"
-                    data-unit="<%= t.Item.Unit.Name %>"
-                    data-qty="<%= t.Quantity %>"
-                    data-price="<%= t.Price %>"
-                    data-amount="<%= t.Amount %>"
-                    data-consultant="<%= t.Consultant %>"
-                    data-comments="<%= t.Comments %>"
-                    data-vat="<%= t.VAT %>"
-                />
-            </td>
-            <td colspan="3"><%= t.ToString() %></td>
-            <td><%= t.Quantity %></td>
-            <td><%= t.Item.Unit.Name %></td>
-            <td class="text-right"><%= t.Price.ToString("### ### ##0.00") %></td>
-            <td class="text-right"><%= t.Amount.ToString("### ### ##0.00") %></td>
-        </tr>
-        <% } %>
+            <% foreach (var t in timebooks) { %>
+                <tr>
+                    <td style="width:16px">
+                        <input type="checkbox" class="timebook-item"
+                            data-id="<%= t.Id %>"
+                            data-item="<%= t.Item.Name %>"
+                            data-unit="<%= t.Item.Unit.Name %>"
+                            data-qty="<%= t.Quantity %>"
+                            data-price="<%= t.Price %>"
+                            data-amount="<%= t.Amount %>"
+                            data-consultant="<%= t.Consultant %>"
+                            data-comments="<%= t.Comments %>"
+                            data-vat="<%= t.VAT %>"
+                        />
+                    </td>
+                    <td colspan="3"><%= t.ToString() %></td>
+                    <td><%= t.Quantity %></td>
+                    <td><%= t.Item.Unit.Name %></td>
+                    <td class="text-right"><%= t.Price.ToString("### ### ##0.00") %></td>
+                    <td class="text-right"><%= t.Amount.ToString("### ### ##0.00") %></td>
+                </tr>
+            <% } %>
 
         </tbody>
-
-        <!--<tr><td>&nbsp;</td></tr>
-        <tr class="hw-invoice-header"><td colspan="7"></td><td class="hw-border-last">Subtotal</td></tr>
-        <tr><td colspan="7"></td><td class="hw-border-last">50 000,00</td></tr>
-        <tr class="hw-invoice-header">
-            <td colspan="5"></td>
-            <td style="width:10%" class="hw-border-left">VAT %</td>
-            <td style="width:10%" class="hw-border-left">VAT</td>
-            <td class="hw-border-last">Total Amount</td>
-        </tr>
-        <tr class="hw-border-bottom">
-            <td colspan="5"></td>
-            <td style="width:10%" class="hw-border-left">25%</td>
-            <td style="width:10%" class="hw-border-left">12 500,00</td>
-            <td class="hw-border-last">62 500,00</td>
-        </tr>-->
         
         <% var strVat = ""; var strVatLabel = ""; %>
         <% decimal totalVat = 0; %>
@@ -340,20 +331,21 @@
             <% strVat += "<td style='width:10%' class='hw-border-left'>" + vats[k].ToString("### ### ##0.00") + "</td>"; %>
             <% totalVat += vats[k]; %>
         <% } %>
+
         <tfoot>
-        <tr><td>&nbsp;</td></tr>
-        <tr class="hw-invoice-header"><td colspan="7"></td><td class="hw-border-last">Subtotal</td></tr>
-        <tr><td colspan="7"></td><td class="hw-border-last"><%= subTotal.ToString("### ### ##0.00") %></td></tr>
-        <tr class="hw-invoice-header">
-            <td colspan="<%= (7 - vats.Count * 2) %>"></td>
-            <%= strVatLabel %>
-            <td class="hw-border-last">Total Amount</td>
-        </tr>
-        <tr class="hw-border-bottom">
-            <td colspan="<%= (7 - vats.Count * 2) %>"></td>
-            <%= strVat %>
-            <td class="hw-border-last"><%= (subTotal + totalVat).ToString("### ### ##0.00") %></td>
-        </tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr class="hw-invoice-header"><td colspan="7"></td><td class="hw-border-last">Subtotal</td></tr>
+            <tr><td colspan="7"></td><td class="hw-border-last"><%= subTotal.ToString("### ### ##0.00") %></td></tr>
+            <tr class="hw-invoice-header">
+                <td colspan="<%= (7 - vats.Count * 2) %>"></td>
+                <%= strVatLabel %>
+                <td class="hw-border-last">Total Amount</td>
+            </tr>
+            <tr class="hw-border-bottom">
+                <td colspan="<%= (7 - vats.Count * 2) %>"></td>
+                <%= strVat %>
+                <td class="hw-border-last"><%= (subTotal + totalVat).ToString("### ### ##0.00") %></td>
+            </tr>
         </tfoot>
     </table>
 
@@ -401,7 +393,7 @@
     </small>
 
     <br />
-    <asp:Button ID="buttonSave" OnClick="buttonSave_Click" runat="server" Text="Save invoice" CssClass="btn btn-success" />
+    <asp:Button ID="buttonSave" OnClick="buttonSave_Click" runat="server" Text="Save this invoice" CssClass="btn btn-success" />
     or <i><%= HtmlHelper.Anchor("cancel", "invoices.aspx") %></i>
 
 </asp:Content>

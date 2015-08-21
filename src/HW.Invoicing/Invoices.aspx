@@ -156,7 +156,7 @@
         <td class="text-right"><strong><%= totalSubTotal.ToString("### ### ##0.00") %></strong></td>
         <td class="text-right"><strong><%= totalVAT.ToString("### ### ##0.00") %></strong></td>
         <td class="text-right"><strong><%= totalAmount.ToString("### ### ##0.00") %></strong></td>
-        <td colspan="4"></td>
+        <td colspan="5"></td>
     </tr>
 </table>
 

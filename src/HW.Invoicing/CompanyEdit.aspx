@@ -27,6 +27,9 @@
 		<li>
 			<a href="#panel-281177" data-toggle="tab">Terms and Advice</a>
 		</li>
+        <li>
+			<a href="#panel-931818" data-toggle="tab">Agreement Email Text</a>
+		</li>
 	</ul>
 	<div class="tab-content">
 		<div class="tab-pane active" id="panel-20704">
@@ -105,6 +108,21 @@
                     onclick="buttonSaveTerms_Click" />
                     or <i><%= HtmlHelper.Anchor("cancel", "companies.aspx") %></i>
             </div>
+		</div>
+        <div class="tab-pane" id="panel-931818">
+            <br />
+            <div class="form-group">
+                <label for="<%= textBoxAgreementEmailText.ClientID %>">Agreement Email Text</label>
+                <asp:TextBox ID="textBoxAgreementEmailText" runat="server" CssClass="form-control" TextMode="MultiLine" Height="450"></asp:TextBox>
+            </div>
+            <div>
+                <asp:Button ID="buttonSaveAgreementEmailText" CssClass="btn btn-success" runat="server" Text="Save agreement email text" 
+                    onclick="buttonSaveAgreementEmailText_Click" />
+                    or <i><%= HtmlHelper.Anchor("cancel", "companies.aspx") %></i>
+            </div>
+			<%--<p>
+				Howdy, I'm in Section 2.
+			</p>--%>
 		</div>
 	</div>
 </div>

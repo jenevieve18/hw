@@ -83,7 +83,8 @@ SELECT Id,
     InvoiceLogo,
     InvoiceTemplate,
     Terms,
-    Signature
+    Signature,
+    AgreementEmailText
 FROM Company
 WHERE Id = @Id";
 			Company c = null;
@@ -103,7 +104,8 @@ WHERE Id = @Id";
                         InvoiceLogo = GetString(rs, 10),
                         InvoiceTemplate = GetString(rs, 11),
                         Terms = GetString(rs, 12),
-                        Signature = GetString(rs, 13)
+                        Signature = GetString(rs, 13),
+                        AgreementEmailText = GetString(rs, 14)
 					};
 				}
 			}
@@ -182,11 +184,28 @@ ORDER BY IsSelected DESC";
             return c;
         }
 
+        public void SaveAgreementEmailText(string agreementEmailText, int id)
+        {
+            string query = @"
+UPDATE Company SET AgreementEmailText = @AgreementEmailText WHERE Id = @Id";
+            ExecuteNonQuery(
+                query,
+                "invoicing",
+                new SqlParameter("@AgreementEmailText", agreementEmailText),
+                new SqlParameter("@Id", id)
+            );
+        }
+
         public void SaveTerms(string terms, int id)
         {
             string query = @"
 UPDATE Company SET Terms = @Terms WHERE Id = @Id";
-            ExecuteNonQuery(query, "invoicing", new SqlParameter("@Terms", terms), new SqlParameter("@Id", id));
+            ExecuteNonQuery(
+                query, 
+                "invoicing", 
+                new SqlParameter("@Terms", terms), 
+                new SqlParameter("@Id", id)
+            );
         }
 		
 		public override void Update(Company t, int id)

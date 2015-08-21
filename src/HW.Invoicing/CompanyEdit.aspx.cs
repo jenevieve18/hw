@@ -37,6 +37,8 @@ namespace HW.Invoicing
                     checkBoxHasSubscriber.Checked = company.HasSubscriber;
 
                     textBoxTerms.Text = company.Terms;
+
+                    textBoxAgreementEmailText.Text = company.AgreementEmailText;
                 }
                 else
                 {
@@ -48,6 +50,12 @@ namespace HW.Invoicing
         protected void buttonSaveTerms_Click(object sender, EventArgs e)
         {
             r.SaveTerms(textBoxTerms.Text, id);
+            Response.Redirect("companies.aspx");
+        }
+
+        protected void buttonSaveAgreementEmailText_Click(object sender, EventArgs e)
+        {
+            r.SaveAgreementEmailText(textBoxAgreementEmailText.Text, id);
             Response.Redirect("companies.aspx");
         }
 
