@@ -22,9 +22,9 @@
         </td>
         <td>
             <%= HtmlHelper.Anchor("Edit", "companyedit.aspx?Id=" + c.Id) %>
-            <% if (c.HasTerms) { %>
+            <%--<% if (c.HasTerms) { %>
                 <%= HtmlHelper.Anchor("Terms", "companyterms.aspx?Id=" + c.Id) %>
-            <% } %>
+            <% } %>--%>
         </td>
     </tr>
     <% } %>

@@ -406,6 +406,12 @@ namespace HW.Invoicing.Core.Models
 		public User CreatedBy { get; set; }
 		public bool Inactive { get; set; }
 	}
+
+    public class CustomerAgreement : BaseModel
+    {
+        public Customer Customer { get; set; }
+        public DateTime? Date { get; set; }
+    }
 	
 	public class CustomerTimebook : BaseModel
 	{

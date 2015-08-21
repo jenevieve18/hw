@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CompanyTermsThanks.aspx.cs" Inherits="HW.Invoicing.CompanyTermsThanks" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CustomerAgreementThanks.aspx.cs" Inherits="HW.Invoicing.CustomerAgreementThanks" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
 <!DOCTYPE html>
 

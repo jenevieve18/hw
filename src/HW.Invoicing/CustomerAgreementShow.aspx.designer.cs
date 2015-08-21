@@ -8,9 +8,10 @@
 //------------------------------------------------------------------------------
 
 namespace HW.Invoicing {
-    
-    
-    public partial class CompanyTerms {
+
+
+    public partial class CustomerAgreementShow
+    {
         
         /// <summary>
         /// Head1 control.

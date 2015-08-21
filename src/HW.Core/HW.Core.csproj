@@ -97,6 +97,7 @@
     <Compile Include="Helpers\ExtendedGraph.cs" />
     <Compile Include="Helpers\Graph.cs" />
     <Compile Include="Helpers\Graph2.cs" />
+    <Compile Include="Helpers\MailHelper.cs" />
     <Compile Include="Helpers\UserLevelGraphFactory.cs" />
     <Compile Include="Helpers\GroupStatsGraphFactory.cs" />
     <Compile Include="Helpers\HtmlHelper.cs" />

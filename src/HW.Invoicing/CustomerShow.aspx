@@ -247,6 +247,7 @@
         <% if (company.HasSubscriber) { %>
             <li <%= selectedTab == "subscription" ? "class='active'" : "" %>><a href="#subscription" data-toggle="tab">Subscription</a></li>
         <% } %>
+        <li <%= selectedTab == "agreements" ? "class='active'" : "" %>><a href="#agreements" data-toggle="tab">Agreements</a></li>
 	</ul>
 	<div class="tab-content">
         <div class="tab-pane <%= selectedTab == "notes" ? "active" : "" %>" id="notes">
@@ -849,43 +850,43 @@
 			<br />
             <p><a id="modal-240447" href="#modal-container-240447" role="button" class="btn btn-info" data-toggle="modal">Add new contact person</a></p>
 			<asp:Panel ID="panelContactPerson" DefaultButton="buttonSaveContact" runat="server">
-			<div class="modal fade" id="modal-container-240447" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-							<h4 class="modal-title" id="H4">New customer contact</h4>
-						</div>
-						<div class="modal-body">
-                            <span id="contact-person-message"></span>
-                            <div class="form-group">
-	                            <label for="">Contact person</label>
-                                <asp:TextBox ID="textBoxContact" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <div class="form-group">
-	                            <label for="">Phone</label>
-                                <asp:TextBox ID="textBoxContactPhone" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <div class="form-group">
-	                            <label for="">Mobile</label>
-                                <asp:TextBox ID="textBoxContactMobile" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <div class="form-group">
-	                            <label for="">Email</label>
-                                <asp:TextBox ID="textBoxContactEmail" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <div class="form-group">
-                                <asp:RadioButtonList ID="radioButtonListContactType" runat="server">
-                                </asp:RadioButtonList>
-                            </div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <asp:Button ID="buttonSaveContact" OnClientClick="return validateContactPerson()" runat="server" Text="Save contact" CssClass="btn btn-primary" OnClick="buttonSaveContact_Click" />
-						</div>
-					</div>
-				</div>
-			</div>
+			    <div class="modal fade" id="modal-container-240447" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				    <div class="modal-dialog">
+					    <div class="modal-content">
+						    <div class="modal-header">
+							    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							    <h4 class="modal-title" id="H4">New customer contact</h4>
+						    </div>
+						    <div class="modal-body">
+                                <span id="contact-person-message"></span>
+                                <div class="form-group">
+	                                <label for="">Contact person</label>
+                                    <asp:TextBox ID="textBoxContact" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
+	                                <label for="">Phone</label>
+                                    <asp:TextBox ID="textBoxContactPhone" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
+	                                <label for="">Mobile</label>
+                                    <asp:TextBox ID="textBoxContactMobile" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
+	                                <label for="">Email</label>
+                                    <asp:TextBox ID="textBoxContactEmail" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
+                                    <asp:RadioButtonList ID="radioButtonListContactType" runat="server">
+                                    </asp:RadioButtonList>
+                                </div>
+						    </div>
+						    <div class="modal-footer">
+							    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <asp:Button ID="buttonSaveContact" OnClientClick="return validateContactPerson()" runat="server" Text="Save contact" CssClass="btn btn-primary" OnClick="buttonSaveContact_Click" />
+						    </div>
+					    </div>
+				    </div>
+			    </div>
             </asp:Panel>
 			<div class="alert alert-info">
 				<strong>Customer contact information</strong> are people serving as a go-between, messenger, connection, or source of special information. Business contacts.
@@ -972,6 +973,51 @@
             </div>
 		</div>
         <% } %>
+        <div class="tab-pane <%= selectedTab == "agreements" ? "active" : "" %>" id="agreements">
+			<br />
+            <p><a id="modal-931985" href="#modal-container-931985" role="button" class="btn btn-info" data-toggle="modal">Create an agreement</a></p>
+            <asp:Panel ID="panel1" DefaultButton="buttonSaveContact" runat="server">
+			    <div class="modal fade" id="modal-container-931985" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				    <div class="modal-dialog">
+					    <div class="modal-content">
+						    <div class="modal-header">
+							    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							    <h4 class="modal-title" id="H5">New agreement</h4>
+						    </div>
+						    <div class="modal-body">
+                                <div class="form-group">
+	                                <label for="">Date</label>
+                                    <asp:TextBox ID="textBoxAgreementDate" runat="server" CssClass="form-control date"></asp:TextBox>
+                                </div>
+						    </div>
+						    <div class="modal-footer">
+							    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
+                                <asp:Button ID="buttonSaveAgreement" CssClass="btn btn-success" runat="server" Text="Save agreement" OnClick="buttonSaveAgreement_Click" />
+						    </div>
+					    </div>
+				    </div>
+			    </div>
+            </asp:Panel>
+            <div class="alert alert-info">
+				<strong>Agreeements</strong> are negotiated and typically legally binding arrangement between parties as to a course of action.
+			</div>
+            <table class="table table-hover">
+                <tr>
+                    <th>Date</th>
+                    <th></th>
+                </tr>
+                <% foreach (var a in agreements) { %>
+                    <tr>
+                        <td><%= a.Date.Value.ToString("yyyy-MM-dd") %></td>
+                        <td>
+                            <%= HtmlHelper.Anchor(" ", string.Format("customeragreementedit.aspx?Id={0}&CustomerId={1}", a.Id, id), "title='Edit' class='glyphicon glyphicon-edit'")%>
+                            <%= HtmlHelper.Anchor(" ", string.Format("custoeragreementdeactivate.aspx?Id={0}&CustomerId={1}", a.Id, id), "title='Deactivate' class='glyphicon glyphicon-minus'")%>
+                            <%= HtmlHelper.Anchor(" ", string.Format("custoeragreementsend.aspx?Id={0}&CustomerId={1}", a.Id, id), "title='Send agreement' class='glyphicon glyphicon-envelope'")%>
+                        </td>
+                    </tr>
+                <% } %>
+            </table>
+        </div>
 	</div>
 </div>
 

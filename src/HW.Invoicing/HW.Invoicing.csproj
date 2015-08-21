@@ -60,8 +60,8 @@
     <Content Include="CompanyAdd.aspx" />
     <Content Include="CompanyEdit.aspx" />
     <Content Include="CompanySelect.aspx" />
-    <Content Include="CompanyTermsAccepted.aspx" />
-    <Content Include="CompanyTermsThanks.aspx" />
+    <Content Include="CustomerAgreementAccepted.aspx" />
+    <Content Include="CustomerAgreementThanks.aspx" />
     <Content Include="CustomerTimebookSubscriptionAdd.aspx" />
     <Content Include="css\style.css" />
     <Content Include="CustomerAdd.aspx" />
@@ -111,7 +111,7 @@
     <Content Include="SignOut.aspx" />
     <Content Include="sql.aspx" />
     <Content Include="sql2.aspx" />
-    <Content Include="CompanyTerms.aspx" />
+    <Content Include="CustomerAgreementShow.aspx" />
     <Content Include="UnitAdd.aspx" />
     <Content Include="UnitDeactivate.aspx" />
     <Content Include="UnitDelete.aspx" />
@@ -158,19 +158,19 @@
     <Compile Include="CompanySelect.aspx.designer.cs">
       <DependentUpon>CompanySelect.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CompanyTermsAccepted.aspx.cs">
-      <DependentUpon>CompanyTermsAccepted.aspx</DependentUpon>
+    <Compile Include="CustomerAgreementAccepted.aspx.cs">
+      <DependentUpon>CustomerAgreementAccepted.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CompanyTermsAccepted.aspx.designer.cs">
-      <DependentUpon>CompanyTermsAccepted.aspx</DependentUpon>
+    <Compile Include="CustomerAgreementAccepted.aspx.designer.cs">
+      <DependentUpon>CustomerAgreementAccepted.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CompanyTermsThanks.aspx.cs">
-      <DependentUpon>CompanyTermsThanks.aspx</DependentUpon>
+    <Compile Include="CustomerAgreementThanks.aspx.cs">
+      <DependentUpon>CustomerAgreementThanks.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CompanyTermsThanks.aspx.designer.cs">
-      <DependentUpon>CompanyTermsThanks.aspx</DependentUpon>
+    <Compile Include="CustomerAgreementThanks.aspx.designer.cs">
+      <DependentUpon>CustomerAgreementThanks.aspx</DependentUpon>
     </Compile>
     <Compile Include="CustomerTimebookSubscriptionAdd.aspx.cs">
       <DependentUpon>CustomerTimebookSubscriptionAdd.aspx</DependentUpon>
@@ -516,12 +516,12 @@
     <Compile Include="sql2.aspx.designer.cs">
       <DependentUpon>sql2.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CompanyTerms.aspx.cs">
-      <DependentUpon>CompanyTerms.aspx</DependentUpon>
+    <Compile Include="CustomerAgreementShow.aspx.cs">
+      <DependentUpon>CustomerAgreementShow.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CompanyTerms.aspx.designer.cs">
-      <DependentUpon>CompanyTerms.aspx</DependentUpon>
+    <Compile Include="CustomerAgreementShow.aspx.designer.cs">
+      <DependentUpon>CustomerAgreementShow.aspx</DependentUpon>
     </Compile>
     <Compile Include="UnitAdd.aspx.cs">
       <DependentUpon>UnitAdd.aspx</DependentUpon>

@@ -10,7 +10,7 @@ using HW.Core.Helpers;
 
 namespace HW.Invoicing
 {
-    public partial class CompanyTerms : System.Web.UI.Page
+    public partial class CustomerAgreementShow : System.Web.UI.Page
     {
         SqlCompanyRepository r = new SqlCompanyRepository();
         protected Company company;
@@ -26,7 +26,6 @@ namespace HW.Invoicing
             
             if (customer != null)
             {
-
             }
         }
 

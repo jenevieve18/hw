@@ -8,9 +8,10 @@
 //------------------------------------------------------------------------------
 
 namespace HW.Invoicing {
-    
-    
-    public partial class CompanyTermsThanks {
+
+
+    public partial class CustomerAgreementAccepted
+    {
         
         /// <summary>
         /// Head1 control.
@@ -29,5 +30,23 @@ namespace HW.Invoicing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        
+        /// <summary>
+        /// buttonBack control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button buttonBack;
+        
+        /// <summary>
+        /// buttonNext control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button buttonNext;
     }
 }

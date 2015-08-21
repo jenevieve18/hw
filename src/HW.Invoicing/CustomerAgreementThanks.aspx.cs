@@ -10,7 +10,7 @@ using HW.Core.Helpers;
 
 namespace HW.Invoicing
 {
-    public partial class CompanyTermsAccepted : System.Web.UI.Page
+    public partial class CustomerAgreementThanks : System.Web.UI.Page
     {
         SqlCompanyRepository r = new SqlCompanyRepository();
         protected Company company;
@@ -22,17 +22,6 @@ namespace HW.Invoicing
             {
                 Response.Redirect("companies.aspx");
             }
-        }
-
-        protected void buttonBackClick(object sender, EventArgs e)
-        {
-            Response.Redirect(string.Format("companyterms.aspx?Id={0}", company.Id));
-        }
-
-        protected void buttonNextClick(object sender, EventArgs e)
-        {
-            Db.sendMail("ian.escarro@gmail.com", "Your contract", "This is your contract!");
-            Response.Redirect(string.Format("companytermsthanks.aspx?Id={0}", company.Id));
         }
     }
 }

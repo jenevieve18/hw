@@ -225,6 +225,21 @@ WHERE Id = @Id"
             }
         }
 
+        public void SaveAgreement(CustomerAgreement agreement, int customerId)
+        {
+            string query = string.Format(
+                @"
+INSERT INTO CustomerAgreement(CustomerId, Date)
+VALUES(@CustomerId, @Date)"
+            );
+            ExecuteNonQuery(
+                query,
+                "invoicing",
+                new SqlParameter("@CustomerId", customerId),
+                new SqlParameter("@Date", agreement.Date)
+            );
+        }
+
 		public void SaveTimebook(CustomerTimebook time, int customerId)
 		{
 			string query = string.Format(
@@ -902,6 +917,35 @@ ORDER BY n.CreatedAt DESC"
 			}
 			return notes;
 		}
+
+        public IList<CustomerAgreement> FindAgreements(int customerId)
+        {
+            string query = string.Format(
+                @"
+SELECT a.Date
+FROM CustomerAgreement a
+WHERE CustomerId = @CustomerId
+ORDER BY a.Date DESC"
+            );
+            var agreements = new List<CustomerAgreement>();
+            using (SqlDataReader rs = ExecuteReader(
+                query,
+                "invoicing",
+                new SqlParameter("@CustomerId", customerId)
+                ))
+            {
+                while (rs.Read())
+                {
+                    agreements.Add(
+                        new CustomerAgreement
+                        {
+                            Date = GetDateTime(rs, 0)
+                        }
+                    );
+                }
+            }
+            return agreements;
+        }
 
         public IList<CustomerTimebook> FindOpenTimebooks(int customerId)
         {

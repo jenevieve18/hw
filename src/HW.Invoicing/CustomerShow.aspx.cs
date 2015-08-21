@@ -26,6 +26,7 @@ namespace HW.Invoicing
         protected IList<Item> timebookItems;
         protected IList<Item> items;
         protected IList<CustomerTimebook> timebooks;
+        protected IList<CustomerAgreement> agreements;
         protected IList<Language> languages;
     	protected int id;
         protected string selectedTab;
@@ -104,6 +105,9 @@ namespace HW.Invoicing
                     {
                         textBoxSubscriptionStartDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
                     }
+
+                    // Agreement
+                    textBoxAgreementDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
                 }
             }
 
@@ -152,7 +156,6 @@ namespace HW.Invoicing
                 Contact = new CustomerContact { Id = ConvertHelper.ToInt32(dropDownListTimebookContacts.SelectedValue) },
                 Item = new Item { Id = ConvertHelper.ToInt32(dropDownListTimebookItems.SelectedValue) },
                 Quantity = ConvertHelper.ToDecimal(textBoxTimebookQty.Text),
-                //Quantity = ConvertHelper.ToDecimal(textBoxTimebookQty.Text, new CultureInfo("en-US")),
                 Price = ConvertHelper.ToDecimal(textBoxTimebookPrice.Text),
                 Consultant = textBoxTimebookConsultant.Text,
                 VAT = ConvertHelper.ToDecimal(textBoxTimebookVAT.Text),
@@ -247,6 +250,16 @@ namespace HW.Invoicing
             Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=customer-prices", id));
         }
 
+        protected void buttonSaveAgreement_Click(object sender, EventArgs e)
+        {
+            var t = new CustomerAgreement
+            {
+                Date = ConvertHelper.ToDateTime(textBoxAgreementDate.Text)
+            };
+            r.SaveAgreement(t, id);
+            Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=agreements", id));
+        }
+
         protected override void OnPreRender(EventArgs e)
         {
             base.OnPreRender(e);
@@ -258,6 +271,7 @@ namespace HW.Invoicing
             timebookItems = ir.FindAllWithCustomerItems(companyId, id);
             items = ir.FindByCompany(companyId);
             languages = lr.FindAll();
+            agreements = r.FindAgreements(id);
 
             dropDownListSubscriptionItem.Items.Clear();
             foreach (var i in items)
