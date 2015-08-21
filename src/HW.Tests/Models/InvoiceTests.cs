@@ -10,5 +10,15 @@ namespace HW.Tests.Models
 	[TestFixture]
 	public class InvoiceTests
 	{
+		[SetUp]
+		public void Setup()
+		{
+		}
+		
+		[Test]
+		public void a()
+		{
+			
+		}
 	}
 }

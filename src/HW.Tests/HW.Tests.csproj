@@ -107,6 +107,7 @@
     <Compile Include="Helpers\GraphTests.cs" />
     <Compile Include="Helpers\HtmlHelperTests.cs" />
     <Compile Include="Helpers\InvoiceExporterTests.cs" />
+    <Compile Include="Helpers\MailHelperTests.cs" />
     <Compile Include="Helpers\PageTests.cs" />
     <Compile Include="Helpers\PdfExporterTests.cs" />
     <Compile Include="Helpers\PresentationDocumentExporterTests.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="Invoicing\Repositories\InvoiceRepositoryTests.cs" />
     <Compile Include="Invoicing\UsersTests.cs" />
     <Compile Include="JsonConvertTests.cs" />
+    <Compile Include="Models\CustomerTests.cs" />
     <Compile Include="Models\DepartmentTests.cs" />
     <Compile Include="Models\GroupFactoryTests.cs" />
     <Compile Include="Models\HWListTests.cs" />
