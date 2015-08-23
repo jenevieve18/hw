@@ -19,6 +19,7 @@ namespace HW.Invoicing.Core.Models
         public string Terms { get; set; }
         public string Signature { get; set; }
         public string AgreementEmailText { get; set; }
+        public string AgreementEmailSubject { get; set; }
 
         public bool HasSignature
         {

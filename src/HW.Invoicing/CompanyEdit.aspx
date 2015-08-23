@@ -111,6 +111,11 @@
 		</div>
         <div class="tab-pane" id="panel-931818">
             <br />
+            <asp:Panel ID="Panel1" runat="server" DefaultButton="buttonSaveAgreementEmailText">
+            <div class="form-group">
+	            <label for="<%= textBoxAgreementEmailSubject.ClientID %>">Agreement Email Subject</label>
+                <asp:TextBox ID="textBoxAgreementEmailSubject" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
             <div class="form-group">
                 <label for="<%= textBoxAgreementEmailText.ClientID %>">Agreement Email Text</label>
                 <asp:TextBox ID="textBoxAgreementEmailText" runat="server" CssClass="form-control" TextMode="MultiLine" Height="450"></asp:TextBox>
@@ -120,6 +125,8 @@
                     onclick="buttonSaveAgreementEmailText_Click" />
                     or <i><%= HtmlHelper.Anchor("cancel", "companies.aspx") %></i>
             </div>
+            </asp:Panel>
+            
 			<%--<p>
 				Howdy, I'm in Section 2.
 			</p>--%>

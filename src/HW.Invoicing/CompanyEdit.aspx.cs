@@ -39,6 +39,7 @@ namespace HW.Invoicing
                     textBoxTerms.Text = company.Terms;
 
                     textBoxAgreementEmailText.Text = company.AgreementEmailText;
+                    textBoxAgreementEmailSubject.Text = company.AgreementEmailSubject;
                 }
                 else
                 {
@@ -55,7 +56,11 @@ namespace HW.Invoicing
 
         protected void buttonSaveAgreementEmailText_Click(object sender, EventArgs e)
         {
-            r.SaveAgreementEmailText(textBoxAgreementEmailText.Text, id);
+            var c = new Company {
+                AgreementEmailSubject = textBoxAgreementEmailSubject.Text,
+                AgreementEmailText = textBoxAgreementEmailText.Text
+            };
+            r.SaveAgreementEmail(c, id);
             Response.Redirect("companies.aspx");
         }
 

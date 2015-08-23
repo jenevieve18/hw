@@ -268,3 +268,11 @@ alter table Company add Terms text;
 alter table Company add Signature varchar(255);
 
 alter table Company add AgreementEmailText text;
+
+create table CustomerAgreement(
+	Id integer not null primary key identity,
+	CustomerId integer,
+	Date datetime
+);
+
+alter table Company add AgreementEmailSubject text;

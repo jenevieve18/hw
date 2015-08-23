@@ -84,7 +84,8 @@ SELECT Id,
     InvoiceTemplate,
     Terms,
     Signature,
-    AgreementEmailText
+    AgreementEmailText,
+    AgreementEmailSubject
 FROM Company
 WHERE Id = @Id";
 			Company c = null;
@@ -105,7 +106,8 @@ WHERE Id = @Id";
                         InvoiceTemplate = GetString(rs, 11),
                         Terms = GetString(rs, 12),
                         Signature = GetString(rs, 13),
-                        AgreementEmailText = GetString(rs, 14)
+                        AgreementEmailText = GetString(rs, 14),
+                        AgreementEmailSubject = GetString(rs, 15)
 					};
 				}
 			}
@@ -184,14 +186,17 @@ ORDER BY IsSelected DESC";
             return c;
         }
 
-        public void SaveAgreementEmailText(string agreementEmailText, int id)
+        public void SaveAgreementEmail(Company c, int id)
         {
             string query = @"
-UPDATE Company SET AgreementEmailText = @AgreementEmailText WHERE Id = @Id";
+UPDATE Company SET AgreementEmailText = @AgreementEmailText,
+AgreementEmailSubject = @AgreementEmailSubject
+WHERE Id = @Id";
             ExecuteNonQuery(
                 query,
                 "invoicing",
-                new SqlParameter("@AgreementEmailText", agreementEmailText),
+                new SqlParameter("@AgreementEmailSubject", c.AgreementEmailSubject),
+                new SqlParameter("@AgreementEmailText", c.AgreementEmailText),
                 new SqlParameter("@Id", id)
             );
         }
