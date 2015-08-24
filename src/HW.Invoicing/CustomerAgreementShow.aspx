@@ -79,6 +79,19 @@
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/scripts.js"></script>
+
+    <link href="css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+    <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script src="js/jquery.number.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.date').datepicker({
+                format: "yyyy-mm-dd",
+                autoclose: true
+            });
+        });
+    </script>
+
     <style type="text/css">
         .label-width 
         {
@@ -86,6 +99,10 @@
         .width1 
         {
             width:100px;
+        }
+        .compensation 
+        {
+            text-align:right;
         }
     </style>
 </head>
@@ -109,31 +126,31 @@
                     <table style="width:100%" cellpadding="2">
                         <tr>
                             <td><b>Företagsnamn</b></td>
-                            <td class="col-md-9">
+                            <td class="col-md-10">
                                 <asp:TextBox ID="textBoxCustomerName" CssClass="form-control" runat="server"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Postadress</b></td>
-                            <td class="col-md-9">
+                            <td class="col-md-10">
                                 <asp:TextBox ID="textBoxCustomerAddress" CssClass="form-control" runat="server" TextMode="MultiLine" Height="100"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Organisationsnummer</b></td>
-                            <td class="col-md-9">
+                            <td class="col-md-10">
                                 <asp:TextBox ID="textBoxCustomerNumber" CssClass="form-control" runat="server"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Faktureringsadress</b></td>
-                            <td class="col-md-9">
+                            <td class="col-md-10">
                                 <asp:TextBox ID="textBoxCustomerInvoiceAddress" CssClass="form-control" runat="server" TextMode="MultiLine" Height="100"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Eventuellt referensnummer</b></td>
-                            <td class="col-md-9">
+                            <td class="col-md-10">
                                 <asp:TextBox ID="textBoxCustomerReferenceNumber" CssClass="form-control" runat="server"></asp:TextBox>
                             </td>
                         </tr>
@@ -154,7 +171,7 @@
                 </td>
             </tr>
             <tr>
-                <td><b>Datum för föreläsningen:</b></td>
+                <td><b>Datum för föreläsningen</b>:</td>
                 <td colspan="2">
                     <asp:TextBox ID="textBoxAgreementDate" CssClass="date form-control" runat="server"></asp:TextBox>
                 </td>
@@ -172,38 +189,38 @@
                 </td>
             </tr>
             <tr>
-                <td><b>Plats och adress</b><%-- <i>Ange gärna adress</i>--%>:</td>
+                <td><b>Plats och adress</b>:</td>
                 <td colspan="2">
                     <asp:TextBox ID="textBoxAgreementLocation" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
                 </td>
             </tr>
             <tr>
-                <td><b>Kontaktperson:</b></td>
+                <td><b>Kontaktperson</b>:</td>
                 <td colspan="2">
                     <asp:TextBox ID="textBoxAgreementContact" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
-                <td><b>Mobil:</b></td>
+                <td><b>Mobil</b>:</td>
                 <td colspan="2">
                     <asp:TextBox ID="textBoxAgreementMobile" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
-                <td><b>E-post kontaktperson:</b></td>
+                <td><b>E-post kontaktperson</b>:</td>
                 <td colspan="2">
                     <asp:TextBox ID="textBoxAgreementEmail" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
-                <td><b>Ersättning:</b></td>
+                <td><b>Ersättning</b>:</td>
                 <td>
-                    <asp:TextBox ID="textBoxAgreementCompensation" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="textBoxAgreementCompensation" CssClass="compensation form-control" runat="server"></asp:TextBox>
                 </td>
                 <td class="col-md-8">SEK + moms. Eventualla resekostnader och logi tillkommer.</td>
             </tr>
             <tr>
-                <td><b>Betalningsvillkor:</b></td>
+                <td><b>Betalningsvillkor</b>:</td>
                 <td colspan="2">
                     <%= agreement.PaymentTerms %>
                 </td>
@@ -227,12 +244,16 @@
         <table style="width:100%" cellpadding="3">
             <tr>
                 <td>Ort och Datum</td>
-                <td>Stockholm den <%= DateTime.Now.ToString("d MMM yyy") %></td>
+                <td>
+                    <asp:TextBox ID="textBoxAgreementDateSigned" CssClass="date form-control" runat="server"></asp:TextBox>
+                </td>
                 <td class="col-md-1"></td>
                 <td>Stockholm den <%= agreement.Date.Value.ToString("d MMM yyyy") %></td>
             </tr>
             <tr>
-                <td>Signatur</td>
+                <td>
+                    Signatur <i>Ange namn och titel på den som ska signera avtalet</i>
+                </td>
                 <td></td>
                 <td></td>
                 <td><img src="uploads/<%= company.Signature %>" /></td>
@@ -240,7 +261,7 @@
             <tr>
                 <td>Namn</td>
                 <td>
-                    <asp:TextBox ID="TextBox1" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="textBoxAgreementCustomerName" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
                 <td></td>
                 <td>
@@ -251,7 +272,7 @@
             <tr>
                 <td>Titel</td>
                 <td>
-                    <asp:TextBox ID="TextBox2" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="textBoxAgreementCustomerTitle" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
                 <td></td>
                 <td></td>
@@ -259,7 +280,7 @@
             <tr>
                 <td>Företag</td>
                 <td>
-                    <asp:TextBox ID="TextBox3" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="textBoxAgreementCustomerCompany" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
                 <td></td>
                 <td></td>
