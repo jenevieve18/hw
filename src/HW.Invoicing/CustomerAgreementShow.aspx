@@ -228,7 +228,8 @@
         </table>
 
         <br />
-        <p><b>Övrig information</b> <i>Beskriv gärna målgruppen här.</i><br />
+        <p>
+            <b>Övrig information</b> <i>Beskriv gärna målgruppen här.</i><br />
             <asp:TextBox ID="textBoxAgreementOtherInformation" CssClass="form-control" runat="server" TextMode="MultiLine" Height="210"></asp:TextBox><br />
         </p>
         
@@ -241,7 +242,7 @@
             <li>Till detta Huvudavtal tillkommer, förutom Rider, även tillhörande bilaga om Avtalsvillkor. Genom undertecknandet av detta Huvudavtal godkänner Parterna, förutom Huvudavtalet, även tillhörande Avtalsvillkor.</li>
         </ol>
 
-        <table style="width:100%" cellpadding="3">
+        <table style="width:100%" cellpadding="2">
             <tr>
                 <td>Ort och Datum</td>
                 <td>

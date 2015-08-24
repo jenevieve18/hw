@@ -8,10 +8,9 @@
 //------------------------------------------------------------------------------
 
 namespace HW.Invoicing {
-
-
-    public partial class CustomerAgreementAccepted
-    {
+    
+    
+    public partial class CustomerAgreementAccepted {
         
         /// <summary>
         /// Head1 control.

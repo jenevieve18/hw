@@ -88,108 +88,132 @@
 <body>
     <form id="form1" runat="server">
     <div class="container">
-    
-        <img src="uploads/<%= company.InvoiceLogo %>" />
-        <table style="width:100%;" cellpadding="3">
+        <table style="width:100%">
             <tr>
-                <td><b>Kund (Ange: Företagsnamn, Postadress och Org.nr)</b></td>
+                <td valign="bottom"><img src="uploads/<%= company.InvoiceLogo %>" /></td>
+                <td valign="bottom"><b>Engagemangsavtal nummer HCGE-<%= agreement.Id.ToString("000") %></b></td>
+            </tr>
+        </table>
+        <p></p>
+        <table style="width:100%;" cellpadding="2">
+            <tr>
+                <td><b>Kund</b> <i>Ange: Företagsnamn, Postadress och Organisationsnummer</i></td>
                 <td><b>Agentur</b></td>
             </tr>
             <tr>
                 <td>
-                    <%--<asp:TextBox ID="TextBox12" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>--%>
-                    <%= Session["TextBox12"]%>
+                    <table style="width:100%" cellpadding="2">
+                        <tr>
+                            <td><b>Företagsnamn</b></td>
+                            <td class="col-md-10">
+                                <%= Session["CustomerName"] %>
+                                <%--<asp:TextBox ID="textBoxCustomerName" CssClass="form-control" runat="server"></asp:TextBox>--%>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Postadress</b></td>
+                            <td class="col-md-10">
+                                <%= Session["CustomerAddress"] %>
+                                <%--<asp:TextBox ID="textBoxCustomerAddress" CssClass="form-control" runat="server" TextMode="MultiLine" Height="100"></asp:TextBox>--%>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Organisationsnummer</b></td>
+                            <td class="col-md-10">
+                                <%= Session["CustomerNumber"] %>
+                                <%--<asp:TextBox ID="textBoxCustomerNumber" CssClass="form-control" runat="server"></asp:TextBox>--%>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Faktureringsadress</b></td>
+                            <td class="col-md-10">
+                                <%= Session["CustomerInvoiceAddress"] %>
+                                <%--<asp:TextBox ID="textBoxCustomerInvoiceAddress" CssClass="form-control" runat="server" TextMode="MultiLine" Height="100"></asp:TextBox>--%>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Eventuellt referensnummer</b></td>
+                            <td class="col-md-10">
+                                <%= Session["CustomerReferenceNumber"] %>
+                                <%--<asp:TextBox ID="textBoxCustomerReferenceNumber" CssClass="form-control" runat="server"></asp:TextBox>--%>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
-                <td>
-                    <%--<asp:TextBox ID="TextBox13" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>--%>
-                    <%= Session["TextBox13"]%>
+                <td valign="top">
+                    <%= company.ToString().Replace("\n", "<br>") %>
                 </td>
             </tr>
         </table>
         <p></p>
         <p>Mellan ovanstående parter har avtal om engagemang träffats enligt följande:</p>
-        <table style="width:100%" cellpadding="3">
+        <table style="width:100%" cellpadding="2">
             <tr>
-                <td class="label-width"><b>Föreläsare:</b></td>
-                <td colspan="3">
-                    <%--<asp:TextBox ID="TextBox2" CssClass="form-control" runat="server"></asp:TextBox>--%>
-                    <%= Session["AgreementLecturer"] %>
+                <td><b>Föreläsare:</b></td>
+                <td class="col-md-9" colspan="2">
+                    <%= agreement.Lecturer %>
                 </td>
             </tr>
             <tr>
-                <td><b>Datum för föreläsningen:</b></td>
-                <td colspan="3">
-                    <%--<asp:TextBox ID="TextBox3" CssClass="form-control" runat="server"></asp:TextBox>--%>
+                <td><b>Datum för föreläsningen</b>:</td>
+                <td colspan="2">
                     <%= Session["AgreementDate"]%>
                 </td>
             </tr>
             <tr>
-                <td><b>Speltid:</b></td>
-                <td colspan="3">
-                    <%--<asp:TextBox ID="TextBox4" CssClass="form-control" runat="server"></asp:TextBox>--%>
+                <td><b>Speltid</b>:</td>
+                <td colspan="2">
                     <%= Session["AgreementRuntime"]%>
                 </td>
             </tr>
             <tr>
-                <td><b>Föreläsningstitel:</b></td>
-                <td colspan="3">
-                    <%--<asp:TextBox ID="TextBox5" CssClass="form-control" runat="server"></asp:TextBox>--%>
+                <td><b>Föreläsningstitel</b>:</td>
+                <td colspan="2">
                     <%= Session["AgreementLectureTitle"]%>
                 </td>
             </tr>
             <tr>
-                <td><b>Plats:</b></td>
-                <td colspan="3">
-                    <%--<asp:TextBox ID="TextBox6" CssClass="form-control" runat="server"></asp:TextBox>--%>
+                <td><b>Plats och adress</b>:</td>
+                <td colspan="2">
                     <%= Session["AgreementLocation"]%>
                 </td>
             </tr>
             <tr>
-                <td><b>Kontaktperson:</b></td>
+                <td><b>Kontaktperson</b>:</td>
+                <td colspan="2">
+                    <%= Session["AgreementContact"]%>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Mobil</b>:</td>
+                <td colspan="2">
+                    <%= Session["AgreementMobile"]%>
+                </td>
+            </tr>
+            <tr>
+                <td><b>E-post kontaktperson</b>:</td>
+                <td colspan="2">
+                    <%= Session["AgreementEmail"]%>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Ersättning</b>:</td>
                 <td>
-                    <%--<asp:TextBox ID="TextBox7" CssClass="form-control" runat="server"></asp:TextBox>--%>
-                    <%= Session["TextBox7"]%>
+                    <%= Session["AgreementCompensation"]%>
                 </td>
-                <td><b>Mobil:</b></td>
-                <td>
-                    <%--<asp:TextBox ID="TextBox14" CssClass="form-control" runat="server"></asp:TextBox>--%>
-                    <%= Session["TextBox14"]%>
-                </td>
+                <td class="col-md-8">SEK + moms. Eventualla resekostnader och logi tillkommer.</td>
             </tr>
             <tr>
-                <td><b>E-post kontaktperson:</b></td>
-                <td colspan="3">
-                    <%--<asp:TextBox ID="TextBox8" CssClass="form-control" runat="server"></asp:TextBox>--%>
-                    <%= Session["TextBox8"]%>
-                </td>
-            </tr>
-            <tr>
-                <td><b>Ersättning:</b></td>
-                <td colspan="3">
-                    <%--<asp:TextBox ID="TextBox9" CssClass="form-control" runat="server"></asp:TextBox>--%>
-                    <%= Session["TextBox9"]%>
-                </td>
-            </tr>
-            <tr>
-                <td><b>Betalningsvillkor:</b></td>
-                <td colspan="3">
-                    <%--<asp:TextBox ID="TextBox10" CssClass="form-control" runat="server"></asp:TextBox>--%>
-                    <%= Session["TextBox10"]%>
-                </td>
-            </tr>
-            <tr>
-                <td><b>Faktureringsadress och eventuellt referensnummer:</b></td>
-                <td colspan="3">
-                    <%--<asp:TextBox ID="TextBox11" CssClass="form-control" runat="server"></asp:TextBox>--%>
-                    <%= Session["TextBox11"]%>
+                <td><b>Betalningsvillkor</b>:</td>
+                <td colspan="2">
+                    <%= Session["AgreementPaymentTerms"]%>
                 </td>
             </tr>
         </table>
 
         <br />
         <p>
-            <b>Övrig information</b><br />
-            <%--<asp:TextBox ID="TextBox1" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox><br />--%>
+            <b>Övrig information</b> <i>Beskriv gärna målgruppen här.</i><br />
             <%= Session["TextBox1"]%>
         </p>
         
@@ -197,12 +221,61 @@
 
         <b>Övriga villkor och önskemål</b>
         <ol>
-        <li>Inga ändringar får göras i detta avtal efter utskrift.</li>
-        <li>Teknik: Föreläsaren tar med sig egen dator (Mac) och behöver tillgång till projektor med VGA-, Thunderbolt- eller HDMI-sladd. Headsetmikrofon och ljudsladd till datorn så att ljud kan spelas upp därifrån önskas.</li>
-        <li>Till detta Huvudavtal tillkommer, förutom Rider, även tillhörande bilaga om Avtalsvillkor. Genom undertecknandet av detta Huvudavtal godkänner Parterna, förutom Huvudavtalet, även tillhörande Avtalsvillkor.</li>
+            <li>Inga ändringar får göras i detta avtal efter utskrift.</li>
+            <li>Teknik: Föreläsaren tar med sig egen dator (Mac) och behöver tillgång till projektor med VGA-, Thunderbolt- eller HDMI-sladd. Headsetmikrofon och ljudsladd till datorn så att ljud kan spelas upp därifrån önskas.</li>
+            <li>Till detta Huvudavtal tillkommer, förutom Rider, även tillhörande bilaga om Avtalsvillkor. Genom undertecknandet av detta Huvudavtal godkänner Parterna, förutom Huvudavtalet, även tillhörande Avtalsvillkor.</li>
         </ol>
 
-        <table style="width:100%" cellpadding="3">
+        <table style="width:100%" cellpadding="2">
+            <tr>
+                <td>Ort och Datum</td>
+                <td>
+                    <%= Session["AgreementDateSigned"] %>
+                </td>
+                <td class="col-md-1"></td>
+                <td>Stockholm den <%= agreement.Date.Value.ToString("d MMM yyyy") %></td>
+            </tr>
+            <tr>
+                <td>
+                    Signatur <i>Ange namn och titel på den som ska signera avtalet</i>
+                </td>
+                <td></td>
+                <td></td>
+                <td><img src="uploads/<%= company.Signature %>" /></td>
+            </tr>
+            <tr>
+                <td>Namn</td>
+                <td>
+                    <%= Session["AgreementCustomerName"] %>
+                    <%--<asp:TextBox ID="textBoxAgreementCustomerName" CssClass="form-control" runat="server"></asp:TextBox>--%>
+                </td>
+                <td></td>
+                <td>
+                    Dan Hasson, VD<br />
+                    Hasson Consulting Group AB
+                </td>
+            </tr>
+            <tr>
+                <td>Titel</td>
+                <td>
+                    <%= Session["AgreementCustomerTitle"] %>
+                    <%--<asp:TextBox ID="textBoxAgreementCustomerTitle" CssClass="form-control" runat="server"></asp:TextBox>--%>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Företag</td>
+                <td>
+                    <%= Session["AgreementCustomerCompany"] %>
+                    <%--<asp:TextBox ID="textBoxAgreementCustomerCompany" CssClass="form-control" runat="server"></asp:TextBox>--%>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+
+        <%--<table style="width:100%" cellpadding="2">
             <tr>
                 <td colspan="3">Ort och Datum</td>
             </tr>
@@ -220,11 +293,86 @@
                     Hasson Consulting Group AB
                 </td>
             </tr>
-        </table>
+        </table>--%>
         <br />
-
+<%--
         <%= company.Terms.Replace("\n", "<br>") %>
-                
+                --%>
+<h3>Avtalsvillkor</h3>
+
+<p><strong>1. Gemensamma villkor</strong></p>
+
+<p>1.1 I och med undertecknandet av Huvudavtalet till denna bilaga godk&auml;nner Kundenoch Agenturen villkoren i denna bilaga.</p>
+
+<p>1.2 Eventuella anm&auml;rkningar som ber&ouml;r artistiskt material eller framf&ouml;rande kringengagemanget enligt detta avtal utg&ouml;r inte grund f&ouml;r skadest&aring;ndsanspr&aring;k.</p>
+
+<p>1.3 Merv&auml;rdesskatt och kostnader f&ouml;r resa och boende tillkommer p&aring; avtaladers&auml;ttning. Agenturen har r&auml;tt att i efterhand debitera merv&auml;rdesskatt enligt besluttagna av myndigheter. Anm&auml;rkningar mot fakturerade tj&auml;nster som l&auml;mnassenare &auml;n &aring;tta (8) dagar efter mottagen faktura beaktas inte.</p>
+
+<p>1.4 Vid eventuella skador, olyckor eller andra h&auml;ndelser som leder till f&ouml;rs&auml;kringsfallskall den v&aring;llande parten &auml;ven st&aring; f&ouml;r den skadelidandes sj&auml;lvrisk.</p>
+
+<p>1.5 Agenturen f&ouml;rbeh&aring;ller sig r&auml;tten att ensidigt &auml;ndra betalningsvillkoren ochefterdebitera dr&ouml;jsm&aring;lsr&auml;ntan vid f&ouml;rsent inkommen betalning samt avmyndigheter eventuellt beslutade f&ouml;r&auml;ndringar av skatter och/eller avgifter.Agenturen skall upplysa Kunden om dessa f&ouml;rh&aring;llanden f&ouml;re fakturering enligtde nya villkoren.</p>
+
+<p><strong>2. Kundens &aring;taganden</strong></p>
+
+<p>2.1 Kunden ansvarar f&ouml;r att en erforderlig och giltig ansvarsf&ouml;rs&auml;kring omfattandeengagemanget i sin helhet finns.</p>
+
+<p>2.2 Kunden svarar f&ouml;r produktionens och Gruppens/Artistens/F&ouml;redragsh&aring;llarens s&auml;kerhet p&aring; platsen f&ouml;rengagemanget. Om s&aring; erfordras skall Kundens egna eller f&ouml;rordnadeordningsvakter finnas.</p>
+
+<p>2.3 Kunden f&aring;r i f&ouml;rekommande fall g&auml;rna tillhandah&aring;lla ett l&aring;sbart eller bevakat omkl&auml;dningsrum med tillg&aring;ngtill toalett, spegel, dricksvatten och i f&ouml;rekommande fall dusch och mat.</p>
+
+<p>2.4 Kunden &auml;r, i de fall denne st&aring;r f&ouml;r ljud-/ljusanl&auml;ggning, skyldig att tillse attutrustningen &auml;r i funktionsdugligt skick och motsvarar de krav Artisten st&auml;llt.</p>
+
+<p>2.5 Kunden ansvarar f&ouml;r att inga ljud- och/eller videoinspelningar av Artistensframtr&auml;dande f&aring;r f&ouml;rekomma utan samtycke fr&aring;n Agenturen och f&ouml;redragsh&aring;llaren.</p>
+
+<p>2.6 I de fall Kunden &auml;r en artistf&ouml;rmedlare f&aring;r Kundens p&aring;slag till slutkund f&aring;r inte &ouml;verstiga 20 % av det &ouml;verenskomna prisetmed Agenturen. Agenturen har r&auml;tt att fr&aring;ga slutkund om slutpriset. InnanAgenturen kontaktar slutkunden skall Kunden underr&auml;ttas.</p>
+
+<p><strong>3. Agenturens &aring;taganden</strong></p>
+
+<p>3.1 Agenturen ansvarar f&ouml;r att Artisten har g&auml;llande f&ouml;rs&auml;kringar f&ouml;r sig sj&auml;lv och f&ouml;rsin egendom.</p>
+
+<p>3.2 Agenturen garanterar att andra avtal inte hindrar eller st&ouml;r &aring;tagandenenligt detta avtal.</p>
+
+<p>3.3 Agenturen ansvarar f&ouml;r att Artisten f&ouml;ljer de regler och anvisningar som Kundenuppr&auml;ttat p&aring; platsen f&ouml;r engagemanget.</p>
+
+<p>3.4 S&aring; snart Artisten intagit och/eller p&aring;b&ouml;rjat sitt framtr&auml;dande betraktas Agenturensuppdrag som genomf&ouml;rt. Detta g&auml;ller &auml;ven i de fall engagemanget inte kangenomf&ouml;ras p&aring; avsett s&auml;tt p&aring; grund av bristande f&ouml;ruts&auml;ttningar som Kundensvarar f&ouml;r.</p>
+
+<p>3.5 Agenturen &auml;r vid Artistens sjukdomsfall, eller andra dylika personligaomst&auml;ndigheter som g&ouml;r Artisten of&ouml;rm&ouml;gen att delta i engagemanget, skyldig attomedelbart meddela Kunden. Sjukdom skall styrkas med l&auml;karintyg. Agenturensoch Kundens &aring;taganden enligt detta avtal upph&auml;vs vid s&aring;dana omst&auml;ndigheter.</p>
+
+<p>Agenturen skall, i dessa fall, efter b&auml;sta f&ouml;rm&aring;ga f&ouml;rs&ouml;ka finna en l&auml;mplig ers&auml;ttare. Om Kunden inte anser att artistens ers&auml;ttare uppfyller de krav somKunden st&auml;ller eller &auml;r l&auml;mplig annulleras avtalet.</p>
+
+<p><strong>4. Avbokningsregler</strong></p>
+
+<p>4.1 Ett undertecknat exemplar av Huvudavtalet skall returneras till Agenturen inomfjorton (14) dagar efter best&auml;llningen f&ouml;r att vara giltigt, f&ouml;rutsatt att avtalet &auml;ruts&auml;nt i tid som m&ouml;jligg&ouml;r detta, annars 14 dagar efter att Kunden erh&aring;llit avtalet. Med best&auml;llningsdatum avses den dag d&aring;Agenturen och Kunden muntligen &ouml;verenskom om engagemanget, tid, plats,artist, ers&auml;ttning etc. F&ouml;r det fall avtalet ej returnerats i enlighet med dessabest&auml;mmelser &auml;ger Agenturen r&auml;tt att h&auml;va avtalet. Innan s&aring; sker &auml;r Agenturenskyldig att informera Kunden d&auml;rom. Om Kunden annullerar best&auml;llningentill&auml;mpas g&auml;llande avbokningsavgifter.</p>
+
+<p>4.2 Vid engagemangsdatum inom fjorton (14) dagar fr&aring;n best&auml;llningen kr&auml;vsomg&aring;ende retur av det undertecknade Huvudavtalet till Agenturen. Om Kundenannullerar best&auml;llningen inom samma tid skall ers&auml;ttning erl&auml;ggas till Agenturenenligt g&auml;llande avbokningsavgifter.</p>
+
+<p><strong>5. Avbokningsavgift</strong></p>
+
+<p>5.1 Vid avbokning under en period fram till en (1) m&aring;nad f&ouml;re engagemangeterl&auml;gger Kunden till Agenturen en avbokningsavgift om 10 % + merv&auml;rdesskatt av &ouml;verenskommen ers&auml;ttning.</p>
+
+<p>5.2 Vid avbokning i perioden en (1) m&aring;nad till tv&aring; (2) veckor f&ouml;re engagemangeterl&auml;gger Kunden till Agenturen 50 % + merv&auml;rdesskatt av&ouml;verenskommen ers&auml;ttning.</p>
+
+<p>5.3 Vid avbokning vid mindre &auml;n fjorton (14) dagar f&ouml;re engagemanget erl&auml;ggerKunden till Agenturen hela den &ouml;verenskomna ers&auml;ttningen +merv&auml;rdesskatt.</p>
+
+<p><strong>6. Force majeure</strong></p>
+
+<p>Force majeure befriar Agenturen och Kunden fr&aring;n alla &aring;taganden enligt dettaavtal. Som force majeure r&auml;knas krig, politiska omv&auml;lvningar, strejk, lock-out,eldsv&aring;da, naturkatastrofer, som t.ex. askmoln, &ouml;versv&auml;mningar, sn&ouml;stormar, ellerandra f&ouml;rh&aring;llanden av j&auml;mf&ouml;rbar natur. D&aring;ligt v&auml;der betraktas inte som forcemajeure. Det &aring;ligger Agenturen och Kunden att r&auml;tta sin planering efter r&aring;dandeoch t&auml;nkbara omst&auml;ndigheter.</p>
+
+<p><strong>7. Sekretess</strong></p>
+
+<p>Agenturen och Kunden skall behandla uppgifterna i Huvudavtalet r&ouml;randeengagemanget samt parternas inb&ouml;rdes f&ouml;rh&aring;llande konfidentiellt, och inteavsl&ouml;ja s&aring;dan information f&ouml;r annan. Detta &aring;tagande skall g&auml;lla &auml;ven efter avtalethar upph&ouml;rt.</p>
+
+<p><strong>8. Avtalsbrott</strong></p>
+
+<p>Om Agenturen eller Kunden bryter mot best&auml;mmelserna i detta avtal samt attden felande parten inte inom trettio (30) dagar efter skriftligen uppmaningvidtagit r&auml;ttelse, har motparten r&auml;tt att med omedelbar verkan s&auml;ga upp dettaavtal i f&ouml;rh&aring;llande till den felande parten. Respektive part har r&auml;tt att kr&auml;va denfelande parten p&aring; utebliven eller f&ouml;rv&auml;ntat ers&auml;ttning.</p>
+
+<p><strong>9. Tvister</strong></p>
+
+<p>Svensk lag skall till&auml;mpas p&aring; detta avtal. Eventuella tvister skall avg&ouml;ras i f&ouml;rsta hand via muntlig f&ouml;rhandling i god ton och i andra han avallm&auml;n domstol med Stockholms tingsr&auml;tt som f&ouml;rsta instans.</p>
+
+<p>&nbsp;</p>
+
+
         <br />
         <p>
             <asp:Button ID="buttonBack" runat="server" Text="<< Back to edit contract" CssClass="btn btn-warning" OnClick="buttonBackClick" />
