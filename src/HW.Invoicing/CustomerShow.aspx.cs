@@ -256,7 +256,6 @@ namespace HW.Invoicing
             {
                 Date = ConvertHelper.ToDateTime(textBoxAgreementDate.Text),
                 Lecturer = textBoxAgreementLecturer.Text,
-                //LectureDate = ConvertHelper.ToDateTime(textBoxAgreementLectureDate.Text),
                 Runtime = textBoxAgreementRuntime.Text,
                 LectureTitle = textBoxAgreementLectureTitle.Text,
                 Location = textBoxAgreementLocation.Text,

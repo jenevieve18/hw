@@ -8,10 +8,9 @@
 //------------------------------------------------------------------------------
 
 namespace HW.Invoicing {
-
-
-    public partial class CustomerAgreementShow
-    {
+    
+    
+    public partial class CustomerAgreementShow {
         
         /// <summary>
         /// Head1 control.
@@ -50,112 +49,112 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox TextBox13;
         
         /// <summary>
-        /// TextBox2 control.
+        /// textBoxAgreementLecturer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox2;
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementLecturer;
         
         /// <summary>
-        /// TextBox3 control.
+        /// textBoxAgreementDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox3;
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementDate;
         
         /// <summary>
-        /// TextBox4 control.
+        /// textBoxAgreementRuntime control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox4;
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementRuntime;
         
         /// <summary>
-        /// TextBox5 control.
+        /// textBoxAgreementLectureTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox5;
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementLectureTitle;
         
         /// <summary>
-        /// TextBox6 control.
+        /// textBoxAgreementLocation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox6;
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementLocation;
         
         /// <summary>
-        /// TextBox7 control.
+        /// textBoxAgreementContact control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox7;
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementContact;
         
         /// <summary>
-        /// TextBox14 control.
+        /// textBoxAgreementMobile control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox14;
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementMobile;
         
         /// <summary>
-        /// TextBox8 control.
+        /// textBoxAgreementEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox8;
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementEmail;
         
         /// <summary>
-        /// TextBox9 control.
+        /// textBoxAgreementCompensation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox9;
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementCompensation;
         
         /// <summary>
-        /// TextBox10 control.
+        /// textBoxAgreementPaymentTerms control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox10;
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementPaymentTerms;
         
         /// <summary>
-        /// TextBox11 control.
+        /// textBoxAgreementBillingAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox11;
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementBillingAddress;
         
         /// <summary>
-        /// TextBox1 control.
+        /// textBoxAgreementOtherInformation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementOtherInformation;
         
         /// <summary>
         /// buttonNext control.

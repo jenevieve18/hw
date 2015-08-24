@@ -12,41 +12,56 @@ namespace HW.Invoicing
 {
     public partial class CustomerAgreementShow : System.Web.UI.Page
     {
-        SqlCompanyRepository r = new SqlCompanyRepository();
+        SqlCompanyRepository cr = new SqlCompanyRepository();
         protected Company company;
-        SqlCustomerRepository cr = new SqlCustomerRepository();
+        SqlCustomerRepository r = new SqlCustomerRepository();
+        CustomerAgreement a;
         Customer customer;
+        int id;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            company = r.Read(ConvertHelper.ToInt32(Request["Id"]));
-            HtmlHelper.RedirectIf(company == null, "companies.aspx");
+            id = ConvertHelper.ToInt32(Request["Id"]);
 
-            customer = cr.Read(ConvertHelper.ToInt32(Request["CustomerId"]));
+            a = r.ReadAgreement(id);
+            HtmlHelper.RedirectIf(a == null, "customers.aspx");
+
+            company = cr.Read(ConvertHelper.ToInt32(Request.QueryString["CompanyId"]));
+
+            customer = r.Read(ConvertHelper.ToInt32(Request["CustomerId"]));
             
-            if (customer != null)
+            if (a != null)
             {
+                textBoxAgreementLecturer.Text = a.Lecturer;
+                textBoxAgreementDate.Text = a.Date.Value.ToString("yyyy-MM-dd");
+                textBoxAgreementRuntime.Text = a.Runtime;
+                textBoxAgreementLectureTitle.Text = a.LectureTitle;
+                textBoxAgreementContact.Text = a.Contact;
+                textBoxAgreementMobile.Text = a.Mobile;
+                textBoxAgreementEmail.Text = a.Email;
+                textBoxAgreementCompensation.Text = a.Compensation;
+                textBoxAgreementPaymentTerms.Text = a.PaymentTerms;
+                textBoxAgreementBillingAddress.Text = a.BillingAddress;
+                textBoxAgreementOtherInformation.Text = a.OtherInformation;
             }
         }
 
         protected void buttonNextClick(object sender, EventArgs e)
         {
-            Session["TextBox1"] = TextBox1.Text;
-            Session["TextBox2"] = TextBox2.Text;
-            Session["TextBox3"] = TextBox3.Text;
-            Session["TextBox4"] = TextBox4.Text;
-            Session["TextBox5"] = TextBox5.Text;
-            Session["TextBox6"] = TextBox6.Text;
-            Session["TextBox7"] = TextBox7.Text;
-            Session["TextBox8"] = TextBox8.Text;
-            Session["TextBox9"] = TextBox9.Text;
-            Session["TextBox10"] = TextBox10.Text;
-            Session["TextBox11"] = TextBox11.Text;
-            Session["TextBox12"] = TextBox12.Text;
-            Session["TextBox13"] = TextBox13.Text;
-            Session["TextBox14"] = TextBox14.Text;
+            Session["AgreementLecturer"] = textBoxAgreementLecturer.Text;
+            Session["AgreementDate"] = textBoxAgreementDate.Text;
+            Session["AgreementRuntime"] = textBoxAgreementRuntime.Text;
+            Session["AgreementLectureTitle"] = textBoxAgreementLectureTitle.Text;
+            Session["AgreementLocation"] = textBoxAgreementLocation.Text;
+            Session["AgreementContact"] = textBoxAgreementContact.Text;
+            Session["AgreementMobile"] = textBoxAgreementMobile.Text;
+            Session["AgreementEmail"] = textBoxAgreementEmail.Text;
+            Session["AgreementCompensation"] = textBoxAgreementCompensation.Text;
+            Session["AgreementPaymentTerms"] = textBoxAgreementPaymentTerms.Text;
+            Session["AgreementBillingAddress"] = textBoxAgreementBillingAddress.Text;
+            Session["AgreementOtherInformation"] = textBoxAgreementOtherInformation.Text;
 
-            Response.Redirect(string.Format("companytermsaccepted.aspx?Id={0}", company.Id));
+            Response.Redirect(string.Format("customeragreementaccepted.aspx?Id={0}&CompanyId={1}&CustomerId={2}", id, company.Id, customer.Id));
         }
     }
 }

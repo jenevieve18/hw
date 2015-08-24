@@ -17,7 +17,7 @@ namespace HW.Invoicing
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            company = r.Read(ConvertHelper.ToInt32(Request["Id"]));
+            company = r.Read(ConvertHelper.ToInt32(Request["CompanyId"]));
             if (company == null)
             {
                 Response.Redirect("companies.aspx");

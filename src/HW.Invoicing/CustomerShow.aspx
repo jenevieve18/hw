@@ -1063,7 +1063,7 @@
                         <td><%= a.Email %></td>
                         <td>
                             <%= HtmlHelper.Anchor(" ", string.Format("customeragreementedit.aspx?Id={0}&CustomerId={1}", a.Id, id), "title='Edit' class='glyphicon glyphicon-edit'")%>
-                            <%= HtmlHelper.Anchor("Show", string.Format("customeragreementshow.aspx?Id={0}&CustomerId={1}", a.Id, id), "title='Show' class=''")%>
+                            <%= HtmlHelper.Anchor("Show", string.Format("customeragreementshow.aspx?Id={0}&CompanyId={2}&CustomerId={1}", a.Id, id, companyId), "title='Show' class=''")%>
                             <%= HtmlHelper.Anchor(" ", string.Format("customeragreementdeactivate.aspx?Id={0}&CustomerId={1}", a.Id, id), "title='Deactivate' class='glyphicon glyphicon-minus'")%>
                             <%= HtmlHelper.Anchor(" ", string.Format("customeragreementsend.aspx?Id={0}&CustomerId={1}", a.Id, id), "title='Send agreement' class='glyphicon glyphicon-envelope'")%>
                         </td>

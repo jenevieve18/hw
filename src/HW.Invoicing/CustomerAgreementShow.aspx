@@ -115,68 +115,68 @@
             <tr>
                 <td class="label-width"><b>Föreläsare:</b></td>
                 <td colspan="3">
-                    <asp:TextBox ID="TextBox2" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="textBoxAgreementLecturer" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
                 <td><b>Datum för föreläsningen:</b></td>
                 <td colspan="3">
-                    <asp:TextBox ID="TextBox3" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="textBoxAgreementDate" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
                 <td><b>Speltid:</b></td>
-                <td colspan="3"><asp:TextBox ID="TextBox4" CssClass="form-control" runat="server"></asp:TextBox></td>
+                <td colspan="3"><asp:TextBox ID="textBoxAgreementRuntime" CssClass="form-control" runat="server"></asp:TextBox></td>
             </tr>
             <tr>
                 <td><b>Föreläsningstitel:</b></td>
                 <td colspan="3">
-                    <asp:TextBox ID="TextBox5" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="textBoxAgreementLectureTitle" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
                 <td><b>Plats:</b></td>
                 <td colspan="3">
-                    <asp:TextBox ID="TextBox6" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="textBoxAgreementLocation" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
                 <td><b>Kontaktperson:</b></td>
                 <td>
-                    <asp:TextBox ID="TextBox7" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="textBoxAgreementContact" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
                 <td><b>Mobil:</b></td>
                 <td>
-                    <asp:TextBox ID="TextBox14" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="textBoxAgreementMobile" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
                 <td><b>E-post kontaktperson:</b></td>
-                <td colspan="3"><asp:TextBox ID="TextBox8" CssClass="form-control" runat="server"></asp:TextBox></td>
+                <td colspan="3"><asp:TextBox ID="textBoxAgreementEmail" CssClass="form-control" runat="server"></asp:TextBox></td>
             </tr>
             <tr>
                 <td><b>Ersättning:</b></td>
                 <td colspan="3">
-                    <asp:TextBox ID="TextBox9" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="textBoxAgreementCompensation" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
                 <td><b>Betalningsvillkor:</b></td>
                 <td colspan="3">
-                    <asp:TextBox ID="TextBox10" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="textBoxAgreementPaymentTerms" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
                 <td><b>Faktureringsadress och eventuellt referensnummer:</b></td>
                 <td colspan="3">
-                    <asp:TextBox ID="TextBox11" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="textBoxAgreementBillingAddress" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
             </tr>
         </table>
 
         <br />
         <p><b>Övrig information</b><br />
-        <asp:TextBox ID="TextBox1" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox><br />
+        <asp:TextBox ID="textBoxAgreementOtherInformation" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox><br />
         </p>
         
         <p>Detta engagemangavtal (Huvudavtal) är en skriftlig bekräftelse på en redan muntlig överenskommelse mellan ovan nämnda Agentur och Kund. Detta Huvudavtal skall tillsammans med tillhörande bilaga returneras till Agenturen inom 14 dagar från att beställningen gjorts. Vid engagemangsdatum inom 14 dagar från beställningen krävs omgående retur till Agenturen.</p>

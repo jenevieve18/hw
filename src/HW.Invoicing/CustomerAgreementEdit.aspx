@@ -26,10 +26,6 @@
 	        <label for="<%= textBoxAgreementDate.ClientID %>">Date</label>
             <asp:TextBox ID="textBoxAgreementDate" runat="server" CssClass="date form-control"></asp:TextBox>
         </div>
-        <%--<div class="form-group">
-	        <label for="<%= textBoxAgreementLectureDate.ClientID %>">Lecture Date</label>
-            <asp:TextBox ID="textBoxAgreementLectureDate" runat="server" CssClass="form-control"></asp:TextBox>
-        </div>--%>
         <div class="form-group">
 	        <label for="<%= textBoxAgreementRuntime.ClientID %>">Runtime</label>
             <asp:TextBox ID="textBoxAgreementRuntime" runat="server" CssClass="form-control"></asp:TextBox>
@@ -72,7 +68,7 @@
         </div>
 
         <div>
-            <asp:Button CssClass="btn btn-success" ID="buttonSave" runat="server" Text="Save customer note" 
+            <asp:Button CssClass="btn btn-success" ID="buttonSave" runat="server" Text="Save customer agreement" 
                 onclick="buttonSave_Click" />
                 or <i><%= HtmlHelper.Anchor("cancel", string.Format("customershow.aspx?Id={0}", customerId)) %></i>
         </div>
