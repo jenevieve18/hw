@@ -986,8 +986,52 @@
 						    </div>
 						    <div class="modal-body">
                                 <div class="form-group">
-	                                <label for="">Date</label>
+	                                <label for="<%= textBoxAgreementLecturer.ClientID %>">Lecturer</label>
+                                    <asp:TextBox ID="textBoxAgreementLecturer" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
+	                                <label for="<%= textBoxAgreementDate.ClientID %>">Date</label>
                                     <asp:TextBox ID="textBoxAgreementDate" runat="server" CssClass="form-control date"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
+	                                <label for="<%= textBoxAgreementRuntime.ClientID %>">Runtime</label>
+                                    <asp:TextBox ID="textBoxAgreementRuntime" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
+	                                <label for="<%= textBoxAgreementLectureTitle.ClientID %>">Lecture Title</label>
+                                    <asp:TextBox ID="textBoxAgreementLectureTitle" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
+	                                <label for="<%= textBoxAgreementLocation.ClientID %>">Location</label>
+                                    <asp:TextBox ID="textBoxAgreementLocation" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
+	                                <label for="<%= textBoxAgreementContact.ClientID %>">Contact</label>
+                                    <asp:TextBox ID="textBoxAgreementContact" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
+	                                <label for="<%= textBoxAgreementMobile.ClientID %>">Mobile</label>
+                                    <asp:TextBox ID="textBoxAgreementMobile" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
+	                                <label for="<%= textBoxAgreementEmail.ClientID %>">Email</label>
+                                    <asp:TextBox ID="textBoxAgreementEmail" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
+	                                <label for="<%= textBoxAgreementCompensation.ClientID %>">Compensation</label>
+                                    <asp:TextBox ID="textBoxAgreementCompensation" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
+	                                <label for="<%= textBoxAgreementPaymentTerms.ClientID %>">Payment Terms</label>
+                                    <asp:TextBox ID="textBoxAgreementPaymentTerms" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
+	                                <label for="<%= textBoxAgreementBillingAddress.ClientID %>">Billing Address</label>
+                                    <asp:TextBox ID="textBoxAgreementBillingAddress" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
+	                                <label for="<%= textBoxAgreementOtherInformation.ClientID %>">Other Information</label>
+                                    <asp:TextBox ID="textBoxAgreementOtherInformation" runat="server" CssClass="form-control"></asp:TextBox>
                                 </div>
 						    </div>
 						    <div class="modal-footer">
@@ -1004,15 +1048,24 @@
             <table class="table table-hover">
                 <tr>
                     <th>Date</th>
+                    <th>Lecturer</th>
+                    <th>Contact</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
                     <th></th>
                 </tr>
                 <% foreach (var a in agreements) { %>
                     <tr>
                         <td><%= a.Date.Value.ToString("yyyy-MM-dd") %></td>
+                        <td><%= a.Lecturer %></td>
+                        <td><%= a.Contact %></td>
+                        <td><%= a.Mobile %></td>
+                        <td><%= a.Email %></td>
                         <td>
                             <%= HtmlHelper.Anchor(" ", string.Format("customeragreementedit.aspx?Id={0}&CustomerId={1}", a.Id, id), "title='Edit' class='glyphicon glyphicon-edit'")%>
-                            <%= HtmlHelper.Anchor(" ", string.Format("custoeragreementdeactivate.aspx?Id={0}&CustomerId={1}", a.Id, id), "title='Deactivate' class='glyphicon glyphicon-minus'")%>
-                            <%= HtmlHelper.Anchor(" ", string.Format("custoeragreementsend.aspx?Id={0}&CustomerId={1}", a.Id, id), "title='Send agreement' class='glyphicon glyphicon-envelope'")%>
+                            <%= HtmlHelper.Anchor("Show", string.Format("customeragreementshow.aspx?Id={0}&CustomerId={1}", a.Id, id), "title='Show' class=''")%>
+                            <%= HtmlHelper.Anchor(" ", string.Format("customeragreementdeactivate.aspx?Id={0}&CustomerId={1}", a.Id, id), "title='Deactivate' class='glyphicon glyphicon-minus'")%>
+                            <%= HtmlHelper.Anchor(" ", string.Format("customeragreementsend.aspx?Id={0}&CustomerId={1}", a.Id, id), "title='Send agreement' class='glyphicon glyphicon-envelope'")%>
                         </td>
                     </tr>
                 <% } %>

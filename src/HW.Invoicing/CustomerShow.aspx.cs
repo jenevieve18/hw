@@ -254,7 +254,19 @@ namespace HW.Invoicing
         {
             var t = new CustomerAgreement
             {
-                Date = ConvertHelper.ToDateTime(textBoxAgreementDate.Text)
+                Date = ConvertHelper.ToDateTime(textBoxAgreementDate.Text),
+                Lecturer = textBoxAgreementLecturer.Text,
+                //LectureDate = ConvertHelper.ToDateTime(textBoxAgreementLectureDate.Text),
+                Runtime = textBoxAgreementRuntime.Text,
+                LectureTitle = textBoxAgreementLectureTitle.Text,
+                Location = textBoxAgreementLocation.Text,
+                Contact = textBoxAgreementContact.Text,
+                Mobile = textBoxAgreementMobile.Text,
+                Email = textBoxAgreementEmail.Text,
+                Compensation = textBoxAgreementCompensation.Text,
+                PaymentTerms = textBoxAgreementPaymentTerms.Text,
+                BillingAddress = textBoxAgreementBillingAddress.Text,
+                OtherInformation = textBoxAgreementOtherInformation.Text,
             };
             r.SaveAgreement(t, id);
             Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=agreements", id));

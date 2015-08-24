@@ -229,14 +229,25 @@ WHERE Id = @Id"
         {
             string query = string.Format(
                 @"
-INSERT INTO CustomerAgreement(CustomerId, Date)
-VALUES(@CustomerId, @Date)"
+INSERT INTO CustomerAgreement(CustomerId, Date, Lecturer, Runtime, LectureTitle, Location, Contact, Mobile, Email, Compensation, PaymentTerms, BillingAddress, OtherInformation)
+VALUES(@CustomerId, @Date, @Lecturer, @Runtime, @LectureTitle, @Location, @Contact, @Mobile, @Email, @Compensation, @PaymentTerms, @BillingAddress, @OtherInformation)"
             );
             ExecuteNonQuery(
                 query,
                 "invoicing",
                 new SqlParameter("@CustomerId", customerId),
-                new SqlParameter("@Date", agreement.Date)
+                new SqlParameter("@Date", agreement.Date),
+                new SqlParameter("@Lecturer", agreement.Lecturer),
+                new SqlParameter("@Runtime", agreement.Runtime),
+                new SqlParameter("@LectureTitle", agreement.LectureTitle),
+                new SqlParameter("@Location", agreement.Location),
+                new SqlParameter("@Contact", agreement.Contact),
+                new SqlParameter("@Mobile", agreement.Mobile),
+                new SqlParameter("@Email", agreement.Email),
+                new SqlParameter("@Compensation", agreement.Compensation),
+                new SqlParameter("@PaymentTerms", agreement.PaymentTerms),
+                new SqlParameter("@BillingAddress", agreement.BillingAddress),
+                new SqlParameter("@OtherInformation", agreement.OtherInformation)
             );
         }
 
@@ -396,6 +407,43 @@ WHERE Id = @Id"
                 new SqlParameter("@Id", id),
                 new SqlParameter("@Inactive", c.Inactive),
                 new SqlParameter("@Type", c.Type)
+            );
+        }
+
+        public void UpdateAgreement(CustomerAgreement a, int id)
+        {
+            string query = string.Format(
+                @"
+UPDATE CustomerAgreement SET Date = @Date,
+Lecturer = @Lecturer,
+Runtime = @Runtime,
+LectureTitle = @LectureTitle,
+Location = @Location,
+Contact = @Contact,
+Mobile = @Mobile,
+Email = @Email,
+Compensation = @Compensation,
+PaymentTerms = @PaymentTerms,
+BillingAddress = @BillingAddress,
+OtherInformation = @OtherInformation
+WHERE Id = @Id"
+            );
+            ExecuteNonQuery(
+                query,
+                "invoicing",
+                new SqlParameter("@Date", a.Date),
+                new SqlParameter("@Lecturer", a.Lecturer),
+                new SqlParameter("@Runtime", a.Runtime),
+                new SqlParameter("@LectureTitle", a.LectureTitle),
+                new SqlParameter("@Location", a.Location),
+                new SqlParameter("@Contact", a.Contact),
+                new SqlParameter("@Mobile", a.Mobile),
+                new SqlParameter("@Email", a.Email),
+                new SqlParameter("@Compensation", a.Compensation),
+                new SqlParameter("@PaymentTerms", a.PaymentTerms),
+                new SqlParameter("@BillingAddress", a.BillingAddress),
+                new SqlParameter("@OtherInformation", a.OtherInformation),
+                new SqlParameter("@Id", id)
             );
         }
 
@@ -716,6 +764,52 @@ WHERE Id = @Id"
             return c;
         }
 
+        public CustomerAgreement ReadAgreement(int id)
+        {
+            string query = string.Format(
+                @"
+SELECT Id,
+    Date,
+    Lecturer,
+    Runtime,
+    LectureTitle,
+    Location,
+    Contact,
+    Mobile,
+    Email,
+    Compensation,
+    PaymentTerms,
+    BillingAddress,
+    OtherInformation
+FROM CustomerAgreement
+WHERE Id = @Id"
+            );
+            CustomerAgreement a = null;
+            using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", id)))
+            {
+                if (rs.Read())
+                {
+                    a = new CustomerAgreement
+                    {
+                        Id = GetInt32(rs, 0),
+                        Date = GetDateTime(rs, 1),
+                        Lecturer = GetString(rs, 2),
+                        Runtime = GetString(rs, 3),
+                        LectureTitle = GetString(rs, 4),
+                        Location = GetString(rs, 5),
+                        Contact = GetString(rs, 6),
+                        Mobile = GetString(rs, 7),
+                        Email = GetString(rs, 8),
+                        Compensation = GetString(rs, 9),
+                        PaymentTerms = GetString(rs, 10),
+                        BillingAddress = GetString(rs, 11),
+                        OtherInformation = GetString(rs, 12)
+                    };
+                }
+            }
+            return a;
+        }
+
         public CustomerContact ReadContact(int id)
         {
             string query = string.Format(
@@ -922,7 +1016,19 @@ ORDER BY n.CreatedAt DESC"
         {
             string query = string.Format(
                 @"
-SELECT a.Date
+SELECT a.Id,
+    a.Date,
+    Lecturer,
+    Runtime,
+    LectureTitle,
+    Location,
+    Contact,
+    Mobile,
+    Email,
+    Compensation,
+    PaymentTerms,
+    BillingAddress,
+    OtherInformation
 FROM CustomerAgreement a
 WHERE CustomerId = @CustomerId
 ORDER BY a.Date DESC"
@@ -939,7 +1045,19 @@ ORDER BY a.Date DESC"
                     agreements.Add(
                         new CustomerAgreement
                         {
-                            Date = GetDateTime(rs, 0)
+                            Id = GetInt32(rs, 0),
+                            Date = GetDateTime(rs, 1),
+                            Lecturer = GetString(rs, 2),
+                            Runtime = GetString(rs, 3),
+                            LectureTitle = GetString(rs, 4),
+                            Location = GetString(rs, 5),
+                            Contact = GetString(rs, 6),
+                            Mobile = GetString(rs, 7),
+                            Email = GetString(rs, 8),
+                            Compensation = GetString(rs, 9),
+                            PaymentTerms = GetString(rs, 10),
+                            BillingAddress = GetString(rs, 11),
+                            OtherInformation = GetString(rs, 12)
                         }
                     );
                 }

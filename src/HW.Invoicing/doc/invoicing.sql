@@ -276,3 +276,18 @@ create table CustomerAgreement(
 );
 
 alter table Company add AgreementEmailSubject text;
+
+alter table CustomerAgreement add Lecturer varchar(255),
+LectureDate datetime,
+Runtime varchar(255),
+LectureTitle varchar(255),
+Location varchar(255),
+Contact varchar(255),
+Mobile varchar(255),
+Email varchar(255),
+Compensation varchar(255),
+PaymentTerms varchar(255),
+BillingAddress varchar(255),
+OtherInformation text;
+
+alter table CustomerAgreement drop column LectureDate;

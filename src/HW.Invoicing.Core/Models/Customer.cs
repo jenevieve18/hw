@@ -411,6 +411,17 @@ namespace HW.Invoicing.Core.Models
     {
         public Customer Customer { get; set; }
         public DateTime? Date { get; set; }
+        public string Lecturer { get; set; }
+        public string Runtime { get; set; }
+        public string LectureTitle { get; set; }
+        public string Location { get; set; }
+        public string Contact { get; set; }
+        public string Mobile { get; set; }
+        public string Email { get; set; }
+        public string Compensation { get; set; }
+        public string PaymentTerms { get; set; }
+        public string BillingAddress { get; set; }
+        public string OtherInformation { get; set; }
     }
 	
 	public class CustomerTimebook : BaseModel
