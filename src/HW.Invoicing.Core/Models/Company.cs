@@ -20,6 +20,12 @@ namespace HW.Invoicing.Core.Models
         public string Signature { get; set; }
         public string AgreementEmailText { get; set; }
         public string AgreementEmailSubject { get; set; }
+        public string OrganizationNumber { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0}\n{1}\n{2}", Name, Address, OrganizationNumber);
+        }
 
         public bool HasSignature
         {

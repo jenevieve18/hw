@@ -113,35 +113,35 @@
                 <td class="label-width"><b>Föreläsare:</b></td>
                 <td colspan="3">
                     <%--<asp:TextBox ID="TextBox2" CssClass="form-control" runat="server"></asp:TextBox>--%>
-                    <%= Session["TextBox2"]%>
+                    <%= Session["AgreementLecturer"] %>
                 </td>
             </tr>
             <tr>
                 <td><b>Datum för föreläsningen:</b></td>
                 <td colspan="3">
                     <%--<asp:TextBox ID="TextBox3" CssClass="form-control" runat="server"></asp:TextBox>--%>
-                    <%= Session["TextBox3"]%>
+                    <%= Session["AgreementDate"]%>
                 </td>
             </tr>
             <tr>
                 <td><b>Speltid:</b></td>
                 <td colspan="3">
                     <%--<asp:TextBox ID="TextBox4" CssClass="form-control" runat="server"></asp:TextBox>--%>
-                    <%= Session["TextBox4"]%>
+                    <%= Session["AgreementRuntime"]%>
                 </td>
             </tr>
             <tr>
                 <td><b>Föreläsningstitel:</b></td>
                 <td colspan="3">
                     <%--<asp:TextBox ID="TextBox5" CssClass="form-control" runat="server"></asp:TextBox>--%>
-                    <%= Session["TextBox5"]%>
+                    <%= Session["AgreementLectureTitle"]%>
                 </td>
             </tr>
             <tr>
                 <td><b>Plats:</b></td>
                 <td colspan="3">
                     <%--<asp:TextBox ID="TextBox6" CssClass="form-control" runat="server"></asp:TextBox>--%>
-                    <%= Session["TextBox6"]%>
+                    <%= Session["AgreementLocation"]%>
                 </td>
             </tr>
             <tr>

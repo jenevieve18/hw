@@ -15,7 +15,7 @@ namespace HW.Invoicing
         SqlCompanyRepository cr = new SqlCompanyRepository();
         protected Company company;
         SqlCustomerRepository r = new SqlCustomerRepository();
-        CustomerAgreement a;
+        protected CustomerAgreement agreement;
         Customer customer;
         int id;
 
@@ -23,32 +23,34 @@ namespace HW.Invoicing
         {
             id = ConvertHelper.ToInt32(Request["Id"]);
 
-            a = r.ReadAgreement(id);
-            HtmlHelper.RedirectIf(a == null, "customers.aspx");
+            agreement = r.ReadAgreement(id);
+            HtmlHelper.RedirectIf(agreement == null, "customers.aspx");
 
             company = cr.Read(ConvertHelper.ToInt32(Request.QueryString["CompanyId"]));
 
             customer = r.Read(ConvertHelper.ToInt32(Request["CustomerId"]));
             
-            if (a != null)
+            if (agreement != null && company != null && customer != null)
             {
-                textBoxAgreementLecturer.Text = a.Lecturer;
-                textBoxAgreementDate.Text = a.Date.Value.ToString("yyyy-MM-dd");
-                textBoxAgreementRuntime.Text = a.Runtime;
-                textBoxAgreementLectureTitle.Text = a.LectureTitle;
-                textBoxAgreementContact.Text = a.Contact;
-                textBoxAgreementMobile.Text = a.Mobile;
-                textBoxAgreementEmail.Text = a.Email;
-                textBoxAgreementCompensation.Text = a.Compensation;
-                textBoxAgreementPaymentTerms.Text = a.PaymentTerms;
-                textBoxAgreementBillingAddress.Text = a.BillingAddress;
-                textBoxAgreementOtherInformation.Text = a.OtherInformation;
+                textBoxCustomerName.Text = customer.Name;
+                textBoxCustomerAddress.Text = customer.Address;
+                textBoxCustomerNumber.Text = customer.Number;
+                textBoxCustomerInvoiceAddress.Text = customer.InvoiceAddress;
+                textBoxCustomerReferenceNumber.Text = customer.PurchaseOrderNumber;
+
+                textBoxAgreementDate.Text = agreement.Date.Value.ToString("yyyy-MM-dd");
+                textBoxAgreementRuntime.Text = agreement.Runtime;
+                textBoxAgreementLectureTitle.Text = agreement.LectureTitle;
+                textBoxAgreementContact.Text = agreement.Contact;
+                textBoxAgreementMobile.Text = agreement.Mobile;
+                textBoxAgreementEmail.Text = agreement.Email;
+                textBoxAgreementCompensation.Text = agreement.Compensation;
+                textBoxAgreementOtherInformation.Text = agreement.OtherInformation;
             }
         }
 
         protected void buttonNextClick(object sender, EventArgs e)
         {
-            Session["AgreementLecturer"] = textBoxAgreementLecturer.Text;
             Session["AgreementDate"] = textBoxAgreementDate.Text;
             Session["AgreementRuntime"] = textBoxAgreementRuntime.Text;
             Session["AgreementLectureTitle"] = textBoxAgreementLectureTitle.Text;
@@ -57,8 +59,6 @@ namespace HW.Invoicing
             Session["AgreementMobile"] = textBoxAgreementMobile.Text;
             Session["AgreementEmail"] = textBoxAgreementEmail.Text;
             Session["AgreementCompensation"] = textBoxAgreementCompensation.Text;
-            Session["AgreementPaymentTerms"] = textBoxAgreementPaymentTerms.Text;
-            Session["AgreementBillingAddress"] = textBoxAgreementBillingAddress.Text;
             Session["AgreementOtherInformation"] = textBoxAgreementOtherInformation.Text;
 
             Response.Redirect(string.Format("customeragreementaccepted.aspx?Id={0}&CompanyId={1}&CustomerId={2}", id, company.Id, customer.Id));

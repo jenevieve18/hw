@@ -18,11 +18,11 @@ namespace HW.Invoicing
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            customerId = ConvertHelper.ToInt32(Request.QueryString["CustomerId"]);
-            HtmlHelper.RedirectIf(customerId == 0, "customers.aspx");
-            
             id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
             HtmlHelper.RedirectIf(id == 0, string.Format("customershow.aspx?Id={0}&SelectedTab=agreement", customerId));
+
+            customerId = ConvertHelper.ToInt32(Request.QueryString["CustomerId"]);
+            HtmlHelper.RedirectIf(customerId == 0, "customers.aspx");
             
             if (!IsPostBack)
             {

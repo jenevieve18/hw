@@ -55,6 +55,10 @@
                 <asp:TextBox ID="textBoxTIN" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="form-group">
+	            <label for="<%= textBoxTIN.ClientID %>">TIN</label>
+                <asp:TextBox ID="textBox1" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="form-group">
                 <label for="<%= fileUploadSignature.ClientID %>">Signature</label>
                 <% if (company.HasSignature) { %>
                     <br /><img src="uploads/<%= company.Signature %>" />
