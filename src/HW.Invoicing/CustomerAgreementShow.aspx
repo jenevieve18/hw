@@ -116,7 +116,7 @@
                         <tr>
                             <td><b>Postadress</b></td>
                             <td class="col-md-9">
-                                <asp:TextBox ID="textBoxCustomerAddress" CssClass="form-control" runat="server" TextMode="MultiLine" Height="40"></asp:TextBox>
+                                <asp:TextBox ID="textBoxCustomerAddress" CssClass="form-control" runat="server" TextMode="MultiLine" Height="100"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
@@ -128,7 +128,7 @@
                         <tr>
                             <td><b>Faktureringsadress</b></td>
                             <td class="col-md-9">
-                                <asp:TextBox ID="textBoxCustomerInvoiceAddress" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
+                                <asp:TextBox ID="textBoxCustomerInvoiceAddress" CssClass="form-control" runat="server" TextMode="MultiLine" Height="100"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
@@ -212,7 +212,7 @@
 
         <br />
         <p><b>Övrig information</b> <i>Beskriv gärna målgruppen här.</i><br />
-            <asp:TextBox ID="textBoxAgreementOtherInformation" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox><br />
+            <asp:TextBox ID="textBoxAgreementOtherInformation" CssClass="form-control" runat="server" TextMode="MultiLine" Height="210"></asp:TextBox><br />
         </p>
         
         <p>Detta engagemangavtal (Huvudavtal) är en skriftlig bekräftelse på en redan muntlig överenskommelse mellan ovan nämnda Agentur och Kund. Detta Huvudavtal skall tillsammans med tillhörande bilaga returneras till Agenturen inom 14 dagar från att beställningen gjorts. Vid engagemangsdatum inom 14 dagar från beställningen krävs omgående retur till Agenturen.</p>
