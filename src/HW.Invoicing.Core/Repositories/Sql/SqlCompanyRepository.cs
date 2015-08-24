@@ -227,7 +227,8 @@ UPDATE Company set Name = @Name,
     HasSubscriber = @HasSubscriber,
     InvoiceLogo = @InvoiceLogo,
     InvoiceTemplate = @InvoiceTemplate,
-    Signature = @Signature
+    Signature = @Signature,
+    Email = @Email
 WHERE Id = @Id";
 			ExecuteNonQuery(
 				query,
@@ -244,7 +245,8 @@ WHERE Id = @Id";
                 new SqlParameter("@HasSubscriber", t.HasSubscriber),
                 new SqlParameter("@InvoiceLogo", t.InvoiceLogo),
                 new SqlParameter("@InvoiceTemplate", t.InvoiceTemplate),
-                new SqlParameter("@Signature", t.Signature)
+                new SqlParameter("@Signature", t.Signature),
+                new SqlParameter("@Email", t.Email)
 			);
 		}
 	}

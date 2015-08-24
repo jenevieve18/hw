@@ -101,46 +101,41 @@
                 <td><b>Agentur</b></td>
             </tr>
             <tr>
-                <td>
+                <td width="50%">
                     <table style="width:100%" cellpadding="2">
                         <tr>
                             <td><b>Företagsnamn</b></td>
-                            <td class="col-md-10">
+                            <td class="col-md-9">
                                 <%= Session["CustomerName"] %>
-                                <%--<asp:TextBox ID="textBoxCustomerName" CssClass="form-control" runat="server"></asp:TextBox>--%>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Postadress</b></td>
-                            <td class="col-md-10">
-                                <%= Session["CustomerAddress"] %>
-                                <%--<asp:TextBox ID="textBoxCustomerAddress" CssClass="form-control" runat="server" TextMode="MultiLine" Height="100"></asp:TextBox>--%>
+                            <td class="col-md-9">
+                                <%= Session["CustomerPostalAddress"].ToString().Replace("\n", "<br>")%>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Organisationsnummer</b></td>
-                            <td class="col-md-10">
+                            <td class="col-md-9">
                                 <%= Session["CustomerNumber"] %>
-                                <%--<asp:TextBox ID="textBoxCustomerNumber" CssClass="form-control" runat="server"></asp:TextBox>--%>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Faktureringsadress</b></td>
-                            <td class="col-md-10">
-                                <%= Session["CustomerInvoiceAddress"] %>
-                                <%--<asp:TextBox ID="textBoxCustomerInvoiceAddress" CssClass="form-control" runat="server" TextMode="MultiLine" Height="100"></asp:TextBox>--%>
+                            <td class="col-md-9">
+                                <%= Session["CustomerInvoiceAddress"].ToString().Replace("\n", "<br>") %>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Eventuellt referensnummer</b></td>
-                            <td class="col-md-10">
+                            <td class="col-md-9">
                                 <%= Session["CustomerReferenceNumber"] %>
-                                <%--<asp:TextBox ID="textBoxCustomerReferenceNumber" CssClass="form-control" runat="server"></asp:TextBox>--%>
                             </td>
                         </tr>
                     </table>
                 </td>
-                <td valign="top">
+                <td width="50%" valign="top">
                     <%= company.ToString().Replace("\n", "<br>") %>
                 </td>
             </tr>
@@ -175,7 +170,7 @@
             <tr>
                 <td><b>Plats och adress</b>:</td>
                 <td class="col-md-9" colspan="2">
-                    <%= Session["AgreementLocation"]%>
+                    <%= Session["AgreementLocation"].ToString().Replace("\n", "<br>")%>
                 </td>
             </tr>
             <tr>
@@ -206,7 +201,7 @@
             <tr>
                 <td><b>Betalningsvillkor</b>:</td>
                 <td colspan="2">
-                    <%= Session["AgreementPaymentTerms"]%>
+                    <%= agreement.PaymentTerms%>
                 </td>
             </tr>
         </table>
@@ -214,7 +209,7 @@
         <br />
         <p>
             <b>Övrig information</b> <i>Beskriv gärna målgruppen här.</i><br />
-            <%= Session["TextBox1"]%>
+            <%= Session["AgreementOtherInformation"]%>
         </p>
         
         <p>Detta engagemangavtal (Huvudavtal) är en skriftlig bekräftelse på en redan muntlig överenskommelse mellan ovan nämnda Agentur och Kund. Detta Huvudavtal skall tillsammans med tillhörande bilaga returneras till Agenturen inom 14 dagar från att beställningen gjorts. Vid engagemangsdatum inom 14 dagar från beställningen krävs omgående retur till Agenturen.</p>
@@ -230,7 +225,7 @@
             <tr>
                 <td>Ort och Datum</td>
                 <td>
-                    <%= Session["AgreementDateSigned"] %>
+                    Stockholm den <%= ConvertHelper.ToDateTime(Session["AgreementDateSigned"].ToString()).ToString("d MMM yyyy") %>
                 </td>
                 <td class="col-md-1"></td>
                 <td>Stockholm den <%= agreement.Date.Value.ToString("d MMM yyyy") %></td>
@@ -247,7 +242,6 @@
                 <td>Namn</td>
                 <td>
                     <%= Session["AgreementCustomerName"] %>
-                    <%--<asp:TextBox ID="textBoxAgreementCustomerName" CssClass="form-control" runat="server"></asp:TextBox>--%>
                 </td>
                 <td></td>
                 <td>
@@ -259,7 +253,6 @@
                 <td>Titel</td>
                 <td>
                     <%= Session["AgreementCustomerTitle"] %>
-                    <%--<asp:TextBox ID="textBoxAgreementCustomerTitle" CssClass="form-control" runat="server"></asp:TextBox>--%>
                 </td>
                 <td></td>
                 <td></td>
@@ -268,36 +261,13 @@
                 <td>Företag</td>
                 <td>
                     <%= Session["AgreementCustomerCompany"] %>
-                    <%--<asp:TextBox ID="textBoxAgreementCustomerCompany" CssClass="form-control" runat="server"></asp:TextBox>--%>
                 </td>
                 <td></td>
                 <td></td>
             </tr>
         </table>
-
-        <%--<table style="width:100%" cellpadding="2">
-            <tr>
-                <td colspan="3">Ort och Datum</td>
-            </tr>
-            <tr>
-                <td>Signatur</td>
-                <td><img src="uploads/<%= company.Signature %>" /></td>
-            </tr>
-            <tr>
-                <td>
-                    Namn, Titel<br />
-                    Företag
-                </td>
-                <td>
-                    Dan Hasson, VD<br />
-                    Hasson Consulting Group AB
-                </td>
-            </tr>
-        </table>--%>
         <br />
-<%--
-        <%= company.Terms.Replace("\n", "<br>") %>
-                --%>
+
 <h3>Avtalsvillkor</h3>
 
 <p><strong>1. Gemensamma villkor</strong></p>

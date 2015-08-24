@@ -422,6 +422,10 @@ namespace HW.Invoicing.Core.Models
         public string PaymentTerms { get; set; }
         public string BillingAddress { get; set; }
         public string OtherInformation { get; set; }
+        public DateTime DateSigned { get; set; }
+        public string CustomerName { get; set; }
+        public string CustomerTitle { get; set; }
+        public string CustomerCompany { get; set; }
     }
 	
 	public class CustomerTimebook : BaseModel

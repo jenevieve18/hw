@@ -29,6 +29,7 @@ namespace HW.Invoicing
                     textBoxName.Text = company.Name;
                     textBoxAddress.Text = company.Address;
                     textBoxPhone.Text = company.Phone;
+                    textBoxEmail.Text = company.Email;
                     textBoxBankAccountNumber.Text = company.BankAccountNumber;
                     textBoxTIN.Text = company.TIN;
                     textBoxFinancialMonthStart.Text = company.FinancialMonthStart.Value.ToString("yyyy-MM-dd");
@@ -100,6 +101,7 @@ namespace HW.Invoicing
                 Name = textBoxName.Text,
                 Address = textBoxAddress.Text,
                 Phone = textBoxPhone.Text,
+                Email = textBoxEmail.Text,
                 BankAccountNumber = textBoxBankAccountNumber.Text,
                 TIN = textBoxTIN.Text,
                 FinancialMonthStart = ConvertHelper.ToDateTime(textBoxFinancialMonthStart.Text),

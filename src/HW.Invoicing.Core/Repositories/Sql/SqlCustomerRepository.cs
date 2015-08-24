@@ -368,6 +368,31 @@ WHERE Id = @Id"
 			);
 		}
 
+        public void Update2(Customer c, int id)
+        {
+            string query = string.Format(
+                @"
+UPDATE Customer SET Name = @Name,
+    Number = @Number,
+    InvoiceAddress = @InvoiceAddress,
+    PostalAddress = @PostalAddress,
+    PurchaseOrderNumber = @PurchaseOrderNumber,
+    Address = @Address
+WHERE Id = @Id"
+            );
+            ExecuteNonQuery(
+                query,
+                "invoicing",
+                new SqlParameter("@Name", c.Name),
+                new SqlParameter("@Number", c.Number),
+                new SqlParameter("@InvoiceAddress", c.InvoiceAddress),
+                new SqlParameter("@PostalAddress", c.PostalAddress),
+                new SqlParameter("@PurchaseOrderNumber", c.PurchaseOrderNumber),
+                new SqlParameter("@Address", c.Address),
+                new SqlParameter("@Id", id)
+            );
+        }
+
         public void UpdateNotes(CustomerNotes c, int id)
         {
             string query = string.Format(
@@ -415,17 +440,17 @@ WHERE Id = @Id"
             string query = string.Format(
                 @"
 UPDATE CustomerAgreement SET Date = @Date,
-Lecturer = @Lecturer,
-Runtime = @Runtime,
-LectureTitle = @LectureTitle,
-Location = @Location,
-Contact = @Contact,
-Mobile = @Mobile,
-Email = @Email,
-Compensation = @Compensation,
-PaymentTerms = @PaymentTerms,
-BillingAddress = @BillingAddress,
-OtherInformation = @OtherInformation
+    Lecturer = @Lecturer,
+    Runtime = @Runtime,
+    LectureTitle = @LectureTitle,
+    Location = @Location,
+    Contact = @Contact,
+    Mobile = @Mobile,
+    Email = @Email,
+    Compensation = @Compensation,
+    PaymentTerms = @PaymentTerms,
+    BillingAddress = @BillingAddress,
+    OtherInformation = @OtherInformation
 WHERE Id = @Id"
             );
             ExecuteNonQuery(

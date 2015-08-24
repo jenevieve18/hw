@@ -29,28 +29,37 @@ namespace HW.Invoicing
             company = cr.Read(ConvertHelper.ToInt32(Request.QueryString["CompanyId"]));
 
             customer = r.Read(ConvertHelper.ToInt32(Request["CustomerId"]));
-            
-            if (agreement != null && company != null && customer != null)
-            {
-                textBoxCustomerName.Text = customer.Name;
-                textBoxCustomerAddress.Text = customer.Address;
-                textBoxCustomerNumber.Text = customer.Number;
-                textBoxCustomerInvoiceAddress.Text = customer.InvoiceAddress;
-                textBoxCustomerReferenceNumber.Text = customer.PurchaseOrderNumber;
 
-                textBoxAgreementDate.Text = agreement.Date.Value.ToString("yyyy-MM-dd");
-                textBoxAgreementRuntime.Text = agreement.Runtime;
-                textBoxAgreementLectureTitle.Text = agreement.LectureTitle;
-                textBoxAgreementContact.Text = agreement.Contact;
-                textBoxAgreementMobile.Text = agreement.Mobile;
-                textBoxAgreementEmail.Text = agreement.Email;
-                textBoxAgreementCompensation.Text = agreement.Compensation;
-                textBoxAgreementOtherInformation.Text = agreement.OtherInformation;
+            if (!IsPostBack)
+            {
+                if (agreement != null && company != null && customer != null)
+                {
+                    textBoxCustomerName.Text = customer.Name;
+                    textBoxCustomerPostalAddress.Text = customer.PostalAddress;
+                    textBoxCustomerNumber.Text = customer.Number;
+                    textBoxCustomerInvoiceAddress.Text = customer.InvoiceAddress;
+                    textBoxCustomerReferenceNumber.Text = customer.PurchaseOrderNumber;
+
+                    textBoxAgreementDate.Text = agreement.Date.Value.ToString("yyyy-MM-dd");
+                    textBoxAgreementRuntime.Text = agreement.Runtime;
+                    textBoxAgreementLectureTitle.Text = agreement.LectureTitle;
+                    textBoxAgreementContact.Text = agreement.Contact;
+                    textBoxAgreementMobile.Text = agreement.Mobile;
+                    textBoxAgreementEmail.Text = agreement.Email;
+                    textBoxAgreementCompensation.Text = agreement.Compensation;
+                    textBoxAgreementOtherInformation.Text = agreement.OtherInformation;
+                }
             }
         }
 
         protected void buttonNextClick(object sender, EventArgs e)
         {
+            Session["CustomerName"] = textBoxCustomerName.Text;
+            Session["CustomerPostalAddress"] = textBoxCustomerPostalAddress.Text;
+            Session["CustomerNumber"] = textBoxCustomerNumber.Text;
+            Session["CustomerInvoiceAddress"] = textBoxCustomerInvoiceAddress.Text;
+            Session["CustomerReferenceNumber"] = textBoxCustomerReferenceNumber.Text;
+
             Session["AgreementDate"] = textBoxAgreementDate.Text;
             Session["AgreementRuntime"] = textBoxAgreementRuntime.Text;
             Session["AgreementLectureTitle"] = textBoxAgreementLectureTitle.Text;
@@ -61,6 +70,11 @@ namespace HW.Invoicing
             Session["AgreementCompensation"] = textBoxAgreementCompensation.Text;
             Session["AgreementOtherInformation"] = textBoxAgreementOtherInformation.Text;
             Session["AgreementPaymentTerms"] = agreement.PaymentTerms;
+
+            Session["AgreementDateSigned"] = textBoxAgreementDateSigned.Text;
+            Session["AgreementCustomerName"] = textBoxAgreementCustomerName.Text;
+            Session["AgreementCustomerTitle"] = textBoxAgreementCustomerTitle.Text;
+            Session["AgreementCustomerCompany"] = textBoxAgreementCustomerCompany.Text;
 
             Response.Redirect(string.Format("customeragreementaccepted.aspx?Id={0}&CompanyId={1}&CustomerId={2}", id, company.Id, customer.Id));
         }

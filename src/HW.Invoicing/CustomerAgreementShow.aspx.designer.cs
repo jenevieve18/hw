@@ -31,6 +31,15 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
+        /// Panel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel Panel1;
+        
+        /// <summary>
         /// textBoxCustomerName control.
         /// </summary>
         /// <remarks>
@@ -40,13 +49,13 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxCustomerName;
         
         /// <summary>
-        /// textBoxCustomerAddress control.
+        /// textBoxCustomerPostalAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxCustomerAddress;
+        protected global::System.Web.UI.WebControls.TextBox textBoxCustomerPostalAddress;
         
         /// <summary>
         /// textBoxCustomerNumber control.

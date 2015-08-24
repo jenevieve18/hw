@@ -12,16 +12,17 @@ namespace HW.Invoicing
 {
     public partial class CustomerAgreementThanks : System.Web.UI.Page
     {
-        SqlCompanyRepository r = new SqlCompanyRepository();
+        SqlCompanyRepository cr = new SqlCompanyRepository();
         protected Company company;
+        SqlCustomerRepository r = new SqlCustomerRepository();
+        Customer customer;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            company = r.Read(ConvertHelper.ToInt32(Request["CompanyId"]));
-            if (company == null)
-            {
-                Response.Redirect("companies.aspx");
-            }
+            company = cr.Read(ConvertHelper.ToInt32(Request["CompanyId"]));
+
+            int customerId = ConvertHelper.ToInt32(Request["CustomerId"]);
+            customer = r.Read(customerId);
         }
     }
 }

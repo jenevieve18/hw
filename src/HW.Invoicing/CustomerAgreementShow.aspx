@@ -109,6 +109,12 @@
 <body>
     <form id="form1" runat="server">
     <div class="container">
+
+        <asp:Panel ID="Panel1" runat="server" DefaultButton="buttonNext">
+
+        
+
+
         <table style="width:100%">
             <tr>
                 <td valign="bottom"><img src="uploads/<%= company.InvoiceLogo %>" /></td>
@@ -126,31 +132,31 @@
                     <table style="width:100%" cellpadding="2">
                         <tr>
                             <td><b>Företagsnamn</b></td>
-                            <td class="col-md-10">
+                            <td class="col-md-9">
                                 <asp:TextBox ID="textBoxCustomerName" CssClass="form-control" runat="server"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Postadress</b></td>
-                            <td class="col-md-10">
-                                <asp:TextBox ID="textBoxCustomerAddress" CssClass="form-control" runat="server" TextMode="MultiLine" Height="100"></asp:TextBox>
+                            <td class="col-md-9">
+                                <asp:TextBox ID="textBoxCustomerPostalAddress" CssClass="form-control" runat="server" TextMode="MultiLine" Height="100"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Organisationsnummer</b></td>
-                            <td class="col-md-10">
+                            <td class="col-md-9">
                                 <asp:TextBox ID="textBoxCustomerNumber" CssClass="form-control" runat="server"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Faktureringsadress</b></td>
-                            <td class="col-md-10">
+                            <td class="col-md-9">
                                 <asp:TextBox ID="textBoxCustomerInvoiceAddress" CssClass="form-control" runat="server" TextMode="MultiLine" Height="100"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Eventuellt referensnummer</b></td>
-                            <td class="col-md-10">
+                            <td class="col-md-9">
                                 <asp:TextBox ID="textBoxCustomerReferenceNumber" CssClass="form-control" runat="server"></asp:TextBox>
                             </td>
                         </tr>
@@ -191,7 +197,7 @@
             <tr>
                 <td><b>Plats och adress</b>:</td>
                 <td colspan="2">
-                    <asp:TextBox ID="textBoxAgreementLocation" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
+                    <asp:TextBox ID="textBoxAgreementLocation" CssClass="form-control" runat="server" TextMode="MultiLine" Height="100"></asp:TextBox>
                 </td>
             </tr>
             <tr>
@@ -288,9 +294,7 @@
             </tr>
         </table>
         <br />
-<%--
-        <%= company.Terms.Replace("\n", "<br>") %>
---%>
+
 <h3>Avtalsvillkor</h3>
 
 <p><strong>1. Gemensamma villkor</strong></p>
@@ -370,6 +374,9 @@
         <p>
             <asp:Button ID="buttonNext" runat="server" Text="Next, proceed to contract preview >>" CssClass="btn btn-success" OnClick="buttonNextClick" />
         </p>
+
+
+        </asp:Panel>
 
     </div>
     </form>

@@ -58,13 +58,13 @@
 	        <label for="<%= textBoxAgreementPaymentTerms.ClientID %>">Payment Terms</label>
             <asp:TextBox ID="textBoxAgreementPaymentTerms" runat="server" CssClass="form-control"></asp:TextBox>
         </div>
-        <div class="form-group">
+        <%--<div class="form-group">
 	        <label for="<%= textBoxAgreementBillingAddress.ClientID %>">Billing Address</label>
-            <asp:TextBox ID="textBoxAgreementBillingAddress" runat="server" CssClass="form-control"></asp:TextBox>
-        </div>
+            <asp:TextBox ID="textBoxAgreementBillingAddress" runat="server" CssClass="form-control" TextMode="MultiLine" Height="100"></asp:TextBox>
+        </div>--%>
         <div class="form-group">
 	        <label for="<%= textBoxAgreementOtherInformation.ClientID %>">Other Information</label>
-            <asp:TextBox ID="textBoxAgreementOtherInformation" runat="server" CssClass="form-control"></asp:TextBox>
+            <asp:TextBox ID="textBoxAgreementOtherInformation" runat="server" CssClass="form-control" ViewStateMode="Inherit" TextMode="MultiLine" Height="210"></asp:TextBox>
         </div>
 
         <div>

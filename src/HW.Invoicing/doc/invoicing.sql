@@ -291,3 +291,5 @@ BillingAddress varchar(255),
 OtherInformation text;
 
 alter table CustomerAgreement drop column LectureDate;
+
+alter table Company add Email varchar(255);

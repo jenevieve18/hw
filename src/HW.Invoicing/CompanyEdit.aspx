@@ -47,6 +47,10 @@
                 <asp:TextBox ID="textBoxPhone" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="form-group">
+	            <label for="<%= textBoxEmail.ClientID %>">Email</label>
+                <asp:TextBox ID="textBoxEmail" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="form-group">
 	            <label for="<%= textBoxBankAccountNumber.ClientID %>">Bank Account</label>
                 <asp:TextBox ID="textBoxBankAccountNumber" runat="server" CssClass="form-control"></asp:TextBox>
             </div>

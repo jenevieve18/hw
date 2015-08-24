@@ -39,7 +39,7 @@ namespace HW.Invoicing
                     textBoxAgreementEmail.Text = a.Email;
                     textBoxAgreementCompensation.Text = a.Compensation;
                     textBoxAgreementPaymentTerms.Text = a.PaymentTerms;
-                    textBoxAgreementBillingAddress.Text = a.BillingAddress;
+                    //textBoxAgreementBillingAddress.Text = a.BillingAddress;
                     textBoxAgreementOtherInformation.Text = a.OtherInformation;
                 }
             }
@@ -59,7 +59,7 @@ namespace HW.Invoicing
                 Email = textBoxAgreementEmail.Text,
                 Compensation = textBoxAgreementCompensation.Text,
                 PaymentTerms = textBoxAgreementPaymentTerms.Text,
-                BillingAddress = textBoxAgreementBillingAddress.Text,
+                //BillingAddress = textBoxAgreementBillingAddress.Text,
                 OtherInformation = textBoxAgreementOtherInformation.Text,
             };
             r.UpdateAgreement(a, id);
