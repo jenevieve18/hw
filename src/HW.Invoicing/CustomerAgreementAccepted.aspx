@@ -156,43 +156,43 @@
             </tr>
             <tr>
                 <td><b>Datum för föreläsningen</b>:</td>
-                <td colspan="2">
+                <td class="col-md-9" colspan="2">
                     <%= Session["AgreementDate"]%>
                 </td>
             </tr>
             <tr>
                 <td><b>Speltid</b>:</td>
-                <td colspan="2">
+                <td class="col-md-9" colspan="2">
                     <%= Session["AgreementRuntime"]%>
                 </td>
             </tr>
             <tr>
                 <td><b>Föreläsningstitel</b>:</td>
-                <td colspan="2">
+                <td class="col-md-9" colspan="2">
                     <%= Session["AgreementLectureTitle"]%>
                 </td>
             </tr>
             <tr>
                 <td><b>Plats och adress</b>:</td>
-                <td colspan="2">
+                <td class="col-md-9" colspan="2">
                     <%= Session["AgreementLocation"]%>
                 </td>
             </tr>
             <tr>
                 <td><b>Kontaktperson</b>:</td>
-                <td colspan="2">
+                <td class="col-md-9" colspan="2">
                     <%= Session["AgreementContact"]%>
                 </td>
             </tr>
             <tr>
                 <td><b>Mobil</b>:</td>
-                <td colspan="2">
+                <td class="col-md-9" colspan="2">
                     <%= Session["AgreementMobile"]%>
                 </td>
             </tr>
             <tr>
                 <td><b>E-post kontaktperson</b>:</td>
-                <td colspan="2">
+                <td class="col-md-9" colspan="2">
                     <%= Session["AgreementEmail"]%>
                 </td>
             </tr>

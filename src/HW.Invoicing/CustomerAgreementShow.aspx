@@ -165,7 +165,7 @@
         <p>Mellan ovanstående parter har avtal om engagemang träffats enligt följande:</p>
         <table style="width:100%" cellpadding="2">
             <tr>
-                <td><b>Föreläsare:</b></td>
+                <td><b>Föreläsare</b>:</td>
                 <td class="col-md-9" colspan="2">
                     <%= agreement.Lecturer %>
                 </td>

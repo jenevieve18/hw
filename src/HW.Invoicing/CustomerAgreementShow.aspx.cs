@@ -60,6 +60,7 @@ namespace HW.Invoicing
             Session["AgreementEmail"] = textBoxAgreementEmail.Text;
             Session["AgreementCompensation"] = textBoxAgreementCompensation.Text;
             Session["AgreementOtherInformation"] = textBoxAgreementOtherInformation.Text;
+            Session["AgreementPaymentTerms"] = agreement.PaymentTerms;
 
             Response.Redirect(string.Format("customeragreementaccepted.aspx?Id={0}&CompanyId={1}&CustomerId={2}", id, company.Id, customer.Id));
         }
