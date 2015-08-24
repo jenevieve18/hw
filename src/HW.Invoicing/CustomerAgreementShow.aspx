@@ -99,7 +99,7 @@
             </tr>
         </table>
         <p></p>
-        <table style="width:100%;" cellpadding="3">
+        <table style="width:100%;" cellpadding="2">
             <tr>
                 <td><b>Kund</b> <i>Ange: Företagsnamn, Postadress och Organisationsnummer</i></td>
                 <td><b>Agentur</b></td>
@@ -109,23 +109,33 @@
                     <table style="width:100%" cellpadding="2">
                         <tr>
                             <td><b>Företagsnamn</b></td>
-                            <td class="col-md-8"><asp:TextBox ID="textBoxCustomerName" CssClass="form-control" runat="server"></asp:TextBox></td>
+                            <td class="col-md-9">
+                                <asp:TextBox ID="textBoxCustomerName" CssClass="form-control" runat="server"></asp:TextBox>
+                            </td>
                         </tr>
                         <tr>
                             <td><b>Postadress</b></td>
-                            <td class="col-md-8"><asp:TextBox ID="textBoxCustomerAddress" CssClass="form-control" runat="server"></asp:TextBox></td>
+                            <td class="col-md-9">
+                                <asp:TextBox ID="textBoxCustomerAddress" CssClass="form-control" runat="server" TextMode="MultiLine" Height="40"></asp:TextBox>
+                            </td>
                         </tr>
                         <tr>
                             <td><b>Organisationsnummer</b></td>
-                            <td class="col-md-8"><asp:TextBox ID="textBoxCustomerNumber" CssClass="form-control" runat="server"></asp:TextBox></td>
+                            <td class="col-md-9">
+                                <asp:TextBox ID="textBoxCustomerNumber" CssClass="form-control" runat="server"></asp:TextBox>
+                            </td>
                         </tr>
                         <tr>
                             <td><b>Faktureringsadress</b></td>
-                            <td class="col-md-8"><asp:TextBox ID="textBoxCustomerInvoiceAddress" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox></td>
+                            <td class="col-md-9">
+                                <asp:TextBox ID="textBoxCustomerInvoiceAddress" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
+                            </td>
                         </tr>
                         <tr>
                             <td><b>Eventuellt referensnummer</b></td>
-                            <td class="col-md-8"><asp:TextBox ID="textBoxCustomerReferenceNumber" CssClass="form-control" runat="server"></asp:TextBox></td>
+                            <td class="col-md-9">
+                                <asp:TextBox ID="textBoxCustomerReferenceNumber" CssClass="form-control" runat="server"></asp:TextBox>
+                            </td>
                         </tr>
                     </table>
                 </td>
@@ -136,60 +146,65 @@
         </table>
         <p></p>
         <p>Mellan ovanstående parter har avtal om engagemang träffats enligt följande:</p>
-        <table style="width:100%" cellpadding="3">
+        <table style="width:100%" cellpadding="2">
             <tr>
-                <td class="label-width"><b>Föreläsare:</b></td>
-                <td class="col-md-8">
+                <td><b>Föreläsare:</b></td>
+                <td class="col-md-9" colspan="2">
                     <%= agreement.Lecturer %>
                 </td>
             </tr>
             <tr>
                 <td><b>Datum för föreläsningen:</b></td>
-                <td class="col-md-8">
+                <td colspan="2">
                     <asp:TextBox ID="textBoxAgreementDate" CssClass="date form-control" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
                 <td><b>Speltid</b>:</td>
-                <td class="col-md-8"><asp:TextBox ID="textBoxAgreementRuntime" CssClass="form-control" runat="server"></asp:TextBox></td>
+                <td colspan="2">
+                    <asp:TextBox ID="textBoxAgreementRuntime" CssClass="form-control" runat="server"></asp:TextBox>
+                </td>
             </tr>
             <tr>
                 <td><b>Föreläsningstitel</b>:</td>
-                <td class="col-md-8">
+                <td colspan="2">
                     <asp:TextBox ID="textBoxAgreementLectureTitle" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
-                <td><b>Plats och adress</b> <i>Ange gärna adress</i>:</td>
-                <td class="col-md-8">
-                    <asp:TextBox ID="textBoxAgreementLocation" CssClass="form-control" runat="server"></asp:TextBox>
+                <td><b>Plats och adress</b><%-- <i>Ange gärna adress</i>--%>:</td>
+                <td colspan="2">
+                    <asp:TextBox ID="textBoxAgreementLocation" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
                 </td>
             </tr>
             <tr>
                 <td><b>Kontaktperson:</b></td>
-                <td class="col-md-8">
+                <td colspan="2">
                     <asp:TextBox ID="textBoxAgreementContact" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
                 <td><b>Mobil:</b></td>
-                <td class="col-md-8">
+                <td colspan="2">
                     <asp:TextBox ID="textBoxAgreementMobile" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
                 <td><b>E-post kontaktperson:</b></td>
-                <td class="col-md-8"><asp:TextBox ID="textBoxAgreementEmail" CssClass="form-control" runat="server"></asp:TextBox></td>
-            </tr>
-            <tr>
-                <td><b>Ersättning:</b></td>
-                <td class="col-md-8">
-                    <asp:TextBox ID="textBoxAgreementCompensation" CssClass="form-control" runat="server"></asp:TextBox>
+                <td colspan="2">
+                    <asp:TextBox ID="textBoxAgreementEmail" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
+                <td><b>Ersättning:</b></td>
+                <td>
+                    <asp:TextBox ID="textBoxAgreementCompensation" CssClass="form-control" runat="server"></asp:TextBox>
+                </td>
+                <td class="col-md-8">SEK + moms. Eventualla resekostnader och logi tillkommer.</td>
+            </tr>
+            <tr>
                 <td><b>Betalningsvillkor:</b></td>
-                <td class="col-md-8">
+                <td colspan="2">
                     <%= agreement.PaymentTerms %>
                 </td>
             </tr>
