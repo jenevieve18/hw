@@ -133,31 +133,31 @@
                     <table style="width:100%" cellpadding="2">
                         <tr>
                             <td><b>Företagsnamn</b></td>
-                            <td>
+                            <td class="col-md-7">
                                 <asp:TextBox ID="textBoxCustomerName" CssClass="form-control" runat="server"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Postadress</b></td>
-                            <td>
+                            <td class="col-md-7">
                                 <asp:TextBox ID="textBoxCustomerPostalAddress" CssClass="form-control" runat="server" TextMode="MultiLine" Height="100"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Organisationsnummer</b></td>
-                            <td>
+                            <td class="col-md-7">
                                 <asp:TextBox ID="textBoxCustomerNumber" CssClass="form-control" runat="server"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Faktureringsadress</b></td>
-                            <td>
+                            <td class="col-md-7">
                                 <asp:TextBox ID="textBoxCustomerInvoiceAddress" CssClass="form-control" runat="server" TextMode="MultiLine" Height="100"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Eventuellt referensnummer</b></td>
-                            <td>
+                            <td class="col-md-7">
                                 <asp:TextBox ID="textBoxCustomerReferenceNumber" CssClass="form-control" runat="server"></asp:TextBox>
                             </td>
                         </tr>
@@ -253,13 +253,16 @@
             <tr>
                 <td>Ort och Datum</td>
                 <td>
+                    <asp:TextBox ID="textBoxAgreementCustomerAddress" CssClass="form-control" runat="server"></asp:TextBox>
+                </td>
+                <td>
                     <asp:TextBox ID="textBoxAgreementDateSigned" CssClass="date form-control" runat="server"></asp:TextBox>
                 </td>
                 <td class="col-md-1"></td>
                 <td>Stockholm den <%= agreement.Date.Value.ToString("d MMM yyyy") %></td>
             </tr>
             <tr>
-                <td colspan="2">
+                <td colspan="3">
                     Signatur <i>Ange namn och titel på den som ska signera avtalet</i>
                 </td>
                 <td></td>
@@ -267,7 +270,7 @@
             </tr>
             <tr>
                 <td>Namn</td>
-                <td>
+                <td colspan="2">
                     <asp:TextBox ID="textBoxAgreementCustomerName" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
                 <td></td>
@@ -278,7 +281,7 @@
             </tr>
             <tr>
                 <td>Titel</td>
-                <td>
+                <td colspan="2">
                     <asp:TextBox ID="textBoxAgreementCustomerTitle" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
                 <td></td>
@@ -286,7 +289,7 @@
             </tr>
             <tr>
                 <td>Företag</td>
-                <td>
+                <td colspan="2">
                     <asp:TextBox ID="textBoxAgreementCustomerCompany" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
                 <td></td>
