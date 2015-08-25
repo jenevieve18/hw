@@ -51,12 +51,16 @@
                 <asp:TextBox ID="textBoxEmail" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="form-group">
-	            <label for="<%= textBoxBankAccountNumber.ClientID %>">Bank Account</label>
+	            <label for="<%= textBoxBankAccountNumber.ClientID %>">Bankgiro</label>
                 <asp:TextBox ID="textBoxBankAccountNumber" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="form-group">
-	            <label for="<%= textBoxTIN.ClientID %>">TIN</label>
+	            <label for="<%= textBoxTIN.ClientID %>">TIN/Momsregistreringsnummer</label>
                 <asp:TextBox ID="textBoxTIN" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="form-group">
+	            <label for="<%= textBoxOrganizationNumber.ClientID %>">Oganization Number</label>
+                <asp:TextBox ID="textBoxOrganizationNumber" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="form-group">
                 <label for="<%= fileUploadSignature.ClientID %>">Signature</label>
@@ -66,16 +70,20 @@
                 <asp:FileUpload ID="fileUploadSignature" runat="server" />
             </div>
             <div class="form-group">
-	            <label for="<%= textBoxFinancialMonthStart.ClientID %>">Start Financial Month</label>
+	            <label for="<%= textBoxFinancialMonthStart.ClientID %>">Start Financial Year</label>
                 <asp:TextBox ID="textBoxFinancialMonthStart" runat="server" CssClass="date form-control"></asp:TextBox>
             </div>
             <div class="form-group">
-	            <label for="<%= textBoxFinancialMonthEnd.ClientID %>">End Financial Month</label>
+	            <label for="<%= textBoxFinancialMonthEnd.ClientID %>">End Financial Year</label>
                 <asp:TextBox ID="textBoxFinancialMonthEnd" runat="server" CssClass="date form-control"></asp:TextBox>
             </div>
             <div class="form-group">
 	            <label for="<%= textBoxInvoicePrefix.ClientID %>">Invoice Prefix</label>
                 <asp:TextBox ID="textBoxInvoicePrefix" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="form-group">
+	            <label for="<%= textBoxAgreementPrefix.ClientID %>">Agreement Prefix</label>
+                <asp:TextBox ID="textBoxAgreementPrefix" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="form-group">
                 <label for="<%= fileUploadInvoiceLogo.ClientID %>">Invoice Logo</label>

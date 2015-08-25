@@ -67,6 +67,15 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxTIN;
         
         /// <summary>
+        /// textBoxOrganizationNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxOrganizationNumber;
+        
+        /// <summary>
         /// fileUploadSignature control.
         /// </summary>
         /// <remarks>
@@ -101,6 +110,15 @@ namespace HW.Invoicing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox textBoxInvoicePrefix;
+        
+        /// <summary>
+        /// textBoxAgreementPrefix control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementPrefix;
         
         /// <summary>
         /// fileUploadInvoiceLogo control.

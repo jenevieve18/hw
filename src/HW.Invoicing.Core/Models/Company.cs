@@ -20,6 +20,7 @@ namespace HW.Invoicing.Core.Models
         public string Signature { get; set; }
         public string AgreementEmailText { get; set; }
         public string AgreementEmailSubject { get; set; }
+        public string AgreementPrefix { get; set; }
         public string OrganizationNumber { get; set; }
         public string Email { get; set; }
 

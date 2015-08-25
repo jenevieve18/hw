@@ -86,7 +86,9 @@ SELECT Id,
     Signature,
     AgreementEmailText,
     AgreementEmailSubject,
-    Email
+    Email,
+    AgreementPrefix,
+    OrganizationNumber
 FROM Company
 WHERE Id = @Id";
 			Company c = null;
@@ -109,7 +111,9 @@ WHERE Id = @Id";
                         Signature = GetString(rs, 13),
                         AgreementEmailText = GetString(rs, 14),
                         AgreementEmailSubject = GetString(rs, 15),
-                        Email = GetString(rs, 16)
+                        Email = GetString(rs, 16),
+                        AgreementPrefix = GetString(rs, 17),
+                        OrganizationNumber = GetString(rs, 18)
 					};
 				}
 			}
@@ -230,7 +234,9 @@ UPDATE Company set Name = @Name,
     InvoiceLogo = @InvoiceLogo,
     InvoiceTemplate = @InvoiceTemplate,
     Signature = @Signature,
-    Email = @Email
+    Email = @Email,
+    AgreementPrefix = @AgreementPrefix,
+    OrganizationNumber = @OrganizationNumber
 WHERE Id = @Id";
 			ExecuteNonQuery(
 				query,
@@ -248,7 +254,9 @@ WHERE Id = @Id";
                 new SqlParameter("@InvoiceLogo", t.InvoiceLogo),
                 new SqlParameter("@InvoiceTemplate", t.InvoiceTemplate),
                 new SqlParameter("@Signature", t.Signature),
-                new SqlParameter("@Email", t.Email)
+                new SqlParameter("@Email", t.Email),
+                new SqlParameter("@AgreementPrefix", t.AgreementPrefix),
+                new SqlParameter("@OrganizationNumber", t.OrganizationNumber)
 			);
 		}
 	}

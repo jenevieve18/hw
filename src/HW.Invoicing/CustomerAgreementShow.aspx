@@ -118,7 +118,7 @@
         <table style="width:100%">
             <tr>
                 <td valign="bottom"><img src="uploads/<%= company.InvoiceLogo %>" /></td>
-                <td valign="bottom"><b>Engagemangsavtal nummer HCGE-<%= agreement.Id.ToString("000") %></b></td>
+                <td valign="bottom"><b>Engagemangsavtal nummer <%= company.AgreementPrefix %>-<%= agreement.Id.ToString("000") %></b></td>
             </tr>
         </table>
         <p></p>

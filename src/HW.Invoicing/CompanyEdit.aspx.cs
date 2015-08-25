@@ -41,6 +41,9 @@ namespace HW.Invoicing
 
                     textBoxAgreementEmailText.Text = company.AgreementEmailText;
                     textBoxAgreementEmailSubject.Text = company.AgreementEmailSubject;
+                    textBoxAgreementPrefix.Text = company.AgreementPrefix;
+
+                    textBoxOrganizationNumber.Text = company.OrganizationNumber;
                 }
                 else
                 {
@@ -110,7 +113,9 @@ namespace HW.Invoicing
                 HasSubscriber = checkBoxHasSubscriber.Checked,
                 InvoiceLogo = logo,
                 InvoiceTemplate = template,
-                Signature = signature
+                Signature = signature,
+                AgreementPrefix = textBoxAgreementPrefix.Text,
+                OrganizationNumber = textBoxOrganizationNumber.Text
             };
             r.Update(c, id);
             Response.Redirect("companies.aspx");

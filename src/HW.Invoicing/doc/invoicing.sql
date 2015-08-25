@@ -293,3 +293,9 @@ OtherInformation text;
 alter table CustomerAgreement drop column LectureDate;
 
 alter table Company add Email varchar(255);
+
+alter table Company add AgreementPrefix varchar(255);
+
+alter table CustomerAgreement add IsClosed int;
+
+alter table Company add OrganizationNumber varchar(255);
