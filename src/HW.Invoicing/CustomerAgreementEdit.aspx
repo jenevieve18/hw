@@ -70,7 +70,7 @@
         <div>
             <asp:Button CssClass="btn btn-success" ID="buttonSave" runat="server" Text="Save customer agreement" 
                 onclick="buttonSave_Click" />
-                or <i><%= HtmlHelper.Anchor("cancel", string.Format("customershow.aspx?Id={0}", customerId)) %></i>
+                or <i><%= HtmlHelper.Anchor("cancel", string.Format("customershow.aspx?Id={0}&SelectedTab=agreements", customerId)) %></i>
         </div>
     </asp:Panel>
 

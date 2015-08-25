@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 
 namespace HW.Tests
 {
@@ -10,6 +11,7 @@ namespace HW.Tests
 		
 		public static void Main(string[] args)
 		{
+			Application.Run(new Form1());
 		}
 	}
 }

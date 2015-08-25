@@ -28,26 +28,61 @@ namespace HW.Invoicing
 
             company = cr.Read(ConvertHelper.ToInt32(Request.QueryString["CompanyId"]));
 
-            customer = r.Read(ConvertHelper.ToInt32(Request["CustomerId"]));
+            customer = r.Read(ConvertHelper.ToInt32(Request.QueryString["CustomerId"]));
+
+            bool isSession = ConvertHelper.ToInt32(Request.QueryString["Session"]) == 1;
 
             if (!IsPostBack)
             {
                 if (agreement != null && company != null && customer != null)
                 {
-                    textBoxCustomerName.Text = customer.Name;
-                    textBoxCustomerPostalAddress.Text = customer.PostalAddress;
-                    textBoxCustomerNumber.Text = customer.Number;
-                    textBoxCustomerInvoiceAddress.Text = customer.InvoiceAddress;
-                    textBoxCustomerReferenceNumber.Text = customer.PurchaseOrderNumber;
+                    if (!isSession)
+                    {
+                        textBoxCustomerName.Text = customer.Name;
+                        textBoxCustomerPostalAddress.Text = customer.PostalAddress;
+                        textBoxCustomerNumber.Text = customer.Number;
+                        textBoxCustomerInvoiceAddress.Text = customer.InvoiceAddress;
+                        textBoxCustomerReferenceNumber.Text = customer.PurchaseOrderNumber;
 
-                    textBoxAgreementDate.Text = agreement.Date.Value.ToString("yyyy-MM-dd");
-                    textBoxAgreementRuntime.Text = agreement.Runtime;
-                    textBoxAgreementLectureTitle.Text = agreement.LectureTitle;
-                    textBoxAgreementContact.Text = agreement.Contact;
-                    textBoxAgreementMobile.Text = agreement.Mobile;
-                    textBoxAgreementEmail.Text = agreement.Email;
-                    textBoxAgreementCompensation.Text = agreement.Compensation;
-                    textBoxAgreementOtherInformation.Text = agreement.OtherInformation;
+                        textBoxAgreementDate.Text = agreement.Date.Value.ToString("yyyy-MM-dd");
+                        textBoxAgreementRuntime.Text = agreement.Runtime;
+                        textBoxAgreementLectureTitle.Text = agreement.LectureTitle;
+                        textBoxAgreementLocation.Text = agreement.Location;
+                        textBoxAgreementContact.Text = agreement.Contact;
+                        textBoxAgreementMobile.Text = agreement.Mobile;
+                        textBoxAgreementEmail.Text = agreement.Email;
+                        textBoxAgreementCompensation.Text = agreement.Compensation;
+                        textBoxAgreementOtherInformation.Text = agreement.OtherInformation;
+
+                        //textBoxAgreementDateSigned.Text = agreement.DateSigned.Value.ToString("yyyy-MM-dd");
+                        textBoxAgreementCustomerName.Text = agreement.CustomerName;
+                        textBoxAgreementCustomerTitle.Text = agreement.CustomerTitle;
+                        textBoxAgreementCustomerCompany.Text = agreement.CustomerCompany;
+                    }
+                    else
+                    {
+                        textBoxCustomerName.Text = Session["CustomerName"].ToString();
+                        textBoxCustomerPostalAddress.Text = Session["CustomerPostalAddress"].ToString();
+                        textBoxCustomerNumber.Text = Session["CustomerNumber"].ToString();
+                        textBoxCustomerInvoiceAddress.Text = Session["CustomerInvoiceAddress"].ToString();
+                        textBoxCustomerReferenceNumber.Text = Session["CustomerReferenceNumber"].ToString();
+                        
+                        textBoxAgreementDate.Text = Session["AgreementDate"].ToString();
+                        textBoxAgreementRuntime.Text = Session["AgreementRuntime"].ToString();
+                        textBoxAgreementLectureTitle.Text = Session["AgreementLectureTitle"].ToString();
+                        textBoxAgreementLocation.Text = Session["AgreementLocation"].ToString();
+                        textBoxAgreementContact.Text = Session["AgreementContact"].ToString();
+                        textBoxAgreementMobile.Text = Session["AgreementMobile"].ToString();
+                        textBoxAgreementEmail.Text = Session["AgreementEmail"].ToString();
+                        textBoxAgreementCompensation.Text = Session["AgreementCompensation"].ToString();
+                        textBoxAgreementOtherInformation.Text = Session["AgreementOtherInformation"].ToString();
+                        agreement.PaymentTerms = Session["AgreementPaymentTerms"].ToString();
+                        
+                        textBoxAgreementDateSigned.Text = Session["AgreementDateSigned"].ToString();
+                        textBoxAgreementCustomerName.Text = Session["AgreementCustomerName"].ToString();
+                        textBoxAgreementCustomerTitle.Text = Session["AgreementCustomerTitle"].ToString();
+                        textBoxAgreementCustomerCompany.Text = Session["AgreementCustomerCompany"].ToString();
+                    }
                 }
             }
         }

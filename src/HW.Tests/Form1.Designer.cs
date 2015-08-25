@@ -40,6 +40,9 @@ namespace HW.Tests
 			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
 			this.button1 = new System.Windows.Forms.Button();
 			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.richTextBox2 = new System.Windows.Forms.RichTextBox();
+			this.richTextBox3 = new System.Windows.Forms.RichTextBox();
+			this.button2 = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -75,11 +78,40 @@ namespace HW.Tests
 			this.textBox1.Size = new System.Drawing.Size(100, 20);
 			this.textBox1.TabIndex = 3;
 			// 
+			// richTextBox2
+			// 
+			this.richTextBox2.Location = new System.Drawing.Point(272, 8);
+			this.richTextBox2.Name = "richTextBox2";
+			this.richTextBox2.Size = new System.Drawing.Size(120, 56);
+			this.richTextBox2.TabIndex = 4;
+			this.richTextBox2.Text = "";
+			// 
+			// richTextBox3
+			// 
+			this.richTextBox3.Location = new System.Drawing.Point(272, 72);
+			this.richTextBox3.Name = "richTextBox3";
+			this.richTextBox3.Size = new System.Drawing.Size(120, 56);
+			this.richTextBox3.TabIndex = 5;
+			this.richTextBox3.Text = "";
+			// 
+			// button2
+			// 
+			this.button2.Location = new System.Drawing.Point(272, 136);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(75, 23);
+			this.button2.TabIndex = 6;
+			this.button2.Text = "button2";
+			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.Button2Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(284, 261);
+			this.ClientSize = new System.Drawing.Size(621, 261);
+			this.Controls.Add(this.button2);
+			this.Controls.Add(this.richTextBox3);
+			this.Controls.Add(this.richTextBox2);
 			this.Controls.Add(this.textBox1);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.richTextBox1);
@@ -89,6 +121,9 @@ namespace HW.Tests
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.RichTextBox richTextBox3;
+		private System.Windows.Forms.RichTextBox richTextBox2;
 		private System.Windows.Forms.TextBox textBox1;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.RichTextBox richTextBox1;
