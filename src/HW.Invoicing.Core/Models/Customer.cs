@@ -426,6 +426,7 @@ namespace HW.Invoicing.Core.Models
         public string CustomerName { get; set; }
         public string CustomerTitle { get; set; }
         public string CustomerCompany { get; set; }
+        public bool IsClosed { get; set; }
     }
 	
 	public class CustomerTimebook : BaseModel

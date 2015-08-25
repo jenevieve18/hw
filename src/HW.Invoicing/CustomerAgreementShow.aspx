@@ -112,17 +112,18 @@
 
         <asp:Panel ID="Panel1" runat="server" DefaultButton="buttonNext">
 
-        
-
-
-        <table style="width:100%">
+        <table style="width:100%" cellpadding="2">
             <tr>
-                <td valign="bottom"><img src="uploads/<%= company.InvoiceLogo %>" /></td>
+                <td class="col-md-6" valign="bottom"><img src="uploads/<%= company.InvoiceLogo %>" /></td>
                 <td valign="bottom"><b>Engagemangsavtal nummer <%= company.AgreementPrefix %>-<%= agreement.Id.ToString("000") %></b></td>
             </tr>
-        </table>
+        <%--</table>
         <p></p>
-        <table style="width:100%;" cellpadding="2">
+        <table style="width:100%;" cellpadding="2">--%>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
             <tr>
                 <td><b>Kund</b> <i>Ange: Företagsnamn, Postadress och Organisationsnummer</i></td>
                 <td><b>Agentur</b></td>
@@ -132,31 +133,31 @@
                     <table style="width:100%" cellpadding="2">
                         <tr>
                             <td><b>Företagsnamn</b></td>
-                            <td class="col-md-9">
+                            <td>
                                 <asp:TextBox ID="textBoxCustomerName" CssClass="form-control" runat="server"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Postadress</b></td>
-                            <td class="col-md-9">
+                            <td>
                                 <asp:TextBox ID="textBoxCustomerPostalAddress" CssClass="form-control" runat="server" TextMode="MultiLine" Height="100"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Organisationsnummer</b></td>
-                            <td class="col-md-9">
+                            <td>
                                 <asp:TextBox ID="textBoxCustomerNumber" CssClass="form-control" runat="server"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Faktureringsadress</b></td>
-                            <td class="col-md-9">
+                            <td>
                                 <asp:TextBox ID="textBoxCustomerInvoiceAddress" CssClass="form-control" runat="server" TextMode="MultiLine" Height="100"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Eventuellt referensnummer</b></td>
-                            <td class="col-md-9">
+                            <td>
                                 <asp:TextBox ID="textBoxCustomerReferenceNumber" CssClass="form-control" runat="server"></asp:TextBox>
                             </td>
                         </tr>
@@ -172,7 +173,7 @@
         <table style="width:100%" cellpadding="2">
             <tr>
                 <td><b>Föreläsare</b>:</td>
-                <td class="col-md-9" colspan="2">
+                <td colspan="2">
                     <%= agreement.Lecturer %>
                 </td>
             </tr>
@@ -258,10 +259,9 @@
                 <td>Stockholm den <%= agreement.Date.Value.ToString("d MMM yyyy") %></td>
             </tr>
             <tr>
-                <td>
+                <td colspan="2">
                     Signatur <i>Ange namn och titel på den som ska signera avtalet</i>
                 </td>
-                <td></td>
                 <td></td>
                 <td><img src="uploads/<%= company.Signature %>" /></td>
             </tr>

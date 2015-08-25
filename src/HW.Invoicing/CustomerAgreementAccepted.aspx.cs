@@ -44,8 +44,6 @@ namespace HW.Invoicing
 
         protected void buttonNextClick(object sender, EventArgs e)
         {
-            //Db.sendMail("ian.escarro@gmail.com", "Your contract", "This is your contract!");
-
             var c = new Customer
             {
                 Name = Session["CustomerName"].ToString(),
@@ -72,7 +70,8 @@ namespace HW.Invoicing
                 DateSigned = ConvertHelper.ToDateTime(Session["AgreementDateSigned"].ToString()),
                 CustomerName = Session["AgreementCustomerName"].ToString(),
                 CustomerTitle = Session["AgreementCustomerTitle"].ToString(),
-                CustomerCompany = Session["AgreementCustomerCompany"].ToString()
+                CustomerCompany = Session["AgreementCustomerCompany"].ToString(),
+                IsClosed = true
             };
             r.UpdateAgreement(a, id);
 

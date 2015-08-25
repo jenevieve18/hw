@@ -41,6 +41,9 @@ namespace HW.Invoicing
                     textBoxAgreementPaymentTerms.Text = a.PaymentTerms;
                     //textBoxAgreementBillingAddress.Text = a.BillingAddress;
                     textBoxAgreementOtherInformation.Text = a.OtherInformation;
+
+                    checkBoxClosed.Checked = a.IsClosed;
+                    //placeHolderOpen.Visible = a.IsClosed;
                 }
             }
         }
@@ -61,6 +64,7 @@ namespace HW.Invoicing
                 PaymentTerms = textBoxAgreementPaymentTerms.Text,
                 //BillingAddress = textBoxAgreementBillingAddress.Text,
                 OtherInformation = textBoxAgreementOtherInformation.Text,
+                IsClosed = checkBoxClosed.Checked
             };
             r.UpdateAgreement(a, id);
             Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=agreements", customerId));

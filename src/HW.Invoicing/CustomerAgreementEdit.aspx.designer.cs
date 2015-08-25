@@ -121,6 +121,24 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxAgreementOtherInformation;
         
         /// <summary>
+        /// placeHolderClosed control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder placeHolderClosed;
+        
+        /// <summary>
+        /// checkBoxClosed control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox checkBoxClosed;
+        
+        /// <summary>
         /// buttonSave control.
         /// </summary>
         /// <remarks>

@@ -18,17 +18,22 @@ namespace HW.Invoicing
         protected CustomerAgreement agreement;
         Customer customer;
         int id;
+        int companyId;
+        int customerId;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             id = ConvertHelper.ToInt32(Request["Id"]);
+            companyId = ConvertHelper.ToInt32(Request.QueryString["CompanyId"]);
+            customerId = ConvertHelper.ToInt32(Request.QueryString["CustomerId"]);
 
             agreement = r.ReadAgreement(id);
-            HtmlHelper.RedirectIf(agreement == null, "customers.aspx");
+            HtmlHelper.RedirectIf(agreement == null, string.Format("customeragreementclosed.aspx?Id={0}&CompanyId={1}&CustomerId={2}", id, companyId, customerId));
+            HtmlHelper.RedirectIf(agreement.IsClosed, string.Format("customeragreementclosed.aspx?Id={0}&CompanyId={1}&CustomerId={2}", id, companyId, customerId));
 
-            company = cr.Read(ConvertHelper.ToInt32(Request.QueryString["CompanyId"]));
+            company = cr.Read(companyId);
 
-            customer = r.Read(ConvertHelper.ToInt32(Request.QueryString["CustomerId"]));
+            customer = r.Read(customerId);
 
             bool isSession = ConvertHelper.ToInt32(Request.QueryString["Session"]) == 1;
 

@@ -1052,6 +1052,7 @@
                     <th>Contact</th>
                     <th>Mobile</th>
                     <th>Email</th>
+                    <th>Status</th>
                     <th></th>
                 </tr>
                 <% foreach (var a in agreements) { %>
@@ -1061,6 +1062,9 @@
                         <td><%= a.Contact %></td>
                         <td><%= a.Mobile %></td>
                         <td><%= a.Email %></td>
+                        <td>
+                            <%= a.IsClosed ? "Closed" : "Open" %>
+                        </td>
                         <td>
                             <%= HtmlHelper.Anchor(" ", string.Format("customeragreementedit.aspx?Id={0}&CustomerId={1}", a.Id, id), "title='Edit' class='glyphicon glyphicon-edit'")%>
                             <%= HtmlHelper.Anchor("Show", string.Format("customeragreementshow.aspx?Id={0}&CompanyId={2}&CustomerId={1}", a.Id, id, companyId), "title='Show' class=''")%>

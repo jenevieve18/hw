@@ -450,7 +450,8 @@ UPDATE CustomerAgreement SET Date = @Date,
     Compensation = @Compensation,
     PaymentTerms = @PaymentTerms,
     BillingAddress = @BillingAddress,
-    OtherInformation = @OtherInformation
+    OtherInformation = @OtherInformation,
+    IsClosed = @IsClosed
 WHERE Id = @Id"
             );
             ExecuteNonQuery(
@@ -468,6 +469,7 @@ WHERE Id = @Id"
                 new SqlParameter("@PaymentTerms", a.PaymentTerms),
                 new SqlParameter("@BillingAddress", a.BillingAddress),
                 new SqlParameter("@OtherInformation", a.OtherInformation),
+                new SqlParameter("@IsClosed", a.IsClosed),
                 new SqlParameter("@Id", id)
             );
         }
@@ -805,7 +807,8 @@ SELECT Id,
     Compensation,
     PaymentTerms,
     BillingAddress,
-    OtherInformation
+    OtherInformation,
+    IsClosed
 FROM CustomerAgreement
 WHERE Id = @Id"
             );
@@ -828,7 +831,8 @@ WHERE Id = @Id"
                         Compensation = GetString(rs, 9),
                         PaymentTerms = GetString(rs, 10),
                         BillingAddress = GetString(rs, 11),
-                        OtherInformation = GetString(rs, 12)
+                        OtherInformation = GetString(rs, 12),
+                        IsClosed = GetInt32(rs, 13) == 1
                     };
                 }
             }
@@ -1053,7 +1057,8 @@ SELECT a.Id,
     Compensation,
     PaymentTerms,
     BillingAddress,
-    OtherInformation
+    OtherInformation,
+    IsClosed
 FROM CustomerAgreement a
 WHERE CustomerId = @CustomerId
 ORDER BY a.Date DESC"
@@ -1082,7 +1087,8 @@ ORDER BY a.Date DESC"
                             Compensation = GetString(rs, 9),
                             PaymentTerms = GetString(rs, 10),
                             BillingAddress = GetString(rs, 11),
-                            OtherInformation = GetString(rs, 12)
+                            OtherInformation = GetString(rs, 12),
+                            IsClosed = GetInt32(rs, 13) == 1
                         }
                     );
                 }

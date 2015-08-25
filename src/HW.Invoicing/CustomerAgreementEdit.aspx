@@ -62,6 +62,11 @@
 	        <label for="<%= textBoxAgreementOtherInformation.ClientID %>">Other Information</label>
             <asp:TextBox ID="textBoxAgreementOtherInformation" runat="server" CssClass="form-control" ViewStateMode="Inherit" TextMode="MultiLine" Height="210"></asp:TextBox>
         </div>
+        <asp:PlaceHolder ID="placeHolderClosed" runat="server">
+            <div class="form-group">
+                <asp:CheckBox ID="checkBoxClosed" runat="server" CssClass="form-control" Text="&nbsp;This customer agreement is closed" />
+            </div>
+        </asp:PlaceHolder>
 
         <div>
             <asp:Button CssClass="btn btn-success" ID="buttonSave" runat="server" Text="Save customer agreement" 
