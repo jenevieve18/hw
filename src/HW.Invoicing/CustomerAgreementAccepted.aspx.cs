@@ -39,7 +39,7 @@ namespace HW.Invoicing
 
         protected void buttonBackClick(object sender, EventArgs e)
         {
-            Response.Redirect(string.Format("customeragreementshow.aspx?Id={0}&CompanyId={1}&CustomerId={2}", id));
+            Response.Redirect(string.Format("customeragreementshow.aspx?Id={0}&CompanyId={1}&CustomerId={2}", id, companyId, customerId));
         }
 
         protected void buttonNextClick(object sender, EventArgs e)
