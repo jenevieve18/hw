@@ -85,7 +85,8 @@ SELECT Id,
     Terms,
     Signature,
     AgreementEmailText,
-    AgreementEmailSubject
+    AgreementEmailSubject,
+    Email
 FROM Company
 WHERE Id = @Id";
 			Company c = null;
@@ -107,7 +108,8 @@ WHERE Id = @Id";
                         Terms = GetString(rs, 12),
                         Signature = GetString(rs, 13),
                         AgreementEmailText = GetString(rs, 14),
-                        AgreementEmailSubject = GetString(rs, 15)
+                        AgreementEmailSubject = GetString(rs, 15),
+                        Email = GetString(rs, 16)
 					};
 				}
 			}
