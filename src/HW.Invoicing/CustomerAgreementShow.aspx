@@ -106,12 +106,7 @@
 --%>
     <script type="text/javascript">
         $(function () {
-            $('.date').datepicker({
-                format: "yyyy-mm-dd",
-                autoclose: true
-            });
             $('#buttonAddMoreTimeAndPlace').click(function () {
-                //alert('test');
                 var s = "<tr>" +
                     "<td></td>" +
                     "<td><input type='text' class='date form-control'></td>" +
@@ -119,10 +114,24 @@
                     "<td><input type='text' class='form-control'></td>" +
                     "<td><input type='text' class='form-control'></td>" +
                     "<td><input type='text' class='form-control'></td>" +
+                    "<td style='width:16px'><a href='javascript:;' class='removeDateTimeAndPlace'><img src='img/cross.png'></a></td>" +
                     "</tr>";
                 $('#dateTimeAndPlaces').append(s);
+                initDates();
+                bindRemoveDateTimeAndPlace();
             });
         });
+        function bindRemoveDateTimeAndPlace() {
+            $('.removeDateTimeAndPlace').click(function () {
+                $(this).closest('tr').remove();
+            });
+        }
+        function initDates() {
+            $('.date').datepicker({
+                format: "yyyy-mm-dd",
+                autoclose: true
+            });
+        }
     </script>
 
 </head>
@@ -230,13 +239,13 @@
             <thead>
                 <tr>
                     <td><b>Föreläsare</b>:</td>
-                    <td colspan="5">
+                    <td colspan="6">
                         <%= agreement.Lecturer %>
                     </td>
                 </tr>
                 <tr>
                     <td><b>Föreläsningstitel</b>:</td>
-                    <td colspan="5">
+                    <td colspan="6">
                         <asp:TextBox ID="textBoxAgreementLectureTitle" CssClass="form-control" runat="server"></asp:TextBox>
                     </td>
                 </tr>
@@ -258,47 +267,40 @@
                     <td><input type="text" class="form-control" /></td>
                     <td><input type="text" class="form-control" /></td>
                     <td><input type="text" class="form-control" /></td>
+                    <td style='width:16px'></td>
                 </tr>
             </tbody>
 
             <tfoot>
                 <tr>
-                    <td colspan="5"></td>
-                    <td align="right">
+                    <td align="right" colspan="7">
                         <a href="javascript:;" id="buttonAddMoreTimeAndPlace" class="btn btn-default">Add more time and place</a>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="6">&nbsp;</td>
                 </tr>
-                <%--<tr>
-                    <td><b>Speltid</b>:</td>
-                    <td colspan="3">
-                        <asp:TextBox ID="textBoxAgreementRuntime" CssClass="form-control" runat="server"></asp:TextBox>
-                    </td>
-                </tr>--%>
-
                 <tr>
                     <td><b>Plats och adress</b>:</td>
-                    <td colspan="5">
+                    <td colspan="6">
                         <asp:TextBox ID="textBoxAgreementLocation" CssClass="form-control" runat="server" TextMode="MultiLine" Height="100"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
                     <td><b>Kontaktperson</b>:</td>
-                    <td colspan="5">
+                    <td colspan="6">
                         <asp:TextBox ID="textBoxAgreementContact" CssClass="form-control" runat="server"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
                     <td><b>Mobil</b>:</td>
-                    <td colspan="5">
+                    <td colspan="6">
                         <asp:TextBox ID="textBoxAgreementMobile" CssClass="form-control" runat="server"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
                     <td><b>E-post kontaktperson</b>:</td>
-                    <td colspan="5">
+                    <td colspan="6">
                         <asp:TextBox ID="textBoxAgreementEmail" CssClass="form-control" runat="server"></asp:TextBox>
                     </td>
                 </tr>
@@ -307,11 +309,11 @@
                     <td>
                         <asp:TextBox ID="textBoxAgreementCompensation" CssClass="compensation form-control" runat="server"></asp:TextBox>
                     </td>
-                    <td colspan="4" class="col-md-8">SEK + moms. Eventualla resekostnader och logi tillkommer.</td>
+                    <td colspan="5" class="col-md-8">SEK + moms. Eventualla resekostnader och logi tillkommer.</td>
                 </tr>
                 <tr>
                     <td><b>Betalningsvillkor</b>:</td>
-                    <td colspan="5">
+                    <td colspan="6">
                         <%= agreement.PaymentTerms %>
                     </td>
                 </tr>
