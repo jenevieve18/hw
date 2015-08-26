@@ -110,10 +110,18 @@
                 format: "yyyy-mm-dd",
                 autoclose: true
             });
-            //            $('#Div1').datetimepicker({
-            //                locale: 'se'
-            //            });
-
+            $('#buttonAddMoreTimeAndPlace').click(function () {
+                //alert('test');
+                var s = "<tr>" +
+                    "<td></td>" +
+                    "<td><input type='text' class='date form-control'></td>" +
+                    "<td><input type='text' class='form-control'></td>" +
+                    "<td><input type='text' class='form-control'></td>" +
+                    "<td><input type='text' class='form-control'></td>" +
+                    "<td><input type='text' class='form-control'></td>" +
+                    "</tr>";
+                $('#dateTimeAndPlaces').append(s);
+            });
         });
     </script>
 
@@ -219,105 +227,95 @@
         <p></p>
         <p>Mellan ovanstående parter har avtal om engagemang träffats enligt följande:</p>
         <table style="width:100%" cellpadding="2">
-            <tr>
-                <td><b>Föreläsare</b>:</td>
-                <td colspan="5">
-                    <%= agreement.Lecturer %>
-                </td>
-            </tr>
-            <tr>
-                <td><b>Föreläsningstitel</b>:</td>
-                <td colspan="5">
-                    <asp:TextBox ID="textBoxAgreementLectureTitle" CssClass="form-control" runat="server"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><b></b></td>
-                <td><b>Från Kl</b></td>
-                <td><b>Till Kl</b></td>
-                <td><b>Speltid</b></td>
-                <td><b>Plats och adress</b></td>
-            </tr>
+            <thead>
+                <tr>
+                    <td><b>Föreläsare</b>:</td>
+                    <td colspan="5">
+                        <%= agreement.Lecturer %>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Föreläsningstitel</b>:</td>
+                    <td colspan="5">
+                        <asp:TextBox ID="textBoxAgreementLectureTitle" CssClass="form-control" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><b></b></td>
+                    <td><b>Från Kl</b></td>
+                    <td><b>Till Kl</b></td>
+                    <td><b>Speltid</b></td>
+                    <td><b>Plats och adress</b></td>
+                </tr>
+            </thead>
 
-            <tr>
-                <td><b>Datum för föreläsningen</b>:</td>
-                <td>
-                    <asp:TextBox ID="textBoxAgreementDate" CssClass="date form-control" runat="server"></asp:TextBox>
-                </td>
-                <td>
-                   <%-- <div class='input-group date' id='Div2'>
-                        <asp:TextBox ID="textBoxAgreementDateTo" CssClass="date form-control" runat="server"></asp:TextBox>
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>--%>
-                    <asp:TextBox ID="textBoxAgreementTimeFrom" CssClass="form-control" runat="server"></asp:TextBox>
-                </td>
-                <td>
-                    <asp:TextBox ID="textBoxAgreementTimeTo" CssClass="form-control" runat="server"></asp:TextBox>
-                </td>
-                <td>
-                    <asp:TextBox ID="textBoxAgreementRuntime" CssClass="form-control" runat="server"></asp:TextBox>
-                </td>
-                <td>
-                    <asp:TextBox ID="textBox2" CssClass="form-control" runat="server"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="5"></td>
-                <td align="right">
-                    <a href="#" class="btn btn-default">Add more time and place</a>
-                    <%--<asp:Button ID="Button1" CssClass="btn btn-default" runat="server" Text="Button" />--%>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="6">&nbsp;</td>
-            </tr>
-            <%--<tr>
-                <td><b>Speltid</b>:</td>
-                <td colspan="3">
-                    <asp:TextBox ID="textBoxAgreementRuntime" CssClass="form-control" runat="server"></asp:TextBox>
-                </td>
-            </tr>--%>
+            <tbody id="dateTimeAndPlaces">
+                <tr>
+                    <td><b>Datum för föreläsningen</b>:</td>
+                    <td><input type="text" class="date form-control" /></td>
+                    <td><input type="text" class="form-control" /></td>
+                    <td><input type="text" class="form-control" /></td>
+                    <td><input type="text" class="form-control" /></td>
+                    <td><input type="text" class="form-control" /></td>
+                </tr>
+            </tbody>
 
-            <tr>
-                <td><b>Plats och adress</b>:</td>
-                <td colspan="5">
-                    <asp:TextBox ID="textBoxAgreementLocation" CssClass="form-control" runat="server" TextMode="MultiLine" Height="100"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td><b>Kontaktperson</b>:</td>
-                <td colspan="5">
-                    <asp:TextBox ID="textBoxAgreementContact" CssClass="form-control" runat="server"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td><b>Mobil</b>:</td>
-                <td colspan="5">
-                    <asp:TextBox ID="textBoxAgreementMobile" CssClass="form-control" runat="server"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td><b>E-post kontaktperson</b>:</td>
-                <td colspan="5">
-                    <asp:TextBox ID="textBoxAgreementEmail" CssClass="form-control" runat="server"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td><b>Ersättning</b>:</td>
-                <td>
-                    <asp:TextBox ID="textBoxAgreementCompensation" CssClass="compensation form-control" runat="server"></asp:TextBox>
-                </td>
-                <td colspan="4" class="col-md-8">SEK + moms. Eventualla resekostnader och logi tillkommer.</td>
-            </tr>
-            <tr>
-                <td><b>Betalningsvillkor</b>:</td>
-                <td colspan="5">
-                    <%= agreement.PaymentTerms %>
-                </td>
-            </tr>
+            <tfoot>
+                <tr>
+                    <td colspan="5"></td>
+                    <td align="right">
+                        <a href="javascript:;" id="buttonAddMoreTimeAndPlace" class="btn btn-default">Add more time and place</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6">&nbsp;</td>
+                </tr>
+                <%--<tr>
+                    <td><b>Speltid</b>:</td>
+                    <td colspan="3">
+                        <asp:TextBox ID="textBoxAgreementRuntime" CssClass="form-control" runat="server"></asp:TextBox>
+                    </td>
+                </tr>--%>
+
+                <tr>
+                    <td><b>Plats och adress</b>:</td>
+                    <td colspan="5">
+                        <asp:TextBox ID="textBoxAgreementLocation" CssClass="form-control" runat="server" TextMode="MultiLine" Height="100"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Kontaktperson</b>:</td>
+                    <td colspan="5">
+                        <asp:TextBox ID="textBoxAgreementContact" CssClass="form-control" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Mobil</b>:</td>
+                    <td colspan="5">
+                        <asp:TextBox ID="textBoxAgreementMobile" CssClass="form-control" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>E-post kontaktperson</b>:</td>
+                    <td colspan="5">
+                        <asp:TextBox ID="textBoxAgreementEmail" CssClass="form-control" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Ersättning</b>:</td>
+                    <td>
+                        <asp:TextBox ID="textBoxAgreementCompensation" CssClass="compensation form-control" runat="server"></asp:TextBox>
+                    </td>
+                    <td colspan="4" class="col-md-8">SEK + moms. Eventualla resekostnader och logi tillkommer.</td>
+                </tr>
+                <tr>
+                    <td><b>Betalningsvillkor</b>:</td>
+                    <td colspan="5">
+                        <%= agreement.PaymentTerms %>
+                    </td>
+                </tr>
+            </tfoot>
         </table>
 
         <br />
