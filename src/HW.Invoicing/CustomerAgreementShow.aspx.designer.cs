@@ -85,6 +85,15 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxCustomerReferenceNumber;
         
         /// <summary>
+        /// textBoxAgreementLectureTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementLectureTitle;
+        
+        /// <summary>
         /// textBoxAgreementDate control.
         /// </summary>
         /// <remarks>
@@ -92,6 +101,24 @@ namespace HW.Invoicing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox textBoxAgreementDate;
+        
+        /// <summary>
+        /// textBoxAgreementTimeFrom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementTimeFrom;
+        
+        /// <summary>
+        /// textBoxAgreementTimeTo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementTimeTo;
         
         /// <summary>
         /// textBoxAgreementRuntime control.
@@ -103,13 +130,13 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxAgreementRuntime;
         
         /// <summary>
-        /// textBoxAgreementLectureTitle control.
+        /// textBox2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementLectureTitle;
+        protected global::System.Web.UI.WebControls.TextBox textBox2;
         
         /// <summary>
         /// textBoxAgreementLocation control.

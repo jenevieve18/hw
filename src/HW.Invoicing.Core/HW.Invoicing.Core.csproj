@@ -46,7 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\InvoiceExporter.cs" />
+    <Compile Include="Helpers\AbstractInvoiceExporter.cs" />
+    <Compile Include="Helpers\HCGEAgreementExporter.cs" />
+    <Compile Include="Helpers\HCGFInvoiceExporter.cs" />
+    <Compile Include="Helpers\IHGFInvoiceExporter.cs" />
+    <Compile Include="Helpers\InvoiceExporterFactory.cs" />
     <Compile Include="Helpers\ItemHelper.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Customer.cs" />

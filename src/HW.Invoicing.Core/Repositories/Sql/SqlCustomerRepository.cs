@@ -341,7 +341,8 @@ VALUES(@Name, @Number, @PostalAddress, @InvoiceAddress, @PurchaseOrderNumber, @Y
 		{
 			string query = string.Format(
                 @"
-UPDATE Customer SET Number = @Number,
+UPDATE Customer SET Name = @Name,
+    Number = @Number,
     InvoiceAddress = @InvoiceAddress,
     PostalAddress = @PostalAddress,
     PurchaseOrderNumber = @PurchaseOrderNumber,
@@ -354,7 +355,8 @@ WHERE Id = @Id"
             );
 			ExecuteNonQuery(
 				query,
-				"invoicing",
+                "invoicing",
+                new SqlParameter("@Name", c.Name),
                 new SqlParameter("@Number", c.Number),
                 new SqlParameter("@InvoiceAddress", c.InvoiceAddress),
                 new SqlParameter("@PostalAddress", c.PostalAddress),
@@ -808,7 +810,8 @@ SELECT Id,
     PaymentTerms,
     BillingAddress,
     OtherInformation,
-    IsClosed
+    IsClosed,
+    CustomerId
 FROM CustomerAgreement
 WHERE Id = @Id"
             );
@@ -832,7 +835,10 @@ WHERE Id = @Id"
                         PaymentTerms = GetString(rs, 10),
                         BillingAddress = GetString(rs, 11),
                         OtherInformation = GetString(rs, 12),
-                        IsClosed = GetInt32(rs, 13) == 1
+                        IsClosed = GetInt32(rs, 13) == 1,
+                        Customer = new Customer {
+                        	Id = GetInt32(rs, 14)
+                        }
                     };
                 }
             }

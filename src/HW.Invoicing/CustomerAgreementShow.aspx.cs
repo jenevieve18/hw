@@ -50,7 +50,7 @@ namespace HW.Invoicing
                         textBoxCustomerReferenceNumber.Text = customer.PurchaseOrderNumber;
 
                         textBoxAgreementDate.Text = agreement.Date.Value.ToString("yyyy-MM-dd");
-                        textBoxAgreementRuntime.Text = agreement.Runtime;
+                        //textBoxAgreementRuntime.Text = agreement.Runtime;
                         textBoxAgreementLectureTitle.Text = agreement.LectureTitle;
                         textBoxAgreementLocation.Text = agreement.Location;
                         textBoxAgreementContact.Text = agreement.Contact;
@@ -73,7 +73,7 @@ namespace HW.Invoicing
                         textBoxCustomerReferenceNumber.Text = Session["CustomerReferenceNumber"].ToString();
                         
                         textBoxAgreementDate.Text = Session["AgreementDate"].ToString();
-                        textBoxAgreementRuntime.Text = Session["AgreementRuntime"].ToString();
+                        //textBoxAgreementRuntime.Text = Session["AgreementRuntime"].ToString();
                         textBoxAgreementLectureTitle.Text = Session["AgreementLectureTitle"].ToString();
                         textBoxAgreementLocation.Text = Session["AgreementLocation"].ToString();
                         textBoxAgreementContact.Text = Session["AgreementContact"].ToString();
@@ -101,7 +101,7 @@ namespace HW.Invoicing
             Session["CustomerReferenceNumber"] = textBoxCustomerReferenceNumber.Text;
 
             Session["AgreementDate"] = textBoxAgreementDate.Text;
-            Session["AgreementRuntime"] = textBoxAgreementRuntime.Text;
+            //Session["AgreementRuntime"] = textBoxAgreementRuntime.Text;
             Session["AgreementLectureTitle"] = textBoxAgreementLectureTitle.Text;
             Session["AgreementLocation"] = textBoxAgreementLocation.Text;
             Session["AgreementContact"] = textBoxAgreementContact.Text;

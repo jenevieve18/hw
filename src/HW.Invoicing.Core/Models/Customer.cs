@@ -423,10 +423,16 @@ namespace HW.Invoicing.Core.Models
         public string BillingAddress { get; set; }
         public string OtherInformation { get; set; }
         public DateTime DateSigned { get; set; }
+        public string PlaceSigned { get; set; }
         public string CustomerName { get; set; }
         public string CustomerTitle { get; set; }
         public string CustomerCompany { get; set; }
         public bool IsClosed { get; set; }
+        
+        public string CustomerToString()
+        {
+            return string.Format("{0}, {1} {2}", CustomerName, CustomerTitle, CustomerCompany);
+        }
     }
 	
 	public class CustomerTimebook : BaseModel

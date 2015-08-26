@@ -765,6 +765,13 @@
             <asp:Panel ID="panelCustomerInfo" DefaultButton="buttonSave" runat="server">
 			<table class="table">
                 <tr>
+                    <td style="width: 30%;"><strong>Customer Name</strong></td>
+                    <td>
+                        <asp:Label ID="labelCustomerName" runat="server" Text="" CssClass="info-text"></asp:Label>
+                        <asp:TextBox ID="textBoxCustomerName" runat="server" CssClass="info form-control"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
                     <td style="width: 30%;"><strong>Customer Number</strong></td>
                     <td>
                         <asp:Label ID="labelCustomerNumber" runat="server" Text="" CssClass="info-text"></asp:Label>

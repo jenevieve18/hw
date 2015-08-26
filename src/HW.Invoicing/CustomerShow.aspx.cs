@@ -54,6 +54,7 @@ namespace HW.Invoicing
                     labelCustomer.Text = customer.Name;
 
                     // Customer Info Panel
+                    labelCustomerName.Text = textBoxCustomerName.Text = customer.Name;
                     labelCustomerNumber.Text = textBoxCustomerNumber.Text = customer.Number;
 
                     labelPostalAddress.Text = customer.PostalAddress.Replace("\n", "<br>");
@@ -199,6 +200,7 @@ namespace HW.Invoicing
         {
             var c = new Customer
             {
+                Name = textBoxCustomerName.Text,
                 Number = textBoxCustomerNumber.Text,
                 PostalAddress = textBoxPostalAddress.Text,
                 InvoiceAddress = textBoxInvoiceAddress.Text,
