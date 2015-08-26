@@ -113,6 +113,7 @@
     <Compile Include="Helpers\PdfExporterTests.cs" />
     <Compile Include="Helpers\PresentationDocumentExporterTests.cs" />
     <Compile Include="Helpers\SessionHelperTests.cs" />
+    <Compile Include="Helpers\AgreementExporterTests.cs" />
     <Compile Include="HWSite\ExerciseShowTests.cs" />
     <Compile Include="Invoicing\CustomersTests.cs" />
     <Compile Include="Invoicing\InvoicesTests.cs" />
