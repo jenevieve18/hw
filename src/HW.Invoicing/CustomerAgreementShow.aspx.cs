@@ -66,6 +66,7 @@ namespace HW.Invoicing
                         labelPaymentTerms.Text = agreement.PaymentTerms;
 
                         textBoxAgreementPlaceSigned.Text = agreement.PlaceSigned;
+                        //textBoxAgreementDateSigned.Text = agreement.DateSigned.Value.ToString("yyyy-MM-dd");
                         labelAgreementDate.Text = agreement.Date.Value.ToString("yyyy-MM-dd");
                         textBoxAgreementContactName.Text = agreement.ContactName;
                         textBoxAgreementContactTitle.Text = agreement.ContactTitle;
@@ -98,7 +99,6 @@ namespace HW.Invoicing
 
                         textBoxAgreementPlaceSigned.Text = Session["AgreementPlaceSigned"].ToString();
                         textBoxAgreementDateSigned.Text = Session["AgreementDateSigned"].ToString();
-                        //labelAgreementDate.Text = Session["AgreementDate"].ToString();
                         labelAgreementDate.Text = agreement.Date.Value.ToString("yyyy-MM-dd");
                         textBoxAgreementContactName.Text = Session["AgreementContactName"].ToString();
                         textBoxAgreementContactTitle.Text = Session["AgreementContactTitle"].ToString();

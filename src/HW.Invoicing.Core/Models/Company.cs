@@ -26,7 +26,7 @@ namespace HW.Invoicing.Core.Models
 
         public override string ToString()
         {
-            return string.Format("{0}\n{1}\n{2}", Name, Address, OrganizationNumber);
+            return string.Format("{0}\n{1}\nOrg.nr {2}", Name, Address, OrganizationNumber);
         }
 
         public bool HasSignature

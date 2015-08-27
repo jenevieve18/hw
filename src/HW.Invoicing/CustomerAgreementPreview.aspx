@@ -122,7 +122,7 @@
                 <td></td>
             </tr>
             <tr>
-                <td><b>Kund</b> <i>Ange: Företagsnamn, Postadress och Organisationsnummer</i></td>
+                <td><b>Kund</b><%-- <i>Ange: Företagsnamn, Postadress och Organisationsnummer</i>--%></td>
                 <td><b>Agentur</b></td>
             </tr>
             <tr>
@@ -252,9 +252,10 @@
 
         <br />
         <p>
-            <b>Övrig information</b> <i>Beskriv gärna målgruppen här.</i><br />
+            <b>Övrig information</b><%-- <i>Beskriv gärna målgruppen här.</i>--%><br />
             <asp:Label ID="labelAgreementOtherInformation" runat="server" Text=""></asp:Label>
         </p>
+        <hr />
         
         <p>Detta engagemangavtal (Huvudavtal) är en skriftlig bekräftelse på en redan muntlig överenskommelse mellan ovan nämnda Agentur och Kund. Detta Huvudavtal skall tillsammans med tillhörande bilaga returneras till Agenturen inom 14 dagar från att beställningen gjorts. Vid engagemangsdatum inom 14 dagar från beställningen krävs omgående retur till Agenturen.</p>
 
@@ -267,7 +268,7 @@
 
         <table style="width:100%" cellpadding="2">
             <tr>
-                <td class="label2-width">Ort och Datum</td>
+                <td class="label2-width"><b>Ort och Datum</b></td>
                 <td>
                     <asp:Label ID="labelAgreementPlaceSigned" runat="server" Text=""></asp:Label>
                     den
@@ -281,13 +282,13 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    Signatur<%-- <i>Ange namn och titel på den som ska signera avtalet</i>--%>
+                    <b>Signatur</b><%-- <i>Ange namn och titel på den som ska signera avtalet</i>--%>
                 </td>
                 <td></td>
                 <td><img src="uploads/<%= company.Signature %>" /></td>
             </tr>
             <tr>
-                <td>Namn</td>
+                <td><b>Namn</b></td>
                 <td>
                     <asp:Label ID="labelAgreementContactName" runat="server" Text=""></asp:Label>
                 </td>
@@ -298,7 +299,7 @@
                 </td>
             </tr>
             <tr>
-                <td>Titel</td>
+                <td><b>Titel</b></td>
                 <td>
                     <asp:Label ID="labelAgreementContactTitle" runat="server" Text=""></asp:Label>
                 </td>
@@ -306,7 +307,7 @@
                 <td></td>
             </tr>
             <tr>
-                <td>Företag</td>
+                <td><b>Företag</b></td>
                 <td>
                     <asp:Label ID="labelAgreementContactCompany" runat="server" Text=""></asp:Label>
                 </td>

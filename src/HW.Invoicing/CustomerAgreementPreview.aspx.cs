@@ -47,17 +47,16 @@ namespace HW.Invoicing
             labelAgreementLecturer.Text = agreement.Lecturer;
             labelAgreementLectureTitle.Text = Session["AgreementLectureTitle"].ToString();
 
-            // Customer agreement datetime and places
-
             labelAgreementContact.Text = Session["AgreementContact"].ToString();
             labelAgreementMobile.Text = Session["AgreementMobile"].ToString();
             labelAgreementEmail.Text = Session["AgreementEmail"].ToString();
             labelAgreementCompensation.Text = Session["AgreementCompensation"].ToString();
-            labelAgreementOtherInformation.Text = Session["AgreementOtherInformation"].ToString();
+            labelAgreementOtherInformation.Text = Session["AgreementOtherInformation"].ToString().Replace("\n", "<br>");
             labelPaymentTerms.Text = Session["AgreementPaymentTerms"].ToString();
 
             labelAgreementPlaceSigned.Text = Session["AgreementPlaceSigned"].ToString();
             labelAgreementDateSigned.Text = Session["AgreementDateSigned"].ToString();
+            labelAgreementDate.Text = agreement.Date.Value.ToString("yyyy-MM-dd");
             labelAgreementContactName.Text = Session["AgreementContactName"].ToString();
             labelAgreementContactTitle.Text = Session["AgreementContactTitle"].ToString();
             labelAgreementContactCompany.Text = Session["AgreementContactCompany"].ToString();
@@ -82,6 +81,7 @@ namespace HW.Invoicing
 
             var a = new CustomerAgreement
             {
+                Date = agreement.Date,
                 Lecturer = agreement.Lecturer,
                 LectureTitle = Session["AgreementLectureTitle"].ToString(),
 

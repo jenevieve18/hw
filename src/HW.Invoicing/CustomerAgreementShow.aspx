@@ -89,23 +89,57 @@
     <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
 --%>
     <script type="text/javascript">
+        var dateTimeAndPlaces = [];
+        <% foreach (var d in dateTimeAndPlaces) { %>
+            var d = {
+                'date': '<%= d.Date %>',
+                'timeFrom': '<%= d.TimeFrom %>',
+                'timeTo': '<%= d.TimeTo %>',
+                'address': '<%= d.Address %>'
+            };
+            dateTimeAndPlaces.push(d);
+        <% } %>
         $(function () {
             initDates();
+            if (dateTimeAndPlaces.length > 0) {
+                $('#dateTimeAndPlaces').html("");
+                var i = 0;
+                dateTimeAndPlaces.forEach(function(e) {
+                    appendDateTimeAndPlace(e.date, e.timeFrom, e.timeTo, e.address, i == 0);
+                    initDates();
+                    bindRemoveDateTimeAndPlace();
+                    i++;
+                });
+            }
             $('#buttonAddMoreTimeAndPlace').click(function () {
-                var s = "<tr>" +
-                    "<td></td>" +
-                    "<td><input type='text' id='agreement-date' name='agreement-date' class='date form-control'></td>" +
-                    "<td><input type='text' id='agreement-timefrom' name='agreement-timefrom' class='form-control'></td>" +
-                    "<td><input type='text' id='agreement-timeto' name='agreement-timeto' class='form-control'></td>" +
-                    //"<td><input type='text' id='agreement-runtime' name='agreement-runtime' class='form-control'></td>" +
-                    "<td><input type='text' id='agreement-address' name='agreement-address' class='form-control'></td>" +
-                    "<td><a href='javascript:;' class='removeDateTimeAndPlace'><img src='img/cross.png'></a></td>" +
-                    "</tr>";
-                $('#dateTimeAndPlaces').append(s);
+                appendDateTimeAndPlace("", "", "", "", false);
                 initDates();
                 bindRemoveDateTimeAndPlace();
             });
         });
+        function appendDateTimeAndPlace(date, timeFrom, timeTo, address, start) {
+            var s = "";
+            if (start) {
+                s = "<tr>" +
+                    "<td></td>" +
+                    "<td><input value='" + date + "' type='text' id='agreement-date' name='agreement-date' class='date form-control'></td>" +
+                    "<td><input value='" + timeFrom + "' type='text' id='agreement-timefrom' name='agreement-timefrom' class='form-control'></td>" +
+                    "<td><input value='" + timeTo + "' type='text' id='agreement-timeto' name='agreement-timeto' class='form-control'></td>" +
+                    "<td><input value='" + address + "' type='text' id='agreement-address' name='agreement-address' class='form-control'></td>" +
+                    "<td></td>" +
+                    "</tr>";
+            } else {
+                s = "<tr>" +
+                    "<td></td>" +
+                    "<td><input value='" + date + "' type='text' id='agreement-date' name='agreement-date' class='date form-control'></td>" +
+                    "<td><input value='" + timeFrom + "' type='text' id='agreement-timefrom' name='agreement-timefrom' class='form-control'></td>" +
+                    "<td><input value='" + timeTo + "' type='text' id='agreement-timeto' name='agreement-timeto' class='form-control'></td>" +
+                    "<td><input value='" + address + "' type='text' id='agreement-address' name='agreement-address' class='form-control'></td>" +
+                    "<td><a href='javascript:;' class='removeDateTimeAndPlace'><img src='img/cross.png'></a></td>" +
+                    "</tr>";
+            }
+            $('#dateTimeAndPlaces').append(s);
+        }
         function bindRemoveDateTimeAndPlace() {
             $('.removeDateTimeAndPlace').click(function () {
                 $(this).closest('tr').remove();
@@ -348,7 +382,7 @@
 
         <table style="width:100%" cellpadding="2">
             <tr>
-                <td class="label2-width">Ort och Datum</td>
+                <td class="label2-width"><b>Ort och Datum</b></td>
                 <td>
                     <asp:TextBox ID="textBoxAgreementPlaceSigned" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
@@ -363,13 +397,13 @@
             </tr>
             <tr>
                 <td colspan="3">
-                    Signatur <i>Ange namn och titel på den som ska signera avtalet</i>
+                    <b>Signatur</b> <i>Ange namn och titel på den som ska signera avtalet</i>
                 </td>
                 <td></td>
                 <td><img src="uploads/<%= company.Signature %>" /></td>
             </tr>
             <tr>
-                <td>Namn</td>
+                <td><b>Namn</b></td>
                 <td colspan="2">
                     <asp:TextBox ID="textBoxAgreementContactName" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
@@ -380,7 +414,7 @@
                 </td>
             </tr>
             <tr>
-                <td>Titel</td>
+                <td><b>Titel</b></td>
                 <td colspan="2">
                     <asp:TextBox ID="textBoxAgreementContactTitle" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
@@ -388,7 +422,7 @@
                 <td></td>
             </tr>
             <tr>
-                <td>Företag</td>
+                <td><b>Företag</b></td>
                 <td colspan="2">
                     <asp:TextBox ID="textBoxAgreementContactCompany" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
