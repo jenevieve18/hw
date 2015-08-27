@@ -24,17 +24,42 @@ namespace HW.Invoicing
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            HtmlHelper.RedirectIf(Session["CustomerName"] == null, "default.aspx");
-
             id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
             companyId = ConvertHelper.ToInt32(Request.QueryString["CompanyId"]);
             customerId = ConvertHelper.ToInt32(Request.QueryString["CustomerId"]);
-            
+
+            HtmlHelper.RedirectIf(Session["CustomerName"] == null, string.Format("customeragreementshow.aspx?Id={0}&CompanyId={1}&CustomerId={2}", id, companyId, customerId));
+
             agreement = r.ReadAgreement(id);
 
             company = cr.Read(companyId);
 
             customer = r.Read(customerId);
+
+            labelCustomerName.Text = Session["CustomerName"].ToString();
+            labelCustomerPostalAddress.Text = Session["CustomerPostalAddress"].ToString();
+            labelCustomerNumber.Text = Session["CustomerNumber"].ToString();
+            labelCustomerInvoiceAddress.Text = Session["CustomerInvoiceAddress"].ToString();
+            labelCustomerReferenceNumber.Text = Session["CustomerReferenceNumber"].ToString();
+
+            labelCompanyName.Text = company.ToString().Replace("\n", "<br>");
+
+            labelAgreementLectureTitle.Text = Session["AgreementLectureTitle"].ToString();
+
+            // Customer agreement datetime and places
+
+            labelAgreementContact.Text = Session["AgreementContact"].ToString();
+            labelAgreementMobile.Text = Session["AgreementMobile"].ToString();
+            labelAgreementEmail.Text = Session["AgreementEmail"].ToString();
+            labelAgreementCompensation.Text = Session["AgreementCompensation"].ToString();
+            labelAgreementOtherInformation.Text = Session["AgreementOtherInformation"].ToString();
+            labelPaymentTerms.Text = Session["AgreementPaymentTerms"].ToString();
+
+            labelAgreementPlaceSigned.Text = Session["AgreementPlaceSigned"].ToString();
+            labelAgreementDateSigned.Text = Session["AgreementDateSigned"].ToString();
+            labelAgreementContactName.Text = Session["AgreementContactName"].ToString();
+            labelAgreementContactTitle.Text = Session["AgreementContactTitle"].ToString();
+            labelAgreementContactCompany.Text = Session["AgreementContactCompany"].ToString();
         }
 
         protected void buttonBackClick(object sender, EventArgs e)
@@ -57,20 +82,21 @@ namespace HW.Invoicing
             var a = new CustomerAgreement
             {
                 Lecturer = agreement.Lecturer,
-                Date = ConvertHelper.ToDateTime(Session["AgreementDate"].ToString()),
-                Runtime = Session["AgreementRuntime"].ToString(),
+                //Date = ConvertHelper.ToDateTime(Session["AgreementDate"].ToString()),
                 LectureTitle = Session["AgreementLectureTitle"].ToString(),
-                Location = Session["AgreementLocation"].ToString(),
+
                 Contact = Session["AgreementContact"].ToString(),
                 Mobile = Session["AgreementMobile"].ToString(),
                 Email = Session["AgreementEmail"].ToString(),
                 Compensation = Session["AgreementCompensation"].ToString(),
                 PaymentTerms = agreement.PaymentTerms,
                 OtherInformation = Session["AgreementOtherInformation"].ToString(),
+                
+                PlaceSigned = Session["AgreementPlaceSigned"].ToString(),
                 DateSigned = ConvertHelper.ToDateTime(Session["AgreementDateSigned"].ToString()),
-                CustomerName = Session["AgreementCustomerName"].ToString(),
-                CustomerTitle = Session["AgreementCustomerTitle"].ToString(),
-                CustomerCompany = Session["AgreementCustomerCompany"].ToString(),
+                ContactName = Session["AgreementContactName"].ToString(),
+                ContactTitle = Session["AgreementContactTitle"].ToString(),
+                ContactCompany = Session["AgreementContactCompany"].ToString(),
                 IsClosed = true
             };
             r.UpdateAgreement(a, id);

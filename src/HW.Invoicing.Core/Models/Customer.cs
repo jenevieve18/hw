@@ -412,9 +412,9 @@ namespace HW.Invoicing.Core.Models
         public Customer Customer { get; set; }
         public DateTime? Date { get; set; }
         public string Lecturer { get; set; }
-        public string Runtime { get; set; }
+        //public string Runtime { get; set; }
         public string LectureTitle { get; set; }
-        public string Location { get; set; }
+        //public string Location { get; set; }
         public string Contact { get; set; }
         public string Mobile { get; set; }
         public string Email { get; set; }
@@ -422,17 +422,26 @@ namespace HW.Invoicing.Core.Models
         public string PaymentTerms { get; set; }
         public string BillingAddress { get; set; }
         public string OtherInformation { get; set; }
-        public DateTime DateSigned { get; set; }
+        public DateTime? DateSigned { get; set; }
         public string PlaceSigned { get; set; }
-        public string CustomerName { get; set; }
-        public string CustomerTitle { get; set; }
-        public string CustomerCompany { get; set; }
+        public string ContactName { get; set; }
+        public string ContactTitle { get; set; }
+        public string ContactCompany { get; set; }
         public bool IsClosed { get; set; }
         
         public string CustomerToString()
         {
-            return string.Format("{0}, {1} {2}", CustomerName, CustomerTitle, CustomerCompany);
+            return string.Format("{0}, {1} {2}", ContactName, ContactTitle, ContactCompany);
         }
+    }
+    
+    public class CustomerAgreementDateTimeAndPlace : BaseModel
+    {
+    	public string Date { get; set; }
+    	public string TimeFrom { get; set; }
+    	public string TimeTo { get; set; }
+    	public string Runtime { get; set; }
+    	public string Address { get; set; }
     }
 	
 	public class CustomerTimebook : BaseModel

@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CustomerAgreementAccepted.aspx.cs" Inherits="HW.Invoicing.CustomerAgreementAccepted" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
+<%@ Import Namespace="HW.Invoicing.Core.Models" %>
 <!DOCTYPE html>
 
 <html lang="en">
@@ -88,128 +89,159 @@
 <body>
     <form id="form1" runat="server">
     <div class="container">
-        <table style="width:100%">
+        <table style="width:100%" cellpadding="2">
             <tr>
-                <td valign="bottom"><img src="uploads/<%= company.InvoiceLogo %>" /></td>
+                <td class="col-md-6" valign="bottom"><img src="uploads/<%= company.InvoiceLogo %>" /></td>
                 <td valign="bottom"><b>Engagemangsavtal nummer HCGE-<%= agreement.Id.ToString("000") %></b></td>
             </tr>
-        </table>
-        <p></p>
-        <table style="width:100%;" cellpadding="2">
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
             <tr>
                 <td><b>Kund</b> <i>Ange: Företagsnamn, Postadress och Organisationsnummer</i></td>
                 <td><b>Agentur</b></td>
             </tr>
             <tr>
-                <td width="50%">
+                <td>
                     <table style="width:100%" cellpadding="2">
                         <tr>
                             <td><b>Företagsnamn</b></td>
-                            <td class="col-md-9">
-                                <%= Session["CustomerName"] %>
+                            <td class="col-md-7">
+                                <asp:Label ID="labelCustomerName" runat="server" Text=""></asp:Label>
+                                <%--<%= Session["CustomerName"] %>--%>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Postadress</b></td>
-                            <td class="col-md-9">
-                                <%= Session["CustomerPostalAddress"].ToString().Replace("\n", "<br>")%>
+                            <td class="col-md-7">
+                                <asp:Label ID="labelCustomerPostalAddress" runat="server" Text=""></asp:Label>
+                                <%--<%= Session["CustomerPostalAddress"].ToString().Replace("\n", "<br>")%>--%>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Organisationsnummer</b></td>
-                            <td class="col-md-9">
-                                <%= Session["CustomerNumber"] %>
+                            <td class="col-md-7">
+                                <asp:Label ID="labelCustomerNumber" runat="server" Text=""></asp:Label>
+                                <%--<%= Session["CustomerNumber"] %>--%>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Faktureringsadress</b></td>
-                            <td class="col-md-9">
-                                <%= Session["CustomerInvoiceAddress"].ToString().Replace("\n", "<br>") %>
+                            <td class="col-md-7">
+                                <asp:Label ID="labelCustomerInvoiceAddress" runat="server" Text=""></asp:Label>
+                                <%--<%= Session["CustomerInvoiceAddress"].ToString().Replace("\n", "<br>") %>--%>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Eventuellt referensnummer</b></td>
-                            <td class="col-md-9">
-                                <%= Session["CustomerReferenceNumber"] %>
+                            <td class="col-md-7">
+                                <asp:Label ID="labelCustomerReferenceNumber" runat="server" Text=""></asp:Label>
+                                <%--<%= Session["CustomerReferenceNumber"] %>--%>
                             </td>
                         </tr>
                     </table>
                 </td>
-                <td width="50%" valign="top">
-                    <%= company.ToString().Replace("\n", "<br>") %>
+                <td valign="top">
+                    <asp:Label ID="labelCompanyName" runat="server" Text=""></asp:Label>
+                    <%--<%= company.ToString().Replace("\n", "<br>") %>--%>
                 </td>
             </tr>
         </table>
+
         <p></p>
         <p>Mellan ovanstående parter har avtal om engagemang träffats enligt följande:</p>
         <table style="width:100%" cellpadding="2">
-            <tr>
-                <td><b>Föreläsare:</b></td>
-                <td class="col-md-9" colspan="2">
-                    <%= agreement.Lecturer %>
-                </td>
-            </tr>
-            <tr>
-                <td><b>Datum för föreläsningen</b>:</td>
-                <td class="col-md-9" colspan="2">
-                    <%= Session["AgreementDate"]%>
-                </td>
-            </tr>
-            <tr>
-                <td><b>Speltid</b>:</td>
-                <td class="col-md-9" colspan="2">
-                    <%= Session["AgreementRuntime"]%>
-                </td>
-            </tr>
-            <tr>
-                <td><b>Föreläsningstitel</b>:</td>
-                <td class="col-md-9" colspan="2">
-                    <%= Session["AgreementLectureTitle"]%>
-                </td>
-            </tr>
-            <tr>
-                <td><b>Plats och adress</b>:</td>
-                <td class="col-md-9" colspan="2">
-                    <%= Session["AgreementLocation"].ToString().Replace("\n", "<br>")%>
-                </td>
-            </tr>
-            <tr>
-                <td><b>Kontaktperson</b>:</td>
-                <td class="col-md-9" colspan="2">
-                    <%= Session["AgreementContact"]%>
-                </td>
-            </tr>
-            <tr>
-                <td><b>Mobil</b>:</td>
-                <td class="col-md-9" colspan="2">
-                    <%= Session["AgreementMobile"]%>
-                </td>
-            </tr>
-            <tr>
-                <td><b>E-post kontaktperson</b>:</td>
-                <td class="col-md-9" colspan="2">
-                    <%= Session["AgreementEmail"]%>
-                </td>
-            </tr>
-            <tr>
-                <td><b>Ersättning</b>:</td>
-                <td>
-                    <%= Session["AgreementCompensation"]%>
-                </td>
-                <td class="col-md-8">SEK + moms. Eventualla resekostnader och logi tillkommer.</td>
-            </tr>
-            <tr>
-                <td><b>Betalningsvillkor</b>:</td>
-                <td colspan="2">
-                    <%= agreement.PaymentTerms%>
-                </td>
-            </tr>
+            <thead>
+                <tr>
+                    <td><b>Föreläsare</b>:</td>
+                    <td class="col-md-9" colspan="2">
+                        <asp:Label ID="labelAgreementLecturer" runat="server" Text=""></asp:Label>
+                        <%= agreement.Lecturer %>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Föreläsningstitel</b>:</td>
+                    <td class="col-md-9" colspan="2">
+                        <asp:Label ID="labelAgreementLectureTitle" runat="server" Text=""></asp:Label>
+                        <%--<%= Session["AgreementLectureTitle"]%>--%>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td><b>Från Kl</b></td>
+                    <td><b>Till Kl</b></td>
+                    <td><b>Speltid</b></td>
+                    <td><b>Plats och adress</b></td>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% var dateTimeAndPlaces = Session["AgreementDateTimeAndPlace"] as List<CustomerAgreementDateTimeAndPlace>; %>
+                <% if (dateTimeAndPlaces != null) { %>
+                    <% foreach (var d in dateTimeAndPlaces) { %>
+                    <tr>
+                        <td></td>
+                        <td><%= d.Date %></td>
+                        <td><%= d.TimeFrom %></td>
+                        <td><%= d.TimeTo %></td>
+                        <td><%= d.Runtime %></td>
+                        <td><%= d.Address %></td>
+                        <td></td>
+                    </tr>
+                    <% } %>
+                <% } %>
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td colspan="6">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td><b>Kontaktperson</b>:</td>
+                    <td colspan="6">
+                        <asp:Label ID="labelAgreementContact" runat="server" Text=""></asp:Label>
+                        <%--<%= Session["AgreementContact"]%>--%>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Mobil</b>:</td>
+                    <td colspan="6">
+                        <asp:Label ID="labelAgreementMobile" runat="server" Text=""></asp:Label>
+                        <%--<%= Session["AgreementMobile"]%>--%>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>E-post kontaktperson</b>:</td>
+                    <td colspan="6">
+                        <asp:Label ID="labelAgreementEmail" runat="server" Text=""></asp:Label>
+                        <%--<%= Session["AgreementEmail"]%>--%>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Ersättning</b>:</td>
+                    <td colspan="6">
+                        <asp:Label ID="labelAgreementCompensation" runat="server" Text=""></asp:Label>
+                        <%--<%= Session["AgreementCompensation"]%>--%>
+                        SEK + moms. Eventualla resekostnader och logi tillkommer.
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Betalningsvillkor</b>:</td>
+                    <td colspan="6">
+                        <asp:Label ID="labelPaymentTerms" runat="server" Text=""></asp:Label>
+                        <%--<%= agreement.PaymentTerms%>--%>
+                    </td>
+                </tr>
+            </tfoot>
         </table>
 
         <br />
         <p>
             <b>Övrig information</b> <i>Beskriv gärna målgruppen här.</i><br />
-            <%= Session["AgreementOtherInformation"]%>
+            <asp:Label ID="labelAgreementOtherInformation" runat="server" Text=""></asp:Label>
+            <%--<%= Session["AgreementOtherInformation"]%>--%>
         </p>
         
         <p>Detta engagemangavtal (Huvudavtal) är en skriftlig bekräftelse på en redan muntlig överenskommelse mellan ovan nämnda Agentur och Kund. Detta Huvudavtal skall tillsammans med tillhörande bilaga returneras till Agenturen inom 14 dagar från att beställningen gjorts. Vid engagemangsdatum inom 14 dagar från beställningen krävs omgående retur till Agenturen.</p>
@@ -225,23 +257,27 @@
             <tr>
                 <td>Ort och Datum</td>
                 <td>
-                    Stockholm den <%= ConvertHelper.ToDateTime(Session["AgreementDateSigned"].ToString()).ToString("d MMM yyyy") %>
+                    <asp:Label ID="labelAgreementPlaceSigned" runat="server" Text=""></asp:Label>
+                    den
+                    <asp:Label ID="labelAgreementDateSigned" runat="server" Text=""></asp:Label>
                 </td>
                 <td class="col-md-1"></td>
-                <td>Stockholm den <%= agreement.Date.Value.ToString("d MMM yyyy") %></td>
+                <td>
+                    Stockholm den
+                    <asp:Label ID="labelAgreementDate" runat="server" Text=""></asp:Label>
+                </td>
             </tr>
             <tr>
-                <td>
+                <td colspan="2">
                     Signatur <i>Ange namn och titel på den som ska signera avtalet</i>
                 </td>
-                <td></td>
                 <td></td>
                 <td><img src="uploads/<%= company.Signature %>" /></td>
             </tr>
             <tr>
                 <td>Namn</td>
                 <td>
-                    <%= Session["AgreementCustomerName"] %>
+                    <asp:Label ID="labelAgreementContactName" runat="server" Text=""></asp:Label>
                 </td>
                 <td></td>
                 <td>
@@ -252,7 +288,7 @@
             <tr>
                 <td>Titel</td>
                 <td>
-                    <%= Session["AgreementCustomerTitle"] %>
+                    <asp:Label ID="labelAgreementContactTitle" runat="server" Text=""></asp:Label>
                 </td>
                 <td></td>
                 <td></td>
@@ -260,7 +296,8 @@
             <tr>
                 <td>Företag</td>
                 <td>
-                    <%= Session["AgreementCustomerCompany"] %>
+                    <asp:Label ID="labelAgreementContactCompany" runat="server" Text=""></asp:Label>
+                    <%--<%= Session["AgreementContactCompany"] %>--%>
                 </td>
                 <td></td>
                 <td></td>
@@ -268,79 +305,79 @@
         </table>
         <br />
 
-<h3>Avtalsvillkor</h3>
+        <h3>Avtalsvillkor</h3>
 
-<p><strong>1. Gemensamma villkor</strong></p>
+        <p><strong>1. Gemensamma villkor</strong></p>
 
-<p>1.1 I och med undertecknandet av Huvudavtalet till denna bilaga godk&auml;nner Kundenoch Agenturen villkoren i denna bilaga.</p>
+        <p>1.1 I och med undertecknandet av Huvudavtalet till denna bilaga godk&auml;nner Kundenoch Agenturen villkoren i denna bilaga.</p>
 
-<p>1.2 Eventuella anm&auml;rkningar som ber&ouml;r artistiskt material eller framf&ouml;rande kringengagemanget enligt detta avtal utg&ouml;r inte grund f&ouml;r skadest&aring;ndsanspr&aring;k.</p>
+        <p>1.2 Eventuella anm&auml;rkningar som ber&ouml;r artistiskt material eller framf&ouml;rande kringengagemanget enligt detta avtal utg&ouml;r inte grund f&ouml;r skadest&aring;ndsanspr&aring;k.</p>
 
-<p>1.3 Merv&auml;rdesskatt och kostnader f&ouml;r resa och boende tillkommer p&aring; avtaladers&auml;ttning. Agenturen har r&auml;tt att i efterhand debitera merv&auml;rdesskatt enligt besluttagna av myndigheter. Anm&auml;rkningar mot fakturerade tj&auml;nster som l&auml;mnassenare &auml;n &aring;tta (8) dagar efter mottagen faktura beaktas inte.</p>
+        <p>1.3 Merv&auml;rdesskatt och kostnader f&ouml;r resa och boende tillkommer p&aring; avtaladers&auml;ttning. Agenturen har r&auml;tt att i efterhand debitera merv&auml;rdesskatt enligt besluttagna av myndigheter. Anm&auml;rkningar mot fakturerade tj&auml;nster som l&auml;mnassenare &auml;n &aring;tta (8) dagar efter mottagen faktura beaktas inte.</p>
 
-<p>1.4 Vid eventuella skador, olyckor eller andra h&auml;ndelser som leder till f&ouml;rs&auml;kringsfallskall den v&aring;llande parten &auml;ven st&aring; f&ouml;r den skadelidandes sj&auml;lvrisk.</p>
+        <p>1.4 Vid eventuella skador, olyckor eller andra h&auml;ndelser som leder till f&ouml;rs&auml;kringsfallskall den v&aring;llande parten &auml;ven st&aring; f&ouml;r den skadelidandes sj&auml;lvrisk.</p>
 
-<p>1.5 Agenturen f&ouml;rbeh&aring;ller sig r&auml;tten att ensidigt &auml;ndra betalningsvillkoren ochefterdebitera dr&ouml;jsm&aring;lsr&auml;ntan vid f&ouml;rsent inkommen betalning samt avmyndigheter eventuellt beslutade f&ouml;r&auml;ndringar av skatter och/eller avgifter.Agenturen skall upplysa Kunden om dessa f&ouml;rh&aring;llanden f&ouml;re fakturering enligtde nya villkoren.</p>
+        <p>1.5 Agenturen f&ouml;rbeh&aring;ller sig r&auml;tten att ensidigt &auml;ndra betalningsvillkoren ochefterdebitera dr&ouml;jsm&aring;lsr&auml;ntan vid f&ouml;rsent inkommen betalning samt avmyndigheter eventuellt beslutade f&ouml;r&auml;ndringar av skatter och/eller avgifter.Agenturen skall upplysa Kunden om dessa f&ouml;rh&aring;llanden f&ouml;re fakturering enligtde nya villkoren.</p>
 
-<p><strong>2. Kundens &aring;taganden</strong></p>
+        <p><strong>2. Kundens &aring;taganden</strong></p>
 
-<p>2.1 Kunden ansvarar f&ouml;r att en erforderlig och giltig ansvarsf&ouml;rs&auml;kring omfattandeengagemanget i sin helhet finns.</p>
+        <p>2.1 Kunden ansvarar f&ouml;r att en erforderlig och giltig ansvarsf&ouml;rs&auml;kring omfattandeengagemanget i sin helhet finns.</p>
 
-<p>2.2 Kunden svarar f&ouml;r produktionens och Gruppens/Artistens/F&ouml;redragsh&aring;llarens s&auml;kerhet p&aring; platsen f&ouml;rengagemanget. Om s&aring; erfordras skall Kundens egna eller f&ouml;rordnadeordningsvakter finnas.</p>
+        <p>2.2 Kunden svarar f&ouml;r produktionens och Gruppens/Artistens/F&ouml;redragsh&aring;llarens s&auml;kerhet p&aring; platsen f&ouml;rengagemanget. Om s&aring; erfordras skall Kundens egna eller f&ouml;rordnadeordningsvakter finnas.</p>
 
-<p>2.3 Kunden f&aring;r i f&ouml;rekommande fall g&auml;rna tillhandah&aring;lla ett l&aring;sbart eller bevakat omkl&auml;dningsrum med tillg&aring;ngtill toalett, spegel, dricksvatten och i f&ouml;rekommande fall dusch och mat.</p>
+        <p>2.3 Kunden f&aring;r i f&ouml;rekommande fall g&auml;rna tillhandah&aring;lla ett l&aring;sbart eller bevakat omkl&auml;dningsrum med tillg&aring;ngtill toalett, spegel, dricksvatten och i f&ouml;rekommande fall dusch och mat.</p>
 
-<p>2.4 Kunden &auml;r, i de fall denne st&aring;r f&ouml;r ljud-/ljusanl&auml;ggning, skyldig att tillse attutrustningen &auml;r i funktionsdugligt skick och motsvarar de krav Artisten st&auml;llt.</p>
+        <p>2.4 Kunden &auml;r, i de fall denne st&aring;r f&ouml;r ljud-/ljusanl&auml;ggning, skyldig att tillse attutrustningen &auml;r i funktionsdugligt skick och motsvarar de krav Artisten st&auml;llt.</p>
 
-<p>2.5 Kunden ansvarar f&ouml;r att inga ljud- och/eller videoinspelningar av Artistensframtr&auml;dande f&aring;r f&ouml;rekomma utan samtycke fr&aring;n Agenturen och f&ouml;redragsh&aring;llaren.</p>
+        <p>2.5 Kunden ansvarar f&ouml;r att inga ljud- och/eller videoinspelningar av Artistensframtr&auml;dande f&aring;r f&ouml;rekomma utan samtycke fr&aring;n Agenturen och f&ouml;redragsh&aring;llaren.</p>
 
-<p>2.6 I de fall Kunden &auml;r en artistf&ouml;rmedlare f&aring;r Kundens p&aring;slag till slutkund f&aring;r inte &ouml;verstiga 20 % av det &ouml;verenskomna prisetmed Agenturen. Agenturen har r&auml;tt att fr&aring;ga slutkund om slutpriset. InnanAgenturen kontaktar slutkunden skall Kunden underr&auml;ttas.</p>
+        <p>2.6 I de fall Kunden &auml;r en artistf&ouml;rmedlare f&aring;r Kundens p&aring;slag till slutkund f&aring;r inte &ouml;verstiga 20 % av det &ouml;verenskomna prisetmed Agenturen. Agenturen har r&auml;tt att fr&aring;ga slutkund om slutpriset. InnanAgenturen kontaktar slutkunden skall Kunden underr&auml;ttas.</p>
 
-<p><strong>3. Agenturens &aring;taganden</strong></p>
+        <p><strong>3. Agenturens &aring;taganden</strong></p>
 
-<p>3.1 Agenturen ansvarar f&ouml;r att Artisten har g&auml;llande f&ouml;rs&auml;kringar f&ouml;r sig sj&auml;lv och f&ouml;rsin egendom.</p>
+        <p>3.1 Agenturen ansvarar f&ouml;r att Artisten har g&auml;llande f&ouml;rs&auml;kringar f&ouml;r sig sj&auml;lv och f&ouml;rsin egendom.</p>
 
-<p>3.2 Agenturen garanterar att andra avtal inte hindrar eller st&ouml;r &aring;tagandenenligt detta avtal.</p>
+        <p>3.2 Agenturen garanterar att andra avtal inte hindrar eller st&ouml;r &aring;tagandenenligt detta avtal.</p>
 
-<p>3.3 Agenturen ansvarar f&ouml;r att Artisten f&ouml;ljer de regler och anvisningar som Kundenuppr&auml;ttat p&aring; platsen f&ouml;r engagemanget.</p>
+        <p>3.3 Agenturen ansvarar f&ouml;r att Artisten f&ouml;ljer de regler och anvisningar som Kundenuppr&auml;ttat p&aring; platsen f&ouml;r engagemanget.</p>
 
-<p>3.4 S&aring; snart Artisten intagit och/eller p&aring;b&ouml;rjat sitt framtr&auml;dande betraktas Agenturensuppdrag som genomf&ouml;rt. Detta g&auml;ller &auml;ven i de fall engagemanget inte kangenomf&ouml;ras p&aring; avsett s&auml;tt p&aring; grund av bristande f&ouml;ruts&auml;ttningar som Kundensvarar f&ouml;r.</p>
+        <p>3.4 S&aring; snart Artisten intagit och/eller p&aring;b&ouml;rjat sitt framtr&auml;dande betraktas Agenturensuppdrag som genomf&ouml;rt. Detta g&auml;ller &auml;ven i de fall engagemanget inte kangenomf&ouml;ras p&aring; avsett s&auml;tt p&aring; grund av bristande f&ouml;ruts&auml;ttningar som Kundensvarar f&ouml;r.</p>
 
-<p>3.5 Agenturen &auml;r vid Artistens sjukdomsfall, eller andra dylika personligaomst&auml;ndigheter som g&ouml;r Artisten of&ouml;rm&ouml;gen att delta i engagemanget, skyldig attomedelbart meddela Kunden. Sjukdom skall styrkas med l&auml;karintyg. Agenturensoch Kundens &aring;taganden enligt detta avtal upph&auml;vs vid s&aring;dana omst&auml;ndigheter.</p>
+        <p>3.5 Agenturen &auml;r vid Artistens sjukdomsfall, eller andra dylika personligaomst&auml;ndigheter som g&ouml;r Artisten of&ouml;rm&ouml;gen att delta i engagemanget, skyldig attomedelbart meddela Kunden. Sjukdom skall styrkas med l&auml;karintyg. Agenturensoch Kundens &aring;taganden enligt detta avtal upph&auml;vs vid s&aring;dana omst&auml;ndigheter.</p>
 
-<p>Agenturen skall, i dessa fall, efter b&auml;sta f&ouml;rm&aring;ga f&ouml;rs&ouml;ka finna en l&auml;mplig ers&auml;ttare. Om Kunden inte anser att artistens ers&auml;ttare uppfyller de krav somKunden st&auml;ller eller &auml;r l&auml;mplig annulleras avtalet.</p>
+        <p>Agenturen skall, i dessa fall, efter b&auml;sta f&ouml;rm&aring;ga f&ouml;rs&ouml;ka finna en l&auml;mplig ers&auml;ttare. Om Kunden inte anser att artistens ers&auml;ttare uppfyller de krav somKunden st&auml;ller eller &auml;r l&auml;mplig annulleras avtalet.</p>
 
-<p><strong>4. Avbokningsregler</strong></p>
+        <p><strong>4. Avbokningsregler</strong></p>
 
-<p>4.1 Ett undertecknat exemplar av Huvudavtalet skall returneras till Agenturen inomfjorton (14) dagar efter best&auml;llningen f&ouml;r att vara giltigt, f&ouml;rutsatt att avtalet &auml;ruts&auml;nt i tid som m&ouml;jligg&ouml;r detta, annars 14 dagar efter att Kunden erh&aring;llit avtalet. Med best&auml;llningsdatum avses den dag d&aring;Agenturen och Kunden muntligen &ouml;verenskom om engagemanget, tid, plats,artist, ers&auml;ttning etc. F&ouml;r det fall avtalet ej returnerats i enlighet med dessabest&auml;mmelser &auml;ger Agenturen r&auml;tt att h&auml;va avtalet. Innan s&aring; sker &auml;r Agenturenskyldig att informera Kunden d&auml;rom. Om Kunden annullerar best&auml;llningentill&auml;mpas g&auml;llande avbokningsavgifter.</p>
+        <p>4.1 Ett undertecknat exemplar av Huvudavtalet skall returneras till Agenturen inomfjorton (14) dagar efter best&auml;llningen f&ouml;r att vara giltigt, f&ouml;rutsatt att avtalet &auml;ruts&auml;nt i tid som m&ouml;jligg&ouml;r detta, annars 14 dagar efter att Kunden erh&aring;llit avtalet. Med best&auml;llningsdatum avses den dag d&aring;Agenturen och Kunden muntligen &ouml;verenskom om engagemanget, tid, plats,artist, ers&auml;ttning etc. F&ouml;r det fall avtalet ej returnerats i enlighet med dessabest&auml;mmelser &auml;ger Agenturen r&auml;tt att h&auml;va avtalet. Innan s&aring; sker &auml;r Agenturenskyldig att informera Kunden d&auml;rom. Om Kunden annullerar best&auml;llningentill&auml;mpas g&auml;llande avbokningsavgifter.</p>
 
-<p>4.2 Vid engagemangsdatum inom fjorton (14) dagar fr&aring;n best&auml;llningen kr&auml;vsomg&aring;ende retur av det undertecknade Huvudavtalet till Agenturen. Om Kundenannullerar best&auml;llningen inom samma tid skall ers&auml;ttning erl&auml;ggas till Agenturenenligt g&auml;llande avbokningsavgifter.</p>
+        <p>4.2 Vid engagemangsdatum inom fjorton (14) dagar fr&aring;n best&auml;llningen kr&auml;vsomg&aring;ende retur av det undertecknade Huvudavtalet till Agenturen. Om Kundenannullerar best&auml;llningen inom samma tid skall ers&auml;ttning erl&auml;ggas till Agenturenenligt g&auml;llande avbokningsavgifter.</p>
 
-<p><strong>5. Avbokningsavgift</strong></p>
+        <p><strong>5. Avbokningsavgift</strong></p>
 
-<p>5.1 Vid avbokning under en period fram till en (1) m&aring;nad f&ouml;re engagemangeterl&auml;gger Kunden till Agenturen en avbokningsavgift om 10 % + merv&auml;rdesskatt av &ouml;verenskommen ers&auml;ttning.</p>
+        <p>5.1 Vid avbokning under en period fram till en (1) m&aring;nad f&ouml;re engagemangeterl&auml;gger Kunden till Agenturen en avbokningsavgift om 10 % + merv&auml;rdesskatt av &ouml;verenskommen ers&auml;ttning.</p>
 
-<p>5.2 Vid avbokning i perioden en (1) m&aring;nad till tv&aring; (2) veckor f&ouml;re engagemangeterl&auml;gger Kunden till Agenturen 50 % + merv&auml;rdesskatt av&ouml;verenskommen ers&auml;ttning.</p>
+        <p>5.2 Vid avbokning i perioden en (1) m&aring;nad till tv&aring; (2) veckor f&ouml;re engagemangeterl&auml;gger Kunden till Agenturen 50 % + merv&auml;rdesskatt av&ouml;verenskommen ers&auml;ttning.</p>
 
-<p>5.3 Vid avbokning vid mindre &auml;n fjorton (14) dagar f&ouml;re engagemanget erl&auml;ggerKunden till Agenturen hela den &ouml;verenskomna ers&auml;ttningen +merv&auml;rdesskatt.</p>
+        <p>5.3 Vid avbokning vid mindre &auml;n fjorton (14) dagar f&ouml;re engagemanget erl&auml;ggerKunden till Agenturen hela den &ouml;verenskomna ers&auml;ttningen +merv&auml;rdesskatt.</p>
 
-<p><strong>6. Force majeure</strong></p>
+        <p><strong>6. Force majeure</strong></p>
 
-<p>Force majeure befriar Agenturen och Kunden fr&aring;n alla &aring;taganden enligt dettaavtal. Som force majeure r&auml;knas krig, politiska omv&auml;lvningar, strejk, lock-out,eldsv&aring;da, naturkatastrofer, som t.ex. askmoln, &ouml;versv&auml;mningar, sn&ouml;stormar, ellerandra f&ouml;rh&aring;llanden av j&auml;mf&ouml;rbar natur. D&aring;ligt v&auml;der betraktas inte som forcemajeure. Det &aring;ligger Agenturen och Kunden att r&auml;tta sin planering efter r&aring;dandeoch t&auml;nkbara omst&auml;ndigheter.</p>
+        <p>Force majeure befriar Agenturen och Kunden fr&aring;n alla &aring;taganden enligt dettaavtal. Som force majeure r&auml;knas krig, politiska omv&auml;lvningar, strejk, lock-out,eldsv&aring;da, naturkatastrofer, som t.ex. askmoln, &ouml;versv&auml;mningar, sn&ouml;stormar, ellerandra f&ouml;rh&aring;llanden av j&auml;mf&ouml;rbar natur. D&aring;ligt v&auml;der betraktas inte som forcemajeure. Det &aring;ligger Agenturen och Kunden att r&auml;tta sin planering efter r&aring;dandeoch t&auml;nkbara omst&auml;ndigheter.</p>
 
-<p><strong>7. Sekretess</strong></p>
+        <p><strong>7. Sekretess</strong></p>
 
-<p>Agenturen och Kunden skall behandla uppgifterna i Huvudavtalet r&ouml;randeengagemanget samt parternas inb&ouml;rdes f&ouml;rh&aring;llande konfidentiellt, och inteavsl&ouml;ja s&aring;dan information f&ouml;r annan. Detta &aring;tagande skall g&auml;lla &auml;ven efter avtalethar upph&ouml;rt.</p>
+        <p>Agenturen och Kunden skall behandla uppgifterna i Huvudavtalet r&ouml;randeengagemanget samt parternas inb&ouml;rdes f&ouml;rh&aring;llande konfidentiellt, och inteavsl&ouml;ja s&aring;dan information f&ouml;r annan. Detta &aring;tagande skall g&auml;lla &auml;ven efter avtalethar upph&ouml;rt.</p>
 
-<p><strong>8. Avtalsbrott</strong></p>
+        <p><strong>8. Avtalsbrott</strong></p>
 
-<p>Om Agenturen eller Kunden bryter mot best&auml;mmelserna i detta avtal samt attden felande parten inte inom trettio (30) dagar efter skriftligen uppmaningvidtagit r&auml;ttelse, har motparten r&auml;tt att med omedelbar verkan s&auml;ga upp dettaavtal i f&ouml;rh&aring;llande till den felande parten. Respektive part har r&auml;tt att kr&auml;va denfelande parten p&aring; utebliven eller f&ouml;rv&auml;ntat ers&auml;ttning.</p>
+        <p>Om Agenturen eller Kunden bryter mot best&auml;mmelserna i detta avtal samt attden felande parten inte inom trettio (30) dagar efter skriftligen uppmaningvidtagit r&auml;ttelse, har motparten r&auml;tt att med omedelbar verkan s&auml;ga upp dettaavtal i f&ouml;rh&aring;llande till den felande parten. Respektive part har r&auml;tt att kr&auml;va denfelande parten p&aring; utebliven eller f&ouml;rv&auml;ntat ers&auml;ttning.</p>
 
-<p><strong>9. Tvister</strong></p>
+        <p><strong>9. Tvister</strong></p>
 
-<p>Svensk lag skall till&auml;mpas p&aring; detta avtal. Eventuella tvister skall avg&ouml;ras i f&ouml;rsta hand via muntlig f&ouml;rhandling i god ton och i andra han avallm&auml;n domstol med Stockholms tingsr&auml;tt som f&ouml;rsta instans.</p>
+        <p>Svensk lag skall till&auml;mpas p&aring; detta avtal. Eventuella tvister skall avg&ouml;ras i f&ouml;rsta hand via muntlig f&ouml;rhandling i god ton och i andra han avallm&auml;n domstol med Stockholms tingsr&auml;tt som f&ouml;rsta instans.</p>
 
-<p>&nbsp;</p>
+        <p>&nbsp;</p>
 
 
         <br />

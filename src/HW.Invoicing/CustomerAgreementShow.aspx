@@ -60,7 +60,7 @@
         }
 
         /* Extra styling */
-        td { width: 100px; }
+        /*td { width: 100px; }*/
         th { text-align: left; }
     </style>
 
@@ -84,37 +84,22 @@
     <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script src="js/jquery.number.min.js" type="text/javascript"></script>
     
-
-    <style type="text/css">
-        .label-width 
-        {
-        }
-        .width1 
-        {
-            width:100px;
-        }
-        .compensation 
-        {
-            text-align:right;
-        }
-    </style>
-
-
     <%--<link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
     <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
 --%>
     <script type="text/javascript">
         $(function () {
+            initDates();
             $('#buttonAddMoreTimeAndPlace').click(function () {
                 var s = "<tr>" +
                     "<td></td>" +
-                    "<td><input type='text' class='date form-control'></td>" +
-                    "<td><input type='text' class='form-control'></td>" +
-                    "<td><input type='text' class='form-control'></td>" +
-                    "<td><input type='text' class='form-control'></td>" +
-                    "<td><input type='text' class='form-control'></td>" +
-                    "<td style='width:16px'><a href='javascript:;' class='removeDateTimeAndPlace'><img src='img/cross.png'></a></td>" +
+                    "<td><input type='text' id='agreement-date' name='agreement-date' class='date form-control'></td>" +
+                    "<td><input type='text' id='agreement-timefrom' name='agreement-timefrom' class='form-control'></td>" +
+                    "<td><input type='text' id='agreement-timeto' name='agreement-timeto' class='form-control'></td>" +
+                    //"<td><input type='text' id='agreement-runtime' name='agreement-runtime' class='form-control'></td>" +
+                    "<td><input type='text' id='agreement-address' name='agreement-address' class='form-control'></td>" +
+                    "<td><a href='javascript:;' class='removeDateTimeAndPlace'><img src='img/cross.png'></a></td>" +
                     "</tr>";
                 $('#dateTimeAndPlaces').append(s);
                 initDates();
@@ -133,6 +118,33 @@
             });
         }
     </script>
+
+    <style type="text/css">
+        .label-width
+        {
+            width:210px;
+        }
+        .label2-width
+        {
+            width:100px;
+        }
+        .date-width 
+        {
+            width:120px;
+        }
+        .time-width 
+        {
+            width:80px;
+        }
+        .icon-width 
+        {
+            width:16px;
+        }
+        .compensation 
+        {
+            text-align:right;
+        }
+    </style>
 
 </head>
 <body>
@@ -196,39 +208,39 @@
                 <td>
                     <table style="width:100%" cellpadding="2">
                         <tr>
-                            <td><b>Företagsnamn</b></td>
-                            <td class="col-md-7">
+                            <td class="label-width"><b>Företagsnamn</b></td>
+                            <td>
                                 <asp:TextBox ID="textBoxCustomerName" CssClass="form-control" runat="server"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Postadress</b></td>
-                            <td class="col-md-7">
+                            <td>
                                 <asp:TextBox ID="textBoxCustomerPostalAddress" CssClass="form-control" runat="server" TextMode="MultiLine" Height="100"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Organisationsnummer</b></td>
-                            <td class="col-md-7">
+                            <td>
                                 <asp:TextBox ID="textBoxCustomerNumber" CssClass="form-control" runat="server"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Faktureringsadress</b></td>
-                            <td class="col-md-7">
+                            <td>
                                 <asp:TextBox ID="textBoxCustomerInvoiceAddress" CssClass="form-control" runat="server" TextMode="MultiLine" Height="100"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Eventuellt referensnummer</b></td>
-                            <td class="col-md-7">
+                            <td>
                                 <asp:TextBox ID="textBoxCustomerReferenceNumber" CssClass="form-control" runat="server"></asp:TextBox>
                             </td>
                         </tr>
                     </table>
                 </td>
                 <td valign="top">
-                    <%= company.ToString().Replace("\n", "<br>") %>
+                    <asp:Label ID="labelCompanyName" runat="server" Text=""></asp:Label>
                 </td>
             </tr>
         </table>
@@ -238,36 +250,35 @@
         <table style="width:100%" cellpadding="2">
             <thead>
                 <tr>
-                    <td><b>Föreläsare</b>:</td>
-                    <td colspan="6">
+                    <td class="label-width"><b>Föreläsare</b>:</td>
+                    <td colspan="5">
                         <%= agreement.Lecturer %>
                     </td>
                 </tr>
                 <tr>
                     <td><b>Föreläsningstitel</b>:</td>
-                    <td colspan="6">
+                    <td colspan="5">
                         <asp:TextBox ID="textBoxAgreementLectureTitle" CssClass="form-control" runat="server"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td><b></b></td>
-                    <td><b>Från Kl</b></td>
-                    <td><b>Till Kl</b></td>
-                    <td><b>Speltid</b></td>
+                    <td class="date-width"><b>Datum för föreläsningen</b></td>
+                    <td class="time-width"><b>Från klockan</b></td>
+                    <td class="time-width"><b>Till klockan</b></td>
                     <td><b>Plats och adress</b></td>
+                    <td class="icon-width"></td>
                 </tr>
             </thead>
 
             <tbody id="dateTimeAndPlaces">
                 <tr>
-                    <td><b>Datum för föreläsningen</b>:</td>
-                    <td><input type="text" class="date form-control" /></td>
-                    <td><input type="text" class="form-control" /></td>
-                    <td><input type="text" class="form-control" /></td>
-                    <td><input type="text" class="form-control" /></td>
-                    <td><input type="text" class="form-control" /></td>
-                    <td style='width:16px'></td>
+                    <td></td>
+                    <td><input type='text' id='agreement-date' name='agreement-date' class='date form-control' /></td>
+                    <td><input type='text' id='agreement-timefrom' name='agreement-timefrom' class='form-control' /></td>
+                    <td><input type='text' id='agreement-timeto' name='agreement-timeto' class='form-control' /></td>
+                    <td><input type='text' id='agreement-address' name='agreement-address' class='form-control' /></td>
+                    <td></td>
                 </tr>
             </tbody>
 
@@ -280,41 +291,41 @@
                 <tr>
                     <td colspan="6">&nbsp;</td>
                 </tr>
-                <tr>
+                <%--<tr>
                     <td><b>Plats och adress</b>:</td>
                     <td colspan="6">
                         <asp:TextBox ID="textBoxAgreementLocation" CssClass="form-control" runat="server" TextMode="MultiLine" Height="100"></asp:TextBox>
                     </td>
-                </tr>
+                </tr>--%>
                 <tr>
                     <td><b>Kontaktperson</b>:</td>
-                    <td colspan="6">
+                    <td colspan="5">
                         <asp:TextBox ID="textBoxAgreementContact" CssClass="form-control" runat="server"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
                     <td><b>Mobil</b>:</td>
-                    <td colspan="6">
+                    <td colspan="5">
                         <asp:TextBox ID="textBoxAgreementMobile" CssClass="form-control" runat="server"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
                     <td><b>E-post kontaktperson</b>:</td>
-                    <td colspan="6">
+                    <td colspan="5">
                         <asp:TextBox ID="textBoxAgreementEmail" CssClass="form-control" runat="server"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
                     <td><b>Ersättning</b>:</td>
-                    <td>
+                    <td class="date-width">
                         <asp:TextBox ID="textBoxAgreementCompensation" CssClass="compensation form-control" runat="server"></asp:TextBox>
                     </td>
-                    <td colspan="5" class="col-md-8">SEK + moms. Eventualla resekostnader och logi tillkommer.</td>
+                    <td colspan="4">SEK + moms. Eventuella resekostnader och logi tillkommer.</td>
                 </tr>
                 <tr>
                     <td><b>Betalningsvillkor</b>:</td>
-                    <td colspan="6">
-                        <%= agreement.PaymentTerms %>
+                    <td colspan="5">
+                        <asp:Label ID="labelPaymentTerms" runat="server" Text=""></asp:Label>
                     </td>
                 </tr>
             </tfoot>
@@ -339,13 +350,16 @@
             <tr>
                 <td>Ort och Datum</td>
                 <td>
-                    <asp:TextBox ID="textBoxAgreementCustomerAddress" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="textBoxAgreementPlaceSigned" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
-                <td>
+                <td class="date-width">
                     <asp:TextBox ID="textBoxAgreementDateSigned" CssClass="date form-control" runat="server"></asp:TextBox>
                 </td>
                 <td class="col-md-1"></td>
-                <td>Stockholm den <%= agreement.Date.Value.ToString("d MMM yyyy") %></td>
+                <td>
+                    Stockholm den
+                    <asp:Label ID="labelAgreementDate" runat="server" Text=""></asp:Label>
+                </td>
             </tr>
             <tr>
                 <td colspan="3">
@@ -357,7 +371,7 @@
             <tr>
                 <td>Namn</td>
                 <td colspan="2">
-                    <asp:TextBox ID="textBoxAgreementCustomerName" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="textBoxAgreementContactName" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
                 <td></td>
                 <td>
@@ -368,7 +382,7 @@
             <tr>
                 <td>Titel</td>
                 <td colspan="2">
-                    <asp:TextBox ID="textBoxAgreementCustomerTitle" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="textBoxAgreementContactTitle" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
                 <td></td>
                 <td></td>
@@ -376,7 +390,7 @@
             <tr>
                 <td>Företag</td>
                 <td colspan="2">
-                    <asp:TextBox ID="textBoxAgreementCustomerCompany" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="textBoxAgreementContactCompany" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
                 <td></td>
                 <td></td>

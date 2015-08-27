@@ -229,8 +229,8 @@ WHERE Id = @Id"
         {
             string query = string.Format(
                 @"
-INSERT INTO CustomerAgreement(CustomerId, Date, Lecturer, Runtime, LectureTitle, Location, Contact, Mobile, Email, Compensation, PaymentTerms, BillingAddress, OtherInformation)
-VALUES(@CustomerId, @Date, @Lecturer, @Runtime, @LectureTitle, @Location, @Contact, @Mobile, @Email, @Compensation, @PaymentTerms, @BillingAddress, @OtherInformation)"
+INSERT INTO CustomerAgreement(CustomerId, Date, Lecturer, LectureTitle, Contact, Mobile, Email, Compensation, PaymentTerms, BillingAddress, OtherInformation)
+VALUES(@CustomerId, @Date, @Lecturer, @LectureTitle, @Contact, @Mobile, @Email, @Compensation, @PaymentTerms, @BillingAddress, @OtherInformation)"
             );
             ExecuteNonQuery(
                 query,
@@ -238,9 +238,9 @@ VALUES(@CustomerId, @Date, @Lecturer, @Runtime, @LectureTitle, @Location, @Conta
                 new SqlParameter("@CustomerId", customerId),
                 new SqlParameter("@Date", agreement.Date),
                 new SqlParameter("@Lecturer", agreement.Lecturer),
-                new SqlParameter("@Runtime", agreement.Runtime),
+                //new SqlParameter("@Runtime", agreement.Runtime),
                 new SqlParameter("@LectureTitle", agreement.LectureTitle),
-                new SqlParameter("@Location", agreement.Location),
+                //new SqlParameter("@Location", agreement.Location),
                 new SqlParameter("@Contact", agreement.Contact),
                 new SqlParameter("@Mobile", agreement.Mobile),
                 new SqlParameter("@Email", agreement.Email),
@@ -443,9 +443,7 @@ WHERE Id = @Id"
                 @"
 UPDATE CustomerAgreement SET Date = @Date,
     Lecturer = @Lecturer,
-    Runtime = @Runtime,
     LectureTitle = @LectureTitle,
-    Location = @Location,
     Contact = @Contact,
     Mobile = @Mobile,
     Email = @Email,
@@ -461,9 +459,9 @@ WHERE Id = @Id"
                 "invoicing",
                 new SqlParameter("@Date", a.Date),
                 new SqlParameter("@Lecturer", a.Lecturer),
-                new SqlParameter("@Runtime", a.Runtime),
+                //new SqlParameter("@Runtime", a.Runtime),
                 new SqlParameter("@LectureTitle", a.LectureTitle),
-                new SqlParameter("@Location", a.Location),
+                //new SqlParameter("@Location", a.Location),
                 new SqlParameter("@Contact", a.Contact),
                 new SqlParameter("@Mobile", a.Mobile),
                 new SqlParameter("@Email", a.Email),
@@ -800,9 +798,7 @@ WHERE Id = @Id"
 SELECT Id,
     Date,
     Lecturer,
-    Runtime,
     LectureTitle,
-    Location,
     Contact,
     Mobile,
     Email,
@@ -825,19 +821,17 @@ WHERE Id = @Id"
                         Id = GetInt32(rs, 0),
                         Date = GetDateTime(rs, 1),
                         Lecturer = GetString(rs, 2),
-                        Runtime = GetString(rs, 3),
-                        LectureTitle = GetString(rs, 4),
-                        Location = GetString(rs, 5),
-                        Contact = GetString(rs, 6),
-                        Mobile = GetString(rs, 7),
-                        Email = GetString(rs, 8),
-                        Compensation = GetString(rs, 9),
-                        PaymentTerms = GetString(rs, 10),
-                        BillingAddress = GetString(rs, 11),
-                        OtherInformation = GetString(rs, 12),
-                        IsClosed = GetInt32(rs, 13) == 1,
+                        LectureTitle = GetString(rs, 3),
+                        Contact = GetString(rs, 4),
+                        Mobile = GetString(rs, 5),
+                        Email = GetString(rs, 6),
+                        Compensation = GetString(rs, 7),
+                        PaymentTerms = GetString(rs, 8),
+                        BillingAddress = GetString(rs, 9),
+                        OtherInformation = GetString(rs, 10),
+                        IsClosed = GetInt32(rs, 11) == 1,
                         Customer = new Customer {
-                        	Id = GetInt32(rs, 14)
+                        	Id = GetInt32(rs, 12)
                         }
                     };
                 }
@@ -1054,9 +1048,7 @@ ORDER BY n.CreatedAt DESC"
 SELECT a.Id,
     a.Date,
     Lecturer,
-    Runtime,
     LectureTitle,
-    Location,
     Contact,
     Mobile,
     Email,
@@ -1084,17 +1076,15 @@ ORDER BY a.Date DESC"
                             Id = GetInt32(rs, 0),
                             Date = GetDateTime(rs, 1),
                             Lecturer = GetString(rs, 2),
-                            Runtime = GetString(rs, 3),
-                            LectureTitle = GetString(rs, 4),
-                            Location = GetString(rs, 5),
-                            Contact = GetString(rs, 6),
-                            Mobile = GetString(rs, 7),
-                            Email = GetString(rs, 8),
-                            Compensation = GetString(rs, 9),
-                            PaymentTerms = GetString(rs, 10),
-                            BillingAddress = GetString(rs, 11),
-                            OtherInformation = GetString(rs, 12),
-                            IsClosed = GetInt32(rs, 13) == 1
+                            LectureTitle = GetString(rs, 3),
+                            Contact = GetString(rs, 4),
+                            Mobile = GetString(rs, 5),
+                            Email = GetString(rs, 6),
+                            Compensation = GetString(rs, 7),
+                            PaymentTerms = GetString(rs, 8),
+                            BillingAddress = GetString(rs, 9),
+                            OtherInformation = GetString(rs, 10),
+                            IsClosed = GetInt32(rs, 11) == 1
                         }
                     );
                 }

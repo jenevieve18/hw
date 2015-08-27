@@ -85,6 +85,15 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxCustomerReferenceNumber;
         
         /// <summary>
+        /// labelCompanyName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelCompanyName;
+        
+        /// <summary>
         /// textBoxAgreementLectureTitle control.
         /// </summary>
         /// <remarks>
@@ -92,15 +101,6 @@ namespace HW.Invoicing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox textBoxAgreementLectureTitle;
-        
-        /// <summary>
-        /// textBoxAgreementLocation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementLocation;
         
         /// <summary>
         /// textBoxAgreementContact control.
@@ -139,6 +139,15 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxAgreementCompensation;
         
         /// <summary>
+        /// labelPaymentTerms control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelPaymentTerms;
+        
+        /// <summary>
         /// textBoxAgreementOtherInformation control.
         /// </summary>
         /// <remarks>
@@ -148,13 +157,13 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxAgreementOtherInformation;
         
         /// <summary>
-        /// textBoxAgreementCustomerAddress control.
+        /// textBoxAgreementPlaceSigned control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementCustomerAddress;
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementPlaceSigned;
         
         /// <summary>
         /// textBoxAgreementDateSigned control.
@@ -166,31 +175,40 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxAgreementDateSigned;
         
         /// <summary>
-        /// textBoxAgreementCustomerName control.
+        /// labelAgreementDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementCustomerName;
+        protected global::System.Web.UI.WebControls.Label labelAgreementDate;
         
         /// <summary>
-        /// textBoxAgreementCustomerTitle control.
+        /// textBoxAgreementContactName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementCustomerTitle;
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementContactName;
         
         /// <summary>
-        /// textBoxAgreementCustomerCompany control.
+        /// textBoxAgreementContactTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementCustomerCompany;
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementContactTitle;
+        
+        /// <summary>
+        /// textBoxAgreementContactCompany control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementContactCompany;
         
         /// <summary>
         /// buttonNext control.

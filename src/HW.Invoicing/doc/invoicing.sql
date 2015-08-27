@@ -299,3 +299,13 @@ alter table Company add AgreementPrefix varchar(255);
 alter table Company add OrganizationNumber varchar(255);
 
 alter table CustomerAgreement add IsClosed int;
+
+create table CustomerAgreementDateTimeAndPlace(
+	Id integer not null primary key identity,
+	CustomerAgreementId integer,
+	Date datetime,
+	TimeFrom varchar(255),
+	TimeTo varchar(255),
+	Runtime varchar(255),
+	Address varchar(255)
+);
