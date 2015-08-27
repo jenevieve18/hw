@@ -132,7 +132,7 @@ namespace HW.Invoicing
                     {
                         Date = d,
                         TimeFrom = timeFroms[i],
-                        TimeTo = timeFroms[i],
+                        TimeTo = timeTos[i],
                         Address = addresses[i]
                     };
                     dateTimeAndPlaces.Add(dt);
