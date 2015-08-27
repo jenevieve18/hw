@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CustomerAgreementAccepted.aspx.cs" Inherits="HW.Invoicing.CustomerAgreementAccepted" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CustomerAgreementPreview.aspx.cs" Inherits="HW.Invoicing.CustomerAgreementPreview" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
 <%@ Import Namespace="HW.Invoicing.Core.Models" %>
 <!DOCTYPE html>
@@ -61,7 +61,7 @@
         }
 
         /* Extra styling */
-        td { width: 100px; }
+        /*td { width: 100px; }*/
         th { text-align: left; }
     </style>
 
@@ -80,15 +80,38 @@
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/scripts.js"></script>
+    
     <style type="text/css">
-        .label-width 
+        .label-width
         {
+            width:200px;
+        }
+        .label2-width
+        {
+            width:100px;
+        }
+        .date-width 
+        {
+            width:120px;
+        }
+        .time-width 
+        {
+            width:75px;
+        }
+        .icon-width 
+        {
+            width:16px;
+        }
+        .compensation 
+        {
+            text-align:right;
         }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
     <div class="container">
+
         <table style="width:100%" cellpadding="2">
             <tr>
                 <td class="col-md-6" valign="bottom"><img src="uploads/<%= company.InvoiceLogo %>" /></td>
@@ -107,44 +130,38 @@
                     <table style="width:100%" cellpadding="2">
                         <tr>
                             <td><b>Företagsnamn</b></td>
-                            <td class="col-md-7">
+                            <td class="label-width">
                                 <asp:Label ID="labelCustomerName" runat="server" Text=""></asp:Label>
-                                <%--<%= Session["CustomerName"] %>--%>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Postadress</b></td>
-                            <td class="col-md-7">
+                            <td>
                                 <asp:Label ID="labelCustomerPostalAddress" runat="server" Text=""></asp:Label>
-                                <%--<%= Session["CustomerPostalAddress"].ToString().Replace("\n", "<br>")%>--%>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Organisationsnummer</b></td>
-                            <td class="col-md-7">
+                            <td>
                                 <asp:Label ID="labelCustomerNumber" runat="server" Text=""></asp:Label>
-                                <%--<%= Session["CustomerNumber"] %>--%>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Faktureringsadress</b></td>
-                            <td class="col-md-7">
+                            <td>
                                 <asp:Label ID="labelCustomerInvoiceAddress" runat="server" Text=""></asp:Label>
-                                <%--<%= Session["CustomerInvoiceAddress"].ToString().Replace("\n", "<br>") %>--%>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Eventuellt referensnummer</b></td>
-                            <td class="col-md-7">
+                            <td>
                                 <asp:Label ID="labelCustomerReferenceNumber" runat="server" Text=""></asp:Label>
-                                <%--<%= Session["CustomerReferenceNumber"] %>--%>
                             </td>
                         </tr>
                     </table>
                 </td>
                 <td valign="top">
                     <asp:Label ID="labelCompanyName" runat="server" Text=""></asp:Label>
-                    <%--<%= company.ToString().Replace("\n", "<br>") %>--%>
                 </td>
             </tr>
         </table>
@@ -154,31 +171,28 @@
         <table style="width:100%" cellpadding="2">
             <thead>
                 <tr>
-                    <td><b>Föreläsare</b>:</td>
-                    <td class="col-md-9" colspan="2">
+                    <td class="label-width"><b>Föreläsare</b>:</td>
+                    <td colspan="4">
                         <asp:Label ID="labelAgreementLecturer" runat="server" Text=""></asp:Label>
-                        <%= agreement.Lecturer %>
                     </td>
                 </tr>
                 <tr>
-                    <td><b>Föreläsningstitel</b>:</td>
-                    <td class="col-md-9" colspan="2">
+                    <td class="label-width"><b>Föreläsningstitel</b>:</td>
+                    <td colspan="4">
                         <asp:Label ID="labelAgreementLectureTitle" runat="server" Text=""></asp:Label>
-                        <%--<%= Session["AgreementLectureTitle"]%>--%>
                     </td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td></td>
-                    <td><b>Från Kl</b></td>
-                    <td><b>Till Kl</b></td>
-                    <td><b>Speltid</b></td>
+                    <td class="date-width"><b>Datum för föreläsningen</b></td>
+                    <td class="time-width"><b>Från klockan</b></td>
+                    <td class="time-width"><b>Till klockan</b></td>
                     <td><b>Plats och adress</b></td>
                 </tr>
             </thead>
 
             <tbody>
-                <% var dateTimeAndPlaces = Session["AgreementDateTimeAndPlace"] as List<CustomerAgreementDateTimeAndPlace>; %>
+                <% var dateTimeAndPlaces = Session["AgreementDateTimeAndPlaces"] as List<CustomerAgreementDateTimeAndPlace>; %>
                 <% if (dateTimeAndPlaces != null) { %>
                     <% foreach (var d in dateTimeAndPlaces) { %>
                     <tr>
@@ -186,9 +200,7 @@
                         <td><%= d.Date %></td>
                         <td><%= d.TimeFrom %></td>
                         <td><%= d.TimeTo %></td>
-                        <td><%= d.Runtime %></td>
                         <td><%= d.Address %></td>
-                        <td></td>
                     </tr>
                     <% } %>
                 <% } %>
@@ -196,42 +208,43 @@
 
             <tfoot>
                 <tr>
-                    <td colspan="6">&nbsp;</td>
+                    <td colspan="5">&nbsp;</td>
                 </tr>
+                <%--<tr>
+                    <td><b>Plats och adress</b>:</td>
+                    <td colspan="5">
+                        <asp:Label ID="labelAgreementLocation" runat="server" Text=""></asp:Label>
+                    </td>
+                </tr>--%>
                 <tr>
                     <td><b>Kontaktperson</b>:</td>
-                    <td colspan="6">
+                    <td colspan="4">
                         <asp:Label ID="labelAgreementContact" runat="server" Text=""></asp:Label>
-                        <%--<%= Session["AgreementContact"]%>--%>
                     </td>
                 </tr>
                 <tr>
                     <td><b>Mobil</b>:</td>
-                    <td colspan="6">
+                    <td colspan="4">
                         <asp:Label ID="labelAgreementMobile" runat="server" Text=""></asp:Label>
-                        <%--<%= Session["AgreementMobile"]%>--%>
                     </td>
                 </tr>
                 <tr>
                     <td><b>E-post kontaktperson</b>:</td>
-                    <td colspan="6">
+                    <td colspan="4">
                         <asp:Label ID="labelAgreementEmail" runat="server" Text=""></asp:Label>
-                        <%--<%= Session["AgreementEmail"]%>--%>
                     </td>
                 </tr>
                 <tr>
                     <td><b>Ersättning</b>:</td>
-                    <td colspan="6">
+                    <td colspan="4">
                         <asp:Label ID="labelAgreementCompensation" runat="server" Text=""></asp:Label>
-                        <%--<%= Session["AgreementCompensation"]%>--%>
                         SEK + moms. Eventualla resekostnader och logi tillkommer.
                     </td>
                 </tr>
                 <tr>
                     <td><b>Betalningsvillkor</b>:</td>
-                    <td colspan="6">
+                    <td colspan="4">
                         <asp:Label ID="labelPaymentTerms" runat="server" Text=""></asp:Label>
-                        <%--<%= agreement.PaymentTerms%>--%>
                     </td>
                 </tr>
             </tfoot>
@@ -241,7 +254,6 @@
         <p>
             <b>Övrig information</b> <i>Beskriv gärna målgruppen här.</i><br />
             <asp:Label ID="labelAgreementOtherInformation" runat="server" Text=""></asp:Label>
-            <%--<%= Session["AgreementOtherInformation"]%>--%>
         </p>
         
         <p>Detta engagemangavtal (Huvudavtal) är en skriftlig bekräftelse på en redan muntlig överenskommelse mellan ovan nämnda Agentur och Kund. Detta Huvudavtal skall tillsammans med tillhörande bilaga returneras till Agenturen inom 14 dagar från att beställningen gjorts. Vid engagemangsdatum inom 14 dagar från beställningen krävs omgående retur till Agenturen.</p>
@@ -255,13 +267,13 @@
 
         <table style="width:100%" cellpadding="2">
             <tr>
-                <td>Ort och Datum</td>
+                <td class="label2-width">Ort och Datum</td>
                 <td>
                     <asp:Label ID="labelAgreementPlaceSigned" runat="server" Text=""></asp:Label>
                     den
                     <asp:Label ID="labelAgreementDateSigned" runat="server" Text=""></asp:Label>
                 </td>
-                <td class="col-md-1"></td>
+                <td style="width:10px;"></td>
                 <td>
                     Stockholm den
                     <asp:Label ID="labelAgreementDate" runat="server" Text=""></asp:Label>
@@ -269,7 +281,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    Signatur <i>Ange namn och titel på den som ska signera avtalet</i>
+                    Signatur<%-- <i>Ange namn och titel på den som ska signera avtalet</i>--%>
                 </td>
                 <td></td>
                 <td><img src="uploads/<%= company.Signature %>" /></td>
@@ -297,7 +309,6 @@
                 <td>Företag</td>
                 <td>
                     <asp:Label ID="labelAgreementContactCompany" runat="server" Text=""></asp:Label>
-                    <%--<%= Session["AgreementContactCompany"] %>--%>
                 </td>
                 <td></td>
                 <td></td>

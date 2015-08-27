@@ -11,7 +11,7 @@ using System.Configuration;
 
 namespace HW.Invoicing
 {
-    public partial class CustomerAgreementAccepted : System.Web.UI.Page
+    public partial class CustomerAgreementPreview : System.Web.UI.Page
     {
         SqlCompanyRepository cr = new SqlCompanyRepository();
         protected Company company;
@@ -44,6 +44,7 @@ namespace HW.Invoicing
 
             labelCompanyName.Text = company.ToString().Replace("\n", "<br>");
 
+            labelAgreementLecturer.Text = agreement.Lecturer;
             labelAgreementLectureTitle.Text = Session["AgreementLectureTitle"].ToString();
 
             // Customer agreement datetime and places
@@ -82,7 +83,6 @@ namespace HW.Invoicing
             var a = new CustomerAgreement
             {
                 Lecturer = agreement.Lecturer,
-                //Date = ConvertHelper.ToDateTime(Session["AgreementDate"].ToString()),
                 LectureTitle = Session["AgreementLectureTitle"].ToString(),
 
                 Contact = Session["AgreementContact"].ToString(),
@@ -97,7 +97,8 @@ namespace HW.Invoicing
                 ContactName = Session["AgreementContactName"].ToString(),
                 ContactTitle = Session["AgreementContactTitle"].ToString(),
                 ContactCompany = Session["AgreementContactCompany"].ToString(),
-                IsClosed = true
+                IsClosed = true,
+                DateTimeAndPlaces = Session["AgreementDateTimeAndPlaces"] as List<CustomerAgreementDateTimeAndPlace>
             };
             r.UpdateAgreement(a, id);
 

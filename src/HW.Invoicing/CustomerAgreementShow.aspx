@@ -134,7 +134,7 @@
         }
         .time-width 
         {
-            width:80px;
+            width:75px;
         }
         .icon-width 
         {
@@ -252,7 +252,7 @@
                 <tr>
                     <td class="label-width"><b>Föreläsare</b>:</td>
                     <td colspan="5">
-                        <%= agreement.Lecturer %>
+                        <asp:Label ID="labelAgreementLecturer" runat="server" Text=""></asp:Label>
                     </td>
                 </tr>
                 <tr>

@@ -428,6 +428,7 @@ namespace HW.Invoicing.Core.Models
         public string ContactTitle { get; set; }
         public string ContactCompany { get; set; }
         public bool IsClosed { get; set; }
+        public List<CustomerAgreementDateTimeAndPlace> DateTimeAndPlaces { get; set; }
         
         public string CustomerToString()
         {

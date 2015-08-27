@@ -52,6 +52,7 @@ namespace HW.Invoicing
 
                         labelCompanyName.Text = company.ToString().Replace("\n", "<br>");
 
+                        labelAgreementLecturer.Text = agreement.Lecturer;
                         textBoxAgreementLectureTitle.Text = agreement.LectureTitle;
 
                         // Customer agreement datetime and places
@@ -79,7 +80,8 @@ namespace HW.Invoicing
                         textBoxCustomerReferenceNumber.Text = Session["CustomerReferenceNumber"].ToString();
 
                         labelCompanyName.Text = company.ToString().Replace("\n", "<br>");
-                        
+                        labelAgreementLecturer.Text = agreement.Lecturer;
+
                         textBoxAgreementLectureTitle.Text = Session["AgreementLectureTitle"].ToString();
 
                         // Customer agreement datetime and places
@@ -152,7 +154,7 @@ namespace HW.Invoicing
             Session["AgreementContactTitle"] = textBoxAgreementContactTitle.Text;
             Session["AgreementContactCompany"] = textBoxAgreementContactCompany.Text;
 
-            Response.Redirect(string.Format("customeragreementaccepted.aspx?Id={0}&CompanyId={1}&CustomerId={2}", id, company.Id, customer.Id));
+            Response.Redirect(string.Format("customeragreementpreview.aspx?Id={0}&CompanyId={1}&CustomerId={2}", id, company.Id, customer.Id));
         }
     }
 }

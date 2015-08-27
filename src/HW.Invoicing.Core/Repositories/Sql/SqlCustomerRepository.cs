@@ -459,9 +459,7 @@ WHERE Id = @Id"
                 "invoicing",
                 new SqlParameter("@Date", a.Date),
                 new SqlParameter("@Lecturer", a.Lecturer),
-                //new SqlParameter("@Runtime", a.Runtime),
                 new SqlParameter("@LectureTitle", a.LectureTitle),
-                //new SqlParameter("@Location", a.Location),
                 new SqlParameter("@Contact", a.Contact),
                 new SqlParameter("@Mobile", a.Mobile),
                 new SqlParameter("@Email", a.Email),
@@ -472,6 +470,29 @@ WHERE Id = @Id"
                 new SqlParameter("@IsClosed", a.IsClosed),
                 new SqlParameter("@Id", id)
             );
+        	
+        	ExecuteNonQuery(
+        		"DELETE FROM CustomerAgreementDateTimeAndPlace WHERE CustomerAgreementId = @CustomerAgreementId",
+        		"invoicing",
+        		new SqlParameter("@CustomerAgreementId", a.Id)
+        	);
+        	
+        	query = string.Format(
+        		@"
+INSERT INTO CustomerAgreementDateTimeAndPlace(CustomerAgreementId, Date, TimeFrom, TimeTo, Address)
+VALUES(@CustomerAgreementId, @Date, @TimeFrom, @TimeTo, @Address)"
+        	);
+        	foreach (var d in a.DateTimeAndPlaces) {
+        		ExecuteNonQuery(
+        			query,
+        			"invoicing",
+        			new SqlParameter("@CustomerAgreementId", a.Id),
+        			new SqlParameter("@Date", d.Date),
+        			new SqlParameter("@TimeFrom", d.TimeFrom),
+        			new SqlParameter("@TimeTo", d.TimeTo),
+        			new SqlParameter("@Address", d.Address)
+        		);
+        	}
         }
 
         public void UpdateSubscriptionTimebook(CustomerTimebook c, int id)

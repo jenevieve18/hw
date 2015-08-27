@@ -31,9 +31,7 @@ namespace HW.Invoicing
                 {
                     textBoxAgreementDate.Text = a.Date.Value.ToString("yyyy-MM-dd");
                     textBoxAgreementLecturer.Text = a.Lecturer;
-                    //textBoxAgreementRuntime.Text = a.Runtime;
                     textBoxAgreementLectureTitle.Text = a.LectureTitle;
-                    //textBoxAgreementLocation.Text = a.Location;
                     textBoxAgreementContact.Text = a.Contact;
                     textBoxAgreementMobile.Text = a.Mobile;
                     textBoxAgreementEmail.Text = a.Email;
@@ -43,7 +41,6 @@ namespace HW.Invoicing
                     textBoxAgreementOtherInformation.Text = a.OtherInformation;
 
                     checkBoxClosed.Checked = a.IsClosed;
-                    //placeHolderOpen.Visible = a.IsClosed;
                 }
             }
         }
@@ -54,9 +51,7 @@ namespace HW.Invoicing
             {
                 Date = ConvertHelper.ToDateTime(textBoxAgreementDate.Text),
                 Lecturer = textBoxAgreementLecturer.Text,
-                //Runtime = textBoxAgreementRuntime.Text,
                 LectureTitle = textBoxAgreementLectureTitle.Text,
-                //Location = textBoxAgreementLocation.Text,
                 Contact = textBoxAgreementContact.Text,
                 Mobile = textBoxAgreementMobile.Text,
                 Email = textBoxAgreementEmail.Text,
