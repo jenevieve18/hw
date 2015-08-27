@@ -96,10 +96,11 @@ namespace HW.Invoicing
 
                         textBoxAgreementPlaceSigned.Text = Session["AgreementPlaceSigned"].ToString();
                         textBoxAgreementDateSigned.Text = Session["AgreementDateSigned"].ToString();
-                        labelAgreementDate.Text = Session["AgreementDate"].ToString();
-                        textBoxAgreementContactName.Text = Session["AgreementCustomerName"].ToString();
-                        textBoxAgreementContactTitle.Text = Session["AgreementCustomerTitle"].ToString();
-                        textBoxAgreementContactCompany.Text = Session["AgreementCustomerCompany"].ToString();
+                        //labelAgreementDate.Text = Session["AgreementDate"].ToString();
+                        labelAgreementDate.Text = agreement.Date.Value.ToString("yyyy-MM-dd");
+                        textBoxAgreementContactName.Text = Session["AgreementContactName"].ToString();
+                        textBoxAgreementContactTitle.Text = Session["AgreementContactTitle"].ToString();
+                        textBoxAgreementContactCompany.Text = Session["AgreementContactCompany"].ToString();
                     }
                 }
             }

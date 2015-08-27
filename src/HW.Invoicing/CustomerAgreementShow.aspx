@@ -122,7 +122,7 @@
     <style type="text/css">
         .label-width
         {
-            width:210px;
+            width:200px;
         }
         .label2-width
         {
@@ -348,14 +348,14 @@
 
         <table style="width:100%" cellpadding="2">
             <tr>
-                <td>Ort och Datum</td>
+                <td class="label2-width">Ort och Datum</td>
                 <td>
                     <asp:TextBox ID="textBoxAgreementPlaceSigned" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
                 <td class="date-width">
                     <asp:TextBox ID="textBoxAgreementDateSigned" CssClass="date form-control" runat="server"></asp:TextBox>
                 </td>
-                <td class="col-md-1"></td>
+                <td style="width:10px;"></td>
                 <td>
                     Stockholm den
                     <asp:Label ID="labelAgreementDate" runat="server" Text=""></asp:Label>
