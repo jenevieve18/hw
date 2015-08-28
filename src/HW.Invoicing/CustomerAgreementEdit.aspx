@@ -12,7 +12,33 @@
             });
         });
     </script>
-
+    
+    <style type="text/css">
+        .label-width
+        {
+            width:200px;
+        }
+        .label2-width
+        {
+            width:100px;
+        }
+        .date-width 
+        {
+            width:120px;
+        }
+        .time-width 
+        {
+            width:75px;
+        }
+        .icon-width 
+        {
+            width:16px;
+        }
+        .compensation 
+        {
+            text-align:right;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     
@@ -23,13 +49,32 @@
             <asp:TextBox ID="textBoxAgreementLecturer" runat="server" CssClass="form-control"></asp:TextBox>
         </div>
         <div class="form-group">
-	        <label for="<%= textBoxAgreementDate.ClientID %>">Date</label>
+	        <label for="<%= textBoxAgreementDate.ClientID %>">Date Created</label>
             <asp:TextBox ID="textBoxAgreementDate" runat="server" CssClass="date form-control"></asp:TextBox>
         </div>
         <div class="form-group">
 	        <label for="<%= textBoxAgreementLectureTitle.ClientID %>">Lecture Title</label>
             <asp:TextBox ID="textBoxAgreementLectureTitle" runat="server" CssClass="form-control"></asp:TextBox>
         </div>
+
+        <table width="100%" cellpadding="2">
+            <tr>
+                <th>Date of Lecture</th>
+                <th>Time From</th>
+                <th>Time To</th>
+                <th>Address</th>
+            </tr>
+            <% foreach (var d in agreement.DateTimeAndPlaces) { %>
+                <tr>
+                    <td class="date-width"><%= FormHelper.Input("agreement-date", d.Date.Value.ToString("yyyy-MM-dd"), "class='date form-control'") %></td>
+                    <td class="time-width"><%= FormHelper.Input("agreement-timefrom", d.TimeFrom, "class='form-control'") %></td>
+                    <td class="time-width"><%= FormHelper.Input("agreement-timeto", d.TimeTo, "class='form-control'") %></td>
+                    <td><%= FormHelper.Input("agreement-address", d.Address, "class='form-control'") %></td>
+                </tr>
+            <% } %>
+        </table>
+
+        <br />
         <div class="form-group">
 	        <label for="<%= textBoxAgreementContact.ClientID %>">Contact</label>
             <asp:TextBox ID="textBoxAgreementContact" runat="server" CssClass="form-control"></asp:TextBox>

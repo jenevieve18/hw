@@ -198,18 +198,23 @@ namespace HW.Core.Helpers
 		
 		public static string Input(string name, string value)
 		{
-			return Input(name, value, "", "");
+			return Input(name, value, "");
 		}
+
+        public static string Input(string name, string value, string attributes)
+        {
+            return string.Format("<input type='text' name='{0}' id='{0}' value='{1}' {2}/>", name, value, attributes);
+        }
 		
-		public static string Input(string name, string value, string placeholder)
-		{
-			return Input(name, value, placeholder, "");
-		}
+        //public static string Input(string name, string value, string placeholder)
+        //{
+        //    return Input(name, value, placeholder, "");
+        //}
 		
-		public static string Input(string name, string value, string placeholder, string clas)
-		{
-			return string.Format("<input type='text' name='{0}' id='{0}' value='{1}' class='{3}' placeholder='{2}'/>", name, value, placeholder, clas);
-		}
+        //public static string Input(string name, string value, string placeholder, string clas)
+        //{
+        //    return string.Format("<input type='text' name='{0}' id='{0}' value='{1}' class='{3}' placeholder='{2}'/>", name, value, placeholder, clas);
+        //}
 		
 		public static string TextArea(string name, string value)
 		{

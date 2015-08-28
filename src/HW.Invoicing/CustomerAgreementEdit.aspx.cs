@@ -15,6 +15,7 @@ namespace HW.Invoicing
         SqlCustomerRepository r = new SqlCustomerRepository();
         protected int customerId;
         int id;
+        protected CustomerAgreement agreement;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -26,39 +27,64 @@ namespace HW.Invoicing
             
             if (!IsPostBack)
             {
-                var a = r.ReadAgreement(id);
-                if (a != null)
+                agreement = r.ReadAgreement(id);
+                if (agreement != null)
                 {
-                    textBoxAgreementLecturer.Text = a.Lecturer;
-                    textBoxAgreementDate.Text = a.Date == null ? "" : a.Date.Value.ToString("yyyy-MM-dd");
-                    textBoxAgreementLectureTitle.Text = a.LectureTitle;
-                    textBoxAgreementContact.Text = a.Contact;
-                    textBoxAgreementMobile.Text = a.Mobile;
-                    textBoxAgreementEmail.Text = a.Email;
-                    textBoxAgreementCompensation.Text = a.Compensation.ToString();
-                    textBoxAgreementPaymentTerms.Text = a.PaymentTerms;
-                    textBoxAgreementOtherInformation.Text = a.OtherInformation;
+                    textBoxAgreementLecturer.Text = agreement.Lecturer;
+                    textBoxAgreementDate.Text = agreement.Date == null ? "" : agreement.Date.Value.ToString("yyyy-MM-dd");
+                    textBoxAgreementLectureTitle.Text = agreement.LectureTitle;
+                    textBoxAgreementContact.Text = agreement.Contact;
+                    textBoxAgreementMobile.Text = agreement.Mobile;
+                    textBoxAgreementEmail.Text = agreement.Email;
+                    textBoxAgreementCompensation.Text = agreement.Compensation.ToString();
+                    textBoxAgreementPaymentTerms.Text = agreement.PaymentTerms;
+                    textBoxAgreementOtherInformation.Text = agreement.OtherInformation;
 
-                    textBoxAgreementContactPlaceSigned.Text = a.ContactPlaceSigned;
-                    textBoxAgreementContactDateSigned.Text = a.ContactDateSigned == null ? "" : a.ContactDateSigned.Value.ToString("yyyy-MM-dd");
-                    textBoxAgreementContactName.Text = a.ContactName;
-                    textBoxAgreementContactTitle.Text = a.ContactTitle;
-                    textBoxAgreementContactCompany.Text = a.ContactCompany;
+                    textBoxAgreementContactPlaceSigned.Text = agreement.ContactPlaceSigned;
+                    textBoxAgreementContactDateSigned.Text = agreement.ContactDateSigned == null ? "" : agreement.ContactDateSigned.Value.ToString("yyyy-MM-dd");
+                    textBoxAgreementContactName.Text = agreement.ContactName;
+                    textBoxAgreementContactTitle.Text = agreement.ContactTitle;
+                    textBoxAgreementContactCompany.Text = agreement.ContactCompany;
 
-                    textBoxAgreementDateSigned.Text = a.DateSigned == null ? "" : a.DateSigned.Value.ToString("yyyy-MM-dd");
+                    textBoxAgreementDateSigned.Text = agreement.DateSigned == null ? "" : agreement.DateSigned.Value.ToString("yyyy-MM-dd");
 
-                    checkBoxClosed.Checked = a.IsClosed;
+                    checkBoxClosed.Checked = agreement.IsClosed;
                 }
             }
         }
 
         protected void buttonSave_Click(object sender, EventArgs e)
         {
+            var dates = Request.Form.GetValues("agreement-date");
+            var timeFroms = Request.Form.GetValues("agreement-timefrom");
+            var timeTos = Request.Form.GetValues("agreement-timeto");
+            var addresses = Request.Form.GetValues("agreement-address");
+            int i = 0;
+            List<CustomerAgreementDateTimeAndPlace> dateTimeAndPlaces = new List<CustomerAgreementDateTimeAndPlace>();
+            if (dates != null)
+            {
+                foreach (var d in dates)
+                {
+                    var dt = new CustomerAgreementDateTimeAndPlace
+                    {
+                        Date = ConvertHelper.ToDateTime(d),
+                        TimeFrom = timeFroms[i],
+                        TimeTo = timeTos[i],
+                        Address = addresses[i]
+                    };
+                    dateTimeAndPlaces.Add(dt);
+                    i++;
+                }
+            }
+
             var a = new CustomerAgreement
             {
                 Date = ConvertHelper.ToDateTime(textBoxAgreementDate.Text),
                 Lecturer = textBoxAgreementLecturer.Text,
                 LectureTitle = textBoxAgreementLectureTitle.Text,
+
+                DateTimeAndPlaces = dateTimeAndPlaces,
+
                 Contact = textBoxAgreementContact.Text,
                 Mobile = textBoxAgreementMobile.Text,
                 Email = textBoxAgreementEmail.Text,

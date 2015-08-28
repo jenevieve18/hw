@@ -62,7 +62,7 @@
         }
 
         /* Extra styling */
-        td { width: 100px; }
+        /*td { width: 100px; }*/
         th { text-align: left; }
     </style>
 

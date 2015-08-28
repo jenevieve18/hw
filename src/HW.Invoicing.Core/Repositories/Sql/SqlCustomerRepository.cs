@@ -486,7 +486,7 @@ WHERE Id = @Id"
                 ExecuteNonQuery(
                     "DELETE FROM CustomerAgreementDateTimeAndPlace WHERE CustomerAgreementId = @CustomerAgreementId",
                     "invoicing",
-                    new SqlParameter("@CustomerAgreementId", a.Id)
+                    new SqlParameter("@CustomerAgreementId", id)
                 );
                 query = string.Format(
                     @"
@@ -498,7 +498,7 @@ VALUES(@CustomerAgreementId, @Date, @TimeFrom, @TimeTo, @Address)"
                     ExecuteNonQuery(
                         query,
                         "invoicing",
-                        new SqlParameter("@CustomerAgreementId", a.Id),
+                        new SqlParameter("@CustomerAgreementId", id),
                         new SqlParameter("@Date", d.Date),
                         new SqlParameter("@TimeFrom", d.TimeFrom),
                         new SqlParameter("@TimeTo", d.TimeTo),

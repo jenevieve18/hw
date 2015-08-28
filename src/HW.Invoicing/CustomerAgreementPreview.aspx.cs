@@ -100,26 +100,24 @@ namespace HW.Invoicing
                 ContactTitle = Session["AgreementContactTitle"].ToString(),
                 ContactCompany = Session["AgreementContactCompany"].ToString(),
 
+                DateSigned = agreement.DateSigned,
+
                 IsClosed = true,
+                
                 DateTimeAndPlaces = Session["AgreementDateTimeAndPlaces"] as List<CustomerAgreementDateTimeAndPlace>
             };
             r.UpdateAgreement(a, id);
 
+            //Db.sendMail(
+            //    company.Email,
+            //    company.AgreementEmailSubject,
+            //    company.AgreementEmailText
+            //);
             Db.sendMail(
                 company.Email,
-                company.AgreementEmailSubject,
-                company.AgreementEmailText
+                "Customer Updated the Agreement",
+                string.Format(@"The customer agreement has been updated. Please click {0}customeragreementedit.aspx?Id={1}&CustomerId={2} to visit the agreement.", ConfigurationManager.AppSettings["InvoiceUrl"], id, customerId)
             );
-//                string.Format("Customer Agreement for {0} is updated", c.Name),
-//                string.Format(@"Updated customer agreement.
-//
-//Please visit this link to review the agreement!
-//
-//{0}customershow.aspx?Id={1}&SelectedTab=agreements
-//
-//Yours,
-//InvoicingSystem", ConfigurationManager.AppSettings["InvoiceURL"], customerId)
-//            );
 
             Response.Redirect(string.Format("customeragreementthanks.aspx?Id={0}&CompanyId={1}&CustomerId={2}", id, companyId, customerId));
         }

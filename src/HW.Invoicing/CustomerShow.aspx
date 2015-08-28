@@ -1054,7 +1054,7 @@
 			</div>
             <table class="table table-hover">
                 <tr>
-                    <th>Date Signed</th>
+                    <th>Date Created</th>
                     <th>Lecturer</th>
                     <th>Contact</th>
                     <th>Mobile</th>
