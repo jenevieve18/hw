@@ -270,7 +270,7 @@
                     <td><b>Ersättning</b>:</td>
                     <td colspan="4">
                         <asp:Label ID="labelAgreementCompensation" runat="server" Text=""></asp:Label>
-                        SEK + moms. Eventualla resekostnader och logi tillkommer.
+                        SEK + moms. Eventuella resekostnader och logi tillkommer.
                     </td>
                 </tr>
                 <tr>
