@@ -27,16 +27,8 @@
             <asp:TextBox ID="textBoxAgreementDate" runat="server" CssClass="date form-control"></asp:TextBox>
         </div>
         <div class="form-group">
-	        <label for="<%= textBoxAgreementRuntime.ClientID %>">Runtime</label>
-            <asp:TextBox ID="textBoxAgreementRuntime" runat="server" CssClass="form-control"></asp:TextBox>
-        </div>
-        <div class="form-group">
 	        <label for="<%= textBoxAgreementLectureTitle.ClientID %>">Lecture Title</label>
             <asp:TextBox ID="textBoxAgreementLectureTitle" runat="server" CssClass="form-control"></asp:TextBox>
-        </div>
-        <div class="form-group">
-	        <label for="<%= textBoxAgreementLocation.ClientID %>">Location</label>
-            <asp:TextBox ID="textBoxAgreementLocation" runat="server" CssClass="form-control"></asp:TextBox>
         </div>
         <div class="form-group">
 	        <label for="<%= textBoxAgreementContact.ClientID %>">Contact</label>
@@ -62,6 +54,33 @@
 	        <label for="<%= textBoxAgreementOtherInformation.ClientID %>">Other Information</label>
             <asp:TextBox ID="textBoxAgreementOtherInformation" runat="server" CssClass="form-control" ViewStateMode="Inherit" TextMode="MultiLine" Height="210"></asp:TextBox>
         </div>
+        
+        <div class="form-group">
+	        <label for="<%= textBoxAgreementContactPlaceSigned.ClientID %>">Contact Place Signed</label>
+            <asp:TextBox ID="textBoxAgreementContactPlaceSigned" runat="server" CssClass="form-control"></asp:TextBox>
+        </div>
+        <div class="form-group">
+	        <label for="<%= textBoxAgreementContactDateSigned.ClientID %>">Contact Date Signed</label>
+            <asp:TextBox ID="textBoxAgreementContactDateSigned" runat="server" CssClass="date form-control"></asp:TextBox>
+        </div>
+        <div class="form-group">
+	        <label for="<%= textBoxAgreementContactName.ClientID %>">Contact Name</label>
+            <asp:TextBox ID="textBoxAgreementContactName" runat="server" CssClass="form-control"></asp:TextBox>
+        </div>
+        <div class="form-group">
+	        <label for="<%= textBoxAgreementContactTitle.ClientID %>">Contact Title</label>
+            <asp:TextBox ID="textBoxAgreementContactTitle" runat="server" CssClass="form-control"></asp:TextBox>
+        </div>
+        <div class="form-group">
+	        <label for="<%= textBoxAgreementContactCompany.ClientID %>">Company</label>
+            <asp:TextBox ID="textBoxAgreementContactCompany" runat="server" CssClass="form-control"></asp:TextBox>
+        </div>
+        
+        <div class="form-group">
+	        <label for="<%= textBoxAgreementDateSigned.ClientID %>">Date Signed</label>
+            <asp:TextBox ID="textBoxAgreementDateSigned" runat="server" CssClass="date form-control"></asp:TextBox>
+        </div>
+
         <asp:PlaceHolder ID="placeHolderClosed" runat="server">
             <div class="form-group">
                 <asp:CheckBox ID="checkBoxClosed" runat="server" CssClass="form-control" Text="&nbsp;This customer agreement is closed" />

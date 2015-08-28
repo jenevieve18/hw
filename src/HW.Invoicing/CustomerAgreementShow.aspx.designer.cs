@@ -166,31 +166,31 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxAgreementOtherInformation;
         
         /// <summary>
-        /// textBoxAgreementPlaceSigned control.
+        /// textBoxAgreementContactPlaceSigned control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementPlaceSigned;
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementContactPlaceSigned;
         
         /// <summary>
-        /// textBoxAgreementDateSigned control.
+        /// textBoxAgreementContactDateSigned control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementDateSigned;
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementContactDateSigned;
         
         /// <summary>
-        /// labelAgreementDate control.
+        /// labelAgreementDateSigned control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label labelAgreementDate;
+        protected global::System.Web.UI.WebControls.Label labelAgreementDateSigned;
         
         /// <summary>
         /// textBoxAgreementContactName control.

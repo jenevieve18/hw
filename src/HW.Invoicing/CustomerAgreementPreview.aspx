@@ -114,18 +114,50 @@
 
         <table style="width:100%" cellpadding="2">
             <tr>
-                <td class="col-md-6" valign="bottom"><img src="uploads/<%= company.InvoiceLogo %>" /></td>
+                <td class="col-md-6" colspan="2" valign="bottom"><img src="uploads/<%= company.InvoiceLogo %>" /></td>
                 <td valign="bottom"><b>Engagemangsavtal nummer HCGE-<%= agreement.Id.ToString("000") %></b></td>
             </tr>
             <tr>
-                <td></td>
-                <td></td>
+                <td colspan="3"></td>
             </tr>
             <tr>
-                <td><b>Kund</b><%-- <i>Ange: Företagsnamn, Postadress och Organisationsnummer</i>--%></td>
+                <td colspan="2"><b>Kund</b></td>
                 <td><b>Agentur</b></td>
             </tr>
             <tr>
+                <td><b>Företagsnamn</b></td>
+                <td class="label-width">
+                    <asp:Label ID="labelCustomerName" runat="server" Text=""></asp:Label>
+                </td>
+                <td rowspan="5" valign="top">
+                    <asp:Label ID="labelCompanyName" runat="server" Text=""></asp:Label>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Postadress</b></td>
+                <td>
+                    <asp:Label ID="labelCustomerPostalAddress" runat="server" Text=""></asp:Label>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Organisationsnummer</b></td>
+                <td>
+                    <asp:Label ID="labelCustomerNumber" runat="server" Text=""></asp:Label>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Faktureringsadress</b></td>
+                <td>
+                    <asp:Label ID="labelCustomerInvoiceAddress" runat="server" Text=""></asp:Label>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Eventuellt referensnummer</b></td>
+                <td>
+                    <asp:Label ID="labelCustomerReferenceNumber" runat="server" Text=""></asp:Label>
+                </td>
+            </tr>
+            <%--<tr>
                 <td>
                     <table style="width:100%" cellpadding="2">
                         <tr>
@@ -163,7 +195,7 @@
                 <td valign="top">
                     <asp:Label ID="labelCompanyName" runat="server" Text=""></asp:Label>
                 </td>
-            </tr>
+            </tr>--%>
         </table>
 
         <p></p>
@@ -252,7 +284,7 @@
 
         <br />
         <p>
-            <b>Övrig information</b><%-- <i>Beskriv gärna målgruppen här.</i>--%><br />
+            <b>Övrig information</b><br />
             <asp:Label ID="labelAgreementOtherInformation" runat="server" Text=""></asp:Label>
         </p>
         <hr />
@@ -270,27 +302,29 @@
             <tr>
                 <td class="label2-width"><b>Ort och Datum</b></td>
                 <td>
-                    <asp:Label ID="labelAgreementPlaceSigned" runat="server" Text=""></asp:Label>
+                    <asp:Label ID="labelAgreementContactPlaceSigned" runat="server" Text=""></asp:Label>
                     den
-                    <asp:Label ID="labelAgreementDateSigned" runat="server" Text=""></asp:Label>
+                    <asp:Label ID="labelAgreementContactDateSigned" runat="server" Text=""></asp:Label>
                 </td>
                 <td style="width:10px;"></td>
                 <td>
                     Stockholm den
-                    <asp:Label ID="labelAgreementDate" runat="server" Text=""></asp:Label>
+                    <asp:Label ID="labelAgreementDateSigned" runat="server" Text=""></asp:Label>
                 </td>
             </tr>
-            <tr>
+            <%--<tr>
                 <td colspan="2">
-                    <b>Signatur</b><%-- <i>Ange namn och titel på den som ska signera avtalet</i>--%>
+                    <b>Signatur</b>
                 </td>
                 <td></td>
                 <td><img src="uploads/<%= company.Signature %>" /></td>
-            </tr>
+            </tr>--%>
             <tr>
-                <td><b>Namn</b></td>
+                <td><b>Namn, Titel, Företag </b></td>
                 <td>
-                    <asp:Label ID="labelAgreementContactName" runat="server" Text=""></asp:Label>
+                    <asp:Label ID="labelAgreementContactName" runat="server" Text=""></asp:Label>,
+                    <asp:Label ID="labelAgreementContactTitle" runat="server" Text=""></asp:Label><br />
+                    <asp:Label ID="labelAgreementContactCompany" runat="server" Text=""></asp:Label>
                 </td>
                 <td></td>
                 <td>
@@ -298,10 +332,9 @@
                     Hasson Consulting Group AB
                 </td>
             </tr>
-            <tr>
+            <%--<tr>
                 <td><b>Titel</b></td>
                 <td>
-                    <asp:Label ID="labelAgreementContactTitle" runat="server" Text=""></asp:Label>
                 </td>
                 <td></td>
                 <td></td>
@@ -309,11 +342,10 @@
             <tr>
                 <td><b>Företag</b></td>
                 <td>
-                    <asp:Label ID="labelAgreementContactCompany" runat="server" Text=""></asp:Label>
                 </td>
                 <td></td>
                 <td></td>
-            </tr>
+            </tr>--%>
         </table>
         <br />
 

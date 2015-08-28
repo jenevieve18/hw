@@ -409,26 +409,33 @@ namespace HW.Invoicing.Core.Models
 
     public class CustomerAgreement : BaseModel
     {
-        public Customer Customer { get; set; }
         public DateTime? Date { get; set; }
+        public Customer Customer { get; set; }
         public string Lecturer { get; set; }
-        //public string Runtime { get; set; }
         public string LectureTitle { get; set; }
-        //public string Location { get; set; }
         public string Contact { get; set; }
         public string Mobile { get; set; }
         public string Email { get; set; }
-        public string Compensation { get; set; }
+        public decimal Compensation { get; set; }
         public string PaymentTerms { get; set; }
         public string BillingAddress { get; set; }
         public string OtherInformation { get; set; }
-        public DateTime? DateSigned { get; set; }
-        public string PlaceSigned { get; set; }
+
+        public string ContactPlaceSigned { get; set; }
+        public DateTime? ContactDateSigned { get; set; }
         public string ContactName { get; set; }
         public string ContactTitle { get; set; }
         public string ContactCompany { get; set; }
+
+        public DateTime? DateSigned { get; set; }
+
         public bool IsClosed { get; set; }
         public List<CustomerAgreementDateTimeAndPlace> DateTimeAndPlaces { get; set; }
+        
+        public CustomerAgreement()
+        {
+        	DateTimeAndPlaces = new List<CustomerAgreementDateTimeAndPlace>();
+        }
         
         public string CustomerToString()
         {

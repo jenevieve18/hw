@@ -309,3 +309,14 @@ create table CustomerAgreementDateTimeAndPlace(
 	Runtime varchar(255),
 	Address varchar(255)
 );
+
+update CustomerAgreement set Compensation = null;
+
+alter table CustomerAgreement alter column Compensation decimal(18, 2);
+
+alter table CustomerAgreement add ContactPlaceSigned varchar(255),
+ContactDateSigned datetime,
+ContactName varchar(255),
+ContactTitle varchar(255),
+ContactCompany varchar(255),
+DateSigned datetime;

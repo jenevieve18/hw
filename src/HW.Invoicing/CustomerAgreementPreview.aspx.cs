@@ -50,16 +50,17 @@ namespace HW.Invoicing
             labelAgreementContact.Text = Session["AgreementContact"].ToString();
             labelAgreementMobile.Text = Session["AgreementMobile"].ToString();
             labelAgreementEmail.Text = Session["AgreementEmail"].ToString();
-            labelAgreementCompensation.Text = Session["AgreementCompensation"].ToString();
+            labelAgreementCompensation.Text = ConvertHelper.ToDecimal(Session["AgreementCompensation"]).ToString("### ##0.00");
             labelAgreementOtherInformation.Text = Session["AgreementOtherInformation"].ToString().Replace("\n", "<br>");
             labelPaymentTerms.Text = Session["AgreementPaymentTerms"].ToString();
 
-            labelAgreementPlaceSigned.Text = Session["AgreementPlaceSigned"].ToString();
-            labelAgreementDateSigned.Text = Session["AgreementDateSigned"].ToString();
-            labelAgreementDate.Text = agreement.Date.Value.ToString("yyyy-MM-dd");
+            labelAgreementContactPlaceSigned.Text = Session["AgreementContactPlaceSigned"].ToString();
+            labelAgreementContactDateSigned.Text = Session["AgreementContactDateSigned"].ToString();
             labelAgreementContactName.Text = Session["AgreementContactName"].ToString();
             labelAgreementContactTitle.Text = Session["AgreementContactTitle"].ToString();
             labelAgreementContactCompany.Text = Session["AgreementContactCompany"].ToString();
+
+            labelAgreementDateSigned.Text = agreement.DateSigned.Value.ToString("yyyy-MM-dd");
         }
 
         protected void buttonBackClick(object sender, EventArgs e)
@@ -81,6 +82,7 @@ namespace HW.Invoicing
 
             var a = new CustomerAgreement
             {
+                Id = agreement.Id,
                 Date = agreement.Date,
                 Lecturer = agreement.Lecturer,
                 LectureTitle = Session["AgreementLectureTitle"].ToString(),
@@ -88,15 +90,16 @@ namespace HW.Invoicing
                 Contact = Session["AgreementContact"].ToString(),
                 Mobile = Session["AgreementMobile"].ToString(),
                 Email = Session["AgreementEmail"].ToString(),
-                Compensation = Session["AgreementCompensation"].ToString(),
+                Compensation = ConvertHelper.ToDecimal(Session["AgreementCompensation"]),
                 PaymentTerms = agreement.PaymentTerms,
                 OtherInformation = Session["AgreementOtherInformation"].ToString(),
                 
-                PlaceSigned = Session["AgreementPlaceSigned"].ToString(),
-                DateSigned = ConvertHelper.ToDateTime(Session["AgreementDateSigned"].ToString()),
+                ContactPlaceSigned = Session["AgreementContactPlaceSigned"].ToString(),
+                ContactDateSigned = ConvertHelper.ToDateTime(Session["AgreementContactDateSigned"].ToString()),
                 ContactName = Session["AgreementContactName"].ToString(),
                 ContactTitle = Session["AgreementContactTitle"].ToString(),
                 ContactCompany = Session["AgreementContactCompany"].ToString(),
+
                 IsClosed = true,
                 DateTimeAndPlaces = Session["AgreementDateTimeAndPlaces"] as List<CustomerAgreementDateTimeAndPlace>
             };

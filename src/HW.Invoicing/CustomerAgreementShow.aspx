@@ -187,44 +187,6 @@
         
         <asp:Panel ID="Panel1" runat="server" DefaultButton="buttonNext">
 
-        <%--<div class="row">
-            <div class='col-sm-6'>
-                <div class="form-group">
-                    <div class='input-group date' id='datetimepicker1'>
-                        <input type='text' class="form-control" />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>--%>
-
-        <%--<div class="row">
-            <div class="col-md-6">
-                <img src="uploads/<%= company.InvoiceLogo %>" />
-            </div>
-            <div class="col-md-6">
-                <b>Engagemangsavtal nummer <%= company.AgreementPrefix %>-<%= agreement.Id.ToString("000") %></b>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group">
-                <label class="control-label col-md-2" >Företagsnamn</label>
-                <div class="col-sm-10">
-                    <asp:TextBox ID="textBox5" CssClass="form-control" runat="server"></asp:TextBox>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group">
-                <label class="control-label col-md-2">Postadress</label>
-                <div class="col-md-10">
-                    <asp:TextBox ID="textBox6" CssClass="form-control" runat="server" TextMode="MultiLine" Height="100"></asp:TextBox>
-                </div>
-            </div>
-        </div>--%>
-
         <table style="width:100%" cellpadding="2">
             <tr>
                 <td class="col-md-6" valign="bottom"><img src="uploads/<%= company.InvoiceLogo %>" /></td>
@@ -384,24 +346,24 @@
             <tr>
                 <td class="label2-width"><b>Ort och Datum</b></td>
                 <td>
-                    <asp:TextBox ID="textBoxAgreementPlaceSigned" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="textBoxAgreementContactPlaceSigned" CssClass="form-control" runat="server"></asp:TextBox>
                 </td>
                 <td class="date-width">
-                    <asp:TextBox ID="textBoxAgreementDateSigned" CssClass="date form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="textBoxAgreementContactDateSigned" CssClass="date form-control" runat="server"></asp:TextBox>
                 </td>
                 <td style="width:10px;"></td>
                 <td>
                     Stockholm den
-                    <asp:Label ID="labelAgreementDate" runat="server" Text=""></asp:Label>
+                    <asp:Label ID="labelAgreementDateSigned" runat="server" Text=""></asp:Label>
                 </td>
             </tr>
-            <tr>
+            <%--<tr>
                 <td colspan="3">
                     <b>Signatur</b> <i>Ange namn och titel på den som ska signera avtalet</i>
                 </td>
                 <td></td>
                 <td><img src="uploads/<%= company.Signature %>" /></td>
-            </tr>
+            </tr>--%>
             <tr>
                 <td><b>Namn</b></td>
                 <td colspan="2">

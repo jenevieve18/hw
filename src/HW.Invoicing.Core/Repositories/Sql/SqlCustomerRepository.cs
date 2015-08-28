@@ -238,9 +238,7 @@ VALUES(@CustomerId, @Date, @Lecturer, @LectureTitle, @Contact, @Mobile, @Email, 
                 new SqlParameter("@CustomerId", customerId),
                 new SqlParameter("@Date", agreement.Date),
                 new SqlParameter("@Lecturer", agreement.Lecturer),
-                //new SqlParameter("@Runtime", agreement.Runtime),
                 new SqlParameter("@LectureTitle", agreement.LectureTitle),
-                //new SqlParameter("@Location", agreement.Location),
                 new SqlParameter("@Contact", agreement.Contact),
                 new SqlParameter("@Mobile", agreement.Mobile),
                 new SqlParameter("@Email", agreement.Email),
@@ -451,7 +449,13 @@ UPDATE CustomerAgreement SET Date = @Date,
     PaymentTerms = @PaymentTerms,
     BillingAddress = @BillingAddress,
     OtherInformation = @OtherInformation,
-    IsClosed = @IsClosed
+    IsClosed = @IsClosed,
+    ContactPlaceSigned = @ContactPlaceSigned,
+    ContactDateSigned = @ContactDateSigned,
+    ContactName = @ContactName,
+    ContactTitle = @ContactTitle,
+    ContactCompany = @ContactCompany,
+    DateSigned = @DateSigned
 WHERE Id = @Id"
             );
             ExecuteNonQuery(
@@ -468,31 +472,40 @@ WHERE Id = @Id"
                 new SqlParameter("@BillingAddress", a.BillingAddress),
                 new SqlParameter("@OtherInformation", a.OtherInformation),
                 new SqlParameter("@IsClosed", a.IsClosed),
+                new SqlParameter("@ContactPlaceSigned", a.ContactPlaceSigned),
+                new SqlParameter("@ContactDateSigned", a.ContactDateSigned),
+                new SqlParameter("@ContactName", a.ContactName),
+                new SqlParameter("@ContactTitle", a.ContactTitle),
+                new SqlParameter("@ContactCompany", a.ContactCompany),
+                new SqlParameter("@DateSigned", a.DateSigned),
                 new SqlParameter("@Id", id)
             );
-        	
-        	ExecuteNonQuery(
-        		"DELETE FROM CustomerAgreementDateTimeAndPlace WHERE CustomerAgreementId = @CustomerAgreementId",
-        		"invoicing",
-        		new SqlParameter("@CustomerAgreementId", a.Id)
-        	);
-        	
-        	query = string.Format(
-        		@"
+
+            if (a.DateTimeAndPlaces != null && a.DateTimeAndPlaces.Count > 0)
+            {
+                ExecuteNonQuery(
+                    "DELETE FROM CustomerAgreementDateTimeAndPlace WHERE CustomerAgreementId = @CustomerAgreementId",
+                    "invoicing",
+                    new SqlParameter("@CustomerAgreementId", a.Id)
+                );
+                query = string.Format(
+                    @"
 INSERT INTO CustomerAgreementDateTimeAndPlace(CustomerAgreementId, Date, TimeFrom, TimeTo, Address)
 VALUES(@CustomerAgreementId, @Date, @TimeFrom, @TimeTo, @Address)"
-        	);
-        	foreach (var d in a.DateTimeAndPlaces) {
-        		ExecuteNonQuery(
-        			query,
-        			"invoicing",
-        			new SqlParameter("@CustomerAgreementId", a.Id),
-        			new SqlParameter("@Date", d.Date),
-        			new SqlParameter("@TimeFrom", d.TimeFrom),
-        			new SqlParameter("@TimeTo", d.TimeTo),
-        			new SqlParameter("@Address", d.Address)
-        		);
-        	}
+                );
+                foreach (var d in a.DateTimeAndPlaces)
+                {
+                    ExecuteNonQuery(
+                        query,
+                        "invoicing",
+                        new SqlParameter("@CustomerAgreementId", a.Id),
+                        new SqlParameter("@Date", d.Date),
+                        new SqlParameter("@TimeFrom", d.TimeFrom),
+                        new SqlParameter("@TimeTo", d.TimeTo),
+                        new SqlParameter("@Address", d.Address)
+                    );
+                }
+            }
         }
 
         public void UpdateSubscriptionTimebook(CustomerTimebook c, int id)
@@ -828,7 +841,13 @@ SELECT Id,
     BillingAddress,
     OtherInformation,
     IsClosed,
-    CustomerId
+    CustomerId,
+    ContactPlaceSigned,
+    ContactDateSigned,
+    ContactName,
+    ContactTitle,
+    ContactCompany,
+    DateSigned
 FROM CustomerAgreement
 WHERE Id = @Id"
             );
@@ -846,14 +865,20 @@ WHERE Id = @Id"
                         Contact = GetString(rs, 4),
                         Mobile = GetString(rs, 5),
                         Email = GetString(rs, 6),
-                        Compensation = GetString(rs, 7),
+                        Compensation = GetDecimal(rs, 7),
                         PaymentTerms = GetString(rs, 8),
                         BillingAddress = GetString(rs, 9),
                         OtherInformation = GetString(rs, 10),
                         IsClosed = GetInt32(rs, 11) == 1,
                         Customer = new Customer {
                         	Id = GetInt32(rs, 12)
-                        }
+                        },
+                        ContactPlaceSigned = GetString(rs, 13),
+                        ContactDateSigned = GetDateTime(rs, 14),
+                        ContactName = GetString(rs, 15),
+                        ContactTitle = GetString(rs, 16),
+                        ContactCompany = GetString(rs, 17),
+                        DateSigned = GetDateTime(rs, 18)
                     };
                 }
             }
@@ -1077,7 +1102,13 @@ SELECT a.Id,
     PaymentTerms,
     BillingAddress,
     OtherInformation,
-    IsClosed
+    IsClosed,
+    ContactPlaceSigned,
+    ContactDateSigned,
+    ContactName,
+    ContactTitle,
+    ContactCompany,
+    DateSigned
 FROM CustomerAgreement a
 WHERE CustomerId = @CustomerId
 ORDER BY a.Date DESC"
@@ -1101,11 +1132,17 @@ ORDER BY a.Date DESC"
                             Contact = GetString(rs, 4),
                             Mobile = GetString(rs, 5),
                             Email = GetString(rs, 6),
-                            Compensation = GetString(rs, 7),
+                            Compensation = GetDecimal(rs, 7),
                             PaymentTerms = GetString(rs, 8),
                             BillingAddress = GetString(rs, 9),
                             OtherInformation = GetString(rs, 10),
-                            IsClosed = GetInt32(rs, 11) == 1
+                            IsClosed = GetInt32(rs, 11) == 1,
+                            ContactPlaceSigned = GetString(rs, 12),
+                            ContactDateSigned = GetDateTime(rs, 13),
+                            ContactName = GetString(rs, 14),
+                            ContactTitle = GetString(rs, 15),
+                            ContactCompany = GetString(rs, 16),
+                            DateSigned = GetDateTime(rs, 17)
                         }
                     );
                 }

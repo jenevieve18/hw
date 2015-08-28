@@ -34,10 +34,10 @@ namespace HW.Invoicing.Core.Helpers
 			form.SetField("Föreläsningstitel", agreement.LectureTitle);
 			// Plats
 			form.SetField("Mobil", agreement.Mobile);
-			form.SetField("Ersättning", agreement.Compensation);
+			form.SetField("Ersättning", agreement.Compensation.ToString());
 			form.SetField("Faktureringsadress", agreement.BillingAddress);
 			form.SetField("Övrig information", agreement.OtherInformation);
-			form.SetField("Ort & Datum 1", string.Format("{0}, {1}", agreement.PlaceSigned, agreement.DateSigned));
+			form.SetField("Ort & Datum 1", string.Format("{0}, {1}", agreement.ContactPlaceSigned, agreement.ContactDateSigned));
 			form.SetField("Namnförtydligande", agreement.CustomerToString());
 			
 			stamper.FormFlattening = true;

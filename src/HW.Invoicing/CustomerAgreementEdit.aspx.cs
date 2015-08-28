@@ -29,16 +29,23 @@ namespace HW.Invoicing
                 var a = r.ReadAgreement(id);
                 if (a != null)
                 {
-                    textBoxAgreementDate.Text = a.Date.Value.ToString("yyyy-MM-dd");
                     textBoxAgreementLecturer.Text = a.Lecturer;
+                    textBoxAgreementDate.Text = a.Date == null ? "" : a.Date.Value.ToString("yyyy-MM-dd");
                     textBoxAgreementLectureTitle.Text = a.LectureTitle;
                     textBoxAgreementContact.Text = a.Contact;
                     textBoxAgreementMobile.Text = a.Mobile;
                     textBoxAgreementEmail.Text = a.Email;
-                    textBoxAgreementCompensation.Text = a.Compensation;
+                    textBoxAgreementCompensation.Text = a.Compensation.ToString();
                     textBoxAgreementPaymentTerms.Text = a.PaymentTerms;
-                    //textBoxAgreementBillingAddress.Text = a.BillingAddress;
                     textBoxAgreementOtherInformation.Text = a.OtherInformation;
+
+                    textBoxAgreementContactPlaceSigned.Text = a.ContactPlaceSigned;
+                    textBoxAgreementContactDateSigned.Text = a.ContactDateSigned == null ? "" : a.ContactDateSigned.Value.ToString("yyyy-MM-dd");
+                    textBoxAgreementContactName.Text = a.ContactName;
+                    textBoxAgreementContactTitle.Text = a.ContactTitle;
+                    textBoxAgreementContactCompany.Text = a.ContactCompany;
+
+                    textBoxAgreementDateSigned.Text = a.DateSigned == null ? "" : a.DateSigned.Value.ToString("yyyy-MM-dd");
 
                     checkBoxClosed.Checked = a.IsClosed;
                 }
@@ -55,10 +62,18 @@ namespace HW.Invoicing
                 Contact = textBoxAgreementContact.Text,
                 Mobile = textBoxAgreementMobile.Text,
                 Email = textBoxAgreementEmail.Text,
-                Compensation = textBoxAgreementCompensation.Text,
+                Compensation = ConvertHelper.ToDecimal(textBoxAgreementCompensation.Text),
                 PaymentTerms = textBoxAgreementPaymentTerms.Text,
-                //BillingAddress = textBoxAgreementBillingAddress.Text,
                 OtherInformation = textBoxAgreementOtherInformation.Text,
+                
+                ContactPlaceSigned = textBoxAgreementContactPlaceSigned.Text,
+                ContactDateSigned = ConvertHelper.ToDateTime(textBoxAgreementContactDateSigned.Text),
+                ContactName = textBoxAgreementContactName.Text,
+                ContactTitle = textBoxAgreementContactTitle.Text,
+                ContactCompany = textBoxAgreementContactCompany.Text,
+                
+                DateSigned = ConvertHelper.ToDateTime(textBoxAgreementDateSigned.Text),
+                
                 IsClosed = checkBoxClosed.Checked
             };
             r.UpdateAgreement(a, id);

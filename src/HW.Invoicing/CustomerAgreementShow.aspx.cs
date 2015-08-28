@@ -60,17 +60,18 @@ namespace HW.Invoicing
                         textBoxAgreementContact.Text = agreement.Contact;
                         textBoxAgreementMobile.Text = agreement.Mobile;
                         textBoxAgreementEmail.Text = agreement.Email;
-                        textBoxAgreementCompensation.Text = agreement.Compensation;
+                        textBoxAgreementCompensation.Text = agreement.Compensation.ToString();
                         textBoxAgreementOtherInformation.Text = agreement.OtherInformation;
 
                         labelPaymentTerms.Text = agreement.PaymentTerms;
 
-                        textBoxAgreementPlaceSigned.Text = agreement.PlaceSigned;
-                        //textBoxAgreementDateSigned.Text = agreement.DateSigned.Value.ToString("yyyy-MM-dd");
-                        labelAgreementDate.Text = agreement.Date.Value.ToString("yyyy-MM-dd");
+                        textBoxAgreementContactPlaceSigned.Text = agreement.ContactPlaceSigned;
+                        //textBoxAgreementContactDateSigned.Text = agreement.ContactDateSigned.Value.ToString("yyyy-MM-dd");
                         textBoxAgreementContactName.Text = agreement.ContactName;
                         textBoxAgreementContactTitle.Text = agreement.ContactTitle;
                         textBoxAgreementContactCompany.Text = agreement.ContactCompany;
+                        
+                        labelAgreementDateSigned.Text = agreement.DateSigned.Value.ToString("yyyy-MM-dd");
                     }
                     else
                     {
@@ -97,12 +98,13 @@ namespace HW.Invoicing
 
                         labelPaymentTerms.Text = Session["AgreementPaymentTerms"].ToString();
 
-                        textBoxAgreementPlaceSigned.Text = Session["AgreementPlaceSigned"].ToString();
-                        textBoxAgreementDateSigned.Text = Session["AgreementDateSigned"].ToString();
-                        labelAgreementDate.Text = agreement.Date.Value.ToString("yyyy-MM-dd");
+                        textBoxAgreementContactPlaceSigned.Text = Session["AgreementContactPlaceSigned"].ToString();
+                        textBoxAgreementContactDateSigned.Text = Session["AgreementContactDateSigned"].ToString();
                         textBoxAgreementContactName.Text = Session["AgreementContactName"].ToString();
                         textBoxAgreementContactTitle.Text = Session["AgreementContactTitle"].ToString();
                         textBoxAgreementContactCompany.Text = Session["AgreementContactCompany"].ToString();
+
+                        labelAgreementDateSigned.Text = agreement.DateSigned.Value.ToString("yyyy-MM-dd");
                     }
                 }
             }
@@ -148,8 +150,8 @@ namespace HW.Invoicing
             Session["AgreementOtherInformation"] = textBoxAgreementOtherInformation.Text;
             Session["AgreementPaymentTerms"] = agreement.PaymentTerms;
 
-            Session["AgreementPlaceSigned"] = textBoxAgreementPlaceSigned.Text;
-            Session["AgreementDateSigned"] = textBoxAgreementDateSigned.Text;
+            Session["AgreementContactPlaceSigned"] = textBoxAgreementContactPlaceSigned.Text;
+            Session["AgreementContactDateSigned"] = textBoxAgreementContactDateSigned.Text;
             Session["AgreementContactName"] = textBoxAgreementContactName.Text;
             Session["AgreementContactTitle"] = textBoxAgreementContactTitle.Text;
             Session["AgreementContactCompany"] = textBoxAgreementContactCompany.Text;

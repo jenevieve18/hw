@@ -8,10 +8,9 @@
 //------------------------------------------------------------------------------
 
 namespace HW.Invoicing {
-
-
-    public partial class CustomerAgreementPreview
-    {
+    
+    
+    public partial class CustomerAgreementPreview {
         
         /// <summary>
         /// Head1 control.
@@ -39,6 +38,15 @@ namespace HW.Invoicing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label labelCustomerName;
+        
+        /// <summary>
+        /// labelCompanyName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelCompanyName;
         
         /// <summary>
         /// labelCustomerPostalAddress control.
@@ -75,15 +83,6 @@ namespace HW.Invoicing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label labelCustomerReferenceNumber;
-        
-        /// <summary>
-        /// labelCompanyName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label labelCompanyName;
         
         /// <summary>
         /// labelAgreementLecturer control.
@@ -158,13 +157,22 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.Label labelAgreementOtherInformation;
         
         /// <summary>
-        /// labelAgreementPlaceSigned control.
+        /// labelAgreementContactPlaceSigned control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label labelAgreementPlaceSigned;
+        protected global::System.Web.UI.WebControls.Label labelAgreementContactPlaceSigned;
+        
+        /// <summary>
+        /// labelAgreementContactDateSigned control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelAgreementContactDateSigned;
         
         /// <summary>
         /// labelAgreementDateSigned control.
@@ -174,15 +182,6 @@ namespace HW.Invoicing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label labelAgreementDateSigned;
-        
-        /// <summary>
-        /// labelAgreementDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label labelAgreementDate;
         
         /// <summary>
         /// labelAgreementContactName control.
