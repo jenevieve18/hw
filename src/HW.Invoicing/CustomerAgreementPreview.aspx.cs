@@ -107,16 +107,19 @@ namespace HW.Invoicing
 
             Db.sendMail(
                 company.Email,
-                string.Format("Customer Agreement for {0} is updated", c.Name),
-                string.Format(@"Updated customer agreement.
-
-Please visit this link to review the agreement!
-
-{0}customershow.aspx?Id={1}&SelectedTab=agreements
-
-Yours,
-InvoicingSystem", ConfigurationManager.AppSettings["InvoiceURL"], customerId)
+                company.AgreementEmailSubject,
+                company.AgreementEmailText
             );
+//                string.Format("Customer Agreement for {0} is updated", c.Name),
+//                string.Format(@"Updated customer agreement.
+//
+//Please visit this link to review the agreement!
+//
+//{0}customershow.aspx?Id={1}&SelectedTab=agreements
+//
+//Yours,
+//InvoicingSystem", ConfigurationManager.AppSettings["InvoiceURL"], customerId)
+//            );
 
             Response.Redirect(string.Format("customeragreementthanks.aspx?Id={0}&CompanyId={1}&CustomerId={2}", id, companyId, customerId));
         }

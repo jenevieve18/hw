@@ -92,7 +92,7 @@
         var dateTimeAndPlaces = [];
         <% foreach (var d in dateTimeAndPlaces) { %>
             var d = {
-                'date': '<%= d.Date %>',
+                'date': '<%= d.Date.Value.ToString("yyyy-MM-dd") %>',
                 'timeFrom': '<%= d.TimeFrom %>',
                 'timeTo': '<%= d.TimeTo %>',
                 'address': '<%= d.Address %>'
@@ -281,7 +281,7 @@
             <tfoot>
                 <tr>
                     <td align="right" colspan="7">
-                        <a href="javascript:;" id="buttonAddMoreTimeAndPlace" class="btn btn-default">Add more time and place</a>
+                        <a href="javascript:;" id="buttonAddMoreTimeAndPlace" class="btn btn-default">Lägg till tid och plats</a>
                     </td>
                 </tr>
                 <tr>
@@ -470,7 +470,7 @@
 
         <br />
         <p>
-            <asp:Button ID="buttonNext" runat="server" Text="Next, proceed to contract preview >>" CssClass="btn btn-success" OnClick="buttonNextClick" />
+            <asp:Button ID="buttonNext" runat="server" Text="Nästa, fortsätt till förhandsvisning av avtalet >>" CssClass="btn btn-success" OnClick="buttonNextClick" />
         </p>
 
         </asp:Panel>

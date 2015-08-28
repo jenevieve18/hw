@@ -229,7 +229,7 @@
                     <% foreach (var d in dateTimeAndPlaces) { %>
                     <tr>
                         <td></td>
-                        <td><%= d.Date %></td>
+                        <td><%= d.Date.Value.ToString("yyyy-MM-dd") %></td>
                         <td><%= d.TimeFrom %></td>
                         <td><%= d.TimeTo %></td>
                         <td><%= d.Address %></td>
@@ -426,8 +426,8 @@
 
         <br />
         <p>
-            <asp:Button ID="buttonBack" runat="server" Text="<< Back to edit contract" CssClass="btn btn-warning" OnClick="buttonBackClick" />
-            <asp:Button ID="buttonNext" runat="server" Text="Finish >>" CssClass="btn btn-success" OnClick="buttonNextClick" />
+            <asp:Button ID="buttonBack" runat="server" Text="<< Tillbaka till redigera avtal" CssClass="btn btn-warning" OnClick="buttonBackClick" />
+            <asp:Button ID="buttonNext" runat="server" Text="Skicka >>" CssClass="btn btn-success" OnClick="buttonNextClick" />
         </p>
 
     </div>

@@ -57,6 +57,8 @@ namespace HW.Invoicing
 
                         // Customer agreement datetime and places
 
+                        dateTimeAndPlaces = agreement.DateTimeAndPlaces;
+
                         textBoxAgreementContact.Text = agreement.Contact;
                         textBoxAgreementMobile.Text = agreement.Mobile;
                         textBoxAgreementEmail.Text = agreement.Email;
@@ -66,7 +68,7 @@ namespace HW.Invoicing
                         labelPaymentTerms.Text = agreement.PaymentTerms;
 
                         textBoxAgreementContactPlaceSigned.Text = agreement.ContactPlaceSigned;
-                        //textBoxAgreementContactDateSigned.Text = agreement.ContactDateSigned.Value.ToString("yyyy-MM-dd");
+                        textBoxAgreementContactDateSigned.Text = agreement.ContactDateSigned == null ? "" : agreement.ContactDateSigned.Value.ToString("yyyy-MM-dd");
                         textBoxAgreementContactName.Text = agreement.ContactName;
                         textBoxAgreementContactTitle.Text = agreement.ContactTitle;
                         textBoxAgreementContactCompany.Text = agreement.ContactCompany;
@@ -132,7 +134,7 @@ namespace HW.Invoicing
                 {
                     var dt = new CustomerAgreementDateTimeAndPlace
                     {
-                        Date = d,
+                        Date = ConvertHelper.ToDateTime(d),
                         TimeFrom = timeFroms[i],
                         TimeTo = timeTos[i],
                         Address = addresses[i]

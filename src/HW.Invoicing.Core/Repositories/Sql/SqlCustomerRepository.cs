@@ -882,7 +882,44 @@ WHERE Id = @Id"
                     };
                 }
             }
+
+            a.DateTimeAndPlaces = FindAgreementDateTimeAndPlaces(id);
+
             return a;
+        }
+
+        List<CustomerAgreementDateTimeAndPlace> FindAgreementDateTimeAndPlaces(int agreementId)
+        {
+            string query = string.Format(
+                @"
+SELECT Id,
+    CustomerAgreementId,
+    Date,
+    TimeFrom,
+    TimeTo,
+    Address
+FROM CustomerAgreementDateTimeAndPlace
+WHERE CustomerAgreementId = @CustomerAgreementId"
+            );
+            List<CustomerAgreementDateTimeAndPlace> dates = new List<CustomerAgreementDateTimeAndPlace>();
+            using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerAgreementId", agreementId)))
+            {
+                while (rs.Read())
+                {
+                    dates.Add(
+                        new CustomerAgreementDateTimeAndPlace
+                        {
+                            Id = GetInt32(rs, 0),
+                            CustomerAgreement = new CustomerAgreement { Id = GetInt32(rs, 1) },
+                            Date = GetDateTime(rs, 2),
+                            TimeFrom = GetString(rs, 3),
+                            TimeTo = GetString(rs, 4),
+                            Address = GetString(rs, 5)
+                        }
+                    );
+                }
+            }
+            return dates;
         }
 
         public CustomerContact ReadContact(int id)

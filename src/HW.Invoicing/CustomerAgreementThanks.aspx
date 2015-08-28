@@ -91,8 +91,11 @@
     
         <img src="uploads/<%= company.InvoiceLogo %>" />
 
-        <h3>Thank you!</h3>
-        <p>Your contract has been updated and administration is notified about the update! For the meantime, visit our official site <%= HtmlHelper.Anchor("here", "http://www.healthwatch.se") %>.</p>
+        <%--<h3>Thank you!</h3>
+        <p>Your contract has been updated and administration is notified about the update! For the meantime, visit our official site <%= HtmlHelper.Anchor("here", "http://www.healthwatch.se") %>.</p>--%>
+
+        <h3>Tack så mycket!</h3>
+        <p>Avtalsutkastet har nu skickats till Dan Hasson för påskrift. När det signerats kommer det att mejlas till er för kontrasignering.</p>
 
     </div>
     </form>

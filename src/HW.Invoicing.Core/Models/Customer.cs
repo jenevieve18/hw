@@ -445,7 +445,8 @@ namespace HW.Invoicing.Core.Models
     
     public class CustomerAgreementDateTimeAndPlace : BaseModel
     {
-    	public string Date { get; set; }
+        public CustomerAgreement CustomerAgreement { get; set; }
+    	public DateTime? Date { get; set; }
     	public string TimeFrom { get; set; }
     	public string TimeTo { get; set; }
     	public string Runtime { get; set; }
