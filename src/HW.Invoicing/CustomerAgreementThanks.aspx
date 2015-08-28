@@ -92,7 +92,7 @@
         <img src="uploads/<%= company.InvoiceLogo %>" />
 
         <h3>Thank you!</h3>
-        <p>Your contract has been updated and administration is notified about the update! For the meantime, visit our official site <%= HtmlHelper.Anchor("here", "http://wwww.healthwatch.se") %>.</p>
+        <p>Your contract has been updated and administration is notified about the update! For the meantime, visit our official site <%= HtmlHelper.Anchor("here", "http://www.healthwatch.se") %>.</p>
 
     </div>
     </form>
