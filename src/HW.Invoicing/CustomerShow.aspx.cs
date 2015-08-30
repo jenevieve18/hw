@@ -33,6 +33,7 @@ namespace HW.Invoicing
         protected Customer customer;
         protected int companyId;
         protected Company company;
+        protected string message;
     	
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -41,6 +42,13 @@ namespace HW.Invoicing
         	id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
             companyId = ConvertHelper.ToInt32(Session["CompanyId"], 1);
             selectedTab = Request.QueryString["SelectedTab"] == null ? "notes" : Request.QueryString["SelectedTab"];
+
+            if (Session["Message"] != null)
+            {
+                message = Session["Message"].ToString();
+                Session.Remove("Message");
+            }
+
             if (!IsPostBack)
             {
                 customer = r.Read(id);

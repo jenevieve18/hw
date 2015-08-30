@@ -108,11 +108,6 @@ namespace HW.Invoicing
             };
             r.UpdateAgreement(a, id);
 
-            //Db.sendMail(
-            //    company.Email,
-            //    company.AgreementEmailSubject,
-            //    company.AgreementEmailText
-            //);
             Db.sendMail(
                 company.Email,
                 "Customer Updated the Agreement",

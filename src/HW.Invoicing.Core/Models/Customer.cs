@@ -441,6 +441,11 @@ namespace HW.Invoicing.Core.Models
         {
             return string.Format("{0}, {1} {2}", ContactName, ContactTitle, ContactCompany);
         }
+        
+		public override void Validate()
+		{
+			base.Validate();
+		}
     }
     
     public class CustomerAgreementDateTimeAndPlace : BaseModel
