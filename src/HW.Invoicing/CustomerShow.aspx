@@ -238,9 +238,10 @@
 <p><%= HtmlHelper.Anchor("<< Back to customer listing", "customers.aspx") %></p>
 
 <% if (message != null && message != "") { %>
-    <div class="alert alert-success">
+    <%--<div class="alert alert-success">
         <%= message %>
-    </div>
+    </div>--%>
+    <%= message %>
 <% } %>
 
 <div class="tabbable" id="tabs-179602">
@@ -1081,6 +1082,7 @@
                         <td>
                             <%= HtmlHelper.Anchor(" ", string.Format("customeragreementedit.aspx?Id={0}&CustomerId={1}", a.Id, id), "title='Edit' class='glyphicon glyphicon-edit'")%>
                             <%= HtmlHelper.Anchor("Show", string.Format("customeragreementshow.aspx?Id={0}&CompanyId={1}&CustomerId={2}", a.Id, companyId, id), "title='Show' class=''")%>
+                            <%= HtmlHelper.Anchor("Send link", string.Format("customeragreementsendlink.aspx?Id={0}&CompanyId={1}&CustomerId={2}", a.Id, companyId, id), "title='Send agreement link' class=''")%>
                             <%= HtmlHelper.Anchor(" ", string.Format("customeragreementsend.aspx?Id={0}&CompanyId={1}&CustomerId={2}", a.Id, companyId, id), "title='Send agreement' class='glyphicon glyphicon-envelope'")%>
                             <%= HtmlHelper.Anchor(" ", string.Format("customeragreementdeactivate.aspx?Id={0}&CustomerId={1}", a.Id, id), "title='Deactivate' class='glyphicon glyphicon-minus'")%>
                         </td>

@@ -124,19 +124,51 @@
         <div class="tab-pane" id="panel-931818">
             <br />
             <asp:Panel ID="Panel1" runat="server" DefaultButton="buttonSaveAgreementEmailText">
-            <div class="form-group">
-	            <label for="<%= textBoxAgreementEmailSubject.ClientID %>">Agreement Email Subject</label>
-                <asp:TextBox ID="textBoxAgreementEmailSubject" runat="server" CssClass="form-control"></asp:TextBox>
-            </div>
-            <div class="form-group">
-                <label for="<%= textBoxAgreementEmailText.ClientID %>">Agreement Email Text</label>
-                <asp:TextBox ID="textBoxAgreementEmailText" runat="server" CssClass="form-control" TextMode="MultiLine" Height="450"></asp:TextBox>
-            </div>
-            <div>
-                <asp:Button ID="buttonSaveAgreementEmailText" CssClass="btn btn-success" runat="server" Text="Save agreement email text" 
-                    onclick="buttonSaveAgreementEmailText_Click" />
-                    or <i><%= HtmlHelper.Anchor("cancel", "companies.aspx") %></i>
-            </div>
+                <div class="tabbable" id="tabs-64570">
+				    <ul class="nav nav-tabs">
+					    <li class="active">
+						    <a href="#panel-67773" data-toggle="tab">Email Texts</a>
+					    </li>
+					    <li>
+						    <a href="#panel-807776" data-toggle="tab">Signed Email Texts</a>
+					    </li>
+				    </ul>
+				    <div class="tab-content">
+					    <div class="tab-pane active" id="panel-67773">
+						    <%--<p>
+							    I'm in Section 1.
+						    </p>--%>
+                            <br />
+                            <div class="form-group">
+	                            <label for="<%= textBoxAgreementEmailSubject.ClientID %>">Agreement Email Subject</label>
+                                <asp:TextBox ID="textBoxAgreementEmailSubject" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                            <div class="form-group">
+                                <label for="<%= textBoxAgreementEmailText.ClientID %>">Agreement Email Text</label>
+                                <asp:TextBox ID="textBoxAgreementEmailText" runat="server" CssClass="form-control" TextMode="MultiLine" Height="450"></asp:TextBox>
+                            </div>
+					    </div>
+					    <div class="tab-pane" id="panel-807776">
+						    <%--<p>
+							    Howdy, I'm in Section 2.
+						    </p>--%>
+                            <br />
+                            <div class="form-group">
+	                            <label for="<%= textBoxAgreementSignedEmailSubject.ClientID %>">Agreement Email Subject</label>
+                                <asp:TextBox ID="textBoxAgreementSignedEmailSubject" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                            <div class="form-group">
+                                <label for="<%= textBoxAgreementSignedEmailText.ClientID %>">Agreement Email Text</label>
+                                <asp:TextBox ID="textBoxAgreementSignedEmailText" runat="server" CssClass="form-control" TextMode="MultiLine" Height="450"></asp:TextBox>
+                            </div>
+					    </div>
+				    </div>
+			    </div>
+                <div>
+                    <asp:Button ID="buttonSaveAgreementEmailText" CssClass="btn btn-success" runat="server" Text="Save agreement email text" 
+                        onclick="buttonSaveAgreementEmailText_Click" />
+                        or <i><%= HtmlHelper.Anchor("cancel", "companies.aspx") %></i>
+                </div>
             </asp:Panel>
             
 			<%--<p>

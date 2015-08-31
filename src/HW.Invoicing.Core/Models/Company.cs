@@ -23,6 +23,8 @@ namespace HW.Invoicing.Core.Models
         public string AgreementPrefix { get; set; }
         public string OrganizationNumber { get; set; }
         public string Email { get; set; }
+        public string AgreementSignedEmailText { get; set; }
+        public string AgreementSignedEmailSubject { get; set; }
 
         public override string ToString()
         {

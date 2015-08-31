@@ -202,6 +202,24 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxAgreementEmailText;
         
         /// <summary>
+        /// textBoxAgreementSignedEmailSubject control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementSignedEmailSubject;
+        
+        /// <summary>
+        /// textBoxAgreementSignedEmailText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementSignedEmailText;
+        
+        /// <summary>
         /// buttonSaveAgreementEmailText control.
         /// </summary>
         /// <remarks>

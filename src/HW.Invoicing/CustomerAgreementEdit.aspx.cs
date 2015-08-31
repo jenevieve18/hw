@@ -16,6 +16,9 @@ namespace HW.Invoicing
         protected int customerId;
         int id;
         protected CustomerAgreement agreement;
+        protected string message;
+
+        protected List<CustomerAgreementDateTimeAndPlace> dateTimeAndPlaces = new List<CustomerAgreementDateTimeAndPlace>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -49,6 +52,8 @@ namespace HW.Invoicing
                     textBoxAgreementDateSigned.Text = agreement.DateSigned == null ? "" : agreement.DateSigned.Value.ToString("yyyy-MM-dd");
 
                     checkBoxClosed.Checked = agreement.IsClosed;
+
+                    dateTimeAndPlaces = agreement.DateTimeAndPlaces;
                 }
             }
         }
@@ -60,7 +65,7 @@ namespace HW.Invoicing
             var timeTos = Request.Form.GetValues("agreement-timeto");
             var addresses = Request.Form.GetValues("agreement-address");
             int i = 0;
-            List<CustomerAgreementDateTimeAndPlace> dateTimeAndPlaces = new List<CustomerAgreementDateTimeAndPlace>();
+            dateTimeAndPlaces = new List<CustomerAgreementDateTimeAndPlace>();
             if (dates != null)
             {
                 foreach (var d in dates)
@@ -102,8 +107,16 @@ namespace HW.Invoicing
                 
                 IsClosed = checkBoxClosed.Checked
             };
-            r.UpdateAgreement(a, id);
-            Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=agreements", customerId));
+            a.Validate();
+            if (a.HasErrors)
+            {
+                message = a.Errors.ToHtmlUl();
+            }
+            else
+            {
+                r.UpdateAgreement(a, id);
+                Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=agreements", customerId));
+            }
         }
     }
 }

@@ -39,11 +39,15 @@ namespace HW.Invoicing
 
                     textBoxTerms.Text = company.Terms;
 
-                    textBoxAgreementEmailText.Text = company.AgreementEmailText;
-                    textBoxAgreementEmailSubject.Text = company.AgreementEmailSubject;
                     textBoxAgreementPrefix.Text = company.AgreementPrefix;
 
                     textBoxOrganizationNumber.Text = company.OrganizationNumber;
+
+                    textBoxAgreementEmailText.Text = company.AgreementEmailText;
+                    textBoxAgreementEmailSubject.Text = company.AgreementEmailSubject;
+
+                    textBoxAgreementSignedEmailText.Text = company.AgreementSignedEmailText;
+                    textBoxAgreementSignedEmailSubject.Text = company.AgreementSignedEmailSubject;
                 }
                 else
                 {
@@ -62,7 +66,9 @@ namespace HW.Invoicing
         {
             var c = new Company {
                 AgreementEmailSubject = textBoxAgreementEmailSubject.Text,
-                AgreementEmailText = textBoxAgreementEmailText.Text
+                AgreementEmailText = textBoxAgreementEmailText.Text,
+                AgreementSignedEmailSubject = textBoxAgreementSignedEmailSubject.Text,
+                AgreementSignedEmailText = textBoxAgreementSignedEmailText.Text
             };
             r.SaveAgreementEmail(c, id);
             Response.Redirect("companies.aspx");

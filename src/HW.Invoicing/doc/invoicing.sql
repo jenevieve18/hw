@@ -320,3 +320,6 @@ ContactName varchar(255),
 ContactTitle varchar(255),
 ContactCompany varchar(255),
 DateSigned datetime;
+
+alter table Company add AgreementSignedEmailText text,
+AgreementSignedEmailSubject text;

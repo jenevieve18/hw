@@ -44,6 +44,13 @@
     
     <asp:Panel ID="Panel1" runat="server">
         <h3>Edit customer agreement</h3>
+
+        <% if (message != null && message != "") { %>
+            <div class="alert alert-warning">
+                <%= message %>
+            </div>
+        <% } %>
+
         <div class="form-group">
 	        <label for="<%= textBoxAgreementLecturer.ClientID %>">Lecturer</label>
             <asp:TextBox ID="textBoxAgreementLecturer" runat="server" CssClass="form-control"></asp:TextBox>
@@ -64,7 +71,7 @@
                 <th>Time To</th>
                 <th>Address</th>
             </tr>
-            <% foreach (var d in agreement.DateTimeAndPlaces) { %>
+            <% foreach (var d in dateTimeAndPlaces) { %>
                 <tr>
                     <td class="date-width"><%= FormHelper.Input("agreement-date", d.Date.Value.ToString("yyyy-MM-dd"), "class='date form-control'") %></td>
                     <td class="time-width"><%= FormHelper.Input("agreement-timefrom", d.TimeFrom, "class='form-control'") %></td>

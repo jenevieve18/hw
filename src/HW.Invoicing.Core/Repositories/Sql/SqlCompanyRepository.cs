@@ -88,7 +88,9 @@ SELECT Id,
     AgreementEmailSubject,
     Email,
     AgreementPrefix,
-    OrganizationNumber
+    OrganizationNumber,
+    AgreementSignedEmailText,
+    AgreementSignedEmailSubject
 FROM Company
 WHERE Id = @Id";
 			Company c = null;
@@ -113,7 +115,9 @@ WHERE Id = @Id";
                         AgreementEmailSubject = GetString(rs, 15),
                         Email = GetString(rs, 16),
                         AgreementPrefix = GetString(rs, 17),
-                        OrganizationNumber = GetString(rs, 18)
+                        OrganizationNumber = GetString(rs, 18),
+                        AgreementSignedEmailText = GetString(rs, 19),
+                        AgreementSignedEmailSubject = GetString(rs, 20)
 					};
 				}
 			}
@@ -196,13 +200,17 @@ ORDER BY IsSelected DESC";
         {
             string query = @"
 UPDATE Company SET AgreementEmailText = @AgreementEmailText,
-AgreementEmailSubject = @AgreementEmailSubject
+    AgreementEmailSubject = @AgreementEmailSubject,
+    AgreementSignedEmailText = @AgreementSignedEmailText,
+    AgreementSignedEmailSubject = @AgreementSignedEmailSubject
 WHERE Id = @Id";
             ExecuteNonQuery(
                 query,
                 "invoicing",
                 new SqlParameter("@AgreementEmailSubject", c.AgreementEmailSubject),
                 new SqlParameter("@AgreementEmailText", c.AgreementEmailText),
+                new SqlParameter("@AgreementSignedEmailSubject", c.AgreementSignedEmailSubject),
+                new SqlParameter("@AgreementSignedEmailText", c.AgreementSignedEmailText),
                 new SqlParameter("@Id", id)
             );
         }
