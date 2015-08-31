@@ -60,6 +60,7 @@
     <Content Include="CompanyAdd.aspx" />
     <Content Include="CompanyEdit.aspx" />
     <Content Include="CompanySelect.aspx" />
+    <Content Include="CustomerAgreementDownload.aspx" />
     <Content Include="CustomerAgreementPreview.aspx" />
     <Content Include="CustomerAgreementClosed.aspx" />
     <Content Include="CustomerAgreementEdit.aspx" />
@@ -163,6 +164,13 @@
     </Compile>
     <Compile Include="CompanySelect.aspx.designer.cs">
       <DependentUpon>CompanySelect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerAgreementDownload.aspx.cs">
+      <DependentUpon>CustomerAgreementDownload.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomerAgreementDownload.aspx.designer.cs">
+      <DependentUpon>CustomerAgreementDownload.aspx</DependentUpon>
     </Compile>
     <Compile Include="CustomerAgreementPreview.aspx.cs">
       <DependentUpon>CustomerAgreementPreview.aspx</DependentUpon>

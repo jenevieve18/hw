@@ -32,8 +32,8 @@ namespace HW.Invoicing
                     textBoxEmail.Text = company.Email;
                     textBoxBankAccountNumber.Text = company.BankAccountNumber;
                     textBoxTIN.Text = company.TIN;
-                    textBoxFinancialMonthStart.Text = company.FinancialMonthStart.Value.ToString("yyyy-MM-dd");
-                    textBoxFinancialMonthEnd.Text = company.FinancialMonthEnd.Value.ToString("yyyy-MM-dd");
+                    textBoxFinancialMonthStart.Text = company.FinancialMonthStart == null ? "" : company.FinancialMonthStart.Value.ToString("yyyy-MM-dd");
+                    textBoxFinancialMonthEnd.Text = company.FinancialMonthEnd == null ? "" : company.FinancialMonthEnd.Value.ToString("yyyy-MM-dd");
                     textBoxInvoicePrefix.Text = company.InvoicePrefix;
                     checkBoxHasSubscriber.Checked = company.HasSubscriber;
 

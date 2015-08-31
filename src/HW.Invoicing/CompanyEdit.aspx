@@ -100,6 +100,13 @@
                 <asp:FileUpload ID="fileUploadInvoiceTemplate" runat="server" />
             </div>
             <div class="form-group">
+                <label for="<%= fileUploadAgreementTemplate.ClientID %>">Agreement Template</label>
+                <% if (company.HasAgreementTemplate) { %>
+                    <br /><%= HtmlHelper.Anchor(company.AgreementTemplate, "uploads/" + company.AgreementTemplate, "target='_blank'")%>
+                <% } %>
+                <asp:FileUpload ID="fileUploadAgreementTemplate" runat="server" />
+            </div>
+            <div class="form-group">
                 <asp:CheckBox ID="checkBoxHasSubscriber" runat="server" CssClass="form-control" Text="&nbsp;This company has subscribers." />
             </div>
             <div>

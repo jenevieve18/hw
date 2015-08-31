@@ -25,7 +25,8 @@ namespace HW.Invoicing.Core.Models
         public string Email { get; set; }
         public string AgreementSignedEmailText { get; set; }
         public string AgreementSignedEmailSubject { get; set; }
-
+        public string AgreementTemplate { get; set; }
+        
         public override string ToString()
         {
             return string.Format("{0}\n{1}\nOrg.nr {2}", Name, Address, OrganizationNumber);
@@ -44,6 +45,11 @@ namespace HW.Invoicing.Core.Models
         public bool HasInvoiceTemplate
         {
             get { return InvoiceTemplate != null && InvoiceTemplate != "";  }
+        }
+        
+        public bool HasAgreementTemplate
+        {
+        	get { return AgreementTemplate != null && AgreementTemplate != ""; }
         }
 
         public bool HasInvoiceLogo
