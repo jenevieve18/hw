@@ -26,6 +26,7 @@ namespace HW.Invoicing.Core.Models
         public string AgreementSignedEmailText { get; set; }
         public string AgreementSignedEmailSubject { get; set; }
         public string AgreementTemplate { get; set; }
+        public User User { get; set; }
         
         public override string ToString()
         {

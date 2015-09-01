@@ -51,8 +51,8 @@ FROM Company";
 		public override void Save(Company t)
 		{
             string query = @"
-INSERT INTO Company(Name, Address, Phone, BankAccountNumber, TIN, FinancialMonthStart, FinancialMonthEnd, HasSubscriber)
-VALUES(@Name, @Address, @Phone, @BankAccountNumber, @TIN, @FinancialMonthStart, @FinancialMonthEnd, @HasSubscriber)";
+INSERT INTO Company(Name, Address, Phone, BankAccountNumber, TIN, FinancialMonthStart, FinancialMonthEnd, UserId, InvoicePrefix, HasSubscriber, InvoiceLogo, InvoiceTemplate, Terms, Signature, AgreementEmailText, AgreementEmailSubject, Email, AgreementPrefix, OrganizationNumber, AgreementSignedEmailText, AgreementSignedEmailSubject)
+VALUES(@Name, @Address, @Phone, @BankAccountNumber, @TIN, @FinancialMonthStart, @FinancialMonthEnd, @UserId, @InvoicePrefix, @HasSubscriber, @InvoiceLogo, @InvoiceTemplate, @Terms, @Signature, @AgreementEmailText, @AgreementEmailSubject, @Email, @AgreementPrefix, @OrganizationNumber, @AgreementSignedEmailText, @AgreementSignedEmailSubject)";
             ExecuteNonQuery(
                 query,
                 "invoicing",
@@ -63,7 +63,20 @@ VALUES(@Name, @Address, @Phone, @BankAccountNumber, @TIN, @FinancialMonthStart, 
                 new SqlParameter("@TIN", t.TIN),
                 new SqlParameter("@FinancialMonthStart", t.FinancialMonthStart),
                 new SqlParameter("@FinancialMonthEnd", t.FinancialMonthEnd),
-                new SqlParameter("@HasSubscriber", t.HasSubscriber)
+                new SqlParameter("@UserId", t.User.Id),
+                new SqlParameter("@InvoicePrefix", t.InvoicePrefix),
+                new SqlParameter("@HasSubscriber", t.HasSubscriber),
+                new SqlParameter("@InvoiceLogo", t.InvoiceLogo),
+                new SqlParameter("@InvoiceTemplate", t.InvoiceTemplate),
+                new SqlParameter("@Terms", t.Terms),
+                new SqlParameter("@Signature", t.Signature),
+                new SqlParameter("@AgreementEmailText", t.AgreementEmailText),
+                new SqlParameter("@AgreementEmailSubject", t.AgreementEmailSubject),
+                new SqlParameter("@Email", t.Email),
+                new SqlParameter("@AgreementPrefix", t.AgreementPrefix),
+                new SqlParameter("@OrganizationNumber", t.OrganizationNumber),
+                new SqlParameter("@AgreementSignedEmailText", t.AgreementSignedEmailText),
+                new SqlParameter("@AgreementSignedEmailSubject", t.AgreementSignedEmailSubject)
             );
 		}
 		

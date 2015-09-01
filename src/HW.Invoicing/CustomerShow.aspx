@@ -1083,6 +1083,7 @@
                             <%= HtmlHelper.Anchor(" ", string.Format("customeragreementedit.aspx?Id={0}&CustomerId={1}", a.Id, id), "title='Edit' class='glyphicon glyphicon-edit'")%>
                             <%= HtmlHelper.Anchor("Show", string.Format("customeragreementshow.aspx?Id={0}&CompanyId={1}&CustomerId={2}", a.Id, companyId, id), "title='Show' class=''")%>
                             <%= HtmlHelper.Anchor("Send link", string.Format("customeragreementsendlink.aspx?Id={0}&CompanyId={1}&CustomerId={2}", a.Id, companyId, id), "title='Send agreement link' class=''")%>
+                            <%= HtmlHelper.Anchor(" ", string.Format("customeragreementdownload.aspx?Id={0}&CompanyId={1}&CustomerId={2}", a.Id, companyId, id), "title='Download PDF' class='glyphicon glyphicon-download-alt'")%>
                             <%= HtmlHelper.Anchor(" ", string.Format("customeragreementsend.aspx?Id={0}&CompanyId={1}&CustomerId={2}", a.Id, companyId, id), "title='Send agreement' class='glyphicon glyphicon-envelope'")%>
                             <%= HtmlHelper.Anchor(" ", string.Format("customeragreementdeactivate.aspx?Id={0}&CustomerId={1}", a.Id, id), "title='Deactivate' class='glyphicon glyphicon-minus'")%>
                         </td>

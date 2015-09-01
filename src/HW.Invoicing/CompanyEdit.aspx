@@ -114,7 +114,6 @@
                     onclick="buttonSave_Click" />
                     or <i><%= HtmlHelper.Anchor("cancel", "companies.aspx") %></i>
             </div>
-
 		</div>
 		<div class="tab-pane" id="panel-281177">
 			<br />
@@ -142,9 +141,6 @@
 				    </ul>
 				    <div class="tab-content">
 					    <div class="tab-pane active" id="panel-67773">
-						    <%--<p>
-							    I'm in Section 1.
-						    </p>--%>
                             <br />
                             <div class="form-group">
 	                            <label for="<%= textBoxAgreementEmailSubject.ClientID %>">Agreement Email Subject</label>
@@ -156,9 +152,6 @@
                             </div>
 					    </div>
 					    <div class="tab-pane" id="panel-807776">
-						    <%--<p>
-							    Howdy, I'm in Section 2.
-						    </p>--%>
                             <br />
                             <div class="form-group">
 	                            <label for="<%= textBoxAgreementSignedEmailSubject.ClientID %>">Agreement Email Subject</label>
@@ -177,10 +170,6 @@
                         or <i><%= HtmlHelper.Anchor("cancel", "companies.aspx") %></i>
                 </div>
             </asp:Panel>
-            
-			<%--<p>
-				Howdy, I'm in Section 2.
-			</p>--%>
 		</div>
 	</div>
 </div>

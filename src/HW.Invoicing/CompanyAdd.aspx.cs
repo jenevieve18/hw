@@ -27,6 +27,24 @@ namespace HW.Invoicing
 
         protected void buttonSave_Click(object sender, EventArgs e)
         {
+            string signature = "";
+            if (fileUploadSignature.HasFile)
+            {
+                signature = fileUploadSignature.FileName;
+                fileUploadSignature.SaveAs(Server.MapPath("~/uploads/" + signature));
+            }
+            string logo = "";
+            if (fileUploadInvoiceLogo.HasFile)
+            {
+                logo = fileUploadInvoiceLogo.FileName;
+                fileUploadInvoiceLogo.SaveAs(Server.MapPath("~/uploads/" + logo));
+            }
+            string template = "";
+            if (fileUploadInvoiceTemplate.HasFile)
+            {
+                template = fileUploadInvoiceTemplate.FileName;
+                fileUploadInvoiceTemplate.SaveAs(Server.MapPath("~/uploads/" + template));
+            }
             var c = new Company {
                 Name = textBoxName.Text,
                 Address = textBoxAddress.Text,
@@ -35,7 +53,19 @@ namespace HW.Invoicing
                 TIN = textBoxTIN.Text,
                 FinancialMonthStart = ConvertHelper.ToDateTime(textBoxFinancialMonthStart.Text),
                 FinancialMonthEnd = ConvertHelper.ToDateTime(textBoxFinancialMonthEnd.Text),
-                HasSubscriber = checkBoxHasSubscriber.Checked
+                User = new User { Id = ConvertHelper.ToInt32(Session["UserId"]) },
+                InvoicePrefix = textBoxInvoicePrefix.Text,
+                HasSubscriber = checkBoxHasSubscriber.Checked,
+                InvoiceLogo = logo,
+                InvoiceTemplate = template,
+                Signature = signature,
+                AgreementPrefix = textBoxAgreementPrefix.Text,
+                OrganizationNumber = textBoxOrganizationNumber.Text,
+
+                AgreementEmailSubject = textBoxAgreementEmailSubject.Text,
+                AgreementEmailText = textBoxAgreementEmailText.Text,
+                AgreementSignedEmailSubject = textBoxAgreementSignedEmailSubject.Text,
+                AgreementSignedEmailText = textBoxAgreementSignedEmailText.Text
             };
             r.Save(c);
             Response.Redirect("companies.aspx");
