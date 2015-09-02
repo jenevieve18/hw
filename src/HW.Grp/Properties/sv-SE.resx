@@ -274,7 +274,7 @@
     <value>Senast inloggad</value>
   </data>
   <data name="manager.login.notactivated" xml:space="preserve">
-    <value />
+    <value>Inte aktiverad</value>
   </data>
   <data name="manager.login.notonrecord" xml:space="preserve">
     <value>Ej tillgängligt</value>
