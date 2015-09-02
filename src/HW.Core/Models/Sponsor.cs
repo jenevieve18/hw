@@ -174,14 +174,28 @@ namespace HW.Core.Models
 			Functions.Add(f);
 		}
 		
-		public string GetLoginDays()
+//		public string GetLoginDays()
+//		{
+//			if (Password == "") {
+//				return "Not activated";
+//			} else if (LoginDays == -1) {
+//				return "Not on record";
+//			} else {
+//				return string.Format("{0} day(s)", LoginDays);
+//			}
+//		}
+		
+		public string GetLoginDays(string notActivated, string notOnRecord, string days)
 		{
 			if (Password == "") {
-				return "Not activated";
+//				return "Not activated";
+				return notActivated;
 			} else if (LoginDays == -1) {
-				return "Not on record";
+//				return "Not on record";
+				return notOnRecord;
 			} else {
-				return string.Format("{0} day(s)", LoginDays);
+//				return string.Format("{0} day(s)", LoginDays);
+				return string.Format("{0} {1}", LoginDays, days);
 			}
 		}
 		

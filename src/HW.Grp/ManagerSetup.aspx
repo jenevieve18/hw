@@ -6,6 +6,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <div class="contentgroup grid_16">
+
+        <asp:Panel ID="Panel1" runat="server" DefaultButton="Save">
+
         <div id="contextbar">
             <div class="settingsPane">
 			    <asp:Button CssClass="btn" ID="Cancel" runat=server Text="Cancel" />
@@ -79,6 +82,8 @@
 				<% } %>--%>
             </table>
         </div>
+
+        </asp:Panel>
 
     </div>
 

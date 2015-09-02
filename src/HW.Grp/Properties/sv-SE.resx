@@ -267,8 +267,20 @@
   <data name="manager.invalid" xml:space="preserve">
     <value>Fel! Användarnamnet är ogiltigt, vänligen välj ett annat!</value>
   </data>
+  <data name="manager.login.days" xml:space="preserve">
+    <value>dag(ar)</value>
+  </data>
+  <data name="manager.login.last" xml:space="preserve">
+    <value>Senast inloggad</value>
+  </data>
+  <data name="manager.login.notactivated" xml:space="preserve">
+    <value />
+  </data>
+  <data name="manager.login.notonrecord" xml:space="preserve">
+    <value>Ej tillgängligt</value>
+  </data>
   <data name="manager.name" xml:space="preserve">
-    <value>Namn</value>
+    <value>Förnamn</value>
   </data>
   <data name="manager.name.last" xml:space="preserve">
     <value>Efternamn</value>

@@ -34,7 +34,7 @@
 				<tr>
                     <th><a class="sort <%= sort == 0 ? "sort-asc" : "sort-desc" %>" href="managers.aspx?sort=<%= sort == 0 ? 1 : 0 %>"><%= R.Str(lid, "manager.name", "Name")%></a></th>
                     <th><%= R.Str(lid, "manager.access", "Roles")%></th>
-                    <th>Last Login</th>
+                    <th><%= R.Str(lid, "manager.login.last", "Last Login")%></th>
                     <th></th>
 					<!--<td><b></b></th>
 					<td><b></b></th>-->
@@ -54,7 +54,7 @@
 							<%= f.Function.SelectedLanguage.Function %>
 						<% } %>
 					</td>
-                    <td style="text-align:center"><%= s.GetLoginDays() %></td>
+                    <td style="text-align:center"><%= s.GetLoginDays(R.Str(lid, "manager.login.notactivated", "Not activated"), R.Str(lid, "manager.login.notonrecord", "Not on record"), R.Str(lid, "manager.login.days", "days(s)")) %></td>
 					<td>
 						<%
 							string url = string.Format(

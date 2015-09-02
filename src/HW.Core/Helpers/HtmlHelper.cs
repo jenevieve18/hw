@@ -230,16 +230,21 @@ namespace HW.Core.Helpers
 		{
 			return Password(name, value, "");
 		}
+
+        public static string Password(string name, string value, string attributes)
+        {
+            return string.Format("<input type='password' name='{0}' id='{0}' value='{1}' {2}/>", name, value, attributes);
+        }
 		
-		public static string Password(string name, string value, string placeholder)
-		{
-			return Password(name, value, placeholder, "");
-		}
+        //public static string Password(string name, string value, string placeholder)
+        //{
+        //    return Password(name, value, placeholder, "");
+        //}
 		
-		public static string Password(string name, string value, string placeholder, string clas)
-		{
-			return string.Format("<input type='password' name='{0}' id='{0}' value='{1}' class='{3}' placeholder='{2}'/>", name, value, placeholder, clas);
-		}
+        //public static string Password(string name, string value, string placeholder, string clas)
+        //{
+        //    return string.Format("<input type='password' name='{0}' id='{0}' value='{1}' class='{3}' placeholder='{2}'/>", name, value, placeholder, clas);
+        //}
 		
 		public static string Hidden(string id, string val)
 		{

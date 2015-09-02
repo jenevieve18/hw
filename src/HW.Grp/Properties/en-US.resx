@@ -255,6 +255,18 @@
   <data name="manager.invalid" xml:space="preserve">
     <value>Error! The username is invalid, please select a different one!</value>
   </data>
+  <data name="manager.login.days" xml:space="preserve">
+    <value>days(s)</value>
+  </data>
+  <data name="manager.login.last" xml:space="preserve">
+    <value>Last login</value>
+  </data>
+  <data name="manager.login.notactivated" xml:space="preserve">
+    <value>Not activated</value>
+  </data>
+  <data name="manager.login.notonrecord" xml:space="preserve">
+    <value>Not on record</value>
+  </data>
   <data name="manager.name" xml:space="preserve">
     <value>Name</value>
   </data>
