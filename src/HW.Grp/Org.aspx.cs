@@ -1249,7 +1249,7 @@ ORDER BY ses.SponsorExtendedSurveyID",
 		{1}
 		{2}
 		<td align='center' style='font-size:9px;'>&nbsp;<b>{10}</b>&nbsp;</td>
-		<td align='center' style='font-size:9px;'>&nbsp;<b>{11}</b>&nbsp;</td>
+		<!--<td align='center' style='font-size:9px;'>&nbsp;<b>{11}</b>&nbsp;</td>-->
 	</tr>",
 					ESdesc,
 					aggrBRdesc,
@@ -1279,7 +1279,7 @@ ORDER BY ses.SponsorExtendedSurveyID",
 		<td align='center' style='font-size:9px;'>&nbsp;<b>{9}</b>&nbsp;</td>
 		{1}
 		<td align='center' style='font-size:9px;'>&nbsp;<b>{7}</b>&nbsp;</td>
-        <td align='center' style='font-size:9px;'>&nbsp;<b>{8}</b>&nbsp;</td>
+        <!--<td align='center' style='font-size:9px;'>&nbsp;<b>{8}</b>&nbsp;</td>-->
 	</tr>",
 					ESdesc,
 					aggrBRdesc,
@@ -1561,15 +1561,15 @@ WHERE d.DepartmentID = {1}",
 					}
 				}
 				//LoggingService.Error(rs.GetInt32(2).ToString());
-				var deptWithReminder = departmentRepository.ReadWithReminder3(rs.GetInt32(2));
-				deptWithReminder.Sponsor = sponsor as Sponsor;
-				string reminder = deptWithReminder.GetReminder2(ReminderHelper.GetLoginDays(), ReminderHelper.GetLoginWeekdays());
+				//var deptWithReminder = departmentRepository.ReadWithReminder3(rs.GetInt32(2));
+				//deptWithReminder.Sponsor = sponsor as Sponsor;
+				//string reminder = deptWithReminder.GetReminder2(ReminderHelper.GetLoginDays(), ReminderHelper.GetLoginWeekdays());
 				OrgTree.Text += string.Format(
 					@"
 	<td align='center' style='font-size:9px;'>&nbsp;{0}&nbsp;</td>
-	<td align='center' style='font-size:9px;'>{1}</td>",
+	<!--<td align='center' style='font-size:9px;'>{1}</td>-->",
 					(rs.IsDBNull(11) ? "N/A" : rs.GetString(11)),
-					HtmlHelper.ToHtml(reminder)
+					"" //HtmlHelper.ToHtml(reminder)
 				);
 				OrgTree.Text += @"
 </tr>";
