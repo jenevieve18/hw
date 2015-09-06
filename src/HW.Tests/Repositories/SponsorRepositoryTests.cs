@@ -132,7 +132,8 @@ namespace HW.Tests.Repositories
 		[Test]
 		public void TestFindAdminBySponsor()
 		{
-			r.FindAdminBySponsor(2, 188, "");
+			//r.FindAdminBySponsor(2, 188, "", "");
+            r.FindAdminBySponsor(2, 188, "");
 		}
 		
 		[Test]

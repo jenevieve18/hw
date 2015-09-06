@@ -3,6 +3,7 @@ using HW.Core;
 using HW.Core.Repositories;
 using HW.Core.Services;
 using NUnit.Framework;
+using HW.Core.Repositories.Sql;
 
 namespace HW.Tests.Grp
 {
@@ -19,7 +20,8 @@ namespace HW.Tests.Grp
 			
 			v = new HW.Grp.Managers();
 			
-			v = new HW.Grp.Managers(new ManagerService(new ManagerFunctionRepositoryStub(), new SponsorRepositoryStub(), new SponsorAdminRepositoryStub()));
+            //v = new HW.Grp.Managers(new ManagerService(new ManagerFunctionRepositoryStub(), new SponsorRepositoryStub(), new SponsorAdminRepositoryStub()));
+            v = new HW.Grp.Managers(new ManagerService(new SqlManagerFunctionRepository(), new SqlSponsorRepository(), new SqlSponsorAdminRepository()));
 //			r = new SponsorRepositoryStub();
 		}
 		
@@ -46,7 +48,7 @@ namespace HW.Tests.Grp
 		public void TestIndex()
 		{
 //			v.SponsorAdmins = r.FindAdminBySponsor(1, 1, "ASC");
-			v.Index(1, 1, 1, 1);
+            //v.Index(1, 1, 1, 1);
 //			Assert.AreEqual(3, v.SponsorAdmins.Count);
 		}
 	}

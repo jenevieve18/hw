@@ -10,7 +10,7 @@ namespace HW.Tests.Helpers
 		[Test]
 		public void TestMethod()
 		{
-			MailHelper.SendMail("ian.escarro", "test", "test", null, "", "", "");
+//			MailHelper.SendMail("ian.escarro", "test", "test", null, "", "", "");
 		}
 	}
 }
