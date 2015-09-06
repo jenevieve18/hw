@@ -6,7 +6,8 @@ namespace HW.Core.Repositories
 {
 	public interface ISponsorRepository : IBaseRepository<Sponsor>
 	{
-		IList<SponsorAdmin> FindAdminBySponsor(int sponsorId, int sponsorAdminId, string sort);
+		//IList<SponsorAdmin> FindAdminBySponsor(int sponsorId, int sponsorAdminId, string sortFirstName, string sortLastName);
+        IList<SponsorAdmin> FindAdminBySponsor(int sponsorId, int sponsorAdminId, string orderBy);
 		
 		void UpdateDeletedAdmin(int sponsorId, int sponsorAdminId);
 		
@@ -34,7 +35,8 @@ namespace HW.Core.Repositories
 	
 	public class SponsorRepositoryStub : BaseRepositoryStub<Sponsor>, ISponsorRepository
 	{
-		public IList<SponsorAdmin> FindAdminBySponsor(int sponsorId, int sponsorAdminId, string sort)
+		//public IList<SponsorAdmin> FindAdminBySponsor(int sponsorId, int sponsorAdminId, string sortFirstName, string sortLastName)
+        public IList<SponsorAdmin> FindAdminBySponsor(int sponsorId, int sponsorAdminId, string orderBy)
 		{
 			return new [] {
 				new SponsorAdmin {},

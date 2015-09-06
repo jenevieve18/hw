@@ -1535,7 +1535,8 @@ WHERE SponsorAdminID = {0}",
 			return functions;
 		}
 
-		public IList<SponsorAdmin> FindAdminBySponsor(int sponsorId, int sponsorAdminId, string sort)
+		//public IList<SponsorAdmin> FindAdminBySponsor(int sponsorId, int sponsorAdminId, string sortFirstName, string sortLastName)
+        public IList<SponsorAdmin> FindAdminBySponsor(int sponsorId, int sponsorAdminId, string orderBy)
 		{
 			string query = string.Format(
 				@"
@@ -1549,16 +1550,17 @@ SELECT sa.SponsorAdminID,
 		FROM SponsorAdminSession sas
 		WHERE sas.SponsorAdminID = sa.SponsorAdminID
 		ORDER BY DT DESC
-	) LoginDays
+	) LoginDays,
+    sa.LastName
 FROM SponsorAdmin sa
 WHERE (sa.SponsorAdminID <> {1} OR sa.SuperUser = 1)
 {2}
 AND sa.SponsorID = {0}
-ORDER BY sa.Name {3}",
+{3}",
 				sponsorId,
 				sponsorAdminId,
 				sponsorAdminId != -1 ? "AND ((SELECT COUNT(*) FROM SponsorAdminDepartment sad WHERE sad.SponsorAdminID = sa.SponsorAdminID) = 0 OR (SELECT COUNT(*) FROM SponsorAdminDepartment sad INNER JOIN SponsorAdminDepartment sad2 ON sad.DepartmentID = sad2.DepartmentID WHERE sad.SponsorAdminID = sa.SponsorAdminID AND sad2.SponsorAdminID = " + sponsorAdminId + ") > 0) " : "",
-				sort
+				orderBy
 			);
 			var admins = new List<SponsorAdmin>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
@@ -1569,7 +1571,8 @@ ORDER BY sa.Name {3}",
 						Name = GetString(rs, 2),
 						ReadOnly = GetInt32(rs, 3) == 1,
 						Password = GetString(rs, 4),
-						LoginDays = GetInt32(rs, 5, -1)
+						LoginDays = GetInt32(rs, 5, -1),
+                        LastName = GetString(rs, 6)
 					};
 					admins.Add(a);
 				}

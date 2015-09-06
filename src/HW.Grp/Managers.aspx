@@ -32,12 +32,15 @@
 			<table border="0" cellpadding="3" cellspacing="0">
 				<%--<asp:Label ID=labelManagers runat=server/>--%>
 				<tr>
-                    <th><a class="sort <%= sort == 0 ? "sort-asc" : "sort-desc" %>" href="managers.aspx?sort=<%= sort == 0 ? 1 : 0 %>"><%= R.Str(lid, "manager.name", "Name")%></a></th>
+                    <th>
+                        <a class="sort <%= sortFirstName == 0 ? "sort-asc" : "sort-desc" %>" href="managers.aspx?Sort=FirstName&SortFirstName=<%= sortFirstName == 0 ? 1 : 0 %>&SortLastName=<%= sortLastName %>"><%= R.Str(lid, "manager.name", "Name")%></a>
+                    </th>
+                    <th>
+                        <a class="sort <%= sortLastName == 0 ? "sort-asc" : "sort-desc" %>" href="managers.aspx?Sort=LastName&SortFirstName=<%= sortFirstName %>&SortLastName=<%= sortLastName == 0 ? 1 : 0 %>"><%= R.Str(lid, "manager.name.last", "Last Name")%></a>
+                    </th>
                     <th><%= R.Str(lid, "manager.access", "Roles")%></th>
                     <th><%= R.Str(lid, "manager.login.last", "Last Login")%></th>
                     <th></th>
-					<!--<td><b></b></th>
-					<td><b></b></th>-->
 				</tr>
 				<% foreach (var s in sponsorAdmins) { %>
 				<tr>
@@ -47,6 +50,7 @@
 						<% } %>
 						<%= HtmlHelper.Anchor(s.ToString(), "managerSetup.aspx?SAID=" + s.Id.ToString()) %>
 					</td>
+                    <td><%= s.LastName %></td>
 					<td>
 						<% int cx = 0; %>
 						<% foreach (var f in s.Functions) { %>

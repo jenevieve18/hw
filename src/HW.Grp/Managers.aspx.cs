@@ -17,13 +17,15 @@ namespace HW.Grp
 	{
 		protected IList<SponsorAdmin> sponsorAdmins;
 		protected int lid;
-		protected int sort;
+		protected int sortFirstName;
+        protected int sortLastName;
 //		ManagerService service = new ManagerService(
 //			AppContext.GetRepositoryFactory().CreateManagerFunctionRepository(),
 //			AppContext.GetRepositoryFactory().CreateSponsorRepository(),
 //			AppContext.GetRepositoryFactory().CreateSponsorAdminRepository()
 //		);
 		ManagerService service;
+        string sort;
 		
 		public Managers() : this(new ManagerService(new SqlManagerFunctionRepository(), new SqlSponsorRepository(), new SqlSponsorAdminRepository()))
 		{
@@ -68,18 +70,21 @@ namespace HW.Grp
 			HtmlHelper.RedirectIf(!HasAccess(sponsorAdminID, ManagerFunction.Managers), "default.aspx", true);
 			
 			lid = ConvertHelper.ToInt32(Session["lid"], 1);
-			sort = ConvertHelper.ToInt32(Request.QueryString["sort"]);
+            
+            sort = Request.QueryString["Sort"];
+			sortFirstName = ConvertHelper.ToInt32(Request.QueryString["SortFirstName"]);
+            sortLastName = ConvertHelper.ToInt32(Request.QueryString["SortLastName"]);
 			
 			Delete(sponsorID, ConvertHelper.ToInt32(Request.QueryString["Delete"], -1));
 			
 //			SponsorAdmins = service.FindAdminBySponsor(sponsorID, sponsorAdminID, sort, lid);
-			
-			Index(sponsorID, sponsorAdminID, sort, lid);
+//			
+			Index(sponsorID, sponsorAdminID, sort, sortFirstName, sortLastName, lid);
 		}
 		
-		public void Index(int sponsorID, int sponsorAdminID, int sort, int lid)
+		public void Index(int sponsorID, int sponsorAdminID, string sort, int sortFirstName, int sortLastName, int lid)
 		{
-			sponsorAdmins = service.FindAdminBySponsor(sponsorID, sponsorAdminID, sort, lid);
+			sponsorAdmins = service.FindAdminBySponsor(sponsorID, sponsorAdminID, sort, sortFirstName, sortLastName, lid);
 		}
 	}
 }

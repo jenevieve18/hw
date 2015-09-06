@@ -2,21 +2,33 @@
 using System.Collections.Generic;
 using HW.Core.Models;
 using HW.Core.Repositories;
+using HW.Core.Repositories.Sql;
 
 namespace HW.Core.Services
 {
 	public class ManagerService
 	{
-		IManagerFunctionRepository mr;
-		ISponsorRepository sr;
-		ISponsorAdminRepository sar;
+        //IManagerFunctionRepository mr;
+        //ISponsorRepository sr;
+        //ISponsorAdminRepository sar;
 		
-		public ManagerService(IManagerFunctionRepository mr, ISponsorRepository sr, ISponsorAdminRepository sar)
-		{
-			this.mr = mr;
-			this.sr = sr;
-			this.sar = sar;
-		}
+        //public ManagerService(IManagerFunctionRepository mr, ISponsorRepository sr, ISponsorAdminRepository sar)
+        //{
+        //    this.mr = mr;
+        //    this.sr = sr;
+        //    this.sar = sar;
+        //}
+
+        SqlManagerFunctionRepository mr;
+        SqlSponsorRepository sr;
+        SqlSponsorAdminRepository sar;
+
+        public ManagerService(SqlManagerFunctionRepository mr, SqlSponsorRepository sr, SqlSponsorAdminRepository sar)
+        {
+            this.mr = mr;
+            this.sr = sr;
+            this.sar = sar;
+        }
 		
 		public bool SponsorAdminHasAccess(int sponsorAdminID, int functionID)
 		{
@@ -33,9 +45,30 @@ namespace HW.Core.Services
 			sr.UpdateDeletedAdmin(sponsorID, sponsorAdminIDToBeDeleted);
 		}
 		
-		public IList<SponsorAdmin> FindAdminBySponsor(int sponsorID, int sponsorAdminID, int sort, int lid)
+		public IList<SponsorAdmin> FindAdminBySponsor(int sponsorID, int sponsorAdminID, string sort, int sortFirstName, int sortLastName, int lid)
 		{
-			var admins = sr.FindAdminBySponsor(sponsorID, sponsorAdminID, sort == 0 ? "ASC" : "DESC");
+            //string orderByFirstName = "";
+            //string orderByLastName = "";
+            string orderBy = "";
+            if (sort == "FirstName")
+            {
+                orderBy = string.Format(
+                    "ORDER BY sa.Name {0}, sa.LastName {1}",
+                    sortFirstName == 0 ? "ASC" : "DESC",
+                    sortLastName == 0 ? "ASC" : "DESC"
+                );
+            }
+            else
+            {
+                orderBy = string.Format(
+                    "ORDER BY sa.LastName {0}, sa.Name {1}",
+                    sortLastName == 0 ? "ASC" : "DESC",
+                    sortFirstName == 0 ? "ASC" : "DESC"
+                );
+            }
+
+			//var admins = sr.FindAdminBySponsor(sponsorID, sponsorAdminID, sortFirstName == 0 ? "ASC" : "DESC", sortLastName == 0 ? "ASC" : "DESC");
+            var admins = sr.FindAdminBySponsor(sponsorID, sponsorAdminID, orderBy);
 			foreach (var a in admins) {
 				a.AddFunctions(mr.FindBySponsorAdminX(a.Id, lid));
 			}
