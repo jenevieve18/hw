@@ -23,32 +23,32 @@ namespace HW.Grp
 		IList<SponsorBackgroundQuestion> questions;
 		int sponsorID = 0;
 		int sponsorAdminID = 0;
-//		SqlProjectRepository projRepository = new SqlProjectRepository();
-//		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
-//		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
-//		SqlReportRepository reportRepository = new SqlReportRepository();
-//		SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
-		IProjectRepository projRepository;
-		ISponsorRepository sponsorRepository;
-		IDepartmentRepository departmentRepository;
-		IReportRepository reportRepository;
-		IPlotTypeRepository plotRepository;
+        SqlProjectRepository projRepository = new SqlProjectRepository();
+        SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
+        SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
+        SqlReportRepository reportRepository = new SqlReportRepository();
+        SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
+        //IProjectRepository projRepository;
+        //ISponsorRepository sponsorRepository;
+        //IDepartmentRepository departmentRepository;
+        //IReportRepository reportRepository;
+        //IPlotTypeRepository plotRepository;
         protected int lid;
         protected DateTime startDate;
         protected DateTime endDate;
         
-        public Stats() : this(new SqlProjectRepository(), new SqlSponsorRepository(), new SqlDepartmentRepository(), new SqlReportRepository(), new SqlPlotTypeRepository())
-        {
-        }
+        //public Stats() : this(new SqlProjectRepository(), new SqlSponsorRepository(), new SqlDepartmentRepository(), new SqlReportRepository(), new SqlPlotTypeRepository())
+        //{
+        //}
         
-        public Stats(IProjectRepository projRepository, ISponsorRepository sponsorRepository, IDepartmentRepository departmentRepository, IReportRepository reportRepository, IPlotTypeRepository plotRepository)
-        {
-        	this.projRepository = projRepository;
-        	this.sponsorRepository = sponsorRepository;
-        	this.departmentRepository = departmentRepository;
-        	this.reportRepository = reportRepository;
-        	this.plotRepository = plotRepository;
-        }
+        //public Stats(IProjectRepository projRepository, ISponsorRepository sponsorRepository, IDepartmentRepository departmentRepository, IReportRepository reportRepository, IPlotTypeRepository plotRepository)
+        //{
+        //    this.projRepository = projRepository;
+        //    this.sponsorRepository = sponsorRepository;
+        //    this.departmentRepository = departmentRepository;
+        //    this.reportRepository = reportRepository;
+        //    this.plotRepository = plotRepository;
+        //}
         
 		public IList<SponsorProjectRoundUnit> ProjectRoundUnits {
 			set {
