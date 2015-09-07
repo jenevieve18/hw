@@ -50,21 +50,21 @@ namespace HW.Core.Services
             //string orderByFirstName = "";
             //string orderByLastName = "";
             string orderBy = "";
-            if (sort == "FirstName")
-            {
-                orderBy = string.Format(
-                    "ORDER BY sa.Name {0}, sa.LastName {1}",
-                    sortFirstName == 0 ? "ASC" : "DESC",
-                    sortLastName == 0 ? "ASC" : "DESC"
-                );
-            }
-            else
+            if (sort == "LastName")
             {
                 orderBy = string.Format(
                     "ORDER BY sa.LastName {0}, sa.Name {1}",
                     sortLastName == 0 ? "ASC" : "DESC",
                     sortFirstName == 0 ? "ASC" : "DESC"
                 );
+            }
+            else
+            {
+                orderBy = string.Format(
+                    "ORDER BY sa.Name {0}, sa.LastName {1}",
+                    sortFirstName == 0 ? "ASC" : "DESC",
+                    sortLastName == 0 ? "ASC" : "DESC"
+                );   
             }
 
 			//var admins = sr.FindAdminBySponsor(sponsorID, sponsorAdminID, sortFirstName == 0 ? "ASC" : "DESC", sortLastName == 0 ? "ASC" : "DESC");
