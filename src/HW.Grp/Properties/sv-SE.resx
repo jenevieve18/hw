@@ -165,6 +165,9 @@
   <data name="department" xml:space="preserve">
     <value>Enhet</value>
   </data>
+  <data name="department.toplevel" xml:space="preserve">
+    <value>&lt; toppnivå &gt;</value>
+  </data>
   <data name="disassociate.start" xml:space="preserve">
     <value>Koppla bort den här användaren från organisationen från start.</value>
   </data>
@@ -584,6 +587,9 @@
   </data>
   <data name="users.no" xml:space="preserve">
     <value># av tillagda&lt;br&gt;användare</value>
+  </data>
+  <data name="users.none" xml:space="preserve">
+    <value>&lt; ingen &gt;</value>
   </data>
   <data name="users.unit" xml:space="preserve">
     <value>Användare på enhet</value>

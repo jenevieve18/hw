@@ -177,7 +177,7 @@ namespace HW.Grp
 					GroupBy.Items.Add(new ListItem(R.Str(lid, "year.one", "One year"), "6"));
 					
 					Grouping.Items.Clear();
-					Grouping.Items.Add(new ListItem(R.Str(lid, "", "< none >"), "0"));
+					Grouping.Items.Add(new ListItem(R.Str(lid, "users.none", "< none >"), "0"));
 					Grouping.Items.Add(new ListItem(R.Str(lid, "users.unit", "Users on unit"), "1"));
 					Grouping.Items.Add(new ListItem(R.Str(lid, "users.unit.subunit", "Users on unit+subunits"), "2"));
 					Grouping.Items.Add(new ListItem(R.Str(lid, "background.variable", "Background variable"), "3"));

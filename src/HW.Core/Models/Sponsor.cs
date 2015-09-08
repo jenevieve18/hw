@@ -209,7 +209,7 @@ namespace HW.Core.Models
 			base.Validate();
 			AddErrorIf(Name == "", "Sponsor admin name is required.");
 			AddErrorIf(Email == "", "Email address name is required.");
-			AddErrorIf(Usr == "", "User name is required.");
+			//AddErrorIf(Usr == "", "User name is required.");
 			AddErrorIf(Password == "", "Password is required.");
 		}
 		

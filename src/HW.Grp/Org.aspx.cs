@@ -342,7 +342,8 @@ ORDER BY sbq.SortOrder",
 				}
 
 				if (!IsPostBack) {
-					ImportUnitsParentDepartmentID.Items.Add(new ListItem("< top level >", "NULL"));
+					//ImportUnitsParentDepartmentID.Items.Add(new ListItem("< top level >", "NULL"));
+                    ImportUnitsParentDepartmentID.Items.Add(new ListItem(R.Str(lid, "department.toplevel", "< top level >"), "NULL"));
 					//ImportUsersParentDepartmentID.Items.Add(new ListItem("< top level >", "NULL"));
 					query = string.Format(
 						@"
@@ -361,7 +362,8 @@ ORDER BY d.SortString",
 					}
 					rs.Close();
 
-					ParentDepartmentID.Items.Add(new ListItem("< top level >", "NULL"));
+					//ParentDepartmentID.Items.Add(new ListItem("< top level >", "NULL"));
+                    ParentDepartmentID.Items.Add(new ListItem(R.Str(lid, "department.toplevel", "< top level >"), "NULL"));
 					if (deptID != 0) {
 						string sortString = "";
 						string parentDepartmentID = "NULL";

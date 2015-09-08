@@ -162,6 +162,9 @@
   <data name="department" xml:space="preserve">
     <value>Department</value>
   </data>
+  <data name="department.toplevel" xml:space="preserve">
+    <value>&lt; top level &gt;</value>
+  </data>
   <data name="disassociate.start" xml:space="preserve">
     <value>Disassociate this user with the organization from start.</value>
   </data>
@@ -566,6 +569,9 @@
   </data>
   <data name="users.no" xml:space="preserve">
     <value># of added&lt;br&gt;users</value>
+  </data>
+  <data name="users.none" xml:space="preserve">
+    <value>&lt;none &gt;</value>
   </data>
   <data name="users.unit" xml:space="preserve">
     <value>Users on unit</value>
