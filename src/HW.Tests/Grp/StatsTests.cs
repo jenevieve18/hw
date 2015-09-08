@@ -14,7 +14,7 @@ namespace HW.Tests.Grp
 		{
 			v = new HW.Grp.Stats();
 			
-			v = new HW.Grp.Stats(new ProjectRepositoryStub(), new SponsorRepositoryStub(), new DepartmentRepositoryStub(), new ReportRepositoryStub(), new PlotTypeRepositoryStub());
+			//v = new HW.Grp.Stats(new ProjectRepositoryStub(), new SponsorRepositoryStub(), new DepartmentRepositoryStub(), new ReportRepositoryStub(), new PlotTypeRepositoryStub());
 		}
 		
 		[Test]
