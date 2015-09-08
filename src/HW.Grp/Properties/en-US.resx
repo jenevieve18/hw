@@ -255,6 +255,12 @@
   <data name="manager.delete" xml:space="preserve">
     <value>Are you sure you want to delete this manager?</value>
   </data>
+  <data name="manager.email.notunique" xml:space="preserve">
+    <value>Please choose a unique email address!</value>
+  </data>
+  <data name="manager.email.required" xml:space="preserve">
+    <value>Email address is required.</value>
+  </data>
   <data name="manager.invalid" xml:space="preserve">
     <value>Error! The username is invalid, please select a different one!</value>
   </data>
@@ -275,6 +281,9 @@
   </data>
   <data name="manager.name.last" xml:space="preserve">
     <value>Last Name</value>
+  </data>
+  <data name="manager.name.required" xml:space="preserve">
+    <value>Sponsor admin name is required.</value>
   </data>
   <data name="manager.password" xml:space="preserve">
     <value>Password</value>

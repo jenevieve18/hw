@@ -16,6 +16,7 @@ namespace HW.Grp
 	{
 		protected IList<SponsorAdminDepartment> sponsorAdminDepartments;
 		protected string errorMessage = string.Empty;
+        protected string message = "";
 		int sponsorAdminID = 0;
 		int sponsorID = 0;
 		protected int lid;
@@ -191,7 +192,10 @@ namespace HW.Grp
 					PermanentlyDeleteUsers = PermanentlyDeleteUsers.Checked
 				};
 				a.Validate();
-				a.AddErrorIf(sponsorAdminRepository.SponsorAdminEmailExists(a.Email, sponsorAdminID), "Please choose a unique email address!");
+                a.AddErrorIf(a.Name == "", R.Str(lid, "manager.name.required", "Sponsor admin name is required."));
+                a.AddErrorIf(a.Email == "", R.Str(lid, "manager.email.required", "Email address name is required."));
+                //a.AddErrorIf(a.Password == "", R.Str(lid, "", "Password is required."));
+				a.AddErrorIf(sponsorAdminRepository.SponsorAdminEmailExists(a.Email, sponsorAdminID), R.Str(lid, "manager.email.notunique", "Please choose a unique email address!"));
 				if (!a.HasErrors) {
 					if (sponsorAdminID != 0) {
 						sponsorRepository.UpdateSponsorAdmin(a);
@@ -244,7 +248,9 @@ namespace HW.Grp
         	string uid = Guid.NewGuid().ToString().ToUpper().Replace("-", "");
         	sponsorAdminRepository.UpdateUniqueKey(uid, sponsorAdminID);
         	new PasswordActivationLink().Send(Email.Text, uid, Name.Text, Usr.Text);
-        	errorMessage = R.Str(lid, "password.activate.sent", "Password activation link sent!");
+        	
+            //errorMessage = R.Str(lid, "password.activate.sent", "Password activation link sent!");
+            message = R.Str(lid, "password.activate.sent", "Password activation link sent!");
         }
 	}
 }

@@ -267,6 +267,12 @@
   <data name="manager.delete" xml:space="preserve">
     <value>Är du säker på att du vill radera denna chef?</value>
   </data>
+  <data name="manager.email.notunique" xml:space="preserve">
+    <value>Vänligen välj en unik epostadress</value>
+  </data>
+  <data name="manager.email.required" xml:space="preserve">
+    <value>Epostadress behövs</value>
+  </data>
   <data name="manager.invalid" xml:space="preserve">
     <value>Fel! Användarnamnet är ogiltigt, vänligen välj ett annat!</value>
   </data>
@@ -287,6 +293,9 @@
   </data>
   <data name="manager.name.last" xml:space="preserve">
     <value>Efternamn</value>
+  </data>
+  <data name="manager.name.required" xml:space="preserve">
+    <value>Namn behövs</value>
   </data>
   <data name="manager.password" xml:space="preserve">
     <value>Lösenord</value>

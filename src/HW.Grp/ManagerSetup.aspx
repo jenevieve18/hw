@@ -15,9 +15,14 @@
 			    <asp:Button CssClass="btn" ID="Save" runat=server Text="Save" />
                 <asp:Button ID="buttonSend" runat="server" Text="Send" CssClass="btn" 
                     onclick="buttonSend_Click" Visible="False" />
+
+                <% if (message != "") { %>
+			    	<span style="color:#00cc00;"><%= message %></span>
+			    <% } %>
+
 			    <!--<asp:Label ID=ErrorMsg runat=server />-->
 			    <% if (errorMessage != "") { %>
-			    	<span style="color:#00cc00;"><%= errorMessage %></span>
+			    	<br /><br /><span style="color:#cc0000;"><%= errorMessage %></span>
 			    <% } %>
             </div>
         </div>
