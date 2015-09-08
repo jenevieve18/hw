@@ -78,7 +78,7 @@
 			</div>
 		<% } %>
 
-		<%= FormHelper.Input("ANV", "", string.Format("class='input-block-level' placeholder='{0}'", R.Str(lid, "user.name", "Username"))) %>
+		<%= FormHelper.Input("ANV", "", string.Format("class='input-block-level' placeholder='{0}'", R.Str(lid, "user.name", "Email or Username")))%>
 		<%= FormHelper.Password("LOS", "", string.Format("class='input-block-level' placeholder='{0}'", R.Str(lid, "user.password", "Password")))%>
 		
         <button class="btn btn-large btn-info" type="submit">

@@ -17,7 +17,7 @@
                     onclick="buttonSend_Click" Visible="False" />
 			    <!--<asp:Label ID=ErrorMsg runat=server />-->
 			    <% if (errorMessage != "") { %>
-			    	<span style="color:#cc0000;"><%= errorMessage %></span>
+			    	<span style="color:#00cc00;"><%= errorMessage %></span>
 			    <% } %>
             </div>
         </div>
@@ -30,7 +30,11 @@
 		                    <tr><td colspan="2"><b><%= R.Str(lid, "credentials", "Credentials") %></b></td></tr>
 		                    <tr><td><%= R.Str(lid, "manager.name", "First Name")%>&nbsp;</td><td><asp:TextBox ID="Name" Width=200 runat=server /></td></tr>
                             <tr><td><%= R.Str(lid, "manager.name.last", "Last Name")%>&nbsp;</td><td><asp:TextBox ID="LastName" Width=200 runat=server /></td></tr>
-		                    <tr><td><%= R.Str(lid, "manager.username", "Username")%>&nbsp;</td><td><asp:TextBox ID="Usr" Width=200 runat=server /></td></tr>
+                            
+                            <asp:Panel ID="panelUserName" runat="server">
+                            <tr><td><%= R.Str(lid, "manager.username", "Username")%>&nbsp;</td><td><asp:TextBox ID="Usr" Width=200 runat=server /></td></tr>
+                            </asp:Panel>
+		                    
 		                    <%-- <tr><td><%= R.Str(lid, "manager.password", "Password")%>&nbsp;</td><td><asp:TextBox ID="Pas" TextMode=Password Width=200 runat=server /></td></tr>--%>
 		                    <tr><td><%= R.Str(lid, "email") %>&nbsp;</td><td><asp:TextBox ID="Email" Width=200 runat=server /></td></tr>
                             <tr><td><%= R.Str(lid, "organization.readonly", "Organization read only")%>&nbsp;</td><td><asp:CheckBox ID=ReadOnly runat=server /></td></tr>

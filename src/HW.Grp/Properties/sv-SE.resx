@@ -556,7 +556,7 @@
     <value>för import/export av användare, kort namn, inga mellanslag</value>
   </data>
   <data name="user.name" xml:space="preserve">
-    <value>Användarnamn</value>
+    <value>E-post eller användarnamn</value>
   </data>
   <data name="user.password" xml:space="preserve">
     <value>Lösenord</value>

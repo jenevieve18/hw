@@ -117,7 +117,9 @@ namespace HW.Grp
 					}
 				}
 
-				if (HasSAID) {
+				if (!HasSAID) {
+                    panelUserName.Visible = false;
+                } else {
 					buttonSend.Visible = true;
 					
 					int SAID = Convert.ToInt32(Request.QueryString["SAID"]);
@@ -128,8 +130,12 @@ namespace HW.Grp
 						if (!IsPostBack) {
 							ReadOnly.Checked = a.ReadOnly;
 							SuperUser.Checked = a.SuperUser;
-							Name.Text = (a.Name == "" ? a.Usr : a.Name);
-							Usr.Text = a.Usr;
+                            Name.Text = (a.Name == "" ? a.Usr : a.Name);
+                            Usr.Text = a.Usr;
+                            if (a.Usr == null || a.Usr == "")
+                            {
+                                panelUserName.Visible = false;
+                            }
 //							Pas.Attributes.Add("value", "Not shown");
 							Email.Text = a.Email;
 							LastName.Text = a.LastName;
