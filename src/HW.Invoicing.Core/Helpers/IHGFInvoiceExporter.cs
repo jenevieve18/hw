@@ -19,10 +19,7 @@ namespace HW.Invoicing.Core.Helpers
 			
 			var templateFileStream = new FileStream(templateFileName, FileMode.Open);
 			var reader = new PdfReader(templateFileStream);
-			var stamper = new PdfStamper(reader, output) {
-//				FormFlattening = true,
-//				FreeTextFlattening = true
-			};
+			var stamper = new PdfStamper(reader, output) { };
 			var form = stamper.AcroFields;
 			var fieldKeys = form.Fields.Keys;
 			
@@ -57,11 +54,11 @@ namespace HW.Invoicing.Core.Helpers
 			form.SetField("Text9b", prices);
 			form.SetField("Text9c", amounts);
 			
-			if (invoice.VATs.ContainsKey(25))
-			{
-				form.SetField("Text11b", 25.ToString("0.00"));
-				form.SetField("Text12", invoice.VATs[25].ToString("### ##0.00"));
-			}
+//			if (invoice.VATs.ContainsKey(25))
+//			{
+//				form.SetField("Text11b", 25.ToString("0.00"));
+//				form.SetField("Text12", invoice.VATs[25].ToString("### ##0.00"));
+//			}
 			
 			stamper.FormFlattening = true;
 			foreach (var s in form.Fields.Keys)
@@ -69,7 +66,7 @@ namespace HW.Invoicing.Core.Helpers
 				stamper.PartialFormFlattening(s);
 			}
 			
-			var b = new IHGFVATBox(stamper.GetOverContent(1), invoice.VATs, calibriFont);
+			var b = new IHGFVATBox(stamper.GetOverContent(1), invoice.VATs, calibriFont, form);
 			b.Draw();
 			
 			stamper.Writer.CloseStream = false;
@@ -87,7 +84,7 @@ namespace HW.Invoicing.Core.Helpers
 //			stamper.Close();
 //			return output.ToArray();
 //		}
-//		
+//
 //		public void Export2(Invoice invoice, string existingFileName)
 //		{
 //			string newFile = @"test.pdf";
@@ -95,20 +92,20 @@ namespace HW.Invoicing.Core.Helpers
 //			PdfStamper stamper = new PdfStamper(reader, new FileStream(newFile, FileMode.Create));
 //			AcroFields form = stamper.AcroFields;
 //			var fieldKeys = form.Fields.Keys;
-//			
+//
 //			form.SetField("Text1", invoice.Customer.Number);
 //			form.SetField("Text2", invoice.Number);
 //			form.SetField("Text3", invoice.Date.Value.ToString("yyyy-MM-dd"));
 //			form.SetField("Text4", invoice.MaturityDate.Value.ToString("yyyy-MM-dd"));
-//			
+//
 //			form.SetField("Text5", invoice.Customer.YourReferencePerson);
 //			form.SetField("Text6", invoice.Customer.OurReferencePerson);
-//			
+//
 //			form.SetField("Text6B", invoice.Customer.ToString());
-//			
+//
 //			form.SetField("Text10b", invoice.SubTotal.ToString("### ##0.00"));
 //			form.SetField("Text13", invoice.TotalAmount.ToString("### ##0.00"));
-//			
+//
 //			string items = "";
 //			string quantities = "";
 //			string units = "";
@@ -126,23 +123,23 @@ namespace HW.Invoicing.Core.Helpers
 //			form.SetField("Text9", units);
 //			form.SetField("Text9b", prices);
 //			form.SetField("Text9c", amounts);
-//			
+//
 //			if (invoice.VATs.ContainsKey(25))
 //			{
 //				form.SetField("Text11b", 25.ToString());
 //				form.SetField("Text12", invoice.VATs[25].ToString());
 //			}
-//			
+//
 //			// "Flatten" the form so it wont be editable/usable anymore
 //			stamper.FormFlattening = true;
-//			
+//
 //			// You can also specify fields to be flattened, which
 //			// leaves the rest of the form still be editable/usable
 //			foreach (var s in form.Fields.Keys)
 //			{
 //				stamper.PartialFormFlattening(s);
 //			}
-//			
+//
 //			stamper.Close();
 //			reader.Close();
 //		}
@@ -156,29 +153,40 @@ namespace HW.Invoicing.Core.Helpers
 		float height = 27f;
 		IDictionary<decimal, decimal> vats;
 		string calibriFont;
+		AcroFields form;
 		
-		public IHGFVATBox(PdfContentByte cb, IDictionary<decimal, decimal> vats, string calibriFont)
+		public IHGFVATBox(PdfContentByte cb, IDictionary<decimal, decimal> vats, string calibriFont, AcroFields form)
 		{
 			this.cb = cb;
 			this.vats = vats;
 			this.calibriFont = calibriFont;
+			this.form = form;
 		}
 		
 		public void Draw()
 		{
-			if (vats.ContainsKey(25)) {
-				vats.Remove(25);
-			}
+//			if (vats.ContainsKey(25)) {
+//				vats.Remove(25);
+//			}
 			
 			float x = 358.5f;
+//			float x = 464f;
+			int i = 0;
 			foreach (var v in vats.Keys) {
-				x -= 64f;
-				DrawRectangle(x, y, 64f, height);
-				SetTexts("MOMS, SEK", vats[v].ToString("0.00"), x + 3, y + 19, y + 4.5f);
-				
-				x -= 41.5f;
-				DrawRectangle(x, y, 41.5f, height);
-				SetTexts("MOMS %", v.ToString(), x + 3, y + 19, y + 4.5f);
+				if (i == 0) {
+					form.SetField("Text11b", v.ToString());
+					form.SetField("Text12", vats[v].ToString("### ##0.00"));
+				} else {
+					x -= 64f;
+					
+					DrawRectangle(x, y, 64f, height);
+					SetTexts("MOMS, SEK", vats[v].ToString("### ##0.00"), x + 3, y + 19, y + 4.5f);
+					
+					x -= 41.5f;
+					DrawRectangle(x, y, 41.5f, height);
+					SetTexts("MOMS %", v.ToString(), x + 3, y + 19, y + 4.5f);
+				}
+				i++;
 			}
 		}
 		
