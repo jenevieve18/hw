@@ -59,7 +59,7 @@ namespace HW.Invoicing.Core.Helpers
 //				form.SetField("Text11b", 25.ToString("0.00"));
 //				form.SetField("Text12", invoice.VATs[25].ToString("### ##0.00"));
 //			}
-			
+//			
 			stamper.FormFlattening = true;
 			foreach (var s in form.Fields.Keys)
 			{
@@ -172,7 +172,11 @@ namespace HW.Invoicing.Core.Helpers
 			float x = 358.5f;
 //			float x = 464f;
 			int i = 0;
-			foreach (var v in vats.Keys) {
+			
+			var keys = vats.Keys.ToList().OrderByDescending(j => j);
+			
+//			foreach (var v in vats.Keys) {
+			foreach (var v in keys) {
 				if (i == 0) {
 					form.SetField("Text11b", v.ToString());
 					form.SetField("Text12", vats[v].ToString("### ##0.00"));
