@@ -444,6 +444,9 @@
   <data name="send.auto.perform" xml:space="preserve">
     <value>Kontrollera och skicka automatiskt varje</value>
   </data>
+  <data name="send.credentials" xml:space="preserve">
+    <value>Skicka användarduppgifter</value>
+  </data>
   <data name="send.individuals" xml:space="preserve">
     <value>Skicka till personer som inte loggat in under den senaste</value>
   </data>

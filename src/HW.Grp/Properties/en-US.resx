@@ -432,6 +432,9 @@
   <data name="send.auto.perform" xml:space="preserve">
     <value>Automatically perform check and send every</value>
   </data>
+  <data name="send.credentials" xml:space="preserve">
+    <value>Send credentials</value>
+  </data>
   <data name="send.individuals" xml:space="preserve">
     <value>Send to individuals who have not logged in during the last</value>
   </data>
