@@ -36,6 +36,7 @@
                     var consultant = selected.data('consultant');
                     var comments = selected.data('comments');
                     var vat = selected.data('vat');
+                    var date = selected.data('date');
                     var invoiceItem = {
                         'id': id,
                         'item': item,
@@ -45,7 +46,8 @@
                         'amount': amount,
                         'consultant': consultant,
                         'comments': comments,
-                        'vat': vat
+                        'vat': vat,
+                        'date': date
                     };
                     invoiceItems.push(invoiceItem);
                 } else {
@@ -82,7 +84,8 @@
                 invoiceItems.forEach(function(e) {
                     var vatAmount = e.vat / 100.0 * e.amount;
                     var consultant = e.consultant == '' ? '' : ' (' + e.consultant + ')';
-                    var item = e.comments == '' ? e.item : e.comments + consultant;
+                    var date = e.date == '' ? '' : e.date + ' ';
+                    var item = e.comments == '' ? e.item : date + e.comments + consultant;
                     items.append('' + 
                         '<tr>' + 
                         '   <td colspan="4">' + item + '<input type="hidden" id="invoice-timebooks" name="invoice-timebooks" value="' + e.id + '"></td>' + 
@@ -238,9 +241,6 @@
 <p><%= HtmlHelper.Anchor("<< Back to customer listing", "customers.aspx") %></p>
 
 <% if (message != null && message != "") { %>
-    <%--<div class="alert alert-success">
-        <%= message %>
-    </div>--%>
     <%= message %>
 <% } %>
 
@@ -653,6 +653,7 @@
                                          data-consultant="<%= t.Consultant %>"
                                          data-comments="<%= t.Comments %>"
                                          data-vat="<%= t.VAT %>"
+                                         data-date="<%= t.Date != null ? t.Date.Value.ToString("yyyy-MM-dd") : "" %>"
                                 />
                                 <% } %>
                             </td>

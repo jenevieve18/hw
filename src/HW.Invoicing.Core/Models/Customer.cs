@@ -506,7 +506,8 @@ namespace HW.Invoicing.Core.Models
 				return Item.Name;
 			}*/
             string c = Consultant != null && Consultant != "" ? string.Format(" ({0})", Consultant) : "";
-            return string.Format("{0}{1}", Comments, c);
+            string d = Date != null ? Date.Value.ToString("yyyy-MM-dd") + " " : "";
+            return string.Format("{2}{0}{1}", Comments, c, d);
 		}
 
 		public bool IsPaid

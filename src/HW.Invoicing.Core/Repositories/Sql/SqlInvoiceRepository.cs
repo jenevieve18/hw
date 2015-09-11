@@ -225,7 +225,8 @@ select it.id,
     u.name,
     ct.comments,
     ct.consultant,
-    ct.IsSubscription
+    ct.IsSubscription,
+    ct.Date
 from invoicetimebook it
 inner join customertimebook ct on ct.id = it.customertimebookid
 inner join item i on i.id = ct.itemid
@@ -253,7 +254,8 @@ where it.invoiceid = @InvoiceId";
                             },
                             Comments = GetString(rs, 9),
                             Consultant = GetString(rs, 10),
-                            IsSubscription = GetInt32(rs, 11) == 1
+                            IsSubscription = GetInt32(rs, 11) == 1,
+                            Date = GetDateTime(rs, 12)
                         }
                     });
                 }
