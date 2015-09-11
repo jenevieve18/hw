@@ -46,28 +46,19 @@ namespace HW.Invoicing.Core.Helpers
 			form.SetField("Text13", invoice.TotalAmount.ToString("0.00"));
 			
 			string items = "";
-//			string quantities = "";
-//			string units = "";
-//			string prices = "";
 			string amounts = "";
 			foreach (var t in invoice.Timebooks) {
 				items += t.Timebook.ToString() + "\n\n";
-//				quantities += t.Timebook.Quantity.ToString() + "\n\n";
-//				units += t.Timebook.Item.Unit.Name + "\n\n";
-//				prices += t.Timebook.Price.ToString("0.00") + "\n\n";
 				amounts += t.Timebook.Amount.ToString("0.00") + "\n\n";
 			}
 			form.SetField("Text8", items);
-//			form.SetField("Text9", prices);
-//			form.SetField("Text9", units);
-//			form.SetField("Text9b", prices);
 			form.SetField("Text9", amounts);
 			
-			if (invoice.VATs.ContainsKey(25))
-			{
-				form.SetField("Text11", 25.ToString("0.00"));
-				form.SetField("Text12", invoice.VATs[25].ToString("0.00"));
-			}
+//			if (invoice.VATs.ContainsKey(25))
+//			{
+//				form.SetField("Text11", 25.ToString("0.00"));
+//				form.SetField("Text12", invoice.VATs[25].ToString("0.00"));
+//			}
 			
 			stamper.FormFlattening = true;
 			foreach (var s in form.Fields.Keys)
@@ -75,8 +66,8 @@ namespace HW.Invoicing.Core.Helpers
 				stamper.PartialFormFlattening(s);
 			}
 			
-//			var b = new VATBox(stamper.GetOverContent(1), invoice.VATs, calibriFont);
-//			b.Draw();
+			var b = new HCGFVATBox(stamper.GetOverContent(1), invoice.VATs, calibriFont, form);
+			b.Draw();
 			
 			stamper.Writer.CloseStream = false;
 			stamper.Close();
@@ -91,33 +82,51 @@ namespace HW.Invoicing.Core.Helpers
 	public class HCGFVATBox
 	{
 		PdfContentByte cb;
-		float y = 87.5f;
-		float height = 27f;
+//		float y = 87.5f;
+		float y = 103f; // + 32f;
+//		float height = 27f;
+		float height = 31.5f;
 		IDictionary<decimal, decimal> vats;
 		string calibriFont;
+		AcroFields form;
 		
-		public HCGFVATBox(PdfContentByte cb, IDictionary<decimal, decimal> vats, string calibriFont)
+		public HCGFVATBox(PdfContentByte cb, IDictionary<decimal, decimal> vats, string calibriFont, AcroFields form)
 		{
 			this.cb = cb;
 			this.vats = vats;
 			this.calibriFont = calibriFont;
+			this.form = form;
 		}
 		
 		public void Draw()
 		{
-			if (vats.ContainsKey(25)) {
-				vats.Remove(25);
-			}
+//			if (vats.ContainsKey(25)) {
+//				vats.Remove(25);
+//			}
 			
-			float x = 358.5f;
-			foreach (var v in vats.Keys) {
-				x -= 64f;
-				DrawRectangle(x, y, 64f, height);
-				SetTexts("MOMS, SEK", vats[v].ToString("0.00"), x + 3, y + 19, y + 4.5f);
-				
-				x -= 41.5f;
-				DrawRectangle(x, y, 41.5f, height);
-				SetTexts("MOMS %", v.ToString(), x + 3, y + 19, y + 4.5f);
+//			float x = 358.5f;
+			float x = 328f; // + 133f;
+			
+			var keys = vats.Keys.ToList().OrderByDescending(j => j);
+			int i = 0;
+			
+//			foreach (var v in vats.Keys) {
+			foreach (var v in keys) {
+				if (i == 0) {
+					form.SetField("Text11", v.ToString("0.00"));
+					form.SetField("Text12", vats[v].ToString("### ##0.00"));
+				} else {
+					float w1 = 70f;
+					x -= w1;
+					DrawRectangle(x, y, w1, height);
+					SetTexts("MOMS, SEK", vats[v].ToString("### ##0.00"), x + 3, y + 22, y + 4.5f);
+					
+					float w2 = 60f;
+					x -= w2;
+					DrawRectangle(x, y, w2, height);
+					SetTexts("MOMS %", v.ToString("0.00"), x + 3, y + 22, y + 4.5f);
+				}
+				i++;
 			}
 		}
 		
