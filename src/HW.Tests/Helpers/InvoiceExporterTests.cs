@@ -29,7 +29,63 @@ namespace HW.Tests.Helpers
 		public void TestIHGFExporter()
 		{
 			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create, FileAccess.Write)) {
-				MemoryStream s = ihg.Export(i, @"IHG faktura MALL Ian without comments.pdf", "calibri.ttf");
+				var x = new Invoice {
+					Customer = new Customer {
+						Name = "Carl T. Escalante",
+						YourReferencePerson = "Gerald S. Hicks",
+						OurReferencePerson = "Michael K. Smith",
+						InvoiceAddress = @"37 East Avenue
+Scottsdale, AZ 85256"
+					},
+					Number = "IHGF-001",
+					Date = DateTime.Now,
+					MaturityDate = DateTime.Now,
+					Timebooks = new System.Collections.Generic.List<InvoiceTimebook>(
+						new InvoiceTimebook[] {
+							new InvoiceTimebook {
+								Timebook = new CustomerTimebook {
+									Item = new Item {
+										Name = "Programming",
+										Unit = new Unit { Name = "months" }
+									},
+									Quantity = 1,
+									Price = 100,
+									VAT = 16,
+									Consultant = "Debbie G. Jackson",
+									Comments = "The cosmos is rooted in visible excellence"
+								}
+							},
+							new InvoiceTimebook {
+								Timebook = new CustomerTimebook {
+									Item = new Item {
+										Name = "Programming",
+										Unit = new Unit { Name = "months" }
+									},
+									Quantity = 1,
+									Price = 100,
+									VAT = 25,
+									Consultant = "Debbie G. Jackson",
+									Comments = "The cosmos is rooted in visible excellence"
+								}
+							},
+							new InvoiceTimebook {
+								Timebook = new CustomerTimebook {
+									Item = new Item {
+										Name = "Programming",
+										Unit = new Unit { Name = "months" }
+									},
+									Quantity = 1,
+									Price = 100,
+									VAT = 10,
+									Consultant = "Debbie G. Jackson",
+									Comments = "The cosmos is rooted in visible excellence"
+								}
+							}
+						}
+					)
+				};
+				MemoryStream s = ihg.Export(x, @"IHG faktura MALL Ian without comments.pdf", "calibri.ttf");
+//				MemoryStream s = ihg.Export(i, @"IHG faktura MALL Ian without comments.pdf", "calibri.ttf");
 				s.WriteTo(f);
 			}
 			Process.Start("test.pdf");
@@ -46,7 +102,63 @@ namespace HW.Tests.Helpers
 		public void TestHCGFExporter()
 		{
 			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create, FileAccess.Write)) {
-				MemoryStream s = hcg.Export(i, @"HCG Fakturamall tom without comments.pdf", "calibri.ttf");
+				var x = new Invoice {
+					Customer = new Customer {
+						Name = "Carl T. Escalante",
+						YourReferencePerson = "Gerald S. Hicks",
+						OurReferencePerson = "Michael K. Smith",
+						InvoiceAddress = @"37 East Avenue
+Scottsdale, AZ 85256"
+					},
+					Number = "IHGF-001",
+					Date = DateTime.Now,
+					MaturityDate = DateTime.Now,
+					Timebooks = new System.Collections.Generic.List<InvoiceTimebook>(
+						new InvoiceTimebook[] {
+							new InvoiceTimebook {
+								Timebook = new CustomerTimebook {
+									Item = new Item {
+										Name = "Programming",
+										Unit = new Unit { Name = "months" }
+									},
+									Quantity = 1,
+									Price = 100,
+									VAT = 16,
+									Consultant = "Debbie G. Jackson",
+									Comments = "The cosmos is rooted in visible excellence"
+								}
+							},
+							new InvoiceTimebook {
+								Timebook = new CustomerTimebook {
+									Item = new Item {
+										Name = "Programming",
+										Unit = new Unit { Name = "months" }
+									},
+									Quantity = 1,
+									Price = 100,
+									VAT = 25,
+									Consultant = "Debbie G. Jackson",
+									Comments = "The cosmos is rooted in visible excellence"
+								}
+							},
+							new InvoiceTimebook {
+								Timebook = new CustomerTimebook {
+									Item = new Item {
+										Name = "Programming",
+										Unit = new Unit { Name = "months" }
+									},
+									Quantity = 1,
+									Price = 100,
+									VAT = 10,
+									Consultant = "Debbie G. Jackson",
+									Comments = "The cosmos is rooted in visible excellence"
+								}
+							}
+						}
+					)
+				};
+				MemoryStream s = hcg.Export(x, @"HCG Fakturamall tom without comments.pdf", "calibri.ttf");
+//				MemoryStream s = hcg.Export(i, @"HCG Fakturamall tom without comments.pdf", "calibri.ttf");
 				s.WriteTo(f);
 			}
 			Process.Start("test.pdf");
