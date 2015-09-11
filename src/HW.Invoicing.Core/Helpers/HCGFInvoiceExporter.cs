@@ -83,9 +83,9 @@ namespace HW.Invoicing.Core.Helpers
 	{
 		PdfContentByte cb;
 //		float y = 87.5f;
-		float y = 103f; // + 32f;
+		float y = 102.5f; // + 32f;
 //		float height = 27f;
-		float height = 31.5f;
+		float height = 32.5f;
 		IDictionary<decimal, decimal> vats;
 		string calibriFont;
 		AcroFields form;
@@ -105,7 +105,7 @@ namespace HW.Invoicing.Core.Helpers
 //			}
 			
 //			float x = 358.5f;
-			float x = 328f; // + 133f;
+			float x = 328.5f; // + 133f;
 			
 			var keys = vats.Keys.ToList().OrderByDescending(j => j);
 			int i = 0;
@@ -132,6 +132,8 @@ namespace HW.Invoicing.Core.Helpers
 		
 		void DrawRectangle(float x, float y, float width, float height)
 		{
+			cb.SetLineWidth(0.3);
+			cb.SetColorStroke(BaseColor.DARK_GRAY);
 			cb.Rectangle(x, y, width, height);
 			cb.SaveState();
 			cb.SetColorFill(new BaseColor(241, 241, 242));
@@ -145,7 +147,7 @@ namespace HW.Invoicing.Core.Helpers
 		void SetTexts(string label, string val, float x, float y, float y2)
 		{
 			BaseFont bf = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
-			cb.SetColorFill(BaseColor.DARK_GRAY);
+			//cb.SetColorFill(BaseColor.DARK_GRAY);
 			cb.SetFontAndSize(bf, 6);
 
 			cb.BeginText();

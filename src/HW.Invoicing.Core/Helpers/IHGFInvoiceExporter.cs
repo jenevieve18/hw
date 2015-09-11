@@ -169,7 +169,7 @@ namespace HW.Invoicing.Core.Helpers
 //				vats.Remove(25);
 //			}
 			
-			float x = 358.5f;
+			float x = 359f;
 //			float x = 464f;
 			int i = 0;
 			
@@ -196,6 +196,8 @@ namespace HW.Invoicing.Core.Helpers
 		
 		void DrawRectangle(float x, float y, float width, float height)
 		{
+			cb.SetLineWidth(0.3);
+			cb.SetColorStroke(BaseColor.DARK_GRAY);
 			cb.Rectangle(x, y, width, height);
 			cb.SaveState();
 			cb.SetColorFill(new BaseColor(241, 241, 242));
