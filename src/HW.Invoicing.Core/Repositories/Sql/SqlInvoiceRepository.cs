@@ -27,20 +27,22 @@ where id = @Id";
         public void Update(Invoice i, int id)
         {
             string query = @"
-update invoice set date = @date, maturitydate = @maturitydate, comments = @comments
-where id = @id";
+UPDATE Invoice SET Date = @Date,
+    MaturityDate = @MaturityDate,
+    Comments = @Comments
+WHERE Id = @Id";
             ExecuteNonQuery(
                 query, 
                 "invoicing",
-                new SqlParameter("@date", i.Date),
-                new SqlParameter("@maturitydate", i.MaturityDate),
-                new SqlParameter("@comments", i.Comments),
-                new SqlParameter("@id", id)
+                new SqlParameter("@Date", i.Date),
+                new SqlParameter("@MaturityDate", i.MaturityDate),
+                new SqlParameter("@Comments", i.Comments),
+                new SqlParameter("@Id", id)
             );
             query = @"
 DELETE FROM InvoiceTimebook
 WHERE InvoiceId = @InvoiceId";
-            ExecuteNonQuery(query, "invoicing", new SqlParameter("@invoiceid", id));
+            ExecuteNonQuery(query, "invoicing", new SqlParameter("@InvoiceId", id));
 
             query = @"
 INSERT INTO InvoiceTimebook(InvoiceId, CustomerTimebookId)
