@@ -29,61 +29,61 @@ namespace HW.Invoicing
             company = cr.Read(ConvertHelper.ToInt32(Session["CompanyId"]));
 
             invoice = r.Read(id);
-            //if (!IsPostBack)
-            //{
-            //    if (invoice != null)
-            //    {
-            //        labelInvoiceNumber.Text = invoice.Number;
-            //        labelInvoiceCustomerNumber.Text = invoice.Customer.Number;
-            //        textBoxInvoiceDate.Text = invoice.Date.Value.ToString("yyyy-MM-dd");
-            //        labelMaturityDate.Text = invoice.MaturityDate.Value.ToString("yyyy-MM-dd");
-            //        labelInvoiceCustomerAddress.Text = invoice.Customer.ToString().Replace("\n", "<br>");
-            //        labelInvoicePurchaseOrderNumber.Text = invoice.Customer.PurchaseOrderNumber;
-            //        labelInvoiceYourReferencePerson.Text = invoice.Customer.YourReferencePerson;
-            //        labelInvoiceOurReferencePerson.Text = invoice.Customer.OurReferencePerson;
-            //        textBoxInvoiceComments.Text = invoice.Comments;
-            //    }
-            //    else
-            //    {
-            //        Response.Redirect("invoices.aspx");
-            //    }
-
-            //    timebooks = ur.FindOpenTimebooks(invoice.Customer.Id);
-            //    if (company != null)
-            //    {
-            //        labelCompanyName.Text = company.Name;
-            //        labelCompanyAddress.Text = company.Address;
-            //        labelCompanyBankAccountNumber.Text = company.BankAccountNumber;
-            //        labelCompanyPhone.Text = company.Phone;
-            //        labelCompanyTIN.Text = company.TIN;
-            //    }
-            //}
-            if (invoice != null)
+            if (!IsPostBack)
             {
-                labelInvoiceNumber.Text = invoice.Number;
-                //labelInvoiceCustomerNumber.Text = invoice.Customer.Number;
-                textBoxInvoiceDate.Text = invoice.Date.Value.ToString("yyyy-MM-dd");
-                labelMaturityDate.Text = invoice.MaturityDate.Value.ToString("yyyy-MM-dd");
-                labelInvoiceCustomerAddress.Text = invoice.Customer.ToString().Replace("\n", "<br>");
-                labelInvoicePurchaseOrderNumber.Text = invoice.Customer.PurchaseOrderNumber;
-                labelInvoiceYourReferencePerson.Text = invoice.Customer.YourReferencePerson;
-                labelInvoiceOurReferencePerson.Text = invoice.Customer.OurReferencePerson;
-                textBoxInvoiceComments.Text = invoice.Comments;
-            }
-            else
-            {
-                Response.Redirect("invoices.aspx");
-            }
+                if (invoice != null)
+                {
+                    labelInvoiceNumber.Text = invoice.Number;
+                    textBoxInvoiceDate.Text = invoice.Date.Value.ToString("yyyy-MM-dd");
+                    labelMaturityDate.Text = invoice.MaturityDate.Value.ToString("yyyy-MM-dd");
+                    labelInvoiceCustomerAddress.Text = invoice.Customer.ToString().Replace("\n", "<br>");
+                    labelInvoicePurchaseOrderNumber.Text = invoice.Customer.PurchaseOrderNumber;
+                    labelInvoiceYourReferencePerson.Text = invoice.Customer.YourReferencePerson;
+                    labelInvoiceOurReferencePerson.Text = invoice.Customer.OurReferencePerson;
+                    textBoxInvoiceComments.Text = invoice.Comments;
+                }
+                else
+                {
+                    Response.Redirect("invoices.aspx");
+                }
 
+                //timebooks = ur.FindOpenTimebooks(invoice.Customer.Id);
+                if (company != null)
+                {
+                    labelCompanyName.Text = company.Name;
+                    labelCompanyAddress.Text = company.Address;
+                    labelCompanyBankAccountNumber.Text = company.BankAccountNumber;
+                    labelCompanyPhone.Text = company.Phone;
+                    labelCompanyTIN.Text = company.TIN;
+                }
+            }
             timebooks = ur.FindOpenTimebooks(invoice.Customer.Id);
-            if (company != null)
-            {
-                labelCompanyName.Text = company.Name;
-                labelCompanyAddress.Text = company.Address;
-                labelCompanyBankAccountNumber.Text = company.BankAccountNumber;
-                labelCompanyPhone.Text = company.Phone;
-                labelCompanyTIN.Text = company.TIN;
-            }
+
+            //if (invoice != null)
+            //{
+            //    labelInvoiceNumber.Text = invoice.Number;
+            //    textBoxInvoiceDate.Text = invoice.Date.Value.ToString("yyyy-MM-dd");
+            //    labelMaturityDate.Text = invoice.MaturityDate.Value.ToString("yyyy-MM-dd");
+            //    labelInvoiceCustomerAddress.Text = invoice.Customer.ToString().Replace("\n", "<br>");
+            //    labelInvoicePurchaseOrderNumber.Text = invoice.Customer.PurchaseOrderNumber;
+            //    labelInvoiceYourReferencePerson.Text = invoice.Customer.YourReferencePerson;
+            //    labelInvoiceOurReferencePerson.Text = invoice.Customer.OurReferencePerson;
+            //    textBoxInvoiceComments.Text = invoice.Comments;
+            //}
+            //else
+            //{
+            //    Response.Redirect("invoices.aspx");
+            //}
+
+            //timebooks = ur.FindOpenTimebooks(invoice.Customer.Id);
+            //if (company != null)
+            //{
+            //    labelCompanyName.Text = company.Name;
+            //    labelCompanyAddress.Text = company.Address;
+            //    labelCompanyBankAccountNumber.Text = company.BankAccountNumber;
+            //    labelCompanyPhone.Text = company.Phone;
+            //    labelCompanyTIN.Text = company.TIN;
+            //}
         }
 
         protected void buttonSave_Click(object sender, EventArgs e)
