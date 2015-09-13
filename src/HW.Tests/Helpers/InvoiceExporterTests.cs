@@ -49,11 +49,12 @@ Scottsdale, AZ 85256"
 										Name = "Programming",
 										Unit = new Unit { Name = "months" }
 									},
+									Date = DateTime.Now,
 									Quantity = 1,
 									Price = 100,
 									VAT = 16,
 									Consultant = "Debbie G. Jackson",
-									Comments = "The cosmos is rooted in visible excellence"
+									Comments = "Programmering av ny WebbQPS baserat på önskemål från chefen på RIA"
 								}
 							},
 							new InvoiceTimebook {
@@ -62,11 +63,12 @@ Scottsdale, AZ 85256"
 										Name = "Programming",
 										Unit = new Unit { Name = "months" }
 									},
+									Date = DateTime.Now,
 									Quantity = 1,
 									Price = 100,
 									VAT = 25,
 									Consultant = "Debbie G. Jackson",
-									Comments = "The cosmos is rooted in visible excellence"
+									Comments = "Framtagande av medelvärden från RIAs senaste Webb-QPS samt kontrastering av värden mot de värden som finns i QPS-Nordics manual."
 								}
 							},
 							new InvoiceTimebook {

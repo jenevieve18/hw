@@ -48,11 +48,27 @@ namespace HW.Invoicing.Core.Helpers
 				prices += t.Timebook.Price.ToString("### ##0.00") + "\n\n";
 				amounts += t.Timebook.Amount.ToString("### ##0.00") + "\n\n";
 			}
-			form.SetField("Text7", items);
-			form.SetField("Text8", quantities);
-			form.SetField("Text9", units);
-			form.SetField("Text9b", prices);
-			form.SetField("Text9c", amounts);
+			
+			var f = BaseFont.CreateFont(calibriFont, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+			float fontSize = 9f;
+			
+//			form.SetField("Text7", items);
+//			form.SetFieldProperty("Text7", "textfont", f, null);
+//			form.SetFieldProperty("Text7", "textsize", 8f, null);
+			
+			SetFieldProperty(form, "Text7", items, f, fontSize);
+			
+//			form.SetField("Text8", quantities);
+			SetFieldProperty(form, "Text8", quantities, f, fontSize);
+			
+//			form.SetField("Text9", units);
+			SetFieldProperty(form, "Text9", units, f, fontSize);
+			
+//			form.SetField("Text9b", prices);
+			SetFieldProperty(form, "Text9b", prices, f, fontSize);
+			
+//			form.SetField("Text9c", amounts);
+			SetFieldProperty(form, "Text9c", amounts, f, fontSize);
 			
 //			if (invoice.VATs.ContainsKey(25))
 //			{
@@ -74,6 +90,13 @@ namespace HW.Invoicing.Core.Helpers
 			reader.Close();
 			
 			return output;
+		}
+		
+		void SetFieldProperty(AcroFields form, string name, string text, BaseFont f, float size)
+		{
+			form.SetField(name, text);
+			form.SetFieldProperty(name, "textfont", f, null);
+			form.SetFieldProperty(name, "textsize", size, null);
 		}
 		
 		#region Commented
