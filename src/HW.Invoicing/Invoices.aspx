@@ -71,6 +71,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <h3>Invoices</h3>
+
+<p><%= HtmlHelper.Anchor("Revert all invoices", "invoicerevertall.aspx", "class='btn btn-danger'") %></p>
+
 <p>
     <asp:DropDownList ID="dropDownListFinancialYear" CssClass="form-control" 
         runat="server" AutoPostBack="true"

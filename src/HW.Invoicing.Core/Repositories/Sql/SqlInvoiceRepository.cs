@@ -8,6 +8,28 @@ namespace HW.Invoicing.Core.Repositories.Sql
 {
 	public class SqlInvoiceRepository : BaseSqlRepository<Invoice>, IInvoiceRepository
 	{
+        public void RevertAll(int companyId, int invoiceNumber)
+        {
+            string query = @"
+DELETE it FROM InvoiceTimebook it
+INNER JOIN Invoice i ON i.Id = it.InvoiceId
+INNER JOIN Customer c ON i.CustomerId = c.Id
+WHERE c.CompanyId = @CompanyId;
+
+DELETE i FROM Invoice i
+INNER JOIN Customer c ON i.CustomerId = c.Id
+WHERE c.CompanyId = @CompanyId;
+
+UPDATE GeneratedNumber SET Invoice = @InvoiceNumber
+WHERE CompanyId = @CompanyId";
+            ExecuteNonQuery(
+                query,
+                "invoicing",
+                new SqlParameter("@CompanyId", companyId),
+                new SqlParameter("@InvoiceNumber", invoiceNumber)
+            );
+        }
+
         public void UpdateInternalComments(string comments, int id)
         {
             string query = @"
