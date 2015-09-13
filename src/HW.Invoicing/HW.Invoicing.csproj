@@ -95,6 +95,7 @@
     <Content Include="InvoiceEdit.aspx" />
     <Content Include="InvoiceExport.aspx" />
     <Content Include="InvoiceReceivePayment.aspx" />
+    <Content Include="InvoiceRevert.aspx" />
     <Content Include="InvoiceRevertAll.aspx" />
     <Content Include="InvoiceRevertPayment.aspx" />
     <Content Include="Invoices.aspx" />
@@ -410,6 +411,13 @@
     </Compile>
     <Compile Include="InvoiceReceivePayment.aspx.designer.cs">
       <DependentUpon>InvoiceReceivePayment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InvoiceRevert.aspx.cs">
+      <DependentUpon>InvoiceRevert.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InvoiceRevert.aspx.designer.cs">
+      <DependentUpon>InvoiceRevert.aspx</DependentUpon>
     </Compile>
     <Compile Include="InvoiceRevertAll.aspx.cs">
       <DependentUpon>InvoiceRevertAll.aspx</DependentUpon>

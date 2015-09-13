@@ -34,7 +34,8 @@ namespace HW.Tests.Helpers
 						Name = "Carl T. Escalante",
 						YourReferencePerson = "Gerald S. Hicks",
 						OurReferencePerson = "Michael K. Smith",
-						InvoiceAddress = @"37 East Avenue
+						InvoiceAddress = @"Carl T. Escalante
+37 East Avenue
 Scottsdale, AZ 85256"
 					},
 					Number = "IHGF-001",

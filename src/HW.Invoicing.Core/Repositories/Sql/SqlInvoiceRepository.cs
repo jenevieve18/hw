@@ -8,6 +8,14 @@ namespace HW.Invoicing.Core.Repositories.Sql
 {
 	public class SqlInvoiceRepository : BaseSqlRepository<Invoice>, IInvoiceRepository
 	{
+        public void Revert(int id)
+        {
+            string query = @"
+DELETE FROM InvoiceTimebook WHERE InvoiceId = @InvoiceId;
+DELETE FROM Invoice WHERE Id = @InvoiceId";
+            ExecuteNonQuery(query, "invoicing", new SqlParameter("@InvoiceId", id));
+        }
+
         public void RevertAll(int companyId, int invoiceNumber)
         {
             string query = @"

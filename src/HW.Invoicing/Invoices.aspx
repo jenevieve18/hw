@@ -72,7 +72,7 @@
 
 <h3>Invoices</h3>
 
-<p><%= HtmlHelper.Anchor("Revert all invoices", "invoicerevertall.aspx", "class='btn btn-danger'") %></p>
+<%--<p><%= HtmlHelper.Anchor("Revert all invoices", "invoicerevertall.aspx", "class='btn btn-danger'") %></p>--%>
 
 <p>
     <asp:DropDownList ID="dropDownListFinancialYear" CssClass="form-control" 
