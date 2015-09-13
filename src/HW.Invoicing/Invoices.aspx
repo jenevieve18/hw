@@ -133,6 +133,7 @@
                             <li><%= HtmlHelper.Anchor("Paid", "invoicereceivepayment.aspx?Id=" + i.Id) %></li>
                         <% } %>
                         <li><%= HtmlHelper.Anchor("PDF", "invoiceexport.aspx?Id=" + i.Id, "target='_blank'")%></li>
+                        <li><%= HtmlHelper.Anchor("PDF Flatten", "invoiceexport.aspx?Id=" + i.Id + "&Flatten=1", "target='_blank'")%></li>
 				    </ul>
 			    </div>
             </td>

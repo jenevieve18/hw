@@ -13,11 +13,11 @@ namespace HW.Invoicing.Core.Helpers
 {
 	public interface IInvoiceExporter
 	{
-		MemoryStream Export(Invoice invoice, string templateFileName, string calibriFont);
+		MemoryStream Export(Invoice invoice, string templateFileName, string calibriFont, bool flatten);
 	}
 	
 	public abstract class AbstractInvoiceExporter : IInvoiceExporter
 	{
-		public abstract MemoryStream Export(Invoice invoice, string templateFileName, string calibriFont);
+		public abstract MemoryStream Export(Invoice invoice, string templateFileName, string calibriFont, bool flatten);
 	}
 }

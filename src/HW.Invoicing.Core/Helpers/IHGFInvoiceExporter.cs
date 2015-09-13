@@ -13,7 +13,7 @@ namespace HW.Invoicing.Core.Helpers
 {
 	public class IHGFInvoiceExporter : AbstractInvoiceExporter
 	{
-		public override MemoryStream Export(Invoice invoice, string templateFileName, string calibriFont)
+		public override MemoryStream Export(Invoice invoice, string templateFileName, string calibriFont, bool flatten)
 		{
 			MemoryStream output = new MemoryStream();
 			
@@ -52,34 +52,22 @@ namespace HW.Invoicing.Core.Helpers
 			var f = BaseFont.CreateFont(calibriFont, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
 			float fontSize = 9f;
 			
-//			form.SetField("Text7", items);
-//			form.SetFieldProperty("Text7", "textfont", f, null);
-//			form.SetFieldProperty("Text7", "textsize", 8f, null);
-			
 			SetFieldProperty(form, "Text7", items, f, fontSize);
 			
-//			form.SetField("Text8", quantities);
 			SetFieldProperty(form, "Text8", quantities, f, fontSize);
 			
-//			form.SetField("Text9", units);
 			SetFieldProperty(form, "Text9", units, f, fontSize);
 			
-//			form.SetField("Text9b", prices);
 			SetFieldProperty(form, "Text9b", prices, f, fontSize);
 			
-//			form.SetField("Text9c", amounts);
 			SetFieldProperty(form, "Text9c", amounts, f, fontSize);
 			
-//			if (invoice.VATs.ContainsKey(25))
-//			{
-//				form.SetField("Text11b", 25.ToString("0.00"));
-//				form.SetField("Text12", invoice.VATs[25].ToString("### ##0.00"));
-//			}
-//			
-			stamper.FormFlattening = true;
-			foreach (var s in form.Fields.Keys)
-			{
-				stamper.PartialFormFlattening(s);
+			if (flatten) {
+				stamper.FormFlattening = true;
+				foreach (var s in form.Fields.Keys)
+				{
+					stamper.PartialFormFlattening(s);
+				}
 			}
 			
 			var b = new IHGFVATBox(stamper.GetOverContent(1), invoice.VATs, calibriFont, form);

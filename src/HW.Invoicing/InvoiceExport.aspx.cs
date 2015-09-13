@@ -22,6 +22,7 @@ namespace HW.Invoicing
             HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
 
             int id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
+            bool flatten = ConvertHelper.ToInt32(Request.QueryString["Flatten"]) == 1;
 
             r.Exported(id);
 
@@ -29,8 +30,6 @@ namespace HW.Invoicing
             int companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
             var company = cr.Read(companyId);
 
-//            var exporter = new IHGFInvoiceExporter();
-            
             Response.ClearHeaders();
             Response.ClearContent();
             Response.ContentType = System.Net.Mime.MediaTypeNames.Application.Pdf;
@@ -42,7 +41,7 @@ namespace HW.Invoicing
             
             var exporter = InvoiceExporterFactory.GetExporter(company.HasInvoiceTemplate ? companyId : InvoiceExporterFactory.IHGF);
             
-            var exported = exporter.Export(invoice, templateFileName, Server.MapPath(@"calibri.ttf"));
+            var exported = exporter.Export(invoice, templateFileName, Server.MapPath(@"calibri.ttf"), flatten);
             exported.WriteTo(Response.OutputStream);
 
             Response.Flush();

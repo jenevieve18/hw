@@ -13,12 +13,12 @@ namespace HW.Invoicing.Core.Helpers
 {
 	public class HCGFInvoiceExporter : AbstractInvoiceExporter
 	{
-		public MemoryStream Export(Invoice invoice)
-		{
-			return Export(invoice, @"HCG Fakturamall tom without comments.pdf", @"calibri.ttf");
-		}
-		
-		public override MemoryStream Export(Invoice invoice, string templateFileName, string calibriFont)
+//		public MemoryStream Export(Invoice invoice)
+//		{
+//			return Export(invoice, @"HCG Fakturamall tom without comments.pdf", @"calibri.ttf");
+//		}
+//		
+		public override MemoryStream Export(Invoice invoice, string templateFileName, string calibriFont, bool flatten)
 		{
 			MemoryStream output = new MemoryStream();
 			
@@ -27,10 +27,6 @@ namespace HW.Invoicing.Core.Helpers
 			var stamper = new PdfStamper(reader, output);
 			var form = stamper.AcroFields;
 			var fieldKeys = form.Fields.Keys;
-			
-//			foreach (var k in fieldKeys) {
-//				form.SetField(k, k);
-//			}
 			
 			form.SetField("Text1", invoice.Customer.Number);
 			form.SetField("Text2", invoice.Number);
@@ -54,16 +50,12 @@ namespace HW.Invoicing.Core.Helpers
 			form.SetField("Text8", items);
 			form.SetField("Text9", amounts);
 			
-//			if (invoice.VATs.ContainsKey(25))
-//			{
-//				form.SetField("Text11", 25.ToString("0.00"));
-//				form.SetField("Text12", invoice.VATs[25].ToString("0.00"));
-//			}
-			
-			stamper.FormFlattening = true;
-			foreach (var s in form.Fields.Keys)
-			{
-				stamper.PartialFormFlattening(s);
+			if (flatten) {
+				stamper.FormFlattening = true;
+				foreach (var s in form.Fields.Keys)
+				{
+					stamper.PartialFormFlattening(s);
+				}
 			}
 			
 			var b = new HCGFVATBox(stamper.GetOverContent(1), invoice.VATs, calibriFont, form);

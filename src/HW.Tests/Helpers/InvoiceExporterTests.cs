@@ -87,7 +87,7 @@ Scottsdale, AZ 85256"
 						}
 					)
 				};
-				MemoryStream s = ihg.Export(x, @"IHG faktura MALL Ian without comments.pdf", "calibri.ttf");
+				MemoryStream s = ihg.Export(x, @"IHG faktura MALL Ian without comments.pdf", "calibri.ttf", true);
 //				MemoryStream s = ihg.Export(i, @"IHG faktura MALL Ian without comments.pdf", "calibri.ttf");
 				s.WriteTo(f);
 			}
