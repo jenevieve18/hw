@@ -32,6 +32,7 @@ namespace HW.Tests.Helpers
 				var x = new Invoice {
 					Customer = new Customer {
 						Name = "Carl T. Escalante",
+						PurchaseOrderNumber = "XXX-01234",
 						YourReferencePerson = "Gerald S. Hicks",
 						OurReferencePerson = "Michael K. Smith",
 						InvoiceAddress = @"Carl T. Escalante
@@ -87,7 +88,7 @@ Scottsdale, AZ 85256"
 						}
 					)
 				};
-				MemoryStream s = ihg.Export(x, @"IHG faktura MALL Ian without comments.pdf", "calibri.ttf", true);
+				MemoryStream s = ihg.Export(x, @"IHG faktura MALL Ian without comments.pdf", "arial.ttf", true);
 //				MemoryStream s = ihg.Export(i, @"IHG faktura MALL Ian without comments.pdf", "calibri.ttf");
 				s.WriteTo(f);
 			}
@@ -160,7 +161,7 @@ Scottsdale, AZ 85256"
 						}
 					)
 				};
-				MemoryStream s = hcg.Export(x, @"HCG Fakturamall tom without comments.pdf", "calibri.ttf");
+				MemoryStream s = hcg.Export(x, @"HCG Fakturamall tom without comments.pdf", "calibri.ttf", true);
 //				MemoryStream s = hcg.Export(i, @"HCG Fakturamall tom without comments.pdf", "calibri.ttf");
 				s.WriteTo(f);
 			}
