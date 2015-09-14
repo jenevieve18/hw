@@ -8,12 +8,18 @@ namespace HW.Invoicing.Core.Repositories.Sql
 {
 	public class SqlInvoiceRepository : BaseSqlRepository<Invoice>, IInvoiceRepository
 	{
-        public void Revert(int id)
+        public void Revert(Invoice invoice)
         {
             string query = @"
 DELETE FROM InvoiceTimebook WHERE InvoiceId = @InvoiceId;
-DELETE FROM Invoice WHERE Id = @InvoiceId";
-            ExecuteNonQuery(query, "invoicing", new SqlParameter("@InvoiceId", id));
+DELETE FROM Invoice WHERE Id = @InvoiceId
+UPDATE GeneratedNumber SET Invoice = Invoice - 1 WHERE CompanyId = @CompanyId";
+            ExecuteNonQuery(
+                query,
+                "invoicing",
+                new SqlParameter("@InvoiceId", invoice.Id),
+                new SqlParameter("@CompanyId", invoice.Customer.Company.Id)
+            );
         }
 
         public void RevertAll(int companyId, int invoiceNumber)
@@ -202,16 +208,18 @@ SELECT i.Id,
     i.Date,
     i.CustomerId,
     c.Name,
-    c.invoiceaddress,
-    c.purchaseordernumber,
-    c.yourreferenceperson,
-    c.ourreferenceperson,
-    i.number,
-    c.number,
-    i.status,
-    i.comments
+    c.InvoiceAddress,
+    c.PurchaseOrderNumber,
+    c.YourReferencePerson,
+    c.OurReferencePerson,
+    i.Number,
+    c.Number,
+    i.Status,
+    i.Comments,
+    co.Id
 FROM Invoice i
 INNER JOIN Customer c ON c.Id = i.CustomerId
+INNER JOIN Company co ON co.Id = c.CompanyId
 WHERE i.Id = @Id"
 			);
 			Invoice i = null;
@@ -222,14 +230,19 @@ WHERE i.Id = @Id"
                         Id = GetInt32(rs, 0),
                         Date = GetDateTime(rs, 1),
                         Number = GetString(rs, 8),
-                        Customer = new Customer {
+                        Customer = new Customer
+                        {
                             Id = GetInt32(rs, 2),
                             Name = GetString(rs, 3),
                             InvoiceAddress = GetString(rs, 4),
                             PurchaseOrderNumber = GetString(rs, 5),
                             YourReferencePerson = GetString(rs, 6),
                             OurReferencePerson = GetString(rs, 7),
-                            Number = GetString(rs, 9)
+                            Number = GetString(rs, 9),
+                            Company = new Company
+                            {
+                                Id = GetInt32(rs, 12)
+                            }
                         },
                         Status = GetInt32(rs, 10),
                         Comments = GetString(rs, 11)

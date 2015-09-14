@@ -16,7 +16,9 @@ namespace HW.Invoicing
         protected void Page_Load(object sender, EventArgs e)
         {
             int id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
-            r.Revert(id);
+            var i = r.Read(id);
+            r.Revert(i);
+            Response.Redirect("invoices.aspx");
         }
     }
 }

@@ -19,6 +19,7 @@ namespace HW.Invoicing
         SqlCompanyRepository cr = new SqlCompanyRepository();
         protected Company company;
         int companyId;
+        int latestInvoiceId;
 
         [WebMethod]
         public static string UpdateInternalComments(string comments, int id)
@@ -28,13 +29,25 @@ namespace HW.Invoicing
             return comments;
         }
 
+        protected bool IsLatestInvoice(string invoiceNumber)
+        {
+            int number = 0;
+            string[] numbers = invoiceNumber.Split('-');
+            if (numbers.Length > 1)
+            {
+                number = ConvertHelper.ToInt32(numbers[1]);
+            }
+            return number == latestInvoiceId;
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
 
-            //company = cr.Read(1);
             companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
             company = cr.Read(companyId);
+
+            latestInvoiceId = r.GetLatestInvoiceNumber(companyId) - 1;
 
             if (!IsPostBack)
             {
