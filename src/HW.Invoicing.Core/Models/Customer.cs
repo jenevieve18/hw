@@ -446,9 +446,9 @@ namespace HW.Invoicing.Core.Models
 		public override void Validate()
 		{
 			base.Validate();
-            AddErrorIf(Lecturer == "", "Lecturer should not be empty.");
-            AddErrorIf(LectureTitle == "", "Lecture title should not be empty.");
-            AddErrorIf(Contact == "", "Contact should not be empty.");
+            //AddErrorIf(Lecturer == "", "Lecturer should not be empty.");
+            //AddErrorIf(LectureTitle == "", "Lecture title should not be empty.");
+            //AddErrorIf(Contact == "", "Contact should not be empty.");
 		}
     }
     

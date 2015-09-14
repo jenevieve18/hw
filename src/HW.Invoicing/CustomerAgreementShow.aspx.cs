@@ -73,7 +73,7 @@ namespace HW.Invoicing
                         textBoxAgreementContactTitle.Text = agreement.ContactTitle;
                         textBoxAgreementContactCompany.Text = agreement.ContactCompany;
                         
-                        labelAgreementDateSigned.Text = agreement.DateSigned.Value.ToString("yyyy-MM-dd");
+                        labelAgreementDateSigned.Text = agreement.DateSigned != null ? agreement.DateSigned.Value.ToString("yyyy-MM-dd") : "";
                     }
                     else
                     {

@@ -117,6 +117,7 @@ namespace HW.Invoicing
 
                     // Agreement
                     textBoxAgreementDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
+                    textBoxAgreementPaymentTerms.Text = "30 dagar";
                 }
             }
 
