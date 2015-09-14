@@ -41,7 +41,8 @@ namespace HW.Invoicing
             
             var exporter = InvoiceExporterFactory.GetExporter(company.HasInvoiceTemplate ? companyId : InvoiceExporterFactory.IHGF);
             
-            var exported = exporter.Export(invoice, templateFileName, Server.MapPath(@"calibri.ttf"), flatten);
+            //var exported = exporter.Export(invoice, templateFileName, Server.MapPath(@"calibri.ttf"), flatten);
+            var exported = exporter.Export(invoice, templateFileName, Server.MapPath(@"arial.ttf"), flatten);
             exported.WriteTo(Response.OutputStream);
 
             Response.Flush();

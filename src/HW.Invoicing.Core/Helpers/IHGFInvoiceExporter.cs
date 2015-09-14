@@ -13,7 +13,7 @@ namespace HW.Invoicing.Core.Helpers
 {
 	public class IHGFInvoiceExporter : AbstractInvoiceExporter
 	{
-		public override MemoryStream Export(Invoice invoice, string templateFileName, string calibriFont, bool flatten)
+		public override MemoryStream Export(Invoice invoice, string templateFileName, string font, bool flatten)
 		{
 			MemoryStream output = new MemoryStream();
 			
@@ -22,19 +22,32 @@ namespace HW.Invoicing.Core.Helpers
 			var stamper = new PdfStamper(reader, output) { };
 			var form = stamper.AcroFields;
 			var fieldKeys = form.Fields.Keys;
+
+			var f = BaseFont.CreateFont(font, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
 			
-			form.SetField("Text1", invoice.Customer.Number);
-			form.SetField("Text2", invoice.Number);
-			form.SetField("Text3", invoice.Date.Value.ToString("yyyy-MM-dd"));
-			form.SetField("Text4", invoice.MaturityDate.Value.ToString("yyyy-MM-dd"));
+//			form.SetField("Text1", invoice.Customer.Number);
+//			form.SetField("Text2", invoice.Number);
+//			form.SetField("Text3", invoice.Date.Value.ToString("yyyy-MM-dd"));
+//			form.SetField("Text4", invoice.MaturityDate.Value.ToString("yyyy-MM-dd"));
+
+			float fontSize = 9f;
+			SetFieldProperty(form, "Text1", invoice.Customer.Number, f, fontSize);
+			SetFieldProperty(form, "Text2", invoice.Number, f, fontSize);
+			SetFieldProperty(form, "Text3", invoice.Date.Value.ToString("yyyy-MM-dd"), f, fontSize);
+			SetFieldProperty(form, "Text4", invoice.MaturityDate.Value.ToString("yyyy-MM-dd"), f, fontSize);
 			
-			form.SetField("Text5", invoice.Customer.YourReferencePerson);
-			form.SetField("Text6", invoice.Customer.OurReferencePerson);
+//			form.SetField("Text5", invoice.Customer.YourReferencePerson);
+//			form.SetField("Text6", invoice.Customer.OurReferencePerson);
+			SetFieldProperty(form, "Text5", invoice.Customer.YourReferencePerson, f, 8f);
+			SetFieldProperty(form, "Text6", invoice.Customer.OurReferencePerson, f, 8f);
 			
-			form.SetField("Text6B", invoice.Customer.ToString());
+//			form.SetField("Text6B", invoice.Customer.ToString() + "\n\nPurchase Order Number: " + invoice.Customer.PurchaseOrderNumber);
+			SetFieldProperty(form, "Text6B", invoice.Customer.ToString() + "\n\nPurchase Order Number: " + invoice.Customer.PurchaseOrderNumber, f, fontSize);
 			
-			form.SetField("Text10b", invoice.SubTotal.ToString("### ##0.00"));
-			form.SetField("Text13", invoice.TotalAmount.ToString("### ##0.00"));
+//			form.SetField("Text10b", invoice.SubTotal.ToString("### ##0.00"));
+//			form.SetField("Text13", invoice.TotalAmount.ToString("### ##0.00"));
+			SetFieldProperty(form, "Text10b", invoice.SubTotal.ToString("### ##0.00"), f, fontSize);
+			SetFieldProperty(form, "Text13", invoice.TotalAmount.ToString("### ##0.00"), f, fontSize);
 			
 			string items = "";
 			string quantities = "";
@@ -49,18 +62,17 @@ namespace HW.Invoicing.Core.Helpers
 				amounts += t.Timebook.Amount.ToString("### ##0.00") + "\n\n";
 			}
 			
-			var f = BaseFont.CreateFont(calibriFont, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
-			float fontSize = 9f;
+			float itemFontSize = 8f;
 			
-			SetFieldProperty(form, "Text7", items, f, fontSize);
+			SetFieldProperty(form, "Text7", items, f, itemFontSize);
 			
-			SetFieldProperty(form, "Text8", quantities, f, fontSize);
+			SetFieldProperty(form, "Text8", quantities, f, itemFontSize);
 			
-			SetFieldProperty(form, "Text9", units, f, fontSize);
+			SetFieldProperty(form, "Text9", units, f, itemFontSize);
 			
-			SetFieldProperty(form, "Text9b", prices, f, fontSize);
+			SetFieldProperty(form, "Text9b", prices, f, itemFontSize);
 			
-			SetFieldProperty(form, "Text9c", amounts, f, fontSize);
+			SetFieldProperty(form, "Text9c", amounts, f, itemFontSize);
 			
 			if (flatten) {
 				stamper.FormFlattening = true;
@@ -70,7 +82,7 @@ namespace HW.Invoicing.Core.Helpers
 				}
 			}
 			
-			var b = new IHGFVATBox(stamper.GetOverContent(1), invoice.VATs, calibriFont, form);
+			var b = new IHGFVATBox(stamper.GetOverContent(1), invoice.VATs, font, form);
 			b.Draw();
 			
 			stamper.Writer.CloseStream = false;
