@@ -296,7 +296,7 @@ namespace HW.Invoicing.Core.Models
 			Errors.Clear();
 			AddErrorIf(Number == "", "Customer number shouldn't be empty.");
 			AddErrorIf(Name == "", "Customer name shouldn't be empty.");
-			AddErrorIf(PostalAddress == "", "Postal address shouldn't be empty.");
+			//AddErrorIf(PostalAddress == "", "Postal address shouldn't be empty.");
 			AddErrorIf(InvoiceAddress == "", "Invoice address shouldn't be empty.");
 			AddErrorIf(YourReferencePerson == "", "Your reference person shouldn't be empty.");
 			AddErrorIf(OurReferencePerson == "", "Our reference person shouldn't be empty.");
