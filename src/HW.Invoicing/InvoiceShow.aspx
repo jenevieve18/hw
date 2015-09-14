@@ -41,7 +41,8 @@
         <td class="hw-border-top">Invoice Date</td>
         <td class="hw-border-top">
             <strong>
-                <%= DateTime.Now.ToString("yyyy-MM-dd") %>
+                <asp:Label ID="labelInvoiceDate" runat="server" Text=""></asp:Label>
+                <%--<%= DateTime.Now.ToString("yyyy-MM-dd") %>--%>
             </strong>
         </td>
     </tr>
@@ -52,7 +53,10 @@
         <td></td>
         <td class="hw-border-top">Maturity Date</td>
         <td class="hw-border-top">
-            <strong>2012-06-30</strong>
+            <strong>
+                <asp:Label ID="labelMaturityDate" runat="server" Text=""></asp:Label>
+            </strong>
+            <%--<strong>2012-06-30</strong>--%>
         </td>
     </tr>
     <tr>

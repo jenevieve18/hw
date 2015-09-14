@@ -29,6 +29,8 @@ namespace HW.Invoicing
             if (invoice != null)
             {
                 labelInvoiceNumber.Text = invoice.Number;
+                labelInvoiceDate.Text = invoice.Date.Value.ToString("yyyy-MM-dd");
+                labelMaturityDate.Text = invoice.MaturityDate.Value.ToString("yyyy-MM-dd");
                 labelInvoiceCustomerNumber.Text = invoice.Customer.Number;
                 //labelInvoiceCustomerAddress.Text = invoice.Customer.InvoiceAddress.Replace("\n", "<br>");
                 labelInvoiceCustomerAddress.Text = invoice.Customer.ToString().Replace("\n", "<br>");
