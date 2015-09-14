@@ -1064,6 +1064,7 @@
                 <tr>
                     <th>Date Created</th>
                     <th>Lecturer</th>
+                    <th>Lecturer Title</th>
                     <th>Contact</th>
                     <th>Mobile</th>
                     <th>Email</th>
@@ -1074,6 +1075,7 @@
                     <tr>
                         <td><%= a.Date.Value.ToString("yyyy-MM-dd") %></td>
                         <td><%= a.Lecturer %></td>
+                        <td><%= a.LectureTitle %></td>
                         <td><%= a.Contact %></td>
                         <td><%= a.Mobile %></td>
                         <td><%= a.Email %></td>
