@@ -1075,7 +1075,7 @@
                     <tr>
                         <td><%= a.Date.Value.ToString("yyyy-MM-dd") %></td>
                         <td><%= a.Lecturer %></td>
-                        <td><%= a.LectureTitle %></td>
+                        <td style="width:250px"><%= a.LectureTitle %></td>
                         <td><%= a.Contact %></td>
                         <td><%= a.Mobile %></td>
                         <td><%= a.Email %></td>
