@@ -108,6 +108,7 @@ Scottsdale, AZ 85256"
 			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create, FileAccess.Write)) {
 				var x = new Invoice {
 					Customer = new Customer {
+						PurchaseOrderNumber = "XXX-001",
 						Name = "Carl T. Escalante",
 						YourReferencePerson = "Gerald S. Hicks",
 						OurReferencePerson = "Michael K. Smith",
