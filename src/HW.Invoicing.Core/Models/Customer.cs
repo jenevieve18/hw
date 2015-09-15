@@ -376,6 +376,7 @@ namespace HW.Invoicing.Core.Models
 	{
 		public Customer Customer { get; set; }
 		public string Contact { get; set; }
+        public string Title { get; set; }
 		public string Phone { get; set; }
 		public string Mobile { get; set; }
 		public string Email { get; set; }

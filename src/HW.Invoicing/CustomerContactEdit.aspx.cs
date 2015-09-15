@@ -44,6 +44,7 @@ namespace HW.Invoicing
                 if (c != null)
                 {
                     textBoxContact.Text = c.Contact;
+                    textBoxContactTitle.Text = c.Title;
                     textBoxPhone.Text = c.Phone;
                     textBoxMobile.Text = c.Mobile;
                     textBoxEmail.Text = c.Email;
@@ -63,6 +64,7 @@ namespace HW.Invoicing
         {
             var c = new CustomerContact {
                 Contact = textBoxContact.Text,
+                Title = textBoxContactTitle.Text,
                 Phone = textBoxPhone.Text,
                 Mobile = textBoxMobile.Text,
                 Email = textBoxEmail.Text,

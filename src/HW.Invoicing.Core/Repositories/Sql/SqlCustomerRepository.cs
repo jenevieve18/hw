@@ -126,8 +126,8 @@ DELETE FROM CustomerContact WHERE Id = @Id";
 		{
 			string query = string.Format(
 				@"
-INSERT INTO CustomerContact(CustomerId, Contact, Phone, Mobile, Email, Type)
-VALUES(@CustomerId, @Contact, @Phone, @Mobile, @Email, @Type)"
+INSERT INTO CustomerContact(CustomerId, Contact, Phone, Mobile, Email, Type, Title)
+VALUES(@CustomerId, @Contact, @Phone, @Mobile, @Email, @Type, @Title)"
 			);
 			ExecuteNonQuery(
 				query,
@@ -137,7 +137,8 @@ VALUES(@CustomerId, @Contact, @Phone, @Mobile, @Email, @Type)"
 				new SqlParameter("@Phone", contact.Phone),
 				new SqlParameter("@Mobile", contact.Mobile),
 				new SqlParameter("@Email", contact.Email),
-				new SqlParameter("@Type", contact.Type)
+                new SqlParameter("@Type", contact.Type),
+                new SqlParameter("@Title", contact.Title)
 			);
 		}
 		
@@ -415,11 +416,12 @@ WHERE Id = @Id"
             string query = string.Format(
                 @"
 UPDATE CustomerContact SET Contact = @Contact,
-Phone = @Phone,
-Mobile = @Mobile,
-Email = @Email,
-Inactive = @Inactive,
-Type = @Type
+    Phone = @Phone,
+    Mobile = @Mobile,
+    Email = @Email,
+    Inactive = @Inactive,
+    Type = @Type,
+    Title = @Title
 WHERE Id = @Id"
             );
             ExecuteNonQuery(
@@ -431,7 +433,8 @@ WHERE Id = @Id"
                 new SqlParameter("@Email", c.Email),
                 new SqlParameter("@Id", id),
                 new SqlParameter("@Inactive", c.Inactive),
-                new SqlParameter("@Type", c.Type)
+                new SqlParameter("@Type", c.Type),
+                new SqlParameter("@Title", c.Title)
             );
         }
 
@@ -931,8 +934,9 @@ SELECT Id,
     Phone,
     Mobile,
     Email,
-Inactive,
-Type
+    Inactive,
+    Type,
+    Title
 FROM CustomerContact
 WHERE Id = @Id"
             );
@@ -949,7 +953,8 @@ WHERE Id = @Id"
                         Mobile = GetString(rs, 3),
                         Email = GetString(rs, 4),
                         Inactive = GetInt32(rs, 5) == 1,
-                        Type = GetInt32(rs, 6, 3)
+                        Type = GetInt32(rs, 6, 3),
+                        Title = GetString(rs, 7)
                     };
                 }
             }
@@ -1348,7 +1353,8 @@ SELECT Contact,
 	Email,
 	Id,
 	Inactive,
-	Type
+	Type,
+    Title
 FROM CustomerContact
 WHERE CustomerId = @CustomerId
 ORDER BY Type"
@@ -1364,7 +1370,8 @@ ORDER BY Type"
 							Email = GetString(rs, 3),
 							Id = GetInt32(rs, 4),
 							Inactive = GetInt32(rs, 5) == 1,
-							Type = GetInt32(rs, 6)
+							Type = GetInt32(rs, 6),
+                            Title = GetString(rs, 7)
 						}
 					);
 				}

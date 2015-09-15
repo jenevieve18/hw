@@ -879,6 +879,10 @@
                                     <asp:TextBox ID="textBoxContact" runat="server" CssClass="form-control"></asp:TextBox>
                                 </div>
                                 <div class="form-group">
+	                                <label for="">Contact title</label>
+                                    <asp:TextBox ID="textBoxContactTitle" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
 	                                <label for="">Phone</label>
                                     <asp:TextBox ID="textBoxContactPhone" runat="server" CssClass="form-control"></asp:TextBox>
                                 </div>
@@ -910,6 +914,7 @@
                 <tr>
                     <td></td>
                     <th>Contact Person</th>
+                    <th>Title</th>
                     <th>Phone</th>
                     <th>Mobile</th>
                     <th>Email</th>
@@ -920,12 +925,11 @@
                         <tr>
                             <td><%= c.GetContactType() %></td>
                             <td><strike><%= c.Contact %></strike></td>
+                            <td><strike><%= c.Title %></strike></td>
                             <td><strike><%= c.Phone %></strike></td>
                             <td><strike><%= c.Mobile %></strike></td>
                             <td><strike><%= c.Email %></strike></td>
                             <td>
-                                <%--<%= HtmlHelper.Anchor("Edit", string.Format("customercontactedit.aspx?Id={0}&CustomerId={1}", c.Id, id)) %>
-                                <%= HtmlHelper.Anchor("Delete", string.Format("customercontactdelete.aspx?Id={0}&CustomerId={1}", c.Id, id), "onclick=\"return confirm('Are you sure you want to delete this contact person?')\"")%>--%>
                                 <%= HtmlHelper.Anchor(" ", string.Format("customercontactedit.aspx?Id={0}&CustomerId={1}", c.Id, id), "title='Edit' class='glyphicon glyphicon-edit'")%>
                                 <%= HtmlHelper.Anchor(" ", string.Format("customercontactdelete.aspx?Id={0}&CustomerId={1}", c.Id, id), "title='Delete' class='glyphicon glyphicon-remove-circle' onclick=\"return confirm('Are you sure you want to delete this contact person?')\"")%>
                             </td>
@@ -934,12 +938,11 @@
                         <tr>
                             <td><%= c.GetContactType() %></td>
                             <td><%= c.Contact %></td>
+                            <td><%= c.Title %></td>
                             <td><%= c.Phone %></td>
                             <td><%= c.Mobile %></td>
                             <td><%= c.Email %></td>
                             <td>
-                                <%--<%= HtmlHelper.Anchor("Edit", string.Format("customercontactedit.aspx?Id={0}&CustomerId={1}", c.Id, id)) %>
-                                <%= HtmlHelper.Anchor("Deactivate", string.Format("customercontactdeactivate.aspx?Id={0}&CustomerId={1}", c.Id, id)) %>--%>
                                 <%= HtmlHelper.Anchor(" ", string.Format("customercontactedit.aspx?Id={0}&CustomerId={1}", c.Id, id), "title='Edit' class='glyphicon glyphicon-edit'")%>
                                 <%= HtmlHelper.Anchor(" ", string.Format("customercontactdeactivate.aspx?Id={0}&CustomerId={1}", c.Id, id), "title='Deactivate' class='glyphicon glyphicon-minus'")%>
                             </td>
