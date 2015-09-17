@@ -832,27 +832,30 @@ WHERE Id = @Id"
         {
             string query = string.Format(
                 @"
-SELECT Id,
-    Date,
-    Lecturer,
-    LectureTitle,
-    Contact,
-    Mobile,
-    Email,
-    Compensation,
-    PaymentTerms,
-    BillingAddress,
-    OtherInformation,
-    IsClosed,
-    CustomerId,
-    ContactPlaceSigned,
-    ContactDateSigned,
-    ContactName,
-    ContactTitle,
-    ContactCompany,
-    DateSigned
-FROM CustomerAgreement
-WHERE Id = @Id"
+SELECT a.Id,
+    a.Date,
+    a.Lecturer,
+    a.LectureTitle,
+    a.Contact,
+    a.Mobile,
+    a.Email,
+    a.Compensation,
+    a.PaymentTerms,
+    a.BillingAddress,
+    a.OtherInformation,
+    a.IsClosed,
+    a.CustomerId,
+    a.ContactPlaceSigned,
+    a.ContactDateSigned,
+    a.ContactName,
+    a.ContactTitle,
+    a.ContactCompany,
+    a.DateSigned,
+    c.Name,
+    c.InvoiceAddress
+FROM CustomerAgreement a
+INNER JOIN Customer c ON c.Id = a.CustomerId
+WHERE a.Id = @Id"
             );
             CustomerAgreement a = null;
             using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", id)))
@@ -874,7 +877,9 @@ WHERE Id = @Id"
                         OtherInformation = GetString(rs, 10),
                         IsClosed = GetInt32(rs, 11) == 1,
                         Customer = new Customer {
-                        	Id = GetInt32(rs, 12)
+                        	Id = GetInt32(rs, 12),
+                            Name = GetString(rs, 19),
+                            InvoiceAddress = GetString(rs, 20)
                         },
                         ContactPlaceSigned = GetString(rs, 13),
                         ContactDateSigned = GetDateTime(rs, 14),
