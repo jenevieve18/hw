@@ -6,6 +6,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Core.Helpers;
 using HW.Invoicing.Core.Repositories.Sql;
+using System.IO;
+using HW.Invoicing.Core.Helpers;
 
 namespace HW.Invoicing
 {
@@ -28,19 +30,30 @@ namespace HW.Invoicing
 
                 try
                 {
-                    Db.sendMail(
+                    var x = new HCGEAgreementExporter();
+                    //string file = string.Format("{0} {1} {2}", agreement.Id, agreement.Customer.Name, DateTime.Now.ToString("MMM yyyy"));
+                    string file = string.Format(Server.MapPath("~/uploads/{0} {1} {2}.pdf"), agreement.Id, agreement.Customer.Name, DateTime.Now.ToString("MMM yyyy"));
+                    string templateFileName = company.HasAgreementTemplate ? string.Format(Server.MapPath("~/uploads/{0}"), company.AgreementTemplate) : Server.MapPath(@"HCG Avtalsmall Latest.pdf");
+
+                    using (FileStream f = new FileStream(file, FileMode.Create, FileAccess.Write))
+                    {
+                        MemoryStream s = x.Export(agreement, templateFileName, "calibri.ttf");
+                        s.WriteTo(f);
+                    }
+
+                    //Db.sendMail(
+                    //    "info@danhasson.se",
+                    //    agreement.Email,
+                    //    company.AgreementSignedEmailSubject,
+                    //    body
+                    //);
+                    MailHelper.SendMail(
                         "info@danhasson.se",
                         agreement.Email,
                         company.AgreementSignedEmailSubject,
-                        body
+                        body,
+                        file
                     );
-                    //MailHelper.SendMail(
-                    //    company.Email,
-                    //    agreement.Email,
-                    //    company.AgreementEmailSubject,
-                    //    company.AgreementEmailText,
-                    //    body
-                    //);
 
                     Session["Message"] = "<div class='alert alert-success'>Customer agreement sent to customer.</div>";
                 }
