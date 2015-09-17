@@ -86,25 +86,35 @@ namespace HW.Invoicing
             {
                 signature = company.Signature;
             }
-            string logo;
+            string invoiceLogo;
             if (fileUploadInvoiceLogo.HasFile)
             {
-                logo = fileUploadInvoiceLogo.FileName;
-                fileUploadInvoiceLogo.SaveAs(Server.MapPath("~/uploads/" + logo));
+                invoiceLogo = fileUploadInvoiceLogo.FileName;
+                fileUploadInvoiceLogo.SaveAs(Server.MapPath("~/uploads/" + invoiceLogo));
             }
             else
             {
-                logo = company.InvoiceLogo;
+                invoiceLogo = company.InvoiceLogo;
             }
-            string template;
+            string invoiceTemplate;
             if (fileUploadInvoiceTemplate.HasFile)
             {
-                template = fileUploadInvoiceTemplate.FileName;
-                fileUploadInvoiceTemplate.SaveAs(Server.MapPath("~/uploads/" + template));
+                invoiceTemplate = fileUploadInvoiceTemplate.FileName;
+                fileUploadInvoiceTemplate.SaveAs(Server.MapPath("~/uploads/" + invoiceTemplate));
             }
             else
             {
-                template = company.InvoiceTemplate;
+                invoiceTemplate = company.InvoiceTemplate;
+            }
+            string agreementTemplate;
+            if (fileUploadAgreementTemplate.HasFile)
+            {
+                agreementTemplate = fileUploadAgreementTemplate.FileName;
+                fileUploadAgreementTemplate.SaveAs(Server.MapPath("~/uploads/" + agreementTemplate));
+            }
+            else
+            {
+                agreementTemplate = company.AgreementTemplate;
             }
             var c = new Company {
                 Name = textBoxName.Text,
@@ -117,11 +127,12 @@ namespace HW.Invoicing
                 FinancialMonthEnd = ConvertHelper.ToDateTime(textBoxFinancialMonthEnd.Text),
                 InvoicePrefix = textBoxInvoicePrefix.Text,
                 HasSubscriber = checkBoxHasSubscriber.Checked,
-                InvoiceLogo = logo,
-                InvoiceTemplate = template,
+                InvoiceLogo = invoiceLogo,
+                InvoiceTemplate = invoiceTemplate,
                 Signature = signature,
                 AgreementPrefix = textBoxAgreementPrefix.Text,
-                OrganizationNumber = textBoxOrganizationNumber.Text
+                OrganizationNumber = textBoxOrganizationNumber.Text,
+                AgreementTemplate = agreementTemplate
             };
             r.Update(c, id);
             Response.Redirect("companies.aspx");
