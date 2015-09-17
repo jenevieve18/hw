@@ -38,14 +38,14 @@ namespace HW.Invoicing.Core.Helpers
 			
 			form.SetField("Text7", invoice.Customer.ToString() + "\n\nPurchase order number: " + invoice.Customer.PurchaseOrderNumber);
 			
-			form.SetField("Text10", invoice.SubTotal.ToString("0.00"));
-			form.SetField("Text13", invoice.TotalAmount.ToString("0.00"));
+			form.SetField("Text10", invoice.SubTotal.ToString("### ##0.00"));
+			form.SetField("Text13", invoice.TotalAmount.ToString("### ##0.00"));
 			
 			string items = "";
 			string amounts = "";
 			foreach (var t in invoice.Timebooks) {
 				items += t.Timebook.ToString() + "\n\n";
-				amounts += t.Timebook.Amount.ToString("0.00") + "\n\n";
+				amounts += t.Timebook.Amount.ToString("### ##0.00") + "\n\n";
 			}
 			form.SetField("Text8", items);
 			form.SetField("Text9", amounts);

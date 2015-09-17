@@ -48,7 +48,7 @@ namespace HW.Core.Helpers
 //			message.Body = body;
 //			message.To.Add(to);
 
-			if (attachmentFilename != null) {
+			if (attachmentFilename != null && attachmentFilename != "") {
 //				message.Attachments.Add(new Attachment(attachmentFilename));
 				Attachment attachment = new Attachment(attachmentFilename, MediaTypeNames.Application.Octet);
 				ContentDisposition disposition = attachment.ContentDisposition;
