@@ -5,12 +5,74 @@
     <link href="css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
     <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
+        var dateTimeAndPlaces = [];
+        <% foreach (var d in dateTimeAndPlaces) { %>
+            var d = {
+                'date': '<%= d.Date.Value.ToString("yyyy-MM-dd") %>',
+                'timeFrom': '<%= d.TimeFrom %>',
+                'timeTo': '<%= d.TimeTo %>',
+                'address': '<%= d.Address %>'
+            };
+            dateTimeAndPlaces.push(d);
+        <% } %>
+//        $(document).ready(function () {
+//            $('.date').datepicker({
+//                format: "yyyy-mm-dd",
+//                autoclose: true
+//            });
+//        });
+        $(function () {
+            initDates();
+            if (dateTimeAndPlaces.length > 0) {
+                $('#dateTimeAndPlaces').html("");
+                var i = 0;
+                dateTimeAndPlaces.forEach(function(e) {
+                    appendDateTimeAndPlace(e.date, e.timeFrom, e.timeTo, e.address, i == 0);
+                    initDates();
+                    bindRemoveDateTimeAndPlace();
+                    i++;
+                });
+            }
+            $('#buttonAddMoreTimeAndPlace').click(function () {
+                appendDateTimeAndPlace("", "", "", "", false);
+                initDates();
+                bindRemoveDateTimeAndPlace();
+            });
+        });
+        function appendDateTimeAndPlace(date, timeFrom, timeTo, address, start) {
+            var s = "";
+            if (start) {
+                s = "<tr>" +
+//                    "<td></td>" +
+                    "<td><input value='" + date + "' type='text' id='agreement-date' name='agreement-date' class='date form-control'></td>" +
+                    "<td><input value='" + timeFrom + "' type='text' id='agreement-timefrom' name='agreement-timefrom' class='form-control'></td>" +
+                    "<td><input value='" + timeTo + "' type='text' id='agreement-timeto' name='agreement-timeto' class='form-control'></td>" +
+                    "<td><input value='" + address + "' type='text' id='agreement-address' name='agreement-address' class='form-control'></td>" +
+                    "<td></td>" +
+                    "</tr>";
+            } else {
+                s = "<tr>" +
+//                    "<td></td>" +
+                    "<td><input value='" + date + "' type='text' id='agreement-date' name='agreement-date' class='date form-control'></td>" +
+                    "<td><input value='" + timeFrom + "' type='text' id='agreement-timefrom' name='agreement-timefrom' class='form-control'></td>" +
+                    "<td><input value='" + timeTo + "' type='text' id='agreement-timeto' name='agreement-timeto' class='form-control'></td>" +
+                    "<td><input value='" + address + "' type='text' id='agreement-address' name='agreement-address' class='form-control'></td>" +
+                    "<td><a href='javascript:;' class='removeDateTimeAndPlace'><img src='img/cross.png'></a></td>" +
+                    "</tr>";
+            }
+            $('#dateTimeAndPlaces').append(s);
+        }
+        function bindRemoveDateTimeAndPlace() {
+            $('.removeDateTimeAndPlace').click(function () {
+                $(this).closest('tr').remove();
+            });
+        }
+        function initDates() {
             $('.date').datepicker({
                 format: "yyyy-mm-dd",
                 autoclose: true
             });
-        });
+        }
     </script>
     
     <style type="text/css">
@@ -65,20 +127,31 @@
         </div>
 
         <table width="100%" cellpadding="2">
-            <tr>
-                <th>Date of Lecture</th>
-                <th>Time From</th>
-                <th>Time To</th>
-                <th>Address</th>
-            </tr>
-            <% foreach (var d in dateTimeAndPlaces) { %>
+            <thead>
                 <tr>
-                    <td class="date-width"><%= FormHelper.Input("agreement-date", d.Date.Value.ToString("yyyy-MM-dd"), "class='date form-control'") %></td>
-                    <td class="time-width"><%= FormHelper.Input("agreement-timefrom", d.TimeFrom, "class='form-control'") %></td>
-                    <td class="time-width"><%= FormHelper.Input("agreement-timeto", d.TimeTo, "class='form-control'") %></td>
-                    <td><%= FormHelper.Input("agreement-address", d.Address, "class='form-control'") %></td>
+                    <th>Date of Lecture</th>
+                    <th>Time From</th>
+                    <th>Time To</th>
+                    <th>Address</th>
                 </tr>
-            <% } %>
+            </thead>
+            <tbody id="dateTimeAndPlaces">
+                <%--<% foreach (var d in dateTimeAndPlaces) { %>
+                    <tr>
+                        <td class="date-width"><%= FormHelper.Input("agreement-date", d.Date.Value.ToString("yyyy-MM-dd"), "class='date form-control'") %></td>
+                        <td class="time-width"><%= FormHelper.Input("agreement-timefrom", d.TimeFrom, "class='form-control'") %></td>
+                        <td class="time-width"><%= FormHelper.Input("agreement-timeto", d.TimeTo, "class='form-control'") %></td>
+                        <td><%= FormHelper.Input("agreement-address", d.Address, "class='form-control'") %></td>
+                    </tr>
+                <% } %>--%>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td align="right" colspan="7">
+                        <a href="javascript:;" id="buttonAddMoreTimeAndPlace" class="btn btn-default">Lägg till tid och plats</a>
+                    </td>
+                </tr>
+            </tfoot>
         </table>
 
         <br />
