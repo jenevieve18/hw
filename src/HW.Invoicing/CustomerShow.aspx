@@ -202,7 +202,7 @@
         function validateTimebook() {
             var errors = [];
             addErrorIf(errors, $('#<%= textBoxTimebookDepartment.ClientID %>').val() == '', "Department name shouldn't be empty.");
-            addErrorIf(errors, $('#<%= textBoxTimebookConsultant.ClientID %>').val() == '', "Consultant shouldn't be empty.");
+            //addErrorIf(errors, $('#<%= textBoxTimebookConsultant.ClientID %>').val() == '', "Consultant shouldn't be empty.");
             addErrorIf(errors, $('#<%= textBoxTimebookComments.ClientID %>').val() == '', "Comments shouldn't be empty.");
 
             var price = $('#<%= textBoxTimebookPrice.ClientID %>').val();

@@ -535,7 +535,7 @@ namespace HW.Invoicing.Core.Models
 		{
 			base.Validate();
 			AddErrorIf(Department == "", "Department shouldn't be empty.");
-			AddErrorIf(Consultant == "", "Consultant shouldn't be empty.");
+			//AddErrorIf(Consultant == "", "Consultant shouldn't be empty.");
 			AddErrorIf(Comments == "", "Comments shouldn't be empty.");
 			AddErrorIf(Price <= 0, "Price should be greater than zero.");
 			AddErrorIf(VAT <= 0, "VAT should be greater than zero.");
