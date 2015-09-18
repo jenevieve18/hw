@@ -23,7 +23,7 @@ VALUES(@Name, @Password, @Color)"
 			ExecuteNonQuery(
 				query,
 				"invoicing",
-				new SqlParameter("@Name", u.Name),
+				new SqlParameter("@Name", u.Username),
                 new SqlParameter("@Password", u.Password),
                 new SqlParameter("@Color", u.Color)
 			);
@@ -41,7 +41,7 @@ WHERE Id = @Id"
 			ExecuteNonQuery(
 				query,
 				"invoicing",
-				new SqlParameter("@Name", u.Name),
+				new SqlParameter("@Name", u.Username),
 				new SqlParameter("@Password", u.Password),
                 new SqlParameter("@Color", u.Color),
 				new SqlParameter("@Id", id)
@@ -76,7 +76,7 @@ ORDER BY Name"
 					users.Add(
 						new User {
 							Id = GetInt32(rs, 0),
-							Name = GetString(rs, 1),
+							Username = GetString(rs, 1),
 							Password = GetString(rs, 2),
                             Color = GetString(rs, 3)
 						}
@@ -99,7 +99,7 @@ WHERE Id = @Id"
 				if (rs.Read()) {
 					u = new User {
 						Id = GetInt32(rs, 0),
-						Name = GetString(rs, 1),
+						Username = GetString(rs, 1),
 						Password = GetString(rs, 2),
                         Color = GetString(rs, 3)
 					};
@@ -122,7 +122,7 @@ AND [Password] = @Password"
 				if (rs.Read()) {
 					u = new User {
 						Id = GetInt32(rs, 0),
-						Name = GetString(rs, 1),
+						Username = GetString(rs, 1),
 						Password = GetString(rs, 2)
 					};
 				}

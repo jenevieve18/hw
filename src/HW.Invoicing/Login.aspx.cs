@@ -67,7 +67,7 @@ namespace HW.Invoicing
                 Session["CompanyId"] = c.Id;
                 Session["CompanyName"] = c.Name;*/
                 Session["UserID"] = u.Id;
-                Session["UserName"] = u.Name;
+                Session["UserName"] = u.Username;
                 if (Request.QueryString["r"] != null)
                 {
                     Response.Redirect(HttpUtility.UrlDecode(Request.QueryString["r"]));

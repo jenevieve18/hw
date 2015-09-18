@@ -13,7 +13,7 @@ namespace HW.Invoicing.Core.Repositories
 	{
 		public User ReadByNameAndPassword(string name, string password)
 		{
-			return new User { Name = name, Password = password };
+			return new User { Username = name, Password = password };
 		}
 	}
 }

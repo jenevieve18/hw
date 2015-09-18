@@ -37,16 +37,16 @@ namespace HW.Invoicing
         {
         	if (IsPostBack) {
         		var d = new User {
-        			Name = textBoxName.Text,
+        			Username = textBoxName.Text,
         			Password = textBoxPassword.Text
         		};
         		r.Update(d, id);
-                Session["UserName"] = d.Name;
+                Session["UserName"] = d.Username;
                 Response.Redirect("dashboard.aspx");
         	}
         	var u = r.Read(id);
         	if (u != null) {
-        		textBoxName.Text = u.Name;
+        		textBoxName.Text = u.Username;
                 textBoxPassword.Text = u.Password;
         	}
         }

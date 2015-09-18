@@ -298,11 +298,9 @@
                     <% if (n.Inactive) { %>
                         <tr>
                             <td><strike><%= n.CreatedAt.Value.ToString("yyyy-MM-dd H:mm:ss") %></strike></td>
-                            <td><strike><%= n.CreatedBy.Name %></strike></td>
+                            <td><strike><%= n.CreatedBy.Username %></strike></td>
                             <td><strike><%= n.Notes %></strike></td>
                             <td>
-                                <%--<%= HtmlHelper.Anchor("Edit", string.Format("customernotesedit.aspx?Id={0}&CustomerId={1}", n.Id, id)) %>
-                                <%= HtmlHelper.Anchor("Delete", string.Format("customernotesdelete.aspx?Id={0}&CustomerId={1}", n.Id, id), "onclick=\"return confirm('Are you sure you want to delete this customer note?')\"") %>--%>
                                 <%= HtmlHelper.Anchor(" ", string.Format("customernotesedit.aspx?Id={0}&CustomerId={1}", n.Id, id), "title='Edit' class='glyphicon glyphicon-edit'")%>
                                 <%= HtmlHelper.Anchor(" ", string.Format("customernotesdelete.aspx?Id={0}&CustomerId={1}", n.Id, id), "title='Delete' class='glyphicon glyphicon-remove-circle' onclick=\"return confirm('Are you sure you want to delete this customer note?')\"")%>
                             </td>
@@ -312,15 +310,13 @@
                             <td><%= n.CreatedAt.Value.ToString("yyyy-MM-dd H:mm:ss") %></td>
                             <td>
                                 <% if (n.CreatedBy.Color != "") { %>
-                                    <span class="label" style="background:<%= n.CreatedBy.Color %>"><%= n.CreatedBy.Name %></span>
+                                    <span class="label" style="background:<%= n.CreatedBy.Color %>"><%= n.CreatedBy.Username %></span>
                                 <% } else { %>
-                                    <span><%= n.CreatedBy.Name %></span>
+                                    <span><%= n.CreatedBy.Username %></span>
                                 <% } %>
                             </td>
                             <td><%= n.Notes %></td>
                             <td>
-                                <%--<%= HtmlHelper.Anchor("Edit", string.Format("customernotesedit.aspx?Id={0}&CustomerId={1}", n.Id, id)) %>
-                                <%= HtmlHelper.Anchor("Deactivate", string.Format("customernotesdeactivate.aspx?Id={0}&CustomerId={1}", n.Id, id))%>--%>
                                 <%= HtmlHelper.Anchor(" ", string.Format("customernotesedit.aspx?Id={0}&CustomerId={1}", n.Id, id), "title='Edit' class='glyphicon glyphicon-edit'")%>
                                 <%= HtmlHelper.Anchor(" ", string.Format("customernotesdeactivate.aspx?Id={0}&CustomerId={1}", n.Id, id), "title='Deactivate' class='glyphicon glyphicon-minus'")%>
                             </td>

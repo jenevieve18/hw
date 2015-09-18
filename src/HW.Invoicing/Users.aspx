@@ -11,13 +11,15 @@
 </div>
 <table class="table table-hover">
     <tr>
+        <th>Username</th>
         <th>Name</th>
         <th>Color</th>
         <th>Actions</th>
     </tr>
     <% foreach (var u in users) { %>
     <tr>
-        <td><%= u.Name %></td>
+        <td><%= u.Username %></td>
+        <%--<td><%= u.Name %></td>--%>
         <td><small class="label" style="background:<%= u.Color %>"><%= u.Color %></small></td>
         <td>
             <%= HtmlHelper.Anchor("Edit", "useredit.aspx?UserID=" + u.Id) %>

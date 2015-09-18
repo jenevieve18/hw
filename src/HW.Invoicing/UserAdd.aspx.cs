@@ -22,7 +22,7 @@ namespace HW.Invoicing
     	public void Add()
     	{
     		var u = new User {
-                Name = textBoxName.Text,
+                Username = textBoxUsername.Text,
                 Password = textBoxPassword.Text,
                 Color = textBoxColor.Text
         	};

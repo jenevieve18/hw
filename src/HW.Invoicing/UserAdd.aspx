@@ -16,7 +16,11 @@
 
 <h3>Add a user</h3>
 <div class="form-group">
-	<label for="<%= textBoxName.ClientID %>">User name</label>
+	<label for="<%= textBoxUsername.ClientID %>">User name</label>
+    <asp:TextBox ID="textBoxUsername" runat="server" CssClass="form-control"></asp:TextBox>
+</div>
+<div class="form-group">
+	<label for="<%= textBoxName.ClientID %>">Name</label>
     <asp:TextBox ID="textBoxName" runat="server" CssClass="form-control"></asp:TextBox>
 </div>
 <div class="form-group">
