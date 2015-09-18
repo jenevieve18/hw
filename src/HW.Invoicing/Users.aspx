@@ -19,11 +19,13 @@
     <% foreach (var u in users) { %>
     <tr>
         <td><%= u.Username %></td>
-        <%--<td><%= u.Name %></td>--%>
+        <td><%= u.Name %></td>
         <td><small class="label" style="background:<%= u.Color %>"><%= u.Color %></small></td>
         <td>
-            <%= HtmlHelper.Anchor("Edit", "useredit.aspx?UserID=" + u.Id) %>
-            <%= HtmlHelper.Anchor("Delete", "userdelete.aspx?UserID=" + u.Id)%>
+            <%--<%= HtmlHelper.Anchor("Edit", "useredit.aspx?UserID=" + u.Id) %>
+            <%= HtmlHelper.Anchor("Delete", "userdelete.aspx?UserID=" + u.Id)%>--%>
+            <%= HtmlHelper.Anchor(" ", "useredit.aspx?UserID=" + u.Id, "title='Edit' class='glyphicon glyphicon-edit'") %>
+            <%= HtmlHelper.Anchor(" ", "userdelete.aspx?UserID=" + u.Id, "title='Delete' class='glyphicon glyphicon-remove-circle' onclick=\"return confirm('Are you sure you want to delete this customer note?')\"")%>
         </td>
     </tr>
     <% } %>

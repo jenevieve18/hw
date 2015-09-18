@@ -298,7 +298,7 @@
                     <% if (n.Inactive) { %>
                         <tr>
                             <td><strike><%= n.CreatedAt.Value.ToString("yyyy-MM-dd H:mm:ss") %></strike></td>
-                            <td><strike><%= n.CreatedBy.Username %></strike></td>
+                            <td><strike><%= n.CreatedBy.Name %></strike></td>
                             <td><strike><%= n.Notes %></strike></td>
                             <td>
                                 <%= HtmlHelper.Anchor(" ", string.Format("customernotesedit.aspx?Id={0}&CustomerId={1}", n.Id, id), "title='Edit' class='glyphicon glyphicon-edit'")%>
@@ -310,9 +310,11 @@
                             <td><%= n.CreatedAt.Value.ToString("yyyy-MM-dd H:mm:ss") %></td>
                             <td>
                                 <% if (n.CreatedBy.Color != "") { %>
-                                    <span class="label" style="background:<%= n.CreatedBy.Color %>"><%= n.CreatedBy.Username %></span>
+                                    <span class="label" style="background:<%= n.CreatedBy.Color %>">
+                                        <%= n.CreatedBy.Name %>
+                                    </span>
                                 <% } else { %>
-                                    <span><%= n.CreatedBy.Username %></span>
+                                    <span><%= n.CreatedBy.Name %></span>
                                 <% } %>
                             </td>
                             <td><%= n.Notes %></td>

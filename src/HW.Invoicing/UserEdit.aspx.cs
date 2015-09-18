@@ -23,7 +23,8 @@ namespace HW.Invoicing
 		{
 			if (IsPostBack) {
 				var d = new User {
-					Username = textBoxUsername.Text,
+                    Username = textBoxUsername.Text,
+                    Name = textBoxName.Text,
 					Password = textBoxPassword.Text,
                     Color = textBoxColor.Text
 				};
@@ -32,7 +33,8 @@ namespace HW.Invoicing
 			}
 			var u = r.Read(id);
 			if (u != null) {
-				textBoxUsername.Text = u.Username;
+                textBoxUsername.Text = u.Username;
+                textBoxName.Text = u.Name;
 				//textBoxPassword.Text = u.Password;
                 textBoxPassword.Attributes["value"] = u.Password;
                 textBoxColor.Text = u.Color;

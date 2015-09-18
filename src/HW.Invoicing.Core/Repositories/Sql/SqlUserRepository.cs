@@ -17,15 +17,16 @@ namespace HW.Invoicing.Core.Repositories.Sql
 		{
 			string query = string.Format(
 				@"
-INSERT INTO [User](Name, [Password], Color)
-VALUES(@Name, @Password, @Color)"
+INSERT INTO [User](Username, [Password], Color, Name)
+VALUES(@Username, @Password, @Color, @Name)"
 			);
 			ExecuteNonQuery(
 				query,
 				"invoicing",
-				new SqlParameter("@Name", u.Username),
+				new SqlParameter("@Username", u.Username),
                 new SqlParameter("@Password", u.Password),
-                new SqlParameter("@Color", u.Color)
+                new SqlParameter("@Color", u.Color),
+                new SqlParameter("@Name", u.Name)
 			);
 		}
 		
@@ -33,18 +34,20 @@ VALUES(@Name, @Password, @Color)"
 		{
 			string query = string.Format(
 				@"
-UPDATE [User] SET Name = @Name,
-[Password] = @Password,
-Color = @Color
+UPDATE [User] SET Username = @Username,
+    [Password] = @Password,
+    Color = @Color,
+    Name = @Name
 WHERE Id = @Id"
 			);
 			ExecuteNonQuery(
 				query,
 				"invoicing",
-				new SqlParameter("@Name", u.Username),
+				new SqlParameter("@Username", u.Username),
 				new SqlParameter("@Password", u.Password),
                 new SqlParameter("@Color", u.Color),
-				new SqlParameter("@Id", id)
+                new SqlParameter("@Id", id),
+                new SqlParameter("@Name", u.Name)
 			);
 		}
 		
@@ -66,9 +69,9 @@ WHERE Id = @Id"
 		{
 			string query = string.Format(
 				@"
-SELECT Id, Name, [Password], Color
+SELECT Id, Username, [Password], Color, Name
 FROM [User]
-ORDER BY Name"
+ORDER BY Username"
 			);
 			IList<User> users = new List<User>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {
@@ -78,7 +81,8 @@ ORDER BY Name"
 							Id = GetInt32(rs, 0),
 							Username = GetString(rs, 1),
 							Password = GetString(rs, 2),
-                            Color = GetString(rs, 3)
+                            Color = GetString(rs, 3),
+                            Name = GetString(rs, 4)
 						}
 					);
 				}
@@ -90,7 +94,7 @@ ORDER BY Name"
 		{
 			string query = string.Format(
 				@"
-SELECT Id, Name, [Password], Color
+SELECT Id, Username, [Password], Color, Name
 FROM [User]
 WHERE Id = @Id"
 			);
@@ -101,7 +105,8 @@ WHERE Id = @Id"
 						Id = GetInt32(rs, 0),
 						Username = GetString(rs, 1),
 						Password = GetString(rs, 2),
-                        Color = GetString(rs, 3)
+                        Color = GetString(rs, 3),
+                        Name = GetString(rs, 4)
 					};
 				}
 			}
@@ -112,18 +117,24 @@ WHERE Id = @Id"
 		{
 			string query = string.Format(
 				@"
-SELECT Id, Name, [Password]
+SELECT Id, Username, [Password], Name
 FROM [User]
-WHERE Name = @Name
+WHERE Username = @Username
 AND [Password] = @Password"
 			);
 			User u = null;
-			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Name", name), new SqlParameter("@Password", password))) {
+			using (SqlDataReader rs = ExecuteReader(
+				query,
+				"invoicing",
+				new SqlParameter("@Username", name),
+				new SqlParameter("@Password", password))) {
+				
 				if (rs.Read()) {
 					u = new User {
 						Id = GetInt32(rs, 0),
 						Username = GetString(rs, 1),
-						Password = GetString(rs, 2)
+						Password = GetString(rs, 2),
+                        Name = GetString(rs, 3)
 					};
 				}
 			}

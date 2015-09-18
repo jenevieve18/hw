@@ -23,6 +23,7 @@ namespace HW.Invoicing
     	{
     		var u = new User {
                 Username = textBoxUsername.Text,
+                Name = textBoxName.Text,
                 Password = textBoxPassword.Text,
                 Color = textBoxColor.Text
         	};
