@@ -270,7 +270,6 @@
 						<div class="modal-body">
                             <span id="notes-message"></span>
                             <div class="form-group">
-	                            <%--<label>Created By: <%= Session["UserName"] %></label>--%>
                                 <label>Created By: <%= Session["UserRealName"] %></label>
                             </div>
                             <div class="form-group">
