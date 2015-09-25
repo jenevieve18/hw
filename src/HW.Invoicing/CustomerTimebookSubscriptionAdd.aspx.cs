@@ -26,40 +26,39 @@ namespace HW.Invoicing
         protected string generatedComments;
         int companyId;
 
-        [WebMethod]
-        public static List<object> FindActiveSubscribersByCompany(int companyId, DateTime startDate, DateTime endDate)
-        {
-            var generatedComments = string.Format("Subscription fee for HealthWatch.se {0} - {1}", startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"));
+        //[WebMethod]
+        //public static List<object> FindActiveSubscribersByCompany(int companyId, DateTime startDate, DateTime endDate)
+        //{
+        //    var generatedComments = string.Format("Subscription fee for HealthWatch.se {0} - {1}", startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"));
 
-            var r = new SqlCustomerRepository();
-            //var d = r.FindActiveSubscribersByCompany(1, startDate, endDate);
-            var d = r.FindActiveSubscribersByCompany(companyId, startDate, endDate);
-            var customers = new List<object>();
-            foreach (var c in d) {
-                var sDate = c.GetLatestSubscriptionTimebookStartDate(startDate);
-                var eDate = c.GetLatestSubscriptionTimebookEndDate(endDate);
-            	var cc = new {
-            		id = c.Id,
-            		name = c.Name,
-                    subscriptionStartAndEndDate = c.GetSubscriptionStartAndEndDate(),
-                    subscriptionStartDate = c.GetSubscriptionStartDate(),
-                    subscriptionHasEndDate = c.SubscriptionHasEndDate,
-                    subscriptionEndDate = c.GetSubscriptionEndDate(),
-                    subscriptionTimebookEndDateLabel = c.GetLatestSubscriptionTimebookEndDateLabel(),
-                    subscriptionItem = c.SubscriptionItem.Name,
-                    subscriptionItemUnit = c.SubscriptionItem.Unit.Name,
-                    subscriptionItemPrice = c.SubscriptionItem.Price,
-                    latestSubscriptionTimebookId = c.GetLatestSubscriptionTimebookId(),
-                    latestSubscriptionTimebookStartDate = sDate.ToString("yyyy-MM-dd"),
-                    latestSubscriptionTimebookEndDate = eDate.ToString("yyyy-MM-dd"),
-                    latestSubscriptionTimebookQuantity = c.GetLatestSubscriptionTimebookQuantity(sDate, eDate),
-                    comments = c.GetLatestSubscriptionTimebookComments(sDate, eDate, generatedComments),
-                    subscriptionTimebookAvailability = c.GetSubscriptionTimebookAvailability(startDate)
-            	};
-            	customers.Add(cc);
-            }
-            return customers;
-        }
+        //    var r = new SqlCustomerRepository();
+        //    var d = r.FindActiveSubscribersByCompany(companyId, startDate, endDate);
+        //    var customers = new List<object>();
+        //    foreach (var c in d) {
+        //        var sDate = c.GetLatestSubscriptionTimebookStartDate(startDate);
+        //        var eDate = c.GetLatestSubscriptionTimebookEndDate(endDate);
+        //        var cc = new {
+        //            id = c.Id,
+        //            name = c.Name,
+        //            subscriptionStartAndEndDate = c.GetSubscriptionStartAndEndDate(),
+        //            subscriptionStartDate = c.GetSubscriptionStartDate(),
+        //            subscriptionHasEndDate = c.SubscriptionHasEndDate,
+        //            subscriptionEndDate = c.GetSubscriptionEndDate(),
+        //            subscriptionTimebookEndDateLabel = c.GetLatestSubscriptionTimebookEndDateLabel(),
+        //            subscriptionItem = c.SubscriptionItem.Name,
+        //            subscriptionItemUnit = c.SubscriptionItem.Unit.Name,
+        //            subscriptionItemPrice = c.SubscriptionItem.Price,
+        //            latestSubscriptionTimebookId = c.GetLatestSubscriptionTimebookId(),
+        //            latestSubscriptionTimebookStartDate = sDate.ToString("yyyy-MM-dd"),
+        //            latestSubscriptionTimebookEndDate = eDate.ToString("yyyy-MM-dd"),
+        //            latestSubscriptionTimebookQuantity = c.GetLatestSubscriptionTimebookQuantity(sDate, eDate),
+        //            comments = c.GetLatestSubscriptionTimebookComments(sDate, eDate, generatedComments),
+        //            subscriptionTimebookAvailability = c.GetSubscriptionTimebookAvailability(startDate)
+        //        };
+        //        customers.Add(cc);
+        //    }
+        //    return customers;
+        //}
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -93,8 +92,7 @@ namespace HW.Invoicing
         {
             r.ClearSubscriptionTimebooks();
             message = "<div class='alert alert-danger'>Subscription timebooks deleted.</div>";
-            
-            //customers = r.FindActiveSubscribersByCompany(companyId, DateTime.Now);
+
             customers = r.FindActiveSubscribersByCompany(companyId, startDate, endDate);
         }
 
@@ -136,8 +134,56 @@ namespace HW.Invoicing
             r.SaveSubscriptionTimebooks(timebooks);
             message = "<div class='alert alert-success'>Saved! customer timebooks for subscription items are now saved.</div>";
 
-            //customers = r.FindActiveSubscribersByCompany(companyId, DateTime.Now);
             customers = r.FindActiveSubscribersByCompany(companyId, startDate, endDate);
         }
+
+        //protected void buttonClear_Click(object sender, EventArgs e)
+        //{
+        //    r.ClearSubscriptionTimebooks();
+        //    message = "<div class='alert alert-danger'>Subscription timebooks deleted.</div>";
+            
+        //    customers = r.FindActiveSubscribersByCompany(companyId, startDate, endDate);
+        //}
+
+        //protected void buttonSave_Click(object sender, EventArgs e)
+        //{
+        //    startDate = ConvertHelper.ToDateTime(textBoxStartDate.Text);
+        //    endDate = ConvertHelper.ToDateTime(textBoxEndDate.Text);
+        //    customers = r.FindActiveSubscribersByCompany(companyId, startDate, endDate);
+
+        //    var ids = Request.Form.GetValues("subscription-id");
+        //    var startDates = Request.Form.GetValues("subscription-start-date");
+        //    var endDates = Request.Form.GetValues("subscription-end-date");
+        //    var quantities = Request.Form.GetValues("subscription-quantities");
+        //    var comments = Request.Form.GetValues("subscription-comments");
+        //    var timebooks = new List<CustomerTimebook>();
+        //    int i = 0;
+        //    foreach (var c in customers)
+        //    {
+        //        var sDate = ConvertHelper.ToDateTime(startDates[i]);
+        //        if (c.HasSubscription && !c.CantCreateTimebook(sDate))
+        //        {
+        //            var t = new CustomerTimebook
+        //            {
+        //                Id = ConvertHelper.ToInt32(ids[i]),
+        //                Customer = c,
+        //                Item = new Item { Id = c.SubscriptionItem.Id },
+        //                Quantity = ConvertHelper.ToDecimal(quantities[i], new CultureInfo("en-US")),
+        //                Price = c.SubscriptionItem.Price,
+        //                VAT = 25,
+        //                Comments = comments[i],
+        //                IsSubscription = true,
+        //                SubscriptionStartDate = sDate,
+        //                SubscriptionEndDate = ConvertHelper.ToDateTime(endDates[i])
+        //            };
+        //            timebooks.Add(t);
+        //        }
+        //        i++;
+        //    }
+        //    r.SaveSubscriptionTimebooks(timebooks);
+        //    message = "<div class='alert alert-success'>Saved! customer timebooks for subscription items are now saved.</div>";
+
+        //    customers = r.FindActiveSubscribersByCompany(companyId, startDate, endDate);
+        //}
     }
 }
