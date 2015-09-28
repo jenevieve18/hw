@@ -953,7 +953,10 @@ WHERE s.SponsorID = {0}",
 		{
 			string query = string.Format(
 				@"
-SELECT SponsorAdminID FROM SponsorAdmin WHERE Usr = '{0}' {1}",
+SELECT SponsorAdminID
+FROM SponsorAdmin
+WHERE Usr != '' AND Usr = '{0}'
+{1}",
 				usr.Replace("'", ""),
 				(sponsorAdminId != 0 ? " AND SponsorAdminID != " + sponsorAdminId : "")
 			);
@@ -1078,23 +1081,53 @@ AND (Pas = @Pas OR Pas = @HashedPas)"
 			return null;
 		}
 
-		public SponsorAdmin ReadSponsorAdmin(int sponsorAdminId, string usr)
+		public SponsorAdmin ReadSponsorAdmin(int sponsorAdminId, string usr, string email)
 		{
-			string query = string.Format(
-				@"
-SELECT SponsorAdminID FROM SponsorAdmin WHERE SponsorID = {0} AND Usr = '{1}'",
-				sponsorAdminId,
-				usr.Replace("'", "")
-			);
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				if (rs.Read()) {
-					var a = new SponsorAdmin {
-						Id = rs.GetInt32(0)
-					};
-					return a;
-				}
-			}
-			return null;
+            string query = string.Format(
+                @"
+SELECT SponsorAdminID
+FROM SponsorAdmin
+WHERE SponsorID = {0}
+{1}
+{2}",
+                sponsorAdminId,
+                usr != "" ? "AND Usr = @Usr" : "",
+                email != "" ? "AND Email = @Email" : ""
+            );
+            using (SqlDataReader rs = ExecuteReader(
+                query,
+                "healthWatchSqlConnection",
+                new SqlParameter("@Usr", usr),
+                new SqlParameter("@Email", email)))
+            {
+                if (rs.Read())
+                {
+                    var a = new SponsorAdmin
+                    {
+                        Id = rs.GetInt32(0)
+                    };
+                    return a;
+                }
+            }
+            return null;
+//            string query = string.Format(
+//                @"
+//SELECT SponsorAdminID
+//FROM SponsorAdmin
+//WHERE SponsorID = {0}
+//AND Usr = '{1}'",
+//                sponsorAdminId,
+//                usr.Replace("'", "")
+//            );
+//            using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+//                if (rs.Read()) {
+//                    var a = new SponsorAdmin {
+//                        Id = rs.GetInt32(0)
+//                    };
+//                    return a;
+//                }
+//            }
+//            return null;
 		}
 
 		public SponsorAdmin ReadSponsorAdmin(string skey, string sakey, string sa, string said, string anv, string los)

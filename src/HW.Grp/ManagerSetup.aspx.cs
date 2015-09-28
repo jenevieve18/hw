@@ -201,7 +201,7 @@ namespace HW.Grp
 						sponsorRepository.UpdateSponsorAdmin(a);
 					} else {
 						sponsorRepository.SaveSponsorAdmin(a);
-						a = sponsorRepository.ReadSponsorAdmin(sponsorID, Usr.Text);
+						a = sponsorRepository.ReadSponsorAdmin(sponsorID, Usr.Text, Email.Text);
 						if (a != null) {
 							sponsorAdminID = a.Id;
 						}
@@ -234,7 +234,8 @@ namespace HW.Grp
 							}
 						}
 					}
-					Response.Redirect("managers.aspx", true);
+					//Response.Redirect("managers.aspx", true);
+                    Response.Redirect(string.Format("managersetup.aspx?SAID={0}", sponsorAdminID));
 				} else {
 					errorMessage = a.Errors.ToHtmlUl();
 				}

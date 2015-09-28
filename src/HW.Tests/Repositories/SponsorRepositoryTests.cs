@@ -146,7 +146,7 @@ namespace HW.Tests.Repositories
 		public void TestReadSponsorAdmin()
 		{
 			r.ReadSponsorAdmin(1, 1, "");
-			r.ReadSponsorAdmin(1, "");
+			r.ReadSponsorAdmin(1, "", "");
 			r.ReadSponsorAdmin(null, null, null, "", "Usr5", "Pas5");
 //			r.ReadSponsorAdmin(1);
 			r.ReadSponsorAdmin(1, 1, 1);
