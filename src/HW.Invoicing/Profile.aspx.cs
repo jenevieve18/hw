@@ -37,7 +37,8 @@ namespace HW.Invoicing
         {
         	if (IsPostBack) {
         		var d = new User {
-        			Username = textBoxName.Text,
+        			Username = textBoxUsername.Text,
+                    Name = textBoxName.Text,
         			Password = textBoxPassword.Text
         		};
         		r.Update(d, id);
@@ -46,7 +47,8 @@ namespace HW.Invoicing
         	}
         	var u = r.Read(id);
         	if (u != null) {
-        		textBoxName.Text = u.Username;
+        		textBoxUsername.Text = u.Username;
+                textBoxName.Text = u.Name;
                 textBoxPassword.Text = u.Password;
         	}
         }
