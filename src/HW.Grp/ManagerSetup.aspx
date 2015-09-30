@@ -20,14 +20,16 @@
 			    	<span style="color:#00cc00;"><%= message %></span>
 			    <% } %>
 
-			    <!--<asp:Label ID=ErrorMsg runat=server />-->
 			    <% if (errorMessage != "") { %>
 			    	<br /><br /><span style="color:#cc0000;"><%= errorMessage %></span>
 			    <% } %>
-            </div>
-        </div>
+            <%--</div>
+        </div>--%>
 
-        <div class="smallContent"><br />
+        <%--<div class="smallContent">--%>
+        <%--<div>--%>
+            <br />
+            <br />
             <table border="0" cellpadding="0" cellspacing="0">
                 <tr>
                     <td valign="top">
@@ -43,7 +45,7 @@
 		                    <%-- <tr><td><%= R.Str(lid, "manager.password", "Password")%>&nbsp;</td><td><asp:TextBox ID="Pas" TextMode=Password Width=200 runat=server /></td></tr>--%>
 		                    <tr><td><%= R.Str(lid, "email") %>&nbsp;</td><td><asp:TextBox ID="Email" Width=200 runat=server /></td></tr>
                             <tr><td><%= R.Str(lid, "organization.readonly", "Organization read only")%>&nbsp;</td><td><asp:CheckBox ID=ReadOnly runat=server /></td></tr>
-                            <tr><td><%= R.Str(lid, "access.nodelete", "No access to permanently delete users") %></td><td><asp:CheckBox ID=PermanentlyDeleteUsers runat=server Checked="True" /></td></tr>
+                            <tr><td><%= R.Str(lid, "access.nodelete", "Access to permanently delete users")%></td><td><asp:CheckBox ID=PermanentlyDeleteUsers runat=server Checked="False" /></td></tr>
                         </table>
                     </td>
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -56,6 +58,8 @@
                     </td>
                 </tr>
 	        </table>
+        </div>
+        <div class="smallContent">
             <table border="0" cellpadding="0" cellspacing="0">
 	            <tr>
 					<td><b><%= R.Str(lid, "organization.access", "Organisation access")%></b></td>

@@ -49,15 +49,6 @@ namespace HW.Grp {
         protected global::System.Web.UI.WebControls.Button buttonSend;
         
         /// <summary>
-        /// ErrorMsg control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ErrorMsg;
-        
-        /// <summary>
         /// Name control.
         /// </summary>
         /// <remarks>
