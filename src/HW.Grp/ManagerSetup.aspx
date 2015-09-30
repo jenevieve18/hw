@@ -23,12 +23,10 @@
 			    <% if (errorMessage != "") { %>
 			    	<br /><br /><span style="color:#cc0000;"><%= errorMessage %></span>
 			    <% } %>
-            <%--</div>
-        </div>--%>
+            </div>
+        </div>
 
-        <%--<div class="smallContent">--%>
-        <%--<div>--%>
-            <br />
+        <div class="smallContent">
             <br />
             <table border="0" cellpadding="0" cellspacing="0">
                 <tr>
@@ -58,8 +56,6 @@
                     </td>
                 </tr>
 	        </table>
-        </div>
-        <div class="smallContent">
             <table border="0" cellpadding="0" cellspacing="0">
 	            <tr>
 					<td><b><%= R.Str(lid, "organization.access", "Organisation access")%></b></td>
