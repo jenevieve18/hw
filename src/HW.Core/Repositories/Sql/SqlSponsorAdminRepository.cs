@@ -12,7 +12,7 @@ namespace HW.Core.Repositories.Sql
 		{
 			string query = string.Format(
 				@"
-UPDATE SponsorAdmin SET Pas = @Password
+UPDATE SponsorAdmin SET Pas = @Password, UniqueKeyUsed = 1
 WHERE UniqueKey = @UniqueKey");
 			ExecuteNonQuery(
 				query,
@@ -158,6 +158,25 @@ FROM ManagerFunction f
 			}
 			return hasAccess;
 		}
+
+        public bool SponsorAdminUniqueKeyUsed(string uid)
+        {
+            string query = string.Format(
+                @"
+SELECT UniqueKey, UniqueKeyUsed
+FROM SponsorAdmin
+WHERE UniqueKey = @UniqueKey"
+            );
+            bool used = false;
+            using (SqlDataReader rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@UniqueKey", uid)))
+            {
+                if (rs.Read())
+                {
+                    used = GetInt32(rs, 1) == 1;
+                }
+            }
+            return used;
+        }
 		
 		public bool SponsorAdminUniqueKeyExists(string uid)
 		{

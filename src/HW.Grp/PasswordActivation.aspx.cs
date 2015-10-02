@@ -30,6 +30,11 @@ namespace HW.Grp
 		{
 			HtmlHelper.RedirectIf(!HasUniqueKey, "default.aspx", true);
 			HtmlHelper.RedirectIf(!r.SponsorAdminUniqueKeyExists(UniqueKey), "default.aspx", true);
+
+            if (r.SponsorAdminUniqueKeyUsed(UniqueKey))
+            {
+                Response.Redirect("default.aspx");
+            }
 			
 			lid = ConvertHelper.ToInt32(Session["lid"], 1);
 		}
