@@ -46,14 +46,22 @@ namespace HW.Core.Helpers
 	
 	public class IHGHtmlTableCell : HtmlTableCell
 	{
-		public IHGHtmlTableCell(string text) : this("td", text)
+        public IHGHtmlTableCell(string text)
+            : this(text, false)
+        {
+        }
+
+		public IHGHtmlTableCell(string text, bool bold) : this("td", text, bold)
 		{
-//			InnerText = text;
 		}
 		
-		public IHGHtmlTableCell(string tagName, string text): base(tagName)
+		public IHGHtmlTableCell(string tagName, string text, bool bold): base(tagName)
 		{
 			this.InnerText = text;
+            if (bold)
+            {
+                Style.Add("font-weight", "bold");
+            }
 		}
 		
 		public IHGHtmlTableCell(IList<Control> cc)

@@ -51,13 +51,19 @@ namespace HW.Grp
 			Org.Controls.Add(new LiteralControl("<br>"));
 			
 			IHGHtmlTable table = new IHGHtmlTable { Border = 0, CellSpacing = 0, CellPadding = 0 };
-			table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(Session["Sponsor"].ToString()) { ColSpan = 3 }));
-			
-//			IHGHtmlTable t = new IHGHtmlTable();
-//			t.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell("th", "Login Day"), new IHGHtmlTableCell("th", "Login Weekday")));
-//			table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(t), new IHGHtmlTableCell("")));
 
-			Dictionary<int, bool> DX = new Dictionary<int, bool>();
+            var r = new IHGHtmlTableRow(
+                new IHGHtmlTableCell(R.Str(lid, "reminder.interval", "Reminder interval"), true),
+                new IHGHtmlTableCell(R.Str(lid, "reminder.check", "System checks"), true),
+                new IHGHtmlTableCell(R.Str(lid, "unit.id", "Unit ID"), true),
+                new IHGHtmlTableCell(R.Str(lid, "unit", "Unit"), true)
+            );
+            r.Attributes.Add("style", "border-bottom:1px solid #333333;");
+            table.Rows.Add(r);
+
+            table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(Session["Sponsor"].ToString()) { ColSpan = 3 }));
+            
+            Dictionary<int, bool> DX = new Dictionary<int, bool>();
 
 			foreach (var d in departments) {
                 IHGHtmlTable boxes = new IHGHtmlTable();
@@ -83,8 +89,8 @@ namespace HW.Grp
                 ld.SelectedValue = d.LoginDays.ToString();
                 lw.SelectedValue = d.LoginWeekDay.ToString();
                 boxes.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(ld), new IHGHtmlTableCell(lw)));
-                
-				IHGHtmlTableRow row = new IHGHtmlTableRow(new IHGHtmlTableCell(boxes), new IHGHtmlTableCell(d.ShortName.ToString()));
+
+                IHGHtmlTableRow row = new IHGHtmlTableRow(new IHGHtmlTableCell(boxes) { ColSpan = 2 }, new IHGHtmlTableCell(d.ShortName.ToString()));
 				int depth = d.Depth;
 				DX[depth] = d.Siblings > 0;
 
