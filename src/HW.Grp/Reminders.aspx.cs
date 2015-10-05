@@ -50,7 +50,7 @@ namespace HW.Grp
 
 			Org.Controls.Add(new LiteralControl("<br>"));
 			
-			IHGHtmlTable table = new IHGHtmlTable { Border = 0, CellSpacing = 0, CellPadding = 0 };
+			IHGHtmlTable table = new IHGHtmlTable { Border = 0, CellSpacing = 0, CellPadding = 3 };
 
             var r = new IHGHtmlTableRow(
                 new IHGHtmlTableCell(R.Str(lid, "reminder.interval", "Reminder interval"), true),
