@@ -396,8 +396,14 @@
   <data name="reminder" xml:space="preserve">
     <value>Reminder:</value>
   </data>
+  <data name="reminder.check" xml:space="preserve">
+    <value>System checks</value>
+  </data>
   <data name="reminder.for" xml:space="preserve">
     <value>Reminder for</value>
+  </data>
+  <data name="reminder.interval" xml:space="preserve">
+    <value>Reminder interval</value>
   </data>
   <data name="reminder.text" xml:space="preserve">
     <value>Reminder</value>

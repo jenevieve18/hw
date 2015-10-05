@@ -408,8 +408,14 @@
   <data name="reminder" xml:space="preserve">
     <value>Påminnelse:</value>
   </data>
+  <data name="reminder.check" xml:space="preserve">
+    <value>Systemet kontrollerar</value>
+  </data>
   <data name="reminder.for" xml:space="preserve">
     <value>Påminnelse för</value>
+  </data>
+  <data name="reminder.interval" xml:space="preserve">
+    <value>Påminnelseintervall</value>
   </data>
   <data name="reminder.text" xml:space="preserve">
     <value>Påminnelse</value>
