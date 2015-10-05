@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Core.Helpers;
 using HW.Core.Repositories.Sql;
+using HW.Core.Models;
 
 namespace HW.Grp
 {
@@ -13,6 +14,7 @@ namespace HW.Grp
 	{
 		SqlSponsorAdminRepository r = new SqlSponsorAdminRepository();
 		protected int lid;
+        //protected SponsorAdmin admin;
 		
 		bool HasUniqueKey {
 			get { return UniqueKey != null && UniqueKey != ""; }
@@ -35,8 +37,11 @@ namespace HW.Grp
             {
                 Response.Redirect("default.aspx");
             }
-			
-			lid = ConvertHelper.ToInt32(Session["lid"], 1);
+
+            lid = ConvertHelper.ToInt32(Session["lid"], 1);
+
+            //admin = r.ReadSponsorByUniqueKey(UniqueKey);
+            //HtmlHelper.RedirectIf(admin == null, "default.aspx", true);
 		}
 		
 		protected override void OnPreRender(EventArgs e)
@@ -57,7 +62,9 @@ namespace HW.Grp
 				labelErrorMessage.Text = R.Str(lid, "password.short", "Password too short! It needs to be at least 8 characters.");
 			} else {
 				r.SavePassword(Db.HashMd5(textBoxPassword.Text), UniqueKey);
-				Response.Redirect(string.Format("passwordactivation.aspx?KEY={0}&Saved=true", UniqueKey), true);
+                //r.SavePassword(Db.HashMd5(textBoxPassword.Text), Guid.NewGuid().ToString(), admin.Id);
+				//Response.Redirect(string.Format("passwordactivation.aspx?KEY={0}&Saved=true", UniqueKey), true);
+                Response.Redirect("default.aspx");
 			}
 		}
 	}

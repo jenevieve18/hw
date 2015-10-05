@@ -9,17 +9,32 @@ namespace HW.Core.Repositories.Sql
 	public class SqlSponsorAdminRepository : BaseSqlRepository<SponsorAdmin>, IExtendedSurveyRepository, ISponsorAdminRepository
 	{
 		public void SavePassword(string password, string uid)
+        //public void SavePassword(string password, string uniqueKey, int sponsorAdminID)
 		{
-			string query = string.Format(
-				@"
-UPDATE SponsorAdmin SET Pas = @Password, UniqueKeyUsed = 1
+            string query = string.Format(
+                @"
+UPDATE SponsorAdmin SET Pas = @Password,
+    UniqueKeyUsed = 1
 WHERE UniqueKey = @UniqueKey");
-			ExecuteNonQuery(
-				query,
-				"healthWatchSqlConnection",
-				new SqlParameter("@Password", password),
-				new SqlParameter("@UniqueKey", uid)
-			);
+            ExecuteNonQuery(
+                query,
+                "healthWatchSqlConnection",
+                new SqlParameter("@Password", password),
+                new SqlParameter("@UniqueKey", uid)
+            );
+//            string query = string.Format(
+//                @"
+//UPDATE SponsorAdmin SET Pas = @Password,
+//UniqueKey = @UniqueKey,
+//UniqueKeyUsed = 1
+//WHERE SponsorAdminID = @SponsorAdminID");
+//            ExecuteNonQuery(
+//                query,
+//                "healthWatchSqlConnection",
+//                new SqlParameter("@Password", password),
+//                new SqlParameter("@UniqueKey", uniqueKey),
+//                new SqlParameter("@SponsorAdminID", sponsorAdminID)
+//            );
 		}
 		
 //		public void SaveAdminExerciseDataInputs(string[] dataInputs, int sponsorAdminID, int exerciseVariantLangID)
@@ -45,7 +60,8 @@ WHERE UniqueKey = @UniqueKey");
 		{
 			string query = string.Format(
 				@"
-UPDATE SponsorAdmin SET UniqueKey = @UniqueKey
+UPDATE SponsorAdmin SET UniqueKey = @UniqueKey,
+UniqueKeyUsed = 0
 WHERE SponsorAdminID = @SponsorAdminID");
 			ExecuteNonQuery(
 				query,
@@ -59,7 +75,8 @@ WHERE SponsorAdminID = @SponsorAdminID");
 		{
 			string query = string.Format(
 				@"
-UPDATE SponsorAdmin SET LoginLastSent = GETDATE() WHERE SponsorAdminID = {0}",
+UPDATE SponsorAdmin SET LoginLastSent = GETDATE()
+WHERE SponsorAdminID = {0}",
 				sponsorAdminId
 			);
 			Db.exec(query, "healthWatchSqlConnection");
@@ -69,7 +86,8 @@ UPDATE SponsorAdmin SET LoginLastSent = GETDATE() WHERE SponsorAdminID = {0}",
 		{
 			string query = string.Format(
 				@"
-UPDATE SponsorAdmin SET AllMessageLastSent = GETDATE() WHERE SponsorAdminID = {0}",
+UPDATE SponsorAdmin SET AllMessageLastSent = GETDATE()
+WHERE SponsorAdminID = {0}",
 				sponsorAdminExtendedSurveyId
 			);
 			Db.exec(query, "healthWatchSqlConnection");
@@ -79,7 +97,8 @@ UPDATE SponsorAdmin SET AllMessageLastSent = GETDATE() WHERE SponsorAdminID = {0
 		{
 			string query = string.Format(
 				@"
-UPDATE SponsorAdminExtendedSurvey SET FinishedLastSent = GETDATE() WHERE SponsorAdminExtendedSurveyID = {0}",
+UPDATE SponsorAdminExtendedSurvey SET FinishedLastSent = GETDATE()
+WHERE SponsorAdminExtendedSurveyID = {0}",
 				sponsorAdminExtendedSurveyId
 			);
 			Db.exec(query, "healthWatchSqlConnection");
@@ -89,7 +108,8 @@ UPDATE SponsorAdminExtendedSurvey SET FinishedLastSent = GETDATE() WHERE Sponsor
 		{
 			string query = string.Format(
 				@"
-UPDATE SponsorAdminExtendedSurvey SET EmailLastSent = GETDATE() WHERE SponsorAdminExtendedSurveyID = {0}",
+UPDATE SponsorAdminExtendedSurvey SET EmailLastSent = GETDATE()
+WHERE SponsorAdminExtendedSurveyID = {0}",
 				sponsorAdminExtendedSurveyId
 			);
 			Db.exec(query, "healthWatchSqlConnection");
@@ -99,7 +119,8 @@ UPDATE SponsorAdminExtendedSurvey SET EmailLastSent = GETDATE() WHERE SponsorAdm
 		{
 			string query = string.Format(
 				@"
-UPDATE SponsorAdmin SET InviteReminderLastSent = GETDATE() WHERE SponsorAdminID = {0}",
+UPDATE SponsorAdmin SET InviteReminderLastSent = GETDATE()
+WHERE SponsorAdminID = {0}",
 				sponsorAdminExtendedSurveyId
 			);
 			Db.exec(query, "healthWatchSqlConnection");
@@ -109,7 +130,8 @@ UPDATE SponsorAdmin SET InviteReminderLastSent = GETDATE() WHERE SponsorAdminID 
 		{
 			string query = string.Format(
 				@"
-UPDATE SponsorAdmin SET InviteLastSent = GETDATE() WHERE SponsorAdminID = {0}",
+UPDATE SponsorAdmin SET InviteLastSent = GETDATE()
+WHERE SponsorAdminID = {0}",
 				sponsorAdminID
 			);
 			Db.exec(query, "healthWatchSqlConnection");
@@ -194,6 +216,25 @@ WHERE UniqueKey = @UniqueKey"
 			}
 			return exists;
 		}
+
+        public SponsorAdmin ReadSponsorByUniqueKey(string uniqueKey)
+        {
+            string query = @"
+SELECT SponsorAdminID
+FROM SponsorAdmin
+WHERE UniqueKey = @UniqueKey";
+			SponsorAdmin a = null;
+            using (SqlDataReader rs = ExecuteReader(query, "healthWatchSqlConnection"))
+            {
+                if (rs.Read())
+                {
+                    a = new SponsorAdmin {
+                        Id = GetInt32(rs, 0)
+                    };
+                }
+            }
+            return a;
+        }
 		
 		public ISponsor ReadSponsor(int sponsorAdminId)
 		{
