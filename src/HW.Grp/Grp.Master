@@ -78,7 +78,8 @@
 				<% if (!super && Session["SponsorID"] != null) { %>
 					<% string desc = ""; %>
 					<% foreach (var f in functions) { %>
-						<% bool active = Request.Url.AbsolutePath.IndexOf(f.URL) >= 0 || (f.URL == "managers.aspx" && Request.Url.AbsolutePath.IndexOf("managerSetup.aspx".ToLower()) >= 0); %>
+                        <% string url = Request.Url.AbsolutePath; %>
+						<% bool active = url.ToLower().IndexOf(f.URL.ToLower()) >= 0 || (f.URL.ToLower() == "managers.aspx".ToLower() && url.ToLower().IndexOf("managerSetup.aspx".ToLower()) >= 0); %>
 						<% if (active) { %>
 							<%= HtmlHelper.Anchor(f.Function, f.URL, "class='active' title='" + f.Expl + "'", true) %>
 							<% desc = f.Expl; %>
