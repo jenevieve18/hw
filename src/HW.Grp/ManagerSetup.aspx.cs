@@ -41,8 +41,8 @@ namespace HW.Grp
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			sponsorID = Convert.ToInt32(Session["SponsorID"]);
-			lid = ConvertHelper.ToInt32(Session["lid"], 1);
+            sponsorID = Convert.ToInt32(Session["SponsorID"]);
+            lid = ConvertHelper.ToInt32(Session["lid"], 1);
 
 			if (sponsorID != 0) {
 				Save.Click += new EventHandler(Save_Click);
@@ -102,8 +102,8 @@ namespace HW.Grp
 						);
 					}
 				} else {
-					int tempSponsorAdminID = sponsorRepository.SponsorAdminExists(sponsorAdminID, Usr.Text);
-					if (tempSponsorAdminID > 0) {
+					int tempSponsorAdminID = sponsorRepository.SponsorAdminExists(Convert.ToInt32(Session["SponsorAdminID"]), Usr.Text);
+					if (tempSponsorAdminID >= 0) {
 						foreach (var d in departmentRepository.a(sponsorID, tempSponsorAdminID)) {
 							bool hasDepartmentID = Request.Form["DepartmentID"] != null;
 							if (hasDepartmentID) {
@@ -137,7 +137,6 @@ namespace HW.Grp
                             {
                                 panelUserName.Visible = false;
                             }
-//							Pas.Attributes.Add("value", "Not shown");
 							Email.Text = a.Email;
 							LastName.Text = a.LastName;
 							PermanentlyDeleteUsers.Checked = a.PermanentlyDeleteUsers;
@@ -177,7 +176,7 @@ namespace HW.Grp
 
 		void Save_Click(object sender, EventArgs e)
 		{
-			int tempSponsorAdminID = sponsorRepository.SponsorAdminExists(sponsorAdminID, Usr.Text);
+			int tempSponsorAdminID = sponsorRepository.SponsorAdminExists2(sponsorAdminID, Usr.Text);
 			if (tempSponsorAdminID <= 0) {
 				var a = new SponsorAdmin {
 					Id = sponsorAdminID,
@@ -185,7 +184,6 @@ namespace HW.Grp
 					Email = Email.Text,
 					Name = Name.Text,
 					Usr = Usr.Text,
-//					Password = Pas.Text,
 					SuperUser = SuperUser.Checked,
 					Sponsor = new Sponsor { Id = sponsorID },
 					LastName = LastName.Text,
@@ -194,8 +192,7 @@ namespace HW.Grp
 				a.Validate();
                 a.AddErrorIf(a.Name == "", R.Str(lid, "manager.name.required", "Sponsor admin name is required."));
                 a.AddErrorIf(a.Email == "", R.Str(lid, "manager.email.required", "Email address name is required."));
-                //a.AddErrorIf(a.Password == "", R.Str(lid, "", "Password is required."));
-				a.AddErrorIf(sponsorAdminRepository.SponsorAdminEmailExists(a.Email, sponsorAdminID), R.Str(lid, "manager.email.notunique", "Please choose a unique email address!"));
+                a.AddErrorIf(sponsorAdminRepository.SponsorAdminEmailExists(a.Email, sponsorAdminID), R.Str(lid, "manager.email.notunique", "Please choose a unique email address!"));
 				if (!a.HasErrors) {
 					if (sponsorAdminID != 0) {
 						sponsorRepository.UpdateSponsorAdmin(a);
@@ -234,7 +231,6 @@ namespace HW.Grp
 							}
 						}
 					}
-					//Response.Redirect("managers.aspx", true);
                     Response.Redirect(string.Format("managersetup.aspx?SAID={0}", sponsorAdminID));
 				} else {
 					errorMessage = a.Errors.ToHtmlUl();
@@ -250,7 +246,6 @@ namespace HW.Grp
         	sponsorAdminRepository.UpdateUniqueKey(uid, sponsorAdminID);
         	new PasswordActivationLink().Send(Email.Text, uid, Name.Text, Usr.Text);
         	
-            //errorMessage = R.Str(lid, "password.activate.sent", "Password activation link sent!");
             message = R.Str(lid, "password.activate.sent", "Password activation link sent!");
         }
 	}

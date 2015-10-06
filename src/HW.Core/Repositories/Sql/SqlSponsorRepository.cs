@@ -965,8 +965,29 @@ WHERE Usr != '' AND Usr = '{0}'
 					return GetInt32(rs, 0);
 				}
 			}
-			return 0;
+			return sponsorAdminId;
 		}
+
+        public int SponsorAdminExists2(int sponsorAdminId, string usr)
+        {
+            string query = string.Format(
+                @"
+SELECT SponsorAdminID
+FROM SponsorAdmin
+WHERE Usr != '' AND Usr = '{0}'
+{1}",
+                usr.Replace("'", ""),
+                (sponsorAdminId != 0 ? " AND SponsorAdminID != " + sponsorAdminId : "")
+            );
+            using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection"))
+            {
+                if (rs.Read())
+                {
+                    return GetInt32(rs, 0);
+                }
+            }
+            return 0;
+        }
 
 		public SponsorAdmin ReadSponsorAdmin(int sponsorId, int sponsorAdminId, int said)
 		{
