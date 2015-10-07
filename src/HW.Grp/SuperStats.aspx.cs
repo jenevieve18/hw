@@ -14,7 +14,7 @@ namespace HW.Grp
 		
 		protected void Page_Load(object sender, EventArgs e)
         {
-            lid = ConvertHelper.ToInt32(Session["lid"], 1);
+            lid = ConvertHelper.ToInt32(Session["lid"], 2);
 		}
 
 		protected override void OnPreRender(EventArgs e)

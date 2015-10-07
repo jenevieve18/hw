@@ -97,7 +97,7 @@ namespace HW.Grp
 			Index(
 				ConvertHelper.ToInt32(Request.QueryString["EAID"]),
 				ConvertHelper.ToInt32(Request.QueryString["ECID"]),
-				ConvertHelper.ToInt32(Session["lid"], 1),
+				ConvertHelper.ToInt32(Session["lid"], 2),
 				ConvertHelper.ToInt32(Request.QueryString["SORT"])
 			);
 		}

@@ -189,7 +189,7 @@ namespace HW.Grp
             
             HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Statistics), "default.aspx", true);
             
-            lid = ConvertHelper.ToInt32(Session["lid"], 1);
+            lid = ConvertHelper.ToInt32(Session["lid"], 2);
 			
             plotTypes = plotRepository.FindByLanguage(lid);
 			

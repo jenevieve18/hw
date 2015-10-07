@@ -25,7 +25,7 @@ namespace HW.Grp
 				Response.Redirect("default.aspx?SuperLogout=1&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
             superAdminID = ConvertHelper.ToInt32(Session["SuperAdminID"]);
-            lid = ConvertHelper.ToInt32(Session["lid"], 1);
+            lid = ConvertHelper.ToInt32(Session["lid"], 2);
 			superAdmin = sponsorRepository.ReadSuperAdmin(superAdminID);
 			submit.Click += new EventHandler(submit_Click);
 			submit2.Click += new EventHandler(submit2_Click);

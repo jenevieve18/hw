@@ -44,7 +44,7 @@ namespace HW.Grp
             if (Request.QueryString["r"] != null) {
                 Response.Redirect(HttpUtility.UrlDecode(Request.QueryString["r"]));
             }
-            lid = ConvertHelper.ToInt32(Session["lid"], 1);
+            lid = ConvertHelper.ToInt32(Session["lid"], 2);
 
             Index();
 			

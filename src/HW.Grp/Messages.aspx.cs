@@ -50,7 +50,7 @@ namespace HW.Grp
 			
 			HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Messages), "default.aspx", true);
 			
-			lid = ConvertHelper.ToInt32(Session["lid"], 1);
+			lid = ConvertHelper.ToInt32(Session["lid"], 2);
 			loginWithSkey = Session["SponsorKey"] != null;
 			
 			buttonSave.Click += new EventHandler(SaveClick);

@@ -30,7 +30,7 @@ namespace HW.Grp
 
 			super = Request.Url.AbsolutePath.Contains("super");
 
-            lid = ConvertHelper.ToInt32(Session["lid"], 1);
+            lid = ConvertHelper.ToInt32(Session["lid"], 2);
 			functions = managerFunctionRepository.FindBySponsorAdmin(sponsorAdminID, lid);
 		}
 	}

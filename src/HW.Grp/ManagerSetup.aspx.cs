@@ -42,7 +42,7 @@ namespace HW.Grp
 		protected void Page_Load(object sender, EventArgs e)
 		{
             sponsorID = Convert.ToInt32(Session["SponsorID"]);
-            lid = ConvertHelper.ToInt32(Session["lid"], 1);
+            lid = ConvertHelper.ToInt32(Session["lid"], 2);
 
 			if (sponsorID != 0) {
 				Save.Click += new EventHandler(Save_Click);

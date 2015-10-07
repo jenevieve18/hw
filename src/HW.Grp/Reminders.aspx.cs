@@ -39,7 +39,7 @@ namespace HW.Grp
 			
 			HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(ConvertHelper.ToInt32(Session["SponsorAdminID"]), ManagerFunction.Reminders), "default.aspx", true);
 			
-			lid = ConvertHelper.ToInt32(Session["lid"], 1);
+			lid = ConvertHelper.ToInt32(Session["lid"], 2);
 			
 			Index(ConvertHelper.ToInt32(Session["SponsorID"]), ConvertHelper.ToInt32(Session["SponsorAdminID"]));
 		}

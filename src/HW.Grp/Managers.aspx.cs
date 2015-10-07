@@ -64,7 +64,7 @@ namespace HW.Grp
 			
 			HtmlHelper.RedirectIf(!HasAccess(sponsorAdminID, ManagerFunction.Managers), "default.aspx", true);
 			
-			lid = ConvertHelper.ToInt32(Session["lid"], 1);
+			lid = ConvertHelper.ToInt32(Session["lid"], 2);
             
             sort = Request.QueryString["Sort"];
 			sortFirstName = ConvertHelper.ToInt32(Request.QueryString["SortFirstName"]);

@@ -49,7 +49,7 @@ namespace HW.Grp
 
 			HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Organization), "default.aspx", true);
 
-			lid = ConvertHelper.ToInt32(Session["lid"], 1);
+			lid = ConvertHelper.ToInt32(Session["lid"], 2);
 			
 			ReminderHelper.SetLanguageID(lid);
 			LanguageFactory.SetCurrentCulture(lid);
