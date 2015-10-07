@@ -61,36 +61,82 @@ namespace HW.Grp
             r.Attributes.Add("style", "border-bottom:1px solid #333333;");
             table.Rows.Add(r);
 
-            table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(Session["Sponsor"].ToString()) { ColSpan = 3 }));
+            table.Rows.Add(
+                new IHGHtmlTableRow(
+                    new IHGHtmlTableCell(Session["Sponsor"].ToString()) { ColSpan = 3 }
+                )
+            );
             
             Dictionary<int, bool> DX = new Dictionary<int, bool>();
 
+            int j = 0;
+            
+            Dictionary<string, string> loginDays = new Dictionary<string, string>();
+            loginDays.Add("NULL", R.Str(lid, "week.same", "< same as parent >"));
+            loginDays.Add("1", R.Str(lid, "day.everyday", "every day"));
+            loginDays.Add("7", R.Str(lid, "week", "week"));
+            loginDays.Add("14", R.Str(lid, "week.two", "2 weeks"));
+            loginDays.Add("30", R.Str(lid, "month", "month"));
+            loginDays.Add("90", R.Str(lid, "month.three", "3 months"));
+            loginDays.Add("180", R.Str(lid, "month.six", "6 months"));
+
+            Dictionary<string, string> loginWeekDays = new Dictionary<string, string>();
+            loginWeekDays.Add("NULL", R.Str(lid, "week.same", "< same as parent >"));
+            loginWeekDays.Add("-1", R.Str(lid, "week.disabled", "< disabled >"));
+            loginWeekDays.Add("0", R.Str(lid, "week.everyday", "< every day >"));
+            loginWeekDays.Add("1", R.Str(lid, "week.monday", "Monday"));
+            loginWeekDays.Add("2", R.Str(lid, "week.tuesday", "Tuesday"));
+            loginWeekDays.Add("3", R.Str(lid, "week.wednesday", "Wednesday"));
+            loginWeekDays.Add("4", R.Str(lid, "week.thursday", "Thursday"));
+            loginWeekDays.Add("5", R.Str(lid, "week.friday", "Friday"));
+
 			foreach (var d in departments) {
-                IHGHtmlTable boxes = new IHGHtmlTable();
-                var ld = new DropDownList { ID = "LDID" + d.Id };
-                ld.Items.Add(new ListItem(R.Str(lid, "week.same", "< same as parent >"), "NULL"));
-                ld.Items.Add(new ListItem(R.Str(lid, "day.everyday", "every day"), "1"));
-                ld.Items.Add(new ListItem(R.Str(lid, "week", "week"), "7"));
-                ld.Items.Add(new ListItem(R.Str(lid, "week.two", "2 weeks"), "14"));
-                ld.Items.Add(new ListItem(R.Str(lid, "month", "month"), "30"));
-                ld.Items.Add(new ListItem(R.Str(lid, "month.three", "3 months"), "90"));
-                ld.Items.Add(new ListItem(R.Str(lid, "month.six", "6 months"), "180"));
-                
-                var lw = new DropDownList { ID = "LWID" + d.Id };
-                lw.Items.Add(new ListItem(R.Str(lid, "week.same", "< same as parent >"), "NULL"));
-                lw.Items.Add(new ListItem(R.Str(lid, "week.disabled", "< disabled >"), "-1"));
-                lw.Items.Add(new ListItem(R.Str(lid, "week.everyday", "< every day >"), "0"));
-                lw.Items.Add(new ListItem(R.Str(lid, "week.monday", "Monday"), "1"));
-                lw.Items.Add(new ListItem(R.Str(lid, "week.tuesday", "Tuesday"), "2"));
-                lw.Items.Add(new ListItem(R.Str(lid, "week.wednesday", "Wednesday"), "3"));
-                lw.Items.Add(new ListItem(R.Str(lid, "week.thursday", "Thursday"), "4"));
-                lw.Items.Add(new ListItem(R.Str(lid, "week.friday", "Friday"), "5"));
+                IHGHtmlTable boxes = new IHGHtmlTable() { Width = "100%" };
+                if (j > 0)
+                {
+                    var ld = new DropDownList { ID = "LDID" + d.Id };
+                    ld.Items.Add(new ListItem(R.Str(lid, "week.same", "< same as parent >"), "NULL"));
+                    ld.Items.Add(new ListItem(R.Str(lid, "day.everyday", "every day"), "1"));
+                    ld.Items.Add(new ListItem(R.Str(lid, "week", "week"), "7"));
+                    ld.Items.Add(new ListItem(R.Str(lid, "week.two", "2 weeks"), "14"));
+                    ld.Items.Add(new ListItem(R.Str(lid, "month", "month"), "30"));
+                    ld.Items.Add(new ListItem(R.Str(lid, "month.three", "3 months"), "90"));
+                    ld.Items.Add(new ListItem(R.Str(lid, "month.six", "6 months"), "180"));
 
-                ld.SelectedValue = d.LoginDays.ToString();
-                lw.SelectedValue = d.LoginWeekDay.ToString();
-                boxes.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(ld), new IHGHtmlTableCell(lw)));
+                    var lw = new DropDownList { ID = "LWID" + d.Id };
+                    lw.Items.Add(new ListItem(R.Str(lid, "week.same", "< same as parent >"), "NULL"));
+                    lw.Items.Add(new ListItem(R.Str(lid, "week.disabled", "< disabled >"), "-1"));
+                    lw.Items.Add(new ListItem(R.Str(lid, "week.everyday", "< every day >"), "0"));
+                    lw.Items.Add(new ListItem(R.Str(lid, "week.monday", "Monday"), "1"));
+                    lw.Items.Add(new ListItem(R.Str(lid, "week.tuesday", "Tuesday"), "2"));
+                    lw.Items.Add(new ListItem(R.Str(lid, "week.wednesday", "Wednesday"), "3"));
+                    lw.Items.Add(new ListItem(R.Str(lid, "week.thursday", "Thursday"), "4"));
+                    lw.Items.Add(new ListItem(R.Str(lid, "week.friday", "Friday"), "5"));
 
-                IHGHtmlTableRow row = new IHGHtmlTableRow(new IHGHtmlTableCell(boxes) { ColSpan = 2 }, new IHGHtmlTableCell(d.ShortName.ToString()));
+                    ld.SelectedValue = d.LoginDays.ToString();
+                    lw.SelectedValue = d.LoginWeekDay.ToString();
+                    boxes.Rows.Add(
+                        new IHGHtmlTableRow(
+                            new IHGHtmlTableCell(ld),
+                            new IHGHtmlTableCell(lw)
+                        )
+                    );
+                }
+                else
+                {
+                    boxes.Rows.Add(
+                        new IHGHtmlTableRow(
+                            new IHGHtmlTableCell(loginDays[d.LoginDays.ToString()]) { Width = "50%" },
+                            new IHGHtmlTableCell(loginWeekDays[d.LoginWeekDay.ToString()])
+                        )
+                    );
+                }
+                j++;
+
+                IHGHtmlTableRow row = new IHGHtmlTableRow(
+                    new IHGHtmlTableCell(boxes) { ColSpan = 2 },
+                    new IHGHtmlTableCell(d.ShortName.ToString())
+                );
 				int depth = d.Depth;
 				DX[depth] = d.Siblings > 0;
 
