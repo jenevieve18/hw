@@ -174,27 +174,13 @@ namespace HW.Core.Models
 			Functions.Add(f);
 		}
 		
-//		public string GetLoginDays()
-//		{
-//			if (Password == "") {
-//				return "Not activated";
-//			} else if (LoginDays == -1) {
-//				return "Not on record";
-//			} else {
-//				return string.Format("{0} day(s)", LoginDays);
-//			}
-//		}
-		
 		public string GetLoginDays(string notActivated, string notOnRecord, string days)
 		{
-			if (Password == "") {
-//				return "Not activated";
+			if (Password == null || Password == "") {
 				return notActivated;
 			} else if (LoginDays == -1) {
-//				return "Not on record";
 				return notOnRecord;
 			} else {
-//				return string.Format("{0} day(s)", LoginDays);
 				return string.Format("{0} {1}", LoginDays, days);
 			}
 		}
@@ -207,9 +193,6 @@ namespace HW.Core.Models
 		public override void Validate()
 		{
 			base.Validate();
-            //AddErrorIf(Name == "", "Sponsor admin name is required.");
-            //AddErrorIf(Email == "", "Email address name is required.");
-            //AddErrorIf(Password == "", "Password is required.");
 		}
 		
 		public virtual bool SuperAdmin {

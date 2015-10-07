@@ -1092,6 +1092,7 @@ AND (Pas = @Pas OR Pas = @HashedPas)"
 				new SqlParameter("@SponsorAdminID", sponsorAdminId),
 				new SqlParameter("@Pas", password),
 				new SqlParameter("@HashedPas", Db.HashMd5(password)))) {
+
 				if (rs.Read()) {
 					var a = new SponsorAdmin {
 						Id = GetInt32(rs, 0)
@@ -1589,8 +1590,7 @@ WHERE SponsorAdminID = {0}",
 			return functions;
 		}
 
-		//public IList<SponsorAdmin> FindAdminBySponsor(int sponsorId, int sponsorAdminId, string sortFirstName, string sortLastName)
-        public IList<SponsorAdmin> FindAdminBySponsor(int sponsorId, int sponsorAdminId, string orderBy)
+		public IList<SponsorAdmin> FindAdminBySponsor(int sponsorId, int sponsorAdminId, string orderBy)
 		{
 			string query = string.Format(
 				@"

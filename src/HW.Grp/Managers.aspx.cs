@@ -35,12 +35,7 @@ namespace HW.Grp
 		{
 			this.service = service;
 		}
-		
-//		public IList<SponsorAdmin> SponsorAdmins {
-//			get { return sponsorAdmins; }
-//			set { sponsorAdmins = value; }
-//		}
-//
+
 		public void Delete(int sponsorID, int sponsorAdminIDToBeDeleted)
 		{
 			if (sponsorAdminIDToBeDeleted != -1) {
@@ -77,8 +72,6 @@ namespace HW.Grp
 			
 			Delete(sponsorID, ConvertHelper.ToInt32(Request.QueryString["Delete"], -1));
 			
-//			SponsorAdmins = service.FindAdminBySponsor(sponsorID, sponsorAdminID, sort, lid);
-//			
 			Index(sponsorID, sponsorAdminID, sort, sortFirstName, sortLastName, lid);
 		}
 		

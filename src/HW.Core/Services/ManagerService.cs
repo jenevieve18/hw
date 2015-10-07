@@ -47,8 +47,6 @@ namespace HW.Core.Services
 		
 		public IList<SponsorAdmin> FindAdminBySponsor(int sponsorID, int sponsorAdminID, string sort, int sortFirstName, int sortLastName, int lid)
 		{
-            //string orderByFirstName = "";
-            //string orderByLastName = "";
             string orderBy = "";
             if (sort == "LastName")
             {
@@ -67,8 +65,7 @@ namespace HW.Core.Services
                 );   
             }
 
-			//var admins = sr.FindAdminBySponsor(sponsorID, sponsorAdminID, sortFirstName == 0 ? "ASC" : "DESC", sortLastName == 0 ? "ASC" : "DESC");
-            var admins = sr.FindAdminBySponsor(sponsorID, sponsorAdminID, orderBy);
+			var admins = sr.FindAdminBySponsor(sponsorID, sponsorAdminID, orderBy);
 			foreach (var a in admins) {
 				a.AddFunctions(mr.FindBySponsorAdminX(a.Id, lid));
 			}
