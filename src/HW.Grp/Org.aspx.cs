@@ -1127,7 +1127,13 @@ ORDER BY sbq.SortOrder",
 			string ESstart = "", ESdesc = "", ESselect = "", ESuserSelect = "", ESuserJoin = "", ESrounds = "", ESroundTexts = "", ESpreviousRounds = "", ESpreviousRoundTexts = "", ESjoin = "", ESattr = "";
 			string bqESselect = "", bqESjoin = "";
 			int EScount = 0, totalEScount = 0, tmpEScount = 0;
-//			query = string.Format("SELECT COUNT(*) FROM SponsorExtendedSurvey ses WHERE ses.SponsorID = {0}", sponsorID);
+//			query = string.Format(
+//				@"
+//SELECT COUNT(*)
+//FROM SponsorExtendedSurvey ses
+//WHERE ses.SponsorID = {0}",
+//				sponsorID
+//			);
 //			rs = Db.rs(query);
 //			if (rs.Read()) {
 //				totalEScount = rs.GetInt32(0);

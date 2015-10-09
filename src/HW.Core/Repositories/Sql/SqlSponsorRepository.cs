@@ -968,26 +968,26 @@ WHERE Usr != '' AND Usr = '{0}'
 			return sponsorAdminId;
 		}
 
-        public int SponsorAdminExists2(int sponsorAdminId, string usr)
-        {
-            string query = string.Format(
-                @"
+		public int SponsorAdminExists2(int sponsorAdminId, string usr)
+		{
+			string query = string.Format(
+				@"
 SELECT SponsorAdminID
 FROM SponsorAdmin
 WHERE Usr != '' AND Usr = '{0}'
 {1}",
-                usr.Replace("'", ""),
-                (sponsorAdminId != 0 ? " AND SponsorAdminID != " + sponsorAdminId : "")
-            );
-            using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection"))
-            {
-                if (rs.Read())
-                {
-                    return GetInt32(rs, 0);
-                }
-            }
-            return 0;
-        }
+				usr.Replace("'", ""),
+				(sponsorAdminId != 0 ? " AND SponsorAdminID != " + sponsorAdminId : "")
+			);
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection"))
+			{
+				if (rs.Read())
+				{
+					return GetInt32(rs, 0);
+				}
+			}
+			return 0;
+		}
 
 		public SponsorAdmin ReadSponsorAdmin(int sponsorId, int sponsorAdminId, int said)
 		{
@@ -1105,51 +1105,51 @@ AND (Pas = @Pas OR Pas = @HashedPas)"
 
 		public SponsorAdmin ReadSponsorAdmin(int sponsorAdminId, string usr, string email)
 		{
-            string query = string.Format(
-                @"
+			string query = string.Format(
+				@"
 SELECT SponsorAdminID
 FROM SponsorAdmin
 WHERE SponsorID = {0}
 {1}
 {2}",
-                sponsorAdminId,
-                usr != "" ? "AND Usr = @Usr" : "",
-                email != "" ? "AND Email = @Email" : ""
-            );
-            using (SqlDataReader rs = ExecuteReader(
-                query,
-                "healthWatchSqlConnection",
-                new SqlParameter("@Usr", usr),
-                new SqlParameter("@Email", email)))
-            {
-                if (rs.Read())
-                {
-                    var a = new SponsorAdmin
-                    {
-                        Id = rs.GetInt32(0)
-                    };
-                    return a;
-                }
-            }
-            return null;
-//            string query = string.Format(
-//                @"
-//SELECT SponsorAdminID
-//FROM SponsorAdmin
-//WHERE SponsorID = {0}
-//AND Usr = '{1}'",
-//                sponsorAdminId,
-//                usr.Replace("'", "")
-//            );
-//            using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-//                if (rs.Read()) {
-//                    var a = new SponsorAdmin {
-//                        Id = rs.GetInt32(0)
-//                    };
-//                    return a;
-//                }
-//            }
-//            return null;
+				sponsorAdminId,
+				usr != "" ? "AND Usr = @Usr" : "",
+				email != "" ? "AND Email = @Email" : ""
+			);
+			using (SqlDataReader rs = ExecuteReader(
+				query,
+				"healthWatchSqlConnection",
+				new SqlParameter("@Usr", usr),
+				new SqlParameter("@Email", email)))
+			{
+				if (rs.Read())
+				{
+					var a = new SponsorAdmin
+					{
+						Id = rs.GetInt32(0)
+					};
+					return a;
+				}
+			}
+			return null;
+			//            string query = string.Format(
+			//                @"
+			//SELECT SponsorAdminID
+			//FROM SponsorAdmin
+			//WHERE SponsorID = {0}
+			//AND Usr = '{1}'",
+			//                sponsorAdminId,
+			//                usr.Replace("'", "")
+			//            );
+			//            using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+			//                if (rs.Read()) {
+			//                    var a = new SponsorAdmin {
+			//                        Id = rs.GetInt32(0)
+			//                    };
+			//                    return a;
+			//                }
+			//            }
+			//            return null;
 		}
 
 		public SponsorAdmin ReadSponsorAdmin(string skey, string sakey, string sa, string said, string anv, string los)
@@ -1626,7 +1626,7 @@ AND sa.SponsorID = {0}
 						ReadOnly = GetInt32(rs, 3) == 1,
 						Password = GetString(rs, 4),
 						LoginDays = GetInt32(rs, 5, -1),
-                        LastName = GetString(rs, 6)
+						LastName = GetString(rs, 6)
 					};
 					admins.Add(a);
 				}
@@ -2135,19 +2135,48 @@ VALUES ({0},{1})",
 
 		public int CountExtendedSurveyBySponsor(int sponsorId)
 		{
+//			string query = string.Format(
+//					@"
+//SELECT COUNT(*)
+//FROM SponsorExtendedSurvey ses
+//WHERE ses.SponsorID = {0}",
+//					sponsorId
+//				);
+//				using (SqlDataReader rs = Db.rs(query)) {
+//					if (rs.Read()) {
+//						return rs.GetInt32(0);
+//					}
+//				}
+//			}
+//			return 0;
 			string query = string.Format(
 				@"
+SELECT Total, Answers
+FROM SponsorExtendedSurvey
+WHERE SponsorID = {0}",
+				sponsorId
+			);
+			int total = -1;
+			using (SqlDataReader rs = ExecuteReader(query)) {
+				if (rs.Read()) {
+					total = GetInt32(rs, 0, GetInt32(rs, 1, -1));
+				}
+			}
+			if (total < 0) {
+				query = string.Format(
+					@"
 SELECT COUNT(*)
 FROM SponsorExtendedSurvey ses
 WHERE ses.SponsorID = {0}",
-				sponsorId
-			);
-			using (SqlDataReader rs = Db.rs(query)) {
-				if (rs.Read()) {
-					return rs.GetInt32(0);
+					sponsorId
+				);
+				using (SqlDataReader rs = Db.rs(query)) {
+					if (rs.Read()) {
+						total = rs.GetInt32(0);
+					}
 				}
 			}
-			return 0;
+			return total;
 		}
 
 		public int CountSentInvitesBySponsor3(int sponsorId, DateTime dt)
