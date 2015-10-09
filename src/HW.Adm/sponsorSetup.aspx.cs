@@ -872,14 +872,15 @@ public partial class sponsorSetup : System.Web.UI.Page
                     bool ext = ((CheckBox)SponsorExtendedSurvey.FindControl("SES" + rs.GetInt32(0) + "D" + rs2.GetInt32(0) + "EXT")).Checked;
                     string t = ((TextBox)SponsorExtendedSurvey.FindControl("SES" + rs.GetInt32(0) + "D" + rs2.GetInt32(0))).Text;
                     string toe = ((TextBox)SponsorExtendedSurvey.FindControl("SES" + rs.GetInt32(0) + "TOE" + rs2.GetInt32(0))).Text;
-                    if (t == "" && !hide && !ext && toe == "")
-                    {
-                        if (!rs2.IsDBNull(1))
-                        {
-                            Db.exec("DELETE FROM SponsorExtendedSurveyDepartment WHERE SponsorExtendedSurveyDepartmentID = " + rs2.GetInt32(1));
-                        }
-                    }
-                    else if(!rs2.IsDBNull(1))
+//                    if (t == "" && !hide && !ext && toe == "")
+//                    {
+//                        if (!rs2.IsDBNull(1))
+//                        {
+//                            Db.exec("DELETE FROM SponsorExtendedSurveyDepartment WHERE SponsorExtendedSurveyDepartmentID = " + rs2.GetInt32(1));
+//                        }
+//                    }
+//                    else
+                	if(!rs2.IsDBNull(1))
                     {
                         Db.exec("UPDATE SponsorExtendedSurveyDepartment SET TreatmentOfferEmail = " + (toe == "" ? "NULL" : "'" + toe.Replace("'","") + "'") + ", Hide = " + (hide ? "1" : "NULL") + ", Ext = " + (ext ? "1" : "NULL") + ", RequiredUserCount = " + (t == "" ? "NULL" : Convert.ToInt32(t).ToString()) + " WHERE SponsorExtendedSurveyDepartmentID = " + rs2.GetInt32(1));
                     }
