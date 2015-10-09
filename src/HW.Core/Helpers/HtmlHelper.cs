@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Data.SqlClient;
 using System.Text;
 using System.Collections.Generic;
 using System.Web;
@@ -8,6 +9,19 @@ using HW.Core.Models;
 
 namespace HW.Core.Helpers
 {
+	public static class DbHelper
+	{
+		public static int GetInt32(SqlDataReader rs, int index)
+		{
+			return GetInt32(rs, index, 0);
+		}
+		
+		public static int GetInt32(SqlDataReader rs, int index, int def)
+		{
+			return rs.IsDBNull(index) ? def : rs.GetInt32(index);
+		}
+	}
+	
 	public static class HtmlHelper
 	{
 		public static void SetTextIfEmpty(TextBox textBox, string text)
