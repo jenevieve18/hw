@@ -14,18 +14,9 @@ namespace HW.Grp
 {
 	public partial class Reminders : System.Web.UI.Page
 	{
-		IDepartmentRepository departmentRepository;
+        SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
 		IList<Department> departments;
 		int lid;
-		
-		public Reminders() : this(new SqlDepartmentRepository())
-		{
-		}
-		
-		public Reminders(IDepartmentRepository departmentRepository)
-		{
-			this.departmentRepository = departmentRepository;
-		}
 		
 		protected override void OnPreRender(EventArgs e)
 		{
@@ -72,7 +63,7 @@ namespace HW.Grp
             int j = 0;
             
             Dictionary<string, string> loginDays = new Dictionary<string, string>();
-            loginDays.Add("NULL", R.Str(lid, "week.same", "< same as parent >"));
+            loginDays.Add("-666", R.Str(lid, "week.same", "< same as parent >"));
             loginDays.Add("1", R.Str(lid, "day.everyday", "every day"));
             loginDays.Add("7", R.Str(lid, "week", "week"));
             loginDays.Add("14", R.Str(lid, "week.two", "2 weeks"));
@@ -81,7 +72,7 @@ namespace HW.Grp
             loginDays.Add("180", R.Str(lid, "month.six", "6 months"));
 
             Dictionary<string, string> loginWeekDays = new Dictionary<string, string>();
-            loginWeekDays.Add("NULL", R.Str(lid, "week.same", "< same as parent >"));
+            loginWeekDays.Add("-666", R.Str(lid, "week.same", "< same as parent >"));
             loginWeekDays.Add("-1", R.Str(lid, "week.disabled", "< disabled >"));
             loginWeekDays.Add("0", R.Str(lid, "week.everyday", "< every day >"));
             loginWeekDays.Add("1", R.Str(lid, "week.monday", "Monday"));
