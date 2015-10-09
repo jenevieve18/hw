@@ -1170,44 +1170,61 @@ ORDER BY ses.SponsorExtendedSurveyID",
 					ESpreviousRounds += (ESpreviousRounds != "" ? "," : "") + (rs.IsDBNull(5) ? 0 : rs.GetInt32(5));
 					ESpreviousRoundTexts += (ESpreviousRoundTexts != "" ? "," : "") + (rs.IsDBNull(7) ? "$" : rs.GetString(7));
 					// Answers on this department and below
+//					ESselect += ", ISNULL(sesd" + rs.GetInt32(0) + ".Answers,0) ";
 					ESselect += string.Format(
 						@",
-(
-	SELECT COUNT(*)
-	FROM UserSponsorExtendedSurvey x
-	--INNER JOIN [User] xu ON x.UserID = xu.UserID
-	INNER JOIN SponsorInvite xsi ON x.UserID = xsi.UserID
-	INNER JOIN Department xd ON xsi.DepartmentID = xd.DepartmentID
-	--WHERE LEFT(xd.SortString,LEN(d.SortString)) = d.SortString
-	WHERE LEFT(xd.SortString,d.SortStringLength) = d.SortString
-	AND x.SponsorExtendedSurveyID = {0}
-	AND xsi.SponsorID = d.SponsorID
-	AND x.AnswerID IS NOT NULL
-) ",
+	(
+		SELECT COUNT(*)
+		FROM UserSponsorExtendedSurvey x
+		--INNER JOIN [User] xu ON x.UserID = xu.UserID
+		INNER JOIN SponsorInvite xsi ON x.UserID = xsi.UserID
+		INNER JOIN Department xd ON xsi.DepartmentID = xd.DepartmentID
+		--WHERE LEFT(xd.SortString,LEN(d.SortString)) = d.SortString
+		WHERE LEFT(xd.SortString,d.SortStringLength) = d.SortString
+		AND x.SponsorExtendedSurveyID = {0}
+		AND xsi.SponsorID = d.SponsorID
+		AND x.AnswerID IS NOT NULL
+	) ",
 						rs.GetInt32(0)
 					);
 					// Answers on this department
+//					ESselect += ", ISNULL(sesd" + rs.GetInt32(0) + ".Total,0) ";
 					ESselect += string.Format(
 						@",
-(
-	SELECT COUNT(*)
-	FROM UserSponsorExtendedSurvey x
-	--INNER JOIN [User] xu ON x.UserID = xu.UserID
-	INNER JOIN SponsorInvite xsi ON x.UserID = xsi.UserID
-	INNER JOIN Department xd ON xsi.DepartmentID = xd.DepartmentID
-	WHERE xd.DepartmentID = d.DepartmentID
-	AND x.SponsorExtendedSurveyID = {0}
-	AND xsi.SponsorID = d.SponsorID
-	AND x.AnswerID IS NOT NULL
-) ",
+	(
+		SELECT COUNT(*)
+		FROM UserSponsorExtendedSurvey x
+		--INNER JOIN [User] xu ON x.UserID = xu.UserID
+		INNER JOIN SponsorInvite xsi ON x.UserID = xsi.UserID
+		INNER JOIN Department xd ON xsi.DepartmentID = xd.DepartmentID
+		WHERE xd.DepartmentID = d.DepartmentID
+		AND x.SponsorExtendedSurveyID = {0}
+		AND xsi.SponsorID = d.SponsorID
+		AND x.AnswerID IS NOT NULL
+	) ",
 						rs.GetInt32(0)
 					);
-					ESselect += ", es" + rs.GetInt32(0) + ".ProjectRoundUnitID AS PRUID" + rs.GetInt32(0) + ", sesd" + rs.GetInt32(0) + ".RequiredUserCount, sesd" + rs.GetInt32(0) + ".Hide, sesd" + rs.GetInt32(0) + ".Ext ";
+//					ESselect += ", es" + rs.GetInt32(0) + ".ProjectRoundUnitID AS PRUID" + rs.GetInt32(0) + ", sesd" + rs.GetInt32(0) + ".RequiredUserCount, sesd" + rs.GetInt32(0) + ".Hide, sesd" + rs.GetInt32(0) + ".Ext ";
+					ESselect += string.Format(
+						@",
+	es{0}.ProjectRoundUnitID AS PRUID{0},
+	sesd{0}.RequiredUserCount,
+	sesd{0}.Hide,
+	sesd{0}.Ext ",
+						rs.GetInt32(0)
+					);
 
-					ESjoin += " " +
-						"LEFT OUTER JOIN SponsorExtendedSurveyDepartment sesd" + rs.GetInt32(0) + " ON sesd" + rs.GetInt32(0) + ".SponsorExtendedSurveyID = " + rs.GetInt32(0) + " AND sesd" + rs.GetInt32(0) + ".DepartmentID = d.DepartmentID " +
-						"LEFT OUTER JOIN eform..ProjectRoundUnit es" + rs.GetInt32(0) + " ON es" + rs.GetInt32(0) + ".ProjectRoundID = " + rs.GetInt32(2) + " " +
-						"AND (s.Sponsor + '=' + dbo.cf_departmentTree(d.DepartmentID,'=')) = eform.dbo.cf_projectUnitTree(es" + rs.GetInt32(0) + ".ProjectRoundUnitID,'=') ";
+//					ESjoin += " " +
+//						"LEFT OUTER JOIN SponsorExtendedSurveyDepartment sesd" + rs.GetInt32(0) + " ON sesd" + rs.GetInt32(0) + ".SponsorExtendedSurveyID = " + rs.GetInt32(0) + " AND sesd" + rs.GetInt32(0) + ".DepartmentID = d.DepartmentID " +
+//						"LEFT OUTER JOIN eform..ProjectRoundUnit es" + rs.GetInt32(0) + " ON es" + rs.GetInt32(0) + ".ProjectRoundID = " + rs.GetInt32(2) + " " +
+//						"AND (s.Sponsor + '=' + dbo.cf_departmentTree(d.DepartmentID,'=')) = eform.dbo.cf_projectUnitTree(es" + rs.GetInt32(0) + ".ProjectRoundUnitID,'=') ";
+					ESjoin += string.Format(
+						@"
+	LEFT OUTER JOIN SponsorExtendedSurveyDepartment sesd{0} ON sesd{0}.SponsorExtendedSurveyID = {0} AND sesd{0}.DepartmentID = d.DepartmentID 
+	LEFT OUTER JOIN eform..ProjectRoundUnit es{0} ON es{0}.ProjectRoundID = {1} AND (s.Sponsor + '=' + dbo.cf_departmentTree(d.DepartmentID,'=')) = eform.dbo.cf_projectUnitTree(es{0}.ProjectRoundUnitID,'=') ",
+						rs.GetInt32(0),
+						rs.GetInt32(2)
+					);
 					ESdesc += "<TD ALIGN='CENTER' style='font-size:9px;'>" +
 						"&nbsp;<B style='font-size:8px;'>" + rs.GetString(1).Replace(" ", "&nbsp;<br/>&nbsp;") + "</B>&nbsp;" +
 						"<br/>" + (rs.IsDBNull(8) ? "" : rs.GetDateTime(8).ToString("yyMMdd")) +
@@ -1313,7 +1330,7 @@ ORDER BY ses.SponsorExtendedSurveyID",
 			Dictionary<int, bool> DX = new Dictionary<int, bool>();
 
 			string sql = string.Format(
-				@"
+                @"
 SELECT d.Department,
 	dbo.cf_departmentDepth(d.DepartmentID),
 	d.DepartmentID,
@@ -1421,6 +1438,8 @@ d.SponsorID = {4} ORDER BY d.SortString",
 				int active = rs.GetInt32(8); //rs.GetInt32(12 + 6 * EScount);
 				totalActive += rs.GetInt32(4); //rs.GetInt32(12 + 6 * EScount + 1);
 				int deptMinUserCountToDisclose = rs.IsDBNull(12 + 6 * EScount + 2) ? MIN_SHOW : rs.GetInt32(12 + 6 * EScount + 2);
+                
+//				int total = DbHelper.GetInt32(rs, 12 + 6 * EScount + 4, DbHelper.GetInt32(rs, 7));
 
 				OrgTree.Text += string.Format(
 					@"
@@ -1449,8 +1468,6 @@ d.SponsorID = {4} ORDER BY d.SortString",
 						s += s1.Substring(i1);
 					}
 				}
-//				string key = Guid.NewGuid().ToString();
-//				actives.Add(key, active);
 				OrgTree.Text += string.Format(
 					@"
 				</td>
@@ -1467,9 +1484,7 @@ d.SponsorID = {4} ORDER BY d.SortString",
 					(Convert.ToInt32(Session["ReadOnly"]) == 0 ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DID=" + rs.GetInt32(2) + "'><img src='img/unt_edt.gif' border='0'/></A>" + "" : ""),
 					(rs.GetInt32(12 + 6 * EScount) > 0 /*rs.GetInt32(3) > 0*/ ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&SDID=" + rs.GetInt32(2) + "'><img src='img/usr_on.gif' border='0'/></A>" : (Convert.ToInt32(Session["ReadOnly"]) == 0 ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DeleteDID=" + rs.GetInt32(2) + "'><img src='img/unt_del.gif' border='0'/></a>" : "")),
 					(rs.GetInt32(3) > 0 && rs.GetInt32(8) != rs.GetInt32(4) ? "" + (rs.GetInt32(4) >= deptMinUserCountToDisclose ? rs.GetInt32(4).ToString() : (showReg ? rs.GetInt32(4).ToString() : "")) + "" : ""),
-//					(rs.GetInt32(8) >= deptMinUserCountToDisclose ? active.ToString() + " / " + rs.GetInt32(8).ToString() : "<img src='img/key.gif'/>")
 					(active >= deptMinUserCountToDisclose ? active.ToString() : "<img src='img/key.gif'/>"),
-//					(active >= deptMinUserCountToDisclose ? string.Format(" ({0}%)", key) : "")
 					(active > deptMinUserCountToDisclose ? string.Format(" ({0}%)", Math.Round((float)active / rs.GetInt32(7) * 100)) : "")
 				);
 
@@ -1477,6 +1492,9 @@ d.SponsorID = {4} ORDER BY d.SortString",
 					int idx = 12 + 6 * i;
 					ESanswerCount[i] += rs.GetInt32(idx + 1);
 					int rac = (rs.IsDBNull(idx + 3) ? Convert.ToInt32(ESattr.Split(',')[i].Split(':')[1]) : rs.GetInt32(idx + 3));
+					
+//					int answers = DbHelper.GetInt32(rs, 12 + 6 * EScount + 3, DbHelper.GetInt32(rs, idx));
+					
 					if (rs.IsDBNull(idx + 4)) {
 						OrgTree.Text += string.Format(
 							@"
@@ -1511,7 +1529,6 @@ d.SponsorID = {4} ORDER BY d.SortString",
 										)
 										: ""
 									),
-//									string.Format("{0} ({1}%)", rs.GetInt32(idx).ToString(), Math.Round(rs.GetInt32(idx) / extendedSurveyTotal * 100))
 									string.Format("{0} ({1}%)", rs.GetInt32(idx).ToString(), Math.Round(rs.GetInt32(idx) / (double)rs.GetInt32(7) * 100))
 								)
 								: string.Format("<img src='img/key.gif' title='{0}'/>", (showReg ? rs.GetInt32(idx + 1).ToString() : ""))
@@ -1528,7 +1545,20 @@ d.SponsorID = {4} ORDER BY d.SortString",
 					rs.GetInt32(7),
 					(rs.GetInt32(3) > 0 && rs.GetInt32(3) != rs.GetInt32(7) ? " (" + rs.GetInt32(3) + ")" : "")
 				);
-				OrgTree.Text += "<td align='center' style='font-size:9px;'>&nbsp;" + (rs.GetInt32(7) > 0 ? Math.Round(((float)rs.GetInt32(9) / (float)rs.GetInt32(7)) * 100, 0).ToString() + "%" : "-") + (rs.GetInt32(3) > 0 && rs.GetInt32(5) != rs.GetInt32(9) && Math.Round(((float)rs.GetInt32(9) / (float)rs.GetInt32(7)) * 100, 0) != Math.Round((float)rs.GetInt32(5) / (float)rs.GetInt32(3) * 100, 0) ? " (" + Math.Round((float)rs.GetInt32(5) / (float)rs.GetInt32(3) * 100, 0).ToString() + "%" + ")" : "") + "&nbsp;</td>";
+				OrgTree.Text += string.Format(
+					@"
+    <td align='center' style='font-size:9px;'>&nbsp;{0}&nbsp;</td>",
+					(
+						rs.GetInt32(7) > 0
+						? Math.Round(((float)rs.GetInt32(9) / (float)rs.GetInt32(7)) * 100, 0).ToString() + "%"
+						: "-"
+					) +
+					(
+						rs.GetInt32(3) > 0 && rs.GetInt32(5) != rs.GetInt32(9) && Math.Round(((float)rs.GetInt32(9) / (float)rs.GetInt32(7)) * 100, 0) != Math.Round((float)rs.GetInt32(5) / (float)rs.GetInt32(3) * 100, 0)
+						? " (" + Math.Round((float)rs.GetInt32(5) / (float)rs.GetInt32(3) * 100, 0).ToString() + "%" + ")"
+						: ""
+					)
+				);
 				OrgTree.Text += string.Format(
 					@"
 	<td align='center' style='font-size:9px;'>&nbsp;{0}&nbsp;</td>",
