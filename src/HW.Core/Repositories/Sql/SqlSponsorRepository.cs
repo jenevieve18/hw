@@ -2135,48 +2135,47 @@ VALUES ({0},{1})",
 
 		public int CountExtendedSurveyBySponsor(int sponsorId)
 		{
-//			string query = string.Format(
-//					@"
-//SELECT COUNT(*)
-//FROM SponsorExtendedSurvey ses
-//WHERE ses.SponsorID = {0}",
-//					sponsorId
-//				);
-//				using (SqlDataReader rs = Db.rs(query)) {
-//					if (rs.Read()) {
-//						return rs.GetInt32(0);
-//					}
-//				}
-//			}
-//			return 0;
-			string query = string.Format(
-				@"
-SELECT Total, Answers
-FROM SponsorExtendedSurvey
-WHERE SponsorID = {0}",
-				sponsorId
-			);
-			int total = -1;
-			using (SqlDataReader rs = ExecuteReader(query)) {
-				if (rs.Read()) {
-					total = GetInt32(rs, 0, GetInt32(rs, 1, -1));
-				}
-			}
-			if (total < 0) {
-				query = string.Format(
-					@"
+            string query = string.Format(
+            		@"
 SELECT COUNT(*)
 FROM SponsorExtendedSurvey ses
 WHERE ses.SponsorID = {0}",
-					sponsorId
-				);
-				using (SqlDataReader rs = Db.rs(query)) {
-					if (rs.Read()) {
-						total = rs.GetInt32(0);
-					}
-				}
-			}
-			return total;
+            		sponsorId
+            );
+            using (SqlDataReader rs = Db.rs(query)) {
+            	if (rs.Read()) {
+            		return rs.GetInt32(0);
+            	}
+            }
+            return 0;
+//            string query = string.Format(
+//                @"
+//SELECT Total, Answers
+//FROM SponsorExtendedSurvey
+//WHERE SponsorID = {0}",
+//                sponsorId
+//            );
+//            int total = -1;
+//            using (SqlDataReader rs = ExecuteReader(query)) {
+//                if (rs.Read()) {
+//                    total = GetInt32(rs, 0, GetInt32(rs, 1, -1));
+//                }
+//            }
+//            if (total < 0) {
+//                query = string.Format(
+//                    @"
+//SELECT COUNT(*)
+//FROM SponsorExtendedSurvey ses
+//WHERE ses.SponsorID = {0}",
+//                    sponsorId
+//                );
+//                using (SqlDataReader rs = Db.rs(query)) {
+//                    if (rs.Read()) {
+//                        total = rs.GetInt32(0);
+//                    }
+//                }
+//            }
+//            return total;
 		}
 
 		public int CountSentInvitesBySponsor3(int sponsorId, DateTime dt)
