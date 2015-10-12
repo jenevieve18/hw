@@ -103,7 +103,7 @@ namespace HW.Grp
 					}
 				} else {
 					int tempSponsorAdminID = sponsorRepository.SponsorAdminExists(Convert.ToInt32(Session["SponsorAdminID"]), Usr.Text);
-					if (tempSponsorAdminID >= 0) {
+					//if (tempSponsorAdminID >= 0) {
 						foreach (var d in departmentRepository.a(sponsorID, tempSponsorAdminID)) {
 							bool hasDepartmentID = Request.Form["DepartmentID"] != null;
 							if (hasDepartmentID) {
@@ -115,7 +115,7 @@ namespace HW.Grp
 								}
 							}
 						}
-					}
+					//}
 				}
 
 				if (!HasSAID) {
