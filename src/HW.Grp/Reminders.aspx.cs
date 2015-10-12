@@ -60,7 +60,7 @@ namespace HW.Grp
             
             Dictionary<int, bool> DX = new Dictionary<int, bool>();
 
-            int j = 0;
+            //int j = 0;
             
             Dictionary<string, string> loginDays = new Dictionary<string, string>();
             loginDays.Add("-666", R.Str(lid, "week.same", "< same as parent >"));
@@ -83,8 +83,8 @@ namespace HW.Grp
 
 			foreach (var d in departments) {
                 IHGHtmlTable boxes = new IHGHtmlTable() { Width = "100%" };
-                if (j > 0)
-                {
+                //if (j > 0)
+                //{
                     var ld = new DropDownList { ID = "LDID" + d.Id };
                     ld.Items.Add(new ListItem(R.Str(lid, "week.same", "< same as parent >"), "NULL"));
                     ld.Items.Add(new ListItem(R.Str(lid, "day.everyday", "every day"), "1"));
@@ -112,17 +112,17 @@ namespace HW.Grp
                             new IHGHtmlTableCell(lw)
                         )
                     );
-                }
-                else
-                {
-                    boxes.Rows.Add(
-                        new IHGHtmlTableRow(
-                            new IHGHtmlTableCell(loginDays[d.LoginDays.ToString()]) { Width = "50%" },
-                            new IHGHtmlTableCell(loginWeekDays[d.LoginWeekDay.ToString()])
-                        )
-                    );
-                }
-                j++;
+                //}
+                //else
+                //{
+                //    boxes.Rows.Add(
+                //        new IHGHtmlTableRow(
+                //            new IHGHtmlTableCell(loginDays[d.LoginDays.ToString()]) { Width = "50%" },
+                //            new IHGHtmlTableCell(loginWeekDays[d.LoginWeekDay.ToString()])
+                //        )
+                //    );
+                //}
+                //j++;
 
                 IHGHtmlTableRow row = new IHGHtmlTableRow(
                     new IHGHtmlTableCell(boxes) { ColSpan = 2 },
