@@ -235,7 +235,8 @@ namespace HW.Grp
 		{
 			DateTime d = DateTime.Now;
 			try {
-				d = DateTime.ParseExact(s, "yyyy MMM", CultureInfo.InvariantCulture);
+				//d = DateTime.ParseExact(s, "yyyy MMM", CultureInfo.InvariantCulture);
+                d = DateTime.ParseExact(s, "yyyy MMM", GetCultureInfo(lid));
 			} catch {}
 			return d;
 		}
