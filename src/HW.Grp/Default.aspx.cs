@@ -37,6 +37,11 @@ namespace HW.Grp
         {
         	adminNews = newsRepository.FindTop3AdminNews();
         }
+
+        protected CultureInfo GetCultureInfo(int lid)
+        {
+            return lid == 1 ? new CultureInfo("sv-SE") : new CultureInfo("en-US");
+        }
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{

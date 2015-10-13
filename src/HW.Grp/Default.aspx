@@ -91,7 +91,7 @@
                 <% var i = 0; %>
                 <% foreach (var n in adminNews) { %>
                     <p>
-                        <span class="date"><%= n.Date.Value.ToString("MMM d, yyyy").ToUpper() %></span>
+                        <span class="date"><%= n.Date.Value.ToString("MMM d, yyyy", GetCultureInfo(lid)).ToUpper() %></span>
                         <%= n.News %>
                     </p>
                     <% if (i < adminNews.Count - 1) { %>
