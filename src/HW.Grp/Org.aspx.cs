@@ -1427,7 +1427,7 @@ d.SponsorID = {4} ORDER BY d.SortString",
 				(Session["SponsorAdminID"].ToString() != "-1" ? "INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = " + Session["SponsorAdminID"] + " AND " : "WHERE "),
 				sponsorID
 			);
-			LoggingService.Info(sql);
+//			LoggingService.Info(sql);
 			rs = Db.rs(sql);
 			while (rs.Read()) {
 				int depth = rs.GetInt32(1);
@@ -1857,9 +1857,16 @@ WHERE up.UserID = {1}",
 				}
 			}
 			rs.Close();
-			OrgTree.Text += "<tr><td colspan='" + (aggrBQcx + 8 + (showDepartmentID != 0 && BQs != "" ? BQs.Split(':').Length : 0) + EScount + 1) + "' style='border-top:1px solid #333333'>&nbsp;</td></tr>";
+			OrgTree.Text += string.Format(
+				@"
+<tr>
+	<td colspan='{0}' style='border-top:1px solid #333333'>&nbsp;</td>
+</tr>",
+				(aggrBQcx + 8 + (showDepartmentID != 0 && BQs != "" ? BQs.Split(':').Length : 0) + EScount + 1)
+			);
 //			string header = "<td align='center' style='font-size:9px;'>" + totalActive.ToString() + " / " + (totalActivated >= MIN_SHOW ? totalActivated.ToString() : "<img src='img/key.gif'/>") + "</td>";
-			string header = string.Format("<td align='center' style='font-size:9px;'>{0}</td>", (totalActive >= MIN_SHOW ? totalActive.ToString() : "<img src='img/key.gif'/>"));
+			string header = string.Format(@"
+	<td align='center' style='font-size:9px;'>{0}</td>", (totalActive >= MIN_SHOW ? totalActive.ToString() : "<img src='img/key.gif'/>"));
 			for (int i = 0; i < EScount; i++) {
 				header += string.Format(
 					@"<td align='center' style='font-size:9px;'>&nbsp;{0}&nbsp;{1}&nbsp;</td>",
@@ -1930,8 +1937,18 @@ WHERE sbq.SponsorID = {0} AND sbq.Organize = 1",
 				rs = Db.rs(query);
 				while (rs.Read()) {
 					int cx = 0;
-					OrgTree.Text += "<table border='0' cellspacing='0' cellpadding='0' style='font-size:12px;line-height:1.0;vertical-align:middle;'>";
-					OrgTree.Text += "<tr style='border-bottom:1px solid #333333;'><td><b style='color:#cc0000;'>" + rs.GetString(1) + "</b>&nbsp;</td><td><b>Activated</b>&nbsp;</td>" + ESdesc + "<td><b>Total</b>&nbsp;</td></tr>";
+					OrgTree.Text += @"
+<table border='0' cellspacing='0' cellpadding='0' style='font-size:12px;line-height:1.0;vertical-align:middle;'>";
+					OrgTree.Text += string.Format(
+						@"
+	<tr style='border-bottom:1px solid #333333;'>
+		<td><b style='color:#cc0000;'>{0}</b>&nbsp;</td>
+		<td><b>Activated</b>&nbsp;</td>{1}
+		<td><b>Total</b>&nbsp;</td>
+	</tr>",
+						rs.GetString(1),
+						ESdesc
+					);
 					query = string.Format(
 						@"
 SELECT BA.BAID,
@@ -1999,15 +2016,28 @@ WHERE usesX.AnswerID IS NOT NULL AND si.SponsorID = {3} AND ISNULL(sib.BAID,upb.
 									"','esBQ" + i + "','scrollbars=1,width=880,height=700,resizable=1,toolbar=0,status=0,menubar=0,location=0'));\"><img src='img/graphIcon2.gif' border='0'/></A>" +
 									"&nbsp;" + rs2.GetInt32(idx) + "&nbsp;</td>";
 							} else if (!rs2.IsDBNull(idx)) {
-								OrgTree.Text += "<td align='center' style='color:#EEEEEE'><img src='img/key.gif'/>&nbsp;" + rs2.GetInt32(idx) + "&nbsp;</td>";
+								OrgTree.Text += string.Format(
+									@"
+	<td align='center' style='color:#EEEEEE'>
+		<img src='img/key.gif'/>&nbsp;{0}&nbsp;
+	</td>",
+									rs2.GetInt32(idx)
+								);
 							} else {
-								OrgTree.Text += "<td align='center'><img src='img/key.gif'/></td>";
+								OrgTree.Text += string.Format(@"
+	<td align='center'><img src='img/key.gif'/></td>";
 							}
 						}
-						OrgTree.Text += "<td align='center'>&nbsp;" + rs2.GetInt32(3) + "&nbsp;</td></tr>";
+						OrgTree.Text += string.Format(
+							@"
+	<td align='center'>&nbsp;{0}&nbsp;</td>
+</tr>",
+							rs2.GetInt32(3)
+						);
 					}
 					rs2.Close();
-					OrgTree.Text += "</table>";
+					OrgTree.Text += @"
+</table>";
 				}
 				rs.Close();
 			}
