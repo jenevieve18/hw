@@ -15,7 +15,9 @@ namespace HW.Grp
 	public partial class Reminders : System.Web.UI.Page
 	{
         SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
+        SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		IList<Department> departments;
+        Sponsor sponsor;
 		int lid;
 		
 		protected override void OnPreRender(EventArgs e)
@@ -38,6 +40,7 @@ namespace HW.Grp
 		public void Index(int sponsorID, int sponsorAdminID)
 		{
 			departments = departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID);
+            sponsor = sponsorRepository.ReadSponsor(ConvertHelper.ToInt32(Session["SponsorID"])) as Sponsor;
 
 			Org.Controls.Add(new LiteralControl("<br>"));
 			
@@ -52,16 +55,6 @@ namespace HW.Grp
             r.Attributes.Add("style", "border-bottom:1px solid #333333;");
             table.Rows.Add(r);
 
-            table.Rows.Add(
-                new IHGHtmlTableRow(
-                    new IHGHtmlTableCell(Session["Sponsor"].ToString()) { ColSpan = 3 }
-                )
-            );
-            
-            Dictionary<int, bool> DX = new Dictionary<int, bool>();
-
-            //int j = 0;
-            
             Dictionary<string, string> loginDays = new Dictionary<string, string>();
             loginDays.Add("-666", R.Str(lid, "week.same", "< same as parent >"));
             loginDays.Add("1", R.Str(lid, "day.everyday", "every day"));
@@ -80,6 +73,19 @@ namespace HW.Grp
             loginWeekDays.Add("3", R.Str(lid, "week.wednesday", "Wednesday"));
             loginWeekDays.Add("4", R.Str(lid, "week.thursday", "Thursday"));
             loginWeekDays.Add("5", R.Str(lid, "week.friday", "Friday"));
+
+            table.Rows.Add(
+                new IHGHtmlTableRow(
+                    new IHGHtmlTableCell(loginDays[sponsor.LoginDays.ToString()]),
+                    new IHGHtmlTableCell(loginWeekDays[sponsor.LoginWeekDay.ToString()]),
+                    new IHGHtmlTableCell(),
+                    new IHGHtmlTableCell(Session["Sponsor"].ToString())
+                )
+            );
+            
+            Dictionary<int, bool> DX = new Dictionary<int, bool>();
+
+            //int j = 0;
 
 			foreach (var d in departments) {
                 IHGHtmlTable boxes = new IHGHtmlTable() { Width = "100%" };

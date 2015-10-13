@@ -65,32 +65,18 @@ namespace HW.Core.Models
 			}
 		}
 		
-		public string GetReminder(Dictionary<int, string> loginDays, Dictionary<int, string> loginWeekDays)
-		{
+//		public string GetReminder(Dictionary<int, string> loginDays, Dictionary<int, string> loginWeekDays)
+//		{
 //			if (LoginWeekDay == -1) {
-//				return loginWeekdays[LoginWeekDay];
-//			} else if (Sponsor != null && Sponsor.LoginWeekday == -1) {
-//				return loginWeekdays[Sponsor.LoginWeekday];
-//			}
-//			if (LoginDays == -1) {
-//				if (Sponsor.LoginDays == -1) {
-//					return "OFF";
-//				} else {
-//					return loginDays[Sponsor.LoginDays];
-//				}
+//				return loginWeekDays[LoginWeekDay.Value];
+//			} else if (LoginDays != -1) {
+//				return loginDays[LoginDays.Value];
+//			} else if (Sponsor != null && Sponsor.LoginWeekDay == -1) {
+//				return loginWeekDays[Sponsor.LoginWeekDay.Value];
 //			} else {
-//				return loginDays[LoginDays];
+//				return loginDays[Sponsor.LoginDays.Value];
 //			}
-			if (LoginWeekDay == -1) {
-				return loginWeekDays[LoginWeekDay.Value];
-			} else if (LoginDays != -1) {
-				return loginDays[LoginDays.Value];
-			} else if (Sponsor != null && Sponsor.LoginWeekDay == -1) {
-				return loginWeekDays[Sponsor.LoginWeekDay.Value];
-			} else {
-				return loginDays[Sponsor.LoginDays.Value];
-			}
-		}
+//		}
 		
 		public override string ToString()
 		{
