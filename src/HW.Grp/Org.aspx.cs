@@ -1531,7 +1531,8 @@ d.SponsorID = {4} ORDER BY d.SortString",
 										)
 										: ""
 									),
-									string.Format("{0} ({1}%)", rs.GetInt32(idx).ToString(), Math.Round(rs.GetInt32(idx) / (double)rs.GetInt32(7) * 100))
+//									string.Format("{0} ({1}%)", rs.GetInt32(idx).ToString(), Math.Round(rs.GetInt32(idx) / (double)rs.GetInt32(7) * 100))
+									string.Format("{0} ({1}%)", rs.GetInt32(idx).ToString(), Math.Round(rs.GetInt32(idx) / (double)rs.GetInt32(idx + 1) * 100))
 								)
 								: string.Format("<img src='img/key.gif' title='{0}'/>", (showReg ? rs.GetInt32(idx + 1).ToString() : ""))
 							)
@@ -2024,7 +2025,7 @@ WHERE usesX.AnswerID IS NOT NULL AND si.SponsorID = {3} AND ISNULL(sib.BAID,upb.
 									rs2.GetInt32(idx)
 								);
 							} else {
-								OrgTree.Text += string.Format(@"
+								OrgTree.Text += @"
 	<td align='center'><img src='img/key.gif'/></td>";
 							}
 						}
