@@ -1153,7 +1153,9 @@ SELECT ses.SponsorExtendedSurveyID,
 	pr.Started,
 	pr.Closed,
 	ses.WarnIfMissingQID,
-	ses.ExtraEmailSubject
+	ses.ExtraEmailSubject,
+	ses.Answers,
+	ses.Total
 FROM SponsorExtendedSurvey ses
 LEFT OUTER JOIN SponsorExtendedSurvey ses2 ON ses.SponsorID = ses2.SponsorID AND ses.PreviousProjectRoundID = ses2.ProjectRoundID
 LEFT OUTER JOIN eform..ProjectRound pr ON ses.ProjectRoundID = pr.ProjectRoundID
@@ -1162,13 +1164,19 @@ ORDER BY ses.SponsorExtendedSurveyID",
 				sponsorID
 			);
 			rs = Db.rs(query);
+			var extendedSurveys = new List<SponsorExtendedSurvey>();
 			while (rs.Read()) {
 				if (totalEScount <= 8 || tmpEScount >= (totalEScount - 8)) {
-					ESstart += (ESstart != "" ? "," : "") + (rs.IsDBNull(8) ? DateTime.MaxValue : rs.GetDateTime(8)).ToString("yyyy-MM-dd");
-					ESrounds += (ESrounds != "" ? "," : "") + rs.GetInt32(2);
-					ESroundTexts += (ESroundTexts != "" ? "," : "") + (rs.IsDBNull(6) ? "$" : rs.GetString(6));
-					ESpreviousRounds += (ESpreviousRounds != "" ? "," : "") + (rs.IsDBNull(5) ? 0 : rs.GetInt32(5));
-					ESpreviousRoundTexts += (ESpreviousRoundTexts != "" ? "," : "") + (rs.IsDBNull(7) ? "$" : rs.GetString(7));
+//					ESstart += (ESstart != "" ? "," : "") + (rs.IsDBNull(8) ? DateTime.MaxValue : rs.GetDateTime(8)).ToString("yyyy-MM-dd");
+//					ESrounds += (ESrounds != "" ? "," : "") + rs.GetInt32(2);
+//					ESroundTexts += (ESroundTexts != "" ? "," : "") + (rs.IsDBNull(6) ? "$" : rs.GetString(6));
+//					ESpreviousRounds += (ESpreviousRounds != "" ? "," : "") + (rs.IsDBNull(5) ? 0 : rs.GetInt32(5));
+//					ESpreviousRoundTexts += (ESpreviousRoundTexts != "" ? "," : "") + (rs.IsDBNull(7) ? "$" : rs.GetString(7));
+					ESstart += (ESstart != "" ? "," : "") + DbHelper.GetDateTime(rs, 8, DateTime.MaxValue).ToString("yyyy-MM-dd");
+					ESrounds += (ESrounds != "" ? "," : "") + DbHelper.GetInt32(rs, 2);
+					ESroundTexts += (ESroundTexts != "" ? "," : "") + DbHelper.GetString(rs, 6, "$");
+					ESpreviousRounds += (ESpreviousRounds != "" ? "," : "") + DbHelper.GetInt32(rs, 5);
+					ESpreviousRoundTexts += (ESpreviousRoundTexts != "" ? "," : "") + DbHelper.GetString(rs, 7, "$");
 					// Answers on this department and below
 					ESselect += string.Format(
 						@",
@@ -1257,6 +1265,13 @@ LEFT OUTER JOIN eform..ProjectRoundUnit es{0} ON es{0}.ProjectRoundID = {1} AND 
 					bqESjoin += " " +
 						"LEFT OUTER JOIN UserSponsorExtendedSurvey s" + rs.GetInt32(0) + " ON u.UserID = s" + rs.GetInt32(0) + ".UserID " +
 						"AND s" + rs.GetInt32(0) + ".SponsorExtendedSurveyID = " + rs.GetInt32(0) + " ";
+					
+					extendedSurveys.Add(
+						new SponsorExtendedSurvey {
+							Answers = DbHelper.GetInt32(rs, 12),
+							Total = DbHelper.GetInt32(rs, 13)
+						}
+					);
 				}
 
 				tmpEScount++;
@@ -1427,7 +1442,6 @@ d.SponsorID = {4} ORDER BY d.SortString",
 				(Session["SponsorAdminID"].ToString() != "-1" ? "INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = " + Session["SponsorAdminID"] + " AND " : "WHERE "),
 				sponsorID
 			);
-//			LoggingService.Info(sql);
 			rs = Db.rs(sql);
 			while (rs.Read()) {
 				int depth = rs.GetInt32(1);
@@ -1870,16 +1884,29 @@ WHERE up.UserID = {1}",
 	<td align='center' style='font-size:9px;'>{0}</td>", (totalActive >= MIN_SHOW ? totalActive.ToString() : "<img src='img/key.gif'/>"));
 			for (int i = 0; i < EScount; i++) {
 				header += string.Format(
-					@"<td align='center' style='font-size:9px;'>&nbsp;{0}&nbsp;{1}&nbsp;</td>",
+					@"
+	<td align='center' style='font-size:9px;'>&nbsp;{0}&nbsp;{1}&nbsp;</td>",
 					(
 						Convert.ToInt32(ESattr.Split(',')[i].Split(':')[0]) != 0 && Convert.ToInt32(ESattr.Split(',')[i].Split(':')[1]) <= ESanswerCount[i]
-						? string.Format("<a href=\"JavaScript:void(window.open('{0}feedback.aspx?R={1}&", ConfigurationManager.AppSettings["eFormURL"], (ESrounds.Split(',')[i])) +
-						(ESpreviousRounds.Split(',')[i] != "0" ? "RR=" + ESpreviousRounds.Split(',')[i] + "&" : "") +
-						(ESpreviousRounds.Split(',')[i] != "0" ? "R1=" + ESroundTexts.Split(',')[i] + "&" : "") +
-						(ESpreviousRounds.Split(',')[i] != "0" ? "R2=" + ESpreviousRoundTexts.Split(',')[i] + "&" : "") +
-						"N=" + Server.HtmlEncode(Session["Sponsor"].ToString()).Replace("&", "_0_").Replace("#", "_1_") + "','es" + i + "','scrollbars=1,width=880,height=700,resizable=1,toolbar=0,status=0,menubar=0,location=0'));\"><img src='img/graphIcon2.gif' border='0'/></a>" : ""
+						? string.Format(
+							"<a href=\"JavaScript:void(window.open('{0}feedback.aspx?R={1}&",
+							ConfigurationManager.AppSettings["eFormURL"],
+							(ESrounds.Split(',')[i])
+						) +
+						(
+							ESpreviousRounds.Split(',')[i] != "0" ? string.Format("RR={0}&", ESpreviousRounds.Split(',')[i]) : ""
+						) +
+						(
+							ESpreviousRounds.Split(',')[i] != "0" ? string.Format("R1={0}&", ESroundTexts.Split(',')[i]) : ""
+						) +
+						(
+							ESpreviousRounds.Split(',')[i] != "0" ? string.Format("R2={0}&", ESpreviousRoundTexts.Split(',')[i]) : ""
+						) +
+						"N=" + Server.HtmlEncode(Session["Sponsor"].ToString()).Replace("&", "_0_").Replace("#", "_1_") + "','es" + i + "','scrollbars=1,width=880,height=700,resizable=1,toolbar=0,status=0,menubar=0,location=0'));\"><img src='img/graphIcon2.gif' border='0'/></a>"
+						: ""
 					),
-					ESanswerCount[i]
+//					ESanswerCount[i]
+					extendedSurveys[i].Answers
 				);
 			}
 //			header += "<td align='center' style='font-size:9px;'>" + UX + "</td>";

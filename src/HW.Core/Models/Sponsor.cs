@@ -115,6 +115,8 @@ namespace HW.Core.Models
 		public virtual ProjectRound PreviousProjectRound { get; set; }
 		public virtual Feedback Feedback { get; set; }
 		public virtual DateTime? FinishedLastSent { get; set; }
+		public virtual int Answers { get; set; }
+		public virtual int Total { get; set; }
 		
 		public virtual int WarnIfMissingQID { get; set; }
 		public virtual string RoundText2 { get; set; }

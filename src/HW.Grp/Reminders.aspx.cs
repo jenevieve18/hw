@@ -36,6 +36,11 @@ namespace HW.Grp
 			
 			Index(ConvertHelper.ToInt32(Session["SponsorID"]), ConvertHelper.ToInt32(Session["SponsorAdminID"]));
 		}
+
+        string P(string s)
+        {
+            return s.PadRight(18, ' ');
+        }
 		
 		public void Index(int sponsorID, int sponsorAdminID)
 		{
@@ -93,6 +98,8 @@ namespace HW.Grp
                 //{
                     var ld = new DropDownList { ID = "LDID" + d.Id };
                     ld.Items.Add(new ListItem(R.Str(lid, "week.same", "< same as parent >"), "NULL"));
+//                    string parentLoginDayReminder = loginDays[d.Parent.LoginDays.ToString()];
+//                    ld.Items.Add(new ListItem("** " + parentLoginDayReminder + " **", "NULL"));
                     ld.Items.Add(new ListItem(R.Str(lid, "day.everyday", "every day"), "1"));
                     ld.Items.Add(new ListItem(R.Str(lid, "week", "week"), "7"));
                     ld.Items.Add(new ListItem(R.Str(lid, "week.two", "2 weeks"), "14"));
@@ -114,8 +121,8 @@ namespace HW.Grp
                     lw.SelectedValue = d.LoginWeekDay.ToString();
                     boxes.Rows.Add(
                         new IHGHtmlTableRow(
-                            new IHGHtmlTableCell(ld),
-                            new IHGHtmlTableCell(lw)
+                            new IHGHtmlTableCell(ld) { Width = "50%" },
+                            new IHGHtmlTableCell(lw) { Width = "50%" }
                         )
                     );
                 //}

@@ -20,6 +20,26 @@ namespace HW.Core.Helpers
 		{
 			return rs.IsDBNull(index) ? def : rs.GetInt32(index);
 		}
+		
+		public static string GetString(SqlDataReader rs, int index)
+		{
+			return GetString(rs, index, "");
+		}
+		
+		public static string GetString(SqlDataReader rs, int index, string def)
+		{
+			return rs.IsDBNull(index) ? def : rs.GetString(index);
+		}
+		
+		public static DateTime GetDateTime(SqlDataReader rs, int index)
+		{
+			return GetDateTime(rs, index, DateTime.MaxValue);
+		}
+		
+		public static DateTime GetDateTime(SqlDataReader rs, int index, DateTime def)
+		{
+			return rs.IsDBNull(index) ? def : rs.GetDateTime(index);
+		}
 	}
 	
 	public static class HtmlHelper
