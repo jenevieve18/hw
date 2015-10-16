@@ -43,6 +43,11 @@ namespace HW.Grp
 			return s.PadLeft(24, ' ');
 		}
 		
+		string If(bool c, string i, string e)
+		{
+			return c ? i : e;
+		}
+		
 		public void Index(int sponsorID, int sponsorAdminID)
 		{
 			departments = departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID);
@@ -95,11 +100,13 @@ namespace HW.Grp
 			
 			Dictionary<int, bool> DX = new Dictionary<int, bool>();
 
+            int j = 0;
+
 			foreach (var d in departments) {
 				IHGHtmlTable boxes = new IHGHtmlTable() { Width = "100%" };
 				var ld = new DropDownList { ID = "LDID" + d.Id, Width = Unit.Pixel(150) };
 //				ld.Items.Add(new ListItem(P(R.Str(lid, "week.same", "< same as parent >")), "NULL"));
-				string parentLoginDaysReminder = loginDays[d.GetLoginDays().ToString()];
+				string parentLoginDaysReminder = loginDays[If(j == 0, d.Sponsor.LoginDays.ToString(), d.GetLoginDays().ToString())];
 				ld.Items.Add(new ListItem(P("* " + parentLoginDaysReminder + " *"), "NULL"));
 				ld.Items.Add(new ListItem(P(R.Str(lid, "day.everyday", "every day")), "1"));
 				ld.Items.Add(new ListItem(P(R.Str(lid, "week", "week")), "7"));
@@ -110,7 +117,7 @@ namespace HW.Grp
 
 				var lw = new DropDownList { ID = "LWID" + d.Id, Width = Unit.Pixel(150) };
 //				lw.Items.Add(new ListItem(P(R.Str(lid, "week.same", "< same as parent >")), "NULL"));
-				string parentLoginWeekdayReminder = loginWeekDays[d.GetLoginWeekDay().ToString()];
+				string parentLoginWeekdayReminder = loginWeekDays[If(j == 0, d.Sponsor.LoginWeekDay.ToString(), d.GetLoginWeekDay().ToString())];
 				lw.Items.Add(new ListItem(P("* " + parentLoginWeekdayReminder + " *"), "NULL"));
 				lw.Items.Add(new ListItem(P(R.Str(lid, "week.disabled", "< disabled >")), "-1"));
 				lw.Items.Add(new ListItem(P(R.Str(lid, "week.everyday", "< every day >")), "0"));

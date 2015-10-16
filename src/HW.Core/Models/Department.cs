@@ -30,15 +30,15 @@ namespace HW.Core.Models
 			if (LoginDays >= -1) {
 				return LoginDays;
 			} else {
-				int i = 0;
-				while (i < Parents.Count && Parents[i].LoginDays == -666) {
-					i++;
-				}
-				if (i < Parents.Count) {
-					return Parents[i].LoginDays;
-				} else {
-					return Sponsor.LoginDays;
-				}
+                int i = 0;
+                while (i < Parents.Count && Parents[i].LoginDays == -666) {
+                    i++;
+                }
+                if (i < Parents.Count) {
+                    return Parents[i].LoginDays;
+                } else {
+                    return Sponsor.LoginDays;
+                }
 			}
 		}
 		
