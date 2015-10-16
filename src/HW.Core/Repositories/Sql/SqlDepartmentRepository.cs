@@ -310,6 +310,48 @@ ORDER BY Level";
 			return d;
 		}
 		
+		public List<Department> FindParents(int id)
+		{
+			string query = @"
+WITH Rec_CTE 
+    AS(
+        SELECT 1 AS Level, 
+               tChild.DepartmentID,
+               tChild.ParentDepartmentID,
+               tChild.SponsorID,
+               tChild.LoginDays,
+               tChild.LoginWeekday
+        FROM dbo.Department tChild
+        WHERE tChild.DepartmentID = @DepartmentID
+
+        UNION ALL
+
+        SELECT Level + 1 AS Level, 
+               parent.DepartmentID,
+               parent.ParentDepartmentID,
+               parent.SponsorID,
+               parent.LoginDays,
+               parent.LoginWeekday
+        FROM Rec_CTE tParent
+        INNER JOIN  dbo.Department parent 
+          ON parent.DepartmentID = tParent.ParentDepartmentID
+    )
+SELECT * FROM Rec_CTE
+ORDER BY Level";
+			var parents = new List<Department>();
+			using (var rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@DepartmentID", id))) {
+				while (rs.Read()) {
+					var p = new Department {
+						Id = GetInt32(rs, 1),
+						LoginDays = GetInt32(rs, 4, -666),
+						LoginWeekDay = GetInt32(rs, 5, -666)
+					};
+					parents.Add(p);
+				}
+			}
+			return parents;
+		}
+		
 		public Department ReadWithReminder2(int id)
 		{
 			string query = string.Format(
@@ -1070,9 +1112,21 @@ FROM Department d
 WHERE {1} d.SponsorID = {0}
 ORDER BY d.SortString",
 				sponsorID,
-				(sponsorAdminID != -1 ? "sad.SponsorAdminID = " + sponsorAdminID + " AND " : ""),
-				(sponsorAdminID != -1 ? "INNER JOIN SponsorAdminDepartment xx ON x.DepartmentID = xx.DepartmentID AND xx.SponsorAdminID = " + sponsorAdminID + " " : ""),
-				(sponsorAdminID != -1 ? "INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID " : "")
+                (
+                    sponsorAdminID != -1
+                    ? string.Format("sad.SponsorAdminID = {0} AND ", sponsorAdminID)
+                    : ""
+                ),
+				(
+                    sponsorAdminID != -1
+                    ? string.Format("INNER JOIN SponsorAdminDepartment xx ON x.DepartmentID = xx.DepartmentID AND xx.SponsorAdminID = {0} ", sponsorAdminID)
+                    : ""
+                ),
+				(
+                    sponsorAdminID != -1
+                    ? "INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID "
+                    : ""
+                )
 			);
 			var departments = new List<Department>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {

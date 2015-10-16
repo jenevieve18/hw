@@ -177,6 +177,18 @@ namespace HW.Core.Helpers
 			}
 		}
 
+        public static void Redirect(string url, bool random)
+        {
+            if (random)
+            {
+                HttpContext.Current.Response.Redirect(string.Format("{0}?Rnd={1}", url, GetRandomInt()), true);
+            }
+            else
+            {
+                HttpContext.Current.Response.Redirect(url, true);
+            }
+        }
+
 //		static string GetAttributes(Dictionary<string, string> attributes)
 //		{
 //			StringBuilder s = new StringBuilder();

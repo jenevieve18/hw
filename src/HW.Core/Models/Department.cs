@@ -25,6 +25,40 @@ namespace HW.Core.Models
 		
 		public IList<Department> Parents { get; set; }
 		
+		public int? GetLoginDays()
+		{
+			if (LoginDays >= -1) {
+				return LoginDays;
+			} else {
+				int i = 0;
+				while (i < Parents.Count && Parents[i].LoginDays == -666) {
+					i++;
+				}
+				if (i < Parents.Count) {
+					return Parents[i].LoginDays;
+				} else {
+					return Sponsor.LoginDays;
+				}
+			}
+		}
+		
+		public int? GetLoginWeekDay()
+		{
+			if (LoginWeekDay >= -1) {
+				return LoginWeekDay;
+			} else {
+				int i = 0;
+				while (i < Parents.Count && Parents[i].LoginWeekDay == -666) {
+					i++;
+				}
+				if (i < Parents.Count) {
+					return Parents[i].LoginWeekDay;
+				} else {
+					return Sponsor.LoginWeekDay;
+				}
+			}
+		}
+		
 		public string GetReminder2(Dictionary<int, string> loginDays, Dictionary<int, string> loginWeekDays)
 		{
 			int i = 0;

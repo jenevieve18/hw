@@ -1124,9 +1124,21 @@ ORDER BY sbq.SortOrder",
 			}
 			rs.Close();
 
-			string ESstart = "", ESdesc = "", ESselect = "", ESuserSelect = "", ESuserJoin = "", ESrounds = "", ESroundTexts = "", ESpreviousRounds = "", ESpreviousRoundTexts = "", ESjoin = "", ESattr = "";
+			string ESstart = "";
+			string ESdesc = "";
+			string ESselect = "";
+			string ESuserSelect = "";
+			string ESuserJoin = "";
+			string ESrounds = "";
+			string ESroundTexts = "";
+			string ESpreviousRounds = "";
+			string ESpreviousRoundTexts = "";
+			string ESjoin = "";
+			string ESattr = "";
 			string bqESselect = "", bqESjoin = "";
-			int EScount = 0, totalEScount = 0, tmpEScount = 0;
+			int EScount = 0;
+			int totalEScount = 0;
+			int tmpEScount = 0;
 //			query = string.Format(
 //				@"
 //SELECT COUNT(*)
@@ -1167,6 +1179,13 @@ ORDER BY ses.SponsorExtendedSurveyID",
 			var extendedSurveys = new List<SponsorExtendedSurvey>();
 			while (rs.Read()) {
 				if (totalEScount <= 8 || tmpEScount >= (totalEScount - 8)) {
+					extendedSurveys.Add(
+						new SponsorExtendedSurvey {
+							Id = DbHelper.GetInt32(rs, 0),
+							Answers = DbHelper.GetInt32(rs, 12),
+							Total = DbHelper.GetInt32(rs, 13)
+						}
+					);
 //					ESstart += (ESstart != "" ? "," : "") + (rs.IsDBNull(8) ? DateTime.MaxValue : rs.GetDateTime(8)).ToString("yyyy-MM-dd");
 //					ESrounds += (ESrounds != "" ? "," : "") + rs.GetInt32(2);
 //					ESroundTexts += (ESroundTexts != "" ? "," : "") + (rs.IsDBNull(6) ? "$" : rs.GetString(6));
@@ -1241,12 +1260,17 @@ LEFT OUTER JOIN eform..ProjectRoundUnit es{0} ON es{0}.ProjectRoundID = {1} AND 
 						rs.GetInt32(0),
 						rs.GetInt32(2)
 					);
-					ESdesc += "<TD ALIGN='CENTER' style='font-size:9px;'>" +
-						"&nbsp;<B style='font-size:8px;'>" + rs.GetString(1).Replace(" ", "&nbsp;<br/>&nbsp;") + "</B>&nbsp;" +
-						"<br/>" + (rs.IsDBNull(8) ? "" : rs.GetDateTime(8).ToString("yyMMdd")) +
-						"<br/>--" +
-						"<br/>" + (rs.IsDBNull(9) ? "" : rs.GetDateTime(9).ToString("yyMMdd")) +
-						"</TD>";
+					ESdesc += string.Format(
+						@"
+	<td align='center' style='font-size:9px;'>
+		&nbsp;<b style='font-size:8px;'>{0}</b>&nbsp;
+		<br/>{1}<br/>--
+		<br/>{2}
+	</td>",
+						rs.GetString(1).Replace(" ", "&nbsp;<br/>&nbsp;"),
+						(rs.IsDBNull(8) ? "" : rs.GetDateTime(8).ToString("yyMMdd")),
+						(rs.IsDBNull(9) ? "" : rs.GetDateTime(9).ToString("yyMMdd"))
+					);
 					ESuserSelect += ", s" + rs.GetInt32(0) + ".AnswerID AS AID" + rs.GetInt32(0) + ", " +
 						"s" + rs.GetInt32(0) + ".ProjectRoundUserID AS PRU2ID" + rs.GetInt32(0) + " ";
 					ESuserJoin += " " +
@@ -1266,12 +1290,6 @@ LEFT OUTER JOIN eform..ProjectRoundUnit es{0} ON es{0}.ProjectRoundID = {1} AND 
 						"LEFT OUTER JOIN UserSponsorExtendedSurvey s" + rs.GetInt32(0) + " ON u.UserID = s" + rs.GetInt32(0) + ".UserID " +
 						"AND s" + rs.GetInt32(0) + ".SponsorExtendedSurveyID = " + rs.GetInt32(0) + " ";
 					
-					extendedSurveys.Add(
-						new SponsorExtendedSurvey {
-							Answers = DbHelper.GetInt32(rs, 12),
-							Total = DbHelper.GetInt32(rs, 13)
-						}
-					);
 				}
 
 				tmpEScount++;
