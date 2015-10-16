@@ -1473,6 +1473,54 @@ ORDER BY ses.SponsorExtendedSurveyID DESC",
 			}
 			return surveys;
 		}
+		
+		public IList<SponsorExtendedSurvey> FindExtendedSurveysBySponsor2(int sponsorID)
+		{
+			string query = string.Format(
+				@"
+SELECT ses.SponsorExtendedSurveyID,
+	ses.Internal,
+	ses.ProjectRoundID,
+	ses.EformFeedbackID,
+	ses.RequiredUserCount,
+	ses.PreviousProjectRoundID,
+	ses.RoundText,
+	ses2.RoundText,
+	pr.Started,
+	pr.Closed,
+	ses.WarnIfMissingQID,
+	ses.ExtraEmailSubject
+FROM SponsorExtendedSurvey ses
+LEFT OUTER JOIN SponsorExtendedSurvey ses2 ON ses.SponsorID = ses2.SponsorID AND ses.PreviousProjectRoundID = ses2.ProjectRoundID
+LEFT OUTER JOIN eform..ProjectRound pr ON ses.ProjectRoundID = pr.ProjectRoundID
+WHERE ses.SponsorID = {0}
+ORDER BY ses.SponsorExtendedSurveyID",
+				sponsorID
+			);
+			var surveys = new List<SponsorExtendedSurvey>();
+			using (SqlDataReader rs = Db.rs(query)) {
+				while (rs.Read()) {
+					var s = new SponsorExtendedSurvey {
+						Id = GetInt32(rs, 0),
+						Internal = GetString(rs, 1),
+						ProjectRound = rs.IsDBNull(2) ? null : new ProjectRound {
+							Id = GetInt32(rs, 2),
+							Started = GetDateTime(rs, 8),
+							Closed = GetDateTime(rs, 9)
+						},
+						Feedback = rs.IsDBNull(3) ? null : new Feedback { Id = GetInt32(rs, 3) },
+						RequiredUserCount = GetInt32(rs, 4, 10),
+						PreviousProjectRound = rs.IsDBNull(5) ? null : new ProjectRound { Id = GetInt32(rs, 5) },
+						RoundText = GetString(rs, 6),
+						RoundText2 = GetString(rs, 7),
+						WarnIfMissingQID = GetInt32(rs, 10),
+						ExtraEmailSubject = GetString(rs, 11)
+					};
+					surveys.Add(s);
+				}
+			}
+			return surveys;
+		}
 
 		public IList<SponsorExtendedSurvey> FindExtendedSurveysBySponsor(int sponsorId)
 		{
@@ -1767,54 +1815,6 @@ WHERE usesX.AnswerID IS NOT NULL AND si.SponsorID = {3} AND ISNULL(sib.BAID,upb.
 					Answer = new Answer { Id = GetInt32(rs, 0) }
 				};
 				surveys.Add(s);
-			}
-			return surveys;
-		}
-		
-		public IList<SponsorExtendedSurvey> Find2(int sponsorID)
-		{
-			string query = string.Format(
-				@"
-SELECT ses.SponsorExtendedSurveyID,
-	ses.Internal,
-	ses.ProjectRoundID,
-	ses.EformFeedbackID,
-	ses.RequiredUserCount,
-	ses.PreviousProjectRoundID,
-	ses.RoundText,
-	ses2.RoundText,
-	pr.Started,
-	pr.Closed,
-	ses.WarnIfMissingQID,
-	ses.ExtraEmailSubject
-FROM SponsorExtendedSurvey ses
-LEFT OUTER JOIN SponsorExtendedSurvey ses2 ON ses.SponsorID = ses2.SponsorID AND ses.PreviousProjectRoundID = ses2.ProjectRoundID
-LEFT OUTER JOIN eform..ProjectRound pr ON ses.ProjectRoundID = pr.ProjectRoundID
-WHERE ses.SponsorID = {0}
-ORDER BY ses.SponsorExtendedSurveyID",
-				sponsorID
-			);
-			var surveys = new List<SponsorExtendedSurvey>();
-			using (SqlDataReader rs = Db.rs(query)) {
-				while (rs.Read()) {
-					var s = new SponsorExtendedSurvey {
-						Id = GetInt32(rs, 0),
-						Internal = GetString(rs, 1),
-						ProjectRound = rs.IsDBNull(2) ? null : new ProjectRound {
-							Id = GetInt32(rs, 2),
-							Started = GetDateTime(rs, 8),
-							Closed = GetDateTime(rs, 9)
-						},
-						Feedback = rs.IsDBNull(3) ? null : new Feedback { Id = GetInt32(rs, 3) },
-						RequiredUserCount = GetInt32(rs, 4, 10),
-						PreviousProjectRound = rs.IsDBNull(5) ? null : new ProjectRound { Id = GetInt32(rs, 5) },
-						RoundText = GetString(rs, 6),
-						RoundText2 = GetString(rs, 7),
-						WarnIfMissingQID = GetInt32(rs, 10),
-						ExtraEmailSubject = GetString(rs, 11)
-					};
-					surveys.Add(s);
-				}
 			}
 			return surveys;
 		}
