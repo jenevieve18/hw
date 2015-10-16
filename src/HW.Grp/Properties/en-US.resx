@@ -405,6 +405,9 @@
   <data name="reminder.interval" xml:space="preserve">
     <value>Reminder interval</value>
   </data>
+  <data name="reminder.star" xml:space="preserve">
+    <value>* = setting inherited from parent unit</value>
+  </data>
   <data name="reminder.text" xml:space="preserve">
     <value>Reminder</value>
   </data>

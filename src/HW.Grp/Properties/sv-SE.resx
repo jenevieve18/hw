@@ -417,6 +417,9 @@
   <data name="reminder.interval" xml:space="preserve">
     <value>Påminnelseintervall</value>
   </data>
+  <data name="reminder.star" xml:space="preserve">
+    <value>* = inställning nedärvd från föräldraenhet</value>
+  </data>
   <data name="reminder.text" xml:space="preserve">
     <value>Påminnelse</value>
   </data>
