@@ -42,6 +42,14 @@ namespace HW.Core.Helpers
 		}
 	}
 	
+	public static class StrHelper
+	{
+		public static string Str(bool condition, string x, string y)
+		{
+			return condition ? x : y;
+		}
+	}
+	
 	public static class HtmlHelper
 	{
 		public static void SetTextIfEmpty(TextBox textBox, string text)

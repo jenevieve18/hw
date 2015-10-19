@@ -16,6 +16,7 @@ using HW.Core.Models;
 using HW.Core.Repositories;
 using HW.Core.Repositories.Sql;
 using HW.Core.Services;
+using S = HW.Core.Helpers.StrHelper;
 
 namespace HW.Grp
 {
@@ -1182,6 +1183,21 @@ ORDER BY ses.SponsorExtendedSurveyID",
 					extendedSurveys.Add(
 						new SponsorExtendedSurvey {
 							Id = DbHelper.GetInt32(rs, 0),
+							Internal = DbHelper.GetString(rs, 1),
+							ProjectRound = new ProjectRound {
+								Id = DbHelper.GetInt32(rs, 2),
+								Started = DbHelper.GetDateTime(rs, 8, DateTime.MaxValue),
+								Closed = DbHelper.GetDateTime(rs, 9, DateTime.MaxValue)
+							},
+							Feedback = new HW.Core.Models.Feedback {
+								Id = DbHelper.GetInt32(rs, 3)
+							},
+							RequiredUserCount = DbHelper.GetInt32(rs, 4),
+							PreviousProjectRound = new ProjectRound { Id = DbHelper.GetInt32(rs, 5) },
+							RoundText = DbHelper.GetString(rs, 6),
+							RoundText2 = DbHelper.GetString(rs, 7),
+							WarnIfMissingQID = DbHelper.GetInt32(rs, 10),
+							ExtraEmailSubject = DbHelper.GetString(rs, 11),
 							Answers = DbHelper.GetInt32(rs, 12),
 							Total = DbHelper.GetInt32(rs, 13)
 						}
@@ -1470,7 +1486,6 @@ d.SponsorID = {4} ORDER BY d.SortString",
 				IX += rs.GetInt32(5);
 				int active = rs.GetInt32(8); //rs.GetInt32(12 + 6 * EScount);
 				totalActive += rs.GetInt32(4); //rs.GetInt32(12 + 6 * EScount + 1);
-//				int deptMinUserCountToDisclose = rs.IsDBNull(12 + 6 * EScount + 2) ? MIN_SHOW : rs.GetInt32(12 + 6 * EScount + 2);
 				int deptMinUserCountToDisclose = DbHelper.GetInt32(rs, 12 + 6 * EScount + 2, MIN_SHOW);
 				
 				OrgTree.Text += string.Format(
@@ -1517,32 +1532,75 @@ d.SponsorID = {4} ORDER BY d.SortString",
 					(deptID == rs.GetInt32(2) || showDepartmentID == rs.GetInt32(2) ? "<b>" : ""),
 					s,
 					(deptID == rs.GetInt32(2) || showDepartmentID == rs.GetInt32(2) ? "</b>" : ""),
-					(Convert.ToInt32(Session["ReadOnly"]) == 0 ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DID=" + rs.GetInt32(2) + "'><img src='img/unt_edt.gif' border='0'/></A>" + "" : ""),
-					(rs.GetInt32(12 + 6 * EScount) > 0 /*rs.GetInt32(3) > 0*/ ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&SDID=" + rs.GetInt32(2) + "'><img src='img/usr_on.gif' border='0'/></A>" : (Convert.ToInt32(Session["ReadOnly"]) == 0 ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DeleteDID=" + rs.GetInt32(2) + "'><img src='img/unt_del.gif' border='0'/></a>" : "")),
-					(rs.GetInt32(3) > 0 && rs.GetInt32(8) != rs.GetInt32(4) ? "" + (rs.GetInt32(4) >= deptMinUserCountToDisclose ? rs.GetInt32(4).ToString() : (showReg ? rs.GetInt32(4).ToString() : "")) + "" : ""),
-					(active >= deptMinUserCountToDisclose ? active.ToString() : "<img src='img/key.gif'/>"),
-					(active > deptMinUserCountToDisclose ? string.Format(" ({0}%)", Math.Round((float)active / rs.GetInt32(7) * 100)) : "")
+					(
+						Convert.ToInt32(Session["ReadOnly"]) == 0
+						? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DID=" + rs.GetInt32(2) + "'><img src='img/unt_edt.gif' border='0'/></A>" + ""
+						: ""
+					),
+					(
+						rs.GetInt32(12 + 6 * EScount) > 0 /*rs.GetInt32(3) > 0*/
+						? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&SDID=" + rs.GetInt32(2) + "'><img src='img/usr_on.gif' border='0'/></A>"
+						: (
+							Convert.ToInt32(Session["ReadOnly"]) == 0
+							? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DeleteDID=" + rs.GetInt32(2) + "'><img src='img/unt_del.gif' border='0'/></a>"
+							: ""
+						)
+					),
+					(
+						rs.GetInt32(3) > 0 && rs.GetInt32(8) != rs.GetInt32(4)
+						? (
+							rs.GetInt32(4) >= deptMinUserCountToDisclose
+							? rs.GetInt32(4).ToString()
+							: (
+								showReg ? rs.GetInt32(4).ToString() : ""
+							)
+						)
+						: ""
+					),
+					(
+						active >= deptMinUserCountToDisclose ? active.ToString() : "<img src='img/key.gif'/>"
+					),
+					(
+						active > deptMinUserCountToDisclose ? string.Format(" ({0}%)", Math.Round((float)active / rs.GetInt32(7) * 100)) : ""
+					)
 				);
 
 				for (int i = 0; i < EScount; i++) {
 					int idx = 12 + 6 * i;
 					ESanswerCount[i] += rs.GetInt32(idx + 1);
-					int rac = (rs.IsDBNull(idx + 3) ? Convert.ToInt32(ESattr.Split(',')[i].Split(':')[1]) : rs.GetInt32(idx + 3));
+//					int rac = (rs.IsDBNull(idx + 3) ? Convert.ToInt32(ESattr.Split(',')[i].Split(':')[1]) : rs.GetInt32(idx + 3));
+					int rac = DbHelper.GetInt32(rs, idx + 3, extendedSurveys[i].RequiredUserCount);
 					
 					if (rs.IsDBNull(idx + 4)) {
 						OrgTree.Text += string.Format(
 							@"
 	<td align='center' style='font-size:9px;'>&nbsp;{0}{1}&nbsp;{2}&nbsp;</td>",
 							(!rs.IsDBNull(idx + 5) ? "E" : ""),
+//							(
+//								!rs.IsDBNull(idx + 2) && Convert.ToInt32(ESattr.Split(',')[i].Split(':')[0]) != 0 && rac <= rs.GetInt32(idx)
+//								? string.Format(
+//									"<a href=\"JavaScript:void(window.open('{0}feedback.aspx?AB=1&R={1}&{2}{3}{4}U={5}&RAC={6}&UD={7}&N={8}','es{9}','scrollbars=1,width=880,height=700,resizable=1,toolbar=0,status=0,menubar=0,location=0'));\"><img src='img/graphIcon2.gif' border='0'/></a>",
+//									ConfigurationManager.AppSettings["eFormURL"],
+//									(ESrounds.Split(',')[i]),
+//									(ESpreviousRounds.Split(',')[i] != "0" ? "RR=" + ESpreviousRounds.Split(',')[i] + "&" : ""),
+//									(ESpreviousRounds.Split(',')[i] != "0" ? "R1=" + ESroundTexts.Split(',')[i] + "&" : ""),
+//									(ESpreviousRounds.Split(',')[i] != "0" ? "R2=" + ESpreviousRoundTexts.Split(',')[i] + "&" : ""),
+//									rs.GetInt32(idx + 2).ToString(),
+//									rac,
+//									Server.HtmlEncode(rs.GetString(0)).Replace("&", "_0_").Replace("#", "_1_"),
+//									Server.HtmlEncode(Session["Sponsor"].ToString()).Replace("&", "_0_").Replace("#", "_1_"),
+//									i
+//								) : ""
+//							),
 							(
-								!rs.IsDBNull(idx + 2) && Convert.ToInt32(ESattr.Split(',')[i].Split(':')[0]) != 0 && rac <= rs.GetInt32(idx)
+								!rs.IsDBNull(idx + 2) && extendedSurveys[i].Feedback.Id != 0 && rac <= rs.GetInt32(idx)
 								? string.Format(
 									"<a href=\"JavaScript:void(window.open('{0}feedback.aspx?AB=1&R={1}&{2}{3}{4}U={5}&RAC={6}&UD={7}&N={8}','es{9}','scrollbars=1,width=880,height=700,resizable=1,toolbar=0,status=0,menubar=0,location=0'));\"><img src='img/graphIcon2.gif' border='0'/></a>",
 									ConfigurationManager.AppSettings["eFormURL"],
-									(ESrounds.Split(',')[i]),
-									(ESpreviousRounds.Split(',')[i] != "0" ? "RR=" + ESpreviousRounds.Split(',')[i] + "&" : ""),
-									(ESpreviousRounds.Split(',')[i] != "0" ? "R1=" + ESroundTexts.Split(',')[i] + "&" : ""),
-									(ESpreviousRounds.Split(',')[i] != "0" ? "R2=" + ESpreviousRoundTexts.Split(',')[i] + "&" : ""),
+									extendedSurveys[i].ProjectRound.Id,
+									S.Str(extendedSurveys[i].PreviousProjectRound.Id != 0, string.Format("RR={0}&", extendedSurveys[i].PreviousProjectRound.Id), ""),
+									S.Str(extendedSurveys[i].PreviousProjectRound.Id != 0, string.Format("R1={0}&", extendedSurveys[i].RoundText), ""),
+									S.Str(extendedSurveys[i].PreviousProjectRound.Id != 0, string.Format("R2={0}&", extendedSurveys[i].RoundText2), ""),
 									rs.GetInt32(idx + 2).ToString(),
 									rac,
 									Server.HtmlEncode(rs.GetString(0)).Replace("&", "_0_").Replace("#", "_1_"),
@@ -1905,22 +1963,28 @@ WHERE up.UserID = {1}",
 					@"
 	<td align='center' style='font-size:9px;'>&nbsp;{0}&nbsp;{1}&nbsp;</td>",
 					(
-						Convert.ToInt32(ESattr.Split(',')[i].Split(':')[0]) != 0 && Convert.ToInt32(ESattr.Split(',')[i].Split(':')[1]) <= ESanswerCount[i]
+//						Convert.ToInt32(ESattr.Split(',')[i].Split(':')[0]) != 0 && Convert.ToInt32(ESattr.Split(',')[i].Split(':')[1]) <= ESanswerCount[i]
+//						? string.Format(
+//							"<a href=\"JavaScript:void(window.open('{0}feedback.aspx?R={1}&{2}{3}{4}",
+//							ConfigurationManager.AppSettings["eFormURL"],
+//							(ESrounds.Split(',')[i]),
+//							ESpreviousRounds.Split(',')[i] != "0" ? string.Format("RR={0}&", ESpreviousRounds.Split(',')[i]) : "",
+//							ESpreviousRounds.Split(',')[i] != "0" ? string.Format("R1={0}&", ESroundTexts.Split(',')[i]) : "",
+//							ESpreviousRounds.Split(',')[i] != "0" ? string.Format("R2={0}&", ESpreviousRoundTexts.Split(',')[i]) : ""
+//						) +
+//						"N=" + Server.HtmlEncode(Session["Sponsor"].ToString()).Replace("&", "_0_").Replace("#", "_1_") + "','es" + i + "','scrollbars=1,width=880,height=700,resizable=1,toolbar=0,status=0,menubar=0,location=0'));\"><img src='img/graphIcon2.gif' border='0'/></a>"
+//						: ""
+						extendedSurveys[i].Feedback.Id != 0 && extendedSurveys[i].RequiredUserCount <= extendedSurveys[i].Answers
 						? string.Format(
-							"<a href=\"JavaScript:void(window.open('{0}feedback.aspx?R={1}&",
+							"<a href=\"JavaScript:void(window.open('{0}feedback.aspx?R={1}&{2}{3}{4}N={5}','es{6}','scrollbars=1,width=880,height=700,resizable=1,toolbar=0,status=0,menubar=0,location=0'));\"><img src='img/graphIcon2.gif' border='0'/></a>",
 							ConfigurationManager.AppSettings["eFormURL"],
-							(ESrounds.Split(',')[i])
-						) +
-						(
-							ESpreviousRounds.Split(',')[i] != "0" ? string.Format("RR={0}&", ESpreviousRounds.Split(',')[i]) : ""
-						) +
-						(
-							ESpreviousRounds.Split(',')[i] != "0" ? string.Format("R1={0}&", ESroundTexts.Split(',')[i]) : ""
-						) +
-						(
-							ESpreviousRounds.Split(',')[i] != "0" ? string.Format("R2={0}&", ESpreviousRoundTexts.Split(',')[i]) : ""
-						) +
-						"N=" + Server.HtmlEncode(Session["Sponsor"].ToString()).Replace("&", "_0_").Replace("#", "_1_") + "','es" + i + "','scrollbars=1,width=880,height=700,resizable=1,toolbar=0,status=0,menubar=0,location=0'));\"><img src='img/graphIcon2.gif' border='0'/></a>"
+							extendedSurveys[i].ProjectRound.Id,
+							S.Str(extendedSurveys[i].PreviousProjectRound.Id != 0, string.Format("RR={0}&", extendedSurveys[i].PreviousProjectRound.Id), ""),
+							S.Str(extendedSurveys[i].PreviousProjectRound.Id != 0, string.Format("R1={0}&", extendedSurveys[i].RoundText), ""),
+							S.Str(extendedSurveys[i].PreviousProjectRound.Id != 0, string.Format("R2={0}&", extendedSurveys[i].RoundText2), ""),
+							Server.HtmlEncode(Session["Sponsor"].ToString()).Replace("&", "_0_").Replace("#", "_1_"),
+							i
+						)
 						: ""
 					),
 //					ESanswerCount[i]
