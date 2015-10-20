@@ -1974,8 +1974,8 @@ WHERE up.UserID = {1}",
 //						) +
 //						"N=" + Server.HtmlEncode(Session["Sponsor"].ToString()).Replace("&", "_0_").Replace("#", "_1_") + "','es" + i + "','scrollbars=1,width=880,height=700,resizable=1,toolbar=0,status=0,menubar=0,location=0'));\"><img src='img/graphIcon2.gif' border='0'/></a>"
 //						: ""
-//						extendedSurveys[i].Feedback.Id != 0 && extendedSurveys[i].RequiredUserCount <= extendedSurveys[i].Answers
-						extendedSurveys[i].Feedback.Id != 0 && sponsor.MinUserCountToDisclose <= extendedSurveys[i].Answers
+						extendedSurveys[i].Feedback.Id != 0 && extendedSurveys[i].RequiredUserCount <= extendedSurveys[i].Answers
+//						extendedSurveys[i].Feedback.Id != 0 && sponsor.MinUserCountToDisclose <= extendedSurveys[i].Answers
 						? string.Format(
 							"<a href=\"JavaScript:void(window.open('{0}feedback.aspx?R={1}&{2}{3}{4}N={5}','es{6}','scrollbars=1,width=880,height=700,resizable=1,toolbar=0,status=0,menubar=0,location=0'));\"><img src='img/graphIcon2.gif' border='0'/></a>",
 							ConfigurationManager.AppSettings["eFormURL"],
