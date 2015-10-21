@@ -36,6 +36,7 @@ namespace HW.Invoicing
                 labelInvoicePurchaseOrderNumber.Text = invoice.Customer.PurchaseOrderNumber;
                 labelInvoiceYourReferencePerson.Text = invoice.Customer.YourReferencePerson;
                 labelInvoiceOurReferencePerson.Text = invoice.Customer.OurReferencePerson;
+                panelPurchaseOrder.Visible = invoice.Customer.PurchaseOrderNumber != "";
             }
             else
             {

@@ -75,8 +75,11 @@
     </tr>
     <tr>
         <td>
-            <strong>Purchase order number: 
-                <asp:Label ID="labelInvoicePurchaseOrderNumber" runat="server" Text=""></asp:Label><!--XX6279292--></strong>
+            <asp:Panel ID="panelPurchaseOrder" runat="server">
+                <strong>Purchase order number: 
+                    <asp:Label ID="labelInvoicePurchaseOrderNumber" runat="server" Text=""></asp:Label>
+                </strong>
+            </asp:Panel>
         </td>
         <td></td>
         <td></td>

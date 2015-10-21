@@ -98,6 +98,7 @@ namespace HW.Invoicing
                     labelInvoiceOurReferencePerson.Text = customer.OurReferencePerson;
                     labelInvoicePurchaseOrderNumber.Text = customer.PurchaseOrderNumber;
                     labelInvoiceYourReferencePerson.Text = customer.YourReferencePerson;
+                    panelPurchaseOrderNumber.Visible = customer.PurchaseOrderNumber != "";
 
                     // Subscription Panel
                     checkBoxSubscribe.Checked = customer.HasSubscription;

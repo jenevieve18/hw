@@ -480,8 +480,11 @@
                                 </tr>
                                 <tr>
                                     <td>
+                                        <asp:Panel ID="panelPurchaseOrderNumber" runat="server">
                                         <strong>Purchase order number: 
-                                            <asp:Label ID="labelInvoicePurchaseOrderNumber" runat="server" Text="Label"></asp:Label><!--XX6279292--></strong>
+                                            <asp:Label ID="labelInvoicePurchaseOrderNumber" runat="server" Text="Label"></asp:Label>
+                                        </strong>
+                                        </asp:Panel>
                                     </td>
                                     <td></td>
                                     <td></td>
