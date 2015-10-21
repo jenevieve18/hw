@@ -59,6 +59,9 @@
             <asp:TextBox ID="textBoxTimebookDate" runat="server" CssClass="date form-control"></asp:TextBox>
         </div>
         <div class="form-group">
+            <asp:CheckBox ID="checkBoxTimebookDateHidden" runat="server" CssClass="form-control" Text="&nbsp;Timebook date is hidden" />
+        </div>
+        <div class="form-group">
 	        <label for="<%= textBoxTimebookDepartment.ClientID %>">Department</label>
             <asp:TextBox ID="textBoxTimebookDepartment" runat="server" CssClass="form-control"></asp:TextBox>
         </div>

@@ -162,6 +162,7 @@ namespace HW.Invoicing
             var t = new CustomerTimebook
             {
                 Date = ConvertHelper.ToDateTime(textBoxTimebookDate.Text),
+                DateHidden = checkBoxTimebookDateHidden.Checked,
                 Department = textBoxTimebookDepartment.Text,
                 Contact = new CustomerContact { Id = ConvertHelper.ToInt32(dropDownListTimebookContacts.SelectedValue) },
                 Item = new Item { Id = ConvertHelper.ToInt32(dropDownListTimebookItems.SelectedValue) },

@@ -61,6 +61,7 @@ namespace HW.Invoicing
                     else
                     {
                         textBoxTimebookDate.Text = t.Date.Value.ToString("yyyy-MM-dd");
+                        checkBoxTimebookDateHidden.Checked = t.DateHidden;
                         textBoxTimebookDepartment.Text = t.Department;
                         dropDownListTimebookContacts.SelectedValue = t.Contact.Id.ToString();
                         dropDownListTimebookItems.SelectedValue = t.Item.Id.ToString();
@@ -92,6 +93,7 @@ namespace HW.Invoicing
 
             var t = new CustomerTimebook {
                 Date = ConvertHelper.ToDateTime(textBoxTimebookDate.Text),
+                DateHidden = checkBoxTimebookDateHidden.Checked,
                 Department = textBoxTimebookDepartment.Text,
                 Contact = new CustomerContact {
                     Id = ConvertHelper.ToInt32(dropDownListTimebookContacts.SelectedValue)

@@ -250,27 +250,28 @@ VALUES(@CustomerId, @Date, @Lecturer, @LectureTitle, @Contact, @Mobile, @Email, 
             );
         }
 
-		public void SaveTimebook(CustomerTimebook time, int customerId)
+		public void SaveTimebook(CustomerTimebook t, int customerId)
 		{
 			string query = string.Format(
 				@"
-INSERT INTO CustomerTimebook(CustomerId, CustomerContactId, ItemId, Quantity, Price, Consultant, Comments, Department, Date, InternalComments, VAT)
-VALUES(@CustomerId, @CustomerContactId, @ItemId, @Quantity, @Price, @Consultant, @Comments, @Department, @Date, @InternalComments, @VAT)"
+INSERT INTO CustomerTimebook(CustomerId, CustomerContactId, ItemId, Quantity, Price, Consultant, Comments, Department, Date, InternalComments, VAT, DateHidden)
+VALUES(@CustomerId, @CustomerContactId, @ItemId, @Quantity, @Price, @Consultant, @Comments, @Department, @Date, @InternalComments, @VAT, @DateHidden)"
 			);
 			ExecuteNonQuery(
 				query,
 				"invoicing",
 				new SqlParameter("@CustomerId", customerId),
-				new SqlParameter("@CustomerContactId", time.Contact.Id),
-				new SqlParameter("@ItemId", time.Item.Id),
-				new SqlParameter("@Quantity", time.Quantity),
-				new SqlParameter("@Price", time.Price),
-				new SqlParameter("@Consultant", time.Consultant),
-				new SqlParameter("@Comments", time.Comments),
-				new SqlParameter("@Department", time.Department),
-                new SqlParameter("@Date", time.Date),
-                new SqlParameter("@InternalComments", time.InternalComments),
-                new SqlParameter("@VAT", time.VAT)
+				new SqlParameter("@CustomerContactId", t.Contact.Id),
+				new SqlParameter("@ItemId", t.Item.Id),
+				new SqlParameter("@Quantity", t.Quantity),
+				new SqlParameter("@Price", t.Price),
+				new SqlParameter("@Consultant", t.Consultant),
+				new SqlParameter("@Comments", t.Comments),
+				new SqlParameter("@Department", t.Department),
+                new SqlParameter("@Date", t.Date),
+                new SqlParameter("@InternalComments", t.InternalComments),
+                new SqlParameter("@VAT", t.VAT),
+                new SqlParameter("@DateHidden", t.DateHidden)
 			);
 		}
 		
@@ -544,6 +545,7 @@ UPDATE CustomerTimebook SET CustomerContactId = @CustomerContactId,
     Comments = @Comments,
     Department = @Department,
     Date = @Date,
+    DateHidden = @DateHidden,
     Inactive = @Inactive,
     InternalComments = @InternalComments,
     VAT = @VAT
@@ -560,6 +562,7 @@ WHERE Id = @Id"
                 new SqlParameter("@Comments", c.Comments),
                 new SqlParameter("@Department", c.Department),
                 new SqlParameter("@Date", c.Date),
+                new SqlParameter("@DateHidden", c.DateHidden),
                 new SqlParameter("@Inactive", c.Inactive),
                 new SqlParameter("@Id", id),
                 new SqlParameter("@InternalComments", c.InternalComments),
@@ -796,7 +799,8 @@ SELECT Id,
     VAT,
     SubscriptionStartDate,
     SubscriptionEndDate,
-    IsSubscription
+    IsSubscription,
+    DateHidden
 FROM CustomerTimebook
 WHERE Id = @Id"
             );
@@ -821,7 +825,8 @@ WHERE Id = @Id"
                         VAT = GetDecimal(rs, 12, 25),
                         SubscriptionStartDate = GetDateTime(rs, 13),
                         SubscriptionEndDate = GetDateTime(rs, 14),
-                        IsSubscription = GetInt32(rs, 15) == 1
+                        IsSubscription = GetInt32(rs, 15) == 1,
+                        DateHidden = GetInt32(rs, 16) == 1
                     };
                 }
             }
@@ -1279,7 +1284,8 @@ SELECT t.CustomerContactId,
     t.VAT,
     t.IsSubscription,
     t.SubscriptionStartDate,
-    t.SubscriptionEndDate
+    t.SubscriptionEndDate,
+    t.DateHidden
 FROM CustomerTimebook t
 LEFT OUTER JOIN CustomerContact c ON c.Id = t.CustomerContactId
 INNER JOIN Item i ON i.Id = t.ItemId
@@ -1313,7 +1319,8 @@ ORDER BY Status, t.Date DESC, t.Id DESC"
                             VAT = GetDecimal(rs, 15, 25),
                             IsSubscription = GetInt32(rs, 16) == 1,
                             SubscriptionStartDate = GetDateTime(rs, 17),
-                            SubscriptionEndDate = GetDateTime(rs, 18)
+                            SubscriptionEndDate = GetDateTime(rs, 18),
+                            DateHidden = GetInt32(rs, 19) == 1
                         }
 					);
 				}

@@ -37,6 +37,7 @@
                     var comments = selected.data('comments');
                     var vat = selected.data('vat');
                     var date = selected.data('date');
+                    var datehidden = selected.data('datehidden');
                     var invoiceItem = {
                         'id': id,
                         'item': item,
@@ -47,7 +48,8 @@
                         'consultant': consultant,
                         'comments': comments,
                         'vat': vat,
-                        'date': date
+                        'date': date,
+                        'datehidden': datehidden
                     };
                     invoiceItems.push(invoiceItem);
                 } else {
@@ -84,7 +86,8 @@
                 invoiceItems.forEach(function(e) {
                     var vatAmount = e.vat / 100.0 * e.amount;
                     var consultant = e.consultant == '' ? '' : ' (' + e.consultant + ')';
-                    var date = e.date == '' ? '' : e.date + ' ';
+                    //var date = e.date == '' ? '' : e.date + ' ';
+                    var date = (e.date != '' && !e.datehidden) ? e.date + ' ' : '';
                     var item = e.comments == '' ? e.item : date + e.comments + consultant;
                     items.append('' + 
                         '<tr>' + 
@@ -346,6 +349,9 @@
                             <div class="form-group">
 	                            <label for="<%= textBoxTimebookDate.ClientID %>">Date</label>
                                 <asp:TextBox ID="textBoxTimebookDate" runat="server" CssClass="form-control date"></asp:TextBox>
+                            </div>
+                            <div class="form-group">
+                                <asp:CheckBox ID="checkBoxTimebookDateHidden" runat="server" CssClass="form-control" Text="&nbsp;Timebook date is hidden" />
                             </div>
                             <div class="form-group">
 	                            <label for="<%= textBoxTimebookDepartment.ClientID %>">Department</label>
@@ -652,6 +658,7 @@
                                          data-comments="<%= t.Comments %>"
                                          data-vat="<%= t.VAT %>"
                                          data-date="<%= t.Date != null ? t.Date.Value.ToString("yyyy-MM-dd") : "" %>"
+                                         data-datehidden="<%= t.DateHidden ? "true" : "false" %>"
                                 />
                                 <% } %>
                             </td>
