@@ -102,7 +102,7 @@
                         vats[e.vat] = vatAmount;
                     }
                 });
-                console.log(subTotal);
+                //console.log(subTotal);
                 var strVat = '', strVatLabel = '';
                 var totalVat = 0;
                 var vatKeys = new Array();
@@ -201,7 +201,7 @@
 
         function validateTimebook() {
             var errors = [];
-            addErrorIf(errors, $('#<%= textBoxTimebookDepartment.ClientID %>').val() == '', "Department name shouldn't be empty.");
+            //addErrorIf(errors, $('#<%= textBoxTimebookDepartment.ClientID %>').val() == '', "Department name shouldn't be empty.");
             //addErrorIf(errors, $('#<%= textBoxTimebookConsultant.ClientID %>').val() == '', "Consultant shouldn't be empty.");
             addErrorIf(errors, $('#<%= textBoxTimebookComments.ClientID %>').val() == '', "Comments shouldn't be empty.");
 
