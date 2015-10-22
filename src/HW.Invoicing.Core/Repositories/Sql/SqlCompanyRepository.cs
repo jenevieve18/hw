@@ -175,6 +175,28 @@ ORDER BY Id";
             return c;
         }
 
+        public List<CompanyUser> FindUsers(int companyId)
+        {
+            string query = @"
+SELECT u.Name,
+u.[Password]
+FROM CompanyUser cu
+INNER JOIN User u ON u.Id = cu.UserId
+WHERE CompanyId = @CompanyId
+ORDER BY Name";
+            var users = new List<CompanyUser>();
+            using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@CompanyId", companyId))) {
+                if (rs.Read()) {
+                	users.Add(
+            			new CompanyUser {
+            				User = new User { Name = GetString(rs, 0), Password = GetString(rs, 1) }
+            			}
+            		);
+                }
+            }
+            return users;
+        }
+
         public Company ReadSelectedCompanyByUser(int userId)
         {
             string query = @"
