@@ -36,11 +36,12 @@ namespace HW.Invoicing.Core.Helpers
 			form.SetField("Text5", invoice.Customer.YourReferencePerson);
 			form.SetField("Text6", invoice.Customer.OurReferencePerson);
 			
-			string po = "";
-			if (invoice.Customer.PurchaseOrderNumber != "") {
-				po = "\n\nPurchase order number: " + invoice.Customer.PurchaseOrderNumber;
-			}
-			form.SetField("Text7", invoice.Customer.ToString() + po);
+//			string po = "";
+//			if (invoice.Customer.PurchaseOrderNumber != "") {
+//				po = "\n\nPurchase order number: " + invoice.Customer.PurchaseOrderNumber;
+//			}
+//			form.SetField("Text7", invoice.Customer.ToString() + po);
+			form.SetField("Text7", invoice.Customer.ToString() + "\n\n" + invoice.Customer.PurchaseOrderNumber);
 			
 			form.SetField("Text10", invoice.SubTotal.ToString("### ##0.00"));
 			form.SetField("Text13", invoice.TotalAmount.ToString("### ##0.00"));

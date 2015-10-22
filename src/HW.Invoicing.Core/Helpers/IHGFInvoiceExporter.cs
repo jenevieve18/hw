@@ -42,11 +42,12 @@ namespace HW.Invoicing.Core.Helpers
 			SetFieldProperty(form, "Text6", invoice.Customer.OurReferencePerson, f, 8f);
 			
 //			form.SetField("Text6B", invoice.Customer.ToString() + "\n\nPurchase Order Number: " + invoice.Customer.PurchaseOrderNumber);
-			string po = "";
-			if (invoice.Customer.PurchaseOrderNumber != "") {
-				po = "\n\nPurchase Order Number: " + invoice.Customer.PurchaseOrderNumber;
-			}
-			SetFieldProperty(form, "Text6B", invoice.Customer.ToString() + po, f, fontSize);
+//			string po = "";
+//			if (invoice.Customer.PurchaseOrderNumber != "") {
+//				po = "\n\nPurchase Order Number: " + invoice.Customer.PurchaseOrderNumber;
+//			}
+//			SetFieldProperty(form, "Text6B", invoice.Customer.ToString() + po, f, fontSize);
+			SetFieldProperty(form, "Text6B", invoice.Customer.ToString() + "\n\n" + invoice.Customer.PurchaseOrderNumber, f, fontSize);
 			
 //			form.SetField("Text10b", invoice.SubTotal.ToString("### ##0.00"));
 //			form.SetField("Text13", invoice.TotalAmount.ToString("### ##0.00"));

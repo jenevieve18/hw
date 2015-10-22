@@ -76,7 +76,7 @@
     <tr>
         <td>
             <asp:Panel ID="panelPurchaseOrder" runat="server">
-                <strong>Purchase order number: 
+                <strong><%--Purchase order number: --%>
                     <asp:Label ID="labelInvoicePurchaseOrderNumber" runat="server" Text=""></asp:Label>
                 </strong>
             </asp:Panel>

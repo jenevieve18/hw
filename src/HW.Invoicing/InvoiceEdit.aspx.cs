@@ -41,6 +41,7 @@ namespace HW.Invoicing
                     labelInvoiceYourReferencePerson.Text = invoice.Customer.YourReferencePerson;
                     labelInvoiceOurReferencePerson.Text = invoice.Customer.OurReferencePerson;
                     textBoxInvoiceComments.Text = invoice.Comments;
+                    panelPurchaseOrderNumber.Visible = invoice.Customer.PurchaseOrderNumber != "";
                 }
                 else
                 {
