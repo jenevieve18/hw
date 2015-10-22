@@ -14,7 +14,7 @@ namespace HW.Tests.Grp
 		{
 			v = new HW.Grp.Reminders();
 			
-			v = new HW.Grp.Reminders(new DepartmentRepositoryStub());
+			//v = new HW.Grp.Reminders(new DepartmentRepositoryStub());
 		}
 		
 		[Test]
