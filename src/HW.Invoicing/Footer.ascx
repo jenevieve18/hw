@@ -1,5 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Footer.ascx.cs" Inherits="HW.Invoicing.Footer" %>
 <%@ Import namespace="HW.Core.Helpers" %>
+<%@ Import Namespace="HW.Invoicing" %>
 <footer>
 	<div class="container">
 	    <div class="row clearfix">
@@ -9,6 +10,7 @@
 <p>You may download anything on these ages for your own personal, non-commercial use, including using the pictures on your own webstite if a copyright notice is included.</p>
 <p>For any other purposes please contact info@healthwatch.se</p>
 <p>Links to internet sites from this site should not be construed as an endorsement of the views contained therein.</p>
+<p>Version <%= typeof(Footer).Assembly.GetName().Version %></p>
 		    </div>
 		    <div class="col-md-4 column">
 			    <h6>About Us</h6>
