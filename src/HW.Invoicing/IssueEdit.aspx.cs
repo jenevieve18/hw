@@ -13,6 +13,7 @@ namespace HW.Invoicing
     public partial class IssueEdit : System.Web.UI.Page
     {
         SqlIssueRepository r = new SqlIssueRepository();
+        SqlMilestoneRepository mr = new SqlMilestoneRepository();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -21,6 +22,12 @@ namespace HW.Invoicing
             int id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
             if (!IsPostBack)
             {
+                dropDownListMilestone.Items.Clear();
+                foreach (var m in mr.FindAll())
+                {
+                    dropDownListMilestone.Items.Add(new ListItem(m.Name, m.Id.ToString()));
+                }
+
                 dropDownListStatus.Items.Clear();
                 foreach (var s in Issue.GetStatuses())
                 {
@@ -31,6 +38,7 @@ namespace HW.Invoicing
                 {
                     textBoxTitle.Text = i.Title;
                     textBoxDescription.Text = i.Description;
+                    dropDownListMilestone.SelectedValue = i.Milestone.Id.ToString();
                     dropDownListStatus.SelectedValue = i.Status.ToString();
                 }
             }
@@ -44,6 +52,7 @@ namespace HW.Invoicing
                 {
                     Title = textBoxTitle.Text,
                     Description = textBoxDescription.Text,
+                    Milestone = new Milestone { Id = ConvertHelper.ToInt32(dropDownListMilestone.SelectedValue) },
                     Status = ConvertHelper.ToInt32(dropDownListStatus.SelectedValue)
                 };
                 r.Update(i, ConvertHelper.ToInt32(Request.QueryString["Id"]));

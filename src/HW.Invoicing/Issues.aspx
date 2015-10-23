@@ -6,7 +6,10 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <h3>Issues</h3>
-<p><%= HtmlHelper.Anchor("Add an issue", "issueadd.aspx", "class='btn btn-info'") %></p>
+<p>
+    <%= HtmlHelper.Anchor("Add an issue", "issueadd.aspx", "class='btn btn-info'") %>
+    or <i><%= HtmlHelper.Anchor("check milestones", "milestones.aspx") %></i>
+</p>
 <div class="alert alert-info">
 	<strong>Issue</strong> is an important topic or problem for debate or discussion.
 </div>
@@ -15,6 +18,7 @@
         <th style="width: 10%;">Number</th>
         <th>Title</th>
         <th>Description</th>
+        <th>Milestone</th>
         <th>Status</th>
         <th></th>
     </tr>
@@ -24,6 +28,7 @@
                 <td><strike>#<%= i.Id %></strike></td>
                 <td><strike><%= i.Title %></strike></td>
                 <td><strike><%= i.Description %></strike></td>
+                <td><strike><%= i.Milestone.Name %></strike></td>
                 <td><%= i.GetStatus() %></td>
                 <td>
                     <%= HtmlHelper.Anchor("Edit", "issueedit.aspx?Id=" + i.Id) %>
@@ -35,6 +40,7 @@
                 <td>#<%= i.Id %></td>
                 <td><%= i.Title %></td>
                 <td><%= i.Description %></td>
+                <td><%= i.Milestone.Name %></td>
                 <td><%= i.GetStatus() %></td>
                 <td>
                     <%= HtmlHelper.Anchor("Edit", "issueedit.aspx?Id=" + i.Id) %>

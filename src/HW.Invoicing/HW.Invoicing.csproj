@@ -113,6 +113,9 @@
     <Content Include="js\scripts.js" />
     <Content Include="Login.aspx" />
     <Content Include="Logout.aspx" />
+    <Content Include="MilestoneAdd.aspx" />
+    <Content Include="MilestoneEdit.aspx" />
+    <Content Include="Milestones.aspx" />
     <Content Include="Profile.aspx" />
     <Content Include="Settings.aspx" />
     <Content Include="SignOut.aspx" />
@@ -537,6 +540,27 @@
     </Compile>
     <Compile Include="Logout.aspx.designer.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MilestoneAdd.aspx.cs">
+      <DependentUpon>MilestoneAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MilestoneAdd.aspx.designer.cs">
+      <DependentUpon>MilestoneAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MilestoneEdit.aspx.cs">
+      <DependentUpon>MilestoneEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MilestoneEdit.aspx.designer.cs">
+      <DependentUpon>MilestoneEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Milestones.aspx.cs">
+      <DependentUpon>Milestones.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Milestones.aspx.designer.cs">
+      <DependentUpon>Milestones.aspx</DependentUpon>
     </Compile>
     <Compile Include="Profile.aspx.cs">
       <DependentUpon>Profile.aspx</DependentUpon>

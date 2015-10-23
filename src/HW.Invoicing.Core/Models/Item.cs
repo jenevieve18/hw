@@ -12,6 +12,7 @@ namespace HW.Invoicing.Core.Models
 		public string Description { get; set; }
 		public int Status { get; set; }
 		public DateTime? CreatedAt { get; set; }
+		public Milestone Milestone { get; set; }
 
         public const int OPEN = 0;
         public const int INPROGRESS = 1;

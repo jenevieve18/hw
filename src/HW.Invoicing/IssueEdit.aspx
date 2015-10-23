@@ -14,6 +14,11 @@
     <asp:TextBox ID="textBoxDescription" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
 </div>
 <div class="form-group">
+	<label for="<%= dropDownListMilestone.ClientID %>">Milestone</label>
+    <asp:DropDownList ID="dropDownListMilestone" runat="server" CssClass="form-control">
+    </asp:DropDownList>
+</div>
+<div class="form-group">
 	<label for="<%= dropDownListStatus.ClientID %>">Status</label>
     <asp:DropDownList ID="dropDownListStatus" runat="server" CssClass="form-control">
     </asp:DropDownList>

@@ -54,7 +54,8 @@ VALUES(@Title, @Description, @CreatedAt, @Status)";
 			string query = @"
 UPDATE Issue SET Title = @Title,
 	Description = @Description,
-	Status = @Status
+	Status = @Status,
+    MilestoneId = @MilestoneId
 WHERE Id = @Id";
 			ExecuteNonQuery(
 				query,
@@ -62,7 +63,8 @@ WHERE Id = @Id";
 				new SqlParameter("@Title", t.Title),
 				new SqlParameter("@Description", t.Description),
 				new SqlParameter("@Id", id),
-                new SqlParameter("@Status", t.Status)
+                new SqlParameter("@Status", t.Status),
+                new SqlParameter("@MilestoneId", t.Milestone.Id)
 			);
 		}
 		
@@ -70,19 +72,21 @@ WHERE Id = @Id";
 		{
 			string query = string.Format(
 				@"
-SELECT Id, Title, Description, Status
+SELECT Id, Title, Description, Status, MilestoneId
 FROM Issue
 WHERE Id = @Id"
 			);
 			Issue issue = null;
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", id))) {
 				while (rs.Read()) {
-					issue = new Issue {
-						Id = GetInt32(rs, 0),
-						Title = GetString(rs, 1),
-						Description = GetString(rs, 2),
-						Status = GetInt32(rs, 3)
-					};
+                    issue = new Issue
+                    {
+                        Id = GetInt32(rs, 0),
+                        Title = GetString(rs, 1),
+                        Description = GetString(rs, 2),
+                        Status = GetInt32(rs, 3),
+                        Milestone = new Milestone { Id = GetInt32(rs, 4) }
+                    };
 				}
 			}
 			return issue;
@@ -91,25 +95,34 @@ WHERE Id = @Id"
 		public override IList<Issue> FindAll()
 		{
 			string query = string.Format(
-				@"
-SELECT Id,
-	Title,
-	Description,
-	Status
-FROM Issue
-ORDER BY Status, CreatedAt DESC"
-			);
+                @"
+SELECT i.Id,
+	i.Title,
+	i.Description,
+	i.Status,
+    i.MilestoneId,
+    m.Name
+FROM Issue i
+INNER JOIN Milestone m ON m.Id = ISNULL(i.MilestoneId, 1)
+ORDER BY i.Status, i.CreatedAt DESC"
+            );
 			var issues = new List<Issue>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {
 				while (rs.Read()) {
-					issues.Add(
-						new Issue {
-							Id = GetInt32(rs, 0),
-							Title = GetString(rs, 1),
-							Description = GetString(rs, 2),
-							Status = GetInt32(rs, 3)
-						}
-					);
+                    issues.Add(
+                        new Issue
+                        {
+                            Id = GetInt32(rs, 0),
+                            Title = GetString(rs, 1),
+                            Description = GetString(rs, 2),
+                            Status = GetInt32(rs, 3),
+                            Milestone = new Milestone
+                            {
+                                Id = GetInt32(rs, 4),
+                                Name = GetString(rs, 5)
+                            }
+                        }
+                    );
 				}
 			}
 			return issues;
