@@ -39,31 +39,45 @@
         }
     </script>
     <script type="text/javascript">
-        function dateChange() {
-            //console.log('date change on ' + $(this).val() + '...');
+        function onDateChange() {
             //$('.spinner').show();
             var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
             var endDate = $('#<%= textBoxEndDate.ClientID %>').datepicker('getDate');
+            
             var months = monthDiff(startDate, endDate);
             $('#<%= textBoxQuantity.ClientID %>').val($.number(months, 2, '.', ''));
+            
             $('#<%= textBoxText.ClientID %>').change();
 
             $('.subscription-start-date').each(function (e) {
                 var v = $(this).data('subscriptionstartdate');
-                //console.log(v);
-                var d = new Date(v); // Date.parse(v);
-                //console.log(d);
-                //var sDate = $(this).datepicker('getDate');
-                //console.log(sDate);
-                if (startDate.setHours(0, 0, 0) < d.setHours(0, 0, 0)) {
-                    $(this).datepicker('update', startDate);
+                var i = $(this).data('subscriptioninitial');
+                if (v != "") { // Has start date
+                	if (i) {
+		                var d = new Date(v);
+		                if (startDate.setHours(0, 0, 0) <= d.setHours(0, 0, 0)) {
+		                    $(this).datepicker('update', startDate);
+		                }
+	                } else {
+	                	var d = new Date($(this).val());
+	                	if (startDate.setHours(0, 0, 0) <= d.setHours(0, 0, 0)) {
+	                		$(this).datepicker('update', startDate);
+	                	}
+	                }
+                } else {
+                	$(this).datepicker('update', startDate);
                 }
             });
+            
             $('.subscription-end-date').each(function (e) {
                 var v = $(this).data('subscriptionenddate');
-                var d = new Date(v);
-                if (d.setHours(0, 0, 0) < endDate.setHours(0, 0, 0)) {
-                    $(this).datepicker('update', endDate);
+                if (v != "") { // Has end date
+                    var d = new Date(v);
+                    if (d.setHours(0, 0, 0) < endDate.setHours(0, 0, 0)) {
+                        $(this).datepicker('update', endDate);
+                    }
+                } else {
+                	$(this).datepicker('update', endDate);
                 }
             });
 
@@ -140,26 +154,60 @@
     <script type="text/javascript">
         $(document).ready(function () {
             init();
-            $('.date').change(dateChange);
-            var textGeneratedComments = $('#<%= textBoxComments.ClientID %>');
+            $('.date').change(onDateChange);
+            //var textGeneratedComments = $('#<%= textBoxComments.ClientID %>');
             $('#<%= textBoxText.ClientID %>').change(function () {
                 var text = $(this).val();
-                var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
-                var endDate = $('#<%= textBoxEndDate.ClientID %>').datepicker('getDate');
-                var generatedText = text + ' ' + $('#<%= textBoxStartDate.ClientID %>').val().replace(/-/g, ".") + ' - ' + $('#<%= textBoxEndDate.ClientID %>').val().replace(/-/g, ".");
-                textGeneratedComments.val(generatedText);
-                $('#<%= textBoxComments.ClientID %>').change();
+                //var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
+                //var endDate = $('#<%= textBoxEndDate.ClientID %>').datepicker('getDate');
+                //var generatedText = text + ' ' + $('#<%= textBoxStartDate.ClientID %>').val().replace(/-/g, ".") + ' - ' + $('#<%= textBoxEndDate.ClientID %>').val().replace(/-/g, ".");
+                //textGeneratedComments.val(generatedText);
+                //$('#<%= textBoxComments.ClientID %>').change();
+                $('.subscription-start-date').each(function (e) {
+	                /*var v = $(this).data('subscriptionstartdate');
+	                var d = new Date(v);
+	                if (startDate.setHours(0, 0, 0) < d.setHours(0, 0, 0)) {
+	                    $(this).datepicker('update', startDate);
+	                }*/
+	                changeText($(this), text);
+	            });
             });
-            $('#<%= textBoxComments.ClientID %>').change(function () {
-                $('.subscription-comments').val($(this).val());
-            });
+            //$('#<%= textBoxComments.ClientID %>').change(function () {
+            //    $('.subscription-comments').val($(this).val());
+            //});
             $('#<%= textBoxQuantity.ClientID %>').change(function () {
                 $('.subscription-quantities').val($(this).val());
+                var quantity = $(this).val();
                 var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
-                var d = addMonth(startDate, $(this).val());
+                var d = addMonth(startDate, quantity);
                 $('#<%= textBoxEndDate.ClientID %>').datepicker('update', d);
+                
+                $('.subscription-quantities').each(function() {
+                	changeQuantity($(this), quantity);
+	                /*var startDate = $(this).closest('tr').find('.subscription-start-date').datepicker('getDate');
+	                var d = addMonth(startDate, $(this).val());
+	                $(this).closest('tr').find('.subscription-end-date').datepicker('update', d);*/
+	            });
             });
         });
+        function changeText(row, text) {
+        	var textBoxStartDate = row.closest('tr').find('.subscription-start-date');
+            var startDate = textBoxStartDate.datepicker('getDate');
+
+            var textBoxEndDate = row.closest('tr').find('.subscription-end-date');
+            var endDate = textBoxEndDate.datepicker('getDate');
+            
+            var months = monthDiff(startDate, endDate);
+            row.closest('tr').find('.subscription-quantities').val($.number(months, 2, '.', ''));
+            
+            var comments = text + ' ' + textBoxStartDate.val().replace(/-/g, ".") + ' - ' + textBoxEndDate.val().replace(/-/g, ".");
+            row.closest('tr').find('.subscription-comments').val(comments);
+        }
+        function changeQuantity(row, quantity) {
+        	var startDate = row.closest('tr').find('.subscription-start-date').datepicker('getDate');
+            var d = addMonth(startDate, quantity);
+            row.closest('tr').find('.subscription-end-date').datepicker('update', d);
+        }
         function init() {
             $('.date, .subscription-start-date, .subscription-end-date').datepicker({
                 format: "yyyy-mm-dd",
@@ -167,59 +215,56 @@
             });
             $('.spinner').hide();
             $('.subscription-date').change(function () {
-                var textBoxStartDate = $(this).closest('tr').find('.subscription-start-date');
-                var startDate = textBoxStartDate.datepicker('getDate');
+                /*var textBoxStartDate = $(this).closest('tr').find('.subscription-start-date');
+                var startDate = textBoxStartDate.datepicker('getDate');*/
 
-                var customerSubscriptionStartDateTime = textBoxStartDate.data('subscriptionstartdate');
-                var customerSubscriptionStartDate = new Date(customerSubscriptionStartDateTime);
-                customerSubscriptionStartDate.setHours(0, 0, 0, 0);
+                //var customerSubscriptionStartDateTime = textBoxStartDate.data('subscriptionstartdate');
+                //var customerSubscriptionStartDate = new Date(customerSubscriptionStartDateTime);
+                //customerSubscriptionStartDate.setHours(0, 0, 0, 0);
 
-                var customerId = textBoxStartDate.data('customerid');
+                //var customerId = textBoxStartDate.data('customerid');
 
-                var textBoxEndDate = $(this).closest('tr').find('.subscription-end-date');
+                /*var textBoxEndDate = $(this).closest('tr').find('.subscription-end-date');
                 var endDate = textBoxEndDate.datepicker('getDate');
+                
                 var months = monthDiff(startDate, endDate);
                 $(this).closest('tr').find('.subscription-quantities').val($.number(months, 2, '.', ''));
+                
                 var comments = $('#<%= textBoxText.ClientID %>').val();
                 comments = comments + ' ' + textBoxStartDate.val().replace(/-/g, ".") + ' - ' + textBoxEndDate.val().replace(/-/g, ".");
-                $(this).closest('tr').find('.subscription-comments').val(comments);
+                $(this).closest('tr').find('.subscription-comments').val(comments);*/
+                changeText($(this), $('#<%= textBoxText.ClientID %>').val());
             });
             $('.subscription-quantities').change(function () {
-                var startDate = $(this).closest('tr').find('.subscription-start-date').datepicker('getDate');
+            	changeQuantity($(this), $(this).val());
+                /*var startDate = $(this).closest('tr').find('.subscription-start-date').datepicker('getDate');
                 var d = addMonth(startDate, $(this).val());
-                $(this).closest('tr').find('.subscription-end-date').datepicker('update', d);
+                $(this).closest('tr').find('.subscription-end-date').datepicker('update', d);*/
             });
         }
     </script>
     <style type="text/css">
-        .label-hastimebook 
-        {
+        .label-hastimebook {
             background:#f2dede;
             color:#333;
         }
-        .label-notimebook 
-        {
+        .label-notimebook {
             background:white;
             color:#333;
         }
-        .date-width 
-        {
+        .date-width {
             width:120px;
         }
-        .quantity-width 
-        {
+        .quantity-width {
             width:80px;
         }
-        .comments-width 
-        {
+        .comments-width {
             width:300px;
         }
-        .unit-width 
-        {
+        .unit-width {
             width:60px;
         }
-        .price-width 
-        {
+        .price-width {
             width:50px;
         }
     </style>
@@ -270,10 +315,10 @@
 	    <label for="<%= textBoxText.ClientID %>">Text</label>
         <asp:TextBox ID="textBoxText" runat="server" CssClass="form-control"></asp:TextBox>
     </div>
-    <div class="form-group">
+    <!--<div class="form-group">
 	    <label for="<%= textBoxComments.ClientID %>">Generated Comments</label>
         <asp:TextBox ID="textBoxComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
-    </div>
+    </div>-->
 
     <br />
     <table class="table table-hover" id="cusotmer-list">
@@ -323,6 +368,7 @@
                         name="subscription-end-date"
                         type="text"
                         class="form-control subscription-end-date subscription-date"
+                        data-subscriptionenddate="<%= c.GetSubscriptionEndDateString() %>"
                         data-customerid="<%= c.Id %>"
                         value="<%= eDate.ToString("yyyy-MM-dd") %>"
                         />
@@ -443,6 +489,7 @@
                         class="form-control subscription-start-date subscription-date"
                         data-subscriptionstartdate="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>"
                         data-customerid="<%= c.Id %>"
+                        data-subscriptioninitial='<%= c.IsInitial(sDate) ? "true" : "false" %>'
                         value="<%= sDate.ToString("yyyy-MM-dd") %>"
                         />
                 </td>

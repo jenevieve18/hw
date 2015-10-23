@@ -53,6 +53,18 @@ namespace HW.Invoicing.Core.Models
             return SubscriptionEndDate.Value.ToString("yyyy.MM.dd");
         }
 
+        public string GetSubscriptionEndDateString()
+        {
+            if (SubscriptionHasEndDate)
+            {
+                return SubscriptionEndDate.Value.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                return "";
+            }
+        }
+
         public string GetLatestSubscriptionTimebookEndDateLabel()
         {
             if (HasLatestSubscriptionTimebook)
@@ -110,6 +122,21 @@ namespace HW.Invoicing.Core.Models
                     return (decimal)DateHelper.MonthDiff(startDate, endDate);
                 }
             }
+        }
+        
+        public bool IsInitial(DateTime d)
+        {
+        	return d.Date == SubscriptionStartDate.Value.Date;
+//        	if (HasSubscriptionTimebooks) {
+//        		var t = SubscriptionTimebooks[0];
+//        		if (t.IsInvoiced) {
+//        			return false;
+//        		} else {
+//        			
+//        		}
+//        	} else {
+//        		return true;
+//        	}
         }
 
         public DateTime GetLatestSubscriptionTimebookStartDate(DateTime d)
@@ -473,6 +500,7 @@ namespace HW.Invoicing.Core.Models
 		public DateTime? SubscriptionEndDate { get; set; }
 		public Customer Customer { get; set; }
 		public DateTime? Date { get; set; }
+		public bool DateHidden { get; set; }
 		public CustomerContact Contact { get; set; }
 		public Item Item { get; set; }
 		public decimal Quantity { get; set; }
@@ -494,6 +522,13 @@ namespace HW.Invoicing.Core.Models
 				return Price * Quantity;
 			}
 		}
+        public string GetDepartmentAndContact()
+        {
+            string s = "";
+            s += StrHelper.Str(Department != null && Department != "", Department + "<br>", "");
+            s += StrHelper.Str(Contact.Contact != "", "<i>" + Contact.Contact + "</i>", "");
+            return s;
+        }
 
 		public override string ToString()
 		{
@@ -507,7 +542,7 @@ namespace HW.Invoicing.Core.Models
 				return Item.Name;
 			}*/
             string c = Consultant != null && Consultant != "" ? string.Format(" ({0})", Consultant) : "";
-            string d = Date != null ? Date.Value.ToString("yyyy-MM-dd") + " " : "";
+            string d = Date != null && !DateHidden ? Date.Value.ToString("yyyy-MM-dd") + " " : "";
             return string.Format("{2}{0}{1}", Comments, c, d);
 		}
 
@@ -534,7 +569,7 @@ namespace HW.Invoicing.Core.Models
 		public override void Validate()
 		{
 			base.Validate();
-			AddErrorIf(Department == "", "Department shouldn't be empty.");
+//			AddErrorIf(Department == "", "Department shouldn't be empty.");
 			//AddErrorIf(Consultant == "", "Consultant shouldn't be empty.");
 			AddErrorIf(Comments == "", "Comments shouldn't be empty.");
 			AddErrorIf(Price <= 0, "Price should be greater than zero.");

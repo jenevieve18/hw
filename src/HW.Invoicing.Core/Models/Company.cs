@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using HW.Core.Models;
 
 namespace HW.Invoicing.Core.Models
@@ -27,6 +28,7 @@ namespace HW.Invoicing.Core.Models
         public string AgreementSignedEmailSubject { get; set; }
         public string AgreementTemplate { get; set; }
         public User User { get; set; }
+        public List<CompanyUser> Users { get; set; }
         
         public override string ToString()
         {
@@ -61,5 +63,11 @@ namespace HW.Invoicing.Core.Models
 		public Company()
 		{
 		}
+	}
+	
+	public class CompanyUser : BaseModel
+	{
+		public Company Company { get; set; }
+		public User User { get; set; }
 	}
 }
