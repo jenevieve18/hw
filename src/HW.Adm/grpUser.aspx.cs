@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
+using HW.Core.Helpers;
 
 public partial class grpUser : System.Web.UI.Page
 {
@@ -24,14 +25,16 @@ public partial class grpUser : System.Web.UI.Page
                 "s.SponsorID, " +
                 "(SELECT COUNT(*) FROM SponsorAdminSession sas WHERE u.SponsorAdminID = sas.SponsorAdminID) AS CX, " +
                 "(SELECT SUM(DATEDIFF(minute, sas.DT, ISNULL(sas.EndDT, DATEADD(minute, 1, sas.DT)))) FROM SponsorAdminSession sas WHERE u.SponsorAdminID = sas.SponsorAdminID) AS TX, " +
-                "u.ReadOnly " +
+                "u.ReadOnly, " +
+                "u.Email " +
                 "FROM Sponsor s " +
                 "INNER JOIN SponsorAdmin u ON s.SponsorID = u.SponsorID " +
                 "ORDER BY s.Sponsor, u.Usr");
             while (rs.Read())
             {
                 List.Text += "<TR" + (cx++ % 2 == 0 ? " BGCOLOR=\"#F2F2F2\"" : "") + ">" +
-                    "<TD><A HREF=\"grpUserSetup.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&SAID=" + rs.GetInt32(0) + "\">" + rs.GetString(1) + "</A>&nbsp;&nbsp;&nbsp;</TD>" +
+                    //"<TD><A HREF=\"grpUserSetup.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&SAID=" + rs.GetInt32(0) + "\">" + rs.GetString(1) + "</A>&nbsp;&nbsp;&nbsp;</TD>" +
+                    "<TD><A HREF=\"grpUserSetup.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&SAID=" + rs.GetInt32(0) + "\">" + (DbHelper.GetString(rs, 1) != "" ? DbHelper.GetString(rs, 1) : DbHelper.GetString(rs, 8)) + "</A>&nbsp;&nbsp;&nbsp;</TD>" +
                     "<TD>" + rs.GetString(2) + "&nbsp;&nbsp;</TD>" +
                     "<TD>" +
                         "<img width=\"16\" src=\"" + System.Configuration.ConfigurationManager.AppSettings["hwGrpURL"] + "/img/" + (rs.IsDBNull(7) ? "null" : "locked") + ".gif\"/>" +
