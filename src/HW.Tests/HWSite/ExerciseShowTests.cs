@@ -12,8 +12,8 @@ namespace HW.Tests.HWSite
 		{
 			var v = new healthWatch.exerciseShow();
 			
-			v = new healthWatch.exerciseShow(new SponsorRepositoryStub(), new ExerciseRepositoryStub());
-			v.Show(1, 1, 1);
+//			v = new healthWatch.exerciseShow(new SponsorRepositoryStub(), new ExerciseRepositoryStub());
+//			v.Show(1, 1, 1);
 		}
 		
 		[Test]
@@ -21,8 +21,8 @@ namespace HW.Tests.HWSite
 		{
 			var v = new healthWatch.exerciseShow();
 			
-			v = new healthWatch.exerciseShow(new SponsorRepositoryStub(), new ExerciseRepositoryStub());
-			v.SetSponsor(1);
+//			v = new healthWatch.exerciseShow(new SponsorRepositoryStub(), new ExerciseRepositoryStub());
+//			v.SetSponsor(1);
 		}
 	}
 }
