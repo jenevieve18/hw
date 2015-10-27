@@ -27,7 +27,11 @@ namespace HW.Invoicing
                 {
                     dropDownListMilestone.Items.Add(new ListItem(m.Name, m.Id.ToString()));
                 }
-
+                dropDownListPriority.Items.Clear();
+                foreach (var p in Priority.GetPriorities())
+                {
+                    dropDownListPriority.Items.Add(new ListItem(p.Name, p.Id.ToString()));
+                }
                 dropDownListStatus.Items.Clear();
                 foreach (var s in Issue.GetStatuses())
                 {
@@ -39,6 +43,7 @@ namespace HW.Invoicing
                     textBoxTitle.Text = i.Title;
                     textBoxDescription.Text = i.Description;
                     dropDownListMilestone.SelectedValue = i.Milestone.Id.ToString();
+                    dropDownListPriority.SelectedValue = i.Priority.Id.ToString();
                     dropDownListStatus.SelectedValue = i.Status.ToString();
                 }
             }
@@ -53,6 +58,7 @@ namespace HW.Invoicing
                     Title = textBoxTitle.Text,
                     Description = textBoxDescription.Text,
                     Milestone = new Milestone { Id = ConvertHelper.ToInt32(dropDownListMilestone.SelectedValue) },
+                    Priority = new Priority { Id = ConvertHelper.ToInt32(dropDownListPriority.SelectedValue) },
                     Status = ConvertHelper.ToInt32(dropDownListStatus.SelectedValue)
                 };
                 r.Update(i, ConvertHelper.ToInt32(Request.QueryString["Id"]));

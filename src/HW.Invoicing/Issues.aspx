@@ -19,6 +19,7 @@
         <th>Title</th>
         <th>Description</th>
         <th>Milestone</th>
+        <th>Priority</th>
         <th>Status</th>
         <th></th>
     </tr>
@@ -29,6 +30,7 @@
                 <td><strike><%= i.Title %></strike></td>
                 <td><strike><%= i.Description %></strike></td>
                 <td><strike><%= i.Milestone.Name %></strike></td>
+                <td><strike><%= i.GetPriority() %></strike></td>
                 <td><%= i.GetStatus() %></td>
                 <td>
                     <%= HtmlHelper.Anchor("Edit", "issueedit.aspx?Id=" + i.Id) %>
@@ -41,6 +43,7 @@
                 <td><%= i.Title %></td>
                 <td><%= i.Description %></td>
                 <td><%= i.Milestone.Name %></td>
+                <td><%= i.GetPriority()  %></td>
                 <td><%= i.GetStatus() %></td>
                 <td>
                     <%= HtmlHelper.Anchor("Edit", "issueedit.aspx?Id=" + i.Id) %>

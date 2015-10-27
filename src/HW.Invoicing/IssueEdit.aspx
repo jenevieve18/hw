@@ -19,6 +19,11 @@
     </asp:DropDownList>
 </div>
 <div class="form-group">
+	<label for="<%= dropDownListPriority.ClientID %>">Priority</label>
+    <asp:DropDownList ID="dropDownListPriority" runat="server" CssClass="form-control">
+    </asp:DropDownList>
+</div>
+<div class="form-group">
 	<label for="<%= dropDownListStatus.ClientID %>">Status</label>
     <asp:DropDownList ID="dropDownListStatus" runat="server" CssClass="form-control">
     </asp:DropDownList>

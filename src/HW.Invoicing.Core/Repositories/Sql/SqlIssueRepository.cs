@@ -37,15 +37,17 @@ WHERE Id = @Id";
 		public override void Save(Issue t)
 		{
 			string query = @"
-INSERT INTO Issue(Title, Description, CreatedAt, Status)
-VALUES(@Title, @Description, @CreatedAt, @Status)";
+INSERT INTO Issue(Title, Description, CreatedAt, Status, MilestoneId, Priority)
+VALUES(@Title, @Description, @CreatedAt, @Status, @MilestoneId, @Priority)";
 			ExecuteNonQuery(
 				query,
 				"invoicing",
 				new SqlParameter("@Title", t.Title),
 				new SqlParameter("@Description", t.Description),
 				new SqlParameter("@CreatedAt", DateTime.Now),
-				new SqlParameter("@Status", t.Status)
+                new SqlParameter("@Status", t.Status),
+                new SqlParameter("@MilestoneId", t.Milestone.Id),
+                new SqlParameter("@Priority", t.Priority.Id)
 			);
 		}
 		
@@ -55,7 +57,8 @@ VALUES(@Title, @Description, @CreatedAt, @Status)";
 UPDATE Issue SET Title = @Title,
 	Description = @Description,
 	Status = @Status,
-    MilestoneId = @MilestoneId
+    MilestoneId = @MilestoneId,
+    Priority = @Priority
 WHERE Id = @Id";
 			ExecuteNonQuery(
 				query,
@@ -64,7 +67,8 @@ WHERE Id = @Id";
 				new SqlParameter("@Description", t.Description),
 				new SqlParameter("@Id", id),
                 new SqlParameter("@Status", t.Status),
-                new SqlParameter("@MilestoneId", t.Milestone.Id)
+                new SqlParameter("@MilestoneId", t.Milestone.Id),
+                new SqlParameter("@Priority", t.Priority.Id)
 			);
 		}
 		
@@ -72,7 +76,7 @@ WHERE Id = @Id";
 		{
 			string query = string.Format(
 				@"
-SELECT Id, Title, Description, Status, MilestoneId
+SELECT Id, Title, Description, Status, MilestoneId, ISNULL(Priority, 3)
 FROM Issue
 WHERE Id = @Id"
 			);
@@ -85,7 +89,8 @@ WHERE Id = @Id"
                         Title = GetString(rs, 1),
                         Description = GetString(rs, 2),
                         Status = GetInt32(rs, 3),
-                        Milestone = new Milestone { Id = GetInt32(rs, 4) }
+                        Milestone = new Milestone { Id = GetInt32(rs, 4) },
+                        Priority = new Priority { Id = GetInt32(rs, 5) }
                     };
 				}
 			}
@@ -101,7 +106,8 @@ SELECT i.Id,
 	i.Description,
 	i.Status,
     i.MilestoneId,
-    m.Name
+    m.Name,
+    ISNULL(i.Priority, 3)
 FROM Issue i
 INNER JOIN Milestone m ON m.Id = ISNULL(i.MilestoneId, 1)
 ORDER BY i.Status, i.CreatedAt DESC"
@@ -120,6 +126,10 @@ ORDER BY i.Status, i.CreatedAt DESC"
                             {
                                 Id = GetInt32(rs, 4),
                                 Name = GetString(rs, 5)
+                            },
+                            Priority = new Priority
+                            {
+                                Id = GetInt32(rs, 6)
                             }
                         }
                     );
