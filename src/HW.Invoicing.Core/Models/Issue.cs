@@ -33,6 +33,19 @@ namespace HW.Invoicing.Core.Models
 				}
             );
         }
+
+        public static List<Priority> GetPriorities2()
+        {
+            return new List<Priority>(
+                new[] {
+					new Priority { Id = HIGHEST, Name = "<span class='label label-danger'>Highest (1)</span>" },
+					new Priority { Id = HIGH, Name = "<span class='label label-warning'>High (2)</span>" },
+					new Priority { Id = NORMAL, Name = "<span class='label label-info'>Normal (3)</span>" },
+					new Priority { Id = LOW, Name = "<span class='label label-success'>Low (4)</span>" },
+					new Priority { Id = LOWEST, Name = "<span class='label label-primary'>Lowest (5)</span>" },
+				}
+            );
+        }
 	}
 	
 	public class Issue : BaseModel
@@ -46,7 +59,7 @@ namespace HW.Invoicing.Core.Models
 
         public Priority GetPriority()
         {
-            foreach (var p in Priority.GetPriorities())
+            foreach (var p in Priority.GetPriorities2())
             {
                 if (p.Id == Priority.Id)
                 {

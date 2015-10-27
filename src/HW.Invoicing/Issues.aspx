@@ -30,7 +30,7 @@
                 <td><strike><%= i.Title %></strike></td>
                 <td><strike><%= i.Description %></strike></td>
                 <td><strike><%= i.Milestone.Name %></strike></td>
-                <td><strike><%= i.GetPriority() %></strike></td>
+                <td><%= i.GetPriority() %></td>
                 <td><%= i.GetStatus() %></td>
                 <td>
                     <%= HtmlHelper.Anchor("Edit", "issueedit.aspx?Id=" + i.Id) %>
