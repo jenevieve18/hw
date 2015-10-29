@@ -107,10 +107,10 @@ SELECT i.Id,
 	i.Status,
     i.MilestoneId,
     m.Name,
-    ISNULL(i.Priority, 3)
+    ISNULL(i.Priority, 3) Priority
 FROM Issue i
 INNER JOIN Milestone m ON m.Id = ISNULL(i.MilestoneId, 1)
-ORDER BY i.Status, i.CreatedAt DESC"
+ORDER BY i.Status, Priority, i.CreatedAt DESC"
             );
 			var issues = new List<Issue>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {
