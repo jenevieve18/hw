@@ -69,6 +69,8 @@ namespace HW.Invoicing.Core.Helpers
 			
 			float itemFontSize = 8f;
 			
+			items += "\n\n" + invoice.Comments;
+			
 			SetFieldProperty(form, "Text7", items, f, itemFontSize);
 			
 			SetFieldProperty(form, "Text8", quantities, f, itemFontSize);

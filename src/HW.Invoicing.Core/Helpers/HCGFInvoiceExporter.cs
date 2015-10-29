@@ -52,6 +52,7 @@ namespace HW.Invoicing.Core.Helpers
 				items += t.Timebook.ToString() + "\n\n";
 				amounts += t.Timebook.Amount.ToString("### ##0.00") + "\n\n";
 			}
+			items += "\n\n" + invoice.Comments;
 			form.SetField("Text8", items);
 			form.SetField("Text9", amounts);
 			
