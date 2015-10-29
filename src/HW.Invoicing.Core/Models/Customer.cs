@@ -37,6 +37,15 @@ namespace HW.Invoicing.Core.Models
 		public string OurReferencePerson { get; set; }
 		public bool Inactive { get; set; }
 		public Language Language { get; set; }
+		
+		public string GetName()
+		{
+			if (Name.Length > 20) {
+				return Name.Substring(0, 20) + "...";
+			} else {
+				return Name;
+			}
+		}
 
         public string GetSubscriptionStartAndEndDate()
         {
