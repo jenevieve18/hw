@@ -106,7 +106,8 @@ namespace HW.Core.Helpers
 		public static decimal ToDecimal(object val, decimal def)
 		{
 			try {
-				return Convert.ToDecimal(val);
+//				return Convert.ToDecimal(val);
+				return decimal.TryParse(val.ToString());
 			} catch {
 				return def;
 			}
