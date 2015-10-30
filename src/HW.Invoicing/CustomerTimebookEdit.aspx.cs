@@ -19,6 +19,7 @@ namespace HW.Invoicing
         protected int id;
         protected string message;
         IList<Item> items;
+        protected CustomerTimebook timebook;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -31,13 +32,14 @@ namespace HW.Invoicing
             
             if (!IsPostBack)
             {
-                var t = r.ReadTimebook(id);
-                if (t != null)
+                timebook = r.ReadTimebook(id);
+                if (timebook != null)
                 {
                     dropDownListTimebookItems.Items.Clear();
                     foreach (var i in items)
                     {
                         var li = new ListItem(i.Name, i.Id.ToString());
+                        li.Attributes.Add("data-id", i.Id.ToString());
                         li.Attributes.Add("data-price", i.Price.ToString());
                         li.Attributes.Add("data-unit", i.Unit.Name);
                         dropDownListTimebookItems.Items.Add(li);
@@ -49,30 +51,30 @@ namespace HW.Invoicing
                         dropDownListTimebookContacts.Items.Add(new ListItem(c.Contact, c.Id.ToString()));
                     }
 
-                    panelSubscriptionTimebook.Visible = t.IsSubscription;
+                    panelSubscriptionTimebook.Visible = timebook.IsSubscription;
                     panelTimebook.Visible = !panelSubscriptionTimebook.Visible;
-                    if (t.IsSubscription)
+                    if (timebook.IsSubscription)
                     {
-                        textBoxSubscriptionTimebookStartDate.Text = t.SubscriptionStartDate.Value.ToString("yyyy-MM-dd");
-                        textBoxSubscriptionTimebookEndDate.Text = t.SubscriptionEndDate.Value.ToString("yyyy-MM-dd");
-                        textBoxSubscriptionTimebookQuantity.Text = t.Quantity.ToString();
-                        textBoxSubscriptionTimebookComments.Text = t.Comments;
+                        textBoxSubscriptionTimebookStartDate.Text = timebook.SubscriptionStartDate.Value.ToString("yyyy-MM-dd");
+                        textBoxSubscriptionTimebookEndDate.Text = timebook.SubscriptionEndDate.Value.ToString("yyyy-MM-dd");
+                        textBoxSubscriptionTimebookQuantity.Text = timebook.Quantity.ToString();
+                        textBoxSubscriptionTimebookComments.Text = timebook.Comments;
                     }
                     else
                     {
-                        textBoxTimebookDate.Text = t.Date.Value.ToString("yyyy-MM-dd");
-                        checkBoxTimebookDateHidden.Checked = t.DateHidden;
-                        textBoxTimebookDepartment.Text = t.Department;
-                        dropDownListTimebookContacts.SelectedValue = t.Contact.Id.ToString();
-                        dropDownListTimebookItems.SelectedValue = t.Item.Id.ToString();
-                        textBoxTimebookQty.Text = t.Quantity.ToString();
-                        textBoxTimebookPrice.Text = t.Price.ToString();
-                        textBoxTimebookVAT.Text = t.VAT.ToString();
-                        textBoxTimebookConsultant.Text = t.Consultant;
-                        textBoxTimebookComments.Text = t.Comments;
-                        textBoxTimebookInternalComments.Text = t.InternalComments;
-                        checkBoxReactivate.Checked = !t.Inactive;
-                        placeHolderReactivate.Visible = t.Inactive;
+                        textBoxTimebookDate.Text = timebook.Date.Value.ToString("yyyy-MM-dd");
+                        checkBoxTimebookDateHidden.Checked = timebook.DateHidden;
+                        textBoxTimebookDepartment.Text = timebook.Department;
+                        dropDownListTimebookContacts.SelectedValue = timebook.Contact.Id.ToString();
+                        dropDownListTimebookItems.SelectedValue = timebook.Item.Id.ToString();
+                        textBoxTimebookQty.Text = timebook.Quantity.ToString();
+                        textBoxTimebookPrice.Text = timebook.Price.ToString();
+                        textBoxTimebookVAT.Text = timebook.VAT.ToString();
+                        textBoxTimebookConsultant.Text = timebook.Consultant;
+                        textBoxTimebookComments.Text = timebook.Comments;
+                        textBoxTimebookInternalComments.Text = timebook.InternalComments;
+                        checkBoxReactivate.Checked = !timebook.Inactive;
+                        placeHolderReactivate.Visible = timebook.Inactive;
                     }
                 }
                 else

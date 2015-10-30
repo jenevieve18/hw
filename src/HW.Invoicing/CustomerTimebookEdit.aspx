@@ -8,10 +8,13 @@
         $(document).ready(function () {
             $('#<%= dropDownListTimebookItems.ClientID %>').change(function () {
                 var selected = $(this).find('option:selected');
-                var selectedPrice = selected.data('price');
-                var selectedUnit = selected.data('unit');
-                $('#<%= textBoxTimebookPrice.ClientID %>').val(selectedPrice);
-                $('#<%= labelTimebookUnit.ClientID %>').text(selectedUnit);
+                var id = selected.data('id');
+                if (id != <%= timebook.Item.Id %>) {
+                    var selectedPrice = selected.data('price');
+                    var selectedUnit = selected.data('unit');
+                    $('#<%= textBoxTimebookPrice.ClientID %>').val(selectedPrice);
+                    $('#<%= labelTimebookUnit.ClientID %>').text(selectedUnit);
+                }
             });
             $('#<%= dropDownListTimebookItems.ClientID %>').change();
 
