@@ -66,10 +66,10 @@ WHERE Id = @Id"
 		{
 			string query = string.Format(
 				@"
-	SELECT Id,
-	Name
-	FROM Milestone
-	ORDER BY Name"
+SELECT Id,
+Name
+FROM Milestone
+ORDER BY Id DESC"
 			);
 			var m = new List<Milestone>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {

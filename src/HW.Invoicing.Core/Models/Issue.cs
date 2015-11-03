@@ -38,11 +38,11 @@ namespace HW.Invoicing.Core.Models
         {
             return new List<Priority>(
                 new[] {
-					new Priority { Id = HIGHEST, Name = "<span class='label label-danger'>Highest (1)</span>" },
-					new Priority { Id = HIGH, Name = "<span class='label label-warning'>High (2)</span>" },
-					new Priority { Id = NORMAL, Name = "<span class='label label-info'>Normal (3)</span>" },
-					new Priority { Id = LOW, Name = "<span class='label label-success'>Low (4)</span>" },
-					new Priority { Id = LOWEST, Name = "<span class='label label-primary'>Lowest (5)</span>" },
+					new Priority { Id = HIGHEST, Name = "<span class='text text-danger'>Highest (1)</span>" },
+					new Priority { Id = HIGH, Name = "<span class='text text-warning'>High (2)</span>" },
+					new Priority { Id = NORMAL, Name = "<span class='text text-info'>Normal (3)</span>" },
+					new Priority { Id = LOW, Name = "<span class='text text-success'>Low (4)</span>" },
+					new Priority { Id = LOWEST, Name = "<span class='text text-primary'>Lowest (5)</span>" },
 				}
             );
         }
