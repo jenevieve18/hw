@@ -51,12 +51,14 @@ namespace HW.Invoicing.Core.Helpers
 						
 						doc.Open();
 						
-						doc.Add(GetInvoiceDetails(invoice));
+						doc.Add(GetInvoiceDetails(invoice, doc));
 						
+						doc.Add(new Paragraph(" "));
 						doc.Add(new Paragraph("Betalningsvillkor: 30 dagar netto. Vid likvid efter förfallodagen debiteras ränta med 2% per månad.", normalFont));
 						doc.Add(new Paragraph(" "));
 						
-						doc.Add(GetInvoiceItems(invoice));
+						doc.Add(GetInvoiceItems(invoice, doc));
+						doc.Add(GetItemTotal(invoice, doc));
 						
 						doc.Close();
 					}
@@ -66,59 +68,78 @@ namespace HW.Invoicing.Core.Helpers
 			return new MemoryStream(bytes);
 		}
 		
-		PdfPTable GetInvoiceItems(Invoice invoice)
+		PdfPTable GetItemTotal(Invoice invoice, Document document)
 		{
-			PdfPTable table = new PdfPTable(5) { WidthPercentage = 100 };
-//			table.DefaultCell.Border = Rectangle.NO_BORDER;
-			var w = table.TotalWidth;
-			float x = 8;
-//			table.SetWidths(new float[] { w / x * 4, w / x * 1, w / x * 1, w / x * 1, w / x * 1 });
+			PdfPTable t = new PdfPTable(5) {
+				TotalWidth = document.Right - document.Left,
+				WidthPercentage = 100
+			};
+			var w = t.TotalWidth;
+			float x = 14;
+			t.SetWidths(new float[] { w / x * 8, w / x * 1, w / x * 1, w / x * 2, w / x * 2 });
 			
-			table.AddCell(new Phrase("SPECIFIKATION", headerFont));
-			table.AddCell(new Phrase("ANTAL", headerFont));
-			table.AddCell(new Phrase("ENHET", headerFont));
-			table.AddCell(new Phrase("PRIS PER ENHET", headerFont));
-			table.AddCell(new Phrase("BELOPP", headerFont));
-			foreach (var t in invoice.Timebooks) {
-				table.AddCell(new Phrase(t.Timebook.ToString(), normalFont));
-				table.AddCell(new Phrase(t.Timebook.Quantity.ToString(), normalFont));
-				table.AddCell(new Phrase(t.Timebook.Item.Unit.Name, normalFont));
-				table.AddCell(new Phrase(t.Timebook.Price.ToString("### ##0.00"), normalFont));
-				table.AddCell(new Phrase(t.Timebook.Amount.ToString("### ###0.00"), normalFont));
-			}
-			return table;
+			
+			
+			return t;
 		}
 		
-		PdfPTable GetInvoiceDetails(Invoice invoice)
+		PdfPTable GetInvoiceItems(Invoice invoice, Document document)
 		{
-			PdfPTable table = new PdfPTable(4) { WidthPercentage = 100 };
-			table.DefaultCell.Border = Rectangle.NO_BORDER;
+			PdfPTable t = new PdfPTable(5) {
+				TotalWidth = document.Right - document.Left,
+				WidthPercentage = 100
+			};
+			var w = t.TotalWidth;
+			float x = 14;
+			t.SetWidths(new float[] { w / x * 8, w / x * 1, w / x * 1, w / x * 2, w / x * 2 });
 			
-			table.AddCell(new PdfPCell() { Colspan = 2 });
-			table.AddCell(new Phrase("KUNDNUMMER", normalFont));
-			table.AddCell(new Phrase(invoice.Customer.Number, normalFont));
+			t.AddCell(new PdfPCell(new Phrase("SPECIFIKATION", headerFont)) { Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
+			t.AddCell(new PdfPCell(new Phrase("ANTAL", headerFont)) { Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
+			t.AddCell(new PdfPCell(new Phrase("ENHET", headerFont)) { Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
+			t.AddCell(new PdfPCell(new Phrase("PRIS PER ENHET", headerFont)) { Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
+			t.AddCell(new PdfPCell(new Phrase("BELOPP", headerFont)) { Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER });
+			foreach (var tb in invoice.Timebooks) {
+				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.ToString(), normalFont)) { Border = Rectangle.NO_BORDER });
+				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Quantity.ToString(), normalFont)) { Border = Rectangle.NO_BORDER });
+				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Item.Unit.Name, normalFont)) { Border = Rectangle.NO_BORDER });
+				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Price.ToString("### ##0.00"), normalFont)) { Border = Rectangle.NO_BORDER });
+				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Amount.ToString("### ###0.00"), normalFont)) { Border = Rectangle.NO_BORDER });
+			}
+			return t;
+		}
+		
+		PdfPTable GetInvoiceDetails(Invoice invoice, Document document)
+		{
+			PdfPTable t = new PdfPTable(4) {
+				TotalWidth = document.Right - document.Left,
+				WidthPercentage = 100
+			};
 			
-            Image logo = Image.GetInstance(invoice.Company.InvoiceLogo);
-			table.AddCell(new PdfPCell(logo) { Colspan = 2 });
-			table.AddCell(new Phrase("FAKTURANUMMER", normalFont));
-			table.AddCell(new Phrase(invoice.Number, normalFont));
+			t.AddCell(new PdfPCell() { Colspan = 2, Border = Rectangle.NO_BORDER });
+			t.AddCell(new PdfPCell(new Phrase("KUNDNUMMER", normalFont)) { Border = Rectangle.NO_BORDER });
+			t.AddCell(new PdfPCell(new Phrase(invoice.Customer.Number, normalFont)) { Border = Rectangle.NO_BORDER });
 			
-			table.AddCell(new PdfPCell(new Phrase("Beställare/Leveransadress/Faktureringsadress", normalFont)) { Colspan = 2 });
-			table.AddCell(new Phrase("FAKTURADATUM", normalFont));
-			table.AddCell(new Phrase(invoice.Date.Value.ToString("yyyy-MM-dd"), normalFont));
+			Image logo = Image.GetInstance(invoice.Company.InvoiceLogo);
+			t.AddCell(new PdfPCell(logo) { Colspan = 2, Border = Rectangle.NO_BORDER });
+			t.AddCell(new PdfPCell(new Phrase("FAKTURANUMMER", normalFont)) { Border = Rectangle.NO_BORDER });
+			t.AddCell(new PdfPCell(new Phrase(invoice.Number, normalFont)) { Border = Rectangle.NO_BORDER });
 			
-			table.AddCell(new PdfPCell(new Phrase(invoice.Customer.ToString() + "\n\n" + invoice.Customer.PurchaseOrderNumber, normalFont)) { Colspan = 2 });
-			table.AddCell(new Phrase("FÖRFALLODAG", normalFont));
-			table.AddCell(new Phrase(invoice.MaturityDate.Value.ToString("yyyy-MM-dd"), normalFont));
+			t.AddCell(new PdfPCell(new Phrase("Beställare/Leveransadress/Faktureringsadress", normalFont)) { Colspan = 2, Border = Rectangle.NO_BORDER });
+			t.AddCell(new PdfPCell(new Phrase("FAKTURADATUM", normalFont)) { Border = Rectangle.NO_BORDER });
+			t.AddCell(new PdfPCell(new Phrase(invoice.Date.Value.ToString("yyyy-MM-dd"), normalFont)) { Border = Rectangle.NO_BORDER });
 			
-			table.AddCell(new PdfPCell(new Phrase("", smallFont)) { Colspan = 2 });
-			table.AddCell(new Phrase("Er referens:", smallFont));
-			table.AddCell(new Phrase(invoice.Customer.YourReferencePerson, smallFont));
+			t.AddCell(new PdfPCell(new Phrase(invoice.Customer.ToString() + "\n\n" + invoice.Customer.PurchaseOrderNumber, normalFont)) { Colspan = 2, Border = Rectangle.NO_BORDER });
+			t.AddCell(new PdfPCell(new Phrase("FÖRFALLODAG", normalFont)) { Border = Rectangle.NO_BORDER });
+			t.AddCell(new PdfPCell(new Phrase(invoice.MaturityDate.Value.ToString("yyyy-MM-dd"), normalFont)) { Border = Rectangle.NO_BORDER });
 			
-			table.AddCell(new PdfPCell(new Phrase("", smallFont)) { Colspan = 2 });
-			table.AddCell(new Phrase("Vår referens:", smallFont));
-			table.AddCell(new Phrase(invoice.Customer.OurReferencePerson, smallFont));
-			return table;
+			t.AddCell(new PdfPCell(new Phrase("", smallFont)) { Colspan = 2, Border = Rectangle.NO_BORDER });
+			t.AddCell(new PdfPCell(new Phrase("Er referens:", smallFont)) { Border = Rectangle.NO_BORDER });
+			t.AddCell(new PdfPCell(new Phrase(invoice.Customer.YourReferencePerson, smallFont)) { Border = Rectangle.NO_BORDER });
+			
+			t.AddCell(new PdfPCell(new Phrase("", smallFont)) { Colspan = 2, Border = Rectangle.NO_BORDER });
+			t.AddCell(new PdfPCell(new Phrase("Vår referens:", smallFont)) { Border = Rectangle.NO_BORDER });
+			t.AddCell(new PdfPCell(new Phrase(invoice.Customer.OurReferencePerson, smallFont)) { Border = Rectangle.NO_BORDER });
+			return t;
 		}
 		
 		public class PDFFooter : PdfPageEventHelper
@@ -134,7 +155,6 @@ namespace HW.Invoicing.Core.Helpers
 			public override void OnOpenDocument(PdfWriter writer, Document document)
 			{
 				base.OnOpenDocument(writer, document);
-				
 //				PdfPTable table = new PdfPTable(2);
 //				table.SpacingAfter = 10F;
 //				table.TotalWidth = 300F;
