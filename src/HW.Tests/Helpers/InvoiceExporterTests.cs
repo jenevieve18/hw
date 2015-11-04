@@ -21,7 +21,7 @@ namespace HW.Tests.Helpers
 		{
 			i = new SqlInvoiceRepository().Read(52);
 			
-			ihg = new IHGFInvoiceExporter();
+			ihg = new IHGFInvoiceExporter(new IHGFInvoicePDFScratchGenerator());
 			hcg = new HCGFInvoiceExporter();
 		}
 		
@@ -42,6 +42,14 @@ Scottsdale, AZ 85256"
 					Number = "IHGF-001",
 					Date = DateTime.Now,
 					MaturityDate = DateTime.Now,
+					Company = new Company {
+						Name = "Interactive Health Group in Stockholm AB",
+						Address = "Rörstrandsgatan 36, 113 40 Stockholm, Sweden",
+						BankAccountNumber = "5091 – 8853",
+						Phone = "+46-70-7284298",
+						TIN = "SE556712369901",
+						InvoiceLogo = "ihg.png"
+					},
 					Timebooks = new System.Collections.Generic.List<InvoiceTimebook>(
 						new InvoiceTimebook[] {
 							new InvoiceTimebook {
@@ -84,12 +92,193 @@ Scottsdale, AZ 85256"
 									Consultant = "Debbie G. Jackson",
 									Comments = "The cosmos is rooted in visible excellence"
 								}
+							},
+							new InvoiceTimebook {
+								Timebook = new CustomerTimebook {
+									Item = new Item {
+										Name = "Programming",
+										Unit = new Unit { Name = "months" }
+									},
+									Quantity = 1,
+									Price = 100,
+									VAT = 10,
+									Consultant = "Debbie G. Jackson",
+									Comments = "The cosmos is rooted in visible excellence"
+								}
+							},
+							new InvoiceTimebook {
+								Timebook = new CustomerTimebook {
+									Item = new Item {
+										Name = "Programming",
+										Unit = new Unit { Name = "months" }
+									},
+									Quantity = 1,
+									Price = 100,
+									VAT = 10,
+									Consultant = "Debbie G. Jackson",
+									Comments = "The cosmos is rooted in visible excellence"
+								}
+							},
+							new InvoiceTimebook {
+								Timebook = new CustomerTimebook {
+									Item = new Item {
+										Name = "Programming",
+										Unit = new Unit { Name = "months" }
+									},
+									Quantity = 1,
+									Price = 100,
+									VAT = 10,
+									Consultant = "Debbie G. Jackson",
+									Comments = "The cosmos is rooted in visible excellence"
+								}
+							},
+							new InvoiceTimebook {
+								Timebook = new CustomerTimebook {
+									Item = new Item {
+										Name = "Programming",
+										Unit = new Unit { Name = "months" }
+									},
+									Quantity = 1,
+									Price = 100,
+									VAT = 10,
+									Consultant = "Debbie G. Jackson",
+									Comments = "The cosmos is rooted in visible excellence"
+								}
+							},
+							new InvoiceTimebook {
+								Timebook = new CustomerTimebook {
+									Item = new Item {
+										Name = "Programming",
+										Unit = new Unit { Name = "months" }
+									},
+									Quantity = 1,
+									Price = 100,
+									VAT = 10,
+									Consultant = "Debbie G. Jackson",
+									Comments = "The cosmos is rooted in visible excellence"
+								}
+							},
+							new InvoiceTimebook {
+								Timebook = new CustomerTimebook {
+									Item = new Item {
+										Name = "Programming",
+										Unit = new Unit { Name = "months" }
+									},
+									Quantity = 1,
+									Price = 100,
+									VAT = 10,
+									Consultant = "Debbie G. Jackson",
+									Comments = "The cosmos is rooted in visible excellence"
+								}
+							},
+							new InvoiceTimebook {
+								Timebook = new CustomerTimebook {
+									Item = new Item {
+										Name = "Programming",
+										Unit = new Unit { Name = "months" }
+									},
+									Quantity = 1,
+									Price = 100,
+									VAT = 10,
+									Consultant = "Debbie G. Jackson",
+									Comments = "The cosmos is rooted in visible excellence"
+								}
+							},
+							new InvoiceTimebook {
+								Timebook = new CustomerTimebook {
+									Item = new Item {
+										Name = "Programming",
+										Unit = new Unit { Name = "months" }
+									},
+									Quantity = 1,
+									Price = 100,
+									VAT = 10,
+									Consultant = "Debbie G. Jackson",
+									Comments = "The cosmos is rooted in visible excellence"
+								}
+							},
+							new InvoiceTimebook {
+								Timebook = new CustomerTimebook {
+									Item = new Item {
+										Name = "Programming",
+										Unit = new Unit { Name = "months" }
+									},
+									Quantity = 1,
+									Price = 100,
+									VAT = 10,
+									Consultant = "Debbie G. Jackson",
+									Comments = "The cosmos is rooted in visible excellence"
+								}
+							},
+							new InvoiceTimebook {
+								Timebook = new CustomerTimebook {
+									Item = new Item {
+										Name = "Programming",
+										Unit = new Unit { Name = "months" }
+									},
+									Quantity = 1,
+									Price = 100,
+									VAT = 10,
+									Consultant = "Debbie G. Jackson",
+									Comments = "The cosmos is rooted in visible excellence"
+								}
+							},
+							new InvoiceTimebook {
+								Timebook = new CustomerTimebook {
+									Item = new Item {
+										Name = "Programming",
+										Unit = new Unit { Name = "months" }
+									},
+									Quantity = 1,
+									Price = 100,
+									VAT = 10,
+									Consultant = "Debbie G. Jackson",
+									Comments = "The cosmos is rooted in visible excellence"
+								}
+							},
+							new InvoiceTimebook {
+								Timebook = new CustomerTimebook {
+									Item = new Item {
+										Name = "Programming",
+										Unit = new Unit { Name = "months" }
+									},
+									Quantity = 1,
+									Price = 100,
+									VAT = 10,
+									Consultant = "Debbie G. Jackson",
+									Comments = "The cosmos is rooted in visible excellence"
+								}
+							},
+							new InvoiceTimebook {
+								Timebook = new CustomerTimebook {
+									Item = new Item {
+										Name = "Programming",
+										Unit = new Unit { Name = "months" }
+									},
+									Quantity = 1,
+									Price = 100,
+									VAT = 10,
+									Consultant = "Debbie G. Jackson",
+									Comments = "The cosmos is rooted in visible excellence"
+								}
+							},
+							new InvoiceTimebook {
+								Timebook = new CustomerTimebook {
+									Item = new Item {
+										Name = "Programming",
+										Unit = new Unit { Name = "months" }
+									},
+									Quantity = 1,
+									Price = 100,
+									VAT = 10,
+									Consultant = "Debbie G. Jackson",
+									Comments = "The cosmos is rooted in visible excellence"
+								}
 							}
 						}
 					)
 				};
 				MemoryStream s = ihg.Export(x, @"IHG faktura MALL Ian without comments.pdf", "arial.ttf", true);
-//				MemoryStream s = ihg.Export(i, @"IHG faktura MALL Ian without comments.pdf", "calibri.ttf");
 				s.WriteTo(f);
 			}
 			Process.Start("test.pdf");

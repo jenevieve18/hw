@@ -13,7 +13,177 @@ namespace HW.Invoicing.Core.Helpers
 {
 	public class IHGFInvoiceExporter : AbstractInvoiceExporter
 	{
+		IIHGFInvoicePDFGenerator generator;
+		
+		public IHGFInvoiceExporter() : this(new IHGFInvoicePDFTemplateGenerator())
+		{
+		}
+		
+		public IHGFInvoiceExporter(IIHGFInvoicePDFGenerator generator)
+		{
+			this.generator = generator;
+		}
+		
 		public override MemoryStream Export(Invoice invoice, string templateFileName, string font, bool flatten)
+		{
+			return generator.Generate(invoice, templateFileName, font, flatten);
+		}
+	}
+	
+	public interface IIHGFInvoicePDFGenerator
+	{
+		MemoryStream Generate(Invoice invoice, string templateFileName, string font, bool flatten);
+	}
+	
+	public class IHGFInvoicePDFScratchGenerator : IIHGFInvoicePDFGenerator
+	{
+		Font normalFont = FontFactory.GetFont("Arial", 9, Font.NORMAL, BaseColor.BLACK);
+		Font headerFont = FontFactory.GetFont("Arial", 7, Font.BOLD, BaseColor.BLACK);
+		Font smallFont = FontFactory.GetFont("Arial", 8, Font.NORMAL, BaseColor.BLACK);
+		
+		public MemoryStream Generate(Invoice invoice, string templateFileName, string font, bool flatten)
+		{
+			byte[] bytes;
+			using (var output = new MemoryStream()) {
+				using (var doc = new Document(PageSize.LETTER, 50f, 50f, 70f, 70f)) {
+					using (var writer = PdfWriter.GetInstance(doc, output)) {
+						writer.PageEvent = new PDFFooter(invoice);
+						
+						doc.Open();
+						
+						doc.Add(GetHeaderTable(invoice));
+						
+						doc.Add(new Paragraph("Betalningsvillkor: 30 dagar netto. Vid likvid efter förfallodagen debiteras ränta med 2% per månad.", normalFont));
+						doc.Add(new Paragraph(" "));
+						
+						doc.Add(GetInvoiceItems(invoice));
+						
+						doc.Close();
+					}
+				}
+				bytes = output.ToArray();
+			}
+			return new MemoryStream(bytes);
+		}
+		
+		PdfPTable GetInvoiceItems(Invoice invoice)
+		{
+			PdfPTable table = new PdfPTable(5) { WidthPercentage = 100 };
+			table.DefaultCell.Border = Rectangle.NO_BORDER;
+			
+			table.AddCell(new Phrase("SPECIFIKATION", headerFont));
+			table.AddCell(new Phrase("ANTAL", headerFont));
+			table.AddCell(new Phrase("ENHET", headerFont));
+			table.AddCell(new Phrase("PRIS PER ENHET", headerFont));
+			table.AddCell(new Phrase("BELOPP", headerFont));
+			foreach (var t in invoice.Timebooks) {
+				table.AddCell(new Phrase(t.Timebook.ToString(), normalFont));
+				table.AddCell(new Phrase(t.Timebook.Quantity.ToString(), normalFont));
+				table.AddCell(new Phrase(t.Timebook.Item.Unit.Name, normalFont));
+				table.AddCell(new Phrase(t.Timebook.Price.ToString("### ##0.00"), normalFont));
+				table.AddCell(new Phrase(t.Timebook.Amount.ToString("### ###0.00"), normalFont));
+			}
+			return table;
+		}
+		
+		PdfPTable GetHeaderTable(Invoice invoice)
+		{
+			PdfPTable table = new PdfPTable(4) { WidthPercentage = 100 };
+			table.DefaultCell.Border = Rectangle.NO_BORDER;
+			
+			table.AddCell(new PdfPCell() { Colspan = 2 });
+			table.AddCell(new Phrase("KUNDNUMMER", normalFont));
+			table.AddCell(new Phrase(invoice.Customer.Number, normalFont));
+			
+            Image logo = Image.GetInstance(invoice.Company.InvoiceLogo);
+			table.AddCell(new PdfPCell(logo) { Colspan = 2 });
+			table.AddCell(new Phrase("FAKTURANUMMER", normalFont));
+			table.AddCell(new Phrase(invoice.Number, normalFont));
+			
+			table.AddCell(new PdfPCell(new Phrase("Beställare/Leveransadress/Faktureringsadress", normalFont)) { Colspan = 2 });
+			table.AddCell(new Phrase("FAKTURADATUM", normalFont));
+			table.AddCell(new Phrase(invoice.Date.Value.ToString("yyyy-MM-dd"), normalFont));
+			
+			table.AddCell(new PdfPCell(new Phrase(invoice.Customer.ToString() + "\n\n" + invoice.Customer.PurchaseOrderNumber, normalFont)) { Colspan = 2 });
+			table.AddCell(new Phrase("FÖRFALLODAG", normalFont));
+			table.AddCell(new Phrase(invoice.MaturityDate.Value.ToString("yyyy-MM-dd"), normalFont));
+			
+			table.AddCell(new PdfPCell(new Phrase("", smallFont)) { Colspan = 2 });
+			table.AddCell(new Phrase("Er referens:", smallFont));
+			table.AddCell(new Phrase(invoice.Customer.YourReferencePerson, smallFont));
+			
+			table.AddCell(new PdfPCell(new Phrase("", smallFont)) { Colspan = 2 });
+			table.AddCell(new Phrase("Vår referens:", smallFont));
+			table.AddCell(new Phrase(invoice.Customer.OurReferencePerson, smallFont));
+			return table;
+		}
+		
+		public class PDFFooter : PdfPageEventHelper
+		{
+			Font font = FontFactory.GetFont("Arial", 7, Font.NORMAL, BaseColor.BLACK);
+			Invoice invoice;
+			
+			public PDFFooter(Invoice invoice)
+			{
+				this.invoice = invoice;
+			}
+			
+			public override void OnOpenDocument(PdfWriter writer, Document document)
+			{
+				base.OnOpenDocument(writer, document);
+				
+//				PdfPTable table = new PdfPTable(2);
+//				table.SpacingAfter = 10F;
+//				table.TotalWidth = 300F;
+//				table.AddCell(new PdfPCell(new Phrase("Header")));
+//				table.WriteSelectedRows(0, -1, 150, document.Top , writer.DirectContent);
+			}
+
+			public override void OnStartPage(PdfWriter writer, Document document)
+			{
+				base.OnStartPage(writer, document);
+			}
+
+			public override void OnEndPage(PdfWriter writer, Document document)
+			{
+				base.OnEndPage(writer, document);
+				
+				PdfPTable t = new PdfPTable(4) {
+					TotalWidth = document.Right - document.Left
+				};
+				t.DefaultCell.Border = Rectangle.NO_BORDER;
+				var w = t.TotalWidth;
+				t.SetWidths(new float[] { w / 7 * 1, w / 7 * 3, w / 7 * 1, w / 7 * 2 });
+				
+				t.AddCell(new PdfPCell(new Phrase(invoice.Company.Name, font)) { Colspan = 2 });
+				t.AddCell(new PdfPCell(new Phrase("Bankgiro", font)));
+				t.AddCell(new PdfPCell(new Phrase(invoice.Company.BankAccountNumber, font)));
+				
+				t.AddCell(new PdfPCell(new Phrase(" ", font)) { Colspan = 4 });
+				
+				t.AddCell(new PdfPCell(new Phrase("Telefon", font)));
+				t.AddCell(new PdfPCell(new Phrase(invoice.Company.Phone, font)));
+				t.AddCell(new PdfPCell(new Phrase("VAT/Momsreg.nr", font)));
+				t.AddCell(new PdfPCell(new Phrase(invoice.Company.TIN, font)));
+				
+				t.AddCell(new PdfPCell(new Phrase("Postadress", font)));
+				t.AddCell(new PdfPCell(new Phrase(invoice.Company.Address, font)));
+				t.AddCell(new PdfPCell(new Phrase("F-skattebevis", font)));
+				t.AddCell(new PdfPCell(new Phrase("", font)));
+
+				t.WriteSelectedRows(0, -1, document.Left, document.Bottom, writer.DirectContent);
+			}
+			
+			public override void OnCloseDocument(PdfWriter writer, Document document)
+			{
+				base.OnCloseDocument(writer, document);
+			}
+		}
+	}
+	
+	public class IHGFInvoicePDFTemplateGenerator : IIHGFInvoicePDFGenerator
+	{
+		public MemoryStream Generate(Invoice invoice, string templateFileName, string font, bool flatten)
 		{
 			MemoryStream output = new MemoryStream();
 			
@@ -25,32 +195,17 @@ namespace HW.Invoicing.Core.Helpers
 
 			var f = BaseFont.CreateFont(font, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
 			
-//			form.SetField("Text1", invoice.Customer.Number);
-//			form.SetField("Text2", invoice.Number);
-//			form.SetField("Text3", invoice.Date.Value.ToString("yyyy-MM-dd"));
-//			form.SetField("Text4", invoice.MaturityDate.Value.ToString("yyyy-MM-dd"));
-
 			float fontSize = 9f;
 			SetFieldProperty(form, "Text1", invoice.Customer.Number, f, fontSize);
 			SetFieldProperty(form, "Text2", invoice.Number, f, fontSize);
 			SetFieldProperty(form, "Text3", invoice.Date.Value.ToString("yyyy-MM-dd"), f, fontSize);
 			SetFieldProperty(form, "Text4", invoice.MaturityDate.Value.ToString("yyyy-MM-dd"), f, fontSize);
 			
-//			form.SetField("Text5", invoice.Customer.YourReferencePerson);
-//			form.SetField("Text6", invoice.Customer.OurReferencePerson);
 			SetFieldProperty(form, "Text5", invoice.Customer.YourReferencePerson, f, 8f);
 			SetFieldProperty(form, "Text6", invoice.Customer.OurReferencePerson, f, 8f);
 			
-//			form.SetField("Text6B", invoice.Customer.ToString() + "\n\nPurchase Order Number: " + invoice.Customer.PurchaseOrderNumber);
-//			string po = "";
-//			if (invoice.Customer.PurchaseOrderNumber != "") {
-//				po = "\n\nPurchase Order Number: " + invoice.Customer.PurchaseOrderNumber;
-//			}
-//			SetFieldProperty(form, "Text6B", invoice.Customer.ToString() + po, f, fontSize);
 			SetFieldProperty(form, "Text6B", invoice.Customer.ToString() + "\n\n" + invoice.Customer.PurchaseOrderNumber, f, fontSize);
 			
-//			form.SetField("Text10b", invoice.SubTotal.ToString("### ##0.00"));
-//			form.SetField("Text13", invoice.TotalAmount.ToString("### ##0.00"));
 			SetFieldProperty(form, "Text10b", invoice.SubTotal.ToString("### ##0.00"), f, fontSize);
 			SetFieldProperty(form, "Text13", invoice.TotalAmount.ToString("### ##0.00"), f, fontSize);
 			
@@ -83,8 +238,7 @@ namespace HW.Invoicing.Core.Helpers
 			
 			if (flatten) {
 				stamper.FormFlattening = true;
-				foreach (var s in form.Fields.Keys)
-				{
+				foreach (var s in form.Fields.Keys) {
 					stamper.PartialFormFlattening(s);
 				}
 			}
@@ -105,75 +259,6 @@ namespace HW.Invoicing.Core.Helpers
 			form.SetFieldProperty(name, "textfont", f, null);
 			form.SetFieldProperty(name, "textsize", size, null);
 		}
-		
-		#region Commented
-//		byte[] FlattenPdfFormToBytes(PdfReader reader)
-//		{
-//			var output = new MemoryStream();
-//			var stamper = new PdfStamper(reader, output) { FormFlattening = true };
-//			stamper.Close();
-//			return output.ToArray();
-//		}
-//
-//		public void Export2(Invoice invoice, string existingFileName)
-//		{
-//			string newFile = @"test.pdf";
-//			PdfReader reader = new PdfReader(existingFileName);
-//			PdfStamper stamper = new PdfStamper(reader, new FileStream(newFile, FileMode.Create));
-//			AcroFields form = stamper.AcroFields;
-//			var fieldKeys = form.Fields.Keys;
-//
-//			form.SetField("Text1", invoice.Customer.Number);
-//			form.SetField("Text2", invoice.Number);
-//			form.SetField("Text3", invoice.Date.Value.ToString("yyyy-MM-dd"));
-//			form.SetField("Text4", invoice.MaturityDate.Value.ToString("yyyy-MM-dd"));
-//
-//			form.SetField("Text5", invoice.Customer.YourReferencePerson);
-//			form.SetField("Text6", invoice.Customer.OurReferencePerson);
-//
-//			form.SetField("Text6B", invoice.Customer.ToString());
-//
-//			form.SetField("Text10b", invoice.SubTotal.ToString("### ##0.00"));
-//			form.SetField("Text13", invoice.TotalAmount.ToString("### ##0.00"));
-//
-//			string items = "";
-//			string quantities = "";
-//			string units = "";
-//			string prices = "";
-//			string amounts = "";
-//			foreach (var t in invoice.Timebooks) {
-//				items += t.ToString() + "\n\n";
-//				quantities += t.Timebook.Quantity.ToString() + "\n\n";
-//				units += t.Timebook.Item.Unit.Name + "\n\n";
-//				prices += t.Timebook.Price.ToString() + "\n\n";
-//				amounts += t.Timebook.Amount.ToString() + "\n\n";
-//			}
-//			form.SetField("Text7", items);
-//			form.SetField("Text8", quantities);
-//			form.SetField("Text9", units);
-//			form.SetField("Text9b", prices);
-//			form.SetField("Text9c", amounts);
-//
-//			if (invoice.VATs.ContainsKey(25))
-//			{
-//				form.SetField("Text11b", 25.ToString());
-//				form.SetField("Text12", invoice.VATs[25].ToString());
-//			}
-//
-//			// "Flatten" the form so it wont be editable/usable anymore
-//			stamper.FormFlattening = true;
-//
-//			// You can also specify fields to be flattened, which
-//			// leaves the rest of the form still be editable/usable
-//			foreach (var s in form.Fields.Keys)
-//			{
-//				stamper.PartialFormFlattening(s);
-//			}
-//
-//			stamper.Close();
-//			reader.Close();
-//		}
-		#endregion
 	}
 	
 	public class IHGFVATBox
@@ -195,17 +280,11 @@ namespace HW.Invoicing.Core.Helpers
 		
 		public void Draw()
 		{
-//			if (vats.ContainsKey(25)) {
-//				vats.Remove(25);
-//			}
-			
 			float x = 359f;
-//			float x = 464f;
 			int i = 0;
 			
 			var keys = vats.Keys.ToList().OrderByDescending(j => j);
 			
-//			foreach (var v in vats.Keys) {
 			foreach (var v in keys) {
 				if (i == 0) {
 					form.SetField("Text11b", v.ToString());

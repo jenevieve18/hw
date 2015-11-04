@@ -13,11 +13,6 @@ namespace HW.Invoicing.Core.Helpers
 {
 	public class HCGFInvoiceExporter : AbstractInvoiceExporter
 	{
-//		public MemoryStream Export(Invoice invoice)
-//		{
-//			return Export(invoice, @"HCG Fakturamall tom without comments.pdf", @"calibri.ttf");
-//		}
-//		
 		public override MemoryStream Export(Invoice invoice, string templateFileName, string calibriFont, bool flatten)
 		{
 			MemoryStream output = new MemoryStream();
@@ -36,11 +31,6 @@ namespace HW.Invoicing.Core.Helpers
 			form.SetField("Text5", invoice.Customer.YourReferencePerson);
 			form.SetField("Text6", invoice.Customer.OurReferencePerson);
 			
-//			string po = "";
-//			if (invoice.Customer.PurchaseOrderNumber != "") {
-//				po = "\n\nPurchase order number: " + invoice.Customer.PurchaseOrderNumber;
-//			}
-//			form.SetField("Text7", invoice.Customer.ToString() + po);
 			form.SetField("Text7", invoice.Customer.ToString() + "\n\n" + invoice.Customer.PurchaseOrderNumber);
 			
 			form.SetField("Text10", invoice.SubTotal.ToString("### ##0.00"));
@@ -75,14 +65,10 @@ namespace HW.Invoicing.Core.Helpers
 		}
 	}
 	
-	
-	
 	public class HCGFVATBox
 	{
 		PdfContentByte cb;
-//		float y = 87.5f;
-		float y = 102.5f; // + 32f;
-//		float height = 27f;
+		float y = 102.5f;
 		float height = 32.5f;
 		IDictionary<decimal, decimal> vats;
 		string calibriFont;
@@ -98,17 +84,11 @@ namespace HW.Invoicing.Core.Helpers
 		
 		public void Draw()
 		{
-//			if (vats.ContainsKey(25)) {
-//				vats.Remove(25);
-//			}
-			
-//			float x = 358.5f;
-			float x = 328.5f; // + 133f;
+			float x = 328.5f;
 			
 			var keys = vats.Keys.ToList().OrderByDescending(j => j);
 			int i = 0;
 			
-//			foreach (var v in vats.Keys) {
 			foreach (var v in keys) {
 				if (i == 0) {
 					form.SetField("Text11", v.ToString("0.00"));
@@ -145,7 +125,7 @@ namespace HW.Invoicing.Core.Helpers
 		void SetTexts(string label, string val, float x, float y, float y2)
 		{
 			BaseFont bf = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
-			//cb.SetColorFill(BaseColor.DARK_GRAY);
+//			cb.SetColorFill(BaseColor.DARK_GRAY);
 			cb.SetFontAndSize(bf, 6);
 
 			cb.BeginText();

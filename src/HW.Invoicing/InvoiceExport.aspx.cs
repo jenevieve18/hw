@@ -29,6 +29,16 @@ namespace HW.Invoicing
             var invoice = r.Read(id);
             int companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
             var company = cr.Read(companyId);
+            
+            invoice.Company = company;
+            if (company.HasInvoiceLogo)
+            {
+                company.InvoiceLogo = string.Format(Server.MapPath("~/uploads/{0}"), company.InvoiceLogo);
+            }
+            else
+            {
+                company.InvoiceLogo = Server.MapPath("~/img/ihg.png");
+            }
 
             Response.ClearHeaders();
             Response.ClearContent();
@@ -41,7 +51,6 @@ namespace HW.Invoicing
             
             var exporter = InvoiceExporterFactory.GetExporter(company.HasInvoiceTemplate ? companyId : InvoiceExporterFactory.IHGF);
             
-            //var exported = exporter.Export(invoice, templateFileName, Server.MapPath(@"calibri.ttf"), flatten);
             var exported = exporter.Export(invoice, templateFileName, Server.MapPath(@"arial.ttf"), flatten);
             exported.WriteTo(Response.OutputStream);
 
