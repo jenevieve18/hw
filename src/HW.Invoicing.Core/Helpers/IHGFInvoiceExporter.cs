@@ -278,8 +278,8 @@ namespace HW.Invoicing.Core.Helpers
 				};
 				t.DefaultCell.Border = Rectangle.NO_BORDER;
 				var w = t.TotalWidth;
-				float x = 7;
-				t.SetWidths(new float[] { w / x * 1, w / x * 3, w / x * 1, w / x * 2 });
+				float x = 10;
+				t.SetWidths(new float[] { w / x * 1.5f, w / x * 5, w / x * 1.5f, w / x * 2 });
 				
 				t.AddCell(new PdfPCell(new Phrase(invoice.Company.Name, font)) { Colspan = 2, Border = Rectangle.NO_BORDER });
 				t.AddCell(new PdfPCell(new Phrase("Bankgiro", font)) { Border = Rectangle.NO_BORDER });
