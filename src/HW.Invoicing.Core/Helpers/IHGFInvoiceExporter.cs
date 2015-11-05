@@ -112,7 +112,8 @@ namespace HW.Invoicing.Core.Helpers
 			t2.AddCell(new PdfPCell(new Phrase(invoice.Customer.ToString() + "\n\n" + invoice.Customer.PurchaseOrderNumber, normalFont)) { Border = Rectangle.NO_BORDER });
 			
 			PdfPTable t3 = new PdfPTable(2);
-			t3.AddCell(C("FAKTURA", titleFont, Rectangle.NO_BORDER, 5, 2, Element.ALIGN_RIGHT));
+//			t3.AddCell(C("FAKTURA", titleFont, Rectangle.NO_BORDER, 5, 2, Element.ALIGN_RIGHT));
+			t3.AddCell(new PdfPCell(new Phrase("FAKTURA", titleFont)) { Border = Rectangle.NO_BORDER, Colspan = 2, HorizontalAlignment = Element.ALIGN_RIGHT, PaddingRight = 3, PaddingBottom = 20 });
 			
 			t3.AddCell(C(" ", smallestFont, Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER, 0, 2));
 			t3.AddCell(C("KUNDNUMMER", normalFont, 3));
@@ -177,7 +178,8 @@ namespace HW.Invoicing.Core.Helpers
 			t.AddCell(new PdfPCell() { Colspan = 9, Border = Rectangle.NO_BORDER });
 			t.AddCell(new PdfPCell(new Phrase("SUBTOTAL, SEK", headerFont)));
 			t.AddCell(new PdfPCell() { Colspan = 9, Border = Rectangle.NO_BORDER });
-			t.AddCell(new PdfPCell(new Phrase(invoice.SubTotal.ToString("### ##0.00"), normalFont)));
+//			t.AddCell(new PdfPCell(new Phrase(invoice.SubTotal.ToString("### ##0.00"), normalFont)));
+			t.AddCell(C(invoice.SubTotal.ToString("### ##0.00"), normalFont, Rectangle.BODY | Rectangle.RIGHT_BORDER, 5));
 			
 			t.AddCell(new PdfPCell() { Colspan = 9 - (invoice.VATs.Count * 2), Border = Rectangle.NO_BORDER });
 			foreach (var v in invoice.VATs.Keys) {
@@ -188,10 +190,13 @@ namespace HW.Invoicing.Core.Helpers
 			
 			t.AddCell(new PdfPCell() { Colspan = 9 - (invoice.VATs.Count * 2), Border = Rectangle.BOTTOM_BORDER });
 			foreach (var v in invoice.VATs.Keys) {
-				t.AddCell(new PdfPCell(new Phrase(v.ToString(), normalFont)));
-				t.AddCell(new PdfPCell(new Phrase(invoice.VATs[v].ToString("### ##0.00"), normalFont)));
+//				t.AddCell(new PdfPCell(new Phrase(v.ToString(), normalFont)));
+//				t.AddCell(new PdfPCell(new Phrase(invoice.VATs[v].ToString("### ##0.00"), normalFont)));
+				t.AddCell(C(v.ToString(), normalFont, Rectangle.BODY, 5));
+				t.AddCell(C(invoice.VATs[v].ToString("### ##0.00"), normalFont, Rectangle.BODY, 5));
 			}
-			t.AddCell(new PdfPCell(new Phrase(invoice.TotalAmount.ToString("### ##0.00"), normalFont)) { Colspan = 2 });
+//			t.AddCell(new PdfPCell(new Phrase(invoice.TotalAmount.ToString("### ##0.00"), boldFont)) { Colspan = 2 });
+			t.AddCell(C(invoice.TotalAmount.ToString("### ##0.00"), boldFont, Rectangle.BODY | Rectangle.RIGHT_BORDER, 5, 2));
 			
 			return t;
 		}
