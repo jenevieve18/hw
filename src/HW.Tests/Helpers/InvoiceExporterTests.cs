@@ -58,7 +58,7 @@ Scottsdale, AZ 85256"
 								Timebook = new CustomerTimebook {
 									Item = new Item {
 										Name = "Programming",
-										Unit = new Unit { Name = "months" }
+										Unit = new Unit { Name = "month" }
 									},
 									Date = DateTime.Now,
 									Quantity = 1,
@@ -72,7 +72,7 @@ Scottsdale, AZ 85256"
 								Timebook = new CustomerTimebook {
 									Item = new Item {
 										Name = "Programming",
-										Unit = new Unit { Name = "months" }
+										Unit = new Unit { Name = "month" }
 									},
 									Date = DateTime.Now,
 									Quantity = 1,
@@ -86,7 +86,7 @@ Scottsdale, AZ 85256"
 								Timebook = new CustomerTimebook {
 									Item = new Item {
 										Name = "Programming",
-										Unit = new Unit { Name = "months" }
+										Unit = new Unit { Name = "month" }
 									},
 									Quantity = 1,
 									Price = 100,
@@ -99,7 +99,7 @@ Scottsdale, AZ 85256"
 								Timebook = new CustomerTimebook {
 									Item = new Item {
 										Name = "Programming",
-										Unit = new Unit { Name = "months" }
+										Unit = new Unit { Name = "month" }
 									},
 									Quantity = 1,
 									Price = 100,
@@ -112,7 +112,7 @@ Scottsdale, AZ 85256"
 								Timebook = new CustomerTimebook {
 									Item = new Item {
 										Name = "Programming",
-										Unit = new Unit { Name = "months" }
+										Unit = new Unit { Name = "month" }
 									},
 									Quantity = 1,
 									Price = 100,
@@ -125,7 +125,7 @@ Scottsdale, AZ 85256"
 								Timebook = new CustomerTimebook {
 									Item = new Item {
 										Name = "Programming",
-										Unit = new Unit { Name = "months" }
+										Unit = new Unit { Name = "month" }
 									},
 									Quantity = 1,
 									Price = 100,
@@ -138,7 +138,7 @@ Scottsdale, AZ 85256"
 								Timebook = new CustomerTimebook {
 									Item = new Item {
 										Name = "Programming",
-										Unit = new Unit { Name = "months" }
+										Unit = new Unit { Name = "month" }
 									},
 									Quantity = 1,
 									Price = 100,
@@ -151,7 +151,7 @@ Scottsdale, AZ 85256"
 								Timebook = new CustomerTimebook {
 									Item = new Item {
 										Name = "Programming",
-										Unit = new Unit { Name = "months" }
+										Unit = new Unit { Name = "month" }
 									},
 									Quantity = 1,
 									Price = 100,
@@ -164,7 +164,7 @@ Scottsdale, AZ 85256"
 								Timebook = new CustomerTimebook {
 									Item = new Item {
 										Name = "Programming",
-										Unit = new Unit { Name = "months" }
+										Unit = new Unit { Name = "month" }
 									},
 									Quantity = 1,
 									Price = 100,
@@ -177,7 +177,7 @@ Scottsdale, AZ 85256"
 								Timebook = new CustomerTimebook {
 									Item = new Item {
 										Name = "Programming",
-										Unit = new Unit { Name = "months" }
+										Unit = new Unit { Name = "month" }
 									},
 									Quantity = 1,
 									Price = 100,
@@ -190,7 +190,7 @@ Scottsdale, AZ 85256"
 								Timebook = new CustomerTimebook {
 									Item = new Item {
 										Name = "Programming",
-										Unit = new Unit { Name = "months" }
+										Unit = new Unit { Name = "month" }
 									},
 									Quantity = 1,
 									Price = 100,
@@ -203,7 +203,7 @@ Scottsdale, AZ 85256"
 								Timebook = new CustomerTimebook {
 									Item = new Item {
 										Name = "Programming",
-										Unit = new Unit { Name = "months" }
+										Unit = new Unit { Name = "month" }
 									},
 									Quantity = 1,
 									Price = 100,
@@ -216,7 +216,7 @@ Scottsdale, AZ 85256"
 								Timebook = new CustomerTimebook {
 									Item = new Item {
 										Name = "Programming",
-										Unit = new Unit { Name = "months" }
+										Unit = new Unit { Name = "month" }
 									},
 									Quantity = 1,
 									Price = 100,
@@ -229,7 +229,7 @@ Scottsdale, AZ 85256"
 								Timebook = new CustomerTimebook {
 									Item = new Item {
 										Name = "Programming",
-										Unit = new Unit { Name = "months" }
+										Unit = new Unit { Name = "month" }
 									},
 									Quantity = 1,
 									Price = 100,
@@ -242,7 +242,7 @@ Scottsdale, AZ 85256"
 								Timebook = new CustomerTimebook {
 									Item = new Item {
 										Name = "Programming",
-										Unit = new Unit { Name = "months" }
+										Unit = new Unit { Name = "month" }
 									},
 									Quantity = 1,
 									Price = 100,
@@ -255,7 +255,7 @@ Scottsdale, AZ 85256"
 								Timebook = new CustomerTimebook {
 									Item = new Item {
 										Name = "Programming",
-										Unit = new Unit { Name = "months" }
+										Unit = new Unit { Name = "month" }
 									},
 									Quantity = 1,
 									Price = 100,
@@ -268,7 +268,7 @@ Scottsdale, AZ 85256"
 								Timebook = new CustomerTimebook {
 									Item = new Item {
 										Name = "Programming",
-										Unit = new Unit { Name = "months" }
+										Unit = new Unit { Name = "month" }
 									},
 									Quantity = 1,
 									Price = 100,
@@ -281,7 +281,7 @@ Scottsdale, AZ 85256"
 								Timebook = new CustomerTimebook {
 									Item = new Item {
 										Name = "Programming",
-										Unit = new Unit { Name = "months" }
+										Unit = new Unit { Name = "month" }
 									},
 									Quantity = 1,
 									Price = 100,
@@ -294,7 +294,7 @@ Scottsdale, AZ 85256"
 								Timebook = new CustomerTimebook {
 									Item = new Item {
 										Name = "Programming",
-										Unit = new Unit { Name = "months" }
+										Unit = new Unit { Name = "month" }
 									},
 									Quantity = 1,
 									Price = 100,
@@ -307,7 +307,7 @@ Scottsdale, AZ 85256"
 								Timebook = new CustomerTimebook {
 									Item = new Item {
 										Name = "Programming",
-										Unit = new Unit { Name = "months" }
+										Unit = new Unit { Name = "month" }
 									},
 									Quantity = 1,
 									Price = 100,
@@ -354,7 +354,7 @@ Scottsdale, AZ 85256"
 								Timebook = new CustomerTimebook {
 									Item = new Item {
 										Name = "Programming",
-										Unit = new Unit { Name = "months" }
+										Unit = new Unit { Name = "month" }
 									},
 									Quantity = 1,
 									Price = 100,
@@ -367,7 +367,7 @@ Scottsdale, AZ 85256"
 								Timebook = new CustomerTimebook {
 									Item = new Item {
 										Name = "Programming",
-										Unit = new Unit { Name = "months" }
+										Unit = new Unit { Name = "month" }
 									},
 									Quantity = 1,
 									Price = 100,
@@ -380,7 +380,7 @@ Scottsdale, AZ 85256"
 								Timebook = new CustomerTimebook {
 									Item = new Item {
 										Name = "Programming",
-										Unit = new Unit { Name = "months" }
+										Unit = new Unit { Name = "month" }
 									},
 									Quantity = 1,
 									Price = 100,
