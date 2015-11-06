@@ -49,7 +49,7 @@ namespace HW.Invoicing.Core.Helpers
 		{
 			byte[] bytes;
 			using (var output = new MemoryStream()) {
-				using (var doc = new Document(PageSize.LETTER, 50f, 50f, 50f, 70f)) {
+				using (var doc = new Document(PageSize.LETTER, 50f, 50f, 30f, 70f)) {
 					using (var writer = PdfWriter.GetInstance(doc, output)) {
 						writer.PageEvent = new PDFFooter(invoice);
 						
