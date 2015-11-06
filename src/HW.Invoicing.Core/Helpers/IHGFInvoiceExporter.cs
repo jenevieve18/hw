@@ -41,6 +41,7 @@ namespace HW.Invoicing.Core.Helpers
 		Font titleFont = FontFactory.GetFont("Arial", 16, Font.NORMAL, BaseColor.BLACK);
 		Font boldFont = FontFactory.GetFont("Arial", 9, Font.BOLD, BaseColor.BLACK);
 		Font headerFont = FontFactory.GetFont("Arial", 6, Font.BOLD, BaseColor.BLACK);
+		Font headerNormalFont = FontFactory.GetFont("Arial", 6, Font.NORMAL, BaseColor.BLACK);
 		Font smallFont = FontFactory.GetFont("Arial", 8, Font.NORMAL, BaseColor.BLACK);
 		Font smallestFont = FontFactory.GetFont("Arial", 3, Font.NORMAL, BaseColor.BLACK);
 		
@@ -68,6 +69,14 @@ namespace HW.Invoicing.Core.Helpers
 				bytes = output.ToArray();
 			}
 			return new MemoryStream(bytes);
+		}
+		
+		PdfPCell B(Font font, int colspan)
+		{
+			return new PdfPCell(new Phrase(" ", font)) {
+				Colspan = colspan,
+				Border = Rectangle.NO_BORDER
+			};
 		}
 		
 		PdfPCell C(string text, Font font, int padding)
@@ -112,7 +121,6 @@ namespace HW.Invoicing.Core.Helpers
 			t2.AddCell(new PdfPCell(new Phrase(invoice.Customer.ToString() + "\n\n" + invoice.Customer.PurchaseOrderNumber, normalFont)) { Border = Rectangle.NO_BORDER });
 			
 			PdfPTable t3 = new PdfPTable(2);
-//			t3.AddCell(C("FAKTURA", titleFont, Rectangle.NO_BORDER, 5, 2, Element.ALIGN_RIGHT));
 			t3.AddCell(new PdfPCell(new Phrase("FAKTURA", titleFont)) { Border = Rectangle.NO_BORDER, Colspan = 2, HorizontalAlignment = Element.ALIGN_RIGHT, PaddingRight = 3, PaddingBottom = 20 });
 			
 			t3.AddCell(C(" ", smallestFont, Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER, 0, 2));
@@ -152,51 +160,101 @@ namespace HW.Invoicing.Core.Helpers
 		
 		PdfPTable GetInvoiceItems(Invoice invoice, Document document)
 		{
-			PdfPTable t = new PdfPTable(10) {
+//			PdfPTable t = new PdfPTable(10) {
+//				TotalWidth = document.Right - document.Left,
+//				WidthPercentage = 100
+//			};
+//			var w = t.TotalWidth;
+//			float x = 10;
+//			t.SetWidths(new float[] { w / x * 1, w / x * 1, w / x * 1, w / x * 1, w / x * 1, w / x * 1, w / x * 1, w / x * 1, w / x * 1, w / x * 1 });
+//			
+//			t.AddCell(new PdfPCell(new Phrase("SPECIFIKATION", headerFont)) { Colspan = 6, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
+//			t.AddCell(new PdfPCell(new Phrase("ANTAL", headerFont)) { Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
+//			t.AddCell(new PdfPCell(new Phrase("ENHET", headerFont)) { Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
+//			t.AddCell(new PdfPCell(new Phrase("PRIS PER ENHET", headerFont)) { Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
+//			t.AddCell(new PdfPCell(new Phrase("BELOPP", headerFont)) { Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER });
+//			foreach (var tb in invoice.Timebooks) {
+//				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.ToString(), normalFont)) { Colspan = 6, Border = Rectangle.NO_BORDER });
+//				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Quantity.ToString(), normalFont)) { HorizontalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
+//				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Item.Unit.Name, normalFont)) { HorizontalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
+//				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Price.ToString("### ##0.00"), normalFont)) { HorizontalAlignment = Element.ALIGN_RIGHT, Border = Rectangle.NO_BORDER });
+//				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Amount.ToString("### ###0.00"), normalFont)) { HorizontalAlignment = Element.ALIGN_RIGHT, Border = Rectangle.NO_BORDER });
+//			}
+//			
+//			t.AddCell(new PdfPCell(new Phrase(" ")) { Colspan = 10, Border = Rectangle.NO_BORDER });
+//			
+//			t.AddCell(new PdfPCell() { Colspan = 9, Border = Rectangle.NO_BORDER });
+//			t.AddCell(new PdfPCell(new Phrase("SUBTOTAL, SEK", headerFont)));
+//			t.AddCell(new PdfPCell() { Colspan = 9, Border = Rectangle.NO_BORDER });
+//			t.AddCell(C(invoice.SubTotal.ToString("### ##0.00"), normalFont, Rectangle.BODY | Rectangle.RIGHT_BORDER, 5));
+//			
+//			t.AddCell(new PdfPCell() { Colspan = 9 - (invoice.VATs.Count * 2), Border = Rectangle.NO_BORDER });
+//			foreach (var v in invoice.VATs.Keys) {
+//				t.AddCell(new PdfPCell(new Phrase("MOMS %", headerNormalFont)));
+//				t.AddCell(new PdfPCell(new Phrase("MOMS, SEK", headerNormalFont)));
+//			}
+//			t.AddCell(new PdfPCell(new Phrase("SUMMA ATT BETALA, SEK", headerFont)));
+//			
+//			t.AddCell(new PdfPCell() { Colspan = 9 - (invoice.VATs.Count * 2), Border = Rectangle.BOTTOM_BORDER });
+//			foreach (var v in invoice.VATs.Keys) {
+//				t.AddCell(C(v.ToString(), normalFont, Rectangle.BODY, 5));
+//				t.AddCell(C(invoice.VATs[v].ToString("### ##0.00"), normalFont, Rectangle.BODY, 5));
+//			}
+//			t.AddCell(C(invoice.TotalAmount.ToString("### ##0.00"), boldFont, Rectangle.BODY | Rectangle.RIGHT_BORDER, 5, 2));
+//			
+//			return t;
+			
+			PdfPTable t = new PdfPTable(16) {
 				TotalWidth = document.Right - document.Left,
 				WidthPercentage = 100
 			};
 			var w = t.TotalWidth;
-			float x = 10;
-			t.SetWidths(new float[] { w / x * 1, w / x * 1, w / x * 1, w / x * 1, w / x * 1, w / x * 1, w / x * 1, w / x * 1, w / x * 1, w / x * 1 });
+			float x = 16;
+			var widths = new List<float>();
+			for (int i = 0; i < 16; i++) {
+				widths.Add(w / x * 1);
+			}
+			t.SetWidths(widths.ToArray());
 			
-			t.AddCell(new PdfPCell(new Phrase("SPECIFIKATION", headerFont)) { Colspan = 6, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
+			t.AddCell(new PdfPCell(new Phrase("SPECIFIKATION", headerFont)) { Colspan = 10, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
 			t.AddCell(new PdfPCell(new Phrase("ANTAL", headerFont)) { Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
 			t.AddCell(new PdfPCell(new Phrase("ENHET", headerFont)) { Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
-			t.AddCell(new PdfPCell(new Phrase("PRIS PER ENHET", headerFont)) { Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
-			t.AddCell(new PdfPCell(new Phrase("BELOPP", headerFont)) { Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER });
+			t.AddCell(new PdfPCell(new Phrase("PRIS PER ENHET", headerFont)) { Colspan = 2, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
+			t.AddCell(new PdfPCell(new Phrase("BELOPP", headerFont)) { Colspan = 2, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER });
 			foreach (var tb in invoice.Timebooks) {
-				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.ToString(), normalFont)) { Colspan = 6, Border = Rectangle.NO_BORDER });
+				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.ToString(), normalFont)) { Colspan = 10, Border = Rectangle.NO_BORDER });
 				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Quantity.ToString(), normalFont)) { HorizontalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
-				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Item.Unit.Name, normalFont)) { HorizontalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
-				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Price.ToString("### ##0.00"), normalFont)) { HorizontalAlignment = Element.ALIGN_RIGHT, Border = Rectangle.NO_BORDER });
-				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Amount.ToString("### ###0.00"), normalFont)) { HorizontalAlignment = Element.ALIGN_RIGHT, Border = Rectangle.NO_BORDER });
+				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Item.Unit.Name, smallFont)) { HorizontalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
+				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Price.ToString("### ##0.00"), normalFont)) { Colspan = 2, HorizontalAlignment = Element.ALIGN_RIGHT, Border = Rectangle.NO_BORDER });
+				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Amount.ToString("### ###0.00"), normalFont)) { Colspan = 2, HorizontalAlignment = Element.ALIGN_RIGHT, Border = Rectangle.NO_BORDER });
 			}
 			
-			t.AddCell(new PdfPCell(new Phrase(" ")) { Colspan = 10, Border = Rectangle.NO_BORDER });
+			t.AddCell(new PdfPCell(new Phrase(" ")) { Colspan = 16, Border = Rectangle.NO_BORDER });
+			t.AddCell(new PdfPCell(new Phrase(" ")) { Colspan = 16, Border = Rectangle.NO_BORDER });
+			t.AddCell(new PdfPCell(new Phrase(" ")) { Colspan = 16, Border = Rectangle.NO_BORDER });
 			
-			t.AddCell(new PdfPCell() { Colspan = 9, Border = Rectangle.NO_BORDER });
-			t.AddCell(new PdfPCell(new Phrase("SUBTOTAL, SEK", headerFont)));
-			t.AddCell(new PdfPCell() { Colspan = 9, Border = Rectangle.NO_BORDER });
-//			t.AddCell(new PdfPCell(new Phrase(invoice.SubTotal.ToString("### ##0.00"), normalFont)));
-			t.AddCell(C(invoice.SubTotal.ToString("### ##0.00"), normalFont, Rectangle.BODY | Rectangle.RIGHT_BORDER, 5));
+			t.AddCell(new PdfPCell(new Phrase(invoice.Comments, normalFont)) { Colspan = 16, Border = Rectangle.NO_BORDER });
 			
-			t.AddCell(new PdfPCell() { Colspan = 9 - (invoice.VATs.Count * 2), Border = Rectangle.NO_BORDER });
+			t.AddCell(new PdfPCell(new Phrase(" ")) { Colspan = 16, Border = Rectangle.NO_BORDER });
+
+			t.AddCell(new PdfPCell() { Colspan = 14, Border = Rectangle.NO_BORDER });
+			t.AddCell(new PdfPCell(new Phrase("SUBTOTAL, SEK", headerFont)) { Colspan = 2 });
+			t.AddCell(new PdfPCell() { Colspan = 14, Border = Rectangle.NO_BORDER });
+			t.AddCell(C(invoice.SubTotal.ToString("### ##0.00"), normalFont, Rectangle.BODY | Rectangle.RIGHT_BORDER, 5, 2));
+
+			t.AddCell(new PdfPCell() { Colspan = 10 - (invoice.VATs.Count * 2), Border = Rectangle.NO_BORDER });
 			foreach (var v in invoice.VATs.Keys) {
-				t.AddCell(new PdfPCell(new Phrase("MOMS %", headerFont)));
-				t.AddCell(new PdfPCell(new Phrase("MOMS, SEK", headerFont)));
+				t.AddCell(new PdfPCell(new Phrase("MOMS %", headerNormalFont)));
+				t.AddCell(new PdfPCell(new Phrase("MOMS, SEK", headerNormalFont)) { Colspan = 2 });
 			}
-			t.AddCell(new PdfPCell(new Phrase("SUMMA ATT BETALA, SEK", headerFont)));
-			
-			t.AddCell(new PdfPCell() { Colspan = 9 - (invoice.VATs.Count * 2), Border = Rectangle.BOTTOM_BORDER });
+			t.AddCell(new PdfPCell(new Phrase("SUMMA ATT BETALA, SEK", headerFont)) { Colspan = 3 });
+
+			t.AddCell(new PdfPCell() { Colspan = 10 - (invoice.VATs.Count * 2), Border = Rectangle.BOTTOM_BORDER });
 			foreach (var v in invoice.VATs.Keys) {
-//				t.AddCell(new PdfPCell(new Phrase(v.ToString(), normalFont)));
-//				t.AddCell(new PdfPCell(new Phrase(invoice.VATs[v].ToString("### ##0.00"), normalFont)));
 				t.AddCell(C(v.ToString(), normalFont, Rectangle.BODY, 5));
-				t.AddCell(C(invoice.VATs[v].ToString("### ##0.00"), normalFont, Rectangle.BODY, 5));
+				t.AddCell(C(invoice.VATs[v].ToString("### ##0.00"), normalFont, Rectangle.BODY, 5, 2));
 			}
-//			t.AddCell(new PdfPCell(new Phrase(invoice.TotalAmount.ToString("### ##0.00"), boldFont)) { Colspan = 2 });
-			t.AddCell(C(invoice.TotalAmount.ToString("### ##0.00"), boldFont, Rectangle.BODY | Rectangle.RIGHT_BORDER, 5, 2));
+			t.AddCell(C(invoice.TotalAmount.ToString("### ##0.00"), boldFont, Rectangle.BODY | Rectangle.RIGHT_BORDER, 5, 3));
 			
 			return t;
 		}

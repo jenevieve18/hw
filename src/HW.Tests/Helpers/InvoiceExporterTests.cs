@@ -31,6 +31,7 @@ namespace HW.Tests.Helpers
 			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create, FileAccess.Write)) {
 				var x = new Invoice {
 					Customer = new Customer {
+						Number = "XXXYY-0123",
 						Name = "Carl T. Escalante",
 						PurchaseOrderNumber = "XXX-01234",
 						YourReferencePerson = "Gerald S. Hicks",
@@ -42,6 +43,7 @@ Scottsdale, AZ 85256"
 					Number = "IHGF-001",
 					Date = DateTime.Now,
 					MaturityDate = DateTime.Now,
+					Comments = "The invisible co creates great life. Your heart is entangled in unbridled actions.",
 					Company = new Company {
 						Name = "Interactive Health Group in Stockholm AB",
 						Address = "Rörstrandsgatan 36, 113 40 Stockholm, Sweden",
