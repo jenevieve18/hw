@@ -49,7 +49,7 @@ namespace HW.Invoicing.Core.Helpers
 		{
 			byte[] bytes;
 			using (var output = new MemoryStream()) {
-				using (var doc = new Document(PageSize.LETTER, 50f, 50f, 70f, 70f)) {
+				using (var doc = new Document(PageSize.LETTER, 50f, 50f, 50f, 70f)) {
 					using (var writer = PdfWriter.GetInstance(doc, output)) {
 						writer.PageEvent = new PDFFooter(invoice);
 						
@@ -117,6 +117,7 @@ namespace HW.Invoicing.Core.Helpers
 			
 			PdfPTable t2 = new PdfPTable(1);
 			Image logo = Image.GetInstance(invoice.Company.InvoiceLogo);
+			logo.ScalePercent(75);
 			t2.AddCell(new PdfPCell(logo) { Border = Rectangle.NO_BORDER });
 			t2.AddCell(new PdfPCell(new Phrase("Beställare/Leveransadress/Faktureringsadress", normalFont)) { Border = Rectangle.NO_BORDER });
 			t2.AddCell(new PdfPCell(new Phrase(invoice.Customer.ToString() + "\n\n" + invoice.Customer.PurchaseOrderNumber, normalFont)) { Border = Rectangle.NO_BORDER });
