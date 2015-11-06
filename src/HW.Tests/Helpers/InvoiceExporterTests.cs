@@ -276,6 +276,45 @@ Scottsdale, AZ 85256"
 									Consultant = "Debbie G. Jackson",
 									Comments = "The cosmos is rooted in visible excellence"
 								}
+							},
+							new InvoiceTimebook {
+								Timebook = new CustomerTimebook {
+									Item = new Item {
+										Name = "Programming",
+										Unit = new Unit { Name = "months" }
+									},
+									Quantity = 1,
+									Price = 100,
+									VAT = 10,
+									Consultant = "Debbie G. Jackson",
+									Comments = "The cosmos is rooted in visible excellence"
+								}
+							},
+							new InvoiceTimebook {
+								Timebook = new CustomerTimebook {
+									Item = new Item {
+										Name = "Programming",
+										Unit = new Unit { Name = "months" }
+									},
+									Quantity = 1,
+									Price = 100,
+									VAT = 10,
+									Consultant = "Debbie G. Jackson",
+									Comments = "The cosmos is rooted in visible excellence"
+								}
+							},
+							new InvoiceTimebook {
+								Timebook = new CustomerTimebook {
+									Item = new Item {
+										Name = "Programming",
+										Unit = new Unit { Name = "months" }
+									},
+									Quantity = 1,
+									Price = 100,
+									VAT = 10,
+									Consultant = "Debbie G. Jackson",
+									Comments = "The cosmos is rooted in visible excellence"
+								}
 							}
 						}
 					)
