@@ -237,11 +237,11 @@ namespace HW.Invoicing.Core.Helpers
 			
 			t.AddCell(new PdfPCell(new Phrase(" ")) { Colspan = 16, Border = Rectangle.NO_BORDER });
 
-			t.AddCell(new PdfPCell() { Colspan = 14, Border = Rectangle.NO_BORDER });
-			t.AddCell(new PdfPCell(new Phrase("SUBTOTAL, SEK", headerNormalFont)) { Colspan = 2 });
+			t.AddCell(new PdfPCell() { Colspan = 13, Border = Rectangle.NO_BORDER });
+			t.AddCell(new PdfPCell(new Phrase("SUBTOTAL, SEK", headerNormalFont)) { Colspan = 3 });
 			
-			t.AddCell(new PdfPCell() { Colspan = 14, Border = Rectangle.NO_BORDER });
-			t.AddCell(C(invoice.SubTotal.ToString("### ##0.00"), normalFont, Rectangle.BODY | Rectangle.RIGHT_BORDER, 5, 2));
+			t.AddCell(new PdfPCell() { Colspan = 13, Border = Rectangle.NO_BORDER });
+			t.AddCell(C(invoice.SubTotal.ToString("### ##0.00"), normalFont, Rectangle.BODY | Rectangle.RIGHT_BORDER, 5, 3));
 
 			t.AddCell(new PdfPCell() { Colspan = 13 - (invoice.VATs.Count * 3), Border = Rectangle.NO_BORDER });
 			foreach (var v in invoice.VATs.Keys) {
