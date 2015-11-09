@@ -1561,7 +1561,7 @@ d.SponsorID = {4} ORDER BY d.SortString",
 						active >= deptMinUserCountToDisclose ? active.ToString() : "<img src='img/key.gif'/>"
 					),
 					(
-						active > deptMinUserCountToDisclose ? string.Format(" ({0}%)", Math.Round((float)active / rs.GetInt32(7) * 100)) : ""
+						active >= deptMinUserCountToDisclose ? string.Format(" ({0}%)", Math.Round((float)active / rs.GetInt32(7) * 100)) : ""
 					)
 				);
 
