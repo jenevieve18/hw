@@ -7,6 +7,8 @@ create table Milestone(
 	Name varchar(255)
 );
 
+alter table Issue add MilestoneId integer;
+
 alter table Issue add Priority integer;
 
 alter table CustomerTimebook alter column Price decimal(16,2);

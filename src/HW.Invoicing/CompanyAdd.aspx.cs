@@ -51,6 +51,8 @@ namespace HW.Invoicing
                 Phone = textBoxPhone.Text,
                 BankAccountNumber = textBoxBankAccountNumber.Text,
                 TIN = textBoxTIN.Text,
+                Email = textBoxEmail.Text,
+                Website = textBoxWebsite.Text,
                 FinancialMonthStart = ConvertHelper.ToDateTime(textBoxFinancialMonthStart.Text),
                 FinancialMonthEnd = ConvertHelper.ToDateTime(textBoxFinancialMonthEnd.Text),
                 User = new User { Id = ConvertHelper.ToInt32(Session["UserId"]) },

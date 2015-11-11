@@ -48,6 +48,15 @@ namespace HW.Core.Helpers
 		{
 			return condition ? x : y;
 		}
+		
+		public static string Clean(this string s, params string[] x)
+		{
+			string y = s;
+			foreach (var z in x) {
+				y = y.Replace(z, "");
+			}
+			return y;
+		}
 	}
 	
 	public static class HtmlHelper

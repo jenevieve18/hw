@@ -106,7 +106,8 @@ Scottsdale, AZ 85256"
 			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create, FileAccess.Write)) {
 				i.Company = new Company {
 					Name = "Interactive Health Group in Stockholm AB",
-					Address = "Rörstrandsgatan 36, 113 40 Stockholm, Sweden",
+					Address = @"Rörstrandsgatan 36, 113 40
+Stockholm, Sweden",
 					BankAccountNumber = "5091 – 8853",
 					Phone = "+46-70-7284298",
 					TIN = "SE556712369901",
@@ -131,11 +132,15 @@ Scottsdale, AZ 85256"
 			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create, FileAccess.Write)) {
 				i.Company = new Company {
 					Name = "Interactive Health Group in Stockholm AB",
-					Address = "Rörstrandsgatan 36, 113 40 Stockholm, Sweden",
+					Address = @"Rörstrandsgatan 36, 113 40
+Stockholm, Sweden",
 					BankAccountNumber = "5091 – 8853",
 					Phone = "+46-70-7284298",
 					TIN = "SE556712369901",
-					InvoiceLogo = "hcg.jpg"
+					InvoiceLogo = "hcg.jpg",
+					Website = "www.danhasson.se",
+					Email = "info@danhasson.se",
+					OrganizationNumber = "Org nr 556757-0568"
 				};
 				MemoryStream s = hcg.Export(i, @"HCG Fakturamall tom without comments.pdf", "calibri.ttf", true);
 				s.WriteTo(f);

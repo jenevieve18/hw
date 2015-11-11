@@ -51,8 +51,8 @@ FROM Company";
 		public override void Save(Company t)
 		{
             string query = @"
-INSERT INTO Company(Name, Address, Phone, BankAccountNumber, TIN, FinancialMonthStart, FinancialMonthEnd, UserId, InvoicePrefix, HasSubscriber, InvoiceLogo, InvoiceTemplate, Terms, Signature, AgreementEmailText, AgreementEmailSubject, Email, AgreementPrefix, OrganizationNumber, AgreementSignedEmailText, AgreementSignedEmailSubject)
-VALUES(@Name, @Address, @Phone, @BankAccountNumber, @TIN, @FinancialMonthStart, @FinancialMonthEnd, @UserId, @InvoicePrefix, @HasSubscriber, @InvoiceLogo, @InvoiceTemplate, @Terms, @Signature, @AgreementEmailText, @AgreementEmailSubject, @Email, @AgreementPrefix, @OrganizationNumber, @AgreementSignedEmailText, @AgreementSignedEmailSubject)";
+INSERT INTO Company(Name, Address, Phone, BankAccountNumber, TIN, FinancialMonthStart, FinancialMonthEnd, UserId, InvoicePrefix, HasSubscriber, InvoiceLogo, InvoiceTemplate, Terms, Signature, AgreementEmailText, AgreementEmailSubject, Email, AgreementPrefix, OrganizationNumber, AgreementSignedEmailText, AgreementSignedEmailSubject, Website)
+VALUES(@Name, @Address, @Phone, @BankAccountNumber, @TIN, @FinancialMonthStart, @FinancialMonthEnd, @UserId, @InvoicePrefix, @HasSubscriber, @InvoiceLogo, @InvoiceTemplate, @Terms, @Signature, @AgreementEmailText, @AgreementEmailSubject, @Email, @AgreementPrefix, @OrganizationNumber, @AgreementSignedEmailText, @AgreementSignedEmailSubject, @Website)";
             ExecuteNonQuery(
                 query,
                 "invoicing",
@@ -73,6 +73,7 @@ VALUES(@Name, @Address, @Phone, @BankAccountNumber, @TIN, @FinancialMonthStart, 
                 new SqlParameter("@AgreementEmailText", t.AgreementEmailText),
                 new SqlParameter("@AgreementEmailSubject", t.AgreementEmailSubject),
                 new SqlParameter("@Email", t.Email),
+                new SqlParameter("@Website", t.Website),
                 new SqlParameter("@AgreementPrefix", t.AgreementPrefix),
                 new SqlParameter("@OrganizationNumber", t.OrganizationNumber),
                 new SqlParameter("@AgreementSignedEmailText", t.AgreementSignedEmailText),
@@ -104,7 +105,8 @@ SELECT Id,
     OrganizationNumber,
     AgreementSignedEmailText,
     AgreementSignedEmailSubject,
-    AgreementTemplate
+    AgreementTemplate,
+    Website
 FROM Company
 WHERE Id = @Id";
 			Company c = null;
@@ -132,7 +134,8 @@ WHERE Id = @Id";
                         OrganizationNumber = GetString(rs, 18),
                         AgreementSignedEmailText = GetString(rs, 19),
                         AgreementSignedEmailSubject = GetString(rs, 20),
-                        AgreementTemplate = GetString(rs, 21)
+                        AgreementTemplate = GetString(rs, 21),
+                        Website = GetString(rs, 22)
 					};
 				}
 			}
@@ -280,6 +283,7 @@ UPDATE Company set Name = @Name,
     InvoiceTemplate = @InvoiceTemplate,
     Signature = @Signature,
     Email = @Email,
+    Website = @Website,
     AgreementPrefix = @AgreementPrefix,
     OrganizationNumber = @OrganizationNumber,
     AgreementTemplate = @AgreementTemplate
@@ -301,6 +305,7 @@ WHERE Id = @Id";
                 new SqlParameter("@InvoiceTemplate", t.InvoiceTemplate),
                 new SqlParameter("@Signature", t.Signature),
                 new SqlParameter("@Email", t.Email),
+                new SqlParameter("@Website", t.Website),
                 new SqlParameter("@AgreementPrefix", t.AgreementPrefix),
                 new SqlParameter("@OrganizationNumber", t.OrganizationNumber),
                 new SqlParameter("@AgreementTemplate", t.AgreementTemplate)

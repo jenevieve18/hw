@@ -44,7 +44,7 @@ namespace HW.Invoicing.Core.Helpers
 		{
 			byte[] bytes;
 			using (var output = new MemoryStream()) {
-				using (var doc = new Document(PageSize.LETTER, 50f, 50f, 30f, 70f)) {
+				using (var doc = new Document(PageSize.LETTER, 50f, 50f, 30f, 90f)) {
 					using (var writer = PdfWriter.GetInstance(doc, output)) {
 						writer.PageEvent = new PDFFooter(invoice);
 						
@@ -81,6 +81,7 @@ namespace HW.Invoicing.Core.Helpers
 			Image logo = Image.GetInstance(invoice.Company.InvoiceLogo);
 			logo.ScalePercent(55);
 			t2.AddCell(new PdfPCell(logo) { Border = Rectangle.NO_BORDER });
+			t2.AddCell(new PdfPCell(new Phrase(" ", normalFont)) { Border = Rectangle.NO_BORDER });
 			t2.AddCell(new PdfPCell(new Phrase("Beställare/Leveransadress/Faktureringsadress", normalFont)) { Border = Rectangle.NO_BORDER });
 			t2.AddCell(new PdfPCell(new Phrase(invoice.Customer.ToString() + "\n\n" + invoice.Customer.PurchaseOrderNumber, normalFont)) { Border = Rectangle.NO_BORDER });
 			
@@ -135,11 +136,11 @@ namespace HW.Invoicing.Core.Helpers
 			}
 			t.SetWidths(widths.ToArray());
 			
-			t.AddCell(new PdfPCell(new Phrase("SPECIFIKATION", headerFont)) { Colspan = 14, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
-			t.AddCell(new PdfPCell(new Phrase("PRIS", headerFont)) { Colspan = 2, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER });
+			t.AddCell(new PdfPCell(new Phrase("SPECIFIKATION", headerFont)) { Colspan = 13, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
+			t.AddCell(new PdfPCell(new Phrase("PRIS", headerFont)) { Colspan = 3, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER });
 			foreach (var tb in invoice.Timebooks) {
-				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.ToString(), normalFont)) { Colspan = 14, Border = Rectangle.NO_BORDER });
-				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Amount.ToString("### ### ##0.00"), normalFont)) { Colspan = 2, HorizontalAlignment = Element.ALIGN_RIGHT, Border = Rectangle.LEFT_BORDER });
+				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.ToString(), normalFont)) { Colspan = 13, Border = Rectangle.NO_BORDER });
+				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Amount.ToString("### ### ##0.00"), normalFont)) { Colspan = 3, HorizontalAlignment = Element.ALIGN_RIGHT, Border = Rectangle.LEFT_BORDER });
 			}
 			
 			t.AddCell(new PdfPCell(new Phrase(" ")) { Colspan = 16, Border = Rectangle.NO_BORDER });
@@ -195,6 +196,7 @@ namespace HW.Invoicing.Core.Helpers
 		public class PDFFooter : PdfPageEventHelper
 		{
 			Font font = FontFactory.GetFont("Arial", 7, Font.NORMAL, BaseColor.BLACK);
+			Font font2 = FontFactory.GetFont("Arial", 6, Font.NORMAL, BaseColor.BLACK);
 			Invoice invoice;
 			
 			public PDFFooter(Invoice invoice)
@@ -230,15 +232,17 @@ namespace HW.Invoicing.Core.Helpers
 				t.SetWidths(new float[] { w / x * 1.5f, w / x * 5, w / x * 1.5f, w / x * 2 });
 				
 				t.AddCell(new PdfPCell(new Phrase(invoice.Company.Name, font)) { Colspan = 2, Border = Rectangle.NO_BORDER });
-				t.AddCell(new PdfPCell(new Phrase("Bankgiro", font)) { Border = Rectangle.NO_BORDER });
-				t.AddCell(new PdfPCell(new Phrase(invoice.Company.BankAccountNumber, font)) { Border = Rectangle.NO_BORDER });
+				t.AddCell(new PdfPCell(new Phrase("Bankgiro " + invoice.Company.BankAccountNumber, font)) { Colspan = 2, Border = Rectangle.NO_BORDER });
+//				t.AddCell(new PdfPCell(new Phrase(invoice.Company.BankAccountNumber, font)) { Border = Rectangle.NO_BORDER });
+//				t.AddCell("");
 				
-				t.AddCell(new PdfPCell(new Phrase(" ", font)) { Colspan = 4, Border = Rectangle.NO_BORDER });
+				t.AddCell(new PdfPCell(new Phrase(" ", font2)) { Colspan = 4, Border = Rectangle.NO_BORDER });
 				
 				t.AddCell(new PdfPCell(new Phrase("Postadress", font)) { Border = Rectangle.NO_BORDER });
-				t.AddCell(new PdfPCell(new Phrase(invoice.Company.Address, font)) { Border = Rectangle.NO_BORDER });
-				t.AddCell(new PdfPCell(new Phrase("VAT/Momsreg.nr", font)) { Border = Rectangle.NO_BORDER });
-				t.AddCell(new PdfPCell(new Phrase(invoice.Company.TIN, font)) { Border = Rectangle.NO_BORDER });
+				t.AddCell(new PdfPCell(new Phrase(invoice.Company.Address.Clean("\n", "\r"), font)) { Border = Rectangle.NO_BORDER });
+				t.AddCell(new PdfPCell(new Phrase("VAT/Momsreg.nr " + invoice.Company.TIN, font)) { Colspan = 2, Border = Rectangle.NO_BORDER });
+//				t.AddCell(new PdfPCell(new Phrase(invoice.Company.TIN, font)) { Border = Rectangle.NO_BORDER });
+//				t.AddCell("");
 
 				t.AddCell(new PdfPCell(new Phrase("Telefon", font)) { Border = Rectangle.NO_BORDER });
 				t.AddCell(new PdfPCell(new Phrase(invoice.Company.Phone, font)) { Border = Rectangle.NO_BORDER });
@@ -246,8 +250,9 @@ namespace HW.Invoicing.Core.Helpers
 				t.AddCell(new PdfPCell(new Phrase("", font)) { Border = Rectangle.NO_BORDER });
 
 				t.AddCell(new PdfPCell(new Phrase("Web", font)) { Border = Rectangle.NO_BORDER });
-				t.AddCell(new PdfPCell(new Phrase(invoice.Company.Website, font)) { Border = Rectangle.NO_BORDER });
-				t.AddCell(new PdfPCell(new Phrase(invoice.Company.OrganizationNumber, font)) { Colspan = 2, Border = Rectangle.NO_BORDER });
+				t.AddCell(new PdfPCell(new Phrase(invoice.Company.GetWebsiteAndEmail(), font)) { Border = Rectangle.NO_BORDER });
+//				t.AddCell(new PdfPCell(new Phrase(invoice.Company.OrganizationNumber, font)) { Colspan = 2, Border = Rectangle.NO_BORDER });
+				t.AddCell(new PdfPCell(new Phrase("Org nr " + invoice.Company.OrganizationNumber, font)) { Colspan = 2, Border = Rectangle.NO_BORDER });
 
 				t.WriteSelectedRows(0, -1, document.Left, document.Bottom, writer.DirectContent);
 			}
