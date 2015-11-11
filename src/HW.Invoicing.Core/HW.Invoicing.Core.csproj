@@ -49,8 +49,8 @@
   <ItemGroup>
     <Compile Include="Helpers\AbstractInvoiceExporter.cs" />
     <Compile Include="Helpers\HCGEAgreementExporter.cs" />
-    <Compile Include="Helpers\HCGFInvoiceExporter.cs" />
-    <Compile Include="Helpers\IHGFInvoiceExporter.cs" />
+    <Compile Include="Helpers\HCGInvoiceExporter.cs" />
+    <Compile Include="Helpers\IHGInvoiceExporter.cs" />
     <Compile Include="Helpers\InvoiceExporterFactory.cs" />
     <Compile Include="Helpers\ItemHelper.cs" />
     <Compile Include="Models\Company.cs" />

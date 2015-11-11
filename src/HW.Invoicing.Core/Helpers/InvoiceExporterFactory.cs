@@ -20,8 +20,9 @@ namespace HW.Invoicing.Core.Helpers
 		{
 			switch (companyId) {
 //					case IHGF: return new IHGFInvoiceExporter();
-					case IHGF: return new IHGFInvoiceExporter(new IHGFInvoicePDFScratchGenerator());
-					case HCGF: return new HCGFInvoiceExporter();
+//					case HCGF: return new HCGInvoiceExporter();
+					case IHGF: return new IHGInvoiceExporter(new IHGInvoicePDFScratchGenerator());
+					case HCGF: return new HCGInvoiceExporter(new HCGInvoicePDFScratchGenerator());
 					default: throw new NotSupportedException();
 			}
 		}

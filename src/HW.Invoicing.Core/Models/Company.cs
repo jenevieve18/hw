@@ -29,6 +29,7 @@ namespace HW.Invoicing.Core.Models
         public string AgreementTemplate { get; set; }
         public User User { get; set; }
         public List<CompanyUser> Users { get; set; }
+		public string Website { get; set; }
         
         public override string ToString()
         {

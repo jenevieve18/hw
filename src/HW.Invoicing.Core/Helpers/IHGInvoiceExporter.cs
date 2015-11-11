@@ -11,15 +11,15 @@ using HW.Core.Helpers;
 
 namespace HW.Invoicing.Core.Helpers
 {
-	public class IHGFInvoiceExporter : AbstractInvoiceExporter
+	public class IHGInvoiceExporter : AbstractInvoiceExporter
 	{
-		IIHGFInvoicePDFGenerator generator;
+		IInvoicePDFGenerator generator;
 		
-		public IHGFInvoiceExporter() : this(new IHGFInvoicePDFTemplateGenerator())
+		public IHGInvoiceExporter() : this(new IHGInvoicePDFTemplateGenerator())
 		{
 		}
 		
-		public IHGFInvoiceExporter(IIHGFInvoicePDFGenerator generator)
+		public IHGInvoiceExporter(IInvoicePDFGenerator generator)
 		{
 			this.generator = generator;
 		}
@@ -30,12 +30,7 @@ namespace HW.Invoicing.Core.Helpers
 		}
 	}
 	
-	public interface IIHGFInvoicePDFGenerator
-	{
-		MemoryStream Generate(Invoice invoice, string templateFileName, string font, bool flatten);
-	}
-	
-	public class IHGFInvoicePDFScratchGenerator : IIHGFInvoicePDFGenerator
+	public class IHGInvoicePDFScratchGenerator : AbstractInvoicePDFGenerator
 	{
 		Font normalFont = FontFactory.GetFont("Arial", 9, Font.NORMAL, BaseColor.BLACK);
 		Font titleFont = FontFactory.GetFont("Arial", 16, Font.NORMAL, BaseColor.BLACK);
@@ -45,7 +40,7 @@ namespace HW.Invoicing.Core.Helpers
 		Font smallFont = FontFactory.GetFont("Arial", 8, Font.NORMAL, BaseColor.BLACK);
 		Font smallestFont = FontFactory.GetFont("Arial", 3, Font.NORMAL, BaseColor.BLACK);
 		
-		public MemoryStream Generate(Invoice invoice, string templateFileName, string font, bool flatten)
+		public override MemoryStream Generate(Invoice invoice, string templateFileName, string font, bool flatten)
 		{
 			byte[] bytes;
 			using (var output = new MemoryStream()) {
@@ -126,6 +121,42 @@ namespace HW.Invoicing.Core.Helpers
 			return t;
 		}
 		
+		PdfPTable GetInvoiceItems(Invoice invoice, Document document)
+		{
+			PdfPTable t = new PdfPTable(16) {
+				TotalWidth = document.Right - document.Left,
+				WidthPercentage = 100
+			};
+			var w = t.TotalWidth;
+			float x = 16;
+			var widths = new List<float>();
+			for (int i = 0; i < 16; i++) {
+				widths.Add(w / x * 1);
+			}
+			t.SetWidths(widths.ToArray());
+			
+			t.AddCell(new PdfPCell(new Phrase("SPECIFIKATION", headerFont)) { Colspan = 10, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
+			t.AddCell(new PdfPCell(new Phrase("ANTAL", headerFont)) { Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
+			t.AddCell(new PdfPCell(new Phrase("ENHET", headerFont)) { Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
+			t.AddCell(new PdfPCell(new Phrase("PRIS PER ENHET", headerFont)) { Colspan = 2, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
+			t.AddCell(new PdfPCell(new Phrase("BELOPP", headerFont)) { Colspan = 2, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER });
+			foreach (var tb in invoice.Timebooks) {
+				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.ToString(), normalFont)) { Colspan = 10, Border = Rectangle.NO_BORDER });
+				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Quantity.ToString(), normalFont)) { HorizontalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
+				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Item.Unit.Name, normalFont)) { HorizontalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
+				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Price.ToString("### ##0.00"), normalFont)) { Colspan = 2, HorizontalAlignment = Element.ALIGN_RIGHT, Border = Rectangle.NO_BORDER });
+				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Amount.ToString("### ###0.00"), normalFont)) { Colspan = 2, HorizontalAlignment = Element.ALIGN_RIGHT, Border = Rectangle.NO_BORDER });
+			}
+			
+			t.AddCell(new PdfPCell(new Phrase(" ")) { Colspan = 16, Border = Rectangle.NO_BORDER });
+			t.AddCell(new PdfPCell(new Phrase(" ")) { Colspan = 16, Border = Rectangle.NO_BORDER });
+			t.AddCell(new PdfPCell(new Phrase(" ")) { Colspan = 16, Border = Rectangle.NO_BORDER });
+			
+			t.AddCell(new PdfPCell(new Phrase(invoice.Comments, normalFont)) { Colspan = 16, Border = Rectangle.NO_BORDER });
+			
+			return t;
+		}
+		
 		PdfPTable GetInvoiceTotal(Invoice invoice, Document document)
 		{
 			PdfPTable t = new PdfPTable(16) {
@@ -167,76 +198,7 @@ namespace HW.Invoicing.Core.Helpers
 			return t;
 		}
 		
-		PdfPTable GetInvoiceItems(Invoice invoice, Document document)
-		{
-			PdfPTable t = new PdfPTable(16) {
-				TotalWidth = document.Right - document.Left,
-				WidthPercentage = 100
-			};
-			var w = t.TotalWidth;
-			float x = 16;
-			var widths = new List<float>();
-			for (int i = 0; i < 16; i++) {
-				widths.Add(w / x * 1);
-			}
-			t.SetWidths(widths.ToArray());
-			
-			t.AddCell(new PdfPCell(new Phrase("SPECIFIKATION", headerFont)) { Colspan = 10, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
-			t.AddCell(new PdfPCell(new Phrase("ANTAL", headerFont)) { Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
-			t.AddCell(new PdfPCell(new Phrase("ENHET", headerFont)) { Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
-			t.AddCell(new PdfPCell(new Phrase("PRIS PER ENHET", headerFont)) { Colspan = 2, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
-			t.AddCell(new PdfPCell(new Phrase("BELOPP", headerFont)) { Colspan = 2, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER });
-			foreach (var tb in invoice.Timebooks) {
-				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.ToString(), normalFont)) { Colspan = 10, Border = Rectangle.NO_BORDER });
-				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Quantity.ToString(), normalFont)) { HorizontalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
-				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Item.Unit.Name, normalFont)) { HorizontalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
-				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Price.ToString("### ##0.00"), normalFont)) { Colspan = 2, HorizontalAlignment = Element.ALIGN_RIGHT, Border = Rectangle.NO_BORDER });
-				t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Amount.ToString("### ###0.00"), normalFont)) { Colspan = 2, HorizontalAlignment = Element.ALIGN_RIGHT, Border = Rectangle.NO_BORDER });
-			}
-			
-			t.AddCell(new PdfPCell(new Phrase(" ")) { Colspan = 16, Border = Rectangle.NO_BORDER });
-			t.AddCell(new PdfPCell(new Phrase(" ")) { Colspan = 16, Border = Rectangle.NO_BORDER });
-			t.AddCell(new PdfPCell(new Phrase(" ")) { Colspan = 16, Border = Rectangle.NO_BORDER });
-			
-			t.AddCell(new PdfPCell(new Phrase(invoice.Comments, normalFont)) { Colspan = 16, Border = Rectangle.NO_BORDER });
-			
-			return t;
-		}
-		
-		PdfPCell B(Font font, int colspan)
-		{
-			return new PdfPCell(new Phrase(" ", font)) {
-				Colspan = colspan,
-				Border = Rectangle.NO_BORDER
-			};
-		}
-		
-		PdfPCell C(string text, Font font, int padding)
-		{
-			return C(text, font, Rectangle.NO_BORDER, padding);
-		}
-		
-		PdfPCell C(string text, Font font, int border, int padding)
-		{
-			return C(text, font, border, padding, 1, Element.ALIGN_LEFT);
-		}
-		
-		PdfPCell C(string text, Font font, int border, int padding, int colspan)
-		{
-			return C(text, font, border, padding, colspan, Element.ALIGN_LEFT);
-		}
-		
-		PdfPCell C(string text, Font font, int border, int padding, int colspan, int align)
-		{
-			return new PdfPCell(new Phrase(text, font)) {
-				Border = border,
-				Padding = padding,
-				Colspan = colspan,
-				HorizontalAlignment = align
-			};
-		}
-		
-		public class PDFFooter : PdfPageEventHelper
+		class PDFFooter : PdfPageEventHelper
 		{
 			Font font = FontFactory.GetFont("Arial", 7, Font.NORMAL, BaseColor.BLACK);
 			Invoice invoice;
@@ -299,7 +261,7 @@ namespace HW.Invoicing.Core.Helpers
 		}
 	}
 	
-	public class IHGFInvoicePDFTemplateGenerator : IIHGFInvoicePDFGenerator
+	public class IHGInvoicePDFTemplateGenerator : IInvoicePDFGenerator
 	{
 		public MemoryStream Generate(Invoice invoice, string templateFileName, string font, bool flatten)
 		{
@@ -377,79 +339,79 @@ namespace HW.Invoicing.Core.Helpers
 			form.SetFieldProperty(name, "textfont", f, null);
 			form.SetFieldProperty(name, "textsize", size, null);
 		}
-	}
-	
-	public class IHGFVATBox
-	{
-		PdfContentByte cb;
-		float y = 87.5f;
-		float height = 27f;
-		IDictionary<decimal, decimal> vats;
-		string calibriFont;
-		AcroFields form;
 		
-		public IHGFVATBox(PdfContentByte cb, IDictionary<decimal, decimal> vats, string calibriFont, AcroFields form)
+		public class IHGFVATBox
 		{
-			this.cb = cb;
-			this.vats = vats;
-			this.calibriFont = calibriFont;
-			this.form = form;
-		}
-		
-		public void Draw()
-		{
-			float x = 359f;
-			int i = 0;
+			PdfContentByte cb;
+			float y = 87.5f;
+			float height = 27f;
+			IDictionary<decimal, decimal> vats;
+			string calibriFont;
+			AcroFields form;
 			
-			var keys = vats.Keys.ToList().OrderByDescending(j => j);
-			
-			foreach (var v in keys) {
-				if (i == 0) {
-					form.SetField("Text11b", v.ToString());
-					form.SetField("Text12", vats[v].ToString("### ##0.00"));
-				} else {
-					x -= 64f;
-					
-					DrawRectangle(x, y, 64f, height);
-					SetTexts("MOMS, SEK", vats[v].ToString("### ##0.00"), x + 3, y + 19, y + 4.5f);
-					
-					x -= 41.5f;
-					DrawRectangle(x, y, 41.5f, height);
-					SetTexts("MOMS %", v.ToString(), x + 3, y + 19, y + 4.5f);
-				}
-				i++;
+			public IHGFVATBox(PdfContentByte cb, IDictionary<decimal, decimal> vats, string calibriFont, AcroFields form)
+			{
+				this.cb = cb;
+				this.vats = vats;
+				this.calibriFont = calibriFont;
+				this.form = form;
 			}
-		}
-		
-		void DrawRectangle(float x, float y, float width, float height)
-		{
-			cb.SetLineWidth(0.3);
-			cb.SetColorStroke(BaseColor.DARK_GRAY);
-			cb.Rectangle(x, y, width, height);
-			cb.SaveState();
-			cb.SetColorFill(new BaseColor(241, 241, 242));
-			cb.Fill();
-			cb.RestoreState();
 			
-			cb.Rectangle(x, y, width, height);
-			cb.Stroke();
-		}
-		
-		void SetTexts(string label, string val, float x, float y, float y2)
-		{
-			BaseFont bf = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
-			cb.SetColorFill(BaseColor.DARK_GRAY);
-			cb.SetFontAndSize(bf, 6);
+			public void Draw()
+			{
+				float x = 359f;
+				int i = 0;
+				
+				var keys = vats.Keys.ToList().OrderByDescending(j => j);
+				
+				foreach (var v in keys) {
+					if (i == 0) {
+						form.SetField("Text11b", v.ToString());
+						form.SetField("Text12", vats[v].ToString("### ##0.00"));
+					} else {
+						x -= 64f;
+						
+						DrawRectangle(x, y, 64f, height);
+						SetTexts("MOMS, SEK", vats[v].ToString("### ##0.00"), x + 3, y + 19, y + 4.5f);
+						
+						x -= 41.5f;
+						DrawRectangle(x, y, 41.5f, height);
+						SetTexts("MOMS %", v.ToString(), x + 3, y + 19, y + 4.5f);
+					}
+					i++;
+				}
+			}
+			
+			void DrawRectangle(float x, float y, float width, float height)
+			{
+				cb.SetLineWidth(0.3);
+				cb.SetColorStroke(BaseColor.DARK_GRAY);
+				cb.Rectangle(x, y, width, height);
+				cb.SaveState();
+				cb.SetColorFill(new BaseColor(241, 241, 242));
+				cb.Fill();
+				cb.RestoreState();
+				
+				cb.Rectangle(x, y, width, height);
+				cb.Stroke();
+			}
+			
+			void SetTexts(string label, string val, float x, float y, float y2)
+			{
+				BaseFont bf = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+				cb.SetColorFill(BaseColor.DARK_GRAY);
+				cb.SetFontAndSize(bf, 6);
 
-			cb.BeginText();
-			cb.ShowTextAligned(Element.ALIGN_LEFT, label, x, y, 0);
-			cb.EndText();
-			
-			bf = BaseFont.CreateFont(calibriFont, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
-			cb.SetFontAndSize(bf, 10);
-			cb.BeginText();
-			cb.ShowTextAligned(Element.ALIGN_LEFT, val, x + 1, y2, 0);
-			cb.EndText();
+				cb.BeginText();
+				cb.ShowTextAligned(Element.ALIGN_LEFT, label, x, y, 0);
+				cb.EndText();
+				
+				bf = BaseFont.CreateFont(calibriFont, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+				cb.SetFontAndSize(bf, 10);
+				cb.BeginText();
+				cb.ShowTextAligned(Element.ALIGN_LEFT, val, x + 1, y2, 0);
+				cb.EndText();
+			}
 		}
 	}
 }

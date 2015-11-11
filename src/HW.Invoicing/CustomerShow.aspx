@@ -105,16 +105,13 @@
                         vats[e.vat] = vatAmount;
                     }
                 });
-                //console.log(subTotal);
                 var strVat = '', strVatLabel = '';
                 var totalVat = 0;
                 var vatKeys = new Array();
                 for (var v in vats) {
                     vatKeys.push(v);
-                    //console.log(v);
                 }
                 vatKeys.sort();
-                //for (var v in vats) {
                 for (var i = 0; i < vatKeys.length; i++) {
                     var v = vatKeys[i];
                     strVat += '   <td style="width:10%" class="hw-border-left">' + v + '</td>';
@@ -191,7 +188,7 @@
             var errors = [];
             var price = $('#<%= textBoxItemPrice.ClientID %>').val();
             addErrorIf(errors, price == '', "Price shouldn't be empty.");
-            addErrorIf(errors, isNaN(price), "Price should be a number.");
+            //addErrorIf(errors, isNaN(price), "Price should be a number.");
             addErrorIf(errors, !isNaN(price) && parseFloat(price) <= 0, "Price should be greater than zero.");
             return displayMessage(errors, '#customer-price-message');
         }
