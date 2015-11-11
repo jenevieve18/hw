@@ -140,7 +140,7 @@ Stockholm, Sweden",
 					InvoiceLogo = "hcg.jpg",
 					Website = "www.danhasson.se",
 					Email = "info@danhasson.se",
-					OrganizationNumber = "Org nr 556757-0568"
+					OrganizationNumber = "556757-0568"
 				};
 				MemoryStream s = hcg.Export(i, @"HCG Fakturamall tom without comments.pdf", "calibri.ttf", true);
 				s.WriteTo(f);
