@@ -138,7 +138,7 @@ Stockholm, Sweden",
 					BankAccountNumber = "5091 – 8853",
 					Phone = "+46-70-7284298",
 					TIN = "SE556712369901",
-					InvoiceLogo = "hcg.jpg",
+					InvoiceLogo = "hcg.png",
 					Website = "www.danhasson.se",
 					Email = "info@danhasson.se",
 					OrganizationNumber = "556757-0568"

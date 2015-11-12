@@ -196,6 +196,7 @@ namespace HW.Invoicing.Core.Helpers
 		public class PDFFooter : PdfPageEventHelper
 		{
 			Font font = FontFactory.GetFont("Arial", 7, Font.NORMAL, BaseColor.BLACK);
+			Font boldFont = FontFactory.GetFont("Arial", 7, Font.BOLD, BaseColor.BLACK);
 			Font font2 = FontFactory.GetFont("Arial", 3, Font.NORMAL, BaseColor.BLACK);
 			Invoice invoice;
 			
@@ -226,8 +227,8 @@ namespace HW.Invoicing.Core.Helpers
 				float x = 10;
 				t.SetWidths(new float[] { w / x * 1.5f, w / x * 5, w / x * 1.5f, w / x * 2 });
 				
-				t.AddCell(new PdfPCell(new Phrase(invoice.Company.Name, font)) { Colspan = 2, Border = Rectangle.NO_BORDER });
-				t.AddCell(new PdfPCell(new Phrase("Bankgiro " + invoice.Company.BankAccountNumber, font)) { Colspan = 2, Border = Rectangle.NO_BORDER });
+				t.AddCell(new PdfPCell(new Phrase(invoice.Company.Name, boldFont)) { Colspan = 2, Border = Rectangle.NO_BORDER });
+				t.AddCell(new PdfPCell(new Phrase("Bankgiro " + invoice.Company.BankAccountNumber, boldFont)) { Colspan = 2, Border = Rectangle.NO_BORDER });
 				
 				t.AddCell(new PdfPCell(new Phrase(" ", font2)) { Colspan = 4, Border = Rectangle.NO_BORDER, Padding = 0 });
 				
