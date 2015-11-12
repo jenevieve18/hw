@@ -139,11 +139,6 @@ namespace HW.Invoicing.Core.Helpers
 			t.AddCell(C(" ", smallestFont, Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER, 0, 13));
 			t.AddCell(C(" ", smallestFont, Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER, 0, 3));
 			
-//			t.AddCell(new PdfPCell(new Phrase(" ", smallestFont)) { Colspan = 13, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
-//			t.AddCell(new PdfPCell(new Phrase(" ", smallestFont)) { Colspan = 3, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER });
-			
-//			t.AddCell(new PdfPCell(new Phrase("SPECIFIKATION", headerFont)) { Colspan = 13, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER });
-//			t.AddCell(new PdfPCell(new Phrase("PRIS", headerFont)) { Colspan = 3, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER });
 			t.AddCell(new PdfPCell(new Phrase("SPECIFIKATION", headerFont)) { Colspan = 13, Border = Rectangle.NO_BORDER });
 			t.AddCell(new PdfPCell(new Phrase("PRIS", headerFont)) { Colspan = 3, Border = Rectangle.LEFT_BORDER });
 			
@@ -205,7 +200,7 @@ namespace HW.Invoicing.Core.Helpers
 		public class PDFFooter : PdfPageEventHelper
 		{
 			Font font = FontFactory.GetFont("Arial", 7, Font.NORMAL, BaseColor.BLACK);
-			Font font2 = FontFactory.GetFont("Arial", 6, Font.NORMAL, BaseColor.BLACK);
+			Font font2 = FontFactory.GetFont("Arial", 3, Font.NORMAL, BaseColor.BLACK);
 			Invoice invoice;
 			
 			public PDFFooter(Invoice invoice)
@@ -238,7 +233,7 @@ namespace HW.Invoicing.Core.Helpers
 				t.AddCell(new PdfPCell(new Phrase(invoice.Company.Name, font)) { Colspan = 2, Border = Rectangle.NO_BORDER });
 				t.AddCell(new PdfPCell(new Phrase("Bankgiro " + invoice.Company.BankAccountNumber, font)) { Colspan = 2, Border = Rectangle.NO_BORDER });
 				
-				t.AddCell(new PdfPCell(new Phrase(" ", font2)) { Colspan = 4, Border = Rectangle.NO_BORDER });
+				t.AddCell(new PdfPCell(new Phrase(" ", font2)) { Colspan = 4, Border = Rectangle.NO_BORDER, Padding = 0 });
 				
 				t.AddCell(new PdfPCell(new Phrase("Postadress", font)) { Border = Rectangle.NO_BORDER });
 				t.AddCell(new PdfPCell(new Phrase(invoice.Company.Address.Clean("\n", "\r"), font)) { Border = Rectangle.NO_BORDER });
