@@ -30,7 +30,7 @@
                 <td><strike><%= i.Title %></strike></td>
                 <td><strike><%= i.Description %></strike></td>
                 <td><strike><%= i.Milestone.Name %></strike></td>
-                <td><%= i.GetPriority() %></td>
+                <td><small><%= i.GetPriority() %></small></td>
                 <td><%= i.GetStatus() %></td>
                 <td>
                     <%= HtmlHelper.Anchor(" ", string.Format("issueedit.aspx?Id=" + i.Id), "title='Edit' class='glyphicon glyphicon-edit'")%>
@@ -43,7 +43,7 @@
                 <td><%= i.Title %></td>
                 <td><%= i.Description %></td>
                 <td><%= i.Milestone.Name %></td>
-                <td><%= i.GetPriority()  %></td>
+                <td><small><%= i.GetPriority()  %></small></td>
                 <td><%= i.GetStatus() %></td>
                 <td>
                     <%= HtmlHelper.Anchor(" ", string.Format("issueedit.aspx?Id=" + i.Id), "title='Edit' class='glyphicon glyphicon-edit'")%>
