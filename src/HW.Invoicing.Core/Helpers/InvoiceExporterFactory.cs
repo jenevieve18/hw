@@ -19,12 +19,26 @@ namespace HW.Invoicing.Core.Helpers
 		public static IInvoiceExporter GetExporter(int companyId)
 		{
 			switch (companyId) {
-//					case IHGF: return new IHGFInvoiceExporter();
-//					case HCGF: return new HCGInvoiceExporter();
 					case IHGF: return new IHGInvoiceExporter(new IHGInvoicePDFScratchGenerator());
 					case HCGF: return new HCGInvoiceExporter(new HCGInvoicePDFScratchGenerator());
 					default: throw new NotSupportedException();
 			}
+		}
+		
+		public static IInvoiceExporter GetExporter2(int index)
+		{
+			return GetExporters()[index];
+		}
+		
+		public static IList<IInvoiceExporter> GetExporters()
+		{
+			return new List<IInvoiceExporter>(
+				new IInvoiceExporter[] {
+					new IHGInvoiceExporter(),
+					new HCGInvoiceExporter(),
+					new VCInvoiceExporter()
+				}
+			);
 		}
 	}
 }

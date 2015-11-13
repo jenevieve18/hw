@@ -15,7 +15,13 @@ namespace HW.Invoicing.Core.Helpers
 	{
 		IInvoicePDFGenerator generator;
 		
-		public IHGInvoiceExporter() : this(new IHGInvoicePDFTemplateGenerator())
+		public override string Name {
+			get {
+				return "IHG Invoice Exporter";
+			}
+		}
+		
+		public IHGInvoiceExporter() : this(new IHGInvoicePDFScratchGenerator())
 		{
 		}
 		

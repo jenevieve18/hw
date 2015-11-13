@@ -15,7 +15,13 @@ namespace HW.Invoicing.Core.Helpers
 	{
 		IInvoicePDFGenerator generator;
 		
-		public HCGInvoiceExporter() : this(new HCGFInvoicePDFTemplateGenerator())
+		public override string Name {
+			get {
+				return "HCG Invoice Exporter";
+			}
+		}
+		
+		public HCGInvoiceExporter() : this(new HCGInvoicePDFScratchGenerator())
 		{
 		}
 		

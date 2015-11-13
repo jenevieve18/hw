@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using HW.Invoicing.Core.Models;
 using HW.Invoicing.Core.Repositories.Sql;
 using HW.Core.Helpers;
+using HW.Invoicing.Core.Helpers;
 
 namespace HW.Invoicing
 {
@@ -22,6 +23,13 @@ namespace HW.Invoicing
             {
                 textBoxFinancialMonthStart.Text = DateTime.Now.ToString("yyyy-MM-dd");
                 textBoxFinancialMonthEnd.Text = DateTime.Now.AddYears(1).AddDays(-1).ToString("yyyy-MM-dd");
+
+                dropDownListInvoiceExporter.Items.Clear();
+                int i = 0;
+                foreach (var x in InvoiceExporterFactory.GetExporters())
+                {
+                    dropDownListInvoiceExporter.Items.Add(new ListItem(x.Name, (i++).ToString()));
+                }
             }
         }
 
@@ -40,11 +48,11 @@ namespace HW.Invoicing
                 fileUploadInvoiceLogo.SaveAs(Server.MapPath("~/uploads/" + logo));
             }
             string template = "";
-            if (fileUploadInvoiceTemplate.HasFile)
-            {
-                template = fileUploadInvoiceTemplate.FileName;
-                fileUploadInvoiceTemplate.SaveAs(Server.MapPath("~/uploads/" + template));
-            }
+            //if (fileUploadInvoiceTemplate.HasFile)
+            //{
+            //    template = fileUploadInvoiceTemplate.FileName;
+            //    fileUploadInvoiceTemplate.SaveAs(Server.MapPath("~/uploads/" + template));
+            //}
             var c = new Company {
                 Name = textBoxName.Text,
                 Address = textBoxAddress.Text,
@@ -63,6 +71,7 @@ namespace HW.Invoicing
                 Signature = signature,
                 AgreementPrefix = textBoxAgreementPrefix.Text,
                 OrganizationNumber = textBoxOrganizationNumber.Text,
+                InvoiceExporter = ConvertHelper.ToInt32(dropDownListInvoiceExporter.SelectedValue),
 
                 AgreementEmailSubject = textBoxAgreementEmailSubject.Text,
                 AgreementEmailText = textBoxAgreementEmailText.Text,

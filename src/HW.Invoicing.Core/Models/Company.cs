@@ -30,6 +30,7 @@ namespace HW.Invoicing.Core.Models
         public User User { get; set; }
         public List<CompanyUser> Users { get; set; }
 		public string Website { get; set; }
+        public int InvoiceExporter { get; set; }
 		
 		public string GetWebsiteAndEmail()
 		{

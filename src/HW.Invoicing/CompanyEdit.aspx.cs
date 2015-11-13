@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using HW.Invoicing.Core.Repositories.Sql;
 using HW.Core.Helpers;
 using HW.Invoicing.Core.Models;
+using HW.Invoicing.Core.Helpers;
 
 namespace HW.Invoicing
 {
@@ -24,6 +25,13 @@ namespace HW.Invoicing
             company = r.Read(id);
             if (!IsPostBack)
             {
+                dropDownListInvoiceExporter.Items.Clear();
+                int i = 0;
+                foreach (var x in InvoiceExporterFactory.GetExporters())
+                {
+                    dropDownListInvoiceExporter.Items.Add(new ListItem(x.Name, (i++).ToString()));
+                }
+
                 if (company != null)
                 {
                     textBoxName.Text = company.Name;
@@ -49,6 +57,8 @@ namespace HW.Invoicing
 
                     textBoxAgreementSignedEmailText.Text = company.AgreementSignedEmailText;
                     textBoxAgreementSignedEmailSubject.Text = company.AgreementSignedEmailSubject;
+
+                    dropDownListInvoiceExporter.SelectedValue = company.InvoiceExporter.ToString();
                 }
                 else
                 {
@@ -97,16 +107,16 @@ namespace HW.Invoicing
             {
                 invoiceLogo = company.InvoiceLogo;
             }
-            string invoiceTemplate;
-            if (fileUploadInvoiceTemplate.HasFile)
-            {
-                invoiceTemplate = fileUploadInvoiceTemplate.FileName;
-                fileUploadInvoiceTemplate.SaveAs(Server.MapPath("~/uploads/" + invoiceTemplate));
-            }
-            else
-            {
-                invoiceTemplate = company.InvoiceTemplate;
-            }
+            string invoiceTemplate = "";
+            //if (fileUploadInvoiceTemplate.HasFile)
+            //{
+            //    invoiceTemplate = fileUploadInvoiceTemplate.FileName;
+            //    fileUploadInvoiceTemplate.SaveAs(Server.MapPath("~/uploads/" + invoiceTemplate));
+            //}
+            //else
+            //{
+            //    invoiceTemplate = company.InvoiceTemplate;
+            //}
             string agreementTemplate;
             if (fileUploadAgreementTemplate.HasFile)
             {
@@ -134,7 +144,8 @@ namespace HW.Invoicing
                 Signature = signature,
                 AgreementPrefix = textBoxAgreementPrefix.Text,
                 OrganizationNumber = textBoxOrganizationNumber.Text,
-                AgreementTemplate = agreementTemplate
+                AgreementTemplate = agreementTemplate,
+                InvoiceExporter = ConvertHelper.ToInt32(dropDownListInvoiceExporter.SelectedValue)
             };
             r.Update(c, id);
             Response.Redirect("companies.aspx");

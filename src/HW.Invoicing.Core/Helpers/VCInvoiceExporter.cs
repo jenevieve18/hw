@@ -15,6 +15,12 @@ namespace HW.Invoicing.Core.Helpers
 	{
 		IInvoicePDFGenerator generator;
 		
+		public override string Name {
+			get {
+				return "VC Invoice Exporter";
+			}
+		}
+		
 		public VCInvoiceExporter() : this(new VCInvoicePDFScratchGenerator())
 		{
 		}

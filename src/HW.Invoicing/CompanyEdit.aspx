@@ -96,12 +96,17 @@
                 <% } %>
                 <asp:FileUpload ID="fileUploadInvoiceLogo" runat="server" />
             </div>
-            <div class="form-group">
+            <%--<div class="form-group">
                 <label for="<%= fileUploadInvoiceTemplate.ClientID %>">Invoice Template</label>
                 <% if (company.HasInvoiceTemplate) { %>
                     <br /><%= HtmlHelper.Anchor(company.InvoiceTemplate, "uploads/" + company.InvoiceTemplate, "target='_blank'") %>
                 <% } %>
                 <asp:FileUpload ID="fileUploadInvoiceTemplate" runat="server" />
+            </div>--%>
+            <div class="form-group">
+                <label for="<%= dropDownListInvoiceExporter.ClientID %>">Invoice Exporter</label>
+                <asp:DropDownList ID="dropDownListInvoiceExporter" runat="server" CssClass="form-control">
+                </asp:DropDownList>
             </div>
             <div class="form-group">
                 <label for="<%= fileUploadAgreementTemplate.ClientID %>">Agreement Template</label>

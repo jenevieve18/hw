@@ -94,9 +94,14 @@
             <div class="form-group">
                 <asp:CheckBox ID="checkBoxHasSubscriber" runat="server" CssClass="form-control" Text="&nbsp;This company has subscribers." />
             </div>
-            <div class="form-group">
+            <%--<div class="form-group">
                 <label for="<%= fileUploadInvoiceTemplate.ClientID %>">Invoice Template</label>
                 <asp:FileUpload ID="fileUploadInvoiceTemplate" runat="server" />
+            </div>--%>
+            <div class="form-group">
+                <label for="<%= dropDownListInvoiceExporter.ClientID %>">Invoice Exporter</label>
+                <asp:DropDownList ID="dropDownListInvoiceExporter" runat="server" CssClass="form-control">
+                </asp:DropDownList>
             </div>
             <div class="form-group">
                 <label for="<%= fileUploadAgreementTemplate.ClientID %>">Agreement Template</label>

@@ -139,13 +139,13 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.FileUpload fileUploadInvoiceLogo;
         
         /// <summary>
-        /// fileUploadInvoiceTemplate control.
+        /// dropDownListInvoiceExporter control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fileUploadInvoiceTemplate;
+        protected global::System.Web.UI.WebControls.DropDownList dropDownListInvoiceExporter;
         
         /// <summary>
         /// fileUploadAgreementTemplate control.
