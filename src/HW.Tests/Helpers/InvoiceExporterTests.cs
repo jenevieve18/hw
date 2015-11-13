@@ -110,9 +110,12 @@ Scottsdale, AZ 85256"
 					Address = @"Rörstrandsgatan 36, 113 40
 Stockholm, Sweden",
 					BankAccountNumber = "5091 – 8853",
+					OrganizationNumber = "556757-0568",
 					Phone = "+46-70-7284298",
 					TIN = "SE556712369901",
-					InvoiceLogo = "ihg.png"
+					InvoiceLogo = "ihg.png",
+					Website = "www.healthwatch.se",
+					Email = "dan.hasson@healthwatch.se"
 				};
 				MemoryStream s = ihg.Export(i, @"IHG faktura MALL Ian without comments.pdf", "arial.ttf", true);
 				s.WriteTo(f);
