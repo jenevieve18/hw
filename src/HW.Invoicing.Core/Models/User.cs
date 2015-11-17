@@ -16,6 +16,7 @@ namespace HW.Invoicing.Core.Models
         	get { return Companies != null && Companies.Count > 0; }
         }
         public IList<UserCompany> Companies { get; set; }
+        public Company SelectedCompany { get; set; }
 	}
 	
 	public class UserCompany : BaseModel
