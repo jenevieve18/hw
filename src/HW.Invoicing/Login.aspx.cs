@@ -11,7 +11,7 @@ namespace HW.Invoicing
 {
     public partial class Login : System.Web.UI.Page
     {
-    	SqlUserRepository r = new SqlUserRepository();
+    	SqlUserRepository ur = new SqlUserRepository();
         SqlCompanyRepository cr = new SqlCompanyRepository();
     	protected string errorMessage;
 
@@ -48,24 +48,16 @@ namespace HW.Invoicing
             Response.Cookies["Password"].Value = textBoxLoginPassword.Text.Trim();
             Response.Cookies["RememberMe"].Value = checkBoxRememberMe.Checked.ToString();
 
-            var u = r.ReadByNameAndPassword(textBoxLoginName.Text, textBoxLoginPassword.Text);
+            var u = ur.ReadByNameAndPassword(textBoxLoginName.Text, textBoxLoginPassword.Text);
             if (u != null)
             {
-                var c = cr.ReadSelectedCompanyByUser(u.Id);
+//                var c = cr.ReadSelectedCompanyByUser(u.Id);
+var c = cr.ReadSelectedCompanyByUser2(u);
                 if (c != null)
                 {
                     Session["CompanyId"] = c.Id;
                     Session["CompanyName"] = c.Name;
                 }
-                /*if (c == null)
-                {
-                    c = cr.ReadFirstCompany(u.Id);
-                    
-                    cr.UnselectByUser(u.Id);
-                    cr.SelectCompany(c.Id);
-                }
-                Session["CompanyId"] = c.Id;
-                Session["CompanyName"] = c.Name;*/
                 Session["UserID"] = u.Id;
                 Session["UserName"] = u.Username;
                 Session["UserRealName"] = u.Name;

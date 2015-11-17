@@ -30,6 +30,21 @@ VALUES(@Username, @Password, @Color, @Name)"
 			);
 		}
 		
+		public void SelectCompany(int userId, int selectedCompany)
+		{
+			string query = string.Format(
+				@"
+UPDATE [User] SET SelectedCompany = @SelectedCompany
+WHERE Id = @Id"
+			);
+			ExecuteNonQuery(
+				query,
+				"invoicing",
+				new SqlParameter("@SelectedCompany", selectedCompany),
+                new SqlParameter("@Id", userId)
+			);
+		}
+		
 		public override void Update(User u, int id)
 		{
 			string query = string.Format(
@@ -117,8 +132,8 @@ WHERE Id = @Id"
 		{
 			string query = string.Format(
 				@"
-SELECT Id, Username, [Password], Name
-FROM [User]
+SELECT Id, Username, [Password], Name, SelectedCompany
+FROM [User] u
 WHERE Username = @Username
 AND [Password] = @Password"
 			);
@@ -134,7 +149,10 @@ AND [Password] = @Password"
 						Id = GetInt32(rs, 0),
 						Username = GetString(rs, 1),
 						Password = GetString(rs, 2),
-                        Name = GetString(rs, 3)
+                        Name = GetString(rs, 3),
+                        SelectedCompany = new Company {
+                        	Id = GetInt32(rs, 4)
+                        }
 					};
 				}
 			}
