@@ -596,7 +596,8 @@ if (t.IsInvoiced || t.IsPaid)
 			switch (Status)
 			{
 					case INVOICED: return string.Format("<span class='label label-warning'>INVOICED</span><br><span class='label label-warning'>{0}</span>", HtmlHelper.Anchor(InvoiceTimebook.Invoice.Number, "invoiceshow.aspx?Id=" + InvoiceTimebook.Invoice.Id));
-					case PAID: return "<span class='label label-success'>PAID</span>";
+					//case PAID: return "<span class='label label-success'>PAID</span>";
+                    case PAID: return string.Format("<span class='label label-success'>PAID</span><br><span class='label label-success'>{0}</span>", HtmlHelper.Anchor(InvoiceTimebook.Invoice.Number, "invoiceshow.aspx?Id=" + InvoiceTimebook.Invoice.Id));
 					default: return "<span class='label label-default'>OPEN</span>";
 			}
 		}
