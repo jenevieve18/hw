@@ -91,7 +91,8 @@ namespace HW.Invoicing.Core.Models
             if (HasLatestSubscriptionTimebook)
             {
                 var t = SubscriptionTimebooks[0];
-                if (t.IsInvoiced)
+//                if (t.IsInvoiced)
+if (t.IsInvoiced || t.IsPaid)
                 {
                     return string.Format("Subscription fee for HealthWatch.se {0} - {1}", startDate.ToString("yyyy.MM.dd"), endDate.ToString("yyyy.MM.dd"));
                 }
@@ -111,7 +112,8 @@ namespace HW.Invoicing.Core.Models
             if (HasLatestSubscriptionTimebook)
             {
                 var t = SubscriptionTimebooks[0];
-                if (t.IsInvoiced)
+//                if (t.IsInvoiced)
+if (t.IsInvoiced || t.IsPaid)
                 {
                     return (decimal)DateHelper.MonthDiff(startDate, endDate);
                 }
@@ -153,7 +155,8 @@ namespace HW.Invoicing.Core.Models
             if (HasSubscriptionTimebooks)
             {
                 var t = SubscriptionTimebooks[0];
-                if (t.IsInvoiced)
+//                if (t.IsInvoiced)
+if (t.IsInvoiced || t.IsPaid)
                 {
                     return t.SubscriptionEndDate.Value.AddDays(1);
                 }
@@ -173,7 +176,8 @@ namespace HW.Invoicing.Core.Models
             if (HasLatestSubscriptionTimebook)
             {
                 var t = SubscriptionTimebooks[0];
-                if (t.IsInvoiced)
+//                if (t.IsInvoiced)
+if (t.IsInvoiced || t.IsPaid)
                 {
                     if (SubscriptionHasEndDate)
                     {
@@ -208,7 +212,8 @@ namespace HW.Invoicing.Core.Models
             if (HasLatestSubscriptionTimebook)
             {
                 var t = SubscriptionTimebooks[0];
-                if (t.IsInvoiced)
+//                if (t.IsInvoiced)
+if (t.IsInvoiced || t.IsPaid)
                 {
                     return 0;
                 }
@@ -228,7 +233,8 @@ namespace HW.Invoicing.Core.Models
             if (HasSubscriptionTimebook(d))
             {
                 var t = SubscriptionTimebooks[0];
-                if (t.IsInvoiced)
+//                if (t.IsInvoiced)
+if (t.IsInvoiced || t.IsPaid)
                 {
                     return "";
                 }
