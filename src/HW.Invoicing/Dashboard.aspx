@@ -66,6 +66,10 @@
                 <li>List <%= HtmlHelper.Anchor("invoices", "invoices.aspx") %> and check receivables.</li>
                 <li>For item <%= HtmlHelper.Anchor("units", "units.apsx") %>, <%= HtmlHelper.Anchor("add", "unitadd.aspx") %> here.</li>
             </ul>
+            <p>Utility tool</p>
+            <ul>
+                <li>Tool for moving <%= HtmlHelper.Anchor("timebooks", "customertimebooks.aspx") %> to other customers. This is only used as a data fixing tool and will be removed when all data is valid.</li>
+            </ul>
         </div>
     </div>
     <div class="col-sm-6">
