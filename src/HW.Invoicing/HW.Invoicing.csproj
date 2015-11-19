@@ -67,6 +67,7 @@
     <Content Include="CustomerAgreementSend.aspx" />
     <Content Include="CustomerAgreementSendLink.aspx" />
     <Content Include="CustomerAgreementThanks.aspx" />
+    <Content Include="CustomerTimebooks.aspx" />
     <Content Include="CustomerTimebookSubscriptionAdd.aspx" />
     <Content Include="css\style.css" />
     <Content Include="CustomerAdd.aspx" />
@@ -218,6 +219,13 @@
     </Compile>
     <Compile Include="CustomerAgreementThanks.aspx.designer.cs">
       <DependentUpon>CustomerAgreementThanks.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerTimebooks.aspx.cs">
+      <DependentUpon>CustomerTimebooks.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomerTimebooks.aspx.designer.cs">
+      <DependentUpon>CustomerTimebooks.aspx</DependentUpon>
     </Compile>
     <Compile Include="CustomerTimebookSubscriptionAdd.aspx.cs">
       <DependentUpon>CustomerTimebookSubscriptionAdd.aspx</DependentUpon>

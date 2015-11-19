@@ -1428,6 +1428,20 @@ ORDER BY c.Inactive, c.Name"
             return customers;
         }
 
+        public void MoveTimebook(int customerId, int timebookId)
+        {
+            string query = string.Format(
+                @"
+UPDATE CustomerTimebook SET CustomerId = @CustomerId
+WHERE Id = @Id"
+            );
+            ExecuteNonQuery(
+                query, "invoicing",
+                new SqlParameter("@CustomerId", customerId),
+                new SqlParameter("@Id", timebookId)
+            );
+        }
+
         public IList<Customer> FindSubscribersByCompany(int companyId)
         {
             string query = string.Format(
