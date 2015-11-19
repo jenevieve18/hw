@@ -13,14 +13,11 @@ namespace HW.Invoicing.Core.Models
 {
 	public class Invoice : BaseModel
 	{
+		public const int INVOICED = 1;
 		public const int PAID = 2;
+		public const int OPEN = 0;
 
 		DateTime? date;
-		
-		public Nullable<DateTime> Date {
-			get { return date; }
-			set { date = value; MaturityDate = date.Value.AddDays(30); }
-		}
 		public DateTime? MaturityDate { get; set; }
 		public Customer Customer { get; set; }
 		public IList<InvoiceTimebook> Timebooks { get; set; }
@@ -30,34 +27,38 @@ namespace HW.Invoicing.Core.Models
 		public string InternalComments { get; set; }
 		public bool Exported { get; set; }
 		public Company Company { get; set; }
-
-		public string GetStatus()
-		{
-			switch (Status)
-			{
-					case PAID: return "<span class='label label-success'>PAID</span>";
-					default: return "<span class='label label-danger'>NOT PAID</span>";
-			}
-		}
 		
 		public Invoice()
 		{
 			Date = DateTime.Now;
 			Timebooks = new List<InvoiceTimebook>();
 		}
+		
+		public Nullable<DateTime> Date {
+			get { return date; }
+			set { date = value; MaturityDate = date.Value.AddDays(30); }
+		}
+		
+		public bool IsPaid {
+			get { return Status == PAID; }
+		}
+
+		public string GetStatus()
+		{
+			switch (Status) {
+					case PAID: return "<span class='label label-success'>PAID</span>";
+					default: return "<span class='label label-danger'>NOT PAID</span>";
+			}
+		}
 
 		public IDictionary<decimal, decimal> VATs
 		{
 			get {
 				var v = new Dictionary<decimal, decimal>();
-				foreach (var t in Timebooks)
-				{
-					if (v.ContainsKey(t.Timebook.VAT))
-					{
+				foreach (var t in Timebooks) {
+					if (v.ContainsKey(t.Timebook.VAT)) {
 						v[t.Timebook.VAT] += t.Timebook.VATAmount;
-					}
-					else
-					{
+					} else {
 						v[t.Timebook.VAT] = t.Timebook.VATAmount;
 					}
 				}
@@ -69,8 +70,7 @@ namespace HW.Invoicing.Core.Models
 		{
 			get {
 				decimal t = 0;
-				foreach (var x in Timebooks)
-				{
+				foreach (var x in Timebooks) {
 					t += (x.Timebook.VAT / 100) * x.Timebook.Amount;
 				}
 				return t;
@@ -79,8 +79,7 @@ namespace HW.Invoicing.Core.Models
 
 		public decimal SubTotal
 		{
-			get
-			{
+			get {
 				return Timebooks.Sum(x => x.Timebook.Amount);
 			}
 		}
@@ -91,43 +90,36 @@ namespace HW.Invoicing.Core.Models
 			}
 		}
 
-        public override void Validate()
-        {
-            base.Validate();
-            AddErrorIf(Timebooks.Count <= 0, "There should be at least one timebook in an invoice.");
-        }
+		public override void Validate()
+		{
+			base.Validate();
+			AddErrorIf(Timebooks.Count <= 0, "There should be at least one timebook in an invoice.");
+		}
 
 		public void AddTimebook(string[] timebooks)
 		{
-            if (timebooks != null)
-            {
-                foreach (var t in timebooks)
-                {
-                    var s = t.Split('|');
-                    if (s.Length > 1)
-                    {
-                        AddTimebook(
-                            new InvoiceTimebook
-                            {
-                                Timebook = new CustomerTimebook
-                                {
-                                    Id = ConvertHelper.ToInt32(s[0]),
-                                    Customer = new Customer { Id = ConvertHelper.ToInt32(s[1]) },
-                                    Item = new Item { Id = ConvertHelper.ToInt32(s[2]) },
-                                    Price = ConvertHelper.ToDecimal(s[3]),
-                                    VAT = ConvertHelper.ToDecimal(s[4]),
-                                    Quantity = ConvertHelper.ToDecimal(s[5]),
-                                    Comments = s[6]
-                                }
-                            }
-                        );
-                    }
-                    else
-                    {
-                        AddTimebook(ConvertHelper.ToInt32(t));
-                    }
-                }
-            }
+			if (timebooks != null) {
+				foreach (var t in timebooks) {
+					var s = t.Split('|');
+					if (s.Length > 1) {
+						AddTimebook(
+							new InvoiceTimebook {
+								Timebook = new CustomerTimebook {
+									Id = ConvertHelper.ToInt32(s[0]),
+									Customer = new Customer { Id = ConvertHelper.ToInt32(s[1]) },
+									Item = new Item { Id = ConvertHelper.ToInt32(s[2]) },
+									Price = ConvertHelper.ToDecimal(s[3]),
+									VAT = ConvertHelper.ToDecimal(s[4]),
+									Quantity = ConvertHelper.ToDecimal(s[5]),
+									Comments = s[6]
+								}
+							}
+						);
+					} else {
+						AddTimebook(ConvertHelper.ToInt32(t));
+					}
+				}
+			}
 		}
 		
 		public void AddTimebook(int id)
