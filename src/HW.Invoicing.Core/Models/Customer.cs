@@ -19,7 +19,7 @@ namespace HW.Invoicing.Core.Models
 
 	public class Customer : BaseModel
 	{
-        public Company Company { get; set; }
+		public Company Company { get; set; }
 		public bool HasSubscription { get; set; }
 		public bool SubscriptionHasEndDate { get; set; }
 		public Item SubscriptionItem { get; set; }
@@ -37,320 +37,54 @@ namespace HW.Invoicing.Core.Models
 		public string OurReferencePerson { get; set; }
 		public bool Inactive { get; set; }
 		public Language Language { get; set; }
-		
-		public string GetName()
+
+		public bool HasOpenSubscriptionTimebooks
 		{
-			if (Name.Length > 20) {
-				return Name.Substring(0, 20) + "...";
-			} else {
-				return Name;
+			get { return OpenSubscriptionTimebooks.Count > 0;  }
+		}
+
+		public bool HasLatestSubscriptionTimebook
+		{
+			get { return LatestSubscriptionTimebook != null; }
+		}
+
+		public CustomerTimebook LatestSubscriptionTimebook
+		{
+			get {
+				if (HasSubscriptionTimebooks) {
+					return SubscriptionTimebooks[0];
+				}
+				return null;
 			}
 		}
 
-        public string GetSubscriptionStartAndEndDate()
-        {
-            return SubscriptionStartDate.Value.ToString("yyyy.MM.dd") + (SubscriptionHasEndDate ? " - " + SubscriptionEndDate.Value.ToString("yyyy.MM.dd") : "");
-        }
-
-        public string GetSubscriptionStartDate()
-        {
-            return SubscriptionStartDate.Value.ToString("yyyy.MM.dd");
-        }
-
-        public string GetSubscriptionEndDate()
-        {
-            return SubscriptionEndDate.Value.ToString("yyyy.MM.dd");
-        }
-
-        public string GetSubscriptionEndDateString()
-        {
-            if (SubscriptionHasEndDate)
-            {
-                return SubscriptionEndDate.Value.ToString("yyyy-MM-dd");
-            }
-            else
-            {
-                return "";
-            }
-        }
-
-        public string GetLatestSubscriptionTimebookEndDateLabel()
-        {
-            if (HasLatestSubscriptionTimebook)
-            {
-                return string.Format("<span class='label label-success'>{0}</span>", LatestSubscriptionTimebook.SubscriptionEndDate.Value.ToString("MMM dd"));
-            }
-            else
-            {
-                return "<span class='label label-default'>None</span>";
-            }
-        }
-
-        public string GetLatestSubscriptionTimebookComments(DateTime startDate, DateTime endDate, string generatedComments)
-        {
-            if (HasLatestSubscriptionTimebook)
-            {
-                var t = SubscriptionTimebooks[0];
-//                if (t.IsInvoiced)
-if (t.IsInvoiced || t.IsPaid)
-                {
-                    return string.Format("Subscription fee for HealthWatch.se {0} - {1}", startDate.ToString("yyyy.MM.dd"), endDate.ToString("yyyy.MM.dd"));
-                }
-                else
-                {
-                    return SubscriptionTimebooks[0].Comments;
-                }
-            }
-            else
-            {
-                return string.Format("Subscription fee for HealthWatch.se {0} - {1}", startDate.ToString("yyyy.MM.dd"), endDate.ToString("yyyy.MM.dd"));
-            }
-        }
-
-        public decimal GetLatestSubscriptionTimebookQuantity(DateTime startDate, DateTime endDate)
-        {
-            if (HasLatestSubscriptionTimebook)
-            {
-                var t = SubscriptionTimebooks[0];
-//                if (t.IsInvoiced)
-if (t.IsInvoiced || t.IsPaid)
-                {
-                    return (decimal)DateHelper.MonthDiff(startDate, endDate);
-                }
-                else
-                {
-                    return SubscriptionTimebooks[0].Quantity;
-                }
-            }
-            else
-            {
-                if (SubscriptionHasEndDate)
-                {
-                    return (decimal)DateHelper.MonthDiff(startDate, endDate);
-                }
-                else
-                {
-                    return (decimal)DateHelper.MonthDiff(startDate, endDate);
-                }
-            }
-        }
-        
-        public bool IsInitial(DateTime d)
-        {
-        	return d.Date == SubscriptionStartDate.Value.Date;
-//        	if (HasSubscriptionTimebooks) {
-//        		var t = SubscriptionTimebooks[0];
-//        		if (t.IsInvoiced) {
-//        			return false;
-//        		} else {
-//        			
-//        		}
-//        	} else {
-//        		return true;
-//        	}
-        }
-
-        public DateTime GetLatestSubscriptionTimebookStartDate(DateTime d)
-        {
-            if (HasSubscriptionTimebooks)
-            {
-                var t = SubscriptionTimebooks[0];
-//                if (t.IsInvoiced)
-if (t.IsInvoiced || t.IsPaid)
-                {
-                    return t.SubscriptionEndDate.Value.AddDays(1);
-                }
-                else
-                {
-                    return t.SubscriptionStartDate.Value;
-                }
-            }
-            else
-            {
-                return SubscriptionStartDate.Value;
-            }
-        }
-
-        public DateTime GetLatestSubscriptionTimebookEndDate(DateTime endDate)
-        {
-            if (HasLatestSubscriptionTimebook)
-            {
-                var t = SubscriptionTimebooks[0];
-//                if (t.IsInvoiced)
-if (t.IsInvoiced || t.IsPaid)
-                {
-                    if (SubscriptionHasEndDate)
-                    {
-                        return SubscriptionEndDate.Value;
-                    }
-                    else
-                    {
-                        //return endDate.AddMonths(1);
-                        return t.SubscriptionEndDate.Value.AddMonths(1);
-                    }
-                }
-                else
-                {
-                    return t.SubscriptionEndDate.Value;
-                }
-            }
-            else
-            {
-                if (SubscriptionHasEndDate)
-                {
-                    return SubscriptionEndDate.Value;
-                }
-                else
-                {
-                    return endDate;
-                }
-            }
-        }
-
-        public int GetLatestSubscriptionTimebookId()
-        {
-            if (HasLatestSubscriptionTimebook)
-            {
-                var t = SubscriptionTimebooks[0];
-//                if (t.IsInvoiced)
-if (t.IsInvoiced || t.IsPaid)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return LatestSubscriptionTimebook.Id;
-                }
-            }
-            else
-            {
-                return 0;
-            }
-        }
-
-        public string GetSubscriptionTimebookAvailability(DateTime d)
-        {
-            if (HasSubscriptionTimebook(d))
-            {
-                var t = SubscriptionTimebooks[0];
-//                if (t.IsInvoiced)
-if (t.IsInvoiced || t.IsPaid)
-                {
-                    return "";
-                }
-                else
-                {
-                    return " class='danger'";
-                }
-            }
-            /*else if (d.Date < SubscriptionStartDate.Value.Date)
-            {
-                return " class='warning'";
-            }*/
-            else
-            {
-                return "";
-            }
-        }
-
-        public bool CantCreateTimebook(DateTime d)
-        {
-            return d.Date < SubscriptionStartDate.Value.Date;
-        }
-
-        public bool HasSubscriptionTimebook(DateTime d)
-        {
-            bool found = false;
-            if (HasSubscriptionTimebooks)
-            {
-                found = true;
-            }
-            return found;
-        }
-
-        public bool HasOpenSubscriptionTimebooks
-        {
-            get { return OpenSubscriptionTimebooks.Count > 0;  }
-        }
-
-        public bool HasLatestSubscriptionTimebook
-        {
-            get
-            {
-                return LatestSubscriptionTimebook != null;
-            }
-        }
-
-        public CustomerTimebook LatestSubscriptionTimebook
-        {
-            get
-            {
-                if (HasSubscriptionTimebooks)
-                {
-                    return SubscriptionTimebooks[0];
-                }
-                return null;
-            }
-        }
-
-        public bool HasSubscriptionTimebooks
-        {
-            get { return SubscriptionTimebooks.Count > 0;  }
-        }
-
-        public IList<CustomerTimebook> SubscriptionTimebooks
-        {
-            get
-            {
-                return Timebooks.OrderByDescending(x => x.SubscriptionStartDate).Where(x => x.IsSubscription).Select(x => x).ToList();
-            }
-        }
-
-        public IList<CustomerTimebook> OpenSubscriptionTimebooks
-        {
-            get
-            {
-                return Timebooks.OrderByDescending(x => x.SubscriptionStartDate).Where(x => x.IsSubscription && x.IsOpen).Select(x => x).ToList();
-            }
-        }
-
-        public IList<CustomerTimebook> Timebooks { get; set; }
-
-		public static List<Currency> GetCurrencies()
+		public bool HasSubscriptionTimebooks
 		{
-			return new List<Currency>(
-				new[] {
-					new Currency { Name = "Pound Sterling", Code = "GBP" },
-					new Currency { Name = "US Dollar", Code = "USD" }
-				}
-			);
+			get { return SubscriptionTimebooks.Count > 0;  }
 		}
 
-		public override string ToString()
+		public IList<CustomerTimebook> SubscriptionTimebooks
 		{
-			//return string.Format("{0}\n{1}", Name, InvoiceAddress);
-            return string.Format("{0}", InvoiceAddress);
+			get {
+				return Timebooks.OrderByDescending(x => x.SubscriptionStartDate).Where(x => x.IsSubscription).Select(x => x).ToList();
+			}
 		}
 
-		public override void Validate()
+		public IList<CustomerTimebook> OpenSubscriptionTimebooks
 		{
-			base.Validate();
-			Errors.Clear();
-			//AddErrorIf(Number == "", "Customer number shouldn't be empty.");
-			AddErrorIf(Name == "", "Customer name shouldn't be empty.");
-            //AddErrorIf(InvoiceAddress == "", "Invoice address shouldn't be empty.");
-            //AddErrorIf(YourReferencePerson == "", "Your reference person shouldn't be empty.");
-            //AddErrorIf(OurReferencePerson == "", "Our reference person shouldn't be empty.");
+			get {
+				return Timebooks.OrderByDescending(x => x.SubscriptionStartDate).Where(x => x.IsSubscription && x.IsOpen).Select(x => x).ToList();
+			}
 		}
+
+		public IList<CustomerTimebook> Timebooks { get; set; }
 
 		public IList<CustomerContact> Contacts { get; set; }
 
 		public CustomerContact FirstPrimaryContact
 		{
-			get
-			{
-				if (HasPrimaryContacts)
-				{
+			get {
+				if (HasPrimaryContacts) {
 					return PrimaryContacts[0];
 				}
 				return null;
@@ -360,8 +94,7 @@ if (t.IsInvoiced || t.IsPaid)
 		public CustomerContact SecondaryContact
 		{
 			get {
-				if (HasSecondaryContacts)
-				{
+				if (HasSecondaryContacts) {
 					return SecondaryContacts[0];
 				}
 				return null;
@@ -391,18 +124,201 @@ if (t.IsInvoiced || t.IsPaid)
 				return (from c in Contacts where c.Type == 2 select c).ToList();
 			}
 		}
-	}
-	
-	public class Unit : BaseModel
-	{
-        public Company Company { get; set; }
-		public string Name { get; set; }
-		public bool Inactive { get; set; }
-	}
+		
+		public string GetName()
+		{
+			if (Name.Length > 20) {
+				return Name.Substring(0, 20) + "...";
+			} else {
+				return Name;
+			}
+		}
 
-	public class Language : BaseModel
-	{
-		public string Name { get; set; }
+		public string GetSubscriptionStartAndEndDate()
+		{
+			return SubscriptionStartDate.Value.ToString("yyyy.MM.dd") + (SubscriptionHasEndDate ? " - " + SubscriptionEndDate.Value.ToString("yyyy.MM.dd") : "");
+		}
+
+		public string GetSubscriptionStartDate()
+		{
+			return SubscriptionStartDate.Value.ToString("yyyy.MM.dd");
+		}
+
+		public string GetSubscriptionEndDate()
+		{
+			return SubscriptionEndDate.Value.ToString("yyyy.MM.dd");
+		}
+
+		public string GetSubscriptionEndDateString()
+		{
+			if (SubscriptionHasEndDate) {
+				return SubscriptionEndDate.Value.ToString("yyyy-MM-dd");
+			} else {
+				return "";
+			}
+		}
+
+		public string GetLatestSubscriptionTimebookEndDateLabel()
+		{
+			if (HasLatestSubscriptionTimebook) {
+				return string.Format("<span class='label label-success'>{0}</span>", LatestSubscriptionTimebook.SubscriptionEndDate.Value.ToString("MMM dd"));
+			} else {
+				return "<span class='label label-default'>None</span>";
+			}
+		}
+
+		public string GetLatestSubscriptionTimebookComments(DateTime startDate, DateTime endDate, string generatedComments)
+		{
+			if (HasLatestSubscriptionTimebook) {
+				var t = SubscriptionTimebooks[0];
+				if (t.IsInvoiced || t.IsPaid) {
+					return string.Format("Subscription fee for HealthWatch.se {0} - {1}", startDate.ToString("yyyy.MM.dd"), endDate.ToString("yyyy.MM.dd"));
+				} else {
+					return SubscriptionTimebooks[0].Comments;
+				}
+			} else {
+				return string.Format("Subscription fee for HealthWatch.se {0} - {1}", startDate.ToString("yyyy.MM.dd"), endDate.ToString("yyyy.MM.dd"));
+			}
+		}
+
+		public decimal GetLatestSubscriptionTimebookQuantity(DateTime startDate, DateTime endDate)
+		{
+			if (HasLatestSubscriptionTimebook) {
+				var t = SubscriptionTimebooks[0];
+				if (t.IsInvoiced || t.IsPaid) {
+					return (decimal)DateHelper.MonthDiff(startDate, endDate);
+				} else {
+					return SubscriptionTimebooks[0].Quantity;
+				}
+			} else {
+				if (SubscriptionHasEndDate) {
+					return (decimal)DateHelper.MonthDiff(startDate, endDate);
+				} else {
+					return (decimal)DateHelper.MonthDiff(startDate, endDate);
+				}
+			}
+		}
+		
+		public bool IsInitial(DateTime d)
+		{
+			return d.Date == SubscriptionStartDate.Value.Date;
+//			if (HasSubscriptionTimebooks) {
+//				var t = SubscriptionTimebooks[0];
+//				if (t.IsInvoiced) {
+//					return false;
+//				} else {
+//
+//				}
+//			} else {
+//				return true;
+//			}
+		}
+
+		public DateTime GetLatestSubscriptionTimebookStartDate(DateTime d)
+		{
+			if (HasSubscriptionTimebooks) {
+				var t = SubscriptionTimebooks[0];
+				if (t.IsInvoiced || t.IsPaid) {
+					return t.SubscriptionEndDate.Value.AddDays(1);
+				} else {
+					return t.SubscriptionStartDate.Value;
+				}
+			} else {
+				return SubscriptionStartDate.Value;
+			}
+		}
+
+		public DateTime GetLatestSubscriptionTimebookEndDate(DateTime endDate)
+		{
+			if (HasLatestSubscriptionTimebook) {
+				var t = SubscriptionTimebooks[0];
+				if (t.IsInvoiced || t.IsPaid) {
+					if (SubscriptionHasEndDate) {
+						return SubscriptionEndDate.Value;
+					} else {
+						//return endDate.AddMonths(1);
+						return t.SubscriptionEndDate.Value.AddMonths(1);
+					}
+				} else {
+					return t.SubscriptionEndDate.Value;
+				}
+			} else {
+				if (SubscriptionHasEndDate) {
+					return SubscriptionEndDate.Value;
+				} else {
+					return endDate;
+				}
+			}
+		}
+
+		public int GetLatestSubscriptionTimebookId()
+		{
+			if (HasLatestSubscriptionTimebook) {
+				var t = SubscriptionTimebooks[0];
+				if (t.IsInvoiced || t.IsPaid) {
+					return 0;
+				} else {
+					return LatestSubscriptionTimebook.Id;
+				}
+			} else {
+				return 0;
+			}
+		}
+
+		public string GetSubscriptionTimebookAvailability(DateTime d)
+		{
+			if (HasSubscriptionTimebook(d)) {
+				var t = SubscriptionTimebooks[0];
+				if (t.IsInvoiced || t.IsPaid) {
+					return "";
+				} else {
+					return " class='danger'";
+				}
+			}
+			else {
+				return "";
+			}
+		}
+
+		public bool CantCreateTimebook(DateTime d)
+		{
+			return d.Date < SubscriptionStartDate.Value.Date;
+		}
+
+		public bool HasSubscriptionTimebook(DateTime d)
+		{
+			bool found = false;
+			if (HasSubscriptionTimebooks) {
+				found = true;
+			}
+			return found;
+		}
+
+		public static List<Currency> GetCurrencies()
+		{
+			return new List<Currency>(
+				new[] {
+					new Currency { Name = "Pound Sterling", Code = "GBP" },
+					new Currency { Name = "US Dollar", Code = "USD" }
+				}
+			);
+		}
+
+		public override string ToString()
+		{
+			return string.Format("{0}", InvoiceAddress);
+		}
+
+		public override void Validate()
+		{
+			base.Validate();
+			Errors.Clear();
+//			AddErrorIf(Number == "", "Customer number shouldn't be empty.");
+			AddErrorIf(Name == "", "Customer name shouldn't be empty.");
+//			AddErrorIf(InvoiceAddress == "", "Invoice address shouldn't be empty.");
+//			AddErrorIf(YourReferencePerson == "", "Your reference person shouldn't be empty.");
+//			AddErrorIf(OurReferencePerson == "", "Our reference person shouldn't be empty.");
+		}
 	}
 	
 	public class CustomerItem : BaseModel
@@ -418,7 +334,7 @@ if (t.IsInvoiced || t.IsPaid)
 	{
 		public Customer Customer { get; set; }
 		public string Contact { get; set; }
-        public string Title { get; set; }
+		public string Title { get; set; }
 		public string Phone { get; set; }
 		public string Mobile { get; set; }
 		public string Email { get; set; }
@@ -450,59 +366,59 @@ if (t.IsInvoiced || t.IsPaid)
 		public bool Inactive { get; set; }
 	}
 
-    public class CustomerAgreement : BaseModel
-    {
-        public DateTime? Date { get; set; }
-        public Customer Customer { get; set; }
-        public string Lecturer { get; set; }
-        public string LectureTitle { get; set; }
-        public string Contact { get; set; }
-        public string Mobile { get; set; }
-        public string Email { get; set; }
-        public decimal Compensation { get; set; }
-        public string PaymentTerms { get; set; }
-        public string BillingAddress { get; set; }
-        public string OtherInformation { get; set; }
+	public class CustomerAgreement : BaseModel
+	{
+		public DateTime? Date { get; set; }
+		public Customer Customer { get; set; }
+		public string Lecturer { get; set; }
+		public string LectureTitle { get; set; }
+		public string Contact { get; set; }
+		public string Mobile { get; set; }
+		public string Email { get; set; }
+		public decimal Compensation { get; set; }
+		public string PaymentTerms { get; set; }
+		public string BillingAddress { get; set; }
+		public string OtherInformation { get; set; }
 
-        public string ContactPlaceSigned { get; set; }
-        public DateTime? ContactDateSigned { get; set; }
-        public string ContactName { get; set; }
-        public string ContactTitle { get; set; }
-        public string ContactCompany { get; set; }
+		public string ContactPlaceSigned { get; set; }
+		public DateTime? ContactDateSigned { get; set; }
+		public string ContactName { get; set; }
+		public string ContactTitle { get; set; }
+		public string ContactCompany { get; set; }
 
-        public DateTime? DateSigned { get; set; }
+		public DateTime? DateSigned { get; set; }
 
-        public bool IsClosed { get; set; }
-        public List<CustomerAgreementDateTimeAndPlace> DateTimeAndPlaces { get; set; }
-        
-        public CustomerAgreement()
-        {
-        	DateTimeAndPlaces = new List<CustomerAgreementDateTimeAndPlace>();
-        }
-        
-        public string CustomerToString()
-        {
-            return string.Format("{0}, {1} {2}", ContactName, ContactTitle, ContactCompany);
-        }
-        
+		public bool IsClosed { get; set; }
+		public List<CustomerAgreementDateTimeAndPlace> DateTimeAndPlaces { get; set; }
+		
+		public CustomerAgreement()
+		{
+			DateTimeAndPlaces = new List<CustomerAgreementDateTimeAndPlace>();
+		}
+		
+		public string CustomerToString()
+		{
+			return string.Format("{0}, {1} {2}", ContactName, ContactTitle, ContactCompany);
+		}
+		
 		public override void Validate()
 		{
 			base.Validate();
-            //AddErrorIf(Lecturer == "", "Lecturer should not be empty.");
-            //AddErrorIf(LectureTitle == "", "Lecture title should not be empty.");
-            //AddErrorIf(Contact == "", "Contact should not be empty.");
+//			AddErrorIf(Lecturer == "", "Lecturer should not be empty.");
+//			AddErrorIf(LectureTitle == "", "Lecture title should not be empty.");
+//			AddErrorIf(Contact == "", "Contact should not be empty.");
 		}
-    }
-    
-    public class CustomerAgreementDateTimeAndPlace : BaseModel
-    {
-        public CustomerAgreement CustomerAgreement { get; set; }
-    	public DateTime? Date { get; set; }
-    	public string TimeFrom { get; set; }
-    	public string TimeTo { get; set; }
-    	public string Runtime { get; set; }
-    	public string Address { get; set; }
-    }
+	}
+	
+	public class CustomerAgreementDateTimeAndPlace : BaseModel
+	{
+		public CustomerAgreement CustomerAgreement { get; set; }
+		public DateTime? Date { get; set; }
+		public string TimeFrom { get; set; }
+		public string TimeTo { get; set; }
+		public string Runtime { get; set; }
+		public string Address { get; set; }
+	}
 	
 	public class CustomerTimebook : BaseModel
 	{
@@ -537,28 +453,19 @@ if (t.IsInvoiced || t.IsPaid)
 				return Price * Quantity;
 			}
 		}
-        public string GetDepartmentAndContact()
-        {
-            string s = "";
-            s += StrHelper.Str(Department != null && Department != "", Department + "<br>", "");
-            s += StrHelper.Str(Contact.Contact != "", "<i>" + Contact.Contact + "</i>", "");
-            return s;
-        }
+		public string GetDepartmentAndContact()
+		{
+			string s = "";
+			s += StrHelper.Str(Department != null && Department != "", Department + "<br>", "");
+			s += StrHelper.Str(Contact.Contact != "", "<i>" + Contact.Contact + "</i>", "");
+			return s;
+		}
 
 		public override string ToString()
 		{
-			/*if (!IsSubscription)
-			{
-				string c = Consultant != "" ? string.Format(" ({0})", Consultant) : "";
-				return string.Format("{0}{1}", Comments, c);
-			}
-			else
-			{
-				return Item.Name;
-			}*/
-            string c = Consultant != null && Consultant != "" ? string.Format(" ({0})", Consultant) : "";
-            string d = Date != null && !DateHidden ? Date.Value.ToString("yyyy-MM-dd") + " " : "";
-            return string.Format("{2}{0}{1}", Comments, c, d);
+			string c = Consultant != null && Consultant != "" ? string.Format(" ({0})", Consultant) : "";
+			string d = Date != null && !DateHidden ? Date.Value.ToString("yyyy-MM-dd") + " " : "";
+			return string.Format("{2}{0}{1}", Comments, c, d);
 		}
 
 		public bool IsPaid
@@ -570,10 +477,10 @@ if (t.IsInvoiced || t.IsPaid)
 			get { return Status == OPEN; }
 		}
 
-        public bool IsInvoiced
-        {
-            get { return Status == INVOICED; }
-        }
+		public bool IsInvoiced
+		{
+			get { return Status == INVOICED; }
+		}
 
 		public void ValidateSubscription()
 		{
@@ -584,8 +491,6 @@ if (t.IsInvoiced || t.IsPaid)
 		public override void Validate()
 		{
 			base.Validate();
-//			AddErrorIf(Department == "", "Department shouldn't be empty.");
-			//AddErrorIf(Consultant == "", "Consultant shouldn't be empty.");
 			AddErrorIf(Comments == "", "Comments shouldn't be empty.");
 			AddErrorIf(Price <= 0, "Price should be greater than zero.");
 			AddErrorIf(VAT <= 0, "VAT should be greater than zero.");
@@ -596,8 +501,7 @@ if (t.IsInvoiced || t.IsPaid)
 			switch (Status)
 			{
 					case INVOICED: return string.Format("<span class='label label-warning'>INVOICED</span><br><span class='label label-warning'>{0}</span>", HtmlHelper.Anchor(InvoiceTimebook.Invoice.Number, "invoiceshow.aspx?Id=" + InvoiceTimebook.Invoice.Id));
-					//case PAID: return "<span class='label label-success'>PAID</span>";
-                    case PAID: return string.Format("<span class='label label-success'>PAID</span><br><span class='label label-success'>{0}</span>", HtmlHelper.Anchor(InvoiceTimebook.Invoice.Number, "invoiceshow.aspx?Id=" + InvoiceTimebook.Invoice.Id));
+					case PAID: return string.Format("<span class='label label-success'>PAID</span><br><span class='label label-success'>{0}</span>", HtmlHelper.Anchor(InvoiceTimebook.Invoice.Number, "invoiceshow.aspx?Id=" + InvoiceTimebook.Invoice.Id));
 					default: return "<span class='label label-default'>OPEN</span>";
 			}
 		}
