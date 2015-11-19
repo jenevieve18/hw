@@ -11,7 +11,6 @@
         function onCustomerChange() {
             var customerId = $(this).val();
             var timebookId = $(this).data('timebookid');
-            //alert(timebookId);
             $.ajax({
                 type: "POST",
                 url: "CustomerTimebooks.aspx/FindSubscribersByCompany",

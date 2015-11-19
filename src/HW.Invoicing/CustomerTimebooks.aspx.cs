@@ -24,7 +24,7 @@ namespace HW.Invoicing
         	
         	customers = cr.FindSubscribersByCompany(companyId);
         	foreach (var c in customers) {
-        		c.Timebooks = cr.FindTimebooks(c.Id);
+                c.Timebooks = cr.FindSubscriptionTimebooks(c.Id);
         	}
         }
 
@@ -45,7 +45,7 @@ namespace HW.Invoicing
                     name = c.Name,
                     timebooks = new List<object>()
                 };
-                foreach (var t in r.FindTimebooks(c.Id))
+                foreach (var t in r.FindSubscriptionTimebooks(c.Id))
                 {
                     d.timebooks.Add(new { id = t.Id, timebook = t.ToString() });
                 }

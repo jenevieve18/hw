@@ -1355,6 +1355,100 @@ INNER JOIN Invoice i ON i.Id = it.InvoiceId AND it.CustomerTimebookId = @Custome
 			return timebooks;
 		}
 		
+		public IList<CustomerTimebook> FindSubscriptionTimebooks(int customerId)
+		{
+			string query = string.Format(
+                @"
+SELECT t.CustomerContactId,
+	t.ItemId,
+	t.Quantity,
+	t.Price,
+	t.Consultant,
+	t.Comments,
+	c.Contact,
+	i.Name,
+	u.Id,
+	u.Name,
+	t.Date,
+	t.Department,
+    t.Id,
+    t.Inactive,
+    t.InternalComments,
+    t.VAT,
+    t.IsSubscription,
+    t.SubscriptionStartDate,
+    t.SubscriptionEndDate,
+    t.DateHidden
+FROM CustomerTimebook t
+LEFT OUTER JOIN CustomerContact c ON c.Id = t.CustomerContactId
+INNER JOIN Item i ON i.Id = t.ItemId
+INNER JOIN UNit u ON u.Id = i.UnitId
+WHERE t.CustomerId = @CustomerId
+AND t.IsSubscription = 1
+ORDER BY Status, t.Date DESC, t.Id DESC"
+            );
+			var timebooks = new List<CustomerTimebook>();
+			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerId", customerId))) {
+				while (rs.Read()) {
+					timebooks.Add(
+						new CustomerTimebook {
+							Contact = new CustomerContact {
+								Id = GetInt32(rs, 0),
+								Contact = GetString(rs, 6)
+							},
+							Item = new Item {
+								Id = GetInt32(rs, 1),
+								Name = GetString(rs, 7),
+								Unit = new Unit { Id = GetInt32(rs, 8), Name = GetString(rs, 9) }
+							},
+							Quantity = GetDecimal(rs, 2),
+							Price = GetDecimal(rs, 3),
+							Consultant = GetString(rs, 4),
+							Comments = GetString(rs, 5),
+							Date = GetDateTime(rs, 10),
+							Department = GetString(rs, 11),
+                            Id = GetInt32(rs, 12),
+                            Inactive = GetInt32(rs, 13) == 1,
+                            InternalComments = GetString(rs, 14),
+                            VAT = GetDecimal(rs, 15, 25),
+                            IsSubscription = GetInt32(rs, 16) == 1,
+                            SubscriptionStartDate = GetDateTime(rs, 17),
+                            SubscriptionEndDate = GetDateTime(rs, 18),
+                            DateHidden = GetInt32(rs, 19) == 1
+                        }
+					);
+				}
+			}
+
+            query = @"
+SELECT i.Status,
+    i.Id,
+    i.Number
+FROM InvoiceTimebook it
+INNER JOIN Invoice i ON i.Id = it.InvoiceId AND it.CustomerTimebookId = @CustomerTimebookId";
+            foreach (var t in timebooks)
+            {
+                int status = 0;
+                using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerTimebookId", t.Id)))
+                {
+                    if (rs.Read())
+                    {
+                        status = GetInt32(rs, 0);
+                        t.InvoiceTimebook = new InvoiceTimebook
+                        {
+                            Invoice = new Invoice {
+                                Id = GetInt32(rs, 1),
+                                Number = GetString(rs, 2)
+                            }
+                        };
+                    }
+                }
+                t.Status = status;
+            }
+            timebooks = timebooks.OrderBy(x => x.Status).ThenByDescending(x => x.IsSubscription).ThenByDescending(x => x.Date).ToList();
+			return timebooks;
+		}
+		
 		public IList<CustomerContact> FindContacts(int customerId)
 		{
 			string query = string.Format(
