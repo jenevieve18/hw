@@ -23,7 +23,6 @@ namespace HW.Invoicing.Core.Models
 		public override void Validate()
 		{
 			base.Validate();
-//			Errors.Clear();
 			AddErrorIf(Name == "", "Item name shouldn't be empty.");
 			AddErrorIf(Price <= 0, "Price should be at least greater than zero.");
 		}

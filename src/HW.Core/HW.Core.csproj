@@ -118,6 +118,7 @@
     <Compile Include="Models\CX.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Diary.cs" />
+    <Compile Include="Models\ErrorMessages.cs" />
     <Compile Include="Models\Exercise.cs" />
     <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\Group.cs" />
