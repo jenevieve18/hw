@@ -78,11 +78,16 @@ namespace HW.Invoicing
                     labelEmail.Text = textBoxEmail.Text = customer.Email;
                     labelLanguage.Text = customer.Language.Name;
                     
-                    labelCustomerNumber.Font.Strikeout = labelInvoiceAddress.Font.Strikeout =
+//                    labelCustomerNumber.Font.Strikeout = labelInvoiceAddress.Font.Strikeout =
+//                        labelPostalAddress.Font.Strikeout = labelPurchaseOrderNumber.Font.Strikeout =
+//                        labelYourReferencePerson.Font.Strikeout = labelOurReferencePerson.Font.Strikeout =
+//                        labelEmail.Font.Strikeout = labelPhone.Font.Strikeout =
+//                        labelLanguage.Font.Strikeout = customer.Inactive;
+labelCustomerNumber.Font.Strikeout = labelInvoiceAddress.Font.Strikeout =
                         labelPostalAddress.Font.Strikeout = labelPurchaseOrderNumber.Font.Strikeout =
                         labelYourReferencePerson.Font.Strikeout = labelOurReferencePerson.Font.Strikeout =
                         labelEmail.Font.Strikeout = labelPhone.Font.Strikeout =
-                        labelLanguage.Font.Strikeout = customer.Inactive;
+                        labelLanguage.Font.Strikeout = customer.IsInactive;
 
                     // Timebook Panel
                     textBoxTimebookDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
@@ -156,6 +161,19 @@ namespace HW.Invoicing
         {
             r.Reactivate(id);
             Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=customer-info", id));
+        }
+
+        protected void buttonDelete_Click(object sender, EventArgs e)
+        {
+            r.Delete(id);
+            //Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=customer-info", id));
+            Response.Redirect("customers.aspx");
+        }
+
+        protected void buttonUndelete_Click(object sender, EventArgs e)
+        {
+            r.Undelete(id);
+            Response.Redirect("customers.aspx");
         }
 
         protected void buttonSaveTimebook_Click(object sender, EventArgs e)

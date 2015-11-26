@@ -16,6 +16,7 @@ namespace HW.Invoicing
     {
     	protected IList<Customer> subscribers;
         protected IList<Customer> nonSubscribers;
+        protected IList<Customer> deletedCustomers;
         CustomerService s = new CustomerService(new SqlCustomerRepository());
         protected Company company;
         SqlCompanyRepository cr = new SqlCompanyRepository();
@@ -27,8 +28,11 @@ namespace HW.Invoicing
             int companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
             company = cr.Read(companyId);
 
-            subscribers = s.FindSubscribersByCompany(ConvertHelper.ToInt32(Session["CompanyId"]));
-            nonSubscribers = s.FindNonSubscribersByCompany(ConvertHelper.ToInt32(Session["CompanyId"]));
+//            subscribers = s.FindSubscribersByCompany(ConvertHelper.ToInt32(Session["CompanyId"]));
+//            nonSubscribers = s.FindNonSubscribersByCompany(ConvertHelper.ToInt32(Session["CompanyId"]));
+subscribers = s.FindSubscribersByCompany(companyId);
+            nonSubscribers = s.FindNonSubscribersByCompany(companyId);
+            deletedCustomers = s.FindDeletedCustomersByCompany(companyId);
         }
 
         public bool HasSubscribers

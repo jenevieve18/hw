@@ -58,7 +58,7 @@ WHERE Id = @Id";
 		public void DeactivateNote(int id)
 		{
 			string query = @"
-update customernotes set inactive = 1
+UPDATE CustomerNotes SET Inactive = 1
 WHERE Id = @Id";
 			ExecuteNonQuery(
 				query,
@@ -70,13 +70,26 @@ WHERE Id = @Id";
 		public override void Delete(int id)
 		{
 			string query = @"
-DELETE FROM Customer WHERE Id = @Id";
+UPDATE Customer SET Status = 2
+WHERE Id = @Id";
 			ExecuteNonQuery(
 				query,
 				"invoicing",
 				new SqlParameter("@Id", id)
 			);
 		}
+
+        public void Undelete(int id)
+        {
+            string query = @"
+UPDATE Customer SET Status = 0
+WHERE Id = @Id";
+            ExecuteNonQuery(
+                query,
+                "invoicing",
+                new SqlParameter("@Id", id)
+            );
+        }
 		
 		public void DeleteNotes(int id)
 		{
@@ -332,8 +345,8 @@ VALUES(@Name, @Number, @PostalAddress, @InvoiceAddress, @PurchaseOrderNumber, @Y
                 new SqlParameter("@SubscriptionItemId", c.SubscriptionItem.Id),
                 new SqlParameter("@SubscriptionStartDate", c.SubscriptionStartDate),
                 new SqlParameter("@SubscriptionEndDate", c.SubscriptionEndDate),
-                new SqlParameter("@SubscriptionHasEndDate", c.SubscriptionHasEndDate),
-                new SqlParameter("@Inactive", c.Inactive)
+                new SqlParameter("@SubscriptionHasEndDate", c.SubscriptionHasEndDate) //,
+//                new SqlParameter("@Inactive", c.Inactive)
 			);
 		}
 		
@@ -614,13 +627,14 @@ where id = @id";
 		{
 			string query = string.Format(
 				@"
-UPDATE Customer SET Inactive = @Inactive
+UPDATE Customer SET Status = @Status --Inactive = @Inactive
 WHERE Id = @Id"
 			);
 			ExecuteNonQuery(
 				query,
 				"invoicing",
-				new SqlParameter("@Inactive", true),
+				//new SqlParameter("@Inactive", true),
+				new SqlParameter("@Status", Customer.INACTIVE),
 				new SqlParameter("@Id", id)
 			);
 		}
@@ -654,14 +668,15 @@ SELECT c.Id,
     c.OurReferencePerson,
     c.Email,
     c.Phone,
-    c.Inactive,
+    NULL, --c.Inactive,
     c.LangId,
     l.Name,
     c.HasSubscription,
     c.SubscriptionItemId,
     c.SubscriptionStartDate,
     c.SubscriptionEndDate,
-    c.SubscriptionHasEndDate
+    c.SubscriptionHasEndDate,
+    c.Status
 FROM Customer c
 INNER JOIN Lang l ON c.LangId = l.Id
 --INNER JOIN Item i ON i.Id = c.SubscriptionItemId
@@ -683,7 +698,7 @@ WHERE c.Id = @Id"
                         OurReferencePerson = GetString(rs, 7),
                         Email = GetString(rs, 8),
                         Phone = GetString(rs, 9),
-                        Inactive = GetInt32(rs, 10) == 1,
+//                        Inactive = GetInt32(rs, 10) == 1,
                         Language = new Language
                         {
                             Id = GetInt32(rs, 11),
@@ -696,7 +711,8 @@ WHERE c.Id = @Id"
                         },
                         SubscriptionStartDate = GetDateTime(rs, 15),
                         SubscriptionEndDate = GetDateTime(rs, 16),
-                        SubscriptionHasEndDate = GetInt32(rs, 17) == 1
+                        SubscriptionHasEndDate = GetInt32(rs, 17) == 1,
+                        Status = GetInt32(rs, 18)
                     };
 				}
 			}
@@ -1494,12 +1510,16 @@ SELECT c.Id,
     c.Number,
     c.Phone,
     c.Email,
-    c.Inactive,
-    c.HasSubscription
+    NULL, --c.Inactive,
+    c.HasSubscription,
+    c.Status
 FROM Customer c
-WHERE (c.HasSubscription != 1 OR c.HasSubscription IS NULL)
+--WHERE (c.HasSubscription != 1 OR c.HasSubscription IS NULL)
+WHERE ISNULL(c.HasSubscription, 0) = 0
+AND ISNULL(c.Status, 0) IN (0, 1)
 AND c.CompanyId = @CompanyId
-ORDER BY c.Inactive, c.Name"
+ORDER BY ISNULL(c.Status, 0), --c.Inactive,
+c.Name"
             );
             var customers = new List<Customer>();
             using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@CompanyId", companyId)))
@@ -1514,7 +1534,54 @@ ORDER BY c.Inactive, c.Name"
                             Number = GetString(rs, 2),
                             Phone = GetString(rs, 3),
                             Email = GetString(rs, 4),
-                            Inactive = GetInt32(rs, 5) == 1
+//                            Inactive = GetInt32(rs, 5) == 1,
+Status = GetInt32(rs, 7)
+                        }
+                    );
+                }
+            }
+            return customers;
+        }
+        
+        
+
+        public IList<Customer> FindDeletedCustomersByCompany(int companyId)
+        {
+            string query = string.Format(
+                @"
+SELECT c.Id,
+    c.Name,
+    c.Number,
+    c.Phone,
+    c.Email,
+    NULL, --c.Inactive,
+    c.HasSubscription,
+    c.Status
+FROM Customer c
+WHERE c.Status = @Status
+AND c.CompanyId = @CompanyId
+ORDER BY c.Name"
+            );
+            var customers = new List<Customer>();
+            using (SqlDataReader rs = ExecuteReader(
+            	query, "invoicing",
+            	new SqlParameter("@CompanyId", companyId),
+            	new SqlParameter("@Status", Customer.DELETED)
+            ))
+            {
+                while (rs.Read())
+                {
+                    customers.Add(
+                        new Customer
+                        {
+                            Id = GetInt32(rs, 0),
+                            Name = GetString(rs, 1),
+                            Number = GetString(rs, 2),
+                            Phone = GetString(rs, 3),
+                            Email = GetString(rs, 4),
+//                            Inactive = GetInt32(rs, 5) == 1
+HasSubscription = GetInt32(rs, 6) == 1,
+Status = GetInt32(rs, 7)
                         }
                     );
                 }
@@ -1545,18 +1612,21 @@ SELECT c.Id,
     c.Number, 
     c.Phone, 
     c.Email, 
-    c.Inactive,
+    NULL, --c.Inactive,
     i.Id,
     i.Name,
     u.Id,
     u.Name,
-    i.Price
+    i.Price,
+    c.Status
 FROM Customer c
 INNER JOIN Item i on i.Id = c.SubscriptionItemId
 INNER JOIN Unit u on u.Id = i.UnitId
 WHERE c.HasSubscription = 1
+AND ISNULL(c.Status, 0) IN (0, 1)
 AND c.CompanyId = @CompanyId
-ORDER BY c.Inactive, c.Name"
+ORDER BY ISNULL(c.Status, 0), --c.Inactive,
+c.Name"
             );
             var customers = new List<Customer>();
             using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@CompanyId", companyId)))
@@ -1571,7 +1641,7 @@ ORDER BY c.Inactive, c.Name"
                             Number = GetString(rs, 2),
                             Phone = GetString(rs, 3),
                             Email = GetString(rs, 4),
-                            Inactive = GetInt32(rs, 5) == 1,
+//                            Inactive = GetInt32(rs, 5) == 1,
                             SubscriptionItem = new Item
                             {
                                 Id = GetInt32(rs, 6),
@@ -1581,7 +1651,8 @@ ORDER BY c.Inactive, c.Name"
                                     Name = GetString(rs, 9)
                                 },
                                 Price = GetDecimal(rs, 10)
-                            }
+                            },
+                            Status = GetInt32(rs, 11)
                         }
                     );
                 }
@@ -1598,7 +1669,7 @@ SELECT c.Id,
     c.Number, 
     c.Phone, 
     c.Email, 
-    c.Inactive,
+    NULL, --c.Inactive,
     i.Id,
     i.Name,
     u.Id,
@@ -1607,18 +1678,21 @@ SELECT c.Id,
     c.HasSubscription,
     c.SubscriptionStartDate,
     c.SubscriptionEndDate,
-    c.SubscriptionHasEndDate
+    c.SubscriptionHasEndDate,
+    c.Status
 FROM Customer c
 INNER JOIN Item i on i.Id = c.SubscriptionItemId
 INNER JOIN Unit u on u.Id = i.UnitId
 WHERE c.HasSubscription = 1
-AND ISNULL(c.Inactive, 0) != 1
+--AND ISNULL(c.Inactive, 0) != 1
+AND ISNULL(c.Status, 0) != 1
 AND c.CompanyId = @CompanyId
 AND (
     c.SubscriptionStartDate BETWEEN @StartDate AND @EndDate
     OR c.SubscriptionStartDate <= @StartDate
 )
-ORDER BY c.Inactive, c.Name"
+ORDER BY c.Status, --c.Inactive,
+c.Name"
             );
             var customers = new List<Customer>();
             using (SqlDataReader rs = ExecuteReader(
@@ -1643,7 +1717,7 @@ ORDER BY c.Inactive, c.Name"
                             Number = GetString(rs, 2),
                             Phone = GetString(rs, 3),
                             Email = GetString(rs, 4),
-                            Inactive = GetInt32(rs, 5) == 1,
+//                            Inactive = GetInt32(rs, 5) == 1,
                             SubscriptionItem = new Item
                             {
                                 Id = GetInt32(rs, 6),
@@ -1658,7 +1732,8 @@ ORDER BY c.Inactive, c.Name"
                             HasSubscription = GetInt32(rs, 11) == 1,
                             SubscriptionStartDate = GetDateTime(rs, 12),
                             SubscriptionEndDate = GetDateTime(rs, 13),
-                            SubscriptionHasEndDate = GetInt32(rs, 14) == 1
+                            SubscriptionHasEndDate = GetInt32(rs, 14) == 1,
+                            Status = GetInt32(rs, 15)
                         }
                     );
                 }

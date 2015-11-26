@@ -30,6 +30,13 @@ namespace HW.Invoicing.Core.Services
             return customers;
         }
 
+        public IList<Customer> FindDeletedCustomersByCompany(int companyId)
+        {
+            var customers = r.FindDeletedCustomersByCompany(companyId);
+            AssignContacts(customers);
+            return customers;
+        }
+
         void AssignContacts(IList<Customer> customers)
         {
             foreach (var c in customers)

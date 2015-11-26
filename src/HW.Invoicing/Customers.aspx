@@ -19,7 +19,7 @@
         <th>Email</th>
     </tr>
     <% foreach (var c in nonSubscribers) { %>
-        <% if (c.Inactive) { %>
+        <% if (c.IsInactive) { %>
             <tr>
                 <td><strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike></td>
                 <td>
@@ -55,6 +55,9 @@
 		<li>
 			<a href="#panel-697427" data-toggle="tab">Non-subscribers</a>
 		</li>
+        <li>
+			<a href="#panel-221812" data-toggle="tab">Ex-Customers</a>
+		</li>
 	</ul>
 	<div class="tab-content">
 		<div class="tab-pane active" id="panel-842795">
@@ -70,7 +73,7 @@
                     <th>Email</th>
                 </tr>
                 <% foreach (var c in subscribers) { %>
-                    <% if (c.Inactive) { %>
+                    <% if (c.IsInactive) { %>
                         <tr>
                             <td><strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike></td>
                             <td>
@@ -109,7 +112,7 @@
                     <th>Email</th>
                 </tr>
                 <% foreach (var c in nonSubscribers) { %>
-                    <% if (c.Inactive) { %>
+                    <% if (c.IsInactive) { %>
                         <tr>
                             <td><strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike></td>
                             <td>
@@ -132,6 +135,32 @@
                             <td><%= c.Email %></td>
                         </tr>
                     <% } %>
+                <% } %>
+            </table>
+		</div>
+        <div class="tab-pane" id="panel-221812">
+			<p></p>
+            <div class="alert alert-info">
+	            <strong>Ex-customers</strong> are customers that have been deleted.
+            </div>
+            <table class="table table-hover">
+                <tr>
+                    <th>Name</th>
+                    <th>Contact Person</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                </tr>
+                <% foreach (var c in deletedCustomers) { %>
+                    <tr>
+                        <td><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></td>
+                        <td>
+                            <% if (c.FirstPrimaryContact != null) { %>
+                                <%= c.FirstPrimaryContact.Contact %>
+                            <% } %>
+                        </td>
+                        <td><%= c.Phone %></td>
+                        <td><%= c.Email %></td>
+                    </tr>
                 <% } %>
             </table>
 		</div>

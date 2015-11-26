@@ -148,11 +148,24 @@
                 $('.info').hide();
             });
 
-            var inactive = <%= customer != null && customer.Inactive ? "true" : "false" %>;
-            if (inactive) {
-                $('#<%= buttonDeactivate.ClientID %>').hide();
-            } else {
+//            var inactive = <%= customer != null && customer.IsInactive ? "true" : "false" %>;
+//            if (inactive) {
+//                $('#<%= buttonDeactivate.ClientID %>').hide();
+//            } else {
+//                $('#<%= buttonReactivate.ClientID %>').hide();
+//            }
+            var status = <%= customer.Status %>;
+            console.log(status);
+            if (status == 0) {
                 $('#<%= buttonReactivate.ClientID %>').hide();
+                $('#<%= buttonUndelete.ClientID %>').hide();
+            } else if (status == 1) {
+                $('#<%= buttonDeactivate.ClientID %>').hide();
+                $('#<%= buttonUndelete.ClientID %>').hide();
+            } else if (status == 2) {
+                $('#<%= buttonDeactivate.ClientID %>').hide();
+                $('#<%= buttonReactivate.ClientID %>').hide();
+                $('#<%= buttonDelete.ClientID %>').hide();
             }
 
             var subscriptionPanel = $('#<%= panelCustomerSubscription.ClientID %>');
@@ -861,6 +874,8 @@
                 <asp:Button ID="buttonSave" runat="server" Text="Save this customer" CssClass="info btn btn-info" OnClick="buttonSave_Click" />
                 <asp:Button ID="buttonDeactivate" runat="server" Text="Deactivate this customer" CssClass="btn btn-warning" OnClick="buttonDeactivate_Click" OnClientClick="return confirm('Are you sure you want to de-activate this customer?')" />
                 <asp:Button ID="buttonReactivate" runat="server" Text="Reactivate this customer" CssClass="btn btn-warning" OnClick="buttonReactivate_Click" OnClientClick="return confirm('Are you sure you want to re-activate this customer?')" />
+                <asp:Button ID="buttonDelete" runat="server" Text="Delete this customer" CssClass="btn btn-warning" OnClick="buttonDelete_Click" OnClientClick="return confirm('Are you sure you want to delete this customer?')" />
+                <asp:Button ID="buttonUndelete" runat="server" Text="Undelete this customer" CssClass="btn btn-warning" OnClick="buttonUndelete_Click" OnClientClick="return confirm('Are you sure you want to undelete this customer?')" />
                 <span class="info">or <i><a id="buttonCancelEdit" href="javascript:;">cancel</a></i></span>
             </div>
 		</div>

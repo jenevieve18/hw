@@ -19,6 +19,10 @@ namespace HW.Invoicing.Core.Models
 
 	public class Customer : BaseModel
 	{
+		public const int ACTIVE = 0;
+		public const int INACTIVE = 1;
+		public const int DELETED = 2;
+		
 		public Company Company { get; set; }
 		public bool HasSubscription { get; set; }
 		public bool SubscriptionHasEndDate { get; set; }
@@ -35,8 +39,17 @@ namespace HW.Invoicing.Core.Models
 		public string PurchaseOrderNumber { get; set; }
 		public string YourReferencePerson { get; set; }
 		public string OurReferencePerson { get; set; }
-		public bool Inactive { get; set; }
+//		public bool Inactive { get; set; }
 		public Language Language { get; set; }
+		public int Status { get; set; }
+		
+		public bool IsInactive {
+			get { return Status == INACTIVE; }
+		}
+		
+		public bool IsDeleted {
+			get { return Status == DELETED; }
+		}
 
 		public bool HasOpenSubscriptionTimebooks
 		{
