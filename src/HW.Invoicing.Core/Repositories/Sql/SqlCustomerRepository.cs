@@ -643,13 +643,13 @@ WHERE Id = @Id"
         {
             string query = string.Format(
                 @"
-UPDATE Customer SET Inactive = @Inactive
+UPDATE Customer SET Status = @Status --Inactive = @Inactive
 WHERE Id = @Id"
             );
             ExecuteNonQuery(
                 query,
                 "invoicing",
-                new SqlParameter("@Inactive", false),
+                new SqlParameter("@Status", Customer.ACTIVE),
                 new SqlParameter("@Id", id)
             );
         }
