@@ -59,12 +59,13 @@
                 }
             });
             $('#checkbox-timebook-all').click(function() {
+                invoiceItems = [];
                 if ($(this).is(':checked')) {
                     $('.timebook-item').prop('checked', true);
                     $('.timebook-item').change();
                 } else {
                     $('.timebook-item').prop('checked', false);
-                    invoiceItems = [];
+                    //invoiceItems = [];
                 }
             });
             $('#modal-701809').click(function() {
