@@ -34,8 +34,15 @@ namespace HW.Invoicing.Core.Models
 		
 		public string GetWebsiteAndEmail()
 		{
-			string e = Email != null && Email != "" ? ", " + Email : "";
-			return string.Format("{0}{1}", Website, e);
+			string e = Email != null && Email != "" ? Email : "";
+			string w = Website != null && Website != "" ? Website : "";
+			if (w == "") {
+				return Email;
+			} else if (e == "") {
+				return Website;
+			} else {
+				return string.Format("{0}, {1}", w, e);
+			}
 		}
         
         public override string ToString()
