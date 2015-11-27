@@ -220,7 +220,7 @@
 
             var price = $('#<%= textBoxTimebookPrice.ClientID %>').val();
             addErrorIf(errors, price == '', "Price shouldn't be empty.");
-            addErrorIf(errors, isNaN(price), "Price should be a number.");
+            //addErrorIf(errors, isNaN(price), "Price should be a number.");
             addErrorIf(errors, !isNaN(price) && parseFloat(price) <= 0, "Price should be greater than zero.");
             
             var qty = $('#<%= textBoxTimebookQty.ClientID %>').val();
