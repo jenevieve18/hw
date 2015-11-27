@@ -122,6 +122,7 @@
     <Compile Include="Invoicing\Repositories\InvoiceRepositoryTests.cs" />
     <Compile Include="Invoicing\UsersTests.cs" />
     <Compile Include="JsonConvertTests.cs" />
+    <Compile Include="Models\CompanyTests.cs" />
     <Compile Include="Models\CustomerTests.cs" />
     <Compile Include="Models\DepartmentTests.cs" />
     <Compile Include="Models\GroupFactoryTests.cs" />
