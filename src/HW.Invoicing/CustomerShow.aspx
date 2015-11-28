@@ -684,7 +684,7 @@
                             </td>
                             <td><%= t.Item.Name %></td>
                             <td><%= t.Item.Unit.Name %></td>
-                            <td><%= t.Quantity.ToString() %></td>
+                            <td><%= t.Quantity.ToString("# ##0.00") %></td>
                             <td><%= t.Price.ToString("# ##0.00") %></td>
                             <td><%= t.Amount.ToString("# ##0.00") %></td>
                             <td><%= t.VAT %>%</td>
