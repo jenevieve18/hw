@@ -45,7 +45,7 @@ Scottsdale, AZ 85256"
 									Unit = new Unit { Name = "month" }
 								},
 								Date = DateTime.Now,
-								Quantity = 1,
+								Quantity = 1234,
 								Price = 100,
 								VAT = 16,
 								Consultant = "Debbie G. Jackson",
