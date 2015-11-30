@@ -36,6 +36,7 @@ namespace HW.Invoicing
                 if (timebook != null)
                 {
                     dropDownListTimebookItems.Items.Clear();
+                    dropDownListSubscriptionTimebookItems.Items.Clear();
                     foreach (var i in items)
                     {
                         var li = new ListItem(i.Name, i.Id.ToString());
@@ -43,6 +44,12 @@ namespace HW.Invoicing
                         li.Attributes.Add("data-price", i.Price.ToString());
                         li.Attributes.Add("data-unit", i.Unit.Name);
                         dropDownListTimebookItems.Items.Add(li);
+
+                        li = new ListItem(i.Name, i.Id.ToString());
+                        li.Attributes.Add("data-id", i.Id.ToString());
+                        li.Attributes.Add("data-price", i.Price.ToString());
+                        li.Attributes.Add("data-unit", i.Unit.Name);
+                        dropDownListSubscriptionTimebookItems.Items.Add(li);
                     }
 
                     dropDownListTimebookContacts.Items.Clear();
@@ -57,7 +64,10 @@ namespace HW.Invoicing
                     {
                         textBoxSubscriptionTimebookStartDate.Text = timebook.SubscriptionStartDate.Value.ToString("yyyy-MM-dd");
                         textBoxSubscriptionTimebookEndDate.Text = timebook.SubscriptionEndDate.Value.ToString("yyyy-MM-dd");
-                        textBoxSubscriptionTimebookQuantity.Text = timebook.Quantity.ToString();
+                        dropDownListSubscriptionTimebookItems.SelectedValue = timebook.Item.Id.ToString();
+                        labelSubscriptionTimebookUnit.Text = timebook.Item.Unit.Name;
+                        textBoxSubscriptionTimebookQty.Text = timebook.Quantity.ToString();
+                        textBoxSubscriptionTimebookPrice.Text = timebook.Price.ToString();
                         textBoxSubscriptionTimebookComments.Text = timebook.Comments;
                     }
                     else
@@ -88,11 +98,14 @@ namespace HW.Invoicing
         protected void buttonSave_Click(object sender, EventArgs e)
         {
             decimal quantity = panelSubscriptionTimebook.Visible
-                ? ConvertHelper.ToDecimal(textBoxSubscriptionTimebookQuantity.Text)
+                ? ConvertHelper.ToDecimal(textBoxSubscriptionTimebookQty.Text)
                 : ConvertHelper.ToDecimal(textBoxTimebookQty.Text);
             string comments = panelSubscriptionTimebook.Visible
                 ? textBoxSubscriptionTimebookComments.Text
                 : textBoxTimebookComments.Text;
+            decimal price = panelSubscriptionTimebook.Visible
+                ? ConvertHelper.ToDecimal(textBoxSubscriptionTimebookPrice.Text)
+                : ConvertHelper.ToDecimal(textBoxTimebookPrice.Text);
 
             var t = new CustomerTimebook {
                 Date = ConvertHelper.ToDateTime(textBoxTimebookDate.Text),
@@ -103,7 +116,8 @@ namespace HW.Invoicing
                 },
                 Item = new Item { Id = ConvertHelper.ToInt32(dropDownListTimebookItems.SelectedValue) },
                 Quantity = quantity,
-                Price = ConvertHelper.ToDecimal(textBoxTimebookPrice.Text),
+                //Price = ConvertHelper.ToDecimal(textBoxTimebookPrice.Text),
+                Price = price,
                 VAT = ConvertHelper.ToDecimal(textBoxTimebookVAT.Text),
                 Consultant = textBoxTimebookConsultant.Text,
                 Comments = comments,
@@ -137,6 +151,7 @@ namespace HW.Invoicing
             {
                 message = t.Errors.ToHtmlUl();
                 var selectedValue = dropDownListTimebookItems.SelectedValue;
+                
                 // HACK: This is for javascript when reflecting changes of the price and unit textboxes.
                 dropDownListTimebookItems.Items.Clear();
                 foreach (var i in items)

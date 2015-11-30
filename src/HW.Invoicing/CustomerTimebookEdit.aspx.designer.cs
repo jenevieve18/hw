@@ -175,13 +175,40 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxSubscriptionTimebookEndDate;
         
         /// <summary>
-        /// textBoxSubscriptionTimebookQuantity control.
+        /// textBoxSubscriptionTimebookQty control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxSubscriptionTimebookQuantity;
+        protected global::System.Web.UI.WebControls.TextBox textBoxSubscriptionTimebookQty;
+        
+        /// <summary>
+        /// dropDownListSubscriptionTimebookItems control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList dropDownListSubscriptionTimebookItems;
+        
+        /// <summary>
+        /// labelSubscriptionTimebookUnit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label labelSubscriptionTimebookUnit;
+        
+        /// <summary>
+        /// textBoxSubscriptionTimebookPrice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxSubscriptionTimebookPrice;
         
         /// <summary>
         /// textBoxSubscriptionTimebookComments control.

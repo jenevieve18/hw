@@ -532,7 +532,8 @@ VALUES(@CustomerAgreementId, @Date, @TimeFrom, @TimeTo, @Address)"
 UPDATE CustomerTimebook SET SubscriptionStartDate = @SubscriptionStartDate,
     SubscriptionEndDate = @SubscriptionEndDate,
     Quantity = @Quantity,
-    Comments = @Comments
+    Comments = @Comments,
+    Price = @Price
 WHERE Id = @Id"
             );
             ExecuteNonQuery(
@@ -542,7 +543,8 @@ WHERE Id = @Id"
                 new SqlParameter("@SubscriptionEndDate", c.SubscriptionEndDate),
                 new SqlParameter("@Quantity", c.Quantity),
                 new SqlParameter("@Comments", c.Comments),
-                new SqlParameter("@Id", id)
+                new SqlParameter("@Id", id),
+                new SqlParameter("@Price", c.Price)
             );
         }
 

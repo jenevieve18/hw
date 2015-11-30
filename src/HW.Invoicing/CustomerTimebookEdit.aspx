@@ -18,6 +18,18 @@
                 var selectedUnit = selected.data('unit');
                 $('#<%= labelTimebookUnit.ClientID %>').text(selectedUnit);
             });
+            $('#<%= dropDownListSubscriptionTimebookItems.ClientID %>').change(function () {
+                console.log("changing item...");
+                var selected = $(this).find('option:selected');
+                var id = selected.data('id');
+                if (id != <%= timebook.Item.Id %>) {
+                    console.log("triggering not same item...");
+                    var selectedPrice = selected.data('price');
+                    $('#<%= textBoxSubscriptionTimebookPrice.ClientID %>').val(selectedPrice);
+                }
+                var selectedUnit = selected.data('unit');
+                $('#<%= labelSubscriptionTimebookUnit.ClientID %>').text(selectedUnit);
+            });
             $('#<%= dropDownListTimebookItems.ClientID %>').change();
 
             $('.date').datepicker({
@@ -29,13 +41,13 @@
                 var startDate = $('#<%= textBoxSubscriptionTimebookStartDate.ClientID %>').datepicker('getDate');
                 var endDate = $('#<%= textBoxSubscriptionTimebookEndDate.ClientID %>').datepicker('getDate');
                 var months = monthDiff(startDate, endDate);
-                $('#<%= textBoxSubscriptionTimebookQuantity.ClientID %>').val(months);
+                $('#<%= textBoxSubscriptionTimebookQty.ClientID %>').val(months);
                 var text = 'Subscription fee for HealthWatch.se';
                 var generatedText = text + ' ' + $('#<%= textBoxSubscriptionTimebookStartDate.ClientID %>').val().replace(/-/g, ".") + ' - ' + $('#<%= textBoxSubscriptionTimebookEndDate.ClientID %>').val().replace(/-/g, ".");
                 textGeneratedComments.val(generatedText);
             });
-            $('#<%= textBoxSubscriptionTimebookQuantity.ClientID %>').change(function () {
-                $('#<%= textBoxSubscriptionTimebookQuantity.ClientID %>').val($(this).val());
+            $('#<%= textBoxSubscriptionTimebookQty.ClientID %>').change(function () {
+                $('#<%= textBoxSubscriptionTimebookQty.ClientID %>').val($(this).val());
                 var startDate = $('#<%= textBoxSubscriptionTimebookStartDate.ClientID %>').datepicker('getDate');
                 //var months = parseInt($(this).val());
                 /*var months = parseFloat($(this).val());
@@ -131,12 +143,33 @@
                 </td>
                 <td>
                     <div class="form-group">
-	                    <label for="<%= textBoxSubscriptionTimebookQuantity.ClientID %>">Quantity</label>
-                        <asp:TextBox ID="textBoxSubscriptionTimebookQuantity" runat="server" CssClass="form-control"></asp:TextBox>
+	                    <label for="<%= textBoxSubscriptionTimebookQty.ClientID %>">Quantity</label>
+                        <asp:TextBox ID="textBoxSubscriptionTimebookQty" runat="server" CssClass="form-control"></asp:TextBox>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+	                    <label for="<%= dropDownListSubscriptionTimebookItems.ClientID %>">Item</label>
+                        <asp:DropDownList ID="dropDownListSubscriptionTimebookItems" runat="server" CssClass="form-control"></asp:DropDownList>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+	                    <label for="<%= labelSubscriptionTimebookUnit.ClientID %>">Unit</label>
+                        <asp:Label ID="labelSubscriptionTimebookUnit" runat="server" Text="" CssClass="form-control"></asp:Label>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+	                    <label for="<%= textBoxSubscriptionTimebookPrice.ClientID %>">Price</label>
+                        <asp:TextBox ID="textBoxSubscriptionTimebookPrice" runat="server" CssClass="form-control"></asp:TextBox>
                     </div>
                 </td>
             </tr>
         </table>
+
         <div class="form-group">
 	        <label for="<%= textBoxSubscriptionTimebookComments.ClientID %>">Comments</label>
             <asp:TextBox ID="textBoxSubscriptionTimebookComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
