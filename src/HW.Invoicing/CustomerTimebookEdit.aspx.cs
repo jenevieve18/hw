@@ -67,6 +67,7 @@ namespace HW.Invoicing
                         textBoxTimebookDepartment.Text = timebook.Department;
                         dropDownListTimebookContacts.SelectedValue = timebook.Contact.Id.ToString();
                         dropDownListTimebookItems.SelectedValue = timebook.Item.Id.ToString();
+                        labelTimebookUnit.Text = timebook.Item.Unit.Name;
                         textBoxTimebookQty.Text = timebook.Quantity.ToString();
                         textBoxTimebookPrice.Text = timebook.Price.ToString();
                         textBoxTimebookVAT.Text = timebook.VAT.ToString();

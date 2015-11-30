@@ -7,14 +7,16 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('#<%= dropDownListTimebookItems.ClientID %>').change(function () {
+                console.log("changing item...");
                 var selected = $(this).find('option:selected');
                 var id = selected.data('id');
                 if (id != <%= timebook.Item.Id %>) {
+                    console.log("triggering not same item...");
                     var selectedPrice = selected.data('price');
-                    var selectedUnit = selected.data('unit');
                     $('#<%= textBoxTimebookPrice.ClientID %>').val(selectedPrice);
-                    $('#<%= labelTimebookUnit.ClientID %>').text(selectedUnit);
                 }
+                var selectedUnit = selected.data('unit');
+                $('#<%= labelTimebookUnit.ClientID %>').text(selectedUnit);
             });
             $('#<%= dropDownListTimebookItems.ClientID %>').change();
 

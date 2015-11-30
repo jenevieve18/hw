@@ -800,25 +800,28 @@ AND IsSubscription = 1";
         {
             string query = string.Format(
                 @"
-SELECT Id,
-    CustomerId,
-    CustomerContactId,
-    ItemId,
-    Quantity,
-    Price,
-    Consultant,
-    Comments,
-    Department,
-    Date,
-    Inactive,
-    InternalComments,
-    VAT,
-    SubscriptionStartDate,
-    SubscriptionEndDate,
-    IsSubscription,
-    DateHidden
-FROM CustomerTimebook
-WHERE Id = @Id"
+SELECT ct.Id,
+    ct.CustomerId,
+    ct.CustomerContactId,
+    ct.ItemId,
+    ct.Quantity,
+    ct.Price,
+    ct.Consultant,
+    ct.Comments,
+    ct.Department,
+    ct.Date,
+    ct.Inactive,
+    ct.InternalComments,
+    ct.VAT,
+    ct.SubscriptionStartDate,
+    ct.SubscriptionEndDate,
+    ct.IsSubscription,
+    ct.DateHidden,
+    u.Name
+FROM CustomerTimebook ct
+INNER JOIN Item i ON i.Id = ct.ItemId
+INNER JOIN Unit u ON u.Id = i.UnitId
+WHERE ct.Id = @Id"
             );
             CustomerTimebook c = null;
             using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", id)))
@@ -829,7 +832,11 @@ WHERE Id = @Id"
                     {
                         Id = GetInt32(rs, 0),
                         Contact = new CustomerContact { Id = GetInt32(rs, 2) },
-                        Item = new Item { Id = GetInt32(rs, 3) },
+                        Item = new Item
+                        {
+                            Id = GetInt32(rs, 3),
+                            Unit = new Unit { Name = GetString(rs, 17) }
+                        },
                         Quantity = GetDecimal(rs, 4),
                         Price = GetDecimal(rs, 5),
                         Consultant = GetString(rs, 6),
