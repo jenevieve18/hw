@@ -89,7 +89,10 @@ namespace HW.Invoicing.Core.Helpers
 			t2.AddCell(new PdfPCell(logo) { Border = Rectangle.NO_BORDER });
 			t2.AddCell(new PdfPCell(new Phrase(" ", normalFont)) { Border = Rectangle.NO_BORDER });
 			t2.AddCell(new PdfPCell(new Phrase("Beställare/Leveransadress/Faktureringsadress", normalFont)) { Border = Rectangle.NO_BORDER });
-			t2.AddCell(new PdfPCell(new Phrase(invoice.Customer.ToString() + "\n\n" + invoice.Customer.PurchaseOrderNumber, normalFont)) { Border = Rectangle.NO_BORDER });
+//			t2.AddCell(new PdfPCell(new Phrase(invoice.Customer.ToString() + "\n\n" + invoice.Customer.PurchaseOrderNumber, normalFont)) { Border = Rectangle.NO_BORDER });
+			var y = new PdfPCell(new Phrase(invoice.Customer.ToString() + "\n\n" + invoice.Customer.PurchaseOrderNumber, normalFont)) { Border = Rectangle.NO_BORDER };
+			y.SetLeading(0.0f, 1.3f);
+			t2.AddCell(y);
 			
 			PdfPTable t3 = new PdfPTable(2);
 			t3.AddCell(new PdfPCell(new Phrase("FAKTURA", titleFont)) { Border = Rectangle.NO_BORDER, Colspan = 2, HorizontalAlignment = Element.ALIGN_RIGHT, PaddingRight = 3, PaddingBottom = 20 });
