@@ -649,7 +649,14 @@
                             <td><strike><%= t.VAT %>%</strike></td>
                             <td><strike><%= t.Consultant %></strike></td>
                             <td align="center"><%= t.GetStatus() %></td>
-                            <td class="comments-width"><strike><%= t.Comments %></strike></td>
+                            <td class="comments-width">
+                                <strike>
+                                    <% if (t.HasInternalComments) { %>
+                                        <img src="img/comment.png" title="<%= t.InternalComments %>"/>
+                                    <% } %>
+                                    <%= t.Comments %>
+                                </strike>
+                            </td>
                             <td>
                                 <%= HtmlHelper.Anchor(" ", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id), "title='Edit' class='glyphicon glyphicon-edit'")%>
                                 <%= HtmlHelper.Anchor(" ", string.Format("customertimebookdelete.aspx?Id={0}&CustomerId={1}", t.Id, id), "title='Delete' class='glyphicon glyphicon-remove-circle' onclick=\"return confirm('Are you sure you want to delete this timebook?')\"")%>
@@ -690,7 +697,12 @@
                             <td><%= t.VAT %>%</td>
                             <td><%= t.Consultant %></td>
                             <td align="center"><%= t.GetStatus() %></td>
-                            <td class="comments-width"><%= t.Comments %></td>
+                            <td class="comments-width">
+                                <% if (t.HasInternalComments) { %>
+                                    <img src="img/comment.png" title="<%= t.InternalComments %>"/>
+                                <% } %>
+                                <%= t.Comments %>
+                            </td>
                             <td>
                                 <% if (!t.IsPaid) { %>
                                     <%= HtmlHelper.Anchor(" ", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id), "title='Edit' class='glyphicon glyphicon-edit'")%>
@@ -752,10 +764,6 @@
                             <td><strike><%= p.Item.Price.ToString("#### ##0.00") %></strike></td>
                             <td><strike><%= p.Price.ToString("### ##0.00") %></strike></td>
                             <td>
-                                <%--<%= HtmlHelper.Anchor("Edit", string.Format("customerpriceedit.aspx?Id={0}&CustomerId={1}", p.Id, id)) %>
-                                <%= HtmlHelper.Anchor("Delete", string.Format("customerpricedelete.aspx?Id={0}&CUstomerId={1}", p.Id, id), "onclick=\"return confirm('Are you sure you want to delete this customer price?')\"")%>
-                                <%= HtmlHelper.Anchor("Move Up", string.Format("customerpricemoveup.aspx?SortOrder={0}&CustomerId={1}", p.SortOrder, id))%>
-                                <%= HtmlHelper.Anchor("Move Down", string.Format("customerpricemovedown.aspx?SortOrder={0}&CustomerId={1}", p.SortOrder, id))%>--%>
                                 <%= HtmlHelper.Anchor(" ", string.Format("customerpriceedit.aspx?Id={0}&CustomerId={1}", p.Id, id), "title='Edit' class='glyphicon glyphicon-edit'")%>
                                 <%= HtmlHelper.Anchor(" ", string.Format("customerpricedelete.aspx?Id={0}&CUstomerId={1}", p.Id, id), "title='Delete' class='glyphicon glyphicon-remove-circle' onclick=\"return confirm('Are you sure you want to delete this customer price?')\"")%>
                                 <%= HtmlHelper.Anchor(" ", string.Format("customerpricemoveup.aspx?SortOrder={0}&CustomerId={1}", p.SortOrder, id), "title='Move Up' class='glyphicon glyphicon-arrow-up'")%>
@@ -768,10 +776,6 @@
                             <td><%= p.Item.Price.ToString("### ##0.00") %></td>
                             <td><%= p.Price.ToString("### ##0.00") %></td>
                             <td>
-                                <%--<%= HtmlHelper.Anchor("Edit", string.Format("customerpriceedit.aspx?Id={0}&CustomerId={1}", p.Id, id)) %>
-                                <%= HtmlHelper.Anchor("Deactivate", string.Format("customerpricedeactivate.aspx?Id={0}&CustomerId={1}", p.Id, id)) %>
-                                <%= HtmlHelper.Anchor("Move Up", string.Format("customerpricemoveup.aspx?SortOrder={0}&CustomerId={1}", p.SortOrder, id))%>
-                                <%= HtmlHelper.Anchor("Move Down", string.Format("customerpricemovedown.aspx?SortOrder={0}&CustomerId={1}", p.SortOrder, id))%>--%>
                                 <%= HtmlHelper.Anchor(" ", string.Format("customerpriceedit.aspx?Id={0}&CustomerId={1}", p.Id, id), "title='Edit' class='glyphicon glyphicon-edit'")%>
                                 <%= HtmlHelper.Anchor(" ", string.Format("customerpricedeactivate.aspx?Id={0}&CustomerId={1}", p.Id, id), "title='Deactivate' class='glyphicon glyphicon-minus'")%>
                                 <%= HtmlHelper.Anchor(" ", string.Format("customerpricemoveup.aspx?SortOrder={0}&CustomerId={1}", p.SortOrder, id), "title='Move Up' class='glyphicon glyphicon-arrow-up'")%>

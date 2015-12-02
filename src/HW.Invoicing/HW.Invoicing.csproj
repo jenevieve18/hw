@@ -56,6 +56,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CollaboratorAdd.aspx" />
+    <Content Include="CollaboratorDelete.aspx" />
+    <Content Include="CollaboratorEdit.aspx" />
+    <Content Include="Collaborators.aspx" />
     <Content Include="Companies.aspx" />
     <Content Include="CompanyAdd.aspx" />
     <Content Include="CompanyEdit.aspx" />
@@ -143,6 +147,34 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CollaboratorAdd.aspx.cs">
+      <DependentUpon>CollaboratorAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CollaboratorAdd.aspx.designer.cs">
+      <DependentUpon>CollaboratorAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CollaboratorDelete.aspx.cs">
+      <DependentUpon>CollaboratorDelete.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CollaboratorDelete.aspx.designer.cs">
+      <DependentUpon>CollaboratorDelete.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CollaboratorEdit.aspx.cs">
+      <DependentUpon>CollaboratorEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CollaboratorEdit.aspx.designer.cs">
+      <DependentUpon>CollaboratorEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Collaborators.aspx.cs">
+      <DependentUpon>Collaborators.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Collaborators.aspx.designer.cs">
+      <DependentUpon>Collaborators.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Companies.aspx.cs">
       <DependentUpon>Companies.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

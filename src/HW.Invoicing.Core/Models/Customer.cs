@@ -7,16 +7,29 @@ using HW.Core.Helpers;
 
 namespace HW.Invoicing.Core.Models
 {
-	public class Currency : BaseModel
+	public class Link : BaseModel
 	{
 		public string Name { get; set; }
-		public string Code { get; set; }
-		public override string ToString()
+		public string Url { get; set; }
+		public bool ForSubscription { get; set; }
+		
+		public static List<Link> GetLinks()
 		{
-			return string.Format("{0} - {1}", Name, Code);
+			return new List<Link>(
+				new Link[] {
+					new Link { Id = 1, Name = "Customers", Url = "customers.aspx" },
+					new Link { Id = 2, Name = "Subscription Timebooks", Url = "customertimebooksubscriptionadd.aspx", ForSubscription = true },
+					new Link { Id = 3, Name = "Invoices", Url = "invoices.aspx" },
+					new Link { Id = 4, Name = "Items", Url = "items.aspx" },
+					new Link { Id = 5, Name = "Units", Url = "units.aspx" },
+//					new Link { Id = 6, Name = "Users", Url = "users.aspx" },
+					new Link { Id = 7, Name = "Collaborators", Url = "collaborators.aspx" },
+					new Link { Id = 8, Name = "Issues", Url = "issues.aspx" }
+				}
+			);
 		}
 	}
-
+	
 	public class Customer : BaseModel
 	{
 		public const int ACTIVE = 0;
@@ -455,6 +468,9 @@ namespace HW.Invoicing.Core.Models
 		public bool Inactive { get; set; }
 		public int Status { get; set; }
 		public string InternalComments { get; set; }
+		public bool HasInternalComments {
+			get { return InternalComments != null && InternalComments != ""; }
+		}
 		public decimal VAT { get; set; }
 		public InvoiceTimebook InvoiceTimebook { get; set; }
 		public decimal VATAmount

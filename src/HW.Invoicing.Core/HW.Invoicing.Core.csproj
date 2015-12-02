@@ -55,6 +55,7 @@
     <Compile Include="Helpers\ItemHelper.cs" />
     <Compile Include="Helpers\VCInvoiceExporter.cs" />
     <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\Issue.cs" />

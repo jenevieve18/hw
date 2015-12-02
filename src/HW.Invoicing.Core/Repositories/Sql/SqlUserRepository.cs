@@ -48,13 +48,15 @@ WHERE Id = @Id"
 		
 		public override void Update(User u, int id)
 		{
+            string p = u.Password != "" ? "[Password] = @Password," : "";
 			string query = string.Format(
 				@"
 UPDATE [User] SET Username = @Username,
-    [Password] = @Password,
+    {0}
     Color = @Color,
     Name = @Name
-WHERE Id = @Id"
+WHERE Id = @Id",
+               p
 			);
 			ExecuteNonQuery(
 				query,
@@ -80,6 +82,35 @@ WHERE Id = @Id"
 				"invoicing",
 				new SqlParameter("@Id", id)
 			);
+		}
+		
+		public IList<User> FindCollaborators(int companyId)
+		{
+			string query = string.Format(
+				@"
+SELECT Id,
+	Username,
+	[Password],
+	Color,
+	Name
+FROM [User]
+ORDER BY Username"
+			);
+			IList<User> users = new List<User>();
+			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {
+				while (rs.Read()) {
+					users.Add(
+						new User {
+							Id = GetInt32(rs, 0),
+							Username = GetString(rs, 1),
+							Password = GetString(rs, 2),
+							Color = GetString(rs, 3),
+							Name = GetString(rs, 4)
+						}
+					);
+				}
+			}
+			return users;
 		}
 		
 		public override IList<User> FindAll()
