@@ -721,11 +721,15 @@ WHERE c.Id = @Id"
             if (c != null && c.HasSubscription)
             {
                 query = @"
-select i.id, i.name, u.id, u.name, i.price
-from item i
-inner join unit u on u.id = i.unitid
-where i.id = @id";
-                using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@id", c.SubscriptionItem.Id)))
+SELECT i.Id,
+	i.Name,
+	u.Id,
+	u.Name,
+	i.Price
+FROM Item i
+INNER JOIN Unit u ON u.Id = i.UnitId
+WHERE i.Id = @Id";
+                using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", c.SubscriptionItem.Id)))
                 {
                     if (rs.Read())
                     {
@@ -752,7 +756,7 @@ where i.id = @id";
                 @"
 SELECT Id,
     Notes,
-Inactive
+	Inactive
 FROM CustomerNotes
 WHERE Id = @Id"
             );

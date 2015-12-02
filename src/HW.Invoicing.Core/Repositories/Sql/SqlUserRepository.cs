@@ -24,9 +24,10 @@ VALUES(@Username, @Password, @Color, @Name)"
 				query,
 				"invoicing",
 				new SqlParameter("@Username", u.Username),
-                new SqlParameter("@Password", u.Password),
-                new SqlParameter("@Color", u.Color),
-                new SqlParameter("@Name", u.Name)
+//				new SqlParameter("@Password", u.Password),
+				new SqlParameter("@Password", StrHelper.MD5Hash(u.Password)),
+				new SqlParameter("@Color", u.Color),
+				new SqlParameter("@Name", u.Name)
 			);
 		}
 		
@@ -41,7 +42,7 @@ WHERE Id = @Id"
 				query,
 				"invoicing",
 				new SqlParameter("@SelectedCompany", selectedCompany),
-                new SqlParameter("@Id", userId)
+				new SqlParameter("@Id", userId)
 			);
 		}
 		
@@ -59,10 +60,11 @@ WHERE Id = @Id"
 				query,
 				"invoicing",
 				new SqlParameter("@Username", u.Username),
-				new SqlParameter("@Password", u.Password),
-                new SqlParameter("@Color", u.Color),
-                new SqlParameter("@Id", id),
-                new SqlParameter("@Name", u.Name)
+//				new SqlParameter("@Password", u.Password),
+				new SqlParameter("@Password", StrHelper.MD5Hash(u.Password)),
+				new SqlParameter("@Color", u.Color),
+				new SqlParameter("@Id", id),
+				new SqlParameter("@Name", u.Name)
 			);
 		}
 		
@@ -96,8 +98,8 @@ ORDER BY Username"
 							Id = GetInt32(rs, 0),
 							Username = GetString(rs, 1),
 							Password = GetString(rs, 2),
-                            Color = GetString(rs, 3),
-                            Name = GetString(rs, 4)
+							Color = GetString(rs, 3),
+							Name = GetString(rs, 4)
 						}
 					);
 				}
@@ -120,8 +122,8 @@ WHERE Id = @Id"
 						Id = GetInt32(rs, 0),
 						Username = GetString(rs, 1),
 						Password = GetString(rs, 2),
-                        Color = GetString(rs, 3),
-                        Name = GetString(rs, 4)
+						Color = GetString(rs, 3),
+						Name = GetString(rs, 4)
 					};
 				}
 			}
@@ -132,27 +134,32 @@ WHERE Id = @Id"
 		{
 			string query = string.Format(
 				@"
-SELECT Id, Username, [Password], Name, SelectedCompany
+SELECT Id,
+	Username,
+	[Password],
+	Name,
+	SelectedCompany
 FROM [User] u
 WHERE Username = @Username
-AND [Password] = @Password"
+AND ([Password] = @Password OR [Password] = @HashedPassword)"
 			);
 			User u = null;
 			using (SqlDataReader rs = ExecuteReader(
 				query,
 				"invoicing",
 				new SqlParameter("@Username", name),
-				new SqlParameter("@Password", password))) {
+				new SqlParameter("@Password", password),
+				new SqlParameter("@HashedPassword", StrHelper.MD5Hash(password)))) {
 				
 				if (rs.Read()) {
 					u = new User {
 						Id = GetInt32(rs, 0),
 						Username = GetString(rs, 1),
 						Password = GetString(rs, 2),
-                        Name = GetString(rs, 3),
-                        SelectedCompany = new Company {
-                        	Id = GetInt32(rs, 4)
-                        }
+						Name = GetString(rs, 3),
+						SelectedCompany = new Company {
+							Id = GetInt32(rs, 4)
+						}
 					};
 				}
 			}

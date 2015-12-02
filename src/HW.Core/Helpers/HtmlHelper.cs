@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Data.SqlClient;
+using System.Security.Cryptography;
 using System.Text;
 using System.Collections.Generic;
 using System.Web;
@@ -57,6 +58,27 @@ namespace HW.Core.Helpers
 			}
 			return y;
 		}
+		
+		public static string MD5Hash(string text)
+		{
+			MD5 md5 = new MD5CryptoServiceProvider();
+			
+			// Compute hash from the bytes of text
+			md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(text));
+			
+			// Get hash result after compute it
+			byte[] result = md5.Hash;
+			
+			StringBuilder strBuilder = new StringBuilder();
+			for (int i = 0; i < result.Length; i++)
+			{
+				// Change it into 2 hexadecimal digits
+				// for each byte
+				strBuilder.Append(result[i].ToString("x2"));
+			}
+			
+			return strBuilder.ToString();
+		}
 	}
 	
 	public static class HtmlHelper
@@ -88,7 +110,7 @@ namespace HW.Core.Helpers
 //		{
 //			return Anchor(text, url, attributes, target, false);
 //		}
-//		
+//
 //		public static string Anchor(string text, string url, string attributes, string target, bool random)
 //		{
 //			if (random) {
@@ -134,10 +156,10 @@ namespace HW.Core.Helpers
 			return AnchorImage(url, image, false);
 		}
 
-        public static string AnchorImage(string url, string image, string attributes)
-        {
-            return string.Format("<a href='{0}' {2}><img src='{1}'></a>", url, image, attributes);
-        }
+		public static string AnchorImage(string url, string image, string attributes)
+		{
+			return string.Format("<a href='{0}' {2}><img src='{1}'></a>", url, image, attributes);
+		}
 		
 		public static string AnchorImage(string url, string image, bool random)
 		{
@@ -194,17 +216,17 @@ namespace HW.Core.Helpers
 			}
 		}
 
-        public static void Redirect(string url, bool random)
-        {
-            if (random)
-            {
-                HttpContext.Current.Response.Redirect(string.Format("{0}?Rnd={1}", url, GetRandomInt()), true);
-            }
-            else
-            {
-                HttpContext.Current.Response.Redirect(url, true);
-            }
-        }
+		public static void Redirect(string url, bool random)
+		{
+			if (random)
+			{
+				HttpContext.Current.Response.Redirect(string.Format("{0}?Rnd={1}", url, GetRandomInt()), true);
+			}
+			else
+			{
+				HttpContext.Current.Response.Redirect(url, true);
+			}
+		}
 
 //		static string GetAttributes(Dictionary<string, string> attributes)
 //		{
@@ -214,7 +236,7 @@ namespace HW.Core.Helpers
 //			}
 //			return s.ToString();
 //		}
-//		
+//
 		public static string CreatePage(string name)
 		{
 			return CreatePage(new P(name));
@@ -264,20 +286,20 @@ namespace HW.Core.Helpers
 			return Input(name, value, "");
 		}
 
-        public static string Input(string name, string value, string attributes)
-        {
-            return string.Format("<input type='text' name='{0}' id='{0}' value='{1}' {2}/>", name, value, attributes);
-        }
+		public static string Input(string name, string value, string attributes)
+		{
+			return string.Format("<input type='text' name='{0}' id='{0}' value='{1}' {2}/>", name, value, attributes);
+		}
 		
-        //public static string Input(string name, string value, string placeholder)
-        //{
-        //    return Input(name, value, placeholder, "");
-        //}
+		//public static string Input(string name, string value, string placeholder)
+		//{
+		//    return Input(name, value, placeholder, "");
+		//}
 		
-        //public static string Input(string name, string value, string placeholder, string clas)
-        //{
-        //    return string.Format("<input type='text' name='{0}' id='{0}' value='{1}' class='{3}' placeholder='{2}'/>", name, value, placeholder, clas);
-        //}
+		//public static string Input(string name, string value, string placeholder, string clas)
+		//{
+		//    return string.Format("<input type='text' name='{0}' id='{0}' value='{1}' class='{3}' placeholder='{2}'/>", name, value, placeholder, clas);
+		//}
 		
 		public static string TextArea(string name, string value)
 		{
@@ -294,20 +316,20 @@ namespace HW.Core.Helpers
 			return Password(name, value, "");
 		}
 
-        public static string Password(string name, string value, string attributes)
-        {
-            return string.Format("<input type='password' name='{0}' id='{0}' value='{1}' {2}/>", name, value, attributes);
-        }
+		public static string Password(string name, string value, string attributes)
+		{
+			return string.Format("<input type='password' name='{0}' id='{0}' value='{1}' {2}/>", name, value, attributes);
+		}
 		
-        //public static string Password(string name, string value, string placeholder)
-        //{
-        //    return Password(name, value, placeholder, "");
-        //}
+		//public static string Password(string name, string value, string placeholder)
+		//{
+		//    return Password(name, value, placeholder, "");
+		//}
 		
-        //public static string Password(string name, string value, string placeholder, string clas)
-        //{
-        //    return string.Format("<input type='password' name='{0}' id='{0}' value='{1}' class='{3}' placeholder='{2}'/>", name, value, placeholder, clas);
-        //}
+		//public static string Password(string name, string value, string placeholder, string clas)
+		//{
+		//    return string.Format("<input type='password' name='{0}' id='{0}' value='{1}' class='{3}' placeholder='{2}'/>", name, value, placeholder, clas);
+		//}
 		
 		public static string Hidden(string id, string val)
 		{
