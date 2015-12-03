@@ -115,7 +115,7 @@
 						        <li><%= HtmlHelper.Anchor("Users", "users.aspx") %></li>
 						        <li><%= HtmlHelper.Anchor("Issues", "issues.aspx") %></li>--%>
                                 <% foreach (var l in Link.GetLinks()) { %>
-                                    <% if (l.ForSubscription && !company.HasSubscriber) { %>
+                                    <% if (l.ForSubscription && (company != null && !company.HasSubscriber)) { %>
                                     <% } else { %>
                                         <li><%= HtmlHelper.Anchor(l.Name, l.Url) %></li>
                                     <% } %>
