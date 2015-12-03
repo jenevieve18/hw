@@ -12,15 +12,20 @@ namespace HW.Invoicing
 {
     public partial class Invoicing : System.Web.UI.MasterPage
     {
-        SqlCompanyRepository r = new SqlCompanyRepository();
+        SqlCompanyRepository cr = new SqlCompanyRepository();
+        SqlUserRepository ur = new SqlUserRepository();
         protected Company company;
         protected IList<Company> companies;
+        protected User user;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             int companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
-            company = r.Read(companyId);
-            companies = r.FindAll();
+            company = cr.Read(companyId);
+            companies = cr.FindAll();
+            
+            int userId = ConvertHelper.ToInt32(Session["UserId"]);
+            user = ur.Read(userId);
         }
     }
 }

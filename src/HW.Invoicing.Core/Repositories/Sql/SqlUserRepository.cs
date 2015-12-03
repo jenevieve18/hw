@@ -68,7 +68,7 @@ WHERE Id = @Id",
 				new SqlParameter("@Id", id),
 				new SqlParameter("@Name", u.Name)
 			);
-            SaveLinks(u.Id, u.Links);
+            SaveLinks(id, u.Links);
 		}
 		
 		public void SaveLinks(int userId, IList<UserLink> links)

@@ -114,10 +114,11 @@
 						        <li><%= HtmlHelper.Anchor("Units", "units.aspx") %></li>
 						        <li><%= HtmlHelper.Anchor("Users", "users.aspx") %></li>
 						        <li><%= HtmlHelper.Anchor("Issues", "issues.aspx") %></li>--%>
-                                <% foreach (var l in Link.GetLinks()) { %>
-                                    <% if (l.ForSubscription && (company != null && !company.HasSubscriber)) { %>
+                                
+                                <% foreach (var l in user.Links) { %>
+                                    <% if (l.Link.ForSubscription && (company != null && !company.HasSubscriber)) { %>
                                     <% } else { %>
-                                        <li><%= HtmlHelper.Anchor(l.Name, l.Url) %></li>
+                                        <li><%= HtmlHelper.Anchor(l.Link.Name, l.Link.Url) %></li>
                                     <% } %>
                                 <% } %>
 					        </ul>
