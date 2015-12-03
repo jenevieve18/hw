@@ -15,6 +15,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <h3>Edit a user</h3>
+
 <div class="form-group">
 	<label for="<%= textBoxUsername.ClientID %>">User name</label>
     <asp:TextBox ID="textBoxUsername" runat="server" CssClass="form-control"></asp:TextBox>
@@ -30,6 +31,11 @@
 <div class="form-group">
 	<label for="<%= textBoxColor.ClientID %>">Color</label>
     <asp:TextBox ID="textBoxColor" runat="server" CssClass="form-control"></asp:TextBox>
+</div>
+<div class="form-group">
+    <label for="<%= checkBoxListLinks.ClientID %>">Access</label>
+    <asp:CheckBoxList ID="checkBoxListLinks" runat="server">
+    </asp:CheckBoxList>
 </div>
 <div>
     <asp:Button ID="buttonSave" runat="server" Text="Save collaborator" 

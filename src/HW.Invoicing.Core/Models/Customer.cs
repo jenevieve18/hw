@@ -13,6 +13,16 @@ namespace HW.Invoicing.Core.Models
 		public string Url { get; set; }
 		public bool ForSubscription { get; set; }
 		
+		public static Link GetLink(int id)
+		{
+			foreach (var l in GetLinks()) {
+				if (id == l.Id) {
+					return l;
+				}
+			}
+			return null;
+		}
+		
 		public static List<Link> GetLinks()
 		{
 			return new List<Link>(

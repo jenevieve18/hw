@@ -12,11 +12,31 @@ namespace HW.Invoicing
 {
     public partial class CollaboratorAdd : System.Web.UI.Page
     {
-    	SqlUserRepository r = new SqlUserRepository();
+    	SqlUserRepository ur = new SqlUserRepository();
+    	SqlCompanyRepository cr = new SqlCompanyRepository();
     	
         protected void Page_Load(object sender, EventArgs e)
         {
         	HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
+
+            int companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
+            var company = cr.Read(companyId);
+            
+            if (!IsPostBack) {
+            	
+                checkBoxListLinks.Items.Clear();
+                foreach (var l in Link.GetLinks())
+                {
+                    if (l.ForSubscription && !company.HasSubscriber)
+                    {
+                    }
+                    else
+                    {
+                        var li = new ListItem(l.Name, l.Id.ToString());
+                        checkBoxListLinks.Items.Add(li);
+                    }
+                }
+            }
         }
 
         protected void buttonSave_Click(object sender, EventArgs e)
@@ -28,7 +48,16 @@ namespace HW.Invoicing
                 Password = textBoxPassword.Text,
                 Color = textBoxColor.Text
             };
-            r.Save(u);
+            var links = new List<UserLink>();
+            foreach (ListItem l in checkBoxListLinks.Items)
+            {
+                if (l.Selected)
+                {
+                    links.Add(new UserLink { Link = new Link { Id = ConvertHelper.ToInt32(l.Value) } });
+                }
+            }
+            u.AddLinks(links);
+            ur.Save(u);
             Response.Redirect("collaborators.aspx");
         }
     }

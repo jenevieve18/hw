@@ -18,17 +18,18 @@ namespace HW.Invoicing.Core.Repositories.Sql
 			string query = string.Format(
 				@"
 INSERT INTO [User](Username, [Password], Color, Name)
-VALUES(@Username, @Password, @Color, @Name)"
+VALUES(@Username, @Password, @Color, @Name);
+SELECT CAST(scope_identity() AS int)"
 			);
-			ExecuteNonQuery(
+			int userId = (int)ExecuteScalar(
 				query,
 				"invoicing",
 				new SqlParameter("@Username", u.Username),
-//				new SqlParameter("@Password", u.Password),
 				new SqlParameter("@Password", StrHelper.MD5Hash(u.Password)),
 				new SqlParameter("@Color", u.Color),
 				new SqlParameter("@Name", u.Name)
 			);
+            SaveLinks(userId, u.Links);
 		}
 		
 		public void SelectCompany(int userId, int selectedCompany)
@@ -62,12 +63,31 @@ WHERE Id = @Id",
 				query,
 				"invoicing",
 				new SqlParameter("@Username", u.Username),
-//				new SqlParameter("@Password", u.Password),
 				new SqlParameter("@Password", StrHelper.MD5Hash(u.Password)),
 				new SqlParameter("@Color", u.Color),
 				new SqlParameter("@Id", id),
 				new SqlParameter("@Name", u.Name)
 			);
+            SaveLinks(u.Id, u.Links);
+		}
+		
+		public void SaveLinks(int userId, IList<UserLink> links)
+		{
+			string query = string.Format(
+            	@"
+DELETE FROM UserLink
+WHERE UserId = @UserId"
+            );
+            ExecuteNonQuery(query, "invoicing", new SqlParameter("@UserId", userId));
+            
+            query = string.Format(
+            	@"
+INSERT INTO UserLink(UserId, Link)
+VALUES(@UserId, @Link)"
+            );
+            foreach (var l in links) {
+            	ExecuteNonQuery(query, "invoicing", new SqlParameter("@UserId", userId), new SqlParameter("@Link", l.Link.Id));
+            }
 		}
 		
 		public override void Delete(int id)
@@ -113,11 +133,40 @@ ORDER BY Username"
 			return users;
 		}
 		
+		public IList<UserLink> FindLinks(int userId)
+		{
+			string query = string.Format(
+				@"
+SELECT Id,
+	UserId,
+	Link
+FROM UserLink
+WHERE UserId = @UserId"
+			);
+			IList<UserLink> links = new List<UserLink>();
+			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@UserId", userId))) {
+				while (rs.Read()) {
+					links.Add(
+						new UserLink {
+							Id = GetInt32(rs, 0),
+							User = new User { Id = GetInt32(rs, 1) },
+							Link = Link.GetLink(GetInt32(rs, 2, 1))
+						}
+					);
+				}
+			}
+			return links;
+		}
+		
 		public override IList<User> FindAll()
 		{
 			string query = string.Format(
 				@"
-SELECT Id, Username, [Password], Color, Name
+SELECT Id,
+	Username,
+	[Password],
+	Color,
+	Name
 FROM [User]
 ORDER BY Username"
 			);
@@ -158,6 +207,7 @@ WHERE Id = @Id"
 					};
 				}
 			}
+			u.AddLinks(FindLinks(id));
 			return u;
 		}
 		
