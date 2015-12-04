@@ -207,7 +207,10 @@ WHERE Id = @Id"
 					};
 				}
 			}
-			u.AddLinks(FindLinks(id));
+            if (u != null)
+            {
+                u.AddLinks(FindLinks(id));
+            }
 			return u;
 		}
 		
