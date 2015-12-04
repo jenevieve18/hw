@@ -124,6 +124,7 @@
                                     <% } %>
                                 <% } %>
 					        </ul>
+                            <% if (company != null) { %>
 					        <ul class="nav navbar-nav navbar-right">
                                 <li class="dropdown">
                                     <% if (Session["CompanyName"] != null) { %>
@@ -150,6 +151,7 @@
 							        </ul>
 						        </li>
 					        </ul>
+                            <% } %>
 				        </div>
 			        </nav>
 
