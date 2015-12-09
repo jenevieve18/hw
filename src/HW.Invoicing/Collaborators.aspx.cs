@@ -12,15 +12,20 @@ namespace HW.Invoicing
 {
     public partial class Collaborators : System.Web.UI.Page
     {
-        SqlUserRepository r = new SqlUserRepository();
+        protected SqlUserRepository ur = new SqlUserRepository();
+        protected SqlCompanyRepository cr = new SqlCompanyRepository();
         protected IList<User> users;
+        //protected int companyId;
+        protected Company company;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
 
             int companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
-            users = r.FindCollaborators(companyId);
+            
+            company = cr.Read(companyId);
+            users = ur.FindCollaborators(companyId);
         }
     }
 }

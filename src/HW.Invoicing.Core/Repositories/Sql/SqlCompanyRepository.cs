@@ -15,6 +15,14 @@ UPDATE Company SET Selected = NULL
 WHERE UserId = @UserId";
 			ExecuteNonQuery(query, "invoicing", new SqlParameter("@UserId", userId));
 		}
+		
+		public override void Delete(int companyId)
+		{
+			string query = @"
+DELETE FROM Company
+WHERE Id = @Id";
+			ExecuteNonQuery(query, "invoicing", new SqlParameter("@Id", companyId));
+		}
 
 		public void SelectCompany(int companyId)
 		{
@@ -23,13 +31,64 @@ UPDATE Company SET Selected = 1
 WHERE Id = @Id";
 			ExecuteNonQuery(query, "invoicing", new SqlParameter("@Id", companyId));
 		}
+		
+		public IList<UserCompany> FindCompaniesThatHasAccessTo(int userId)
+		{
+			string query = string.Format(
+				@"
+SELECT c.Id,
+	c.Name
+FROM UserCompany uc
+INNER JOIN Company c ON c.Id = uc.CompanyId
+WHERE uc.UserId = @UserId
+ORDER BY c.Name"
+			);
+			IList<UserCompany> companies = new List<UserCompany>();
+			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@UserId", userId))) {
+				while (rs.Read()) {
+					companies.Add(
+						new UserCompany {
+							Company = new Company {
+								Id = GetInt32(rs, 0),
+								Name = GetString(rs, 1)
+							}
+						}
+					);
+				}
+			}
+			return companies;
+		}
+		
+		public IList<Company> FindCompanies(int userId)
+		{
+			string query = string.Format(
+				@"
+SELECT Id,
+	Name
+FROM Company
+WHERE UserId = @UserId
+ORDER BY Name"
+			);
+			IList<Company> companies = new List<Company>();
+			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@UserId", userId))) {
+				while (rs.Read()) {
+					companies.Add(
+						new Company {
+							Id = GetInt32(rs, 0),
+							Name = GetString(rs, 1)
+						}
+					);
+				}
+			}
+			return companies;
+		}
 
 		public override IList<Company> FindAll()
 		{
 			string query = @"
 SELECT Id,
-Name,
-Terms
+	Name,
+	Terms
 FROM Company";
 			var companies = new List<Company>();
 			using (var rs = ExecuteReader(query, "invoicing"))
@@ -108,7 +167,8 @@ SELECT Id,
     AgreementSignedEmailSubject,
     AgreementTemplate,
     Website,
-    InvoiceExporter
+    InvoiceExporter,
+    UserId
 FROM Company
 WHERE Id = @Id";
 			Company c = null;
@@ -138,7 +198,8 @@ WHERE Id = @Id";
 						AgreementSignedEmailSubject = GetString(rs, 20),
 						AgreementTemplate = GetString(rs, 21),
 						Website = GetString(rs, 22),
-						InvoiceExporter = GetInt32(rs, 23)
+						InvoiceExporter = GetInt32(rs, 23),
+						User = new User { Id = GetInt32(rs, 24) }
 					};
 				}
 			}

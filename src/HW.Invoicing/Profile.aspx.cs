@@ -49,7 +49,7 @@ namespace HW.Invoicing
         	if (u != null) {
         		textBoxUsername.Text = u.Username;
                 textBoxName.Text = u.Name;
-                textBoxPassword.Text = u.Password;
+                //textBoxPassword.Text = u.Password;
         	}
         }
     }

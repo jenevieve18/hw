@@ -28,9 +28,11 @@ namespace HW.Invoicing.Core.Models
         public string AgreementSignedEmailSubject { get; set; }
         public string AgreementTemplate { get; set; }
         public User User { get; set; }
-        public List<CompanyUser> Users { get; set; }
+//        public List<CompanyUser> Users { get; set; }
 		public string Website { get; set; }
         public int InvoiceExporter { get; set; }
+        
+        public IList<Link> Links { get; set; }
 		
 		public string GetWebsiteAndEmail()
 		{

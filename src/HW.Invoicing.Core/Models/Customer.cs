@@ -499,6 +499,13 @@ namespace HW.Invoicing.Core.Models
 			s += StrHelper.Str(Contact.Contact != "", "<i>" + Contact.Contact + "</i>", "");
 			return s;
 		}
+        public string GetDepartmentAndContact2()
+        {
+            string s = "";
+            s += StrHelper.Str(Department != null && Department != "", Department, "");
+            s += StrHelper.Str(Contact.Contact != null && Contact.Contact != "", " - " + Contact.Contact, "");
+            return s;
+        }
 
 		public override string ToString()
 		{

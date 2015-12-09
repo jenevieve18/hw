@@ -12,3 +12,16 @@ create table UserLink(
 	UserId integer,
 	Link integer
 );
+
+create table UserCompany(
+	Id integer not null primary key identity,
+	UserId integer,
+	CompanyId integer
+);
+
+create table UserCompanyLink(
+	Id integer not null primary key identity,
+	UserId integer,
+	CompanyId integer,
+	Link integer
+);

@@ -115,16 +115,17 @@
 						        <li><%= HtmlHelper.Anchor("Users", "users.aspx") %></li>
 						        <li><%= HtmlHelper.Anchor("Issues", "issues.aspx") %></li>--%>
                                 
-                                <% if (user != null) { %>
-                                    <% foreach (var l in user.Links) { %>
-                                        <% if (l.Link.ForSubscription && (company != null && !company.HasSubscriber)) { %>
+                                <% if (user != null && company != null) { %>
+                                    <% var links = user.IsOwner(company) ? Link.GetLinks() : user.GetCompany(company.Id).Links; %>
+                                    <% foreach (var l in links) { %>
+                                        <% if (l.ForSubscription && (company != null && !company.HasSubscriber)) { %>
                                         <% } else { %>
-                                            <li><%= HtmlHelper.Anchor(l.Link.Name, l.Link.Url) %></li>
+                                            <li><%= HtmlHelper.Anchor(l.Name, l.Url) %></li>
                                         <% } %>
                                     <% } %>
                                 <% } %>
 					        </ul>
-                            <% if (company != null) { %>
+                            <%--<% if (company != null) { %>--%>
 					        <ul class="nav navbar-nav navbar-right">
                                 <li class="dropdown">
                                     <% if (Session["CompanyName"] != null) { %>
@@ -133,8 +134,16 @@
 							            <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Companies<strong class="caret"></strong></a>
                                     <% } %>
 							        <ul class="dropdown-menu">
-                                        <% foreach (var c in companies) { %>
+                                        <% foreach (var c in user.Companies) { %>
                                             <li><%= HtmlHelper.Anchor(c.Name, "companyselect.aspx?Id=" + c.Id) %></li>
+                                        <% } %>
+                                        <% if (user.HasCompaniesThatHasAccessTo) { %>
+                                            <% if (user.Companies.Count > 0) { %>
+                                                <li class="divider"></li>
+                                            <% } %>
+                                            <% foreach (var c in user.CompaniesThatHasAccessTo) { %>
+                                                <li><%= HtmlHelper.Anchor(c.Company.Name, "companyselect.aspx?Id=" + c.Company.Id) %></li>
+                                            <% } %>
                                         <% } %>
 							        </ul>
 						        </li>
@@ -151,7 +160,7 @@
 							        </ul>
 						        </li>
 					        </ul>
-                            <% } %>
+                            <%--<% } %>--%>
 				        </div>
 			        </nav>
 

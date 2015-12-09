@@ -14,12 +14,13 @@ namespace HW.Invoicing
     {
     	SqlUserRepository ur = new SqlUserRepository();
     	SqlCompanyRepository cr = new SqlCompanyRepository();
+        int companyId;
     	
         protected void Page_Load(object sender, EventArgs e)
         {
         	HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
 
-            int companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
+            companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
             var company = cr.Read(companyId);
             
             if (!IsPostBack) {
@@ -48,15 +49,16 @@ namespace HW.Invoicing
                 Password = textBoxPassword.Text,
                 Color = textBoxColor.Text
             };
-            var links = new List<UserLink>();
+            var links = new List<Link>();
             foreach (ListItem l in checkBoxListLinks.Items)
             {
                 if (l.Selected)
                 {
-                    links.Add(new UserLink { Link = new Link { Id = ConvertHelper.ToInt32(l.Value) } });
+                    links.Add(new Link { Id = ConvertHelper.ToInt32(l.Value) });
                 }
             }
-            u.AddLinks(links);
+//            u.AddLinks(links);
+            u.SelectedCompany = new Company { Id = companyId, Links = links };
             ur.Save(u);
             Response.Redirect("collaborators.aspx");
         }
