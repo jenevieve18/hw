@@ -29,7 +29,8 @@ SELECT CAST(scope_identity() AS int)"
 				new SqlParameter("@Color", u.Color),
 				new SqlParameter("@Name", u.Name)
 			);
-			//            SaveLinks(userId, u.Links);
+//			SaveLinks(userId, u.Links);
+			SaveCompanyLinks(userId, u.SelectedCompany);
 		}
 		
 		public void SelectCompany(int userId, int selectedCompany)
@@ -50,7 +51,7 @@ WHERE Id = @Id"
 		public override void Update(User u, int id)
 		{
 			string p = u.Password != "" ? "[Password] = @Password," : "";
-            string c = u.Color != "" ? "Color = @Color," : "";
+			string c = u.Color != "" ? "Color = @Color," : "";
 			string query = string.Format(
 				@"
 UPDATE [User] SET Username = @Username,
@@ -59,7 +60,7 @@ UPDATE [User] SET Username = @Username,
     Name = @Name
 WHERE Id = @Id",
 				p,
-                c
+				c
 			);
 			ExecuteNonQuery(
 				query,
