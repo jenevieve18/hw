@@ -123,7 +123,7 @@ WHERE Id = @Id",
 SELECT 1
 FROM UserCompany uc
 WHERE uc.UserId = @UserId
-AND uc.Id = @CompanyId"
+AND uc.CompanyId = @CompanyId"
 				);
 				bool userCompanyFound = false;
 				using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@UserId", user.Id), new SqlParameter("@CompanyId", company.Id))) {
