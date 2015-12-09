@@ -29,8 +29,7 @@ SELECT CAST(scope_identity() AS int)"
 				new SqlParameter("@Color", u.Color),
 				new SqlParameter("@Name", u.Name)
 			);
-//			SaveLinks(userId, u.Links);
-			SaveCompanyLinks(userId, u.SelectedCompany);
+			SaveCompanyLinks(new User { Id = userId }, u.SelectedCompany);
 		}
 		
 		public void SelectCompany(int userId, int selectedCompany)
@@ -71,7 +70,7 @@ WHERE Id = @Id",
 				new SqlParameter("@Id", id),
 				new SqlParameter("@Name", u.Name)
 			);
-			SaveCompanyLinks(id, u.SelectedCompany);
+			SaveCompanyLinks(u, u.SelectedCompany);
 		}
 		
 //		public override void UpdateProfile(User u, int id)
@@ -116,30 +115,29 @@ WHERE Id = @Id",
 //			}
 //		}
 		
-		public void SaveCompanyLinks(int userId, Company company)
+		public void SaveCompanyLinks(User user, Company company)
 		{
 			if (company != null) {
 				string query = string.Format(
 					@"
 SELECT 1
 FROM UserCompany uc
-RIGHT OUTER JOIN Company c ON c.Id = uc.CompanyId
-WHERE c.UserId = @UserId
-AND c.Id = @CompanyId"
+WHERE uc.UserId = @UserId
+AND uc.Id = @CompanyId"
 				);
 				bool userCompanyFound = false;
-				using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@UserId", userId), new SqlParameter("@CompanyId", company.Id))) {
+				using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@UserId", user.Id), new SqlParameter("@CompanyId", company.Id))) {
 					if (rs.Read()) {
 						userCompanyFound = true;
 					}
 				}
-				if (!userCompanyFound) {
+				if (!userCompanyFound && !user.IsOwner(company)) {
 					query = string.Format(
 						@"
 INSERT INTO UserCompany(UserId, CompanyId)
 VALUES(@UserId, @CompanyId)"
 					);
-					ExecuteNonQuery(query, "invoicing", new SqlParameter(), new SqlParameter("@UserId", userId), new SqlParameter("@CompanyId", company.Id));
+					ExecuteNonQuery(query, "invoicing", new SqlParameter(), new SqlParameter("@UserId", user.Id), new SqlParameter("@CompanyId", company.Id));
 				}
 				query = string.Format(
 					@"
@@ -150,7 +148,7 @@ AND CompanyId = @CompanyId"
 				ExecuteNonQuery(
 					query,
 					"invoicing",
-					new SqlParameter("@UserId", userId),
+					new SqlParameter("@UserId", user.Id),
 					new SqlParameter("@CompanyId", company.Id)
 				);
 				
@@ -162,13 +160,67 @@ VALUES(@UserId, @CompanyId, @Link)"
 				foreach (var l in company.Links) {
 					ExecuteNonQuery(
 						query, "invoicing",
-						new SqlParameter("@UserId", userId),
+						new SqlParameter("@UserId", user.Id),
 						new SqlParameter("@CompanyId", company.Id),
 						new SqlParameter("@Link", l.Id)
 					);
 				}
 			}
 		}
+		
+//		public void SaveCompanyLinks(int userId, Company company)
+//		{
+//			if (company != null) {
+//				string query = string.Format(
+//					@"
+//SELECT 1
+//FROM UserCompany uc
+//RIGHT OUTER JOIN Company c ON c.Id = uc.CompanyId
+//WHERE c.UserId = @UserId
+//AND c.Id = @CompanyId"
+//				);
+//				bool userCompanyFound = false;
+//				using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@UserId", userId), new SqlParameter("@CompanyId", company.Id))) {
+//					if (rs.Read()) {
+//						userCompanyFound = true;
+//					}
+//				}
+//				if (!userCompanyFound) {
+//					query = string.Format(
+//						@"
+//INSERT INTO UserCompany(UserId, CompanyId)
+//VALUES(@UserId, @CompanyId)"
+//					);
+//					ExecuteNonQuery(query, "invoicing", new SqlParameter(), new SqlParameter("@UserId", userId), new SqlParameter("@CompanyId", company.Id));
+//				}
+//				query = string.Format(
+//					@"
+//DELETE FROM UserCompanyLink
+//WHERE UserId = @UserId
+//AND CompanyId = @CompanyId"
+//				);
+//				ExecuteNonQuery(
+//					query,
+//					"invoicing",
+//					new SqlParameter("@UserId", userId),
+//					new SqlParameter("@CompanyId", company.Id)
+//				);
+//				
+//				query = string.Format(
+//					@"
+//INSERT INTO UserCompanyLink(UserId, CompanyId, Link)
+//VALUES(@UserId, @CompanyId, @Link)"
+//				);
+//				foreach (var l in company.Links) {
+//					ExecuteNonQuery(
+//						query, "invoicing",
+//						new SqlParameter("@UserId", userId),
+//						new SqlParameter("@CompanyId", company.Id),
+//						new SqlParameter("@Link", l.Id)
+//					);
+//				}
+//			}
+//		}
 		
 		public override void Delete(int id)
 		{

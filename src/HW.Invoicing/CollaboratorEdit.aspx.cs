@@ -14,8 +14,6 @@ namespace HW.Invoicing
 	public partial class CollaboratorEdit : System.Web.UI.Page
 	{
 		int id;
-//		SqlUserRepository ur = new SqlUserRepository();
-//		SqlCompanyRepository cr = new SqlCompanyRepository();
 		UserService service = new UserService();
 		int companyId;
         protected Company company;
@@ -25,13 +23,11 @@ namespace HW.Invoicing
 			HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
 
 			companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
-//			var company = cr.Read(companyId);
 			company = service.ReadCompany(companyId);
 
 			id = ConvertHelper.ToInt32(Request.QueryString["UserID"]);
 			if (!IsPostBack)
 			{
-//				var u = ur.Read(id);
 				var u = service.ReadUser(id);
 
 				checkBoxListLinks.Items.Clear();
@@ -60,6 +56,7 @@ namespace HW.Invoicing
 		{
 			var u = new User
 			{
+				Id = id,
 				Username = textBoxUsername.Text,
 				Name = textBoxName.Text,
 				Password = textBoxPassword.Text,
@@ -73,8 +70,9 @@ namespace HW.Invoicing
 					links.Add(new Link { Id = ConvertHelper.ToInt32(l.Value) });
 				}
 			}
-			u.SelectedCompany = new Company { Id = companyId, Links = links };
-//			ur.Update(u, id);
+//			u.SelectedCompany = new Company { Id = companyId, Links = links };
+			company.Links = links;
+			u.SelectedCompany = company;
 			service.UpdateUser(u, id);
 			Response.Redirect("collaborators.aspx");
 		}
