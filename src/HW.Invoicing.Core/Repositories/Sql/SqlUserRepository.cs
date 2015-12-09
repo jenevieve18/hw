@@ -144,12 +144,14 @@ VALUES(@UserId, @CompanyId)"
 				query = string.Format(
 					@"
 DELETE FROM UserCompanyLink
-WHERE UserId = @UserId"
+WHERE UserId = @UserId
+AND CompanyId = @CompanyId"
 				);
 				ExecuteNonQuery(
 					query,
 					"invoicing",
-					new SqlParameter("@UserId", userId)
+					new SqlParameter("@UserId", userId),
+					new SqlParameter("@CompanyId", company.Id)
 				);
 				
 				query = string.Format(

@@ -187,6 +187,35 @@
                 }
             });
             $('#<%= checkBoxSubscriptionHasEndDate.ClientID %>').change();
+
+            $('.spinner').hide();
+            $('.timebook-consultant-label').click(function () {
+                var text = $(this).find('.timebook-consultant-text');
+                $(this).find('.timebook-consultant-label').hide();
+                text.show();
+                text.focus();
+            });
+            $('.timebook-consultant-text').focusout(function () {
+                var comments = $(this).val();
+                var id = $(this).data('id');
+                var label = $(this).closest('td').find('.timebook-consultant-label');
+                label.text(comments);
+
+                var spinner = $(this).closest('td').find('.spinner');
+                spinner.show();
+                $.ajax({
+                    type: 'POST',
+                    url: 'CustomerShow.aspx/UpdateTimebookConsultant',
+                    data: JSON.stringify({ comments: comments, id: id }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json',
+                    success: function (msg) {
+                        spinner.hide();
+                    }
+                });
+                $(this).hide();
+                label.show();
+            });
         });
     </script>
     <script type="text/javascript">
@@ -611,7 +640,7 @@
 			<div class="alert alert-info">
 				<strong>Time book</strong> is a sheet for recording the time of arrival and departure of workers and for recording the amount of time spent on each job.
 			</div>
-            <%--<table class="table table-hover small timebook-list">
+            <table class="table table-hover small timebook-list">
                 <tr>
                     <th><input type="checkbox" id="checkbox-timebook-all" /></th>
                     <th style="width:80px">Date</th>
@@ -695,7 +724,12 @@
                             <td><%= t.Price.ToString("# ##0.00") %></td>
                             <td><%= t.Amount.ToString("# ##0.00") %></td>
                             <td><%= t.VAT %>%</td>
-                            <td><%= t.Consultant %></td>
+                            <td>
+                                <%--<%= t.Consultant %>--%>
+                                <span class="timebook-consultant-label"><%= t.Consultant%></span>
+                                <textarea data-id="<%= t.Id %>" type="text" class="form-control timebook-consultant-text"><%= t.Consultant %></textarea>
+                                <img alt="" class="spinner" src="img/spiffygif_30x30.gif" />
+                            </td>
                             <td align="center"><%= t.GetStatus() %></td>
                             <td class="comments-width">
                                 <% if (t.HasInternalComments) { %>
@@ -712,31 +746,17 @@
                         </tr>
                     <% } %>
                 <% } %>
-            </table>--%>
-            <table class="table table-hover timebook-list">
-                <%--<tr>
-                    <th><input type="checkbox" id="checkbox-timebook-all" /></th>
-                    <th style="width:80px">Date</th>
-                    <th>Department<br /><i>Contact</i></th>
-                    <th>Item</th>
-                    <th>Unit</th>
-                    <th>Qty</th>
-                    <th>Price</th>
-                    <th>Amount</th>
-                    <th>VAT %</th>
-                    <th>Consultant</th>
-                    <th>Status</th>
-                    <th>Comments</th>
-                    <th></th>
-                </tr>--%>
+            </table>
+            <%--<table class="table table-hover timebook-list">
                 <tr>
-                    <th></th>
+                    <th><input type="checkbox" id="checkbox-timebook-all" /></th>
                     <th></th>
                     <th>Item</th>
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Amount</th>
                     <th>VAT</th>
+                    <th></th>
                 </tr>
                 <% foreach (var t in timebooks) { %>
                     <% if (t.Inactive) { %>
@@ -820,27 +840,7 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <%--<% if (t.Date != null) { %>
-                                    <%= t.Date.Value.ToString("yyyy-MM-dd") %>
-                                <% } %>--%>
                             </td>
-                            <%--<td>
-                                <%= t.GetDepartmentAndContact() %>
-                            </td>
-                            <td><%= t.Item.Name %></td>
-                            <td><%= t.Item.Unit.Name %></td>
-                            <td><%= t.Quantity.ToString("# ##0.00") %></td>
-                            <td><%= t.Price.ToString("# ##0.00") %></td>
-                            <td><%= t.Amount.ToString("# ##0.00") %></td>
-                            <td><%= t.VAT %>%</td>
-                            <td><%= t.Consultant %></td>
-                            <td align="center"><%= t.GetStatus() %></td>
-                            <td class="comments-width">
-                                <% if (t.HasInternalComments) { %>
-                                    <img src="img/comment.png" title="<%= t.InternalComments %>"/>
-                                <% } %>
-                                <%= t.Comments %>
-                            </td>--%>
                             <td>
                                 <% if (!t.IsPaid) { %>
                                     <%= HtmlHelper.Anchor(" ", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id), "title='Edit' class='glyphicon glyphicon-edit'")%>
@@ -850,7 +850,7 @@
                         </tr>
                     <% } %>
                 <% } %>
-            </table>
+            </table>--%>
 		</div>
 		<div class="tab-pane <%= selectedTab == "customer-prices" ? "active" : "" %>" id="customer-prices">
 			<br />
