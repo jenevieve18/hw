@@ -187,26 +187,27 @@
                 }
             });
             $('#<%= checkBoxSubscriptionHasEndDate.ClientID %>').change();
-
+            
+            $('.timebook-consultant-text').hide();
             $('.spinner').hide();
-            $('.timebook-consultant-label').click(function () {
+            $('.timebook-consultant').click(function () {
                 var text = $(this).find('.timebook-consultant-text');
                 $(this).find('.timebook-consultant-label').hide();
                 text.show();
                 text.focus();
             });
             $('.timebook-consultant-text').focusout(function () {
-                var comments = $(this).val();
+                var consultant = $(this).val();
                 var id = $(this).data('id');
                 var label = $(this).closest('td').find('.timebook-consultant-label');
-                label.text(comments);
+                label.text(consultant);
 
                 var spinner = $(this).closest('td').find('.spinner');
                 spinner.show();
                 $.ajax({
                     type: 'POST',
                     url: 'CustomerShow.aspx/UpdateTimebookConsultant',
-                    data: JSON.stringify({ comments: comments, id: id }),
+                    data: JSON.stringify({ consultant: consultant, id: id }),
                     contentType: "application/json; charset=utf-8",
                     dataType: 'json',
                     success: function (msg) {
@@ -389,6 +390,9 @@
                             <div class="form-group">
 	                            <label for="<%= textBoxTimebookDate.ClientID %>">Date</label>
                                 <asp:TextBox ID="textBoxTimebookDate" runat="server" CssClass="form-control date"></asp:TextBox>
+                            </div>
+                            <div class="form-group">
+                                <asp:CheckBox ID="checkBoxTimebookIsHeader" runat="server" CssClass="form-control" Text="&nbsp;This timebook is a header type" />
                             </div>
                             <div class="form-group">
                                 <asp:CheckBox ID="checkBoxTimebookDateHidden" runat="server" CssClass="form-control" Text="&nbsp;Timebook date is hidden" />
@@ -724,7 +728,7 @@
                             <td><%= t.Price.ToString("# ##0.00") %></td>
                             <td><%= t.Amount.ToString("# ##0.00") %></td>
                             <td><%= t.VAT %>%</td>
-                            <td>
+                            <td class="timebook-consultant">
                                 <%--<%= t.Consultant %>--%>
                                 <span class="timebook-consultant-label"><%= t.Consultant%></span>
                                 <textarea data-id="<%= t.Id %>" type="text" class="form-control timebook-consultant-text"><%= t.Consultant %></textarea>

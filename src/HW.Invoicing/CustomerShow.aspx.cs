@@ -34,6 +34,14 @@ namespace HW.Invoicing
         protected int companyId;
         protected Company company;
         protected string message;
+
+        [WebMethod]
+        public static string UpdateTimebookConsultant(string consultant, int id)
+        {
+            var d = new SqlCustomerRepository();
+            d.UpdateTimebookConsultant(consultant, id);
+            return consultant;
+        }
     	
         protected void Page_Load(object sender, EventArgs e)
         {

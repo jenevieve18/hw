@@ -30,6 +30,14 @@ WHERE Id = @Id";
 				new SqlParameter("@Id", id)
 			);
 		}
+		
+        public void UpdateTimebookConsultant(string consultant, int id)
+        {
+            string query = @"
+UPDATE CustomerTimebook SET Consultant = @Consultant
+WHERE Id = @Id";
+            ExecuteNonQuery(query, "invoicing", new SqlParameter("@Consultant", consultant), new SqlParameter("@Id", id));
+        }
 
         public void DeactivateTimebook(int id)
         {
