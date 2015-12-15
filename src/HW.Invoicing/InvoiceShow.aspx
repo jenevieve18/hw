@@ -23,7 +23,6 @@
         <td class="hw-border-top">
             <strong>
                 <%= HtmlHelper.Anchor(invoice.Customer.Number, string.Format("customershow.aspx?Id={0}&SelectedTab=customer-info", invoice.Customer.Id)) %>
-                <!--<asp:Label ID="labelInvoiceCustomerNumber" runat="server" Text=""></asp:Label>-->
             </strong>
         </td>
     </tr>
@@ -76,7 +75,7 @@
     <tr>
         <td>
             <asp:Panel ID="panelPurchaseOrder" runat="server">
-                <strong><%--Purchase order number: --%>
+                <strong>
                     <asp:Label ID="labelInvoicePurchaseOrderNumber" runat="server" Text=""></asp:Label>
                 </strong>
             </asp:Panel>
@@ -102,19 +101,35 @@
     <% decimal subTotal = 0; %>
     <% Dictionary<decimal, decimal> vats = new Dictionary<decimal, decimal>(); %>
     <% foreach (var t in invoice.Timebooks) { %>
-        <tr>
-            <td colspan="4"><%= t.Timebook.ToString() %></td>
-            <td><%= t.Timebook.Quantity.ToString("# ##0.00") %></td>
-            <td><%= t.Timebook.Item.Unit.Name %></td>
-            <td class="text-right"><%= t.Timebook.Price.ToString("### ### ##0.00") %></td>
-            <td class="text-right"><%= t.Timebook.Amount.ToString("### ### ##0.00") %></td>
-            <% subTotal += t.Timebook.Amount; %>
-            <% if (vats.ContainsKey(t.Timebook.VAT)) { %>
-                <% vats[t.Timebook.VAT] += t.Timebook.VATAmount; %>
-            <% } else { %>
-                <% vats[t.Timebook.VAT] = t.Timebook.VATAmount; %>
-            <% } %>
-        </tr>
+        <% if (t.Timebook.IsHeader) { %>
+            <tr>
+                <td colspan="4"><%= t.Timebook.ToString() %></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <% subTotal += t.Timebook.Amount; %>
+                <% if (vats.ContainsKey(t.Timebook.VAT)) { %>
+                    <% vats[t.Timebook.VAT] += t.Timebook.VATAmount; %>
+                <% } else { %>
+                    <% vats[t.Timebook.VAT] = t.Timebook.VATAmount; %>
+                <% } %>
+            </tr>
+        <% } else { %>
+            <tr>
+                <td colspan="4"><%= t.Timebook.ToString() %></td>
+                <td><%= t.Timebook.Quantity.ToString("# ##0.00") %></td>
+                <td><%= t.Timebook.Item.Unit.Name %></td>
+                <td class="text-right"><%= t.Timebook.Price.ToString("### ### ##0.00") %></td>
+                <td class="text-right"><%= t.Timebook.Amount.ToString("### ### ##0.00") %></td>
+                <% subTotal += t.Timebook.Amount; %>
+                <% if (vats.ContainsKey(t.Timebook.VAT)) { %>
+                    <% vats[t.Timebook.VAT] += t.Timebook.VATAmount; %>
+                <% } else { %>
+                    <% vats[t.Timebook.VAT] = t.Timebook.VATAmount; %>
+                <% } %>
+            </tr>
+        <% } %>
     <% } %>
     </tbody>
 
@@ -135,16 +150,12 @@
     <tr><td colspan="7"></td><td class="hw-border-last"><%= subTotal.ToString("### ### ##0.00") %></td></tr>
     <tr class="hw-invoice-header">
         <td colspan="<%= (7 - vats.Count * 2) %>"></td>
-        <!--<td style="width:10%" class="hw-border-left">VAT %</td>
-        <td style="width:10%" class="hw-border-left">VAT</td>-->
         <%= strVatLabel %>
         <td class="hw-border-last">Total Amount</td>
     </tr>
     <tr class="hw-border-bottom">
         <td colspan="<%= (7 - vats.Count * 2) %>"></td>
         <%= strVat %>
-        <!--<td style="width:10%" class="hw-border-left">25%</td>
-        <td style="width:10%" class="hw-border-left">12 500,00</td>-->
         <td class="hw-border-last"><%= (subTotal + totalVat).ToString("### ### ##0.00") %></td>
     </tr>
 </table>
@@ -152,8 +163,6 @@
 <div class="form-group">
     <label for="labelInvoiceComments">Comments</label><br />
     <span id="labelInvoiceComments"><%= invoice.Comments %></span>
-	<%-- <label for="<%= labelInvoiceComments.ClientID %>">Comments</label>
-    <asp:Label ID="labelInvoiceComments" runat="server" Text=""></asp:Label>--%>
 </div>
 <% } %>
 <small class="hw-footer">

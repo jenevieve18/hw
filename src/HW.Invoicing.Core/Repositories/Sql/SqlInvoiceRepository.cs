@@ -81,11 +81,17 @@ WHERE InvoiceId = @InvoiceId";
             ExecuteNonQuery(query, "invoicing", new SqlParameter("@InvoiceId", id));
 
             query = @"
-INSERT INTO InvoiceTimebook(InvoiceId, CustomerTimebookId)
-VALUES(@InvoiceId, @CustomerTimebookId)";
+INSERT INTO InvoiceTimebook(InvoiceId, CustomerTimebookId, SortOrder)
+VALUES(@InvoiceId, @CustomerTimebookId, @SortOrder)";
             foreach (var t in i.Timebooks)
             {
-                ExecuteNonQuery(query, "invoicing", new SqlParameter("@CustomerTimebookId", t.Timebook.Id), new SqlParameter("@InvoiceId", id));
+                ExecuteNonQuery(
+                    query,
+                    "invoicing",
+                    new SqlParameter("@CustomerTimebookId", t.Timebook.Id),
+                    new SqlParameter("@InvoiceId", id),
+                    new SqlParameter("@SortOrder", t.SortOrder)
+                    );
             }
         }
 
@@ -150,8 +156,8 @@ ELSE
             ExecuteNonQuery(query, "invoicing", new SqlParameter("@Invoice", i.Id), new SqlParameter("@CompanyId", i.Customer.Company.Id));
             
 			query = @"
-INSERT INTO InvoiceTimebook(InvoiceId, CustomerTimebookId)
-VALUES(@InvoiceId, @CustomerTimebookId)";
+INSERT INTO InvoiceTimebook(InvoiceId, CustomerTimebookId, SortOrder)
+VALUES(@InvoiceId, @CustomerTimebookId, @SortOrder)";
 			
 			var cr = new SqlCustomerRepository();
 			var c = cr.Read(i.Customer.Id);
@@ -164,19 +170,23 @@ VALUES(@InvoiceId, @CustomerTimebookId)";
 					query,
 					"invoicing",
 					new SqlParameter("@CustomerTimebookId", t.Timebook.Id),
-                    new SqlParameter("@InvoiceId", id)
+                    new SqlParameter("@InvoiceId", id),
+                    new SqlParameter("@SortOrder", t.SortOrder)
 				);
 
                 // Unscribe customer when subscription timebook end date equals to it's subscription end date is invoiced.
                 var ti = cr.ReadTimebook(t.Timebook.Id);
-                if (ti.IsSubscription && c.SubscriptionHasEndDate && ti.SubscriptionEndDate.Value.Date == c.SubscriptionEndDate.Value.Date)
+                if (ti != null)
                 {
-                	ExecuteNonQuery(
-                		"UPDATE Customer SET HasSubscription = @HasSubscription WHERE Id = @Id",
-                		"invoicing",
-                		new SqlParameter("@HasSubscription", false),
-                		new SqlParameter("@Id", c.Id)
-                	);
+                    if (ti.IsSubscription && c.SubscriptionHasEndDate && ti.SubscriptionEndDate.Value.Date == c.SubscriptionEndDate.Value.Date)
+                    {
+                        ExecuteNonQuery(
+                            "UPDATE Customer SET HasSubscription = @HasSubscription WHERE Id = @Id",
+                            "invoicing",
+                            new SqlParameter("@HasSubscription", false),
+                            new SqlParameter("@Id", c.Id)
+                        );
+                    }
                 }
 			}
 		}
@@ -259,25 +269,30 @@ WHERE i.Id = @Id"
         public List<InvoiceTimebook> FindTimebooks(int invoiceId)
         {
             string query = @"
-select it.id,
-    it.customertimebookid,
-    ct.quantity,
-    ct.price,
-    ct.vat,
-    ct.itemid,
-    i.name,
-    i.unitid,
-    u.name,
-    ct.comments,
-    ct.consultant,
+SELECT it.Id,
+    it.CustomerTimebookId,
+    ct.Quantity,
+    ct.Price,
+    ct.VAT,
+    ct.ItemId,
+    i.Name,
+    i.UnitId,
+    u.Name,
+    ct.Comments,
+    ct.Consultant,
     ct.IsSubscription,
     ct.Date,
-    ct.DateHidden
-from invoicetimebook it
-inner join customertimebook ct on ct.id = it.customertimebookid
-inner join item i on i.id = ct.itemid
-inner join unit u on u.id = i.unitid
-where it.invoiceid = @InvoiceId";
+    ct.DateHidden,
+    ct.IsHeader,
+    it.SortOrder
+FROM InvoiceTimebook it
+INNER JOIN CustomerTimebook ct ON ct.Id = it.CustomerTimebookId
+--inner join item i on i.id = ct.itemid
+--inner join unit u on u.id = i.unitid
+LEFT OUTER JOIN Item i ON i.Id = ct.ItemId
+LEFT OUTER JOIN Unit u ON u.Id = i.UnitId
+WHERE it.InvoiceId = @InvoiceId
+ORDER BY it.SortOrder";
             var timebooks = new List<InvoiceTimebook>();
             using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@InvoiceId", invoiceId)))
             {
@@ -302,8 +317,10 @@ where it.invoiceid = @InvoiceId";
                             Consultant = GetString(rs, 10),
                             IsSubscription = GetInt32(rs, 11) == 1,
                             Date = GetDateTime(rs, 12),
-                            DateHidden = GetInt32(rs, 13) == 1
-                        }
+                            DateHidden = GetInt32(rs, 13) == 1,
+                            IsHeader = GetInt32(rs, 14) == 1
+                        },
+                        SortOrder = GetInt32(rs, 15)
                     });
                 }
             }

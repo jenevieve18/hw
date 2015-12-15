@@ -271,6 +271,22 @@ VALUES(@CustomerId, @Date, @Lecturer, @LectureTitle, @Contact, @Mobile, @Email, 
             );
         }
 
+		public void SaveHeaderTimebook(CustomerTimebook t, int customerId)
+		{
+			string query = string.Format(
+				@"
+INSERT INTO CustomerTimebook(CustomerId, IsHeader, Comments)
+VALUES(@CustomerId, @IsHeader, @Comments)"
+			);
+			ExecuteNonQuery(
+				query,
+				"invoicing",
+				new SqlParameter("@CustomerId", customerId),
+				new SqlParameter("@IsHeader", t.IsHeader),
+				new SqlParameter("@Comments", t.Comments)
+			);
+		}
+
 		public void SaveTimebook(CustomerTimebook t, int customerId)
 		{
 			string query = string.Format(
@@ -833,8 +849,10 @@ SELECT ct.Id,
     ct.DateHidden,
     u.Name
 FROM CustomerTimebook ct
-INNER JOIN Item i ON i.Id = ct.ItemId
-INNER JOIN Unit u ON u.Id = i.UnitId
+--INNER JOIN Item i ON i.Id = ct.ItemId
+--INNER JOIN Unit u ON u.Id = i.UnitId
+LEFT OUTER JOIN Item i ON i.Id = ct.ItemId
+LEFT OUTER JOIN Unit u ON u.Id = i.UnitId
 WHERE ct.Id = @Id"
             );
             CustomerTimebook c = null;
@@ -1242,7 +1260,7 @@ ORDER BY a.Date DESC"
         public IList<CustomerTimebook> FindOpenTimebooks(int customerId)
         {
             string query = @"
-select t.CustomerContactId,
+SELECT t.CustomerContactId,
 	t.ItemId,
 	t.Quantity,
 	t.Price,
@@ -1257,13 +1275,18 @@ select t.CustomerContactId,
     t.Id,
     t.Inactive,
     t.InternalComments,
-t.VAT
-from CustomerTimebook t
-inner join CustomerContact c on c.Id = t.CustomerContactId
-inner join Item i on i.Id = t.ItemId
-inner join Unit u on u.Id = i.UnitId
-where t.Customerid = @CustomerId
-and not exists (select 1 from invoicetimebook it where it.customertimebookid = t.id)";
+    t.VAT,
+    t.IsHeader
+FROM CustomerTimebook t
+INNER JOIN CustomerContact c on c.Id = t.CustomerContactId
+--inner join Item i on i.Id = t.ItemId
+--inner join Unit u on u.Id = i.UnitId
+LEFT OUTER JOIN Item i ON i.Id = t.ItemId
+LEFT OUTER JOIN Unit u ON u.Id = i.UnitId
+WHERE t.Customerid = @CustomerId
+AND NOT EXISTS (
+    SELECT 1 FROM InvoiceTimebook it WHERE it.CustomerTimebookid = t.Id
+)";
             var t = new List<CustomerTimebook>();
             using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerId", customerId)))
             {
@@ -1291,7 +1314,8 @@ and not exists (select 1 from invoicetimebook it where it.customertimebookid = t
                             Id = GetInt32(rs, 12),
                             Inactive = GetInt32(rs, 13) == 1,
                             InternalComments = GetString(rs, 14),
-                            VAT = GetDecimal(rs, 15)
+                            VAT = GetDecimal(rs, 15),
+                            IsHeader = GetInt32(rs, 16) == 1
                         }
                     );
                 }
@@ -1322,11 +1346,14 @@ SELECT t.CustomerContactId,
     t.IsSubscription,
     t.SubscriptionStartDate,
     t.SubscriptionEndDate,
-    t.DateHidden
+    t.DateHidden,
+    t.IsHeader
 FROM CustomerTimebook t
 LEFT OUTER JOIN CustomerContact c ON c.Id = t.CustomerContactId
-INNER JOIN Item i ON i.Id = t.ItemId
-INNER JOIN UNit u ON u.Id = i.UnitId
+--INNER JOIN Item i ON i.Id = t.ItemId
+--INNER JOIN UNit u ON u.Id = i.UnitId
+LEFT OUTER JOIN Item i ON i.Id = t.ItemId
+LEFT OUTER JOIN Unit u ON u.Id = i.UnitId
 WHERE t.CustomerId = @CustomerId
 ORDER BY Status, t.Date DESC, t.Id DESC"
             );
@@ -1357,7 +1384,8 @@ ORDER BY Status, t.Date DESC, t.Id DESC"
                             IsSubscription = GetInt32(rs, 16) == 1,
                             SubscriptionStartDate = GetDateTime(rs, 17),
                             SubscriptionEndDate = GetDateTime(rs, 18),
-                            DateHidden = GetInt32(rs, 19) == 1
+                            DateHidden = GetInt32(rs, 19) == 1,
+                            IsHeader = GetInt32(rs, 20) == 1
                         }
 					);
 				}

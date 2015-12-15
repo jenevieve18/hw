@@ -31,7 +31,7 @@ namespace HW.Invoicing
                 labelInvoiceNumber.Text = invoice.Number;
                 labelInvoiceDate.Text = invoice.Date.Value.ToString("yyyy-MM-dd");
                 labelMaturityDate.Text = invoice.MaturityDate.Value.ToString("yyyy-MM-dd");
-                labelInvoiceCustomerNumber.Text = invoice.Customer.Number;
+                //labelInvoiceCustomerNumber.Text = invoice.Customer.Number;
                 labelInvoiceCustomerAddress.Text = invoice.Customer.ToString().Replace("\n", "<br>");
                 labelInvoicePurchaseOrderNumber.Text = invoice.Customer.PurchaseOrderNumber;
                 labelInvoiceYourReferencePerson.Text = invoice.Customer.YourReferencePerson;

@@ -478,6 +478,7 @@ namespace HW.Invoicing.Core.Models
 		public bool Inactive { get; set; }
 		public int Status { get; set; }
 		public string InternalComments { get; set; }
+		public bool IsHeader { get; set; }
 		public bool HasInternalComments {
 			get { return InternalComments != null && InternalComments != ""; }
 		}

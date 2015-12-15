@@ -96,10 +96,12 @@ namespace HW.Invoicing.Core.Models
 			AddErrorIf(Timebooks.Count <= 0, "There should be at least one timebook in an invoice.");
 		}
 
-		public void AddTimebook(string[] timebooks)
+		public void AddTimebook(string[] timebooks, string[] sortOrders)
 		{
 			if (timebooks != null) {
+                int i = 0;
 				foreach (var t in timebooks) {
+                    var sortOrder = ConvertHelper.ToInt32(sortOrders[i]);
 					var s = t.Split('|');
 					if (s.Length > 1) {
 						AddTimebook(
@@ -112,19 +114,21 @@ namespace HW.Invoicing.Core.Models
 									VAT = ConvertHelper.ToDecimal(s[4]),
 									Quantity = ConvertHelper.ToDecimal(s[5]),
 									Comments = s[6]
-								}
+								},
+                                SortOrder = sortOrder
 							}
 						);
 					} else {
-						AddTimebook(ConvertHelper.ToInt32(t));
+						AddTimebook(ConvertHelper.ToInt32(t), sortOrder);
 					}
+                    i++;
 				}
 			}
 		}
 		
-		public void AddTimebook(int id)
+		public void AddTimebook(int id, int sortOrder)
 		{
-			AddTimebook(new InvoiceTimebook { Timebook = new CustomerTimebook { Id = id }});
+			AddTimebook(new InvoiceTimebook { Timebook = new CustomerTimebook { Id = id }, SortOrder = sortOrder });
 		}
 		
 		public void AddTimebook(InvoiceTimebook t)
@@ -137,6 +141,7 @@ namespace HW.Invoicing.Core.Models
 	{
 		public Invoice Invoice { get; set; }
 		public CustomerTimebook Timebook { get; set; }
+        public int SortOrder { get; set; }
 		
 		public override string ToString()
 		{

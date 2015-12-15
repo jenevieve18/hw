@@ -38,6 +38,7 @@
                     var vat = selected.data('vat');
                     var date = selected.data('date');
                     var datehidden = selected.data('datehidden');
+                    var header = selected.data('header');
                     var invoiceItem = {
                         'id': id,
                         'item': item,
@@ -49,7 +50,8 @@
                         'comments': comments,
                         'vat': vat,
                         'date': date,
-                        'datehidden': datehidden
+                        'datehidden': datehidden,
+                        'header': header
                     };
                     invoiceItems.push(invoiceItem);
                 } else {
@@ -65,7 +67,6 @@
                     $('.timebook-item').change();
                 } else {
                     $('.timebook-item').prop('checked', false);
-                    //invoiceItems = [];
                 }
             });
             $('#modal-701809').click(function() {
@@ -87,18 +88,31 @@
                 invoiceItems.forEach(function(e) {
                     var vatAmount = e.vat / 100.0 * e.amount;
                     var consultant = e.consultant == '' ? '' : ' (' + e.consultant + ')';
-                    //var date = e.date == '' ? '' : e.date + ' ';
                     var date = (e.date != '' && !e.datehidden) ? e.date + ' ' : '';
                     var item = e.comments == '' ? e.item : date + e.comments + consultant;
-                    items.append('' + 
-                        '<tr>' + 
-                        '   <td colspan="4">' + item + '<input type="hidden" id="invoice-timebooks" name="invoice-timebooks" value="' + e.id + '"></td>' + 
-                        '   <td>' + e.qty + '</td>' + 
-                        '   <td>' + e.unit + '</td>' + 
-                        '   <td class="text-right">' + $.number(e.price, 2, ',', ' ') + '</td>' + 
-                        '   <td class="text-right">' + $.number(e.amount, 2, ',', ' ') + '</td>' + 
-                        '</tr>' + 
-                    '');
+                    if (e.header) {
+                        items.append('' + 
+                            '<tr>' + 
+                            '   <td colspan="4">' + item + '<input type="hidden" id="invoice-timebooks" name="invoice-timebooks" value="' + e.id + '"></td>' + 
+                            '   <td></td>' + 
+                            '   <td></td>' + 
+                            '   <td class="text-right"></td>' + 
+                            '   <td class="text-right"></td>' + 
+                            '   <td><input type="text" class="form-control" id="invoice-timebooks-sortorder" name="invoice-timebooks-sortorder" value="" /></td>' +
+                            '</tr>' + 
+                        '');
+                    } else {
+                        items.append('' + 
+                            '<tr>' + 
+                            '   <td colspan="4">' + item + '<input type="hidden" id="invoice-timebooks" name="invoice-timebooks" value="' + e.id + '"></td>' + 
+                            '   <td>' + e.qty + '</td>' + 
+                            '   <td>' + e.unit + '</td>' + 
+                            '   <td class="text-right">' + $.number(e.price, 2, ',', ' ') + '</td>' + 
+                            '   <td class="text-right">' + $.number(e.amount, 2, ',', ' ') + '</td>' + 
+                            '   <td><input type="text" class="form-control" id="invoice-timebooks-sortorder" name="invoice-timebooks-sortorder" value="" /></td>' +
+                            '</tr>' + 
+                        '');
+                    }
                     subTotal += parseFloat(e.amount);
                     if (vats.hasOwnProperty(e.vat)) {
                         vats[e.vat] += vatAmount;
@@ -184,6 +198,13 @@
                     $('#subscription-end-date').show();
                 } else {
                     $('#subscription-end-date').hide();
+                }
+            });
+            $('#<%= checkBoxTimebookIsHeader.ClientID %>').change(function() {
+                if ($(this).is(':checked')) {
+                    $('#<%= Panel2.ClientID %>').hide();
+                } else {
+                    $('#<%= Panel2.ClientID %>').show();
                 }
             });
             $('#<%= checkBoxSubscriptionHasEndDate.ClientID %>').change();
@@ -394,6 +415,8 @@
                             <div class="form-group">
                                 <asp:CheckBox ID="checkBoxTimebookIsHeader" runat="server" CssClass="form-control" Text="&nbsp;This timebook is a header type" />
                             </div>
+
+                            <asp:Panel ID="Panel2" runat="server">
                             <div class="form-group">
                                 <asp:CheckBox ID="checkBoxTimebookDateHidden" runat="server" CssClass="form-control" Text="&nbsp;Timebook date is hidden" />
                             </div>
@@ -431,12 +454,13 @@
                                 <asp:TextBox ID="textBoxTimebookConsultant" runat="server" CssClass="form-control"></asp:TextBox>
                             </div>
                             <div class="form-group">
-	                            <label for="<%= textBoxTimebookComments.ClientID %>">Comments</label>
-                                <asp:TextBox ID="textBoxTimebookComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
-                            </div>
-                            <div class="form-group">
 	                            <label for="<%= textBoxTimebookInternalComments.ClientID %>">Internal Comments</label>
                                 <asp:TextBox ID="textBoxTimebookInternalComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+                            </div>
+                            </asp:Panel>
+                            <div class="form-group">
+	                            <label for="<%= textBoxTimebookComments.ClientID %>">Comments</label>
+                                <asp:TextBox ID="textBoxTimebookComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
                             </div>
 						</div>
 						<div class="modal-footer">
@@ -525,7 +549,7 @@
                                 <tr>
                                     <td>
                                         <asp:Panel ID="panelPurchaseOrderNumber" runat="server">
-                                        <strong><%--Purchase order number: --%>
+                                        <strong>
                                             <asp:Label ID="labelInvoicePurchaseOrderNumber" runat="server" Text="Label"></asp:Label>
                                         </strong>
                                         </asp:Panel>
@@ -544,7 +568,8 @@
                                     <td class="hw-border-left" style="width:10%">Qty</td>
                                     <td class="hw-border-left" style="width:10%">Unit</td>
                                     <td class="hw-border-left" style="width:10%">Price/Unit</td>
-                                    <td class="hw-border-last" style="width:10%">Amount</td>
+                                    <td class="hw-border-left" style="width:10%">Amount</td>
+                                    <td class="hw-border-last" style="width:10%">#</td>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -699,48 +724,62 @@
                         <tr>
                             <td style="width:16px">
                                 <% if (t.Status == 0) { %>
-                                    <input type="checkbox" class="timebook-item" id="timebook-<%= t.Id %>"
-                                         data-id="<%= t.Id %>"
-                                         data-item="<%= t.Item.Name %>"
-                                         data-unit="<%= t.Item.Unit.Name %>"
-                                         data-qty="<%= t.Quantity %>"
-                                         data-price="<%= t.Price %>"
-                                         data-amount="<%= t.Amount %>"
-                                         data-consultant="<%= t.Consultant %>"
-                                         data-comments="<%= t.Comments %>"
-                                         data-vat="<%= t.VAT %>"
-                                         data-date="<%= t.Date != null ? t.Date.Value.ToString("yyyy-MM-dd") : "" %>"
-                                         data-datehidden="<%= t.DateHidden ? "true" : "false" %>"
+                                    <input type="checkbox" class="timebook-item" id="Checkbox1"
+                                            data-id="<%= t.Id %>"
+                                            data-item="<%= t.Item.Name %>"
+                                            data-unit="<%= t.Item.Unit.Name %>"
+                                            data-qty="<%= t.Quantity %>"
+                                            data-price="<%= t.Price %>"
+                                            data-amount="<%= t.Amount %>"
+                                            data-consultant="<%= t.Consultant %>"
+                                            data-comments="<%= t.Comments %>"
+                                            data-vat="<%= t.VAT %>"
+                                            data-date="<%= t.Date != null ? t.Date.Value.ToString("yyyy-MM-dd") : "" %>"
+                                            data-datehidden="<%= t.DateHidden ? "true" : "false" %>"
+                                            data-header="<%= t.IsHeader ? "true" : "false" %>"
                                 />
                                 <% } %>
                             </td>
-                            <td style="width:120px">
-                                <% if (t.Date != null) { %>
-                                    <%= t.Date.Value.ToString("yyyy-MM-dd") %>
-                                <% } %>
-                            </td>
-                            <td>
-                                <%= t.GetDepartmentAndContact() %>
-                            </td>
-                            <td><%= t.Item.Name %></td>
-                            <td><%= t.Item.Unit.Name %></td>
-                            <td><%= t.Quantity.ToString("# ##0.00") %></td>
-                            <td><%= t.Price.ToString("# ##0.00") %></td>
-                            <td><%= t.Amount.ToString("# ##0.00") %></td>
-                            <td><%= t.VAT %>%</td>
-                            <td class="timebook-consultant">
-                                <%--<%= t.Consultant %>--%>
-                                <span class="timebook-consultant-label"><%= t.Consultant%></span>
-                                <textarea data-id="<%= t.Id %>" type="text" class="form-control timebook-consultant-text"><%= t.Consultant %></textarea>
-                                <img alt="" class="spinner" src="img/spiffygif_30x30.gif" />
-                            </td>
-                            <td align="center"><%= t.GetStatus() %></td>
-                            <td class="comments-width">
-                                <% if (t.HasInternalComments) { %>
-                                    <img src="img/comment.png" title="<%= t.InternalComments %>"/>
-                                <% } %>
-                                <%= t.Comments %>
-                            </td>
+                            <% if (t.IsHeader) { %>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td align="center"><%= t.GetStatus() %></td>
+                                <td><%= t.Comments %></td>
+                            <% } else { %>
+                                <td style="width:120px">
+                                    <% if (t.Date != null) { %>
+                                        <%= t.Date.Value.ToString("yyyy-MM-dd") %>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <%= t.GetDepartmentAndContact() %>
+                                </td>
+                                <td><%= t.Item.Name %></td>
+                                <td><%= t.Item.Unit.Name %></td>
+                                <td><%= t.Quantity.ToString("# ##0.00") %></td>
+                                <td><%= t.Price.ToString("# ##0.00") %></td>
+                                <td><%= t.Amount.ToString("# ##0.00") %></td>
+                                <td><%= t.VAT %>%</td>
+                                <td class="timebook-consultant">
+                                    <span class="timebook-consultant-label"><%= t.Consultant%></span>
+                                    <textarea data-id="<%= t.Id %>" type="text" class="form-control timebook-consultant-text"><%= t.Consultant %></textarea>
+                                    <img alt="" class="spinner" src="img/spiffygif_30x30.gif" />
+                                </td>
+                                <td align="center"><%= t.GetStatus() %></td>
+                                <td class="comments-width">
+                                    <% if (t.HasInternalComments) { %>
+                                        <img src="img/comment.png" title="<%= t.InternalComments %>"/>
+                                    <% } %>
+                                    <%= t.Comments %>
+                                </td>
+                            <% } %>
                             <td>
                                 <% if (!t.IsPaid) { %>
                                     <%= HtmlHelper.Anchor(" ", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id), "title='Edit' class='glyphicon glyphicon-edit'")%>

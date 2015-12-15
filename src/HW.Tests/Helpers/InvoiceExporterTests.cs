@@ -81,6 +81,12 @@ Scottsdale, AZ 85256"
 						},
 						new InvoiceTimebook {
 							Timebook = new CustomerTimebook {
+								Comments = "ABB",
+								IsHeader = true
+							}
+						},
+						new InvoiceTimebook {
+							Timebook = new CustomerTimebook {
 								Item = new Item {
 									Name = "Programming",
 									Unit = new Unit { Name = "month" }

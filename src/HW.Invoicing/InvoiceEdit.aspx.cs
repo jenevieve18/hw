@@ -95,7 +95,7 @@ namespace HW.Invoicing
                 MaturityDate = ConvertHelper.ToDateTime(labelMaturityDate.Text),
                 Comments = textBoxInvoiceComments.Text
             };
-            i.AddTimebook(Request.Form.GetValues("invoice-timebooks"));
+            i.AddTimebook(Request.Form.GetValues("invoice-timebooks"), Request.Form.GetValues("invoice-timebooks-sortorder"));
             i.Validate();
             if (i.HasErrors)
             {

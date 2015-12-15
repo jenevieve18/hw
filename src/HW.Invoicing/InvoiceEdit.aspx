@@ -221,7 +221,6 @@
             <td>
                 <asp:Panel ID="panelPurchaseOrderNumber" runat="server">
                 <strong>
-                    <%--Purchase order number: --%>
                     <asp:Label ID="labelInvoicePurchaseOrderNumber" runat="server" Text="Label"></asp:Label>
                 </strong>
                 </asp:Panel>
@@ -244,7 +243,8 @@
                 <td class="hw-border-left" style="width:10%">Qty</td>
                 <td class="hw-border-left" style="width:10%">Unit</td>
                 <td class="hw-border-left" style="width:10%">Price/Unit</td>
-                <td class="hw-border-last" style="width:10%">Amount</td>
+                <td class="hw-border-left" style="width:10%">Amount</td>
+                <td class="hw-border-last" style="width:10%">#</td>
             </tr>
         </thead>
         <tbody>
@@ -281,11 +281,22 @@
                         </script>
                         <input type="hidden" id="invoice-timebooks" name="invoice-timebooks" value="<%= t.Timebook.Id %>" />
                     </td>
-                    <td colspan="3"><%= t.Timebook.ToString() %></td>
-                    <td><%= t.Timebook.Quantity %></td>
-                    <td><%= t.Timebook.Item.Unit.Name %></td>
-                    <td class="text-right"><%= t.Timebook.Price.ToString("### ### ##0.00") %></td>
-                    <td class="text-right"><%= t.Timebook.Amount.ToString("### ### ##0.00") %></td>
+                    <% if (t.Timebook.IsHeader) { %>
+                        <td colspan="3"><%= t.Timebook.ToString() %></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    <% } else { %>
+                        <td colspan="3"><%= t.Timebook.ToString() %></td>
+                        <td><%= t.Timebook.Quantity %></td>
+                        <td><%= t.Timebook.Item.Unit.Name %></td>
+                        <td class="text-right"><%= t.Timebook.Price.ToString("### ### ##0.00") %></td>
+                        <td class="text-right"><%= t.Timebook.Amount.ToString("### ### ##0.00") %></td>
+                    <% } %>
+                    <td>
+                        <input type="text" class="form-control" id="invoice-timebooks-sortorder" name="invoice-timebooks-sortorder" value="<%= t.SortOrder %>" />
+                    </td>
 
                     <% subTotal += t.Timebook.Amount; %>
                     <% if (vats.ContainsKey(t.Timebook.VAT)) { %>
@@ -311,11 +322,22 @@
                             data-vat="<%= t.VAT %>"
                         />
                     </td>
-                    <td colspan="3"><%= t.ToString() %></td>
-                    <td><%= t.Quantity %></td>
-                    <td><%= t.Item.Unit.Name %></td>
-                    <td class="text-right"><%= t.Price.ToString("### ### ##0.00") %></td>
-                    <td class="text-right"><%= t.Amount.ToString("### ### ##0.00") %></td>
+                    <% if (t.IsHeader) { %>
+                        <td colspan="3"><%= t.ToString() %></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    <% } else { %>
+                        <td colspan="3"><%= t.ToString() %></td>
+                        <td><%= t.Quantity %></td>
+                        <td><%= t.Item.Unit.Name %></td>
+                        <td class="text-right"><%= t.Price.ToString("### ### ##0.00") %></td>
+                        <td class="text-right"><%= t.Amount.ToString("### ### ##0.00") %></td>
+                    <% } %>
+                    <td>
+                        <input type="text" class="form-control" id="Text1" name="invoice-timebooks-sortorder" value="" />
+                    </td>
                 </tr>
             <% } %>
 

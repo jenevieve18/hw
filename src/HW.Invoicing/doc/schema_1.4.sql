@@ -25,3 +25,6 @@ create table UserCompanyLink(
 	CompanyId integer,
 	Link integer
 );
+
+alter table CustomerTimebook add IsHeader integer;
+alter table InvoiceTimebook add SortOrder integer;

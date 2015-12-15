@@ -67,6 +67,15 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.CheckBox checkBoxTimebookIsHeader;
         
         /// <summary>
+        /// Panel2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel Panel2;
+        
+        /// <summary>
         /// checkBoxTimebookDateHidden control.
         /// </summary>
         /// <remarks>
@@ -148,15 +157,6 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxTimebookConsultant;
         
         /// <summary>
-        /// textBoxTimebookComments control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxTimebookComments;
-        
-        /// <summary>
         /// textBoxTimebookInternalComments control.
         /// </summary>
         /// <remarks>
@@ -164,6 +164,15 @@ namespace HW.Invoicing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox textBoxTimebookInternalComments;
+        
+        /// <summary>
+        /// textBoxTimebookComments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxTimebookComments;
         
         /// <summary>
         /// buttonSaveTimebook control.
