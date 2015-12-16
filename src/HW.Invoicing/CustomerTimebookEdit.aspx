@@ -10,11 +10,13 @@
                 console.log("changing item...");
                 var selected = $(this).find('option:selected');
                 var id = selected.data('id');
-                if (id != <%= timebook.Item.Id %>) {
-                    console.log("triggering not same item...");
-                    var selectedPrice = selected.data('price');
-                    $('#<%= textBoxTimebookPrice.ClientID %>').val(selectedPrice);
-                }
+                <% if (timebook != null && timebook.Item != null) { %>
+                    if (id != <%= timebook.Item.Id %>) {
+                        console.log("triggering not same item...");
+                        var selectedPrice = selected.data('price');
+                        $('#<%= textBoxTimebookPrice.ClientID %>').val(selectedPrice);
+                    }
+                <% } %>
                 var selectedUnit = selected.data('unit');
                 $('#<%= labelTimebookUnit.ClientID %>').text(selectedUnit);
             });
@@ -22,11 +24,13 @@
                 console.log("changing item...");
                 var selected = $(this).find('option:selected');
                 var id = selected.data('id');
+                <% if (timebook != null && timebook.Item != null) { %>
                 if (id != <%= timebook.Item.Id %>) {
                     console.log("triggering not same item...");
                     var selectedPrice = selected.data('price');
                     $('#<%= textBoxSubscriptionTimebookPrice.ClientID %>').val(selectedPrice);
                 }
+                <% } %>
                 var selectedUnit = selected.data('unit');
                 $('#<%= labelSubscriptionTimebookUnit.ClientID %>').text(selectedUnit);
             });
@@ -71,6 +75,7 @@
     <% } %>
 
     <asp:Panel ID="panelTimebook" runat="server">
+        <asp:Panel ID="panelNonHeaderTimebook" runat="server">
         <div class="form-group">
 	        <label for="<%= textBoxTimebookDate.ClientID %>">Date</label>
             <asp:TextBox ID="textBoxTimebookDate" runat="server" CssClass="date form-control"></asp:TextBox>
@@ -112,12 +117,13 @@
             <asp:TextBox ID="textBoxTimebookConsultant" runat="server" CssClass="form-control"></asp:TextBox>
         </div>
         <div class="form-group">
-	        <label for="<%= textBoxTimebookComments.ClientID %>">Comments</label>
-            <asp:TextBox ID="textBoxTimebookComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
-        </div>
-        <div class="form-group">
 	        <label for="<%= textBoxTimebookInternalComments.ClientID %>">Internal Comments</label>
             <asp:TextBox ID="textBoxTimebookInternalComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+        </div>
+        </asp:Panel>
+        <div class="form-group">
+	        <label for="<%= textBoxTimebookComments.ClientID %>">Comments</label>
+            <asp:TextBox ID="textBoxTimebookComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
         </div>
         <asp:PlaceHolder ID="placeHolderReactivate" runat="server">
             <div class="form-group">

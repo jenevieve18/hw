@@ -60,6 +60,7 @@ namespace HW.Invoicing
 
                     panelSubscriptionTimebook.Visible = timebook.IsSubscription;
                     panelTimebook.Visible = !panelSubscriptionTimebook.Visible;
+                    panelNonHeaderTimebook.Visible = !timebook.IsHeader;
                     if (timebook.IsSubscription)
                     {
                         textBoxSubscriptionTimebookStartDate.Text = timebook.SubscriptionStartDate.Value.ToString("yyyy-MM-dd");
@@ -69,6 +70,10 @@ namespace HW.Invoicing
                         textBoxSubscriptionTimebookQty.Text = timebook.Quantity.ToString();
                         textBoxSubscriptionTimebookPrice.Text = timebook.Price.ToString();
                         textBoxSubscriptionTimebookComments.Text = timebook.Comments;
+                    }
+                    else if (timebook.IsHeader)
+                    {
+                        textBoxTimebookComments.Text = timebook.Comments;
                     }
                     else
                     {
@@ -84,9 +89,9 @@ namespace HW.Invoicing
                         textBoxTimebookConsultant.Text = timebook.Consultant;
                         textBoxTimebookComments.Text = timebook.Comments;
                         textBoxTimebookInternalComments.Text = timebook.InternalComments;
-                        checkBoxReactivate.Checked = !timebook.Inactive;
-                        placeHolderReactivate.Visible = timebook.Inactive;
                     }
+                    checkBoxReactivate.Checked = !timebook.Inactive;
+                    placeHolderReactivate.Visible = timebook.Inactive;
                 }
                 else
                 {
@@ -131,9 +136,13 @@ namespace HW.Invoicing
             {
                 t.ValidateSubscription();
             }
-            else
+            else if (panelNonHeaderTimebook.Visible)
             {
                 t.Validate();
+            }
+            else
+            {
+                t.ValidateSubscription();
             }
             if (!t.HasErrors)
             {
@@ -141,9 +150,17 @@ namespace HW.Invoicing
                 {
                     r.UpdateSubscriptionTimebook(t, id);
                 }
-                else
+                //else
+                //{
+                //    r.UpdateTimebook(t, id);
+                //}
+                else if (panelNonHeaderTimebook.Visible)
                 {
                     r.UpdateTimebook(t, id);
+                }
+                else
+                {
+                    r.UpdateHeaderTimebook(t, id);
                 }
                 Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=timebook", customerId));
             }

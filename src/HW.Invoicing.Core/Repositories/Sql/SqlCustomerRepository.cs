@@ -609,6 +609,21 @@ WHERE Id = @Id"
             );
         }
 
+        public void UpdateHeaderTimebook(CustomerTimebook c, int id)
+        {
+            string query = string.Format(
+                @"
+UPDATE CustomerTimebook SET Comments = @Comments
+WHERE Id = @Id"
+            );
+            ExecuteNonQuery(
+                query,
+                "invoicing",
+                new SqlParameter("@Comments", c.Comments),
+                new SqlParameter("@Id", id)
+            );
+        }
+
         public void UpdateItem(CustomerItem c, int id)
         {
             string query = string.Format(
@@ -847,7 +862,8 @@ SELECT ct.Id,
     ct.SubscriptionEndDate,
     ct.IsSubscription,
     ct.DateHidden,
-    u.Name
+    u.Name,
+    ct.IsHeader
 FROM CustomerTimebook ct
 --INNER JOIN Item i ON i.Id = ct.ItemId
 --INNER JOIN Unit u ON u.Id = i.UnitId
@@ -881,7 +897,8 @@ WHERE ct.Id = @Id"
                         SubscriptionStartDate = GetDateTime(rs, 13),
                         SubscriptionEndDate = GetDateTime(rs, 14),
                         IsSubscription = GetInt32(rs, 15) == 1,
-                        DateHidden = GetInt32(rs, 16) == 1
+                        DateHidden = GetInt32(rs, 16) == 1,
+                        IsHeader = GetInt32(rs, 18) == 1
                     };
                 }
             }
