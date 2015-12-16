@@ -147,12 +147,16 @@ namespace HW.Invoicing.Core.Helpers
 			
 			t.AddCell(new PdfPCell(new Phrase("SPECIFIKATION", headerFont)) { Colspan = 13, Border = Rectangle.NO_BORDER });
 			t.AddCell(new PdfPCell(new Phrase("PRIS", headerFont)) { Colspan = 3, Border = Rectangle.LEFT_BORDER });
+			
+			int j = 0;
 			foreach (var tb in invoice.Timebooks) {
 				if (tb.Timebook.IsHeader) {
-					t.AddCell(new PdfPCell(new Phrase(" ", normalFont)) { Colspan = 13, Border = Rectangle.NO_BORDER });
-					t.AddCell(new PdfPCell(new Phrase("", normalFont)) { Colspan = 3, HorizontalAlignment = Element.ALIGN_RIGHT, Border = Rectangle.LEFT_BORDER });
-					t.AddCell(new PdfPCell(new Phrase(" ", normalFont)) { Colspan = 13, Border = Rectangle.NO_BORDER });
-					t.AddCell(new PdfPCell(new Phrase("", normalFont)) { Colspan = 3, HorizontalAlignment = Element.ALIGN_RIGHT, Border = Rectangle.LEFT_BORDER });
+					if (j > 0) {
+						t.AddCell(new PdfPCell(new Phrase(" ", normalFont)) { Colspan = 13, Border = Rectangle.NO_BORDER });
+						t.AddCell(new PdfPCell(new Phrase("", normalFont)) { Colspan = 3, HorizontalAlignment = Element.ALIGN_RIGHT, Border = Rectangle.LEFT_BORDER });
+						t.AddCell(new PdfPCell(new Phrase(" ", normalFont)) { Colspan = 13, Border = Rectangle.NO_BORDER });
+						t.AddCell(new PdfPCell(new Phrase("", normalFont)) { Colspan = 3, HorizontalAlignment = Element.ALIGN_RIGHT, Border = Rectangle.LEFT_BORDER });
+					}
 					
 					t.AddCell(new PdfPCell(new Phrase(tb.Timebook.ToString(), normalFont)) { Colspan = 13, Border = Rectangle.NO_BORDER });
 					t.AddCell(new PdfPCell(new Phrase("", normalFont)) { Colspan = 3, HorizontalAlignment = Element.ALIGN_RIGHT, Border = Rectangle.LEFT_BORDER });
@@ -160,6 +164,7 @@ namespace HW.Invoicing.Core.Helpers
 					t.AddCell(new PdfPCell(new Phrase(tb.Timebook.ToString(), normalFont)) { Colspan = 13, Border = Rectangle.NO_BORDER });
 					t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Amount.ToString("### ### ##0.00"), normalFont)) { Colspan = 3, HorizontalAlignment = Element.ALIGN_RIGHT, Border = Rectangle.LEFT_BORDER });
 				}
+				j++;
 			}
 			
 			t.AddCell(new PdfPCell(new Phrase(" ")) { Colspan = 16, Border = Rectangle.NO_BORDER });

@@ -156,10 +156,13 @@ namespace HW.Invoicing.Core.Helpers
 			t.AddCell(new PdfPCell(new Phrase("ENHET", headerFont)) { Border = Rectangle.LEFT_BORDER });
 			t.AddCell(new PdfPCell(new Phrase("PRIS PER ENHET", headerFont)) { Colspan = 2, Border = Rectangle.LEFT_BORDER });
 			t.AddCell(new PdfPCell(new Phrase("BELOPP", headerFont)) { Colspan = 2, Border = Rectangle.LEFT_BORDER });
+			int j = 0;
 			foreach (var tb in invoice.Timebooks) {
 				if (tb.Timebook.IsHeader) {
-					t.AddCell(new PdfPCell(new Phrase(" ", normalFont)) { Colspan = 16, Border = Rectangle.NO_BORDER });
-					t.AddCell(new PdfPCell(new Phrase(" ", normalFont)) { Colspan = 16, Border = Rectangle.NO_BORDER });
+					if (j > 0) {
+						t.AddCell(new PdfPCell(new Phrase(" ", normalFont)) { Colspan = 16, Border = Rectangle.NO_BORDER });
+						t.AddCell(new PdfPCell(new Phrase(" ", normalFont)) { Colspan = 16, Border = Rectangle.NO_BORDER });
+					}
 					
 					t.AddCell(new PdfPCell(new Phrase(tb.Timebook.ToString(), normalFont)) { Colspan = 9, Border = Rectangle.NO_BORDER });
 					t.AddCell(new PdfPCell(new Phrase("", normalFont)) { Colspan = 2, HorizontalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
@@ -173,6 +176,7 @@ namespace HW.Invoicing.Core.Helpers
 					t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Price.ToString("### ##0.00"), normalFont)) { Colspan = 2, HorizontalAlignment = Element.ALIGN_RIGHT, Border = Rectangle.NO_BORDER });
 					t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Amount.ToString("### ##0.00"), normalFont)) { Colspan = 2, HorizontalAlignment = Element.ALIGN_RIGHT, Border = Rectangle.NO_BORDER });
 				}
+				j++;
 			}
 			
 			t.AddCell(new PdfPCell(new Phrase(" ")) { Colspan = 16, Border = Rectangle.NO_BORDER });
