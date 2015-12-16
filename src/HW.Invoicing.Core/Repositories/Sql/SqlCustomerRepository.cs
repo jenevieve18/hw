@@ -1295,9 +1295,8 @@ SELECT t.CustomerContactId,
     t.VAT,
     t.IsHeader
 FROM CustomerTimebook t
-INNER JOIN CustomerContact c on c.Id = t.CustomerContactId
---inner join Item i on i.Id = t.ItemId
---inner join Unit u on u.Id = i.UnitId
+--INNER JOIN CustomerContact c on c.Id = t.CustomerContactId
+LEFT OUTER JOIN CustomerContact c on c.Id = t.CustomerContactId
 LEFT OUTER JOIN Item i ON i.Id = t.ItemId
 LEFT OUTER JOIN Unit u ON u.Id = i.UnitId
 WHERE t.Customerid = @CustomerId

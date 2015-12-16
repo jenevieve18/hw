@@ -100,8 +100,14 @@
     <tbody>
     <% decimal subTotal = 0; %>
     <% Dictionary<decimal, decimal> vats = new Dictionary<decimal, decimal>(); %>
+    <% int j = 0; %>
     <% foreach (var t in invoice.Timebooks) { %>
         <% if (t.Timebook.IsHeader) { %>
+            <% if (j > 0) { %>
+                <tr><td colspan="8"></td></tr>
+                <tr><td colspan="8"></td></tr>
+            <% } %>
+
             <tr>
                 <td colspan="4"><%= t.Timebook.ToString() %></td>
                 <td></td>
@@ -130,6 +136,7 @@
                 <% } %>
             </tr>
         <% } %>
+        <% j++; %>
     <% } %>
     </tbody>
 

@@ -24,7 +24,6 @@ namespace HW.Invoicing
 
             id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
             
-
             invoice = ir.Read(id);
             if (invoice != null)
             {

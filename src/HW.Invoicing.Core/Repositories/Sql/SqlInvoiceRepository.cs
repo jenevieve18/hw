@@ -287,8 +287,6 @@ SELECT it.Id,
     it.SortOrder
 FROM InvoiceTimebook it
 INNER JOIN CustomerTimebook ct ON ct.Id = it.CustomerTimebookId
---inner join item i on i.id = ct.itemid
---inner join unit u on u.id = i.unitid
 LEFT OUTER JOIN Item i ON i.Id = ct.ItemId
 LEFT OUTER JOIN Unit u ON u.Id = i.UnitId
 WHERE it.InvoiceId = @InvoiceId
