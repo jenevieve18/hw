@@ -14,8 +14,10 @@ namespace HW.Tests.Helpers
 	{
 		Invoice i;
 		IHGInvoiceExporter ihg;
-		HCGInvoiceExporter hcg;
-		VCInvoiceExporter vc;
+//		HCGInvoiceExporter hcg;
+//		VCInvoiceExporter vc;
+		BaseInvoiceExporter hcg;
+		BaseInvoiceExporter vc;
 		
 		[SetUp]
 		public void Setup()
@@ -108,9 +110,16 @@ Scottsdale, AZ 85256"
 				)
 			};
 			
-			ihg = new IHGInvoiceExporter(new IHGInvoicePDFScratchGenerator());
-			hcg = new HCGInvoiceExporter(new HCGInvoicePDFScratchGenerator());
-			vc = new VCInvoiceExporter(new VCInvoicePDFScratchGenerator());
+//			ihg = new IHGInvoiceExporter(new IHGInvoicePDFScratchGenerator());
+//			hcg = new HCGInvoiceExporter(new HCGInvoicePDFScratchGenerator());
+//			vc = new VCInvoiceExporter(new VCInvoicePDFScratchGenerator());
+//			hcg = new HCGInvoiceExporter(new BaseInvoicePDFScratchGenerator());
+//			vc = new VCInvoiceExporter(new BaseInvoicePDFScratchGenerator());
+			ihg = new IHGInvoiceExporter();
+//			hcg = new HCGInvoiceExporter();
+//			vc = new VCInvoiceExporter();
+			hcg = new BaseInvoiceExporter();
+			vc = new BaseInvoiceExporter();
 		}
 		
 		[Test]

@@ -20,14 +20,23 @@ namespace HW.Invoicing.Core.Helpers
 		{
 			switch (companyId) {
 					case IHGF: return new IHGInvoiceExporter(new IHGInvoicePDFScratchGenerator());
-					case HCGF: return new HCGInvoiceExporter(new HCGInvoicePDFScratchGenerator());
+//					case HCGF: return new HCGInvoiceExporter(new HCGInvoicePDFScratchGenerator());
+//					case HCGF: return new HCGInvoiceExporter(new BaseInvoicePDFScratchGenerator());
+//					case HCGF: return new HCGInvoiceExporter();
+					case HCGF: return new BaseInvoiceExporter();
 					default: throw new NotSupportedException();
 			}
 		}
 		
 		public static IInvoiceExporter GetExporter2(int index)
 		{
-			return GetExporters()[index];
+			var exporters = GetExporters();
+			if (exporters.Count > index) {
+				return exporters[index];
+			} else {
+				return new BaseInvoiceExporter();
+			}
+//			return GetExporters()[index];
 		}
 		
 		public static IList<IInvoiceExporter> GetExporters()
@@ -35,8 +44,9 @@ namespace HW.Invoicing.Core.Helpers
 			return new List<IInvoiceExporter>(
 				new IInvoiceExporter[] {
 					new IHGInvoiceExporter(),
-					new HCGInvoiceExporter(),
-					new VCInvoiceExporter()
+//					new HCGInvoiceExporter(),
+//					new VCInvoiceExporter()
+					new BaseInvoiceExporter()
 				}
 			);
 		}
