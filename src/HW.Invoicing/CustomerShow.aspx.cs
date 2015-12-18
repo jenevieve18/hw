@@ -42,6 +42,14 @@ namespace HW.Invoicing
 			d.UpdateTimebookConsultant(consultant, id);
 			return consultant;
 		}
+
+		[WebMethod]
+		public static string UpdateTimebookComments(string comments, int id)
+		{
+			var d = new SqlCustomerRepository();
+			d.UpdateTimebookComments(comments, id);
+			return comments;
+		}
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{

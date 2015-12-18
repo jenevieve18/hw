@@ -114,12 +114,12 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <% subTotal += t.Timebook.Amount; %>
+                <%--<% subTotal += t.Timebook.Amount; %>
                 <% if (vats.ContainsKey(t.Timebook.VAT)) { %>
                     <% vats[t.Timebook.VAT] += t.Timebook.VATAmount; %>
                 <% } else { %>
                     <% vats[t.Timebook.VAT] = t.Timebook.VATAmount; %>
-                <% } %>
+                <% } %>--%>
             </tr>
         <% } else { %>
             <tr>

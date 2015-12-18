@@ -38,6 +38,14 @@ UPDATE CustomerTimebook SET Consultant = @Consultant
 WHERE Id = @Id";
             ExecuteNonQuery(query, "invoicing", new SqlParameter("@Consultant", consultant), new SqlParameter("@Id", id));
         }
+		
+        public void UpdateTimebookComments(string comments, int id)
+        {
+            string query = @"
+UPDATE CustomerTimebook SET Comments = @Comments
+WHERE Id = @Id";
+            ExecuteNonQuery(query, "invoicing", new SqlParameter("@Comments", comments), new SqlParameter("@Id", id));
+        }
 
         public void DeactivateTimebook(int id)
         {

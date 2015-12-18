@@ -209,8 +209,9 @@
             });
             $('#<%= checkBoxSubscriptionHasEndDate.ClientID %>').change();
             
+            // Edit timebook consultant through AJAX
             $('.timebook-consultant-text').hide();
-            $('.spinner').hide();
+            $('.timebook-consultant-spinner').hide();
             $('.timebook-consultant').click(function () {
                 var text = $(this).find('.timebook-consultant-text');
                 $(this).find('.timebook-consultant-label').hide();
@@ -218,17 +219,48 @@
                 text.focus();
             });
             $('.timebook-consultant-text').focusout(function () {
-                var consultant = $(this).val();
+                var value = $(this).val();
                 var id = $(this).data('id');
                 var label = $(this).closest('td').find('.timebook-consultant-label');
-                label.text(consultant);
+                label.text(value);
 
-                var spinner = $(this).closest('td').find('.spinner');
+                var spinner = $(this).closest('td').find('.timebook-consultant-spinner');
                 spinner.show();
                 $.ajax({
                     type: 'POST',
                     url: 'CustomerShow.aspx/UpdateTimebookConsultant',
-                    data: JSON.stringify({ consultant: consultant, id: id }),
+                    data: JSON.stringify({ consultant: value, id: id }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json',
+                    success: function (msg) {
+                        spinner.hide();
+                    }
+                });
+                $(this).hide();
+                label.show();
+            });
+
+            // Edit timebook comments through AJAX
+            $('.timebook-comments-text').hide();
+            $('.timebook-comments-spinner').hide();
+            $('.timebook-comments').click(function () {
+                var text = $(this).find('.timebook-comments-text');
+                $(this).find('.timebook-comments-label').hide();
+                text.show();
+                text.focus();
+            });
+            $('.timebook-comments-text').focusout(function () {
+                var value = $(this).val();
+                var id = $(this).data('id');
+                var label = $(this).closest('td').find('.timebook-comments-label');
+                label.text(value);
+
+                var spinner = $(this).closest('td').find('.timebook-comments-spinner');
+                spinner.show();
+                $.ajax({
+                    type: 'POST',
+                    url: 'CustomerShow.aspx/UpdateTimebookComments',
+                    data: JSON.stringify({ comments: value, id: id }),
                     contentType: "application/json; charset=utf-8",
                     dataType: 'json',
                     success: function (msg) {
@@ -289,12 +321,10 @@
         }
     </script>
     <style type="text/css">
-        .timebook-list td, .timebook-list th
-        {
+        .timebook-list td, .timebook-list th {
             padding:5px;
         }
-        .comments-width 
-        {
+        .comments-width {
             width:300px;
         }
     </style>
@@ -574,44 +604,6 @@
                                 </thead>
                                 <tbody>
                                 </tbody>
-                                <!--<% for (int i = 0; i < 20; i++) { %>
-                                <tr>
-                                    <td>Usage HealthWatch 2012.01.01 - 2012.06.30</td>
-                                    <td>10</td>
-                                    <td>month</td>
-                                    <td class="text-right">100,00</td>
-                                    <td class="text-right">1.000,00</td>
-                                </tr>
-                                <% } %>
-                                <tr>
-                                    <td>&nbsp;</td>
-                                </tr>
-                                <tr class="hw-invoice-header">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="hw-border-last">SubTotal</td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="hw-border-last">3.200,00</td>
-                                </tr>
-                                <tr class="hw-invoice-header">
-                                    <td colspan="2"></td>
-                                    <td class="hw-border-left">Moms %</td>
-                                    <td class="hw-border-left">Moms</td>
-                                    <td class="hw-border-last">Total Amount</td>
-                                </tr>
-                                <tr class="hw-border-bottom">
-                                    <td colspan="2"></td>
-                                    <td class="hw-border-left">25,00</td>
-                                    <td class="hw-border-left">800,00</td>
-                                    <td class="hw-border-last">4.000,00</td>
-                                </tr>-->
                             </table>
                             <div class="form-group">
 	                            <label for="<%= textBoxInvoiceComments.ClientID %>">Comments</label>
@@ -637,8 +629,6 @@
                                         <td colspan="3">
                                             <asp:Label ID="labelCompanyPhone" runat="server" Text=""></asp:Label>
                                         </td>
-                                        <!--<td></td>
-                                        <td></td>-->
                                         <td><span>VAT/Momsreg.nr</span></td>
                                         <td>
                                             <asp:Label ID="labelCompanyTIN" runat="server" Text=""></asp:Label>
@@ -650,7 +640,6 @@
                                         <td colspan="3">
                                             <asp:Label ID="labelCompanyAddress" runat="server" Text=""></asp:Label>
                                         </td>
-                                        <!--<td></td>-->
                                         <td><span>F-skattebevis</span></td>
                                         <td></td>
                                         <td></td>
@@ -770,14 +759,17 @@
                                 <td class="timebook-consultant">
                                     <span class="timebook-consultant-label"><%= t.Consultant%></span>
                                     <textarea data-id="<%= t.Id %>" type="text" class="form-control timebook-consultant-text"><%= t.Consultant %></textarea>
-                                    <img alt="" class="spinner" src="img/spiffygif_30x30.gif" />
+                                    <img alt="" class="timebook-consultant-spinner" src="img/spiffygif_30x30.gif" />
                                 </td>
                                 <td align="center"><%= t.GetStatus() %></td>
-                                <td class="comments-width">
+                                <td class="comments-width timebook-comments">
                                     <% if (t.HasInternalComments) { %>
                                         <img src="img/comment.png" title="<%= t.InternalComments %>"/>
                                     <% } %>
-                                    <%= t.Comments %>
+                                    <!--<%= t.Comments %>-->
+                                    <span class="timebook-comments-label"><%= t.Comments%></span>
+                                    <textarea data-id="<%= t.Id %>" type="text" class="form-control timebook-comments-text"><%= t.Comments %></textarea>
+                                    <img alt="" class="timebook-comments-spinner" src="img/spiffygif_30x30.gif" />
                                 </td>
                             <% } %>
                             <td>
