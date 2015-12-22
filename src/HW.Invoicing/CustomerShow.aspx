@@ -826,9 +826,9 @@
                                     </small>
                                     </strike>
                                 </td>
-                                <td><strike><%= t.Quantity.ToString("# ##0.00") %></strike></td>
-                                <td><strike><%= t.Price.ToString("# ##0.00") %></strike></td>
-                                <td><strike><%= t.Amount.ToString("# ##0.00") %></strike></td>
+                                <td><strike><%= t.Quantity.ToString("### ### ##0.00") %></strike></td>
+                                <td><strike><%= t.Price.ToString("### ### ##0.00") %></strike></td>
+                                <td><strike><%= t.Amount.ToString("### ### ##0.00") %></strike></td>
                                 <td><strike><%= t.VAT %>%</strike></td>
                             <% } %>
                             <td>
@@ -883,9 +883,9 @@
                                         </span>
                                     </small>
                                 </td>
-                                <td><%= t.Quantity.ToString("# ##0.00") %></td>
-                                <td><%= t.Price.ToString("# ##0.00") %></td>
-                                <td><%= t.Amount.ToString("# ##0.00") %></td>
+                                <td class="col-md-1"><%= t.Quantity.ToString("### ### ##0.00") %></td>
+                                <td class="col-md-2"><%= t.Price.ToString("### ### ##0.00") %></td>
+                                <td class="col-md-2"><%= t.Amount.ToString("### ### ##0.00") %></td>
                                 <td><%= t.VAT %>%</td>
                             <% } %>
                             <td>
