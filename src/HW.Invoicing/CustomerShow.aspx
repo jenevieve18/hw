@@ -883,9 +883,9 @@
                                         </span>
                                     </small>
                                 </td>
-                                <td class="col-md-1"><%= t.Quantity.ToString("### ### ##0.00") %></td>
-                                <td class="col-md-2"><%= t.Price.ToString("### ### ##0.00") %></td>
-                                <td class="col-md-2"><%= t.Amount.ToString("### ### ##0.00") %></td>
+                                <td style="width:80px"><%= t.Quantity.ToString("### ### ##0.00") %></td>
+                                <td style="width:130px"><%= t.Price.ToString("### ### ##0.00") %></td>
+                                <td style="width:130px"><%= t.Amount.ToString("### ### ##0.00") %></td>
                                 <td><%= t.VAT %>%</td>
                             <% } %>
                             <td>
