@@ -220,6 +220,9 @@
             });
             $('.timebook-consultant-text').focusout(function () {
                 var value = $(this).val();
+                if (value == "") {
+                    value = "(no consultant)";
+                }
                 var id = $(this).data('id');
                 var label = $(this).closest('td').find('.timebook-consultant-label');
                 label.text(value);
@@ -871,7 +874,17 @@
                                         <% if (t.Date != null && !t.DateHidden && !t.IsSubscription) { %>
                                             <%= t.Date.Value.ToString("yyyy-MM-dd") %>
                                         <% } %>
-                                        <%= StrHelper.Str(t.GetDepartmentAndContact2() != "", t.GetDepartmentAndContact2() + "<br>", "") %>
+                                        <%= StrHelper.Str(t.Department != null && t.Department != "", " - " + t.Department, "") %>
+                                        <% if (t.Consultant != null) { %>
+                                            - 
+                                            <span class="timebook-consultant">
+                                                <span class="timebook-consultant-label"><%= StrHelper.Str(t.Consultant != "", t.Consultant, "(no consultant)") %></span>
+                                                <textarea data-id="<%= t.Id %>" type="text" class="form-control timebook-consultant-text"><%= t.Consultant %></textarea>
+                                                <img alt="" class="timebook-consultant-spinner" src="img/spiffygif_30x30.gif" />
+                                            </span>
+                                            <br />
+                                        <% } %>
+                                        <%--<%= StrHelper.Str(t.GetDepartmentAndContact2() != "", t.GetDepartmentAndContact2() + "<br>", "") %>--%>
 
                                         <span class="timebook-comments">
                                             <% if (t.HasInternalComments) { %>
