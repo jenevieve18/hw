@@ -166,15 +166,6 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.CheckBox checkBoxHasSubscriber;
         
         /// <summary>
-        /// buttonSave control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button buttonSave;
-        
-        /// <summary>
         /// textBoxTerms control.
         /// </summary>
         /// <remarks>
@@ -182,24 +173,6 @@ namespace HW.Invoicing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox textBoxTerms;
-        
-        /// <summary>
-        /// buttonSaveTerms control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button buttonSaveTerms;
-        
-        /// <summary>
-        /// Panel1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel Panel1;
         
         /// <summary>
         /// textBoxAgreementEmailSubject control.
@@ -238,12 +211,48 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxAgreementSignedEmailText;
         
         /// <summary>
-        /// buttonSaveAgreementEmailText control.
+        /// textBoxInvoiceEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button buttonSaveAgreementEmailText;
+        protected global::System.Web.UI.WebControls.TextBox textBoxInvoiceEmail;
+        
+        /// <summary>
+        /// textBoxInvoiceEmailCC control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxInvoiceEmailCC;
+        
+        /// <summary>
+        /// textBoxInvoiceEmailSubject control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxInvoiceEmailSubject;
+        
+        /// <summary>
+        /// textBoxInvoiceEmailText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxInvoiceEmailText;
+        
+        /// <summary>
+        /// buttonSave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button buttonSave;
     }
 }

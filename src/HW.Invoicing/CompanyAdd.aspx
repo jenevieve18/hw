@@ -19,18 +19,12 @@
 
 <h3>Add a company</h3>
 
-
 <div class="tabbable" id="tabs-813930">
 	<ul class="nav nav-tabs">
-		<li class="active">
-			<a href="#panel-20704" data-toggle="tab">Company Info</a>
-		</li>
-		<li>
-			<a href="#panel-281177" data-toggle="tab">Terms and Advice</a>
-		</li>
-        <li>
-			<a href="#panel-931818" data-toggle="tab">Agreement Email Text</a>
-		</li>
+		<li class="active"><a href="#panel-20704" data-toggle="tab">Company Info</a></li>
+		<li><a href="#panel-281177" data-toggle="tab">Terms and Advice</a></li>
+        <li><a href="#panel-931818" data-toggle="tab">Agreement Email Text</a></li>
+        <li><a href="#panel-934381" data-toggle="tab">Invoice Section</a></li>
 	</ul>
 	<div class="tab-content">
 		<div class="tab-pane active" id="panel-20704">
@@ -130,12 +124,8 @@
             <%--<asp:Panel ID="Panel1" runat="server" DefaultButton="buttonSaveAgreementEmailText">--%>
                 <div class="tabbable" id="tabs-64570">
 				    <ul class="nav nav-tabs">
-					    <li class="active">
-						    <a href="#panel-67773" data-toggle="tab">Email Texts</a>
-					    </li>
-					    <li>
-						    <a href="#panel-807776" data-toggle="tab">Signed Email Texts</a>
-					    </li>
+					    <li class="active"><a href="#panel-67773" data-toggle="tab">Email Texts</a></li>
+					    <li><a href="#panel-807776" data-toggle="tab">Signed Email Texts</a></li>
 				    </ul>
 				    <div class="tab-content">
 					    <div class="tab-pane active" id="panel-67773">
@@ -169,13 +159,31 @@
                 </div>--%>
             <%--</asp:Panel>--%>
 		</div>
-
-        
-            <div>
-                <asp:Button ID="buttonSave" CssClass="btn btn-success" runat="server" Text="Save company info" 
-                    onclick="buttonSave_Click" />
-                    or <i><%= HtmlHelper.Anchor("cancel", "companies.aspx") %></i>
+        <div class="tab-pane" id="panel-934381">
+			<br />
+            <div class="form-group">
+	            <label for="<%= textBoxInvoiceEmail.ClientID %>">Invoice Email</label>
+                <asp:TextBox ID="textBoxInvoiceEmail" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
+            <div class="form-group">
+	            <label for="<%= textBoxInvoiceEmailCC.ClientID %>">Invoice Email CC</label>
+                <asp:TextBox ID="textBoxInvoiceEmailCC" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="form-group">
+	            <label for="<%= textBoxInvoiceEmailSubject.ClientID %>">Invoice Email Subject</label>
+                <asp:TextBox ID="textBoxInvoiceEmailSubject" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="form-group">
+	            <label for="<%= textBoxInvoiceEmailText.ClientID %>">Invoice Email Text</label>
+                <asp:TextBox ID="textBoxInvoiceEmailText" runat="server" CssClass="form-control" TextMode="MultiLine" Height="450"></asp:TextBox>
+            </div>
+		</div>
+
+        <div>
+            <asp:Button ID="buttonSave" CssClass="btn btn-success" runat="server" Text="Save company info" 
+                onclick="buttonSave_Click" />
+                or <i><%= HtmlHelper.Anchor("cancel", "companies.aspx") %></i>
+        </div>
 
     </div>
 </div>

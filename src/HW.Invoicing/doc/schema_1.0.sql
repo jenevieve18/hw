@@ -1,3 +1,5 @@
+create database invoicing;
+
 use invoicing;
 
 create table Item(
@@ -102,7 +104,7 @@ create table Issue(
 	Description text
 );
 
-alter table Customer alter Address PostalAddress varchar(255);
+alter table Customer alter [Address] PostalAddress varchar(255);
 
 alter table CustomerTimebook add Date datetime;
 

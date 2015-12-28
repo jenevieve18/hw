@@ -76,7 +76,12 @@ namespace HW.Invoicing
                 AgreementEmailSubject = textBoxAgreementEmailSubject.Text,
                 AgreementEmailText = textBoxAgreementEmailText.Text,
                 AgreementSignedEmailSubject = textBoxAgreementSignedEmailSubject.Text,
-                AgreementSignedEmailText = textBoxAgreementSignedEmailText.Text
+                AgreementSignedEmailText = textBoxAgreementSignedEmailText.Text,
+
+                InvoiceEmail = textBoxInvoiceEmail.Text,
+                InvoiceEmailCC = textBoxInvoiceEmailCC.Text,
+                InvoiceEmailSubject = textBoxInvoiceEmailSubject.Text,
+                InvoiceEmailText = textBoxInvoiceEmailText.Text
             };
             r.Save(c);
             Response.Redirect("companies.aspx");

@@ -28,3 +28,8 @@ create table UserCompanyLink(
 
 alter table CustomerTimebook add IsHeader integer;
 alter table InvoiceTimebook add SortOrder integer;
+
+alter table Company add InvoiceEmail varchar(255);
+alter table Company add InvoiceEmailCC varchar(255);
+alter table Company add InvoiceEmailSubject varchar(255);
+alter table Company add InvoiceEmailText varchar(255);
