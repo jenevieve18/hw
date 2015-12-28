@@ -16,6 +16,7 @@ namespace HW.Invoicing
         SqlCompanyRepository r = new SqlCompanyRepository();
         int id;
         protected Company company;
+        protected string message;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -164,8 +165,16 @@ namespace HW.Invoicing
                 AgreementSignedEmailSubject = textBoxAgreementSignedEmailSubject.Text,
                 AgreementSignedEmailText = textBoxAgreementSignedEmailText.Text
             };
-            r.Update(c, id);
-            Response.Redirect("companies.aspx");
+            c.Validate();
+            if (c.HasErrors)
+            {
+                message = c.Errors.ToHtmlUl();
+            }
+            else
+            {
+                r.Update(c, id);
+                Response.Redirect("companies.aspx");
+            }
         }
     }
 }

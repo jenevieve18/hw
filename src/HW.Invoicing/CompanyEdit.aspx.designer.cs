@@ -112,51 +112,6 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxFinancialMonthEnd;
         
         /// <summary>
-        /// textBoxInvoicePrefix control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxInvoicePrefix;
-        
-        /// <summary>
-        /// textBoxAgreementPrefix control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementPrefix;
-        
-        /// <summary>
-        /// fileUploadInvoiceLogo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fileUploadInvoiceLogo;
-        
-        /// <summary>
-        /// dropDownListInvoiceExporter control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dropDownListInvoiceExporter;
-        
-        /// <summary>
-        /// fileUploadAgreementTemplate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fileUploadAgreementTemplate;
-        
-        /// <summary>
         /// checkBoxHasSubscriber control.
         /// </summary>
         /// <remarks>
@@ -173,6 +128,24 @@ namespace HW.Invoicing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox textBoxTerms;
+        
+        /// <summary>
+        /// textBoxAgreementPrefix control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementPrefix;
+        
+        /// <summary>
+        /// fileUploadAgreementTemplate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fileUploadAgreementTemplate;
         
         /// <summary>
         /// textBoxAgreementEmailSubject control.
@@ -209,6 +182,33 @@ namespace HW.Invoicing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox textBoxAgreementSignedEmailText;
+        
+        /// <summary>
+        /// textBoxInvoicePrefix control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxInvoicePrefix;
+        
+        /// <summary>
+        /// fileUploadInvoiceLogo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fileUploadInvoiceLogo;
+        
+        /// <summary>
+        /// dropDownListInvoiceExporter control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList dropDownListInvoiceExporter;
         
         /// <summary>
         /// textBoxInvoiceEmail control.

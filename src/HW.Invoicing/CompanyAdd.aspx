@@ -18,7 +18,11 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <h3>Add a company</h3>
-
+<% if (message != null && message != "") { %>
+<div class="alert alert-warning">
+    <%= message %>
+</div>
+<% } %>
 <div class="tabbable" id="tabs-813930">
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="#panel-20704" data-toggle="tab">Company Info</a></li>
@@ -74,33 +78,12 @@
                 <asp:TextBox ID="textBoxFinancialMonthEnd" runat="server" CssClass="date form-control"></asp:TextBox>
             </div>
             <div class="form-group">
-	            <label for="<%= textBoxInvoicePrefix.ClientID %>">Invoice Prefix</label>
-                <asp:TextBox ID="textBoxInvoicePrefix" runat="server" CssClass="form-control"></asp:TextBox>
-            </div>
-            <div class="form-group">
-	            <label for="<%= textBoxAgreementPrefix.ClientID %>">Agreement Prefix</label>
-                <asp:TextBox ID="textBoxAgreementPrefix" runat="server" CssClass="form-control"></asp:TextBox>
-            </div>
-            <div class="form-group">
-                <label for="<%= fileUploadInvoiceLogo.ClientID %>">Invoice Logo</label>
-                <asp:FileUpload ID="fileUploadInvoiceLogo" runat="server" />
-            </div>
-            <div class="form-group">
                 <asp:CheckBox ID="checkBoxHasSubscriber" runat="server" CssClass="form-control" Text="&nbsp;This company has subscribers." />
             </div>
             <%--<div class="form-group">
                 <label for="<%= fileUploadInvoiceTemplate.ClientID %>">Invoice Template</label>
                 <asp:FileUpload ID="fileUploadInvoiceTemplate" runat="server" />
             </div>--%>
-            <div class="form-group">
-                <label for="<%= dropDownListInvoiceExporter.ClientID %>">Invoice Exporter</label>
-                <asp:DropDownList ID="dropDownListInvoiceExporter" runat="server" CssClass="form-control">
-                </asp:DropDownList>
-            </div>
-            <div class="form-group">
-                <label for="<%= fileUploadAgreementTemplate.ClientID %>">Agreement Template</label>
-                <asp:FileUpload ID="fileUploadAgreementTemplate" runat="server" />
-            </div>
             <%--<div>
                 <asp:Button ID="buttonSave" CssClass="btn btn-success" runat="server" Text="Save company info" 
                     onclick="buttonSave_Click" />
@@ -121,6 +104,14 @@
 		</div>
         <div class="tab-pane" id="panel-931818">
             <br />
+            <div class="form-group">
+	            <label for="<%= textBoxAgreementPrefix.ClientID %>">Agreement Prefix</label>
+                <asp:TextBox ID="textBoxAgreementPrefix" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="form-group">
+                <label for="<%= fileUploadAgreementTemplate.ClientID %>">Agreement Template</label>
+                <asp:FileUpload ID="fileUploadAgreementTemplate" runat="server" />
+            </div>
             <%--<asp:Panel ID="Panel1" runat="server" DefaultButton="buttonSaveAgreementEmailText">--%>
                 <div class="tabbable" id="tabs-64570">
 				    <ul class="nav nav-tabs">
@@ -161,6 +152,19 @@
 		</div>
         <div class="tab-pane" id="panel-934381">
 			<br />
+            <div class="form-group">
+	            <label for="<%= textBoxInvoicePrefix.ClientID %>">Invoice Prefix</label>
+                <asp:TextBox ID="textBoxInvoicePrefix" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="form-group">
+                <label for="<%= fileUploadInvoiceLogo.ClientID %>">Invoice Logo</label>
+                <asp:FileUpload ID="fileUploadInvoiceLogo" runat="server" />
+            </div>
+            <div class="form-group">
+                <label for="<%= dropDownListInvoiceExporter.ClientID %>">Invoice Exporter</label>
+                <asp:DropDownList ID="dropDownListInvoiceExporter" runat="server" CssClass="form-control">
+                </asp:DropDownList>
+            </div>
             <div class="form-group">
 	            <label for="<%= textBoxInvoiceEmail.ClientID %>">Invoice Email</label>
                 <asp:TextBox ID="textBoxInvoiceEmail" runat="server" CssClass="form-control"></asp:TextBox>
