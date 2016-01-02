@@ -356,8 +356,8 @@ VALUES(@CustomerId, @ItemId, @Price, @SortOrder)"
 		{
 			string query = string.Format(
                 @"
-INSERT INTO Customer(Name, Number, PostalAddress, InvoiceAddress, PurchaseOrderNumber, YourReferencePerson, OurReferencePerson, Phone, Email, LangId, CompanyId, HasSubscription, SubscriptionItemId, SubscriptionStartDate, SubscriptionEndDate, SubscriptionHasEndDate, Inactive)
-VALUES(@Name, @Number, @PostalAddress, @InvoiceAddress, @PurchaseOrderNumber, @YourReferencePerson, @OurReferencePerson, @Phone, @Email, @LangId, @CompanyId, @HasSubscription, @SubscriptionItemId, @SubscriptionStartDate, @SubscriptionEndDate, @SubscriptionHasEndDate, @Inactive)"
+INSERT INTO Customer(Name, Number, PostalAddress, InvoiceAddress, PurchaseOrderNumber, YourReferencePerson, OurReferencePerson, Phone, Email, LangId, CompanyId, HasSubscription, SubscriptionItemId, SubscriptionStartDate, SubscriptionEndDate, SubscriptionHasEndDate)
+VALUES(@Name, @Number, @PostalAddress, @InvoiceAddress, @PurchaseOrderNumber, @YourReferencePerson, @OurReferencePerson, @Phone, @Email, @LangId, @CompanyId, @HasSubscription, @SubscriptionItemId, @SubscriptionStartDate, @SubscriptionEndDate, @SubscriptionHasEndDate)"
             );
 			ExecuteNonQuery(
 				query,

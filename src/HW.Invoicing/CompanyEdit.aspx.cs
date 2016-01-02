@@ -16,6 +16,7 @@ namespace HW.Invoicing
         SqlCompanyRepository r = new SqlCompanyRepository();
         int id;
         protected Company company;
+        protected string message;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -59,6 +60,11 @@ namespace HW.Invoicing
                     textBoxAgreementSignedEmailSubject.Text = company.AgreementSignedEmailSubject;
 
                     dropDownListInvoiceExporter.SelectedValue = company.InvoiceExporter.ToString();
+
+                    textBoxInvoiceEmail.Text = company.InvoiceEmail;
+                    textBoxInvoiceEmailCC.Text = company.InvoiceEmailCC;
+                    textBoxInvoiceEmailSubject.Text = company.InvoiceEmailSubject;
+                    textBoxInvoiceEmailText.Text = company.InvoiceEmailText;
                 }
                 else
                 {
@@ -67,23 +73,23 @@ namespace HW.Invoicing
             }
         }
 
-        protected void buttonSaveTerms_Click(object sender, EventArgs e)
-        {
-            r.SaveTerms(textBoxTerms.Text, id);
-            Response.Redirect("companies.aspx");
-        }
+        //protected void buttonSaveTerms_Click(object sender, EventArgs e)
+        //{
+        //    r.SaveTerms(textBoxTerms.Text, id);
+        //    Response.Redirect("companies.aspx");
+        //}
 
-        protected void buttonSaveAgreementEmailText_Click(object sender, EventArgs e)
-        {
-            var c = new Company {
-                AgreementEmailSubject = textBoxAgreementEmailSubject.Text,
-                AgreementEmailText = textBoxAgreementEmailText.Text,
-                AgreementSignedEmailSubject = textBoxAgreementSignedEmailSubject.Text,
-                AgreementSignedEmailText = textBoxAgreementSignedEmailText.Text
-            };
-            r.SaveAgreementEmail(c, id);
-            Response.Redirect("companies.aspx");
-        }
+        //protected void buttonSaveAgreementEmailText_Click(object sender, EventArgs e)
+        //{
+        //    var c = new Company {
+        //        AgreementEmailSubject = textBoxAgreementEmailSubject.Text,
+        //        AgreementEmailText = textBoxAgreementEmailText.Text,
+        //        AgreementSignedEmailSubject = textBoxAgreementSignedEmailSubject.Text,
+        //        AgreementSignedEmailText = textBoxAgreementSignedEmailText.Text
+        //    };
+        //    r.SaveAgreementEmail(c, id);
+        //    Response.Redirect("companies.aspx");
+        //}
 
         protected void buttonSave_Click(object sender, EventArgs e)
         {
@@ -145,10 +151,30 @@ namespace HW.Invoicing
                 AgreementPrefix = textBoxAgreementPrefix.Text,
                 OrganizationNumber = textBoxOrganizationNumber.Text,
                 AgreementTemplate = agreementTemplate,
-                InvoiceExporter = ConvertHelper.ToInt32(dropDownListInvoiceExporter.SelectedValue)
+                InvoiceExporter = ConvertHelper.ToInt32(dropDownListInvoiceExporter.SelectedValue),
+
+                InvoiceEmail = textBoxInvoiceEmail.Text,
+                InvoiceEmailCC = textBoxInvoiceEmailCC.Text,
+                InvoiceEmailSubject = textBoxInvoiceEmailSubject.Text,
+                InvoiceEmailText = textBoxInvoiceEmailText.Text,
+
+                Terms = textBoxTerms.Text,
+
+                AgreementEmailSubject = textBoxAgreementEmailSubject.Text,
+                AgreementEmailText = textBoxAgreementEmailText.Text,
+                AgreementSignedEmailSubject = textBoxAgreementSignedEmailSubject.Text,
+                AgreementSignedEmailText = textBoxAgreementSignedEmailText.Text
             };
-            r.Update(c, id);
-            Response.Redirect("companies.aspx");
+            c.Validate();
+            if (c.HasErrors)
+            {
+                message = c.Errors.ToHtmlUl();
+            }
+            else
+            {
+                r.Update(c, id);
+                Response.Redirect("companies.aspx");
+            }
         }
     }
 }

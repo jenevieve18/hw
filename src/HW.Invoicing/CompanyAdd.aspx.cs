@@ -14,6 +14,7 @@ namespace HW.Invoicing
     public partial class CompanyAdd : System.Web.UI.Page
     {
         SqlCompanyRepository r = new SqlCompanyRepository();
+        protected string message;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -76,10 +77,23 @@ namespace HW.Invoicing
                 AgreementEmailSubject = textBoxAgreementEmailSubject.Text,
                 AgreementEmailText = textBoxAgreementEmailText.Text,
                 AgreementSignedEmailSubject = textBoxAgreementSignedEmailSubject.Text,
-                AgreementSignedEmailText = textBoxAgreementSignedEmailText.Text
+                AgreementSignedEmailText = textBoxAgreementSignedEmailText.Text,
+
+                InvoiceEmail = textBoxInvoiceEmail.Text,
+                InvoiceEmailCC = textBoxInvoiceEmailCC.Text,
+                InvoiceEmailSubject = textBoxInvoiceEmailSubject.Text,
+                InvoiceEmailText = textBoxInvoiceEmailText.Text
             };
-            r.Save(c);
-            Response.Redirect("companies.aspx");
+            c.Validate();
+            if (c.HasErrors)
+            {
+                message = c.Errors.ToHtmlUl();
+            }
+            else
+            {
+                r.Save(c);
+                Response.Redirect("companies.aspx");
+            }
         }
     }
 }

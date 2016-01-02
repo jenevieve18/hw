@@ -112,51 +112,6 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxFinancialMonthEnd;
         
         /// <summary>
-        /// textBoxInvoicePrefix control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxInvoicePrefix;
-        
-        /// <summary>
-        /// textBoxAgreementPrefix control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementPrefix;
-        
-        /// <summary>
-        /// fileUploadInvoiceLogo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fileUploadInvoiceLogo;
-        
-        /// <summary>
-        /// dropDownListInvoiceExporter control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dropDownListInvoiceExporter;
-        
-        /// <summary>
-        /// fileUploadAgreementTemplate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fileUploadAgreementTemplate;
-        
-        /// <summary>
         /// checkBoxHasSubscriber control.
         /// </summary>
         /// <remarks>
@@ -164,15 +119,6 @@ namespace HW.Invoicing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox checkBoxHasSubscriber;
-        
-        /// <summary>
-        /// buttonSave control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button buttonSave;
         
         /// <summary>
         /// textBoxTerms control.
@@ -184,22 +130,22 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxTerms;
         
         /// <summary>
-        /// buttonSaveTerms control.
+        /// textBoxAgreementPrefix control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button buttonSaveTerms;
+        protected global::System.Web.UI.WebControls.TextBox textBoxAgreementPrefix;
         
         /// <summary>
-        /// Panel1 control.
+        /// fileUploadAgreementTemplate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel Panel1;
+        protected global::System.Web.UI.WebControls.FileUpload fileUploadAgreementTemplate;
         
         /// <summary>
         /// textBoxAgreementEmailSubject control.
@@ -238,12 +184,75 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxAgreementSignedEmailText;
         
         /// <summary>
-        /// buttonSaveAgreementEmailText control.
+        /// textBoxInvoicePrefix control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button buttonSaveAgreementEmailText;
+        protected global::System.Web.UI.WebControls.TextBox textBoxInvoicePrefix;
+        
+        /// <summary>
+        /// fileUploadInvoiceLogo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fileUploadInvoiceLogo;
+        
+        /// <summary>
+        /// dropDownListInvoiceExporter control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList dropDownListInvoiceExporter;
+        
+        /// <summary>
+        /// textBoxInvoiceEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxInvoiceEmail;
+        
+        /// <summary>
+        /// textBoxInvoiceEmailCC control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxInvoiceEmailCC;
+        
+        /// <summary>
+        /// textBoxInvoiceEmailSubject control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxInvoiceEmailSubject;
+        
+        /// <summary>
+        /// textBoxInvoiceEmailText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxInvoiceEmailText;
+        
+        /// <summary>
+        /// buttonSave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button buttonSave;
     }
 }

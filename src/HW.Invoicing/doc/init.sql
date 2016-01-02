@@ -1,6 +1,6 @@
 use invoicing;
 
-insert into [User](Name, [Password]) values('Danx', 'Start123!!!');
+insert into [User](Name, Username, [Password]) values('Dan', 'Dan', 'Start123!!!');
 
 insert into Company(Name, UserId) values('Interactive Health Group in Stockholm AB', 1);
 

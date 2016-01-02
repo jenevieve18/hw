@@ -110,8 +110,8 @@ FROM Company";
 		public override void Save(Company t)
 		{
 			string query = @"
-INSERT INTO Company(Name, Address, Phone, BankAccountNumber, TIN, FinancialMonthStart, FinancialMonthEnd, UserId, InvoicePrefix, HasSubscriber, InvoiceLogo, InvoiceTemplate, Terms, Signature, AgreementEmailText, AgreementEmailSubject, Email, AgreementPrefix, OrganizationNumber, AgreementSignedEmailText, AgreementSignedEmailSubject, Website, InvoiceExporter)
-VALUES(@Name, @Address, @Phone, @BankAccountNumber, @TIN, @FinancialMonthStart, @FinancialMonthEnd, @UserId, @InvoicePrefix, @HasSubscriber, @InvoiceLogo, @InvoiceTemplate, @Terms, @Signature, @AgreementEmailText, @AgreementEmailSubject, @Email, @AgreementPrefix, @OrganizationNumber, @AgreementSignedEmailText, @AgreementSignedEmailSubject, @Website, @InvoiceExporter)";
+INSERT INTO Company(Name, Address, Phone, BankAccountNumber, TIN, FinancialMonthStart, FinancialMonthEnd, UserId, InvoicePrefix, HasSubscriber, InvoiceLogo, InvoiceTemplate, Terms, Signature, AgreementEmailText, AgreementEmailSubject, Email, AgreementPrefix, OrganizationNumber, AgreementSignedEmailText, AgreementSignedEmailSubject, Website, InvoiceExporter, InvoiceEmail, InvoiceEmailCC, InvoiceEmailSubject, InvoiceEmailText)
+VALUES(@Name, @Address, @Phone, @BankAccountNumber, @TIN, @FinancialMonthStart, @FinancialMonthEnd, @UserId, @InvoicePrefix, @HasSubscriber, @InvoiceLogo, @InvoiceTemplate, @Terms, @Signature, @AgreementEmailText, @AgreementEmailSubject, @Email, @AgreementPrefix, @OrganizationNumber, @AgreementSignedEmailText, @AgreementSignedEmailSubject, @Website, @InvoiceExporter, @InvoiceEmail, @InvoiceEmailCC, @InvoiceEmailSubject, @InvoiceEmailText)";
 			ExecuteNonQuery(
 				query,
 				"invoicing",
@@ -137,7 +137,11 @@ VALUES(@Name, @Address, @Phone, @BankAccountNumber, @TIN, @FinancialMonthStart, 
 				new SqlParameter("@OrganizationNumber", t.OrganizationNumber),
 				new SqlParameter("@AgreementSignedEmailText", t.AgreementSignedEmailText),
 				new SqlParameter("@AgreementSignedEmailSubject", t.AgreementSignedEmailSubject),
-				new SqlParameter("@InvoiceExporter", t.InvoiceExporter)
+                new SqlParameter("@InvoiceExporter", t.InvoiceExporter),
+                new SqlParameter("@InvoiceEmail", t.InvoiceEmail),
+                new SqlParameter("@InvoiceEmailCC", t.InvoiceEmailCC),
+                new SqlParameter("@InvoiceEmailSubject", t.InvoiceEmailSubject),
+                new SqlParameter("@InvoiceEmailText", t.InvoiceEmailText)
 			);
 		}
 		
@@ -168,7 +172,11 @@ SELECT Id,
     AgreementTemplate,
     Website,
     InvoiceExporter,
-    UserId
+    UserId,
+    InvoiceEmail,
+    InvoiceEmailCC,
+    InvoiceEmailSubject,
+    InvoiceEmailText
 FROM Company
 WHERE Id = @Id";
 			Company c = null;
@@ -199,7 +207,11 @@ WHERE Id = @Id";
 						AgreementTemplate = GetString(rs, 21),
 						Website = GetString(rs, 22),
 						InvoiceExporter = GetInt32(rs, 23),
-						User = new User { Id = GetInt32(rs, 24) }
+						User = new User { Id = GetInt32(rs, 24) },
+                        InvoiceEmail = GetString(rs, 25),
+                        InvoiceEmailCC = GetString(rs, 26),
+                        InvoiceEmailSubject = GetString(rs, 27),
+                        InvoiceEmailText = GetString(rs, 28)
 					};
 				}
 			}
@@ -242,27 +254,27 @@ ORDER BY Id";
 			return c;
 		}
 
-		public List<CompanyUser> FindUsers(int companyId)
-		{
-			string query = @"
-SELECT u.Name,
-u.[Password]
-FROM CompanyUser cu
-INNER JOIN User u ON u.Id = cu.UserId
-WHERE CompanyId = @CompanyId
-ORDER BY Name";
-			var users = new List<CompanyUser>();
-			using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@CompanyId", companyId))) {
-				if (rs.Read()) {
-					users.Add(
-						new CompanyUser {
-							User = new User { Name = GetString(rs, 0), Password = GetString(rs, 1) }
-						}
-					);
-				}
-			}
-			return users;
-		}
+//		public List<CompanyUser> FindUsers(int companyId)
+//		{
+//			string query = @"
+//SELECT u.Name,
+//u.[Password]
+//FROM CompanyUser cu
+//INNER JOIN User u ON u.Id = cu.UserId
+//WHERE CompanyId = @CompanyId
+//ORDER BY Name";
+//			var users = new List<CompanyUser>();
+//			using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@CompanyId", companyId))) {
+//				if (rs.Read()) {
+//					users.Add(
+//						new CompanyUser {
+//							User = new User { Name = GetString(rs, 0), Password = GetString(rs, 1) }
+//						}
+//					);
+//				}
+//			}
+//			return users;
+//		}
 
 		public Company ReadSelectedCompanyByUser2(User u)
 		{
@@ -403,7 +415,16 @@ UPDATE Company set Name = @Name,
     AgreementPrefix = @AgreementPrefix,
     OrganizationNumber = @OrganizationNumber,
     AgreementTemplate = @AgreementTemplate,
-    InvoiceExporter = @InvoiceExporter
+    InvoiceExporter = @InvoiceExporter,
+    InvoiceEmail = @InvoiceEmail,
+    InvoiceEmailCC = @InvoiceEmailCC,
+    InvoiceEmailSubject = @InvoiceEmailSubject,
+    InvoiceEmailText = @InvoiceEmailText,
+    Terms = @Terms,
+    AgreementEmailSubject = @AgreementEmailSubject,
+    AgreementEmailText = @AgreementEmailText,
+    AgreementSignedEmailSubject = @AgreementSignedEmailSubject,
+    AgreementSignedEmailText = @AgreementSignedEmailText
 WHERE Id = @Id";
 			ExecuteNonQuery(
 				query,
@@ -426,7 +447,16 @@ WHERE Id = @Id";
 				new SqlParameter("@AgreementPrefix", t.AgreementPrefix),
 				new SqlParameter("@OrganizationNumber", t.OrganizationNumber),
 				new SqlParameter("@AgreementTemplate", t.AgreementTemplate),
-				new SqlParameter("@InvoiceExporter", t.InvoiceExporter)
+                new SqlParameter("@InvoiceExporter", t.InvoiceExporter),
+                new SqlParameter("@InvoiceEmail", t.InvoiceEmail),
+                new SqlParameter("@InvoiceEmailCC", t.InvoiceEmailCC),
+                new SqlParameter("@InvoiceEmailSubject", t.InvoiceEmailSubject),
+                new SqlParameter("@InvoiceEmailText", t.InvoiceEmailText),
+                new SqlParameter("@Terms", t.Terms),
+                new SqlParameter("@AgreementEmailSubject", t.AgreementEmailSubject),
+                new SqlParameter("@AgreementEmailText", t.AgreementEmailText),
+                new SqlParameter("@AgreementSignedEmailSubject", t.AgreementSignedEmailSubject),
+                new SqlParameter("@AgreementSignedEmailText", t.AgreementSignedEmailText)
 			);
 		}
 	}
