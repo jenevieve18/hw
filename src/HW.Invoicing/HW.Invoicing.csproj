@@ -104,6 +104,7 @@
     <Content Include="InvoiceRevertAll.aspx" />
     <Content Include="InvoiceRevertPayment.aspx" />
     <Content Include="Invoices.aspx" />
+    <Content Include="InvoiceSend.aspx" />
     <Content Include="InvoiceShow.aspx" />
     <Content Include="IssueAdd.aspx" />
     <Content Include="IssueDeactivate.aspx" />
@@ -482,6 +483,13 @@
     </Compile>
     <Compile Include="Invoices.aspx.designer.cs">
       <DependentUpon>Invoices.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InvoiceSend.aspx.cs">
+      <DependentUpon>InvoiceSend.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InvoiceSend.aspx.designer.cs">
+      <DependentUpon>InvoiceSend.aspx</DependentUpon>
     </Compile>
     <Compile Include="InvoiceShow.aspx.cs">
       <DependentUpon>InvoiceShow.aspx</DependentUpon>

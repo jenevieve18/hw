@@ -1,0 +1,54 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using HW.Core.Helpers;
+using HW.Invoicing.Core.Repositories.Sql;
+
+namespace HW.Invoicing
+{
+	public partial class InvoiceSend : System.Web.UI.Page
+	{
+		SqlInvoiceRepository ir = new SqlInvoiceRepository();
+		SqlCompanyRepository cr = new SqlCompanyRepository();
+		
+		protected void Page_Load(object sender, EventArgs e)
+		{
+			int id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
+			var invoice = ir.Read(id);
+			
+			int companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
+			var company = cr.Read(companyId);
+			
+			invoice.Company = company;
+			if (company.HasInvoiceLogo) {
+				company.InvoiceLogo = string.Format(Server.MapPath("~/uploads/{0}"), company.InvoiceLogo);
+			} else {
+				company.InvoiceLogo = Server.MapPath("~/img/ihg.png");
+			}
+			
+			try {
+				string file = string.Format(Server.MapPath("~/uploads/{0} {1} {2}.pdf"), agreement.Id, agreement.Customer.Name, DateTime.Now.ToString("MMM yyyy"));
+				string templateFileName = company.HasAgreementTemplate ? string.Format(Server.MapPath("~/uploads/{0}"), company.AgreementTemplate) : Server.MapPath(@"HCG Avtalsmall Latest.pdf");
+
+				using (FileStream fStream = new FileStream(file, FileMode.Create, FileAccess.Write)) {
+					var exporter = InvoiceExporterFactory.GetExporter2(company.InvoiceExporter);
+					var exported = exporter.Export(invoice, templateFileName, Server.MapPath(@"arial.ttf"), flatten);
+					mStream.WriteTo(fStream);
+				}
+				
+				MailHelper.SendMail(
+					"info@danhasson.se",
+					agreement.Email,
+					company.AgreementSignedEmailSubject,
+					body,
+					file
+				);
+			} catch (Exception ex) {
+			}
+		}
+	}
+}

@@ -125,17 +125,18 @@
 					    <span class="caret"></span>
 				    </button>
 				    <ul class="dropdown-menu">
-					    <li><%= HtmlHelper.Anchor("Show", "invoiceshow.aspx?Id=" + i.Id) %></li>
+					    <li><%= HtmlHelper.Anchor("Show", "InvoiceShow.aspx?Id=" + i.Id) %></li>
                         <% if (i.Status == Invoice.PAID) { %>
-                            <li><%= HtmlHelper.Anchor("Revert Payment", "invoicerevertpayment.aspx?Id=" + i.Id) %></li>
+                            <li><%= HtmlHelper.Anchor("Revert Payment", "InvoiceRevertPayment.aspx?Id=" + i.Id) %></li>
                         <% } else { %>
-					        <li><%= HtmlHelper.Anchor("Edit", "invoiceedit.aspx?Id=" + i.Id) %></li>
-                            <li><%= HtmlHelper.Anchor("Paid", "invoicereceivepayment.aspx?Id=" + i.Id) %></li>
+					        <li><%= HtmlHelper.Anchor("Edit", "InvoiceEdit.aspx?Id=" + i.Id) %></li>
+                            <li><%= HtmlHelper.Anchor("Paid", "InvoiceReceivePayment.aspx?Id=" + i.Id) %></li>
                         <% } %>
-                        <li><%= HtmlHelper.Anchor("PDF", "invoiceexport.aspx?Id=" + i.Id, "target='_blank'")%></li>
+                        <li><%= HtmlHelper.Anchor("PDF", "InvoiceExport.aspx?Id=" + i.Id, "target='_blank'")%></li>
                         <%--<li><%= HtmlHelper.Anchor("PDF Flatten", "invoiceexport.aspx?Id=" + i.Id + "&Flatten=1", "target='_blank'")%></li>--%>
+                        <li><%= HtmlHelper.Anchor("Send", "InvoiceSend.aspx?Id=" + i.Id, "target='_blank'")%></li>
                         <% if (IsLatestInvoice(i.Number)) { %>
-                            <li><%= HtmlHelper.Anchor("Revert this invoice", "invoicerevert.aspx?Id=" + i.Id)%></li>
+                            <li><%= HtmlHelper.Anchor("Revert this invoice", "invoiceRevert.aspx?Id=" + i.Id)%></li>
                         <% } %>
 				    </ul>
 			    </div>
