@@ -96,9 +96,9 @@
         <th style="width:16px">
             <input type="checkbox" id="checkbox-invoice-all" />
         </th>
-        <th style="width:16px">
+        <%--<th style="width:16px">
             <span id="button-download-pdf-selected" class="btn btn-xs btn-info">Export</span>
-        </th>
+        </th>--%>
         <th class="col-md-2">Comments</th>
     </tr>
     <% decimal totalSubTotal = 0, totalVAT = 0, totalAmount = 0; %>
@@ -146,11 +146,11 @@
                     data-id="<%= i.Id %>"
                  />
             </td>
-            <td style="width:16px" class="text-center">
+            <%--<td style="width:16px" class="text-center">
                 <% if (i.Exported) { %>
                     <%= HtmlHelper.AnchorImage("invoiceexport.aspx?Id=" + i.Id, "img/page_white_acrobat.png", "target='_blank'")%>
                 <% } %>
-            </td>
+            </td>--%>
             <td class="internal-comments">
                 <span class="internal-comments-label"><%= i.InternalComments %></span>
                 <textarea data-id="<%= i.Id %>" type="text" class="form-control internal-comments-text"><%= i.InternalComments %></textarea>
