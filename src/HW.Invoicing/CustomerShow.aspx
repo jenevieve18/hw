@@ -325,10 +325,14 @@
     </script>
     <style type="text/css">
         .timebook-list td, .timebook-list th {
-            padding:5px;
+            padding:5px !important;
         }
         .comments-width {
             width:300px;
+        }
+        .date-width 
+        {
+            width:120px;
         }
     </style>
 </asp:Content>
@@ -788,19 +792,26 @@
             <table class="table table-hover timebook-list">
                 <tr>
                     <th><input type="checkbox" id="checkbox-timebook-all" /></th>
-                    <th></th>
+                    <%--<th></th>--%>
+                    <th style="width:85px !important">Date</th>
                     <th>Item</th>
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Amount</th>
                     <th>VAT</th>
                     <th></th>
+                    <th></th>
                 </tr>
                 <% foreach (var t in timebooks) { %>
                     <% if (t.Inactive) { %>
                         <tr>
                             <td style="width:16px"></td>
-                            <td><%= t.GetStatus() %></td>
+                            <%--<td><%= t.GetStatus() %></td>--%>
+                            <td>
+                            <% if (t.Date != null && !t.DateHidden && !t.IsSubscription) { %>
+                                            <%= t.Date.Value.ToString("yyyy-MM-dd") %>
+                                        <% } %>
+                            </td>
                             <% if (t.IsHeader) { %>
                                 <td class="timebook-comments"><strike><%= t.Comments %></strike></td>
                                 <td></td>
@@ -829,10 +840,11 @@
                                     </small>
                                     </strike>
                                 </td>
-                                <td><strike><%= t.Quantity.ToString("### ### ##0.00") %></strike></td>
+                                <td style="text-align:center"><strike><%= t.Quantity.ToString("### ### ##0.00") %></strike></td>
                                 <td><strike><%= t.Price.ToString("### ### ##0.00") %></strike></td>
                                 <td><strike><%= t.Amount.ToString("### ### ##0.00") %></strike></td>
                                 <td><strike><%= t.VAT %>%</strike></td>
+                                <td><%= t.GetStatus() %></td>
                             <% } %>
                             <td>
                                 <%= HtmlHelper.Anchor(" ", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id), "title='Edit' class='glyphicon glyphicon-edit'")%>
@@ -859,7 +871,12 @@
                                 />
                                 <% } %>
                             </td>
-                            <td><%= t.GetStatus() %></td>
+                            <td>
+                            <% if (t.Date != null && !t.DateHidden && !t.IsSubscription) { %>
+                                            <%= t.Date.Value.ToString("yyyy-MM-dd") %>
+                                        <% } %>
+                            </td>
+                            <%--<td><%= t.GetStatus() %></td>--%>
                             <% if (t.IsHeader) { %>
                                 <td class="timebook-comments"><%= t.Comments %></td>
                                 <td></td>
@@ -896,12 +913,13 @@
                                         </span>
                                     </small>
                                 </td>
-                                <td style="width:80px"><%= t.Quantity.ToString("### ### ##0.00") %></td>
-                                <td style="width:130px"><%= t.Price.ToString("### ### ##0.00") %></td>
-                                <td style="width:130px"><%= t.Amount.ToString("### ### ##0.00") %></td>
+                                <td style="width:80px !important;text-align:center"><%= t.Quantity.ToString("### ### ##0.00") %></td>
+                                <td style="width:110px !important;text-align:right"><%= t.Price.ToString("### ### ##0.00") %></td>
+                                <td style="width:110px !important;text-align:right"><%= t.Amount.ToString("### ### ##0.00") %></td>
                                 <td><%= t.VAT %>%</td>
+                                <td><%= t.GetStatus() %></td>
                             <% } %>
-                            <td>
+                            <td style="width:48px !important">
                                 <% if (!t.IsPaid) { %>
                                     <%= HtmlHelper.Anchor(" ", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id), "title='Edit' class='glyphicon glyphicon-edit'")%>
                                     <%= HtmlHelper.Anchor(" ", string.Format("customertimebookdeactivate.aspx?Id={0}&CustomerId={1}", t.Id, id), "title='Deactivate' class='glyphicon glyphicon-minus'")%>

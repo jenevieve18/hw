@@ -22,15 +22,16 @@
                 }
             });
             $('.checkbox-invoice').change(function () {
+                var selected;
                 if ($(this).is(':checked')) {
-                    var selected = $(this);
+                    selected = $(this);
                     var id = selected.data('id');
                     var invoice = {
                         'id': id
                     };
                     invoices.push(invoice);
                 } else {
-                    var selected = $(this);
+                    selected = $(this);
                     var id = selected.data('id');
                     findAndRemove(invoices, 'id', id);
                 }
@@ -66,6 +67,12 @@
             });
         });
     </script>
+    <style type="text/css">
+        .date-width 
+        {
+            width:120px;
+        }
+    </style>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -83,7 +90,7 @@
 <div class="alert alert-info">
 	<strong>Invoices</strong> are lists of goods sent or services provided, with a statement of the sum due for these; a bill.
 </div>
-<table class="table table-hover">
+<table class="table table-hover invoice-list">
     <tr>
         <th>Number</th>
         <th>Date</th>
@@ -93,9 +100,9 @@
         <th class="text-right">Total Amount</th>
         <th>Status</th>
         <th>Actions</th>
-        <th style="width:16px">
+        <%--<th style="width:16px">
             <input type="checkbox" id="checkbox-invoice-all" />
-        </th>
+        </th>--%>
         <%--<th style="width:16px">
             <span id="button-download-pdf-selected" class="btn btn-xs btn-info">Export</span>
         </th>--%>
@@ -118,12 +125,16 @@
             <td><%= i.GetStatus() %></td>
             <td>
                 <div class="btn-group">
-				    <button onclick="javascript:;return false;" class="btn btn-default">
+				    <%--<button onclick="javascript:;return false;" class="btn btn-default">
                         <i class="glyphicon glyphicon-cog"></i>&nbsp;
                     </button> 
 				    <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
 					    <span class="caret"></span>
-				    </button>
+				    </button>--%>
+                    <div class="btn-group">
+  <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="glyphicon glyphicon-cog"></i> <span class="caret"></span>
+  </button>
 				    <ul class="dropdown-menu">
 					    <li><%= HtmlHelper.Anchor("Show", "InvoiceShow.aspx?Id=" + i.Id) %></li>
                         <% if (i.Status == Invoice.PAID) { %>
@@ -141,11 +152,11 @@
 				    </ul>
 			    </div>
             </td>
-            <td style="width:16px">
+            <%--<td style="width:16px">
                 <input type="checkbox" class="checkbox-invoice"
                     data-id="<%= i.Id %>"
                  />
-            </td>
+            </td>--%>
             <%--<td style="width:16px" class="text-center">
                 <% if (i.Exported) { %>
                     <%= HtmlHelper.AnchorImage("invoiceexport.aspx?Id=" + i.Id, "img/page_white_acrobat.png", "target='_blank'")%>
