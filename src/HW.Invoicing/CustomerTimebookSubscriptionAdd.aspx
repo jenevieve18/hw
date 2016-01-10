@@ -328,8 +328,10 @@
                 <th>Subscription Item</th>
                 <th class='unit-width'>Unit</th>
                 <th class='price-width'>Price</th>
-                <th class='date-width'>Start Date</th>
-                <th class='date-width'>End Date</th>
+                <%--<th class='date-width'>Start Date</th>
+                <th class='date-width'>End Date</th>--%>
+                <th class='date-width'>From</th>
+                <th class='date-width'>To</th>
                 <th class='quantity-width'>Qty</th>
                 <th class='comments-width'>Comments</th>
             </tr>
