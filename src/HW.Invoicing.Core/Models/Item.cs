@@ -14,6 +14,8 @@ namespace HW.Invoicing.Core.Models
 		public decimal Price { get; set; }
 		public Unit Unit { get; set; }
 		public bool Inactive { get; set; }
+		public bool HasConsultant { get; set; }
+		public string Consultant { get; set; }
 
 		public override string ToString()
 		{

@@ -125,16 +125,15 @@
             <td><%= i.GetStatus() %></td>
             <td>
                 <div class="btn-group">
-				    <%--<button onclick="javascript:;return false;" class="btn btn-default">
+                    <%--<button onclick="javascript:;return false;" class="btn btn-default">
                         <i class="glyphicon glyphicon-cog"></i>&nbsp;
                     </button> 
-				    <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
-					    <span class="caret"></span>
-				    </button>--%>
-                    <div class="btn-group">
-  <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <i class="glyphicon glyphicon-cog"></i> <span class="caret"></span>
-  </button>
+                    <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
+	                    <span class="caret"></span>
+                    </button>--%>
+                    <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="glyphicon glyphicon-cog"></i> <span class="caret"></span>
+                    </button>
 				    <ul class="dropdown-menu">
 					    <li><%= HtmlHelper.Anchor("Show", "InvoiceShow.aspx?Id=" + i.Id) %></li>
                         <% if (i.Status == Invoice.PAID) { %>

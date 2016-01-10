@@ -25,9 +25,13 @@
                 <td><strike><%= i.Description %></strike></td>
                 <td><strike><%= i.Price.ToString("# ##0.00") %></strike></td>
                 <td><strike><%= i.Unit.Name %></strike></td>
-                <td>
+                <%--<td>
                     <%= HtmlHelper.Anchor("Edit", "itemedit.aspx?Id=" + i.Id)%>
                     <%= HtmlHelper.Anchor("Delete", "itemdelete.aspx?Id=" + i.Id, "onclick=\"return confirm('Are you sure you want to delete this item?')\"")%>
+                </td>--%>
+                <td>
+                    <%= HtmlHelper.Anchor(" ", string.Format("itemedit.aspx?Id=" + i.Id), "title='Edit' class='glyphicon glyphicon-edit'")%>
+                    <%= HtmlHelper.Anchor(" ", string.Format("itemdelete.aspx?Id=" + i.Id), "title='Delete' class='glyphicon glyphicon-remove-circle' onclick=\"return confirm('Are you sure you want to delete this item?')\"")%>
                 </td>
             </tr>
         <% } else { %>
@@ -36,9 +40,13 @@
                 <td><%= i.Description %></td>
                 <td><%= i.Price.ToString("# ##0.00") %></td>
                 <td><%= i.Unit.Name %></td>
-                <td>
+                <%--<td>
                     <%= HtmlHelper.Anchor("Edit", "itemedit.aspx?Id=" + i.Id)%>
                     <%= HtmlHelper.Anchor("Deactivate", "itemdeactivate.aspx?Id=" + i.Id)%>
+                </td>--%>
+                <td>
+                    <%= HtmlHelper.Anchor(" ", string.Format("itemedit.aspx?Id=" + i.Id), "title='Edit' class='glyphicon glyphicon-edit'")%>
+                    <%= HtmlHelper.Anchor(" ", string.Format("itemdeactivate.aspx?Id=" + i.Id), "title='Deactivate' class='glyphicon glyphicon-minus'")%>
                 </td>
             </tr>
         <% } %>

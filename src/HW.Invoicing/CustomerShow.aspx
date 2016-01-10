@@ -794,7 +794,7 @@
                     <th><input type="checkbox" id="checkbox-timebook-all" /></th>
                     <%--<th></th>--%>
                     <th style="width:85px !important">Date</th>
-                    <th>Item</th>
+                    <th>Item/Unit/Department</th>
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Amount</th>
@@ -808,9 +808,9 @@
                             <td style="width:16px"></td>
                             <%--<td><%= t.GetStatus() %></td>--%>
                             <td>
-                            <% if (t.Date != null && !t.DateHidden && !t.IsSubscription) { %>
-                                            <%= t.Date.Value.ToString("yyyy-MM-dd") %>
-                                        <% } %>
+                                <% if (t.Date != null && !t.DateHidden && !t.IsSubscription) { %>
+                                    <%= t.Date.Value.ToString("yyyy-MM-dd") %>
+                                <% } %>
                             </td>
                             <% if (t.IsHeader) { %>
                                 <td class="timebook-comments"><strike><%= t.Comments %></strike></td>
@@ -828,7 +828,6 @@
                                             <%= t.Date.Value.ToString("yyyy-MM-dd") %>
                                         <% } %>
                                         <%= StrHelper.Str(t.GetDepartmentAndContact2() != "", t.GetDepartmentAndContact2() + "<br>", "") %>
-
                                         <span class="timebook-comments">
                                             <% if (t.HasInternalComments) { %>
                                                 <img src="img/comment.png" title="<%= t.InternalComments %>"/>
@@ -872,9 +871,9 @@
                                 <% } %>
                             </td>
                             <td>
-                            <% if (t.Date != null && !t.DateHidden && !t.IsSubscription) { %>
-                                            <%= t.Date.Value.ToString("yyyy-MM-dd") %>
-                                        <% } %>
+                                <% if (t.Date != null && !t.DateHidden && !t.IsSubscription) { %>
+                                    <%= t.Date.Value.ToString("yyyy-MM-dd") %>
+                                <% } %>
                             </td>
                             <%--<td><%= t.GetStatus() %></td>--%>
                             <% if (t.IsHeader) { %>
@@ -888,10 +887,11 @@
                                     <%= t.Item.Name %>
                                     (<%= t.Item.Unit.Name %>)<br />
                                     <small class="text-muted">
-                                        <% if (t.Date != null && !t.DateHidden && !t.IsSubscription) { %>
+                                        <%--<% if (t.Date != null && !t.DateHidden && !t.IsSubscription) { %>
                                             <%= t.Date.Value.ToString("yyyy-MM-dd") %>
                                         <% } %>
-                                        <%= StrHelper.Str(t.Department != null && t.Department != "", " - " + t.Department, "") %>
+                                        <%= StrHelper.Str(t.Department != null && t.Department != "", " - " + t.Department, "") %>--%>
+                                        <%= StrHelper.Str(t.Department != null && t.Department != "", t.Department, "") %>
                                         <% if (t.Consultant != null) { %>
                                             - 
                                             <span class="timebook-consultant">
@@ -902,7 +902,6 @@
                                             <br />
                                         <% } %>
                                         <%--<%= StrHelper.Str(t.GetDepartmentAndContact2() != "", t.GetDepartmentAndContact2() + "<br>", "") %>--%>
-
                                         <span class="timebook-comments">
                                             <% if (t.HasInternalComments) { %>
                                                 <img src="img/comment.png" title="<%= t.InternalComments %>"/>
@@ -916,7 +915,11 @@
                                 <td style="width:80px !important;text-align:center"><%= t.Quantity.ToString("### ### ##0.00") %></td>
                                 <td style="width:110px !important;text-align:right"><%= t.Price.ToString("### ### ##0.00") %></td>
                                 <td style="width:110px !important;text-align:right"><%= t.Amount.ToString("### ### ##0.00") %></td>
-                                <td><%= t.VAT %>%</td>
+                                <%--<td><%= t.VAT %>%</td>--%>
+                                <td style="text-align:right">
+                                    <%= t.VATAmount.ToString("#### ### ##0.00") %><br />
+                                    <small class="text-success"><%= t.VAT %>%</small>
+                                </td>
                                 <td><%= t.GetStatus() %></td>
                             <% } %>
                             <td style="width:48px !important">
