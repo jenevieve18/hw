@@ -166,7 +166,7 @@ namespace HW.Invoicing.Core.Models
 		public string GetName()
 		{
 			if (Name.Length > 20) {
-				return Name.Substring(0, 20) + "...";
+				return Name.Substring(0, 30) + "...";
 			} else {
 				return Name;
 			}
