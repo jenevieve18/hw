@@ -49,6 +49,18 @@ namespace HW.Core.Helpers
 		{
 			return condition ? x : y;
 		}
+
+        public static string Str2(string s, int length)
+        {
+            if (s.Length > length)
+            {
+                return s.Substring(0, length) + "...";
+            }
+            else
+            {
+                return s;
+            }
+        }
 		
 		public static string Clean(this string s, params string[] x)
 		{

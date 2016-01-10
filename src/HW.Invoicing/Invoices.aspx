@@ -138,9 +138,9 @@
             <td><%= HtmlHelper.Anchor(i.Number, "invoiceshow.aspx?Id=" + i.Id) %></td>
             <td><%= i.Date.Value.ToString("yyyy-MM-dd") %></td>
             <td><%= HtmlHelper.Anchor(i.Customer.GetName(), string.Format("customershow.aspx?Id={0}&SelectedTab=timebook", i.Customer.Id)) %></td>
-            <td class="text-right"><%= i.SubTotal.ToString("### ### ##0.00") %></td>
+            <td class="text-right"><%= StrHelper.Str2(i.SubTotal.ToString("### ### ##0.00"), 12) %></td>
             <td class="text-right"><%= i.TotalVAT.ToString("### ### ##0.00") %></td>
-            <td class="text-right"><%= i.TotalAmount.ToString("### ### ##0.00") %></td>
+            <td class="text-right"><%= StrHelper.Str2(i.TotalAmount.ToString("### ### ##0.00"), 12) %></td>
             <td><%= i.GetStatus() %></td>
             <td>
                 <div class="btn-group">
