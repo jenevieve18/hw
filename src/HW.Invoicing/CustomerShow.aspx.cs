@@ -89,8 +89,8 @@ namespace HW.Invoicing
                     labelInvoiceEmail.Text = textBoxInvoiceEmail.Text = customer.InvoiceEmail;
                     labelInvoiceEmailCC.Text = textBoxInvoiceEmailCC.Text = customer.InvoiceEmailCC;
 
-					labelPurchaseOrderNumber.Text = textBoxPurchaseOrderNumber.Text = customer.PurchaseOrderNumber;
-					labelYourReferencePerson.Text = textBoxYourReferencePerson.Text = customer.YourReferencePerson;
+					//labelPurchaseOrderNumber.Text = textBoxPurchaseOrderNumber.Text = customer.PurchaseOrderNumber;
+					//labelYourReferencePerson.Text = textBoxYourReferencePerson.Text = customer.YourReferencePerson;
 					labelOurReferencePerson.Text = textBoxOurReferencePerson.Text = customer.OurReferencePerson;
 					labelPhone.Text = textBoxPhone.Text = customer.Phone;
 					labelEmail.Text = textBoxEmail.Text = customer.Email;
@@ -102,8 +102,10 @@ namespace HW.Invoicing
 					//                        labelEmail.Font.Strikeout = labelPhone.Font.Strikeout =
 					//                        labelLanguage.Font.Strikeout = customer.Inactive;
 					labelCustomerNumber.Font.Strikeout = labelInvoiceAddress.Font.Strikeout =
-						labelPostalAddress.Font.Strikeout = labelPurchaseOrderNumber.Font.Strikeout =
-						labelYourReferencePerson.Font.Strikeout = labelOurReferencePerson.Font.Strikeout =
+						labelPostalAddress.Font.Strikeout = 
+                        //labelPurchaseOrderNumber.Font.Strikeout =
+						//labelYourReferencePerson.Font.Strikeout = 
+                        labelOurReferencePerson.Font.Strikeout =
 						labelEmail.Font.Strikeout = labelPhone.Font.Strikeout =
 						labelLanguage.Font.Strikeout = customer.IsInactive;
 
@@ -262,8 +264,8 @@ namespace HW.Invoicing
 				InvoiceAddress = textBoxInvoiceAddress.Text,
                 InvoiceEmail = textBoxInvoiceEmail.Text,
                 InvoiceEmailCC = textBoxInvoiceEmailCC.Text,
-				PurchaseOrderNumber = textBoxPurchaseOrderNumber.Text,
-				YourReferencePerson = textBoxYourReferencePerson.Text,
+				//PurchaseOrderNumber = textBoxPurchaseOrderNumber.Text,
+				//YourReferencePerson = textBoxYourReferencePerson.Text,
 				OurReferencePerson = textBoxOurReferencePerson.Text,
 				Phone = textBoxPhone.Text,
 				Email = textBoxEmail.Text,

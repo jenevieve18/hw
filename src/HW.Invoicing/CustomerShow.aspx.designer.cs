@@ -481,24 +481,6 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxInvoiceEmailCC;
         
         /// <summary>
-        /// labelPurchaseOrderNumber control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label labelPurchaseOrderNumber;
-        
-        /// <summary>
-        /// textBoxPurchaseOrderNumber control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxPurchaseOrderNumber;
-        
-        /// <summary>
         /// labelYourReferencePerson control.
         /// </summary>
         /// <remarks>
@@ -508,13 +490,13 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.Label labelYourReferencePerson;
         
         /// <summary>
-        /// textBoxYourReferencePerson control.
+        /// dropDownListYourReferencePerson control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxYourReferencePerson;
+        protected global::System.Web.UI.WebControls.DropDownList dropDownListYourReferencePerson;
         
         /// <summary>
         /// labelOurReferencePerson control.

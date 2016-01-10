@@ -1057,6 +1057,14 @@
                     </td>
                 </tr>
                 <tr>
+                    <td><strong>Your Reference Person</strong></td>
+                    <td>
+                        <asp:Label ID="labelYourReferencePerson" runat="server" Text="" CssClass="info-text"></asp:Label>
+                        <asp:DropDownList ID="dropDownListYourReferencePerson" runat="server" CssClass=" info form-control">
+                        </asp:DropDownList>
+                    </td>
+                </tr>
+                <%--<tr>
                     <td><strong>Reference / Purchase Order Number</strong></td>
                     <td>
                         <asp:Label ID="labelPurchaseOrderNumber" runat="server" Text="" CssClass="info-text"></asp:Label>
@@ -1069,7 +1077,7 @@
                         <asp:Label ID="labelYourReferencePerson" runat="server" Text="" CssClass="info-text"></asp:Label>
                         <asp:TextBox ID="textBoxYourReferencePerson" runat="server" CssClass="info form-control"></asp:TextBox>
                     </td>
-                </tr>
+                </tr>--%>
                 <tr>
                     <td><strong>Our Reference Person</strong></td>
                     <td>
