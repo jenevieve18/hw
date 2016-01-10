@@ -794,7 +794,7 @@
                     <th><input type="checkbox" id="checkbox-timebook-all" /></th>
                     <%--<th></th>--%>
                     <th style="width:85px !important">Date</th>
-                    <th>Item/Unit/Department</th>
+                    <th>Item / Unit / Department</th>
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Amount</th>
@@ -874,7 +874,7 @@
                                 <% if (t.Date != null && !t.DateHidden && !t.IsSubscription) { %>
                                     <%= t.Date.Value.ToString("yyyy-MM-dd") %>
                                 <% } %><br />
-                                <small class="text-success"><%= t.Consultant %></small>
+                                <small class="text-success"><%= StrHelper.Str2(t.Consultant, 10) %></small>
                             </td>
                             <%--<td><%= t.GetStatus() %></td>--%>
                             <% if (t.IsHeader) { %>

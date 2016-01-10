@@ -52,7 +52,7 @@ namespace HW.Core.Helpers
 
         public static string Str2(string s, int length)
         {
-            if (s.Length > length)
+            if (s != null && s != "" && s.Length > length)
             {
                 return s.Substring(0, length) + "...";
             }
