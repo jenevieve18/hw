@@ -72,7 +72,7 @@
         {
             width:120px;
         }
-        .invoice-list 
+        .invoice-list td, .invoice-list th
         {
             padding:3px !important;
         }
@@ -139,7 +139,7 @@
             <td><%= i.Date.Value.ToString("yyyy-MM-dd") %></td>
             <td><%= HtmlHelper.Anchor(i.Customer.GetName(), string.Format("customershow.aspx?Id={0}&SelectedTab=timebook", i.Customer.Id)) %></td>
             <td class="text-right"><%= StrHelper.Str2(i.SubTotal.ToString("### ### ##0.00"), 12) %></td>
-            <td class="text-right"><%= i.TotalVAT.ToString("### ### ##0.00") %></td>
+            <td class="text-right"><%= StrHelper.Str2(i.TotalVAT.ToString("### ### ##0.00"), 8) %></td>
             <td class="text-right"><%= StrHelper.Str2(i.TotalAmount.ToString("### ### ##0.00"), 12) %></td>
             <td><%= i.GetStatus() %></td>
             <td>
