@@ -86,6 +86,8 @@ namespace HW.Invoicing
 
 					labelInvoiceAddress.Text = customer.InvoiceAddress.Replace("\n", "<br>");
 					textBoxInvoiceAddress.Text = customer.InvoiceAddress;
+                    labelInvoiceEmail.Text = textBoxInvoiceEmail.Text = customer.InvoiceEmail;
+                    labelInvoiceEmailCC.Text = textBoxInvoiceEmailCC.Text = customer.InvoiceEmailCC;
 
 					labelPurchaseOrderNumber.Text = textBoxPurchaseOrderNumber.Text = customer.PurchaseOrderNumber;
 					labelYourReferencePerson.Text = textBoxYourReferencePerson.Text = customer.YourReferencePerson;
@@ -258,6 +260,8 @@ namespace HW.Invoicing
 				Number = textBoxCustomerNumber.Text,
 				PostalAddress = textBoxPostalAddress.Text,
 				InvoiceAddress = textBoxInvoiceAddress.Text,
+                InvoiceEmail = textBoxInvoiceEmail.Text,
+                InvoiceEmailCC = textBoxInvoiceEmailCC.Text,
 				PurchaseOrderNumber = textBoxPurchaseOrderNumber.Text,
 				YourReferencePerson = textBoxYourReferencePerson.Text,
 				OurReferencePerson = textBoxOurReferencePerson.Text,

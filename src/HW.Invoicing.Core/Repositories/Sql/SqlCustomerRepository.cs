@@ -395,7 +395,9 @@ UPDATE Customer SET Name = @Name,
     OurReferencePerson = @OurReferencePerson,
     Email = @Email,
     Phone = @Phone,
-    LangId = @LangId
+    LangId = @LangId,
+    InvoiceEmail = @InvoiceEmail,
+    InvoiceEmailCC = @InvoiceEmailCC
 WHERE Id = @Id"
             );
 			ExecuteNonQuery(
@@ -411,7 +413,9 @@ WHERE Id = @Id"
                 new SqlParameter("@Phone", c.Phone),
                 new SqlParameter("@Email", c.Email),
                 new SqlParameter("@LangId", c.Language.Id),
-                new SqlParameter("@Id", id)
+                new SqlParameter("@Id", id),
+                new SqlParameter("@InvoiceEmail", c.InvoiceEmail),
+                new SqlParameter("@InvoiceEmailCC", c.InvoiceEmailCC)
 			);
 		}
 
@@ -725,7 +729,9 @@ SELECT c.Id,
     c.SubscriptionStartDate,
     c.SubscriptionEndDate,
     c.SubscriptionHasEndDate,
-    c.Status
+    c.Status,
+    c.InvoiceEmail,
+    c.InvoiceEmailCC
 FROM Customer c
 INNER JOIN Lang l ON c.LangId = l.Id
 --INNER JOIN Item i ON i.Id = c.SubscriptionItemId
@@ -761,7 +767,9 @@ WHERE c.Id = @Id"
                         SubscriptionStartDate = GetDateTime(rs, 15),
                         SubscriptionEndDate = GetDateTime(rs, 16),
                         SubscriptionHasEndDate = GetInt32(rs, 17) == 1,
-                        Status = GetInt32(rs, 18)
+                        Status = GetInt32(rs, 18),
+                        InvoiceEmail = GetString(rs, 19),
+                        InvoiceEmailCC = GetString(rs, 20)
                     };
 				}
 			}

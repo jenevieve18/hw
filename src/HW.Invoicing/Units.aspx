@@ -32,7 +32,7 @@
                     <%--<%= HtmlHelper.Anchor("Edit", "unitedit.aspx?Id=" + u.Id) %>
                     <%= HtmlHelper.Anchor("Deactivate", "unitdeactivate.aspx?Id=" + u.Id) %>--%>
                     <%= HtmlHelper.Anchor(" ", "unitedit.aspx?Id=" + u.Id, "title='Edit' class='glyphicon glyphicon-edit'")%>
-                    <%= HtmlHelper.Anchor(" ", "unitdeactivate.aspx?Id=" + u.Id, "title='Deactivate' class='glyphicon glyphicon-minus-sign'")%>
+                    <%= HtmlHelper.Anchor(" ", "unitdeactivate.aspx?Id=" + u.Id, "title='Deactivate' class='glyphicon glyphicon-minus'")%>
                 </td>
             </tr>
         <% } %>

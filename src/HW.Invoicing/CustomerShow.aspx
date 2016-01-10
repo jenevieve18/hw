@@ -873,7 +873,8 @@
                             <td>
                                 <% if (t.Date != null && !t.DateHidden && !t.IsSubscription) { %>
                                     <%= t.Date.Value.ToString("yyyy-MM-dd") %>
-                                <% } %>
+                                <% } %><br />
+                                <small class="text-success"><%= t.Consultant %></small>
                             </td>
                             <%--<td><%= t.GetStatus() %></td>--%>
                             <% if (t.IsHeader) { %>
@@ -882,25 +883,26 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                <td></td>
                             <% } else { %>
                                 <td>
-                                    <%= t.Item.Name %>
-                                    (<%= t.Item.Unit.Name %>)<br />
+                                    <%= t.Item.Name %> /
+                                    <%= t.Item.Unit.Name %> /
+                                    <%= t.Department %><br />
                                     <small class="text-muted">
                                         <%--<% if (t.Date != null && !t.DateHidden && !t.IsSubscription) { %>
                                             <%= t.Date.Value.ToString("yyyy-MM-dd") %>
                                         <% } %>
                                         <%= StrHelper.Str(t.Department != null && t.Department != "", " - " + t.Department, "") %>--%>
-                                        <%= StrHelper.Str(t.Department != null && t.Department != "", t.Department, "") %>
-                                        <% if (t.Consultant != null) { %>
-                                            - 
+                                        <%--<%= StrHelper.Str(t.Department != null && t.Department != "", t.Department, "") %>--%>
+                                        <%--<% if (t.Consultant != null) { %>
                                             <span class="timebook-consultant">
                                                 <span class="timebook-consultant-label"><%= StrHelper.Str(t.Consultant != "", t.Consultant, "(no consultant)") %></span>
                                                 <textarea data-id="<%= t.Id %>" type="text" class="form-control timebook-consultant-text"><%= t.Consultant %></textarea>
                                                 <img alt="" class="timebook-consultant-spinner" src="img/spiffygif_30x30.gif" />
                                             </span>
                                             <br />
-                                        <% } %>
+                                        <% } %>--%>
                                         <%--<%= StrHelper.Str(t.GetDepartmentAndContact2() != "", t.GetDepartmentAndContact2() + "<br>", "") %>--%>
                                         <span class="timebook-comments">
                                             <% if (t.HasInternalComments) { %>
@@ -1038,6 +1040,20 @@
                     <td>
                         <asp:Label ID="labelInvoiceAddress" runat="server" Text="" CssClass="info-text"></asp:Label>
                         <asp:TextBox ID="textBoxInvoiceAddress" runat="server" CssClass="info form-control" TextMode="MultiLine"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Invoicing Email</strong></td>
+                    <td>
+                        <asp:Label ID="labelInvoiceEmail" runat="server" Text="" CssClass="info-text"></asp:Label>
+                        <asp:TextBox ID="textBoxInvoiceEmail" runat="server" CssClass="info form-control"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Invoicing Email CC</strong></td>
+                    <td>
+                        <asp:Label ID="labelInvoiceEmailCC" runat="server" Text="" CssClass="info-text"></asp:Label>
+                        <asp:TextBox ID="textBoxInvoiceEmailCC" runat="server" CssClass="info form-control"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>

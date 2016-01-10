@@ -58,6 +58,8 @@ namespace HW.Invoicing.Core.Models
 		public string Email { get; set; }
 		public string Number { get; set; }
 		public string InvoiceAddress { get; set; }
+        public string InvoiceEmail { get; set; }
+        public string InvoiceEmailCC { get; set; }
 		public string PostalAddress { get; set; }
 		public string PurchaseOrderNumber { get; set; }
 		public string YourReferencePerson { get; set; }

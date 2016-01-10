@@ -49,3 +49,9 @@ go
 
 alter table Company add InvoiceEmailText varchar(255);
 go
+
+alter table Customer add InvoiceEmail varchar(255);
+go
+
+alter table Customer add InvoiceEmailCC varchar(255);
+go

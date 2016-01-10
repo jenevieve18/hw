@@ -72,24 +72,43 @@
         {
             width:120px;
         }
+        .invoice-list 
+        {
+            padding:3px !important;
+        }
     </style>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-<h3>Invoices</h3>
+
 
 <%--<p><%= HtmlHelper.Anchor("Revert all invoices", "invoicerevertall.aspx", "class='btn btn-danger'") %></p>--%>
 
-<p>
-    <asp:DropDownList ID="dropDownListFinancialYear" CssClass="form-control" 
+	<div class="row">
+        <div class="col-md-2" style="width:100px !important">
+            <span style="font-size: 24px;">Invoices</span>
+        </div>
+		<div class="col-md-2" style="width:200px !important">
+        <asp:DropDownList ID="dropDownListFinancialYear" CssClass="form-control" 
         runat="server" AutoPostBack="true"
         onselectedindexchanged="dropDownListFinancialYear_SelectedIndexChanged">
-    </asp:DropDownList><br />
-</p>
-<div class="alert alert-info">
-	<strong>Invoices</strong> are lists of goods sent or services provided, with a statement of the sum due for these; a bill.
+    </asp:DropDownList>
+
+		</div>
+		<div class="col-md-8">
+
+        <div class="alert alert-info" style="padding:6px !important">
+	<%--<strong>Invoices</strong> are lists of goods sent or services provided, with a statement of the sum due for these; a bill.--%>
+    <strong>Invoices</strong> are lists of goods sent or services provided, with a statement...
 </div>
+		</div>
+	</div>
+
+<p>
+    
+</p>
+
 <table class="table table-hover invoice-list">
     <tr>
         <th>Number</th>
@@ -97,7 +116,7 @@
         <th>Customer</th>
         <th class="text-right">Amount</th>
         <th class="text-right">VAT</th>
-        <th class="text-right">Total Amount</th>
+        <th class="text-right">Total</th>
         <th>Status</th>
         <th>Actions</th>
         <%--<th style="width:16px">
