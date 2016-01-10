@@ -55,3 +55,6 @@ go
 
 alter table Customer add InvoiceEmailCC varchar(255);
 go
+
+alter table CustomerContact add PurchaseOrderNumber varchar(255);
+go

@@ -155,8 +155,8 @@ DELETE FROM CustomerContact WHERE Id = @Id";
 		{
 			string query = string.Format(
 				@"
-INSERT INTO CustomerContact(CustomerId, Contact, Phone, Mobile, Email, Type, Title)
-VALUES(@CustomerId, @Contact, @Phone, @Mobile, @Email, @Type, @Title)"
+INSERT INTO CustomerContact(CustomerId, Contact, Phone, Mobile, Email, Type, Title, PurchaseOrderNumber)
+VALUES(@CustomerId, @Contact, @Phone, @Mobile, @Email, @Type, @Title, @PurchaseOrderNumber)"
 			);
 			ExecuteNonQuery(
 				query,
@@ -167,7 +167,8 @@ VALUES(@CustomerId, @Contact, @Phone, @Mobile, @Email, @Type, @Title)"
 				new SqlParameter("@Mobile", contact.Mobile),
 				new SqlParameter("@Email", contact.Email),
                 new SqlParameter("@Type", contact.Type),
-                new SqlParameter("@Title", contact.Title)
+                new SqlParameter("@Title", contact.Title),
+                new SqlParameter("@PurchaseOrderNumber", contact.PurchaseOrderNumber)
 			);
 		}
 		
@@ -471,7 +472,8 @@ UPDATE CustomerContact SET Contact = @Contact,
     Email = @Email,
     Inactive = @Inactive,
     Type = @Type,
-    Title = @Title
+    Title = @Title,
+    PurchaseOrderNumber = @PurchaseOrderNumber
 WHERE Id = @Id"
             );
             ExecuteNonQuery(
@@ -484,7 +486,8 @@ WHERE Id = @Id"
                 new SqlParameter("@Id", id),
                 new SqlParameter("@Inactive", c.Inactive),
                 new SqlParameter("@Type", c.Type),
-                new SqlParameter("@Title", c.Title)
+                new SqlParameter("@Title", c.Title),
+                new SqlParameter("@PurchaseOrderNumber", c.PurchaseOrderNumber)
             );
         }
 
@@ -1557,7 +1560,8 @@ SELECT Contact,
 	Id,
 	Inactive,
 	Type,
-    Title
+    Title,
+    PurchaseOrderNumber
 FROM CustomerContact
 WHERE CustomerId = @CustomerId
 ORDER BY Type"
@@ -1574,7 +1578,8 @@ ORDER BY Type"
 							Id = GetInt32(rs, 4),
 							Inactive = GetInt32(rs, 5) == 1,
 							Type = GetInt32(rs, 6),
-                            Title = GetString(rs, 7)
+                            Title = GetString(rs, 7),
+                            PurchaseOrderNumber = GetString(rs, 8)
 						}
 					);
 				}

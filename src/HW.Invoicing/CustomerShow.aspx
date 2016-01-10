@@ -1137,6 +1137,10 @@
                                     <asp:TextBox ID="textBoxContact" runat="server" CssClass="form-control"></asp:TextBox>
                                 </div>
                                 <div class="form-group">
+	                                <label for="">Reference / Purchase Order Number</label>
+                                    <asp:TextBox ID="textBoxContactPurchaseOrderNumber" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
 	                                <label for="">Contact title</label>
                                     <asp:TextBox ID="textBoxContactTitle" runat="server" CssClass="form-control"></asp:TextBox>
                                 </div>
@@ -1172,6 +1176,7 @@
                 <tr>
                     <td></td>
                     <th>Contact Person</th>
+                    <th>Invoice Reference</th>
                     <th>Title</th>
                     <th>Phone</th>
                     <th>Mobile</th>
@@ -1183,6 +1188,7 @@
                         <tr>
                             <td><%= c.GetContactType() %></td>
                             <td><strike><%= c.Contact %></strike></td>
+                            <td><strike><%= c.PurchaseOrderNumber %></strike></td>
                             <td><strike><%= c.Title %></strike></td>
                             <td><strike><%= c.Phone %></strike></td>
                             <td><strike><%= c.Mobile %></strike></td>
@@ -1196,6 +1202,7 @@
                         <tr>
                             <td><%= c.GetContactType() %></td>
                             <td><%= c.Contact %></td>
+                            <td><%= c.PurchaseOrderNumber %></td>
                             <td><%= c.Title %></td>
                             <td><%= c.Phone %></td>
                             <td><%= c.Mobile %></td>

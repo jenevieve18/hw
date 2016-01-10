@@ -26,6 +26,8 @@ namespace HW.Invoicing
             if (!IsPostBack)
             {
                 var customer = r.Read(customerId);
+                HtmlHelper.RedirectIf(customer == null, "customers.aspx");
+
                 customer.Contacts = r.FindContacts(customerId);
 
                 radioButtonListContactType.Items.Clear();
@@ -44,6 +46,7 @@ namespace HW.Invoicing
                 if (c != null)
                 {
                     textBoxContact.Text = c.Contact;
+                    textBoxContactPurchaseOrderNumber.Text = c.PurchaseOrderNumber;
                     textBoxContactTitle.Text = c.Title;
                     textBoxPhone.Text = c.Phone;
                     textBoxMobile.Text = c.Mobile;
@@ -64,6 +67,7 @@ namespace HW.Invoicing
         {
             var c = new CustomerContact {
                 Contact = textBoxContact.Text,
+                PurchaseOrderNumber = textBoxContactPurchaseOrderNumber.Text,
                 Title = textBoxContactTitle.Text,
                 Phone = textBoxPhone.Text,
                 Mobile = textBoxMobile.Text,

@@ -290,6 +290,7 @@ namespace HW.Invoicing
 			var t = new CustomerContact
 			{
 				Contact = textBoxContact.Text,
+                PurchaseOrderNumber = textBoxContactPurchaseOrderNumber.Text,
 				Title = textBoxContactTitle.Text,
 				Phone = textBoxContactPhone.Text,
 				Mobile = textBoxContactMobile.Text,

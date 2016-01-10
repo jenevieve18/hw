@@ -378,6 +378,7 @@ namespace HW.Invoicing.Core.Models
 		public string Email { get; set; }
 		public bool Inactive { get; set; }
 		public int Type { get; set; }
+		public string PurchaseOrderNumber { get; set; }
 
 		public override void Validate()
 		{
