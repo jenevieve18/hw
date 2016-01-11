@@ -45,6 +45,7 @@ namespace HW.Invoicing
             var i = new Item
             {
                 Name = textBoxName.Text,
+                Consultant = textBoxConsultant.Text,
                 Description = textBoxDescription.Text,
                 Price = ConvertHelper.ToDecimal(textBoxPrice.Text),
                 Unit = new m.Unit { Id = ConvertHelper.ToInt32(dropDownListUnits.SelectedValue) },

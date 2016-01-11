@@ -16,6 +16,10 @@
     <asp:TextBox ID="textBoxName" runat="server" CssClass="form-control"></asp:TextBox>
 </div>
 <div class="form-group">
+	<label for="<%= textBoxConsultant.ClientID %>">Consultant</label>
+    <asp:TextBox ID="textBoxConsultant" runat="server" CssClass="form-control"></asp:TextBox>
+</div>
+<div class="form-group">
 	<label for="<%= textBoxDescription.ClientID %>">Description</label>
     <asp:TextBox ID="textBoxDescription" runat="server" CssClass="form-control"></asp:TextBox>
 </div>

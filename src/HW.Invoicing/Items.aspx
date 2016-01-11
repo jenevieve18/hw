@@ -13,6 +13,7 @@
 <table class="table table-hover">
     <tr>
         <th>Name</th>
+        <th>Consultant</th>
         <th>Description</th>
         <th>Price</th>
         <th>Unit</th>
@@ -22,6 +23,7 @@
         <% if (i.Inactive) { %>
             <tr>
                 <td><strike><%= i.Name %></strike></td>
+                <td><strike><%= i.Consultant %></strike></td>
                 <td><strike><%= i.Description %></strike></td>
                 <td><strike><%= i.Price.ToString("# ##0.00") %></strike></td>
                 <td><strike><%= i.Unit.Name %></strike></td>
@@ -37,6 +39,7 @@
         <% } else { %>
             <tr>
                 <td><%= i.Name %></td>
+                <td><%= i.Consultant %></td>
                 <td><%= i.Description %></td>
                 <td><%= i.Price.ToString("# ##0.00") %></td>
                 <td><%= i.Unit.Name %></td>

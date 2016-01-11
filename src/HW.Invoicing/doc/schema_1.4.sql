@@ -61,3 +61,7 @@ go
 
 alter table Customer add ContactPersonId integer;
 go
+
+alter table Item add Consultant varchar(255);
+go
+

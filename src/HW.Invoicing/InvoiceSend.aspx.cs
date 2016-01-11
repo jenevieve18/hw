@@ -44,12 +44,11 @@ namespace HW.Invoicing
 					exported.WriteTo(fStream);
 				}
 				
-				string body = "";
 				MailHelper.SendMail(
-					"info@danhasson.se",
-					"test@localhost",
-					company.AgreementSignedEmailSubject,
-					body,
+                    company.InvoiceEmail,
+                    invoice.Customer.InvoiceEmail,
+					company.InvoiceEmailSubject,
+					company.InvoiceEmailText,
 					file
 				);
 			} catch (Exception ex) {

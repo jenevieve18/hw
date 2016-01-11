@@ -28,6 +28,7 @@ namespace HW.Invoicing
                 if (i != null)
                 {
                     textBoxName.Text = i.Name;
+                    textBoxConsultant.Text = i.Consultant;
                     textBoxDescription.Text = i.Description;
                     textBoxPrice.Text = i.Price.ToString();
                     dropDownListUnits.SelectedValue = i.Unit.Id.ToString();
@@ -50,6 +51,7 @@ namespace HW.Invoicing
             var d = new Item
             {
                 Name = textBoxName.Text,
+                Consultant = textBoxConsultant.Text,
                 Description = textBoxDescription.Text,
                 Price = ConvertHelper.ToDecimal(textBoxPrice.Text),
                 Unit = new m.Unit { Id = ConvertHelper.ToInt32(dropDownListUnits.SelectedValue) },
