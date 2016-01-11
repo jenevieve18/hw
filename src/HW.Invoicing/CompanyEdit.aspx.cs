@@ -62,7 +62,7 @@ namespace HW.Invoicing
                     dropDownListInvoiceExporter.SelectedValue = company.InvoiceExporter.ToString();
 
                     textBoxInvoiceEmail.Text = company.InvoiceEmail;
-                    textBoxInvoiceEmailCC.Text = company.InvoiceEmailCC;
+                    //textBoxInvoiceEmailCC.Text = company.InvoiceEmailCC;
                     textBoxInvoiceEmailSubject.Text = company.InvoiceEmailSubject;
                     textBoxInvoiceEmailText.Text = company.InvoiceEmailText;
                 }
@@ -154,7 +154,7 @@ namespace HW.Invoicing
                 InvoiceExporter = ConvertHelper.ToInt32(dropDownListInvoiceExporter.SelectedValue),
 
                 InvoiceEmail = textBoxInvoiceEmail.Text,
-                InvoiceEmailCC = textBoxInvoiceEmailCC.Text,
+                //InvoiceEmailCC = textBoxInvoiceEmailCC.Text,
                 InvoiceEmailSubject = textBoxInvoiceEmailSubject.Text,
                 InvoiceEmailText = textBoxInvoiceEmailText.Text,
 

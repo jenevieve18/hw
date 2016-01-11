@@ -91,6 +91,7 @@ namespace HW.Invoicing
 
 					//labelPurchaseOrderNumber.Text = textBoxPurchaseOrderNumber.Text = customer.PurchaseOrderNumber;
 					//labelYourReferencePerson.Text = textBoxYourReferencePerson.Text = customer.YourReferencePerson;
+                    labelYourReferencePerson.Text = customer.ContactPerson != null ? customer.ContactPerson.ToString() : "";
 					labelOurReferencePerson.Text = textBoxOurReferencePerson.Text = customer.OurReferencePerson;
 					labelPhone.Text = textBoxPhone.Text = customer.Phone;
 					labelEmail.Text = textBoxEmail.Text = customer.Email;
@@ -108,7 +109,7 @@ namespace HW.Invoicing
                         labelOurReferencePerson.Font.Strikeout =
 						labelEmail.Font.Strikeout = labelPhone.Font.Strikeout =
 						labelLanguage.Font.Strikeout = customer.IsInactive;
-
+                    
 					// Timebook Panel
 					textBoxTimebookDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
 					textBoxTimebookQty.Text = 1.ToString();
@@ -266,6 +267,7 @@ namespace HW.Invoicing
                 InvoiceEmailCC = textBoxInvoiceEmailCC.Text,
 				//PurchaseOrderNumber = textBoxPurchaseOrderNumber.Text,
 				//YourReferencePerson = textBoxYourReferencePerson.Text,
+                ContactPerson = new CustomerContact { Id = ConvertHelper.ToInt32(dropDownListYourReferencePerson.SelectedValue) },
 				OurReferencePerson = textBoxOurReferencePerson.Text,
 				Phone = textBoxPhone.Text,
 				Email = textBoxEmail.Text,
@@ -368,6 +370,12 @@ namespace HW.Invoicing
 				dropDownListTimebookItems.Items.Add(li);
 			}
 
+            dropDownListYourReferencePerson.Items.Clear();
+            foreach (var c in contacts)
+            {
+                dropDownListYourReferencePerson.Items.Add(new ListItem(c.ToString(), c.Id.ToString()));
+            }
+
 			dropDownListTimebookContacts.Items.Clear();
 			foreach (var c in contacts)
 			{
@@ -390,6 +398,7 @@ namespace HW.Invoicing
 			{
 				customer.Contacts = contacts;
 				dropDownListLanguage.SelectedValue = customer.Language.Id.ToString();
+                dropDownListYourReferencePerson.SelectedValue = customer.ContactPerson != null ? customer.ContactPerson.Id.ToString() : "";
 				if (customer.SubscriptionItem != null)
 				{
 					dropDownListSubscriptionItem.SelectedValue = customer.SubscriptionItem.Id.ToString();

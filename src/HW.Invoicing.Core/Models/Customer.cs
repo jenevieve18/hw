@@ -63,6 +63,7 @@ namespace HW.Invoicing.Core.Models
 		public string PostalAddress { get; set; }
 		public string PurchaseOrderNumber { get; set; }
 		public string YourReferencePerson { get; set; }
+        public CustomerContact ContactPerson { get; set; }
 		public string OurReferencePerson { get; set; }
 //		public bool Inactive { get; set; }
 		public Language Language { get; set; }
@@ -394,6 +395,12 @@ namespace HW.Invoicing.Core.Models
 					default: return "<span class='label label-default'>Other</span>";
 			}
 		}
+
+        public override string ToString()
+        {
+            string p = PurchaseOrderNumber != null && PurchaseOrderNumber != "" ? "( " + PurchaseOrderNumber + ")" : "";
+            return string.Format("{0}{1}", Contact, p);
+        }
 	}
 	
 	public class CustomerNotes : BaseModel

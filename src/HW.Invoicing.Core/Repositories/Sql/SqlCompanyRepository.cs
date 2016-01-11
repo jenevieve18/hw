@@ -110,8 +110,10 @@ FROM Company";
 		public override void Save(Company t)
 		{
 			string query = @"
-INSERT INTO Company(Name, Address, Phone, BankAccountNumber, TIN, FinancialMonthStart, FinancialMonthEnd, UserId, InvoicePrefix, HasSubscriber, InvoiceLogo, InvoiceTemplate, Terms, Signature, AgreementEmailText, AgreementEmailSubject, Email, AgreementPrefix, OrganizationNumber, AgreementSignedEmailText, AgreementSignedEmailSubject, Website, InvoiceExporter, InvoiceEmail, InvoiceEmailCC, InvoiceEmailSubject, InvoiceEmailText)
-VALUES(@Name, @Address, @Phone, @BankAccountNumber, @TIN, @FinancialMonthStart, @FinancialMonthEnd, @UserId, @InvoicePrefix, @HasSubscriber, @InvoiceLogo, @InvoiceTemplate, @Terms, @Signature, @AgreementEmailText, @AgreementEmailSubject, @Email, @AgreementPrefix, @OrganizationNumber, @AgreementSignedEmailText, @AgreementSignedEmailSubject, @Website, @InvoiceExporter, @InvoiceEmail, @InvoiceEmailCC, @InvoiceEmailSubject, @InvoiceEmailText)";
+INSERT INTO Company(Name, Address, Phone, BankAccountNumber, TIN, FinancialMonthStart, FinancialMonthEnd, UserId, InvoicePrefix, HasSubscriber, InvoiceLogo, InvoiceTemplate, Terms, Signature, AgreementEmailText, AgreementEmailSubject, Email, AgreementPrefix, OrganizationNumber, AgreementSignedEmailText, AgreementSignedEmailSubject, Website, InvoiceExporter, InvoiceEmail, --InvoiceEmailCC,
+InvoiceEmailSubject, InvoiceEmailText)
+VALUES(@Name, @Address, @Phone, @BankAccountNumber, @TIN, @FinancialMonthStart, @FinancialMonthEnd, @UserId, @InvoicePrefix, @HasSubscriber, @InvoiceLogo, @InvoiceTemplate, @Terms, @Signature, @AgreementEmailText, @AgreementEmailSubject, @Email, @AgreementPrefix, @OrganizationNumber, @AgreementSignedEmailText, @AgreementSignedEmailSubject, @Website, @InvoiceExporter, @InvoiceEmail, --@InvoiceEmailCC,
+@InvoiceEmailSubject, @InvoiceEmailText)";
 			ExecuteNonQuery(
 				query,
 				"invoicing",
@@ -139,7 +141,7 @@ VALUES(@Name, @Address, @Phone, @BankAccountNumber, @TIN, @FinancialMonthStart, 
 				new SqlParameter("@AgreementSignedEmailSubject", t.AgreementSignedEmailSubject),
                 new SqlParameter("@InvoiceExporter", t.InvoiceExporter),
                 new SqlParameter("@InvoiceEmail", t.InvoiceEmail),
-                new SqlParameter("@InvoiceEmailCC", t.InvoiceEmailCC),
+                //new SqlParameter("@InvoiceEmailCC", t.InvoiceEmailCC),
                 new SqlParameter("@InvoiceEmailSubject", t.InvoiceEmailSubject),
                 new SqlParameter("@InvoiceEmailText", t.InvoiceEmailText)
 			);
@@ -174,7 +176,7 @@ SELECT Id,
     InvoiceExporter,
     UserId,
     InvoiceEmail,
-    InvoiceEmailCC,
+    NULL, --InvoiceEmailCC,
     InvoiceEmailSubject,
     InvoiceEmailText
 FROM Company
@@ -209,7 +211,7 @@ WHERE Id = @Id";
 						InvoiceExporter = GetInt32(rs, 23),
 						User = new User { Id = GetInt32(rs, 24) },
                         InvoiceEmail = GetString(rs, 25),
-                        InvoiceEmailCC = GetString(rs, 26),
+                        //InvoiceEmailCC = GetString(rs, 26),
                         InvoiceEmailSubject = GetString(rs, 27),
                         InvoiceEmailText = GetString(rs, 28)
 					};
@@ -417,7 +419,7 @@ UPDATE Company set Name = @Name,
     AgreementTemplate = @AgreementTemplate,
     InvoiceExporter = @InvoiceExporter,
     InvoiceEmail = @InvoiceEmail,
-    InvoiceEmailCC = @InvoiceEmailCC,
+    --InvoiceEmailCC = @InvoiceEmailCC,
     InvoiceEmailSubject = @InvoiceEmailSubject,
     InvoiceEmailText = @InvoiceEmailText,
     Terms = @Terms,
@@ -449,7 +451,7 @@ WHERE Id = @Id";
 				new SqlParameter("@AgreementTemplate", t.AgreementTemplate),
                 new SqlParameter("@InvoiceExporter", t.InvoiceExporter),
                 new SqlParameter("@InvoiceEmail", t.InvoiceEmail),
-                new SqlParameter("@InvoiceEmailCC", t.InvoiceEmailCC),
+                //new SqlParameter("@InvoiceEmailCC", t.InvoiceEmailCC),
                 new SqlParameter("@InvoiceEmailSubject", t.InvoiceEmailSubject),
                 new SqlParameter("@InvoiceEmailText", t.InvoiceEmailText),
                 new SqlParameter("@Terms", t.Terms),

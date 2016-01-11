@@ -32,7 +32,7 @@ namespace HW.Invoicing.Core.Models
 		public string InvoiceTemplate { get; set; }
 		public int InvoiceExporter { get; set; }
 		public string InvoiceEmail { get; set; }
-		public string InvoiceEmailCC { get; set; }
+		//public string InvoiceEmailCC { get; set; }
 		public string InvoiceEmailSubject { get; set; }
 		public string InvoiceEmailText { get; set; }
 		

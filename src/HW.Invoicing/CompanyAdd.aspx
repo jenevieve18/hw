@@ -169,10 +169,10 @@
 	            <label for="<%= textBoxInvoiceEmail.ClientID %>">Invoice Email</label>
                 <asp:TextBox ID="textBoxInvoiceEmail" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
-            <div class="form-group">
+            <%--<div class="form-group">
 	            <label for="<%= textBoxInvoiceEmailCC.ClientID %>">Invoice Email CC</label>
                 <asp:TextBox ID="textBoxInvoiceEmailCC" runat="server" CssClass="form-control"></asp:TextBox>
-            </div>
+            </div>--%>
             <div class="form-group">
 	            <label for="<%= textBoxInvoiceEmailSubject.ClientID %>">Invoice Email Subject</label>
                 <asp:TextBox ID="textBoxInvoiceEmailSubject" runat="server" CssClass="form-control"></asp:TextBox>

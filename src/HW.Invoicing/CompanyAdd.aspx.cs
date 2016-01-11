@@ -80,7 +80,7 @@ namespace HW.Invoicing
                 AgreementSignedEmailText = textBoxAgreementSignedEmailText.Text,
 
                 InvoiceEmail = textBoxInvoiceEmail.Text,
-                InvoiceEmailCC = textBoxInvoiceEmailCC.Text,
+                //InvoiceEmailCC = textBoxInvoiceEmailCC.Text,
                 InvoiceEmailSubject = textBoxInvoiceEmailSubject.Text,
                 InvoiceEmailText = textBoxInvoiceEmailText.Text
             };

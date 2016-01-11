@@ -58,3 +58,6 @@ go
 
 alter table CustomerContact add PurchaseOrderNumber varchar(255);
 go
+
+alter table Customer add ContactPersonId integer;
+go

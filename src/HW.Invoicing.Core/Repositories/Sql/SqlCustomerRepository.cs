@@ -398,7 +398,8 @@ UPDATE Customer SET Name = @Name,
     Phone = @Phone,
     LangId = @LangId,
     InvoiceEmail = @InvoiceEmail,
-    InvoiceEmailCC = @InvoiceEmailCC
+    InvoiceEmailCC = @InvoiceEmailCC,
+    ContactPersonId = @ContactPersonId
 WHERE Id = @Id"
             );
 			ExecuteNonQuery(
@@ -416,7 +417,8 @@ WHERE Id = @Id"
                 new SqlParameter("@LangId", c.Language.Id),
                 new SqlParameter("@Id", id),
                 new SqlParameter("@InvoiceEmail", c.InvoiceEmail),
-                new SqlParameter("@InvoiceEmailCC", c.InvoiceEmailCC)
+                new SqlParameter("@InvoiceEmailCC", c.InvoiceEmailCC),
+                new SqlParameter("@ContactPersonId", c.ContactPerson.Id)
 			);
 		}
 
@@ -734,11 +736,13 @@ SELECT c.Id,
     c.SubscriptionHasEndDate,
     c.Status,
     c.InvoiceEmail,
-    c.InvoiceEmailCC
+    c.InvoiceEmailCC,
+    c.ContactPersonId
 FROM Customer c
 INNER JOIN Lang l ON c.LangId = l.Id
 --INNER JOIN Item i ON i.Id = c.SubscriptionItemId
 --INNER JOIN Unit u ON u.Id = i.UnitId
+LEFT OUTER JOIN CustomerContact cc ON cc.CustomerId = c.Id
 WHERE c.Id = @Id"
             );
 			Customer c = null;
@@ -756,7 +760,7 @@ WHERE c.Id = @Id"
                         OurReferencePerson = GetString(rs, 7),
                         Email = GetString(rs, 8),
                         Phone = GetString(rs, 9),
-//                        Inactive = GetInt32(rs, 10) == 1,
+                        //                        Inactive = GetInt32(rs, 10) == 1,
                         Language = new Language
                         {
                             Id = GetInt32(rs, 11),
@@ -772,7 +776,8 @@ WHERE c.Id = @Id"
                         SubscriptionHasEndDate = GetInt32(rs, 17) == 1,
                         Status = GetInt32(rs, 18),
                         InvoiceEmail = GetString(rs, 19),
-                        InvoiceEmailCC = GetString(rs, 20)
+                        InvoiceEmailCC = GetString(rs, 20),
+                        ContactPerson = new CustomerContact { Id = GetInt32(rs, 21) }
                     };
 				}
 			}
