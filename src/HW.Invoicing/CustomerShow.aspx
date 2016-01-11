@@ -321,7 +321,7 @@
             var vat = $('#<%= textBoxTimebookVAT.ClientID %>').val();
             addErrorIf(errors, vat == '', "VAT shouldn't be empty.");
             addErrorIf(errors, isNaN(vat), "VAT should be a number.");
-            addErrorIf(errors, !isNaN(vat) && parseFloat(vat) <= 0, "VAT should be greater than zero.");
+            //addErrorIf(errors, !isNaN(vat) && parseFloat(vat) <= 0, "VAT should be greater than zero.");
             
             return displayMessage(errors, '#timebook-message');
         }
