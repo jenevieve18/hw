@@ -203,8 +203,10 @@
             $('#<%= checkBoxTimebookIsHeader.ClientID %>').change(function() {
                 if ($(this).is(':checked')) {
                     $('#<%= Panel2.ClientID %>').hide();
+                    $('#<%= Panel3.ClientID %>').hide();
                 } else {
                     $('#<%= Panel2.ClientID %>').show();
+                    $('#<%= Panel3.ClientID %>').show();
                 }
             });
             $('#<%= checkBoxSubscriptionHasEndDate.ClientID %>').change();
@@ -276,6 +278,7 @@
         });
     </script>
     <script type="text/javascript">
+        // Validation javascript files.
         function validateNotes() {
             var errors = [];
             if ($('#<%= textBoxNotes.ClientID %>').val() == '') {
@@ -454,51 +457,53 @@
                             </div>
 
                             <asp:Panel ID="Panel2" runat="server">
-                            <div class="form-group">
-                                <asp:CheckBox ID="checkBoxTimebookDateHidden" runat="server" CssClass="form-control" Text="&nbsp;Timebook date is hidden" />
-                            </div>
-                            <div class="form-group">
-	                            <label for="<%= textBoxTimebookDepartment.ClientID %>">Department</label>
-                                <asp:TextBox ID="textBoxTimebookDepartment" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <div class="form-group">
-	                            <label for="<%= dropDownListTimebookContacts.ClientID %>">Contact Person</label>
-                                <asp:DropDownList ID="dropDownListTimebookContacts" runat="server" CssClass="form-control">
-                                </asp:DropDownList>
-                            </div>
-                            <div class="form-group">
-	                            <label for="<%= dropDownListTimebookItems.ClientID %>">Item</label>
-                                <asp:DropDownList ID="dropDownListTimebookItems" runat="server" CssClass="form-control"></asp:DropDownList>
-                            </div>
-                            <div class="form-group">
-	                            <label for="<%= labelTimebookUnit.ClientID %>">Unit</label>
-                                <asp:Label ID="labelTimebookUnit" runat="server" Text="" CssClass="form-control"></asp:Label>
-                            </div>
-                            <div class="form-group">
-	                            <label for="<%= textBoxTimebookQty.ClientID %>">Qty</label>
-                                <asp:TextBox ID="textBoxTimebookQty" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <div class="form-group">
-	                            <label for="<%= textBoxTimebookPrice.ClientID %>">Price</label>
-                                <asp:TextBox ID="textBoxTimebookPrice" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <div class="form-group">
-	                            <label for="<%= textBoxTimebookVAT.ClientID %>">VAT</label>
-                                <asp:TextBox ID="textBoxTimebookVAT" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <div class="form-group">
-	                            <label for="<%= textBoxTimebookConsultant.ClientID %>">Consultant</label>
-                                <asp:TextBox ID="textBoxTimebookConsultant" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <div class="form-group">
-	                            <label for="<%= textBoxTimebookInternalComments.ClientID %>">Internal Comments</label>
-                                <asp:TextBox ID="textBoxTimebookInternalComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
-                            </div>
+                                <div class="form-group">
+                                    <asp:CheckBox ID="checkBoxTimebookDateHidden" runat="server" CssClass="form-control" Text="&nbsp;Timebook date is hidden" />
+                                </div>
+                                <div class="form-group">
+	                                <label for="<%= textBoxTimebookDepartment.ClientID %>">Department</label>
+                                    <asp:TextBox ID="textBoxTimebookDepartment" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
+	                                <label for="<%= dropDownListTimebookContacts.ClientID %>">Contact Person</label>
+                                    <asp:DropDownList ID="dropDownListTimebookContacts" runat="server" CssClass="form-control">
+                                    </asp:DropDownList>
+                                </div>
+                                <div class="form-group">
+	                                <label for="<%= dropDownListTimebookItems.ClientID %>">Item</label>
+                                    <asp:DropDownList ID="dropDownListTimebookItems" runat="server" CssClass="form-control"></asp:DropDownList>
+                                </div>
+                                <div class="form-group">
+	                                <label for="<%= labelTimebookUnit.ClientID %>">Unit</label>
+                                    <asp:Label ID="labelTimebookUnit" runat="server" Text="" CssClass="form-control"></asp:Label>
+                                </div>
+                                <div class="form-group">
+	                                <label for="<%= textBoxTimebookQty.ClientID %>">Qty</label>
+                                    <asp:TextBox ID="textBoxTimebookQty" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
+	                                <label for="<%= textBoxTimebookPrice.ClientID %>">Price</label>
+                                    <asp:TextBox ID="textBoxTimebookPrice" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
+	                                <label for="<%= textBoxTimebookVAT.ClientID %>">VAT</label>
+                                    <asp:TextBox ID="textBoxTimebookVAT" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
+	                                <label for="<%= textBoxTimebookConsultant.ClientID %>">Consultant</label>
+                                    <asp:TextBox ID="textBoxTimebookConsultant" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
                             </asp:Panel>
                             <div class="form-group">
 	                            <label for="<%= textBoxTimebookComments.ClientID %>">Comments</label>
                                 <asp:TextBox ID="textBoxTimebookComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
                             </div>
+                            <asp:Panel ID="Panel3" runat="server">
+                                <div class="form-group">
+	                                <label for="<%= textBoxTimebookInternalComments.ClientID %>">Internal Comments</label>
+                                    <asp:TextBox ID="textBoxTimebookInternalComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+                                </div>
+                            </asp:Panel>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
