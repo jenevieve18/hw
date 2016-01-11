@@ -53,6 +53,8 @@ namespace HW.Invoicing
 				);
 			} catch (Exception ex) {
 			}
+
+            Response.Redirect("invoices.aspx");
 		}
 	}
 }
