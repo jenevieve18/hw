@@ -64,10 +64,10 @@ namespace HW.Invoicing
                     {
                         year = y;
                     }
-                    dropDownListFinancialYear.Items.Add(new ListItem(string.Format("{0} - {1}", y - 1, y), y.ToString()));
+                    dropDownListFinancialYear.Items.Add(new ListItem(string.Format("{0} - {1}", y - 1, y), (y + 1).ToString()));
                 }
-                var dateFrom = new DateTime(year, company.FinancialMonthStart.Value.Month, company.FinancialMonthStart.Value.Day, 0, 0, 0);
-                var dateTo = new DateTime(year + 1, company.FinancialMonthEnd.Value.Month, company.FinancialMonthEnd.Value.Day, 23, 59, 59);
+                var dateFrom = new DateTime(year - 1, company.FinancialMonthStart.Value.Month, company.FinancialMonthStart.Value.Day, 0, 0, 0);
+                var dateTo = new DateTime(year, company.FinancialMonthEnd.Value.Month, company.FinancialMonthEnd.Value.Day, 23, 59, 59);
                 invoices = r.FindByDateAndCompany(dateFrom, dateTo, companyId);
             }
         }
@@ -75,6 +75,7 @@ namespace HW.Invoicing
         protected void dropDownListFinancialYear_SelectedIndexChanged(object sender, EventArgs e)
         {
             int year = ConvertHelper.ToInt32(dropDownListFinancialYear.SelectedValue);
+            
             var dateFrom = new DateTime(year - 1, company.FinancialMonthStart.Value.Month, company.FinancialMonthStart.Value.Day, 0, 0, 0);
             var dateTo = new DateTime(year, company.FinancialMonthEnd.Value.Month, company.FinancialMonthEnd.Value.Day, 23, 59, 59);
             invoices = r.FindByDateAndCompany(dateFrom, dateTo, companyId);
