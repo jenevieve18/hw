@@ -60,7 +60,7 @@ namespace HW.Invoicing
 
                     panelSubscriptionTimebook.Visible = timebook.IsSubscription;
                     panelTimebook.Visible = !panelSubscriptionTimebook.Visible;
-                    panelNonHeaderTimebook.Visible = !timebook.IsHeader;
+                    panelNonHeaderTimebook.Visible = Panel1.Visible = !timebook.IsHeader;
                     if (timebook.IsSubscription)
                     {
                         textBoxSubscriptionTimebookStartDate.Text = timebook.SubscriptionStartDate.Value.ToString("yyyy-MM-dd");

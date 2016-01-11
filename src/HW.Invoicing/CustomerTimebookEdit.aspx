@@ -76,55 +76,57 @@
 
     <asp:Panel ID="panelTimebook" runat="server">
         <asp:Panel ID="panelNonHeaderTimebook" runat="server">
-        <div class="form-group">
-	        <label for="<%= textBoxTimebookDate.ClientID %>">Date</label>
-            <asp:TextBox ID="textBoxTimebookDate" runat="server" CssClass="date form-control"></asp:TextBox>
-        </div>
-        <div class="form-group">
-            <asp:CheckBox ID="checkBoxTimebookDateHidden" runat="server" CssClass="form-control" Text="&nbsp;Timebook date is hidden" />
-        </div>
-        <div class="form-group">
-	        <label for="<%= textBoxTimebookDepartment.ClientID %>">Department</label>
-            <asp:TextBox ID="textBoxTimebookDepartment" runat="server" CssClass="form-control"></asp:TextBox>
-        </div>
-        <div class="form-group">
-	        <label for="<%= dropDownListTimebookContacts.ClientID %>">Contact Person</label>
-            <asp:DropDownList ID="dropDownListTimebookContacts" runat="server" CssClass="form-control">
-            </asp:DropDownList>
-        </div>
-        <div class="form-group">
-	        <label for="<%= dropDownListTimebookItems.ClientID %>">Item</label>
-            <asp:DropDownList ID="dropDownListTimebookItems" runat="server" CssClass="form-control"></asp:DropDownList>
-        </div>
-        <div class="form-group">
-	        <label for="<%= labelTimebookUnit.ClientID %>">Unit</label>
-            <asp:Label ID="labelTimebookUnit" runat="server" Text="" CssClass="form-control"></asp:Label>
-        </div>
-        <div class="form-group">
-	        <label for="<%= textBoxTimebookQty.ClientID %>">Qty</label>
-            <asp:TextBox ID="textBoxTimebookQty" runat="server" CssClass="form-control"></asp:TextBox>
-        </div>
-        <div class="form-group">
-	        <label for="<%= textBoxTimebookPrice.ClientID %>">Price</label>
-            <asp:TextBox ID="textBoxTimebookPrice" runat="server" CssClass="form-control"></asp:TextBox>
-        </div>
-        <div class="form-group">
-	        <label for="<%= textBoxTimebookVAT.ClientID %>">VAT</label>
-            <asp:TextBox ID="textBoxTimebookVAT" runat="server" CssClass="form-control"></asp:TextBox>
-        </div>
-        <div class="form-group">
-	        <label for="<%= textBoxTimebookConsultant.ClientID %>">Consultant</label>
-            <asp:TextBox ID="textBoxTimebookConsultant" runat="server" CssClass="form-control"></asp:TextBox>
-        </div>
-        <div class="form-group">
-	        <label for="<%= textBoxTimebookInternalComments.ClientID %>">Internal Comments</label>
-            <asp:TextBox ID="textBoxTimebookInternalComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
-        </div>
+            <div class="form-group">
+	            <label for="<%= textBoxTimebookDate.ClientID %>">Date</label>
+                <asp:TextBox ID="textBoxTimebookDate" runat="server" CssClass="date form-control"></asp:TextBox>
+            </div>
+            <div class="form-group">
+                <asp:CheckBox ID="checkBoxTimebookDateHidden" runat="server" CssClass="form-control" Text="&nbsp;Timebook date is hidden" />
+            </div>
+            <div class="form-group">
+	            <label for="<%= textBoxTimebookDepartment.ClientID %>">Department</label>
+                <asp:TextBox ID="textBoxTimebookDepartment" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="form-group">
+	            <label for="<%= dropDownListTimebookContacts.ClientID %>">Contact Person</label>
+                <asp:DropDownList ID="dropDownListTimebookContacts" runat="server" CssClass="form-control">
+                </asp:DropDownList>
+            </div>
+            <div class="form-group">
+	            <label for="<%= dropDownListTimebookItems.ClientID %>">Item</label>
+                <asp:DropDownList ID="dropDownListTimebookItems" runat="server" CssClass="form-control"></asp:DropDownList>
+            </div>
+            <div class="form-group">
+	            <label for="<%= labelTimebookUnit.ClientID %>">Unit</label>
+                <asp:Label ID="labelTimebookUnit" runat="server" Text="" CssClass="form-control"></asp:Label>
+            </div>
+            <div class="form-group">
+	            <label for="<%= textBoxTimebookQty.ClientID %>">Qty</label>
+                <asp:TextBox ID="textBoxTimebookQty" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="form-group">
+	            <label for="<%= textBoxTimebookPrice.ClientID %>">Price</label>
+                <asp:TextBox ID="textBoxTimebookPrice" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="form-group">
+	            <label for="<%= textBoxTimebookVAT.ClientID %>">VAT</label>
+                <asp:TextBox ID="textBoxTimebookVAT" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="form-group">
+	            <label for="<%= textBoxTimebookConsultant.ClientID %>">Consultant</label>
+                <asp:TextBox ID="textBoxTimebookConsultant" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
         </asp:Panel>
         <div class="form-group">
 	        <label for="<%= textBoxTimebookComments.ClientID %>">Comments</label>
             <asp:TextBox ID="textBoxTimebookComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
         </div>
+        <asp:Panel ID="Panel1" runat="server">
+            <div class="form-group">
+	            <label for="<%= textBoxTimebookInternalComments.ClientID %>">Internal Comments</label>
+                <asp:TextBox ID="textBoxTimebookInternalComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+            </div>
+        </asp:Panel>
         <asp:PlaceHolder ID="placeHolderReactivate" runat="server">
             <div class="form-group">
                 <asp:CheckBox ID="checkBoxReactivate" runat="server" CssClass="form-control" Text="&nbsp;Re-activate this customer timebook" />
