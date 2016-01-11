@@ -74,7 +74,12 @@ namespace HW.Invoicing
 					Response.Redirect("customers.aspx");
 				}
 				else
-				{
+                {
+                    if (customer.ContactPerson != null && customer.ContactPerson.Id > 0)
+                    {
+                        customer.ContactPerson = r.ReadContact(customer.ContactPerson.Id);
+                    }
+
 					labelCustomer.Text = customer.Name;
 
 					// Customer Info Panel
