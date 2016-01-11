@@ -50,13 +50,17 @@
                     <% } else { %>
                         <tr>
                             <td><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></td>
-                            <td>
+                            <td><%= c.ContactPerson != null ? c.ContactPerson.ToString() : "" %></td>
+                            <td><%= c.ContactPerson != null ? c.ContactPerson.Phone : "" %></td>
+                            <td><%= c.ContactPerson != null ? c.ContactPerson.Email : "" %></td>
+                            <%--<td>
                                 <% if (c.FirstPrimaryContact != null) { %>
                                     <%= c.FirstPrimaryContact.Contact %>
                                 <% } %>
                             </td>
                             <td><%= c.Phone %></td>
-                            <td><%= c.Email %></td>
+                            <td><%= c.Email %></td>--%>
+
                         </tr>
                     <% } %>
                 <% } %>
@@ -77,13 +81,16 @@
                 <% foreach (var c in deletedCustomers) { %>
                     <tr>
                         <td><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></td>
-                        <td>
+                        <%--<td>
                             <% if (c.FirstPrimaryContact != null) { %>
                                 <%= c.FirstPrimaryContact.Contact %>
                             <% } %>
                         </td>
                         <td><%= c.Phone %></td>
-                        <td><%= c.Email %></td>
+                        <td><%= c.Email %></td>--%>
+                        <td><%= c.ContactPerson != null ? c.ContactPerson.ToString() : "" %></td>
+                            <td><%= c.ContactPerson != null ? c.ContactPerson.Phone : "" %></td>
+                            <td><%= c.ContactPerson != null ? c.ContactPerson.Email : "" %></td>
                     </tr>
                 <% } %>
             </table>
@@ -133,13 +140,16 @@
                     <% } else { %>
                         <tr>
                             <td><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></td>
-                            <td>
+                            <%--<td>
                                 <% if (c.FirstPrimaryContact != null) { %>
                                     <%= c.FirstPrimaryContact.Contact %>
                                 <% } %>
                             </td>
                             <td><%= c.Phone %></td>
-                            <td><%= c.Email %></td>
+                            <td><%= c.Email %></td>--%>
+                            <td><%= c.ContactPerson != null ? c.ContactPerson.ToString() : "" %></td>
+                            <td><%= c.ContactPerson != null ? c.ContactPerson.Phone : "" %></td>
+                            <td><%= c.ContactPerson != null ? c.ContactPerson.Email : "" %></td>
                         </tr>
                     <% } %>
                 <% } %>
@@ -172,13 +182,16 @@
                     <% } else { %>
                         <tr>
                             <td><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></td>
-                            <td>
+                            <%--<td>
                                 <% if (c.FirstPrimaryContact != null) { %>
                                     <%= c.FirstPrimaryContact.Contact %>
                                 <% } %>
                             </td>
                             <td><%= c.Phone %></td>
-                            <td><%= c.Email %></td>
+                            <td><%= c.Email %></td>--%>
+                            <td><%= c.ContactPerson != null ? c.ContactPerson.ToString() : "" %></td>
+                            <td><%= c.ContactPerson != null ? c.ContactPerson.Phone : "" %></td>
+                            <td><%= c.ContactPerson != null ? c.ContactPerson.Email : "" %></td>
                         </tr>
                     <% } %>
                 <% } %>
@@ -199,13 +212,16 @@
                 <% foreach (var c in deletedCustomers) { %>
                     <tr>
                         <td><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></td>
-                        <td>
+                        <%--<td>
                             <% if (c.FirstPrimaryContact != null) { %>
                                 <%= c.FirstPrimaryContact.Contact %>
                             <% } %>
                         </td>
                         <td><%= c.Phone %></td>
-                        <td><%= c.Email %></td>
+                        <td><%= c.Email %></td>--%>
+                        <td><%= c.ContactPerson != null ? c.ContactPerson.ToString() : "" %></td>
+                            <td><%= c.ContactPerson != null ? c.ContactPerson.Phone : "" %></td>
+                            <td><%= c.ContactPerson != null ? c.ContactPerson.Email : "" %></td>
                     </tr>
                 <% } %>
             </table>

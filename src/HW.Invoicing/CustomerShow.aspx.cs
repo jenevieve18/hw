@@ -222,7 +222,9 @@ namespace HW.Invoicing
 				};
 				r.SaveTimebook(t, ConvertHelper.ToInt32(Request.QueryString["Id"]));
 			} else {
-				t = new CustomerTimebook {
+                t = new CustomerTimebook
+                {
+                    Date = ConvertHelper.ToDateTime(textBoxTimebookDate.Text),
 					IsHeader = checkBoxTimebookIsHeader.Checked,
 					Comments = textBoxTimebookComments.Text
 				};
