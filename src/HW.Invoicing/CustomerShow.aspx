@@ -796,9 +796,9 @@
                     <th style="width:85px !important">Date</th>
                     <th>Item / Unit / Department</th>
                     <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Amount</th>
-                    <th>VAT</th>
+                    <th style="text-align:right">Price</th>
+                    <th style="text-align:right">Amount</th>
+                    <th style="text-align:right">VAT</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -908,7 +908,7 @@
                                             <% if (t.HasInternalComments) { %>
                                                 <img src="img/comment.png" title="<%= t.InternalComments %>"/>
                                             <% } %>
-                                            <span class="timebook-comments-label"><%= t.Comments%></span>
+                                            <span class="timebook-comments-label"><%= StrHelper.Str2(t.Comments, 150) %></span>
                                             <textarea data-id="<%= t.Id %>" type="text" class="form-control timebook-comments-text"><%= t.Comments %></textarea>
                                             <img alt="" class="timebook-comments-spinner" src="img/spiffygif_30x30.gif" />
                                         </span>
@@ -919,7 +919,7 @@
                                 <td style="width:110px !important;text-align:right"><%= t.Amount.ToString("### ### ##0.00") %></td>
                                 <%--<td><%= t.VAT %>%</td>--%>
                                 <td style="text-align:right">
-                                    <%= t.VATAmount.ToString("#### ### ##0.00") %><br />
+                                    <%--<%= t.VATAmount.ToString("#### ### ##0.00") %><br />--%>
                                     <small class="text-success"><%= t.VAT %>%</small>
                                 </td>
                                 <td><%= t.GetStatus() %></td>

@@ -57,14 +57,14 @@
 	<label for="<%= textBoxInvoiceAddress.ClientID %>">Invoicing Address</label>
     <asp:TextBox ID="textBoxInvoiceAddress" TextMode="MultiLine" runat="server" CssClass="form-control"></asp:TextBox>
 </div>
-<div class="form-group">
+<%--<div class="form-group">
 	<label for="<%= textBoxPurchaseOrderNumber.ClientID %>">Reference / Purchase Order Number</label>
     <asp:TextBox ID="textBoxPurchaseOrderNumber" runat="server" CssClass="form-control"></asp:TextBox>
 </div>
 <div class="form-group">
 	<label for="<%= textBoxYourReferencePerson.ClientID %>">Your Reference Person</label>
     <asp:TextBox ID="textBoxYourReferencePerson" runat="server" CssClass="form-control"></asp:TextBox>
-</div>
+</div>--%>
 <div class="form-group">
 	<label for="<%= textBoxOurReferencePerson.ClientID %>">Our Reference Person</label>
     <asp:TextBox ID="textBoxOurReferencePerson" runat="server" CssClass="form-control"></asp:TextBox>
