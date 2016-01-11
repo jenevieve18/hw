@@ -52,9 +52,19 @@ namespace HW.Invoicing
             if (!IsPostBack)
             {
                 dropDownListFinancialYear.Items.Clear();
+                //int year = DateTime.Now.Year;
+                //for (int i = year; i >= year - 5; i--) {
+                //    dropDownListFinancialYear.Items.Add(new ListItem(string.Format("{0} - {1}", i, i + 1), i.ToString()));
+                //}
                 int year = DateTime.Now.Year;
-                for (int i = year; i >= year - 5; i--) {
-                    dropDownListFinancialYear.Items.Add(new ListItem(string.Format("{0} - {1}", i, i + 1), i.ToString()));
+                int i = 0;
+                foreach (var y in r.FindDistinctYears())
+                {
+                    if (i++ <= 0)
+                    {
+                        year = y;
+                    }
+                    dropDownListFinancialYear.Items.Add(new ListItem(string.Format("{0} - {1}", y, y + 1), y.ToString()));
                 }
                 var dateFrom = new DateTime(year, company.FinancialMonthStart.Value.Month, company.FinancialMonthStart.Value.Day, 0, 0, 0);
                 var dateTo = new DateTime(year + 1, company.FinancialMonthEnd.Value.Month, company.FinancialMonthEnd.Value.Day, 23, 59, 59);
