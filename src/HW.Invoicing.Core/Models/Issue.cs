@@ -48,6 +48,13 @@ namespace HW.Invoicing.Core.Models
         }
 	}
 	
+	public class IssueComment : BaseModel
+	{
+		public Issue Issue { get; set; }
+		public string Comments { get; set; }
+		public User User { get; set; }
+	}
+	
 	public class Issue : BaseModel
 	{
 		public string Title { get; set; }
