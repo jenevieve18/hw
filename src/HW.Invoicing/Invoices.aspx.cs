@@ -62,7 +62,7 @@ namespace HW.Invoicing
                 {
                     if (i++ <= 0)
                     {
-                        year = y;
+                        year = y + 1;
                     }
                     dropDownListFinancialYear.Items.Add(new ListItem(string.Format("{0} - {1}", y - 1, y), (y + 1).ToString()));
                 }

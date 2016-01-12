@@ -28,7 +28,8 @@ SELECT i.Id,
     i.Description,
     i.Price,
     i.UnitId,
-    i.Inactive
+    i.Inactive,
+    i.Consultant
 FROM Item i
 WHERE i.Id = @Id"
 			);
@@ -41,7 +42,8 @@ WHERE i.Id = @Id"
 						Description = GetString(rs, 2),
 						Price = GetDecimal(rs, 3),
 						Unit = new Unit { Id = GetInt32(rs, 4) },
-                        Inactive = GetInt32(rs, 5) == 1
+                        Inactive = GetInt32(rs, 5) == 1,
+                        Consultant = GetString(rs, 6)
 					};
 				}
 			}
@@ -70,7 +72,8 @@ UPDATE Item SET Name = @Name,
     Description = @Description,
     Price = @Price,
     UnitId = @UnitId,
-    Inactive = @Inactive
+    Inactive = @Inactive,
+    Consultant = @Consultant
 WHERE Id = @Id"
 			);
 			ExecuteNonQuery(
@@ -81,7 +84,8 @@ WHERE Id = @Id"
 				new SqlParameter("@Price", i.Price),
 				new SqlParameter("@Id", id),
                 new SqlParameter("@UnitId", i.Unit.Id),
-                new SqlParameter("@Inactive", i.Inactive)
+                new SqlParameter("@Inactive", i.Inactive),
+                new SqlParameter("@Consultant", i.Consultant)
 			);
 		}
 		
@@ -89,8 +93,8 @@ WHERE Id = @Id"
 		{
 			string query = string.Format(
 				@"
-INSERT INTO Item(Name, Description, Price, UnitId, CompanyId)
-VALUES(@Name, @Description, @Price, @UnitId, @CompanyId)"
+INSERT INTO Item(Name, Description, Price, UnitId, CompanyId, Consultant)
+VALUES(@Name, @Description, @Price, @UnitId, @CompanyId, @Consultant)"
 			);
 			ExecuteNonQuery(
 				query,
@@ -99,7 +103,8 @@ VALUES(@Name, @Description, @Price, @UnitId, @CompanyId)"
 				new SqlParameter("@Description", i.Description),
 				new SqlParameter("@Price", i.Price),
                 new SqlParameter("@UnitId", i.Unit.Id),
-                new SqlParameter("@CompanyId", i.Company.Id)
+                new SqlParameter("@CompanyId", i.Company.Id),
+                new SqlParameter("@Consultant", i.Consultant)
 			);
 		}
 		
@@ -113,7 +118,8 @@ SELECT i.Id,
 	i.Price,
 	i.UnitId,
 	u.Name,
-	i.Inactive
+	i.Inactive,
+    i.Consultant
 FROM Item i
 INNER JOIN Unit u ON u.Id = i.UnitId
 WHERE i.CompanyId = @CompanyId
@@ -132,7 +138,8 @@ ORDER BY i.Name"
 								Id = GetInt32(rs, 4),
 								Name = GetString(rs, 5)
 							},
-							Inactive = GetInt32(rs, 6) == 1
+							Inactive = GetInt32(rs, 6) == 1,
+                            Consultant = GetString(rs, 7)
 						}
 					);
 				}

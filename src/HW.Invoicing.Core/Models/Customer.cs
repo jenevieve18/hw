@@ -398,7 +398,7 @@ namespace HW.Invoicing.Core.Models
 
         public override string ToString()
         {
-            string p = PurchaseOrderNumber != null && PurchaseOrderNumber != "" ? "( " + PurchaseOrderNumber + ")" : "";
+            string p = PurchaseOrderNumber != null && PurchaseOrderNumber != "" ? " (" + PurchaseOrderNumber + ")" : "";
             return string.Format("{0}{1}", Contact, p);
         }
 	}
@@ -550,7 +550,7 @@ namespace HW.Invoicing.Core.Models
 			base.Validate();
 			AddErrorIf(Comments == "", "Comments shouldn't be empty.");
 			AddErrorIf(Price <= 0, "Price should be greater than zero.");
-			AddErrorIf(VAT <= 0, "VAT should be greater than zero.");
+			//AddErrorIf(VAT <= 0, "VAT should be greater than zero.");
 		}
 
 		public string GetStatus()

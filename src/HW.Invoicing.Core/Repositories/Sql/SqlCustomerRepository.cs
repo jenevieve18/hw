@@ -284,15 +284,16 @@ VALUES(@CustomerId, @Date, @Lecturer, @LectureTitle, @Contact, @Mobile, @Email, 
 		{
 			string query = string.Format(
 				@"
-INSERT INTO CustomerTimebook(CustomerId, IsHeader, Comments)
-VALUES(@CustomerId, @IsHeader, @Comments)"
+INSERT INTO CustomerTimebook(CustomerId, IsHeader, Comments, Date)
+VALUES(@CustomerId, @IsHeader, @Comments, @Date)"
 			);
 			ExecuteNonQuery(
 				query,
 				"invoicing",
 				new SqlParameter("@CustomerId", customerId),
 				new SqlParameter("@IsHeader", t.IsHeader),
-				new SqlParameter("@Comments", t.Comments)
+				new SqlParameter("@Comments", t.Comments),
+                new SqlParameter("@Date", t.Date)
 			);
 		}
 
@@ -777,7 +778,9 @@ WHERE c.Id = @Id"
                         Status = GetInt32(rs, 18),
                         InvoiceEmail = GetString(rs, 19),
                         InvoiceEmailCC = GetString(rs, 20),
-                        ContactPerson = new CustomerContact { Id = GetInt32(rs, 21) }
+                        ContactPerson = new CustomerContact {
+                            Id = GetInt32(rs, 21)
+                        }
                     };
 				}
 			}
@@ -1603,7 +1606,8 @@ SELECT c.Id,
     c.Email,
     NULL, --c.Inactive,
     c.HasSubscription,
-    c.Status
+    c.Status,
+    c.ContactPersonId
 FROM Customer c
 --WHERE (c.HasSubscription != 1 OR c.HasSubscription IS NULL)
 WHERE ISNULL(c.HasSubscription, 0) = 0
@@ -1625,8 +1629,9 @@ c.Name"
                             Number = GetString(rs, 2),
                             Phone = GetString(rs, 3),
                             Email = GetString(rs, 4),
-//                            Inactive = GetInt32(rs, 5) == 1,
-Status = GetInt32(rs, 7)
+                            //                            Inactive = GetInt32(rs, 5) == 1,
+                            Status = GetInt32(rs, 7),
+                            ContactPerson = new CustomerContact { Id = GetInt32(rs, 8) }
                         }
                     );
                 }
@@ -1647,7 +1652,8 @@ SELECT c.Id,
     c.Email,
     NULL, --c.Inactive,
     c.HasSubscription,
-    c.Status
+    c.Status,
+    c.ContactPersonId
 FROM Customer c
 WHERE c.Status = @Status
 AND c.CompanyId = @CompanyId
@@ -1670,9 +1676,10 @@ ORDER BY c.Name"
                             Number = GetString(rs, 2),
                             Phone = GetString(rs, 3),
                             Email = GetString(rs, 4),
-//                            Inactive = GetInt32(rs, 5) == 1
-HasSubscription = GetInt32(rs, 6) == 1,
-Status = GetInt32(rs, 7)
+                            //                            Inactive = GetInt32(rs, 5) == 1
+                            HasSubscription = GetInt32(rs, 6) == 1,
+                            Status = GetInt32(rs, 7),
+                            ContactPerson = new CustomerContact { Id = GetInt32(rs, 8) }
                         }
                     );
                 }
@@ -1709,7 +1716,8 @@ SELECT c.Id,
     u.Id,
     u.Name,
     i.Price,
-    c.Status
+    c.Status,
+    c.ContactPersonId
 FROM Customer c
 INNER JOIN Item i on i.Id = c.SubscriptionItemId
 INNER JOIN Unit u on u.Id = i.UnitId
@@ -1732,18 +1740,20 @@ c.Name"
                             Number = GetString(rs, 2),
                             Phone = GetString(rs, 3),
                             Email = GetString(rs, 4),
-//                            Inactive = GetInt32(rs, 5) == 1,
+                            //                            Inactive = GetInt32(rs, 5) == 1,
                             SubscriptionItem = new Item
                             {
                                 Id = GetInt32(rs, 6),
                                 Name = GetString(rs, 7),
-                                Unit = new Unit {
+                                Unit = new Unit
+                                {
                                     Id = GetInt32(rs, 8),
                                     Name = GetString(rs, 9)
                                 },
                                 Price = GetDecimal(rs, 10)
                             },
-                            Status = GetInt32(rs, 11)
+                            Status = GetInt32(rs, 11),
+                            ContactPerson = new CustomerContact { Id = GetInt32(rs, 12) }
                         }
                     );
                 }

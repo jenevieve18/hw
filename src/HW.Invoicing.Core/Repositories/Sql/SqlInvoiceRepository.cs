@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using HW.Core.Repositories.Sql;
 using HW.Invoicing.Core.Models;
+using HW.Core.Helpers;
 
 namespace HW.Invoicing.Core.Repositories.Sql
 {
@@ -323,6 +324,23 @@ ORDER BY it.SortOrder";
                 }
             }
             return timebooks;
+        }
+
+        public IList<int> FindDistinctYears()
+        {
+            string query = @"
+SELECT DISTINCT YEAR(Date) y
+FROM Invoice
+ORDER BY y DESC";
+            var years = new List<int>();
+            using (SqlDataReader rs = ExecuteReader(query, "invoicing"))
+            {
+                while (rs.Read())
+                {
+                	years.Add(GetInt32(rs, 0));
+                }
+            }
+            return years;
         }
 
         public IList<Invoice> FindByDateAndCompany(DateTime dateFrom, DateTime dateTo, int companyId)

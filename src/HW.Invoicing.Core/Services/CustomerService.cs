@@ -41,6 +41,7 @@ namespace HW.Invoicing.Core.Services
         {
             foreach (var c in customers)
             {
+                c.ContactPerson = r.ReadContact(c.ContactPerson.Id);
                 c.Contacts = r.FindContacts(c.Id);
             }
         }
