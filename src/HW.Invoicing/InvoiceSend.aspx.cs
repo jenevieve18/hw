@@ -50,10 +50,12 @@ namespace HW.Invoicing
 					company.InvoiceEmailSubject,
 					company.InvoiceEmailText,
 					file
-				);
-			} catch (Exception ex) {
-			}
+                );
 
+                Session["Message"] = "Invoice sent!";
+			} catch (Exception ex) {
+                Session["Message"] = ex.Message;
+			}
             Response.Redirect("invoices.aspx");
 		}
 	}

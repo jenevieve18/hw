@@ -43,6 +43,13 @@ namespace HW.Invoicing
 		{
 			HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
 
+            if (Session["Message"] != null)
+            {
+                Panel1.Visible = true;
+                Label1.Text = "Invoice sent!";
+                Session.Remove("Message");
+            }
+
 			companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
 			company = cr.Read(companyId);
 

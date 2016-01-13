@@ -227,7 +227,8 @@ SELECT i.Id,
     c.Number,
     i.Status,
     i.Comments,
-    co.Id
+    co.Id,
+    c.InvoiceEmail
 FROM Invoice i
 INNER JOIN Customer c ON c.Id = i.CustomerId
 INNER JOIN Company co ON co.Id = c.CompanyId
@@ -253,7 +254,8 @@ WHERE i.Id = @Id"
                             Company = new Company
                             {
                                 Id = GetInt32(rs, 12)
-                            }
+                            },
+                            InvoiceEmail = GetString(rs, 13)
                         },
                         Status = GetInt32(rs, 10),
                         Comments = GetString(rs, 11)

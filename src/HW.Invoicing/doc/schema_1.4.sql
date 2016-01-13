@@ -72,3 +72,6 @@ create table IssueComment(
 	UserId integer
 );
 go
+
+alter table Company alter column InvoiceEmailText text;
+go

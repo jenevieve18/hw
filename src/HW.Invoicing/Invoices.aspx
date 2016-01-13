@@ -106,7 +106,11 @@
 	</div>
 
 <p>
-    
+    <asp:Panel ID="Panel1" runat="server" Visible="False">
+    <div class="alert alert-success">
+        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+    </div>
+    </asp:Panel>
 </p>
 
 <table class="table table-hover invoice-list">
@@ -163,7 +167,7 @@
                         <% } %>
                         <li><%= HtmlHelper.Anchor("PDF", "InvoiceExport.aspx?Id=" + i.Id, "target='_blank'")%></li>
                         <%--<li><%= HtmlHelper.Anchor("PDF Flatten", "invoiceexport.aspx?Id=" + i.Id + "&Flatten=1", "target='_blank'")%></li>--%>
-                        <li><%= HtmlHelper.Anchor("Send", "InvoiceSend.aspx?Id=" + i.Id, "target='_blank'")%></li>
+                        <li><%= HtmlHelper.Anchor("Send", "InvoiceSend.aspx?Id=" + i.Id)%></li>
                         <% if (IsLatestInvoice(i.Number)) { %>
                             <li><%= HtmlHelper.Anchor("Revert this invoice", "invoiceRevert.aspx?Id=" + i.Id)%></li>
                         <% } %>
