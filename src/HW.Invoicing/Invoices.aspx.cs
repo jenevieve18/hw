@@ -46,7 +46,7 @@ namespace HW.Invoicing
             if (Session["Message"] != null)
             {
                 Panel1.Visible = true;
-                Label1.Text = "Invoice sent!";
+                Label1.Text = Session["Message"].ToString();
                 Session.Remove("Message");
             }
 
