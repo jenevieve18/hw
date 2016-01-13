@@ -22,21 +22,21 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.DropDownList dropDownListFinancialYear;
         
         /// <summary>
-        /// Panel1 control.
+        /// panelMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel Panel1;
+        protected global::System.Web.UI.WebControls.Panel panelMessage;
         
         /// <summary>
-        /// Label1 control.
+        /// labelMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label labelMessage;
     }
 }

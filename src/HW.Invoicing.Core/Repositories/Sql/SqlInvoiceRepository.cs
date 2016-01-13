@@ -345,6 +345,25 @@ ORDER BY y DESC";
             return years;
         }
 
+        public bool HasInvoicesByCompany(DateTime dateFrom, DateTime dateTo, int companyId)
+        {
+            string query = @"
+SELECT COUNT(*)
+FROM Invoice i
+INNER JOIN Customer c ON i.CustomerId = c.Id
+WHERE i.Date BETWEEN @DateFrom and @DateTo
+AND c.CompanyId = @CompanyId";
+            bool hasInovices = false;
+            using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@DateFrom", dateFrom), new SqlParameter("@DateTo", dateTo), new SqlParameter("@CompanyId", companyId)))
+            {
+                if (rs.Read())
+                {
+                	hasInovices = GetInt32(rs, 0) > 0;
+                }
+            }
+            return hasInovices;
+        }
+
         public IList<Invoice> FindByDateAndCompany(DateTime dateFrom, DateTime dateTo, int companyId)
         {
             string query = @"
@@ -362,7 +381,7 @@ FROM Invoice i
 INNER JOIN Customer c ON i.CustomerId = c.Id
 WHERE i.Date BETWEEN @DateFrom and @DateTo
 AND c.CompanyId = @CompanyId
-ORDER BY i.number desc";
+ORDER BY i.Number desc";
             var invoices = new List<Invoice>();
             using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@DateFrom", dateFrom), new SqlParameter("@DateTo", dateTo), new SqlParameter("@CompanyId", companyId)))
             {
