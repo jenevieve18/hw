@@ -154,7 +154,6 @@ namespace HW.Invoicing
 				InvoiceExporter = ConvertHelper.ToInt32(dropDownListInvoiceExporter.SelectedValue),
 
 				InvoiceEmail = textBoxInvoiceEmail.Text,
-				//InvoiceEmailCC = textBoxInvoiceEmailCC.Text,
 				InvoiceEmailSubject = textBoxInvoiceEmailSubject.Text,
 				InvoiceEmailText = textBoxInvoiceEmailText.Text,
 
@@ -175,7 +174,7 @@ namespace HW.Invoicing
 				r.Update(c, id);
 				
 				if (id == ConvertHelper.ToInt32(Session["CompanyId"])) {
-                    Session["CompanyName"] = c.Name;
+					Session["CompanyName"] = c.Name;
 				}
 				
 				Response.Redirect("companies.aspx");

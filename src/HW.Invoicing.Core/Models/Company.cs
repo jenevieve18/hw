@@ -32,7 +32,6 @@ namespace HW.Invoicing.Core.Models
 		public string InvoiceTemplate { get; set; }
 		public int InvoiceExporter { get; set; }
 		public string InvoiceEmail { get; set; }
-		//public string InvoiceEmailCC { get; set; }
 		public string InvoiceEmailSubject { get; set; }
 		public string InvoiceEmailText { get; set; }
 		
@@ -76,21 +75,15 @@ namespace HW.Invoicing.Core.Models
 			get { return InvoiceLogo != null && InvoiceLogo != "";  }
 		}
 
-        public override string ToString()
-        {
-            return string.Format("{0}\n{1}\nOrg.nr {2}", Name, Address, OrganizationNumber);
-        }
+		public override string ToString()
+		{
+			return string.Format("{0}\n{1}\nOrg.nr {2}", Name, Address, OrganizationNumber);
+		}
 
-        public override void Validate()
-        {
-            base.Validate();
-            AddErrorIf(Name == "", "Company name should not be empty.");
-        }
+		public override void Validate()
+		{
+			base.Validate();
+			AddErrorIf(Name == "", "Company name should not be empty.");
+		}
 	}
-	
-//	public class CompanyUser : BaseModel
-//	{
-//		public Company Company { get; set; }
-//		public User User { get; set; }
-//	}
 }

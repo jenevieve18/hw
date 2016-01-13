@@ -14,6 +14,7 @@ namespace HW.Invoicing
     {
         SqlIssueRepository r = new SqlIssueRepository();
         SqlMilestoneRepository mr = new SqlMilestoneRepository();
+        protected Issue issue;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -37,14 +38,16 @@ namespace HW.Invoicing
                 {
                     dropDownListStatus.Items.Add(new ListItem(s.Name, s.Id.ToString()));
                 }
-                var i = r.Read(id);
-                if (i != null)
+                issue = r.Read(id);
+                if (issue != null)
                 {
-                    textBoxTitle.Text = i.Title;
-                    textBoxDescription.Text = i.Description;
-                    dropDownListMilestone.SelectedValue = i.Milestone.Id.ToString();
-                    dropDownListPriority.SelectedValue = i.Priority.Id.ToString();
-                    dropDownListStatus.SelectedValue = i.Status.ToString();
+                    issue.Comments = r.FindComments(id);
+
+                    textBoxTitle.Text = issue.Title;
+                    textBoxDescription.Text = issue.Description;
+                    dropDownListMilestone.SelectedValue = issue.Milestone.Id.ToString();
+                    dropDownListPriority.SelectedValue = issue.Priority.Id.ToString();
+                    dropDownListStatus.SelectedValue = issue.Status.ToString();
                 }
             }
         }

@@ -18,7 +18,7 @@ WHERE Id = @Id";
 				query,
 				"invoicing",
 				new SqlParameter("@Id", id),
-                new SqlParameter("@Deactivated", Issue.DEACTIVATED)
+				new SqlParameter("@Deactivated", Issue.DEACTIVATED)
 			);
 		}
 		
@@ -45,9 +45,9 @@ VALUES(@Title, @Description, @CreatedAt, @Status, @MilestoneId, @Priority)";
 				new SqlParameter("@Title", t.Title),
 				new SqlParameter("@Description", t.Description),
 				new SqlParameter("@CreatedAt", DateTime.Now),
-                new SqlParameter("@Status", t.Status),
-                new SqlParameter("@MilestoneId", t.Milestone.Id),
-                new SqlParameter("@Priority", t.Priority.Id)
+				new SqlParameter("@Status", t.Status),
+				new SqlParameter("@MilestoneId", t.Milestone.Id),
+				new SqlParameter("@Priority", t.Priority.Id)
 			);
 		}
 		
@@ -66,9 +66,9 @@ WHERE Id = @Id";
 				new SqlParameter("@Title", t.Title),
 				new SqlParameter("@Description", t.Description),
 				new SqlParameter("@Id", id),
-                new SqlParameter("@Status", t.Status),
-                new SqlParameter("@MilestoneId", t.Milestone.Id),
-                new SqlParameter("@Priority", t.Priority.Id)
+				new SqlParameter("@Status", t.Status),
+				new SqlParameter("@MilestoneId", t.Milestone.Id),
+				new SqlParameter("@Priority", t.Priority.Id)
 			);
 		}
 		
@@ -83,24 +83,48 @@ WHERE Id = @Id"
 			Issue issue = null;
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", id))) {
 				while (rs.Read()) {
-                    issue = new Issue
-                    {
-                        Id = GetInt32(rs, 0),
-                        Title = GetString(rs, 1),
-                        Description = GetString(rs, 2),
-                        Status = GetInt32(rs, 3),
-                        Milestone = new Milestone { Id = GetInt32(rs, 4) },
-                        Priority = new Priority { Id = GetInt32(rs, 5) }
-                    };
+					issue = new Issue
+					{
+						Id = GetInt32(rs, 0),
+						Title = GetString(rs, 1),
+						Description = GetString(rs, 2),
+						Status = GetInt32(rs, 3),
+						Milestone = new Milestone { Id = GetInt32(rs, 4) },
+						Priority = new Priority { Id = GetInt32(rs, 5) }
+					};
 				}
 			}
 			return issue;
+		}
+
+		public IList<IssueComment> FindComments(int id)
+		{
+			string query = string.Format(
+				@"
+SELECT c.Comments
+FROM IssueComment c
+WHERE c.IssueId = @Id"
+			);
+			var comments = new List<IssueComment>();
+			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", id)))
+			{
+				while (rs.Read())
+				{
+					comments.Add(
+						new IssueComment
+						{
+							Comments = GetString(rs, 0)
+						}
+					);
+				}
+			}
+			return comments;
 		}
 		
 		public override IList<Issue> FindAll()
 		{
 			string query = string.Format(
-                @"
+				@"
 SELECT i.Id,
 	i.Title,
 	i.Description,
@@ -111,28 +135,28 @@ SELECT i.Id,
 FROM Issue i
 INNER JOIN Milestone m ON m.Id = ISNULL(i.MilestoneId, 1)
 ORDER BY i.Status, Priority, i.CreatedAt DESC"
-            );
+			);
 			var issues = new List<Issue>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {
 				while (rs.Read()) {
-                    issues.Add(
-                        new Issue
-                        {
-                            Id = GetInt32(rs, 0),
-                            Title = GetString(rs, 1),
-                            Description = GetString(rs, 2),
-                            Status = GetInt32(rs, 3),
-                            Milestone = new Milestone
-                            {
-                                Id = GetInt32(rs, 4),
-                                Name = GetString(rs, 5)
-                            },
-                            Priority = new Priority
-                            {
-                                Id = GetInt32(rs, 6)
-                            }
-                        }
-                    );
+					issues.Add(
+						new Issue
+						{
+							Id = GetInt32(rs, 0),
+							Title = GetString(rs, 1),
+							Description = GetString(rs, 2),
+							Status = GetInt32(rs, 3),
+							Milestone = new Milestone
+							{
+								Id = GetInt32(rs, 4),
+								Name = GetString(rs, 5)
+							},
+							Priority = new Priority
+							{
+								Id = GetInt32(rs, 6)
+							}
+						}
+					);
 				}
 			}
 			return issues;

@@ -15,7 +15,7 @@
 </div>
 <table class="table table-hover">
     <tr>
-        <th style="width: 10%;">Number</th>
+        <th>Number</th>
         <th>Title</th>
         <th>Description</th>
         <th>Milestone</th>
@@ -30,9 +30,9 @@
                 <td><strike><%= i.Title %></strike></td>
                 <td><strike><%= i.Description %></strike></td>
                 <td><strike><%= i.Milestone.Name %></strike></td>
-                <td><small><%= i.GetPriority() %></small></td>
+                <td style="width:80px"><small><%= i.GetPriority() %></small></td>
                 <td><%= i.GetStatus() %></td>
-                <td>
+                <td style="width:50px">
                     <%= HtmlHelper.Anchor(" ", string.Format("issueedit.aspx?Id=" + i.Id), "title='Edit' class='glyphicon glyphicon-edit'")%>
                     <%= HtmlHelper.Anchor(" ", string.Format("issuedelete.aspx?Id=" + i.Id), "title='Delete' class='glyphicon glyphicon-remove-circle' onclick=\"return confirm('Are you sure you want to delete this issue?')\"")%>
                 </td>
@@ -43,9 +43,9 @@
                 <td><%= i.Title %></td>
                 <td><%= i.Description %></td>
                 <td><%= i.Milestone.Name %></td>
-                <td><small><%= i.GetPriority()  %></small></td>
+                <td style="width:80px"><small><%= i.GetPriority()  %></small></td>
                 <td><%= i.GetStatus() %></td>
-                <td>
+                <td style="width:50px">
                     <%= HtmlHelper.Anchor(" ", string.Format("issueedit.aspx?Id=" + i.Id), "title='Edit' class='glyphicon glyphicon-edit'")%>
                     <%= HtmlHelper.Anchor(" ", string.Format("issuedeactivate.aspx?Id=" + i.Id), "title='Deactivate' class='glyphicon glyphicon-minus'")%>
                 </td>

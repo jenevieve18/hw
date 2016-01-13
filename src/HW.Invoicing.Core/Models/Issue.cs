@@ -63,6 +63,7 @@ namespace HW.Invoicing.Core.Models
 		public DateTime? CreatedAt { get; set; }
 		public Milestone Milestone { get; set; }
 		public Priority Priority { get; set; }
+		public IList<IssueComment> Comments { get; set; }
 
         public Priority GetPriority()
         {

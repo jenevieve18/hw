@@ -65,3 +65,10 @@ go
 alter table Item add Consultant varchar(255);
 go
 
+create table IssueComment(
+	Id integer not null primary key identity,
+	IssueId integer,
+	Comments text,
+	UserId integer
+);
+go
