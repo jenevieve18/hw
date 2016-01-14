@@ -156,7 +156,8 @@ SELECT i.Id,
     i.Description,
     i.Price,
     i.UnitId,
-    u.Name
+    u.Name,
+    i.Consultant
 FROM Item i
 INNER JOIN Unit u ON u.Id = i.UnitId
 WHERE i.CompanyId = @CompanyId
@@ -179,7 +180,8 @@ ORDER BY i.Name"
 							Unit = new Unit {
                                 Id = GetInt32(rs, 4),
                                 Name = GetString(rs, 5)
-                            }
+                            },
+                            Consultant = GetString(rs, 6)
 						}
 					);
 				}

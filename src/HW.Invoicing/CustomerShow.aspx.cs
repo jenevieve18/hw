@@ -373,7 +373,8 @@ namespace HW.Invoicing
 			{
 				var li = new ListItem(i.Name, i.Id.ToString());
 				li.Attributes.Add("data-price", i.Price.ToString());
-				li.Attributes.Add("data-unit", i.Unit.Name);
+                li.Attributes.Add("data-unit", i.Unit.Name);
+                li.Attributes.Add("data-consultant", i.Consultant);
 				dropDownListTimebookItems.Items.Add(li);
 			}
 

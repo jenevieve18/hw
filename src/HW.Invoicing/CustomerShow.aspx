@@ -11,8 +11,11 @@
                 var selected = $(this).find('option:selected');
                 var selectedPrice = selected.data('price');
                 var selectedUnit = selected.data('unit');
+                var selectedConsultant = selected.data('consultant');
+                //alert(selectedConsultant);
                 $('#<%= textBoxTimebookPrice.ClientID %>').val(selectedPrice);
                 $('#<%= labelTimebookUnit.ClientID %>').text(selectedUnit);
+                $('#<%= textBoxTimebookConsultant.ClientID %>').val(selectedConsultant);
             });
             $('#<%= dropDownListTimebookItems.ClientID %>').change();
             $('.date').datepicker({
@@ -733,6 +736,7 @@
                                         data-id="<%= t.Id %>"
                                         data-item="<%= t.Item.Name %>"
                                         data-unit="<%= t.Item.Unit.Name %>"
+                                        data-consultant="<%= t.Item.Consultant %>"
                                         data-qty="<%= t.Quantity %>"
                                         data-price="<%= t.Price %>"
                                         data-amount="<%= t.Amount %>"
