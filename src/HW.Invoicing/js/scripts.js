@@ -10,8 +10,8 @@ function addMonth(startDate, months) {
 }
 
 function getDaysInAMonth(month, year) {
-    var isLeapYear = year % 4 == 0 && (year % 100 != 0 && year % 400 == 0);
-    var febDays = isLeapYear ? 29 : 28;
+    //var isLeapYear = (year % 4 == 0) && (year % 100 != 0 && year % 400 == 0);
+    var febDays = isLeapYear(year) ? 29 : 28;
     var days = [
         31,
         febDays,
@@ -28,6 +28,10 @@ function getDaysInAMonth(month, year) {
     ];
     var d = days[month];
     return d;
+}
+
+function isLeapYear(year) {
+    return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
 }
 
 function monthDiff(d1, d2) {

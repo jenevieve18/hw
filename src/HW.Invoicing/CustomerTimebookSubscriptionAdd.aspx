@@ -4,6 +4,7 @@
 <%@ Import Namespace="System.Globalization" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+    
     <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script src="js/jquery.number.min.js" type="text/javascript"></script>
     <script type="text/javascript">

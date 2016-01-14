@@ -24,8 +24,8 @@ namespace HW.Core.Helpers
 		
 		static int GetDaysInMonth(int month, int year)
 		{
-			bool isLeapYear = year % 4 == 0 && (year % 100 != 00 && year % 400 == 0);
-			int febDays = isLeapYear ? 29 : 28;
+			//bool isLeapYear = year % 4 == 0 && (year % 100 != 00 && year % 400 == 0);
+			int febDays = IsLeapYear(year) ? 29 : 28;
 			int[] days = {
 				31,
 				febDays,
@@ -42,5 +42,10 @@ namespace HW.Core.Helpers
 			};
 			return days[month - 1];
 		}
+
+        static bool IsLeapYear(int year)
+        {
+            return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+        }
 	}
 }
