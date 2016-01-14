@@ -749,7 +749,12 @@
                                 <% if (t.Date != null && !t.DateHidden && !t.IsSubscription) { %>
                                     <%= t.Date.Value.ToString("yyyy-MM-dd") %>
                                 <% } %><br />
-                                <small class="text-success"><%= StrHelper.Str2(t.Consultant, 10) %></small>
+                                <small class="text-success timebook-consultant">
+                                    <%--<%= StrHelper.Str2(t.Consultant, 10) %>--%>
+                                    <span class="timebook-consultant-label"><%= StrHelper.Str(t.Consultant != "", StrHelper.Str2(t.Consultant, 10), "(no consultant)") %></span>
+                                    <textarea data-id="<%= t.Id %>" type="text" class="form-control timebook-consultant-text"><%= t.Consultant %></textarea>
+                                    <img alt="" class="timebook-consultant-spinner" src="img/spiffygif_30x30.gif" />
+                                </small>
                             </td>
                             <%--<td><%= t.GetStatus() %></td>--%>
                             <% if (t.IsHeader) { %>
