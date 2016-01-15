@@ -90,9 +90,12 @@ namespace HW.Invoicing
 					}
 					dropDownListFinancialYear.Items.Add(new ListItem(string.Format("{0} - {1}", y.From, y.To), y.From.ToString()));
 				}
-				var d1 = new DateTime(year.From, company.FinancialMonthStart.Value.Month, company.FinancialMonthStart.Value.Day, 0, 0, 0);
-				var d2 = new DateTime(year.To, company.FinancialMonthEnd.Value.Month, company.FinancialMonthEnd.Value.Day, 23, 59, 59);
-				invoices = r.FindByDateAndCompany(d1, d2, companyId);
+                if (year != null)
+                {
+                    var d1 = new DateTime(year.From, company.FinancialMonthStart.Value.Month, company.FinancialMonthStart.Value.Day, 0, 0, 0);
+                    var d2 = new DateTime(year.To, company.FinancialMonthEnd.Value.Month, company.FinancialMonthEnd.Value.Day, 23, 59, 59);
+                    invoices = r.FindByDateAndCompany(d1, d2, companyId);
+                }
 			}
 		}
 		
