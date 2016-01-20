@@ -136,7 +136,6 @@ insert into plottypelang(plottypeid, langid, name, description)
 select id, 2, name, description from plottype
 go
 
-
 USE HealthWatch
 GO
 ALTER TABLE Sponsor ADD EmailFrom NVARCHAR(255)
