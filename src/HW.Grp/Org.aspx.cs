@@ -1284,7 +1284,8 @@ LEFT OUTER JOIN eform..ProjectRoundUnit es{0} ON es{0}.ProjectRoundID = {1} AND 
 		<br/>{1}<br/>--
 		<br/>{2}
 	</td>",
-						rs.GetString(1).Replace(" ", "&nbsp;<br/>&nbsp;"),
+//						rs.GetString(1).Replace(" ", "&nbsp;<br/>&nbsp;"),
+						DbHelper.GetString(rs, 1).Replace(" ", "&nbsp;<br/>&nbsp;"),
 						(rs.IsDBNull(8) ? "" : rs.GetDateTime(8).ToString("yyMMdd")),
 						(rs.IsDBNull(9) ? "" : rs.GetDateTime(9).ToString("yyMMdd"))
 					);
