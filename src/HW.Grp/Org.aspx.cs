@@ -1274,7 +1274,8 @@ ORDER BY ses.SponsorExtendedSurveyID",
 LEFT OUTER JOIN SponsorExtendedSurveyDepartment sesd{0} ON sesd{0}.SponsorExtendedSurveyID = {0} AND sesd{0}.DepartmentID = d.DepartmentID 
 LEFT OUTER JOIN eform..ProjectRoundUnit es{0} ON es{0}.ProjectRoundID = {1} AND (s.Sponsor + '=' + dbo.cf_departmentTree(d.DepartmentID,'=')) = eform.dbo.cf_projectUnitTree(es{0}.ProjectRoundUnitID,'=') ",
 						rs.GetInt32(0),
-						rs.GetInt32(2)
+//						rs.GetInt32(2)
+						DbHelper.GetInt32(rs, 2)
 					);
 					ESdesc += string.Format(
 						@"

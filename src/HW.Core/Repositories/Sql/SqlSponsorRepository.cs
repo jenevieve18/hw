@@ -10,14 +10,23 @@ namespace HW.Core.Repositories.Sql
 	public interface IExtendedSurveyRepository
 	{
 		void UpdateInviteTexts(int ID, string inviteSubject, string inviteText, string inviteReminderSubject, string inviteReminderText, string allMessageSubject, string allMessageBody);
+		
 		int UpdateEmailTexts(int sponsorExtendedSurveyID, int sponsorAdminID, int extraExtendedSurveyID, string emailSubject, string emailBody, string finishedEmailSubject, string finishedEmailBody);
+		
 		IList<IExtendedSurvey> FindExtendedSurveysBySponsorAdmin(int sponsorId, int sponsorAdminId);
+		
 		ISponsor ReadSponsor(int sponsorAdminId);
+		
 		void UpdateSponsorLastInviteSent(int sponsorID);
+		
 		void UpdateSponsorLastInviteReminderSent(int sponsorId);
+		
 		void UpdateLastAllMessageSent(int sponsorId);
+		
 		void UpdateExtendedSurveyLastEmailSent(int sponsorExtendedSurveyId);
+		
 		void UpdateExtendedSurveyLastFinishedSent(int sponsorExtendedSurveyId);
+		
 		void UpdateSponsorLastLoginSent(int sponsorId);
 	}
 	
