@@ -28,7 +28,8 @@ namespace HW.Tests.Helpers
 					Number = "XXXYY-0123",
 					Name = "Carl T. Escalante",
 					PurchaseOrderNumber = "XXX-01234",
-					YourReferencePerson = "Gerald S. Hicks",
+//					YourReferencePerson = "Gerald S. Hicks",
+					ContactPerson = new CustomerContact { Name  = "Gerald S. Hicks" },
 					OurReferencePerson = "Michael K. Smith",
 					InvoiceAddress = @"Carl T. Escalante
 37 East Avenue

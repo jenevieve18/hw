@@ -214,7 +214,7 @@ SELECT CAST(scope_identity() AS int)";
 		public override Invoice Read(int id)
 		{
 			string query = string.Format(
-				@"
+                @"
 SELECT i.Id,
     i.Date,
     i.CustomerId,
@@ -228,12 +228,13 @@ SELECT i.Id,
     i.Status,
     i.Comments,
     co.Id,
-    c.InvoiceEmail
+    c.InvoiceEmail,
+    c.ContactPersonId
 FROM Invoice i
 INNER JOIN Customer c ON c.Id = i.CustomerId
 INNER JOIN Company co ON co.Id = c.CompanyId
 WHERE i.Id = @Id"
-			);
+            );
 			Invoice i = null;
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", id))) {
 				if (rs.Read()) {
@@ -248,14 +249,17 @@ WHERE i.Id = @Id"
                             Name = GetString(rs, 3),
                             InvoiceAddress = GetString(rs, 4),
                             PurchaseOrderNumber = GetString(rs, 5),
-                            YourReferencePerson = GetString(rs, 6),
+//                            YourReferencePerson = GetString(rs, 6),
                             OurReferencePerson = GetString(rs, 7),
                             Number = GetString(rs, 9),
                             Company = new Company
                             {
                                 Id = GetInt32(rs, 12)
                             },
-                            InvoiceEmail = GetString(rs, 13)
+                            InvoiceEmail = GetString(rs, 13),
+                            ContactPerson = new CustomerContact {
+                                Id = GetInt32(rs, 14)
+                            }
                         },
                         Status = GetInt32(rs, 10),
                         Comments = GetString(rs, 11)
@@ -264,6 +268,7 @@ WHERE i.Id = @Id"
 			}
             if (i != null)
             {
+                i.Customer.ContactPerson = new SqlCustomerRepository().ReadContact(i.Customer.ContactPerson.Id);
                 i.Timebooks = FindTimebooks(id);
             }
 			return i;

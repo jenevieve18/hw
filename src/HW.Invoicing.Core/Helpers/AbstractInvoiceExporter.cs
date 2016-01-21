@@ -173,7 +173,8 @@ namespace HW.Invoicing.Core.Helpers
 			
 			t3.AddCell(C(" ", smallestFont, Rectangle.TOP_BORDER, 0, 2));
 			t3.AddCell(C("Er referens:", smallFont, 3));
-			t3.AddCell(C(invoice.Customer.YourReferencePerson, smallFont, 3));
+//			t3.AddCell(C(invoice.Customer.YourReferencePerson, smallFont, 3));
+			t3.AddCell(C(invoice.Customer.ContactPerson.Name, smallFont, 3));
 			
 			t3.AddCell(C(" ", smallestFont, Rectangle.NO_BORDER, 0, 2));
 			t3.AddCell(C("Vår referens:", smallFont, 3));

@@ -162,7 +162,7 @@ VALUES(@CustomerId, @Contact, @Phone, @Mobile, @Email, @Type, @Title, @PurchaseO
 				query,
 				"invoicing",
 				new SqlParameter("@CustomerId", customerId),
-				new SqlParameter("@Contact", contact.Contact),
+				new SqlParameter("@Contact", contact.Name),
 				new SqlParameter("@Phone", contact.Phone),
 				new SqlParameter("@Mobile", contact.Mobile),
 				new SqlParameter("@Email", contact.Email),
@@ -369,7 +369,8 @@ VALUES(@Name, @Number, @PostalAddress, @InvoiceAddress, @PurchaseOrderNumber, @Y
                 new SqlParameter("@PostalAddress", c.PostalAddress),
                 new SqlParameter("@InvoiceAddress", c.InvoiceAddress),
                 new SqlParameter("@PurchaseOrderNumber", c.PurchaseOrderNumber),
-                new SqlParameter("@YourReferencePerson", c.YourReferencePerson),
+//                new SqlParameter("@YourReferencePerson", c.YourReferencePerson),
+new SqlParameter("@YourReferencePerson", ""),
                 new SqlParameter("@OurReferencePerson", c.OurReferencePerson),
                 new SqlParameter("@Phone", c.Phone),
                 new SqlParameter("@Email", c.Email),
@@ -411,7 +412,8 @@ WHERE Id = @Id"
                 new SqlParameter("@InvoiceAddress", c.InvoiceAddress),
                 new SqlParameter("@PostalAddress", c.PostalAddress),
                 new SqlParameter("@PurchaseOrderNumber", c.PurchaseOrderNumber),
-                new SqlParameter("@YourReferencePerson", c.YourReferencePerson),
+//                new SqlParameter("@YourReferencePerson", c.YourReferencePerson),
+new SqlParameter("@YourReferencePerson", ""),
                 new SqlParameter("@OurReferencePerson", c.OurReferencePerson),
                 new SqlParameter("@Phone", c.Phone),
                 new SqlParameter("@Email", c.Email),
@@ -482,7 +484,7 @@ WHERE Id = @Id"
             ExecuteNonQuery(
                 query,
                 "invoicing",
-                new SqlParameter("@Contact", c.Contact),
+                new SqlParameter("@Contact", c.Name),
                 new SqlParameter("@Phone", c.Phone),
                 new SqlParameter("@Mobile", c.Mobile),
                 new SqlParameter("@Email", c.Email),
@@ -757,7 +759,7 @@ WHERE c.Id = @Id"
                         InvoiceAddress = GetString(rs, 3, ""),
                         PostalAddress = GetString(rs, 4, ""),
                         PurchaseOrderNumber = GetString(rs, 5),
-                        YourReferencePerson = GetString(rs, 6),
+//                        YourReferencePerson = GetString(rs, 6),
                         OurReferencePerson = GetString(rs, 7),
                         Email = GetString(rs, 8),
                         Phone = GetString(rs, 9),
@@ -1057,7 +1059,7 @@ WHERE Id = @Id"
                     c = new CustomerContact
                     {
                         Id = GetInt32(rs, 0),
-                        Contact = GetString(rs, 1),
+                        Name = GetString(rs, 1),
                         Phone = GetString(rs, 2),
                         Mobile = GetString(rs, 3),
                         Email = GetString(rs, 4),
@@ -1340,7 +1342,7 @@ AND NOT EXISTS (
                             Contact = new CustomerContact
                             {
                                 Id = GetInt32(rs, 0),
-                                Contact = GetString(rs, 6)
+                                Name = GetString(rs, 6)
                             },
                             Item = new Item
                             {
@@ -1407,7 +1409,7 @@ ORDER BY Status, t.Date DESC, t.Id DESC"
 						new CustomerTimebook {
 							Contact = new CustomerContact {
 								Id = GetInt32(rs, 0),
-								Contact = GetString(rs, 6)
+								Name = GetString(rs, 6)
 							},
 							Item = new Item {
 								Id = GetInt32(rs, 1),
@@ -1502,7 +1504,7 @@ ORDER BY Status, t.Date DESC, t.Id DESC"
 						new CustomerTimebook {
 							Contact = new CustomerContact {
 								Id = GetInt32(rs, 0),
-								Contact = GetString(rs, 6)
+								Name = GetString(rs, 6)
 							},
 							Item = new Item {
 								Id = GetInt32(rs, 1),
@@ -1579,7 +1581,7 @@ ORDER BY Type"
 				while (rs.Read()) {
 					contacts.Add(
 						new CustomerContact {
-							Contact = GetString(rs, 0),
+							Name = GetString(rs, 0),
 							Phone = GetString(rs, 1),
 							Mobile = GetString(rs, 2),
 							Email = GetString(rs, 3),

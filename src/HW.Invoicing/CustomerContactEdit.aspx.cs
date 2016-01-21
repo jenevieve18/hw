@@ -45,7 +45,7 @@ namespace HW.Invoicing
                 var c = r.ReadContact(id);
                 if (c != null)
                 {
-                    textBoxContact.Text = c.Contact;
+                    textBoxContact.Text = c.Name;
                     textBoxContactPurchaseOrderNumber.Text = c.PurchaseOrderNumber;
                     textBoxContactTitle.Text = c.Title;
                     textBoxPhone.Text = c.Phone;
@@ -66,7 +66,7 @@ namespace HW.Invoicing
         protected void buttonSave_Click(object sender, EventArgs e)
         {
             var c = new CustomerContact {
-                Contact = textBoxContact.Text,
+                Name = textBoxContact.Text,
                 PurchaseOrderNumber = textBoxContactPurchaseOrderNumber.Text,
                 Title = textBoxContactTitle.Text,
                 Phone = textBoxPhone.Text,

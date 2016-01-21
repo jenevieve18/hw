@@ -44,7 +44,8 @@ namespace HW.Invoicing
             Response.ClearContent();
             Response.ContentType = System.Net.Mime.MediaTypeNames.Application.Pdf;
 
-            string file = string.Format("{0} {1} {2} {3}", invoice.Number, invoice.Customer.Name, invoice.Customer.YourReferencePerson, DateTime.Now.ToString("MMM yyyy"));
+//            string file = string.Format("{0} {1} {2} {3}", invoice.Number, invoice.Customer.Name, invoice.Customer.YourReferencePerson, DateTime.Now.ToString("MMM yyyy"));
+string file = string.Format("{0} {1} {2} {3}", invoice.Number, invoice.Customer.Name, invoice.Customer.ContactPerson.Name, DateTime.Now.ToString("MMM yyyy"));
             Response.AddHeader("content-disposition", string.Format("attachment;filename=\"{0}.pdf\";", file));
 
             string templateFileName = company.HasInvoiceTemplate ? string.Format(Server.MapPath("~/uploads/{0}"), company.InvoiceTemplate) : Server.MapPath(@"IHG faktura MALL Ian without comments.pdf");

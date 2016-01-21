@@ -304,7 +304,8 @@ namespace HW.Invoicing.Core.Helpers
 			form.SetField("Text3", invoice.Date.Value.ToString("yyyy-MM-dd"));
 			form.SetField("Text4", invoice.MaturityDate.Value.ToString("yyyy-MM-dd"));
 			
-			form.SetField("Text5", invoice.Customer.YourReferencePerson);
+//			form.SetField("Text5", invoice.Customer.YourReferencePerson);
+			form.SetField("Text5", invoice.Customer.ContactPerson.Name);
 			form.SetField("Text6", invoice.Customer.OurReferencePerson);
 			
 			form.SetField("Text7", invoice.Customer.ToString() + "\n\n" + invoice.Customer.PurchaseOrderNumber);

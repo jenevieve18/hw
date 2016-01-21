@@ -55,7 +55,7 @@ namespace HW.Invoicing
                     dropDownListTimebookContacts.Items.Clear();
                     foreach (var c in r.FindContacts(customerId))
                     {
-                        dropDownListTimebookContacts.Items.Add(new ListItem(c.Contact, c.Id.ToString()));
+                        dropDownListTimebookContacts.Items.Add(new ListItem(c.Name, c.Id.ToString()));
                     }
 
                     panelSubscriptionTimebook.Visible = timebook.IsSubscription;

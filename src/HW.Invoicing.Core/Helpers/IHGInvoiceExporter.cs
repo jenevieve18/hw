@@ -119,7 +119,8 @@ namespace HW.Invoicing.Core.Helpers
 			
 			t3.AddCell(C(" ", smallestFont, Rectangle.TOP_BORDER, 0, 2));
 			t3.AddCell(C("Er referens:", smallFont, 3));
-			t3.AddCell(C(invoice.Customer.YourReferencePerson, smallFont, 3));
+//			t3.AddCell(C(invoice.Customer.YourReferencePerson, smallFont, 3));
+			t3.AddCell(C(invoice.Customer.ContactPerson.Name, smallFont, 3));
 			
 			t3.AddCell(C(" ", smallestFont, Rectangle.NO_BORDER, 0, 2));
 			t3.AddCell(C("Vår referens:", smallFont, 3));
@@ -316,7 +317,8 @@ namespace HW.Invoicing.Core.Helpers
 			SetFieldProperty(form, "Text3", invoice.Date.Value.ToString("yyyy-MM-dd"), f, fontSize);
 			SetFieldProperty(form, "Text4", invoice.MaturityDate.Value.ToString("yyyy-MM-dd"), f, fontSize);
 			
-			SetFieldProperty(form, "Text5", invoice.Customer.YourReferencePerson, f, 8f);
+//			SetFieldProperty(form, "Text5", invoice.Customer.YourReferencePerson, f, 8f);
+			SetFieldProperty(form, "Text5", invoice.Customer.ContactPerson.Name, f, 8f);
 			SetFieldProperty(form, "Text6", invoice.Customer.OurReferencePerson, f, 8f);
 			
 			SetFieldProperty(form, "Text6B", invoice.Customer.ToString() + "\n\n" + invoice.Customer.PurchaseOrderNumber, f, fontSize);

@@ -128,7 +128,7 @@ namespace HW.Invoicing
 					labelInvoiceNumber.Text = "IHG-001";
 					labelInvoiceOurReferencePerson.Text = customer.OurReferencePerson;
 					labelInvoicePurchaseOrderNumber.Text = customer.PurchaseOrderNumber;
-					labelInvoiceYourReferencePerson.Text = customer.YourReferencePerson;
+//					labelInvoiceYourReferencePerson.Text = customer.YourReferencePerson;
 					panelPurchaseOrderNumber.Visible = customer.PurchaseOrderNumber != "";
 
 					// Subscription Panel
@@ -300,7 +300,7 @@ namespace HW.Invoicing
 		{
 			var t = new CustomerContact
 			{
-				Contact = textBoxContact.Text,
+				Name = textBoxContact.Text,
                 PurchaseOrderNumber = textBoxContactPurchaseOrderNumber.Text,
 				Title = textBoxContactTitle.Text,
 				Phone = textBoxContactPhone.Text,
@@ -387,7 +387,7 @@ namespace HW.Invoicing
 			dropDownListTimebookContacts.Items.Clear();
 			foreach (var c in contacts)
 			{
-				dropDownListTimebookContacts.Items.Add(new ListItem(c.Contact, c.Id.ToString()));
+				dropDownListTimebookContacts.Items.Add(new ListItem(c.Name, c.Id.ToString()));
 			}
 
 			dropDownListLanguage.Items.Clear();

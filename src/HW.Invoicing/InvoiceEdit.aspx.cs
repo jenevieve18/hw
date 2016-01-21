@@ -38,7 +38,8 @@ namespace HW.Invoicing
                     labelMaturityDate.Text = invoice.MaturityDate.Value.ToString("yyyy-MM-dd");
                     labelInvoiceCustomerAddress.Text = invoice.Customer.ToString().Replace("\n", "<br>");
                     labelInvoicePurchaseOrderNumber.Text = invoice.Customer.PurchaseOrderNumber;
-                    labelInvoiceYourReferencePerson.Text = invoice.Customer.YourReferencePerson;
+//                    labelInvoiceYourReferencePerson.Text = invoice.Customer.YourReferencePerson;
+labelInvoiceYourReferencePerson.Text = invoice.Customer.ContactPerson.Name;
                     labelInvoiceOurReferencePerson.Text = invoice.Customer.OurReferencePerson;
                     textBoxInvoiceComments.Text = invoice.Comments;
                     panelPurchaseOrderNumber.Visible = invoice.Customer.PurchaseOrderNumber != "";

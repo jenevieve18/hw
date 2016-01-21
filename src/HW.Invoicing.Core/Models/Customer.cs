@@ -62,7 +62,7 @@ namespace HW.Invoicing.Core.Models
         public string InvoiceEmailCC { get; set; }
 		public string PostalAddress { get; set; }
 		public string PurchaseOrderNumber { get; set; }
-		public string YourReferencePerson { get; set; }
+//		public string YourReferencePerson { get; set; }
         public CustomerContact ContactPerson { get; set; }
 		public string OurReferencePerson { get; set; }
 //		public bool Inactive { get; set; }
@@ -372,7 +372,7 @@ namespace HW.Invoicing.Core.Models
 	public class CustomerContact : BaseModel
 	{
 		public Customer Customer { get; set; }
-		public string Contact { get; set; }
+		public string Name { get; set; }
 		public string Title { get; set; }
 		public string Phone { get; set; }
 		public string Mobile { get; set; }
@@ -384,7 +384,7 @@ namespace HW.Invoicing.Core.Models
 		public override void Validate()
 		{
 			base.Validate();
-			AddErrorIf(Contact == "", "Contact person name shouldn't be empty.");
+			AddErrorIf(Name == "", "Contact person name shouldn't be empty.");
 		}
 		
 		public string GetContactType()
@@ -399,7 +399,7 @@ namespace HW.Invoicing.Core.Models
         public override string ToString()
         {
             string p = PurchaseOrderNumber != null && PurchaseOrderNumber != "" ? " (" + PurchaseOrderNumber + ")" : "";
-            return string.Format("{0}{1}", Contact, p);
+            return string.Format("{0}{1}", Name, p);
         }
 	}
 	
@@ -507,14 +507,14 @@ namespace HW.Invoicing.Core.Models
 		{
 			string s = "";
 			s += StrHelper.Str(Department != null && Department != "", Department + "<br>", "");
-			s += StrHelper.Str(Contact.Contact != "", "<i>" + Contact.Contact + "</i>", "");
+			s += StrHelper.Str(Contact.Name != "", "<i>" + Contact.Name + "</i>", "");
 			return s;
 		}
         public string GetDepartmentAndContact2()
         {
             string s = "";
             s += StrHelper.Str(Department != null && Department != "", Department, "");
-            s += StrHelper.Str(Contact.Contact != null && Contact.Contact != "", " - " + Contact.Contact, "");
+            s += StrHelper.Str(Contact.Name != null && Contact.Name != "", " - " + Contact.Name, "");
             return s;
         }
 
