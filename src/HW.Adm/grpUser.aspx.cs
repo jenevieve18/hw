@@ -37,7 +37,8 @@ public partial class grpUser : System.Web.UI.Page
                     "<TD><A HREF=\"grpUserSetup.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&SAID=" + rs.GetInt32(0) + "\">" + (DbHelper.GetString(rs, 1) != "" ? DbHelper.GetString(rs, 1) : DbHelper.GetString(rs, 8)) + "</A>&nbsp;&nbsp;&nbsp;</TD>" +
                     "<TD>" + rs.GetString(2) + "&nbsp;&nbsp;</TD>" +
                     "<TD>" +
-                        "<img width=\"16\" src=\"" + System.Configuration.ConfigurationManager.AppSettings["hwGrpURL"] + "/img/" + (rs.IsDBNull(7) ? "null" : "locked") + ".gif\"/>" +
+//                	"<img width=\"16\" src=\"" + System.Configuration.ConfigurationManager.AppSettings["hwGrpURL"] + "/img/" + (rs.IsDBNull(7) ? "null" : "locked") + ".gif\"/>" +
+                	"<img width=\"16\" src=\"" + System.Configuration.ConfigurationManager.AppSettings["hwGrpURL"] + "/img/" + (DbHelper.GetInt32(rs, 7) != 1 ? "null" : "locked") + ".gif\"/>" +
                         "&nbsp;&nbsp;" +
                         "<A HREF=\"" + System.Configuration.ConfigurationManager.AppSettings["hwGrpURL"] + "/default.aspx?SAKEY=" + rs.GetString(3) + rs.GetInt32(4).ToString() + "\" TARGET=\"_blank\">Log in (" + System.Configuration.ConfigurationManager.AppSettings["hwGrpURLtext"] + ")</A>" +
                         "&nbsp;" +
