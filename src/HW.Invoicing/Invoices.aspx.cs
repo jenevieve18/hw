@@ -58,29 +58,15 @@ namespace HW.Invoicing
 			if (!IsPostBack)
 			{
 				dropDownListFinancialYear.Items.Clear();
-				//int year = DateTime.Now.Year;
-				//for (int i = year; i >= year - 5; i--) {
-				//    dropDownListFinancialYear.Items.Add(new ListItem(string.Format("{0} - {1}", i, i + 1), i.ToString()));
-				//}
-//				int year = DateTime.Now.Year;
-//				int i = 0;
 				var years = new List<Year>();
 				foreach (var y in r.FindDistinctYears())
 				{
-//					if (i++ <= 0)
-//					{
-//						year = y + 1;
-//					}
-//					dropDownListFinancialYear.Items.Add(new ListItem(string.Format("{0} - {1}", y - 1, y), (y + 1).ToString()));
 					var dateFrom = new DateTime(y, company.FinancialMonthStart.Value.Month, company.FinancialMonthStart.Value.Day, 0, 0, 0);
 					var dateTo = new DateTime(y + 1, company.FinancialMonthEnd.Value.Month, company.FinancialMonthEnd.Value.Day, 23, 59, 59);
 					if (r.HasInvoicesByCompany(dateFrom, dateTo, companyId)) {
 						years.Add(new Year { From = y, To = y + 1 });
 					}
 				}
-//				var dateFrom = new DateTime(year - 1, company.FinancialMonthStart.Value.Month, company.FinancialMonthStart.Value.Day, 0, 0, 0);
-//				var dateTo = new DateTime(year, company.FinancialMonthEnd.Value.Month, company.FinancialMonthEnd.Value.Day, 23, 59, 59);
-//				invoices = r.FindByDateAndCompany(dateFrom, dateTo, companyId);
 				
 				Year year = null;
 				int i = 0;
@@ -109,9 +95,6 @@ namespace HW.Invoicing
 		{
 			int year = ConvertHelper.ToInt32(dropDownListFinancialYear.SelectedValue);
 			
-//			var dateFrom = new DateTime(year - 1, company.FinancialMonthStart.Value.Month, company.FinancialMonthStart.Value.Day, 0, 0, 0);
-//			var dateTo = new DateTime(year, company.FinancialMonthEnd.Value.Month, company.FinancialMonthEnd.Value.Day, 23, 59, 59);
-//			invoices = r.FindByDateAndCompany(dateFrom, dateTo, companyId);
 			var dateFrom = new DateTime(year, company.FinancialMonthStart.Value.Month, company.FinancialMonthStart.Value.Day, 0, 0, 0);
 			var dateTo = new DateTime(year + 1, company.FinancialMonthEnd.Value.Month, company.FinancialMonthEnd.Value.Day, 23, 59, 59);
 			invoices = r.FindByDateAndCompany(dateFrom, dateTo, companyId);
