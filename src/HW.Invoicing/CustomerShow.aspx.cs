@@ -96,8 +96,9 @@ namespace HW.Invoicing
 
 					//labelPurchaseOrderNumber.Text = textBoxPurchaseOrderNumber.Text = customer.PurchaseOrderNumber;
 					//labelYourReferencePerson.Text = textBoxYourReferencePerson.Text = customer.YourReferencePerson;
-                    labelYourReferencePerson.Text = customer.ContactPerson != null ? customer.ContactPerson.ToString() : "";
-					labelOurReferencePerson.Text = textBoxOurReferencePerson.Text = customer.OurReferencePerson;
+                    //labelYourReferencePerson.Text = customer.ContactPerson != null ? customer.ContactPerson.ToString() : "";
+                    labelYourReferencePerson.Text = customer.ContactPerson != null ? customer.ContactPerson.Name : "";
+                    labelOurReferencePerson.Text = textBoxOurReferencePerson.Text = customer.OurReferencePerson;
 					labelPhone.Text = textBoxPhone.Text = customer.Phone;
 					labelEmail.Text = textBoxEmail.Text = customer.Email;
 					labelLanguage.Text = customer.Language.Name;
@@ -129,7 +130,8 @@ namespace HW.Invoicing
 					labelInvoiceOurReferencePerson.Text = customer.OurReferencePerson;
 					labelInvoicePurchaseOrderNumber.Text = customer.PurchaseOrderNumber;
 //					labelInvoiceYourReferencePerson.Text = customer.YourReferencePerson;
-					panelPurchaseOrderNumber.Visible = customer.PurchaseOrderNumber != "";
+                    labelInvoiceYourReferencePerson.Text = customer.ContactPerson.Name;
+                    panelPurchaseOrderNumber.Visible = customer.PurchaseOrderNumber != "";
 
 					// Subscription Panel
 					checkBoxSubscribe.Checked = customer.HasSubscription;

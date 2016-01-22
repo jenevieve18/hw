@@ -788,6 +788,7 @@ WHERE c.Id = @Id"
 			}
             if (c != null && c.HasSubscription)
             {
+				//c.ContactPerson = ReadContact(c.ContactPerson.Id);
                 query = @"
 SELECT i.Id,
 	i.Name,
