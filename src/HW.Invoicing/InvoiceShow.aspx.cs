@@ -34,7 +34,7 @@ namespace HW.Invoicing
                 labelInvoiceCustomerAddress.Text = invoice.Customer.ToString().Replace("\n", "<br>");
                 labelInvoicePurchaseOrderNumber.Text = invoice.Customer.PurchaseOrderNumber;
 //                labelInvoiceYourReferencePerson.Text = invoice.Customer.YourReferencePerson;
-labelInvoiceYourReferencePerson.Text = invoice.Customer.ContactPerson.Name;
+                labelInvoiceYourReferencePerson.Text = invoice.Customer != null && invoice.Customer.ContactPerson != null ? invoice.Customer.ContactPerson.Name : "";
                 labelInvoiceOurReferencePerson.Text = invoice.Customer.OurReferencePerson;
                 panelPurchaseOrder.Visible = invoice.Customer.PurchaseOrderNumber != "";
             }
