@@ -12,23 +12,23 @@ namespace HW.Tests.Helpers
 	[TestFixture]
 	public class InvoiceExporterTests
 	{
-		Invoice i;
+		Invoice invoice;
+		Invoice invoiceWithNullCustomer;
+		
+		Company ihgCompany;
+		
 		IHGInvoiceExporter ihg;
-//		HCGInvoiceExporter hcg;
-//		VCInvoiceExporter vc;
 		BaseInvoiceExporter hcg;
-		BaseInvoiceExporter vc;
+//		BaseInvoiceExporter vc;
 		
 		[SetUp]
 		public void Setup()
 		{
-//			i = new SqlInvoiceRepository().Read(52);
-			i = new Invoice {
+			invoice = new Invoice {
 				Customer = new Customer {
 					Number = "XXXYY-0123",
 					Name = "Carl T. Escalante",
 					PurchaseOrderNumber = "XXX-01234",
-//					YourReferencePerson = "Gerald S. Hicks",
 					ContactPerson = new CustomerContact { Name  = "Gerald S. Hicks" },
 					OurReferencePerson = "Michael K. Smith",
 					InvoiceAddress = @"Carl T. Escalante
@@ -111,23 +111,16 @@ Scottsdale, AZ 85256"
 				)
 			};
 			
-//			ihg = new IHGInvoiceExporter(new IHGInvoicePDFScratchGenerator());
-//			hcg = new HCGInvoiceExporter(new HCGInvoicePDFScratchGenerator());
-//			vc = new VCInvoiceExporter(new VCInvoicePDFScratchGenerator());
-//			hcg = new HCGInvoiceExporter(new BaseInvoicePDFScratchGenerator());
-//			vc = new VCInvoiceExporter(new BaseInvoicePDFScratchGenerator());
 			ihg = new IHGInvoiceExporter();
-//			hcg = new HCGInvoiceExporter();
-//			vc = new VCInvoiceExporter();
 			hcg = new BaseInvoiceExporter();
-			vc = new BaseInvoiceExporter();
+//			vc = new BaseInvoiceExporter();
 		}
 		
 		[Test]
 		public void TestIHGExporter()
 		{
 			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create, FileAccess.Write)) {
-				i.Company = new Company {
+				invoice.Company = new Company {
 					Name = "Interactive Health Group in Stockholm AB",
 					Address = @"Rörstrandsgatan 36, 113 40
 Stockholm, Sweden",
@@ -139,24 +132,63 @@ Stockholm, Sweden",
 					Website = "www.healthwatch.se",
 					Email = "dan.hasson@healthwatch.se"
 				};
-				MemoryStream s = ihg.Export(i, @"IHG faktura MALL Ian without comments.pdf", "arial.ttf", true);
+				MemoryStream s = ihg.Export(invoice, @"IHG faktura MALL Ian without comments.pdf", "arial.ttf", true);
 				s.WriteTo(f);
 			}
 			Process.Start("test.pdf");
 		}
 		
-//		[Test]
-//		public void TestIHGFExporter2()
-//		{
-//			ihg.Export2(i, @"IHG faktura MALL Ian without comments.pdf");
-//			Process.Start("test.pdf");
-//		}
+		[Test]
+		public void TestIHGExporterWithNullCustomer()
+		{
+			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create, FileAccess.Write)) {
+				invoice.Company = new Company {
+					Name = "Interactive Health Group in Stockholm AB",
+					Address = @"Rörstrandsgatan 36, 113 40
+Stockholm, Sweden",
+					BankAccountNumber = "5091 – 8853",
+					OrganizationNumber = "556757-0568",
+					Phone = "+46-70-7284298",
+					TIN = "SE556712369901",
+					InvoiceLogo = "ihg.png",
+					Website = "www.healthwatch.se",
+					Email = "dan.hasson@healthwatch.se"
+				};
+				invoice.Customer = null;
+				MemoryStream s = ihg.Export(invoice, @"IHG faktura MALL Ian without comments.pdf", "arial.ttf", true);
+				s.WriteTo(f);
+			}
+			Process.Start("test.pdf");
+		}
+		
+		[Test]
+		public void TestIHGExporterWithNullCustomerContact()
+		{
+			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create, FileAccess.Write)) {
+				invoice.Company = new Company {
+					Name = "Interactive Health Group in Stockholm AB",
+					Address = @"Rörstrandsgatan 36, 113 40
+Stockholm, Sweden",
+					BankAccountNumber = "5091 – 8853",
+					OrganizationNumber = "556757-0568",
+					Phone = "+46-70-7284298",
+					TIN = "SE556712369901",
+					InvoiceLogo = "ihg.png",
+					Website = "www.healthwatch.se",
+					Email = "dan.hasson@healthwatch.se"
+				};
+				invoice.Customer.ContactPerson = null;
+				MemoryStream s = ihg.Export(invoice, @"IHG faktura MALL Ian without comments.pdf", "arial.ttf", true);
+				s.WriteTo(f);
+			}
+			Process.Start("test.pdf");
+		}
 		
 		[Test]
 		public void TestHCGExporter()
 		{
 			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create, FileAccess.Write)) {
-				i.Company = new Company {
+				invoice.Company = new Company {
 					Name = "Interactive Health Group in Stockholm AB",
 					Address = @"Rörstrandsgatan 36, 113 40
 Stockholm, Sweden",
@@ -168,37 +200,118 @@ Stockholm, Sweden",
 					Email = "info@danhasson.se",
 					OrganizationNumber = "556757-0568"
 				};
-				MemoryStream s = hcg.Export(i, @"HCG Fakturamall tom without comments.pdf", "calibri.ttf", true);
+				MemoryStream s = hcg.Export(invoice, @"HCG Fakturamall tom without comments.pdf", "calibri.ttf", true);
+				s.WriteTo(f);
+			}
+			Process.Start("test.pdf");
+		}
+		
+		[Test]
+		public void TestHCGExporterWithNullCustomer()
+		{
+			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create, FileAccess.Write)) {
+				invoice.Company = new Company {
+					Name = "Interactive Health Group in Stockholm AB",
+					Address = @"Rörstrandsgatan 36, 113 40
+Stockholm, Sweden",
+					BankAccountNumber = "5091 – 8853",
+					Phone = "+46-70-7284298",
+					TIN = "SE556712369901",
+					InvoiceLogo = "hcg.png",
+					Website = "www.danhasson.se",
+					Email = "info@danhasson.se",
+					OrganizationNumber = "556757-0568"
+				};
+				invoice.Customer = null;
+				MemoryStream s = hcg.Export(invoice, @"HCG Fakturamall tom without comments.pdf", "calibri.ttf", true);
+				s.WriteTo(f);
+			}
+			Process.Start("test.pdf");
+		}
+		
+		[Test]
+		public void TestHCGExporterWithNullCustomerContact()
+		{
+			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create, FileAccess.Write)) {
+				invoice.Company = new Company {
+					Name = "Interactive Health Group in Stockholm AB",
+					Address = @"Rörstrandsgatan 36, 113 40
+Stockholm, Sweden",
+					BankAccountNumber = "5091 – 8853",
+					Phone = "+46-70-7284298",
+					TIN = "SE556712369901",
+					InvoiceLogo = "hcg.png",
+					Website = "www.danhasson.se",
+					Email = "info@danhasson.se",
+					OrganizationNumber = "556757-0568"
+				};
+				invoice.Customer.ContactPerson = null;
+				MemoryStream s = hcg.Export(invoice, @"HCG Fakturamall tom without comments.pdf", "calibri.ttf", true);
 				s.WriteTo(f);
 			}
 			Process.Start("test.pdf");
 		}
 		
 //		[Test]
-//		public void TestHCGFExporter2()
+//		public void TestVCExporter()
 //		{
-//			hcg.Export2(i, @"HCG Fakturamall tom without comments.pdf", "calibri.ttf");
+//			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create, FileAccess.Write)) {
+//				invoice.Company = new Company {
+//					Name = "Villaume Consulting AB",
+//					Address = "Storholmsvägen 382, 132 52 Saltsjö-Boo",
+//					BankAccountNumber = "425 – 7291",
+//					Phone = "+46 70 241 56 90",
+//					TIN = "SE556942889801",
+//					InvoiceLogo = "vc.png",
+//					Email = "karin.villaume@gmail.com",
+//					OrganizationNumber = "556942-8898"
+//				};
+//				MemoryStream s = vc.Export(invoice, @"HCG Fakturamall tom without comments.pdf", "calibri.ttf", true);
+//				s.WriteTo(f);
+//			}
 //			Process.Start("test.pdf");
 //		}
-		
-		[Test]
-		public void TestVCExporter()
-		{
-			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create, FileAccess.Write)) {
-				i.Company = new Company {
-					Name = "Villaume Consulting AB",
-					Address = "Storholmsvägen 382, 132 52 Saltsjö-Boo",
-					BankAccountNumber = "425 – 7291",
-					Phone = "+46 70 241 56 90",
-					TIN = "SE556942889801",
-					InvoiceLogo = "vc.png",
-					Email = "karin.villaume@gmail.com",
-					OrganizationNumber = "556942-8898"
-				};
-				MemoryStream s = vc.Export(i, @"HCG Fakturamall tom without comments.pdf", "calibri.ttf", true);
-				s.WriteTo(f);
-			}
-			Process.Start("test.pdf");
-		}
+//		
+//		[Test]
+//		public void TestVCExporterWithNullCustomer()
+//		{
+//			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create, FileAccess.Write)) {
+//				invoice.Company = new Company {
+//					Name = "Villaume Consulting AB",
+//					Address = "Storholmsvägen 382, 132 52 Saltsjö-Boo",
+//					BankAccountNumber = "425 – 7291",
+//					Phone = "+46 70 241 56 90",
+//					TIN = "SE556942889801",
+//					InvoiceLogo = "vc.png",
+//					Email = "karin.villaume@gmail.com",
+//					OrganizationNumber = "556942-8898"
+//				};
+//				invoice.Customer = null;
+//				MemoryStream s = vc.Export(invoice, @"HCG Fakturamall tom without comments.pdf", "calibri.ttf", true);
+//				s.WriteTo(f);
+//			}
+//			Process.Start("test.pdf");
+//		}
+//		
+//		[Test]
+//		public void TestVCExporterWithNullCustomerContact()
+//		{
+//			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create, FileAccess.Write)) {
+//				invoice.Company = new Company {
+//					Name = "Villaume Consulting AB",
+//					Address = "Storholmsvägen 382, 132 52 Saltsjö-Boo",
+//					BankAccountNumber = "425 – 7291",
+//					Phone = "+46 70 241 56 90",
+//					TIN = "SE556942889801",
+//					InvoiceLogo = "vc.png",
+//					Email = "karin.villaume@gmail.com",
+//					OrganizationNumber = "556942-8898"
+//				};
+//				invoice.Customer.ContactPerson = null;
+//				MemoryStream s = vc.Export(invoice, @"HCG Fakturamall tom without comments.pdf", "calibri.ttf", true);
+//				s.WriteTo(f);
+//			}
+//			Process.Start("test.pdf");
+//		}
 	}
 }
