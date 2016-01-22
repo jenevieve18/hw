@@ -1081,7 +1081,7 @@
                     <% if (c.Inactive) { %>
                         <tr>
                             <td><%= c.GetContactType() %></td>
-                            <td><strike><%= c.Contact %></strike></td>
+                            <td><strike><%= c.Name %></strike></td>
                             <td><strike><%= c.PurchaseOrderNumber %></strike></td>
                             <td><strike><%= c.Title %></strike></td>
                             <td><strike><%= c.Phone %></strike></td>
@@ -1095,7 +1095,7 @@
                     <% } else { %>
                         <tr>
                             <td><%= c.GetContactType() %></td>
-                            <td><%= c.Contact %></td>
+                            <td><%= c.Name %></td>
                             <td><%= c.PurchaseOrderNumber %></td>
                             <td><%= c.Title %></td>
                             <td><%= c.Phone %></td>

@@ -30,25 +30,30 @@ namespace HW.Invoicing
 			{
 				var u = service.ReadUser(id);
 
-				checkBoxListLinks.Items.Clear();
-				foreach (var l in Link.GetLinks())
-				{
-					if (l.ForSubscription && !company.HasSubscriber)
-					{
-					}
-					else
-					{
-						var li = new ListItem(l.Name, l.Id.ToString());
-						li.Selected = u.HasAccess(l, companyId);
-						checkBoxListLinks.Items.Add(li);
-					}
-				}
-				if (u != null)
-				{
-					textBoxUsername.Text = u.Username;
-					textBoxName.Text = u.Name;
-					textBoxColor.Text = u.Color;
-				}
+                if (u != null)
+                {
+                    textBoxUsername.Text = u.Username;
+                    textBoxName.Text = u.Name;
+                    textBoxColor.Text = u.Color;
+
+                    checkBoxListLinks.Items.Clear();
+                    foreach (var l in Link.GetLinks())
+                    {
+                        if (l.ForSubscription && !company.HasSubscriber)
+                        {
+                        }
+                        else
+                        {
+                            var li = new ListItem(l.Name, l.Id.ToString());
+                            li.Selected = u.HasAccess(l, companyId);
+                            checkBoxListLinks.Items.Add(li);
+                        }
+                    }
+                }
+                else
+                {
+                    Response.Redirect("collaborators.aspx");
+                }
 			}
 		}
 

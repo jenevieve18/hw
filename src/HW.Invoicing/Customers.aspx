@@ -41,7 +41,7 @@
                             <td><strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike></td>
                             <td>
                                 <% if (c.FirstPrimaryContact != null) { %>
-                                    <strike><%= c.FirstPrimaryContact.Contact %></strike>
+                                    <strike><%= c.FirstPrimaryContact.Name %></strike>
                                 <% } %>
                             </td>
                             <td><strike><%= c.Phone %></strike></td>
@@ -131,7 +131,7 @@
                             <td><strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike></td>
                             <td>
                                 <% if (c.FirstPrimaryContact != null) { %>
-                                    <strike><%= c.FirstPrimaryContact.Contact %></strike>
+                                    <strike><%= c.FirstPrimaryContact.Name %></strike>
                                 <% } %>
                             </td>
                             <td><strike><%= c.Phone %></strike></td>
@@ -173,7 +173,7 @@
                             <td><strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike></td>
                             <td>
                                 <% if (c.FirstPrimaryContact != null) { %>
-                                    <strike><%= c.FirstPrimaryContact.Contact %></strike>
+                                    <strike><%= c.FirstPrimaryContact.Name %></strike>
                                 <% } %>
                             </td>
                             <td><strike><%= c.Phone %></strike></td>
