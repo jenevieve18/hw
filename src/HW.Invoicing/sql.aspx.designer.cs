@@ -10,7 +10,7 @@
 namespace HW.Invoicing {
     
     
-    public partial class sql2 {
+    public partial class sql {
         
         /// <summary>
         /// form1 control.

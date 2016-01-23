@@ -125,7 +125,7 @@
     <Content Include="Profile.aspx" />
     <Content Include="Settings.aspx" />
     <Content Include="SignOut.aspx" />
-    <Content Include="sql2.aspx" />
+    <Content Include="sql.aspx" />
     <Content Include="CustomerAgreementShow.aspx" />
     <Content Include="UnitAdd.aspx" />
     <Content Include="UnitDeactivate.aspx" />
@@ -631,12 +631,12 @@
     <Compile Include="SignOut.aspx.designer.cs">
       <DependentUpon>SignOut.aspx</DependentUpon>
     </Compile>
-    <Compile Include="sql2.aspx.cs">
-      <DependentUpon>sql2.aspx</DependentUpon>
+    <Compile Include="sql.aspx.cs">
+      <DependentUpon>sql.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="sql2.aspx.designer.cs">
-      <DependentUpon>sql2.aspx</DependentUpon>
+    <Compile Include="sql.aspx.designer.cs">
+      <DependentUpon>sql.aspx</DependentUpon>
     </Compile>
     <Compile Include="CustomerAgreementShow.aspx.cs">
       <DependentUpon>CustomerAgreementShow.aspx</DependentUpon>

@@ -10,7 +10,7 @@ using System.Configuration;
 
 namespace HW.Invoicing
 {
-    public partial class sql2 : System.Web.UI.Page
+    public partial class sql : System.Web.UI.Page
     {
         protected string message;
 
