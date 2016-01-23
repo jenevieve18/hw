@@ -12,8 +12,8 @@ namespace HW.Invoicing
 {
     public partial class InvoiceShow : System.Web.UI.Page
     {
-        SqlInvoiceRepository ir = new SqlInvoiceRepository();
-        SqlCompanyRepository cr = new SqlCompanyRepository();
+        SqlInvoiceRepository invoiceRepository = new SqlInvoiceRepository();
+        SqlCompanyRepository companyRepository = new SqlCompanyRepository();
         int id;
         protected Invoice invoice;
         protected Company company;
@@ -24,16 +24,14 @@ namespace HW.Invoicing
 
             id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
             
-            invoice = ir.Read(id);
+            invoice = invoiceRepository.Read(id);
             if (invoice != null)
             {
                 labelInvoiceNumber.Text = invoice.Number;
                 labelInvoiceDate.Text = invoice.Date.Value.ToString("yyyy-MM-dd");
                 labelMaturityDate.Text = invoice.MaturityDate.Value.ToString("yyyy-MM-dd");
-                //labelInvoiceCustomerNumber.Text = invoice.Customer.Number;
                 labelInvoiceCustomerAddress.Text = invoice.Customer.ToString().Replace("\n", "<br>");
                 labelInvoicePurchaseOrderNumber.Text = invoice.Customer.PurchaseOrderNumber;
-//                labelInvoiceYourReferencePerson.Text = invoice.Customer.YourReferencePerson;
                 labelInvoiceYourReferencePerson.Text = invoice.Customer != null && invoice.Customer.ContactPerson != null ? invoice.Customer.ContactPerson.Name : "";
                 labelInvoiceOurReferencePerson.Text = invoice.Customer.OurReferencePerson;
                 panelPurchaseOrder.Visible = invoice.Customer.PurchaseOrderNumber != "";
@@ -44,7 +42,7 @@ namespace HW.Invoicing
             }
 
             int companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
-            company = cr.Read(companyId);
+            company = companyRepository.Read(companyId);
             if (company != null)
             {
                 labelCompanyName.Text = company.Name;

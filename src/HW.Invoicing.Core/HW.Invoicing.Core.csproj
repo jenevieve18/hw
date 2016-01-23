@@ -49,7 +49,6 @@
   <ItemGroup>
     <Compile Include="Helpers\AbstractInvoiceExporter.cs" />
     <Compile Include="Helpers\HCGEAgreementExporter.cs" />
-    <Compile Include="Helpers\HCGInvoiceExporter.cs" />
     <Compile Include="Helpers\IHGInvoiceExporter.cs" />
     <Compile Include="Helpers\InvoiceExporterFactory.cs" />
     <Compile Include="Helpers\ItemHelper.cs" />
@@ -82,6 +81,7 @@
     <Compile Include="Repositories\Sql\SqlUnitRepository.cs" />
     <Compile Include="Repositories\Sql\SqlUserRepository.cs" />
     <Compile Include="Services\CustomerService.cs" />
+    <Compile Include="Services\InvoiceService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -13,19 +13,19 @@ namespace HW.Invoicing
 {
 	public partial class InvoiceSend : System.Web.UI.Page
 	{
-		SqlInvoiceRepository ir = new SqlInvoiceRepository();
-		SqlCompanyRepository cr = new SqlCompanyRepository();
+		SqlInvoiceRepository invoiceRepository = new SqlInvoiceRepository();
+		SqlCompanyRepository companyRepository = new SqlCompanyRepository();
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
             HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
 
-			int id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
-			var invoice = ir.Read(id);
+			int invoiceId = ConvertHelper.ToInt32(Request.QueryString["Id"]);
+			var invoice = invoiceRepository.Read(invoiceId);
             HtmlHelper.RedirectIf(invoice == null, "invoices.aspx");
 			
 			int companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
-			var company = cr.Read(companyId);
+			var company = companyRepository.Read(companyId);
 			
 			invoice.Company = company;
 			if (company.HasInvoiceLogo) {
@@ -40,7 +40,9 @@ namespace HW.Invoicing
 
 				using (FileStream fStream = new FileStream(file, FileMode.Create, FileAccess.Write)) {
 					var exporter = InvoiceExporterFactory.GetExporter2(company.InvoiceExporter);
-					var exported = exporter.Export(invoice, templateFileName, Server.MapPath(@"arial.ttf"), false);
+//					var exported = exporter.Export(invoice, templateFileName, Server.MapPath(@"arial.ttf"), false);
+//					var exported = exporter.Export(invoice, templateFileName, Server.MapPath(@"arial.ttf"));
+					var exported = exporter.Export(invoice, templateFileName);
 					exported.WriteTo(fStream);
 				}
 				

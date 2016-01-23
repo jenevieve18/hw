@@ -15,19 +15,25 @@ namespace HW.Invoicing.Core.Helpers
 	{
 		string Name { get; }
 		
-		MemoryStream Export(Invoice invoice, string templateFileName, string calibriFont, bool flatten);
+//		MemoryStream Export(Invoice invoice, string templateFileName, string calibriFont, bool flatten);
+//		MemoryStream Export(Invoice invoice, string templateFileName, string calibriFont);
+		MemoryStream Export(Invoice invoice, string templateFileName);
 	}
 	
 	public interface IInvoicePDFGenerator
 	{
-		MemoryStream Generate(Invoice invoice, string templateFileName, string font, bool flatten);
+//		MemoryStream Generate(Invoice invoice, string templateFileName, string font, bool flatten);
+//		MemoryStream Generate(Invoice invoice, string templateFileName, string font);
+		MemoryStream Generate(Invoice invoice, string templateFileName);
 	}
 	
 	public abstract class AbstractInvoiceExporter : IInvoiceExporter
 	{
 		public abstract string Name { get; }
 		
-		public abstract MemoryStream Export(Invoice invoice, string templateFileName, string calibriFont, bool flatten);
+//		public abstract MemoryStream Export(Invoice invoice, string templateFileName, string calibriFont, bool flatten);
+//		public abstract MemoryStream Export(Invoice invoice, string templateFileName, string calibriFont);
+		public abstract MemoryStream Export(Invoice invoice, string templateFileName);
 	}
 	
 	public class BaseInvoiceExporter : AbstractInvoiceExporter
@@ -49,15 +55,21 @@ namespace HW.Invoicing.Core.Helpers
 			this.generator = generator;
 		}
 		
-		public override MemoryStream Export(Invoice invoice, string templateFileName, string font, bool flatten)
+//		public override MemoryStream Export(Invoice invoice, string templateFileName, string font, bool flatten)
+//		public override MemoryStream Export(Invoice invoice, string templateFileName, string font)
+		public override MemoryStream Export(Invoice invoice, string templateFileName)
 		{
-			return generator.Generate(invoice, templateFileName, font, flatten);
+//			return generator.Generate(invoice, templateFileName, font, flatten);
+//			return generator.Generate(invoice, templateFileName, font);
+			return generator.Generate(invoice, templateFileName);
 		}
 	}
 	
 	public abstract class AbstractInvoicePDFGenerator : IInvoicePDFGenerator
 	{
-		public abstract MemoryStream Generate(Invoice invoice, string templateFileName, string font, bool flatten);
+//		public abstract MemoryStream Generate(Invoice invoice, string templateFileName, string font, bool flatten);
+//		public abstract MemoryStream Generate(Invoice invoice, string templateFileName, string font);
+		public abstract MemoryStream Generate(Invoice invoice, string templateFileName);
 		
 		protected PdfPCell B(Font font, int colspan)
 		{
@@ -103,7 +115,9 @@ namespace HW.Invoicing.Core.Helpers
 		Font smallFont = FontFactory.GetFont("Arial", 8, Font.NORMAL, BaseColor.BLACK);
 		Font smallestFont = FontFactory.GetFont("Arial", 3, Font.NORMAL, BaseColor.BLACK);
 		
-		public override MemoryStream Generate(Invoice invoice, string templateFileName, string font, bool flatten)
+//		public override MemoryStream Generate(Invoice invoice, string templateFileName, string font, bool flatten)
+//		public override MemoryStream Generate(Invoice invoice, string templateFileName, string font)
+		public override MemoryStream Generate(Invoice invoice, string templateFileName)
 		{
 			byte[] bytes;
 			using (var output = new MemoryStream()) {
@@ -329,7 +343,7 @@ namespace HW.Invoicing.Core.Helpers
 				t.AddCell(new PdfPCell(new Phrase("Email", font)) { Border = Rectangle.NO_BORDER });
 				t.AddCell(new PdfPCell(new Phrase(invoice.Company.Email, font)) { Border = Rectangle.NO_BORDER });
 				t.AddCell(new PdfPCell(new Phrase("Org nr " + invoice.Company.OrganizationNumber, font)) { Colspan = 2, Border = Rectangle.NO_BORDER });
-
+				
 				t.WriteSelectedRows(0, -1, document.Left, document.Bottom, writer.DirectContent);
 			}
 			

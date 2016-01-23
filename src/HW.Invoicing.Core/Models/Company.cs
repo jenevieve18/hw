@@ -37,6 +37,17 @@ namespace HW.Invoicing.Core.Models
 		
 		public IList<Link> Links { get; set; }
 		
+		public string GetInvoiceTemplate(string directory, string defaultInvoiceTemplate)
+		{
+			if (HasInvoiceTemplate) {
+//				return string.Format(Server.MapPath("~/uploads/{0}"), InvoiceTemplate);
+				return string.Format(directory, InvoiceTemplate);
+			} else {
+//				return Server.MapPath(@"IHG faktura MALL Ian without comments.pdf");
+				return defaultInvoiceTemplate;
+			}
+		}
+		
 		public string GetWebsiteAndEmail()
 		{
 			string e = Email != null && Email != "" ? Email : "";
