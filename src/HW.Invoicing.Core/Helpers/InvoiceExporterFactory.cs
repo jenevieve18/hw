@@ -23,7 +23,7 @@ namespace HW.Invoicing.Core.Helpers
 //					case HCGF: return new HCGInvoiceExporter(new HCGInvoicePDFScratchGenerator());
 //					case HCGF: return new HCGInvoiceExporter(new BaseInvoicePDFScratchGenerator());
 //					case HCGF: return new HCGInvoiceExporter();
-					case HCGF: return new BaseInvoiceExporter();
+					case HCGF: return new DefaultInvoiceExporter();
 					default: throw new NotSupportedException();
 			}
 		}
@@ -34,7 +34,7 @@ namespace HW.Invoicing.Core.Helpers
 			if (exporters.Count > index) {
 				return exporters[index];
 			} else {
-				return new BaseInvoiceExporter();
+				return new DefaultInvoiceExporter();
 			}
 //			return GetExporters()[index];
 		}
@@ -46,7 +46,7 @@ namespace HW.Invoicing.Core.Helpers
 					new IHGInvoiceExporter(),
 //					new HCGInvoiceExporter(),
 //					new VCInvoiceExporter()
-					new BaseInvoiceExporter()
+					new DefaultInvoiceExporter()
 				}
 			);
 		}

@@ -37,7 +37,7 @@ namespace HW.Invoicing
 			string file = string.Format("{0} {1} {2} {3}", invoice.Number, invoice.Customer != null ? invoice.Customer.Name : "", invoice.Customer != null && invoice.Customer.ContactPerson != null ? invoice.Customer.ContactPerson.Name : "", DateTime.Now.ToString("MMM yyyy"));
 			Response.AddHeader("content-disposition", string.Format("attachment;filename=\"{0}.pdf\";", file));
 
-			string templateFileName = invoice.Customer.Company.GetInvoiceTemplate(Server.MapPath("~/uploads"), Server.MapPath(@"IHG faktura MALL Ian without comments.pdf"));
+//			string templateFileName = invoice.Customer.Company.GetInvoiceTemplate(Server.MapPath("~/uploads"), Server.MapPath(@"IHG faktura MALL Ian without comments.pdf"));
 			
 			var exporter = InvoiceExporterFactory.GetExporter2(invoice.Customer.Company.InvoiceExporter);
 

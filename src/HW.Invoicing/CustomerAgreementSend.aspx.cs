@@ -13,8 +13,8 @@ namespace HW.Invoicing
 {
     public partial class CustomerAgreementSend : System.Web.UI.Page
     {
-        SqlCustomerRepository r = new SqlCustomerRepository();
-        SqlCompanyRepository cr = new SqlCompanyRepository();
+        SqlCustomerRepository customerRepository = new SqlCustomerRepository();
+        SqlCompanyRepository companyRepository = new SqlCompanyRepository();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -22,22 +22,22 @@ namespace HW.Invoicing
             int companyId = ConvertHelper.ToInt32(Request.QueryString["CompanyId"]);
             int customerId = ConvertHelper.ToInt32(Request.QueryString["CustomerId"]);
 
-            var agreement = r.ReadAgreement(id);
-            var company = cr.Read(companyId);
+            var agreement = customerRepository.ReadAgreement(id);
+            var company = companyRepository.Read(companyId);
             if (agreement != null)
             {
                 var body = company.AgreementSignedEmailText;
 
                 try
                 {
-                    var x = new HCGEAgreementExporter();
+                    var exporter = new HCGEAgreementExporter();
                     //string file = string.Format("{0} {1} {2}", agreement.Id, agreement.Customer.Name, DateTime.Now.ToString("MMM yyyy"));
                     string file = string.Format(Server.MapPath("~/uploads/{0} {1} {2}.pdf"), agreement.Id, agreement.Customer.Name, DateTime.Now.ToString("MMM yyyy"));
                     string templateFileName = company.HasAgreementTemplate ? string.Format(Server.MapPath("~/uploads/{0}"), company.AgreementTemplate) : Server.MapPath(@"HCG Avtalsmall Latest.pdf");
 
                     using (FileStream f = new FileStream(file, FileMode.Create, FileAccess.Write))
                     {
-                        MemoryStream s = x.Export(agreement, templateFileName, "calibri.ttf");
+                        MemoryStream s = exporter.Export(agreement, templateFileName, "calibri.ttf");
                         s.WriteTo(f);
                     }
 

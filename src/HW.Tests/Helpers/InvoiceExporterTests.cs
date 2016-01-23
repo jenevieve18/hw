@@ -13,13 +13,9 @@ namespace HW.Tests.Helpers
 	public class InvoiceExporterTests
 	{
 		Invoice invoice;
-		Invoice invoiceWithNullCustomer;
-		
-		Company ihgCompany;
 		
 		IHGInvoiceExporter ihg;
-		BaseInvoiceExporter hcg;
-//		BaseInvoiceExporter vc;
+		DefaultInvoiceExporter def;
 		
 		[SetUp]
 		public void Setup()
@@ -112,8 +108,7 @@ Scottsdale, AZ 85256"
 			};
 			
 			ihg = new IHGInvoiceExporter();
-			hcg = new BaseInvoiceExporter();
-//			vc = new BaseInvoiceExporter();
+			def = new DefaultInvoiceExporter();
 		}
 		
 		[Test]
@@ -132,9 +127,6 @@ Stockholm, Sweden",
 					Website = "www.healthwatch.se",
 					Email = "dan.hasson@healthwatch.se"
 				};
-//				MemoryStream s = ihg.Export(invoice, @"IHG faktura MALL Ian without comments.pdf", "arial.ttf", true);
-//				MemoryStream s = ihg.Export(invoice, @"IHG faktura MALL Ian without comments.pdf", "arial.ttf");
-//				MemoryStream s = ihg.Export(invoice, @"IHG faktura MALL Ian without comments.pdf");
 				MemoryStream s = ihg.Export(invoice);
 				s.WriteTo(f);
 			}
@@ -158,9 +150,6 @@ Stockholm, Sweden",
 					Email = "dan.hasson@healthwatch.se"
 				};
 				invoice.Customer = null;
-//				MemoryStream s = ihg.Export(invoice, @"IHG faktura MALL Ian without comments.pdf", "arial.ttf", true);
-//				MemoryStream s = ihg.Export(invoice, @"IHG faktura MALL Ian without comments.pdf", "arial.ttf");
-//				MemoryStream s = ihg.Export(invoice, @"IHG faktura MALL Ian without comments.pdf");
 				MemoryStream s = ihg.Export(invoice);
 				s.WriteTo(f);
 			}
@@ -184,9 +173,6 @@ Stockholm, Sweden",
 					Email = "dan.hasson@healthwatch.se"
 				};
 				invoice.Customer.ContactPerson = null;
-//				MemoryStream s = ihg.Export(invoice, @"IHG faktura MALL Ian without comments.pdf", "arial.ttf", true);
-//				MemoryStream s = ihg.Export(invoice, @"IHG faktura MALL Ian without comments.pdf", "arial.ttf");
-//				MemoryStream s = ihg.Export(invoice, @"IHG faktura MALL Ian without comments.pdf");
 				MemoryStream s = ihg.Export(invoice);
 				s.WriteTo(f);
 			}
@@ -209,10 +195,7 @@ Stockholm, Sweden",
 					Email = "info@danhasson.se",
 					OrganizationNumber = "556757-0568"
 				};
-//				MemoryStream s = hcg.Export(invoice, @"HCG Fakturamall tom without comments.pdf", "calibri.ttf", true);
-//				MemoryStream s = hcg.Export(invoice, @"HCG Fakturamall tom without comments.pdf", "calibri.ttf");
-//				MemoryStream s = hcg.Export(invoice, @"HCG Fakturamall tom without comments.pdf");
-				MemoryStream s = hcg.Export(invoice);
+				MemoryStream s = def.Export(invoice);
 				s.WriteTo(f);
 			}
 			Process.Start("test.pdf");
@@ -235,10 +218,7 @@ Stockholm, Sweden",
 					OrganizationNumber = "556757-0568"
 				};
 				invoice.Customer = null;
-//				MemoryStream s = hcg.Export(invoice, @"HCG Fakturamall tom without comments.pdf", "calibri.ttf", true);
-//				MemoryStream s = hcg.Export(invoice, @"HCG Fakturamall tom without comments.pdf", "calibri.ttf");
-//				MemoryStream s = hcg.Export(invoice, @"HCG Fakturamall tom without comments.pdf");
-				MemoryStream s = hcg.Export(invoice);
+				MemoryStream s = def.Export(invoice);
 				s.WriteTo(f);
 			}
 			Process.Start("test.pdf");
@@ -261,10 +241,7 @@ Stockholm, Sweden",
 					OrganizationNumber = "556757-0568"
 				};
 				invoice.Customer.ContactPerson = null;
-//				MemoryStream s = hcg.Export(invoice, @"HCG Fakturamall tom without comments.pdf", "calibri.ttf", true);
-//				MemoryStream s = hcg.Export(invoice, @"HCG Fakturamall tom without comments.pdf", "calibri.ttf");
-//				MemoryStream s = hcg.Export(invoice, @"HCG Fakturamall tom without comments.pdf");
-				MemoryStream s = hcg.Export(invoice);
+				MemoryStream s = def.Export(invoice);
 				s.WriteTo(f);
 			}
 			Process.Start("test.pdf");
