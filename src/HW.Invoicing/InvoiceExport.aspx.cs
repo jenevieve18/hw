@@ -43,7 +43,8 @@ namespace HW.Invoicing
 
 //			var exported = exporter.Export(invoice, templateFileName, Server.MapPath(@"arial.ttf"), flatten);
 //			var exported = exporter.Export(invoice, templateFileName, Server.MapPath(@"arial.ttf"));
-			var exported = exporter.Export(invoice, templateFileName);
+//			var exported = exporter.Export(invoice, templateFileName);
+			var exported = exporter.Export(invoice);
 			exported.WriteTo(Response.OutputStream);
 
 			Response.Flush();

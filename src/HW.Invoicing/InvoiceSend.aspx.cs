@@ -42,7 +42,8 @@ namespace HW.Invoicing
 					var exporter = InvoiceExporterFactory.GetExporter2(company.InvoiceExporter);
 //					var exported = exporter.Export(invoice, templateFileName, Server.MapPath(@"arial.ttf"), false);
 //					var exported = exporter.Export(invoice, templateFileName, Server.MapPath(@"arial.ttf"));
-					var exported = exporter.Export(invoice, templateFileName);
+//					var exported = exporter.Export(invoice, templateFileName);
+					var exported = exporter.Export(invoice);
 					exported.WriteTo(fStream);
 				}
 				
