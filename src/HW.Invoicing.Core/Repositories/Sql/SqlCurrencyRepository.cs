@@ -8,23 +8,23 @@ using System.Linq;
 
 namespace HW.Invoicing.Core.Repositories.Sql
 {
-    public class SqlCurrencyRepository : BaseSqlRepository<Currency>
-    {
-        public override IList<Currency> FindAll()
-        {
-            string query = @"
+	public class SqlCurrencyRepository : BaseSqlRepository<Currency>
+	{
+		public override IList<Currency> FindAll()
+		{
+			string query = @"
     select id, code, name from currency";
-            var currencies = new List<Currency>();
-            using (var rs = ExecuteReader(query, "invoicing"))
-            {
-                while (rs.Read())
-                {
-                    currencies.Add(
-                        new Currency { Id = GetInt32(rs, 0), Code = GetString(rs, 1), Name = GetString(rs, 2) }
-                        );
-                }
-            }
-            return currencies;
-        }
-    }
+			var currencies = new List<Currency>();
+			using (var rs = ExecuteReader(query, "invoicing"))
+			{
+				while (rs.Read())
+				{
+					currencies.Add(
+						new Currency { Id = GetInt32(rs, 0), Code = GetString(rs, 1), Name = GetString(rs, 2) }
+					);
+				}
+			}
+			return currencies;
+		}
+	}
 }

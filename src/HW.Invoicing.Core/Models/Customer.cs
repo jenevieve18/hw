@@ -67,6 +67,7 @@ namespace HW.Invoicing.Core.Models
 		public string OurReferencePerson { get; set; }
 //		public bool Inactive { get; set; }
 		public Language Language { get; set; }
+		public Currency Currency { get; set; }
 		public int Status { get; set; }
 		
 		public bool IsInactive {
@@ -333,15 +334,15 @@ namespace HW.Invoicing.Core.Models
 			return found;
 		}
 
-		public static List<Currency> GetCurrencies()
-		{
-			return new List<Currency>(
-				new[] {
-					new Currency { Name = "Pound Sterling", Code = "GBP" },
-					new Currency { Name = "US Dollar", Code = "USD" }
-				}
-			);
-		}
+//		public static List<Currency> GetCurrencies()
+//		{
+//			return new List<Currency>(
+//				new[] {
+//					new Currency { Name = "Pound Sterling", Code = "GBP" },
+//					new Currency { Name = "US Dollar", Code = "USD" }
+//				}
+//			);
+//		}
 
 		public override string ToString()
 		{

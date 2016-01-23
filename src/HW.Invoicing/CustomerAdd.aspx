@@ -78,9 +78,14 @@
     <asp:TextBox ID="textBoxEmail" runat="server" CssClass="form-control"></asp:TextBox>
 </div>
 <div class="form-group">
-	<label for="<%= textBoxEmail.ClientID %>">Language</label>
+	<label for="<%= dropDownListLanguage.ClientID %>">Language</label>
     <asp:DropDownList ID="dropDownListLanguage" runat="server" CssClass="info form-control">
-                        </asp:DropDownList>
+    </asp:DropDownList>
+</div>
+<div class="form-group">
+	<label for="<%= dropDownListCurrency.ClientID %>">Currency</label>
+    <asp:DropDownList ID="dropDownListCurrency" runat="server" CssClass="info form-control">
+    </asp:DropDownList>
 </div>
 <% if (company.HasSubscriber) { %>
 <div class="form-group">
