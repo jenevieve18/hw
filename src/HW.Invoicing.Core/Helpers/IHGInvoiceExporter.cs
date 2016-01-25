@@ -60,6 +60,7 @@ namespace HW.Invoicing.Core.Helpers
 						
 						doc.Add(new Paragraph(" "));
 						doc.Add(new Paragraph("Betalningsvillkor: 30 dagar netto. Vid likvid efter förfallodagen debiteras ränta med 2% per månad.", smallFont));
+//						doc.Add(new Paragraph(R.Str(invoice.Customer.Language.Id, "invoice.terms", "Betalningsvillkor: 30 dagar netto. Vid likvid efter förfallodagen debiteras ränta med 2% per månad."), smallFont));
 						doc.Add(new Paragraph(" ", smallestFont));
 						
 						doc.Add(GetInvoiceItems(invoice, doc));
@@ -93,6 +94,7 @@ namespace HW.Invoicing.Core.Helpers
 			}
 			t2.AddCell(new PdfPCell(new Phrase(" ", normalFont)) { Border = Rectangle.NO_BORDER });
 			t2.AddCell(new PdfPCell(new Phrase("Beställare/Leveransadress/Faktureringsadress", normalFont)) { Border = Rectangle.NO_BORDER });
+//			t2.AddCell(new PdfPCell(new Phrase(R.Str(invoice.Customer.Language.Id, "invoice.customer", "Beställare/Leveransadress/Faktureringsadress"), normalFont)) { Border = Rectangle.NO_BORDER });
 			var y = new PdfPCell(new Phrase(invoice.Customer != null ? invoice.Customer.ToString() + "\n\n" + invoice.Customer.PurchaseOrderNumber : "", normalFont)) { Border = Rectangle.NO_BORDER };
 			y.SetLeading(0.0f, 1.3f);
 			t2.AddCell(y);

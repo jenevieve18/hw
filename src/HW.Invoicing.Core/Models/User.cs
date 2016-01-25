@@ -10,7 +10,6 @@ namespace HW.Invoicing.Core.Models
 	{
 		public User()
 		{
-//			Links = new List<UserLink>();
 		}
 		public string Username { get; set; }
 		public string Name { get; set; }
@@ -91,7 +90,7 @@ namespace HW.Invoicing.Core.Models
 		public Company Company { get; set; }
 //		public IList<UserCompanyLink> Links { get; set; }
 	}
-	
+//	
 //	public class UserCompanyLink : BaseModel
 //	{
 //		public User User { get; set; }

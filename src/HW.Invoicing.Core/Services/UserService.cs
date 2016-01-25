@@ -26,13 +26,11 @@ namespace HW.Invoicing.Core.Services
 		public User ReadUser(int userId)
 		{
 			var user = ur.Read(userId);
-            if (user != null)
-            {
+            if (user != null) {
                 user.Companies = cr.FindCompanies(userId);
                 user.CompaniesThatHasAccessTo = cr.FindCompaniesThatHasAccessTo(userId);
 
-                foreach (var c in user.AllCompanies)
-                {
+                foreach (var c in user.AllCompanies) {
                     c.Links = ur.FindLinks(userId, c.Id);
                 }
             }

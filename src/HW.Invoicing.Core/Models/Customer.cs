@@ -32,7 +32,6 @@ namespace HW.Invoicing.Core.Models
 					new Link { Id = 3, Name = "Invoices", Url = "invoices.aspx" },
 					new Link { Id = 4, Name = "Items", Url = "items.aspx" },
 					new Link { Id = 5, Name = "Units", Url = "units.aspx" },
-//					new Link { Id = 6, Name = "Users", Url = "users.aspx" },
 					new Link { Id = 7, Name = "Collaborators", Url = "collaborators.aspx" },
 					new Link { Id = 8, Name = "Issues", Url = "issues.aspx" }
 				}
@@ -62,7 +61,6 @@ namespace HW.Invoicing.Core.Models
 		public string InvoiceEmailCC { get; set; }
 		public string PostalAddress { get; set; }
 		public string PurchaseOrderNumber { get; set; }
-//		public string YourReferencePerson { get; set; }
 		public CustomerContact ContactPerson { get; set; }
 		public string OurReferencePerson { get; set; }
 		public Language Language { get; set; }

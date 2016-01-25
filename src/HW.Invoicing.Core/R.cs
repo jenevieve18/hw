@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Resources;
 
-namespace HW.Invoicing
+namespace HW.Invoicing.Core
 {
 	public class R
 	{

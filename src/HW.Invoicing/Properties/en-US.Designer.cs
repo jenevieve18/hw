@@ -59,5 +59,14 @@ namespace HW.Invoicing.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Client/Delivery address/Billing address.
+        /// </summary>
+        internal static string invoice_customer {
+            get {
+                return ResourceManager.GetString("invoice.customer", resourceCulture);
+            }
+        }
     }
 }

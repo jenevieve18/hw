@@ -229,7 +229,8 @@ SELECT i.Id,
     i.Comments,
     co.Id,
     c.InvoiceEmail,
-    c.ContactPersonId
+    c.ContactPersonId,
+    c.Language
 FROM Invoice i
 INNER JOIN Customer c ON c.Id = i.CustomerId
 INNER JOIN Company co ON co.Id = c.CompanyId
@@ -249,7 +250,6 @@ WHERE i.Id = @Id"
                             Name = GetString(rs, 3),
                             InvoiceAddress = GetString(rs, 4),
                             PurchaseOrderNumber = GetString(rs, 5),
-//                            YourReferencePerson = GetString(rs, 6),
                             OurReferencePerson = GetString(rs, 7),
                             Number = GetString(rs, 9),
                             Company = new Company
@@ -259,7 +259,8 @@ WHERE i.Id = @Id"
                             InvoiceEmail = GetString(rs, 13),
                             ContactPerson = new CustomerContact {
                                 Id = GetInt32(rs, 14)
-                            }
+                            },
+                            Language = Language.GetLanguage(GetInt32(rs, 15))
                         },
                         Status = GetInt32(rs, 10),
                         Comments = GetString(rs, 11)

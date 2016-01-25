@@ -323,7 +323,6 @@ namespace HW.Invoicing
 			timebooks = r.FindTimebooks(id);
 			timebookItems = ir.FindAllWithCustomerItems(companyId, id);
 			items = ir.FindByCompany(companyId);
-//			languages = Language.GetLanguages();
 			agreements = r.FindAgreements(id);
 
 			dropDownListSubscriptionItem.Items.Clear();
@@ -356,7 +355,6 @@ namespace HW.Invoicing
 			}
 
 			dropDownListLanguage.Items.Clear();
-//			foreach (var l in languages) {
 			foreach (var l in Language.GetLanguages()) {
 				dropDownListLanguage.Items.Add(new ListItem(l.Name, l.Id.ToString()));
 			}
