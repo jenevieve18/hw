@@ -13,10 +13,9 @@ namespace HW.Invoicing
 {
 	public partial class CustomerAdd : System.Web.UI.Page
 	{
-		SqlCustomerRepository r = new SqlCustomerRepository();
-//		SqlLanguageRepository lr = new SqlLanguageRepository();
-		SqlItemRepository ir = new SqlItemRepository();
-		SqlCompanyRepository cr = new SqlCompanyRepository();
+		SqlCustomerRepository customerRepository = new SqlCustomerRepository();
+		SqlItemRepository itemRepository = new SqlItemRepository();
+		SqlCompanyRepository companyRepository = new SqlCompanyRepository();
 		int companyId;
 		protected string message;
 		protected Company company;
@@ -26,11 +25,10 @@ namespace HW.Invoicing
 			HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
 
 			companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
-			company = cr.Read(companyId);
+			company = companyRepository.Read(companyId);
 
 			if (!IsPostBack) {
 				dropDownListLanguage.Items.Clear();
-//				foreach (var l in lr.FindAll()) {
 				foreach (var l in Language.GetLanguages()) {
 					dropDownListLanguage.Items.Add(new ListItem(l.Name, l.Id.ToString()));
 				}
@@ -39,7 +37,7 @@ namespace HW.Invoicing
 					dropDownListCurrency.Items.Add(new ListItem(c.ToString(), c.Id.ToString()));
 				}
 
-				var items = ir.FindByCompany(companyId);
+				var items = itemRepository.FindByCompany(companyId);
 
 				dropDownListSubscriptionItem.Items.Clear();
 				foreach (var i in items) {
@@ -69,7 +67,7 @@ namespace HW.Invoicing
 			};
 			customer.Validate();
 			if (!customer.HasErrors) {
-				r.Save(customer);
+				customerRepository.Save(customer);
 				Response.Redirect("customers.aspx");
 			} else {
 				message = customer.Errors.ToHtmlUl();

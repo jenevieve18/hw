@@ -30,14 +30,8 @@ namespace HW.Invoicing.Core.Helpers
 			this.generator = generator;
 		}
 		
-//		public override MemoryStream Export(Invoice invoice, string templateFileName, string font, bool flatten)
-//		public override MemoryStream Export(Invoice invoice, string templateFileName, string font)
-//		public override MemoryStream Export(Invoice invoice, string templateFileName)
 		public override MemoryStream Export(Invoice invoice)
 		{
-//			return generator.Generate(invoice, templateFileName, font, flatten);
-//			return generator.Generate(invoice, templateFileName, font);
-//			return generator.Generate(invoice, templateFileName);
 			return generator.Generate(invoice);
 		}
 	}
@@ -52,9 +46,6 @@ namespace HW.Invoicing.Core.Helpers
 		Font smallFont = FontFactory.GetFont("Arial", 8, Font.NORMAL, BaseColor.BLACK);
 		Font smallestFont = FontFactory.GetFont("Arial", 3, Font.NORMAL, BaseColor.BLACK);
 		
-//		public override MemoryStream Generate(Invoice invoice, string templateFileName, string font, bool flatten)
-//		public override MemoryStream Generate(Invoice invoice, string templateFileName, string font)
-//		public override MemoryStream Generate(Invoice invoice, string templateFileName)
 		public override MemoryStream Generate(Invoice invoice)
 		{
 			byte[] bytes;
@@ -307,6 +298,4 @@ namespace HW.Invoicing.Core.Helpers
 			}
 		}
 	}
-	
-
 }

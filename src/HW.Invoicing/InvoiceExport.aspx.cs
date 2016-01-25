@@ -22,7 +22,6 @@ namespace HW.Invoicing
 			HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
 
 			int invoiceId = ConvertHelper.ToInt32(Request.QueryString["Id"]);
-//			bool flatten = ConvertHelper.ToInt32(Request.QueryString["Flatten"]) == 1;
 
 			service.InvoiceExported(invoiceId);
 
@@ -37,13 +36,8 @@ namespace HW.Invoicing
 			string file = string.Format("{0} {1} {2} {3}", invoice.Number, invoice.Customer != null ? invoice.Customer.Name : "", invoice.Customer != null && invoice.Customer.ContactPerson != null ? invoice.Customer.ContactPerson.Name : "", DateTime.Now.ToString("MMM yyyy"));
 			Response.AddHeader("content-disposition", string.Format("attachment;filename=\"{0}.pdf\";", file));
 
-//			string templateFileName = invoice.Customer.Company.GetInvoiceTemplate(Server.MapPath("~/uploads"), Server.MapPath(@"IHG faktura MALL Ian without comments.pdf"));
-			
 			var exporter = InvoiceExporterFactory.GetExporter2(invoice.Customer.Company.InvoiceExporter);
 
-//			var exported = exporter.Export(invoice, templateFileName, Server.MapPath(@"arial.ttf"), flatten);
-//			var exported = exporter.Export(invoice, templateFileName, Server.MapPath(@"arial.ttf"));
-//			var exported = exporter.Export(invoice, templateFileName);
 			var exported = exporter.Export(invoice);
 			exported.WriteTo(Response.OutputStream);
 

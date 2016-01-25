@@ -39,7 +39,6 @@ namespace HW.Invoicing
 			string file = string.Format("{0} {1} {2}", agreement.Id, agreement.Customer.Name, DateTime.Now.ToString("MMM yyyy"));
 			Response.AddHeader("content-disposition", string.Format("attachment;filename=\"{0}.pdf\";", file));
 
-//			string templateFileName = company.HasAgreementTemplate ? string.Format(Server.MapPath("~/uploads/{0}"), company.AgreementTemplate) : Server.MapPath(@"HCG Avtal HCGE-PDF form example without comments.pdf");
 			string templateFileName = company.HasAgreementTemplate ? string.Format(Server.MapPath("~/uploads/{0}"), company.AgreementTemplate) : Server.MapPath(@"HCG Avtalsmall Latest.pdf");
 			
 			var exporter = new HCGEAgreementExporter();

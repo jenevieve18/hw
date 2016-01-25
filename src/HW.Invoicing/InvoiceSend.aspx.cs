@@ -36,13 +36,9 @@ namespace HW.Invoicing
 			
 			try {
 				string file = string.Format(Server.MapPath("~/uploads/{0} {1} {2}.pdf"), invoice.Id, invoice.Customer.Name, DateTime.Now.ToString("MMM yyyy"));
-//				string templateFileName = company.HasAgreementTemplate ? string.Format(Server.MapPath("~/uploads/{0}"), company.AgreementTemplate) : Server.MapPath(@"HCG Avtalsmall Latest.pdf");
 
 				using (FileStream fStream = new FileStream(file, FileMode.Create, FileAccess.Write)) {
 					var exporter = InvoiceExporterFactory.GetExporter2(company.InvoiceExporter);
-//					var exported = exporter.Export(invoice, templateFileName, Server.MapPath(@"arial.ttf"), false);
-//					var exported = exporter.Export(invoice, templateFileName, Server.MapPath(@"arial.ttf"));
-//					var exported = exporter.Export(invoice, templateFileName);
 					var exported = exporter.Export(invoice);
 					exported.WriteTo(fStream);
 				}

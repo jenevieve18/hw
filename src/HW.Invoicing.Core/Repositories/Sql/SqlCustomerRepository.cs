@@ -209,10 +209,8 @@ SubscriptionEndDate = @SubscriptionEndDate,
 IsSubscription = @IsSubscription
 WHERE Id = @Id"
 			);
-			foreach (var t in timebooks)
-			{
-				if (t.Id <= 0)
-				{
+			foreach (var t in timebooks) {
+				if (t.Id <= 0) {
 					ExecuteNonQuery(
 						saveQuery,
 						"invoicing",
@@ -235,9 +233,7 @@ WHERE Id = @Id"
                             new SqlParameter("@Id", t.Customer.Id)
                         );
                     }*/
-				}
-				else
-				{
+				} else {
 					ExecuteNonQuery(
 						updateQuery,
 						"invoicing",
@@ -330,10 +326,8 @@ FROM CustomerItem WHERE
 CustomerId = @CustomerId
 ORDER BY SortOrder DESC";
 			int order = 0;
-			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerId", customerId)))
-			{
-				if (rs.Read())
-				{
+			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerId", customerId))) {
+				if (rs.Read()) {
 					order = GetInt32(rs, 0);
 					order += 1;
 				}
@@ -369,7 +363,6 @@ VALUES(@Name, @Number, @PostalAddress, @InvoiceAddress, @PurchaseOrderNumber, @Y
 				new SqlParameter("@PostalAddress", c.PostalAddress),
 				new SqlParameter("@InvoiceAddress", c.InvoiceAddress),
 				new SqlParameter("@PurchaseOrderNumber", c.PurchaseOrderNumber),
-				//                new SqlParameter("@YourReferencePerson", c.YourReferencePerson),
 				new SqlParameter("@YourReferencePerson", ""),
 				new SqlParameter("@OurReferencePerson", c.OurReferencePerson),
 				new SqlParameter("@Phone", c.Phone),
@@ -543,8 +536,7 @@ WHERE Id = @Id"
 				new SqlParameter("@Id", id)
 			);
 
-			if (a.DateTimeAndPlaces != null && a.DateTimeAndPlaces.Count > 0)
-			{
+			if (a.DateTimeAndPlaces != null && a.DateTimeAndPlaces.Count > 0) {
 				ExecuteNonQuery(
 					"DELETE FROM CustomerAgreementDateTimeAndPlace WHERE CustomerAgreementId = @CustomerAgreementId",
 					"invoicing",
@@ -555,8 +547,7 @@ WHERE Id = @Id"
 INSERT INTO CustomerAgreementDateTimeAndPlace(CustomerAgreementId, Date, TimeFrom, TimeTo, Address)
 VALUES(@CustomerAgreementId, @Date, @TimeFrom, @TimeTo, @Address)"
 				);
-				foreach (var d in a.DateTimeAndPlaces)
-				{
+				foreach (var d in a.DateTimeAndPlaces) {
 					ExecuteNonQuery(
 						query,
 						"invoicing",
@@ -695,7 +686,6 @@ WHERE Id = @Id"
 			ExecuteNonQuery(
 				query,
 				"invoicing",
-				//new SqlParameter("@Inactive", true),
 				new SqlParameter("@Status", Customer.INACTIVE),
 				new SqlParameter("@Id", id)
 			);
@@ -1313,19 +1303,15 @@ AND NOT EXISTS (
     SELECT 1 FROM InvoiceTimebook it WHERE it.CustomerTimebookid = t.Id
 )";
 			var t = new List<CustomerTimebook>();
-			using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerId", customerId)))
-			{
-				while (rs.Read())
-				{
+			using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerId", customerId))) {
+				while (rs.Read()) {
 					t.Add(
 						new CustomerTimebook {
-							Contact = new CustomerContact
-							{
+							Contact = new CustomerContact {
 								Id = GetInt32(rs, 0),
 								Name = GetString(rs, 6)
 							},
-							Item = new Item
-							{
+							Item = new Item {
 								Id = GetInt32(rs, 1),
 								Name = GetString(rs, 7),
 								Unit = new Unit { Id = GetInt32(rs, 8), Name = GetString(rs, 9) }

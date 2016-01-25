@@ -58,14 +58,13 @@ namespace HW.Invoicing.Core.Models
 		public string Email { get; set; }
 		public string Number { get; set; }
 		public string InvoiceAddress { get; set; }
-        public string InvoiceEmail { get; set; }
-        public string InvoiceEmailCC { get; set; }
+		public string InvoiceEmail { get; set; }
+		public string InvoiceEmailCC { get; set; }
 		public string PostalAddress { get; set; }
 		public string PurchaseOrderNumber { get; set; }
 //		public string YourReferencePerson { get; set; }
-        public CustomerContact ContactPerson { get; set; }
+		public CustomerContact ContactPerson { get; set; }
 		public string OurReferencePerson { get; set; }
-//		public bool Inactive { get; set; }
 		public Language Language { get; set; }
 		public Currency Currency { get; set; }
 		public int Status { get; set; }
@@ -334,16 +333,6 @@ namespace HW.Invoicing.Core.Models
 			return found;
 		}
 
-//		public static List<Currency> GetCurrencies()
-//		{
-//			return new List<Currency>(
-//				new[] {
-//					new Currency { Name = "Pound Sterling", Code = "GBP" },
-//					new Currency { Name = "US Dollar", Code = "USD" }
-//				}
-//			);
-//		}
-
 		public override string ToString()
 		{
 			return string.Format("{0}", InvoiceAddress);
@@ -353,8 +342,8 @@ namespace HW.Invoicing.Core.Models
 		{
 			base.Validate();
 			Errors.Clear();
-//			AddErrorIf(Number == "", "Customer number shouldn't be empty.");
 			AddErrorIf(Name == "", "Customer name shouldn't be empty.");
+//			AddErrorIf(Number == "", "Customer number shouldn't be empty.");
 //			AddErrorIf(InvoiceAddress == "", "Invoice address shouldn't be empty.");
 //			AddErrorIf(YourReferencePerson == "", "Your reference person shouldn't be empty.");
 //			AddErrorIf(OurReferencePerson == "", "Our reference person shouldn't be empty.");
@@ -397,11 +386,11 @@ namespace HW.Invoicing.Core.Models
 			}
 		}
 
-        public override string ToString()
-        {
-            string p = PurchaseOrderNumber != null && PurchaseOrderNumber != "" ? " (" + PurchaseOrderNumber + ")" : "";
-            return string.Format("{0}{1}", Name, p);
-        }
+		public override string ToString()
+		{
+			string p = PurchaseOrderNumber != null && PurchaseOrderNumber != "" ? " (" + PurchaseOrderNumber + ")" : "";
+			return string.Format("{0}{1}", Name, p);
+		}
 	}
 	
 	public class CustomerNotes : BaseModel
@@ -511,13 +500,13 @@ namespace HW.Invoicing.Core.Models
 			s += StrHelper.Str(Contact.Name != "", "<i>" + Contact.Name + "</i>", "");
 			return s;
 		}
-        public string GetDepartmentAndContact2()
-        {
-            string s = "";
-            s += StrHelper.Str(Department != null && Department != "", Department, "");
-            s += StrHelper.Str(Contact.Name != null && Contact.Name != "", " - " + Contact.Name, "");
-            return s;
-        }
+		public string GetDepartmentAndContact2()
+		{
+			string s = "";
+			s += StrHelper.Str(Department != null && Department != "", Department, "");
+			s += StrHelper.Str(Contact.Name != null && Contact.Name != "", " - " + Contact.Name, "");
+			return s;
+		}
 
 		public override string ToString()
 		{
@@ -551,7 +540,7 @@ namespace HW.Invoicing.Core.Models
 			base.Validate();
 			AddErrorIf(Comments == "", "Comments shouldn't be empty.");
 			AddErrorIf(Price <= 0, "Price should be greater than zero.");
-			//AddErrorIf(VAT <= 0, "VAT should be greater than zero.");
+//			AddErrorIf(VAT <= 0, "VAT should be greater than zero.");
 		}
 
 		public string GetStatus()

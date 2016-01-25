@@ -19,7 +19,6 @@ namespace HW.Invoicing
 		SqlItemRepository ir = new SqlItemRepository();
 		SqlInvoiceRepository vr = new SqlInvoiceRepository();
 		SqlCompanyRepository cr = new SqlCompanyRepository();
-//		SqlLanguageRepository lr = new SqlLanguageRepository();
 		protected IList<CustomerNotes> notes;
 		protected IList<CustomerItem> prices;
 		protected IList<CustomerContact> contacts;
@@ -290,7 +289,6 @@ namespace HW.Invoicing
 		{
 			var t = new CustomerItem {
 				Item = new Item { Id = ConvertHelper.ToInt32(dropDownListItems.SelectedValue) },
-				//                Price = ConvertHelper.ToInt32(textBoxItemPrice.Text)
 				Price = ConvertHelper.ToDecimal(textBoxItemPrice.Text)
 			};
 			r.SaveItem(t, ConvertHelper.ToInt32(Request.QueryString["Id"]));
@@ -325,8 +323,7 @@ namespace HW.Invoicing
 			timebooks = r.FindTimebooks(id);
 			timebookItems = ir.FindAllWithCustomerItems(companyId, id);
 			items = ir.FindByCompany(companyId);
-//			languages = lr.FindAll();
-			languages = Language.GetLanguages();
+//			languages = Language.GetLanguages();
 			agreements = r.FindAgreements(id);
 
 			dropDownListSubscriptionItem.Items.Clear();
@@ -359,7 +356,8 @@ namespace HW.Invoicing
 			}
 
 			dropDownListLanguage.Items.Clear();
-			foreach (var l in languages) {
+//			foreach (var l in languages) {
+			foreach (var l in Language.GetLanguages()) {
 				dropDownListLanguage.Items.Add(new ListItem(l.Name, l.Id.ToString()));
 			}
 

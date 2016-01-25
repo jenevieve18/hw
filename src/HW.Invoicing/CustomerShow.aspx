@@ -684,45 +684,43 @@
                     <% if (t.Inactive) { %>
                         <tr>
                             <td style="width:16px"></td>
-                            <%--<td><%= t.GetStatus() %></td>--%>
                             <td>
                                 <% if (t.Date != null && !t.DateHidden && !t.IsSubscription) { %>
-                                    <%= t.Date.Value.ToString("yyyy-MM-dd") %>
-                                <% } %>
+                                    <strike><%= t.Date.Value.ToString("yyyy-MM-dd") %></strike>
+                                <% } %><br />
+                                <small class="text-success">
+                                    <strike><%= StrHelper.Str(t.Consultant != "", StrHelper.Str2(t.Consultant, 10), "(no consultant)") %></strike>
+                                </small>
                             </td>
-                            <% if (t.IsHeader) { %>
+                            <% if (t.IsHeader || t.IsSubscription) { %>
                                 <td class="timebook-comments"><strike><%= t.Comments %></strike></td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                             <% } else { %>
                                 <td>
-                                    <strike>
-                                    <%= t.Item.Name %>
-                                    (<%= t.Item.Unit.Name %>)<br />
+                                    <strike><%= t.Item.Name %> /
+                                    <%= t.Item.Unit.Name %> /
+                                    <%= t.Department %></strike><br />
                                     <small class="text-muted">
-                                        <% if (t.Date != null && !t.DateHidden && !t.IsSubscription) { %>
-                                            <%= t.Date.Value.ToString("yyyy-MM-dd") %>
-                                        <% } %>
-                                        <%= StrHelper.Str(t.GetDepartmentAndContact2() != "", t.GetDepartmentAndContact2() + "<br>", "") %>
                                         <span class="timebook-comments">
                                             <% if (t.HasInternalComments) { %>
                                                 <img src="img/comment.png" title="<%= t.InternalComments %>"/>
                                             <% } %>
-                                            <span class="timebook-comments-label"><%= t.Comments%></span>
-                                            <textarea data-id="<%= t.Id %>" type="text" class="form-control timebook-comments-text"><%= t.Comments %></textarea>
-                                            <img alt="" class="timebook-comments-spinner" src="img/spiffygif_30x30.gif" />
+                                            <span class="timebook-comments-label" title="<%= StrHelper.Str(t.Comments.Length > 150, t.Comments, "") %>">
+                                                <strike><%= StrHelper.Str2(t.Comments, 150) %></strike>
+                                            </span>
                                         </span>
                                     </small>
-                                    </strike>
                                 </td>
-                                <td style="text-align:center"><strike><%= t.Quantity.ToString("### ### ##0.00") %></strike></td>
-                                <td><strike><%= t.Price.ToString("### ### ##0.00") %></strike></td>
-                                <td><strike><%= t.Amount.ToString("### ### ##0.00") %></strike></td>
-                                <td><strike><%= t.VAT %>%</strike></td>
-                                <td><%= t.GetStatus() %></td>
+                                <td style="width:80px !important;text-align:center"><strike><%= t.Quantity.ToString("### ### ##0.00") %></strike></td>
+                                <td style="width:110px !important;text-align:right"><strike><%= t.Price.ToString("### ### ##0.00") %></strike></td>
+                                <td style="width:110px !important;text-align:right"><strike><%= t.Amount.ToString("### ### ##0.00") %></strike></td>
+                                <td style="text-align:right">
+                                    <small class="text-success"><strike><%= t.VAT %>%</strike></small>
+                                </td>
                             <% } %>
+                            <td><%= t.GetStatus() %></td>
                             <td>
                                 <%= HtmlHelper.Anchor(" ", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id), "title='Edit' class='glyphicon glyphicon-edit'")%>
                                 <%= HtmlHelper.Anchor(" ", string.Format("customertimebookdelete.aspx?Id={0}&CustomerId={1}", t.Id, id), "title='Delete' class='glyphicon glyphicon-remove-circle' onclick=\"return confirm('Are you sure you want to delete this timebook?')\"")%>
@@ -754,16 +752,13 @@
                                     <%= t.Date.Value.ToString("yyyy-MM-dd") %>
                                 <% } %><br />
                                 <small class="text-success timebook-consultant">
-                                    <%--<%= StrHelper.Str2(t.Consultant, 10) %>--%>
                                     <span class="timebook-consultant-label"><%= StrHelper.Str(t.Consultant != "", StrHelper.Str2(t.Consultant, 10), "(no consultant)") %></span>
                                     <textarea data-id="<%= t.Id %>" type="text" class="form-control timebook-consultant-text"><%= t.Consultant %></textarea>
                                     <img alt="" class="timebook-consultant-spinner" src="img/spiffygif_30x30.gif" />
                                 </small>
                             </td>
-                            <%--<td><%= t.GetStatus() %></td>--%>
-                            <% if (t.IsHeader) { %>
+                            <% if (t.IsHeader || t.IsSubscription) { %>
                                 <td class="timebook-comments"><%= t.Comments %></td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -774,20 +769,6 @@
                                     <%= t.Item.Unit.Name %> /
                                     <%= t.Department %><br />
                                     <small class="text-muted">
-                                        <%--<% if (t.Date != null && !t.DateHidden && !t.IsSubscription) { %>
-                                            <%= t.Date.Value.ToString("yyyy-MM-dd") %>
-                                        <% } %>
-                                        <%= StrHelper.Str(t.Department != null && t.Department != "", " - " + t.Department, "") %>--%>
-                                        <%--<%= StrHelper.Str(t.Department != null && t.Department != "", t.Department, "") %>--%>
-                                        <%--<% if (t.Consultant != null) { %>
-                                            <span class="timebook-consultant">
-                                                <span class="timebook-consultant-label"><%= StrHelper.Str(t.Consultant != "", t.Consultant, "(no consultant)") %></span>
-                                                <textarea data-id="<%= t.Id %>" type="text" class="form-control timebook-consultant-text"><%= t.Consultant %></textarea>
-                                                <img alt="" class="timebook-consultant-spinner" src="img/spiffygif_30x30.gif" />
-                                            </span>
-                                            <br />
-                                        <% } %>--%>
-                                        <%--<%= StrHelper.Str(t.GetDepartmentAndContact2() != "", t.GetDepartmentAndContact2() + "<br>", "") %>--%>
                                         <span class="timebook-comments">
                                             <% if (t.HasInternalComments) { %>
                                                 <img src="img/comment.png" title="<%= t.InternalComments %>"/>
@@ -803,15 +784,16 @@
                                 <td style="width:80px !important;text-align:center"><%= t.Quantity.ToString("### ### ##0.00") %></td>
                                 <td style="width:110px !important;text-align:right"><%= t.Price.ToString("### ### ##0.00") %></td>
                                 <td style="width:110px !important;text-align:right"><%= t.Amount.ToString("### ### ##0.00") %></td>
-                                <%--<td><%= t.VAT %>%</td>--%>
                                 <td style="text-align:right">
-                                    <%--<%= t.VATAmount.ToString("#### ### ##0.00") %><br />--%>
                                     <small class="text-success"><%= t.VAT %>%</small>
                                 </td>
-                                <td><%= t.GetStatus() %></td>
                             <% } %>
+                            <td><%= t.GetStatus() %></td>
                             <td style="width:48px !important">
-                                <% if (!t.IsPaid) { %>
+                                <% if (t.IsPaid) { %>
+                                <% } else if (t.IsInvoiced) { %>
+                                    <%= HtmlHelper.Anchor(" ", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id), "title='Edit' class='glyphicon glyphicon-edit'")%>
+                                <% } else { %>
                                     <%= HtmlHelper.Anchor(" ", string.Format("customertimebookedit.aspx?Id={0}&CustomerId={1}", t.Id, id), "title='Edit' class='glyphicon glyphicon-edit'")%>
                                     <%= HtmlHelper.Anchor(" ", string.Format("customertimebookdeactivate.aspx?Id={0}&CustomerId={1}", t.Id, id), "title='Deactivate' class='glyphicon glyphicon-minus'")%>
                                 <% } %>
