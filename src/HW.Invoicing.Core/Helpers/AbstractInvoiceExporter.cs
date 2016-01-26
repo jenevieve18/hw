@@ -116,7 +116,8 @@ namespace HW.Invoicing.Core.Helpers
 						doc.Add(GetInvoiceDetails(invoice, doc));
 						
 						doc.Add(new Paragraph(" "));
-						doc.Add(new Paragraph("Betalningsvillkor: 30 dagar netto. Vid likvid efter förfallodagen debiteras ränta med 2% per månad.", smallFont));
+//						doc.Add(new Paragraph("Betalningsvillkor: 30 dagar netto. Vid likvid efter förfallodagen debiteras ränta med 2% per månad.", smallFont));
+						doc.Add(new Paragraph(R.Str(invoice.Customer.Language.Id, "invoice.terms", "Betalningsvillkor: 30 dagar netto. Vid likvid efter förfallodagen debiteras ränta med 2% per månad."), smallFont));
 						doc.Add(new Paragraph(" ", smallestFont));
 						
 						doc.Add(GetInvoiceItems(invoice, doc));
@@ -132,6 +133,8 @@ namespace HW.Invoicing.Core.Helpers
 		
 		PdfPTable GetInvoiceDetails(Invoice invoice, Document document)
 		{
+			int langId = invoice.Customer.Language.Id;
+			
 			PdfPTable t = new PdfPTable(2) {
 				TotalWidth = document.Right - document.Left,
 				WidthPercentage = 100
@@ -149,38 +152,46 @@ namespace HW.Invoicing.Core.Helpers
 				t2.AddCell(new PdfPCell(new Phrase(" ")) { Border = Rectangle.NO_BORDER });
 			}
 			t2.AddCell(new PdfPCell(new Phrase(" ", normalFont)) { Border = Rectangle.NO_BORDER });
-			t2.AddCell(new PdfPCell(new Phrase("Beställare/Leveransadress/Faktureringsadress", normalFont)) { Border = Rectangle.NO_BORDER });
+//			t2.AddCell(new PdfPCell(new Phrase("Beställare/Leveransadress/Faktureringsadress", normalFont)) { Border = Rectangle.NO_BORDER });
+			t2.AddCell(new PdfPCell(new Phrase(R.Str(langId, "customer", "Beställare/Leveransadress/Faktureringsadress"), normalFont)) { Border = Rectangle.NO_BORDER });
 			t2.AddCell(new PdfPCell(new Phrase(invoice.Customer != null ? invoice.Customer.ToString() + "\n\n" + invoice.Customer.PurchaseOrderNumber : "", normalFont)) { Border = Rectangle.NO_BORDER });
 			
 			PdfPTable t3 = new PdfPTable(2);
-			t3.AddCell(new PdfPCell(new Phrase("FAKTURA", titleFont)) { Border = Rectangle.NO_BORDER, Colspan = 2, HorizontalAlignment = Element.ALIGN_RIGHT, PaddingRight = 3, PaddingBottom = 20 });
+//			t3.AddCell(new PdfPCell(new Phrase("FAKTURA", titleFont)) { Border = Rectangle.NO_BORDER, Colspan = 2, HorizontalAlignment = Element.ALIGN_RIGHT, PaddingRight = 3, PaddingBottom = 20 });
+			t3.AddCell(new PdfPCell(new Phrase(R.Str(langId, "invoice.label", "FAKTURA"), titleFont)) { Border = Rectangle.NO_BORDER, Colspan = 2, HorizontalAlignment = Element.ALIGN_RIGHT, PaddingRight = 3, PaddingBottom = 20 });
 			
 			t3.AddCell(C(" ", smallestFont, Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER, 0, 2));
-			t3.AddCell(C("KUNDNUMMER", normalFont, 3));
+//			t3.AddCell(C("KUNDNUMMER", normalFont, 3));
+			t3.AddCell(C(R.Str(langId, "customer.number", "KUNDNUMMER"), normalFont, 3));
 			t3.AddCell(C(invoice.Customer != null ? invoice.Customer.Number : "", normalFont, 3));
 			t3.AddCell(C(" ", smallestFont, Rectangle.RIGHT_BORDER, 0, 2));
 			
 			t3.AddCell(C(" ", smallestFont, Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER, 0, 2));
-			t3.AddCell(C("FAKTURANUMMER", normalFont, 3));
+//			t3.AddCell(C("FAKTURANUMMER", normalFont, 3));
+			t3.AddCell(C(R.Str(langId, "invoice.number", "FAKTURANUMMER"), normalFont, 3));
 			t3.AddCell(C(invoice.Number, normalFont, 3));
 			t3.AddCell(C(" ", smallestFont, Rectangle.RIGHT_BORDER, 0, 2));
 			
 			t3.AddCell(C(" ", smallestFont, Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER, 0, 2));
-			t3.AddCell(C("FAKTURADATUM", normalFont, 3));
+//			t3.AddCell(C("FAKTURADATUM", normalFont, 3));
+			t3.AddCell(C(R.Str(langId, "invoice.date", "FAKTURADATUM"), normalFont, 3));
 			t3.AddCell(C(invoice.Date.Value.ToString("yyyy-MM-dd"), normalFont, 3));
 			t3.AddCell(C(" ", smallestFont, Rectangle.RIGHT_BORDER, 0, 2));
 			
 			t3.AddCell(C(" ", smallestFont, Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER, 0, 2));
-			t3.AddCell(C("FÖRFALLODAG", normalFont, 3));
+//			t3.AddCell(C("FÖRFALLODAG", normalFont, 3));
+			t3.AddCell(C(R.Str(langId, "invoice.date.maturity", "FÖRFALLODAG"), normalFont, 3));
 			t3.AddCell(C(invoice.MaturityDate.Value.ToString("yyyy-MM-dd"), normalFont, 3));
 			t3.AddCell(C(" ", smallestFont, Rectangle.RIGHT_BORDER, 0, 2));
 			
 			t3.AddCell(C(" ", smallestFont, Rectangle.TOP_BORDER, 0, 2));
-			t3.AddCell(C("Er referens:", smallFont, 3));
+//			t3.AddCell(C("Er referens:", smallFont, 3));
+			t3.AddCell(C(R.Str(langId, "invoice.reference.your", "Er referens:"), smallFont, 3));
 			t3.AddCell(C(invoice.Customer != null && invoice.Customer.ContactPerson != null ? invoice.Customer.ContactPerson.Name : "", smallFont, 3));
 			
 			t3.AddCell(C(" ", smallestFont, Rectangle.NO_BORDER, 0, 2));
-			t3.AddCell(C("Vår referens:", smallFont, 3));
+//			t3.AddCell(C("Vår referens:", smallFont, 3));
+			t3.AddCell(C(R.Str(langId, "invoice.reference.our", "Vår referens:"), smallFont, 3));
 			t3.AddCell(C(invoice.Customer != null ? invoice.Customer.OurReferencePerson : "", smallFont, 3));
 			
 			t.AddCell(new PdfPCell(t2) { Border = Rectangle.NO_BORDER });
@@ -191,6 +202,8 @@ namespace HW.Invoicing.Core.Helpers
 		
 		PdfPTable GetInvoiceItems(Invoice invoice, Document document)
 		{
+			int langId = invoice.Customer.Language.Id;
+			
 			PdfPTable t = new PdfPTable(16) {
 				TotalWidth = document.Right - document.Left,
 				WidthPercentage = 100
@@ -206,8 +219,10 @@ namespace HW.Invoicing.Core.Helpers
 			t.AddCell(C(" ", smallestFont, Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER, 0, 13));
 			t.AddCell(C(" ", smallestFont, Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER, 0, 3));
 			
-			t.AddCell(new PdfPCell(new Phrase("SPECIFIKATION", headerFont)) { Colspan = 13, Border = Rectangle.NO_BORDER });
-			t.AddCell(new PdfPCell(new Phrase("PRIS", headerFont)) { Colspan = 3, Border = Rectangle.LEFT_BORDER });
+//			t.AddCell(new PdfPCell(new Phrase("SPECIFIKATION", headerFont)) { Colspan = 13, Border = Rectangle.NO_BORDER });
+//			t.AddCell(new PdfPCell(new Phrase("PRIS", headerFont)) { Colspan = 3, Border = Rectangle.LEFT_BORDER });
+			t.AddCell(new PdfPCell(new Phrase(R.Str(langId, "item", "SPECIFIKATION"), headerFont)) { Colspan = 13, Border = Rectangle.NO_BORDER });
+			t.AddCell(new PdfPCell(new Phrase(R.Str(langId, "item.price", "PRIS"), headerFont)) { Colspan = 3, Border = Rectangle.LEFT_BORDER });
 			
 			int j = 0;
 			foreach (var tb in invoice.Timebooks) {
@@ -239,6 +254,9 @@ namespace HW.Invoicing.Core.Helpers
 		
 		PdfPTable GetInvoiceTotal(Invoice invoice, Document document)
 		{
+			int langId = invoice.Customer.Language.Id;
+			string currency = invoice.Customer.Currency.ShortName;
+			
 			PdfPTable t = new PdfPTable(16) {
 				TotalWidth = document.Right - document.Left,
 				WidthPercentage = 100
@@ -256,17 +274,21 @@ namespace HW.Invoicing.Core.Helpers
 			t.AddCell(new PdfPCell(new Phrase(" ")) { Colspan = 16, Border = Rectangle.NO_BORDER });
 
 			t.AddCell(new PdfPCell() { Colspan = 13, Border = Rectangle.NO_BORDER });
-			t.AddCell(new PdfPCell(new Phrase("SUBTOTAL, SEK", headerNormalFont)) { Colspan = 3, HorizontalAlignment = Element.ALIGN_CENTER, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER });
+//			t.AddCell(new PdfPCell(new Phrase("SUBTOTAL, SEK", headerNormalFont)) { Colspan = 3, HorizontalAlignment = Element.ALIGN_CENTER, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER });
+			t.AddCell(new PdfPCell(new Phrase(R.Str(langId, "invoice.subtotal", "SUBTOTAL") + ", " + currency, headerNormalFont)) { Colspan = 3, HorizontalAlignment = Element.ALIGN_CENTER, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER });
 			
 			t.AddCell(new PdfPCell() { Colspan = 13, Border = Rectangle.NO_BORDER });
 			t.AddCell(C(invoice.SubTotal.ToString("### ### ##0.00"), normalFont, Rectangle.BODY | Rectangle.RIGHT_BORDER, 5, 3, Element.ALIGN_CENTER));
 
 			t.AddCell(new PdfPCell() { Colspan = 13 - (invoice.VATs.Count * 3), Border = Rectangle.NO_BORDER });
 			foreach (var v in invoice.VATs.Keys) {
-				t.AddCell(new PdfPCell(new Phrase("MOMS %", headerNormalFont)) { Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER });
-				t.AddCell(new PdfPCell(new Phrase("MOMS, SEK", headerNormalFont)) { Colspan = 2, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER });
+//				t.AddCell(new PdfPCell(new Phrase("MOMS %", headerNormalFont)) { Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER });
+//				t.AddCell(new PdfPCell(new Phrase("MOMS, SEK", headerNormalFont)) { Colspan = 2, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER });
+				t.AddCell(new PdfPCell(new Phrase(R.Str(langId, "invoice.vat", "MOMS %"), headerNormalFont)) { Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER });
+				t.AddCell(new PdfPCell(new Phrase(R.Str(langId, "invoice.vat.amount", "MOMS") + ", " + currency, headerNormalFont)) { Colspan = 2, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER });
 			}
-			t.AddCell(new PdfPCell(new Phrase("SUMMA ATT BETALA, SEK", headerFont)) { Colspan = 3, HorizontalAlignment = Element.ALIGN_CENTER, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER });
+//			t.AddCell(new PdfPCell(new Phrase("SUMMA ATT BETALA, SEK", headerFont)) { Colspan = 3, HorizontalAlignment = Element.ALIGN_CENTER, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER });
+			t.AddCell(new PdfPCell(new Phrase(R.Str(langId, "invoice.total", "SUMMA ATT BETALA"), headerFont)) { Colspan = 3, HorizontalAlignment = Element.ALIGN_CENTER, Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER });
 
 			t.AddCell(new PdfPCell() { Colspan = 13 - (invoice.VATs.Count * 3), Border = Rectangle.BOTTOM_BORDER });
 			foreach (var v in invoice.VATs.Keys) {

@@ -117,7 +117,82 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="invoice.customer" xml:space="preserve">
+  <data name="company.address.postal" xml:space="preserve">
+    <value>Postadress</value>
+  </data>
+  <data name="company.bank" xml:space="preserve">
+    <value>Bankgiro</value>
+  </data>
+  <data name="company.org" xml:space="preserve">
+    <value>Org nr</value>
+  </data>
+  <data name="company.phone" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="company.tax" xml:space="preserve">
+    <value>F-skattebevis</value>
+  </data>
+  <data name="company.vat" xml:space="preserve">
+    <value>VAT/Momsreg.nr</value>
+  </data>
+  <data name="company.web" xml:space="preserve">
+    <value>Web</value>
+  </data>
+  <data name="customer" xml:space="preserve">
     <value>Beställare/Leveransadress/Faktureringsadress</value>
+  </data>
+  <data name="customer.number" xml:space="preserve">
+    <value>KUNDNUMMER</value>
+  </data>
+  <data name="invoice.date" xml:space="preserve">
+    <value>FAKTURADATUM</value>
+  </data>
+  <data name="invoice.date.maturity" xml:space="preserve">
+    <value>FÖRFALLODAG</value>
+  </data>
+  <data name="invoice.label" xml:space="preserve">
+    <value>FAKTURA</value>
+  </data>
+  <data name="invoice.number" xml:space="preserve">
+    <value>FAKTURANUMMER</value>
+  </data>
+  <data name="invoice.reference.our" xml:space="preserve">
+    <value>Vår referens:</value>
+  </data>
+  <data name="invoice.reference.your" xml:space="preserve">
+    <value>Er referens:</value>
+  </data>
+  <data name="invoice.subtotal&quot;" xml:space="preserve">
+    <value>SUBTOTAL</value>
+  </data>
+  <data name="invoice.terms" xml:space="preserve">
+    <value>Betalningsvillkor: 30 dagar netto. Vid likvid efter förfallodagen debiteras ränta med 2% per månad.</value>
+  </data>
+  <data name="invoice.total" xml:space="preserve">
+    <value>SUMMA ATT BETALA</value>
+  </data>
+  <data name="invoice.vat" xml:space="preserve">
+    <value>MOMS %</value>
+  </data>
+  <data name="invoice.vat.amount" xml:space="preserve">
+    <value>MOMS</value>
+  </data>
+  <data name="item" xml:space="preserve">
+    <value>SPECIFIKATION</value>
+  </data>
+  <data name="item.amount" xml:space="preserve">
+    <value>BELOPP</value>
+  </data>
+  <data name="item.price" xml:space="preserve">
+    <value>PRIS</value>
+  </data>
+  <data name="item.price.unit" xml:space="preserve">
+    <value>PRIS PER ENHET</value>
+  </data>
+  <data name="item.quantity" xml:space="preserve">
+    <value>ANTAL</value>
+  </data>
+  <data name="item.unit" xml:space="preserve">
+    <value>ENHET</value>
   </data>
 </root>

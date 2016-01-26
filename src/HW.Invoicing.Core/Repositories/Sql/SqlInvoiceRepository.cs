@@ -230,7 +230,8 @@ SELECT i.Id,
     co.Id,
     c.InvoiceEmail,
     c.ContactPersonId,
-    c.Language
+    c.Language,
+    c.Currency
 FROM Invoice i
 INNER JOIN Customer c ON c.Id = i.CustomerId
 INNER JOIN Company co ON co.Id = c.CompanyId
@@ -260,7 +261,8 @@ WHERE i.Id = @Id"
                             ContactPerson = new CustomerContact {
                                 Id = GetInt32(rs, 14)
                             },
-                            Language = Language.GetLanguage(GetInt32(rs, 15))
+                            Language = Language.GetLanguage(GetInt32(rs, 15)),
+                            Currency = Currency.GetCurrency(GetInt32(rs, 16))
                         },
                         Status = GetInt32(rs, 10),
                         Comments = GetString(rs, 11)

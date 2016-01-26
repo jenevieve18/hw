@@ -6,8 +6,8 @@ namespace HW.Invoicing.Core
 {
 	public class R
 	{
-        static readonly string English = "HW.Grp.Properties.en-US";
-        static readonly string Swedish = "HW.Grp.Properties.sv-SE";
+        static readonly string English = "HW.Invoicing.Core.Properties.en-US";
+        static readonly string Swedish = "HW.Invoicing.Core.Properties.sv-SE";
         const int EnglishID = 2;
         const int SwedishID = 1;
         const int DefaultID = SwedishID;

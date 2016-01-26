@@ -117,7 +117,82 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="invoice.customer" xml:space="preserve">
+  <data name="company.address.postal" xml:space="preserve">
+    <value>Postal address</value>
+  </data>
+  <data name="company.bank" xml:space="preserve">
+    <value>Bank</value>
+  </data>
+  <data name="company.org" xml:space="preserve">
+    <value>Org number</value>
+  </data>
+  <data name="company.phone" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="company.tax" xml:space="preserve">
+    <value>Tax certificate</value>
+  </data>
+  <data name="company.vat" xml:space="preserve">
+    <value>VAT/TIN number</value>
+  </data>
+  <data name="company.web" xml:space="preserve">
+    <value>Web</value>
+  </data>
+  <data name="customer" xml:space="preserve">
     <value>Client/Delivery address/Billing address</value>
+  </data>
+  <data name="customer.number" xml:space="preserve">
+    <value>CUSTOMER NUMBER</value>
+  </data>
+  <data name="invoice.date" xml:space="preserve">
+    <value>INVOICE DATE</value>
+  </data>
+  <data name="invoice.date.maturity" xml:space="preserve">
+    <value>MATURITY DATE</value>
+  </data>
+  <data name="invoice.label" xml:space="preserve">
+    <value>INVOICE</value>
+  </data>
+  <data name="invoice.number" xml:space="preserve">
+    <value>INVOICE NUMBER</value>
+  </data>
+  <data name="invoice.reference.our" xml:space="preserve">
+    <value>Our Reference:</value>
+  </data>
+  <data name="invoice.reference.your" xml:space="preserve">
+    <value>Your Reference:</value>
+  </data>
+  <data name="invoice.subtotal&quot;" xml:space="preserve">
+    <value>SUBTOTAL</value>
+  </data>
+  <data name="invoice.terms" xml:space="preserve">
+    <value>Terms of payment: 30 days net. If the payment due date will be charged interest of 2% per month.</value>
+  </data>
+  <data name="invoice.total" xml:space="preserve">
+    <value>TOTAL AMOUNT</value>
+  </data>
+  <data name="invoice.vat" xml:space="preserve">
+    <value>VAT%</value>
+  </data>
+  <data name="invoice.vat.amount" xml:space="preserve">
+    <value>VAT</value>
+  </data>
+  <data name="item" xml:space="preserve">
+    <value>ITEM</value>
+  </data>
+  <data name="item.amount" xml:space="preserve">
+    <value>AMOUNT</value>
+  </data>
+  <data name="item.price" xml:space="preserve">
+    <value>PRICE</value>
+  </data>
+  <data name="item.price.unit" xml:space="preserve">
+    <value>PRICE / UNIT</value>
+  </data>
+  <data name="item.quantity" xml:space="preserve">
+    <value>QUANTITY</value>
+  </data>
+  <data name="item.unit" xml:space="preserve">
+    <value>UNIT</value>
   </data>
 </root>
