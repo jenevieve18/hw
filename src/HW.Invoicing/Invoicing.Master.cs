@@ -19,14 +19,13 @@ namespace HW.Invoicing
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			HtmlHelper.RedirectIf(Session["CompanyId"] == null, "login.aspx");
+			
 			int companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
-//			company = cr.Read(companyId);
 			company = service.ReadCompany(companyId);
 			
 			int userId = ConvertHelper.ToInt32(Session["UserId"]);
 			
-//			user = ur.Read(userId);
-//			user.Companies = ur.FindCompanies(userId);
 			user = service.ReadUser(userId);
 		}
 	}

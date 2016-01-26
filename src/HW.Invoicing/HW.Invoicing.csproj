@@ -111,6 +111,7 @@
     <Content Include="IssueDelete.aspx" />
     <Content Include="IssueEdit.aspx" />
     <Content Include="Issues.aspx" />
+    <Content Include="IssueShow.aspx" />
     <Content Include="ItemAdd.aspx" />
     <Content Include="ItemDeactivate.aspx" />
     <Content Include="ItemDelete.aspx" />
@@ -538,6 +539,13 @@
     </Compile>
     <Compile Include="Issues.aspx.designer.cs">
       <DependentUpon>Issues.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IssueShow.aspx.cs">
+      <DependentUpon>IssueShow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IssueShow.aspx.designer.cs">
+      <DependentUpon>IssueShow.aspx</DependentUpon>
     </Compile>
     <Compile Include="ItemAdd.aspx.cs">
       <DependentUpon>ItemAdd.aspx</DependentUpon>

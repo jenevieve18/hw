@@ -50,6 +50,20 @@ VALUES(@Title, @Description, @CreatedAt, @Status, @MilestoneId, @Priority)";
 				new SqlParameter("@Priority", t.Priority.Id)
 			);
 		}
+
+        public void SaveComment(IssueComment t, int issueId, int userId)
+        {
+            string query = @"
+INSERT INTO IssueComment(Comments, IssueId, UserId, Date)
+VALUES(@Comments, @IssueId, @UserId, GETDATE())";
+            ExecuteNonQuery(
+                query,
+                "invoicing",
+                new SqlParameter("@Comments", t.Comments),
+                new SqlParameter("@IssueId", issueId),
+                new SqlParameter("@UserId", userId)
+            );
+        }
 		
 		public override void Update(Issue t, int id)
 		{
@@ -83,8 +97,7 @@ WHERE Id = @Id"
 			Issue issue = null;
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", id))) {
 				while (rs.Read()) {
-					issue = new Issue
-					{
+					issue = new Issue {
 						Id = GetInt32(rs, 0),
 						Title = GetString(rs, 1),
 						Description = GetString(rs, 2),
@@ -94,6 +107,9 @@ WHERE Id = @Id"
 					};
 				}
 			}
+			if (issue != null) {
+				issue.Comments = FindComments(id);
+			}
 			return issue;
 		}
 
@@ -101,21 +117,25 @@ WHERE Id = @Id"
 		{
 			string query = string.Format(
 				@"
-SELECT c.Comments
+SELECT c.Comments,
+c.Date,
+c.UserId,
+u.Name
 FROM IssueComment c
+INNER JOIN [User] u ON u.Id = c.UserId
 WHERE c.IssueId = @Id"
 			);
 			var comments = new List<IssueComment>();
-			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", id)))
-			{
-				while (rs.Read())
-				{
-					comments.Add(
-						new IssueComment
-						{
-							Comments = GetString(rs, 0)
-						}
-					);
+			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", id))) {
+				while (rs.Read()) {
+                    comments.Add(
+                        new IssueComment
+                        {
+                            Comments = GetString(rs, 0),
+                            Date = GetDateTime(rs, 1),
+                            User = new User { Id = GetInt32(rs, 2), Name = GetString(rs, 3) }
+                        }
+                    );
 				}
 			}
 			return comments;
@@ -140,19 +160,16 @@ ORDER BY i.Status, Priority, i.CreatedAt DESC"
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {
 				while (rs.Read()) {
 					issues.Add(
-						new Issue
-						{
+						new Issue {
 							Id = GetInt32(rs, 0),
 							Title = GetString(rs, 1),
 							Description = GetString(rs, 2),
 							Status = GetInt32(rs, 3),
-							Milestone = new Milestone
-							{
+							Milestone = new Milestone {
 								Id = GetInt32(rs, 4),
 								Name = GetString(rs, 5)
 							},
-							Priority = new Priority
-							{
+							Priority = new Priority {
 								Id = GetInt32(rs, 6)
 							}
 						}

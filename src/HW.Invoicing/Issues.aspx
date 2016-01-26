@@ -40,7 +40,7 @@
         <% } else { %>
             <tr>
                 <td>#<%= i.Id %></td>
-                <td><%= i.Title %></td>
+                <td><%= HtmlHelper.Anchor(i.Title, "issueshow.aspx?Id=" + i.Id) %></td>
                 <td><%= i.Description %></td>
                 <td><%= i.Milestone.Name %></td>
                 <td style="width:80px"><small><%= i.GetPriority()  %></small></td>

@@ -53,6 +53,7 @@ namespace HW.Invoicing.Core.Models
 		public Issue Issue { get; set; }
 		public string Comments { get; set; }
 		public User User { get; set; }
+        public DateTime? Date { get; set; }
 	}
 	
 	public class Issue : BaseModel

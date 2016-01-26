@@ -5,3 +5,6 @@ go
 
 alter table Customer add Currency integer;
 go
+
+alter table IssueComment add Date datetime;
+go

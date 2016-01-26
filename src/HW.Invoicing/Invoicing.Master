@@ -105,16 +105,6 @@
 				
 				        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					        <ul class="nav navbar-nav">
-						        <%--<li><%= HtmlHelper.Anchor("Customers", "customers.aspx") %></li>
-                                <% if (company != null && company.HasSubscriber) { %>
-                                    <li><%= HtmlHelper.Anchor("Subscription Timebooks", "customertimebooksubscriptionadd.aspx")%></li>
-                                <% } %>
-						        <li><%= HtmlHelper.Anchor("Invoices", "invoices.aspx") %></li>
-						        <li><%= HtmlHelper.Anchor("Items", "items.aspx") %></li>
-						        <li><%= HtmlHelper.Anchor("Units", "units.aspx") %></li>
-						        <li><%= HtmlHelper.Anchor("Users", "users.aspx") %></li>
-						        <li><%= HtmlHelper.Anchor("Issues", "issues.aspx") %></li>--%>
-                                
                                 <% if (user != null && company != null) { %>
                                     <% var links = user.IsOwner(company) ? Link.GetLinks() : user.GetCompany(company.Id).Links; %>
                                     <% foreach (var l in links) { %>
@@ -125,7 +115,6 @@
                                     <% } %>
                                 <% } %>
 					        </ul>
-                            <%--<% if (company != null) { %>--%>
 					        <ul class="nav navbar-nav navbar-right">
                                 <li class="dropdown">
                                     <% if (Session["CompanyName"] != null) { %>
