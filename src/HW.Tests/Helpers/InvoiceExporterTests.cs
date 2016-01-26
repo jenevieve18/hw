@@ -27,6 +27,8 @@ namespace HW.Tests.Helpers
 					PurchaseOrderNumber = "XXX-01234",
 					ContactPerson = new CustomerContact { Name  = "Gerald S. Hicks" },
 					OurReferencePerson = "Michael K. Smith",
+//					Language = Language.GetLanguage(1),
+//					Currency = Currency.GetCurrency(1)
 					InvoiceAddress = @"Carl T. Escalante
 37 East Avenue
 Scottsdale, AZ 85256"
@@ -180,7 +182,7 @@ Stockholm, Sweden",
 		}
 		
 		[Test]
-		public void TestHCGExporter()
+		public void TestDefaultExporter()
 		{
 			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create, FileAccess.Write)) {
 				invoice.Company = new Company {
@@ -202,7 +204,7 @@ Stockholm, Sweden",
 		}
 		
 		[Test]
-		public void TestHCGExporterWithNullCustomer()
+		public void TestDefaultExporterWithNullCustomer()
 		{
 			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create, FileAccess.Write)) {
 				invoice.Company = new Company {
@@ -225,7 +227,7 @@ Stockholm, Sweden",
 		}
 		
 		[Test]
-		public void TestHCGExporterWithNullCustomerContact()
+		public void TestDefaultExporterWithNullCustomerContact()
 		{
 			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create, FileAccess.Write)) {
 				invoice.Company = new Company {
