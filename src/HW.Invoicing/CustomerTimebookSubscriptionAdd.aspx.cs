@@ -90,7 +90,7 @@ namespace HW.Invoicing
 
         protected void buttonClear_Click(object sender, EventArgs e)
         {
-            r.ClearSubscriptionTimebooks();
+            r.ClearSubscriptionTimebooks(companyId);
             message = "<div class='alert alert-danger'>Subscription timebooks deleted.</div>";
 
             customers = r.FindActiveSubscribersByCompany(companyId, startDate, endDate);

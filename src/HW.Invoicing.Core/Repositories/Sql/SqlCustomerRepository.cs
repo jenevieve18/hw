@@ -823,12 +823,14 @@ WHERE Id = @Id"
 			return c;
 		}
 
-		public void ClearSubscriptionTimebooks()
+		public void ClearSubscriptionTimebooks(int companyId)
 		{
 			string query = @"
-DELETE FROM CustomerTimebook
-WHERE IsSubscription = 1";
-			ExecuteNonQuery(query, "invoicing");
+DELETE ct FROM CustomerTimebook ct
+INNER JOIN Customer c ON c.Id = ct.CustomerId
+WHERE IsSubscription = 1
+AND c.CompanyId = @CompanyId";
+			ExecuteNonQuery(query, "invoicing", new SqlParameter("@CompanyId", companyId));
 		}
 
 		public bool HasSubscriptionTimebookWithDate(DateTime startDate)
