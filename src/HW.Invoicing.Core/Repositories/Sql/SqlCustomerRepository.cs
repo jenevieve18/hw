@@ -86,12 +86,13 @@ WHERE Id = @Id";
 		public override void Delete(int id)
 		{
 			string query = @"
-UPDATE Customer SET Status = 2
+UPDATE Customer SET Status = @Status
 WHERE Id = @Id";
 			ExecuteNonQuery(
 				query,
 				"invoicing",
-				new SqlParameter("@Id", id)
+				new SqlParameter("@Id", id),
+				new SqlParameter("@Status", Customer.DELETED)
 			);
 		}
 
@@ -1755,14 +1756,13 @@ FROM Customer c
 INNER JOIN Item i on i.Id = c.SubscriptionItemId
 INNER JOIN Unit u on u.Id = i.UnitId
 WHERE c.HasSubscription = 1
---AND ISNULL(c.Inactive, 0) != 1
-AND ISNULL(c.Status, 0) != 1
+AND ISNULL(c.Status, 0) = 0
 AND c.CompanyId = @CompanyId
 AND (
     c.SubscriptionStartDate BETWEEN @StartDate AND @EndDate
     OR c.SubscriptionStartDate <= @StartDate
 )
-ORDER BY c.Status, --c.Inactive,
+ORDER BY c.Status,
 c.Name"
 			);
 			var customers = new List<Customer>();
@@ -1772,29 +1772,20 @@ c.Name"
 				new SqlParameter("@CompanyId", companyId),
 				new SqlParameter("@StartDate", startDate),
 				new SqlParameter("@EndDate", endDate)
-				/*new SqlParameter("@StartMonth", startDate.Month),
-                new SqlParameter("@StartYear", startDate.Year),
-                new SqlParameter("@EndMonth", endDate.Month),
-                new SqlParameter("@EndYear", endDate.Year)*/
 			))
 			{
-				while (rs.Read())
-				{
+				while (rs.Read()) {
 					customers.Add(
-						new Customer
-						{
+						new Customer {
 							Id = GetInt32(rs, 0),
 							Name = GetString(rs, 1),
 							Number = GetString(rs, 2),
 							Phone = GetString(rs, 3),
 							Email = GetString(rs, 4),
-							//                            Inactive = GetInt32(rs, 5) == 1,
-							SubscriptionItem = new Item
-							{
+							SubscriptionItem = new Item {
 								Id = GetInt32(rs, 6),
 								Name = GetString(rs, 7),
-								Unit = new Unit
-								{
+								Unit = new Unit {
 									Id = GetInt32(rs, 8),
 									Name = GetString(rs, 9)
 								},
@@ -1809,8 +1800,7 @@ c.Name"
 					);
 				}
 			}
-			foreach (var c in customers)
-			{
+			foreach (var c in customers) {
 				c.Timebooks = FindTimebooks(c.Id);
 			}
 			return customers;

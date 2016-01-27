@@ -26,40 +26,6 @@ namespace HW.Invoicing
         protected string generatedComments;
         int companyId;
 
-        //[WebMethod]
-        //public static List<object> FindActiveSubscribersByCompany(int companyId, DateTime startDate, DateTime endDate)
-        //{
-        //    var generatedComments = string.Format("Subscription fee for HealthWatch.se {0} - {1}", startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"));
-
-        //    var r = new SqlCustomerRepository();
-        //    var d = r.FindActiveSubscribersByCompany(companyId, startDate, endDate);
-        //    var customers = new List<object>();
-        //    foreach (var c in d) {
-        //        var sDate = c.GetLatestSubscriptionTimebookStartDate(startDate);
-        //        var eDate = c.GetLatestSubscriptionTimebookEndDate(endDate);
-        //        var cc = new {
-        //            id = c.Id,
-        //            name = c.Name,
-        //            subscriptionStartAndEndDate = c.GetSubscriptionStartAndEndDate(),
-        //            subscriptionStartDate = c.GetSubscriptionStartDate(),
-        //            subscriptionHasEndDate = c.SubscriptionHasEndDate,
-        //            subscriptionEndDate = c.GetSubscriptionEndDate(),
-        //            subscriptionTimebookEndDateLabel = c.GetLatestSubscriptionTimebookEndDateLabel(),
-        //            subscriptionItem = c.SubscriptionItem.Name,
-        //            subscriptionItemUnit = c.SubscriptionItem.Unit.Name,
-        //            subscriptionItemPrice = c.SubscriptionItem.Price,
-        //            latestSubscriptionTimebookId = c.GetLatestSubscriptionTimebookId(),
-        //            latestSubscriptionTimebookStartDate = sDate.ToString("yyyy-MM-dd"),
-        //            latestSubscriptionTimebookEndDate = eDate.ToString("yyyy-MM-dd"),
-        //            latestSubscriptionTimebookQuantity = c.GetLatestSubscriptionTimebookQuantity(sDate, eDate),
-        //            comments = c.GetLatestSubscriptionTimebookComments(sDate, eDate, generatedComments),
-        //            subscriptionTimebookAvailability = c.GetSubscriptionTimebookAvailability(startDate)
-        //        };
-        //        customers.Add(cc);
-        //    }
-        //    return customers;
-        //}
-
         protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
@@ -98,8 +64,8 @@ namespace HW.Invoicing
 
         protected void buttonSave_Click(object sender, EventArgs e)
         {
-            startDate = ConvertHelper.ToDateTime(textBoxStartDate.Text);
-            endDate = ConvertHelper.ToDateTime(textBoxEndDate.Text);
+            //startDate = ConvertHelper.ToDateTime(textBoxStartDate.Text);
+            //endDate = ConvertHelper.ToDateTime(textBoxEndDate.Text);
             customers = r.FindActiveSubscribersByCompany(companyId, startDate, endDate);
 
             var ids = Request.Form.GetValues("subscription-id");
@@ -136,6 +102,40 @@ namespace HW.Invoicing
 
             customers = r.FindActiveSubscribersByCompany(companyId, startDate, endDate);
         }
+
+        //[WebMethod]
+        //public static List<object> FindActiveSubscribersByCompany(int companyId, DateTime startDate, DateTime endDate)
+        //{
+        //    var generatedComments = string.Format("Subscription fee for HealthWatch.se {0} - {1}", startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"));
+
+        //    var r = new SqlCustomerRepository();
+        //    var d = r.FindActiveSubscribersByCompany(companyId, startDate, endDate);
+        //    var customers = new List<object>();
+        //    foreach (var c in d) {
+        //        var sDate = c.GetLatestSubscriptionTimebookStartDate(startDate);
+        //        var eDate = c.GetLatestSubscriptionTimebookEndDate(endDate);
+        //        var cc = new {
+        //            id = c.Id,
+        //            name = c.Name,
+        //            subscriptionStartAndEndDate = c.GetSubscriptionStartAndEndDate(),
+        //            subscriptionStartDate = c.GetSubscriptionStartDate(),
+        //            subscriptionHasEndDate = c.SubscriptionHasEndDate,
+        //            subscriptionEndDate = c.GetSubscriptionEndDate(),
+        //            subscriptionTimebookEndDateLabel = c.GetLatestSubscriptionTimebookEndDateLabel(),
+        //            subscriptionItem = c.SubscriptionItem.Name,
+        //            subscriptionItemUnit = c.SubscriptionItem.Unit.Name,
+        //            subscriptionItemPrice = c.SubscriptionItem.Price,
+        //            latestSubscriptionTimebookId = c.GetLatestSubscriptionTimebookId(),
+        //            latestSubscriptionTimebookStartDate = sDate.ToString("yyyy-MM-dd"),
+        //            latestSubscriptionTimebookEndDate = eDate.ToString("yyyy-MM-dd"),
+        //            latestSubscriptionTimebookQuantity = c.GetLatestSubscriptionTimebookQuantity(sDate, eDate),
+        //            comments = c.GetLatestSubscriptionTimebookComments(sDate, eDate, generatedComments),
+        //            subscriptionTimebookAvailability = c.GetSubscriptionTimebookAvailability(startDate)
+        //        };
+        //        customers.Add(cc);
+        //    }
+        //    return customers;
+        //}
 
         //protected void buttonClear_Click(object sender, EventArgs e)
         //{

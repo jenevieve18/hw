@@ -322,6 +322,14 @@
     </div>-->
 
     <br />
+
+    <div>
+        <asp:Button CssClass="btn btn-success" ID="buttonSave" runat="server" Text="Save these subscription timebooks" 
+            onclick="buttonSave_Click" />
+            or go to <i><%= HtmlHelper.Anchor("customer list", "customers.aspx") %></i>
+    </div>
+
+    <br />
     <table class="table table-hover" id="cusotmer-list">
         <thead>
             <tr>
@@ -395,14 +403,6 @@
             <% } %>
         </tbody>
     </table>
-
-    <br />
-
-    <div>
-        <asp:Button CssClass="btn btn-success" ID="buttonSave" runat="server" Text="Save these subscription timebooks" 
-            onclick="buttonSave_Click" />
-            or go to <i><%= HtmlHelper.Anchor("customer list", "customers.aspx") %></i>
-    </div>
 
     <%--<h3>Subscription Timebooks</h3>
 
