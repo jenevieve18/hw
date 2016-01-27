@@ -697,6 +697,7 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                <td></td>
                             <% } else { %>
                                 <td>
                                     <strike><%= t.Item.Name %> /
