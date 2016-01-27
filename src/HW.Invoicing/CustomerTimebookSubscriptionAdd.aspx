@@ -54,31 +54,40 @@
                 var v = $(this).data('subscriptionstartdate');
                 var i = $(this).data('subscriptioninitial');
                 if (v != "") { // Has start date
-                	if (i) {
-		                var d = new Date(v);
-		                if (startDate.setHours(0, 0, 0) <= d.setHours(0, 0, 0)) {
-		                    $(this).datepicker('update', startDate);
-		                }
-	                } else {
-	                	var d = new Date($(this).val());
-	                	if (startDate.setHours(0, 0, 0) <= d.setHours(0, 0, 0)) {
-	                		$(this).datepicker('update', startDate);
-	                	}
-	                }
+                    //console.log('Has start date...');
+                    if (i) {
+                        //console.log('Has initial timebook already saved...');
+                        var d = new Date(v);
+                        //console.log('Timebook start date: ' + d.toString() + '. Actual start date: ' + startDate.toString());
+                        if (d.setHours(0, 0, 0) <= startDate.setHours(0, 0, 0)) {
+                            $(this).datepicker('update', startDate);
+                        }
+                    } else {
+                        //console.log('No initial timebook saved...');
+                        var d = new Date($(this).val());
+                        if (d.setHours(0, 0, 0) <= startDate.setHours(0, 0, 0)) {
+                            $(this).datepicker('update', startDate);
+                        }
+                    }
                 } else {
-                	$(this).datepicker('update', startDate);
+                    //console.log('Has no start date, thus update it with the start date from main start date textbox.');
+                    $(this).datepicker('update', startDate);
                 }
             });
-            
+
             $('.subscription-end-date').each(function (e) {
                 var v = $(this).data('subscriptionenddate');
                 if (v != "") { // Has end date
+                    console.log('Has end date...');
                     var d = new Date(v);
+                    console.log("Subscription end date: " + d);
                     if (d.setHours(0, 0, 0) < endDate.setHours(0, 0, 0)) {
-                        $(this).datepicker('update', endDate);
+                        $(this).datepicker('update', d);
                     }
                 } else {
-                	$(this).datepicker('update', endDate);
+                    console.log('No end date, thus update it with the end date from main end date textbox.');
+                    console.log('Actual end date: ' + endDate.toString());
+                    $(this).datepicker('update', endDate);
                 }
             });
 
@@ -165,30 +174,32 @@
                 //textGeneratedComments.val(generatedText);
                 //$('#<%= textBoxComments.ClientID %>').change();
                 $('.subscription-start-date').each(function (e) {
-	                /*var v = $(this).data('subscriptionstartdate');
-	                var d = new Date(v);
-	                if (startDate.setHours(0, 0, 0) < d.setHours(0, 0, 0)) {
-	                    $(this).datepicker('update', startDate);
-	                }*/
-	                changeText($(this), text);
-	            });
+                    /*var v = $(this).data('subscriptionstartdate');
+                    var d = new Date(v);
+                    if (startDate.setHours(0, 0, 0) < d.setHours(0, 0, 0)) {
+                    $(this).datepicker('update', startDate);
+                    }*/
+                    changeText($(this), text);
+                });
             });
             //$('#<%= textBoxComments.ClientID %>').change(function () {
             //    $('.subscription-comments').val($(this).val());
             //});
             $('#<%= textBoxQuantity.ClientID %>').change(function () {
+                console.log('Quantity changed...');
                 $('.subscription-quantities').val($(this).val());
                 var quantity = $(this).val();
                 var startDate = $('#<%= textBoxStartDate.ClientID %>').datepicker('getDate');
                 var d = addMonth(startDate, quantity);
+                console.log('Anticipated date: ' + d);
                 $('#<%= textBoxEndDate.ClientID %>').datepicker('update', d);
-                
-                $('.subscription-quantities').each(function() {
-                	changeQuantity($(this), quantity);
-	                /*var startDate = $(this).closest('tr').find('.subscription-start-date').datepicker('getDate');
-	                var d = addMonth(startDate, $(this).val());
-	                $(this).closest('tr').find('.subscription-end-date').datepicker('update', d);*/
-	            });
+
+                $('.subscription-quantities').each(function () {
+                    changeQuantity($(this), quantity);
+                    /*var startDate = $(this).closest('tr').find('.subscription-start-date').datepicker('getDate');
+                    var d = addMonth(startDate, $(this).val());
+                    $(this).closest('tr').find('.subscription-end-date').datepicker('update', d);*/
+                });
             });
         });
         function changeText(row, text) {
@@ -369,6 +380,8 @@
                         type="text"
                         class="form-control subscription-start-date subscription-date"
                         data-subscriptionstartdate="<%= c.SubscriptionStartDate.Value.ToString("yyyy-MM-dd") %>"
+                        <%--data-subscriptioninitial='<%= c.IsInitial(sDate) ? "true" : "false" %>'--%>
+                        data-subscriptioninitial='<%= c.IsInitial(startDate) ? "true" : "false" %>'
                         data-customerid="<%= c.Id %>"
                         value="<%= sDate.ToString("yyyy-MM-dd") %>"
                         />
