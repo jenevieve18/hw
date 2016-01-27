@@ -386,7 +386,7 @@
                         value="<%= sDate.ToString("yyyy-MM-dd") %>"
                         />
                 </td>
-                <% DateTime eDate = c.GetLatestSubscriptionTimebookEndDate(endDate); %>
+                <% DateTime eDate = c.GetLatestSubscriptionTimebookEndDate(sDate, endDate); %>
                 <td class='date-width'>
                     <input id="subscription-end-date"
                         name="subscription-end-date"

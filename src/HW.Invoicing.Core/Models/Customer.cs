@@ -265,7 +265,7 @@ namespace HW.Invoicing.Core.Models
 			}
 		}
 
-		public DateTime GetLatestSubscriptionTimebookEndDate(DateTime endDate)
+		public DateTime GetLatestSubscriptionTimebookEndDate(DateTime startDate, DateTime endDate)
 		{
 			if (HasLatestSubscriptionTimebook) {
 				var t = SubscriptionTimebooks[0];
@@ -274,7 +274,8 @@ namespace HW.Invoicing.Core.Models
 						return SubscriptionEndDate.Value;
 					} else {
 						//return endDate.AddMonths(1);
-						return t.SubscriptionEndDate.Value.AddMonths(1);
+						//return t.SubscriptionEndDate.Value.AddMonths(1);
+                        return startDate.AddMonths(1).AddDays(-1);
 					}
 				} else {
 					return t.SubscriptionEndDate.Value;
