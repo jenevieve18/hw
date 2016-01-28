@@ -334,6 +334,10 @@
         {
             width:120px;
         }
+        .label a 
+        {
+            color:White;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
