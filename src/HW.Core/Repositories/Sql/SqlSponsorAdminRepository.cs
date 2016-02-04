@@ -383,6 +383,49 @@ ORDER BY SponsorAdminExtendedSurveyID DESC",
 			return surveys;
 		}
 		
+		public IExtendedSurvey ReadExtendedSurveysBySponsorAdmin(int sponsorID, int sponsorAdminID)
+		{
+			string query = string.Format(
+				@"
+SELECT SponsorAdminExtendedSurveyID,
+	sae.EmailSubject,
+	sae.EmailBody,
+	sae.FinishedEmailSubject,
+	sae.FinishedEmailBody,
+	sae.SponsorExtendedSurveyID,
+	pr.ProjectRoundID,
+	se.Internal,
+	se.RoundText,
+	sae.FinishedLastSent,
+	sae.EmailLastSent
+FROM SponsorAdminExtendedSurvey sae
+INNER JOIN SponsorExtendedSurvey se ON sae.SponsorExtendedSurveyID = se.SponsorExtendedSurveyID
+INNER JOIN eForm..ProjectRound pr ON se.ProjectRoundID = pr.ProjectRoundID
+WHERE SponsorAdminID = {0}
+ORDER BY SponsorAdminExtendedSurveyID DESC",
+				sponsorAdminID
+			);
+			SponsorAdminExtendedSurvey s = null;
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				if (rs.Read()) {
+					s = new SponsorAdminExtendedSurvey {
+						ExtraExtendedSurveyId = GetInt32(rs, 0),
+						EmailSubject = GetString(rs, 1),
+						EmailBody = GetString(rs, 2),
+						FinishedEmailSubject = GetString(rs, 3),
+						FinishedEmailBody = GetString(rs, 4),
+						Id = GetInt32(rs, 5),
+						ProjectRound = rs.IsDBNull(6) ? null : new ProjectRound { Id = GetInt32(rs, 6) },
+						Internal = GetString(rs, 7),
+						RoundText = GetString(rs, 8),
+						FinishedLastSent = GetDateTime(rs, 9),
+						EmailLastSent = GetDateTime(rs, 10)
+					};
+				}
+			}
+			return s;
+		}
+		
 		public int UpdateEmailTexts(int sponsorExtendedSurveyID, int sponsorAdminID, int sponsorAdminExtendedSurveyID, string emailSubject, string emailBody, string finishedEmailSubject, string finishedEmailBody)
 		{
 			string query = string.Format(
