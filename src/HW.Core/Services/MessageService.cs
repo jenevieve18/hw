@@ -78,27 +78,27 @@ namespace HW.Core.Services
 //			}
 			
 			var surveys = sponsorRepository.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID);
-//			var latestSponsorAdminExtendedSurveys = new SqlSponsorAdminRepository().ReadExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID);
-//			if (latestSponsorAdminExtendedSurveys != null) {
-//				bool found = false;
-//				IList<int> seen = new List<int>();
-//				foreach (var s in surveys) {
-//					if (!seen.Contains(s.ExtraExtendedSurveyId != 0 ? s.ExtraExtendedSurveyId : s.Id)) {
-//						if (s.ProjectRound != null) {
-//							if (!found) {
-//								s.EmailSubject = latestSponsorAdminExtendedSurveys.EmailSubject;
-//								s.EmailBody = latestSponsorAdminExtendedSurveys.EmailBody;
-//								
-//								s.FinishedEmailSubject = latestSponsorAdminExtendedSurveys.FinishedEmailSubject;
-//								s.FinishedEmailBody = latestSponsorAdminExtendedSurveys.FinishedEmailBody;
-//								
-//								found = true;
-//							}
-//						}
-//						seen.Add(s.ExtraExtendedSurveyId != 0 ? s.ExtraExtendedSurveyId : s.Id);
-//					}
-//				}
-//			}
+			var latestSponsorAdminExtendedSurveys = new SqlSponsorAdminRepository().ReadExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID);
+			if (latestSponsorAdminExtendedSurveys != null) {
+				bool found = false;
+				IList<int> seen = new List<int>();
+				foreach (var s in surveys) {
+					if (!seen.Contains(s.ExtraExtendedSurveyId != 0 ? s.ExtraExtendedSurveyId : s.Id)) {
+						if (s.ProjectRound != null) {
+							if (!found) {
+								s.EmailSubject = latestSponsorAdminExtendedSurveys.EmailSubject;
+								s.EmailBody = latestSponsorAdminExtendedSurveys.EmailBody;
+								
+								s.FinishedEmailSubject = latestSponsorAdminExtendedSurveys.FinishedEmailSubject;
+								s.FinishedEmailBody = latestSponsorAdminExtendedSurveys.FinishedEmailBody;
+								
+								found = true;
+							}
+						}
+						seen.Add(s.ExtraExtendedSurveyId != 0 ? s.ExtraExtendedSurveyId : s.Id);
+					}
+				}
+			}
 			return surveys;
 		}
 		
