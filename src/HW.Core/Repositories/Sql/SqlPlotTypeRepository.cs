@@ -12,7 +12,8 @@ namespace HW.Core.Repositories.Sql
 		{
 			string query = string.Format(
 				@"
-select * from PlotType"
+SELECT *
+FROM PlotType"
 			);
 			var types = new List<PlotType>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {

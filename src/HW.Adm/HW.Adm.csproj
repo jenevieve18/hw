@@ -122,6 +122,20 @@
     <Compile Include="faqedit.aspx.designer.cs">
       <DependentUpon>faqedit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="grpManual.aspx.cs">
+      <DependentUpon>grpManual.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grpManual.aspx.designer.cs">
+      <DependentUpon>grpManual.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grpManualSetup.aspx.cs">
+      <DependentUpon>grpManualSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="grpManualSetup.aspx.designer.cs">
+      <DependentUpon>grpManualSetup.aspx</DependentUpon>
+    </Compile>
     <Compile Include="grpUser.aspx.designer.cs">
       <DependentUpon>grpUser.aspx</DependentUpon>
     </Compile>
@@ -234,6 +248,13 @@
     <Compile Include="news.aspx.cs">
       <DependentUpon>news.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="plotType.aspx.cs">
+      <DependentUpon>plotType.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="plotType.aspx.designer.cs">
+      <DependentUpon>plotType.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="rss.aspx.cs">
@@ -1269,6 +1290,8 @@
     <Content Include="faqadd.aspx" />
     <Content Include="faqdelete.aspx" />
     <Content Include="faqedit.aspx" />
+    <Content Include="grpManual.aspx" />
+    <Content Include="grpManualSetup.aspx" />
     <Content Include="grpUser.aspx" />
     <Content Include="grpUserSetup.aspx" />
     <Content Include="img\DelToolSmall.gif" />
@@ -1286,6 +1309,7 @@
     <Content Include="main.css" />
     <Content Include="messages.aspx" />
     <Content Include="news.aspx" />
+    <Content Include="plotType.aspx" />
     <Content Include="rss.aspx" />
     <Content Include="rssSetupChannel.aspx" />
     <Content Include="rssSetupNewsCategory.aspx" />

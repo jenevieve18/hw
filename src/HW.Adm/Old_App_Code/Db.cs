@@ -302,6 +302,10 @@ public class Db
             "<A class=\"unli\" HREF=\"wise.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Words of wisdom</A><br/>" +
             "<A class=\"unli\" HREF=\"faq.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">FAQ</A><br/>" +
             "</td>";
+        ret += "<td><img src=\"img/null.gif\" width=\"25\" height=\"1\"></td>";
+        ret += "<td>" +
+            "<A class=\"unli\" HREF=\"grpManual.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">GRP Manual</A><br/>" +
+            "</td>";
         ret += "</tr>";
         ret += "</table>";
        
