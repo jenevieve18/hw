@@ -7,7 +7,7 @@ using HW.Core.Models;
 namespace HW.Core.Repositories.Sql
 {
 	public class SqlLanguageRepository : BaseSqlRepository<Language>//, ILanguageRepository
-	{
+    {
 		public override IList<Language> FindAll()
 		{
 			string query = @"

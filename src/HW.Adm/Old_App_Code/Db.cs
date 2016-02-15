@@ -304,6 +304,7 @@ public class Db
             "</td>";
         ret += "<td><img src=\"img/null.gif\" width=\"25\" height=\"1\"></td>";
         ret += "<td>" +
+            "<A class=\"unli\" HREF=\"plotType.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">Chart Descriptions</A><br/>" +
             "<A class=\"unli\" HREF=\"grpManual.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "\">GRP Manual</A><br/>" +
             "</td>";
         ret += "</tr>";
