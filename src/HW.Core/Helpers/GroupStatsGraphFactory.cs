@@ -36,7 +36,7 @@ namespace HW.Core.Helpers
 			this.departmentRepository = departmentRepository;
 		}
 		
-		public ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int width, int height, string bg, int GRPNG, int sponsorAdminID, int SID, string GID, object disabled, int point, int sponsorMinUserCountToDisclose, int fm, int tm)
+		public ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int PRUID, int yearFrom, int yearTo, int GB, bool hasGrouping, int plot, int width, int height, string bg, int GRPNG, int sponsorAdminID, int SID, string GID, object disabled, int point, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
 		{
 			int cx = p.Components.Capacity;
 			string sortString = "";
@@ -54,7 +54,7 @@ namespace HW.Core.Helpers
 			LanguageFactory.SetCurrentCulture(langID);
 	
 			if (p.Type == 1) {
-				decimal tot = answerRepository.CountByDate(fy, ty, sortString, fm, tm);
+				decimal tot = answerRepository.CountByDate(yearFrom, yearTo, sortString, monthFrom, monthTo);
 	
 				if (p.RequiredAnswerCount > Convert.ToInt32(tot)) {
 					g = new ExtendedGraph(895, 50, "#FFFFFF");
@@ -63,7 +63,7 @@ namespace HW.Core.Helpers
 					g = new ExtendedGraph(895, 550, "#FFFFFF");
 					List<Bar> bars = new List<Bar>();
 					foreach (OptionComponents c in optionRepository.FindComponentsByLanguage(p.Option.Id, langID)) {
-						int x = answerRepository.CountByValueWithDateOptionAndQuestion(c.Component.Id, fy, ty, p.Option.Id, p.Question.Id, sortString, fm, tm);
+						int x = answerRepository.CountByValueWithDateOptionAndQuestion(c.Component.Id, yearFrom, yearTo, p.Option.Id, p.Question.Id, sortString, monthFrom, monthTo);
 						var b = new Bar {
 							Description = c.Component.CurrentLanguage.Text,
 							Value = Convert.ToInt32(Math.Round(Convert.ToDecimal(x) / tot * 100M, 0)),
@@ -87,9 +87,9 @@ namespace HW.Core.Helpers
 						res = new System.Collections.Hashtable();
 	
 						if (c.Index.Parts.Capacity == 0) {
-							GetIdxVal(c.Index.Id, u.SortString, langID, fy, ty, fm, tm);
+							GetIdxVal(c.Index.Id, u.SortString, langID, yearFrom, yearTo, monthFrom, monthTo);
 						} else {
-							GetOtherIdxVal(c.Index.Id, u.SortString, langID, fy, ty, fm, tm);
+							GetOtherIdxVal(c.Index.Id, u.SortString, langID, yearFrom, yearTo, monthFrom, monthTo);
 						}
 	
 						if (all.Contains(lastVal)) {
@@ -116,9 +116,9 @@ namespace HW.Core.Helpers
 				List<Bar> bars = new List<Bar>();
 				foreach (ReportPartComponent c in reportRepository.FindComponents(p.Id)) {
 					if (c.Index.Parts.Capacity == 0) {
-						GetIdxVal(c.Index.Id, sortString, langID, fy, ty, fm, tm);
+						GetIdxVal(c.Index.Id, sortString, langID, yearFrom, yearTo, monthFrom, monthTo);
 					} else {
-						GetOtherIdxVal(c.Index.Id, sortString, langID, fy, ty, fm, tm);
+						GetOtherIdxVal(c.Index.Id, sortString, langID, yearFrom, yearTo, monthFrom, monthTo);
 					}
 					int color = c.Index.GetColor(lastVal);
 					bars.Add(new Bar { Value = lastVal, Color = color, Description = lastDesc, Reference = c.Index.TargetValue });
@@ -146,7 +146,7 @@ namespace HW.Core.Helpers
 				} else {
 					g.Type = new LineGraphType(0, t);
 				}
-				Answer answer = answerRepository.ReadByGroup(groupBy, fy, ty, sortString, fm, tm);
+				Answer answer = answerRepository.ReadByGroup(groupBy, yearFrom, yearTo, sortString, monthFrom, monthTo);
 				if (answer != null) {
 					cx = answer.DummyValue1 + 3;
 					minDT = answer.DummyValue2;
@@ -157,7 +157,7 @@ namespace HW.Core.Helpers
 				List<IMinMax> minMaxes = new List<IMinMax>();
 				foreach (ReportPartComponent c in reportRepository.FindComponentsByPart(p.Id)) {
 					if (!hasGrouping) {
-						Answer a = answerRepository.ReadMinMax(groupBy, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, fy, ty, sortString, fm, tm);
+						Answer a = answerRepository.ReadMinMax(groupBy, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, yearFrom, yearTo, sortString, monthFrom, monthTo);
 						if (a != null) {
 							minMaxes.Add(a);
 						} else {
@@ -177,7 +177,7 @@ namespace HW.Core.Helpers
 				
 				g.DrawBottomString(minDT, maxDT, GB);
 				
-				List<IExplanation> explanationBoxes = new List<IExplanation>();
+//				List<IExplanation> explanationBoxes = new List<IExplanation>();
 				
 				if (hasGrouping) {
 					int count = 0;
@@ -212,17 +212,17 @@ namespace HW.Core.Helpers
 					if (c != null) {
 						int bx = 0;
 						foreach(string i in item) {
-							explanationBoxes.Add(
-								new Explanation {
-									Description = (string)desc[i],
-									Color = bx + 4,
-									X = 130 + (int)((bx % breaker) * itemWidth),
-									Y = 20 + (int)Math.Floor((double)bx / breaker) * 15
-								}
-							);
+//							explanationBoxes.Add(
+//								new Explanation {
+//									Description = (string)desc[i],
+//									Color = bx + 4,
+//									X = 130 + (int)((bx % breaker) * itemWidth),
+//									Y = 20 + (int)Math.Floor((double)bx / breaker) * 15
+//								}
+//							);
 							cx = 1;
 							int lastDT = minDT - 1;
-							var answers = answerRepository.FindByQuestionAndOptionJoinedAndGrouped2(join[i].ToString(), groupBy, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, fy, ty, fm, tm);
+							var answers = answerRepository.FindByQuestionAndOptionJoinedAndGrouped2(join[i].ToString(), groupBy, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, yearFrom, yearTo, monthFrom, monthTo);
 							Series s = new Series {
 								Description = (string)desc[i],
 								Color = bx + 4,
@@ -267,7 +267,7 @@ namespace HW.Core.Helpers
 						cx = 1;
 						int lastDT = minDT - 1;
 						Series s = new Series { Color = bx + 4 };
-						var answers = answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, fy, ty, sortString, fm, tm);
+						var answers = answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, yearFrom, yearTo, sortString, monthFrom, monthTo);
 						foreach (Answer a in answers) {
 							if (a.DT < minDT) {
 								continue;

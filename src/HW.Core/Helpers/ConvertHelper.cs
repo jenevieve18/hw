@@ -89,6 +89,11 @@ namespace HW.Core.Helpers
 			return ToDouble(val, 0);
 		}
 		
+		public static double ToDouble(bool condition, double x, double y)
+		{
+			return condition ? x : y;
+		}
+		
 		public static double ToDouble(object val, double def)
 		{
 			try {

@@ -984,6 +984,56 @@ GROUP BY a.ProjectRoundUserID, {1}(a.EndDT)",
 			return answers;
 		}
 		
+		public IList<Answer> FindByQuestionAndOptionGrouped4(string groupBy, int questionID, int optionID, string join1, string yearFrom, string yearTo, string rnds1)
+		{
+			string query = string.Format(
+				@"
+--SELECT tmp.DT,
+--	AVG(tmp.V),
+--	COUNT(tmp.V),
+--	STDEV(tmp.V)
+--FROM (
+	SELECT {0}(a.EndDT) AS DT,
+		AVG(av.ValueInt) AS V
+	FROM Answer a
+	INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = {1} AND av.OptionID = {2}
+	INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
+	{3}
+	WHERE a.EndDT IS NOT NULL
+	AND a.EndDT >= '{4}'
+	AND a.EndDT < '{5}'
+	{6}
+	GROUP BY a.ProjectRoundUserID, {0}(a.EndDT)
+	ORDER BY DT
+--) tmp
+--GROUP BY tmp.DT
+--ORDER BY tmp.DT",
+				groupBy,
+				questionID,
+				optionID,
+				join1,
+				yearFrom,
+				yearTo,
+				rnds1
+			);
+			var answers = new List<Answer>();
+			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
+				if (rs.Read()) {
+					bool done = false;
+					while (!done) {
+						var a = new Answer { };
+						do {
+							a.DT = rs.GetInt32(0);
+							a.Values.Add(new AnswerValue { ValueInt = rs.GetInt32(1) });
+							done = !rs.Read();
+						} while (!done && rs.GetInt32(0) == a.DT);
+						answers.Add(a);
+					}
+				}
+			}
+			return answers;
+		}
+		
 		/// <summary>
 		/// Used in SuperReportImage thus no MonthFrom and MonthTo!
 		/// </summary>
