@@ -61,6 +61,11 @@ namespace HW.Core.Helpers
                 return s;
             }
         }
+        
+        public static string Str3(string x, string y)
+        {
+        	return x != null ? x : y;
+        }
 		
 		public static string Clean(this string s, params string[] x)
 		{

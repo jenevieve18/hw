@@ -78,18 +78,18 @@ namespace HW.Grp
 			ExtendedGraph g = null;
 
 			int gb = (Request.QueryString["GB"] != null ? Convert.ToInt32(Request.QueryString["GB"].ToString()) : 0);
-			bool stdev = (Request.QueryString["STDEV"] != null ? Convert.ToInt32(Request.QueryString["STDEV"]) == 1 : false);
+//			bool stdev = (Request.QueryString["STDEV"] != null ? Convert.ToInt32(Request.QueryString["STDEV"]) == 1 : false);
 			
-			int fy = Request.QueryString["FY"] != null ? Convert.ToInt32(Request.QueryString["FY"]) : 0;
-			int ty = Request.QueryString["TY"] != null ? Convert.ToInt32(Request.QueryString["TY"]) : 0;
+			int yearFrom = Request.QueryString["FY"] != null ? Convert.ToInt32(Request.QueryString["FY"]) : 0;
+			int yearTo = Request.QueryString["TY"] != null ? Convert.ToInt32(Request.QueryString["TY"]) : 0;
 			
-			int fm = ConvertHelper.ToInt32(Request.QueryString["FM"]);
-			int tm = ConvertHelper.ToInt32(Request.QueryString["TM"]);
+			int monthFrom = ConvertHelper.ToInt32(Request.QueryString["FM"]);
+			int monthTo = ConvertHelper.ToInt32(Request.QueryString["TM"]);
 			
 			int langID = (Request.QueryString["LangID"] != null ? Convert.ToInt32(Request.QueryString["LangID"]) : 0);
 
-			int rpid = Convert.ToInt32(Request.QueryString["RPID"]);
-			int pruid = Convert.ToInt32(Request.QueryString["PRUID"]);
+			int reportPartID = Convert.ToInt32(Request.QueryString["RPID"]);
+			int projectRoundUnitID = Convert.ToInt32(Request.QueryString["PRUID"]);
 			
 			bool hasGrouping = Request.QueryString["GRPNG"] != null || Request.QueryString["GRPNG"] != "0";
 			
@@ -106,10 +106,10 @@ namespace HW.Grp
 			int point = Request.QueryString["ExtraPoint"] != null ? Convert.ToInt32(Request.QueryString["ExtraPoint"]) : 0;
 			
 			ISponsor s = service.ReadSponsor(sid);
-			ReportPart r = service.ReadReportPart(rpid, langID);
+			ReportPart r = service.ReadReportPart(reportPartID, langID);
 
 			var f = service.GetGraphFactory(HasAnswerKey);
-			g = f.CreateGraph(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, Width, Height, Background, grpng, sponsorAdminID, sid, gid, disabled, point, s.MinUserCountToDisclose, fm, tm);
+			g = f.CreateGraph(key, r, langID, projectRoundUnitID, yearFrom, yearTo, gb, hasGrouping, plot, Width, Height, Background, grpng, sponsorAdminID, sid, gid, disabled, point, s.MinUserCountToDisclose, monthFrom, monthTo);
 			g.render();
 		}
 	}
