@@ -151,7 +151,8 @@ namespace HW.Grp
         	if (sponsorID != 0) {
 				if (!IsPostBack) {
 					
-					startDate = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day);
+					//startDate = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day);
+                    startDate = ToDate(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day);
 					endDate = DateTime.Now;
 					
 					GroupBy.Items.Clear();
@@ -180,6 +181,20 @@ namespace HW.Grp
 			} else {
 				Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
+        }
+
+        DateTime ToDate(int year, int month, int day)
+        {
+            DateTime d;
+            try
+            {
+                d = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day);
+            }
+            catch
+            {
+                d = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day - 1);
+            }
+            return d;
         }
 
 		protected void Page_Load(object sender, EventArgs e)
