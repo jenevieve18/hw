@@ -12,14 +12,18 @@ namespace HW.Grp
 	public partial class SuperStats : System.Web.UI.Page
 	{
 		SqlReportRepository reportRepository = new SqlReportRepository();
+        SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
 		protected int lid;
 		protected IList<ReportPartLanguage> reportParts;
+        protected IList<PlotTypeLanguage> plotTypes;
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			HtmlHelper.RedirectIf(Session["SuperAdminID"] == null, "default.aspx", true);
 
-			lid = ConvertHelper.ToInt32(Session["lid"], 2);
+            lid = ConvertHelper.ToInt32(Session["lid"], 2);
+
+            plotTypes = plotRepository.FindByLanguage(lid);
 		}
 
 		protected string X(ReportPartLanguage p)

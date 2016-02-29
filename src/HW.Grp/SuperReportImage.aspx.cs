@@ -21,7 +21,8 @@ namespace HW.Grp
 			
 			var g = CreateGraph(
 //				new LineGraphType(2, 2),
-				new BoxPlotMinMaxGraphType(),
+//				new BoxPlotMinMaxGraphType(),
+				GetGraphType(ConvertHelper.ToInt32(Request.QueryString["PLOT"])),
 				StrHelper.Str3(Request.QueryString["RNDS1"], ""),
 				StrHelper.Str3(Request.QueryString["RNDS2"], ""),
 				StrHelper.Str3(Request.QueryString["RNDSD1"], ""),
@@ -37,6 +38,22 @@ namespace HW.Grp
 				Request.QueryString["DISABLED"]
 			);
 			g.render();
+		}
+		
+		IGraphType GetGraphType(int plot)
+		{
+			int t = 2;
+			if (plot == PlotType.BoxPlotMinMax) {
+				return new BoxPlotMinMaxGraphType();
+			} else if (plot == PlotType.BoxPlot) {
+				return new BoxPlotGraphType();
+			} else if (plot == PlotType.LineSDWithCI) {
+				return new LineGraphType(2, t);
+			} else if (plot == PlotType.LineSD) {
+				return new LineGraphType(1, t);
+			} else {
+				return new LineGraphType(0, t);
+			}
 		}
 		
 		public ExtendedGraph CreateGraph(IGraphType gt, string rnds1, string rnds2, string rndsd1, string rndsd2, string pid1, string pid2, string n, int rpid, string yearFrom, string yearTo, string r1, string r2, string disabled)
