@@ -17,15 +17,15 @@ namespace HW.Grp
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		int superAdminID;
 		HW.Core.Models.SuperAdmin superAdmin;
-        protected int lid;
+		protected int lid;
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			if (Session["SuperAdminID"] == null) {
 				Response.Redirect("default.aspx?SuperLogout=1&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
-            superAdminID = ConvertHelper.ToInt32(Session["SuperAdminID"]);
-            lid = ConvertHelper.ToInt32(Session["lid"], 2);
+			superAdminID = ConvertHelper.ToInt32(Session["SuperAdminID"]);
+			lid = ConvertHelper.ToInt32(Session["lid"], 2);
 			superAdmin = sponsorRepository.ReadSuperAdmin(superAdminID);
 			submit.Click += new EventHandler(submit_Click);
 			submit2.Click += new EventHandler(submit2_Click);
@@ -92,6 +92,34 @@ namespace HW.Grp
 				qs2 = ",0";
 			}
 
+			foreach (var spru in sponsorRepository.FindSponsorProjectRoundUnits(Convert.ToInt32(Session["SuperAdminID"]))) {
+				not += "," + spru.ProjectRoundUnit.Id;
+				if (Request.Form["Measure_" + spru.ProjectRoundUnit.Id] != null && Request.Form["Measure_" + spru.ProjectRoundUnit.Id] == "1" && qs1 != ",0") {
+					qs1 += "," + spru.ProjectRoundUnit.Id;
+				}
+				if (Request.Form["Measure_" + spru.ProjectRoundUnit.Id] != null && Request.Form["Measure_" + spru.ProjectRoundUnit.Id] == "2" && qs2 != ",0") {
+					qs2 += "," + spru.ProjectRoundUnit.Id;
+				}
+			}
+			if (qs1 != "") {
+				string url = string.Format(
+					@"superstats.aspx?N={0}&FDT={1}&TDT={2}&R1={3}&R2={4}&RNDS1={5}{6}&RID={7}",
+					not.Substring(1),
+					FromDT.SelectedValue,
+					ToDT.SelectedValue,
+					Measure2Txt1.Text,
+					Measure2Txt2.Text,
+					qs1.Substring(1),
+					(qs2 != "" ? "&RNDS2=" + qs2.Substring(1) : ""),
+					ReportID.SelectedValue
+				);
+//				Response.Redirect(
+//					url,
+//					true
+//				);
+				ScriptManager.RegisterStartupScript(Page, typeof(Page), "OpenWindow", "window.open('" + url + "')", true);
+			}
+
 //			string query = string.Format(
 //				@"
 			//SELECT s.Sponsor,
@@ -110,38 +138,13 @@ namespace HW.Grp
 //			);
 //			SqlDataReader rs = Db.rs(query);
 //			while (rs.Read())
-			foreach (var spru in sponsorRepository.FindSponsorProjectRoundUnits(Convert.ToInt32(Session["SuperAdminID"]))) {
 //				not += "," + rs.GetInt32(1);
-				not += "," + spru.ProjectRoundUnit.Id;
 //				if (Request.Form["Measure_" + rs.GetInt32(1)] != null && Request.Form["Measure_" + rs.GetInt32(1)] == "1" && qs1 != ",0") {
-				if (Request.Form["Measure_" + spru.ProjectRoundUnit.Id] != null && Request.Form["Measure_" + spru.ProjectRoundUnit.Id] == "1" && qs1 != ",0") {
 //					qs1 += "," + rs.GetInt32(1).ToString();
-					qs1 += "," + spru.ProjectRoundUnit.Id;
-				}
 //				if (Request.Form["Measure_" + rs.GetInt32(1)] != null && Request.Form["Measure_" + rs.GetInt32(1)] == "2" && qs2 != ",0") {
-				if (Request.Form["Measure_" + spru.ProjectRoundUnit.Id] != null && Request.Form["Measure_" + spru.ProjectRoundUnit.Id] == "2" && qs2 != ",0") {
 //					qs2 += "," + rs.GetInt32(1).ToString();
-					qs2 += "," + spru.ProjectRoundUnit.Id;
-				}
-			}
 //			rs.Close();
-			if (qs1 != "") {
-				//Response.Redirect("http://" + Request.Url.Host + Request.Url.PathAndQuery.Substring(0, Request.Url.PathAndQuery.LastIndexOf("/")) + "/superstats.aspx?" +
-				Response.Redirect(
-					string.Format(
-						@"superstats.aspx?N={0}&FDT={1}&TDT={2}&R1={3}&R2={4}&RNDS1={5}{6}&RID={7}",
-						not.Substring(1),
-						FromDT.SelectedValue,
-						ToDT.SelectedValue,
-						Measure2Txt1.Text,
-						Measure2Txt2.Text,
-						qs1.Substring(1),
-						(qs2 != "" ? "&RNDS2=" + qs2.Substring(1) : ""),
-						ReportID.SelectedValue
-					),
-					true
-				);
-			}
+			//Response.Redirect("http://" + Request.Url.Host + Request.Url.PathAndQuery.Substring(0, Request.Url.PathAndQuery.LastIndexOf("/")) + "/superstats.aspx?" +
 		}
 
 		void submit_Click(object sender, EventArgs e)
@@ -206,9 +209,9 @@ namespace HW.Grp
 		{
 			base.OnPreRender(e);
 
-            Search.Text = R.Str(lid, "search", "Search");
-            submit.Text = R.Str(lid, "submit", "Submit");
-            submit2.Text = R.Str(lid, "submit", "Submit");
+			Search.Text = R.Str(lid, "search", "Search");
+			submit.Text = R.Str(lid, "submit", "Submit");
+			submit2.Text = R.Str(lid, "submit", "Submit");
 
 			ExtendedSurvey.Text = string.Format(
 				@"
@@ -285,12 +288,12 @@ namespace HW.Grp
 	<td>{0}</td>
 </tr>",
 				bx,
-                R.Str(lid, "org.total", "Total for your organization(s)")
+				R.Str(lid, "org.total", "Total for your organization(s)")
 			);
 			ESS.Visible = cx > 0;
 
 			SponsorID.Text = string.Format(
-                @"
+				@"
 <tr>
     <td><b>{0}</b></td>
     <td><b>{1}</b></td>
@@ -300,14 +303,14 @@ namespace HW.Grp
     <td><b>{5}</b></td>
     <td><b>{6}</b></td>
 </tr>",
-              R.Str(lid, "manager.name", "Name"),
-              R.Str(lid, "survey.extended.no", "# of ext<br/>surveys"),
-              R.Str(lid, "users.no", "# of added<br/>users"),
-              R.Str(lid, "users.invited.no", "# of invited<br/>users"),
-              R.Str(lid, "users.activated.no", "# of activated<br/>users"),
-              R.Str(lid, "invite.first", "1st invite sent"),
-              R.Str(lid, "privilege.super", "Super privileges")
-          );
+				R.Str(lid, "manager.name", "Name"),
+				R.Str(lid, "survey.extended.no", "# of ext<br/>surveys"),
+				R.Str(lid, "users.no", "# of added<br/>users"),
+				R.Str(lid, "users.invited.no", "# of invited<br/>users"),
+				R.Str(lid, "users.activated.no", "# of activated<br/>users"),
+				R.Str(lid, "invite.first", "1st invite sent"),
+				R.Str(lid, "privilege.super", "Super privileges")
+			);
 
 			cx = 0;
 			int totInvitees = 0, totNonClosedInvites = 0, totActive = 0, totNonClosedActive = 0;
@@ -527,20 +530,20 @@ namespace HW.Grp
 	<td>{0}</td>
 </tr>",
 				bx,
-                R.Str(lid, "org.total", "Total for your organization(s)"));
+				R.Str(lid, "org.total", "Total for your organization(s)"));
 		}
 		
 		protected IList<User> users;
-        protected string searchQuery;
+		protected string searchQuery;
 		SqlUserRepository userRepository = new SqlUserRepository();
 
-        protected void Search_Click(object sender, EventArgs e)
-        {
-            if (SearchEmail.Text != "")
-            {
-                searchQuery = SearchEmail.Text.Replace("'", "");
-                users = userRepository.FindLikeUsers(superAdminID, searchQuery);
-            }
-        }
+		protected void Search_Click(object sender, EventArgs e)
+		{
+			if (SearchEmail.Text != "")
+			{
+				searchQuery = SearchEmail.Text.Replace("'", "");
+				users = userRepository.FindLikeUsers(superAdminID, searchQuery);
+			}
+		}
 	}
 }
