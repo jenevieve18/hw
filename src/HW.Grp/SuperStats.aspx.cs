@@ -26,23 +26,11 @@ namespace HW.Grp
             plotTypes = plotRepository.FindByLanguage(lid);
 		}
 
-		protected string X(ReportPartLanguage p)
+        protected string GetReportImageUrl(ReportPartLanguage p)
 		{
 			return string.Format(
 				"superReportImage.aspx?N={0}&FDT={1}&TDT={2}&RNDS1={3}&RNDSD1={4}&PID1={5}&RNDS2={6}&RNDSD2={7}&PID2={8}&R1={9}&R2={10}&RPID={11}",
-//				(Request.QueryString["N"] != null ? Request.QueryString["N"] : ""),
-//				(Request.QueryString["FDT"] != null ? Request.QueryString["FDT"] : ""),
-//				(Request.QueryString["TDT"] != null ? Request.QueryString["TDT"] : ""),
-//				(Request.QueryString["RNDS1"] != null ? Request.QueryString["RNDS1"] : ""),
-//				(Request.QueryString["RNDSD1"] != null ? Request.QueryString["RNDSD1"] : ""),
-//				(Request.QueryString["PID1"] != null ? Request.QueryString["PID1"] : ""),
-//				(Request.QueryString["RNDS2"] != null ? Request.QueryString["RNDS2"] : ""),
-//				(Request.QueryString["RNDSD2"] != null ? Request.QueryString["RNDSD2"] : ""),
-//				(Request.QueryString["PID2"] != null ? Request.QueryString["PID2"] : ""),
-//				(Request.QueryString["R1"] != null ? Request.QueryString["R1"] : ""),
-//				(Request.QueryString["R2"] != null ? Request.QueryString["R2"] : ""),
-//				p.ReportPart.Id
-				(StrHelper.Str3(Request.QueryString["N"], "")),
+                (StrHelper.Str3(Request.QueryString["N"], "")),
 				(StrHelper.Str3(Request.QueryString["FDT"], "")),
 				(StrHelper.Str3(Request.QueryString["TDT"], "")),
 				(StrHelper.Str3(Request.QueryString["RNDS1"], "")),

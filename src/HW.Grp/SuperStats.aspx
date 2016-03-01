@@ -7,18 +7,22 @@
     $(document).ready(function () {
         $('.report-part .plot-types').change(function () {
             var plotType = $(this).val();
-            console.log(plotType);
 
             var reportPart = $(this).closest('.report-part');
             var imageUrl = reportPart.find('.image-url').text();
-            //console.log(imageUrl);
 
             var img = reportPart.find('.image');
-            //console.log(img);
             img.attr('src', imageUrl + '&PLOT=' + plotType);
-            //alert(imageUrl);
-
-
+        });
+        $('.all-plot-types').change(function () {
+            var plotType = $(this).val();
+            console.log(plotType);
+            $.each($('.report-part'), function () {
+                var p = $(this).find('.plot-types');
+                console.log(plotType);
+                p.val(plotType);
+                p.change();
+            });
         });
     });
 </script>
@@ -29,9 +33,9 @@
 <%--<asp:Label ID=StatsImg runat=server />--%>
 
 Change all graphs to:
-<select>
+<select class="all-plot-types">
     <% foreach (var p in plotTypes) { %>
-        <option id="<%= p.PlotType.Id %>"><%= p.ShortName %></option>
+        <option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option>
     <% } %>
 </select>
 Export all graphs to:
@@ -58,8 +62,9 @@ Export all graphs to:
 		</tr>
 		<tr>
 			<td>
-				<img class="image" src="<%= X(r) %>" />
-                <span class="hidden image-url"><%= X(r) %></span>
+                <% string url = GetReportImageUrl(r); %>
+				<img class="image" src="<%= url %>" />
+                <span class="hidden image-url"><%= url %></span>
 			</td>
 		</tr>
         <tr>
