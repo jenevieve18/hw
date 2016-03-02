@@ -62,8 +62,8 @@ namespace HW.Core.Helpers
 		
 		public void DrawWhiskers2(int color, int cx, int upperWhisker, int lowerWhisker)
 		{
-			upperWhisker = ConvertHelper.ToInt32(upperWhisker > maxVal ? maxVal : upperWhisker);
-			lowerWhisker = ConvertHelper.ToInt32(lowerWhisker < minVal ? minVal : lowerWhisker);
+//			upperWhisker = ConvertHelper.ToInt32(upperWhisker > maxVal ? maxVal : upperWhisker);
+//			lowerWhisker = ConvertHelper.ToInt32(lowerWhisker < minVal ? minVal : lowerWhisker);
 			Line l1 = new Line {
 				Color = 20,
 				X1 = cx * steping - 10,
@@ -93,36 +93,36 @@ namespace HW.Core.Helpers
 			drawLine(l3); // |
 		}
 		
-//		public void DrawWhiskers(int cx, int upperWhisker, int lowerWhisker)
-//		{
-//			Line l1 = new Line {
-//				Color = 20,
-//				X1 = cx * steping - 10,
-//				Y1 = Convert.ToInt32(maxH - (upperWhisker - minVal) / (maxVal - minVal) * maxH),
-//				X2 = cx * steping + 10,
-//				Y2 = Convert.ToInt32(maxH - (upperWhisker - minVal) / (maxVal - minVal) * maxH),
-//				T = 1
-//			};
-//			drawLine(l1); // ---
-//			Line l2 = new Line {
-//				Color = 20,
-//				X1 = cx * steping - 10,
-//				Y1 = Convert.ToInt32(maxH - (lowerWhisker - minVal) / (maxVal - minVal) * maxH),
-//				X2 = cx * steping + 10,
-//				Y2 = Convert.ToInt32(maxH - (lowerWhisker - minVal) / (maxVal - minVal) * maxH),
-//				T = 1
-//			};
-//			drawLine(l2); // ---
-//			Line l3 = new Line {
-//				Color = 20,
-//				X1 = cx * steping,
-//				Y1 = Convert.ToInt32(maxH - (upperWhisker - minVal) / (maxVal - minVal) * maxH),
-//				X2 = cx * steping,
-//				Y2 = Convert.ToInt32(maxH - (lowerWhisker - minVal) / (maxVal - minVal) * maxH),
-//				T = 1
-//			};
-//			drawLine(l3); // |
-//		}
+		public void DrawWhiskers(int cx, int upperWhisker, int lowerWhisker)
+		{
+			Line l1 = new Line {
+				Color = 20,
+				X1 = cx * steping - 10,
+				Y1 = Convert.ToInt32(maxH - (upperWhisker - minVal) / (maxVal - minVal) * maxH),
+				X2 = cx * steping + 10,
+				Y2 = Convert.ToInt32(maxH - (upperWhisker - minVal) / (maxVal - minVal) * maxH),
+				T = 1
+			};
+			drawLine(l1); // ---
+			Line l2 = new Line {
+				Color = 20,
+				X1 = cx * steping - 10,
+				Y1 = Convert.ToInt32(maxH - (lowerWhisker - minVal) / (maxVal - minVal) * maxH),
+				X2 = cx * steping + 10,
+				Y2 = Convert.ToInt32(maxH - (lowerWhisker - minVal) / (maxVal - minVal) * maxH),
+				T = 1
+			};
+			drawLine(l2); // ---
+			Line l3 = new Line {
+				Color = 20,
+				X1 = cx * steping,
+				Y1 = Convert.ToInt32(maxH - (upperWhisker - minVal) / (maxVal - minVal) * maxH),
+				X2 = cx * steping,
+				Y2 = Convert.ToInt32(maxH - (lowerWhisker - minVal) / (maxVal - minVal) * maxH),
+				T = 1
+			};
+			drawLine(l3); // |
+		}
 		
 		public void DrawMedian(int cx, int mean)
 		{

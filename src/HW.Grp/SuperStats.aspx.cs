@@ -16,6 +16,7 @@ namespace HW.Grp
 		protected int lid;
 		protected IList<ReportPartLanguage> reportParts;
         protected IList<PlotTypeLanguage> plotTypes;
+        protected bool forSingleSeries;
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -24,6 +25,8 @@ namespace HW.Grp
             lid = ConvertHelper.ToInt32(Session["lid"], 2);
 
             plotTypes = plotRepository.FindByLanguage(lid);
+
+            forSingleSeries = StrHelper.Str3(Request.QueryString["RNDS2"], "") == "";
 		}
 
         protected string GetReportImageUrl(ReportPartLanguage p)

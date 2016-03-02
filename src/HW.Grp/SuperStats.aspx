@@ -35,7 +35,8 @@
 Change all graphs to:
 <select class="all-plot-types">
     <% foreach (var p in plotTypes) { %>
-        <option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option>
+        <% if (!p.SupportsMultipleSeries && !forSingleSeries) {} %>
+        <% else { %><option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option><% } %>
     <% } %>
 </select>
 Export all graphs to:

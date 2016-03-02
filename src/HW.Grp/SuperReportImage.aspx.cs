@@ -226,17 +226,7 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 				int bx = 0;
 				var p = reportRepository.ReadComponentByPartAndLanguage(rpid, langID);
 				if (p != null) {
-					Series s = new Series {
-						Description = r1,
-						Color = 4,
-						X = 300,
-						Y = 20
-					};
-					
-//					g.drawAxisExpl(p.WeightedQuestionOption.Languages[0].Question + ", " + (langID == 1 ? "medelvärde" : "mean value") + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""), 20, false, false);
-//					g.drawAxis(false);
-
-//					g.drawColorExplBox(Request.QueryString["R1"].ToString(), 4, 300, 20);
+					Series s1 = new Series { Description = r1, Color = 4, X = 300, Y = 20 };
 					
 					g.Explanations.Add(
 						new Explanation {
@@ -248,52 +238,50 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 						}
 					);
 
-					float lastVal = -1f;
-					float lastStd = -1f;
-					int lastCX = 1;
+//					float lastVal = -1f;
+//					float lastStd = -1f;
+//					int lastCX = 1;
 					cx = 1;
 					int lastDT = minDT - 1;
-//					string yearFrom = Request.QueryString["FDT"];
-//					string yearTo = Request.QueryString["TDT"];
-//					string yearFrom = fdt;
-//					string yearTo = tdt;
 					
 					foreach (var a in answerRepository.FindByQuestionAndOptionGrouped4(groupBy, p.WeightedQuestionOption.Question.Id, p.WeightedQuestionOption.Option.Id, join1, yearFrom, yearTo, rnds1)) {
 						while (lastDT + 1 < a.DT) {
 							lastDT++;
 							cx++;
 						}
-//						if (a.CountV >= rac) {
 						if (a.Values.Count >= rac) {
-//							float newVal = (a.AverageV == -1 ? -1f : (float)Convert.ToDouble(a.AverageV));
-//							float newStd = (a.StandardDeviation == -1 ? -1f : (float)Convert.ToDouble(a.StandardDeviation));
-
-//							if (stdev) {
-//								g.drawLine(20, cx * g.steping - 10, Convert.ToInt32(g.maxH - ((newVal - newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), cx * g.steping + 10, Convert.ToInt32(g.maxH - ((newVal - newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), 1);
-//								g.drawLine(20, cx * g.steping, Convert.ToInt32(g.maxH - ((newVal - newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), cx * g.steping, Convert.ToInt32(g.maxH - ((newVal + newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), 1);
-//								g.drawLine(20, cx * g.steping - 10, Convert.ToInt32(g.maxH - ((newVal + newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), cx * g.steping + 10, Convert.ToInt32(g.maxH - ((newVal + newStd) - g.minVal) / (g.maxVal - g.minVal) * g.maxH), 1);
-//							}
-							
-							s.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
-
-//							if (newVal != -1f) {
-//								if (lastVal != -1f) {
-//									g.drawStepLine(4, lastCX, lastVal, cx, newVal, 3);
-//								}
-//								if (rnds2 == "") {
-//									g.drawBottomString("\n\n\n\n\n\nn=" + a.CountV.ToString(), cx, false);
-//								}
-//								lastCX = cx;
-//							}
-//							lastVal = newVal;
-//							lastStd = newStd;
-
-//							g.drawCircle(cx, newVal);
+							s1.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
 						}
 						lastDT = a.DT;
 						cx++;
 					}
-					g.Series.Add(s);
+					g.Series.Add(s1);
+
+					if (rnds2 != "") {
+						Series s2 = new Series { Description = r2, Color = 5, X = 600, Y = 20 };
+
+//						lastVal = -1f;
+//						lastStd = -1f;
+//						lastCX = 1;
+						cx = 1;
+						lastDT = minDT - 1;
+						foreach (var a in answerRepository.FindByQuestionAndOptionGrouped4(groupBy, p.WeightedQuestionOption.Question.Id, p.WeightedQuestionOption.Option.Id, join2, yearFrom, yearTo, rnds2)) {
+							while (lastDT + 1 < a.DT) {
+								lastDT++;
+								cx++;
+							}
+							if (a.Values.Count >= rac) {
+								s2.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
+							}
+							lastDT = a.DT;
+							cx++;
+						}
+						g.Series.Add(s2);
+					}
+					
+//					g.drawAxisExpl(p.WeightedQuestionOption.Languages[0].Question + ", " + (langID == 1 ? "medelvärde" : "mean value") + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""), 20, false, false);
+//					g.drawAxis(false);
+//					g.drawColorExplBox(Request.QueryString["R1"].ToString(), 4, 300, 20);
 					
 //					foreach (var a in answerRepository.FindByQuestionAndOptionGrouped3(groupBy, p.WeightedQuestionOption.Question.Id, p.WeightedQuestionOption.Option.Id, join1, yearFrom, yearTo, rnds1)) {
 //						while (lastDT + 1 < a.DT) {
@@ -328,40 +316,38 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 //						lastDT = a.DT;
 //						cx++;
 //					}
-
-					if (rnds2 != "") {
-//						g.drawColorExplBox(Request.QueryString["R2"].ToString(), 5, 600, 20);
-						g.drawColorExplBox(r2, 5, 600, 20);
-
-						lastVal = -1f;
-						lastStd = -1f;
-						lastCX = 1;
-						cx = 1;
-						lastDT = minDT - 1;
-//						foreach (var a in answerRepository.FindByQuestionAndOptionGrouped3(groupBy, p.WeightedQuestionOption.Question.Id, p.WeightedQuestionOption.Option.Id, join2, Request.QueryString["FDT"], Request.QueryString["TDT"], rnds2)) {
-						foreach (var a in answerRepository.FindByQuestionAndOptionGrouped3(groupBy, p.WeightedQuestionOption.Question.Id, p.WeightedQuestionOption.Option.Id, join2, yearFrom, yearTo, rnds2)) {
-							while (lastDT + 1 < a.DT) {
-								lastDT++;
-								cx++;
-							}
-
-							if (a.CountV >= rac) {
-								float newVal = (a.AverageV == -1 ? -1f : (float)Convert.ToDouble(a.AverageV));
-
-								if (newVal != -1f) {
-									if (lastVal != -1f) {
-										g.drawStepLine(5, lastCX, lastVal, cx, newVal, 3);
-									}
-									lastCX = cx;
-								}
-								lastVal = newVal;
-
-								g.drawCircle(cx, newVal);
-							}
-							lastDT = a.DT;
-							cx++;
-						}
-					}
+//
+//					if (rnds2 != "") {
+//						g.drawColorExplBox(r2, 5, 600, 20);
+//
+//						lastVal = -1f;
+//						lastStd = -1f;
+//						lastCX = 1;
+//						cx = 1;
+//						lastDT = minDT - 1;
+//						foreach (var a in answerRepository.FindByQuestionAndOptionGrouped3(groupBy, p.WeightedQuestionOption.Question.Id, p.WeightedQuestionOption.Option.Id, join2, yearFrom, yearTo, rnds2)) {
+//							while (lastDT + 1 < a.DT) {
+//								lastDT++;
+//								cx++;
+//							}
+//
+//							if (a.CountV >= rac) {
+//								float newVal = (a.AverageV == -1 ? -1f : (float)Convert.ToDouble(a.AverageV));
+//
+//								if (newVal != -1f) {
+//									if (lastVal != -1f) {
+//										g.drawStepLine(5, lastCX, lastVal, cx, newVal, 3);
+//									}
+//									lastCX = cx;
+//								}
+//								lastVal = newVal;
+//
+//								g.drawCircle(cx, newVal);
+//							}
+//							lastDT = a.DT;
+//							cx++;
+//						}
+//					}
 					bx++;
 				}
 			}
