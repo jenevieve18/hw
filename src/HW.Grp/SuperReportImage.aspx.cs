@@ -19,6 +19,8 @@ namespace HW.Grp
 		{
 			Response.ContentType = "image/gif";
 			
+			int langID = ConvertHelper.ToInt32(Session["lid"], 2);
+			
 			var g = CreateGraph(
 				GetGraphType(ConvertHelper.ToInt32(Request.QueryString["PLOT"])),
 				StrHelper.Str3(Request.QueryString["RNDS1"], ""),
@@ -33,7 +35,8 @@ namespace HW.Grp
 				Request.QueryString["TDT"],
 				StrHelper.Str3(Request.QueryString["R1"], ""),
 				StrHelper.Str3(Request.QueryString["R2"], ""),
-				Request.QueryString["DISABLED"]
+				Request.QueryString["DISABLED"],
+				langID
 			);
 			g.render();
 		}
@@ -54,7 +57,7 @@ namespace HW.Grp
 			}
 		}
 		
-		public ExtendedGraph CreateGraph(IGraphType gt, string rnds1, string rnds2, string rndsd1, string rndsd2, string pid1, string pid2, string n, int rpid, string yearFrom, string yearTo, string r1, string r2, string disabled)
+		public ExtendedGraph CreateGraph(IGraphType gt, string rnds1, string rnds2, string rndsd1, string rndsd2, string pid1, string pid2, string n, int rpid, string yearFrom, string yearTo, string r1, string r2, string disabled, int langID)
 		{
 			// For min/max
 			string rnds = (rnds1 == "0" || rnds2 == "0" ? "" : " AND pru.ProjectRoundUnitID IN (" + rnds1 + (rnds2 != "" ? "," + rnds2 : "") + ")");
@@ -144,7 +147,7 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 
 			#region group stats
 
-			int langID = 1;
+//			int langID = 1;
 			int minDT = 0;
 			int maxDT = 0;
 

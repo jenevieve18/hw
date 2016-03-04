@@ -72,14 +72,14 @@
 
 <%--<asp:Label ID=StatsImg runat=server />--%>
 
-Change all graphs to:
+<%= R.Str(lid, "graphs.change.all", "Change all graphs to:")%>
 <select class="all-plot-types">
     <% foreach (var p in plotTypes) { %>
         <% if (!p.SupportsMultipleSeries && !forSingleSeries) {} %>
         <% else { %><option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option><% } %>
     <% } %>
 </select>
-Export all graphs to:
+<%= R.Str(lid, "graphs.export.all", "Export all graphs to:")%>
 <input type="button" value="docx" />
 <input type="button" value="pptx" />
 <input type="button" value="xls" />
@@ -115,13 +115,13 @@ Export all graphs to:
 		</tr>
         <tr>
             <td colspan="2">
-                Change this graph to:
+                <%= R.Str(lid, "graphs.change", "Change this graph to:")%>
                 <select class="plot-types">
                     <% foreach (var p in plotTypes) { %>
                         <option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option>
                     <% } %>
                 </select>
-                Export this graph to:
+                <%= R.Str(lid, "graphs.export", "Export this graph to:")%>
                 <input type="button" value="docx" onclick="" />
                 <input type="button" value="pptx" />
                 <input type="button" value="xls" />
