@@ -85,10 +85,10 @@ namespace HW.Tests.Helpers
 		[Ignore("Finding a way to test without the fetch of GRP image from website.")]
 		public void TestPdfExporter()
 		{
-			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create, FileAccess.Write)) {
-				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:25555/", x.MinUserCountToDisclose, 3, 3) as MemoryStream;
-				s.WriteTo(f);
-			}
+//			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create, FileAccess.Write)) {
+//				MemoryStream s = e.Export(7, 2012, 2013, 1, 2643, 2, 514, 83, "0,923", PlotType.Line, "http://localhost:25555/", x.MinUserCountToDisclose, 3, 3) as MemoryStream;
+//				s.WriteTo(f);
+//			}
 		}
 		
 		[Test]

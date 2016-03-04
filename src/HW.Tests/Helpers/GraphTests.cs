@@ -52,38 +52,38 @@ namespace HW.Tests.Helpers
 			g.Draw();
 		}
 		
-		[Test]
-		public void b()
-		{
-			var x = new SuperReportImage();
-			var i = x.CreateGraph(new LineGraphType(1, 2), "0", "", "", "", "", "", "1113,3101,3238,3241,1149,1161,1215,1225,1543,1551,1575,1577,1620,1622,509,1703,1752,1790,911,1889,2059,1053,2238,2256,2258,2260,2275,1096,2614,2663,2759,2775,1111", 47, "2012-02-01", "2016-03-01", "Measure 1", "Measure 2", null);
-			using (var d = new Form()) {
-				d.Size = new Size(1000, 600);
-				
-				var p = new PictureBox();
-				p.Image = i.objBitmap;
-				p.Dock = DockStyle.Fill;
-				
-				d.Controls.Add(p);
-				d.ShowDialog();
-			}
-		}
-		
-		[Test]
-		public void c()
-		{
-			var x = new SuperReportImage();
-			var i = x.CreateGraph(new BoxPlotMinMaxGraphType(), "0", "", "", "", "", "", "1113,3101,3238,3241,1149,1161,1215,1225,1543,1551,1575,1577,1620,1622,509,1703,1752,1790,911,1889,2059,1053,2238,2256,2258,2260,2275,1096,2614,2663,2759,2775,1111", 47, "2012-02-01", "2016-03-01", "Measure 1", "Measure 2", null);
-			using (var d = new Form()) {
-				d.Size = new Size(1000, 600);
-				
-				var p = new PictureBox();
-				p.Image = i.objBitmap;
-				p.Dock = DockStyle.Fill;
-				
-				d.Controls.Add(p);
-				d.ShowDialog();
-			}
-		}
+//		[Test]
+//		public void b()
+//		{
+//			var x = new SuperReportImage();
+//			var i = x.CreateGraph(new LineGraphType(1, 2), "0", "", "", "", "", "", "1113,3101,3238,3241,1149,1161,1215,1225,1543,1551,1575,1577,1620,1622,509,1703,1752,1790,911,1889,2059,1053,2238,2256,2258,2260,2275,1096,2614,2663,2759,2775,1111", 47, "2012-02-01", "2016-03-01", "Measure 1", "Measure 2", null);
+//			using (var d = new Form()) {
+//				d.Size = new Size(1000, 600);
+//				
+//				var p = new PictureBox();
+//				p.Image = i.objBitmap;
+//				p.Dock = DockStyle.Fill;
+//				
+//				d.Controls.Add(p);
+//				d.ShowDialog();
+//			}
+//		}
+//		
+//		[Test]
+//		public void c()
+//		{
+//			var x = new SuperReportImage();
+//			var i = x.CreateGraph(new BoxPlotMinMaxGraphType(), "0", "", "", "", "", "", "1113,3101,3238,3241,1149,1161,1215,1225,1543,1551,1575,1577,1620,1622,509,1703,1752,1790,911,1889,2059,1053,2238,2256,2258,2260,2275,1096,2614,2663,2759,2775,1111", 47, "2012-02-01", "2016-03-01", "Measure 1", "Measure 2", null);
+//			using (var d = new Form()) {
+//				d.Size = new Size(1000, 600);
+//				
+//				var p = new PictureBox();
+//				p.Image = i.objBitmap;
+//				p.Dock = DockStyle.Fill;
+//				
+//				d.Controls.Add(p);
+//				d.ShowDialog();
+//			}
+//		}
 	}
 }
