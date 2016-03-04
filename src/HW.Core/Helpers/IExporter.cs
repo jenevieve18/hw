@@ -17,7 +17,7 @@ namespace HW.Core.Helpers
 		public static readonly string WordDocument = "docx";
 		public static readonly string SpreadsheetDocument = "xlsx";
 		public static readonly string PresentationDocument = "pptx";
-        public static readonly string Excel = "xls";
+		public static readonly string Excel = "xls";
 		
 		public static IExporter GetExporter(ReportService service, string type, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, ReportPart r, string key, string template)
 		{
@@ -72,6 +72,10 @@ namespace HW.Core.Helpers
 		
 		bool HasContentDisposition2 { get; }
 		
+//		object Export(string url);
+//		
+//		object Export2(string url, int langID);
+		
 		object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm);
 		
 		object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm);
@@ -97,6 +101,10 @@ namespace HW.Core.Helpers
 		public abstract object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm);
 		
 		public abstract object Export2(int gb, int fy, int ty, int langID, int pruid, int GRPNG, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm);
+		
+//		public abstract object Export(string url);
+//		
+//		public abstract object Export2(string url, int langID);
 		
 		protected string GetUrl(string path, int langID, int fy, int ty, int spons, int sid, int gb, int rpid, int pruid, string gid, int grpng, int plot, int fm, int tm)
 		{

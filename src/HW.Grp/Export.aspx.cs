@@ -77,15 +77,15 @@ namespace HW.Grp
 			int gb = (Request.QueryString["GB"] != null ? Convert.ToInt32(Request.QueryString["GB"].ToString()) : 0);
 			int stdev = Convert.ToInt32(Request.QueryString["STDEV"]);
 			
-			int fy = Request.QueryString["FY"] != null ? Convert.ToInt32(Request.QueryString["FY"]) : 0;
-			int ty = Request.QueryString["TY"] != null ? Convert.ToInt32(Request.QueryString["TY"]) : 0;
+			int yearFrom = Request.QueryString["FY"] != null ? Convert.ToInt32(Request.QueryString["FY"]) : 0;
+			int yearTo = Request.QueryString["TY"] != null ? Convert.ToInt32(Request.QueryString["TY"]) : 0;
 			
-			int fm = ConvertHelper.ToInt32(Request.QueryString["FM"]);
-			int tm = ConvertHelper.ToInt32(Request.QueryString["TM"]);
+			int monthFrom = ConvertHelper.ToInt32(Request.QueryString["FM"]);
+			int monthTo = ConvertHelper.ToInt32(Request.QueryString["TM"]);
 			
 			int langID = (Request.QueryString["LangID"] != null ? Convert.ToInt32(Request.QueryString["LangID"]) : 0);
 
-			int rpid = Convert.ToInt32(Request.QueryString["RPID"]);
+			int reportPartID = Convert.ToInt32(Request.QueryString["RPID"]);
 			int pruid = Convert.ToInt32(Request.QueryString["PRUID"]);
 			
 			int grpng = Convert.ToInt32(Request.QueryString["GRPNG"]);
@@ -101,7 +101,7 @@ namespace HW.Grp
 			object disabled = Request.QueryString["DISABLED"];
 			
 			ISponsor s = service.ReadSponsor(sid);
-			ReportPart r = service.ReadReportPart(rpid, langID);
+			ReportPart r = service.ReadReportPart(reportPartID, langID);
 			
 			var exporter = ExportFactory.GetExporter(service, type, HasAnswerKey, hasGrouping, disabled, Width, Height, Background, r, key, Server.MapPath("HW template for Word.docx"));
 			
@@ -110,8 +110,30 @@ namespace HW.Grp
 			Response.ContentType = exporter.Type;
 			AddHeaderIf(exporter.HasContentDisposition(r.CurrentLanguage.Subject), "content-disposition", exporter.GetContentDisposition(r.CurrentLanguage.Subject));
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
-			Write(exporter.Export(gb, fy, ty, langID, pruid, grpng, spons, sid, gid, plot, path, s.MinUserCountToDisclose, fm, tm));
+			Write(exporter.Export(gb, yearFrom, yearTo, langID, pruid, grpng, spons, sid, gid, plot, path, s.MinUserCountToDisclose, monthFrom, monthTo));
+			
+//			string url = GetUrl(path, langID, yearFrom, yearTo, spons, sid, gb, r.Id, pruid, gid, grpng, plot, monthFrom, monthTo);
+//			Write(exporter.Export(url));
 		}
+		
+//		string GetUrl(string path, int langID, int yearFrom, int yearTo, int spons, int sid, int gb, int rpid, int pruid, string gid, int grpng, int plot, int monthFrom, int monthTo)
+//		{
+//			P p = new P(path, "reportImage.aspx");
+//			p.Q.Add("LangID", langID);
+//			p.Q.Add("FY", yearFrom);
+//			p.Q.Add("TY", yearTo);
+//			p.Q.Add("FM", monthFrom);
+//			p.Q.Add("TM", monthTo);
+//			p.Q.Add("SAID", spons);
+//			p.Q.Add("SID", sid);
+//			p.Q.Add("GB", gb);
+//			p.Q.Add("RPID", rpid);
+//			p.Q.Add("PRUID", pruid);
+//			p.Q.Add("GID", gid);
+//			p.Q.Add("GRPNG", grpng);
+//			p.Q.Add("PLOT", plot);
+//			return p.ToString();
+//		}
 		
 		void Write(object obj)
 		{

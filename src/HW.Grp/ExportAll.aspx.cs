@@ -76,13 +76,13 @@ namespace HW.Grp
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			int gb = (Request.QueryString["GB"] != null ? Convert.ToInt32(Request.QueryString["GB"].ToString()) : 0);
-			int stdev = Convert.ToInt32(Request.QueryString["STDEV"]);
+//			int stdev = Convert.ToInt32(Request.QueryString["STDEV"]);
 			
-			int fy = Request.QueryString["FY"] != null ? Convert.ToInt32(Request.QueryString["FY"]) : 0;
-			int ty = Request.QueryString["TY"] != null ? Convert.ToInt32(Request.QueryString["TY"]) : 0;
+			int yearFrom = Request.QueryString["FY"] != null ? Convert.ToInt32(Request.QueryString["FY"]) : 0;
+			int yearTo = Request.QueryString["TY"] != null ? Convert.ToInt32(Request.QueryString["TY"]) : 0;
 			
-			int fm = ConvertHelper.ToInt32(Request.QueryString["FM"]);
-			int tm = ConvertHelper.ToInt32(Request.QueryString["TM"]);
+			int monthFrom = ConvertHelper.ToInt32(Request.QueryString["FM"]);
+			int monthTo = ConvertHelper.ToInt32(Request.QueryString["TM"]);
 			
 			int langID = (Request.QueryString["LangID"] != null ? Convert.ToInt32(Request.QueryString["LangID"]) : 0);
 
@@ -109,7 +109,11 @@ namespace HW.Grp
 			
 			AddHeaderIf(exporter.HasContentDisposition2, "content-disposition", exporter.ContentDisposition2);
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
-			Write(exporter.Export2(gb, fy, ty, langID, pruid, grpng, spons, sid, gid, plot, path, s.MinUserCountToDisclose, fm, tm));
+			Write(exporter.Export2(gb, yearFrom, yearTo, langID, pruid, grpng, spons, sid, gid, plot, path, s.MinUserCountToDisclose, monthFrom, monthTo));
+			
+//			string url = GetUrl(path, langID, fy, ty, spons, sid, gb, r.Id, pruid, gid, grpng, plot, fm, tm);
+//			string url = "";
+//			Write(exporter.Export2(url, langID));
 		}
 		
 		void Write(object obj)

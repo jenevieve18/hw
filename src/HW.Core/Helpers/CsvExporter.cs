@@ -77,6 +77,16 @@ namespace HW.Core.Helpers
 			return string.Format("attachment;filename=HealthWatch {0} {1}.csv", file, DateTime.Now.ToString("yyyyMMdd"));
 		}
 		
+//		public override object Export(string url)
+//		{
+//			throw new NotImplementedException();
+//		}
+//		
+//		public override object Export2(string url, int langID)
+//		{
+//			throw new NotImplementedException();
+//		}
+		
 		public override object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
 		{
 			var f = service.GetGraphFactory(hasAnswerKey);

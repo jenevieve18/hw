@@ -279,6 +279,8 @@
     <Content Include="sql.aspx" />
     <Content Include="Stats.aspx" />
     <Content Include="SuperAdmin.aspx" />
+    <Content Include="SuperExport.aspx" />
+    <Content Include="SuperExportAll.aspx" />
     <Content Include="SuperReportImage.aspx" />
     <Content Include="SuperStats.aspx" />
     <Content Include="ui\i18n\jquery-ui-i18n.js" />
@@ -467,6 +469,20 @@
     </Compile>
     <Compile Include="SuperAdmin.aspx.designer.cs">
       <DependentUpon>SuperAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SuperExport.aspx.cs">
+      <DependentUpon>SuperExport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SuperExport.aspx.designer.cs">
+      <DependentUpon>SuperExport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SuperExportAll.aspx.cs">
+      <DependentUpon>SuperExportAll.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SuperExportAll.aspx.designer.cs">
+      <DependentUpon>SuperExportAll.aspx</DependentUpon>
     </Compile>
     <Compile Include="SuperReportImage.aspx.cs">
       <DependentUpon>SuperReportImage.aspx</DependentUpon>
