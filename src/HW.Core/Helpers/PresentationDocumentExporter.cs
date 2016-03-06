@@ -78,5 +78,24 @@ namespace HW.Core.Helpers
 			}
 			return output;
 		}
+		
+//		public override object SuperExport(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
+		public override object SuperExport(string url)
+		{
+			MemoryStream output = new MemoryStream();
+			using (PresentationDocument package = PresentationDocument.Create(output, PresentationDocumentType.Presentation)) {
+//				gc.UrlSet += delegate(object sender, ReportPartLanguageEventArgs e) { e.Url =  GetUrl(path, langID, fy, ty, spons, sid, gb, e.ReportPart.Id, pruid, gid, grpng, plot, fm, tm); };
+				gc.UrlSet += delegate(object sender, ReportPartLanguageEventArgs e) { e.Url =  url; };
+				r.CurrentLanguage.ReportPart = r; // HACK: Report part should be assigned to the language because upon querying from database it's not set.
+				gc.CreateParts(package, new List<ReportPartLanguage>(new ReportPartLanguage[] { r.CurrentLanguage }));
+			}
+			return output;
+		}
+		
+		public override object SuperExport2(int gb, int fy, int ty, int langID, int pruid, int GRPNG, int spons, int sid, string gid, int plot,
+		string path, int sponsorMinUserCountToDisclose, int fm, int tm)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

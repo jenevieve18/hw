@@ -122,10 +122,10 @@
                     <% } %>
                 </select>
                 <%= R.Str(lid, "graphs.export", "Export this graph to:")%>
-                <input type="button" value="docx" onclick="" />
-                <input type="button" value="pptx" />
-                <input type="button" value="xls" />
-                <input type="button" value="xlsverbose" />
+                <input type="button" value="docx" onclick="window.open('<%= GetReportExportUrl(r, "docx") %>', '_blank')" />
+                <input type="button" value="pptx" onclick="window.open('<%= GetReportExportUrl(r, "pptx") %>', '_blank')" />
+                <input type="button" value="xls" onclick="window.open('<%= GetReportExportUrl(r, "xls") %>', '_blank')" />
+                <input type="button" value="xlsverbose" onclick="window.open('<%= GetReportExportUrl(r, "xlsverbose") %>', '_blank')" />
             </td>
         </tr>
 	</tbody>

@@ -68,6 +68,18 @@ namespace HW.Core.Helpers
 		{
 			throw new NotImplementedException();
 		}
+		
+//		public override object SuperExport(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
+		public override object SuperExport(string url)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public override object SuperExport2(int gb, int fy, int ty, int langID, int pruid, int GRPNG, int spons, int sid, string gid, int plot,
+		string path, int sponsorMinUserCountToDisclose, int fm, int tm)
+		{
+			throw new NotImplementedException();
+		}
 
         // Adds child parts and generates content of the specified part.
         private void CreateParts(SpreadsheetDocument document, ReportPartLanguage r, string url)

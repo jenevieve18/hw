@@ -18,7 +18,7 @@ namespace HW.Core.Helpers
 		public static readonly string SpreadsheetDocument = "xlsx";
 		public static readonly string PresentationDocument = "pptx";
 		public static readonly string Excel = "xls";
-		
+
 		public static IExporter GetExporter(ReportService service, string type, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, ReportPart r, string key, string template)
 		{
 			if (type == Pdf) {
@@ -58,6 +58,26 @@ namespace HW.Core.Helpers
 				throw new NotSupportedException();
 			}
 		}
+		
+//		public static IExporter GetSuperExporter(ReportService service, string type, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, ReportPart r, string key, string template)
+		public static IExporter GetSuperExporter(string type, ReportPart r, string template)
+		{
+			if (type == Pdf) {
+				return new PdfExporter(r);
+//			} else if (type == Csv) {
+//				return new CsvExporter(service, hasAnswerKey, hasGrouping, disabled, width, height, background, r, key);
+//			} else if (type == Excel) {
+//				return new ExcelExporter(service, hasAnswerKey, hasGrouping, disabled, width, height, background, r, key);
+			} else if (type == WordDocument) {
+				return new DocXExporter(r, template);
+			} else if (type == SpreadsheetDocument) {
+				return new SpreadsheetDocumentExporter(r);
+			} else if (type == PresentationDocument) {
+				return new PresentationDocumentExporter(r);
+			} else {
+				throw new NotSupportedException();
+			}
+		}
 	}
 	
 	public interface IExporter
@@ -79,6 +99,11 @@ namespace HW.Core.Helpers
 		object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm);
 		
 		object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm);
+		
+//		object SuperExport(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm);
+		object SuperExport(string url);
+		
+		object SuperExport2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm);
 	}
 	
 	public abstract class AbstractExporter : IExporter
@@ -106,6 +131,11 @@ namespace HW.Core.Helpers
 //		
 //		public abstract object Export2(string url, int langID);
 		
+//		public abstract object SuperExport(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm);
+		public abstract object SuperExport(string url);
+		
+		public abstract object SuperExport2(int gb, int fy, int ty, int langID, int pruid, int GRPNG, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm);
+
 		protected string GetUrl(string path, int langID, int fy, int ty, int spons, int sid, int gb, int rpid, int pruid, string gid, int grpng, int plot, int fm, int tm)
 		{
 			P p = new P(path, "reportImage.aspx");

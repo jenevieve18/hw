@@ -132,6 +132,52 @@ namespace HW.Core.Helpers
 			return output;
 		}
 		
+//		public override object SuperExport(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
+		public override object SuperExport(string url)
+		{
+			MemoryStream output = new MemoryStream();
+			using (DocX d = DocX.Load(template)) {
+				Paragraph header = d.Paragraphs[0];
+				header.Append(r.CurrentLanguage.Subject).Font(new FontFamily("Calibri")).FontSize(14).Bold().Color(Color.SteelBlue);
+				
+//				string url = GetUrl(path, langID, fy, ty, spons, sid, gb, r.Id, pruid, gid, grpng, plot, fm, tm);
+				
+				Paragraph image = d.InsertParagraph();
+				image.AppendPicture(CreatePicture(d, url));
+				
+				d.SaveAs(output);
+			}
+			return output;
+		}
+		
+		public override object SuperExport2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
+		{
+			MemoryStream output = new MemoryStream();
+			using (DocX d = DocX.Load(template)) {
+				int i = 0;
+				foreach (var p in parts) {
+					ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
+					if (i == 0) {
+						Paragraph header = d.Paragraphs[0];
+						header.Append(r.CurrentLanguage.Subject).Font(new FontFamily("Calibri")).FontSize(14).Bold().Color(Color.SteelBlue);
+					} else {
+						Paragraph header = d.InsertParagraph();
+						header.Append(r.CurrentLanguage.Subject).Font(new FontFamily("Calibri")).FontSize(14).Bold().Color(Color.SteelBlue);
+					}
+					
+					string url = GetUrl(path, langID, fy, ty, spons, sid, gb, r.Id, pruid, gid, grpng, plot, fm, tm);
+					Paragraph image = d.InsertParagraph();
+					image.AppendPicture(CreatePicture(d, url));
+					image.InsertPageBreakAfterSelf();
+					
+					i++;
+				}
+				d.SaveAs(output);
+			}
+
+			return output;
+		}
+		
 		Novacode.Picture CreatePicture(DocX d, string url)
 		{
 			WebRequest req = WebRequest.Create(url);

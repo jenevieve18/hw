@@ -148,6 +148,29 @@ namespace HW.Core.Helpers
 			doc.Close();
 			return output;
 		}
+		
+//		public override object SuperExport(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
+		public override object SuperExport(string url)
+		{
+			Document doc = new Document();
+			var output = new MemoryStream();
+			PdfWriter writer = PdfWriter.GetInstance(doc, output);
+			doc.Open();
+			
+//			string url = GetUrl(path, langID, fy, ty, spons, sid, gb, r.Id, pruid, gid, grpng, plot, fm, tm);
+			doc.Add(new Chunk(r.CurrentLanguage.Subject));
+			iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(new Uri(url));
+			jpg.ScaleToFit(500f, 500f);
+			doc.Add(jpg);
+			doc.Close();
+			return output;
+		}
+		
+		public override object SuperExport2(int gb, int fy, int ty, int langID, int pruid, int GRPNG, int spons, int sid, string gid, int plot,
+		string path, int sponsorMinUserCountToDisclose, int fm, int tm)
+		{
+			throw new NotImplementedException();
+		}
 	}
 	
 	public class PdfHeaderFooter : PdfPageEventHelper

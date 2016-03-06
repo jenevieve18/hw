@@ -110,6 +110,18 @@ namespace HW.Core.Helpers
 			w.EndWrite();
 			return output;
 		}
+		
+//		public override object SuperExport(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
+		public override object SuperExport(string url)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public override object SuperExport2(int gb, int fy, int ty, int langID, int pruid, int GRPNG, int spons, int sid, string gid, int plot,
+		string path, int sponsorMinUserCountToDisclose, int fm, int tm)
+		{
+			throw new NotImplementedException();
+		}
 	}
 	
 	public interface IExcelWriter
