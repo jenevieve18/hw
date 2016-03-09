@@ -30,11 +30,11 @@ namespace HW.Tests.Helpers
 		public void Setup()
 		{
 			x = service.ReadSponsor(101);
-			r = new SqlReportRepository().ReadReportPart(14, 1);
-			e = new ExcelExporter(service, false, true, null, 550, 440, "#efefef", r, null);
-			
-			var parts = service.FindByProjectAndLanguage(2643, 1);
-			e2 = new ExcelExporter(service, false, true, null, 550, 440, "#efefef", parts, null);
+//			r = new SqlReportRepository().ReadReportPart(14, 1);
+//			e = new ExcelExporter(service, false, true, null, 550, 440, "#efefef", r, null);
+//			
+//			var parts = service.FindByProjectAndLanguage(2643, 1);
+//			e2 = new ExcelExporter(service, false, true, null, 550, 440, "#efefef", parts, null);
 		}
 		
 		[Test]
