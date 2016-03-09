@@ -80,8 +80,8 @@
     <% } %>
 </select>
 <%= R.Str(lid, "graphs.export.all", "Export all graphs to:")%>
-<input type="button" value="docx" />
-<input type="button" value="pptx" />
+<input type="button" value="docx" onclick="window.open('<%= GetReportExportAllUrl("docx") %>', '_blank')" />
+<input type="button" value="pptx" onclick="window.open('<%= GetReportExportAllUrl("pptx") %>', '_blank')" />
 <input type="button" value="xls" />
 <input type="button" value="xlsverbose" />
 

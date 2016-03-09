@@ -13,9 +13,10 @@ namespace HW.Core.Helpers
 	{
 		ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int pruid, int fy, int ty, int GB, bool hasGrouping, int plot, int width, int height, string bg, int grpng, int sponsorAdminID, int sid, string gid, object disabled, int point, int sponsorMinUserCountToDisclose, int fm, int tm);
 
-		string CreateGraph2(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int sponsorAdminID, int sid, string gid, object disabled, int sponsorMinUserCountToDisclose, int fm, int tm);
+//		string CreateGraph2(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int sponsorAdminID, int sid, string gid, object disabled, int sponsorMinUserCountToDisclose, int fm, int tm);
 		
-		void CreateGraph3(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int sponsorAdminID, int sid, string gid, object disabled, ExcelWriter w, ref int i, int sponsorMinUserCountToDisclose, int fm, int tm);
+//		void CreateGraph3(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int sponsorAdminID, int sid, string gid, object disabled, ExcelWriter w, ref int i, int sponsorMinUserCountToDisclose, int fm, int tm);
+		void CreateGraph3(ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int sponsorAdminID, int SID, string GID, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose, int fm, int tm);
 		
 		event EventHandler<MergeEventArgs> ForMerge;
 	}
@@ -122,6 +123,7 @@ namespace HW.Core.Helpers
 			return g;
 		}
 		
+		/*
 		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int sponsorAdminID, int SID, string GID, object disabled, int sponsorMinUserCountToDisclose, int fm, int tm)
 		{
 			int cx = p.Components.Capacity;
@@ -212,8 +214,10 @@ namespace HW.Core.Helpers
 //			return g;
 			return s.ToString();
 		}
+		*/
 		
-		public void CreateGraph3(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int spons, int sid, string gid, object disabled, ExcelWriter w, ref int i, int sponsorMinUserCountToDisclose, int fm, int tm)
+//		public void CreateGraph3(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int spons, int sid, string gid, object disabled, ExcelWriter w, ref int i, int sponsorMinUserCountToDisclose, int fm, int tm)
+		public void CreateGraph3(ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int spons, int sid, string gid, ExcelWriter w, ref int i, int sponsorMinUserCountToDisclose, int fm, int tm)
 		{
 			throw new NotImplementedException();
 		}

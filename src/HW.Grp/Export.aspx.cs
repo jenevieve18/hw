@@ -96,44 +96,46 @@ namespace HW.Grp
 			string type = Request.QueryString["TYPE"].ToString();
 			
 			bool hasGrouping = Request.QueryString["GRPNG"] != null || Request.QueryString["GRPNG"] != "0";
-			string key = Request.QueryString["AK"];
+//			string key = Request.QueryString["AK"];
 			
 			object disabled = Request.QueryString["DISABLED"];
 			
-			ISponsor s = service.ReadSponsor(sid);
-			ReportPart r = service.ReadReportPart(reportPartID, langID);
+			ISponsor sponsor = service.ReadSponsor(sid);
+			ReportPart reportPart = service.ReadReportPart(reportPartID, langID);
 			
-			var exporter = ExportFactory.GetExporter(service, type, HasAnswerKey, hasGrouping, disabled, Width, Height, Background, r, key, Server.MapPath("HW template for Word.docx"));
+//			var exporter = ExportFactory.GetExporter(service, type, HasAnswerKey, hasGrouping, disabled, Width, Height, Background, reportPart, key, Server.MapPath("HW template for Word.docx"));
+			var exporter = ExportFactory.GetExporter(service, type, HasAnswerKey, hasGrouping, reportPart, Server.MapPath("HW template for Word.docx"));
 			
 			Response.ClearHeaders();
 			Response.ClearContent();
 			Response.ContentType = exporter.Type;
-			AddHeaderIf(exporter.HasContentDisposition(r.CurrentLanguage.Subject), "content-disposition", exporter.GetContentDisposition(r.CurrentLanguage.Subject));
+			AddHeaderIf(exporter.HasContentDisposition(reportPart.CurrentLanguage.Subject), "content-disposition", exporter.GetContentDisposition(reportPart.CurrentLanguage.Subject));
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
-			Write(exporter.Export(gb, yearFrom, yearTo, langID, pruid, grpng, spons, sid, gid, plot, path, s.MinUserCountToDisclose, monthFrom, monthTo));
 			
-//			string url = GetUrl(path, langID, yearFrom, yearTo, spons, sid, gb, r.Id, pruid, gid, grpng, plot, monthFrom, monthTo);
-//			Write(exporter.Export(url));
+//			Write(exporter.Export(gb, yearFrom, yearTo, langID, pruid, grpng, spons, sid, gid, plot, path, sponsor.MinUserCountToDisclose, monthFrom, monthTo));
+			
+			string url = GetReportImageUrl(path, langID, yearFrom, yearTo, spons, sid, gb, reportPart.Id, pruid, gid, grpng, plot, monthFrom, monthTo);
+			Write(exporter.Export(url, langID, pruid, yearFrom, yearTo, gb, plot, grpng, spons, sid, gid, sponsor.MinUserCountToDisclose, monthFrom, monthTo));
 		}
 		
-//		string GetUrl(string path, int langID, int yearFrom, int yearTo, int spons, int sid, int gb, int rpid, int pruid, string gid, int grpng, int plot, int monthFrom, int monthTo)
-//		{
-//			P p = new P(path, "reportImage.aspx");
-//			p.Q.Add("LangID", langID);
-//			p.Q.Add("FY", yearFrom);
-//			p.Q.Add("TY", yearTo);
-//			p.Q.Add("FM", monthFrom);
-//			p.Q.Add("TM", monthTo);
-//			p.Q.Add("SAID", spons);
-//			p.Q.Add("SID", sid);
-//			p.Q.Add("GB", gb);
-//			p.Q.Add("RPID", rpid);
-//			p.Q.Add("PRUID", pruid);
-//			p.Q.Add("GID", gid);
-//			p.Q.Add("GRPNG", grpng);
-//			p.Q.Add("PLOT", plot);
-//			return p.ToString();
-//		}
+		string GetReportImageUrl(string path, int langID, int yearFrom, int yearTo, int spons, int sid, int gb, int reportPartID, int projectRoundUnitID, string gid, int grpng, int plot, int monthFrom, int monthTo)
+		{
+			P p = new P(path, "reportImage.aspx");
+			p.Q.Add("LangID", langID);
+			p.Q.Add("FY", yearFrom);
+			p.Q.Add("TY", yearTo);
+			p.Q.Add("FM", monthFrom);
+			p.Q.Add("TM", monthTo);
+			p.Q.Add("SAID", spons);
+			p.Q.Add("SID", sid);
+			p.Q.Add("GB", gb);
+			p.Q.Add("RPID", reportPartID);
+			p.Q.Add("PRUID", projectRoundUnitID);
+			p.Q.Add("GID", gid);
+			p.Q.Add("GRPNG", grpng);
+			p.Q.Add("PLOT", plot);
+			return p.ToString();
+		}
 		
 		void Write(object obj)
 		{

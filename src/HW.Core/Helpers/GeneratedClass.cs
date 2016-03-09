@@ -13,16 +13,16 @@ using Vt = DocumentFormat.OpenXml.VariantTypes;
 
 namespace HW.Core.Helpers
 {
-	public class ReportPartLanguageEventArgs : EventArgs
-	{
-		public ReportPart ReportPart { get; set; }
-		public string Url { get; set; }
-		
-		public ReportPartLanguageEventArgs(ReportPart part)
-		{
-			this.ReportPart = part;
-		}
-	}
+//	public class ReportPartLanguageEventArgs : EventArgs
+//	{
+//		public ReportPart ReportPart { get; set; }
+//		public string Url { get; set; }
+//		
+//		public ReportPartLanguageEventArgs(ReportPart part)
+//		{
+//			this.ReportPart = part;
+//		}
+//	}
 	
 	public class GeneratedClass
 	{
@@ -167,7 +167,7 @@ namespace HW.Core.Helpers
 				// Slide insert
 				SlidePart sp2 = presentationPart1.AddNewPart<SlidePart>("rId" + slideID);
 				GenerateSlidePart2Content(p.Subject, sp2);
-				ReportPartLanguageEventArgs e = new ReportPartLanguageEventArgs(p.ReportPart);
+				ReportPartEventArgs e = new ReportPartEventArgs(p.ReportPart);
 				OnUrlSet(e);
 				ImagePart img2 = sp2.AddNewPart<ImagePart>("image/gif", "rId2");
 				GenerateImagePart7Content(img2, e.Url);
@@ -207,9 +207,9 @@ namespace HW.Core.Helpers
 			SetPackageProperties(document);
 		}
 		
-		public event EventHandler<ReportPartLanguageEventArgs> UrlSet;
+		public event EventHandler<ReportPartEventArgs> UrlSet;
 		
-		protected virtual void OnUrlSet(ReportPartLanguageEventArgs e)
+		protected virtual void OnUrlSet(ReportPartEventArgs e)
 		{
 			if (UrlSet != null) {
 				UrlSet(this, e);

@@ -99,58 +99,48 @@ namespace HW.Core.Helpers
 			return p;
 		}
 		
+//		public override object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
+//		{
+//			Document doc = new Document();
+//			var output = new MemoryStream();
+//			PdfWriter writer = PdfWriter.GetInstance(doc, output);
+//			doc.Open();
+//
+//			string url = GetUrl(path, langID, fy, ty, spons, sid, gb, r.Id, pruid, gid, grpng, plot, fm, tm);
+//			doc.Add(new Chunk(r.CurrentLanguage.Subject));
+//			iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(new Uri(url));
+//			jpg.ScaleToFit(500f, 500f);
+//			doc.Add(jpg);
+//			doc.Close();
+//			return output;
+//		}
+//
+//		public override object ExportAll(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
+//		{
+//			Document doc = new Document();
+//			var output = new MemoryStream();
+//			PdfWriter writer = PdfWriter.GetInstance(doc, output);
+//			doc.Open();
+//
+//			int i = 0;
+//			foreach (var p in parts) {
+//				string url = GetUrl(path, langID, fy, ty, spons, sid, gb, p.ReportPart.Id, pruid, gid, grpng, plot, fm, tm);
+//				ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
+//				doc.Add(new Chunk(r.CurrentLanguage.Subject));
+//				iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(new Uri(url));
+//				jpg.ScaleToFit(500f, 500f);
+//				doc.Add(jpg);
+//
+//				if (i++ < parts.Count - 1) {
+//					doc.NewPage();
+//				}
+//			}
+//			doc.Close();
+//			return output;
+//		}
+		
 //		public override object Export(string url)
-//		{
-//			throw new NotImplementedException();
-//		}
-//		
-//		public override object Export2(string url, int langID)
-//		{
-//			throw new NotImplementedException();
-//		}
-		
-		public override object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
-		{
-			Document doc = new Document();
-			var output = new MemoryStream();
-			PdfWriter writer = PdfWriter.GetInstance(doc, output);
-			doc.Open();
-			
-			string url = GetUrl(path, langID, fy, ty, spons, sid, gb, r.Id, pruid, gid, grpng, plot, fm, tm);
-			doc.Add(new Chunk(r.CurrentLanguage.Subject));
-			iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(new Uri(url));
-			jpg.ScaleToFit(500f, 500f);
-			doc.Add(jpg);
-			doc.Close();
-			return output;
-		}
-		
-		public override object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
-		{
-			Document doc = new Document();
-			var output = new MemoryStream();
-			PdfWriter writer = PdfWriter.GetInstance(doc, output);
-			doc.Open();
-			
-			int i = 0;
-			foreach (var p in parts) {
-				string url = GetUrl(path, langID, fy, ty, spons, sid, gb, p.ReportPart.Id, pruid, gid, grpng, plot, fm, tm);
-				ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
-				doc.Add(new Chunk(r.CurrentLanguage.Subject));
-				iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(new Uri(url));
-				jpg.ScaleToFit(500f, 500f);
-				doc.Add(jpg);
-				
-				if (i++ < parts.Count - 1) {
-					doc.NewPage();
-				}
-			}
-			doc.Close();
-			return output;
-		}
-		
-//		public override object SuperExport(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
-		public override object SuperExport(string url)
+		public override object Export(string url, int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
 		{
 			Document doc = new Document();
 			var output = new MemoryStream();
@@ -166,8 +156,52 @@ namespace HW.Core.Helpers
 			return output;
 		}
 		
-		public override object SuperExport2(int gb, int fy, int ty, int langID, int pruid, int GRPNG, int spons, int sid, string gid, int plot,
-		string path, int sponsorMinUserCountToDisclose, int fm, int tm)
+//		public override object ExportAll(int langID)
+		public override object ExportAll(int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
+		{
+			Document doc = new Document();
+			var output = new MemoryStream();
+			PdfWriter writer = PdfWriter.GetInstance(doc, output);
+			doc.Open();
+			
+			int i = 0;
+			foreach (var p in parts) {
+//				string url = GetUrl(path, langID, fy, ty, spons, sid, gb, p.ReportPart.Id, pruid, gid, grpng, plot, fm, tm);
+				
+				var e = new ReportPartEventArgs(p.ReportPart);
+				OnUrlSet(e);
+				string url = e.Url;
+				
+				ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
+				doc.Add(new Chunk(r.CurrentLanguage.Subject));
+				iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(new Uri(url));
+				jpg.ScaleToFit(500f, 500f);
+				doc.Add(jpg);
+				
+				if (i++ < parts.Count - 1) {
+					doc.NewPage();
+				}
+			}
+			doc.Close();
+			return output;
+		}
+		
+		public override object SuperExport(string url)
+		{
+			Document doc = new Document();
+			var output = new MemoryStream();
+			PdfWriter writer = PdfWriter.GetInstance(doc, output);
+			doc.Open();
+			
+			doc.Add(new Chunk(r.CurrentLanguage.Subject));
+			iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(new Uri(url));
+			jpg.ScaleToFit(500f, 500f);
+			doc.Add(jpg);
+			doc.Close();
+			return output;
+		}
+		
+		public override object SuperExportAll(int langID)
 		{
 			throw new NotImplementedException();
 		}

@@ -68,6 +68,26 @@ namespace HW.Grp
             );
         }
 
+        protected string GetReportExportAllUrl(string type)
+        {
+            return string.Format(
+                "superexportall.aspx?N={0}&FDT={1}&TDT={2}&RNDS1={3}&RNDSD1={4}&PID1={5}&RNDS2={6}&RNDSD2={7}&PID2={8}&R1={9}&R2={10}&TYPE={11}&RID={12}",
+                (StrHelper.Str3(Request.QueryString["N"], "")),
+                (StrHelper.Str3(Request.QueryString["FDT"], "")),
+                (StrHelper.Str3(Request.QueryString["TDT"], "")),
+                (StrHelper.Str3(Request.QueryString["RNDS1"], "")),
+                (StrHelper.Str3(Request.QueryString["RNDSD1"], "")),
+                (StrHelper.Str3(Request.QueryString["PID1"], "")),
+                (StrHelper.Str3(Request.QueryString["RNDS2"], "")),
+                (StrHelper.Str3(Request.QueryString["RNDSD2"], "")),
+                (StrHelper.Str3(Request.QueryString["PID2"], "")),
+                (StrHelper.Str3(Request.QueryString["R1"], "")),
+                (StrHelper.Str3(Request.QueryString["R2"], "")),
+                type,
+                Convert.ToInt32(Request.QueryString["RID"])
+            );
+        }
+
 		protected override void OnPreRender(EventArgs e)
 		{
 			base.OnPreRender(e);

@@ -14,39 +14,46 @@ namespace HW.Core.Helpers
 	{
 		bool hasAnswerKey;
 		bool hasGrouping;
-		object disabled;
-		int width;
-		int height;
-		string background;
+//		object disabled;
+//		int width;
+//		int height;
+//		string background;
 		ReportPart r;
-		string key;
+//		string key;
 		ReportService service;
 		IList<ReportPartLanguage> parts;
 		
-		public ExcelExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, ReportPart r, string key)
+		public ExcelExporter(ReportPart r)
 		{
-			this.service = service;
-			this.hasAnswerKey = hasAnswerKey;
-			this.hasGrouping = hasGrouping;
-			this.disabled = disabled;
-			this.width = width;
-			this.height = height;
-			this.background = background;
 			this.r = r;
-			this.key = key;
 		}
 		
-		public ExcelExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, IList<ReportPartLanguage> parts, string key)
+//		public ExcelExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, ReportPart r, string key)
+		public ExcelExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, ReportPart r)
 		{
 			this.service = service;
 			this.hasAnswerKey = hasAnswerKey;
 			this.hasGrouping = hasGrouping;
-			this.disabled = disabled;
-			this.width = width;
-			this.height = height;
-			this.background = background;
+//			this.disabled = disabled;
+//			this.width = width;
+//			this.height = height;
+//			this.background = background;
+			this.r = r;
+//			this.key = key;
+		}
+		
+//		public ExcelExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, IList<ReportPartLanguage> parts, string key)
+		public ExcelExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, IList<ReportPartLanguage> parts)
+		{
+			this.service = service;
+			this.hasAnswerKey = hasAnswerKey;
+			this.hasGrouping = hasGrouping;
+//			this.disabled = disabled;
+//			this.width = width;
+//			this.height = height;
+//			this.background = background;
 			this.parts = parts;
-			this.key = key;
+//			this.key = key;
 		}
 		
 		public override string Type {
@@ -63,17 +70,60 @@ namespace HW.Core.Helpers
 			get { return string.Format("attachment;filename=\"HealthWatch Survey {0}.xlsx\";", DateTime.Now.ToString("yyyyMMdd")); }
 		}
 		
-//		public override object Export(string url)
+//		public override object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
 //		{
-//			throw new NotImplementedException();
+//			MemoryStream output = new MemoryStream();
+//			var f = service.GetGraphFactory(hasAnswerKey);
+//			ExcelWriter w = new ExcelWriter(output);
+//			int i = 0;
+//			w.WriteCell(i, 0, r.CurrentLanguage.Subject, Color.Black, Color.AliceBlue, 16, ExcelBorderStyle.Thin);
+//			int j = i;
+//			f.ForMerge += delegate(object sender, MergeEventArgs e) {
+//				w.Merge(j, 0, j, e.WeeksCount, ExcelBorderStyle.Thin);
+//			};
+//			i++;
+//			f.CreateGraph3(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled, w, ref i, sponsorMinUserCountToDisclose, fm, tm);
+//			w.EndWrite();
+//			return output;
 //		}
-//		
-//		public override object Export2(string url, int langID)
+//
+//		public override object ExportAll(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
 //		{
-//			throw new NotImplementedException();
+//			MemoryStream output = new MemoryStream();
+//			ExcelWriter w = new ExcelWriter(output);
+//			int i = 0;
+//			foreach (var p in parts) {
+//				ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
+//				var f = service.GetGraphFactory(hasAnswerKey);
+//				w.WriteCell(new ExcelCell { Row = i, Column = 0, Value = r.CurrentLanguage.Subject, BackgroundColor = Color.AliceBlue, FontSize = 16, BorderStyle = ExcelBorderStyle.Thin});
+//				int j = i;
+//				f.ForMerge += delegate(object sender, MergeEventArgs e) {
+//					w.Merge(j, 0, j, e.WeeksCount, ExcelBorderStyle.Thin);
+//				};
+//				i++;
+//				f.CreateGraph3(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled, w, ref i, sponsorMinUserCountToDisclose, fm, tm);
+//
+//			}
+//			w.EndWrite();
+//			return output;
 //		}
 		
-		public override object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
+//		int pruid;
+//		int fy;
+//		int ty;
+//		int gb;
+//		int plot;
+//		int grpng;
+//		int spons;
+//		int sid;
+//		string gid;
+//		int sponsorMinUserCountToDisclose;
+//		int fm;
+//		int tm;
+//		int langID;
+		
+//		public override object Export(string url) 
+		public override object Export(string url, int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
 		{
 			MemoryStream output = new MemoryStream();
 			var f = service.GetGraphFactory(hasAnswerKey);
@@ -85,12 +135,15 @@ namespace HW.Core.Helpers
 				w.Merge(j, 0, j, e.WeeksCount, ExcelBorderStyle.Thin);
 			};
 			i++;
-			f.CreateGraph3(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled, w, ref i, sponsorMinUserCountToDisclose, fm, tm);
+			
+//			f.CreateGraph3(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled, w, ref i, sponsorMinUserCountToDisclose, fm, tm);
+			f.CreateGraph3(r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, w, ref i, sponsorMinUserCountToDisclose, fm, tm);
+			
 			w.EndWrite();
 			return output;
 		}
 		
-		public override object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
+		public override object ExportAll(int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
 		{
 			MemoryStream output = new MemoryStream();
 			ExcelWriter w = new ExcelWriter(output);
@@ -104,25 +157,56 @@ namespace HW.Core.Helpers
 					w.Merge(j, 0, j, e.WeeksCount, ExcelBorderStyle.Thin);
 				};
 				i++;
-				f.CreateGraph3(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled, w, ref i, sponsorMinUserCountToDisclose, fm, tm);
-				
+//				f.CreateGraph3(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled, w, ref i, sponsorMinUserCountToDisclose, fm, tm);
+				f.CreateGraph3(r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, w, ref i, sponsorMinUserCountToDisclose, fm, tm);
 			}
 			w.EndWrite();
 			return output;
 		}
 		
-//		public override object SuperExport(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
 		public override object SuperExport(string url)
 		{
-			throw new NotImplementedException();
+			MemoryStream output = new MemoryStream();
+			var f = service.GetGraphFactory(hasAnswerKey);
+			ExcelWriter w = new ExcelWriter(output);
+			int i = 0;
+			w.WriteCell(i, 0, r.CurrentLanguage.Subject, Color.Black, Color.AliceBlue, 16, ExcelBorderStyle.Thin);
+			int j = i;
+			f.ForMerge += delegate(object sender, MergeEventArgs e) {
+				w.Merge(j, 0, j, e.WeeksCount, ExcelBorderStyle.Thin);
+			};
+			i++;
+//			f.CreateSuperGraph(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled, w, ref i, sponsorMinUserCountToDisclose, fm, tm);
+			w.EndWrite();
+			return output;
 		}
 		
-		public override object SuperExport2(int gb, int fy, int ty, int langID, int pruid, int GRPNG, int spons, int sid, string gid, int plot,
-		string path, int sponsorMinUserCountToDisclose, int fm, int tm)
+		public override object SuperExportAll(int langID)
 		{
 			throw new NotImplementedException();
 		}
 	}
+	
+//	public class ExcelWriterEventArgs : EventArgs
+//	{
+//		ExcelWriter writer;
+//		int index;
+//		
+//		public int Index {
+//			get { return index; }
+//		}
+//		
+//		public ExcelWriter Writer {
+//			get { return writer; }
+//			set { writer = value; }
+//		}
+//		
+//		public ExcelWriterEventArgs(ExcelWriter writer, int index)
+//		{
+//			this.writer = writer;
+//			this.Index = index;
+//		}
+//	}
 	
 	public interface IExcelWriter
 	{

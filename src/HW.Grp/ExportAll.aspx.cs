@@ -104,12 +104,16 @@ namespace HW.Grp
 			ISponsor s = service.ReadSponsor(sid);
 			reportParts = service.FindByProjectAndLanguage(pruid, langID);
 
-            var exporter = ExportFactory.GetExporter2(service, type, HasAnswerKey, hasGrouping, disabled, Width, Height, Background, reportParts, key, Server.MapPath("HW template for Word.docx"));
+//			var exporter = ExportFactory.GetExporterAll(service, type, HasAnswerKey, hasGrouping, disabled, Width, Height, Background, reportParts, key, Server.MapPath("HW template for Word.docx"));
+			var exporter = ExportFactory.GetExporterAll(service, type, HasAnswerKey, hasGrouping, reportParts, Server.MapPath("HW template for Word.docx"));
 			Response.ContentType = exporter.Type;
 			
 			AddHeaderIf(exporter.HasContentDisposition2, "content-disposition", exporter.ContentDisposition2);
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
-			Write(exporter.Export2(gb, yearFrom, yearTo, langID, pruid, grpng, spons, sid, gid, plot, path, s.MinUserCountToDisclose, monthFrom, monthTo));
+//			Write(exporter.ExportAll(gb, yearFrom, yearTo, langID, pruid, grpng, spons, sid, gid, plot, path, s.MinUserCountToDisclose, monthFrom, monthTo));
+			
+			exporter.UrlSet += delegate(object sender2, ReportPartEventArgs e2) { e2.Url = GetReportImageUrl(path, langID, yearFrom, yearTo, spons, sid, gb, e2.ReportPart.Id, pruid, gid, grpng, plot, monthFrom, monthTo); };
+			Write(exporter.ExportAll(langID, pruid, yearFrom, yearTo, gb, plot, grpng, spons, sid, gid, s.MinUserCountToDisclose, monthFrom, monthTo));
 			
 //			string url = GetUrl(path, langID, fy, ty, spons, sid, gb, r.Id, pruid, gid, grpng, plot, fm, tm);
 //			string url = "";
@@ -131,6 +135,25 @@ namespace HW.Grp
 			if (condition) {
 				Response.AddHeader(name, value);
 			}
+		}
+		
+		string GetReportImageUrl(string path, int langID, int yearFrom, int yearTo, int spons, int sid, int gb, int reportPartID, int projectRoundUnitID, string gid, int grpng, int plot, int monthFrom, int monthTo)
+		{
+			P p = new P(path, "reportImage.aspx");
+			p.Q.Add("LangID", langID);
+			p.Q.Add("FY", yearFrom);
+			p.Q.Add("TY", yearTo);
+			p.Q.Add("FM", monthFrom);
+			p.Q.Add("TM", monthTo);
+			p.Q.Add("SAID", spons);
+			p.Q.Add("SID", sid);
+			p.Q.Add("GB", gb);
+			p.Q.Add("RPID", reportPartID);
+			p.Q.Add("PRUID", projectRoundUnitID);
+			p.Q.Add("GID", gid);
+			p.Q.Add("GRPNG", grpng);
+			p.Q.Add("PLOT", plot);
+			return p.ToString();
 		}
 	}
 }

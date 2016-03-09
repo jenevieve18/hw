@@ -25,7 +25,6 @@ namespace HW.Grp
 			
 			var p = r.ReadReportPart(rpid, lid);
 			var exporter = ExportFactory.GetSuperExporter(type, p, Server.MapPath("HW template for Word.docx"));
-//			var exporter = new DocXExporter(p, Server.MapPath("HW template for Word.docx"));
 			
 			Response.ClearHeaders();
 			Response.ClearContent();

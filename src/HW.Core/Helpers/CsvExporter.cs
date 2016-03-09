@@ -29,39 +29,41 @@ namespace HW.Core.Helpers
 	{
 		bool hasAnswerKey;
 		bool hasGrouping;
-		object disabled;
-		int width;
-		int height;
-		string background;
+//		object disabled;
+//		int width;
+//		int height;
+//		string background;
 		ReportPart r;
-		string key;
+//		string key;
 		ReportService service;
 		IList<ReportPartLanguage> parts;
 		
-		public CsvExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, ReportPart r, string key)
+//		public CsvExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, ReportPart r, string key)
+		public CsvExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, ReportPart r)
 		{
 			this.service = service;
 			this.hasAnswerKey = hasAnswerKey;
 			this.hasGrouping = hasGrouping;
-			this.disabled = disabled;
-			this.width = width;
-			this.height = height;
-			this.background = background;
+//			this.disabled = disabled;
+//			this.width = width;
+//			this.height = height;
+//			this.background = background;
 			this.r = r;
-			this.key = key;
+//			this.key = key;
 		}
 		
-		public CsvExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, IList<ReportPartLanguage> parts, string key)
+//		public CsvExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, IList<ReportPartLanguage> parts, string key)
+		public CsvExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, IList<ReportPartLanguage> parts)
 		{
 			this.service = service;
 			this.hasAnswerKey = hasAnswerKey;
 			this.hasGrouping = hasGrouping;
-			this.disabled = disabled;
-			this.width = width;
-			this.height = height;
-			this.background = background;
+//			this.disabled = disabled;
+//			this.width = width;
+//			this.height = height;
+//			this.background = background;
 			this.parts = parts;
-			this.key = key;
+//			this.key = key;
 		}
 		
 		public override string Type {
@@ -77,43 +79,43 @@ namespace HW.Core.Helpers
 			return string.Format("attachment;filename=HealthWatch {0} {1}.csv", file, DateTime.Now.ToString("yyyyMMdd"));
 		}
 		
-//		public override object Export(string url)
+//		public override object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
 //		{
-//			throw new NotImplementedException();
+//			var f = service.GetGraphFactory(hasAnswerKey);
+//			return f.CreateGraph2(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled, sponsorMinUserCountToDisclose, fm, tm);
 //		}
 //		
-//		public override object Export2(string url, int langID)
+//		public override object ExportAll(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
 //		{
-//			throw new NotImplementedException();
+//			StringBuilder s = new StringBuilder();
+//			foreach (var p in parts) {
+//				ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
+//				var f = service.GetGraphFactory(hasAnswerKey);
+//				string x = f.CreateGraph2(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled, sponsorMinUserCountToDisclose, fm, tm);
+//				s.AppendLine(x);
+//				s.AppendLine();
+//			}
+//			return s.ToString();
 //		}
 		
-		public override object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
+//		public override object Export(string url)
+		public override object Export(string url, int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
 		{
-			var f = service.GetGraphFactory(hasAnswerKey);
-			return f.CreateGraph2(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled, sponsorMinUserCountToDisclose, fm, tm);
+			throw new NotImplementedException();
 		}
 		
-		public override object Export2(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
+//		public override object ExportAll(int langID)
+		public override object ExportAll(int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
 		{
-			StringBuilder s = new StringBuilder();
-			foreach (var p in parts) {
-				ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
-				var f = service.GetGraphFactory(hasAnswerKey);
-				string x = f.CreateGraph2(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled, sponsorMinUserCountToDisclose, fm, tm);
-				s.AppendLine(x);
-				s.AppendLine();
-			}
-			return s.ToString();
+			throw new NotImplementedException();
 		}
 		
-//		public override object SuperExport(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
 		public override object SuperExport(string url)
 		{
 			throw new NotImplementedException();
 		}
 		
-		public override object SuperExport2(int gb, int fy, int ty, int langID, int pruid, int GRPNG, int spons, int sid, string gid, int plot,
-		string path, int sponsorMinUserCountToDisclose, int fm, int tm)
+		public override object SuperExportAll(int langID)
 		{
 			throw new NotImplementedException();
 		}
