@@ -110,7 +110,7 @@ namespace HW.Grp
 		{
 			base.OnPreRender(e);
 
-			reportParts = reportRepository.FindPartLanguagesByReport(Convert.ToInt32(Request.QueryString["RID"]));
+			reportParts = reportRepository.FindPartLanguagesByReport(Convert.ToInt32(Request.QueryString["RID"]), lid);
 			
 //			int cx = 0;
 //			foreach (var p in reportRepository.FindPartLanguagesByReport(Convert.ToInt32(Request.QueryString["RID"])))

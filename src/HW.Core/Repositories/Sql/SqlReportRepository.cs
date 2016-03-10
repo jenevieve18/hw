@@ -215,7 +215,7 @@ ORDER BY rp.SortOrder",
 			return languages;
 		}
 		
-		public IList<ReportPartLanguage> FindPartLanguagesByReport(int reportID)
+		public IList<ReportPartLanguage> FindPartLanguagesByReport(int reportID, int langID)
 		{
 			string query = string.Format(
 				@"
@@ -226,10 +226,12 @@ SELECT rp.ReportPartID,
 	rp.Type
 FROM Report r
 INNER JOIN ReportPart rp ON r.ReportID = rp.ReportID
-INNER JOIN ReportPartLang rpl ON rp.ReportPartID = rpl.ReportPartID AND rpl.LangID = 1
+--INNER JOIN ReportPartLang rpl ON rp.ReportPartID = rpl.ReportPartID AND rpl.LangID = 1
+INNER JOIN ReportPartLang rpl ON rp.ReportPartID = rpl.ReportPartID AND rpl.LangID = {1}
 WHERE r.ReportID = {0}
 ORDER BY rp.SortOrder",
-				reportID
+				reportID,
+				langID
 			);
 			var languages = new List<ReportPartLanguage>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {

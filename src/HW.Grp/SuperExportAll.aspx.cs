@@ -33,7 +33,8 @@ namespace HW.Grp
 			int lid = ConvertHelper.ToInt32(Session["lid"], 2);
 			string type = StrHelper.Str3(Request.QueryString["TYPE"], "docx");
 			
-			var parts = r.FindPartLanguagesByReport(Convert.ToInt32(Request.QueryString["RID"]));
+//			var parts = r.FindPartLanguagesByReport(Convert.ToInt32(Request.QueryString["RID"]));
+			var parts = r.FindPartLanguagesByReport(Convert.ToInt32(Request.QueryString["RID"]), lid);
 //			var exporter = ExportFactory.GetSuperExporterAll(service, parts, type, Server.MapPath("HW template for Word.docx"));
 			var exporter = ExportFactory.GetSuperExporterAll(type, service, parts, Server.MapPath("HW template for Word.docx"));
 			
