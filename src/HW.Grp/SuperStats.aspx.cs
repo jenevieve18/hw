@@ -12,28 +12,28 @@ namespace HW.Grp
 	public partial class SuperStats : System.Web.UI.Page
 	{
 		SqlReportRepository reportRepository = new SqlReportRepository();
-        SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
+		SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
 		protected int lid;
 		protected IList<ReportPartLanguage> reportParts;
-        protected IList<PlotTypeLanguage> plotTypes;
-        protected bool forSingleSeries;
+		protected IList<PlotTypeLanguage> plotTypes;
+		protected bool forSingleSeries;
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			HtmlHelper.RedirectIf(Session["SuperAdminID"] == null, "default.aspx", true);
 
-            lid = ConvertHelper.ToInt32(Session["lid"], 2);
+			lid = ConvertHelper.ToInt32(Session["lid"], 2);
 
-            plotTypes = plotRepository.FindByLanguage(lid);
+			plotTypes = plotRepository.FindByLanguage(lid);
 
-            forSingleSeries = StrHelper.Str3(Request.QueryString["RNDS2"], "") == "";
+			forSingleSeries = StrHelper.Str3(Request.QueryString["RNDS2"], "") == "";
 		}
 
-        protected string GetReportImageUrl(ReportPartLanguage p)
+		protected string GetReportImageUrl(ReportPartLanguage p)
 		{
 			return string.Format(
 				"superReportImage.aspx?N={0}&FDT={1}&TDT={2}&RNDS1={3}&RNDSD1={4}&PID1={5}&RNDS2={6}&RNDSD2={7}&PID2={8}&R1={9}&R2={10}&RPID={11}",
-                (StrHelper.Str3(Request.QueryString["N"], "")),
+				(StrHelper.Str3(Request.QueryString["N"], "")),
 				(StrHelper.Str3(Request.QueryString["FDT"], "")),
 				(StrHelper.Str3(Request.QueryString["TDT"], "")),
 				(StrHelper.Str3(Request.QueryString["RNDS1"], "")),
@@ -48,45 +48,63 @@ namespace HW.Grp
 			);
 		}
 
-        protected string GetReportExportUrl(ReportPartLanguage p, string type)
-        {
-            return string.Format(
-                "superexport.aspx?N={0}&FDT={1}&TDT={2}&RNDS1={3}&RNDSD1={4}&PID1={5}&RNDS2={6}&RNDSD2={7}&PID2={8}&R1={9}&R2={10}&RPID={11}&TYPE={12}",
-                (StrHelper.Str3(Request.QueryString["N"], "")),
-                (StrHelper.Str3(Request.QueryString["FDT"], "")),
-                (StrHelper.Str3(Request.QueryString["TDT"], "")),
-                (StrHelper.Str3(Request.QueryString["RNDS1"], "")),
-                (StrHelper.Str3(Request.QueryString["RNDSD1"], "")),
-                (StrHelper.Str3(Request.QueryString["PID1"], "")),
-                (StrHelper.Str3(Request.QueryString["RNDS2"], "")),
-                (StrHelper.Str3(Request.QueryString["RNDSD2"], "")),
-                (StrHelper.Str3(Request.QueryString["PID2"], "")),
-                (StrHelper.Str3(Request.QueryString["R1"], "")),
-                (StrHelper.Str3(Request.QueryString["R2"], "")),
-                p.ReportPart.Id,
-                type
-            );
-        }
+		protected string GetReportExportUrl(ReportPartLanguage p)
+		{
+			return string.Format(
+				"superexport.aspx?N={0}&FDT={1}&TDT={2}&RNDS1={3}&RNDSD1={4}&PID1={5}&RNDS2={6}&RNDSD2={7}&PID2={8}&R1={9}&R2={10}&RPID={11}",
+				(StrHelper.Str3(Request.QueryString["N"], "")),
+				(StrHelper.Str3(Request.QueryString["FDT"], "")),
+				(StrHelper.Str3(Request.QueryString["TDT"], "")),
+				(StrHelper.Str3(Request.QueryString["RNDS1"], "")),
+				(StrHelper.Str3(Request.QueryString["RNDSD1"], "")),
+				(StrHelper.Str3(Request.QueryString["PID1"], "")),
+				(StrHelper.Str3(Request.QueryString["RNDS2"], "")),
+				(StrHelper.Str3(Request.QueryString["RNDSD2"], "")),
+				(StrHelper.Str3(Request.QueryString["PID2"], "")),
+				(StrHelper.Str3(Request.QueryString["R1"], "")),
+				(StrHelper.Str3(Request.QueryString["R2"], "")),
+				p.ReportPart.Id
+			);
+		}
 
-        protected string GetReportExportAllUrl(string type)
-        {
-            return string.Format(
-                "superexportall.aspx?N={0}&FDT={1}&TDT={2}&RNDS1={3}&RNDSD1={4}&PID1={5}&RNDS2={6}&RNDSD2={7}&PID2={8}&R1={9}&R2={10}&TYPE={11}&RID={12}",
-                (StrHelper.Str3(Request.QueryString["N"], "")),
-                (StrHelper.Str3(Request.QueryString["FDT"], "")),
-                (StrHelper.Str3(Request.QueryString["TDT"], "")),
-                (StrHelper.Str3(Request.QueryString["RNDS1"], "")),
-                (StrHelper.Str3(Request.QueryString["RNDSD1"], "")),
-                (StrHelper.Str3(Request.QueryString["PID1"], "")),
-                (StrHelper.Str3(Request.QueryString["RNDS2"], "")),
-                (StrHelper.Str3(Request.QueryString["RNDSD2"], "")),
-                (StrHelper.Str3(Request.QueryString["PID2"], "")),
-                (StrHelper.Str3(Request.QueryString["R1"], "")),
-                (StrHelper.Str3(Request.QueryString["R2"], "")),
-                type,
-                Convert.ToInt32(Request.QueryString["RID"])
-            );
-        }
+		protected string GetReportExportAllUrl()
+		{
+			return string.Format(
+				"superexportall.aspx?N={0}&FDT={1}&TDT={2}&RNDS1={3}&RNDSD1={4}&PID1={5}&RNDS2={6}&RNDSD2={7}&PID2={8}&R1={9}&R2={10}&RID={11}",
+				(StrHelper.Str3(Request.QueryString["N"], "")),
+				(StrHelper.Str3(Request.QueryString["FDT"], "")),
+				(StrHelper.Str3(Request.QueryString["TDT"], "")),
+				(StrHelper.Str3(Request.QueryString["RNDS1"], "")),
+				(StrHelper.Str3(Request.QueryString["RNDSD1"], "")),
+				(StrHelper.Str3(Request.QueryString["PID1"], "")),
+				(StrHelper.Str3(Request.QueryString["RNDS2"], "")),
+				(StrHelper.Str3(Request.QueryString["RNDSD2"], "")),
+				(StrHelper.Str3(Request.QueryString["PID2"], "")),
+				(StrHelper.Str3(Request.QueryString["R1"], "")),
+				(StrHelper.Str3(Request.QueryString["R2"], "")),
+				Convert.ToInt32(Request.QueryString["RID"])
+			);
+		}
+
+//		protected string GetReportExportAllUrl(string type)
+//		{
+//			return string.Format(
+//				"superexportall.aspx?N={0}&FDT={1}&TDT={2}&RNDS1={3}&RNDSD1={4}&PID1={5}&RNDS2={6}&RNDSD2={7}&PID2={8}&R1={9}&R2={10}&TYPE={11}&RID={12}",
+//				(StrHelper.Str3(Request.QueryString["N"], "")),
+//				(StrHelper.Str3(Request.QueryString["FDT"], "")),
+//				(StrHelper.Str3(Request.QueryString["TDT"], "")),
+//				(StrHelper.Str3(Request.QueryString["RNDS1"], "")),
+//				(StrHelper.Str3(Request.QueryString["RNDSD1"], "")),
+//				(StrHelper.Str3(Request.QueryString["PID1"], "")),
+//				(StrHelper.Str3(Request.QueryString["RNDS2"], "")),
+//				(StrHelper.Str3(Request.QueryString["RNDSD2"], "")),
+//				(StrHelper.Str3(Request.QueryString["PID2"], "")),
+//				(StrHelper.Str3(Request.QueryString["R1"], "")),
+//				(StrHelper.Str3(Request.QueryString["R2"], "")),
+//				type,
+//				Convert.ToInt32(Request.QueryString["RID"])
+//			);
+//		}
 
 		protected override void OnPreRender(EventArgs e)
 		{
@@ -99,8 +117,8 @@ namespace HW.Grp
 //			{
 //				StatsImg.Text += string.Format(
 //					@"
-//<div{0}>&nbsp;<br/>&nbsp;<br/></div>
-//<table border='0' cellspacing='0' cellpadding='0'>",
+			//<div{0}>&nbsp;<br/>&nbsp;<br/></div>
+			//<table border='0' cellspacing='0' cellpadding='0'>",
 //					(cx > 0 ? " style='page-break-before:always;'" : "")
 //				);
 //				StatsImg.Text += string.Format(
@@ -161,7 +179,7 @@ namespace HW.Grp
 //				}
 //
 //				StatsImg.Text += @"
-//</table>";
+			//</table>";
 //				cx++;
 //			}
 		}

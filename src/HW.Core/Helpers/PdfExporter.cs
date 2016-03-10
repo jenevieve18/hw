@@ -186,7 +186,8 @@ namespace HW.Core.Helpers
 			return output;
 		}
 		
-		public override object SuperExport(string url)
+//		public override object SuperExport(string url)
+		public override object SuperExport(string url, string rnds1, string rnds2, string rndsd1, string rndsd2, string pid1, string pid2, string n, int rpid, string yearFrom, string yearTo, string r1, string r2, int langID, int plot)
 		{
 			Document doc = new Document();
 			var output = new MemoryStream();
@@ -201,7 +202,8 @@ namespace HW.Core.Helpers
 			return output;
 		}
 		
-		public override object SuperExportAll(int langID)
+//		public override object SuperExportAll(int langID)
+		public override object SuperExportAll(string rnds1, string rnds2, string rndsd1, string rndsd2, string pid1, string pid2, string n, string yearFrom, string yearTo, string r1, string r2, int langID, int plot)
 		{
 			throw new NotImplementedException();
 		}

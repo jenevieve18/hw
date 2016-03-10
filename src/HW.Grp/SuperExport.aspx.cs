@@ -32,13 +32,29 @@ namespace HW.Grp
 			AddHeaderIf(exporter.HasContentDisposition(p.CurrentLanguage.Subject), "content-disposition", exporter.GetContentDisposition(p.CurrentLanguage.Subject));
 			
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
-			Write(exporter.SuperExport(path + GetReportImageUrl(p)));
+			string url = path + GetReportImageUrl(p);
+			
+			string N = StrHelper.Str3(Request.QueryString["N"], "");
+			string FDT = StrHelper.Str3(Request.QueryString["FDT"], "");
+			string TDT = StrHelper.Str3(Request.QueryString["TDT"], "");
+			string RNDS1 = StrHelper.Str3(Request.QueryString["RNDS1"], "");
+			string RNDSD1 = StrHelper.Str3(Request.QueryString["RNDSD1"], "");
+			string PID1 = StrHelper.Str3(Request.QueryString["PID1"], "");
+			string RNDS2 = StrHelper.Str3(Request.QueryString["RNDS2"], "");
+			string RNDSD2 = StrHelper.Str3(Request.QueryString["RNDSD2"], "");
+			string PID2 = StrHelper.Str3(Request.QueryString["PID2"], "");
+			string R1 = StrHelper.Str3(Request.QueryString["R1"], "");
+			string R2 = StrHelper.Str3(Request.QueryString["R2"], "");
+			
+			int plot = ConvertHelper.ToInt32(Request.QueryString["Plot"]);
+			
+			Write(exporter.SuperExport(url, RNDS1, RNDS2, RNDSD1, RNDSD2, PID1, PID2, N, rpid, FDT, TDT, R1, R2, lid, plot));
 		}
 
 		string GetReportImageUrl(ReportPart p)
 		{
 			return string.Format(
-				"superReportImage.aspx?N={0}&FDT={1}&TDT={2}&RNDS1={3}&RNDSD1={4}&PID1={5}&RNDS2={6}&RNDSD2={7}&PID2={8}&R1={9}&R2={10}&RPID={11}",
+				"superReportImage.aspx?N={0}&FDT={1}&TDT={2}&RNDS1={3}&RNDSD1={4}&PID1={5}&RNDS2={6}&RNDSD2={7}&PID2={8}&R1={9}&R2={10}&RPID={11}&Plot={12}",
 				(StrHelper.Str3(Request.QueryString["N"], "")),
 				(StrHelper.Str3(Request.QueryString["FDT"], "")),
 				(StrHelper.Str3(Request.QueryString["TDT"], "")),
@@ -50,7 +66,8 @@ namespace HW.Grp
 				(StrHelper.Str3(Request.QueryString["PID2"], "")),
 				(StrHelper.Str3(Request.QueryString["R1"], "")),
 				(StrHelper.Str3(Request.QueryString["R2"], "")),
-				p.Id
+				p.Id,
+				(StrHelper.Str3(Request.QueryString["Plot"], ""))
 			);
 		}
 		

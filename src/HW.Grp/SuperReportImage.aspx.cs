@@ -387,7 +387,7 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 //			return g;
 //		}
 		
-		public void X(string rnds1, string rnds2, string rndsd1, string rndsd2, string pid1, string pid2, string n, int rpid, string yearFrom, string yearTo, string r1, string r2, string disabled, int langID)
+		public ExtendedGraph CreateGraphCleanedVersion(IGraphType gt, string rnds1, string rnds2, string rndsd1, string rndsd2, string pid1, string pid2, string n, int rpid, string yearFrom, string yearTo, string r1, string r2, string disabled, int langID)
 		{
 			// For min/max
 			string rnds = (rnds1 == "0" || rnds2 == "0" ? "" : " AND pru.ProjectRoundUnitID IN (" + rnds1 + (rnds2 != "" ? "," + rnds2 : "") + ")");
@@ -455,6 +455,7 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 			int cx = 0;
 			int type = 0;
 			int pl = 0;
+			ExtendedGraph g;
 
 			int GB = 3;
 			bool stdev = (rnds2 == "");
@@ -469,9 +470,10 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 
 			int minDT = 0;
 			int maxDT = 0;
-
+			
 			if (type == 8) {
 				groupBy = GroupFactory.GetGroupBy(GB);
+				g = new ExtendedGraph(895, 440, "#FFFFFF");
 
 				Answer answer = answerRepository.ReadByGroup(groupBy, yearFrom, yearTo, rnds);
 				if (answer != null) {
@@ -491,27 +493,40 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 					}
 					indexes.Add(p.WeightedQuestionOption);
 				}
+				g.SetMinMaxes(minMaxes);
+				g.DrawBackgroundFromIndexes(indexes);
+
+				g.DrawWiggle();
 			} else {
+				g = new ExtendedGraph(895, 550, "#FFFFFF");
+				g.setMinMax(0f, 100f);
+				
 				cx += 2;
 			}
+			
+			g.Type = gt;
+			
+			g.DrawComputingSteps(disabled, cx);
 
 			cx = 0;
 
 			if (type == 8) {
+				g.DrawBottomString(minDT, maxDT, GB);
+				
 				int bx = 0;
 				var p = reportRepository.ReadComponentByPartAndLanguage(rpid, langID);
 				if (p != null) {
 					Series s1 = new Series { Description = r1, Color = 4, X = 300, Y = 20 };
 					
-//					g.Explanations.Add(
-//						new Explanation {
-//							Description = p.WeightedQuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
-//							Color = 0,
-//							Right = false,
-//							Box = false,
-//							HasAxis = false
-//						}
-//					);
+					g.Explanations.Add(
+						new Explanation {
+							Description = p.WeightedQuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (stdev ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+							Color = 0,
+							Right = false,
+							Box = false,
+							HasAxis = false
+						}
+					);
 
 					cx = 1;
 					int lastDT = minDT - 1;
@@ -527,6 +542,7 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 						lastDT = a.DT;
 						cx++;
 					}
+					g.Series.Add(s1);
 
 					if (rnds2 != "") {
 						Series s2 = new Series { Description = r2, Color = 5, X = 600, Y = 20 };
@@ -544,10 +560,14 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 							lastDT = a.DT;
 							cx++;
 						}
+						g.Series.Add(s2);
 					}
 					bx++;
 				}
 			}
+			
+			g.Draw();
+			return g;
 		}
 	}
 }

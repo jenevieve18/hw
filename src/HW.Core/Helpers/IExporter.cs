@@ -84,7 +84,8 @@ namespace HW.Core.Helpers
 			if (type == Pdf) {
 				return new PdfExporter(service, parts);
 			} else if (type == Excel) {
-				return new ExcelExporter(null);
+//				return new ExcelExporter(service, hasAnswerKey, hasGrouping, parts);
+				return new ExcelExporter(service, false, false, parts);
 			} else if (type == WordDocument) {
 				return new DocXExporter(service, parts, template);
 			} else if (type == PresentationDocument) {
@@ -117,9 +118,11 @@ namespace HW.Core.Helpers
 //		
 //		object ExportAll(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm);
 		
-		object SuperExport(string url);
+//		object SuperExport(string url);
+		object SuperExport(string url, string rnds1, string rnds2, string rndsd1, string rndsd2, string pid1, string pid2, string n, int rpid, string yearFrom, string yearTo, string r1, string r2, int langID, int plot);
 		
-		object SuperExportAll(int langID);
+//		object SuperExportAll(int langID);
+		object SuperExportAll(string rnds1, string rnds2, string rndsd1, string rndsd2, string pid1, string pid2, string n, string yearFrom, string yearTo, string r1, string r2, int langID, int plot);
 		
 		event EventHandler<ReportPartEventArgs> UrlSet;
 		
@@ -172,9 +175,11 @@ namespace HW.Core.Helpers
 //		public abstract object ExportAll(int langID);
 		public abstract object ExportAll(int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm);
 		
-		public abstract object SuperExport(string url);
+//		public abstract object SuperExport(string url);
+		public abstract object SuperExport(string url, string rnds1, string rnds2, string rndsd1, string rndsd2, string pid1, string pid2, string n, int rpid, string yearFrom, string yearTo, string r1, string r2, int langID, int plot);
 		
-		public abstract object SuperExportAll(int langID);
+//		public abstract object SuperExportAll(int langID);
+		public abstract object SuperExportAll(string rnds1, string rnds2, string rndsd1, string rndsd2, string pid1, string pid2, string n, string yearFrom, string yearTo, string r1, string r2, int langID, int plot);
 
 //		protected string GetUrl(string path, int langID, int fy, int ty, int spons, int sid, int gb, int rpid, int pruid, string gid, int grpng, int plot, int fm, int tm)
 //		{

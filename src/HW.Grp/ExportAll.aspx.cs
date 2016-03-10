@@ -86,7 +86,7 @@ namespace HW.Grp
 			
 			int langID = (Request.QueryString["LangID"] != null ? Convert.ToInt32(Request.QueryString["LangID"]) : 0);
 
-			int rpid = Convert.ToInt32(Request.QueryString["RPID"]);
+//			int rpid = Convert.ToInt32(Request.QueryString["RPID"]);
 			int pruid = Convert.ToInt32(Request.QueryString["PRUID"]);
 			
 			int grpng = Convert.ToInt32(Request.QueryString["GRPNG"]);
@@ -94,12 +94,13 @@ namespace HW.Grp
 			int sid = Convert.ToInt32((Request.QueryString["SID"] != null ? Request.QueryString["SID"] : HttpContext.Current.Session["SponsorID"]));
 			string gid = (Request.QueryString["GID"] != null ? Request.QueryString["GID"].ToString().Replace(" ", "") : "");
 			int plot = ConvertHelper.ToInt32(Request.QueryString["PLOT"]);
-			string type = Request.QueryString["TYPE"].ToString();
+			//string type = Request.QueryString["TYPE"].ToString();
+            string type = StrHelper.Str3(Request.QueryString["TYPE"], "");
 			
 			bool hasGrouping = Request.QueryString["GRPNG"] != null || Request.QueryString["GRPNG"] != "0";
-			string key = Request.QueryString["AK"];
+//			string key = Request.QueryString["AK"];
 			
-			object disabled = Request.QueryString["DISABLED"];
+//			object disabled = Request.QueryString["DISABLED"];
 			
 			ISponsor s = service.ReadSponsor(sid);
 			reportParts = service.FindByProjectAndLanguage(pruid, langID);

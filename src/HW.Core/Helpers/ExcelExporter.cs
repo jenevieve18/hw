@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using HW.Core.Models;
+using HW.Core.Repositories.Sql;
 using HW.Core.Services;
 using OfficeOpenXml.Style;
 
@@ -137,7 +138,7 @@ namespace HW.Core.Helpers
 			i++;
 			
 //			f.CreateGraph3(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled, w, ref i, sponsorMinUserCountToDisclose, fm, tm);
-			f.CreateGraph3(r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, w, ref i, sponsorMinUserCountToDisclose, fm, tm);
+			f.CreateGraphForExcelWriter(r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, w, ref i, sponsorMinUserCountToDisclose, fm, tm);
 			
 			w.EndWrite();
 			return output;
@@ -158,16 +159,17 @@ namespace HW.Core.Helpers
 				};
 				i++;
 //				f.CreateGraph3(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled, w, ref i, sponsorMinUserCountToDisclose, fm, tm);
-				f.CreateGraph3(r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, w, ref i, sponsorMinUserCountToDisclose, fm, tm);
+				f.CreateGraphForExcelWriter(r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, w, ref i, sponsorMinUserCountToDisclose, fm, tm);
 			}
 			w.EndWrite();
 			return output;
 		}
 		
-		public override object SuperExport(string url)
+		public override object SuperExport(string url, string rnds1, string rnds2, string rndsd1, string rndsd2, string pid1, string pid2, string n, int rpid, string yearFrom, string yearTo, string r1, string r2, int langID, int plot)
 		{
 			MemoryStream output = new MemoryStream();
-			var f = service.GetGraphFactory(hasAnswerKey);
+//			var f = service.GetGraphFactory(hasAnswerKey);
+			var f = new GroupStatsGraphFactory(new SqlAnswerRepository(), new SqlReportRepository(), new SqlProjectRepository(), new SqlOptionRepository(), new SqlIndexRepository(), new SqlQuestionRepository(), new SqlDepartmentRepository());
 			ExcelWriter w = new ExcelWriter(output);
 			int i = 0;
 			w.WriteCell(i, 0, r.CurrentLanguage.Subject, Color.Black, Color.AliceBlue, 16, ExcelBorderStyle.Thin);
@@ -177,13 +179,32 @@ namespace HW.Core.Helpers
 			};
 			i++;
 //			f.CreateSuperGraph(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled, w, ref i, sponsorMinUserCountToDisclose, fm, tm);
+			f.CreateSuperGraphForExcelWriter(rnds1, rnds2, rndsd1, rndsd2, pid1, pid2, n, rpid, yearFrom, yearTo, r1, r2, langID, ref i, plot, w);
 			w.EndWrite();
 			return output;
 		}
 		
-		public override object SuperExportAll(int langID)
+//		public override object SuperExportAll(int langID)
+		public override object SuperExportAll(string rnds1, string rnds2, string rndsd1, string rndsd2, string pid1, string pid2, string n, string yearFrom, string yearTo, string r1, string r2, int langID, int plot)
 		{
-			throw new NotImplementedException();
+			MemoryStream output = new MemoryStream();
+			ExcelWriter w = new ExcelWriter(output);
+			int i = 0;
+			foreach (var p in parts) {
+				ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
+//				var f = service.GetGraphFactory(hasAnswerKey);
+				var f = new GroupStatsGraphFactory(new SqlAnswerRepository(), new SqlReportRepository(), new SqlProjectRepository(), new SqlOptionRepository(), new SqlIndexRepository(), new SqlQuestionRepository(), new SqlDepartmentRepository());
+				w.WriteCell(new ExcelCell { Row = i, Column = 0, Value = r.CurrentLanguage.Subject, BackgroundColor = Color.AliceBlue, FontSize = 16, BorderStyle = ExcelBorderStyle.Thin});
+				int j = i;
+				f.ForMerge += delegate(object sender, MergeEventArgs e) {
+					w.Merge(j, 0, j, e.WeeksCount, ExcelBorderStyle.Thin);
+				};
+				i++;
+//				f.CreateSuperGraph(r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, w, ref i, sponsorMinUserCountToDisclose, fm, tm);
+				f.CreateSuperGraphForExcelWriter(rnds1, rnds2, rndsd1, rndsd2, pid1, pid2, n, r.Id, yearFrom, yearTo, r1, r2, langID, ref i, plot, w);
+			}
+			w.EndWrite();
+			return output;
 		}
 	}
 	
