@@ -76,6 +76,7 @@ namespace HW.Core.Helpers
 			using (PresentationDocument package = PresentationDocument.Create(output, PresentationDocumentType.Presentation)) {
 //				gc.UrlSet += delegate(object sender, ReportPartEventArgs e) { e.Url =  GetUrl(path, langID, fy, ty, spons, sid, gb, e.ReportPart.Id, pruid, gid, grpng, plot, fm, tm); };
 				gc.UrlSet += delegate(object sender, ReportPartEventArgs e) {
+					e.Url = url;
 					OnUrlSet(e);
 //					e.Url =  GetUrl(path, langID, fy, ty, spons, sid, gb, e.ReportPart.Id, pruid, gid, grpng, plot, fm, tm);
 				};
