@@ -378,9 +378,24 @@ ORDER BY rpc.SortOrder",
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				while (rs.Read()) {
 					var c = new ReportPartComponent();
+//					var q = new WeightedQuestionOption {
+//						Id = rs.GetInt32(0),
+//						TargetValue = rs.GetInt32(2),
+//						YellowLow = GetInt32(rs, 3, -1),
+//						GreenLow = GetInt32(rs, 4, -1),
+//						GreenHigh = GetInt32(rs, 5, -1),
+//						YellowHigh = GetInt32(rs, 6, -1),
+//						Question = new Question { Id = rs.GetInt32(7) },
+//						Option = new Option { Id = rs.GetInt32(8) }
+//					};
+//					q.Languages = new List<WeightedQuestionOptionLanguage>(
+//						new WeightedQuestionOptionLanguage[] {
+//							new WeightedQuestionOptionLanguage { Question = rs.GetString(1) }
+//						}
+//					);
 					var q = new WeightedQuestionOption {
 						Id = rs.GetInt32(0),
-						TargetValue = rs.GetInt32(2),
+						TargetValue = GetInt32(rs, 2, -1),
 						YellowLow = GetInt32(rs, 3, -1),
 						GreenLow = GetInt32(rs, 4, -1),
 						GreenHigh = GetInt32(rs, 5, -1),

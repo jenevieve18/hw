@@ -73,7 +73,7 @@ namespace HW.Grp
 
 		private void Page_Load(object sender, System.EventArgs e)
 		{
-            Response.ContentType = "image/gif";
+			Response.ContentType = "image/gif";
 
 			ExtendedGraph g = null;
 
@@ -91,7 +91,9 @@ namespace HW.Grp
 			int reportPartID = Convert.ToInt32(Request.QueryString["RPID"]);
 			int projectRoundUnitID = Convert.ToInt32(Request.QueryString["PRUID"]);
 			
+			// FIXME: This hasGrouping value is always true! Please check!
 			bool hasGrouping = Request.QueryString["GRPNG"] != null || Request.QueryString["GRPNG"] != "0";
+//			bool hasGrouping = ConvertHelper.ToInt32(Request.QueryString["GRPNG"], 0) != 0;
 			
 			int plot = ConvertHelper.ToInt32(Request.QueryString["Plot"]);
 			string key = Request.QueryString["AK"];

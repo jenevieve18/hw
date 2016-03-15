@@ -1093,6 +1093,60 @@ ORDER BY tmp.DT",
 			return answers;
 		}
 		
+		public IList<Answer> FindByQuestionAndOptionGroupedX(string groupBy, int questionID, int optionID, int yearFrom, int yearTo, string sortString, int fm, int tm)
+		{
+			string query = string.Format(
+				@"
+--SELECT tmp.DT,
+--	AVG(tmp.V),
+--	COUNT(tmp.V),
+--	STDEV(tmp.V)
+--FROM (
+	SELECT {0}(a.EndDT) AS DT,
+		AVG(av.ValueInt) AS V
+	FROM Answer a
+	INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = {1} AND av.OptionID = {2}
+	INNER JOIN ProjectRoundUnit pru ON a.ProjectRoundUnitID = pru.ProjectRoundUnitID
+	INNER JOIN ProjectRound pr ON pru.ProjectRoundID = pr.ProjectRoundID
+	WHERE a.EndDT IS NOT NULL
+		AND a.EndDT >= pr.Started
+		--AND YEAR(a.EndDT) >= {3}
+		--AND YEAR(a.EndDT) <= {4}
+		AND (YEAR(a.EndDT) = {3} AND MONTH(a.EndDT) >= {7} OR YEAR(a.EndDT) > {3})
+		AND (YEAR(a.EndDT) = {4} AND MONTH(a.EndDT) <= {8} OR YEAR(a.EndDT) < {4})
+		AND LEFT(pru.SortString, {5}) = '{6}'
+	GROUP BY a.ProjectRoundUserID, {0}(a.EndDT)
+--) tmp
+--GROUP BY tmp.DT
+--ORDER BY tmp.DT",
+				groupBy,
+				questionID,
+				optionID,
+				yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
+				yearTo, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
+				sortString.Length,
+				sortString,
+				fm,
+				tm
+			);
+			var answers = new List<Answer>();
+			using (SqlDataReader rs = Db.rs(query, "eFormSqlconnection")) {
+				if (rs.Read()) {
+					bool done = false;
+					while (!done) {
+						var a = new Answer { };
+						do {
+							a.DT = rs.GetInt32(0);
+							a.Values.Add(new AnswerValue { ValueInt = rs.GetInt32(1) });
+							done = !rs.Read();
+						} while (!done && rs.GetInt32(0) == a.DT);
+						answers.Add(a);
+					}
+				}
+			}
+			return answers;
+		}
+		
 		public IList<Answer> FindByQuestionAndOptionGrouped(string groupBy, int questionID, int optionID, int yearFrom, int yearTo, string sortString, int fm, int tm)
 		{
 			string query = string.Format(
@@ -1136,7 +1190,8 @@ ORDER BY tmp.DT",
 						DT = rs.GetInt32(0),
 						AverageV = rs.GetInt32(1),
 						CountV = rs.GetInt32(2),
-						StandardDeviation = rs.GetFloat(3)
+						//StandardDeviation = rs.GetFloat(3)
+                        StandardDeviation = (float)GetDouble(rs, 3, -1)
 					};
 					answers.Add(a);
 				}
