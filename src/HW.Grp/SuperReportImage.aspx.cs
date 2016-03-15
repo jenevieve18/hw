@@ -164,13 +164,30 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 				
 				List<IIndex> indexes = new List<IIndex>();
 				List<IMinMax> minMaxes = new List<IMinMax>();
+                bool hasGrouping = true;
 				foreach (var p in reportRepository.FindComponentsByPart(rpid)) {
-					Answer a = answerRepository.ReadMinMax(groupBy, p.WeightedQuestionOption.Question.Id, p.WeightedQuestionOption.Option.Id, yearFrom, yearTo, rnds);
-					if (a != null) {
-						minMaxes.Add(a);
-					} else {
-						minMaxes.Add(new Answer());
-					}
+                    //Answer a = answerRepository.ReadMinMax(groupBy, p.WeightedQuestionOption.Question.Id, p.WeightedQuestionOption.Option.Id, yearFrom, yearTo, rnds);
+                    //if (a != null) {
+                    //    minMaxes.Add(a);
+                    //} else {
+                    //    minMaxes.Add(new Answer());
+                    //}
+                    if (!hasGrouping)
+                    {
+                        Answer a = answerRepository.ReadMinMax(groupBy, p.WeightedQuestionOption.Question.Id, p.WeightedQuestionOption.Option.Id, yearFrom, yearTo, rnds);
+                        if (a != null)
+                        {
+                            minMaxes.Add(a);
+                        }
+                        else
+                        {
+                            minMaxes.Add(new Answer());
+                        }
+                    }
+                    else
+                    {
+                        minMaxes.Add(new Answer());
+                    }
 					indexes.Add(p.WeightedQuestionOption);
 				}
 				g.SetMinMaxes(minMaxes);
