@@ -363,8 +363,10 @@ FROM (
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				if (rs.Read()) {
 					var a = new Answer() {
-						Max = (float)GetDouble(rs, 0),
-						Min = (float)GetDouble(rs, 1)
+//						Max = (float)GetDouble(rs, 0),
+//						Min = (float)GetDouble(rs, 1)
+						Max = (float)GetDouble(rs, 0, 100),
+						Min = (float)GetDouble(rs, 1, 0)
 					};
 					return a;
 				}
