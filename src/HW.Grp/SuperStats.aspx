@@ -43,7 +43,7 @@
             });
         });
         $('.report-part-subject').click(function () {
-            $('.report-part-header').toggle("slow");
+            $(this).closest('.report-part').find('.report-part-header').toggle("slow");
         });
         $('.report-part-subject .icon').mouseover(function () {
             //console.log('mouseover');
