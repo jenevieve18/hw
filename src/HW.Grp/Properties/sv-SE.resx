@@ -205,7 +205,7 @@
     <value>träffar.</value>
   </data>
   <data name="graphs.change" xml:space="preserve">
-    <value>Ändra alla grafer till:</value>
+    <value>Ändra denna graf till:</value>
   </data>
   <data name="graphs.change.all" xml:space="preserve">
     <value>Ändra alla grafer till:</value>
