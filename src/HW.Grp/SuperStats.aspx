@@ -104,7 +104,7 @@
 <input type="button" class="button-docx-all" value="docx" onclick="window.open('<%= exportAllUrl + "&TYPE=docx" %>', '_blank')" />
 <input type="button" class="button-pptx-all" value="pptx" onclick="window.open('<%= exportAllUrl + "&TYPE=pptx" %>', '_blank')" />
 <input type="button" class="button-xls-all" value="xls" onclick="window.open('<%= exportAllUrl + "&TYPE=xls" %>', '_blank')" />
-<input type="button" class="button-xlsverbose-all" value="xls verbose" onclick="window.open('<%= exportAllUrl + "&TYPE=xls&Plot=" + PlotType.Verbose %>', '_blank')" />
+<input type="button" class="button-xlsverbose-all" value="<%=R.Str(lid, "xls.verbose", "xls verbose") %>" onclick="window.open('<%= exportAllUrl + "&TYPE=xls&Plot=" + PlotType.Verbose %>', '_blank')" />
 </div>
 
 <% int cx = 0; %>
@@ -149,7 +149,7 @@
                 <input type="button" class="button-docx" value="docx" onclick="window.open('<%= exportUrl + "&TYPE=docx" %>', '_blank')" />
                 <input type="button" class="button-pptx" value="pptx" onclick="window.open('<%= exportUrl + "&TYPE=pptx" %>', '_blank')" />
                 <input type="button" class="button-xls" value="xls" onclick="window.open('<%= exportUrl + "&TYPE=xls" %>', '_blank')" />
-                <input type="button" class="button-xlsverbose" value="xls verbose" onclick="window.open('<%= exportUrl + "&TYPE=xls&PLOT=" + PlotType.Verbose %>', '_blank')" />
+                <input type="button" class="button-xlsverbose" value="<%=R.Str(lid, "xls.verbose", "xls verbose") %>" onclick="window.open('<%= exportUrl + "&TYPE=xls&PLOT=" + PlotType.Verbose %>', '_blank')" />
             </td>
         </tr>
 	</tbody>
