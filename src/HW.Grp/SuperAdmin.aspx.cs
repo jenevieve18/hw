@@ -446,13 +446,18 @@ namespace HW.Grp
 				totNonClosedActive
 			);
 
-			Survey.Text = @"
+			Survey.Text = string.Format(
+				@"
 <tr>
 	<td><i>Database, all <b>other</b> organizations</i></td>
-	<td><input type='radio' name='Measure_0' value='1'/></td>
-	<td><input type='radio' name='Measure_0' value='2'/></td>
-	<td><input type='radio' name='Measure_0' value='0' checked/></td>
-</tr>";
+	<td><input type='radio' name='Measure_0' value='1'{0}/></td>
+	<td><input type='radio' name='Measure_0' value='2'{1}/></td>
+	<td><input type='radio' name='Measure_0' value='0'{2}/></td>
+</tr>",
+				ConvertHelper.ToInt32(Request["Measure_0"], 0) == 1 ? " checked" : "",
+				ConvertHelper.ToInt32(Request["Measure_0"], 0) == 2 ? " checked" : "",
+				ConvertHelper.ToInt32(Request["Measure_0"], 0) == 0 ? " checked" : ""
+			);
 
 			//SqlDataReader rs = Db.rs("SELECT DISTINCT ses.SurveyID, ss.Internal FROM Sponsor s " +
 			//    "INNER JOIN SponsorProjectRoundUnit ses ON s.SponsorID = ses.SponsorID " +
@@ -504,16 +509,19 @@ namespace HW.Grp
 					@"
 <tr{0}>
 	<td>{1}, {2}</td>
-	<td><input type='radio' name='Measure_{3}' value='1'/></td>
-	<td><input type='radio' name='Measure_{3}' value='2'/></td>
-	<td><input type='radio' name='Measure_{3}' value='0' checked/></td>
+	<td><input type='radio' name='Measure_{3}' value='1'{5}/></td>
+	<td><input type='radio' name='Measure_{3}' value='2'{6}/></td>
+	<td><input type='radio' name='Measure_{3}' value='0'{7}/></td>
 	<td>{4}</td>
 </tr>",
 					(cx % 2 == 0 ? " style='background-color:#F2F2F2;'" : ""),
 					ss.Sponsor.Name,
 					ss.Navigation,
 					ss.ProjectRoundUnit.Id,
-					ss.ProjectRoundUnit.Answers.Capacity
+					ss.ProjectRoundUnit.Answers.Capacity,
+                    ConvertHelper.ToInt32(Request["Measure_" + ss.ProjectRoundUnit.Id.ToString()], 0) == 1 ? " checked" : "",
+                    ConvertHelper.ToInt32(Request["Measure_" + ss.ProjectRoundUnit.Id.ToString()], 0) == 2 ? " checked" : "",
+                    ConvertHelper.ToInt32(Request["Measure_" + ss.ProjectRoundUnit.Id.ToString()], 0) == 0 ? " checked" : ""
 				);
 				cx++;
 //				bx += rs.GetInt32(5);

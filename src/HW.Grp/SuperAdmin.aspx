@@ -82,6 +82,7 @@
 		    </table>
 		    <asp:DropDownList ID=FromDT runat=server />--<asp:DropDownList ID=ToDT runat=server /><asp:DropDownList ID="ReportID" runat=server />
             <asp:Button Text="Submit" ID=submit2 runat=server />
+            <div style="margin-bottom:30px"></div>
         </div>
     </div>
 
