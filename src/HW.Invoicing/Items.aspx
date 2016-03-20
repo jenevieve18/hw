@@ -32,8 +32,8 @@
                     <%= HtmlHelper.Anchor("Delete", "itemdelete.aspx?Id=" + i.Id, "onclick=\"return confirm('Are you sure you want to delete this item?')\"")%>
                 </td>--%>
                 <td>
-                    <%= HtmlHelper.Anchor(" ", string.Format("itemedit.aspx?Id=" + i.Id), "title='Edit' class='glyphicon glyphicon-edit'")%>
-                    <%= HtmlHelper.Anchor(" ", string.Format("itemdelete.aspx?Id=" + i.Id), "title='Delete' class='glyphicon glyphicon-remove-circle' onclick=\"return confirm('Are you sure you want to delete this item?')\"")%>
+                    <%= HtmlHelper.Anchor(" ", string.Format("itemedit.aspx?Id=" + i.Id), "title='Edit' class='glyphicon glyphicon-pencil'")%>
+                    <%= HtmlHelper.Anchor(" ", string.Format("itemdelete.aspx?Id=" + i.Id), "title='Delete' class='glyphicon glyphicon-trash' onclick=\"return confirm('Are you sure you want to delete this item?')\"")%>
                 </td>
             </tr>
         <% } else { %>
@@ -48,8 +48,8 @@
                     <%= HtmlHelper.Anchor("Deactivate", "itemdeactivate.aspx?Id=" + i.Id)%>
                 </td>--%>
                 <td>
-                    <%= HtmlHelper.Anchor(" ", string.Format("itemedit.aspx?Id=" + i.Id), "title='Edit' class='glyphicon glyphicon-edit'")%>
-                    <%= HtmlHelper.Anchor(" ", string.Format("itemdeactivate.aspx?Id=" + i.Id), "title='Deactivate' class='glyphicon glyphicon-minus'")%>
+                    <%= HtmlHelper.Anchor(" ", string.Format("itemedit.aspx?Id=" + i.Id), "title='Edit' class='glyphicon glyphicon-pencil'")%>
+                    <%= HtmlHelper.Anchor(" ", string.Format("itemdeactivate.aspx?Id=" + i.Id), "title='Deactivate' class='glyphicon glyphicon-remove'")%>
                 </td>
             </tr>
         <% } %>

@@ -33,8 +33,8 @@
                 <td style="width:80px"><small><%= i.GetPriority() %></small></td>
                 <td><%= i.GetStatus() %></td>
                 <td style="width:50px">
-                    <%= HtmlHelper.Anchor(" ", string.Format("issueedit.aspx?Id=" + i.Id), "title='Edit' class='glyphicon glyphicon-edit'")%>
-                    <%= HtmlHelper.Anchor(" ", string.Format("issuedelete.aspx?Id=" + i.Id), "title='Delete' class='glyphicon glyphicon-remove-circle' onclick=\"return confirm('Are you sure you want to delete this issue?')\"")%>
+                    <%= HtmlHelper.Anchor(" ", string.Format("issueedit.aspx?Id=" + i.Id), "title='Edit' class='glyphicon glyphicon-pencil'")%>
+                    <%= HtmlHelper.Anchor(" ", string.Format("issuedelete.aspx?Id=" + i.Id), "title='Delete' class='glyphicon glyphicon-trash' onclick=\"return confirm('Are you sure you want to delete this issue?')\"")%>
                 </td>
             </tr>
         <% } else { %>
@@ -46,8 +46,8 @@
                 <td style="width:80px"><small><%= i.GetPriority()  %></small></td>
                 <td><%= i.GetStatus() %></td>
                 <td style="width:50px">
-                    <%= HtmlHelper.Anchor(" ", string.Format("issueedit.aspx?Id=" + i.Id), "title='Edit' class='glyphicon glyphicon-edit'")%>
-                    <%= HtmlHelper.Anchor(" ", string.Format("issuedeactivate.aspx?Id=" + i.Id), "title='Deactivate' class='glyphicon glyphicon-minus'")%>
+                    <%= HtmlHelper.Anchor(" ", string.Format("issueedit.aspx?Id=" + i.Id), "title='Edit' class='glyphicon glyphicon-pencil'")%>
+                    <%= HtmlHelper.Anchor(" ", string.Format("issuedeactivate.aspx?Id=" + i.Id), "title='Deactivate' class='glyphicon glyphicon-remove'")%>
                 </td>
             </tr>
         <% } %>

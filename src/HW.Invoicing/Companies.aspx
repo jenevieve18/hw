@@ -22,7 +22,7 @@
         </td>
         <td>
             <%--<%= HtmlHelper.Anchor("Edit", "companyedit.aspx?Id=" + c.Id) %>--%>
-            <%= HtmlHelper.Anchor(" ", "companyedit.aspx?Id=" + c.Id, "title='Edit' class='glyphicon glyphicon-edit'")%>
+            <%= HtmlHelper.Anchor(" ", "companyedit.aspx?Id=" + c.Id, "title='Edit' class='glyphicon glyphicon-pencil'")%>
             <%--<% if (c.HasTerms) { %>
                 <%= HtmlHelper.Anchor("Terms", "companyterms.aspx?Id=" + c.Id) %>
             <% } %>--%>

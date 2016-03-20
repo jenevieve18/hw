@@ -34,8 +34,8 @@
         </td>
         <td>
             <% if (!u.IsOwner(company)) { %>
-                <%= HtmlHelper.Anchor(" ", "collaboratoredit.aspx?UserID=" + u.Id, "title='Edit' class='glyphicon glyphicon-edit'") %>
-                <%= HtmlHelper.Anchor(" ", "collaboratordelete.aspx?UserID=" + u.Id, "title='Delete' class='glyphicon glyphicon-remove-circle' onclick=\"return confirm('Are you sure you want to delete this collaborator?')\"")%>
+                <%= HtmlHelper.Anchor(" ", "collaboratoredit.aspx?UserID=" + u.Id, "title='Edit' class='glyphicon glyphicon-pencil'") %>
+                <%= HtmlHelper.Anchor(" ", "collaboratordelete.aspx?UserID=" + u.Id, "title='Delete' class='glyphicon glyphicon-trash' onclick=\"return confirm('Are you sure you want to delete this collaborator?')\"")%>
             <% } %>
         </td>
     </tr>
