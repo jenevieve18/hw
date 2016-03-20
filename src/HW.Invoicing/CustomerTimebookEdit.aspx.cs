@@ -60,7 +60,7 @@ namespace HW.Invoicing
 
                     panelSubscriptionTimebook.Visible = timebook.IsSubscription;
                     panelTimebook.Visible = !panelSubscriptionTimebook.Visible;
-                    panelNonHeaderTimebook.Visible = Panel1.Visible = !timebook.IsHeader;
+                    //Panel2.Visible = Panel1.Visible = !timebook.IsHeader;
                     if (timebook.IsSubscription)
                     {
                         textBoxSubscriptionTimebookStartDate.Text = timebook.SubscriptionStartDate.Value.ToString("yyyy-MM-dd");
@@ -73,10 +73,11 @@ namespace HW.Invoicing
                     }
                     else if (timebook.IsHeader)
                     {
+                        textBoxTimebookDate.Text = timebook.Date.Value.ToString("yyyy-MM-dd");
                         textBoxTimebookComments.Text = timebook.Comments;
-                    }
-                    else
-                    {
+                    //}
+                    //else
+                    //{
                         textBoxTimebookDate.Text = timebook.Date.Value.ToString("yyyy-MM-dd");
                         checkBoxTimebookDateHidden.Checked = timebook.DateHidden;
                         textBoxTimebookDepartment.Text = timebook.Department;
@@ -92,6 +93,7 @@ namespace HW.Invoicing
                     }
                     checkBoxReactivate.Checked = !timebook.Inactive;
                     placeHolderReactivate.Visible = timebook.Inactive;
+                    checkBoxTimebookIsHeader.Checked = timebook.IsHeader;
                 }
                 else
                 {
@@ -136,7 +138,7 @@ namespace HW.Invoicing
             {
                 t.ValidateSubscription();
             }
-            else if (panelNonHeaderTimebook.Visible)
+            else if (Panel2.Visible)
             {
                 t.Validate();
             }
@@ -154,7 +156,7 @@ namespace HW.Invoicing
                 //{
                 //    r.UpdateTimebook(t, id);
                 //}
-                else if (panelNonHeaderTimebook.Visible)
+                else if (Panel2.Visible)
                 {
                     r.UpdateTimebook(t, id);
                 }

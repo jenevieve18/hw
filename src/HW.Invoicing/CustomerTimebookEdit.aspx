@@ -62,6 +62,17 @@
                 var d = addMonth(startDate, $(this).val());
                 $('#<%= textBoxSubscriptionTimebookEndDate.ClientID %>').datepicker('update', d);
             });
+
+            $('#<%= checkBoxTimebookIsHeader.ClientID %>').change(function() {
+                if ($(this).is(':checked')) {
+                    $('#<%= Panel2.ClientID %>').hide();
+                    $('#<%= Panel1.ClientID %>').hide();
+                } else {
+                    $('#<%= Panel2.ClientID %>').show();
+                    $('#<%= Panel1.ClientID %>').show();
+                }
+            });
+            $('#<%= checkBoxTimebookIsHeader.ClientID %>').change();
         });
     </script>
 </asp:Content>
@@ -75,11 +86,14 @@
     <% } %>
 
     <asp:Panel ID="panelTimebook" runat="server">
-        <asp:Panel ID="panelNonHeaderTimebook" runat="server">
-            <div class="form-group">
-	            <label for="<%= textBoxTimebookDate.ClientID %>">Date</label>
-                <asp:TextBox ID="textBoxTimebookDate" runat="server" CssClass="date form-control"></asp:TextBox>
-            </div>
+        <div class="form-group">
+	        <label for="<%= textBoxTimebookDate.ClientID %>">Date</label>
+            <asp:TextBox ID="textBoxTimebookDate" runat="server" CssClass="date form-control"></asp:TextBox>
+        </div>
+        <div class="form-group">
+            <asp:CheckBox ID="checkBoxTimebookIsHeader" runat="server" CssClass="form-control" Text="&nbsp;This timebook is a header type" />
+        </div>
+        <asp:Panel ID="Panel2" runat="server">
             <div class="form-group">
                 <asp:CheckBox ID="checkBoxTimebookDateHidden" runat="server" CssClass="form-control" Text="&nbsp;Timebook date is hidden" />
             </div>
