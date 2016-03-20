@@ -78,6 +78,7 @@ namespace HW.Invoicing
                 InvoiceAddress = Session["CustomerInvoiceAddress"].ToString(),
                 PurchaseOrderNumber = Session["CustomerReferenceNumber"].ToString()
             };
+            // FIXME: Put the purchase order number somewhere?
             r.Update2(c, customerId);
 
             var a = new CustomerAgreement

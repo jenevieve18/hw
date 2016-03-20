@@ -112,9 +112,11 @@ namespace HW.Invoicing
 					labelInvoiceCustomerAddress.Text = customer.InvoiceAddress.Replace("\n", "<br>");
 					labelInvoiceNumber.Text = "IHG-001";
 					labelInvoiceOurReferencePerson.Text = customer.OurReferencePerson;
-					labelInvoicePurchaseOrderNumber.Text = customer.PurchaseOrderNumber;
+					//labelInvoicePurchaseOrderNumber.Text = customer.PurchaseOrderNumber;
+                    labelInvoicePurchaseOrderNumber.Text = customer.PrimaryContactReferenceNumber;
 					labelInvoiceYourReferencePerson.Text = customer.ContactPerson.Name;
-					panelPurchaseOrderNumber.Visible = customer.PurchaseOrderNumber != "";
+                    //panelPurchaseOrderNumber.Visible = customer.PurchaseOrderNumber != "";
+                    panelPurchaseOrderNumber.Visible = customer.PrimaryContactReferenceNumber != "";
 
 					// Subscription Panel
 					checkBoxSubscribe.Checked = customer.HasSubscription;

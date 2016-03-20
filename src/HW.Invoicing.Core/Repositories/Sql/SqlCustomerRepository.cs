@@ -363,7 +363,8 @@ VALUES(@Name, @Number, @PostalAddress, @InvoiceAddress, @PurchaseOrderNumber, @Y
 				new SqlParameter("@Number", c.Number),
 				new SqlParameter("@PostalAddress", c.PostalAddress),
 				new SqlParameter("@InvoiceAddress", c.InvoiceAddress),
-				new SqlParameter("@PurchaseOrderNumber", c.PurchaseOrderNumber),
+				//new SqlParameter("@PurchaseOrderNumber", c.PurchaseOrderNumber),
+				new SqlParameter("@PurchaseOrderNumber", ""),
 				new SqlParameter("@YourReferencePerson", ""),
 				new SqlParameter("@OurReferencePerson", c.OurReferencePerson),
 				new SqlParameter("@Phone", c.Phone),
@@ -406,7 +407,8 @@ WHERE Id = @Id"
 				new SqlParameter("@Number", c.Number),
 				new SqlParameter("@InvoiceAddress", c.InvoiceAddress),
 				new SqlParameter("@PostalAddress", c.PostalAddress),
-				new SqlParameter("@PurchaseOrderNumber", c.PurchaseOrderNumber),
+//				new SqlParameter("@PurchaseOrderNumber", c.PurchaseOrderNumber),
+				new SqlParameter("@PurchaseOrderNumber", ""),
 				new SqlParameter("@YourReferencePerson", ""),
 				new SqlParameter("@OurReferencePerson", c.OurReferencePerson),
 				new SqlParameter("@Phone", c.Phone),
@@ -750,7 +752,7 @@ WHERE c.Id = @Id"
 						Number = GetString(rs, 2),
 						InvoiceAddress = GetString(rs, 3, ""),
 						PostalAddress = GetString(rs, 4, ""),
-						PurchaseOrderNumber = GetString(rs, 5),
+//						PurchaseOrderNumber = GetString(rs, 5),
 						OurReferencePerson = GetString(rs, 7),
 						Email = GetString(rs, 8),
 						Phone = GetString(rs, 9),
@@ -774,6 +776,7 @@ WHERE c.Id = @Id"
 			}
 			if (c != null && c.HasSubscription)
 			{
+				c.Contacts = FindContacts(id);
 				//c.ContactPerson = ReadContact(c.ContactPerson.Id);
 				query = @"
 SELECT i.Id,

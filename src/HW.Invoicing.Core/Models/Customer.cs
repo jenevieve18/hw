@@ -115,6 +115,27 @@ namespace HW.Invoicing.Core.Models
 		}
 
 		public IList<CustomerTimebook> Timebooks { get; set; }
+		
+		public bool HasContacts {
+			get {
+				return Contacts != null && Contacts.Count > 0;
+			}
+		}
+		
+		public string PrimaryContactReferenceNumber {
+			get {
+				return PrimaryContact != null ? PrimaryContact.PurchaseOrderNumber : "";
+			}
+		}
+		
+		public CustomerContact PrimaryContact {
+			get {
+				if (HasContacts) {
+					return Contacts[0];
+				}
+				return null;
+			}
+		}
 
 		public IList<CustomerContact> Contacts { get; set; }
 

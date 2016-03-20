@@ -250,7 +250,7 @@ WHERE i.Id = @Id"
                             Id = GetInt32(rs, 2),
                             Name = GetString(rs, 3),
                             InvoiceAddress = GetString(rs, 4),
-                            PurchaseOrderNumber = GetString(rs, 5),
+//                            PurchaseOrderNumber = GetString(rs, 5),
                             OurReferencePerson = GetString(rs, 7),
                             Number = GetString(rs, 9),
                             Company = new Company
@@ -271,6 +271,7 @@ WHERE i.Id = @Id"
 			}
             if (i != null)
             {
+            	i.Customer.Contacts = new SqlCustomerRepository().FindContacts(i.Customer.Id);
                 i.Customer.ContactPerson = new SqlCustomerRepository().ReadContact(i.Customer.ContactPerson.Id);
                 i.Timebooks = FindTimebooks(id);
             }
