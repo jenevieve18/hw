@@ -17,7 +17,10 @@
 	<!--script src="js/less-1.3.3.min.js"></script-->
 	<!--append ‘#!watch’ to the browser URL, then refresh the page. -->
 	
-	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<%--<link href="css/bootstrap.css" rel="stylesheet">--%>
+
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
 	<link href="css/style.css" rel="stylesheet">
 
 	<!--<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>-->
@@ -44,10 +47,12 @@
 	</style>
 
     <style type="text/css">
-        table { border-collapse: collapse; empty-cells: show; }
-
-        td { position: relative; }
-
+        table {
+        	border-collapse: collapse; empty-cells: show;
+		}
+        td {
+        	position: relative;
+        }
         tr.strikeout td:before {
             content: " ";
             position: absolute;
@@ -56,15 +61,54 @@
             border-bottom: 1px solid red;
             /*width: 100%;*/
         }
-
         tr.strikeout td:after {
             content: "\00B7";
             font-size: 1px;
         }
-
         /* Extra styling */
         /*td { width: 100px; }*/
         th { text-align: left; }
+    </style>
+
+    <style type="text/css">
+        /*@media (max-width: 992px) {*/
+        @media (max-width: 1199px) {
+            .navbar-header {
+                float: none;
+            }
+            .navbar-left,
+            .navbar-right {
+                float: none !important;
+            }
+            .navbar-toggle {
+                display: block;
+            }
+            .navbar-collapse {
+                border-top: 1px solid transparent;
+                box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            }
+            .navbar-fixed-top {
+                top: 0;
+                border-width: 0 0 1px;
+            }
+            .navbar-collapse.collapse {
+                display: none!important;
+            }
+            .navbar-nav {
+                float: none!important;
+                margin-top: 7.5px;
+            }
+            .navbar-nav > li {
+                float: none;
+            }
+            .navbar-nav > li > a {
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+            .collapse.in {
+                display: block !important;
+            }
+        }
     </style>
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -73,14 +117,18 @@
     <![endif]-->
 
     <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/apple-touch-icon-144-precomposed.png">
+    <%--<link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png">
-    <!--<link rel="shortcut icon" href="img/favicon.png">-->
+    <link rel="shortcut icon" href="img/favicon.png">--%>
   
-    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <%--<script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/scripts.js"></script>--%>
+
+    <script   src="https://code.jquery.com/jquery-2.2.1.min.js"   integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="   crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/scripts.js"></script>
 
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -88,7 +136,7 @@
 </head>
 <body>
     <form id="form1" runat="server" role="form">
-    
+
         <div class="container">
 	        <div class="row clearfix">
 		        <div class="col-md-12 column">
@@ -102,7 +150,6 @@
 					         </button>
                              <%= HtmlHelper.Anchor("IHG Invoicing", "dashboard.aspx", "class='navbar-brand'")%>
 				        </div>
-				
 				        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					        <ul class="nav navbar-nav">
                                 <% if (user != null && company != null) { %>
@@ -162,5 +209,6 @@
     </form>
 
     <hw:Footer runat="server" />
+
 </body>
 </html>
