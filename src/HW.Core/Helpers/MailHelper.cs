@@ -15,25 +15,39 @@ namespace HW.Core.Helpers
 		
 		public static void SendMail(string to, string subject, string body)
 		{
-			SendMail("info@healthwatch.se", to, subject, body);
+			SendMail("info@healthwatch.se", to, subject, body, "");
 		}
 		
-		public static void SendMail(string from, string to, string subject, string body)
+		public static void SendMail(string from, string to, string subject, string body, string attachmentFilename)
 		{
-			SendMail(from, to, subject, body, "");
+			SendMail(from, to, subject, body, attachmentFilename, "");
 		}
 
-        public static void SendMail(string from, string to, string subject, string body, string attachmentFilename)
+        public static void SendMail(string from, string to, string subject, string body, string attachmentFilename, string cc)
         {
-            SendMail(from, to, subject, body, attachmentFilename, "", "", ConfigurationManager.AppSettings["SmtpServer"]);
+            SendMail(from, to, subject, body, attachmentFilename, "", "", ConfigurationManager.AppSettings["SmtpServer"], cc);
         }
 		
-		public static void SendMail(string from, string to, string subject, string body, string attachmentFilename, string username, string password, string server)
+		public static void SendMail(string from, string to, string subject, string body, string attachmentFilename, string username, string password, string server, string cc)
 		{
 			SmtpClient smtpClient = new SmtpClient();
 //			NetworkCredential basicCredential = new NetworkCredential(username, password);
 //			MailMessage message = new MailMessage();
-			MailMessage message = new MailMessage(from, to, subject, body);
+//			MailMessage message = new MailMessage(from, to, subject, body);
+			MailMessage message = new MailMessage();
+			message.From = new MailAddress(from);
+			foreach (var t in to.Split(';')) {
+				if (!t.Trim().Equals("")) {
+					message.To.Add(t.Trim());
+				}
+			}
+			foreach (var c in cc.Split(';')) {
+				if (!c.Trim().Equals("")) {
+					message.CC.Add(c.Trim());
+				}
+			}
+			message.Subject = subject;
+			message.Body = body;
 //			MailAddress fromAddress = new MailAddress(username);
 
 			// Setup up the host, increase the timeout to 5 minutes

@@ -48,10 +48,11 @@ namespace HW.Invoicing
                     invoice.Customer.InvoiceEmail,
 					company.InvoiceEmailSubject,
 					company.InvoiceEmailText,
-					file
+					file,
+                    invoice.Customer.InvoiceEmailCC
                 );
 
-                Session["Message"] = "Invoice sent!";
+                Session["Message"] = string.Format("Invoice successfully sent and received at {0} with CC {1}.", invoice.Customer.InvoiceEmail, invoice.Customer.InvoiceEmailCC);
 			} catch (Exception ex) {
                 Session["Message"] = ex.Message;
 			}
