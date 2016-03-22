@@ -1023,7 +1023,8 @@ SELECT Id,
     Email,
     Inactive,
     Type,
-    Title
+    Title,
+    PurchaseOrderNumber
 FROM CustomerContact
 WHERE Id = @Id"
 			);
@@ -1041,7 +1042,8 @@ WHERE Id = @Id"
 						Email = GetString(rs, 4),
 						Inactive = GetInt32(rs, 5) == 1,
 						Type = GetInt32(rs, 6, 3),
-						Title = GetString(rs, 7)
+						Title = GetString(rs, 7),
+                        PurchaseOrderNumber = GetString(rs, 8)
 					};
 				}
 			}
