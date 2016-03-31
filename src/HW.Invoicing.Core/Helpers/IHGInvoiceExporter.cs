@@ -194,21 +194,21 @@ namespace HW.Invoicing.Core.Helpers
 			foreach (var tb in invoice.Timebooks) {
 				if (tb.Timebook.IsHeader) {
 					if (j > 0) {
-						t.AddCell(new PdfPCell(new Phrase(" ", normalFont)) { Colspan = 16, Border = Rectangle.NO_BORDER });
-						t.AddCell(new PdfPCell(new Phrase(" ", normalFont)) { Colspan = 16, Border = Rectangle.NO_BORDER });
+						t.AddCell(new PdfPCell(new Phrase(" ", normalFont)) { Colspan = 16, VerticalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
+						t.AddCell(new PdfPCell(new Phrase(" ", normalFont)) { Colspan = 16, VerticalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
 					}
 					
 					t.AddCell(new PdfPCell(new Phrase(tb.Timebook.ToString(), normalFont)) { Colspan = 9, Border = Rectangle.NO_BORDER });
-					t.AddCell(new PdfPCell(new Phrase("", normalFont)) { Colspan = 2, HorizontalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
-					t.AddCell(new PdfPCell(new Phrase("", normalFont)) { HorizontalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
-					t.AddCell(new PdfPCell(new Phrase("", normalFont)) { Colspan = 2, HorizontalAlignment = Element.ALIGN_RIGHT, Border = Rectangle.NO_BORDER });
-					t.AddCell(new PdfPCell(new Phrase("", normalFont)) { Colspan = 2, HorizontalAlignment = Element.ALIGN_RIGHT, Border = Rectangle.NO_BORDER });
+					t.AddCell(new PdfPCell(new Phrase("", normalFont)) { Colspan = 2, HorizontalAlignment = Element.ALIGN_CENTER, VerticalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
+					t.AddCell(new PdfPCell(new Phrase("", normalFont)) { HorizontalAlignment = Element.ALIGN_CENTER, VerticalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
+					t.AddCell(new PdfPCell(new Phrase("", normalFont)) { Colspan = 2, HorizontalAlignment = Element.ALIGN_RIGHT, VerticalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
+					t.AddCell(new PdfPCell(new Phrase("", normalFont)) { Colspan = 2, HorizontalAlignment = Element.ALIGN_RIGHT, VerticalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
 				} else {
-					t.AddCell(new PdfPCell(new Phrase(tb.Timebook.ToString(), normalFont)) { Colspan = 9, Border = Rectangle.NO_BORDER });
-					t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Quantity.ToString("# ##0.00"), normalFont)) { Colspan = 2, HorizontalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
-					t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Item.Unit.Name, normalFont)) { HorizontalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
-					t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Price.ToString("### ##0.00"), normalFont)) { Colspan = 2, HorizontalAlignment = Element.ALIGN_RIGHT, Border = Rectangle.NO_BORDER });
-					t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Amount.ToString("### ##0.00"), normalFont)) { Colspan = 2, HorizontalAlignment = Element.ALIGN_RIGHT, Border = Rectangle.NO_BORDER });
+					t.AddCell(new PdfPCell(new Phrase(tb.Timebook.ToString(), normalFont)) { Colspan = 9, VerticalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
+					t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Quantity.ToString("# ##0.00"), normalFont)) { Colspan = 2, HorizontalAlignment = Element.ALIGN_CENTER, VerticalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
+					t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Item.Unit.Name, normalFont)) { HorizontalAlignment = Element.ALIGN_CENTER, VerticalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
+					t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Price.ToString("### ##0.00"), normalFont)) { Colspan = 2, HorizontalAlignment = Element.ALIGN_RIGHT, VerticalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
+					t.AddCell(new PdfPCell(new Phrase(tb.Timebook.Amount.ToString("### ##0.00"), normalFont)) { Colspan = 2, HorizontalAlignment = Element.ALIGN_RIGHT, VerticalAlignment = Element.ALIGN_CENTER, Border = Rectangle.NO_BORDER });
 				}
 				j++;
 			}
