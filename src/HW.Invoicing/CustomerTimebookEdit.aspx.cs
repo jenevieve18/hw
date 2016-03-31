@@ -73,12 +73,19 @@ namespace HW.Invoicing
                     //}
                     //else if (timebook.IsHeader)
                     //{
-                        textBoxTimebookDate.Text = timebook.Date.Value.ToString("yyyy-MM-dd");
-                        textBoxTimebookComments.Text = timebook.Comments;
+                        //textBoxTimebookDate.Text = timebook.Date.Value.ToString("yyyy-MM-dd");
+                        //textBoxTimebookComments.Text = timebook.Comments;
                     }
                     else
                     {
-                        textBoxTimebookDate.Text = timebook.Date.Value.ToString("yyyy-MM-dd");
+                        if (timebook.Date != null)
+                        {
+                            textBoxTimebookDate.Text = timebook.Date.Value.ToString("yyyy-MM-dd");
+                        }
+                        else
+                        {
+                            textBoxTimebookDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
+                        }
                         checkBoxTimebookDateHidden.Checked = timebook.DateHidden;
                         textBoxTimebookDepartment.Text = timebook.Department;
                         dropDownListTimebookContacts.SelectedValue = timebook.Contact.Id.ToString();

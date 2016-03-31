@@ -689,7 +689,7 @@
                         <tr>
                             <td style="width:16px"></td>
                             <td>
-                                <% if (t.Date != null && !t.DateHidden && !t.IsSubscription) { %>
+                                <% if (t.Date != null && !t.DateHidden && !t.IsSubscription && !t.IsHeader) { %>
                                     <strike><%= t.Date.Value.ToString("yyyy-MM-dd") %></strike>
                                 <% } %><br />
                                 <small class="text-success">
@@ -753,7 +753,7 @@
                                 <% } %>
                             </td>
                             <td>
-                                <% if (t.Date != null && !t.DateHidden && !t.IsSubscription) { %>
+                                <% if (t.Date != null && !t.DateHidden && !t.IsSubscription && !t.IsHeader) { %>
                                     <%= t.Date.Value.ToString("yyyy-MM-dd") %>
                                 <% } %><br />
                                 <small class="text-success timebook-consultant">
