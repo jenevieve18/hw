@@ -70,14 +70,14 @@ namespace HW.Invoicing
                         textBoxSubscriptionTimebookQty.Text = timebook.Quantity.ToString();
                         textBoxSubscriptionTimebookPrice.Text = timebook.Price.ToString();
                         textBoxSubscriptionTimebookComments.Text = timebook.Comments;
-                    }
-                    else if (timebook.IsHeader)
-                    {
+                    //}
+                    //else if (timebook.IsHeader)
+                    //{
                         textBoxTimebookDate.Text = timebook.Date.Value.ToString("yyyy-MM-dd");
                         textBoxTimebookComments.Text = timebook.Comments;
-                    //}
-                    //else
-                    //{
+                    }
+                    else
+                    {
                         textBoxTimebookDate.Text = timebook.Date.Value.ToString("yyyy-MM-dd");
                         checkBoxTimebookDateHidden.Checked = timebook.DateHidden;
                         textBoxTimebookDepartment.Text = timebook.Department;
