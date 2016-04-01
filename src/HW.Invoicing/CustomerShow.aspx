@@ -755,12 +755,15 @@
                             <td>
                                 <% if (t.Date != null && !t.DateHidden && !t.IsSubscription && !t.IsHeader) { %>
                                     <%= t.Date.Value.ToString("yyyy-MM-dd") %>
-                                <% } %><br />
+                                <% } %>
+                                <% if (!t.IsHeader) { %>
+                                <br />
                                 <small class="text-success timebook-consultant">
                                     <span class="timebook-consultant-label"><%= StrHelper.Str(t.Consultant != "", StrHelper.Str2(t.Consultant, 10), "(no consultant)") %></span>
                                     <textarea data-id="<%= t.Id %>" type="text" class="form-control timebook-consultant-text"><%= t.Consultant %></textarea>
                                     <img alt="" class="timebook-consultant-spinner" src="img/spiffygif_30x30.gif" />
                                 </small>
+                                <% } %>
                             </td>
                             <% if (t.IsHeader || t.IsSubscription) { %>
                                 <td class="timebook-comments"><%= t.Comments %></td>
