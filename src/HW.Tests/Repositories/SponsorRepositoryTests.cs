@@ -18,19 +18,19 @@ namespace HW.Tests.Repositories
 			r = new SqlSponsorRepository();
 		}
 		
-		[Test]
-		public void TestSaveExerciseDataInputs()
-		{
-			r.SaveExerciseDataInputs(new[] { "life", "box", "chocolate" }, 84, 135);
-		}
+        //[Test]
+        //public void TestSaveExerciseDataInputs()
+        //{
+        //    r.SaveExerciseDataInputs(new[] { "life", "box", "chocolate" }, 84, 135);
+        //}
 		
-		[Test]
-		public void TestFindSponsorExerciseDataInputs()
-		{
-			foreach (var i in r.FindSponsorExerciseDataInputs(514, 135)) {
-				Console.WriteLine(i.Content);
-			}
-		}
+//		[Test]
+//		public void TestFindSponsorExerciseDataInputs()
+//		{
+//			foreach (var i in r.FindSponsorExerciseDataInputs(514, 135)) {
+//				Console.WriteLine(i.Content);
+//			}
+//		}
 		
 		[Test]
 		public void TestUpdateSponsorLastLoginSent()

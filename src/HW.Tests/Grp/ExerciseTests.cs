@@ -14,7 +14,7 @@ namespace HW.Tests.Grp
 		{
 			v = new HW.Grp.Exercise();
 			
-			v = new HW.Grp.Exercise(new SponsorRepositoryStub(), new ExerciseRepositoryStub());
+//			v = new HW.Grp.Exercise(new SponsorRepositoryStub(), new ExerciseRepositoryStub());
 		}
 		[Test]
 		public void TestExercises()

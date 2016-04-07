@@ -72,7 +72,7 @@ namespace HW.Tests.Helpers
 		{
 			p.Image = g.objBitmap;
 			f.Controls.Add(p);
-//			f.ShowDialog();
+			f.ShowDialog();
 		}
 		
 		[Test]
