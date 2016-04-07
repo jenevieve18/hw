@@ -34,6 +34,7 @@
 <form id="Form1" method="post" runat="server">
 
 <input id="sponsorID" type="hidden" value="<%= SID %>" />
+<input id="sponsorAdminID" type="hidden" value="<%= sponsorAdminID %>" />
 <input id="exerciseVariantLangID" type="hidden" value="<%= EVLID %>" />
 
 <div class="popupie">

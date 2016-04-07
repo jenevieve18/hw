@@ -79,8 +79,10 @@
 					<% string desc = ""; %>
 					<% foreach (var f in functions) { %>
                         <% string url = Request.Url.AbsolutePath; %>
-						<% bool active = url.ToLower().IndexOf(f.URL.ToLower()) >= 0 || (f.URL.ToLower() == "managers.aspx".ToLower() && url.ToLower().IndexOf("managerSetup.aspx".ToLower()) >= 0); %>
-						<% if (active) { %>
+						<%--<% bool active = url.ToLower().IndexOf(f.URL.ToLower()) >= 0 || (f.URL.ToLower() == "managers.aspx".ToLower() && url.ToLower().IndexOf("managerSetup.aspx".ToLower()) >= 0); %>--%>
+						<% url = url.Trim('/'); %>
+                        <% bool active = url.ToLower().Equals(f.URL.ToLower()) || (f.URL.ToLower().Equals("managers.aspx") && url.ToLower().IndexOf("managerSetup.aspx".ToLower()) >= 0); %>
+                        <% if (active) { %>
 							<%= HtmlHelper.Anchor(f.Function, f.URL, "class='active' title='" + f.Expl + "'", true) %>
 							<% desc = f.Expl; %>
 						<% } else { %>

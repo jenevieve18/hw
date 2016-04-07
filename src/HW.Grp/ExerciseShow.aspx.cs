@@ -24,25 +24,15 @@ namespace HW.Grp
 		protected ExerciseVariantLanguage evl;
 		protected int EVLID;
 		protected int SID;
+        protected int sponsorAdminID;
 
-		//ISponsorRepository sr;
-		//IExerciseRepository er;
         SqlSponsorRepository sr = new SqlSponsorRepository();
         SqlExerciseRepository er = new SqlExerciseRepository();
 		
-		/*public ExerciseShow() : this(new SqlSponsorRepository(), new SqlExerciseRepository())
-		{
-		}
-		
-		public ExerciseShow(ISponsorRepository sr, IExerciseRepository er)
-		{
-			this.sr = sr;
-			this.er = er;
-		}*/
-
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			LID = ConvertHelper.ToInt32(Session["LID"], ConvertHelper.ToInt32(Request.QueryString["LID"], 2));
+            sponsorAdminID = ConvertHelper.ToInt32(Session["SponsorAdminID"]);
 
 			int UID = 0, UPID = 0;
 			if (HttpContext.Current.Request.QueryString["AUID"] != null) {
@@ -71,8 +61,7 @@ namespace HW.Grp
 			}
 		}
 		
-		
-		[WebMethod]
+		/*[WebMethod]
 		public static string Save(string[] dataInputs, int sponsorID, int exerciseVariantLangID)
 		{
 			try {
@@ -80,12 +69,23 @@ namespace HW.Grp
 				r.SaveExerciseDataInputs(dataInputs, sponsorID, exerciseVariantLangID);
 				return "Exercise Data Inputs Saved.";
 			} catch (Exception ex) {
-				//LoggingService.Error(ex.Message);
+				throw ex;
+			}
+		}*/
+		
+		[WebMethod]
+		public static string Save2(string[] dataInputs, int sponsorAdminID, int exerciseVariantLangID)
+		{
+			try {
+				var r = new SqlSponsorRepository();
+				r.SaveSponsorAdminExercise(dataInputs, sponsorAdminID, exerciseVariantLangID);
+				return "Exercise data for sponsor administrator is saved.";
+			} catch (Exception ex) {
 				throw ex;
 			}
 		}
 		
-		[WebMethod]
+		/*[WebMethod]
 		[ScriptMethod(UseHttpGet = true)]
 		public static IList<object> Read(int sponsorID, int exerciseVariantLangID)
 		{
@@ -98,10 +98,9 @@ namespace HW.Grp
 				}
 				return data;
 			} catch (Exception ex) {
-				//LoggingService.Error(ex.Message);
 				throw ex;
 			}
-		}
+		}*/
 		
 		public void Show(int ExerciseVariantLangID, int UID, int UPID)
 		{

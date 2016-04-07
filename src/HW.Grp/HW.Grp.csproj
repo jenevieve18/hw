@@ -271,6 +271,7 @@
     <Content Include="Managers.aspx" />
     <Content Include="ManagerSetup.aspx" />
     <Content Include="Messages.aspx" />
+    <Content Include="MyExercise.aspx" />
     <Content Include="Org.aspx" />
     <Content Include="PasswordActivation.aspx" />
     <Content Include="Reminders.aspx" />
@@ -411,6 +412,13 @@
     </Compile>
     <Compile Include="Messages.aspx.designer.cs">
       <DependentUpon>Messages.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MyExercise.aspx.cs">
+      <DependentUpon>MyExercise.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyExercise.aspx.designer.cs">
+      <DependentUpon>MyExercise.aspx</DependentUpon>
     </Compile>
     <Compile Include="Org.aspx.cs">
       <DependentUpon>Org.aspx</DependentUpon>

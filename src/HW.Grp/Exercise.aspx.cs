@@ -16,8 +16,10 @@ namespace HW.Grp
 {
 	public partial class Exercise : System.Web.UI.Page
 	{
-		IExerciseRepository exerciseRepository;
-		ISponsorRepository sponsorRepository;
+//		IExerciseRepository exerciseRepository;
+//		ISponsorRepository sponsorRepository;
+		SqlExerciseRepository exerciseRepository = new SqlExerciseRepository();
+		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		
 //		protected int BX = 0;
 		protected int EAID;
@@ -32,15 +34,15 @@ namespace HW.Grp
 		protected int lid;
 		protected int SORTX;
 		
-		public Exercise() : this(new SqlSponsorRepository(), new SqlExerciseRepository())
-		{
-		}
-		
-		public Exercise(ISponsorRepository sponsorRepository, IExerciseRepository exerciseRepository)
-		{
-			this.sponsorRepository = sponsorRepository;
-			this.exerciseRepository = exerciseRepository;
-		}
+//		public Exercise() : this(new SqlSponsorRepository(), new SqlExerciseRepository())
+//		{
+//		}
+//		
+//		public Exercise(ISponsorRepository sponsorRepository, IExerciseRepository exerciseRepository)
+//		{
+//			this.sponsorRepository = sponsorRepository;
+//			this.exerciseRepository = exerciseRepository;
+//		}
 		
 		public string AdditionalSortQuery {
 			get { return (EAID != 0 ? "&EAID=" + EAID : "") + (ECID != 0 ? "&ECID=" + ECID : ""); }

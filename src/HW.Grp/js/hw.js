@@ -28,7 +28,6 @@ HW.save = function (dataInputs, sponsorID, exerciseVariantLangID) {
 }
 
 HW.save2 = function (dataInputs, sponsorID, exerciseVariantLangID, savingText, saveText) {
-    //$('#save').text('Saving...');
 	$('#save').text(savingText);
     $.ajax({
         type: 'POST',
@@ -37,13 +36,31 @@ HW.save2 = function (dataInputs, sponsorID, exerciseVariantLangID, savingText, s
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (response) {
-            //$('#save').text('Save');
 			$('#save').text(saveText);
             alert(response.d);
         },
         error: function(req, textStatus, errorThrown) {
-            //this is going to happen when you send something different from a 200 OK HTTP
+            // This is going to happen when you send something different from a 200 OK HTTP
             alert('Ooops, something happened: ' + textStatus + ' ' +errorThrown);
+        }
+    });
+}
+
+HW.save3 = function (dataInputs, sponsorAdminID, exerciseVariantLangID) {
+    $('#save').text('Saving...');
+    $.ajax({
+        type: 'POST',
+        url: 'ExerciseShow.aspx/Save2',
+        data: JSON.stringify({ dataInputs: dataInputs, sponsorAdminID: sponsorAdminID, exerciseVariantLangID: exerciseVariantLangID }),
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            $('#save').text('Save');
+            alert(response.d);
+        },
+        error: function (req, textStatus, errorThrown) {
+            // This is going to happen when you send something different from a 200 OK HTTP
+            alert('Ooops, something happened: ' + textStatus + ' ' + errorThrown);
         }
     });
 }
