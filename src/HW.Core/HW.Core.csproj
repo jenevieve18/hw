@@ -154,6 +154,7 @@
     <Compile Include="Repositories\ISponsorRepository.cs" />
     <Compile Include="Repositories\Sql\BaseSqlRepository.cs" />
     <Compile Include="Repositories\Sql\SqlIssueRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlMeasureRepository.cs" />
     <Compile Include="Repositories\Sql\SqlNewsRepository.cs" />
     <Compile Include="Repositories\Sql\SqlPlotTypeRepository.cs" />
     <Compile Include="Repositories\Sql\SqlReportRepository.cs" />
@@ -177,19 +178,6 @@
     <Compile Include="Services\ReportService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Models\Mappings\Report.hbm.xml" />
-    <EmbeddedResource Include="Models\Mappings\Question.hbm.xml" />
-    <EmbeddedResource Include="Models\Mappings\Language.hbm.xml" />
-    <EmbeddedResource Include="Models\Mappings\User.hbm.xml" />
-    <EmbeddedResource Include="Models\Mappings\Index.hbm.xml" />
-    <EmbeddedResource Include="Models\Mappings\Sponsor.hbm.xml" />
-    <EmbeddedResource Include="Models\Mappings\Answer.hbm.xml" />
-    <EmbeddedResource Include="Models\Mappings\Project.hbm.xml" />
-    <EmbeddedResource Include="Models\Mappings\Option.hbm.xml" />
-    <EmbeddedResource Include="Models\Mappings\Survey.hbm.xml" />
-    <EmbeddedResource Include="Models\Mappings\Department.hbm.xml" />
-    <EmbeddedResource Include="Models\Mappings\ManagerFunction.hbm.xml" />
-    <EmbeddedResource Include="Models\Mappings\Exercise.hbm.xml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

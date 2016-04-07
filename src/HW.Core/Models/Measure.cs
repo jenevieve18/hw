@@ -9,6 +9,7 @@ namespace HW.Core.Models
 		public virtual MeasureCategory Category { get; set; }
 		public virtual int SortOrder { get; set; }
 		public virtual string Description { get; set; }
+		public virtual IList<MeasureComponent> Components { get; set; }
 	}
 	
 	public class MeasureCategory : BaseModel
@@ -28,9 +29,9 @@ namespace HW.Core.Models
 	
 	public class MeasureComponent : BaseModel
 	{
-		public virtual Measure Measure { get; set; }
-		public virtual string Component { get; set; }
-		public virtual IList<MeasureComponentLanguage> Languages { get; set; }
+		public Measure Measure { get; set; }
+		public string Component { get; set; }
+		public IList<MeasureComponentLanguage> Languages { get; set; }
 	}
 	
 	public class MeasureComponentLanguage : BaseModel

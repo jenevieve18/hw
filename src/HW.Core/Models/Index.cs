@@ -14,13 +14,26 @@ namespace HW.Core.Models
 	
 	public class BaseIndex : BaseModel, IIndex
 	{
-		public virtual int TargetValue { get; set; }
-		public virtual int YellowLow { get; set; }
-		public virtual int GreenLow { get; set; }
-		public virtual int GreenHigh { get; set; }
-		public virtual int YellowHigh { get; set; }
+		public int TargetValue { get; set; }
+		public int YellowLow { get; set; }
+		public int GreenLow { get; set; }
+		public int GreenHigh { get; set; }
+		public int YellowHigh { get; set; }
 		
-		public virtual int GetColor(float x)
+		public BaseIndex()
+		{
+		}
+		
+		public BaseIndex(int targetValue, int yellowLow, int greenLow, int greenHigh, int yellowHigh)
+		{
+			this.TargetValue = targetValue;
+			this.YellowLow = yellowLow;
+			this.GreenLow = greenLow;
+			this.GreenHigh = greenHigh;
+			this.YellowHigh = yellowHigh;
+		}
+		
+		public int GetColor(float x)
 		{
 			if (YellowLow >= 0 && YellowLow <= 100 && x >= YellowLow) {
 				return 1;
@@ -38,27 +51,27 @@ namespace HW.Core.Models
 	
 	public class Index : BaseIndex
 	{
-		public virtual string Internal { get; set; }
-		public virtual int RequiredAnswerCount { get; set; }
-		public virtual bool AllPartsRequired { get; set; }
-		public virtual int MaxValue { get; set; }
-		public virtual List<IndexPart> Parts { get; set; }
-		public virtual IList<IndexLanguage> Languages { get; set; }
+		public string Internal { get; set; }
+		public int RequiredAnswerCount { get; set; }
+		public bool AllPartsRequired { get; set; }
+		public int MaxValue { get; set; }
+		public List<IndexPart> Parts { get; set; }
+		public IList<IndexLanguage> Languages { get; set; }
 		
-		public virtual float AverageAX { get; set; }
-		public virtual int CountDX { get; set; }
+		public float AverageAX { get; set; }
+		public int CountDX { get; set; }
 	}
 	
 	public class IndexPart : BaseModel
 	{
-		public virtual int Multiple { get; set; }
-		public virtual Index OtherIndex { get; set; }
+		public int Multiple { get; set; }
+		public Index OtherIndex { get; set; }
 	}
 	
 	public class IndexLanguage : BaseModel
 	{
-		public virtual Index Index { get; set; }
-		public virtual Language Language { get; set; }
-		public virtual string IndexName { get; set;}
+		public Index Index { get; set; }
+		public Language Language { get; set; }
+		public string IndexName { get; set;}
 	}
 }

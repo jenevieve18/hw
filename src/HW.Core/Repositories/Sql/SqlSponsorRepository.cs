@@ -114,7 +114,40 @@ UPDATE SponsorExtendedSurvey SET FinishedLastSent = GETDATE() WHERE SponsorExten
 			Db.exec(query, "healthWatchSqlConnection");
 		}
 		
-		public void SaveExerciseDataInputs(string[] dataInputs, int sponsorID, int exerciseVariantLangID)
+		public void SaveSponsorAdminExercise(string[] dataInputs, int sponsorAdminID, int exerciseVariantLangID)
+		{
+			string query = string.Format(
+				@"
+INSERT INTO SponsorAdminExercise(SponsorAdminID, ExerciseVariantLangID, Date)
+VALUES(@SponsorAdminID, @ExerciseVariantLangID, GETDATE());
+SELECT IDENT_CURRENT('SponsorAdminExercise');"
+			);
+			int sponsorAdminExerciseID = ConvertHelper.ToInt32(
+				ExecuteScalar(
+					query, 
+					"healthWatchSqlConnection", 
+					new SqlParameter("@SponsorAdminID", sponsorAdminID), 
+					new SqlParameter("@ExerciseVariantLangID", exerciseVariantLangID)
+				)
+			);
+			
+			query = string.Format(
+				@"
+INSERT SponsorAdminExerciseDataInput(SponsorAdminExerciseID, [Content], [Order])
+VALUES(@SponsorAdminExerciseID, @Content, @Order)");
+			int i = 0;
+			foreach (var data in dataInputs) {
+				ExecuteNonQuery(
+					query,
+					"healthWatchSqlConnection",
+					new SqlParameter("@SponsorAdminExerciseID", sponsorAdminExerciseID),
+					new SqlParameter("@Content", data),
+					new SqlParameter("@Order", i++)
+				);
+			}
+		}
+		
+		/*public void SaveExerciseDataInputs(string[] dataInputs, int sponsorID, int exerciseVariantLangID)
 		{
 			string query = string.Format(
 				@"
@@ -161,9 +194,125 @@ VALUES(@Content, @SponsorID, @Order, @ExerciseVariantLangID)");
 					new SqlParameter("@ExerciseVariantLangID", exerciseVariantLangID)
 				);
 			}
+		}*/
+		
+		public IList<SponsorAdminExercise> FindSponsorAdminExercise(int areaID, int categoryID, int langID, int sort, int sponsorAdminID)
+		{
+			string query = string.Format(
+				@"
+SELECT el.New,
+	NULL,
+	evl.ExerciseVariantLangID,
+	eal.ExerciseArea,
+	eal.ExerciseAreaID,
+	e.ExerciseImg,
+	e.ExerciseID,
+	ea.ExerciseAreaImg,
+	el.Exercise,
+	el.ExerciseTime,
+	el.ExerciseTeaser,
+	evl.ExerciseFile,
+	evl.ExerciseFileSize,
+	evl.ExerciseContent,
+	evl.ExerciseWindowX,
+	evl.ExerciseWindowY,
+	et.ExerciseTypeID,
+	etl.ExerciseType,
+	etl.ExerciseSubtype,
+	ecl.ExerciseCategory
+FROM [ExerciseArea] ea
+INNER JOIN [ExerciseAreaLang] eal ON ea.ExerciseAreaID = eal.ExerciseAreaID
+INNER JOIN [Exercise] e ON ea.ExerciseAreaID = e.ExerciseAreaID
+INNER JOIN [ExerciseLang] el ON e.ExerciseID = el.ExerciseID
+INNER JOIN [ExerciseVariant] ev ON e.ExerciseID = ev.ExerciseID
+INNER JOIN [ExerciseVariantLang] evl ON ev.ExerciseVariantID = evl.ExerciseVariantID
+INNER JOIN SponsorAdminExercise sae ON evl.ExerciseVariantID = sae.ExerciseVariantID
+INNER JOIN [ExerciseType] et ON ev.ExerciseTypeID = et.ExerciseTypeID
+INNER JOIN [ExerciseTypeLang] etl ON et.ExerciseTypeID = etl.ExerciseTypeID
+LEFT OUTER JOIN [ExerciseCategory] ec ON e.ExerciseCategoryID = ec.ExerciseCategoryID
+LEFT OUTER JOIN [ExerciseCategoryLang] ecl ON ec.ExerciseCategoryID = ecl.ExerciseCategoryID AND ecl.Lang = eal.Lang
+WHERE eal.Lang = el.Lang
+AND e.RequiredUserLevel = 10
+AND el.Lang = evl.Lang
+AND evl.Lang = etl.Lang
+AND etl.Lang = {0}
+AND
+{1}
+{2}
+ORDER BY
+{3}
+HASHBYTES('MD2',CAST(RAND({4})*e.ExerciseID AS VARCHAR(16))) ASC,
+et.ExerciseTypeSortOrder ASC",
+				langID,
+				"", //(categoryID != 0 ? "AND e.ExerciseCategoryID = " + categoryID + " " : ""),
+				"", //(areaID != 0 ? "AND e.ExerciseAreaID = " + areaID + " " : ""),
+				"", (sort == 1 ? "(SELECT COUNT(*) FROM ExerciseStats esX INNER JOIN ExerciseVariantLang evlX ON esX.ExerciseVariantLangID = evlX.ExerciseVariantLangID INNER JOIN ExerciseVariant evX ON evlX.ExerciseVariantID = evX.ExerciseVariantID WHERE evX.ExerciseID = e.ExerciseID) DESC, " : (sort == 2 ? "el.Exercise ASC, " : "")),
+				DateTime.Now.Second * DateTime.Now.Minute
+			);
+			//var exercises = new List<Exercise>();
+			var exercises = new List<SponsorAdminExercise>();
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				while (rs.Read()) {
+					var e = new SponsorAdminExercise();
+//					var e = new Exercise();
+//					e.Id = GetInt32(rs, 6);
+//					e.Image = GetString(rs, 5);
+//					e.CurrentLanguage = new ExerciseLanguage {
+//						IsNew = GetBoolean(rs, 0),
+//						ExerciseName = GetString(rs, 8),
+//						Time = GetString(rs, 9),
+//						Teaser = GetString(rs, 10)
+//					};
+//					e.Area = new ExerciseArea(GetInt32(rs, 4), new ExerciseAreaLanguage(GetString(rs, 3, "")));
+//					e.CurrentVariant = new ExerciseVariantLanguage {
+//						Id = GetInt32(rs, 2),
+//						File = GetString(rs, 11),
+//						Size = GetInt32(rs, 12),
+//						Content = GetString(rs, 13),
+//						ExerciseWindowX = GetInt32(rs, 14, 650),
+//						ExerciseWindowY = GetInt32(rs, 15, 580)
+//					};
+//					e.CurrentType = new ExerciseTypeLanguage {
+//						TypeName = GetString(rs, 17),
+//						SubTypeName = GetString(rs, 18)
+//					};
+//					e.Category = new ExerciseCategory(new ExerciseCategoryLanguage(GetString(rs, 19, "")));
+//					exercises.Add(e);
+				}
+			}
+			return exercises;
 		}
 		
-		public IList<SponsorExerciseDataInput> FindSponsorExerciseDataInputs(int sponsorID, int exerciseVariantLangID)
+//		public IList<SponsorAdminExercise> FindSponsorExerciseDataInputs(int sponsorID, int exerciseVariantLangID)
+//		{
+//			string query = string.Format(
+//				@"
+//SELECT SponsorExerciseDataInputID,
+//	[Content],
+//	SponsorID,
+//	[Order]
+//FROM SponsorExerciseDataInput
+//WHERE SponsorID = {0}
+//AND ExerciseVariantLangID = {1}",
+//				sponsorID,
+//				exerciseVariantLangID
+//			);
+//			var inputs = new List<SponsorExerciseDataInput>();
+//			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+//				while (rs.Read()) {
+//					var i = new SponsorExerciseDataInput {
+//						Id = GetInt32(rs, 0),
+//						Content = GetString(rs, 1),
+//						Sponsor = new Sponsor { Id = GetInt32(rs, 2) },
+//						Order = GetInt32(rs, 3)
+//					};
+//					inputs.Add(i);
+//				}
+//			}
+//			return inputs;
+//		}
+		
+		/*public IList<SponsorExerciseDataInput> FindSponsorExerciseDataInputs(int sponsorID, int exerciseVariantLangID)
 		{
 			string query = string.Format(
 				@"
@@ -190,7 +339,7 @@ AND ExerciseVariantLangID = {1}",
 				}
 			}
 			return inputs;
-		}
+		}*/
 
 		public void InsertSponsorAdminExtendedSurvey(SponsorAdminExtendedSurvey s)
 		{

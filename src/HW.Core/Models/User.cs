@@ -1,97 +1,128 @@
 ﻿using System;
+using System.Collections.Generic;
+using HW.Core.Helpers;
 
 namespace HW.Core.Models
 {
 	// FIXME: This has conflict with eForm's User class. Verify!
 	public class User : BaseModel
 	{
-		public virtual string Name { get; set; }
-		public virtual string Password { get; set; }
-		public virtual string Email { get; set; }
-		public virtual Department Department { get; set; }
-		public virtual UserProfile Profile { get; set; }
-		public virtual Sponsor Sponsor { get; set; }
-		public virtual string AltEmail { get; set; }
-		public virtual int ReminderLink { get; set; }
-		public virtual string UserKey { get; set; }
+		public string Name { get; set; }
+		public string Password { get; set; }
+		public string Email { get; set; }
+		public Department Department { get; set; }
+		public UserProfile Profile { get; set; }
+		public Sponsor Sponsor { get; set; }
+		public string AltEmail { get; set; }
+		public int ReminderLink { get; set; }
+		public string UserKey { get; set; }
 	}
 	
 	public class UserMeasure : BaseModel
 	{
-		public virtual User User { get; set; }
-		public virtual DateTime Created { get; set; }
-		public virtual DateTime Deleted { get; set; }
-		public virtual UserProfile UserProfile { get; set; }
+		public User User { get; set; }
+		public DateTime? Date { get; set; }
+		public DateTime? Created { get; set; }
+		public DateTime? Deleted { get; set; }
+		public UserProfile UserProfile { get; set; }
+		public IList<UserMeasureComponent> Values { get; set; }
+		public HWList GetIntValues()
+		{
+			List<double> n = new List<double>();
+			foreach (var v in Values) {
+				n.Add((double)v.ValueInt);
+			}
+			return new HWList(n);
+		}
+		public HWList GetDecimalValues()
+		{
+			List<double> n = new List<double>();
+			foreach (var v in Values) {
+				n.Add((double)v.ValueDecimal);
+			}
+			return new HWList(n);
+		}
+		public UserMeasure()
+		{
+			Values = new List<UserMeasureComponent>();
+		}
 	}
 	
-	public class UserMeasureComponent : BaseModel
+	public class UserMeasureComponent : BaseModel, IValue
 	{
-		public virtual UserMeasure Measure { get; set; }
-		public virtual MeasureComponent Component { get; set; }
-		public virtual int IntegerValue { get; set; }
-		public virtual decimal DecimalValue { get; set; }
-		public virtual string StringValue { get; set; }
+		public UserMeasure UserMeasure { get; set; }
+		public MeasureComponent MeasureComponent { get; set; }
+		public int ValueInt { get; set; }
+		public decimal ValueDecimal { get; set; }
+		public string ValueText { get; set; }
+	}
+	
+	public class UserSponsorProject : BaseModel
+	{
+		public User User { get; set; }
+		public SponsorProject SponsorProject { get; set; }
+		public DateTime ContentDate { get; set; }
 	}
 	
 	public class UserProfile : BaseModel
 	{
-		public virtual User User { get; set; }
-		public virtual Sponsor Sponsor { get; set; }
-		public virtual Department Department { get; set; }
-		public virtual ProfileComparison Comparison { get; set; }
-		public virtual DateTime Created { get; set; }
-		public virtual ProfileComparison ProfileComparison { get; set; }
+		public User User { get; set; }
+		public Sponsor Sponsor { get; set; }
+		public Department Department { get; set; }
+		public ProfileComparison Comparison { get; set; }
+		public DateTime Created { get; set; }
+		public ProfileComparison ProfileComparison { get; set; }
 	}
 	
 	public class UserProfileBackgroundQuestion : BaseModel
 	{
-		public virtual UserProfile Profile { get; set; }
-		public virtual BackgroundQuestion BackgroundQuestion { get; set; }
-		public virtual int ValueInt { get; set; }
-		public virtual string ValueText { get; set; }
-		public virtual DateTime? ValueDate { get; set; }
+		public UserProfile Profile { get; set; }
+		public BackgroundQuestion BackgroundQuestion { get; set; }
+		public int ValueInt { get; set; }
+		public string ValueText { get; set; }
+		public DateTime? ValueDate { get; set; }
 		
-		public virtual double Average { get; set; }
-		public virtual int Count { get; set; }
+		public double Average { get; set; }
+		public int Count { get; set; }
 	}
 	
 	public class UserProjectRoundUser : BaseModel
 	{
-		public virtual User User { get; set; }
-		public virtual ProjectRoundUser ProjectRoundUser { get; set; }
+		public User User { get; set; }
+		public ProjectRoundUser ProjectRoundUser { get; set; }
 	}
 	
 	public class UserProjectRoundUserAnswer : BaseModel
 	{
-		public virtual DateTime Date { get; set; }
-		public virtual UserProfile Profile { get; set; }
-		public virtual Answer Answer { get; set; }
-		public virtual UserProjectRoundUser ProjectRoundUser { get; set; }
+		public DateTime Date { get; set; }
+		public UserProfile Profile { get; set; }
+		public Answer Answer { get; set; }
+		public UserProjectRoundUser ProjectRoundUser { get; set; }
 	}
 	
 	public class UserToken : BaseModel
 	{
-		public virtual string Token { get; set; }
-		public virtual User Owner { get; set; }
-		public virtual DateTime Expiry { get; set; }
+		public string Token { get; set; }
+		public User Owner { get; set; }
+		public DateTime Expiry { get; set; }
 	}
 	
 	public class UserCategory : BaseModel
 	{
-		public virtual string Internal { get; set; }
+		public string Internal { get; set; }
 	}
 	
 	public class UserNote : BaseModel
 	{
-		public virtual User User { get; set; }
-		public virtual string Note { get; set; }
-		public virtual DateTime Date { get; set; }
-		public virtual SponsorAdmin SponsorAdmin { get; set; }
+		public User User { get; set; }
+		public string Note { get; set; }
+		public DateTime Date { get; set; }
+		public SponsorAdmin SponsorAdmin { get; set; }
 	}
 	
 	public class UserSponsorExtendedSurvey : BaseModel
 	{
-		public virtual User User { get; set; }
-		public virtual Answer Answer { get; set; }
+		public User User { get; set; }
+		public Answer Answer { get; set; }
 	}
 }

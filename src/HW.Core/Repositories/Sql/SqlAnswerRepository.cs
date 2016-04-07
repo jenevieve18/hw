@@ -285,7 +285,7 @@ AND a.EndDT < '{2}'
 //			return null;
 //		}
 //		
-		public Answer ReadByGroup(string groupBy, int yearFrom, int yearTo, string sortString, int fm, int tm)
+		public Answer ReadByGroup(string groupBy, int yearFrom, int yearTo, string sortString, int monthFrom, int monthTo)
 		{
 			string query = string.Format(
                 @"
@@ -305,8 +305,8 @@ AND LEFT(pru.SortString, {3}) = '{4}'",
 				yearTo, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
 				sortString.Length,
 				sortString,
-                fm,
-                tm
+                monthFrom,
+                monthTo
 			);
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				if (rs.Read()) {
@@ -945,7 +945,7 @@ ORDER BY 1 dbo.cf_yearMonthDay(a.EndDT)",
 //			return answers;
 //		}
 		
-		public IList<Answer> FindByQuestionAndOptionJoinedAndGrouped2(string join, string groupBy, int questionID, int optionID, int yearFrom, int yearTo, int fm, int tm)
+		public IList<Answer> FindByQuestionAndOptionJoinedAndGrouped2(string join, string groupBy, int questionID, int optionID, int yearFrom, int yearTo, int monthFrom, int monthTo)
 		{
 			string query = string.Format(
 				@"
@@ -965,8 +965,8 @@ GROUP BY a.ProjectRoundUserID, {1}(a.EndDT)",
 				optionID,
 				yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
 				yearTo, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : ""
-				fm,
-				tm
+				monthFrom,
+				monthTo
 			);
 			var answers = new List<Answer>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlconnection")) {

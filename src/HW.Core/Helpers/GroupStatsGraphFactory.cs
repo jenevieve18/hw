@@ -984,6 +984,19 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 			}
 		}
 		
+		public static List<string> GetBottomStrings(int minDT, int maxDT, int groupBy)
+		{
+			int j = 0;
+			var strings = new List<string>();
+			for (int i = minDT; i <= maxDT; i++) {
+				j++;
+				string v = GroupStatsGraphFactory.GetBottomString(groupBy, i, j, "");
+//				DrawBottomString(v, j);
+				strings.Add(v);
+			}
+			return strings;
+		}
+		
 		public static string GetBottomString(int groupBy, int i, int dx, string str)
 		{
 			switch (groupBy) {
