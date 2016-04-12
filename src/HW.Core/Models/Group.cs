@@ -208,7 +208,7 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 //								txt += (txt != "" ? " / " : "") + rs2.GetString(1 + i * 3);
 //								sql += string.Format(
 //									@"
-//INNER JOIN healthWatch..UserProfileBQ HWp{0} ON HWup.UserProfileID = HWp{0}.UserProfileID AND HWp{0}.BQID = {0} AND HWp{0}.ValueInt = {1}",
+								//INNER JOIN healthWatch..UserProfileBQ HWp{0} ON HWup.UserProfileID = HWp{0}.UserProfileID AND HWp{0}.BQID = {0} AND HWp{0}.ValueInt = {1}",
 //									gids[i],
 //									rs2.GetInt32(0 + i * 3)
 //								);
@@ -234,5 +234,241 @@ INNER JOIN healthWatch..UserProfileBQ HWp{0} ON HWup.UserProfileID = HWp{0}.User
 			}
 			return count;
 		}
+		
+		public static List<DepartmentAndQuery> GetCount2(int grpng, int spons, int sid, int pruid, string gid, ref string extraDesc, SqlDepartmentRepository departmentRepository, SqlQuestionRepository questionRepository, int sponsorMinUserCountToDisclose)
+		{
+//			int count = 0;
+			var y = new List<DepartmentAndQuery>();
+			switch (grpng) {
+				case Group.Grouping.None:
+					{
+						string tmpDesc = "";
+						int sslen = 0;
+						string tmpSS = "";
+						int i = 0;
+						IList<Department> departments = spons != -1 ? departmentRepository.FindBySponsorWithSponsorAdmin(sid, spons, sponsorMinUserCountToDisclose) : departmentRepository.FindBySponsorOrderedBySortString(sid, sponsorMinUserCountToDisclose);
+						int minUserCountToDisclose = 0;
+						foreach (Department d in departments) {
+							if (i == 0) {
+//								mins.Add("1", d.MinUserCountToDisclose);
+								minUserCountToDisclose = d.MinUserCountToDisclose;
+							}
+							if (sslen == 0) {
+								sslen = d.SortString.Length;
+							}
+							if (sslen == d.SortString.Length) {
+								tmpDesc += (tmpDesc != "" ? ", " : "") + d.Name + "+";
+								tmpSS += (tmpSS != "" ? "," : "") + "'" + d.SortString + "'";
+							} else {
+								break;
+							}
+							i++;
+						}
+
+						string query = string.Format(
+							@"
+INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
+INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID
+INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID AND HWu.ProjectRoundUnitID = {0}
+INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString, {1}) IN ({2}) ",
+							pruid,
+							sslen,
+							tmpSS
+						);
+						y.Add(new DepartmentAndQuery("1", "1", minUserCountToDisclose, query));
+//						item.Add("1");
+//						desc.Add("1", tmpDesc);
+//						join.Add(
+//							"1",
+//							string.Format(
+//								@"
+						//INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
+						//INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID
+						//INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID AND HWu.ProjectRoundUnitID = {0}
+						//INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString, {1}) IN ({2}) ",
+//								pruid,
+//								sslen,
+//								tmpSS
+//							)
+//						);
+//						count++;
+						break;
+					}
+				case Group.Grouping.UsersOnUnit:
+					{
+						IList<Department> departments = spons != -1 ? departmentRepository.FindBySponsorWithSponsorAdminIn(sid, spons, gid, sponsorMinUserCountToDisclose) : departmentRepository.FindBySponsorOrderedBySortStringIn(sid, gid, sponsorMinUserCountToDisclose);
+						foreach (Department d in departments) {
+							string query = string.Format(
+								@"
+							INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
+							INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID AND HWu.ProjectRoundUnitID = {0}
+							INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID AND HWup.DepartmentID = {1}",
+								pruid,
+								d.Id
+							);
+							y.Add(new DepartmentAndQuery(d.Id.ToString(), d.Name, d.MinUserCountToDisclose, query));
+//							item.Add(d.Id.ToString());
+//							desc.Add(d.Id.ToString(), d.Name);
+//							mins.Add(d.Id.ToString(), d.MinUserCountToDisclose);
+//							join.Add(
+//								d.Id.ToString(),
+//								string.Format(
+//									@"
+							//INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
+							//INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID AND HWu.ProjectRoundUnitID = {0}
+							//INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID AND HWup.DepartmentID = {1}",
+//									pruid,
+//									d.Id
+//								)
+//							);
+//							count++;
+						}
+						break;
+					}
+				case Group.Grouping.UsersOnUnitAndSubUnits:
+					{
+						IList<Department> departments = spons != -1 ? departmentRepository.FindBySponsorWithSponsorAdminIn(sid, spons, gid, sponsorMinUserCountToDisclose) : departmentRepository.FindBySponsorOrderedBySortStringIn(sid, gid, sponsorMinUserCountToDisclose);
+						foreach (Department d in departments) {
+							string query = string.Format(
+								@"
+INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
+INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID AND HWu.ProjectRoundUnitID = {0}
+INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID
+INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString, {1}) = '{2}'",
+								pruid,
+								d.SortString.Length,
+								d.SortString
+							);
+							y.Add(new DepartmentAndQuery(d.Id.ToString(), d.Name, d.MinUserCountToDisclose, query));
+//							item.Add(d.Id.ToString());
+//							desc.Add(d.Id.ToString(), d.Name);
+//							mins.Add(d.Id.ToString(), d.MinUserCountToDisclose);
+//							join.Add(
+//								d.Id.ToString(),
+//								string.Format(
+//									@"
+							//INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
+							//INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID AND HWu.ProjectRoundUnitID = {0}
+							//INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID
+							//INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString, {1}) = '{2}'",
+//									pruid,
+//									d.SortString.Length,
+//									d.SortString
+//								)
+//							);
+//							count++;
+						}
+						break;
+					}
+				case Group.Grouping.BackgroundVariable:
+					{
+						string tmpSelect = "";
+						string tmpJoin = "";
+						string tmpOrder = "";
+
+						string tmpDesc = "";
+						int sslen = 0;
+						string tmpSS = "";
+						int i = 0;
+
+						IList<Department> departments = spons != -1 ? departmentRepository.FindBySponsorWithSponsorAdmin(sid, spons, sponsorMinUserCountToDisclose) : departmentRepository.FindBySponsorOrderedBySortString(sid, sponsorMinUserCountToDisclose);
+						foreach (Department d in departments) {
+							if (i == 0) {
+								sponsorMinUserCountToDisclose = d.MinUserCountToDisclose;
+							}
+							if (sslen == 0) {
+								sslen = d.SortString.Length;
+							}
+							if (sslen == d.SortString.Length) {
+								tmpDesc += string.Format("{0}{1}+", (tmpDesc != "" ? ", " : ""), d.Name);
+								tmpSS += string.Format("{0}'{1}'", (tmpSS != "" ? "," : ""), d.SortString);
+							} else {
+								break;
+							}
+							i++;
+						}
+						string bqid = gid.Replace("'", "");
+						gid = "";
+						var questions = questionRepository.FindLikeBackgroundQuestions(bqid);
+						foreach (var bq in questions) {
+							gid += string.Format("{0}{1}", (gid != "" ? "," : ""), bq.Id);
+
+							extraDesc += string.Format("{0}{1}", (extraDesc != "" ? " / " : ""), bq.Internal);
+
+							tmpSelect += string.Format("{0}ba{1}.BAID,ba{1}.Internal,ba{1}.BQID", (tmpSelect != "" ? " ," : ""), bq.Id); // TODO: Add BQID here!
+							tmpJoin += (tmpJoin != "" ? string.Format("INNER JOIN BA ba{0} ON ba{0}.BQID = {0} ", bq.Id) : string.Format(" FROM BA ba{0} ", bq.Id));
+							tmpOrder += (tmpOrder != "" ? string.Format(", ba{0}.SortOrder", bq.Id) : string.Format("WHERE ba{0}.BQID = {0} ORDER BY ba{0}.SortOrder", bq.Id));
+						}
+						string[] gids = gid.Split(',');
+
+						string query = "SELECT " +
+							tmpSelect +
+							tmpJoin +
+							tmpOrder;
+						questions = questionRepository.FindBackgroundQuestionsWithAnswers(query, gids.Length);
+						foreach (var bq in questions) {
+							string key = "";
+							string txt = "";
+							string sql = string.Format(
+								@"
+INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
+INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID AND HWu.ProjectRoundUnitID = {0}
+INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID
+INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString, {1}) IN ({2})",
+								pruid,
+								sslen,
+								tmpSS
+							);
+
+							foreach (var a in bq.Answers) {
+								key += string.Format("{0}{1}", (key != "" ? "X" : ""), a.Id);
+								txt += string.Format("{0}{1}", (txt != "" ? " / " : ""), a.Internal);
+								sql += string.Format(
+									@"
+INNER JOIN healthWatch..UserProfileBQ HWp{0} ON HWup.UserProfileID = HWp{0}.UserProfileID AND HWp{0}.BQID = {0} AND HWp{0}.ValueInt = {1}",
+									bq.Id,
+									a.Id
+								);
+							}
+							y.Add(new DepartmentAndQuery(key, txt, sponsorMinUserCountToDisclose, sql));
+//							count++;
+//
+//							item.Add(key);
+//							desc.Add(key, txt);
+//							mins.Add(key, sponsorMinUserCountToDisclose);
+//							join.Add(key, sql);
+						}
+						break;
+					}
+			}
+//			return count;
+			return y;
+		}
+	}
+	
+	public class DepartmentAndQuery : Department
+	{
+		public string Key { get; set; }
+		public string Query { get; set; }
+		
+		public DepartmentAndQuery()
+		{
+		}
+		
+		public DepartmentAndQuery(string key, string name, int minUserCountToDisclose, string query)
+		{
+			this.Key = key;
+			this.Name = name;
+			this.MinUserCountToDisclose = minUserCountToDisclose;
+			this.Query = query;
+		}
+//
+//		public DepartmentAndQuery(Department d, string query)
+//		{
+//			this.Id = d.Id;
+//			this.Name = d.Name;
+//			this.MinUserCountToDisclose = d.MinUserCountToDisclose;
+//			this.Query = query;
+//		}
 	}
 }

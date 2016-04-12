@@ -276,6 +276,7 @@
     <Content Include="PasswordActivation.aspx" />
     <Content Include="Reminders.aspx" />
     <Content Include="ReportImage.aspx" />
+    <Content Include="ReportImage2.aspx" />
     <Content Include="Settings.aspx" />
     <Content Include="sql.aspx" />
     <Content Include="Stats.aspx" />
@@ -449,6 +450,13 @@
     </Compile>
     <Compile Include="ReportImage.aspx.designer.cs">
       <DependentUpon>ReportImage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportImage2.aspx.cs">
+      <DependentUpon>ReportImage2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportImage2.aspx.designer.cs">
+      <DependentUpon>ReportImage2.aspx</DependentUpon>
     </Compile>
     <Compile Include="Settings.aspx.cs">
       <DependentUpon>Settings.aspx</DependentUpon>

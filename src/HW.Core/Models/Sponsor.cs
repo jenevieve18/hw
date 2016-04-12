@@ -298,18 +298,23 @@ namespace HW.Core.Models
 		public Sponsor Sponsor { get; set; }
 	}
 	
-	public class SponsorProject : BaseModel
-	{
-		public Sponsor Sponsor { get; set; }
-		public DateTime? StartDate { get; set; }
-		public DateTime? EndDate { get; set; }
-		public string ProjectName { get; set; }
-	}
-	
 	public class SponsorProjectMeasure : BaseModel
 	{
 		public SponsorProject SponsorProject { get; set; }
 		public Measure Measure { get; set; }
+	}
+	
+	public class SponsorProject : BaseModel, IReportPart
+	{
+		public Sponsor Sponsor { get; set; }
+		public DateTime? StartDate { get; set; }
+		public DateTime? EndDate { get; set; }
+//		public string ProjectName { get; set; }
+		public string Subject { get; set; }
+		public string Header { get; set; }
+		public IList<SponsorProjectMeasure> Measures { get; set; }
+		
+		public ReportPart ReportPart { get; set; }
 	}
 	
 	public class SponsorProjectRoundUnit : BaseModel

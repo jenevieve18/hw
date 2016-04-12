@@ -11,66 +11,123 @@ namespace HW.Core.Repositories.Sql
 		{
 		}
 		
-		public IList<UserMeasure> FindUserMeasures()
+		public SponsorProject ReadSponsorProject(int sponsorProjectID)
 		{
 			string query = string.Format(
 				@"
-SELECT um.UserID,
-u.Email,
-umc.MeasureComponentID,
-SUM(umc.ValDec)
-FROM UserMeasure um
-INNER JOIN UserMeasureComponent umc ON umc.UserMeasureID = um.UserMeasureID
-INNER JOIN [User] u ON u.UserID = um.UserID
-WHERE umc.MeasureComponentID = 55
-GROUP BY um.UserID, u.Email, umc.MeasureComponentID"
+SELECT SponsorProjectID,
+	SponsorID,
+	StartDT,
+	EndDT,
+	ProjectName
+FROM SponsorProject
+WHERE SponsorProjectID = @SponsorProjectID"
 			);
-			var measures = new List<UserMeasure>();
-			using (SqlDataReader rs = ExecuteReader(query, "healthWatchSqlConnection")) {
-				while (rs.Read()) {
-					if (rs.Read()) {
-						bool done = false;
-						while (!done) {
-							var m = new UserMeasure { };
-							do {
-								m.User = new User { Id = GetInt32(rs, 0) };
-								m.Values.Add(new UserMeasureComponent { ValueDecimal = GetDecimal(rs, 3) });
-								done = !rs.Read();
-							} while (!done && GetInt32(rs, 0) == m.User.Id);
-							measures.Add(m);
-						}
-					}
-				}
-			}
-			return measures;
-		}
-		
-		public IList<SponsorProject> FindSponsorProjects()
-		{
-			string query = string.Format(
-				@"
-SELECT sp.SponsorProjectID,
-	sp.SponsorID,
-	sp.StartDT,
-	sp.EndDT,
-	sp.ProjectName
-FROM SponsorProject sp"
-			);
-			var projects = new List<SponsorProject>();
-			using (SqlDataReader rs = ExecuteReader(query, "healthWatchSqlConnection")) {
-				while (rs.Read()) {
-					var s = new Sponsor { Id = GetInt32(rs, 1) };
-					var p = new SponsorProject {
+			SponsorProject p = null;
+			using (SqlDataReader rs = ExecuteReader(query, "SqlConnection", new SqlParameter("@SponsorProjectID", sponsorProjectID))) {
+				if (rs.Read()) {
+					p = new SponsorProject {
 						Id = GetInt32(rs, 0),
-						Sponsor = s,
+						Sponsor = new Sponsor { Id = GetInt32(rs, 1) },
 						StartDate = GetDateTime(rs, 2),
 						EndDate = GetDateTime(rs, 3),
-						ProjectName = GetString(rs, 4)
+//						ProjectName = GetString(rs, 4)
+						Subject = GetString(rs, 4)
+					};
+				}
+			}
+			return p;
+		}
+		
+		public IList<SponsorProject> FindSponsorProjects(int sponsorID)
+		{
+			string query = string.Format(
+				@"
+SELECT SponsorProjectID,
+	SponsorID,
+	StartDT,
+	EndDT,
+	ProjectName
+FROM SponsorProject
+WHERE SponsorID = @SponsorID"
+			);
+			var projects = new List<SponsorProject>();
+			using (SqlDataReader rs = ExecuteReader(query, "SqlConnection", new SqlParameter("@SponsorID", sponsorID))) {
+				while (rs.Read()) {
+					var p = new SponsorProject {
+						Id = GetInt32(rs, 0),
+						Sponsor = new Sponsor { Id = GetInt32(rs, 1) },
+						StartDate = GetDateTime(rs, 2),
+						EndDate = GetDateTime(rs, 3),
+//						ProjectName = GetString(rs, 4)
+						Subject = GetString(rs, 4)
 					};
 					projects.Add(p);
 				}
 			}
 			return projects;
+		}
+		
+		public IList<SponsorProjectMeasure> FindMeasures(int sponsorProjectID)
+		{
+			string query = string.Format(
+				@"
+SELECT SponsorProjectMeasureID,
+	SponsorProjectID,
+	MeasureID
+FROM SponsorProjectMeasure"
+			);
+			var measures = new List<SponsorProjectMeasure>();
+			using (SqlDataReader rs = ExecuteReader(query)) {
+				while (rs.Read()) {
+					var m = new SponsorProjectMeasure {
+						Id = GetInt32(rs, 0),
+						SponsorProject = new SponsorProject { Id = GetInt32(rs, 1) },
+						Measure = new Measure { Id = GetInt32(rs, 2) }
+					};
+					measures.Add(m);
+				}
+			}
+			return measures;
+		}
+		
+		public IList<Answer> FindByQuestionAndOptionJoinedAndGrouped2(string join, string groupBy, int yearFrom, int yearTo, int monthFrom, int monthTo)
+		{
+			string query = string.Format(
+				@"
+SELECT {1}(a.EndDT) AS DT, AVG(av.ValueInt) AS V
+FROM Answer a
+{0}
+INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = {2} AND av.OptionID = {3}
+WHERE a.EndDT IS NOT NULL
+AND (YEAR(a.EndDT) = {4} AND MONTH(a.EndDT) >= {6} OR YEAR(a.EndDT) > {4})
+AND (YEAR(a.EndDT) = {5} AND MONTH(a.EndDT) <= {7} OR YEAR(a.EndDT) < {5})
+GROUP BY a.ProjectRoundUserID, {1}(a.EndDT)",
+				join,
+				groupBy,
+				238,
+				55,
+				yearFrom,
+				yearTo,
+				monthFrom,
+				monthTo
+			);
+			var measures = new List<Answer>();
+			using (SqlDataReader rs = ExecuteReader(query, "eFormSqlconnection")) {
+				if (rs.Read()) {
+					bool done = false;
+					while (!done) {
+						var m = new Answer { };
+						do {
+							m.DT = rs.GetInt32(0);
+							m.Values.Add(new AnswerValue { ValueInt = rs.GetInt32(1) });
+							done = !rs.Read();
+						} while (!done && rs.GetInt32(0) == m.DT);
+						measures.Add(m);
+					}
+				}
+			}
+			return measures;
 		}
 	}
 }

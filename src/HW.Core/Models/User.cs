@@ -16,6 +16,8 @@ namespace HW.Core.Models
 		public string AltEmail { get; set; }
 		public int ReminderLink { get; set; }
 		public string UserKey { get; set; }
+		
+		public IList<SponsorProject> SponsorProjects { get; set; }
 	}
 	
 	public class UserMeasure : BaseModel

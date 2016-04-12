@@ -16,29 +16,42 @@ namespace HW.Grp
 {
 	public partial class Stats : System.Web.UI.Page
 	{
-		protected IList<ReportPartLanguage> reportParts = null;
+//		protected IList<ReportPartLanguage> reportParts = null;
+		protected IList<IReportPart> reportParts = null;
 		protected IList<BaseModel> urlModels;
 		protected IList<PlotTypeLanguage> plotTypes = new List<PlotTypeLanguage>();
 		IList<Department> departments;
 		IList<SponsorBackgroundQuestion> questions;
 		int sponsorID = 0;
 		int sponsorAdminID = 0;
-        SqlProjectRepository projRepository = new SqlProjectRepository();
-        SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
-        SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
-        SqlReportRepository reportRepository = new SqlReportRepository();
-        SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
-        protected int lid;
-        protected DateTime startDate;
-        protected DateTime endDate;
+		SqlProjectRepository projRepository = new SqlProjectRepository();
+		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
+		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
+		SqlReportRepository reportRepository = new SqlReportRepository();
+		SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
+		protected int lid;
+		protected DateTime startDate;
+		protected DateTime endDate;
+		SqlMeasureRepository measureRepository = new SqlMeasureRepository();
 
 		public IList<SponsorProjectRoundUnit> ProjectRoundUnits {
 			set {
-        		ProjectRoundUnitID.Items.Clear();
+				ProjectRoundUnitID.Items.Clear();
 				foreach (var p in value) {
-					ProjectRoundUnitID.Items.Add(new ListItem(p.Navigation, p.ProjectRoundUnit.Id.ToString()));
+//					ProjectRoundUnitID.Items.Add(new ListItem(p.Navigation, p.ProjectRoundUnit.Id.ToString()));
+					ProjectRoundUnitID.Items.Add(new ListItem(p.Navigation, "SPRU" + p.ProjectRoundUnit.Id.ToString()));
 				}
 				GroupBy.SelectedValue = "7";
+			}
+		}
+		
+		public IList<SponsorProject> Projects {
+			set {
+				foreach (var p in value) {
+//					ProjectRoundUnitID.Items.Add(new ListItem(p.ProjectName, p.Id.ToString()));
+//					ProjectRoundUnitID.Items.Add(new ListItem(p.ProjectName, "SP" + p.Id.ToString()));
+					ProjectRoundUnitID.Items.Add(new ListItem(p.Subject, "SP" + p.Id.ToString()));
+				}
 			}
 		}
 		
@@ -61,7 +74,7 @@ namespace HW.Grp
 				table.Rows.Add(new IHGHtmlTableRow(new IHGHtmlTableCell(Session["Sponsor"].ToString()) { ColSpan = 3 }));
 				Dictionary<int, bool> DX = new Dictionary<int, bool>();
 				foreach (var d in departments) {
-                    IHGHtmlTableRow row = new IHGHtmlTableRow(new IHGHtmlTableCell(new CheckBox { ID = "DID" + d.Id }), new IHGHtmlTableCell(d.ShortName));
+					IHGHtmlTableRow row = new IHGHtmlTableRow(new IHGHtmlTableCell(new CheckBox { ID = "DID" + d.Id }), new IHGHtmlTableCell(d.ShortName));
 					
 					int depth = d.Depth;
 					DX[depth] = d.Siblings > 0;
@@ -124,35 +137,36 @@ namespace HW.Grp
 			}
 		}
 		
-		public void SetReportPartLanguages(IList<ReportPartLanguage> reportParts, IList<BaseModel> urlModels)
+//		public void SetReportPartLanguages(IList<ReportPartLanguage> reportParts, IList<BaseModel> urlModels)
+		public void SetReportPartLanguages(IList<IReportPart> reportParts, IList<BaseModel> urlModels)
 		{
 			this.reportParts = reportParts;
 			this.urlModels = urlModels;
 			var selectedDepartments = SelectedDepartments;
 		}
 
-        protected string GetLang(int lid)
-        {
-            return lid == 1 ? "sv" : "en";
-        }
+		protected string GetLang(int lid)
+		{
+			return lid == 1 ? "sv" : "en";
+		}
 
-        protected CultureInfo GetCultureInfo(int lid)
-        {
-            return lid == 1 ? new CultureInfo("sv-SE") : new CultureInfo("en-US");
-        }
-        
-        public void SaveAdminSession(int SponsorAdminSessionID, int ManagerFunction, DateTime date)
-        {
-        	sponsorRepository.SaveSponsorAdminSessionFunction(SponsorAdminSessionID, ManagerFunction, date);
-        }
-        
-        public void Index(int sponsorID, int sponsorAdminID)
-        {
-        	if (sponsorID != 0) {
+		protected CultureInfo GetCultureInfo(int lid)
+		{
+			return lid == 1 ? new CultureInfo("sv-SE") : new CultureInfo("en-US");
+		}
+		
+		public void SaveAdminSession(int SponsorAdminSessionID, int ManagerFunction, DateTime date)
+		{
+			sponsorRepository.SaveSponsorAdminSessionFunction(SponsorAdminSessionID, ManagerFunction, date);
+		}
+		
+		public void Index(int sponsorID, int sponsorAdminID)
+		{
+			if (sponsorID != 0) {
 				if (!IsPostBack) {
 					
 					//startDate = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day);
-                    startDate = ToDate(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day);
+					startDate = ToDate(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day);
 					endDate = DateTime.Now;
 					
 					GroupBy.Items.Clear();
@@ -171,6 +185,8 @@ namespace HW.Grp
 					Grouping.Items.Add(new ListItem(R.Str(lid, "background.variable", "Background variable"), "3"));
 					
 					ProjectRoundUnits = sponsorRepository.FindBySponsorAndLanguage(sponsorID, lid);
+					
+					Projects = measureRepository.FindSponsorProjects(sponsorID);
 
 					BackgroundQuestions = sponsorRepository.FindBySponsor(sponsorID);
 				} else {
@@ -181,42 +197,39 @@ namespace HW.Grp
 			} else {
 				Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
-        }
+		}
 
-        DateTime ToDate(int year, int month, int day)
-        {
-            DateTime d;
-            try
-            {
-                d = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day);
-            }
-            catch
-            {
-                d = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day - 1);
-            }
-            return d;
-        }
+		DateTime ToDate(int year, int month, int day)
+		{
+			DateTime d;
+			try {
+				d = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day);
+			} catch {
+				d = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day - 1);
+			}
+			return d;
+		}
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
-            sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
-            
-            HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Statistics), "default.aspx", true);
-            
-            lid = ConvertHelper.ToInt32(Session["lid"], 2);
+			sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 			
-            plotTypes = plotRepository.FindByLanguage(lid);
+			HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Statistics), "default.aspx", true);
 			
-            SaveAdminSession(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Statistics, DateTime.Now);
-            Index(sponsorID, sponsorAdminID);
+			lid = ConvertHelper.ToInt32(Session["lid"], 2);
+			
+			plotTypes = plotRepository.FindByLanguage(lid);
+			
+			SaveAdminSession(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Statistics, DateTime.Now);
+			Index(sponsorID, sponsorAdminID);
 //			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Statistics, DateTime.Now);
 //			if (sponsorID != 0) {
 //				if (!IsPostBack) {
-//					
+//
 //					startDate = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day);
 //					endDate = DateTime.Now;
-//					
+//
 //					GroupBy.Items.Clear();
 //					GroupBy.Items.Add(new ListItem(R.Str(lid, "week.one", "One week"), "1"));
 //					GroupBy.Items.Add(new ListItem(R.Str(lid, "week.two.even", "Two weeks, start with even"), "7"));
@@ -225,13 +238,13 @@ namespace HW.Grp
 //					GroupBy.Items.Add(new ListItem(R.Str(lid, "month.three", "Three months"), "4"));
 //					GroupBy.Items.Add(new ListItem(R.Str(lid, "month.six", "Six months"), "5"));
 //					GroupBy.Items.Add(new ListItem(R.Str(lid, "year.one", "One year"), "6"));
-//					
+//
 //					Grouping.Items.Clear();
 //					Grouping.Items.Add(new ListItem(R.Str(lid, "", "< none >"), "0"));
 //					Grouping.Items.Add(new ListItem(R.Str(lid, "users.unit", "Users on unit"), "1"));
 //					Grouping.Items.Add(new ListItem(R.Str(lid, "users.unit.subunit", "Users on unit+subunits"), "2"));
 //					Grouping.Items.Add(new ListItem(R.Str(lid, "background.variable", "Background variable"), "3"));
-//					
+//
 //					ProjectRoundUnits = sponsorRepository.FindBySponsorAndLanguage(sponsorID, lid);
 //
 //					BackgroundQuestions = sponsorRepository.FindBySponsor(sponsorID);
@@ -251,17 +264,24 @@ namespace HW.Grp
 			DateTime d = DateTime.Now;
 			try {
 				//d = DateTime.ParseExact(s, "yyyy MMM", CultureInfo.InvariantCulture);
-                d = DateTime.ParseExact(s, "yyyy MMM", GetCultureInfo(lid));
+				d = DateTime.ParseExact(s, "yyyy MMM", GetCultureInfo(lid));
 			} catch {}
 			return d;
 		}
 		
-		protected string GetReportImageUrl(int reportID, int reportPartLangID, Q additionalQuery)
+		protected string GetReportImageUrl2(int reportPartLangID, Q additionalQuery)
 		{
-			var p = GetPage("reportImage.aspx", reportID, reportPartLangID);
+			var p = GetPage2("reportImage2.aspx", reportPartLangID);
 			p.Add(additionalQuery);
 			return p.ToString();
 		}
+
+        protected string GetReportImageUrl(int reportID, int reportPartLangID, Q additionalQuery)
+        {
+            var p = GetPage("reportImage.aspx", reportID, reportPartLangID);
+            p.Add(additionalQuery);
+            return p.ToString();
+        }
 		
 		protected string GetExportUrl(int reportID, int reportPartID, string type, Q additionalQuery)
 		{
@@ -280,8 +300,8 @@ namespace HW.Grp
 		}
 		
 		protected override void OnPreRender(EventArgs e)
-        {
-            Execute.Text = R.Str(lid, "execute", "Execute");
+		{
+			Execute.Text = R.Str(lid, "execute", "Execute");
 
 			Org.Visible = (Grouping.SelectedValue == "1" || Grouping.SelectedValue == "2");
 			BQ.Visible = (Grouping.SelectedValue == "3");
@@ -307,6 +327,26 @@ namespace HW.Grp
 			q.Add("GID", "0" + v);
 			return q;
 		}
+
+        P GetPage2(string page, int reportPartLangID)
+        {
+            P p = new P(page);
+            p.Q.Add("LangID", lid);
+            p.Q.Add("FY", startDate.Year);
+            p.Q.Add("TY", endDate.Year);
+            p.Q.Add("FM", startDate.Month);
+            p.Q.Add("TM", endDate.Month);
+            p.Q.Add("SAID", sponsorAdminID);
+            p.Q.Add("SID", sponsorID);
+            p.Q.AddIf(Convert.ToInt32(Session["Anonymized"]) == 1, "Anonymized", 1);
+            p.Q.Add("GB", GroupBy.SelectedValue);
+            //p.Q.Add("RPID", reportID);
+            p.Q.Add("RPLID", reportPartLangID);
+            p.Q.Add("PRUID", ProjectRoundUnitID.SelectedValue);
+            p.Q.Add("GRPNG", Grouping.SelectedValue);
+            p.Q.AddIf(Request.QueryString["PLOT"] != null, "PLOT", Request.QueryString["PLOT"]);
+            return p;
+        }
 		
 		P GetPage(string page, int reportID, int reportPartLangID)
 		{
@@ -330,15 +370,40 @@ namespace HW.Grp
 
 		void Execute_Click(object sender, EventArgs e)
 		{
-			int selectedProjectRoundUnitID = Convert.ToInt32(ProjectRoundUnitID.SelectedValue);
+//			int selectedProjectRoundUnitID = Convert.ToInt32(ProjectRoundUnitID.SelectedValue);
 			int grouping = Convert.ToInt32(Grouping.SelectedValue);
 			
-			int selectedDepartmentID = departments[0].Id;
-			var reportParts = reportRepository.FindByProjectAndLanguage2(selectedProjectRoundUnitID, lid, selectedDepartmentID);
-			if (reportParts.Count <= 0) {
-				reportParts = reportRepository.FindByProjectAndLanguage(selectedProjectRoundUnitID, lid);
+			if (departments.Count > 0) {
+//				int selectedDepartmentID = departments[0].Id;
+//				var reportParts = reportRepository.FindByProjectAndLanguage2(selectedProjectRoundUnitID, lid, selectedDepartmentID);
+//				if (reportParts.Count <= 0) {
+//					reportParts = reportRepository.FindByProjectAndLanguage(selectedProjectRoundUnitID, lid);
+//				}
+				var reportParts = GetReportParts(ProjectRoundUnitID.SelectedValue);
+				SetReportPartLanguages(reportParts, GetUrlModels(grouping));
 			}
-			SetReportPartLanguages(reportParts, GetUrlModels(grouping));
+		}
+		
+//		IList<ReportPartLanguage> GetReportParts(string project)
+		IList<IReportPart> GetReportParts(string project)
+		{
+			var parts = new List<IReportPart>();
+			if (project.Contains("SPRU")) {
+				int selectedProjectRoundUnitID = ConvertHelper.ToInt32(project.Replace("SPRU", ""));
+				int selectedDepartmentID = departments[0].Id;
+				var reportParts = reportRepository.FindByProjectAndLanguage2(selectedProjectRoundUnitID, lid, selectedDepartmentID);
+				if (reportParts.Count <= 0) {
+					reportParts = reportRepository.FindByProjectAndLanguage(selectedProjectRoundUnitID, lid);
+				}
+//				return reportParts;
+				parts.AddRange(reportParts);
+			} else {
+				int sponsorProjectID = ConvertHelper.ToInt32(project.Replace("SP", ""));
+//				return measureRepository.ReadSponsorProject(sponsorProjectID);
+				var sponsorProject = measureRepository.ReadSponsorProject(sponsorProjectID);
+				parts.Add(sponsorProject);
+			}
+			return parts;
 		}
 	}
 }
