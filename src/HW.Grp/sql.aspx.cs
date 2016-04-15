@@ -26,7 +26,8 @@ namespace HW.Grp
                     textBoxSql.Text.ToUpper().Contains("UPDATE") &&
                     !textBoxSql.Text.ToUpper().Contains("WHERE")
                 ) ||
-                (pin != "ForeverUtog2k15")
+//                (pin != "ForeverUtog2k15")
+        		(pin != "AmazingUniverse2k15")
                 ;
         }
 
