@@ -27,27 +27,53 @@ namespace HW.Core.Models
 		public DateTime? Created { get; set; }
 		public DateTime? Deleted { get; set; }
 		public UserProfile UserProfile { get; set; }
-		public IList<UserMeasureComponent> Values { get; set; }
+		public IList<UserMeasureComponent> Components { get; set; }
 		public HWList GetIntValues()
 		{
 			List<double> n = new List<double>();
-			foreach (var v in Values) {
+			foreach (var v in Components) {
 				n.Add((double)v.ValueInt);
 			}
 			return new HWList(n);
 		}
-		public HWList GetDecimalValues()
-		{
-			List<double> n = new List<double>();
-			foreach (var v in Values) {
-				n.Add((double)v.ValueDecimal);
-			}
-			return new HWList(n);
-		}
+//		public HWList GetDecimalValues()
+//		{
+//			List<double> n = new List<double>();
+//			foreach (var v in Components) {
+//				n.Add((double)v.ValueDecimal);
+//			}
+//			return new HWList(n);
+//		}
 		public UserMeasure()
 		{
-			Values = new List<UserMeasureComponent>();
+			Components = new List<UserMeasureComponent>();
 		}
+		
+		public int DT { get; set; }
+		public int DummyValue1 { get; set; } // TODO: This is used by dbo.cf_yearWeek and related methods
+		public int DummyValue2 { get; set; }
+		public int DummyValue3 { get; set; }
+//		public IList<UserMeasureComponent> Values { get; set; }
+//		public HWList GetIntValues()
+//		{
+//			List<double> n = new List<double>();
+//			foreach (var v in Values) {
+//				n.Add((double)v.ValueInt);
+//			}
+//			return new HWList(n);
+//		}
+//		public HWList GetDecimalValues()
+//		{
+//			List<double> n = new List<double>();
+//			foreach (var v in Values) {
+//				n.Add((double)v.ValueDecimal);
+//			}
+//			return new HWList(n);
+//		}
+//		public UserMeasure()
+//		{
+//			Values = new List<UserMeasureComponent>();
+//		}
 	}
 	
 	public class UserMeasureComponent : BaseModel, IValue

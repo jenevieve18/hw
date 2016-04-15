@@ -9,7 +9,7 @@ using HW.Core.Repositories.Sql;
 
 namespace HW.Core.Helpers
 {
-	public class GroupStatsGraphFactory : IGraphFactory
+	public class GroupStatsGraphFactory : BaseGraphFactory
 	{
 		SqlProjectRepository projectRepository;
 		SqlAnswerRepository answerRepository;
@@ -36,13 +36,28 @@ namespace HW.Core.Helpers
 			this.departmentRepository = departmentRepository;
 		}
 		
-		public ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int PRUID, int yearFrom, int yearTo, int GB, bool hasGrouping, int plot, int width, int height, string bg, int GRPNG, int sponsorAdminID, int SID, string GID, object disabled, int point, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
+		IGraphType GetGraphType(int plot, int t)
+		{
+			if (plot == PlotType.BoxPlotMinMax) {
+				return new BoxPlotMinMaxGraphType();
+			} else if (plot == PlotType.BoxPlot) {
+				return new BoxPlotGraphType();
+			} else if (plot == PlotType.LineSDWithCI) {
+				return new LineGraphType(2, t);
+			} else if (plot == PlotType.LineSD) {
+				return new LineGraphType(1, t);
+			} else {
+				return new LineGraphType(0, t);
+			}
+		}
+		
+		public override ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int GB, bool hasGrouping, int plot, int width, int height, string bg, int GRPNG, int sponsorAdminID, int sponsorID, string departmentIDs, object disabled, int point, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
 		{
 			int cx = p.Components.Capacity;
 			string sortString = "";
 			int minDT = 0;
 			int maxDT = 0;
-			ProjectRoundUnit roundUnit = projectRepository.ReadRoundUnit(PRUID);
+			ProjectRoundUnit roundUnit = projectRepository.ReadRoundUnit(projectRoundUnitID);
 			if (roundUnit != null) {
 				sortString = roundUnit.SortString;
 				if (langID == 0) {
@@ -134,18 +149,19 @@ namespace HW.Core.Helpers
 				string groupBy = GroupFactory.GetGroupBy(GB);
 				g = new ExtendedGraph(895, 440, "#FFFFFF");
 				
-				int t = 2;
-				if (plot == PlotType.BoxPlotMinMax) {
-					g.Type = new BoxPlotMinMaxGraphType();
-				} else if (plot == PlotType.BoxPlot) {
-					g.Type = new BoxPlotGraphType();
-				} else if (plot == PlotType.LineSDWithCI) {
-					g.Type = new LineGraphType(2, t);
-				} else if (plot == PlotType.LineSD) {
-					g.Type = new LineGraphType(1, t);
-				} else {
-					g.Type = new LineGraphType(0, t);
-				}
+//				int t = 2;
+//				if (plot == PlotType.BoxPlotMinMax) {
+//					g.Type = new BoxPlotMinMaxGraphType();
+//				} else if (plot == PlotType.BoxPlot) {
+//					g.Type = new BoxPlotGraphType();
+//				} else if (plot == PlotType.LineSDWithCI) {
+//					g.Type = new LineGraphType(2, t);
+//				} else if (plot == PlotType.LineSD) {
+//					g.Type = new LineGraphType(1, t);
+//				} else {
+//					g.Type = new LineGraphType(0, t);
+//				}
+				g.Type = GetGraphType(plot, 2);
 				Answer answer = answerRepository.ReadByGroup(groupBy, yearFrom, yearTo, sortString, monthFrom, monthTo);
 				if (answer != null) {
 					cx = answer.DummyValue1 + 3;
@@ -187,7 +203,7 @@ namespace HW.Core.Helpers
 					Dictionary<string, int> mins = new Dictionary<string, int>();
 					string extraDesc = "";
 					
-					count = GroupFactory.GetCount(GRPNG, sponsorAdminID, SID, PRUID, GID, ref extraDesc, desc, join, item, mins, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
+					count = GroupFactory.GetCount(GRPNG, sponsorAdminID, sponsorID, projectRoundUnitID, departmentIDs, ref extraDesc, desc, join, item, mins, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
 					
 					int breaker = 6, itemWidth = 120;
 					if (count < 6) {
@@ -590,7 +606,7 @@ namespace HW.Core.Helpers
 		}
 		
 //		public void CreateGraph3(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int sponsorAdminID, int SID, string GID, object disabled, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose, int fm, int tm)
-		public void CreateGraphForExcelWriter(ReportPart p, int langID, int PRUID, int yearFrom, int yearTo, int GB, bool hasGrouping, int plot, int GRPNG, int sponsorAdminID, int SID, string GID, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
+		public override void CreateGraphForExcelWriter(ReportPart p, int langID, int PRUID, int yearFrom, int yearTo, int GB, bool hasGrouping, int plot, int GRPNG, int sponsorAdminID, int SID, string GID, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
 		{
 			int cx = p.Components.Capacity;
 			string sortString = "";
@@ -974,101 +990,6 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 				var plotter = new LineExcel();
 				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
 				plotter.ToExcel(departments, weeks, writer, ref index);
-			}
-		}
-		
-		public event EventHandler<MergeEventArgs> ForMerge;
-		
-		protected virtual void OnForMerge(MergeEventArgs e)
-		{
-			if (ForMerge != null) {
-				ForMerge(this, e);
-			}
-		}
-		
-		public static List<string> GetBottomStrings(int minDT, int maxDT, int groupBy)
-		{
-			int j = 0;
-			var strings = new List<string>();
-			for (int i = minDT; i <= maxDT; i++) {
-				j++;
-				string v = GroupStatsGraphFactory.GetBottomString(groupBy, i, j, "");
-//				DrawBottomString(v, j);
-				strings.Add(v);
-			}
-			return strings;
-		}
-		
-		public static string GetBottomString(int groupBy, int i, int dx, string str)
-		{
-			switch (groupBy) {
-				case 1:
-					{
-						int d = i;
-						int w = d % 52;
-						if (w == 0) {
-							w = 52;
-						}
-						string v = string.Format("v{0}, {1}{2}", w, d / 52, str);
-						return v;
-					}
-				case 2:
-					{
-						int d = i * 2;
-						int w = d % 52;
-						if (w == 0) {
-							w = 52;
-						}
-						string v = string.Format("v{0}-{1}, {2}{3}", w - 1, w, (d - ((d - 1) % 52)) / 52, str);
-						return v;
-					}
-				case 3:
-					{
-						int d = i;
-						int w = d % 12;
-						if (w == 0) {
-							w = 12;
-						}
-						string v = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedMonthNames[w - 1] + ", " + ((d - w) / 12) + str;
-						return v;
-					}
-				case 4:
-					{
-						int d = i * 3;
-						int w = d % 12;
-						if (w == 0) {
-							w = 12;
-						}
-						string v = string.Format("Q{0}, {1}{2}", w / 3, (d - w) / 12, str);
-						return v;
-					}
-				case 5:
-					{
-						int d = i * 6;
-						int w = d % 12;
-						if (w == 0) {
-							w = 12;
-						}
-						string v = string.Format("{0}/{1}{2}", (d - w) / 12, w / 6, str);
-						return v;
-					}
-				case 6:
-					{
-						string v = i.ToString() + str;
-						return v;
-					}
-				case 7:
-					{
-						int d = i * 2;
-						int w = d % 52;
-						if (w == 0) {
-							w = 52;
-						}
-						string v = "v" + w + "-" + ((w == 52 ? 0 : w) + 1) + ", " + ((d + 1) - (d % 52)) / 52 + str;
-						return v;
-					}
-				default:
-					throw new NotSupportedException();
 			}
 		}
 		

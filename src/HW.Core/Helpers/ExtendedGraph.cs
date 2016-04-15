@@ -257,6 +257,11 @@ namespace HW.Core.Helpers
 			}
 		}
 		
+		public void SetMinMax(IMinMax m)
+		{
+			SetMinMax((int)m.Min, (int)m.Max);
+		}
+		
 		public void SetMinMax(int min, int max)
 		{
 			setMinMax(min, max);

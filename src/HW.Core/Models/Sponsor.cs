@@ -310,11 +310,16 @@ namespace HW.Core.Models
 		public DateTime? StartDate { get; set; }
 		public DateTime? EndDate { get; set; }
 //		public string ProjectName { get; set; }
-		public string Subject { get; set; }
+		public string Subject { get; set; } // Project Name
 		public string Header { get; set; }
 		public IList<SponsorProjectMeasure> Measures { get; set; }
 		
 		public ReportPart ReportPart { get; set; }
+		
+		public SponsorProject()
+		{
+			Measures = new List<SponsorProjectMeasure>();
+		}
 	}
 	
 	public class SponsorProjectRoundUnit : BaseModel

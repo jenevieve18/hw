@@ -51,22 +51,20 @@ namespace HW.Core.Helpers
 			}
 		}
 		
-//		public ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int GB, bool hasGrouping, int plot, int width, int height, string bg, int GRPNG, int sponsorAdminID, int sponsorID, string GID, object disabled, int point, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
-//		public ExtendedGraph CreateGraph(ReportPart p, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int GB, bool hasGrouping, int plot, int GRPNG, int sponsorAdminID, int sponsorID, string GID, object disabled, int point, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
-		public ExtendedGraph CreateGraph(SponsorProject p, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int GB, bool hasGrouping, int plot, int GRPNG, int sponsorAdminID, int sponsorID, string GID, object disabled, int point, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
+		public ExtendedGraph CreateGraph(SponsorProject p, int langID, int yearFrom, int yearTo, int GB, bool hasGrouping, int plot, int grouping, int sponsorAdminID, int sponsorID, string departmentIDs, object disabled, int point, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
 		{
 //			int differenceDate = p.Components.Capacity;
 			int differenceDate = 0;
 			string sortString = "";
 			int startDate = 0;
 			int endDate = 0;
-			ProjectRoundUnit roundUnit = projectRepository.ReadRoundUnit(projectRoundUnitID);
-			if (roundUnit != null) {
-				sortString = roundUnit.SortString;
-				if (langID == 0) {
-					langID = roundUnit.Language.Id;
-				}
-			}
+//			ProjectRoundUnit roundUnit = projectRepository.ReadRoundUnit(projectRoundUnitID);
+//			if (roundUnit != null) {
+//				sortString = roundUnit.SortString;
+//				if (langID == 0) {
+//					langID = roundUnit.Language.Id;
+//				}
+//			}
 			ExtendedGraph g = null;
 			
 			LanguageFactory.SetCurrentCulture(langID);
@@ -149,23 +147,11 @@ namespace HW.Core.Helpers
 					GB = 2;
 				}
 				
-				string groupBy = GroupFactory.GetGroupBy(GB);
+				string groupByQuery = GroupFactory.GetGroupBy(GB);
 				g = new ExtendedGraph(895, 440, "#FFFFFF");
 				
-//				int t = 2;
-//				if (plot == PlotType.BoxPlotMinMax) {
-//					g.Type = new BoxPlotMinMaxGraphType();
-//				} else if (plot == PlotType.BoxPlot) {
-//					g.Type = new BoxPlotGraphType();
-//				} else if (plot == PlotType.LineSDWithCI) {
-//					g.Type = new LineGraphType(2, t);
-//				} else if (plot == PlotType.LineSD) {
-//					g.Type = new LineGraphType(1, t);
-//				} else {
-//					g.Type = new LineGraphType(0, t);
-//				}
 				g.Type = GetGraphType(plot, 2);
-				Answer answer = answerRepository.ReadByGroup(groupBy, yearFrom, yearTo, sortString, monthFrom, monthTo);
+				var answer = measureRepository.ReadByGroup(groupByQuery, yearFrom, yearTo, sortString, monthFrom, monthTo);
 				if (answer != null) {
 					differenceDate = answer.DummyValue1 + 3;
 					startDate = answer.DummyValue2;
@@ -189,7 +175,12 @@ namespace HW.Core.Helpers
 //				}
 //				g.SetMinMaxes(minMaxes);
 //				g.DrawBackgroundFromIndexes(indexes);
-				g.SetMinMax(0, 100);
+//				g.SetMinMax(0, 500000);
+//				var m = measureRepository.ReadMinMax(groupBy, yearFrom, yearTo, sortString, monthFrom, monthTo);
+//				g.SetMinMax((int)m.Min, (int)m.Max);
+				int aggregation = GetAggregationByGroupBy(GB);
+				var minMax = measureRepository.ReadMinMax(groupByQuery, yearFrom, yearTo, monthFrom, monthTo, aggregation, departmentIDs, sponsorID);
+				g.SetMinMax((int)minMax.Min, ((int)minMax.Max).Ceiling());
 				g.DrawBackgroundFromIndex(new BaseIndex());
 				g.DrawComputingSteps(disabled, differenceDate);
 				
@@ -200,7 +191,7 @@ namespace HW.Core.Helpers
 				if (hasGrouping) {
 					string extraDesc = "";
 					
-					var departments = GroupFactory.GetCount2(GRPNG, sponsorAdminID, sponsorID, projectRoundUnitID, GID, ref extraDesc, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
+					var departments = GroupFactory.GetDepartmentsWithJoinQueryForStepCount(grouping, sponsorAdminID, sponsorID, departmentIDs, ref extraDesc, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
 					
 					int breaker = 6;
 					int itemWidth = 120;
@@ -228,8 +219,7 @@ namespace HW.Core.Helpers
 						foreach(var i in departments) {
 							differenceDate = 1;
 							int lastDT = startDate - 1;
-//							var answers = answerRepository.FindByQuestionAndOptionJoinedAndGrouped2(i.Query, groupBy, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, yearFrom, yearTo, monthFrom, monthTo);
-							var measures = measureRepository.FindByQuestionAndOptionJoinedAndGrouped2(i.Query, groupBy, yearFrom, yearTo, monthFrom, monthTo);
+							var measures = measureRepository.FindByQuestionAndOptionJoinedAndGrouped2(i.Query, groupByQuery, yearFrom, yearTo, monthFrom, monthTo, aggregation, sponsorID);
 							Series s = new Series {
 								Description = i.Name,
 								Color = bx + 4,
@@ -237,6 +227,7 @@ namespace HW.Core.Helpers
 								Y = 20 + (int)Math.Floor((double)bx / breaker) * 15
 							};
 							foreach (var a in measures) {
+//								if (a.DT < startDate) {
 								if (a.DT < startDate) {
 									continue;
 								}
@@ -244,13 +235,15 @@ namespace HW.Core.Helpers
 									lastDT++;
 									differenceDate++;
 								}
-								if (a.Values.Count >= i.MinUserCountToDisclose) {
+								//if (a.Values.Count >= i.MinUserCountToDisclose) {
 									if (departments.Count == 1) {
-										string v = GetBottomString(GB, a.DT, differenceDate, (departments.Count == 1 ? ", n = " + a.Values.Count : ""));
+//										string v = GetBottomString(grouping, a.DT, differenceDate, (departments.Count == 1 ? ", n = " + a.Values.Count : ""));
+//										string v = BaseGraphFactory.GetBottomString(GB, a.DT, differenceDate, (departments.Count == 1 ? ", n = " + a.Values.Count : ""));
+										string v = BaseGraphFactory.GetBottomString(GB, a.DT, differenceDate, (departments.Count == 1 ? ", n = " + a.Components.Count : ""));
 										g.DrawBottomString(v, differenceDate);
 									}
 									s.Points.Add(new PointV { X = differenceDate, Values = a.GetIntValues() });
-								}
+								//}
 								lastDT = a.DT;
 								differenceDate++;
 							}
@@ -274,7 +267,7 @@ namespace HW.Core.Helpers
 						differenceDate = 1;
 						int lastDT = startDate - 1;
 						Series s = new Series { Color = bx + 4 };
-						var answers = answerRepository.FindByQuestionAndOptionGroupedX(groupBy, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, yearFrom, yearTo, sortString, monthFrom, monthTo);
+						var answers = answerRepository.FindByQuestionAndOptionGroupedX(groupByQuery, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, yearFrom, yearTo, sortString, monthFrom, monthTo);
 						foreach (Answer a in answers) {
 							if (a.DT < startDate) {
 								continue;
@@ -284,7 +277,8 @@ namespace HW.Core.Helpers
 								differenceDate++;
 							}
 //							if (a.CountV >= p.RequiredAnswerCount) {
-								string v = GetBottomString(GB, a.DT, differenceDate, ", n = " + a.CountV);
+//								string v = GetBottomString(grouping, a.DT, differenceDate, ", n = " + a.CountV);
+								string v = BaseGraphFactory.GetBottomString(GB, a.DT, differenceDate, ", n = " + a.CountV);
 								g.DrawBottomString(v, differenceDate);
 								s.Points.Add(new PointV { X = differenceDate, Values = a.GetIntValues() });
 //							}
@@ -298,6 +292,19 @@ namespace HW.Core.Helpers
 				g.Draw();
 //			}
 			return g;
+		}
+		
+		int GetAggregationByGroupBy(int groupBy)
+		{
+			switch (groupBy) {
+				case 1: return 7;
+				case 7: return 14;
+				case 2: return 14;
+				case 3: return 30;
+				case 4: return 120;
+				case 5: return 180;
+				default: return 365;
+			}
 		}
 		
 //		Dictionary<string, List<Answer>> GetWeeks(int minDT, int maxDT, int groupBy)
@@ -691,79 +698,79 @@ namespace HW.Core.Helpers
 //				ForMerge(this, e);
 //			}
 //		}
-		
-		public static string GetBottomString(int groupBy, int i, int dx, string str)
-		{
-			switch (groupBy) {
-				case 1:
-					{
-						int d = i;
-						int w = d % 52;
-						if (w == 0) {
-							w = 52;
-						}
-						string v = string.Format("v{0}, {1}{2}", w, d / 52, str);
-						return v;
-					}
-				case 2:
-					{
-						int d = i * 2;
-						int w = d % 52;
-						if (w == 0) {
-							w = 52;
-						}
-						string v = string.Format("v{0}-{1}, {2}{3}", w - 1, w, (d - ((d - 1) % 52)) / 52, str);
-						return v;
-					}
-				case 3:
-					{
-						int d = i;
-						int w = d % 12;
-						if (w == 0) {
-							w = 12;
-						}
-						string v = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedMonthNames[w - 1] + ", " + ((d - w) / 12) + str;
-						return v;
-					}
-				case 4:
-					{
-						int d = i * 3;
-						int w = d % 12;
-						if (w == 0) {
-							w = 12;
-						}
-						string v = string.Format("Q{0}, {1}{2}", w / 3, (d - w) / 12, str);
-						return v;
-					}
-				case 5:
-					{
-						int d = i * 6;
-						int w = d % 12;
-						if (w == 0) {
-							w = 12;
-						}
-						string v = string.Format("{0}/{1}{2}", (d - w) / 12, w / 6, str);
-						return v;
-					}
-				case 6:
-					{
-						string v = i.ToString() + str;
-						return v;
-					}
-				case 7:
-					{
-						int d = i * 2;
-						int w = d % 52;
-						if (w == 0) {
-							w = 52;
-						}
-						string v = "v" + w + "-" + ((w == 52 ? 0 : w) + 1) + ", " + ((d + 1) - (d % 52)) / 52 + str;
-						return v;
-					}
-				default:
-					throw new NotSupportedException();
-			}
-		}
+//		
+//		public static string GetBottomString(int groupBy, int i, int dx, string str)
+//		{
+//			switch (groupBy) {
+//				case 1:
+//					{
+//						int d = i;
+//						int w = d % 52;
+//						if (w == 0) {
+//							w = 52;
+//						}
+//						string v = string.Format("v{0}, {1}{2}", w, d / 52, str);
+//						return v;
+//					}
+//				case 2:
+//					{
+//						int d = i * 2;
+//						int w = d % 52;
+//						if (w == 0) {
+//							w = 52;
+//						}
+//						string v = string.Format("v{0}-{1}, {2}{3}", w - 1, w, (d - ((d - 1) % 52)) / 52, str);
+//						return v;
+//					}
+//				case 3:
+//					{
+//						int d = i;
+//						int w = d % 12;
+//						if (w == 0) {
+//							w = 12;
+//						}
+//						string v = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedMonthNames[w - 1] + ", " + ((d - w) / 12) + str;
+//						return v;
+//					}
+//				case 4:
+//					{
+//						int d = i * 3;
+//						int w = d % 12;
+//						if (w == 0) {
+//							w = 12;
+//						}
+//						string v = string.Format("Q{0}, {1}{2}", w / 3, (d - w) / 12, str);
+//						return v;
+//					}
+//				case 5:
+//					{
+//						int d = i * 6;
+//						int w = d % 12;
+//						if (w == 0) {
+//							w = 12;
+//						}
+//						string v = string.Format("{0}/{1}{2}", (d - w) / 12, w / 6, str);
+//						return v;
+//					}
+//				case 6:
+//					{
+//						string v = i.ToString() + str;
+//						return v;
+//					}
+//				case 7:
+//					{
+//						int d = i * 2;
+//						int w = d % 52;
+//						if (w == 0) {
+//							w = 52;
+//						}
+//						string v = "v" + w + "-" + ((w == 52 ? 0 : w) + 1) + ", " + ((d + 1) - (d % 52)) / 52 + str;
+//						return v;
+//					}
+//				default:
+//					throw new NotSupportedException();
+//			}
+//		}
 		
 		void GetIdxVal(int idx, string sortString, int langID, int fy, int ty, int fm, int tm)
 		{

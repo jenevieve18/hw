@@ -26,6 +26,24 @@ namespace HW.Core.Helpers
 		}
 	}
 	
+	public static class ExtensionMethods
+	{
+		public static int Ceiling(this int i)
+		{
+			int d = 10;
+			if (i > 100000) {
+				d = 100000;
+			} else if (i > 10000) {
+				d = 10000;
+			} else if (i > 100) {
+				d = 100;
+			} else {
+				d = 10;
+			}
+			return ((int)Math.Ceiling(i / (double)d)) * d;
+		}
+	}
+	
 	public static class ConvertHelper
 	{
 		public static int ToInt32(object val)

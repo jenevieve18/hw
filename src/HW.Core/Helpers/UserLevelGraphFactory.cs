@@ -9,19 +9,7 @@ using HW.Core.Repositories.Sql;
 
 namespace HW.Core.Helpers
 {
-	public interface IGraphFactory
-	{
-		ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int pruid, int fy, int ty, int GB, bool hasGrouping, int plot, int width, int height, string bg, int grpng, int sponsorAdminID, int sid, string gid, object disabled, int point, int sponsorMinUserCountToDisclose, int fm, int tm);
-
-//		string CreateGraph2(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int sponsorAdminID, int sid, string gid, object disabled, int sponsorMinUserCountToDisclose, int fm, int tm);
-		
-//		void CreateGraph3(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int sponsorAdminID, int sid, string gid, object disabled, ExcelWriter w, ref int i, int sponsorMinUserCountToDisclose, int fm, int tm);
-		void CreateGraphForExcelWriter(ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int sponsorAdminID, int SID, string GID, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose, int fm, int tm);
-		
-		event EventHandler<MergeEventArgs> ForMerge;
-	}
-	
-	public class UserLevelGraphFactory : IGraphFactory
+	public class UserLevelGraphFactory : BaseGraphFactory
 	{
 		SqlAnswerRepository answerRepository;
 		SqlReportRepository reportRepository;
@@ -32,7 +20,7 @@ namespace HW.Core.Helpers
 			this.reportRepository = reportRepository;
 		}
 		
-		public ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int width, int height, string bg, int GRPNG, int sponsorAdminID, int SID, string GID, object disabled, int point, int sponsorMinUserCountToDisclose, int fm, int tm)
+		public override ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int GB, bool hasGrouping, int plot, int width, int height, string bg, int GRPNG, int sponsorAdminID, int sponsorID, string departmentIDs, object disabled, int point, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
 		{
 			int cx = p.Components.Capacity;
 			int answerID = 0;
@@ -51,7 +39,7 @@ namespace HW.Core.Helpers
 			g.setMinMax(0f, 100f);
 
 			if (p.Type == 8) {
-				int dx = answerRepository.CountByProject(projectRoundUserID, fy, ty, fm, tm);
+				int dx = answerRepository.CountByProject(projectRoundUserID, yearFrom, yearTo, monthFrom, monthTo);
 				if (dx == 1) {
 					p.Type = 9;
 				} else {
@@ -74,7 +62,7 @@ namespace HW.Core.Helpers
 					float lastVal = -1f;
 					int lastCX = 0;
 					cx = 0;
-					foreach (Answer aa in answerRepository.FindByQuestionAndOptionWithYearSpan(c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, fy, ty, fm, tm)) {
+					foreach (Answer aa in answerRepository.FindByQuestionAndOptionWithYearSpan(c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, yearFrom, yearTo, monthFrom, monthTo)) {
 						if (bx == 0) {
 							g.drawBottomString(aa.SomeString, cx);
 						}
@@ -217,19 +205,19 @@ namespace HW.Core.Helpers
 		*/
 		
 //		public void CreateGraph3(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int spons, int sid, string gid, object disabled, ExcelWriter w, ref int i, int sponsorMinUserCountToDisclose, int fm, int tm)
-		public void CreateGraphForExcelWriter(ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int spons, int sid, string gid, ExcelWriter w, ref int i, int sponsorMinUserCountToDisclose, int fm, int tm)
+		public override void CreateGraphForExcelWriter(ReportPart p, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int gb, bool hasGrouping, int plot, int grpng, int sponsorAdminID, int sponsorID, string departmentIDs, ExcelWriter w, ref int i, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
 		{
 			throw new NotImplementedException();
 		}
-		
-		public event EventHandler<MergeEventArgs> ForMerge;
-		
-		protected virtual void OnForMerge(MergeEventArgs e)
-		{
-			if (ForMerge != null) {
-				ForMerge(this, e);
-			}
-		}
+//		
+//		public event EventHandler<MergeEventArgs> ForMerge;
+//		
+//		protected virtual void OnForMerge(MergeEventArgs e)
+//		{
+//			if (ForMerge != null) {
+//				ForMerge(this, e);
+//			}
+//		}
 	}
 	
 	public class MergeEventArgs : EventArgs

@@ -11,6 +11,82 @@ namespace HW.Core.Repositories.Sql
 		{
 		}
 		
+		public UserMeasure ReadByGroup(string groupBy, int yearFrom, int yearTo, string sortString, int monthFrom, int monthTo)
+		{
+			string query = string.Format(
+                @"
+SELECT {0}(MAX(a.DT)) - {0}(MIN(a.DT)),
+	{0}(MIN(a.DT)),
+	{0}(MAX(a.DT))
+FROM healthwatch..UserMeasure a
+WHERE a.DT IS NOT NULL
+AND (YEAR(a.DT) = {1} AND MONTH(a.DT) >= {3} OR YEAR(a.DT) > {1})
+AND (YEAR(a.DT) = {2} AND MONTH(a.DT) <= {4} OR YEAR(a.DT) < {2})",
+				groupBy,
+                yearFrom,
+				yearTo,
+                monthFrom,
+                monthTo
+			);
+			using (SqlDataReader rs = ExecuteReader(query, "eFormSqlConnection")) {
+				if (rs.Read()) {
+					var a = new UserMeasure();
+					a.DummyValue1 = GetInt32(rs, 0, 0);
+					a.DummyValue2 = GetInt32(rs, 1, 0);
+					a.DummyValue3 = GetInt32(rs, 2, 0);
+					return a;
+				}
+			}
+			return null;
+		}
+		
+		public Answer ReadMinMax(string groupBy, int yearFrom, int yearTo, int monthFrom, int monthTo, int aggregation, string departmentIDs, int sponsorID)
+		{
+			string query = string.Format(
+				@"
+SELECT MAX(tmp2.VA + tmp2.SD), MIN(tmp2.VA - tmp2.SD)
+FROM (
+	SELECT AVG(tmp.VA) AS VA, STDEV(tmp.VA) AS SD
+	FROM (
+		SELECT {0}(um.DT) AS DT, SUM(umc.ValDec) AS V, SUM(umc.ValDec) / {5} AS VA, um.UserID
+		FROM healthwatch..UserMeasure um
+		INNER JOIN healthwatch..UserMeasureComponent umc ON umc.UserMeasureID = um.UserMeasureID
+		INNER JOIN healthwatch..MeasureComponent mc ON mc.MeasureComponentID = umc.MeasureComponentID AND mc.MeasureID = 65
+		INNER JOIN healthwatch..[User] u ON u.UserID = um.UserID
+		INNER JOIN healthwatch..UserProfile up ON up.UserID = u.UserID
+		INNER JOIN healthWatch..Department d ON d.DepartmentID = up.DepartmentID AND d.DepartmentID IN ({6})
+		INNER JOIN healthwatch..Sponsor s ON s.SponsorID = u.SponsorID AND s.SponsorID = {7}
+		INNER JOIN healthwatch..SponsorProject sp ON sp.SponsorID = s.SponsorID
+		WHERE um.DT IS NOT NULL
+		AND (YEAR(um.DT) = {1} AND MONTH(um.DT) >= {3} OR YEAR(um.DT) > {1})
+		AND (YEAR(um.DT) = {2} AND MONTH(um.DT) <= {4} OR YEAR(um.DT) < {2})
+		AND (YEAR(sp.StartDT) = {1} AND MONTH(sp.StartDT) >= {3} OR YEAR(sp.StartDT) > {1})
+		AND (YEAR(sp.EndDT) = {2} AND MONTH(sp.EndDT) <= {4} OR YEAR(sp.EndDT) < {2})
+		GROUP BY {0}(um.DT), um.UserID
+	) tmp
+	GROUP BY tmp.DT
+) tmp2",
+				groupBy,
+				yearFrom,
+				yearTo,
+				monthFrom,
+				monthTo,
+				aggregation,
+				departmentIDs,
+				sponsorID
+			);
+			using (SqlDataReader rs = ExecuteReader(query, "eFormSqlConnection")) {
+				if (rs.Read()) {
+					var a = new Answer {
+						Max = (float)GetDouble(rs, 0),
+						Min = 0
+					};
+					return a;
+				}
+			}
+			return null;
+		}
+		
 		public SponsorProject ReadSponsorProject(int sponsorProjectID)
 		{
 			string query = string.Format(
@@ -31,7 +107,6 @@ WHERE SponsorProjectID = @SponsorProjectID"
 						Sponsor = new Sponsor { Id = GetInt32(rs, 1) },
 						StartDate = GetDateTime(rs, 2),
 						EndDate = GetDateTime(rs, 3),
-//						ProjectName = GetString(rs, 4)
 						Subject = GetString(rs, 4)
 					};
 				}
@@ -59,7 +134,6 @@ WHERE SponsorID = @SponsorID"
 						Sponsor = new Sponsor { Id = GetInt32(rs, 1) },
 						StartDate = GetDateTime(rs, 2),
 						EndDate = GetDateTime(rs, 3),
-//						ProjectName = GetString(rs, 4)
 						Subject = GetString(rs, 4)
 					};
 					projects.Add(p);
@@ -91,38 +165,43 @@ FROM SponsorProjectMeasure"
 			return measures;
 		}
 		
-		public IList<Answer> FindByQuestionAndOptionJoinedAndGrouped2(string join, string groupBy, int yearFrom, int yearTo, int monthFrom, int monthTo)
+		public IList<UserMeasure> FindByQuestionAndOptionJoinedAndGrouped2(string join, string groupBy, int yearFrom, int yearTo, int monthFrom, int monthTo, int aggregation, int sponsorID)
 		{
 			string query = string.Format(
 				@"
-SELECT {1}(a.EndDT) AS DT, AVG(av.ValueInt) AS V
-FROM Answer a
+SELECT {1}(um.DT) AS DT, SUM(umc.ValDec) AS V, SUM(umc.ValDec) / {6} AS AV, um.UserID
+FROM healthwatch..UserMeasureComponent umc
+INNER JOIN healthwatch..UserMeasure um ON um.UserMeasureID = umc.UserMeasureID
 {0}
-INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = {2} AND av.OptionID = {3}
-WHERE a.EndDT IS NOT NULL
-AND (YEAR(a.EndDT) = {4} AND MONTH(a.EndDT) >= {6} OR YEAR(a.EndDT) > {4})
-AND (YEAR(a.EndDT) = {5} AND MONTH(a.EndDT) <= {7} OR YEAR(a.EndDT) < {5})
-GROUP BY a.ProjectRoundUserID, {1}(a.EndDT)",
+INNER JOIN healthwatch..Sponsor s ON s.SponsorID = u.SponsorID AND s.SponsorID = {7}
+INNER JOIN healthwatch..SponsorProject sp ON sp.SponsorID = s.SponsorID
+WHERE um.DT IS NOT NULL
+AND (YEAR(um.DT) = {2} AND MONTH(um.DT) >= {4} OR YEAR(um.DT) > {2})
+AND (YEAR(um.DT) = {3} AND MONTH(um.DT) <= {5} OR YEAR(um.DT) < {3})
+AND (YEAR(sp.StartDT) = {2} AND MONTH(sp.StartDT) >= {4} OR YEAR(sp.StartDT) > {2})
+AND (YEAR(sp.EndDT) = {3} AND MONTH(sp.EndDT) <= {5} OR YEAR(sp.EndDT) < {3})
+GROUP BY {1}(um.DT), um.UserID
+ORDER BY um.DT",
 				join,
 				groupBy,
-				238,
-				55,
 				yearFrom,
 				yearTo,
 				monthFrom,
-				monthTo
+				monthTo,
+				aggregation,
+				sponsorID
 			);
-			var measures = new List<Answer>();
+			var measures = new List<UserMeasure>();
 			using (SqlDataReader rs = ExecuteReader(query, "eFormSqlconnection")) {
 				if (rs.Read()) {
 					bool done = false;
 					while (!done) {
-						var m = new Answer { };
+						var m = new UserMeasure { };
 						do {
-							m.DT = rs.GetInt32(0);
-							m.Values.Add(new AnswerValue { ValueInt = rs.GetInt32(1) });
+							m.DT = GetInt32(rs, 0);
+							m.Components.Add(new UserMeasureComponent { ValueInt = (int)rs.GetDecimal(2) });
 							done = !rs.Read();
-						} while (!done && rs.GetInt32(0) == m.DT);
+						} while (!done && GetInt32(rs, 0) == m.DT);
 						measures.Add(m);
 					}
 				}

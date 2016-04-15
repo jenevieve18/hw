@@ -10,6 +10,11 @@ namespace HW.Core.Models
 		public virtual int SortOrder { get; set; }
 		public virtual string Description { get; set; }
 		public virtual IList<MeasureComponent> Components { get; set; }
+		
+		public Measure()
+		{
+			Components = new List<MeasureComponent>();
+		}
 	}
 	
 	public class MeasureCategory : BaseModel

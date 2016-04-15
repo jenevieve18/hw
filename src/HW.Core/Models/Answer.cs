@@ -42,7 +42,8 @@ namespace HW.Core.Models
 		public int DummyValue2 { get; set; }
 		public int DummyValue3 { get; set; }
 		public float Max {
-			get { return max > 100 ? 100 : max; }
+//			get { return max > 100 ? 100 : max; }
+			get { return max; }
 			set { max = value; }
 		}
 		public float Min {

@@ -89,7 +89,8 @@ namespace HW.Grp
 			int langID = (Request.QueryString["LangID"] != null ? Convert.ToInt32(Request.QueryString["LangID"]) : 0);
 
 			int reportPartID = Convert.ToInt32(Request.QueryString["RPID"]);
-			int projectRoundUnitID = Convert.ToInt32(Request.QueryString["PRUID"]);
+			//int projectRoundUnitID = Convert.ToInt32(Request.QueryString["PRUID"]);
+            int projectRoundUnitID = ConvertHelper.ToInt32(Request.QueryString["PRUID"].Replace("SPRU", ""));
 			
 			// FIXME: This hasGrouping value is always true! Please check!
 			bool hasGrouping = Request.QueryString["GRPNG"] != null || Request.QueryString["GRPNG"] != "0";

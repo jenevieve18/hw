@@ -94,8 +94,8 @@ namespace HW.Grp
 			int langID = (Request.QueryString["LangID"] != null ? Convert.ToInt32(Request.QueryString["LangID"]) : 0);
 
 //			int reportPartID = Convert.ToInt32(Request.QueryString["RPID"]);
-			int sponsorProjectID = ConvertHelper.ToInt32(Request.QueryString["SPID"]);
-			int projectRoundUnitID = ConvertHelper.ToInt32(Request.QueryString["PRUID"]);
+			int sponsorProjectID = ConvertHelper.ToInt32(Request.QueryString["PRUID"].Replace("SP", ""));
+//			int projectRoundUnitID = ConvertHelper.ToInt32(Request.QueryString["PRUID"]);
 
 			// FIXME: This hasGrouping value is always true! Please check!
 			bool hasGrouping = Request.QueryString["GRPNG"] != null || Request.QueryString["GRPNG"] != "0";
@@ -120,7 +120,8 @@ namespace HW.Grp
 //			var f = service.GetGraphFactory(HasAnswerKey);
 			var f = new ForStepCount(new SqlAnswerRepository(), new SqlReportRepository(), new SqlProjectRepository(), new SqlOptionRepository(), new SqlIndexRepository(), new SqlQuestionRepository(), new SqlDepartmentRepository(), new SqlMeasureRepository());
 //			g = f.CreateGraph(key, r, langID, projectRoundUnitID, yearFrom, yearTo, gb, hasGrouping, plot, Width, Height, Background, grpng, sponsorAdminID, sid, gid, disabled, point, s.MinUserCountToDisclose, monthFrom, monthTo);
-			g = f.CreateGraph(r, langID, projectRoundUnitID, yearFrom, yearTo, gb, hasGrouping, plot, grpng, sponsorAdminID, sid, gid, disabled, point, s.MinUserCountToDisclose, monthFrom, monthTo);
+//			g = f.CreateGraph(r, langID, projectRoundUnitID, yearFrom, yearTo, gb, hasGrouping, plot, grpng, sponsorAdminID, sid, gid, disabled, point, s.MinUserCountToDisclose, monthFrom, monthTo);
+			g = f.CreateGraph(r, langID, yearFrom, yearTo, gb, hasGrouping, plot, grpng, sponsorAdminID, sid, gid, disabled, point, s.MinUserCountToDisclose, monthFrom, monthTo);
 			g.render();
 		}
 	}
