@@ -172,6 +172,7 @@ FROM SponsorProjectMeasure"
 SELECT {1}(um.DT) AS DT, SUM(umc.ValDec) AS V, SUM(umc.ValDec) / {6} AS AV, um.UserID
 FROM healthwatch..UserMeasureComponent umc
 INNER JOIN healthwatch..UserMeasure um ON um.UserMeasureID = umc.UserMeasureID
+INNER JOIN healthwatch..MeasureComponent mc ON mc.MeasureComponentID = umc.MeasureComponentID AND mc.MeasureID = 65
 {0}
 INNER JOIN healthwatch..Sponsor s ON s.SponsorID = u.SponsorID AND s.SponsorID = {7}
 INNER JOIN healthwatch..SponsorProject sp ON sp.SponsorID = s.SponsorID
