@@ -78,13 +78,13 @@ FROM (
 			using (SqlDataReader rs = ExecuteReader(query, "eFormSqlConnection")) {
 				if (rs.Read()) {
 					var a = new Answer {
-						Max = (float)GetDouble(rs, 0),
+						Max = (float)GetDouble(rs, 0, 100),
 						Min = 0
 					};
 					return a;
 				}
 			}
-			return null;
+			return new Answer();
 		}
 		
 		public SponsorProject ReadSponsorProject(int sponsorProjectID)
