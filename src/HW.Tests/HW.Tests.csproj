@@ -105,6 +105,7 @@
     <Compile Include="Helpers\ExporterTests.cs" />
     <Compile Include="Helpers\ExtendedGraphTests.cs" />
     <Compile Include="Helpers\ExtendedGraphTests2.cs" />
+    <Compile Include="Helpers\ExtensionMethodsTests.cs" />
     <Compile Include="Helpers\GraphFactoryTests.cs" />
     <Compile Include="Helpers\GraphTests.cs" />
     <Compile Include="Helpers\HtmlHelperTests.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Repositories\IndexRepositoryTests.cs" />
     <Compile Include="Repositories\LanguageRepositoryTests.cs" />
     <Compile Include="Repositories\ManagerFunctionRepositoryTests.cs" />
+    <Compile Include="Repositories\MeasureRepositoryTests.cs" />
     <Compile Include="Repositories\OptionRepositoryTests.cs" />
     <Compile Include="Repositories\ProjectRepositoryTests.cs" />
     <Compile Include="Repositories\QuestionRepositoryTests.cs" />

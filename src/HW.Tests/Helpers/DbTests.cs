@@ -18,5 +18,11 @@ namespace HW.Tests.Helpers
 		{
 			Db.sendMail("ian.escarro@gmail.com", "", "");
 		}
+		
+		[Test]
+		public void TestHasMD5()
+		{
+			Console.WriteLine(Db.HashMd5("password"));
+		}
 	}
 }

@@ -6,6 +6,7 @@ using HW.Core;
 using HW.Core.Helpers;
 using HW.Core.Models;
 using HW.Core.Repositories.Sql;
+using HW.Core.Services;
 using NUnit.Framework;
 
 namespace HW.Tests.Helpers
@@ -16,6 +17,17 @@ namespace HW.Tests.Helpers
 		ExtendedGraph g;
 		Form f;
 		PictureBox p;
+		
+		ReportService service = new ReportService(
+			new SqlAnswerRepository(),
+			new SqlReportRepository(),
+			new SqlProjectRepository(),
+			new SqlOptionRepository(),
+			new SqlDepartmentRepository(),
+			new SqlQuestionRepository(),
+			new SqlIndexRepository(),
+			new SqlSponsorRepository()
+		);
 		
 		[SetUp]
 		public void Setup()
@@ -93,58 +105,176 @@ namespace HW.Tests.Helpers
 		}
 		
 		[Test]
-		public void TestBoxPlotUnitMeasure()
+		public void TestModelSponsorProject()
 		{
-			g.SetMinMax(0, 100);
-			g.DrawBackgroundFromIndex(new BaseIndex(0, 40, 60, 101, 101));
-			g.DrawComputingSteps(null, 24);
+			var p = new SponsorProject();
+//			p.ProjectName = "Project1";
+			p.Subject = "Project1";
 			
-			g.DrawBottomString(52313, 52334, 7);
+			var m = new Measure();
+			m.Components.Add(new MeasureComponent());
+			m.Components.Add(new MeasureComponent());
+			m.Components.Add(new MeasureComponent());
 			
-			g.Explanations.Add(
-				new Explanation {
-					Description = "mean value",
-					Color = 0,
-					Right = false,
-					Box = false,
-					HasAxis = false
-				}
+			p.Measures.Add(new SponsorProjectMeasure { Measure = m });
+			p.Measures.Add(new SponsorProjectMeasure { Measure = m });
+		}
+		
+		[Test]
+		public void TestUnitMeasure()
+		{
+			var p = new {
+				langID = 2,
+				yearFrom = 2016,
+				yearTo = 2016,
+				GB = Group.Grouping.UsersOnUnitAndSubUnits,
+				grouping = Group.Grouping.UsersOnUnitAndSubUnits,
+				sponsorAdminID = 10,
+				sponsorID = 3,
+				monthFrom = 3,
+				monthTo = 5,
+				sponsorMinUserCountToDisclose = 2,
+			};
+			
+			ISponsor s = service.ReadSponsor(p.sponsorID);
+			SponsorProject r = new SqlMeasureRepository().ReadSponsorProject(2);
+			
+			var exporter = new ForStepCount(new SqlAnswerRepository(), new SqlReportRepository(), new SqlProjectRepository(), new SqlOptionRepository(), new SqlIndexRepository(), new SqlQuestionRepository(), new SqlDepartmentRepository(), new SqlMeasureRepository());
+			
+			g = exporter.CreateGraph(
+				r,
+				p.langID,
+				p.yearFrom,
+				p.yearTo,
+				p.GB,
+				true,
+				PlotType.Line,
+				p.grouping,
+				p.sponsorAdminID,
+				p.sponsorID,
+				"0,7,8",
+				null,
+				0,
+				p.sponsorMinUserCountToDisclose,
+				p.monthFrom,
+				p.monthTo
+			);
+			g.Draw();
+		}
+		
+		[Test]
+		public void a()
+		{
+			ISponsor s = service.ReadSponsor(83);
+			ReportPart r = service.ReadReportPart(14, 2);
+			
+			var exporter = new GroupStatsGraphFactory(
+				new SqlAnswerRepository(),
+				new SqlReportRepository(),
+				new SqlProjectRepository(),
+				new SqlOptionRepository(),
+				new SqlIndexRepository(),
+				new SqlQuestionRepository(),
+				new SqlDepartmentRepository()
 			);
 			
-			var r =  new Random();
+			var p = new {
+				yearFrom = 2011,
+				yearTo = 2012,
+				groupBy = Group.GroupBy.TwoWeeksStartWithEven,
+				hasGrouping = true,
+				grouping = Group.Grouping.UsersOnUnit,
+				sponsorAdminID = 791,
+				sponsorID = 83,
+				monthFrom = 1,
+				monthTo = 1,
+				projectRoundUnitID = 2643,
+				sponsorMinUserCountToDisclose = 2,
+				point = 0,
+				langID = 2,
+			};
 			
-			var mr = new SqlMeasureRepository();
+			g = exporter.CreateGraph(
+				null,
+				r,
+				p.langID,
+				p.projectRoundUnitID,
+				p.yearFrom,
+				p.yearTo,
+				p.groupBy,
+				p.hasGrouping,
+				PlotType.LineSD,
+				0,
+				0,
+				"#ffffff",
+				p.grouping,
+				p.sponsorAdminID,
+				p.sponsorID,
+				"0,925",
+				null,
+				p.point,
+				p.sponsorMinUserCountToDisclose,
+				p.monthFrom,
+				p.monthTo
+			);
+			g.Draw();
+		}
+		
+		[Test]
+		public void b()
+		{
+			ISponsor s = service.ReadSponsor(83);
+			ReportPart r = service.ReadReportPart(14, 2);
 			
-			int breaker = 3;
-			int itemWidth = 240;
+			var exporter = new GroupStatsGraphFactory(
+				new SqlAnswerRepository(),
+				new SqlReportRepository(),
+				new SqlProjectRepository(),
+				new SqlOptionRepository(),
+				new SqlIndexRepository(),
+				new SqlQuestionRepository(),
+				new SqlDepartmentRepository()
+			);
 			
-			for (int i = 0; i < 5; i++) {
-				var s = new Series {
-					Description = "Series " + i.ToString(),
-					Color = i + 4,
-					X = 130 + (int)((i % breaker) * itemWidth),
-					Y = 20 + (int)Math.Floor((double)i / breaker) * 15
-				};
-				
-//				for (int j = 0; j < 22; j++) {
-				int j = 0;
-				var measures = mr.FindUserMeasures();
-				foreach (var a in measures) {
-					
-//					var l = new List<double>();
-//					for (int k = 0; k < 10; k++) {
-//						l.Add((double)r.Next(1, 100));
-//					}
-//					
-//					s.Points.Add(new PointV { X = j + 1, Values = new HWList(l) });
-					
-					s.Points.Add(new PointV { X = j + 1, Values = a.GetDecimalValues() });
-				}
-				g.Series.Add(s);
-			}
+			var p = new {
+				yearFrom = 2011,
+				yearTo = 2012,
+				groupBy = Group.GroupBy.TwoWeeksStartWithEven,
+				hasGrouping = true,
+				grouping = Group.Grouping.UsersOnUnitAndSubUnits,
+				sponsorAdminID = 791,
+				sponsorID = 83,
+				monthFrom = 1,
+				monthTo = 1,
+				projectRoundUnitID = 2643,
+				sponsorMinUserCountToDisclose = 2,
+				point = 0,
+				langID = 2,
+			};
 			
-			g.Type = new LineGraphType(0, 2);
-//			g.Type = new BoxPlotGraphType();
+			g = exporter.CreateGraph(
+				null,
+				r,
+				p.langID,
+				p.projectRoundUnitID,
+				p.yearFrom,
+				p.yearTo,
+				p.groupBy,
+				p.hasGrouping,
+				PlotType.LineSD,
+				0,
+				0,
+				"#ffffff",
+				p.grouping,
+				p.sponsorAdminID,
+				p.sponsorID,
+				"0,925",
+				null,
+				p.point,
+				p.sponsorMinUserCountToDisclose,
+				p.monthFrom,
+				p.monthTo
+			);
 			g.Draw();
 		}
 	}

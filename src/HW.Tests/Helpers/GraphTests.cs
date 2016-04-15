@@ -53,23 +53,23 @@ namespace HW.Tests.Helpers
 			g.Draw();
 		}
 		
-		[Test]
-		public void b()
-		{
-			var s = new Series();
-			var r = new Random();
-			var mr = new SqlMeasureRepository();
-			foreach (var x in mr.FindUserMeasures()) {
-				var l = new HWList();
-				for (int i = 0; i < 100; i++) {
-					l.Add(r.Next(1, 100));
-				}
-				s.Points.Add(new PointV { Values = l });
-			}
-			g.Series.Add(s);
-			g.Draw();
-		}
-		
+//		[Test]
+//		public void b()
+//		{
+//			var s = new Series();
+//			var r = new Random();
+//			var mr = new SqlMeasureRepository();
+//			foreach (var x in mr.FindUserMeasures()) {
+//				var l = new HWList();
+//				for (int i = 0; i < 100; i++) {
+//					l.Add(r.Next(1, 100));
+//				}
+//				s.Points.Add(new PointV { Values = l });
+//			}
+//			g.Series.Add(s);
+//			g.Draw();
+//		}
+//		
 //		[Test]
 //		public void b()
 //		{
