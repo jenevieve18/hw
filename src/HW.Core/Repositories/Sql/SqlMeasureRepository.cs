@@ -46,7 +46,7 @@ AND (YEAR(a.DT) = {2} AND MONTH(a.DT) <= {4} OR YEAR(a.DT) < {2})",
 				@"
 SELECT MAX(tmp2.VA + tmp2.SD), MIN(tmp2.VA - tmp2.SD)
 FROM (
-	SELECT AVG(tmp.VA) AS VA, STDEV(tmp.VA) AS SD
+	SELECT AVG(tmp.VA) AS VA, ISNULL(STDEV(tmp.VA), 0) AS SD
 	FROM (
 		SELECT {0}(um.DT) AS DT, SUM(umc.ValDec) AS V, SUM(umc.ValDec) / {5} AS VA, um.UserID
 		FROM healthwatch..UserMeasure um
@@ -61,7 +61,8 @@ FROM (
 		AND (YEAR(um.DT) = {1} AND MONTH(um.DT) >= {3} OR YEAR(um.DT) > {1})
 		AND (YEAR(um.DT) = {2} AND MONTH(um.DT) <= {4} OR YEAR(um.DT) < {2})
 		AND (YEAR(sp.StartDT) = {1} AND MONTH(sp.StartDT) >= {3} OR YEAR(sp.StartDT) > {1})
-		AND (YEAR(sp.EndDT) = {2} AND MONTH(sp.EndDT) <= {4} OR YEAR(sp.EndDT) < {2})
+		--AND (YEAR(sp.EndDT) = {2} AND MONTH(sp.EndDT) <= {4} OR YEAR(sp.EndDT) < {2})
+		AND (YEAR(sp.EndDT) = {2} AND MONTH(sp.EndDT) <= {4} OR YEAR(sp.EndDT) <= {2})
 		GROUP BY {0}(um.DT), um.UserID
 	) tmp
 	GROUP BY tmp.DT
@@ -180,7 +181,8 @@ WHERE um.DT IS NOT NULL
 AND (YEAR(um.DT) = {2} AND MONTH(um.DT) >= {4} OR YEAR(um.DT) > {2})
 AND (YEAR(um.DT) = {3} AND MONTH(um.DT) <= {5} OR YEAR(um.DT) < {3})
 AND (YEAR(sp.StartDT) = {2} AND MONTH(sp.StartDT) >= {4} OR YEAR(sp.StartDT) > {2})
-AND (YEAR(sp.EndDT) = {3} AND MONTH(sp.EndDT) <= {5} OR YEAR(sp.EndDT) < {3})
+--AND (YEAR(sp.EndDT) = {3} AND MONTH(sp.EndDT) <= {5} OR YEAR(sp.EndDT) < {3})
+AND (YEAR(sp.EndDT) = {3} AND MONTH(sp.EndDT) <= {5} OR YEAR(sp.EndDT) <= {3})
 GROUP BY {1}(um.DT), um.UserID
 ORDER BY um.DT",
 				join,
