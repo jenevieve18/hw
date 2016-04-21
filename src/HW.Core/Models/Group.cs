@@ -490,15 +490,26 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 						foreach (Department d in departments) {
 							string query = string.Format(
 								@"
-INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
-INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID AND HWu.ProjectRoundUnitID = {0}
-INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID AND HWup.DepartmentID = {1}",
-								"509", //pruid,
+INNER JOIN healthwatch..[User] u ON u.UserID = um.UserID
+INNER JOIN healthwatch..UserProfile up ON up.UserID = u.UserID AND up.DepartmentID = {0}",
 								d.Id
 							);
 							y.Add(new DepartmentAndQuery(d.Id.ToString(), d.Name, d.MinUserCountToDisclose, query));
 						}
 						break;
+//						IList<Department> departments = sponsorAdminID != -1 ? departmentRepository.FindBySponsorWithSponsorAdminIn(sponsorID, sponsorAdminID, departmentIDs, sponsorMinUserCountToDisclose) : departmentRepository.FindBySponsorOrderedBySortStringIn(sponsorID, departmentIDs, sponsorMinUserCountToDisclose);
+//						foreach (Department d in departments) {
+//							string query = string.Format(
+//								@"
+//INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
+//INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID AND HWu.ProjectRoundUnitID = {0}
+//INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID AND HWup.DepartmentID = {1}",
+//								"509", //pruid,
+//								d.Id
+//							);
+//							y.Add(new DepartmentAndQuery(d.Id.ToString(), d.Name, d.MinUserCountToDisclose, query));
+//						}
+//						break;
 					}
 				case Group.Grouping.UsersOnUnitAndSubUnits:
 					{

@@ -178,20 +178,38 @@ namespace HW.Core.Helpers
 //				g.SetMinMax(0, 500000);
 //				var m = measureRepository.ReadMinMax(groupBy, yearFrom, yearTo, sortString, monthFrom, monthTo);
 //				g.SetMinMax((int)m.Min, (int)m.Max);
-				int aggregation = GetAggregationByGroupBy(GB);
-				var minMax = measureRepository.ReadMinMax(groupByQuery, yearFrom, yearTo, monthFrom, monthTo, aggregation, departmentIDs, sponsorID);
-				g.SetMinMax((int)minMax.Min, ((int)minMax.Max).Ceiling());
-				g.DrawBackgroundFromIndex(new BaseIndex());
-				g.DrawComputingSteps(disabled, differenceDate);
-				
-				differenceDate = 0;
-				
-				g.DrawBottomString(startDate, endDate, GB);
+//				int aggregation = GetAggregationByGroupBy(GB);
+//				
+//				var minMax = measureRepository.ReadMinMax(groupByQuery, yearFrom, yearTo, monthFrom, monthTo, aggregation, departmentIDs, sponsorID);
+//				g.SetMinMax((int)minMax.Min, ((int)minMax.Max).Ceiling());
+//				g.DrawBackgroundFromIndex(new BaseIndex());
+//				g.DrawComputingSteps(disabled, differenceDate);
+//				
+//				differenceDate = 0;
+//				
+//				g.DrawBottomString(startDate, endDate, GB);
 				
 				if (hasGrouping) {
 					string extraDesc = "";
 					
 					var departments = GroupFactory.GetDepartmentsWithJoinQueryForStepCount(grouping, sponsorAdminID, sponsorID, departmentIDs, ref extraDesc, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
+					
+					int aggregation = GetAggregationByGroupBy(GB);
+				
+					var minMaxes = new List<IMinMax>();
+					foreach (var d in departments) {
+						var minMax = measureRepository.ReadMinMax2(groupByQuery, yearFrom, yearTo, monthFrom, monthTo, aggregation, departmentIDs, sponsorID, d.Query);
+						minMax.Max = (float)(((int)minMax.Max).Ceiling());
+						minMaxes.Add(minMax);
+					}
+					//g.SetMinMax((int)minMax.Min, ((int)minMax.Max).Ceiling());
+					g.SetMinMaxes(minMaxes);
+					g.DrawBackgroundFromIndex(new BaseIndex());
+					g.DrawComputingSteps(disabled, differenceDate);
+					
+					differenceDate = 0;
+					
+					g.DrawBottomString(startDate, endDate, GB);
 					
 					int breaker = 6;
 					int itemWidth = 120;

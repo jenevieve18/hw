@@ -61,7 +61,6 @@ FROM (
 		AND (YEAR(um.DT) = {1} AND MONTH(um.DT) >= {3} OR YEAR(um.DT) > {1})
 		AND (YEAR(um.DT) = {2} AND MONTH(um.DT) <= {4} OR YEAR(um.DT) < {2})
 		AND (YEAR(sp.StartDT) = {1} AND MONTH(sp.StartDT) >= {3} OR YEAR(sp.StartDT) > {1})
-		--AND (YEAR(sp.EndDT) = {2} AND MONTH(sp.EndDT) <= {4} OR YEAR(sp.EndDT) < {2})
 		AND (YEAR(sp.EndDT) = {2} AND MONTH(sp.EndDT) <= {4} OR YEAR(sp.EndDT) <= {2})
 		GROUP BY {0}(um.DT), um.UserID
 	) tmp
@@ -75,6 +74,55 @@ FROM (
 				aggregation,
 				departmentIDs,
 				sponsorID
+			);
+			using (SqlDataReader rs = ExecuteReader(query, "eFormSqlConnection")) {
+				if (rs.Read()) {
+					var a = new Answer {
+						Max = (float)GetDouble(rs, 0, 100),
+						Min = 0
+					};
+					return a;
+				}
+			}
+			return new Answer();
+		}
+		
+		public Answer ReadMinMax2(string groupBy, int yearFrom, int yearTo, int monthFrom, int monthTo, int aggregation, string departmentIDs, int sponsorID, string join)
+		{
+			string query = string.Format(
+				@"
+SELECT MAX(tmp2.VA + tmp2.SD), MIN(tmp2.VA - tmp2.SD)
+FROM (
+	SELECT AVG(tmp.VA) AS VA, ISNULL(STDEV(tmp.VA), 0) AS SD
+	FROM (
+		SELECT {0}(um.DT) AS DT, SUM(umc.ValDec) AS V, SUM(umc.ValDec) / {5} AS VA, um.UserID
+		FROM healthwatch..UserMeasure um
+		INNER JOIN healthwatch..UserMeasureComponent umc ON umc.UserMeasureID = um.UserMeasureID
+		INNER JOIN healthwatch..MeasureComponent mc ON mc.MeasureComponentID = umc.MeasureComponentID AND mc.MeasureID = 65
+		--INNER JOIN healthwatch..[User] u ON u.UserID = um.UserID
+		--INNER JOIN healthwatch..UserProfile up ON up.UserID = u.UserID
+		--INNER JOIN healthWatch..Department d ON d.DepartmentID = up.DepartmentID AND d.DepartmentID IN ({6})
+		{8}
+		INNER JOIN healthwatch..Sponsor s ON s.SponsorID = u.SponsorID AND s.SponsorID = {7}
+		INNER JOIN healthwatch..SponsorProject sp ON sp.SponsorID = s.SponsorID
+		WHERE um.DT IS NOT NULL
+		AND (YEAR(um.DT) = {1} AND MONTH(um.DT) >= {3} OR YEAR(um.DT) > {1})
+		AND (YEAR(um.DT) = {2} AND MONTH(um.DT) <= {4} OR YEAR(um.DT) < {2})
+		AND (YEAR(sp.StartDT) = {1} AND MONTH(sp.StartDT) >= {3} OR YEAR(sp.StartDT) > {1})
+		AND (YEAR(sp.EndDT) = {2} AND MONTH(sp.EndDT) <= {4} OR YEAR(sp.EndDT) <= {2})
+		GROUP BY {0}(um.DT), um.UserID
+	) tmp
+	GROUP BY tmp.DT
+) tmp2",
+				groupBy,
+				yearFrom,
+				yearTo,
+				monthFrom,
+				monthTo,
+				aggregation,
+				departmentIDs,
+				sponsorID,
+				join
 			);
 			using (SqlDataReader rs = ExecuteReader(query, "eFormSqlConnection")) {
 				if (rs.Read()) {
@@ -181,7 +229,6 @@ WHERE um.DT IS NOT NULL
 AND (YEAR(um.DT) = {2} AND MONTH(um.DT) >= {4} OR YEAR(um.DT) > {2})
 AND (YEAR(um.DT) = {3} AND MONTH(um.DT) <= {5} OR YEAR(um.DT) < {3})
 AND (YEAR(sp.StartDT) = {2} AND MONTH(sp.StartDT) >= {4} OR YEAR(sp.StartDT) > {2})
---AND (YEAR(sp.EndDT) = {3} AND MONTH(sp.EndDT) <= {5} OR YEAR(sp.EndDT) < {3})
 AND (YEAR(sp.EndDT) = {3} AND MONTH(sp.EndDT) <= {5} OR YEAR(sp.EndDT) <= {3})
 GROUP BY {1}(um.DT), um.UserID
 ORDER BY um.DT",
