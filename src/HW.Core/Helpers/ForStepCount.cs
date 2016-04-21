@@ -253,7 +253,7 @@ namespace HW.Core.Helpers
 									lastDT++;
 									differenceDate++;
 								}
-								//if (a.Values.Count >= i.MinUserCountToDisclose) {
+								if (a.Components.Count >= i.MinUserCountToDisclose) {
 									if (departments.Count == 1) {
 //										string v = GetBottomString(grouping, a.DT, differenceDate, (departments.Count == 1 ? ", n = " + a.Values.Count : ""));
 //										string v = BaseGraphFactory.GetBottomString(GB, a.DT, differenceDate, (departments.Count == 1 ? ", n = " + a.Values.Count : ""));
@@ -261,7 +261,7 @@ namespace HW.Core.Helpers
 										g.DrawBottomString(v, differenceDate);
 									}
 									s.Points.Add(new PointV { X = differenceDate, Values = a.GetIntValues() });
-								//}
+								}
 								lastDT = a.DT;
 								differenceDate++;
 							}
