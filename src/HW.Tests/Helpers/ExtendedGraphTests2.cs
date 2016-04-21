@@ -121,18 +121,60 @@ namespace HW.Tests.Helpers
 		}
 		
 		[Test]
-		public void TestUnitMeasure()
+		public void TestUnitMeasureWithUnits()
 		{
 			var p = new {
 				langID = 2,
 				yearFrom = 2016,
 				yearTo = 2016,
-				GB = Group.Grouping.UsersOnUnitAndSubUnits,
+				GB = Group.GroupBy.TwoWeeksStartWithEven,
+				grouping = Group.Grouping.UsersOnUnit,
+				sponsorAdminID = 10,
+				sponsorID = 3,
+				monthFrom = 4,
+				monthTo = 4,
+				sponsorMinUserCountToDisclose = 2,
+			};
+			
+			ISponsor s = service.ReadSponsor(p.sponsorID);
+			SponsorProject r = new SqlMeasureRepository().ReadSponsorProject(2);
+			
+			var exporter = new ForStepCount(new SqlAnswerRepository(), new SqlReportRepository(), new SqlProjectRepository(), new SqlOptionRepository(), new SqlIndexRepository(), new SqlQuestionRepository(), new SqlDepartmentRepository(), new SqlMeasureRepository());
+			
+			g = exporter.CreateGraph(
+				r,
+				p.langID,
+				p.yearFrom,
+				p.yearTo,
+				p.GB,
+				true,
+				PlotType.Line,
+				p.grouping,
+				p.sponsorAdminID,
+				p.sponsorID,
+				"0,6",
+				null,
+				0,
+				p.sponsorMinUserCountToDisclose,
+				p.monthFrom,
+				p.monthTo
+			);
+			g.Draw();
+		}
+		
+		[Test]
+		public void TestUnitMeasureWithSubUnits()
+		{
+			var p = new {
+				langID = 2,
+				yearFrom = 2016,
+				yearTo = 2016,
+				GB = Group.GroupBy.TwoWeeksStartWithEven,
 				grouping = Group.Grouping.UsersOnUnitAndSubUnits,
 				sponsorAdminID = 10,
 				sponsorID = 3,
-				monthFrom = 3,
-				monthTo = 5,
+				monthFrom = 4,
+				monthTo = 4,
 				sponsorMinUserCountToDisclose = 2,
 			};
 			
