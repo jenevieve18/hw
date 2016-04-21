@@ -470,17 +470,24 @@ INNER JOIN healthWatch..UserProfileBQ HWp{0} ON HWup.UserProfileID = HWp{0}.User
 							}
 							i++;
 						}
-
 						string query = string.Format(
 							@"
-INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
-INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID
-INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID AND HWu.ProjectRoundUnitID = {0}
-INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString, {1}) IN ({2}) ",
-							"509", //pruid,
+INNER JOIN healthwatch..[User] u ON u.UserID = um.UserID
+INNER JOIN healthWatch..UserProfile up ON up.UserID = u.UserID
+INNER JOIN healthWatch..Department d ON d.DepartmentID = up.DepartmentID AND LEFT(d.SortString, {0}) IN ({1}) ",
 							sslen,
 							tmpSS
 						);
+//						string query = string.Format(
+//							@"
+//INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
+//INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID
+//INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID AND HWu.ProjectRoundUnitID = {0}
+//INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString, {1}) IN ({2}) ",
+//							"509", //pruid,
+//							sslen,
+//							tmpSS
+//						);
 						y.Add(new DepartmentAndQuery("1", tmpDesc, minUserCountToDisclose, query));
 						break;
 					}
