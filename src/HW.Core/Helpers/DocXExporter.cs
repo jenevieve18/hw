@@ -13,7 +13,7 @@ namespace HW.Core.Helpers
 	public class DocXExporter : AbstractExporter
 	{
 		ReportPart r;
-		IList<ReportPartLanguage> parts;
+		IList<IReportPart> parts;
 		ReportService service;
         string template;
 		
@@ -23,7 +23,7 @@ namespace HW.Core.Helpers
             this.template = template;
 		}
 		
-		public DocXExporter(ReportService service, IList<ReportPartLanguage> parts, string template)
+		public DocXExporter(ReportService service, IList<IReportPart> parts, string template)
 		{
 			this.service = service;
 			this.parts = parts;
@@ -117,13 +117,19 @@ namespace HW.Core.Helpers
 					ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
 					if (i == 0) {
 						Paragraph header = d.Paragraphs[0];
-						header.Append(r.CurrentLanguage.Subject).Font(new FontFamily("Calibri")).FontSize(14).Bold().Color(Color.SteelBlue);
+						//header.Append(r.CurrentLanguage.Subject).Font(new FontFamily("Calibri")).FontSize(14).Bold().Color(Color.SteelBlue);
+						header.Append(p.Subject).Font(new FontFamily("Calibri")).FontSize(14).Bold().Color(Color.SteelBlue);
 					} else {
 						Paragraph header = d.InsertParagraph();
-						header.Append(r.CurrentLanguage.Subject).Font(new FontFamily("Calibri")).FontSize(14).Bold().Color(Color.SteelBlue);
+						//header.Append(r.CurrentLanguage.Subject).Font(new FontFamily("Calibri")).FontSize(14).Bold().Color(Color.SteelBlue);
+						header.Append(p.Subject).Font(new FontFamily("Calibri")).FontSize(14).Bold().Color(Color.SteelBlue);
 					}
 					
 //					string url = GetUrl(path, langID, fy, ty, spons, sid, gb, r.Id, pruid, gid, grpng, plot, fm, tm);
+					
+					if (r == null) {
+						r = new ReportPart();
+					}
 					
 					var e = new ReportPartEventArgs(r);
 					OnUrlSet(e);

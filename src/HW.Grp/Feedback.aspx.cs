@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
 using HW.Core.Helpers;
+using HW.Core.Models;
 using HW.Core.Repositories.Sql;
 
 namespace HW.Grp
@@ -741,7 +741,9 @@ namespace HW.Grp
 //					do
 					foreach (var v in u.Values) {
 //						List.Text += "<tr><td>" + rs2.GetString(0) + "</td><td>" + (rs2.IsDBNull(1) ? "" : rs2.GetString(1)) + "</td></tr>";
-						List.Text += "<tr><td>" + u.ProjectRoundUser.Email + "</td><td>" + v.Option.CurrentComponent.Text + "</td></tr>";
+//						List.Text += "<tr><td>" + u.ProjectRoundUser.Email + "</td><td>" + v.Option.CurrentComponent.Text + "</td></tr>";
+						var vv = v as AnswerValue;
+						List.Text += "<tr><td>" + u.ProjectRoundUser.Email + "</td><td>" + vv.Option.CurrentComponent.Text + "</td></tr>";
 					}
 //					while (rs2.Read());
 					List.Text += "</table>";

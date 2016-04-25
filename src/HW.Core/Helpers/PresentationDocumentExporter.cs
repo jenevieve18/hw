@@ -19,7 +19,7 @@ namespace HW.Core.Helpers
 	public class PresentationDocumentExporter : AbstractExporter
 	{
 		ReportPart r;
-		IList<ReportPartLanguage> parts;
+		IList<IReportPart> parts;
 		ReportService service;
 		GeneratedClass gc = new GeneratedClass();
 		
@@ -28,7 +28,7 @@ namespace HW.Core.Helpers
 			this.r = r;
 		}
 		
-		public PresentationDocumentExporter(ReportService service, IList<ReportPartLanguage> parts)
+		public PresentationDocumentExporter(ReportService service, IList<IReportPart> parts)
 		{
 			this.service = service;
 			this.parts = parts;
@@ -81,7 +81,7 @@ namespace HW.Core.Helpers
 //					e.Url =  GetUrl(path, langID, fy, ty, spons, sid, gb, e.ReportPart.Id, pruid, gid, grpng, plot, fm, tm);
 				};
 				r.CurrentLanguage.ReportPart = r; // HACK: Report part should be assigned to the language because upon querying from database it's not set.
-				gc.CreateParts(package, new List<ReportPartLanguage>(new ReportPartLanguage[] { r.CurrentLanguage }));
+				gc.CreateParts(package, new List<IReportPart>(new ReportPartLanguage[] { r.CurrentLanguage }));
 			}
 			return output;
 		}
@@ -108,7 +108,7 @@ namespace HW.Core.Helpers
 			using (PresentationDocument package = PresentationDocument.Create(output, PresentationDocumentType.Presentation)) {
 				gc.UrlSet += delegate(object sender, ReportPartEventArgs e) { e.Url =  url; };
 				r.CurrentLanguage.ReportPart = r; // HACK: Report part should be assigned to the language because upon querying from database it's not set.
-				gc.CreateParts(package, new List<ReportPartLanguage>(new ReportPartLanguage[] { r.CurrentLanguage }));
+				gc.CreateParts(package, new List<IReportPart>(new ReportPartLanguage[] { r.CurrentLanguage }));
 			}
 			return output;
 		}

@@ -117,7 +117,8 @@ ORDER BY pru.Email",
 					var a = new Answer {
 						ProjectRoundUser = new ProjectRoundUser { Email = rs.GetString(0) }
 					};
-					a.Values = new List<AnswerValue>();
+//					a.Values = new List<AnswerValue>();
+					a.Values = new List<IValue>();
 					do {
 						var o = new Option {
 							CurrentComponent = new OptionComponentLanguage { Text = rs.GetString(1) }
@@ -172,7 +173,8 @@ AND av.OptionID = {2}",
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				if (rs.Read()) {
 					var a = new Answer();
-					a.Values = new List<AnswerValue>(
+//					a.Values = new List<AnswerValue>(
+					a.Values = new List<IValue>(
 						new AnswerValue[] {
 							new AnswerValue { Answer = a, ValueInt = rs.GetInt32(0) }
 						}
@@ -605,7 +607,8 @@ AND u.ProjectRoundID = {0}",
 					var a = new Answer {
 						ProjectRoundUser = new ProjectRoundUser{ Email = rs.GetString(1) }
 					};
-					a.Values = new List<AnswerValue>(
+//					a.Values = new List<AnswerValue>(
+					a.Values = new List<IValue>(
 						new AnswerValue [] {
 							new AnswerValue { ValueInt = rs.GetInt32(0) }
 						}
@@ -654,7 +657,8 @@ WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = {0}",
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				while (rs.Read()) {
 					var a = new Answer { ProjectRoundUser = new ProjectRoundUser{ Email = rs.GetString(12) }};
-					a.Values = new List<AnswerValue>();
+//					a.Values = new List<AnswerValue>();
+					a.Values = new List<IValue>();
 					a.Values.Add(new AnswerValue { ValueDecimal = rs.GetDecimal(0) });
 					a.Values.Add(new AnswerValue { ValueInt = GetInt32(rs, 1) });
 					a.Values.Add(new AnswerValue { ValueDecimal = rs.GetDecimal(2) });
@@ -695,7 +699,8 @@ WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = {0}",
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				while (rs.Read()) {
 					var a = new Answer { ProjectRoundUser = new ProjectRoundUser{ Email = rs.GetString(4) }};
-					a.Values = new List<AnswerValue>(
+//					a.Values = new List<AnswerValue>(
+					a.Values = new List<IValue>(
 						new AnswerValue[] {
 							new AnswerValue { ValueInt = rs.GetInt32(0) },
 							new AnswerValue { ValueInt = rs.GetInt32(1) },
@@ -731,7 +736,8 @@ WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = {0}",
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				while (rs.Read()) {
 					var a = new Answer { ProjectRoundUser = new ProjectRoundUser{ Email = rs.GetString(4) }};
-					a.Values = new List<AnswerValue>(
+//					a.Values = new List<AnswerValue>(
+					a.Values = new List<IValue>(
 						new AnswerValue[] {
 							new AnswerValue { ValueInt = rs.GetInt32(0) },
 							new AnswerValue { ValueInt = rs.GetInt32(1) },
@@ -767,7 +773,8 @@ WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = {0}",
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				while (rs.Read()) {
 					var a = new Answer { ProjectRoundUser = new ProjectRoundUser { Email = rs.GetString(4) }};
-					a.Values = new List<AnswerValue>(
+//					a.Values = new List<AnswerValue>(
+					a.Values = new List<IValue>(
 						new AnswerValue[] {
 							new AnswerValue { ValueInt = rs.GetInt32(0) },
 							new AnswerValue { ValueInt = rs.GetInt32(1) },
@@ -849,7 +856,8 @@ WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = {0}",
 				while (rs.Read()) {
 					var a = new Answer();
 					a.ProjectRoundUser = new ProjectRoundUser { Email = rs.GetString(9) };
-					a.Values = new List<AnswerValue>(
+//					a.Values = new List<AnswerValue>(
+					a.Values = new List<IValue>(
 						new AnswerValue[] {
 							new AnswerValue { ValueInt = rs.GetInt32(0) },
 							new AnswerValue { ValueInt = rs.GetInt32(1) },

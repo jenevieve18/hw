@@ -22,7 +22,7 @@ namespace HW.Core.Helpers
 		ReportPart r;
 //		string key;
 		ReportService service;
-		IList<ReportPartLanguage> parts;
+		IList<IReportPart> parts;
 		
 		public ExcelExporter(ReportPart r)
 		{
@@ -44,7 +44,7 @@ namespace HW.Core.Helpers
 		}
 		
 //		public ExcelExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, IList<ReportPartLanguage> parts, string key)
-		public ExcelExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, IList<ReportPartLanguage> parts)
+		public ExcelExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, IList<IReportPart> parts)
 		{
 			this.service = service;
 			this.hasAnswerKey = hasAnswerKey;
@@ -123,8 +123,8 @@ namespace HW.Core.Helpers
 //		int tm;
 //		int langID;
 		
-//		public override object Export(string url) 
-		public override object Export(string url, int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
+//		public override object Export(string url)
+		public override object Export(string url, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int gb, int plot, int grouping, int sponsorAdminID, int sponsorID, string departmentIDs, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
 		{
 			MemoryStream output = new MemoryStream();
 			var f = service.GetGraphFactory(hasAnswerKey);
@@ -138,7 +138,7 @@ namespace HW.Core.Helpers
 			i++;
 			
 //			f.CreateGraph3(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled, w, ref i, sponsorMinUserCountToDisclose, fm, tm);
-			f.CreateGraphForExcelWriter(r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, w, ref i, sponsorMinUserCountToDisclose, fm, tm);
+			f.CreateGraphForExcelWriter(r, langID, projectRoundUnitID, yearFrom, yearTo, gb, hasGrouping, plot, grouping, sponsorAdminID, sponsorID, departmentIDs, w, ref i, sponsorMinUserCountToDisclose, monthFrom, monthTo);
 			
 			w.EndWrite();
 			return output;
@@ -150,16 +150,32 @@ namespace HW.Core.Helpers
 			ExcelWriter w = new ExcelWriter(output);
 			int i = 0;
 			foreach (var p in parts) {
-				ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
-				var f = service.GetGraphFactory(hasAnswerKey);
-				w.WriteCell(new ExcelCell { Row = i, Column = 0, Value = r.CurrentLanguage.Subject, BackgroundColor = Color.AliceBlue, FontSize = 16, BorderStyle = ExcelBorderStyle.Thin});
-				int j = i;
-				f.ForMerge += delegate(object sender, MergeEventArgs e) {
-					w.Merge(j, 0, j, e.WeeksCount, ExcelBorderStyle.Thin);
-				};
-				i++;
+				if (p is SponsorProject) {
+//					var f = service.GetGraphFactory(hasAnswerKey);
+					var f = new ForStepCount(new SqlAnswerRepository(), new SqlReportRepository(), new SqlProjectRepository(), new SqlOptionRepository(), new SqlIndexRepository(), new SqlQuestionRepository(), new SqlDepartmentRepository(), new SqlMeasureRepository());
+					w.WriteCell(new ExcelCell { Row = i, Column = 0, Value = p.Subject, BackgroundColor = Color.AliceBlue, FontSize = 16, BorderStyle = ExcelBorderStyle.Thin});
+					int j = i;
+					f.ForMerge += delegate(object sender, MergeEventArgs e) {
+						w.Merge(j, 0, j, e.WeeksCount, ExcelBorderStyle.Thin);
+					};
+					i++;
+					
+					ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
+					f.CreateGraphForExcelWriter(r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, w, ref i, sponsorMinUserCountToDisclose, fm, tm);
+				} else {
+					var f = service.GetGraphFactory(hasAnswerKey);
+					//w.WriteCell(new ExcelCell { Row = i, Column = 0, Value = r.CurrentLanguage.Subject, BackgroundColor = Color.AliceBlue, FontSize = 16, BorderStyle = ExcelBorderStyle.Thin});
+					w.WriteCell(new ExcelCell { Row = i, Column = 0, Value = p.Subject, BackgroundColor = Color.AliceBlue, FontSize = 16, BorderStyle = ExcelBorderStyle.Thin});
+					int j = i;
+					f.ForMerge += delegate(object sender, MergeEventArgs e) {
+						w.Merge(j, 0, j, e.WeeksCount, ExcelBorderStyle.Thin);
+					};
+					i++;
+					
+					ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
 //				f.CreateGraph3(key, r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, disabled, w, ref i, sponsorMinUserCountToDisclose, fm, tm);
-				f.CreateGraphForExcelWriter(r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, w, ref i, sponsorMinUserCountToDisclose, fm, tm);
+					f.CreateGraphForExcelWriter(r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, w, ref i, sponsorMinUserCountToDisclose, fm, tm);
+				}
 			}
 			w.EndWrite();
 			return output;
@@ -212,16 +228,16 @@ namespace HW.Core.Helpers
 //	{
 //		ExcelWriter writer;
 //		int index;
-//		
+//
 //		public int Index {
 //			get { return index; }
 //		}
-//		
+//
 //		public ExcelWriter Writer {
 //			get { return writer; }
 //			set { writer = value; }
 //		}
-//		
+//
 //		public ExcelWriterEventArgs(ExcelWriter writer, int index)
 //		{
 //			this.writer = writer;
@@ -254,7 +270,8 @@ namespace HW.Core.Helpers
 	
 	public class LineExcel : AbstractExcel
 	{
-		public void ToExcel(List<Department> departments, Dictionary<string, List<Answer>> weeks, ExcelWriter writer, ref int i)
+//		public void ToExcel(List<Department> departments, Dictionary<string, List<Answer>> weeks, ExcelWriter writer, ref int i)
+		public void ToExcel(List<IDepartment> departments, Dictionary<string, List<IAnswer>> weeks, ExcelWriter writer, ref int i)
 		{
 			writer.WriteCell(new ExcelCell { Row = i, Column = 0, Value = "Timeframe", ForegroundColor = Color.White, BackgroundColor = Color.SteelBlue, BorderStyle = ExcelBorderStyle.Thin });
 			int j = 1;
@@ -296,7 +313,8 @@ namespace HW.Core.Helpers
 	
 	public class ConfidenceIntervalLineExcel : AbstractExcel
 	{
-		public void ToExcel(List<Department> departments, Dictionary<string, List<Answer>> weeks, ExcelWriter writer, ref int i)
+//		public void ToExcel(List<Department> departments, Dictionary<string, List<Answer>> weeks, ExcelWriter writer, ref int i)
+		public void ToExcel(List<IDepartment> departments, Dictionary<string, List<IAnswer>> weeks, ExcelWriter writer, ref int i)
 		{
 			writer.WriteCell(new ExcelCell { Row = i, Column = 0, Value = "Timeframe", ForegroundColor = Color.White, BackgroundColor = Color.SteelBlue, BorderStyle = ExcelBorderStyle.Thin});
 			int j = 1;
@@ -345,7 +363,8 @@ namespace HW.Core.Helpers
 	
 	public class StandardDeviationLineExcel : AbstractExcel
 	{
-		public void ToExcel(List<Department> departments, Dictionary<string, List<Answer>> weeks, ExcelWriter writer, ref int i)
+//		public void ToExcel(List<Department> departments, Dictionary<string, List<Answer>> weeks, ExcelWriter writer, ref int i)
+		public void ToExcel(List<IDepartment> departments, Dictionary<string, List<IAnswer>> weeks, ExcelWriter writer, ref int i)
 		{
 			writer.WriteCell(new ExcelCell { Row = i, Column = 0, Value = "Timeframe", ForegroundColor = Color.White, BackgroundColor = Color.SteelBlue, BorderStyle = ExcelBorderStyle.Thin});
 			int j = 1;
@@ -394,7 +413,8 @@ namespace HW.Core.Helpers
 	
 	public class BoxPlotExcel : AbstractExcel
 	{
-		public void ToExcel(List<Department> departments, Dictionary<string, List<Answer>> weeks, ExcelWriter writer, ref int i)
+//		public void ToExcel(List<Department> departments, Dictionary<string, List<Answer>> weeks, ExcelWriter writer, ref int i)
+		public void ToExcel(List<IDepartment> departments, Dictionary<string, List<IAnswer>> weeks, ExcelWriter writer, ref int i)
 		{
 			writer.WriteCell(new ExcelCell { Row = i, Column = 0, Value = "Timeframe", ForegroundColor = Color.White, BackgroundColor = Color.SteelBlue, BorderStyle = ExcelBorderStyle.Thin });
 			int j = 1;
@@ -440,7 +460,8 @@ namespace HW.Core.Helpers
 	
 	public class EverythingExcel : AbstractExcel
 	{
-		public void ToExcel(List<Department> departments, Dictionary<string, List<Answer>> weeks, ExcelWriter writer, ref int i)
+//		public void ToExcel(List<Department> departments, Dictionary<string, List<Answer>> weeks, ExcelWriter writer, ref int i)
+		public void ToExcel(List<IDepartment> departments, Dictionary<string, List<IAnswer>> weeks, ExcelWriter writer, ref int i)
 		{
 			writer.WriteCell(new ExcelCell { Row = i, Column = 0, Value = "Timeframe", ForegroundColor = Color.White, BackgroundColor = Color.SteelBlue, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Right });
 			writer.Merge(i, 0, i, 1, ExcelBorderStyle.Thin);

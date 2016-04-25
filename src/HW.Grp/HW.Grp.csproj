@@ -155,6 +155,7 @@
     <Content Include="css\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="css\jquery.ui.all.css" />
     <Content Include="css\style.css" />
+    <Content Include="ExportAll2.aspx" />
     <Content Include="images\book.png" />
     <Content Include="images\champagne.png" />
     <Content Include="images\coffe.png" />
@@ -375,6 +376,13 @@
     </Compile>
     <Compile Include="ExportAll.aspx.designer.cs">
       <DependentUpon>ExportAll.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ExportAll2.aspx.cs">
+      <DependentUpon>ExportAll2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExportAll2.aspx.designer.cs">
+      <DependentUpon>ExportAll2.aspx</DependentUpon>
     </Compile>
     <Compile Include="Feedback.aspx.cs">
       <DependentUpon>Feedback.aspx</DependentUpon>

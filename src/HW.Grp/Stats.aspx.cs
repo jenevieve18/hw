@@ -299,6 +299,14 @@ namespace HW.Grp
 			return p.ToString();
 		}
 		
+		protected string GetExportAllUrl2(string type, Q additionalQuery)
+		{
+			var p = GetPage("ExportAll2.aspx", 0, 0);
+			p.Q.Add("TYPE", type);
+			p.Add(additionalQuery);
+			return p.ToString();
+		}
+		
 		protected override void OnPreRender(EventArgs e)
 		{
 			Execute.Text = R.Str(lid, "execute", "Execute");

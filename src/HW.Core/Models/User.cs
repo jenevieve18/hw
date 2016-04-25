@@ -20,18 +20,20 @@ namespace HW.Core.Models
 		public IList<SponsorProject> SponsorProjects { get; set; }
 	}
 	
-	public class UserMeasure : BaseModel
+	public class UserMeasure : BaseModel, IAnswer
 	{
 		public User User { get; set; }
 		public DateTime? Date { get; set; }
 		public DateTime? Created { get; set; }
 		public DateTime? Deleted { get; set; }
 		public UserProfile UserProfile { get; set; }
-		public IList<UserMeasureComponent> Components { get; set; }
+//		public IList<UserMeasureComponent> Components { get; set; }
+		public IList<IValue> Values { get; set; }
 		public HWList GetIntValues()
 		{
 			List<double> n = new List<double>();
-			foreach (var v in Components) {
+//			foreach (var v in Components) {
+			foreach (var v in Values) {
 				n.Add((double)v.ValueInt);
 			}
 			return new HWList(n);
@@ -46,7 +48,8 @@ namespace HW.Core.Models
 //		}
 		public UserMeasure()
 		{
-			Components = new List<UserMeasureComponent>();
+//			Components = new List<UserMeasureComponent>();
+			Values = new List<IValue>();
 		}
 		
 		public int DT { get; set; }

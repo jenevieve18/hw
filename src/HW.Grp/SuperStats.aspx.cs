@@ -14,7 +14,7 @@ namespace HW.Grp
 		SqlReportRepository reportRepository = new SqlReportRepository();
 		SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
 		protected int lid;
-		protected IList<ReportPartLanguage> reportParts;
+		protected IList<IReportPart> reportParts;
 		protected IList<PlotTypeLanguage> plotTypes;
 		protected bool forSingleSeries;
 		

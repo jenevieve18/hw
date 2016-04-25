@@ -26,7 +26,7 @@ namespace HW.Core.Helpers
 	
 	public class GeneratedClass
 	{
-		public void CreateParts(PresentationDocument document, IList<ReportPartLanguage> parts)
+		public void CreateParts(PresentationDocument document, IList<IReportPart> parts)
 		{
 			ThumbnailPart thumbnailPart1 = document.AddNewPart<ThumbnailPart>("image/jpeg", "rId2");
 			GenerateThumbnailPart1Content(thumbnailPart1);
@@ -225,7 +225,7 @@ namespace HW.Core.Helpers
 		}
 
 		// Generates content of presentationPart1.
-		private void GeneratePresentationPart1Content(PresentationPart presentationPart1, IList<ReportPartLanguage> parts)
+		private void GeneratePresentationPart1Content(PresentationPart presentationPart1, IList<IReportPart> parts)
 		{
 			Presentation presentation1 = new Presentation(){ SaveSubsetFonts = true };
 			presentation1.AddNamespaceDeclaration("a", "http://schemas.openxmlformats.org/drawingml/2006/main");

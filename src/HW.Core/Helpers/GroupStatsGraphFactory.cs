@@ -591,37 +591,41 @@ namespace HW.Core.Helpers
 		*/
 		#endregion
 		
-		Dictionary<string, List<Answer>> GetWeeks(int minDT, int maxDT, int groupBy)
+//		Dictionary<string, List<Answer>> GetWeeks(int minDT, int maxDT, int groupBy)
+		Dictionary<string, List<IAnswer>> GetWeeks(int minDT, int maxDT, int groupBy)
 		{
 			int j = 0;
-			Dictionary<string, List<Answer>> weeks = new Dictionary<string, List<Answer>>();
+//			Dictionary<string, List<Answer>> weeks = new Dictionary<string, List<Answer>>();
+			var weeks = new Dictionary<string, List<IAnswer>>();
 			for (int i = minDT; i <= maxDT; i++) {
 				j++;
 				string w = GetBottomString(groupBy, i, j, "");
 				if (!weeks.ContainsKey(w)) {
-					weeks.Add(w, new List<Answer>());
+					weeks.Add(w, new List<IAnswer>());
 				}
 			}
 			return weeks;
 		}
 		
 //		public void CreateGraph3(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int sponsorAdminID, int SID, string GID, object disabled, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose, int fm, int tm)
-		public override void CreateGraphForExcelWriter(ReportPart p, int langID, int PRUID, int yearFrom, int yearTo, int GB, bool hasGrouping, int plot, int GRPNG, int sponsorAdminID, int SID, string GID, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
+		public override void CreateGraphForExcelWriter(ReportPart p, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int GB, bool hasGrouping, int plot, int GRPNG, int sponsorAdminID, int sponsorID, string departmentIDs, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
 		{
 			int cx = p.Components.Capacity;
 			string sortString = "";
 			int minDT = 0;
 			int maxDT = 0;
-			ProjectRoundUnit roundUnit = projectRepository.ReadRoundUnit(PRUID);
+			ProjectRoundUnit roundUnit = projectRepository.ReadRoundUnit(projectRoundUnitID);
 			if (roundUnit != null) {
 				sortString = roundUnit.SortString;
 				if (langID == 0) {
 					langID = roundUnit.Language.Id;
 				}
 			}
-			Dictionary<string, List<Answer>> weeks = new Dictionary<string, List<Answer>>();
+//			Dictionary<string, List<Answer>> weeks = new Dictionary<string, List<Answer>>();
 //			List<Answer> week =  new List<Answer>();
-			List<Department> departments = new List<Department>();
+//			List<Department> departments = new List<Department>();
+			var weeks = new Dictionary<string, List<IAnswer>>();
+			var departments = new List<IDepartment>();
 			
 			LanguageFactory.SetCurrentCulture(langID);
 			
@@ -701,7 +705,7 @@ namespace HW.Core.Helpers
 					Dictionary<string, int> mins = new Dictionary<string, int>();
 					string extraDesc = "";
 					
-					count = GroupFactory.GetCount(GRPNG, sponsorAdminID, SID, PRUID, GID, ref extraDesc, desc, join, item, mins, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
+					count = GroupFactory.GetCount(GRPNG, sponsorAdminID, sponsorID, projectRoundUnitID, departmentIDs, ref extraDesc, desc, join, item, mins, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
 					
 					ReportPartComponent c = reportRepository.ReadComponentByPartAndLanguage(p.Id, langID);
 					if (c != null) {
@@ -710,8 +714,9 @@ namespace HW.Core.Helpers
 							cx = 1;
 							int lastDT = minDT - 1;
 							var answers = answerRepository.FindByQuestionAndOptionJoinedAndGrouped2(join[i].ToString(), groupBy, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, yearFrom, yearTo, monthFrom, monthTo);
+//							departments.Add(new Department { Name = (string)desc[i] });
 							departments.Add(new Department { Name = (string)desc[i] });
-							foreach (Answer a in answers) {
+							foreach (var a in answers) {
 								if (a.DT < minDT) {
 									continue;
 								}
@@ -862,8 +867,10 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 			int minDT = 0;
 			int maxDT = 0;
 			
-			Dictionary<string, List<Answer>> weeks = new Dictionary<string, List<Answer>>();
-			List<Department> departments = new List<Department>();
+//			Dictionary<string, List<Answer>> weeks = new Dictionary<string, List<Answer>>();
+//			List<Department> departments = new List<Department>();
+			var weeks = new Dictionary<string, List<IAnswer>>();
+			var departments = new List<IDepartment>();
 			
 			if (type == 8) {
 				groupBy = GroupFactory.GetGroupBy(GB);

@@ -316,11 +316,12 @@
                 <asp:Button ID="Execute" CssClass="btn" runat="server" Text="Execute" />
 			</div>
         </div>
-		<% if (reportParts != null) { %>
+		<% if (reportParts != null && reportParts.Count > 0) { %>
 			<% Q additionalQuery = GetGID(urlModels); %>
             <% bool supportsBoxPlot = SelectedDepartments.Count == 1 || Grouping.SelectedValue == "0"; %>
             <% bool forSingleSeries = SelectedDepartments.Count == 1 || Grouping.SelectedValue == "0"; %>
 			<div class="report-parts">
+                <% if (reportParts[0] is ReportPartLanguage) { %>
 				<div class="action">
                     <div class="chart-descriptions" title="Chart Descriptions">
                         <div>
@@ -343,14 +344,6 @@
                             <% else { %><option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option><% } %>
                         <% } %>
                     </select>
-					<!--<span id="modal" class="button white small graph"><span class="hidden plot-type"><%= PlotType.Line%></span><%= PlotType.GetString(PlotType.Line)%></span>
-					<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.LineSD %></span><%= PlotType.GetString(PlotType.LineSD)%></span>
-					<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.LineSDWithCI %></span><%= PlotType.GetString(PlotType.LineSDWithCI)%></span>
-                    <% if (supportsBoxPlot) { %>
-						<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.BoxPlotMinMax %></span><%= PlotType.GetString(PlotType.BoxPlotMinMax)%></span>
-						<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.BoxPlot %></span><%= PlotType.GetString(PlotType.BoxPlot)%></span>
-					<% } %>-->
-                    <!--<span class="toggle toggle-chart-description"></span>-->
                     <span class="chart-descriptions-info"></span>
 					<span class="small"><%= R.Str(lid, "graphs.export.all", "Export all graphs to:")%></span>
 					<span class="button white small export">
@@ -371,8 +364,52 @@
 					<span class="button white small export">
 						<%= HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportAllXlsUrl + "&PLOT=" + PlotType.Verbose, "class='exportall-xls-verbose-url' target='_blank'")%>
                     </span>
-
 				</div>
+                <% } else { %>
+				<div class="action">
+                    <div class="chart-descriptions" title="Chart Descriptions">
+                        <div>
+                        <% foreach (var p in plotTypes) { %>
+	       			        <div>&nbsp;<br /></div>
+                            <div class="report-part">
+                                <div class="report-part-subject">
+							        <span><%= p.ShortName %> - <%= p.Name %></span>
+                                    <span class="toggle toggle-right toggle-active"></span>
+						        </div>
+                                <div class="report-part-header"><%= p.Description %></div>
+                            </div>
+                        <% } %>
+                        </div>
+                    </div>
+					<span class="small"><%= R.Str(lid, "graphs.change.all", "Change all graphs to:")%></span>
+                    <select class="plot-types small">
+                        <% foreach (var p in plotTypes) { %>
+                            <% if (!p.SupportsMultipleSeries && !forSingleSeries) {} %>
+                            <% else { %><option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option><% } %>
+                        <% } %>
+                    </select>
+                    <span class="chart-descriptions-info"></span>
+					<span class="small"><%= R.Str(lid, "graphs.export.all", "Export all graphs to:")%></span>
+					<span class="button white small export">
+                        <% string exportAllDocXUrl = GetExportAllUrl2("docx", additionalQuery); %>
+                        <span class="hidden hidden-exportall-docx-url"><%= exportAllDocXUrl%></span>
+						<%= HtmlHelper.Anchor("docx", exportAllDocXUrl, "class='exportall-docx-url' target='_blank'") %>
+                    </span>
+					<span class="button white small export">
+                        <% string exportAllPptxUrl = GetExportAllUrl2("pptx", additionalQuery); %>
+                        <span class="hidden hidden-exportall-pptx-url"><%= exportAllPptxUrl%></span>
+						<%= HtmlHelper.Anchor("pptx", exportAllPptxUrl, "class='exportall-pptx-url' target='_blank'") %>
+                    </span>
+                    <% string exportAllXlsUrl = GetExportAllUrl2("xls", additionalQuery); %>
+					<span class="button white small export">
+                        <span class="hidden hidden-exportall-xls-url"><%= exportAllXlsUrl%></span>
+						<%= HtmlHelper.Anchor("xls", exportAllXlsUrl, "class='exportall-xls-url' target='_blank'")%>
+                    </span>
+					<span class="button white small export">
+						<%= HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportAllXlsUrl + "&PLOT=" + PlotType.Verbose, "class='exportall-xls-verbose-url' target='_blank'")%>
+                    </span>
+				</div>
+                <% } %>
 	        	<% foreach (var r in reportParts) { %>
 	       			<div>&nbsp;<br /></div>
 					<div class="report-part">

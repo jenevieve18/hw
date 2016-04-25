@@ -42,27 +42,39 @@ namespace HW.Core.Helpers
 			}
 		}
 		
-		public static IExporter GetExporterAll(ReportService service, string type, bool hasAnswerKey, bool hasGrouping, IList<ReportPartLanguage> parts, string template)
+		public static IExporter GetExporterAll(ReportService service, string type, bool hasAnswerKey, bool hasGrouping, IList<IReportPart> parts, string template)
 		{
 			if (type == Pdf) {
 				return new PdfExporter(service, parts);
 			} else if (type == Csv) {
-//				return new CsvExporter(service, hasAnswerKey, hasGrouping, disabled, width, height, background, parts, key);
 				return new CsvExporter(service, hasAnswerKey, hasGrouping, parts);
 			} else if (type == Excel) {
-//				return new ExcelExporter(service, hasAnswerKey, hasGrouping, disabled, width, height, background, parts, key);
 				return new ExcelExporter(service, hasAnswerKey, hasGrouping, parts);
 			} else if (type == WordDocument) {
-//				return new WordDocumentExporter2(service, parts);
 				return new DocXExporter(service, parts, template);
-//			} else if (type == SpreadsheetDocument) {
-//				return new SpreadsheetDocumentExporter(service, parts);
 			} else if (type == PresentationDocument) {
 				return new PresentationDocumentExporter(service, parts);
 			} else {
 				throw new NotSupportedException();
 			}
 		}
+		
+//		public static IExporter GetExporterAll2(ReportService service, string type, bool hasAnswerKey, bool hasGrouping, IList<IReportPart> parts, string template)
+//		{
+//			if (type == Pdf) {
+//				return new PdfExporter(service, parts);
+//			} else if (type == Csv) {
+//				return new CsvExporter(service, hasAnswerKey, hasGrouping, parts);
+//			} else if (type == Excel) {
+//				return new ExcelExporter(service, hasAnswerKey, hasGrouping, parts);
+//			} else if (type == WordDocument) {
+//				return new DocXExporter(service, parts, template);
+//			} else if (type == PresentationDocument) {
+//				return new PresentationDocumentExporter(service, parts);
+//			} else {
+//				throw new NotSupportedException();
+//			}
+//		}
 		
 		public static IExporter GetSuperExporter(string type, ReportPart r, string template)
 		{
@@ -79,7 +91,7 @@ namespace HW.Core.Helpers
 			}
 		}
 		
-		public static IExporter GetSuperExporterAll(string type, ReportService service, IList<ReportPartLanguage> parts, string template)
+		public static IExporter GetSuperExporterAll(string type, ReportService service, IList<IReportPart> parts, string template)
 		{
 			if (type == Pdf) {
 				return new PdfExporter(service, parts);
@@ -170,10 +182,10 @@ namespace HW.Core.Helpers
 //		public abstract object ExportAll(int gb, int fy, int ty, int langID, int pruid, int GRPNG, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm);
 		
 //		public abstract object Export(string url);
-		public abstract object Export(string url, int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm);
+		public abstract object Export(string url, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm);
 		
 //		public abstract object ExportAll(int langID);
-		public abstract object ExportAll(int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm);
+		public abstract object ExportAll(int langID, int projectRoundUnitID, int yearFrom, int yearTo, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm);
 		
 //		public abstract object SuperExport(string url);
 		public abstract object SuperExport(string url, string rnds1, string rnds2, string rndsd1, string rndsd2, string pid1, string pid2, string n, int rpid, string yearFrom, string yearTo, string r1, string r2, int langID, int plot);

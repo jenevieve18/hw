@@ -4,26 +4,47 @@ using System.Collections.Generic;
 
 namespace HW.Core.Models
 {
-	public class Department : BaseModel
+	public interface IDepartment
 	{
-		public virtual Sponsor Sponsor { get; set; }
-		public virtual string Name { get; set; }
-		public virtual Department Parent { get; set; }
-		public virtual int SortOrder { get; set; }
-		public virtual string SortString { get; set; }
-		public virtual string ShortName { get; set; }
-		public virtual string AnonymizedName { get; set; }
-		public virtual int MinUserCountToDisclose { get; set; }
-		public virtual int? LoginDays { get; set; }
-		public virtual int? LoginWeekDay { get; set; }
+		string Name { get; set; }
+		string Query { get; set; }
+		int MinUserCountToDisclose { get; set; }
+	}
+	
+	public class Department : BaseModel, IDepartment
+	{
+		public Sponsor Sponsor { get; set; }
+		public string Name { get; set; }
+		public Department Parent { get; set; }
+		public int SortOrder { get; set; }
+		public string SortString { get; set; }
+		public string ShortName { get; set; }
+		public string AnonymizedName { get; set; }
+		public int MinUserCountToDisclose { get; set; }
+		public int? LoginDays { get; set; }
+		public int? LoginWeekDay { get; set; }
 		
-		public virtual int Depth { get; set; }
-		public virtual int Siblings { get; set; }
-		public virtual string TreeName { get; set; }
-		public virtual double Average { get; set; }
-		public virtual int Count { get; set; }
+		public int Depth { get; set; }
+		public int Siblings { get; set; }
+		public string TreeName { get; set; }
+		public double Average { get; set; }
+		public int Count { get; set; }
+		public string Key { get; set; }
+		public string Query { get; set; }
 		
 		public IList<Department> Parents { get; set; }
+		
+		public Department()
+		{
+		}
+		
+		public Department(string key, string name, int minUserCountToDisclose, string query)
+		{
+			this.Key = key;
+			this.Name = name;
+			this.MinUserCountToDisclose = minUserCountToDisclose;
+			this.Query = query;
+		}
 		
 		public int? GetLoginDays()
 		{

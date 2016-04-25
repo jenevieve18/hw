@@ -52,7 +52,7 @@ FROM (
 		FROM healthwatch..UserMeasure um
 		INNER JOIN healthwatch..UserMeasureComponent umc ON umc.UserMeasureID = um.UserMeasureID
 		INNER JOIN healthwatch..MeasureComponent mc ON mc.MeasureComponentID = umc.MeasureComponentID AND mc.MeasureID = 65
-		INNER JOIN healthwatch..[User] u ON u.UserID = um.UserID
+		INNER JOIN healthwatch..[User] u ON u.UserID = um.UserID AND u.Consent IS NOT NULL		
 		INNER JOIN healthwatch..UserProfile up ON up.UserID = u.UserID
 		INNER JOIN healthWatch..Department d ON d.DepartmentID = up.DepartmentID AND d.DepartmentID IN ({6})
 		INNER JOIN healthwatch..Sponsor s ON s.SponsorID = u.SponsorID AND s.SponsorID = {7}
@@ -99,9 +99,6 @@ FROM (
 		FROM healthwatch..UserMeasure um
 		INNER JOIN healthwatch..UserMeasureComponent umc ON umc.UserMeasureID = um.UserMeasureID
 		INNER JOIN healthwatch..MeasureComponent mc ON mc.MeasureComponentID = umc.MeasureComponentID AND mc.MeasureID = 65
-		--INNER JOIN healthwatch..[User] u ON u.UserID = um.UserID
-		--INNER JOIN healthwatch..UserProfile up ON up.UserID = u.UserID
-		--INNER JOIN healthWatch..Department d ON d.DepartmentID = up.DepartmentID AND d.DepartmentID IN ({6})
 		{8}
 		INNER JOIN healthwatch..Sponsor s ON s.SponsorID = u.SponsorID AND s.SponsorID = {7}
 		INNER JOIN healthwatch..SponsorProject sp ON sp.SponsorID = s.SponsorID
@@ -156,7 +153,9 @@ WHERE SponsorProjectID = @SponsorProjectID"
 						Sponsor = new Sponsor { Id = GetInt32(rs, 1) },
 						StartDate = GetDateTime(rs, 2),
 						EndDate = GetDateTime(rs, 3),
-						Subject = GetString(rs, 4)
+						Subject = GetString(rs, 4),
+						
+						ReportPart = new ReportPart()
 					};
 				}
 			}
@@ -249,7 +248,8 @@ ORDER BY um.DT",
 						var m = new UserMeasure { };
 						do {
 							m.DT = GetInt32(rs, 0);
-							m.Components.Add(new UserMeasureComponent { ValueInt = (int)rs.GetDecimal(2) });
+//							m.Components.Add(new UserMeasureComponent { ValueInt = (int)rs.GetDecimal(2) });
+							m.Values.Add(new UserMeasureComponent { ValueInt = (int)rs.GetDecimal(2) });
 							done = !rs.Read();
 						} while (!done && GetInt32(rs, 0) == m.DT);
 						measures.Add(m);

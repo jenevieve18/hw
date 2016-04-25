@@ -39,7 +39,7 @@ namespace HW.Core.Services
 			this.sponsorRepository = sponsorRepository;
 		}
 		
-		public IList<ReportPartLanguage> FindByProjectAndLanguage(int projectRoundID, int langID)
+		public IList<IReportPart> FindByProjectAndLanguage(int projectRoundID, int langID)
 		{
 			return reportRepository.FindByProjectAndLanguage(projectRoundID, langID);
 		}

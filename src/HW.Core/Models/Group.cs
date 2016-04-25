@@ -236,10 +236,12 @@ INNER JOIN healthWatch..UserProfileBQ HWp{0} ON HWup.UserProfileID = HWp{0}.User
 		}
 		
 //		public IList<DepartmentAndQuery> GetDepartmentsWithJoinQuery(int grouping, int sponsorAdminID, int sponsorID, int projectRoundUnitID, string departmentIDs, ref string extraDesc, Dictionary<string, string> desc, Dictionary<string, string> join, List<string> item, Dictionary<string, int> mins, SqlDepartmentRepository departmentRepository, SqlQuestionRepository questionRepository, int sponsorMinUserCountToDisclose)
-		public IList<DepartmentAndQuery> GetDepartmentsWithJoinQuery(int grouping, int sponsorAdminID, int sponsorID, int projectRoundUnitID, string departmentIDs, ref string extraDesc, SqlDepartmentRepository departmentRepository, SqlQuestionRepository questionRepository, int sponsorMinUserCountToDisclose)
+//		public IList<DepartmentAndQuery> GetDepartmentsWithJoinQuery(int grouping, int sponsorAdminID, int sponsorID, int projectRoundUnitID, string departmentIDs, ref string extraDesc, SqlDepartmentRepository departmentRepository, SqlQuestionRepository questionRepository, int sponsorMinUserCountToDisclose)
+		public IList<IDepartment> GetDepartmentsWithJoinQuery(int grouping, int sponsorAdminID, int sponsorID, int projectRoundUnitID, string departmentIDs, ref string extraDesc, SqlDepartmentRepository departmentRepository, SqlQuestionRepository questionRepository, int sponsorMinUserCountToDisclose)
 		{
 //			int count = 0;
-			var y = new List<DepartmentAndQuery>();
+//			var y = new List<DepartmentAndQuery>();
+			var y = new List<IDepartment>();
 			switch (grouping) {
 				case Group.Grouping.None:
 					{
@@ -276,7 +278,8 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 							sslen,
 							tmpSS
 						);
-						y.Add(new DepartmentAndQuery("1", tmpDesc, minUserCountToDisclose, query));
+//						y.Add(new DepartmentAndQuery("1", tmpDesc, minUserCountToDisclose, query));
+						y.Add(new Department("1", tmpDesc, minUserCountToDisclose, query));
 //						item.Add("1");
 //						desc.Add("1", tmpDesc);
 //						join.Add(
@@ -307,7 +310,8 @@ INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfile
 								projectRoundUnitID,
 								d.Id
 							);
-							y.Add(new DepartmentAndQuery(d.Id.ToString(), d.Name, d.MinUserCountToDisclose, query));
+//							y.Add(new DepartmentAndQuery(d.Id.ToString(), d.Name, d.MinUserCountToDisclose, query));
+							y.Add(new Department(d.Id.ToString(), d.Name, d.MinUserCountToDisclose, query));
 //							item.Add(d.Id.ToString());
 //							desc.Add(d.Id.ToString(), d.Name);
 //							mins.Add(d.Id.ToString(), d.MinUserCountToDisclose);
@@ -430,7 +434,8 @@ INNER JOIN healthWatch..UserProfileBQ HWp{0} ON HWup.UserProfileID = HWp{0}.User
 									a.Id
 								);
 							}
-							y.Add(new DepartmentAndQuery(key, txt, sponsorMinUserCountToDisclose, sql));
+//							y.Add(new DepartmentAndQuery(key, txt, sponsorMinUserCountToDisclose, sql));
+							y.Add(new Department(key, txt, sponsorMinUserCountToDisclose, sql));
 //							item.Add(key);
 //							desc.Add(key, txt);
 //							mins.Add(key, sponsorMinUserCountToDisclose);
@@ -443,9 +448,11 @@ INNER JOIN healthWatch..UserProfileBQ HWp{0} ON HWup.UserProfileID = HWp{0}.User
 			return y;
 		}
 		
-		public static List<DepartmentAndQuery> GetDepartmentsWithJoinQueryForStepCount(int grouping, int sponsorAdminID, int sponsorID, string departmentIDs, ref string extraDesc, SqlDepartmentRepository departmentRepository, SqlQuestionRepository questionRepository, int sponsorMinUserCountToDisclose)
+//		public static List<DepartmentAndQuery> GetDepartmentsWithJoinQueryForStepCount(int grouping, int sponsorAdminID, int sponsorID, string departmentIDs, ref string extraDesc, SqlDepartmentRepository departmentRepository, SqlQuestionRepository questionRepository, int sponsorMinUserCountToDisclose)
+		public static List<IDepartment> GetDepartmentsWithJoinQueryForStepCount(int grouping, int sponsorAdminID, int sponsorID, string departmentIDs, ref string extraDesc, SqlDepartmentRepository departmentRepository, SqlQuestionRepository questionRepository, int sponsorMinUserCountToDisclose)
 		{
-			var y = new List<DepartmentAndQuery>();
+//			var y = new List<DepartmentAndQuery>();
+			var y = new List<IDepartment>();
 			switch (grouping) {
 				case Group.Grouping.None:
 					{
@@ -472,7 +479,7 @@ INNER JOIN healthWatch..UserProfileBQ HWp{0} ON HWup.UserProfileID = HWp{0}.User
 						}
 						string query = string.Format(
 							@"
-INNER JOIN healthwatch..[User] u ON u.UserID = um.UserID
+INNER JOIN healthwatch..[User] u ON u.UserID = um.UserID AND u.Consent IS NOT NULL
 INNER JOIN healthWatch..UserProfile up ON up.UserID = u.UserID
 INNER JOIN healthWatch..Department d ON d.DepartmentID = up.DepartmentID AND LEFT(d.SortString, {0}) IN ({1}) ",
 							sslen,
@@ -488,7 +495,8 @@ INNER JOIN healthWatch..Department d ON d.DepartmentID = up.DepartmentID AND LEF
 //							sslen,
 //							tmpSS
 //						);
-						y.Add(new DepartmentAndQuery("1", tmpDesc, minUserCountToDisclose, query));
+//						y.Add(new DepartmentAndQuery("1", tmpDesc, minUserCountToDisclose, query));
+						y.Add(new Department("1", tmpDesc, minUserCountToDisclose, query));
 						break;
 					}
 				case Group.Grouping.UsersOnUnit:
@@ -497,11 +505,12 @@ INNER JOIN healthWatch..Department d ON d.DepartmentID = up.DepartmentID AND LEF
 						foreach (Department d in departments) {
 							string query = string.Format(
 								@"
-INNER JOIN healthwatch..[User] u ON u.UserID = um.UserID
+INNER JOIN healthwatch..[User] u ON u.UserID = um.UserID AND u.Consent IS NOT NULL
 INNER JOIN healthwatch..UserProfile up ON up.UserID = u.UserID AND up.DepartmentID = {0}",
 								d.Id
 							);
-							y.Add(new DepartmentAndQuery(d.Id.ToString(), d.Name, d.MinUserCountToDisclose, query));
+//							y.Add(new DepartmentAndQuery(d.Id.ToString(), d.Name, d.MinUserCountToDisclose, query));
+							y.Add(new Department(d.Id.ToString(), d.Name, d.MinUserCountToDisclose, query));
 						}
 						break;
 //						IList<Department> departments = sponsorAdminID != -1 ? departmentRepository.FindBySponsorWithSponsorAdminIn(sponsorID, sponsorAdminID, departmentIDs, sponsorMinUserCountToDisclose) : departmentRepository.FindBySponsorOrderedBySortStringIn(sponsorID, departmentIDs, sponsorMinUserCountToDisclose);
@@ -524,13 +533,14 @@ INNER JOIN healthwatch..UserProfile up ON up.UserID = u.UserID AND up.Department
 						foreach (Department d in departments) {
 							string query = string.Format(
 								@"
-INNER JOIN healthwatch..[User] u ON u.UserID = um.UserID
+INNER JOIN healthwatch..[User] u ON u.UserID = um.UserID AND u.Consent IS NOT NULL
 INNER JOIN healthwatch..UserProfile up ON up.UserID = u.UserID
 INNER JOIN healthWatch..Department d ON d.DepartmentID = up.DepartmentID AND LEFT(d.SortString, {0}) = '{1}'",
 								d.SortString.Length,
 								d.SortString
 							);
-							y.Add(new DepartmentAndQuery(d.Id.ToString(), d.Name, d.MinUserCountToDisclose, query));
+//							y.Add(new DepartmentAndQuery(d.Id.ToString(), d.Name, d.MinUserCountToDisclose, query));
+							y.Add(new Department(d.Id.ToString(), d.Name, d.MinUserCountToDisclose, query));
 						}
 						break;
 					}
@@ -604,7 +614,8 @@ INNER JOIN healthWatch..UserProfileBQ HWp{0} ON HWup.UserProfileID = HWp{0}.User
 									a.Id
 								);
 							}
-							y.Add(new DepartmentAndQuery(key, txt, sponsorMinUserCountToDisclose, sql));
+//							y.Add(new DepartmentAndQuery(key, txt, sponsorMinUserCountToDisclose, sql));
+							y.Add(new Department(key, txt, sponsorMinUserCountToDisclose, sql));
 						}
 						break;
 					}
@@ -613,21 +624,21 @@ INNER JOIN healthWatch..UserProfileBQ HWp{0} ON HWup.UserProfileID = HWp{0}.User
 		}
 	}
 	
-	public class DepartmentAndQuery : Department
-	{
-		public string Key { get; set; }
-		public string Query { get; set; }
-		
-		public DepartmentAndQuery()
-		{
-		}
-		
-		public DepartmentAndQuery(string key, string name, int minUserCountToDisclose, string query)
-		{
-			this.Key = key;
-			this.Name = name;
-			this.MinUserCountToDisclose = minUserCountToDisclose;
-			this.Query = query;
-		}
-	}
+//	public class DepartmentAndQuery : Department, IDepartment
+//	{
+//		public string Key { get; set; }
+//		public string Query { get; set; }
+//		
+//		public DepartmentAndQuery()
+//		{
+//		}
+//		
+//		public DepartmentAndQuery(string key, string name, int minUserCountToDisclose, string query)
+//		{
+//			this.Key = key;
+//			this.Name = name;
+//			this.MinUserCountToDisclose = minUserCountToDisclose;
+//			this.Query = query;
+//		}
+//	}
 }

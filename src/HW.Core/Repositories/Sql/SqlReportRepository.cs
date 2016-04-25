@@ -6,7 +6,7 @@ using HW.Core.Models;
 
 namespace HW.Core.Repositories.Sql
 {
-	public class SqlReportRepository : BaseSqlRepository<Report>, IReportRepository
+	public class SqlReportRepository : BaseSqlRepository<Report> //, IReportRepository
 	{
 		public ReportPartComponent ReadComponentByPartAndLanguage(int reportPartID, int langID)
 		{
@@ -136,7 +136,7 @@ FROM Report"
 			return reports;
 		}
 		
-		public IList<ReportPartLanguage> FindByProjectAndLanguage2(int projectRoundUnitID, int langID, int departmentID)
+		public IList<IReportPart> FindByProjectAndLanguage2(int projectRoundUnitID, int langID, int departmentID)
 		{
 			string query = string.Format(
 				@"
@@ -158,7 +158,7 @@ ORDER BY rp.SortOrder",
 				langID,
 				departmentID
 			);
-			var languages = new List<ReportPartLanguage>();
+			var languages = new List<IReportPart>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				while (rs.Read()) {
 					var l = new ReportPartLanguage {
@@ -177,7 +177,7 @@ ORDER BY rp.SortOrder",
 			return languages;
 		}
 		
-		public IList<ReportPartLanguage> FindByProjectAndLanguage(int projectRoundUnitID, int langID)
+		public IList<IReportPart> FindByProjectAndLanguage(int projectRoundUnitID, int langID)
 		{
 			string query = string.Format(
 				@"
@@ -196,7 +196,7 @@ ORDER BY rp.SortOrder",
 				projectRoundUnitID,
 				langID
 			);
-			var languages = new List<ReportPartLanguage>();
+			var languages = new List<IReportPart>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				while (rs.Read()) {
 					var l = new ReportPartLanguage {
@@ -215,7 +215,7 @@ ORDER BY rp.SortOrder",
 			return languages;
 		}
 		
-		public IList<ReportPartLanguage> FindPartLanguagesByReport(int reportID, int langID)
+		public IList<IReportPart> FindPartLanguagesByReport(int reportID, int langID)
 		{
 			string query = string.Format(
 				@"
@@ -233,7 +233,7 @@ ORDER BY rp.SortOrder",
 				reportID,
 				langID
 			);
-			var languages = new List<ReportPartLanguage>();
+			var languages = new List<IReportPart>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				while (rs.Read()) {
 					var p = new ReportPartLanguage {

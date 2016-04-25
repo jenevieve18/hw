@@ -15,7 +15,8 @@ namespace HW.Core.Helpers
 	public class PdfExporter : AbstractExporter
 	{
 		ReportPart r;
-		IList<ReportPartLanguage> parts;
+//		IList<ReportPartLanguage> parts;
+		IList<IReportPart> parts;
 		ReportService service;
 		
 		public PdfExporter(ReportPart r)
@@ -23,7 +24,8 @@ namespace HW.Core.Helpers
 			this.r = r;
 		}
 		
-		public PdfExporter(ReportService service, IList<ReportPartLanguage> parts)
+//		public PdfExporter(ReportService service, IList<ReportPartLanguage> parts)
+		public PdfExporter(ReportService service, IList<IReportPart> parts)
 		{
 			this.service = service;
 			this.parts = parts;
@@ -172,8 +174,10 @@ namespace HW.Core.Helpers
 				OnUrlSet(e);
 				string url = e.Url;
 				
-				ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
-				doc.Add(new Chunk(r.CurrentLanguage.Subject));
+//				ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
+//				doc.Add(new Chunk(r.CurrentLanguage.Subject));
+				//ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
+				doc.Add(new Chunk(p.Subject));
 				iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(new Uri(url));
 				jpg.ScaleToFit(500f, 500f);
 				doc.Add(jpg);

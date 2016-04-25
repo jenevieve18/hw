@@ -36,7 +36,7 @@ namespace HW.Core.Helpers
 		ReportPart r;
 //		string key;
 		ReportService service;
-		IList<ReportPartLanguage> parts;
+		IList<IReportPart> parts;
 		
 //		public CsvExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, ReportPart r, string key)
 		public CsvExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, ReportPart r)
@@ -53,7 +53,7 @@ namespace HW.Core.Helpers
 		}
 		
 //		public CsvExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, IList<ReportPartLanguage> parts, string key)
-		public CsvExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, IList<ReportPartLanguage> parts)
+		public CsvExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, IList<IReportPart> parts)
 		{
 			this.service = service;
 			this.hasAnswerKey = hasAnswerKey;

@@ -10,11 +10,18 @@ namespace HW.Core.Models
 		float Max { get; set; }
 	}
 	
-	public class Answer : BaseModel, IMinMax
+	public interface IAnswer
+	{
+//		IList<AnswerValue> Values { get; set; }
+		IList<IValue> Values { get; set; }
+		HWList GetIntValues();
+	}
+	
+	public class Answer : BaseModel, IMinMax, IAnswer
 	{
 		public Answer()
 		{
-			Values = new List<AnswerValue>();
+			Values = new List<IValue>();
 		}
 		
 		float min = 0;
@@ -25,7 +32,8 @@ namespace HW.Core.Models
 		public Language Language { get; set; }
 		public DateTime StartDate { get; set; }
 		public DateTime EndDate { get; set; }
-		public IList<AnswerValue> Values { get; set; }
+//		public IList<AnswerValue> Values { get; set; }
+		public IList<IValue> Values { get; set; }
 		public int CurrentPage { get; set; }
 		
 		public HWList GetIntValues()

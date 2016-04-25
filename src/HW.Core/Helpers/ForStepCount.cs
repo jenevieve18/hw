@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Web;
 using HW.Core.Models;
@@ -94,30 +95,30 @@ namespace HW.Core.Helpers
 //				g = new ExtendedGraph(895, 550, "#FFFFFF");
 //				List<Bar> bars = new List<Bar>();
 //				List<int> referenceLines = new List<int>();
-//				
+//
 //				foreach (ReportPartComponent c in reportRepository.FindComponents(p.Id)) {
 //					System.Collections.SortedList all = new System.Collections.SortedList();
-//					
+//
 //					foreach (ProjectRoundUnit u in projectRepository.FindRoundUnitsBySortString(sortString)) {
 //						res = new System.Collections.Hashtable();
-//						
+//
 //						if (c.Index.Parts.Capacity == 0) {
 //							GetIdxVal(c.Index.Id, u.SortString, langID, yearFrom, yearTo, monthFrom, monthTo);
 //						} else {
 //							GetOtherIdxVal(c.Index.Id, u.SortString, langID, yearFrom, yearTo, monthFrom, monthTo);
 //						}
-//						
+//
 //						if (all.Contains(lastVal)) {
 //							all[lastVal] += "," + u.TreeString;
 //						} else {
 //							all.Add(lastVal, u.TreeString);
 //						}
 //					}
-//					
+//
 //					for (int i = all.Count - 1; i >= 0; i--) {
 //						int color = c.Index.GetColor(Convert.ToInt32(all.GetKey(i)));
 //						string[] u = all.GetByIndex(i).ToString().Split(',');
-//						
+//
 //						foreach (string s in u) {
 //							bars.Add(new Bar { Color = color, Value = Convert.ToInt32(all.GetKey(i)), Description = s });
 //						}
@@ -143,21 +144,21 @@ namespace HW.Core.Helpers
 //				g.drawAxisExpl("poäng", 0, false, false);
 //				g.drawReference(780, 25, " = riktvärde");
 //			} else if (p.Type == 8) {
-				if (GB == 0) {
-					GB = 2;
-				}
-				
-				string groupByQuery = GroupFactory.GetGroupBy(GB);
-				g = new ExtendedGraph(895, 440, "#FFFFFF");
-				
-				g.Type = GetGraphType(plot, 2);
-				var answer = measureRepository.ReadByGroup(groupByQuery, yearFrom, yearTo, sortString, monthFrom, monthTo);
-				if (answer != null) {
-					differenceDate = answer.DummyValue1 + 3;
-					startDate = answer.DummyValue2;
-					endDate = answer.DummyValue3;
-				}
-				
+			if (GB == 0) {
+				GB = 2;
+			}
+			
+			string groupByQuery = GroupFactory.GetGroupBy(GB);
+			g = new ExtendedGraph(895, 440, "#FFFFFF");
+			
+			g.Type = GetGraphType(plot, 2);
+			var answer = measureRepository.ReadByGroup(groupByQuery, yearFrom, yearTo, sortString, monthFrom, monthTo);
+			if (answer != null) {
+				differenceDate = answer.DummyValue1 + 3;
+				startDate = answer.DummyValue2;
+				endDate = answer.DummyValue3;
+			}
+			
 //				List<IIndex> indexes = new List<IIndex>();
 //				List<IMinMax> minMaxes = new List<IMinMax>();
 //				foreach (ReportPartComponent c in reportRepository.FindComponentsByPart(p.Id)) {
@@ -179,135 +180,137 @@ namespace HW.Core.Helpers
 //				var m = measureRepository.ReadMinMax(groupBy, yearFrom, yearTo, sortString, monthFrom, monthTo);
 //				g.SetMinMax((int)m.Min, (int)m.Max);
 //				int aggregation = GetAggregationByGroupBy(GB);
-//				
+//
 //				var minMax = measureRepository.ReadMinMax(groupByQuery, yearFrom, yearTo, monthFrom, monthTo, aggregation, departmentIDs, sponsorID);
 //				g.SetMinMax((int)minMax.Min, ((int)minMax.Max).Ceiling());
 //				g.DrawBackgroundFromIndex(new BaseIndex());
 //				g.DrawComputingSteps(disabled, differenceDate);
-//				
+//
 //				differenceDate = 0;
-//				
+//
 //				g.DrawBottomString(startDate, endDate, GB);
+			
+			if (hasGrouping) {
+				string extraDesc = "";
 				
-				if (hasGrouping) {
-					string extraDesc = "";
-					
-					var departments = GroupFactory.GetDepartmentsWithJoinQueryForStepCount(grouping, sponsorAdminID, sponsorID, departmentIDs, ref extraDesc, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
-					
-					int aggregation = GetAggregationByGroupBy(GB);
+				var departments = GroupFactory.GetDepartmentsWithJoinQueryForStepCount(grouping, sponsorAdminID, sponsorID, departmentIDs, ref extraDesc, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
 				
-					var minMaxes = new List<IMinMax>();
-					foreach (var d in departments) {
-						var minMax = measureRepository.ReadMinMax2(groupByQuery, yearFrom, yearTo, monthFrom, monthTo, aggregation, departmentIDs, sponsorID, d.Query);
-						minMax.Max = (float)(((int)minMax.Max).Ceiling());
-						minMaxes.Add(minMax);
+				int aggregation = GetAggregationByGroupBy(GB);
+				
+				var minMaxes = new List<IMinMax>();
+				foreach (var d in departments) {
+					var minMax = measureRepository.ReadMinMax2(groupByQuery, yearFrom, yearTo, monthFrom, monthTo, aggregation, departmentIDs, sponsorID, d.Query);
+					minMax.Max = (float)(((int)minMax.Max).Ceiling());
+					minMaxes.Add(minMax);
+				}
+//				g.SetMinMax((int)minMax.Min, ((int)minMax.Max).Ceiling());
+				g.SetMinMaxes(minMaxes);
+				g.DrawBackgroundFromIndex(new BaseIndex());
+				g.DrawComputingSteps(disabled, differenceDate);
+				
+				differenceDate = 0;
+				
+				g.DrawBottomString(startDate, endDate, GB);
+				
+				int breaker = 6;
+				int itemWidth = 120;
+				if (departments.Count < 6) {
+					breaker = 4;
+					itemWidth = 180;
+				}
+				if (departments.Count < 4) {
+					breaker = 3;
+					itemWidth = 240;
+				}
+				
+				g.Explanations.Add(
+					new Explanation {
+						Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (point == Distribution.StandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+						Color = 0,
+						Right = false,
+						Box = false,
+						HasAxis = false
 					}
-					//g.SetMinMax((int)minMax.Min, ((int)minMax.Max).Ceiling());
-					g.SetMinMaxes(minMaxes);
-					g.DrawBackgroundFromIndex(new BaseIndex());
-					g.DrawComputingSteps(disabled, differenceDate);
-					
-					differenceDate = 0;
-					
-					g.DrawBottomString(startDate, endDate, GB);
-					
-					int breaker = 6;
-					int itemWidth = 120;
-					if (departments.Count < 6) {
-						breaker = 4;
-						itemWidth = 180;
-					}
-					if (departments.Count < 4) {
-						breaker = 3;
-						itemWidth = 240;
-					}
-					
-					g.Explanations.Add(
-						new Explanation {
-							Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (point == Distribution.StandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
-							Color = 0,
-							Right = false,
-							Box = false,
-							HasAxis = false
-						}
-					);
+				);
 //					ReportPartComponent c = reportRepository.ReadComponentByPartAndLanguage(p.Id, langID);
 //					if (c != null) {
-						int bx = 0;
-						foreach(var i in departments) {
-							differenceDate = 1;
-							int lastDT = startDate - 1;
-							var measures = measureRepository.FindByQuestionAndOptionJoinedAndGrouped2(i.Query, groupByQuery, yearFrom, yearTo, monthFrom, monthTo, aggregation, sponsorID);
-							Series s = new Series {
-								Description = i.Name,
-								Color = bx + 4,
-								X = 130 + (int)((bx % breaker) * itemWidth),
-								Y = 20 + (int)Math.Floor((double)bx / breaker) * 15
-							};
-							foreach (var a in measures) {
+				int bx = 0;
+				foreach(var i in departments) {
+					differenceDate = 1;
+					int lastDT = startDate - 1;
+					var measures = measureRepository.FindByQuestionAndOptionJoinedAndGrouped2(i.Query, groupByQuery, yearFrom, yearTo, monthFrom, monthTo, aggregation, sponsorID);
+					Series s = new Series {
+						Description = i.Name,
+						Color = bx + 4,
+						X = 130 + (int)((bx % breaker) * itemWidth),
+						Y = 20 + (int)Math.Floor((double)bx / breaker) * 15
+					};
+					foreach (var a in measures) {
 //								if (a.DT < startDate) {
-								if (a.DT < startDate) {
-									continue;
-								}
-								while (lastDT + 1 < a.DT) {
-									lastDT++;
-									differenceDate++;
-								}
-								if (a.Components.Count >= i.MinUserCountToDisclose) {
-									if (departments.Count == 1) {
-//										string v = GetBottomString(grouping, a.DT, differenceDate, (departments.Count == 1 ? ", n = " + a.Values.Count : ""));
-//										string v = BaseGraphFactory.GetBottomString(GB, a.DT, differenceDate, (departments.Count == 1 ? ", n = " + a.Values.Count : ""));
-										string v = BaseGraphFactory.GetBottomString(GB, a.DT, differenceDate, (departments.Count == 1 ? ", n = " + a.Components.Count : ""));
-										g.DrawBottomString(v, differenceDate);
-									}
-									s.Points.Add(new PointV { X = differenceDate, Values = a.GetIntValues() });
-								}
-								lastDT = a.DT;
-								differenceDate++;
-							}
-							g.Series.Add(s);
-							bx++;
+						if (a.DT < startDate) {
+							continue;
 						}
-//					}
-				} else {
-					int bx = 0;
-					var components = reportRepository.FindComponentsByPartAndLanguage2(p.Id, langID);
-					foreach (ReportPartComponent c in components) {
-						g.Explanations.Add(
-							new Explanation {
-								Description = c.WeightedQuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (point == Distribution.StandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
-								Color = bx + 4,
-								Right = bx == 0 ? false : true,
-								Box = bx == 0 ? true : false,
-								HasAxis = bx == 0 ? false : true
-							}
-						);
-						differenceDate = 1;
-						int lastDT = startDate - 1;
-						Series s = new Series { Color = bx + 4 };
-						var answers = answerRepository.FindByQuestionAndOptionGroupedX(groupByQuery, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, yearFrom, yearTo, sortString, monthFrom, monthTo);
-						foreach (Answer a in answers) {
-							if (a.DT < startDate) {
-								continue;
-							}
-							while (lastDT + 1 < a.DT) {
-								lastDT++;
-								differenceDate++;
-							}
-//							if (a.CountV >= p.RequiredAnswerCount) {
-//								string v = GetBottomString(grouping, a.DT, differenceDate, ", n = " + a.CountV);
-								string v = BaseGraphFactory.GetBottomString(GB, a.DT, differenceDate, ", n = " + a.CountV);
-								g.DrawBottomString(v, differenceDate);
-								s.Points.Add(new PointV { X = differenceDate, Values = a.GetIntValues() });
-//							}
-							lastDT = a.DT;
+						while (lastDT + 1 < a.DT) {
+							lastDT++;
 							differenceDate++;
 						}
-						g.Series.Add(s);
-						bx++;
+//						if (a.Components.Count >= i.MinUserCountToDisclose) {
+						if (a.Values.Count >= i.MinUserCountToDisclose) {
+							if (departments.Count == 1) {
+//										string v = GetBottomString(grouping, a.DT, differenceDate, (departments.Count == 1 ? ", n = " + a.Values.Count : ""));
+//										string v = BaseGraphFactory.GetBottomString(GB, a.DT, differenceDate, (departments.Count == 1 ? ", n = " + a.Values.Count : ""));
+//								string v = BaseGraphFactory.GetBottomString(GB, a.DT, differenceDate, (departments.Count == 1 ? ", n = " + a.Components.Count : ""));
+								string v = BaseGraphFactory.GetBottomString(GB, a.DT, differenceDate, (departments.Count == 1 ? ", n = " + a.Values.Count : ""));
+								g.DrawBottomString(v, differenceDate);
+							}
+							s.Points.Add(new PointV { X = differenceDate, Values = a.GetIntValues() });
+						}
+						lastDT = a.DT;
+						differenceDate++;
 					}
+					g.Series.Add(s);
+					bx++;
 				}
-				g.Draw();
+//					}
+			} else {
+				int bx = 0;
+				var components = reportRepository.FindComponentsByPartAndLanguage2(p.Id, langID);
+				foreach (ReportPartComponent c in components) {
+					g.Explanations.Add(
+						new Explanation {
+							Description = c.WeightedQuestionOption.Languages[0].Question + ", " + LanguageFactory.GetMeanText(langID) + (point == Distribution.StandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+							Color = bx + 4,
+							Right = bx == 0 ? false : true,
+							Box = bx == 0 ? true : false,
+							HasAxis = bx == 0 ? false : true
+						}
+					);
+					differenceDate = 1;
+					int lastDT = startDate - 1;
+					Series s = new Series { Color = bx + 4 };
+					var answers = answerRepository.FindByQuestionAndOptionGroupedX(groupByQuery, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, yearFrom, yearTo, sortString, monthFrom, monthTo);
+					foreach (Answer a in answers) {
+						if (a.DT < startDate) {
+							continue;
+						}
+						while (lastDT + 1 < a.DT) {
+							lastDT++;
+							differenceDate++;
+						}
+//							if (a.CountV >= p.RequiredAnswerCount) {
+//								string v = GetBottomString(grouping, a.DT, differenceDate, ", n = " + a.CountV);
+						string v = BaseGraphFactory.GetBottomString(GB, a.DT, differenceDate, ", n = " + a.CountV);
+						g.DrawBottomString(v, differenceDate);
+						s.Points.Add(new PointV { X = differenceDate, Values = a.GetIntValues() });
+//							}
+						lastDT = a.DT;
+						differenceDate++;
+					}
+					g.Series.Add(s);
+					bx++;
+				}
+			}
+			g.Draw();
 //			}
 			return g;
 		}
@@ -315,36 +318,23 @@ namespace HW.Core.Helpers
 		int GetAggregationByGroupBy(int groupBy)
 		{
 			switch (groupBy) {
-				case 1: return 7;
-				case 7: return 14;
-				case 2: return 14;
-				case 3: return 30;
-				case 4: return 120;
-				case 5: return 180;
-				default: return 365;
+					case 1: return 7;
+					case 7: return 14;
+					case 2: return 14;
+					case 3: return 30;
+					case 4: return 120;
+					case 5: return 180;
+					default: return 365;
 			}
 		}
-		
-//		Dictionary<string, List<Answer>> GetWeeks(int minDT, int maxDT, int groupBy)
-//		{
-//			int j = 0;
-//			Dictionary<string, List<Answer>> weeks = new Dictionary<string, List<Answer>>();
-//			for (int i = minDT; i <= maxDT; i++) {
-//				j++;
-//				string w = GetBottomString(groupBy, i, j, "");
-//				if (!weeks.ContainsKey(w)) {
-//					weeks.Add(w, new List<Answer>());
-//				}
-//			}
-//			return weeks;
-//		}
-//		
-//		public void CreateGraphForExcelWriter(ReportPart p, int langID, int PRUID, int yearFrom, int yearTo, int GB, bool hasGrouping, int plot, int GRPNG, int sponsorAdminID, int SID, string GID, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
-//		{
+
+		public void CreateGraphForExcelWriter(ReportPart p, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int groupBy, bool hasGrouping, int plot, int grouping, int sponsorAdminID, int sponsorID, string departmentIDs, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
+		{
 //			int cx = p.Components.Capacity;
-//			string sortString = "";
-//			int minDT = 0;
-//			int maxDT = 0;
+			int cx;
+			string sortString = "";
+			int minDT = 0;
+			int maxDT = 0;
 //			ProjectRoundUnit roundUnit = projectRepository.ReadRoundUnit(PRUID);
 //			if (roundUnit != null) {
 //				sortString = roundUnit.SortString;
@@ -354,9 +344,13 @@ namespace HW.Core.Helpers
 //			}
 //			Dictionary<string, List<Answer>> weeks = new Dictionary<string, List<Answer>>();
 //			List<Department> departments = new List<Department>();
-//
-//			LanguageFactory.SetCurrentCulture(langID);
-//
+			Dictionary<string, List<IAnswer>> weeks = new Dictionary<string, List<IAnswer>>();
+			string extraDesc = "";
+			
+			var departments = GroupFactory.GetDepartmentsWithJoinQueryForStepCount(grouping, sponsorAdminID, sponsorID, departmentIDs, ref extraDesc, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
+
+			LanguageFactory.SetCurrentCulture(langID);
+
 //			if (p.Type == 1) {
 //				decimal tot = answerRepository.CountByDate(yearFrom, yearTo, sortString, monthFrom, monthTo);
 //
@@ -405,111 +399,158 @@ namespace HW.Core.Helpers
 //					int color = c.Index.GetColor(lastVal);
 //				}
 //			} else if (p.Type == 8) {
-//				if (GB == 0) {
-//					GB = 2;
-//				}
-//
-//				string groupBy = GroupFactory.GetGroupBy(GB);
-//
+				if (groupBy == 0) {
+					groupBy = 2;
+				}
+
+				string groupByQuery = GroupFactory.GetGroupBy(groupBy);
+
 //				if (plot == PlotType.BoxPlotMinMax) {
 //				} else {
 //				}
 //				Answer answer = answerRepository.ReadByGroup(groupBy, yearFrom, yearTo, sortString, monthFrom, monthTo);
-//				if (answer != null) {
+				var answer = measureRepository.ReadByGroup(groupByQuery, yearFrom, yearTo, sortString, monthFrom, monthTo);
+				if (answer != null) {
 //					cx = answer.DummyValue1 + 3;
-//					minDT = answer.DummyValue2;
-//					maxDT = answer.DummyValue3;
-//				}
-//
+					minDT = answer.DummyValue2;
+					maxDT = answer.DummyValue3;
+				}
+
 //				cx = 0;
-//
-//				weeks = GetWeeks(minDT, maxDT, GB);
-//
-//				if (hasGrouping) {
+
+				weeks = GetWeeks(minDT, maxDT, groupBy);
+
+				if (hasGrouping) {
 //					int count = 0;
+					int aggregation = GetAggregationByGroupBy(groupBy);
+					
 //					Dictionary<string, string> desc = new Dictionary<string, string>();
 //					Dictionary<string, string> join = new Dictionary<string, string>();
 //					List<string> item = new List<string>();
 //					Dictionary<string, int> mins = new Dictionary<string, int>();
 //					string extraDesc = "";
-//
-//					count = GroupFactory.GetCount(GRPNG, sponsorAdminID, SID, PRUID, GID, ref extraDesc, desc, join, item, mins, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
-//
+
+//					count = GroupFactory.GetCount(grouping, sponsorAdminID, sponsorID, projectRoundUnitID, departmentIDs, ref extraDesc, desc, join, item, mins, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
+
 //					ReportPartComponent c = reportRepository.ReadComponentByPartAndLanguage(p.Id, langID);
 //					if (c != null) {
-//						int bx = 0;
+						int bx = 0;
 //						foreach(string i in item) {
-//							cx = 1;
-//							int lastDT = minDT - 1;
+						foreach(var i in departments) {
+							cx = 1;
+							int lastDT = minDT - 1;
 //							var answers = answerRepository.FindByQuestionAndOptionJoinedAndGrouped2(join[i].ToString(), groupBy, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, yearFrom, yearTo, monthFrom, monthTo);
+							var answers = measureRepository.FindByQuestionAndOptionJoinedAndGrouped2(i.Query, groupByQuery, yearFrom, yearTo, monthFrom, monthTo, aggregation, sponsorID);
 //							departments.Add(new Department { Name = (string)desc[i] });
-//							foreach (Answer a in answers) {
-//								if (a.DT < minDT) {
-//									continue;
-//								}
-//								while (lastDT + 1 < a.DT) {
-//									lastDT++;
-//									cx++;
-//								}
+							foreach (var a in answers) {
+								if (a.DT < minDT) {
+									continue;
+								}
+								while (lastDT + 1 < a.DT) {
+									lastDT++;
+									cx++;
+								}
 //								if (a.Values.Count >= mins[i]) {
+//								if (a.Components.Count >= i.MinUserCountToDisclose) {
+								if (a.Values.Count >= i.MinUserCountToDisclose) {
 //									if (count == 1) {
-//									}
-//									weeks[GetBottomString(GB, a.DT, cx, "")].Add(a);
-//								}
-//								lastDT = a.DT;
-//								cx++;
-//							}
-//							bx++;
-//						}
+									if (departments.Count == 1) {
+									}
+//									weeks[GroupStatsGraphFactory.GetBottomString(GB, a.DT, cx, "")].Add(a);
+									weeks[GroupStatsGraphFactory.GetBottomString(groupBy, a.DT, cx, "")].Add(a);
+								}
+								lastDT = a.DT;
+								cx++;
+							}
+							bx++;
+						}
 //					}
-//				} else {
-//					int bx = 0;
-//					foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(p.Id, langID)) {
-//						cx = 1;
-//						int lastDT = minDT - 1;
-//						var answers = answerRepository.FindByQuestionAndOptionGrouped(groupBy, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, yearFrom, yearTo, sortString, monthFrom, monthTo);
-//						foreach (Answer a in answers) {
-//							if (a.DT < minDT) {
-//								continue;
-//							}
-//							while (lastDT + 1 < a.DT) {
-//								lastDT++;
-//								cx++;
-//							}
-//
-//							if (a.CountV >= p.RequiredAnswerCount) {
-//							}
-//							lastDT = a.DT;
-//							cx++;
-//						}
-//						bx++;
-//					}
-//				}
+				} else {
+					int bx = 0;
+					foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(p.Id, langID)) {
+						cx = 1;
+						int lastDT = minDT - 1;
+						var answers = answerRepository.FindByQuestionAndOptionGrouped(groupByQuery, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, yearFrom, yearTo, sortString, monthFrom, monthTo);
+						foreach (Answer a in answers) {
+							if (a.DT < minDT) {
+								continue;
+							}
+							while (lastDT + 1 < a.DT) {
+								lastDT++;
+								cx++;
+							}
+
+							if (a.CountV >= p.RequiredAnswerCount) {
+							}
+							lastDT = a.DT;
+							cx++;
+						}
+						bx++;
+					}
+				}
 //			}
+
+			if (plot == PlotType.BoxPlotMinMax) {
+				var plotter = new BoxPlotExcel();
+				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
+				plotter.ToExcel(departments, weeks, writer, ref index);
+			} else if (plot == PlotType.LineSDWithCI) {
+				var plotter = new ConfidenceIntervalLineExcel();
+				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
+				plotter.ToExcel(departments, weeks, writer, ref index);
+			} else if (plot == PlotType.LineSD) {
+				var plotter = new StandardDeviationLineExcel();
+				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
+				plotter.ToExcel(departments, weeks, writer, ref index);
+			} else if (plot == PlotType.Verbose) {
+				var plotter = new EverythingExcel();
+				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
+				plotter.ToExcel(departments, weeks, writer, ref index);
+			} else {
+				var plotter = new LineExcel();
+				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
+				plotter.ToExcel(departments, weeks, writer, ref index);
+			}
+		}
+		
+//		Dictionary<string, List<Answer>> GetWeeks(int minDT, int maxDT, int groupBy)
+		Dictionary<string, List<IAnswer>> GetWeeks(int minDT, int maxDT, int groupBy)
+		{
+			int j = 0;
+//			Dictionary<string, List<Answer>> weeks = new Dictionary<string, List<Answer>>();
+			Dictionary<string, List<IAnswer>> weeks = new Dictionary<string, List<IAnswer>>();
+			for (int i = minDT; i <= maxDT; i++) {
+				j++;
+				//string w = GetBottomString(groupBy, i, j, "");
+				string w = GroupStatsGraphFactory.GetBottomString(groupBy, i, j, "");
+				if (!weeks.ContainsKey(w)) {
+					weeks.Add(w, new List<IAnswer>());
+				}
+			}
+			return weeks;
+		}
 //
-//			if (plot == PlotType.BoxPlotMinMax) {
-//				var plotter = new BoxPlotExcel();
-//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-//				plotter.ToExcel(departments, weeks, writer, ref index);
-//			} else if (plot == PlotType.LineSDWithCI) {
-//				var plotter = new ConfidenceIntervalLineExcel();
-//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-//				plotter.ToExcel(departments, weeks, writer, ref index);
-//			} else if (plot == PlotType.LineSD) {
-//				var plotter = new StandardDeviationLineExcel();
-//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-//				plotter.ToExcel(departments, weeks, writer, ref index);
-//			} else if (plot == PlotType.Verbose) {
-//				var plotter = new EverythingExcel();
-//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-//				plotter.ToExcel(departments, weeks, writer, ref index);
-//			} else {
-//				var plotter = new LineExcel();
-//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-//				plotter.ToExcel(departments, weeks, writer, ref index);
+//		public static List<string> GetBottomStrings(int minDT, int maxDT, int groupBy)
+//		{
+//			int j = 0;
+//			var strings = new List<string>();
+//			for (int i = minDT; i <= maxDT; i++) {
+//				j++;
+//				string v = GroupStatsGraphFactory.GetBottomString(groupBy, i, j, "");
+//				strings.Add(v);
 //			}
+//			return strings;
 //		}
 //
+		public event EventHandler<MergeEventArgs> ForMerge;
+
+		protected virtual void OnForMerge(MergeEventArgs e)
+		{
+			if (ForMerge != null) {
+				ForMerge(this, e);
+			}
+		}
+
 //		public void CreateSuperGraphForExcelWriter(string rnds1, string rnds2, string rndsd1, string rndsd2, string pid1, string pid2, string n, int rpid, string yearFrom, string yearTo, string r1, string r2, int langID, ref int index, int plot, ExcelWriter writer)
 //		{
 //			// For min/max
@@ -551,10 +592,10 @@ namespace HW.Core.Helpers
 //				foreach (var d in departmentRepository.FindIn(rndsd1)) {
 //					join1 += string.Format(
 //						@"
-		//INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
-		//INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID
-		//INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID
-		//INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString,{0}) = '{1}' ",
+//		INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
+//		INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID
+//		INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID
+//		INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString,{0}) = '{1}' ",
 //						d.SortString.Length,
 //						d.SortString
 //					);
@@ -565,10 +606,10 @@ namespace HW.Core.Helpers
 //				foreach (var d in departmentRepository.FindIn(rndsd2)) {
 //					join2 += string.Format(
 //						@"
-		//INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
-		//INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID
-		//INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID
-		//INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString,{0}) = '{1}' ",
+//		INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
+//		INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID
+//		INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID
+//		INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString,{0}) = '{1}' ",
 //						d.SortString.Length,
 //						d.SortString
 //					);
@@ -696,27 +737,6 @@ namespace HW.Core.Helpers
 //			}
 //		}
 //
-//		public static List<string> GetBottomStrings(int minDT, int maxDT, int groupBy)
-//		{
-//			int j = 0;
-//			var strings = new List<string>();
-//			for (int i = minDT; i <= maxDT; i++) {
-//				j++;
-//				string v = GroupStatsGraphFactory.GetBottomString(groupBy, i, j, "");
-//				strings.Add(v);
-//			}
-//			return strings;
-//		}
-//		
-//		public event EventHandler<MergeEventArgs> ForMerge;
-//		
-//		protected virtual void OnForMerge(MergeEventArgs e)
-//		{
-//			if (ForMerge != null) {
-//				ForMerge(this, e);
-//			}
-//		}
-//		
 //		public static string GetBottomString(int groupBy, int i, int dx, string str)
 //		{
 //			switch (groupBy) {
