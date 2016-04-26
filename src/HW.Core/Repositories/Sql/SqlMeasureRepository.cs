@@ -52,11 +52,12 @@ FROM (
 		FROM healthwatch..UserMeasure um
 		INNER JOIN healthwatch..UserMeasureComponent umc ON umc.UserMeasureID = um.UserMeasureID
 		INNER JOIN healthwatch..MeasureComponent mc ON mc.MeasureComponentID = umc.MeasureComponentID AND mc.MeasureID = 65
-		INNER JOIN healthwatch..[User] u ON u.UserID = um.UserID AND u.Consent IS NOT NULL		
+		INNER JOIN healthwatch..[User] u ON u.UserID = um.UserID
+		INNER JOIN healthwatch..UserSponsorProject usp ON usp.UserID = u.UserID AND usp.ConsentDT IS NOT NULL
 		INNER JOIN healthwatch..UserProfile up ON up.UserID = u.UserID
 		INNER JOIN healthWatch..Department d ON d.DepartmentID = up.DepartmentID AND d.DepartmentID IN ({6})
 		INNER JOIN healthwatch..Sponsor s ON s.SponsorID = u.SponsorID AND s.SponsorID = {7}
-		INNER JOIN healthwatch..SponsorProject sp ON sp.SponsorID = s.SponsorID
+		INNER JOIN healthwatch..SponsorProject sp ON sp.SponsorID = s.SponsorID AND sp.SponsorProjectID = usp.SponsorProjectID
 		WHERE um.DT IS NOT NULL
 		AND (YEAR(um.DT) = {1} AND MONTH(um.DT) >= {3} OR YEAR(um.DT) > {1})
 		AND (YEAR(um.DT) = {2} AND MONTH(um.DT) <= {4} OR YEAR(um.DT) < {2})
@@ -101,7 +102,7 @@ FROM (
 		INNER JOIN healthwatch..MeasureComponent mc ON mc.MeasureComponentID = umc.MeasureComponentID AND mc.MeasureID = 65
 		{8}
 		INNER JOIN healthwatch..Sponsor s ON s.SponsorID = u.SponsorID AND s.SponsorID = {7}
-		INNER JOIN healthwatch..SponsorProject sp ON sp.SponsorID = s.SponsorID
+		INNER JOIN healthwatch..SponsorProject sp ON sp.SponsorID = s.SponsorID AND sp.SponsorProjectID = usp.SponsorProjectID
 		WHERE um.DT IS NOT NULL
 		AND (YEAR(um.DT) = {1} AND MONTH(um.DT) >= {3} OR YEAR(um.DT) > {1})
 		AND (YEAR(um.DT) = {2} AND MONTH(um.DT) <= {4} OR YEAR(um.DT) < {2})
@@ -223,7 +224,7 @@ INNER JOIN healthwatch..UserMeasure um ON um.UserMeasureID = umc.UserMeasureID
 INNER JOIN healthwatch..MeasureComponent mc ON mc.MeasureComponentID = umc.MeasureComponentID AND mc.MeasureID = 65
 {0}
 INNER JOIN healthwatch..Sponsor s ON s.SponsorID = u.SponsorID AND s.SponsorID = {7}
-INNER JOIN healthwatch..SponsorProject sp ON sp.SponsorID = s.SponsorID
+INNER JOIN healthwatch..SponsorProject sp ON sp.SponsorID = s.SponsorID AND sp.SponsorProjectID = usp.SponsorProjectID
 WHERE um.DT IS NOT NULL
 AND (YEAR(um.DT) = {2} AND MONTH(um.DT) >= {4} OR YEAR(um.DT) > {2})
 AND (YEAR(um.DT) = {3} AND MONTH(um.DT) <= {5} OR YEAR(um.DT) < {3})

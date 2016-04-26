@@ -75,7 +75,7 @@ namespace HW.Grp
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			int gb = (Request.QueryString["GB"] != null ? Convert.ToInt32(Request.QueryString["GB"].ToString()) : 0);
+			int groupBy = (Request.QueryString["GB"] != null ? Convert.ToInt32(Request.QueryString["GB"].ToString()) : 0);
 			
 			int yearFrom = Request.QueryString["FY"] != null ? Convert.ToInt32(Request.QueryString["FY"]) : 0;
 			int yearTo = Request.QueryString["TY"] != null ? Convert.ToInt32(Request.QueryString["TY"]) : 0;
@@ -87,20 +87,20 @@ namespace HW.Grp
 
 //			int rpid = Convert.ToInt32(Request.QueryString["RPID"]);
 			string project = Request.QueryString["PRUID"];
-			int pruid = ConvertHelper.ToInt32(project.Replace("SPRU", ""));
+			int projectRoundUnitID = ConvertHelper.ToInt32(project.Replace("SPRU", ""));
 			
-			int grpng = Convert.ToInt32(Request.QueryString["GRPNG"]);
-			int spons = Convert.ToInt32((Request.QueryString["SAID"] != null ? Request.QueryString["SAID"] : HttpContext.Current.Session["SponsorAdminID"]));
-			int sid = Convert.ToInt32((Request.QueryString["SID"] != null ? Request.QueryString["SID"] : HttpContext.Current.Session["SponsorID"]));
-			string gid = (Request.QueryString["GID"] != null ? Request.QueryString["GID"].ToString().Replace(" ", "") : "");
+			int grouping = Convert.ToInt32(Request.QueryString["GRPNG"]);
+			int sponsorAdminID = Convert.ToInt32((Request.QueryString["SAID"] != null ? Request.QueryString["SAID"] : HttpContext.Current.Session["SponsorAdminID"]));
+			int sponsorID = Convert.ToInt32((Request.QueryString["SID"] != null ? Request.QueryString["SID"] : HttpContext.Current.Session["SponsorID"]));
+			string departmentIDs = (Request.QueryString["GID"] != null ? Request.QueryString["GID"].ToString().Replace(" ", "") : "");
 			int plot = ConvertHelper.ToInt32(Request.QueryString["PLOT"]);
             string type = StrHelper.Str3(Request.QueryString["TYPE"], "");
 			
 			bool hasGrouping = Request.QueryString["GRPNG"] != null || Request.QueryString["GRPNG"] != "0";
 //			string key = Request.QueryString["AK"];
 			
-			ISponsor s = service.ReadSponsor(sid);
-			reportParts = service.FindByProjectAndLanguage(pruid, langID);
+			ISponsor sponsor = service.ReadSponsor(sponsorID);
+			reportParts = service.FindByProjectAndLanguage(projectRoundUnitID, langID);
 
 			var exporter = ExportFactory.GetExporterAll(service, type, HasAnswerKey, hasGrouping, reportParts, Server.MapPath("HW template for Word.docx"));
 			Response.ContentType = exporter.Type;
@@ -108,8 +108,8 @@ namespace HW.Grp
 			AddHeaderIf(exporter.HasContentDisposition2, "content-disposition", exporter.ContentDisposition2);
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
 			
-			exporter.UrlSet += delegate(object sender2, ReportPartEventArgs e2) { e2.Url = GetReportImageUrl(path, langID, yearFrom, yearTo, spons, sid, gb, e2.ReportPart.Id, pruid, gid, grpng, plot, monthFrom, monthTo); };
-			Write(exporter.ExportAll(langID, pruid, yearFrom, yearTo, gb, plot, grpng, spons, sid, gid, s.MinUserCountToDisclose, monthFrom, monthTo));
+			exporter.UrlSet += delegate(object sender2, ReportPartEventArgs e2) { e2.Url = GetReportImageUrl(path, langID, yearFrom, yearTo, sponsorAdminID, sponsorID, groupBy, e2.ReportPart.Id, projectRoundUnitID, departmentIDs, grouping, plot, monthFrom, monthTo); };
+			Write(exporter.ExportAll(langID, projectRoundUnitID, yearFrom, yearTo, groupBy, plot, grouping, sponsorAdminID, sponsorID, departmentIDs, sponsor.MinUserCountToDisclose, monthFrom, monthTo));
 		}
 		
 		void Write(object obj)
