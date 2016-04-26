@@ -479,9 +479,8 @@ INNER JOIN healthWatch..UserProfileBQ HWp{0} ON HWup.UserProfileID = HWp{0}.User
 						}
 						string query = string.Format(
 							@"
-INNER JOIN healthwatch..[User] u ON u.UserID = um.UserID
-INNER JOIN healthwatch..UserSponsorProject usp ON usp.UserID = u.UserID AND usp.ConsentDT IS NOT NULL
-INNER JOIN healthWatch..UserProfile up ON up.UserID = u.UserID
+INNER JOIN healthwatch..UserSponsorProject usp ON usp.UserID = um.UserID AND usp.ConsentDT IS NOT NULL
+INNER JOIN healthWatch..UserProfile up ON up.UserProfileID = um.UserProfileID
 INNER JOIN healthWatch..Department d ON d.DepartmentID = up.DepartmentID AND LEFT(d.SortString, {0}) IN ({1}) ",
 							sslen,
 							tmpSS
@@ -506,9 +505,8 @@ INNER JOIN healthWatch..Department d ON d.DepartmentID = up.DepartmentID AND LEF
 						foreach (Department d in departments) {
 							string query = string.Format(
 								@"
-INNER JOIN healthwatch..[User] u ON u.UserID = um.UserID
-INNER JOIN healthwatch..UserSponsorProject usp ON usp.UserID = u.UserID AND usp.ConsentDT IS NOT NULL
-INNER JOIN healthwatch..UserProfile up ON up.UserID = u.UserID AND up.DepartmentID = {0}",
+INNER JOIN healthwatch..UserSponsorProject usp ON usp.UserID = um.UserID AND usp.ConsentDT IS NOT NULL
+INNER JOIN healthwatch..UserProfile up ON up.UserProfileID = um.UserProfileID AND up.DepartmentID = {0}",
 								d.Id
 							);
 //							y.Add(new DepartmentAndQuery(d.Id.ToString(), d.Name, d.MinUserCountToDisclose, query));
@@ -535,9 +533,8 @@ INNER JOIN healthwatch..UserProfile up ON up.UserID = u.UserID AND up.Department
 						foreach (Department d in departments) {
 							string query = string.Format(
 								@"
-INNER JOIN healthwatch..[User] u ON u.UserID = um.UserID
-INNER JOIN healthwatch..UserSponsorProject usp ON usp.UserID = u.UserID AND usp.ConsentDT IS NOT NULL
-INNER JOIN healthwatch..UserProfile up ON up.UserID = u.UserID
+INNER JOIN healthwatch..UserSponsorProject usp ON usp.UserID = um.UserID AND usp.ConsentDT IS NOT NULL
+INNER JOIN healthwatch..UserProfile up ON up.UserProfileID = um.UserProfileID
 INNER JOIN healthWatch..Department d ON d.DepartmentID = up.DepartmentID AND LEFT(d.SortString, {0}) = '{1}'",
 								d.SortString.Length,
 								d.SortString
