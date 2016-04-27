@@ -186,24 +186,7 @@
             var exportPptXUrl = partContent.find('.hidden-export-pptx-url').text();
             partContent.find('.export-pptx-url').attr('href', exportPptXUrl + '&PLOT=' + plotType);
         });
-        /*$('.report-part .action .graph').click(function () {
-            var partContent = $(this).closest('.report-part-content');
-            var plotType = $(this).find('.plot-type').text();
-            f($(this), plotType, false);
-
-            var img = partContent.find('img.report-part-graph');
-            var imageUrl = partContent.find('.hidden-image-url').text();
-            img.attr('src', imageUrl + '&PLOT=' + plotType);
-
-            var exportDocXUrl = partContent.find('.hidden-export-docx-url').text();
-            partContent.find('.export-docx-url').attr('href', exportDocXUrl + '&PLOT=' + plotType);
-
-            var exportXlsXUrl = partContent.find('.hidden-export-xls-url').text();
-            partContent.find('.export-xls-url').attr('href', exportXlsXUrl + '&PLOT=' + plotType);
-
-            var exportPptXUrl = partContent.find('.hidden-export-pptx-url').text();
-            partContent.find('.export-pptx-url').attr('href', exportPptXUrl + '&PLOT=' + plotType);
-        });*/
+        
         $('.report-parts > .action .plot-types').change(function () {
             var plotType = $(this).val();
 
@@ -220,49 +203,11 @@
                 var p = $(this).closest('.report-part').find('.action .plot-types');
                 p.val(plotType);
                 p.change();
-                //f($(this), plotType, false);
-                /*var img = $(this).find('img.report-part-graph');
-                var imageUrl = $(this).find('.hidden-image-url').text();
-                img.attr('src', imageUrl + '&PLOT=' + plotType);
-
-                var exportDocXUrl = $(this).find('.hidden-export-docx-url').text();
-                $(this).find('.export-docx-url').attr('href', exportDocXUrl + '&PLOT=' + plotType);
-
-                var exportXlsXUrl = $(this).find('.hidden-export-xls-url').text();
-                $(this).find('.export-xls-url').attr('href', exportXlsXUrl + '&PLOT=' + plotType);
-
-                var exportPptXUrl = $(this).find('.hidden-export-pptx-url').text();
-                $(this).find('.export-pptx-url').attr('href', exportPptXUrl + '&PLOT=' + plotType);*/
+                
+                
             });
         });
-        /*$('.report-parts > .action .graph').click(function () {
-            var plotType = $(this).find('.plot-type').text();
-
-            var exportAllDocXUrl = $('.hidden-exportall-docx-url').text();
-            $('.exportall-docx-url').attr('href', exportAllDocXUrl + '&PLOT=' + plotType);
-
-            var exportAllXlsUrl = $('.hidden-exportall-xls-url').text();
-            $('.exportall-xls-url').attr('href', exportAllXlsUrl + '&PLOT=' + plotType);
-
-            var exportAllPptxUrl = $('.hidden-exportall-pptx-url').text();
-            $('.exportall-pptx-url').attr('href', exportAllPptxUrl + '&PLOT=' + plotType);
-
-            $.each($('.report-part-content'), function () {
-                f($(this), plotType, false);
-                img = $(this).find('img.report-part-graph');
-                imageUrl = $(this).find('.hidden-image-url').text();
-                img.attr('src', imageUrl + '&PLOT=' + plotType);
-
-                var exportDocXUrl = $(this).find('.hidden-export-docx-url').text();
-                $(this).find('.export-docx-url').attr('href', exportDocXUrl + '&PLOT=' + plotType);
-
-                var exportXlsXUrl = $(this).find('.hidden-export-xls-url').text();
-                $(this).find('.export-xls-url').attr('href', exportXlsXUrl + '&PLOT=' + plotType);
-
-                var exportPptXUrl = $(this).find('.hidden-export-pptx-url').text();
-                $(this).find('.export-pptx-url').attr('href', exportPptXUrl + '&PLOT=' + plotType);
-            });
-        });*/
+        
     });
 </script>
 
@@ -322,93 +267,93 @@
             <% bool forSingleSeries = SelectedDepartments.Count == 1 || Grouping.SelectedValue == "0"; %>
 			<div class="report-parts">
                 <% if (reportParts[0] is ReportPartLanguage) { %>
-				<div class="action">
-                    <div class="chart-descriptions" title="Chart Descriptions">
-                        <div>
-                        <% foreach (var p in plotTypes) { %>
-	       			        <div>&nbsp;<br /></div>
-                            <div class="report-part">
-                                <div class="report-part-subject">
-							        <span><%= p.ShortName %> - <%= p.Name %></span>
-                                    <span class="toggle toggle-right toggle-active"></span>
-						        </div>
-                                <div class="report-part-header"><%= p.Description %></div>
+				    <div class="action">
+                        <div class="chart-descriptions" title="Chart Descriptions">
+                            <div>
+                            <% foreach (var p in plotTypes) { %>
+	       			            <div>&nbsp;<br /></div>
+                                <div class="report-part">
+                                    <div class="report-part-subject">
+							            <span><%= p.ShortName %> - <%= p.Name %></span>
+                                        <span class="toggle toggle-right toggle-active"></span>
+						            </div>
+                                    <div class="report-part-header"><%= p.Description %></div>
+                                </div>
+                            <% } %>
                             </div>
-                        <% } %>
                         </div>
-                    </div>
-					<span class="small"><%= R.Str(lid, "graphs.change.all", "Change all graphs to:")%></span>
-                    <select class="plot-types small">
-                        <% foreach (var p in plotTypes) { %>
-                            <% if (!p.SupportsMultipleSeries && !forSingleSeries) {} %>
-                            <% else { %><option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option><% } %>
-                        <% } %>
-                    </select>
-                    <span class="chart-descriptions-info"></span>
-					<span class="small"><%= R.Str(lid, "graphs.export.all", "Export all graphs to:")%></span>
-					<span class="button white small export">
-                        <% string exportAllDocXUrl = GetExportAllUrl("docx", additionalQuery); %>
-                        <span class="hidden hidden-exportall-docx-url"><%= exportAllDocXUrl%></span>
-						<%= HtmlHelper.Anchor("docx", exportAllDocXUrl, "class='exportall-docx-url' target='_blank'") %>
-                    </span>
-					<span class="button white small export">
-                        <% string exportAllPptxUrl = GetExportAllUrl("pptx", additionalQuery); %>
-                        <span class="hidden hidden-exportall-pptx-url"><%= exportAllPptxUrl%></span>
-						<%= HtmlHelper.Anchor("pptx", exportAllPptxUrl, "class='exportall-pptx-url' target='_blank'") %>
-                    </span>
-                    <% string exportAllXlsUrl = GetExportAllUrl("xls", additionalQuery); %>
-					<span class="button white small export">
-                        <span class="hidden hidden-exportall-xls-url"><%= exportAllXlsUrl%></span>
-						<%= HtmlHelper.Anchor("xls", exportAllXlsUrl, "class='exportall-xls-url' target='_blank'")%>
-                    </span>
-					<span class="button white small export">
-						<%= HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportAllXlsUrl + "&PLOT=" + PlotType.Verbose, "class='exportall-xls-verbose-url' target='_blank'")%>
-                    </span>
-				</div>
+					    <span class="small"><%= R.Str(lid, "graphs.change.all", "Change all graphs to:")%></span>
+                        <select class="plot-types small">
+                            <% foreach (var p in plotTypes) { %>
+                                <% if (!p.SupportsMultipleSeries && !forSingleSeries) {} %>
+                                <% else { %><option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option><% } %>
+                            <% } %>
+                        </select>
+                        <span class="chart-descriptions-info"></span>
+					    <span class="small"><%= R.Str(lid, "graphs.export.all", "Export all graphs to:")%></span>
+					    <span class="button white small export">
+                            <% string exportAllDocXUrl = GetExportAllUrl("docx", additionalQuery); %>
+                            <span class="hidden hidden-exportall-docx-url"><%= exportAllDocXUrl%></span>
+						    <%= HtmlHelper.Anchor("docx", exportAllDocXUrl, "class='exportall-docx-url' target='_blank'") %>
+                        </span>
+					    <span class="button white small export">
+                            <% string exportAllPptxUrl = GetExportAllUrl("pptx", additionalQuery); %>
+                            <span class="hidden hidden-exportall-pptx-url"><%= exportAllPptxUrl%></span>
+						    <%= HtmlHelper.Anchor("pptx", exportAllPptxUrl, "class='exportall-pptx-url' target='_blank'") %>
+                        </span>
+                        <% string exportAllXlsUrl = GetExportAllUrl("xls", additionalQuery); %>
+					    <span class="button white small export">
+                            <span class="hidden hidden-exportall-xls-url"><%= exportAllXlsUrl%></span>
+						    <%= HtmlHelper.Anchor("xls", exportAllXlsUrl, "class='exportall-xls-url' target='_blank'")%>
+                        </span>
+					    <span class="button white small export">
+						    <%= HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportAllXlsUrl + "&PLOT=" + PlotType.Verbose, "class='exportall-xls-verbose-url' target='_blank'")%>
+                        </span>
+				    </div>
                 <% } else { %>
-				<div class="action">
-                    <div class="chart-descriptions" title="Chart Descriptions">
-                        <div>
-                        <% foreach (var p in plotTypes) { %>
-	       			        <div>&nbsp;<br /></div>
-                            <div class="report-part">
-                                <div class="report-part-subject">
-							        <span><%= p.ShortName %> - <%= p.Name %></span>
-                                    <span class="toggle toggle-right toggle-active"></span>
-						        </div>
-                                <div class="report-part-header"><%= p.Description %></div>
+				    <div class="action">
+                        <div class="chart-descriptions" title="Chart Descriptions">
+                            <div>
+                            <% foreach (var p in plotTypes) { %>
+	       			            <div>&nbsp;<br /></div>
+                                <div class="report-part">
+                                    <div class="report-part-subject">
+							            <span><%= p.ShortName %> - <%= p.Name %></span>
+                                        <span class="toggle toggle-right toggle-active"></span>
+						            </div>
+                                    <div class="report-part-header"><%= p.Description %></div>
+                                </div>
+                            <% } %>
                             </div>
-                        <% } %>
                         </div>
-                    </div>
-					<span class="small"><%= R.Str(lid, "graphs.change.all", "Change all graphs to:")%></span>
-                    <select class="plot-types small">
-                        <% foreach (var p in plotTypes) { %>
-                            <% if (!p.SupportsMultipleSeries && !forSingleSeries) {} %>
-                            <% else { %><option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option><% } %>
-                        <% } %>
-                    </select>
-                    <span class="chart-descriptions-info"></span>
-					<span class="small"><%= R.Str(lid, "graphs.export.all", "Export all graphs to:")%></span>
-					<span class="button white small export">
-                        <% string exportAllDocXUrl = GetExportAllUrl2("docx", additionalQuery); %>
-                        <span class="hidden hidden-exportall-docx-url"><%= exportAllDocXUrl%></span>
-						<%= HtmlHelper.Anchor("docx", exportAllDocXUrl, "class='exportall-docx-url' target='_blank'") %>
-                    </span>
-					<span class="button white small export">
-                        <% string exportAllPptxUrl = GetExportAllUrl2("pptx", additionalQuery); %>
-                        <span class="hidden hidden-exportall-pptx-url"><%= exportAllPptxUrl%></span>
-						<%= HtmlHelper.Anchor("pptx", exportAllPptxUrl, "class='exportall-pptx-url' target='_blank'") %>
-                    </span>
-                    <% string exportAllXlsUrl = GetExportAllUrl2("xls", additionalQuery); %>
-					<span class="button white small export">
-                        <span class="hidden hidden-exportall-xls-url"><%= exportAllXlsUrl%></span>
-						<%= HtmlHelper.Anchor("xls", exportAllXlsUrl, "class='exportall-xls-url' target='_blank'")%>
-                    </span>
-					<span class="button white small export">
-						<%= HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportAllXlsUrl + "&PLOT=" + PlotType.Verbose, "class='exportall-xls-verbose-url' target='_blank'")%>
-                    </span>
-				</div>
+					    <span class="small"><%= R.Str(lid, "graphs.change.all", "Change all graphs to:")%></span>
+                        <select class="plot-types small">
+                            <% foreach (var p in plotTypes) { %>
+                                <% if (!p.SupportsMultipleSeries && !forSingleSeries) {} %>
+                                <% else { %><option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option><% } %>
+                            <% } %>
+                        </select>
+                        <span class="chart-descriptions-info"></span>
+					    <span class="small"><%= R.Str(lid, "graphs.export.all", "Export all graphs to:")%></span>
+					    <span class="button white small export">
+                            <% string exportAllDocXUrl = GetExportAllUrl2("docx", additionalQuery); %>
+                            <span class="hidden hidden-exportall-docx-url"><%= exportAllDocXUrl%></span>
+						    <%= HtmlHelper.Anchor("docx", exportAllDocXUrl, "class='exportall-docx-url' target='_blank'") %>
+                        </span>
+					    <span class="button white small export">
+                            <% string exportAllPptxUrl = GetExportAllUrl2("pptx", additionalQuery); %>
+                            <span class="hidden hidden-exportall-pptx-url"><%= exportAllPptxUrl%></span>
+						    <%= HtmlHelper.Anchor("pptx", exportAllPptxUrl, "class='exportall-pptx-url' target='_blank'") %>
+                        </span>
+                        <% string exportAllXlsUrl = GetExportAllUrl2("xls", additionalQuery); %>
+					    <span class="button white small export">
+                            <span class="hidden hidden-exportall-xls-url"><%= exportAllXlsUrl%></span>
+						    <%= HtmlHelper.Anchor("xls", exportAllXlsUrl, "class='exportall-xls-url' target='_blank'")%>
+                        </span>
+					    <span class="button white small export">
+						    <%= HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportAllXlsUrl + "&PLOT=" + PlotType.Verbose, "class='exportall-xls-verbose-url' target='_blank'")%>
+                        </span>
+				    </div>
                 <% } %>
 	        	<% foreach (var r in reportParts) { %>
 	       			<div>&nbsp;<br /></div>
@@ -462,8 +407,54 @@
 							    </div>
                             <% } else { %>
                                 <% string imageUrl = GetReportImageUrl2(r.Id, additionalQuery); %>
-                                <span class="hidden hidden-image-url"><%= imageUrl %></span>
+							    <span class="hidden hidden-image-url"><%= imageUrl %></span>
                                 <img class="report-part-graph" src="<%= imageUrl %>" alt="" />
+							    <div class="action">
+								    <span class="small"><%= R.Str(lid, "graphs.change", "Change this graph to:")%></span>
+                                    <select class="plot-types small">
+                                        <% foreach (var p in plotTypes) { %>
+                                            <% if (!p.SupportsMultipleSeries && !forSingleSeries) {} %>
+                                            <% else { %><option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option><% } %>
+                                        <% } %>
+                                    </select>
+								    <span class="small"><%= R.Str(lid, "graphs.export", "Export this graph to:")%></span>
+								    <%--<span class="button white small export">
+                                        <% string exportDocXUrl = GetExportUrl(r.ReportPart.Id, r.Id, "docx", additionalQuery); %>
+							            <span class="hidden hidden-export-docx-url"><%= exportDocXUrl%></span>
+									    <%= HtmlHelper.Anchor("docx", exportDocXUrl, "class='export-docx-url' target='_blank'")%>
+								    </span>
+								    <span class="button white small export">
+                                        <% string exportPptXUrl = GetExportUrl(r.ReportPart.Id, r.Id, "pptx", additionalQuery); %>
+							            <span class="hidden hidden-export-pptx-url"><%= exportPptXUrl%></span>
+									    <%= HtmlHelper.Anchor("pptx", exportPptXUrl, "class='export-pptx-url' target='_blank'")%>
+								    </span>
+                                    <% string exportXlsUrl = GetExportUrl(r.ReportPart.Id, r.Id, "xls", additionalQuery); %>
+								    <span class="button white small export">
+							            <span class="hidden hidden-export-xls-url"><%= exportXlsUrl%></span>
+									    <%= HtmlHelper.Anchor("xls", exportXlsUrl, "class='export-xls-url' target='_blank'")%>
+								    </span>
+								    <span class="button white small export">
+									    <%= HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportXlsUrl + "&PLOT=" + PlotType.Verbose, "class='export-xls-verbose-url' target='_blank'")%>
+								    </span>--%>
+                                    <span class="button white small export">
+                                        <% string exportAllDocXUrl = GetExportAllUrl2("docx", additionalQuery); %>
+                                        <span class="hidden hidden-exportall-docx-url"><%= exportAllDocXUrl%></span>
+						                <%= HtmlHelper.Anchor("docx", exportAllDocXUrl, "class='exportall-docx-url' target='_blank'") %>
+                                    </span>
+					                <span class="button white small export">
+                                        <% string exportAllPptxUrl = GetExportAllUrl2("pptx", additionalQuery); %>
+                                        <span class="hidden hidden-exportall-pptx-url"><%= exportAllPptxUrl%></span>
+						                <%= HtmlHelper.Anchor("pptx", exportAllPptxUrl, "class='exportall-pptx-url' target='_blank'") %>
+                                    </span>
+                                    <% string exportAllXlsUrl = GetExportAllUrl2("xls", additionalQuery); %>
+					                <span class="button white small export">
+                                        <span class="hidden hidden-exportall-xls-url"><%= exportAllXlsUrl%></span>
+						                <%= HtmlHelper.Anchor("xls", exportAllXlsUrl, "class='exportall-xls-url' target='_blank'")%>
+                                    </span>
+					                <span class="button white small export">
+						                <%= HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportAllXlsUrl + "&PLOT=" + PlotType.Verbose, "class='exportall-xls-verbose-url' target='_blank'")%>
+                                    </span>
+							    </div>
                             <% } %>
 						</div>
 						<div class="report-part-bottom">&nbsp;</div>
