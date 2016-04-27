@@ -83,6 +83,7 @@ namespace HW.Grp
 
 			ExtendedGraph g = null;
 
+			try {
 			int gb = (Request.QueryString["GB"] != null ? Convert.ToInt32(Request.QueryString["GB"].ToString()) : 0);
 
 			int yearFrom = Request.QueryString["FY"] != null ? Convert.ToInt32(Request.QueryString["FY"]) : 0;
@@ -122,6 +123,24 @@ namespace HW.Grp
 //			g = f.CreateGraph(key, r, langID, projectRoundUnitID, yearFrom, yearTo, gb, hasGrouping, plot, Width, Height, Background, grpng, sponsorAdminID, sid, gid, disabled, point, s.MinUserCountToDisclose, monthFrom, monthTo);
 //			g = f.CreateGraph(r, langID, projectRoundUnitID, yearFrom, yearTo, gb, hasGrouping, plot, grpng, sponsorAdminID, sid, gid, disabled, point, s.MinUserCountToDisclose, monthFrom, monthTo);
 			g = f.CreateGraph(r, langID, yearFrom, yearTo, gb, hasGrouping, plot, grpng, sponsorAdminID, sid, gid, disabled, point, s.MinUserCountToDisclose, monthFrom, monthTo);
+			} catch (NotSupportedException) {
+				g = new ExtendedGraph(895, 440, "#FFFFFF");
+				g.SetMinMax(0, 100);
+				g.DrawBackgroundFromIndex(new BaseIndex());
+				g.DrawComputingSteps(null, 0);
+				int bx = 0;
+				g.Explanations.Add(
+					new Explanation {
+						Description = "Background variable graph for this project is not yet supported.",
+//						Color = bx + 4,
+						Color = bx + 0,
+						Right = bx == 0 ? false : true,
+						Box = bx == 0 ? true : false,
+						HasAxis = bx == 0 ? false : true
+					}
+				);
+				g.Draw();
+			}
 			g.render();
 		}
 	}
