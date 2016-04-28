@@ -66,6 +66,14 @@
     <asp:TextBox ID="textBoxYourReferencePerson" runat="server" CssClass="form-control"></asp:TextBox>
 </div>--%>
 <div class="form-group">
+	<label for="<%= textBoxInvoiceEmail.ClientID %>">Invoicing Email</label>
+    <asp:TextBox ID="textBoxInvoiceEmail" runat="server" CssClass="form-control"></asp:TextBox>
+</div>
+<div class="form-group">
+	<label for="<%= textBoxInvoiceEmailCC.ClientID %>">Invoicing Email CC</label>
+    <asp:TextBox ID="textBoxInvoiceEmailCC" runat="server" CssClass="form-control"></asp:TextBox>
+</div>
+<div class="form-group">
 	<label for="<%= textBoxOurReferencePerson.ClientID %>">Our Reference Person</label>
     <asp:TextBox ID="textBoxOurReferencePerson" runat="server" CssClass="form-control"></asp:TextBox>
 </div>

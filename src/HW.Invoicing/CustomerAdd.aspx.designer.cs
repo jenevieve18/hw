@@ -49,6 +49,24 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxInvoiceAddress;
         
         /// <summary>
+        /// textBoxInvoiceEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxInvoiceEmail;
+        
+        /// <summary>
+        /// textBoxInvoiceEmailCC control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxInvoiceEmailCC;
+        
+        /// <summary>
         /// textBoxOurReferencePerson control.
         /// </summary>
         /// <remarks>

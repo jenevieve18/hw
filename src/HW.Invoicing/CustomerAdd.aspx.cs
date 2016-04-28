@@ -53,6 +53,8 @@ namespace HW.Invoicing
 				Name = textBoxName.Text,
 				PostalAddress = textBoxPostalAddress.Text,
 				InvoiceAddress = textBoxInvoiceAddress.Text,
+				InvoiceEmail = textBoxInvoiceEmail.Text,
+				InvoiceEmailCC = textBoxInvoiceEmailCC.Text,
 				OurReferencePerson = textBoxOurReferencePerson.Text,
 				Phone = textBoxPhone.Text,
 				Email = textBoxEmail.Text,
