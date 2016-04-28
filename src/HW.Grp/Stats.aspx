@@ -328,7 +328,10 @@
                         </div>
 					    <span class="small"><%= R.Str(lid, "graphs.change.all", "Change all graphs to:")%></span>
                         <select class="plot-types small">
-                            <% foreach (var p in plotTypes) { %>
+                            <% var xxx = lid == 1 ? new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Linje" } :
+                                   new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Line" }; %>
+                            <% foreach (var p in new PlotTypeLanguage[] { xxx }) { %>
+                            <%--<% foreach (var p in plotTypes) { %>--%>
                                 <% if (!p.SupportsMultipleSeries && !forSingleSeries) {} %>
                                 <% else { %><option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option><% } %>
                             <% } %>
@@ -412,7 +415,10 @@
 							    <div class="action">
 								    <span class="small"><%= R.Str(lid, "graphs.change", "Change this graph to:")%></span>
                                     <select class="plot-types small">
-                                        <% foreach (var p in plotTypes) { %>
+                                        <% var xxx = lid == 1 ? new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Linje" } :
+                                               new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Line" }; %>
+                                        <% foreach (var p in new PlotTypeLanguage[] { xxx }) { %>
+                                        <%--<% foreach (var p in plotTypes) { %>--%>
                                             <% if (!p.SupportsMultipleSeries && !forSingleSeries) {} %>
                                             <% else { %><option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option><% } %>
                                         <% } %>
