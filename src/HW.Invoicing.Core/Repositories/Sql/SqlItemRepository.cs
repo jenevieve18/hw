@@ -19,6 +19,42 @@ where id = @Id"
 			ExecuteNonQuery(query, "invoicing", new SqlParameter("@Id", id));
 		}
 		
+		public Item Read2(int id)
+		{
+			string query = string.Format(
+				@"
+SELECT i.Id,
+    i.Name,
+    i.Description,
+    i.Price,
+    i.UnitId,
+    i.Inactive,
+    i.Consultant,
+    u.Name
+FROM Item i
+INNER JOIN Unit u ON u.Id = i.UnitId
+WHERE i.Id = @Id"
+			);
+			Item i = null;
+			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", id))) {
+				while (rs.Read()) {
+					i = new Item {
+						Id = GetInt32(rs, 0),
+						Name = GetString(rs, 1),
+						Description = GetString(rs, 2),
+						Price = GetDecimal(rs, 3),
+						Unit = new Unit {
+							Id = GetInt32(rs, 4),
+							Name = GetString(rs, 7)
+						},
+                        Inactive = GetInt32(rs, 5) == 1,
+                        Consultant = GetString(rs, 6)
+					};
+				}
+			}
+			return i;
+		}
+		
 		public override Item Read(int id)
 		{
 			string query = string.Format(

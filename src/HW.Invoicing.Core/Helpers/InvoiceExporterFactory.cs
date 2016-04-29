@@ -14,16 +14,13 @@ namespace HW.Invoicing.Core.Helpers
 	public class InvoiceExporterFactory
 	{
 		public const int IHGF = 1;
-		public const int HCGF = 2;
+		public const int DEFAULT = 2;
 		
-		public static IInvoiceExporter GetExporter(int companyId)
+		public static IInvoiceExporter GetExporter(int exporter)
 		{
-			switch (companyId) {
+			switch (exporter) {
 					case IHGF: return new IHGInvoiceExporter(new IHGInvoicePDFScratchGenerator());
-//					case HCGF: return new HCGInvoiceExporter(new HCGInvoicePDFScratchGenerator());
-//					case HCGF: return new HCGInvoiceExporter(new BaseInvoicePDFScratchGenerator());
-//					case HCGF: return new HCGInvoiceExporter();
-					case HCGF: return new DefaultInvoiceExporter();
+					case DEFAULT: return new DefaultInvoiceExporter();
 					default: throw new NotSupportedException();
 			}
 		}
@@ -36,7 +33,6 @@ namespace HW.Invoicing.Core.Helpers
 			} else {
 				return new DefaultInvoiceExporter();
 			}
-//			return GetExporters()[index];
 		}
 		
 		public static IList<IInvoiceExporter> GetExporters()
@@ -44,8 +40,6 @@ namespace HW.Invoicing.Core.Helpers
 			return new List<IInvoiceExporter>(
 				new IInvoiceExporter[] {
 					new IHGInvoiceExporter(),
-//					new HCGInvoiceExporter(),
-//					new VCInvoiceExporter()
 					new DefaultInvoiceExporter()
 				}
 			);

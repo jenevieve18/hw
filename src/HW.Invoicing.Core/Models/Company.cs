@@ -29,6 +29,7 @@ namespace HW.Invoicing.Core.Models
 		public string Website { get; set; }
 		
 		public string InvoiceLogo { get; set; }
+		public double InvoiceLogoPercentage { get; set; }
 		public string InvoiceTemplate { get; set; }
 		public int InvoiceExporter { get; set; }
 		public string InvoiceEmail { get; set; }

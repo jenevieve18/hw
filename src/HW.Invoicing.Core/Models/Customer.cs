@@ -138,6 +138,16 @@ namespace HW.Invoicing.Core.Models
 		}
 
 		public IList<CustomerContact> Contacts { get; set; }
+		
+		public CustomerContact GetCustomerContact(int customerContactId)
+		{
+			foreach (var c in Contacts) {
+				if (c.Id == customerContactId) {
+					return c;
+				}
+			}
+			return null;
+		}
 
 		public CustomerContact FirstPrimaryContact
 		{
@@ -381,6 +391,10 @@ namespace HW.Invoicing.Core.Models
 	
 	public class CustomerContact : BaseModel
 	{
+		public const int PRIMARY = 1;
+		public const int SECONDARY = 2;
+		public const int OTHER = 3;
+		
 		public Customer Customer { get; set; }
 		public string Name { get; set; }
 		public string Title { get; set; }
@@ -400,8 +414,11 @@ namespace HW.Invoicing.Core.Models
 		public string GetContactType()
 		{
 			switch (Type) {
-					case 1: return "<span class='label label-success'>Primary</span>";
-					case 2: return "<span class='label label-warning'>Secondary</span>";
+//					case 1: return "<span class='label label-success'>Primary</span>";
+//					case 2: return "<span class='label label-warning'>Secondary</span>";
+//					default: return "<span class='label label-default'>Other</span>";
+					case PRIMARY: return "<span class='label label-success'>Primary</span>";
+					case SECONDARY: return "<span class='label label-warning'>Secondary</span>";
 					default: return "<span class='label label-default'>Other</span>";
 			}
 		}

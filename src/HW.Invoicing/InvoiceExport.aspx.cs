@@ -36,7 +36,8 @@ namespace HW.Invoicing
 			string file = string.Format("{0} {1} {2} {3}", invoice.Number, invoice.Customer != null ? invoice.Customer.Name : "", invoice.Customer != null && invoice.Customer.ContactPerson != null ? invoice.Customer.ContactPerson.Name : "", DateTime.Now.ToString("MMM yyyy"));
 			Response.AddHeader("content-disposition", string.Format("attachment;filename=\"{0}.pdf\";", file));
 
-			var exporter = InvoiceExporterFactory.GetExporter2(invoice.Customer.Company.InvoiceExporter);
+//			var exporter = InvoiceExporterFactory.GetExporter(invoice.Customer.Company.InvoiceExporter);
+			var exporter = InvoiceExporterFactory.GetExporter(invoice.Company.InvoiceExporter);
 
 			var exported = exporter.Export(invoice);
 			exported.WriteTo(Response.OutputStream);

@@ -178,7 +178,8 @@ SELECT Id,
     InvoiceEmail,
     NULL, --InvoiceEmailCC,
     InvoiceEmailSubject,
-    InvoiceEmailText
+    InvoiceEmailText,
+    InvoiceLogoPercentage
 FROM Company
 WHERE Id = @Id";
 			Company c = null;
@@ -211,9 +212,9 @@ WHERE Id = @Id";
 						InvoiceExporter = GetInt32(rs, 23),
 						User = new User { Id = GetInt32(rs, 24) },
                         InvoiceEmail = GetString(rs, 25),
-                        //InvoiceEmailCC = GetString(rs, 26),
                         InvoiceEmailSubject = GetString(rs, 27),
-                        InvoiceEmailText = GetString(rs, 28)
+                        InvoiceEmailText = GetString(rs, 28),
+                        InvoiceLogoPercentage = GetDouble(rs, 29, 100)
 					};
 				}
 			}
@@ -419,14 +420,14 @@ UPDATE Company set Name = @Name,
     AgreementTemplate = @AgreementTemplate,
     InvoiceExporter = @InvoiceExporter,
     InvoiceEmail = @InvoiceEmail,
-    --InvoiceEmailCC = @InvoiceEmailCC,
     InvoiceEmailSubject = @InvoiceEmailSubject,
     InvoiceEmailText = @InvoiceEmailText,
     Terms = @Terms,
     AgreementEmailSubject = @AgreementEmailSubject,
     AgreementEmailText = @AgreementEmailText,
     AgreementSignedEmailSubject = @AgreementSignedEmailSubject,
-    AgreementSignedEmailText = @AgreementSignedEmailText
+    AgreementSignedEmailText = @AgreementSignedEmailText,
+    InvoiceLogoPercentage = @InvoiceLogoPercentage
 WHERE Id = @Id";
 			ExecuteNonQuery(
 				query,
@@ -451,14 +452,14 @@ WHERE Id = @Id";
 				new SqlParameter("@AgreementTemplate", t.AgreementTemplate),
                 new SqlParameter("@InvoiceExporter", t.InvoiceExporter),
                 new SqlParameter("@InvoiceEmail", t.InvoiceEmail),
-                //new SqlParameter("@InvoiceEmailCC", t.InvoiceEmailCC),
                 new SqlParameter("@InvoiceEmailSubject", t.InvoiceEmailSubject),
                 new SqlParameter("@InvoiceEmailText", t.InvoiceEmailText),
                 new SqlParameter("@Terms", t.Terms),
                 new SqlParameter("@AgreementEmailSubject", t.AgreementEmailSubject),
                 new SqlParameter("@AgreementEmailText", t.AgreementEmailText),
                 new SqlParameter("@AgreementSignedEmailSubject", t.AgreementSignedEmailSubject),
-                new SqlParameter("@AgreementSignedEmailText", t.AgreementSignedEmailText)
+                new SqlParameter("@AgreementSignedEmailText", t.AgreementSignedEmailText),
+                new SqlParameter("@InvoiceLogoPercentage", t.InvoiceLogoPercentage)
 			);
 		}
 	}

@@ -113,10 +113,10 @@ namespace HW.Invoicing
 					labelInvoiceNumber.Text = "IHG-001";
 					labelInvoiceOurReferencePerson.Text = customer.OurReferencePerson;
 					//labelInvoicePurchaseOrderNumber.Text = customer.PurchaseOrderNumber;
-                    labelInvoicePurchaseOrderNumber.Text = customer.PrimaryContactReferenceNumber;
+					labelInvoicePurchaseOrderNumber.Text = customer.PrimaryContactReferenceNumber;
 					labelInvoiceYourReferencePerson.Text = customer.ContactPerson.Name;
-                    //panelPurchaseOrderNumber.Visible = customer.PurchaseOrderNumber != "";
-                    panelPurchaseOrderNumber.Visible = customer.PrimaryContactReferenceNumber != "";
+					//panelPurchaseOrderNumber.Visible = customer.PurchaseOrderNumber != "";
+					panelPurchaseOrderNumber.Visible = customer.PrimaryContactReferenceNumber != "";
 
 					// Subscription Panel
 					checkBoxSubscribe.Checked = customer.HasSubscription;
@@ -126,8 +126,7 @@ namespace HW.Invoicing
 						if (customer.SubscriptionHasEndDate) {
 							textBoxSubscriptionEndDate.Text = customer.SubscriptionEndDate.Value.ToString("yyyy-MM-dd");
 						}
-					}
-					else {
+					} else {
 						textBoxSubscriptionStartDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
 					}
 
@@ -235,6 +234,9 @@ namespace HW.Invoicing
 					Company = new Company { Id = companyId }
 				},
 				Comments = textBoxInvoiceComments.Text
+//				YourReferencePerson = labelInvoiceYourReferencePerson.Text,
+//				OurReferencePerson = labelInvoiceOurReferencePerson.Text,
+//				PurchaseOrderNumber = labelInvoicePurchaseOrderNumber.Text
 			};
 			i.AddTimebook(Request.Form.GetValues("invoice-timebooks"), Request.Form.GetValues("invoice-timebooks-sortorder"));
 			vr.Save(i);

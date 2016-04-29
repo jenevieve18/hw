@@ -711,6 +711,63 @@ WHERE Id = @Id"
 			);
 		}
 		
+		public Customer Read2(int id)
+		{
+			string query = string.Format(
+				@"
+SELECT c.Id,
+    c.Name,
+    c.Number,
+    c.InvoiceAddress,
+    c.PostalAddress,
+    c.PurchaseOrderNumber,
+    c.OurReferencePerson,
+    c.Email,
+    c.Phone,
+    c.Language,
+    c.HasSubscription,
+    c.SubscriptionItemId,
+    c.SubscriptionStartDate,
+    c.SubscriptionEndDate,
+    c.SubscriptionHasEndDate,
+    c.Status,
+    c.InvoiceEmail,
+    c.InvoiceEmailCC,
+    c.ContactPersonId,
+    c.Currency
+FROM Customer c
+WHERE c.Id = @Id"
+			);
+			Customer c = null;
+			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", id))) {
+				if (rs.Read()) {
+					c = new Customer {
+						Id = GetInt32(rs, 0),
+						Name = GetString(rs, 1),
+						Number = GetString(rs, 2),
+						InvoiceAddress = GetString(rs, 3, ""),
+						PostalAddress = GetString(rs, 4, ""),
+						PurchaseOrderNumber = GetString(rs, 5),
+						OurReferencePerson = GetString(rs, 6),
+						Email = GetString(rs, 7),
+						Phone = GetString(rs, 8),
+						Language = Language.GetLanguage(GetInt32(rs, 9, 1)),
+						HasSubscription = GetInt32(rs, 10) == 1,
+						SubscriptionItem = new Item { Id = GetInt32(rs, 10) },
+						SubscriptionStartDate = GetDateTime(rs, 11),
+						SubscriptionEndDate = GetDateTime(rs, 12),
+						SubscriptionHasEndDate = GetInt32(rs, 13) == 1,
+						Status = GetInt32(rs, 14),
+						InvoiceEmail = GetString(rs, 15),
+						InvoiceEmailCC = GetString(rs, 16),
+						ContactPerson = new CustomerContact { Id = GetInt32(rs, 17) },
+						Currency = Currency.GetCurrency(GetInt32(rs, 18, 1))
+					};
+				}
+			}
+			return c;
+		}
+		
 		public override Customer Read(int id)
 		{
 			string query = string.Format(
@@ -742,7 +799,7 @@ FROM Customer c
 --INNER JOIN Lang l ON c.Language = l.Id
 --INNER JOIN Item i ON i.Id = c.SubscriptionItemId
 --INNER JOIN Unit u ON u.Id = i.UnitId
-LEFT OUTER JOIN CustomerContact cc ON cc.CustomerId = c.Id
+--LEFT OUTER JOIN CustomerContact cc ON cc.CustomerId = c.Id
 WHERE c.Id = @Id"
 			);
 			Customer c = null;
@@ -776,11 +833,13 @@ WHERE c.Id = @Id"
 					};
 				}
 			}
-			if (c != null && c.HasSubscription)
+//			if (c != null && c.HasSubscription)
+			if (c != null)
 			{
 				c.Contacts = FindContacts(id);
-				//c.ContactPerson = ReadContact(c.ContactPerson.Id);
-				query = @"
+				if (c.HasSubscription) {
+					//c.ContactPerson = ReadContact(c.ContactPerson.Id);
+					query = @"
 SELECT i.Id,
 	i.Name,
 	u.Id,
@@ -789,17 +848,18 @@ SELECT i.Id,
 FROM Item i
 INNER JOIN Unit u ON u.Id = i.UnitId
 WHERE i.Id = @Id";
-				using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", c.SubscriptionItem.Id))) {
-					if (rs.Read()) {
-						c.SubscriptionItem = new Item {
-							Id = GetInt32(rs, 0),
-							Name = GetString(rs, 1),
-							Unit = new Unit {
-								Id = GetInt32(rs, 2),
-								Name = GetString(rs, 3)
-							},
-							Price = GetDecimal(rs, 4)
-						};
+					using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", c.SubscriptionItem.Id))) {
+						if (rs.Read()) {
+							c.SubscriptionItem = new Item {
+								Id = GetInt32(rs, 0),
+								Name = GetString(rs, 1),
+								Unit = new Unit {
+									Id = GetInt32(rs, 2),
+									Name = GetString(rs, 3)
+								},
+								Price = GetDecimal(rs, 4)
+							};
+						}
 					}
 				}
 			}
@@ -1045,7 +1105,7 @@ WHERE Id = @Id"
 						Inactive = GetInt32(rs, 5) == 1,
 						Type = GetInt32(rs, 6, 3),
 						Title = GetString(rs, 7),
-                        PurchaseOrderNumber = GetString(rs, 8)
+						PurchaseOrderNumber = GetString(rs, 8)
 					};
 				}
 			}
