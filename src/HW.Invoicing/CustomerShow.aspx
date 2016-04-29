@@ -527,7 +527,7 @@
                                 <tr>
                                     <td rowspan="4" valign="bottom">
                                         <% if (company.HasInvoiceLogo) { %>
-                                            <img src="uploads/<%= company.InvoiceLogo %>" />
+                                            <img src="uploads/<%= company.InvoiceLogo %>" style="width:<%= company.InvoiceLogoPercentage %>%" />
                                         <% } else { %>
                                             <img src="img/ihg.png"><br />
                                         <% } %>
@@ -933,14 +933,14 @@
                         <asp:TextBox ID="textBoxInvoiceEmailCC" runat="server" CssClass="info form-control"></asp:TextBox>
                     </td>
                 </tr>
-                <tr>
+                <%--<tr>
                     <td><strong>Your Reference Person</strong></td>
                     <td>
                         <asp:Label ID="labelYourReferencePerson" runat="server" Text="" CssClass="info-text"></asp:Label>
                         <asp:DropDownList ID="dropDownListYourReferencePerson" runat="server" CssClass=" info form-control">
                         </asp:DropDownList>
                     </td>
-                </tr>
+                </tr>--%>
                 <%--<tr>
                     <td><strong>Reference / Purchase Order Number</strong></td>
                     <td>

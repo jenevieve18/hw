@@ -130,8 +130,8 @@ WHERE CompanyId = @CompanyId";
 		public override void Save(Invoice i)
 		{
 			string query = @"
-INSERT INTO Invoice(Date, CustomerId, Comments, Number, MaturityDate, Status)
-VALUES(@Date, @CustomerId, @Comments, @Number, @MaturityDate, @Status);
+INSERT INTO Invoice(Date, CustomerId, Comments, Number, MaturityDate, Status, CustomerContactId, OurReferencePerson)
+VALUES(@Date, @CustomerId, @Comments, @Number, @MaturityDate, @Status, @CustomerContactId, @OurReferencePerson);
 SELECT CAST(scope_identity() AS int)";
 			int id = (int)ExecuteScalar(
 				query,
@@ -141,9 +141,10 @@ SELECT CAST(scope_identity() AS int)";
 				new SqlParameter("@Comments", i.Comments),
 				new SqlParameter("@Number", i.Number),
 				new SqlParameter("@MaturityDate", i.MaturityDate),
-				new SqlParameter("@Status", Invoice.INVOICED)
+				new SqlParameter("@Status", Invoice.INVOICED),
+				new SqlParameter("@CustomerContactId", i.CustomerContact != null ? (object)i.CustomerContact.Id : DBNull.Value),
 //				new SqlParameter("@YourReferencePerson", i.YourReferencePerson),
-//				new SqlParameter("@OurReferencePerson", i.OurReferencePerson),
+				new SqlParameter("@OurReferencePerson", i.OurReferencePerson)
 //				new SqlParameter("@PurchaseOrderNumber", i.PurchaseOrderNumber)
 			);
 
@@ -236,7 +237,9 @@ SELECT i.Id,
     c.ContactPersonId,
     c.Language,
     c.Currency,
-    c.InvoiceEmailCC
+    c.InvoiceEmailCC,
+    i.OurReferencePerson,
+    i.CustomerContactId
 FROM Invoice i
 INNER JOIN Customer c ON c.Id = i.CustomerId
 INNER JOIN Company co ON co.Id = c.CompanyId
@@ -255,33 +258,26 @@ WHERE i.Id = @Id"
 							Id = GetInt32(rs, 2),
 							Name = GetString(rs, 3),
 							InvoiceAddress = GetString(rs, 4),
-							//                            PurchaseOrderNumber = GetString(rs, 5),
 							OurReferencePerson = GetString(rs, 7),
 							Number = GetString(rs, 9),
-							Company = new Company
-							{
-								Id = GetInt32(rs, 12)
-							},
+							Company = new Company { Id = GetInt32(rs, 12) },
 							InvoiceEmail = GetString(rs, 13),
-							ContactPerson = new CustomerContact {
-								Id = GetInt32(rs, 14)
-							},
 							Language = Language.GetLanguage(GetInt32(rs, 15)),
 							Currency = Currency.GetCurrency(GetInt32(rs, 16)),
-							InvoiceEmailCC = GetString(rs, 17)
+							InvoiceEmailCC = GetString(rs, 17),
 						},
 						Status = GetInt32(rs, 10),
-						Comments = GetString(rs, 11)
-//						YourReferencePerson = GetString(rs, 18),
-//						OurReferencePerson = GetString(rs, 19),
-//						PurchaseOrderNumber = GetString(rs, 20)
+						Comments = GetString(rs, 11),
+						OurReferencePerson = GetString(rs, 18),
+						CustomerContact = new CustomerContact { Id = GetInt32(rs, 19) }
 					};
 				}
 			}
 			if (i != null)
 			{
-				i.Customer.Contacts = new SqlCustomerRepository().FindContacts(i.Customer.Id);
-				i.Customer.ContactPerson = new SqlCustomerRepository().ReadContact(i.Customer.ContactPerson.Id);
+				var cr = new SqlCustomerRepository();
+				i.CustomerContact = cr.ReadContact(i.CustomerContact.Id);
+				i.Customer.Contacts = cr.FindContacts(i.Customer.Id);
 				i.Timebooks = FindTimebooks(id);
 			}
 			return i;

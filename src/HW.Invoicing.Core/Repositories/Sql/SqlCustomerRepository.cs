@@ -419,7 +419,7 @@ WHERE Id = @Id"
 				new SqlParameter("@Id", id),
 				new SqlParameter("@InvoiceEmail", c.InvoiceEmail),
 				new SqlParameter("@InvoiceEmailCC", c.InvoiceEmailCC),
-				new SqlParameter("@ContactPersonId", c.ContactPerson.Id),
+//				new SqlParameter("@ContactPersonId", c.ContactPerson.Id),
 				new SqlParameter("@Currency", c.Currency.Id)
 			);
 		}
@@ -733,7 +733,6 @@ SELECT c.Id,
     c.Status,
     c.InvoiceEmail,
     c.InvoiceEmailCC,
-    c.ContactPersonId,
     c.Currency
 FROM Customer c
 WHERE c.Id = @Id"
@@ -753,14 +752,14 @@ WHERE c.Id = @Id"
 						Phone = GetString(rs, 8),
 						Language = Language.GetLanguage(GetInt32(rs, 9, 1)),
 						HasSubscription = GetInt32(rs, 10) == 1,
-						SubscriptionItem = new Item { Id = GetInt32(rs, 10) },
-						SubscriptionStartDate = GetDateTime(rs, 11),
-						SubscriptionEndDate = GetDateTime(rs, 12),
-						SubscriptionHasEndDate = GetInt32(rs, 13) == 1,
-						Status = GetInt32(rs, 14),
-						InvoiceEmail = GetString(rs, 15),
-						InvoiceEmailCC = GetString(rs, 16),
-						ContactPerson = new CustomerContact { Id = GetInt32(rs, 17) },
+						SubscriptionItem = new Item { Id = GetInt32(rs, 11) },
+						SubscriptionStartDate = GetDateTime(rs, 12),
+						SubscriptionEndDate = GetDateTime(rs, 13),
+						SubscriptionHasEndDate = GetInt32(rs, 14) == 1,
+						Status = GetInt32(rs, 15),
+						InvoiceEmail = GetString(rs, 16),
+						InvoiceEmailCC = GetString(rs, 17),
+//						ContactPerson = new CustomerContact { Id = GetInt32(rs, 17) },
 						Currency = Currency.GetCurrency(GetInt32(rs, 18, 1))
 					};
 				}
@@ -826,9 +825,7 @@ WHERE c.Id = @Id"
 						Status = GetInt32(rs, 18),
 						InvoiceEmail = GetString(rs, 19),
 						InvoiceEmailCC = GetString(rs, 20),
-						ContactPerson = new CustomerContact {
-							Id = GetInt32(rs, 21)
-						},
+//						ContactPerson = new CustomerContact { Id = GetInt32(rs, 21) },
 						Currency = Currency.GetCurrency(GetInt32(rs, 22, 1))
 					};
 				}
@@ -1667,9 +1664,9 @@ c.Name"
 							Number = GetString(rs, 2),
 							Phone = GetString(rs, 3),
 							Email = GetString(rs, 4),
-							//                            Inactive = GetInt32(rs, 5) == 1,
+//							Inactive = GetInt32(rs, 5) == 1,
 							Status = GetInt32(rs, 7),
-							ContactPerson = new CustomerContact { Id = GetInt32(rs, 8) }
+//							ContactPerson = new CustomerContact { Id = GetInt32(rs, 8) }
 						}
 					);
 				}
@@ -1714,10 +1711,10 @@ ORDER BY c.Name"
 							Number = GetString(rs, 2),
 							Phone = GetString(rs, 3),
 							Email = GetString(rs, 4),
-							//                            Inactive = GetInt32(rs, 5) == 1
+//							Inactive = GetInt32(rs, 5) == 1,
 							HasSubscription = GetInt32(rs, 6) == 1,
 							Status = GetInt32(rs, 7),
-							ContactPerson = new CustomerContact { Id = GetInt32(rs, 8) }
+//							ContactPerson = new CustomerContact { Id = GetInt32(rs, 8) }
 						}
 					);
 				}
@@ -1778,7 +1775,7 @@ c.Name"
 							Number = GetString(rs, 2),
 							Phone = GetString(rs, 3),
 							Email = GetString(rs, 4),
-							//                            Inactive = GetInt32(rs, 5) == 1,
+//							Inactive = GetInt32(rs, 5) == 1,
 							SubscriptionItem = new Item
 							{
 								Id = GetInt32(rs, 6),
@@ -1791,7 +1788,7 @@ c.Name"
 								Price = GetDecimal(rs, 10)
 							},
 							Status = GetInt32(rs, 11),
-							ContactPerson = new CustomerContact { Id = GetInt32(rs, 12) }
+//							ContactPerson = new CustomerContact { Id = GetInt32(rs, 12) }
 						}
 					);
 				}

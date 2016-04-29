@@ -42,7 +42,7 @@ namespace HW.Invoicing.Core.Services
 		void AssignContacts(IList<Customer> customers)
 		{
 			foreach (var c in customers) {
-				c.ContactPerson = cr.ReadContact(c.ContactPerson.Id);
+//				c.ContactPerson = cr.ReadContact(c.ContactPerson.Id);
 				c.Contacts = cr.FindContacts(c.Id);
 			}
 		}

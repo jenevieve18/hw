@@ -40,8 +40,8 @@
                         <tr>
                             <td><strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike></td>
                             <td>
-                                <% if (c.FirstPrimaryContact != null) { %>
-                                    <strike><%= c.FirstPrimaryContact.Name %></strike>
+                                <% if (c.PrimaryContact != null) { %>
+                                    <strike><%= c.PrimaryContact.Name%></strike>
                                 <% } %>
                             </td>
                             <td><strike><%= c.Phone %></strike></td>
@@ -50,9 +50,12 @@
                     <% } else { %>
                         <tr>
                             <td><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></td>
-                            <td><%= c.ContactPerson != null ? c.ContactPerson.ToString() : "" %></td>
+                            <%--<td><%= c.ContactPerson != null ? c.ContactPerson.ToString() : "" %></td>
                             <td><%= c.ContactPerson != null ? c.ContactPerson.Phone : "" %></td>
-                            <td><%= c.ContactPerson != null ? c.ContactPerson.Email : "" %></td>
+                            <td><%= c.ContactPerson != null ? c.ContactPerson.Email : "" %></td>--%>
+                            <td><%= c.PrimaryContact != null ? c.PrimaryContact.ToString() : "" %></td>
+                            <td><%= c.PrimaryContact != null ? c.PrimaryContact.Phone : "" %></td>
+                            <td><%= c.PrimaryContact != null ? c.PrimaryContact.Email : "" %></td>
                             <%--<td>
                                 <% if (c.FirstPrimaryContact != null) { %>
                                     <%= c.FirstPrimaryContact.Contact %>
@@ -88,9 +91,12 @@
                         </td>
                         <td><%= c.Phone %></td>
                         <td><%= c.Email %></td>--%>
-                        <td><%= c.ContactPerson != null ? c.ContactPerson.ToString() : "" %></td>
-                            <td><%= c.ContactPerson != null ? c.ContactPerson.Phone : "" %></td>
-                            <td><%= c.ContactPerson != null ? c.ContactPerson.Email : "" %></td>
+                        <%--<td><%= c.ContactPerson != null ? c.ContactPerson.ToString() : "" %></td>
+                        <td><%= c.ContactPerson != null ? c.ContactPerson.Phone : "" %></td>
+                        <td><%= c.ContactPerson != null ? c.ContactPerson.Email : "" %></td>--%>
+                        <td><%= c.PrimaryContact != null ? c.PrimaryContact.ToString() : "" %></td>
+                        <td><%= c.PrimaryContact != null ? c.PrimaryContact.Phone : "" %></td>
+                        <td><%= c.PrimaryContact != null ? c.PrimaryContact.Email : "" %></td>
                     </tr>
                 <% } %>
             </table>
@@ -130,8 +136,8 @@
                         <tr>
                             <td><strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike></td>
                             <td>
-                                <% if (c.FirstPrimaryContact != null) { %>
-                                    <strike><%= c.FirstPrimaryContact.Name %></strike>
+                                <% if (c.PrimaryContact != null) { %>
+                                    <strike><%= c.PrimaryContact.Name%></strike>
                                 <% } %>
                             </td>
                             <td><strike><%= c.Phone %></strike></td>
@@ -147,9 +153,12 @@
                             </td>
                             <td><%= c.Phone %></td>
                             <td><%= c.Email %></td>--%>
-                            <td><%= c.ContactPerson != null ? c.ContactPerson.ToString() : "" %></td>
+                            <%--<td><%= c.ContactPerson != null ? c.ContactPerson.ToString() : "" %></td>
                             <td><%= c.ContactPerson != null ? c.ContactPerson.Phone : "" %></td>
-                            <td><%= c.ContactPerson != null ? c.ContactPerson.Email : "" %></td>
+                            <td><%= c.ContactPerson != null ? c.ContactPerson.Email : "" %></td>--%>
+                            <td><%= c.PrimaryContact != null ? c.PrimaryContact.ToString() : "" %></td>
+                            <td><%= c.PrimaryContact != null ? c.PrimaryContact.Phone : "" %></td>
+                            <td><%= c.PrimaryContact != null ? c.PrimaryContact.Email : "" %></td>
                         </tr>
                     <% } %>
                 <% } %>
@@ -172,8 +181,8 @@
                         <tr>
                             <td><strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike></td>
                             <td>
-                                <% if (c.FirstPrimaryContact != null) { %>
-                                    <strike><%= c.FirstPrimaryContact.Name %></strike>
+                                <% if (c.PrimaryContact != null) { %>
+                                    <strike><%= c.PrimaryContact.Name%></strike>
                                 <% } %>
                             </td>
                             <td><strike><%= c.Phone %></strike></td>
@@ -189,9 +198,12 @@
                             </td>
                             <td><%= c.Phone %></td>
                             <td><%= c.Email %></td>--%>
-                            <td><%= c.ContactPerson != null ? c.ContactPerson.ToString() : "" %></td>
+                            <%--<td><%= c.ContactPerson != null ? c.ContactPerson.ToString() : "" %></td>
                             <td><%= c.ContactPerson != null ? c.ContactPerson.Phone : "" %></td>
-                            <td><%= c.ContactPerson != null ? c.ContactPerson.Email : "" %></td>
+                            <td><%= c.ContactPerson != null ? c.ContactPerson.Email : "" %></td>--%>
+                            <td><%= c.PrimaryContact != null ? c.PrimaryContact.ToString() : "" %></td>
+                            <td><%= c.PrimaryContact != null ? c.PrimaryContact.Phone : "" %></td>
+                            <td><%= c.PrimaryContact != null ? c.PrimaryContact.Email : "" %></td>
                         </tr>
                     <% } %>
                 <% } %>
@@ -219,9 +231,12 @@
                         </td>
                         <td><%= c.Phone %></td>
                         <td><%= c.Email %></td>--%>
-                        <td><%= c.ContactPerson != null ? c.ContactPerson.ToString() : "" %></td>
-                            <td><%= c.ContactPerson != null ? c.ContactPerson.Phone : "" %></td>
-                            <td><%= c.ContactPerson != null ? c.ContactPerson.Email : "" %></td>
+                        <%--<td><%= c.ContactPerson != null ? c.ContactPerson.ToString() : "" %></td>
+                        <td><%= c.ContactPerson != null ? c.ContactPerson.Phone : "" %></td>
+                        <td><%= c.ContactPerson != null ? c.ContactPerson.Email : "" %></td>--%>
+                        <td><%= c.PrimaryContact != null ? c.PrimaryContact.ToString() : "" %></td>
+                        <td><%= c.PrimaryContact != null ? c.PrimaryContact.Phone : "" %></td>
+                        <td><%= c.PrimaryContact != null ? c.PrimaryContact.Email : "" %></td>
                     </tr>
                 <% } %>
             </table>

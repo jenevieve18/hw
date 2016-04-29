@@ -61,17 +61,17 @@ namespace HW.Invoicing
 			if (Session["Message"] != null) {
 				message = Session["Message"].ToString();
 				Session.Remove("Message");
-			}
+            }
+
+            customer = r.Read(id);
 
 			if (!IsPostBack) {
-				customer = r.Read(id);
-
 				if (customer == null) {
 					Response.Redirect("customers.aspx");
 				} else {
-					if (customer.ContactPerson != null && customer.ContactPerson.Id > 0) {
-						customer.ContactPerson = r.ReadContact(customer.ContactPerson.Id);
-					}
+//					if (customer.ContactPerson != null && customer.ContactPerson.Id > 0) {
+//						customer.ContactPerson = r.ReadContact(customer.ContactPerson.Id);
+//					}
 
 					labelCustomer.Text = customer.Name;
 
@@ -87,7 +87,7 @@ namespace HW.Invoicing
 					labelInvoiceEmail.Text = textBoxInvoiceEmail.Text = customer.InvoiceEmail;
 					labelInvoiceEmailCC.Text = textBoxInvoiceEmailCC.Text = customer.InvoiceEmailCC;
 
-					labelYourReferencePerson.Text = customer.ContactPerson != null ? customer.ContactPerson.Name : "";
+					//labelYourReferencePerson.Text = customer.ContactPerson != null ? customer.ContactPerson.Name : "";
 					labelOurReferencePerson.Text = textBoxOurReferencePerson.Text = customer.OurReferencePerson;
 					labelPhone.Text = textBoxPhone.Text = customer.Phone;
 					labelEmail.Text = textBoxEmail.Text = customer.Email;
@@ -112,11 +112,12 @@ namespace HW.Invoicing
 					labelInvoiceCustomerAddress.Text = customer.InvoiceAddress.Replace("\n", "<br>");
 					labelInvoiceNumber.Text = "IHG-001";
 					labelInvoiceOurReferencePerson.Text = customer.OurReferencePerson;
-					//labelInvoicePurchaseOrderNumber.Text = customer.PurchaseOrderNumber;
-					labelInvoicePurchaseOrderNumber.Text = customer.PrimaryContactReferenceNumber;
-					labelInvoiceYourReferencePerson.Text = customer.ContactPerson.Name;
-					//panelPurchaseOrderNumber.Visible = customer.PurchaseOrderNumber != "";
-					panelPurchaseOrderNumber.Visible = customer.PrimaryContactReferenceNumber != "";
+//					labelInvoicePurchaseOrderNumber.Text = customer.PrimaryContactReferenceNumber;
+					labelInvoicePurchaseOrderNumber.Text = customer.GetPrimaryContactReferenceNumber();
+//					labelInvoiceYourReferencePerson.Text = customer.ContactPerson.Name;
+					labelInvoiceYourReferencePerson.Text = customer.GetPrimaryContactName();
+//					panelPurchaseOrderNumber.Visible = customer.PrimaryContactReferenceNumber != "";
+					panelPurchaseOrderNumber.Visible = customer.GetPrimaryContactReferenceNumber() != "";
 
 					// Subscription Panel
 					checkBoxSubscribe.Checked = customer.HasSubscription;
@@ -233,9 +234,10 @@ namespace HW.Invoicing
 					Id = id,
 					Company = new Company { Id = companyId }
 				},
-				Comments = textBoxInvoiceComments.Text
+				Comments = textBoxInvoiceComments.Text,
+				CustomerContact = customer.PrimaryContact != null ? customer.PrimaryContact : null,
 //				YourReferencePerson = labelInvoiceYourReferencePerson.Text,
-//				OurReferencePerson = labelInvoiceOurReferencePerson.Text,
+				OurReferencePerson = labelInvoiceOurReferencePerson.Text
 //				PurchaseOrderNumber = labelInvoicePurchaseOrderNumber.Text
 			};
 			i.AddTimebook(Request.Form.GetValues("invoice-timebooks"), Request.Form.GetValues("invoice-timebooks-sortorder"));
@@ -252,7 +254,7 @@ namespace HW.Invoicing
 				InvoiceAddress = textBoxInvoiceAddress.Text,
 				InvoiceEmail = textBoxInvoiceEmail.Text,
 				InvoiceEmailCC = textBoxInvoiceEmailCC.Text,
-				ContactPerson = new CustomerContact { Id = ConvertHelper.ToInt32(dropDownListYourReferencePerson.SelectedValue) },
+				//ContactPerson = new CustomerContact { Id = ConvertHelper.ToInt32(dropDownListYourReferencePerson.SelectedValue) },
 				OurReferencePerson = textBoxOurReferencePerson.Text,
 				Phone = textBoxPhone.Text,
 				Email = textBoxEmail.Text,
@@ -348,10 +350,10 @@ namespace HW.Invoicing
 				dropDownListTimebookItems.Items.Add(li);
 			}
 
-			dropDownListYourReferencePerson.Items.Clear();
-			foreach (var c in contacts) {
-				dropDownListYourReferencePerson.Items.Add(new ListItem(c.ToString(), c.Id.ToString()));
-			}
+//			dropDownListYourReferencePerson.Items.Clear();
+//			foreach (var c in contacts) {
+//				dropDownListYourReferencePerson.Items.Add(new ListItem(c.ToString(), c.Id.ToString()));
+//			}
 
 			dropDownListTimebookContacts.Items.Clear();
 			foreach (var c in contacts) {
@@ -372,22 +374,22 @@ namespace HW.Invoicing
 				customer.Contacts = contacts;
 				dropDownListLanguage.SelectedValue = customer.Language.Id.ToString();
 				dropDownListCurrency.SelectedValue = customer.Currency.Id.ToString();
-				dropDownListYourReferencePerson.SelectedValue = customer.ContactPerson != null ? customer.ContactPerson.Id.ToString() : "";
+//				dropDownListYourReferencePerson.SelectedValue = customer.ContactPerson != null ? customer.ContactPerson.Id.ToString() : "";
 				if (customer.SubscriptionItem != null) {
 					dropDownListSubscriptionItem.SelectedValue = customer.SubscriptionItem.Id.ToString();
 				}
 
 				foreach (var t in new[] { new { id = 1, name = "Primary" }, new { id = 2, name = "Secondary" }, new { id = 3, name = "Other" } }) {
-					if ((t.id == 1 && customer.HasPrimaryContacts) || (t.id == 2 && customer.HasSecondaryContacts)) {
+					if ((t.id == 1 && customer.HasPrimaryContact) || (t.id == 2 && customer.HasSecondaryContact)) {
 						continue;
 					}
 					var li = new ListItem(t.name, t.id.ToString());
 					li.Attributes.Add("class", "radio-inline");
 					radioButtonListContactType.Items.Add(li);
 				}
-				if (!customer.HasPrimaryContacts) {
+				if (!customer.HasPrimaryContact) {
 					radioButtonListContactType.SelectedValue = 1.ToString();
-				} else if (!customer.HasSecondaryContacts) {
+				} else if (!customer.HasSecondaryContact) {
 					radioButtonListContactType.SelectedValue = 2.ToString();
 				} else {
 					radioButtonListContactType.SelectedValue = 3.ToString();

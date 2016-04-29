@@ -31,9 +31,12 @@ namespace HW.Invoicing
 				labelMaturityDate.Text = invoice.MaturityDate.Value.ToString("yyyy-MM-dd");
 				labelInvoiceCustomerAddress.Text = invoice.Customer.ToString().Replace("\n", "<br>");
 //				labelInvoicePurchaseOrderNumber.Text = invoice.PurchaseOrderNumber;
+                labelInvoicePurchaseOrderNumber.Text = invoice.GetContactReferenceNumber();
 //				labelInvoiceYourReferencePerson.Text = invoice.YourReferencePerson;
-//				labelInvoiceOurReferencePerson.Text = invoice.OurReferencePerson;
-				panelPurchaseOrder.Visible = invoice.Customer.PrimaryContactReferenceNumber != "";
+                labelInvoiceYourReferencePerson.Text = invoice.GetContactName();
+				labelInvoiceOurReferencePerson.Text = invoice.OurReferencePerson;
+//				panelPurchaseOrder.Visible = invoice.Customer.PrimaryContactReferenceNumber != "";
+				panelPurchaseOrder.Visible = invoice.Customer.GetPrimaryContactReferenceNumber() != "";
 			} else {
 				Response.Redirect("invoices.aspx");
 			}

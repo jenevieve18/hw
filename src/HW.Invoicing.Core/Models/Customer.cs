@@ -61,7 +61,7 @@ namespace HW.Invoicing.Core.Models
 		public string InvoiceEmailCC { get; set; }
 		public string PostalAddress { get; set; }
 		public string PurchaseOrderNumber { get; set; }
-		public CustomerContact ContactPerson { get; set; }
+//		public CustomerContact ContactPerson { get; set; }
 		public string OurReferencePerson { get; set; }
 		public Language Language { get; set; }
 		public Currency Currency { get; set; }
@@ -122,10 +122,18 @@ namespace HW.Invoicing.Core.Models
 			}
 		}
 		
-		public string PrimaryContactReferenceNumber {
-			get {
-				return PrimaryContact != null ? PrimaryContact.PurchaseOrderNumber : "";
-			}
+		public string GetPrimaryContactReferenceNumber()
+		{
+			return PrimaryContact != null ? PrimaryContact.PurchaseOrderNumber : "";
+		}
+		
+		public string GetPrimaryContactName()
+		{
+			return PrimaryContact != null ? PrimaryContact.Name : "";
+		}
+		
+		public bool HasPrimaryContact {
+			get { return PrimaryContact != null; }
 		}
 		
 		public CustomerContact PrimaryContact {
@@ -148,50 +156,60 @@ namespace HW.Invoicing.Core.Models
 			}
 			return null;
 		}
-
-		public CustomerContact FirstPrimaryContact
-		{
+		
+		public bool HasSecondaryContact {
+			get { return SecondaryContact != null; }
+		}
+		
+		public CustomerContact SecondaryContact {
 			get {
-				if (HasPrimaryContacts) {
-					return PrimaryContacts[0];
-				}
-				return null;
+				return (from c in Contacts where c.Type == CustomerContact.SECONDARY select c).FirstOrDefault();
 			}
 		}
 
-		public CustomerContact SecondaryContact
-		{
-			get {
-				if (HasSecondaryContacts) {
-					return SecondaryContacts[0];
-				}
-				return null;
-			}
-		}
-
-		public bool HasPrimaryContacts
-		{
-			get { return PrimaryContacts.Count > 0; }
-		}
-
-		public bool HasSecondaryContacts
-		{
-			get { return SecondaryContacts.Count > 0; }
-		}
-
-		public IList<CustomerContact> PrimaryContacts
-		{
-			get {
-				return (from c in Contacts where c.Type == 1 select c).ToList();
-			}
-		}
-
-		public IList<CustomerContact> SecondaryContacts
-		{
-			get {
-				return (from c in Contacts where c.Type == 2 select c).ToList();
-			}
-		}
+//		public CustomerContact FirstPrimaryContact
+//		{
+//			get {
+//				if (HasPrimaryContacts) {
+//					return PrimaryContacts[0];
+//				}
+//				return null;
+//			}
+//		}
+//
+//		public CustomerContact SecondaryContact
+//		{
+//			get {
+//				if (HasSecondaryContacts) {
+//					return SecondaryContacts[0];
+//				}
+//				return null;
+//			}
+//		}
+//
+//		public bool HasPrimaryContacts
+//		{
+//			get { return PrimaryContacts.Count > 0; }
+//		}
+//
+//		public bool HasSecondaryContacts
+//		{
+//			get { return SecondaryContacts.Count > 0; }
+//		}
+//
+//		public IList<CustomerContact> PrimaryContacts
+//		{
+//			get {
+//				return (from c in Contacts where c.Type == 1 select c).ToList();
+//			}
+//		}
+//
+//		public IList<CustomerContact> SecondaryContacts
+//		{
+//			get {
+//				return (from c in Contacts where c.Type == 2 select c).ToList();
+//			}
+//		}
 		
 		public string GetName()
 		{

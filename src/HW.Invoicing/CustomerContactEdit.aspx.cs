@@ -36,7 +36,8 @@ namespace HW.Invoicing
 				radioButtonListContactType.Items.Clear();
 				foreach (var t in new[] { new { id = 1, name = "Primary" }, new { id = 2, name = "Secondary" }, new { id = 3, name = "Other" } })
 				{
-					if ((t.id == 1 && customer.HasPrimaryContacts && customer.FirstPrimaryContact.Id != id) || (t.id == 2 && customer.HasSecondaryContacts && customer.SecondaryContact.Id != id))
+//					if ((t.id == 1 && customer.HasPrimaryContacts && customer.FirstPrimaryContact.Id != id) || (t.id == 2 && customer.HasSecondaryContacts && customer.SecondaryContact.Id != id))
+					if ((t.id == 1 && customer.HasPrimaryContact && customer.PrimaryContact.Id != id) || (t.id == 2 && customer.HasSecondaryContact && customer.SecondaryContact.Id != id))
 					{
 						continue;
 					}
