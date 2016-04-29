@@ -105,7 +105,6 @@ namespace HW.Invoicing.Core.Helpers
 			PdfPTable t2 = new PdfPTable(1);
 			try {
 				Image logo = Image.GetInstance(invoice.Company.InvoiceLogo);
-//				logo.ScalePercent(75);
 				logo.ScalePercent((float)invoice.Company.InvoiceLogoPercentage);
 				t2.AddCell(new PdfPCell(logo) { Border = Rectangle.NO_BORDER });
 			} catch {
