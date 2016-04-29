@@ -86,7 +86,9 @@ namespace HW.Grp
 			int langID = (Request.QueryString["LangID"] != null ? Convert.ToInt32(Request.QueryString["LangID"]) : 0);
 
 			int reportPartID = Convert.ToInt32(Request.QueryString["RPID"]);
-			int pruid = Convert.ToInt32(Request.QueryString["PRUID"]);
+            //int pruid = Convert.ToInt32(Request.QueryString["PRUID"]);
+            string project = Request.QueryString["PRUID"];
+            int pruid = ConvertHelper.ToInt32(project.Replace("SPRU", ""));
 			
 			int grpng = Convert.ToInt32(Request.QueryString["GRPNG"]);
 			int spons = Convert.ToInt32((Request.QueryString["SAID"] != null ? Request.QueryString["SAID"] : Session["SponsorAdminID"]));
