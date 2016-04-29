@@ -106,7 +106,7 @@ namespace HW.Invoicing.Core.Helpers
 			try {
 				Image logo = Image.GetInstance(invoice.Company.InvoiceLogo);
 //				logo.ScalePercent(75);
-				logo.ScalePercent(10f);
+				logo.ScalePercent((float)invoice.Company.InvoiceLogoPercentage);
 				t2.AddCell(new PdfPCell(logo) { Border = Rectangle.NO_BORDER });
 			} catch {
 				t2.AddCell(new PdfPCell(new Phrase(" ")) { Border = Rectangle.NO_BORDER });
