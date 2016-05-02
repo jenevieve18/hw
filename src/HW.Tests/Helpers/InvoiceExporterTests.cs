@@ -25,10 +25,8 @@ namespace HW.Tests.Helpers
 					Number = "XXXYY-0123",
 					Name = "Carl T. Escalante",
 					PurchaseOrderNumber = "XXX-01234",
-					ContactPerson = new CustomerContact { Name  = "Gerald S. Hicks" },
+//					ContactPerson = new CustomerContact { Name  = "Gerald S. Hicks" },
 					OurReferencePerson = "Michael K. Smith",
-//					Language = Language.GetLanguage(1),
-//					Currency = Currency.GetCurrency(1)
 					InvoiceAddress = @"Carl T. Escalante
 37 East Avenue
 Scottsdale, AZ 85256"
@@ -174,7 +172,7 @@ Stockholm, Sweden",
 					Website = "www.healthwatch.se",
 					Email = "dan.hasson@healthwatch.se"
 				};
-				invoice.Customer.ContactPerson = null;
+//				invoice.Customer.ContactPerson = null;
 				MemoryStream s = ihg.Export(invoice);
 				s.WriteTo(f);
 			}
@@ -242,7 +240,7 @@ Stockholm, Sweden",
 					Email = "info@danhasson.se",
 					OrganizationNumber = "556757-0568"
 				};
-				invoice.Customer.ContactPerson = null;
+//				invoice.Customer.ContactPerson = null;
 				MemoryStream s = def.Export(invoice);
 				s.WriteTo(f);
 			}
