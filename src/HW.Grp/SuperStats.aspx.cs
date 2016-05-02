@@ -29,7 +29,8 @@ namespace HW.Grp
 			forSingleSeries = StrHelper.Str3(Request.QueryString["RNDS2"], "") == "";
 		}
 
-		protected string GetReportImageUrl(ReportPartLanguage p)
+//		protected string GetReportImageUrl(ReportPartLanguage p)
+		protected string GetReportImageUrl(IReportPart p)
 		{
 			return string.Format(
 				"superReportImage.aspx?N={0}&FDT={1}&TDT={2}&RNDS1={3}&RNDSD1={4}&PID1={5}&RNDS2={6}&RNDSD2={7}&PID2={8}&R1={9}&R2={10}&RPID={11}",
@@ -48,7 +49,8 @@ namespace HW.Grp
 			);
 		}
 
-		protected string GetReportExportUrl(ReportPartLanguage p)
+//		protected string GetReportExportUrl(ReportPartLanguage p)
+		protected string GetReportExportUrl(IReportPart p)
 		{
 			return string.Format(
 				"superexport.aspx?N={0}&FDT={1}&TDT={2}&RNDS1={3}&RNDSD1={4}&PID1={5}&RNDS2={6}&RNDSD2={7}&PID2={8}&R1={9}&R2={10}&RPID={11}",
