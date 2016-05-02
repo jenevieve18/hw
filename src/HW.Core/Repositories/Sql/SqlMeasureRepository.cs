@@ -230,7 +230,8 @@ AND (YEAR(um.DT) = {3} AND MONTH(um.DT) <= {5} OR YEAR(um.DT) < {3})
 AND (YEAR(sp.StartDT) = {2} AND MONTH(sp.StartDT) >= {4} OR YEAR(sp.StartDT) > {2})
 AND (YEAR(sp.EndDT) = {3} AND MONTH(sp.EndDT) <= {5} OR YEAR(sp.EndDT) <= {3})
 GROUP BY {1}(um.DT), um.UserID
-ORDER BY um.DT",
+ORDER BY {1}(um.DT)
+--ORDER BY um.DT",
 				join,
 				groupBy,
 				yearFrom,
