@@ -624,7 +624,10 @@ WHERE ProjectRoundUserID = {1}",
 				query = string.Format("SELECT DepartmentShort, DepartmentID FROM Department WHERE DepartmentShort IS NOT NULL AND SponsorID = {0}", sponsorID);
 				rs = Db.rs(query);
 				while (rs.Read()) {
-					existingUnits.Add(rs.GetString(0).ToLower().Trim(), rs.GetInt32(1));
+//					existingUnits.Add(rs.GetString(0).ToLower().Trim(), rs.GetInt32(1));
+					if (!existingUnits.Contains(rs.GetString(0).ToLower().Trim())) {
+						existingUnits.Add(rs.GetString(0).ToLower().Trim(), rs.GetInt32(1));
+					}
 				}
 				rs.Close();
 
