@@ -22,7 +22,8 @@ namespace HW.Grp
 		}
 
 		protected void Session_Start(object sender, EventArgs e)
-		{
+        {
+            Session.Timeout = 60 * 24 * 20;
 //			HttpRequest httpRequest = HttpContext.Current.Request;
 //			if (httpRequest.Browser.IsMobileDevice) {
 //				string path = httpRequest.Url.PathAndQuery;
