@@ -35,14 +35,12 @@ namespace HW.Invoicing
 					textBoxInvoiceDate.Text = invoice.Date.Value.ToString("yyyy-MM-dd");
 					labelMaturityDate.Text = invoice.MaturityDate.Value.ToString("yyyy-MM-dd");
 					labelInvoiceCustomerAddress.Text = invoice.Customer.ToString().Replace("\n", "<br>");
-//					labelInvoicePurchaseOrderNumber.Text = invoice.Customer.GetPrimaryContactReferenceNumber();
-//                    labelInvoiceYourReferencePerson.Text = invoice.Customer.GetPrimaryContactName();
-//					labelInvoiceOurReferencePerson.Text = invoice.Customer.OurReferencePerson;
-labelInvoicePurchaseOrderNumber.Text = invoice.GetContactReferenceNumber();
-                    labelInvoiceYourReferencePerson.Text = invoice.GetContactName();
-					labelInvoiceOurReferencePerson.Text = invoice.Customer.OurReferencePerson;
+					labelInvoicePurchaseOrderNumber.Text = invoice.GetContactReferenceNumber();
+					labelInvoiceYourReferencePerson.Text = invoice.GetContactName();
+					labelInvoiceOurReferencePerson.Text = invoice.OurReferencePerson;
 					textBoxInvoiceComments.Text = invoice.Comments;
-					panelPurchaseOrderNumber.Visible = invoice.Customer.GetPrimaryContactReferenceNumber() != "";
+//					panelPurchaseOrderNumber.Visible = invoice.Customer.GetPrimaryContactReferenceNumber() != "";
+					panelPurchaseOrderNumber.Visible = invoice.GetContactReferenceNumber() != "";
 				} else {
 					Response.Redirect("invoices.aspx");
 				}
@@ -82,20 +80,16 @@ labelInvoicePurchaseOrderNumber.Text = invoice.GetContactReferenceNumber();
 
 		protected void buttonSave_Click(object sender, EventArgs e)
 		{
-			var i = new Invoice
-			{
+			var i = new Invoice {
 				Date = ConvertHelper.ToDateTime(textBoxInvoiceDate.Text),
 				MaturityDate = ConvertHelper.ToDateTime(labelMaturityDate.Text),
 				Comments = textBoxInvoiceComments.Text
 			};
 			i.AddTimebook(Request.Form.GetValues("invoice-timebooks"), Request.Form.GetValues("invoice-timebooks-sortorder"));
 			i.Validate();
-			if (i.HasErrors)
-			{
+			if (i.HasErrors) {
 				message = i.Errors.ToHtmlUl();
-			}
-			else
-			{
+			} else {
 				r.Update(i, id);
 				Response.Redirect("invoices.aspx");
 			}
