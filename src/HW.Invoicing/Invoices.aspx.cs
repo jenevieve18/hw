@@ -63,6 +63,9 @@ namespace HW.Invoicing
 				{
 					var dateFrom = new DateTime(y, company.FinancialMonthStart.Value.Month, company.FinancialMonthStart.Value.Day, 0, 0, 0);
 					var dateTo = new DateTime(y + 1, company.FinancialMonthEnd.Value.Month, company.FinancialMonthEnd.Value.Day, 23, 59, 59);
+					if (r.HasInvoicesByCompanyWithSameYearLessFinancialStart(dateFrom, companyId) && !YearsExists(y - 1, y, years)) {
+						years.Add(new Year { From = y - 1, To = y });
+					}
 					if (r.HasInvoicesByCompany(dateFrom, dateTo, companyId)) {
 						years.Add(new Year { From = y, To = y + 1 });
 					}
@@ -83,6 +86,16 @@ namespace HW.Invoicing
                     invoices = r.FindByDateAndCompany(d1, d2, companyId);
                 }
 			}
+		}
+		
+		bool YearsExists(int from, int to, List<Year> years)
+		{
+			foreach (var y in years) {
+				if (y.From == from && y.To == to) {
+					return true;
+				}
+			}
+			return false;
 		}
 		
 		class Year

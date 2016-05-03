@@ -358,6 +358,25 @@ ORDER BY y DESC";
 			}
 			return years;
 		}
+		
+		public bool HasInvoicesByCompanyWithSameYearLessFinancialStart(DateTime dateFrom, int companyId)
+		{
+			string query = @"
+SELECT COUNT(*)
+FROM Invoice i
+INNER JOIN Customer c ON i.CustomerId = c.Id
+WHERE i.Date < @DateFrom AND YEAR(i.Date) = @DateFromYear
+AND c.CompanyId = @CompanyId";
+			bool hasInovices = false;
+			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@DateFrom", dateFrom), new SqlParameter("@DateFromYear", dateFrom.Year), new SqlParameter("@CompanyId", companyId)))
+			{
+				if (rs.Read())
+				{
+					hasInovices = GetInt32(rs, 0) > 0;
+				}
+			}
+			return hasInovices;
+		}
 
 		public bool HasInvoicesByCompany(DateTime dateFrom, DateTime dateTo, int companyId)
 		{
