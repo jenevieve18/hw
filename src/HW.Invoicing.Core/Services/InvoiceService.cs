@@ -25,7 +25,6 @@ namespace HW.Invoicing.Core.Services
 			var invoice = ir.Read(invoiceId);
 			var company = cr.Read(companyId);
 			invoice.Company = company;
-			invoice.Company = company;
 			if (company.HasInvoiceLogo)
 			{
 				company.InvoiceLogo = string.Format("{0}/{1}", directory, company.InvoiceLogo);

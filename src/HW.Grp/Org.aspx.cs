@@ -625,6 +625,9 @@ WHERE ProjectRoundUserID = {1}",
 				rs = Db.rs(query);
 				while (rs.Read()) {
 					existingUnits.Add(rs.GetString(0).ToLower().Trim(), rs.GetInt32(1));
+//					if (!existingUnits.Contains(rs.GetString(0).ToLower().Trim())) {
+//						existingUnits.Add(rs.GetString(0).ToLower().Trim(), rs.GetInt32(1));
+//					}
 				}
 				rs.Close();
 

@@ -61,7 +61,7 @@ namespace HW.Invoicing.Core.Models
 		public string InvoiceEmailCC { get; set; }
 		public string PostalAddress { get; set; }
 		public string PurchaseOrderNumber { get; set; }
-		public CustomerContact ContactPerson { get; set; }
+//		public CustomerContact ContactPerson { get; set; }
 		public string OurReferencePerson { get; set; }
 		public Language Language { get; set; }
 		public Currency Currency { get; set; }
@@ -122,10 +122,18 @@ namespace HW.Invoicing.Core.Models
 			}
 		}
 		
-		public string PrimaryContactReferenceNumber {
-			get {
-				return PrimaryContact != null ? PrimaryContact.PurchaseOrderNumber : "";
-			}
+		public string GetPrimaryContactReferenceNumber()
+		{
+			return PrimaryContact != null ? PrimaryContact.PurchaseOrderNumber : "";
+		}
+		
+		public string GetPrimaryContactName()
+		{
+			return PrimaryContact != null ? PrimaryContact.Name : "";
+		}
+		
+		public bool HasPrimaryContact {
+			get { return PrimaryContact != null; }
 		}
 		
 		public CustomerContact PrimaryContact {
@@ -138,50 +146,70 @@ namespace HW.Invoicing.Core.Models
 		}
 
 		public IList<CustomerContact> Contacts { get; set; }
-
-		public CustomerContact FirstPrimaryContact
+		
+		public CustomerContact GetCustomerContact(int customerContactId)
 		{
-			get {
-				if (HasPrimaryContacts) {
-					return PrimaryContacts[0];
+			foreach (var c in Contacts) {
+				if (c.Id == customerContactId) {
+					return c;
 				}
-				return null;
 			}
+			return null;
 		}
-
-		public CustomerContact SecondaryContact
-		{
+		
+		public bool HasSecondaryContact {
+			get { return SecondaryContact != null; }
+		}
+		
+		public CustomerContact SecondaryContact {
 			get {
-				if (HasSecondaryContacts) {
-					return SecondaryContacts[0];
-				}
-				return null;
+				return (from c in Contacts where c.Type == CustomerContact.SECONDARY select c).FirstOrDefault();
 			}
 		}
 
-		public bool HasPrimaryContacts
-		{
-			get { return PrimaryContacts.Count > 0; }
-		}
-
-		public bool HasSecondaryContacts
-		{
-			get { return SecondaryContacts.Count > 0; }
-		}
-
-		public IList<CustomerContact> PrimaryContacts
-		{
-			get {
-				return (from c in Contacts where c.Type == 1 select c).ToList();
-			}
-		}
-
-		public IList<CustomerContact> SecondaryContacts
-		{
-			get {
-				return (from c in Contacts where c.Type == 2 select c).ToList();
-			}
-		}
+//		public CustomerContact FirstPrimaryContact
+//		{
+//			get {
+//				if (HasPrimaryContacts) {
+//					return PrimaryContacts[0];
+//				}
+//				return null;
+//			}
+//		}
+//
+//		public CustomerContact SecondaryContact
+//		{
+//			get {
+//				if (HasSecondaryContacts) {
+//					return SecondaryContacts[0];
+//				}
+//				return null;
+//			}
+//		}
+//
+//		public bool HasPrimaryContacts
+//		{
+//			get { return PrimaryContacts.Count > 0; }
+//		}
+//
+//		public bool HasSecondaryContacts
+//		{
+//			get { return SecondaryContacts.Count > 0; }
+//		}
+//
+//		public IList<CustomerContact> PrimaryContacts
+//		{
+//			get {
+//				return (from c in Contacts where c.Type == 1 select c).ToList();
+//			}
+//		}
+//
+//		public IList<CustomerContact> SecondaryContacts
+//		{
+//			get {
+//				return (from c in Contacts where c.Type == 2 select c).ToList();
+//			}
+//		}
 		
 		public string GetName()
 		{
@@ -381,6 +409,10 @@ namespace HW.Invoicing.Core.Models
 	
 	public class CustomerContact : BaseModel
 	{
+		public const int PRIMARY = 1;
+		public const int SECONDARY = 2;
+		public const int OTHER = 3;
+		
 		public Customer Customer { get; set; }
 		public string Name { get; set; }
 		public string Title { get; set; }
@@ -400,8 +432,11 @@ namespace HW.Invoicing.Core.Models
 		public string GetContactType()
 		{
 			switch (Type) {
-					case 1: return "<span class='label label-success'>Primary</span>";
-					case 2: return "<span class='label label-warning'>Secondary</span>";
+//					case 1: return "<span class='label label-success'>Primary</span>";
+//					case 2: return "<span class='label label-warning'>Secondary</span>";
+//					default: return "<span class='label label-default'>Other</span>";
+					case PRIMARY: return "<span class='label label-success'>Primary</span>";
+					case SECONDARY: return "<span class='label label-warning'>Secondary</span>";
 					default: return "<span class='label label-default'>Other</span>";
 			}
 		}

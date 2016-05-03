@@ -328,8 +328,8 @@
                         </div>
 					    <span class="small"><%= R.Str(lid, "graphs.change.all", "Change all graphs to:")%></span>
                         <select class="plot-types small">
-                            <% var xxx = lid == 1 ? new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Linje" } :
-                                   new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Line" }; %>
+                            <% var xxx = lid == 1 ? new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Linje", SupportsMultipleSeries = true } :
+                                   new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Line", SupportsMultipleSeries = true }; %>
                             <% foreach (var p in new PlotTypeLanguage[] { xxx }) { %>
                             <%--<% foreach (var p in plotTypes) { %>--%>
                                 <% if (!p.SupportsMultipleSeries && !forSingleSeries) {} %>
@@ -415,8 +415,8 @@
 							    <div class="action">
 								    <span class="small"><%= R.Str(lid, "graphs.change", "Change this graph to:")%></span>
                                     <select class="plot-types small">
-                                        <% var xxx = lid == 1 ? new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Linje" } :
-                                               new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Line" }; %>
+                                        <% var xxx = lid == 1 ? new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Linje", SupportsMultipleSeries = true } :
+                                               new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Line", SupportsMultipleSeries = true }; %>
                                         <% foreach (var p in new PlotTypeLanguage[] { xxx }) { %>
                                         <%--<% foreach (var p in plotTypes) { %>--%>
                                             <% if (!p.SupportsMultipleSeries && !forSingleSeries) {} %>

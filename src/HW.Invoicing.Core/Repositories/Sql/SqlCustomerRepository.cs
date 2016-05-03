@@ -419,7 +419,7 @@ WHERE Id = @Id"
 				new SqlParameter("@Id", id),
 				new SqlParameter("@InvoiceEmail", c.InvoiceEmail),
 				new SqlParameter("@InvoiceEmailCC", c.InvoiceEmailCC),
-				new SqlParameter("@ContactPersonId", c.ContactPerson.Id),
+//				new SqlParameter("@ContactPersonId", c.ContactPerson.Id),
 				new SqlParameter("@Currency", c.Currency.Id)
 			);
 		}
@@ -711,6 +711,62 @@ WHERE Id = @Id"
 			);
 		}
 		
+		public Customer Read2(int id)
+		{
+			string query = string.Format(
+				@"
+SELECT c.Id,
+    c.Name,
+    c.Number,
+    c.InvoiceAddress,
+    c.PostalAddress,
+    c.PurchaseOrderNumber,
+    c.OurReferencePerson,
+    c.Email,
+    c.Phone,
+    c.Language,
+    c.HasSubscription,
+    c.SubscriptionItemId,
+    c.SubscriptionStartDate,
+    c.SubscriptionEndDate,
+    c.SubscriptionHasEndDate,
+    c.Status,
+    c.InvoiceEmail,
+    c.InvoiceEmailCC,
+    c.Currency
+FROM Customer c
+WHERE c.Id = @Id"
+			);
+			Customer c = null;
+			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", id))) {
+				if (rs.Read()) {
+					c = new Customer {
+						Id = GetInt32(rs, 0),
+						Name = GetString(rs, 1),
+						Number = GetString(rs, 2),
+						InvoiceAddress = GetString(rs, 3, ""),
+						PostalAddress = GetString(rs, 4, ""),
+						PurchaseOrderNumber = GetString(rs, 5),
+						OurReferencePerson = GetString(rs, 6),
+						Email = GetString(rs, 7),
+						Phone = GetString(rs, 8),
+						Language = Language.GetLanguage(GetInt32(rs, 9, 1)),
+						HasSubscription = GetInt32(rs, 10) == 1,
+						SubscriptionItem = new Item { Id = GetInt32(rs, 11) },
+						SubscriptionStartDate = GetDateTime(rs, 12),
+						SubscriptionEndDate = GetDateTime(rs, 13),
+						SubscriptionHasEndDate = GetInt32(rs, 14) == 1,
+						Status = GetInt32(rs, 15),
+						InvoiceEmail = GetString(rs, 16),
+						InvoiceEmailCC = GetString(rs, 17),
+//						ContactPerson = new CustomerContact { Id = GetInt32(rs, 17) },
+						Currency = Currency.GetCurrency(GetInt32(rs, 18, 1))
+					};
+				}
+			}
+			return c;
+		}
+		
 		public override Customer Read(int id)
 		{
 			string query = string.Format(
@@ -742,7 +798,7 @@ FROM Customer c
 --INNER JOIN Lang l ON c.Language = l.Id
 --INNER JOIN Item i ON i.Id = c.SubscriptionItemId
 --INNER JOIN Unit u ON u.Id = i.UnitId
-LEFT OUTER JOIN CustomerContact cc ON cc.CustomerId = c.Id
+--LEFT OUTER JOIN CustomerContact cc ON cc.CustomerId = c.Id
 WHERE c.Id = @Id"
 			);
 			Customer c = null;
@@ -769,18 +825,18 @@ WHERE c.Id = @Id"
 						Status = GetInt32(rs, 18),
 						InvoiceEmail = GetString(rs, 19),
 						InvoiceEmailCC = GetString(rs, 20),
-						ContactPerson = new CustomerContact {
-							Id = GetInt32(rs, 21)
-						},
+//						ContactPerson = new CustomerContact { Id = GetInt32(rs, 21) },
 						Currency = Currency.GetCurrency(GetInt32(rs, 22, 1))
 					};
 				}
 			}
-			if (c != null && c.HasSubscription)
+//			if (c != null && c.HasSubscription)
+			if (c != null)
 			{
 				c.Contacts = FindContacts(id);
-				//c.ContactPerson = ReadContact(c.ContactPerson.Id);
-				query = @"
+				if (c.HasSubscription) {
+					//c.ContactPerson = ReadContact(c.ContactPerson.Id);
+					query = @"
 SELECT i.Id,
 	i.Name,
 	u.Id,
@@ -789,17 +845,18 @@ SELECT i.Id,
 FROM Item i
 INNER JOIN Unit u ON u.Id = i.UnitId
 WHERE i.Id = @Id";
-				using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", c.SubscriptionItem.Id))) {
-					if (rs.Read()) {
-						c.SubscriptionItem = new Item {
-							Id = GetInt32(rs, 0),
-							Name = GetString(rs, 1),
-							Unit = new Unit {
-								Id = GetInt32(rs, 2),
-								Name = GetString(rs, 3)
-							},
-							Price = GetDecimal(rs, 4)
-						};
+					using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", c.SubscriptionItem.Id))) {
+						if (rs.Read()) {
+							c.SubscriptionItem = new Item {
+								Id = GetInt32(rs, 0),
+								Name = GetString(rs, 1),
+								Unit = new Unit {
+									Id = GetInt32(rs, 2),
+									Name = GetString(rs, 3)
+								},
+								Price = GetDecimal(rs, 4)
+							};
+						}
 					}
 				}
 			}
@@ -1045,7 +1102,7 @@ WHERE Id = @Id"
 						Inactive = GetInt32(rs, 5) == 1,
 						Type = GetInt32(rs, 6, 3),
 						Title = GetString(rs, 7),
-                        PurchaseOrderNumber = GetString(rs, 8)
+						PurchaseOrderNumber = GetString(rs, 8)
 					};
 				}
 			}
@@ -1607,9 +1664,9 @@ c.Name"
 							Number = GetString(rs, 2),
 							Phone = GetString(rs, 3),
 							Email = GetString(rs, 4),
-							//                            Inactive = GetInt32(rs, 5) == 1,
+//							Inactive = GetInt32(rs, 5) == 1,
 							Status = GetInt32(rs, 7),
-							ContactPerson = new CustomerContact { Id = GetInt32(rs, 8) }
+//							ContactPerson = new CustomerContact { Id = GetInt32(rs, 8) }
 						}
 					);
 				}
@@ -1654,10 +1711,10 @@ ORDER BY c.Name"
 							Number = GetString(rs, 2),
 							Phone = GetString(rs, 3),
 							Email = GetString(rs, 4),
-							//                            Inactive = GetInt32(rs, 5) == 1
+//							Inactive = GetInt32(rs, 5) == 1,
 							HasSubscription = GetInt32(rs, 6) == 1,
 							Status = GetInt32(rs, 7),
-							ContactPerson = new CustomerContact { Id = GetInt32(rs, 8) }
+//							ContactPerson = new CustomerContact { Id = GetInt32(rs, 8) }
 						}
 					);
 				}
@@ -1718,7 +1775,7 @@ c.Name"
 							Number = GetString(rs, 2),
 							Phone = GetString(rs, 3),
 							Email = GetString(rs, 4),
-							//                            Inactive = GetInt32(rs, 5) == 1,
+//							Inactive = GetInt32(rs, 5) == 1,
 							SubscriptionItem = new Item
 							{
 								Id = GetInt32(rs, 6),
@@ -1731,7 +1788,7 @@ c.Name"
 								Price = GetDecimal(rs, 10)
 							},
 							Status = GetInt32(rs, 11),
-							ContactPerson = new CustomerContact { Id = GetInt32(rs, 12) }
+//							ContactPerson = new CustomerContact { Id = GetInt32(rs, 12) }
 						}
 					);
 				}

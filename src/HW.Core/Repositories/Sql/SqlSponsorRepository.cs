@@ -2049,15 +2049,25 @@ ORDER BY s.SortOrder",
 		{
 			string query = string.Format(
 				@"
-SELECT ISNULL(sprul.Nav, '?'),
+SELECT ISNULL(sprul.Nav, spru.Nav),
 	spru.ProjectRoundUnitID
 FROM SponsorProjectRoundUnit spru
-LEFT OUTER JOIN SponsorProjectRoundUnitLang sprul ON spru.SponsorProjectRoundUnitID = sprul.SponsorProjectRoundUnitID
-WHERE spru.SponsorID = {0}
-AND ISNULL(sprul.LangID, 1) = {1}",
+LEFT OUTER JOIN SponsorProjectRoundUnitLang sprul ON spru.SponsorProjectRoundUnitID = sprul.SponsorProjectRoundUnitID AND ISNULL(sprul.LangID, 1) = {1}
+WHERE spru.SponsorID = {0}",
 				sponsorId,
 				langId
 			);
+//			string query = string.Format(
+//				@"
+//SELECT ISNULL(sprul.Nav, '?'),
+//	spru.ProjectRoundUnitID
+//FROM SponsorProjectRoundUnit spru
+//LEFT OUTER JOIN SponsorProjectRoundUnitLang sprul ON spru.SponsorProjectRoundUnitID = sprul.SponsorProjectRoundUnitID
+//WHERE spru.SponsorID = {0}
+//AND ISNULL(sprul.LangID, 1) = {1}",
+//				sponsorId,
+//				langId
+//			);
 			var projects = new List<SponsorProjectRoundUnit>();
 			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {

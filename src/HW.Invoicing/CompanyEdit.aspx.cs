@@ -24,17 +24,15 @@ namespace HW.Invoicing
 
 			id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
 			company = r.Read(id);
-			if (!IsPostBack)
-			{
+			if (!IsPostBack) {
 				dropDownListInvoiceExporter.Items.Clear();
 				int i = 0;
-				foreach (var x in InvoiceExporterFactory.GetExporters())
-				{
-					dropDownListInvoiceExporter.Items.Add(new ListItem(x.Name, (i++).ToString()));
+				foreach (var x in InvoiceExporterFactory.GetExporters()) {
+//					dropDownListInvoiceExporter.Items.Add(new ListItem(x.Name, (i++).ToString()));
+					dropDownListInvoiceExporter.Items.Add(new ListItem(x.Name, x.Id.ToString()));
 				}
 
-				if (company != null)
-				{
+				if (company != null) {
 					textBoxName.Text = company.Name;
 					textBoxAddress.Text = company.Address;
 					textBoxPhone.Text = company.Phone;
@@ -44,7 +42,6 @@ namespace HW.Invoicing
 					textBoxTIN.Text = company.TIN;
 					textBoxFinancialMonthStart.Text = company.FinancialMonthStart == null ? "" : company.FinancialMonthStart.Value.ToString("yyyy-MM-dd");
 					textBoxFinancialMonthEnd.Text = company.FinancialMonthEnd == null ? "" : company.FinancialMonthEnd.Value.ToString("yyyy-MM-dd");
-					textBoxInvoicePrefix.Text = company.InvoicePrefix;
 					checkBoxHasSubscriber.Checked = company.HasSubscriber;
 
 					textBoxTerms.Text = company.Terms;
@@ -59,15 +56,13 @@ namespace HW.Invoicing
 					textBoxAgreementSignedEmailText.Text = company.AgreementSignedEmailText;
 					textBoxAgreementSignedEmailSubject.Text = company.AgreementSignedEmailSubject;
 
+					textBoxInvoicePrefix.Text = company.InvoicePrefix;
+					textBoxInvoiceLogoPercentage.Text = company.InvoiceLogoPercentage.ToString();
 					dropDownListInvoiceExporter.SelectedValue = company.InvoiceExporter.ToString();
-
 					textBoxInvoiceEmail.Text = company.InvoiceEmail;
-					//textBoxInvoiceEmailCC.Text = company.InvoiceEmailCC;
 					textBoxInvoiceEmailSubject.Text = company.InvoiceEmailSubject;
 					textBoxInvoiceEmailText.Text = company.InvoiceEmailText;
-				}
-				else
-				{
+				} else {
 					Response.Redirect("companies.aspx");
 				}
 			}
@@ -94,23 +89,17 @@ namespace HW.Invoicing
 		protected void buttonSave_Click(object sender, EventArgs e)
 		{
 			string signature;
-			if (fileUploadSignature.HasFile)
-			{
+			if (fileUploadSignature.HasFile) {
 				signature = fileUploadSignature.FileName;
 				fileUploadSignature.SaveAs(Server.MapPath("~/uploads/" + signature));
-			}
-			else
-			{
+			} else {
 				signature = company.Signature;
 			}
 			string invoiceLogo;
-			if (fileUploadInvoiceLogo.HasFile)
-			{
+			if (fileUploadInvoiceLogo.HasFile) {
 				invoiceLogo = fileUploadInvoiceLogo.FileName;
 				fileUploadInvoiceLogo.SaveAs(Server.MapPath("~/uploads/" + invoiceLogo));
-			}
-			else
-			{
+			} else {
 				invoiceLogo = company.InvoiceLogo;
 			}
 			string invoiceTemplate = "";
@@ -124,13 +113,10 @@ namespace HW.Invoicing
 			//    invoiceTemplate = company.InvoiceTemplate;
 			//}
 			string agreementTemplate;
-			if (fileUploadAgreementTemplate.HasFile)
-			{
+			if (fileUploadAgreementTemplate.HasFile) {
 				agreementTemplate = fileUploadAgreementTemplate.FileName;
 				fileUploadAgreementTemplate.SaveAs(Server.MapPath("~/uploads/" + agreementTemplate));
-			}
-			else
-			{
+			} else {
 				agreementTemplate = company.AgreementTemplate;
 			}
 			var c = new Company {
@@ -143,16 +129,17 @@ namespace HW.Invoicing
 				TIN = textBoxTIN.Text,
 				FinancialMonthStart = ConvertHelper.ToDateTime(textBoxFinancialMonthStart.Text),
 				FinancialMonthEnd = ConvertHelper.ToDateTime(textBoxFinancialMonthEnd.Text),
-				InvoicePrefix = textBoxInvoicePrefix.Text,
 				HasSubscriber = checkBoxHasSubscriber.Checked,
-				InvoiceLogo = invoiceLogo,
-				InvoiceTemplate = invoiceTemplate,
 				Signature = signature,
 				AgreementPrefix = textBoxAgreementPrefix.Text,
 				OrganizationNumber = textBoxOrganizationNumber.Text,
 				AgreementTemplate = agreementTemplate,
-				InvoiceExporter = ConvertHelper.ToInt32(dropDownListInvoiceExporter.SelectedValue),
 
+				InvoicePrefix = textBoxInvoicePrefix.Text,
+				InvoiceLogo = invoiceLogo,
+				InvoiceLogoPercentage = ConvertHelper.ToDouble(textBoxInvoiceLogoPercentage.Text),
+				InvoiceTemplate = invoiceTemplate,
+				InvoiceExporter = ConvertHelper.ToInt32(dropDownListInvoiceExporter.SelectedValue),
 				InvoiceEmail = textBoxInvoiceEmail.Text,
 				InvoiceEmailSubject = textBoxInvoiceEmailSubject.Text,
 				InvoiceEmailText = textBoxInvoiceEmailText.Text,
@@ -165,12 +152,9 @@ namespace HW.Invoicing
 				AgreementSignedEmailText = textBoxAgreementSignedEmailText.Text
 			};
 			c.Validate();
-			if (c.HasErrors)
-			{
+			if (c.HasErrors) {
 				message = c.Errors.ToHtmlUl();
-			}
-			else
-			{
+			} else {
 				r.Update(c, id);
 				
 				if (id == ConvertHelper.ToInt32(Session["CompanyId"])) {

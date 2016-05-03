@@ -28,6 +28,22 @@ namespace HW.Invoicing.Core.Models
 		public bool Exported { get; set; }
 		public Company Company { get; set; }
 		
+//		public string YourReferencePerson { get; set; }
+		public string OurReferencePerson { get; set; }
+//		public string PurchaseOrderNumber { get; set; }
+		
+		public CustomerContact CustomerContact { get; set; }
+		
+		public string GetContactReferenceNumber()
+		{
+			return CustomerContact != null ? CustomerContact.PurchaseOrderNumber : "";
+		}
+		
+		public string GetContactName()
+		{
+			return CustomerContact != null ? CustomerContact.Name : "";
+		}
+		
 		public Invoice()
 		{
 			Date = DateTime.Now;

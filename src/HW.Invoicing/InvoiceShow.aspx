@@ -8,7 +8,7 @@
     <tr>
         <td rowspan="4" valign="bottom">
             <% if (company.HasInvoiceLogo) { %>
-                <img src="uploads/<%= company.InvoiceLogo %>" /><br />
+                <img src="uploads/<%= company.InvoiceLogo %>" style="width:<%= company.InvoiceLogoPercentage %>%" /><br />
             <% } else { %>
                 <img src="img/ihg.png"><br />
             <% } %>

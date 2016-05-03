@@ -1,6 +1,8 @@
 ﻿using System;
 using HW.Invoicing.Core.Models;
 using NUnit.Framework;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace HW.Tests.Models
 {

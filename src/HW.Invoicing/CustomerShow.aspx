@@ -527,7 +527,7 @@
                                 <tr>
                                     <td rowspan="4" valign="bottom">
                                         <% if (company.HasInvoiceLogo) { %>
-                                            <img src="uploads/<%= company.InvoiceLogo %>" />
+                                            <img src="uploads/<%= company.InvoiceLogo %>" style="width:<%= company.InvoiceLogoPercentage %>%" />
                                         <% } else { %>
                                             <img src="img/ihg.png"><br />
                                         <% } %>
@@ -593,7 +593,7 @@
                                     <td>
                                         <asp:Panel ID="panelPurchaseOrderNumber" runat="server">
                                         <strong>
-                                            <asp:Label ID="labelInvoicePurchaseOrderNumber" runat="server" Text="Label"></asp:Label>
+                                            <asp:Label ID="labelInvoicePurchaseOrderNumber" runat="server" Text=""></asp:Label>
                                         </strong>
                                         </asp:Panel>
                                     </td>
@@ -886,7 +886,8 @@
 		<div class="tab-pane <%= selectedTab == "customer-info" ? "active" : "" %>" id="customer-info">
             <br />
 			<div class="alert alert-info">
-				<strong>Customer information</strong> is lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+				<%--<strong>Customer information</strong> is lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.--%>
+                <strong>Customer information</strong> is the details of the customer including the information regarding phone, email and invoicing address, etc.
 			</div>
             <asp:Panel ID="panelCustomerInfo" DefaultButton="buttonSave" runat="server">
 			<table class="table">
@@ -932,14 +933,14 @@
                         <asp:TextBox ID="textBoxInvoiceEmailCC" runat="server" CssClass="info form-control"></asp:TextBox>
                     </td>
                 </tr>
-                <tr>
+                <%--<tr>
                     <td><strong>Your Reference Person</strong></td>
                     <td>
                         <asp:Label ID="labelYourReferencePerson" runat="server" Text="" CssClass="info-text"></asp:Label>
                         <asp:DropDownList ID="dropDownListYourReferencePerson" runat="server" CssClass=" info form-control">
                         </asp:DropDownList>
                     </td>
-                </tr>
+                </tr>--%>
                 <%--<tr>
                     <td><strong>Reference / Purchase Order Number</strong></td>
                     <td>

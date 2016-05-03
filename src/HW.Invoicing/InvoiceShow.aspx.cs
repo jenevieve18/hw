@@ -30,12 +30,13 @@ namespace HW.Invoicing
 				labelInvoiceDate.Text = invoice.Date.Value.ToString("yyyy-MM-dd");
 				labelMaturityDate.Text = invoice.MaturityDate.Value.ToString("yyyy-MM-dd");
 				labelInvoiceCustomerAddress.Text = invoice.Customer.ToString().Replace("\n", "<br>");
-				//labelInvoicePurchaseOrderNumber.Text = invoice.Customer.PurchaseOrderNumber;
-                labelInvoicePurchaseOrderNumber.Text = invoice.Customer.PrimaryContactReferenceNumber;
-				labelInvoiceYourReferencePerson.Text = invoice.Customer != null && invoice.Customer.ContactPerson != null ? invoice.Customer.ContactPerson.Name : "";
-				labelInvoiceOurReferencePerson.Text = invoice.Customer.OurReferencePerson;
-				//panelPurchaseOrder.Visible = invoice.Customer.PurchaseOrderNumber != "";
-                panelPurchaseOrder.Visible = invoice.Customer.PrimaryContactReferenceNumber != "";
+//				labelInvoicePurchaseOrderNumber.Text = invoice.PurchaseOrderNumber;
+                labelInvoicePurchaseOrderNumber.Text = invoice.GetContactReferenceNumber();
+//				labelInvoiceYourReferencePerson.Text = invoice.YourReferencePerson;
+                labelInvoiceYourReferencePerson.Text = invoice.GetContactName();
+				labelInvoiceOurReferencePerson.Text = invoice.OurReferencePerson;
+//				panelPurchaseOrder.Visible = invoice.Customer.PrimaryContactReferenceNumber != "";
+				panelPurchaseOrder.Visible = invoice.Customer.GetPrimaryContactReferenceNumber() != "";
 			} else {
 				Response.Redirect("invoices.aspx");
 			}

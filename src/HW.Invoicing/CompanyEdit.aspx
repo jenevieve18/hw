@@ -80,21 +80,9 @@
 	            <label for="<%= textBoxFinancialMonthEnd.ClientID %>">End Financial Year</label>
                 <asp:TextBox ID="textBoxFinancialMonthEnd" runat="server" CssClass="date form-control"></asp:TextBox>
             </div>
-            <%--<div class="form-group">
-                <label for="<%= fileUploadInvoiceTemplate.ClientID %>">Invoice Template</label>
-                <% if (company.HasInvoiceTemplate) { %>
-                    <br /><%= HtmlHelper.Anchor(company.InvoiceTemplate, "uploads/" + company.InvoiceTemplate, "target='_blank'") %>
-                <% } %>
-                <asp:FileUpload ID="fileUploadInvoiceTemplate" runat="server" />
-            </div>--%>
             <div class="form-group">
                 <asp:CheckBox ID="checkBoxHasSubscriber" runat="server" CssClass="form-control" Text="&nbsp;This company has subscribers." />
             </div>
-            <%--<div>
-                <asp:Button ID="buttonSave" CssClass="btn btn-success" runat="server" Text="Save company info" 
-                    onclick="buttonSave_Click" />
-                    or <i><%= HtmlHelper.Anchor("cancel", "companies.aspx") %></i>
-            </div>--%>
 		</div>
 		<div class="tab-pane" id="panel-281177">
 			<br />
@@ -102,11 +90,6 @@
                 <label for="<%= textBoxTerms.ClientID %>">Terms</label>
                 <asp:TextBox ID="textBoxTerms" runat="server" CssClass="form-control" TextMode="MultiLine" Height="450"></asp:TextBox>
             </div>
-            <%--<div>
-                <asp:Button ID="buttonSaveTerms" CssClass="btn btn-success" runat="server" Text="Save company terms and advice" 
-                    onclick="buttonSaveTerms_Click" />
-                    or <i><%= HtmlHelper.Anchor("cancel", "companies.aspx") %></i>
-            </div>--%>
 		</div>
         <div class="tab-pane" id="panel-931818">
             <br />
@@ -121,47 +104,40 @@
                 <% } %>
                 <asp:FileUpload ID="fileUploadAgreementTemplate" runat="server" />
             </div>
-            <%--<asp:Panel ID="Panel1" runat="server" DefaultButton="buttonSaveAgreementEmailText">--%>
-                <div class="tabbable" id="tabs-64570">
-				    <ul class="nav nav-tabs">
-					    <li class="active">
-						    <a href="#panel-67773" data-toggle="tab">Email Texts</a>
-					    </li>
-					    <li>
-						    <a href="#panel-807776" data-toggle="tab">Signed Email Texts</a>
-					    </li>
-				    </ul>
-				    <div class="tab-content">
-					    <div class="tab-pane active" id="panel-67773">
-                            <br />
-                            <div class="form-group">
-	                            <label for="<%= textBoxAgreementEmailSubject.ClientID %>">Agreement Email Subject</label>
-                                <asp:TextBox ID="textBoxAgreementEmailSubject" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <div class="form-group">
-                                <label for="<%= textBoxAgreementEmailText.ClientID %>">Agreement Email Text</label>
-                                <asp:TextBox ID="textBoxAgreementEmailText" runat="server" CssClass="form-control" TextMode="MultiLine" Height="450"></asp:TextBox>
-                            </div>
-					    </div>
-					    <div class="tab-pane" id="panel-807776">
-                            <br />
-                            <div class="form-group">
-	                            <label for="<%= textBoxAgreementSignedEmailSubject.ClientID %>">Agreement Email Subject</label>
-                                <asp:TextBox ID="textBoxAgreementSignedEmailSubject" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <div class="form-group">
-                                <label for="<%= textBoxAgreementSignedEmailText.ClientID %>">Agreement Email Text</label>
-                                <asp:TextBox ID="textBoxAgreementSignedEmailText" runat="server" CssClass="form-control" TextMode="MultiLine" Height="450"></asp:TextBox>
-                            </div>
-					    </div>
-				    </div>
-			    </div>
-                <%--<div>
-                    <asp:Button ID="buttonSaveAgreementEmailText" CssClass="btn btn-success" runat="server" Text="Save agreement email text" 
-                        onclick="buttonSaveAgreementEmailText_Click" />
-                        or <i><%= HtmlHelper.Anchor("cancel", "companies.aspx") %></i>
-                </div>--%>
-            <%--</asp:Panel>--%>
+            <div class="tabbable" id="tabs-64570">
+				<ul class="nav nav-tabs">
+					<li class="active">
+						<a href="#panel-67773" data-toggle="tab">Email Texts</a>
+					</li>
+					<li>
+						<a href="#panel-807776" data-toggle="tab">Signed Email Texts</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="panel-67773">
+                        <br />
+                        <div class="form-group">
+	                        <label for="<%= textBoxAgreementEmailSubject.ClientID %>">Agreement Email Subject</label>
+                            <asp:TextBox ID="textBoxAgreementEmailSubject" runat="server" CssClass="form-control"></asp:TextBox>
+                        </div>
+                        <div class="form-group">
+                            <label for="<%= textBoxAgreementEmailText.ClientID %>">Agreement Email Text</label>
+                            <asp:TextBox ID="textBoxAgreementEmailText" runat="server" CssClass="form-control" TextMode="MultiLine" Height="450"></asp:TextBox>
+                        </div>
+					</div>
+					<div class="tab-pane" id="panel-807776">
+                        <br />
+                        <div class="form-group">
+	                        <label for="<%= textBoxAgreementSignedEmailSubject.ClientID %>">Agreement Email Subject</label>
+                            <asp:TextBox ID="textBoxAgreementSignedEmailSubject" runat="server" CssClass="form-control"></asp:TextBox>
+                        </div>
+                        <div class="form-group">
+                            <label for="<%= textBoxAgreementSignedEmailText.ClientID %>">Agreement Email Text</label>
+                            <asp:TextBox ID="textBoxAgreementSignedEmailText" runat="server" CssClass="form-control" TextMode="MultiLine" Height="450"></asp:TextBox>
+                        </div>
+					</div>
+				</div>
+			</div>
 		</div>
         <div class="tab-pane" id="panel-934381">
 			<br />
@@ -172,9 +148,13 @@
             <div class="form-group">
                 <label for="<%= fileUploadInvoiceLogo.ClientID %>">Invoice Logo</label>
                 <% if (company.HasInvoiceLogo) { %>
-                    <br /><img src="uploads/<%= company.InvoiceLogo %>" />
+                    <br /><img src="uploads/<%= company.InvoiceLogo %>" style="width:<%= company.InvoiceLogoPercentage %>%" /><br /><br />
                 <% } %>
                 <asp:FileUpload ID="fileUploadInvoiceLogo" runat="server" />
+            </div>
+            <div class="form-group">
+	            <label for="<%= textBoxInvoiceLogoPercentage.ClientID %>">Invoice Log Percentage (ex. 100 for 100%)</label>
+                <asp:TextBox ID="textBoxInvoiceLogoPercentage" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="form-group">
                 <label for="<%= dropDownListInvoiceExporter.ClientID %>">Invoice Exporter</label>
@@ -185,10 +165,6 @@
 	            <label for="<%= textBoxInvoiceEmail.ClientID %>">Invoice Email</label>
                 <asp:TextBox ID="textBoxInvoiceEmail" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
-            <%--<div class="form-group">
-	            <label for="<%= textBoxInvoiceEmailCC.ClientID %>">Invoice Email CC</label>
-                <asp:TextBox ID="textBoxInvoiceEmailCC" runat="server" CssClass="form-control"></asp:TextBox>
-            </div>--%>
             <div class="form-group">
 	            <label for="<%= textBoxInvoiceEmailSubject.ClientID %>">Invoice Email Subject</label>
                 <asp:TextBox ID="textBoxInvoiceEmailSubject" runat="server" CssClass="form-control"></asp:TextBox>
