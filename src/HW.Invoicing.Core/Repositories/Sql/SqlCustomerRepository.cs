@@ -398,7 +398,7 @@ UPDATE Customer SET Name = @Name,
     Language = @Language,
     InvoiceEmail = @InvoiceEmail,
     InvoiceEmailCC = @InvoiceEmailCC,
-    ContactPersonId = @ContactPersonId,
+    --ContactPersonId = @ContactPersonId,
     Currency = @Currency
 WHERE Id = @Id"
 			);

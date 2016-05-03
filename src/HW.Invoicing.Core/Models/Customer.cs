@@ -138,10 +138,11 @@ namespace HW.Invoicing.Core.Models
 		
 		public CustomerContact PrimaryContact {
 			get {
-				if (HasContacts) {
-					return Contacts[0];
-				}
-				return null;
+//				if (HasContacts) {
+//					return Contacts[0];
+//				}
+//				return null;
+				return (from c in Contacts where c.Type == CustomerContact.PRIMARY select c).FirstOrDefault();
 			}
 		}
 

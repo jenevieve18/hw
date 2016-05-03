@@ -268,7 +268,7 @@ WHERE i.Id = @Id"
 						},
 						Status = GetInt32(rs, 10),
 						Comments = GetString(rs, 11),
-						OurReferencePerson = GetString(rs, 18),
+						OurReferencePerson = GetString(rs, 18, ""),
 						CustomerContact = new CustomerContact { Id = GetInt32(rs, 19) }
 					};
 				}

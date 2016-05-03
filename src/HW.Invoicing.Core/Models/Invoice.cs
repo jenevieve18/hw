@@ -29,19 +29,48 @@ namespace HW.Invoicing.Core.Models
 		public Company Company { get; set; }
 		
 //		public string YourReferencePerson { get; set; }
-		public string OurReferencePerson { get; set; }
+//		public string OurReferencePerson { get; set; }
 //		public string PurchaseOrderNumber { get; set; }
+		
+		string ourReferencePerson;
+		
+		public string OurReferencePerson {
+			get {
+				if (ourReferencePerson != null && ourReferencePerson != "") {
+					return ourReferencePerson;
+				} else if (Customer != null) {
+					return Customer.OurReferencePerson;
+				} else {
+					return "";
+				}
+			}
+			set { ourReferencePerson = value; }
+		}
 		
 		public CustomerContact CustomerContact { get; set; }
 		
 		public string GetContactReferenceNumber()
 		{
-			return CustomerContact != null ? CustomerContact.PurchaseOrderNumber : "";
+//			return CustomerContact != null ? CustomerContact.PurchaseOrderNumber : "";
+			if (CustomerContact != null) {
+				return CustomerContact.PurchaseOrderNumber;
+			} else if (Customer != null) {
+				return Customer.GetPrimaryContactReferenceNumber();
+			} else {
+				return "";
+			}
 		}
 		
 		public string GetContactName()
 		{
-			return CustomerContact != null ? CustomerContact.Name : "";
+//			return CustomerContact != null ? CustomerContact.Name : "";
+			if (CustomerContact != null) {
+				return CustomerContact.Name;
+			} else if (Customer != null) {
+				return Customer.GetPrimaryContactName();
+			} else {
+				return "";
+			}
 		}
 		
 		public Invoice()
@@ -115,9 +144,9 @@ namespace HW.Invoicing.Core.Models
 		public void AddTimebook(string[] timebooks, string[] sortOrders)
 		{
 			if (timebooks != null) {
-                int i = 0;
+				int i = 0;
 				foreach (var t in timebooks) {
-                    var sortOrder = ConvertHelper.ToInt32(sortOrders[i]);
+					var sortOrder = ConvertHelper.ToInt32(sortOrders[i]);
 					var s = t.Split('|');
 					if (s.Length > 1) {
 						AddTimebook(
@@ -131,13 +160,13 @@ namespace HW.Invoicing.Core.Models
 									Quantity = ConvertHelper.ToDecimal(s[5]),
 									Comments = s[6]
 								},
-                                SortOrder = sortOrder
+								SortOrder = sortOrder
 							}
 						);
 					} else {
 						AddTimebook(ConvertHelper.ToInt32(t), sortOrder);
 					}
-                    i++;
+					i++;
 				}
 			}
 		}
@@ -157,7 +186,7 @@ namespace HW.Invoicing.Core.Models
 	{
 		public Invoice Invoice { get; set; }
 		public CustomerTimebook Timebook { get; set; }
-        public int SortOrder { get; set; }
+		public int SortOrder { get; set; }
 		
 		public override string ToString()
 		{
