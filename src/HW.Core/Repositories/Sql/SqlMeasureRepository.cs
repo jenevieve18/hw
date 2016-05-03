@@ -60,8 +60,9 @@ FROM (
 		WHERE um.DT IS NOT NULL
 		AND (YEAR(um.DT) = {1} AND MONTH(um.DT) >= {3} OR YEAR(um.DT) > {1})
 		AND (YEAR(um.DT) = {2} AND MONTH(um.DT) <= {4} OR YEAR(um.DT) < {2})
-		AND (YEAR(sp.StartDT) = {1} AND MONTH(sp.StartDT) >= {3} OR YEAR(sp.StartDT) > {1})
-		AND (YEAR(sp.EndDT) = {2} AND MONTH(sp.EndDT) <= {4} OR YEAR(sp.EndDT) <= {2})
+		AND um.DT >= sp.StartDT AND um.DT <= sp.EndDT
+		--AND (YEAR(sp.StartDT) = {1} AND MONTH(sp.StartDT) >= {3} OR YEAR(sp.StartDT) > {1})
+		--AND (YEAR(sp.EndDT) = {2} AND MONTH(sp.EndDT) <= {4} OR YEAR(sp.EndDT) <= {2})
 		GROUP BY {0}(um.DT), um.UserID
 	) tmp
 	GROUP BY tmp.DT
@@ -105,8 +106,9 @@ FROM (
 		WHERE um.DT IS NOT NULL
 		AND (YEAR(um.DT) = {1} AND MONTH(um.DT) >= {3} OR YEAR(um.DT) > {1})
 		AND (YEAR(um.DT) = {2} AND MONTH(um.DT) <= {4} OR YEAR(um.DT) < {2})
-		AND (YEAR(sp.StartDT) = {1} AND MONTH(sp.StartDT) >= {3} OR YEAR(sp.StartDT) > {1})
-		AND (YEAR(sp.EndDT) = {2} AND MONTH(sp.EndDT) <= {4} OR YEAR(sp.EndDT) <= {2})
+		AND um.DT >= sp.StartDT AND um.DT <= sp.EndDT
+		--AND (YEAR(sp.StartDT) = {1} AND MONTH(sp.StartDT) >= {3} OR YEAR(sp.StartDT) > {1})
+		--AND (YEAR(sp.EndDT) = {2} AND MONTH(sp.EndDT) <= {4} OR YEAR(sp.EndDT) <= {2})
 		GROUP BY {0}(um.DT), um.UserID
 	) tmp
 	GROUP BY tmp.DT
