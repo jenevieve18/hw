@@ -1,0 +1,15 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "EYF5WLCK7Q.se.healthwatch.native.HealthWatch",
+                "paths": [ "/c/*", "*"]
+            },
+            {
+                "appID": "EYF5WLCK7Q.se.healthwatch.HealthWatch",
+                "paths": [ "/c/*", "*" ]
+            }
+        ]
+    }
+}
