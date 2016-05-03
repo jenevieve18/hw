@@ -440,9 +440,9 @@ namespace HW.Core.Helpers
 							cx = 1;
 							int lastDT = minDT - 1;
 //							var answers = answerRepository.FindByQuestionAndOptionJoinedAndGrouped2(join[i].ToString(), groupBy, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, yearFrom, yearTo, monthFrom, monthTo);
-							var answers = measureRepository.FindByQuestionAndOptionJoinedAndGrouped2(i.Query, groupByQuery, yearFrom, yearTo, monthFrom, monthTo, aggregation, sponsorID);
+							var measures = measureRepository.FindByQuestionAndOptionJoinedAndGrouped2(i.Query, groupByQuery, yearFrom, yearTo, monthFrom, monthTo, aggregation, sponsorID);
 //							departments.Add(new Department { Name = (string)desc[i] });
-							foreach (var a in answers) {
+							foreach (var a in measures) {
 								if (a.DT < minDT) {
 									continue;
 								}
