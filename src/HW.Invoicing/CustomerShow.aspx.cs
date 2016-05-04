@@ -117,6 +117,7 @@ namespace HW.Invoicing
 					panelPurchaseOrderNumber.Visible = customer.GetPrimaryContactReferenceNumber() != "";
 					
 					labelInvoiceYourReferencePerson.Visible = !customer.HasSecondaryContact;
+					dropDownListInvoiceYourReferencePerson.Visible = customer.HasPrimaryContact;
 
 					// Subscription Panel
 					checkBoxSubscribe.Checked = customer.HasSubscription;
@@ -225,7 +226,8 @@ namespace HW.Invoicing
 			int n = vr.GetLatestInvoiceNumber(companyId);
 			CustomerContact customerContact = null;
 			if (labelInvoiceYourReferencePerson.Visible) {
-				customerContact = customer.PrimaryContact;
+//				customerContact = customer.PrimaryContact;
+                customerContact = customer.PrimaryContact != null ? customer.PrimaryContact : null;
 			} else {
 				customerContact = new CustomerContact { Id = ConvertHelper.ToInt32(dropDownListInvoiceYourReferencePerson.SelectedValue) };
 			}

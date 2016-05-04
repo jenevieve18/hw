@@ -44,13 +44,17 @@ namespace HW.Invoicing
 				
 				labelInvoiceYourReferencePerson.Visible = !invoice.Customer.HasSecondaryContact;
 
-                foreach (var c in invoice.Customer.Contacts)
-                {
+                foreach (var c in invoice.Customer.Contacts) {
                     var li = new ListItem(c.Name, c.Id.ToString());
                     li.Attributes.Add("data-purchase-order-number", c.PurchaseOrderNumber);
 					dropDownListInvoiceYourReferencePerson.Items.Add(li);
 				}
-                dropDownListInvoiceYourReferencePerson.SelectedValue = invoice.CustomerContact.Id.ToString();
+                
+                if (invoice.CustomerContact != null) {
+                    dropDownListInvoiceYourReferencePerson.SelectedValue = invoice.CustomerContact.Id.ToString();
+                } else {
+                    dropDownListInvoiceYourReferencePerson.Visible = false;
+                }
 
 				if (company != null) {
 					labelCompanyName.Text = company.Name;
@@ -66,16 +70,24 @@ namespace HW.Invoicing
 		protected void buttonSave_Click(object sender, EventArgs e)
 		{
 			int selectedCustomerContact;
+            CustomerContact customerContact = null;
 			if (labelInvoiceYourReferencePerson.Visible) {
-				selectedCustomerContact = invoice.CustomerContact.Id;
+//				customerContact = customer.PrimaryContact;
+                customerContact = invoice.Customer.PrimaryContact != null ? invoice.Customer.PrimaryContact : null;
 			} else {
-				selectedCustomerContact = ConvertHelper.ToInt32(dropDownListInvoiceYourReferencePerson.SelectedValue);
+				customerContact = new CustomerContact { Id = ConvertHelper.ToInt32(dropDownListInvoiceYourReferencePerson.SelectedValue) };
 			}
+//			if (labelInvoiceYourReferencePerson.Visible) {
+//				selectedCustomerContact = invoice.CustomerContact.Id;
+//			} else {
+//				selectedCustomerContact = ConvertHelper.ToInt32(dropDownListInvoiceYourReferencePerson.SelectedValue);
+//			}
 			
 			var newInvoice = new Invoice {
 				Date = ConvertHelper.ToDateTime(textBoxInvoiceDate.Text),
 				MaturityDate = ConvertHelper.ToDateTime(labelMaturityDate.Text),
-				CustomerContact = new CustomerContact { Id = selectedCustomerContact },
+//				CustomerContact = new CustomerContact { Id = selectedCustomerContact },
+				CustomerContact = customerContact,
 				Comments = textBoxInvoiceComments.Text
 			};
 			newInvoice.AddTimebook(Request.Form.GetValues("invoice-timebooks"), Request.Form.GetValues("invoice-timebooks-sortorder"));
