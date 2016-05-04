@@ -43,6 +43,7 @@ namespace HW.Invoicing
 				panelPurchaseOrderNumber.Visible = invoice.GetContactReferenceNumber() != "";
 				
 				labelInvoiceYourReferencePerson.Visible = !invoice.Customer.HasSecondaryContact;
+				dropDownListInvoiceYourReferencePerson.Visible = invoice.Customer.HasSecondaryContact;
 
                 foreach (var c in invoice.Customer.Contacts) {
                     var li = new ListItem(c.Name, c.Id.ToString());
@@ -52,8 +53,8 @@ namespace HW.Invoicing
                 
                 if (invoice.CustomerContact != null) {
                     dropDownListInvoiceYourReferencePerson.SelectedValue = invoice.CustomerContact.Id.ToString();
-                } else {
-                    dropDownListInvoiceYourReferencePerson.Visible = false;
+//                } else {
+//                    dropDownListInvoiceYourReferencePerson.Visible = false;
                 }
 
 				if (company != null) {
@@ -69,7 +70,7 @@ namespace HW.Invoicing
 
 		protected void buttonSave_Click(object sender, EventArgs e)
 		{
-			int selectedCustomerContact;
+//			int selectedCustomerContact;
             CustomerContact customerContact = null;
 			if (labelInvoiceYourReferencePerson.Visible) {
 //				customerContact = customer.PrimaryContact;

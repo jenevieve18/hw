@@ -117,7 +117,8 @@ namespace HW.Invoicing
 					panelPurchaseOrderNumber.Visible = customer.GetPrimaryContactReferenceNumber() != "";
 					
 					labelInvoiceYourReferencePerson.Visible = !customer.HasSecondaryContact;
-					dropDownListInvoiceYourReferencePerson.Visible = customer.HasPrimaryContact;
+//					dropDownListInvoiceYourReferencePerson.Visible = customer.HasPrimaryContact;
+					dropDownListInvoiceYourReferencePerson.Visible = customer.HasSecondaryContact;
 
 					// Subscription Panel
 					checkBoxSubscribe.Checked = customer.HasSubscription;
