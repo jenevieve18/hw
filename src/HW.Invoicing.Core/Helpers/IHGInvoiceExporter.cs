@@ -113,7 +113,8 @@ namespace HW.Invoicing.Core.Helpers
 			t2.AddCell(new PdfPCell(new Phrase(" ", normalFont)) { Border = Rectangle.NO_BORDER });
 			t2.AddCell(new PdfPCell(new Phrase(R.Str(LangId, "customer", "Beställare/Leveransadress/Faktureringsadress"), normalFont)) { Border = Rectangle.NO_BORDER });
 //			var y = new PdfPCell(new Phrase(invoice.Customer != null ? invoice.Customer.ToString() + "\n\n" + invoice.Customer.PrimaryContactReferenceNumber : "", normalFont)) { Border = Rectangle.NO_BORDER };
-			var y = new PdfPCell(new Phrase(invoice.Customer != null ? invoice.Customer.ToString() + "\n\n" + invoice.Customer.GetPrimaryContactReferenceNumber() : "", normalFont)) { Border = Rectangle.NO_BORDER };
+//			var y = new PdfPCell(new Phrase(invoice.Customer != null ? invoice.Customer.ToString() + "\n\n" + invoice.Customer.GetPrimaryContactReferenceNumber() : "", normalFont)) { Border = Rectangle.NO_BORDER };
+			var y = new PdfPCell(new Phrase(invoice.Customer != null ? invoice.Customer.ToString() + "\n\n" + invoice.GetContactReferenceNumber() : "", normalFont)) { Border = Rectangle.NO_BORDER };
 			y.SetLeading(0.0f, 1.3f);
 			t2.AddCell(y);
 			
@@ -143,6 +144,7 @@ namespace HW.Invoicing.Core.Helpers
 			t3.AddCell(C(" ", smallestFont, Rectangle.TOP_BORDER, 0, 2));
 			t3.AddCell(C(R.Str(LangId, "invoice.reference.your", "Er referens:"), smallFont, 3));
 //			t3.AddCell(C(invoice.Customer != null && invoice.Customer.ContactPerson != null ? invoice.Customer.ContactPerson.Name : "", smallFont, 3));
+			t3.AddCell(C(invoice.GetContactName(), smallFont, 3));
 			
 			t3.AddCell(C(" ", smallestFont, Rectangle.NO_BORDER, 0, 2));
 			t3.AddCell(C(R.Str(LangId, "invoice.reference.our", "Vår referens:"), smallFont, 3));
