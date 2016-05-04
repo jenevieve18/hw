@@ -11,14 +11,14 @@ namespace HW.Invoicing
 {
     public partial class InvoiceRevert : System.Web.UI.Page
     {
-        SqlInvoiceRepository invoiceRepository = new SqlInvoiceRepository();
+        SqlInvoiceRepository ir = new SqlInvoiceRepository();
 
         protected void Page_Load(object sender, EventArgs e)
         {
             int invoiceId = ConvertHelper.ToInt32(Request.QueryString["Id"]);
             
-            var invoice = invoiceRepository.Read(invoiceId);
-            invoiceRepository.Revert(invoice);
+            var invoice = ir.Read(invoiceId);
+            ir.Revert(invoice);
             
             Response.Redirect("invoices.aspx");
         }

@@ -15,7 +15,7 @@ namespace HW.Invoicing
 {
 	public partial class InvoiceExport : System.Web.UI.Page
 	{
-		InvoiceService service = new InvoiceService(new SqlCompanyRepository(), new SqlInvoiceRepository());
+		InvoiceService service = new InvoiceService(new SqlCompanyRepository(), new SqlInvoiceRepository(), new SqlCustomerRepository());
 
 		protected void Page_Load(object sender, EventArgs e)
 		{

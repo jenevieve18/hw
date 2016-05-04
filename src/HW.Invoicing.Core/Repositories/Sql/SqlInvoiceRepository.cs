@@ -282,6 +282,71 @@ WHERE i.Id = @Id"
 			}
 			return i;
 		}
+		
+		public Invoice Read2(int id)
+		{
+			string query = string.Format(
+				@"
+SELECT i.Id,
+    i.Date,
+    i.CustomerId,
+    c.Name,
+    c.InvoiceAddress,
+    c.PurchaseOrderNumber,
+    c.YourReferencePerson,
+    c.OurReferencePerson,
+    i.Number,
+    c.Number,
+    i.Status,
+    i.Comments,
+    co.Id,
+    c.InvoiceEmail,
+    c.ContactPersonId,
+    c.Language,
+    c.Currency,
+    c.InvoiceEmailCC,
+    i.OurReferencePerson,
+    i.CustomerContactId
+FROM Invoice i
+INNER JOIN Customer c ON c.Id = i.CustomerId
+INNER JOIN Company co ON co.Id = c.CompanyId
+WHERE i.Id = @Id"
+			);
+			Invoice invoice = null;
+			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", id))) {
+				if (rs.Read()) {
+					invoice = new Invoice {
+						Id = GetInt32(rs, 0),
+						Date = GetDateTime(rs, 1),
+						Number = GetString(rs, 8),
+						Customer = new Customer {
+							Id = GetInt32(rs, 2),
+							Name = GetString(rs, 3),
+							InvoiceAddress = GetString(rs, 4),
+							OurReferencePerson = GetString(rs, 7),
+							Number = GetString(rs, 9),
+							Company = new Company { Id = GetInt32(rs, 12) },
+							InvoiceEmail = GetString(rs, 13),
+							Language = Language.GetLanguage(GetInt32(rs, 15)),
+							Currency = Currency.GetCurrency(GetInt32(rs, 16)),
+							InvoiceEmailCC = GetString(rs, 17),
+						},
+						Status = GetInt32(rs, 10),
+						Comments = GetString(rs, 11),
+						OurReferencePerson = GetString(rs, 18, ""),
+						CustomerContact = new CustomerContact { Id = GetInt32(rs, 19) }
+					};
+				}
+			}
+//			if (i != null)
+//			{
+//				var cr = new SqlCustomerRepository();
+//				i.CustomerContact = cr.ReadContact(i.CustomerContact.Id);
+//				i.Customer.Contacts = cr.FindContacts(i.Customer.Id);
+//				i.Timebooks = FindTimebooks(id);
+//			}
+			return invoice;
+		}
 
 		public List<InvoiceTimebook> FindTimebooks(int invoiceId)
 		{
