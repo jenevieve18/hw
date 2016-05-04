@@ -73,7 +73,8 @@ namespace HW.Invoicing
 				
 				Year year = null;
 				int i = 0;
-				foreach (var y in years) {
+//				foreach (var y in years) {
+				foreach (var y in years.OrderByDescending(x => x.From).ToList()) {
 					if (i++ <= 0) {
 						year = y;
 					}

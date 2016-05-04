@@ -416,7 +416,8 @@ ORDER BY it.SortOrder";
 			string query = @"
 SELECT DISTINCT YEAR(Date) y
 FROM Invoice
-ORDER BY y DESC";
+ORDER BY y ASC
+--ORDER BY y DESC";
 			var years = new List<int>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing"))
 			{
