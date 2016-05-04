@@ -61,9 +61,9 @@ namespace HW.Invoicing
 			if (Session["Message"] != null) {
 				message = Session["Message"].ToString();
 				Session.Remove("Message");
-            }
+			}
 
-            customer = r.Read(id);
+			customer = r.Read(id);
 
 			if (!IsPostBack) {
 				if (customer == null) {
@@ -112,12 +112,11 @@ namespace HW.Invoicing
 					labelInvoiceCustomerAddress.Text = customer.InvoiceAddress.Replace("\n", "<br>");
 					labelInvoiceNumber.Text = "IHG-001";
 					labelInvoiceOurReferencePerson.Text = customer.OurReferencePerson;
-//					labelInvoicePurchaseOrderNumber.Text = customer.PrimaryContactReferenceNumber;
 					labelInvoicePurchaseOrderNumber.Text = customer.GetPrimaryContactReferenceNumber();
-//					labelInvoiceYourReferencePerson.Text = customer.ContactPerson.Name;
 					labelInvoiceYourReferencePerson.Text = customer.GetPrimaryContactName();
-//					panelPurchaseOrderNumber.Visible = customer.PrimaryContactReferenceNumber != "";
 					panelPurchaseOrderNumber.Visible = customer.GetPrimaryContactReferenceNumber() != "";
+					
+					labelInvoiceYourReferencePerson.Visible = !customer.HasSecondaryContact;
 
 					// Subscription Panel
 					checkBoxSubscribe.Checked = customer.HasSubscription;
@@ -224,6 +223,12 @@ namespace HW.Invoicing
 		protected void buttonSaveInvoice_Click(object sender, EventArgs e)
 		{
 			int n = vr.GetLatestInvoiceNumber(companyId);
+			CustomerContact customerContact = null;
+			if (labelInvoiceYourReferencePerson.Visible) {
+				customerContact = customer.PrimaryContact;
+			} else {
+				customerContact = new CustomerContact { Id = ConvertHelper.ToInt32(dropDownListInvoiceYourReferencePerson.SelectedValue) };
+			}
 			var i = new Invoice
 			{
 				Id = n,
@@ -235,7 +240,8 @@ namespace HW.Invoicing
 					Company = new Company { Id = companyId }
 				},
 				Comments = textBoxInvoiceComments.Text,
-				CustomerContact = customer.PrimaryContact != null ? customer.PrimaryContact : null,
+//				CustomerContact = customer.PrimaryContact != null ? customer.PrimaryContact : null,
+				CustomerContact = customerContact,
 //				YourReferencePerson = labelInvoiceYourReferencePerson.Text,
 				OurReferencePerson = labelInvoiceOurReferencePerson.Text
 //				PurchaseOrderNumber = labelInvoicePurchaseOrderNumber.Text
@@ -354,7 +360,14 @@ namespace HW.Invoicing
 //			foreach (var c in contacts) {
 //				dropDownListYourReferencePerson.Items.Add(new ListItem(c.ToString(), c.Id.ToString()));
 //			}
-
+//
+			dropDownListInvoiceYourReferencePerson.Items.Clear();
+			foreach (var c in contacts) {
+				var li = new ListItem(c.Name, c.Id.ToString());
+				li.Attributes.Add("data-purchase-order-number", c.PurchaseOrderNumber);
+				dropDownListInvoiceYourReferencePerson.Items.Add(li);
+			}
+			
 			dropDownListTimebookContacts.Items.Clear();
 			foreach (var c in contacts) {
 				dropDownListTimebookContacts.Items.Add(new ListItem(c.Name, c.Id.ToString()));

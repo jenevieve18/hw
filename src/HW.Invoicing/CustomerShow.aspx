@@ -272,6 +272,11 @@
                 $(this).hide();
                 label.show();
             });
+            $('#<%= dropDownListInvoiceYourReferencePerson.ClientID %>').change(function () {
+                var selected = $(this).find('option:selected');
+                var selectedReferenceNumber = selected.data('purchase-order-number');
+                $('#<%= labelInvoicePurchaseOrderNumber.ClientID %>').text(selectedReferenceNumber);
+            });
         });
     </script>
     <script type="text/javascript">
@@ -583,9 +588,11 @@
                                     <td colspan="2">
                                         <small>
                                             Your Reference: <strong>
-                                                <asp:Label ID="labelInvoiceYourReferencePerson" runat="server" Text=""></asp:Label><!--First Name + Surname--></strong><br />
+                                                <asp:Label ID="labelInvoiceYourReferencePerson" runat="server" Text=""></asp:Label></strong>
+                                                <asp:DropDownList ID="dropDownListInvoiceYourReferencePerson" runat="server">
+                                                </asp:DropDownList><br />
                                             Our Reference: <strong>
-                                                <asp:Label ID="labelInvoiceOurReferencePerson" runat="server" Text=""></asp:Label><!--Dan Hasson--></strong>
+                                                <asp:Label ID="labelInvoiceOurReferencePerson" runat="server" Text=""></asp:Label></strong>
                                         </small>
                                     </td>
                                 </tr>

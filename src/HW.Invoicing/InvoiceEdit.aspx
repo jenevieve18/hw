@@ -11,7 +11,6 @@
             $('#<%= dropDownListInvoiceYourReferencePerson.ClientID %>').change(function () {
                 var selected = $(this).find('option:selected');
                 var selectedReferenceNumber = selected.data('purchase-order-number');
-                //console.log(selectedReferenceNumber);
                 $('#<%= labelInvoicePurchaseOrderNumber.ClientID %>').text(selectedReferenceNumber);
             });
             $('#<%= textBoxInvoiceDate.ClientID %>').datepicker({

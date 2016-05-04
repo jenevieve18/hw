@@ -144,10 +144,11 @@ SELECT CAST(scope_identity() AS int)";
 				new SqlParameter("@Number", i.Number),
 				new SqlParameter("@MaturityDate", i.MaturityDate),
 				new SqlParameter("@Status", Invoice.INVOICED),
-				new SqlParameter("@CustomerContactId", i.CustomerContact != null ? (object)i.CustomerContact.Id : DBNull.Value),
+//				new SqlParameter("@CustomerContactId", i.CustomerContact != null ? (object)i.CustomerContact.Id : DBNull.Value),
+				new SqlParameter("@CustomerContactId", i.CustomerContact.Id),
 //				new SqlParameter("@YourReferencePerson", i.YourReferencePerson),
 				new SqlParameter("@OurReferencePerson", i.OurReferencePerson)
-//				new SqlParameter("@PurchaseOrderNumber", i.PurchaseOrderNumber)
+//				new SqlParameter("@PurchaseOrderNumber", i.PurchaseOrderNumber),
 			);
 
 			query = @"

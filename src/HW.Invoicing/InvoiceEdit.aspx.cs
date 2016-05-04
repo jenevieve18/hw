@@ -14,9 +14,6 @@ namespace HW.Invoicing
 	public partial class InvoiceEdit : System.Web.UI.Page
 	{
 		protected Invoice invoice;
-//		SqlInvoiceRepository r = new SqlInvoiceRepository();
-//		SqlCompanyRepository cr = new SqlCompanyRepository();
-//		SqlCustomerRepository ur = new SqlCustomerRepository();
 		protected int id;
 		protected IList<CustomerTimebook> timebooks = new List<CustomerTimebook>();
 		protected Company company;
@@ -28,10 +25,8 @@ namespace HW.Invoicing
 			HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
 
 			id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
-//			company = cr.Read(ConvertHelper.ToInt32(Session["CompanyId"]));
 			company = service.ReadCompany(ConvertHelper.ToInt32(Session["CompanyId"]));
 
-//			invoice = r.Read(id);
 			invoice = service.ReadInvoice(id);
 			if (!IsPostBack) {
 				HtmlHelper.RedirectIf(invoice == null, "invoices.aspx");
@@ -65,7 +60,6 @@ namespace HW.Invoicing
 					labelCompanyTIN.Text = company.TIN;
 				}
 			}
-//			timebooks = ur.FindOpenTimebooks(invoice.Customer.Id);
 			timebooks = service.FindOpenCustomerTimebooks(invoice.Customer.Id);
 		}
 
@@ -89,7 +83,6 @@ namespace HW.Invoicing
 			if (newInvoice.HasErrors) {
 				message = invoice.Errors.ToHtmlUl();
 			} else {
-//				r.Update(i, id);
 				service.UpdateInvoice(newInvoice, id);
 				Response.Redirect("invoices.aspx");
 			}
