@@ -34,19 +34,28 @@ namespace HW.Invoicing
 //			invoice = r.Read(id);
 			invoice = service.ReadInvoice(id);
 			if (!IsPostBack) {
-				if (invoice != null) {
-					labelInvoiceNumber.Text = invoice.Number;
-					textBoxInvoiceDate.Text = invoice.Date.Value.ToString("yyyy-MM-dd");
-					labelMaturityDate.Text = invoice.MaturityDate.Value.ToString("yyyy-MM-dd");
-					labelInvoiceCustomerAddress.Text = invoice.Customer.ToString().Replace("\n", "<br>");
-					labelInvoicePurchaseOrderNumber.Text = invoice.GetContactReferenceNumber();
-					labelInvoiceYourReferencePerson.Text = invoice.GetContactName();
-					labelInvoiceOurReferencePerson.Text = invoice.OurReferencePerson;
-					textBoxInvoiceComments.Text = invoice.Comments;
-					panelPurchaseOrderNumber.Visible = invoice.GetContactReferenceNumber() != "";
-				} else {
-					Response.Redirect("invoices.aspx");
+				HtmlHelper.RedirectIf(invoice == null, "invoices.aspx");
+				
+				labelInvoiceNumber.Text = invoice.Number;
+				textBoxInvoiceDate.Text = invoice.Date.Value.ToString("yyyy-MM-dd");
+				labelMaturityDate.Text = invoice.MaturityDate.Value.ToString("yyyy-MM-dd");
+				labelInvoiceCustomerAddress.Text = invoice.Customer.ToString().Replace("\n", "<br>");
+				
+				labelInvoicePurchaseOrderNumber.Text = invoice.GetContactReferenceNumber();
+				labelInvoiceYourReferencePerson.Text = invoice.GetContactName();
+				labelInvoiceOurReferencePerson.Text = invoice.OurReferencePerson;
+				textBoxInvoiceComments.Text = invoice.Comments;
+				panelPurchaseOrderNumber.Visible = invoice.GetContactReferenceNumber() != "";
+				
+				labelInvoiceYourReferencePerson.Visible = !invoice.Customer.HasSecondaryContact;
+
+                foreach (var c in invoice.Customer.Contacts)
+                {
+                    var li = new ListItem(c.Name, c.Id.ToString());
+                    li.Attributes.Add("data-purchase-order-number", c.PurchaseOrderNumber);
+					dropDownListInvoiceYourReferencePerson.Items.Add(li);
 				}
+                dropDownListInvoiceYourReferencePerson.SelectedValue = invoice.CustomerContact.Id.ToString();
 
 				if (company != null) {
 					labelCompanyName.Text = company.Name;
@@ -62,18 +71,26 @@ namespace HW.Invoicing
 
 		protected void buttonSave_Click(object sender, EventArgs e)
 		{
-			var invoice = new Invoice {
+			int selectedCustomerContact;
+			if (labelInvoiceYourReferencePerson.Visible) {
+				selectedCustomerContact = invoice.CustomerContact.Id;
+			} else {
+				selectedCustomerContact = ConvertHelper.ToInt32(dropDownListInvoiceYourReferencePerson.SelectedValue);
+			}
+			
+			var newInvoice = new Invoice {
 				Date = ConvertHelper.ToDateTime(textBoxInvoiceDate.Text),
 				MaturityDate = ConvertHelper.ToDateTime(labelMaturityDate.Text),
+				CustomerContact = new CustomerContact { Id = selectedCustomerContact },
 				Comments = textBoxInvoiceComments.Text
 			};
-			invoice.AddTimebook(Request.Form.GetValues("invoice-timebooks"), Request.Form.GetValues("invoice-timebooks-sortorder"));
-			invoice.Validate();
-			if (invoice.HasErrors) {
+			newInvoice.AddTimebook(Request.Form.GetValues("invoice-timebooks"), Request.Form.GetValues("invoice-timebooks-sortorder"));
+			newInvoice.Validate();
+			if (newInvoice.HasErrors) {
 				message = invoice.Errors.ToHtmlUl();
 			} else {
 //				r.Update(i, id);
-				service.UpdateInvoice(invoice, id);
+				service.UpdateInvoice(newInvoice, id);
 				Response.Redirect("invoices.aspx");
 			}
 		}

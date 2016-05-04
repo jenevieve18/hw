@@ -61,11 +61,12 @@ where id = @Id";
 			ExecuteNonQuery(query, "invoicing", new SqlParameter("@Id", id));
 		}
 
-		public void Update(Invoice i, int id)
+		public override void Update(Invoice i, int id)
 		{
 			string query = @"
 UPDATE Invoice SET Date = @Date,
     MaturityDate = @MaturityDate,
+    CustomerContactId = @CustomerContactId,
     Comments = @Comments
 WHERE Id = @Id";
 			ExecuteNonQuery(
@@ -73,6 +74,7 @@ WHERE Id = @Id";
 				"invoicing",
 				new SqlParameter("@Date", i.Date),
 				new SqlParameter("@MaturityDate", i.MaturityDate),
+				new SqlParameter("@CustomerContactId", i.CustomerContact.Id),
 				new SqlParameter("@Comments", i.Comments),
 				new SqlParameter("@Id", id)
 			);

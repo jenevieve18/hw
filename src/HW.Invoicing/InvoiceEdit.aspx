@@ -8,6 +8,12 @@
     <script type="text/javascript">
         var invoiceItems = [];
         $(document).ready(function () {
+            $('#<%= dropDownListInvoiceYourReferencePerson.ClientID %>').change(function () {
+                var selected = $(this).find('option:selected');
+                var selectedReferenceNumber = selected.data('purchase-order-number');
+                //console.log(selectedReferenceNumber);
+                $('#<%= labelInvoicePurchaseOrderNumber.ClientID %>').text(selectedReferenceNumber);
+            });
             $('#<%= textBoxInvoiceDate.ClientID %>').datepicker({
                 format: "yyyy-mm-dd",
                 autoclose: true
@@ -209,6 +215,8 @@
                     Your Reference:
                         <strong>
                             <asp:Label ID="labelInvoiceYourReferencePerson" runat="server" Text=""></asp:Label>
+                            <asp:DropDownList ID="dropDownListInvoiceYourReferencePerson" runat="server">
+                            </asp:DropDownList>
                         </strong><br />
                     Our Reference:
                         <strong>
@@ -221,7 +229,7 @@
             <td>
                 <asp:Panel ID="panelPurchaseOrderNumber" runat="server">
                 <strong>
-                    <asp:Label ID="labelInvoicePurchaseOrderNumber" runat="server" Text="Label"></asp:Label>
+                    <asp:Label ID="labelInvoicePurchaseOrderNumber" runat="server" Text=""></asp:Label>
                 </strong>
                 </asp:Panel>
             </td>
