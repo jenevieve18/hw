@@ -8,6 +8,9 @@ namespace HW.Invoicing.Core.Models
 {
 	public class User : BaseModel
 	{
+		public const int ACTIVE = 0;
+		public const int INACTIVE = 1;
+		
 		public User()
 		{
 		}

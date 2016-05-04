@@ -236,6 +236,21 @@ WHERE Id = @Id"
 			);
 		}
 		
+		public void MakeInactive(int id)
+		{
+			string query = string.Format(
+				@"
+UPDATE [User] SET Status = @Status
+WHERE Id = @Id"
+			);
+			ExecuteNonQuery(
+				query,
+				"invoicing",
+				new SqlParameter("@Id", id),
+				new SqlParameter("@Status", User.INACTIVE)
+			);
+		}
+		
 		public IList<User> FindCollaborators(int companyId)
 		{
 			string query = string.Format(
@@ -250,6 +265,36 @@ ORDER BY Username"
 			);
 			IList<User> users = new List<User>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {
+				while (rs.Read()) {
+					users.Add(
+						new User {
+							Id = GetInt32(rs, 0),
+							Username = GetString(rs, 1),
+							Password = GetString(rs, 2),
+							Color = GetString(rs, 3),
+							Name = GetString(rs, 4)
+						}
+					);
+				}
+			}
+			return users;
+		}
+		
+		public IList<User> FindActiveCollaborators(int companyId)
+		{
+			string query = string.Format(
+				@"
+SELECT Id,
+	Username,
+	[Password],
+	Color,
+	Name
+FROM [User]
+WHERE ISNULL(Status, 0) = 0
+ORDER BY Username"
+			);
+			IList<User> users = new List<User>();
+			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Status", User.ACTIVE))) {
 				while (rs.Read()) {
 					users.Add(
 						new User {

@@ -18,7 +18,8 @@ namespace HW.Invoicing
         	HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
 
             int id = ConvertHelper.ToInt32(Request.QueryString["UserID"]);
-            r.Delete(id);
+//            r.Delete(id);
+r.MakeInactive(id);
         	Response.Redirect("collaborators.aspx");
         }
     }

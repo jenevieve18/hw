@@ -25,7 +25,8 @@ namespace HW.Invoicing
             int companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
             
             company = cr.Read(companyId);
-            users = ur.FindCollaborators(companyId);
+//            users = ur.FindCollaborators(companyId);
+users = ur.FindActiveCollaborators(companyId);
         }
     }
 }
