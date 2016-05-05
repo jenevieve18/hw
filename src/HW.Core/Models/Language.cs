@@ -6,6 +6,8 @@ namespace HW.Core.Models
 {
 	public class Language : BaseModel
 	{
+		public const int ENGLISH = 2;
+		
 		public virtual string Name { get; set; }
 
 		public override string ToString()

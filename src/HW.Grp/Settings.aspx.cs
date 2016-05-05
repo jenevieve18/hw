@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Core.Helpers;
+using HW.Core.Models;
 using HW.Core.Repositories.Sql;
 
 namespace HW.Grp
@@ -12,19 +13,26 @@ namespace HW.Grp
 	public partial class Settings : System.Web.UI.Page
 	{
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
-        protected int lid;
+//		protected int lid;
+		
+		SqlUserRepository userRepository = new SqlUserRepository();
+		protected int lid = Language.ENGLISH;
 
-        protected override void OnPreRender(EventArgs e)
-        {
-            base.OnPreRender(e);
-            Save.Text = R.Str(lid, "save", "Save");
-        }
+		protected override void OnPreRender(EventArgs e)
+		{
+			base.OnPreRender(e);
+			Save.Text = R.Str(lid, "save", "Save");
+		}
 		
 		protected void Page_Load(object sender, EventArgs e)
-        {
+		{
 			HtmlHelper.RedirectIf(Session["SponsorAdminID"] == null, "default.aspx", true);
 			
-            lid = ConvertHelper.ToInt32(Session["lid"], 2);
+//			lid = ConvertHelper.ToInt32(Session["lid"], 2);
+			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+			if (userSession != null) {
+				lid = userSession.Lang;
+			}
 			Save.Click += new EventHandler(Save_Click);
 			if (Convert.ToInt32(Session["SponsorAdminID"]) <= 0) {
 				Message.Text = R.Str(lid, "admin.error", "Super administrators cannot change password. Please contact support@healthwatch.se!");

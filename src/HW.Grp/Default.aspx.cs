@@ -20,38 +20,45 @@ namespace HW.Grp
 		SqlManagerFunctionRepository functionRepository = new SqlManagerFunctionRepository();
 		ISponsorRepository sponsorRepository;
 		INewsRepository newsRepository;
+		SqlUserRepository userRepository = new SqlUserRepository();
 		protected IList<AdminNews> adminNews;
-        protected int lid;
-        
-        public Default() : this(new SqlSponsorRepository(), new SqlNewsRepository())
-        {
-        }
-        
-        public Default(ISponsorRepository sponsorRepository, INewsRepository newsRepository)
-        {
-        	this.sponsorRepository = sponsorRepository;
-        	this.newsRepository = newsRepository;
-        }
-        
-        public void Index()
-        {
-        	adminNews = newsRepository.FindTop3AdminNews();
-        }
+		protected int lid = Language.ENGLISH;
+		
+		public Default() : this(new SqlSponsorRepository(), new SqlNewsRepository())
+		{
+		}
+		
+		public Default(ISponsorRepository sponsorRepository, INewsRepository newsRepository)
+		{
+			this.sponsorRepository = sponsorRepository;
+			this.newsRepository = newsRepository;
+		}
+		
+		public void Index()
+		{
+			adminNews = newsRepository.FindTop3AdminNews();
+		}
 
-        protected CultureInfo GetCultureInfo(int lid)
-        {
-            return lid == 1 ? new CultureInfo("sv-SE") : new CultureInfo("en-US");
-        }
+		protected CultureInfo GetCultureInfo(int lid)
+		{
+			return lid == 1 ? new CultureInfo("sv-SE") : new CultureInfo("en-US");
+		}
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
-            SessionHelper.AddIf(Request.QueryString["lid"] != null, "lid", ConvertHelper.ToInt32(Request.QueryString["lid"]));
-            if (Request.QueryString["r"] != null) {
-                Response.Redirect(HttpUtility.UrlDecode(Request.QueryString["r"]));
-            }
-            lid = ConvertHelper.ToInt32(Session["lid"], 2);
+//			SessionHelper.AddIf(Request.QueryString["lid"] != null, "lid", ConvertHelper.ToInt32(Request.QueryString["lid"]));
+			var userSession = new UserSession { HostAddress = Request.UserHostAddress, Agent = Request.UserAgent, Lang = ConvertHelper.ToInt32(Request.QueryString["lid"]) };
+			userRepository.SaveSessionIf(Request.QueryString["lid"] != null, userSession);
+			if (Request.QueryString["r"] != null) {
+				Response.Redirect(HttpUtility.UrlDecode(Request.QueryString["r"]));
+			}
+//			lid = ConvertHelper.ToInt32(Session["lid"], 2);
+			userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+			if (userSession != null) {
+				lid = userSession.Lang;
+			}
 
-            Index();
+			Index();
 			
 			bool login = false;
 			SponsorAdmin s = null;
@@ -64,7 +71,7 @@ namespace HW.Grp
 				string said = sa != null ? (Session["SuperAdminID"] != null ? Session["SuperAdminID"].ToString() : "0") : "";
 				s = sponsorRepository.ReadSponsorAdmin(skey, sakey, sa, said, anv, los);
 				if (s != null) {
-				    login = true;
+					login = true;
 					sponsorRepository.SaveSponsorAdminSession(s.Id, DateTime.Now);
 					Session["SponsorAdminSessionID"] = sponsorRepository.ReadLastSponsorAdminSession();
 					
@@ -79,11 +86,11 @@ namespace HW.Grp
 						Session["SeeUsers"] = s.SeeUsers ? 1 : 0;
 						Session["ReadOnly"] = s.ReadOnly ? 1 : 0;
 
-                        SessionHelper.AddIf(skey != null, "SponsorKey", skey);
-                        SessionHelper.RemoveIf(skey == null, "SponsorKey");
+						SessionHelper.AddIf(skey != null, "SponsorKey", skey);
+						SessionHelper.RemoveIf(skey == null, "SponsorKey");
 					}
 				} else {
-                    errorMessage = R.Str(lid, "login.invalid", "Invalid user name and password. Please try again.");
+					errorMessage = R.Str(lid, "login.invalid", "Invalid user name and password. Please try again.");
 				}
 			}
 			if (login && (Session["SponsorAdminID"] != null || Session["SuperAdminID"] != null)) {
@@ -106,8 +113,8 @@ namespace HW.Grp
 				Session.Remove("Anonymized");
 				Session.Remove("SeeUsers");
 				Session.Remove("ReadOnly");
-                Session.Remove("SponsorAdminSessionID");
-                Session.Remove("SponsorKey");
+				Session.Remove("SponsorAdminSessionID");
+				Session.Remove("SponsorKey");
 				ClientScript.RegisterStartupScript(this.GetType(), "CLOSE", "<script language='JavaScript'>window.close();</script>");
 			} else if (login && Session["SuperAdminID"] != null || Request.QueryString["SuperLogout"] != null) {
 				Session.Remove("SuperAdminID");

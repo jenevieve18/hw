@@ -18,7 +18,9 @@ namespace HW.Grp
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		IList<Department> departments;
 		Sponsor sponsor;
-		protected int lid;
+//		protected int lid;
+		SqlUserRepository userRepository = new SqlUserRepository();
+		protected int lid = Language.ENGLISH;
 		
 		protected override void OnPreRender(EventArgs e)
 		{
@@ -32,7 +34,11 @@ namespace HW.Grp
 			
 			HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(ConvertHelper.ToInt32(Session["SponsorAdminID"]), ManagerFunction.Reminders), "default.aspx", true);
 			
-			lid = ConvertHelper.ToInt32(Session["lid"], 2);
+//			lid = ConvertHelper.ToInt32(Session["lid"], 2);
+			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+			if (userSession != null) {
+				lid = userSession.Lang;
+			}
 			
 			Index(ConvertHelper.ToInt32(Session["SponsorID"]), ConvertHelper.ToInt32(Session["SponsorAdminID"]));
 		}
@@ -100,7 +106,7 @@ namespace HW.Grp
 			
 			Dictionary<int, bool> DX = new Dictionary<int, bool>();
 
-            int j = 0;
+			int j = 0;
 
 			foreach (var d in departments) {
 				IHGHtmlTable boxes = new IHGHtmlTable() { Width = "100%" };
@@ -163,7 +169,7 @@ namespace HW.Grp
 		protected void buttonSave_Click(object sender, EventArgs e)
 		{
 			Save();
-            HtmlHelper.Redirect("reminders.aspx", true);
+			HtmlHelper.Redirect("reminders.aspx", true);
 		}
 		
 		public void Save()

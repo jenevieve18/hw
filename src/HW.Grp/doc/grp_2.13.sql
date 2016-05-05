@@ -23,3 +23,11 @@ create table SponsorAdminExerciseDataInput(
 	Content text,
 	[Order] integer
 );
+
+create table UserSession(
+	UserSessionID integer not null primary key identity,
+	UserHostAddress varchar(255),
+	UserAgent varchar(255)
+);
+
+alter table UserSession add LangID integer;

@@ -13,7 +13,9 @@ namespace HW.Grp
 	public partial class PasswordActivation : System.Web.UI.Page
 	{
 		SqlSponsorAdminRepository r = new SqlSponsorAdminRepository();
-		protected int lid;
+//		protected int lid;
+		SqlUserRepository userRepository = new SqlUserRepository();
+		protected int lid = Language.ENGLISH;
 		
 		bool HasUniqueKey {
 			get { return UniqueKey != null && UniqueKey != ""; }
@@ -32,18 +34,22 @@ namespace HW.Grp
 			HtmlHelper.RedirectIf(!HasUniqueKey, "default.aspx", true);
 			HtmlHelper.RedirectIf(!r.SponsorAdminUniqueKeyExists(UniqueKey), "default.aspx", true);
 
-            if (r.SponsorAdminUniqueKeyUsed(UniqueKey))
-            {
-                Response.Redirect("default.aspx");
-            }
+			if (r.SponsorAdminUniqueKeyUsed(UniqueKey))
+			{
+				Response.Redirect("default.aspx");
+			}
 
-            lid = ConvertHelper.ToInt32(Session["lid"], 2);
+//			lid = ConvertHelper.ToInt32(Session["lid"], 2);
+			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+			if (userSession != null) {
+				lid = userSession.Lang;
+			}
 		}
 		
 		protected override void OnPreRender(EventArgs e)
 		{
 			base.OnPreRender(e);
-            buttonActivate.Text = R.Str(lid, "password.activate", "Activate Password");
+			buttonActivate.Text = R.Str(lid, "password.activate", "Activate Password");
 			if (Saved) {
 				string script = string.Format("<script>openWindow('{0}')</script>", R.Str(lid, "password.saved", "New password saved!"));
 				ClientScript.RegisterStartupScript(this.GetType(), "SENT", script);
@@ -58,7 +64,7 @@ namespace HW.Grp
 				labelErrorMessage.Text = R.Str(lid, "password.short", "Password too short! It needs to be at least 8 characters.");
 			} else {
 				r.SavePassword(Db.HashMd5(textBoxPassword.Text), UniqueKey);
-                Response.Redirect("default.aspx");
+				Response.Redirect("default.aspx");
 			}
 		}
 	}

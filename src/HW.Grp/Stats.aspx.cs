@@ -29,10 +29,12 @@ namespace HW.Grp
 		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
 		SqlReportRepository reportRepository = new SqlReportRepository();
 		SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
-		protected int lid;
+//		protected int lid;
 		protected DateTime startDate;
 		protected DateTime endDate;
 		SqlMeasureRepository measureRepository = new SqlMeasureRepository();
+		SqlUserRepository userRepository = new SqlUserRepository();
+		protected int lid = Language.ENGLISH;
 
 		public IList<SponsorProjectRoundUnit> ProjectRoundUnits {
 			set {
@@ -217,7 +219,11 @@ namespace HW.Grp
 			
 			HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Statistics), "default.aspx", true);
 			
-			lid = ConvertHelper.ToInt32(Session["lid"], 2);
+//			lid = ConvertHelper.ToInt32(Session["lid"], 2);
+			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+			if (userSession != null) {
+				lid = userSession.Lang;
+			}
 			
 			plotTypes = plotRepository.FindByLanguage(lid);
 			
@@ -276,12 +282,12 @@ namespace HW.Grp
 			return p.ToString();
 		}
 
-        protected string GetReportImageUrl(int reportID, int reportPartLangID, Q additionalQuery)
-        {
-            var p = GetPage("reportImage.aspx", reportID, reportPartLangID);
-            p.Add(additionalQuery);
-            return p.ToString();
-        }
+		protected string GetReportImageUrl(int reportID, int reportPartLangID, Q additionalQuery)
+		{
+			var p = GetPage("reportImage.aspx", reportID, reportPartLangID);
+			p.Add(additionalQuery);
+			return p.ToString();
+		}
 		
 		protected string GetExportUrl(int reportID, int reportPartID, string type, Q additionalQuery)
 		{
@@ -336,25 +342,25 @@ namespace HW.Grp
 			return q;
 		}
 
-        P GetPage2(string page, int reportPartLangID)
-        {
-            P p = new P(page);
-            p.Q.Add("LangID", lid);
-            p.Q.Add("FY", startDate.Year);
-            p.Q.Add("TY", endDate.Year);
-            p.Q.Add("FM", startDate.Month);
-            p.Q.Add("TM", endDate.Month);
-            p.Q.Add("SAID", sponsorAdminID);
-            p.Q.Add("SID", sponsorID);
-            p.Q.AddIf(Convert.ToInt32(Session["Anonymized"]) == 1, "Anonymized", 1);
-            p.Q.Add("GB", GroupBy.SelectedValue);
-            //p.Q.Add("RPID", reportID);
-            p.Q.Add("RPLID", reportPartLangID);
-            p.Q.Add("PRUID", ProjectRoundUnitID.SelectedValue);
-            p.Q.Add("GRPNG", Grouping.SelectedValue);
-            p.Q.AddIf(Request.QueryString["PLOT"] != null, "PLOT", Request.QueryString["PLOT"]);
-            return p;
-        }
+		P GetPage2(string page, int reportPartLangID)
+		{
+			P p = new P(page);
+			p.Q.Add("LangID", lid);
+			p.Q.Add("FY", startDate.Year);
+			p.Q.Add("TY", endDate.Year);
+			p.Q.Add("FM", startDate.Month);
+			p.Q.Add("TM", endDate.Month);
+			p.Q.Add("SAID", sponsorAdminID);
+			p.Q.Add("SID", sponsorID);
+			p.Q.AddIf(Convert.ToInt32(Session["Anonymized"]) == 1, "Anonymized", 1);
+			p.Q.Add("GB", GroupBy.SelectedValue);
+			//p.Q.Add("RPID", reportID);
+			p.Q.Add("RPLID", reportPartLangID);
+			p.Q.Add("PRUID", ProjectRoundUnitID.SelectedValue);
+			p.Q.Add("GRPNG", Grouping.SelectedValue);
+			p.Q.AddIf(Request.QueryString["PLOT"] != null, "PLOT", Request.QueryString["PLOT"]);
+			return p;
+		}
 		
 		P GetPage(string page, int reportID, int reportPartLangID)
 		{

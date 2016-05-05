@@ -14,12 +14,18 @@ namespace HW.Grp
 	public partial class SuperExport : System.Web.UI.Page
 	{
 		SqlReportRepository r = new SqlReportRepository();
+		SqlUserRepository userRepository = new SqlUserRepository();
+		protected int lid = Language.ENGLISH;
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			HtmlHelper.RedirectIf(Session["SuperAdminID"] == null, "default.aspx", true);
 
-			int lid = ConvertHelper.ToInt32(Session["lid"], 2);
+//			int lid = ConvertHelper.ToInt32(Session["lid"], 2);
+			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+			if (userSession != null) {
+				lid = userSession.Lang;
+			}
 			int rpid = ConvertHelper.ToInt32(Request.QueryString["RPID"]);
 			string type = StrHelper.Str3(Request.QueryString["TYPE"], "docx");
 			

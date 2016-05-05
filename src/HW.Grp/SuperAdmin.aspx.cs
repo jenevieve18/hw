@@ -17,7 +17,9 @@ namespace HW.Grp
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		int superAdminID;
 		HW.Core.Models.SuperAdmin superAdmin;
-		protected int lid;
+//		protected int lid;
+		SqlUserRepository userRepository = new SqlUserRepository();
+		protected int lid = Language.ENGLISH;
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -25,7 +27,11 @@ namespace HW.Grp
 				Response.Redirect("default.aspx?SuperLogout=1&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
 			superAdminID = ConvertHelper.ToInt32(Session["SuperAdminID"]);
-			lid = ConvertHelper.ToInt32(Session["lid"], 2);
+//			lid = ConvertHelper.ToInt32(Session["lid"], 2);
+			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+			if (userSession != null) {
+				lid = userSession.Lang;
+			}
 			superAdmin = sponsorRepository.ReadSuperAdmin(superAdminID);
 			submit.Click += new EventHandler(submit_Click);
 			submit2.Click += new EventHandler(submit2_Click);
@@ -519,9 +525,9 @@ namespace HW.Grp
 					ss.Navigation,
 					ss.ProjectRoundUnit.Id,
 					ss.ProjectRoundUnit.Answers.Capacity,
-                    ConvertHelper.ToInt32(Request["Measure_" + ss.ProjectRoundUnit.Id.ToString()], 0) == 1 ? " checked" : "",
-                    ConvertHelper.ToInt32(Request["Measure_" + ss.ProjectRoundUnit.Id.ToString()], 0) == 2 ? " checked" : "",
-                    ConvertHelper.ToInt32(Request["Measure_" + ss.ProjectRoundUnit.Id.ToString()], 0) == 0 ? " checked" : ""
+					ConvertHelper.ToInt32(Request["Measure_" + ss.ProjectRoundUnit.Id.ToString()], 0) == 1 ? " checked" : "",
+					ConvertHelper.ToInt32(Request["Measure_" + ss.ProjectRoundUnit.Id.ToString()], 0) == 2 ? " checked" : "",
+					ConvertHelper.ToInt32(Request["Measure_" + ss.ProjectRoundUnit.Id.ToString()], 0) == 0 ? " checked" : ""
 				);
 				cx++;
 //				bx += rs.GetInt32(5);
@@ -543,7 +549,7 @@ namespace HW.Grp
 		
 		protected IList<User> users;
 		protected string searchQuery;
-		SqlUserRepository userRepository = new SqlUserRepository();
+//		SqlUserRepository userRepository = new SqlUserRepository();
 
 		protected void Search_Click(object sender, EventArgs e)
 		{

@@ -25,8 +25,10 @@ namespace HW.Grp
 		bool sent = false;
 		bool loginWithSkey = false;
 		ISponsor sponsor;
+		SqlUserRepository userRepository = new SqlUserRepository();
+		protected int lid = Language.ENGLISH;
 		
-		protected int lid;
+//		protected int lid;
 		
 		MessageService service;
 		
@@ -50,7 +52,11 @@ namespace HW.Grp
 			
 			HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Messages), "default.aspx", true);
 			
-			lid = ConvertHelper.ToInt32(Session["lid"], 2);
+//			lid = ConvertHelper.ToInt32(Session["lid"], 2);
+			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+			if (userSession != null) {
+				lid = userSession.Lang;
+			}
 			loginWithSkey = Session["SponsorKey"] != null;
 			
 			buttonSave.Click += new EventHandler(SaveClick);

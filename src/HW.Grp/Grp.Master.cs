@@ -13,12 +13,14 @@ namespace HW.Grp
 	{
 		protected Sponsor sponsor;
 		protected IList<ManagerFunctionLang> functions;
-		protected int lid;
+//		protected int lid;
 		protected int sponsorAdminID;
 		protected string sponsorName;
 		protected bool super;
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		SqlManagerFunctionRepository managerFunctionRepository = new SqlManagerFunctionRepository();
+		SqlUserRepository userRepository = new SqlUserRepository();
+		protected int lid = Language.ENGLISH;
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -30,7 +32,11 @@ namespace HW.Grp
 
 			super = Request.Url.AbsolutePath.Contains("super");
 
-            lid = ConvertHelper.ToInt32(Session["lid"], 2);
+//			lid = ConvertHelper.ToInt32(Session["lid"], 2);
+			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+			if (userSession != null) {
+				lid = userSession.Lang;
+			}
 			functions = managerFunctionRepository.FindBySponsorAdmin(sponsorAdminID, lid);
 		}
 	}

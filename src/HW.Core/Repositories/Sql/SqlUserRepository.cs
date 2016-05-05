@@ -13,8 +13,8 @@ namespace HW.Core.Repositories.Sql
 //		{
 //			string query = string.Format(
 //				@"
-//INSERT INTO UserProfileBQ (UserProfileID, BQID, ValueInt, ValueText, ValueDate)
-//VALUES (@UserProfileID, @BQID, @ValueInt, @ValueText, @ValueDate)"
+		//INSERT INTO UserProfileBQ (UserProfileID, BQID, ValueInt, ValueText, ValueDate)
+		//VALUES (@UserProfileID, @BQID, @ValueInt, @ValueText, @ValueDate)"
 //			);
 //			ExecuteNonQuery(
 //				query,
@@ -26,13 +26,13 @@ namespace HW.Core.Repositories.Sql
 //				new SqlParameter("@ValueDate", s.ValueDate)
 //			);
 //		}
-//		
+//
 //		public void SaveUserProfileBackgroundQuestion(int profileID, int bqID, int valueInt, string valueText, DateTime? valueDate)
 //		{
 //			string query = string.Format(
 //				@"
-//INSERT INTO UserProfileBQ (UserProfileID,BQID,ValueInt,ValueText,ValueDate)
-//VALUES ({0},{1},{2},{3},{4})",
+		//INSERT INTO UserProfileBQ (UserProfileID,BQID,ValueInt,ValueText,ValueDate)
+		//VALUES ({0},{1},{2},{3},{4})",
 //				profileID,
 //				bqID,
 //				(valueInt == 0 ? "NULL" : valueInt.ToString()),
@@ -41,47 +41,47 @@ namespace HW.Core.Repositories.Sql
 //			);
 //			Db.exec(query);
 //		}
-//		
+//
 //		public void SaveUserProfile(int userID, int profileComparisonID)
 //		{
 //			string query = string.Format(
 //				@"
-//INSERT INTO UserProfile (UserID,SponsorID,DepartmentID,ProfileComparisonID,Created)
-//VALUES ({0},1,NULL,{1},GETDATE())",
+		//INSERT INTO UserProfile (UserID,SponsorID,DepartmentID,ProfileComparisonID,Created)
+		//VALUES ({0},1,NULL,{1},GETDATE())",
 //				userID,
 //				profileComparisonID
 //			);
 //			Db.exec(query);
 //		}
-//		
+//
 //		public void UpdateProjectRoundUser(int projectRoundUserID, int projectRoundUnitID)
 //		{
 //			string query = string.Format(
 //				@"
-//UPDATE UserProjectRoundUser SET ProjectRoundUnitID = {0}
-//WHERE UserProjectRoundUserID = {1}",
+		//UPDATE UserProjectRoundUser SET ProjectRoundUnitID = {0}
+		//WHERE UserProjectRoundUserID = {1}",
 //				projectRoundUnitID,
 //				projectRoundUserID
 //			);
 //			Db.exec(query);
 //			query = string.Format(
 //				@"
-//UPDATE [eform]..[ProjectRoundUser] SET ProjectRoundUnitID = {0}
-//WHERE ProjectRoundUserID = {1}",
+		//UPDATE [eform]..[ProjectRoundUser] SET ProjectRoundUnitID = {0}
+		//WHERE ProjectRoundUserID = {1}",
 //				projectRoundUnitID,
 //				projectRoundUserID
 //			);
 //			Db.exec(query);
 //			query = string.Format(
 //				@"
-//UPDATE [eform]..[Answer] SET ProjectRoundUnitID = {0}
-//WHERE ProjectRoundUserID = {1}",
+		//UPDATE [eform]..[Answer] SET ProjectRoundUnitID = {0}
+		//WHERE ProjectRoundUserID = {1}",
 //				projectRoundUnitID,
 //				projectRoundUserID
 //			);
 //			Db.exec(query);
 //		}
-//		
+//
 //		public void UpdateUser(int userID, int sponsorID, int departmentID)
 //		{
 //			string query = "UPDATE [User] SET DepartmentID = " + departmentID + ", SponsorID = " + sponsorID + " WHERE UserID = " + userID;
@@ -105,7 +105,7 @@ namespace HW.Core.Repositories.Sql
 //			);
 //			Db.exec(query, "healthWatchSqlConnection");
 //		}
-//		
+//
 //		public void UpdateWithDepartment(string unit, int userID, int sponsorID)
 //		{
 //			string query = string.Format("UPDATE [User] SET DepartmentID = {0} WHERE UserID = {1} AND SponsorID = {2}", unit, userID, sponsorID);
@@ -113,24 +113,24 @@ namespace HW.Core.Repositories.Sql
 //			query = string.Format("UPDATE UserProfile SET DepartmentID = {0} WHERE UserID = {1} AND SponsorID = {2}", unit, userID, sponsorID);
 //			Db.exec(query);
 //		}
-//		
+//
 //		public void Update3(int profileID, int userID)
 //		{
 //			string query = string.Format(
 //				@"
-//UPDATE [User] SET UserProfileID = {0} WHERE UserID = {1}",
+		//UPDATE [User] SET UserProfileID = {0} WHERE UserID = {1}",
 //				profileID,
 //				userID
 //			);
 //			Db.exec(query);
 //		}
-//		
+//
 //		public void Update2(int userID, int sponsorID)
 //		{
 //			string query = string.Format("UPDATE [User] SET DepartmentID = NULL, SponsorID = 1 WHERE UserID = " + userID + " AND SponsorID = " + sponsorID);
 //			Db.exec(query);
 //		}
-//		
+//
 //		public void Update(int userID, int sponsorID)
 //		{
 //			string query = string.Format("UPDATE [User] SET DepartmentID = NULL, SponsorID = 1 WHERE UserID = " + userID + " AND SponsorID = " + sponsorID);
@@ -138,7 +138,7 @@ namespace HW.Core.Repositories.Sql
 //			query = string.Format("UPDATE UserProfile SET DepartmentID = NULL, SponsorID = 1 WHERE UserID = " + userID + " AND SponsorID = " + sponsorID);
 //			Db.exec(query);
 //		}
-//		
+//
 //		public void Update(Department d, int sponsorID, int deleteDepartmentID)
 //		{
 //			string query = string.Format("UPDATE [User] SET DepartmentID = " + (d.Parent == null ? "NULL" : d.Parent.Id.ToString()) + " WHERE SponsorID = " + sponsorID + " AND DepartmentID = " + deleteDepartmentID);
@@ -148,11 +148,42 @@ namespace HW.Core.Repositories.Sql
 //			query = string.Format("UPDATE Department SET ParentDepartmentID = " + (d.Parent == null ? "NULL" : d.Parent.Id.ToString()) + " WHERE SponsorID = " + sponsorID + " AND ParentDepartmentID = " + deleteDepartmentID);
 //			Db.exec(query);
 //		}
-//		
+//
 		public void UpdateEmailFailure(int userID)
 		{
 			string query = "UPDATE [User] SET EmailFailure = GETDATE() WHERE UserID = " + userID;
 			Db.exec(query, "healthWatchSqlConnection");
+		}
+		
+		public void SaveSessionIf(bool condition, UserSession s)
+		{
+			if (condition) {
+				var u = ReadUserSession(s.HostAddress, s.Agent);
+				string query = "";
+				if (u != null) {
+					query = @"
+UPDATE dbo.UserSession SET LangID = @LangID
+WHERE UserHostAddress = @UserHostAddress AND UserAgent = @UserAgent";
+					ExecuteNonQuery(
+						query,
+						"healthWatchSqlConnection",
+						new SqlParameter("@UserHostAddress", s.HostAddress),
+						new SqlParameter("@UserAgent", s.Agent),
+						new SqlParameter("@LangID", s.Lang)
+					);
+				} else {
+					query = @"
+INSERT INTO dbo.UserSession(UserHostAddress, UserAgent, LangID)
+VALUES(@UserHostAddress, @UserAgent, @LangID)";
+					ExecuteNonQuery(
+						query,
+						"healthWatchSqlConnection",
+						new SqlParameter("@UserHostAddress", s.HostAddress),
+						new SqlParameter("@UserAgent", s.Agent),
+						new SqlParameter("@LangID", s.Lang)
+					);
+				}
+			}
 		}
 		
 		public void UpdateLastReminderSent(int userID)
@@ -235,19 +266,19 @@ WHERE u.UserID = {0}",
 //			}
 //			return null;
 //		}
-//		
+//
 //		public void lalala3(int projectRoundUserId, int answerId)
 //		{
 //			Db.exec(string.Format("UPDATE UserSponsorExtendedSurvey SET AnswerID = {0} WHERE AnswerID IS NULL AND ProjectRoundUserID = {1}", answerId, projectRoundUserId));
 //			Db.exec(string.Format("UPDATE Answer SET EndDT = GETDATE() WHERE ProjectRoundUserID = {0} AND AnswerID = {1}", projectRoundUserId, answerId), "eFormSqlConnection");
 //		}
-//		
+//
 //		public void lalala2(int projectRoundUserId, int answerId)
 //		{
 //			Db.exec(string.Format("UPDATE UserSponsorExtendedSurvey SET AnswerID = NULL WHERE ProjectRoundUserID = {0} AND AnswerID = {1}", projectRoundUserId, answerId));
 //			Db.exec(string.Format("UPDATE Answer SET EndDT = NULL WHERE ProjectRoundUserID = {0} AND AnswerID = {1}", projectRoundUserId, answerId), "eFormSqlConnection");
 //		}
-//		
+//
 		public void lalala(int sponsorInviteID, int sponsorID, string email, int departmentID)
 		{
 			string query = string.Format(
@@ -321,6 +352,39 @@ WHERE up.UserID = {1}",
 				}
 			}
 			return null;
+		}
+		
+		public UserSession ReadUserSession(string hostAddress, string agent)
+		{
+			string query = string.Format(
+				@"
+SELECT UserSessionID,
+	UserHostAddress,
+	UserAgent,
+	LangID
+FROM dbo.UserSession
+WHERE UserHostAddress = @UserHostAddress AND UserAgent = @UserAgent",
+				hostAddress,
+				agent
+			);
+			UserSession u = null;
+//			int lang = 2;
+			using (SqlDataReader rs = ExecuteReader(
+				query, "healthWatchSqlConnection",
+				new SqlParameter("@UserHostAddress", hostAddress),
+				new SqlParameter("@UserAgent", agent))) {
+				if (rs.Read()) {
+					u = new UserSession {
+						Id = GetInt32(rs, 0),
+						HostAddress = GetString(rs, 1),
+						Agent = GetString(rs, 2),
+						Lang = GetInt32(rs, 3, 2)
+					};
+//					lang = GetInt32(rs, 3);
+				}
+			}
+			return u;
+//			return lang;
 		}
 		
 		public User ReadById(int userID)

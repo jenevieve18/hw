@@ -13,16 +13,22 @@ namespace HW.Grp
 	{
 		SqlReportRepository reportRepository = new SqlReportRepository();
 		SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
-		protected int lid;
+//		protected int lid;
 		protected IList<IReportPart> reportParts;
 		protected IList<PlotTypeLanguage> plotTypes;
 		protected bool forSingleSeries;
+		SqlUserRepository userRepository = new SqlUserRepository();
+		protected int lid = Language.ENGLISH;
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			HtmlHelper.RedirectIf(Session["SuperAdminID"] == null, "default.aspx", true);
 
-			lid = ConvertHelper.ToInt32(Session["lid"], 2);
+//			lid = ConvertHelper.ToInt32(Session["lid"], 2);
+			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+			if (userSession != null) {
+				lid = userSession.Lang;
+			}
 
 			plotTypes = plotRepository.FindByLanguage(lid);
 

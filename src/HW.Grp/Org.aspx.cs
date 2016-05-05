@@ -34,10 +34,12 @@ namespace HW.Grp
 		string hiddenBqWhere = "";
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
-		protected int lid;
+//		protected int lid;
 		SponsorAdmin sponsorAdmin;
 		int sponsorAdminID;
 		ISponsor sponsor;
+		SqlUserRepository userRepository = new SqlUserRepository();
+		protected int lid = Language.ENGLISH;
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -50,7 +52,11 @@ namespace HW.Grp
 
 			HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Organization), "default.aspx", true);
 
-			lid = ConvertHelper.ToInt32(Session["lid"], 2);
+//			lid = ConvertHelper.ToInt32(Session["lid"], 2);
+			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+			if (userSession != null) {
+				lid = userSession.Lang;
+			}
 			
 			ReminderHelper.SetLanguageID(lid);
 			LanguageFactory.SetCurrentCulture(lid);

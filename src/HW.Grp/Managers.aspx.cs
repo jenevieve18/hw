@@ -16,7 +16,7 @@ namespace HW.Grp
 	public partial class Managers : System.Web.UI.Page
 	{
 		protected IList<SponsorAdmin> sponsorAdmins;
-		protected int lid;
+//		protected int lid;
 		protected int sortFirstName;
         protected int sortLastName;
 //		ManagerService service = new ManagerService(
@@ -26,6 +26,8 @@ namespace HW.Grp
 //		);
 		ManagerService service;
         string sort;
+        SqlUserRepository userRepository = new SqlUserRepository();
+		protected int lid = Language.ENGLISH;
 		
 		public Managers() : this(new ManagerService(new SqlManagerFunctionRepository(), new SqlSponsorRepository(), new SqlSponsorAdminRepository()))
 		{
@@ -64,7 +66,11 @@ namespace HW.Grp
 			
 			HtmlHelper.RedirectIf(!HasAccess(sponsorAdminID, ManagerFunction.Managers), "default.aspx", true);
 			
-			lid = ConvertHelper.ToInt32(Session["lid"], 2);
+//			lid = ConvertHelper.ToInt32(Session["lid"], 2);
+			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+			if (userSession != null) {
+				lid = userSession.Lang;
+			}
             
             sort = Request.QueryString["Sort"];
 			sortFirstName = ConvertHelper.ToInt32(Request.QueryString["SortFirstName"]);

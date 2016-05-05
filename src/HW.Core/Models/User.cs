@@ -20,6 +20,13 @@ namespace HW.Core.Models
 		public IList<SponsorProject> SponsorProjects { get; set; }
 	}
 	
+	public class UserSession : BaseModel
+	{
+		public string HostAddress { get; set; }
+		public string Agent { get; set; }
+		public int Lang { get; set; }
+	}
+	
 	public class UserMeasure : BaseModel, IAnswer
 	{
 		public User User { get; set; }
