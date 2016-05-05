@@ -31,8 +31,10 @@ namespace HW.Grp
 		protected int sponsorID;
 		protected int sponsorAdminID;
 //		int AX = 0;
-		protected int lid;
+//		protected int lid;
 		protected int SORTX;
+		SqlUserRepository userRepository = new SqlUserRepository();
+		protected int lid = Language.ENGLISH;
 		
 //		public Exercise() : this(new SqlSponsorRepository(), new SqlExerciseRepository())
 //		{
@@ -95,11 +97,17 @@ namespace HW.Grp
 			SaveAdminSession(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Exercises, DateTime.Now);
 
 			sortQS = "&SORT=" + SORTX;
+			
+			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+			if (userSession != null) {
+				lid = userSession.Lang;
+			}
 
 			Index(
 				ConvertHelper.ToInt32(Request.QueryString["EAID"]),
 				ConvertHelper.ToInt32(Request.QueryString["ECID"]),
-				ConvertHelper.ToInt32(Session["lid"], 2),
+//				ConvertHelper.ToInt32(Session["lid"], 2),
+				lid,
 				ConvertHelper.ToInt32(Request.QueryString["SORT"])
 			);
 		}
