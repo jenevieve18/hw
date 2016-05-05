@@ -280,6 +280,7 @@
     <Content Include="ReportImage2.aspx" />
     <Content Include="Settings.aspx" />
     <Content Include="sql.aspx" />
+    <Content Include="sql2.aspx" />
     <Content Include="Stats.aspx" />
     <Content Include="SuperAdmin.aspx" />
     <Content Include="SuperExport.aspx" />
@@ -479,6 +480,13 @@
     </Compile>
     <Compile Include="sql.aspx.designer.cs">
       <DependentUpon>sql.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="sql2.aspx.cs">
+      <DependentUpon>sql2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sql2.aspx.designer.cs">
+      <DependentUpon>sql2.aspx</DependentUpon>
     </Compile>
     <Compile Include="Stats.aspx.cs">
       <DependentUpon>Stats.aspx</DependentUpon>
