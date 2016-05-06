@@ -17,7 +17,8 @@ namespace HW.Grp
 		protected int sponsorID;
 		protected int sponsorAdminID;
 		SqlUserRepository userRepository = new SqlUserRepository();
-		protected int lid = Language.ENGLISH;
+//		protected int lid = Language.ENGLISH;
+		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{

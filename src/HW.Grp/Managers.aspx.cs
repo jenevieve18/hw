@@ -27,7 +27,8 @@ namespace HW.Grp
 		ManagerService service;
         string sort;
         SqlUserRepository userRepository = new SqlUserRepository();
-		protected int lid = Language.ENGLISH;
+//		protected int lid = Language.ENGLISH;
+        protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
 		public Managers() : this(new ManagerService(new SqlManagerFunctionRepository(), new SqlSponsorRepository(), new SqlSponsorAdminRepository()))
 		{

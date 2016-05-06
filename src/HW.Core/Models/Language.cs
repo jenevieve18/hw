@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Globalization;
 using System.Threading;
+using System.Web;
 
 namespace HW.Core.Models
 {
 	public class Language : BaseModel
 	{
+		public const int SWEDISH = 1;
 		public const int ENGLISH = 2;
 		
 		public virtual string Name { get; set; }
@@ -21,6 +23,28 @@ namespace HW.Core.Models
 		public static string GetMeanText(int lid)
 		{
 			return lid == 1 ? "medelvärde" : "mean value";
+		}
+		
+		public static int GetLanguageID(HttpRequest request)
+		{
+			var c = ResolveCulture(request);
+			return c.Name == "sv-SE" ? Language.SWEDISH : Language.ENGLISH;
+		}
+		
+		public static CultureInfo ResolveCulture(HttpRequest request)
+		{
+			string[] languages = request.UserLanguages;
+			
+			if (languages == null || languages.Length == 0) {
+				return null;
+			}
+			
+			try {
+				string language = languages[0].ToLowerInvariant().Trim();
+				return CultureInfo.CreateSpecificCulture(language);
+			} catch (ArgumentException) {
+				return null;
+			}
 		}
 		
 //		public static string GetGroupExercise(int lid)

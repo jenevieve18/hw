@@ -26,7 +26,8 @@ namespace HW.Grp
 		bool loginWithSkey = false;
 		ISponsor sponsor;
 		SqlUserRepository userRepository = new SqlUserRepository();
-		protected int lid = Language.ENGLISH;
+//		protected int lid = Language.ENGLISH;
+		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
 //		protected int lid;
 		

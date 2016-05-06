@@ -19,7 +19,8 @@ namespace HW.Grp
 		HW.Core.Models.SuperAdmin superAdmin;
 //		protected int lid;
 		SqlUserRepository userRepository = new SqlUserRepository();
-		protected int lid = Language.ENGLISH;
+//		protected int lid = Language.ENGLISH;
+		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{

@@ -15,7 +15,8 @@ namespace HW.Grp
 		SqlSponsorAdminRepository r = new SqlSponsorAdminRepository();
 //		protected int lid;
 		SqlUserRepository userRepository = new SqlUserRepository();
-		protected int lid = Language.ENGLISH;
+//		protected int lid = Language.ENGLISH;
+		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
 		bool HasUniqueKey {
 			get { return UniqueKey != null && UniqueKey != ""; }

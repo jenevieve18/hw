@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using HW.Core;
 using HW.Core.Helpers;
 using HW.Core.Models;
@@ -20,7 +21,8 @@ namespace HW.Grp
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		SqlManagerFunctionRepository managerFunctionRepository = new SqlManagerFunctionRepository();
 		SqlUserRepository userRepository = new SqlUserRepository();
-		protected int lid = Language.ENGLISH;
+//		protected int lid = Language.ENGLISH;
+		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 
 		protected void Page_Load(object sender, EventArgs e)
 		{

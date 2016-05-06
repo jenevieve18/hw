@@ -22,7 +22,8 @@ namespace HW.Grp
 		INewsRepository newsRepository;
 		SqlUserRepository userRepository = new SqlUserRepository();
 		protected IList<AdminNews> adminNews;
-		protected int lid = Language.ENGLISH;
+//		protected int lid = Language.ENGLISH;
+		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
 		public Default() : this(new SqlSponsorRepository(), new SqlNewsRepository())
 		{

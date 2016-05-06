@@ -34,7 +34,8 @@ namespace HW.Grp
 //		protected int lid;
 		protected int SORTX;
 		SqlUserRepository userRepository = new SqlUserRepository();
-		protected int lid = Language.ENGLISH;
+//		protected int lid = Language.ENGLISH;
+		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
 //		public Exercise() : this(new SqlSponsorRepository(), new SqlExerciseRepository())
 //		{

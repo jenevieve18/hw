@@ -27,7 +27,8 @@ namespace HW.Grp
 		SqlSponsorAdminRepository sponsorAdminRepository = new SqlSponsorAdminRepository();
 		
 		SqlUserRepository userRepository = new SqlUserRepository();
-		protected int lid = Language.ENGLISH;
+//		protected int lid = Language.ENGLISH;
+		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 
 		bool HasSAID {
 			get { return Request.QueryString["SAID"] != null; }
