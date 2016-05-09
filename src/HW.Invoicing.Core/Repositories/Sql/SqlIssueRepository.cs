@@ -24,13 +24,23 @@ WHERE Id = @Id";
 		
 		public override void Delete(int id)
 		{
+//			string query = @"
+//DELETE FROM Issue
+//WHERE Id = @Id";
+//			ExecuteNonQuery(
+//				query,
+//				"invoicing",
+//				new SqlParameter("@Id", id)
+//			);
+
 			string query = @"
-DELETE FROM Issue
+UPDATE Issue SET Status = @Status
 WHERE Id = @Id";
 			ExecuteNonQuery(
 				query,
 				"invoicing",
-				new SqlParameter("@Id", id)
+				new SqlParameter("@Id", id),
+				new SqlParameter("@Status", Issue.DELETED)
 			);
 		}
 		
@@ -91,9 +101,10 @@ WHERE Id = @Id";
 			string query = string.Format(
 				@"
 SELECT COUNT(*)
-FROM Issue"
+FROM Issue
+WHERE Status != @Status"
 			);
-			int count = (int)ExecuteScalar(query, "invoicing");
+			int count = (int)ExecuteScalar(query, "invoicing", new SqlParameter("@Status", Issue.DELETED));
 			return count;
 		}
 		
@@ -103,10 +114,15 @@ FROM Issue"
 				@"
 SELECT Id, Title, Description, Status, MilestoneId, ISNULL(Priority, 3)
 FROM Issue
-WHERE Id = @Id"
+WHERE Id = @Id
+AND Status = @Status"
 			);
 			Issue issue = null;
-			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", id))) {
+			using (SqlDataReader rs = ExecuteReader(
+				query, 
+				"invoicing", 
+				new SqlParameter("@Id", id), 
+				new SqlParameter("@Status", Issue.DELETED))) {
 				while (rs.Read()) {
 					issue = new Issue {
 						Id = GetInt32(rs, 0),
@@ -129,9 +145,9 @@ WHERE Id = @Id"
 			string query = string.Format(
 				@"
 SELECT c.Comments,
-c.Date,
-c.UserId,
-u.Name
+	c.Date,
+	c.UserId,
+	u.Name
 FROM IssueComment c
 INNER JOIN [User] u ON u.Id = c.UserId
 WHERE c.IssueId = @Id"
@@ -165,10 +181,11 @@ SELECT i.Id,
     ISNULL(i.Priority, 3) Priority
 FROM Issue i
 INNER JOIN Milestone m ON m.Id = ISNULL(i.MilestoneId, 1)
+WHERE i.Status != @Status
 ORDER BY i.Status, Priority, i.CreatedAt DESC"
 			);
 			var issues = new List<Issue>();
-			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {
+			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Status", Issue.DELETED))) {
 				while (rs.Read()) {
 					issues.Add(
 						new Issue {
@@ -205,20 +222,20 @@ WITH Results_CTE AS (
         ROW_NUMBER() OVER (ORDER BY i.Id DESC) AS RowNum
     FROM Issue i
     INNER JOIN Milestone m ON m.Id = i.MilestoneId
+    WHERE i.Status != @Deleted
 )
 SELECT *
 FROM Results_CTE
 WHERE RowNum >= @Offset
-AND RowNum < @Offset + @Limit",
-				new SqlParameter("@Offset", offset),
-				new SqlParameter("@Limit", limit)
+AND RowNum < @Offset + @Limit"
 			);
 			var issues = new List<Issue>();
 			using (SqlDataReader rs = ExecuteReader(
 				query,
 				"invoicing",
 				new SqlParameter("@Offset", offset),
-				new SqlParameter("@Limit", limit))) {
+				new SqlParameter("@Limit", limit),
+				new SqlParameter("@Deleted", Issue.DELETED))) {
 				while (rs.Read()) {
 					issues.Add(
 						new Issue {
