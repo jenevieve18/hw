@@ -51,19 +51,19 @@ VALUES(@Title, @Description, @CreatedAt, @Status, @MilestoneId, @Priority)";
 			);
 		}
 
-        public void SaveComment(IssueComment t, int issueId, int userId)
-        {
-            string query = @"
+		public void SaveComment(IssueComment t, int issueId, int userId)
+		{
+			string query = @"
 INSERT INTO IssueComment(Comments, IssueId, UserId, Date)
 VALUES(@Comments, @IssueId, @UserId, GETDATE())";
-            ExecuteNonQuery(
-                query,
-                "invoicing",
-                new SqlParameter("@Comments", t.Comments),
-                new SqlParameter("@IssueId", issueId),
-                new SqlParameter("@UserId", userId)
-            );
-        }
+			ExecuteNonQuery(
+				query,
+				"invoicing",
+				new SqlParameter("@Comments", t.Comments),
+				new SqlParameter("@IssueId", issueId),
+				new SqlParameter("@UserId", userId)
+			);
+		}
 		
 		public override void Update(Issue t, int id)
 		{
@@ -84,6 +84,17 @@ WHERE Id = @Id";
 				new SqlParameter("@MilestoneId", t.Milestone.Id),
 				new SqlParameter("@Priority", t.Priority.Id)
 			);
+		}
+		
+		public int CountAllIssues()
+		{
+			string query = string.Format(
+				@"
+SELECT COUNT(*)
+FROM Issue"
+			);
+			int count = (int)ExecuteScalar(query, "invoicing");
+			return count;
 		}
 		
 		public override Issue Read(int id)
@@ -128,14 +139,14 @@ WHERE c.IssueId = @Id"
 			var comments = new List<IssueComment>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", id))) {
 				while (rs.Read()) {
-                    comments.Add(
-                        new IssueComment
-                        {
-                            Comments = GetString(rs, 0),
-                            Date = GetDateTime(rs, 1),
-                            User = new User { Id = GetInt32(rs, 2), Name = GetString(rs, 3) }
-                        }
-                    );
+					comments.Add(
+						new IssueComment
+						{
+							Comments = GetString(rs, 0),
+							Date = GetDateTime(rs, 1),
+							User = new User { Id = GetInt32(rs, 2), Name = GetString(rs, 3) }
+						}
+					);
 				}
 			}
 			return comments;
@@ -158,6 +169,56 @@ ORDER BY i.Status, Priority, i.CreatedAt DESC"
 			);
 			var issues = new List<Issue>();
 			using (SqlDataReader rs = ExecuteReader(query, "invoicing")) {
+				while (rs.Read()) {
+					issues.Add(
+						new Issue {
+							Id = GetInt32(rs, 0),
+							Title = GetString(rs, 1),
+							Description = GetString(rs, 2),
+							Status = GetInt32(rs, 3),
+							Milestone = new Milestone {
+								Id = GetInt32(rs, 4),
+								Name = GetString(rs, 5)
+							},
+							Priority = new Priority {
+								Id = GetInt32(rs, 6)
+							}
+						}
+					);
+				}
+			}
+			return issues;
+		}
+		
+		public IList<Issue> FindByOffset(int offset, int limit)
+		{
+			string query = string.Format(
+				@"
+WITH Results_CTE AS (
+    SELECT i.Id,
+		i.Title,
+		i.Description,
+		i.Status,
+	    i.MilestoneId,
+	    m.Name,
+	    ISNULL(i.Priority, 3) Priority,
+        ROW_NUMBER() OVER (ORDER BY i.Id DESC) AS RowNum
+    FROM Issue i
+    INNER JOIN Milestone m ON m.Id = i.MilestoneId
+)
+SELECT *
+FROM Results_CTE
+WHERE RowNum >= @Offset
+AND RowNum < @Offset + @Limit",
+				new SqlParameter("@Offset", offset),
+				new SqlParameter("@Limit", limit)
+			);
+			var issues = new List<Issue>();
+			using (SqlDataReader rs = ExecuteReader(
+				query,
+				"invoicing",
+				new SqlParameter("@Offset", offset),
+				new SqlParameter("@Limit", limit))) {
 				while (rs.Read()) {
 					issues.Add(
 						new Issue {

@@ -54,4 +54,22 @@
     <% } %>
 </table>
 
+<nav>
+  <% if (pager.EndPage > 1) { %>
+  <ul class="pagination">
+    <% if (pager.CurrentPage > 1) { %>
+        <li><%= HtmlHelper.Anchor("&laquo;", "issues.aspx") %></li>
+        <li><%= HtmlHelper.Anchor("&lt;", "issues.aspx?page=" + (pager.CurrentPage - 1).ToString()) %></li>
+    <% } %>
+    <% for (var page = pager.StartPage; page <= pager.EndPage; page++) { %>
+        <li class="<%= page == pager.CurrentPage ? "active" : "" %>"><%= HtmlHelper.Anchor(page.ToString(), "issues.aspx?page=" + page.ToString()) %></li>
+    <% } %>
+    <% if (pager.CurrentPage < pager.TotalPages) { %>
+        <li><%= HtmlHelper.Anchor("&gt;", "issues.aspx" + (pager.CurrentPage + 1).ToString())%></li>
+        <li><%= HtmlHelper.Anchor("&raquo;", "issues.aspx?page=" + (pager.TotalPages).ToString())%></li>
+    <% } %>
+  </ul>
+  <% } %>
+</nav>
+
 </asp:Content>

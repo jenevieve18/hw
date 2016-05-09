@@ -14,12 +14,17 @@ namespace HW.Invoicing
     {
     	SqlIssueRepository r = new SqlIssueRepository();
     	protected IList<Issue> issues;
+    	protected Pager pager;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
 
-        	issues = r.FindAll();
+            int page = ConvertHelper.ToInt32(Request.QueryString["page"], 1);
+            int pageSize = 25;
+            int offset = (page - 1) * pageSize + 1;
+        	issues = r.FindByOffset(offset, pageSize);
+        	pager = new Pager(r.CountAllIssues(), page, pageSize);
         }
     }
 }
