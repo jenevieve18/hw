@@ -219,10 +219,12 @@ WITH Results_CTE AS (
 	    i.MilestoneId,
 	    m.Name,
 	    ISNULL(i.Priority, 3) Priority,
-        ROW_NUMBER() OVER (ORDER BY i.Id DESC) AS RowNum
+        --ROW_NUMBER() OVER (ORDER BY i.Id DESC) AS RowNum
+        ROW_NUMBER() OVER (ORDER BY i.Status, Priority, i.CreatedAt DESC) AS RowNum
     FROM Issue i
     INNER JOIN Milestone m ON m.Id = i.MilestoneId
     WHERE i.Status != @Deleted
+	--ORDER BY i.Status, Priority, i.CreatedAt DESC
 )
 SELECT *
 FROM Results_CTE
