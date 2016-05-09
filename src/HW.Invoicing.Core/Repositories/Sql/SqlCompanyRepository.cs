@@ -179,7 +179,8 @@ SELECT Id,
     NULL, --InvoiceEmailCC,
     InvoiceEmailSubject,
     InvoiceEmailText,
-    InvoiceLogoPercentage
+    InvoiceLogoPercentage,
+    SubscriptionText
 FROM Company
 WHERE Id = @Id";
 			Company c = null;
@@ -214,7 +215,8 @@ WHERE Id = @Id";
                         InvoiceEmail = GetString(rs, 25),
                         InvoiceEmailSubject = GetString(rs, 27),
                         InvoiceEmailText = GetString(rs, 28),
-                        InvoiceLogoPercentage = GetDouble(rs, 29, 100)
+                        InvoiceLogoPercentage = GetDouble(rs, 29, 100),
+                        SubscriptionText = GetString(rs, 30, "")
 					};
 				}
 			}
@@ -394,6 +396,18 @@ UPDATE Company SET Terms = @Terms WHERE Id = @Id";
 				query,
 				"invoicing",
 				new SqlParameter("@Terms", terms),
+				new SqlParameter("@Id", id)
+			);
+		}
+
+		public void SaveSubscriptionText(string subscriptionText, int id)
+		{
+			string query = @"
+UPDATE Company SET SubscriptionText = @SubscriptionText WHERE Id = @Id";
+			ExecuteNonQuery(
+				query,
+				"invoicing",
+				new SqlParameter("@SubscriptionText", subscriptionText),
 				new SqlParameter("@Id", id)
 			);
 		}

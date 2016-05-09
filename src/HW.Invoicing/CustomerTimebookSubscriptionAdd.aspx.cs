@@ -25,12 +25,16 @@ namespace HW.Invoicing
         protected decimal quantity;
         protected string generatedComments;
         int companyId;
+        SqlCompanyRepository cr = new SqlCompanyRepository();
 
         protected void Page_Load(object sender, EventArgs e)
         {
             HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
 
             companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
+            
+
+            var company = cr.Read(companyId);
 
             var now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             startDate = now;
@@ -39,7 +43,8 @@ namespace HW.Invoicing
 
             customers = r.FindActiveSubscribersByCompany(companyId, startDate, endDate);
                         
-            string text = "Subscription fee for HealthWatch.se";
+//            string text = "Subscription fee for HealthWatch.se";
+string text = StrHelper.Str(company.SubscriptionText == "", "Subscription fee for HealthWatch.se", company.SubscriptionText);
             generatedComments = text + " " + startDate.ToString("yyyy.MM.dd") + " - " + endDate.ToString("yyyy.MM.dd");
 
             if (!IsPostBack)
@@ -66,6 +71,9 @@ namespace HW.Invoicing
         {
             //startDate = ConvertHelper.ToDateTime(textBoxStartDate.Text);
             //endDate = ConvertHelper.ToDateTime(textBoxEndDate.Text);
+            
+            cr.SaveSubscriptionText(textBoxText.Text, companyId);
+            
             customers = r.FindActiveSubscribersByCompany(companyId, startDate, endDate);
 
             var ids = Request.Form.GetValues("subscription-id");

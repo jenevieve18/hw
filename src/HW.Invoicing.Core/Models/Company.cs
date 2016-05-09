@@ -35,6 +35,7 @@ namespace HW.Invoicing.Core.Models
 		public string InvoiceEmail { get; set; }
 		public string InvoiceEmailSubject { get; set; }
 		public string InvoiceEmailText { get; set; }
+		public string SubscriptionText { get; set; }
 		
 		public IList<Link> Links { get; set; }
 		
