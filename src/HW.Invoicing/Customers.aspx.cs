@@ -20,6 +20,7 @@ namespace HW.Invoicing
 		CustomerService s = new CustomerService(new SqlCustomerRepository(), new SqlItemRepository());
 		protected Company company;
 		SqlCompanyRepository cr = new SqlCompanyRepository();
+        protected string selectedTab;
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -27,6 +28,7 @@ namespace HW.Invoicing
 
 			int companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
 			company = cr.Read(companyId);
+            selectedTab = Request.QueryString["SelectedTab"] == null ? "subscribed" : Request.QueryString["SelectedTab"];
 
 			subscribers = s.FindSubscribersByCompany(companyId);
 			nonSubscribers = s.FindNonSubscribersByCompany(companyId);

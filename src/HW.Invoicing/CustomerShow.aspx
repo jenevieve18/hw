@@ -349,7 +349,11 @@
 
 <h3><asp:Label ID="labelCustomer" runat="server" Text=""></asp:Label></h3>
 
+<% if (customer.HasSubscription) { %>
 <p><%= HtmlHelper.Anchor("<< Back to customer listing", "customers.aspx") %></p>
+<% } else { %>
+<p><%= HtmlHelper.Anchor("<< Back to customer listing", "customers.aspx?SelectedTab=nonsubscribers")%></p>
+<% } %>
 
 <% if (message != null && message != "") { %>
     <%= message %>

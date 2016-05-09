@@ -1752,7 +1752,8 @@ SELECT c.Id,
     u.Name,
     i.Price,
     c.Status,
-    c.ContactPersonId
+    c.ContactPersonId,
+    c.HasSubscription
 FROM Customer c
 INNER JOIN Item i on i.Id = c.SubscriptionItemId
 INNER JOIN Unit u on u.Id = i.UnitId
@@ -1788,7 +1789,8 @@ c.Name"
 								Price = GetDecimal(rs, 10)
 							},
 							Status = GetInt32(rs, 11),
-//							ContactPerson = new CustomerContact { Id = GetInt32(rs, 12) }
+//							ContactPerson = new CustomerContact { Id = GetInt32(rs, 12) },
+							HasSubscription = GetInt32(rs, 13) == 1
 						}
 					);
 				}

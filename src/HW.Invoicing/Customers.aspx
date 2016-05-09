@@ -15,15 +15,14 @@
 
 <div class="tabbable" id="tabs-327908">
 	<ul class="nav nav-tabs">
-		<li class="active">
-			<a href="#panel-200403" data-toggle="tab">Customers</a>
-		</li>
-		<li>
-			<a href="#panel-188210" data-toggle="tab">Ex-Customers</a>
-		</li>
+		<%--<li class="active"><a href="#nonsubscribers" data-toggle="tab">Customers</a></li>
+		<li><a href="#excustomers" data-toggle="tab">Ex-Customers</a></li>--%>
+	    <li <%= selectedTab == "nonsubscribers" ? "class='active'" : "" %>><a href="#nonsubscribers" data-toggle="tab">Customers</a></li>
+	    <li <%= selectedTab == "excustomers" ? "class='active'" : "" %>><a href="#excustomers" data-toggle="tab">Ex-Customers</a></li>
 	</ul>
 	<div class="tab-content">
-		<div class="tab-pane active" id="panel-200403">
+		<%--<div class="tab-pane active" id="nonsubscribers">--%>
+		<div class="tab-pane <%= selectedTab == "nonsubscribers" ? "active" : "" %>" id="nonsubscribers">
             <p></p>
             <div class="alert alert-info">
 	            <strong>Customer</strong> is a person or organization that buys goods or services from a store or business.
@@ -50,26 +49,16 @@
                     <% } else { %>
                         <tr>
                             <td><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></td>
-                            <%--<td><%= c.ContactPerson != null ? c.ContactPerson.ToString() : "" %></td>
-                            <td><%= c.ContactPerson != null ? c.ContactPerson.Phone : "" %></td>
-                            <td><%= c.ContactPerson != null ? c.ContactPerson.Email : "" %></td>--%>
                             <td><%= c.PrimaryContact != null ? c.PrimaryContact.ToString() : "" %></td>
                             <td><%= c.PrimaryContact != null ? c.PrimaryContact.Phone : "" %></td>
                             <td><%= c.PrimaryContact != null ? c.PrimaryContact.Email : "" %></td>
-                            <%--<td>
-                                <% if (c.FirstPrimaryContact != null) { %>
-                                    <%= c.FirstPrimaryContact.Contact %>
-                                <% } %>
-                            </td>
-                            <td><%= c.Phone %></td>
-                            <td><%= c.Email %></td>--%>
-
                         </tr>
                     <% } %>
                 <% } %>
             </table>
 		</div>
-		<div class="tab-pane" id="panel-188210">
+		<%--<div class="tab-pane" id="excustomers">--%>
+		<div class="tab-pane <%= selectedTab == "excustomers" ? "active" : "" %>" id="excustomers">
 			<p></p>
             <div class="alert alert-info">
 	            <strong>Ex-customers</strong> are customers that have been deleted.
@@ -84,16 +73,6 @@
                 <% foreach (var c in deletedCustomers) { %>
                     <tr>
                         <td><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></td>
-                        <%--<td>
-                            <% if (c.FirstPrimaryContact != null) { %>
-                                <%= c.FirstPrimaryContact.Contact %>
-                            <% } %>
-                        </td>
-                        <td><%= c.Phone %></td>
-                        <td><%= c.Email %></td>--%>
-                        <%--<td><%= c.ContactPerson != null ? c.ContactPerson.ToString() : "" %></td>
-                        <td><%= c.ContactPerson != null ? c.ContactPerson.Phone : "" %></td>
-                        <td><%= c.ContactPerson != null ? c.ContactPerson.Email : "" %></td>--%>
                         <td><%= c.PrimaryContact != null ? c.PrimaryContact.ToString() : "" %></td>
                         <td><%= c.PrimaryContact != null ? c.PrimaryContact.Phone : "" %></td>
                         <td><%= c.PrimaryContact != null ? c.PrimaryContact.Email : "" %></td>
@@ -108,18 +87,16 @@
 
 <div class="tabbable" id="tabs-789614">
 	<ul class="nav nav-tabs">
-		<li class="active">
-			<a href="#panel-842795" data-toggle="tab">Subscribed</a>
-		</li>
-		<li>
-			<a href="#panel-697427" data-toggle="tab">Non-subscribers</a>
-		</li>
-        <li>
-			<a href="#panel-221812" data-toggle="tab">Ex-Customers</a>
-		</li>
+		<%--<li class="active"><a href="#subscribed" data-toggle="tab">Subscribed</a></li>
+		<li><a href="#nonsubscribers" data-toggle="tab">Non-subscribers</a></li>
+        <li><a href="#excustomers" data-toggle="tab">Ex-Customers</a></li>--%>
+	    <li <%= selectedTab == "subscribed" ? "class='active'" : "" %>><a href="#subscribed" data-toggle="tab">Subscribed</a></li>
+        <li <%= selectedTab == "nonsubscribers" ? "class='active'" : "" %>><a href="#nonsubscribers" data-toggle="tab">Non-subscribers</a></li>
+        <li <%= selectedTab == "excustomers" ? "class='active'" : "" %>><a href="#excustomers" data-toggle="tab">Ex-Customers</a></li>
 	</ul>
 	<div class="tab-content">
-		<div class="tab-pane active" id="panel-842795">
+		<%--<div class="tab-pane active" id="subscribed">--%>
+		<div class="tab-pane <%= selectedTab == "subscribed" ? "active" : "" %>" id="subscribed">
 			<p></p>
             <div class="alert alert-info">
 	            <strong>Subscribed customers</strong> are customers that sign up for recurring, automatic billing scenarios (this means repeat purchases are inherit in their definition, or at least more likely).
@@ -146,16 +123,6 @@
                     <% } else { %>
                         <tr>
                             <td><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></td>
-                            <%--<td>
-                                <% if (c.FirstPrimaryContact != null) { %>
-                                    <%= c.FirstPrimaryContact.Contact %>
-                                <% } %>
-                            </td>
-                            <td><%= c.Phone %></td>
-                            <td><%= c.Email %></td>--%>
-                            <%--<td><%= c.ContactPerson != null ? c.ContactPerson.ToString() : "" %></td>
-                            <td><%= c.ContactPerson != null ? c.ContactPerson.Phone : "" %></td>
-                            <td><%= c.ContactPerson != null ? c.ContactPerson.Email : "" %></td>--%>
                             <td><%= c.PrimaryContact != null ? c.PrimaryContact.ToString() : "" %></td>
                             <td><%= c.PrimaryContact != null ? c.PrimaryContact.Phone : "" %></td>
                             <td><%= c.PrimaryContact != null ? c.PrimaryContact.Email : "" %></td>
@@ -164,7 +131,8 @@
                 <% } %>
             </table>
 		</div>
-		<div class="tab-pane" id="panel-697427">
+		<%--<div class="tab-pane" id="nonsubscribers">--%>
+		<div class="tab-pane <%= selectedTab == "nonsubscribers" ? "active" : "" %>" id="nonsubscribers">
 			<p></p>
             <div class="alert alert-info">
 	            <strong>Non-subscribers</strong> are single-purchase customers.
@@ -191,16 +159,6 @@
                     <% } else { %>
                         <tr>
                             <td><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></td>
-                            <%--<td>
-                                <% if (c.FirstPrimaryContact != null) { %>
-                                    <%= c.FirstPrimaryContact.Contact %>
-                                <% } %>
-                            </td>
-                            <td><%= c.Phone %></td>
-                            <td><%= c.Email %></td>--%>
-                            <%--<td><%= c.ContactPerson != null ? c.ContactPerson.ToString() : "" %></td>
-                            <td><%= c.ContactPerson != null ? c.ContactPerson.Phone : "" %></td>
-                            <td><%= c.ContactPerson != null ? c.ContactPerson.Email : "" %></td>--%>
                             <td><%= c.PrimaryContact != null ? c.PrimaryContact.ToString() : "" %></td>
                             <td><%= c.PrimaryContact != null ? c.PrimaryContact.Phone : "" %></td>
                             <td><%= c.PrimaryContact != null ? c.PrimaryContact.Email : "" %></td>
@@ -209,7 +167,8 @@
                 <% } %>
             </table>
 		</div>
-        <div class="tab-pane" id="panel-221812">
+        <%--<div class="tab-pane" id="excustomers">--%>
+		<div class="tab-pane <%= selectedTab == "excustomers" ? "active" : "" %>" id="excustomers">
 			<p></p>
             <div class="alert alert-info">
 	            <strong>Ex-customers</strong> are customers that have been deleted.
@@ -224,16 +183,6 @@
                 <% foreach (var c in deletedCustomers) { %>
                     <tr>
                         <td><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></td>
-                        <%--<td>
-                            <% if (c.FirstPrimaryContact != null) { %>
-                                <%= c.FirstPrimaryContact.Contact %>
-                            <% } %>
-                        </td>
-                        <td><%= c.Phone %></td>
-                        <td><%= c.Email %></td>--%>
-                        <%--<td><%= c.ContactPerson != null ? c.ContactPerson.ToString() : "" %></td>
-                        <td><%= c.ContactPerson != null ? c.ContactPerson.Phone : "" %></td>
-                        <td><%= c.ContactPerson != null ? c.ContactPerson.Email : "" %></td>--%>
                         <td><%= c.PrimaryContact != null ? c.PrimaryContact.ToString() : "" %></td>
                         <td><%= c.PrimaryContact != null ? c.PrimaryContact.Phone : "" %></td>
                         <td><%= c.PrimaryContact != null ? c.PrimaryContact.Email : "" %></td>
