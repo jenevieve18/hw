@@ -75,9 +75,9 @@ namespace HW.Grp
 		{
 			Response.ContentType = "image/gif";
 
-			ExtendedGraph g = null;
+			ExtendedGraph graph = null;
 
-			int gb = (Request.QueryString["GB"] != null ? Convert.ToInt32(Request.QueryString["GB"].ToString()) : 0);
+			int groupBy = (Request.QueryString["GB"] != null ? Convert.ToInt32(Request.QueryString["GB"].ToString()) : 0);
 //			bool stdev = (Request.QueryString["STDEV"] != null ? Convert.ToInt32(Request.QueryString["STDEV"]) == 1 : false);
 			
 			int yearFrom = Request.QueryString["FY"] != null ? Convert.ToInt32(Request.QueryString["FY"]) : 0;
@@ -99,21 +99,21 @@ namespace HW.Grp
 			int plot = ConvertHelper.ToInt32(Request.QueryString["Plot"]);
 			string key = Request.QueryString["AK"];
 			
-			int grpng = Convert.ToInt32(Request.QueryString["GRPNG"]);
+			int grouping = Convert.ToInt32(Request.QueryString["GRPNG"]);
 			int sponsorAdminID = Convert.ToInt32((Request.QueryString["SAID"] != null ? Request.QueryString["SAID"] : Session["SponsorAdminID"]));
-			int sid = Convert.ToInt32((Request.QueryString["SID"] != null ? Request.QueryString["SID"] : Session["SponsorID"]));
+			int sponsorID = Convert.ToInt32((Request.QueryString["SID"] != null ? Request.QueryString["SID"] : Session["SponsorID"]));
 			string gid = (Request.QueryString["GID"] != null ? Request.QueryString["GID"].ToString().Replace(" ", "") : "");
 			
 			object disabled = Request.QueryString["DISABLED"];
 			
 			int point = Request.QueryString["ExtraPoint"] != null ? Convert.ToInt32(Request.QueryString["ExtraPoint"]) : 0;
 			
-			ISponsor s = service.ReadSponsor(sid);
-			ReportPart r = service.ReadReportPart(reportPartID, langID);
+			ISponsor sponsor = service.ReadSponsor(sponsorID);
+			ReportPart reportPart = service.ReadReportPart(reportPartID, langID);
 
-			var f = service.GetGraphFactory(HasAnswerKey);
-			g = f.CreateGraph(key, r, langID, projectRoundUnitID, yearFrom, yearTo, gb, hasGrouping, plot, Width, Height, Background, grpng, sponsorAdminID, sid, gid, disabled, point, s.MinUserCountToDisclose, monthFrom, monthTo);
-			g.render();
+			var facrtory = service.GetGraphFactory(HasAnswerKey);
+			graph = facrtory.CreateGraph(key, reportPart, langID, projectRoundUnitID, yearFrom, yearTo, groupBy, hasGrouping, plot, Width, Height, Background, grouping, sponsorAdminID, sponsorID, gid, disabled, point, sponsor.MinUserCountToDisclose, monthFrom, monthTo);
+			graph.render();
 		}
 	}
 }
