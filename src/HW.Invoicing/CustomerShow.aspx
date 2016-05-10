@@ -821,6 +821,23 @@
                     <% } %>
                 <% } %>
             </table>
+            <nav>
+                <% if (pager.EndPage > 1) { %>
+                <ul class="pagination">
+                    <% if (pager.CurrentPage > 1) { %>
+                        <li><%= HtmlHelper.Anchor("&laquo;", string.Format("customershow.aspx?Id={0}&SelectedTab=timebook", customer.Id)) %></li>
+                        <li><%= HtmlHelper.Anchor("&lt;", string.Format("customershow.aspx?Id={0}&SelectedTab=timebook&page={1}", customer.Id, pager.CurrentPage - 1))%></li>
+                    <% } %>
+                    <% for (var page = pager.StartPage; page <= pager.EndPage; page++) { %>
+                        <li class="<%= page == pager.CurrentPage ? "active" : "" %>"><%= HtmlHelper.Anchor(page.ToString(), string.Format("customershow.aspx?Id={0}&SelectedTab=timebook&page={1}", customer.Id, page))%></li>
+                    <% } %>
+                    <% if (pager.CurrentPage < pager.TotalPages) { %>
+                        <li><%= HtmlHelper.Anchor("&gt;", string.Format("customershow.aspx?Id={0}&SelectedTab=timebook", customer.Id, pager.CurrentPage + 1))%></li>
+                        <li><%= HtmlHelper.Anchor("&raquo;", string.Format("customershow.aspx?Id={0}&SelectedTab=timebook&page={1}", customer.Id, pager.TotalPages))%></li>
+                    <% } %>
+                </ul>
+                <% } %>
+            </nav>
 		</div>
 		<div class="tab-pane <%= selectedTab == "customer-prices" ? "active" : "" %>" id="customer-prices">
 			<br />
