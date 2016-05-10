@@ -1401,6 +1401,98 @@ AND NOT EXISTS (
 			return t;
 		}
 		
+		public int CountAllTimebooks(int customerId)
+		{
+			string query = string.Format(
+				@"
+SELECT COUNT(*)
+FROM CustomerTimebook
+WHERE CustomerId = @CustomerId"
+			);
+			return (int)ExecuteScalar(query, "invoicing", new SqlParameter("@CustomerId", customerId));
+		}
+		
+		public IList<CustomerTimebook> FindTimebooksByOffset(int customerId, int offset, int pageSize)
+		{
+			string query = string.Format(
+				@"
+WITH Results_CTE AS (
+	SELECT t.CustomerContactId,
+		t.ItemId,
+		t.Quantity,
+		t.Price,
+		t.Consultant,
+		t.Comments,
+		c.Contact,
+		i.Name,
+		u.Id UnitId,
+		u.Name UnitName,
+		t.Date,
+		t.Department,
+	    t.Id,
+	    t.Inactive,
+	    t.InternalComments,
+	    t.VAT,
+	    t.IsSubscription,
+	    t.SubscriptionStartDate,
+	    t.SubscriptionEndDate,
+	    t.DateHidden,
+	    t.IsHeader,
+        ROW_NUMBER() OVER (ORDER BY t.Status, t.Date DESC, t.Id DESC) AS RowNum
+	FROM CustomerTimebook t
+	LEFT OUTER JOIN CustomerContact c ON c.Id = t.CustomerContactId
+	LEFT OUTER JOIN Item i ON i.Id = t.ItemId
+	LEFT OUTER JOIN Unit u ON u.Id = i.UnitId
+	WHERE t.CustomerId = @CustomerId
+)
+SELECT *
+FROM Results_CTE
+WHERE RowNum >= @Offset
+AND RowNum < @Offset + @Limit"
+			);
+			var timebooks = new List<CustomerTimebook>();
+			using (SqlDataReader rs = ExecuteReader(
+				query, 
+				"invoicing", 
+				new SqlParameter("@CustomerId", customerId),
+				new SqlParameter("@Offset", offset),
+				new SqlParameter("@Limit", pageSize))) {
+				while (rs.Read()) {
+					timebooks.Add(
+						new CustomerTimebook {
+							Contact = new CustomerContact {
+								Id = GetInt32(rs, 0),
+								Name = GetString(rs, 6)
+							},
+							Item = new Item {
+								Id = GetInt32(rs, 1),
+								Name = GetString(rs, 7),
+								Unit = new Unit { Id = GetInt32(rs, 8), Name = GetString(rs, 9) }
+							},
+							Quantity = GetDecimal(rs, 2),
+							Price = GetDecimal(rs, 3),
+							Consultant = GetString(rs, 4),
+							Comments = GetString(rs, 5),
+							Date = GetDateTime(rs, 10),
+							Department = GetString(rs, 11),
+							Id = GetInt32(rs, 12),
+							Inactive = GetInt32(rs, 13) == 1,
+							InternalComments = GetString(rs, 14),
+							VAT = GetDecimal(rs, 15, 25),
+							IsSubscription = GetInt32(rs, 16) == 1,
+							SubscriptionStartDate = GetDateTime(rs, 17),
+							SubscriptionEndDate = GetDateTime(rs, 18),
+							DateHidden = GetInt32(rs, 19) == 1,
+							IsHeader = GetInt32(rs, 20) == 1
+						}
+					);
+				}
+			}
+			AssignInvoiceTimebooks(timebooks);
+			timebooks = timebooks.OrderBy(x => x.Status).ThenByDescending(x => x.IsSubscription).ThenByDescending(x => x.Date).ToList();
+			return timebooks;
+		}
+		
 		public IList<CustomerTimebook> FindTimebooks(int customerId)
 		{
 			string query = string.Format(
@@ -1469,22 +1561,50 @@ ORDER BY Status, t.Date DESC, t.Id DESC"
 				}
 			}
 
-			query = @"
+//			query = @"
+			//SELECT i.Status,
+			//    i.Id,
+			//    i.Number
+			//FROM InvoiceTimebook it
+			//INNER JOIN Invoice i ON i.Id = it.InvoiceId AND it.CustomerTimebookId = @CustomerTimebookId";
+//			foreach (var t in timebooks)
+//			{
+//				int status = 0;
+//				using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerTimebookId", t.Id)))
+//				{
+//					if (rs.Read())
+//					{
+//						status = GetInt32(rs, 0);
+//						t.InvoiceTimebook = new InvoiceTimebook
+//						{
+//							Invoice = new Invoice {
+//								Id = GetInt32(rs, 1),
+//								Number = GetString(rs, 2)
+//							}
+//						};
+//					}
+//				}
+//				t.Status = status;
+//			}
+			AssignInvoiceTimebooks(timebooks);
+			timebooks = timebooks.OrderBy(x => x.Status).ThenByDescending(x => x.IsSubscription).ThenByDescending(x => x.Date).ToList();
+			return timebooks;
+		}
+		
+		void AssignInvoiceTimebooks(IList<CustomerTimebook> timebooks)
+		{
+			string query = @"
 SELECT i.Status,
     i.Id,
     i.Number
 FROM InvoiceTimebook it
 INNER JOIN Invoice i ON i.Id = it.InvoiceId AND it.CustomerTimebookId = @CustomerTimebookId";
-			foreach (var t in timebooks)
-			{
+			foreach (var t in timebooks) {
 				int status = 0;
-				using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerTimebookId", t.Id)))
-				{
-					if (rs.Read())
-					{
+				using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerTimebookId", t.Id))) {
+					if (rs.Read()) {
 						status = GetInt32(rs, 0);
-						t.InvoiceTimebook = new InvoiceTimebook
-						{
+						t.InvoiceTimebook = new InvoiceTimebook {
 							Invoice = new Invoice {
 								Id = GetInt32(rs, 1),
 								Number = GetString(rs, 2)
@@ -1494,8 +1614,6 @@ INNER JOIN Invoice i ON i.Id = it.InvoiceId AND it.CustomerTimebookId = @Custome
 				}
 				t.Status = status;
 			}
-			timebooks = timebooks.OrderBy(x => x.Status).ThenByDescending(x => x.IsSubscription).ThenByDescending(x => x.Date).ToList();
-			return timebooks;
 		}
 		
 		public IList<CustomerTimebook> FindSubscriptionTimebooks(int customerId)

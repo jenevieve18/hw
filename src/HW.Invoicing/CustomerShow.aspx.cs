@@ -33,6 +33,7 @@ namespace HW.Invoicing
 		protected int companyId;
 		protected Company company;
 		protected string message;
+		protected Pager pager;
 
 		[WebMethod]
 		public static string UpdateTimebookConsultant(string consultant, int id)
@@ -135,6 +136,8 @@ namespace HW.Invoicing
 					// Agreement
 					textBoxAgreementDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
 					textBoxAgreementPaymentTerms.Text = "30 dagar";
+        	
+					
 				}
 			}
 
@@ -335,10 +338,16 @@ namespace HW.Invoicing
 			notes = r.FindNotes(id);
 			prices = r.FindItems(id);
 			contacts = r.FindContacts(id);
-			timebooks = r.FindTimebooks(id);
+//			timebooks = r.FindTimebooks(id);
 			timebookItems = ir.FindAllWithCustomerItems(companyId, id);
 			items = ir.FindByCompany(companyId);
 			agreements = r.FindAgreements(id);
+			
+			int page = ConvertHelper.ToInt32(Request.QueryString["page"], 1);
+            int pageSize = 25;
+            int offset = (page - 1) * pageSize + 1;
+        	timebooks = r.FindTimebooksByOffset(id, offset, pageSize);
+			pager = new Pager(r.CountAllTimebooks(id), page, pageSize);
 
 			dropDownListSubscriptionItem.Items.Clear();
 			foreach (var i in items) {
