@@ -441,7 +441,8 @@ UPDATE Company set Name = @Name,
     AgreementEmailText = @AgreementEmailText,
     AgreementSignedEmailSubject = @AgreementSignedEmailSubject,
     AgreementSignedEmailText = @AgreementSignedEmailText,
-    InvoiceLogoPercentage = @InvoiceLogoPercentage
+    InvoiceLogoPercentage = @InvoiceLogoPercentage,
+    SubscriptionText = @SubscriptionText
 WHERE Id = @Id";
 			ExecuteNonQuery(
 				query,
@@ -473,7 +474,8 @@ WHERE Id = @Id";
                 new SqlParameter("@AgreementEmailText", t.AgreementEmailText),
                 new SqlParameter("@AgreementSignedEmailSubject", t.AgreementSignedEmailSubject),
                 new SqlParameter("@AgreementSignedEmailText", t.AgreementSignedEmailText),
-                new SqlParameter("@InvoiceLogoPercentage", t.InvoiceLogoPercentage)
+                new SqlParameter("@InvoiceLogoPercentage", t.InvoiceLogoPercentage),
+                new SqlParameter("@SubscriptionText", t.SubscriptionText)
 			);
 		}
 	}

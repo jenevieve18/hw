@@ -62,6 +62,8 @@ namespace HW.Invoicing
 					textBoxInvoiceEmail.Text = company.InvoiceEmail;
 					textBoxInvoiceEmailSubject.Text = company.InvoiceEmailSubject;
 					textBoxInvoiceEmailText.Text = company.InvoiceEmailText;
+					
+					textBoxSubscriptionText.Text = company.SubscriptionText;
 				} else {
 					Response.Redirect("companies.aspx");
 				}
@@ -149,7 +151,9 @@ namespace HW.Invoicing
 				AgreementEmailSubject = textBoxAgreementEmailSubject.Text,
 				AgreementEmailText = textBoxAgreementEmailText.Text,
 				AgreementSignedEmailSubject = textBoxAgreementSignedEmailSubject.Text,
-				AgreementSignedEmailText = textBoxAgreementSignedEmailText.Text
+				AgreementSignedEmailText = textBoxAgreementSignedEmailText.Text,
+
+                SubscriptionText = textBoxSubscriptionText.Text
 			};
 			c.Validate();
 			if (c.HasErrors) {

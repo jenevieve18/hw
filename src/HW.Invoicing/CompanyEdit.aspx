@@ -29,6 +29,7 @@
 		<li><a href="#panel-281177" data-toggle="tab">Terms and Advice</a></li>
         <li><a href="#panel-931818" data-toggle="tab">Agreement Email Text</a></li>
         <li><a href="#panel-934381" data-toggle="tab">Invoice Section</a></li>
+        <li><a href="#panel-383664" data-toggle="tab">Subscription</a></li>
 	</ul>
 	<div class="tab-content">
 		<div class="tab-pane active" id="panel-20704">
@@ -174,7 +175,13 @@
                 <asp:TextBox ID="textBoxInvoiceEmailText" runat="server" CssClass="form-control" TextMode="MultiLine" Height="450"></asp:TextBox>
             </div>
 		</div>
-
+        <div class="tab-pane active" id="panel-383664">
+			<br />
+            <div class="form-group">
+	            <label for="<%= textBoxSubscriptionText.ClientID %>">Subscription Text</label>
+                <asp:TextBox ID="textBoxSubscriptionText" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+		</div>
         <div>
                 <asp:Button ID="buttonSave" CssClass="btn btn-success" runat="server" Text="Save company info" 
                     onclick="buttonSave_Click" />
