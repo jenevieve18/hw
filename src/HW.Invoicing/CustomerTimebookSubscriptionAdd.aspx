@@ -286,6 +286,8 @@
 
     <h3>Subscription Timebooks</h3>
 
+    <asp:Panel ID="Panel1" DefaultButton="buttonSave" runat="server">
+
     <div class='alert alert-warning'>
         <h4>Testing Purposes Only</h4>
         <p>This will delete all subscription timebooks. This will be removed on production.</p>
@@ -339,6 +341,8 @@
             onclick="buttonSave_Click" />
             or go to <i><%= HtmlHelper.Anchor("customer list", "customers.aspx") %></i>
     </div>
+
+    </asp:Panel>
 
     <br />
     <table class="table table-hover" id="cusotmer-list">
