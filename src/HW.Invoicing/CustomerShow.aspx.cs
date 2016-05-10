@@ -344,7 +344,7 @@ namespace HW.Invoicing
 			agreements = r.FindAgreements(id);
 			
 			int page = ConvertHelper.ToInt32(Request.QueryString["page"], 1);
-            int pageSize = 3;
+            int pageSize = 25;
             int offset = (page - 1) * pageSize + 1;
         	timebooks = r.FindTimebooksByOffset(id, offset, pageSize);
 			pager = new Pager(r.CountAllTimebooks(id), page, pageSize);
