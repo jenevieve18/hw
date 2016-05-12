@@ -1,0 +1,37 @@
+<html>
+	<head>
+
+	<script type="text/javascript">
+
+
+		window.onload = function() {
+
+			self.window.location = getLinks();
+
+		};
+
+
+
+		function getLinks() {
+			var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+			var linkIOS = "https://itunes.apple.com/lc/app/healthwatch/id1035687142";
+			var linkAndroid = "http://play.google.com/store/apps/details?id=se.healthwatch";	
+			var linkOther = "https://dev-m.healthwatch.se/default.aspx";
+
+		  	if( userAgent.match( /iPad/i ) || userAgent.match( /iPhone/i ) || userAgent.match( /iPod/i ) ){
+		    	return linkIOS;
+		    }else if( userAgent.match( /Android/i ) ){
+		  		return linkAndroid;
+		  	}else{
+		  		return linkOther
+		  	}
+		}
+
+	</script>
+
+	</head>
+	<body>
+		
+	</body>
+</html>
