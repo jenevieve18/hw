@@ -5,6 +5,36 @@
 <html>
 <head runat="server">
     <title></title>
+	
+	<script type="text/javascript">
+
+
+		window.onload = function() {
+
+			self.window.location = getLinks();
+
+		};
+
+
+
+		function getLinks() {
+			var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+			var linkIOS = "https://itunes.apple.com/lc/app/healthwatch/id1035687142";
+			var linkAndroid = "http://play.google.com/store/apps/details?id=se.healthwatch";	
+			var linkOther = "https://healthwatch.se";
+
+		  	if( userAgent.match( /iPad/i ) || userAgent.match( /iPhone/i ) || userAgent.match( /iPod/i ) ){
+		    	return linkIOS;
+		    }else if( userAgent.match( /Android/i ) ){
+		  		return linkAndroid;
+		  	}else{
+		  		return linkOther
+		  	}
+		}
+
+	</script>
+	
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--<link rel="stylesheet" href="jquery.mobile-1.2.1.min.css" />-->
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
