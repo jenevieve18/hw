@@ -62,6 +62,11 @@
                     var id = selected.data('id');
                     findAndRemove(invoiceItems, 'id', id);
                 }
+                if (invoiceItems.length > 0) {
+                    $('#modal-701809').removeClass('no-modal');
+                } else {
+                    $('#modal-701809').addClass('no-modal');
+                }
             });
             $('#checkbox-timebook-all').click(function() {
                 invoiceItems = [];
@@ -72,7 +77,24 @@
                     $('.timebook-item').prop('checked', false);
                 }
             });
-            $('#modal-701809').click(function() {
+//            $('#modal-701809').on('show.bs.modal', function(e) {
+//                var button = e.relatedTarget;
+//                console.log('test');
+//                if($(button).hasClass('no-modal')) {
+//                    console.log('stopping the showing of show in the middle of the show!');
+//                    e.stopPropagation();
+//                }
+//            });
+//            $('#modal-701809 .no-modal').on('click', function(e) {
+//				console.log('clicking no modal stuff...');
+//				e.stopPropagation();
+//            });
+            $('#modal-701809').click(function(e) {
+                if ($(this).hasClass('no-modal')) {
+                    console.log('Stopping showing the dialgo for there are no timebooks selected!');
+                    e.stopPropagation();
+                }
+            
                 $.ajax({
                     type: "GET",
                     url: "CustomerShow.aspx/GetLatestInvoiceNumber",
@@ -167,7 +189,7 @@
             });
 
             var status = <%= customer.Status %>;
-            console.log(status);
+            //console.log(status);
             if (status == 0) {
                 $('#<%= buttonReactivate.ClientID %>').hide();
                 $('#<%= buttonUndelete.ClientID %>').hide();
@@ -335,12 +357,10 @@
         .comments-width {
             width:300px;
         }
-        .date-width 
-        {
+        .date-width {
             width:120px;
         }
-        .label a 
-        {
+        .label a {
             color:White;
         }
     </style>
@@ -446,7 +466,7 @@
 			<br />
             <p>
                 <a id="modal-717670" href="#timebook-form" role="button" class="btn btn-info" data-toggle="modal">Add a timebook</a>
-                <a id="modal-701809" href="#modal-container-701809" role="button" class="btn btn-default" data-toggle="modal">Create Invoice</a>
+                <a id="modal-701809" href="#modal-container-701809" role="button" class="btn btn-default no-modal" data-toggle="modal">Create Invoice</a>
             </p>
 			<asp:Panel ID="panelCustomerTimebook" DefaultButton="buttonSaveTimebook" runat="server">
 			<div class="modal fade" id="timebook-form" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
