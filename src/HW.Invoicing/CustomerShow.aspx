@@ -75,6 +75,7 @@
                     $('.timebook-item').change();
                 } else {
                     $('.timebook-item').prop('checked', false);
+                    $('#modal-701809').addClass('no-modal');
                 }
             });
 //            $('#modal-701809').on('show.bs.modal', function(e) {
