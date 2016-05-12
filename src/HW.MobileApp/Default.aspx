@@ -22,7 +22,7 @@
 
 			var linkIOS = "https://itunes.apple.com/lc/app/healthwatch/id1035687142";
 			var linkAndroid = "http://play.google.com/store/apps/details?id=se.healthwatch";	
-			var linkOther = "https://healthwatch.se";
+			var linkOther = "https://dev-m.healthwatch.se";
 
 		  	if( userAgent.match( /iPad/i ) || userAgent.match( /iPhone/i ) || userAgent.match( /iPod/i ) ){
 		    	return linkIOS;
