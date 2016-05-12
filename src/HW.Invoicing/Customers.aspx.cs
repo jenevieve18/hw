@@ -28,7 +28,8 @@ namespace HW.Invoicing
 
 			int companyId = ConvertHelper.ToInt32(Session["CompanyId"]);
 			company = cr.Read(companyId);
-            selectedTab = Request.QueryString["SelectedTab"] == null ? "subscribed" : Request.QueryString["SelectedTab"];
+            string defaultCustomers = company.HasSubscriber ? "subscribed" : "nonsubscribers";
+            selectedTab = Request.QueryString["SelectedTab"] == null ? defaultCustomers : Request.QueryString["SelectedTab"];
 
 			subscribers = s.FindSubscribersByCompany(companyId);
 			nonSubscribers = s.FindNonSubscribersByCompany(companyId);
