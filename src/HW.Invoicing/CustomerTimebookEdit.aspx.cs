@@ -114,13 +114,13 @@ namespace HW.Invoicing
         	CultureInfo culture = textBoxSubscriptionTimebookQty.Text.IndexOf(",") >= 0 ? new CultureInfo("sv-SE") : new CultureInfo("en-US");
             decimal quantity = panelSubscriptionTimebook.Visible
             	? ConvertHelper.ToDecimal(textBoxSubscriptionTimebookQty.Text, 0, culture)
-                : ConvertHelper.ToDecimal(textBoxTimebookQty.Text);
+                : ConvertHelper.ToDecimal(textBoxTimebookQty.Text, 0, culture);
             string comments = panelSubscriptionTimebook.Visible
                 ? textBoxSubscriptionTimebookComments.Text
                 : textBoxTimebookComments.Text;
             decimal price = panelSubscriptionTimebook.Visible
-                ? ConvertHelper.ToDecimal(textBoxSubscriptionTimebookPrice.Text)
-                : ConvertHelper.ToDecimal(textBoxTimebookPrice.Text);
+                ? ConvertHelper.ToDecimal(textBoxSubscriptionTimebookPrice.Text, 0, culture)
+                : ConvertHelper.ToDecimal(textBoxTimebookPrice.Text, 0, culture);
 
             var t = new CustomerTimebook {
                 Date = ConvertHelper.ToDateTime(textBoxTimebookDate.Text),
@@ -133,7 +133,7 @@ namespace HW.Invoicing
                 Quantity = quantity,
                 //Price = ConvertHelper.ToDecimal(textBoxTimebookPrice.Text),
                 Price = price,
-                VAT = ConvertHelper.ToDecimal(textBoxTimebookVAT.Text),
+                VAT = ConvertHelper.ToDecimal(textBoxTimebookVAT.Text, 0, culture),
                 Consultant = textBoxTimebookConsultant.Text,
                 Comments = comments,
                 InternalComments = textBoxTimebookInternalComments.Text,
