@@ -728,12 +728,21 @@
                                     <strike><%= StrHelper.Str(t.Consultant != "", StrHelper.Str2(t.Consultant, 10), "(no consultant)") %></strike>
                                 </small>
                             </td>
-                            <% if (t.IsHeader || t.IsSubscription) { %>
+                            <%--<% if (t.IsHeader || t.IsSubscription) { %>--%>
+                            <% if (t.IsHeader) { %>
                                 <td class="timebook-comments"><strike><%= t.Comments %></strike></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                            <% } else if (t.IsSubscription) { %>
+                                <td class="timebook-comments"><strike><%= t.Comments %></strike></td>
+                                <td style="width:80px !important;text-align:center"><strike><%= t.Quantity.ToString("### ### ##0.00") %></strike></td>
+                                <td style="width:110px !important;text-align:right"><strike><%= t.Price.ToString("### ### ##0.00") %></strike></td>
+                                <td style="width:110px !important;text-align:right"><strike><%= t.Amount.ToString("### ### ##0.00") %></strike></td>
+                                <td style="text-align:right">
+                                    <small class="text-success"><strike><%= t.VAT %>%</strike></small>
+                                </td>
                             <% } else { %>
                                 <td>
                                     <strike><%= t.Item.Name %> /
@@ -797,12 +806,21 @@
                                 </small>
                                 <% } %>
                             </td>
-                            <% if (t.IsHeader || t.IsSubscription) { %>
+                            <%--<% if (t.IsHeader || t.IsSubscription) { %>--%>
+                            <% if (t.IsHeader) { %>
                                 <td class="timebook-comments"><%= t.Comments %></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                            <% } else if (t.IsSubscription) { %>
+                                <td class="timebook-comments"><%= t.Comments %></td>
+                                <td style="width:80px !important;text-align:center"><%= t.Quantity.ToString("### ### ##0.00") %></td>
+                                <td style="width:110px !important;text-align:right"><%= t.Price.ToString("### ### ##0.00") %></td>
+                                <td style="width:110px !important;text-align:right"><%= t.Amount.ToString("### ### ##0.00") %></td>
+                                <td style="text-align:right">
+                                    <small class="text-success"><%= t.VAT %>%</small>
+                                </td>
                             <% } else { %>
                                 <td>
                                     <%= t.Item.Name %> /
