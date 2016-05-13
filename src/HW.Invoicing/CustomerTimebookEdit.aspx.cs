@@ -111,16 +111,15 @@ namespace HW.Invoicing
 
         protected void buttonSave_Click(object sender, EventArgs e)
         {
-        	CultureInfo culture = textBoxSubscriptionTimebookQty.Text.IndexOf(",") >= 0 ? new CultureInfo("sv-SE") : new CultureInfo("en-US");
             decimal quantity = panelSubscriptionTimebook.Visible
-            	? ConvertHelper.ToDecimal(textBoxSubscriptionTimebookQty.Text, 0, culture)
-                : ConvertHelper.ToDecimal(textBoxTimebookQty.Text, 0, culture);
+            	? ConvertHelper.ToDecimal(textBoxSubscriptionTimebookQty.Text, 0, textBoxSubscriptionTimebookQty.Text.IndexOf(",") >= 0 ? new CultureInfo("sv-SE") : new CultureInfo("en-US"))
+                : ConvertHelper.ToDecimal(textBoxTimebookQty.Text, 0, textBoxTimebookQty.Text.IndexOf(",") >= 0 ? new CultureInfo("sv-SE") : new CultureInfo("en-US"));
             string comments = panelSubscriptionTimebook.Visible
                 ? textBoxSubscriptionTimebookComments.Text
                 : textBoxTimebookComments.Text;
             decimal price = panelSubscriptionTimebook.Visible
-                ? ConvertHelper.ToDecimal(textBoxSubscriptionTimebookPrice.Text, 0, culture)
-                : ConvertHelper.ToDecimal(textBoxTimebookPrice.Text, 0, culture);
+                ? ConvertHelper.ToDecimal(textBoxSubscriptionTimebookPrice.Text, 0, textBoxSubscriptionTimebookPrice.Text.IndexOf(",") >= 0 ? new CultureInfo("sv-SE") : new CultureInfo("en-US"))
+                : ConvertHelper.ToDecimal(textBoxTimebookPrice.Text, 0, textBoxTimebookPrice.Text.IndexOf(",") >= 0 ? new CultureInfo("sv-SE") : new CultureInfo("en-US"));
 
             var t = new CustomerTimebook {
                 Date = ConvertHelper.ToDateTime(textBoxTimebookDate.Text),
@@ -133,7 +132,7 @@ namespace HW.Invoicing
                 Quantity = quantity,
                 //Price = ConvertHelper.ToDecimal(textBoxTimebookPrice.Text),
                 Price = price,
-                VAT = ConvertHelper.ToDecimal(textBoxTimebookVAT.Text, 0, culture),
+                VAT = ConvertHelper.ToDecimal(textBoxTimebookVAT.Text, 0, textBoxTimebookVAT.Text.IndexOf(",") >= 0 ? new CultureInfo("sv-SE") : new CultureInfo("en-US")),
                 Consultant = textBoxTimebookConsultant.Text,
                 Comments = comments,
                 InternalComments = textBoxTimebookInternalComments.Text,
