@@ -111,8 +111,9 @@ namespace HW.Invoicing
 
         protected void buttonSave_Click(object sender, EventArgs e)
         {
+        	CultureInfo culture = textBoxSubscriptionTimebookQty.Text.IndexOf(",") >= 0 ? new CultureInfo("sv-SE") : new CultureInfo("en-US");
             decimal quantity = panelSubscriptionTimebook.Visible
-                ? ConvertHelper.ToDecimal(textBoxSubscriptionTimebookQty.Text)
+            	? ConvertHelper.ToDecimal(textBoxSubscriptionTimebookQty.Text, 0, culture)
                 : ConvertHelper.ToDecimal(textBoxTimebookQty.Text);
             string comments = panelSubscriptionTimebook.Visible
                 ? textBoxSubscriptionTimebookComments.Text

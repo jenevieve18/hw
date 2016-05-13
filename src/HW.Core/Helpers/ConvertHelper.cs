@@ -136,6 +136,16 @@ namespace HW.Core.Helpers
 			}
 		}
 		
+		public static decimal ToDecimal(object val, decimal def, CultureInfo culture)
+		{
+			try {
+				return Convert.ToDecimal(val, culture);
+//				return decimal.TryParse(val.ToString());
+			} catch {
+				return def;
+			}
+		}
+		
 		public static decimal ToDecimal(object val, CultureInfo culture)
 		{
 			try {
