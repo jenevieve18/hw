@@ -157,24 +157,6 @@ namespace HW.Invoicing {
         protected global::System.Web.UI.WebControls.TextBox textBoxTimebookInternalComments;
         
         /// <summary>
-        /// placeHolderReactivate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder placeHolderReactivate;
-        
-        /// <summary>
-        /// checkBoxReactivate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox checkBoxReactivate;
-        
-        /// <summary>
         /// panelSubscriptionTimebook control.
         /// </summary>
         /// <remarks>
@@ -245,6 +227,24 @@ namespace HW.Invoicing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox textBoxSubscriptionTimebookComments;
+        
+        /// <summary>
+        /// placeHolderReactivate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder placeHolderReactivate;
+        
+        /// <summary>
+        /// checkBoxReactivate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox checkBoxReactivate;
         
         /// <summary>
         /// buttonSave control.

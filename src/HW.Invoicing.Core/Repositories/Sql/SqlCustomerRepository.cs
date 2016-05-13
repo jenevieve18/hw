@@ -574,7 +574,8 @@ UPDATE CustomerTimebook SET SubscriptionStartDate = @SubscriptionStartDate,
     SubscriptionEndDate = @SubscriptionEndDate,
     Quantity = @Quantity,
     Comments = @Comments,
-    Price = @Price
+    Price = @Price,
+    Inactive = @Inactive
 WHERE Id = @Id"
 			);
 			ExecuteNonQuery(
@@ -585,7 +586,8 @@ WHERE Id = @Id"
 				new SqlParameter("@Quantity", c.Quantity),
 				new SqlParameter("@Comments", c.Comments),
 				new SqlParameter("@Id", id),
-				new SqlParameter("@Price", c.Price)
+				new SqlParameter("@Price", c.Price),
+				new SqlParameter("@Inactive", c.Inactive)
 			);
 		}
 

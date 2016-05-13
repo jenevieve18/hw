@@ -141,11 +141,6 @@
                 <asp:TextBox ID="textBoxTimebookInternalComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
             </div>
         </asp:Panel>
-        <asp:PlaceHolder ID="placeHolderReactivate" runat="server">
-            <div class="form-group">
-                <asp:CheckBox ID="checkBoxReactivate" runat="server" CssClass="form-control" Text="&nbsp;Re-activate this customer timebook" />
-            </div>
-        </asp:PlaceHolder>
     </asp:Panel>
 
     <asp:Panel ID="panelSubscriptionTimebook" runat="server">
@@ -197,6 +192,11 @@
             <asp:TextBox ID="textBoxSubscriptionTimebookComments" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
         </div>
     </asp:Panel>
+        <asp:PlaceHolder ID="placeHolderReactivate" runat="server">
+            <div class="form-group">
+                <asp:CheckBox ID="checkBoxReactivate" runat="server" CssClass="form-control" Text="&nbsp;Re-activate this customer timebook" />
+            </div>
+        </asp:PlaceHolder>
 
     <div>
         <asp:Button CssClass="btn btn-success" ID="buttonSave" runat="server" Text="Save customer timebook" 
