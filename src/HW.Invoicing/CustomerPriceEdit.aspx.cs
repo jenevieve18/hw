@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -48,7 +49,7 @@ namespace HW.Invoicing
             var c = new CustomerItem
             {
                 Item = new Item { Id = ConvertHelper.ToInt32(dropDownListItems.SelectedValue) },
-                Price = ConvertHelper.ToDecimal(textBoxItemPrice.Text),
+                Price = ConvertHelper.ToDecimal(textBoxItemPrice.Text, 0, textBoxItemPrice.Text.IndexOf(",") >= 0 ? new CultureInfo("sv-SE") : new CultureInfo("en-US")),
                 Inactive = !checkBoxReactivate.Checked
             };
             r.UpdateItem(c, id);
