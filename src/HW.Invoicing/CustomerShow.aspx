@@ -842,7 +842,7 @@
                     <% } %>
                 <% } %>
             </table>
-            <nav>
+            <%--<nav>
                 <% if (pager.EndPage > 1) { %>
                 <ul class="pagination">
                     <% if (pager.CurrentPage > 1) { %>
@@ -858,7 +858,7 @@
                     <% } %>
                 </ul>
                 <% } %>
-            </nav>
+            </nav>--%>
 		</div>
 		<div class="tab-pane <%= selectedTab == "customer-prices" ? "active" : "" %>" id="customer-prices">
 			<br />
