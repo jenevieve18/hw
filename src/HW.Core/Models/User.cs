@@ -20,6 +20,12 @@ namespace HW.Core.Models
 		public IList<SponsorProject> SponsorProjects { get; set; }
 	}
 	
+	public class UserRegistrationID : BaseModel
+	{
+		public User User { get; set; }
+		public string RegistrationID { get; set; }
+	}
+	
 	public class UserSession : BaseModel
 	{
 		public string HostAddress { get; set; }

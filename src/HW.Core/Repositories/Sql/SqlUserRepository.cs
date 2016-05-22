@@ -155,6 +155,18 @@ namespace HW.Core.Repositories.Sql
 			Db.exec(query, "healthWatchSqlConnection");
 		}
 		
+		public void SaveUserRegistrationID(UserRegistrationID r)
+		{
+			string query = @"
+INSERT INTO UserRegistrationID(UserID, RegistrationID)
+VALUES(@UserID, @RegistrationID)";
+			ExecuteNonQuery(
+				query, "healthWatchSqlConnection",
+				new SqlParameter("@UserID", r.User.Id),
+				new SqlParameter("@RegistrationID", r.RegistrationID)
+			);
+		}
+		
 		public void SaveSessionIf(bool condition, UserSession s)
 		{
 			if (condition) {

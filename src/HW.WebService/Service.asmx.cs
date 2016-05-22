@@ -2664,6 +2664,32 @@ namespace HW.WebService
 			return false;
 		}
 		
+		[WebMethod(Description = "")]
+		public bool UserSaveRegistrationID(string registrationID, string token, int expirationMinutes)
+		{
+			int userID = getUserIdFromToken(token, expirationMinutes);
+			bool isNewValue = false;
+			if (userID != 0) {
+				SqlDataReader r = rs(
+					"SELECT UserRegistrationID, UserID, RegistrationID " +
+					"FROM dbo.UserRegistrationID " +
+					"WHERE UserID = " + userID + " " +
+					"AND RegistrationID = '" + registrationID + "'"
+				);
+				if (!r.Read()) {
+					isNewValue = true;
+				}
+				if (isNewValue) {
+					exec(
+						"INSERT INTO dbo.UserRegistrationID(UserID, RegistrationID)" +
+						"VALUES(" + userID + ", '" + registrationID.Replace("'", "") + "')"
+					);
+				}
+				r.Close();
+			}
+			return isNewValue;
+		}
+		
 		[WebMethod(Description = "Gets a profile question answer of a user. Returns blank if token invalid/expired or no answer exist.")]
 		public string UserGetProfileQuestion(int questionID, string token, int expirationMinutes)
 		{
