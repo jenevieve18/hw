@@ -263,7 +263,7 @@ namespace HW.WebService
 //			public string words;
 //			public string author;
 //		}
-//		
+//
 		public enum QuestionTypes { SingleChoiceFewOptions = 1, SingleChoiceManyOptions = 7, FreeText = 2, Numeric = 4, Date = 3, VAS = 9 };
 		public enum Mood { NotSet = 0, DontKnow = 1, Happy = 2, Neutral = 3, Unhappy = 4 };
 		public enum EventType { Form = 1, Measurement = 2, Exercise = 3 };
@@ -2664,7 +2664,7 @@ namespace HW.WebService
 			return false;
 		}
 		
-		[WebMethod(Description = "")]
+		[WebMethod(Description = "Saves the user device registration ID. Returns false if the device ID is already in the database.")]
 		public bool UserSaveRegistrationID(string registrationID, string token, int expirationMinutes)
 		{
 			int userID = getUserIdFromToken(token, expirationMinutes);
@@ -2688,6 +2688,33 @@ namespace HW.WebService
 				r.Close();
 			}
 			return isNewValue;
+		}
+		
+		[WebMethod(Description = "Gets the UserKey and updates a new value into the database. Returns 0 if UserKey is not found. This will only update a new UserKey if the User's ReminderLink is 2.")]
+		public bool UserSetUsedUserKey(string userKey, string token, int expirationMinutes)
+		{
+			int userID = getUserIdFromToken(token, expirationMinutes);
+			bool validKey = false;
+			if (userID != 0) {
+				userKey = (userKey.Length == 12 ? userKey.Substring(0, 12) : userKey).Replace("'", "").ToLower();
+				SqlDataReader r = rs(
+					"SELECT " +
+					"u.UserID, " +
+					"u.ReminderLink " +
+					"FROM [User] u " +
+					"WHERE u.UserID = " + userID + " " +
+					"AND LOWER(LEFT(REPLACE(CONVERT(VARCHAR(255),u.UserKey),'-',''),12)) = '" + userKey + "'"
+				);
+				if (r.Read()) {
+					userID = r.GetInt32(0);
+					if (r.GetInt32(1) == 2) {
+						exec("UPDATE [User] SET UserKey = NEWID() WHERE UserID = " + userID);
+					}
+					validKey = true;
+				}
+				r.Close();
+			}
+			return validKey;
 		}
 		
 		[WebMethod(Description = "Gets a profile question answer of a user. Returns blank if token invalid/expired or no answer exist.")]
