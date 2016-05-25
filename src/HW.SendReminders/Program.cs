@@ -394,6 +394,114 @@ namespace HW.SendReminders
 
 			return nextReminderSend.ToString("yyyy-MM-dd HH:mm");
 		}
+		
+		/*
+		void sendGcmNotification(String[] registrationIds, String apiKey, String senderId, String message)
+		{
+            // Configuration
+            var config = new GcmConfiguration(senderId, apiKey, null);
 
+            // Create a new broker
+            var gcmBroker = new GcmServiceBroker(config);
+
+            // Wire up events
+            gcmBroker.OnNotificationFailed += (notification, aggregateEx) => {
+
+                aggregateEx.Handle(ex => {
+
+                    // See what kind of exception it was to further diagnose
+                    if (ex is GcmNotificationException)
+                    {
+                        var notificationException = (GcmNotificationException)ex;
+
+                        // Deal with the failed notification
+                        var gcmNotification = notificationException.Notification;
+                        var description = notificationException.Description;
+
+//                        Console.WriteLine($"GCM Notification Failed: ID={gcmNotification.MessageId}, Desc={description}");
+						Console.WriteLine("GCM Notification Failed: ID={0}, Desc={1}", gcmNotification.MessageId, description);
+                    }
+                    else if (ex is GcmMulticastResultException)
+                    {
+                        var multicastException = (GcmMulticastResultException)ex;
+
+                        foreach (var succeededNotification in multicastException.Succeeded)
+                        {
+//                            Console.WriteLine($"GCM Notification Failed: ID={succeededNotification.MessageId}");
+							Console.WriteLine("GCM Notification Failed: ID={0}", succeededNotification.MessageId);
+                        }
+
+                        foreach (var failedKvp in multicastException.Failed)
+                        {
+                            var n = failedKvp.Key;
+                            var en = failedKvp.Value;
+
+//                            Console.WriteLine($"GCM Notification Failed: ID={n.MessageId}, Desc={en.Data}");
+							Console.WriteLine("GCM Notification Failed: ID={0}, Desc={1}", n.MessageId, en.Data);
+                        }
+
+                    }
+                    else if (ex is DeviceSubscriptionExpiredException)
+                    {
+                        var expiredException = (DeviceSubscriptionExpiredException)ex;
+
+                        var oldId = expiredException.OldSubscriptionId;
+                        var newId = expiredException.NewSubscriptionId;
+
+//                        Console.WriteLine($"Device RegistrationId Expired: {oldId}");
+						Console.WriteLine("Device RegistrationId Expired: {0}", oldId);
+
+                        if (!string.IsNullOrWhiteSpace(newId))
+                        {
+                            // If this value isn't null, our subscription changed and we should update our database
+//                            Console.WriteLine($"Device RegistrationId Changed To: {newId}");
+							Console.WriteLine("Device RegistrationId Changed To: {0}", newId);
+                        }
+                    }
+                    else if (ex is RetryAfterException)
+                    {
+                        var retryException = (RetryAfterException)ex;
+                        // If you get rate limited, you should stop sending messages until after the RetryAfterUtc date
+//                        Console.WriteLine($"GCM Rate Limited, don't send more until after {retryException.RetryAfterUtc}");
+						Console.WriteLine("GCM Rate Limited, don't send more until after {0}", retryException.RetryAfterUtc);
+                    }
+                    else
+                    {
+                        Console.WriteLine("GCM Notification Failed for some unknown reason");
+                    }
+
+                    // Mark it as handled
+                    return true;
+                });
+            };
+
+            gcmBroker.OnNotificationSucceeded += (notification) => {
+                Console.WriteLine("GCM Notification Sent!");
+            };
+
+            // Start the broker
+            gcmBroker.Start();
+
+
+            foreach (var registrationId in registrationIds)
+            {
+                // Queue a notification to send
+                gcmBroker.QueueNotification(new GcmNotification
+                {
+                    RegistrationIds = new List<string> {
+                                registrationId
+                    },
+                    Notification = JObject.Parse("{\"sound\": \"default\",\"title\": \"HealthWatch\",\"body\": \"" + message + "\"}")
+                    //Notification = JObject.Parse("{\"sound\": \"default\",\"badge\": \"1\",\"title\": \"HealthWatch\",\"body\": \"" + message + "\"}")
+
+                });
+            }
+
+            // Stop the broker, wait for it to finish   
+            // This isn't done after every message, but after you're
+            // done with the broker
+            gcmBroker.Stop();
+        }
+        */
     }
 }
