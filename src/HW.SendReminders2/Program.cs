@@ -114,7 +114,7 @@ namespace HW.SendReminders2
                             System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage(reminderEmail, rs.GetString(1), reminderSubjectLang[rs.GetInt32(7) - 1], personalReminderMessage);
                             smtp.Send(mail);
                             
-                            List<string> regirationIds = new List<string>();
+                            List<string> registrationIds = new List<string>();
                             using (var rs2 = recordSet(
                             	"SELECT UserRegistrationID, " +
                             	"UserID, " +
@@ -124,11 +124,12 @@ namespace HW.SendReminders2
                             )) {
                             	while (rs2.Read()) {
                             		if (!rs2.IsDBNull(2)) {
-                            			regirationIds.Add(rs2.GetString(2));
+                            			registrationIds.Add(rs2.GetString(2));
                             		}
                             	}
                             }
-                            sendGcmNotification(regirationIds, apiKey, senderId, message);
+                            string keyAndUserID = rs.GetString(3).ToLower() + rs.GetInt32(0).ToString();
+                            sendGcmNotification(registrationIds, apiKey, senderId, message, keyAndUserID);
 
                             exec("UPDATE [User] SET ReminderLastSent = GETDATE(), ReminderNextSend = '" + nextReminderSend(rs.GetInt32(4),rs.GetString(5).Split(':'),(rs.IsDBNull(6) ? DateTime.Now : rs.GetDateTime(6)),DateTime.Now) + "' WHERE UserID = " + rs.GetInt32(0));
                             exec("INSERT INTO Reminder (UserID,Subject,Body) VALUES (" + rs.GetInt32(0) + ",'" + reminderSubjectLang[rs.GetInt32(7) - 1].Replace("'", "''") + "','" + personalReminderMessage.Replace("'", "''") + "')");
@@ -247,7 +248,7 @@ namespace HW.SendReminders2
 									System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage(reminderEmail, rs.GetString(1), reminderSubject, personalReminderMessage);
 									smtp.Send(mail);
 									
-									List<string> regirationIds = new List<string>();
+									List<string> registrationIds = new List<string>();
 		                            using (var rs3 = recordSet(
 		                            	"SELECT UserRegistrationID, " +
 		                            	"UserID, " +
@@ -257,11 +258,12 @@ namespace HW.SendReminders2
 		                            )) {
 		                            	while (rs3.Read()) {
 		                            		if (!rs3.IsDBNull(2)) {
-		                            			regirationIds.Add(rs3.GetString(2));
+		                            			registrationIds.Add(rs3.GetString(2));
 		                            		}
 		                            	}
 		                            }
-		                            sendGcmNotification(regirationIds, apiKey, senderId, message);
+									string keyAndUserID = rs.GetString(3).ToLower() + rs.GetInt32(0).ToString();
+		                            sendGcmNotification(registrationIds, apiKey, senderId, message, keyAndUserID);
 
 									exec("UPDATE [User] SET ReminderLastSent = GETDATE() WHERE UserID = " + rs.GetInt32(0));
                                     exec("INSERT INTO Reminder (UserID,Subject,Body) VALUES (" + rs.GetInt32(0) + ",'" + reminderSubject.Replace("'", "''") + "','" + personalReminderMessage.Replace("'", "''") + "')");
@@ -440,7 +442,7 @@ namespace HW.SendReminders2
 		
 		
 //		static void sendGcmNotification(String[] registrationIds, String apiKey, String senderId, String message)
-		static void sendGcmNotification(List<string> registrationIds, string apiKey, string senderId, string message)
+		static void sendGcmNotification(List<string> registrationIds, string apiKey, string senderId, string message, string keyAndUserID)
 		{
             // Configuration
             var config = new GcmConfiguration(senderId, apiKey, null);
@@ -535,7 +537,8 @@ namespace HW.SendReminders2
                     RegistrationIds = new List<string> {
                                 registrationId
                     },
-                    Notification = JObject.Parse("{\"sound\": \"default\",\"title\": \"HealthWatch\",\"body\": \"" + message + "\"}"),
+//                    Notification = JObject.Parse("{\"sound\": \"default\",\"title\": \"HealthWatch\",\"body\": \"" + message + "\"}"),
+Notification = JObject.Parse("{\"sound\": \"default\",\"title\": \"HealthWatch\",\"body\": \"" + message + "\", 'userKey': '" + keyAndUserID + "'}"),
                     Priority = GcmNotificationPriority.High
 //                    Notification = JObject.Parse("{\"sound\": \"default\",\"title\": \"HealthWatch\",\"body\": \"" + message + "\"}")
                     //Notification = JObject.Parse("{\"sound\": \"default\",\"badge\": \"1\",\"title\": \"HealthWatch\",\"body\": \"" + message + "\"}")
