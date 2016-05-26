@@ -539,7 +539,8 @@ namespace HW.SendReminders2
                     },
 //                    Notification = JObject.Parse("{\"sound\": \"default\",\"title\": \"HealthWatch\",\"body\": \"" + message + "\"}"),
 Notification = JObject.Parse("{\"sound\": \"default\",\"title\": \"HealthWatch\",\"body\": \"" + message + "\", 'userKey': '" + keyAndUserID + "'}"),
-                    Priority = GcmNotificationPriority.High
+                    Priority = GcmNotificationPriority.High,
+                    Data = JObject.Parse("{ 'userKey': '" + keyAndUserID + "'}")
 //                    Notification = JObject.Parse("{\"sound\": \"default\",\"title\": \"HealthWatch\",\"body\": \"" + message + "\"}")
                     //Notification = JObject.Parse("{\"sound\": \"default\",\"badge\": \"1\",\"title\": \"HealthWatch\",\"body\": \"" + message + "\"}")
 
