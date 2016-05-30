@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -47,7 +48,8 @@ namespace HW.Invoicing
                 Name = textBoxName.Text,
                 Consultant = textBoxConsultant.Text,
                 Description = textBoxDescription.Text,
-                Price = ConvertHelper.ToDecimal(textBoxPrice.Text),
+                //Price = ConvertHelper.ToDecimal(textBoxPrice.Text),
+                Price = ConvertHelper.ToDecimal(textBoxPrice.Text, 0, textBoxPrice.Text.IndexOf(",") >= 0 ? new CultureInfo("sv-SE") : new CultureInfo("en-US")),
                 Unit = new m.Unit { Id = ConvertHelper.ToInt32(dropDownListUnits.SelectedValue) },
                 Company = new Company { Id = ConvertHelper.ToInt32(Session["CompanyId"]) }
             };
