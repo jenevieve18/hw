@@ -307,7 +307,8 @@ namespace HW.Invoicing
 		{
 			var t = new CustomerItem {
 				Item = new Item { Id = ConvertHelper.ToInt32(dropDownListItems.SelectedValue) },
-				Price = ConvertHelper.ToDecimal(textBoxItemPrice.Text)
+				//Price = ConvertHelper.ToDecimal(textBoxItemPrice.Text)
+				Price = ConvertHelper.ToDecimal(textBoxItemPrice.Text, 0, textBoxItemPrice.Text.IndexOf(",") >= 0 ? new CultureInfo("sv-SE") : new CultureInfo("en-US")),
 			};
 			r.SaveItem(t, ConvertHelper.ToInt32(Request.QueryString["Id"]));
 			Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=customer-prices", id));
