@@ -3141,7 +3141,7 @@ namespace HW.WebService
 			int userID = getUserIdFromToken(token, expirationMinutes);
 			bool validKey = false;
 			if (userID != 0) {
-				userKey = (userKey.Length == 12 ? userKey.Substring(0, 12) : userKey).Replace("'", "").ToLower();
+				userKey = (userKey.Length >= 12 ? userKey.Substring(0, 12) : userKey).Replace("'", "").ToLower();
 				SqlDataReader r = rs(
 					"SELECT " +
 					"u.UserID, " +
