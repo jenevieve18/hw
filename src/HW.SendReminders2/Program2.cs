@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Configuration;
 using System.Collections.Generic;
-
 using PushSharp;
 using PushSharp.Google;
 using PushSharp.Core;
@@ -18,7 +18,7 @@ namespace HW.SendReminders2
 	{
 		static void Main(string[] args)
 		{
-			string[] reminderMessageLang = new string[2], reminderSubjectLang = new string[2], reminderAutoLoginLang = new string[2];
+//			string[] reminderMessageLang = new string[2], reminderSubjectLang = new string[2], reminderAutoLoginLang = new string[2];
 			
 			var apiKey = "AIzaSyB3ne08mvULbQX8HalX-qRGQtP1Ih9bqDY";
 			var senderId = "59929247886";
@@ -28,7 +28,7 @@ namespace HW.SendReminders2
 			ISmtp smtp = new SmtpStub();
 
 //			IRepo repo = new Repo(); // Uncomment this class and comment below to connect to a real repository with database connectivity and not just use the dummy Stub.
-			IRepo repo = new RepoStub();
+			var repo = new RepoStub();
 			
 			var settings = repo.GetSystemSettings();
 
@@ -54,9 +54,9 @@ namespace HW.SendReminders2
 								personalReminderMessage += "\r\n\r\n" + personalLink;
 							}
 							if (u.ReminderLink == 0) {
-								personalReminderMessage += "\r\n\r\n" + reminderAutoLoginLang[u.LID - 1];
+								personalReminderMessage += "\r\n\r\n" + settings.Languages[u.LID - 1].ReminderAutoLogin;
 							}
-							System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage(settings.ReminderEmail, u.Email, settings.Languages[u.LID - 1].ReminderSubject, personalReminderMessage);
+							MailMessage mail = new MailMessage(settings.ReminderEmail, u.Email, settings.Languages[u.LID - 1].ReminderSubject, personalReminderMessage);
 							smtp.Send(mail);
 							
 							var registrationIds = repo.GetUserRegistrationIDs(u.ID);
@@ -123,7 +123,7 @@ namespace HW.SendReminders2
 									if (u.ReminderLink == 0) {
 										personalReminderMessage += "\r\n\r\n" + settings.Languages[u.ID - 1];
 									}
-									System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage(settings.ReminderEmail, u.Email, reminderSubject, personalReminderMessage);
+									MailMessage mail = new MailMessage(settings.ReminderEmail, u.Email, reminderSubject, personalReminderMessage);
 									smtp.Send(mail);
 									
 									var registrationIds = repo.GetUserRegistrationIDs(u.ID);
