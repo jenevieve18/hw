@@ -18,7 +18,7 @@
     <tr>
         <td>
             <!--<%= c.Name %>-->
-            <%= HtmlHelper.Anchor(c.Name, "companyselect.aspx?Id=" + c.Id) %>
+            <%= HtmlHelper.Anchor(c.Name, "companyedit.aspx?Id=" + c.Id)%>
         </td>
         <td>
             <%--<%= HtmlHelper.Anchor("Edit", "companyedit.aspx?Id=" + c.Id) %>--%>
