@@ -795,7 +795,8 @@ SELECT c.Id,
     c.InvoiceEmail,
     c.InvoiceEmailCC,
     c.ContactPersonId,
-    c.Currency
+    c.Currency,
+    c.CompanyId
 FROM Customer c
 --INNER JOIN Lang l ON c.Language = l.Id
 --INNER JOIN Item i ON i.Id = c.SubscriptionItemId
@@ -828,7 +829,8 @@ WHERE c.Id = @Id"
 						InvoiceEmail = GetString(rs, 19),
 						InvoiceEmailCC = GetString(rs, 20),
 //						ContactPerson = new CustomerContact { Id = GetInt32(rs, 21) },
-						Currency = Currency.GetCurrency(GetInt32(rs, 22, 1))
+						Currency = Currency.GetCurrency(GetInt32(rs, 22, 1)),
+						Company = new Company { Id = GetInt32(rs, 23) }
 					};
 				}
 			}
