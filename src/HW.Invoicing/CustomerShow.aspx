@@ -92,18 +92,25 @@
 //            });
             $('#modal-701809').click(function(e) {
                 if ($(this).hasClass('no-modal')) {
-                    console.log('Stopping showing the dialgo for there are no timebooks selected!');
+                    //console.log('Stopping showing the dialgo for there are no timebooks selected!');
                     e.stopPropagation();
                 }
             
                 $.ajax({
-                    type: "GET",
+                    type: "POST",
                     url: "CustomerShow.aspx/GetLatestInvoiceNumber",
-                    data: "{}",
+                    //data: "{ }",
+                    data: JSON.stringify({ customerID: <%= customer.Id %> }),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function(msg) {
-                        $('#<%= labelInvoiceNumber.ClientID %>').text('<%= company.InvoicePrefix %>-' + ('000' + msg.d).slice(-3));
+                        if (msg.d < 0) {
+                            //console.log('session changed');
+                            window.location = "customers.aspx";
+                        } else {
+                            //console.log('ok');
+                            $('#<%= labelInvoiceNumber.ClientID %>').text('<%= company.InvoicePrefix %>-' + ('000' + msg.d).slice(-3));
+                        }
                     }
                 });
 

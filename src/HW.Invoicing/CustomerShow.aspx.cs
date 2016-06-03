@@ -50,11 +50,27 @@ namespace HW.Invoicing
 			d.UpdateTimebookComments(comments, id);
 			return comments;
 		}
+
+		[WebMethod(EnableSession = true)]
+		//[ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
+		public static int GetLatestInvoiceNumber(int customerID)
+		{
+			var ir = new SqlInvoiceRepository();
+			var cr = new SqlCustomerRepository();
+			
+			int companyId = ConvertHelper.ToInt32(HttpContext.Current.Session["CompanyId"]);
+			var customer = cr.Read(customerID);
+			if (customer.Company.Id != companyId) {
+				return -1;
+			} else {
+				return ir.GetLatestInvoiceNumber(companyId);
+			}
+		}
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			HtmlHelper.RedirectIf(Session["UserId"] == null, string.Format("login.aspx?r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)));
-            
+			
 
 			id = ConvertHelper.ToInt32(Request.QueryString["Id"]);
 			companyId = ConvertHelper.ToInt32(Session["CompanyId"], 1);
@@ -141,7 +157,7 @@ namespace HW.Invoicing
 					// Agreement
 					textBoxAgreementDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
 					textBoxAgreementPaymentTerms.Text = "30 dagar";
-        	
+					
 					
 				}
 			}
@@ -223,21 +239,13 @@ namespace HW.Invoicing
 			Response.Redirect(string.Format("customershow.aspx?Id={0}&SelectedTab=timebook", id));
 		}
 
-		[WebMethod(EnableSession = true)]
-		[ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
-		public static int GetLatestInvoiceNumber()
-		{
-			int companyId = ConvertHelper.ToInt32(HttpContext.Current.Session["CompanyId"]);
-			return new SqlInvoiceRepository().GetLatestInvoiceNumber(companyId);
-		}
-
 		protected void buttonSaveInvoice_Click(object sender, EventArgs e)
 		{
 			int n = vr.GetLatestInvoiceNumber(companyId);
 			CustomerContact customerContact = null;
 			if (labelInvoiceYourReferencePerson.Visible) {
 //				customerContact = customer.PrimaryContact;
-                customerContact = customer.PrimaryContact != null ? customer.PrimaryContact : null;
+				customerContact = customer.PrimaryContact != null ? customer.PrimaryContact : null;
 			} else {
 				customerContact = new CustomerContact { Id = ConvertHelper.ToInt32(dropDownListInvoiceYourReferencePerson.SelectedValue) };
 			}
@@ -351,9 +359,9 @@ namespace HW.Invoicing
 			agreements = r.FindAgreements(id);
 			
 //			int page = ConvertHelper.ToInt32(Request.QueryString["page"], 1);
-//            int pageSize = 5;
-//            int offset = (page - 1) * pageSize + 1;
-//        	timebooks = r.FindTimebooksByOffset(id, offset, pageSize);
+			//            int pageSize = 5;
+			//            int offset = (page - 1) * pageSize + 1;
+			//        	timebooks = r.FindTimebooksByOffset(id, offset, pageSize);
 //			pager = new Pager(r.CountAllTimebooks(id), page, pageSize);
 
 			dropDownListSubscriptionItem.Items.Clear();
