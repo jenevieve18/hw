@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Core.Helpers;
 using HW.Invoicing.Core.Helpers;
+using HW.Invoicing.Core.Models;
 using HW.Invoicing.Core.Repositories.Sql;
 
 namespace HW.Invoicing
@@ -42,12 +43,12 @@ namespace HW.Invoicing
 					var exported = exporter.Export(invoice);
 					exported.WriteTo(fStream);
 				}
-				
+
 				MailHelper.SendMail(
                     company.InvoiceEmail,
                     invoice.Customer.InvoiceEmail,
-					company.InvoiceEmailSubject,
-					company.InvoiceEmailText,
+                    ReplaceInvoiceEmailTemplate(company.InvoiceEmailSubject, invoice),
+                    ReplaceInvoiceEmailTemplate(company.InvoiceEmailText, invoice),
 					file,
                     invoice.Customer.InvoiceEmailCC
                 );
@@ -58,5 +59,16 @@ namespace HW.Invoicing
 			}
             Response.Redirect("invoices.aspx");
 		}
+
+        string ReplaceInvoiceEmailTemplate(string s, Invoice invoice)
+        {
+            s = s.Replace("<INVOICE_AMOUNT>", invoice.TotalAmount.ToString("0.00"));
+            s = s.Replace("<CUSTOMER_NAME>", invoice.Customer.Name);
+            s = s.Replace("<CUSTOMER_ADDRESS>", invoice.Customer.Address);
+            s = s.Replace("<COMPANY_NAME>", invoice.Company.Name);
+            s = s.Replace("<INVOICE_DATE>", invoice.Date != null ? invoice.Date.Value.ToString("yyyy-MM-dd") : "");
+            s = s.Replace("<INVOICE_MATURITY_DATE>", invoice.MaturityDate != null ? invoice.MaturityDate.Value.ToString("yyyy-MM-dd") : "");
+            return s;
+        }
 	}
 }
