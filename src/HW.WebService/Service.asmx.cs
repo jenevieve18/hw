@@ -2499,7 +2499,8 @@ namespace HW.WebService
 
 			try
 			{
-				sendMail("info@healthwatch.se", "support@healthwatch.se", d, "Issue report: " + t);
+//				sendMail("info@healthwatch.se", "support@healthwatch.se", d, "Issue report: " + t);
+				sendMail("info@healthwatch.se", "info@healthwatch.se", d, "Issue report: " + t);
 			}
 			catch (Exception) { }
 
