@@ -2491,19 +2491,25 @@ namespace HW.WebService
 			{
 				d = d.Substring(0, 64000);
 			}
+			bool success = false;
 			try
 			{
 				exec("INSERT INTO [Issue] (IssueDate,Title,Description,UserID) VALUES (GETDATE(),'" + t.Replace("'", "''") + "','" + d.Replace("'", "''") + "'," + userID + ")");
+				success = true;
 			}
 			catch (Exception) { }
 
 			try
 			{
 				sendMail("info@healthwatch.se", "support@healthwatch.se", d, "Issue report: " + t);
+				success = true;
 			}
-			catch (Exception ex) { throw ex; }
+			catch (Exception ex) {
+				throw ex;
+			}
 
-			return true;
+//			return true;
+			return success;
 		}
 
 		[WebMethod(Description = "Provide email address to request a password reset link to be sent by email. Returns false only if malformed email address or email server is unavailable, otherwise true.")]
