@@ -2505,9 +2505,7 @@ namespace HW.WebService
 				sendMail("info@healthwatch.se", "support@healthwatch.se", d, "Issue report: " + t);
 				success = true;
 			}
-			catch (Exception ex) {
-				throw ex;
-			}
+			catch (Exception) { }
 
 //			return true;
 			return success;
