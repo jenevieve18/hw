@@ -29,9 +29,9 @@ namespace HW.Grp
 			var senderId = "59929247886";
 			var message = "Reminder";
 
-			var smtp = new SmtpStub(new System.Net.Mail.SmtpClient(ConfigurationManager.AppSettings["SmtpServer"]));
+			var smtp = new SmtpWrapper(new System.Net.Mail.SmtpClient(ConfigurationManager.AppSettings["SmtpServer"]));
 
-			var repo = new RepoStub();
+			var repo = new Repo();
 			
 			var settings = repo.GetSystemSettings();
 
