@@ -18,6 +18,12 @@ namespace HW.Core.Models
 		public string UserKey { get; set; }
 		
 		public IList<SponsorProject> SponsorProjects { get; set; }
+		public int ReminderType { get; set; }
+		public string ReminderSettings { get; set; }
+		public DateTime DT { get; set; }
+		public int LID { get; set; }
+		public int UserSponsorExtendedSurveyID { get; set; }
+		public int AnswerID { get; set; }
 	}
 	
 	public class UserRegistrationID : BaseModel

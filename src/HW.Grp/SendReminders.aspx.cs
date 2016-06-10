@@ -10,6 +10,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Core.Models;
+using Newtonsoft.Json.Linq;
+using PushSharp.Core;
+using PushSharp.Google;
 
 namespace HW.Grp
 {
@@ -26,9 +29,9 @@ namespace HW.Grp
 			var senderId = "59929247886";
 			var message = "Reminder";
 
-			var smtp = new SmtpWrapper(new System.Net.Mail.SmtpClient(ConfigurationManager.AppSettings["SmtpServer"]));
+			var smtp = new SmtpStub(new System.Net.Mail.SmtpClient(ConfigurationManager.AppSettings["SmtpServer"]));
 
-			var repo = new Repo();
+			var repo = new RepoStub();
 			
 			var settings = repo.GetSystemSettings();
 
@@ -46,7 +49,7 @@ namespace HW.Grp
 							string personalReminderMessage = settings.Languages[u.LID - 1].ReminderMessage;
 							string personalLink = "https://www.healthwatch.se";
 							if (u.ReminderLink > 0) {
-								personalLink += "/c/" + u.UserKey.ToLower() + u.ID.ToString();
+								personalLink += "/c/" + u.UserKey.ToLower() + u.Id.ToString();
 							}
 							if (personalReminderMessage.IndexOf("<LINK/>") >= 0) {
 								personalReminderMessage = personalReminderMessage.Replace("<LINK/>", personalLink);
@@ -59,11 +62,11 @@ namespace HW.Grp
 							MailMessage mail = new MailMessage(settings.ReminderEmail, u.Email, settings.Languages[u.LID - 1].ReminderSubject, personalReminderMessage);
 							smtp.Send(mail);
 							
-							var registrationIds = repo.GetUserRegistrationIDs(u.ID);
-							Helper.sendGcmNotification(repo, registrationIds, apiKey, senderId, message, u.ID, u.UserKey);
+							var registrationIds = repo.GetUserRegistrationIDs(u.Id);
+							Helper.sendGcmNotification(repo, registrationIds, apiKey, senderId, message, u.Id, u.UserKey);
 
 							repo.demyo(
-								u.ID,
+								u.Id,
 								personalReminderMessage,
 								Helper.nextReminderSend(u.ReminderType, u.ReminderSettings.Split(':'), u.DT, DateTime.Now),
 								settings.Languages[u.LID - 1].ReminderSubject.Replace("'", "''")
@@ -77,7 +80,7 @@ namespace HW.Grp
 						badEmail = true;
 					}
 					if (badEmail) {
-						repo.UpdateEmailFailure(u.ID);
+						repo.UpdateEmailFailure(u.Id);
 					}
 				}
 			}
@@ -113,7 +116,7 @@ namespace HW.Grp
 									string personalReminderMessage = reminderMessage;
 									string personalLink = "https://www.healthwatch.se";
 									if (u.ReminderLink > 0) {
-										personalLink += "/c/" + u.UserKey.ToLower() + u.ID.ToString();
+										personalLink += "/c/" + u.UserKey.ToLower() + u.Id.ToString();
 									}
 									if (personalReminderMessage.IndexOf("<LINK/>") >= 0) {
 										personalReminderMessage = personalReminderMessage.Replace("<LINK/>", personalLink);
@@ -121,15 +124,15 @@ namespace HW.Grp
 										personalReminderMessage += "\r\n\r\n" + personalLink;
 									}
 									if (u.ReminderLink == 0) {
-										personalReminderMessage += "\r\n\r\n" + settings.Languages[u.ID - 1];
+										personalReminderMessage += "\r\n\r\n" + settings.Languages[u.Id - 1];
 									}
 									MailMessage mail = new MailMessage(settings.ReminderEmail, u.Email, reminderSubject, personalReminderMessage);
 									smtp.Send(mail);
 									
-									var registrationIds = repo.GetUserRegistrationIDs(u.ID);
-									Helper.sendGcmNotification(repo, registrationIds, apiKey, senderId, message, u.ID, u.UserKey);
+									var registrationIds = repo.GetUserRegistrationIDs(u.Id);
+									Helper.sendGcmNotification(repo, registrationIds, apiKey, senderId, message, u.Id, u.UserKey);
 
-									repo.eee(u.ID, reminderSubject, personalReminderMessage);
+									repo.eee(u.Id, reminderSubject, personalReminderMessage);
 
 									Console.WriteLine(u.Email);
 								} catch (Exception) {
@@ -139,7 +142,7 @@ namespace HW.Grp
 								badEmail = true;
 							}
 							if (badEmail) {
-								repo.fff(u.ID);
+								repo.fff(u.Id);
 							}
 						}
 					}
@@ -266,7 +269,7 @@ namespace HW.Grp
 			var users = new List<User>();
 			while (rs.Read()) {
 				var u = new User {
-					ID = GetInt32(rs, 0),
+					Id = GetInt32(rs, 0),
 					Email = GetString(rs, 1),
 					ReminderLink = GetInt32(rs, 2),
 					UserKey = GetString(rs, 3),
@@ -441,7 +444,7 @@ AND u.UserID = 1565"
 			var users = new List<User>();
 			while (rs.Read()) {
 				var u = new User {
-					ID = GetInt32(rs, 0),
+					Id = GetInt32(rs, 0),
 					Email = GetString(rs, 1),
 					ReminderLink = GetInt32(rs, 2),
 					UserKey = GetString(rs, 3),
@@ -501,20 +504,20 @@ WHERE s.SystemID = 1"
 		}
 	}
 	
-	public class User
-	{
-		public int ID { get; set; }
-		public string Email { get; set; }
-		public int ReminderLink { get; set ;}
-		public string UserKey { get; set; }
-		public int ReminderType { get; set; }
-		public string ReminderSettings { get; set; }
-		public DateTime DT { get; set; }
-		public int LID { get; set; }
-		public int UserSponsorExtendedSurveyID { get; set; }
-		public int AnswerID { get; set; }
-	}
-	
+//	public class User
+//	{
+//		public int ID { get; set; }
+//		public string Email { get; set; }
+//		public int ReminderLink { get; set ;}
+//		public string UserKey { get; set; }
+//		public int ReminderType { get; set; }
+//		public string ReminderSettings { get; set; }
+//		public DateTime DT { get; set; }
+//		public int LID { get; set; }
+//		public int UserSponsorExtendedSurveyID { get; set; }
+//		public int AnswerID { get; set; }
+//	}
+//	
 //	public class Sponsor
 //	{
 //		public string LoginTxt { get; set; }
@@ -730,5 +733,163 @@ WHERE s.SystemID = 1"
 
             gcmBroker.Stop();
         }
+	}
+	
+	
+	
+	
+	
+	
+	
+	public class SmtpStub : ISmtp
+	{
+		public SmtpStub(SmtpClient smtp)
+		{
+		}
+		
+		public void Send(MailMessage mail)
+		{
+		}
+	}
+	
+	public class RepoStub : IRepo
+	{
+		public SystemSettings GetSystemSettings()
+		{
+			var s = new SystemSettings {
+				ReminderEmail = "reminder@healthwatch.se",
+			};
+			
+			s.Languages.Add(
+				new SystemSettingsLang {
+					ReminderMessage = @"Här kommer en påminnelse om att logga in på HealthWatch.
+	
+	<LINK/>
+	
+	Om du inte vill ha fler påminnelser så kan du stänga av dessa genom att logga in och välja Påminnelser på menyn längst upp.
+	
+	Med vänliga hälsningar,
+	HealthWatch",
+					ReminderSubject = "Påminnelse från HealthWatch",
+					ReminderAutoLogin = "Tips! Du ställa in så att länken ovan loggar in dig automatiskt utan att ange användarnamn och lösenord. Denna inställning hittar du också under menyalternativet Påminnelser efter att du loggat in.",
+				}
+			);
+			
+			s.Languages.Add(
+				new SystemSettingsLang {
+					ReminderMessage = @"This is a reminder to log on to HealthWatch.
+	
+	<LINK/>
+	
+	If you want no further reminders, please log in and turn them off under Reminders on the top menu.
+	
+	Best regards,
+	HealthWatch",
+					ReminderSubject = "Reminder from HealthWatch",
+					ReminderAutoLogin = "Please note! The link above can be customized to log you on automatically. This is also done in the Reminders section after login."
+				}
+			);
+			return s;
+		}
+		
+		public List<User> ggg()
+		{
+			var users = new List<User>();
+			return users;
+		}
+		
+		public List<User> GetUsers()
+		{
+			var users = new List<User>();
+			users.Add(
+				new User {
+					Id = 17429,
+					UserKey = "d4469cf8-a9c1-474f-a5c3-148f107e432d".Replace("-", "").Substring(0, 12),
+					ReminderLink = 2,
+					Email = "customer@localhost.com",
+					LID = 1,
+					ReminderSettings = "17:1:3"
+				});
+			return users;
+		}
+		
+		public void UpdateUserKey()
+		{
+		}
+		
+		public void demyo(int userID, string personalReminderMessage, string xxx, string yyy)
+		{
+		}
+		
+		public void UpdateEmailFailure(int userID)
+		{
+		}
+		
+		public List<Sponsor> otot()
+		{
+			var sponsors = new List<Sponsor>();
+			sponsors.Add(
+				new Sponsor {
+					LoginText = "LoginTxt2",
+					LoginSubject = "LoginSubject2"
+				}
+			);
+			return sponsors;
+		}
+		
+		public void hhh(int answerID, int userSponsorExtendedSurveyID)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public List<User> ototize(int sponsorID, string ddd, int userID)
+		{
+			var users = new List<User>();
+			users.Add(
+				new User {
+					Id = 17429,
+					UserKey = "d4469cf8-a9c1-474f-a5c3-148f107e432d".Replace("-", "").Substring(0, 12),
+					Email = "customer@localhost.com",
+					ReminderLink = 2,
+					LID = 1
+				}
+			);
+			return users;
+		}
+		
+		public List<string> GetUserRegistrationIDs(int userID)
+		{
+			var ids = new List<string>();
+			ids.Add("cLrKoHsz4zw:APA91bFpZnwCmmXhZN0JongzTbZPx2f9OGyLVBMO-joT-MXP0u-U73w6RQPOUXqNDCEcH7XgiaDUNdKQsY3nIToyX4Km6UyU1NgI6YV56eL_xISSPPlHPawRHexbf_Yyyiiev6tygXPE"); // Ian's Android Phone
+	//			ids.Add("e4elA3Xu7Eg:APA91bGZ9lzk1XQoucveFngdRVtk0atB4TWvfbhN_Zp3LwjfWuBiDfLjZo4sBVi8-JJIObCvOGz8hgMiNLt9i-ttLBLw3_hr-tE0oqRVIAfU7SyjXGQliIk6sKiIE-bbVXOKPhXBxnBe"); // Nino's Android Phone
+	//			ids.Add("djS9ID_BN18:APA91bGCXkzSGaRqaKlQWw5qwZYRlFY1i9AsQvXBG4imBxphoVD7vEv0BlNQVKPedqVJSVT8AEdd9BARzajkANlNSF2fexHaNwhB-hD91yLX_OL_rNVRVgLQC48Ne9la1G6hRcgRiUpi"); // Nino's Apple Phone
+			return ids;
+		}
+		
+		public void fff(int userID)
+		{
+		}
+		
+		public void eee(int userID, string reminderSubject, string personalReminderMessage)
+		{
+		}
+		
+		public void ddd(int userID, string userKey)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public void ccc(int userID, string userKey)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public void bbb(Sponsor s)
+		{
+		}
+		
+		public void aaa(int sponsorID)
+		{
+		}
 	}
 }
