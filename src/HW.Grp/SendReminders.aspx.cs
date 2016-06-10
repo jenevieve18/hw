@@ -47,9 +47,11 @@ namespace HW.Grp
 					if (Helper.isEmail(u.Email)) {
 						try {
 							string personalReminderMessage = settings.Languages[u.LID - 1].ReminderMessage;
-							string personalLink = "https://www.healthwatch.se";
+							//string personalLink = "https://www.healthwatch.se";
+                            string personalLink = ConfigurationManager.AppSettings["healthWatchURL"];
 							if (u.ReminderLink > 0) {
-								personalLink += "/c/" + u.UserKey.ToLower() + u.Id.ToString();
+//								personalLink += "/c/" + u.UserKey.ToLower() + u.Id.ToString();
+                            	personalLink += "c/" + u.UserKey.ToLower() + u.Id.ToString();
 							}
 							if (personalReminderMessage.IndexOf("<LINK/>") >= 0) {
 								personalReminderMessage = personalReminderMessage.Replace("<LINK/>", personalLink);
@@ -73,7 +75,7 @@ namespace HW.Grp
 							);
 
 							Console.WriteLine(u.Email);
-						} catch (Exception) {
+						} catch (Exception ex) {
 							badEmail = true;
 						}
 					} else {
@@ -161,7 +163,8 @@ namespace HW.Grp
 	{
 		protected SqlDataReader recordSet(string sqlString)
 		{
-			SqlConnection dataConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlConnection"].ConnectionString);
+            //SqlConnection dataConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlConnection"].ConnectionString);
+            SqlConnection dataConnection = new SqlConnection(ConfigurationManager.AppSettings["SqlConnection"]);
 			dataConnection.Open();
 			SqlCommand dataCommand = new SqlCommand(sqlString, dataConnection);
 			SqlDataReader dataReader = dataCommand.ExecuteReader(CommandBehavior.CloseConnection);
@@ -170,7 +173,8 @@ namespace HW.Grp
 
 		protected void exec(string sqlString)
 		{
-			SqlConnection dataConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlConnection"].ConnectionString);
+            //SqlConnection dataConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlConnection"].ConnectionString);
+            SqlConnection dataConnection = new SqlConnection(ConfigurationManager.AppSettings["SqlConnection"]);
 			dataConnection.Open();
 			SqlCommand dataCommand = new SqlCommand(sqlString, dataConnection);
 			dataCommand.ExecuteNonQuery();
@@ -439,7 +443,7 @@ AND u.Reminder IS NOT NULL
 AND u.Reminder <> 0
 AND u.ReminderNextSend IS NOT NULL
 AND u.ReminderNextSend <= GETDATE()
-AND u.UserID = 1565"
+--AND u.UserID = 1565"
 			);
 			var users = new List<User>();
 			while (rs.Read()) {
@@ -490,6 +494,7 @@ WHERE s.SystemID = 1"
 			);
 			SystemSettings s = null;
 			if (rs.Read()) {
+                s = new SystemSettings();
 				s.ReminderEmail = GetString(rs, 2);
 				do {
 					var l = new SystemSettingsLang {
