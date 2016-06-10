@@ -12,7 +12,8 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>HW.Invoicing</RootNamespace>
     <AssemblyName>HW.Invoicing</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

@@ -12,7 +12,8 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>healthWatch</RootNamespace>
     <AssemblyName>HW</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
