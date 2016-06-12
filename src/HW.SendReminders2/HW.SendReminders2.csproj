@@ -10,6 +10,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <NoWin32Manifest>False</NoWin32Manifest>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -75,6 +76,7 @@
     <Compile Include="Repo.cs" />
     <Compile Include="Program2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepoStub.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -18,17 +18,13 @@ namespace HW.SendReminders2
 	{
 		static void Main(string[] args)
 		{
-//			string[] reminderMessageLang = new string[2], reminderSubjectLang = new string[2], reminderAutoLoginLang = new string[2];
-			
 			var apiKey = "AIzaSyB3ne08mvULbQX8HalX-qRGQtP1Ih9bqDY";
 			var senderId = "59929247886";
 			var message = "Reminder";
 
-//			ISmtp smtp = new SmtpWrapper(new System.Net.Mail.SmtpClient(ConfigurationManager.AppSettings["SmtpServer"])); // Uncomment this for production and comment below code to connect to real SMTP instead of just a dummy Stub
-			ISmtp smtp = new SmtpStub();
+			var smtp = new SmtpWrapper(new System.Net.Mail.SmtpClient(ConfigurationManager.AppSettings["SmtpServer"]));
 
-//			IRepo repo = new Repo(); // Uncomment this class and comment below to connect to a real repository with database connectivity and not just use the dummy Stub.
-			var repo = new RepoStub();
+			var repo = new Repo();
 			
 			var settings = repo.GetSystemSettings();
 
@@ -39,7 +35,7 @@ namespace HW.SendReminders2
 
 				Console.WriteLine("Sending personal reminders");
 
-				foreach (var u in repo.hahaha()) {
+				foreach (var u in repo.GetUsers()) {
 					bool badEmail = false;
 					if (Helper.isEmail(u.Email)) {
 						try {

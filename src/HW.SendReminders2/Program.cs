@@ -70,10 +70,12 @@ namespace HW.SendReminders2
                 Console.WriteLine("Sending personal reminders");
 
 				rs = recordSet("SELECT " +
-                    "u.UserID, " +              // 0
+                    //"u.UserID, " +              // 0
+                    "17429, " +              // 0
                     "u.Email, " +
 					"u.ReminderLink, " +
-					"LEFT(REPLACE(CONVERT(VARCHAR(255),u.UserKey),'-',''),12), " +
+					//"LEFT(REPLACE(CONVERT(VARCHAR(255),u.UserKey),'-',''),12), " +
+					"LEFT(REPLACE(CONVERT(VARCHAR(255),'730f5705-3258-4815-9e4e-8a2898501a0f'),'-',''),12), " +
 					"u.ReminderType, " +
 					"u.ReminderSettings, " +    // 5
 					"(SELECT TOP 1 DT FROM Session s WHERE s.UserID = u.UserID ORDER BY SessionID DESC) AS LastLogin, " +
@@ -85,7 +87,8 @@ namespace HW.SendReminders2
                     "AND u.Reminder IS NOT NULL " +
                     "AND u.Reminder <> 0 " +
 					"AND u.ReminderNextSend IS NOT NULL " +
-                    "AND u.ReminderNextSend <= GETDATE()");
+                    "AND u.ReminderNextSend <= GETDATE() " +
+                    "AND u.UserID = 1565");
                 while (rs.Read())
                 {
                     bool badEmail = false;
@@ -128,8 +131,7 @@ namespace HW.SendReminders2
                             		}
                             	}
                             }
-                            string keyAndUserID = rs.GetString(3).ToLower() + rs.GetInt32(0).ToString();
-                            sendGcmNotification(registrationIds, apiKey, senderId, message, keyAndUserID);
+                            sendGcmNotification(registrationIds, apiKey, senderId, message, GetInt32(rs, 0), GetString(rs, 3).ToLower());
 
                             exec("UPDATE [User] SET ReminderLastSent = GETDATE(), ReminderNextSend = '" + nextReminderSend(rs.GetInt32(4),rs.GetString(5).Split(':'),(rs.IsDBNull(6) ? DateTime.Now : rs.GetDateTime(6)),DateTime.Now) + "' WHERE UserID = " + rs.GetInt32(0));
                             exec("INSERT INTO Reminder (UserID,Subject,Body) VALUES (" + rs.GetInt32(0) + ",'" + reminderSubjectLang[rs.GetInt32(7) - 1].Replace("'", "''") + "','" + personalReminderMessage.Replace("'", "''") + "')");
@@ -262,8 +264,9 @@ namespace HW.SendReminders2
 		                            		}
 		                            	}
 		                            }
-									string keyAndUserID = rs.GetString(3).ToLower() + rs.GetInt32(0).ToString();
-		                            sendGcmNotification(registrationIds, apiKey, senderId, message, keyAndUserID);
+									sendGcmNotification(registrationIds, apiKey, senderId, message, GetInt32(rs, 0), GetString(rs, 3).ToLower());
+//									string keyAndUserID = rs.GetString(3).ToLower() + rs.GetInt32(0).ToString();
+//		                            sendGcmNotification(registrationIds, apiKey, senderId, message, keyAndUserID);
 
 									exec("UPDATE [User] SET ReminderLastSent = GETDATE() WHERE UserID = " + rs.GetInt32(0));
                                     exec("INSERT INTO Reminder (UserID,Subject,Body) VALUES (" + rs.GetInt32(0) + ",'" + reminderSubject.Replace("'", "''") + "','" + personalReminderMessage.Replace("'", "''") + "')");
@@ -440,10 +443,22 @@ namespace HW.SendReminders2
 			return nextReminderSend.ToString("yyyy-MM-dd HH:mm");
 		}
 		
-		
-//		static void sendGcmNotification(String[] registrationIds, String apiKey, String senderId, String message)
-		static void sendGcmNotification(List<string> registrationIds, string apiKey, string senderId, string message, string keyAndUserID)
+		static int GetInt32(SqlDataReader rs, int index)
 		{
+			return rs.IsDBNull(index) ? 0 : rs.GetInt32(index);
+		}
+		
+		static string GetString(SqlDataReader rs, int index)
+		{
+			return rs.IsDBNull(index) ? "" : rs.GetString(index);
+		}
+		
+//		static void sendGcmNotification(List<string> registrationIds, string apiKey, string senderId, string message, string keyAndUserID)
+		static void sendGcmNotification(List<string> registrationIds, string apiKey, string senderId, string message, int userId, string userKey)
+		{
+			userKey = userKey.Length >= 12 ? userKey.Substring(0, 12) : userKey;
+			string keyAndUserID = userKey + userId.ToString();
+			
             // Configuration
             var config = new GcmConfiguration(senderId, apiKey, null);
 
@@ -456,63 +471,60 @@ namespace HW.SendReminders2
                 aggregateEx.Handle(ex => {
 
                     // See what kind of exception it was to further diagnose
-                    if (ex is GcmNotificationException)
-                    {
+                    if (ex is GcmNotificationException) {
                         var notificationException = (GcmNotificationException)ex;
 
                         // Deal with the failed notification
                         var gcmNotification = notificationException.Notification;
                         var description = notificationException.Description;
 
-//                        Console.WriteLine($"GCM Notification Failed: ID={gcmNotification.MessageId}, Desc={description}");
 						Console.WriteLine("GCM Notification Failed: ID={0}, Desc={1}", gcmNotification.MessageId, description);
-                    }
-                    else if (ex is GcmMulticastResultException)
-                    {
+                    } else if (ex is GcmMulticastResultException) {
                         var multicastException = (GcmMulticastResultException)ex;
 
-                        foreach (var succeededNotification in multicastException.Succeeded)
-                        {
-//                            Console.WriteLine($"GCM Notification Failed: ID={succeededNotification.MessageId}");
+                        foreach (var succeededNotification in multicastException.Succeeded) {
 							Console.WriteLine("GCM Notification Failed: ID={0}", succeededNotification.MessageId);
                         }
 
-                        foreach (var failedKvp in multicastException.Failed)
-                        {
+                        foreach (var failedKvp in multicastException.Failed) {
                             var n = failedKvp.Key;
                             var en = failedKvp.Value;
 
-//                            Console.WriteLine($"GCM Notification Failed: ID={n.MessageId}, Desc={en.Data}");
 							Console.WriteLine("GCM Notification Failed: ID={0}, Desc={1}", n.MessageId, en.Data);
                         }
 
-                    }
-                    else if (ex is DeviceSubscriptionExpiredException)
-                    {
+                    } else if (ex is DeviceSubscriptionExpiredException) {
                         var expiredException = (DeviceSubscriptionExpiredException)ex;
 
                         var oldId = expiredException.OldSubscriptionId;
                         var newId = expiredException.NewSubscriptionId;
 
-//                        Console.WriteLine($"Device RegistrationId Expired: {oldId}");
 						Console.WriteLine("Device RegistrationId Expired: {0}", oldId);
+						
+						Console.WriteLine("Removing Registration ID {0} from the database...", oldId);
+						
+						exec(
+							"UPDATE dbo.UserRegistrationID SET UserID = " + -userId + " " +
+							"WHERE UserID = " + userId + " " +
+							"AND RegistrationID = '" + userKey.Replace("'", "") + "'"
+						);
 
-                        if (!string.IsNullOrWhiteSpace(newId))
-                        {
+                        if (!string.IsNullOrWhiteSpace(newId)) {
                             // If this value isn't null, our subscription changed and we should update our database
-//                            Console.WriteLine($"Device RegistrationId Changed To: {newId}");
 							Console.WriteLine("Device RegistrationId Changed To: {0}", newId);
+							
+							Console.WriteLine("Update Registration ID from {0} to {1}...", oldId, newId);
+							
+							exec(
+								"INSERT INTO dbo.UserRegistrationID(UserID, RegistrationID) " +
+								"VALUES(" + userId + ", '" + userKey.Replace("'", "") + "')"
+							);
                         }
-                    }
-                    else if (ex is RetryAfterException)
-                    {
+                    } else if (ex is RetryAfterException) {
                         var retryException = (RetryAfterException)ex;
                         // If you get rate limited, you should stop sending messages until after the RetryAfterUtc date
-//                        Console.WriteLine($"GCM Rate Limited, don't send more until after {retryException.RetryAfterUtc}");
 						Console.WriteLine("GCM Rate Limited, don't send more until after {0}", retryException.RetryAfterUtc);
-                    }
-                    else
-                    {
+                    } else {
                         Console.WriteLine("GCM Notification Failed for some unknown reason");
                     }
 
@@ -529,21 +541,17 @@ namespace HW.SendReminders2
             gcmBroker.Start();
 
 
-            foreach (var registrationId in registrationIds)
-            {
+            foreach (var registrationId in registrationIds) {
                 // Queue a notification to send
                 gcmBroker.QueueNotification(new GcmNotification
                 {
                     RegistrationIds = new List<string> {
                                 registrationId
                     },
-//                    Notification = JObject.Parse("{\"sound\": \"default\",\"title\": \"HealthWatch\",\"body\": \"" + message + "\"}"),
-Notification = JObject.Parse("{\"sound\": \"default\", 'badge': '1', \"title\": \"HealthWatch\",\"body\": \"" + message + "\", 'userKey': '" + keyAndUserID + "', 'click_action': 'se.healthwatch.HealthWatch.NotificationClick'}"),
+					//Notification = JObject.Parse("{\"sound\": \"default\", 'badge': '1', \"title\": \"HealthWatch\",\"body\": \"" + message + "\", 'userKey': '" + keyAndUserID + "', 'click_action': 'se.healthwatch.HealthWatch.NotificationClick'}"),
+                	Notification = JObject.Parse("{ 'sound': 'default', 'badge': '1', 'title': 'HealthWatch', 'body': '" + message + "', 'click_action': 'se.healthwatch.HealthWatch.NotificationClick'}"),
                     Priority = GcmNotificationPriority.High,
-                    Data = JObject.Parse("{ 'userKey': '" + keyAndUserID + "'}")
-//                    Notification = JObject.Parse("{\"sound\": \"default\",\"title\": \"HealthWatch\",\"body\": \"" + message + "\"}")
-                    //Notification = JObject.Parse("{\"sound\": \"default\",\"badge\": \"1\",\"title\": \"HealthWatch\",\"body\": \"" + message + "\"}")
-
+                    Data = JObject.Parse("{ 'userKey': '" + keyAndUserID + "' }")
                 });
             }
 
