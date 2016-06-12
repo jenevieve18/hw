@@ -89,6 +89,7 @@ ORDER BY i.Status, i.IssueDate DESC";
                     });
                 }
             }
+            CloseConnection();
             return i;
         }
 	}

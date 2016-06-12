@@ -24,6 +24,7 @@ FROM Lang";
 					languages.Add(l);
 				}
 			}
+			CloseConnection();
 			return languages;
 		}
 		

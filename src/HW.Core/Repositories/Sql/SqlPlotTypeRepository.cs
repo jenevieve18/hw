@@ -95,6 +95,7 @@ LEFT OUTER JOIN PlotTypeLang ptl
                     p.Add(t);
                 }
             }
+            CloseConnection();
             return p;
         }
 
@@ -116,6 +117,7 @@ FROM PlotType"
 					types.Add(t);
 				}
 			}
+			CloseConnection();
 			return types;
 		}
 
@@ -151,6 +153,7 @@ WHERE PlotTypeId = @PlotTypeId"
                     l.Add(p);
                 }
             }
+            CloseConnection();
             return l;
         }
 		
@@ -172,6 +175,7 @@ WHERE Id = @Id"
 					};
 				}
 			}
+			CloseConnection();
 			return p;
 		}
 		
@@ -201,6 +205,7 @@ WHERE LangID = {0}",
 					types.Add(t);
 				}
 			}
+			CloseConnection();
 			return types;
 		}
 	}

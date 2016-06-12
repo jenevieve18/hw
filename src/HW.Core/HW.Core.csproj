@@ -155,6 +155,7 @@
     <Compile Include="Repositories\IRepositoryFactory.cs" />
     <Compile Include="Repositories\ISponsorRepository.cs" />
     <Compile Include="Repositories\Sql\BaseSqlRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlFAQRepository.cs" />
     <Compile Include="Repositories\Sql\SqlIssueRepository.cs" />
     <Compile Include="Repositories\Sql\SqlMeasureRepository.cs" />
     <Compile Include="Repositories\Sql\SqlNewsRepository.cs" />

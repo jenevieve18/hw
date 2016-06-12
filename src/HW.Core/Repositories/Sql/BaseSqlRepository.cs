@@ -83,6 +83,7 @@ namespace HW.Core.Repositories.Sql
 				cmd.Parameters.Add(p);
 			}
 			cmd.ExecuteNonQuery();
+			CloseConnection();
 		}
 
         protected object ExecuteScalar(string query, string connectionName, params SqlParameter[] parameters)
@@ -98,7 +99,9 @@ namespace HW.Core.Repositories.Sql
                 }
                 cmd.Parameters.Add(p);
             }
-            return cmd.ExecuteScalar();
+            object obj = cmd.ExecuteScalar();
+            CloseConnection();
+            return obj;
         }
 		
 		protected SqlDataReader ExecuteReader(string query)
@@ -231,14 +234,14 @@ namespace HW.Core.Repositories.Sql
 			return rs.IsDBNull(index) ? def : rs.GetDecimal(index);
 		}
 		
-		void CloseConnection()
+		protected void CloseConnection()
 		{
 			if (con.State == ConnectionState.Open) {
 				con.Close();
 			}
 		}
 		
-		void OpenConnection()
+		protected void OpenConnection()
 		{
 			if (con.State == ConnectionState.Closed) {
 				con.Open();
