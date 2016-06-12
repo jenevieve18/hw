@@ -236,14 +236,14 @@ namespace HW.Core.Repositories.Sql
 		
 		protected void CloseConnection()
 		{
-			if (con.State == ConnectionState.Open) {
+			if (con != null && con.State == ConnectionState.Open) {
 				con.Close();
 			}
 		}
 		
 		protected void OpenConnection()
 		{
-			if (con.State == ConnectionState.Closed) {
+			if (con != null && con.State == ConnectionState.Closed) {
 				con.Open();
 			}
 		}

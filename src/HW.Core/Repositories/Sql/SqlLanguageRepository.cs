@@ -15,7 +15,7 @@ SELECT LangID,
 Lang
 FROM Lang";
 			var languages = new List<Language>();
-			using (SqlDataReader rs = Db.rs(query)) {
+			using (SqlDataReader rs = ExecuteReader(query)) {
 				while (rs.Read()) {
 					var l = new Language {
 						Id = GetInt32(rs, 0),
