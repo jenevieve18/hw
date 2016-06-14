@@ -568,6 +568,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\de-DE.resx" />
     <EmbeddedResource Include="Properties\en-US.resx" />
     <EmbeddedResource Include="Properties\sv-SE.resx" />
   </ItemGroup>

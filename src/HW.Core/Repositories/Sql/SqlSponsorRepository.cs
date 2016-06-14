@@ -2284,7 +2284,7 @@ INSERT INTO SponsorAdminSessionFunction(SponsorAdminSessionID, ManagerFunctionID
 VALUES({0}, {1}, '{2}')",
 				sessionId,
 				functionId,
-				date
+				date.ToString("s")
 			);
 			Db.exec(query);
 		}

@@ -76,8 +76,10 @@ namespace HW.Grp
 	{
         static readonly string English = "HW.Grp.Properties.en-US";
         static readonly string Swedish = "HW.Grp.Properties.sv-SE";
+        static readonly string German = "HW.Grp.Properties.de-DE";
         const int EnglishID = 2;
         const int SwedishID = 1;
+        const int GermanID = 4;
         const int DefaultID = SwedishID;
 
         static string GetLangID(int langID)
@@ -88,6 +90,8 @@ namespace HW.Grp
                     return English;
                 case SwedishID:
                     return Swedish;
+                case GermanID:
+                    return German;
                 default:
                     return English;
             }

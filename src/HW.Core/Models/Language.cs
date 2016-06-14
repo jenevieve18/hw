@@ -97,7 +97,8 @@ namespace HW.Core.Models
 		{
 			switch (lid) {
 					case 1: Thread.CurrentThread.CurrentCulture = new CultureInfo("sv-SE"); break;
-					case 2: Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US"); break;
+                    case 2: Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US"); break;
+                    case 4: Thread.CurrentThread.CurrentCulture = new CultureInfo("de-DE"); break;
 					default: throw new NotSupportedException();
 			}
 		}

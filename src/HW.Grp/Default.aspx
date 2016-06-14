@@ -70,7 +70,14 @@
         <h2>
             <%= R.Str(lid, "login.header", "HealthWatch.se<br>Group administration") %>
         </h2>
-        <p style="font-size:14px"><%= HtmlHelper.Anchor(R.Str(lid, "i18n", "På svenska"), string.Format("default.aspx?lid={0}", lid == 1 ? 2 : 1), "class='i18n'")%></p>
+        <p style="font-size:14px">
+            <!--<%= HtmlHelper.Anchor(R.Str(lid, "i18n", "På svenska"), string.Format("default.aspx?lid={0}", lid == 1 ? 2 : 1), "class='i18n'")%>-->
+            <small>
+                <%= HtmlHelper.Anchor(R.Str(1, "i18n"), string.Format("default.aspx?lid=2&r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)), "class='i18n'")%>
+                <%= HtmlHelper.Anchor(R.Str(2, "i18n"), string.Format("default.aspx?lid=1&r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)), "class='i18n'")%>
+                <%= HtmlHelper.Anchor(R.Str(4, "i18n", "In German"), string.Format("default.aspx?lid=4&r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)), "class='i18n'")%>
+            </small>
+        </p>
 
 		<% if (errorMessage != "") { %>
 			<div class="alert alert-error">

@@ -1,0 +1,651 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="access.nodelete" xml:space="preserve">
+    <value>Zugang zum endgültigen Löschen von Benutzern</value>
+  </data>
+  <data name="action" xml:space="preserve">
+    <value>Aktivität</value>
+  </data>
+  <data name="active" xml:space="preserve">
+    <value>Aktiv</value>
+  </data>
+  <data name="active.activated" xml:space="preserve">
+    <value>Aktiv/&lt;br&gt;Aktiviert</value>
+  </data>
+  <data name="admin.error" xml:space="preserve">
+    <value>Super-User kann Passwort nicht ändern Bitte wenden Sie sich an support@healthwatch.se.</value>
+  </data>
+  <data name="administration" xml:space="preserve">
+    <value>Verwaltung</value>
+  </data>
+  <data name="alphabetical" xml:space="preserve">
+    <value>Alphabetisch</value>
+  </data>
+  <data name="answer.last" xml:space="preserve">
+    <value>Zahl der Antworten&lt;br/&gt;im letzten Monat</value>
+  </data>
+  <data name="background.variable" xml:space="preserve">
+    <value>Hintergrundvariable</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="count.answer" xml:space="preserve">
+    <value>Anzahl Antworten</value>
+  </data>
+  <data name="credentials" xml:space="preserve">
+    <value>Daten</value>
+  </data>
+  <data name="date.future.no" xml:space="preserve">
+    <value>(zukünftige Datumsangaben unzulässig)</value>
+  </data>
+  <data name="day.everyday" xml:space="preserve">
+    <value>Jeden Tag</value>
+  </data>
+  <data name="department" xml:space="preserve">
+    <value>Einheit</value>
+  </data>
+  <data name="department.toplevel" xml:space="preserve">
+    <value>&lt; Top Level &gt;</value>
+  </data>
+  <data name="disassociate.start" xml:space="preserve">
+    <value>Diesen Benutzer von Anfang an von der Organisation trennen.</value>
+  </data>
+  <data name="disassociate.today" xml:space="preserve">
+    <value>Diesen Benutzer ab heute und zukünftig von der Organisation trennen.</value>
+  </data>
+  <data name="display.hierarchy" xml:space="preserve">
+    <value>(zur Anzeige in der Hierarchie)</value>
+  </data>
+  <data name="email" xml:space="preserve">
+    <value>E-Mail</value>
+  </data>
+  <data name="email.incorrect" xml:space="preserve">
+    <value>Falsche Mailadresse(n) gefunden.</value>
+  </data>
+  <data name="execute" xml:space="preserve">
+    <value>Ausführen</value>
+  </data>
+  <data name="exercises.area" xml:space="preserve">
+    <value>Gebiet wählen</value>
+  </data>
+  <data name="exercises.category" xml:space="preserve">
+    <value>Kategorie wählen</value>
+  </data>
+  <data name="exercises.group" xml:space="preserve">
+    <value>Gruppenübungen</value>
+  </data>
+  <data name="exercises.sorting" xml:space="preserve">
+    <value>Übungen - Sortierung:</value>
+  </data>
+  <data name="filename" xml:space="preserve">
+    <value>Dateiname</value>
+  </data>
+  <data name="found.results" xml:space="preserve">
+    <value>Treffer.</value>
+  </data>
+  <data name="graphs.change" xml:space="preserve">
+    <value>Diese Grafik ändern in:</value>
+  </data>
+  <data name="graphs.change.all" xml:space="preserve">
+    <value>Alle Grafiken ändern in:</value>
+  </data>
+  <data name="graphs.export" xml:space="preserve">
+    <value>Diese Grafik exportieren nach:</value>
+  </data>
+  <data name="graphs.export.all" xml:space="preserve">
+    <value>Alle Grafiken exportieren nach:</value>
+  </data>
+  <data name="i18n" xml:space="preserve">
+    <value>In German</value>
+  </data>
+  <data name="included.not" xml:space="preserve">
+    <value>Nicht enthalten</value>
+  </data>
+  <data name="invitation.received" xml:space="preserve">
+    <value>Einladung&lt;br&gt;erhalten</value>
+  </data>
+  <data name="invite.first" xml:space="preserve">
+    <value>1. Einladung&amp;nbsp;&lt;br/&gt;&amp;nbsp;versandt</value>
+  </data>
+  <data name="invite.resolve" xml:space="preserve">
+    <value>Einladung</value>
+  </data>
+  <data name="login.header" xml:space="preserve">
+    <value>Gruppenadministration</value>
+  </data>
+  <data name="login.invalid" xml:space="preserve">
+    <value>Benutzername oder Passwort ungültig. Bitte versuchen Sie es noch einmal.</value>
+  </data>
+  <data name="login.reminder" xml:space="preserve">
+    <value>Login-Erinnerung</value>
+  </data>
+  <data name="login.reminder.subject" xml:space="preserve">
+    <value>Login-Erinnerung Betreff/Nachricht</value>
+  </data>
+  <data name="login.signin" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="manager.access" xml:space="preserve">
+    <value>Zugang</value>
+  </data>
+  <data name="manager.add" xml:space="preserve">
+    <value>Vorgesetzten hinzufügen</value>
+  </data>
+  <data name="manager.delete" xml:space="preserve">
+    <value>Wollen Sie diesen Vorgesetzten wirklich löschen?</value>
+  </data>
+  <data name="manager.email.notunique" xml:space="preserve">
+    <value>Bitte wählen Sie eine eindeutige E-Mail-Adresse</value>
+  </data>
+  <data name="manager.email.required" xml:space="preserve">
+    <value>E-Mail-Adresse erforderlich</value>
+  </data>
+  <data name="manager.invalid" xml:space="preserve">
+    <value>Fehler! Benutzername ungültig, bitte wählen Sie einen anderen.</value>
+  </data>
+  <data name="manager.login.days" xml:space="preserve">
+    <value>Tag(e)</value>
+  </data>
+  <data name="manager.login.last" xml:space="preserve">
+    <value>Letztes Login</value>
+  </data>
+  <data name="manager.login.notactivated" xml:space="preserve">
+    <value>Nicht aktiviert</value>
+  </data>
+  <data name="manager.login.notonrecord" xml:space="preserve">
+    <value>Nicht verfügbar</value>
+  </data>
+  <data name="manager.name" xml:space="preserve">
+    <value>Vorname</value>
+  </data>
+  <data name="manager.name.last" xml:space="preserve">
+    <value>Nachname</value>
+  </data>
+  <data name="manager.name.required" xml:space="preserve">
+    <value>Name erforderlich</value>
+  </data>
+  <data name="manager.password" xml:space="preserve">
+    <value>Passwort</value>
+  </data>
+  <data name="manager.username" xml:space="preserve">
+    <value>Benutzername</value>
+  </data>
+  <data name="match.no" xml:space="preserve">
+    <value>Die Suche ergab keine Treffer.</value>
+  </data>
+  <data name="message.activated.all" xml:space="preserve">
+    <value>Nachricht an alle aktivierten Benutzer</value>
+  </data>
+  <data name="message.confirm" xml:space="preserve">
+    <value>Nachricht, bitte mit Passwort bestätigen</value>
+  </data>
+  <data name="message.sent" xml:space="preserve">
+    <value>Die Nachricht wurde erfolgreich gesendet.</value>
+  </data>
+  <data name="month" xml:space="preserve">
+    <value>Monat</value>
+  </data>
+  <data name="month.one" xml:space="preserve">
+    <value>Einen Monat</value>
+  </data>
+  <data name="month.six" xml:space="preserve">
+    <value>6 Monate</value>
+  </data>
+  <data name="month.three" xml:space="preserve">
+    <value>3 Monate</value>
+  </data>
+  <data name="never" xml:space="preserve">
+    <value>Nie</value>
+  </data>
+  <data name="news" xml:space="preserve">
+    <value>Neuigkeiten</value>
+  </data>
+  <data name="no" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="org.database" xml:space="preserve">
+    <value>Datenbank, alle&lt;br&gt;anderen&lt;/b&gt;Organisationen</value>
+  </data>
+  <data name="org.total" xml:space="preserve">
+    <value>Summe für Ihre Organisation(en)</value>
+  </data>
+  <data name="organization.access" xml:space="preserve">
+    <value>Organisationszugang</value>
+  </data>
+  <data name="organization.readonly" xml:space="preserve">
+    <value>Organisation, nur Leseberechtigung</value>
+  </data>
+  <data name="password.activate" xml:space="preserve">
+    <value>Passwort aktivieren</value>
+  </data>
+  <data name="password.activate.sent" xml:space="preserve">
+    <value>Aktivierungslink für Passwort versandt.</value>
+  </data>
+  <data name="password.change" xml:space="preserve">
+    <value>Passwort ändern</value>
+  </data>
+  <data name="password.confirm" xml:space="preserve">
+    <value>Passwort bestätigen</value>
+  </data>
+  <data name="password.incorrect" xml:space="preserve">
+    <value>Falsches Passwort!</value>
+  </data>
+  <data name="password.new" xml:space="preserve">
+    <value>Neues Passwort</value>
+  </data>
+  <data name="password.nomatch" xml:space="preserve">
+    <value>Passwörter stimmen nicht überein!</value>
+  </data>
+  <data name="password.saved" xml:space="preserve">
+    <value>Neues Passwort wurde gespeichert.</value>
+  </data>
+  <data name="password.short" xml:space="preserve">
+    <value>Zu kurzes Passwort! Ihr Passwort muss mindestens 8 Zeichen lang sein.</value>
+  </data>
+  <data name="period" xml:space="preserve">
+    <value>Zeitraum</value>
+  </data>
+  <data name="popularity" xml:space="preserve">
+    <value>Beliebtheit</value>
+  </data>
+  <data name="privilege.super" xml:space="preserve">
+    <value>Superberechtigungen</value>
+  </data>
+  <data name="questions.based" xml:space="preserve">
+    <value>basiert auf Fragen im Fragebogen</value>
+  </data>
+  <data name="random" xml:space="preserve">
+    <value>Zufällig</value>
+  </data>
+  <data name="recipients" xml:space="preserve">
+    <value>Empfänger</value>
+  </data>
+  <data name="registration" xml:space="preserve">
+    <value>Registrierung</value>
+  </data>
+  <data name="registration.invitation.subject" xml:space="preserve">
+    <value>Einladung zur Registrierung Betreff/Nachricht *</value>
+  </data>
+  <data name="registration.reminder" xml:space="preserve">
+    <value>Registrierungserinnerung</value>
+  </data>
+  <data name="registration.reminder.subject" xml:space="preserve">
+    <value>Registrierungserinnerung Betreff/Nachricht **</value>
+  </data>
+  <data name="reminder" xml:space="preserve">
+    <value>Erinnerung:</value>
+  </data>
+  <data name="reminder.check" xml:space="preserve">
+    <value>System kontrolliert</value>
+  </data>
+  <data name="reminder.for" xml:space="preserve">
+    <value>Erinnerung für</value>
+  </data>
+  <data name="reminder.interval" xml:space="preserve">
+    <value>Erinnerungsintervall</value>
+  </data>
+  <data name="reminder.star" xml:space="preserve">
+    <value>* = Einstellung von übergeordneter Einheit übernommen</value>
+  </data>
+  <data name="reminder.text" xml:space="preserve">
+    <value>Erinnerung</value>
+  </data>
+  <data name="resend" xml:space="preserve">
+    <value>Erneut senden</value>
+  </data>
+  <data name="revert.default" xml:space="preserve">
+    <value>Auf Standardnachrichten zurücksetzen</value>
+  </data>
+  <data name="role.user.super" xml:space="preserve">
+    <value>Super-User (kann sein eigenes Vorgesetztenkonto einschließlich aller Einheiten verwalten)</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>Suchen</value>
+  </data>
+  <data name="search.email" xml:space="preserve">
+    <value>Benutzer über E-Mail suchen</value>
+  </data>
+  <data name="select.send.type" xml:space="preserve">
+    <value>&lt; Typ auswählen und senden &gt;</value>
+  </data>
+  <data name="send" xml:space="preserve">
+    <value>Senden</value>
+  </data>
+  <data name="send.auto.day" xml:space="preserve">
+    <value>Die automatische Sendung im Modus "Täglich" erfolgt nur einmal/Woche/Benutzer</value>
+  </data>
+  <data name="send.auto.perform" xml:space="preserve">
+    <value>Automatisch kontrollieren und senden an jedem</value>
+  </data>
+  <data name="send.credentials" xml:space="preserve">
+    <value>Benutzerdaten senden</value>
+  </data>
+  <data name="send.individuals" xml:space="preserve">
+    <value>An Personen senden, die sich nicht eingeloggt haben im letzten</value>
+  </data>
+  <data name="send.once" xml:space="preserve">
+    <value>* Wird nur einmal an jede Person gesendet (Status wird zurückgesetzt, wenn E-Mail-Adresse geändert wird)</value>
+  </data>
+  <data name="send.only" xml:space="preserve">
+    <value>** Wird nur an Personen gesendet, die schon eine Einladung erhalten, ihr Konto jedoch noch nicht aktiviert haben</value>
+  </data>
+  <data name="sent.last" xml:space="preserve">
+    <value>Zuletzt gesendet</value>
+  </data>
+  <data name="settings" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+  <data name="show.all" xml:space="preserve">
+    <value>Alle anzeigen</value>
+  </data>
+  <data name="sponsor" xml:space="preserve">
+    <value>Organisation</value>
+  </data>
+  <data name="stats.named" xml:space="preserve">
+    <value>Statistik anzeigen als</value>
+  </data>
+  <data name="status.active" xml:space="preserve">
+    <value>Aktiv</value>
+  </data>
+  <data name="status.stop.complete" xml:space="preserve">
+    <value>Beendet, Projekt abgeschlossen</value>
+  </data>
+  <data name="status.stop.education" xml:space="preserve">
+    <value>Beendet, Weiterbildungsurlaub</value>
+  </data>
+  <data name="status.stop.not.associated" xml:space="preserve">
+    <value>Beendet, nicht mehr verbunden</value>
+  </data>
+  <data name="status.stop.not.participate" xml:space="preserve">
+    <value>Beendet, möchte nicht teilnehmen</value>
+  </data>
+  <data name="status.stop.other" xml:space="preserve">
+    <value>Beendet, andere Gründe</value>
+  </data>
+  <data name="status.stop.parent" xml:space="preserve">
+    <value>Beendet, Erziehungsurlaub</value>
+  </data>
+  <data name="status.stop.sick" xml:space="preserve">
+    <value>Beendet, krank geschrieben</value>
+  </data>
+  <data name="status.stop.unknown" xml:space="preserve">
+    <value>Beendet, Grund unbekannt</value>
+  </data>
+  <data name="status.stop.work" xml:space="preserve">
+    <value>Beendet, arbeitsbedingt</value>
+  </data>
+  <data name="submit" xml:space="preserve">
+    <value>Ausführen</value>
+  </data>
+  <data name="survey.extended.no" xml:space="preserve">
+    <value># erweiterter&lt;br&gt;Umfragen</value>
+  </data>
+  <data name="survey.extended.stats" xml:space="preserve">
+    <value>Statistik für erweiterte Umfragen</value>
+  </data>
+  <data name="survey.stats" xml:space="preserve">
+    <value>Umfragestatistik</value>
+  </data>
+  <data name="thanks" xml:space="preserve">
+    <value>Danke:</value>
+  </data>
+  <data name="thanks.mail" xml:space="preserve">
+    <value>Dankmail für</value>
+  </data>
+  <data name="total" xml:space="preserve">
+    <value>Gesamt</value>
+  </data>
+  <data name="unit" xml:space="preserve">
+    <value>Einheit</value>
+  </data>
+  <data name="unit.add" xml:space="preserve">
+    <value>Einheit hinzufügen</value>
+  </data>
+  <data name="unit.email" xml:space="preserve">
+    <value>Einheit/E-Mail</value>
+  </data>
+  <data name="unit.id" xml:space="preserve">
+    <value>Einheits-ID</value>
+  </data>
+  <data name="unit.import" xml:space="preserve">
+    <value>Einheiten importieren</value>
+  </data>
+  <data name="unit.name" xml:space="preserve">
+    <value>Einheitsname</value>
+  </data>
+  <data name="unit.parent" xml:space="preserve">
+    <value>Übergeordnete Einheit</value>
+  </data>
+  <data name="unit.parent.default" xml:space="preserve">
+    <value>Übergeordnete Einheit, Standardwert</value>
+  </data>
+  <data name="updated.on" xml:space="preserve">
+    <value>aktualisiert am</value>
+  </data>
+  <data name="user.active.perform" xml:space="preserve">
+    <value>Wenn dieser Benutzer sein Konto aktiviert hat, wie folgt vorgehen:</value>
+  </data>
+  <data name="user.add" xml:space="preserve">
+    <value>Benutzer hinzufügen</value>
+  </data>
+  <data name="user.exists" xml:space="preserve">
+    <value>Es existiert bereits ein Benutzer mit dieser E-Mail-Adresse!</value>
+  </data>
+  <data name="user.import" xml:space="preserve">
+    <value>Benutzer importieren</value>
+  </data>
+  <data name="user.import.export" xml:space="preserve">
+    <value>für Import/Export von Benutzern, Kurzname, keine Leerzeichen</value>
+  </data>
+  <data name="user.name" xml:space="preserve">
+    <value>E-Mail oder Benutzername</value>
+  </data>
+  <data name="user.password" xml:space="preserve">
+    <value>Passwort</value>
+  </data>
+  <data name="user.perform.activated" xml:space="preserve">
+    <value>Wenn dieser Benutzer sein Konto aktiviert hat, wie folgt vorgehen:</value>
+  </data>
+  <data name="user.update.onwards" xml:space="preserve">
+    <value>Benutzerprofil mit diesen Einstellungen von heute an aktualisieren</value>
+  </data>
+  <data name="user.update.previous" xml:space="preserve">
+    <value>Die zuvor registrierte E-Mail-Adresse ist niemals korrekt gewesen; das angelegte Konto muss aus der Organisation entfernt werden.</value>
+  </data>
+  <data name="user.update.start" xml:space="preserve">
+    <value>Benutzerprofil aktualisieren, als ob diese Einstellungen von Anfang an bestanden hätten.</value>
+  </data>
+  <data name="users.activated.all" xml:space="preserve">
+    <value>Alle aktivierten Benutzer</value>
+  </data>
+  <data name="users.activated.no" xml:space="preserve">
+    <value># der aktivierten&lt;br&gt;Benutzer</value>
+  </data>
+  <data name="users.invited.no" xml:space="preserve">
+    <value># der eingeladenen&lt;br&gt;Benutzer</value>
+  </data>
+  <data name="users.no" xml:space="preserve">
+    <value># der hinzugefügten&lt;br&gt;Benutzer</value>
+  </data>
+  <data name="users.none" xml:space="preserve">
+    <value>&lt; keine &gt;</value>
+  </data>
+  <data name="users.unit" xml:space="preserve">
+    <value>Benutzer in Einheit</value>
+  </data>
+  <data name="users.unit.subunit" xml:space="preserve">
+    <value>Benutzer in Einheit und Untergruppen</value>
+  </data>
+  <data name="version" xml:space="preserve">
+    <value>Version x.xx veröffentlicht</value>
+  </data>
+  <data name="week" xml:space="preserve">
+    <value>Woche</value>
+  </data>
+  <data name="week.disabled" xml:space="preserve">
+    <value>&lt; deaktiviert &gt;</value>
+  </data>
+  <data name="week.everyday" xml:space="preserve">
+    <value>&lt; jeden Tag &gt;</value>
+  </data>
+  <data name="week.friday" xml:space="preserve">
+    <value>Freitag</value>
+  </data>
+  <data name="week.monday" xml:space="preserve">
+    <value>Montag</value>
+  </data>
+  <data name="week.one" xml:space="preserve">
+    <value>Eine Woche</value>
+  </data>
+  <data name="week.same" xml:space="preserve">
+    <value>&lt; dieselbe wie übergeordnete &gt;</value>
+  </data>
+  <data name="week.thursday" xml:space="preserve">
+    <value>Donnerstag</value>
+  </data>
+  <data name="week.tuesday" xml:space="preserve">
+    <value>Dienstag</value>
+  </data>
+  <data name="week.two" xml:space="preserve">
+    <value>Zwei Wochen</value>
+  </data>
+  <data name="week.two.even" xml:space="preserve">
+    <value>Zwei Wochen, beginnend mit gerader</value>
+  </data>
+  <data name="week.two.odd" xml:space="preserve">
+    <value>Zwei Wochen, beginnend mit ungerader</value>
+  </data>
+  <data name="week.wednesday" xml:space="preserve">
+    <value>Mittwoch</value>
+  </data>
+  <data name="xls.verbose" xml:space="preserve">
+    <value>xls Verbose</value>
+  </data>
+  <data name="year.one" xml:space="preserve">
+    <value>Ein Jahr</value>
+  </data>
+  <data name="yes" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+</root>

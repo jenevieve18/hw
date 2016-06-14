@@ -42,7 +42,13 @@ namespace HW.Grp
 
 		protected CultureInfo GetCultureInfo(int lid)
 		{
-			return lid == 1 ? new CultureInfo("sv-SE") : new CultureInfo("en-US");
+			//return lid == 1 ? new CultureInfo("sv-SE") : new CultureInfo("en-US");
+            switch (lid)
+            {
+                case 1: return new CultureInfo("sv-SE");
+                case 4: return new CultureInfo("de-DE");
+                default: return new CultureInfo("en-US");
+            }
 		}
 		
 		protected void Page_Load(object sender, EventArgs e)
