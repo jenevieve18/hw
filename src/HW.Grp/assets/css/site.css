@@ -263,7 +263,8 @@ hr {
 .headergroup .logincontainer {
 	margin-top: 30px;
 	font-family: arial, Helvetica, sans-serif;
-	width: 400px;
+	//width: 400px;
+	width: 310px;
 }
 .headergroup .logincontainer.loggedin {
 	background: url('resources/myhealth_loggedin.gif');

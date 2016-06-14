@@ -76,7 +76,8 @@ body {
 
 .container_12 .grid_6,
 .container_16 .grid_8 {
-	width: 376px;
+	//width: 376px;
+	width: 466px;
 }
 
 .container_12 .grid_9,
