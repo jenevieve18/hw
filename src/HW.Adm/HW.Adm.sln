@@ -5,8 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW.Adm", "HW.Adm.csproj", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW.Core", "..\HW.Core\HW.Core.csproj", "{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW.Adm2", "..\HW.Adm2\HW.Adm2.csproj", "{760EDD09-7DE8-4D7C-8E5C-BE26ADC30556}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,14 +29,6 @@ Global
 		{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}.Release|Any CPU.Build.0 = Release|x86
 		{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}.Release|Mixed Platforms.ActiveCfg = Release|x86
 		{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}.Release|Mixed Platforms.Build.0 = Release|x86
-		{760EDD09-7DE8-4D7C-8E5C-BE26ADC30556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{760EDD09-7DE8-4D7C-8E5C-BE26ADC30556}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{760EDD09-7DE8-4D7C-8E5C-BE26ADC30556}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{760EDD09-7DE8-4D7C-8E5C-BE26ADC30556}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{760EDD09-7DE8-4D7C-8E5C-BE26ADC30556}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{760EDD09-7DE8-4D7C-8E5C-BE26ADC30556}.Release|Any CPU.Build.0 = Release|Any CPU
-		{760EDD09-7DE8-4D7C-8E5C-BE26ADC30556}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{760EDD09-7DE8-4D7C-8E5C-BE26ADC30556}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
