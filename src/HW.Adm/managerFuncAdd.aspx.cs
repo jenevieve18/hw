@@ -24,9 +24,9 @@ namespace HW.Adm
                 var f = new TextBox { ID = "textBoxManagerFunction" + l.Id };
                 placeHolderLanguages.Controls.Add(f);
                 
-                //placeHolderLanguages.Controls.Add(new LiteralControl("</td></tr><td valign='top'>URL</td><td>"));
-                //var u = new TextBox { ID = "textBoxURL" + l.Id };
-                //placeHolderLanguages.Controls.Add(u);
+                placeHolderLanguages.Controls.Add(new LiteralControl("</td></tr><td valign='top'>URL</td><td>"));
+                var u = new TextBox { ID = "textBoxURL" + l.Id };
+                placeHolderLanguages.Controls.Add(u);
                 
                 placeHolderLanguages.Controls.Add(new LiteralControl("</td></tr><td valign='top'>Explanation</td><td>"));
                 var x = new TextBox { ID = "textBoxExpl" + l.Id };
@@ -43,13 +43,13 @@ namespace HW.Adm
             foreach (var l in languages)
             {
                 TextBox f = placeHolderLanguages.FindControl("textBoxManagerFunction" + l.Id) as TextBox;
-                //TextBox u = placeHolderLanguages.FindControl("textBoxURL" + l.Id) as TextBox;
+                TextBox u = placeHolderLanguages.FindControl("textBoxURL" + l.Id) as TextBox;
                 TextBox x = placeHolderLanguages.FindControl("textBoxExpl" + l.Id) as TextBox;
                 var fl = new ManagerFunctionLang
                 {
                     ManagerFunction = new ManagerFunction { Id = id },
                     Function = f.Text,
-                    //URL = u.Text,
+                    URL = u.Text,
                     Expl = x.Text,
                     Language = new Language { Id = l.Id + 1 }
                 };
