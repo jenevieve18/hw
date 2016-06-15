@@ -14,8 +14,8 @@ namespace HW.Core.Models
 	public class ManagerFunction : BaseModel
 	{
 //		public virtual string Function { get; set; }
-		public virtual string URL { get; set; }
 //		public virtual string Expl { get; set; }
+		public virtual string URL { get; set; }
 		public virtual IList<ManagerFunctionLang> Languages { get; set; }
 		public virtual ManagerFunctionLang SelectedLanguage {
 			get { return Languages[0]; }
@@ -38,10 +38,25 @@ namespace HW.Core.Models
 			Languages = languages;
 		}
 		
-//		public override string ToString()
-//		{
-//			return Function;
-//		}
+        public ManagerFunctionLang FindLanguage(int langID)
+        {
+            foreach (var l in Languages)
+            {
+                if (l.Language.Id == langID)
+                {
+                    return l;
+                }
+            }
+            return null;
+        }
+        
+        public bool HasLanguages
+        {
+            get
+            {
+                return Languages != null && Languages.Count > 0;
+            }
+        }
 	}
 	
 	public class ManagerFunctionLang : BaseModel
@@ -49,6 +64,8 @@ namespace HW.Core.Models
 		public virtual string Function { get; set; }
 		public virtual string URL { get; set; }
 		public virtual string Expl { get; set; }
+		public Language Language { get; set; }
+		public ManagerFunction ManagerFunction { get; set; }
 		
 		public override string ToString()
 		{

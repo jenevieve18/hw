@@ -29,6 +29,167 @@ FROM ManagerFunction AS mf {0}",
 			}
 			return null;
 		}
+
+        public override void Update(ManagerFunction t, int id)
+        {
+            string query = @"
+UPDATE dbo.ManagerFunction SET URL = @URL
+WHERE ManagerFunctionID = @ManagerFunctionID";
+            ExecuteNonQuery(query, "SqlConnection", new SqlParameter("@URL", t.URL), new SqlParameter("@ManagerFunctionID", id));
+        }
+		
+		public override void Delete(int id)
+		{
+			string query = @"
+DELETE FROM dbo.ManagerFunction WHERE ManagerFunctionID = @ManagerFunctionID";
+            ExecuteNonQuery(query, "SqlConnection", new SqlParameter("@ManagerFunctionID", id));
+            query = @"
+DELETE FROM dbo.ManagerFunctionLang WHERE ManagerFunctionID = @ManagerFunctionID";
+            ExecuteNonQuery(query, "SqlConnection", new SqlParameter("@ManagerFunctionID", id));
+		}
+
+        public int SaveManagerFunction(ManagerFunction f)
+        {
+            string query = @"
+INSERT INTO dbo.ManagerFunction(URL)
+VALUES(@URL)";
+            ExecuteNonQuery(query, "SqlConnection", new SqlParameter("@URL", f.URL));
+            int id = 0;
+            using (var rs = ExecuteReader("SELECT TOP 1 ManagerFunctionID FROM dbo.ManagerFunction ORDER BY ManagerFunctionID DESC"))
+            {
+                if (rs.Read())
+                {
+                    id = GetInt32(rs, 0);
+                }
+            }
+            CloseConnection();
+            return id;
+        }
+
+        public void SaveManagerFunctionLanguage(ManagerFunctionLang f)
+        {
+            string query = @"
+INSERT INTO dbo.ManagerFunctionLang(ManagerFunctionID, ManagerFunction, URL, Expl, LangID)
+VALUES(@ManagerFunctionID, @ManagerFunction, @URL, @Expl, @LangID)";
+            ExecuteNonQuery(
+                query,
+                "SqlConnection",
+                new SqlParameter("@ManagerFunctionID", f.ManagerFunction.Id),
+                new SqlParameter("@ManagerFunction", f.Function),
+                new SqlParameter("@URL", f.URL),
+                new SqlParameter("@Expl", f.Expl),
+                new SqlParameter("@LangID", f.Language.Id)
+            );
+        }
+
+        public void UpdateManagerFunctionLanguage(ManagerFunctionLang f, int id)
+        {
+            string query = @"
+UPDATE dbo.ManagerFunctionLang SET ManagerFunction = @ManagerFunction,
+URL = @URL,
+Expl = @Expl
+WHERE ManagerFunctionLangID = @ManagerFunctionLangID";
+            ExecuteNonQuery(
+                query,
+                "SqlConnection",
+                new SqlParameter("@ManagerFunction", f.Function),
+                new SqlParameter("@URL", f.URL),
+                new SqlParameter("@Expl", f.Expl),
+                new SqlParameter("@ManagerFunctionLangID", id)
+            );
+        }
+
+        public ManagerFunctionLang ReadManagerFunctionLanguage(int functionID, int langID)
+        {
+            string query = @"
+SELECT ManagerFunctionLangID,
+ManagerFunctionID,
+ManagerFunction,
+URL,
+Expl,
+LangID
+FROM dbo.ManagerFunctionLang
+WHERE ManagerFunctionID = @ManagerFunctionID
+AND LangID = @LangID";
+            ManagerFunctionLang l = null;
+            using (var rs = ExecuteReader(query, "SqlConnection", new SqlParameter("@ManagerFunctionID", functionID), new SqlParameter("@LangID", langID)))
+            {
+                if (rs.Read())
+                {
+                    l = new ManagerFunctionLang
+                    {
+                        Id = GetInt32(rs, 0),
+                        ManagerFunction = new ManagerFunction { Id = GetInt32(rs, 1) },
+                        Function = GetString(rs, 2),
+                        URL = GetString(rs, 3),
+                        Expl = GetString(rs, 4),
+                        Language = new Language { Id = GetInt32(rs, 5) },
+                    };
+                }
+            }
+            CloseConnection();
+            return l;
+        }
+
+        public override ManagerFunction Read(int id)
+        {
+            string query = @"
+SELECT ManagerFunctionID,
+ManagerFunction,
+URL,
+Expl
+FROM ManagerFunction
+WHERE ManagerFunctionID = @ManagerFunctionID";
+            ManagerFunction f = null;
+            using (var rs = ExecuteReader(query, "SqlConnection", new SqlParameter("@ManagerFunctionID", id)))
+            {
+                if (rs.Read())
+                {
+                    f = new ManagerFunction
+                    {
+                        Id = GetInt32(rs, 0),
+                        URL = GetString(rs, 2)
+                    };
+                }
+            }
+            CloseConnection();
+            if (f != null)
+            {
+                f.Languages = GetLanguages(id);
+            }
+            return f;
+        }
+
+        List<ManagerFunctionLang> GetLanguages(int functionID)
+        {
+            string query = @"
+SELECT ManagerFunctionLangID,
+ManagerFunctionID,
+ManagerFunction,
+URL,
+Expl,
+LangID
+FROM dbo.ManagerFunctionLang
+WHERE ManagerFunctionID = @ManagerFunctionID";
+            var l = new List<ManagerFunctionLang>();
+            using (var rs = ExecuteReader(query, "SqlConnection", new SqlParameter("@ManagerFunctionID", functionID)))
+            {
+                while (rs.Read())
+                {
+                    l.Add(new ManagerFunctionLang
+                    {
+                        Id = GetInt32(rs, 0),
+                        ManagerFunction = new ManagerFunction { Id = GetInt32(rs, 1) },
+                        Function = GetString(rs, 2),
+                        URL = GetString(rs, 3),
+                        Expl = GetString(rs, 4),
+                        Language = new Language { Id = GetInt32(rs, 5) },
+                    });
+                }
+            }
+            CloseConnection();
+            return l;
+        }
 		
 		public override IList<ManagerFunction> FindAll()
 		{

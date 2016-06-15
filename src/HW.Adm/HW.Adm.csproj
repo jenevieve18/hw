@@ -21,6 +21,10 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
     <TargetFrameworkProfile />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -172,6 +176,34 @@
     </Compile>
     <Compile Include="mailSubmission.aspx.designer.cs">
       <DependentUpon>mailSubmission.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="managerFunc.aspx.cs">
+      <DependentUpon>managerFunc.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="managerFunc.aspx.designer.cs">
+      <DependentUpon>managerFunc.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="managerFuncAdd.aspx.cs">
+      <DependentUpon>managerFuncAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="managerFuncAdd.aspx.designer.cs">
+      <DependentUpon>managerFuncAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="managerFuncDelete.aspx.cs">
+      <DependentUpon>managerFuncDelete.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="managerFuncDelete.aspx.designer.cs">
+      <DependentUpon>managerFuncDelete.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="managerFuncEdit.aspx.cs">
+      <DependentUpon>managerFuncEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="managerFuncEdit.aspx.designer.cs">
+      <DependentUpon>managerFuncEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="messages.aspx.designer.cs">
       <DependentUpon>messages.aspx</DependentUpon>
@@ -1315,6 +1347,10 @@
     <Content Include="issueedit.aspx" />
     <Content Include="mailSubmission.aspx" />
     <Content Include="main.css" />
+    <Content Include="managerFunc.aspx" />
+    <Content Include="managerFuncAdd.aspx" />
+    <Content Include="managerFuncDelete.aspx" />
+    <Content Include="managerFuncEdit.aspx" />
     <Content Include="messages.aspx" />
     <Content Include="news.aspx" />
     <Content Include="plotType.aspx" />
