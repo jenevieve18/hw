@@ -13,7 +13,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Net.Mail;
 
-namespace HW.SendReminders2
+namespace HW.SendReminders
 {
 	public class BaseRepository
 	{

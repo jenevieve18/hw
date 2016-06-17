@@ -16,7 +16,7 @@ using Newtonsoft.Json.Linq;
 using PushSharp.Core;
 using PushSharp.Google;
 
-namespace HW.SendReminders2
+namespace HW.SendReminders
 {
 	public class Helper
 	{

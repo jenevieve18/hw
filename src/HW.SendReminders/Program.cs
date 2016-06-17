@@ -15,6 +15,12 @@ namespace HW.SendReminders
             string reminderEmail = "";
 
             System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient(ConfigurationManager.AppSettings["SmtpServer"]);
+            
+			var apiKey = "AIzaSyB3ne08mvULbQX8HalX-qRGQtP1Ih9bqDY";
+			var senderId = "59929247886";
+			var message = "Reminder";
+			
+            var repo = new Repo();
 
             SqlDataReader rs = recordSet("SELECT " +
                 "sl.ReminderMessage, " +
@@ -74,7 +80,9 @@ namespace HW.SendReminders
                     "AND u.Reminder IS NOT NULL " +
                     "AND u.Reminder <> 0 " +
 					"AND u.ReminderNextSend IS NOT NULL " +
-                    "AND u.ReminderNextSend <= GETDATE()");
+                    "AND u.ReminderNextSend <= GETDATE()" +
+                    //"AND u.UserID = 1565" +
+                    "");
                 while (rs.Read())
                 {
                     bool badEmail = false;
@@ -102,6 +110,9 @@ namespace HW.SendReminders
 							}
                             System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage(reminderEmail, rs.GetString(1), reminderSubjectLang[rs.GetInt32(7) - 1], personalReminderMessage);
                             smtp.Send(mail);
+                            
+                            var registrationIds = repo.GetUserRegistrationIDs(rs.GetInt32(0));
+                            Helper.sendGcmNotification(repo, registrationIds, apiKey, senderId, message, rs.GetInt32(0), rs.GetString(3));
 
                             exec("UPDATE [User] SET ReminderLastSent = GETDATE(), ReminderNextSend = '" + nextReminderSend(rs.GetInt32(4),rs.GetString(5).Split(':'),(rs.IsDBNull(6) ? DateTime.Now : rs.GetDateTime(6)),DateTime.Now) + "' WHERE UserID = " + rs.GetInt32(0));
                             exec("INSERT INTO Reminder (UserID,Subject,Body) VALUES (" + rs.GetInt32(0) + ",'" + reminderSubjectLang[rs.GetInt32(7) - 1].Replace("'", "''") + "','" + personalReminderMessage.Replace("'", "''") + "')");
@@ -219,6 +230,9 @@ namespace HW.SendReminders
 									}
 									System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage(reminderEmail, rs.GetString(1), reminderSubject, personalReminderMessage);
 									smtp.Send(mail);
+									
+									var registrationIds = repo.GetUserRegistrationIDs(rs.GetInt32(0));
+									Helper.sendGcmNotification(repo, registrationIds, apiKey, senderId, message, rs.GetInt32(0), rs.GetString(3));
 
 									exec("UPDATE [User] SET ReminderLastSent = GETDATE() WHERE UserID = " + rs.GetInt32(0));
                                     exec("INSERT INTO Reminder (UserID,Subject,Body) VALUES (" + rs.GetInt32(0) + ",'" + reminderSubject.Replace("'", "''") + "','" + personalReminderMessage.Replace("'", "''") + "')");
