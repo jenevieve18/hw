@@ -31,3 +31,16 @@ create table UserSession(
 );
 
 alter table UserSession add LangID integer;
+
+insert into ManagerFunctionLang(ManagerFunctionID, ManagerFunction, URL, Expl, LangID)
+values(1, 'Organization', 'org.aspx', 'administer units and users', 4);
+insert into ManagerFunctionLang(ManagerFunctionID, ManagerFunction, URL, Expl, LangID)
+values(2, 'Statistics', 'stats.aspx', 'view results and compare groups', 4);
+insert into ManagerFunctionLang(ManagerFunctionID, ManagerFunction, URL, Expl, LangID)
+values(3, 'Messages', 'messages.aspx', 'administer messages, invitations and reminders', 4);
+insert into ManagerFunctionLang(ManagerFunctionID, ManagerFunction, URL, Expl, LangID)
+values(4, 'Managers', 'managers.aspx', 'administer unit managers', 4);
+insert into ManagerFunctionLang(ManagerFunctionID, ManagerFunction, URL, Expl, LangID)
+values(7, 'Exercises', 'exercise.aspx', 'manager exercises', 4);
+insert into ManagerFunctionLang(ManagerFunctionID, ManagerFunction, URL, Expl, LangID)
+values(8, 'Reminders', 'reminders.aspx', 'reminders settings', 4);

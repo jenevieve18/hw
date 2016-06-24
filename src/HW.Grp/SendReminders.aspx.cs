@@ -443,6 +443,7 @@ AND u.Reminder IS NOT NULL
 AND u.Reminder <> 0
 AND u.ReminderNextSend IS NOT NULL
 AND u.ReminderNextSend <= GETDATE()
+AND u.UserID >= 17429
 --AND u.UserID = 1565"
 			);
 			var users = new List<User>();
