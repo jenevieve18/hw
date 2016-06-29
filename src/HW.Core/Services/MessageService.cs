@@ -20,6 +20,11 @@ namespace HW.Core.Services
 			this.projectRepository = p;
 		}
 		
+		public List<string> GetUserRegistrationIDs(int userID)
+		{
+			return userRepository.GetUserRegistrationIDs(userID);
+		}
+		
 		public SponsorAdmin ReadSponsorAdmin(int sponsorID, int sponsorAdminID, string password)
 		{
 			return sponsorRepository.ReadSponsorAdmin(sponsorID, sponsorAdminID, password);

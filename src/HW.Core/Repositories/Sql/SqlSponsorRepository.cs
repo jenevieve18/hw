@@ -1518,7 +1518,8 @@ WHERE s.SponsorInviteID = " + userId
 				@"
 SELECT DISTINCT si.SponsorInviteID,
 	si.Email,
-	LEFT(REPLACE(CONVERT(VARCHAR(255),si.InvitationKey),'-',''),8)
+	LEFT(REPLACE(CONVERT(VARCHAR(255),si.InvitationKey),'-',''),8),
+	si.UserID
 FROM SponsorInvite si
 {1}si.SponsorID = {0}
 AND si.UserID IS NULL
@@ -1533,7 +1534,8 @@ AND si.Sent IS NULL",
 					var i = new SponsorInvite {
 						Id = rs.GetInt32(0),
 						Email = rs.GetString(1),
-						InvitationKey = rs.GetString(2)
+						InvitationKey = rs.GetString(2),
+						User = new User { Id = GetInt32(rs,3) }
 					};
 					invites.Add(i);
 				}

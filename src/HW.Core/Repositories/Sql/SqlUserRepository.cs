@@ -9,6 +9,25 @@ namespace HW.Core.Repositories.Sql
 {
 	public class SqlUserRepository : BaseSqlRepository<User>
 	{
+		public List<string> GetUserRegistrationIDs(int userID)
+		{
+			List<string> registrationIds = new List<string>();
+			using (var rs2 = ExecuteReader(
+				"SELECT UserRegistrationID, " +
+				"UserID, " +
+				"RegistrationID " +
+				"FROM dbo.UserRegistrationID " +
+				"WHERE UserID = " + userID
+			)) {
+				while (rs2.Read()) {
+					if (!rs2.IsDBNull(2)) {
+						registrationIds.Add(rs2.GetString(2));
+					}
+				}
+			}
+			return registrationIds;
+		}
+		
 //		public void SaveUserProfileBackgroundQuestion(UserProfileBackgroundQuestion s)
 //		{
 //			string query = string.Format(
