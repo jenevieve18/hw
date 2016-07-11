@@ -283,34 +283,34 @@ et.ExerciseTypeSortOrder ASC",
 			return exercises;
 		}
 		
-//		public IList<SponsorAdminExercise> FindSponsorExerciseDataInputs(int sponsorID, int exerciseVariantLangID)
-//		{
-//			string query = string.Format(
-//				@"
-//SELECT SponsorExerciseDataInputID,
-//	[Content],
-//	SponsorID,
-//	[Order]
-//FROM SponsorExerciseDataInput
-//WHERE SponsorID = {0}
-//AND ExerciseVariantLangID = {1}",
-//				sponsorID,
-//				exerciseVariantLangID
-//			);
-//			var inputs = new List<SponsorExerciseDataInput>();
-//			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-//				while (rs.Read()) {
-//					var i = new SponsorExerciseDataInput {
-//						Id = GetInt32(rs, 0),
-//						Content = GetString(rs, 1),
-//						Sponsor = new Sponsor { Id = GetInt32(rs, 2) },
-//						Order = GetInt32(rs, 3)
-//					};
-//					inputs.Add(i);
-//				}
-//			}
-//			return inputs;
-//		}
+		public IList<SponsorAdminExerciseDataInput> FindSponsorAdminExerciseDataInputs(int sponsorID, int exerciseVariantLangID)
+		{
+			string query = string.Format(
+                @"
+SELECT saed.SponsorAdminExerciseDataInputID,
+	saed.[Content],
+	saed.SponsorAdminExerciseID,
+	saed.[Order]
+FROM SponsorAdminExerciseDataInput saed
+INNER JOIN SponsorAdminExercise sae ON sae.SponsorAdminExerciseID = saed.SponsorAdminExerciseID
+WHERE sae.ExerciseVariantLangID = {1}",
+				sponsorID,
+				exerciseVariantLangID
+			);
+			var inputs = new List<SponsorAdminExerciseDataInput>();
+			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+				while (rs.Read()) {
+					var i = new SponsorAdminExerciseDataInput {
+						Id = GetInt32(rs, 0),
+						Content = GetString(rs, 1),
+						SponsorAdminExercise = new SponsorAdminExercise { Id = GetInt32(rs, 2) },
+						Order = GetInt32(rs, 3)
+					};
+					inputs.Add(i);
+				}
+			}
+			return inputs;
+		}
 		
 		/*public IList<SponsorExerciseDataInput> FindSponsorExerciseDataInputs(int sponsorID, int exerciseVariantLangID)
 		{
