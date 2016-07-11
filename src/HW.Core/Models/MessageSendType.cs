@@ -87,7 +87,6 @@ namespace HW.Core.Models
 			foreach (var i in service.FindInvitesBySponsor(sponsorID, sponsorAdminID)) {
 				bool success = Db.sendInvitation(i.Id, i.Email, Message.Subject, Message.Body, i.InvitationKey);
 				if (success) {
-//					lalala(i.User.Id);
 					Message.Sent++;
 				} else {
 					Message.Failed++;
@@ -200,7 +199,6 @@ namespace HW.Core.Models
 						}
 
 						success = Db.sendMail(Message.From, u.Email, Message.Subject, body);
-						//                        lalala(u.Id);
 					} catch (Exception) {
 						badEmail = true;
 					}
@@ -343,11 +341,9 @@ namespace HW.Core.Models
 			string keyAndUserID = userKey + userId.ToString();
 			
 			var config = new GcmConfiguration(senderId, apiKey, null);
-
 			var gcmBroker = new GcmServiceBroker(config);
 
 			gcmBroker.OnNotificationFailed += (notification, aggregateEx) => {
-
 				aggregateEx.Handle(
 					ex => {
 						if (ex is GcmNotificationException) {
@@ -363,14 +359,12 @@ namespace HW.Core.Models
 							foreach (var succeededNotification in multicastException.Succeeded) {
 								Console.WriteLine("GCM Notification Failed: ID={0}", succeededNotification.MessageId);
 							}
-
 							foreach (var failedKvp in multicastException.Failed) {
 								var n = failedKvp.Key;
 								var en = failedKvp.Value;
 
 								Console.WriteLine("GCM Notification Failed: ID={0}, Desc={1}", n.MessageId, en.Data);
 							}
-
 						} else if (ex is DeviceSubscriptionExpiredException) {
 							var expiredException = (DeviceSubscriptionExpiredException)ex;
 
@@ -378,15 +372,15 @@ namespace HW.Core.Models
 							var newId = expiredException.NewSubscriptionId;
 
 							Console.WriteLine("Device RegistrationId Expired: {0}", oldId);
-							
 							Console.WriteLine("Removing Registration ID {0} from the database...", oldId);
-							
+
 //						exec(
 //							"UPDATE dbo.UserRegistrationID SET UserID = " + -userId + " " +
 //							"WHERE UserID = " + userId + " " +
 //							"AND RegistrationID = '" + userKey.Replace("'", "") + "'"
 //						);
 //						repo.ccc(userId, userKey);
+
 							Db.exec(
 								"UPDATE dbo.UserRegistrationID SET UserID = " + -userId + " " +
 								"WHERE UserID = " + userId + " " +
@@ -414,7 +408,6 @@ namespace HW.Core.Models
 						} else {
 							Console.WriteLine("GCM Notification Failed for some unknown reason");
 						}
-
 						return true;
 					}
 				);
@@ -425,7 +418,6 @@ namespace HW.Core.Models
 			};
 
 			gcmBroker.Start();
-
 
 			foreach (var registrationId in registrationIds) {
 				gcmBroker.QueueNotification(
