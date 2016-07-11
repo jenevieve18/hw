@@ -87,7 +87,7 @@ namespace HW.Core.Models
 			foreach (var i in service.FindInvitesBySponsor(sponsorID, sponsorAdminID)) {
 				bool success = Db.sendInvitation(i.Id, i.Email, Message.Subject, Message.Body, i.InvitationKey);
 				if (success) {
-					lalala(i.User.Id);
+//					lalala(i.User.Id);
 					Message.Sent++;
 				} else {
 					Message.Failed++;
@@ -147,7 +147,7 @@ namespace HW.Core.Models
 
 						success = Db.sendMail(Message.From, u.Email, Message.Subject, body);
 						
-						lalala(u.Id);
+						SendPushNotification(u.Id);
 
 						if (success) {
 							service.UpdateLastReminderSent(u.Id);
@@ -200,7 +200,7 @@ namespace HW.Core.Models
 						}
 
 						success = Db.sendMail(Message.From, u.Email, Message.Subject, body);
-                        lalala(u.Id);
+						//                        lalala(u.Id);
 					} catch (Exception) {
 						badEmail = true;
 					}
@@ -235,7 +235,7 @@ namespace HW.Core.Models
 				if (Db.isEmail(u.Email)) {
 					try {
 						success = Db.sendMail(u.Email, Message.Subject, Message.Body);
-                        lalala(u.Id);
+//						SendPushNotification(u.Id);
 					} catch (Exception) {
 						badEmail = true;
 					}
@@ -327,120 +327,121 @@ namespace HW.Core.Models
 		
 		public abstract void Send(int sponsorID, int sponsorAdminID);
 		
-		protected void lalala(int userID)
+		protected void SendPushNotification(int userID)
 		{
 			var apiKey = "AIzaSyB3ne08mvULbQX8HalX-qRGQtP1Ih9bqDY";
 			var senderId = "59929247886";
 			var message = "Reminder";
-			
+
 			var registrationIds = service.GetUserRegistrationIDs(userID);
-//			Helper.sendGcmNotification(repo, registrationIds, apiKey, senderId, message, userID, u.UserKey);
 			SendGcmNotification(registrationIds, apiKey, senderId, message, userID, "");
 		}
 		
-//		void SendGcmNotification(IRepo repo, List<string> registrationIds, string apiKey, string senderId, string message, int userId, string userKey)
 		void SendGcmNotification(List<string> registrationIds, string apiKey, string senderId, string message, int userId, string userKey)
 		{
 			userKey = userKey.Length >= 12 ? userKey.Substring(0, 12) : userKey;
 			string keyAndUserID = userKey + userId.ToString();
 			
-            var config = new GcmConfiguration(senderId, apiKey, null);
+			var config = new GcmConfiguration(senderId, apiKey, null);
 
-            var gcmBroker = new GcmServiceBroker(config);
+			var gcmBroker = new GcmServiceBroker(config);
 
-            gcmBroker.OnNotificationFailed += (notification, aggregateEx) => {
+			gcmBroker.OnNotificationFailed += (notification, aggregateEx) => {
 
-                aggregateEx.Handle(ex => {
+				aggregateEx.Handle(
+					ex => {
+						if (ex is GcmNotificationException) {
+							var notificationException = (GcmNotificationException)ex;
 
-                    if (ex is GcmNotificationException) {
-                        var notificationException = (GcmNotificationException)ex;
+							var gcmNotification = notificationException.Notification;
+							var description = notificationException.Description;
 
-                        var gcmNotification = notificationException.Notification;
-                        var description = notificationException.Description;
+							Console.WriteLine("GCM Notification Failed: ID={0}, Desc={1}", gcmNotification.MessageId, description);
+						} else if (ex is GcmMulticastResultException) {
+							var multicastException = (GcmMulticastResultException)ex;
 
-						Console.WriteLine("GCM Notification Failed: ID={0}, Desc={1}", gcmNotification.MessageId, description);
-                    } else if (ex is GcmMulticastResultException) {
-                        var multicastException = (GcmMulticastResultException)ex;
+							foreach (var succeededNotification in multicastException.Succeeded) {
+								Console.WriteLine("GCM Notification Failed: ID={0}", succeededNotification.MessageId);
+							}
 
-                        foreach (var succeededNotification in multicastException.Succeeded) {
-							Console.WriteLine("GCM Notification Failed: ID={0}", succeededNotification.MessageId);
-                        }
+							foreach (var failedKvp in multicastException.Failed) {
+								var n = failedKvp.Key;
+								var en = failedKvp.Value;
 
-                        foreach (var failedKvp in multicastException.Failed) {
-                            var n = failedKvp.Key;
-                            var en = failedKvp.Value;
+								Console.WriteLine("GCM Notification Failed: ID={0}, Desc={1}", n.MessageId, en.Data);
+							}
 
-							Console.WriteLine("GCM Notification Failed: ID={0}, Desc={1}", n.MessageId, en.Data);
-                        }
+						} else if (ex is DeviceSubscriptionExpiredException) {
+							var expiredException = (DeviceSubscriptionExpiredException)ex;
 
-                    } else if (ex is DeviceSubscriptionExpiredException) {
-                        var expiredException = (DeviceSubscriptionExpiredException)ex;
+							var oldId = expiredException.OldSubscriptionId;
+							var newId = expiredException.NewSubscriptionId;
 
-                        var oldId = expiredException.OldSubscriptionId;
-                        var newId = expiredException.NewSubscriptionId;
-
-						Console.WriteLine("Device RegistrationId Expired: {0}", oldId);
-						
-						Console.WriteLine("Removing Registration ID {0} from the database...", oldId);
-						
+							Console.WriteLine("Device RegistrationId Expired: {0}", oldId);
+							
+							Console.WriteLine("Removing Registration ID {0} from the database...", oldId);
+							
 //						exec(
 //							"UPDATE dbo.UserRegistrationID SET UserID = " + -userId + " " +
 //							"WHERE UserID = " + userId + " " +
 //							"AND RegistrationID = '" + userKey.Replace("'", "") + "'"
 //						);
 //						repo.ccc(userId, userKey);
-						Db.exec(
-							"UPDATE dbo.UserRegistrationID SET UserID = " + -userId + " " +
-							"WHERE UserID = " + userId + " " +
-							"AND RegistrationID = '" + userKey.Replace("'", "") + "'"
-						);
+							Db.exec(
+								"UPDATE dbo.UserRegistrationID SET UserID = " + -userId + " " +
+								"WHERE UserID = " + userId + " " +
+								"AND RegistrationID = '" + userKey.Replace("'", "") + "'"
+							);
 
-                        if (!string.IsNullOrWhiteSpace(newId)) {
-							Console.WriteLine("Device RegistrationId Changed To: {0}", newId);
-							
-							Console.WriteLine("Update Registration ID from {0} to {1}...", oldId, newId);
-							
+							if (!string.IsNullOrWhiteSpace(newId)) {
+								Console.WriteLine("Device RegistrationId Changed To: {0}", newId);
+								
+								Console.WriteLine("Update Registration ID from {0} to {1}...", oldId, newId);
+								
 //							exec(
 //								"INSERT INTO dbo.UserRegistrationID(UserID, RegistrationID) " +
 //								"VALUES(" + userId + ", '" + userKey.Replace("'", "") + "')"
 //							);
 //							repo.ddd(userId, userKey);
-							Db.exec(
-								"INSERT INTO dbo.UserRegistrationID(UserID, RegistrationID) " +
-								"VALUES(" + userId + ", '" + userKey.Replace("'", "") + "')"
-							);
-                        }
-                    } else if (ex is RetryAfterException) {
-                        var retryException = (RetryAfterException)ex;
-						Console.WriteLine("GCM Rate Limited, don't send more until after {0}", retryException.RetryAfterUtc);
-                    } else {
-                        Console.WriteLine("GCM Notification Failed for some unknown reason");
-                    }
+								Db.exec(
+									"INSERT INTO dbo.UserRegistrationID(UserID, RegistrationID) " +
+									"VALUES(" + userId + ", '" + userKey.Replace("'", "") + "')"
+								);
+							}
+						} else if (ex is RetryAfterException) {
+							var retryException = (RetryAfterException)ex;
+							Console.WriteLine("GCM Rate Limited, don't send more until after {0}", retryException.RetryAfterUtc);
+						} else {
+							Console.WriteLine("GCM Notification Failed for some unknown reason");
+						}
 
-                    return true;
-                });
-            };
+						return true;
+					}
+				);
+			};
 
-            gcmBroker.OnNotificationSucceeded += (notification) => {
-                Console.WriteLine("GCM Notification Sent!");
-            };
+			gcmBroker.OnNotificationSucceeded += (notification) => {
+				Console.WriteLine("GCM Notification Sent!");
+			};
 
-            gcmBroker.Start();
+			gcmBroker.Start();
 
 
-            foreach (var registrationId in registrationIds) {
-                gcmBroker.QueueNotification(new GcmNotification {
-                    RegistrationIds = new List<string> {
-                                registrationId
-                    },
-                	Notification = JObject.Parse("{ 'sound': 'default', 'badge': '1', 'title': 'HealthWatch', 'body': '" + message + "', 'click_action': 'se.healthwatch.HealthWatch.NotificationClick'}"),
-                    Priority = GcmNotificationPriority.High,
-                    Data = JObject.Parse("{ 'userKey': '" + keyAndUserID + "' }")
-                });
-            }
+			foreach (var registrationId in registrationIds) {
+				gcmBroker.QueueNotification(
+					new GcmNotification {
+						RegistrationIds = new List<string> {
+							registrationId
+						},
+						Notification = JObject.Parse("{ 'sound': 'default', 'badge': '1', 'title': 'HealthWatch', 'body': '" + message + "', 'click_action': 'se.healthwatch.HealthWatch.NotificationClick'}"),
+						Priority = GcmNotificationPriority.High,
+						Data = JObject.Parse("{ 'userKey': '" + keyAndUserID + "' }")
+					}
+				);
+			}
 
-            gcmBroker.Stop();
-        }
+			gcmBroker.Stop();
+		}
 		
 		public static MessageSendType CreateSendType(MessageService service, int sendType)
 		{
