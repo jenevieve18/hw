@@ -52,7 +52,7 @@
       <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
     <Reference Include="itextsharp">
-      <HintPath>..\HW.Invoicing\packages\iTextSharp.5.5.6\lib\itextsharp.dll</HintPath>
+      <HintPath>..\..\lib\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel">
       <HintPath>..\..\lib\Microsoft.Office.Interop.Excel.dll</HintPath>
@@ -102,6 +102,7 @@
     <Compile Include="Helpers\DbTests.cs" />
     <Compile Include="Helpers\DocXExporterTests.cs" />
     <Compile Include="Helpers\ExcelExporterTests.cs" />
+    <Compile Include="Helpers\ExerciseExporterTests.cs" />
     <Compile Include="Helpers\ExporterTests.cs" />
     <Compile Include="Helpers\ExtendedGraphTests.cs" />
     <Compile Include="Helpers\ExtendedGraphTests2.cs" />
