@@ -11,7 +11,7 @@ namespace HW.Core.Repositories.Sql
 		public void UpdateVariant(int id, string content)
 		{
 			string query = @"
-UPDATE ExerciseVariantLang SET ExerciseContent = @ExerciseContent 
+UPDATE ExerciseVariantLang SET ExerciseContent = @ExerciseContent
 WHERE ExerciseVariantLangID = @ExerciseVariantLangID";
 			ExecuteNonQuery(
 				query,
@@ -96,6 +96,30 @@ WHERE el.Lang = {0}",
 			return exercises;
 		}
 		
+		public SponsorAdminExercise ReadSponsorAdminExercise(int sponsorAdminExerciseID)
+		{
+			string query = string.Format(
+				@"
+SELECT evl.ExerciseContent
+FROM dbo.SponsorAdminExercise sae
+INNER JOIN dbo.ExerciseVariantLang evl ON evl.ExerciseVariantLangID = sae.ExerciseVariantLangID
+INNER JOIN dbo.ExerciseVariant ev ON ev.ExerciseVariantID = evl.ExerciseVariantID
+WHERE sae.SponsorAdminExerciseID = {0}",
+			sponsorAdminExerciseID);
+			
+			SponsorAdminExercise s = null;
+			using (var rs = ExecuteReader(query)) {
+				if (rs.Read()) {
+					s = new SponsorAdminExercise {
+						ExerciseVariantLanguage = new ExerciseVariantLanguage {
+							Content = GetString(rs, 0)
+						}
+					};
+				}
+			}
+			return s;
+		}
+		
 		public ExerciseVariantLanguage ReadExerciseVariant(int exerciseVariantLangID)
 		{
 			string query = string.Format(
@@ -125,7 +149,7 @@ WHERE evl.ExerciseVariantLangID = {0}",
 								Languages = new [] { new ExerciseLanguage { ExerciseName = GetString(rs, 0) }},
 								PrintOnBottom = GetInt32(rs, 4) == 1,
 								ReplacementHead = GetString(rs, 5, ""),
-                                Script = GetString(rs, 7)
+								Script = GetString(rs, 7)
 							},
 							Type = GetObject<ExerciseType>(rs, 2)
 						},
@@ -302,7 +326,7 @@ et.ExerciseTypeSortOrder ASC",
 			return exercises;
 		}
 		
-		public IList<SponsorAdminExercise> FindBySponsorAdminHistory(int langID, int sponsorAdminID)
+		public IList<SponsorAdminExercise> FindBySponsorAdminExerciseHistory(int langID, int sponsorAdminID)
 		{
 			string query = string.Format(
 				@"
@@ -317,7 +341,8 @@ SELECT sae.Date,
 	etl.ExerciseType,
 	evl.ExerciseWindowX,
 	evl.ExerciseWindowY,
-	evl.ExerciseVariantLangID
+	evl.ExerciseVariantLangID,
+	sae.SponsorAdminExerciseID
 FROM SponsorAdminExercise sae
 INNER JOIN ExerciseVariantLang evl ON evl.ExerciseVariantLangID = sae.ExerciseVariantLangID
 INNER JOIN ExerciseVariant ev ON ev.ExerciseVariantID = evl.ExerciseVariantID
@@ -334,7 +359,7 @@ ORDER BY sae.Date DESC"
 			);
 			var managerExercises = new List<SponsorAdminExercise>();
 			using (SqlDataReader rs = ExecuteReader(
-				query, 
+				query,
 				"healthWatchSqlConnection",
 				new SqlParameter("@Lang", langID),
 				new SqlParameter("@SponsorAdminID", sponsorAdminID))) {
@@ -381,11 +406,12 @@ ORDER BY sae.Date DESC"
 						ExerciseWindowX = GetInt32(rs, 9, 650),
 						ExerciseWindowY = GetInt32(rs, 10, 580),
 						Id = GetInt32(rs, 11)
-						
+							
 					};
 					var sae = new SponsorAdminExercise {
 						Date = GetDateTime(rs, 0),
-						ExerciseVariantLanguage = evl 
+						ExerciseVariantLanguage = evl,
+						Id = GetInt32(rs, 12)
 					};
 					managerExercises.Add(sae);
 				}
