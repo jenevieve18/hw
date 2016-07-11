@@ -30,7 +30,7 @@ namespace HW.Grp
 				lid = userSession.Lang;
 			}
 
-			exercises = er.FindBySponsorAdminHistory(lid - 1, sponsorAdminID);
+			exercises = er.FindBySponsorAdminExerciseHistory(lid - 1, sponsorAdminID);
 		}
 	}
 }

@@ -30,47 +30,47 @@ namespace HW.Grp
 			get { return Request.QueryString["AK"] != null; }
 		}
 		
-		bool HasWidth {
-			get { return Request.QueryString["W"] != null; }
-		}
-		
-		bool HasHeight {
-			get { return Request.QueryString["H"] != null; }
-		}
-		
-		bool HasBackground {
-			get { return Request.QueryString["BG"] != null; }
-		}
-		
-		int Width {
-			get {
-				if (HasWidth) {
-					return Convert.ToInt32(Request.QueryString["W"]);
-				} else {
-					return 550;
-				}
-			}
-		}
-		
-		int Height {
-			get {
-				if (HasHeight) {
-					return Convert.ToInt32(Request.QueryString["H"]);
-				} else {
-					return 440;
-				}
-			}
-		}
-		
-		string Background {
-			get {
-				if (HasBackground) {
-					return "#" + Request.QueryString["BG"];
-				} else {
-					return "#EFEFEF";
-				}
-			}
-		}
+//		bool HasWidth {
+//			get { return Request.QueryString["W"] != null; }
+//		}
+//		
+//		bool HasHeight {
+//			get { return Request.QueryString["H"] != null; }
+//		}
+//		
+//		bool HasBackground {
+//			get { return Request.QueryString["BG"] != null; }
+//		}
+//		
+//		int Width {
+//			get {
+//				if (HasWidth) {
+//					return Convert.ToInt32(Request.QueryString["W"]);
+//				} else {
+//					return 550;
+//				}
+//			}
+//		}
+//		
+//		int Height {
+//			get {
+//				if (HasHeight) {
+//					return Convert.ToInt32(Request.QueryString["H"]);
+//				} else {
+//					return 440;
+//				}
+//			}
+//		}
+//		
+//		string Background {
+//			get {
+//				if (HasBackground) {
+//					return "#" + Request.QueryString["BG"];
+//				} else {
+//					return "#EFEFEF";
+//				}
+//			}
+//		}
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -86,7 +86,6 @@ namespace HW.Grp
 			int langID = (Request.QueryString["LangID"] != null ? Convert.ToInt32(Request.QueryString["LangID"]) : 0);
 
 			int reportPartID = Convert.ToInt32(Request.QueryString["RPID"]);
-            //int pruid = Convert.ToInt32(Request.QueryString["PRUID"]);
             string project = Request.QueryString["PRUID"];
             int pruid = ConvertHelper.ToInt32(project.Replace("SPRU", ""));
 			
@@ -105,7 +104,6 @@ namespace HW.Grp
 			ISponsor sponsor = service.ReadSponsor(sid);
 			ReportPart reportPart = service.ReadReportPart(reportPartID, langID);
 			
-//			var exporter = ExportFactory.GetExporter(service, type, HasAnswerKey, hasGrouping, disabled, Width, Height, Background, reportPart, key, Server.MapPath("HW template for Word.docx"));
 			var exporter = ExportFactory.GetExporter(service, type, HasAnswerKey, hasGrouping, reportPart, Server.MapPath("HW template for Word.docx"));
 			
 			Response.ClearHeaders();
@@ -113,8 +111,6 @@ namespace HW.Grp
 			Response.ContentType = exporter.Type;
 			AddHeaderIf(exporter.HasContentDisposition(reportPart.CurrentLanguage.Subject), "content-disposition", exporter.GetContentDisposition(reportPart.CurrentLanguage.Subject));
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
-			
-//			Write(exporter.Export(gb, yearFrom, yearTo, langID, pruid, grpng, spons, sid, gid, plot, path, sponsor.MinUserCountToDisclose, monthFrom, monthTo));
 			
 			string url = GetReportImageUrl(path, langID, yearFrom, yearTo, spons, sid, gb, reportPart.Id, pruid, gid, grpng, plot, monthFrom, monthTo);
 			Write(exporter.Export(url, langID, pruid, yearFrom, yearTo, gb, plot, grpng, spons, sid, gid, sponsor.MinUserCountToDisclose, monthFrom, monthTo));

@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Grp.Master" AutoEventWireup="true" CodeBehind="MyExercise.aspx.cs" Inherits="HW.Grp.MyExercise" %>
+<%@ Import Namespace="HW.Core.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -35,6 +36,7 @@
                                 );
                             %>
                             <a class="sidearrow" href="<%= t %>"><%= v.Type.Languages[0].ToString() %></a>
+                            <%= HtmlHelper.Anchor("PDF", string.Format("exerciseexport.aspx?SponsorAdminExerciseID={0}", l.Id)) %>
                         </div>
                         <div class="bottom">&nbsp;</div>
                     </div>

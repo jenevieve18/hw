@@ -23,6 +23,10 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
     <TargetFrameworkProfile />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -177,6 +181,7 @@
     <Content Include="css\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="css\jquery.ui.all.css" />
     <Content Include="css\style.css" />
+    <Content Include="ExerciseExport.aspx" />
     <Content Include="ExportAll2.aspx" />
     <Content Include="images\book.png" />
     <Content Include="images\champagne.png" />
@@ -295,6 +300,7 @@
     <Content Include="ManagerSetup.aspx" />
     <Content Include="Messages.aspx" />
     <Content Include="MyExercise.aspx" />
+    <Content Include="MyExerciseShow.aspx" />
     <Content Include="Org.aspx" />
     <Content Include="PasswordActivation.aspx" />
     <Content Include="Reminders.aspx" />
@@ -379,6 +385,13 @@
     <Compile Include="Exercise.aspx.designer.cs">
       <DependentUpon>Exercise.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ExerciseExport.aspx.cs">
+      <DependentUpon>ExerciseExport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExerciseExport.aspx.designer.cs">
+      <DependentUpon>ExerciseExport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ExerciseShow.aspx.cs">
       <DependentUpon>ExerciseShow.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -451,6 +464,13 @@
     </Compile>
     <Compile Include="MyExercise.aspx.designer.cs">
       <DependentUpon>MyExercise.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MyExerciseShow.aspx.cs">
+      <DependentUpon>MyExerciseShow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyExerciseShow.aspx.designer.cs">
+      <DependentUpon>MyExerciseShow.aspx</DependentUpon>
     </Compile>
     <Compile Include="Org.aspx.cs">
       <DependentUpon>Org.aspx</DependentUpon>

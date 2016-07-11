@@ -31,47 +31,47 @@ namespace HW.Grp
 			get { return Request.QueryString["AK"] != null; }
 		}
 		
-		bool HasWidth {
-			get { return Request.QueryString["W"] != null; }
-		}
-		
-		bool HasHeight {
-			get { return Request.QueryString["H"] != null; }
-		}
-		
-		bool HasBackground {
-			get { return Request.QueryString["BG"] != null; }
-		}
-		
-		int Width {
-			get {
-				if (HasWidth) {
-					return Convert.ToInt32(Request.QueryString["W"]);
-				} else {
-					return 550;
-				}
-			}
-		}
-		
-		int Height {
-			get {
-				if (HasHeight) {
-					return Convert.ToInt32(Request.QueryString["H"]);
-				} else {
-					return 440;
-				}
-			}
-		}
-		
-		string Background {
-			get {
-				if (HasBackground) {
-					return "#" + Request.QueryString["BG"];
-				} else {
-					return "#EFEFEF";
-				}
-			}
-		}
+//		bool HasWidth {
+//			get { return Request.QueryString["W"] != null; }
+//		}
+//		
+//		bool HasHeight {
+//			get { return Request.QueryString["H"] != null; }
+//		}
+//		
+//		bool HasBackground {
+//			get { return Request.QueryString["BG"] != null; }
+//		}
+//		
+//		int Width {
+//			get {
+//				if (HasWidth) {
+//					return Convert.ToInt32(Request.QueryString["W"]);
+//				} else {
+//					return 550;
+//				}
+//			}
+//		}
+//		
+//		int Height {
+//			get {
+//				if (HasHeight) {
+//					return Convert.ToInt32(Request.QueryString["H"]);
+//				} else {
+//					return 440;
+//				}
+//			}
+//		}
+//		
+//		string Background {
+//			get {
+//				if (HasBackground) {
+//					return "#" + Request.QueryString["BG"];
+//				} else {
+//					return "#EFEFEF";
+//				}
+//			}
+//		}
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{

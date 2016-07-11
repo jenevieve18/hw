@@ -27,12 +27,12 @@ HW.save = function (dataInputs, sponsorID, exerciseVariantLangID) {
     });
 }
 
-HW.save2 = function (dataInputs, sponsorID, exerciseVariantLangID, savingText, saveText) {
+HW.save2 = function (dataInputs, sponsorAdminID, exerciseVariantLangID, savingText, saveText) {
 	$('#save').text(savingText);
     $.ajax({
         type: 'POST',
-        url: 'ExerciseShow.aspx/Save',
-        data: JSON.stringify({ dataInputs: dataInputs, sponsorID: sponsorID, exerciseVariantLangID: exerciseVariantLangID }),
+        url: 'ExerciseShow.aspx/Save2',
+        data: JSON.stringify({ dataInputs: dataInputs, sponsorAdminID: sponsorAdminID, exerciseVariantLangID: exerciseVariantLangID }),
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (response) {
@@ -65,11 +65,11 @@ HW.save3 = function (dataInputs, sponsorAdminID, exerciseVariantLangID) {
     });
 }
 
-HW.read = function(sponsorID, exerciseVariantLangID, f) {
+HW.read = function(sponsorAdminID, exerciseVariantLangID, f) {
     $.ajax({
         type: 'GET',
         url: 'ExerciseShow.aspx/Read',
-        data: { 'sponsorID': sponsorID, 'exerciseVariantLangID': exerciseVariantLangID },
+        data: { 'sponsorAdminID': sponsorAdminID, 'exerciseVariantLangID': exerciseVariantLangID },
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (response) {

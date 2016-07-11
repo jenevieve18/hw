@@ -79,19 +79,19 @@ namespace HW.Grp
 			try {
 				var r = new SqlSponsorRepository();
 				r.SaveSponsorAdminExercise(dataInputs, sponsorAdminID, exerciseVariantLangID);
-				return "Exercise data for sponsor administrator is saved.";
+				return "Exercise data for this manager is saved.";
 			} catch (Exception ex) {
 				throw ex;
 			}
 		}
 		
-		/*[WebMethod]
+		[WebMethod]
 		[ScriptMethod(UseHttpGet = true)]
-		public static IList<object> Read(int sponsorID, int exerciseVariantLangID)
+		public static IList<object> Read(int sponsorAdminID, int exerciseVariantLangID)
 		{
 			try {
 				var r = new SqlSponsorRepository();
-				var inputs = r.FindSponsorExerciseDataInputs(sponsorID, exerciseVariantLangID);
+				var inputs = r.FindSponsorAdminExerciseDataInputs(sponsorAdminID, exerciseVariantLangID);
 				var data = new List<object>();
 				foreach (var i in inputs) {
 					data.Add(new { content = i.Content });
@@ -100,7 +100,7 @@ namespace HW.Grp
 			} catch (Exception ex) {
 				throw ex;
 			}
-		}*/
+		}
 		
 		public void Show(int ExerciseVariantLangID, int UID, int UPID)
 		{
