@@ -190,7 +190,7 @@
     <value>Kategorie wählen</value>
   </data>
   <data name="exercises.group" xml:space="preserve">
-    <value>Gruppenübungen</value>
+    <value>Gruppen-&lt;br&gt;übungen</value>
   </data>
   <data name="exercises.sorting" xml:space="preserve">
     <value>Übungen - Sortierung:</value>
