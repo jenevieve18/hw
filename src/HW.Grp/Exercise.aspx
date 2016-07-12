@@ -145,6 +145,7 @@
 			    </div>
 			</div>
 		</div>
+        <% if (exercises.Count > 0) { %>
 		<div class="results">
 			<div class="largelegend">
 				<%-- LanguageFactory.GetLegend(LID) --%>
@@ -186,6 +187,7 @@
 				</div>
 			</div>-->
 		</div><!-- end .results -->
+        <% } %>
 		<div class="bottom"></div>
 	</div>
 
