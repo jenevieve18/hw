@@ -9,7 +9,7 @@
 	<meta http-equiv="Pragma" content="no-cache">
 	<meta http-equiv="Expires" content="-1">
 	<meta name="Robots" content="noarchive">
-	<title><%= LID == 1 ? "Övningar" : "Exercises"%> - HealthWatch</title>
+	<title><%= langId == 1 ? "Övningar" : "Exercises"%> - HealthWatch</title>
 	<link rel="shortcut icon" href="favicon.ico">
 	<link rel="apple-touch-icon" href="apple-touch-icon.png">
 	<link type="text/css" rel="stylesheet" href="includes2/css/960.css">
@@ -33,27 +33,26 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <body class="popup"> <!--<![endif]-->
 <form id="Form1" method="post" runat="server">
 
-<input id="sponsorID" type="hidden" value="<%= SID %>" />
+<input id="sponsorID" type="hidden" value="<%= sponsorId %>" />
 <input id="sponsorAdminID" type="hidden" value="<%= sponsorAdminID %>" />
-<input id="exerciseVariantLangID" type="hidden" value="<%= EVLID %>" />
+<input id="exerciseVariantLangID" type="hidden" value="<%= exerciseVariantLangId %>" />
 
 <div class="popupie">
 	<div class="header">
 		<h1>HealthWatch.se<%= headerText %></h1>
         <a href="#" id="printBtn" onclick="window.print();return false;" class="print">
-            <%= LID == 1 ? "Skriv ut" : "Print" %>
+            <%= langId == 1 ? "Skriv ut" : "Print" %>
         </a>
 	</div>
 	<div class="content">
         <img src="img/hwlogosmall.gif" />
         <%= logos %>
         <br /><br />
-		<asp:PlaceHolder id="exercise" runat="server"/>
-		
+		<asp:PlaceHolder id="exercise" runat="server"/>		
 		<% if (evl != null && evl.Variant.Exercise.PrintOnBottom) { %>
 			<br><br>
 			<a href='#' id='printBtn2' onclick='window.print();return false;' class='print'>
-				<%= LID == 1 ? "Skriv ut" : "Print" %>
+				<%= langId == 1 ? "Skriv ut" : "Print" %>
 			</a>
 		<% } %>
     </div>

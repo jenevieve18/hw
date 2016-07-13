@@ -48,7 +48,7 @@ namespace HW.Grp
 			Response.ClearHeaders();
 			Response.ClearContent();
 			Response.ContentType = exporter.Type;
-			AddHeaderIf(exporter.HasContentDisposition2, "content-disposition", exporter.ContentDisposition2);
+			HtmlHelper.AddHeaderIf(exporter.HasContentDisposition2, "content-disposition", exporter.ContentDisposition2, Response);
 			
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
 			
@@ -70,7 +70,7 @@ namespace HW.Grp
 			
 			exporter.UrlSet += delegate(object sender2, ReportPartEventArgs e2) { e2.Url = path + GetSuperReportImageUrl(e2.ReportPart); };
 //			Write(exporter.SuperExportAll(lid));
-			Write(exporter.SuperExportAll(RNDS1, RNDS2, RNDSD1, RNDSD2, PID1, PID2, N, FDT, TDT, R1, R2, lid, plot));
+			HtmlHelper.Write(exporter.SuperExportAll(RNDS1, RNDS2, RNDSD1, RNDSD2, PID1, PID2, N, FDT, TDT, R1, R2, lid, plot), Response);
 		}
 
 		string GetSuperReportImageUrl(ReportPart p)
@@ -93,21 +93,21 @@ namespace HW.Grp
 			);
 		}
 		
-		void Write(object obj)
-		{
-			if (obj is MemoryStream) {
-				Response.BinaryWrite(((MemoryStream)obj).ToArray());
-				Response.End();
-			} else if (obj is string) {
-				Response.Write((string)obj);
-			}
-		}
-		
-		void AddHeaderIf(bool condition, string name, string value)
-		{
-			if (condition) {
-				Response.AddHeader(name, value);
-			}
-		}
+//		void Write(object obj)
+//		{
+//			if (obj is MemoryStream) {
+//				Response.BinaryWrite(((MemoryStream)obj).ToArray());
+//				Response.End();
+//			} else if (obj is string) {
+//				Response.Write((string)obj);
+//			}
+//		}
+//		
+//		void AddHeaderIf(bool condition, string name, string value)
+//		{
+//			if (condition) {
+//				Response.AddHeader(name, value);
+//			}
+//		}
 	}
 }

@@ -27,40 +27,38 @@
     <script type="text/javascript">        $("body").addClass("popup"); $(document).ready(function () { $("body").addClass("popup"); });</script>
     <script src="AC_ActiveX.js" type="text/javascript"></script>
 </head>
-<body>
 <!--[if lt IE 7 ]> <body class="ie6" class="popup"> <![endif]-->
 <!--[if IE 7 ]>    <body class="ie7" class="popup"> <![endif]-->
 <!--[if IE 8 ]>    <body class="ie8" class="popup"> <![endif]-->
 <!--[if IE 9 ]>    <body class="ie9" class="popup"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body class="popup"> <!--<![endif]-->
-    <form id="form1" runat="server">
-    
-<input id="sponsorID" type="hidden" value="<%= sponsorId %>" />
-<input id="sponsorAdminID" type="hidden" value="<%= sponsorAdminID %>" />
-<input id="exerciseVariantLangID" type="hidden" value="<%= exerciseVariantLangId %>" />
 
-<div class="popupie">
-	<div class="header">
-		<h1>HealthWatch.se<%= headerText %></h1>
-        <a href="#" id="printBtn" onclick="window.print();return false;" class="print">
-            <%= langId == 1 ? "Skriv ut" : "Print" %>
-        </a>
-	</div>
-	<div class="content">
-        <img src="img/hwlogosmall.gif" />
-        <%= logos %>
-        <br /><br />
-		<asp:PlaceHolder id="exercise" runat="server"/>
-		
-		<% if (evl != null && evl.Variant.Exercise.PrintOnBottom) { %>
-			<br><br>
-			<a href='#' id='printBtn2' onclick='window.print();return false;' class='print'>
-				<%= langId == 1 ? "Skriv ut" : "Print" %>
-			</a>
-		<% } %>
-    </div>
-    <div class="footer">&copy; <%=DateTime.Now.Year%> www.healthwatch.se</div>
-</div>
+    <form id="form1" runat="server">
+        <input id="sponsorID" type="hidden" value="<%= sponsorId %>" />
+        <input id="sponsorAdminID" type="hidden" value="<%= sponsorAdminID %>" />
+        <input id="exerciseVariantLangID" type="hidden" value="<%= exerciseVariantLangId %>" />
+
+        <div class="popupie">
+	        <div class="header">
+		        <h1>HealthWatch.se<%= headerText %></h1>
+                <a href="#" id="printBtn" onclick="window.print();return false;" class="print">
+                    <%= langId == 1 ? "Skriv ut" : "Print" %>
+                </a>
+	        </div>
+	        <div class="content">
+                <img src="img/hwlogosmall.gif" />
+                <%= logos %>
+                <br /><br />
+		        <asp:PlaceHolder id="exercise" runat="server"/>
+		        <% if (evl != null && evl.Variant.Exercise.PrintOnBottom) { %>
+			        <br><br>
+			        <a href='#' id='printBtn2' onclick='window.print();return false;' class='print'>
+				        <%= langId == 1 ? "Skriv ut" : "Print" %>
+			        </a>
+		        <% } %>
+            </div>
+            <div class="footer">&copy; <%=DateTime.Now.Year%> www.healthwatch.se</div>
+        </div>
     </form>
 </body>
 </html>

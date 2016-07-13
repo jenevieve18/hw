@@ -13,11 +13,20 @@ namespace HW.Grp
 	public partial class MyExercise : System.Web.UI.Page
 	{
 		SqlExerciseRepository er = new SqlExerciseRepository();
+		SqlUserRepository userRepository = new SqlUserRepository();
 		protected IList<SponsorAdminExercise> exercises;
 		protected int sponsorID;
 		protected int sponsorAdminID;
-		SqlUserRepository userRepository = new SqlUserRepository();
-		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
+		protected int lid;
+		
+		public MyExercise() : this(LanguageFactory.GetLanguageID(HttpContext.Current.Request))
+		{
+		}
+		
+		public MyExercise(int lid)
+		{
+			this.lid = lid;
+		}
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -25,12 +34,27 @@ namespace HW.Grp
 
 			sponsorID = ConvertHelper.ToInt32(Session["SponsorID"]);
 			sponsorAdminID = ConvertHelper.ToInt32(Session["SponsorAdminID"], -1);
-			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+			
+//			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+//			if (userSession != null) {
+//				lid = userSession.Lang;
+//			}
+			SetLanguage(userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent));
+			
+//			exercises = er.FindBySponsorAdminExerciseHistory(lid - 1, sponsorAdminID);
+			Show(er.FindBySponsorAdminExerciseHistory(lid - 1, sponsorAdminID));
+		}
+		
+		public void SetLanguage(UserSession userSession)
+		{
 			if (userSession != null) {
-				lid = userSession.Lang;
+				this.lid = userSession.Lang;
 			}
-
-			exercises = er.FindBySponsorAdminExerciseHistory(lid - 1, sponsorAdminID);
+		}
+		
+		public void Show(IList<SponsorAdminExercise> exercises)
+		{
+			this.exercises = exercises;
 		}
 	}
 }

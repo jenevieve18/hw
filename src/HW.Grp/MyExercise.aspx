@@ -22,11 +22,11 @@
                             <%= l.Date.Value.ToString("yyyy-MM-dd") %>
                             <%= e.AreaCategoryName%>
                         </div>
-                        <h2><%= e.Languages[0].ExerciseName%></h2>
-                        <p><%= e.Languages[0].Teaser%></p>
+                        <h2><%= e.Languages[0].ExerciseName %></h2>
+                        <p><%= e.Languages[0].Teaser %></p>
                         <div>
                             <% string t = string.Format(
-                                    "JavaScript:void(window.open('ExerciseShow.aspx?SID={1}&AUID={2}&ExerciseVariantLangID={3}','EVLID{3}','scrollbars=yes,resizable=yes,width={4},height={5}'));",
+                                    "JavaScript:void(window.open('MyExerciseShow.aspx?SID={1}&AUID={2}&ExerciseVariantLangID={3}','EVLID{3}','scrollbars=yes,resizable=yes,width={4},height={5}'));",
                                     ConfigurationManager.AppSettings["healthWatchURL"],
                                     sponsorID,
                                     sponsorAdminID,
@@ -35,8 +35,9 @@
                                     evl.ExerciseWindowY
                                 );
                             %>
-                            <a class="sidearrow" href="<%= t %>"><%= v.Type.Languages[0].ToString() %></a>
-                            <%= HtmlHelper.Anchor("PDF", string.Format("exerciseexport.aspx?SponsorAdminExerciseID={0}", l.Id)) %>
+                            <%--<%= HtmlHelper.Anchor(v.Type.Languages[0].ToString(), t, "class='sidearrow'") %>--%>
+                            <a class='sidearrow' href="<%= t %>"><%= v.Type.Languages[0].ToString() %></a>
+                            <%= HtmlHelper.Anchor("PDF", string.Format("exerciseexport.aspx?SponsorAdminExerciseID={0}", l.Id), "class='sidearrow' target='__blank'") %>
                         </div>
                         <div class="bottom">&nbsp;</div>
                     </div>

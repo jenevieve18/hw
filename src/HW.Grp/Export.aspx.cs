@@ -30,48 +30,6 @@ namespace HW.Grp
 			get { return Request.QueryString["AK"] != null; }
 		}
 		
-//		bool HasWidth {
-//			get { return Request.QueryString["W"] != null; }
-//		}
-//		
-//		bool HasHeight {
-//			get { return Request.QueryString["H"] != null; }
-//		}
-//		
-//		bool HasBackground {
-//			get { return Request.QueryString["BG"] != null; }
-//		}
-//		
-//		int Width {
-//			get {
-//				if (HasWidth) {
-//					return Convert.ToInt32(Request.QueryString["W"]);
-//				} else {
-//					return 550;
-//				}
-//			}
-//		}
-//		
-//		int Height {
-//			get {
-//				if (HasHeight) {
-//					return Convert.ToInt32(Request.QueryString["H"]);
-//				} else {
-//					return 440;
-//				}
-//			}
-//		}
-//		
-//		string Background {
-//			get {
-//				if (HasBackground) {
-//					return "#" + Request.QueryString["BG"];
-//				} else {
-//					return "#EFEFEF";
-//				}
-//			}
-//		}
-		
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			int gb = (Request.QueryString["GB"] != null ? Convert.ToInt32(Request.QueryString["GB"].ToString()) : 0);
@@ -109,11 +67,11 @@ namespace HW.Grp
 			Response.ClearHeaders();
 			Response.ClearContent();
 			Response.ContentType = exporter.Type;
-			AddHeaderIf(exporter.HasContentDisposition(reportPart.CurrentLanguage.Subject), "content-disposition", exporter.GetContentDisposition(reportPart.CurrentLanguage.Subject));
+			HtmlHelper.AddHeaderIf(exporter.HasContentDisposition(reportPart.CurrentLanguage.Subject), "content-disposition", exporter.GetContentDisposition(reportPart.CurrentLanguage.Subject), Response);
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
 			
 			string url = GetReportImageUrl(path, langID, yearFrom, yearTo, spons, sid, gb, reportPart.Id, pruid, gid, grpng, plot, monthFrom, monthTo);
-			Write(exporter.Export(url, langID, pruid, yearFrom, yearTo, gb, plot, grpng, spons, sid, gid, sponsor.MinUserCountToDisclose, monthFrom, monthTo));
+			HtmlHelper.Write(exporter.Export(url, langID, pruid, yearFrom, yearTo, gb, plot, grpng, spons, sid, gid, sponsor.MinUserCountToDisclose, monthFrom, monthTo), Response);
 		}
 		
 		string GetReportImageUrl(string path, int langID, int yearFrom, int yearTo, int spons, int sid, int gb, int reportPartID, int projectRoundUnitID, string gid, int grpng, int plot, int monthFrom, int monthTo)
@@ -133,23 +91,6 @@ namespace HW.Grp
 			p.Q.Add("GRPNG", grpng);
 			p.Q.Add("PLOT", plot);
 			return p.ToString();
-		}
-		
-		void Write(object obj)
-		{
-			if (obj is MemoryStream) {
-				Response.BinaryWrite(((MemoryStream)obj).ToArray());
-				Response.End();
-			} else if (obj is string) {
-				Response.Write((string)obj);
-			}
-		}
-		
-		void AddHeaderIf(bool condition, string name, string value)
-		{
-			if (condition) {
-				Response.AddHeader(name, value);
-			}
 		}
 	}
 }

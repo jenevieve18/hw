@@ -13,45 +13,33 @@ namespace HW.Grp
 	public partial class ExerciseExport : System.Web.UI.Page
 	{
 		ExerciseExporter exporter = new ExerciseExporter();
-		SqlExerciseRepository r = new SqlExerciseRepository();
+		SqlExerciseRepository er = new SqlExerciseRepository();
+		SqlSponsorRepository sr = new SqlSponsorRepository();
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			int variantID = ConvertHelper.ToInt32(Request.QueryString["ExerciseVariantLangID"]);
-			
-//			var ex = r.ReadExerciseVariant(variantID);
-			int sponsorAdminExerciseID = ConvertHelper.ToInt32(Request.QueryString["SponsorAdminExerciseID"]);
-			var sae = r.ReadSponsorAdminExercise(sponsorAdminExerciseID);
-			var ex = sae.ExerciseVariantLanguage;
-			exporter.Export(ex);
+			int sponsorAdminExerciseId = ConvertHelper.ToInt32(Request.QueryString["SponsorAdminExerciseID"]);
+			var sae = er.ReadSponsorAdminExercise(sponsorAdminExerciseId);
+			var evl = er.ReadExerciseVariant(sae.ExerciseVariantLanguage.Id);
 
 			Response.ClearHeaders();
 			Response.ClearContent();
 			Response.ContentType = exporter.Type;
-//			AddHeaderIf(exporter.HasContentDisposition(reportPart.CurrentLanguage.Subject), "content-disposition", exporter.GetContentDisposition(reportPart.CurrentLanguage.Subject));
-			AddHeaderIf(exporter.HasContentDisposition(""), "content-disposition", exporter.GetContentDisposition(""));
-			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
+			
+			HtmlHelper.AddHeaderIf(exporter.HasContentDisposition(""), "content-disposition", exporter.GetContentDisposition(""), Response);
 
-//			string url = GetReportImageUrl(path, langID, yearFrom, yearTo, spons, sid, gb, reportPart.Id, pruid, gid, grpng, plot, monthFrom, monthTo);
-//			Write(exporter.Export(url, langID, pruid, yearFrom, yearTo, gb, plot, grpng, spons, sid, gid, sponsor.MinUserCountToDisclose, monthFrom, monthTo));
-			Write(exporter.Export(ex));
-		}
-		
-		void Write(object obj)
-		{
-			if (obj is MemoryStream) {
-				Response.BinaryWrite(((MemoryStream)obj).ToArray());
-				Response.End();
-			} else if (obj is string) {
-				Response.Write((string)obj);
+			string logo = Server.MapPath("~/img/hwlogosmall.gif");
+			
+			int sponsorId = Convert.ToInt32(Session["SponsorID"]);
+			string sponsorLogo = "";
+			var s = sr.ReadSponsor3(sponsorId);
+			if (s != null) {
+				if (s.HasSuperSponsor) {
+					sponsorLogo = Server.MapPath("~/img/partner/" + s.SuperSponsor.Id + ".gif");
+				}
 			}
-		}
-		
-		void AddHeaderIf(bool condition, string name, string value)
-		{
-			if (condition) {
-				Response.AddHeader(name, value);
-			}
+			
+			HtmlHelper.Write(exporter.Export(evl, logo, sponsorLogo), Response);
 		}
 	}
 }

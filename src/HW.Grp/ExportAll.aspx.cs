@@ -105,29 +105,29 @@ namespace HW.Grp
 			var exporter = ExportFactory.GetExporterAll(service, type, HasAnswerKey, hasGrouping, reportParts, Server.MapPath("HW template for Word.docx"));
 			Response.ContentType = exporter.Type;
 			
-			AddHeaderIf(exporter.HasContentDisposition2, "content-disposition", exporter.ContentDisposition2);
+			HtmlHelper.AddHeaderIf(exporter.HasContentDisposition2, "content-disposition", exporter.ContentDisposition2, Response);
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
 			
 			exporter.UrlSet += delegate(object sender2, ReportPartEventArgs e2) { e2.Url = GetReportImageUrl(path, langID, yearFrom, yearTo, sponsorAdminID, sponsorID, groupBy, e2.ReportPart.Id, projectRoundUnitID, departmentIDs, grouping, plot, monthFrom, monthTo); };
-			Write(exporter.ExportAll(langID, projectRoundUnitID, yearFrom, yearTo, groupBy, plot, grouping, sponsorAdminID, sponsorID, departmentIDs, sponsor.MinUserCountToDisclose, monthFrom, monthTo));
+			HtmlHelper.Write(exporter.ExportAll(langID, projectRoundUnitID, yearFrom, yearTo, groupBy, plot, grouping, sponsorAdminID, sponsorID, departmentIDs, sponsor.MinUserCountToDisclose, monthFrom, monthTo), Response);
 		}
 		
-		void Write(object obj)
-		{
-			if (obj is MemoryStream) {
-				Response.BinaryWrite(((MemoryStream)obj).ToArray());
-				Response.End();
-			} else if (obj is string) {
-				Response.Write((string)obj);
-			}
-		}
-		
-		void AddHeaderIf(bool condition, string name, string value)
-		{
-			if (condition) {
-				Response.AddHeader(name, value);
-			}
-		}
+//		void Write(object obj)
+//		{
+//			if (obj is MemoryStream) {
+//				Response.BinaryWrite(((MemoryStream)obj).ToArray());
+//				Response.End();
+//			} else if (obj is string) {
+//				Response.Write((string)obj);
+//			}
+//		}
+//		
+//		void AddHeaderIf(bool condition, string name, string value)
+//		{
+//			if (condition) {
+//				Response.AddHeader(name, value);
+//			}
+//		}
 		
 		string GetReportImageUrl(string path, int langID, int yearFrom, int yearTo, int spons, int sid, int gb, int reportPartID, int projectRoundUnitID, string gid, int grpng, int plot, int monthFrom, int monthTo)
 		{

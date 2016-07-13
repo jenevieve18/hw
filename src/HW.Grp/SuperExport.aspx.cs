@@ -36,7 +36,7 @@ namespace HW.Grp
 			Response.ClearHeaders();
 			Response.ClearContent();
 			Response.ContentType = exporter.Type;
-			AddHeaderIf(exporter.HasContentDisposition(p.CurrentLanguage.Subject), "content-disposition", exporter.GetContentDisposition(p.CurrentLanguage.Subject));
+			HtmlHelper.AddHeaderIf(exporter.HasContentDisposition(p.CurrentLanguage.Subject), "content-disposition", exporter.GetContentDisposition(p.CurrentLanguage.Subject), Response);
 			
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
 			string url = path + GetReportImageUrl(p);
@@ -55,7 +55,7 @@ namespace HW.Grp
 			
 			int plot = ConvertHelper.ToInt32(Request.QueryString["Plot"]);
 			
-			Write(exporter.SuperExport(url, RNDS1, RNDS2, RNDSD1, RNDSD2, PID1, PID2, N, rpid, FDT, TDT, R1, R2, lid, plot));
+			HtmlHelper.Write(exporter.SuperExport(url, RNDS1, RNDS2, RNDSD1, RNDSD2, PID1, PID2, N, rpid, FDT, TDT, R1, R2, lid, plot), Response);
 		}
 
 		string GetReportImageUrl(ReportPart p)
@@ -78,21 +78,21 @@ namespace HW.Grp
 			);
 		}
 		
-		void Write(object obj)
-		{
-			if (obj is MemoryStream) {
-				Response.BinaryWrite(((MemoryStream)obj).ToArray());
-				Response.End();
-			} else if (obj is string) {
-				Response.Write((string)obj);
-			}
-		}
-		
-		void AddHeaderIf(bool condition, string name, string value)
-		{
-			if (condition) {
-				Response.AddHeader(name, value);
-			}
-		}
+//		void Write(object obj)
+//		{
+//			if (obj is MemoryStream) {
+//				Response.BinaryWrite(((MemoryStream)obj).ToArray());
+//				Response.End();
+//			} else if (obj is string) {
+//				Response.Write((string)obj);
+//			}
+//		}
+//		
+//		void AddHeaderIf(bool condition, string name, string value)
+//		{
+//			if (condition) {
+//				Response.AddHeader(name, value);
+//			}
+//		}
 	}
 }
