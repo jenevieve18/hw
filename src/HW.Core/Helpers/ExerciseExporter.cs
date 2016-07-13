@@ -56,33 +56,35 @@ namespace HW.Core.Helpers
 				TextReader txtReader = new StringReader(htmlText);
 				using (var doc = new Document(PageSize.A4, 50f, 50f, 50f, 50f)) {
 					using (var writer = PdfWriter.GetInstance(doc, output)) {
-                            writer.PageEvent = new PDFFooter(evl);
+						writer.PageEvent = new PDFFooter(evl);
 
-                            var styles = new StyleSheet();
-//                            styles.LoadStyle("body", "font-size", "3px");
-//                            styles.LoadStyle("h1", "font-size", "3px");
-//                            styles.LoadStyle("h2", "font-size", "3px");
-//                            styles.LoadStyle("p", "font-size", "3px");
+						var styles = new StyleSheet();
+//						styles.LoadStyle("body", "font-size", "3px");
+//						styles.LoadStyle("h1", "font-size", "3px");
+//						styles.LoadStyle("h2", "font-size", "3px");
+//						styles.LoadStyle("p", "font-size", "3px");
 
-                            doc.Open();
+						doc.Open();
 
-                            Image logoImage = Image.GetInstance(logo);
-                            doc.Add(logoImage);
+						try {
+							Image logoImage = Image.GetInstance(logo);
+							doc.Add(logoImage);
 
-                            if (!sponsorLogo.Equals("")) {
-	                            Image sponsorLogoImage = Image.GetInstance(sponsorLogo);
-	                            doc.Add(sponsorLogoImage);
-                            }
+							if (!sponsorLogo.Equals("")) {
+								Image sponsorLogoImage = Image.GetInstance(sponsorLogo);
+								doc.Add(sponsorLogoImage);
+							}
+						} catch {}
 
-                            List<IElement> objects = HTMLWorker.ParseToList(new StringReader(htmlText), styles);
-                            if (objects.Count > 0)
-                            {
-                                foreach (IElement element in objects)
-                                {
-                                    doc.Add(element);
-                                }
-                            }
-                            doc.Close();
+						List<IElement> objects = HTMLWorker.ParseToList(new StringReader(htmlText), styles);
+						if (objects.Count > 0)
+						{
+							foreach (IElement element in objects)
+							{
+								doc.Add(element);
+							}
+						}
+						doc.Close();
 					}
 				}
 				bytes = output.ToArray();

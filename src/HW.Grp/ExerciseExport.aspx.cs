@@ -34,7 +34,7 @@ namespace HW.Grp
 			string sponsorLogo = "";
 			var s = sr.ReadSponsor3(sponsorId);
 			if (s != null) {
-				if (s.HasSuperSponsor && s.SuperSponsor.Id > 0) {
+				if (s.HasSuperSponsor) {
 					sponsorLogo = Server.MapPath("~/img/partner/" + s.SuperSponsor.Id + ".gif");
 				}
 			}
