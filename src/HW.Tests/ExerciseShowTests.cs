@@ -2,7 +2,7 @@
 using HW.Core.Repositories;
 using NUnit.Framework;
 
-namespace HW.Tests.HWSite
+namespace HW.Tests
 {
 	[TestFixture]
 	public class ExerciseShowTests

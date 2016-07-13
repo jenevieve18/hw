@@ -4,7 +4,7 @@
     <ProjectGuid>{561534C3-E27C-4F5D-A9E6-A14A7F01EC20}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>HW.Tests</RootNamespace>
     <AssemblyName>HW.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -89,70 +89,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Grp\DefaultTests.cs" />
-    <Compile Include="Grp\RemindersTests.cs" />
-    <Compile Include="Helpers\AgreementExporterTests.cs" />
-    <Compile Include="Helpers\ConvertHelperTests.cs" />
-    <Compile Include="Helpers\DbTests.cs" />
-    <Compile Include="Helpers\DocXExporterTests.cs" />
-    <Compile Include="Helpers\ExcelExporterTests.cs" />
-    <Compile Include="Helpers\ExerciseExporterTests.cs" />
-    <Compile Include="Helpers\ExporterTests.cs" />
-    <Compile Include="Helpers\ExtendedGraphTests.cs" />
-    <Compile Include="Helpers\ExtendedGraphTests2.cs" />
-    <Compile Include="Helpers\ExtensionMethodsTests.cs" />
-    <Compile Include="Helpers\GraphFactoryTests.cs" />
-    <Compile Include="Helpers\GraphTests.cs" />
-    <Compile Include="Helpers\HtmlHelperTests.cs" />
-    <Compile Include="Helpers\InvoiceExporterTests.cs" />
-    <Compile Include="Helpers\MailHelperTests.cs" />
-    <Compile Include="Helpers\PageTests.cs" />
-    <Compile Include="Helpers\PdfExporterTests.cs" />
-    <Compile Include="Helpers\PresentationDocumentExporterTests.cs" />
-    <Compile Include="Helpers\SessionHelperTests.cs" />
-    <Compile Include="HWSite\ExerciseShowTests.cs" />
-    <Compile Include="Invoicing\CustomersTests.cs" />
-    <Compile Include="Invoicing\InvoicesTests.cs" />
-    <Compile Include="Invoicing\ItemsTests.cs" />
-    <Compile Include="Invoicing\Repositories\CustomerRepositoryTests.cs" />
-    <Compile Include="Invoicing\Repositories\InvoiceRepositoryTests.cs" />
-    <Compile Include="Invoicing\UsersTests.cs" />
+    <Compile Include="ExerciseShowTests.cs" />
     <Compile Include="JsonConvertTests.cs" />
-    <Compile Include="Models\CompanyTests.cs" />
-    <Compile Include="Models\CustomerTests.cs" />
-    <Compile Include="Models\DepartmentTests.cs" />
-    <Compile Include="Models\GroupFactoryTests.cs" />
-    <Compile Include="Models\HWListTests.cs" />
-    <Compile Include="Models\InvoiceTests.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\AnswerRepositoryTests.cs" />
-    <Compile Include="Repositories\DepartmentRepositoryTests.cs" />
-    <Compile Include="Repositories\ExerciseRepositoryTests.cs" />
-    <Compile Include="Repositories\IndexRepositoryTests.cs" />
-    <Compile Include="Repositories\LanguageRepositoryTests.cs" />
-    <Compile Include="Repositories\ManagerFunctionRepositoryTests.cs" />
-    <Compile Include="Repositories\MeasureRepositoryTests.cs" />
-    <Compile Include="Repositories\OptionRepositoryTests.cs" />
-    <Compile Include="Repositories\ProjectRepositoryTests.cs" />
-    <Compile Include="Repositories\QuestionRepositoryTests.cs" />
-    <Compile Include="Repositories\ReportRepositoryTests.cs" />
-    <Compile Include="Repositories\SponsorAdminRepositoryTests.cs" />
-    <Compile Include="Repositories\SponsorRepositoryTests.cs" />
-    <Compile Include="Repositories\UserRepositoryTests.cs" />
-    <Compile Include="Grp\ExerciseTests.cs" />
-    <Compile Include="Grp\FeedbackTests.cs" />
-    <Compile Include="Grp\ManagerSetupTests.cs" />
-    <Compile Include="Grp\ManagersTests.cs" />
-    <Compile Include="Grp\MessagesTests.cs" />
-    <Compile Include="Grp\OrgTests.cs" />
-    <Compile Include="Grp\StatsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HW.Core\HW.Core.csproj">
@@ -183,18 +122,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Repositories\HW.Invoicing.sln" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Invoicing" />
-    <Folder Include="HWSite" />
-    <Folder Include="Invoicing\Repositories" />
-    <Folder Include="Services" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>
