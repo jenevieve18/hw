@@ -939,7 +939,8 @@ AND si.SponsorID = {0}",
 				@"
 SELECT s.Sponsor,
 	ss.SuperSponsorID,
-	ssl.Header
+	ssl.Header,
+	s.SponsorID
 FROM Sponsor s
 LEFT OUTER JOIN SuperSponsor ss ON s.SuperSponsorID = ss.SuperSponsorID
 LEFT OUTER JOIN SuperSponsorLang ssl ON ss.SuperSponsorID = ssl.SuperSponsorID AND ssl.LangID = 1
@@ -957,7 +958,8 @@ WHERE s.SponsorID = {0}",
 					}
 					s = new Sponsor {
 						Name = GetString(rs, 0),
-						SuperSponsor = u
+						SuperSponsor = u,
+						Id = GetInt32(rs, 3)
 					};
 				}
 			}

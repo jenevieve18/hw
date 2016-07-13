@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Data.SqlClient;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Collections.Generic;
@@ -235,12 +236,9 @@ namespace HW.Core.Helpers
 
 		public static void Redirect(string url, bool random)
 		{
-			if (random)
-			{
+			if (random) {
 				HttpContext.Current.Response.Redirect(string.Format("{0}?Rnd={1}", url, GetRandomInt()), true);
-			}
-			else
-			{
+			} else {
 				HttpContext.Current.Response.Redirect(url, true);
 			}
 		}
@@ -254,14 +252,31 @@ namespace HW.Core.Helpers
 //			return s.ToString();
 //		}
 //
-		public static string CreatePage(string name)
+//		public static string CreatePage(string name)
+//		{
+//			return CreatePage(new P(name));
+//		}
+//		
+//		public static string CreatePage(P p)
+//		{
+//			return p.ToString();
+//		}
+		
+		public static void Write(object obj, HttpResponse reponse)
 		{
-			return CreatePage(new P(name));
+			if (obj is MemoryStream) {
+				reponse.BinaryWrite(((MemoryStream)obj).ToArray());
+				reponse.End();
+			} else if (obj is string) {
+				reponse.Write((string)obj);
+			}
 		}
 		
-		public static string CreatePage(P p)
+		public static void AddHeaderIf(bool condition, string name, string value, HttpResponse response)
 		{
-			return p.ToString();
+			if (condition) {
+				response.AddHeader(name, value);
+			}
 		}
 	}
 	

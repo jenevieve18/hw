@@ -25,7 +25,7 @@ namespace HW.Core.Helpers
 		Font headerNormalFont = FontFactory.GetFont("Arial", 6, Font.NORMAL, BaseColor.BLACK);
 		Font smallFont = FontFactory.GetFont("Arial", 8, Font.NORMAL, BaseColor.BLACK);
 		Font smallestFont = FontFactory.GetFont("Arial", 3, Font.NORMAL, BaseColor.BLACK);
-		ExerciseVariantLanguage variant;
+		ExerciseVariantLanguage evl;
 		
 		public ExerciseExporter()
 		{
@@ -45,59 +45,44 @@ namespace HW.Core.Helpers
 			get { return "application/pdf"; }
 		}
 		
-//		int LangId {
-//			get { return exercise.Customer.Language != null ? exercise.Customer.Language.Id : 1; }
-//		}
-//
-//		string Currency {
-//			get { return exercise.Customer.Currency != null ? ", " + exercise.Customer.Currency.ShortName : ""; }
-//		}
-		
-		public MemoryStream Export(ExerciseVariantLanguage variant)
+		public MemoryStream Export(ExerciseVariantLanguage evl, string logo, string sponsorLogo)
 		{
-			this.variant = variant;
+			this.evl = evl;
 			
 			byte[] bytes;
 			using (var output = new MemoryStream()) {
-//				var htmlText = "<h1>Hello world</h1><p>The quick brown fox jumps over the lazy dog.</p>";
-				var htmlText = variant.Content;
+				var header = evl.Variant.Exercise.Languages[0].ExerciseName;
+				var htmlText = string.Format("<h1 style='color:#1c73a8'>{0}</h1>{1}", header, evl.Content);
 				TextReader txtReader = new StringReader(htmlText);
 				using (var doc = new Document(PageSize.A4, 50f, 50f, 50f, 50f)) {
 					using (var writer = PdfWriter.GetInstance(doc, output)) {
-						writer.PageEvent = new PDFFooter(variant);
-						
-//						HTMLWorker htmlWorker = new HTMLWorker(doc);
-						
-						var styles = new StyleSheet();
-						styles.LoadStyle("body", "font-size", "3px");
-						styles.LoadStyle("h2", "font-size", "3px");
-						styles.LoadStyle("p", "font-size", "3px");
-						
-//						htmlWorker.SetStyleSheet(style);
-						
-						doc.Open();
-						
-//						htmlWorker.StartDocument();
-//						htmlWorker.Parse(txtReader);
-						
-						List<IElement> objects = HTMLWorker.ParseToList(new StringReader(htmlText), styles);
-						foreach (IElement element in objects) {
-							doc.Add(element);
-						}
-						
-//						doc.Add(GetInvoiceDetails(exercise, doc));
-						
-//						doc.Add(new Paragraph("hello world "));
-//						doc.Add(new Paragraph(R.Str(LangId, "invoice.terms", "Betalningsvillkor: 30 dagar netto. Vid likvid efter förfallodagen debiteras ränta med 2% per månad."), smallFont));
-//						doc.Add(new Paragraph(" ", smallestFont));
-						
-//						doc.Add(GetInvoiceItems(exercise, doc));
-//						doc.Add(GetInvoiceTotal(exercise, doc));
-						
-//						htmlWorker.EndDocument();
-//						htmlWorker.Close();
-						
-						doc.Close();
+                            writer.PageEvent = new PDFFooter(evl);
+
+                            var styles = new StyleSheet();
+//                            styles.LoadStyle("body", "font-size", "3px");
+//                            styles.LoadStyle("h1", "font-size", "3px");
+//                            styles.LoadStyle("h2", "font-size", "3px");
+//                            styles.LoadStyle("p", "font-size", "3px");
+
+                            doc.Open();
+
+                            Image logoImage = Image.GetInstance(logo);
+                            doc.Add(logoImage);
+
+                            if (!sponsorLogo.Equals("")) {
+	                            Image sponsorLogoImage = Image.GetInstance(sponsorLogo);
+	                            doc.Add(sponsorLogoImage);
+                            }
+
+                            List<IElement> objects = HTMLWorker.ParseToList(new StringReader(htmlText), styles);
+                            if (objects.Count > 0)
+                            {
+                                foreach (IElement element in objects)
+                                {
+                                    doc.Add(element);
+                                }
+                            }
+                            doc.Close();
 					}
 				}
 				bytes = output.ToArray();

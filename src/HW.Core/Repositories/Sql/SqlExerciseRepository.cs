@@ -100,7 +100,8 @@ WHERE el.Lang = {0}",
 		{
 			string query = string.Format(
 				@"
-SELECT evl.ExerciseContent
+SELECT evl.ExerciseContent,
+evl.ExerciseVariantLangID
 FROM dbo.SponsorAdminExercise sae
 INNER JOIN dbo.ExerciseVariantLang evl ON evl.ExerciseVariantLangID = sae.ExerciseVariantLangID
 INNER JOIN dbo.ExerciseVariant ev ON ev.ExerciseVariantID = evl.ExerciseVariantID
@@ -112,7 +113,8 @@ WHERE sae.SponsorAdminExerciseID = {0}",
 				if (rs.Read()) {
 					s = new SponsorAdminExercise {
 						ExerciseVariantLanguage = new ExerciseVariantLanguage {
-							Content = GetString(rs, 0)
+							Content = GetString(rs, 0),
+							Id = GetInt32(rs, 1)
 						}
 					};
 				}
