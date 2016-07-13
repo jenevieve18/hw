@@ -1,0 +1,1 @@
+﻿<%@ WebService Language="C#"  Class="HW.WebService2.Soap" %>
