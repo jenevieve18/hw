@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace HW.Grp.Tests.Models
 {
 	[TestFixture]
-	public class DepartmentTests
+	public class ReminderHelperTests
 	{
 		Dictionary<int, string> loginDays;
 		Dictionary<int, string> loginWeekdays;
