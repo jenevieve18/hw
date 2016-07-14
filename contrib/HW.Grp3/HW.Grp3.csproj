@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{235C6469-53AA-41BE-982F-41E4811DBD0F}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HW.Grp3</RootNamespace>
+    <AssemblyName>HW.Grp3</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\css\styles.css" />
+    <Content Include="assets\img\hwlogo.png" />
+    <Content Include="assets\img\partner\1.gif" />
+    <Content Include="assets\img\partner\3.gif" />
+    <Content Include="assets\img\submenu.gif" />
+    <Content Include="assets\js\scripts.js" />
+    <Content Include="Default.aspx" />
+    <Content Include="Exercise.aspx" />
+    <Content Include="ExerciseExport.aspx" />
+    <Content Include="ExerciseShow.aspx" />
+    <Content Include="Feedback.aspx" />
+    <Content Include="Managers.aspx" />
+    <Content Include="ManagerSetup.aspx" />
+    <Content Include="Messages.aspx" />
+    <Content Include="MyExcerciseShow.aspx" />
+    <Content Include="MyExercise.aspx" />
+    <Content Include="Org.aspx" />
+    <Content Include="PasswordActivation.aspx" />
+    <Content Include="Reminders.aspx" />
+    <Content Include="ReportImage.aspx" />
+    <Content Include="ReportImage2.aspx" />
+    <Content Include="Settings.aspx" />
+    <Content Include="Stats.aspx" />
+    <Content Include="StatsExport.aspx" />
+    <Content Include="StatsExportAll.aspx" />
+    <Content Include="SuperAdmin.aspx" />
+    <Content Include="SuperStatsExport.aspx" />
+    <Content Include="SuperStatsExportAll.aspx" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Exercise.aspx.cs">
+      <DependentUpon>Exercise.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Exercise.aspx.designer.cs">
+      <DependentUpon>Exercise.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ExerciseExport.aspx.cs">
+      <DependentUpon>ExerciseExport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExerciseExport.aspx.designer.cs">
+      <DependentUpon>ExerciseExport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ExerciseShow.aspx.cs">
+      <DependentUpon>ExerciseShow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExerciseShow.aspx.designer.cs">
+      <DependentUpon>ExerciseShow.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Feedback.aspx.cs">
+      <DependentUpon>Feedback.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Feedback.aspx.designer.cs">
+      <DependentUpon>Feedback.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Layout.Master.cs">
+      <DependentUpon>Layout.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layout.Master.designer.cs">
+      <DependentUpon>Layout.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Managers.aspx.cs">
+      <DependentUpon>Managers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Managers.aspx.designer.cs">
+      <DependentUpon>Managers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ManagerSetup.aspx.cs">
+      <DependentUpon>ManagerSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ManagerSetup.aspx.designer.cs">
+      <DependentUpon>ManagerSetup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Messages.aspx.cs">
+      <DependentUpon>Messages.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Messages.aspx.designer.cs">
+      <DependentUpon>Messages.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MyExcerciseShow.aspx.cs">
+      <DependentUpon>MyExcerciseShow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyExcerciseShow.aspx.designer.cs">
+      <DependentUpon>MyExcerciseShow.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MyExercise.aspx.cs">
+      <DependentUpon>MyExercise.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyExercise.aspx.designer.cs">
+      <DependentUpon>MyExercise.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Org.aspx.cs">
+      <DependentUpon>Org.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Org.aspx.designer.cs">
+      <DependentUpon>Org.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PasswordActivation.aspx.cs">
+      <DependentUpon>PasswordActivation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PasswordActivation.aspx.designer.cs">
+      <DependentUpon>PasswordActivation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reminders.aspx.cs">
+      <DependentUpon>Reminders.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reminders.aspx.designer.cs">
+      <DependentUpon>Reminders.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportImage.aspx.cs">
+      <DependentUpon>ReportImage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportImage.aspx.designer.cs">
+      <DependentUpon>ReportImage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportImage2.aspx.cs">
+      <DependentUpon>ReportImage2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportImage2.aspx.designer.cs">
+      <DependentUpon>ReportImage2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.aspx.cs">
+      <DependentUpon>Settings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Settings.aspx.designer.cs">
+      <DependentUpon>Settings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Stats.aspx.cs">
+      <DependentUpon>Stats.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Stats.aspx.designer.cs">
+      <DependentUpon>Stats.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StatsExport.aspx.cs">
+      <DependentUpon>StatsExport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StatsExport.aspx.designer.cs">
+      <DependentUpon>StatsExport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StatsExportAll.aspx.cs">
+      <DependentUpon>StatsExportAll.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StatsExportAll.aspx.designer.cs">
+      <DependentUpon>StatsExportAll.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SuperAdmin.aspx.cs">
+      <DependentUpon>SuperAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SuperAdmin.aspx.designer.cs">
+      <DependentUpon>SuperAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SuperStatsExport.aspx.cs">
+      <DependentUpon>SuperStatsExport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SuperStatsExport.aspx.designer.cs">
+      <DependentUpon>SuperStatsExport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SuperStatsExportAll.aspx.cs">
+      <DependentUpon>SuperStatsExportAll.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SuperStatsExportAll.aspx.designer.cs">
+      <DependentUpon>SuperStatsExportAll.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Layout.Master" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\HW.Core\HW.Core.csproj">
+      <Project>{c7b845fd-7d23-42ef-9ea7-521a83c4ef60}</Project>
+      <Name>HW.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:5336/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

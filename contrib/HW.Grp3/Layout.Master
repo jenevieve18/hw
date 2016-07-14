@@ -1,0 +1,116 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Layout.master.cs" Inherits="HW.Grp3.Layout" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <!--<title></title>-->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+
+    <style>
+        body
+        {
+            background: #efefef;
+        }
+        .container
+        {
+            background: white;
+            border: 1px solid #cccccc;
+        }
+        .header nav ul
+        {
+            list-style: none;
+            padding-left: 0px;
+            /*margin-left: 0px;*/
+        }
+        .header .header-top
+        {
+            line-height: 1.1em;
+        }
+        .header nav ul li
+        {
+            float: left;
+        }
+        .header nav ul li a
+        {
+            display: block;
+            padding: 10px 20px;
+            /*background: url('assets/img/submenu.gif') center -120px;*/
+            background: url('assets/img/submenu.gif') center 0px;
+            margin-left:1px;
+            text-decoration: none;
+            color: white;
+        }
+        .text-white
+        {
+            color: white;
+        }
+        .content
+        {
+            margin-top: 10px;
+        }
+        .nav-description
+        {
+            padding: 10px 0 0 30px;
+        }
+    </style>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div class="container">
+        <div class="header">
+            <div class="row header-top">
+                <div class="col-md-2">
+                    <img style="" src="assets/img/hwlogo.png" />
+                </div>
+                <div class="col-md-6" style="padding:30px 0 0 40px;">
+                    <strong>HealthWatch.se</strong> - <br />
+                    Group administration - Sponsor83
+                    <small>
+                        <a href="default.aspx?lid=1&amp;r=%2forg.aspx%3fRnd%3d1538679563" class="i18n">På svenska</a>
+                        <a href="default.aspx?lid=2&amp;r=%2forg.aspx%3fRnd%3d1538679563" class="i18n">In English</a>
+                        <a href="default.aspx?lid=4&amp;r=%2forg.aspx%3fRnd%3d1538679563" class="i18n">Auf Deutsch</a>
+                    </small>
+                    <img src="assets/img/partner/3.gif" />
+                </div>
+                <div class="col-md-4 pull-right" style="padding-top:30px;text-align:right;">
+                    <strong>sponsor83admin514</strong><br />
+                    <span class="text-white">791</span><br />
+                    Settings   Log out
+                </div>
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="">Organization</a></li>
+                    <li><a href="">Statistics</a></li>
+                    <li><a href="">Messages</a></li>
+                    <li><a href="">Managers</a></li>
+                    <li><a href="">Exercises</a></li>
+                    <li><a href="">Reminders</a></li>
+                    <li><a href="">My Exercises</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="clearfix"></div>
+        <div class="nav-description">
+            Administer units and users
+        </div>
+
+        <div class="content">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+            </asp:ContentPlaceHolder>
+        </div>
+    </div>
+    </form>
+</body>
+</html>
