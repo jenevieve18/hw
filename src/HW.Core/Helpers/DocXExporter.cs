@@ -10,20 +10,20 @@ using Novacode;
 
 namespace HW.Core.Helpers
 {
-	public class DocXExporter : AbstractExporter
+	public class DocXStatsExporter : AbstractExporter
 	{
 		ReportPart r;
 		IList<IReportPart> parts;
 		ReportService service;
         string template;
 		
-		public DocXExporter(ReportPart r, string template)
+		public DocXStatsExporter(ReportPart r, string template)
 		{
 			this.r = r;
             this.template = template;
 		}
 		
-		public DocXExporter(ReportService service, IList<IReportPart> parts, string template)
+		public DocXStatsExporter(ReportService service, IList<IReportPart> parts, string template)
 		{
 			this.service = service;
 			this.parts = parts;

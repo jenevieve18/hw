@@ -23,20 +23,20 @@ namespace HW.Core.Helpers
 		public static IExporter GetExporter(ReportService service, string type, bool hasAnswerKey, bool hasGrouping, ReportPart r, string template)
 		{
 			if (type == Pdf) {
-				return new PdfExporter(r);
+				return new PdfStatsExporter(r);
 			} else if (type == Csv) {
 //				return new CsvExporter(service, hasAnswerKey, hasGrouping, width, height, background, r);
-				return new CsvExporter(service, hasAnswerKey, hasGrouping, r);
+				return new CsvStatsExporter(service, hasAnswerKey, hasGrouping, r);
 			} else if (type == Excel) {
 //				return new ExcelExporter(service, hasAnswerKey, hasGrouping, width, height, background, r, key);
-				return new ExcelExporter(service, hasAnswerKey, hasGrouping, r);
+				return new ExcelStatsExporter(service, hasAnswerKey, hasGrouping, r);
 			} else if (type == WordDocument) {
 //				return new WordDocumentExporter2(r);
-				return new DocXExporter(r, template);
+				return new DocXStatsExporter(r, template);
 //			} else if (type == SpreadsheetDocument) {
 //				return new SpreadsheetDocumentExporter(r);
 			} else if (type == PresentationDocument) {
-				return new PresentationDocumentExporter(r);
+				return new PresentationDocumentStatsExporter(r);
 			} else {
 				throw new NotSupportedException();
 			}
@@ -45,15 +45,15 @@ namespace HW.Core.Helpers
 		public static IExporter GetExporterAll(ReportService service, string type, bool hasAnswerKey, bool hasGrouping, IList<IReportPart> parts, string template)
 		{
 			if (type == Pdf) {
-				return new PdfExporter(service, parts);
+				return new PdfStatsExporter(service, parts);
 			} else if (type == Csv) {
-				return new CsvExporter(service, hasAnswerKey, hasGrouping, parts);
+				return new CsvStatsExporter(service, hasAnswerKey, hasGrouping, parts);
 			} else if (type == Excel) {
-				return new ExcelExporter(service, hasAnswerKey, hasGrouping, parts);
+				return new ExcelStatsExporter(service, hasAnswerKey, hasGrouping, parts);
 			} else if (type == WordDocument) {
-				return new DocXExporter(service, parts, template);
+				return new DocXStatsExporter(service, parts, template);
 			} else if (type == PresentationDocument) {
-				return new PresentationDocumentExporter(service, parts);
+				return new PresentationDocumentStatsExporter(service, parts);
 			} else {
 				throw new NotSupportedException();
 			}
@@ -79,13 +79,13 @@ namespace HW.Core.Helpers
 		public static IExporter GetSuperExporter(string type, ReportPart r, string template)
 		{
 			if (type == Pdf) {
-				return new PdfExporter(r);
+				return new PdfStatsExporter(r);
 			} else if (type == Excel) {
-				return new ExcelExporter(r);
+				return new ExcelStatsExporter(r);
 			} else if (type == WordDocument) {
-				return new DocXExporter(r, template);
+				return new DocXStatsExporter(r, template);
 			} else if (type == PresentationDocument) {
-				return new PresentationDocumentExporter(r);
+				return new PresentationDocumentStatsExporter(r);
 			} else {
 				throw new NotSupportedException();
 			}
@@ -94,14 +94,14 @@ namespace HW.Core.Helpers
 		public static IExporter GetSuperExporterAll(string type, ReportService service, IList<IReportPart> parts, string template)
 		{
 			if (type == Pdf) {
-				return new PdfExporter(service, parts);
+				return new PdfStatsExporter(service, parts);
 			} else if (type == Excel) {
 //				return new ExcelExporter(service, hasAnswerKey, hasGrouping, parts);
-				return new ExcelExporter(service, false, false, parts);
+				return new ExcelStatsExporter(service, false, false, parts);
 			} else if (type == WordDocument) {
-				return new DocXExporter(service, parts, template);
+				return new DocXStatsExporter(service, parts, template);
 			} else if (type == PresentationDocument) {
-				return new PresentationDocumentExporter(service, parts);
+				return new PresentationDocumentStatsExporter(service, parts);
 			} else {
 				throw new NotSupportedException();
 			}

@@ -12,18 +12,18 @@ using iTextSharp.text.pdf;
 
 namespace HW.Core.Helpers
 {
-	public class PdfExporter : AbstractExporter
+	public class PdfStatsExporter : AbstractExporter
 	{
 		ReportPart r;
 		IList<IReportPart> parts;
 		ReportService service;
 		
-		public PdfExporter(ReportPart r)
+		public PdfStatsExporter(ReportPart r)
 		{
 			this.r = r;
 		}
 		
-		public PdfExporter(ReportService service, IList<IReportPart> parts)
+		public PdfStatsExporter(ReportService service, IList<IReportPart> parts)
 		{
 			this.service = service;
 			this.parts = parts;

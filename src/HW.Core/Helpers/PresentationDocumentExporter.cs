@@ -16,19 +16,19 @@ using HW.Core.Services;
 
 namespace HW.Core.Helpers
 {
-	public class PresentationDocumentExporter : AbstractExporter
+	public class PresentationDocumentStatsExporter : AbstractExporter
 	{
 		ReportPart r;
 		IList<IReportPart> parts;
 		ReportService service;
 		GeneratedClass gc = new GeneratedClass();
 		
-		public PresentationDocumentExporter(ReportPart r)
+		public PresentationDocumentStatsExporter(ReportPart r)
 		{
 			this.r = r;
 		}
 		
-		public PresentationDocumentExporter(ReportService service, IList<IReportPart> parts)
+		public PresentationDocumentStatsExporter(ReportService service, IList<IReportPart> parts)
 		{
 			this.service = service;
 			this.parts = parts;

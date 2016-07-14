@@ -16,7 +16,7 @@ using System.Collections.Generic;
 
 namespace HW.Core.Helpers
 {
-	public class ExerciseExporter
+	public class PdfExerciseExporter
 	{
 		Font normalFont = FontFactory.GetFont("Arial", 9, Font.NORMAL, BaseColor.BLACK);
 		Font titleFont = FontFactory.GetFont("Arial", 16, Font.NORMAL, BaseColor.BLACK);
@@ -27,7 +27,7 @@ namespace HW.Core.Helpers
 		Font smallestFont = FontFactory.GetFont("Arial", 3, Font.NORMAL, BaseColor.BLACK);
 		ExerciseVariantLanguage evl;
 		
-		public ExerciseExporter()
+		public PdfExerciseExporter()
 		{
 		}
 		

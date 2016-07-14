@@ -11,7 +11,7 @@ using OfficeOpenXml.Style;
 
 namespace HW.Core.Helpers
 {
-	public class ExcelExporter : AbstractExporter
+	public class ExcelStatsExporter : AbstractExporter
 	{
 		bool hasAnswerKey;
 		bool hasGrouping;
@@ -24,13 +24,13 @@ namespace HW.Core.Helpers
 		ReportService service;
 		IList<IReportPart> parts;
 		
-		public ExcelExporter(ReportPart r)
+		public ExcelStatsExporter(ReportPart r)
 		{
 			this.r = r;
 		}
 		
 //		public ExcelExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, ReportPart r, string key)
-		public ExcelExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, ReportPart r)
+		public ExcelStatsExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, ReportPart r)
 		{
 			this.service = service;
 			this.hasAnswerKey = hasAnswerKey;
@@ -44,7 +44,7 @@ namespace HW.Core.Helpers
 		}
 		
 //		public ExcelExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, IList<ReportPartLanguage> parts, string key)
-		public ExcelExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, IList<IReportPart> parts)
+		public ExcelStatsExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, IList<IReportPart> parts)
 		{
 			this.service = service;
 			this.hasAnswerKey = hasAnswerKey;

@@ -25,7 +25,7 @@ namespace HW.Core.Helpers
 		}
 	}
 	
-	public class CsvExporter : AbstractExporter
+	public class CsvStatsExporter : AbstractExporter
 	{
 		bool hasAnswerKey;
 		bool hasGrouping;
@@ -39,7 +39,7 @@ namespace HW.Core.Helpers
 		IList<IReportPart> parts;
 		
 //		public CsvExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, ReportPart r, string key)
-		public CsvExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, ReportPart r)
+		public CsvStatsExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, ReportPart r)
 		{
 			this.service = service;
 			this.hasAnswerKey = hasAnswerKey;
@@ -53,7 +53,7 @@ namespace HW.Core.Helpers
 		}
 		
 //		public CsvExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, object disabled, int width, int height, string background, IList<ReportPartLanguage> parts, string key)
-		public CsvExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, IList<IReportPart> parts)
+		public CsvStatsExporter(ReportService service, bool hasAnswerKey, bool hasGrouping, IList<IReportPart> parts)
 		{
 			this.service = service;
 			this.hasAnswerKey = hasAnswerKey;
