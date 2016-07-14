@@ -73,6 +73,21 @@ namespace HW.Grp
 				throw ex;
 			}
 		}*/
+
+        [WebMethod]
+        public static string SaveSponsorAdminExercise(string[] dataInputs, int sponsorAdminID, int exerciseVariantLangID)
+        {
+            try
+            {
+                var r = new SqlSponsorRepository();
+                r.SaveSponsorAdminExercise(dataInputs, sponsorAdminID, exerciseVariantLangID);
+                return "Exercise data for this manager is saved.";
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 		
 		[WebMethod]
 		public static string Save2(string[] dataInputs, int sponsorAdminID, int exerciseVariantLangID)

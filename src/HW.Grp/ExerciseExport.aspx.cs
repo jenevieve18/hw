@@ -12,7 +12,7 @@ namespace HW.Grp
 {
 	public partial class ExerciseExport : System.Web.UI.Page
 	{
-		ExerciseExporter exporter = new ExerciseExporter();
+		PdfExerciseExporter exporter = new PdfExerciseExporter();
 		SqlExerciseRepository er = new SqlExerciseRepository();
 		SqlSponsorRepository sr = new SqlSponsorRepository();
 		
