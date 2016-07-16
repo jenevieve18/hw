@@ -181,11 +181,13 @@
                     </div>
                 <% } %>
 			</div><!-- end .contentlist -->
+
             <!--<div class="disclaimer">
 				<div class="paginationgroup">Sida 1 av 13
 					<a class="page">&lt;</a><a class="page active">1</a><a class="page">2</a><a class="page">3</a><a class="page">4</a><a class="page">5</a><a class="page">6</a><a class="page">7</a><a class="page">&gt;</a>
 				</div>
 			</div>-->
+
 		</div><!-- end .results -->
         <% } %>
 		<div class="bottom"></div>

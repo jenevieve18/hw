@@ -18,6 +18,7 @@
     <link rel="Stylesheet" href="assets/css/site.css" />
 
 	<script type="text/javascript" src="assets/js/jquery-1.10.2.js"></script>
+
 	<script type="text/javascript">
 	    $(document).ready(function () {
 	        var descriptionS = $("#submenu .description").html();
@@ -31,6 +32,7 @@
 	        });
 	    });
 	</script>
+
     <style type="text/css">
         .i18n 
         {

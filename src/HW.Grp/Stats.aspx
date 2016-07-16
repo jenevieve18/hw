@@ -4,7 +4,8 @@
 <%@ Import Namespace="HW.Grp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-<link rel="stylesheet" href="css/smoothness/jquery-ui-1.9.2.custom.min.css"/>
+<link rel="stylesheet" href="assets/smoothness/jquery-ui-1.9.2.custom.min.css"/>
+
 <style type="text/css">
 
 .ui-widget {
@@ -112,7 +113,8 @@
 }
 </style>
 
-<script type="text/javascript" src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script type="text/javascript" src="assets/jquery-ui/jquery-ui-1.9.2.custom.min.js"></script>
+
 <script type="text/javascript">
     String.prototype.format = function () {
         var formatted = this;
@@ -211,11 +213,11 @@
     });
 </script>
 
-<link href="bootstrap-datepicker/css/bootstrap-combined.min.css" rel="stylesheet"/>
-<link href="bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet"/>
+<link href="assets/bootstrap-datepicker/css/bootstrap-combined.min.css" rel="stylesheet"/>
+<link href="assets/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet"/>
 
-<script type="text/javascript" src="bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="bootstrap-datepicker/locales/bootstrap-datepicker.sv.min.js"></script>
+<script type="text/javascript" src="assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="assets/bootstrap-datepicker/locales/bootstrap-datepicker.sv.min.js"></script>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">

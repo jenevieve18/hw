@@ -13,8 +13,9 @@
 	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 
-	<link rel="stylesheet" href="css/bootstrap.css"/>
-	<link rel="stylesheet" href="css/bootstrap-responsive.css"/>
+	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css"/>
+	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap-responsive.css"/>
+
     <style type="text/css">
         body {
             padding-top: 40px;
@@ -64,14 +65,12 @@
 </head>
 <body>
     <form id="form1" runat="server" class="form-signin">
-    
-		<img src="img/hwlogo.png" alt="HealthWatch group administrator"/>
-        
+    	
+        <img src="img/hwlogo.png" alt="HealthWatch group administrator"/>
         <h2>
             <%= R.Str(lid, "login.header", "HealthWatch.se<br>Group administration") %>
         </h2>
         <p style="font-size:14px">
-            <!--<%= HtmlHelper.Anchor(R.Str(lid, "i18n", "På svenska"), string.Format("default.aspx?lid={0}", lid == 1 ? 2 : 1), "class='i18n'")%>-->
             <small>
                 <%= HtmlHelper.Anchor(R.Str(1, "i18n"), string.Format("default.aspx?lid=1&r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)), "class='i18n'")%>
                 <%= HtmlHelper.Anchor(R.Str(2, "i18n"), string.Format("default.aspx?lid=2&r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)), "class='i18n'")%>
@@ -91,6 +90,7 @@
         <button class="btn btn-large btn-info" type="submit">
             <i class="icon-circle-arrow-right"></i><%= R.Str(lid, "login.signin", "Sign in") %>
         </button>
+
         <% if (adminNews.Count > 0) { %>
         	<hr />
             <div class="news">
@@ -109,6 +109,7 @@
             </div>
         <% } %>
     </form>
+
     <div class="footer">
         &copy; Interactive Health Group <%= DateTime.Now.ToString("yyyy") %><br />
         Version <%= typeof(Default).Assembly.GetName().Version%>
