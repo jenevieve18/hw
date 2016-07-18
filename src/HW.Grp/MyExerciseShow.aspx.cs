@@ -21,6 +21,7 @@ namespace HW.Grp
 		protected int exerciseVariantLangId;
 		protected int sponsorId;
 		protected int sponsorAdminID;
+		protected int sponsorAdminExerciseID;
 
 		SqlSponsorRepository sr = new SqlSponsorRepository();
 		IExerciseRepository er;
@@ -38,18 +39,15 @@ namespace HW.Grp
 		{
 			langId = ConvertHelper.ToInt32(Session["LID"], ConvertHelper.ToInt32(Request.QueryString["LID"], 2));
 			sponsorAdminID = ConvertHelper.ToInt32(Session["SponsorAdminID"]);
+			sponsorAdminExerciseID = ConvertHelper.ToInt32(Request.QueryString["SponsorAdminExerciseID"]);
 
 			int userId = 0;
 			int userProfileID = 0;
 			if (HttpContext.Current.Request.QueryString["AUID"] != null) {
 				userId = -Convert.ToInt32(HttpContext.Current.Request.QueryString["AUID"]);
-//				if (HttpContext.Current.Request.QueryString["SID"] != null) {
-//					SetSponsor(HW.Core.Helpers.ConvertHelper.ToInt32(Request.QueryString["SID"]));
-//				}
 				sponsorId = ConvertHelper.ToInt32(Request.QueryString["SID"]);
 				SetSponsor(sr.ReadSponsor3(sponsorId));
 			} else if (HttpContext.Current.Session["UserID"] != null) {
-//				userId = Convert.ToInt32(HttpContext.Current.Session["UserID"]);
 				userId = ConvertHelper.ToInt32(HttpContext.Current.Session["UserID"]);
 				if (Convert.ToInt32(Application["SUPERSPONSOR" + Convert.ToInt32(Session["SponsorID"])]) > 0 && Application["SUPERSPONSORHEAD" + Convert.ToInt32(Session["SponsorID"]) + "LANG" + Convert.ToInt32(HttpContext.Current.Session["LID"])] != null) {
 					headerText += " - " + Application["SUPERSPONSORHEAD" + Convert.ToInt32(Session["SponsorID"]) + "LANG" + Convert.ToInt32(Session["LID"])];
@@ -107,7 +105,7 @@ namespace HW.Grp
 //				}
 //			}
 //		}
-		
+//		
 		public void SetSponsor(Sponsor s)
 		{
 			if (s != null) {

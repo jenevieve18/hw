@@ -26,13 +26,14 @@
                         <p><%= e.Languages[0].Teaser %></p>
                         <div>
                             <% string t = string.Format(
-                                    "JavaScript:void(window.open('MyExerciseShow.aspx?SID={1}&AUID={2}&ExerciseVariantLangID={3}','EVLID{3}','scrollbars=yes,resizable=yes,width={4},height={5}'));",
+                                    "JavaScript:void(window.open('MyExerciseShow.aspx?SID={1}&AUID={2}&ExerciseVariantLangID={3}&SponsorAdminExerciseID={6}','EVLID{3}','scrollbars=yes,resizable=yes,width={4},height={5}'));",
                                     ConfigurationManager.AppSettings["healthWatchURL"],
                                     sponsorID,
                                     sponsorAdminID,
                                     evl.Id,
                                     evl.ExerciseWindowX,
-                                    evl.ExerciseWindowY
+                                    evl.ExerciseWindowY,
+                                    l.Id
                                 );
                             %>
                             <%--<%= HtmlHelper.Anchor(v.Type.Languages[0].ToString(), t, "class='sidearrow'") %>--%>

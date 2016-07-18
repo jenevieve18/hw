@@ -35,13 +35,8 @@ namespace HW.Grp
 			sponsorID = ConvertHelper.ToInt32(Session["SponsorID"]);
 			sponsorAdminID = ConvertHelper.ToInt32(Session["SponsorAdminID"], -1);
 			
-//			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
-//			if (userSession != null) {
-//				lid = userSession.Lang;
-//			}
 			SetLanguage(userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent));
 			
-//			exercises = er.FindBySponsorAdminExerciseHistory(lid - 1, sponsorAdminID);
 			Show(er.FindBySponsorAdminExerciseHistory(lid - 1, sponsorAdminID));
 		}
 		

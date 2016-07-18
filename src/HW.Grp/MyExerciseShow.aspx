@@ -44,6 +44,9 @@
                 <a href="#" id="printBtn" onclick="window.print();return false;" class="print">
                     <%= langId == 1 ? "Skriv ut" : "Print" %>
                 </a>
+                <a href="#" id="A1" onclick="window.open('exerciseexport.aspx?SponsorAdminExerciseID=<%= sponsorAdminExerciseID %>')" class="print">
+                    <%= langId == 1 ? "PDF" : "PDF" %>
+                </a>
 	        </div>
 	        <div class="content">
                 <img src="img/hwlogosmall.gif" />
