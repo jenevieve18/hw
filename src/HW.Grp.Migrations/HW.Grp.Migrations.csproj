@@ -50,6 +50,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddLangIDToUserSession.cs" />
     <Compile Include="CreateSponsorAdminExercise.cs" />
     <Compile Include="CreateSponsorAdminExerciseDataInput.cs" />
     <Compile Include="CreateUserSession.cs" />
