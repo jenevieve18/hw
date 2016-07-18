@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Rooko.Core.dll</id>
+    <version>0.2</version>
+    <authors>Ian Escarro</authors>
+    <owners>Ian Escarro</owners>
+    <licenseUrl>http://license_url_here_or_delete_this_line/</licenseUrl>
+    <projectUrl>https://github.com/iescarro/rooko</projectUrl>
+    <iconUrl>http://icon_url_here_or_delete_this_line/</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Database migration tool</description>
+    <copyright>Copyright 2016</copyright>
+  </metadata>
+</package>
