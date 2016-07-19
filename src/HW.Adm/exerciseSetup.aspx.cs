@@ -53,12 +53,13 @@ public partial class exerciseSetup : System.Web.UI.Page
                 switch (rs.GetInt32(1))
                 {
                     case 1:
-                		CKEditorControl tb = new CKEditorControl();
-//                        TextBox tb = new TextBox(); 
+                		//CKEditorControl tb = new CKEditorControl();
+                        TextBox tb = new TextBox(); 
                         tb.ID = "EV" + rs.GetInt32(0) + "L" + rs2.GetInt32(0);
-//                        tb.TextMode = TextBoxMode.MultiLine;
+                        tb.TextMode = TextBoxMode.MultiLine;
                         tb.Rows = 20;
                         tb.Width = 800;
+                        tb.CssClass = "text";
                         ExerciseVariant.Controls.Add(tb);
                         if (!IsPostBack)
                         {
