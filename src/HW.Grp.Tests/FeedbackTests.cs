@@ -14,6 +14,8 @@ namespace HW.Grp.Tests
 	[TestFixture]
 	public class FeedbackTests
 	{
+		Feedback v = new Feedback();
+		
 		[Test]
 		public void TestMethod()
 		{
