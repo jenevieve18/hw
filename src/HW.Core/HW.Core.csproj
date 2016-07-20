@@ -200,6 +200,7 @@
     <Compile Include="Repositories\Sql\SqlDepartmentRepository.cs" />
     <Compile Include="Repositories\Sql\SqlAnswerRepository.cs" />
     <Compile Include="Repositories\Sql\SqlWiseRepository.cs" />
+    <Compile Include="Services\ExerciseService.cs" />
     <Compile Include="Services\LoggingService.cs" />
     <Compile Include="Services\ManagerService.cs" />
     <Compile Include="Services\MessageService.cs" />

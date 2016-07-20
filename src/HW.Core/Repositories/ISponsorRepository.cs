@@ -25,6 +25,8 @@ namespace HW.Core.Repositories
 		int ReadLastSponsorAdminSession();
 		
 		void UpdateSponsorAdminSession(int sponsorAdminSessionId, DateTime date);
+		
+		SponsorAdminExercise ReadSponsorAdminExercise(int sponsorAdminExerciseID);
 	}
 	
 	public interface ISponsorAdminRepository : IBaseRepository<SponsorAdmin>
@@ -96,6 +98,20 @@ namespace HW.Core.Repositories
 		
 		public void UpdateSponsorAdminSession(int sponsorAdminSessionId, DateTime date)
 		{
+		}
+		
+		public SponsorAdminExercise ReadSponsorAdminExercise(int sponsorAdminExerciseID)
+		{
+			return new SponsorAdminExercise {
+				ExerciseVariantLanguage = new ExerciseVariantLanguage {
+					Content = "This is a test.",
+					Variant = new ExerciseVariant {
+						Exercise = new Exercise {
+							ReplacementHead = "This is a replacement head"
+						}
+					}
+				}
+			};
 		}
 	}
 	

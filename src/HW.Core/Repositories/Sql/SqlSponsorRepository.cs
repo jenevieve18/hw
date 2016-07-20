@@ -124,9 +124,9 @@ SELECT IDENT_CURRENT('SponsorAdminExercise');"
 			);
 			int sponsorAdminExerciseID = ConvertHelper.ToInt32(
 				ExecuteScalar(
-					query, 
-					"healthWatchSqlConnection", 
-					new SqlParameter("@SponsorAdminID", sponsorAdminID), 
+					query,
+					"healthWatchSqlConnection",
+					new SqlParameter("@SponsorAdminID", sponsorAdminID),
 					new SqlParameter("@ExerciseVariantLangID", exerciseVariantLangID)
 				)
 			);
@@ -286,7 +286,7 @@ et.ExerciseTypeSortOrder ASC",
 		public IList<SponsorAdminExerciseDataInput> FindSponsorAdminExerciseDataInputs(int sponsorID, int exerciseVariantLangID)
 		{
 			string query = string.Format(
-                @"
+				@"
 SELECT saed.SponsorAdminExerciseDataInputID,
 	saed.[Content],
 	saed.SponsorAdminExerciseID,
@@ -1262,6 +1262,32 @@ AND (Pas = @Pas OR Pas = @HashedPas)"
 			}
 			return null;
 		}
+		
+		public SponsorAdminExercise ReadSponsorAdminExercise(int sponsorAdminExerciseID)
+		{
+			string query = string.Format(
+				@"
+SELECT sae.SponsorAdminExerciseID,
+	sae.Date,
+	sae.SponsorAdminID,
+	sae.ExerciseVariantLangID
+FROM dbo.SponsorAdminExercise sae
+WHERE sae.SponsorAdminExerciseID = {0}",
+				sponsorAdminExerciseID
+			);
+			SponsorAdminExercise a = null;
+			using (SqlDataReader rs = ExecuteReader(query, "healthWatchSqlConnection")) {
+				if (rs.Read()) {
+					a = new SponsorAdminExercise {
+						Id = GetInt32(rs, 0),
+						Date = GetDateTime(rs, 1),
+						SponsorAdmin = new SponsorAdmin { Id = GetInt32(rs, 2) },
+						ExerciseVariantLanguage = new ExerciseVariantLanguage { Id = GetInt32(rs, 3) }
+					};
+				}
+			}
+			return a;
+		}
 
 		public SponsorAdmin ReadSponsorAdmin(int sponsorAdminId, string usr, string email)
 		{
@@ -2063,12 +2089,12 @@ WHERE spru.SponsorID = {0}",
 			);
 //			string query = string.Format(
 //				@"
-//SELECT ISNULL(sprul.Nav, '?'),
+			//SELECT ISNULL(sprul.Nav, '?'),
 //	spru.ProjectRoundUnitID
-//FROM SponsorProjectRoundUnit spru
-//LEFT OUTER JOIN SponsorProjectRoundUnitLang sprul ON spru.SponsorProjectRoundUnitID = sprul.SponsorProjectRoundUnitID
-//WHERE spru.SponsorID = {0}
-//AND ISNULL(sprul.LangID, 1) = {1}",
+			//FROM SponsorProjectRoundUnit spru
+			//LEFT OUTER JOIN SponsorProjectRoundUnitLang sprul ON spru.SponsorProjectRoundUnitID = sprul.SponsorProjectRoundUnitID
+			//WHERE spru.SponsorID = {0}
+			//AND ISNULL(sprul.LangID, 1) = {1}",
 //				sponsorId,
 //				langId
 //			);
@@ -2307,47 +2333,47 @@ VALUES ({0},{1})",
 
 		public int CountExtendedSurveyBySponsor(int sponsorId)
 		{
-            string query = string.Format(
-            		@"
+			string query = string.Format(
+				@"
 SELECT COUNT(*)
 FROM SponsorExtendedSurvey ses
 WHERE ses.SponsorID = {0}",
-            		sponsorId
-            );
-            using (SqlDataReader rs = Db.rs(query)) {
-            	if (rs.Read()) {
-            		return rs.GetInt32(0);
-            	}
-            }
-            return 0;
-//            string query = string.Format(
-//                @"
-//SELECT Total, Answers
-//FROM SponsorExtendedSurvey
-//WHERE SponsorID = {0}",
-//                sponsorId
-//            );
-//            int total = -1;
-//            using (SqlDataReader rs = ExecuteReader(query)) {
-//                if (rs.Read()) {
-//                    total = GetInt32(rs, 0, GetInt32(rs, 1, -1));
-//                }
-//            }
-//            if (total < 0) {
-//                query = string.Format(
-//                    @"
-//SELECT COUNT(*)
-//FROM SponsorExtendedSurvey ses
-//WHERE ses.SponsorID = {0}",
-//                    sponsorId
-//                );
-//                using (SqlDataReader rs = Db.rs(query)) {
-//                    if (rs.Read()) {
-//                        total = rs.GetInt32(0);
-//                    }
-//                }
-//            }
-//            return total;
+				sponsorId
+			);
+			using (SqlDataReader rs = Db.rs(query)) {
+				if (rs.Read()) {
+					return rs.GetInt32(0);
+				}
+			}
+			return 0;
+			//            string query = string.Format(
+			//                @"
+			//SELECT Total, Answers
+			//FROM SponsorExtendedSurvey
+			//WHERE SponsorID = {0}",
+			//                sponsorId
+			//            );
+			//            int total = -1;
+			//            using (SqlDataReader rs = ExecuteReader(query)) {
+			//                if (rs.Read()) {
+			//                    total = GetInt32(rs, 0, GetInt32(rs, 1, -1));
+			//                }
+			//            }
+			//            if (total < 0) {
+			//                query = string.Format(
+			//                    @"
+			//SELECT COUNT(*)
+			//FROM SponsorExtendedSurvey ses
+			//WHERE ses.SponsorID = {0}",
+			//                    sponsorId
+			//                );
+			//                using (SqlDataReader rs = Db.rs(query)) {
+			//                    if (rs.Read()) {
+			//                        total = rs.GetInt32(0);
+			//                    }
+			//                }
+			//            }
+			//            return total;
 		}
 
 		public int CountSentInvitesBySponsor3(int sponsorId, DateTime dt)

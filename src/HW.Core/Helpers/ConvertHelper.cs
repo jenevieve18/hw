@@ -46,6 +46,14 @@ namespace HW.Core.Helpers
 	
 	public static class ConvertHelper
 	{
+		public static int ToInt32If(bool condition, object val, int def)
+		{
+			if (condition) {
+				return ToInt32(val, def);
+			}
+			return def;
+		}
+		
 		public static int ToInt32(object val)
 		{
 			return ToInt32(val, 0);
