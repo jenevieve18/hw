@@ -7,20 +7,20 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Core.Helpers;
 using HW.Core.Repositories.Sql;
+using HW.Core.Services;
 
 namespace HW.Grp
 {
 	public partial class ExerciseExport : System.Web.UI.Page
 	{
 		PdfExerciseExporter exporter = new PdfExerciseExporter();
-		SqlExerciseRepository er = new SqlExerciseRepository();
-		SqlSponsorRepository sr = new SqlSponsorRepository();
+        ExerciseService service = new ExerciseService();
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			int sponsorAdminExerciseId = ConvertHelper.ToInt32(Request.QueryString["SponsorAdminExerciseID"]);
-			var sae = er.ReadSponsorAdminExercise(sponsorAdminExerciseId);
-			var evl = er.ReadExerciseVariant(sae.ExerciseVariantLanguage.Id);
+			var sae = service.ReadSponsorAdminExercise(sponsorAdminExerciseId);
+			var evl = sae.ExerciseVariantLanguage;
 
 			Response.ClearHeaders();
 			Response.ClearContent();
@@ -32,7 +32,7 @@ namespace HW.Grp
 			
 			int sponsorId = Convert.ToInt32(Session["SponsorID"]);
 			string sponsorLogo = "";
-			var s = sr.ReadSponsor3(sponsorId);
+			var s = service.ReadSponsor3(sponsorId);
 			if (s != null) {
 				if (s.HasSuperSponsor) {
 					sponsorLogo = Server.MapPath("~/img/partner/" + s.SuperSponsor.Id + ".gif");

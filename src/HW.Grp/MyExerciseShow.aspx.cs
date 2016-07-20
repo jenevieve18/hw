@@ -8,6 +8,7 @@ using HW.Core.Helpers;
 using HW.Core.Models;
 using HW.Core.Repositories;
 using HW.Core.Repositories.Sql;
+using HW.Core.Services;
 
 namespace HW.Grp
 {
@@ -23,89 +24,87 @@ namespace HW.Grp
 		protected int sponsorAdminID;
 		protected int sponsorAdminExerciseID;
 
-		SqlSponsorRepository sr = new SqlSponsorRepository();
-		IExerciseRepository er;
+		ExerciseService s = new ExerciseService();
 		
-		public MyExerciseShow() : this(new SqlExerciseRepository())
+		public MyExerciseShow()
 		{
 		}
 		
-		public MyExerciseShow(IExerciseRepository er)
-		{
-			this.er = er;
-		}
-
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			langId = ConvertHelper.ToInt32(Session["LID"], ConvertHelper.ToInt32(Request.QueryString["LID"], 2));
-			sponsorAdminID = ConvertHelper.ToInt32(Session["SponsorAdminID"]);
-			sponsorAdminExerciseID = ConvertHelper.ToInt32(Request.QueryString["SponsorAdminExerciseID"]);
-
-			int userId = 0;
-			int userProfileID = 0;
-			if (HttpContext.Current.Request.QueryString["AUID"] != null) {
-				userId = -Convert.ToInt32(HttpContext.Current.Request.QueryString["AUID"]);
-				sponsorId = ConvertHelper.ToInt32(Request.QueryString["SID"]);
-				SetSponsor(sr.ReadSponsor3(sponsorId));
-			} else if (HttpContext.Current.Session["UserID"] != null) {
-				userId = ConvertHelper.ToInt32(HttpContext.Current.Session["UserID"]);
-				if (Convert.ToInt32(Application["SUPERSPONSOR" + Convert.ToInt32(Session["SponsorID"])]) > 0 && Application["SUPERSPONSORHEAD" + Convert.ToInt32(Session["SponsorID"]) + "LANG" + Convert.ToInt32(HttpContext.Current.Session["LID"])] != null) {
-					headerText += " - " + Application["SUPERSPONSORHEAD" + Convert.ToInt32(Session["SponsorID"]) + "LANG" + Convert.ToInt32(Session["LID"])];
+			int userId = ConvertHelper.ToInt32If(
+				Request.QueryString["AUID"] != null,
+				-Convert.ToInt32(Request.QueryString["AUID"]),
+				ConvertHelper.ToInt32(Session["UserID"])
+			);
+			int sponsorId = ConvertHelper.ToInt32If(
+				Request.QueryString["AUID"] != null,
+				ConvertHelper.ToInt32(Request.QueryString["SID"]),
+				ConvertHelper.ToInt32(Session["SponsorID"])
+			);
+			int superSponsorId = ConvertHelper.ToInt32(Application["SUPERSPONSOR" + sponsorId]);
+			object superSponsorLang = Application["SUPERSPONSORHEAD" + sponsorId + "LANG" + langId];
+			
+			Index(
+				ConvertHelper.ToInt32(Session["LID"], ConvertHelper.ToInt32(Request.QueryString["LID"], 2)),
+				superSponsorId,
+				superSponsorLang,
+				sponsorId,
+				ConvertHelper.ToInt32(Session["SponsorAdminID"]),
+				ConvertHelper.ToInt32(Request.QueryString["SponsorAdminExerciseID"]),
+				ConvertHelper.ToInt32(Request.QueryString["ExerciseVariantLangID"]),
+				userId,
+				Convert.ToInt32(Session["UserProfileID"])
+			);
+		}
+		
+		public void Index(int langId, int superSponsorId, object superSponsorLang, int sponsorId, int sponsorAdminID, int sponsorAdminExerciseID, int exerciseVariantLangId, int userId, int userProfileId)
+		{
+			this.sponsorAdminExerciseID = sponsorAdminExerciseID;
+			if (userId < 0) {
+				SetSponsor(s.ReadSponsor3(sponsorId));
+			} else if (userId > 0) {
+				if (superSponsorId > 0 && superSponsorLang != null) {
+					headerText += " - " + superSponsorLang;
 				}
-				if (Convert.ToInt32(Application["SUPERSPONSOR" + Convert.ToInt32(Session["SponsorID"])]) > 0) {
-					logos += "<img src='img/partner/" + Convert.ToInt32(Application["SUPERSPONSOR" + Convert.ToInt32(Session["SponsorID"])]) + ".gif'/>";
+				if (superSponsorId > 0) {
+					logos += "<img src='img/partner/" + superSponsorId + ".gif'/>";
 				}
 			}
-			if (HttpContext.Current.Session["UserProfileID"] != null) {
-				userProfileID = Convert.ToInt32(HttpContext.Current.Session["UserProfileID"]);
-			}
 
-			exerciseVariantLangId = HW.Core.Helpers.ConvertHelper.ToInt32(Request.QueryString["ExerciseVariantLangID"]);
-			if (userId == 0 || HttpContext.Current.Request.QueryString["ExerciseVariantLangID"] == null) {
-				ClientScript.RegisterStartupScript(this.GetType(), "CLOSE_WINDOW", "<script language='JavaScript'>window.close();</script>");
+			if (userId == 0 || exerciseVariantLangId == 0) {
+				CloseWindow();
 			} else {
-				Show(exerciseVariantLangId, userId, userProfileID);
+				if (!IsPostBack) {
+					SaveStatistics(exerciseVariantLangId, userId, userProfileId);
+				}
+				Show(s.ReadSponsorAdminExercise(sponsorAdminExerciseID));
 			}
 		}
-
-		public void Show(int exerciseVariantLangId, int userId, int userProfileId)
+		
+		public void CloseWindow()
 		{
-			if (!IsPostBack)
-			{
-				er.SaveStats(exerciseVariantLangId, userId, userProfileId);
-			}
-			evl = er.ReadExerciseVariant(exerciseVariantLangId);
-			if (evl != null)
-			{
+			ClientScript.RegisterStartupScript(this.GetType(), "CLOSE_WINDOW", "<script language='JavaScript'>window.close();</script>");
+		}
+		
+		public void SaveStatistics(int exerciseVariantLangId, int userId, int userProfileId)
+		{
+			s.SaveStats(exerciseVariantLangId, userId, userProfileId);
+		}
+
+		public void Show(SponsorAdminExercise sae)
+		{
+			evl = sae.ExerciseVariantLanguage;
+			if (evl != null) {
 				replacementHead = evl.Variant.Exercise.ReplacementHead;
-				if (evl.Variant.Type.HasContent() && evl.File != null)
-				{
+				if (evl.Variant.Type.HasContent() && evl.File != null) {
 					Response.Redirect("exercise/" + evl.File, true);
-				}
-				else
-				{
+				} else {
 					exercise.Controls.Add(GetExerciseTypeControl(evl));
 				}
 			}
 		}
-
-//		public void SetSponsor(int sponsorId)
-//		{
-//			this.sponsorId = sponsorId;
-//			var s = sr.ReadSponsor3(sponsorId);
-//			if (s != null)
-//			{
-//				if (s.HasSuperSponsor)
-//				{
-//					logos += "<img src='img/partner/" + s.SuperSponsor.Id + ".gif'/>";
-//				}
-//				if (s.HasSuperSponsor && s.SuperSponsor.Languages[0].Header != "")
-//				{
-//					headerText += " - " + s.SuperSponsor.Languages[0].Header;
-//				}
-//			}
-//		}
-//		
+		
 		public void SetSponsor(Sponsor s)
 		{
 			if (s != null) {
