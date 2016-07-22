@@ -147,6 +147,38 @@ VALUES(@SponsorAdminExerciseID, @Content, @Order)");
 			}
 		}
 		
+		public void UpdateSponsorAdminExercise(string[] dataInputs, int sponsorAdminExerciseId)
+		{
+			string query = string.Format(
+				@"
+UPDATE SponsorAdminExercise SET DATE = GETDATE()
+WHERE SponsorAdminExerciseId = @SponsorAdminExerciseId"
+			);
+			ExecuteNonQuery(
+				query,
+				"healthWatchSqlConnection",
+				new SqlParameter("@SponsorAdminExerciseId", sponsorAdminExerciseId)
+			);
+			
+			query = string.Format("DELETE FROM SponsorAdminExerciseDataInput WHERE SponsorAdminExerciseID = @SponsorAdminExerciseID", sponsorAdminExerciseId);
+			ExecuteNonQuery(query, "healthWatchSqlConnection", new SqlParameter("@SponsorAdminExerciseID", sponsorAdminExerciseId));
+			
+			query = string.Format(
+				@"
+INSERT SponsorAdminExerciseDataInput(SponsorAdminExerciseID, [Content], [Order])
+VALUES(@SponsorAdminExerciseID, @Content, @Order)");
+			int i = 0;
+			foreach (var data in dataInputs) {
+				ExecuteNonQuery(
+					query,
+					"healthWatchSqlConnection",
+					new SqlParameter("@SponsorAdminExerciseID", sponsorAdminExerciseId),
+					new SqlParameter("@Content", data),
+					new SqlParameter("@Order", i++)
+				);
+			}
+		}
+		
 		/*public void SaveExerciseDataInputs(string[] dataInputs, int sponsorID, int exerciseVariantLangID)
 		{
 			string query = string.Format(
@@ -283,7 +315,7 @@ et.ExerciseTypeSortOrder ASC",
 			return exercises;
 		}
 		
-		public IList<SponsorAdminExerciseDataInput> FindSponsorAdminExerciseDataInputs(int sponsorID, int exerciseVariantLangID)
+		public IList<SponsorAdminExerciseDataInput> FindSponsorAdminExerciseDataInputs(int sponsorAdminExerciseID)
 		{
 			string query = string.Format(
 				@"
@@ -293,12 +325,11 @@ SELECT saed.SponsorAdminExerciseDataInputID,
 	saed.[Order]
 FROM SponsorAdminExerciseDataInput saed
 INNER JOIN SponsorAdminExercise sae ON sae.SponsorAdminExerciseID = saed.SponsorAdminExerciseID
-WHERE sae.ExerciseVariantLangID = {1}",
-				sponsorID,
-				exerciseVariantLangID
+WHERE sae.SponsorAdminExerciseID = {0}",
+				sponsorAdminExerciseID
 			);
 			var inputs = new List<SponsorAdminExerciseDataInput>();
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+			using (var rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
 					var i = new SponsorAdminExerciseDataInput {
 						Id = GetInt32(rs, 0),

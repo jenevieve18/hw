@@ -264,30 +264,6 @@
     <Content Include="assets\exercises\css\style.css" />
     <Content Include="ExerciseExport.aspx" />
     <Content Include="ExportAll2.aspx" />
-    <Content Include="images\book.png" />
-    <Content Include="images\champagne.png" />
-    <Content Include="images\coffe.png" />
-    <Content Include="images\cross.png" />
-    <Content Include="images\delete.png" />
-    <Content Include="images\eformlogo.gif" />
-    <Content Include="images\eu.gif" />
-    <Content Include="images\flowers.png" />
-    <Content Include="images\greenshadow.png" />
-    <Content Include="images\hwlogo_monochrome.gif" />
-    <Content Include="images\logo_hw.png" />
-    <Content Include="images\lunch.png" />
-    <Content Include="images\nacke.jpg" />
-    <Content Include="images\orangeShadow.png" />
-    <Content Include="images\purpleshadow.png" />
-    <Content Include="images\RebiSmart_ml.gif" />
-    <Content Include="images\RebiSmart_sl.gif" />
-    <Content Include="images\speech-bubble.png" />
-    <Content Include="images\speech-bubble1.png" />
-    <Content Include="images\stock1.jpg" />
-    <Content Include="images\stock2.jpg" />
-    <Content Include="images\submenu.jpg" />
-    <Content Include="images\text_bg.png" />
-    <Content Include="images\text_bg1.png" />
     <Content Include="img\auditTrail.gif" />
     <Content Include="img\back.gif" />
     <Content Include="img\box-border.gif" />
@@ -378,7 +354,6 @@
     <Content Include="ExportAll.aspx" />
     <Content Include="Feedback.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="assets\js\hw.js" />
     <Content Include="Managers.aspx" />
     <Content Include="ManagerSetup.aspx" />
     <Content Include="Messages.aspx" />
@@ -631,7 +606,6 @@
   <ItemGroup>
     <None Include="assets\css\main.css" />
     <None Include="assets\plasm\javascript\demo1.js" />
-    <None Include="images\information.png" />
     <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup>

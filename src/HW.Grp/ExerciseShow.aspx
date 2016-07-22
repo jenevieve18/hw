@@ -41,8 +41,9 @@
     <form id="Form1" method="post" runat="server">
 
         <input id="sponsorID" type="hidden" value="<%= sponsorId %>" />
-        <input id="sponsorAdminID" type="hidden" value="<%= sponsorAdminID %>" />
+        <input id="sponsorAdminID" type="hidden" value="<%= sponsorAdminId %>" />
         <input id="exerciseVariantLangID" type="hidden" value="<%= exerciseVariantLangId %>" />
+        <input id="sponsorAdminExerciseID" type="hidden" value="0" />
 
         <div class="popupie">
 	        <div class="header">

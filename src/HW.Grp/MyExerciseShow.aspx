@@ -37,6 +37,7 @@
         <input id="sponsorID" type="hidden" value="<%= sponsorId %>" />
         <input id="sponsorAdminID" type="hidden" value="<%= sponsorAdminID %>" />
         <input id="exerciseVariantLangID" type="hidden" value="<%= exerciseVariantLangId %>" />
+        <input id="sponsorAdminExerciseID" type="hidden" value="<%= sponsorAdminExerciseID %>" />
 
         <div class="popupie">
 	        <div class="header">

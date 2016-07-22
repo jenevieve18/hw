@@ -24,15 +24,15 @@ namespace HW.Grp
 		protected ExerciseVariantLanguage evl;
 		protected int exerciseVariantLangId;
 		protected int sponsorId;
-        protected int sponsorAdminID;
+		protected int sponsorAdminId;
 
-        SqlSponsorRepository sr = new SqlSponsorRepository();
-        SqlExerciseRepository er = new SqlExerciseRepository();
+		SqlSponsorRepository sr = new SqlSponsorRepository();
+		SqlExerciseRepository er = new SqlExerciseRepository();
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			langId = ConvertHelper.ToInt32(Session["LID"], ConvertHelper.ToInt32(Request.QueryString["LID"], 2));
-            sponsorAdminID = ConvertHelper.ToInt32(Session["SponsorAdminID"]);
+			sponsorAdminId = ConvertHelper.ToInt32(Session["SponsorAdminID"]);
 
 			int userId = 0;
 			int userProfileId = 0;
@@ -61,53 +61,33 @@ namespace HW.Grp
 				Show(exerciseVariantLangId, userId, userProfileId);
 			}
 		}
-		
-		/*[WebMethod]
-		public static string Save(string[] dataInputs, int sponsorID, int exerciseVariantLangID)
-		{
-			try {
-				var r = new SqlSponsorRepository();
-				r.SaveExerciseDataInputs(dataInputs, sponsorID, exerciseVariantLangID);
-				return "Exercise Data Inputs Saved.";
-			} catch (Exception ex) {
-				throw ex;
-			}
-		}*/
 
-        [WebMethod]
-        public static string SaveSponsorAdminExercise(string[] dataInputs, int sponsorAdminID, int exerciseVariantLangID)
-        {
-            try
-            {
-                var r = new SqlSponsorRepository();
-                r.SaveSponsorAdminExercise(dataInputs, sponsorAdminID, exerciseVariantLangID);
-                return "Exercise data for this manager is saved.";
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-		
 		[WebMethod]
-		public static string Save2(string[] dataInputs, int sponsorAdminID, int exerciseVariantLangID)
+		public static string SaveOrUpdateSponsorAdminExercise(string[] dataInputs, int sponsorAdminID, int exerciseVariantLangID, int sponsorAdminExerciseID)
 		{
-			try {
+			try
+			{
 				var r = new SqlSponsorRepository();
-				r.SaveSponsorAdminExercise(dataInputs, sponsorAdminID, exerciseVariantLangID);
+				if (sponsorAdminExerciseID <= 0) {
+					r.SaveSponsorAdminExercise(dataInputs, sponsorAdminID, exerciseVariantLangID);
+				} else {
+					r.UpdateSponsorAdminExercise(dataInputs, sponsorAdminExerciseID);
+				}
 				return "Exercise data for this manager is saved.";
-			} catch (Exception ex) {
+			}
+			catch (Exception ex)
+			{
 				throw ex;
 			}
 		}
 		
 		[WebMethod]
 		[ScriptMethod(UseHttpGet = true)]
-		public static IList<object> Read(int sponsorAdminID, int exerciseVariantLangID)
+		public static IList<object> FindSponsorAdminExerciseDataInputs(int sponsorAdminExerciseID)
 		{
 			try {
 				var r = new SqlSponsorRepository();
-				var inputs = r.FindSponsorAdminExerciseDataInputs(sponsorAdminID, exerciseVariantLangID);
+				var inputs = r.FindSponsorAdminExerciseDataInputs(sponsorAdminExerciseID);
 				var data = new List<object>();
 				foreach (var i in inputs) {
 					data.Add(new { content = i.Content });
@@ -167,7 +147,7 @@ namespace HW.Grp
 {1}",
 						evl.Variant.Exercise.Languages[0].ExerciseName,
 						evl.Content,
-                        evl.Variant.Exercise.Script
+						evl.Variant.Exercise.Script
 					)
 				);
 			} else {
