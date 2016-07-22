@@ -57,7 +57,6 @@
     <Compile Include="Helpers\DbTests.cs" />
     <Compile Include="Helpers\DocXExporterTests.cs" />
     <Compile Include="Helpers\ExcelExporterTests.cs" />
-    <Compile Include="Helpers\ExerciseExporterTests.cs" />
     <Compile Include="Helpers\ExporterTests.cs" />
     <Compile Include="Helpers\ExtendedGraphTests.cs" />
     <Compile Include="Helpers\ExtendedGraphTests2.cs" />

@@ -19,7 +19,7 @@
                         <div class="image"><img src="<%= e.Image %>" width="121" height="100"></div>
                         <div class="time"><%= el.Time%><span class="time-end"></span></div>
                         <div class="descriptions">
-                            <%= l.Date.Value.ToString("yyyy-MM-dd") %>
+                            <%= l.Date.Value.ToString("yyyy-MM-dd HH:mm") %>
                             <%= e.AreaCategoryName%>
                         </div>
                         <h2><%= e.Languages[0].ExerciseName %></h2>

@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Core.Helpers;
+using HW.Core.Models;
 using HW.Core.Repositories.Sql;
 using HW.Core.Services;
 
@@ -39,7 +40,13 @@ namespace HW.Grp
 				}
 			}
 			
-			HtmlHelper.Write(exporter.Export(evl, logo, sponsorLogo), Response);
+//			HtmlHelper.Write(exporter.Export(evl, logo, sponsorLogo), Response);
+			HtmlHelper.Write(Export(evl, logo, sponsorLogo), Response);
+		}
+		
+		public MemoryStream Export(ExerciseVariantLanguage evl, string logo, string sponsorLogo)
+		{
+			return exporter.Export(evl, logo, sponsorLogo);
 		}
 	}
 }

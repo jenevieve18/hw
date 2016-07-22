@@ -67,8 +67,10 @@ namespace HW.Core.Helpers
 						doc.Open();
 
 						try {
-							Image logoImage = Image.GetInstance(logo);
-							doc.Add(logoImage);
+							if (logo != "") {
+								Image logoImage = Image.GetInstance(logo);
+								doc.Add(logoImage);
+							}
 
 							if (!sponsorLogo.Equals("")) {
 								Image sponsorLogoImage = Image.GetInstance(sponsorLogo);
@@ -120,7 +122,7 @@ namespace HW.Core.Helpers
 //			}
 //			return new MemoryStream(bytes);
 //		}
-		
+//		
 //		PdfPTable GetInvoiceDetails(Exercise invoice, Document document)
 //		{
 //			PdfPTable t = new PdfPTable(2) {
@@ -227,7 +229,7 @@ namespace HW.Core.Helpers
 //
 //			return t;
 //		}
-		
+//		
 //		PdfPTable GetInvoiceTotal(Exercise exercise, Document document)
 //		{
 //			PdfPTable t = new PdfPTable(16) {
@@ -299,6 +301,16 @@ namespace HW.Core.Helpers
 			{
 				base.OnEndPage(writer, document);
 				
+				var cb = writer.DirectContent;
+				ColumnText ct = new ColumnText(cb);
+
+				cb.BeginText();
+//				cb.SetFontAndSize(BaseFont.CreateFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED), 12.0f);
+				cb.SetFontAndSize(BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED), 7.0f);
+				cb.SetTextMatrix(document.LeftMargin, document.BottomMargin);
+				cb.ShowText(String.Format("© Copyright {0} www.healthwatch.se", DateTime.Now.Year));
+				cb.EndText();
+				
 //				PdfPTable t = new PdfPTable(4) {
 //					TotalWidth = document.Right - document.Left
 //				};
@@ -306,7 +318,7 @@ namespace HW.Core.Helpers
 //				var w = t.TotalWidth;
 //				float x = 10;
 //				t.SetWidths(new float[] { w / x * 1.5f, w / x * 5, w / x * 1.5f, w / x * 2 });
-//
+
 //				t.AddCell(new PdfPCell(new Phrase(exercise.Company.Name, boldFont)) { Colspan = 2, Border = Rectangle.NO_BORDER });
 //				t.AddCell(new PdfPCell(new Phrase(R.Str(LangId, "company.bank", "Bankgiro") + " " + exercise.Company.BankAccountNumber, boldFont)) { Colspan = 2, Border = Rectangle.NO_BORDER });
 //

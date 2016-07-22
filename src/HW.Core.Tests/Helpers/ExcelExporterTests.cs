@@ -30,8 +30,8 @@ namespace HW.Core.Tests.Helpers
 			new SqlIndexRepository(),
 			new SqlSponsorRepository()
 		);
-		ExcelExporter e;
-		ExcelExporter e2;
+		ExcelStatsExporter e;
+		ExcelStatsExporter e2;
 		
 		[SetUpAttribute]
 		public void Setup()

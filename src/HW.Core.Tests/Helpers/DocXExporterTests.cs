@@ -30,8 +30,8 @@ namespace HW.Core.Tests.Helpers
 			new SqlIndexRepository(),
 			new SqlSponsorRepository()
 		);
-		DocXExporter e;
-		DocXExporter e2;
+		DocXStatsExporter e;
+		DocXStatsExporter e2;
 		
 		[SetUpAttribute]
 		public void Setup()

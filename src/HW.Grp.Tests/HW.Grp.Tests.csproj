@@ -64,6 +64,7 @@
     <Compile Include="OrgTests.cs" />
     <Compile Include="RemindersTests.cs" />
     <Compile Include="StatsTests.cs" />
+    <Compile Include="ExerciseExportTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
