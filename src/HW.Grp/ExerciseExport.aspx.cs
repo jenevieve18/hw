@@ -21,7 +21,7 @@ namespace HW.Grp
 		{
 			int sponsorAdminExerciseId = ConvertHelper.ToInt32(Request.QueryString["SponsorAdminExerciseID"]);
 			var sae = service.ReadSponsorAdminExercise(sponsorAdminExerciseId);
-			var evl = sae.ExerciseVariantLanguage;
+//			var evl = sae.ExerciseVariantLanguage;
 
 			Response.ClearHeaders();
 			Response.ClearContent();
@@ -41,12 +41,18 @@ namespace HW.Grp
 			}
 			
 //			HtmlHelper.Write(exporter.Export(evl, logo, sponsorLogo), Response);
-			HtmlHelper.Write(Export(evl, logo, sponsorLogo), Response);
+//			HtmlHelper.Write(Export(evl, logo, sponsorLogo), Response);
+			HtmlHelper.Write(Export(sae, logo, sponsorLogo), Response);
 		}
 		
 		public MemoryStream Export(ExerciseVariantLanguage evl, string logo, string sponsorLogo)
 		{
 			return exporter.Export(evl, logo, sponsorLogo);
+		}
+		
+		public MemoryStream Export(SponsorAdminExercise sae, string logo, string sponsorLogo)
+		{
+			return exporter.Export(sae, logo, sponsorLogo);
 		}
 	}
 }

@@ -347,6 +347,7 @@ namespace HW.Core.Models
 		public DateTime? Date { get; set; }
 		public SponsorAdmin SponsorAdmin { get; set; }
 		public ExerciseVariantLanguage ExerciseVariantLanguage { get; set; }
+		public IList<SponsorAdminExerciseDataInput> DataInputs { get; set; }
 	}
 	
 	public class SponsorAdminExerciseDataInput : BaseModel
@@ -355,13 +356,6 @@ namespace HW.Core.Models
 		public string Content { get; set; }
 		public int Order { get; set; }
 	}
-	
-//	public class SponsorExerciseDataInput : BaseModel
-//	{
-//		public Sponsor Sponsor { get; set; }
-//		public string Content { get; set; }
-//		public int Order { get; set; }
-//	}
 	
 	public class SuperAdmin : BaseModel
 	{

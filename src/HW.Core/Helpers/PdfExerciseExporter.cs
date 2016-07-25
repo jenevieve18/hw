@@ -51,6 +51,75 @@ namespace HW.Core.Helpers
 			
 			byte[] bytes;
 			using (var output = new MemoryStream()) {
+				
+				evl.Content = evl.Content.Replace("<a href='javascript:;' class='btn btnAddDataInput'>Lägg till</a>", "");
+				evl.Content = evl.Content.Replace("<a href='javascript:;' class='btn btnSaveSponsorAdminExercise'>Spara</a>", "");
+				
+				string contents = "<ul>";
+				foreach (var c in new[] { "Hello world", "World hello" }) {
+					contents += "<li>" + c + "</li>";
+				}
+				contents += "</ul>";
+				evl.Content = evl.Content.Replace("<ul class='sortable'></ul>", contents);
+				
+				var header = evl.Variant.Exercise.Languages[0].ExerciseName;
+				var htmlText = string.Format("<h1 style='color:#1c73a8'>{0}</h1>{1}", header, evl.Content);
+				TextReader txtReader = new StringReader(htmlText);
+				using (var doc = new Document(PageSize.A4, 50f, 50f, 50f, 50f)) {
+					using (var writer = PdfWriter.GetInstance(doc, output)) {
+						writer.PageEvent = new PDFFooter(evl);
+
+						var styles = new StyleSheet();
+//						styles.LoadStyle("body", "font-size", "3px");
+//						styles.LoadStyle("h1", "font-size", "3px");
+//						styles.LoadStyle("h2", "font-size", "3px");
+//						styles.LoadStyle("p", "font-size", "3px");
+
+						doc.Open();
+
+						try {
+							if (logo != "") {
+								Image logoImage = Image.GetInstance(logo);
+								doc.Add(logoImage);
+							}
+
+							if (!sponsorLogo.Equals("")) {
+								Image sponsorLogoImage = Image.GetInstance(sponsorLogo);
+								doc.Add(sponsorLogoImage);
+							}
+						} catch {}
+
+						List<IElement> objects = HTMLWorker.ParseToList(new StringReader(htmlText), styles);
+						if (objects.Count > 0)
+						{
+							foreach (IElement element in objects)
+							{
+								doc.Add(element);
+							}
+						}
+						doc.Close();
+					}
+				}
+				bytes = output.ToArray();
+			}
+			return new MemoryStream(bytes);
+		}
+		
+		public MemoryStream Export(SponsorAdminExercise sae, string logo, string sponsorLogo)
+		{
+			this.evl = sae.ExerciseVariantLanguage;
+			
+			byte[] bytes;
+			using (var output = new MemoryStream()) {
+				evl.Content = evl.Content.Replace("<a href='javascript:;' class='btn btnAddDataInput'>Lägg till</a>", "");
+				evl.Content = evl.Content.Replace("<a href='javascript:;' class='btn btnSaveSponsorAdminExercise'>Spara</a>", "");
+				
+				string contents = "<ul>";
+				foreach (var c in sae.DataInputs) {
+					contents += string.Format("<li>{0}</li>", c.Content);
+				}
+				evl.Content = evl.Content.Replace("<ul class=\"sortable\">", contents);
+				
 				var header = evl.Variant.Exercise.Languages[0].ExerciseName;
 				var htmlText = string.Format("<h1 style='color:#1c73a8'>{0}</h1>{1}", header, evl.Content);
 				TextReader txtReader = new StringReader(htmlText);
@@ -122,7 +191,7 @@ namespace HW.Core.Helpers
 //			}
 //			return new MemoryStream(bytes);
 //		}
-//		
+//
 //		PdfPTable GetInvoiceDetails(Exercise invoice, Document document)
 //		{
 //			PdfPTable t = new PdfPTable(2) {
@@ -229,7 +298,7 @@ namespace HW.Core.Helpers
 //
 //			return t;
 //		}
-//		
+//
 //		PdfPTable GetInvoiceTotal(Exercise exercise, Document document)
 //		{
 //			PdfPTable t = new PdfPTable(16) {

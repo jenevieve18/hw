@@ -263,15 +263,15 @@ namespace HW.Core.Models
 		public virtual Language Language { get; set; }
 	}
 	
-	public class ExerciseDataInput : BaseModel
-	{
-		public virtual Exercise Exercise { get; set; }
-	}
-	
-	public class ExerciseDataInputLang : BaseModel
-	{
-		public virtual ExerciseDataInput ExerciseDataInput { get; set; }
-		public virtual Language Language { get; set; }
-		public virtual string Content { get; set; }
-	}
+//	public class ExerciseDataInput : BaseModel
+//	{
+//		public virtual Exercise Exercise { get; set; }
+//	}
+//	
+//	public class ExerciseDataInputLang : BaseModel
+//	{
+//		public virtual ExerciseDataInput ExerciseDataInput { get; set; }
+//		public virtual Language Language { get; set; }
+//		public virtual string Content { get; set; }
+//	}
 }

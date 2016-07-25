@@ -34,6 +34,72 @@ namespace HW.Grp.Tests
 					}
 				},
 				Content = @"<div class='block'>
+          <p>Tidsåtgång: Förberedelse 2 min; genomförande ca 20 min tillsammans med medarbetarna</p>
+          <p>Om du som chef förstår dina medarbetares olika preferenser och önskemål ökar dina möjligheter att hitta sätt att fira framgång som motiverar medarbetarna.</p>
+          <p>Det här är en blankett som du kan dela ut till dina medarbetare för att få reda på hur de skulle önska att ni firade framgångar. </p>
+          <p>Du kan välja mellan att dela ut den som den är – eller ännu hellre: gör en brainstorming i grupp, och sammanställ sedan favoriterna på blanketten.</p>
+          <p>
+            <h2>Favoritfirande</h2>
+          </p>
+          <p>Framgång bör firas! Fira kan man böra på flera sätt – och vad som upplevs som relevanta sätt att fira på varierar mellan olika personer. Nedan kan du fylla i vad du tycker ni kan göra för att fira något som varit bra. Syftet är att ge din chef
+            insyn i vad just du uppskattar.
+          </p>
+          <p>
+            <ul>
+              <li>Börja med att generera så många olika förslag på firande du kan komma på.</li>
+            </ul>
+          </p>
+          <p>
+            <ul class='sortable1'></ul>
+            <p style='text-align:center; margin:10px; margin-right:40px;'>
+              <a href='javascript:;' class='btn btnAddDataInput'>Lägg till</a>
+              <a href='javascript:;' class='btn btnSaveSponsorAdminExercise'>Spara</a>
+            </p>
+          </p>
+          <p>
+            <ul>
+              <li>Rangordna dina förslag genom att skriva en siffra vid förslagen; 1 för det förslag som skulle kännas bäst för dig, 2 för det näst bästa osv.</li>
+            </ul>
+          </p>
+          <p>
+            <form action='' method='post' id='frm1'>
+              <ul class='sortable'></ul>
+            </form>
+          </p>
+        </div>"
+			};
+		}
+		
+		[Test]
+		public void TestExport()
+		{
+			
+			
+			Console.WriteLine(evl.Content);
+			
+			using (var f = new FileStream("@exercise.pdf", FileMode.Create)) {
+				var s = v.Export(evl, "", "");
+				s.WriteTo(f);
+			}
+			
+			Process.Start("@exercise.pdf");
+		}
+		
+		[Test]
+		public void TestExport2()
+		{
+			var sae = new SponsorAdminExercise {
+				ExerciseVariantLanguage = new ExerciseVariantLanguage {
+					Variant = new ExerciseVariant {
+						Exercise = new HW.Core.Models.Exercise {
+							Languages = new [] {
+								new ExerciseLanguage {
+									ExerciseName = "Celebrating success"
+								}
+							}
+						}
+					},
+					Content = @"<div class='block'>
 <p>Tids&aring;tg&aring;ng: F&ouml;rberedelse 2 min; genomf&ouml;rande ca 20 min tillsammans med medarbetarna</p>
 <p>Om du som chef f&ouml;rst&aring;r dina medarbetares olika preferenser och &ouml;nskem&aring;l &ouml;kar dina m&ouml;jligheter att hitta s&auml;tt att fira framg&aring;ng som motiverar medarbetarna.</p>
 <p>Det h&auml;r &auml;r en blankett som du kan dela ut till dina medarbetare f&ouml;r att f&aring; reda p&aring; hur de skulle &ouml;nska att ni firade framg&aring;ngar.</p>
@@ -50,18 +116,21 @@ namespace HW.Grp.Tests
 </ul>
 <form id='frm1' action='' method='post'>
 <ul class='sortable'><!-- <li><input type='text' name='text0' value=''></li> --></ul>
-<div id='print'>&nbsp;</div>
 </form></div>"
+				},
+				DataInputs = new System.Collections.Generic.List<SponsorAdminExerciseDataInput>(
+					new[] {
+						new SponsorAdminExerciseDataInput { Content = "Hello world" },
+						new SponsorAdminExerciseDataInput { Content = "World hello" },
+						new SponsorAdminExerciseDataInput { Content = "World hello otot!" },
+					}
+				)
 			};
-		}
-		
-		[Test]
-		public void TestExport()
-		{
 			using (var f = new FileStream("@exercise.pdf", FileMode.Create)) {
-				var s = v.Export(evl, "", "");
+				var s = v.Export(sae, "", "");
 				s.WriteTo(f);
 			}
+			
 			Process.Start("@exercise.pdf");
 		}
 		

@@ -21,10 +21,11 @@ namespace HW.Core.Services
 		{
 		}
 		
-		public SponsorAdminExercise ReadSponsorAdminExercise(int x)
+		public SponsorAdminExercise ReadSponsorAdminExercise(int sponsorAdminExerciseID)
 		{
-			var a = sr.ReadSponsorAdminExercise(x);
+			var a = sr.ReadSponsorAdminExercise(sponsorAdminExerciseID);
 			a.ExerciseVariantLanguage = er.ReadExerciseVariant(a.ExerciseVariantLanguage.Id);
+			a.DataInputs = sr.FindSponsorAdminExerciseDataInputs(sponsorAdminExerciseID);
 			return a;
 		}
 		
