@@ -4,9 +4,6 @@ using System.Data.SqlClient;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Configuration;
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
-using System.Net.Security;
 
 namespace HW.SendReminders
 {
@@ -15,34 +12,11 @@ namespace HW.SendReminders
         static void Main(string[] args)
         {
             string[] reminderMessageLang = new string[2], reminderSubjectLang = new string[2], reminderAutoLoginLang = new string[2];
-            string reminderEmail = "", backupServer = "";
+            string reminderEmail = "";
 
-			ServicePointManager.ServerCertificateValidationCallback = delegate(object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
-
-			System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient(ConfigurationManager.AppSettings["SmtpServer"], (ConfigurationManager.AppSettings["SmtpPort"] != null ? Convert.ToInt32(ConfigurationManager.AppSettings["SmtpPort"]) : 25));
-			if (ConfigurationManager.AppSettings["SmtpUsername"] != null && ConfigurationManager.AppSettings["SmtpPassword"] != null)
-			{
-				smtp.Credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["SmtpUsername"], ConfigurationManager.AppSettings["SmtpPassword"]);
-			}
-			if (ConfigurationManager.AppSettings["SmtpSSL"] != null && Convert.ToBoolean(ConfigurationManager.AppSettings["SmtpSSL"]))
-			{
-				smtp.EnableSsl = true;
-			}
-			if (ConfigurationManager.AppSettings["BackupSmtpServer"] != null)
-			{
-				backupServer = "Backup";
-			}
-			System.Net.Mail.SmtpClient backupSmtp = new System.Net.Mail.SmtpClient(ConfigurationManager.AppSettings[backupServer + "SmtpServer"], (ConfigurationManager.AppSettings[backupServer + "SmtpPort"] != null ? Convert.ToInt32(ConfigurationManager.AppSettings[backupServer + "SmtpPort"]) : 25));
-			if (ConfigurationManager.AppSettings[backupServer + "SmtpUsername"] != null && ConfigurationManager.AppSettings[backupServer + "SmtpPassword"] != null)
-			{
-				backupSmtp.Credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings[backupServer + "SmtpUsername"], ConfigurationManager.AppSettings[backupServer + "SmtpPassword"]);
-			}
-			if (ConfigurationManager.AppSettings[backupServer + "SmtpSSL"] != null && Convert.ToBoolean(ConfigurationManager.AppSettings[backupServer + "SmtpSSL"]))
-			{
-				backupSmtp.EnableSsl = true;
-			}
-			
-			var repo = new Repo();
+            System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient(ConfigurationManager.AppSettings["SmtpServer"]);
+            
+            var repo = new Repo();
 
             SqlDataReader rs = recordSet("SELECT " +
                 "sl.ReminderMessage, " +
@@ -79,7 +53,6 @@ namespace HW.SendReminders
 					"AND Email NOT LIKE '%DELETED' " +
                     "AND Reminder IS NOT NULL " +
                     "AND Reminder <> 0 " +
-					"AND (NULLIF(AltEmail,'') IS NOT NULL OR EmailFailure IS NULL OR DATEADD(MONTH,1,EmailFailure) < GETDATE()) " +
 					"AND ReminderNextSend IS NOT NULL " +
                     "AND ReminderNextSend <= GETDATE()");
                 #endregion
@@ -95,36 +68,26 @@ namespace HW.SendReminders
 					"u.ReminderType, " +
 					"u.ReminderSettings, " +    // 5
 					"(SELECT TOP 1 DT FROM Session s WHERE s.UserID = u.UserID ORDER BY SessionID DESC) AS LastLogin, " +
-                    "ISNULL(u.LID,1), " +
-					"u.AltEmail, " +			// 8
-					"u.EmailFailure " +			// 9
+                    "ISNULL(u.LID,1) " +
                     "FROM [User] u " +
                     "WHERE u.Email IS NOT NULL " +
                     "AND u.Email <> '' " +
 					"AND u.Email NOT LIKE '%DELETED' " +
                     "AND u.Reminder IS NOT NULL " +
                     "AND u.Reminder <> 0 " +
-					"AND (NULLIF(u.AltEmail,'') IS NOT NULL OR u.EmailFailure IS NULL OR DATEADD(MONTH,1,u.EmailFailure) < GETDATE()) " +
 					"AND u.ReminderNextSend IS NOT NULL " +
-                    "AND u.ReminderNextSend <= GETDATE()");
+                    "AND u.ReminderNextSend <= GETDATE()" +
+                    //"AND u.UserID = 1565" +
+                    "");
                 while (rs.Read())
                 {
-                    bool badEmail = false, usingAlternative = false;
-					string emailAddress = rs.GetString(1);
-					if ((!isEmail(emailAddress) || !rs.IsDBNull(9) && rs.GetDateTime(9).AddMonths(1) >= DateTime.Now) && !rs.IsDBNull(8))
-					{
-						// If there is an alternative adress AND:
-						//		- the standard email is malformatted, or
-						//		- the standard email could not be sent to during the last month
-						emailAddress = rs.GetString(8);
-						usingAlternative = true;
-					}
-					if (isEmail(emailAddress))
+                    bool badEmail = false;
+                    if (isEmail(rs.GetString(1)))
                     {
                         try
                         {
                             string personalReminderMessage = reminderMessageLang[rs.GetInt32(7) - 1];
-							string personalLink = ConfigurationManager.AppSettings["LinkUrl"];
+							string personalLink = "https://www.healthwatch.se";
 							if (!rs.IsDBNull(2) && rs.GetInt32(2) > 0)
 							{
 								personalLink += "/c/" + rs.GetString(3).ToLower() + rs.GetInt32(0).ToString();
@@ -141,28 +104,16 @@ namespace HW.SendReminders
 							{
                                 personalReminderMessage += "\r\n\r\n" + reminderAutoLoginLang[rs.GetInt32(7) - 1];
 							}
-							System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage(reminderEmail, emailAddress, reminderSubjectLang[rs.GetInt32(7) - 1], personalReminderMessage);
-							try
-							{
-								smtp.Send(mail);
-							}
-							catch (Exception ex)
-							{
-								Console.WriteLine(ex.Message);
-								backupSmtp.Send(mail);
-							}
-							
-							var registrationIds = repo.GetUserRegistrationIDs(rs.GetInt32(0));
-							Helper.sendGcmNotification(repo, registrationIds, Helper.API_KEY, Helper.SENDER_ID, Helper.Message, rs.GetInt32(0), rs.GetString(3));
+                            System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage(reminderEmail, rs.GetString(1), reminderSubjectLang[rs.GetInt32(7) - 1], personalReminderMessage);
+                            smtp.Send(mail);
+                            
+                            var registrationIds = repo.GetUserRegistrationIDs(rs.GetInt32(0));
+                            Helper.sendGcmNotification(repo, registrationIds, Helper.API_KEY, Helper.SENDER_ID, Helper.Message, rs.GetInt32(0), rs.GetString(3));
 
-							exec("UPDATE [User] SET " +
-								(!usingAlternative ? "EmailFailure = NULL, " : "") +
-								"ReminderLastSent = GETDATE(), " +
-								"ReminderNextSend = '" + nextReminderSend(rs.GetInt32(4), rs.GetString(5).Split(':'), (rs.IsDBNull(6) ? DateTime.Now : rs.GetDateTime(6)), DateTime.Now) + "' " +
-								"WHERE UserID = " + rs.GetInt32(0));
+                            exec("UPDATE [User] SET ReminderLastSent = GETDATE(), ReminderNextSend = '" + nextReminderSend(rs.GetInt32(4),rs.GetString(5).Split(':'),(rs.IsDBNull(6) ? DateTime.Now : rs.GetDateTime(6)),DateTime.Now) + "' WHERE UserID = " + rs.GetInt32(0));
                             exec("INSERT INTO Reminder (UserID,Subject,Body) VALUES (" + rs.GetInt32(0) + ",'" + reminderSubjectLang[rs.GetInt32(7) - 1].Replace("'", "''") + "','" + personalReminderMessage.Replace("'", "''") + "')");
 
-							Console.WriteLine(rs.GetString(1) + (usingAlternative ? " (" + emailAddress + ")" : ""));
+							Console.WriteLine(rs.GetString(1));
                         }
                         catch (Exception) 
                         {
@@ -173,7 +124,7 @@ namespace HW.SendReminders
                     {
                         badEmail = true;
                     }
-                    if (badEmail && !usingAlternative)
+                    if (badEmail)
                     {
                         exec("UPDATE [User] SET EmailFailure = GETDATE() WHERE UserID = " + rs.GetInt32(0));
                     }
@@ -223,53 +174,40 @@ namespace HW.SendReminders
 
                         // Update all keys for users with variable links
 						exec("UPDATE [User] SET UserKey = NEWID() " +
-							"WHERE SponsorID = " + rs2.GetInt32(4) + " " +
-							"AND ReminderLink = 2 " +
-							"AND Email IS NOT NULL " +
-							"AND Email <> '' " +
-							"AND Email NOT LIKE '%DELETED' " +
-							"AND (ReminderLastSent IS NULL OR DATEADD(d," + 
-							(rs2.GetInt32(3) == 0 && rs2.GetInt32(2) != 1 ? "7" : "1") +	// If check every day (0) and not send every day then push minimum reminder interval to 7 else 1
-							",ReminderLastSent) <= GETDATE()) " +
-							"AND (NULLIF(AltEmail,'') IS NOT NULL OR EmailFailure IS NULL OR DATEADD(MONTH,1,EmailFailure) < GETDATE()) " +
-							"AND dbo.cf_daysFromLastLogin(UserID) >= " + rs2.GetInt32(2));
+						"WHERE SponsorID = " + rs2.GetInt32(4) + " " +
+						"AND ReminderLink = 2 " +
+						"AND Email IS NOT NULL " +
+						"AND Email <> '' " +
+						"AND Email NOT LIKE '%DELETED' " +
+						"AND (ReminderLastSent IS NULL OR DATEADD(d," + 
+						(rs2.GetInt32(3) == 0 && rs2.GetInt32(2) != 1 ? "7" : "1") +	// If check every day (0) and not send every day then push minimum reminder interval to 7 else 1
+						",ReminderLastSent) <= GETDATE()) " +
+						"AND dbo.cf_daysFromLastLogin(UserID) >= " + rs2.GetInt32(2));
 
 						rs = recordSet("SELECT " +
 							"u.UserID, " +
 							"u.Email, " +
 							"u.ReminderLink, " +
                             "LEFT(REPLACE(CONVERT(VARCHAR(255),u.UserKey),'-',''),12), " +
-							"ISNULL(u.LID,1), " +
-							"u.AltEmail, " +			// 5
-							"u.EmailFailure " +			// 6
+                            "ISNULL(u.LID,1) " +
 							"FROM [User] u " +
-                            "INNER JOIN SponsorInvite si ON u.UserID = si.UserID AND u.SponsorID = si.SponsorID " +
+                            "INNER JOIN SponsorInvite si ON u.UserID = si.UserID " +
 							"WHERE u.SponsorID = " + rs2.GetInt32(4) + " " +
 							"AND u.Email IS NOT NULL " +
 							"AND u.Email <> '' " +
                             "AND si.StoppedReason IS NULL " +
 							"AND u.Email NOT LIKE '%DELETED' " +
 							"AND (u.ReminderLastSent IS NULL OR DATEADD(d," + (rs2.GetInt32(3) == 0 && rs2.GetInt32(2) != 1 ? "7" : "1") + ",u.ReminderLastSent) <= GETDATE()) " +
-							"AND (NULLIF(u.AltEmail,'') IS NOT NULL OR u.EmailFailure IS NULL OR DATEADD(MONTH,1,u.EmailFailure) < GETDATE()) " +
 							"AND dbo.cf_daysFromLastLogin(u.UserID) >= " + rs2.GetInt32(2));
 						while (rs.Read())
 						{
-							bool badEmail = false, usingAlternative = false;
-							string emailAddress = rs.GetString(1);
-							if ((!isEmail(emailAddress) || !rs.IsDBNull(6) && rs.GetDateTime(6).AddMonths(1) >= DateTime.Now) && !rs.IsDBNull(5))
-							{
-								// If there is an alternative adress AND:
-								//		- the standard email is malformatted, or
-								//		- the standard email could not be sent to during the last month
-								emailAddress = rs.GetString(5);
-								usingAlternative = true;
-							}
-							if (isEmail(emailAddress))
+							bool badEmail = false;
+							if (isEmail(rs.GetString(1)))
 							{
 								try
 								{
 									string personalReminderMessage = reminderMessage;
-									string personalLink = ConfigurationManager.AppSettings["LinkUrl"];
+									string personalLink = "https://www.healthwatch.se";
 									if (!rs.IsDBNull(2) && rs.GetInt32(2) > 0)
 									{
 										personalLink += "/c/" + rs.GetString(3).ToLower() + rs.GetInt32(0).ToString();
@@ -286,27 +224,16 @@ namespace HW.SendReminders
 									{
                                         personalReminderMessage += "\r\n\r\n" + reminderAutoLoginLang[rs.GetInt32(4) - 1];
 									}
-									System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage(reminderEmail, emailAddress, reminderSubject, personalReminderMessage);
-									try
-									{
-										smtp.Send(mail);
-									}
-									catch (Exception ex)
-									{
-										Console.WriteLine(ex.Message);
-										backupSmtp.Send(mail);
-									}
+									System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage(reminderEmail, rs.GetString(1), reminderSubject, personalReminderMessage);
+									smtp.Send(mail);
 									
 									var registrationIds = repo.GetUserRegistrationIDs(rs.GetInt32(0));
 									Helper.sendGcmNotification(repo, registrationIds, Helper.API_KEY, Helper.SENDER_ID, Helper.Message, rs.GetInt32(0), rs.GetString(3));
 
-									exec("UPDATE [User] SET " +
-										(!usingAlternative ? "EmailFailure = NULL, " : "") +
-										"ReminderLastSent = GETDATE() " +
-										"WHERE UserID = " + rs.GetInt32(0));
+									exec("UPDATE [User] SET ReminderLastSent = GETDATE() WHERE UserID = " + rs.GetInt32(0));
                                     exec("INSERT INTO Reminder (UserID,Subject,Body) VALUES (" + rs.GetInt32(0) + ",'" + reminderSubject.Replace("'", "''") + "','" + personalReminderMessage.Replace("'", "''") + "')");
 
-									Console.WriteLine(rs.GetString(1) + (usingAlternative ? " (" + emailAddress + ")" : ""));
+									Console.WriteLine(rs.GetString(1));
 								}
 								catch (Exception)
 								{
@@ -317,7 +244,7 @@ namespace HW.SendReminders
 							{
 								badEmail = true;
 							}
-							if (badEmail && !usingAlternative)
+							if (badEmail)
 							{
 								exec("UPDATE [User] SET EmailFailure = GETDATE() WHERE UserID = " + rs.GetInt32(0));
 							}
@@ -369,15 +296,14 @@ namespace HW.SendReminders
 
         public static bool isEmail(string inputEmail)
         {
-			//string strRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
-			//    @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
-			//    @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
-			//Regex re = new Regex(strRegex);
-			//if (re.IsMatch(inputEmail))
-			//    return true;
-			//else
-			//    return false;
-			return (new RegexUtilities()).IsValidEmail(inputEmail.Trim());
+            string strRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
+                @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
+                @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
+            Regex re = new Regex(strRegex);
+            if (re.IsMatch(inputEmail))
+                return true;
+            else
+                return false;
         }
 
 		public static string nextReminderSend(int type, string[] settings, DateTime lastLogin, DateTime lastSend)
@@ -478,6 +404,5 @@ namespace HW.SendReminders
 
 			return nextReminderSend.ToString("yyyy-MM-dd HH:mm");
 		}
-
     }
 }

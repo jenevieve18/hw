@@ -1,12 +1,4 @@
-﻿/*
- * Created by SharpDevelop.
- * User: Ian
- * Date: 5/31/2016
- * Time: 9:51 PM
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -24,94 +16,94 @@ namespace HW.SendReminders
 		public const string SENDER_ID = "59929247886";
 		public const string Message = "Reminder";
 		
-		public static bool isEmail(string inputEmail)
-		{
-			string strRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
-				@"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
-				@".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
-			Regex re = new Regex(strRegex);
-			if (re.IsMatch(inputEmail))
-				return true;
-			else
-				return false;
-		}
-
-		public static string nextReminderSend(int type, string[] settings, DateTime lastLogin, DateTime lastSend)
-		{
-			DateTime nextPossibleReminderSend = lastSend.Date.AddHours(Convert.ToInt32(settings[0]));
-			while (nextPossibleReminderSend <= DateTime.Now.AddMinutes(30)) {
-				nextPossibleReminderSend = nextPossibleReminderSend.AddDays(1);
-			}
-			DateTime nextReminderSend = nextPossibleReminderSend.AddYears(10);
-
-			try {
-				switch (type) {
-					case 1:
-						System.DayOfWeek[] dayOfWeek = { System.DayOfWeek.Monday, System.DayOfWeek.Tuesday, System.DayOfWeek.Wednesday, System.DayOfWeek.Thursday, System.DayOfWeek.Friday, System.DayOfWeek.Saturday, System.DayOfWeek.Sunday };
-
-						switch (Convert.ToInt32(settings[1])) {
-							case 1:
-								{
-									string[] days = settings[2].Split(',');
-									foreach (string day in days) {
-										DateTime tmp = nextPossibleReminderSend;
-										while (tmp.DayOfWeek != dayOfWeek[Convert.ToInt32(day) - 1]) {
-											tmp = tmp.AddDays(1);
-										}
-										if (tmp < nextReminderSend) {
-											nextReminderSend = tmp;
-										}
-									}
-									break;
-								}
-							case 2:
-								{
-									nextReminderSend = nextPossibleReminderSend.AddDays(7 * (Convert.ToInt32(settings[3]) - 1));
-									while (nextReminderSend.DayOfWeek != dayOfWeek[Convert.ToInt32(settings[2]) - 1]) {
-										nextReminderSend = nextReminderSend.AddDays(1);
-									}
-									break;
-								}
-							case 3:
-								{
-									DateTime tmp = nextPossibleReminderSend.AddDays(-nextPossibleReminderSend.Day);
-									int i = 0;
-									while (tmp.DayOfWeek != dayOfWeek[Convert.ToInt32(settings[3]) - 1] || i != Convert.ToInt32(settings[2])) {
-										tmp = tmp.AddDays(1);
-										if (tmp.DayOfWeek == dayOfWeek[Convert.ToInt32(settings[3]) - 1]) {
-											i++;
-										}
-									}
-									nextReminderSend = nextPossibleReminderSend.AddMonths((Convert.ToInt32(settings[4]) - 1));
-									if (tmp < nextPossibleReminderSend) {
-										// Has allready occurred this month
-										nextReminderSend = nextReminderSend.AddMonths(1);
-									}
-									nextReminderSend = nextReminderSend.AddDays(-nextReminderSend.Day);
-									i = 0;
-									while (nextReminderSend.DayOfWeek != dayOfWeek[Convert.ToInt32(settings[3]) - 1] || i != Convert.ToInt32(settings[2])) {
-										nextReminderSend = nextReminderSend.AddDays(1);
-										if (nextReminderSend.DayOfWeek == dayOfWeek[Convert.ToInt32(settings[3]) - 1]) {
-											i++;
-										}
-									}
-									break;
-								}
-						}
-						break;
-					case 2:
-						nextReminderSend = lastLogin.Date.AddHours(Convert.ToInt32(settings[0])).AddDays(Convert.ToInt32(settings[1]) * Convert.ToInt32(settings[2]));
-						while (nextReminderSend < nextPossibleReminderSend) {
-							nextReminderSend = nextReminderSend.AddDays(7);
-						}
-						break;
-				}
-			} catch (Exception) {
-				nextReminderSend = nextPossibleReminderSend.AddYears(10);
-			}
-
-			return nextReminderSend.ToString("yyyy-MM-dd HH:mm");
-		}
+//		public static bool isEmail(string inputEmail)
+//		{
+//			string strRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
+//				@"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
+//				@".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
+//			Regex re = new Regex(strRegex);
+//			if (re.IsMatch(inputEmail))
+//				return true;
+//			else
+//				return false;
+//		}
+//
+//		public static string nextReminderSend(int type, string[] settings, DateTime lastLogin, DateTime lastSend)
+//		{
+//			DateTime nextPossibleReminderSend = lastSend.Date.AddHours(Convert.ToInt32(settings[0]));
+//			while (nextPossibleReminderSend <= DateTime.Now.AddMinutes(30)) {
+//				nextPossibleReminderSend = nextPossibleReminderSend.AddDays(1);
+//			}
+//			DateTime nextReminderSend = nextPossibleReminderSend.AddYears(10);
+//
+//			try {
+//				switch (type) {
+//					case 1:
+//						System.DayOfWeek[] dayOfWeek = { System.DayOfWeek.Monday, System.DayOfWeek.Tuesday, System.DayOfWeek.Wednesday, System.DayOfWeek.Thursday, System.DayOfWeek.Friday, System.DayOfWeek.Saturday, System.DayOfWeek.Sunday };
+//
+//						switch (Convert.ToInt32(settings[1])) {
+//							case 1:
+//								{
+//									string[] days = settings[2].Split(',');
+//									foreach (string day in days) {
+//										DateTime tmp = nextPossibleReminderSend;
+//										while (tmp.DayOfWeek != dayOfWeek[Convert.ToInt32(day) - 1]) {
+//											tmp = tmp.AddDays(1);
+//										}
+//										if (tmp < nextReminderSend) {
+//											nextReminderSend = tmp;
+//										}
+//									}
+//									break;
+//								}
+//							case 2:
+//								{
+//									nextReminderSend = nextPossibleReminderSend.AddDays(7 * (Convert.ToInt32(settings[3]) - 1));
+//									while (nextReminderSend.DayOfWeek != dayOfWeek[Convert.ToInt32(settings[2]) - 1]) {
+//										nextReminderSend = nextReminderSend.AddDays(1);
+//									}
+//									break;
+//								}
+//							case 3:
+//								{
+//									DateTime tmp = nextPossibleReminderSend.AddDays(-nextPossibleReminderSend.Day);
+//									int i = 0;
+//									while (tmp.DayOfWeek != dayOfWeek[Convert.ToInt32(settings[3]) - 1] || i != Convert.ToInt32(settings[2])) {
+//										tmp = tmp.AddDays(1);
+//										if (tmp.DayOfWeek == dayOfWeek[Convert.ToInt32(settings[3]) - 1]) {
+//											i++;
+//										}
+//									}
+//									nextReminderSend = nextPossibleReminderSend.AddMonths((Convert.ToInt32(settings[4]) - 1));
+//									if (tmp < nextPossibleReminderSend) {
+//										// Has allready occurred this month
+//										nextReminderSend = nextReminderSend.AddMonths(1);
+//									}
+//									nextReminderSend = nextReminderSend.AddDays(-nextReminderSend.Day);
+//									i = 0;
+//									while (nextReminderSend.DayOfWeek != dayOfWeek[Convert.ToInt32(settings[3]) - 1] || i != Convert.ToInt32(settings[2])) {
+//										nextReminderSend = nextReminderSend.AddDays(1);
+//										if (nextReminderSend.DayOfWeek == dayOfWeek[Convert.ToInt32(settings[3]) - 1]) {
+//											i++;
+//										}
+//									}
+//									break;
+//								}
+//						}
+//						break;
+//					case 2:
+//						nextReminderSend = lastLogin.Date.AddHours(Convert.ToInt32(settings[0])).AddDays(Convert.ToInt32(settings[1]) * Convert.ToInt32(settings[2]));
+//						while (nextReminderSend < nextPossibleReminderSend) {
+//							nextReminderSend = nextReminderSend.AddDays(7);
+//						}
+//						break;
+//				}
+//			} catch (Exception) {
+//				nextReminderSend = nextPossibleReminderSend.AddYears(10);
+//			}
+//
+//			return nextReminderSend.ToString("yyyy-MM-dd HH:mm");
+//		}
 		
 		public static void sendGcmNotification(IRepo repo, List<string> registrationIds, string apiKey, string senderId, string message, int userId, string userKey)
 		{
