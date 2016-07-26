@@ -73,21 +73,6 @@ namespace HW.Grp.Tests
 		[Test]
 		public void TestExport()
 		{
-			
-			
-			Console.WriteLine(evl.Content);
-			
-			using (var f = new FileStream("@exercise.pdf", FileMode.Create)) {
-				var s = v.Export(evl, "", "");
-				s.WriteTo(f);
-			}
-			
-			Process.Start("@exercise.pdf");
-		}
-		
-		[Test]
-		public void TestExport2()
-		{
 			var sae = new SponsorAdminExercise {
 				ExerciseVariantLanguage = new ExerciseVariantLanguage {
 					Variant = new ExerciseVariant {
@@ -133,15 +118,5 @@ namespace HW.Grp.Tests
 			
 			Process.Start("@exercise.pdf");
 		}
-		
-//		[Test]
-//		public void TestMethod()
-//		{
-//			using (FileStream f = new FileStream(@"test.pdf", FileMode.Create)) {
-//				MemoryStream s = x.Export(evl);
-//				s.WriteTo(f);
-//			}
-//			Process.Start(@"test.pdf");
-//		}
 	}
 }

@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExerciseShowTests.cs" />
     <Compile Include="ReminderHelperTests.cs" />
     <Compile Include="MyExerciseShowTests.cs" />
     <Compile Include="MyExerciseTests.cs" />
