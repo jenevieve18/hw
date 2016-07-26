@@ -32,6 +32,7 @@ namespace HW.Grp
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			langId = ConvertHelper.ToInt32(Session["LID"], ConvertHelper.ToInt32(Request.QueryString["LID"], 2));
+			sponsorId = ConvertHelper.ToInt32(Request.QueryString["SID"]);
 			sponsorAdminId = ConvertHelper.ToInt32(Session["SponsorAdminID"]);
 
 			int userId = 0;
@@ -39,7 +40,8 @@ namespace HW.Grp
 			if (HttpContext.Current.Request.QueryString["AUID"] != null) {
 				userId = -Convert.ToInt32(HttpContext.Current.Request.QueryString["AUID"]);
 				if (HttpContext.Current.Request.QueryString["SID"] != null) {
-					SetSponsor(HW.Core.Helpers.ConvertHelper.ToInt32(Request.QueryString["SID"]));
+//					SetSponsor(HW.Core.Helpers.ConvertHelper.ToInt32(Request.QueryString["SID"]));
+					SetSponsor(sr.ReadSponsor3(sponsorId));
 				}
 			} else if(HttpContext.Current.Session["UserID"] != null) {
 				userId = Convert.ToInt32(HttpContext.Current.Session["UserID"]);
@@ -58,7 +60,11 @@ namespace HW.Grp
 			if (userId == 0 || HttpContext.Current.Request.QueryString["ExerciseVariantLangID"] == null) {
 				ClientScript.RegisterStartupScript(this.GetType(), "CLOSE_WINDOW", "<script language='JavaScript'>window.close();</script>");
 			} else {
-				Show(exerciseVariantLangId, userId, userProfileId);
+				if (!IsPostBack) {
+					er.SaveStats(exerciseVariantLangId, userId, userProfileId);
+				}
+//				Show(exerciseVariantLangId, userId, userProfileId);
+				Show(er.ReadExerciseVariant(exerciseVariantLangId));
 			}
 		}
 
@@ -98,12 +104,24 @@ namespace HW.Grp
 			}
 		}
 		
-		public void Show(int exerciseVariantLangId, int userId, int userProfileId)
+//		public void Show(int exerciseVariantLangId, int userId, int userProfileId)
+//		{
+//			if (!IsPostBack) {
+//				er.SaveStats(exerciseVariantLangId, userId, userProfileId);
+//			}
+//			evl = er.ReadExerciseVariant(exerciseVariantLangId);
+//			if (evl != null) {
+//				replacementHead = evl.Variant.Exercise.ReplacementHead;
+//				if (evl.Variant.Type.HasContent() && evl.File != null) {
+//					Response.Redirect("exercise/" + evl.File, true);
+//				} else {
+//					exercise.Controls.Add(GetExerciseTypeControl(evl));
+//				}
+//			}
+//		}
+		
+		public void Show(ExerciseVariantLanguage evl)
 		{
-			if (!IsPostBack) {
-				er.SaveStats(exerciseVariantLangId, userId, userProfileId);
-			}
-			evl = er.ReadExerciseVariant(exerciseVariantLangId);
 			if (evl != null) {
 				replacementHead = evl.Variant.Exercise.ReplacementHead;
 				if (evl.Variant.Type.HasContent() && evl.File != null) {
@@ -114,10 +132,24 @@ namespace HW.Grp
 			}
 		}
 		
-		public void SetSponsor(int sponsorId)
+//		public void SetSponsor(int sponsorId)
+//		{
+//			this.sponsorId = sponsorId;
+//			var s = sr.ReadSponsor3(sponsorId);
+//			if (s != null) {
+//				if (s.HasSuperSponsor) {
+//					logos += "<img src='img/partner/" + s.SuperSponsor.Id + ".gif'/>";
+//				}
+//				if (s.HasSuperSponsor && s.SuperSponsor.Languages[0].Header != "") {
+//					headerText += " - " + s.SuperSponsor.Languages[0].Header;
+//				}
+//			}
+//		}
+		
+		public void SetSponsor(Sponsor s)
 		{
-			this.sponsorId = sponsorId;
-			var s = sr.ReadSponsor3(sponsorId);
+//			this.sponsorId = sponsorId;
+//			var s = sr.ReadSponsor3(sponsorId);
 			if (s != null) {
 				if (s.HasSuperSponsor) {
 					logos += "<img src='img/partner/" + s.SuperSponsor.Id + ".gif'/>";

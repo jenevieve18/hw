@@ -45,10 +45,10 @@ namespace HW.Grp
 			HtmlHelper.Write(Export(sae, logo, sponsorLogo), Response);
 		}
 		
-		public MemoryStream Export(ExerciseVariantLanguage evl, string logo, string sponsorLogo)
-		{
-			return exporter.Export(evl, logo, sponsorLogo);
-		}
+//		public MemoryStream Export(ExerciseVariantLanguage evl, string logo, string sponsorLogo)
+//		{
+//			return exporter.Export(evl, logo, sponsorLogo);
+//		}
 		
 		public MemoryStream Export(SponsorAdminExercise sae, string logo, string sponsorLogo)
 		{
