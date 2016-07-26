@@ -54,13 +54,19 @@ public partial class exerciseSetup : System.Web.UI.Page
                 {
                     case 1:
                 		//CKEditorControl tb = new CKEditorControl();
-                        TextBox tb = new TextBox(); 
-                        tb.ID = "EV" + rs.GetInt32(0) + "L" + rs2.GetInt32(0);
+                        TextBox tb = new TextBox();
+                        string editorID = "EV" + rs.GetInt32(0) + "L" + rs2.GetInt32(0);
+                        tb.ID = editorID;
                         tb.TextMode = TextBoxMode.MultiLine;
                         tb.Rows = 20;
                         tb.Width = 800;
                         tb.CssClass = "text";
                         ExerciseVariant.Controls.Add(tb);
+                        ExerciseVariant.Controls.Add(new LiteralControl(
+string.Format(@"<script>var editor{0} = CodeMirror.fromTextArea(document.getElementById('{0}'), {{
+              lineNumbers: true,
+              mode: 'xml'
+          }});</script><hr>", editorID)));
                         if (!IsPostBack)
                         {
                             tb.Text = (!rs2.IsDBNull(1) ? rs2.GetString(1) : "");

@@ -4,7 +4,7 @@
   <head>
    <%=Db.header()%>
 
-    <script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>
+    <%--<script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>
     <script>
         tinymce.init({
             selector: 'textarea.text',
@@ -17,7 +17,11 @@
             
             
         });
-    </script>
+    </script>--%>
+
+      <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/codemirror/CodeMirror/master/lib/codemirror.css">
+        <script type="text/javascript" src="https://cdn.rawgit.com/codemirror/CodeMirror/master/lib/codemirror.js"></script>
+        <script type="text/javascript" src="https://cdn.rawgit.com/codemirror/CodeMirror/master/mode/xml/xml.js"></script>
   </head>
   <body>
 	    <form id="Form1" method="post" runat="server">
@@ -41,5 +45,13 @@
         <asp:Button ID=Save runat=server Text="Save" /> Add <asp:DropDownList ID=ExerciseTypeID runat=server />
 		<%=Db.bottom()%>
 		</form>
+
+      <script>
+          var editor = CodeMirror.fromTextArea(document.getElementById("<%= textBoxJavascript.ClientID %>"), {
+          //var editor = CodeMirror.fromTextArea(document.getElementsByClassName("editor"), {
+              lineNumbers: true,
+              mode: "xml"
+          });
+    </script>
   </body>
 </html>
