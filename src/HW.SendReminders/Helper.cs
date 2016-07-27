@@ -12,9 +12,21 @@ namespace HW.SendReminders
 {
 	public static class Helper
 	{
-		public const string API_KEY = "AIzaSyB3ne08mvULbQX8HalX-qRGQtP1Ih9bqDY";
-		public const string SENDER_ID = "59929247886";
-		public const string Message = "Reminder";
+//		public const string API_KEY = "AIzaSyB3ne08mvULbQX8HalX-qRGQtP1Ih9bqDY";
+//		public const string SENDER_ID = "59929247886";
+//		public const string Message = "Reminder";
+		
+		public static string GcmAPIKey {
+			get { return ConfigurationManager.AppSettings["GcmAPIKey"]; }
+		}
+		
+		public static string GcmSenderId {
+			get { return ConfigurationManager.AppSettings["GcmSenderId"]; }
+		}
+		
+		public static string GcmMessage {
+			get { return ConfigurationManager.AppSettings["GcmMessage"]; }
+		}
 		
 //		public static bool isEmail(string inputEmail)
 //		{
