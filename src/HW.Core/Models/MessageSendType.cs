@@ -144,7 +144,7 @@ namespace HW.Core.Models
 							body += "\r\n\r\n" + personalLink;
 						}
 
-						success = Db.sendMail(Message.From, u.Email, Message.Subject, body);
+						success = Db.sendMail2(Message.From, u.Email, Message.Subject, body);
 						
 						SendPushNotification(u.Id);
 
@@ -198,7 +198,7 @@ namespace HW.Core.Models
 							body += "\r\n\r\n" + personalLink;
 						}
 
-						success = Db.sendMail(Message.From, u.Email, Message.Subject, body);
+						success = Db.sendMail2(Message.From, u.Email, Message.Subject, body);
 					} catch (Exception) {
 						badEmail = true;
 					}
@@ -232,7 +232,7 @@ namespace HW.Core.Models
 				bool badEmail = false;
 				if (Db.isEmail(u.Email)) {
 					try {
-						success = Db.sendMail(u.Email, Message.Subject, Message.Body);
+						success = Db.sendMail2(u.Email, Message.Subject, Message.Body);
 //						SendPushNotification(u.Id);
 					} catch (Exception) {
 						badEmail = true;
@@ -281,7 +281,7 @@ namespace HW.Core.Models
 							body += "\r\n\r\n" + personalLink;
 						}
 
-						success = Db.sendMail(Message.From, u.Email, Message.Subject, body);
+						success = Db.sendMail2(Message.From, u.Email, Message.Subject, body);
 					} catch (Exception) {
 						badEmail = true;
 					}
@@ -466,7 +466,7 @@ A manager account has been set up for you to the HealthWatch group administratio
 				uid,
 				username != "" ? string.Format("Your username is '{0}'", username) : ""
 			);
-			Db.sendMail("info@healthwatch.se", to, "Your HealthWatch Group Administration account", body);
+			Db.sendMail2("info@healthwatch.se", to, "Your HealthWatch Group Administration account", body);
 		}
 	}
 }

@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -21,12 +22,12 @@ namespace HW.Core.Helpers
 //			string email = "";
 //			string query = string.Format(
 //				@"
-//SELECT SponsorID,
+			//SELECT SponsorID,
 //	Email,
 //	DepartmentID
-//FROM SponsorInvite
-//WHERE UserID IS NULL
-//AND SponsorInviteID = {0}",
+			//FROM SponsorInvite
+			//WHERE UserID IS NULL
+			//AND SponsorInviteID = {0}",
 //				sponsorInviteID
 //			);
 //			SqlDataReader rs = Db.rs(query);
@@ -44,11 +45,11 @@ namespace HW.Core.Helpers
 //			if (sponsorID != 0) {
 //				query = string.Format(
 //					@"
-//SELECT u2.UserID,
+			//SELECT u2.UserID,
 //	u2.SponsorID
-//FROM [User] u2
-//LEFT OUTER JOIN SponsorInvite si ON u2.UserID = si.UserID
-//WHERE u2.Email = '{0}' OR si.Email = '{0}'",
+			//FROM [User] u2
+			//LEFT OUTER JOIN SponsorInvite si ON u2.UserID = si.UserID
+			//WHERE u2.Email = '{0}' OR si.Email = '{0}'",
 //					email.Replace("'", "''")
 //				);
 //				rs = Db.rs(query);
@@ -61,7 +62,7 @@ namespace HW.Core.Helpers
 //					Db.exec("UPDATE SponsorInvite SET UserID = " + userID + ", Sent = GETDATE() WHERE SponsorInviteID = " + sponsorInviteID);
 //					Db.exec("UPDATE [User] SET DepartmentID = " + departmentID + ", SponsorID = " + sponsorID + " WHERE UserID = " + userID);
 //					Db.exec("UPDATE UserProfile SET DepartmentID = " + departmentID + ", SponsorID = " + sponsorID + " WHERE UserID = " + userID);
-//					
+//
 //					while (rs.Read()) {
 //						userID = rs.GetInt32(0);
 //						Db.exec("UPDATE SponsorInvite SET SponsorID = -ABS(SponsorID), DepartmentID = -ABS(DepartmentID), UserID = -ABS(UserID) WHERE UserID = " + userID);
@@ -327,7 +328,7 @@ WHERE ProjectRoundUnitID = {0}",
 //			return ret;
 //		}
 
-		public static bool sendMail(string to, string subject, string body)
+		/*public static bool sendMail(string to, string subject, string body)
 		{
 			return sendMail("reminder@healthwatch.se", to, subject, body);
 		}
@@ -336,8 +337,8 @@ WHERE ProjectRoundUnitID = {0}",
 		{
 			try {
 				string server = ConfigurationManager.AppSettings["SmtpServer"];
-				System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage(from, to, subject, body);
-				System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient(server);
+				MailMessage mail = new MailMessage(from, to, subject, body);
+				SmtpClient client = new SmtpClient(server);
 				client.Send(mail);
 				return true;
 			} catch (Exception ex) {
@@ -345,6 +346,16 @@ WHERE ProjectRoundUnitID = {0}",
 				//LoggingService.Error(ex.Message);
 			}
 			return false;
+		}*/
+		
+		public static bool sendMail2(string to, string subject, string body)
+		{
+			return sendMail2("reminder@healthwatch.se", to, subject, body);
+		}
+		
+		public static bool sendMail2(string from, string to, string subject, string body)
+		{
+			return SmtpHelper.Send(from, to, subject, body);
 		}
 
 		public static bool sendInvitation(int sponsorInviteID, string to, string subject, string body, string key)
@@ -358,7 +369,8 @@ WHERE ProjectRoundUnitID = {0}",
 						string path = ConfigurationManager.AppSettings["healthWatchURL"];
 						body += "\r\n\r\n" + "" + path + "i/" + key + sponsorInviteID.ToString();
 					}
-					if (sendMail("info@healthwatch.se", to, subject, body)) {
+//					if (sendMail("info@healthwatch.se", to, subject, body)) {
+					if (sendMail2("info@healthwatch.se", to, subject, body)) {
 						string query = string.Format("UPDATE SponsorInvite SET Sent = GETDATE() WHERE SponsorInviteID = {0}", sponsorInviteID);
 						Db.exec(query);
 
