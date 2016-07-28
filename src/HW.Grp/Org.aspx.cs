@@ -207,7 +207,7 @@ WHERE u.UserID = {1}",
 							body += "\r\n\r\n" + personalLink;
 						}
 
-						Db.sendMail(rs.GetString(2).Trim(), rs.GetString(1), body);
+						Db.sendMail2(rs.GetString(2).Trim(), rs.GetString(1), body);
 					}
 					rs.Close();
 					#endregion
@@ -259,7 +259,7 @@ WHERE u.UserID = {1}",
 							}
 
 //							Db.sendMail(rs.GetString(2).Trim(), rs.GetString(8), body);
-							Db.sendMail(i.Email.Trim(), i.Sponsor.LoginSubject, body);
+							Db.sendMail2(i.Email.Trim(), i.Sponsor.LoginSubject, body);
 						}
 					}
 //					rs.Close();

@@ -58,7 +58,7 @@ namespace HW.Grp
 							body += "\r\n\r\n" + personalLink;
 						}
 
-						Db.sendMail(i.Email.Trim(), i.Sponsor.LoginSubject, body);
+						Db.sendMail2(i.Email.Trim(), i.Sponsor.LoginSubject, body);
 					}
 				}
 			}

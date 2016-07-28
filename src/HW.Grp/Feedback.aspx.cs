@@ -711,7 +711,7 @@ namespace HW.Grp
 								if (Db.isEmail(x)) {
 //									Db.sendMail("info@healthwatch.se", x, rs.GetString(4), rs.GetString(3));
 //									Db.sendMail("info@healthwatch.se", x, s.IndividualFeedbackEmailBody, s.IndividualFeedbackEmailSubject);
-									Db.sendMail("info@healthwatch.se", x, s.IndividualFeedbackEmailSubject, s.IndividualFeedbackEmailBody);
+									Db.sendMail2("info@healthwatch.se", x, s.IndividualFeedbackEmailSubject, s.IndividualFeedbackEmailBody);
 								}
 							}
 //							List.Text += "<br/><a href='feedback.aspx?PRID=" + rs.GetInt32(0) + "&Send=" + x + "'/>" + x + "</a>";
