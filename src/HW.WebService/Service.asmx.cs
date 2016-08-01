@@ -2502,7 +2502,8 @@ namespace HW.WebService
 			success = false;
 			try
 			{
-				sendMail("info@healthwatch.se", "support@healthwatch.se", d, "Issue report: " + t);
+//				sendMail("info@healthwatch.se", "support@healthwatch.se", d, "Issue report: " + t);
+				HW.Core.Helpers.SmtpHelper.Send("info@healthwatch.se", "support@healthwatch.se", d, "Issue report: " + t);
 				success = true;
 			}
 			catch (Exception) { }
@@ -3358,19 +3359,19 @@ namespace HW.WebService
 			dataConnection.Dispose();
 			return ret;
 		}
-		private bool sendMail(string from, string email, string body, string subject)
-		{
-			bool success = false;
-			try
-			{
-				System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient(ConfigurationManager.AppSettings["SmtpServer"]);
-				System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage(from,email,subject,body);
-				smtp.Send(mail);
-				success = true;
-			}
-			catch (Exception) { }
-			return success;
-		}
+//		private bool sendMail(string from, string email, string body, string subject)
+//		{
+//			bool success = false;
+//			try
+//			{
+//				System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient(ConfigurationManager.AppSettings["SmtpServer"]);
+//				System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage(from,email,subject,body);
+//				smtp.Send(mail);
+//				success = true;
+//			}
+//			catch (Exception) { }
+//			return success;
+//		}
 		private bool isEmail(string inputEmail)
 		{
 			string strRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
@@ -3397,7 +3398,8 @@ namespace HW.WebService
 					switch (languageID)
 					{
 						case 1:
-							success = sendMail("support@healthwatch.se", r.GetString(1),
+//							success = sendMail("support@healthwatch.se", r.GetString(1),
+							success = HW.Core.Helpers.SmtpHelper.Send("support@healthwatch.se", r.GetString(1),
 							                   "Hej." +
 							                   "\r\n\r\n" +
 							                   "En begäran om nytt lösenord till ditt konto med användarnamn \"" + r.GetString(2) + "\" har inkommit. Om du begärt detta, klicka på länken nedan för att ange ett nytt lösenord." +
@@ -3406,7 +3408,8 @@ namespace HW.WebService
 							                   "Nytt lösenord");
 							break;
 						case 2:
-							success = sendMail("support@healthwatch.se", r.GetString(1),
+//							success = sendMail("support@healthwatch.se", r.GetString(1),
+							success = HW.Core.Helpers.SmtpHelper.Send("support@healthwatch.se", r.GetString(1),
 							                   "Hi." +
 							                   "\r\n\r\n" +
 							                   "A request for new password for your account with username \"" + r.GetString(2) + "\" has arrived. If you made this request, click the link below to set a new password." +
