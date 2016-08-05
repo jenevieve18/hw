@@ -183,13 +183,29 @@ FROM Exercise e WHERE e.ExerciseID = " + eid);
 
         if (eid != 0)
         {
-            Db.exec("UPDATE Exercise SET " +
-                "ExerciseAreaID = " + Convert.ToInt32(ExerciseAreaID.SelectedValue) + ", " +
-                "ExerciseCategoryID = " + (Convert.ToInt32(ExerciseCategoryID.SelectedValue) != 0 ? Convert.ToInt32(ExerciseCategoryID.SelectedValue).ToString() : "NULL") + ", " +
-                "RequiredUserLevel = " + Convert.ToInt32(RequiredUserLevel.SelectedValue) + ", " +
-                "Minutes = " + Convert.ToInt32(Minutes.Text) + ", " +
-                "Script = '" + textBoxJavascript.Text.Replace("'", "''") + "'" + " " +
-                "WHERE ExerciseID = " + eid);
+            //Db.exec("UPDATE Exercise SET " +
+            //    "ExerciseAreaID = " + Convert.ToInt32(ExerciseAreaID.SelectedValue) + ", " +
+            //    "ExerciseCategoryID = " + (Convert.ToInt32(ExerciseCategoryID.SelectedValue) != 0 ? Convert.ToInt32(ExerciseCategoryID.SelectedValue).ToString() : "NULL") + ", " +
+            //    "RequiredUserLevel = " + Convert.ToInt32(RequiredUserLevel.SelectedValue) + ", " +
+            //    "Minutes = " + Convert.ToInt32(Minutes.Text) + ", " +
+            //    "Script = '" + textBoxJavascript.Text.Replace("'", "''") + "'" + " " +
+            //    "WHERE ExerciseID = " + eid);
+            string query = "UPDATE Exercise SET " +
+                "ExerciseAreaID = @ExerciseAreaID, " +
+                "ExerciseCategoryID = @ExerciseCategoryID, " +
+                "RequiredUserLevel = @RequiredUserLevel, " +
+                "Minutes = @Minutes, " +
+                "Script = @Script " +
+                "WHERE ExerciseID = @ExerciseID";
+            Db.ExecuteNonQuery(
+                query,
+                new SqlParameter("@ExerciseAreaID", Convert.ToInt32(ExerciseAreaID.SelectedValue)),
+                new SqlParameter("@ExerciseCategoryID", (Convert.ToInt32(ExerciseCategoryID.SelectedValue) != 0 ? Convert.ToInt32(ExerciseCategoryID.SelectedValue).ToString() : (object)DBNull.Value)),
+                new SqlParameter("@RequiredUserLevel", Convert.ToInt32(RequiredUserLevel.SelectedValue)),
+                new SqlParameter("@Minutes", Convert.ToInt32(Minutes.Text)),
+                new SqlParameter("@Script", textBoxJavascript.Text),
+                new SqlParameter("@ExerciseID", eid)
+                );
         }
         else
         {
@@ -231,11 +247,25 @@ VALUES (@ExerciseCategoryID,@ExerciseAreaID,@RequiredUserLevel,@Minutes,@Script)
                     case 1:
                         if (!rs2.IsDBNull(1))
                         {
-                            Db.exec("UPDATE ExerciseVariantLang SET ExerciseContent = '" + ((TextBox)ExerciseVariant.FindControl("EV" + rs.GetInt32(0) + "L" + rs2.GetInt32(0))).Text.Replace("'", "''") + "' WHERE ExerciseVariantLangID = " + rs2.GetInt32(1));
+                            //Db.exec("UPDATE ExerciseVariantLang SET ExerciseContent = '" + ((TextBox)ExerciseVariant.FindControl("EV" + rs.GetInt32(0) + "L" + rs2.GetInt32(0))).Text.Replace("'", "''") + "' WHERE ExerciseVariantLangID = " + rs2.GetInt32(1));
+                            string query = "UPDATE ExerciseVariantLang SET ExerciseContent = @ExerciseContent WHERE ExerciseVariantLangID = @ExerciseVariantLangID";
+                            Db.ExecuteNonQuery(
+                                query,
+                                new SqlParameter("@ExerciseContent", ((TextBox)ExerciseVariant.FindControl("EV" + rs.GetInt32(0) + "L" + rs2.GetInt32(0))).Text),
+                                new SqlParameter("@ExerciseVariantLangID", rs2.GetInt32(1))
+                                );
                         }
                         else
                         {
-                            Db.exec("INSERT INTO ExerciseVariantLang (ExerciseVariantID,Lang,ExerciseContent) VALUES (" + rs.GetInt32(0) + "," + rs2.GetInt32(0) + ",'" + ((TextBox)ExerciseVariant.FindControl("EV" + rs.GetInt32(0) + "L" + rs2.GetInt32(0))).Text.Replace("'", "''") + "')");
+                            //Db.exec("INSERT INTO ExerciseVariantLang (ExerciseVariantID,Lang,ExerciseContent) VALUES (" + rs.GetInt32(0) + "," + rs2.GetInt32(0) + ",'" + ((TextBox)ExerciseVariant.FindControl("EV" + rs.GetInt32(0) + "L" + rs2.GetInt32(0))).Text.Replace("'", "''") + "')");
+                            string query = "INSERT INTO ExerciseVariantLang (ExerciseVariantID,Lang,ExerciseContent) " +
+                                "VALUES (@ExerciseVariantID,@Lang,@ExerciseContent)";
+                            Db.ExecuteNonQuery(
+                                query,
+                                new SqlParameter("@ExerciseVariantID", rs.GetInt32(0)),
+                                new SqlParameter("@Lang", rs2.GetInt32(0)),
+                                new SqlParameter("@ExerciseContent", ((TextBox)ExerciseVariant.FindControl("EV" + rs.GetInt32(0) + "L" + rs2.GetInt32(0))).Text)
+                                );
                         }
                         break;
                     default:
