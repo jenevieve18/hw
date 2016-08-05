@@ -208,6 +208,20 @@ public class Db
         dataConnection.Close();
         dataConnection.Dispose();
     }
+    public static void ExecuteNonQuery(string query, params SqlParameter[] parameters)
+    {
+        ExecuteNonQuery(query, "SqlConnection", parameters);
+    }
+    public static void ExecuteNonQuery(string query, string con, params SqlParameter[] parameters)
+    {
+        SqlConnection connection = new SqlConnection(ConfigurationSettings.AppSettings[con]);
+        connection.Open();
+        SqlCommand command = new SqlCommand(query, connection);
+        command.Parameters.AddRange(parameters);
+        command.ExecuteNonQuery();
+        connection.Close();
+        connection.Dispose();
+    }
 	public static int getInt32(string sqlString)
 	{
 		return getInt32(sqlString, "SqlConnection");

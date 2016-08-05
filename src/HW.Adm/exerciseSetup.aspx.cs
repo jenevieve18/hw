@@ -193,7 +193,18 @@ FROM Exercise e WHERE e.ExerciseID = " + eid);
         }
         else
         {
-            Db.exec("INSERT INTO Exercise (ExerciseCategoryID,ExerciseAreaID,RequiredUserLevel,Minutes,Script) VALUES (" + (Convert.ToInt32(ExerciseCategoryID.SelectedValue) != 0 ? Convert.ToInt32(ExerciseCategoryID.SelectedValue).ToString() : "NULL") + "," + Convert.ToInt32(ExerciseAreaID.SelectedValue) + "," + Convert.ToInt32(RequiredUserLevel.SelectedValue) + "," + Convert.ToInt32(Minutes.Text) + ", '" + textBoxJavascript.Text.Replace("'", "''") + "')");
+            //Db.exec("INSERT INTO Exercise (ExerciseCategoryID,ExerciseAreaID,RequiredUserLevel,Minutes,Script) VALUES (" + (Convert.ToInt32(ExerciseCategoryID.SelectedValue) != 0 ? Convert.ToInt32(ExerciseCategoryID.SelectedValue).ToString() : "NULL") + "," + Convert.ToInt32(ExerciseAreaID.SelectedValue) + "," + Convert.ToInt32(RequiredUserLevel.SelectedValue) + "," + Convert.ToInt32(Minutes.Text) + ", '" + textBoxJavascript.Text.Replace("'", "''") + "')");
+            string query = string.Format(
+                @"INSERT INTO Exercise (ExerciseCategoryID,ExerciseAreaID,RequiredUserLevel,Minutes,Script) 
+VALUES (@ExerciseCategoryID,@ExerciseAreaID,@RequiredUserLevel,@Minutes,@Script)");
+            Db.ExecuteNonQuery(
+                query,
+                new SqlParameter("@ExerciseCategoryID", Convert.ToInt32(ExerciseCategoryID.SelectedValue) != 0 ? Convert.ToInt32(ExerciseCategoryID.SelectedValue).ToString() : (object)DBNull.Value),
+                new SqlParameter("@ExerciseAreaID", ExerciseAreaID.SelectedValue),
+                new SqlParameter("@RequiredUserLevel", RequiredUserLevel.SelectedValue),
+                new SqlParameter("@Minutes", Minutes.Text),
+                new SqlParameter("@Script", textBoxJavascript.Text)
+            );
             rs = Db.rs("SELECT TOP 1 ExerciseID FROM Exercise ORDER BY ExerciseID DESC");
             if (rs.Read())
             {
