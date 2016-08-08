@@ -21,6 +21,28 @@ WHERE ExerciseVariantLangID = @ExerciseVariantLangID";
 			);
 		}
 		
+		public void UpdateExerciseScript(string script, int exerciseID)
+		{
+			string query = @"
+UPDATE dbo.Exercise
+   SET Script = @Script
+ WHERE ExerciseID = @ExerciseID";
+			ExecuteNonQuery(query, "healthWatchSqlConnection",
+			                new SqlParameter("@Script", script),
+			                new SqlParameter("@ExerciseID", exerciseID));
+		}
+		
+		public void UpdateExerciseVariantLanguageContent(string content, int exerciseVariantLangID)
+		{
+			string query = @"
+UPDATE dbo.ExerciseVariantLang
+   SET ExerciseContent = @ExerciseContent
+ WHERE ExerciseVariantLangID = @ExerciseVariantLangID";
+			ExecuteNonQuery(query, "healthWatchSqlConnection",
+			                new SqlParameter("@ExerciseContent", content),
+			                new SqlParameter("@ExerciseVariantLangID", exerciseVariantLangID));
+		}
+		
 		public void SaveStats(int ExerciseVariantLangID, int UID, int UPID)
 		{
 			string query = string.Format(
@@ -52,6 +74,19 @@ VALUES(@ExerciseAreaID, @ExerciseSortOrder, @ExerciseImg, @RequiredUserLevel, @M
 				new SqlParameter("@ExerciseCategoryID", e.Category.Id),
 				new SqlParameter("@PrintOnBottom", e.PrintOnBottom),
 				new SqlParameter("@ReplacementHead", e.ReplacementHead)
+			);
+		}
+		
+		public void SaveExerciseVariantLanguage(string content, string script, int exerciseVariantLangID)
+		{
+			string query = @"
+UPDATE dbo.ExerciseVariantLang SET ExerciseContent = @ExerciseContent
+WHERE ExerciseVariantLangID = @ExerciseVariantLangID";
+			ExecuteNonQuery(
+				query,
+				"healthWatchSqlConnection",
+				new SqlParameter("@ExerciseContent", content),
+				new SqlParameter("@ExerciseVariantLangID", exerciseVariantLangID)
 			);
 		}
 		
@@ -120,6 +155,131 @@ WHERE sae.SponsorAdminExerciseID = {0}",
 				}
 			}
 			return s;
+		}
+		
+		public ExerciseLanguage ReadExerciseLanguage(int exerciseID, int langID)
+		{
+			string query = @"
+SELECT [ExerciseLangID]
+      ,[ExerciseID]
+      ,[Exercise]
+      ,[ExerciseTime]
+      ,[ExerciseTeaser]
+      ,[Lang]
+      ,[New]
+      ,[ExerciseContent]
+  FROM [healthWatch].[dbo].[ExerciseLang]
+  WHERE [ExerciseID] = @ExerciseID AND [Lang] = @Lang
+";
+			ExerciseLanguage el = null;
+			using (SqlDataReader rs = ExecuteReader(
+				query, 
+				"healthWatchSqlConnection", 
+				new SqlParameter("@ExerciseID", exerciseID),
+				new SqlParameter("@Lang", langID))) {
+				if (rs.Read()) {
+					el = new ExerciseLanguage {
+						Id = GetInt32(rs, 0),
+						Exercise = new Exercise { Id = GetInt32(rs, 1) },
+						ExerciseName = GetString(rs, 2),
+						Time = GetString(rs, 3),
+						Teaser = GetString(rs, 4),
+						Language = new Language { Id = GetInt32(rs, 5) },
+						IsNew = GetBoolean(rs, 6),
+						Content = GetString(rs, 7)
+					};
+				}
+			}
+			return el;
+		}
+		
+		public Exercise ReadExercise(int exerciseID)
+		{
+			string query = @"
+SELECT [ExerciseID]
+      ,[ExerciseAreaID]
+      ,[ExerciseSortOrder]
+      ,[ExerciseImg]
+      ,[RequiredUserLevel]
+      ,[Minutes]
+      ,[ExerciseCategoryID]
+      ,[PrintOnBottom]
+      ,[ReplacementHead]
+      ,[Status]
+      ,[Script]
+  FROM [healthWatch].[dbo].[Exercise]
+  WHERE [ExerciseID] = @ExerciseID";
+			Exercise e = null;
+			using (SqlDataReader rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@ExerciseID", exerciseID))) {
+				if (rs.Read()) {
+					e = new Exercise {
+						Id = GetInt32(rs, 0),
+						Area = new ExerciseArea { Id = GetInt32(rs, 1) },
+						SortOrder = GetInt32(rs, 2),
+						Image = GetString(rs, 3),
+						RequiredUserLevel = GetInt32(rs, 4),
+						Minutes = GetInt32(rs, 5),
+						Category = new ExerciseCategory { Id = GetInt32(rs, 6) },
+						PrintOnBottom = GetInt32(rs, 7) == 1,
+						ReplacementHead = GetString(rs, 8),
+						Status = GetInt32(rs, 9),
+						Script = GetString(rs, 10)
+					};
+				}
+			}
+			return e;
+		}
+		
+		public ExerciseVariant ReadExerciseVariant2(int exerciseVariantID)
+		{
+			string query = @"
+SELECT [ExerciseVariantID]
+      ,[ExerciseID]
+      ,[ExerciseTypeID]
+  FROM [healthWatch].[dbo].[ExerciseVariant]
+  WHERE [ExerciseVariantID] = @ExerciseVariantID";
+			ExerciseVariant ev = null;
+			using (SqlDataReader rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@ExerciseVariantID", exerciseVariantID))) {
+				if (rs.Read()) {
+					ev = new ExerciseVariant {
+						Id = GetInt32(rs, 0),
+						Exercise = new Exercise { Id = GetInt32(rs, 1) },
+						Type = new ExerciseType { Id = GetInt32(rs, 2) }
+					};
+				}
+			}
+			return ev;
+		}
+		
+		public ExerciseVariantLanguage ReadExerciseVariantLanguage(int exerciseVariantLangID)
+		{
+			string query = @"
+SELECT [ExerciseVariantLangID]
+      ,[ExerciseVariantID]
+      ,[ExerciseFile]
+      ,[ExerciseFileSize]
+      ,[ExerciseContent]
+      ,[ExerciseWindowX]
+      ,[ExerciseWindowY]
+      ,[Lang]
+  FROM [healthWatch].[dbo].[ExerciseVariantLang]
+  WHERE [ExerciseVariantLangID] = @ExerciseVariantLangID";
+			ExerciseVariantLanguage evl = null;
+			using (SqlDataReader rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@ExerciseVariantLangID", exerciseVariantLangID))) {
+				if (rs.Read()) {
+					evl = new ExerciseVariantLanguage {
+						Id = GetInt32(rs, 0),
+						Variant = new ExerciseVariant { Id = GetInt32(rs, 1) },
+						File = GetString(rs, 2),
+						Size = GetInt32(rs, 3),
+						Content = GetString(rs, 4),
+						ExerciseWindowX = GetInt32(rs, 5),
+						ExerciseWindowY = GetInt32(rs, 6),
+						Language = new Language { Id = GetInt32(rs, 7) }
+					};
+				}
+			}
+			return evl;
 		}
 		
 		public ExerciseVariantLanguage ReadExerciseVariant(int exerciseVariantLangID)
@@ -282,8 +442,10 @@ et.ExerciseTypeSortOrder ASC",
 										File = GetString(rs, 11),
 										Size = GetInt32(rs, 12),
 										Content = GetString(rs, 13),
-										ExerciseWindowX = GetInt32(rs, 14, 650),
-										ExerciseWindowY = GetInt32(rs, 15, 580)
+//										ExerciseWindowX = GetInt32(rs, 14, 650),
+//										ExerciseWindowY = GetInt32(rs, 15, 580)
+										ExerciseWindowX = GetInt32(rs, 14, 960),
+										ExerciseWindowY = GetInt32(rs, 15, 760)
 									}
 								}
 							}
@@ -405,8 +567,10 @@ ORDER BY sae.Date DESC"
 					var evl = new ExerciseVariantLanguage {
 						Variant = ev,
 						File = GetString(rs, 5),
-						ExerciseWindowX = GetInt32(rs, 9, 650),
-						ExerciseWindowY = GetInt32(rs, 10, 580),
+//						ExerciseWindowX = GetInt32(rs, 9, 650),
+//						ExerciseWindowY = GetInt32(rs, 10, 580),
+						ExerciseWindowX = GetInt32(rs, 9, 980),
+						ExerciseWindowY = GetInt32(rs, 10, 760),
 						Id = GetInt32(rs, 11)
 							
 					};
@@ -490,8 +654,10 @@ et.ExerciseTypeSortOrder ASC",
 						File = GetString(rs, 11),
 						Size = GetInt32(rs, 12),
 						Content = GetString(rs, 13),
-						ExerciseWindowX = GetInt32(rs, 14, 650),
-						ExerciseWindowY = GetInt32(rs, 15, 580)
+//						ExerciseWindowX = GetInt32(rs, 14, 650),
+//						ExerciseWindowY = GetInt32(rs, 15, 580)
+						ExerciseWindowX = GetInt32(rs, 14, 960),
+						ExerciseWindowY = GetInt32(rs, 15, 760)
 					};
 					e.CurrentType = new ExerciseTypeLanguage {
 						TypeName = GetString(rs, 17),

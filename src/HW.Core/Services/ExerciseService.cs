@@ -38,5 +38,24 @@ namespace HW.Core.Services
 		{
 			er.SaveStats(exerciseVariantLangId, userId, userProfileId);
 		}
+		
+		public ExerciseVariantLanguage ReadExerciseVariantLanguage(int exerciseVariantLangID)
+		{
+			var evl = er.ReadExerciseVariantLanguage(exerciseVariantLangID);
+			evl.Variant = er.ReadExerciseVariant2(evl.Variant.Id);
+			evl.Variant.Exercise = er.ReadExercise(evl.Variant.Exercise.Id);
+			evl.Variant.Exercise.CurrentLanguage = er.ReadExerciseLanguage(evl.Variant.Exercise.Id, evl.Language.Id);
+			return evl;
+		}
+		
+		public void UpdateExerciseVariangLanguageContent(string content, int exerciseVariantLangID)
+		{
+			er.UpdateExerciseVariantLanguageContent(content, exerciseVariantLangID);
+		}
+		
+		public void UpdateExerciseScript(string script, int exerciseID)
+		{
+			er.UpdateExerciseScript(script, exerciseID);
+		}
 	}
 }
