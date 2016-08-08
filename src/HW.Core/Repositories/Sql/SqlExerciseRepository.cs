@@ -141,7 +141,7 @@ FROM dbo.SponsorAdminExercise sae
 INNER JOIN dbo.ExerciseVariantLang evl ON evl.ExerciseVariantLangID = sae.ExerciseVariantLangID
 INNER JOIN dbo.ExerciseVariant ev ON ev.ExerciseVariantID = evl.ExerciseVariantID
 WHERE sae.SponsorAdminExerciseID = {0}",
-			sponsorAdminExerciseID);
+				sponsorAdminExerciseID);
 			
 			SponsorAdminExercise s = null;
 			using (var rs = ExecuteReader(query)) {
@@ -157,6 +157,26 @@ WHERE sae.SponsorAdminExerciseID = {0}",
 			return s;
 		}
 		
+		public int GetExerciseVariantLangID(int exerciseID, int langID)
+		{
+			string query = @"
+SELECT ExerciseVariantLangID
+FROM dbo.ExerciseVariantLang evl
+INNER JOIN dbo.ExerciseVariant ev ON ev.ExerciseVariantID = evl.ExerciseVariantID
+	AND ev.ExerciseID = @ExerciseID
+	AND evl.Lang = @Lang";
+			int exerciseVariantLangID = 0;
+			using (var rs = ExecuteReader(
+				query, "healthWatchSqlConnection",
+				new SqlParameter("@ExerciseID", exerciseID),
+				new SqlParameter("@Lang", langID))) {
+				if (rs.Read()) {
+					exerciseVariantLangID = GetInt32(rs, 0);
+				}
+			}
+			return exerciseVariantLangID;
+		}
+		
 		public ExerciseLanguage ReadExerciseLanguage(int exerciseID, int langID)
 		{
 			string query = @"
@@ -167,14 +187,12 @@ SELECT [ExerciseLangID]
       ,[ExerciseTeaser]
       ,[Lang]
       ,[New]
-      ,[ExerciseContent]
   FROM [healthWatch].[dbo].[ExerciseLang]
-  WHERE [ExerciseID] = @ExerciseID AND [Lang] = @Lang
-";
+  WHERE [ExerciseID] = @ExerciseID AND [Lang] = @Lang";
 			ExerciseLanguage el = null;
 			using (SqlDataReader rs = ExecuteReader(
-				query, 
-				"healthWatchSqlConnection", 
+				query,
+				"healthWatchSqlConnection",
 				new SqlParameter("@ExerciseID", exerciseID),
 				new SqlParameter("@Lang", langID))) {
 				if (rs.Read()) {
@@ -185,8 +203,7 @@ SELECT [ExerciseLangID]
 						Time = GetString(rs, 3),
 						Teaser = GetString(rs, 4),
 						Language = new Language { Id = GetInt32(rs, 5) },
-						IsNew = GetBoolean(rs, 6),
-						Content = GetString(rs, 7)
+						IsNew = GetBoolean(rs, 6)
 					};
 				}
 			}
