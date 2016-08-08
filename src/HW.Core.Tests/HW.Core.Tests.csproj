@@ -55,7 +55,6 @@
   <ItemGroup>
     <Compile Include="Helpers\ConvertHelperTests.cs" />
     <Compile Include="Helpers\DbTests.cs" />
-    <Compile Include="Helpers\DocXExporterTests.cs" />
     <Compile Include="Helpers\ExcelExporterTests.cs" />
     <Compile Include="Helpers\ExporterTests.cs" />
     <Compile Include="Helpers\ExtendedGraphTests.cs" />
@@ -66,8 +65,6 @@
     <Compile Include="Helpers\HtmlHelperTests.cs" />
     <Compile Include="Helpers\MailHelperTests.cs" />
     <Compile Include="Helpers\PageTests.cs" />
-    <Compile Include="Helpers\PdfExporterTests.cs" />
-    <Compile Include="Helpers\PresentationDocumentExporterTests.cs" />
     <Compile Include="Helpers\SessionHelperTests.cs" />
     <Compile Include="MainForm.cs" />
     <Compile Include="MainForm.Designer.cs">

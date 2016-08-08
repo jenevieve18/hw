@@ -24,7 +24,7 @@ namespace HW.Core.Tests.Helpers
 		[Test]
 		public void TestSendMail()
 		{
-			Db.sendMail("ian.escarro@gmail.com", "", "");
+			Db.sendMail2("ian.escarro@gmail.com", "", "");
 		}
 		
 		[Test]
