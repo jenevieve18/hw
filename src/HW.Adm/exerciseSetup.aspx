@@ -67,7 +67,9 @@
 
         <script>
             $(document).ready(function () {
-                $('.summernote').summernote();
+                $('.summernote').summernote({
+                    width: 800,
+                });
             });
         </script>
   </body>
