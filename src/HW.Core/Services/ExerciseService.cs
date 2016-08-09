@@ -39,6 +39,18 @@ namespace HW.Core.Services
 			er.SaveStats(exerciseVariantLangId, userId, userProfileId);
 		}
 		
+		public int GetExerciseVariantLangID(int exerciseID, int langID)
+		{
+			return er.GetExerciseVariantLangID(exerciseID, langID);
+		}
+		
+		public Exercise ReadExercise(int exerciseID, int langID)
+		{
+			var e = er.ReadExercise(exerciseID);
+			e.CurrentLanguage = er.ReadExerciseLanguage(exerciseID, langID);
+			return e;
+		}
+		
 		public ExerciseVariantLanguage ReadExerciseVariantLanguage(int exerciseVariantLangID)
 		{
 			var evl = er.ReadExerciseVariantLanguage(exerciseVariantLangID);
