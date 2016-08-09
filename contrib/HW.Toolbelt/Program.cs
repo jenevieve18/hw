@@ -47,10 +47,10 @@ namespace HW.Toolbelt
 						Console.WriteLine(@">>> File ""{0}"" uploaded.", htmlFile);
 						s.UpdateExerciseScript(script, e.Id);
 						Console.WriteLine(@">>> File ""{0}"" uploaded.", jsFile);
+						
+						Console.WriteLine();
+						Console.WriteLine(@"""{0}"" updated.", el.ExerciseName);
 					}
-					
-					Console.WriteLine();
-					Console.WriteLine(@"""{0}"" updated.", el.ExerciseName);
 				}
 			}
 		}
