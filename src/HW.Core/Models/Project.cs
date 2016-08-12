@@ -82,4 +82,10 @@ namespace HW.Core.Models
 	public class ProjectUserCategory : BaseModel
 	{
 	}
+	
+	public class ProjectSurvey : BaseModel
+	{
+		public Project Project { get; set; }
+		public Survey Survey { get; set; }
+	}
 }

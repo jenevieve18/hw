@@ -1,12 +1,4 @@
-﻿/*
- * Created by SharpDevelop.
- * User: Ian
- * Date: 7/19/2016
- * Time: 1:15 PM
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-using System;
+﻿using System;
 using HW.Core.Models;
 using HW.Core.Repositories.Sql;
 
@@ -47,7 +39,9 @@ namespace HW.Core.Services
 		public Exercise ReadExercise(int exerciseID, int langID)
 		{
 			var e = er.ReadExercise(exerciseID);
-			e.CurrentLanguage = er.ReadExerciseLanguage(exerciseID, langID);
+			if (e != null) {
+				e.CurrentLanguage = er.ReadExerciseLanguage(exerciseID, langID);
+			}
 			return e;
 		}
 		

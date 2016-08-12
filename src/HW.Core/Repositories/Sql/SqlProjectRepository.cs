@@ -115,6 +115,29 @@ WHERE LEFT(pru.SortString, {1}) = '{0}'",
 			return units;
 		}
 		
+		public override IList<Project> FindAll()
+		{
+			string query = @"
+SELECT [ProjectID]
+      ,[Internal]
+      ,[Name]
+      ,[AppURL]
+  FROM [eForm].[dbo].[Project]";
+			var projects = new List<Project>();
+			using (var rs = ExecuteReader(query, "eFormSqlConnection")) {
+				while (rs.Read()) {
+					var p = new Project {
+						Id = GetInt32(rs, 0),
+						Internal = GetString(rs, 1),
+						Name = GetString(rs, 2),
+						AppURL = GetString(rs, 3)
+					};
+					projects.Add(p);
+				}
+			}
+			return projects;
+		}
+		
 		public IList<ProjectRoundUnit> FindAllProjectRoundUnits()
 		{
 			throw new NotImplementedException();

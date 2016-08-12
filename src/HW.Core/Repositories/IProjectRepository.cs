@@ -10,5 +10,13 @@ namespace HW.Core.Repositories
 	
 	public class ProjectRepositoryStub : BaseRepositoryStub<Project>, IProjectRepository
 	{
+		public override IList<Project> FindAll()
+		{
+			return new List<Project>(
+				new [] {
+					new Project { Name = "Project 1" }
+				}
+			);
+		}
 	}
 }
