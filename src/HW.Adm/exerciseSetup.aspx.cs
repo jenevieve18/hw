@@ -190,13 +190,14 @@ FROM Exercise e WHERE e.ExerciseID = " + eid);
             //    "Minutes = " + Convert.ToInt32(Minutes.Text) + ", " +
             //    "Script = '" + textBoxJavascript.Text.Replace("'", "''") + "'" + " " +
             //    "WHERE ExerciseID = " + eid);
-            string query = "UPDATE Exercise SET " +
-                "ExerciseAreaID = @ExerciseAreaID, " +
-                "ExerciseCategoryID = @ExerciseCategoryID, " +
-                "RequiredUserLevel = @RequiredUserLevel, " +
-                "Minutes = @Minutes, " +
-                "Script = @Script " +
-                "WHERE ExerciseID = @ExerciseID";
+            string query = @"
+UPDATE Exercise SET 
+ExerciseAreaID = @ExerciseAreaID, 
+ExerciseCategoryID = @ExerciseCategoryID, 
+RequiredUserLevel = @RequiredUserLevel, 
+Minutes = @Minutes, 
+Script = @Script 
+WHERE ExerciseID = @ExerciseID";
             Db.ExecuteNonQuery(
                 query,
                 new SqlParameter("@ExerciseAreaID", Convert.ToInt32(ExerciseAreaID.SelectedValue)),
@@ -210,9 +211,9 @@ FROM Exercise e WHERE e.ExerciseID = " + eid);
         else
         {
             //Db.exec("INSERT INTO Exercise (ExerciseCategoryID,ExerciseAreaID,RequiredUserLevel,Minutes,Script) VALUES (" + (Convert.ToInt32(ExerciseCategoryID.SelectedValue) != 0 ? Convert.ToInt32(ExerciseCategoryID.SelectedValue).ToString() : "NULL") + "," + Convert.ToInt32(ExerciseAreaID.SelectedValue) + "," + Convert.ToInt32(RequiredUserLevel.SelectedValue) + "," + Convert.ToInt32(Minutes.Text) + ", '" + textBoxJavascript.Text.Replace("'", "''") + "')");
-            string query = string.Format(
-                @"INSERT INTO Exercise (ExerciseCategoryID,ExerciseAreaID,RequiredUserLevel,Minutes,Script) 
-VALUES (@ExerciseCategoryID,@ExerciseAreaID,@RequiredUserLevel,@Minutes,@Script)");
+            string query = @"
+INSERT INTO Exercise (ExerciseCategoryID,ExerciseAreaID,RequiredUserLevel,Minutes,Script) 
+VALUES (@ExerciseCategoryID,@ExerciseAreaID,@RequiredUserLevel,@Minutes,@Script)";
             Db.ExecuteNonQuery(
                 query,
                 new SqlParameter("@ExerciseCategoryID", Convert.ToInt32(ExerciseCategoryID.SelectedValue) != 0 ? Convert.ToInt32(ExerciseCategoryID.SelectedValue).ToString() : (object)DBNull.Value),
