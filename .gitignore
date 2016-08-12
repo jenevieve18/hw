@@ -167,6 +167,7 @@ partcover.driver.log
 
 #OpenCover
 OpenCover**
+
 /src/HW.Grp/bin/log.txt
 /src/HW.Grp/bin/log-file.txt
 /src/HW.Invoicing/uploads/HCG Fakturamall tom without comments.pdf
@@ -174,8 +175,8 @@ OpenCover**
 /src/HW.Invoicing/uploads/hcg.png
 /src/HW.Invoicing/uploads/ihg.png
 /src/HW.Invoicing/uploads/paynpark.jpg
-src/HW.Invoicing/log.txt
-src/HW/bin/log-file.txt
+/src/HW.Invoicing/log.txt
+/src/HW/bin/log-file.txt
 /src/HW.Invoicing/uploads/6 AstraZeneca Sep 2015
 /src/HW.Invoicing/uploads/6 AstraZeneca Sep 2015.pdf
 /src/HW.Invoicing/uploads/HCG Avtalsmall Latest.pdf
@@ -185,4 +186,6 @@ src/HW/bin/log-file.txt
 /src/HW.Invoicing/uploads/New HCG Logo.svg
 /src/HW.Invoicing/uploads/New HCG Logo_NEW_ONE-02.eps
 /src/HW.Invoicing/uploads/New-HCG-Logo_Small.png
-src/HW.WebService/UpgradeLog.htm
+/src/HW.WebService/UpgradeLog.htm
+/src/packages
+/contrib/packages
