@@ -132,7 +132,7 @@ namespace HW.Grp
         margin:0 2em;
     }}
 </style>
-{2}
+<script>{2}</script>
 <h1>{0}</h1>
 {1}",
 						evl.Variant.Exercise.Languages[0].ExerciseName,

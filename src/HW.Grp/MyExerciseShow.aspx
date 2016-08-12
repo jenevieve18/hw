@@ -27,6 +27,7 @@
     <script type="text/javascript">        $("body").addClass("popup"); $(document).ready(function () { $("body").addClass("popup"); });</script>
     <script src="AC_ActiveX.js" type="text/javascript"></script>
 </head>
+
 <!--[if lt IE 7 ]> <body class="ie6" class="popup"> <![endif]-->
 <!--[if IE 7 ]>    <body class="ie7" class="popup"> <![endif]-->
 <!--[if IE 8 ]>    <body class="ie8" class="popup"> <![endif]-->

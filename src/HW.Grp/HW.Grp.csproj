@@ -109,7 +109,6 @@
     <Content Include="assets\exercises\images\submenu.jpg" />
     <Content Include="assets\exercises\images\text_bg.png" />
     <Content Include="assets\exercises\images\text_bg1.png" />
-    <Content Include="assets\exercises\js\hw.js" />
     <Content Include="assets\ui\jquery-ui.css" />
     <Content Include="assets\js\jquery-1.10.2.js" />
     <Content Include="assets\ui\jquery-ui-1.9.2.custom.min.js" />
@@ -599,6 +598,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\bootstrap\js\" />
+    <Folder Include="assets\exercises\js\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Grp.Master" />

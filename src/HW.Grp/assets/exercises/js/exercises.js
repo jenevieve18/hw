@@ -8,15 +8,39 @@ function getData(elements) {
 
 var SponsorRepository = function() {};
 
-SponsorRepository.saveSponsorAdminExercise = function(dataInputs, sponsorAdminID, exerciseVariantLangID) {
+// SponsorRepository.saveSponsorAdminExercise = function(dataInputs, sponsorAdminID, exerciseVariantLangID) {
+//   $('#save').text('Saving...');
+//   $.ajax({
+//     type: 'POST',
+//     url: 'ExerciseShow.aspx/SaveOrUpdateSponsorAdminExercise',
+//     data: JSON.stringify({
+//       dataInputs: dataInputs,
+//       sponsorAdminID: sponsorAdminID,
+//       exerciseVariantLangID: exerciseVariantLangID
+//     }),
+//     contentType: "application/json;charset=utf-8",
+//     dataType: "json",
+//     success: function(response) {
+//       $('#save').text('Save');
+//       alert(response.d);
+//     },
+//     error: function(req, textStatus, errorThrown) {
+//       // This is going to happen when you send something different from a 200 OK HTTP
+//       alert('Ooops, something happened: ' + textStatus + ' ' + errorThrown);
+//     }
+//   });
+// };
+
+SponsorRepository.saveSponsorAdminExercise = function(dataInputs, sponsorAdminID, exerciseVariantLangID, sponsorAdminExerciseID) {
   $('#save').text('Saving...');
   $.ajax({
     type: 'POST',
-    url: 'ExerciseShow.aspx/SaveSponsorAdminExercise',
+    url: 'ExerciseShow.aspx/SaveOrUpdateSponsorAdminExercise',
     data: JSON.stringify({
       dataInputs: dataInputs,
       sponsorAdminID: sponsorAdminID,
-      exerciseVariantLangID: exerciseVariantLangID
+      exerciseVariantLangID: exerciseVariantLangID,
+      sponsorAdminExerciseID: sponsorAdminExerciseID
     }),
     contentType: "application/json;charset=utf-8",
     dataType: "json",
