@@ -44,14 +44,15 @@ WHERE Id = @Id"
         {
             string query = string.Format(
                 @"
-INSERT INTO PlotTypeLang(Name, Description, PlotTypeID, LangID)
-VALUES(@Name, @Description, @PlotTypeID, @LangID)"
+INSERT INTO PlotTypeLang(Name, Description, PlotTypeID, LangID, ShortName)
+VALUES(@Name, @Description, @PlotTypeID, @LangID, @ShortName)"
             );
             ExecuteNonQuery(query, "eFormSqlConnection",
                 new SqlParameter("@Name", p.Name),
                 new SqlParameter("@Description", p.Description),
                 new SqlParameter("@PlotTypeID", p.PlotType.Id),
-                new SqlParameter("@LangID", p.Language.Id)
+                new SqlParameter("@LangID", p.Language.Id),
+                new SqlParameter("@ShortName", p.ShortName)
             );
         }
 
@@ -60,11 +61,13 @@ VALUES(@Name, @Description, @PlotTypeID, @LangID)"
             string query = string.Format(
                 @"
 UPDATE PlotTypeLang SET Name = @Name,
-Description = @Description
+Description = @Description,
+ShortName = @ShortName
 WHERE PlotTypeLangId = @PlotTypeLangId"
             );
             ExecuteNonQuery(query, "eFormSqlConnection",
                 new SqlParameter("@Name", p.Name),
+                new SqlParameter("@ShortName", p.ShortName),
                 new SqlParameter("@Description", p.Description),
                 new SqlParameter("@PlotTypeLangId", plotTypeLangId)
             );
