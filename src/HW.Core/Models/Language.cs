@@ -9,6 +9,7 @@ namespace HW.Core.Models
 	{
 		public const int SWEDISH = 1;
 		public const int ENGLISH = 2;
+		public const int GERMAN = 4;
 		
 		public virtual string Name { get; set; }
 
@@ -22,13 +23,25 @@ namespace HW.Core.Models
 	{
 		public static string GetMeanText(int lid)
 		{
-			return lid == 1 ? "medelvärde" : "mean value";
+//			return lid == 1 ? "medelvärde" : "mean value";
+			switch (lid) {
+				case 1: return "medelvärde";
+			case 4: return "medelvärde";
+		default: return "mean value";
+			}
 		}
 		
 		public static int GetLanguageID(HttpRequest request)
 		{
 			var c = ResolveCulture(request);
-			return c.Name == "sv-SE" ? Language.SWEDISH : Language.ENGLISH;
+//			return c.Name == "sv-SE" ? Language.SWEDISH : Language.ENGLISH;
+			if (c.Name == "sv-SE") {
+				return Language.SWEDISH;
+			} else if (c.Name == "de-DE") {
+				return Language.GERMAN;
+			} else {
+				return Language.ENGLISH;
+			}
 		}
 		
 		public static CultureInfo ResolveCulture(HttpRequest request)
