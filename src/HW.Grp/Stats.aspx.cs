@@ -150,12 +150,24 @@ namespace HW.Grp
 
 		protected string GetLang(int lid)
 		{
-			return lid == 1 ? "sv" : "en";
+			//return lid == 1 ? "sv" : "en";
+            switch (lid)
+            {
+                case 1: return "sv";
+                case 4: return "de";
+                default: return "en";
+            }
 		}
 
 		protected CultureInfo GetCultureInfo(int lid)
 		{
-			return lid == 1 ? new CultureInfo("sv-SE") : new CultureInfo("en-US");
+			//return lid == 1 ? new CultureInfo("sv-SE") : new CultureInfo("en-US");
+            switch (lid)
+            {
+                case 1: return new CultureInfo("sv-SE");
+                case 4: return new CultureInfo("de-DE");
+                default: return new CultureInfo("en-US");
+            }
 		}
 		
 		public void SaveAdminSession(int SponsorAdminSessionID, int ManagerFunction, DateTime date)

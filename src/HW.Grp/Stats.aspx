@@ -218,6 +218,7 @@
 
 <script type="text/javascript" src="assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="assets/bootstrap-datepicker/locales/bootstrap-datepicker.sv.min.js"></script>
+<script type="text/javascript" src="assets/bootstrap-datepicker/locales/bootstrap-datepicker.de.min.js"></script>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
