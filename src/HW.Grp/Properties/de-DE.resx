@@ -234,6 +234,9 @@
   <data name="invite.resolve" xml:space="preserve">
     <value>Einladung</value>
   </data>
+  <data name="language" xml:space="preserve">
+    <value>Sprache</value>
+  </data>
   <data name="login.header" xml:space="preserve">
     <value>Gruppenadministration</value>
   </data>
@@ -248,6 +251,9 @@
   </data>
   <data name="login.signin" xml:space="preserve">
     <value>Login</value>
+  </data>
+  <data name="logout" xml:space="preserve">
+    <value>Logout</value>
   </data>
   <data name="manager.access" xml:space="preserve">
     <value>Zugang</value>

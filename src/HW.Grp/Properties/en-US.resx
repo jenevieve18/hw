@@ -135,6 +135,9 @@
   <data name="administration" xml:space="preserve">
     <value>Administration</value>
   </data>
+  <data name="aggregation" xml:space="preserve">
+    <value>Aggregation</value>
+  </data>
   <data name="alphabetical" xml:space="preserve">
     <value>Alphabetical</value>
   </data>
@@ -213,6 +216,9 @@
   <data name="graphs.export.all" xml:space="preserve">
     <value>Export all graphs to:</value>
   </data>
+  <data name="grouping" xml:space="preserve">
+    <value>Grouping</value>
+  </data>
   <data name="i18n" xml:space="preserve">
     <value>In English</value>
   </data>
@@ -227,6 +233,9 @@
   </data>
   <data name="invite.resolve" xml:space="preserve">
     <value>Resolve&lt;br/&gt;Invitation</value>
+  </data>
+  <data name="language" xml:space="preserve">
+    <value>Language</value>
   </data>
   <data name="login.header" xml:space="preserve">
     <value>Group administration</value>
@@ -243,13 +252,13 @@
   <data name="login.signin" xml:space="preserve">
     <value>Sign in</value>
   </data>
+  <data name="logout" xml:space="preserve">
+    <value>Log out</value>
+  </data>
   <data name="manager.access" xml:space="preserve">
     <value>Roles</value>
   </data>
   <data name="manager.add" xml:space="preserve">
-    <value>Add manager</value>
-  </data>
-  <data name="manager.add1" xml:space="preserve">
     <value>Add manager</value>
   </data>
   <data name="manager.delete" xml:space="preserve">
@@ -501,6 +510,9 @@
   <data name="submit" xml:space="preserve">
     <value>Submit</value>
   </data>
+  <data name="survey" xml:space="preserve">
+    <value>Survey</value>
+  </data>
   <data name="survey.extended.no" xml:space="preserve">
     <value># of extended&lt;br&gt;surveys</value>
   </data>
@@ -515,6 +527,9 @@
   </data>
   <data name="thanks.mail" xml:space="preserve">
     <value>Thank you mail for</value>
+  </data>
+  <data name="timeframe" xml:space="preserve">
+    <value>Timeframe</value>
   </data>
   <data name="total" xml:space="preserve">
     <value>Total</value>

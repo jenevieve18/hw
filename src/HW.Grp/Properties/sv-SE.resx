@@ -210,9 +210,6 @@
   <data name="graphs.change.all" xml:space="preserve">
     <value>Ändra alla grafer till:</value>
   </data>
-  <data name="graphs.change1" xml:space="preserve">
-    <value>Ändra denna graf till:</value>
-  </data>
   <data name="graphs.export" xml:space="preserve">
     <value>Exportera denna graf till:</value>
   </data>
