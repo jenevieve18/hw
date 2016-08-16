@@ -113,7 +113,7 @@
 }
 </style>
 
-<script type="text/javascript" src="assets/jquery-ui/jquery-ui-1.9.2.custom.min.js"></script>
+<script type="text/javascript" src="assets/ui/jquery-ui-1.9.2.custom.min.js"></script>
 
 <script type="text/javascript">
     String.prototype.format = function () {
