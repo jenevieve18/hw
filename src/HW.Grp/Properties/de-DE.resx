@@ -135,6 +135,9 @@
   <data name="administration" xml:space="preserve">
     <value>Verwaltung</value>
   </data>
+  <data name="aggregation" xml:space="preserve">
+    <value>Aggregation</value>
+  </data>
   <data name="alphabetical" xml:space="preserve">
     <value>Alphabetisch</value>
   </data>
@@ -212,6 +215,9 @@
   </data>
   <data name="graphs.export.all" xml:space="preserve">
     <value>Alle Grafiken exportieren nach:</value>
+  </data>
+  <data name="grouping" xml:space="preserve">
+    <value>Gruppierung</value>
   </data>
   <data name="i18n" xml:space="preserve">
     <value>Auf Deutsch</value>
@@ -498,6 +504,9 @@
   <data name="submit" xml:space="preserve">
     <value>Ausführen</value>
   </data>
+  <data name="survey" xml:space="preserve">
+    <value>Umfrage</value>
+  </data>
   <data name="survey.extended.no" xml:space="preserve">
     <value># erweiterter&lt;br&gt;Umfragen</value>
   </data>
@@ -512,6 +521,9 @@
   </data>
   <data name="thanks.mail" xml:space="preserve">
     <value>Dankmail für</value>
+  </data>
+  <data name="timeframe" xml:space="preserve">
+    <value>Zeitraum</value>
   </data>
   <data name="total" xml:space="preserve">
     <value>Gesamt</value>
