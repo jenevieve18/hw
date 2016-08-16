@@ -61,6 +61,7 @@
     <Content Include="Default.aspx" />
     <Content Include="Projects.aspx" />
     <Content Include="ProjectShow.aspx" />
+    <Content Include="Units.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +81,7 @@
     </Compile>
     <Compile Include="Layout.Master.cs">
       <DependentUpon>Layout.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Layout.Master.designer.cs">
       <DependentUpon>Layout.Master</DependentUpon>
@@ -99,6 +101,13 @@
       <DependentUpon>ProjectShow.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Units.aspx.cs">
+      <DependentUpon>Units.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Units.aspx.designer.cs">
+      <DependentUpon>Units.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Layout.Master" />
@@ -108,6 +117,12 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\HW.Core\HW.Core.csproj">
+      <Project>{c7b845fd-7d23-42ef-9ea7-521a83c4ef60}</Project>
+      <Name>HW.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
