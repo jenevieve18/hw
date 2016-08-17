@@ -303,6 +303,18 @@
   <data name="match.no" xml:space="preserve">
     <value>The search yielded no results!</value>
   </data>
+  <data name="mean" xml:space="preserve">
+    <value>Mean</value>
+  </data>
+  <data name="mean.value" xml:space="preserve">
+    <value>Mean value</value>
+  </data>
+  <data name="median" xml:space="preserve">
+    <value>Median</value>
+  </data>
+  <data name="median.q2" xml:space="preserve">
+    <value>Median (Q2)</value>
+  </data>
   <data name="message.activated.all" xml:space="preserve">
     <value>Message to all activated users</value>
   </data>
@@ -380,6 +392,12 @@
   </data>
   <data name="privilege.super" xml:space="preserve">
     <value>Super privileges</value>
+  </data>
+  <data name="quartile.lower" xml:space="preserve">
+    <value>Lower quartile (Q1)</value>
+  </data>
+  <data name="quartile.upper" xml:space="preserve">
+    <value>Upper quartile (Q3)</value>
   </data>
   <data name="questions.based" xml:space="preserve">
     <value>based on questions in survey</value>
@@ -614,6 +632,9 @@
   </data>
   <data name="users.unit.subunit" xml:space="preserve">
     <value>Users on unit+subunits</value>
+  </data>
+  <data name="variable" xml:space="preserve">
+    <value>Variable</value>
   </data>
   <data name="version" xml:space="preserve">
     <value>Version x.xx published</value>

@@ -303,6 +303,18 @@
   <data name="match.no" xml:space="preserve">
     <value>Sökningen gav inget resultat!</value>
   </data>
+  <data name="mean" xml:space="preserve">
+    <value>Medelvärde</value>
+  </data>
+  <data name="mean.value" xml:space="preserve">
+    <value>Medelvärde</value>
+  </data>
+  <data name="median" xml:space="preserve">
+    <value>Median</value>
+  </data>
+  <data name="median.q2" xml:space="preserve">
+    <value>Median (Q2)</value>
+  </data>
   <data name="message.activated.all" xml:space="preserve">
     <value>Meddelande till alla aktiverade användare</value>
   </data>
@@ -380,6 +392,12 @@
   </data>
   <data name="privilege.super" xml:space="preserve">
     <value>Superbehörigheter</value>
+  </data>
+  <data name="quartile.lower" xml:space="preserve">
+    <value>Undre kvartilen (Q1)</value>
+  </data>
+  <data name="quartile.upper" xml:space="preserve">
+    <value>Övre kvartilen (Q3)</value>
   </data>
   <data name="questions.based" xml:space="preserve">
     <value>baserat på frågor i enkät</value>
@@ -614,6 +632,9 @@
   </data>
   <data name="users.unit.subunit" xml:space="preserve">
     <value>Användare på enhet och undergrupper</value>
+  </data>
+  <data name="variable" xml:space="preserve">
+    <value>Variabel</value>
   </data>
   <data name="version" xml:space="preserve">
     <value>Version x.xx publicerad</value>
