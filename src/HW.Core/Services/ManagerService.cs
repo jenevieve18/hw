@@ -8,17 +8,6 @@ namespace HW.Core.Services
 {
 	public class ManagerService
 	{
-        //IManagerFunctionRepository mr;
-        //ISponsorRepository sr;
-        //ISponsorAdminRepository sar;
-		
-        //public ManagerService(IManagerFunctionRepository mr, ISponsorRepository sr, ISponsorAdminRepository sar)
-        //{
-        //    this.mr = mr;
-        //    this.sr = sr;
-        //    this.sar = sar;
-        //}
-
         SqlManagerFunctionRepository mr;
         SqlSponsorRepository sr;
         SqlSponsorAdminRepository sar;

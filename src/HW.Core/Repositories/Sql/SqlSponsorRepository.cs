@@ -2079,7 +2079,6 @@ ORDER BY sbq.SortOrder",
 			return questions;
 		}
 
-		// TODO: Is this a duplicate of SqlQuestionRepository.FindBackgroundQuestions()?
 		public IList<SponsorBackgroundQuestion> FindBackgroundQuestions(int sponsorID)
 		{
 			string query = string.Format(
@@ -2295,7 +2294,7 @@ UPDATE Sponsor SET AllMessageLastSent = GETDATE()
 WHERE SponsorID = {0}",
 				sponsorId
 			);
-			Db.exec(query, "healthWatchSqlConnection"); // TODO: move to department???
+			Db.exec(query, "healthWatchSqlConnection");
 		}
 
 		public void UpdateSponsorAdminPassword(string password, int sponsorAdminId)

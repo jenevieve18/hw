@@ -13,8 +13,6 @@ namespace HW.Core.Models
 	
 	public class ManagerFunction : BaseModel
 	{
-//		public virtual string Function { get; set; }
-//		public virtual string Expl { get; set; }
 		public virtual string URL { get; set; }
 		public virtual IList<ManagerFunctionLang> Languages { get; set; }
 		public virtual ManagerFunctionLang SelectedLanguage {
@@ -28,6 +26,7 @@ namespace HW.Core.Models
 		public const int TEST = 6;
 		public const int Exercises = 7;
 		public const int Reminders = 8;
+		public const int MyExercises = 9;
 		
 		public ManagerFunction()
 		{

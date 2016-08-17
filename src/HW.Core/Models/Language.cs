@@ -23,18 +23,16 @@ namespace HW.Core.Models
 	{
 		public static string GetMeanText(int lid)
 		{
-//			return lid == 1 ? "medelvärde" : "mean value";
 			switch (lid) {
 				case 1: return "medelvärde";
-			case 4: return "medelvärde";
-		default: return "mean value";
+				case 4: return "medelvärde";
+				default: return "mean value";
 			}
 		}
 		
 		public static int GetLanguageID(HttpRequest request)
 		{
 			var c = ResolveCulture(request);
-//			return c.Name == "sv-SE" ? Language.SWEDISH : Language.ENGLISH;
 			if (c.Name == "sv-SE") {
 				return Language.SWEDISH;
 			} else if (c.Name == "de-DE") {
@@ -68,7 +66,7 @@ namespace HW.Core.Models
 //					default: throw new NotSupportedException();
 //			}
 //		}
-		
+//		
 //		public static string GetChooseArea(int lid)
 //		{
 //			switch (lid) {
@@ -77,7 +75,7 @@ namespace HW.Core.Models
 //					default: throw new NotSupportedException();
 //			}
 //		}
-		
+//		
 //		public static string GetChooseCategory(int lid)
 //		{
 //			switch (lid) {
@@ -86,7 +84,7 @@ namespace HW.Core.Models
 //					default: throw new NotSupportedException();
 //			}
 //		}
-		
+//		
 //		public static string GetSortingOrder(int lid, int bx)
 //		{
 //			switch (lid) {

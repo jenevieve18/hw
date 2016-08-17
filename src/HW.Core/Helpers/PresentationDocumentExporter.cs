@@ -35,7 +35,6 @@ namespace HW.Core.Helpers
 		}
 		
 		public override string Type {
-//			get { return "application/octet-stream"; }
 			get { return "application/vnd.openxmlformats-officedocument.presentationml.presentation"; }
 		}
 		
@@ -48,72 +47,43 @@ namespace HW.Core.Helpers
 			get { return string.Format("attachment;filename=\"HealthWatch Survey {0}.pptx\";", DateTime.Now.ToString("yyyyMMdd")); }
 		}
 		
-//		public override object Export(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
-//		{
-//			MemoryStream output = new MemoryStream();
-//			using (PresentationDocument package = PresentationDocument.Create(output, PresentationDocumentType.Presentation)) {
-//				gc.UrlSet += delegate(object sender, ReportPartEventArgs e) { e.Url =  GetUrl(path, langID, fy, ty, spons, sid, gb, e.ReportPart.Id, pruid, gid, grpng, plot, fm, tm); };
-//				r.CurrentLanguage.ReportPart = r; // HACK: Report part should be assigned to the language because upon querying from database it's not set.
-//				gc.CreateParts(package, new List<ReportPartLanguage>(new ReportPartLanguage[] { r.CurrentLanguage }));
-//			}
-//			return output;
-//		}
-//		
-//		public override object ExportAll(int gb, int fy, int ty, int langID, int pruid, int grpng, int spons, int sid, string gid, int plot, string path, int sponsorMinUserCountToDisclose, int fm, int tm)
-//		{
-//			MemoryStream output = new MemoryStream();
-//			using (PresentationDocument package = PresentationDocument.Create(output, PresentationDocumentType.Presentation)) {
-//				gc.UrlSet += delegate(object sender, ReportPartEventArgs e) { e.Url =  GetUrl(path, langID, fy, ty, spons, sid, gb, e.ReportPart.Id, pruid, gid, grpng, plot, fm, tm); };
-//				gc.CreateParts(package, parts);
-//			}
-//			return output;
-//		}
-		
-//		public override object Export(string url)
 		public override object Export(string url, int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
 		{
 			MemoryStream output = new MemoryStream();
 			using (PresentationDocument package = PresentationDocument.Create(output, PresentationDocumentType.Presentation)) {
-//				gc.UrlSet += delegate(object sender, ReportPartEventArgs e) { e.Url =  GetUrl(path, langID, fy, ty, spons, sid, gb, e.ReportPart.Id, pruid, gid, grpng, plot, fm, tm); };
 				gc.UrlSet += delegate(object sender, ReportPartEventArgs e) {
 					e.Url = url;
 					OnUrlSet(e);
-//					e.Url =  GetUrl(path, langID, fy, ty, spons, sid, gb, e.ReportPart.Id, pruid, gid, grpng, plot, fm, tm);
 				};
-				r.CurrentLanguage.ReportPart = r; // HACK: Report part should be assigned to the language because upon querying from database it's not set.
+//				r.CurrentLanguage.ReportPart = r; // HACK: Report part should be assigned to the language because upon querying from database it's not set.
 				gc.CreateParts(package, new List<IReportPart>(new ReportPartLanguage[] { r.CurrentLanguage }));
 			}
 			return output;
 		}
 		
-//		public override object ExportAll(int langID)
 		public override object ExportAll(int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
 		{
 			MemoryStream output = new MemoryStream();
 			using (PresentationDocument package = PresentationDocument.Create(output, PresentationDocumentType.Presentation)) {
-//				gc.UrlSet += delegate(object sender, ReportPartEventArgs e) { e.Url =  GetUrl(path, langID, fy, ty, spons, sid, gb, e.ReportPart.Id, pruid, gid, grpng, plot, fm, tm); };
 				gc.UrlSet += delegate(object sender, ReportPartEventArgs e) {
 					OnUrlSet(e);
-//					e.Url =  GetUrl(path, langID, fy, ty, spons, sid, gb, e.ReportPart.Id, pruid, gid, grpng, plot, fm, tm);
 				};
 				gc.CreateParts(package, parts);
 			}
 			return output;
 		}
 		
-//		public override object SuperExport(string url)
 		public override object SuperExport(string url, string rnds1, string rnds2, string rndsd1, string rndsd2, string pid1, string pid2, string n, int rpid, string yearFrom, string yearTo, string r1, string r2, int langID, int plot)
 		{
 			MemoryStream output = new MemoryStream();
 			using (PresentationDocument package = PresentationDocument.Create(output, PresentationDocumentType.Presentation)) {
 				gc.UrlSet += delegate(object sender, ReportPartEventArgs e) { e.Url =  url; };
-				r.CurrentLanguage.ReportPart = r; // HACK: Report part should be assigned to the language because upon querying from database it's not set.
+//				r.CurrentLanguage.ReportPart = r; // HACK: Report part should be assigned to the language because upon querying from database it's not set.
 				gc.CreateParts(package, new List<IReportPart>(new ReportPartLanguage[] { r.CurrentLanguage }));
 			}
 			return output;
 		}
 		
-//		public override object SuperExportAll(int langID)
 		public override object SuperExportAll(string rnds1, string rnds2, string rndsd1, string rndsd2, string pid1, string pid2, string n, string yearFrom, string yearTo, string r1, string r2, int langID, int plot)
 		{
 			MemoryStream output = new MemoryStream();

@@ -42,7 +42,15 @@ namespace HW.Core.Models
 		public List<ReportPartComponent> Components { get; set; }
 		public IList<ReportPartLanguage> Languages { get; set; }
 		
-		public ReportPartLanguage CurrentLanguage { get; set; }
+		public ReportPartLanguage currentLanguage;
+		
+		public ReportPartLanguage CurrentLanguage {
+			get { return currentLanguage; }
+			set {
+				currentLanguage = value;
+				currentLanguage.ReportPart = this;
+			}
+		}
 	}
 	
 	public class ReportPartComponent : BaseModel

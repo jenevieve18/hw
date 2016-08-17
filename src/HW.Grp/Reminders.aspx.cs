@@ -18,9 +18,7 @@ namespace HW.Grp
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		IList<Department> departments;
 		Sponsor sponsor;
-//		protected int lid;
 		SqlUserRepository userRepository = new SqlUserRepository();
-//		protected int lid = Language.ENGLISH;
 		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
 		protected override void OnPreRender(EventArgs e)
@@ -35,7 +33,6 @@ namespace HW.Grp
 			
 			HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(ConvertHelper.ToInt32(Session["SponsorAdminID"]), ManagerFunction.Reminders), "default.aspx", true);
 			
-//			lid = ConvertHelper.ToInt32(Session["lid"], 2);
 			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
 			if (userSession != null) {
 				lid = userSession.Lang;
@@ -46,7 +43,6 @@ namespace HW.Grp
 
 		string P(string s)
 		{
-			//            return s.PadRight(24, ' ');
 			return s.PadLeft(24, ' ');
 		}
 		

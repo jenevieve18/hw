@@ -12,7 +12,6 @@ namespace HW.Core.Models
 	
 	public interface IAnswer
 	{
-//		IList<AnswerValue> Values { get; set; }
 		IList<IValue> Values { get; set; }
 		HWList GetIntValues();
 	}
@@ -32,7 +31,6 @@ namespace HW.Core.Models
 		public Language Language { get; set; }
 		public DateTime StartDate { get; set; }
 		public DateTime EndDate { get; set; }
-//		public IList<AnswerValue> Values { get; set; }
 		public IList<IValue> Values { get; set; }
 		public int CurrentPage { get; set; }
 		
@@ -63,12 +61,6 @@ namespace HW.Core.Models
 		public float AverageV { get; set; }
 		public int CountV { get; set; }
 		public float StandardDeviation { get; set; }
-		
-//		public double LowerWhisker { get; set; }
-//		public double UpperWhisker { get; set; }
-//		public double LowerBox { get; set; }
-//		public double UpperBox { get; set; }
-//		public double Median { get; set; }
 	}
 	
 	public interface IValue
