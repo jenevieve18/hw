@@ -25,6 +25,7 @@ namespace HW.Grp
 			new SqlIndexRepository(),
 			new SqlSponsorRepository()
 		);
+//		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 
 		bool HasAnswerKey
 		{
@@ -113,6 +114,12 @@ namespace HW.Grp
 			reportParts.Add(sponsorProject);
 
 			var exporter = ExportFactory.GetExporterAll(service, type, HasAnswerKey, hasGrouping, reportParts, Server.MapPath("HW template for Word.docx"));
+			exporter.CellWrite += delegate(object sender2, ExcelCellEventArgs e2) {
+//				e2.ExcelCell.Value = R.Str(lid, e2.ValueKey, "");
+				e2.ExcelCell.Value = R.Str(langID, e2.ValueKey, "");
+				e2.Writer.WriteCell(e2.ExcelCell);
+			};
+			
 			Response.ContentType = exporter.Type;
 
 			HtmlHelper.AddHeaderIf(exporter.HasContentDisposition2, "content-disposition", exporter.ContentDisposition2, Response);

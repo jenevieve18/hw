@@ -16,6 +16,8 @@ namespace HW.Core.Helpers
 		void CreateGraphForExcelWriter(ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int sponsorAdminID, int SID, string GID, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose, int fm, int tm);
 		
 		event EventHandler<MergeEventArgs> ForMerge;
+		
+		event EventHandler<ExcelCellEventArgs> CellWrite;
 	}
 	
 	public abstract class BaseGraphFactory : IGraphFactory
@@ -103,6 +105,15 @@ namespace HW.Core.Helpers
 					}
 				default:
 					throw new NotSupportedException();
+			}
+		}
+		
+		public event EventHandler<ExcelCellEventArgs> CellWrite;
+		
+		protected virtual void OnCellWrite(ExcelCellEventArgs e)
+		{
+			if (CellWrite != null) {
+				CellWrite(this, e);
 			}
 		}
 		

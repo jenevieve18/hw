@@ -26,24 +26,25 @@ namespace HW.Grp
 		);
 		SqlReportRepository r = new SqlReportRepository();
 		SqlUserRepository userRepository = new SqlUserRepository();
-//		protected int lid = Language.ENGLISH;
 		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			HtmlHelper.RedirectIf(Session["SuperAdminID"] == null, "default.aspx", true);
 
-//			int lid = ConvertHelper.ToInt32(Session["lid"], 2);
 			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
 			if (userSession != null) {
 				lid = userSession.Lang;
 			}
 			string type = StrHelper.Str3(Request.QueryString["TYPE"], "docx");
 			
-//			var parts = r.FindPartLanguagesByReport(Convert.ToInt32(Request.QueryString["RID"]));
 			var parts = r.FindPartLanguagesByReport(Convert.ToInt32(Request.QueryString["RID"]), lid);
-//			var exporter = ExportFactory.GetSuperExporterAll(service, parts, type, Server.MapPath("HW template for Word.docx"));
+			
 			var exporter = ExportFactory.GetSuperExporterAll(type, service, parts, Server.MapPath("HW template for Word.docx"));
+			exporter.CellWrite += delegate(object sender2, ExcelCellEventArgs e2) {
+				e2.ExcelCell.Value = R.Str(lid, e2.ValueKey, "");
+				e2.Writer.WriteCell(e2.ExcelCell);
+			};
 			
 			Response.ClearHeaders();
 			Response.ClearContent();
@@ -69,6 +70,7 @@ namespace HW.Grp
 //			Write(exporter.SuperExport(url, RNDS1, RNDS2, RNDSD1, RNDSD2, PID1, PID2, N, rpid, FDT, TDT, R1, R2, lid, plot));
 			
 			exporter.UrlSet += delegate(object sender2, ReportPartEventArgs e2) { e2.Url = path + GetSuperReportImageUrl(e2.ReportPart); };
+
 //			Write(exporter.SuperExportAll(lid));
 			HtmlHelper.Write(exporter.SuperExportAll(RNDS1, RNDS2, RNDSD1, RNDSD2, PID1, PID2, N, FDT, TDT, R1, R2, lid, plot), Response);
 		}

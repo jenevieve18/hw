@@ -149,18 +149,6 @@ namespace HW.Core.Helpers
 				string groupBy = GroupFactory.GetGroupBy(GB);
 				g = new ExtendedGraph(895, 440, "#FFFFFF");
 				
-//				int t = 2;
-//				if (plot == PlotType.BoxPlotMinMax) {
-//					g.Type = new BoxPlotMinMaxGraphType();
-//				} else if (plot == PlotType.BoxPlot) {
-//					g.Type = new BoxPlotGraphType();
-//				} else if (plot == PlotType.LineSDWithCI) {
-//					g.Type = new LineGraphType(2, t);
-//				} else if (plot == PlotType.LineSD) {
-//					g.Type = new LineGraphType(1, t);
-//				} else {
-//					g.Type = new LineGraphType(0, t);
-//				}
 				g.Type = GetGraphType(plot, 2);
 				Answer answer = answerRepository.ReadByGroup(groupBy, yearFrom, yearTo, sortString, monthFrom, monthTo);
 				if (answer != null) {
@@ -588,14 +576,12 @@ namespace HW.Core.Helpers
 				return new LineCsv().ToCsv(departments, weeks);
 			}
 		}
-		*/
+		 */
 		#endregion
 		
-//		Dictionary<string, List<Answer>> GetWeeks(int minDT, int maxDT, int groupBy)
 		Dictionary<string, List<IAnswer>> GetWeeks(int minDT, int maxDT, int groupBy)
 		{
 			int j = 0;
-//			Dictionary<string, List<Answer>> weeks = new Dictionary<string, List<Answer>>();
 			var weeks = new Dictionary<string, List<IAnswer>>();
 			for (int i = minDT; i <= maxDT; i++) {
 				j++;
@@ -607,7 +593,6 @@ namespace HW.Core.Helpers
 			return weeks;
 		}
 		
-//		public void CreateGraph3(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int sponsorAdminID, int SID, string GID, object disabled, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose, int fm, int tm)
 		public override void CreateGraphForExcelWriter(ReportPart p, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int GB, bool hasGrouping, int plot, int GRPNG, int sponsorAdminID, int sponsorID, string departmentIDs, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
 		{
 			int cx = p.Components.Capacity;
@@ -621,9 +606,6 @@ namespace HW.Core.Helpers
 					langID = roundUnit.Language.Id;
 				}
 			}
-//			Dictionary<string, List<Answer>> weeks = new Dictionary<string, List<Answer>>();
-//			List<Answer> week =  new List<Answer>();
-//			List<Department> departments = new List<Department>();
 			var weeks = new Dictionary<string, List<IAnswer>>();
 			var departments = new List<IDepartment>();
 			
@@ -714,7 +696,6 @@ namespace HW.Core.Helpers
 							cx = 1;
 							int lastDT = minDT - 1;
 							var answers = answerRepository.FindByQuestionAndOptionJoinedAndGrouped2(join[i].ToString(), groupBy, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, yearFrom, yearTo, monthFrom, monthTo);
-//							departments.Add(new Department { Name = (string)desc[i] });
 							departments.Add(new Department { Name = (string)desc[i] });
 							foreach (var a in answers) {
 								if (a.DT < minDT) {
@@ -760,26 +741,51 @@ namespace HW.Core.Helpers
 				}
 			}
 			
+			// TODO: Make this a factory
+//			if (plot == PlotType.BoxPlotMinMax) {
+//				var plotter = new BoxPlotExcel();
+//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
+//				plotter.CellWrite += delegate(object sender, ExcelCellEventArgs e) { OnCellWrite(e); };
+//				plotter.ToExcel(departments, weeks, writer, ref index);
+//			} else if (plot == PlotType.LineSDWithCI) {
+//				var plotter = new ConfidenceIntervalLineExcel();
+//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
+//				plotter.CellWrite += delegate(object sender, ExcelCellEventArgs e) { OnCellWrite(e); };
+//				plotter.ToExcel(departments, weeks, writer, ref index);
+//			} else if (plot == PlotType.LineSD) {
+//				var plotter = new StandardDeviationLineExcel();
+//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
+//				plotter.CellWrite += delegate(object sender, ExcelCellEventArgs e) { OnCellWrite(e); };
+//				plotter.ToExcel(departments, weeks, writer, ref index);
+//			} else if (plot == PlotType.Verbose) {
+//				var plotter = new EverythingExcel();
+//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
+//				plotter.CellWrite += delegate(object sender, ExcelCellEventArgs e) { OnCellWrite(e); };
+//				plotter.ToExcel(departments, weeks, writer, ref index);
+//			} else {
+//				var plotter = new LineExcel();
+//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
+//				plotter.CellWrite += delegate(object sender, ExcelCellEventArgs e) { OnCellWrite(e); };
+//				plotter.ToExcel(departments, weeks, writer, ref index);
+//			}
+			var plotter = GetPlotter(plot);
+			plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
+			plotter.CellWrite += delegate(object sender, ExcelCellEventArgs e) { OnCellWrite(e); };
+			plotter.ToExcel(departments, weeks, writer, ref index);
+		}
+		
+		AbstractExcel GetPlotter(int plot)
+		{
 			if (plot == PlotType.BoxPlotMinMax) {
-				var plotter = new BoxPlotExcel();
-				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-				plotter.ToExcel(departments, weeks, writer, ref index);
+				return new BoxPlotExcel();
 			} else if (plot == PlotType.LineSDWithCI) {
-				var plotter = new ConfidenceIntervalLineExcel();
-				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-				plotter.ToExcel(departments, weeks, writer, ref index);
+				return new ConfidenceIntervalLineExcel();
 			} else if (plot == PlotType.LineSD) {
-				var plotter = new StandardDeviationLineExcel();
-				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-				plotter.ToExcel(departments, weeks, writer, ref index);
+				return new StandardDeviationLineExcel();
 			} else if (plot == PlotType.Verbose) {
-				var plotter = new EverythingExcel();
-				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-				plotter.ToExcel(departments, weeks, writer, ref index);
+				return new EverythingExcel();
 			} else {
-				var plotter = new LineExcel();
-				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-				plotter.ToExcel(departments, weeks, writer, ref index);
+				return new LineExcel();
 			}
 		}
 		
@@ -977,27 +983,31 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 //			g.Draw();
 //			return g;
 			
-			if (plot == PlotType.BoxPlotMinMax) {
-				var plotter = new BoxPlotExcel();
-				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-				plotter.ToExcel(departments, weeks, writer, ref index);
-			} else if (plot == PlotType.LineSDWithCI) {
-				var plotter = new ConfidenceIntervalLineExcel();
-				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-				plotter.ToExcel(departments, weeks, writer, ref index);
-			} else if (plot == PlotType.LineSD) {
-				var plotter = new StandardDeviationLineExcel();
-				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-				plotter.ToExcel(departments, weeks, writer, ref index);
-			} else if (plot == PlotType.Verbose) {
-				var plotter = new EverythingExcel();
-				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-				plotter.ToExcel(departments, weeks, writer, ref index);
-			} else {
-				var plotter = new LineExcel();
-				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-				plotter.ToExcel(departments, weeks, writer, ref index);
-			}
+//			if (plot == PlotType.BoxPlotMinMax) {
+//				var plotter = new BoxPlotExcel();
+//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
+//				plotter.ToExcel(departments, weeks, writer, ref index);
+//			} else if (plot == PlotType.LineSDWithCI) {
+//				var plotter = new ConfidenceIntervalLineExcel();
+//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
+//				plotter.ToExcel(departments, weeks, writer, ref index);
+//			} else if (plot == PlotType.LineSD) {
+//				var plotter = new StandardDeviationLineExcel();
+//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
+//				plotter.ToExcel(departments, weeks, writer, ref index);
+//			} else if (plot == PlotType.Verbose) {
+//				var plotter = new EverythingExcel();
+//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
+//				plotter.ToExcel(departments, weeks, writer, ref index);
+//			} else {
+//				var plotter = new LineExcel();
+//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
+//				plotter.ToExcel(departments, weeks, writer, ref index);
+//			}
+			var plotter = GetPlotter(plot);
+			plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
+			plotter.CellWrite += delegate(object sender, ExcelCellEventArgs e) { OnCellWrite(e); };
+			plotter.ToExcel(departments, weeks, writer, ref index);
 		}
 		
 		void GetIdxVal(int idx, string sortString, int langID, int fy, int ty, int fm, int tm)

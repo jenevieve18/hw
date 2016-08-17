@@ -31,7 +31,12 @@ namespace HW.Grp
 			string type = StrHelper.Str3(Request.QueryString["TYPE"], "docx");
 			
 			var p = r.ReadReportPart(rpid, lid);
+			
 			var exporter = ExportFactory.GetSuperExporter(type, p, Server.MapPath("HW template for Word.docx"));
+			exporter.CellWrite += delegate(object sender2, ExcelCellEventArgs e2) {
+				e2.ExcelCell.Value = R.Str(lid, e2.ValueKey, "");
+				e2.Writer.WriteCell(e2.ExcelCell);
+			};
 			
 			Response.ClearHeaders();
 			Response.ClearContent();
