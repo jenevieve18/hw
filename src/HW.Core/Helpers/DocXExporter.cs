@@ -137,9 +137,12 @@ namespace HW.Core.Helpers
 					
 					Paragraph image = d.InsertParagraph();
 					image.AppendPicture(CreatePicture(d, url));
-					image.InsertPageBreakAfterSelf();
-					
-					i++;
+//					image.InsertPageBreakAfterSelf();
+//					
+//					i++;
+					if (i++ < parts.Count - 1) {
+						image.InsertPageBreakAfterSelf();
+					}
 				}
 				d.SaveAs(output);
 			}
