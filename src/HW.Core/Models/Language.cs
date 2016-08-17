@@ -24,9 +24,9 @@ namespace HW.Core.Models
 		public static string GetMeanText(int lid)
 		{
 			switch (lid) {
-				case 1: return "medelvärde";
-				case 4: return "medelvärde";
-				default: return "mean value";
+				case 1: return "Medelvärde";
+				case 4: return "Mittelwert";
+				default: return "Mean value";
 			}
 		}
 		
