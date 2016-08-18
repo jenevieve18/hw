@@ -1,0 +1,21 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+@import url(https://fonts.googleapis.com/css?family=Merriweather);
+@import url(https://fonts.googleapis.com/css?family=Amaranth);
+body {
+  font-family: "Roboto", sans-serif; }
+
+h1, h2, h3, h4, h5, h6, .navbar-brand {
+  font-family: 'Amaranth', sans-serif;
+  /*font-family: "Merriweather", serif;*/ }
+
+body footer {
+  background: #efefef;
+  color: #666;
+  margin-top: 100px;
+  padding: 10px 0 100px 0; }
+  body footer nav ul {
+    padding-left: 20px; }
+    body footer nav ul a {
+      text-decoration: none; }
+
+/*# sourceMappingURL=main.css.map */

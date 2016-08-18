@@ -57,8 +57,14 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\css\login.css" />
+    <Content Include="assets\css\main.css" />
+    <Content Include="assets\img\1.gif" />
+    <Content Include="assets\img\hwlogo.png" />
+    <Content Include="assets\js\test.js" />
     <Content Include="Dashboard.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="ProjectRoundShow.aspx" />
     <Content Include="Projects.aspx" />
     <Content Include="ProjectShow.aspx" />
     <Content Include="Units.aspx" />
@@ -86,6 +92,13 @@
     <Compile Include="Layout.Master.designer.cs">
       <DependentUpon>Layout.Master</DependentUpon>
     </Compile>
+    <Compile Include="ProjectRoundShow.aspx.cs">
+      <DependentUpon>ProjectRoundShow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProjectRoundShow.aspx.designer.cs">
+      <DependentUpon>ProjectRoundShow.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Projects.aspx.cs">
       <DependentUpon>Projects.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -110,6 +123,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\css\login.css.map" />
+    <Content Include="assets\css\main.css.map" />
     <Content Include="Layout.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -119,9 +134,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\HW.Core\HW.Core.csproj">
-      <Project>{c7b845fd-7d23-42ef-9ea7-521a83c4ef60}</Project>
-      <Name>HW.Core</Name>
+    <ProjectReference Include="..\HW.EForm.Core\HW.EForm.Core.csproj">
+      <Project>{F3340E3E-E108-4D65-ACBF-E996CCB32668}</Project>
+      <Name>HW.EForm.Core</Name>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
