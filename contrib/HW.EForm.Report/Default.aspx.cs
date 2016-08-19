@@ -17,7 +17,7 @@ namespace HW.EForm.Report
         {
             if (IsPostBack)
             {
-                Response.Redirect("dashboard.aspx");
+            	Login(textBoxEmail.Text, textBoxPassword.Text);
             }
         }
         
@@ -25,6 +25,9 @@ namespace HW.EForm.Report
         {
         	var m = s.ReadByEmailAndPassword(name, password);
         	if (m != null) {
+        		Session["Email"] = m.Email;
+        		Session["Password"] = m.Password;
+        		
         		Response.Redirect("dashboard.aspx");
         	} else {
         		errorMessage = "Invalid user name or password. Please try again.";

@@ -57,6 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\css\main.sass" />
     <Content Include="assets\css\login.css" />
     <Content Include="assets\css\main.css" />
     <Content Include="assets\img\1.gif" />

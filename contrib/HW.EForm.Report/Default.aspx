@@ -23,10 +23,12 @@
           <h3>Login</h3>
           <form action="dashboard.html">
             <div class="form-group">
-              <input placeholder="Username or email address" class="form-control">
+                <asp:TextBox ID="textBoxEmail" runat="server" placeholder="Username or email address" CssClass="form-control"></asp:TextBox>
+              <%--<input placeholder="Username or email address" class="form-control">--%>
             </div>
             <div class="form-group">
-              <input placeholder="Password" class="form-control">
+                <asp:TextBox ID="textBoxPassword" runat="server" placeholder="Password" CssClass="form-control" TextMode="Password"></asp:TextBox>
+              <%--<input placeholder="Password" class="form-control">--%>
             </div>
             <div class="form-group">
 <asp:Button ID="buttonLogin" runat="server" Text="Login" CssClass="btn btn-default" />
