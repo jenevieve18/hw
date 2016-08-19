@@ -3,9 +3,17 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
+    
+
+
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <h3><%= projectRoundUnit.Unit %></h3>
+
+    <% for (int i = 0; i < 10; i++) { %>
     <script>
         $(function () {
-            $('#container').highcharts({
+            $('#container<%= i %>').highcharts({
                 credits: {
                     enabled: false
                 },
@@ -76,9 +84,12 @@
         });
     </script>
 
-
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h3><%= projectRoundUnit.Unit %></h3>
-    <div id="container"></div>
+    <div class="panel panel-default">
+  <div class="panel-heading">Panel heading without title</div>
+  <div class="panel-body">
+    <div id="container<%= i %>"></div>
+  </div>
+</div>
+    
+    <% } %>
 </asp:Content>
