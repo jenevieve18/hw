@@ -190,4 +190,4 @@ OpenCover**
 /src/packages
 /contrib/packages
 /src/HW.EForm/UpgradeLog.htm
-src/HW.Core/StyleCopViolations.xml
+/src/HW.Core/StyleCopViolations.xml
