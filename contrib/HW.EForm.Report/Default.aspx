@@ -21,6 +21,9 @@
       <div class="row">
         <div class="login"><img src="assets/img/hwlogo.png">
           <h3>Login</h3>
+            <% if (errorMessage != "") { %>
+            <div class="alert alert-danger"><%= errorMessage %></div>
+            <% } %>
           <form action="dashboard.html">
             <div class="form-group">
                 <asp:TextBox ID="textBoxEmail" runat="server" placeholder="Username or email address" CssClass="form-control"></asp:TextBox>

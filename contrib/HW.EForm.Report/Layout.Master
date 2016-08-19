@@ -35,7 +35,8 @@
             <li><%= HtmlHelper.Anchor("Projects", "projects.aspx") %></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown"><a href="#" data-toggle="dropdown" role="button" aria-hashpopup="true" aria-expanded="false" class="dropdown-toggle">Account<span class="caret"></span>
+            <li class="dropdown">
+                <a href="#" data-toggle="dropdown" role="button" aria-hashpopup="true" aria-expanded="false" class="dropdown-toggle"><%= Session["Email"] %><span class="caret"></span>
                 <ul class="dropdown-menu">
                   <li><%= HtmlHelper.Anchor("Profile", "profile.aspx") %></li>
                   <li role="separator" class="divider"></li>

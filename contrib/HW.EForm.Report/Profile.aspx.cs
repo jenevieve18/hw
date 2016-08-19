@@ -7,14 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace HW.EForm.Report
 {
-    public partial class Layout : System.Web.UI.MasterPage
+    public partial class Profile : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Email"] == null)
-            {
-                Response.Redirect("default.aspx");
-            }
+
         }
     }
 }
