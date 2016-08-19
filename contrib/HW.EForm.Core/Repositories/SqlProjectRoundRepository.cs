@@ -352,44 +352,45 @@ FROM ProjectRound";
 			return projectRounds;
 		}
 		
-		public IList<ProjectRound> FindByProject(int projectID)
+		public IList<ProjectRound> FindByProjectAndManager(int projectID, int managerID)
 		{
 			string query = @"
-SELECT 	ProjectRoundID, 
-	ProjectID, 
-	Internal, 
-	Started, 
-	Closed, 
-	TransparencyLevel, 
-	RepeatedEntry, 
-	SurveyID, 
-	LangID, 
-	RoundKey, 
-	EmailFromAddress, 
-	ReminderInterval, 
-	Layout, 
-	SelfRegistration, 
-	Timeframe, 
-	Yellow, 
-	Green, 
-	IndividualReportID, 
-	ExtendedSurveyID, 
-	ReportID, 
-	Logo, 
-	UseCode, 
-	ConfidentialIndividualReportID, 
-	SendSurveyAsEmail, 
-	SFTPhost, 
-	SFTPpath, 
-	SFTPuser, 
-	SFTPpass, 
-	SendSurveyAsPdfTo, 
-	SendSurveyAsPdfToQ, 
-	SendSurveyAsPdfToO
-FROM ProjectRound
-WHERE ProjectID = @ProjectID";
+SELECT 	pr.ProjectRoundID, 
+	pr.ProjectID, 
+	pr.Internal, 
+	pr.Started, 
+	pr.Closed, 
+	pr.TransparencyLevel, 
+	pr.RepeatedEntry, 
+	pr.SurveyID, 
+	pr.LangID, 
+	pr.RoundKey, 
+	pr.EmailFromAddress, 
+	pr.ReminderInterval, 
+	pr.Layout, 
+	pr.SelfRegistration, 
+	pr.Timeframe, 
+	pr.Yellow, 
+	pr.Green, 
+	pr.IndividualReportID, 
+	pr.ExtendedSurveyID, 
+	pr.ReportID, 
+	pr.Logo, 
+	pr.UseCode, 
+	pr.ConfidentialIndividualReportID, 
+	pr.SendSurveyAsEmail, 
+	pr.SFTPhost, 
+	pr.SFTPpath, 
+	pr.SFTPuser, 
+	pr.SFTPpass, 
+	pr.SendSurveyAsPdfTo, 
+	pr.SendSurveyAsPdfToQ, 
+	pr.SendSurveyAsPdfToO
+FROM ProjectRound pr
+INNER JOIN ManagerProjectRound mpr ON mpr.ProjectRoundID = pr.ProjectRoundID AND mpr.ManagerID = @ManagerID
+WHERE pr.ProjectID = @ProjectID";
 			var projectRounds = new List<ProjectRound>();
-			using (var rs = ExecuteReader(query, new SqlParameter("@ProjectID", projectID))) {
+			using (var rs = ExecuteReader(query, new SqlParameter("@ProjectID", projectID), new SqlParameter("@ManagerID", managerID))) {
 				while (rs.Read()) {
 					projectRounds.Add(new ProjectRound {
 						ProjectRoundID = GetInt32(rs, 0),

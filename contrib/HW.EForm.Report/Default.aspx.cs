@@ -25,6 +25,7 @@ namespace HW.EForm.Report
         {
         	var m = s.ReadByEmailAndPassword(name, password);
         	if (m != null) {
+        		Session["ManagerID"] = m.ManagerID;
         		Session["Email"] = m.Email;
         		Session["Password"] = m.Password;
         		

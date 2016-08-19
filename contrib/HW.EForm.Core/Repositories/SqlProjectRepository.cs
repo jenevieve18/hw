@@ -108,5 +108,29 @@ FROM Project";
 			}
 			return projects;
 		}
+		
+		public IList<Project> FindByManager(int managerID)
+		{
+			string query = @"
+SELECT 	p.ProjectID, 
+	p.Internal, 
+	p.Name, 
+	p.AppURL
+FROM Project p
+INNER JOIN ProjectRound pr ON pr.ProjectID = p.ProjectID
+INNER JOIN ManagerProjectRound mpr ON mpr.ProjectRoundID = pr.ProjectRoundID AND mpr.ManagerID = @ManagerID";
+			var projects = new List<Project>();
+			using (var rs = ExecuteReader(query, new SqlParameter("@ManagerID", managerID))) {
+				while (rs.Read()) {
+					projects.Add(new Project {
+						ProjectID = GetInt32(rs, 0),
+						Internal = GetString(rs, 1),
+						Name = GetString(rs, 2),
+						AppURL = GetString(rs, 3)
+					});
+				}
+			}
+			return projects;
+		}
 	}
 }

@@ -271,35 +271,37 @@ FROM ProjectRoundUnit";
 			return projectRoundUnits;
 		}
 		
-		public IList<ProjectRoundUnit> FindByProjectRound(int projectRoundID)
+		public IList<ProjectRoundUnit> FindByProjectRoundAndManager(int projectRoundID, int managerID)
 		{
 			string query = @"
-SELECT 	ProjectRoundUnitID, 
-	ProjectRoundID, 
-	Unit, 
-	ID, 
-	ParentProjectRoundUnitID, 
-	SortOrder, 
-	SortString, 
-	SurveyID, 
-	LangID, 
-	UnitKey, 
-	UserCount, 
-	UnitCategoryID, 
-	CanHaveUsers, 
-	ReportID, 
-	Timeframe, 
-	Yellow, 
-	Green, 
-	SurveyIntro, 
-	Terminated, 
-	IndividualReportID, 
-	UniqueID, 
-	RequiredAnswerCount
-FROM ProjectRoundUnit
-WHERE ProjectRoundID = @ProjectRoundID";
+SELECT 	pru.ProjectRoundUnitID, 
+	pru.ProjectRoundID, 
+	pru.Unit, 
+	pru.ID, 
+	pru.ParentProjectRoundUnitID, 
+	pru.SortOrder, 
+	pru.SortString, 
+	pru.SurveyID, 
+	pru.LangID, 
+	pru.UnitKey, 
+	pru.UserCount, 
+	pru.UnitCategoryID, 
+	pru.CanHaveUsers, 
+	pru.ReportID, 
+	pru.Timeframe, 
+	pru.Yellow, 
+	pru.Green, 
+	pru.SurveyIntro, 
+	pru.Terminated, 
+	pru.IndividualReportID, 
+	pru.UniqueID, 
+	pru.RequiredAnswerCount
+FROM ProjectRoundUnit pru
+INNER JOIN ManagerProjectRoundUnit mpru ON mpru.ProjectRoundUnitID = pru.ProjectRoundUnitID
+INNER JOIN ManagerProjectRound mpr ON mpr.ProjectRoundID = mpru.ProjectRoundID AND mpru.ManagerID = @ManagerID
+WHERE pru.ProjectRoundID = @ProjectRoundID";
 			var projectRoundUnits = new List<ProjectRoundUnit>();
-			using (var rs = ExecuteReader(query, new SqlParameter("@ProjectRoundID", projectRoundID))) {
+			using (var rs = ExecuteReader(query, new SqlParameter("@ProjectRoundID", projectRoundID), new SqlParameter("@ManagerID", managerID))) {
 				while (rs.Read()) {
 					projectRoundUnits.Add(new ProjectRoundUnit {
 						ProjectRoundUnitID = GetInt32(rs, 0),

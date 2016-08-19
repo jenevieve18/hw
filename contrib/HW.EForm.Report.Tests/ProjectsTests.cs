@@ -16,7 +16,7 @@ namespace HW.EForm.Report.Tests
 		[Test]
 		public void TestIndex()
 		{
-			var p = v.Index();
+			v.Index();
 		}
 	}
 }
