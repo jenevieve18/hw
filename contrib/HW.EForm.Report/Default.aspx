@@ -17,14 +17,20 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div class="container">
+    <div class="container" style="margin-top:30px">
       <div class="row">
-        <div class="login"><img src="assets/img/hwlogo.png">
+
+          <div class="panel panel-default login">
+  <%--<div class="panel-heading">
+    <h3 class="panel-title">Please sign in</h3>
+  </div>--%>
+  <div class="panel-body">
+            
+            <img src="assets/img/hwlogo.png">
           <h3>Login</h3>
             <% if (errorMessage != "") { %>
             <div class="alert alert-danger"><%= errorMessage %></div>
             <% } %>
-          <form action="dashboard.html">
             <div class="form-group">
                 <asp:TextBox ID="textBoxEmail" runat="server" placeholder="Username or email address" CssClass="form-control"></asp:TextBox>
               <%--<input placeholder="Username or email address" class="form-control">--%>
@@ -36,8 +42,10 @@
             <div class="form-group">
 <asp:Button ID="buttonLogin" runat="server" Text="Login" CssClass="btn btn-default" />
             </div>
-          </form>
-        </div>
+  </div>
+</div>
+
+       
       </div>
     
     </div>
