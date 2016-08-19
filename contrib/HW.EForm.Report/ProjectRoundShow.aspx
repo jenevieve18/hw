@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Layout.Master" AutoEventWireup="true" CodeBehind="ProjectRoundShow.aspx.cs" Inherits="HW.EForm.Report.ProjectRoundShow" %>
+<%@ Import Namespace="HW.EForm.Core.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -11,9 +12,9 @@
         </tr>
         <% foreach (var u in projectRound.Units) { %>
         <tr>
-            <td><%= u.Unit %></td>
+            <td><%= HtmlHelper.Anchor(u.Unit, "projectroundunitshow.aspx?ProjectRoundUnitID=" + u.ProjectRoundUnitID) %></td>
             <td><%= u.ID %></td>
-            <td><%= u.Survey != null ? u.Survey.Internal : "" %></td>
+            <td><%= u.Survey.ToString() %></td>
         </tr>
         <% } %>
     </table>

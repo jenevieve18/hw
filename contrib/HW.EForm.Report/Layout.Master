@@ -32,7 +32,6 @@
         </div>
         <div id="mynavbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><%= HtmlHelper.Anchor("Units", "units.aspx") %></li>
             <li><%= HtmlHelper.Anchor("Projects", "projects.aspx") %></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">

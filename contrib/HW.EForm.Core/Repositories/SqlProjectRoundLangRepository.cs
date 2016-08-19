@@ -315,5 +315,74 @@ FROM ProjectRoundLang";
 			}
 			return projectRoundLangs;
 		}
+		
+		public IList<ProjectRoundLang> FindByProjectRound(int projectRoundID)
+		{
+			string query = @"
+SELECT 	ProjectRoundLangID, 
+	LangID, 
+	ProjectRoundID, 
+	InvitationSubject, 
+	InvitationBody, 
+	ReminderSubject, 
+	ReminderBody, 
+	SurveyName, 
+	SurveyIntro, 
+	UnitText, 
+	ThankyouText, 
+	ExtraInvitationSubject, 
+	ExtraInvitationBody, 
+	ExtraReminderSubject, 
+	ExtraReminderBody, 
+	InvitationSubjectJapaneseUnicode, 
+	InvitationBodyJapaneseUnicode, 
+	ReminderSubjectJapaneseUnicode, 
+	ReminderBodyJapaneseUnicode, 
+	SurveyNameJapaneseUnicode, 
+	SurveyIntroJapaneseUnicode, 
+	UnitTextJapaneseUnicode, 
+	ThankyouTextJapaneseUnicode, 
+	ExtraInvitationSubjectJapaneseUnicode, 
+	ExtraInvitationBodyJapaneseUnicode, 
+	ExtraReminderSubjectJapaneseUnicode, 
+	ExtraReminderBodyJapaneseUnicode
+FROM ProjectRoundLang
+WHERE ProjectRoundID = @ProjectRoundID";
+			var projectRoundLangs = new List<ProjectRoundLang>();
+			using (var rs = ExecuteReader(query, new SqlParameter("@ProjectRoundID", projectRoundID))) {
+				while (rs.Read()) {
+					projectRoundLangs.Add(new ProjectRoundLang {
+						ProjectRoundLangID = GetInt32(rs, 0),
+						LangID = GetInt32(rs, 1),
+						ProjectRoundID = GetInt32(rs, 2),
+						InvitationSubject = GetString(rs, 3),
+						InvitationBody = GetString(rs, 4),
+						ReminderSubject = GetString(rs, 5),
+						ReminderBody = GetString(rs, 6),
+						SurveyName = GetString(rs, 7),
+						SurveyIntro = GetString(rs, 8),
+						UnitText = GetString(rs, 9),
+						ThankyouText = GetString(rs, 10),
+						ExtraInvitationSubject = GetString(rs, 11),
+						ExtraInvitationBody = GetString(rs, 12),
+						ExtraReminderSubject = GetString(rs, 13),
+						ExtraReminderBody = GetString(rs, 14),
+						InvitationSubjectJapaneseUnicode = GetString(rs, 15),
+						InvitationBodyJapaneseUnicode = GetString(rs, 16),
+						ReminderSubjectJapaneseUnicode = GetString(rs, 17),
+						ReminderBodyJapaneseUnicode = GetString(rs, 18),
+						SurveyNameJapaneseUnicode = GetString(rs, 19),
+						SurveyIntroJapaneseUnicode = GetString(rs, 20),
+						UnitTextJapaneseUnicode = GetString(rs, 21),
+						ThankyouTextJapaneseUnicode = GetString(rs, 22),
+						ExtraInvitationSubjectJapaneseUnicode = GetString(rs, 23),
+						ExtraInvitationBodyJapaneseUnicode = GetString(rs, 24),
+						ExtraReminderSubjectJapaneseUnicode = GetString(rs, 25),
+						ExtraReminderBodyJapaneseUnicode = GetString(rs, 26)
+					});
+				}
+			}
+			return projectRoundLangs;
+		}
 	}
 }

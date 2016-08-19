@@ -65,6 +65,7 @@
     <Content Include="Dashboard.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="ProjectRoundShow.aspx" />
+    <Content Include="ProjectRoundUnitShow.aspx" />
     <Content Include="Projects.aspx" />
     <Content Include="ProjectShow.aspx" />
     <Content Include="Units.aspx" />
@@ -98,6 +99,13 @@
     </Compile>
     <Compile Include="ProjectRoundShow.aspx.designer.cs">
       <DependentUpon>ProjectRoundShow.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectRoundUnitShow.aspx.cs">
+      <DependentUpon>ProjectRoundUnitShow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProjectRoundUnitShow.aspx.designer.cs">
+      <DependentUpon>ProjectRoundUnitShow.aspx</DependentUpon>
     </Compile>
     <Compile Include="Projects.aspx.cs">
       <DependentUpon>Projects.aspx</DependentUpon>

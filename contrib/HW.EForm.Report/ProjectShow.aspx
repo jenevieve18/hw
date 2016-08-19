@@ -6,11 +6,19 @@
     <h3><%= project.Name %></h3>
     <table class="table table-hover table-striped">
         <tr>
-            <th>Unit</th>
+            <th>Project Round</th>
+            <th>Survey</th>
+            <th></th>
         </tr>
         <% foreach (var r in project.Rounds) { %>
         <tr>
             <td><%= HtmlHelper.Anchor(r.Internal, "projectroundshow.aspx?ProjectRoundID=" + r.ProjectRoundID) %></td>
+            <td><%= r.Survey.ToString() %></td>
+            <td>
+                <% foreach (var l in r.Languages) { %>
+                <img src="assets/img/langID_<%= l.LangID - 1 %>.gif" />
+                <% } %>
+            </td>
         </tr>
         <% } %>
     </table>
