@@ -175,7 +175,7 @@ SELECT 	ManagerID,
 	SeeTerminated, 
 	SeeSurvey
 FROM Manager
-WHERE Email = @Email
+WHERE (Email = @Email OR Name = @Email)
 AND Password = @Password";
 			Manager manager = null;
 			using (var rs = ExecuteReader(query, new SqlParameter("@Email", email), new SqlParameter("@Password", password))) {
