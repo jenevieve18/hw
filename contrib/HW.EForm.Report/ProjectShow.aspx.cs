@@ -22,7 +22,7 @@ namespace HW.EForm.Report
         
         public void Show(int projectID)
         {
-        	project = s.ReadProject(projectID);
+        	project = s.ReadProjectAndManager(projectID, ConvertHelper.ToInt32(Session["ManagerID"]));
         }
     }
 }

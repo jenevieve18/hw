@@ -18,7 +18,7 @@ namespace HW.EForm.Report.Tests
 		[Test]
 		public void TestShow()
 		{
-			var p = s.ReadProject(13);
+			var p = s.ReadProjectAndManager(13, 1);
 			foreach (var r in p.Rounds) {
 				Console.WriteLine(r.Internal);
 //				Console.WriteLine("  {0}: {1}", r.SurveyID, r.Survey.Internal);

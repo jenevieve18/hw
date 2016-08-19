@@ -24,23 +24,23 @@ namespace HW.EForm.Core.Services
 		{
 		}
 		
-		public Project ReadProject(int projectID)
+		public Project ReadProjectAndManager(int projectID, int managerID)
 		{
 			var p = pr.Read(projectID);
-			p.Rounds = prr.FindByProject(p.ProjectID);
+			p.Rounds = prr.FindByProjectAndManager(p.ProjectID, managerID);
 			foreach (var r in p.Rounds) {
 				r.Survey = sr.Read(r.SurveyID);
-				r.Units = prur.FindByProjectRound(r.ProjectRoundID);
+				r.Units = prur.FindByProjectRoundAndManager(r.ProjectRoundID, managerID);
 				r.Languages = prlr.FindByProjectRound(r.ProjectRoundID);
 			}
 			return p;
 		}
 		
-		public ProjectRound ReadProjectRound(int projectRoundID)
+		public ProjectRound ReadProjectRound(int projectRoundID, int managerID)
 		{
 			var r = prr.Read(projectRoundID);
 			r.Survey = sr.Read(r.SurveyID);
-			r.Units = prur.FindByProjectRound(projectRoundID);
+			r.Units = prur.FindByProjectRoundAndManager(projectRoundID, managerID);
 			foreach (var u in r.Units) {
 				var s = sr.Read(u.SurveyID);
 				if (s == null) {
@@ -58,9 +58,9 @@ namespace HW.EForm.Core.Services
 			return u;
 		}
 		
-		public IList<Project> FindAllProjects()
+		public IList<Project> FindByManager(int managerID)
 		{
-			var projects = pr.FindAll();
+			var projects = pr.FindByManager(managerID);
 			return projects;
 		}
 	}
