@@ -14,9 +14,11 @@ namespace HW.EForm.Core.Services
 	{
 		SqlProjectRepository pr = new SqlProjectRepository();
 		SqlProjectRoundRepository prr = new SqlProjectRoundRepository();
+		SqlProjectRoundLangRepository prlr = new SqlProjectRoundLangRepository();
+		SqlProjectRoundUnitRepository prur = new SqlProjectRoundUnitRepository();
+
 		SqlProjectSurveyRepository psr = new SqlProjectSurveyRepository();
 		SqlSurveyRepository sr = new SqlSurveyRepository();
-		SqlProjectRoundUnitRepository prur = new SqlProjectRoundUnitRepository();
 		
 		public ProjectService()
 		{
@@ -29,6 +31,7 @@ namespace HW.EForm.Core.Services
 			foreach (var r in p.Rounds) {
 				r.Survey = sr.Read(r.SurveyID);
 				r.Units = prur.FindByProjectRound(r.ProjectRoundID);
+				r.Languages = prlr.FindByProjectRound(r.ProjectRoundID);
 			}
 			return p;
 		}
@@ -36,11 +39,23 @@ namespace HW.EForm.Core.Services
 		public ProjectRound ReadProjectRound(int projectRoundID)
 		{
 			var r = prr.Read(projectRoundID);
+			r.Survey = sr.Read(r.SurveyID);
 			r.Units = prur.FindByProjectRound(projectRoundID);
 			foreach (var u in r.Units) {
-				u.Survey = sr.Read(u.SurveyID);
+				var s = sr.Read(u.SurveyID);
+				if (s == null) {
+					s = new Survey(r.Survey);
+					s.Internal += " *";
+				}
+				u.Survey = s;
 			}
 			return r;
+		}
+		
+		public ProjectRoundUnit ReadProjectRoundUnit(int projectRoundUnitID)
+		{
+			var u = prur.Read(projectRoundUnitID);
+			return u;
 		}
 		
 		public IList<Project> FindAllProjects()

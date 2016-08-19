@@ -16,5 +16,22 @@ namespace HW.EForm.Core.Models
 		public Survey()
 		{
 		}
+		
+		public Survey(Survey s)
+		{
+			this.SurveyID = s.SurveyID;
+			this.Internal = s.Internal;
+			this.SurveyKey = s.SurveyKey;
+			this.Copyright = s.Copyright;
+			this.FlipFlopBg = s.FlipFlopBg;
+			this.NoTime = s.NoTime;
+			this.ClearQuestions = s.ClearQuestions;
+			this.TwoColumns = s.TwoColumns;
+		}
+		
+		public override string ToString()
+		{
+			return string.Format("(SurveyID: {0}) {1}", SurveyID, Internal);
+		}
 	}
 }
