@@ -14,7 +14,7 @@ namespace HW.EForm.Report
     public partial class Projects : System.Web.UI.Page
     {
     	protected IList<Project> projects;
-    	ProjectService s = new ProjectService();
+    	ProjectService service = new ProjectService();
     	
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -23,7 +23,7 @@ namespace HW.EForm.Report
         
         public void Index()
         {
-        	projects = s.FindByManager(ConvertHelper.ToInt32(Session["ManagerID"]));
+        	projects = service.FindByManager(ConvertHelper.ToInt32(Session["ManagerID"]));
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
-	
+using System.Collections.Generic;
+
 namespace HW.EForm.Core.Models
 {
 	public class Survey
@@ -28,6 +29,8 @@ namespace HW.EForm.Core.Models
 			this.ClearQuestions = s.ClearQuestions;
 			this.TwoColumns = s.TwoColumns;
 		}
+		
+		public IList<SurveyQuestion> Questions { get; set; }
 		
 		public override string ToString()
 		{

@@ -135,5 +135,34 @@ FROM ManagerProjectRound";
 			}
 			return managerProjectRounds;
 		}
+		
+		public IList<ManagerProjectRound> FindByManager(int managerID)
+		{
+			string query = @"
+SELECT 	ManagerProjectRoundID, 
+	ProjectRoundID, 
+	ManagerID, 
+	ShowAllUnits, 
+	EmailSubject, 
+	EmailBody, 
+	MPRK
+FROM ManagerProjectRound
+WHERE ManagerID = @ManagerID";
+			var managerProjectRounds = new List<ManagerProjectRound>();
+			using (var rs = ExecuteReader(query, new SqlParameter("@ManagerID", managerID))) {
+				while (rs.Read()) {
+					managerProjectRounds.Add(new ManagerProjectRound {
+						ManagerProjectRoundID = GetInt32(rs, 0),
+						ProjectRoundID = GetInt32(rs, 1),
+						ManagerID = GetInt32(rs, 2),
+						ShowAllUnits = GetInt32(rs, 3),
+						EmailSubject = GetString(rs, 4),
+						EmailBody = GetString(rs, 5),
+						MPRK = GetGuid(rs, 6)
+					});
+				}
+			}
+			return managerProjectRounds;
+		}
 	}
 }

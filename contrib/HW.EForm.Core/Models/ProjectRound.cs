@@ -41,6 +41,7 @@ namespace HW.EForm.Core.Models
 		{
 		}
 		
+		public Project Project { get; set; }
 		public Survey Survey { get; set; }
 		public IList<ProjectRoundUnit> Units { get; set; }
 		public IList<ProjectRoundLang> Languages { get; set; }

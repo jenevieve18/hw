@@ -33,5 +33,6 @@ namespace HW.EForm.Core.Models
 		}
 		
 		public Survey Survey { get; set; }
+		public Report Report { get; set; }
 	}
 }

@@ -1,5 +1,6 @@
 using System;
-	
+using System.Collections.Generic;
+
 namespace HW.EForm.Core.Models
 {
 	public class Manager
@@ -22,5 +23,7 @@ namespace HW.EForm.Core.Models
 		public Manager()
 		{
 		}
+		
+		public IList<ManagerProjectRound> ProjectRounds { get; set; }
 	}
 }

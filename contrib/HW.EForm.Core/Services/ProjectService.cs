@@ -20,11 +20,18 @@ namespace HW.EForm.Core.Services
 		SqlProjectSurveyRepository psr = new SqlProjectSurveyRepository();
 		SqlSurveyRepository sr = new SqlSurveyRepository();
 		
+		SqlReportRepository rr = new SqlReportRepository();
+		SqlReportPartRepository rpr = new SqlReportPartRepository();
+		
+		SqlQuestionRepository qr = new SqlQuestionRepository();
+		
+		ReportService rs = new ReportService();
+		
 		public ProjectService()
 		{
 		}
 		
-		public Project ReadProjectAndManager(int projectID, int managerID)
+		public Project ReadProject(int projectID, int managerID)
 		{
 			var p = pr.Read(projectID);
 			p.Rounds = prr.FindByProjectAndManager(p.ProjectID, managerID);
@@ -38,24 +45,37 @@ namespace HW.EForm.Core.Services
 		
 		public ProjectRound ReadProjectRound(int projectRoundID, int managerID)
 		{
-			var r = prr.Read(projectRoundID);
-			r.Survey = sr.Read(r.SurveyID);
-			r.Units = prur.FindByProjectRoundAndManager(projectRoundID, managerID);
-			foreach (var u in r.Units) {
+			var pr = prr.Read(projectRoundID);
+			pr.Survey = sr.Read(pr.SurveyID);
+			pr.Units = prur.FindByProjectRoundAndManager(projectRoundID, managerID);
+			foreach (var u in pr.Units) {
 				var s = sr.Read(u.SurveyID);
 				if (s == null) {
-					s = new Survey(r.Survey);
+					s = new Survey(pr.Survey);
 					s.Internal += " *";
 				}
 				u.Survey = s;
 			}
-			return r;
+			return pr;
 		}
 		
 		public ProjectRoundUnit ReadProjectRoundUnit(int projectRoundUnitID)
 		{
-			var u = prur.Read(projectRoundUnitID);
-			return u;
+			var pru = prur.Read(projectRoundUnitID);
+			pru.Report = ReadReport(pru.ReportID);
+			return pru;
+		}
+		
+		public Report ReadReport(int reportID)
+		{
+			var r = rr.Read(reportID);
+			if (r != null) {
+				r.Parts = rpr.FindByReport(reportID);
+				foreach (var p in r.Parts) {
+					p.Question = qr.Read(p.QuestionID);
+				}
+			}
+			return r;
 		}
 		
 		public IList<Project> FindByManager(int managerID)

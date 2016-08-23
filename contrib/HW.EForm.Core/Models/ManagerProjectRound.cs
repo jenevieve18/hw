@@ -1,5 +1,6 @@
 using System;
-	
+using System.Collections.Generic;
+
 namespace HW.EForm.Core.Models
 {
 	public class ManagerProjectRound
@@ -15,5 +16,8 @@ namespace HW.EForm.Core.Models
 		public ManagerProjectRound()
 		{
 		}
+		
+		public ProjectRound ProjectRound { get; set; }
+		public IList<ManagerProjectRoundUnit> Units { get; set; }
 	}
 }

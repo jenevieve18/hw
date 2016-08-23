@@ -12,7 +12,7 @@ namespace HW.EForm.Report
 {
     public partial class ProjectRoundShow : System.Web.UI.Page
     {
-    	ProjectService s = new ProjectService();
+    	ProjectService service = new ProjectService();
     	protected ProjectRound projectRound;
     	
         protected void Page_Load(object sender, EventArgs e)
@@ -22,7 +22,7 @@ namespace HW.EForm.Report
         
         public void Show(int projectRoundID)
         {
-        	projectRound = s.ReadProjectRound(projectRoundID, ConvertHelper.ToInt32(Session["ManagerID"]));
+        	projectRound = service.ReadProjectRound(projectRoundID, ConvertHelper.ToInt32(Session["ManagerID"]));
         }
     }
 }

@@ -10,7 +10,7 @@ namespace HW.EForm.Report
 {
     public partial class Default : System.Web.UI.Page
     {
-    	UserService s = new UserService();
+    	ManagerService s = new ManagerService();
     	protected string errorMessage = "";
     	
         protected void Page_Load(object sender, EventArgs e)

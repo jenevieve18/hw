@@ -7,11 +7,13 @@ using System;
 using HW.EForm.Core.Services;
 using NUnit.Framework;
 
-namespace HW.EForm.Report.Tests
+namespace HW.EForm.Report.Tests.Services
 {
 	[TestFixture]
-	public class AllTests
+	public class ProjectServiceTests
 	{
+		ProjectService s = new ProjectService();
+		
 		[Test]
 		public void TestMethod()
 		{

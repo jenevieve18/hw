@@ -13,15 +13,14 @@ namespace HW.EForm.Report.Tests
 	public class ProjectShowTests
 	{
 		ProjectShow v = new ProjectShow();
-		ProjectService s = new ProjectService();
+		ProjectService service = new ProjectService();
 		
 		[Test]
 		public void TestShow()
 		{
-			var p = s.ReadProjectAndManager(13, 1);
+			var p = service.ReadProject(13, 1);
 			foreach (var r in p.Rounds) {
 				Console.WriteLine(r.Internal);
-//				Console.WriteLine("  {0}: {1}", r.SurveyID, r.Survey.Internal);
 				foreach (var u in r.Units) {
 					Console.WriteLine("    {0}: {1}", u.Unit, u.ID);
 				}
