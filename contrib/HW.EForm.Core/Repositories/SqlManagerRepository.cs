@@ -69,24 +69,23 @@ VALUES(
 		{
 			string query = @"
 UPDATE Manager SET
-	ManagerID = @ManagerID,
 	Email = @Email,
 	Password = @Password,
 	Name = @Name,
-	Phone = @Phone,
-	AddUser = @AddUser,
-	SeeAnswer = @SeeAnswer,
-	ExpandAll = @ExpandAll,
-	UseExternalID = @UseExternalID,
-	SeeFeedback = @SeeFeedback,
-	HasFeedback = @HasFeedback,
-	SeeUnit = @SeeUnit,
-	SeeTerminated = @SeeTerminated,
-	SeeSurvey = @SeeSurvey
+	Phone = @Phone
+	--AddUser = @AddUser,
+	--SeeAnswer = @SeeAnswer,
+	--ExpandAll = @ExpandAll,
+	--UseExternalID = @UseExternalID,
+	--SeeFeedback = @SeeFeedback,
+	--HasFeedback = @HasFeedback,
+	--SeeUnit = @SeeUnit,
+	--SeeTerminated = @SeeTerminated,
+	--SeeSurvey = @SeeSurvey
 WHERE ManagerID = @ManagerID";
 			ExecuteNonQuery(
 				query,
-				new SqlParameter("@ManagerID", manager.ManagerID),
+				new SqlParameter("@ManagerID", id),
 				new SqlParameter("@Email", manager.Email),
 				new SqlParameter("@Password", manager.Password),
 				new SqlParameter("@Name", manager.Name),

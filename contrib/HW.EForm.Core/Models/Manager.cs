@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HW.EForm.Core.Models
 {
-	public class Manager
+	public class Manager : BaseModel
 	{
 		public int ManagerID { get; set; }
 		public string Email { get; set; }

@@ -45,5 +45,10 @@ namespace HW.EForm.Core.Models
 		public Survey Survey { get; set; }
 		public IList<ProjectRoundUnit> Units { get; set; }
 		public IList<ProjectRoundLang> Languages { get; set; }
+		
+		public override string ToString()
+		{
+			return string.Format("{0} >> {1}", Project.Internal, Internal);
+		}
 	}
 }

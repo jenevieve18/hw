@@ -43,6 +43,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq">
@@ -59,12 +60,14 @@
     <Compile Include="Models\ManagerProjectRound.cs" />
     <Compile Include="Models\ManagerProjectRoundUnit.cs" />
     <Compile Include="Models\Option.cs" />
+    <Compile Include="Models\OptionComponent.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectRound.cs" />
     <Compile Include="Models\ProjectRoundLang.cs" />
     <Compile Include="Models\ProjectRoundUnit.cs" />
     <Compile Include="Models\ProjectSurvey.cs" />
     <Compile Include="Models\Question.cs" />
+    <Compile Include="Models\QuestionContainer.cs" />
     <Compile Include="Models\QuestionLang.cs" />
     <Compile Include="Models\QuestionOption.cs" />
     <Compile Include="Models\Report.cs" />
@@ -81,12 +84,14 @@
     <Compile Include="Repositories\SqlManagerProjectRoundRepository.cs" />
     <Compile Include="Repositories\SqlManagerProjectRoundUnitRepository.cs" />
     <Compile Include="Repositories\SqlManagerRepository.cs" />
+    <Compile Include="Repositories\SqlOptionComponentRepository.cs" />
     <Compile Include="Repositories\SqlOptionRepository.cs" />
     <Compile Include="Repositories\SqlProjectRepository.cs" />
     <Compile Include="Repositories\SqlProjectRoundLangRepository.cs" />
     <Compile Include="Repositories\SqlProjectRoundRepository.cs" />
     <Compile Include="Repositories\SqlProjectRoundUnitRepository.cs" />
     <Compile Include="Repositories\SqlProjectSurveyRepository.cs" />
+    <Compile Include="Repositories\SqlQuestionContainerRepository.cs" />
     <Compile Include="Repositories\SqlQuestionLangRepository.cs" />
     <Compile Include="Repositories\SqlQuestionOptionRepository.cs" />
     <Compile Include="Repositories\SqlQuestionRepository.cs" />

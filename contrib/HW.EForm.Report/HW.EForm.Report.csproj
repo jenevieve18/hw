@@ -151,6 +151,7 @@
     <Content Include="assets\css\login.css.map" />
     <Content Include="assets\css\main.css.map" />
     <Content Include="Layout.Master" />
+    <Content Include="templates\Promas template.pptx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -10,8 +10,27 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="assets/css/login.css">
+    <%--<link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/login.css">--%>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amaranth" />
+    <style>
+        body
+        {
+            font-family: "Roboto", sans-serif;
+            font-size: 10pt;
+        }
+        h1, h2, h3, h4, h5, h6, .navbar-brand
+        {
+            font-family: 'Amaranth', sans-serif;
+        }
+        .login
+        {
+            width: 320px;
+            margin: auto;
+            padding: 15px;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">

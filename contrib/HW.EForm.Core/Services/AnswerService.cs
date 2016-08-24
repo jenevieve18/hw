@@ -11,10 +11,14 @@ namespace HW.EForm.Core.Services
 {
 	public class AnswerService
 	{
-		SqlAnswerRepository ar = new SqlAnswerRepository();
-		SqlAnswerValueRepository avr = new SqlAnswerValueRepository();
-		SqlQuestionRepository qr = new SqlQuestionRepository();
-		SqlOptionRepository or = new SqlOptionRepository();
+		SqlAnswerRepository sar = new SqlAnswerRepository();
+		SqlAnswerValueRepository savr = new SqlAnswerValueRepository();
+		
+		SqlQuestionRepository sqr = new SqlQuestionRepository();
+		SqlOptionRepository sor = new SqlOptionRepository();
+		
+//		SqlProjectRoundRepository sprr = new SqlProjectRoundRepository();
+//		SqlProjectRoundUnitRepository sprur = new SqlProjectRoundUnitRepository();
 		
 		public AnswerService()
 		{
@@ -22,11 +26,13 @@ namespace HW.EForm.Core.Services
 		
 		public Answer ReadAnswer(int answerID)
 		{
-			var a = ar.Read(answerID);
-			a.Values = avr.FindByAnswer(answerID);
+			var a = sar.Read(answerID);
+//			a.ProjectRound = sprr.Read(a.ProjectRoundID);
+//			a.ProjectRoundUnitID = sprur.Read(a.ProjectRoundUnitID);
+			a.Values = savr.FindByAnswer(answerID);
 			foreach (var v in a.Values) {
-				v.Question = qr.Read(v.QuestionID);
-				v.Option = or.Read(v.OptionID);
+				v.Question = sqr.Read(v.QuestionID);
+				v.Option = sor.Read(v.OptionID);
 			}
 			return a;
 		}

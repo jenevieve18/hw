@@ -11,7 +11,7 @@ namespace HW.EForm.Report
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Email"] == null)
+            if (Session["ManagerID"] == null)
             {
                 Response.Redirect("default.aspx");
             }

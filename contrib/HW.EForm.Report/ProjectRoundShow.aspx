@@ -4,6 +4,14 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h3><%= projectRound.Internal %></h3>
+    <dl class="dl-horizontal">
+        <dt>Survey</dt>
+        <dd><%= projectRound.Survey.ToString() %></dd>
+        <%--<dt>Last Name</dt>
+        <dd>Bar</dd>
+        <dt>Job</dt>
+        <dd>Something</dd>--%>
+    </dl>
     <table class="table table-hover table-striped">
         <tr>
             <th>Unit</th>

@@ -4,6 +4,7 @@
 // </file>
 
 using System;
+using System.Collections.Generic;
 using HW.EForm.Core.Models;
 using HW.EForm.Core.Repositories;
 
@@ -18,6 +19,11 @@ namespace HW.EForm.Core.Services
 		public ReportService()
 		{
 		}
+
+        public IList<Report> FindAllReports()
+        {
+            return rr.FindAll();
+        }
 		
 		public Report ReadReport(int reportID)
 		{

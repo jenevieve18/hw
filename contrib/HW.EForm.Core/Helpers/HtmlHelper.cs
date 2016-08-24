@@ -4,6 +4,7 @@
 // </file>
 
 using System;
+using System.Web;
 
 namespace HW.EForm.Core.Helpers
 {
@@ -17,6 +18,13 @@ namespace HW.EForm.Core.Helpers
 		public static string Anchor(string text, string url, string attributes)
 		{
 			return string.Format("<a href='{1}' {2}>{0}</a>", text, url, attributes);
+		}
+		
+		public static void RedirectIf(bool condition, string url)
+		{
+			if (condition) {
+				HttpContext.Current.Response.Redirect(url, true);
+			}
 		}
 	}
 }

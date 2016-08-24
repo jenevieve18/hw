@@ -32,6 +32,16 @@ namespace HW.EForm.Core.Services
 		{
 		}
 		
+		public void UpdateManager(Manager m, int id)
+		{
+			smr.Update(m, id);
+		}
+		
+		public IList<Manager> FindAllManagers()
+		{
+			return smr.FindAll();
+		}
+		
 		public Manager ReadByEmailAndPassword(string name, string password)
 		{
 			return smr.ReadByEmailAndPassword(name, password);

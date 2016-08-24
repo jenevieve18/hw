@@ -53,7 +53,7 @@ namespace HW.EForm.Core.Repositories
 		
 		protected void ExecuteNonQuery(string query, params SqlParameter[] parameters)
 		{
-			ExecuteNonQuery(query, "SqlConnection", parameters);
+			ExecuteNonQuery(query, "", parameters);
 		}
 		
 		protected void ExecuteNonQuery(string query, string connectionName, params SqlParameter[] parameters)

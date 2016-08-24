@@ -3,7 +3,28 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h3><%= project.Name %></h3>
+    <h3><%= project.Internal %></h3>
+    <table>
+        <tr>
+            <td><strong>Name</strong></td>
+            <td><%= project.Name %></td>
+        </tr>
+        <tr>
+            <td><strong>Logo</strong></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td valign="top"><strong>Survey(s)</strong></td>
+            <td>
+                <ul>
+                <% foreach (var s in project.Surveys) { %>
+                <li><%= s.Survey.Internal %></li>
+                <% } %>
+                </ul>
+            </td>
+        </tr>
+    </table>
+    <h4>Project Rounds</h4>
     <table class="table table-hover table-striped">
         <tr>
             <th>Project Round</th>
