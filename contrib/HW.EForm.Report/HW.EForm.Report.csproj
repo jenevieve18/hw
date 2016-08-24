@@ -65,6 +65,7 @@
     <Content Include="assets\js\test.js" />
     <Content Include="Dashboard.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="Export.aspx" />
     <Content Include="Logout.aspx" />
     <Content Include="Profile.aspx" />
     <Content Include="ProjectRoundShow.aspx" />
@@ -88,6 +89,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Export.aspx.cs">
+      <DependentUpon>Export.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Export.aspx.designer.cs">
+      <DependentUpon>Export.aspx</DependentUpon>
     </Compile>
     <Compile Include="Layout.Master.cs">
       <DependentUpon>Layout.Master</DependentUpon>

@@ -4,25 +4,26 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h3><%= projectRound.Internal %></h3>
-    <dl class="dl-horizontal">
-        <dt>Survey</dt>
-        <dd><%= projectRound.Survey.ToString() %></dd>
-        <%--<dt>Last Name</dt>
-        <dd>Bar</dd>
-        <dt>Job</dt>
-        <dd>Something</dd>--%>
-    </dl>
+    <p><strong>Language: </strong><img src="assets/img/<%= projectRound.LangID %>.gif" /></p>
+    <p><strong>Survey: </strong><%= projectRound.Survey.ToString() %></p>
+    <h4>Units</h4>
     <table class="table table-hover table-striped">
         <tr>
             <th>Unit</th>
             <th>ID</th>
+            <th>Users</th>
+            <th>Sent</th>
             <th>Survey</th>
+            <th>Lang</th>
         </tr>
         <% foreach (var u in projectRound.Units) { %>
         <tr>
             <td><%= HtmlHelper.Anchor(u.Unit, "projectroundunitshow.aspx?ProjectRoundUnitID=" + u.ProjectRoundUnitID) %></td>
             <td><%= u.ID %></td>
+            <td></td>
+            <td></td>
             <td><%= u.Survey.ToString() %></td>
+            <td><img src="assets/img/<%= u.LangID %>.gif" /></td>
         </tr>
         <% } %>
     </table>

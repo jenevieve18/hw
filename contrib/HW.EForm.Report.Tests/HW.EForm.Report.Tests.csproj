@@ -33,6 +33,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DocumentFormat.OpenXml" />
     <Reference Include="nunit.framework">
       <HintPath>..\..\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -51,9 +52,13 @@
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DefaultTests.cs" />
+    <Compile Include="Helpers\Test1.cs" />
     <Compile Include="ProjectShowTests.cs" />
     <Compile Include="ProjectsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,6 +82,8 @@
       <Name>HW.EForm.Report</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Helpers" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

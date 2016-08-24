@@ -66,8 +66,11 @@ namespace HW.EForm.Core.Services
 			pr.Survey = ssr.Read(pr.SurveyID);
 			pr.Units = sprur.FindByProjectRoundAndManager(projectRoundID, managerID);
 			foreach (var u in pr.Units) {
+				if (u.LangID == 0) { // Use parent language
+					u.LangID = pr.LangID;
+				}
 				var s = ssr.Read(u.SurveyID);
-				if (s == null) {
+				if (s == null) { // Use parent survey
 					s = new Survey(pr.Survey);
 					s.Internal += " *";
 				}
@@ -79,7 +82,16 @@ namespace HW.EForm.Core.Services
 		public ProjectRoundUnit ReadProjectRoundUnit(int projectRoundUnitID)
 		{
 			var pru = sprur.Read(projectRoundUnitID);
+			pru.ProjectRound = sprr.Read(pru.ProjectRoundID);
 			pru.Report = ReadReport(pru.ReportID);
+			var s = ssr.Read(pru.SurveyID);
+			if (s == null) {
+				s = ssr.Read(pru.ProjectRound.SurveyID);
+				pru.Survey = s;
+			}
+			if (pru.LangID == 0) {
+				pru.LangID = pru.ProjectRound.LangID;
+			}
 			return pru;
 		}
 		

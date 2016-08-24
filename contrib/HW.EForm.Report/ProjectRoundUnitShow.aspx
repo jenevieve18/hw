@@ -1,16 +1,15 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Layout.Master" AutoEventWireup="true" CodeBehind="ProjectRoundUnitShow.aspx.cs" Inherits="HW.EForm.Report.ProjectRoundUnitShow" %>
+<%@ Import Namespace="HW.EForm.Core.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h3><%= projectRoundUnit.Unit %></h3>
-    <%--<table>
-        <tr>
-            <td>Survey</td>
-            <td><%= projectRoundUnit.Survey.ToString() %></td>
-        </tr>
-    </table>--%>
+    <p><strong>Unit exernal ID: </strong><%= projectRoundUnit.ID %></p>
+    <p><strong>Survey: </strong><%= projectRoundUnit.Survey.ToString() %></p>
+    <p><strong>Language: </strong><img src="assets/img/<%= projectRoundUnit.LangID %>.gif" /></p>
+    <p><%= HtmlHelper.Anchor("Export", "export.aspx", "class='btn btn-default'") %></p>
     <% if (projectRoundUnit.Report != null) { %>
         <% int i = 0; %>
         <% foreach (var p in projectRoundUnit.Report.Parts) { %>
