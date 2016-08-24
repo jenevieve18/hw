@@ -152,6 +152,7 @@
     <Content Include="assets\css\main.css.map" />
     <Content Include="Layout.Master" />
     <Content Include="templates\Promas template.pptx" />
+    <Content Include="templates\Test.docx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
