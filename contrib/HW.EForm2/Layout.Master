@@ -1,0 +1,45 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Layout.master.cs" Inherits="HW.EForm2.Layout" %>
+<%@ Import Namespace="HW.EForm.Core.Helpers" %>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <style>
+        body, table, input, select
+        {
+            font-family: Tahoma;
+            font-size: 8pt;
+        }
+    </style>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <p>
+        [
+        <%= HtmlHelper.Anchor("Projects", "projects.aspx") %> |
+        <%= HtmlHelper.Anchor("Project Managers", "managers.aspx") %> |
+        <%= HtmlHelper.Anchor("Mail Queue", "") %> |
+        <%= HtmlHelper.Anchor("Reports", "reports.aspx") %> |
+        <%= HtmlHelper.Anchor("Indexes", "") %> |
+        <%= HtmlHelper.Anchor("Weighted Questions", "") %> |
+        <%= HtmlHelper.Anchor("Surveys", "surveys.aspx") %> |
+        <%= HtmlHelper.Anchor("Questions", "questions.aspx") %> |
+        <%= HtmlHelper.Anchor("Options", "options.aspx") %> |
+        <%= HtmlHelper.Anchor("Option Components", "optioncomponents.aspx") %> |
+        <%= HtmlHelper.Anchor("Containers", "containers.aspx") %> |
+        <%= HtmlHelper.Anchor("Survey Statistics", "") %> |
+        <%= HtmlHelper.Anchor("Export", "") %> |
+        <%= HtmlHelper.Anchor("Feedback", "") %>
+        ]
+    </p>
+    <form id="form1" runat="server">
+    <div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>
