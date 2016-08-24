@@ -55,7 +55,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
           </button>
-            <%= HtmlHelper.Anchor("report.eform", "dashboard.aspx", "class='navbar-brand'") %>
+            <%= HtmlHelper.Anchor("report.eform", "projects.aspx", "class='navbar-brand'") %>
         </div>
         <div id="mynavbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">

@@ -30,7 +30,7 @@ namespace HW.EForm.Report
         		Session["Email"] = m.Email;
         		Session["Password"] = m.Password;
         		
-        		Response.Redirect("dashboard.aspx");
+        		Response.Redirect("projects.aspx");
         	} else {
         		errorMessage = "Invalid user name or password. Please try again.";
         	}

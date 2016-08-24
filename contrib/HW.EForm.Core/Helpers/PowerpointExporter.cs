@@ -32,11 +32,6 @@ namespace HW.EForm.Core.Helpers
 			return string.Format("attachment;filename=\"HealthWatch {0} {1}.pptx\";", file, DateTime.Now.ToString("yyyyMMdd"));
 		}
 		
-//		public string ContentDisposition2 {
-//			get { return string.Format("attachment;filename=\"HealthWatch Survey {0}.pptx\";", DateTime.Now.ToString("yyyyMMdd")); }
-//		}
-		
-//		public object Export(string url, int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
 		public object Export()
 		{
 			MemoryStream output = new MemoryStream();
