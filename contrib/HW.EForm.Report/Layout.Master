@@ -64,11 +64,13 @@
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
                 <a href="#" data-toggle="dropdown" role="button" aria-hashpopup="true" aria-expanded="false" class="dropdown-toggle"><%= Session["Email"] %><span class="caret"></span>
-                <ul class="dropdown-menu">
-                  <li><%= HtmlHelper.Anchor("Profile", "profile.aspx") %></li>
-                  <li role="separator" class="divider"></li>
-                  <li><%= HtmlHelper.Anchor("Logout", "logout.aspx") %></li>
-                </ul></a></li>
+                    <ul class="dropdown-menu">
+                      <li><%= HtmlHelper.Anchor("Profile", "profile.aspx") %></li>
+                      <li role="separator" class="divider"></li>
+                      <li><%= HtmlHelper.Anchor("Logout", "logout.aspx") %></li>
+                    </ul>
+                </a>
+            </li>
           </ul>
         </div>
       </div>
@@ -76,7 +78,6 @@
     <form id="form1" runat="server">
     <div class="container">
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-        
         </asp:ContentPlaceHolder>
     </div>
     </form>

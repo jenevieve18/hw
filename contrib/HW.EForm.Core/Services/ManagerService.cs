@@ -50,12 +50,14 @@ namespace HW.EForm.Core.Services
 		public Manager ReadManager(int managerID)
 		{
 			var m = smr.Read(managerID);
-			m.ProjectRounds = smprr.FindByManager(managerID);
-			foreach (var mpr in m.ProjectRounds) {
-				mpr.ProjectRound = ReadProjectRound(mpr.ProjectRoundID);
-				mpr.Units = smprur.FindByProjectRound(mpr.ProjectRoundID);
-				foreach (var mpru in mpr.Units) {
-					mpru.ProjectRoundUnit = ReadProjectRoundUnit(mpru.ProjectRoundUnitID);
+			if (m != null) {
+				m.ProjectRounds = smprr.FindByManager(managerID);
+				foreach (var mpr in m.ProjectRounds) {
+					mpr.ProjectRound = ReadProjectRound(mpr.ProjectRoundID);
+					mpr.Units = smprur.FindByProjectRound(mpr.ProjectRoundID);
+					foreach (var mpru in mpr.Units) {
+						mpru.ProjectRoundUnit = ReadProjectRoundUnit(mpru.ProjectRoundUnitID);
+					}
 				}
 			}
 			return m;
@@ -64,23 +66,30 @@ namespace HW.EForm.Core.Services
 		public ProjectRound ReadProjectRound(int projectRoundID)
 		{
 			var pr = sprr.Read(projectRoundID);
-			pr.Project = spr.Read(pr.ProjectID);
-			pr.Survey = ReadSurvey(pr.SurveyID);
+			if (pr != null) {
+				pr.Project = spr.Read(pr.ProjectID);
+				pr.Survey = ReadSurvey(pr.SurveyID);
+				pr.Units = sprur.FindByProjectRound(pr.ProjectRoundID);
+			}
 			return pr;
 		}
 		
 		public ProjectRoundUnit ReadProjectRoundUnit(int projectRoundUnitID)
 		{
 			var pru = sprur.Read(projectRoundUnitID);
-			pru.Survey = ReadSurvey(pru.SurveyID);
-			pru.Report = ReadReport(pru.ReportID);
+			if (pru != null) {
+				pru.Survey = ReadSurvey(pru.SurveyID);
+				pru.Report = ReadReport(pru.ReportID);
+			}
 			return pru;
 		}
 		
 		public Report ReadReport(int reportID)
 		{
 			var r = srr.Read(reportID);
-			r.Parts = srpr.FindByReport(r.ReportID);
+			if (r != null) {
+				r.Parts = srpr.FindByReport(r.ReportID);
+			}
 			return r;
 		}
 		
@@ -96,10 +105,20 @@ namespace HW.EForm.Core.Services
 			return s;
 		}
 		
-		public Question ReadQuestion(int x)
+		public Question ReadQuestion(int questionID)
 		{
-			var q = sqr.Read(x);
+			var q = sqr.Read(questionID);
 			return q;
+		}
+		
+		public IList<ManagerProjectRound> FindManagerProjectRounds(int managerID)
+		{
+			var mprs = smprr.FindByManager(managerID);
+			foreach (var mpr in mprs) {
+				var pr = ReadProjectRound(mpr.ProjectRoundID);
+				mpr.ProjectRound = pr;
+			}
+			return mprs;
 		}
 	}
 }

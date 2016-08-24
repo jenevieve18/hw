@@ -18,7 +18,7 @@ namespace HW.EForm.Report
     	
         protected void Page_Load(object sender, EventArgs e)
         {
-        	HtmlHelper.RedirectIf(Session["ManagerID"] == null, "default.aspx");
+        	//HtmlHelper.RedirectIf(Session["ManagerID"] == null, "default.aspx");
             managerID = ConvertHelper.ToInt32(Session["ManagerID"]);
             manager = s.ReadManager(managerID);
             if (!IsPostBack)

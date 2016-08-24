@@ -4,8 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h3><%= projectRound.Internal %></h3>
-    <p><strong>Language: </strong><img src="assets/img/<%= projectRound.LangID %>.gif" /></p>
-    <p><strong>Survey: </strong><%= projectRound.Survey.ToString() %></p>
+    <p><strong>Survey: </strong><%= projectRound.Survey.ToString() %> <img src="assets/img/<%= projectRound.LangID %>.gif" /></p>
     <h4>Units</h4>
     <table class="table table-hover table-striped">
         <tr>

@@ -271,6 +271,65 @@ FROM ProjectRoundUnit";
 			return projectRoundUnits;
 		}
 		
+		public IList<ProjectRoundUnit> FindByProjectRound(int projectRoundID)
+		{
+			string query = @"
+SELECT 	ProjectRoundUnitID, 
+	ProjectRoundID, 
+	Unit, 
+	ID, 
+	ParentProjectRoundUnitID, 
+	SortOrder, 
+	SortString, 
+	SurveyID, 
+	LangID, 
+	UnitKey, 
+	UserCount, 
+	UnitCategoryID, 
+	CanHaveUsers, 
+	ReportID, 
+	Timeframe, 
+	Yellow, 
+	Green, 
+	SurveyIntro, 
+	Terminated, 
+	IndividualReportID, 
+	UniqueID, 
+	RequiredAnswerCount
+FROM ProjectRoundUnit
+WHERE ProjectRoundID = @ProjectRoundID";
+			var projectRoundUnits = new List<ProjectRoundUnit>();
+			using (var rs = ExecuteReader(query, new SqlParameter("@ProjectRoundID", projectRoundID))) {
+				while (rs.Read()) {
+					projectRoundUnits.Add(new ProjectRoundUnit {
+						ProjectRoundUnitID = GetInt32(rs, 0),
+						ProjectRoundID = GetInt32(rs, 1),
+						Unit = GetString(rs, 2),
+						ID = GetString(rs, 3),
+						ParentProjectRoundUnitID = GetInt32(rs, 4),
+						SortOrder = GetInt32(rs, 5),
+						SortString = GetString(rs, 6),
+						SurveyID = GetInt32(rs, 7),
+						LangID = GetInt32(rs, 8),
+						UnitKey = GetGuid(rs, 9),
+						UserCount = GetInt32(rs, 10),
+						UnitCategoryID = GetInt32(rs, 11),
+						CanHaveUsers = GetBoolean(rs, 12),
+						ReportID = GetInt32(rs, 13),
+						Timeframe = GetInt32(rs, 14),
+						Yellow = GetInt32(rs, 15),
+						Green = GetInt32(rs, 16),
+						SurveyIntro = GetString(rs, 17),
+						Terminated = GetBoolean(rs, 18),
+						IndividualReportID = GetInt32(rs, 19),
+						UniqueID = GetString(rs, 20),
+						RequiredAnswerCount = GetInt32(rs, 21)
+					});
+				}
+			}
+			return projectRoundUnits;
+		}
+		
 		public IList<ProjectRoundUnit> FindByProjectRoundAndManager(int projectRoundID, int managerID)
 		{
 			string query = @"
