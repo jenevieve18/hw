@@ -25,7 +25,7 @@
             <td><%= r.Survey.ToString() %></td>
             <td>
                 <% foreach (var l in r.Languages) { %>
-                <img src="assets/img/langID_<%= l.LangID - 1 %>.gif" />
+                <img src="assets/img/<%= l.LangID %>.gif" />
                 <% } %>
             </td>
         </tr>

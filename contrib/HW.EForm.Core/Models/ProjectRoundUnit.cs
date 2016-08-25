@@ -13,7 +13,7 @@ namespace HW.EForm.Core.Models
 		public int SortOrder { get; set; }
 		public string SortString { get; set; }
 		public int SurveyID { get; set; }
-		public int LangID { get; set; }
+//		public int LangID { get; set; }
 		public Guid UnitKey { get; set; }
 		public int UserCount { get; set; }
 		public int UnitCategoryID { get; set; }
@@ -27,13 +27,35 @@ namespace HW.EForm.Core.Models
 		public int IndividualReportID { get; set; }
 		public string UniqueID { get; set; }
 		public int RequiredAnswerCount { get; set; }
+		int langID;
+		
+		public int LangID {
+			get {
+				if (langID == 0 && ProjectRound != null) {
+					return ProjectRound.LangID;
+				}
+				return langID;
+			}
+			set { langID = value; }
+		}
 
 		public ProjectRoundUnit()
 		{
 		}
 		
-		public Survey Survey { get; set; }
+		Survey survey;
+		
+		public Survey Survey {
+			get {
+				if (survey == null) {
+					return ProjectRound.Survey;
+				}
+				return survey;
+			}
+			set { survey = value; }
+		}
 		public Report Report { get; set; }
 		public ProjectRound ProjectRound { get; set; }
+		public IList<ProjectRoundUnitManager> Managers { get; set; }
 	}
 }

@@ -21,5 +21,7 @@ namespace HW.EForm.Core.Models
 		}
 		
 		public IList<AnswerValue> Values { get; set; }
+		public Question Question { get; set; }
+		public Option Option { get; set; }
 	}
 }

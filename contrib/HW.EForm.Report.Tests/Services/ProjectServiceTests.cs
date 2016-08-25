@@ -12,11 +12,23 @@ namespace HW.EForm.Report.Tests.Services
 	[TestFixture]
 	public class ProjectServiceTests
 	{
-		ProjectService s = new ProjectService();
+		ProjectService ps = new ProjectService();
 		
 		[Test]
 		public void TestMethod()
 		{
+			var pru = ps.ReadProjectRoundUnit(97);
+			var s = pru.Survey;
+			Console.WriteLine(s.ToString());
+			foreach (var sq in s.Questions) {
+				Console.WriteLine(sq.Question.Internal);
+				foreach (var sqo in sq.Question.Options) {
+					foreach (var oc in sqo.Option.Components) {
+						Console.WriteLine("  " + oc.Component.CurrentLanguage.Text);
+					}
+				}
+				Console.WriteLine();
+			}
 		}
 	}
 }

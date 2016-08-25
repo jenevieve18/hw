@@ -36,6 +36,8 @@ namespace HW.EForm.Core.Models
 		public string SendSurveyAsPdfTo { get; set; }
 		public int SendSurveyAsPdfToQ { get; set; }
 		public int SendSurveyAsPdfToO { get; set; }
+		public int AdHocReportCompareWithParent { get; set; }
+		public int FeedbackID { get; set; }
 
 		public ProjectRound()
 		{
@@ -45,6 +47,7 @@ namespace HW.EForm.Core.Models
 		public Survey Survey { get; set; }
 		public IList<ProjectRoundUnit> Units { get; set; }
 		public IList<ProjectRoundLang> Languages { get; set; }
+		public Feedback Feedback { get; set; }
 		
 		public override string ToString()
 		{

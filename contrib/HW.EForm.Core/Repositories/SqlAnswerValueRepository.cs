@@ -219,5 +219,44 @@ WHERE AnswerID = @AnswerID";
 			}
 			return answerValues;
 		}
+		
+		public IList<AnswerValue> FindByQuestion(int questionID)
+		{
+			string query = @"
+SELECT 	AnswerValue, 
+	AnswerID, 
+	QuestionID, 
+	OptionID, 
+	ValueInt, 
+	ValueDecimal, 
+	ValueDateTime, 
+	CreatedDateTime, 
+	CreatedSessionID, 
+	DeletedSessionID, 
+	ValueText, 
+	ValueTextJapaneseUnicode
+FROM AnswerValue
+WHERE QuestionID = @QuestionID";
+			var answerValues = new List<AnswerValue>();
+			using (var rs = ExecuteReader(query, new SqlParameter("@QuestionID", questionID))) {
+				while (rs.Read()) {
+					answerValues.Add(new AnswerValue {
+						Value = GetInt32(rs, 0),
+						AnswerID = GetInt32(rs, 1),
+						QuestionID = GetInt32(rs, 2),
+						OptionID = GetInt32(rs, 3),
+						ValueInt = GetInt32(rs, 4),
+						ValueDecimal = GetDecimal(rs, 5),
+						ValueDateTime = GetDateTime(rs, 6),
+						CreatedDateTime = GetDateTime(rs, 7),
+						CreatedSessionID = GetInt32(rs, 8),
+						DeletedSessionID = GetInt32(rs, 9),
+						ValueText = GetString(rs, 10),
+						ValueTextJapaneseUnicode = GetString(rs, 11)
+					});
+				}
+			}
+			return answerValues;
+		}
 	}
 }

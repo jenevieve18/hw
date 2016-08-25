@@ -4,6 +4,7 @@
 // </file>
 
 using System;
+using System.Collections.Generic;
 using HW.EForm.Core.Models;
 using HW.EForm.Core.Repositories;
 
@@ -17,9 +18,6 @@ namespace HW.EForm.Core.Services
 		SqlQuestionRepository sqr = new SqlQuestionRepository();
 		SqlOptionRepository sor = new SqlOptionRepository();
 		
-//		SqlProjectRoundRepository sprr = new SqlProjectRoundRepository();
-//		SqlProjectRoundUnitRepository sprur = new SqlProjectRoundUnitRepository();
-		
 		public AnswerService()
 		{
 		}
@@ -27,14 +25,32 @@ namespace HW.EForm.Core.Services
 		public Answer ReadAnswer(int answerID)
 		{
 			var a = sar.Read(answerID);
-//			a.ProjectRound = sprr.Read(a.ProjectRoundID);
-//			a.ProjectRoundUnitID = sprur.Read(a.ProjectRoundUnitID);
-			a.Values = savr.FindByAnswer(answerID);
-			foreach (var v in a.Values) {
-				v.Question = sqr.Read(v.QuestionID);
-				v.Option = sor.Read(v.OptionID);
+			if (a != null) {
+				a.Values = savr.FindByAnswer(answerID);
+				foreach (var av in a.Values) {
+					av.Question = sqr.Read(av.QuestionID);
+					av.Option = sor.Read(av.OptionID);
+				}
 			}
 			return a;
+		}
+		
+		public Answer ReadAnswerByProjectRound(int projectRoundID, int projectRoundUnitID)
+		{
+			var a = sar.ReadByProjectRound(projectRoundID, projectRoundUnitID);
+			if (a != null) {
+				a.Values = savr.FindByAnswer(a.AnswerID);
+				foreach (var av in a.Values) {
+					av.Question = sqr.Read(av.QuestionID);
+					av.Option = sor.Read(av.OptionID);
+				}
+			}
+			return a;
+		}
+		
+		public IList<AnswerValue> FindByQuestion(int questionID)
+		{
+			return savr.FindByQuestion(questionID);
 		}
 	}
 }

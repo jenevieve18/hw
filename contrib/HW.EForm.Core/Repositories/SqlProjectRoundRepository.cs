@@ -232,7 +232,9 @@ SELECT 	ProjectRoundID,
 	SFTPpass, 
 	SendSurveyAsPdfTo, 
 	SendSurveyAsPdfToQ, 
-	SendSurveyAsPdfToO
+	SendSurveyAsPdfToO,
+	AdHocReportCompareWithParent,
+	FeedbackID
 FROM ProjectRound
 WHERE ProjectRoundID = @ProjectRoundID";
 			ProjectRound projectRound = null;
@@ -269,7 +271,9 @@ WHERE ProjectRoundID = @ProjectRoundID";
 						SFTPpass = GetString(rs, 27),
 						SendSurveyAsPdfTo = GetString(rs, 28),
 						SendSurveyAsPdfToQ = GetInt32(rs, 29),
-						SendSurveyAsPdfToO = GetInt32(rs, 30)
+						SendSurveyAsPdfToO = GetInt32(rs, 30),
+						AdHocReportCompareWithParent = GetInt32(rs, 31),
+						FeedbackID = GetInt32(rs, 32)
 					};
 				}
 			}

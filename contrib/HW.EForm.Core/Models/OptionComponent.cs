@@ -12,5 +12,7 @@ namespace HW.EForm.Core.Models
 		public OptionComponent()
 		{
 		}
+		
+		public OptionComponentLang CurrentLanguage { get; set; }
 	}
 }

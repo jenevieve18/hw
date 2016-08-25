@@ -1,5 +1,6 @@
 using System;
-	
+using System.Collections.Generic;
+
 namespace HW.EForm.Core.Models
 {
 	public class Option
@@ -20,5 +21,7 @@ namespace HW.EForm.Core.Models
 		public Option()
 		{
 		}
+		
+		public IList<OptionComponents> Components;
 	}
 }

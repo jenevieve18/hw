@@ -129,6 +129,42 @@ WHERE AnswerID = @AnswerID";
 			return answer;
 		}
 		
+		public Answer ReadByProjectRound(int projectRoundID, int projectRoundUnitID)
+		{
+			string query = @"
+SELECT 	AnswerID, 
+	ProjectRoundID, 
+	ProjectRoundUnitID, 
+	ProjectRoundUserID, 
+	StartDT, 
+	EndDT, 
+	AnswerKey, 
+	ExtendedFirst, 
+	CurrentPage, 
+	FeedbackAlert
+FROM Answer
+WHERE ProjectRoundID = @ProjectRoundID
+AND ProjectRoundUnitID = @ProjectRoundUnitID";
+			Answer answer = null;
+			using (var rs = ExecuteReader(query, new SqlParameter("@ProjectRoundID", projectRoundID), new SqlParameter("@ProjectRoundUnitID", projectRoundUnitID))) {
+				if (rs.Read()) {
+					answer = new Answer {
+						AnswerID = GetInt32(rs, 0),
+						ProjectRoundID = GetInt32(rs, 1),
+						ProjectRoundUnitID = GetInt32(rs, 2),
+						ProjectRoundUserID = GetInt32(rs, 3),
+						StartDT = GetDateTime(rs, 4),
+						EndDT = GetDateTime(rs, 5),
+						AnswerKey = GetGuid(rs, 6),
+						ExtendedFirst = GetInt32(rs, 7),
+						CurrentPage = GetInt32(rs, 8),
+						FeedbackAlert = GetInt32(rs, 9)
+					};
+				}
+			}
+			return answer;
+		}
+		
 		public override IList<Answer> FindAll()
 		{
 			string query = @"

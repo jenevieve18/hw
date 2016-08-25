@@ -19,7 +19,7 @@
         <tr>
             <td><%= HtmlHelper.Anchor(u.Unit, "projectroundunitshow.aspx?ProjectRoundUnitID=" + u.ProjectRoundUnitID) %></td>
             <td><%= u.ID %></td>
-            <td></td>
+            <td><%= u.Managers.Count %></td>
             <td></td>
             <td><%= u.Survey.ToString() %></td>
             <td><img src="assets/img/<%= u.LangID %>.gif" /></td>
