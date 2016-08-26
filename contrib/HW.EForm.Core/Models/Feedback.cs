@@ -12,6 +12,25 @@ namespace HW.EForm.Core.Models
 		{
 		}
 		
-		public IList<FeedbackQuestion> Questions { get; set; }
+		IList<FeedbackQuestion> questions;
+		
+		public IList<FeedbackQuestion> Questions {
+			get {
+				if (questions == null) {
+					OnQuestionsGet(null);
+				}
+				return questions;
+			}
+			set { questions = value; }
+		}
+		
+		public event EventHandler QuestionsGet;
+		
+		protected virtual void OnQuestionsGet(EventArgs e)
+		{
+			if (QuestionsGet != null) {
+				QuestionsGet(this, e);
+			}
+		}
 	}
 }

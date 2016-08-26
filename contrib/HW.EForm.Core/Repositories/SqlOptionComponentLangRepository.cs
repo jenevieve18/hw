@@ -94,31 +94,31 @@ WHERE OptionComponentLangID = @OptionComponentLangID";
 			return optionComponentLang;
 		}
 		
-		public OptionComponentLang ReadByLang(int optionComponentID, int langID)
-		{
-			string query = @"
-SELECT 	OptionComponentLangID, 
-	OptionComponentID, 
-	LangID, 
-	Text, 
-	TextJapaneseUnicode
-FROM OptionComponentLang
-WHERE OptionComponentID = @OptionComponentID
-AND LangID = @LangID";
-			OptionComponentLang optionComponentLang = null;
-			using (var rs = ExecuteReader(query, new SqlParameter("@OptionComponentID", optionComponentID), new SqlParameter("@LangID", langID))) {
-				if (rs.Read()) {
-					optionComponentLang = new OptionComponentLang {
-						OptionComponentLangID = GetInt32(rs, 0),
-						OptionComponentID = GetInt32(rs, 1),
-						LangID = GetInt32(rs, 2),
-						Text = GetString(rs, 3),
-						TextJapaneseUnicode = GetString(rs, 4)
-					};
-				}
-			}
-			return optionComponentLang;
-		}
+//		public OptionComponentLang ReadByLang(int optionComponentID, int langID)
+//		{
+//			string query = @"
+//SELECT 	OptionComponentLangID, 
+//	OptionComponentID, 
+//	LangID, 
+//	Text, 
+//	TextJapaneseUnicode
+//FROM OptionComponentLang
+//WHERE OptionComponentID = @OptionComponentID
+//AND LangID = @LangID";
+//			OptionComponentLang optionComponentLang = null;
+//			using (var rs = ExecuteReader(query, new SqlParameter("@OptionComponentID", optionComponentID), new SqlParameter("@LangID", langID))) {
+//				if (rs.Read()) {
+//					optionComponentLang = new OptionComponentLang {
+//						OptionComponentLangID = GetInt32(rs, 0),
+//						OptionComponentID = GetInt32(rs, 1),
+//						LangID = GetInt32(rs, 2),
+//						Text = GetString(rs, 3),
+//						TextJapaneseUnicode = GetString(rs, 4)
+//					};
+//				}
+//			}
+//			return optionComponentLang;
+//		}
 		
 		public override IList<OptionComponentLang> FindAll()
 		{
@@ -131,6 +131,31 @@ SELECT 	OptionComponentLangID,
 FROM OptionComponentLang";
 			var optionComponentLangs = new List<OptionComponentLang>();
 			using (var rs = ExecuteReader(query)) {
+				while (rs.Read()) {
+					optionComponentLangs.Add(new OptionComponentLang {
+						OptionComponentLangID = GetInt32(rs, 0),
+						OptionComponentID = GetInt32(rs, 1),
+						LangID = GetInt32(rs, 2),
+						Text = GetString(rs, 3),
+						TextJapaneseUnicode = GetString(rs, 4)
+					});
+				}
+			}
+			return optionComponentLangs;
+		}
+		
+		public IList<OptionComponentLang> FindByOptionComponent(int optionComponentID)
+		{
+			string query = @"
+SELECT 	OptionComponentLangID, 
+	OptionComponentID, 
+	LangID, 
+	Text, 
+	TextJapaneseUnicode
+FROM OptionComponentLang
+WHERE OptionComponentID = @OptionComponentID";
+			var optionComponentLangs = new List<OptionComponentLang>();
+			using (var rs = ExecuteReader(query, new SqlParameter("@OptionComponentID", optionComponentID))) {
 				while (rs.Read()) {
 					optionComponentLangs.Add(new OptionComponentLang {
 						OptionComponentLangID = GetInt32(rs, 0),

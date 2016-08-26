@@ -12,11 +12,15 @@ namespace HW.EForm.Core.Models
 		public string Variablename { get; set; }
 		public int Forced { get; set; }
 		public int Hide { get; set; }
+		public Option Option { get; set; }
 
 		public QuestionOption()
 		{
 		}
 		
-		public Option Option { get; set; }
+		public QuestionOption(Option option)
+		{
+			this.Option = option;
+		}
 	}
 }

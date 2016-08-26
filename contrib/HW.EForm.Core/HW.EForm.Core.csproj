@@ -55,6 +55,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\Highcharts.cs" />
+    <Compile Include="Helpers\JSONHelper.cs" />
     <Compile Include="Helpers\PromasTemplateGeneratedClass.cs" />
     <Compile Include="Helpers\ConvertHelper.cs" />
     <Compile Include="Helpers\HtmlHelper.cs" />
@@ -124,6 +126,7 @@
     <Compile Include="Services\FeedbackService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\ManagerService.cs" />
+    <Compile Include="Services\ProjectService2.cs" />
     <Compile Include="Services\QuestionService.cs" />
     <Compile Include="Services\ReportService.cs" />
     <Compile Include="Services\SurveyService.cs" />

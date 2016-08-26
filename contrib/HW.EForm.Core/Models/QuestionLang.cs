@@ -17,5 +17,11 @@ namespace HW.EForm.Core.Models
 		public QuestionLang()
 		{
 		}
+		
+		public QuestionLang(int langID, string question)
+		{
+			this.LangID = langID;
+			this.Question = question;
+		}
 	}
 }

@@ -122,6 +122,40 @@ WHERE QuestionLangID = @QuestionLangID";
 			return questionLang;
 		}
 		
+		public QuestionLang ReadByQuestionAndLang(int questionID, int langID)
+		{
+			string query = @"
+SELECT 	QuestionLangID, 
+	QuestionID, 
+	LangID, 
+	Question, 
+	QuestionShort, 
+	QuestionArea, 
+	QuestionJapaneseUnicode, 
+	QuestionShortJapaneseUnicode, 
+	QuestionAreaJapaneseUnicode
+FROM QuestionLang
+WHERE QuestionID = @QuestionID
+AND LangID = @LangID";
+			QuestionLang questionLang = null;
+			using (var rs = ExecuteReader(query, new SqlParameter("@QuestionID", questionID), new SqlParameter("@LangID", langID))) {
+				if (rs.Read()) {
+					questionLang = new QuestionLang {
+						QuestionLangID = GetInt32(rs, 0),
+						QuestionID = GetInt32(rs, 1),
+						LangID = GetInt32(rs, 2),
+						Question = GetString(rs, 3),
+						QuestionShort = GetString(rs, 4),
+						QuestionArea = GetString(rs, 5),
+						QuestionJapaneseUnicode = GetString(rs, 6),
+						QuestionShortJapaneseUnicode = GetString(rs, 7),
+						QuestionAreaJapaneseUnicode = GetString(rs, 8)
+					};
+				}
+			}
+			return questionLang;
+		}
+		
 		public override IList<QuestionLang> FindAll()
 		{
 			string query = @"
@@ -137,6 +171,39 @@ SELECT 	QuestionLangID,
 FROM QuestionLang";
 			var questionLangs = new List<QuestionLang>();
 			using (var rs = ExecuteReader(query)) {
+				while (rs.Read()) {
+					questionLangs.Add(new QuestionLang {
+						QuestionLangID = GetInt32(rs, 0),
+						QuestionID = GetInt32(rs, 1),
+						LangID = GetInt32(rs, 2),
+						Question = GetString(rs, 3),
+						QuestionShort = GetString(rs, 4),
+						QuestionArea = GetString(rs, 5),
+						QuestionJapaneseUnicode = GetString(rs, 6),
+						QuestionShortJapaneseUnicode = GetString(rs, 7),
+						QuestionAreaJapaneseUnicode = GetString(rs, 8)
+					});
+				}
+			}
+			return questionLangs;
+		}
+		
+		public IList<QuestionLang> FindByQuestion(int questionID)
+		{
+			string query = @"
+SELECT 	QuestionLangID, 
+	QuestionID, 
+	LangID, 
+	Question, 
+	QuestionShort, 
+	QuestionArea, 
+	QuestionJapaneseUnicode, 
+	QuestionShortJapaneseUnicode, 
+	QuestionAreaJapaneseUnicode
+FROM QuestionLang
+WHERE QuestionID = @QuestionID";
+			var questionLangs = new List<QuestionLang>();
+			using (var rs = ExecuteReader(query, new SqlParameter("@QuestionID", questionID))) {
 				while (rs.Read()) {
 					questionLangs.Add(new QuestionLang {
 						QuestionLangID = GetInt32(rs, 0),

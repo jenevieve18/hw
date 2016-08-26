@@ -11,7 +11,7 @@ namespace HW.EForm.Core.Services
 {
 	public class FeedbackService
 	{
-		SqlFeedbackRepository sfr = new SqlFeedbackRepository();
+		SqlFeedbackRepository feedbackRepo = new SqlFeedbackRepository();
 		SqlFeedbackQuestionRepository sfqr = new SqlFeedbackQuestionRepository();
 		
 		SqlQuestionRepository sqr = new SqlQuestionRepository();
@@ -22,7 +22,7 @@ namespace HW.EForm.Core.Services
 		
 		public Feedback ReadFeedback(int feedbackID)
 		{
-			var f = sfr.Read(feedbackID);
+			var f = feedbackRepo.Read(feedbackID);
 			if (f != null) {
 				f.Questions = sfqr.FindByFeedback(feedbackID);
 				foreach (var fq in f.Questions) {

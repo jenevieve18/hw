@@ -31,11 +31,15 @@ namespace HW.EForm.Core.Services
 		
 		SqlQuestionRepository sqr = new SqlQuestionRepository();
 		SqlQuestionOptionRepository sqor = new SqlQuestionOptionRepository();
+		SqlQuestionLangRepository sqlr = new SqlQuestionLangRepository();
 		
 		SqlOptionRepository sor = new SqlOptionRepository();
 		SqlOptionComponentsRepository socsr = new SqlOptionComponentsRepository();
 		SqlOptionComponentRepository socr = new SqlOptionComponentRepository();
 		SqlOptionComponentLangRepository soclr = new SqlOptionComponentLangRepository();
+		
+		SqlAnswerRepository sar = new SqlAnswerRepository();
+		SqlAnswerValueRepository savr = new SqlAnswerValueRepository();
 		
 		public ProjectService()
 		{
@@ -83,7 +87,7 @@ namespace HW.EForm.Core.Services
 				pr.Survey = ReadSurvey(pr.SurveyID);
 				pr.Units = sprur.FindByProjectRoundAndManager(projectRoundID, managerID);
 				foreach (var pru in pr.Units) {
-                    pru.ProjectRound = pr;
+					pru.ProjectRound = pr;
 					pru.Survey = ReadSurvey(pru.SurveyID);
 					pru.Managers = sprumr.FindByProjectRoundUnit(pru.ProjectRoundUnitID);
 					foreach (var prum in pru.Managers) {
@@ -94,13 +98,13 @@ namespace HW.EForm.Core.Services
 			return pr;
 		}
 		
-		public ProjectRound ReadProjectRound(int projectRoundID)
+		public ProjectRound ReadProjectRound2(int projectRoundID, int projectRoundUnitID)
 		{
 			var pr = sprr.Read(projectRoundID);
 			if (pr != null) {
 				pr.Survey = ReadSurvey(pr.SurveyID);
 				pr.Units = sprur.FindByProjectRound(projectRoundID);
-				pr.Feedback = ReadFeedback(pr.FeedbackID);
+				pr.Feedback = ReadFeedback(pr.FeedbackID, projectRoundID, projectRoundUnitID);
 				foreach (var pru in pr.Units) {
 					pru.Survey = ReadSurvey(pru.SurveyID);
 					pru.Managers = sprumr.FindByProjectRoundUnit(pru.ProjectRoundUnitID);
@@ -112,13 +116,13 @@ namespace HW.EForm.Core.Services
 			return pr;
 		}
 		
-		public Feedback ReadFeedback(int feedbackID)
+		public Feedback ReadFeedback(int feedbackID, int projectRoundID, int projectRoundUnitID)
 		{
 			var f = sfr.Read(feedbackID);
 			if (f != null) {
 				f.Questions = sfqr.FindByFeedback(feedbackID);
 				foreach (var fq in f.Questions) {
-					fq.Question = ReadQuestion(fq.QuestionID);
+					fq.Question = ReadQuestion2(fq.QuestionID, projectRoundID, projectRoundUnitID);
 				}
 			}
 			return f;
@@ -128,12 +132,54 @@ namespace HW.EForm.Core.Services
 		{
 			var pru = sprur.Read(projectRoundUnitID);
 			if (pru != null) {
-				pru.ProjectRound = ReadProjectRound(pru.ProjectRoundID);
-//				pru.Report = ReadReport(pru.ReportID);
+				pru.ProjectRound = ReadProjectRound2(pru.ProjectRoundID, projectRoundUnitID);
 				pru.Survey = ReadSurvey(pru.SurveyID);
 				pru.Managers = sprumr.FindByProjectRoundUnit(pru.ProjectRoundUnitID);
 				foreach (var prum in pru.Managers) {
 					prum.User = sprur2.Read(prum.ProjectRoundUserID);
+				}
+			}
+			return pru;
+		}
+		
+		public ProjectRoundUnit ReadProjectRoundUnit2(int projectRoundUnitID)
+		{
+			var pru = sprur.Read(projectRoundUnitID);
+			if (pru != null) {
+				var pr = sprr.Read(pru.ProjectRoundID);
+				if (pr != null) {
+					pr.Survey = ssr.Read(pr.SurveyID);
+					var f = sfr.Read(pr.FeedbackID);
+					if (f != null) {
+						f.Questions = sfqr.FindByFeedback(pr.FeedbackID);
+						foreach (var fq in f.Questions) {
+							var q = sqr.Read(fq.QuestionID);
+							if (q != null) {
+								q.Languages = sqlr.FindByQuestion(q.QuestionID);
+								q.Options = sqor.FindByQuestion(q.QuestionID);
+								foreach (var qo in q.Options) {
+									var o = sor.Read(qo.OptionID);
+									o.AnswerValues = savr.FindByQuestionOption(q.QuestionID, o.OptionID, pr.ProjectRoundID, projectRoundUnitID);
+									if (o != null) {
+										o.Components = socsr.FindByOption(o.OptionID);
+										foreach (var ocs in o.Components) {
+											var oc = socr.Read(ocs.OptionComponentID);
+											if (oc != null) {
+												oc.Languages = soclr.FindByOptionComponent(oc.OptionComponentID);
+												ocs.Component = oc;
+											}
+										}
+										qo.Option = o;
+									}
+								}
+//								q.AnswerValues = savr.FindByQuestionOptions(q.QuestionID, q.Options, pr.ProjectRoundID, projectRoundUnitID);
+								fq.Question = q;
+							}
+						}
+						pr.Feedback = f;
+						pru.ProjectRound = pr;
+						pru.Survey = ssr.Read(pru.SurveyID);
+					}
 				}
 			}
 			return pru;
@@ -163,6 +209,16 @@ namespace HW.EForm.Core.Services
 			return q;
 		}
 		
+		public Question ReadQuestion2(int questionID, int projectRoundID, int projectRoundUnitID)
+		{
+			var q = sqr.Read(questionID);
+			if (q != null) {
+				q.Options = sqor.FindByQuestion(questionID);
+//				q.AnswerValues = savr.FindByQuestionOptions(questionID, q.Options, projectRoundID, projectRoundUnitID);
+			}
+			return q;
+		}
+		
 		Option ReadOption(int optionID)
 		{
 			var o = sor.Read(optionID);
@@ -179,7 +235,8 @@ namespace HW.EForm.Core.Services
 		{
 			var oc = socr.Read(optionComponentID);
 			if (oc != null) {
-				oc.CurrentLanguage = soclr.ReadByLang(oc.OptionComponentID, 1);
+//				oc.CurrentLanguage = soclr.ReadByLang(oc.OptionComponentID, 1);
+				oc.Languages = soclr.FindByOptionComponent(oc.OptionComponentID);
 			}
 			return oc;
 		}

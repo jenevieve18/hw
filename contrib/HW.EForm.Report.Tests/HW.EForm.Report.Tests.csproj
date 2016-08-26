@@ -58,16 +58,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DefaultTests.cs" />
+    <Compile Include="Helpers\ChartTests.cs" />
     <Compile Include="Helpers\Test1.cs" />
+    <Compile Include="Models\QuestionTests.cs" />
     <Compile Include="ProjectShowTests.cs" />
     <Compile Include="ProjectsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AnswerServiceTests.cs" />
+    <Compile Include="Services\FeedbackTests.cs" />
     <Compile Include="Services\ManagerServiceTests.cs" />
     <Compile Include="Services\ProjectServiceTests.cs" />
     <Compile Include="Services\QuestionServiceTests.cs" />
     <Compile Include="Services\ReportServiceTests.cs" />
     <Compile Include="Services\SurveyServiceTests.cs" />
+    <Compile Include="Services\Test1.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -84,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers" />
+    <Folder Include="Models" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

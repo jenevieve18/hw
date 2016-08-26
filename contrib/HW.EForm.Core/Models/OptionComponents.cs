@@ -14,6 +14,30 @@ namespace HW.EForm.Core.Models
 		{
 		}
 		
-		public OptionComponent Component { get; set; }
+		public OptionComponents(string text)
+		{
+			Component = new OptionComponent(text);
+		}
+		
+		OptionComponent component;
+		
+		public OptionComponent Component {
+			get {
+				if (component == null) {
+					OnComponentGet(null);
+				}
+				return component;
+			}
+			set { component = value; }
+		}
+		
+		public event EventHandler ComponentGet;
+		
+		protected virtual void OnComponentGet(EventArgs e)
+		{
+			if (ComponentGet != null) {
+				ComponentGet(this, e);
+			}
+		}
 	}
 }

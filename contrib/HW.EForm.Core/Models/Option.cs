@@ -17,11 +17,36 @@ namespace HW.EForm.Core.Models
 		public string BgColor { get; set; }
 		public decimal RangeLow { get; set; }
 		public decimal RangeHigh { get; set; }
-
-		public Option()
+		public IList<OptionComponents> Components { get; set; }
+		public IList<AnswerValue> AnswerValues { get; set; }
+		
+		public Option() : this("")
 		{
 		}
+
+		public Option(string @internal)
+		{
+			this.Internal = @internal;
+			this.Components = new List<OptionComponents>();
+		}
 		
-		public IList<OptionComponents> Components;
+		public bool IsSlider {
+			get { return OptionType == 9; }
+		}
+		
+		public void AddComponent(string @internal)
+		{
+			Components.Add(new OptionComponents(@internal));
+		}
+		
+		public OptionComponents GetComponent(int optionComponentID)
+		{
+			foreach (var c in Components) {
+				if (c.OptionComponentID == optionComponentID) {
+					return c;
+				}
+			}
+			return null;
+		}
 	}
 }

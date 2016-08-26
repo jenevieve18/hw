@@ -2,7 +2,7 @@ using System;
 using HW.EForm.Core.Models;
 using System.Data.SqlClient;
 using System.Collections.Generic;
-	
+
 namespace HW.EForm.Core.Repositories
 {
 	public class SqlAnswerValueRepository : BaseSqlRepository<AnswerValue>
@@ -15,31 +15,31 @@ namespace HW.EForm.Core.Repositories
 		{
 			string query = @"
 INSERT INTO AnswerValue(
-	AnswerValue, 
-	AnswerID, 
-	QuestionID, 
-	OptionID, 
-	ValueInt, 
-	ValueDecimal, 
-	ValueDateTime, 
-	CreatedDateTime, 
-	CreatedSessionID, 
-	DeletedSessionID, 
-	ValueText, 
+	AnswerValue,
+	AnswerID,
+	QuestionID,
+	OptionID,
+	ValueInt,
+	ValueDecimal,
+	ValueDateTime,
+	CreatedDateTime,
+	CreatedSessionID,
+	DeletedSessionID,
+	ValueText,
 	ValueTextJapaneseUnicode
 )
 VALUES(
-	@AnswerValue, 
-	@AnswerID, 
-	@QuestionID, 
-	@OptionID, 
-	@ValueInt, 
-	@ValueDecimal, 
-	@ValueDateTime, 
-	@CreatedDateTime, 
-	@CreatedSessionID, 
-	@DeletedSessionID, 
-	@ValueText, 
+	@AnswerValue,
+	@AnswerID,
+	@QuestionID,
+	@OptionID,
+	@ValueInt,
+	@ValueDecimal,
+	@ValueDateTime,
+	@CreatedDateTime,
+	@CreatedSessionID,
+	@DeletedSessionID,
+	@ValueText,
 	@ValueTextJapaneseUnicode
 )";
 			ExecuteNonQuery(
@@ -107,17 +107,17 @@ WHERE AnswerValueID = @AnswerValueID";
 		public override AnswerValue Read(int id)
 		{
 			string query = @"
-SELECT 	AnswerValue, 
-	AnswerID, 
-	QuestionID, 
-	OptionID, 
-	ValueInt, 
-	ValueDecimal, 
-	ValueDateTime, 
-	CreatedDateTime, 
-	CreatedSessionID, 
-	DeletedSessionID, 
-	ValueText, 
+SELECT 	AnswerValue,
+	AnswerID,
+	QuestionID,
+	OptionID,
+	ValueInt,
+	ValueDecimal,
+	ValueDateTime,
+	CreatedDateTime,
+	CreatedSessionID,
+	DeletedSessionID,
+	ValueText,
 	ValueTextJapaneseUnicode
 FROM AnswerValue
 WHERE AnswerValueID = @AnswerValueID";
@@ -146,36 +146,36 @@ WHERE AnswerValueID = @AnswerValueID";
 		public override IList<AnswerValue> FindAll()
 		{
 			string query = @"
-SELECT 	AnswerValue, 
-	AnswerID, 
-	QuestionID, 
-	OptionID, 
-	ValueInt, 
-	ValueDecimal, 
-	ValueDateTime, 
-	CreatedDateTime, 
-	CreatedSessionID, 
-	DeletedSessionID, 
-	ValueText, 
+SELECT 	AnswerValue,
+	AnswerID,
+	QuestionID,
+	OptionID,
+	ValueInt,
+	ValueDecimal,
+	ValueDateTime,
+	CreatedDateTime,
+	CreatedSessionID,
+	DeletedSessionID,
+	ValueText,
 	ValueTextJapaneseUnicode
 FROM AnswerValue";
 			var answerValues = new List<AnswerValue>();
 			using (var rs = ExecuteReader(query)) {
 				while (rs.Read()) {
 					answerValues.Add(new AnswerValue {
-						Value = GetInt32(rs, 0),
-						AnswerID = GetInt32(rs, 1),
-						QuestionID = GetInt32(rs, 2),
-						OptionID = GetInt32(rs, 3),
-						ValueInt = GetInt32(rs, 4),
-						ValueDecimal = GetDecimal(rs, 5),
-						ValueDateTime = GetDateTime(rs, 6),
-						CreatedDateTime = GetDateTime(rs, 7),
-						CreatedSessionID = GetInt32(rs, 8),
-						DeletedSessionID = GetInt32(rs, 9),
-						ValueText = GetString(rs, 10),
-						ValueTextJapaneseUnicode = GetString(rs, 11)
-					});
+					                 	Value = GetInt32(rs, 0),
+					                 	AnswerID = GetInt32(rs, 1),
+					                 	QuestionID = GetInt32(rs, 2),
+					                 	OptionID = GetInt32(rs, 3),
+					                 	ValueInt = GetInt32(rs, 4),
+					                 	ValueDecimal = GetDecimal(rs, 5),
+					                 	ValueDateTime = GetDateTime(rs, 6),
+					                 	CreatedDateTime = GetDateTime(rs, 7),
+					                 	CreatedSessionID = GetInt32(rs, 8),
+					                 	DeletedSessionID = GetInt32(rs, 9),
+					                 	ValueText = GetString(rs, 10),
+					                 	ValueTextJapaneseUnicode = GetString(rs, 11)
+					                 });
 				}
 			}
 			return answerValues;
@@ -184,17 +184,17 @@ FROM AnswerValue";
 		public IList<AnswerValue> FindByAnswer(int answerID)
 		{
 			string query = @"
-SELECT 	AnswerValue, 
-	AnswerID, 
-	QuestionID, 
-	OptionID, 
-	ValueInt, 
-	ValueDecimal, 
-	ValueDateTime, 
-	CreatedDateTime, 
-	CreatedSessionID, 
-	DeletedSessionID, 
-	ValueText, 
+SELECT 	AnswerValue,
+	AnswerID,
+	QuestionID,
+	OptionID,
+	ValueInt,
+	ValueDecimal,
+	ValueDateTime,
+	CreatedDateTime,
+	CreatedSessionID,
+	DeletedSessionID,
+	ValueText,
 	ValueTextJapaneseUnicode
 FROM AnswerValue
 WHERE AnswerID = @AnswerID";
@@ -202,19 +202,19 @@ WHERE AnswerID = @AnswerID";
 			using (var rs = ExecuteReader(query, new SqlParameter("@AnswerID", answerID))) {
 				while (rs.Read()) {
 					answerValues.Add(new AnswerValue {
-						Value = GetInt32(rs, 0),
-						AnswerID = GetInt32(rs, 1),
-						QuestionID = GetInt32(rs, 2),
-						OptionID = GetInt32(rs, 3),
-						ValueInt = GetInt32(rs, 4),
-						ValueDecimal = GetDecimal(rs, 5),
-						ValueDateTime = GetDateTime(rs, 6),
-						CreatedDateTime = GetDateTime(rs, 7),
-						CreatedSessionID = GetInt32(rs, 8),
-						DeletedSessionID = GetInt32(rs, 9),
-						ValueText = GetString(rs, 10),
-						ValueTextJapaneseUnicode = GetString(rs, 11)
-					});
+					                 	Value = GetInt32(rs, 0),
+					                 	AnswerID = GetInt32(rs, 1),
+					                 	QuestionID = GetInt32(rs, 2),
+					                 	OptionID = GetInt32(rs, 3),
+					                 	ValueInt = GetInt32(rs, 4),
+					                 	ValueDecimal = GetDecimal(rs, 5),
+					                 	ValueDateTime = GetDateTime(rs, 6),
+					                 	CreatedDateTime = GetDateTime(rs, 7),
+					                 	CreatedSessionID = GetInt32(rs, 8),
+					                 	DeletedSessionID = GetInt32(rs, 9),
+					                 	ValueText = GetString(rs, 10),
+					                 	ValueTextJapaneseUnicode = GetString(rs, 11)
+					                 });
 				}
 			}
 			return answerValues;
@@ -223,17 +223,17 @@ WHERE AnswerID = @AnswerID";
 		public IList<AnswerValue> FindByQuestion(int questionID)
 		{
 			string query = @"
-SELECT 	AnswerValue, 
-	AnswerID, 
-	QuestionID, 
-	OptionID, 
-	ValueInt, 
-	ValueDecimal, 
-	ValueDateTime, 
-	CreatedDateTime, 
-	CreatedSessionID, 
-	DeletedSessionID, 
-	ValueText, 
+SELECT 	AnswerValue,
+	AnswerID,
+	QuestionID,
+	OptionID,
+	ValueInt,
+	ValueDecimal,
+	ValueDateTime,
+	CreatedDateTime,
+	CreatedSessionID,
+	DeletedSessionID,
+	ValueText,
 	ValueTextJapaneseUnicode
 FROM AnswerValue
 WHERE QuestionID = @QuestionID";
@@ -241,19 +241,131 @@ WHERE QuestionID = @QuestionID";
 			using (var rs = ExecuteReader(query, new SqlParameter("@QuestionID", questionID))) {
 				while (rs.Read()) {
 					answerValues.Add(new AnswerValue {
-						Value = GetInt32(rs, 0),
-						AnswerID = GetInt32(rs, 1),
-						QuestionID = GetInt32(rs, 2),
-						OptionID = GetInt32(rs, 3),
-						ValueInt = GetInt32(rs, 4),
-						ValueDecimal = GetDecimal(rs, 5),
-						ValueDateTime = GetDateTime(rs, 6),
-						CreatedDateTime = GetDateTime(rs, 7),
-						CreatedSessionID = GetInt32(rs, 8),
-						DeletedSessionID = GetInt32(rs, 9),
-						ValueText = GetString(rs, 10),
-						ValueTextJapaneseUnicode = GetString(rs, 11)
-					});
+					                 	Value = GetInt32(rs, 0),
+					                 	AnswerID = GetInt32(rs, 1),
+					                 	QuestionID = GetInt32(rs, 2),
+					                 	OptionID = GetInt32(rs, 3),
+					                 	ValueInt = GetInt32(rs, 4),
+					                 	ValueDecimal = GetDecimal(rs, 5),
+					                 	ValueDateTime = GetDateTime(rs, 6),
+					                 	CreatedDateTime = GetDateTime(rs, 7),
+					                 	CreatedSessionID = GetInt32(rs, 8),
+					                 	DeletedSessionID = GetInt32(rs, 9),
+					                 	ValueText = GetString(rs, 10),
+					                 	ValueTextJapaneseUnicode = GetString(rs, 11)
+					                 });
+				}
+			}
+			return answerValues;
+		}
+		
+		public IList<AnswerValue> FindByQuestionOptions(int questionID, IList<QuestionOption> options, int projectRoundID, int projectRoundUnitID)
+		{
+			string optionQuery = "";
+			List<SqlParameter> parameters = new List<SqlParameter>();
+			if (options.Count > 0) {
+				optionQuery = "AND av.OptionID IN (";
+				int i = 1;
+				foreach (var o in options) {
+					optionQuery += "@OptionID" + o.OptionID;
+					optionQuery += i++ < options.Count ? ", " : "";
+					parameters.Add(new SqlParameter("@OptionID" + o.OptionID, o.OptionID));
+				}
+				optionQuery += ")";
+			}
+			string query = string.Format(@"
+SELECT 	av.AnswerValue,
+	av.AnswerID,
+	av.QuestionID,
+	av.OptionID,
+	av.ValueInt,
+	av.ValueDecimal,
+	av.ValueDateTime,
+	av.CreatedDateTime,
+	av.CreatedSessionID,
+	av.DeletedSessionID,
+	av.ValueText,
+	av.ValueTextJapaneseUnicode
+FROM AnswerValue av
+INNER JOIN Answer a ON a.AnswerID = av.AnswerID
+	AND a.ProjectRoundID = @ProjectRoundID
+	AND a.ProjectRoundUnitID = @ProjectRoundUnitID
+WHERE av.QuestionID = @QuestionID
+{0}", optionQuery);
+			var answerValues = new List<AnswerValue>();
+			parameters.Add(new SqlParameter("@QuestionID", questionID));
+			parameters.Add(new SqlParameter("@ProjectRoundID", projectRoundID));
+			parameters.Add(new SqlParameter("@ProjectRoundUnitID", projectRoundUnitID));
+			using (var rs = ExecuteReader(
+				query,
+				parameters.ToArray())) {
+				while (rs.Read()) {
+					answerValues.Add(
+						new AnswerValue {
+							Value = GetInt32(rs, 0),
+							AnswerID = GetInt32(rs, 1),
+							QuestionID = GetInt32(rs, 2),
+							OptionID = GetInt32(rs, 3),
+							ValueInt = GetInt32(rs, 4),
+							ValueDecimal = GetDecimal(rs, 5),
+							ValueDateTime = GetDateTime(rs, 6),
+							CreatedDateTime = GetDateTime(rs, 7),
+							CreatedSessionID = GetInt32(rs, 8),
+							DeletedSessionID = GetInt32(rs, 9),
+							ValueText = GetString(rs, 10),
+							ValueTextJapaneseUnicode = GetString(rs, 11)
+						}
+					);
+				}
+			}
+			return answerValues;
+		}
+		
+		public IList<AnswerValue> FindByQuestionOption(int questionID, int optionID, int projectRoundID, int projectRoundUnitID)
+		{
+			string query = @"
+SELECT 	av.AnswerValue,
+	av.AnswerID,
+	av.QuestionID,
+	av.OptionID,
+	av.ValueInt,
+	av.ValueDecimal,
+	av.ValueDateTime,
+	av.CreatedDateTime,
+	av.CreatedSessionID,
+	av.DeletedSessionID,
+	av.ValueText,
+	av.ValueTextJapaneseUnicode
+FROM AnswerValue av
+INNER JOIN Answer a ON a.AnswerID = av.AnswerID
+	AND a.ProjectRoundID = @ProjectRoundID
+	AND a.ProjectRoundUnitID = @ProjectRoundUnitID
+WHERE av.QuestionID = @QuestionID
+AND av.OptionID = @OptionID";
+			var answerValues = new List<AnswerValue>();
+			using (var rs = ExecuteReader(
+				query,
+				new SqlParameter("@QuestionID", questionID),
+				new SqlParameter("@ProjectRoundID", projectRoundID),
+				new SqlParameter("@ProjectRoundUnitID", projectRoundUnitID),
+				new SqlParameter("@OptionID", optionID))) {
+				while (rs.Read()) {
+					answerValues.Add(
+						new AnswerValue {
+							Value = GetInt32(rs, 0),
+							AnswerID = GetInt32(rs, 1),
+							QuestionID = GetInt32(rs, 2),
+							OptionID = GetInt32(rs, 3),
+							ValueInt = GetInt32(rs, 4),
+							ValueDecimal = GetDecimal(rs, 5),
+							ValueDateTime = GetDateTime(rs, 6),
+							CreatedDateTime = GetDateTime(rs, 7),
+							CreatedSessionID = GetInt32(rs, 8),
+							DeletedSessionID = GetInt32(rs, 9),
+							ValueText = GetString(rs, 10),
+							ValueTextJapaneseUnicode = GetString(rs, 11)
+						}
+					);
 				}
 			}
 			return answerValues;

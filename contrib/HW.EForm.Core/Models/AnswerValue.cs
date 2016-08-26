@@ -22,6 +22,52 @@ namespace HW.EForm.Core.Models
 		}
 		
 		public Question Question { get; set; }
-		public Option Option { get; set; }
+		Option option;
+		Answer answer;
+		
+		public int GetValueInt()
+		{
+			if (Option != null && !Option.IsSlider) {
+				return Option.GetComponent(ValueInt).ExportValue;
+			}
+			return ValueInt;
+		}
+		
+		public Answer Answer {
+			get {
+				if (answer == null) {
+					OnAnswerGet(null);
+				}
+				return answer;
+			}
+			set { answer = value; }
+		}
+		
+		public Option Option {
+			get {
+				if (option == null) {
+					OnOptionGet(null);
+				}
+				return option;
+			}
+			set { option = value; }
+		}
+		
+		public event EventHandler OptionGet;
+		public event EventHandler AnswerGet;
+		
+		protected virtual void OnAnswerGet(EventArgs e)
+		{
+			if (AnswerGet != null) {
+				AnswerGet(this, e);
+			}
+		}
+		
+		protected virtual void OnOptionGet(EventArgs e)
+		{
+			if (OptionGet != null) {
+				OptionGet(this, e);
+			}
+		}
 	}
 }

@@ -55,7 +55,27 @@ namespace HW.EForm.Core.Models
 			set { survey = value; }
 		}
 		public Report Report { get; set; }
-		public ProjectRound ProjectRound { get; set; }
+//		public ProjectRound ProjectRound { get; set; }
+		ProjectRound projectRound;
+		
+		public ProjectRound ProjectRound {
+			get {
+				if (projectRound == null) {
+					OnProjectRoundGet(null);
+				}
+				return projectRound;
+			}
+			set { projectRound = value; }
+		}
 		public IList<ProjectRoundUnitManager> Managers { get; set; }
+		
+		public event EventHandler ProjectRoundGet;
+		
+		protected virtual void OnProjectRoundGet(EventArgs e)
+		{
+			if (ProjectRoundGet != null) {
+				ProjectRoundGet(this, e);
+			}
+		}
 	}
 }
