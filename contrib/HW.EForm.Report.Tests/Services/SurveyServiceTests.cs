@@ -12,17 +12,20 @@ namespace HW.EForm.Report.Tests.Services
 	[TestFixture]
 	public class SurveyServiceTests
 	{
-		SurveyService ss = new SurveyService();
+		SurveyService service = new SurveyService();
 		
 		[Test]
 		public void TestReadSurvey()
 		{
-			var s = ss.ReadSurvey(32);
-			Console.WriteLine(s.Internal);
-			foreach (var q in s.Questions) {
-				Console.WriteLine("  Question: {0}", q.Question.Internal);
-				foreach (var o in q.Options) {
-					Console.WriteLine("    Option: {0}", o.QuestionOption.Option.Internal);
+			var s = service.ReadSurvey(32);
+			Console.WriteLine("Survey: {0}", s.Internal);
+			foreach (var sq in s.Questions) {
+				Console.WriteLine("\tQuestion: {0}", sq.Question.Internal);
+				foreach (var sqo in sq.Options) {
+					Console.WriteLine("\t\tOption: {0}", sqo.QuestionOption.Option.Internal);
+					foreach (var oc in sqo.QuestionOption.Option.Components) {
+						Console.WriteLine("\t\t\t Component: {0}", oc.OptionComponent.Internal);
+					}
 				}
 			}
 		}

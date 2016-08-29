@@ -22,11 +22,37 @@ namespace HW.EForm.Core.Models
 		{
 			Languages = new List<QuestionLang>();
 			Options = new List<QuestionOption>();
+			AnswerValues = new List<AnswerValue>();
 		}
 		
 		public IList<QuestionOption> Options { get; set; }
 		public IList<QuestionLang> Languages { get; set; }
 		public IList<AnswerValue> AnswerValues { get; set; }
+		
+		public void SetAnswerValuesForComponents()
+		{
+			foreach (var qo in Options) {
+				foreach (var oc in qo.Option.Components) {
+					oc.OptionComponent.AnswerValues = GetAnswerValuesForComponent(oc.OptionComponentID);
+				}
+			}
+		}
+		
+		List<AnswerValue> GetAnswerValuesForComponent(int optionComponentID)
+		{
+			var answerValues = new List<AnswerValue>();
+			foreach (var av in AnswerValues) {
+				if (av.ValueInt == optionComponentID) {
+					answerValues.Add(av);
+				}
+			}
+			return answerValues;
+		}
+		
+		public void AddOption(QuestionOption option)
+		{
+			Options.Add(option);
+		}
 		
 		public QuestionLang GetLanguage(int langID)
 		{
@@ -38,39 +64,24 @@ namespace HW.EForm.Core.Models
 			return null;
 		}
 		
-//		public void AddLanguage(int langID, string question)
-//		{
-//			Languages.Add(new QuestionLang(langID, question));
-//		}
-//		
-//		public void AddOption(Option option)
-//		{
-//			Options.Add(new QuestionOption(option));
-//		}
-		
-		public Chart lalala()
+		public void AddAnswerValue(Answer answer, int optionID, int valueInt)
 		{
-			var c = new ColumnChart { Title = GetLanguage(1).Question };
-			foreach (var qo in Options) {
-				foreach (var oc in qo.Option.Components) {
-					c.Categories.Add(oc.Component.Internal);
-				}
-			}
-			return c;
+			AddAnswerValue(new AnswerValue { Answer = answer, OptionID = optionID, ValueInt = valueInt });
 		}
 		
-		public Chart ToChart()
+		public void AddAnswerValue(AnswerValue av)
 		{
-			var c = new LineChart { Title = GetLanguage(1).Question };
-			c.Categories = new List<string>(new[] { "Jan", "Feb" });
-			foreach (var o in Options) {
-				var d = new List<double>();
-				foreach (var x in o.Option.AnswerValues) {
-					d.Add(x.GetValueInt());
-				}
-				c.Series.Add(new Series("test", d));
-			}
-			return c;
+			AnswerValues.Add(av);
+		}
+		
+		public void AddLanguage(int langID, string question)
+		{
+			AddLanguage(new QuestionLang { LangID = langID, Question = question });
+		}
+		
+		public void AddLanguage(QuestionLang lang)
+		{
+			Languages.Add(lang);
 		}
 	}
 }

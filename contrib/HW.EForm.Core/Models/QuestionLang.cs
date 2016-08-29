@@ -23,5 +23,10 @@ namespace HW.EForm.Core.Models
 			this.LangID = langID;
 			this.Question = question;
 		}
+		
+		public override string ToString()
+		{
+			return string.Format("[QuestionLang QuestionLangID={0}, QuestionID={1}, LangID={2}, Question={3}, QuestionShort={4}, QuestionArea={5}, QuestionJapaneseUnicode={6}, QuestionShortJapaneseUnicode={7}, QuestionAreaJapaneseUnicode={8}]", QuestionLangID, QuestionID, LangID, Question, QuestionShort, QuestionArea, QuestionJapaneseUnicode, QuestionShortJapaneseUnicode, QuestionAreaJapaneseUnicode);
+		}
 	}
 }

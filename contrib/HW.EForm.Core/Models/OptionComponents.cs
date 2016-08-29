@@ -14,30 +14,13 @@ namespace HW.EForm.Core.Models
 		{
 		}
 		
-		public OptionComponents(string text)
+		public OptionComponents(int optionComponentID, string @internal, int langID, string text)
 		{
-			Component = new OptionComponent(text);
+			OptionComponentID = optionComponentID;
+			OptionComponent = new OptionComponent { OptionComponentID = optionComponentID, Internal = @internal };
+			OptionComponent.AddLanguage(langID, text);
 		}
 		
-		OptionComponent component;
-		
-		public OptionComponent Component {
-			get {
-				if (component == null) {
-					OnComponentGet(null);
-				}
-				return component;
-			}
-			set { component = value; }
-		}
-		
-		public event EventHandler ComponentGet;
-		
-		protected virtual void OnComponentGet(EventArgs e)
-		{
-			if (ComponentGet != null) {
-				ComponentGet(this, e);
-			}
-		}
+		public OptionComponent OptionComponent { get; set; }
 	}
 }

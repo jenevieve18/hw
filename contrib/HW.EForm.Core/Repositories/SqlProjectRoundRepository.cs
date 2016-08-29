@@ -356,6 +356,83 @@ FROM ProjectRound";
 			return projectRounds;
 		}
 		
+		public IList<ProjectRound> FindByProject(int projectID)
+		{
+			string query = @"
+SELECT 	ProjectRoundID, 
+	ProjectID, 
+	Internal, 
+	Started, 
+	Closed, 
+	TransparencyLevel, 
+	RepeatedEntry, 
+	SurveyID, 
+	LangID, 
+	RoundKey, 
+	EmailFromAddress, 
+	ReminderInterval, 
+	Layout, 
+	SelfRegistration, 
+	Timeframe, 
+	Yellow, 
+	Green, 
+	IndividualReportID, 
+	ExtendedSurveyID, 
+	ReportID, 
+	Logo, 
+	UseCode, 
+	ConfidentialIndividualReportID, 
+	SendSurveyAsEmail, 
+	SFTPhost, 
+	SFTPpath, 
+	SFTPuser, 
+	SFTPpass, 
+	SendSurveyAsPdfTo, 
+	SendSurveyAsPdfToQ, 
+	SendSurveyAsPdfToO
+FROM ProjectRound
+WHERE ProjectID = @ProjectID";
+			var projectRounds = new List<ProjectRound>();
+			using (var rs = ExecuteReader(query, new SqlParameter("@ProjectID", projectID))) {
+				while (rs.Read()) {
+					projectRounds.Add(new ProjectRound {
+						ProjectRoundID = GetInt32(rs, 0),
+						ProjectID = GetInt32(rs, 1),
+						Internal = GetString(rs, 2),
+						Started = GetDateTime(rs, 3),
+						Closed = GetDateTime(rs, 4),
+						TransparencyLevel = GetInt32(rs, 5),
+						RepeatedEntry = GetInt32(rs, 6),
+						SurveyID = GetInt32(rs, 7),
+						LangID = GetInt32(rs, 8),
+						RoundKey = GetGuid(rs, 9),
+						EmailFromAddress = GetString(rs, 10),
+						ReminderInterval = GetInt32(rs, 11),
+						Layout = GetInt32(rs, 12),
+						SelfRegistration = GetInt32(rs, 13),
+						Timeframe = GetInt32(rs, 14),
+						Yellow = GetInt32(rs, 15),
+						Green = GetInt32(rs, 16),
+						IndividualReportID = GetInt32(rs, 17),
+						ExtendedSurveyID = GetInt32(rs, 18),
+						ReportID = GetInt32(rs, 19),
+						Logo = GetInt32(rs, 20),
+						UseCode = GetInt32(rs, 21),
+						ConfidentialIndividualReportID = GetInt32(rs, 22),
+						SendSurveyAsEmail = GetInt32(rs, 23),
+						SFTPhost = GetString(rs, 24),
+						SFTPpath = GetString(rs, 25),
+						SFTPuser = GetString(rs, 26),
+						SFTPpass = GetString(rs, 27),
+						SendSurveyAsPdfTo = GetString(rs, 28),
+						SendSurveyAsPdfToQ = GetInt32(rs, 29),
+						SendSurveyAsPdfToO = GetInt32(rs, 30)
+					});
+				}
+			}
+			return projectRounds;
+		}
+		
 		public IList<ProjectRound> FindByProjectAndManager(int projectID, int managerID)
 		{
 			string query = @"

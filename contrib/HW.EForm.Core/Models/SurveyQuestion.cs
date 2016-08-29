@@ -25,5 +25,9 @@ namespace HW.EForm.Core.Models
 		
 		public Question Question { get; set; }
 		public IList<SurveyQuestionOption> Options { get; set; }
+		
+		public bool HasOptions {
+			get { return Options != null && Options.Count > 0; }
+		}
 	}
 }

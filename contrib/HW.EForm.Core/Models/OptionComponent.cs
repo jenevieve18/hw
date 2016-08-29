@@ -10,26 +10,29 @@ namespace HW.EForm.Core.Models
 		public string Internal { get; set; }
 		public int OptionComponentContainerID { get; set; }
 
-		public OptionComponent()
+		public OptionComponent() : this("")
 		{
 		}
 		
 		public OptionComponent(string @internal)
 		{
 			this.Internal = @internal;
+			Languages = new List<OptionComponentLang>();
 		}
 		
-		IList<OptionComponentLang> languages;
+		public IList<AnswerValue> AnswerValues { get; set; }
 		
-		public IList<OptionComponentLang> Languages {
-			get {
-				if (languages == null) {
-					OnLanguagesSet(null);
-				}
-				return languages;
-			}
-			set { languages = value; }
+		public void AddLanguage(int langID, string text)
+		{
+			AddLanguage(new OptionComponentLang { LangID = langID, Text = text});
 		}
+		
+		public void AddLanguage(OptionComponentLang language)
+		{
+			Languages.Add(language);
+		}
+		
+		public IList<OptionComponentLang> Languages { get; set; }
 		
 		public OptionComponentLang GetLanguage(int langID)
 		{
@@ -39,15 +42,6 @@ namespace HW.EForm.Core.Models
 				}
 			}
 			return null;
-		}
-		
-		public event EventHandler LanguagesSet;
-		
-		protected virtual void OnLanguagesSet(EventArgs e)
-		{
-			if (LanguagesSet != null) {
-				LanguagesSet(this, e);
-			}
 		}
 	}
 }

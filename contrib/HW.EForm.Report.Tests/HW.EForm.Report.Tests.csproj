@@ -59,7 +59,10 @@
   <ItemGroup>
     <Compile Include="DefaultTests.cs" />
     <Compile Include="Helpers\ChartTests.cs" />
+    <Compile Include="Helpers\QuestionHelperTests.cs" />
     <Compile Include="Helpers\Test1.cs" />
+    <Compile Include="Models\AnswerTests.cs" />
+    <Compile Include="Models\ProjectTests.cs" />
     <Compile Include="Models\QuestionTests.cs" />
     <Compile Include="ProjectShowTests.cs" />
     <Compile Include="ProjectsTests.cs" />

@@ -18,9 +18,9 @@ namespace HW.EForm.Report.Tests.Services
 		public void TestReadReport()
 		{
 			var r = s.ReadReport(3);
-			Console.WriteLine(r.Internal);
-			foreach (var p in r.Parts) {
-				Console.WriteLine("  {0}, Question: {1}", p.Internal, p.Question.Internal);
+			Console.WriteLine("Report: {0}", r.Internal);
+			foreach (var rp in r.Parts) {
+				Console.WriteLine("  Part: {0}, Question: {1}", rp.Internal, rp.Question.Internal);
 			}
 		}
 	}

@@ -34,9 +34,9 @@ namespace HW.EForm.Core.Models
 			get { return OptionType == 9; }
 		}
 		
-		public void AddComponent(string @internal)
+		public void AddComponent(OptionComponents component)
 		{
-			Components.Add(new OptionComponents(@internal));
+			Components.Add(component);
 		}
 		
 		public OptionComponents GetComponent(int optionComponentID)

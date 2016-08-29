@@ -12,9 +12,15 @@ namespace HW.EForm.Core.Services
 	public class FeedbackService
 	{
 		SqlFeedbackRepository feedbackRepo = new SqlFeedbackRepository();
-		SqlFeedbackQuestionRepository sfqr = new SqlFeedbackQuestionRepository();
+		SqlFeedbackQuestionRepository feedbackQuestionRepo = new SqlFeedbackQuestionRepository();
 		
-		SqlQuestionRepository sqr = new SqlQuestionRepository();
+		SqlQuestionRepository questionRepo = new SqlQuestionRepository();
+		SqlQuestionOptionRepository questionOptionRepo = new SqlQuestionOptionRepository();
+		SqlQuestionLangRepository questionLangRepo = new SqlQuestionLangRepository();
+		
+		SqlOptionRepository optionRepo = new SqlOptionRepository();
+		SqlOptionComponentsRepository optionComponentsRepo = new SqlOptionComponentsRepository();
+		SqlOptionComponentRepository optionComponentRepo = new SqlOptionComponentRepository();
 		
 		public FeedbackService()
 		{
@@ -24,9 +30,18 @@ namespace HW.EForm.Core.Services
 		{
 			var f = feedbackRepo.Read(feedbackID);
 			if (f != null) {
-				f.Questions = sfqr.FindByFeedback(feedbackID);
+				f.Questions = feedbackQuestionRepo.FindByFeedback(feedbackID);
 				foreach (var fq in f.Questions) {
-					fq.Question = sqr.Read(fq.QuestionID);
+					fq.Question = questionRepo.Read(fq.QuestionID);
+					fq.Question.Languages = questionLangRepo.FindByQuestion(fq.QuestionID);
+					fq.Question.Options = questionOptionRepo.FindByQuestion(fq.QuestionID);
+					foreach (var qo in fq.Question.Options) {
+						qo.Option = optionRepo.Read(qo.OptionID);
+						qo.Option.Components = optionComponentsRepo.FindByOption(qo.OptionID);
+						foreach (var oc in qo.Option.Components) {
+							oc.OptionComponent = optionComponentRepo.Read(oc.OptionComponentID);
+						}
+					}
 				}
 			}
 			return f;

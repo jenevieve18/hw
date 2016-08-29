@@ -21,28 +21,29 @@ namespace HW.EForm.Core.Models
 		}
 		
 		public IList<AnswerValue> Values { get; set; }
-		public Question Question { get; set; }
-		public Option Option { get; set; }
-		
-		ProjectRoundUser projectRoundUser;
-		
-		public ProjectRoundUser ProjectRoundUser {
-			get {
-				if (projectRoundUser == null) {
-					OnProjectRoundUserGet(null);
-				}
-				return projectRoundUser;
-			}
-			set { projectRoundUser = value; }
-		}
-		
-		public event EventHandler ProjectRoundUserGet;
-		
-		protected virtual void OnProjectRoundUserGet(EventArgs e)
-		{
-			if (ProjectRoundUserGet != null) {
-				ProjectRoundUserGet(this, e);
-			}
-		}
+		public ProjectRoundUnit ProjectRoundUnit { get; set; }
+//		public Question Question { get; set; }
+//		public Option Option { get; set; }
+//		
+//		ProjectRoundUser projectRoundUser;
+//		
+//		public ProjectRoundUser ProjectRoundUser {
+//			get {
+//				if (projectRoundUser == null) {
+//					OnProjectRoundUserGet(null);
+//				}
+//				return projectRoundUser;
+//			}
+//			set { projectRoundUser = value; }
+//		}
+//		
+//		public event EventHandler ProjectRoundUserGet;
+//		
+//		protected virtual void OnProjectRoundUserGet(EventArgs e)
+//		{
+//			if (ProjectRoundUserGet != null) {
+//				ProjectRoundUserGet(this, e);
+//			}
+//		}
 	}
 }

@@ -19,8 +19,8 @@ namespace HW.EForm.Report.Tests.Services
 		{
 			var a = s.ReadAnswer(214);
 			Console.WriteLine(a.AnswerKey);
-			foreach (var v in a.Values) {
-				Console.WriteLine("  ValueInt: {0}, Question: {1}, Option: {2}", v.ValueInt, v.Question.Internal, v.Option.Internal);
+			foreach (var av in a.Values) {
+				Console.WriteLine("\tValueInt: {0}, Question: {1}, Option: {2}", av.ValueInt, av.Question.Internal, av.Option.Internal);
 			}
 		}
 	}

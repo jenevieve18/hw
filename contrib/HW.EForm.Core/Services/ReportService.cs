@@ -12,9 +12,9 @@ namespace HW.EForm.Core.Services
 {
 	public class ReportService
 	{
-		SqlReportRepository rr = new SqlReportRepository();
-		SqlReportPartRepository rpr = new SqlReportPartRepository();
-		SqlQuestionRepository qr = new SqlQuestionRepository();
+		SqlReportRepository reportRepo = new SqlReportRepository();
+		SqlReportPartRepository reportPartRepo = new SqlReportPartRepository();
+		SqlQuestionRepository questionRepo = new SqlQuestionRepository();
 		
 		public ReportService()
 		{
@@ -22,15 +22,15 @@ namespace HW.EForm.Core.Services
 
         public IList<Report> FindAllReports()
         {
-            return rr.FindAll();
+            return reportRepo.FindAll();
         }
 		
 		public Report ReadReport(int reportID)
 		{
-			var r = rr.Read(reportID);
-			r.Parts = rpr.FindByReport(reportID);
-			foreach (var p in r.Parts) {
-				p.Question = qr.Read(p.QuestionID);
+			var r = reportRepo.Read(reportID);
+			r.Parts = reportPartRepo.FindByReport(reportID);
+			foreach (var rp in r.Parts) {
+				rp.Question = questionRepo.Read(rp.QuestionID);
 			}
 			return r;
 		}

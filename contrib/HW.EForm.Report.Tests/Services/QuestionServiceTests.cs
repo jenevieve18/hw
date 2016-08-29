@@ -18,9 +18,12 @@ namespace HW.EForm.Report.Tests.Services
 		public void TestReadQuestion()
 		{
 			var q = s.ReadQuestion(62);
-			Console.WriteLine(q.Internal);
+			Console.WriteLine("QuestionID: {0}, Question: {1}", q.QuestionID, q.GetLanguage(1).Question);
 			foreach (var o in q.Options) {
-				Console.WriteLine("  {0}", o.Option.Internal);
+				Console.WriteLine("\tOptionID: {0}, Internal: {1}", o.OptionID, o.Option.Internal);
+				foreach (var oc in o.Option.Components) {
+					Console.WriteLine("\t\tOptionComponentID: {0}, Internal: {1}", oc.OptionComponentID, oc.OptionComponent.Internal);
+				}
 			}
 		}
 	}

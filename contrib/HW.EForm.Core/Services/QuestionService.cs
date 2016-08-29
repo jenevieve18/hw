@@ -12,52 +12,71 @@ namespace HW.EForm.Core.Services
 {
 	public class QuestionService
 	{
-		SqlQuestionRepository sqr = new SqlQuestionRepository();
-		SqlQuestionLangRepository sqlr = new SqlQuestionLangRepository();
-		SqlQuestionOptionRepository sqor = new SqlQuestionOptionRepository();
+		SqlQuestionRepository questionRepo = new SqlQuestionRepository();
+		SqlQuestionLangRepository questionLangRepo = new SqlQuestionLangRepository();
+		SqlQuestionOptionRepository questionOptionRepo = new SqlQuestionOptionRepository();
 
-		SqlQuestionContainerRepository sqcr = new SqlQuestionContainerRepository();
+		SqlQuestionContainerRepository questionContainerRepo = new SqlQuestionContainerRepository();
 
-		SqlOptionRepository sor = new SqlOptionRepository();
-		SqlOptionComponentRepository socr = new SqlOptionComponentRepository();
+		SqlOptionRepository optionRepo = new SqlOptionRepository();
+		SqlOptionComponentsRepository optionComponentsRepo = new SqlOptionComponentsRepository();
+		SqlOptionComponentRepository optionComponentRepo = new SqlOptionComponentRepository();
 		
 		public QuestionService()
 		{
 		}
 
-        public IList<OptionComponent> FindAllComponents()
-        {
-            return socr.FindAll();
-        }
+		public IList<OptionComponent> FindAllComponents()
+		{
+			return optionComponentRepo.FindAll();
+		}
 
-        public IList<Question> FindAllQuestions()
-        {
-            return sqr.FindAll();
-        }
+		public IList<Question> FindAllQuestions()
+		{
+			var questions = questionRepo.FindAll();
+			foreach (var q in questions) {
+				q.Languages = questionLangRepo.FindByQuestion(q.QuestionID);
+				q.Options = questionOptionRepo.FindByQuestion(q.QuestionID);
+				foreach (var o in q.Options) {
+					o.Option = optionRepo.Read(o.OptionID);
+					o.Option.Components = optionComponentsRepo.FindByOption(o.OptionID);
+					foreach (var oc in o.Option.Components) {
+						oc.OptionComponent = optionComponentRepo.Read(oc.OptionComponentID);
+					}
+				}
+			}
+			return questions;
+		}
 
-        public IList<Option> FindAllOptions()
-        {
-            return sor.FindAll();
-        }
+		public IList<Option> FindAllOptions()
+		{
+			return optionRepo.FindAll();
+		}
 
-        public IList<QuestionContainer> FindAllContainers()
-        {
-            return sqcr.FindAll();
-        }
+		public IList<QuestionContainer> FindAllContainers()
+		{
+			return questionContainerRepo.FindAll();
+		}
 		
 		public Question ReadQuestion(int questionID)
 		{
-			var q = sqr.Read(questionID);
-			q.Options = sqor.FindByQuestion(questionID);
+			var q = questionRepo.Read(questionID);
+			q.Languages = questionLangRepo.FindByQuestion(questionID);
+			q.Options = questionOptionRepo.FindByQuestion(questionID);
 			foreach (var o in q.Options) {
-				o.Option = sor.Read(o.OptionID);
+				o.Option = optionRepo.Read(o.OptionID);
+				o.Option.Components = optionComponentsRepo.FindByOption(o.OptionID);
+				foreach (var oc in o.Option.Components) {
+					oc.OptionComponent = optionComponentRepo.Read(oc.OptionComponentID);
+				}
+				
 			}
 			return q;
 		}
 		
 		public Option ReadOption(int optionID)
 		{
-			var o = sor.Read(optionID);
+			var o = optionRepo.Read(optionID);
 			return o;
 		}
 	}

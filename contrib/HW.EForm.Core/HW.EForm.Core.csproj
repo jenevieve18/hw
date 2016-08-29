@@ -57,10 +57,9 @@
   <ItemGroup>
     <Compile Include="Helpers\Highcharts.cs" />
     <Compile Include="Helpers\JSONHelper.cs" />
-    <Compile Include="Helpers\PromasTemplateGeneratedClass.cs" />
     <Compile Include="Helpers\ConvertHelper.cs" />
     <Compile Include="Helpers\HtmlHelper.cs" />
-    <Compile Include="Helpers\PowerpointExporter.cs" />
+    <Compile Include="Helpers\QuestionHelper.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\AnswerValue.cs" />
     <Compile Include="Models\BaseModel.cs" />

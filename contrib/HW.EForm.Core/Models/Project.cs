@@ -12,6 +12,8 @@ namespace HW.EForm.Core.Models
 
 		public Project()
 		{
+			Rounds = new List<ProjectRound>();
+			Surveys = new List<ProjectSurvey>();
 		}
 		
 		public IList<ProjectRound> Rounds { get; set; }

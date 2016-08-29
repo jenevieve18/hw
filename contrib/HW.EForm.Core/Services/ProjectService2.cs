@@ -41,7 +41,24 @@ namespace HW.EForm.Core.Services
 		{
 		}
 		
-		public ProjectRoundUnit ReadProjectRoundUnit3(int projectRoundUnitID)
+		public Project ReadProject(int projectID)
+		{
+			var p = projectRepo.Read(projectID);
+			p.Rounds = projectRoundRepo.FindByProject(projectID);
+			foreach (var pr in p.Rounds) {
+				pr.Units = projectRoundUnitRepo.FindByProjectRound(pr.ProjectRoundID);
+			}
+			return p;
+		}
+		
+		public ProjectRound ReadProjectRound(int projectRoundID)
+		{
+			var pr = projectRoundRepo.Read(projectRoundID);
+			pr.Units = projectRoundUnitRepo.FindByProjectRound(projectRoundID);
+			return pr;
+		}
+		
+		public ProjectRoundUnit ReadProjectRoundUnit(int projectRoundUnitID)
 		{
 			var pru = projectRoundUnitRepo.Read(projectRoundUnitID);
 			var pr = projectRoundRepo.Read(pru.ProjectRoundID);
@@ -50,6 +67,11 @@ namespace HW.EForm.Core.Services
 			foreach (var fq in f.Questions) {
 				fq.Question = questionRepo.Read(fq.QuestionID);
 				fq.Question.Languages = questionLangRepo.FindByQuestion(fq.QuestionID);
+				fq.Question.Options = questionOptionRepo.FindByQuestion(fq.QuestionID);
+				foreach (var qo in fq.Question.Options) {
+					qo.Option = optionRepo.Read(qo.OptionID);
+					qo.Option.Components = optionComponentsRepo.FindByOption(qo.OptionID);
+				}
 				fq.Question.AnswerValues = answerValueRepo.FindByQuestionOptions(fq.QuestionID, fq.Question.Options, pru.ProjectRoundID, pru.ProjectRoundUnitID);
 			}
 			pr.Feedback = f;

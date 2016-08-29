@@ -166,7 +166,7 @@ namespace HW.EForm.Core.Services
 											var oc = socr.Read(ocs.OptionComponentID);
 											if (oc != null) {
 												oc.Languages = soclr.FindByOptionComponent(oc.OptionComponentID);
-												ocs.Component = oc;
+												ocs.OptionComponent = oc;
 											}
 										}
 										qo.Option = o;
@@ -225,7 +225,7 @@ namespace HW.EForm.Core.Services
 			if (o != null) {
 				o.Components = socsr.FindByOption(o.OptionID);
 				foreach (var oc in o.Components) {
-					oc.Component = ReadOptionComponent(oc.OptionComponentID);
+					oc.OptionComponent = ReadOptionComponent(oc.OptionComponentID);
 				}
 			}
 			return o;
