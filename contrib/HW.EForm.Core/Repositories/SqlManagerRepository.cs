@@ -15,7 +15,6 @@ namespace HW.EForm.Core.Repositories
 		{
 			string query = @"
 INSERT INTO Manager(
-	ManagerID, 
 	Email, 
 	Password, 
 	Name, 
@@ -31,7 +30,6 @@ INSERT INTO Manager(
 	SeeSurvey
 )
 VALUES(
-	@ManagerID, 
 	@Email, 
 	@Password, 
 	@Name, 
@@ -48,7 +46,6 @@ VALUES(
 )";
 			ExecuteNonQuery(
 				query,
-				new SqlParameter("@ManagerID", manager.ManagerID),
 				new SqlParameter("@Email", manager.Email),
 				new SqlParameter("@Password", manager.Password),
 				new SqlParameter("@Name", manager.Name),
@@ -65,7 +62,7 @@ VALUES(
 			);
 		}
 		
-		public override void Update(Manager manager, int id)
+		public override void Update(Manager manager, int managerID)
 		{
 			string query = @"
 UPDATE Manager SET
@@ -85,7 +82,7 @@ UPDATE Manager SET
 WHERE ManagerID = @ManagerID";
 			ExecuteNonQuery(
 				query,
-				new SqlParameter("@ManagerID", id),
+				new SqlParameter("@ManagerID", managerID),
 				new SqlParameter("@Email", manager.Email),
 				new SqlParameter("@Password", manager.Password),
 				new SqlParameter("@Name", manager.Name),

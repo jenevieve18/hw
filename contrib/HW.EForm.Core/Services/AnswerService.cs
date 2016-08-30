@@ -12,11 +12,11 @@ namespace HW.EForm.Core.Services
 {
 	public class AnswerService
 	{
-		SqlAnswerRepository sar = new SqlAnswerRepository();
-		SqlAnswerValueRepository savr = new SqlAnswerValueRepository();
+		SqlAnswerRepository answerRepo = new SqlAnswerRepository();
+		SqlAnswerValueRepository answerValueRepo = new SqlAnswerValueRepository();
 		
-		SqlQuestionRepository sqr = new SqlQuestionRepository();
-		SqlOptionRepository sor = new SqlOptionRepository();
+		SqlQuestionRepository questionRepo = new SqlQuestionRepository();
+		SqlOptionRepository optionRepo = new SqlOptionRepository();
 		
 		public AnswerService()
 		{
@@ -24,12 +24,12 @@ namespace HW.EForm.Core.Services
 		
 		public Answer ReadAnswer(int answerID)
 		{
-			var a = sar.Read(answerID);
+			var a = answerRepo.Read(answerID);
 			if (a != null) {
-				a.Values = savr.FindByAnswer(answerID);
+				a.Values = answerValueRepo.FindByAnswer(answerID);
 				foreach (var av in a.Values) {
-					av.Question = sqr.Read(av.QuestionID);
-					av.Option = sor.Read(av.OptionID);
+					av.Question = questionRepo.Read(av.QuestionID);
+					av.Option = optionRepo.Read(av.OptionID);
 				}
 			}
 			return a;
@@ -37,12 +37,12 @@ namespace HW.EForm.Core.Services
 		
 		public Answer ReadAnswerByProjectRound(int projectRoundID, int projectRoundUnitID)
 		{
-			var a = sar.ReadByProjectRound(projectRoundID, projectRoundUnitID);
+			var a = answerRepo.ReadByProjectRound(projectRoundID, projectRoundUnitID);
 			if (a != null) {
-				a.Values = savr.FindByAnswer(a.AnswerID);
+				a.Values = answerValueRepo.FindByAnswer(a.AnswerID);
 				foreach (var av in a.Values) {
-					av.Question = sqr.Read(av.QuestionID);
-					av.Option = sor.Read(av.OptionID);
+					av.Question = questionRepo.Read(av.QuestionID);
+					av.Option = optionRepo.Read(av.OptionID);
 				}
 			}
 			return a;
@@ -50,7 +50,19 @@ namespace HW.EForm.Core.Services
 		
 		public IList<AnswerValue> FindByQuestion(int questionID)
 		{
-			return savr.FindByQuestion(questionID);
+			return answerValueRepo.FindByQuestion(questionID);
+		}
+		
+		public IList<AnswerValue> FindByQuestionOptionsAndUnits(int questionID, IList<QuestionOption> options, int projectRoundID, IList<ProjectRoundUnit> projectRoundUnits)
+		{
+			var av = answerValueRepo.FindByQuestionOptionsAndUnits(questionID, options, projectRoundID, projectRoundUnits);
+			return av;
+		}
+		
+		public IList<AnswerValue> FindByQuestionOptionAndUnit(int questionID, int optionID, int projectRoundID, int projectRoundUnitID)
+		{
+			var av = answerValueRepo.FindByQuestionOptionAndUnit(questionID, optionID, projectRoundID, projectRoundUnitID);
+			return av;
 		}
 	}
 }

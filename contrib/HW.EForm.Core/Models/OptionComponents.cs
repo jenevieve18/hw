@@ -14,12 +14,12 @@ namespace HW.EForm.Core.Models
 		{
 		}
 		
-		public OptionComponents(int optionComponentID, string @internal, int langID, string text)
-		{
-			OptionComponentID = optionComponentID;
-			OptionComponent = new OptionComponent { OptionComponentID = optionComponentID, Internal = @internal };
-			OptionComponent.AddLanguage(langID, text);
-		}
+//		public OptionComponents(int optionComponentID, string @internal, int langID, string text)
+//		{
+//			OptionComponentID = optionComponentID;
+//			OptionComponent = new OptionComponent { OptionComponentID = optionComponentID, Internal = @internal };
+//			OptionComponent.AddLanguage(langID, text);
+//		}
 		
 		public OptionComponent OptionComponent { get; set; }
 	}

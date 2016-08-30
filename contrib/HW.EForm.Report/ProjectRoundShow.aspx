@@ -15,14 +15,15 @@
             <th>Survey</th>
             <th>Lang</th>
         </tr>
-        <% foreach (var u in projectRound.Units) { %>
+        <% foreach (var pru in projectRound.Units) { %>
         <tr>
-            <td><%= HtmlHelper.Anchor(u.Unit, "projectroundunitshow.aspx?ProjectRoundUnitID=" + u.ProjectRoundUnitID) %></td>
-            <td><%= u.ID %></td>
-            <td><%= u.Managers.Count %></td>
+            <%--<td><%= HtmlHelper.Anchor(u.Unit, "projectroundunitshow.aspx?ProjectRoundUnitID=" + u.ProjectRoundUnitID) %></td>--%>
+            <td><%= HtmlHelper.Anchor(pru.Unit, string.Format("feedbackshow.aspx?FeedbackID={0}&ProjectRoundID={1}&ProjectRoundUnitID={2}", pru.ProjectRound.FeedbackID, pru.ProjectRound.ProjectRoundID, pru.ProjectRoundUnitID)) %></td>
+            <td><%= pru.ID %></td>
+            <td><%--<%= u.Managers.Count %>--%></td>
             <td></td>
-            <td><%= u.Survey.ToString() %></td>
-            <td><img src="assets/img/<%= u.LangID %>.gif" /></td>
+            <td><%= pru.Survey.ToString() %></td>
+            <td><img src="assets/img/<%= pru.LangID %>.gif" /></td>
         </tr>
         <% } %>
     </table>

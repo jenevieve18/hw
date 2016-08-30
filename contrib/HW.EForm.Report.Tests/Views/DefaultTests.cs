@@ -6,7 +6,7 @@
 using System;
 using NUnit.Framework;
 
-namespace HW.EForm.Report.Tests
+namespace HW.EForm.Report.Tests.Views
 {
 	[TestFixture]
 	public class DefaultTests

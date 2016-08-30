@@ -66,13 +66,12 @@
     <Content Include="Dashboard.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Export.aspx" />
+    <Content Include="FeedbackShow.aspx" />
     <Content Include="Logout.aspx" />
     <Content Include="Profile.aspx" />
     <Content Include="ProjectRoundShow.aspx" />
-    <Content Include="ProjectRoundUnitShow.aspx" />
     <Content Include="Projects.aspx" />
     <Content Include="ProjectShow.aspx" />
-    <Content Include="Units.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -96,6 +95,13 @@
     </Compile>
     <Compile Include="Export.aspx.designer.cs">
       <DependentUpon>Export.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FeedbackShow.aspx.cs">
+      <DependentUpon>FeedbackShow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FeedbackShow.aspx.designer.cs">
+      <DependentUpon>FeedbackShow.aspx</DependentUpon>
     </Compile>
     <Compile Include="Layout.Master.cs">
       <DependentUpon>Layout.Master</DependentUpon>
@@ -125,13 +131,6 @@
     <Compile Include="ProjectRoundShow.aspx.designer.cs">
       <DependentUpon>ProjectRoundShow.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ProjectRoundUnitShow.aspx.cs">
-      <DependentUpon>ProjectRoundUnitShow.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ProjectRoundUnitShow.aspx.designer.cs">
-      <DependentUpon>ProjectRoundUnitShow.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Projects.aspx.cs">
       <DependentUpon>Projects.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -147,13 +146,6 @@
       <DependentUpon>ProjectShow.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Units.aspx.cs">
-      <DependentUpon>Units.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Units.aspx.designer.cs">
-      <DependentUpon>Units.aspx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\css\login.css.map" />

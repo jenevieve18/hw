@@ -13,20 +13,14 @@ namespace HW.EForm.Report.Tests.Services
 	public class SurveyServiceTests
 	{
 		SurveyService service = new SurveyService();
-		
+				
 		[Test]
 		public void TestReadSurvey()
 		{
 			var s = service.ReadSurvey(32);
-			Console.WriteLine("Survey: {0}", s.Internal);
+			Console.WriteLine(s.Internal);
 			foreach (var sq in s.Questions) {
-				Console.WriteLine("\tQuestion: {0}", sq.Question.Internal);
-				foreach (var sqo in sq.Options) {
-					Console.WriteLine("\t\tOption: {0}", sqo.QuestionOption.Option.Internal);
-					foreach (var oc in sqo.QuestionOption.Option.Components) {
-						Console.WriteLine("\t\t\t Component: {0}", oc.OptionComponent.Internal);
-					}
-				}
+				Console.WriteLine("\t" + sq.Question.Internal);
 			}
 		}
 	}

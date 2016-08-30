@@ -14,13 +14,23 @@ namespace HW.EForm.Report.Tests.Services
 	{
 		ReportService s = new ReportService();
 		
+//		[Test]
+//		public void TestReadReport()
+//		{
+//			var r = s.ReadReport(3);
+//			Console.WriteLine("Report: {0}", r.Internal);
+//			foreach (var rp in r.Parts) {
+//				Console.WriteLine("  Part: {0}, Question: {1}", rp.Internal, rp.Question.Internal);
+//			}
+//		}
+		
 		[Test]
 		public void TestReadReport()
 		{
-			var r = s.ReadReport(3);
-			Console.WriteLine("Report: {0}", r.Internal);
+			var r = s.ReadReport(1);
+			Console.WriteLine(r.Internal);
 			foreach (var rp in r.Parts) {
-				Console.WriteLine("  Part: {0}, Question: {1}", rp.Internal, rp.Question.Internal);
+				Console.WriteLine("\t" + rp.Internal);
 			}
 		}
 	}

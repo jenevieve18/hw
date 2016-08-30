@@ -13,7 +13,6 @@ namespace HW.EForm.Core.Models
 		public int SortOrder { get; set; }
 		public string SortString { get; set; }
 		public int SurveyID { get; set; }
-//		public int LangID { get; set; }
 		public Guid UnitKey { get; set; }
 		public int UserCount { get; set; }
 		public int UnitCategoryID { get; set; }
@@ -55,27 +54,35 @@ namespace HW.EForm.Core.Models
 			set { survey = value; }
 		}
 		public Report Report { get; set; }
-//		public ProjectRound ProjectRound { get; set; }
-		ProjectRound projectRound;
-		
-		public ProjectRound ProjectRound {
-			get {
-				if (projectRound == null) {
-					OnProjectRoundGet(null);
-				}
-				return projectRound;
-			}
-			set { projectRound = value; }
-		}
+		public ProjectRound ProjectRound { get; set; }
 		public IList<ProjectRoundUnitManager> Managers { get; set; }
 		
-		public event EventHandler ProjectRoundGet;
+		IList<AnswerValue> answerValues;
+		public IList<QuestionOption> Options { get; set; }
 		
-		protected virtual void OnProjectRoundGet(EventArgs e)
+		public IList<AnswerValue> AnswerValues {
+			get { return answerValues; }
+			set { answerValues = value; SetAnswerValuesForComponents(); }
+		}
+		
+		void SetAnswerValuesForComponents()
 		{
-			if (ProjectRoundGet != null) {
-				ProjectRoundGet(this, e);
+			foreach (var qo in Options) {
+				foreach (var oc in qo.Option.Components) {
+					oc.OptionComponent.AnswerValues = GetAnswerValuesForComponent(oc.OptionComponentID);
+				}
 			}
+		}
+		
+		List<AnswerValue> GetAnswerValuesForComponent(int optionComponentID)
+		{
+			var answerValues = new List<AnswerValue>();
+			foreach (var av in AnswerValues) {
+				if (av.ValueInt == optionComponentID) {
+					answerValues.Add(av);
+				}
+			}
+			return answerValues;
 		}
 	}
 }

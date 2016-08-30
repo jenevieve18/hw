@@ -5,13 +5,6 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h3><%= project.Internal %></h3>
     <p><strong>Name: </strong><%= project.Name %></p>
-    <p><strong>Logo: </strong></p>
-    <p><strong>Survey(s)</strong></p>
-    <ul>
-        <% foreach (var s in project.Surveys) { %>
-        <li><%= s.Survey.Internal %></li>
-        <% } %>
-    </ul>
     <h4>Project Rounds</h4>
     <table class="table table-hover table-striped">
         <tr>

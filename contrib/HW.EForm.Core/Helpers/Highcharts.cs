@@ -8,42 +8,31 @@ using System.Collections.Generic;
 
 namespace HW.EForm.Core.Helpers
 {
-	public class Chart
+	public abstract class HighchartsChart
 	{
-		public string Title { get; set; }
-		public string Subtitle { get; set; }
-		public List<string> Categories { get; set; }
-		public string XAxisTitle { get; set; }
-		public string YAxisTitle { get; set; }
-		public List<Series> Series { get; set; }
+		public Chart Chart { get; set; }
 		
-		public Chart()
+		public HighchartsChart(Chart chart)
 		{
-			Series = new List<Series>();
-			Categories = new List<string>();
+			this.Chart = chart;
 		}
 	}
 	
-	public class Series
+	public class HighchartsBoxplot : HighchartsChart
 	{
-		public string Name { get; set; }
-		public List<double> Data { get; set; }
-		
-		public Series(string name, List<double> data)
+		public HighchartsBoxplot(Chart chart) : base(chart)
 		{
-			this.Name = name;
-			this.Data = data;
 		}
-	}
-	
-	public class Boxplot : Chart
-	{
+		
 		public override string ToString()
 		{
 			string str = @"
 {
 	chart: {
 	    type: 'boxplot'
+	},
+	credits: {
+		enabled: false,
 	},
 	title: {
 	    text: '__TITLE__'
@@ -62,36 +51,43 @@ namespace HW.EForm.Core.Helpers
 	        text: '__YAXIS_TITLE__'
 	    },
 	},
-	series: [__SERIES__]
+	series: [{ name: '', data: [__DATA__] }]
 }";
-			str = str.Replace("__TITLE__", Title);
-			str = str.Replace("__XAXIS_TITLE__", XAxisTitle);
-			str = str.Replace("__YAXIS_TITLE__", YAxisTitle);
+			str = str.Replace("__TITLE__", Chart.Title);
+			str = str.Replace("__XAXIS_TITLE__", Chart.XAxisTitle);
+			str = str.Replace("__YAXIS_TITLE__", Chart.YAxisTitle);
 			string categories = "";
-			foreach (var c in Categories) {
+			foreach (var c in Chart.Categories) {
 				categories += string.Format("'{0}',", c);
 			}
 			str = str.Replace("__CATEGORIES__", categories);
-			string series = "";
-			foreach (var s in Series) {
-				string data = "";
+			string data = "";
+			foreach (var s in Chart.Series) {
+				data += "[";
 				foreach (var d in s.Data) {
 					data += d + ",";
 				}
-				series += string.Format("{{name: '{1}', data: [[{0}]]}}", data, s.Name);
+				data += "],";
 			}
-			str = str.Replace("__SERIES__", series);
+			str = str.Replace("__DATA__", data);
 			return str;
 		}
 	}
 	
-	public class ColumnChart : Chart
+	public class HighchartsColumnChart : HighchartsChart
 	{
+		public HighchartsColumnChart(Chart chart) : base(chart)
+		{
+		}
+		
 		public override string ToString()
 		{
 			string str = @"{
   chart: {
     type: 'column'
+  },
+  credits: {
+    enabled: false
   },
   title: {
     text: '__TITLE__'
@@ -105,6 +101,8 @@ namespace HW.EForm.Core.Helpers
   },
   yAxis: {
     min: 0,
+    max: 100,
+    tickInterval: 10,
     title: {
       text: ''
     }
@@ -123,19 +121,19 @@ namespace HW.EForm.Core.Helpers
       borderWidth: 0
     }
   },
-  series: [{__SERIES__}]
+  series: [__SERIES__]
 }";
-			str = str.Replace("__TITLE__", Title);
-			str = str.Replace("__SUBTITLE__", Subtitle);
-			str = str.Replace("__XAXIS_TITLE__", XAxisTitle);
-			str = str.Replace("__YAXIS_TITLE__", YAxisTitle);
+			str = str.Replace("__TITLE__", Chart.Title);
+			str = str.Replace("__SUBTITLE__", Chart.Subtitle);
+			str = str.Replace("__XAXIS_TITLE__", Chart.XAxisTitle);
+			str = str.Replace("__YAXIS_TITLE__", Chart.YAxisTitle);
 			string categories = "";
-			foreach (var c in Categories) {
+			foreach (var c in Chart.Categories) {
 				categories += string.Format("'{0}',", c);
 			}
 			str = str.Replace("__CATEGORIES__", categories);
 			string series = "";
-			foreach (var s in Series) {
+			foreach (var s in Chart.Series) {
 				string data = "";
 				foreach (var d in s.Data) {
 					data += d + ",";
@@ -147,8 +145,12 @@ namespace HW.EForm.Core.Helpers
 		}
 	}
 	
-	public class LineChart : Chart
+	public class HighchartsLineChart : HighchartsChart
 	{
+		public HighchartsLineChart(Chart chart) : base(chart)
+		{
+		}
+		
 		public override string ToString()
 		{
 			string str = @"
@@ -156,6 +158,9 @@ namespace HW.EForm.Core.Helpers
   title: {
     text: '__TITLE__',
     x: -20 //center
+  },
+  credits: {
+  	enabled: false,
   },
   subtitle: {
     text: '__SUBTITLE__',
@@ -165,6 +170,9 @@ namespace HW.EForm.Core.Helpers
     categories: [__CATEGORIES__]
   },
   yAxis: {
+    min: 0,
+    max: 100,
+    tickInterval: 10,
     title: {
       text: '__YAXIS_TITLE__'
     },
@@ -185,17 +193,17 @@ namespace HW.EForm.Core.Helpers
   },
   series: [__SERIES__]
 }";
-			str = str.Replace("__TITLE__", Title);
-			str = str.Replace("__SUBTITLE__", Subtitle);
-			str = str.Replace("__XAXIS_TITLE__", XAxisTitle);
-			str = str.Replace("__YAXIS_TITLE__", YAxisTitle);
+			str = str.Replace("__TITLE__", Chart.Title);
+			str = str.Replace("__SUBTITLE__", Chart.Subtitle);
+			str = str.Replace("__XAXIS_TITLE__", Chart.XAxisTitle);
+			str = str.Replace("__YAXIS_TITLE__", Chart.YAxisTitle);
 			string categories = "";
-			foreach (var c in Categories) {
+			foreach (var c in Chart.Categories) {
 				categories += string.Format("'{0}',", c);
 			}
 			str = str.Replace("__CATEGORIES__", categories);
 			string series = "";
-			foreach (var s in Series) {
+			foreach (var s in Chart.Series) {
 				string data = "";
 				foreach (var d in s.Data) {
 					data += d + ",";

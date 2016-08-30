@@ -133,7 +133,7 @@ namespace HW.EForm.Core.Services
 			var pru = sprur.Read(projectRoundUnitID);
 			if (pru != null) {
 				pru.ProjectRound = ReadProjectRound2(pru.ProjectRoundID, projectRoundUnitID);
-				pru.Survey = ReadSurvey(pru.SurveyID);
+//				pru.Survey = ReadSurvey(pru.SurveyID);
 				pru.Managers = sprumr.FindByProjectRoundUnit(pru.ProjectRoundUnitID);
 				foreach (var prum in pru.Managers) {
 					prum.User = sprur2.Read(prum.ProjectRoundUserID);

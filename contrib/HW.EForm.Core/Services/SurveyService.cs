@@ -12,14 +12,14 @@ namespace HW.EForm.Core.Services
 {
 	public class SurveyService
 	{
-		SqlSurveyRepository ssr = new SqlSurveyRepository();
-		SqlSurveyQuestionRepository ssqr = new SqlSurveyQuestionRepository();
-		SqlSurveyQuestionOptionRepository ssqor = new SqlSurveyQuestionOptionRepository();
+		SqlSurveyRepository surveyRepo = new SqlSurveyRepository();
+		SqlSurveyQuestionRepository surveyQuestionRepo = new SqlSurveyQuestionRepository();
+		SqlSurveyQuestionOptionRepository surveyQuestionOptionRepo = new SqlSurveyQuestionOptionRepository();
 		
-		SqlQuestionRepository sqr = new SqlQuestionRepository();
-		SqlQuestionOptionRepository sqor = new SqlQuestionOptionRepository();
+		SqlQuestionRepository questionRepo = new SqlQuestionRepository();
+		SqlQuestionOptionRepository questionOptionRepo = new SqlQuestionOptionRepository();
 		
-		SqlOptionRepository sor = new SqlOptionRepository();
+		SqlOptionRepository optionRepo = new SqlOptionRepository();
 		
 		public SurveyService()
 		{
@@ -27,19 +27,19 @@ namespace HW.EForm.Core.Services
 
         public IList<Survey> FindAllSurveys()
         {
-            return ssr.FindAll();
+            return surveyRepo.FindAll();
         }
 		
 		public Survey ReadSurvey(int surveyID)
 		{
-			var s = ssr.Read(surveyID);
-			s.Questions = ssqr.FindBySurvey(surveyID);
+			var s = surveyRepo.Read(surveyID);
+			s.Questions = surveyQuestionRepo.FindBySurvey(surveyID);
 			foreach (var q in s.Questions) {
-				q.Question = sqr.Read(q.QuestionID);
-				q.Options = ssqor.lalala(q.SurveyQuestionID);
+				q.Question = questionRepo.Read(q.QuestionID);
+				q.Options = surveyQuestionOptionRepo.FindBySurveyQuestion(q.SurveyQuestionID);
 				foreach (var o in q.Options) {
-					o.QuestionOption = sqor.Read(o.QuestionOptionID);
-					o.QuestionOption.Option = sor.Read(o.QuestionOption.OptionID);
+					o.QuestionOption = questionOptionRepo.Read(o.QuestionOptionID);
+					o.QuestionOption.Option = optionRepo.Read(o.QuestionOption.OptionID);
 				}
 			}
 			return s;

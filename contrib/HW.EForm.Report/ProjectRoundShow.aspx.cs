@@ -17,6 +17,7 @@ namespace HW.EForm.Report
     	
         protected void Page_Load(object sender, EventArgs e)
         {
+            HtmlHelper.RedirectIf(Session["ManagerID"] == null, "default.aspx");
         	Show(ConvertHelper.ToInt32(Request.QueryString["ProjectRoundID"]));
         }
         

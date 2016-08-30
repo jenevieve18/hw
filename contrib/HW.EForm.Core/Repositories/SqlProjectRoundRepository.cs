@@ -280,6 +280,89 @@ WHERE ProjectRoundID = @ProjectRoundID";
 			return projectRound;
 		}
 		
+		public ProjectRound Read(int projectRoundID, int managerID)
+		{
+			string query = @"
+SELECT 	pr.ProjectRoundID, 
+	pr.ProjectID, 
+	pr.Internal, 
+	pr.Started, 
+	pr.Closed, 
+	pr.TransparencyLevel, 
+	pr.RepeatedEntry, 
+	pr.SurveyID, 
+	pr.LangID, 
+	pr.RoundKey, 
+	pr.EmailFromAddress, 
+	pr.ReminderInterval, 
+	pr.Layout, 
+	pr.SelfRegistration, 
+	pr.Timeframe, 
+	pr.Yellow, 
+	pr.Green, 
+	pr.IndividualReportID, 
+	pr.ExtendedSurveyID, 
+	pr.ReportID, 
+	pr.Logo, 
+	pr.UseCode, 
+	pr.ConfidentialIndividualReportID, 
+	pr.SendSurveyAsEmail, 
+	pr.SFTPhost, 
+	pr.SFTPpath, 
+	pr.SFTPuser, 
+	pr.SFTPpass, 
+	pr.SendSurveyAsPdfTo, 
+	pr.SendSurveyAsPdfToQ, 
+	pr.SendSurveyAsPdfToO,
+	pr.AdHocReportCompareWithParent,
+	pr.FeedbackID
+FROM ProjectRound pr
+INNER JOIN ManagerProjectRound mpr ON mpr.ProjectRoundID = pr.ProjectRoundID
+	AND mpr.ManagerID = @ManagerID
+WHERE pr.ProjectRoundID = @ProjectRoundID";
+			ProjectRound projectRound = null;
+			using (var rs = ExecuteReader(query, new SqlParameter("@ProjectRoundID", projectRoundID), new SqlParameter("@ManagerID", managerID))) {
+				if (rs.Read()) {
+					projectRound = new ProjectRound {
+						ProjectRoundID = GetInt32(rs, 0),
+						ProjectID = GetInt32(rs, 1),
+						Internal = GetString(rs, 2),
+						Started = GetDateTime(rs, 3),
+						Closed = GetDateTime(rs, 4),
+						TransparencyLevel = GetInt32(rs, 5),
+						RepeatedEntry = GetInt32(rs, 6),
+						SurveyID = GetInt32(rs, 7),
+						LangID = GetInt32(rs, 8),
+						RoundKey = GetGuid(rs, 9),
+						EmailFromAddress = GetString(rs, 10),
+						ReminderInterval = GetInt32(rs, 11),
+						Layout = GetInt32(rs, 12),
+						SelfRegistration = GetInt32(rs, 13),
+						Timeframe = GetInt32(rs, 14),
+						Yellow = GetInt32(rs, 15),
+						Green = GetInt32(rs, 16),
+						IndividualReportID = GetInt32(rs, 17),
+						ExtendedSurveyID = GetInt32(rs, 18),
+						ReportID = GetInt32(rs, 19),
+						Logo = GetInt32(rs, 20),
+						UseCode = GetInt32(rs, 21),
+						ConfidentialIndividualReportID = GetInt32(rs, 22),
+						SendSurveyAsEmail = GetInt32(rs, 23),
+						SFTPhost = GetString(rs, 24),
+						SFTPpath = GetString(rs, 25),
+						SFTPuser = GetString(rs, 26),
+						SFTPpass = GetString(rs, 27),
+						SendSurveyAsPdfTo = GetString(rs, 28),
+						SendSurveyAsPdfToQ = GetInt32(rs, 29),
+						SendSurveyAsPdfToO = GetInt32(rs, 30),
+						AdHocReportCompareWithParent = GetInt32(rs, 31),
+						FeedbackID = GetInt32(rs, 32)
+					};
+				}
+			}
+			return projectRound;
+		}
+		
 		public override IList<ProjectRound> FindAll()
 		{
 			string query = @"
@@ -394,6 +477,85 @@ FROM ProjectRound
 WHERE ProjectID = @ProjectID";
 			var projectRounds = new List<ProjectRound>();
 			using (var rs = ExecuteReader(query, new SqlParameter("@ProjectID", projectID))) {
+				while (rs.Read()) {
+					projectRounds.Add(new ProjectRound {
+						ProjectRoundID = GetInt32(rs, 0),
+						ProjectID = GetInt32(rs, 1),
+						Internal = GetString(rs, 2),
+						Started = GetDateTime(rs, 3),
+						Closed = GetDateTime(rs, 4),
+						TransparencyLevel = GetInt32(rs, 5),
+						RepeatedEntry = GetInt32(rs, 6),
+						SurveyID = GetInt32(rs, 7),
+						LangID = GetInt32(rs, 8),
+						RoundKey = GetGuid(rs, 9),
+						EmailFromAddress = GetString(rs, 10),
+						ReminderInterval = GetInt32(rs, 11),
+						Layout = GetInt32(rs, 12),
+						SelfRegistration = GetInt32(rs, 13),
+						Timeframe = GetInt32(rs, 14),
+						Yellow = GetInt32(rs, 15),
+						Green = GetInt32(rs, 16),
+						IndividualReportID = GetInt32(rs, 17),
+						ExtendedSurveyID = GetInt32(rs, 18),
+						ReportID = GetInt32(rs, 19),
+						Logo = GetInt32(rs, 20),
+						UseCode = GetInt32(rs, 21),
+						ConfidentialIndividualReportID = GetInt32(rs, 22),
+						SendSurveyAsEmail = GetInt32(rs, 23),
+						SFTPhost = GetString(rs, 24),
+						SFTPpath = GetString(rs, 25),
+						SFTPuser = GetString(rs, 26),
+						SFTPpass = GetString(rs, 27),
+						SendSurveyAsPdfTo = GetString(rs, 28),
+						SendSurveyAsPdfToQ = GetInt32(rs, 29),
+						SendSurveyAsPdfToO = GetInt32(rs, 30)
+					});
+				}
+			}
+			return projectRounds;
+		}
+		
+		public IList<ProjectRound> FindByProject(int projectID, int managerID)
+		{
+			string query = @"
+SELECT 	pr.ProjectRoundID, 
+	pr.ProjectID, 
+	pr.Internal, 
+	pr.Started, 
+	pr.Closed, 
+	pr.TransparencyLevel, 
+	pr.RepeatedEntry, 
+	pr.SurveyID, 
+	pr.LangID, 
+	pr.RoundKey, 
+	pr.EmailFromAddress, 
+	pr.ReminderInterval, 
+	pr.Layout, 
+	pr.SelfRegistration, 
+	pr.Timeframe, 
+	pr.Yellow, 
+	pr.Green, 
+	pr.IndividualReportID, 
+	pr.ExtendedSurveyID, 
+	pr.ReportID, 
+	pr.Logo, 
+	pr.UseCode, 
+	pr.ConfidentialIndividualReportID, 
+	pr.SendSurveyAsEmail, 
+	pr.SFTPhost, 
+	pr.SFTPpath, 
+	pr.SFTPuser, 
+	pr.SFTPpass, 
+	pr.SendSurveyAsPdfTo, 
+	pr.SendSurveyAsPdfToQ, 
+	pr.SendSurveyAsPdfToO
+FROM ProjectRound pr
+INNER JOIN ManagerProjectRound mpr ON mpr.ProjectRoundID = pr.ProjectRoundID
+	AND mpr.ManagerID = @ManagerID
+WHERE pr.ProjectID = @ProjectID";
+			var projectRounds = new List<ProjectRound>();
+			using (var rs = ExecuteReader(query, new SqlParameter("@ProjectID", projectID), new SqlParameter("@ManagerID", managerID))) {
 				while (rs.Read()) {
 					projectRounds.Add(new ProjectRound {
 						ProjectRoundID = GetInt32(rs, 0),

@@ -15,20 +15,17 @@ namespace HW.EForm.Core.Repositories
 		{
 			string query = @"
 INSERT INTO Project(
-	ProjectID, 
 	Internal, 
 	Name, 
 	AppURL
 )
 VALUES(
-	@ProjectID, 
 	@Internal, 
 	@Name, 
 	@AppURL
 )";
 			ExecuteNonQuery(
 				query,
-				new SqlParameter("@ProjectID", project.ProjectID),
 				new SqlParameter("@Internal", project.Internal),
 				new SqlParameter("@Name", project.Name),
 				new SqlParameter("@AppURL", project.AppURL)
@@ -75,6 +72,31 @@ FROM Project
 WHERE ProjectID = @ProjectID";
 			Project project = null;
 			using (var rs = ExecuteReader(query, new SqlParameter("@ProjectID", id))) {
+				if (rs.Read()) {
+					project = new Project {
+						ProjectID = GetInt32(rs, 0),
+						Internal = GetString(rs, 1),
+						Name = GetString(rs, 2),
+						AppURL = GetString(rs, 3)
+					};
+				}
+			}
+			return project;
+		}
+		
+		public Project Read(int projectID, int managerID)
+		{
+			string query = @"
+SELECT 	p.ProjectID, 
+	p.Internal, 
+	p.Name, 
+	p.AppURL
+FROM Project p
+INNER JOIN ProjectRound pr ON pr.ProjectID = p.ProjectID
+INNER JOIN ManagerProjectRound mpr ON mpr.ProjectRoundID = pr.ProjectRoundID AND mpr.ManagerID = @ManagerID
+WHERE p.ProjectID = @ProjectID";
+			Project project = null;
+			using (var rs = ExecuteReader(query, new SqlParameter("@ProjectID", projectID), new SqlParameter("@ManagerID", managerID))) {
 				if (rs.Read()) {
 					project = new Project {
 						ProjectID = GetInt32(rs, 0),

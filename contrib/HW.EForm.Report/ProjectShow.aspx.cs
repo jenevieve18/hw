@@ -10,19 +10,20 @@ using HW.EForm.Core.Services;
 
 namespace HW.EForm.Report
 {
-    public partial class ProjectShow : System.Web.UI.Page
-    {
-    	ProjectService s = new ProjectService();
-    	protected Project project;
-    	
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            Show(ConvertHelper.ToInt32(Request.QueryString["ProjectID"]));
-        }
-        
-        public void Show(int projectID)
-        {
-        	project = s.ReadProject(projectID, ConvertHelper.ToInt32(Session["ManagerID"]));
-        }
-    }
+	public partial class ProjectShow : System.Web.UI.Page
+	{
+		ProjectService s = new ProjectService();
+		protected Project project;
+		
+		protected void Page_Load(object sender, EventArgs e)
+		{
+            HtmlHelper.RedirectIf(Session["ManagerID"] == null, "default.aspx");
+			Show(ConvertHelper.ToInt32(Request.QueryString["ProjectID"]));
+		}
+		
+		public void Show(int projectID)
+		{
+			project = s.ReadProject(projectID, ConvertHelper.ToInt32(Session["ManagerID"]));
+		}
+	}
 }

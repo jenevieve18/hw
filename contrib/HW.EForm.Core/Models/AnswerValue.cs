@@ -25,6 +25,8 @@ namespace HW.EForm.Core.Models
 		Option option;
 		Answer answer;
 		
+		public OptionComponent OptionComponent { get; set; }
+		
 		public int GetValueInt()
 		{
 			if (Option != null && !Option.IsSlider) {

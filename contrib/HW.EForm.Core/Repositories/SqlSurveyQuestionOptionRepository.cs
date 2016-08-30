@@ -154,7 +154,7 @@ FROM SurveyQuestionOption";
 			return surveyQuestionOptions;
 		}
 		
-		public IList<SurveyQuestionOption> lalala(int surveyQuestionID)
+		public IList<SurveyQuestionOption> FindBySurveyQuestion(int surveyQuestionID)
 		{
 			string query = @"
 SELECT 	SurveyQuestionOptionID, 

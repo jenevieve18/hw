@@ -175,5 +175,56 @@ WHERE QuestionID = @QuestionID";
 			}
 			return questionOptions;
 		}
+		
+		public IList<QuestionOption> FindByQuestion(int questionID, int[] projectRoundUnitIDs)
+		{
+			string projectRoundUnitQuery = "";
+			var parameters = new List<SqlParameter>();
+			if (projectRoundUnitIDs.Length > 0) {
+				projectRoundUnitQuery += "AND a.ProjectRoundUnitID IN (";
+				int i = 1;
+				foreach (var u in projectRoundUnitIDs) {
+					projectRoundUnitQuery += "@ProjectRoundUnitID" + u;
+					projectRoundUnitQuery += i++ < projectRoundUnitIDs.Length ? ", " : "";
+					parameters.Add(new SqlParameter("@ProjectRoundUnitID" + u, u));
+				}
+				projectRoundUnitQuery += ")";
+			}
+			string query = string.Format(@"
+SELECT 	qo.QuestionOptionID, 
+	qo.QuestionID, 
+	qo.OptionID, 
+	qo.OptionPlacement, 
+	qo.SortOrder, 
+	qo.Variablename, 
+	qo.Forced, 
+	qo.Hide
+FROM QuestionOption qo
+WHERE qo.QuestionID = @QuestionID
+AND EXISTS (
+	SELECT 1 FROM Answer a
+	INNER JOIN AnswerValue av ON av.AnswerID = a.AnswerID
+	WHERE av.QuestionID = qo.QuestionID
+		AND av.OptionID = qo.OptionID
+		{0}
+)", projectRoundUnitQuery);
+			var questionOptions = new List<QuestionOption>();
+			parameters.Add(new SqlParameter("@QuestionID", questionID));
+			using (var rs = ExecuteReader(query, parameters.ToArray())) {
+				while (rs.Read()) {
+					questionOptions.Add(new QuestionOption {
+						QuestionOptionID = GetInt32(rs, 0),
+						QuestionID = GetInt32(rs, 1),
+						OptionID = GetInt32(rs, 2),
+						OptionPlacement = GetInt32(rs, 3),
+						SortOrder = GetInt32(rs, 4),
+						Variablename = GetString(rs, 5),
+						Forced = GetInt32(rs, 6),
+						Hide = GetInt32(rs, 7)
+					});
+				}
+			}
+			return questionOptions;
+		}
 	}
 }

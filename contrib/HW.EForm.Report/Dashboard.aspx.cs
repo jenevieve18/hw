@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using HW.EForm.Core.Helpers;
 
 namespace HW.EForm.Report
 {
@@ -11,6 +12,7 @@ namespace HW.EForm.Report
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            HtmlHelper.RedirectIf(Session["ManagerID"] == null, "default.aspx");
         }
     }
 }
