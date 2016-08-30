@@ -16,7 +16,10 @@
                 });
             </script>
             <div class="panel panel-default">
-                <div class="panel-heading"><%= fq.Question.Internal %></div>
+                <div class="panel-heading">
+                    <span class="hidden">QuestionID: <%= fq.QuestionID %></span>
+                    <%= fq.Question.Internal %>
+                </div>
                 <div class="panel-body">
                     <div id="container<%= i++ %>"></div>
                     <%--<img id="container<%= i++ %>" />--%>
