@@ -5,20 +5,25 @@
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h3><%= feedback.FeedbackText %></h3>
-    <% int i = 0; %>
-    <% foreach (var fq in feedback.Questions) { %>
-        <script>
-            $(function () {
-                $('#container<%= i %>').highcharts(<%= new HighchartsColumnChart(fq.ToChart()) %>);
-            });
-        </script>
-        <div class="panel panel-default">
-            <div class="panel-heading"><%= fq.Question.Internal %></div>
-            <div class="panel-body">
-                <div id="container<%= i++ %>"></div>
-                <%--<img id="container<%= i++ %>" />--%>
+    <% if (feedback != null) { %>
+        <h3><%= feedback.FeedbackText %></h3>
+        <% int i = 0; %>
+        <% foreach (var fq in feedback.Questions) { %>
+            <script>
+                $(function () {
+                    $('#container<%= i %>').highcharts(<%= new HighchartsColumnChart(fq.ToChart()) %>);
+                });
+            </script>
+            <div class="panel panel-default">
+                <div class="panel-heading"><%= fq.Question.Internal %></div>
+                <div class="panel-body">
+                    <div id="container<%= i++ %>"></div>
+                    <%--<img id="container<%= i++ %>" />--%>
+                </div>
             </div>
-        </div>
+        <% } %>
+    <% } else { %>
+        <h3>No feedback result.</h3>
+        Go back to list of <%= HtmlHelper.Anchor("projects", "projects.aspx") %>.
     <% } %>
 </asp:Content>
