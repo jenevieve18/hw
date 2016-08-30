@@ -37,7 +37,12 @@ namespace HW.EForm.Core.Helpers
 		}
 
 		public double LowerWhisker {
-			get { return data[0]; }
+			get {
+				if (data.Count > 0) {
+					return data[0];
+				}
+				return 0;
+			}
 		}
 		
 		public double NerdLowerWhisker {
@@ -140,7 +145,6 @@ namespace HW.EForm.Core.Helpers
 
 		double GetMeanMedian(List<double> data)
 		{
-//			LoggingService.Info(ToStr());
 			if (data.Count % 2 != 0) {
 				return data[data.Count / 2];
 			} else {

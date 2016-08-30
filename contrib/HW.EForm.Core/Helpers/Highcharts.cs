@@ -66,13 +66,11 @@ namespace HW.EForm.Core.Helpers
 			str = str.Replace("__CATEGORIES__", categories);
 			string data = "";
 			foreach (var s in Chart.Series) {
-//				data += "[";
-//				s.Data.Sort();
-//				foreach (var d in s.Data) {
-//					data += d + ",";
-//				}
-//				data += "],";
-				data += new HWList(s.Data).ToString() + ",";
+				if (s.Data.Count > 0) {
+					data += new HWList(s.Data).ToString() + ",";
+				} else {
+					data += "[],";
+				}
 			}
 			str = str.Replace("__DATA__", data);
 			return str;
