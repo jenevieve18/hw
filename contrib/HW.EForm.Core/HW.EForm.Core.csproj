@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Helpers\Chart.cs" />
     <Compile Include="Helpers\Highcharts.cs" />
+    <Compile Include="Helpers\HWList.cs" />
     <Compile Include="Helpers\JSONHelper.cs" />
     <Compile Include="Helpers\ConvertHelper.cs" />
     <Compile Include="Helpers\HtmlHelper.cs" />

@@ -47,6 +47,9 @@ namespace HW.EForm.Core.Helpers
 	    }
 	},
 	yAxis: {
+		min: 0,
+		max: 100,
+		tickInterval: 10,
 	    title: {
 	        text: '__YAXIS_TITLE__'
 	    },
@@ -63,11 +66,13 @@ namespace HW.EForm.Core.Helpers
 			str = str.Replace("__CATEGORIES__", categories);
 			string data = "";
 			foreach (var s in Chart.Series) {
-				data += "[";
-				foreach (var d in s.Data) {
-					data += d + ",";
-				}
-				data += "],";
+//				data += "[";
+//				s.Data.Sort();
+//				foreach (var d in s.Data) {
+//					data += d + ",";
+//				}
+//				data += "],";
+				data += new HWList(s.Data).ToString() + ",";
 			}
 			str = str.Replace("__DATA__", data);
 			return str;

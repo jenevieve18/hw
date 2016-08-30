@@ -69,7 +69,11 @@ namespace HW.EForm.Core.Models
 		{
 			foreach (var qo in Options) {
 				foreach (var oc in qo.Option.Components) {
-					oc.OptionComponent.AnswerValues = GetAnswerValuesForComponent(oc.OptionComponentID);
+					if (qo.Option.IsSlider) {
+						oc.OptionComponent.AnswerValues = AnswerValues;
+					} else {
+						oc.OptionComponent.AnswerValues = GetAnswerValuesForComponent(oc.OptionComponentID);
+					}
 				}
 			}
 		}

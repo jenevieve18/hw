@@ -70,7 +70,8 @@ namespace HW.EForm.Report.Tests.Services
 				}
 				
 //				Console.WriteLine(new HighchartsColumnChart(fq.ToChart()));
-				Console.WriteLine(new HighchartsLineChart(fq.ToChart()));
+//				Console.WriteLine(new HighchartsLineChart(fq.ToChart()));
+				Console.WriteLine(new HighchartsBoxplot(fq.ToChart()));
 			}
 		}
 	}
