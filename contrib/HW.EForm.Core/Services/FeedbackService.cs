@@ -87,7 +87,6 @@ namespace HW.EForm.Core.Services
 							oc.OptionComponent = optionComponentRepo.Read(oc.OptionComponentID);
 						}
 					}
-					
 					fq.ProjectRoundUnits = projectRoundUnitRepo.FindProjectRoundUnits(projectRoundUnitIDs);
 					foreach (var pru in fq.ProjectRoundUnits) {
 						pru.Options = fq.Question.Options;
