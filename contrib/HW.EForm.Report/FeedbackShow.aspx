@@ -11,7 +11,7 @@
         <% foreach (var fq in feedback.Questions) { %>
             <script>
                 $(function () {
-                    $('#container<%= i %>').highcharts(<%= new HighchartsColumnChart(fq.ToChart()) %>);
+                    $('#container<%= i %>').highcharts(<%= new HighchartsBoxplot(fq.ToChart()) %>);
                 });
             </script>
             <div class="panel panel-default">
