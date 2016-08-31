@@ -14,13 +14,15 @@ namespace HW.EForm.Report
     {
     	FeedbackService s = new FeedbackService();
     	protected Feedback feedback;
+        protected int projectRoundID;
     	
         protected void Page_Load(object sender, EventArgs e)
         {
         	HtmlHelper.RedirectIf(Session["ManagerID"] == null, "default.aspx");
+            projectRoundID = ConvertHelper.ToInt32(Request.QueryString["ProjectRoundID"]);
         	Show(
                 ConvertHelper.ToInt32(Request.QueryString["FeedbackID"]),
-                ConvertHelper.ToInt32(Request.QueryString["ProjectRoundID"]),
+                projectRoundID,
                 ConvertHelper.ToInt32(Request.QueryString["ProjectRoundUnitID"])
             );
         }

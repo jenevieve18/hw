@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h3><%= projectRound.Internal %></h3>
+    <h3><%= HtmlHelper.Anchor("<i class='fa fa-arrow-left' aria-hidden='true'></i>", "projectshow.aspx?ProjectID=" + projectRound.ProjectID) %> <%= projectRound.Internal %></h3>
     <p><strong>Survey: </strong><%= projectRound.Survey.ToString() %> <img src="assets/img/<%= projectRound.LangID %>.gif" /></p>
     <h4>Units</h4>
     <table class="table table-hover table-striped">

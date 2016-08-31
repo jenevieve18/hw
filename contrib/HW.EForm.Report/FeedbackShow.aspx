@@ -7,7 +7,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <% if (feedback != null) { %>
-        <h3><%= feedback.FeedbackText %></h3>
+        <h3><%= HtmlHelper.Anchor("<i class='fa fa-arrow-left' aria-hidden='true'></i>", "projectroundshow.aspx?ProjectRoundID=" + projectRoundID) %> <%= feedback.FeedbackText %></h3>
         <% int i = 0; %>
         <% foreach (var fq in feedback.Questions) { %>
             <script>
@@ -27,7 +27,7 @@
             </div>
         <% } %>
     <% } else { %>
-        <h3>No feedback result.</h3>
+        <h3><%= HtmlHelper.Anchor("<i class='fa fa-arrow-left' aria-hidden='true'></i>", "projectroundshow.aspx?ProjectRoundID=" + projectRoundID) %> No feedback result.</h3>
         Go back to list of <%= HtmlHelper.Anchor("projects", "projects.aspx") %>.
     <% } %>
 </asp:Content>
