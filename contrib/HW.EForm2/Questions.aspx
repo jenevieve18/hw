@@ -10,6 +10,11 @@
             <td><%= q.QuestionID %></td>
             <td><%= q.Internal %></td>
             <td>
+                <% foreach (var l in q.Languages) { %>
+                    <img src="assets/img/<%= l.LangID %>.gif" />
+                <% } %>
+            </td>
+            <td>
                 <%= HtmlHelper.Anchor("Edit", "questionedit.aspx?QuestionID=" + q.QuestionID) %>
             </td>
         </tr>

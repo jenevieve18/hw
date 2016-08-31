@@ -95,6 +95,11 @@ namespace HW.EForm.Core.Services
 			return pru;
 		}
 		
+		public IList<Project> FindAllProjects()
+		{
+			return projectRepo.FindAll();
+		}
+		
 		public IList<Project> FindByManager(int managerID)
 		{
 			return projectRepo.FindByManager(managerID);
