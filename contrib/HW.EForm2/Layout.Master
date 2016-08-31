@@ -31,7 +31,7 @@
         <%= HtmlHelper.Anchor("Containers", "containers.aspx") %> |
         <%= HtmlHelper.Anchor("Survey Statistics", "") %> |
         <%= HtmlHelper.Anchor("Export", "") %> |
-        <%= HtmlHelper.Anchor("Feedback", "") %>
+        <%= HtmlHelper.Anchor("Feedback", "feedbacks.aspx") %>
         ]
     </p>
     <form id="form1" runat="server">

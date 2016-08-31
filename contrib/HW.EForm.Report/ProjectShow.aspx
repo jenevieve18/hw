@@ -5,6 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h3><%= project.Internal %></h3>
     <p><strong>Name: </strong><%= project.Name %></p>
+    <p>Go back list of <%= HtmlHelper.Anchor("projects", "projects.aspx") %>.</p>
     <h4>Project Rounds</h4>
     <table class="table table-hover table-striped">
         <tr>

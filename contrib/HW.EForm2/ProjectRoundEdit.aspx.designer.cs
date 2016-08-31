@@ -10,7 +10,7 @@
 namespace HW.EForm2 {
     
     
-    public partial class ProjectEdit {
+    public partial class ProjectRoundEdit {
         
         /// <summary>
         /// textBoxInternal control.
@@ -22,21 +22,30 @@ namespace HW.EForm2 {
         protected global::System.Web.UI.WebControls.TextBox textBoxInternal;
         
         /// <summary>
-        /// textBoxName control.
+        /// dropDownListSurveys control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxName;
+        protected global::System.Web.UI.WebControls.DropDownList dropDownListSurveys;
         
         /// <summary>
-        /// dropDownListSurvey control.
+        /// buttonUpdate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dropDownListSurvey;
+        protected global::System.Web.UI.WebControls.Button buttonUpdate;
+        
+        /// <summary>
+        /// dropDownListFeedback control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList dropDownListFeedback;
     }
 }

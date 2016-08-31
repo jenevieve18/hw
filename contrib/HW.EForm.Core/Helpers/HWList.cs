@@ -126,7 +126,8 @@ namespace HW.EForm.Core.Helpers
 		public override string ToString()
 		{
 //			return string.Format("[Lower Whisker: {0}, Lower Box: {1}, Median: {2}, Upper Box: {3}, Upper Whisker: {4}, Mean: {5}]", LowerWhisker, LowerBox, Median, UpperBox, UpperWhisker, Mean);
-			return string.Format("[{0},{1},{2},{3},{4}]", LowerWhisker, LowerBox, Median, UpperBox, UpperWhisker);
+//			return string.Format("[{0},{1},{2},{3},{4}]", LowerWhisker, LowerBox, Median, UpperBox, UpperWhisker);
+			return string.Format("[{0},{1},{2},{3},{4}]", NerdLowerWhisker, LowerBox, Median, UpperBox, NerdUpperWhisker);
 		}
 		
 		public string ToStr()

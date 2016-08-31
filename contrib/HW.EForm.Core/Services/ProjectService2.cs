@@ -46,12 +46,22 @@ namespace HW.EForm.Core.Services
 		{
 			projectRepo.Save(p);
 		}
+
+        public void UpdateProjectRound(ProjectRound pr, int projectRoundID)
+        {
+            projectRoundRepo.Update(pr, projectRoundID);
+        }
 		
 		public Project ReadProject(int projectID)
 		{
 			var p = projectRepo.Read(projectID);
+			p.Surveys = projectSurveyRepo.FindByProject(projectID);
+			foreach (var ps in p.Surveys) {
+				ps.Survey = surveyRepo.Read(ps.SurveyID);
+			}
 			p.Rounds = projectRoundRepo.FindByProject(projectID);
 			foreach (var pr in p.Rounds) {
+                pr.Survey = surveyRepo.Read(pr.SurveyID);
 				pr.Units = projectRoundUnitRepo.FindByProjectRound(pr.ProjectRoundID);
 			}
 			return p;

@@ -59,12 +59,15 @@
   <ItemGroup>
     <Content Include="Containers.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="FeedbackEdit.aspx" />
+    <Content Include="Feedbacks.aspx" />
     <Content Include="ManagerEdit.aspx" />
     <Content Include="Managers.aspx" />
     <Content Include="OptionComponents.aspx" />
     <Content Include="OptionEdit.aspx" />
     <Content Include="Options.aspx" />
     <Content Include="ProjectEdit.aspx" />
+    <Content Include="ProjectRoundEdit.aspx" />
     <Content Include="Projects.aspx" />
     <Content Include="QuestionEdit.aspx" />
     <Content Include="Questions.aspx" />
@@ -88,6 +91,20 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FeedbackEdit.aspx.cs">
+      <DependentUpon>FeedbackEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FeedbackEdit.aspx.designer.cs">
+      <DependentUpon>FeedbackEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Feedbacks.aspx.cs">
+      <DependentUpon>Feedbacks.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Feedbacks.aspx.designer.cs">
+      <DependentUpon>Feedbacks.aspx</DependentUpon>
     </Compile>
     <Compile Include="Layout.Master.cs">
       <DependentUpon>Layout.Master</DependentUpon>
@@ -137,6 +154,13 @@
     </Compile>
     <Compile Include="ProjectEdit.aspx.designer.cs">
       <DependentUpon>ProjectEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectRoundEdit.aspx.cs">
+      <DependentUpon>ProjectRoundEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProjectRoundEdit.aspx.designer.cs">
+      <DependentUpon>ProjectRoundEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="Projects.aspx.cs">
       <DependentUpon>Projects.aspx</DependentUpon>
