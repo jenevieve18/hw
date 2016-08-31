@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace HW.EForm.Core.Helpers
 {
@@ -127,7 +128,14 @@ namespace HW.EForm.Core.Helpers
 		{
 //			return string.Format("[Lower Whisker: {0}, Lower Box: {1}, Median: {2}, Upper Box: {3}, Upper Whisker: {4}, Mean: {5}]", LowerWhisker, LowerBox, Median, UpperBox, UpperWhisker, Mean);
 //			return string.Format("[{0},{1},{2},{3},{4}]", LowerWhisker, LowerBox, Median, UpperBox, UpperWhisker);
-			return string.Format("[{0},{1},{2},{3},{4}]", NerdLowerWhisker.ToString("0.0"), LowerBox.ToString("0.0"), Median.ToString("0.0"), UpperBox.ToString("0.0"), NerdUpperWhisker.ToString("0.0"));
+			return string.Format(
+				"[{0},{1},{2},{3},{4}]",
+				NerdLowerWhisker.ToString("0.0", new CultureInfo("en-US")),
+				LowerBox.ToString("0.0", new CultureInfo("en-US")),
+				Median.ToString("0.0", new CultureInfo("en-US")),
+				UpperBox.ToString("0.0", new CultureInfo("en-US")),
+				NerdUpperWhisker.ToString("0.0", new CultureInfo("en-US"))
+			);
 		}
 		
 		public string ToStr()
