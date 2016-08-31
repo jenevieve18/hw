@@ -94,6 +94,7 @@ namespace HW.EForm.Core.Services
 			foreach (var pru in pr.Units) {
 				pru.ProjectRound = pr;
 				pru.Survey = surveyRepo.Read(pru.SurveyID);
+				pru.Managers = projectRoundUnitManagerRepo.FindByProjectRoundUnit(pru.ProjectRoundUnitID);
 			}
 			return pr;
 		}

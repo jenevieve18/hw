@@ -12,12 +12,12 @@
             <th>Survey</th>
             <th></th>
         </tr>
-        <% foreach (var r in project.Rounds) { %>
+        <% foreach (var pr in project.Rounds) { %>
         <tr>
-            <td><%= HtmlHelper.Anchor(r.Internal, "projectroundshow.aspx?ProjectRoundID=" + r.ProjectRoundID) %></td>
-            <td><%= r.Survey.ToString() %></td>
+            <td><%= HtmlHelper.Anchor(pr.Internal, "projectroundshow.aspx?ProjectRoundID=" + pr.ProjectRoundID) %></td>
+            <td><%= pr.Survey.ToString() %></td>
             <td>
-                <% foreach (var l in r.Languages) { %>
+                <% foreach (var l in pr.Languages) { %>
                 <img src="assets/img/<%= l.LangID %>.gif" />
                 <% } %>
             </td>

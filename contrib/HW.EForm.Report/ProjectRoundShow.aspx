@@ -20,7 +20,7 @@
             <%--<td><%= HtmlHelper.Anchor(u.Unit, "projectroundunitshow.aspx?ProjectRoundUnitID=" + u.ProjectRoundUnitID) %></td>--%>
             <td><%= HtmlHelper.Anchor(pru.Unit, string.Format("feedbackshow.aspx?FeedbackID={0}&ProjectRoundID={1}&ProjectRoundUnitID={2}", pru.ProjectRound.FeedbackID, pru.ProjectRound.ProjectRoundID, pru.ProjectRoundUnitID)) %></td>
             <td><%= pru.ID %></td>
-            <td><%--<%= u.Managers.Count %>--%></td>
+            <td><%= pru.Managers.Count %></td>
             <td></td>
             <td><%= pru.Survey.ToString() %></td>
             <td><img src="assets/img/<%= pru.LangID %>.gif" /></td>
