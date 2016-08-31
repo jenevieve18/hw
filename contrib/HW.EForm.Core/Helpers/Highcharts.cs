@@ -16,6 +16,14 @@ namespace HW.EForm.Core.Helpers
 		{
 			this.Chart = chart;
 		}
+		
+		public static HighchartsChart GetHighchartsChart(int optionType, Chart chart)
+		{
+			switch (optionType) {
+					case 9: return new HighchartsBoxplot(chart);
+					default: return new HighchartsColumnChart(chart);
+			}
+		}
 	}
 	
 	public class HighchartsBoxplot : HighchartsChart

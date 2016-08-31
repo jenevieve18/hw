@@ -12,7 +12,7 @@
         <% foreach (var fq in feedback.Questions) { %>
             <script>
                 $(function () {
-                    $('#container<%= i %>').highcharts(<%= new HighchartsBoxplot(fq.ToChart()) %>);
+                    $('#container<%= i %>').highcharts(<%= HighchartsBoxplot.GetHighchartsChart(fq.Question.Options[0].Option.OptionType, fq.ToChart()) %>);
                 });
             </script>
             <div class="panel panel-default">
