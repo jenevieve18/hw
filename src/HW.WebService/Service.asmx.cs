@@ -3185,7 +3185,8 @@ namespace HW.WebService
 				if (registrationIDFound) {
 					exec(
 						"UPDATE dbo.UserRegistrationID SET UserID = -UserID " +
-						"WHERE RegistrationID = '" + registrationID + "' "
+						"WHERE RegistrationID = '" + registrationID + "' " +
+						"AND UserID > 0"
 					);
 				}
 				r.Close();
