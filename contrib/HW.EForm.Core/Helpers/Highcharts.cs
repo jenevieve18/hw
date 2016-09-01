@@ -36,33 +36,59 @@ namespace HW.EForm.Core.Helpers
 		{
 			string str = @"
 {
-	chart: {
-	    type: 'boxplot'
-	},
-	credits: {
-		enabled: false,
-	},
-	title: {
-	    text: '__TITLE__'
-	},
-	legend: {
-	    enabled: false
-	},
-	xAxis: {
-	    categories: [__CATEGORIES__],
-	    title: {
-	        text: '__XAXIS_TITLE__'
-	    }
-	},
-	yAxis: {
-		min: 0,
-		max: 100,
-		tickInterval: 10,
-	    title: {
-	        text: '__YAXIS_TITLE__'
-	    },
-	},
-	series: [{ name: '', data: [__DATA__] }]
+  chart: {
+    type: 'boxplot'
+  },
+  credits: {
+    enabled: false,
+  },
+  title: {
+    text: '__TITLE__'
+  },
+  legend: {
+    enabled: false
+  },
+  xAxis: {
+    categories: [__CATEGORIES__],
+    title: {
+      text: '__XAXIS_TITLE__'
+    }
+  },
+  yAxis: {
+    min: 0,
+    max: 100,
+    tickInterval: 10,
+    title: {
+      text: '__YAXIS_TITLE__'
+    },
+    plotBands: [{
+      from: 0,
+      to: 30,
+      color: 'rgb(255,168,168)',
+    }, {
+      from: 30,
+      to: 60,
+      color: 'rgb(255,254,190)',
+    }, {
+      from: 60,
+      to: 100,
+      color: 'rgb(204,255,187)',
+    }]
+  },
+  plotOptions: {
+    boxplot: {
+      fillColor: '#4467e9',
+      color: 'black',
+      medianColor: 'black',
+      medianWidth: 1,
+      whiskerColor: 'black',
+      whiskerWidth: 1
+    }
+  },
+  series: [{
+    name: '',
+    data: [__DATA__]
+  }]
 }";
 			str = str.Replace("__TITLE__", Chart.Title);
 			str = str.Replace("__XAXIS_TITLE__", Chart.XAxisTitle);

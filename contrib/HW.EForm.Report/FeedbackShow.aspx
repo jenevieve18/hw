@@ -1,12 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Layout.Master" AutoEventWireup="true" CodeBehind="FeedbackShow.aspx.cs" Inherits="HW.EForm.Report.FeedbackShow" %>
 <%@ Import Namespace="HW.EForm.Core.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-<%--<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/highcharts-more.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>--%>
-<script src="https://code.highcharts.com/5/js/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<%--<script src="https://code.highcharts.com/5/js/highcharts.js"></script>
 <script src="https://code.highcharts.com/5/js/highcharts-more.js"></script>
-<script src="https://code.highcharts.com/5/js/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/5/js/modules/exporting.js"></script>--%>
 <style>
   @import 'https://code.highcharts.com/5/css/highcharts.css';
   .highcharts-boxplot-series .highcharts-point {}
