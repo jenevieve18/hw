@@ -73,5 +73,12 @@ namespace HW.EForm.Report.Tests.Services
 				Console.WriteLine(new HighchartsBoxplot(fq.ToChart()));
 			}
 		}
+		
+		[Test]
+		public void b()
+		{
+			var f = s.ReadFeedback2(6, 13, new int[] { 97 });
+			Console.WriteLine(new HighchartsBoxplot(f.ToChart()));
+		}
 	}
 }

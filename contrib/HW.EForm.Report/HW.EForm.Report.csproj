@@ -67,6 +67,7 @@
     <Content Include="Default.aspx" />
     <Content Include="Export.aspx" />
     <Content Include="FeedbackShow.aspx" />
+    <Content Include="FeedbackShow2.aspx" />
     <Content Include="Logout.aspx" />
     <Content Include="Profile.aspx" />
     <Content Include="ProjectRoundShow.aspx" />
@@ -102,6 +103,13 @@
     </Compile>
     <Compile Include="FeedbackShow.aspx.designer.cs">
       <DependentUpon>FeedbackShow.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FeedbackShow2.aspx.cs">
+      <DependentUpon>FeedbackShow2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FeedbackShow2.aspx.designer.cs">
+      <DependentUpon>FeedbackShow2.aspx</DependentUpon>
     </Compile>
     <Compile Include="Layout.Master.cs">
       <DependentUpon>Layout.Master</DependentUpon>
