@@ -10,7 +10,7 @@
         <h3><%= HtmlHelper.Anchor("<i class='fa fa-arrow-left' aria-hidden='true'></i>", "projectroundshow.aspx?ProjectRoundID=" + projectRoundID) %> <%= feedback.FeedbackText %></h3>
         <script>
             $(function () {
-                $('#container').highcharts(<%= HighchartsBoxplot.GetHighchartsChart(9, feedback.ToChart()) %>);
+                $('#container').highcharts(<%= HighchartsBoxplot.GetHighchartsChart(9, feedback.ToChart(false)) %>);
             });
         </script>
         <div class="panel panel-default">

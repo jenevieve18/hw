@@ -1,6 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+# SharpDevelop 4.4
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW.EForm.Report", "HW.EForm.Report.csproj", "{25294112-2552-4DEE-AA62-9C159E426941}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW.EForm.Core", "..\HW.EForm.Core\HW.EForm.Core.csproj", "{F3340E3E-E108-4D65-ACBF-E996CCB32668}"

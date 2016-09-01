@@ -19,6 +19,8 @@ namespace HW.EForm.Core.Services
 		SqlQuestionOptionRepository questionOptionRepo = new SqlQuestionOptionRepository();
 		SqlQuestionLangRepository questionLangRepo = new SqlQuestionLangRepository();
 		
+		SqlWeightedQuestionOptionRepository weightedQuestionOptionRepo = new SqlWeightedQuestionOptionRepository();
+		
 		SqlOptionRepository optionRepo = new SqlOptionRepository();
 		SqlOptionComponentsRepository optionComponentsRepo = new SqlOptionComponentsRepository();
 		SqlOptionComponentRepository optionComponentRepo = new SqlOptionComponentRepository();
@@ -78,6 +80,7 @@ namespace HW.EForm.Core.Services
 				f.Questions = feedbackQuestionRepo.FindByFeedback(f.FeedbackID);
 				foreach (var fq in f.Questions) {
 					fq.Question = questionRepo.Read(fq.QuestionID);
+					fq.Question.WeightedQuestionOption = weightedQuestionOptionRepo.ReadByQuestion(fq.QuestionID);
 					fq.Question.Languages = questionLangRepo.FindByQuestion(fq.QuestionID);
 					fq.Question.Options = questionOptionRepo.FindByQuestion(fq.QuestionID, projectRoundUnitIDs);
 					foreach (var qo in fq.Question.Options) {

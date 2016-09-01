@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\ChartTests.cs" />
+    <Compile Include="Helpers\HWListTests.cs" />
     <Compile Include="Helpers\QuestionHelperTests.cs" />
     <Compile Include="Helpers\Test1.cs" />
     <Compile Include="Models\AnswerTests.cs" />

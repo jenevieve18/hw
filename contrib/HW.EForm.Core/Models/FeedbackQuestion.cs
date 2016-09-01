@@ -13,9 +13,10 @@ namespace HW.EForm.Core.Models
 		public Question Question { get; set; }
 		public Feedback Feedback { get; set; }
 		
-		public Chart ToChart()
+		public Chart ToChart(bool hasBackground)
 		{
-			var c = new Chart { Title = Question.GetLanguage(1).Question };
+			var c = new Chart { Title = Question.GetLanguage(1).Question, HasBackground = hasBackground };
+			c.WeightedQuestionOption = Question.WeightedQuestionOption;
 			foreach (var qo in Question.Options) {
 				if (qo.Option.IsSlider) {
 					foreach (var pru in ProjectRoundUnits) {

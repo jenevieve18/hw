@@ -50,7 +50,7 @@ $(function() {
 //				fq.Units = units;
 //				fq.AnswerValues = answerService.FindByQuestionOptionsAndUnits(fq.QuestionID, fq.Question.Options, projectRoundID, units);
 
-				string chart = new HighchartsColumnChart(fq.ToChart()).ToString();
+				string chart = new HighchartsColumnChart(fq.ToChart(false)).ToString();
 				template = template.Replace("__SCRIPT__", chart);
 				
 				Console.WriteLine(template);

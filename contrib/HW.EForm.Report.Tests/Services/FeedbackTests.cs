@@ -70,7 +70,7 @@ namespace HW.EForm.Report.Tests.Services
 				}
 //				Console.WriteLine(new HighchartsColumnChart(fq.ToChart()));
 //				Console.WriteLine(new HighchartsLineChart(fq.ToChart()));
-				Console.WriteLine(new HighchartsBoxplot(fq.ToChart()));
+				Console.WriteLine(new HighchartsBoxplot(fq.ToChart(true)));
 			}
 		}
 		
@@ -78,7 +78,7 @@ namespace HW.EForm.Report.Tests.Services
 		public void b()
 		{
 			var f = s.ReadFeedback2(6, 13, new int[] { 97 });
-			Console.WriteLine(new HighchartsBoxplot(f.ToChart()));
+			Console.WriteLine(new HighchartsBoxplot(f.ToChart(false)));
 		}
 	}
 }

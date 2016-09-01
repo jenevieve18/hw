@@ -89,7 +89,7 @@ $(function() {
 					fq.ProjectRoundUnits = projectRoundUnits;
 //					fq.AnswerValues = answerService.FindByQuestionOptionsAndUnits(fq.QuestionID, fq.Question.Options, pru.ProjectRoundID, projectRoundUnits);
 
-					string chart = new HighchartsColumnChart(fq.ToChart()).ToString();
+					string chart = new HighchartsColumnChart(fq.ToChart(false)).ToString();
 					template = template.Replace("__SCRIPT__", chart);
 					
 					Console.WriteLine(template);

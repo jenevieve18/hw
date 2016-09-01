@@ -15,15 +15,27 @@ namespace HW.EForm.Core.Services
 		SqlQuestionRepository questionRepo = new SqlQuestionRepository();
 		SqlQuestionLangRepository questionLangRepo = new SqlQuestionLangRepository();
 		SqlQuestionOptionRepository questionOptionRepo = new SqlQuestionOptionRepository();
-
 		SqlQuestionContainerRepository questionContainerRepo = new SqlQuestionContainerRepository();
 
 		SqlOptionRepository optionRepo = new SqlOptionRepository();
 		SqlOptionComponentsRepository optionComponentsRepo = new SqlOptionComponentsRepository();
 		SqlOptionComponentRepository optionComponentRepo = new SqlOptionComponentRepository();
 		
+		SqlWeightedQuestionOptionRepository weightedQuestionOptionRepo = new SqlWeightedQuestionOptionRepository();
+		
 		public QuestionService()
 		{
+		}
+		
+		public Option ReadOption(int optionID)
+		{
+			var o = optionRepo.Read(optionID);
+			return o;
+		}
+		
+		public WeightedQuestionOption ReadWeightedQuestionOption(int questionID)
+		{
+			return weightedQuestionOptionRepo.ReadByQuestion(questionID);
 		}
 
 		public IList<OptionComponent> FindAllComponents()
@@ -71,12 +83,6 @@ namespace HW.EForm.Core.Services
 				}
 			}
 			return q;
-		}
-		
-		public Option ReadOption(int optionID)
-		{
-			var o = optionRepo.Read(optionID);
-			return o;
 		}
 	}
 }
