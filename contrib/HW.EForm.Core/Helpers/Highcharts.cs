@@ -77,12 +77,12 @@ namespace HW.EForm.Core.Helpers
   },
   plotOptions: {
     boxplot: {
-      fillColor: '#4467e9',
+      fillColor: '#8BB9DE',
       color: 'black',
       medianColor: 'black',
-      medianWidth: 1,
+      medianWidth: 2,
       whiskerColor: 'black',
-      whiskerWidth: 1
+      whiskerWidth: 2
     }
   },
   series: [{
