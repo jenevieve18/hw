@@ -3192,6 +3192,50 @@ namespace HW.WebService
 			}
 			return registrationIDFound;
 		}
+		
+		[WebMethod(Description="Validates a user key and, if there is a match, returns a user data object including token with a variable lifetime (max 20 minutes).")]
+		public UserData UserLoginWithKey(string userKey, int expirationMinutes)
+		{
+			UserData ud = new UserData();
+
+			SqlDataReader r = rs(
+				"SELECT u.UserID, u.LID " +
+				"FROM [User] u " +
+				"WHERE u.UserID = " + toInt32(subString(userKey, 12), 0).ToString() + " " +
+				"AND LOWER(LEFT(REPLACE(CONVERT(VARCHAR(255),u.UserKey),'-',''),12)) = '" + subString(userKey, 0, 12).Replace("'", "").ToLower() + "'"
+			);
+			if (r.Read())
+			{
+				ud = getUserToken(r.GetInt32(0),r.GetInt32(1),expirationMinutes);
+			}
+			r.Close();
+
+			return ud;
+		}
+		private string subString(string str, int startIndex)
+		{
+			try {
+				return str.Substring(startIndex);
+			} catch {
+				return "";
+			}
+		}
+		private string subString(string str, int startIndex, int length)
+		{
+			try {
+				return str.Substring(startIndex, length);
+			} catch {
+				return "";
+			}
+		}
+		private int toInt32(object v, int d)
+		{
+			try {
+				return Convert.ToInt32(v);
+			} catch {
+				return d;
+			}
+		}
 		private void updateProfileComparison(int userProfileID)
 		{
 			string comparison = "";
