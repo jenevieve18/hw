@@ -3168,10 +3168,29 @@ namespace HW.WebService
 			return validKey;
 		}
 
-		[WebMethod(Description = "")]
-		public string HelloWorld()
+		[WebMethod(Description = "Removes the user device registration ID. Returns false if the device ID is not found in the database.")]
+		public bool UserRemoveRegistrationID(string registrationID, string token, int expirationMinutes)
 		{
-			return "Hello you son of a shit!";
+			int userID = getUserIdFromToken(token, expirationMinutes);
+			bool registrationIDFound = false;
+			if (userID != 0) {
+				SqlDataReader r = rs(
+					"SELECT UserRegistrationID " +
+					"FROM dbo.UserRegistrationID " +
+					"WHERE RegistrationID = '" + registrationID + "'"
+				);
+				if (r.Read()) {
+					registrationIDFound = true;
+				}
+				if (registrationIDFound) {
+					exec(
+						"UPDATE dbo.UserRegistrationID SET UserID = -UserID " +
+						"WHERE RegistrationID = '" + registrationID + "' "
+					);
+				}
+				r.Close();
+			}
+			return registrationIDFound;
 		}
 		private void updateProfileComparison(int userProfileID)
 		{
