@@ -18,9 +18,8 @@
         </tr>
         <% foreach (var pru in projectRound.Units) { %>
         <tr>
-            <%--<td><%= HtmlHelper.Anchor(u.Unit, "projectroundunitshow.aspx?ProjectRoundUnitID=" + u.ProjectRoundUnitID) %></td>--%>
             <td><%= HtmlHelper.Anchor(pru.Unit, string.Format("feedbackshow.aspx?FeedbackID={0}&ProjectRoundID={1}&ProjectRoundUnitID={2}", pru.ProjectRound.FeedbackID, pru.ProjectRound.ProjectRoundID, pru.ProjectRoundUnitID)) %></td>
-            <td><%= HtmlHelper.Anchor(pru.Unit, string.Format("feedbackshow2.aspx?FeedbackID={0}&ProjectRoundID={1}&ProjectRoundUnitID={2}", pru.ProjectRound.FeedbackID, pru.ProjectRound.ProjectRoundID, pru.ProjectRoundUnitID)) %></td>
+            <td><%= HtmlHelper.Anchor(pru.Unit + " (Grouped)", string.Format("feedbackshow2.aspx?FeedbackID={0}&ProjectRoundID={1}&ProjectRoundUnitID={2}", pru.ProjectRound.FeedbackID, pru.ProjectRound.ProjectRoundID, pru.ProjectRoundUnitID)) %></td>
             <td><%= pru.ID %></td>
             <td><%= pru.Managers.Count %></td>
             <td></td>

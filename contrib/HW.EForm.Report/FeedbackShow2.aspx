@@ -19,12 +19,10 @@
             </div>
             <div class="panel-body">
                 <div id="container"></div>
-                <%--<img id="container<%= i++ %>" />--%>
             </div>
         </div>
     <% } else { %>
         <h3><%= HtmlHelper.Anchor("<i class='fa fa-arrow-left' aria-hidden='true'></i>", "projectroundshow.aspx?ProjectRoundID=" + projectRoundID) %> No feedback result.</h3>
         Go back to list of <%= HtmlHelper.Anchor("projects", "projects.aspx") %>.
     <% } %>
-
 </asp:Content>
