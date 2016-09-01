@@ -15,7 +15,7 @@ namespace HW.EForm.Core.Models
 		
 		public Chart ToChart()
 		{
-			var c = new Chart { Title = Question.Internal };
+			var c = new Chart { Title = Question.GetLanguage(1).Question };
 			foreach (var qo in Question.Options) {
 				if (qo.Option.IsSlider) {
 					foreach (var pru in ProjectRoundUnits) {
@@ -23,7 +23,7 @@ namespace HW.EForm.Core.Models
 					}
 				} else {
 					foreach (var oc in qo.Option.Components) {
-						c.Categories.Add(oc.OptionComponent.Internal);
+						c.Categories.Add(oc.OptionComponent.GetLanguage(1).Text);
 					}
 				}
 			}
