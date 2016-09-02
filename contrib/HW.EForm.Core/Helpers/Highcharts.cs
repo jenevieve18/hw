@@ -75,6 +75,7 @@ namespace HW.EForm.Core.Helpers
   },
   series: [{
     name: '',
+    pointWidth: 40,
     data: [__DATA__]
   }]
 }";

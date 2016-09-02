@@ -22,7 +22,6 @@
                 </div>
                 <div class="panel-body">
                     <div id="container<%= i++ %>"></div>
-                    <%--<img id="container<%= i++ %>" />--%>
                 </div>
             </div>
         <% } %>
