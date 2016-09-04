@@ -27,7 +27,7 @@ namespace HW.EForm.Core.Helpers
 				GenerateThumbnailPart1Content(thumbnailPart1);
 
 				PresentationPart presentationPart1 = document.AddPresentationPart();
-				GeneratePresentationPart1Content(presentationPart1);
+				GeneratePresentationPart1Content(presentationPart1, feedback);
 
 				SlidePart slidePart1 = presentationPart1.AddNewPart<SlidePart>("rId8");
 				GenerateSlidePart1Content(slidePart1);
@@ -191,13 +191,16 @@ namespace HW.EForm.Core.Helpers
 				ThemePart themePart6 = slideMasterPart5.AddNewPart<ThemePart>("rId1");
 				GenerateThemePart6Content(themePart6);
 
-				SlidePart slidePart6 = presentationPart1.AddNewPart<SlidePart>("rId9");
-				GenerateSlidePart6Content(slidePart6);
-
-				ImagePart imagePart7 = slidePart6.AddNewPart<ImagePart>("image/png", "rId2");
-				GenerateImagePart7Content(imagePart7);
-
-				slidePart6.AddPart(slideLayoutPart1, "rId1");
+//				SlidePart slidePart6 = presentationPart1.AddNewPart<SlidePart>("rId9");
+//				GenerateSlidePart6Content(slidePart6);
+//
+//				ImagePart imagePart7 = slidePart6.AddNewPart<ImagePart>("image/png", "rId2");
+//				GenerateImagePart7Content(imagePart7);
+//
+//				slidePart6.AddPart(slideLayoutPart1, "rId1");
+				foreach (var fq in feedback.Questions) {
+					GenerateGraphSlideContent(presentationPart1, slideLayoutPart1, fq);
+				}
 
 				ViewPropertiesPart viewPropertiesPart1 = presentationPart1.AddNewPart<ViewPropertiesPart>("rId14");
 				GenerateViewPropertiesPart1Content(viewPropertiesPart1);
@@ -206,6 +209,17 @@ namespace HW.EForm.Core.Helpers
 				GenerateExtendedFilePropertiesPart1Content(extendedFilePropertiesPart1);
 
 				SetPackageProperties(document);
+			}
+			
+			void GenerateGraphSlideContent(PresentationPart presentationPart1, SlideLayoutPart slideLayoutPart1, FeedbackQuestion question)
+			{
+				SlidePart slidePart6 = presentationPart1.AddNewPart<SlidePart>("rId9" + question.QuestionID);
+				GenerateSlidePart6Content(slidePart6, question.Question);
+
+				ImagePart imagePart7 = slidePart6.AddNewPart<ImagePart>("image/png", "rId2");
+				GenerateImagePart7Content(imagePart7);
+
+				slidePart6.AddPart(slideLayoutPart1, "rId1");
 			}
 
 			// Generates content of thumbnailPart1.
@@ -217,7 +231,7 @@ namespace HW.EForm.Core.Helpers
 			}
 
 			// Generates content of presentationPart1.
-			private void GeneratePresentationPart1Content(PresentationPart presentationPart1)
+			private void GeneratePresentationPart1Content(PresentationPart presentationPart1, Feedback feedback)
 			{
 				Presentation presentation1 = new Presentation(){ ShowSpecialPlaceholderOnTitleSlide = false, SaveSubsetFonts = true };
 				presentation1.AddNamespaceDeclaration("a", "http://schemas.openxmlformats.org/drawingml/2006/main");
@@ -246,14 +260,19 @@ namespace HW.EForm.Core.Helpers
 				SlideId slideId1 = new SlideId(){ Id = (UInt32Value)256U, RelationshipId = "rId6" };
 				SlideId slideId2 = new SlideId(){ Id = (UInt32Value)257U, RelationshipId = "rId7" };
 				SlideId slideId3 = new SlideId(){ Id = (UInt32Value)262U, RelationshipId = "rId8" };
-				SlideId slideId4 = new SlideId(){ Id = (UInt32Value)272U, RelationshipId = "rId9" };
+//				SlideId slideId4 = new SlideId(){ Id = (UInt32Value)272U, RelationshipId = "rId9" };
 				SlideId slideId5 = new SlideId(){ Id = (UInt32Value)279U, RelationshipId = "rId10" };
 				SlideId slideId6 = new SlideId(){ Id = (UInt32Value)260U, RelationshipId = "rId11" };
 
 				slideIdList1.Append(slideId1);
 				slideIdList1.Append(slideId2);
 				slideIdList1.Append(slideId3);
-				slideIdList1.Append(slideId4);
+//				slideIdList1.Append(slideId4);
+				int i = 0;
+				foreach (var fq in feedback.Questions) {
+					SlideId slideId4 = new SlideId(){ Id = (UInt32Value)(uint)(280 + i++), RelationshipId = "rId9" + fq.QuestionID };
+					slideIdList1.Append(slideId4);
+				}
 				slideIdList1.Append(slideId5);
 				slideIdList1.Append(slideId6);
 				SlideSize slideSize1 = new SlideSize(){ Cx = 9144000, Cy = 6858000, Type = SlideSizeValues.Screen4x3 };
@@ -19415,7 +19434,7 @@ namespace HW.EForm.Core.Helpers
 			}
 
 			// Generates content of slidePart6.
-			private void GenerateSlidePart6Content(SlidePart slidePart6)
+			private void GenerateSlidePart6Content(SlidePart slidePart6, Question question)
 			{
 				Slide slide6 = new Slide();
 				slide6.AddNamespaceDeclaration("a", "http://schemas.openxmlformats.org/drawingml/2006/main");
@@ -19879,7 +19898,8 @@ namespace HW.EForm.Core.Helpers
 				runProperties129.Append(eastAsianFont194);
 				runProperties129.Append(complexScriptFont199);
 				A.Text text129 = new A.Text();
-				text129.Text = "Hur är på det hela taget ditt allmänna hälsotillstånd?";
+//				text129.Text = "Hur är på det hela taget ditt allmänna hälsotillstånd?";
+				text129.Text = question.GetLanguage(1).Question;
 
 				run98.Append(runProperties129);
 				run98.Append(text129);

@@ -15,9 +15,6 @@ namespace HW.EForm.Report.Tests.Helpers
 	[TestFixture]
 	public class ChartTests
 	{
-		Chart c;
-		string template;
-		
 //		[SetUp]
 //		public void Setup()
 //		{

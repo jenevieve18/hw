@@ -38,7 +38,6 @@ $(function() {
 <body>
 <div id=container></div>
 </body.";
-			int projectRoundID = 10;
 //			var units = projectService.FindProjectRoundUnits(new int[] { 96 });
 //			var f = feedbackService.ReadFeedback2(6, units);
 			var f = feedbackService.ReadFeedback2(6, 10, new int[] { 96 });
