@@ -363,6 +363,7 @@
     <Content Include="Reminders.aspx" />
     <Content Include="ReportImage.aspx" />
     <Content Include="ReportImage2.aspx" />
+    <Content Include="SendReminders.aspx" />
     <Content Include="Settings.aspx" />
     <Content Include="sql.aspx" />
     <Content Include="sql2.aspx" />
@@ -520,6 +521,13 @@
     </Compile>
     <Compile Include="ReportImage2.aspx.designer.cs">
       <DependentUpon>ReportImage2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SendReminders.aspx.cs">
+      <DependentUpon>SendReminders.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SendReminders.aspx.designer.cs">
+      <DependentUpon>SendReminders.aspx</DependentUpon>
     </Compile>
     <Compile Include="Settings.aspx.cs">
       <DependentUpon>Settings.aspx</DependentUpon>
