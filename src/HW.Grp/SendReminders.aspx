@@ -10,6 +10,7 @@
     <form id="form1" runat="server">
     <div>
         <asp:Button ID="buttonSendReminder" runat="server" Text="Send Reminders" OnClick="buttonSendReminder_Click" />
+        <asp:Button ID="buttonRever" runat="server" Text="Revert SendReminderLastSent for 'iiiii' and 'jay123' to a month ago" OnClick="buttonRevert_Click" />
     </div>
     </form>
 </body>
