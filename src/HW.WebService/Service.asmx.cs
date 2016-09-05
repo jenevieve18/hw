@@ -540,7 +540,7 @@ namespace HW.WebService
 					r = rs(sql, "eFormSqlConnection");
 					if (r.Read())
 					{
-						fi.formDisclaimer = r.GetString(0);
+						fi.formDisclaimer = r.IsDBNull(0) ? "" : r.GetString(0);
 						FormInstanceFeedback[] fiv = new FormInstanceFeedback[r.GetInt32(4)];
 						int cx = 0;
 						do
