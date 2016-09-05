@@ -36,7 +36,8 @@ namespace HW.Grp
 			//void Main(string[] args)
             public void Main()
 			{
-				string[] reminderMessageLang = new string[2], reminderSubjectLang = new string[2], reminderAutoLoginLang = new string[2];
+//				string[] reminderMessageLang = new string[2], reminderSubjectLang = new string[2], reminderAutoLoginLang = new string[2];
+            	string[] reminderMessageLang = new string[4], reminderSubjectLang = new string[4], reminderAutoLoginLang = new string[4];
 				string reminderEmail = "", backupServer = "";
 
 				ServicePointManager.ServerCertificateValidationCallback = delegate(object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
