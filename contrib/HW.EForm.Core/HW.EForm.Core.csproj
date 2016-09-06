@@ -78,6 +78,7 @@
     <Compile Include="Models\OptionComponent.cs" />
     <Compile Include="Models\OptionComponentLang.cs" />
     <Compile Include="Models\OptionComponents.cs" />
+    <Compile Include="Models\OptionContainer.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectRound.cs" />
     <Compile Include="Models\ProjectRoundLang.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="Repositories\SqlOptionComponentLangRepository.cs" />
     <Compile Include="Repositories\SqlOptionComponentRepository.cs" />
     <Compile Include="Repositories\SqlOptionComponentsRepository.cs" />
+    <Compile Include="Repositories\SqlOptionContainerRepository.cs" />
     <Compile Include="Repositories\SqlOptionRepository.cs" />
     <Compile Include="Repositories\SqlProjectRepository.cs" />
     <Compile Include="Repositories\SqlProjectRoundLangRepository.cs" />

@@ -19,7 +19,7 @@ namespace HW.EForm.Core.Models
 		
 		public Chart ToChart(bool hasBackground)
 		{
-			var c = new Chart { HasBackground = hasBackground };
+			var c = new Chart { Title = FeedbackText, HasBackground = hasBackground };
 			foreach (var fq in Questions) {
 				c.Categories.Add(fq.Question.GetLanguage(1).Question);
 				var d = new List<double>();

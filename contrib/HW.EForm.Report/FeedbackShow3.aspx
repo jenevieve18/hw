@@ -18,9 +18,7 @@
             </script>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <%--<span class="hidden">QuestionID: <%= fq.QuestionID %>, Options: <%= fq.Question.Options.Count %></span>
-                    <%= fq.Question.GetLanguage(1).Question %>--%>
-                    
+                    <%= c.Chart.Title %>
                 </div>
                 <div class="panel-body">
                     <div id="container<%= i++ %>"></div>

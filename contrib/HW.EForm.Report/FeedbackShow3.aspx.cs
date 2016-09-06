@@ -28,7 +28,8 @@ namespace HW.EForm.Report
 			feedbackID = ConvertHelper.ToInt32(Request.QueryString["FeedbackID"]);
 			projectRoundID = ConvertHelper.ToInt32(Request.QueryString["ProjectRoundID"]);
 			projectRoundUnitID = ConvertHelper.ToInt32(Request.QueryString["ProjectRoundUnitID"]);
-			Show(feedbackID, projectRoundID, projectRoundUnitID);
+			
+            Show(feedbackID, projectRoundID, projectRoundUnitID);
 		}
 
 		public void Show(int feedbackID, int projectRoundID, int projectRoundUnitID)
@@ -41,6 +42,15 @@ namespace HW.EForm.Report
 			}
 			
 //			AddQuestions(GetIndex1Questions(), projectRoundID, projectRoundUnitID);
+			
+			var painQuestions = new GroupedQuestions();
+			painQuestions.Questions.AddRange(questionService.ReadQuestion2(1689, 13, new int[] { 97 }).ToQuestions());
+			painQuestions.Questions.AddRange(questionService.ReadQuestion2(1690, 13, new int[] { 97 }).ToQuestions());
+			painQuestions.Questions.AddRange(questionService.ReadQuestion2(1691, 13, new int[] { 97 }).ToQuestions());
+			painQuestions.Questions.AddRange(questionService.ReadQuestion2(1692, 13, new int[] { 97 }).ToQuestions());
+			
+//			Console.WriteLine(HighchartsChart.GetHighchartsChart(9, painQuestions.ToChart(true)));
+			charts.Add(HighchartsChart.GetHighchartsChart(9, painQuestions.ToChart(true)));
 		}
 		
 		void AddQuestions(int[] questionIDs, int projectRoundID, int projectRoundUnitID)
