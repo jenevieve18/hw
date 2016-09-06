@@ -34,7 +34,7 @@ namespace HW.Grp
         protected void buttonRevert_Click(object sender, EventArgs e)
         {
             X.exec(@"update [User] set ReminderNextSend = '2016-08-06 09:00:00'
-where Username in ('iiiii', 'jay123');");
+where Username in ('iiiii', 'jay123', 'kkkkk');");
         }
 		
 		class X
