@@ -18,15 +18,17 @@ namespace HW.EForm.Core.Helpers
 		public string YAxisTitle { get; set; }
 		public List<Series> Series { get; set; }
 		public bool HasBackground { get; set; }
+		public List<PlotBand> PlotBands { get; set; }
+		public bool HasPlotBands {
+			get { return PlotBands.Count > 0; }
+		}
 		
 		public Chart()
 		{
 			Series = new List<Series>();
 			Categories = new List<string>();
+			PlotBands = new List<PlotBand>();
 		}
-		
-		
-		public WeightedQuestionOption WeightedQuestionOption { get; set; }
 	}
 	
 	public class Series
@@ -39,5 +41,12 @@ namespace HW.EForm.Core.Helpers
 			this.Name = name;
 			this.Data = data;
 		}
+	}
+	
+	public class PlotBand
+	{
+		public double From { get; set; }
+		public double To { get; set; }
+		public string Color { get; set; }
 	}
 }

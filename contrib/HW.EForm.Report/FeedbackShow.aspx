@@ -8,6 +8,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <% if (feedback != null) { %>
         <h3><%= HtmlHelper.Anchor("<i class='fa fa-arrow-left' aria-hidden='true'></i>", "projectroundshow.aspx?ProjectRoundID=" + projectRoundID) %> <%= feedback.FeedbackText %></h3>
+        <p><%= HtmlHelper.Anchor("Export", string.Format("export.aspx?FeedbackID={0}&ProjectRoundID={1}&ProjectRoundUnitID={2}", feedbackID, projectRoundID, projectRoundUnitID), "class='btn btn-default'") %></p>
         <% int i = 0; %>
         <% foreach (var fq in feedback.Questions) { %>
             <script>

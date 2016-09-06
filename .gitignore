@@ -188,8 +188,10 @@ OpenCover**
 /src/HW.Invoicing/uploads/New-HCG-Logo_Small.png
 /src/HW.WebService/UpgradeLog.htm
 /src/packages
-/contrib/packages
 /src/HW.EForm/UpgradeLog.htm
 /src/HW.Core/StyleCopViolations.xml
 /src/HW.WebService/packages
 /src/HW.Grp/packages
+
+/contrib/packages
+/contrib/HW.EForm.Report/packages

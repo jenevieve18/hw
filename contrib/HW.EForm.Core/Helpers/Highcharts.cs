@@ -88,38 +88,15 @@ namespace HW.EForm.Core.Helpers
 			}
 			str = str.Replace("__CATEGORIES__", categories);
 			
-			string plotOptions = "";
-			if (Chart.HasBackground) {
-				plotOptions = @"
-    plotBands: [{
-      from: 0,
-      to: __YELLOWLOW__,
-      color: 'rgb(255,168,168)',
-    }, {
-      from: __YELLOWLOW__,
-      to: __GREENLOW__,
-      color: 'rgb(255,254,190)',
-    }, {
-      from: __GREENLOW__,
-      to: __GREENHIGH__,
-      color: 'rgb(204,255,187)',
-    }, {
-      from: __GREENHIGH__,
-      to: __YELLOWHIGH__,
-      color: 'rgb(255,254,190)',
-    }, {
-      from: __YELLOWHIGH__,
-      to: __REDHIGH__,
-      color: 'rgb(255,168,168)',
-    }],";
-				plotOptions = plotOptions.Replace("__GREENHIGH__", Chart.WeightedQuestionOption.GreenHigh.ToString());
-				plotOptions = plotOptions.Replace("__GREENLOW__", Chart.WeightedQuestionOption.GreenLow.ToString());
-				plotOptions = plotOptions.Replace("__YELLOWLOW__", Chart.WeightedQuestionOption.YellowLow.ToString());
-				plotOptions = plotOptions.Replace("__YELLOWHIGH__", Chart.WeightedQuestionOption.YellowHigh.ToString());
-				plotOptions = plotOptions.Replace("__REDHIGH__", Chart.WeightedQuestionOption.YellowHigh < 100 ? 100.ToString() : 101.ToString());
-				
+			string plotBands = "";
+			if (Chart.HasPlotBands) {
+				plotBands += "plotBands: [";
+				foreach (var p in Chart.PlotBands) {
+					plotBands += "{ from: " + p.From + ", to: " + p.To + ", color: '" + p.Color + "' }, ";
+				}
+				plotBands += "],";
 			}
-			str = str.Replace("__PLOT_BANDS__", plotOptions);
+			str = str.Replace("__PLOT_BANDS__", plotBands);
 			string data = "";
 			foreach (var s in Chart.Series) {
 				if (s.Data.Count > 0) {
