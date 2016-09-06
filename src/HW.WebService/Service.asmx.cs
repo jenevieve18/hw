@@ -453,7 +453,7 @@ namespace HW.WebService
 				while (r.Read())
 				{
 					fft[cx].feedbackTemplateID = r.GetInt32(3);
-					fft[cx].header = r.GetString(1);
+					fft[cx].header = r.IsDBNull(1) ? "" : r.GetString(1);
 					cx++;
 				}
 				r.Close();
