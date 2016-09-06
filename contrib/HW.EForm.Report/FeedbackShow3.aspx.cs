@@ -40,10 +40,20 @@ namespace HW.EForm.Report
 				charts.Add(HighchartsBoxplot.GetHighchartsChart(fq.Question.Options[0].Option.OptionType, fq.ToChart(true)));
 			}
 			
-			var questions = questionService.FindQuestion(new int[] { 380, 381, 382, 383, 384, 459, 460, 461, 462, 463 }, 13, new int[] { 97 });
+			AddQuestions(GetIndex1Questions(), projectRoundID, projectRoundUnitID);
+		}
+		
+		void AddQuestions(int[] questionIDs, int projectRoundID, int projectRoundUnitID)
+		{
+			var questions = questionService.FindQuestion(questionIDs, projectRoundID, new int[] { projectRoundUnitID });
 			foreach (var q in questions) {
 				charts.Add(HighchartsBoxplot.GetHighchartsChart(q.Options[0].Option.OptionType, q.ToChart(true)));
 			}
+		}
+		
+		int[] GetIndex1Questions()
+		{
+			return new int[] { 380, 381, 382, 383, 384, 459, 460, 461, 462, 463 };
 		}
 	}
 }
