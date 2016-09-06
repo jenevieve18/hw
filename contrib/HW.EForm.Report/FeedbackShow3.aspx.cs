@@ -40,7 +40,7 @@ namespace HW.EForm.Report
 				charts.Add(HighchartsBoxplot.GetHighchartsChart(fq.Question.Options[0].Option.OptionType, fq.ToChart(true)));
 			}
 			
-			AddQuestions(GetIndex1Questions(), projectRoundID, projectRoundUnitID);
+//			AddQuestions(GetIndex1Questions(), projectRoundID, projectRoundUnitID);
 		}
 		
 		void AddQuestions(int[] questionIDs, int projectRoundID, int projectRoundUnitID)
@@ -55,5 +55,15 @@ namespace HW.EForm.Report
 		{
 			return new int[] { 380, 381, 382, 383, 384, 459, 460, 461, 462, 463 };
 		}
+
+        int[] GetIndex3Questions()
+        {
+            return new int[] { 459, 460, 461, 462, 463 };
+        }
+
+        int[] GetIndex5Questions()
+        {
+            return new int[] { 387, 388, 389, 390, 391 };
+        }
 	}
 }
