@@ -16,7 +16,6 @@ namespace HW.EForm.Core.Models
 		public Chart ToChart(bool hasBackground)
 		{
 			var c = new Chart { Title = Question.GetLanguage(1).Question, HasBackground = hasBackground };
-//			c.WeightedQuestionOption = Question.WeightedQuestionOption;
 			c.PlotBands.Add(new PlotBand { From = 0, To = Question.WeightedQuestionOption.YellowLow, Color = "rgb(255,168,168)" });
 			c.PlotBands.Add(new PlotBand { From = Question.WeightedQuestionOption.YellowLow, To = Question.WeightedQuestionOption.GreenLow, Color = "rgb(255,254,190)" });
 			c.PlotBands.Add(new PlotBand { From = Question.WeightedQuestionOption.GreenLow, To = Question.WeightedQuestionOption.GreenHigh, Color = "rgb(204,255,187)" });

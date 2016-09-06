@@ -302,7 +302,6 @@ WHERE av.QuestionID = @QuestionID
 			parameters.Add(new SqlParameter("@QuestionID", questionID));
 			parameters.Add(new SqlParameter("@ProjectRoundID", projectRoundID));
 			parameters.Add(new SqlParameter("@ProjectRoundUnitID", projectRoundUnitID));
-//			Console.WriteLine(query);
 			using (var rs = ExecuteReader(
 				query,
 				parameters.ToArray())) {
