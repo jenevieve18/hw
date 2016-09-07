@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{B74743D4-DC68-4452-89D4-A4816FF069D7}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>HW.Core2</RootNamespace>
+    <AssemblyName>HW.Core2</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>True</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MainForm.cs" />
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdminNew.cs" />
+    <Compile Include="Models\Affiliate.cs" />
+    <Compile Include="Models\BA.cs" />
+    <Compile Include="Models\BALang.cs" />
+    <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\BQ.cs" />
+    <Compile Include="Models\BQLang.cs" />
+    <Compile Include="Models\BQvisibility.cs" />
+    <Compile Include="Models\CX.cs" />
+    <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\Diary.cs" />
+    <Compile Include="Models\Exercise.cs" />
+    <Compile Include="Models\ExerciseArea.cs" />
+    <Compile Include="Models\ExerciseAreaLang.cs" />
+    <Compile Include="Models\ExerciseCategory.cs" />
+    <Compile Include="Models\ExerciseCategoryLang.cs" />
+    <Compile Include="Models\ExerciseLang.cs" />
+    <Compile Include="Models\ExerciseMiracle.cs" />
+    <Compile Include="Models\ExerciseStat.cs" />
+    <Compile Include="Models\ExerciseType.cs" />
+    <Compile Include="Models\ExerciseTypeLang.cs" />
+    <Compile Include="Models\ExerciseVariant.cs" />
+    <Compile Include="Models\ExerciseVariantLang.cs" />
+    <Compile Include="Models\FAQ.cs" />
+    <Compile Include="Models\FAQLang.cs" />
+    <Compile Include="Models\Issue.cs" />
+    <Compile Include="Models\Lang.cs" />
+    <Compile Include="Models\ManagerFunction.cs" />
+    <Compile Include="Models\ManagerFunctionLang.cs" />
+    <Compile Include="Models\Measure.cs" />
+    <Compile Include="Models\MeasureCategory.cs" />
+    <Compile Include="Models\MeasureCategoryLang.cs" />
+    <Compile Include="Models\MeasureComponent.cs" />
+    <Compile Include="Models\MeasureComponentLang.cs" />
+    <Compile Include="Models\MeasureComponentPart.cs" />
+    <Compile Include="Models\MeasureLang.cs" />
+    <Compile Include="Models\MeasureType.cs" />
+    <Compile Include="Models\MeasureTypeLang.cs" />
+    <Compile Include="Models\ProfileComparison.cs" />
+    <Compile Include="Models\ProfileComparisonBQ.cs" />
+    <Compile Include="Models\Reminder.cs" />
+    <Compile Include="Models\Session.cs" />
+    <Compile Include="Models\Sponsor.cs" />
+    <Compile Include="Models\SponsorAdmin.cs" />
+    <Compile Include="Models\SponsorAdminDepartment.cs" />
+    <Compile Include="Models\SponsorAdminExercise.cs" />
+    <Compile Include="Models\SponsorAdminExerciseDataInput.cs" />
+    <Compile Include="Models\SponsorAdminExtendedSurvey.cs" />
+    <Compile Include="Models\SponsorAdminFunction.cs" />
+    <Compile Include="Models\SponsorAdminSession.cs" />
+    <Compile Include="Models\SponsorAdminSessionFunction.cs" />
+    <Compile Include="Models\SponsorBQ.cs" />
+    <Compile Include="Models\SponsorExerciseDataInput.cs" />
+    <Compile Include="Models\SponsorExtendedSurvey.cs" />
+    <Compile Include="Models\SponsorExtendedSurveyBA.cs" />
+    <Compile Include="Models\SponsorExtendedSurveyBQ.cs" />
+    <Compile Include="Models\SponsorExtendedSurveyDepartment.cs" />
+    <Compile Include="Models\SponsorInvite.cs" />
+    <Compile Include="Models\SponsorInviteBQ.cs" />
+    <Compile Include="Models\SponsorLang.cs" />
+    <Compile Include="Models\SponsorLogo.cs" />
+    <Compile Include="Models\SponsorProject.cs" />
+    <Compile Include="Models\SponsorProjectMeasure.cs" />
+    <Compile Include="Models\SponsorProjectRoundUnit.cs" />
+    <Compile Include="Models\SponsorProjectRoundUnitDepartment.cs" />
+    <Compile Include="Models\SponsorProjectRoundUnitLang.cs" />
+    <Compile Include="Models\SponsorPRUBQmap.cs" />
+    <Compile Include="Models\SponsorPRUBQmapVal.cs" />
+    <Compile Include="Models\SuperAdmin.cs" />
+    <Compile Include="Models\SuperAdminSponsor.cs" />
+    <Compile Include="Models\SuperSponsor.cs" />
+    <Compile Include="Models\SuperSponsorLang.cs" />
+    <Compile Include="Models\Sysdiagram.cs" />
+    <Compile Include="Models\SystemSetting.cs" />
+    <Compile Include="Models\SystemSettingsLang.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserMeasure.cs" />
+    <Compile Include="Models\UserMeasureComponent.cs" />
+    <Compile Include="Models\UserProfile.cs" />
+    <Compile Include="Models\UserProfileBQ.cs" />
+    <Compile Include="Models\UserProjectRoundUser.cs" />
+    <Compile Include="Models\UserProjectRoundUserAnswer.cs" />
+    <Compile Include="Models\UserRegistrationID.cs" />
+    <Compile Include="Models\UserSession.cs" />
+    <Compile Include="Models\UserSponsorExtendedSurvey.cs" />
+    <Compile Include="Models\UserSponsorProject.cs" />
+    <Compile Include="Models\UserToken.cs" />
+    <Compile Include="Models\Wise.cs" />
+    <Compile Include="Models\WiseLang.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\SqlAdminNewRepository.cs" />
+    <Compile Include="Repositories\SqlAffiliateRepository.cs" />
+    <Compile Include="Repositories\SqlBALangRepository.cs" />
+    <Compile Include="Repositories\SqlBARepository.cs" />
+    <Compile Include="Repositories\SqlBaseRepository.cs" />
+    <Compile Include="Repositories\SqlBQLangRepository.cs" />
+    <Compile Include="Repositories\SqlBQRepository.cs" />
+    <Compile Include="Repositories\SqlBQvisibilityRepository.cs" />
+    <Compile Include="Repositories\SqlCXRepository.cs" />
+    <Compile Include="Repositories\SqlDepartmentRepository.cs" />
+    <Compile Include="Repositories\SqlDiaryRepository.cs" />
+    <Compile Include="Repositories\SqlExerciseAreaLangRepository.cs" />
+    <Compile Include="Repositories\SqlExerciseAreaRepository.cs" />
+    <Compile Include="Repositories\SqlExerciseCategoryLangRepository.cs" />
+    <Compile Include="Repositories\SqlExerciseCategoryRepository.cs" />
+    <Compile Include="Repositories\SqlExerciseLangRepository.cs" />
+    <Compile Include="Repositories\SqlExerciseMiracleRepository.cs" />
+    <Compile Include="Repositories\SqlExerciseRepository.cs" />
+    <Compile Include="Repositories\SqlExerciseStatRepository.cs" />
+    <Compile Include="Repositories\SqlExerciseTypeLangRepository.cs" />
+    <Compile Include="Repositories\SqlExerciseTypeRepository.cs" />
+    <Compile Include="Repositories\SqlExerciseVariantLangRepository.cs" />
+    <Compile Include="Repositories\SqlExerciseVariantRepository.cs" />
+    <Compile Include="Repositories\SqlFAQLangRepository.cs" />
+    <Compile Include="Repositories\SqlFAQRepository.cs" />
+    <Compile Include="Repositories\SqlIssueRepository.cs" />
+    <Compile Include="Repositories\SqlLangRepository.cs" />
+    <Compile Include="Repositories\SqlManagerFunctionLangRepository.cs" />
+    <Compile Include="Repositories\SqlManagerFunctionRepository.cs" />
+    <Compile Include="Repositories\SqlMeasureCategoryLangRepository.cs" />
+    <Compile Include="Repositories\SqlMeasureCategoryRepository.cs" />
+    <Compile Include="Repositories\SqlMeasureComponentLangRepository.cs" />
+    <Compile Include="Repositories\SqlMeasureComponentPartRepository.cs" />
+    <Compile Include="Repositories\SqlMeasureComponentRepository.cs" />
+    <Compile Include="Repositories\SqlMeasureLangRepository.cs" />
+    <Compile Include="Repositories\SqlMeasureRepository.cs" />
+    <Compile Include="Repositories\SqlMeasureTypeLangRepository.cs" />
+    <Compile Include="Repositories\SqlMeasureTypeRepository.cs" />
+    <Compile Include="Repositories\SqlProfileComparisonBQRepository.cs" />
+    <Compile Include="Repositories\SqlProfileComparisonRepository.cs" />
+    <Compile Include="Repositories\SqlReminderRepository.cs" />
+    <Compile Include="Repositories\SqlSessionRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorAdminDepartmentRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorAdminExerciseDataInputRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorAdminExerciseRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorAdminExtendedSurveyRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorAdminFunctionRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorAdminRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorAdminSessionFunctionRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorAdminSessionRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorBQRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorExerciseDataInputRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorExtendedSurveyBARepository.cs" />
+    <Compile Include="Repositories\SqlSponsorExtendedSurveyBQRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorExtendedSurveyDepartmentRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorExtendedSurveyRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorInviteBQRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorInviteRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorLangRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorLogoRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorProjectMeasureRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorProjectRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorProjectRoundUnitDepartmentRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorProjectRoundUnitLangRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorProjectRoundUnitRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorPRUBQmapRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorPRUBQmapValRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorRepository.cs" />
+    <Compile Include="Repositories\SqlSuperAdminRepository.cs" />
+    <Compile Include="Repositories\SqlSuperAdminSponsorRepository.cs" />
+    <Compile Include="Repositories\SqlSuperSponsorLangRepository.cs" />
+    <Compile Include="Repositories\SqlSuperSponsorRepository.cs" />
+    <Compile Include="Repositories\SqlSystemSettingRepository.cs" />
+    <Compile Include="Repositories\SqlSystemSettingsLangRepository.cs" />
+    <Compile Include="Repositories\SqlUserMeasureComponentRepository.cs" />
+    <Compile Include="Repositories\SqlUserMeasureRepository.cs" />
+    <Compile Include="Repositories\SqlUserProfileBQRepository.cs" />
+    <Compile Include="Repositories\SqlUserProfileRepository.cs" />
+    <Compile Include="Repositories\SqlUserProjectRoundUserAnswerRepository.cs" />
+    <Compile Include="Repositories\SqlUserProjectRoundUserRepository.cs" />
+    <Compile Include="Repositories\SqlUserRegistrationIDRepository.cs" />
+    <Compile Include="Repositories\SqlUserRepository.cs" />
+    <Compile Include="Repositories\SqlUserSessionRepository.cs" />
+    <Compile Include="Repositories\SqlUserSponsorExtendedSurveyRepository.cs" />
+    <Compile Include="Repositories\SqlUserSponsorProjectRepository.cs" />
+    <Compile Include="Repositories\SqlUserTokenRepository.cs" />
+    <Compile Include="Repositories\SqlWiseLangRepository.cs" />
+    <Compile Include="Repositories\SqlWiseRepository.cs" />
+    <Compile Include="Services\DepartmentService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models" />
+    <Folder Include="Services" />
+    <Folder Include="Repositories" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
