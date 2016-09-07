@@ -75,30 +75,30 @@ namespace HW.EForm.Report.Tests.Services
 			}
 		}
 		
-		[Test]
-		public void aa()
-		{
-			var f = s.ReadFeedbackWithAnswers(8, 13, new int[] { 97 });
-			var questions = f.lalala(new int[] { 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248 });
-			foreach (var q in questions) {
-				Console.WriteLine(q.Question.GetLanguage(2).Question);
-			}
-		}
-		
-		[Test]
-		public void b()
-		{
-			var f = s.ReadFeedbackWithAnswers(6, 13, new int[] { 97 });
-			Console.WriteLine(new HighchartsBoxplot(f.ToChart(false)));
-		}
-		
-		[Test]
-		public void TestFindFeedbackQuestions()
-		{
-			var x = s.FindFeedbackQuestions(8, new int[] { 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248 });
-			foreach (var y in x) {
-				Console.WriteLine(y.Question.GetLanguage(2).Question);
-			}
-		}
+//		[Test]
+//		public void aa()
+//		{
+//			var f = s.ReadFeedbackWithAnswers(8, 13, new int[] { 97 });
+//			var questions = f.lalala(new int[] { 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248 });
+//			foreach (var q in questions) {
+//				Console.WriteLine(q.Question.GetLanguage(2).Question);
+//			}
+//		}
+//		
+//		[Test]
+//		public void b()
+//		{
+//			var f = s.ReadFeedbackWithAnswers(6, 13, new int[] { 97 });
+//			Console.WriteLine(new HighchartsBoxplot(f.ToChart(false)));
+//		}
+//		
+//		[Test]
+//		public void TestFindFeedbackQuestions()
+//		{
+//			var x = s.FindFeedbackQuestions(8, new int[] { 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248 });
+//			foreach (var y in x) {
+//				Console.WriteLine(y.Question.GetLanguage(2).Question);
+//			}
+//		}
 	}
 }

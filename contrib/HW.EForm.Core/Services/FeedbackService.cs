@@ -74,7 +74,6 @@ namespace HW.EForm.Core.Services
 					fq.Question = questionRepo.Read(fq.QuestionID);
 					fq.Question.WeightedQuestionOption = weightedQuestionOptionRepo.ReadByQuestion(fq.QuestionID);
 					fq.Question.Languages = questionLangRepo.FindByQuestion(fq.QuestionID);
-//					fq.Question.Options = questionOptionRepo.FindByQuestion(fq.QuestionID, projectRoundUnitIDs);
 					fq.Question.Options = questionOptionRepo.FindByQuestion(fq.QuestionID);
 					foreach (var qo in fq.Question.Options) {
 						qo.Option = optionRepo.Read(qo.OptionID);
@@ -84,9 +83,7 @@ namespace HW.EForm.Core.Services
 							oc.OptionComponent.Languages = optionComponentLangRepo.FindByOptionComponent(oc.OptionComponentID);
 						}
 					}
-//					fq.ProjectRoundUnits = projectRoundUnitRepo.FindProjectRoundUnits(projectRoundUnitIDs);
 					fq.Question.ProjectRoundUnits = projectRoundUnitRepo.FindProjectRoundUnits(projectRoundUnitIDs);
-//					foreach (var pru in fq.ProjectRoundUnits) {
 					foreach (var pru in fq.Question.ProjectRoundUnits) {
 						pru.Options = fq.Question.Options;
 						pru.AnswerValues = answerValueRepo.FindByQuestionOptionsAndUnit(fq.QuestionID, fq.Question.Options, projectRoundID, pru.ProjectRoundUnitID);

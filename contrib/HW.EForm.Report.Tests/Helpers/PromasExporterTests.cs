@@ -20,14 +20,14 @@ namespace HW.EForm.Report.Tests.Helpers
 		[Test]
 		public void TestMethod()
 		{
-			var x = new PromasExporter();
-			
-			var f = s.ReadFeedbackWithAnswers(6, 13, new int[] { 97 });
-			using (var fs = new FileStream("test.pptx", FileMode.Create)) {
-				var m = x.Export(f) as MemoryStream;
-				m.WriteTo(fs);
-			}
-			Process.Start("test.pptx");
+//			var x = new PromasExporter();
+//			
+//			var f = s.ReadFeedbackWithAnswers(6, 13, new int[] { 97 });
+//			using (var fs = new FileStream("test.pptx", FileMode.Create)) {
+//				var m = x.Export(f) as MemoryStream;
+//				m.WriteTo(fs);
+//			}
+//			Process.Start("test.pptx");
 		}
 	}
 }

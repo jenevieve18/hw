@@ -11,6 +11,26 @@ namespace HW.EForm.Core.Helpers
 {
 	public static class ChartHelper
 	{
+		public static Chart ToChart(this GroupedQuestions groupQuestions, bool hasBackground)
+		{
+			var c = new Chart { Title = "", HasBackground = hasBackground };
+			foreach (var q in groupQuestions.Questions) {
+				c.Categories.Add(q.GetLanguage(1).Question);
+				var d = new List<double>();
+				foreach (var qo in q.Options) {
+					if (qo.Option.IsSlider) {
+						foreach (var oc in qo.Option.Components) {
+							foreach (var av in oc.OptionComponent.AnswerValues) {
+								d.Add(av.ValueInt);
+							}
+						}
+					}
+				}
+				c.Series.Add(new Series(q.GetLanguage(1).Question, d));
+			}
+			return c;
+		}
+		
 		public static Chart ToChart(this Feedback feedback, bool hasBackground)
 		{
 			var c = new Chart { Title = feedback.FeedbackText, HasBackground = hasBackground };

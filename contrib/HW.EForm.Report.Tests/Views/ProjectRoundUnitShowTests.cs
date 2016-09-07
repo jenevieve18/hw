@@ -86,7 +86,6 @@ $(function() {
 				foreach (var fq in pru.ProjectRound.Feedback.Questions) {
 					Console.WriteLine("\tQuestionID: {0}, Question: {1}", fq.QuestionID, fq.Question.GetLanguage(1).Question);
 					
-//					fq.ProjectRoundUnits = projectRoundUnits;
 					fq.Question.ProjectRoundUnits = projectRoundUnits;
 //					fq.AnswerValues = answerService.FindByQuestionOptionsAndUnits(fq.QuestionID, fq.Question.Options, pru.ProjectRoundID, projectRoundUnits);
 
