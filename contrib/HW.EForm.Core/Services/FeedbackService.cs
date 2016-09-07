@@ -24,6 +24,7 @@ namespace HW.EForm.Core.Services
 		SqlOptionRepository optionRepo = new SqlOptionRepository();
 		SqlOptionComponentsRepository optionComponentsRepo = new SqlOptionComponentsRepository();
 		SqlOptionComponentRepository optionComponentRepo = new SqlOptionComponentRepository();
+		SqlOptionComponentLangRepository optionComponentLangRepo = new SqlOptionComponentLangRepository();
 		
 		SqlProjectRoundUnitRepository projectRoundUnitRepo = new SqlProjectRoundUnitRepository();
 		
@@ -32,6 +33,16 @@ namespace HW.EForm.Core.Services
 		public FeedbackService()
 		{
 		}
+		
+		public void SaveFeedback(Feedback f)
+		{
+			feedbackRepo.Save(f);
+		}
+
+        public void SaveFeedbackQuestion(FeedbackQuestion fq)
+        {
+            feedbackQuestionRepo.Save(fq);
+        }
 		
 		public Feedback ReadFeedback(int feedbackID)
 		{
@@ -54,26 +65,7 @@ namespace HW.EForm.Core.Services
 			return f;
 		}
 		
-//		public Feedback ReadFeedback2(int feedbackID, IList<ProjectRoundUnit> units)
-//		{
-//			var f = feedbackRepo.Read(feedbackID);
-//			f.Questions = feedbackQuestionRepo.FindByFeedback(f.FeedbackID);
-//			foreach (var fq in f.Questions) {
-//				fq.Question = questionRepo.Read(fq.QuestionID);
-//				fq.Question.Languages = questionLangRepo.FindByQuestion(fq.QuestionID);
-//				fq.Question.Options = questionOptionRepo.FindByQuestion(fq.QuestionID, units);
-//				foreach (var qo in fq.Question.Options) {
-//					qo.Option = optionRepo.Read(qo.OptionID);
-//					qo.Option.Components = optionComponentsRepo.FindByOption(qo.OptionID);
-//					foreach (var oc in qo.Option.Components) {
-//						oc.OptionComponent = optionComponentRepo.Read(oc.OptionComponentID);
-//					}
-//				}
-//			}
-//			return f;
-//		}
-		
-		public Feedback ReadFeedback2(int feedbackID, int projectRoundID, int[] projectRoundUnitIDs)
+		public Feedback ReadFeedbackWithAnswers(int feedbackID, int projectRoundID, int[] projectRoundUnitIDs)
 		{
 			var f = feedbackRepo.Read(feedbackID);
 			if (f != null) {
@@ -89,10 +81,13 @@ namespace HW.EForm.Core.Services
 						qo.Option.Components = optionComponentsRepo.FindByOption(qo.OptionID);
 						foreach (var oc in qo.Option.Components) {
 							oc.OptionComponent = optionComponentRepo.Read(oc.OptionComponentID);
+							oc.OptionComponent.Languages = optionComponentLangRepo.FindByOptionComponent(oc.OptionComponentID);
 						}
 					}
-					fq.ProjectRoundUnits = projectRoundUnitRepo.FindProjectRoundUnits(projectRoundUnitIDs);
-					foreach (var pru in fq.ProjectRoundUnits) {
+//					fq.ProjectRoundUnits = projectRoundUnitRepo.FindProjectRoundUnits(projectRoundUnitIDs);
+					fq.Question.ProjectRoundUnits = projectRoundUnitRepo.FindProjectRoundUnits(projectRoundUnitIDs);
+//					foreach (var pru in fq.ProjectRoundUnits) {
+					foreach (var pru in fq.Question.ProjectRoundUnits) {
 						pru.Options = fq.Question.Options;
 						pru.AnswerValues = answerValueRepo.FindByQuestionOptionsAndUnit(fq.QuestionID, fq.Question.Options, projectRoundID, pru.ProjectRoundUnitID);
 					}
@@ -120,6 +115,16 @@ namespace HW.EForm.Core.Services
 				}
 			}
 			return feedbacks;
+		}
+		
+		public IList<FeedbackQuestion> FindFeedbackQuestions(int feedbackID, int[] questionIDs)
+		{
+			var questions = feedbackQuestionRepo.FindByQuestions(feedbackID, questionIDs);
+			foreach (var fq in questions) {
+				fq.Question = questionRepo.Read(fq.QuestionID);
+				fq.Question.Languages = questionLangRepo.FindByQuestion(fq.QuestionID);
+			}
+			return questions;
 		}
 	}
 }

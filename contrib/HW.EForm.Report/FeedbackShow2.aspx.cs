@@ -29,7 +29,7 @@ namespace HW.EForm.Report
 
         public void Show(int feedbackID, int projectRoundID, int projectRoundUnitID)
         {
-        	feedback = s.ReadFeedback2(feedbackID, projectRoundID, new int[] { projectRoundUnitID });
+        	feedback = s.ReadFeedbackWithAnswers(feedbackID, projectRoundID, new int[] { projectRoundUnitID });
         }
     }
 }

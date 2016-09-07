@@ -15,17 +15,26 @@ namespace HW.EForm.Core.Repositories
 		{
 			string query = @"
 INSERT INTO Feedback(
-	FeedbackID, 
-	Feedback
+	Feedback,
+	SurveyID,
+	Compare,
+	FeedbackTemplateID,
+	NoHardcodedIdxs
 )
 VALUES(
-	@FeedbackID, 
-	@Feedback
+	@Feedback,
+	@SurveyID,
+	@Compare,
+	@FeedbackTemplateID,
+	@NoHardcodedIdxs
 )";
 			ExecuteNonQuery(
 				query,
-				new SqlParameter("@FeedbackID", feedback.FeedbackID),
-				new SqlParameter("@Feedback", feedback.FeedbackText)
+				new SqlParameter("@Feedback", feedback.FeedbackText),
+				new SqlParameter("@SurveyID", feedback.SurveyID),
+				new SqlParameter("@Compare", feedback.Compare),
+				new SqlParameter("@FeedbackTemplateID", feedback.FeedbackTemplateID),
+				new SqlParameter("@NoHardcodedIdxs", feedback.NoHardcodedIdxs)
 			);
 		}
 		

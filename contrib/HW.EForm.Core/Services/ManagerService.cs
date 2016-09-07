@@ -59,6 +59,7 @@ namespace HW.EForm.Core.Services
 				m.ProjectRounds = managerProjectRoundRepo.FindByManager(managerID);
 				foreach (var mpr in m.ProjectRounds) {
 					mpr.ProjectRound = projectRoundRepo.Read(mpr.ProjectRoundID);
+					mpr.ProjectRound.Project = projectRepo.Read(mpr.ProjectRound.ProjectID);
 					mpr.Units = managerProjectRoundUnitRepo.FindByProjectRound(mpr.ProjectRoundID);
 					foreach (var mpru in mpr.Units) {
 //						mpru.ProjectRoundUnit = ReadProjectRoundUnit(mpru.ProjectRoundUnitID);

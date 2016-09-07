@@ -49,9 +49,9 @@ namespace HW.EForm.Report.Tests.Services
 		}
 		
 		[Test]
-		public void a()
+		public void TestReadFeedbackWithAnswers()
 		{
-			var f = s.ReadFeedback2(1, 13, new int[] { 97 });
+			var f = s.ReadFeedbackWithAnswers(8, 13, new int[] { 97 });
 			foreach (var fq in f.Questions) {
 				Console.WriteLine("QuestionID: {0}, Question: {1}", fq.QuestionID, fq.Question.Internal);
 				foreach (var qo in fq.Question.Options) {
@@ -60,7 +60,7 @@ namespace HW.EForm.Report.Tests.Services
 						Console.WriteLine("\t\tOptionComponentID: {0}, Internal: {1}", oc.OptionComponentID, oc.OptionComponent.Internal);
 					}
 				}
-				foreach (var pru in fq.ProjectRoundUnits) {
+				foreach (var pru in fq.Question.ProjectRoundUnits) {
 					Console.WriteLine("\tProjectRoundUnitID: {0}, Unit: {1}, Total Answers: {2}", pru.ProjectRoundUnitID, pru.Unit, pru.AnswerValues.Count);
 					foreach (var qo in pru.Options) {
 						foreach (var oc in qo.Option.Components) {
@@ -70,15 +70,34 @@ namespace HW.EForm.Report.Tests.Services
 				}
 //				Console.WriteLine(new HighchartsColumnChart(fq.ToChart()));
 //				Console.WriteLine(new HighchartsLineChart(fq.ToChart()));
-				Console.WriteLine(new HighchartsBoxplot(fq.ToChart(true)));
+				Console.WriteLine(new HighchartsBoxplot(fq.Question.ToChart(true)));
+			}
+		}
+		
+		[Test]
+		public void aa()
+		{
+			var f = s.ReadFeedbackWithAnswers(8, 13, new int[] { 97 });
+			var questions = f.lalala(new int[] { 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248 });
+			foreach (var q in questions) {
+				Console.WriteLine(q.Question.GetLanguage(2).Question);
 			}
 		}
 		
 		[Test]
 		public void b()
 		{
-			var f = s.ReadFeedback2(6, 13, new int[] { 97 });
+			var f = s.ReadFeedbackWithAnswers(6, 13, new int[] { 97 });
 			Console.WriteLine(new HighchartsBoxplot(f.ToChart(false)));
+		}
+		
+		[Test]
+		public void TestFindFeedbackQuestions()
+		{
+			var x = s.FindFeedbackQuestions(8, new int[] { 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248 });
+			foreach (var y in x) {
+				Console.WriteLine(y.Question.GetLanguage(2).Question);
+			}
 		}
 	}
 }

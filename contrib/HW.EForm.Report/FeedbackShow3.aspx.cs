@@ -34,20 +34,20 @@ namespace HW.EForm.Report
 
 		public void Show(int feedbackID, int projectRoundID, int projectRoundUnitID)
 		{
-			feedback = feedbackService.ReadFeedback2(feedbackID, projectRoundID, new int[] { projectRoundUnitID });
+			feedback = feedbackService.ReadFeedbackWithAnswers(feedbackID, projectRoundID, new int[] { projectRoundUnitID });
 			
 			charts.Add(HighchartsBoxplot.GetHighchartsChart(9, feedback.ToChart(false)));
 			foreach (var fq in feedback.Questions) {
-				charts.Add(HighchartsBoxplot.GetHighchartsChart(fq.Question.Options[0].Option.OptionType, fq.ToChart(true)));
+				charts.Add(HighchartsBoxplot.GetHighchartsChart(fq.Question.Options[0].Option.OptionType, fq.Question.ToChart(true)));
 			}
 			
 //			AddQuestions(GetIndex1Questions(), projectRoundID, projectRoundUnitID);
 			
 			var painQuestions = new GroupedQuestions();
-			painQuestions.Questions.AddRange(questionService.ReadQuestion2(1689, 13, new int[] { 97 }).ToQuestions());
-			painQuestions.Questions.AddRange(questionService.ReadQuestion2(1690, 13, new int[] { 97 }).ToQuestions());
-			painQuestions.Questions.AddRange(questionService.ReadQuestion2(1691, 13, new int[] { 97 }).ToQuestions());
-			painQuestions.Questions.AddRange(questionService.ReadQuestion2(1692, 13, new int[] { 97 }).ToQuestions());
+			painQuestions.Questions.AddRange(questionService.ReadQuestion2(1689, projectRoundID, new int[] { projectRoundUnitID }).ToQuestions());
+			painQuestions.Questions.AddRange(questionService.ReadQuestion2(1690, projectRoundID, new int[] { projectRoundUnitID }).ToQuestions());
+			painQuestions.Questions.AddRange(questionService.ReadQuestion2(1691, projectRoundID, new int[] { projectRoundUnitID }).ToQuestions());
+			painQuestions.Questions.AddRange(questionService.ReadQuestion2(1692, projectRoundID, new int[] { projectRoundUnitID }).ToQuestions());
 			
 //			Console.WriteLine(HighchartsChart.GetHighchartsChart(9, painQuestions.ToChart(true)));
 			charts.Add(HighchartsChart.GetHighchartsChart(9, painQuestions.ToChart(true)));

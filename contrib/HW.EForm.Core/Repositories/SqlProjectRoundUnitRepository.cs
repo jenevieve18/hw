@@ -238,7 +238,8 @@ SELECT 	ProjectRoundUnitID,
 	IndividualReportID,
 	UniqueID,
 	RequiredAnswerCount
-FROM ProjectRoundUnit";
+FROM ProjectRoundUnit
+WHERE ProjectRoundID > 0";
 			var projectRoundUnits = new List<ProjectRoundUnit>();
 			using (var rs = ExecuteReader(query)) {
 				while (rs.Read()) {

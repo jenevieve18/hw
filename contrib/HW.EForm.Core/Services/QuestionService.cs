@@ -55,14 +55,15 @@ namespace HW.EForm.Core.Services
 			var questions = questionRepo.FindAll();
 			foreach (var q in questions) {
 				q.Languages = questionLangRepo.FindByQuestion(q.QuestionID);
-//				q.Options = questionOptionRepo.FindByQuestion(q.QuestionID);
-//				foreach (var o in q.Options) {
-//					o.Option = optionRepo.Read(o.OptionID);
-//					o.Option.Components = optionComponentsRepo.FindByOption(o.OptionID);
-//					foreach (var oc in o.Option.Components) {
-//						oc.OptionComponent = optionComponentRepo.Read(oc.OptionComponentID);
-//					}
-//				}
+				q.Options = questionOptionRepo.FindByQuestion(q.QuestionID);
+				foreach (var o in q.Options) {
+					o.Option = optionRepo.Read(o.OptionID);
+					o.Option.Components = optionComponentsRepo.FindByOption(o.OptionID);
+					foreach (var oc in o.Option.Components) {
+						oc.OptionComponent = optionComponentRepo.Read(oc.OptionComponentID);
+						oc.OptionComponent.Languages = optionComponentLangRepo.FindByOptionComponent(oc.OptionComponentID);
+					}
+				}
 			}
 			return questions;
 		}

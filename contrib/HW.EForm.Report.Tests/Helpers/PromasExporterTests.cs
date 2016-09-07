@@ -22,12 +22,11 @@ namespace HW.EForm.Report.Tests.Helpers
 		{
 			var x = new PromasExporter();
 			
-			var f = s.ReadFeedback2(6, 13, new int[] { 97 });
+			var f = s.ReadFeedbackWithAnswers(6, 13, new int[] { 97 });
 			using (var fs = new FileStream("test.pptx", FileMode.Create)) {
 				var m = x.Export(f) as MemoryStream;
 				m.WriteTo(fs);
 			}
-			
 			Process.Start("test.pptx");
 		}
 	}

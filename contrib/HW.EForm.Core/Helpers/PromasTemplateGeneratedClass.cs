@@ -19976,7 +19976,7 @@ namespace HW.EForm.Core.Helpers
 			
 			string GetFeedbackQuestionImage(FeedbackQuestion question)
 			{
-				StringBuilder json = new StringBuilder(new HighchartsBoxplot(question.ToChart(true)).ToString());
+				StringBuilder json = new StringBuilder(new HighchartsBoxplot(question.Question.ToChart(true)).ToString());
 
 				var request = new RestRequest("/", Method.POST);
 				request.AddHeader("Content-Type", "multipart/form-data");

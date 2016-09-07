@@ -40,7 +40,7 @@ $(function() {
 </body.";
 //			var units = projectService.FindProjectRoundUnits(new int[] { 96 });
 //			var f = feedbackService.ReadFeedback2(6, units);
-			var f = feedbackService.ReadFeedback2(6, 10, new int[] { 96 });
+			var f = feedbackService.ReadFeedbackWithAnswers(6, 10, new int[] { 96 });
 			
 			Console.WriteLine("FeedbackID: {0}, Feedback: {1}", f.FeedbackID, f.FeedbackText);
 			foreach (var fq in f.Questions) {
@@ -49,7 +49,7 @@ $(function() {
 //				fq.Units = units;
 //				fq.AnswerValues = answerService.FindByQuestionOptionsAndUnits(fq.QuestionID, fq.Question.Options, projectRoundID, units);
 
-				string chart = new HighchartsColumnChart(fq.ToChart(false)).ToString();
+				string chart = new HighchartsColumnChart(fq.Question.ToChart(false)).ToString();
 				template = template.Replace("__SCRIPT__", chart);
 				
 				Console.WriteLine(template);

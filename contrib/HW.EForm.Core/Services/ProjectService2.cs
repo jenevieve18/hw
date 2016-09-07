@@ -115,6 +115,34 @@ namespace HW.EForm.Core.Services
 		{
 			return projectRepo.FindByManager(managerID);
 		}
+
+        public IList<ProjectRound> FindAllProjectRounds()
+        {
+            var projectRounds = projectRoundRepo.FindAll();
+            foreach (var pr in projectRounds)
+            {
+                pr.Project = projectRepo.Read(pr.ProjectID);
+            }
+            return projectRounds;
+        }
+		
+		public IList<ProjectRoundUnit> FindAllProjectRoundUnits()
+		{
+			var units = projectRoundUnitRepo.FindAll();
+			foreach (var pru in units) {
+				pru.ProjectRound = projectRoundRepo.Read(pru.ProjectRoundID);
+			}
+			return units;
+		}
+		
+		public IList<ProjectRoundUnit> FindProjectRoundUnitsByProjectRound(int projectRoundID)
+		{
+			var units = projectRoundUnitRepo.FindByProjectRound(projectRoundID);
+			foreach (var pru in units) {
+				pru.ProjectRound = projectRoundRepo.Read(pru.ProjectRoundID);
+			}
+			return units;
+		}
 		
 		public IList<ProjectRoundUnit> FindProjectRoundUnits(int[] projectRoundUnitIDs)
 		{
@@ -140,7 +168,6 @@ namespace HW.EForm.Core.Services
 			foreach (var fq in f.Questions) {
 				fq.Question = questionRepo.Read(fq.QuestionID);
 				fq.Question.Languages = questionLangRepo.FindByQuestion(fq.QuestionID);
-//				fq.Question.Options = questionOptionRepo.FindByQuestion(fq.QuestionID, projectRoundUnitID);
 				foreach (var qo in fq.Question.Options) {
 					qo.Option = optionRepo.Read(qo.OptionID);
 					qo.Option.Components = optionComponentsRepo.FindByOption(qo.OptionID);

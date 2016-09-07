@@ -19,8 +19,12 @@ namespace HW.EForm.Report.Tests.Services
 		[Test]
 		public void TestReadQuestion()
 		{
-			var q = s.ReadQuestion(1689);
-			Console.WriteLine("QuestionID: {0}, Question: {1}", q.QuestionID, q.GetLanguage(1).Question);
+//			var q = s.ReadQuestion(1690); // Pain question
+//			var q = s.ReadQuestion(387); // Has Bra and stuff
+//			var q = s.ReadQuestion(211); // Has every week, month, less than a month, etc
+//			var q = s.ReadQuestion(406); // Has rarely, often, satisfied, etc
+			var q = s.ReadQuestion(140);
+			Console.WriteLine("QuestionID: {0}, Question: {1}", q.QuestionID, q.GetLanguage(2).Question);
 			foreach (var qo in q.Options) {
 				Console.WriteLine("\tOptionID: {0}, Type: {1} Internal: {2}", qo.OptionID, qo.Option.OptionType, qo.Option.Internal);
 				foreach (var oc in qo.Option.Components) {
@@ -35,6 +39,36 @@ namespace HW.EForm.Report.Tests.Services
 //			var q = s.ReadQuestion2(380, 13, new int[] { 97 });
 //			Console.WriteLine(HighchartsChart.GetHighchartsChart(q.Options[0].Option.OptionType, q.ToChart(true)));
 //		}
+		
+		[Test]
+		public void TestFindAllQuestions()
+		{
+			var questions = s.FindAllQuestions();
+			foreach (var q in questions) {
+				bool sameOptions = lalala(q.Options);
+				if (!sameOptions) {
+					Console.WriteLine(q.QuestionID);
+				}
+//				Assert.IsTrue(sameOptions);
+			}
+		}
+		
+		bool lalala(System.Collections.Generic.IList<QuestionOption> options)
+		{
+			int type = 0;
+			int i = 0;
+			foreach (var x in options) {
+				if (i == 0) {
+					type = x.Option.OptionType;
+				} else {
+					if (type != x.Option.OptionType) {
+						return false;
+					}
+				}
+				i++;
+			}
+			return true;
+		}
 		
 		[Test]
 		public void b()
@@ -60,6 +94,7 @@ namespace HW.EForm.Report.Tests.Services
 		public void d()
 		{
 			var x = new GroupedQuestions();
+			
 			x.Questions.Add(s.ReadQuestion2(1689, 13, new int[] { 97 }));
 			x.Questions.Add(s.ReadQuestion2(1690, 13, new int[] { 97 }));
 			x.Questions.Add(s.ReadQuestion2(1691, 13, new int[] { 97 }));
@@ -71,9 +106,9 @@ namespace HW.EForm.Report.Tests.Services
 		[Test]
 		public void e()
 		{
-			var q = s.ReadQuestion2(1689, 13, new int[] { 97 });
-			foreach (var x in q.ToQuestions()) {
-				Console.WriteLine(HighchartsChart.GetHighchartsChart(q.Options[0].Option.OptionType, x.ToChart(false)));
+			var question = s.ReadQuestion2(1689, 13, new int[] { 97 });
+			foreach (var q in question.ToQuestions()) {
+				Console.WriteLine(HighchartsChart.GetHighchartsChart(question.Options[0].Option.OptionType, q.ToChart(false)));
 			}
 		}
 		
