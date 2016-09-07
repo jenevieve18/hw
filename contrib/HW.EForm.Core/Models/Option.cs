@@ -49,4 +49,13 @@ namespace HW.EForm.Core.Models
 			return null;
 		}
 	}
+	
+	public enum OptionType
+	{
+		SingleChoice = 1,
+		FreeText = 2,
+		MultiChoice = 3,
+		Numeric = 4,
+		VAS = 9
+	}
 }

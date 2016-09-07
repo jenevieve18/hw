@@ -51,7 +51,8 @@ namespace HW.EForm.Report.Tests.Services
 		[Test]
 		public void TestReadFeedbackWithAnswers()
 		{
-			var f = s.ReadFeedbackWithAnswers(8, 13, new int[] { 97 });
+//			var f = s.ReadFeedbackWithAnswers(8, 13, new int[] { 97 });
+			var f = s.ReadFeedbackWithAnswers(8, 62, new int[] { 1183 });
 			foreach (var fq in f.Questions) {
 				Console.WriteLine("QuestionID: {0}, Question: {1}", fq.QuestionID, fq.Question.Internal);
 				foreach (var qo in fq.Question.Options) {
