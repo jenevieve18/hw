@@ -3,6 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <%= HtmlHelper.Anchor("Add feedback", "feedbackadd.aspx") %>
     <table>
         <% foreach (var f in feedbacks) { %>
         <tr>

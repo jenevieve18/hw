@@ -59,6 +59,7 @@
   <ItemGroup>
     <Content Include="Containers.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="FeedbackAdd.aspx" />
     <Content Include="FeedbackEdit.aspx" />
     <Content Include="Feedbacks.aspx" />
     <Content Include="ManagerEdit.aspx" />
@@ -75,7 +76,9 @@
     <Content Include="Reports.aspx" />
     <Content Include="SurveyEdit.aspx" />
     <Content Include="Surveys.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Containers.aspx.cs">
@@ -91,6 +94,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FeedbackAdd.aspx.cs">
+      <DependentUpon>FeedbackAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FeedbackAdd.aspx.designer.cs">
+      <DependentUpon>FeedbackAdd.aspx</DependentUpon>
     </Compile>
     <Compile Include="FeedbackEdit.aspx.cs">
       <DependentUpon>FeedbackEdit.aspx</DependentUpon>

@@ -6,6 +6,12 @@
         <tr>
             <td>Feedback</td>
         </tr>
+        <tr>
+            <td>
+                <asp:DropDownList ID="dropDownListQuestions" runat="server"></asp:DropDownList>
+                <asp:Button ID="buttonAddQuestion" runat="server" Text="Add Question" OnClick="buttonAddQuestion_Click" />
+            </td>
+        </tr>
     </table>
 
     <table>

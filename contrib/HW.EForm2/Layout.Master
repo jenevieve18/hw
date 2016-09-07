@@ -5,13 +5,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <%--<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
     <style>
-        body, table, input, select
+        body
         {
-            font-family: Tahoma;
-            font-size: 8pt;
+            font-size: 10pt;
+            font-family: 'Roboto', sans-serif;
         }
-    </style>
+    </style>--%>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -35,7 +41,7 @@
         ]
     </p>
     <form id="form1" runat="server">
-    <div>
+    <div class="container">
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         
         </asp:ContentPlaceHolder>
