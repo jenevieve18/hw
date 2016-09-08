@@ -5,7 +5,13 @@ using System.Collections.Generic;
 	
 namespace HW.EForm.Core.Repositories
 {
-	public class SqlQuestionOptionRepository : BaseSqlRepository<QuestionOption>
+	public interface IQuestionOptionRepository : IBaseRepository<QuestionOption>
+	{
+		IList<QuestionOption> FindByQuestion(int questionID);
+		IList<QuestionOption> FindByQuestionAndOption(int questionID, int optionID);
+	}
+	
+	public class SqlQuestionOptionRepository : BaseSqlRepository<QuestionOption>, IQuestionOptionRepository
 	{
 		public SqlQuestionOptionRepository()
 		{
@@ -160,6 +166,38 @@ FROM QuestionOption
 WHERE QuestionID = @QuestionID";
 			var questionOptions = new List<QuestionOption>();
 			using (var rs = ExecuteReader(query, new SqlParameter("@QuestionID", questionID))) {
+				while (rs.Read()) {
+					questionOptions.Add(new QuestionOption {
+						QuestionOptionID = GetInt32(rs, 0),
+						QuestionID = GetInt32(rs, 1),
+						OptionID = GetInt32(rs, 2),
+						OptionPlacement = GetInt32(rs, 3),
+						SortOrder = GetInt32(rs, 4),
+						Variablename = GetString(rs, 5),
+						Forced = GetInt32(rs, 6),
+						Hide = GetInt32(rs, 7)
+					});
+				}
+			}
+			return questionOptions;
+		}
+		
+		public IList<QuestionOption> FindByQuestionAndOption(int questionID, int optionID)
+		{
+			string query = @"
+SELECT 	QuestionOptionID, 
+	QuestionID, 
+	OptionID, 
+	OptionPlacement, 
+	SortOrder, 
+	Variablename, 
+	Forced, 
+	Hide
+FROM QuestionOption
+WHERE QuestionID = @QuestionID
+AND OptionID = @OptionID";
+			var questionOptions = new List<QuestionOption>();
+			using (var rs = ExecuteReader(query, new SqlParameter("@QuestionID", questionID), new SqlParameter("@OptionID", optionID))) {
 				while (rs.Read()) {
 					questionOptions.Add(new QuestionOption {
 						QuestionOptionID = GetInt32(rs, 0),

@@ -5,7 +5,9 @@
 
 using System;
 using HW.EForm.Core.Helpers;
+using HW.EForm.Core.Repositories;
 using HW.EForm.Core.Services;
+using HW.EForm.Report.Tests.Repositories;
 using NUnit.Framework;
 
 namespace HW.EForm.Report.Tests.Services
@@ -13,46 +15,64 @@ namespace HW.EForm.Report.Tests.Services
 	[TestFixture]
 	public class FeedbackTests
 	{
-		FeedbackService s = new FeedbackService();
+		FeedbackService s = new FeedbackService(new FeedbackRepositoryStub(),
+		                                        new FeedbackQuestionRepositoryStub(),
+		                                        new QuestionRepositoryStub(),
+		                                        new QuestionOptionRepositoryStub(),
+		                                        new QuestionLangRepositoryStub(),
+		                                        new WeightedQuestionOptionRepositoryStub(),
+		                                        new OptionRepositoryStub(),
+		                                        new OptionComponentsRepositoryStub(),
+		                                        new OptionComponentRepositoryStub(),
+		                                        new OptionComponentLangRepositoryStub(),
+		                                        new ProjectRoundUnitRepositoryStub(),
+		                                        new AnswerValueRepositoryStub());
 		
 		[Test]
-		public void TestReadFeedback()
+		public void TestMethod()
 		{
-			var f = s.ReadFeedback(6);
-			Console.WriteLine("FeedbackID: {0}, Feedback: {1}", f.FeedbackID, f.FeedbackText);
-			foreach (var fq in f.Questions) {
-				Console.WriteLine("\tQuestionID: {0}, Question: {1}", fq.QuestionID, fq.Question.GetLanguage(1).Question);
-				foreach (var qo in fq.Question.Options) {
-					Console.WriteLine("\t\tOptionID: {0}, Option: {1}", qo.OptionID, qo.Option.Internal);
-					foreach (var oc in qo.Option.Components) {
-						Console.WriteLine("\t\t\tOptionComponentID: {0}, Component: {1}", oc.OptionComponentID, oc.OptionComponent.Internal);
-					}
-				}
-			}
+//			var f = s.ReadFeedbackWithAnswers2(8, 62, new int[] { 1183 }, 1);
+			var f = s.ReadFeedbackWithAnswers2(1, 1, new int[] { 1 }, 1);
 		}
 		
-		[Test]
-		public void TestFindAllFeedbacks()
-		{
-			foreach (var f in s.FindAllFeedbacks()) {
-				Console.WriteLine("FeedbackID: {0}, Feedback: {1}", f.FeedbackID, f.FeedbackText);
-				foreach (var fq in f.Questions) {
-					Console.WriteLine("\tQuestionID: {0}, Question: {1}", fq.QuestionID, fq.Question.GetLanguage(1).Question);
-					foreach (var qo in fq.Question.Options) {
-						Console.WriteLine("\t\tOptionID: {0}, Option: {1}", qo.OptionID, qo.Option.Internal);
-						foreach (var oc in qo.Option.Components) {
-							Console.WriteLine("\t\t\tOptionComponentID: {0}, Component: {1}", oc.OptionComponentID, oc.OptionComponent.Internal);
-						}
-					}
-				}
-			}
-		}
+//		[Test]
+//		public void TestReadFeedback()
+//		{
+//			var f = s.ReadFeedback(6);
+//			Console.WriteLine("FeedbackID: {0}, Feedback: {1}", f.FeedbackID, f.FeedbackText);
+//			foreach (var fq in f.Questions) {
+//				Console.WriteLine("\tQuestionID: {0}, Question: {1}", fq.QuestionID, fq.Question.GetLanguage(1).Question);
+//				foreach (var qo in fq.Question.Options) {
+//					Console.WriteLine("\t\tOptionID: {0}, Option: {1}", qo.OptionID, qo.Option.Internal);
+//					foreach (var oc in qo.Option.Components) {
+//						Console.WriteLine("\t\t\tOptionComponentID: {0}, Component: {1}", oc.OptionComponentID, oc.OptionComponent.Internal);
+//					}
+//				}
+//			}
+//		}
+//		
+//		[Test]
+//		public void TestFindAllFeedbacks()
+//		{
+//			foreach (var f in s.FindAllFeedbacks()) {
+//				Console.WriteLine("FeedbackID: {0}, Feedback: {1}", f.FeedbackID, f.FeedbackText);
+//				foreach (var fq in f.Questions) {
+//					Console.WriteLine("\tQuestionID: {0}, Question: {1}", fq.QuestionID, fq.Question.GetLanguage(1).Question);
+//					foreach (var qo in fq.Question.Options) {
+//						Console.WriteLine("\t\tOptionID: {0}, Option: {1}", qo.OptionID, qo.Option.Internal);
+//						foreach (var oc in qo.Option.Components) {
+//							Console.WriteLine("\t\t\tOptionComponentID: {0}, Component: {1}", oc.OptionComponentID, oc.OptionComponent.Internal);
+//						}
+//					}
+//				}
+//			}
+//		}
 		
 		[Test]
 		public void TestReadFeedbackWithAnswers()
 		{
 //			var f = s.ReadFeedbackWithAnswers(8, 13, new int[] { 97 });
-			var f = s.ReadFeedbackWithAnswers(8, 62, new int[] { 1183 });
+			var f = s.ReadFeedbackWithAnswers(8, 62, new int[] { 1183 }, 1);
 			foreach (var fq in f.Questions) {
 				Console.WriteLine("QuestionID: {0}, Question: {1}", fq.QuestionID, fq.Question.Internal);
 				foreach (var qo in fq.Question.Options) {
@@ -76,28 +96,30 @@ namespace HW.EForm.Report.Tests.Services
 		}
 		
 //		[Test]
-//		public void aa()
+//		public void a()
 //		{
-//			var f = s.ReadFeedbackWithAnswers(8, 13, new int[] { 97 });
-//			var questions = f.lalala(new int[] { 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248 });
-//			foreach (var q in questions) {
-//				Console.WriteLine(q.Question.GetLanguage(2).Question);
+//			var f = s.ReadFeedbackWithAnswers(8, 62, new int[] { 1183 }, 2);
+//			foreach (var fq in f.Questions) {
+//				Console.WriteLine("QuestionID: {0}, Question: {1}", fq.QuestionID, fq.Question.SelectedQuestionLang.Question);
+//				foreach (var qo in fq.Question.Options) {
+//					Console.WriteLine("\t" + qo.Option.Internal);
+//					foreach (var oc in qo.Option.Components) {
+//						Console.WriteLine("\t\t" + oc.OptionComponent.SelectedOptionComponentLang.Text);
+//					}
+//				}
 //			}
 //		}
 //		
 //		[Test]
 //		public void b()
 //		{
-//			var f = s.ReadFeedbackWithAnswers(6, 13, new int[] { 97 });
-//			Console.WriteLine(new HighchartsBoxplot(f.ToChart(false)));
-//		}
-//		
-//		[Test]
-//		public void TestFindFeedbackQuestions()
-//		{
-//			var x = s.FindFeedbackQuestions(8, new int[] { 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248 });
-//			foreach (var y in x) {
-//				Console.WriteLine(y.Question.GetLanguage(2).Question);
+//			var f = s.ReadFeedbackWithAnswers(8, 62, new int[] { 1183 }, 2);
+//			var questions = f.GetGroupedQuestions();
+//			foreach (var keys in questions.Keys) {
+//				Console.WriteLine(keys);
+//				foreach (var fq in questions[keys]) {
+//					Console.WriteLine("\t" + fq.Question.SelectedQuestionLang.Question);
+//				}
 //			}
 //		}
 	}

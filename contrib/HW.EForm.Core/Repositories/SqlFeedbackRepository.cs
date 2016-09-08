@@ -5,7 +5,11 @@ using System.Collections.Generic;
 
 namespace HW.EForm.Core.Repositories
 {
-	public class SqlFeedbackRepository : BaseSqlRepository<Feedback>
+	public interface IFeedbackRepository : IBaseRepository<Feedback>
+	{
+	}
+	
+	public class SqlFeedbackRepository : BaseSqlRepository<Feedback>, IFeedbackRepository
 	{
 		public SqlFeedbackRepository()
 		{

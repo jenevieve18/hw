@@ -5,7 +5,12 @@ using System.Collections.Generic;
 	
 namespace HW.EForm.Core.Repositories
 {
-	public class SqlQuestionLangRepository : BaseSqlRepository<QuestionLang>
+	public interface IQuestionLangRepository : IBaseRepository<QuestionLang>
+	{
+		IList<QuestionLang> FindByQuestion(int questionID);
+	}
+	
+	public class SqlQuestionLangRepository : BaseSqlRepository<QuestionLang>, IQuestionLangRepository
 	{
 		public SqlQuestionLangRepository()
 		{

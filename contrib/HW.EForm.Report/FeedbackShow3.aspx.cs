@@ -6,13 +6,25 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.EForm.Core.Helpers;
 using HW.EForm.Core.Models;
+using HW.EForm.Core.Repositories;
 using HW.EForm.Core.Services;
 
 namespace HW.EForm.Report
 {
 	public partial class FeedbackShow3 : System.Web.UI.Page
 	{
-		FeedbackService feedbackService = new FeedbackService();
+		FeedbackService feedbackService = new FeedbackService(new SqlFeedbackRepository(),
+		                                        new SqlFeedbackQuestionRepository(),
+		                                        new SqlQuestionRepository(),
+		                                        new SqlQuestionOptionRepository(),
+		                                        new SqlQuestionLangRepository(),
+		                                        new SqlWeightedQuestionOptionRepository(),
+		                                        new SqlOptionRepository(),
+		                                        new SqlOptionComponentsRepository(),
+		                                        new SqlOptionComponentRepository(),
+		                                        new SqlOptionComponentLangRepository(),
+		                                        new SqlProjectRoundUnitRepository(),
+		                                        new SqlAnswerValueRepository());
 		QuestionService questionService = new QuestionService();
 		
 		protected Feedback feedback;
@@ -28,13 +40,14 @@ namespace HW.EForm.Report
 			feedbackID = ConvertHelper.ToInt32(Request.QueryString["FeedbackID"]);
 			projectRoundID = ConvertHelper.ToInt32(Request.QueryString["ProjectRoundID"]);
 			projectRoundUnitID = ConvertHelper.ToInt32(Request.QueryString["ProjectRoundUnitID"]);
+			int langID = 1;
 			
-            Show(feedbackID, projectRoundID, projectRoundUnitID);
+            Show(feedbackID, projectRoundID, projectRoundUnitID, langID);
 		}
 
-		public void Show(int feedbackID, int projectRoundID, int projectRoundUnitID)
+		public void Show(int feedbackID, int projectRoundID, int projectRoundUnitID, int langID)
 		{
-			feedback = feedbackService.ReadFeedbackWithAnswers(feedbackID, projectRoundID, new int[] { projectRoundUnitID });
+			feedback = feedbackService.ReadFeedbackWithAnswers(feedbackID, projectRoundID, new int[] { projectRoundUnitID }, langID);
 			
 			charts.Add(HighchartsBoxplot.GetHighchartsChart(9, feedback.ToChart(false)));
 			foreach (var fq in feedback.Questions) {

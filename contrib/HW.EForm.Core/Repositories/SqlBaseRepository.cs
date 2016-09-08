@@ -6,7 +6,16 @@ using System.Configuration;
 	
 namespace HW.EForm.Core.Repositories
 {
-	public class BaseSqlRepository<T>
+	public interface IBaseRepository<T>
+	{
+		void Save(T t);
+		void Update(T t, int id);
+		void Delete(int id);
+		T Read(int id);
+		IList<T> FindAll();
+	}
+	
+	public class BaseSqlRepository<T> : IBaseRepository<T>
 	{
 		SqlConnection con;
 		

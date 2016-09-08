@@ -7,6 +7,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using HW.EForm.Core.Helpers;
+using HW.EForm.Core.Repositories;
 using HW.EForm.Core.Services;
 using NUnit.Framework;
 
@@ -15,7 +16,18 @@ namespace HW.EForm.Report.Tests.Views
 	[TestFixture]
 	public class FeedbackShowTests
 	{
-		FeedbackService feedbackService = new FeedbackService();
+		FeedbackService feedbackService = new FeedbackService(new SqlFeedbackRepository(),
+		                                        new SqlFeedbackQuestionRepository(),
+		                                        new SqlQuestionRepository(),
+		                                        new SqlQuestionOptionRepository(),
+		                                        new SqlQuestionLangRepository(),
+		                                        new SqlWeightedQuestionOptionRepository(),
+		                                        new SqlOptionRepository(),
+		                                        new SqlOptionComponentsRepository(),
+		                                        new SqlOptionComponentRepository(),
+		                                        new SqlOptionComponentLangRepository(),
+		                                        new SqlProjectRoundUnitRepository(),
+		                                        new SqlAnswerValueRepository());
 		AnswerService answerService = new AnswerService();
 		ProjectService projectService = new ProjectService();
 		
@@ -38,17 +50,12 @@ $(function() {
 <body>
 <div id=container></div>
 </body.";
-//			var units = projectService.FindProjectRoundUnits(new int[] { 96 });
-//			var f = feedbackService.ReadFeedback2(6, units);
-			var f = feedbackService.ReadFeedbackWithAnswers(6, 10, new int[] { 96 });
+			var f = feedbackService.ReadFeedbackWithAnswers(6, 10, new int[] { 96 }, 1);
 			
 			Console.WriteLine("FeedbackID: {0}, Feedback: {1}", f.FeedbackID, f.FeedbackText);
 			foreach (var fq in f.Questions) {
 				Console.WriteLine("\tQuestionID: {0}, Question: {1}", fq.QuestionID, fq.Question.GetLanguage(1).Question);
 				
-//				fq.Units = units;
-//				fq.AnswerValues = answerService.FindByQuestionOptionsAndUnits(fq.QuestionID, fq.Question.Options, projectRoundID, units);
-
 				string chart = new HighchartsColumnChart(fq.Question.ToChart(false)).ToString();
 				template = template.Replace("__SCRIPT__", chart);
 				

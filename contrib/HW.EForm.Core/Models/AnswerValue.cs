@@ -29,7 +29,7 @@ namespace HW.EForm.Core.Models
 		
 		public int GetValueInt()
 		{
-			if (Option != null && !Option.IsSlider) {
+			if (Option != null && !Option.IsVAS) {
 				return Option.GetComponent(ValueInt).ExportValue;
 			}
 			return ValueInt;

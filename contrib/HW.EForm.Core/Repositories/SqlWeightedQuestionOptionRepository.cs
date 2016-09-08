@@ -5,7 +5,12 @@ using System.Collections.Generic;
 	
 namespace HW.EForm.Core.Repositories
 {
-	public class SqlWeightedQuestionOptionRepository : BaseSqlRepository<WeightedQuestionOption>
+	public interface IWeightedQuestionOptionRepository : IBaseRepository<WeightedQuestionOption>
+	{
+		WeightedQuestionOption ReadByQuestion(int questionID);
+	}
+	
+	public class SqlWeightedQuestionOptionRepository : BaseSqlRepository<WeightedQuestionOption>, IWeightedQuestionOptionRepository
 	{
 		public SqlWeightedQuestionOptionRepository()
 		{

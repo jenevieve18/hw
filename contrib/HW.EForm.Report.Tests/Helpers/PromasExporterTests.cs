@@ -7,6 +7,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using HW.EForm.Core.Helpers;
+using HW.EForm.Core.Repositories;
 using HW.EForm.Core.Services;
 using NUnit.Framework;
 
@@ -15,7 +16,18 @@ namespace HW.EForm.Report.Tests.Helpers
 	[TestFixture]
 	public class PromasExporterTests
 	{
-		FeedbackService s = new FeedbackService();
+		FeedbackService s = new FeedbackService(new SqlFeedbackRepository(),
+		                                        new SqlFeedbackQuestionRepository(),
+		                                        new SqlQuestionRepository(),
+		                                        new SqlQuestionOptionRepository(),
+		                                        new SqlQuestionLangRepository(),
+		                                        new SqlWeightedQuestionOptionRepository(),
+		                                        new SqlOptionRepository(),
+		                                        new SqlOptionComponentsRepository(),
+		                                        new SqlOptionComponentRepository(),
+		                                        new SqlOptionComponentLangRepository(),
+		                                        new SqlProjectRoundUnitRepository(),
+		                                        new SqlAnswerValueRepository());
 		
 		[Test]
 		public void TestMethod()

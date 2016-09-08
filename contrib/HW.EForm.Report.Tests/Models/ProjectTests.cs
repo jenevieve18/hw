@@ -14,7 +14,15 @@ namespace HW.EForm.Report.Tests.Models
 		[Test]
 		public void TestMethod()
 		{
-			var p = new Project { Name = "Project 1" };
+			var p = new Project { Name = "DEG Health Project" };
+			var s = new Survey {};
+			p.AddSurvey(s);
+			
+			var pr = new ProjectRound { Internal = "Q1 (Jan-Mar)" };
+			pr.AddUnit("DEG IT");
+			pr.AddUnit("DEG Customer Support");
+			pr.AddUnit("DEG Graphics Team");
+			p.AddRound(pr);
 		}
 	}
 }

@@ -9,34 +9,52 @@ namespace HW.EForm.Core.Models
 		public int ExportValue { get; set; }
 		public string Internal { get; set; }
 		public int OptionComponentContainerID { get; set; }
-
-//		public OptionComponent() : this("")
-//		{
+		public IList<AnswerValue> AnswerValues { get; set; }
+//		int selectedOptionComponentLangID;
+//		public int SelectedOptionComponentLangID {
+//			get { return selectedOptionComponentLangID; }
+//			set { selectedOptionComponentLangID = value; SelectedOptionComponentLang = GetLanguage(selectedOptionComponentLangID); }
 //		}
-//		
-//		public OptionComponent(string @internal)
-//		{
-//			this.Internal = @internal;
-//			Languages = new List<OptionComponentLang>();
-//		}
+		public int SelectedOptionComponentLangID { get; set; }
+//		public OptionComponentLang SelectedOptionComponentLang { get; set; }
+		public IList<OptionComponentLang> Languages { get; set; }
 		
 		public OptionComponent()
 		{
+			Languages = new List<OptionComponentLang>();
 		}
 		
-		public IList<AnswerValue> AnswerValues { get; set; }
+		public OptionComponentLang FirstLanguage {
+			get {
+				if (Languages.Count > 0) {
+					return Languages[0];
+				}
+				return null;
+			}
+		}
+		OptionComponentLang selectedOptionComponentLang;
+		public OptionComponentLang SelectedOptionComponentLang {
+			get {
+				if (selectedOptionComponentLang == null) {
+					selectedOptionComponentLang = GetLanguage(SelectedOptionComponentLangID);
+				}
+				if (selectedOptionComponentLang == null && FirstLanguage != null) {
+					selectedOptionComponentLang = FirstLanguage;
+				}
+				return selectedOptionComponentLang;
+			}
+			set { selectedOptionComponentLang = value; }
+		}
 		
-//		public void AddLanguage(int langID, string text)
-//		{
-//			AddLanguage(new OptionComponentLang { LangID = langID, Text = text});
-//		}
-//		
-//		public void AddLanguage(OptionComponentLang language)
-//		{
-//			Languages.Add(language);
-//		}
+		public void AddLanguage(int langID, string text)
+		{
+			AddLanguage(new OptionComponentLang { LangID = 1, Text = text });
+		}
 		
-		public IList<OptionComponentLang> Languages { get; set; }
+		public void AddLanguage(OptionComponentLang ocl)
+		{
+			Languages.Add(ocl);
+		}
 		
 		public OptionComponentLang GetLanguage(int langID)
 		{

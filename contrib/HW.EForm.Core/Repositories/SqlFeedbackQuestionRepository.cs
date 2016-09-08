@@ -5,7 +5,13 @@ using System.Collections.Generic;
 
 namespace HW.EForm.Core.Repositories
 {
-	public class SqlFeedbackQuestionRepository : BaseSqlRepository<FeedbackQuestion>
+	public interface IFeedbackQuestionRepository : IBaseRepository<FeedbackQuestion>
+	{
+		IList<FeedbackQuestion> FindByFeedback(int feedbackID);
+		IList<FeedbackQuestion> FindByQuestions(int feedbackID, int[] questionIDs);
+	}
+	
+	public class SqlFeedbackQuestionRepository : BaseSqlRepository<FeedbackQuestion>, IFeedbackQuestionRepository
 	{
 		public SqlFeedbackQuestionRepository()
 		{
@@ -16,16 +22,25 @@ namespace HW.EForm.Core.Repositories
 			string query = @"
 INSERT INTO FeedbackQuestion(
 	FeedbackID,
-	QuestionID
+	QuestionID,
+	Additional,
+	OptionID,
+	PartOfChart
 )
 VALUES(
 	@FeedbackID,
-	@QuestionID
+	@QuestionID,
+	@Additional,
+	@OptionID,
+	@PartOfChart
 )";
 			ExecuteNonQuery(
 				query,
 				new SqlParameter("@FeedbackID", feedbackQuestion.FeedbackID),
-				new SqlParameter("@QuestionID", feedbackQuestion.QuestionID)
+				new SqlParameter("@QuestionID", feedbackQuestion.QuestionID),
+				new SqlParameter("@Additional", feedbackQuestion.Additional),
+				new SqlParameter("@OptionID", feedbackQuestion.OptionID),
+				new SqlParameter("@PartOfChart", feedbackQuestion.PartOfChart)
 			);
 		}
 		
@@ -35,13 +50,19 @@ VALUES(
 UPDATE FeedbackQuestion SET
 	FeedbackQuestionID = @FeedbackQuestionID,
 	FeedbackID = @FeedbackID,
-	QuestionID = @QuestionID
+	QuestionID = @QuestionID,
+	Additional = @Additional,
+	OptionID = @OptionID,
+	PartOfChart = @PartOfChart
 WHERE FeedbackQuestionID = @FeedbackQuestionID";
 			ExecuteNonQuery(
 				query,
-				new SqlParameter("@FeedbackQuestionID", feedbackQuestion.FeedbackQuestionID),
+				new SqlParameter("@FeedbackQuestionID", id),
 				new SqlParameter("@FeedbackID", feedbackQuestion.FeedbackID),
-				new SqlParameter("@QuestionID", feedbackQuestion.QuestionID)
+				new SqlParameter("@QuestionID", feedbackQuestion.QuestionID),
+				new SqlParameter("@Additional", feedbackQuestion.Additional),
+				new SqlParameter("@OptionID", feedbackQuestion.OptionID),
+				new SqlParameter("@PartOfChart", feedbackQuestion.PartOfChart)
 			);
 		}
 		
@@ -61,7 +82,10 @@ WHERE FeedbackQuestionID = @FeedbackQuestionID";
 			string query = @"
 SELECT 	FeedbackQuestionID,
 	FeedbackID,
-	QuestionID
+	QuestionID,
+	Additional,
+	OptionID,
+	PartOfChart
 FROM FeedbackQuestion
 WHERE FeedbackQuestionID = @FeedbackQuestionID";
 			FeedbackQuestion feedbackQuestion = null;
@@ -70,7 +94,10 @@ WHERE FeedbackQuestionID = @FeedbackQuestionID";
 					feedbackQuestion = new FeedbackQuestion {
 						FeedbackQuestionID = GetInt32(rs, 0),
 						FeedbackID = GetInt32(rs, 1),
-						QuestionID = GetInt32(rs, 2)
+						QuestionID = GetInt32(rs, 2),
+						Additional = GetInt32(rs, 3),
+						OptionID = GetInt32(rs, 4),
+						PartOfChart = GetInt32(rs, 5)
 					};
 				}
 			}
@@ -82,7 +109,10 @@ WHERE FeedbackQuestionID = @FeedbackQuestionID";
 			string query = @"
 SELECT 	FeedbackQuestionID,
 	FeedbackID,
-	QuestionID
+	QuestionID,
+	Additional,
+	OptionID,
+	PartOfChart
 FROM FeedbackQuestion";
 			var feedbackQuestions = new List<FeedbackQuestion>();
 			using (var rs = ExecuteReader(query)) {
@@ -91,7 +121,10 @@ FROM FeedbackQuestion";
 						new FeedbackQuestion {
 							FeedbackQuestionID = GetInt32(rs, 0),
 							FeedbackID = GetInt32(rs, 1),
-							QuestionID = GetInt32(rs, 2)
+							QuestionID = GetInt32(rs, 2),
+							Additional = GetInt32(rs, 3),
+							OptionID = GetInt32(rs, 4),
+							PartOfChart = GetInt32(rs, 5)
 						}
 					);
 				}
@@ -117,7 +150,10 @@ FROM FeedbackQuestion";
 			string query = string.Format(@"
 SELECT 	FeedbackQuestionID,
 	FeedbackID,
-	QuestionID
+	QuestionID,
+	Additional,
+	OptionID,
+	PartOfChart
 FROM FeedbackQuestion
 WHERE FeedbackID = @FeedbackID
 {0}", questions);
@@ -128,7 +164,10 @@ WHERE FeedbackID = @FeedbackID
 						new FeedbackQuestion {
 							FeedbackQuestionID = GetInt32(rs, 0),
 							FeedbackID = GetInt32(rs, 1),
-							QuestionID = GetInt32(rs, 2)
+							QuestionID = GetInt32(rs, 2),
+							Additional = GetInt32(rs, 3),
+							OptionID = GetInt32(rs, 4),
+							PartOfChart = GetInt32(rs, 5)
 						}
 					);
 				}
@@ -141,7 +180,10 @@ WHERE FeedbackID = @FeedbackID
 			string query = @"
 SELECT 	FeedbackQuestionID,
 	FeedbackID,
-	QuestionID
+	QuestionID,
+	Additional,
+	OptionID,
+	PartOfChart
 FROM FeedbackQuestion
 WHERE FeedbackID = @FeedbackID";
 			var feedbackQuestions = new List<FeedbackQuestion>();
@@ -151,7 +193,10 @@ WHERE FeedbackID = @FeedbackID";
 						new FeedbackQuestion {
 							FeedbackQuestionID = GetInt32(rs, 0),
 							FeedbackID = GetInt32(rs, 1),
-							QuestionID = GetInt32(rs, 2)
+							QuestionID = GetInt32(rs, 2),
+							Additional = GetInt32(rs, 3),
+							OptionID = GetInt32(rs, 4),
+							PartOfChart = GetInt32(rs, 5)
 						}
 					);
 				}

@@ -9,6 +9,9 @@ namespace HW.EForm.Core.Models
 		public string Internal { get; set; }
 		public string Name { get; set; }
 		public string AppURL { get; set; }
+		
+		public IList<ProjectRound> Rounds { get; set; }
+		public IList<ProjectSurvey> Surveys { get; set; }
 
 		public Project()
 		{
@@ -16,7 +19,19 @@ namespace HW.EForm.Core.Models
 			Surveys = new List<ProjectSurvey>();
 		}
 		
-		public IList<ProjectRound> Rounds { get; set; }
-		public IList<ProjectSurvey> Surveys { get; set; }
+		public void AddSurvey(Survey s)
+		{
+			AddSurvey(new ProjectSurvey { Survey = s });
+		}
+		
+		public void AddSurvey(ProjectSurvey s)
+		{
+			Surveys.Add(s);
+		}
+		
+		public void AddRound(ProjectRound r)
+		{
+			Rounds.Add(r);
+		}
 	}
 }

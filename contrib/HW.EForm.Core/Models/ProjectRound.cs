@@ -41,6 +41,7 @@ namespace HW.EForm.Core.Models
 
 		public ProjectRound()
 		{
+			Units = new List<ProjectRoundUnit>();
 		}
 		
 		public Project Project { get; set; }
@@ -48,6 +49,16 @@ namespace HW.EForm.Core.Models
 		public IList<ProjectRoundUnit> Units { get; set; }
 		public IList<ProjectRoundLang> Languages { get; set; }
 		public Feedback Feedback { get; set; }
+		
+		public void AddUnit(string unit)
+		{
+			AddUnit(new ProjectRoundUnit { Unit = unit });
+		}
+		
+		public void AddUnit(ProjectRoundUnit unit)
+		{
+			Units.Add(unit);
+		}
 		
 		public override string ToString()
 		{

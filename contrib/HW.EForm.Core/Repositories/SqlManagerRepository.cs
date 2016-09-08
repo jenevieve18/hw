@@ -5,7 +5,11 @@ using System.Collections.Generic;
 	
 namespace HW.EForm.Core.Repositories
 {
-	public class SqlManagerRepository : BaseSqlRepository<Manager>
+	public interface IManagerRepository : IBaseRepository<Manager>
+	{
+	}
+	
+	public class SqlManagerRepository : BaseSqlRepository<Manager>, IManagerRepository
 	{
 		public SqlManagerRepository()
 		{

@@ -5,7 +5,12 @@ using System.Collections.Generic;
 	
 namespace HW.EForm.Core.Repositories
 {
-	public class SqlOptionComponentsRepository : BaseSqlRepository<OptionComponents>
+	public interface IOptionComponentsRepository : IBaseRepository<OptionComponents>
+	{
+		IList<OptionComponents> FindByOption(int optionID);
+	}
+	
+	public class SqlOptionComponentsRepository : BaseSqlRepository<OptionComponents>, IOptionComponentsRepository
 	{
 		public SqlOptionComponentsRepository()
 		{

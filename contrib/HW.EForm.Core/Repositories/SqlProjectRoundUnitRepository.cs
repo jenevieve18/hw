@@ -5,7 +5,12 @@ using System.Collections.Generic;
 
 namespace HW.EForm.Core.Repositories
 {
-	public class SqlProjectRoundUnitRepository : BaseSqlRepository<ProjectRoundUnit>
+	public interface IProjectRoundUnitRepository : IBaseRepository<ProjectRoundUnit>
+	{
+		IList<ProjectRoundUnit> FindProjectRoundUnits(int[] projectRoundUnitIDs);
+	}
+	
+	public class SqlProjectRoundUnitRepository : BaseSqlRepository<ProjectRoundUnit>, IProjectRoundUnitRepository
 	{
 		public SqlProjectRoundUnitRepository()
 		{

@@ -5,6 +5,10 @@ using System.Collections.Generic;
 	
 namespace HW.EForm.Core.Repositories
 {
+	public interface IWeightedQuestionOptionLangRepository : IBaseRepository<WeightedQuestionOption>
+	{
+	}
+	
 	public class SqlWeightedQuestionOptionLangRepository : BaseSqlRepository<WeightedQuestionOptionLang>
 	{
 		public SqlWeightedQuestionOptionLangRepository()

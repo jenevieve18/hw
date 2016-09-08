@@ -70,6 +70,7 @@
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\FeedbackQuestion.cs" />
+    <Compile Include="Models\Lang.cs" />
     <Compile Include="Models\Manager.cs" />
     <Compile Include="Models\ManagerProjectRound.cs" />
     <Compile Include="Models\ManagerProjectRoundUnit.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Repositories\SqlBaseRepository.cs" />
     <Compile Include="Repositories\SqlFeedbackQuestionRepository.cs" />
     <Compile Include="Repositories\SqlFeedbackRepository.cs" />
+    <Compile Include="Repositories\SqlLangRepository.cs" />
     <Compile Include="Repositories\SqlManagerProjectRoundRepository.cs" />
     <Compile Include="Repositories\SqlManagerProjectRoundUnitRepository.cs" />
     <Compile Include="Repositories\SqlManagerRepository.cs" />

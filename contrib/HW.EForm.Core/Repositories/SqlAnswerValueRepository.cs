@@ -5,7 +5,12 @@ using System.Collections.Generic;
 
 namespace HW.EForm.Core.Repositories
 {
-	public class SqlAnswerValueRepository : BaseSqlRepository<AnswerValue>
+	public interface IAnswerValueRepository : IBaseRepository<AnswerValue>
+	{
+		IList<AnswerValue> FindByQuestionOptionsAndUnit(int questionID, IList<QuestionOption> options, int projectRoundID, int projectRoundUnitID);
+	}
+	
+	public class SqlAnswerValueRepository : BaseSqlRepository<AnswerValue>, IAnswerValueRepository
 	{
 		public SqlAnswerValueRepository()
 		{

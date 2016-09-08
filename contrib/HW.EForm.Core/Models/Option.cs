@@ -20,23 +20,40 @@ namespace HW.EForm.Core.Models
 		public IList<OptionComponents> Components { get; set; }
 		public IList<AnswerValue> AnswerValues { get; set; }
 		
-		public Option() : this("")
+		public Option()
 		{
+			Components = new List<OptionComponents>();
+			AnswerValues = new List<AnswerValue>();
+		}
+		
+		public void AddComponent(OptionComponent oc)
+		{
+			AddComponent(new OptionComponents { OptionComponent = oc });
+		}
+		
+		public void AddComponent(OptionComponents ocs)
+		{
+			Components.Add(ocs);
 		}
 
-		public Option(string @internal)
-		{
-			this.Internal = @internal;
-			this.Components = new List<OptionComponents>();
+		public bool IsSingleChoice {
+			get { return OptionType == OptionTypes.SingleChoice; }
 		}
 		
-		public bool IsSlider {
-			get { return OptionType == 9; }
+		public bool IsNumeric {
+			get { return OptionType == OptionTypes.Numeric; }
 		}
 		
-		public void AddComponent(OptionComponents component)
-		{
-			Components.Add(component);
+		public bool IsVAS {
+			get { return OptionType == OptionTypes.VAS; }
+		}
+		
+		public bool IsMultiChoice {
+			get { return OptionType == OptionTypes.MultiChoice; }
+		}
+		
+		public bool IsFreeText {
+			get { return OptionType == OptionTypes.FreeText; }
 		}
 		
 		public OptionComponents GetComponent(int optionComponentID)
@@ -50,12 +67,12 @@ namespace HW.EForm.Core.Models
 		}
 	}
 	
-	public enum OptionType
+	public class OptionTypes
 	{
-		SingleChoice = 1,
-		FreeText = 2,
-		MultiChoice = 3,
-		Numeric = 4,
-		VAS = 9
+		public const int SingleChoice = 1;
+		public const int FreeText = 2;
+		public const int MultiChoice = 3;
+		public const int Numeric = 4;
+		public const int VAS = 9;
 	}
 }
