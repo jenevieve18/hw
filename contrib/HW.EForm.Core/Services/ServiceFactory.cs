@@ -11,6 +11,13 @@ namespace HW.EForm.Core.Services
 {
 	public class ServiceFactory
 	{
+		static IRepositoryFactory repoFactory;
+		
+		public static void SetRepositoryFactory(IRepositoryFactory repoFactory)
+		{
+			ServiceFactory.repoFactory = repoFactory;
+		}
+		
 		public static FeedbackService CreateFeedbackService()
 		{
 //			return new FeedbackService(
