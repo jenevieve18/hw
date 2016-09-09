@@ -14,18 +14,19 @@ namespace HW.EForm.Report
 	public partial class FeedbackQuestionImage : System.Web.UI.Page
 	{
 //		FeedbackService s = new FeedbackService();
-		FeedbackService s = new FeedbackService(new SqlFeedbackRepository(),
-		                                        new SqlFeedbackQuestionRepository(),
-		                                        new SqlQuestionRepository(),
-		                                        new SqlQuestionOptionRepository(),
-		                                        new SqlQuestionLangRepository(),
-		                                        new SqlWeightedQuestionOptionRepository(),
-		                                        new SqlOptionRepository(),
-		                                        new SqlOptionComponentsRepository(),
-		                                        new SqlOptionComponentRepository(),
-		                                        new SqlOptionComponentLangRepository(),
-		                                        new SqlProjectRoundUnitRepository(),
-		                                        new SqlAnswerValueRepository());
+//		FeedbackService s = new FeedbackService(new SqlFeedbackRepository(),
+//		                                        new SqlFeedbackQuestionRepository(),
+//		                                        new SqlQuestionRepository(),
+//		                                        new SqlQuestionOptionRepository(),
+//		                                        new SqlQuestionLangRepository(),
+//		                                        new SqlWeightedQuestionOptionRepository(),
+//		                                        new SqlOptionRepository(),
+//		                                        new SqlOptionComponentsRepository(),
+//		                                        new SqlOptionComponentRepository(),
+//		                                        new SqlOptionComponentLangRepository(),
+//		                                        new SqlProjectRoundUnitRepository(),
+//		                                        new SqlAnswerValueRepository());
+		FeedbackService s = ServiceFactory.CreateFeedbackService();
 		protected Feedback feedback;
 		protected int feedbackID;
 		protected int projectRoundID;
@@ -44,7 +45,7 @@ namespace HW.EForm.Report
 
 		public void Show(int feedbackID, int projectRoundID, int projectRoundUnitID, int langID)
 		{
-			feedback = s.ReadFeedbackWithAnswers(feedbackID, projectRoundID, new int[] { projectRoundUnitID }, langID);
+			feedback = s.ReadFeedbackWithAnswers2(feedbackID, projectRoundID, new int[] { projectRoundUnitID }, langID);
 		}
 	}
 }

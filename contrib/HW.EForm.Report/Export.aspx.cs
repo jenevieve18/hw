@@ -12,18 +12,19 @@ namespace HW.EForm.Report
 {
 	public partial class Export : System.Web.UI.Page
 	{
-		FeedbackService s = new FeedbackService(new SqlFeedbackRepository(),
-		                                        new SqlFeedbackQuestionRepository(),
-		                                        new SqlQuestionRepository(),
-		                                        new SqlQuestionOptionRepository(),
-		                                        new SqlQuestionLangRepository(),
-		                                        new SqlWeightedQuestionOptionRepository(),
-		                                        new SqlOptionRepository(),
-		                                        new SqlOptionComponentsRepository(),
-		                                        new SqlOptionComponentRepository(),
-		                                        new SqlOptionComponentLangRepository(),
-		                                        new SqlProjectRoundUnitRepository(),
-		                                        new SqlAnswerValueRepository());
+//		FeedbackService s = new FeedbackService(new SqlFeedbackRepository(),
+//		                                        new SqlFeedbackQuestionRepository(),
+//		                                        new SqlQuestionRepository(),
+//		                                        new SqlQuestionOptionRepository(),
+//		                                        new SqlQuestionLangRepository(),
+//		                                        new SqlWeightedQuestionOptionRepository(),
+//		                                        new SqlOptionRepository(),
+//		                                        new SqlOptionComponentsRepository(),
+//		                                        new SqlOptionComponentRepository(),
+//		                                        new SqlOptionComponentLangRepository(),
+//		                                        new SqlProjectRoundUnitRepository(),
+//		                                        new SqlAnswerValueRepository());
+		FeedbackService s = ServiceFactory.CreateFeedbackService();
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -32,7 +33,7 @@ namespace HW.EForm.Report
 			int projectRoundUnitID = ConvertHelper.ToInt32(Request.QueryString["ProjectRoundUnitID"]);
 			int langID = 1;
 			
-			var feedback = s.ReadFeedbackWithAnswers(feedbackID, projectRoundID, new int[] { projectRoundUnitID }, langID);
+			var feedback = s.ReadFeedbackWithAnswers2(feedbackID, projectRoundID, new int[] { projectRoundUnitID }, langID);
 			
 //			var exporter = new PromasExporter();
 //

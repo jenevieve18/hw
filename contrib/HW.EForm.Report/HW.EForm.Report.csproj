@@ -76,6 +76,7 @@
     <Content Include="FeedbackShow.aspx" />
     <Content Include="FeedbackShow2.aspx" />
     <Content Include="FeedbackShow3.aspx" />
+    <Content Include="Global.asax" />
     <Content Include="Logout.aspx" />
     <Content Include="Profile.aspx" />
     <Content Include="ProjectRoundShow.aspx" />
@@ -132,6 +133,9 @@
     </Compile>
     <Compile Include="FeedbackShow3.aspx.designer.cs">
       <DependentUpon>FeedbackShow3.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Layout.Master.cs">
       <DependentUpon>Layout.Master</DependentUpon>
