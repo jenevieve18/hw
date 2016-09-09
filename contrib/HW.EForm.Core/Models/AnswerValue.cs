@@ -4,6 +4,16 @@ namespace HW.EForm.Core.Models
 {
 	public class AnswerValue
 	{
+		Option option;
+		Answer answer;
+		
+		public AnswerValue()
+		{
+		}
+		
+		public event EventHandler OptionGet;
+		public event EventHandler AnswerGet;
+		
 		public int Value { get; set; }
 		public int AnswerID { get; set; }
 		public int QuestionID { get; set; }
@@ -16,24 +26,10 @@ namespace HW.EForm.Core.Models
 		public int DeletedSessionID { get; set; }
 		public string ValueText { get; set; }
 		public string ValueTextJapaneseUnicode { get; set; }
-
-		public AnswerValue()
-		{
-		}
 		
 		public Question Question { get; set; }
-		Option option;
-		Answer answer;
 		
 		public OptionComponent OptionComponent { get; set; }
-		
-		public int GetValueInt()
-		{
-			if (Option != null && !Option.IsVAS) {
-				return Option.GetComponent(ValueInt).ExportValue;
-			}
-			return ValueInt;
-		}
 		
 		public Answer Answer {
 			get {
@@ -55,8 +51,13 @@ namespace HW.EForm.Core.Models
 			set { option = value; }
 		}
 		
-		public event EventHandler OptionGet;
-		public event EventHandler AnswerGet;
+		public int GetValueInt()
+		{
+			if (Option != null && !Option.IsVAS) {
+				return Option.GetComponent(ValueInt).ExportValue;
+			}
+			return ValueInt;
+		}
 		
 		protected virtual void OnAnswerGet(EventArgs e)
 		{

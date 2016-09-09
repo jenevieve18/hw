@@ -76,9 +76,10 @@
     <Compile Include="Repositories\OptionRepositoryTests.cs" />
     <Compile Include="Repositories\ProjectRepositoryTests.cs" />
     <Compile Include="Repositories\QuestionRepositoryTests.cs" />
+    <Compile Include="Repositories\RepositoryStubFactory.cs" />
     <Compile Include="Repositories\WeightedQuestionRepositoryTests.cs" />
     <Compile Include="Services\AnswerServiceTests.cs" />
-    <Compile Include="Services\FeedbackTests.cs" />
+    <Compile Include="Services\FeedbackServiceTests.cs" />
     <Compile Include="Services\ManagerServiceTests.cs" />
     <Compile Include="Services\QuestionServiceTests.cs" />
     <Compile Include="Services\ReportServiceTests.cs" />

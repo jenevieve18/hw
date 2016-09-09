@@ -37,17 +37,9 @@ namespace HW.EForm.Report.Tests.Repositories
 	{
 		public FeedbackQuestionRepositoryStub()
 		{
-			items.Add(new FeedbackQuestion { FeedbackID = 1, QuestionID = 1 });
-			items.Add(new FeedbackQuestion { FeedbackID = 1, QuestionID = 2 });
-			items.Add(new FeedbackQuestion { FeedbackID = 1, QuestionID = 3 });
-			items.Add(new FeedbackQuestion { FeedbackID = 1, QuestionID = 4 });
-			items.Add(new FeedbackQuestion { FeedbackID = 1, QuestionID = 5 });
-			items.Add(new FeedbackQuestion { FeedbackID = 1, QuestionID = 6 });
-			items.Add(new FeedbackQuestion { FeedbackID = 1, QuestionID = 7 });
-			items.Add(new FeedbackQuestion { FeedbackID = 1, QuestionID = 8 });
-			items.Add(new FeedbackQuestion { FeedbackID = 1, QuestionID = 9 });
-			items.Add(new FeedbackQuestion { FeedbackID = 1, QuestionID = 10 });
-			items.Add(new FeedbackQuestion { FeedbackID = 1, QuestionID = 11 });
+			for (int i = 1; i <= 11; i++) {
+				items.Add(new FeedbackQuestion { FeedbackID = 1, QuestionID = i, OptionID = 1 });
+			}
 		}
 		
 		public IList<FeedbackQuestion> FindByFeedback(int feedbackID)

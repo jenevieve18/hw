@@ -291,7 +291,9 @@ WHERE ProjectRoundID > 0";
 				}
 				projectRoundUnitQuery += ")";
 			}
-			string query = string.Format(@"
+			
+			string query = string.Format(
+				@"
 SELECT 	ProjectRoundUnitID,
 	ProjectRoundID,
 	Unit,
@@ -315,7 +317,9 @@ SELECT 	ProjectRoundUnitID,
 	UniqueID,
 	RequiredAnswerCount
 FROM ProjectRoundUnit
-{0}", projectRoundUnitQuery);
+{0}",
+				projectRoundUnitQuery
+			);
 			var projectRoundUnits = new List<ProjectRoundUnit>();
 			using (var rs = ExecuteReader(query, parameters.ToArray())) {
 				while (rs.Read()) {

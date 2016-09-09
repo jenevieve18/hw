@@ -5,6 +5,12 @@ namespace HW.EForm.Core.Models
 {
 	public class Project
 	{
+		public Project()
+		{
+			Rounds = new List<ProjectRound>();
+			Surveys = new List<ProjectSurvey>();
+		}
+		
 		public int ProjectID { get; set; }
 		public string Internal { get; set; }
 		public string Name { get; set; }
@@ -13,12 +19,6 @@ namespace HW.EForm.Core.Models
 		public IList<ProjectRound> Rounds { get; set; }
 		public IList<ProjectSurvey> Surveys { get; set; }
 
-		public Project()
-		{
-			Rounds = new List<ProjectRound>();
-			Surveys = new List<ProjectSurvey>();
-		}
-		
 		public void AddSurvey(Survey s)
 		{
 			AddSurvey(new ProjectSurvey { Survey = s });

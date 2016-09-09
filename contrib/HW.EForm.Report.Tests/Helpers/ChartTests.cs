@@ -15,6 +15,23 @@ namespace HW.EForm.Report.Tests.Helpers
 	[TestFixture]
 	public class ChartTests
 	{
+		[SetUp]
+		public void Setup()
+		{
+		}
+		
+		[Test]
+		public void TestMethod()
+		{
+			var c = new Chart();
+			c.Categories.Add("Male");
+			c.Categories.Add("Female");
+			
+			var d = new List<double>(new double[] {});
+			var s = new Series("Department 1", d);
+			c.Series.Add(s);
+		}
+		
 //		[SetUp]
 //		public void Setup()
 //		{

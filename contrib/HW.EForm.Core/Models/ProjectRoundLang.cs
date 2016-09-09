@@ -4,6 +4,10 @@ namespace HW.EForm.Core.Models
 {
 	public class ProjectRoundLang
 	{
+		public ProjectRoundLang()
+		{
+		}
+		
 		public int ProjectRoundLangID { get; set; }
 		public int LangID { get; set; }
 		public int ProjectRoundID { get; set; }
@@ -31,9 +35,5 @@ namespace HW.EForm.Core.Models
 		public string ExtraInvitationBodyJapaneseUnicode { get; set; }
 		public string ExtraReminderSubjectJapaneseUnicode { get; set; }
 		public string ExtraReminderBodyJapaneseUnicode { get; set; }
-
-		public ProjectRoundLang()
-		{
-		}
 	}
 }

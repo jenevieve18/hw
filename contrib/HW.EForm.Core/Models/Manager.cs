@@ -5,6 +5,10 @@ namespace HW.EForm.Core.Models
 {
 	public class Manager : BaseModel
 	{
+		public Manager()
+		{
+		}
+		
 		public int ManagerID { get; set; }
 		public string Email { get; set; }
 		public string Password { get; set; }
@@ -20,10 +24,6 @@ namespace HW.EForm.Core.Models
 		public int SeeTerminated { get; set; }
 		public int SeeSurvey { get; set; }
 
-		public Manager()
-		{
-		}
-		
 		public IList<ManagerProjectRound> ProjectRounds { get; set; }
 	}
 }

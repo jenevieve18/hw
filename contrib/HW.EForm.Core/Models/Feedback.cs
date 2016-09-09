@@ -6,6 +6,11 @@ namespace HW.EForm.Core.Models
 {
 	public class Feedback
 	{
+		public Feedback()
+		{
+			Questions = new List<FeedbackQuestion>();
+		}
+		
 		public int FeedbackID { get; set; }
 		public string FeedbackText { get; set; }
 		public int SurveyID { get; set; }
@@ -16,11 +21,6 @@ namespace HW.EForm.Core.Models
 		public Survey Survey { get; set; }
 		public IList<FeedbackQuestion> Questions { get; set; }
 
-		public Feedback()
-		{
-			Questions = new List<FeedbackQuestion>();
-		}
-		
 		public Dictionary<int, List<FeedbackQuestion>> GetGroupedQuestions()
 		{
 			var groups = new Dictionary<int, List<FeedbackQuestion>>();
@@ -41,6 +41,7 @@ namespace HW.EForm.Core.Models
 		
 		public void AddQuestion(FeedbackQuestion fq)
 		{
+			fq.Feedback = this;
 			Questions.Add(fq);
 		}
 	}

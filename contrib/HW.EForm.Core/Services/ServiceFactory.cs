@@ -11,13 +11,6 @@ namespace HW.EForm.Core.Services
 {
 	public class ServiceFactory
 	{
-		static IRepositoryFactory repoFactory;
-		
-		static ServiceFactory()
-		{
-//			repoFactory = ConfigurationManager.AppSettings["repositoryFactory"];
-		}
-		
 		public static FeedbackService CreateFeedbackService()
 		{
 //			return new FeedbackService(

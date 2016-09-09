@@ -4,6 +4,10 @@ namespace HW.EForm.Core.Models
 {
 	public class User
 	{
+		public User()
+		{
+		}
+		
 		public int UserID { get; set; }
 		public int SponsorID { get; set; }
 		public int UserNr { get; set; }
@@ -21,9 +25,5 @@ namespace HW.EForm.Core.Models
 		public string UserIdent9 { get; set; }
 		public string UserIdent10 { get; set; }
 		public string FeedbackSent { get; set; }
-
-		public User()
-		{
-		}
 	}
 }

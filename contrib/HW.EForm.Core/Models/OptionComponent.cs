@@ -5,24 +5,20 @@ namespace HW.EForm.Core.Models
 {
 	public class OptionComponent
 	{
-		public int OptionComponentID { get; set; }
-		public int ExportValue { get; set; }
-		public string Internal { get; set; }
-		public int OptionComponentContainerID { get; set; }
-		public IList<AnswerValue> AnswerValues { get; set; }
-//		int selectedOptionComponentLangID;
-//		public int SelectedOptionComponentLangID {
-//			get { return selectedOptionComponentLangID; }
-//			set { selectedOptionComponentLangID = value; SelectedOptionComponentLang = GetLanguage(selectedOptionComponentLangID); }
-//		}
-		public int SelectedOptionComponentLangID { get; set; }
-//		public OptionComponentLang SelectedOptionComponentLang { get; set; }
-		public IList<OptionComponentLang> Languages { get; set; }
+		OptionComponentLang selectedOptionComponentLang;
 		
 		public OptionComponent()
 		{
 			Languages = new List<OptionComponentLang>();
 		}
+		
+		public int OptionComponentID { get; set; }
+		public int ExportValue { get; set; }
+		public string Internal { get; set; }
+		public int OptionComponentContainerID { get; set; }
+		public IList<AnswerValue> AnswerValues { get; set; }
+		public int SelectedOptionComponentLangID { get; set; }
+		public IList<OptionComponentLang> Languages { get; set; }
 		
 		public OptionComponentLang FirstLanguage {
 			get {
@@ -32,7 +28,7 @@ namespace HW.EForm.Core.Models
 				return null;
 			}
 		}
-		OptionComponentLang selectedOptionComponentLang;
+		
 		public OptionComponentLang SelectedOptionComponentLang {
 			get {
 				if (selectedOptionComponentLang == null) {

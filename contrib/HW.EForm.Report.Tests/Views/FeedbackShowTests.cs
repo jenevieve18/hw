@@ -16,18 +16,19 @@ namespace HW.EForm.Report.Tests.Views
 	[TestFixture]
 	public class FeedbackShowTests
 	{
-		FeedbackService feedbackService = new FeedbackService(new SqlFeedbackRepository(),
-		                                        new SqlFeedbackQuestionRepository(),
-		                                        new SqlQuestionRepository(),
-		                                        new SqlQuestionOptionRepository(),
-		                                        new SqlQuestionLangRepository(),
-		                                        new SqlWeightedQuestionOptionRepository(),
-		                                        new SqlOptionRepository(),
-		                                        new SqlOptionComponentsRepository(),
-		                                        new SqlOptionComponentRepository(),
-		                                        new SqlOptionComponentLangRepository(),
-		                                        new SqlProjectRoundUnitRepository(),
-		                                        new SqlAnswerValueRepository());
+//		FeedbackService feedbackService = new FeedbackService(new SqlFeedbackRepository(),
+//		                                        new SqlFeedbackQuestionRepository(),
+//		                                        new SqlQuestionRepository(),
+//		                                        new SqlQuestionOptionRepository(),
+//		                                        new SqlQuestionLangRepository(),
+//		                                        new SqlWeightedQuestionOptionRepository(),
+//		                                        new SqlOptionRepository(),
+//		                                        new SqlOptionComponentsRepository(),
+//		                                        new SqlOptionComponentRepository(),
+//		                                        new SqlOptionComponentLangRepository(),
+//		                                        new SqlProjectRoundUnitRepository(),
+//		                                        new SqlAnswerValueRepository());
+		FeedbackService feedbackService = ServiceFactory.CreateFeedbackService();
 		AnswerService answerService = new AnswerService();
 		ProjectService projectService = new ProjectService();
 		
@@ -50,7 +51,7 @@ $(function() {
 <body>
 <div id=container></div>
 </body.";
-			var f = feedbackService.ReadFeedbackWithAnswers(6, 10, new int[] { 96 }, 1);
+			var f = feedbackService.ReadFeedbackWithAnswers2(6, 10, new int[] { 96 }, 1);
 			
 			Console.WriteLine("FeedbackID: {0}, Feedback: {1}", f.FeedbackID, f.FeedbackText);
 			foreach (var fq in f.Questions) {

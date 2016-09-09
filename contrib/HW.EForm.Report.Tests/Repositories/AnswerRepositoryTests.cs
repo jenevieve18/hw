@@ -22,9 +22,21 @@ namespace HW.EForm.Report.Tests.Repositories
 	
 	public class AnswerValueRepositoryStub : BaseRepositoryStub<AnswerValue>, IAnswerValueRepository
 	{
+		public AnswerValueRepositoryStub()
+		{
+			for (int i = 1; i <= 10; i++) {
+				items.Add(new AnswerValue { Answer = new Answer { ProjectRoundID = 1, ProjectRoundUnitID = i }, QuestionID = 1, OptionID = 1 });
+			}
+		}
+		
 		public IList<AnswerValue> FindByQuestionOptionsAndUnit(int questionID, IList<QuestionOption> options, int projectRoundID, int projectRoundUnitID)
 		{
-			throw new NotImplementedException();
+			var values = items.FindAll(x => x.QuestionID == questionID && x.Answer.ProjectRoundID == projectRoundID && x.Answer.ProjectRoundUnitID == projectRoundUnitID);
+			var newValues = new List<AnswerValue>();
+			foreach (var o in options) {
+				newValues.AddRange(values.FindAll(x => x.OptionID == o.OptionID));
+			}
+			return newValues;
 		}
 	}
 }

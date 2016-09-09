@@ -1,8 +1,8 @@
 using System;
-using HW.EForm.Core.Models;
-using System.Data.SqlClient;
 using System.Collections.Generic;
-	
+using System.Data.SqlClient;
+using HW.EForm.Core.Models;
+
 namespace HW.EForm.Core.Repositories
 {
 	public interface IQuestionOptionRepository : IBaseRepository<QuestionOption>
@@ -21,23 +21,23 @@ namespace HW.EForm.Core.Repositories
 		{
 			string query = @"
 INSERT INTO QuestionOption(
-	QuestionOptionID, 
-	QuestionID, 
-	OptionID, 
-	OptionPlacement, 
-	SortOrder, 
-	Variablename, 
-	Forced, 
+	QuestionOptionID,
+	QuestionID,
+	OptionID,
+	OptionPlacement,
+	SortOrder,
+	Variablename,
+	Forced,
 	Hide
 )
 VALUES(
-	@QuestionOptionID, 
-	@QuestionID, 
-	@OptionID, 
-	@OptionPlacement, 
-	@SortOrder, 
-	@Variablename, 
-	@Forced, 
+	@QuestionOptionID,
+	@QuestionID,
+	@OptionID,
+	@OptionPlacement,
+	@SortOrder,
+	@Variablename,
+	@Forced,
 	@Hide
 )";
 			ExecuteNonQuery(
@@ -93,13 +93,13 @@ WHERE QuestionOptionID = @QuestionOptionID";
 		public override QuestionOption Read(int id)
 		{
 			string query = @"
-SELECT 	QuestionOptionID, 
-	QuestionID, 
-	OptionID, 
-	OptionPlacement, 
-	SortOrder, 
-	Variablename, 
-	Forced, 
+SELECT 	QuestionOptionID,
+	QuestionID,
+	OptionID,
+	OptionPlacement,
+	SortOrder,
+	Variablename,
+	Forced,
 	Hide
 FROM QuestionOption
 WHERE QuestionOptionID = @QuestionOptionID";
@@ -124,28 +124,30 @@ WHERE QuestionOptionID = @QuestionOptionID";
 		public override IList<QuestionOption> FindAll()
 		{
 			string query = @"
-SELECT 	QuestionOptionID, 
-	QuestionID, 
-	OptionID, 
-	OptionPlacement, 
-	SortOrder, 
-	Variablename, 
-	Forced, 
+SELECT 	QuestionOptionID,
+	QuestionID,
+	OptionID,
+	OptionPlacement,
+	SortOrder,
+	Variablename,
+	Forced,
 	Hide
 FROM QuestionOption";
 			var questionOptions = new List<QuestionOption>();
 			using (var rs = ExecuteReader(query)) {
 				while (rs.Read()) {
-					questionOptions.Add(new QuestionOption {
-						QuestionOptionID = GetInt32(rs, 0),
-						QuestionID = GetInt32(rs, 1),
-						OptionID = GetInt32(rs, 2),
-						OptionPlacement = GetInt32(rs, 3),
-						SortOrder = GetInt32(rs, 4),
-						Variablename = GetString(rs, 5),
-						Forced = GetInt32(rs, 6),
-						Hide = GetInt32(rs, 7)
-					});
+					questionOptions.Add(
+						new QuestionOption {
+							QuestionOptionID = GetInt32(rs, 0),
+							QuestionID = GetInt32(rs, 1),
+							OptionID = GetInt32(rs, 2),
+							OptionPlacement = GetInt32(rs, 3),
+							SortOrder = GetInt32(rs, 4),
+							Variablename = GetString(rs, 5),
+							Forced = GetInt32(rs, 6),
+							Hide = GetInt32(rs, 7)
+						}
+					);
 				}
 			}
 			return questionOptions;
@@ -154,29 +156,31 @@ FROM QuestionOption";
 		public IList<QuestionOption> FindByQuestion(int questionID)
 		{
 			string query = @"
-SELECT 	QuestionOptionID, 
-	QuestionID, 
-	OptionID, 
-	OptionPlacement, 
-	SortOrder, 
-	Variablename, 
-	Forced, 
+SELECT 	QuestionOptionID,
+	QuestionID,
+	OptionID,
+	OptionPlacement,
+	SortOrder,
+	Variablename,
+	Forced,
 	Hide
 FROM QuestionOption
 WHERE QuestionID = @QuestionID";
 			var questionOptions = new List<QuestionOption>();
 			using (var rs = ExecuteReader(query, new SqlParameter("@QuestionID", questionID))) {
 				while (rs.Read()) {
-					questionOptions.Add(new QuestionOption {
-						QuestionOptionID = GetInt32(rs, 0),
-						QuestionID = GetInt32(rs, 1),
-						OptionID = GetInt32(rs, 2),
-						OptionPlacement = GetInt32(rs, 3),
-						SortOrder = GetInt32(rs, 4),
-						Variablename = GetString(rs, 5),
-						Forced = GetInt32(rs, 6),
-						Hide = GetInt32(rs, 7)
-					});
+					questionOptions.Add(
+						new QuestionOption {
+							QuestionOptionID = GetInt32(rs, 0),
+							QuestionID = GetInt32(rs, 1),
+							OptionID = GetInt32(rs, 2),
+							OptionPlacement = GetInt32(rs, 3),
+							SortOrder = GetInt32(rs, 4),
+							Variablename = GetString(rs, 5),
+							Forced = GetInt32(rs, 6),
+							Hide = GetInt32(rs, 7)
+						}
+					);
 				}
 			}
 			return questionOptions;
@@ -185,13 +189,13 @@ WHERE QuestionID = @QuestionID";
 		public IList<QuestionOption> FindByQuestionAndOption(int questionID, int optionID)
 		{
 			string query = @"
-SELECT 	QuestionOptionID, 
-	QuestionID, 
-	OptionID, 
-	OptionPlacement, 
-	SortOrder, 
-	Variablename, 
-	Forced, 
+SELECT 	QuestionOptionID,
+	QuestionID,
+	OptionID,
+	OptionPlacement,
+	SortOrder,
+	Variablename,
+	Forced,
 	Hide
 FROM QuestionOption
 WHERE QuestionID = @QuestionID
@@ -199,16 +203,18 @@ AND OptionID = @OptionID";
 			var questionOptions = new List<QuestionOption>();
 			using (var rs = ExecuteReader(query, new SqlParameter("@QuestionID", questionID), new SqlParameter("@OptionID", optionID))) {
 				while (rs.Read()) {
-					questionOptions.Add(new QuestionOption {
-						QuestionOptionID = GetInt32(rs, 0),
-						QuestionID = GetInt32(rs, 1),
-						OptionID = GetInt32(rs, 2),
-						OptionPlacement = GetInt32(rs, 3),
-						SortOrder = GetInt32(rs, 4),
-						Variablename = GetString(rs, 5),
-						Forced = GetInt32(rs, 6),
-						Hide = GetInt32(rs, 7)
-					});
+					questionOptions.Add(
+						new QuestionOption {
+							QuestionOptionID = GetInt32(rs, 0),
+							QuestionID = GetInt32(rs, 1),
+							OptionID = GetInt32(rs, 2),
+							OptionPlacement = GetInt32(rs, 3),
+							SortOrder = GetInt32(rs, 4),
+							Variablename = GetString(rs, 5),
+							Forced = GetInt32(rs, 6),
+							Hide = GetInt32(rs, 7)
+						}
+					);
 				}
 			}
 			return questionOptions;
@@ -228,14 +234,15 @@ AND OptionID = @OptionID";
 				}
 				projectRoundUnitQuery += ")";
 			}
-			string query = string.Format(@"
-SELECT 	qo.QuestionOptionID, 
-	qo.QuestionID, 
-	qo.OptionID, 
-	qo.OptionPlacement, 
-	qo.SortOrder, 
-	qo.Variablename, 
-	qo.Forced, 
+			string query = string.Format(
+				@"
+SELECT 	qo.QuestionOptionID,
+	qo.QuestionID,
+	qo.OptionID,
+	qo.OptionPlacement,
+	qo.SortOrder,
+	qo.Variablename,
+	qo.Forced,
 	qo.Hide
 FROM QuestionOption qo
 WHERE qo.QuestionID = @QuestionID
@@ -245,21 +252,25 @@ AND EXISTS (
 	WHERE av.QuestionID = qo.QuestionID
 		AND av.OptionID = qo.OptionID
 		{0}
-)", projectRoundUnitQuery);
+)",
+				projectRoundUnitQuery
+			);
 			var questionOptions = new List<QuestionOption>();
 			parameters.Add(new SqlParameter("@QuestionID", questionID));
 			using (var rs = ExecuteReader(query, parameters.ToArray())) {
 				while (rs.Read()) {
-					questionOptions.Add(new QuestionOption {
-						QuestionOptionID = GetInt32(rs, 0),
-						QuestionID = GetInt32(rs, 1),
-						OptionID = GetInt32(rs, 2),
-						OptionPlacement = GetInt32(rs, 3),
-						SortOrder = GetInt32(rs, 4),
-						Variablename = GetString(rs, 5),
-						Forced = GetInt32(rs, 6),
-						Hide = GetInt32(rs, 7)
-					});
+					questionOptions.Add(
+						new QuestionOption {
+							QuestionOptionID = GetInt32(rs, 0),
+							QuestionID = GetInt32(rs, 1),
+							OptionID = GetInt32(rs, 2),
+							OptionPlacement = GetInt32(rs, 3),
+							SortOrder = GetInt32(rs, 4),
+							Variablename = GetString(rs, 5),
+							Forced = GetInt32(rs, 6),
+							Hide = GetInt32(rs, 7)
+						}
+					);
 				}
 			}
 			return questionOptions;

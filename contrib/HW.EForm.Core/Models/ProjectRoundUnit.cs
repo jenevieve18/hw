@@ -5,6 +5,14 @@ namespace HW.EForm.Core.Models
 {
 	public class ProjectRoundUnit
 	{
+		int langID;
+		Survey survey;
+		IList<AnswerValue> answerValues;
+		
+		public ProjectRoundUnit()
+		{
+		}
+		
 		public int ProjectRoundUnitID { get; set; }
 		public int ProjectRoundID { get; set; }
 		public string Unit { get; set; }
@@ -26,7 +34,6 @@ namespace HW.EForm.Core.Models
 		public int IndividualReportID { get; set; }
 		public string UniqueID { get; set; }
 		public int RequiredAnswerCount { get; set; }
-		int langID;
 		
 		public int LangID {
 			get {
@@ -37,12 +44,6 @@ namespace HW.EForm.Core.Models
 			}
 			set { langID = value; }
 		}
-
-		public ProjectRoundUnit()
-		{
-		}
-		
-		Survey survey;
 		
 		public Survey Survey {
 			get {
@@ -53,11 +54,11 @@ namespace HW.EForm.Core.Models
 			}
 			set { survey = value; }
 		}
+		
 		public Report Report { get; set; }
 		public ProjectRound ProjectRound { get; set; }
 		public IList<ProjectRoundUnitManager> Managers { get; set; }
 		
-		IList<AnswerValue> answerValues;
 		public IList<QuestionOption> Options { get; set; }
 		
 		public IList<AnswerValue> AnswerValues {

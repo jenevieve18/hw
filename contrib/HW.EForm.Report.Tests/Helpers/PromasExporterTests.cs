@@ -16,18 +16,19 @@ namespace HW.EForm.Report.Tests.Helpers
 	[TestFixture]
 	public class PromasExporterTests
 	{
-		FeedbackService s = new FeedbackService(new SqlFeedbackRepository(),
-		                                        new SqlFeedbackQuestionRepository(),
-		                                        new SqlQuestionRepository(),
-		                                        new SqlQuestionOptionRepository(),
-		                                        new SqlQuestionLangRepository(),
-		                                        new SqlWeightedQuestionOptionRepository(),
-		                                        new SqlOptionRepository(),
-		                                        new SqlOptionComponentsRepository(),
-		                                        new SqlOptionComponentRepository(),
-		                                        new SqlOptionComponentLangRepository(),
-		                                        new SqlProjectRoundUnitRepository(),
-		                                        new SqlAnswerValueRepository());
+//		FeedbackService s = new FeedbackService(new SqlFeedbackRepository(),
+//		                                        new SqlFeedbackQuestionRepository(),
+//		                                        new SqlQuestionRepository(),
+//		                                        new SqlQuestionOptionRepository(),
+//		                                        new SqlQuestionLangRepository(),
+//		                                        new SqlWeightedQuestionOptionRepository(),
+//		                                        new SqlOptionRepository(),
+//		                                        new SqlOptionComponentsRepository(),
+//		                                        new SqlOptionComponentRepository(),
+//		                                        new SqlOptionComponentLangRepository(),
+//		                                        new SqlProjectRoundUnitRepository(),
+//		                                        new SqlAnswerValueRepository());
+		FeedbackService s = ServiceFactory.CreateFeedbackService();
 		
 		[Test]
 		public void TestMethod()

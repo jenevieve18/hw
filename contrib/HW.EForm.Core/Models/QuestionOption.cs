@@ -4,6 +4,15 @@ namespace HW.EForm.Core.Models
 {
 	public class QuestionOption
 	{
+		public QuestionOption()
+		{
+		}
+		
+		public QuestionOption(Option option)
+		{
+			this.Option = option;
+		}
+		
 		public int QuestionOptionID { get; set; }
 		public int QuestionID { get; set; }
 		public int OptionID { get; set; }
@@ -13,14 +22,5 @@ namespace HW.EForm.Core.Models
 		public int Forced { get; set; }
 		public int Hide { get; set; }
 		public Option Option { get; set; }
-
-		public QuestionOption()
-		{
-		}
-		
-		public QuestionOption(Option option)
-		{
-			this.Option = option;
-		}
 	}
 }

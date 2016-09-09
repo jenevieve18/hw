@@ -5,6 +5,10 @@ namespace HW.EForm.Core.Models
 {
 	public class ManagerProjectRound
 	{
+		public ManagerProjectRound()
+		{
+		}
+		
 		public int ManagerProjectRoundID { get; set; }
 		public int ProjectRoundID { get; set; }
 		public int ManagerID { get; set; }
@@ -13,10 +17,6 @@ namespace HW.EForm.Core.Models
 		public string EmailBody { get; set; }
 		public Guid MPRK { get; set; }
 
-		public ManagerProjectRound()
-		{
-		}
-		
 		public ProjectRound ProjectRound { get; set; }
 		public IList<ManagerProjectRoundUnit> Units { get; set; }
 	}

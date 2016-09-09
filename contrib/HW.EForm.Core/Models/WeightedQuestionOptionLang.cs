@@ -4,6 +4,10 @@ namespace HW.EForm.Core.Models
 {
 	public class WeightedQuestionOptionLang
 	{
+		public WeightedQuestionOptionLang()
+		{
+		}
+		
 		public int WeightedQuestionOptionLangID { get; set; }
 		public int WeightedQuestionOptionID { get; set; }
 		public int LangID { get; set; }
@@ -33,9 +37,5 @@ namespace HW.EForm.Core.Models
 		public string ActionGreenJapaneseUnicode { get; set; }
 		public string ActionYellowHighJapaneseUnicode { get; set; }
 		public string ActionRedHighJapaneseUnicode { get; set; }
-
-		public WeightedQuestionOptionLang()
-		{
-		}
 	}
 }

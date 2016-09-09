@@ -1,7 +1,7 @@
 using System;
-using HW.EForm.Core.Models;
-using System.Data.SqlClient;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using HW.EForm.Core.Models;
 
 namespace HW.EForm.Core.Repositories
 {
@@ -284,7 +284,9 @@ WHERE QuestionID = @QuestionID";
 				}
 				optionQuery += ")";
 			}
-			string query = string.Format(@"
+			
+			string query = string.Format(
+				@"
 SELECT 	av.AnswerValue,
 	av.AnswerID,
 	av.QuestionID,
@@ -302,7 +304,9 @@ INNER JOIN Answer a ON a.AnswerID = av.AnswerID
 	AND a.ProjectRoundID = @ProjectRoundID
 	AND a.ProjectRoundUnitID = @ProjectRoundUnitID
 WHERE av.QuestionID = @QuestionID
-{0}", optionQuery);
+{0}",
+				optionQuery
+			);
 			var answerValues = new List<AnswerValue>();
 			parameters.Add(new SqlParameter("@QuestionID", questionID));
 			parameters.Add(new SqlParameter("@ProjectRoundID", projectRoundID));
@@ -346,6 +350,7 @@ WHERE av.QuestionID = @QuestionID
 				}
 				optionQuery += ")";
 			}
+			
 			string projectRoundUnitQuery = "";
 			if (projectRoundUnits.Count > 0) {
 				projectRoundUnitQuery += "AND a.ProjectRoundUnitID IN (";
@@ -357,7 +362,9 @@ WHERE av.QuestionID = @QuestionID
 				}
 				projectRoundUnitQuery += ")";
 			}
-			string query = string.Format(@"
+			
+			string query = string.Format(
+				@"
 SELECT 	av.AnswerValue,
 	av.AnswerID,
 	av.QuestionID,
@@ -375,7 +382,10 @@ INNER JOIN Answer a ON a.AnswerID = av.AnswerID
 	AND a.ProjectRoundID = @ProjectRoundID
 	{1}
 WHERE av.QuestionID = @QuestionID
-{0}", optionQuery, projectRoundUnitQuery);
+{0}",
+				optionQuery,
+				projectRoundUnitQuery
+			);
 			var answerValues = new List<AnswerValue>();
 			parameters.Add(new SqlParameter("@QuestionID", questionID));
 			parameters.Add(new SqlParameter("@ProjectRoundID", projectRoundID));

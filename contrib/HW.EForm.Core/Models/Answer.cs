@@ -5,6 +5,10 @@ namespace HW.EForm.Core.Models
 {
 	public class Answer
 	{
+		public Answer()
+		{
+		}
+		
 		public int AnswerID { get; set; }
 		public int ProjectRoundID { get; set; }
 		public int ProjectRoundUnitID { get; set; }
@@ -16,10 +20,6 @@ namespace HW.EForm.Core.Models
 		public int CurrentPage { get; set; }
 		public int FeedbackAlert { get; set; }
 
-		public Answer()
-		{
-		}
-		
 		public IList<AnswerValue> Values { get; set; }
 		public ProjectRoundUnit ProjectRoundUnit { get; set; }
 //		public Question Question { get; set; }

@@ -102,7 +102,7 @@ namespace HW.EForm.Core.Services
 		public ProjectRoundUnit ReadProjectRoundUnit(int projectRoundUnitID)
 		{
 			var pru = projectRoundUnitRepo.Read(projectRoundUnitID);
-			pru.ProjectRound = lalala(pru.ProjectRoundID, pru.ProjectRoundUnitID);
+			pru.ProjectRound = Lalala(pru.ProjectRoundID, pru.ProjectRoundUnitID);
 			return pru;
 		}
 		
@@ -148,20 +148,20 @@ namespace HW.EForm.Core.Services
 		{
 			var units = projectRoundUnitRepo.FindProjectRoundUnits(projectRoundUnitIDs);
 			foreach (var pru in units) {
-				pru.ProjectRound = lalala(pru.ProjectRoundID, pru.ProjectRoundUnitID);
+				pru.ProjectRound = Lalala(pru.ProjectRoundID, pru.ProjectRoundUnitID);
 			}
 			return units;
 		}
 		
 		// FIXME: Refer to feedback service
-		ProjectRound lalala(int projectRoundID, int projectRoundUnitID)
+		ProjectRound Lalala(int projectRoundID, int projectRoundUnitID)
 		{
 			var pr = projectRoundRepo.Read(projectRoundID);
-			pr.Feedback = lololo(pr.FeedbackID, projectRoundUnitID);
+			pr.Feedback = Lololo(pr.FeedbackID, projectRoundUnitID);
 			return pr;
 		}
 		
-		Feedback lololo(int feedbackID, int projectRoundUnitID)
+		Feedback Lololo(int feedbackID, int projectRoundUnitID)
 		{
 			var f = feedbackRepo.Read(feedbackID);
 			f.Questions = feedbackQuestionRepo.FindByFeedback(f.FeedbackID);

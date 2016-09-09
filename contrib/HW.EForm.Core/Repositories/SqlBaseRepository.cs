@@ -1,8 +1,8 @@
 using System;
-using System.Data.SqlClient;
 using System.Collections.Generic;
-using System.Data;
 using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 	
 namespace HW.EForm.Core.Repositories
 {
@@ -46,18 +46,6 @@ namespace HW.EForm.Core.Repositories
 		public virtual IList<T> FindAll()
 		{
 			throw new NotImplementedException();
-		}
-		
-		SqlConnection CreateConnection(string connectionName)
-		{
-			if (connectionName == "") {
-				con = new SqlConnection(ConfigurationManager.ConnectionStrings[ConfigurationManager.AppSettings["database"]].ConnectionString);
-			} else if (ConfigurationManager.ConnectionStrings[connectionName] != null) {
-				con = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionName].ConnectionString);
-			} else {
-				con = new SqlConnection(ConfigurationManager.AppSettings[connectionName]);
-			}
-			return con;
 		}
 		
 		protected void ExecuteNonQuery(string query, params SqlParameter[] parameters)
@@ -225,6 +213,18 @@ namespace HW.EForm.Core.Repositories
 			if (con != null && con.State == ConnectionState.Closed) {
 				con.Open();
 			}
+		}
+		
+		SqlConnection CreateConnection(string connectionName)
+		{
+			if (connectionName == "") {
+				con = new SqlConnection(ConfigurationManager.ConnectionStrings[ConfigurationManager.AppSettings["database"]].ConnectionString);
+			} else if (ConfigurationManager.ConnectionStrings[connectionName] != null) {
+				con = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionName].ConnectionString);
+			} else {
+				con = new SqlConnection(ConfigurationManager.AppSettings[connectionName]);
+			}
+			return con;
 		}
 	}
 }

@@ -4,6 +4,10 @@ namespace HW.EForm.Core.Models
 {
 	public class ReportPart
 	{
+		public ReportPart()
+		{
+		}
+		
 		public int ReportPartID { get; set; }
 		public int ReportID { get; set; }
 		public string Internal { get; set; }
@@ -16,10 +20,6 @@ namespace HW.EForm.Core.Models
 		public int GroupingQuestionID { get; set; }
 		public int GroupingOptionID { get; set; }
 
-		public ReportPart()
-		{
-		}
-		
 		public Question Question { get; set; }
 	}
 }

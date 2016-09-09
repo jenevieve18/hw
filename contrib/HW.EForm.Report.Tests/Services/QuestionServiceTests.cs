@@ -188,5 +188,11 @@ namespace HW.EForm.Report.Tests.Services
 			
 			Console.WriteLine(HighchartsChart.GetHighchartsChart(9, painQuestions.ToChart(true)));
 		}
+		
+		[Test]
+		public void TestMethod()
+		{
+			var o = s.ReadOption(434);
+		}
 	}
 }

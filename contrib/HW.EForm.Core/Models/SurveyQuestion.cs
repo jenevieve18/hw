@@ -5,6 +5,10 @@ namespace HW.EForm.Core.Models
 {
 	public class SurveyQuestion
 	{
+		public SurveyQuestion()
+		{
+		}
+		
 		public int SurveyQuestionID { get; set; }
 		public int SurveyID { get; set; }
 		public int QuestionID { get; set; }
@@ -19,10 +23,6 @@ namespace HW.EForm.Core.Models
 		public int PageBreakBeforeQuestion { get; set; }
 		public int FontSize { get; set; }
 
-		public SurveyQuestion()
-		{
-		}
-		
 		public Question Question { get; set; }
 		public IList<SurveyQuestionOption> Options { get; set; }
 		

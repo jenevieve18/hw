@@ -5,6 +5,11 @@ namespace HW.EForm.Core.Models
 {
 	public class ProjectRound
 	{
+		public ProjectRound()
+		{
+			Units = new List<ProjectRoundUnit>();
+		}
+		
 		public int ProjectRoundID { get; set; }
 		public int ProjectID { get; set; }
 		public string Internal { get; set; }
@@ -39,11 +44,6 @@ namespace HW.EForm.Core.Models
 		public int AdHocReportCompareWithParent { get; set; }
 		public int FeedbackID { get; set; }
 
-		public ProjectRound()
-		{
-			Units = new List<ProjectRoundUnit>();
-		}
-		
 		public Project Project { get; set; }
 		public Survey Survey { get; set; }
 		public IList<ProjectRoundUnit> Units { get; set; }

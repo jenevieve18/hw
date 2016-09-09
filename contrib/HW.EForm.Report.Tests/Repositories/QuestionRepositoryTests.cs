@@ -26,7 +26,9 @@ namespace HW.EForm.Report.Tests.Repositories
 		
 		public QuestionRepositoryStub()
 		{
-			questions.Add(new Question { QuestionID = 1, Internal = "sex" });
+			for (int i = 1; i <= 100; i++) {
+				questions.Add(new Question { QuestionID = i, Internal = "Question" + i });
+			}
 		}
 		
 		public override Question Read(int id)
@@ -42,14 +44,21 @@ namespace HW.EForm.Report.Tests.Repositories
 	
 	public class QuestionOptionRepositoryStub : BaseRepositoryStub<QuestionOption>, IQuestionOptionRepository
 	{
+		public QuestionOptionRepositoryStub()
+		{
+			for (int i = 1; i <= 11; i++) {
+				items.Add(new QuestionOption { QuestionID = i, OptionID = 1 });
+			}
+		}
+		
 		public IList<QuestionOption> FindByQuestion(int questionID)
 		{
-			throw new NotImplementedException();
+			return items.FindAll(x => x.QuestionID == questionID);
 		}
 		
 		public IList<QuestionOption> FindByQuestionAndOption(int questionID, int optionID)
 		{
-			throw new NotImplementedException();
+			return items.FindAll(x => x.QuestionID == questionID && x.OptionID == optionID);
 		}
 	}
 	
@@ -57,8 +66,11 @@ namespace HW.EForm.Report.Tests.Repositories
 	{
 		public QuestionLangRepositoryStub()
 		{
-			items.Add(new QuestionLang { QuestionID = 1, LangID = 1, Question = "" });
-			items.Add(new QuestionLang { QuestionID = 1, LangID = 2, Question = "" });
+			for (int i = 1; i <= 100; i++) {
+				for (int j = 1; j <= 2; j++) {
+					items.Add(new QuestionLang { QuestionID = i, LangID = j, Question = "Question" + i + "Lang" + j });
+				}
+			}
 		}
 		
 		public IList<QuestionLang> FindByQuestion(int questionID)

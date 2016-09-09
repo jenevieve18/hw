@@ -4,6 +4,10 @@ namespace HW.EForm.Core.Models
 {
 	public class ProjectRoundUser
 	{
+		public ProjectRoundUser()
+		{
+		}
+		
 		public int ProjectRoundUserID { get; set; }
 		public int ProjectRoundID { get; set; }
 		public int ProjectRoundUnitID { get; set; }
@@ -23,9 +27,5 @@ namespace HW.EForm.Core.Models
 		public int FollowupSendCount { get; set; }
 		public int GroupID { get; set; }
 		public int ExtendedTag { get; set; }
-
-		public ProjectRoundUser()
-		{
-		}
 	}
 }

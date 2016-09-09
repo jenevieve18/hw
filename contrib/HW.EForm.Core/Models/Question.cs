@@ -6,6 +6,16 @@ namespace HW.EForm.Core.Models
 {
 	public class Question
 	{
+		QuestionLang selectedQuestionLang;
+		int selectedQuestionLangID;
+		
+		public Question()
+		{
+			Languages = new List<QuestionLang>();
+			Options = new List<QuestionOption>();
+			ProjectRoundUnits = new List<ProjectRoundUnit>();
+		}
+		
 		public int QuestionID { get; set; }
 		public string VariableName { get; set; }
 		public int OptionsPlacement { get; set; }
@@ -20,6 +30,11 @@ namespace HW.EForm.Core.Models
 		public IList<QuestionOption> Options { get; set; }
 		public IList<QuestionLang> Languages { get; set; }
 		public WeightedQuestionOption WeightedQuestionOption { get; set; }
+		
+		public bool HasWeightedQuestionOption {
+			get { return WeightedQuestionOption != null; }
+		}
+		
         public QuestionOption FirstOption {
             get {
                 if (Options.Count > 0) {
@@ -28,6 +43,7 @@ namespace HW.EForm.Core.Models
                 return null;
             }
         }
+		
 		public QuestionLang FirstLanguage {
 			get {
 				if (Languages.Count > 0) {
@@ -36,8 +52,7 @@ namespace HW.EForm.Core.Models
 				return null;
 			}
 		}
-//		public int SelectedQuestionLangID { get; set; }
-		int selectedQuestionLangID;
+		
 		public int SelectedQuestionLangID {
 			get { return selectedQuestionLangID; }
 			set {
@@ -49,7 +64,7 @@ namespace HW.EForm.Core.Models
 				}
 			}
 		}
-		QuestionLang selectedQuestionLang;
+		
 		public QuestionLang SelectedQuestionLang {
 			get {
 				if (selectedQuestionLang == null) {
@@ -62,7 +77,9 @@ namespace HW.EForm.Core.Models
 			}
 			set { selectedQuestionLang = value; }
 		}
+		
 		public IList<ProjectRoundUnit> ProjectRoundUnits { get; set; }
+		
 		public bool HasOnlyOneOption {
 			get { return Options.Count == 1; }
 		}
@@ -70,19 +87,6 @@ namespace HW.EForm.Core.Models
 			get { return Options.Count > 1; }
 		}
 
-		public Question()
-		{
-			Languages = new List<QuestionLang>();
-			Options = new List<QuestionOption>();
-			ProjectRoundUnits = new List<ProjectRoundUnit>();
-		}
-		
-//		public Question(int questionID, string @internal)
-//		{
-//			this.QuestionID = questionID;
-//			this.Internal = @internal;
-//		}
-		
 		public void AddLanguage(int langID, string question)
 		{
 			AddLanguage(new QuestionLang { LangID = langID, Question = question });
@@ -119,7 +123,7 @@ namespace HW.EForm.Core.Models
 			foreach (var qo in Options) {
 				var q = new Question();
 				q.Languages = new List<QuestionLang>(
-					new [] {
+					new[] {
 						new QuestionLang { LangID = 1, Question = qo.Option.Components[0].OptionComponent.GetLanguage(1).Text }
 					}
 				);
@@ -179,20 +183,13 @@ namespace HW.EForm.Core.Models
 //		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	
 	public class GroupedQuestions
 	{
-		public List<Question> Questions { get; set; }
-		
 		public GroupedQuestions()
 		{
 			Questions = new System.Collections.Generic.List<Question>();
 		}
+		
+		public List<Question> Questions { get; set; }
 	}
 }

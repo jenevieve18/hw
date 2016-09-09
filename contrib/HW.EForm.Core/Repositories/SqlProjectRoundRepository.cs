@@ -5,7 +5,11 @@ using System.Collections.Generic;
 	
 namespace HW.EForm.Core.Repositories
 {
-	public class SqlProjectRoundRepository : BaseSqlRepository<ProjectRound>
+	public interface IProjectRoundRepository : IBaseRepository<ProjectRound>
+	{
+	}
+	
+	public class SqlProjectRoundRepository : BaseSqlRepository<ProjectRound>, IProjectRoundRepository
 	{
 		public SqlProjectRoundRepository()
 		{

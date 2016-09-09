@@ -4,6 +4,10 @@ namespace HW.EForm.Core.Models
 {
 	public class WeightedQuestionOption
 	{
+		public WeightedQuestionOption()
+		{
+		}
+		
 		public int WeightedQuestionOptionID { get; set; }
 		public string Internal { get; set; }
 		public int QuestionID { get; set; }
@@ -14,9 +18,5 @@ namespace HW.EForm.Core.Models
 		public int GreenHigh { get; set; }
 		public int YellowHigh { get; set; }
 		public int SortOrder { get; set; }
-
-		public WeightedQuestionOption()
-		{
-		}
 	}
 }

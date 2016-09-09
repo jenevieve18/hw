@@ -20,11 +20,30 @@ namespace HW.EForm.Report.Tests.Repositories
 		}
 	}
 	
+	public class ProjectRoundRepositoryStub : BaseRepositoryStub<ProjectRound>, IProjectRoundRepository
+	{
+	}
+	
 	public class ProjectRoundUnitRepositoryStub : BaseRepositoryStub<ProjectRoundUnit>, IProjectRoundUnitRepository
 	{
+		public ProjectRoundUnitRepositoryStub()
+		{
+			for (int i = 1; i <= 10; i++) {
+				items.Add(new ProjectRoundUnit { ProjectRoundID = 1, ProjectRoundUnitID = i, Unit = "Unit" + i });
+			}
+		}
+		
 		public IList<ProjectRoundUnit> FindProjectRoundUnits(int[] projectRoundUnitIDs)
 		{
-			throw new NotImplementedException();
+			var units = new List<ProjectRoundUnit>();
+			foreach (var i in projectRoundUnitIDs) {
+				foreach (var u in items) {
+					if (u.ProjectRoundUnitID == i) {
+						units.Add(u);
+					}
+				}
+			}
+			return units;
 		}
 	}
 }

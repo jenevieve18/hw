@@ -5,6 +5,12 @@ namespace HW.EForm.Core.Models
 {
 	public class Option
 	{
+		public Option()
+		{
+			Components = new List<OptionComponents>();
+			AnswerValues = new List<AnswerValue>();
+		}
+		
 		public int OptionID { get; set; }
 		public int OptionType { get; set; }
 		public int OptionPlacement { get; set; }
@@ -19,22 +25,6 @@ namespace HW.EForm.Core.Models
 		public decimal RangeHigh { get; set; }
 		public IList<OptionComponents> Components { get; set; }
 		public IList<AnswerValue> AnswerValues { get; set; }
-		
-		public Option()
-		{
-			Components = new List<OptionComponents>();
-			AnswerValues = new List<AnswerValue>();
-		}
-		
-		public void AddComponent(OptionComponent oc)
-		{
-			AddComponent(new OptionComponents { OptionComponent = oc });
-		}
-		
-		public void AddComponent(OptionComponents ocs)
-		{
-			Components.Add(ocs);
-		}
 
 		public bool IsSingleChoice {
 			get { return OptionType == OptionTypes.SingleChoice; }
@@ -54,6 +44,16 @@ namespace HW.EForm.Core.Models
 		
 		public bool IsFreeText {
 			get { return OptionType == OptionTypes.FreeText; }
+		}
+		
+		public void AddComponent(OptionComponent oc)
+		{
+			AddComponent(new OptionComponents { OptionComponent = oc });
+		}
+		
+		public void AddComponent(OptionComponents ocs)
+		{
+			Components.Add(ocs);
 		}
 		
 		public OptionComponents GetComponent(int optionComponentID)

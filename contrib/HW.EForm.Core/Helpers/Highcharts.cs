@@ -10,12 +10,12 @@ namespace HW.EForm.Core.Helpers
 {
 	public abstract class HighchartsChart
 	{
-		public Chart Chart { get; set; }
-		
 		public HighchartsChart(Chart chart)
 		{
 			this.Chart = chart;
 		}
+		
+		public Chart Chart { get; set; }
 		
 		public static HighchartsChart GetHighchartsChart(int optionType, Chart chart)
 		{

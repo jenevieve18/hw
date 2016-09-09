@@ -4,6 +4,10 @@ namespace HW.EForm.Core.Models
 {
 	public class SurveyQuestionOption
 	{
+		public SurveyQuestionOption()
+		{
+		}
+		
 		public int SurveyQuestionOptionID { get; set; }
 		public int SurveyQuestionID { get; set; }
 		public int QuestionOptionID { get; set; }
@@ -14,10 +18,6 @@ namespace HW.EForm.Core.Models
 		public int Warn { get; set; }
 		public int Height { get; set; }
 
-		public SurveyQuestionOption()
-		{
-		}
-		
 		public QuestionOption QuestionOption { get; set; }
 	}
 }

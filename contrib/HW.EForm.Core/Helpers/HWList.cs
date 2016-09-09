@@ -47,7 +47,7 @@ namespace HW.EForm.Core.Helpers
 		}
 		
 		public double NerdLowerWhisker {
-			get { return Math.Max(LowerWhisker, LowerBox - 1.5 * (UpperBox - LowerBox)); }
+			get { return Math.Max(LowerWhisker, LowerBox - (1.5 * (UpperBox - LowerBox))); }
 		}
 
 		public double UpperWhisker {
@@ -55,7 +55,7 @@ namespace HW.EForm.Core.Helpers
 		}
 		
 		public double NerdUpperWhisker {
-			get { return Math.Min(UpperWhisker, UpperBox + 1.5 * (UpperBox - LowerBox)); }
+			get { return Math.Min(UpperWhisker, UpperBox + (1.5 * (UpperBox - LowerBox))); }
 		}
 
 		public double LowerBox {
@@ -78,7 +78,7 @@ namespace HW.EForm.Core.Helpers
 			get {
 //				int lower = data.Count % 2 != 0 ? data.Count / 2 + 1 : data.Count / 2;
 //				return GetMeanMedian(data.GetRange(lower, data.Count / 2));
-				int lower = data.Count % 2 != 0 && data.Count > 1 ? data.Count / 2 + 1 : data.Count / 2;
+				int lower = (data.Count % 2 != 0 && data.Count > 1) ? data.Count / 2 + 1 : data.Count / 2;
 				return GetMeanMedian(data.GetRange(lower, Math.Max(1, data.Count / 2)));
 //				double q = 0.75 * (data.Count);
 //				if (q % 1 == 0) {

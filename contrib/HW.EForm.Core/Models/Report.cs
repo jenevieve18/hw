@@ -5,14 +5,14 @@ namespace HW.EForm.Core.Models
 {
 	public class Report
 	{
-		public int ReportID { get; set; }
-		public string Internal { get; set; }
-		public Guid ReportKey { get; set; }
-
 		public Report()
 		{
 		}
 		
+		public int ReportID { get; set; }
+		public string Internal { get; set; }
+		public Guid ReportKey { get; set; }
+
 		public IList<ReportPart> Parts { get; set; }
 	}
 }
