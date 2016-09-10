@@ -336,29 +336,40 @@ WHERE av.QuestionID = @QuestionID
 			return answerValues;
 		}
 		
-		public IList<AnswerValue> FindByQuestionOptionsAndUnits(int questionID, IList<QuestionOption> options, int projectRoundID, IList<ProjectRoundUnit> projectRoundUnits)
+//		public IList<AnswerValue> FindByQuestionOptionsAndUnits(int questionID, IList<QuestionOption> options, int projectRoundID, IList<ProjectRoundUnit> projectRoundUnits)
+		public IList<AnswerValue> FindByQuestionOptionsAndUnits(int questionID, int[] optionIDs, int projectRoundID, int[] projectRoundUnitIDs)
 		{
 			string optionQuery = "";
 			List<SqlParameter> parameters = new List<SqlParameter>();
-			if (options.Count > 0) {
+//			if (options.Count > 0) {
+			if (optionIDs.Length > 0) {
 				optionQuery += "AND av.OptionID IN (";
 				int i = 1;
-				foreach (var o in options) {
-					optionQuery += "@OptionID" + o.OptionID;
-					optionQuery += i++ < options.Count ? ", " : "";
-					parameters.Add(new SqlParameter("@OptionID" + o.OptionID, o.OptionID));
+//				foreach (var o in options) {
+//					optionQuery += "@OptionID" + o.OptionID;
+//					optionQuery += i++ < options.Count ? ", " : "";
+//					parameters.Add(new SqlParameter("@OptionID" + o.OptionID, o.OptionID));
+				foreach (var optionID in optionIDs) {
+					optionQuery += "@OptionID" + optionID;
+					optionQuery += i++ < optionIDs.Length ? ", " : "";
+					parameters.Add(new SqlParameter("@OptionID" + optionID, optionID));
 				}
 				optionQuery += ")";
 			}
 			
 			string projectRoundUnitQuery = "";
-			if (projectRoundUnits.Count > 0) {
+//			if (projectRoundUnits.Count > 0) {
+			if (projectRoundUnitIDs.Length > 0) {
 				projectRoundUnitQuery += "AND a.ProjectRoundUnitID IN (";
 				int i = 1;
-				foreach (var pru in projectRoundUnits) {
-					projectRoundUnitQuery += "@ProjectRoundUnitID" + pru.ProjectRoundUnitID;
-					projectRoundUnitQuery += i++ < projectRoundUnits.Count ? ", " : "";
-					parameters.Add(new SqlParameter("@ProjectRoundUnitID" + pru.ProjectRoundUnitID, pru.ProjectRoundUnitID));
+//				foreach (var pru in projectRoundUnits) {
+//					projectRoundUnitQuery += "@ProjectRoundUnitID" + pru.ProjectRoundUnitID;
+//					projectRoundUnitQuery += i++ < projectRoundUnits.Count ? ", " : "";
+//					parameters.Add(new SqlParameter("@ProjectRoundUnitID" + pru.ProjectRoundUnitID, pru.ProjectRoundUnitID));
+				foreach (var pru in projectRoundUnitIDs) {
+					projectRoundUnitQuery += "@ProjectRoundUnitID" + pru;
+					projectRoundUnitQuery += i++ < projectRoundUnitIDs.Length ? ", " : "";
+					parameters.Add(new SqlParameter("@ProjectRoundUnitID" + pru, pru));
 				}
 				projectRoundUnitQuery += ")";
 			}

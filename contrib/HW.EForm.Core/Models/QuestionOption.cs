@@ -22,5 +22,9 @@ namespace HW.EForm.Core.Models
 		public int Forced { get; set; }
 		public int Hide { get; set; }
 		public Option Option { get; set; }
+		public WeightedQuestionOption WeightedQuestionOption { get; set; }
+		public bool HasWeightedQuestionOption {
+			get { return WeightedQuestionOption != null; }
+		}
 	}
 }

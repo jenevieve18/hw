@@ -65,6 +65,8 @@
     <Compile Include="Helpers\JSONHelper.cs" />
     <Compile Include="Helpers\ConvertHelper.cs" />
     <Compile Include="Helpers\HtmlHelper.cs" />
+    <Compile Include="Helpers\PromasExporter.cs" />
+    <Compile Include="Helpers\PromasTemplateGeneratedClass.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\AnswerValue.cs" />
     <Compile Include="Models\BaseModel.cs" />
@@ -91,6 +93,7 @@
     <Compile Include="Models\QuestionLang.cs" />
     <Compile Include="Models\QuestionOption.cs" />
     <Compile Include="Models\Report.cs" />
+    <Compile Include="Models\ReportLang.cs" />
     <Compile Include="Models\ReportPart.cs" />
     <Compile Include="Models\Survey.cs" />
     <Compile Include="Models\SurveyQuestion.cs" />
@@ -125,6 +128,7 @@
     <Compile Include="Repositories\SqlQuestionLangRepository.cs" />
     <Compile Include="Repositories\SqlQuestionOptionRepository.cs" />
     <Compile Include="Repositories\SqlQuestionRepository.cs" />
+    <Compile Include="Repositories\SqlReportLangRepository.cs" />
     <Compile Include="Repositories\SqlReportPartRepository.cs" />
     <Compile Include="Repositories\SqlReportRepository.cs" />
     <Compile Include="Repositories\SqlRepositoryFactory.cs" />

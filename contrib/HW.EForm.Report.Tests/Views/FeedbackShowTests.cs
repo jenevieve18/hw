@@ -51,13 +51,13 @@ $(function() {
 <body>
 <div id=container></div>
 </body.";
-			var f = feedbackService.ReadFeedbackWithAnswers2(6, 10, new int[] { 96 }, 1);
+			var f = feedbackService.ReadFeedbackWithAnswers(6, 10, new int[] { 96 }, 1);
 			
 			Console.WriteLine("FeedbackID: {0}, Feedback: {1}", f.FeedbackID, f.FeedbackText);
 			foreach (var fq in f.Questions) {
 				Console.WriteLine("\tQuestionID: {0}, Question: {1}", fq.QuestionID, fq.Question.GetLanguage(1).Question);
 				
-				string chart = new HighchartsColumnChart(fq.Question.ToChart(false)).ToString();
+				string chart = new HighchartsColumnChart(fq.Question.ToChart()).ToString();
 				template = template.Replace("__SCRIPT__", chart);
 				
 				Console.WriteLine(template);

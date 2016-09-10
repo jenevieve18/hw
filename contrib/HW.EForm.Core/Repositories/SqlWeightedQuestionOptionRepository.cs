@@ -169,6 +169,42 @@ WHERE QuestionID = @QuestionID";
 			return weightedQuestionOption;
 		}
 		
+		public WeightedQuestionOption ReadByQuestionAndOption(int questionID, int optionID)
+		{
+			string query = @"
+SELECT 	WeightedQuestionOptionID, 
+	Internal, 
+	QuestionID, 
+	OptionID, 
+	TargetVal, 
+	YellowLow, 
+	GreenLow, 
+	GreenHigh, 
+	YellowHigh, 
+	SortOrder
+FROM WeightedQuestionOption
+WHERE QuestionID = @QuestionID
+AND OptionID = @OptionID";
+			WeightedQuestionOption weightedQuestionOption = null;
+			using (var rs = ExecuteReader(query, new SqlParameter("@QuestionID", questionID), new SqlParameter("@OptionID", optionID))) {
+				if (rs.Read()) {
+					weightedQuestionOption = new WeightedQuestionOption {
+						WeightedQuestionOptionID = GetInt32(rs, 0),
+						Internal = GetString(rs, 1),
+						QuestionID = GetInt32(rs, 2),
+						OptionID = GetInt32(rs, 3),
+						TargetVal = GetInt32(rs, 4),
+						YellowLow = GetInt32(rs, 5),
+						GreenLow = GetInt32(rs, 6),
+						GreenHigh = GetInt32(rs, 7),
+						YellowHigh = GetInt32(rs, 8),
+						SortOrder = GetInt32(rs, 9)
+					};
+				}
+			}
+			return weightedQuestionOption;
+		}
+		
 		public override IList<WeightedQuestionOption> FindAll()
 		{
 			string query = @"

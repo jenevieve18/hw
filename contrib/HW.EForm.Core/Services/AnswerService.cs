@@ -53,16 +53,14 @@ namespace HW.EForm.Core.Services
 			return answerValueRepo.FindByQuestion(questionID);
 		}
 		
-		public IList<AnswerValue> FindByQuestionOptionsAndUnits(int questionID, IList<QuestionOption> options, int projectRoundID, IList<ProjectRoundUnit> projectRoundUnits)
+		public IList<AnswerValue> FindByQuestionOptionsAndUnits(int questionID, int[] optionIDs, int projectRoundID, int[] projectRoundUnitIDs)
 		{
-			var av = answerValueRepo.FindByQuestionOptionsAndUnits(questionID, options, projectRoundID, projectRoundUnits);
-			return av;
+			return answerValueRepo.FindByQuestionOptionsAndUnits(questionID, optionIDs, projectRoundID, projectRoundUnitIDs);
 		}
 		
 		public IList<AnswerValue> FindByQuestionOptionAndUnit(int questionID, int optionID, int projectRoundID, int projectRoundUnitID)
 		{
-			var av = answerValueRepo.FindByQuestionOptionAndUnit(questionID, optionID, projectRoundID, projectRoundUnitID);
-			return av;
+			return answerValueRepo.FindByQuestionOptionAndUnit(questionID, optionID, projectRoundID, projectRoundUnitID);
 		}
 	}
 }

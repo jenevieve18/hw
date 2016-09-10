@@ -25,6 +25,17 @@ namespace HW.EForm.Core.Models
 		public decimal RangeHigh { get; set; }
 		public IList<OptionComponents> Components { get; set; }
 		public IList<AnswerValue> AnswerValues { get; set; }
+		public bool HasOnlyOneComponent {
+			get { return Components.Count == 1; }
+		}
+		public OptionComponents FirstComponent {
+			get {
+				if (Components.Count > 0) {
+					return Components[0];
+				}
+				return null;
+			}
+		}
 
 		public bool IsSingleChoice {
 			get { return OptionType == OptionTypes.SingleChoice; }

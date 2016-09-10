@@ -13,7 +13,7 @@ namespace HW.EForm.Report.Tests.Helpers
 	public class HWListTests
 	{
 		[Test]
-		public void TestMethod()
+		public void TestValues()
 		{
 			var l = new HWList(13, 13, 13, 13, 14, 14, 16, 18, 21);
 			Assert.AreEqual(14, l.Median);

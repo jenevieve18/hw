@@ -15,12 +15,12 @@ namespace HW.EForm.Core.Helpers
 	{
 		GeneratedCode.GeneratedClass gc = new GeneratedCode.GeneratedClass();
 		
-		public string Type {
-			get { return "application/vnd.openxmlformats-officedocument.presentationml.presentation"; }
-		}
-		
 		public PromasExporter()
 		{
+		}
+		
+		public string Type {
+			get { return "application/vnd.openxmlformats-officedocument.presentationml.presentation"; }
 		}
 		
 		public bool HasContentDisposition(string file)

@@ -33,7 +33,7 @@ namespace HW.EForm.Report
 			int projectRoundUnitID = ConvertHelper.ToInt32(Request.QueryString["ProjectRoundUnitID"]);
 			int langID = 1;
 			
-			var feedback = s.ReadFeedbackWithAnswers2(feedbackID, projectRoundID, new int[] { projectRoundUnitID }, langID);
+			var feedback = s.ReadFeedbackWithAnswers(feedbackID, projectRoundID, new int[] { projectRoundUnitID }, langID);
 			
 //			var exporter = new PromasExporter();
 //

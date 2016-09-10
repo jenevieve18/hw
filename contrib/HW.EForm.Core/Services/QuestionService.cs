@@ -55,15 +55,16 @@ namespace HW.EForm.Core.Services
 			var questions = questionRepo.FindAll();
 			foreach (var q in questions) {
 				q.Languages = questionLangRepo.FindByQuestion(q.QuestionID);
-				q.Options = questionOptionRepo.FindByQuestion(q.QuestionID);
-				foreach (var o in q.Options) {
-					o.Option = optionRepo.Read(o.OptionID);
-					o.Option.Components = optionComponentsRepo.FindByOption(o.OptionID);
-					foreach (var oc in o.Option.Components) {
-						oc.OptionComponent = optionComponentRepo.Read(oc.OptionComponentID);
-						oc.OptionComponent.Languages = optionComponentLangRepo.FindByOptionComponent(oc.OptionComponentID);
-					}
-				}
+//				q.Options = questionOptionRepo.FindByQuestion(q.QuestionID);
+//				foreach (var o in q.Options) {
+//					o.Option = optionRepo.Read(o.OptionID);
+//					o.Option.Components = optionComponentsRepo.FindByOption(o.OptionID);
+//					foreach (var oc in o.Option.Components) {
+//						oc.OptionComponent = optionComponentRepo.Read(oc.OptionComponentID);
+//						oc.OptionComponent.Languages = optionComponentLangRepo.FindByOptionComponent(oc.OptionComponentID);
+//					}
+//				}
+				q.Options = FindQuestionOptions(q.QuestionID);
 			}
 			return questions;
 		}
@@ -81,36 +82,28 @@ namespace HW.EForm.Core.Services
 		public Question ReadQuestion(int questionID)
 		{
 			var q = questionRepo.Read(questionID);
-			q.WeightedQuestionOption = weightedQuestionOptionRepo.ReadByQuestion(questionID);
 			q.Languages = questionLangRepo.FindByQuestion(questionID);
-			q.Options = questionOptionRepo.FindByQuestion(questionID);
-			foreach (var o in q.Options) {
-				o.Option = optionRepo.Read(o.OptionID);
-				o.Option.Components = optionComponentsRepo.FindByOption(o.OptionID);
-				foreach (var oc in o.Option.Components) {
-					oc.OptionComponent = optionComponentRepo.Read(oc.OptionComponentID);
-					oc.OptionComponent.Languages = optionComponentLangRepo.FindByOptionComponent(oc.OptionComponentID);
-				}
-			}
+//			q.Options = questionOptionRepo.FindByQuestion(questionID);
+//			foreach (var o in q.Options) {
+//				o.Option = optionRepo.Read(o.OptionID);
+//				o.Option.Components = optionComponentsRepo.FindByOption(o.OptionID);
+//				foreach (var oc in o.Option.Components) {
+//					oc.OptionComponent = optionComponentRepo.Read(oc.OptionComponentID);
+//					oc.OptionComponent.Languages = optionComponentLangRepo.FindByOptionComponent(oc.OptionComponentID);
+//				}
+//			}
+			q.Options = FindQuestionOptions(questionID);
 			return q;
 		}
 		
-		public Question ReadQuestion2(int questionID, int projectRoundID, int[] projectRoundUnitIDs)
+		public Question ReadQuestionWithAnswers(int questionID, int projectRoundID, int[] projectRoundUnitIDs)
 		{
 			var q = questionRepo.Read(questionID);
 			q.Languages = questionLangRepo.FindByQuestion(questionID);
-			q.Options = questionOptionRepo.FindByQuestion(questionID);
-			foreach (var o in q.Options) {
-				o.Option = optionRepo.Read(o.OptionID);
-				o.Option.Components = optionComponentsRepo.FindByOption(o.OptionID);
-				foreach (var oc in o.Option.Components) {
-					oc.OptionComponent = optionComponentRepo.Read(oc.OptionComponentID);
-					oc.OptionComponent.Languages = optionComponentLangRepo.FindByOptionComponent(oc.OptionComponentID);
-				}
-			}
+			q.Options = FindQuestionOptions(questionID);
 			q.ProjectRoundUnits = projectRoundUnitRepo.FindProjectRoundUnits(projectRoundUnitIDs);
 			foreach (var pru in q.ProjectRoundUnits) {
-				pru.Options = q.Options;
+				pru.Options = FindQuestionOptions(questionID);
 				pru.AnswerValues = answerValueRepo.FindByQuestionOptionsAndUnit(q.QuestionID, q.Options, projectRoundID, pru.ProjectRoundUnitID);
 			}
 			return q;
@@ -122,15 +115,16 @@ namespace HW.EForm.Core.Services
 			foreach (var questionID in questionIDs) {
 				var q = questionRepo.Read(questionID);
 				q.Languages = questionLangRepo.FindByQuestion(questionID);
-				q.Options = questionOptionRepo.FindByQuestion(questionID);
-				foreach (var o in q.Options) {
-					o.Option = optionRepo.Read(o.OptionID);
-					o.Option.Components = optionComponentsRepo.FindByOption(o.OptionID);
-					foreach (var oc in o.Option.Components) {
-						oc.OptionComponent = optionComponentRepo.Read(oc.OptionComponentID);
-						oc.OptionComponent.Languages = optionComponentLangRepo.FindByOptionComponent(oc.OptionComponentID);
-					}
-				}
+//				q.Options = questionOptionRepo.FindByQuestion(questionID);
+//				foreach (var o in q.Options) {
+//					o.Option = optionRepo.Read(o.OptionID);
+//					o.Option.Components = optionComponentsRepo.FindByOption(o.OptionID);
+//					foreach (var oc in o.Option.Components) {
+//						oc.OptionComponent = optionComponentRepo.Read(oc.OptionComponentID);
+//						oc.OptionComponent.Languages = optionComponentLangRepo.FindByOptionComponent(oc.OptionComponentID);
+//					}
+//				}
+				q.Options = FindQuestionOptions(questionID);
 				q.ProjectRoundUnits = projectRoundUnitRepo.FindProjectRoundUnits(projectRoundUnitIDs);
 				foreach (var pru in q.ProjectRoundUnits) {
 					pru.Options = q.Options;
@@ -139,6 +133,21 @@ namespace HW.EForm.Core.Services
 				questions.Add(q);
 			}
 			return questions;
+		}
+		
+		IList<QuestionOption> FindQuestionOptions(int questionID)
+		{
+			var questionOptions = questionOptionRepo.FindByQuestion(questionID);
+			foreach (var qo in questionOptions) {
+				qo.Option = optionRepo.Read(qo.OptionID);
+				qo.WeightedQuestionOption = weightedQuestionOptionRepo.ReadByQuestionAndOption(qo.QuestionID, qo.OptionID);
+				qo.Option.Components = optionComponentsRepo.FindByOption(qo.OptionID);
+				foreach (var oc in qo.Option.Components) {
+					oc.OptionComponent = optionComponentRepo.Read(oc.OptionComponentID);
+					oc.OptionComponent.Languages = optionComponentLangRepo.FindByOptionComponent(oc.OptionComponentID);
+				}
+			}
+			return questionOptions;
 		}
 	}
 }

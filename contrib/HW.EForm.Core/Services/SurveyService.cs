@@ -17,9 +17,12 @@ namespace HW.EForm.Core.Services
 		SqlSurveyQuestionOptionRepository surveyQuestionOptionRepo = new SqlSurveyQuestionOptionRepository();
 		
 		SqlQuestionRepository questionRepo = new SqlQuestionRepository();
+		SqlQuestionLangRepository questionLangRepo = new SqlQuestionLangRepository();
 		SqlQuestionOptionRepository questionOptionRepo = new SqlQuestionOptionRepository();
 		
 		SqlOptionRepository optionRepo = new SqlOptionRepository();
+		SqlOptionComponentsRepository optionComponentsRepo = new SqlOptionComponentsRepository();
+		SqlOptionComponentRepository optionComponentRepo = new SqlOptionComponentRepository();
 		
 		public SurveyService()
 		{
@@ -34,12 +37,17 @@ namespace HW.EForm.Core.Services
 		{
 			var s = surveyRepo.Read(surveyID);
 			s.Questions = surveyQuestionRepo.FindBySurvey(surveyID);
-			foreach (var q in s.Questions) {
-				q.Question = questionRepo.Read(q.QuestionID);
-				q.Options = surveyQuestionOptionRepo.FindBySurveyQuestion(q.SurveyQuestionID);
-				foreach (var o in q.Options) {
-					o.QuestionOption = questionOptionRepo.Read(o.QuestionOptionID);
-					o.QuestionOption.Option = optionRepo.Read(o.QuestionOption.OptionID);
+			foreach (var sq in s.Questions) {
+				sq.Question = questionRepo.Read(sq.QuestionID);
+				sq.Question.Languages = questionLangRepo.FindByQuestion(sq.QuestionID);
+				sq.Options = surveyQuestionOptionRepo.FindBySurveyQuestion(sq.SurveyQuestionID);
+				foreach (var sqo in sq.Options) {
+					sqo.QuestionOption = questionOptionRepo.Read(sqo.QuestionOptionID);
+					sqo.QuestionOption.Option = optionRepo.Read(sqo.QuestionOption.OptionID);
+					sqo.QuestionOption.Option.Components = optionComponentsRepo.FindByOption(sqo.QuestionOption.OptionID);
+					foreach (var oc in sqo.QuestionOption.Option.Components) {
+						oc.OptionComponent = optionComponentRepo.Read(oc.OptionComponentID);
+					}
 				}
 			}
 			return s;

@@ -21,17 +21,29 @@ namespace HW.EForm.Core.Models
 		public Survey Survey { get; set; }
 		public IList<FeedbackQuestion> Questions { get; set; }
 
-		public Dictionary<int, List<FeedbackQuestion>> GetGroupedQuestions()
+//		public Dictionary<int, List<FeedbackQuestion>> GetGroupedQuestions()
+//		{
+//			var groups = new Dictionary<int, List<FeedbackQuestion>>();
+//			foreach (var fq in Questions) {
+//				if (!groups.ContainsKey(fq.PartOfChart)) {
+//					groups.Add(fq.PartOfChart, new List<FeedbackQuestion>());
+//				}
+//				var @group = groups[fq.PartOfChart];
+//				@group.Add(fq);
+//			}
+//			return groups;
+//		}
+		
+		List<int> chartIDs = new List<int>();
+		public bool HasGroupedChart(int chartID)
 		{
-			var groups = new Dictionary<int, List<FeedbackQuestion>>();
-			foreach (var fq in Questions) {
-				if (!groups.ContainsKey(fq.PartOfChart)) {
-					groups.Add(fq.PartOfChart, new List<FeedbackQuestion>());
-				}
-				var @group = groups[fq.PartOfChart];
-				@group.Add(fq);
-			}
-			return groups;
+			return chartIDs.Contains(chartID);
+		}
+		
+		public IList<FeedbackQuestion> GetQuestions(int chartID)
+		{
+			chartIDs.Add(chartID);
+			return (Questions as List<FeedbackQuestion>).FindAll(x => x.PartOfChart == chartID);
 		}
 		
 		public void AddQuestion(Question q)

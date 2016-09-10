@@ -23,5 +23,10 @@ namespace HW.EForm.Report.Tests.Services
 				Console.WriteLine("\tValueInt: {0}, Question: {1}, Option: {2}", av.ValueInt, av.Question.Internal, av.Option.Internal);
 			}
 		}
+		
+		[Test]
+		public void TestMethod()
+		{
+		}
 	}
 }

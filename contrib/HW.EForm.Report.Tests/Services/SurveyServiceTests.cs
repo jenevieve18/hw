@@ -18,9 +18,9 @@ namespace HW.EForm.Report.Tests.Services
 		public void TestReadSurvey()
 		{
 			var s = service.ReadSurvey(32);
-			Console.WriteLine(s.Internal);
+			Console.WriteLine("{0}: {1}", s.SurveyID, s.Internal);
 			foreach (var sq in s.Questions) {
-				Console.WriteLine("\t" + sq.Question.Internal);
+				Console.WriteLine("\t{0}: {1}", sq.QuestionID, sq.Question.SelectedQuestionLang.Question);
 			}
 		}
 	}

@@ -16,5 +16,9 @@ namespace HW.EForm.Core.Models
 		public Question Question { get; set; }
 		public Feedback Feedback { get; set; }
 		public Option Option { get; set; }
+		
+		public bool IsPartOfChart {
+			get { return PartOfChart != 0; }
+		}
 	}
 }

@@ -42,24 +42,6 @@ namespace HW.EForm.Report.Tests.Views
 			}
 		}
 		
-//		[Test]
-//		public void a()
-//		{
-//			var projectRoundUnits = projectService.FindProjectRoundUnits(new int[] { 96 });
-//			foreach (var pru in projectRoundUnits) {
-//				Console.WriteLine("ProjectRoundUnitID: {0}, Unit: {1}", pru.ProjectRoundUnitID, pru.Unit);
-//				Console.WriteLine("FeedbackID: {0}, Feedback: {1}", pru.ProjectRound.FeedbackID, pru.ProjectRound.Feedback.FeedbackText);
-//				foreach (var fq in pru.ProjectRound.Feedback.Questions) {
-//					Console.WriteLine("\tQuestion: {0}", fq.Question.GetLanguage(1).Question);
-//					
-//					fq.Units = projectRoundUnits;
-//					fq.AnswerValues = answerService.FindByQuestionOptionsAndUnits(fq.QuestionID, fq.Question.Options, pru.ProjectRoundID, projectRoundUnits);
-//
-//					Console.WriteLine(new HighchartsColumnChart(fq.ToChart()).ToString());
-//				}
-//			}
-//		}
-		
 		[Test]
 		public void b()
 		{
@@ -78,7 +60,7 @@ $(function() {
 </head>
 <body>
 <div id=container></div>
-</body.";
+</body>";
 			var projectRoundUnits = projectService.FindProjectRoundUnits(new int[] { 96 });
 			foreach (var pru in projectRoundUnits) {
 				Console.WriteLine("ProjectRoundUnitID: {0}, Unit: {1}", pru.ProjectRoundUnitID, pru.Unit);
@@ -89,7 +71,7 @@ $(function() {
 					fq.Question.ProjectRoundUnits = projectRoundUnits;
 //					fq.AnswerValues = answerService.FindByQuestionOptionsAndUnits(fq.QuestionID, fq.Question.Options, pru.ProjectRoundID, projectRoundUnits);
 
-					string chart = new HighchartsColumnChart(fq.Question.ToChart(false)).ToString();
+					string chart = new HighchartsColumnChart(fq.Question.ToChart()).ToString();
 					template = template.Replace("__SCRIPT__", chart);
 					
 					Console.WriteLine(template);

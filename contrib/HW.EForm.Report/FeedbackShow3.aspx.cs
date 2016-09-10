@@ -48,30 +48,27 @@ namespace HW.EForm.Report
 
 		public void Show(int feedbackID, int projectRoundID, int projectRoundUnitID, int langID)
 		{
-			feedback = feedbackService.ReadFeedbackWithAnswers2(feedbackID, projectRoundID, new int[] { projectRoundUnitID }, langID);
-			
-			charts.Add(HighchartsBoxplot.GetHighchartsChart(9, feedback.ToChart(false)));
-			foreach (var fq in feedback.Questions) {
-				charts.Add(HighchartsBoxplot.GetHighchartsChart(fq.Question.Options[0].Option.OptionType, fq.Question.ToChart(true)));
-			}
-			
-//			AddQuestions(GetIndex1Questions(), projectRoundID, projectRoundUnitID);
-			
-			var painQuestions = new GroupedQuestions();
-			painQuestions.Questions.AddRange(questionService.ReadQuestion2(1689, projectRoundID, new int[] { projectRoundUnitID }).ToQuestions());
-			painQuestions.Questions.AddRange(questionService.ReadQuestion2(1690, projectRoundID, new int[] { projectRoundUnitID }).ToQuestions());
-			painQuestions.Questions.AddRange(questionService.ReadQuestion2(1691, projectRoundID, new int[] { projectRoundUnitID }).ToQuestions());
-			painQuestions.Questions.AddRange(questionService.ReadQuestion2(1692, projectRoundID, new int[] { projectRoundUnitID }).ToQuestions());
-			
-//			Console.WriteLine(HighchartsChart.GetHighchartsChart(9, painQuestions.ToChart(true)));
-			charts.Add(HighchartsChart.GetHighchartsChart(9, painQuestions.ToChart(true)));
+//			feedback = feedbackService.ReadFeedbackWithAnswers(feedbackID, projectRoundID, new int[] { projectRoundUnitID }, langID);
+//			
+//			charts.Add(HighchartsBoxplot.GetHighchartsChart(9, feedback.ToChart(false)));
+//			foreach (var fq in feedback.Questions) {
+//				charts.Add(HighchartsBoxplot.GetHighchartsChart(fq.Question.Options[0].Option.OptionType, fq.Question.ToChart()));
+//			}
+//			
+//			var painQuestions = new GroupedQuestions();
+//			painQuestions.Questions.AddRange(questionService.ReadQuestionWithAnswers(1689, projectRoundID, new int[] { projectRoundUnitID }).ToQuestions());
+//			painQuestions.Questions.AddRange(questionService.ReadQuestionWithAnswers(1690, projectRoundID, new int[] { projectRoundUnitID }).ToQuestions());
+//			painQuestions.Questions.AddRange(questionService.ReadQuestionWithAnswers(1691, projectRoundID, new int[] { projectRoundUnitID }).ToQuestions());
+//			painQuestions.Questions.AddRange(questionService.ReadQuestionWithAnswers(1692, projectRoundID, new int[] { projectRoundUnitID }).ToQuestions());
+//			
+//			charts.Add(HighchartsChart.GetHighchartsChart(9, painQuestions.ToChart(true)));
 		}
 		
 		void AddQuestions(int[] questionIDs, int projectRoundID, int projectRoundUnitID)
 		{
 			var questions = questionService.FindQuestion(questionIDs, projectRoundID, new int[] { projectRoundUnitID });
 			foreach (var q in questions) {
-				charts.Add(HighchartsBoxplot.GetHighchartsChart(q.Options[0].Option.OptionType, q.ToChart(true)));
+				charts.Add(HighchartsBoxplot.GetHighchartsChart(q.Options[0].Option.OptionType, q.ToChart()));
 			}
 		}
 		

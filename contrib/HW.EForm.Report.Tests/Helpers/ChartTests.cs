@@ -28,8 +28,8 @@ namespace HW.EForm.Report.Tests.Helpers
 			c.Categories.Add("Female");
 			
 			var d = new List<double>(new double[] {});
-			var s = new Series("Department 1", d);
-			c.Series.Add(s);
+//			var s = new Series("Department 1", d);
+//			c.Series.Add(s);
 		}
 		
 //		[SetUp]

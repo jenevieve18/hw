@@ -4,11 +4,14 @@
 // </file>
 
 using System;
+using System.Diagnostics;
+using System.IO;
 using HW.EForm.Core.Helpers;
 using HW.EForm.Core.Models;
 using HW.EForm.Core.Repositories;
 using HW.EForm.Core.Services;
 using HW.EForm.Report.Tests.Repositories;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace HW.EForm.Report.Tests.Services
@@ -43,7 +46,7 @@ namespace HW.EForm.Report.Tests.Services
 		[Test]
 		public void TestReadFeedbackWithAnswers()
 		{
-			var f = s.ReadFeedbackWithAnswers2(8, 62, new int[] { 1183 }, 1);
+			var f = s.ReadFeedbackWithAnswers(8, 62, new int[] { 1183 }, 1);
 			foreach (var fq in f.Questions) {
 				Console.WriteLine("{0}: {1}", fq.QuestionID, fq.Question.SelectedQuestionLang.Question);
 				foreach (var qo in fq.Question.Options) {
@@ -53,6 +56,85 @@ namespace HW.EForm.Report.Tests.Services
 					}
 				}
 			}
+		}
+		
+		[Test]
+		public void b()
+		{
+			var fq = s.ReadFeedbackQuestion(194, 62, new int[] { 1183 }, 1);
+			var c = fq.Question.ToChart();
+			using (var w = new StreamWriter("chart.html")) {
+				w.WriteLine(@"<html>
+<head>
+<meta charset='utf-8'>
+<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+<script src='https://code.highcharts.com/highcharts.js'></script>
+<script src='https://code.highcharts.com/highcharts-more.js'></script>
+<script src='https://code.highcharts.com/modules/exporting.js'></script>
+</head>
+<body>");
+				var chart = HighchartsBoxplot.GetHighchartsChart(c.Type, c, true);
+				Console.WriteLine(chart);
+				w.WriteLine(chart);
+				w.WriteLine("</body>");
+			}
+			Process.Start("chart.html");
+		}
+		
+//		[Test]
+//		public void a()
+//		{
+//			var f = s.ReadFeedbackWithAnswers(8, 62, new int[] { 1183 }, 1);
+//			var c = f.GetQuestions(1).ToChart();
+//			using (var w = new StreamWriter("charts.html")) {
+//				w.WriteLine(@"<html>
+		//<head>
+		//<meta charset='utf-8'>
+		//<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+		//<script src='https://code.highcharts.com/highcharts.js'></script>
+		//<script src='https://code.highcharts.com/highcharts-more.js'></script>
+		//<script src='https://code.highcharts.com/modules/exporting.js'></script>
+		//</head>
+		//<body>");
+//				var chart = HighchartsBoxplot.GetHighchartsChart(c.Type, c, true);
+//				Console.WriteLine(chart);
+//				w.WriteLine(chart);
+//				w.WriteLine("</body>");
+//			}
+//			Process.Start("charts.html");
+//		}
+
+		[Test]
+		public void TestReadFeedbackWithAnswers2()
+		{
+			var f = s.ReadFeedbackWithAnswers(8, 62, new int[] { 1183 }, 1);
+			var charts = new List<Chart>();
+			foreach (var fq in f.Questions) {
+				if (fq.IsPartOfChart && !f.HasGroupedChart(fq.PartOfChart)) {
+					charts.Add(f.GetQuestions(fq.PartOfChart).ToChart());
+				} else if (!fq.IsPartOfChart) {
+					charts.Add(fq.Question.ToChart());
+				}
+			}
+			
+			using (var w = new StreamWriter("charts.html")) {
+				w.WriteLine(@"<html>
+<head>
+<meta charset='utf-8'>
+<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+<script src='https://code.highcharts.com/highcharts.js'></script>
+<script src='https://code.highcharts.com/highcharts-more.js'></script>
+<script src='https://code.highcharts.com/modules/exporting.js'></script>
+</head>
+<body>");
+				foreach (var c in charts) {
+					var chart = HighchartsBoxplot.GetHighchartsChart(c.Type, c, true);
+					Console.WriteLine(chart);
+					w.WriteLine(chart);
+				}
+				w.WriteLine("</body>");
+			}
+			Process.Start("charts.html");
 		}
 		
 		[Test]
@@ -71,29 +153,5 @@ namespace HW.EForm.Report.Tests.Services
 				}
 			}
 		}
-		
-//		[Test]
-//		public void TestReadFeedbackWithAnswers()
-//		{
-//			var f = s.ReadFeedbackWithAnswers(8, 62, new int[] { 1183 }, 1);
-//			foreach (var fq in f.Questions) {
-//				Console.WriteLine("QuestionID: {0}, Question: {1}", fq.QuestionID, fq.Question.Internal);
-//				foreach (var qo in fq.Question.Options) {
-//					Console.WriteLine("\tOptionID: {0}, Internal: {1}", qo.OptionID, qo.Option.Internal);
-//					foreach (var oc in qo.Option.Components) {
-//						Console.WriteLine("\t\tOptionComponentID: {0}, Internal: {1}", oc.OptionComponentID, oc.OptionComponent.Internal);
-//					}
-//				}
-//				foreach (var pru in fq.Question.ProjectRoundUnits) {
-//					Console.WriteLine("\tProjectRoundUnitID: {0}, Unit: {1}, Total Answers: {2}", pru.ProjectRoundUnitID, pru.Unit, pru.AnswerValues.Count);
-//					foreach (var qo in pru.Options) {
-//						foreach (var oc in qo.Option.Components) {
-//							Console.WriteLine("\t\tInternal: {0} Answers: {1}, Percentage: {2}%", oc.OptionComponent.Internal, oc.OptionComponent.AnswerValues.Count, oc.OptionComponent.AnswerValues.Count / (double)pru.AnswerValues.Count * 100);
-//						}
-//					}
-//				}
-//				Console.WriteLine(new HighchartsBoxplot(fq.Question.ToChart(true)));
-//			}
-//		}
 	}
 }

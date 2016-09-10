@@ -11,6 +11,7 @@ namespace HW.EForm.Core.Models
 		
 		public ProjectRoundUnit()
 		{
+			Options = new List<QuestionOption>();
 		}
 		
 		public int ProjectRoundUnitID { get; set; }
@@ -58,12 +59,27 @@ namespace HW.EForm.Core.Models
 		public Report Report { get; set; }
 		public ProjectRound ProjectRound { get; set; }
 		public IList<ProjectRoundUnitManager> Managers { get; set; }
-		
 		public IList<QuestionOption> Options { get; set; }
+		public bool HasOnlyOneOption {
+			get { return Options.Count == 1; }
+		}
+		public QuestionOption FirstOption {
+			get {
+				if (Options.Count > 0) {
+					return Options[0];
+				}
+				return null;
+			}
+		}
 		
 		public IList<AnswerValue> AnswerValues {
 			get { return answerValues; }
 			set { answerValues = value; SetAnswerValuesForComponents(); }
+		}
+		
+		public void AddOption(QuestionOption qo)
+		{
+			Options.Add(qo);
 		}
 		
 		void SetAnswerValuesForComponents()
