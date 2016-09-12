@@ -4,6 +4,7 @@
 // </file>
 
 using System;
+using System.Collections.Generic;
 using System.Text;
 using HW.EForm.Core.Models;
 using RestSharp;
@@ -23,15 +24,13 @@ namespace HW.EForm.Core.Helpers
 	{
 		public class GeneratedClass
 		{
-//			string feedbackImageData = "iVBORw0KGgoAAAANSUhEUgAAAlgAAAGQCAYAAAByNR6YAAAACXBIWXMAAAsTAAALEwEAmpwYAAAf9klEQVR4nO3df3SfZWH//1faJCVQmPxqyAeLB+NMshk+IGgpsBYcibo44bgCbvPLSCmWDUa3Kt8hDJz8mIeP82DpsBaRsoE7p7JVOAhOAxRqJKzvIrgysTLYBFs8mFNcxRJSSr5/9Nt8CAGaNhdJSh+Pc3pOc19Xr+tOlfd5nvu+c7dqYGBgIAAAFDNpvE8AAOCtRmABABQmsAAAChNYAACFCSwAgMIEFgBAYQILAKAwgQUAUJjAAgAoTGDBOBoYGMjWrVvz8ssv79I4ABOTwIJxdO+992bGjBm57rrrXnO8p6cnM2bMyDXXXDPGZzaxHXPMMTnmmGN2m3XfTI888kguvPDCfPCDH8ysWbPyh3/4h7n55puzZcuW8T412KNVj/cJALDNRz/60WzcuDHd3d0jHps3b96Qrx9//PEsWrQo//mf/5nPfe5zb+r5Aq/PFSyA/9+aNWuyZs2acdt/w4YN6evr26mx973vfbnuuuty33335Xvf+97g1c677777TT1X4I0JLNjNvN5trNc6vv1Yf39/Lr744hx33HE7XH/z5s255ppr8tGPfjQnnHBCzjnnnHz/+98fNu+pp57KwoULM2vWrMyaNSsLFy7M008/PWTOH/zBH2TGjBnZtGnTkOPPPvts3ve+9+W0007b4fn8+Mc/zllnnZXjjz8+F1xwwbC1Xv29jvT4zqyxo7krV67M6aefnlmzZuVTn/pUnnvuuWHzt9/K+9CHPpRZs2blT//0T/PTn/50yHqvdx5vNLZkyZLMmDEjU6dOTV1dXQ488MAkycEHHzyi7wN4cwgs2AMsXbo03/3ud9Pf37/DuVdddVW+/vWvD14xefjhh7NgwYIhczZu3Jh58+Zl1apV2bx5czZv3pxVq1bl7LPPzsaNGwfnnXTSSdm6dWvuu+++IX9+5cqVGRgYyO/+7u++4bk899xz+bM/+7M8+uijefHFF/PAAw/ks5/97Mi/8TGwcuXK/NVf/VWefPLJbN68Offff3++8IUvDJs3b968rFy5Mr29vdm8eXMqlUquvPLKoueyZcuWXH311Zk0aVIWLlxYdG1g5wgsmAB+8IMfZPHixcN+3XHHHUXWX7lyZa6//vqsXr16h3O3P+OzfPny9PT05Kabbhp25eumm27Kxo0b8973vjd33XVX7rrrrhx99NHZuHFjbrrppsF5J510UpLht6vuueeeJMkHPvCBNzyXFStWZNOmTTnyyCNz11135Y477sjAwMAOv4exdPXVV+f888/Pfffdl8svvzxJ8uCDDw6bd9xxx+XGG29Md3d3/u7v/i5J8qMf/Whw/JW3Jl99q/KNxrZ7+eWXc8UVV+Sxxx7LZz/72cyaNWv03xywywQWTAD//d//nXvuuWfYr4cffrjI+hdddFHe+973ZtKkHf8nP23atCTJt771rWzdujXvec97cu211w6Zsz3CFixYkGnTpmXatGm54IILkmTI7cTf+q3fyrRp07J69erBW3sbN27MI488kre//e1597vf/Ybncv/99ydJzj///EybNi0NDQ354he/OMLvemycddZZOfPMMzN16tScfPLJSfKatzGvvfbaHHHEEdlrr71y4oknJklefPHFYudx1VVX5a677sp5552Xjo6OYusCu0ZgwQTwsY99LLfddtuwX5dddlmR9d///vePeO6nP/3p1NbW5uabb84pp5ySn/zkJ8Pm/PznP0+SHH744YPHtv/+mWeeGTxWVVWVE088MS+99NLgbcL77rsvL7/88g6vXr1yn3e9612DxyZPnjzi72UsfPzjHx/8fW1t7evOu//++3P++efn5JNP3qn/PUZi48aNuf3225Ns+/8SMP4EFjDEjBkz8o1vfCPt7e3ZuHFjzj333Pzwhz98zblVVVU7XG/71Zrttwm33x7c0fNXSfLLX/4yyRuHy+7g1ltvzac+9ak8+OCD+eUvf1n8NufUqVMHf7/vvvsWXRvYNQILdlOvfGD9G9/4RtG13/72t+dv//Zvc9VVV2XTpk255JJLhowfcsghSZL/+q//Gjz2xBNPJEkaGhqGzD366KOz3377pVKp5Gc/+1nWrFmTQw45JL/927+9w/N429veliT52c9+Nnhs/fr1b/hn3sy/l121/bm0+fPn5zvf+c6QZ+FeK7a2bt36umu91lhtbe24v2ICGEpgwW5mv/32S7LtStCvf/3r3HLLLbnxxhuLrX/++efn4YcfzubNmwd/5P/V71864YQTkiSLFy/Os88+m5///OeDz2kdf/zxQ+ZOnjw5J5xwQrZs2ZIrrrgiW7duHdHtwSQ56qijkmz7KchNmzblRz/6UT7zmc+85tw3++9lNP7nf/4nybZ3VtXV1Q1exUu2PX+33ZQpU5Ik3/3ud4f980hvNAZMPAILdjPbn9+59NJLM3v27Fx77bW56KKLiq3/4IMP5pxzzsmsWbMyf/78JMmHP/zhIXPOOuusHHDAAalUKvm93/u9fOQjH8nDDz+c/fffP3/yJ38ybM3tP0340EMPJdnxTw9ud+6552b//ffPPffckw984AM588wzB+Pu1d7sv5fR2B6K8+bNy6xZs3LppZemvr4+STJ37tzBea2trUm2fQ+vfk7rjcaS3fOf+YG3MoEFu5kLL7wwv/M7v5O99947hx9+eK6++urB55xK+MpXvpKZM2dmn332ySGHHJKzzz578CcEtzvggANyww035IQTTkhdXV323nvvzJo1K1/72tcGr3q90syZMwevwBx44IE54ogjRnQuhx9+eP7hH/4hJ598cvbdd9+cfvrpw/5pmO3e7L+X0bj44otzzDHHZK+99soRRxyR66+/PhdffHH23XffTJ8+fXDeJZdckqOPPvo1nzl7ozFg4qkamGgvlQEA2M25ggUAUJjAAgAoTGABABQmsAAAChNYAACFCSwAgMIEFgBAYQILAKAwgQUAUJjAAgAoTGABABQmsAAAChNYAACFCSwAgMIEFgBAYQILAKAwgQUAUJjAAgAorHpnJm/YsCGVSiWrV6/OVVddNWSsv78/S5cuzdq1a9Pa2pr58+entrZ2h2MAAG81O3UF684778zee++dDRs2DBvr6upKY2NjFi1alMbGxnR1dY1oDADgrWanrmCdc845SZJ/+qd/GjZWqVRyySWXpKamJu3t7bnyyivT0dGxw7FdtW7dulH9eQCAndXU1DSieTsVWG+kt7c3NTU12xatrk5vb++IxnbVvk01o14DAODNUCywXv1M1aRJk0Y0tqueyZOjXgMAYGf8r7xzRPOK/RRhQ0PDkK/r6+tHNAYA8FZTLLBaWlrS09OTvr6+dHd3p7m5eURjAABvNVUDAwMDI53c2dk57NiyZcuSbHsVw5IlS7Ju3brMnj07c+bMyeTJk3c4tqseyt2j+vMAADvr6Jw8onk7FVgTicACAMbaSAPLm9wBAAoTWAAAhQksAIDCBBYAQGECCwCgMIEFAFCYwAIAKExgAQAUJrAAAAoTWAAAhQksAIDCBBYAQGHV430CACVc/7mbc/3f/GOx9T75N2fmk5/9f4qtB+xZXMECACisamBgYGC8T2JXPJS7x/sUgN3QMVVtWTPQNd6nAeymjs7JI5rnChYAQGECCwCgMIEFAFCYwAIAKExgAQAUJrAAAAoTWAAAhRV7k/svfvGL3HDDDXn66afT2tqauXPnZsqUKUmS/v7+LF26NGvXrk1ra2vmz5+f2traUlsDAEwoxa5g3XTTTTn++ONzzTXXZNq0abnjjjsGx7q6utLY2JhFixalsbExXV1e8gcAvHUVC6wnnngixx57bKZMmZKOjo5UKpXBsUqlkra2ttTV1aW9vX3IGADAW02xwGpoaMiqVauyadOm3HbbbXnuuecGx3p7e1NTU5Mkqa6uTm9vb6ltAQAmnGLPYM2dOzdf/epXs2LFinR0dGSfffYZHHv181aTJo2+66aumz7qNYA9k88PYJc1jWxascCaPn16Lr/88iTJo48+munT/+8HWENDw5C59fX1o97v+aanR70GsGfy+QHsupEVVtHXNAwMDGT9+vVZvnx5Ojo6Bo+3tLSkp6cnfX196e7uTnNzc8ltAQAmlGJXsDo7O1NVVZWDDjoop5xySpqa/m/htbe3Z8mSJbn55psze/bszJkzp9S2AAATTtXAwMDAeJ/Erngod4/3KQC7oWOq2rJmwKtigF1zdE4e0TxvcgcAKExgAQAUJrAAAAoTWAAAhQksAIDCBBYAQGECCwCgMIEFAFCYwAIAKExgAQAUJrAAAAoTWAAAhQksAIDCBBYAQGECCwCgMIEFAFCYwAIAKKx6vE8A4I2c/Tv/b37Y/XDRNY+paiu21v8+4ah87Xv/p9h6wFuDwAImtB92P5wvfOfJ8T6N13XhB9853qcATEBuEQIAFCawAAAKE1gAAIUJLACAwoo95P7444/n61//ejZs2JD9998/H/vYxzJjxowkSX9/f5YuXZq1a9emtbU18+fPT21tbamtAQAmlGJXsJYsWZI5c+bky1/+cv7oj/4o//iP/zg41tXVlcbGxixatCiNjY3p6uoqtS0AwIRTLLDq6urywgsvpLq6OlVVVWlsbBwcq1QqaWtrS11dXdrb21OpVEptCwAw4RS7RXjeeeflc5/7XL797W/n17/+dS699NLBsd7e3tTU1GzbsLo6vb29pbYFAJhwigXW9773vZxyyik58cQTs3bt2tx6663p7OxMkmHPW02aNPoLZ1PXTR/1GgAl+DyCPUjTyKYVC6z7778/X/ziF1NXV5ejjjoqy5YtGwyshoaGIXPr6+tHvd/zTU+Peg2AEnwewZ5kZIVV7BmsffbZJ//2b/+W/v7+3H333TnwwAMHx1paWtLT05O+vr50d3enubm51LYAABNOscCaN29e7rnnnvz5n/951qxZk3POOWdwrL29PatXr87ChQuzfv36nHrqqaW2BQCYcIrdImxqasoVV1zxmmO1tbVZsGBBqa0AACY0b3IHAChMYAEAFCawAAAKE1gAAIUJLACAwgQWAEBhAgsAoDCBBQBQmMACAChMYAEAFCawAAAKE1gAAIUJLACAwgQWAEBhAgsAoDCBBQBQmMACAChMYAEAFCawAAAKqx7vEwDYkQs/+M7xPgWAneIKFgBAYa5gARPeF77z5HifwutydQ14La5gAQAUVuwKVmdn57Bjy5YtS5L09/dn6dKlWbt2bVpbWzN//vzU1taW2hoAYEIpFljbYypJnnnmmSxfvnzw666urjQ2NmbevHlZuXJlurq60tHRUWprAIAJ5U25RfjNb34zp5122uDXlUolbW1tqaurS3t7eyqVypuxLQDAhFD8Ifcnn3wytbW1OfTQQweP9fb2pqamZtuG1dXp7e0d9T5T100f9RoAJfg8gj1I08imFQ+sFStW5I//+I+HHHv181aTJo3+wtnzTU+Peg2AEnwewZ5kZIVV9Bbh448/nqqqqjQ0NAw5/uqv6+vrS24LADChFA2se++9NzNnzhx2vKWlJT09Penr60t3d3eam5tLbgsAMKEUDazHHnssLS0tw463t7dn9erVWbhwYdavX59TTz215LYAABNK0WewvvSlL73m8dra2ixYsKDkVgAAE5Y3uQMAFCawAAAKE1gAAIUJLACAwgQWAEBhAgsAoDCBBQBQmMACAChMYAEAFCawAAAKE1gAAIUJLACAwgQWAEBhAgsAoDCBBQBQmMACAChMYAEAFCawAAAKE1gAAIUJLACAwgQWAEBhAgsAoDCBBQBQWHXJxXp6evKv//qvefrppzMwMJBly5YlSfr7+7N06dKsXbs2ra2tmT9/fmpra0tuDQAwYRQLrIceeij33Xdfzj///Bx88MFDxrq6utLY2Jh58+Zl5cqV6erqSkdHR6mtAQAmlGK3CL/zne/kjDPOGBZXSVKpVNLW1pa6urq0t7enUqmU2hYAYMIpdgXrmWeeyY9//ONcd9112WuvvXL22Wfnne98Z5Kkt7c3NTU12zasrk5vb++o95u6bvqo1wAowecR7EGaRjatWGD19/enrq4un//857Nq1arceOONufLKK5Nk2PNWkyaN/sJZ07s3jHoNgBJ8HsGeZGSFVewW4f7775+ZM2emtrY2s2bNGnKVqqGhYcjc+vr6UtsCAEw4xQLrmGOOyZ133pkXX3wxDzzwQH7zN39zcKylpSU9PT3p6+tLd3d3mpubS20LADDhFAusjo6OPPXUU7ngggvywAMP5Mwzzxwca29vz+rVq7Nw4cKsX78+p556aqltAQAmnGLPYNXV1eUv//IvX3OstrY2CxYsKLUVAMCE5k3uAACFCSwAgMIEFgBAYQILAKAwgQUAUJjAAgAoTGABABQmsAAAChNYAACFCSwAgMIEFgBAYQILAKAwgQUAUFj1eJ8AwBuZefx7c+EH3znep/G6Zh7/3vE+BWACqhoYGBgY75PYJQMrx/sMgN1Q1aQPZODle8f7NIDdVdVJI5rmFiEAQGECCwCgMIEFAFCYwAIAKExgAQAUJrAAAAoTWAAAhQksAIDCir3JvbOzc9ixZcuWJUn6+/uzdOnSrF27Nq2trZk/f35qa2tLbQ0AMKEU/adytgfVq3V1daWxsTHz5s3LypUr09XVlY6OjpJbAwBMGGNyi7BSqaStrS11dXVpb29PpVIZi20BAMZFsStYVVVV+eu//usceuihOeyww9LW1jZ4G7C3tzc1NTXbNqyuTm9v76j3W/eT/zXqNYA9k88PYFc1NY1sXrHAuvHGGwd/v2bNmlx//fU5//zzk2TY81aTJo3+wlnTI4+Meg1gz+TzA9hlIyysN+UW4RFHHJG1a9cOft3Q0DBkvL6+/s3YFgBgQigeWC+//HKeeuqpNDY2Dh5raWlJT09P+vr60t3dnebm5tLbAgBMGEVf01BVVZXf+I3fyHve856ce+65g2Pt7e1ZsmRJbr755syePTtz5swptS0AwIRTLLBe7xUNybZnsBYsWFBqKwCACc2b3AEAChNYAACFCSwAgMIEFgBAYQILAKAwgQUAUJjAAgAoTGABABQmsAAAChNYAACFCSwAgMIEFgBAYQILAKAwgQUAUJjAAgAoTGABABQmsAAAChNYAACFCSwAgMIEFgBAYQILAKAwgQUAUFjxwPr3f//3dHZ2DjnW39+fxYsX55Of/GQWL16c/v7+0tsCAEwYRQNr69at+fa3vz3seFdXVxobG7No0aI0Njamq6ur5LYAABNK0cDq6urK+9///mHHK5VK2traUldXl/b29lQqlZLbAgBMKMUCa9OmTXnwwQcze/bsYWO9vb2pqalJklRXV6e3t7fUtgAAE051qYVuvfXWfPjDH86kScObrba2dsjXrzVnZ6078shRrwHsmXx+ALuqaYTzigXW97///XR3d+crX/lKkqSzszPLli1LkjQ0NAyZW19fP+r9mh55ZNRrAHsmnx/ALmsaWWIVC6wbb7xx8PevjKskaWlpSU9PT4466qisWbMmzc3NpbYFAJhwxuQ9WO3t7Vm9enUWLlyY9evX59RTTx2LbQEAxkWxK1iv9MqrV8m2Z7AWLFjwZmwFADDheJM7AEBhAgsAoDCBBQBQmMACAChMYAEAFCawAAAKE1gAAIUJLACAwgQWAEBhAgsAoDCBBQBQmMACAChMYAEAFCawAAAKE1gAAIUJLACAwgQWAEBhAgsAoDCBBQBQmMACAChMYAEAFCawAAAKE1gAAIVVl1qos7Nz24LV1Tn44IPzkY98JMcdd1ySpL+/P0uXLs3atWvT2tqa+fPnp7a2ttTWAAATSrHAWrZsWZJk69ateeyxx/LlL395MLC6urrS2NiYefPmZeXKlenq6kpHR0eprQEAJpTitwgnT56cl19+OYceeujgsUqlkra2ttTV1aW9vT2VSqX0tgAAE0axK1hJMnfu3NTU1GTLli35i7/4i8Hjvb29qamp2bZhdXV6e3tLbgsAMKEUDawbbrghmzdvzqOPPpoVK1bkiCOOSJJhz1tNmjT6C2frjjxy1GsAeyafH8CuahrhvKKBNWnSpEydOjXHHntsVqxYMXi8oaFhyLz6+vpR79X0yCOjXgPYM/n8AHZZ08gSq/gzWFu3bs3DDz+cAw44YPBYS0tLenp60tfXl+7u7jQ3N5feFgBgwij+moa999477373uzNv3rzBsfb29ixZsiQ333xzZs+enTlz5pTaFgBgwin+mobXUltbmwULFpTaCgBgQvMmdwCAwgQWAEBhAgsAoLCir2kAGC+f++d/zt/88z+PaG7Vxz++wzl/M2dOPusHcoBd5AoWAEBhVQMDAwPjfRK7ZPny8T4DAGBPc8YZI5rmChYAQGECCwCgMIEFAFCYwAIAKExgAQAUJrAAAAoTWAAAhQksAIDCBBYAQGECCwCgMIEFAFCYwAIAKExgAQAUJrAAAAoTWAAAhQksAIDCBBYAQGHVpRbq7OxMktTU1OQd73hHPvGJT+Qd73hHkqS/vz9Lly7N2rVr09ramvnz56e2trbU1gAAE0rVwMDAQMkFX3rppfT09OSuu+7K5z//+STJnXfemaqqqpx00klZuXJlBgYG0tHRMbqNli8vcLYAADvhjDNGNK34LcLq6uocddRR+dWvfjV4rFKppK2tLXV1dWlvb0+lUim9LQDAhFHsFuEr/cu//EtOO+20wa97e3tTU1OzbcPq6vT29o56j3VHHjnqNQAAdkbTCOcVDawtW7bklltuSXNzc2bOnDl4/NXPW02aNPoLZ02PPDLqNQAAdkrTyBKrWGD19fXla1/7Wn7/938/hx122JCxhoaGIV/X19eX2hYAYMIp9gzWV7/61bS1tQ2LqyRpaWlJT09P+vr60t3dnebm5lLbAgBMOMV+inD7axpeadmyZUm2vaZhyZIlWbduXWbPnp05c+Zk8uTJo9vQTxECAGNthD9FWPw1DWNGYAEAY228XtMAALCnE1gAAIUJLACAwgQWAEBhAgsAoDCBBQBQmMACAChMYAEAFCawAAAKE1gAAIUJLACAwgQWAEBhAgsAoDCBBQBQmMACAChMYAEAFCawAAAKE1gAAIUJLACAwgQWAEBhAgsAoDCBBQBQmMACACisWGBt2LAht99+ey655JJhY/39/Vm8eHE++clPZvHixenv7y+1LQDAhFMssO68887svffe2bBhw7Cxrq6uNDY2ZtGiRWlsbExXV1epbQEAJpxigXXOOeekra3tNccqlUra2tpSV1eX9vb2VCqVUtsCAEw41WOxSW9vb2pqarZtWF2d3t7eUa+57sgjR70GAMDOaBrhvDEJrNra2iFfT5o0+gtnTY88Muo1AAB2StPIEmtMfoqwoaFhyNf19fVjsS0AwLgYk8BqaWlJT09P+vr60t3dnebm5rHYFgBgXFQNDAwMlFios7Nz2LFly5Yl2faahiVLlmTdunWZPXt25syZk8mTJ49uw+XLR/fnAQB21hlnjGhascAacwILABhrIwwsb3IHAChMYAEAFCawAAAKE1gAAIUJLACAwgQWAEBhAgsAoDCBBQBQmMACAChMYAEAFCawAAAKE1gAAIUJLACAwgQWAEBhAgsAoDCBBQBQmMACAChMYAEAFCawAAAKE1gAAIUJLACAwgQWAEBhAgsAoLDqsdikv78/S5cuzdq1a9Pa2pr58+entrZ2LLYGABhzY3IFq6urK42NjVm0aFEaGxvT1dU1FtsCAIyLMQmsSqWStra21NXVpb29PZVKZSy2BQAYF2Nyi7C3tzc1NTXbNqyuTm9v76jWu/+HP02ajy1xagAAI/fDn2b2/37HDqeNSWC9+nmrSZNGf+FsJN8cAEBJ9//wpyOaNya3CBsaGoZ8XV9fPxbbAgCMizEJrJaWlvT09KSvry/d3d1pbm4ei20BAMbFmARWe3t7Vq9enYULF2b9+vU59dRTx2JbAIBxMWbPYC1YsGAstgIAGHfe5A4AUJjAAgAoTGABABQmsAAACqsaGBgYGO+TAAB4KxmTnyIEKKWzszPLli3b4bHXsnDhwlx22WV529veNmzsF7/4RW644YY8/fTTaW1tzdy5czNlypTB9V9tJPsBey6BBewxLrvssuy3335Jks985jNZsGBBDjnkkCTJTTfdlOOPPz4zZszIt771rdxxxx2ZM2dOkqEx9cwzz2T58uVjf/LAbsUzWMBbSmdnZ/7jP/4jF110US677LL85Cc/GRy77rrr8vzzz+f222/Ps88+m7//+78fjKUnnngixx57bKZMmZKOjo5UKpXXXP+b3/xmTjvttDH5XoDdl8AC3nJWrlyZT3/605k3b16+9KUvDR5fv359tm7dmlNOOSVTp07NeeedlzPOOCPJtn8zddWqVdm0aVNuu+22PPfcc8PWffLJJ1NbW5tDDz10zL4XYPcksIC3nHPPPTcHHXRQDjvssLzwwgsj+jNz587NqlWrctFFF2XffffNPvvsM2zOihUr0tHRUfp0gbcgz2ABu5WpU6dmy5YtqampSZI8//zzw2KounrnP9qmT5+eyy+/PEny6KOPZvr06UPGH3/88VRVVaWhoWEXzxzYk7iCBexWmpqa8oMf/CAvvfRSXnjhhdx5551517vetdPr1NTUDLu6NTAwkPXr12f58uXDrlTde++9mTlz5qjOHdhzuIIF7FY+8YlP5JZbbsktt9ySrVu3prGxMWeeeeZOr3PCCSdk6dKlOemkk/KhD30onZ2dqaqqykEHHZRTTjklTU1NQ+Y/9thjOf3000t9G8BbnBeNAnusX/3qV5kyZUpqa2vH+1SAtxiBBQBQmGewAAAKE1gAAIUJLACAwgQWAEBhAgsAoDCBBQBQmMACAChMYAEAFCawAAAKE1gAAIUJLACAwgQWAEBhAgsAoDCBBQBQmMACACjs/wOwNRCneTteTgAAAABJRU5ErkJggg==";
-			
-			public void CreateParts(PresentationDocument document, Feedback feedback)
+			public void CreateParts(PresentationDocument document, IList<Chart> charts)
 			{
 				ThumbnailPart thumbnailPart1 = document.AddNewPart<ThumbnailPart>("image/jpeg", "rId2");
 				GenerateThumbnailPart1Content(thumbnailPart1);
 
 				PresentationPart presentationPart1 = document.AddPresentationPart();
-				GeneratePresentationPart1Content(presentationPart1, feedback);
+				GeneratePresentationPart1Content(presentationPart1, charts);
 
 				SlidePart slidePart1 = presentationPart1.AddNewPart<SlidePart>("rId8");
 				GenerateSlidePart1Content(slidePart1);
@@ -202,8 +201,8 @@ namespace HW.EForm.Core.Helpers
 //				GenerateImagePart7Content(imagePart7);
 //
 //				slidePart6.AddPart(slideLayoutPart1, "rId1");
-				foreach (var fq in feedback.Questions) {
-					GenerateGraphSlideContent(presentationPart1, slideLayoutPart1, fq);
+				foreach (var c in charts) {
+					GenerateGraphSlideContent(presentationPart1, slideLayoutPart1, c);
 				}
 
 				ViewPropertiesPart viewPropertiesPart1 = presentationPart1.AddNewPart<ViewPropertiesPart>("rId14");
@@ -215,13 +214,13 @@ namespace HW.EForm.Core.Helpers
 				SetPackageProperties(document);
 			}
 			
-			void GenerateGraphSlideContent(PresentationPart presentationPart1, SlideLayoutPart slideLayoutPart1, FeedbackQuestion question)
+			void GenerateGraphSlideContent(PresentationPart presentationPart1, SlideLayoutPart slideLayoutPart1, Chart chart)
 			{
-				SlidePart slidePart6 = presentationPart1.AddNewPart<SlidePart>("rId9" + question.QuestionID);
-				GenerateSlidePart6Content(slidePart6, question.Question);
+				SlidePart slidePart6 = presentationPart1.AddNewPart<SlidePart>("rId9" + chart.ID);
+				GenerateSlidePart6Content(slidePart6, chart);
 
 				ImagePart imagePart7 = slidePart6.AddNewPart<ImagePart>("image/png", "rId2");
-				GenerateImagePart7Content(imagePart7, question);
+				GenerateImagePart7Content(imagePart7, chart);
 
 				slidePart6.AddPart(slideLayoutPart1, "rId1");
 			}
@@ -235,7 +234,7 @@ namespace HW.EForm.Core.Helpers
 			}
 
 			// Generates content of presentationPart1.
-			private void GeneratePresentationPart1Content(PresentationPart presentationPart1, Feedback feedback)
+			private void GeneratePresentationPart1Content(PresentationPart presentationPart1, IList<Chart> charts)
 			{
 				Presentation presentation1 = new Presentation(){ ShowSpecialPlaceholderOnTitleSlide = false, SaveSubsetFonts = true };
 				presentation1.AddNamespaceDeclaration("a", "http://schemas.openxmlformats.org/drawingml/2006/main");
@@ -273,8 +272,10 @@ namespace HW.EForm.Core.Helpers
 				slideIdList1.Append(slideId3);
 //				slideIdList1.Append(slideId4);
 				int i = 0;
-				foreach (var fq in feedback.Questions) {
-					SlideId slideId4 = new SlideId(){ Id = (UInt32Value)(uint)(280 + i++), RelationshipId = "rId9" + fq.QuestionID };
+//				foreach (var fq in feedback.Questions) {
+				foreach (var c in charts) {
+//					SlideId slideId4 = new SlideId(){ Id = (UInt32Value)(uint)(280 + i++), RelationshipId = "rId9" + fq.QuestionID };
+					SlideId slideId4 = new SlideId(){ Id = (UInt32Value)(uint)(280 + i++), RelationshipId = "rId9" + c.ID };
 					slideIdList1.Append(slideId4);
 				}
 				slideIdList1.Append(slideId5);
@@ -19438,7 +19439,7 @@ namespace HW.EForm.Core.Helpers
 			}
 
 			// Generates content of slidePart6.
-			private void GenerateSlidePart6Content(SlidePart slidePart6, Question question)
+			private void GenerateSlidePart6Content(SlidePart slidePart6, Chart chart)
 			{
 				Slide slide6 = new Slide();
 				slide6.AddNamespaceDeclaration("a", "http://schemas.openxmlformats.org/drawingml/2006/main");
@@ -19903,7 +19904,7 @@ namespace HW.EForm.Core.Helpers
 				runProperties129.Append(complexScriptFont199);
 				A.Text text129 = new A.Text();
 //				text129.Text = "Hur är på det hela taget ditt allmänna hälsotillstånd?";
-				text129.Text = question.SelectedQuestionLang.Question;
+				text129.Text = chart.Title;
 
 				run98.Append(runProperties129);
 				run98.Append(text129);
@@ -19964,19 +19965,19 @@ namespace HW.EForm.Core.Helpers
 			}
 
 			// Generates content of imagePart7.
-			private void GenerateImagePart7Content(ImagePart imagePart7, FeedbackQuestion question)
+			private void GenerateImagePart7Content(ImagePart imagePart7, Chart chart)
 			{
 //				System.IO.Stream data = GetBinaryDataStream(imagePart7Data);
-				System.IO.Stream data = GetBinaryDataStream(GetFeedbackQuestionImage(question));
+				System.IO.Stream data = GetBinaryDataStream(GetChartImage(chart));
 				imagePart7.FeedData(data);
 				data.Close();
 			}
 			
 			RestClient client = new RestClient("http://export.highcharts.com");
 			
-			string GetFeedbackQuestionImage(FeedbackQuestion question)
+			string GetChartImage(Chart chart)
 			{
-				StringBuilder json = new StringBuilder(new HighchartsBoxplot(question.Question.ToChart()).ToString());
+				StringBuilder json = new StringBuilder(HighchartsBoxplot.GetHighchartsChart(chart.Type, chart).GetOptions());
 
 				var request = new RestRequest("/", Method.POST);
 				request.AddHeader("Content-Type", "multipart/form-data");

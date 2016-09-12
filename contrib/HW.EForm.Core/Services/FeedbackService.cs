@@ -27,6 +27,7 @@ namespace HW.EForm.Core.Services
 		SqlOptionComponentLangRepository optionComponentLangRepo = new SqlOptionComponentLangRepository();
 
 		SqlProjectRoundUnitRepository projectRoundUnitRepo = new SqlProjectRoundUnitRepository();
+		SqlProjectRoundUnitManagerRepository projectRoundUnitManagerRepo = new SqlProjectRoundUnitManagerRepository();
 
 		SqlAnswerValueRepository answerValueRepo = new SqlAnswerValueRepository();
 		
@@ -173,6 +174,7 @@ namespace HW.EForm.Core.Services
 			q.Options = FindQuestionOptions(questionID, optionID, langID);
 			q.ProjectRoundUnits = projectRoundUnitRepo.FindProjectRoundUnits(projectRoundUnitIDs);
 			foreach (var pru in q.ProjectRoundUnits) {
+//				pru.Managers = projectRoundUnitManagerRepo.FindByProjectRoundUnit(pru.ProjectRoundUnitID);
 				pru.Options = FindQuestionOptions(questionID, optionID, langID);
 				pru.AnswerValues = answerValueRepo.FindByQuestionOptionsAndUnit(questionID, q.Options, projectRoundID, pru.ProjectRoundUnitID);
 			}

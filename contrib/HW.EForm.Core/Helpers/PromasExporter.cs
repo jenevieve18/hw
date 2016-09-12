@@ -4,6 +4,7 @@
 // </file>
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
@@ -33,11 +34,11 @@ namespace HW.EForm.Core.Helpers
 			return string.Format("attachment;filename=\"HealthWatch {0} {1}.pptx\";", file, DateTime.Now.ToString("yyyyMMdd"));
 		}
 		
-		public object Export(Feedback feedback)
+		public object Export(IList<Chart> charts)
 		{
 			MemoryStream output = new MemoryStream();
 			using (PresentationDocument document = PresentationDocument.Create(output, PresentationDocumentType.Presentation)) {
-				gc.CreateParts(document, feedback);
+				gc.CreateParts(document, charts);
 			}
 			return output;
 		}

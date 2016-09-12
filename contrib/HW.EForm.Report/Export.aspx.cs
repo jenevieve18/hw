@@ -34,16 +34,16 @@ namespace HW.EForm.Report
 			int langID = 1;
 			
 			var feedback = s.ReadFeedbackWithAnswers(feedbackID, projectRoundID, new int[] { projectRoundUnitID }, langID);
-			
-//			var exporter = new PromasExporter();
-//
-//			Response.ClearHeaders();
-//			Response.ClearContent();
-//			Response.ContentType = exporter.Type;
-//			HtmlHelper.AddHeaderIf(exporter.HasContentDisposition("test"), "content-disposition", exporter.GetContentDisposition("test"), Response);
-//			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
-//
-//			HtmlHelper.Write(exporter.Export(feedback), Response);
+
+            var exporter = new PromasExporter();
+
+            Response.ClearHeaders();
+            Response.ClearContent();
+            Response.ContentType = exporter.Type;
+            HtmlHelper.AddHeaderIf(exporter.HasContentDisposition("test"), "content-disposition", exporter.GetContentDisposition("test"), Response);
+            string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
+
+            HtmlHelper.Write(exporter.Export(feedback.Charts), Response);
 		}
 	}
 }

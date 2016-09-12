@@ -74,8 +74,6 @@
     <Content Include="Export.aspx" />
     <Content Include="FeedbackQuestionImage.aspx" />
     <Content Include="FeedbackShow.aspx" />
-    <Content Include="FeedbackShow2.aspx" />
-    <Content Include="FeedbackShow3.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Logout.aspx" />
     <Content Include="Profile.aspx" />
@@ -121,20 +119,6 @@
     </Compile>
     <Compile Include="FeedbackShow.aspx.designer.cs">
       <DependentUpon>FeedbackShow.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="FeedbackShow2.aspx.cs">
-      <DependentUpon>FeedbackShow2.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="FeedbackShow2.aspx.designer.cs">
-      <DependentUpon>FeedbackShow2.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="FeedbackShow3.aspx.cs">
-      <DependentUpon>FeedbackShow3.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="FeedbackShow3.aspx.designer.cs">
-      <DependentUpon>FeedbackShow3.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

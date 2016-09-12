@@ -34,6 +34,20 @@ namespace HW.EForm.Core.Models
 //			return groups;
 //		}
 		
+		public IList<Chart> Charts {
+			get {
+				var charts = new List<Chart>();
+				foreach (var fq in Questions) {
+					if (fq.IsPartOfChart && !HasGroupedChart(fq.PartOfChart)) {
+						charts.Add(GetQuestions(fq.PartOfChart).ToChart());
+					} else if (!fq.IsPartOfChart) {
+						charts.Add(fq.Question.ToChart());
+					}
+				}
+				return charts;
+			}
+		}
+		
 		List<int> chartIDs = new List<int>();
 		public bool HasGroupedChart(int chartID)
 		{
