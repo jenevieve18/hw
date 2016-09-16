@@ -3474,22 +3474,22 @@ namespace HW.WebService
 						case 1:
 //							success = sendMail("support@healthwatch.se", r.GetString(1),
 							success = HW.Core.Helpers.SmtpHelper.Send("support@healthwatch.se", r.GetString(1),
+							                                          "Nytt lösenord",
 							                                          "Hej." +
 							                                          "\r\n\r\n" +
 							                                          "En begäran om nytt lösenord till ditt konto med användarnamn \"" + r.GetString(2) + "\" har inkommit. Om du begärt detta, klicka på länken nedan för att ange ett nytt lösenord." +
 							                                          "\r\n\r\n" +
-							                                          "https://www.healthwatch.se/password.aspx?NL=1&K=" + r.GetString(3) + r.GetInt32(0) + "",
-							                                          "Nytt lösenord");
+							                                          "https://www.healthwatch.se/password.aspx?NL=1&K=" + r.GetString(3) + r.GetInt32(0) + "");
 							break;
 						case 2:
 //							success = sendMail("support@healthwatch.se", r.GetString(1),
 							success = HW.Core.Helpers.SmtpHelper.Send("support@healthwatch.se", r.GetString(1),
+							                                          "New password",
 							                                          "Hi." +
 							                                          "\r\n\r\n" +
 							                                          "A request for new password for your account with username \"" + r.GetString(2) + "\" has arrived. If you made this request, click the link below to set a new password." +
 							                                          "\r\n\r\n" +
-							                                          "https://www.healthwatch.se/password.aspx?NL=1&K=" + r.GetString(3) + r.GetInt32(0) + "",
-							                                          "New password");
+							                                          "https://www.healthwatch.se/password.aspx?NL=1&K=" + r.GetString(3) + r.GetInt32(0) + "");
 							break;
 					}
 				}
