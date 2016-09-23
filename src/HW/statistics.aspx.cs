@@ -17,7 +17,7 @@ namespace healthWatch
         private string surveyName = "";
         private string[] rpt = { "", "", "", "" };
         private int measurementType = 0;
-        private int compare = 0;
+        private int comparex = 0;
         int[] rp = { -1, -1, 0, 0 };
         DateTime highDT = DateTime.Now, lowDT = DateTime.Now;
 
@@ -79,7 +79,7 @@ namespace healthWatch
                 if (rp[0] > 0)
                 {
                     s += "<div class=\"var1\">" + rpt[0] + "</div>";
-                    if (compare > 1)
+                    if (comparex > 1)
                     {
                         if (rp[0] > 0)
                         {
@@ -90,7 +90,7 @@ namespace healthWatch
                 if (rp[1] > 0)
                 {
                     s += "<div class=\"var2\">" + rpt[1] + "</div>";
-                    if (compare > 1)
+                    if (comparex > 1)
                     {
                         if (rp[1] > 0)
                         {
@@ -101,7 +101,7 @@ namespace healthWatch
                 if (rp[2] > 0)
                 {
                     s += "<div class=\"var3\">" + rpt[2] + "</div>";
-                    if (compare > 1)
+                    if (comparex > 1)
                     {
                         if (rp[2] > 0)
                         {
@@ -112,7 +112,7 @@ namespace healthWatch
                 if (rp[3] > 0)
                 {
                     s += "<div class=\"var4\">" + rpt[3] + "</div>";
-                    if (compare > 1)
+                    if (comparex > 1)
                     {
                         if (rp[3] > 0)
                         {
@@ -342,9 +342,9 @@ namespace healthWatch
             }
             string rpQ = "&RP0=" + rp[0] + "&RP1=" + rp[1] + "&RP2=" + rp[2] + "&RP3=" + rp[3];
 
-            compare = (HttpContext.Current.Request.QueryString["C"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["C"]) : 1);
+            comparex = (HttpContext.Current.Request.QueryString["C"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["C"]) : 1);
             measurementType = (HttpContext.Current.Request.QueryString["MT"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["MT"]) : 0);
-            if (compare > 1 && measurementType == 0) { measurementType = 2; }
+            if (comparex > 1 && measurementType == 0) { measurementType = 2; }
 
             if (!IsPostBack)
             {
@@ -509,12 +509,12 @@ namespace healthWatch
                     case 1:
                         availableCompare.Controls.Add(new LiteralControl("<li id=\"compare0\"><a href=\"statistics.aspx?MT=" + measurementType + "&C=1" + rpQ + "\">Ingen</a></li>"));
                         availableCompare.Controls.Add(new LiteralControl("<li id=\"compare1\"><a href=\"statistics.aspx?MT=" + measurementType + "&C=2" + rpQ + "\">Databasen</a></li>"));
-                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe0\"><a href=\"statistics.aspx?C=" + compare + "&MT=0\">Specifik mätning</a></li>"));
-                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe1\"><a href=\"statistics.aspx?C=" + compare + "&MT=1" + rpQ + "\">Senaste veckan</a></li>"));
-                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe2\"><a href=\"statistics.aspx?C=" + compare + "&MT=2" + rpQ + "\">Senaste månaden</a></li>"));
-                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe3\"><a href=\"statistics.aspx?C=" + compare + "&MT=3" + rpQ + "\">Senaste året</a></li>"));
-                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe4\" class=\"last\"><a href=\"statistics.aspx?C=" + compare + "&MT=4" + rpQ + "\">Sen första mätning</a></li>"));
-                        if (compare == 2)
+                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe0\"><a href=\"statistics.aspx?C=" + comparex + "&MT=0\">Specifik mätning</a></li>"));
+                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe1\"><a href=\"statistics.aspx?C=" + comparex + "&MT=1" + rpQ + "\">Senaste veckan</a></li>"));
+                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe2\"><a href=\"statistics.aspx?C=" + comparex + "&MT=2" + rpQ + "\">Senaste månaden</a></li>"));
+                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe3\"><a href=\"statistics.aspx?C=" + comparex + "&MT=3" + rpQ + "\">Senaste året</a></li>"));
+                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe4\" class=\"last\"><a href=\"statistics.aspx?C=" + comparex + "&MT=4" + rpQ + "\">Sen första mätning</a></li>"));
+                        if (comparex == 2)
                         {
                             selectedCompare.Controls.Add(new LiteralControl("Databasen"));
                             selectedCompare2.Controls.Add(new LiteralControl("Databasen"));
@@ -553,12 +553,12 @@ namespace healthWatch
                     case 2:
                         availableCompare.Controls.Add(new LiteralControl("<li id=\"compare0\"><a href=\"statistics.aspx?MT=" + measurementType + "&C=1" + rpQ + "\">None</a></li>"));
                         availableCompare.Controls.Add(new LiteralControl("<li id=\"compare1\" class=\"last\"><a href=\"statistics.aspx?MT=" + measurementType + "&C=2" + rpQ + "\">Database</a></li>"));
-                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe0\"><a href=\"statistics.aspx?C=" + compare + "&MT=0\">Specific measurement</a></li>"));
-                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe1\"><a href=\"statistics.aspx?C=" + compare + "&MT=1" + rpQ + "\">Last week</a></li>"));
-                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe2\"><a href=\"statistics.aspx?C=" + compare + "&MT=2" + rpQ + "\">Last month</a></li>"));
-                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe3\"><a href=\"statistics.aspx?C=" + compare + "&MT=3" + rpQ + "\">Last year</a></li>"));
-                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe4\" class=\"last\"><a href=\"statistics.aspx?C=" + compare + "&MT=4" + rpQ + "\">Since first measurement</a></li>"));
-                        if (compare == 2)
+                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe0\"><a href=\"statistics.aspx?C=" + comparex + "&MT=0\">Specific measurement</a></li>"));
+                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe1\"><a href=\"statistics.aspx?C=" + comparex + "&MT=1" + rpQ + "\">Last week</a></li>"));
+                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe2\"><a href=\"statistics.aspx?C=" + comparex + "&MT=2" + rpQ + "\">Last month</a></li>"));
+                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe3\"><a href=\"statistics.aspx?C=" + comparex + "&MT=3" + rpQ + "\">Last year</a></li>"));
+                        availableMeasurements.Controls.Add(new LiteralControl("<li id=\"timeframe4\" class=\"last\"><a href=\"statistics.aspx?C=" + comparex + "&MT=4" + rpQ + "\">Since first measurement</a></li>"));
+                        if (comparex == 2)
                         {
                             selectedCompare.Controls.Add(new LiteralControl("Database"));
                             selectedCompare2.Controls.Add(new LiteralControl("Database"));
@@ -1105,7 +1105,7 @@ namespace healthWatch
                         {
                             sb.Append("<li" + s);
                         }
-                        s = "><a href=\"statistics.aspx?C=" + compare + "&MT=" + measurementType + "&RPx=" + cx + "x\">" + rs.GetString(1) + "</a></li>";
+                        s = "><a href=\"statistics.aspx?C=" + comparex + "&MT=" + measurementType + "&RPx=" + cx + "x\">" + rs.GetString(1) + "</a></li>";
                         ht2.Add(rs.GetInt32(3), s);
                         if (rp[0] == -1 || rp[0] == rs.GetInt32(3))
                         {
@@ -1181,8 +1181,8 @@ namespace healthWatch
                     {
                         switch (Convert.ToInt32(HttpContext.Current.Session["LID"]))
                         {
-                            case 1: q = "<li><a href=\"statistics.aspx?C=" + compare + "&MT=" + measurementType + ss + "&RP" + i + "=0\">Ingen</a></li>"; break;
-                            case 2: q = "<li><a href=\"statistics.aspx?C=" + compare + "&MT=" + measurementType + ss + "&RP" + i + "=0\">None</a></li>"; break;
+                            case 1: q = "<li><a href=\"statistics.aspx?C=" + comparex + "&MT=" + measurementType + ss + "&RP" + i + "=0\">Ingen</a></li>"; break;
+                            case 2: q = "<li><a href=\"statistics.aspx?C=" + comparex + "&MT=" + measurementType + ss + "&RP" + i + "=0\">None</a></li>"; break;
                         }
                     }
 
@@ -1224,7 +1224,7 @@ namespace healthWatch
                         "&SID=" + Convert.ToInt32(HttpContext.Current.Session["SponsorID"]) +
                         "&LID=" + Convert.ToInt32(HttpContext.Current.Session["LID"]) +
                         "&UID=" + Convert.ToInt32(HttpContext.Current.Session["UserID"]) +
-                        "&C=" + compare +
+                        "&C=" + comparex +
                         "&S=" + Convert.ToInt32(SurveyKey.SelectedValue.Split(':')[1]) +
                         "&RP0=" + rp[0] +
                         "&RP1=" + rp[1] +

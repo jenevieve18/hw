@@ -92,6 +92,7 @@
     <Compile Include="Repositories\SponsorAdminRepositoryTests.cs" />
     <Compile Include="Repositories\SponsorRepositoryTests.cs" />
     <Compile Include="Repositories\UserRepositoryTests.cs" />
+    <Compile Include="Test1.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

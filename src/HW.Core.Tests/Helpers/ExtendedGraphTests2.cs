@@ -143,7 +143,8 @@ namespace HW.Core.Tests.Helpers
 			};
 			
 			ISponsor s = service.ReadSponsor(p.sponsorID);
-			SponsorProject r = new SqlMeasureRepository().ReadSponsorProject(2);
+//			SponsorProject r = new SqlMeasureRepository().ReadSponsorProject(2);
+			SponsorProject r = new SqlSponsorProjectRepository().Read(2);
 			
 			var exporter = new ForStepCount(new SqlAnswerRepository(), new SqlReportRepository(), new SqlProjectRepository(), new SqlOptionRepository(), new SqlIndexRepository(), new SqlQuestionRepository(), new SqlDepartmentRepository(), new SqlMeasureRepository());
 			
@@ -185,7 +186,8 @@ namespace HW.Core.Tests.Helpers
 			};
 			
 			ISponsor s = service.ReadSponsor(p.sponsorID);
-			SponsorProject r = new SqlMeasureRepository().ReadSponsorProject(2);
+//			SponsorProject r = new SqlMeasureRepository().ReadSponsorProject(2);
+			SponsorProject r = new SqlSponsorProjectRepository().Read(2);
 			
 			var exporter = new ForStepCount(new SqlAnswerRepository(), new SqlReportRepository(), new SqlProjectRepository(), new SqlOptionRepository(), new SqlIndexRepository(), new SqlQuestionRepository(), new SqlDepartmentRepository(), new SqlMeasureRepository());
 			

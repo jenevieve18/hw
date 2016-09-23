@@ -14,7 +14,7 @@ namespace HW.Core.Helpers
 		SqlAnswerRepository answerRepository;
 		SqlOptionRepository optionRepository;
 		SqlReportRepository reportRepository;
-		SqlIndexRepository indexRepository;
+		SqlIndexRepository indexRepo;
 		SqlQuestionRepository questionRepository;
 		SqlDepartmentRepository departmentRepository;
 		SqlMeasureRepository measureRepository;
@@ -31,7 +31,7 @@ namespace HW.Core.Helpers
 			this.answerRepository = answerRepository;
 			this.optionRepository = optionRepository;
 			this.reportRepository = reportRepository;
-			this.indexRepository = indexRepository;
+			this.indexRepo = indexRepository;
 			this.questionRepository = questionRepository;
 			this.departmentRepository = departmentRepository;
 			this.measureRepository = measureRepository;
@@ -830,7 +830,7 @@ namespace HW.Core.Helpers
 		
 		void GetIdxVal(int idx, string sortString, int langID, int fy, int ty, int fm, int tm)
 		{
-			foreach (Index i in indexRepository.FindByLanguage(idx, langID, fy, ty, sortString, fm, tm)) {
+			foreach (Index i in indexRepo.FindByLanguage(idx, langID, fy, ty, sortString, fm, tm)) {
 				lastCount = i.CountDX;
 				lastVal = i.AverageAX;
 				lastDesc = i.Languages[0].IndexName;
@@ -848,7 +848,7 @@ namespace HW.Core.Helpers
 			float tot = 0;
 			int max = 0;
 			int minCnt = Int32.MaxValue;
-			Index index = indexRepository.ReadByIdAndLanguage(idx, langID);
+			Index index = indexRepo.ReadByIdAndLanguage(idx, langID);
 			if (index != null) {
 				lastDesc = index.Languages[0].IndexName;
 				foreach (IndexPart p in index.Parts) {

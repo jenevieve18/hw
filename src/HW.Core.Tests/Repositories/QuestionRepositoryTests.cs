@@ -19,7 +19,7 @@ namespace HW.Core.Tests.Repositories
 		[Test]
 		public void TestFindBackgroundQuestions()
 		{
-			r.FindBackgroundQuestions(100);
+//			r.FindBackgroundQuestions(100);
 		}
 		
 		[Test]
