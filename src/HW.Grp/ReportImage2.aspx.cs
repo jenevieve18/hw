@@ -112,7 +112,8 @@ namespace HW.Grp
 				int point = Request.QueryString["ExtraPoint"] != null ? Convert.ToInt32(Request.QueryString["ExtraPoint"]) : 0;
 
 				ISponsor sponsor = service.ReadSponsor(sponsorID);
-				SponsorProject project = new SqlMeasureRepository().ReadSponsorProject(sponsorProjectID);
+//				SponsorProject project = new SqlMeasureRepository().ReadSponsorProject(sponsorProjectID);
+				SponsorProject project = new SqlSponsorProjectRepository().Read(sponsorProjectID);
 
 				var factory = new ForStepCount(new SqlAnswerRepository(), new SqlReportRepository(), new SqlProjectRepository(), new SqlOptionRepository(), new SqlIndexRepository(), new SqlQuestionRepository(), new SqlDepartmentRepository(), new SqlMeasureRepository());
 				graph = factory.CreateGraph(project, langID, yearFrom, yearTo, groupBy, hasGrouping, plot, grouping, sponsorAdminID, sponsorID, departmentIDs, disabled, point, sponsor.MinUserCountToDisclose, monthFrom, monthTo);

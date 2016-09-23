@@ -269,7 +269,7 @@
             <% bool supportsBoxPlot = SelectedDepartments.Count == 1 || Grouping.SelectedValue == "0"; %>
             <% bool forSingleSeries = SelectedDepartments.Count == 1 || Grouping.SelectedValue == "0"; %>
 			<div class="report-parts">
-                <% if (reportParts[0] is ReportPartLanguage) { %>
+                <% if (reportParts[0] is ReportPartLang) { %>
 				    <div class="action">
                         <div class="chart-descriptions" title="Chart Descriptions">
                             <div>
@@ -371,7 +371,7 @@
 						</div>
 						<div class="report-part-header"><%= r.Header %></div>
 						<div class="report-part-content">
-                            <% if (r is ReportPartLanguage) { %>
+                            <% if (r is ReportPartLang) { %>
                                 <% string imageUrl = GetReportImageUrl(r.ReportPart.Id, r.Id, additionalQuery); %>
 							    <span class="hidden hidden-image-url"><%= imageUrl %></span>
                                 <img class="report-part-graph" src="<%= imageUrl %>" alt="" />

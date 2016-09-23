@@ -16,7 +16,6 @@ namespace HW.Grp
 {
 	public partial class Stats : System.Web.UI.Page
 	{
-//		protected IList<ReportPartLanguage> reportParts = null;
 		protected IList<IReportPart> reportParts = null;
 		protected IList<BaseModel> urlModels;
 		protected IList<PlotTypeLanguage> plotTypes = new List<PlotTypeLanguage>();
@@ -29,30 +28,25 @@ namespace HW.Grp
 		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
 		SqlReportRepository reportRepository = new SqlReportRepository();
 		SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
-//		protected int lid;
 		protected DateTime startDate;
 		protected DateTime endDate;
-		SqlMeasureRepository measureRepository = new SqlMeasureRepository();
+		SqlSponsorProjectRepository sponsorProjectRepo = new SqlSponsorProjectRepository();
 		SqlUserRepository userRepository = new SqlUserRepository();
-//		protected int lid = Language.ENGLISH;
 		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 
-		public IList<SponsorProjectRoundUnit> ProjectRoundUnits {
+		public IList<SponsorProjectRoundUnit> SponsorProjectRoundUnits {
 			set {
 				ProjectRoundUnitID.Items.Clear();
 				foreach (var p in value) {
-//					ProjectRoundUnitID.Items.Add(new ListItem(p.Navigation, p.ProjectRoundUnit.Id.ToString()));
 					ProjectRoundUnitID.Items.Add(new ListItem(p.Navigation, "SPRU" + p.ProjectRoundUnit.Id.ToString()));
 				}
 				GroupBy.SelectedValue = "7";
 			}
 		}
 		
-		public IList<SponsorProject> Projects {
+		public IList<SponsorProject> SponsorProjects {
 			set {
 				foreach (var p in value) {
-//					ProjectRoundUnitID.Items.Add(new ListItem(p.ProjectName, p.Id.ToString()));
-//					ProjectRoundUnitID.Items.Add(new ListItem(p.ProjectName, "SP" + p.Id.ToString()));
 					ProjectRoundUnitID.Items.Add(new ListItem(p.Subject, "SP" + p.Id.ToString()));
 				}
 			}
@@ -140,7 +134,6 @@ namespace HW.Grp
 			}
 		}
 		
-//		public void SetReportPartLanguages(IList<ReportPartLanguage> reportParts, IList<BaseModel> urlModels)
 		public void SetReportPartLanguages(IList<IReportPart> reportParts, IList<BaseModel> urlModels)
 		{
 			this.reportParts = reportParts;
@@ -150,7 +143,6 @@ namespace HW.Grp
 
 		protected string GetLang(int lid)
 		{
-			//return lid == 1 ? "sv" : "en";
             switch (lid)
             {
                 case 1: return "sv";
@@ -161,7 +153,6 @@ namespace HW.Grp
 
 		protected CultureInfo GetCultureInfo(int lid)
 		{
-			//return lid == 1 ? new CultureInfo("sv-SE") : new CultureInfo("en-US");
             switch (lid)
             {
                 case 1: return new CultureInfo("sv-SE");
@@ -180,7 +171,7 @@ namespace HW.Grp
 			if (sponsorID != 0) {
 				if (!IsPostBack) {
 					
-					//startDate = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day);
+					// startDate = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day);
 					startDate = ToDate(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day);
 					endDate = DateTime.Now;
 					
@@ -199,9 +190,9 @@ namespace HW.Grp
 					Grouping.Items.Add(new ListItem(R.Str(lid, "users.unit.subunit", "Users on unit+subunits"), "2"));
 					Grouping.Items.Add(new ListItem(R.Str(lid, "background.variable", "Background variable"), "3"));
 					
-					ProjectRoundUnits = sponsorRepository.FindBySponsorAndLanguage(sponsorID, lid);
+					SponsorProjectRoundUnits = sponsorRepository.FindBySponsorAndLanguage(sponsorID, lid);
 					
-					Projects = measureRepository.FindSponsorProjects(sponsorID);
+					SponsorProjects = sponsorProjectRepo.FindSponsorProjects(sponsorID);
 
 					BackgroundQuestions = sponsorRepository.FindBySponsor(sponsorID);
 				} else {
@@ -232,7 +223,6 @@ namespace HW.Grp
 			
 			HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Statistics), "default.aspx", true);
 			
-//			lid = ConvertHelper.ToInt32(Session["lid"], 2);
 			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
 			if (userSession != null) {
 				lid = userSession.Lang;
@@ -282,7 +272,7 @@ namespace HW.Grp
 		{
 			DateTime d = DateTime.Now;
 			try {
-				//d = DateTime.ParseExact(s, "yyyy MMM", CultureInfo.InvariantCulture);
+//				d = DateTime.ParseExact(s, "yyyy MMM", CultureInfo.InvariantCulture);
 				d = DateTime.ParseExact(s, "yyyy MMM", GetCultureInfo(lid));
 			} catch {}
 			return d;
@@ -367,7 +357,7 @@ namespace HW.Grp
 			p.Q.Add("SID", sponsorID);
 			p.Q.AddIf(Convert.ToInt32(Session["Anonymized"]) == 1, "Anonymized", 1);
 			p.Q.Add("GB", GroupBy.SelectedValue);
-			//p.Q.Add("RPID", reportID);
+//			p.Q.Add("RPID", reportID);
 			p.Q.Add("RPLID", reportPartLangID);
 			p.Q.Add("PRUID", ProjectRoundUnitID.SelectedValue);
 			p.Q.Add("GRPNG", Grouping.SelectedValue);
@@ -411,7 +401,6 @@ namespace HW.Grp
 			}
 		}
 		
-//		IList<ReportPartLanguage> GetReportParts(string project)
 		IList<IReportPart> GetReportParts(string project)
 		{
 			var parts = new List<IReportPart>();
@@ -422,12 +411,11 @@ namespace HW.Grp
 				if (reportParts.Count <= 0) {
 					reportParts = reportRepository.FindByProjectAndLanguage(selectedProjectRoundUnitID, lid);
 				}
-//				return reportParts;
 				parts.AddRange(reportParts);
 			} else {
 				int sponsorProjectID = ConvertHelper.ToInt32(project.Replace("SP", ""));
-//				return measureRepository.ReadSponsorProject(sponsorProjectID);
-				var sponsorProject = measureRepository.ReadSponsorProject(sponsorProjectID);
+//				var sponsorProject = measureRepository.ReadSponsorProject(sponsorProjectID);
+				var sponsorProject = sponsorProjectRepo.Read(sponsorProjectID);
 				parts.Add(sponsorProject);
 			}
 			return parts;

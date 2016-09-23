@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExerciseShowTests.cs" />
+    <Compile Include="Models\ReportTests.cs" />
     <Compile Include="ReminderHelperTests.cs" />
     <Compile Include="MyExerciseShowTests.cs" />
     <Compile Include="MyExerciseTests.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="MessagesTests.cs" />
     <Compile Include="OrgTests.cs" />
     <Compile Include="RemindersTests.cs" />
+    <Compile Include="Repositories\ReportRepositoryTests.cs" />
     <Compile Include="StatsTests.cs" />
     <Compile Include="ExerciseExportTests.cs" />
   </ItemGroup>
@@ -79,6 +81,10 @@
       <Project>{5772C97E-DD4A-464F-AE9B-9E7F33A4CA81}</Project>
       <Name>HW.Grp</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models" />
+    <Folder Include="Repositories" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

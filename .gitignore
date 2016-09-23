@@ -192,6 +192,7 @@ OpenCover**
 /src/HW.Core/StyleCopViolations.xml
 /src/HW.WebService/packages
 /src/HW.Grp/packages
+/src/HW.Adm/packages
 
 /contrib/packages
 /contrib/HW.EForm.Report/packages

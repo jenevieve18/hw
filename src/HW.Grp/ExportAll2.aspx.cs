@@ -108,9 +108,11 @@ namespace HW.Grp
 			
 			string project = Request.QueryString["PRUID"];
 			int sponsorProjectID = ConvertHelper.ToInt32(project.Replace("SP", ""));
-			var measureRepository = new SqlMeasureRepository();
+//			var measureRepository = new SqlMeasureRepository();
+//			var sponsorProject = measureRepository.ReadSponsorProject(sponsorProjectID);
 			
-			var sponsorProject = measureRepository.ReadSponsorProject(sponsorProjectID);
+			var sponsorProjectRepo = new SqlSponsorProjectRepository();
+			var sponsorProject = sponsorProjectRepo.Read(sponsorProjectID);
 			reportParts.Add(sponsorProject);
 
 			var exporter = ExportFactory.GetExporterAll(service, type, HasAnswerKey, hasGrouping, reportParts, Server.MapPath("HW template for Word.docx"));
