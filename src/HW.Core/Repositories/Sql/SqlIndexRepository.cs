@@ -38,8 +38,8 @@ FROM (
 		AND LEFT(pru.SortString, {5}) = '{4}'
 		--AND YEAR(a.EndDT) >= {2}
 		--AND YEAR(a.EndDT) <= {3}
-		--AND (YEAR(a.EndDT) = {2} AND MONTH(a.EndDT) >= {6} OR YEAR(a.EndDT) > {2})
-		--AND (YEAR(a.EndDT) = {3} AND MONTH(a.EndDT) <= {7} OR YEAR(a.EndDT) < {3})
+		AND (YEAR(a.EndDT) = {2} AND MONTH(a.EndDT) >= {6} OR YEAR(a.EndDT) > {2})
+		AND (YEAR(a.EndDT) = {3} AND MONTH(a.EndDT) <= {7} OR YEAR(a.EndDT) < {3})
 	GROUP BY i.IdxID,
 		a.AnswerID,
 		i.MaxVal,
@@ -52,7 +52,7 @@ GROUP BY tmp.IdxID, tmp.Idx",
 				indexID,
 				langID,
 				yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
-				yearFrom, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
+				yearTo, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
 				sortString,
 				sortString.Length,
 				monthFrom,
