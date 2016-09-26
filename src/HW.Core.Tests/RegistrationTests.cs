@@ -13,14 +13,15 @@ using NUnit.Framework;
 namespace HW.Core.Tests
 {
 	[TestFixture]
-	public class Test1
+	public class RegistrationTests
 	{
 		[Test]
 		public void TestMethod()
 		{
 			var session = new Dictionary<string, object>();
 			session["UserID"] = null;
-			lalala(session, "D322060F10971");
+			//lalala(session, "D322060F10971");
+			lalala(session, "B8B54D4E10980");
 		}
 		
 		void lalala(Dictionary<string, object> session, string invite)

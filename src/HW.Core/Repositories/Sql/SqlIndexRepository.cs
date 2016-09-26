@@ -8,7 +8,7 @@ namespace HW.Core.Repositories.Sql
 {
 	public class SqlIndexRepository : BaseSqlRepository<Index>
 	{
-		public IList<Index> FindByLanguage(int idxID, int langID, int yearFrom, int yearTo, string sortString, int fm, int tm)
+		public IList<Index> FindByLanguage(int indexID, int langID, int yearFrom, int yearTo, string sortString, int monthFrom, int monthTo)
 		{
 			string query = string.Format(
 				@"
@@ -38,8 +38,8 @@ FROM (
 		AND LEFT(pru.SortString, {5}) = '{4}'
 		--AND YEAR(a.EndDT) >= {2}
 		--AND YEAR(a.EndDT) <= {3}
-		AND (YEAR(a.EndDT) = {2} AND MONTH(a.EndDT) >= {6} OR YEAR(a.EndDT) > {2})
-		AND (YEAR(a.EndDT) = {3} AND MONTH(a.EndDT) <= {7} OR YEAR(a.EndDT) < {3})
+		--AND (YEAR(a.EndDT) = {2} AND MONTH(a.EndDT) >= {6} OR YEAR(a.EndDT) > {2})
+		--AND (YEAR(a.EndDT) = {3} AND MONTH(a.EndDT) <= {7} OR YEAR(a.EndDT) < {3})
 	GROUP BY i.IdxID,
 		a.AnswerID,
 		i.MaxVal,
@@ -49,20 +49,21 @@ FROM (
 ) tmp
 WHERE tmp.AllPartsRequired = 0 OR tmp.CX = tmp.BX
 GROUP BY tmp.IdxID, tmp.Idx",
-				idxID,
+				indexID,
 				langID,
 				yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
 				yearFrom, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
 				sortString,
 				sortString.Length,
-				fm,
-				tm
+				monthFrom,
+				monthTo
 			);
 			var indexes = new List<Index>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				while (rs.Read()) {
 					var i = new Index();
-					i.AverageAX = rs.GetFloat(0);
+					//i.AverageAX = GetFloat(rs, 0);
+                    i.AverageAX = (float)GetDouble(rs, 0);
 					i.Languages = new List<IndexLanguage>(
 						new IndexLanguage[] {
 							new IndexLanguage { IndexName = rs.GetString(1) }
@@ -99,7 +100,7 @@ WHERE i.IdxID = {0}",
 							new IndexLanguage { IndexName = rs.GetString(1) }
 						}
 					);
-					i.MaxValue = rs.GetInt32(2);
+					i.MaxVal = rs.GetInt32(2);
 					i.Parts = new List<IndexPart>();
 					do {
 						i.Parts.Add(new IndexPart { OtherIndex = new Index { Id = rs.GetInt32(0) }, Multiple = rs.GetInt32(3) });

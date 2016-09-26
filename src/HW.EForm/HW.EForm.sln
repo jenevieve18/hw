@@ -1,7 +1,10 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+# SharpDevelop 4.4
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW.EForm", "HW.EForm.csproj", "{2BA9C9A0-1497-46C5-A9C3-663AF8676777}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW.EForm.Tests", "..\HW.EForm.Tests\HW.EForm.Tests.csproj", "{BFC590D7-6CF0-4553-9C2F-2ECB8027869B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +16,10 @@ Global
 		{2BA9C9A0-1497-46C5-A9C3-663AF8676777}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BA9C9A0-1497-46C5-A9C3-663AF8676777}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BA9C9A0-1497-46C5-A9C3-663AF8676777}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFC590D7-6CF0-4553-9C2F-2ECB8027869B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFC590D7-6CF0-4553-9C2F-2ECB8027869B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFC590D7-6CF0-4553-9C2F-2ECB8027869B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFC590D7-6CF0-4553-9C2F-2ECB8027869B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

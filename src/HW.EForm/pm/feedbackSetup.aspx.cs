@@ -21,6 +21,7 @@ namespace eform
 		protected DropDownList FeedbackTemplateID;
 		protected PlaceHolder QuestionID;
 		protected Label FeedbackID;
+		protected TextBox Feedback;
 
 		int f = 0;
 
@@ -32,6 +33,13 @@ namespace eform
 
 			if(!IsPostBack)
 			{
+				if(HttpContext.Current.Request.QueryString["CopyFeedbackID"] != null)
+				{
+					Db.execute("INSERT INTO Feedback (Feedback, SurveyID, FeedbackTemplateID, Compare, NoHardcodedIdxs) SELECT Feedback, SurveyID, FeedbackTemplateID, Compare, NoHardcodedIdxs FROM Feedback WHERE FeedbackID = " + Convert.ToInt32(HttpContext.Current.Request.QueryString["CopyFeedbackID"]));
+					f = Db.getInt32("SELECT TOP 1 FeedbackID FROM Feedback ORDER BY FeedbackID DESC");
+					Db.execute("INSERT INTO FeedbackQuestion (FeedbackID, QuestionID, Additional, FeedbackTemplatePageID, IdxID, HardcodedIdx) SELECT " + f + ", QuestionID, Additional, FeedbackTemplatePageID, IdxID, HardcodedIdx FROM FeedbackQuestion WHERE FeedbackID = " + Convert.ToInt32(HttpContext.Current.Request.QueryString["CopyFeedbackID"]));
+				}
+
 				rs = Db.recordSet("SELECT FeedbackTemplateID, FeedbackTemplate FROM FeedbackTemplate");
 				while(rs.Read())
 				{
@@ -41,15 +49,22 @@ namespace eform
 				rs = Db.recordSet("SELECT SurveyID, Internal FROM Survey");
 				while(rs.Read())
 				{
-					SurveyID.Items.Add(new ListItem(rs.GetString(1),rs.GetInt32(0).ToString()));
+					SurveyID.Items.Add(new ListItem(rs.GetInt32(0).ToString().PadLeft(3,'0') + " " + rs.GetString(1),rs.GetInt32(0).ToString()));
 				}
 				rs.Close();
+
+				System.Text.StringBuilder sb = new System.Text.StringBuilder();
+				sb.Append("<table>");
 				rs = Db.recordSet("SELECT FeedbackID, Feedback, SurveyID, FeedbackTemplateID FROM Feedback");
 				while(rs.Read())
 				{
-					FeedbackID.Text += "&bull; <a href=\"feedbackSetup.aspx?FeedbackID=" + rs.GetInt32(0) + "\"" + (f == rs.GetInt32(0) ? " style=\"font-weight:bold;\"" : "") + ">" + rs.GetString(1) + "</a><br/>";
+					sb.Append("<tr class=\"hov\"><td>&bull; " +
+						"<a href=\"feedbackSetup.aspx?FeedbackID=" + rs.GetInt32(0) + "\"" + (f == rs.GetInt32(0) ? " style=\"font-weight:bold;\"" : "") + ">" + 
+						rs.GetString(1) + 
+						"</a></td><td>[<a href=\"feedbackSetup.aspx?CopyFeedbackID=" + rs.GetInt32(0) + "\">copy</a>]</td></tr>");
 					if(f == rs.GetInt32(0))
 					{
+						Feedback.Text = rs.GetString(1);
 						if(!rs.IsDBNull(2))
 						{
 							SurveyID.SelectedValue =  rs.GetInt32(2).ToString();
@@ -58,6 +73,8 @@ namespace eform
 					}
 				}
 				rs.Close();
+				sb.Append("</table>");
+				FeedbackID.Text += sb.ToString();
 
 				populateQuestions(true);
 			}
@@ -117,6 +134,49 @@ namespace eform
 				QuestionID.Controls.Add(new LiteralControl("<span title=\"" + (!rs.IsDBNull(6) ? rs.GetString(6).Replace("\"","") : "") + "\">?</span></td></tr>"));
 			}
 			rs.Close();
+
+			QuestionID.Controls.Add(new LiteralControl("<tr><td colspan=\"2\"><hr/></td></tr>"));
+
+			rs = Db.recordSet("SELECT i.Internal, i.IdxID, NULL, NULL, f.FeedbackQuestionID, f.FeedbackTemplatePageID, NULL " +
+				"FROM Idx i " +
+				"LEFT OUTER JOIN FeedbackQuestion f ON i.IdxID = f.IdxID AND f.FeedbackID = " + f);
+			while(rs.Read())
+			{
+				QuestionID.Controls.Add(new LiteralControl("<tr><td>"));
+
+				CheckBox CB = new CheckBox();
+				CB.EnableViewState = true;
+				CB.ID = "I" + rs.GetInt32(1);
+				CB.Text = "INDEX: " + rs.GetInt32(1) + " / " + rs.GetString(0);
+
+				if(pop && !rs.IsDBNull(4))
+				{
+					CB.Checked = true;
+				}
+
+				QuestionID.Controls.Add(CB);
+				QuestionID.Controls.Add(new LiteralControl("</td><td>"));
+				DropDownList dl = new DropDownList();
+				dl.EnableViewState = true;
+				dl.ID = "IFTP" + rs.GetInt32(1);
+				dl.Items.Add(new ListItem("< default >","0"));
+				OdbcDataReader rs2 = Db.recordSet("SELECT FeedbackTemplatePageID, Description FROM FeedbackTemplatePage WHERE FeedbackTemplateID = " + Convert.ToInt32(FeedbackTemplateID.SelectedValue));
+				while(rs2.Read())
+				{
+					dl.Items.Add(new ListItem(rs2.GetString(1),rs2.GetInt32(0).ToString()));
+				}
+				rs2.Close();
+				
+				if(pop && !rs.IsDBNull(5))
+				{
+					dl.Items.FindByValue(rs.GetInt32(5).ToString()).Selected = true;
+				}
+
+				QuestionID.Controls.Add(dl);
+
+				QuestionID.Controls.Add(new LiteralControl("</td></tr>"));
+			}
+			rs.Close();
 		}
 
 		#region Web Form Designer generated code
@@ -150,7 +210,7 @@ namespace eform
 
 			if(f != 0)
 			{
-				Db.execute("UPDATE Feedback SET FeedbackTemplateID = " + Convert.ToInt32(FeedbackTemplateID.SelectedValue) + ", SurveyID = " + Convert.ToInt32(SurveyID.SelectedValue) + " WHERE FeedbackID = " + f);
+				Db.execute("UPDATE Feedback SET Feedback = '" + Feedback.Text.Replace("'","") + "', FeedbackTemplateID = " + Convert.ToInt32(FeedbackTemplateID.SelectedValue) + ", SurveyID = " + Convert.ToInt32(SurveyID.SelectedValue) + " WHERE FeedbackID = " + f);
 
 				OdbcDataReader rs = Db.recordSet("SELECT DISTINCT q.QuestionID, f.FeedbackQuestionID " +
 					"FROM Question q " +
@@ -166,6 +226,33 @@ namespace eform
 						if(rs.IsDBNull(1))
 						{
 							Db.execute("INSERT INTO FeedbackQuestion (FeedbackID,QuestionID,FeedbackTemplatePageID) VALUES (" + f + "," + rs.GetInt32(0) + "," + (s == "0" ? "NULL" : s) + ")");
+						}
+						else
+						{
+							Db.execute("UPDATE FeedbackQuestion SET FeedbackTemplatePageID = " + (s == "0" ? "NULL" : s) + " WHERE FeedbackID = " + f + " AND QuestionID = " + rs.GetInt32(0));
+						}
+					}
+					else
+					{
+						if(!rs.IsDBNull(1))
+						{
+							Db.execute("UPDATE FeedbackQuestion SET FeedbackID = -ABS(FeedbackID) WHERE FeedbackQuestionID = " + rs.GetInt32(1));
+						}
+					}
+				}
+				rs.Close();
+
+				rs = Db.recordSet("SELECT DISTINCT i.IdxID, f.FeedbackQuestionID " +
+					"FROM Idx i " +
+					"LEFT OUTER JOIN FeedbackQuestion f ON i.IdxID = f.IdxID AND f.FeedbackID = " + f);
+				while(rs.Read())
+				{
+					if(((CheckBox)QuestionID.FindControl("I" + rs.GetInt32(0))).Checked)
+					{
+						string s = ((DropDownList)QuestionID.FindControl("IFTP" + rs.GetInt32(0))).SelectedValue;
+						if(rs.IsDBNull(1))
+						{
+							Db.execute("INSERT INTO FeedbackQuestion (FeedbackID,QuestionID,FeedbackTemplatePageID,IdxID) VALUES (" + f + ",-" + rs.GetInt32(0) + "," + (s == "0" ? "NULL" : s) + "," + rs.GetInt32(0) + ")");
 						}
 						else
 						{

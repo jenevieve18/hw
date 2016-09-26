@@ -56,7 +56,7 @@ namespace HW.Core.Helpers
 					OnUrlSet(e);
 				};
 //				r.CurrentLanguage.ReportPart = r; // HACK: Report part should be assigned to the language because upon querying from database it's not set.
-				gc.CreateParts(package, new List<IReportPart>(new ReportPartLanguage[] { r.CurrentLanguage }));
+				gc.CreateParts(package, new List<IReportPart>(new ReportPartLang[] { r.CurrentLanguage }));
 			}
 			return output;
 		}
@@ -79,7 +79,7 @@ namespace HW.Core.Helpers
 			using (PresentationDocument package = PresentationDocument.Create(output, PresentationDocumentType.Presentation)) {
 				gc.UrlSet += delegate(object sender, ReportPartEventArgs e) { e.Url =  url; };
 //				r.CurrentLanguage.ReportPart = r; // HACK: Report part should be assigned to the language because upon querying from database it's not set.
-				gc.CreateParts(package, new List<IReportPart>(new ReportPartLanguage[] { r.CurrentLanguage }));
+				gc.CreateParts(package, new List<IReportPart>(new ReportPartLang[] { r.CurrentLanguage }));
 			}
 			return output;
 		}

@@ -12,6 +12,14 @@ namespace HW.Core.Helpers
 	{
 		IGraphType type;
 		
+		public ExtendedGraph(int width, int height, string color) : base(width, height, color)
+		{
+			Series = new List<Series>();
+			Explanations = new List<IExplanation>();
+			
+			Type = new LineGraphType(0, 2); // TODO: Why default to line graph? Also map the point value to ExtraPoint class.
+		}
+		
 		public List<IExplanation> Explanations { get; set; }
 		
 		public List<Series> Series { get; set; }
@@ -19,14 +27,6 @@ namespace HW.Core.Helpers
 		public IGraphType Type {
 			get { return type; }
 			set { type = value; type.Graph = this; }
-		}
-		
-		public ExtendedGraph(int width, int height, string color) : base(width, height, color)
-		{
-			Series = new List<Series>();
-			Explanations = new List<IExplanation>();
-			
-			Type = new LineGraphType(0, 2); // TODO: Why default to line graph? Also map the point value to ExtraPoint class.
 		}
 		
 		public void DrawDeviation(int color, int cx, int newVal, int newStd)
@@ -459,9 +459,10 @@ namespace HW.Core.Helpers
 	
 	public class LineGraphType : IGraphType
 	{
-		public ExtendedGraph Graph { get; set; }
 		int point;
 		int t;
+		
+		public ExtendedGraph Graph { get; set; }
 		
 		public LineGraphType() : this(0, 2) // TODO: Map this point value to Distribution class.
 		{
@@ -488,7 +489,7 @@ namespace HW.Core.Helpers
 					}
 					Graph.drawCircle((int)p.X, (int)l.Mean, s.Color);
 					if (i > 0) {
-						PointV pp = s.Points[i -1];
+						PointV pp = s.Points[i - 1];
 						HWList ll = pp.Values;
 						Graph.drawStepLine(s.Color, (int)p.X, (int)l.Mean, (int)pp.X, (int)ll.Mean, t);
 					}
@@ -576,6 +577,11 @@ namespace HW.Core.Helpers
 	
 	public class Series
 	{
+		public Series()
+		{
+			Points = new List<PointV>();
+		}
+		
 		public List<PointV> Points { get; set; }
 		public int Color { get; set; }
 		public string Description { get; set; }
@@ -585,11 +591,6 @@ namespace HW.Core.Helpers
 		public bool HasAxis { get; set; }
 		public int X { get; set; }
 		public int Y { get; set; }
-		
-		public Series()
-		{
-			Points = new List<PointV>();
-		}
 	}
 	
 	public class Bar

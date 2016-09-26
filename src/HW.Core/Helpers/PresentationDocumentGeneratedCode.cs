@@ -15,7 +15,7 @@ namespace HW.Core.Helpers
 {
 	public class PresentationDocumentGeneratedCode
 	{
-		public void CreateParts(PresentationDocument document, IList<ReportPartLanguage> parts, string url)
+		public void CreateParts(PresentationDocument document, IList<ReportPartLang> parts, string url)
 		{
 			ThumbnailPart thumbnailPart1 = document.AddNewPart<ThumbnailPart>("image/jpeg", "rId2");
 			GenerateThumbnailPart1Content(thumbnailPart1);
@@ -234,7 +234,7 @@ namespace HW.Core.Helpers
 			SetPackageProperties(document);
 		}
 		
-		void GenerateSlide(PresentationPart presentationPart1, SlideLayoutPart slideLayoutPart19, ReportPartLanguage r, string slideId, string url)
+		void GenerateSlide(PresentationPart presentationPart1, SlideLayoutPart slideLayoutPart19, ReportPartLang r, string slideId, string url)
 		{
 			SlidePart slidePart2 = presentationPart1.AddNewPart<SlidePart>(slideId);
 			GenerateSlidePart2Content(slidePart2, r);
@@ -252,7 +252,7 @@ namespace HW.Core.Helpers
 			data.Close();
 		}
 
-		private void GeneratePresentationPart1Content(PresentationPart presentationPart1, IList<ReportPartLanguage> parts)
+		private void GeneratePresentationPart1Content(PresentationPart presentationPart1, IList<ReportPartLang> parts)
 		{
 			Presentation presentation1 = new Presentation(){ SaveSubsetFonts = true };
 			presentation1.AddNamespaceDeclaration("a", "http://schemas.openxmlformats.org/drawingml/2006/main");
@@ -16807,7 +16807,7 @@ namespace HW.Core.Helpers
 		}
 
 		// Generates content of slidePart2.
-		private void GenerateSlidePart2Content(SlidePart slidePart2, ReportPartLanguage r)
+		private void GenerateSlidePart2Content(SlidePart slidePart2, ReportPartLang r)
 		{
 			Slide slide2 = new Slide();
 			slide2.AddNamespaceDeclaration("a", "http://schemas.openxmlformats.org/drawingml/2006/main");

@@ -287,7 +287,7 @@ namespace HW.Core.Models
 		public string ValueText { get; set; }
 	}
 	
-	public class SponsorLanguage : BaseModel
+	public class SponsorLang : BaseModel
 	{
 		public Sponsor Sponsor { get; set; }
 		public Language Language { get; set; }
@@ -309,7 +309,6 @@ namespace HW.Core.Models
 		public Sponsor Sponsor { get; set; }
 		public DateTime? StartDate { get; set; }
 		public DateTime? EndDate { get; set; }
-//		public string ProjectName { get; set; }
 		public string Subject { get; set; } // Project Name
 		public string Header { get; set; }
 		public IList<SponsorProjectMeasure> Measures { get; set; }

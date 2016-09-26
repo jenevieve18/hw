@@ -15,7 +15,7 @@ namespace HW.Core.Helpers
 		SqlAnswerRepository answerRepository;
 		SqlOptionRepository optionRepository;
 		SqlReportRepository reportRepository;
-		SqlIndexRepository indexRepository;
+		SqlIndexRepository indexRepo;
 		SqlQuestionRepository questionRepository;
 		SqlDepartmentRepository departmentRepository;
 		
@@ -31,7 +31,7 @@ namespace HW.Core.Helpers
 			this.answerRepository = answerRepository;
 			this.optionRepository = optionRepository;
 			this.reportRepository = reportRepository;
-			this.indexRepository = indexRepository;
+			this.indexRepo = indexRepository;
 			this.questionRepository = questionRepository;
 			this.departmentRepository = departmentRepository;
 		}
@@ -122,21 +122,21 @@ namespace HW.Core.Helpers
 							bars.Add(new Bar { Color = color, Value = Convert.ToInt32(all.GetKey(i)), Description = s });
 						}
 					}
-					referenceLines.Add(c.Index.TargetValue);
+					referenceLines.Add(c.Index.TargetVal);
 				}
 				g.DrawBars(disabled, cx, bars, referenceLines);
 				g.drawAxisExpl("poäng", 0, false, false);
 			} else if (p.Type == 2) {
 				g = new ExtendedGraph(895, 550, "#FFFFFF");
 				List<Bar> bars = new List<Bar>();
-				foreach (ReportPartComponent c in reportRepository.FindComponents(p.Id)) {
-					if (c.Index.Parts.Capacity == 0) {
-						GetIdxVal(c.Index.Id, sortString, langID, yearFrom, yearTo, monthFrom, monthTo);
+				foreach (ReportPartComponent rpc in reportRepository.FindComponents(p.Id)) {
+					if (rpc.Index.Parts.Capacity == 0) {
+						GetIdxVal(rpc.Index.Id, sortString, langID, yearFrom, yearTo, monthFrom, monthTo);
 					} else {
-						GetOtherIdxVal(c.Index.Id, sortString, langID, yearFrom, yearTo, monthFrom, monthTo);
+						GetOtherIdxVal(rpc.Index.Id, sortString, langID, yearFrom, yearTo, monthFrom, monthTo);
 					}
-					int color = c.Index.GetColor(lastVal);
-					bars.Add(new Bar { Value = lastVal, Color = color, Description = lastDesc, Reference = c.Index.TargetValue });
+					int color = rpc.Index.GetColor(lastVal);
+					bars.Add(new Bar { Value = lastVal, Color = color, Description = lastDesc, Reference = rpc.Index.TargetVal });
 				}
 				g.DrawBars(disabled, cx, bars);
 				g.drawAxisExpl("poäng", 0, false, false);
@@ -741,33 +741,6 @@ namespace HW.Core.Helpers
 				}
 			}
 			
-			// TODO: Make this a factory
-//			if (plot == PlotType.BoxPlotMinMax) {
-//				var plotter = new BoxPlotExcel();
-//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-//				plotter.CellWrite += delegate(object sender, ExcelCellEventArgs e) { OnCellWrite(e); };
-//				plotter.ToExcel(departments, weeks, writer, ref index);
-//			} else if (plot == PlotType.LineSDWithCI) {
-//				var plotter = new ConfidenceIntervalLineExcel();
-//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-//				plotter.CellWrite += delegate(object sender, ExcelCellEventArgs e) { OnCellWrite(e); };
-//				plotter.ToExcel(departments, weeks, writer, ref index);
-//			} else if (plot == PlotType.LineSD) {
-//				var plotter = new StandardDeviationLineExcel();
-//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-//				plotter.CellWrite += delegate(object sender, ExcelCellEventArgs e) { OnCellWrite(e); };
-//				plotter.ToExcel(departments, weeks, writer, ref index);
-//			} else if (plot == PlotType.Verbose) {
-//				var plotter = new EverythingExcel();
-//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-//				plotter.CellWrite += delegate(object sender, ExcelCellEventArgs e) { OnCellWrite(e); };
-//				plotter.ToExcel(departments, weeks, writer, ref index);
-//			} else {
-//				var plotter = new LineExcel();
-//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-//				plotter.CellWrite += delegate(object sender, ExcelCellEventArgs e) { OnCellWrite(e); };
-//				plotter.ToExcel(departments, weeks, writer, ref index);
-//			}
 			var plotter = GetPlotter(plot);
 			plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
 			plotter.CellWrite += delegate(object sender, ExcelCellEventArgs e) { OnCellWrite(e); };
@@ -983,36 +956,15 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 //			g.Draw();
 //			return g;
 			
-//			if (plot == PlotType.BoxPlotMinMax) {
-//				var plotter = new BoxPlotExcel();
-//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-//				plotter.ToExcel(departments, weeks, writer, ref index);
-//			} else if (plot == PlotType.LineSDWithCI) {
-//				var plotter = new ConfidenceIntervalLineExcel();
-//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-//				plotter.ToExcel(departments, weeks, writer, ref index);
-//			} else if (plot == PlotType.LineSD) {
-//				var plotter = new StandardDeviationLineExcel();
-//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-//				plotter.ToExcel(departments, weeks, writer, ref index);
-//			} else if (plot == PlotType.Verbose) {
-//				var plotter = new EverythingExcel();
-//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-//				plotter.ToExcel(departments, weeks, writer, ref index);
-//			} else {
-//				var plotter = new LineExcel();
-//				plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
-//				plotter.ToExcel(departments, weeks, writer, ref index);
-//			}
 			var plotter = GetPlotter(plot);
 			plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
 			plotter.CellWrite += delegate(object sender, ExcelCellEventArgs e) { OnCellWrite(e); };
 			plotter.ToExcel(departments, weeks, writer, ref index);
 		}
 		
-		void GetIdxVal(int idx, string sortString, int langID, int fy, int ty, int fm, int tm)
+		void GetIdxVal(int indexID, string sortString, int langID, int yearFrom, int yearTo, int monthFrom, int monthTo)
 		{
-			foreach (Index i in indexRepository.FindByLanguage(idx, langID, fy, ty, sortString, fm, tm)) {
+			foreach (Index i in indexRepo.FindByLanguage(indexID, langID, yearFrom, yearTo, sortString, monthFrom, monthTo)) {
 				lastCount = i.CountDX;
 				lastVal = i.AverageAX;
 				lastDesc = i.Languages[0].IndexName;
@@ -1030,7 +982,7 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 			float tot = 0;
 			int max = 0;
 			int minCnt = Int32.MaxValue;
-			Index index = indexRepository.ReadByIdAndLanguage(idx, langID);
+			Index index = indexRepo.ReadByIdAndLanguage(idx, langID);
 			if (index != null) {
 				lastDesc = index.Languages[0].IndexName;
 				foreach (IndexPart p in index.Parts) {

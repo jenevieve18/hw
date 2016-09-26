@@ -101,10 +101,10 @@ AND rpl.LangID = {1}",
 					p.Components = new List<ReportPartComponent>(rs.GetInt32(1));
 					p.Question = new Question { Id = GetInt32(rs, 2) };
 					p.Option = new Option { Id = GetInt32(rs, 3) };
-					p.RequiredAnswerCount = rs.GetInt32(4);
+					p.RequiredAnswerCount = GetInt32(rs, 4);
 					p.PartLevel = GetInt32(rs, 5);
 					p.Id = GetInt32(rs, 6);
-					p.CurrentLanguage = new ReportPartLanguage {
+					p.CurrentLanguage = new ReportPartLang {
 						Subject = GetString(rs, 7),
 						Header = GetString(rs, 8),
 						Footer = GetString(rs, 9)
@@ -161,7 +161,7 @@ ORDER BY rp.SortOrder",
 			var languages = new List<IReportPart>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				while (rs.Read()) {
-					var l = new ReportPartLanguage {
+					var l = new ReportPartLang {
 						Id = rs.GetInt32(5),
 						ReportPart = new ReportPart {
 							Id = rs.GetInt32(0),
@@ -199,7 +199,7 @@ ORDER BY rp.SortOrder",
 			var languages = new List<IReportPart>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				while (rs.Read()) {
-					var l = new ReportPartLanguage {
+					var l = new ReportPartLang {
 						Id = rs.GetInt32(5),
 						ReportPart = new ReportPart {
 							Id = rs.GetInt32(0),
@@ -236,7 +236,7 @@ ORDER BY rp.SortOrder",
 			var languages = new List<IReportPart>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				while (rs.Read()) {
-					var p = new ReportPartLanguage {
+					var p = new ReportPartLang {
 						ReportPart = new ReportPart { Id = rs.GetInt32(0), Type = rs.GetInt32(4) },
 						Subject = rs.GetString(1),
 						Header = rs.GetString(2),
@@ -269,9 +269,10 @@ ORDER BY rpc.SortOrder",
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				while (rs.Read()) {
 					var c = new ReportPartComponent();
-					c.Id = rs.GetInt32(0);
+//					c.Id = rs.GetInt32(0);
 					c.Index = new Index {
-						TargetValue = rs.GetInt32(2),
+						Id = rs.GetInt32(0),
+						TargetVal = GetInt32(rs, 2, -1),
 						YellowLow = GetInt32(rs, 3, -1),
 						GreenLow = GetInt32(rs, 4, -1),
 						GreenHigh = GetInt32(rs, 5, -1),
@@ -395,7 +396,7 @@ ORDER BY rpc.SortOrder",
 //					);
 					var q = new WeightedQuestionOption {
 						Id = rs.GetInt32(0),
-						TargetValue = GetInt32(rs, 2, -1),
+						TargetVal = GetInt32(rs, 2, -1),
 						YellowLow = GetInt32(rs, 3, -1),
 						GreenLow = GetInt32(rs, 4, -1),
 						GreenHigh = GetInt32(rs, 5, -1),
@@ -415,7 +416,7 @@ ORDER BY rpc.SortOrder",
 			return components;
 		}
 		
-		public ReportPartLanguage ReadReportPartLanguage(int reportPartLangID)
+		public ReportPartLang ReadReportPartLanguage(int reportPartLangID)
 		{
 			throw new NotImplementedException();
 		}
@@ -425,7 +426,7 @@ ORDER BY rpc.SortOrder",
 			throw new NotImplementedException();
 		}
 		
-		public void SaveOrUpdateReportPartLanguage(ReportPartLanguage part)
+		public void SaveOrUpdateReportPartLanguage(ReportPartLang part)
 		{
 			throw new NotImplementedException();
 		}

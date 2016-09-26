@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
+using System;
 using System.Data.SqlClient;
-using HW.Core.Models;
-using HW.Core.Services;
-
-namespace HW.Core.Repositories.Sql
+using System.Collections.Generic;
+using System.Data;
+using System.Configuration;
+	
+namespace HW.Core.Repositories
 {
-	public class BaseSqlRepository<T> // : IBaseRepository<T>
+	public class BaseSqlRepository<T>
 	{
 		SqlConnection con;
 		
@@ -26,27 +24,7 @@ namespace HW.Core.Repositories.Sql
 			throw new NotImplementedException();
 		}
 		
-		public virtual void SaveOrUpdate(T t)
-		{
-			throw new NotImplementedException();
-		}
-		
-		public virtual void SaveOrUpdate<U>(U t)
-		{
-			throw new NotImplementedException();
-		}
-		
 		public virtual void Delete(int id)
-		{
-			throw new NotImplementedException();
-		}
-		
-		public virtual void Delete(T t)
-		{
-			throw new NotImplementedException();
-		}
-		
-		public virtual void Delete<U>(U t)
 		{
 			throw new NotImplementedException();
 		}
@@ -63,12 +41,19 @@ namespace HW.Core.Repositories.Sql
 		
 		SqlConnection CreateConnection(string connectionName)
 		{
-			if (ConfigurationManager.ConnectionStrings[connectionName] != null) {
+			if (connectionName == "") {
+				con = new SqlConnection(ConfigurationManager.ConnectionStrings[ConfigurationManager.AppSettings["database"]].ConnectionString);
+			} else if (ConfigurationManager.ConnectionStrings[connectionName] != null) {
 				con = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionName].ConnectionString);
 			} else {
 				con = new SqlConnection(ConfigurationManager.AppSettings[connectionName]);
 			}
 			return con;
+		}
+		
+		protected void ExecuteNonQuery(string query, params SqlParameter[] parameters)
+		{
+			ExecuteNonQuery(query, "", parameters);
 		}
 		
 		protected void ExecuteNonQuery(string query, string connectionName, params SqlParameter[] parameters)
@@ -91,10 +76,8 @@ namespace HW.Core.Repositories.Sql
             con = CreateConnection(connectionName);
             OpenConnection();
             SqlCommand cmd = new SqlCommand(query, con);
-            foreach (var p in parameters)
-            {
-                if (p.Value == null)
-                {
+            foreach (var p in parameters) {
+                if (p.Value == null) {
                     p.Value = DBNull.Value;
                 }
                 cmd.Parameters.Add(p);
@@ -104,9 +87,9 @@ namespace HW.Core.Repositories.Sql
             return obj;
         }
 		
-		protected SqlDataReader ExecuteReader(string query)
+		protected SqlDataReader ExecuteReader(string query, params SqlParameter[] parameters)
 		{
-			return ExecuteReader(query, "SqlConnection");
+			return ExecuteReader(query, "", parameters);
 		}
 		
 		protected SqlDataReader ExecuteReader(string query, string connectionName, params SqlParameter[] parameters)
@@ -130,7 +113,6 @@ namespace HW.Core.Repositories.Sql
 		
 		protected DateTime? GetDateTime(SqlDataReader rs, int index)
 		{
-			//return rs.IsDBNull(index) ? null : (DateTime?)rs.GetDateTime(index);
             return GetDateTime(rs, index, null);
 		}
 		
@@ -172,28 +154,6 @@ namespace HW.Core.Repositories.Sql
 			return rs.IsDBNull(index) ? def : rs.GetFloat(index);
 		}
 		
-		protected T GetObject<T>(SqlDataReader rs, int index) where T : BaseModel, new()
-		{
-			if (!rs.IsDBNull(index)) {
-				T m = new T();
-				m.Id = GetInt32(rs, index);
-				return m;
-			} else {
-				return null;
-			}
-		}
-		
-//		protected object GetObject(SqlDataReader rs, int index, Type type)
-//		{
-//			if (!rs.IsDBNull(index)) {
-//				BaseModel m = (BaseModel)Activator.CreateInstance(type);
-//				m.Id = GetInt32(rs, index);
-//				return m;
-//			} else {
-//				return null;
-//			}
-//		}
-//
 		protected int GetInt32(SqlDataReader rs, int index)
 		{
 			return GetInt32(rs, index, 0);
@@ -202,16 +162,6 @@ namespace HW.Core.Repositories.Sql
 		protected int GetInt32(SqlDataReader rs, int index, int def)
 		{
 			return rs.IsDBNull(index) ? def : rs.GetInt32(index);
-		}
-		
-		protected Guid? GetGuid(SqlDataReader rs, int index)
-		{
-			return GetGuid(rs, index, null);
-		}
-		
-		protected Guid? GetGuid(SqlDataReader rs, int index, Guid? def)
-		{
-			return rs.IsDBNull(index) ? def : rs.GetGuid(index);
 		}
 		
 		protected int? GetInt32Nullable(SqlDataReader rs, int index)
@@ -242,6 +192,16 @@ namespace HW.Core.Repositories.Sql
 		protected decimal GetDecimal(SqlDataReader rs, int index, decimal def)
 		{
 			return rs.IsDBNull(index) ? def : rs.GetDecimal(index);
+		}
+		
+		protected Guid GetGuid(SqlDataReader rs, int index)
+		{
+			return GetGuid(rs, index, new Guid());
+		}
+		
+		protected Guid GetGuid(SqlDataReader rs, int index, Guid def)
+		{
+			return rs.IsDBNull(index) ? def : rs.GetGuid(index);
 		}
 		
 		protected void CloseConnection()

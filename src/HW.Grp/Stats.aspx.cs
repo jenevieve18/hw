@@ -414,7 +414,6 @@ namespace HW.Grp
 				parts.AddRange(reportParts);
 			} else {
 				int sponsorProjectID = ConvertHelper.ToInt32(project.Replace("SP", ""));
-//				var sponsorProject = measureRepository.ReadSponsorProject(sponsorProjectID);
 				var sponsorProject = sponsorProjectRepo.Read(sponsorProjectID);
 				parts.Add(sponsorProject);
 			}

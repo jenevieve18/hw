@@ -135,62 +135,62 @@ FROM (
 			return new Answer();
 		}
 		
-		public SponsorProject ReadSponsorProject(int sponsorProjectID)
-		{
-			string query = string.Format(
-				@"
-SELECT SponsorProjectID,
-	SponsorID,
-	StartDT,
-	EndDT,
-	ProjectName
-FROM SponsorProject
-WHERE SponsorProjectID = @SponsorProjectID"
-			);
-			SponsorProject p = null;
-			using (SqlDataReader rs = ExecuteReader(query, "SqlConnection", new SqlParameter("@SponsorProjectID", sponsorProjectID))) {
-				if (rs.Read()) {
-					p = new SponsorProject {
-						Id = GetInt32(rs, 0),
-						Sponsor = new Sponsor { Id = GetInt32(rs, 1) },
-						StartDate = GetDateTime(rs, 2),
-						EndDate = GetDateTime(rs, 3),
-						Subject = GetString(rs, 4),
-						
-						ReportPart = new ReportPart()
-					};
-				}
-			}
-			return p;
-		}
+//		public SponsorProject ReadSponsorProject(int sponsorProjectID)
+//		{
+//			string query = string.Format(
+//				@"
+//SELECT SponsorProjectID,
+//	SponsorID,
+//	StartDT,
+//	EndDT,
+//	ProjectName
+//FROM SponsorProject
+//WHERE SponsorProjectID = @SponsorProjectID"
+//			);
+//			SponsorProject p = null;
+//			using (SqlDataReader rs = ExecuteReader(query, "SqlConnection", new SqlParameter("@SponsorProjectID", sponsorProjectID))) {
+//				if (rs.Read()) {
+//					p = new SponsorProject {
+//						Id = GetInt32(rs, 0),
+//						Sponsor = new Sponsor { Id = GetInt32(rs, 1) },
+//						StartDate = GetDateTime(rs, 2),
+//						EndDate = GetDateTime(rs, 3),
+//						Subject = GetString(rs, 4),
+//						
+//						ReportPart = new ReportPart()
+//					};
+//				}
+//			}
+//			return p;
+//		}
 		
-		public IList<SponsorProject> FindSponsorProjects(int sponsorID)
-		{
-			string query = string.Format(
-				@"
-SELECT SponsorProjectID,
-	SponsorID,
-	StartDT,
-	EndDT,
-	ProjectName
-FROM SponsorProject
-WHERE SponsorID = @SponsorID"
-			);
-			var projects = new List<SponsorProject>();
-			using (SqlDataReader rs = ExecuteReader(query, "SqlConnection", new SqlParameter("@SponsorID", sponsorID))) {
-				while (rs.Read()) {
-					var p = new SponsorProject {
-						Id = GetInt32(rs, 0),
-						Sponsor = new Sponsor { Id = GetInt32(rs, 1) },
-						StartDate = GetDateTime(rs, 2),
-						EndDate = GetDateTime(rs, 3),
-						Subject = GetString(rs, 4)
-					};
-					projects.Add(p);
-				}
-			}
-			return projects;
-		}
+//		public IList<SponsorProject> FindSponsorProjects(int sponsorID)
+//		{
+//			string query = string.Format(
+//				@"
+//SELECT SponsorProjectID,
+//	SponsorID,
+//	StartDT,
+//	EndDT,
+//	ProjectName
+//FROM SponsorProject
+//WHERE SponsorID = @SponsorID"
+//			);
+//			var projects = new List<SponsorProject>();
+//			using (SqlDataReader rs = ExecuteReader(query, "SqlConnection", new SqlParameter("@SponsorID", sponsorID))) {
+//				while (rs.Read()) {
+//					var p = new SponsorProject {
+//						Id = GetInt32(rs, 0),
+//						Sponsor = new Sponsor { Id = GetInt32(rs, 1) },
+//						StartDate = GetDateTime(rs, 2),
+//						EndDate = GetDateTime(rs, 3),
+//						Subject = GetString(rs, 4)
+//					};
+//					projects.Add(p);
+//				}
+//			}
+//			return projects;
+//		}
 		
 		public IList<SponsorProjectMeasure> FindMeasures(int sponsorProjectID)
 		{

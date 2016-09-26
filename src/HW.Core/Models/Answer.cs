@@ -18,13 +18,14 @@ namespace HW.Core.Models
 	
 	public class Answer : BaseModel, IMinMax, IAnswer
 	{
+		float min = 0;
+		float max = 100;
+		
 		public Answer()
 		{
 			Values = new List<IValue>();
 		}
 		
-		float min = 0;
-		float max = 100;
 		public ProjectRound ProjectRound { get; set; }
 		public ProjectRoundUnit ProjectRoundUnit { get; set; }
 		public ProjectRoundUser ProjectRoundUser { get; set; }
@@ -33,15 +34,6 @@ namespace HW.Core.Models
 		public DateTime EndDate { get; set; }
 		public IList<IValue> Values { get; set; }
 		public int CurrentPage { get; set; }
-		
-		public HWList GetIntValues()
-		{
-			List<double> n = new List<double>();
-			foreach (var v in Values) {
-				n.Add((double)v.ValueInt);
-			}
-			return new HWList(n);
-		}
 		
 		public float Average { get; set; }
 		public int DummyValue1 { get; set; } // TODO: This is used by dbo.cf_yearWeek and related methods
@@ -61,6 +53,15 @@ namespace HW.Core.Models
 		public float AverageV { get; set; }
 		public int CountV { get; set; }
 		public float StandardDeviation { get; set; }
+		
+		public HWList GetIntValues()
+		{
+			List<double> n = new List<double>();
+			foreach (var v in Values) {
+				n.Add((double)v.ValueInt);
+			}
+			return new HWList(n);
+		}
 	}
 	
 	public interface IValue

@@ -16,16 +16,29 @@ namespace HW.Core.Services
 {
 	public class ProjectService
 	{
-		IProjectRepository pr;
+		IProjectRepository projectRepo;
+		IProjectRoundUnitRepository projectRoundUnitRepo;
+		IProjectRoundUserRepository projectRoundUserRepo;
 		
-		public ProjectService(IProjectRepository pr)
+		public ProjectService(IProjectRepository projectRepo, 
+		                      IProjectRoundUnitRepository projectRoundUnitRepo,
+		                     IProjectRoundUserRepository projectRoundUserRepo)
 		{
-			this.pr = pr;
+			this.projectRepo = projectRepo;
+			this.projectRoundUnitRepo = projectRoundUnitRepo;
+			this.projectRoundUserRepo = projectRoundUserRepo;
 		}
 		
 		public IList<Project> FindAllProjects()
 		{
-			return pr.FindAll();
+			return projectRepo.FindAll();
+		}
+		
+		public ProjectRoundUnit ReadProjectRoundUnit(int projectRoundUnitID)
+		{
+			var pru = projectRoundUnitRepo.Read(projectRoundUnitID);
+			pru.ProjectRoundUsers = projectRoundUserRepo.FindByProjectRoundUnit(projectRoundUnitID);
+			return pru;
 		}
 	}
 }

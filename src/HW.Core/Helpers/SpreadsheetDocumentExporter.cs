@@ -17,7 +17,7 @@ namespace HW.Core.Helpers
 	public class SpreadsheetDocumentExporter : AbstractExporter
 	{
 		ReportPart r;
-		IList<ReportPartLanguage> parts;
+		IList<ReportPartLang> parts;
 		ReportService service;
 		
 		public SpreadsheetDocumentExporter(ReportPart r)
@@ -25,7 +25,7 @@ namespace HW.Core.Helpers
 			this.r = r;
 		}
 		
-		public SpreadsheetDocumentExporter(ReportService service, IList<ReportPartLanguage> parts)
+		public SpreadsheetDocumentExporter(ReportService service, IList<ReportPartLang> parts)
 		{
 			this.service = service;
 			this.parts = parts;
@@ -93,7 +93,7 @@ namespace HW.Core.Helpers
 			throw new NotImplementedException();
 		}
 		
-		private void CreateParts(SpreadsheetDocument document, ReportPartLanguage r, string url)
+		private void CreateParts(SpreadsheetDocument document, ReportPartLang r, string url)
 		{
 			ExtendedFilePropertiesPart extendedFilePropertiesPart1 = document.AddNewPart<ExtendedFilePropertiesPart>("rId3");
 			GenerateExtendedFilePropertiesPart1Content(extendedFilePropertiesPart1);

@@ -34,6 +34,4 @@ namespace HW.Core.Models
 			}
 		}
 	}
-	
-
 }

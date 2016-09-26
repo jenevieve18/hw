@@ -42,8 +42,8 @@ namespace HW.Core.Models
 
 	public class Wise : BaseModel
 	{
-		public virtual DateTime? LastShown { get; set; }
-		public virtual List<WiseLanguage> Languages { get; set; }
+		public DateTime? LastShown { get; set; }
+		public List<WiseLanguage> Languages { get; set; }
         public string WiseName
         {
             get
@@ -77,10 +77,10 @@ namespace HW.Core.Models
 	
 	public class WiseLanguage : BaseModel
 	{
-		public virtual Wise Wise { get; set; }
-		public virtual Language Language { get; set; }
-		public virtual string WiseName { get; set; }
-		public virtual string WiseBy { get; set; }
+		public Wise Wise { get; set; }
+		public Language Language { get; set; }
+		public string WiseName { get; set; }
+		public string WiseBy { get; set; }
 	}
 	
 	public struct WordsOfWisdom

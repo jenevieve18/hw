@@ -10,12 +10,26 @@ namespace HW.Core.Models
 			Answers = new List<Answer>();
 		}
 		
-		public virtual QuestionCategory Category { get; set; }
-		public virtual QuestionContainer Container { get; set; }
-		public virtual string VariableName { get; set; }
-		public virtual IList<QuestionLanguage> Languages { get; set; }
-		public virtual IList<Answer> Answers { get; set; }
-		public virtual string Internal { get; set; }
+		
+		public int QuestionID { get; set; }
+		public string VariableName { get; set; }
+		public int OptionsPlacement { get; set; }
+		public int FontFamily { get; set; }
+		public int FontSize { get; set; }
+		public int FontDecoration { get; set; }
+		public string FontColor { get; set; }
+		public int Underlined { get; set; }
+		public int QuestionContainerID { get; set; }
+		public string Internal { get; set; }
+		public int Box { get; set; }
+		public int LimitWidth { get; set; }
+		public string FillRemainderWithBgColor { get; set; }
+		public int Niner { get; set; }
+		
+		public QuestionCategory Category { get; set; }
+		public QuestionContainer Container { get; set; }
+		public IList<QuestionLanguage> Languages { get; set; }
+		public IList<Answer> Answers { get; set; }
 	}
 	
 	public class QuestionCategory : BaseModel

@@ -828,9 +828,9 @@ namespace HW.Core.Helpers
 //			}
 //		}
 		
-		void GetIdxVal(int idx, string sortString, int langID, int fy, int ty, int fm, int tm)
+		void GetIdxVal(int indexID, string sortString, int langID, int yearFrom, int yearTo, int monthFrom, int monthTo)
 		{
-			foreach (Index i in indexRepo.FindByLanguage(idx, langID, fy, ty, sortString, fm, tm)) {
+			foreach (Index i in indexRepo.FindByLanguage(indexID, langID, yearFrom, yearTo, sortString, monthFrom, monthTo)) {
 				lastCount = i.CountDX;
 				lastVal = i.AverageAX;
 				lastDesc = i.Languages[0].IndexName;
@@ -843,12 +843,12 @@ namespace HW.Core.Helpers
 			}
 		}
 		
-		void GetOtherIdxVal(int idx, string sortString, int langID, int fy, int ty, int fm, int tm)
+		void GetOtherIdxVal(int indexID, string sortString, int langID, int yearFrom, int yearTo, int monthFrom, int monthTo)
 		{
 			float tot = 0;
 			int max = 0;
 			int minCnt = Int32.MaxValue;
-			Index index = indexRepo.ReadByIdAndLanguage(idx, langID);
+			Index index = indexRepo.ReadByIdAndLanguage(indexID, langID);
 			if (index != null) {
 				lastDesc = index.Languages[0].IndexName;
 				foreach (IndexPart p in index.Parts) {
@@ -857,7 +857,7 @@ namespace HW.Core.Helpers
 						tot += (float)res[p.OtherIndex.Id] * p.Multiple;
 						minCnt = Math.Min((int)cnt[p.OtherIndex.Id], minCnt);
 					} else {
-						GetIdxVal(p.OtherIndex.Id, sortString, langID, fy, ty, fm, tm);
+						GetIdxVal(p.OtherIndex.Id, sortString, langID, yearFrom, yearTo, monthFrom, monthTo);
 						tot += lastVal * p.Multiple;
 						minCnt = Math.Min(lastCount, minCnt);
 					}

@@ -27,7 +27,6 @@ namespace HW.Core.Helpers
 			} else if (type == Excel) {
 				return new ExcelStatsExporter(service, hasAnswerKey, hasGrouping, r);
 			} else if (type == WordDocument) {
-//				return new WordDocumentExporter2(r);
 				return new DocXStatsExporter(r, template);
 			} else if (type == PresentationDocument) {
 				return new PresentationDocumentStatsExporter(r);

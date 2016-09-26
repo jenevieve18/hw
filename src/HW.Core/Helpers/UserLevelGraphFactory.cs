@@ -90,9 +90,9 @@ namespace HW.Core.Helpers
 					if (a != null) {
 						int color = c.WeightedQuestionOption.GetColor(a.Values[0].ValueInt);
 						g.drawBar(color, ++cx, a.Values[0].ValueInt);
-						if (c.WeightedQuestionOption.TargetValue != 0) {
+						if (c.WeightedQuestionOption.TargetVal != 0) {
 							hasReference = true;
-							g.drawReference(cx, c.WeightedQuestionOption.TargetValue);
+							g.drawReference(cx, c.WeightedQuestionOption.TargetVal);
 						}
 						g.drawBottomString(c.WeightedQuestionOption.Languages[0].Question, cx, true);
 					}
@@ -111,8 +111,7 @@ namespace HW.Core.Helpers
 			return g;
 		}
 		
-		/*
-		public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int sponsorAdminID, int SID, string GID, object disabled, int sponsorMinUserCountToDisclose, int fm, int tm)
+		/*public string CreateGraph2(string key, ReportPart p, int langID, int PRUID, int fy, int ty, int GB, bool hasGrouping, int plot, int GRPNG, int sponsorAdminID, int SID, string GID, object disabled, int sponsorMinUserCountToDisclose, int fm, int tm)
 		{
 			int cx = p.Components.Capacity;
 			int answerID = 0;
@@ -201,23 +200,12 @@ namespace HW.Core.Helpers
 			}
 //			return g;
 			return s.ToString();
-		}
-		*/
-		
-//		public void CreateGraph3(string key, ReportPart p, int langID, int pruid, int fy, int ty, int gb, bool hasGrouping, int plot, int grpng, int spons, int sid, string gid, object disabled, ExcelWriter w, ref int i, int sponsorMinUserCountToDisclose, int fm, int tm)
+		}*/
+
 		public override void CreateGraphForExcelWriter(ReportPart p, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int gb, bool hasGrouping, int plot, int grpng, int sponsorAdminID, int sponsorID, string departmentIDs, ExcelWriter w, ref int i, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
 		{
 			throw new NotImplementedException();
 		}
-//		
-//		public event EventHandler<MergeEventArgs> ForMerge;
-//		
-//		protected virtual void OnForMerge(MergeEventArgs e)
-//		{
-//			if (ForMerge != null) {
-//				ForMerge(this, e);
-//			}
-//		}
 	}
 	
 	public class MergeEventArgs : EventArgs

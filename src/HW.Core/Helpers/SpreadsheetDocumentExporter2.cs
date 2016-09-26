@@ -17,7 +17,7 @@ namespace HW.Core.Helpers
 	public class SpreadsheetDocumentExporter2 : AbstractExporter
 	{
 		ReportPart r;
-		IList<ReportPartLanguage> parts;
+		IList<ReportPartLang> parts;
 		ReportService service;
 		
 		public SpreadsheetDocumentExporter2(ReportPart r)
@@ -25,7 +25,7 @@ namespace HW.Core.Helpers
 			this.r = r;
 		}
 		
-		public SpreadsheetDocumentExporter2(ReportService service, IList<ReportPartLanguage> parts)
+		public SpreadsheetDocumentExporter2(ReportService service, IList<ReportPartLang> parts)
 		{
 			this.service = service;
 			this.parts = parts;
@@ -89,7 +89,7 @@ namespace HW.Core.Helpers
 		}
 
         // Adds child parts and generates content of the specified part.
-        private void CreateParts(SpreadsheetDocument document, ReportPartLanguage r, string url)
+        private void CreateParts(SpreadsheetDocument document, ReportPartLang r, string url)
         {
             ExtendedFilePropertiesPart extendedFilePropertiesPart1 = document.AddNewPart<ExtendedFilePropertiesPart>("rId3");
             GenerateExtendedFilePropertiesPart1Content(extendedFilePropertiesPart1);

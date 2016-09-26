@@ -181,10 +181,14 @@
     <Compile Include="Repositories\IBaseRepository.cs" />
     <Compile Include="Repositories\IDepartmentRepository.cs" />
     <Compile Include="Repositories\IExerciseRepository.cs" />
+    <Compile Include="Repositories\IIndexRepository.cs" />
     <Compile Include="Repositories\IManagerFunctionRepository.cs" />
     <Compile Include="Repositories\INewsRepository.cs" />
     <Compile Include="Repositories\IPlotTypeRepository.cs" />
     <Compile Include="Repositories\IProjectRepository.cs" />
+    <Compile Include="Repositories\IProjectRoundUnitRepository.cs" />
+    <Compile Include="Repositories\IProjectRoundUserRepository.cs" />
+    <Compile Include="Repositories\IQuestionRepository.cs" />
     <Compile Include="Repositories\IReportRepository.cs" />
     <Compile Include="Repositories\IRepositoryFactory.cs" />
     <Compile Include="Repositories\ISponsorRepository.cs" />
@@ -194,6 +198,10 @@
     <Compile Include="Repositories\Sql\SqlMeasureRepository.cs" />
     <Compile Include="Repositories\Sql\SqlNewsRepository.cs" />
     <Compile Include="Repositories\Sql\SqlPlotTypeRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlProjectRoundUnitRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlProjectRoundUserRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlReportPartComponentRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlReportPartRepository.cs" />
     <Compile Include="Repositories\Sql\SqlReportRepository.cs" />
     <Compile Include="Repositories\Sql\SqlProjectRepository.cs" />
     <Compile Include="Repositories\Sql\SqlOptionRepository.cs" />
@@ -203,6 +211,7 @@
     <Compile Include="Repositories\Sql\SqlExerciseRepository.cs" />
     <Compile Include="Repositories\Sql\SqlRepositoryFactory.cs" />
     <Compile Include="Repositories\Sql\SqlSponsorAdminRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlSponsorProjectRepository.cs" />
     <Compile Include="Repositories\Sql\SqlSponsorRepository.cs" />
     <Compile Include="Repositories\Sql\SqlUserRepository.cs" />
     <Compile Include="Repositories\Sql\SqlLanguageRepository.cs" />
@@ -216,6 +225,7 @@
     <Compile Include="Services\MessageService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\ReportService.cs" />
+    <Compile Include="Services\ReportService2.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>

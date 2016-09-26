@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW.Grp.Tests", "..\HW.Grp.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW.Grp.Migrations", "..\HW.Grp.Migrations\HW.Grp.Migrations.csproj", "{E1898DDC-725C-429B-9690-ADEAE528A86A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW.Core.Tests", "..\HW.Core.Tests\HW.Core.Tests.csproj", "{585A0548-B365-4186-BCB2-63E218D793EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,14 @@ Global
 		{E1898DDC-725C-429B-9690-ADEAE528A86A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1898DDC-725C-429B-9690-ADEAE528A86A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{E1898DDC-725C-429B-9690-ADEAE528A86A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{585A0548-B365-4186-BCB2-63E218D793EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{585A0548-B365-4186-BCB2-63E218D793EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{585A0548-B365-4186-BCB2-63E218D793EA}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{585A0548-B365-4186-BCB2-63E218D793EA}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{585A0548-B365-4186-BCB2-63E218D793EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{585A0548-B365-4186-BCB2-63E218D793EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{585A0548-B365-4186-BCB2-63E218D793EA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{585A0548-B365-4186-BCB2-63E218D793EA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

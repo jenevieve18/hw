@@ -70,6 +70,7 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\AnswerTests.cs" />
     <Compile Include="Models\GroupFactoryTests.cs" />
     <Compile Include="Models\HWListTests.cs" />
     <Compile Include="Program.cs" />
@@ -87,12 +88,13 @@
     <Compile Include="Repositories\MeasureRepositoryTests.cs" />
     <Compile Include="Repositories\OptionRepositoryTests.cs" />
     <Compile Include="Repositories\ProjectRepositoryTests.cs" />
+    <Compile Include="Repositories\ProjectRoundRepositoryTests.cs" />
     <Compile Include="Repositories\QuestionRepositoryTests.cs" />
     <Compile Include="Repositories\ReportRepositoryTests.cs" />
     <Compile Include="Repositories\SponsorAdminRepositoryTests.cs" />
     <Compile Include="Repositories\SponsorRepositoryTests.cs" />
     <Compile Include="Repositories\UserRepositoryTests.cs" />
-    <Compile Include="Test1.cs" />
+    <Compile Include="RegistrationTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

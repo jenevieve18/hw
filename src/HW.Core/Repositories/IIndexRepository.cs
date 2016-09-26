@@ -13,22 +13,35 @@ namespace HW.Core.Repositories
 	
 	public class IndexRepositoryStub : BaseRepositoryStub<Index>, IIndexRepository
 	{
+		public IndexRepositoryStub()
+		{
+			data.Add(new Index { IdxID = 1, Internal = "HME Motivation" });
+			data.Add(new Index { IdxID = 2, Internal = "HME Leadership" });
+			data.Add(new Index { IdxID = 3, Internal = "HME Styrning" });
+		}
+		
+		public override Index Read(int id)
+		{
+			return data.Find(x => x.IdxID == id);
+		}
+		
 		public IList<Index> FindByLanguage(int id, int langID, int yearFrom, int yearTo, string sortString)
 		{
-			var indexes = new List<Index>();
-			for (int j = 0; j < 10; j++) {
-				var i = new Index();
-				i.AverageAX = 50;
-				i.Languages = new List<IndexLanguage>(
-					new IndexLanguage[] {
-						new IndexLanguage { IndexName = "Index " + j }
-					}
-				);
-				i.Id = j;
-				i.CountDX = 10;
-				indexes.Add(i);
-			}
-			return indexes;
+//			var indexes = new List<Index>();
+//			for (int j = 0; j < 10; j++) {
+//				var i = new Index();
+//				i.AverageAX = 50;
+//				i.Languages = new List<IndexLanguage>(
+//					new IndexLanguage[] {
+//						new IndexLanguage { IndexName = "Index " + j }
+//					}
+//				);
+//				i.Id = j;
+//				i.CountDX = 10;
+//				indexes.Add(i);
+//			}
+//			return indexes;
+			throw new NotImplementedException();
 		}
 		
 		public Index ReadByIdAndLanguage(int idxID, int langID)

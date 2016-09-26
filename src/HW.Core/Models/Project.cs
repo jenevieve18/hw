@@ -10,23 +10,54 @@ namespace HW.Core.Models
 	
 	public class Project : BaseModel
 	{
-		public virtual string Internal { get; set; }
-		public virtual string Name { get; set; }
-		public virtual string AppURL { get; set; }
-		public virtual IList<ProjectRound> Rounds { get; set; }
+		public string Internal { get; set; }
+		public string Name { get; set; }
+		public string AppURL { get; set; }
+		public IList<ProjectRound> Rounds { get; set; }
 	}
 	
 	public class ProjectRound : BaseModel
 	{
-		public virtual Project Project { get; set; }
-		public virtual string Internal { get; set; }
-		public virtual DateTime? Started { get; set; }
-		public virtual DateTime? Closed { get; set; }
-		public virtual Report Report { get; set; }
-		public virtual IList<ProjectRoundLanguage> Languages { get; set; }
-		public virtual IList<ProjectRoundUnit> Units { get; set; }
-		public virtual Survey Survey { get; set; }
-		public virtual List<Answer> Answers { get; set; }
+		public int ProjectRoundID { get; set; }
+		public int ProjectID { get; set; }
+		public string Internal { get; set; }
+		public DateTime? Started { get; set; }
+		public DateTime? Closed { get; set; }
+		public int TransparencyLevel { get; set; }
+		public int RepeatedEntry { get; set; }
+		public int SurveyID { get; set; }
+		public int LangID { get; set; }
+		public Guid RoundKey { get; set; }
+		public string EmailFromAddress { get; set; }
+		public int ReminderInterval { get; set; }
+		public int Layout { get; set; }
+		public int SelfRegistration { get; set; }
+		public int Timeframe { get; set; }
+		public int Yellow { get; set; }
+		public int Green { get; set; }
+		public int IndividualReportID { get; set; }
+		public int ExtendedSurveyID { get; set; }
+		public int ReportID { get; set; }
+		public int Logo { get; set; }
+		public int UseCode { get; set; }
+		public int ConfidentialIndividualReportID { get; set; }
+		public int SendSurveyAsEmail { get; set; }
+		public string SFTPhost { get; set; }
+		public string SFTPpath { get; set; }
+		public string SFTPuser { get; set; }
+		public string SFTPpass { get; set; }
+		public string SendSurveyAsPdfTo { get; set; }
+		public int SendSurveyAsPdfToQ { get; set; }
+		public int SendSurveyAsPdfToO { get; set; }
+		public int AdHocReportCompareWithParent { get; set; }
+		public int FeedBackID { get; set; }
+		
+		public Project Project { get; set; }
+		public Report Report { get; set; }
+		public IList<ProjectRoundLang> Languages { get; set; }
+		public IList<ProjectRoundUnit> Units { get; set; }
+		public Survey Survey { get; set; }
+		public List<Answer> Answers { get; set; }
 		
 		public bool IsOpen {
 			get { return Closed == null || Closed >= DateTime.Now; }
@@ -38,53 +69,110 @@ namespace HW.Core.Models
 		}
 	}
 	
-	public class ProjectRoundLanguage : BaseModel
+	public class ProjectRoundLang : BaseModel
 	{
-		public virtual ProjectRound Round { get; set; }
-		public virtual Language Language { get; set; }
-		public virtual string InvitationSubject { get; set; }
+		public ProjectRound Round { get; set; }
+		public Language Language { get; set; }
+		public string InvitationSubject { get; set; }
 	}
 	
 	public class ProjectRoundUnit : BaseModel, IHasLanguage
 	{
-		public virtual string Name { get; set; }
-		public virtual Report Report { get; set; }
-		public virtual string SortString { get; set; }
-		public virtual Language Language { get; set; }
-		public virtual List<Answer> Answers { get; set; }
-		public virtual Survey Survey { get; set; }
-		public virtual ProjectRound ProjectRound { get; set; }
+		public int ProjectRoundUnitID { get; set; }
+		public int ProjectRoundID { get; set; }
+		public string Name { get; set; }
+		public string ID { get; set; }
+		public int ParentProjectRoundUnitID { get; set; }
+		public int SortOrder { get; set; }
+		public string SortString { get; set; }
+		public int SurveyID { get; set; }
+		public int LangID { get; set; }
+		public Guid? UnitKey { get; set; }
+		public int UserCount { get; set; }
+		public int UnitCategoryID { get; set; }
+		public bool CanHaveUsers { get; set; }
+		public int ReportID { get; set; }
+		public int Timeframe { get; set; }
+		public int Yellow { get; set; }
+		public int Green { get; set; }
+		public string SurveyIntro { get; set; }
+		public bool Terminated { get; set; }
+		public int IndividualReportID { get; set; }
+		public string UniqueID { get; set; }
+		public int RequiredAnswerCount { get; set; }
+		public int SortStringLength { get; set; }
 		
-		public virtual string TreeString { get; set; } // TODO: This comes from cf_projectUnitTree function.
+		public Report Report { get; set; }
+		public Language Language { get; set; }
+		public List<Answer> Answers { get; set; }
+		public Survey Survey { get; set; }
+		public ProjectRound ProjectRound { get; set; }
+		public IList<ProjectRoundUser> ProjectRoundUsers { get; set; }
+		
+		public string TreeString { get; set; } // TODO: This comes from cf_projectUnitTree function.
 	}
 	
 	public class ProjectRoundUnitManager : BaseModel
 	{
-		public virtual ProjectRoundUnit ProjectRoundUnit { get; set; }
-		public virtual ProjectRoundUser ProjectRoundUser { get; set; }
+		public int ProjectRoundUnitManagerID { get; set; }
+		public int ProjectRoundUnitID { get; set; }
+		public int ProjectRoundUserID { get; set; }
+		
+		public ProjectRoundUnit ProjectRoundUnit { get; set; }
+		public ProjectRoundUser ProjectRoundUser { get; set; }
 	}
 	
 	public class ProjectRoundUser : BaseModel
 	{
-		public virtual ProjectRound ProjectRound { get; set; }
-		public virtual ProjectRoundUnit ProjectRoundUnit { get; set; }
-		public virtual UserCategory UserCategory { get; set; }
-		public virtual string Email { get; set; }
+		public int ProjectRoundUserID { get; set; }
+		public int ProjectRoundID { get; set; }
+		public int ProjectRoundUnitID { get; set; }
+		public Guid? UserKey { get; set; }
+		public string Email { get; set; }
+		public DateTime? LastSent { get; set; }
+		public int SendCount { get; set; }
+		public int ReminderCount { get; set; }
+		public int UserCategoryID { get; set; }
+		public string Name { get; set; }
+		public DateTime? Created { get; set; }
+		public int Extended { get; set; }
+		public string Extra { get; set; }
+		public int ExternalID { get; set; }
+		public int NoSend { get; set; }
+		public int Terminated { get; set; }
+		public int FollowupSendCount { get; set; }
+		public int GroupID { get; set; }
+		public int ExtendedTag { get; set; }
 		
-		public virtual string SomeText { get; set; }
+		public ProjectRound ProjectRound { get; set; }
+		public ProjectRoundUnit ProjectRoundUnit { get; set; }
+		public UserCategory UserCategory { get; set; }
+		
+		public string SomeText { get; set; }
 	}
 	
 	public class ProjectUnitCategory : BaseModel
 	{
-		public virtual Project Project { get; set; }
+		public int ProjectUnitCategoryID { get; set; }
+		public int ProjectID { get; set; }
+		public int UnitCategoryID { get; set; }
+		
+		public Project Project { get; set; }
 	}
 	
 	public class ProjectUserCategory : BaseModel
 	{
+		public int ProjectUserCategoryID { get; set; }
+		public int ProjectID { get; set; }
+		public int UserCategoryID { get; set; }
 	}
 	
 	public class ProjectSurvey : BaseModel
 	{
+		public int ProjectSurveyID { get; set; }
+		public int ProjectID { get; set; }
+		public int SurveyID { get; set; }
+		
 		public Project Project { get; set; }
 		public Survey Survey { get; set; }
 	}
