@@ -19,7 +19,6 @@ namespace HW.EForm.Core.Models
 		public int PartLevel { get; set; }
 		public int GroupingQuestionID { get; set; }
 		public int GroupingOptionID { get; set; }
-
 		public Question Question { get; set; }
 	}
 }

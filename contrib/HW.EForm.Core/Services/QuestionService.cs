@@ -12,25 +12,51 @@ namespace HW.EForm.Core.Services
 {
 	public class QuestionService
 	{
-		SqlQuestionRepository questionRepo = new SqlQuestionRepository();
-		SqlQuestionLangRepository questionLangRepo = new SqlQuestionLangRepository();
-		SqlQuestionOptionRepository questionOptionRepo = new SqlQuestionOptionRepository();
-		SqlQuestionContainerRepository questionContainerRepo = new SqlQuestionContainerRepository();
+//		SqlQuestionRepository questionRepo = new SqlQuestionRepository();
+//		SqlQuestionLangRepository questionLangRepo = new SqlQuestionLangRepository();
+//		SqlQuestionOptionRepository questionOptionRepo = new SqlQuestionOptionRepository();
+//		SqlQuestionContainerRepository questionContainerRepo = new SqlQuestionContainerRepository();
+//
+//		SqlOptionRepository optionRepo = new SqlOptionRepository();
+//		SqlOptionComponentsRepository optionComponentsRepo = new SqlOptionComponentsRepository();
+//		SqlOptionComponentRepository optionComponentRepo = new SqlOptionComponentRepository();
+//		SqlOptionComponentLangRepository optionComponentLangRepo = new SqlOptionComponentLangRepository();
+//
+//		SqlOptionContainerRepository optionContainerRepo = new SqlOptionContainerRepository();
+//
+//		SqlWeightedQuestionOptionRepository weightedQuestionOptionRepo = new SqlWeightedQuestionOptionRepository();
+//
+//		SqlProjectRoundUnitRepository projectRoundUnitRepo = new SqlProjectRoundUnitRepository();
+//
+//		SqlAnswerValueRepository answerValueRepo = new SqlAnswerValueRepository();
 		
-		SqlOptionRepository optionRepo = new SqlOptionRepository();
-		SqlOptionComponentsRepository optionComponentsRepo = new SqlOptionComponentsRepository();
-		SqlOptionComponentRepository optionComponentRepo = new SqlOptionComponentRepository();
-		SqlOptionComponentLangRepository optionComponentLangRepo = new SqlOptionComponentLangRepository();
+		IQuestionRepository questionRepo;
+		IQuestionLangRepository questionLangRepo;
+		IQuestionOptionRepository questionOptionRepo;
+		IQuestionContainerRepository questionContainerRepo;
 		
-		SqlOptionContainerRepository optionContainerRepo = new SqlOptionContainerRepository();
+		IOptionRepository optionRepo;
+		IOptionComponentsRepository optionComponentsRepo;
+		IOptionComponentRepository optionComponentRepo;
+		IOptionComponentLangRepository optionComponentLangRepo;
 		
-		SqlWeightedQuestionOptionRepository weightedQuestionOptionRepo = new SqlWeightedQuestionOptionRepository();
+//		IOptionContainerRepository optionContainerRepo;
 		
-		SqlProjectRoundUnitRepository projectRoundUnitRepo = new SqlProjectRoundUnitRepository();
+		IWeightedQuestionOptionRepository weightedQuestionOptionRepo;
 		
-		SqlAnswerValueRepository answerValueRepo = new SqlAnswerValueRepository();
+		IProjectRoundUnitRepository projectRoundUnitRepo;
+		
+		IAnswerValueRepository answerValueRepo;
 		
 		public QuestionService()
+		{
+		}
+		
+		public QuestionService(IQuestionRepository questionRepo,
+		                       IQuestionOptionRepository questionOptionRepo,
+		                       IOptionRepository optionRepo,
+		                       IOptionComponentsRepository optionComponentsRepo,
+		                       IOptionComponentRepository optionComponentRepo)
 		{
 		}
 		

@@ -12,6 +12,7 @@ namespace HW.EForm.Core.Models
 		public ProjectRoundUnit()
 		{
 			Options = new List<QuestionOption>();
+			Answers = new List<Answer>();
 		}
 		
 		public int ProjectRoundUnitID { get; set; }
@@ -35,6 +36,14 @@ namespace HW.EForm.Core.Models
 		public int IndividualReportID { get; set; }
 		public string UniqueID { get; set; }
 		public int RequiredAnswerCount { get; set; }
+		public Report Report { get; set; }
+		public ProjectRound ProjectRound { get; set; }
+		public IList<ProjectRoundUnitManager> Managers { get; set; }
+		public IList<QuestionOption> Options { get; set; }
+		public IList<Answer> Answers { get; set; }
+		public bool HasOnlyOneOption {
+			get { return Options.Count == 1; }
+		}
 		
 		public int LangID {
 			get {
@@ -56,13 +65,6 @@ namespace HW.EForm.Core.Models
 			set { survey = value; }
 		}
 		
-		public Report Report { get; set; }
-		public ProjectRound ProjectRound { get; set; }
-		public IList<ProjectRoundUnitManager> Managers { get; set; }
-		public IList<QuestionOption> Options { get; set; }
-		public bool HasOnlyOneOption {
-			get { return Options.Count == 1; }
-		}
 		public QuestionOption FirstOption {
 			get {
 				if (Options.Count > 0) {
@@ -77,9 +79,38 @@ namespace HW.EForm.Core.Models
 			set { answerValues = value; SetAnswerValuesForComponents(); }
 		}
 		
+		public void AddAnswer(Answer a)
+		{
+			a.ProjectRoundUnit = this;
+			Answers.Add(a);
+		}
+		
 		public void AddOption(QuestionOption qo)
 		{
 			Options.Add(qo);
+		}
+		
+		public IList<Question> GetQuestions()
+		{
+			var questions = new List<Question>();
+			foreach (var a in Answers) {
+				foreach (var av in a.AnswerValues) {
+					if (!ExistsIn(questions, av.Question)) {
+						questions.Add(av.Question);
+					}
+				}
+			}
+			return questions;
+		}
+		
+		bool ExistsIn(IList<Question> questions, Question question)
+		{
+			foreach (var q in questions) {
+				if (q.QuestionID == question.QuestionID) {
+					return true;
+				}
+			}
+			return false;
 		}
 		
 		void SetAnswerValuesForComponents()

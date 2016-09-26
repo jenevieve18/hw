@@ -136,14 +136,14 @@ namespace HW.EForm.Core.Models
 			return null;
 		}
 		
-		public void AddOption(Option o)
+		public void AddOption(Option option)
 		{
-			AddOption(new QuestionOption { Option = o });
+			AddOption(new QuestionOption { Option = option });
 		}
 		
-		public void AddOption(QuestionOption qo)
+		public void AddOption(QuestionOption option)
 		{
-			Options.Add(qo);
+			Options.Add(option);
 		}
 		
 		public override string ToString()

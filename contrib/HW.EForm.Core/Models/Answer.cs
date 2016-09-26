@@ -5,8 +5,13 @@ namespace HW.EForm.Core.Models
 {
 	public class Answer
 	{
-		public Answer()
+		public Answer() : this(new List<AnswerValue>())
 		{
+		}
+		
+		public Answer(IList<AnswerValue> values)
+		{
+			AnswerValues = values;
 		}
 		
 		public int AnswerID { get; set; }
@@ -19,31 +24,25 @@ namespace HW.EForm.Core.Models
 		public int ExtendedFirst { get; set; }
 		public int CurrentPage { get; set; }
 		public int FeedbackAlert { get; set; }
-
-		public IList<AnswerValue> Values { get; set; }
+		public ProjectRound ProjectRound { get; set; }
 		public ProjectRoundUnit ProjectRoundUnit { get; set; }
-//		public Question Question { get; set; }
-//		public Option Option { get; set; }
-//		
-//		ProjectRoundUser projectRoundUser;
-//		
-//		public ProjectRoundUser ProjectRoundUser {
-//			get {
-//				if (projectRoundUser == null) {
-//					OnProjectRoundUserGet(null);
-//				}
-//				return projectRoundUser;
-//			}
-//			set { projectRoundUser = value; }
-//		}
-//		
-//		public event EventHandler ProjectRoundUserGet;
-//		
-//		protected virtual void OnProjectRoundUserGet(EventArgs e)
-//		{
-//			if (ProjectRoundUserGet != null) {
-//				ProjectRoundUserGet(this, e);
-//			}
-//		}
+		public ProjectRoundUser ProjectRoundUser { get; set; }
+		public bool HasProjectRoundUser {
+			get { return ProjectRoundUser != null; }
+		}
+		public IList<AnswerValue> AnswerValues { get; set; }
+		
+		public void AddAnswerValue(AnswerValue v)
+		{
+			v.Answer = this;
+			AnswerValues.Add(v);
+		}
+		
+		public void AddAnswerValues(IList<AnswerValue> values)
+		{
+			foreach (var v in values) {
+				AddAnswerValue(v);
+			}
+		}
 	}
 }

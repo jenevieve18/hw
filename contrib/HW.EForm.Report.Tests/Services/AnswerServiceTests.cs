@@ -17,16 +17,12 @@ namespace HW.EForm.Report.Tests.Services
 		[Test]
 		public void TestReadAnswer()
 		{
-			var a = s.ReadAnswer(214);
-			Console.WriteLine(a.AnswerKey);
-			foreach (var av in a.Values) {
-				Console.WriteLine("\tValueInt: {0}, Question: {1}, Option: {2}", av.ValueInt, av.Question.Internal, av.Option.Internal);
+//			var a = s.ReadAnswer(214);
+			var a = s.ReadAnswer(9534);
+			Console.WriteLine("Email: {0}, AnswerKey: {1}", a.HasProjectRoundUser ? a.ProjectRoundUser.Email : "", a.AnswerKey);
+			foreach (var av in a.AnswerValues) {
+				Console.WriteLine("\tValueInt: {0}, QuestionID: {3}, Question: {1}, Option: {2}", av.ValueInt, av.Question.Internal, av.Option.Internal, av.QuestionID);
 			}
-		}
-		
-		[Test]
-		public void TestMethod()
-		{
 		}
 	}
 }

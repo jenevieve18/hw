@@ -14,9 +14,13 @@ namespace HW.EForm.Report.Tests.Repositories
 	[TestFixture]
 	public class FeedbackRepositoryTests
 	{
+		IFeedbackRepository fr = new FeedbackRepositoryStub();
+		
 		[Test]
 		public void TestMethod()
 		{
+			var f = fr.Read(1);
+			Assert.AreEqual("HME", f.FeedbackText);
 		}
 	}
 	
@@ -24,7 +28,7 @@ namespace HW.EForm.Report.Tests.Repositories
 	{
 		public FeedbackRepositoryStub()
 		{
-			items.Add(new Feedback { FeedbackID = 1, FeedbackText = "Feedback1" });
+			items.Add(new Feedback { FeedbackID = 1, FeedbackText = "HME" });
 		}
 		
 		public override Feedback Read(int id)
@@ -37,9 +41,20 @@ namespace HW.EForm.Report.Tests.Repositories
 	{
 		public FeedbackQuestionRepositoryStub()
 		{
-			for (int i = 1; i <= 11; i++) {
-				items.Add(new FeedbackQuestion { FeedbackID = 1, QuestionID = i, OptionID = 1 });
-			}
+			items.Add(new FeedbackQuestion { FeedbackID = 1, QuestionID = 1, OptionID = 1 });
+			items.Add(new FeedbackQuestion { FeedbackID = 1, QuestionID = 2, OptionID = 1 });
+			items.Add(new FeedbackQuestion { FeedbackID = 1, QuestionID = 3, OptionID = 1 });
+			items.Add(new FeedbackQuestion { FeedbackID = 1, QuestionID = 4, OptionID = 1 });
+			items.Add(new FeedbackQuestion { FeedbackID = 1, QuestionID = 5, OptionID = 1 });
+			items.Add(new FeedbackQuestion { FeedbackID = 1, QuestionID = 6, OptionID = 1 });
+			items.Add(new FeedbackQuestion { FeedbackID = 1, QuestionID = 7, OptionID = 1 });
+			items.Add(new FeedbackQuestion { FeedbackID = 1, QuestionID = 8, OptionID = 1 });
+			items.Add(new FeedbackQuestion { FeedbackID = 1, QuestionID = 9, OptionID = 1 });
+			items.Add(new FeedbackQuestion { FeedbackID = 1, QuestionID = 10, OptionID = 1 });
+			
+			items.Add(new FeedbackQuestion { FeedbackID = 1, IdxID = 1 });
+			items.Add(new FeedbackQuestion { FeedbackID = 1, IdxID = 2 });
+			items.Add(new FeedbackQuestion { FeedbackID = 1, IdxID = 3 });
 		}
 		
 		public IList<FeedbackQuestion> FindByFeedback(int feedbackID)

@@ -30,5 +30,10 @@ namespace HW.EForm.Report.Tests.Repositories
 		{
 			return items.Find(x => x.QuestionID == questionID);
 		}
+		
+		public WeightedQuestionOption ReadByQuestionAndOption(int questionID, int optionID)
+		{
+			return items.Find(x => x.QuestionID == questionID && x.OptionID == optionID);
+		}
 	}
 }

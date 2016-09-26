@@ -11,6 +11,26 @@ namespace HW.EForm.Core.Helpers
 {
 	public static class ChartHelper
 	{
+		public static Chart ToChart(IList<ProjectRoundUnit> units, QuestionOption questionOption)
+		{
+			var c = new Chart {};
+			foreach (var oc in questionOption.Option.Components) {
+				c.Categories.Add(oc.OptionComponent.Internal);
+			}
+			foreach (var u in units) {
+				var seriesData = new List<List<double>>();
+				var d = new List<double>();
+				foreach (var oc in questionOption.Option.Components) {
+					var values = questionOption.GetAnswerValues(u.ProjectRoundUnitID, oc.OptionComponentID);
+					double v = (double)values.Count / questionOption.AnswerValues.Count * 100;
+					d.Add(v);
+				}
+				seriesData.Add(d);
+				c.Series.Add(new Series(u.Unit, seriesData));
+			}
+			return c;
+		}
+		
 		public static Chart ToChart(this IList<FeedbackQuestion> questions)
 		{
 			if (AreVASQuestions(questions)) {

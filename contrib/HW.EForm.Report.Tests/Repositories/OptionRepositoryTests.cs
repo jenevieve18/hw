@@ -14,9 +14,21 @@ namespace HW.EForm.Report.Tests.Repositories
 	[TestFixture]
 	public class OptionRepositoryTests
 	{
+		OptionRepositoryStub or = new OptionRepositoryStub();
+		OptionComponentRepositoryStub ocr = new OptionComponentRepositoryStub();
+		
 		[Test]
 		public void TestMethod()
 		{
+			var o = or.Read(1);
+			Assert.AreEqual(1, o.OptionID);
+		}
+		
+		[Test]
+		public void TestMethod2()
+		{
+			var oc = ocr.Read(1);
+			Assert.AreEqual(1, oc.ExportValue);
 		}
 	}
 	
@@ -24,9 +36,7 @@ namespace HW.EForm.Report.Tests.Repositories
 	{
 		public OptionRepositoryStub()
 		{
-			foreach (var i in new int[] { 1, 2, 3, 4, 9 }) {
-				items.Add(new Option { OptionID = i, OptionType = i, Internal = "Option" + i });
-			}
+			items.Add(new Option { OptionID = 1 });
 		}
 		
 		public override Option Read(int id)
@@ -39,9 +49,11 @@ namespace HW.EForm.Report.Tests.Repositories
 	{
 		public OptionComponentsRepositoryStub()
 		{
-			for (int i = 1; i <= 5; i++) {
-				items.Add(new OptionComponents { OptionID = 1, OptionComponentID = i });
-			}
+			items.Add(new OptionComponents { OptionID = 1, OptionComponentID = 1});
+			items.Add(new OptionComponents { OptionID = 1, OptionComponentID = 2});
+			items.Add(new OptionComponents { OptionID = 1, OptionComponentID = 3});
+			items.Add(new OptionComponents { OptionID = 1, OptionComponentID = 4});
+			items.Add(new OptionComponents { OptionID = 1, OptionComponentID = 5});
 		}
 		
 		public IList<OptionComponents> FindByOption(int optionID)
@@ -54,9 +66,11 @@ namespace HW.EForm.Report.Tests.Repositories
 	{
 		public OptionComponentRepositoryStub()
 		{
-			for (int i = 1; i <= 5; i++) {
-				items.Add(new OptionComponent { OptionComponentID = i, Internal = "OptionComponent" + i });
-			}
+			items.Add(new OptionComponent { OptionComponentID = 5, Internal = "Completely agree", ExportValue = 5 });
+			items.Add(new OptionComponent { OptionComponentID = 4, Internal = "Agree", ExportValue = 4 });
+			items.Add(new OptionComponent { OptionComponentID = 3, Internal = "Neither agree nor disagree", ExportValue = 3 });
+			items.Add(new OptionComponent { OptionComponentID = 2, Internal = "Disagree", ExportValue = 2 });
+			items.Add(new OptionComponent { OptionComponentID = 1, Internal = "Complete disagree", ExportValue = 1 });
 		}
 		
 		public override OptionComponent Read(int id)
@@ -69,11 +83,6 @@ namespace HW.EForm.Report.Tests.Repositories
 	{
 		public OptionComponentLangRepositoryStub()
 		{
-			for (int i = 1; i <= 5; i++) {
-				for (int j = 1; j <= 2; j++) {
-					items.Add(new OptionComponentLang { OptionComponentID = i, LangID = j, Text = "OptionComponent" + i + "Lang" + j });
-				}
-			}
 		}
 		
 		public IList<OptionComponentLang> FindByOptionComponent(int optionComponentID)

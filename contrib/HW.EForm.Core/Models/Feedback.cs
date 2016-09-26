@@ -6,6 +6,8 @@ namespace HW.EForm.Core.Models
 {
 	public class Feedback
 	{
+		List<int> chartIDs = new List<int>();
+		
 		public Feedback()
 		{
 			Questions = new List<FeedbackQuestion>();
@@ -17,22 +19,8 @@ namespace HW.EForm.Core.Models
 		public int Compare { get; set; }
 		public int FeedbackTemplateID { get; set; }
 		public int NoHardcodedIdxs { get; set; }
-		
 		public Survey Survey { get; set; }
 		public IList<FeedbackQuestion> Questions { get; set; }
-
-//		public Dictionary<int, List<FeedbackQuestion>> GetGroupedQuestions()
-//		{
-//			var groups = new Dictionary<int, List<FeedbackQuestion>>();
-//			foreach (var fq in Questions) {
-//				if (!groups.ContainsKey(fq.PartOfChart)) {
-//					groups.Add(fq.PartOfChart, new List<FeedbackQuestion>());
-//				}
-//				var @group = groups[fq.PartOfChart];
-//				@group.Add(fq);
-//			}
-//			return groups;
-//		}
 		
 		public IList<Chart> Charts {
 			get {
@@ -48,7 +36,6 @@ namespace HW.EForm.Core.Models
 			}
 		}
 		
-		List<int> chartIDs = new List<int>();
 		public bool HasGroupedChart(int chartID)
 		{
 			return chartIDs.Contains(chartID);
