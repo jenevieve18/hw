@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="HW.Core.Models" assembly="HW.Core">
-	<class name="Survey" table="Survey">
-		<id name="Id" column="SurveyID">
-			<generator class="identity" />
-		</id>
-		<property name="Internal" />
-	</class>
-</hibernate-mapping>

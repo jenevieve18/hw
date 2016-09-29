@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="HW.Core.Models" assembly="HW.Core">
-	<class name="Department" table="Department">
-		<id name="Id" column="DepartmentID">
-			<generator class="identity" />
-		</id>
-		<property name="Name" column="Department" />
-	</class>
-</hibernate-mapping>
