@@ -82,6 +82,7 @@
     <Compile Include="Models\ManagerProjectRoundUnit.cs" />
     <Compile Include="Models\Option.cs" />
     <Compile Include="Models\OptionComponent.cs" />
+    <Compile Include="Models\OptionComponentContainer.cs" />
     <Compile Include="Models\OptionComponentLang.cs" />
     <Compile Include="Models\OptionComponents.cs" />
     <Compile Include="Models\OptionContainer.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Models\Report.cs" />
     <Compile Include="Models\ReportLang.cs" />
     <Compile Include="Models\ReportPart.cs" />
+    <Compile Include="Models\ReportPartComponent.cs" />
     <Compile Include="Models\Survey.cs" />
     <Compile Include="Models\SurveyQuestion.cs" />
     <Compile Include="Models\SurveyQuestionIf.cs" />

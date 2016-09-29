@@ -7,6 +7,7 @@ namespace HW.EForm.Core.Models
 	{
 		public ManagerProjectRound()
 		{
+			Units = new List<ManagerProjectRoundUnit>();
 		}
 		
 		public int ManagerProjectRoundID { get; set; }
@@ -19,5 +20,17 @@ namespace HW.EForm.Core.Models
 
 		public ProjectRound ProjectRound { get; set; }
 		public IList<ManagerProjectRoundUnit> Units { get; set; }
+		
+		public Manager Manager { get; set; }
+		
+		public void AddUnit(ProjectRoundUnit unit)
+		{
+			AddUnit(new ManagerProjectRoundUnit { ProjectRoundUnit = unit });
+		}
+		
+		public void AddUnit(ManagerProjectRoundUnit unit)
+		{
+			Units.Add(unit);
+		}
 	}
 }

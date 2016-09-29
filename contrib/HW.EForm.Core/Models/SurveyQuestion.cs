@@ -11,6 +11,7 @@ namespace HW.EForm.Core.Models
 		
 		public int SurveyQuestionID { get; set; }
 		public int SurveyID { get; set; }
+		public Survey Survey { get; set; }
 		public int QuestionID { get; set; }
 		public int OptionsPlacement { get; set; }
 		public string Variablename { get; set; }

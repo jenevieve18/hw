@@ -29,8 +29,8 @@ namespace HW.EForm.Core.Services
 			var a = answerRepo.Read(answerID);
 			if (a != null) {
 				a.ProjectRoundUser = projectRoundUserRepo.Read(a.ProjectRoundUserID);
-				a.AnswerValues = answerValueRepo.FindByAnswer(answerID);
-				foreach (var av in a.AnswerValues) {
+				a.Values = answerValueRepo.FindByAnswer(answerID);
+				foreach (var av in a.Values) {
 					av.Question = questionRepo.Read(av.QuestionID);
 					av.Option = optionRepo.Read(av.OptionID);
 				}
@@ -42,8 +42,8 @@ namespace HW.EForm.Core.Services
 		{
 			var a = answerRepo.ReadByProjectRound(projectRoundID, projectRoundUnitID);
 			if (a != null) {
-				a.AnswerValues = answerValueRepo.FindByAnswer(a.AnswerID);
-				foreach (var av in a.AnswerValues) {
+				a.Values = answerValueRepo.FindByAnswer(a.AnswerID);
+				foreach (var av in a.Values) {
 					av.Question = questionRepo.Read(av.QuestionID);
 					av.Option = optionRepo.Read(av.OptionID);
 				}

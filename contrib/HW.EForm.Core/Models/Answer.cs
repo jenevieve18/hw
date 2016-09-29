@@ -11,7 +11,7 @@ namespace HW.EForm.Core.Models
 		
 		public Answer(IList<AnswerValue> values)
 		{
-			AnswerValues = values;
+			Values = values;
 		}
 		
 		public int AnswerID { get; set; }
@@ -30,18 +30,18 @@ namespace HW.EForm.Core.Models
 		public bool HasProjectRoundUser {
 			get { return ProjectRoundUser != null; }
 		}
-		public IList<AnswerValue> AnswerValues { get; set; }
+		public IList<AnswerValue> Values { get; set; }
 		
-		public void AddAnswerValue(AnswerValue v)
+		public void AddValue(AnswerValue v)
 		{
 			v.Answer = this;
-			AnswerValues.Add(v);
+			Values.Add(v);
 		}
 		
-		public void AddAnswerValues(IList<AnswerValue> values)
+		public void AddValues(IList<AnswerValue> values)
 		{
 			foreach (var v in values) {
-				AddAnswerValue(v);
+				AddValue(v);
 			}
 		}
 	}

@@ -94,7 +94,7 @@ namespace HW.EForm.Core.Models
 		{
 			var questions = new List<Question>();
 			foreach (var a in Answers) {
-				foreach (var av in a.AnswerValues) {
+				foreach (var av in a.Values) {
 					if (!ExistsIn(questions, av.Question)) {
 						questions.Add(av.Question);
 					}

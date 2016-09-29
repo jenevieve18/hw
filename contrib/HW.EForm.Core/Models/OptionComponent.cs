@@ -16,6 +16,7 @@ namespace HW.EForm.Core.Models
 		public int ExportValue { get; set; }
 		public string Internal { get; set; }
 		public int OptionComponentContainerID { get; set; }
+		public OptionComponentContainer Container { get; set; }
 		public IList<AnswerValue> AnswerValues { get; set; }
 		public int SelectedOptionComponentLangID { get; set; }
 		public IList<OptionComponentLang> Languages { get; set; }

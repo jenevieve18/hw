@@ -7,6 +7,7 @@ namespace HW.EForm.Core.Models
 	{
 		public Survey()
 		{
+			Questions = new List<SurveyQuestion>();
 		}
 		
 		public Survey(Survey s)
@@ -31,6 +32,17 @@ namespace HW.EForm.Core.Models
 		public int TwoColumns { get; set; }
 
 		public IList<SurveyQuestion> Questions { get; set; }
+		
+		public void AddQuestion(Question question)
+		{
+			AddQuestion(new SurveyQuestion { Question = question });
+		}
+		
+		public void AddQuestion(SurveyQuestion question)
+		{
+			question.Survey = this;
+			Questions.Add(question);
+		}
 		
 		public override string ToString()
 		{

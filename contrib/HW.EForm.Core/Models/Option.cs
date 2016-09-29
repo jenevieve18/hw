@@ -78,6 +78,14 @@ namespace HW.EForm.Core.Models
 		}
 	}
 	
+	public class OptionPlacements
+	{
+		public const int HorizontalLabelsTop = 1;
+		public const int HorizontalLabelsRight = 3;
+		public const int HorizontalNoLabels = 5;
+		public const int VerticalLabelsRight = 8;
+	}
+	
 	public class OptionTypes
 	{
 		public const int SingleChoice = 1;

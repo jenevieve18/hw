@@ -50,6 +50,21 @@ namespace HW.EForm.Core.Models
 		public IList<ProjectRoundLang> Languages { get; set; }
 		public Feedback Feedback { get; set; }
 		
+		public bool HasStarted {
+			get { return Started != null && Started < DateTime.Now; }
+		}
+		
+		public bool IsClosed {
+			get { return Closed != null && Closed < DateTime.Now; }
+		}
+		
+		public void AddUnits(IList<ProjectRoundUnit> units)
+		{
+			foreach (var u in units) {
+				AddUnit(u);
+			}
+		}
+		
 		public void AddUnit(string unit)
 		{
 			AddUnit(new ProjectRoundUnit { Unit = unit });
@@ -57,6 +72,7 @@ namespace HW.EForm.Core.Models
 		
 		public void AddUnit(ProjectRoundUnit unit)
 		{
+			unit.ProjectRound = this;
 			Units.Add(unit);
 		}
 		

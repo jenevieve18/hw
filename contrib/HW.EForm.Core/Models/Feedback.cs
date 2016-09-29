@@ -22,6 +22,28 @@ namespace HW.EForm.Core.Models
 		public Survey Survey { get; set; }
 		public IList<FeedbackQuestion> Questions { get; set; }
 		
+		public int CountQuestions()
+		{
+			int questions = 0;
+			foreach (var q in Questions) {
+				if (q.HasQuestion) {
+					questions ++;
+				}
+			}
+			return questions;
+		}
+		
+		public int CountIndexes()
+		{
+			int indexes = 0;
+			foreach (var q in Questions) {
+				if (q.HasIndex) {
+					indexes ++;
+				}
+			}
+			return indexes;
+		}
+		
 		public IList<Chart> Charts {
 			get {
 				var charts = new List<Chart>();
@@ -47,9 +69,14 @@ namespace HW.EForm.Core.Models
 			return (Questions as List<FeedbackQuestion>).FindAll(x => x.PartOfChart == chartID);
 		}
 		
-		public void AddQuestion(Question q)
+		public void AddQuestion(Index index)
 		{
-			AddQuestion(new FeedbackQuestion { Question = q });
+			AddQuestion(new FeedbackQuestion { Index = index });
+		}
+		
+		public void AddQuestion(Question question)
+		{
+			AddQuestion(new FeedbackQuestion { Question = question });
 		}
 		
 		public void AddQuestion(FeedbackQuestion fq)

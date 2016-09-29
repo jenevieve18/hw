@@ -21,6 +21,12 @@ namespace HW.EForm.Core.Models
 		public IList<ReportLang> Languages { get; set; }
 		public int SelectedQuestionLangID { get; set; }
 		
+		public void AddPart(ReportPart part)
+		{
+			part.Report = this;
+			Parts.Add(part);
+		}
+		
 		public ReportLang FirstLanguage {
 			get {
 				if (Languages.Count > 0) {

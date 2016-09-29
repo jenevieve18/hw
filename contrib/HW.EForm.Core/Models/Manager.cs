@@ -7,6 +7,7 @@ namespace HW.EForm.Core.Models
 	{
 		public Manager()
 		{
+			ProjectRounds = new List<ManagerProjectRound>();
 		}
 		
 		public int ManagerID { get; set; }
@@ -25,5 +26,16 @@ namespace HW.EForm.Core.Models
 		public int SeeSurvey { get; set; }
 
 		public IList<ManagerProjectRound> ProjectRounds { get; set; }
+		
+		public void AddProjectRound(ProjectRound round)
+		{
+			AddProjectRound(new ManagerProjectRound { ProjectRound = round });
+		}
+		
+		public void AddProjectRound(ManagerProjectRound round)
+		{
+			round.Manager = this;
+			ProjectRounds.Add(round);
+		}
 	}
 }
