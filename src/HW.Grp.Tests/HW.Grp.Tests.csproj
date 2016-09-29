@@ -51,23 +51,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExerciseShowTests.cs" />
+    <Compile Include="Helpers\GroupStatsGraphFactoryTests.cs" />
+    <Compile Include="Helpers\ReminderHelperTests.cs" />
     <Compile Include="Models\ReportTests.cs" />
-    <Compile Include="ReminderHelperTests.cs" />
-    <Compile Include="MyExerciseShowTests.cs" />
-    <Compile Include="MyExerciseTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DefaultTests.cs" />
-    <Compile Include="ExerciseTests.cs" />
-    <Compile Include="FeedbackTests.cs" />
-    <Compile Include="ManagerSetupTests.cs" />
-    <Compile Include="ManagersTests.cs" />
-    <Compile Include="MessagesTests.cs" />
-    <Compile Include="OrgTests.cs" />
-    <Compile Include="RemindersTests.cs" />
     <Compile Include="Repositories\ReportRepositoryTests.cs" />
-    <Compile Include="StatsTests.cs" />
-    <Compile Include="ExerciseExportTests.cs" />
+    <Compile Include="Services\ReportServiceTests.cs" />
+    <Compile Include="Views\DefaultTests.cs" />
+    <Compile Include="Views\ExerciseExportTests.cs" />
+    <Compile Include="Views\ExerciseShowTests.cs" />
+    <Compile Include="Views\ExerciseTests.cs" />
+    <Compile Include="Views\FeedbackTests.cs" />
+    <Compile Include="Views\ManagerSetupTests.cs" />
+    <Compile Include="Views\ManagersTests.cs" />
+    <Compile Include="Views\MessagesTests.cs" />
+    <Compile Include="Views\MyExerciseShowTests.cs" />
+    <Compile Include="Views\MyExerciseTests.cs" />
+    <Compile Include="Views\OrgTests.cs" />
+    <Compile Include="Views\RemindersTests.cs" />
+    <Compile Include="Views\StatsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -84,6 +86,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models" />
+    <Folder Include="Helpers" />
+    <Folder Include="Services" />
+    <Folder Include="Views" />
     <Folder Include="Repositories" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

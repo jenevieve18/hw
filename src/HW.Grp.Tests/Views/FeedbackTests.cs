@@ -9,7 +9,7 @@
 using System;
 using NUnit.Framework;
 
-namespace HW.Grp.Tests
+namespace HW.Grp.Tests.Views
 {
 	[TestFixture]
 	public class FeedbackTests

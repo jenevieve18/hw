@@ -12,7 +12,7 @@ using System.IO;
 using HW.Core.Models;
 using NUnit.Framework;
 
-namespace HW.Grp.Tests
+namespace HW.Grp.Tests.Views
 {
 	[TestFixture]
 	public class ExerciseExportTests

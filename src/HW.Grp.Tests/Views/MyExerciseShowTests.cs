@@ -13,7 +13,7 @@ using HW.Core.Repositories.Sql;
 using HW.Core.Services;
 using NUnit.Framework;
 
-namespace HW.Grp.Tests
+namespace HW.Grp.Tests.Views
 {
 	[TestFixture]
 	public class MyExerciseShowTests

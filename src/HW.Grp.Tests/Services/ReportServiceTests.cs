@@ -4,16 +4,16 @@
 // </file>
 
 using System;
-using HW.Core.Models;
-using HW.Core.Repositories;
-using HW.Core.Services;
 using NUnit.Framework;
 
-namespace HW.Grp.Tests.Models
+namespace HW.Grp.Tests.Services
 {
 	[TestFixture]
-	public class ReportTests
+	public class ReportServiceTests
 	{
-		
+		[Test]
+		public void TestMethod()
+		{
+		}
 	}
 }

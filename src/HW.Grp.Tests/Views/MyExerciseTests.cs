@@ -11,7 +11,7 @@ using HW.Core.Models;
 using HW.Core.Repositories.Sql;
 using NUnit.Framework;
 
-namespace HW.Grp.Tests
+namespace HW.Grp.Tests.Views
 {
 	[TestFixture]
 	public class MyExerciseTests

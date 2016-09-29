@@ -10,7 +10,7 @@ using System;
 using HW.Core.Repositories;
 using NUnit.Framework;
 
-namespace HW.Grp.Tests
+namespace HW.Grp.Tests.Views
 {
 	[TestFixture]
 	public class DefaultTests

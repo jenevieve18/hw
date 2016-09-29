@@ -6,7 +6,7 @@ using HW.Core.Repositories.Sql;
 //using HW.Grp;
 using NUnit.Framework;
 
-namespace HW.Grp.Tests.Models
+namespace HW.Grp.Tests.Helpers
 {
 	[TestFixture]
 	public class ReminderHelperTests

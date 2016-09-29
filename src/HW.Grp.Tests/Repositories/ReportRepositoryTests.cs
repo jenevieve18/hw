@@ -12,12 +12,12 @@ namespace HW.Grp.Tests.Repositories
 	[TestFixture]
 	public class ReportRepositoryTests
 	{
-		ReportRepositoryStub r = new ReportRepositoryStub();
+		ReportRepositoryStub reportRepo = new ReportRepositoryStub();
 		
 		[Test]
 		public void TestMethod()
 		{
-			var x = r.Read(1);
+			var r = reportRepo.Read(1);
 		}
 	}
 }
