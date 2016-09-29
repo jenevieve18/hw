@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{489C2456-EB4D-4EDA-A400-7E7EB7B20DC0}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>HW.EForm.Core</RootNamespace>
+    <AssemblyName>HW.EForm.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <NoWin32Manifest>False</NoWin32Manifest>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Answer.cs" />
+    <Compile Include="Models\AnswerValue.cs" />
+    <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\CustomReport.cs" />
+    <Compile Include="Models\CustomReportRow.cs" />
+    <Compile Include="Models\Debug.cs" />
+    <Compile Include="Models\Feedback.cs" />
+    <Compile Include="Models\FeedbackQuestion.cs" />
+    <Compile Include="Models\FeedbackRun.cs" />
+    <Compile Include="Models\FeedbackRunRow.cs" />
+    <Compile Include="Models\FeedbackTemplate.cs" />
+    <Compile Include="Models\FeedbackTemplatePage.cs" />
+    <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\Idx.cs" />
+    <Compile Include="Models\IdxLang.cs" />
+    <Compile Include="Models\IdxPart.cs" />
+    <Compile Include="Models\IdxPartComponent.cs" />
+    <Compile Include="Models\Lang.cs" />
+    <Compile Include="Models\MailQueue.cs" />
+    <Compile Include="Models\Manager.cs" />
+    <Compile Include="Models\ManagerProjectRound.cs" />
+    <Compile Include="Models\ManagerProjectRoundUnit.cs" />
+    <Compile Include="Models\Nav.cs" />
+    <Compile Include="Models\Option.cs" />
+    <Compile Include="Models\OptionComponent.cs" />
+    <Compile Include="Models\OptionComponents.cs" />
+    <Compile Include="Models\OptionComponentContainer.cs" />
+    <Compile Include="Models\OptionComponentLang.cs" />
+    <Compile Include="Models\OptionContainer.cs" />
+    <Compile Include="Models\PlotType.cs" />
+    <Compile Include="Models\PlotTypeLang.cs" />
+    <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\ProjectRound.cs" />
+    <Compile Include="Models\ProjectRoundLang.cs" />
+    <Compile Include="Models\ProjectRoundQO.cs" />
+    <Compile Include="Models\ProjectRoundUnit.cs" />
+    <Compile Include="Models\ProjectRoundUnitManager.cs" />
+    <Compile Include="Models\ProjectRoundUser.cs" />
+    <Compile Include="Models\ProjectRoundUserCompare.cs" />
+    <Compile Include="Models\ProjectRoundUserQO.cs" />
+    <Compile Include="Models\ProjectSurvey.cs" />
+    <Compile Include="Models\ProjectUnitCategory.cs" />
+    <Compile Include="Models\ProjectUserCategory.cs" />
+    <Compile Include="Models\Question.cs" />
+    <Compile Include="Models\QuestionCategory.cs" />
+    <Compile Include="Models\QuestionCategoryLang.cs" />
+    <Compile Include="Models\QuestionCategoryQuestion.cs" />
+    <Compile Include="Models\QuestionContainer.cs" />
+    <Compile Include="Models\QuestionLang.cs" />
+    <Compile Include="Models\QuestionOption.cs" />
+    <Compile Include="Models\QuestionOptionRange.cs" />
+    <Compile Include="Models\Report.cs" />
+    <Compile Include="Models\ReportLang.cs" />
+    <Compile Include="Models\ReportPart.cs" />
+    <Compile Include="Models\ReportPartComponent.cs" />
+    <Compile Include="Models\ReportPartLang.cs" />
+    <Compile Include="Models\Sponsor.cs" />
+    <Compile Include="Models\SponsorAdmin.cs" />
+    <Compile Include="Models\SponsorAutoPRU.cs" />
+    <Compile Include="Models\SponsorLang.cs" />
+    <Compile Include="Models\SponsorPRU.cs" />
+    <Compile Include="Models\SponsorReminder.cs" />
+    <Compile Include="Models\SponsorSuperAdmin.cs" />
+    <Compile Include="Models\SponsorSuperAdminSponsor.cs" />
+    <Compile Include="Models\SponsorUserCheck.cs" />
+    <Compile Include="Models\Survey.cs" />
+    <Compile Include="Models\SurveyLang.cs" />
+    <Compile Include="Models\SurveyQuestion.cs" />
+    <Compile Include="Models\SurveyQuestionIf.cs" />
+    <Compile Include="Models\SurveyQuestionLang.cs" />
+    <Compile Include="Models\SurveyQuestionOption.cs" />
+    <Compile Include="Models\SurveyQuestionOptionComponent.cs" />
+    <Compile Include="Models\SurveyQuestionOptionComponentLang.cs" />
+    <Compile Include="Models\TempReport.cs" />
+    <Compile Include="Models\TempReportComponent.cs" />
+    <Compile Include="Models\TempReportComponentAnswer.cs" />
+    <Compile Include="Models\Unit.cs" />
+    <Compile Include="Models\UnitCategory.cs" />
+    <Compile Include="Models\UnitCategoryLang.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserCategory.cs" />
+    <Compile Include="Models\UserCategoryLang.cs" />
+    <Compile Include="Models\UserNote.cs" />
+    <Compile Include="Models\UserProjectRoundUser.cs" />
+    <Compile Include="Models\UserSchedule.cs" />
+    <Compile Include="Models\WeightedQuestionOption.cs" />
+    <Compile Include="Models\WeightedQuestionOptionLang.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\SqlAnswerRepository.cs" />
+    <Compile Include="Repositories\SqlAnswerValueRepository.cs" />
+    <Compile Include="Repositories\SqlBaseRepository.cs" />
+    <Compile Include="Repositories\SqlCustomReportRepository.cs" />
+    <Compile Include="Repositories\SqlCustomReportRowRepository.cs" />
+    <Compile Include="Repositories\SqlDebugRepository.cs" />
+    <Compile Include="Repositories\SqlFeedbackQuestionRepository.cs" />
+    <Compile Include="Repositories\SqlFeedbackRepository.cs" />
+    <Compile Include="Repositories\SqlFeedbackRunRepository.cs" />
+    <Compile Include="Repositories\SqlFeedbackRunRowRepository.cs" />
+    <Compile Include="Repositories\SqlFeedbackTemplatePageRepository.cs" />
+    <Compile Include="Repositories\SqlFeedbackTemplateRepository.cs" />
+    <Compile Include="Repositories\SqlGroupRepository.cs" />
+    <Compile Include="Repositories\SqlIdxLangRepository.cs" />
+    <Compile Include="Repositories\SqlIdxPartComponentRepository.cs" />
+    <Compile Include="Repositories\SqlIdxPartRepository.cs" />
+    <Compile Include="Repositories\SqlIdxRepository.cs" />
+    <Compile Include="Repositories\SqlLangRepository.cs" />
+    <Compile Include="Repositories\SqlMailQueueRepository.cs" />
+    <Compile Include="Repositories\SqlManagerProjectRoundRepository.cs" />
+    <Compile Include="Repositories\SqlManagerProjectRoundUnitRepository.cs" />
+    <Compile Include="Repositories\SqlManagerRepository.cs" />
+    <Compile Include="Repositories\SqlNavRepository.cs" />
+    <Compile Include="Repositories\SqlOptionComponentContainerRepository.cs" />
+    <Compile Include="Repositories\SqlOptionComponentLangRepository.cs" />
+    <Compile Include="Repositories\SqlOptionComponentRepository.cs" />
+    <Compile Include="Repositories\SqlOptionComponentsRepository.cs" />
+    <Compile Include="Repositories\SqlOptionContainerRepository.cs" />
+    <Compile Include="Repositories\SqlOptionRepository.cs" />
+    <Compile Include="Repositories\SqlPlotTypeLangRepository.cs" />
+    <Compile Include="Repositories\SqlPlotTypeRepository.cs" />
+    <Compile Include="Repositories\SqlProjectRepository.cs" />
+    <Compile Include="Repositories\SqlProjectRoundLangRepository.cs" />
+    <Compile Include="Repositories\SqlProjectRoundQORepository.cs" />
+    <Compile Include="Repositories\SqlProjectRoundRepository.cs" />
+    <Compile Include="Repositories\SqlProjectRoundUnitManagerRepository.cs" />
+    <Compile Include="Repositories\SqlProjectRoundUnitRepository.cs" />
+    <Compile Include="Repositories\SqlProjectRoundUserCompareRepository.cs" />
+    <Compile Include="Repositories\SqlProjectRoundUserQORepository.cs" />
+    <Compile Include="Repositories\SqlProjectRoundUserRepository.cs" />
+    <Compile Include="Repositories\SqlProjectSurveyRepository.cs" />
+    <Compile Include="Repositories\SqlProjectUnitCategoryRepository.cs" />
+    <Compile Include="Repositories\SqlProjectUserCategoryRepository.cs" />
+    <Compile Include="Repositories\SqlQuestionCategoryLangRepository.cs" />
+    <Compile Include="Repositories\SqlQuestionCategoryQuestionRepository.cs" />
+    <Compile Include="Repositories\SqlQuestionCategoryRepository.cs" />
+    <Compile Include="Repositories\SqlQuestionContainerRepository.cs" />
+    <Compile Include="Repositories\SqlQuestionLangRepository.cs" />
+    <Compile Include="Repositories\SqlQuestionOptionRangeRepository.cs" />
+    <Compile Include="Repositories\SqlQuestionOptionRepository.cs" />
+    <Compile Include="Repositories\SqlQuestionRepository.cs" />
+    <Compile Include="Repositories\SqlReportLangRepository.cs" />
+    <Compile Include="Repositories\SqlReportPartComponentRepository.cs" />
+    <Compile Include="Repositories\SqlReportPartLangRepository.cs" />
+    <Compile Include="Repositories\SqlReportPartRepository.cs" />
+    <Compile Include="Repositories\SqlReportRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorAdminRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorAutoPRURepository.cs" />
+    <Compile Include="Repositories\SqlSponsorLangRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorPRURepository.cs" />
+    <Compile Include="Repositories\SqlSponsorReminderRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorSuperAdminRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorSuperAdminSponsorRepository.cs" />
+    <Compile Include="Repositories\SqlSponsorUserCheckRepository.cs" />
+    <Compile Include="Repositories\SqlSurveyLangRepository.cs" />
+    <Compile Include="Repositories\SqlSurveyQuestionIfRepository.cs" />
+    <Compile Include="Repositories\SqlSurveyQuestionLangRepository.cs" />
+    <Compile Include="Repositories\SqlSurveyQuestionOptionComponentLangRepository.cs" />
+    <Compile Include="Repositories\SqlSurveyQuestionOptionComponentRepository.cs" />
+    <Compile Include="Repositories\SqlSurveyQuestionOptionRepository.cs" />
+    <Compile Include="Repositories\SqlSurveyQuestionRepository.cs" />
+    <Compile Include="Repositories\SqlSurveyRepository.cs" />
+    <Compile Include="Repositories\SqlTempReportComponentAnswerRepository.cs" />
+    <Compile Include="Repositories\SqlTempReportComponentRepository.cs" />
+    <Compile Include="Repositories\SqlTempReportRepository.cs" />
+    <Compile Include="Repositories\SqlUnitCategoryLangRepository.cs" />
+    <Compile Include="Repositories\SqlUnitCategoryRepository.cs" />
+    <Compile Include="Repositories\SqlUnitRepository.cs" />
+    <Compile Include="Repositories\SqlUserCategoryLangRepository.cs" />
+    <Compile Include="Repositories\SqlUserCategoryRepository.cs" />
+    <Compile Include="Repositories\SqlUserNoteRepository.cs" />
+    <Compile Include="Repositories\SqlUserProjectRoundUserRepository.cs" />
+    <Compile Include="Repositories\SqlUserRepository.cs" />
+    <Compile Include="Repositories\SqlUserScheduleRepository.cs" />
+    <Compile Include="Repositories\SqlWeightedQuestionOptionLangRepository.cs" />
+    <Compile Include="Repositories\SqlWeightedQuestionOptionRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models" />
+    <Folder Include="Repositories" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
