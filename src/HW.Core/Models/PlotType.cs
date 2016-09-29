@@ -7,7 +7,7 @@ using HW.Core.Models;
 using HW.Core.Repositories;
 using HW.Core.Repositories.Sql;
 
-namespace HW.Core.Helpers
+namespace HW.Core.Models
 {
 	public class PlotType : BaseModel
 	{

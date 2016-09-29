@@ -5,11 +5,11 @@ namespace HW.Core.Models
 {
 	public class Measure : BaseModel
 	{
-		public virtual string Name { get; set; }
-		public virtual MeasureCategory Category { get; set; }
-		public virtual int SortOrder { get; set; }
-		public virtual string Description { get; set; }
-		public virtual IList<MeasureComponent> Components { get; set; }
+		public string Name { get; set; }
+		public MeasureCategory Category { get; set; }
+		public int SortOrder { get; set; }
+		public string Description { get; set; }
+		public IList<MeasureComponent> Components { get; set; }
 		
 		public Measure()
 		{
@@ -19,17 +19,17 @@ namespace HW.Core.Models
 	
 	public class MeasureCategory : BaseModel
 	{
-		public virtual string Name { get; set; }
-		public virtual MeasureType Type { get; set; }
-		public virtual int SortOrder { get; set; }
-		public virtual IList<MeasureCategoryLanguage> Languages { get; set; }
+		public string Name { get; set; }
+		public MeasureType Type { get; set; }
+		public int SortOrder { get; set; }
+		public IList<MeasureCategoryLanguage> Languages { get; set; }
 	}
 	
 	public class MeasureCategoryLanguage : BaseModel
 	{
-		public virtual MeasureCategory Category { get; set; }
-		public virtual Measure Measure { get; set; }
-		public virtual Language Language { get; set; }
+		public MeasureCategory Category { get; set; }
+		public Measure Measure { get; set; }
+		public Language Language { get; set; }
 	}
 	
 	public class MeasureComponent : BaseModel
@@ -41,37 +41,37 @@ namespace HW.Core.Models
 	
 	public class MeasureComponentLanguage : BaseModel
 	{
-		public virtual MeasureComponent Component { get; set; }
-		public virtual Language Language { get; set; }
-		public virtual string ComponentName { get; set; }
-		public virtual string Unit { get; set; }
+		public MeasureComponent Component { get; set; }
+		public Language Language { get; set; }
+		public string ComponentName { get; set; }
+		public string Unit { get; set; }
 	}
 	
 	public class MeasureComponentPart : BaseModel
 	{
-		public virtual MeasureComponent Component { get; set; }
-		public virtual int Part { get; set; }
-		public virtual int SortOrder { get; set; }
+		public MeasureComponent Component { get; set; }
+		public int Part { get; set; }
+		public int SortOrder { get; set; }
 	}
 	
 	public class MeasureLanguage : BaseModel
 	{
-		public virtual Measure Measure { get; set; }
-		public virtual Language Language { get; set; }
-		public virtual string MeasureName { get; set; }
+		public Measure Measure { get; set; }
+		public Language Language { get; set; }
+		public string MeasureName { get; set; }
 	}
 	
 	public class MeasureType : BaseModel
 	{
-		public virtual string Name { get; set; }
-		public virtual bool Active { get; set; }
-		public virtual int SortOrder { get; set; }
+		public string Name { get; set; }
+		public bool Active { get; set; }
+		public int SortOrder { get; set; }
 	}
 	
 	public class MeasureTypeLanguage : BaseModel
 	{
-		public virtual Measure Measure { get; set; }
-		public virtual Language Language { get; set; }
-		public virtual string TypeName { get; set; }
+		public Measure Measure { get; set; }
+		public Language Language { get; set; }
+		public string TypeName { get; set; }
 	}
 }

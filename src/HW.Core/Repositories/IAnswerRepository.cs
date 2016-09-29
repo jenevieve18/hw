@@ -37,6 +37,11 @@ namespace HW.Core.Repositories
 	
 	public class AnswerRepositoryStub : BaseRepositoryStub<Answer>, IAnswerRepository
 	{
+		public AnswerRepositoryStub()
+		{
+			data.Add(new Answer { Id = 1, ProjectRoundUserID = 1, ProjectRoundUnitID = 1 });
+		}
+		
 		public IList<BackgroundAnswer> FindBackgroundAnswers(int bqID)
 		{
 			var answers = new List<BackgroundAnswer>();
@@ -103,7 +108,8 @@ namespace HW.Core.Repositories
 					CountV = 10,
 					StandardDeviation = 11.3f
 				};
-				a.Values = new List<AnswerValue>();
+//				a.Values = new List<AnswerValue>();
+				a.Values = new List<IValue>();
 				for (int j = 0; j < 10; j++) {
 					a.Values.Add(new AnswerValue { ValueDecimal = r.Next(0, 100), ValueInt = r.Next(0, 100) });
 				}
@@ -147,7 +153,8 @@ namespace HW.Core.Repositories
 		public Answer ReadByQuestionAndOption(int answerID, int questionID, int optionID)
 		{
 			var a = new Answer();
-			a.Values = new List<AnswerValue>(
+//			a.Values = new List<AnswerValue>(
+			a.Values = new List<IValue>(
 				new AnswerValue[] {
 					new AnswerValue { Answer = a, ValueInt = 10 }
 				}

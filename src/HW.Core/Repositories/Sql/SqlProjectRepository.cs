@@ -53,16 +53,19 @@ SELECT COUNT(*) FROM ProjectRoundUnit pru WHERE LEFT(pru.SortString, {1}) = '{0}
 			string query = string.Format(
 				@"
 SELECT SortString,
-	dbo.cf_unitLangID(ProjectRoundUnitID)
+	dbo.cf_unitLangID(ProjectRoundUnitID),
+	ProjectRoundUnitID
 FROM ProjectRoundUnit
 WHERE ProjectRoundUnitID = {0}",
 				projectRoundUnitID
 			);
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				if (rs.Read()) {
-					var p = new ProjectRoundUnit();
-					p.SortString = rs.GetString(0);
-					p.Language = new Language { Id = rs.GetInt32(1) };
+					var p = new ProjectRoundUnit {
+						SortString = rs.GetString(0),
+						Language = new Language { Id = rs.GetInt32(1) },
+						Id = GetInt32(rs, 2)
+					};
 					return p;
 				}
 			}

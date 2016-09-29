@@ -223,70 +223,6 @@ AND a.EndDT < '{2}'
 			return null;
 		}
 		
-//		public Answer Read3(int answerID, int questionID)
-//		{
-//			string query = string.Format(
-//				@"
-//SELECT COUNT(*)
-//FROM AnswerValue WHERE AnswerID = {0}
-//AND QuestionID = {1}
-//AND DeletedSessionID IS NULL
-//AND (ValueInt IS NOT NULL OR ValueDecimal IS NOT NULL OR ValueDateTime IS NOT NULL OR ValueText IS NOT NULL)",
-//				answerID,
-//				questionID
-//			);
-//			using (SqlDataReader rs3 = Db.rs(query, "eFormSqlConnection")) {
-//				if (rs3.Read()) {
-//					return new Answer {
-//						CountV = GetInt32(rs3, 0)
-//					};
-//				}
-//			}
-//			return null;
-//		}
-//		
-//		public Answer Read2(int projectRoundUserID)
-//		{
-//			string query = string.Format(
-//				@"
-//SELECT a.AnswerID,
-//	a.CurrentPage
-//FROM Answer a
-//WHERE a.ProjectRoundUserID = {0}",
-//				projectRoundUserID
-//			);
-//			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
-//				if (rs.Read()) {
-//					return new Answer {
-//						Id = GetInt32(rs, 0),
-//						CurrentPage = GetInt32(rs, 1)
-//					};
-//				}
-//			}
-//			return null;
-//		}
-//		
-//		public BackgroundAnswer Read(string bqID, int val)
-//		{
-//			string query = string.Format(
-//				@"
-//SELECT BAID
-//FROM BA
-//WHERE BQID = {0}
-//AND Value = {1}",
-//				bqID,
-//				val
-//			);
-//			using (SqlDataReader rs = Db.rs(query)) {
-//				if (rs.Read()) {
-//					return new BackgroundAnswer {
-//						Id = GetInt32(rs, 0)
-//					};
-//				}
-//			}
-//			return null;
-//		}
-//		
 		public Answer ReadByGroup(string groupBy, int yearFrom, int yearTo, string sortString, int monthFrom, int monthTo)
 		{
 			string query = string.Format(
@@ -962,8 +898,6 @@ FROM Answer a
 {0}
 INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID AND av.QuestionID = {2} AND av.OptionID = {3}
 WHERE a.EndDT IS NOT NULL
---AND YEAR(a.EndDT) >= {4}
---AND YEAR(a.EndDT) <= {5}
 AND (YEAR(a.EndDT) = {4} AND MONTH(a.EndDT) >= {6} OR YEAR(a.EndDT) > {4})
 AND (YEAR(a.EndDT) = {5} AND MONTH(a.EndDT) <= {7} OR YEAR(a.EndDT) < {5})
 GROUP BY a.ProjectRoundUserID, {1}(a.EndDT)",
@@ -971,8 +905,8 @@ GROUP BY a.ProjectRoundUserID, {1}(a.EndDT)",
 				groupBy,
 				questionID,
 				optionID,
-				yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
-				yearTo, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : ""
+				yearFrom,
+				yearTo,
 				monthFrom,
 				monthTo
 			);

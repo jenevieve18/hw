@@ -6,7 +6,7 @@ using HW.Core.Models;
 
 namespace HW.Core.Repositories.Sql
 {
-	public class SqlOptionRepository : BaseSqlRepository<Option>//, IOptionRepository
+	public class SqlOptionRepository : BaseSqlRepository<Option>, IOptionRepository
 	{
 		public int CountByOption(int optionID)
 		{

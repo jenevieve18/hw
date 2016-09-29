@@ -1,9 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace HW.Core.Models
 {
 	public class Survey : BaseModel
 	{
+		public Survey()
+		{
+			Questions = new List<SurveyQuestion>();
+		}
+		
 		public int SurveyID { get; set; }
 		public string Internal { get; set; }
 		public Guid SurveyKey { get; set; }
@@ -12,6 +18,18 @@ namespace HW.Core.Models
 		public int NoTime { get; set; }
 		public int ClearQuestions { get; set; }
 		public int TwoColumns { get; set; }
+		public IList<SurveyQuestion> Questions { get; set; }
+		
+		public void AddQuestion(Question question)
+		{
+			AddQuestion(new SurveyQuestion { Question = question });
+		}
+		
+		public void AddQuestion(SurveyQuestion question)
+		{
+			question.Survey = this;
+			Questions.Add(question);
+		}
 	}
 	
 	public class SurveyLang : BaseModel
@@ -29,7 +47,9 @@ namespace HW.Core.Models
 		
 		public int SurveyQuestionID { get; set; }
 		public int SurveyID { get; set; }
+		public Survey Survey { get; set; }
 		public int QuestionID { get; set; }
+		public Question Question { get; set; }
 		public int OptionsPlacement { get; set; }
 		public string Variablename { get; set; }
 		public int SortOrder { get; set; }

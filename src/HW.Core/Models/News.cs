@@ -5,75 +5,75 @@ namespace HW.Core.Models
 {
 	public class News : BaseModel
 	{
-		public virtual NewsCategory Category { get; set; }
-		public virtual string Headline { get; set; }
-		public virtual DateTime Date { get; set; }
-		public virtual string Teaser { get; set; }
-		public virtual string Body { get; set; }
-		public virtual NewsImage Image { get; set; }
-		public virtual NewsImage TeaserImage { get; set; }
-		public virtual DateTime Published { get; set; }
-		public virtual DateTime Deleted { get; set; }
-		public virtual string Link { get; set; }
-		public virtual string LinkText { get; set; }
-		public virtual string ShortHeadline { get; set; }
+		public NewsCategory Category { get; set; }
+		public string Headline { get; set; }
+		public DateTime Date { get; set; }
+		public string Teaser { get; set; }
+		public string Body { get; set; }
+		public NewsImage Image { get; set; }
+		public NewsImage TeaserImage { get; set; }
+		public DateTime Published { get; set; }
+		public DateTime Deleted { get; set; }
+		public string Link { get; set; }
+		public string LinkText { get; set; }
+		public string ShortHeadline { get; set; }
 	}
 	
 	public class NewsCategory : BaseModel
 	{
-		public virtual string Name { get; set; }
-		public virtual string ShortName { get; set; }
-		public virtual int OnlyDirectFromFeed { get; set; }
+		public string Name { get; set; }
+		public string ShortName { get; set; }
+		public int OnlyDirectFromFeed { get; set; }
 		
-		public virtual IList<News> SomeNews { get; set; }
-		public virtual IList<News> News { get; set; }
+		public IList<News> SomeNews { get; set; }
+		public IList<News> News { get; set; }
 	}
 	
 	public class NewsCategoryLanguage : BaseModel
 	{
-		public virtual NewsCategory Category { get; set; }
-		public virtual Language Language { get; set; }
+		public NewsCategory Category { get; set; }
+		public Language Language { get; set; }
 	}
 	
 	public class NewsChannel : BaseModel
 	{
-		public virtual NewsSource Source { get; set; }
-		public virtual string Feed { get; set; }
-		public virtual Language Language { get; set; }
-		public virtual DateTime? Pause { get; set; }
-		public virtual NewsCategory Category { get; set; }
-		public virtual string Internal { get; set; }
+		public NewsSource Source { get; set; }
+		public string Feed { get; set; }
+		public Language Language { get; set; }
+		public DateTime? Pause { get; set; }
+		public NewsCategory Category { get; set; }
+		public string Internal { get; set; }
 		
-		public virtual IList<NewsRSS> UndeletedRSS { get; set; }
-		public virtual IList<NewsRSS> DeletedRSS { get; set; }
+		public IList<NewsRSS> UndeletedRSS { get; set; }
+		public IList<NewsRSS> DeletedRSS { get; set; }
 	}
 	
 	public class NewsRSS : BaseModel
 	{
-		public virtual NewsChannel Channel { get; set; }
-		public virtual string Link { get; set; }
+		public NewsChannel Channel { get; set; }
+		public string Link { get; set; }
 	}
 	
 	public class NewsImage : BaseModel
 	{
-		public virtual string Description { get; set; }
-		public virtual string FileName { get; set; }
-		public virtual string Alternative { get; set; }
-		public virtual int Width { get; set; }
-		public virtual int Height { get; set; }
-		public virtual int Size { get; set; }
+		public string Description { get; set; }
+		public string FileName { get; set; }
+		public string Alternative { get; set; }
+		public int Width { get; set; }
+		public int Height { get; set; }
+		public int Size { get; set; }
 	}
 	
 	public class NewsSource : BaseModel
 	{
-		public virtual string Source { get; set; }
-		public virtual string SourceShort { get; set; }
-		public virtual int Favourite { get; set; }
+		public string Source { get; set; }
+		public string SourceShort { get; set; }
+		public int Favourite { get; set; }
 	}
 	
 	public class AdminNews : BaseModel
 	{
-		public virtual DateTime? Date { get; set; }
-		public virtual string News { get; set; }
+		public DateTime? Date { get; set; }
+		public string News { get; set; }
 	}
 }

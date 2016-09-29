@@ -96,18 +96,19 @@ AND rpl.LangID = {1}",
 			);
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				if (rs.Read()) {
-					var p = new ReportPart();
-					p.Type = rs.GetInt32(0);
-					p.Components = new List<ReportPartComponent>(rs.GetInt32(1));
-					p.Question = new Question { Id = GetInt32(rs, 2) };
-					p.Option = new Option { Id = GetInt32(rs, 3) };
-					p.RequiredAnswerCount = GetInt32(rs, 4);
-					p.PartLevel = GetInt32(rs, 5);
-					p.Id = GetInt32(rs, 6);
-					p.CurrentLanguage = new ReportPartLang {
-						Subject = GetString(rs, 7),
-						Header = GetString(rs, 8),
-						Footer = GetString(rs, 9)
+					var p = new ReportPart {
+						Type = rs.GetInt32(0),
+						Components = new List<ReportPartComponent>(rs.GetInt32(1)),
+						Question = new Question { Id = GetInt32(rs, 2) },
+						Option = new Option { Id = GetInt32(rs, 3) },
+						RequiredAnswerCount = GetInt32(rs, 4),
+						PartLevel = GetInt32(rs, 5),
+						Id = GetInt32(rs, 6),
+						CurrentLanguage = new ReportPartLang {
+							Subject = GetString(rs, 7),
+							Header = GetString(rs, 8),
+							Footer = GetString(rs, 9)
+						}
 					};
 					return p;
 				}

@@ -37,7 +37,7 @@ namespace HW.Core.Models
 	
 	public class Message
 	{
-		string _from;
+		string @from;
 		string to;
 		string subject;
 		string body;
@@ -55,8 +55,8 @@ namespace HW.Core.Models
 		}
 		
 		public string From {
-			get { return _from; }
-			set { _from = value; }
+			get { return @from; }
+			set { @from = value; }
 		}
 		
 		public string To {

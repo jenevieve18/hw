@@ -400,7 +400,8 @@ namespace HW.Core.Helpers
 //				}
 //			} else if (p.Type == 8) {
 			if (groupBy == 0) {
-				groupBy = 2;
+//				groupBy = 2;
+				groupBy = Group.GroupBy.TwoWeeksStartWithOdd;
 			}
 
 			string groupByQuery = GroupFactory.GetGroupBy(groupBy);

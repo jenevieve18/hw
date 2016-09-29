@@ -17,7 +17,7 @@ namespace HW.Core.Models
 		string LoginSubject { get; set; }
 		string LoginText { get; set; }
 		int? LoginDays { get; set; }
-		int? LoginWeekDay { get; set; }
+		int? LoginWeekday { get; set; }
 		DateTime? LoginLastSent { get; set; }
 		string EmailFrom { get; set; }
 		int MinUserCountToDisclose { get; set; }
@@ -26,11 +26,14 @@ namespace HW.Core.Models
 	
 	public class Sponsor : BaseModel, ISponsor
 	{
+		public int SponsorID { get; set; }
 		public string Name { get; set; }
 		public string Application { get; set; }
+		public int ProjectRoundUnitID { get; set; }
 		public ProjectRoundUnit ProjectRoundUnit { get; set; }
-		public DateTime? ClosedAt { get; set; }
-		public DateTime DeletedAt { get; set; }
+		public DateTime? Closed { get; set; }
+		public DateTime? Deleted { get; set; }
+		public int SuperSponsorID { get; set; }
 		public string ConsentText { get; set; }
 		public SuperSponsor SuperSponsor { get; set; }
 		public string InviteSubject { get; set; }
@@ -42,10 +45,12 @@ namespace HW.Core.Models
 		public string AllMessageSubject { get; set; }
 		public string AllMessageBody { get; set; }
 		public DateTime? AllMessageLastSent { get; set; }
+		public int ForceLID { get; set; }
 		public string LoginSubject { get; set; }
 		public string LoginText { get; set; }
 		public int? LoginDays { get; set; }
-		public int? LoginWeekDay { get; set; }
+		public int? LoginWeekday { get; set; }
+		public int LID { get; set; }
 		public DateTime? LoginLastSent { get; set; }
 		public string SponsorKey { get; set; }
 		public IList<SponsorProjectRoundUnit> RoundUnits { get; set; }
@@ -64,9 +69,11 @@ namespace HW.Core.Models
 		public string InfoText { get; set; }
 		public string AlternativeTreatmentOfferText { get; set; }
 		public string AlternativeTreatmentOfferEmail { get; set; }
+		public Guid? SponsorApiKey { get; set; }
 		public Language Language { get; set; }
 		public int MinUserCountToDisclose { get; set; }
 		public string EmailFrom { get; set; }
+		public string Comment { get; set; }
 		
 		public bool HasSuperSponsor {
 			get { return SuperSponsor != null; }
@@ -74,7 +81,7 @@ namespace HW.Core.Models
 		
 		// FIXME: These are not necessary properties
 		public DateTime? MinimumInviteDate { get; set; }
-		public bool Closed { get { return ClosedAt != null; } }
+		public bool IsClosed { get { return Closed != null; } }
 		public List<SponsorInvite> SentInvites { get; set; }
 		public List<SponsorInvite> ActiveInvites { get; set; }
 		public bool SuperUser { get; set; }
@@ -125,7 +132,9 @@ namespace HW.Core.Models
 	
 	public class SponsorAdmin : BaseModel, ISponsor
 	{
+		public int SponsorAdminID { get; set; }
 		public Sponsor Sponsor { get; set; }
+		public int SponsorID { get; set; }
 		public string Name { get; set; }
 		public string Email { get; set; }
 		public string Usr { get; set; }
@@ -205,10 +214,16 @@ namespace HW.Core.Models
 		public string LoginSubject { get; set; }
 		public string LoginText { get; set; }
 		public int? LoginDays { get; set; }
-		public int? LoginWeekDay { get; set; }
+		public int? LoginWeekday { get; set; }
 		public DateTime? LoginLastSent { get; set; }
 		public string EmailFrom { get; set; }
 		public int MinUserCountToDisclose { get; set; }
+		
+		public Guid? SponsorAdminKey { get; set; }
+		public string InviteTxt { get; set; }
+		public string InviteReminderTxt { get; set; }
+		public string UniqueKey { get; set; }
+		public int UniqueKeyUsed { get; set; }
 	}
 	
 	public class SponsorAdminExtendedSurvey : BaseModel, IExtendedSurvey

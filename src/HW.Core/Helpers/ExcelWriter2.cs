@@ -34,7 +34,7 @@ namespace HW.Core.Helpers
 		}
 	}
 	
-	public class ExcelWriter// : IExcelWriter
+	public class ExcelWriter
 	{
 		ExcelPackage p;
 		ExcelWorksheet w;

@@ -53,12 +53,9 @@ namespace HW.Core.Helpers
 
         public static string Str2(string s, int length)
         {
-            if (s != null && s != "" && s.Length > length)
-            {
+            if (s != null && s != "" && s.Length > length) {
                 return s.Substring(0, length) + "...";
-            }
-            else
-            {
+            } else {
                 return s;
             }
         }
@@ -88,8 +85,7 @@ namespace HW.Core.Helpers
 			byte[] result = md5.Hash;
 			
 			StringBuilder strBuilder = new StringBuilder();
-			for (int i = 0; i < result.Length; i++)
-			{
+			for (int i = 0; i < result.Length; i++) {
 				// Change it into 2 hexadecimal digits
 				// for each byte
 				strBuilder.Append(result[i].ToString("x2"));
@@ -120,24 +116,8 @@ namespace HW.Core.Helpers
 		
 		public static string Anchor(string text, string url, string attributes)
 		{
-//			return Anchor(text, url, attributes, "", false);
 			return Anchor(text, url, attributes, false);
 		}
-		
-//		public static string Anchor(string text, string url, string attributes, string target)
-//		{
-//			return Anchor(text, url, attributes, target, false);
-//		}
-//
-//		public static string Anchor(string text, string url, string attributes, string target, bool random)
-//		{
-//			if (random) {
-//				url = string.Format("{0}?Rnd={1}", url, GetRandomInt());
-//				return string.Format("<a href='{0}' {1} {2}>{3}</a>", url, attributes, ToAttribute("target", target), text);
-//			} else {
-//				return string.Format("<a href='{0}' {1} {2}>{3}</a>", url, attributes, ToAttribute("target", target), text);
-//			}
-//		}
 		
 		public static string Anchor(string text, string url, string attributes, bool random)
 		{
@@ -243,25 +223,6 @@ namespace HW.Core.Helpers
 			}
 		}
 
-//		static string GetAttributes(Dictionary<string, string> attributes)
-//		{
-//			StringBuilder s = new StringBuilder();
-//			foreach (var a in attributes.Keys) {
-//				s.Append(string.Format(" {0}='{1}'", a, attributes[a]));
-//			}
-//			return s.ToString();
-//		}
-//
-//		public static string CreatePage(string name)
-//		{
-//			return CreatePage(new P(name));
-//		}
-//		
-//		public static string CreatePage(P p)
-//		{
-//			return p.ToString();
-//		}
-		
 		public static void Write(object obj, HttpResponse reponse)
 		{
 			if (obj is MemoryStream) {

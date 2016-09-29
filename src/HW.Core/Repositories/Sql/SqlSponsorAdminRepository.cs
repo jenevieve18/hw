@@ -235,6 +235,73 @@ WHERE UniqueKey = @UniqueKey";
             }
             return a;
         }
+        
+        public override SponsorAdmin Read(int id)
+		{
+			string query = @"
+SELECT 	SponsorAdminID, 
+	Usr, 
+	Pas, 
+	SponsorID, 
+	Name, 
+	Email, 
+	SuperUser, 
+	SponsorAdminKey, 
+	Anonymized, 
+	SeeUsers, 
+	ReadOnly, 
+	LastName, 
+	PermanentlyDeleteUsers, 
+	InviteSubject, 
+	InviteTxt, 
+	InviteReminderSubject, 
+	InviteReminderTxt, 
+	AllMessageSubject, 
+	AllMessageBody, 
+	InviteLastSent, 
+	InviteReminderLastSent, 
+	AllMessageLastSent, 
+	LoginLastSent, 
+	UniqueKey, 
+	UniqueKeyUsed
+FROM SponsorAdmin
+WHERE SponsorAdminID = @SponsorAdminID";
+			SponsorAdmin sponsorAdmin = null;
+			using (var rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@SponsorAdminID", id))) {
+				if (rs.Read()) {
+					sponsorAdmin = new SponsorAdmin {
+						SponsorAdminID = GetInt32(rs, 0),
+						Id = GetInt32(rs, 0),
+						Usr = GetString(rs, 1),
+						Password = GetString(rs, 2),
+						SponsorID = GetInt32(rs, 3),
+						Sponsor = new Sponsor { Id = GetInt32(rs, 3) },
+						Name = GetString(rs, 4),
+						Email = GetString(rs, 5),
+						SuperUser = GetInt32(rs, 6) == 1,
+						SponsorAdminKey = GetGuid(rs, 7),
+						Anonymized = GetInt32(rs, 8) == 1,
+						SeeUsers = GetInt32(rs, 9) == 1,
+						ReadOnly = GetInt32(rs, 10) == 1,
+						LastName = GetString(rs, 11),
+						PermanentlyDeleteUsers = GetInt32(rs, 12) == 1,
+						InviteSubject = GetString(rs, 13),
+						InviteTxt = GetString(rs, 14),
+						InviteReminderSubject = GetString(rs, 15),
+						InviteReminderTxt = GetString(rs, 16),
+						AllMessageSubject = GetString(rs, 17),
+						AllMessageBody = GetString(rs, 18),
+						InviteLastSent = GetDateTime(rs, 19),
+						InviteReminderLastSent = GetDateTime(rs, 20),
+						AllMessageLastSent = GetDateTime(rs, 21),
+						LoginLastSent = GetDateTime(rs, 22),
+						UniqueKey = GetString(rs, 23),
+						UniqueKeyUsed = GetInt32(rs, 24)
+					};
+				}
+			}
+			return sponsorAdmin;
+		}
 		
 		public ISponsor ReadSponsor(int sponsorAdminId)
 		{
@@ -286,7 +353,7 @@ AND a.SponsorAdminID = {0}",
 						LoginText = GetString(rs, 13),
 						LoginSubject = GetString(rs, 14),
 						LoginDays = GetInt32(rs, 15),
-						LoginWeekDay = GetInt32(rs, 16),
+						LoginWeekday = GetInt32(rs, 16),
 						InviteLastSent = GetLaterDate(GetDateTime(rs, 17), GetDateTime(rs, 21)),
 						InviteReminderLastSent = GetLaterDate(GetDateTime(rs, 18), GetDateTime(rs, 22)),
 						AllMessageLastSent = GetLaterDate(GetDateTime(rs, 19), GetDateTime(rs, 23)),

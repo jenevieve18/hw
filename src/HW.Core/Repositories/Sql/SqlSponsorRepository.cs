@@ -507,7 +507,7 @@ WHERE SponsorID = {10}",
 				s.AllMessageBody.Replace("'", "''"),
 				s.LoginSubject.Replace("'", "''"),
 				s.LoginDays,
-				s.LoginWeekDay,
+				s.LoginWeekday,
 				s.Id
 			);
 			Db.exec(query, "healthWatchSqlConnection");
@@ -1113,7 +1113,7 @@ WHERE s.SponsorID = {0}",
 //						LoginDays = GetInt32Nullable(rs, 9, null),
 //						LoginWeekDay = GetInt32Nullable(rs, 10, null),
 						LoginDays = GetInt32Nullable(rs, 9, -666),
-						LoginWeekDay = GetInt32Nullable(rs, 10, -666),
+						LoginWeekday = GetInt32Nullable(rs, 10, -666),
 						AllMessageSubject = GetString(rs, 11),
 						AllMessageBody = GetString(rs, 12),
 						AllMessageLastSent = GetDateTime(rs, 13),
@@ -2216,7 +2216,7 @@ ORDER BY s.Sponsor",
 						Id = rs.GetInt32(0),
 						Name = rs.GetString(1),
 						SponsorKey = rs.GetString(2),
-						ClosedAt = GetDateTime(rs, 9),
+						Closed = GetDateTime(rs, 9),
 						MinimumInviteDate = GetDateTime(rs, 6),
 						ExtendedSurveys = new List<SponsorExtendedSurvey>(GetInt32(rs, 3)),
 						SentInvites = new List<SponsorInvite>(GetInt32(rs, 4)),
@@ -2470,6 +2470,101 @@ WHERE si.SponsorID = {1}",
 			return null;
 		}
 		
+		public override Sponsor Read(int id)
+		{
+			string query = @"
+SELECT 	SponsorID, 
+	Sponsor, 
+	Application, 
+	ProjectRoundUnitID, 
+	SponsorKey, 
+	InviteTxt, 
+	InviteReminderTxt, 
+	LoginTxt, 
+	InviteLastSent, 
+	InviteReminderLastSent, 
+	LoginLastSent, 
+	InviteSubject, 
+	InviteReminderSubject, 
+	LoginSubject, 
+	LoginDays, 
+	LoginWeekday, 
+	LID, 
+	TreatmentOffer, 
+	TreatmentOfferText, 
+	TreatmentOfferEmail, 
+	TreatmentOfferIfNeededText, 
+	TreatmentOfferBQ, 
+	TreatmentOfferBQfn, 
+	TreatmentOfferBQmorethan, 
+	InfoText, 
+	ConsentText, 
+	Closed, 
+	Deleted, 
+	SuperSponsorID, 
+	AlternativeTreatmentOfferText, 
+	AlternativeTreatmentOfferEmail, 
+	SponsorApiKey, 
+	AllMessageSubject, 
+	AllMessageBody, 
+	AllMessageLastSent, 
+	ForceLID, 
+	MinUserCountToDisclose, 
+	EmailFrom, 
+	Comment
+FROM Sponsor
+WHERE SponsorID = @SponsorID";
+			Sponsor sponsor = null;
+			using (var rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@SponsorID", id))) {
+				if (rs.Read()) {
+					sponsor = new Sponsor {
+						SponsorID = GetInt32(rs, 0),
+						Id = GetInt32(rs, 0),
+						Name = GetString(rs, 1),
+						Application = GetString(rs, 2),
+						ProjectRoundUnitID = GetInt32(rs, 3),
+//						SponsorKey = GetGuid(rs, 4),
+//						SponsorKey = GetString(rs, 4),
+						InviteText = GetString(rs, 5),
+						InviteReminderText = GetString(rs, 6),
+						LoginText = GetString(rs, 7),
+						InviteLastSent = GetDateTime(rs, 8),
+						InviteReminderLastSent = GetDateTime(rs, 9),
+						LoginLastSent = GetDateTime(rs, 10),
+						InviteSubject = GetString(rs, 11),
+						InviteReminderSubject = GetString(rs, 12),
+						LoginSubject = GetString(rs, 13),
+						LoginDays = GetInt32(rs, 14),
+						LoginWeekday = GetInt32(rs, 15),
+						LID = GetInt32(rs, 16),
+						TreatmentOffer = GetInt32(rs, 17),
+						TreatmentOfferText = GetString(rs, 18),
+						TreatmentOfferEmail = GetString(rs, 19),
+						TreatmentOfferIfNeededText = GetString(rs, 20),
+						TreatmentOfferBQ = GetInt32(rs, 21),
+						TreatmentOfferBQfn = GetInt32(rs, 22),
+						TreatmentOfferBQmorethan = GetInt32(rs, 23),
+						InfoText = GetString(rs, 24),
+						ConsentText = GetString(rs, 25),
+						Closed = GetDateTime(rs, 26),
+						Deleted = GetDateTime(rs, 27),
+						SuperSponsorID = GetInt32(rs, 28),
+						AlternativeTreatmentOfferText = GetString(rs, 29),
+						AlternativeTreatmentOfferEmail = GetString(rs, 30),
+						SponsorApiKey = GetGuid(rs, 31),
+						AllMessageSubject = GetString(rs, 32),
+						AllMessageBody = GetString(rs, 33),
+						AllMessageLastSent = GetDateTime(rs, 34),
+						ForceLID = GetInt32(rs, 35),
+						MinUserCountToDisclose = GetInt32(rs, 36),
+						EmailFrom = GetString(rs, 37),
+						Comment = GetString(rs, 38)
+					};
+				}
+			}
+			return sponsor;
+		}
+		
 		public SponsorInvite Read2(int deleteUserID)
 		{
 			string query = string.Format(
@@ -2601,7 +2696,7 @@ ORDER BY s.Sponsor",
 							ActiveInvites = new List<SponsorInvite>(GetInt32(rs, 5)),
 							MinimumInviteDate = GetDateTime(rs, 6),
 							Invites = new List<SponsorInvite>(GetInt32(rs, 8)),
-							ClosedAt = GetDateTime(rs, 9)
+							Closed = GetDateTime(rs, 9)
 						},
 						SeeUsers = GetInt32(rs, 7) == 1
 					};

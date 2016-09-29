@@ -113,12 +113,12 @@ namespace HW.Core.Helpers
 			}
 		}
 		
-		class BoxPlotGraphType : BaseGraphType
-		{
-			public override void Draw(Graph2 g)
-			{
-			}
-		}
+//		class BoxPlotGraphType : BaseGraphType
+//		{
+//			public override void Draw(Graph2 g)
+//			{
+//			}
+//		}
 	}
 	
 	public interface IGraphType2

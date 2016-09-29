@@ -288,26 +288,26 @@ namespace HW.Core.Helpers
 			}
 		}
 		
-		public void DrawBackgroundFromIndexes2(List<IIndex> indexes)
-		{
-			foreach (var i in indexes) {
-				if (i.YellowLow > 0) {
-					drawBgFromString2(minVal, Math.Min(maxVal, (float)Convert.ToDouble(i.YellowLow)), "FFA8A8", "Unhealthy");                             // red
-				}
-				if (i.YellowLow < 100 && i.GreenLow > 0) {
-					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.YellowLow)), Math.Min(maxVal, (float)Convert.ToDouble(i.GreenLow)), "FFFEBE", "Improvement Needed");    // yellow
-				}
-				if (i.GreenLow < 100 && i.GreenHigh > 0) {
-					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.GreenLow)), Math.Min(maxVal, (float)Convert.ToDouble(i.GreenHigh)), "CCFFBB", "Healthy");   // green
-				}
-				if (i.GreenHigh < 100 && i.YellowHigh > 0) {
-					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.GreenHigh)), Math.Min(maxVal, (float)Convert.ToDouble(i.YellowHigh)), "FFFEBE", "Improvement Needed"); // yellow
-				}
-				if (i.YellowHigh < 100) {
-					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.YellowHigh)), maxVal, "FFA8A8", "Unhealthy");                           // red
-				}
-			}
-		}
+//		public void DrawBackgroundFromIndexes2(List<IIndex> indexes)
+//		{
+//			foreach (var i in indexes) {
+//				if (i.YellowLow > 0) {
+//					drawBgFromString2(minVal, Math.Min(maxVal, (float)Convert.ToDouble(i.YellowLow)), "FFA8A8", "Unhealthy");                             // red
+//				}
+//				if (i.YellowLow < 100 && i.GreenLow > 0) {
+//					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.YellowLow)), Math.Min(maxVal, (float)Convert.ToDouble(i.GreenLow)), "FFFEBE", "Improvement Needed");    // yellow
+//				}
+//				if (i.GreenLow < 100 && i.GreenHigh > 0) {
+//					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.GreenLow)), Math.Min(maxVal, (float)Convert.ToDouble(i.GreenHigh)), "CCFFBB", "Healthy");   // green
+//				}
+//				if (i.GreenHigh < 100 && i.YellowHigh > 0) {
+//					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.GreenHigh)), Math.Min(maxVal, (float)Convert.ToDouble(i.YellowHigh)), "FFFEBE", "Improvement Needed"); // yellow
+//				}
+//				if (i.YellowHigh < 100) {
+//					drawBgFromString2(Math.Max(minVal, (float)Convert.ToDouble(i.YellowHigh)), maxVal, "FFA8A8", "Unhealthy");                           // red
+//				}
+//			}
+//		}
 		
 		public void SetMinMaxes(List<IMinMax> minMaxes)
 		{

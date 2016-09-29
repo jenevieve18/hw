@@ -5,17 +5,17 @@ namespace HW.Core.Models
 {
 	public class Manager : BaseModel
 	{
-		public virtual string Email { get; set; }
-		public virtual string Password { get; set; }
-		public virtual string Name { get; set; }
-		public virtual string Phone { get; set; }
+		public string Email { get; set; }
+		public string Password { get; set; }
+		public string Name { get; set; }
+		public string Phone { get; set; }
 	}
 	
 	public class ManagerFunction : BaseModel
 	{
-		public virtual string URL { get; set; }
-		public virtual IList<ManagerFunctionLang> Languages { get; set; }
-		public virtual ManagerFunctionLang SelectedLanguage {
+		public string URL { get; set; }
+		public IList<ManagerFunctionLang> Languages { get; set; }
+		public ManagerFunctionLang SelectedLanguage {
 			get { return Languages[0]; }
 		}
 		
@@ -60,9 +60,9 @@ namespace HW.Core.Models
 	
 	public class ManagerFunctionLang : BaseModel
 	{
-		public virtual string Function { get; set; }
-		public virtual string URL { get; set; }
-		public virtual string Expl { get; set; }
+		public string Function { get; set; }
+		public string URL { get; set; }
+		public string Expl { get; set; }
 		public Language Language { get; set; }
 		public ManagerFunction ManagerFunction { get; set; }
 		

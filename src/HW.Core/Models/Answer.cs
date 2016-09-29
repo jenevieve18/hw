@@ -27,13 +27,21 @@ namespace HW.Core.Models
 		}
 		
 		public ProjectRound ProjectRound { get; set; }
+		public int ProjectRoundID { get; set; }
 		public ProjectRoundUnit ProjectRoundUnit { get; set; }
+		public int ProjectRoundUnitID { get; set; }
 		public ProjectRoundUser ProjectRoundUser { get; set; }
+		public int ProjectRoundUserID { get; set; }
 		public Language Language { get; set; }
 		public DateTime StartDate { get; set; }
 		public DateTime EndDate { get; set; }
 		public IList<IValue> Values { get; set; }
 		public int CurrentPage { get; set; }
+		
+		public void AddValue(IValue value)
+		{
+			Values.Add(value);
+		}
 		
 		public float Average { get; set; }
 		public int DummyValue1 { get; set; } // TODO: This is used by dbo.cf_yearWeek and related methods
@@ -82,20 +90,5 @@ namespace HW.Core.Models
 		public DateTime Created { get; set; }
 		public string ValueText { get; set; }
 		public string ValueTextJapaneseUnicode { get; set; }
-	}
-	
-	public class BackgroundAnswer : BaseModel
-	{
-		public BackgroundQuestion BackgroundQuestion { get; set; }
-		public string Internal { get; set; }
-		public int SortOrder { get; set; }
-		public int Value { get; set; }
-		public IList<BackgroundAnswerLanguage> Languages { get; set; }
-	}
-	
-	public class BackgroundAnswerLanguage : BaseModel
-	{
-		public Language Language { get; set; }
-		public BackgroundAnswer Answer { get; set; }
 	}
 }

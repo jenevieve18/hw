@@ -58,6 +58,7 @@ namespace HW.Core.Models
 		public int MaxVal { get; set; }
 		public int SortOrder { get; set; }
 		public int CX { get; set; }
+		public string Description { get; set; }
 		public IList<IndexLanguage> Languages { get; set; }
 		public List<IndexPart> Parts { get; set; }
 		

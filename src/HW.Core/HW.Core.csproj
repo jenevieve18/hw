@@ -139,7 +139,6 @@
     <Compile Include="Helpers\HWList.cs" />
     <Compile Include="Helpers\OctreeQuantizer.cs" />
     <Compile Include="Helpers\PdfExporter.cs" />
-    <Compile Include="Helpers\PlotType.cs" />
     <Compile Include="Helpers\PresentationDocumentExporter.cs" />
     <Compile Include="Helpers\PresentationDocumentGeneratedCode.cs" />
     <Compile Include="Helpers\Quantizer.cs" />
@@ -149,6 +148,8 @@
     <Compile Include="Helpers\SpreadsheetDocumentExporter2.cs" />
     <Compile Include="Libraries\ConnectionSingleton.cs" />
     <Compile Include="Models\Answer.cs" />
+    <Compile Include="Models\BackgroundAnswer.cs" />
+    <Compile Include="Models\BackgroundQuestion.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Affiliate.cs" />
     <Compile Include="Models\CX.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Models\Diary.cs" />
     <Compile Include="Models\ErrorMessages.cs" />
     <Compile Include="Models\Exercise.cs" />
+    <Compile Include="Models\FAQ.cs" />
     <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\Index.cs" />
@@ -167,10 +169,10 @@
     <Compile Include="Models\Navigation.cs" />
     <Compile Include="Models\News.cs" />
     <Compile Include="Models\Option.cs" />
+    <Compile Include="Models\PlotType.cs" />
     <Compile Include="Models\Profile.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\Question.cs" />
-    <Compile Include="Models\Reminder.cs" />
     <Compile Include="Models\Report.cs" />
     <Compile Include="Models\Sponsor.cs" />
     <Compile Include="Models\Survey.cs" />
@@ -178,12 +180,15 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Wise.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\IAnswerRepository.cs" />
     <Compile Include="Repositories\IBaseRepository.cs" />
     <Compile Include="Repositories\IDepartmentRepository.cs" />
     <Compile Include="Repositories\IExerciseRepository.cs" />
     <Compile Include="Repositories\IIndexRepository.cs" />
+    <Compile Include="Repositories\ILanguageRepository.cs" />
     <Compile Include="Repositories\IManagerFunctionRepository.cs" />
     <Compile Include="Repositories\INewsRepository.cs" />
+    <Compile Include="Repositories\IOptionRepository.cs" />
     <Compile Include="Repositories\IPlotTypeRepository.cs" />
     <Compile Include="Repositories\IProjectRepository.cs" />
     <Compile Include="Repositories\IProjectRoundUnitRepository.cs" />
@@ -226,6 +231,7 @@
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\ReportService.cs" />
     <Compile Include="Services\ReportService2.cs" />
+    <Compile Include="Services\SponsorService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using HW.Core.Helpers;
+using HW.Core.Models;
 
 namespace HW.Core.Repositories
 {

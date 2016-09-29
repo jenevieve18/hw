@@ -9,6 +9,7 @@ namespace HW.Core.Models
 	{
 		public const int SWEDISH = 1;
 		public const int ENGLISH = 2;
+		public const int JAPANESE = 3;
 		public const int GERMAN = 4;
 		
 		public virtual string Name { get; set; }

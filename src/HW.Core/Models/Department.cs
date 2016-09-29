@@ -75,7 +75,7 @@ namespace HW.Core.Models
 				if (i < Parents.Count) {
 					return Parents[i].LoginWeekDay;
 				} else {
-					return Sponsor.LoginWeekDay;
+					return Sponsor.LoginWeekday;
 				}
 			}
 		}
@@ -103,7 +103,7 @@ namespace HW.Core.Models
 					}
 				}
 			} else {
-				if (Sponsor.LoginWeekDay == -1) {
+				if (Sponsor.LoginWeekday == -1) {
 					return loginWeekDays[-1];
 				} else {
 					i = 0;
