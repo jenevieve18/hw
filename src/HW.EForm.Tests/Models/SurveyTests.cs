@@ -4,18 +4,19 @@
 // </file>
 
 using System;
-using System.Data.Odbc;
+using HW.EForm.Core.Models;
 using NUnit.Framework;
 
-namespace HW.EForm.Tests
+namespace HW.EForm.Tests.Models
 {
 	[TestFixture]
-	public class Test1
+	public class SurveyTests
 	{
 		[Test]
 		public void TestMethod()
 		{
-			OdbcConnection c = new OdbcConnection("Driver={SQL Server};Server=myServerAddress;Database=myDataBase;Trusted_Connection=Yes;");
+			var s = new Survey {};
+			s.AddQuestion(new Question {});
 		}
 	}
 }
