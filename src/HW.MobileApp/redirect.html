@@ -1,0 +1,56 @@
+<html>
+	<head>
+ 		<meta charset="utf-8">
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+    	
+		<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    	<link href="http://getbootstrap.com/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    	<link href="http://getbootstrap.com/examples/navbar-fixed-top/navbar-fixed-top.css" rel="stylesheet">
+    	<script src="http://getbootstrap.com/assets/js/ie-emulation-modes-warning.js"></script>
+	
+    
+	<script type="text/javascript">
+		window.onload = function() {
+			var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+			var divText = "";
+			var linkText = "";
+
+			if( userAgent.match( /iPad/i ) || userAgent.match( /iPhone/i ) || userAgent.match( /iPod/i ) ){
+		    	divText = "Open iOS app";
+		    	linkText = "https://itunes.apple.com/lc/app/healthwatch/id1035687142";
+		    	document.getElementById("link").innerHTML = "<a class='navbar-brand' href='" + linkText + "'>"+divText+"</a>";
+
+		    }else if( userAgent.match( /Android/i ) ){
+		  		divText = "Open Android app";
+		  		linkText = "http://play.google.com/store/apps/details?id=se.healthwatch";
+		  		document.getElementById("link").innerHTML = '<a class="navbar-brand" href="' + linkText + '">'+divText+'</a>';
+
+		  	}else {
+		  		document.getElementById("parent").innerHTML = "";
+		  	}
+
+		  	
+		};
+		
+	</script>
+
+	</head>
+	<body>
+	<!-- Fixed navbar -->
+	<div id="parent">
+    	<nav class="navbar navbar-default navbar-fixed-top">
+    	  <div class="container">
+    	    <div id="link" class="navbar-header">
+    	     <a class="navbar-brand" href="#"></a>
+    	    </div>
+    	  </div>
+    	</nav>
+	</div>	
+	<!-- Fixed navbar -->
+
+	HealthWatch Site
+
+
+	</body>
+</html>
