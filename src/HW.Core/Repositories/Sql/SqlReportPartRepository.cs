@@ -124,6 +124,7 @@ WHERE ReportPartID = @ReportPartID";
 				if (rs.Read()) {
 					reportPart = new ReportPart {
 						ReportPartID = GetInt32(rs, 0),
+						Id = GetInt32(rs, 0),
 						ReportID = GetInt32(rs, 1),
 						Internal = GetString(rs, 2),
 						Type = GetInt32(rs, 3),

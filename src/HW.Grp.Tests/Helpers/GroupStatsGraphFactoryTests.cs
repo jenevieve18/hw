@@ -28,7 +28,7 @@ namespace HW.Grp.Tests.Helpers
 		ExtendedGraph g;
 		
 		[Test]
-		public void TestGetWeightedQuestionOptionReportGraph()
+		public void TestGetWeightedQuestionOptionReportPartGraph2()
 		{
 //			g = f.CreateGraph(
 //				null,
