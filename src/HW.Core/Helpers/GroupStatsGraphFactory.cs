@@ -297,8 +297,10 @@ namespace HW.Core.Helpers
 			} else {
 				g = new ExtendedGraph(895, 550, "#FFFFFF");
 				List<Bar> bars = new List<Bar>();
-				foreach (OptionComponents c in optionRepo.FindComponentsByLanguage(reportPart.Option.Id, langID != 0 ? langID : projectRoundUnit.Language.Id)) {
-					int x = answerRepo.CountByValueWithDateOptionAndQuestion(c.Component.Id, dateFrom.Year, dateTo.Month, reportPart.Option.Id, reportPart.Question.Id, projectRoundUnit.SortString, dateFrom.Month, dateTo.Month);
+				//foreach (OptionComponents c in optionRepo.FindComponentsByLanguage(reportPart.Option.Id, langID != 0 ? langID : projectRoundUnit.Language.Id)) {
+                foreach (OptionComponents c in optionRepo.FindComponentsByLanguage(reportPart.OptionID, langID != 0 ? langID : projectRoundUnit.Language.Id)) {
+					//int x = answerRepo.CountByValueWithDateOptionAndQuestion(c.Component.Id, dateFrom.Year, dateTo.Month, reportPart.Option.Id, reportPart.Question.Id, projectRoundUnit.SortString, dateFrom.Month, dateTo.Month);
+                    int x = answerRepo.CountByValueWithDateOptionAndQuestion(c.Component.Id, dateFrom.Year, dateTo.Month, reportPart.OptionID, reportPart.QuestionID, projectRoundUnit.SortString, dateFrom.Month, dateTo.Month);
 					var b = new Bar {
 						Description = c.Component.CurrentLanguage.Text,
 						Value = Convert.ToInt32(Math.Round(Convert.ToDecimal(x) / tot * 100M, 0)),
@@ -306,7 +308,8 @@ namespace HW.Core.Helpers
 					};
 					bars.Add(b);
 				}
-				int cx = optionRepo.CountByOption(reportPart.Option.Id);
+				//int cx = optionRepo.CountByOption(reportPart.Option.Id);
+                int cx = optionRepo.CountByOption(reportPart.OptionID);
 				g.DrawBars(null, cx, tot, bars);
 				g.drawAxisExpl(string.Format("% (n = {0})", tot), 5, false, false);
 			}
