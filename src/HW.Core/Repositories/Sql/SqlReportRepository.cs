@@ -270,7 +270,6 @@ ORDER BY rpc.SortOrder",
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				while (rs.Read()) {
 					var c = new ReportPartComponent();
-//					c.Id = rs.GetInt32(0);
 					c.Index = new Index {
 						Id = rs.GetInt32(0),
 						TargetVal = GetInt32(rs, 2, -1),

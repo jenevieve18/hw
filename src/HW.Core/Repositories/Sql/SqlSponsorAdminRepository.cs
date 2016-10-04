@@ -303,7 +303,7 @@ WHERE SponsorAdminID = @SponsorAdminID";
 			return sponsorAdmin;
 		}
 		
-		public ISponsor ReadSponsor(int sponsorAdminId)
+		public IAdmin ReadSponsor(int sponsorAdminId)
 		{
 			string query = string.Format(
 				@"

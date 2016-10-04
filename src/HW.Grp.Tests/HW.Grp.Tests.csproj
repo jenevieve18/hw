@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Helpers\GroupStatsGraphFactoryTests.cs" />
     <Compile Include="Helpers\ReminderHelperTests.cs" />
+    <Compile Include="Helpers\UserLevelStatsGraphFactoryTests.cs" />
     <Compile Include="Models\ReportTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ReportRepositoryTests.cs" />

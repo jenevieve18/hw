@@ -47,15 +47,18 @@ namespace HW.Core.Models
 		public int DummyValue1 { get; set; } // TODO: This is used by dbo.cf_yearWeek and related methods
 		public int DummyValue2 { get; set; }
 		public int DummyValue3 { get; set; }
+		
 		public float Max {
 //			get { return max > 100 ? 100 : max; }
 			get { return max; }
 			set { max = value; }
 		}
+		
 		public float Min {
 			get { return min < 0 ? 0 : min; }
 			set { min = value; }
 		}
+		
 		public string SomeString { get; set; } // TODO: From cf_yearMonthDay(a.EndDT) function
 		public int DT { get; set; } // TODO: From cf_yearWeek(a.EndDT) function
 		public float AverageV { get; set; }

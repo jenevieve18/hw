@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HW.Core.Models
 {
-	public interface ISponsor
+	public interface IAdmin
 	{
 		string InviteSubject { get; set; }
 		string InviteText { get; set; }
@@ -24,7 +24,7 @@ namespace HW.Core.Models
 		bool SuperUser { get; set; }
 	}
 	
-	public class Sponsor : BaseModel, ISponsor
+	public class Sponsor : BaseModel, IAdmin
 	{
 		public int SponsorID { get; set; }
 		public string Name { get; set; }
@@ -130,7 +130,7 @@ namespace HW.Core.Models
 		public int ExtraExtendedSurveyId { get; set; }
 	}
 	
-	public class SponsorAdmin : BaseModel, ISponsor
+	public class SponsorAdmin : BaseModel, IAdmin
 	{
 		public int SponsorAdminID { get; set; }
 		public Sponsor Sponsor { get; set; }

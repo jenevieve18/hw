@@ -24,7 +24,7 @@ namespace HW.Grp
 		bool incorrectPassword = false;
 		bool sent = false;
 		bool loginWithSkey = false;
-		ISponsor sponsor;
+		IAdmin sponsor;
 		SqlUserRepository userRepository = new SqlUserRepository();
 //		protected int lid = Language.ENGLISH;
 		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
@@ -77,13 +77,13 @@ namespace HW.Grp
 			LoadMessages(service.ReadSponsor(SponsorAndSponsorAdminID), service.FindExtendedSurveysBySponsorAdmin(sponsorID, sponsorAdminID), IsPostBack, false);
 		}
 		
-		void LoadMessages(ISponsor sponsor, IList<IExtendedSurvey> surveys, bool postBack, bool revert)
+		void LoadMessages(IAdmin sponsor, IList<IExtendedSurvey> surveys, bool postBack, bool revert)
 		{
 			SetSponsor(sponsor, postBack, revert);
 			SetExtendedSurveys(surveys, postBack, revert);
 		}
 		
-		public void SetSponsor(ISponsor sponsor, bool postBack, bool revert)
+		public void SetSponsor(IAdmin sponsor, bool postBack, bool revert)
 		{
 			this.sponsor = sponsor;
 			if (!postBack) {
@@ -104,7 +104,7 @@ namespace HW.Grp
 					textBoxLoginSubject.Text = sponsor.LoginSubject;
 
 					dropDownLoginDays.SelectedValue = (sponsor.LoginDays <= 0 ? "14" : sponsor.LoginDays.ToString());
-					dropDownLoginWeekday.SelectedValue = (sponsor.LoginWeekDay <= -1 ? "NULL" : sponsor.LoginWeekDay.ToString());
+					dropDownLoginWeekday.SelectedValue = (sponsor.LoginWeekday <= -1 ? "NULL" : sponsor.LoginWeekday.ToString());
 
 					if (!revert) {
 						labelInviteLastSent.Text = (sponsor.InviteLastSent ==  null ? R.Str(lid, "never", "Never") : sponsor.InviteLastSent.Value.ToString("yyyy-MM-dd HH:mm"));

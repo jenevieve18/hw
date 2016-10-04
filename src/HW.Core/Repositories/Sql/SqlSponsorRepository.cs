@@ -15,7 +15,7 @@ namespace HW.Core.Repositories.Sql
 		
 		IList<IExtendedSurvey> FindExtendedSurveysBySponsorAdmin(int sponsorId, int sponsorAdminId);
 		
-		ISponsor ReadSponsor(int sponsorAdminId);
+		IAdmin ReadSponsor(int sponsorAdminId);
 		
 		void UpdateSponsorLastInviteSent(int sponsorID);
 		
@@ -1054,7 +1054,7 @@ FROM SuperAdmin"
 			return null;
 		}
 
-		public ISponsor ReadSponsor(int sponsorId)
+		public IAdmin ReadSponsor(int sponsorId)
 		{
 			string query = string.Format(
 				@"

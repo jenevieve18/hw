@@ -32,7 +32,8 @@ namespace HW.Core.Tests.Helpers
 			new SqlDepartmentRepository(),
 			new SqlQuestionRepository(),
 			new SqlIndexRepository(),
-			new SqlSponsorRepository()
+			new SqlSponsorRepository(),
+			new SqlSponsorAdminRepository()
 		);
 		
 		[SetUp]
@@ -133,8 +134,8 @@ namespace HW.Core.Tests.Helpers
 				langID = 2,
 				yearFrom = 2016,
 				yearTo = 2016,
-				GB = Group.GroupBy.TwoWeeksStartWithEven,
-				grouping = Group.Grouping.UsersOnUnit,
+				GB = GroupBy.TwoWeeksStartWithEven,
+				grouping = Grouping.UsersOnUnit,
 				sponsorAdminID = 10,
 				sponsorID = 3,
 				monthFrom = 4,
@@ -142,7 +143,7 @@ namespace HW.Core.Tests.Helpers
 				sponsorMinUserCountToDisclose = 2,
 			};
 			
-			ISponsor s = service.ReadSponsor(p.sponsorID);
+			IAdmin s = service.ReadSponsor(p.sponsorID);
 //			SponsorProject r = new SqlMeasureRepository().ReadSponsorProject(2);
 			SponsorProject r = new SqlSponsorProjectRepository().Read(2);
 			
@@ -176,8 +177,8 @@ namespace HW.Core.Tests.Helpers
 				langID = 2,
 				yearFrom = 2016,
 				yearTo = 2016,
-				GB = Group.GroupBy.TwoWeeksStartWithEven,
-				grouping = Group.Grouping.UsersOnUnitAndSubUnits,
+				GB = GroupBy.TwoWeeksStartWithEven,
+				grouping = Grouping.UsersOnUnitAndSubUnits,
 				sponsorAdminID = 10,
 				sponsorID = 3,
 				monthFrom = 4,
@@ -185,7 +186,7 @@ namespace HW.Core.Tests.Helpers
 				sponsorMinUserCountToDisclose = 2,
 			};
 			
-			ISponsor s = service.ReadSponsor(p.sponsorID);
+			IAdmin s = service.ReadSponsor(p.sponsorID);
 //			SponsorProject r = new SqlMeasureRepository().ReadSponsorProject(2);
 			SponsorProject r = new SqlSponsorProjectRepository().Read(2);
 			
@@ -215,7 +216,7 @@ namespace HW.Core.Tests.Helpers
 		[Test]
 		public void a()
 		{
-			ISponsor s = service.ReadSponsor(83);
+			IAdmin s = service.ReadSponsor(83);
 			ReportPart r = service.ReadReportPart(14, 2);
 			
 			var exporter = new GroupStatsGraphFactory(
@@ -229,15 +230,17 @@ namespace HW.Core.Tests.Helpers
 			);
 			
 			var p = new {
-				yearFrom = 2011,
-				yearTo = 2012,
-				groupBy = Group.GroupBy.TwoWeeksStartWithEven,
+//				yearFrom = 2011,
+//				yearTo = 2012,
+				dateFrom = new DateTime(2011, 1, 1),
+				dateTo = new DateTime(2012, 1, 1),
+				groupBy = GroupBy.TwoWeeksStartWithEven,
 				hasGrouping = true,
-				grouping = Group.Grouping.UsersOnUnit,
+				grouping = Grouping.UsersOnUnit,
 				sponsorAdminID = 791,
 				sponsorID = 83,
-				monthFrom = 1,
-				monthTo = 1,
+//				monthFrom = 1,
+//				monthTo = 1,
 				projectRoundUnitID = 2643,
 				sponsorMinUserCountToDisclose = 2,
 				point = 0,
@@ -249,8 +252,10 @@ namespace HW.Core.Tests.Helpers
 				r,
 				p.langID,
 				p.projectRoundUnitID,
-				p.yearFrom,
-				p.yearTo,
+//				p.yearFrom,
+//				p.yearTo,
+				p.dateFrom,
+				p.dateTo,
 				p.groupBy,
 				p.hasGrouping,
 				PlotType.LineSD,
@@ -263,9 +268,9 @@ namespace HW.Core.Tests.Helpers
 				"0,925",
 				null,
 				p.point,
-				p.sponsorMinUserCountToDisclose,
-				p.monthFrom,
-				p.monthTo
+				p.sponsorMinUserCountToDisclose
+//				p.monthFrom,
+//				p.monthTo
 			);
 			g.Draw();
 		}
@@ -273,7 +278,7 @@ namespace HW.Core.Tests.Helpers
 		[Test]
 		public void b()
 		{
-			ISponsor s = service.ReadSponsor(83);
+			IAdmin s = service.ReadSponsor(83);
 			ReportPart r = service.ReadReportPart(14, 2);
 			
 			var exporter = new GroupStatsGraphFactory(
@@ -287,15 +292,17 @@ namespace HW.Core.Tests.Helpers
 			);
 			
 			var p = new {
-				yearFrom = 2011,
-				yearTo = 2012,
-				groupBy = Group.GroupBy.TwoWeeksStartWithEven,
+//				yearFrom = 2011,
+//				yearTo = 2012,
+				dateFrom = new DateTime(2011, 1, 1),
+				dateTo = new DateTime(2012, 1, 1),
+				groupBy = GroupBy.TwoWeeksStartWithEven,
 				hasGrouping = true,
-				grouping = Group.Grouping.UsersOnUnitAndSubUnits,
+				grouping = Grouping.UsersOnUnitAndSubUnits,
 				sponsorAdminID = 791,
 				sponsorID = 83,
-				monthFrom = 1,
-				monthTo = 1,
+//				monthFrom = 1,
+//				monthTo = 1,
 				projectRoundUnitID = 2643,
 				sponsorMinUserCountToDisclose = 2,
 				point = 0,
@@ -307,8 +314,10 @@ namespace HW.Core.Tests.Helpers
 				r,
 				p.langID,
 				p.projectRoundUnitID,
-				p.yearFrom,
-				p.yearTo,
+//				p.yearFrom,
+//				p.yearTo,
+				p.dateFrom,
+				p.dateTo,
 				p.groupBy,
 				p.hasGrouping,
 				PlotType.LineSD,
@@ -321,9 +330,9 @@ namespace HW.Core.Tests.Helpers
 				"0,925",
 				null,
 				p.point,
-				p.sponsorMinUserCountToDisclose,
-				p.monthFrom,
-				p.monthTo
+				p.sponsorMinUserCountToDisclose
+//				p.monthFrom,
+//				p.monthTo
 			);
 			g.Draw();
 		}

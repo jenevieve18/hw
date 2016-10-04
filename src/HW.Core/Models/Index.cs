@@ -64,6 +64,7 @@ namespace HW.Core.Models
 		
 		public float AverageAX { get; set; }
 		public int CountDX { get; set; }
+		public int DT { get; set; }
 	}
 	
 	public class IndexLanguage : BaseModel

@@ -24,7 +24,8 @@ namespace HW.Grp
 			new SqlDepartmentRepository(),
 			new SqlQuestionRepository(),
 			new SqlIndexRepository(),
-			new SqlSponsorRepository()
+			new SqlSponsorRepository(),
+			new SqlSponsorAdminRepository()
 		);
 //		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
@@ -100,7 +101,7 @@ namespace HW.Grp
 			bool hasGrouping = Request.QueryString["GRPNG"] != null || Request.QueryString["GRPNG"] != "0";
 //			string key = Request.QueryString["AK"];
 			
-			ISponsor sponsor = service.ReadSponsor(sponsorID);
+			IAdmin sponsor = service.ReadSponsor(sponsorID);
 			reportParts = service.FindByProjectAndLanguage(projectRoundUnitID, langID);
 
 			var exporter = ExportFactory.GetExporterAll(service, type, HasAnswerKey, hasGrouping, reportParts, Server.MapPath("HW template for Word.docx"));

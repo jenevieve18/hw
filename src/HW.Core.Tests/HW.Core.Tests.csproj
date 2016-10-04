@@ -66,7 +66,9 @@
     <Compile Include="Helpers\MailHelperTests.cs" />
     <Compile Include="Helpers\PageTests.cs" />
     <Compile Include="Helpers\SessionHelperTests.cs" />
-    <Compile Include="MainForm.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
@@ -78,7 +80,9 @@
     <Compile Include="Repositories\AnswerRepositoryTests.cs" />
     <Compile Include="Repositories\DepartmentRepositoryTests.cs" />
     <Compile Include="Repositories\ExerciseRepositoryTests.cs" />
-    <Compile Include="Repositories\Form1.cs" />
+    <Compile Include="Repositories\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Repositories\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
@@ -105,11 +109,7 @@
       <Name>HW.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers" />
-    <Folder Include="Models" />
-    <Folder Include="Repositories" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Repositories\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

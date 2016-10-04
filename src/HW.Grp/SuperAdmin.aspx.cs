@@ -346,7 +346,7 @@ namespace HW.Grp
 //				totInvitees += rs.GetInt32(4);
 				totInvitees += sap.Sponsor.SentInvites.Capacity;
 //				if (rs.IsDBNull(9))
-				if (sap.Sponsor.ClosedAt == null)
+				if (sap.Sponsor.Closed == null)
 				{
 //					totNonClosedInvites += rs.GetInt32(4);
 					totNonClosedInvites += sap.Sponsor.SentInvites.Capacity;
@@ -354,7 +354,7 @@ namespace HW.Grp
 //				totActive += rs.GetInt32(5);
 				totActive += sap.Sponsor.ActiveInvites.Capacity;
 //				if (rs.IsDBNull(9))
-				if (sap.Sponsor.ClosedAt == null)
+				if (sap.Sponsor.Closed == null)
 				{
 //					totNonClosedActive += rs.GetInt32(5);
 					totNonClosedActive += sap.Sponsor.ActiveInvites.Capacity;
@@ -382,7 +382,7 @@ namespace HW.Grp
 	<td>{11}{12}</td>
 </tr>",
 					(cx % 2 == 0 ? " bgcolor='#F2F2F2'" : ""),
-					(sap.Sponsor.ClosedAt != null ? " style='text-decoration:line-through;color:#cc0000;'" : ""),
+					(sap.Sponsor.Closed != null ? " style='text-decoration:line-through;color:#cc0000;'" : ""),
 					sap.Sponsor.SponsorKey,
 					sap.Sponsor.Id,
 					sap.Sponsor.Name,
@@ -393,7 +393,7 @@ namespace HW.Grp
 					(sap.Sponsor.MinimumInviteDate == null ? "N/A" : sap.Sponsor.MinimumInviteDate.Value.ToString("yyyy-MM-dd")),
 					(sap.SeeUsers ? "No" : "Yes"),
 					(sap.Sponsor.MinimumInviteDate != null ? "<a href='superadmin.aspx?ATSID=" + sap.Sponsor.Id + "'><img src='img/auditTrail.gif' border='0'/></a>" : ""),
-					(sap.Sponsor.ClosedAt == null ? "" : " <span style='color:#cc0000;'>Closed " + sap.Sponsor.ClosedAt.Value.ToString("yyyy-MM-dd") + "</span>")
+					(sap.Sponsor.Closed == null ? "" : " <span style='color:#cc0000;'>Closed " + sap.Sponsor.Closed.Value.ToString("yyyy-MM-dd") + "</span>")
 				);
 
 				if (Request.QueryString["ATSID"] != null && Convert.ToInt32(Request.QueryString["ATSID"]) == sap.Sponsor.Id) {

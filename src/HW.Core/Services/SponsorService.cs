@@ -26,5 +26,11 @@ namespace HW.Core.Services
 			}
 			return sa;
 		}
+		
+		public Sponsor ReadSponsor(int sponsorID)
+		{
+			var s = sponsorRepo.Read(sponsorID);
+			return s;
+		}
 	}
 }

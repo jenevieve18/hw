@@ -49,8 +49,11 @@ namespace HW.Core.Models
 	
 	public class ReportPart : BaseModel
 	{
+		ReportPartLang currentLanguage;
+		
 		public ReportPart()
 		{
+			Languages = new List<ReportPartLang>();
 			Components = new List<ReportPartComponent>();
 		}
 		
@@ -65,14 +68,17 @@ namespace HW.Core.Models
 		public int PartLevel { get; set; }
 		public int GroupingQuestionID { get; set; }
 		public int GroupingOptionID { get; set; }
-		
 		public Report Report { get; set; }
 		public Question Question { get; set; }
+		public Option Option { get; set; }
+		public List<ReportPartComponent> Components { get; set; }
+		public IList<ReportPartLang> Languages { get; set; }
+		public int SelectedReportPartLangID { get; set; }
+		
 		public bool HasQuestion {
 			get { return Question != null; }
 		}
-		public Option Option { get; set; }
-		public List<ReportPartComponent> Components { get; set; }
+		
 		public ReportPartComponent FirstComponent {
 			get {
 				if (Components.Count > 0) {
@@ -81,12 +87,10 @@ namespace HW.Core.Models
 				return null;
 			}
 		}
+		
 		public bool HasComponents {
 			get { return Components.Count > 0; }
 		}
-		public IList<ReportPartLang> Languages { get; set; }
-		
-		public ReportPartLang currentLanguage;
 		
 		public ReportPartLang CurrentLanguage {
 			get { return currentLanguage; }
@@ -94,6 +98,40 @@ namespace HW.Core.Models
 				currentLanguage = value;
 				currentLanguage.ReportPart = this;
 			}
+		}
+		
+		public ReportPartLang FirstLanguage {
+			get {
+				if (Languages.Count > 0) {
+					return Languages[0];
+				}
+				return null;
+			}
+		}
+		
+		ReportPartLang selectedReportPartLang;
+		
+		public ReportPartLang SelectedReportPartLang {
+			get {
+				if (selectedReportPartLang == null) {
+					selectedReportPartLang = GetLanguage(SelectedReportPartLangID);
+				}
+				if (selectedReportPartLang == null && FirstLanguage != null) {
+					selectedReportPartLang = FirstLanguage;
+				}
+				return selectedReportPartLang;
+			}
+			set { selectedReportPartLang = value; }
+		}
+		
+		ReportPartLang GetLanguage(int langID)
+		{
+			foreach (var l in Languages) {
+				if (l.LangID == langID) {
+					return l;
+				}
+			}
+			return null;
 		}
 	}
 	
@@ -115,13 +153,14 @@ namespace HW.Core.Models
 		public int IdxID { get; set; }
 		public int WeightedQuestionOptionID { get; set; }
 		public int SortOrder { get; set; }
-		
 		public ReportPart ReportPart { get; set; }
 		public Index Index { get; set; }
+		public WeightedQuestionOption WeightedQuestionOption { get; set; }
+		
 		public bool HasIndex {
 			get { return Index != null; }
 		}
-		public WeightedQuestionOption WeightedQuestionOption { get; set; }
+		
 		public bool HasWeightedQuestionOption {
 			get { return WeightedQuestionOption != null; }
 		}
@@ -129,6 +168,7 @@ namespace HW.Core.Models
 	
 	public class ReportPartLang : BaseModel, IReportPart
 	{
+		public int ReportPartLangID { get; set; }
 		public int ReportPartID { get; set; }
 		public int LangID { get; set; }
 		public string Subject { get; set; }
@@ -139,7 +179,6 @@ namespace HW.Core.Models
 		public string HeaderJapaneseUnicode { get; set; }
 		public string FooterJapaneseUnicode { get; set; }
 		public string AltTextJapaneseUnicode { get; set; }
-		
 		public ReportPart ReportPart { get; set; }
 		public Language Language { get; set; }
 	}

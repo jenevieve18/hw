@@ -19,7 +19,7 @@ namespace HW.Core.Tests.Helpers
 	public class ExcelExporterTests
 	{
 		ReportPart r;
-		ISponsor x;
+		IAdmin x;
 		ReportService service = new ReportService(
 			new SqlAnswerRepository(),
 			new SqlReportRepository(),
@@ -28,7 +28,8 @@ namespace HW.Core.Tests.Helpers
 			new SqlDepartmentRepository(),
 			new SqlQuestionRepository(),
 			new SqlIndexRepository(),
-			new SqlSponsorRepository()
+			new SqlSponsorRepository(),
+			new SqlSponsorAdminRepository()
 		);
 		ExcelStatsExporter e;
 		ExcelStatsExporter e2;

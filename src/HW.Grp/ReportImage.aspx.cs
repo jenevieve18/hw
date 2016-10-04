@@ -22,7 +22,8 @@ namespace HW.Grp
 			new SqlDepartmentRepository(),
 			new SqlQuestionRepository(),
 			new SqlIndexRepository(),
-			new SqlSponsorRepository()
+			new SqlSponsorRepository(),
+			new SqlSponsorAdminRepository()
 		);
 		
 		bool HasAnswerKey {
@@ -75,44 +76,60 @@ namespace HW.Grp
 		{
 			Response.ContentType = "image/gif";
 
-			ExtendedGraph graph = null;
-
-			int groupBy = (Request.QueryString["GB"] != null ? Convert.ToInt32(Request.QueryString["GB"].ToString()) : 0);
-//			bool stdev = (Request.QueryString["STDEV"] != null ? Convert.ToInt32(Request.QueryString["STDEV"]) == 1 : false);
+			int groupBy = ConvertHelper.ToInt32(Request.QueryString["GB"].ToString());
 			
-			int yearFrom = Request.QueryString["FY"] != null ? Convert.ToInt32(Request.QueryString["FY"]) : 0;
-			int yearTo = Request.QueryString["TY"] != null ? Convert.ToInt32(Request.QueryString["TY"]) : 0;
+//			int yearFrom = ConvertHelper.ToInt32(Request.QueryString["FY"]);
+//			int yearTo = ConvertHelper.ToInt32(Request.QueryString["TY"]);
+//			
+//			int monthFrom = ConvertHelper.ToInt32(Request.QueryString["FM"]);
+//			int monthTo = ConvertHelper.ToInt32(Request.QueryString["TM"]);
 			
-			int monthFrom = ConvertHelper.ToInt32(Request.QueryString["FM"]);
-			int monthTo = ConvertHelper.ToInt32(Request.QueryString["TM"]);
+			var dateFrom = new DateTime(ConvertHelper.ToInt32(Request.QueryString["FY"]), ConvertHelper.ToInt32(Request.QueryString["FM"]), 1);
+			var dateTo = new DateTime(ConvertHelper.ToInt32(Request.QueryString["TY"]), ConvertHelper.ToInt32(Request.QueryString["TM"]), 1);
 			
-			int langID = (Request.QueryString["LangID"] != null ? Convert.ToInt32(Request.QueryString["LangID"]) : 0);
+			int langID = ConvertHelper.ToInt32(Request.QueryString["LangID"]);
 
 			int reportPartID = Convert.ToInt32(Request.QueryString["RPID"]);
-//			int projectRoundUnitID = Convert.ToInt32(Request.QueryString["PRUID"]);
             int projectRoundUnitID = ConvertHelper.ToInt32(Request.QueryString["PRUID"].Replace("SPRU", ""));
 			
 			// FIXME: This hasGrouping value is always true! Please check!
 			bool hasGrouping = Request.QueryString["GRPNG"] != null || Request.QueryString["GRPNG"] != "0";
-//			bool hasGrouping = ConvertHelper.ToInt32(Request.QueryString["GRPNG"], 0) != 0;
 			
 			int plot = ConvertHelper.ToInt32(Request.QueryString["Plot"]);
 			string key = Request.QueryString["AK"];
 			
-			int grouping = Convert.ToInt32(Request.QueryString["GRPNG"]);
-			int sponsorAdminID = Convert.ToInt32((Request.QueryString["SAID"] != null ? Request.QueryString["SAID"] : Session["SponsorAdminID"]));
-			int sponsorID = Convert.ToInt32((Request.QueryString["SID"] != null ? Request.QueryString["SID"] : Session["SponsorID"]));
-			string gid = (Request.QueryString["GID"] != null ? Request.QueryString["GID"].ToString().Replace(" ", "") : "");
+			int grouping = ConvertHelper.ToInt32(Request.QueryString["GRPNG"]);
+			int sponsorAdminID = ConvertHelper.ToInt32(Request.QueryString["SAID"], ConvertHelper.ToInt32(Session["SponsorAdminID"]));
+			int sponsorID = ConvertHelper.ToInt32(Request.QueryString["SID"], ConvertHelper.ToInt32(Session["SponsorID"]));
+			string departmentIDs = (Request.QueryString["GID"] != null ? Request.QueryString["GID"].ToString().Replace(" ", "") : "");
 			
 			object disabled = Request.QueryString["DISABLED"];
 			
-			int point = Request.QueryString["ExtraPoint"] != null ? Convert.ToInt32(Request.QueryString["ExtraPoint"]) : 0;
+			int point = ConvertHelper.ToInt32(Request.QueryString["ExtraPoint"]);
 			
-			ISponsor sponsor = service.ReadSponsor(sponsorID);
-			ReportPart reportPart = service.ReadReportPart(reportPartID, langID);
+//			ISponsor sponsor = service.ReadSponsor(sponsorID);
+//			ReportPart reportPart = service.ReadReportPart(reportPartID, langID);
+			
+			var reportService = new ReportService3();
 
-			var facrtory = service.GetGraphFactory(HasAnswerKey);
-			graph = facrtory.CreateGraph(key, reportPart, langID, projectRoundUnitID, yearFrom, yearTo, groupBy, hasGrouping, plot, Width, Height, Background, grouping, sponsorAdminID, sponsorID, gid, disabled, point, sponsor.MinUserCountToDisclose, monthFrom, monthTo);
+			var reportPart = reportService.ReadReportPart(reportPartID);
+			reportPart.SelectedReportPartLangID = langID;
+
+//			var factory = service.GetGraphFactory(HasAnswerKey);
+//			var graph = factory.CreateGraph(key, reportPart, langID, projectRoundUnitID, yearFrom, yearTo, groupBy, hasGrouping, plot, Width, Height, Background, grouping, sponsorAdminID, sponsorID, departmentIDs, disabled, point, sponsor.MinUserCountToDisclose, monthFrom, monthTo);
+			
+			var factory = new GroupStatsGraphFactory(new SqlAnswerRepository(), new SqlReportRepository(), new SqlProjectRepository(), new SqlOptionRepository(), new SqlIndexRepository(), new SqlQuestionRepository(), new SqlDepartmentRepository());
+//			var graph = factory.CreateGraph(key, reportPart, langID, projectRoundUnitID, yearFrom, yearTo, groupBy, hasGrouping, plot, Width, Height, Background, grouping, sponsorAdminID, sponsorID, departmentIDs, disabled, point, sponsor.MinUserCountToDisclose, monthFrom, monthTo);
+			
+//			var dateFrom = new DateTime(yearFrom, monthFrom, 1);
+//			var dateTo = new DateTime(yearTo, monthTo, 1);
+			
+			var projectRoundUnit = service.ReadProjectRoundUnit(projectRoundUnitID);
+			var sponsorAdmin = service.ReadSponsorAdmin(sponsorAdminID);
+			
+            var sponsor = new SqlSponsorRepository().Read(sponsorID);
+			var graph = factory.CreateGraph2(reportPart, projectRoundUnit, langID, sponsorAdmin, sponsor, dateFrom, dateTo, groupBy, hasGrouping, plot, grouping, departmentIDs, point);
+			
 			graph.render();
 		}
 	}

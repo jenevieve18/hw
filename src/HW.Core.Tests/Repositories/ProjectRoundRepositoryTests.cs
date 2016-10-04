@@ -13,9 +13,10 @@ namespace HW.Core.Tests.Repositories
 	[TestFixture]
 	public class ProjectRoundRepositoryTests
 	{
-		ProjectService s = new ProjectService(new SqlProjectRepository(),
-		                                      new SqlProjectRoundUnitRepository(),
-		                                      new SqlProjectRoundUserRepository());
+//		ProjectService s = new ProjectService(new SqlProjectRepository(),
+//		                                      new SqlProjectRoundUnitRepository(),
+//		                                      new SqlProjectRoundUserRepository());
+		ProjectService s = new ProjectService();
 		
 		[Test]
 		public void TestMethod()

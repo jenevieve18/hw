@@ -18,33 +18,31 @@ namespace HW.Grp
 	{
 		protected string errorMessage = "";
 		SqlManagerFunctionRepository functionRepository = new SqlManagerFunctionRepository();
-		ISponsorRepository sponsorRepository;
-		INewsRepository newsRepository;
+		ISponsorRepository sponsorRepo;
+		INewsRepository newsRepo;
 		SqlUserRepository userRepository = new SqlUserRepository();
 		protected IList<AdminNews> adminNews;
-//		protected int lid = Language.ENGLISH;
+		
 		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
 		public Default() : this(new SqlSponsorRepository(), new SqlNewsRepository())
 		{
 		}
 		
-		public Default(ISponsorRepository sponsorRepository, INewsRepository newsRepository)
+		public Default(ISponsorRepository sponsorRepo, INewsRepository newsRepo)
 		{
-			this.sponsorRepository = sponsorRepository;
-			this.newsRepository = newsRepository;
+			this.sponsorRepo = sponsorRepo;
+			this.newsRepo = newsRepo;
 		}
 		
 		public void Index()
 		{
-			adminNews = newsRepository.FindTop3AdminNews();
+			adminNews = newsRepo.FindTop3AdminNews();
 		}
 
 		protected CultureInfo GetCultureInfo(int lid)
 		{
-			//return lid == 1 ? new CultureInfo("sv-SE") : new CultureInfo("en-US");
-            switch (lid)
-            {
+            switch (lid) {
                 case 1: return new CultureInfo("sv-SE");
                 case 4: return new CultureInfo("de-DE");
                 default: return new CultureInfo("en-US");
@@ -53,13 +51,11 @@ namespace HW.Grp
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
-//			SessionHelper.AddIf(Request.QueryString["lid"] != null, "lid", ConvertHelper.ToInt32(Request.QueryString["lid"]));
 			var userSession = new UserSession { HostAddress = Request.UserHostAddress, Agent = Request.UserAgent, Lang = ConvertHelper.ToInt32(Request.QueryString["lid"]) };
 			userRepository.SaveSessionIf(Request.QueryString["lid"] != null, userSession);
 			if (Request.QueryString["r"] != null) {
 				Response.Redirect(HttpUtility.UrlDecode(Request.QueryString["r"]));
 			}
-//			lid = ConvertHelper.ToInt32(Session["lid"], 2);
 			userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
 			if (userSession != null) {
 				lid = userSession.Lang;
@@ -76,11 +72,11 @@ namespace HW.Grp
 				string los = Request.Form["LOS"];
 				string sa = Request.QueryString["SA"];
 				string said = sa != null ? (Session["SuperAdminID"] != null ? Session["SuperAdminID"].ToString() : "0") : "";
-				s = sponsorRepository.ReadSponsorAdmin(skey, sakey, sa, said, anv, los);
+				s = sponsorRepo.ReadSponsorAdmin(skey, sakey, sa, said, anv, los);
 				if (s != null) {
 					login = true;
-					sponsorRepository.SaveSponsorAdminSession(s.Id, DateTime.Now);
-					Session["SponsorAdminSessionID"] = sponsorRepository.ReadLastSponsorAdminSession();
+					sponsorRepo.SaveSponsorAdminSession(s.Id, DateTime.Now);
+					Session["SponsorAdminSessionID"] = sponsorRepo.ReadLastSponsorAdminSession();
 					
 					Session["Name"] = s.Name;
 					if (s.SuperAdmin) {
@@ -112,7 +108,7 @@ namespace HW.Grp
 					Response.Redirect(firstUrl, true);
 				}
 			} else if (login && Session["SponsorAdminID"] != null || Request.QueryString["Logout"] != null) {
-				sponsorRepository.UpdateSponsorAdminSession(Convert.ToInt32(Session["SponsorAdminSessionID"]), DateTime.Now);
+				sponsorRepo.UpdateSponsorAdminSession(Convert.ToInt32(Session["SponsorAdminSessionID"]), DateTime.Now);
 				
 				Session.Remove("SponsorID");
 				Session.Remove("SponsorAdminID");

@@ -21,7 +21,7 @@ namespace HW.Core.Tests
 			var session = new Dictionary<string, object>();
 			session["UserID"] = null;
 			//lalala(session, "D322060F10971");
-			lalala(session, "B8B54D4E10980");
+			lalala(session, "84A0D0B510981");
 		}
 		
 		void lalala(Dictionary<string, object> session, string invite)

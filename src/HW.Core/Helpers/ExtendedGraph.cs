@@ -505,39 +505,41 @@ namespace HW.Core.Helpers
 		public void Draw(List<Series> series)
 		{
 //			Graph.DrawBars(new object(), 10, tot, bars);
-			int steps = 10;
+//			int steps = 10;
 			
-			Graph.setMinMax(0f, 100f);
+//			Graph.setMinMax(0f, 100f);
 
-			steps += 2;
-			int tot = 2000;
+//			steps += 2;
+//			int tot = 2000;
 			
-			Graph.computeSteping((steps <= 1 ? 2 : steps));
-			Graph.drawOutlines(11);
+//			Graph.computeSteping((steps <= 1 ? 2 : steps));
+//			Graph.drawOutlines(11);
 //			Graph.drawAxis(disabled);
-			Graph.drawAxis(new object());
+//			Graph.drawAxis(new object());
 
-			int i = 0;
-			decimal sum = 0;
+//			int i = 0;
+//			decimal sum = 0;
 			Series s = series[0];
 //			foreach (Bar b in bars) {
 			foreach (var p in s.Points) {
-				i++;
-				sum += (decimal)p.Y;
-				Graph.drawBar(s.Color, i, p.Y);
-				Graph.drawBottomString(p.Description, i, true);
+//				i++;
+//				sum += (decimal)p.Y;
+//				Graph.drawBar(s.Color, i, p.Y);
+//				Graph.drawBottomString(p.Description, i, true);
+				Graph.drawBar(s.Color, p.X, (float)p.Values.Mean);
+//				Graph.drawBottomString(p.Description, p.X, true);
 //				if (b.HasReference) {
 //					Graph.drawReference(i, b.Reference);
 //				}
-				Graph.drawReference(i, 12);
+//				Graph.drawReference(i, 12);
 			}
 //			foreach (int l in referenceLines) {
 //				drawReferenceLine(l, " = riktvärde");
 //			}
-			if (tot > 0) {
-				Graph.drawBar(4, ++i, Convert.ToInt32(Math.Round((tot - sum) / tot * 100M, 0)));
-				Graph.drawBottomString("Inget svar", i, true);
-			}
+//			if (tot > 0) {
+//				Graph.drawBar(4, ++i, Convert.ToInt32(Math.Round((tot - sum) / tot * 100M, 0)));
+//				Graph.drawBottomString("Inget svar", i, true);
+//			}
 		}
 	}
 	

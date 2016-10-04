@@ -95,7 +95,7 @@ namespace HW.Grp
 			table.Rows.Add(
 				new IHGHtmlTableRow(
 					new IHGHtmlTableCell(loginDays[sponsor.LoginDays.ToString()]),
-					new IHGHtmlTableCell(loginWeekDays[sponsor.LoginWeekDay.ToString()]),
+					new IHGHtmlTableCell(loginWeekDays[sponsor.LoginWeekday.ToString()]),
 					new IHGHtmlTableCell(),
 					new IHGHtmlTableCell(Session["Sponsor"].ToString())
 				)
@@ -120,7 +120,7 @@ namespace HW.Grp
 
 				var lw = new DropDownList { ID = "LWID" + d.Id, Width = Unit.Pixel(150) };
 //				lw.Items.Add(new ListItem(P(R.Str(lid, "week.same", "< same as parent >")), "NULL"));
-				string parentLoginWeekdayReminder = loginWeekDays[If(j == 0, d.Sponsor.LoginWeekDay.ToString(), d.GetLoginWeekDay().ToString())];
+				string parentLoginWeekdayReminder = loginWeekDays[If(j == 0, d.Sponsor.LoginWeekday.ToString(), d.GetLoginWeekDay().ToString())];
 				lw.Items.Add(new ListItem(P(parentLoginWeekdayReminder + "*"), "NULL"));
 				lw.Items.Add(new ListItem(P(R.Str(lid, "week.disabled", "< disabled >")), "-1"));
 				lw.Items.Add(new ListItem(P(R.Str(lid, "week.everyday", "< every day >")), "0"));

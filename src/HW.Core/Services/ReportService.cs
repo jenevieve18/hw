@@ -19,7 +19,8 @@ namespace HW.Core.Services
 		SqlDepartmentRepository departmentRepository;
 		SqlQuestionRepository questionRepository;
 		SqlIndexRepository indexRepository;
-		SqlSponsorRepository sponsorRepository;
+		SqlSponsorRepository sponsorRepo;
+		SqlSponsorAdminRepository sponsorAdminRepo;
 		
 		int lastCount = 0;
 		float lastVal = 0;
@@ -34,7 +35,8 @@ namespace HW.Core.Services
 		                     SqlDepartmentRepository departmentRepository,
 		                     SqlQuestionRepository questionRepository,
 		                     SqlIndexRepository indexRepository,
-		                     SqlSponsorRepository sponsorRepository)
+		                     SqlSponsorRepository sponsorRepo,
+		                     SqlSponsorAdminRepository sponsorAdminRepo)
 		{
 			this.answerRepository = answerRepository;
 			this.reportRepository = reportRepository;
@@ -43,7 +45,8 @@ namespace HW.Core.Services
 			this.departmentRepository = departmentRepository;
 			this.questionRepository = questionRepository;
 			this.indexRepository = indexRepository;
-			this.sponsorRepository = sponsorRepository;
+			this.sponsorRepo = sponsorRepo;
+			this.sponsorAdminRepo = sponsorAdminRepo;
 		}
 		
 		public IList<IReportPart> FindByProjectAndLanguage(int projectRoundID, int langID)
@@ -51,9 +54,19 @@ namespace HW.Core.Services
 			return reportRepository.FindByProjectAndLanguage(projectRoundID, langID);
 		}
 		
-		public ISponsor ReadSponsor(int sponsorID)
+		public IAdmin ReadSponsor(int sponsorID)
 		{
-			return sponsorRepository.ReadSponsor(sponsorID);
+			return sponsorRepo.ReadSponsor(sponsorID);
+		}
+		
+		public SponsorAdmin ReadSponsorAdmin(int sponsorAdminID)
+		{
+			return sponsorAdminRepo.Read(sponsorAdminID);
+		}
+		
+		public ProjectRoundUnit ReadProjectRoundUnit(int projectRoundUnitID)
+		{
+			return projectRepository.ReadRoundUnit(projectRoundUnitID);
 		}
 		
 		public ReportPart ReadReportPart(int rpid, int langID)

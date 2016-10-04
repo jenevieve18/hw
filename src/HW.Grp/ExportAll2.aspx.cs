@@ -23,7 +23,8 @@ namespace HW.Grp
 			new SqlDepartmentRepository(),
 			new SqlQuestionRepository(),
 			new SqlIndexRepository(),
-			new SqlSponsorRepository()
+			new SqlSponsorRepository(),
+			new SqlSponsorAdminRepository()
 		);
 //		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 
@@ -103,7 +104,7 @@ namespace HW.Grp
 
 			bool hasGrouping = Request.QueryString["GRPNG"] != null || Request.QueryString["GRPNG"] != "0";
 
-			ISponsor s = service.ReadSponsor(sponsorID);
+			IAdmin s = service.ReadSponsor(sponsorID);
 //			reportParts = service.FindByProjectAndLanguage(pruid, langID);
 			
 			string project = Request.QueryString["PRUID"];

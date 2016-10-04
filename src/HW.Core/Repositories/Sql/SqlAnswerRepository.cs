@@ -239,8 +239,8 @@ AND (YEAR(a.EndDT) = {1} AND MONTH(a.EndDT) >= {5} OR YEAR(a.EndDT) > {1})
 AND (YEAR(a.EndDT) = {2} AND MONTH(a.EndDT) <= {6} OR YEAR(a.EndDT) < {2})
 AND LEFT(pru.SortString, {3}) = '{4}'",
 				groupBy,
-                yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
-				yearTo, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
+                yearFrom,
+				yearTo,
 				sortString.Length,
 				sortString,
                 monthFrom,

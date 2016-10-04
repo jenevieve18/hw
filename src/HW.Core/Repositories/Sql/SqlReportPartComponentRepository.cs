@@ -120,5 +120,30 @@ FROM ReportPartComponent";
 			}
 			return reportPartComponents;
 		}
+		
+		public IList<ReportPartComponent> FindByReportPart(int reportPartID)
+		{
+			string query = @"
+SELECT 	ReportPartComponentID, 
+	ReportPartID, 
+	IdxID, 
+	WeightedQuestionOptionID, 
+	SortOrder
+FROM ReportPartComponent
+WHERE ReportPartID = @ReportPartID";
+			var reportPartComponents = new List<ReportPartComponent>();
+			using (var rs = ExecuteReader(query, "eFormSqlConnection", new SqlParameter("@ReportPartID", reportPartID))) {
+				while (rs.Read()) {
+					reportPartComponents.Add(new ReportPartComponent {
+						ReportPartComponentID = GetInt32(rs, 0),
+						ReportPartID = GetInt32(rs, 1),
+						IdxID = GetInt32(rs, 2),
+						WeightedQuestionOptionID = GetInt32(rs, 3),
+						SortOrder = GetInt32(rs, 4)
+					});
+				}
+			}
+			return reportPartComponents;
+		}
 	}
 }

@@ -70,7 +70,7 @@ namespace HW.Core.Services
 			sponsorRepository.SaveSponsorAdminSessionFunction(sponsorAdminSessionID, functionID, date);
 		}
 		
-		public ISponsor ReadSponsor(int ID)
+		public IAdmin ReadSponsor(int ID)
 		{
 			return extendedSurveyRepository.ReadSponsor(ID);
 		}

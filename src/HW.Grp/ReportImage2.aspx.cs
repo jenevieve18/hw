@@ -21,7 +21,8 @@ namespace HW.Grp
 			new SqlDepartmentRepository(),
 			new SqlQuestionRepository(),
 			new SqlIndexRepository(),
-			new SqlSponsorRepository()
+			new SqlSponsorRepository(),
+			new SqlSponsorAdminRepository()
 		);
 
 //		bool HasAnswerKey
@@ -111,7 +112,7 @@ namespace HW.Grp
 
 				int point = Request.QueryString["ExtraPoint"] != null ? Convert.ToInt32(Request.QueryString["ExtraPoint"]) : 0;
 
-				ISponsor sponsor = service.ReadSponsor(sponsorID);
+				IAdmin sponsor = service.ReadSponsor(sponsorID);
 //				SponsorProject project = new SqlMeasureRepository().ReadSponsorProject(sponsorProjectID);
 				SponsorProject project = new SqlSponsorProjectRepository().Read(sponsorProjectID);
 

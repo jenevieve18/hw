@@ -203,9 +203,11 @@
     <Compile Include="Repositories\Sql\SqlMeasureRepository.cs" />
     <Compile Include="Repositories\Sql\SqlNewsRepository.cs" />
     <Compile Include="Repositories\Sql\SqlPlotTypeRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlProjectRoundRepository.cs" />
     <Compile Include="Repositories\Sql\SqlProjectRoundUnitRepository.cs" />
     <Compile Include="Repositories\Sql\SqlProjectRoundUserRepository.cs" />
     <Compile Include="Repositories\Sql\SqlReportPartComponentRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlReportPartLangRepository.cs" />
     <Compile Include="Repositories\Sql\SqlReportPartRepository.cs" />
     <Compile Include="Repositories\Sql\SqlReportRepository.cs" />
     <Compile Include="Repositories\Sql\SqlProjectRepository.cs" />
@@ -222,6 +224,7 @@
     <Compile Include="Repositories\Sql\SqlLanguageRepository.cs" />
     <Compile Include="Repositories\Sql\SqlDepartmentRepository.cs" />
     <Compile Include="Repositories\Sql\SqlAnswerRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlWeightedQuestionOptionRepository.cs" />
     <Compile Include="Repositories\Sql\SqlWiseRepository.cs" />
     <Compile Include="Services\ExerciseService.cs" />
     <Compile Include="Services\ExportService.cs" />
@@ -231,12 +234,12 @@
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\ReportService.cs" />
     <Compile Include="Services\ReportService2.cs" />
+    <Compile Include="Services\ReportService3.cs" />
     <Compile Include="Services\SponsorService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

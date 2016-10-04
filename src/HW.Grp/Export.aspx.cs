@@ -23,7 +23,8 @@ namespace HW.Grp
 			new SqlDepartmentRepository(),
 			new SqlQuestionRepository(),
 			new SqlIndexRepository(),
-			new SqlSponsorRepository()
+			new SqlSponsorRepository(),
+			new SqlSponsorAdminRepository()
 		);
 //		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
@@ -60,7 +61,7 @@ namespace HW.Grp
 			
 			object disabled = Request.QueryString["DISABLED"];
 			
-			ISponsor sponsor = service.ReadSponsor(sid);
+			IAdmin sponsor = service.ReadSponsor(sid);
 			ReportPart reportPart = service.ReadReportPart(reportPartID, langID);
 			
 			var exporter = ExportFactory.GetExporter(service, type, HasAnswerKey, hasGrouping, reportPart, Server.MapPath("HW template for Word.docx"));

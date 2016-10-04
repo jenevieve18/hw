@@ -22,7 +22,8 @@ namespace HW.Grp
 			new SqlDepartmentRepository(),
 			new SqlQuestionRepository(),
 			new SqlIndexRepository(),
-			new SqlSponsorRepository()
+			new SqlSponsorRepository(),
+			new SqlSponsorAdminRepository()
 		);
 		SqlReportRepository r = new SqlReportRepository();
 		SqlUserRepository userRepository = new SqlUserRepository();
