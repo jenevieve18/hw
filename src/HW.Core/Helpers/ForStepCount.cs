@@ -52,7 +52,8 @@ namespace HW.Core.Helpers
 			}
 		}
 		
-		public ExtendedGraph CreateGraph(SponsorProject p, int langID, int yearFrom, int yearTo, int GB, bool hasGrouping, int plot, int grouping, int sponsorAdminID, int sponsorID, string departmentIDs, object disabled, int point, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
+//		public ExtendedGraph CreateGraph(SponsorProject p, int langID, int yearFrom, int yearTo, int GB, bool hasGrouping, int plot, int grouping, int sponsorAdminID, int sponsorID, string departmentIDs, object disabled, int point, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
+		public ExtendedGraph CreateGraph(SponsorProject p, int langID, DateTime dateFrom, DateTime dateTo, int GB, bool hasGrouping, int plot, int grouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, object disabled, int point)
 		{
 //			int differenceDate = p.Components.Capacity;
 			int differenceDate = 0;
@@ -152,7 +153,8 @@ namespace HW.Core.Helpers
 			g = new ExtendedGraph(895, 440, "#FFFFFF");
 			
 			g.Type = GetGraphType(plot, 2);
-			var answer = measureRepository.ReadByGroup(groupByQuery, yearFrom, yearTo, sortString, monthFrom, monthTo);
+//			var answer = measureRepository.ReadByGroup(groupByQuery, yearFrom, yearTo, sortString, monthFrom, monthTo);
+			var answer = measureRepository.ReadByGroup(groupByQuery, dateFrom.Year, dateTo.Year, sortString, dateFrom.Month, dateTo.Month);
 			if (answer != null) {
 				differenceDate = answer.DummyValue1 + 3;
 				startDate = answer.DummyValue2;
@@ -193,13 +195,15 @@ namespace HW.Core.Helpers
 			if (hasGrouping) {
 				string extraDesc = "";
 				
-				var departments = GroupFactory.GetDepartmentsWithJoinQueryForStepCount(grouping, sponsorAdminID, sponsorID, departmentIDs, ref extraDesc, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
+//				var departments = GroupFactory.GetDepartmentsWithJoinQueryForStepCount(grouping, sponsorAdminID, sponsorID, departmentIDs, ref extraDesc, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
+				var departments = GroupFactory.GetDepartmentsWithJoinQueryForStepCount(grouping, sponsorAdmin, sponsor, departmentIDs, ref extraDesc, departmentRepository, questionRepository);
 				
 				int aggregation = GetAggregationByGroupBy(GB);
 				
 				var minMaxes = new List<IMinMax>();
 				foreach (var d in departments) {
-					var minMax = measureRepository.ReadMinMax2(groupByQuery, yearFrom, yearTo, monthFrom, monthTo, aggregation, departmentIDs, sponsorID, d.Query);
+//					var minMax = measureRepository.ReadMinMax2(groupByQuery, yearFrom, yearTo, monthFrom, monthTo, aggregation, departmentIDs, sponsorID, d.Query);
+					var minMax = measureRepository.ReadMinMax2(groupByQuery, dateFrom.Year, dateTo.Year, dateFrom.Month, dateTo.Month, aggregation, departmentIDs, sponsor.Id, d.Query);
 					minMax.Max = (float)(((int)minMax.Max).Ceiling());
 					minMaxes.Add(minMax);
 				}
@@ -238,7 +242,8 @@ namespace HW.Core.Helpers
 				foreach(var i in departments) {
 					differenceDate = 1;
 					int lastDT = startDate - 1;
-					var measures = measureRepository.FindByQuestionAndOptionJoinedAndGrouped2(i.Query, groupByQuery, yearFrom, yearTo, monthFrom, monthTo, aggregation, sponsorID);
+//					var measures = measureRepository.FindByQuestionAndOptionJoinedAndGrouped2(i.Query, groupByQuery, yearFrom, yearTo, monthFrom, monthTo, aggregation, sponsorID);
+					var measures = measureRepository.FindByQuestionAndOptionJoinedAndGrouped2(i.Query, groupByQuery, dateFrom.Year, dateTo.Year, dateFrom.Month, dateTo.Month, aggregation, sponsor.Id);
 					Series s = new Series {
 						Description = i.Name,
 						Color = bx + 4,
@@ -263,7 +268,8 @@ namespace HW.Core.Helpers
 								string v = BaseGraphFactory.GetBottomString(GB, a.DT, differenceDate, (departments.Count == 1 ? ", n = " + a.Values.Count : ""));
 								g.DrawBottomString(v, differenceDate);
 							}
-							s.Points.Add(new PointV { X = differenceDate, Values = a.GetIntValues() });
+//							s.Points.Add(new PointV { X = differenceDate, Values = a.GetIntValues() });
+							s.Points.Add(new PointV { X = differenceDate, Values = a.GetDoubleValues() });
 						}
 						lastDT = a.DT;
 						differenceDate++;
@@ -288,7 +294,8 @@ namespace HW.Core.Helpers
 					differenceDate = 1;
 					int lastDT = startDate - 1;
 					Series s = new Series { Color = bx + 4 };
-					var answers = answerRepository.FindByQuestionAndOptionGroupedX(groupByQuery, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, yearFrom, yearTo, sortString, monthFrom, monthTo);
+//					var answers = answerRepository.FindByQuestionAndOptionGroupedX(groupByQuery, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, yearFrom, yearTo, sortString, monthFrom, monthTo);
+					var answers = answerRepository.FindByQuestionAndOptionGroupedX(groupByQuery, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, dateFrom.Year, dateTo.Year, sortString, dateFrom.Month, dateTo.Month);
 					foreach (Answer a in answers) {
 						if (a.DT < startDate) {
 							continue;
@@ -301,7 +308,8 @@ namespace HW.Core.Helpers
 //								string v = GetBottomString(grouping, a.DT, differenceDate, ", n = " + a.CountV);
 						string v = BaseGraphFactory.GetBottomString(GB, a.DT, differenceDate, ", n = " + a.CountV);
 						g.DrawBottomString(v, differenceDate);
-						s.Points.Add(new PointV { X = differenceDate, Values = a.GetIntValues() });
+//						s.Points.Add(new PointV { X = differenceDate, Values = a.GetIntValues() });
+						s.Points.Add(new PointV { X = differenceDate, Values = a.GetDoubleValues() });
 //							}
 						lastDT = a.DT;
 						differenceDate++;
@@ -328,7 +336,8 @@ namespace HW.Core.Helpers
 			}
 		}
 
-		public void CreateGraphForExcelWriter(ReportPart p, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int groupBy, bool hasGrouping, int plot, int grouping, int sponsorAdminID, int sponsorID, string departmentIDs, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
+//		public void CreateGraphForExcelWriter(ReportPart p, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int groupBy, bool hasGrouping, int plot, int grouping, int sponsorAdminID, int sponsorID, string departmentIDs, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
+		public void CreateGraphForExcelWriter(ReportPart p, int langID, ProjectRoundUnit projectRoundUnit, DateTime dateFrom, DateTime dateTo, int groupBy, bool hasGrouping, int plot, int grouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ExcelWriter writer, ref int index)
 		{
 //			int cx = p.Components.Capacity;
 			int cx;
@@ -347,7 +356,8 @@ namespace HW.Core.Helpers
 			Dictionary<string, List<IAnswer>> weeks = new Dictionary<string, List<IAnswer>>();
 			string extraDesc = "";
 			
-			var departments = GroupFactory.GetDepartmentsWithJoinQueryForStepCount(grouping, sponsorAdminID, sponsorID, departmentIDs, ref extraDesc, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
+//			var departments = GroupFactory.GetDepartmentsWithJoinQueryForStepCount(grouping, sponsorAdminID, sponsorID, departmentIDs, ref extraDesc, departmentRepository, questionRepository, sponsorMinUserCountToDisclose);
+			var departments = GroupFactory.GetDepartmentsWithJoinQueryForStepCount(grouping, sponsorAdmin, sponsor, departmentIDs, ref extraDesc, departmentRepository, questionRepository);
 
 			LanguageFactory.SetCurrentCulture(langID);
 
@@ -410,7 +420,8 @@ namespace HW.Core.Helpers
 //				} else {
 //				}
 //				Answer answer = answerRepository.ReadByGroup(groupBy, yearFrom, yearTo, sortString, monthFrom, monthTo);
-			var answer = measureRepository.ReadByGroup(groupByQuery, yearFrom, yearTo, sortString, monthFrom, monthTo);
+//			var answer = measureRepository.ReadByGroup(groupByQuery, yearFrom, yearTo, sortString, monthFrom, monthTo);
+			var answer = measureRepository.ReadByGroup(groupByQuery, dateFrom.Year, dateTo.Year, sortString, dateFrom.Month, dateTo.Month);
 			if (answer != null) {
 //					cx = answer.DummyValue1 + 3;
 				minDT = answer.DummyValue2;
@@ -441,7 +452,8 @@ namespace HW.Core.Helpers
 					cx = 1;
 					int lastDT = minDT - 1;
 //							var answers = answerRepository.FindByQuestionAndOptionJoinedAndGrouped2(join[i].ToString(), groupBy, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, yearFrom, yearTo, monthFrom, monthTo);
-					var measures = measureRepository.FindByQuestionAndOptionJoinedAndGrouped2(i.Query, groupByQuery, yearFrom, yearTo, monthFrom, monthTo, aggregation, sponsorID);
+//					var measures = measureRepository.FindByQuestionAndOptionJoinedAndGrouped2(i.Query, groupByQuery, yearFrom, yearTo, monthFrom, monthTo, aggregation, sponsorID);
+					var measures = measureRepository.FindByQuestionAndOptionJoinedAndGrouped2(i.Query, groupByQuery, dateFrom.Year, dateTo.Year, dateFrom.Month, dateTo.Month, aggregation, sponsor.Id);
 //							departments.Add(new Department { Name = (string)desc[i] });
 					foreach (var a in measures) {
 						if (a.DT < minDT) {
@@ -471,7 +483,8 @@ namespace HW.Core.Helpers
 				foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(p.Id, langID)) {
 					cx = 1;
 					int lastDT = minDT - 1;
-					var answers = answerRepository.FindByQuestionAndOptionGrouped(groupByQuery, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, yearFrom, yearTo, sortString, monthFrom, monthTo);
+//					var answers = answerRepository.FindByQuestionAndOptionGrouped(groupByQuery, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, yearFrom, yearTo, sortString, monthFrom, monthTo);
+					var answers = answerRepository.FindByQuestionAndOptionGrouped(groupByQuery, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, dateFrom.Year, dateTo.Year, sortString, dateFrom.Month, dateTo.Month);
 					foreach (Answer a in answers) {
 						if (a.DT < minDT) {
 							continue;

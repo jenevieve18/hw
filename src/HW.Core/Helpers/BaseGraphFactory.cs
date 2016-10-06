@@ -12,9 +12,10 @@ namespace HW.Core.Helpers
 	public interface IGraphFactory
 	{
 //		ExtendedGraph CreateGraph(string key, ReportPart reportPart, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int groupBy, bool hasGrouping, int plot, int width, int height, string bg, int grouping, int sponsorAdminID, int sponsorID, string departmentIDs, object disabled, int point, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo);
-		ExtendedGraph CreateGraph(string key, ReportPart reportPart, int langID, int projectRoundUnitID, DateTime dateFrom, DateTime dateTo, int groupBy, bool hasGrouping, int plot, int width, int height, string bg, int grouping, int sponsorAdminID, int sponsorID, string departmentIDs, object disabled, int point, int sponsorMinUserCountToDisclose);
+//		ExtendedGraph CreateGraph(string key, ReportPart reportPart, int langID, int projectRoundUnitID, DateTime dateFrom, DateTime dateTo, int groupBy, bool hasGrouping, int plot, int width, int height, string bg, int grouping, int sponsorAdminID, int sponsorID, string departmentIDs, object disabled, int point, int sponsorMinUserCountToDisclose);
 
-		void CreateGraphForExcelWriter(ReportPart reportPart, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int groupBy, bool hasGrouping, int plot, int grouping, int sponsorAdminID, int sponsorID, string departmentIDs, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo);
+//		void CreateGraphForExcelWriter(ReportPart reportPart, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int groupBy, bool hasGrouping, int plot, int grouping, int sponsorAdminID, int sponsorID, string departmentIDs, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo);
+		void CreateGraphForExcelWriter(ReportPart reportPart, int langID, ProjectRoundUnit projectRoundUnit, DateTime dateFrom, DateTime dateTo, int groupBy, bool hasGrouping, int plot, int grouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ExcelWriter writer, ref int index);
 		
 		event EventHandler<MergeEventArgs> ForMerge;
 		
@@ -128,8 +129,9 @@ namespace HW.Core.Helpers
 		}
 		
 //		public abstract ExtendedGraph CreateGraph(string key, ReportPart reportPart, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int groupBy, bool hasGrouping, int plot, int width, int height, string bg, int grouping, int sponsorAdminID, int sponsorID, string departmentIDs, object disabled, int point, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo);
-		public abstract ExtendedGraph CreateGraph(string key, ReportPart reportPart, int langID, int projectRoundUnitID, DateTime dateFrom, DateTime dateTo, int groupBy, bool hasGrouping, int plot, int width, int height, string bg, int grouping, int sponsorAdminID, int sponsorID, string departmentIDs, object disabled, int point, int sponsorMinUserCountToDisclose);
+//		public abstract ExtendedGraph CreateGraph(string key, ReportPart reportPart, int langID, int projectRoundUnitID, DateTime dateFrom, DateTime dateTo, int groupBy, bool hasGrouping, int plot, int width, int height, string bg, int grouping, int sponsorAdminID, int sponsorID, string departmentIDs, object disabled, int point, int sponsorMinUserCountToDisclose);
 		
-		public abstract void CreateGraphForExcelWriter(ReportPart reportPart, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int groupBy, bool hasGrouping, int plot, int grouping, int sponsorAdminID, int sponsorID, string departmentIDs, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo);
+//		public abstract void CreateGraphForExcelWriter(ReportPart reportPart, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int groupBy, bool hasGrouping, int plot, int grouping, int sponsorAdminID, int sponsorID, string departmentIDs, ExcelWriter writer, ref int index, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo);
+		public abstract void CreateGraphForExcelWriter(ReportPart reportPart, int langID, ProjectRoundUnit projectRoundUnit, DateTime dateFrom, DateTime dateTo, int groupBy, bool hasGrouping, int plot, int grouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ExcelWriter writer, ref int index);
 	}
 }

@@ -48,15 +48,6 @@ namespace HW.Core.Models
 		public UserProfile UserProfile { get; set; }
 		public IList<IValue> Values { get; set; }
 		
-		public HWList GetIntValues()
-		{
-			List<double> n = new List<double>();
-			foreach (var v in Values) {
-				n.Add((double)v.ValueInt);
-			}
-			return new HWList(n);
-		}
-		
 		public UserMeasure()
 		{
 			Values = new List<IValue>();
@@ -66,15 +57,45 @@ namespace HW.Core.Models
 		public int DummyValue1 { get; set; } // TODO: This is used by dbo.cf_yearWeek and related methods
 		public int DummyValue2 { get; set; }
 		public int DummyValue3 { get; set; }
+		
+//		public HWList GetFloatValues()
+//		{
+//			List<double> n = new List<double>();
+//			foreach (var v in Values) {
+//				n.Add((double)v.ValueFloat);
+//			}
+//			return new HWList(n);
+//		}
+//		
+//		public HWList GetIntValues()
+//		{
+//			List<double> n = new List<double>();
+//			foreach (var v in Values) {
+//				n.Add((double)v.ValueInt);
+//			}
+//			return new HWList(n);
+//		}
+		
+		public HWList GetDoubleValues()
+		{
+			List<double> n = new List<double>();
+			foreach (var v in Values) {
+				n.Add(v.ValueDouble);
+			}
+			return new HWList(n);
+		}
 	}
 	
 	public class UserMeasureComponent : BaseModel, IValue
 	{
 		public UserMeasure UserMeasure { get; set; }
 		public MeasureComponent MeasureComponent { get; set; }
-		public int ValueInt { get; set; }
+//		public int ValueInt { get; set; }
 		public decimal ValueDecimal { get; set; }
 		public string ValueText { get; set; }
+//		public float ValueFloat { get; set; }
+		
+		public double ValueDouble { get; set; }
 	}
 	
 	public class UserSponsorProject : BaseModel

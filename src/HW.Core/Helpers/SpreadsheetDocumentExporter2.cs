@@ -60,18 +60,21 @@ namespace HW.Core.Helpers
 //		}
 		
 //		public override object Export(string url)
-		public override object Export(string url, int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
+//		public override object Export(string url, int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
+		public override object Export(string url, int langID, ProjectRoundUnit projectRoundUnit, DateTime dateFrom, DateTime dateTo, int groupBy, int plot, int grouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs)
 		{
 			MemoryStream output = new MemoryStream();
 			using (SpreadsheetDocument  package = SpreadsheetDocument.Create(output, SpreadsheetDocumentType.Workbook)) {
 //				string url = GetUrl(path, langID, fy, ty, spons, sid, gb, r.Id, pruid, gid, grpng, plot, fm, tm);
-				CreateParts(package, r.CurrentLanguage, url);
+//				CreateParts(package, r.CurrentLanguage, url);
+				CreateParts(package, r.SelectedReportPartLang, url);
 			}
 			return output;
 		}
 		
 //		public override object ExportAll(int langID)
-		public override object ExportAll(int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
+//		public override object ExportAll(int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
+		public override object ExportAll(int langID, ProjectRoundUnit projectRoundUnit, DateTime dateFrom, DateTime dateTo, int groupBy, int plot, int grouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs)
 		{
 			throw new NotImplementedException();
 		}

@@ -79,11 +79,14 @@ namespace HW.Grp
 		{
 			int groupBy = (Request.QueryString["GB"] != null ? Convert.ToInt32(Request.QueryString["GB"].ToString()) : 0);
 			
-			int yearFrom = Request.QueryString["FY"] != null ? Convert.ToInt32(Request.QueryString["FY"]) : 0;
-			int yearTo = Request.QueryString["TY"] != null ? Convert.ToInt32(Request.QueryString["TY"]) : 0;
+//			int yearFrom = Request.QueryString["FY"] != null ? Convert.ToInt32(Request.QueryString["FY"]) : 0;
+//			int yearTo = Request.QueryString["TY"] != null ? Convert.ToInt32(Request.QueryString["TY"]) : 0;
+//			
+//			int monthFrom = ConvertHelper.ToInt32(Request.QueryString["FM"]);
+//			int monthTo = ConvertHelper.ToInt32(Request.QueryString["TM"]);
 			
-			int monthFrom = ConvertHelper.ToInt32(Request.QueryString["FM"]);
-			int monthTo = ConvertHelper.ToInt32(Request.QueryString["TM"]);
+			DateTime dateFrom = new DateTime(Convert.ToInt32(Request.QueryString["FY"]), ConvertHelper.ToInt32(Request.QueryString["FM"]), 1);
+			DateTime dateTo = new DateTime(Convert.ToInt32(Request.QueryString["TY"]), ConvertHelper.ToInt32(Request.QueryString["TM"]), 1);
 			
 			int langID = (Request.QueryString["LangID"] != null ? Convert.ToInt32(Request.QueryString["LangID"]) : 0);
 
@@ -103,6 +106,9 @@ namespace HW.Grp
 			
 			IAdmin sponsor = service.ReadSponsor(sponsorID);
 			reportParts = service.FindByProjectAndLanguage(projectRoundUnitID, langID);
+			
+			ProjectRoundUnit projectRoundUnit = service.ReadProjectRoundUnit(projectRoundUnitID);
+			var sponsorAdmin = service.ReadSponsorAdmin(sponsorAdminID);
 
 			var exporter = ExportFactory.GetExporterAll(service, type, HasAnswerKey, hasGrouping, reportParts, Server.MapPath("HW template for Word.docx"));
 			exporter.CellWrite += delegate(object sender2, ExcelCellEventArgs e2) {
@@ -116,8 +122,11 @@ namespace HW.Grp
 			HtmlHelper.AddHeaderIf(exporter.HasContentDisposition2, "content-disposition", exporter.ContentDisposition2, Response);
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
 			
-			exporter.UrlSet += delegate(object sender2, ReportPartEventArgs e2) { e2.Url = GetReportImageUrl(path, langID, yearFrom, yearTo, sponsorAdminID, sponsorID, groupBy, e2.ReportPart.Id, projectRoundUnitID, departmentIDs, grouping, plot, monthFrom, monthTo); };
-			HtmlHelper.Write(exporter.ExportAll(langID, projectRoundUnitID, yearFrom, yearTo, groupBy, plot, grouping, sponsorAdminID, sponsorID, departmentIDs, sponsor.MinUserCountToDisclose, monthFrom, monthTo), Response);
+//			exporter.UrlSet += delegate(object sender2, ReportPartEventArgs e2) { e2.Url = GetReportImageUrl(path, langID, yearFrom, yearTo, sponsorAdminID, sponsorID, groupBy, e2.ReportPart.Id, projectRoundUnitID, departmentIDs, grouping, plot, monthFrom, monthTo); };
+//			HtmlHelper.Write(exporter.ExportAll(langID, projectRoundUnitID, yearFrom, yearTo, groupBy, plot, grouping, sponsorAdminID, sponsorID, departmentIDs, sponsor.MinUserCountToDisclose, monthFrom, monthTo), Response);
+			
+			exporter.UrlSet += delegate(object sender2, ReportPartEventArgs e2) { e2.Url = GetReportImageUrl(path, langID, dateFrom.Year, dateTo.Year, sponsorAdminID, sponsorID, groupBy, e2.ReportPart.Id, projectRoundUnitID, departmentIDs, grouping, plot, dateFrom.Month, dateTo.Month); };
+			HtmlHelper.Write(exporter.ExportAll(langID, projectRoundUnit, dateFrom, dateTo, groupBy, plot, grouping, sponsorAdmin, sponsor as Sponsor, departmentIDs), Response);
 		}
 		
 //		void Write(object obj)

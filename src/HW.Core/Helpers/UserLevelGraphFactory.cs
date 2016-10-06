@@ -21,7 +21,7 @@ namespace HW.Core.Helpers
 		}
 		
 //		public override ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int GB, bool hasGrouping, int plot, int width, int height, string bg, int GRPNG, int sponsorAdminID, int sponsorID, string departmentIDs, object disabled, int point, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
-		public override ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int projectRoundUnitID, DateTime dateFrom, DateTime dateTo, int GB, bool hasGrouping, int plot, int width, int height, string bg, int GRPNG, int sponsorAdminID, int sponsorID, string departmentIDs, object disabled, int point, int sponsorMinUserCountToDisclose)
+		public ExtendedGraph CreateGraph(string key, ReportPart p, int langID, int projectRoundUnitID, DateTime dateFrom, DateTime dateTo, int GB, bool hasGrouping, int plot, int width, int height, string bg, int GRPNG, int sponsorAdminID, int sponsorID, string departmentIDs, object disabled, int point, int sponsorMinUserCountToDisclose)
 		{
 			int cx = p.Components.Capacity;
 			int answerID = 0;
@@ -89,8 +89,10 @@ namespace HW.Core.Helpers
 				foreach (ReportPartComponent c in reportRepository.FindComponentsByPartAndLanguage2(p.Id, langID)) {
 					a = answerRepository.ReadByQuestionAndOption(answerID, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id);
 					if (a != null) {
-						int color = c.WeightedQuestionOption.GetColor(a.Values[0].ValueInt);
-						g.drawBar(color, ++cx, a.Values[0].ValueInt);
+//						int color = c.WeightedQuestionOption.GetColor(a.Values[0].ValueInt);
+//						g.drawBar(color, ++cx, a.Values[0].ValueInt);
+						int color = c.WeightedQuestionOption.GetColor((int)a.Values[0].ValueDouble);
+						g.drawBar(color, ++cx, (int)a.Values[0].ValueDouble);
 						if (c.WeightedQuestionOption.TargetVal != 0) {
 							hasReference = true;
 							g.drawReference(cx, c.WeightedQuestionOption.TargetVal);
@@ -112,7 +114,8 @@ namespace HW.Core.Helpers
 			return g;
 		}
 
-		public override void CreateGraphForExcelWriter(ReportPart p, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int gb, bool hasGrouping, int plot, int grpng, int sponsorAdminID, int sponsorID, string departmentIDs, ExcelWriter w, ref int i, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
+//		public override void CreateGraphForExcelWriter(ReportPart p, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int gb, bool hasGrouping, int plot, int grpng, int sponsorAdminID, int sponsorID, string departmentIDs, ExcelWriter w, ref int i, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
+		public override void CreateGraphForExcelWriter(ReportPart p, int langID, ProjectRoundUnit projectRoundUnit, DateTime dateFrom, DateTime dateTo, int gb, bool hasGrouping, int plot, int grpng, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ExcelWriter w, ref int i)
 		{
 			throw new NotImplementedException();
 		}

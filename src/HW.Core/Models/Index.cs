@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using HW.Core.Helpers;
 
 namespace HW.Core.Models
 {
@@ -49,8 +50,13 @@ namespace HW.Core.Models
 		}
 	}
 	
-	public class Index : BaseIndex
+	public class Index : BaseIndex, IAnswer
 	{
+		public Index()
+		{
+			Values = new List<IValue>();
+		}
+		
 		public int IdxID { get; set; }
 		public string Internal { get; set; }
 		public int RequiredAnswerCount { get; set; }
@@ -65,6 +71,35 @@ namespace HW.Core.Models
 		public float AverageAX { get; set; }
 		public int CountDX { get; set; }
 		public int DT { get; set; }
+		
+		public IList<IValue> Values { get; set; }
+		
+//		public HWList GetFloatValues()
+//		{
+//			List<double> n = new List<double>();
+//			foreach (var v in Values) {
+//				n.Add((double)v.ValueFloat);
+//			}
+//			return new HWList(n);
+//		}
+//		
+//		public HWList GetIntValues()
+//		{
+//			List<double> n = new List<double>();
+//			foreach (var v in Values) {
+//				n.Add((double)v.ValueInt);
+//			}
+//			return new HWList(n);
+//		}
+		
+		public HWList GetDoubleValues()
+		{
+			List<double> n = new List<double>();
+			foreach (var v in Values) {
+				n.Add(v.ValueDouble);
+			}
+			return new HWList(n);
+		}
 	}
 	
 	public class IndexLanguage : BaseModel

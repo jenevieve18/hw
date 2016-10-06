@@ -270,7 +270,8 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 							cx++;
 						}
 						if (a.Values.Count >= rac) {
-							s1.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
+//							s1.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
+							s1.Points.Add(new PointV { X = cx, Values = a.GetDoubleValues() });
 						}
 						lastDT = a.DT;
 						cx++;
@@ -291,7 +292,8 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 								cx++;
 							}
 							if (a.Values.Count >= rac) {
-								s2.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
+//								s2.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
+								s2.Points.Add(new PointV { X = cx, Values = a.GetDoubleValues() });
 							}
 							lastDT = a.DT;
 							cx++;
@@ -554,7 +556,8 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 							cx++;
 						}
 						if (a.Values.Count >= r.RequiredAnswerCount) {
-							s1.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
+//							s1.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
+							s1.Points.Add(new PointV { X = cx, Values = a.GetDoubleValues() });
 						}
 						lastDT = a.DT;
 						cx++;
@@ -572,7 +575,8 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 								cx++;
 							}
 							if (a.Values.Count >= r.RequiredAnswerCount) {
-								s2.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
+//								s2.Points.Add(new PointV { X = cx, Values = a.GetIntValues() });
+								s2.Points.Add(new PointV { X = cx, Values = a.GetDoubleValues() });
 							}
 							lastDT = a.DT;
 							cx++;

@@ -95,9 +95,11 @@ namespace HW.Core.Helpers
 		
 		bool HasContentDisposition2 { get; }
 		
-		object Export(string url, int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm);
+//		object Export(string url, int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm);
+		object Export(string url, int langID, ProjectRoundUnit projectRoundUnit, DateTime dateFrom, DateTime dateTo, int groupBy, int plot, int grouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs);
 		
-		object ExportAll(int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm);
+//		object ExportAll(int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm);
+		object ExportAll(int langID, ProjectRoundUnit projectRoundUnit, DateTime dateFrom, DateTime dateTo, int groupBy, int plot, int grouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs);
 		
 		object SuperExport(string url, string rnds1, string rnds2, string rndsd1, string rndsd2, string pid1, string pid2, string n, int rpid, string yearFrom, string yearTo, string r1, string r2, int langID, int plot);
 		
@@ -107,7 +109,6 @@ namespace HW.Core.Helpers
 		
 		event EventHandler<ExcelCellEventArgs> CellWrite;
 	}
-	
 	
 	public abstract class AbstractExporter : IExporter
 	{
@@ -144,9 +145,11 @@ namespace HW.Core.Helpers
 		
 		public abstract string ContentDisposition2 { get; }
 		
-		public abstract object Export(string url, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm);
+//		public abstract object Export(string url, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm);
+		public abstract object Export(string url, int langID, ProjectRoundUnit projectRoundUnit, DateTime dateFrom, DateTime dateTo, int groupBy, int plot, int grouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs);
 		
-		public abstract object ExportAll(int langID, int projectRoundUnitID, int yearFrom, int yearTo, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm);
+//		public abstract object ExportAll(int langID, int projectRoundUnitID, int yearFrom, int yearTo, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm);
+		public abstract object ExportAll(int langID, ProjectRoundUnit projectRoundUnit, DateTime dateFrom, DateTime dateTo, int groupBy, int plot, int grouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs);
 		
 		public abstract object SuperExport(string url, string rnds1, string rnds2, string rndsd1, string rndsd2, string pid1, string pid2, string n, int rpid, string yearFrom, string yearTo, string r1, string r2, int langID, int plot);
 		

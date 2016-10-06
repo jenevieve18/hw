@@ -26,51 +26,51 @@ namespace HW.Grp
 			new SqlSponsorAdminRepository()
 		);
 		
-		bool HasAnswerKey {
-			get { return Request.QueryString["AK"] != null; }
-		}
-		
-		bool HasWidth {
-			get { return Request.QueryString["W"] != null; }
-		}
-		
-		bool HasHeight {
-			get { return Request.QueryString["H"] != null; }
-		}
-		
-		bool HasBackground {
-			get { return Request.QueryString["BG"] != null; }
-		}
-		
-		int Width {
-			get {
-				if (HasWidth) {
-					return Convert.ToInt32(Request.QueryString["W"]);
-				} else {
-					return 550;
-				}
-			}
-		}
-		
-		int Height {
-			get {
-				if (HasHeight) {
-					return Convert.ToInt32(Request.QueryString["H"]);
-				} else {
-					return 440;
-				}
-			}
-		}
-		
-		string Background {
-			get {
-				if (HasBackground) {
-					return "#" + Request.QueryString["BG"];
-				} else {
-					return "#EFEFEF";
-				}
-			}
-		}
+//		bool HasAnswerKey {
+//			get { return Request.QueryString["AK"] != null; }
+//		}
+//		
+//		bool HasWidth {
+//			get { return Request.QueryString["W"] != null; }
+//		}
+//		
+//		bool HasHeight {
+//			get { return Request.QueryString["H"] != null; }
+//		}
+//		
+//		bool HasBackground {
+//			get { return Request.QueryString["BG"] != null; }
+//		}
+//		
+//		int Width {
+//			get {
+//				if (HasWidth) {
+//					return Convert.ToInt32(Request.QueryString["W"]);
+//				} else {
+//					return 550;
+//				}
+//			}
+//		}
+//		
+//		int Height {
+//			get {
+//				if (HasHeight) {
+//					return Convert.ToInt32(Request.QueryString["H"]);
+//				} else {
+//					return 440;
+//				}
+//			}
+//		}
+//		
+//		string Background {
+//			get {
+//				if (HasBackground) {
+//					return "#" + Request.QueryString["BG"];
+//				} else {
+//					return "#EFEFEF";
+//				}
+//			}
+//		}
 
 		private void Page_Load(object sender, System.EventArgs e)
 		{
@@ -107,9 +107,6 @@ namespace HW.Grp
 			
 			int point = ConvertHelper.ToInt32(Request.QueryString["ExtraPoint"]);
 			
-//			ISponsor sponsor = service.ReadSponsor(sponsorID);
-//			ReportPart reportPart = service.ReadReportPart(reportPartID, langID);
-			
 			var reportService = new ReportService3();
 
 			var reportPart = reportService.ReadReportPart(reportPartID);
@@ -128,7 +125,7 @@ namespace HW.Grp
 			var sponsorAdmin = service.ReadSponsorAdmin(sponsorAdminID);
 			
             var sponsor = new SqlSponsorRepository().Read(sponsorID);
-			var graph = factory.CreateGraph2(reportPart, projectRoundUnit, langID, sponsorAdmin, sponsor, dateFrom, dateTo, groupBy, hasGrouping, plot, grouping, departmentIDs, point);
+			var graph = factory.CreateGraph(reportPart, projectRoundUnit, langID, sponsorAdmin, sponsor, dateFrom, dateTo, groupBy, hasGrouping, plot, grouping, departmentIDs, point);
 			
 			graph.render();
 		}

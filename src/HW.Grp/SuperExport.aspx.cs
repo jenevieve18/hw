@@ -13,8 +13,8 @@ namespace HW.Grp
 {
 	public partial class SuperExport : System.Web.UI.Page
 	{
-		SqlReportRepository r = new SqlReportRepository();
-		SqlUserRepository userRepository = new SqlUserRepository();
+		SqlReportRepository reportRepo = new SqlReportRepository();
+		SqlUserRepository userRepo = new SqlUserRepository();
 //		protected int lid = Language.ENGLISH;
 		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
@@ -23,14 +23,14 @@ namespace HW.Grp
 			HtmlHelper.RedirectIf(Session["SuperAdminID"] == null, "default.aspx", true);
 
 //			int lid = ConvertHelper.ToInt32(Session["lid"], 2);
-			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+			var userSession = userRepo.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
 			if (userSession != null) {
 				lid = userSession.Lang;
 			}
 			int rpid = ConvertHelper.ToInt32(Request.QueryString["RPID"]);
 			string type = StrHelper.Str3(Request.QueryString["TYPE"], "docx");
 			
-			var p = r.ReadReportPart(rpid, lid);
+			var p = reportRepo.ReadReportPart(rpid, lid);
 			
 			var exporter = ExportFactory.GetSuperExporter(type, p, Server.MapPath("HW template for Word.docx"));
 			exporter.CellWrite += delegate(object sender2, ExcelCellEventArgs e2) {
@@ -41,7 +41,8 @@ namespace HW.Grp
 			Response.ClearHeaders();
 			Response.ClearContent();
 			Response.ContentType = exporter.Type;
-			HtmlHelper.AddHeaderIf(exporter.HasContentDisposition(p.CurrentLanguage.Subject), "content-disposition", exporter.GetContentDisposition(p.CurrentLanguage.Subject), Response);
+//			HtmlHelper.AddHeaderIf(exporter.HasContentDisposition(p.CurrentLanguage.Subject), "content-disposition", exporter.GetContentDisposition(p.CurrentLanguage.Subject), Response);
+			HtmlHelper.AddHeaderIf(exporter.HasContentDisposition(p.SelectedReportPartLang.Subject), "content-disposition", exporter.GetContentDisposition(p.SelectedReportPartLang.Subject), Response);
 			
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
 			string url = path + GetReportImageUrl(p);

@@ -253,7 +253,8 @@ ORDER BY {1}(um.DT)
 						do {
 							m.DT = GetInt32(rs, 0);
 //							m.Components.Add(new UserMeasureComponent { ValueInt = (int)rs.GetDecimal(2) });
-							m.Values.Add(new UserMeasureComponent { ValueInt = (int)rs.GetDecimal(2) });
+//							m.Values.Add(new UserMeasureComponent { ValueInt = (int)rs.GetDecimal(2) });
+							m.Values.Add(new UserMeasureComponent { ValueDouble = GetDouble(rs, 2) });
 							done = !rs.Read();
 						} while (!done && GetInt32(rs, 0) == m.DT);
 						measures.Add(m);

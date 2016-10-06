@@ -87,11 +87,14 @@ namespace HW.Grp
 			try {
 				int groupBy = (Request.QueryString["GB"] != null ? Convert.ToInt32(Request.QueryString["GB"].ToString()) : 0);
 
-				int yearFrom = Request.QueryString["FY"] != null ? Convert.ToInt32(Request.QueryString["FY"]) : 0;
-				int yearTo = Request.QueryString["TY"] != null ? Convert.ToInt32(Request.QueryString["TY"]) : 0;
-
-				int monthFrom = ConvertHelper.ToInt32(Request.QueryString["FM"]);
-				int monthTo = ConvertHelper.ToInt32(Request.QueryString["TM"]);
+//				int yearFrom = Request.QueryString["FY"] != null ? Convert.ToInt32(Request.QueryString["FY"]) : 0;
+//				int yearTo = Request.QueryString["TY"] != null ? Convert.ToInt32(Request.QueryString["TY"]) : 0;
+//
+//				int monthFrom = ConvertHelper.ToInt32(Request.QueryString["FM"]);
+//				int monthTo = ConvertHelper.ToInt32(Request.QueryString["TM"]);
+				
+				var dateFrom = new DateTime(ConvertHelper.ToInt32(Request.QueryString["FY"]), ConvertHelper.ToInt32(Request.QueryString["FM"]), 1);
+				var dateTo = new DateTime(ConvertHelper.ToInt32(Request.QueryString["TY"]), ConvertHelper.ToInt32(Request.QueryString["TM"]), 1);
 
 				int langID = (Request.QueryString["LangID"] != null ? Convert.ToInt32(Request.QueryString["LangID"]) : 0);
 
@@ -115,9 +118,12 @@ namespace HW.Grp
 				IAdmin sponsor = service.ReadSponsor(sponsorID);
 //				SponsorProject project = new SqlMeasureRepository().ReadSponsorProject(sponsorProjectID);
 				SponsorProject project = new SqlSponsorProjectRepository().Read(sponsorProjectID);
-
+				
+				var sponsorAdmin = service.ReadSponsorAdmin(sponsorAdminID);
+				
 				var factory = new ForStepCount(new SqlAnswerRepository(), new SqlReportRepository(), new SqlProjectRepository(), new SqlOptionRepository(), new SqlIndexRepository(), new SqlQuestionRepository(), new SqlDepartmentRepository(), new SqlMeasureRepository());
-				graph = factory.CreateGraph(project, langID, yearFrom, yearTo, groupBy, hasGrouping, plot, grouping, sponsorAdminID, sponsorID, departmentIDs, disabled, point, sponsor.MinUserCountToDisclose, monthFrom, monthTo);
+//				graph = factory.CreateGraph(project, langID, yearFrom, yearTo, groupBy, hasGrouping, plot, grouping, sponsorAdminID, sponsorID, departmentIDs, disabled, point, sponsor.MinUserCountToDisclose, monthFrom, monthTo);
+				graph = factory.CreateGraph(project, langID, dateFrom, dateTo, groupBy, hasGrouping, plot, grouping, sponsorAdmin, sponsor as Sponsor, departmentIDs, disabled, point);
 			} catch (NotSupportedException) {
 				graph = new ExtendedGraph(895, 440, "#FFFFFF");
 				graph.SetMinMax(0, 100);

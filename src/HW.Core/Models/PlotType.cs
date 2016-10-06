@@ -19,8 +19,8 @@ namespace HW.Core.Models
 		public const int LineSDWithCI = 3;
 		public const int BoxPlotMinMax = 4;
 		public const int BoxPlot = 5;
-		public const int Verbose = 6;
-		public const int Bar = 7;
+		public const int Verbose = 7;
+		public const int Bar = 6;
 		
 		public static string GetString(int plot)
 		{

@@ -53,13 +53,16 @@ namespace HW.Core.Helpers
 			get { return string.Format("attachment;filename=\"HealthWatch Survey {0}.xlsx\";", DateTime.Now.ToString("yyyyMMdd")); }
 		}
 		
-		public override object Export(string url, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int gb, int plot, int grouping, int sponsorAdminID, int sponsorID, string departmentIDs, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
+//		public override object Export(string url, int langID, int projectRoundUnitID, int yearFrom, int yearTo, int gb, int plot, int grouping, int sponsorAdminID, int sponsorID, string departmentIDs, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
+//		public override object Export(string url, int langID, ProjectRoundUnit projectRoundUnit, DateTime dateFrom, DateTime dateTo, int gb, int plot, int grouping, Sponsor sponsorAdmin, Sponsor sponsor, string departmentIDs)
+		public override object Export(string url, int langID, ProjectRoundUnit projectRoundUnit, DateTime dateFrom, DateTime dateTo, int groupBy, int plot, int grouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs)
 		{
 			MemoryStream output = new MemoryStream();
 			var f = service.GetGraphFactory(hasAnswerKey);
 			ExcelWriter w = new ExcelWriter(output);
 			int i = 0;
-			w.WriteCell(i, 0, r.CurrentLanguage.Subject, Color.Black, Color.AliceBlue, 16, ExcelBorderStyle.Thin);
+//			w.WriteCell(i, 0, r.CurrentLanguage.Subject, Color.Black, Color.AliceBlue, 16, ExcelBorderStyle.Thin);
+			w.WriteCell(i, 0, r.SelectedReportPartLang.Subject, Color.Black, Color.AliceBlue, 16, ExcelBorderStyle.Thin);
 			int j = i;
 			f.ForMerge += delegate(object sender, MergeEventArgs e) {
 				w.Merge(j, 0, j, e.WeeksCount, ExcelBorderStyle.Thin);
@@ -67,13 +70,16 @@ namespace HW.Core.Helpers
 			i++;
 			f.CellWrite += delegate(object sender, ExcelCellEventArgs e) { OnCellWrite(e); };
 			
-			f.CreateGraphForExcelWriter(r, langID, projectRoundUnitID, yearFrom, yearTo, gb, hasGrouping, plot, grouping, sponsorAdminID, sponsorID, departmentIDs, w, ref i, sponsorMinUserCountToDisclose, monthFrom, monthTo);
+//			f.CreateGraphForExcelWriter(r, langID, projectRoundUnitID, yearFrom, yearTo, gb, hasGrouping, plot, grouping, sponsorAdminID, sponsorID, departmentIDs, w, ref i, sponsorMinUserCountToDisclose, monthFrom, monthTo);
+//			f.CreateGraphForExcelWriter(r, langID, projectRoundUnitID, dateFrom, yearTo, gb, hasGrouping, plot, grouping, sponsorAdminID, sponsorID, departmentIDs, w, ref i, sponsorMinUserCountToDisclose, monthFrom, monthTo);
+			f.CreateGraphForExcelWriter(r, langID, projectRoundUnit, dateFrom, dateTo, groupBy, hasGrouping, plot, grouping, sponsorAdmin, sponsor, departmentIDs, w, ref i);
 			
 			w.EndWrite();
 			return output;
 		}
 		
-		public override object ExportAll(int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
+//		public override object ExportAll(int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int monthFrom, int monthTo)
+		public override object ExportAll(int langID, ProjectRoundUnit projectRoundUnit, DateTime dateFrom, DateTime dateTo, int groupBy, int plot, int grouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs)
 		{
 			MemoryStream output = new MemoryStream();
 			ExcelWriter w = new ExcelWriter(output);
@@ -89,7 +95,8 @@ namespace HW.Core.Helpers
 					i++;
 					
 					ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
-					f.CreateGraphForExcelWriter(r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, w, ref i, sponsorMinUserCountToDisclose, monthFrom, monthTo);
+//					f.CreateGraphForExcelWriter(r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, w, ref i, sponsorMinUserCountToDisclose, monthFrom, monthTo);
+					f.CreateGraphForExcelWriter(r, langID, projectRoundUnit, dateFrom, dateTo, groupBy, hasGrouping, plot, grouping, sponsorAdmin, sponsor, departmentIDs, w, ref i);
 				} else {
 					var f = service.GetGraphFactory(hasAnswerKey);
 					w.WriteCell(new ExcelCell { Row = i, Column = 0, Value = p.Subject, BackgroundColor = Color.AliceBlue, FontSize = 16, BorderStyle = ExcelBorderStyle.Thin});
@@ -101,7 +108,8 @@ namespace HW.Core.Helpers
 					f.CellWrite += delegate(object sender, ExcelCellEventArgs e) { OnCellWrite(e); };
 					
 					ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
-					f.CreateGraphForExcelWriter(r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, w, ref i, sponsorMinUserCountToDisclose, monthFrom, monthTo);
+//					f.CreateGraphForExcelWriter(r, langID, pruid, fy, ty, gb, hasGrouping, plot, grpng, spons, sid, gid, w, ref i, sponsorMinUserCountToDisclose, monthFrom, monthTo);
+					f.CreateGraphForExcelWriter(r, langID, projectRoundUnit, dateFrom, dateTo, groupBy, hasGrouping, plot, grouping, sponsorAdmin, sponsor, departmentIDs, w, ref i);
 				}
 			}
 			w.EndWrite();
@@ -114,7 +122,8 @@ namespace HW.Core.Helpers
 			var f = new GroupStatsGraphFactory(new SqlAnswerRepository(), new SqlReportRepository(), new SqlProjectRepository(), new SqlOptionRepository(), new SqlIndexRepository(), new SqlQuestionRepository(), new SqlDepartmentRepository());
 			ExcelWriter w = new ExcelWriter(output);
 			int i = 0;
-			w.WriteCell(i, 0, r.CurrentLanguage.Subject, Color.Black, Color.AliceBlue, 16, ExcelBorderStyle.Thin);
+//			w.WriteCell(i, 0, r.CurrentLanguage.Subject, Color.Black, Color.AliceBlue, 16, ExcelBorderStyle.Thin);
+			w.WriteCell(i, 0, r.SelectedReportPartLang.Subject, Color.Black, Color.AliceBlue, 16, ExcelBorderStyle.Thin);
 			int j = i;
 			f.ForMerge += delegate(object sender, MergeEventArgs e) {
 				w.Merge(j, 0, j, e.WeeksCount, ExcelBorderStyle.Thin);
@@ -134,7 +143,8 @@ namespace HW.Core.Helpers
 			foreach (var p in parts) {
 				ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
 				var f = new GroupStatsGraphFactory(new SqlAnswerRepository(), new SqlReportRepository(), new SqlProjectRepository(), new SqlOptionRepository(), new SqlIndexRepository(), new SqlQuestionRepository(), new SqlDepartmentRepository());
-				w.WriteCell(new ExcelCell { Row = i, Column = 0, Value = r.CurrentLanguage.Subject, BackgroundColor = Color.AliceBlue, FontSize = 16, BorderStyle = ExcelBorderStyle.Thin});
+//				w.WriteCell(new ExcelCell { Row = i, Column = 0, Value = r.CurrentLanguage.Subject, BackgroundColor = Color.AliceBlue, FontSize = 16, BorderStyle = ExcelBorderStyle.Thin});
+				w.WriteCell(new ExcelCell { Row = i, Column = 0, Value = r.SelectedReportPartLang.Subject, BackgroundColor = Color.AliceBlue, FontSize = 16, BorderStyle = ExcelBorderStyle.Thin});
 				int j = i;
 				f.ForMerge += delegate(object sender, MergeEventArgs e) {
 					w.Merge(j, 0, j, e.WeeksCount, ExcelBorderStyle.Thin);
@@ -222,7 +232,8 @@ namespace HW.Core.Helpers
 			foreach (var w in weeks.Keys) {
 				foreach (var x in weeks[w]) {
 					if (x.Values.Count > 0) {
-						writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = x.GetIntValues().Mean, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+//						writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = x.GetIntValues().Mean, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+						writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = x.GetDoubleValues().Mean, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
 					} else {
 						writer.WriteCell(new ExcelCell { Row = i, Column = j, BorderStyle = ExcelBorderStyle.Thin });
 					}
@@ -271,8 +282,10 @@ namespace HW.Core.Helpers
 				foreach (var a in weeks[w]) {
 					if (a.Values.Count > 0) {
 						writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = a.Values.Count, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-						writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, Value = a.GetIntValues().Mean, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-						writer.WriteCell(new ExcelCell { Row = i, Column = j + 2, Value = a.GetIntValues().ConfidenceInterval, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+//						writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, Value = a.GetIntValues().Mean, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+//						writer.WriteCell(new ExcelCell { Row = i, Column = j + 2, Value = a.GetIntValues().ConfidenceInterval, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+						writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, Value = a.GetDoubleValues().Mean, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+						writer.WriteCell(new ExcelCell { Row = i, Column = j + 2, Value = a.GetDoubleValues().ConfidenceInterval, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
 					} else {
 						writer.WriteCell(new ExcelCell { Row = i, Column = j });
 						writer.WriteCell(new ExcelCell { Row = i, Column = j + 1 });
@@ -323,8 +336,10 @@ namespace HW.Core.Helpers
 				foreach (var a in weeks[w]) {
 					if (a.Values.Count > 0) {
 						writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = a.Values.Count, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-						writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, Value = a.GetIntValues().Mean, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-						writer.WriteCell(new ExcelCell { Row = i, Column = j + 2, Value = a.GetIntValues().StandardDeviation, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+//						writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, Value = a.GetIntValues().Mean, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+//						writer.WriteCell(new ExcelCell { Row = i, Column = j + 2, Value = a.GetIntValues().StandardDeviation, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+						writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, Value = a.GetDoubleValues().Mean, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+						writer.WriteCell(new ExcelCell { Row = i, Column = j + 2, Value = a.GetDoubleValues().StandardDeviation, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
 					} else {
 						writer.WriteCell(new ExcelCell { Row = i, Column = j, BorderStyle = ExcelBorderStyle.Thin });
 						writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, BorderStyle = ExcelBorderStyle.Thin });
@@ -374,7 +389,8 @@ namespace HW.Core.Helpers
 				foreach (var a in weeks[w]) {
 					if (a.Values.Count > 0) {
 						writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = a.Values.Count, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-						writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, Value = a.GetIntValues().Median, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+//						writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, Value = a.GetIntValues().Median, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+						writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, Value = a.GetDoubleValues().Median, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
 					} else {
 						writer.WriteCell(new ExcelCell { Row = i, Column = j, BorderStyle = ExcelBorderStyle.Thin });
 						writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, BorderStyle = ExcelBorderStyle.Thin });
@@ -449,7 +465,8 @@ namespace HW.Core.Helpers
 			foreach (var w in weeks.Keys) {
 				foreach (var a in weeks[w]) {
 					if (a.Values.Count > 0) {
-						var v = a.GetIntValues();
+//						var v = a.GetIntValues();
+						var v = a.GetDoubleValues();
 						writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = v.Mean, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
 						writer.WriteCell(new ExcelCell { Row = i + 1, Column = j, Value = v.StandardDeviation, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
 						writer.WriteCell(new ExcelCell { Row = i + 2, Column = j, Value = v.ConfidenceInterval, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });

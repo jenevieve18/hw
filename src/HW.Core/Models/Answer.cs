@@ -13,7 +13,9 @@ namespace HW.Core.Models
 	public interface IAnswer
 	{
 		IList<IValue> Values { get; set; }
-		HWList GetIntValues();
+//		HWList GetIntValues();
+//		HWList GetFloatValues();
+		HWList GetDoubleValues();
 	}
 	
 	public class Answer : BaseModel, IMinMax, IAnswer
@@ -65,21 +67,42 @@ namespace HW.Core.Models
 		public int CountV { get; set; }
 		public float StandardDeviation { get; set; }
 		
-		public HWList GetIntValues()
+//		public HWList GetIntValues()
+//		{
+//			List<double> n = new List<double>();
+//			foreach (var v in Values) {
+//				n.Add((double)v.ValueInt);
+//			}
+//			return new HWList(n);
+//		}
+		
+		public HWList GetDoubleValues()
 		{
 			List<double> n = new List<double>();
 			foreach (var v in Values) {
-				n.Add((double)v.ValueInt);
+				n.Add(v.ValueDouble);
 			}
 			return new HWList(n);
 		}
+		
+//		public HWList GetFloatValues()
+//		{
+//			List<double> n = new List<double>();
+//			foreach (var v in Values) {
+//				n.Add((double)v.ValueFloat);
+//			}
+//			return new HWList(n);
+//		}
 	}
 	
 	public interface IValue
 	{
-		int ValueInt { get; set; }
+//		int ValueInt { get; set; }
 		decimal ValueDecimal { get; set; }
 		string ValueText { get; set; }
+//		float ValueFloat { get; set; }
+		
+		double ValueDouble { get; set; }
 	}
 	
 	public class AnswerValue : BaseModel, IValue
@@ -87,11 +110,15 @@ namespace HW.Core.Models
 		public Answer Answer { get; set; }
 		public Question Question { get; set; }
 		public Option Option { get; set; }
-		public int ValueInt { get; set; }
+//		public int ValueInt { get; set; }
 		public decimal ValueDecimal { get; set; }
 		public DateTime ValueDateTime { get; set; }
 		public DateTime Created { get; set; }
 		public string ValueText { get; set; }
 		public string ValueTextJapaneseUnicode { get; set; }
+		
+//		public float ValueFloat { get; set; }
+		
+		public double ValueDouble { get; set; }
 	}
 }

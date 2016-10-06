@@ -1090,7 +1090,8 @@ SELECT s.InviteTxt,
 	s.LID,
 	s.MinUserCountToDisclose,
 	s.ProjectRoundUnitID,
-	s.EmailFrom
+	s.EmailFrom,
+    s.SponsorID
 FROM Sponsor s
 WHERE s.SponsorID = {0}",
 				sponsorId
@@ -1135,7 +1136,9 @@ WHERE s.SponsorID = {0}",
 						Language = new Language {Id = GetInt32(rs, 29)},
 						MinUserCountToDisclose = GetInt32(rs, 30, 10),
 						ProjectRoundUnit = new ProjectRoundUnit { Id = GetInt32(rs, 31) },
-						EmailFrom = GetString(rs, 32, "", "info@healthwatch.se")
+						EmailFrom = GetString(rs, 32, "", "info@healthwatch.se"),
+                        SponsorID = GetInt32(rs, 33),
+                        Id = GetInt32(rs, 33)
 					};
 				}
 			}
@@ -1901,32 +1904,6 @@ AND sa.SponsorID = {0}
 				}
 			}
 			return admins;
-		}
-
-		public IList<SponsorBackgroundQuestion> FindBySponsor(int sponsorId)
-		{
-			string query = string.Format(
-				@"
-SELECT sbq.BQID,
-	BQ.Internal
-FROM SponsorBQ sbq
-INNER JOIN BQ ON BQ.BQID = sbq.BQID
-WHERE (BQ.Comparison = 1 OR sbq.Hidden = 1)
-AND BQ.Type IN (1, 7)
-AND sbq.SponsorID = {0}",
-				sponsorId
-			);
-			var sponsors = new List<SponsorBackgroundQuestion>();
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-				while (rs.Read()) {
-					var s = new SponsorBackgroundQuestion {
-						Id = rs.GetInt32(0),
-						BackgroundQuestion = new BackgroundQuestion { Internal = rs.GetString(1) }
-					};
-					sponsors.Add(s);
-				}
-			}
-			return sponsors;
 		}
 		
 		public IList<SponsorInvite> FindInvites(string select, string ESuserSelect, string join, string ESuserJoin, int sponsorID, int deptID)

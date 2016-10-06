@@ -104,7 +104,12 @@ AND rpl.LangID = {1}",
 						RequiredAnswerCount = GetInt32(rs, 4),
 						PartLevel = GetInt32(rs, 5),
 						Id = GetInt32(rs, 6),
-						CurrentLanguage = new ReportPartLang {
+//						CurrentLanguage = new ReportPartLang {
+//							Subject = GetString(rs, 7),
+//							Header = GetString(rs, 8),
+//							Footer = GetString(rs, 9)
+//						}
+						SelectedReportPartLang = new ReportPartLang {
 							Subject = GetString(rs, 7),
 							Header = GetString(rs, 8),
 							Footer = GetString(rs, 9)

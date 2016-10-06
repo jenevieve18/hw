@@ -27,6 +27,14 @@ namespace HW.Core.Helpers
 			this.data = new List<double>(data);
 			this.data.Sort();
 		}
+		
+		public double Max {
+			get { return data[data.Count - 1]; }
+		}
+		
+		public double Min {
+			get { return data[0]; }
+		}
 
 		public List<double> Data {
 			get { return data; }

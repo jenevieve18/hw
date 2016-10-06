@@ -130,42 +130,43 @@ namespace HW.Core.Tests.Helpers
 		[Test]
 		public void TestUnitMeasureWithUnits()
 		{
-			var p = new {
-				langID = 2,
-				yearFrom = 2016,
-				yearTo = 2016,
-				GB = GroupBy.TwoWeeksStartWithEven,
-				grouping = Grouping.UsersOnUnit,
-				sponsorAdminID = 10,
-				sponsorID = 3,
-				monthFrom = 4,
-				monthTo = 4,
-				sponsorMinUserCountToDisclose = 2,
-			};
-			
-			IAdmin s = service.ReadSponsor(p.sponsorID);
+			IAdmin s = service.ReadSponsor(3);
 //			SponsorProject r = new SqlMeasureRepository().ReadSponsorProject(2);
 			SponsorProject r = new SqlSponsorProjectRepository().Read(2);
+			
+			var p = new {
+				langID = 2,
+//				yearFrom = 2016,
+//				yearTo = 2016,
+				dateFrom = new DateTime(2016, 4, 1),
+				dateTo = new DateTime(2016, 4, 1),
+				GB = GroupBy.TwoWeeksStartWithEven,
+				grouping = Grouping.UsersOnUnit,
+//				sponsorAdminID = 10,
+//				sponsorID = 3,
+				sponsorAdmin = new SqlSponsorAdminRepository().Read(10),
+				sponsor = s,
+//				monthFrom = 4,
+//				monthTo = 4,
+//				sponsorMinUserCountToDisclose = 2,
+			};
 			
 			var exporter = new ForStepCount(new SqlAnswerRepository(), new SqlReportRepository(), new SqlProjectRepository(), new SqlOptionRepository(), new SqlIndexRepository(), new SqlQuestionRepository(), new SqlDepartmentRepository(), new SqlMeasureRepository());
 			
 			g = exporter.CreateGraph(
 				r,
 				p.langID,
-				p.yearFrom,
-				p.yearTo,
+				p.dateFrom,
+				p.dateTo,
 				p.GB,
 				true,
 				PlotType.Line,
 				p.grouping,
-				p.sponsorAdminID,
-				p.sponsorID,
+				p.sponsorAdmin,
+				p.sponsor as Sponsor,
 				"0,6",
 				null,
-				0,
-				p.sponsorMinUserCountToDisclose,
-				p.monthFrom,
-				p.monthTo
+				0
 			);
 			g.Draw();
 		}
@@ -173,168 +174,153 @@ namespace HW.Core.Tests.Helpers
 		[Test]
 		public void TestUnitMeasureWithSubUnits()
 		{
-			var p = new {
-				langID = 2,
-				yearFrom = 2016,
-				yearTo = 2016,
-				GB = GroupBy.TwoWeeksStartWithEven,
-				grouping = Grouping.UsersOnUnitAndSubUnits,
-				sponsorAdminID = 10,
-				sponsorID = 3,
-				monthFrom = 4,
-				monthTo = 4,
-				sponsorMinUserCountToDisclose = 2,
-			};
-			
-			IAdmin s = service.ReadSponsor(p.sponsorID);
+			IAdmin s = service.ReadSponsor(3);
 //			SponsorProject r = new SqlMeasureRepository().ReadSponsorProject(2);
 			SponsorProject r = new SqlSponsorProjectRepository().Read(2);
+			
+			var p = new {
+				langID = 2,
+//				yearFrom = 2016,
+//				yearTo = 2016,
+				dateFrom = new DateTime(2016, 4, 1),
+				dateTo = new DateTime(2016, 4, 1),
+				GB = GroupBy.TwoWeeksStartWithEven,
+				grouping = Grouping.UsersOnUnitAndSubUnits,
+//				sponsorAdminID = 10,
+//				sponsorID = 3,
+				sponsorAdmin = new SqlSponsorAdminRepository().Read(10),
+				sponsor = s as Sponsor,
+//				monthFrom = 4,
+//				monthTo = 4,
+//				sponsorMinUserCountToDisclose = 2,
+			};
 			
 			var exporter = new ForStepCount(new SqlAnswerRepository(), new SqlReportRepository(), new SqlProjectRepository(), new SqlOptionRepository(), new SqlIndexRepository(), new SqlQuestionRepository(), new SqlDepartmentRepository(), new SqlMeasureRepository());
 			
 			g = exporter.CreateGraph(
 				r,
 				p.langID,
-				p.yearFrom,
-				p.yearTo,
+				p.dateFrom,
+				p.dateTo,
 				p.GB,
 				true,
 				PlotType.Line,
 				p.grouping,
-				p.sponsorAdminID,
-				p.sponsorID,
+				p.sponsorAdmin,
+				p.sponsor,
 				"0,7,8",
 				null,
-				0,
-				p.sponsorMinUserCountToDisclose,
-				p.monthFrom,
-				p.monthTo
+				0
 			);
 			g.Draw();
 		}
 		
-		[Test]
-		public void a()
-		{
-			IAdmin s = service.ReadSponsor(83);
-			ReportPart r = service.ReadReportPart(14, 2);
-			
-			var exporter = new GroupStatsGraphFactory(
-				new SqlAnswerRepository(),
-				new SqlReportRepository(),
-				new SqlProjectRepository(),
-				new SqlOptionRepository(),
-				new SqlIndexRepository(),
-				new SqlQuestionRepository(),
-				new SqlDepartmentRepository()
-			);
-			
-			var p = new {
-//				yearFrom = 2011,
-//				yearTo = 2012,
-				dateFrom = new DateTime(2011, 1, 1),
-				dateTo = new DateTime(2012, 1, 1),
-				groupBy = GroupBy.TwoWeeksStartWithEven,
-				hasGrouping = true,
-				grouping = Grouping.UsersOnUnit,
-				sponsorAdminID = 791,
-				sponsorID = 83,
-//				monthFrom = 1,
-//				monthTo = 1,
-				projectRoundUnitID = 2643,
-				sponsorMinUserCountToDisclose = 2,
-				point = 0,
-				langID = 2,
-			};
-			
-			g = exporter.CreateGraph(
-				null,
-				r,
-				p.langID,
-				p.projectRoundUnitID,
-//				p.yearFrom,
-//				p.yearTo,
-				p.dateFrom,
-				p.dateTo,
-				p.groupBy,
-				p.hasGrouping,
-				PlotType.LineSD,
-				0,
-				0,
-				"#ffffff",
-				p.grouping,
-				p.sponsorAdminID,
-				p.sponsorID,
-				"0,925",
-				null,
-				p.point,
-				p.sponsorMinUserCountToDisclose
-//				p.monthFrom,
-//				p.monthTo
-			);
-			g.Draw();
-		}
-		
-		[Test]
-		public void b()
-		{
-			IAdmin s = service.ReadSponsor(83);
-			ReportPart r = service.ReadReportPart(14, 2);
-			
-			var exporter = new GroupStatsGraphFactory(
-				new SqlAnswerRepository(),
-				new SqlReportRepository(),
-				new SqlProjectRepository(),
-				new SqlOptionRepository(),
-				new SqlIndexRepository(),
-				new SqlQuestionRepository(),
-				new SqlDepartmentRepository()
-			);
-			
-			var p = new {
-//				yearFrom = 2011,
-//				yearTo = 2012,
-				dateFrom = new DateTime(2011, 1, 1),
-				dateTo = new DateTime(2012, 1, 1),
-				groupBy = GroupBy.TwoWeeksStartWithEven,
-				hasGrouping = true,
-				grouping = Grouping.UsersOnUnitAndSubUnits,
-				sponsorAdminID = 791,
-				sponsorID = 83,
-//				monthFrom = 1,
-//				monthTo = 1,
-				projectRoundUnitID = 2643,
-				sponsorMinUserCountToDisclose = 2,
-				point = 0,
-				langID = 2,
-			};
-			
-			g = exporter.CreateGraph(
-				null,
-				r,
-				p.langID,
-				p.projectRoundUnitID,
-//				p.yearFrom,
-//				p.yearTo,
-				p.dateFrom,
-				p.dateTo,
-				p.groupBy,
-				p.hasGrouping,
-				PlotType.LineSD,
-				0,
-				0,
-				"#ffffff",
-				p.grouping,
-				p.sponsorAdminID,
-				p.sponsorID,
-				"0,925",
-				null,
-				p.point,
-				p.sponsorMinUserCountToDisclose
-//				p.monthFrom,
-//				p.monthTo
-			);
-			g.Draw();
-		}
+//		[Test]
+//		public void a()
+//		{
+//			IAdmin s = service.ReadSponsor(83);
+//			ReportPart r = service.ReadReportPart(14, 2);
+//			
+//			var exporter = new GroupStatsGraphFactory(
+//				new SqlAnswerRepository(),
+//				new SqlReportRepository(),
+//				new SqlProjectRepository(),
+//				new SqlOptionRepository(),
+//				new SqlIndexRepository(),
+//				new SqlQuestionRepository(),
+//				new SqlDepartmentRepository()
+//			);
+//			
+//			var p = new {
+//				dateFrom = new DateTime(2011, 1, 1),
+//				dateTo = new DateTime(2012, 1, 1),
+//				groupBy = GroupBy.TwoWeeksStartWithEven,
+//				hasGrouping = true,
+//				grouping = Grouping.UsersOnUnit,
+//				sponsorAdminID = 791,
+//				sponsorID = 83,
+//				projectRoundUnitID = 2643,
+//				sponsorMinUserCountToDisclose = 2,
+//				point = 0,
+//				langID = 2,
+//			};
+//			
+//			g = exporter.CreateGraph(
+//				null,
+//				r,
+//				p.langID,
+//				p.projectRoundUnitID,
+//				p.dateFrom,
+//				p.dateTo,
+//				p.groupBy,
+//				p.hasGrouping,
+//				PlotType.LineSD,
+//				0,
+//				0,
+//				"#ffffff",
+//				p.grouping,
+//				p.sponsorAdminID,
+//				p.sponsorID,
+//				"0,925",
+//				null,
+//				p.point,
+//				p.sponsorMinUserCountToDisclose
+//			);
+//			g.Draw();
+//		}
+//		
+//		[Test]
+//		public void b()
+//		{
+//			IAdmin s = service.ReadSponsor(83);
+//			ReportPart r = service.ReadReportPart(14, 2);
+//			
+//			var exporter = new GroupStatsGraphFactory(
+//				new SqlAnswerRepository(),
+//				new SqlReportRepository(),
+//				new SqlProjectRepository(),
+//				new SqlOptionRepository(),
+//				new SqlIndexRepository(),
+//				new SqlQuestionRepository(),
+//				new SqlDepartmentRepository()
+//			);
+//			
+//			var p = new {
+//				dateFrom = new DateTime(2011, 1, 1),
+//				dateTo = new DateTime(2012, 1, 1),
+//				groupBy = GroupBy.TwoWeeksStartWithEven,
+//				hasGrouping = true,
+//				grouping = Grouping.UsersOnUnitAndSubUnits,
+//				sponsorAdminID = 791,
+//				sponsorID = 83,
+//				projectRoundUnitID = 2643,
+//				sponsorMinUserCountToDisclose = 2,
+//				point = 0,
+//				langID = 2,
+//			};
+//			
+//			g = exporter.CreateGraph(
+//				null,
+//				r,
+//				p.langID,
+//				p.projectRoundUnitID,
+//				p.dateFrom,
+//				p.dateTo,
+//				p.groupBy,
+//				p.hasGrouping,
+//				PlotType.LineSD,
+//				0,
+//				0,
+//				"#ffffff",
+//				p.grouping,
+//				p.sponsorAdminID,
+//				p.sponsorID,
+//				"0,925",
+//				null,
+//				p.point,
+//				p.sponsorMinUserCountToDisclose
+//			);
+//			g.Draw();
+//		}
 	}
 }

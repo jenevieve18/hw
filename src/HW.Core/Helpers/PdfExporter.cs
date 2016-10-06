@@ -99,14 +99,16 @@ namespace HW.Core.Helpers
 			return p;
 		}
 		
-		public override object Export(string url, int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
+//		public override object Export(string url, int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
+		public override object Export(string url, int langID, ProjectRoundUnit projectRoundUnit, DateTime dateFrom, DateTime dateTo, int groupBy, int plot, int grouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs)
 		{
 			Document doc = new Document();
 			var output = new MemoryStream();
 			PdfWriter writer = PdfWriter.GetInstance(doc, output);
 			doc.Open();
 			
-			doc.Add(new Chunk(r.CurrentLanguage.Subject));
+//			doc.Add(new Chunk(r.CurrentLanguage.Subject));
+			doc.Add(new Chunk(r.SelectedReportPartLang.Subject));
 			iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(new Uri(url));
 			jpg.ScaleToFit(500f, 500f);
 			doc.Add(jpg);
@@ -114,7 +116,8 @@ namespace HW.Core.Helpers
 			return output;
 		}
 		
-		public override object ExportAll(int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
+//		public override object ExportAll(int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
+		public override object ExportAll(int langID, ProjectRoundUnit projectRoundUnit, DateTime dateFrom, DateTime dateTo, int groupBy, int plot, int grouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs)
 		{
 			Document doc = new Document();
 			var output = new MemoryStream();
@@ -147,7 +150,8 @@ namespace HW.Core.Helpers
 			PdfWriter writer = PdfWriter.GetInstance(doc, output);
 			doc.Open();
 			
-			doc.Add(new Chunk(r.CurrentLanguage.Subject));
+//			doc.Add(new Chunk(r.CurrentLanguage.Subject));
+			doc.Add(new Chunk(r.SelectedReportPartLang.Subject));
 			iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(new Uri(url));
 			jpg.ScaleToFit(500f, 500f);
 			doc.Add(jpg);

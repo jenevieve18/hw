@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace HW.Core.Models
 {
-	public enum ReportType
+	public class ReportPartType
 	{
-		One = 1,
-		Index = 2,
-		Three = 3,
-		Eight = 8,
-		Nine = 9
+		public const int Question = 1;
+		public const int Index = 2;
+		public const int Three = 3;
+		public const int WeightedQuestionOption = 8;
+		public const int Nine = 9;
 	}
 	
 	public class Report : BaseModel
@@ -92,13 +92,13 @@ namespace HW.Core.Models
 			get { return Components.Count > 0; }
 		}
 		
-		public ReportPartLang CurrentLanguage {
-			get { return currentLanguage; }
-			set {
-				currentLanguage = value;
-				currentLanguage.ReportPart = this;
-			}
-		}
+//		public ReportPartLang CurrentLanguage {
+//			get { return currentLanguage; }
+//			set {
+//				currentLanguage = value;
+//				currentLanguage.ReportPart = this;
+//			}
+//		}
 		
 		public ReportPartLang FirstLanguage {
 			get {

@@ -16,6 +16,15 @@ namespace HW.Grp
 {
 	public partial class Stats : System.Web.UI.Page
 	{
+		SqlSponsorProjectRepository sponsorProjectRepo = new SqlSponsorProjectRepository();
+		SqlUserRepository userRepository = new SqlUserRepository();
+		SqlProjectRepository projRepository = new SqlProjectRepository();
+		SqlSponsorRepository sponsorRepo = new SqlSponsorRepository();
+		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
+		SqlReportRepository reportRepository = new SqlReportRepository();
+		SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
+		SqlSponsorBQRepository sponsorBQRepo = new SqlSponsorBQRepository();
+		
 		protected IList<IReportPart> reportParts = null;
 		protected IList<BaseModel> urlModels;
 		protected IList<PlotTypeLanguage> plotTypes = new List<PlotTypeLanguage>();
@@ -23,15 +32,8 @@ namespace HW.Grp
 		IList<SponsorBackgroundQuestion> questions;
 		int sponsorID = 0;
 		int sponsorAdminID = 0;
-		SqlProjectRepository projRepository = new SqlProjectRepository();
-		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
-		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
-		SqlReportRepository reportRepository = new SqlReportRepository();
-		SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
 		protected DateTime startDate;
 		protected DateTime endDate;
-		SqlSponsorProjectRepository sponsorProjectRepo = new SqlSponsorProjectRepository();
-		SqlUserRepository userRepository = new SqlUserRepository();
 		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 
 		public IList<SponsorProjectRoundUnit> SponsorProjectRoundUnits {
@@ -112,7 +114,8 @@ namespace HW.Grp
 		IList<BaseModel> SelectedQuestions {
 			get {
 				var selectedQuestions = new List<BaseModel>();
-				foreach (var q in sponsorRepository.FindBySponsor(sponsorID)) {
+//				foreach (var q in sponsorRepo.FindBySponsor(sponsorID)) {
+				foreach (var q in sponsorBQRepo.FindBySponsor(sponsorID)) {
 					if (BQ.Items.FindByValue(q.Id.ToString()).Selected) {
 						selectedQuestions.Add(q);
 					}
@@ -163,7 +166,7 @@ namespace HW.Grp
 		
 		public void SaveAdminSession(int SponsorAdminSessionID, int ManagerFunction, DateTime date)
 		{
-			sponsorRepository.SaveSponsorAdminSessionFunction(SponsorAdminSessionID, ManagerFunction, date);
+			sponsorRepo.SaveSponsorAdminSessionFunction(SponsorAdminSessionID, ManagerFunction, date);
 		}
 		
 		public void Index(int sponsorID, int sponsorAdminID)
@@ -190,11 +193,12 @@ namespace HW.Grp
 					Grouping.Items.Add(new ListItem(R.Str(lid, "users.unit.subunit", "Users on unit+subunits"), "2"));
 					Grouping.Items.Add(new ListItem(R.Str(lid, "background.variable", "Background variable"), "3"));
 					
-					SponsorProjectRoundUnits = sponsorRepository.FindBySponsorAndLanguage(sponsorID, lid);
+					SponsorProjectRoundUnits = sponsorRepo.FindBySponsorAndLanguage(sponsorID, lid);
 					
 					SponsorProjects = sponsorProjectRepo.FindSponsorProjects(sponsorID);
 
-					BackgroundQuestions = sponsorRepository.FindBySponsor(sponsorID);
+//					BackgroundQuestions = sponsorRepo.FindBySponsor(sponsorID);
+					BackgroundQuestions = sponsorBQRepo.FindBySponsor(sponsorID);
 				} else {
 					startDate = GetDateFromString(Request.Form["startDate"]);
 					endDate = GetDateFromString(Request.Form["endDate"]);

@@ -136,11 +136,11 @@ namespace HW.Core.Tests.Repositories
             r.FindAdminBySponsor(2, 188, "");
 		}
 		
-		[Test]
-		public void TestFindBySponsor()
-		{
-			r.FindBySponsor(1);
-		}
+//		[Test]
+//		public void TestFindBySponsor()
+//		{
+//			r.FindBySponsor(1);
+//		}
 		
 		[Test]
 		public void TestReadSponsorAdmin()

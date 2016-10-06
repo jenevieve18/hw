@@ -99,13 +99,15 @@ namespace HW.Core.Helpers
 //		}
 		
 //		public override object Export(string url)
-		public override object Export(string url, int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
+//		public override object Export(string url, int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
+		public override object Export(string url, int langID, ProjectRoundUnit projectRoundUnit, DateTime dateFrom, DateTime dateTo, int groupBy, int plot, int grouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs)
 		{
 			throw new NotImplementedException();
 		}
 		
 //		public override object ExportAll(int langID)
-		public override object ExportAll(int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
+//		public override object ExportAll(int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
+		public override object ExportAll(int langID, ProjectRoundUnit projectRoundUnit, DateTime dateFrom, DateTime dateTo, int groupBy, int plot, int grouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs)
 		{
 			throw new NotImplementedException();
 		}
@@ -142,7 +144,8 @@ namespace HW.Core.Helpers
 				content.Append(AddComma(w));
 				foreach (var a in weeks[w]) {
 					if (a.Values.Count > 0) {
-						content.Append(AddComma(a.GetIntValues().Mean.ToString()));
+//						content.Append(AddComma(a.GetIntValues().Mean.ToString()));
+						content.Append(AddComma(a.GetDoubleValues().Mean.ToString()));
 						content.Append(AddComma(a.Values.Count.ToString()));
 					} else {
 						content.Append(",,");
@@ -177,7 +180,8 @@ namespace HW.Core.Helpers
 				content.Append(AddComma(w));
 				foreach (var a in weeks[w]) {
 					if (a.Values.Count > 0) {
-						var v = a.GetIntValues();
+//						var v = a.GetIntValues();
+						var v = a.GetDoubleValues();
 						content.Append(AddComma(v.Mean.ToString()));
 						content.Append(AddComma(v.ConfidenceInterval.ToString()));
 						content.Append(AddComma(a.Values.Count.ToString()));
@@ -214,7 +218,8 @@ namespace HW.Core.Helpers
 				content.Append(AddComma(w));
 				foreach (var a in weeks[w]) {
 					if (a.Values.Count > 0) {
-						var v = a.GetIntValues();
+//						var v = a.GetIntValues();
+						var v = a.GetDoubleValues();
 						content.Append(AddComma(v.Mean.ToString()));
 						content.Append(AddComma(v.ConfidenceInterval.ToString()));
 						content.Append(AddComma(a.Values.Count.ToString()));
@@ -249,7 +254,8 @@ namespace HW.Core.Helpers
 				content.Append(AddComma(w));
 				foreach (var a in weeks[w]) {
 					if (a.Values.Count > 0) {
-						content.Append(AddComma(a.GetIntValues().Median.ToString()));
+//						content.Append(AddComma(a.GetIntValues().Median.ToString()));
+						content.Append(AddComma(a.GetDoubleValues().Median.ToString()));
 						content.Append(AddComma(a.Values.Count.ToString()));
 					} else {
 						content.Append(",,");

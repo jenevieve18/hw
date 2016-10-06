@@ -125,7 +125,14 @@ namespace HW.Core.Models
 		public int Answers { get; set; }
 		public int Total { get; set; }
 		
+		public int SponsorExtendedSurveyID { get; set; }
+		public int SponsorID { get; set; }
+		public int ProjectRoundID { get; set; }
+		public int EformFeedbackID { get; set; }
+		public int PreviousProjectRoundID { get; set; }
+		public int IndividualFeedbackID { get; set; }
 		public int WarnIfMissingQID { get; set; }
+		
 		public string RoundText2 { get; set; }
 		public int ExtraExtendedSurveyId { get; set; }
 	}
@@ -276,6 +283,13 @@ namespace HW.Core.Models
 		public int Hidden { get; set; }
 		public int InGrpAdmin { get; set; }
 		public int Fn { get; set; }
+		public int SponsorBQID { get; set; }
+		public int SponsorID { get; set; }
+		public int BQID { get; set; }
+		public int Forced { get; set; }
+		public int SortOrder { get; set; }
+		public int IncludeInTreatmentReq { get; set; }
+		public int Organize { get; set; }
 	}
 	
 	public class SponsorInvite : BaseModel

@@ -218,6 +218,7 @@
     <Compile Include="Repositories\Sql\SqlExerciseRepository.cs" />
     <Compile Include="Repositories\Sql\SqlRepositoryFactory.cs" />
     <Compile Include="Repositories\Sql\SqlSponsorAdminRepository.cs" />
+    <Compile Include="Repositories\Sql\SqlSponsorBQRepository.cs" />
     <Compile Include="Repositories\Sql\SqlSponsorProjectRepository.cs" />
     <Compile Include="Repositories\Sql\SqlSponsorRepository.cs" />
     <Compile Include="Repositories\Sql\SqlUserRepository.cs" />

@@ -70,7 +70,8 @@ namespace HW.Grp
 					float scoreN = 0;
 					for (int i = 5; i < 9; i++) {
 //						switch (rs2.GetInt32(i))
-						switch (a.Values[i].ValueInt) {
+//						switch (a.Values[i].ValueInt) {
+						switch ((int)a.Values[i].ValueDouble) {
 								case 367: scoreN += 5; break;
 								case 363: scoreN += 4; break;
 								case 368: scoreN += 3; break;
@@ -86,7 +87,8 @@ namespace HW.Grp
 					for (int i = 0; i < 5; i++) {
 						if (i == 0 || i == 1 || i == 4) {
 //							switch (rs2.GetInt32(i))
-							switch (a.Values[i].ValueInt) {
+//							switch (a.Values[i].ValueInt) {
+							switch ((int)a.Values[i].ValueDouble) {
 									case 361: scoreN += 1; break;
 									case 362: scoreN += 2; break;
 									case 363: scoreN += 3; break;
@@ -94,7 +96,8 @@ namespace HW.Grp
 							}
 						} else {
 //							switch (rs2.GetInt32(i))
-							switch (a.Values[i].ValueInt) {
+//							switch (a.Values[i].ValueInt) {
+							switch ((int)a.Values[i].ValueDouble) {
 									case 361: scoreN += 4; break;
 									case 362: scoreN += 3; break;
 									case 363: scoreN += 2; break;
@@ -154,13 +157,15 @@ namespace HW.Grp
 					bool depr = false;
 					for (int i = 0; i < 6; i++) {
 //						switch (rs2.GetInt32(i))
-						switch (a.Values[i].ValueInt) {
+//						switch (a.Values[i].ValueInt) {
+						switch ((int)a.Values[i].ValueDouble) {
 								case 364: depr = true; break;
 								case 365: depr = true; break;
 						}
 					}
 //					if (rs2.GetInt32(6) == 294 && depr)
-					if (a.Values[6].ValueInt == 294 && depr) {
+//					if (a.Values[6].ValueInt == 294 && depr) {
+					if ((int)a.Values[6].ValueDouble == 294 && depr) {
 //						if (!l.Contains(rs2.GetString(7))) { l.Add(rs2.GetString(7)); }
 						if (!l.Contains(a.ProjectRoundUser.Email)) {
 //							l.Add(rs2.GetString(7));
@@ -298,7 +303,8 @@ namespace HW.Grp
 				foreach (var a in answerRepository.FindByRoundQuestionAndOption(s.ProjectRound.Id, 374, 86))
 				{
 //					if (rs2.GetInt32(0) == 313 || rs2.GetInt32(0) == 314)
-					if (a.Values[0].ValueInt == 313 || a.Values[0].ValueInt == 314)
+//					if (a.Values[0].ValueInt == 313 || a.Values[0].ValueInt == 314)
+					if ((int)a.Values[0].ValueDouble == 313 || (int)a.Values[0].ValueDouble == 314)
 					{
 //						if (!l.Contains(rs2.GetString(1))) { l.Add(rs2.GetString(1)); }
 						if (!l.Contains(a.ProjectRoundUser.Email)) {
@@ -334,7 +340,8 @@ namespace HW.Grp
 //				while (rs2.Read())
 				foreach (var a in answerRepository.FindByRoundQuestionAndOption(s.ProjectRound.Id, 331, 98)) {
 //					if (rs2.GetInt32(0) == 316 || rs2.GetInt32(0) == 317)
-					if (a.Values[0].ValueInt == 316 || a.Values[0].ValueInt == 317) {
+//					if (a.Values[0].ValueInt == 316 || a.Values[0].ValueInt == 317) {
+					if ((int)a.Values[0].ValueDouble == 316 || (int)a.Values[0].ValueDouble == 317) {
 //						if (!l.Contains(rs2.GetString(1))) { l.Add(rs2.GetString(1)); }
 						if (!l.Contains(a.ProjectRoundUser.Email)) {
 //							l.Add(rs2.GetString(1));
@@ -373,7 +380,8 @@ namespace HW.Grp
 //				while (rs2.Read())
 				foreach (var a in answerRepository.a(s.ProjectRound.Id)) {
 //					if (rs2.GetInt32(0) == 294 && (rs2.GetInt32(1) == 294 || rs2.GetInt32(2) == 294 || rs2.GetInt32(3) == 294))
-					if (a.Values[0].ValueInt == 294 && (a.Values[1].ValueInt == 294 || a.Values[2].ValueInt == 294 || a.Values[3].ValueInt == 294)) {
+//					if (a.Values[0].ValueInt == 294 && (a.Values[1].ValueInt == 294 || a.Values[2].ValueInt == 294 || a.Values[3].ValueInt == 294)) {
+					if ((int)a.Values[0].ValueDouble == 294 && ((int)a.Values[1].ValueDouble == 294 || (int)a.Values[2].ValueDouble == 294 || (int)a.Values[3].ValueDouble == 294)) {
 //						if (!l.Contains(rs2.GetString(4))) { l.Add(rs2.GetString(4)); }
 						if (!l.Contains(a.ProjectRoundUser.Email)) {
 //							l.Add(rs2.GetString(4));
@@ -412,7 +420,8 @@ namespace HW.Grp
 //				while (rs2.Read())
 				foreach (var a in answerRepository.b(s.ProjectRound.Id)) {
 //					if (rs2.GetInt32(0) == 294 && (rs2.GetInt32(1) == 294 || rs2.GetInt32(2) == 294 || rs2.GetInt32(3) == 294))
-					if (a.Values[0].ValueInt == 294 && (a.Values[1].ValueInt == 294 || a.Values[2].ValueInt == 294 || a.Values[3].ValueInt == 294)) {
+//					if (a.Values[0].ValueInt == 294 && (a.Values[1].ValueInt == 294 || a.Values[2].ValueInt == 294 || a.Values[3].ValueInt == 294)) {
+					if ((int)a.Values[0].ValueDouble == 294 && ((int)a.Values[1].ValueDouble == 294 || (int)a.Values[2].ValueDouble == 294 || (int)a.Values[3].ValueDouble == 294)) {
 //						if (!l.Contains(rs2.GetString(4))) { l.Add(rs2.GetString(4)); }
 						if (!l.Contains(a.ProjectRoundUser.Email)) {
 //							l.Add(rs2.GetString(4));
@@ -445,7 +454,8 @@ namespace HW.Grp
 //				while (rs2.Read())
 				foreach (var a in answerRepository.FindByRoundQuestionAndOption(s.ProjectRound.Id, 370, 90)) {
 //					if (rs2.GetInt32(0) == 294)
-					if (a.Values[0].ValueInt == 294) {
+//					if (a.Values[0].ValueInt == 294) {
+					if ((int)a.Values[0].ValueDouble == 294) {
 //						if (!l.Contains(rs2.GetString(1))) { l.Add(rs2.GetString(1)); }
 						if (!l.Contains(a.ProjectRoundUser.Email)) {
 //							l.Add(rs2.GetString(1));
@@ -478,7 +488,8 @@ namespace HW.Grp
 //				while (rs2.Read())
 				foreach (var a in answerRepository.FindByRoundQuestionAndOption(s.ProjectRound.Id, 349, 90)) {
 //					if (rs2.GetInt32(0) == 294)
-					if (a.Values[0].ValueInt == 294) {
+//					if (a.Values[0].ValueInt == 294) {
+					if ((int)a.Values[0].ValueDouble == 294) {
 //						if (!l.Contains(rs2.GetString(1))) { l.Add(rs2.GetString(1)); }
 						if (!l.Contains(a.ProjectRoundUser.Email)) {
 //							l.Add(rs2.GetString(1));
@@ -511,7 +522,8 @@ namespace HW.Grp
 //				while (rs2.Read())
 				foreach (var a in answerRepository.FindByRoundQuestionAndOption(s.ProjectRound.Id, 350, 90)) {
 //					if (rs2.GetInt32(0) == 294)
-					if (a.Values[0].ValueInt == 294) {
+//					if (a.Values[0].ValueInt == 294) {
+					if ((int)a.Values[0].ValueDouble == 294) {
 //						if (!l.Contains(rs2.GetString(1))) { l.Add(rs2.GetString(1)); }
 						if (!l.Contains(a.ProjectRoundUser.Email)) {
 //							l.Add(rs2.GetString(1));
@@ -551,7 +563,8 @@ namespace HW.Grp
 				foreach (var a in answerRepository.f(s.ProjectRound.Id)) {
 					if (
 //						(rs2.GetInt32(0) == 340 || rs2.GetInt32(0) == 341)
-						(a.Values[0].ValueInt == 340 || a.Values[0].ValueInt == 341)
+//						(a.Values[0].ValueInt == 340 || a.Values[0].ValueInt == 341)
+						((int)a.Values[0].ValueDouble == 340 || (int)a.Values[0].ValueDouble == 341)
 						&&
 						(
 //							rs2.GetInt32(1) == 133 ||
@@ -561,13 +574,20 @@ namespace HW.Grp
 //							rs2.GetInt32(2) == 134 ||
 //							rs2.GetInt32(2) == 135 ||
 //							rs2.GetInt32(3) == 138
-							a.Values[1].ValueInt == 133 ||
-							a.Values[1].ValueInt == 134 ||
-							a.Values[1].ValueInt == 135 ||
-							a.Values[2].ValueInt == 133 ||
-							a.Values[2].ValueInt == 134 ||
-							a.Values[3].ValueInt == 135 ||
-							a.Values[3].ValueInt == 138
+//							a.Values[1].ValueInt == 133 ||
+//							a.Values[1].ValueInt == 134 ||
+//							a.Values[1].ValueInt == 135 ||
+//							a.Values[2].ValueInt == 133 ||
+//							a.Values[2].ValueInt == 134 ||
+//							a.Values[3].ValueInt == 135 ||
+//							a.Values[3].ValueInt == 138
+							(int)a.Values[1].ValueDouble == 133 ||
+							(int)a.Values[1].ValueDouble == 134 ||
+							(int)a.Values[1].ValueDouble == 135 ||
+							(int)a.Values[2].ValueDouble == 133 ||
+							(int)a.Values[2].ValueDouble == 134 ||
+							(int)a.Values[3].ValueDouble == 135 ||
+							(int)a.Values[3].ValueDouble == 138
 						)
 					)
 					{
@@ -648,36 +668,45 @@ namespace HW.Grp
 					//List.Text += "<br/>" + Qbmi + ":" + rs2.GetDecimal(0);
 
 //					if (rs2.GetInt32(1) == 255 && rs2.GetDecimal(2) > 88 || rs2.GetInt32(1) != 255 && rs2.GetDecimal(2) > 102) { Qscore += 4; } else if (rs2.GetInt32(1) == 255 && rs2.GetDecimal(2) >= 80 || rs2.GetInt32(1) != 255 && rs2.GetDecimal(2) >= 94) { Qscore += 3; }
-					if (a.Values[1].ValueInt == 255 && a.Values[2].ValueDecimal > 88 || a.Values[1].ValueInt != 255 && a.Values[2].ValueDecimal > 102) {
+//					if (a.Values[1].ValueInt == 255 && a.Values[2].ValueDecimal > 88 || a.Values[1].ValueInt != 255 && a.Values[2].ValueDecimal > 102) {
+					if ((int)a.Values[1].ValueDouble == 255 && a.Values[2].ValueDecimal > 88 || (int)a.Values[1].ValueDouble != 255 && a.Values[2].ValueDecimal > 102) {
 						Qscore += 4;
-					} else if (a.Values[1].ValueInt == 255 && a.Values[2].ValueDecimal >= 80 || a.Values[1].ValueInt != 255 && a.Values[2].ValueDecimal >= 94) {
+//					} else if (a.Values[1].ValueInt == 255 && a.Values[2].ValueDecimal >= 80 || a.Values[1].ValueInt != 255 && a.Values[2].ValueDecimal >= 94) {
+					} else if ((int)a.Values[1].ValueDouble == 255 && a.Values[2].ValueDecimal >= 80 || (int)a.Values[1].ValueDouble != 255 && a.Values[2].ValueDecimal >= 94) {
 						Qscore += 3;
 					}
 
 //					if ((rs2.GetInt32(3) == 342 && (rs2.GetInt32(4) == 322 || rs2.GetInt32(4) == 346)) || (rs2.GetInt32(3) == 343 && rs2.GetInt32(4) == 322)) { Qscore += 2; }
-					if ((a.Values[3].ValueInt == 342 && (a.Values[4].ValueInt == 322 || a.Values[4].ValueInt == 346)) || (a.Values[3].ValueInt == 343 && a.Values[4].ValueInt == 322)) {
+//					if ((a.Values[3].ValueInt == 342 && (a.Values[4].ValueInt == 322 || a.Values[4].ValueInt == 346)) || (a.Values[3].ValueInt == 343 && a.Values[4].ValueInt == 322)) {
+//					if (((int)a.Values[3].ValueDouble == 342 && ((int)a.Values[4].ValueDouble == 322 || (int)a.Values[4].ValueDouble == 346)) || ((int)a.Values[3].ValueDouble == 343 && a.Values[4].ValueInt == 322)) {
+					if (((int)a.Values[3].ValueDouble == 342 && ((int)a.Values[4].ValueDouble == 322 || (int)a.Values[4].ValueDouble == 346)) || ((int)a.Values[3].ValueDouble == 343 && (int)a.Values[4].ValueDouble == 322)) {
 						Qscore += 2;
 					}
 
 //					if (rs2.GetInt32(5) == 417) { Qscore += 1; }
-					if (a.Values[5].ValueInt == 417) {
+//					if (a.Values[5].ValueInt == 417) {
+					if ((int)a.Values[5].ValueDouble == 417) {
 						Qscore += 1;
 					}
 
 //					if (!rs2.IsDBNull(6) && rs2.GetInt32(6) == 294 && !rs2.IsDBNull(7) && rs2.GetInt32(7) == 294) { Qscore += 2; }
-					if (a.Values[6].ValueInt == 294 && a.Values[7].ValueInt == 294) {
+//					if (a.Values[6].ValueInt == 294 && a.Values[7].ValueInt == 294) {
+					if ((int)a.Values[6].ValueDouble == 294 && (int)a.Values[7].ValueDouble == 294) {
 						Qscore += 2;
 					}
 
 //					if (!rs2.IsDBNull(8) && rs2.GetInt32(8) == 294) { Qscore += 5; }
-					if (a.Values[8].ValueInt == 294) {
+//					if (a.Values[8].ValueInt == 294) {
+					if ((int)a.Values[8].ValueDouble == 294) {
 						Qscore += 5;
 					}
 
 //					if (rs2.GetInt32(9) == 428) { Qscore += 3; } else if (rs2.GetInt32(9) == 429) { Qscore += 5; }
-					if (a.Values[9].ValueInt == 428) {
+//					if (a.Values[9].ValueInt == 428) {
+					if ((int)a.Values[9].ValueDouble == 428) {
 						Qscore += 3;
-					} else if (a.Values[9].ValueInt == 429) {
+//					} else if (a.Values[9].ValueInt == 429) {
+					} else if ((int)a.Values[9].ValueDouble == 429) {
 						Qscore += 5;
 					}
 

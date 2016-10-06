@@ -47,7 +47,8 @@ namespace HW.Core.Helpers
 			get { return string.Format("attachment;filename=\"HealthWatch Survey {0}.pptx\";", DateTime.Now.ToString("yyyyMMdd")); }
 		}
 		
-		public override object Export(string url, int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
+//		public override object Export(string url, int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
+		public override object Export(string url, int langID, ProjectRoundUnit projectRoundUnit, DateTime dateFrom, DateTime dateTo, int groupBy, int plot, int grouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs)
 		{
 			MemoryStream output = new MemoryStream();
 			using (PresentationDocument package = PresentationDocument.Create(output, PresentationDocumentType.Presentation)) {
@@ -56,12 +57,14 @@ namespace HW.Core.Helpers
 					OnUrlSet(e);
 				};
 //				r.CurrentLanguage.ReportPart = r; // HACK: Report part should be assigned to the language because upon querying from database it's not set.
-				gc.CreateParts(package, new List<IReportPart>(new ReportPartLang[] { r.CurrentLanguage }));
+//				gc.CreateParts(package, new List<IReportPart>(new ReportPartLang[] { r.CurrentLanguage }));
+				gc.CreateParts(package, new List<IReportPart>(new ReportPartLang[] { r.SelectedReportPartLang }));
 			}
 			return output;
 		}
 		
-		public override object ExportAll(int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
+//		public override object ExportAll(int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
+		public override object ExportAll(int langID, ProjectRoundUnit projectRoundUnit, DateTime dateFrom, DateTime dateTo, int groupBy, int plot, int grouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs)
 		{
 			MemoryStream output = new MemoryStream();
 			using (PresentationDocument package = PresentationDocument.Create(output, PresentationDocumentType.Presentation)) {
@@ -79,7 +82,8 @@ namespace HW.Core.Helpers
 			using (PresentationDocument package = PresentationDocument.Create(output, PresentationDocumentType.Presentation)) {
 				gc.UrlSet += delegate(object sender, ReportPartEventArgs e) { e.Url =  url; };
 //				r.CurrentLanguage.ReportPart = r; // HACK: Report part should be assigned to the language because upon querying from database it's not set.
-				gc.CreateParts(package, new List<IReportPart>(new ReportPartLang[] { r.CurrentLanguage }));
+//				gc.CreateParts(package, new List<IReportPart>(new ReportPartLang[] { r.CurrentLanguage }));
+				gc.CreateParts(package, new List<IReportPart>(new ReportPartLang[] { r.SelectedReportPartLang }));
 			}
 			return output;
 		}

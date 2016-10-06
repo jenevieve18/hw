@@ -111,7 +111,8 @@ namespace HW.Core.Repositories
 //				a.Values = new List<AnswerValue>();
 				a.Values = new List<IValue>();
 				for (int j = 0; j < 10; j++) {
-					a.Values.Add(new AnswerValue { ValueDecimal = r.Next(0, 100), ValueInt = r.Next(0, 100) });
+//					a.Values.Add(new AnswerValue { ValueDecimal = r.Next(0, 100), ValueInt = r.Next(0, 100) });
+					a.Values.Add(new AnswerValue { ValueDecimal = r.Next(0, 100), ValueDouble = r.Next(0, 100) });
 				}
 				answers.Add(a);
 			}
@@ -156,7 +157,8 @@ namespace HW.Core.Repositories
 //			a.Values = new List<AnswerValue>(
 			a.Values = new List<IValue>(
 				new AnswerValue[] {
-					new AnswerValue { Answer = a, ValueInt = 10 }
+//					new AnswerValue { Answer = a, ValueInt = 10 }
+					new AnswerValue { Answer = a, ValueDouble = 10 }
 				}
 			);
 			return a;

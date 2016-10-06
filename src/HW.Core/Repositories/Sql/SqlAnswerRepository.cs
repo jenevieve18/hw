@@ -176,7 +176,8 @@ AND av.OptionID = {2}",
 //					a.Values = new List<AnswerValue>(
 					a.Values = new List<IValue>(
 						new AnswerValue[] {
-							new AnswerValue { Answer = a, ValueInt = rs.GetInt32(0) }
+//							new AnswerValue { Answer = a, ValueInt = rs.GetInt32(0) }
+							new AnswerValue { Answer = a, ValueDouble = rs.GetInt32(0) }
 						}
 					);
 					return a;
@@ -546,7 +547,8 @@ AND u.ProjectRoundID = {0}",
 //					a.Values = new List<AnswerValue>(
 					a.Values = new List<IValue>(
 						new AnswerValue [] {
-							new AnswerValue { ValueInt = rs.GetInt32(0) }
+//							new AnswerValue { ValueInt = rs.GetInt32(0) }
+							new AnswerValue { ValueDouble = rs.GetInt32(0) }
 						}
 					);
 					answers.Add(a);
@@ -596,15 +598,23 @@ WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = {0}",
 //					a.Values = new List<AnswerValue>();
 					a.Values = new List<IValue>();
 					a.Values.Add(new AnswerValue { ValueDecimal = rs.GetDecimal(0) });
-					a.Values.Add(new AnswerValue { ValueInt = GetInt32(rs, 1) });
+//					a.Values.Add(new AnswerValue { ValueInt = GetInt32(rs, 1) });
+					a.Values.Add(new AnswerValue { ValueDouble = GetInt32(rs, 1) });
 					a.Values.Add(new AnswerValue { ValueDecimal = rs.GetDecimal(2) });
-					a.Values.Add(new AnswerValue { ValueInt = rs.GetInt32(3) });
-					a.Values.Add(new AnswerValue { ValueInt = rs.GetInt32(4) });
-					a.Values.Add(new AnswerValue { ValueInt = rs.GetInt32(5) });
-					a.Values.Add(new AnswerValue { ValueInt = rs.GetInt32(6) });
-					a.Values.Add(new AnswerValue { ValueInt = GetInt32(rs, 7) });
-					a.Values.Add(new AnswerValue { ValueInt = GetInt32(rs, 8) });
-					a.Values.Add(new AnswerValue { ValueInt = rs.GetInt32(9) });
+//					a.Values.Add(new AnswerValue { ValueInt = rs.GetInt32(3) });
+//					a.Values.Add(new AnswerValue { ValueInt = rs.GetInt32(4) });
+//					a.Values.Add(new AnswerValue { ValueInt = rs.GetInt32(5) });
+//					a.Values.Add(new AnswerValue { ValueInt = rs.GetInt32(6) });
+//					a.Values.Add(new AnswerValue { ValueInt = GetInt32(rs, 7) });
+//					a.Values.Add(new AnswerValue { ValueInt = GetInt32(rs, 8) });
+//					a.Values.Add(new AnswerValue { ValueInt = rs.GetInt32(9) });
+					a.Values.Add(new AnswerValue { ValueDouble = rs.GetInt32(3) });
+					a.Values.Add(new AnswerValue { ValueDouble = rs.GetInt32(4) });
+					a.Values.Add(new AnswerValue { ValueDouble = rs.GetInt32(5) });
+					a.Values.Add(new AnswerValue { ValueDouble = rs.GetInt32(6) });
+					a.Values.Add(new AnswerValue { ValueDouble = GetInt32(rs, 7) });
+					a.Values.Add(new AnswerValue { ValueDouble = GetInt32(rs, 8) });
+					a.Values.Add(new AnswerValue { ValueDouble = rs.GetInt32(9) });
 					a.Values.Add(new AnswerValue { ValueDecimal = rs.GetDecimal(10) });
 					a.Values.Add(new AnswerValue { ValueDecimal = rs.GetDecimal(11) });
 					answers.Add(a);
@@ -638,10 +648,14 @@ WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = {0}",
 //					a.Values = new List<AnswerValue>(
 					a.Values = new List<IValue>(
 						new AnswerValue[] {
-							new AnswerValue { ValueInt = rs.GetInt32(0) },
-							new AnswerValue { ValueInt = rs.GetInt32(1) },
-							new AnswerValue { ValueInt = rs.GetInt32(2) },
-							new AnswerValue { ValueInt = rs.GetInt32(3) },
+//							new AnswerValue { ValueInt = rs.GetInt32(0) },
+//							new AnswerValue { ValueInt = rs.GetInt32(1) },
+//							new AnswerValue { ValueInt = rs.GetInt32(2) },
+//							new AnswerValue { ValueInt = rs.GetInt32(3) },
+							new AnswerValue { ValueDouble = rs.GetInt32(0) },
+							new AnswerValue { ValueDouble = rs.GetInt32(1) },
+							new AnswerValue { ValueDouble = rs.GetInt32(2) },
+							new AnswerValue { ValueDouble = rs.GetInt32(3) },
 						}
 					);
 					answers.Add(a);
@@ -675,10 +689,14 @@ WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = {0}",
 //					a.Values = new List<AnswerValue>(
 					a.Values = new List<IValue>(
 						new AnswerValue[] {
-							new AnswerValue { ValueInt = rs.GetInt32(0) },
-							new AnswerValue { ValueInt = rs.GetInt32(1) },
-							new AnswerValue { ValueInt = rs.GetInt32(2) },
-							new AnswerValue { ValueInt = rs.GetInt32(3) }
+//							new AnswerValue { ValueInt = rs.GetInt32(0) },
+//							new AnswerValue { ValueInt = rs.GetInt32(1) },
+//							new AnswerValue { ValueInt = rs.GetInt32(2) },
+//							new AnswerValue { ValueInt = rs.GetInt32(3) }
+							new AnswerValue { ValueDouble = rs.GetInt32(0) },
+							new AnswerValue { ValueDouble = rs.GetInt32(1) },
+							new AnswerValue { ValueDouble = rs.GetInt32(2) },
+							new AnswerValue { ValueDouble = rs.GetInt32(3) }
 						}
 					);
 					answers.Add(a);
@@ -712,10 +730,14 @@ WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = {0}",
 //					a.Values = new List<AnswerValue>(
 					a.Values = new List<IValue>(
 						new AnswerValue[] {
-							new AnswerValue { ValueInt = rs.GetInt32(0) },
-							new AnswerValue { ValueInt = rs.GetInt32(1) },
-							new AnswerValue { ValueInt = rs.GetInt32(2) },
-							new AnswerValue { ValueInt = rs.GetInt32(3) },
+//							new AnswerValue { ValueInt = rs.GetInt32(0) },
+//							new AnswerValue { ValueInt = rs.GetInt32(1) },
+//							new AnswerValue { ValueInt = rs.GetInt32(2) },
+//							new AnswerValue { ValueInt = rs.GetInt32(3) },
+							new AnswerValue { ValueDouble = rs.GetInt32(0) },
+							new AnswerValue { ValueDouble = rs.GetInt32(1) },
+							new AnswerValue { ValueDouble = rs.GetInt32(2) },
+							new AnswerValue { ValueDouble = rs.GetInt32(3) },
 						}
 					);
 					answers.Add(a);
@@ -795,15 +817,24 @@ WHERE a.EndDT IS NOT NULL AND u.ProjectRoundID = {0}",
 //					a.Values = new List<AnswerValue>(
 					a.Values = new List<IValue>(
 						new AnswerValue[] {
-							new AnswerValue { ValueInt = rs.GetInt32(0) },
-							new AnswerValue { ValueInt = rs.GetInt32(1) },
-							new AnswerValue { ValueInt = rs.GetInt32(2) },
-							new AnswerValue { ValueInt = rs.GetInt32(3) },
-							new AnswerValue { ValueInt = rs.GetInt32(4) },
-							new AnswerValue { ValueInt = rs.GetInt32(5) },
-							new AnswerValue { ValueInt = rs.GetInt32(6) },
-							new AnswerValue { ValueInt = rs.GetInt32(7) },
-							new AnswerValue { ValueInt = rs.GetInt32(8) }
+//							new AnswerValue { ValueInt = rs.GetInt32(0) },
+//							new AnswerValue { ValueInt = rs.GetInt32(1) },
+//							new AnswerValue { ValueInt = rs.GetInt32(2) },
+//							new AnswerValue { ValueInt = rs.GetInt32(3) },
+//							new AnswerValue { ValueInt = rs.GetInt32(4) },
+//							new AnswerValue { ValueInt = rs.GetInt32(5) },
+//							new AnswerValue { ValueInt = rs.GetInt32(6) },
+//							new AnswerValue { ValueInt = rs.GetInt32(7) },
+//							new AnswerValue { ValueInt = rs.GetInt32(8) }
+							new AnswerValue { ValueDouble = rs.GetInt32(0) },
+							new AnswerValue { ValueDouble = rs.GetInt32(1) },
+							new AnswerValue { ValueDouble = rs.GetInt32(2) },
+							new AnswerValue { ValueDouble = rs.GetInt32(3) },
+							new AnswerValue { ValueDouble = rs.GetInt32(4) },
+							new AnswerValue { ValueDouble = rs.GetInt32(5) },
+							new AnswerValue { ValueDouble = rs.GetInt32(6) },
+							new AnswerValue { ValueDouble = rs.GetInt32(7) },
+							new AnswerValue { ValueDouble = rs.GetInt32(8) }
 						}
 					);
 					answers.Add(a);
@@ -918,7 +949,8 @@ GROUP BY a.ProjectRoundUserID, {1}(a.EndDT)",
 						var a = new Answer { };
 						do {
 							a.DT = rs.GetInt32(0);
-							a.Values.Add(new AnswerValue { ValueInt = rs.GetInt32(1) });
+//							a.Values.Add(new AnswerValue { ValueInt = rs.GetInt32(1) });
+							a.Values.Add(new AnswerValue { ValueDouble = rs.GetInt32(1) });
 							done = !rs.Read();
 						} while (!done && rs.GetInt32(0) == a.DT);
 						answers.Add(a);
@@ -968,7 +1000,8 @@ GROUP BY a.ProjectRoundUserID, {1}(a.EndDT)",
 						var a = new Answer { };
 						do {
 							a.DT = rs.GetInt32(0);
-							a.Values.Add(new AnswerValue { ValueInt = rs.GetInt32(1) });
+//							a.Values.Add(new AnswerValue { ValueInt = rs.GetInt32(1) });
+							a.Values.Add(new AnswerValue { ValueDouble = rs.GetInt32(1) });
 							done = !rs.Read();
 						} while (!done && rs.GetInt32(0) == a.DT);
 						answers.Add(a);
@@ -1079,7 +1112,8 @@ ORDER BY tmp.DT",
 						var a = new Answer { };
 						do {
 							a.DT = rs.GetInt32(0);
-							a.Values.Add(new AnswerValue { ValueInt = rs.GetInt32(1) });
+//							a.Values.Add(new AnswerValue { ValueInt = rs.GetInt32(1) });
+							a.Values.Add(new AnswerValue { ValueDouble = rs.GetInt32(1) });
 							done = !rs.Read();
 						} while (!done && rs.GetInt32(0) == a.DT);
 						answers.Add(a);
