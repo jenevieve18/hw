@@ -24,17 +24,18 @@ namespace HW.Core.Tests.Helpers
 		Form f;
 		PictureBox p;
 		
-		ReportService service = new ReportService(
-			new SqlAnswerRepository(),
-			new SqlReportRepository(),
-			new SqlProjectRepository(),
-			new SqlOptionRepository(),
-			new SqlDepartmentRepository(),
-			new SqlQuestionRepository(),
-			new SqlIndexRepository(),
-			new SqlSponsorRepository(),
-			new SqlSponsorAdminRepository()
-		);
+//		ReportService service = new ReportService(
+//			new SqlAnswerRepository(),
+//			new SqlReportRepository(),
+//			new SqlProjectRepository(),
+//			new SqlOptionRepository(),
+//			new SqlDepartmentRepository(),
+//			new SqlQuestionRepository(),
+//			new SqlIndexRepository(),
+//			new SqlSponsorRepository(),
+//			new SqlSponsorAdminRepository()
+//		);
+		ReportService service = new ReportService();
 		
 		[SetUp]
 		public void Setup()

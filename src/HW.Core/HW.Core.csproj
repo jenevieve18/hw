@@ -235,7 +235,6 @@
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\ReportService.cs" />
     <Compile Include="Services\ReportService2.cs" />
-    <Compile Include="Services\ReportService3.cs" />
     <Compile Include="Services\SponsorService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>

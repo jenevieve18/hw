@@ -209,6 +209,7 @@ ORDER BY rp.SortOrder",
 						Id = rs.GetInt32(5),
 						ReportPart = new ReportPart {
 							Id = rs.GetInt32(0),
+							ReportPartID = GetInt32(rs, 0),
 							Type = rs.GetInt32(4)
 						},
 						Subject = rs.GetString(1),

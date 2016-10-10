@@ -15,17 +15,18 @@ namespace HW.Grp
 {
 	public partial class Export : System.Web.UI.Page
 	{
-		ReportService service = new ReportService(
-			new SqlAnswerRepository(),
-			new SqlReportRepository(),
-			new SqlProjectRepository(),
-			new SqlOptionRepository(),
-			new SqlDepartmentRepository(),
-			new SqlQuestionRepository(),
-			new SqlIndexRepository(),
-			new SqlSponsorRepository(),
-			new SqlSponsorAdminRepository()
-		);
+//		ReportService service = new ReportService(
+//			new SqlAnswerRepository(),
+//			new SqlReportRepository(),
+//			new SqlProjectRepository(),
+//			new SqlOptionRepository(),
+//			new SqlDepartmentRepository(),
+//			new SqlQuestionRepository(),
+//			new SqlIndexRepository(),
+//			new SqlSponsorRepository(),
+//			new SqlSponsorAdminRepository()
+//		);
+		ReportService service = new ReportService();
 //		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
 		bool HasAnswerKey {
@@ -68,8 +69,9 @@ namespace HW.Grp
 			IAdmin sponsor = service.ReadSponsor(sponsorID);
 //			ReportPart reportPart = service.ReadReportPart(reportPartID, langID);
 			
-			var reportService = new ReportService3();
-			var reportPart = reportService.ReadReportPart(reportPartID);
+//			var reportService = new ReportService3();
+//			var reportPart = reportService.ReadReportPart(reportPartID);
+			var reportPart = service.ReadReportPart(reportPartID);
             reportPart.SelectedReportPartLangID = langID;
 			
 			ProjectRoundUnit projectRoundUnit = service.ReadProjectRoundUnit(projectRoundUnitID);

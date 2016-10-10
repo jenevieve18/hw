@@ -14,17 +14,18 @@ namespace HW.Grp
 {
 	public partial class SuperExportAll : System.Web.UI.Page
 	{
-		ReportService service = new ReportService(
-			new SqlAnswerRepository(),
-			new SqlReportRepository(),
-			new SqlProjectRepository(),
-			new SqlOptionRepository(),
-			new SqlDepartmentRepository(),
-			new SqlQuestionRepository(),
-			new SqlIndexRepository(),
-			new SqlSponsorRepository(),
-			new SqlSponsorAdminRepository()
-		);
+//		ReportService service = new ReportService(
+//			new SqlAnswerRepository(),
+//			new SqlReportRepository(),
+//			new SqlProjectRepository(),
+//			new SqlOptionRepository(),
+//			new SqlDepartmentRepository(),
+//			new SqlQuestionRepository(),
+//			new SqlIndexRepository(),
+//			new SqlSponsorRepository(),
+//			new SqlSponsorAdminRepository()
+//		);
+		ReportService service = new ReportService();
 		SqlReportRepository r = new SqlReportRepository();
 		SqlUserRepository userRepository = new SqlUserRepository();
 		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);

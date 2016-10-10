@@ -181,6 +181,9 @@ namespace HW.Core.Models
 		public string AltTextJapaneseUnicode { get; set; }
 		public ReportPart ReportPart { get; set; }
 		public Language Language { get; set; }
+		
+		public List<ReportPartComponent> Components { get; set; }
+		public IList<ReportPartLang> Languages { get; set; }
 	}
 	
 	public interface IReportPart : IBaseModel
@@ -188,5 +191,8 @@ namespace HW.Core.Models
 		string Subject { get; set; }
 		string Header { get; set; }
 		ReportPart ReportPart { get; set; }
+		
+		List<ReportPartComponent> Components { get; set; }
+		IList<ReportPartLang> Languages { get; set; }
 	}
 }

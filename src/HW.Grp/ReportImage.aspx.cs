@@ -14,34 +14,35 @@ namespace HW.Grp
 {
 	public partial class ReportImage : System.Web.UI.Page
 	{
-		ReportService service = new ReportService(
-			new SqlAnswerRepository(),
-			new SqlReportRepository(),
-			new SqlProjectRepository(),
-			new SqlOptionRepository(),
-			new SqlDepartmentRepository(),
-			new SqlQuestionRepository(),
-			new SqlIndexRepository(),
-			new SqlSponsorRepository(),
-			new SqlSponsorAdminRepository()
-		);
+//		ReportService service = new ReportService(
+//			new SqlAnswerRepository(),
+//			new SqlReportRepository(),
+//			new SqlProjectRepository(),
+//			new SqlOptionRepository(),
+//			new SqlDepartmentRepository(),
+//			new SqlQuestionRepository(),
+//			new SqlIndexRepository(),
+//			new SqlSponsorRepository(),
+//			new SqlSponsorAdminRepository()
+//		);
+		ReportService service = new ReportService();
 		
 //		bool HasAnswerKey {
 //			get { return Request.QueryString["AK"] != null; }
 //		}
-//		
+//
 //		bool HasWidth {
 //			get { return Request.QueryString["W"] != null; }
 //		}
-//		
+//
 //		bool HasHeight {
 //			get { return Request.QueryString["H"] != null; }
 //		}
-//		
+//
 //		bool HasBackground {
 //			get { return Request.QueryString["BG"] != null; }
 //		}
-//		
+//
 //		int Width {
 //			get {
 //				if (HasWidth) {
@@ -51,7 +52,7 @@ namespace HW.Grp
 //				}
 //			}
 //		}
-//		
+//
 //		int Height {
 //			get {
 //				if (HasHeight) {
@@ -61,7 +62,7 @@ namespace HW.Grp
 //				}
 //			}
 //		}
-//		
+//
 //		string Background {
 //			get {
 //				if (HasBackground) {
@@ -80,7 +81,7 @@ namespace HW.Grp
 			
 //			int yearFrom = ConvertHelper.ToInt32(Request.QueryString["FY"]);
 //			int yearTo = ConvertHelper.ToInt32(Request.QueryString["TY"]);
-//			
+//
 //			int monthFrom = ConvertHelper.ToInt32(Request.QueryString["FM"]);
 //			int monthTo = ConvertHelper.ToInt32(Request.QueryString["TM"]);
 			
@@ -90,7 +91,7 @@ namespace HW.Grp
 			int langID = ConvertHelper.ToInt32(Request.QueryString["LangID"]);
 
 			int reportPartID = Convert.ToInt32(Request.QueryString["RPID"]);
-            int projectRoundUnitID = ConvertHelper.ToInt32(Request.QueryString["PRUID"].Replace("SPRU", ""));
+			int projectRoundUnitID = ConvertHelper.ToInt32(Request.QueryString["PRUID"].Replace("SPRU", ""));
 			
 			// FIXME: This hasGrouping value is always true! Please check!
 			bool hasGrouping = Request.QueryString["GRPNG"] != null || Request.QueryString["GRPNG"] != "0";
@@ -107,9 +108,9 @@ namespace HW.Grp
 			
 			int point = ConvertHelper.ToInt32(Request.QueryString["ExtraPoint"]);
 			
-			var reportService = new ReportService3();
-
-			var reportPart = reportService.ReadReportPart(reportPartID);
+//			var reportService = new ReportService3();
+//			var reportPart = reportService.ReadReportPart(reportPartID);
+			var reportPart = service.ReadReportPart(reportPartID);
 			reportPart.SelectedReportPartLangID = langID;
 
 //			var factory = service.GetGraphFactory(HasAnswerKey);
@@ -124,7 +125,7 @@ namespace HW.Grp
 			var projectRoundUnit = service.ReadProjectRoundUnit(projectRoundUnitID);
 			var sponsorAdmin = service.ReadSponsorAdmin(sponsorAdminID);
 			
-            var sponsor = new SqlSponsorRepository().Read(sponsorID);
+			var sponsor = new SqlSponsorRepository().Read(sponsorID);
 			var graph = factory.CreateGraph(reportPart, projectRoundUnit, langID, sponsorAdmin, sponsor, dateFrom, dateTo, groupBy, hasGrouping, plot, grouping, departmentIDs, point);
 			
 			graph.render();

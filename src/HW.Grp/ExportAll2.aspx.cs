@@ -15,17 +15,18 @@ namespace HW.Grp
 	public partial class ExportAll2 : System.Web.UI.Page
 	{
 		IList<IReportPart> reportParts = new List<IReportPart>();
-		ReportService service = new ReportService(
-			new SqlAnswerRepository(),
-			new SqlReportRepository(),
-			new SqlProjectRepository(),
-			new SqlOptionRepository(),
-			new SqlDepartmentRepository(),
-			new SqlQuestionRepository(),
-			new SqlIndexRepository(),
-			new SqlSponsorRepository(),
-			new SqlSponsorAdminRepository()
-		);
+//		ReportService service = new ReportService(
+//			new SqlAnswerRepository(),
+//			new SqlReportRepository(),
+//			new SqlProjectRepository(),
+//			new SqlOptionRepository(),
+//			new SqlDepartmentRepository(),
+//			new SqlQuestionRepository(),
+//			new SqlIndexRepository(),
+//			new SqlSponsorRepository(),
+//			new SqlSponsorAdminRepository()
+//		);
+		ReportService service = new ReportService();
 //		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 
 		bool HasAnswerKey

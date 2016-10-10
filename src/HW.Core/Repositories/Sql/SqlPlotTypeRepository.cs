@@ -31,7 +31,7 @@ SELECT TOP 1 Id FROM PlotType ORDER BY Id DESC"
             string query = string.Format(
                 @"
 UPDATE PlotType SET Name = @Name, Description = @Description
-WHERE Id = @Id"
+WHERE PlotTypeID = @Id"
                 );
             ExecuteNonQuery(query, "eFormSqlConnection",
                 new SqlParameter("@Name", p.Name),
@@ -136,7 +136,7 @@ SELECT PlotTypeLangID,
     ShortName,
     SupportsMultipleSeries
 FROM PlotTypeLang
-WHERE PlotTypeId = @PlotTypeId"
+WHERE PlotTypeID = @PlotTypeId"
             );
             var l = new List<PlotTypeLanguage>();
             using (SqlDataReader rs = ExecuteReader(query, "eFormSqlConnection", new SqlParameter("@PlotTypeId", plotTypeId)))
@@ -166,7 +166,7 @@ WHERE PlotTypeId = @PlotTypeId"
 				@"
 SELECT *
 FROM PlotType
-WHERE Id = @Id"
+WHERE PlotTypeID = @Id"
 			);
 			PlotType p = null;
 			using (SqlDataReader rs = ExecuteReader(query, "eFormSqlConnection", new SqlParameter("@Id", id))) {

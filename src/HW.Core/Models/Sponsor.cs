@@ -348,6 +348,9 @@ namespace HW.Core.Models
 		{
 			Measures = new List<SponsorProjectMeasure>();
 		}
+		
+		public List<ReportPartComponent> Components { get; set; }
+		public IList<ReportPartLang> Languages { get; set; }
 	}
 	
 	public class SponsorProjectRoundUnit : BaseModel

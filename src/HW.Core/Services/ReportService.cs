@@ -12,46 +12,86 @@ namespace HW.Core.Services
 {
 	public class ReportService
 	{
-		SqlAnswerRepository answerRepository;
-		SqlReportRepository reportRepository;
-		SqlProjectRepository projectRepository;
-		SqlOptionRepository optionRepository;
-		SqlDepartmentRepository departmentRepository;
-		SqlQuestionRepository questionRepository;
-		SqlIndexRepository indexRepository;
-		SqlSponsorRepository sponsorRepo;
-		SqlSponsorAdminRepository sponsorAdminRepo;
+		SqlReportRepository reportRepo = new SqlReportRepository();
+		SqlReportPartRepository reportPartRepo = new SqlReportPartRepository();
+		SqlReportPartLangRepository reportPartLangRepo =  new SqlReportPartLangRepository();
+		SqlReportPartComponentRepository reportPartComponentRepo = new SqlReportPartComponentRepository();
 		
-		int lastCount = 0;
-		float lastVal = 0;
-		string lastDesc = "";
-		Hashtable res = new Hashtable();
-		Hashtable cnt = new Hashtable();
+		SqlAnswerRepository answerRepo = new SqlAnswerRepository();
 		
-		public ReportService(SqlAnswerRepository answerRepository,
-		                     SqlReportRepository reportRepository,
-		                     SqlProjectRepository projectRepository,
-		                     SqlOptionRepository optionRepository,
-		                     SqlDepartmentRepository departmentRepository,
-		                     SqlQuestionRepository questionRepository,
-		                     SqlIndexRepository indexRepository,
-		                     SqlSponsorRepository sponsorRepo,
-		                     SqlSponsorAdminRepository sponsorAdminRepo)
+		SqlProjectRepository projectRepo = new SqlProjectRepository();
+		
+		SqlOptionRepository optionRepo = new SqlOptionRepository();
+		
+		SqlDepartmentRepository departmentRepo = new SqlDepartmentRepository();
+		
+		SqlQuestionRepository questionRepo = new SqlQuestionRepository();
+		
+		SqlWeightedQuestionOptionRepository weightedQuestionOptionRepo = new SqlWeightedQuestionOptionRepository();
+		
+		SqlIndexRepository indexRepo = new SqlIndexRepository();
+		
+		SqlSponsorRepository sponsorRepo = new SqlSponsorRepository();
+		SqlSponsorAdminRepository sponsorAdminRepo = new SqlSponsorAdminRepository();
+		
+		public ReportService()
 		{
-			this.answerRepository = answerRepository;
-			this.reportRepository = reportRepository;
-			this.projectRepository = projectRepository;
-			this.optionRepository = optionRepository;
-			this.departmentRepository = departmentRepository;
-			this.questionRepository = questionRepository;
-			this.indexRepository = indexRepository;
-			this.sponsorRepo = sponsorRepo;
-			this.sponsorAdminRepo = sponsorAdminRepo;
 		}
+		
+//		int lastCount = 0;
+//		float lastVal = 0;
+//		string lastDesc = "";
+//		Hashtable res = new Hashtable();
+//		Hashtable cnt = new Hashtable();
+		
+//		public ReportService(SqlAnswerRepository answerRepo,
+//		                     SqlReportRepository reportRepo,
+//		                     SqlProjectRepository projectRepo,
+//		                     SqlOptionRepository optionRepo,
+//		                     SqlDepartmentRepository departmentRepo,
+//		                     SqlQuestionRepository questionRepo,
+//		                     SqlIndexRepository indexRepo,
+//		                     SqlSponsorRepository sponsorRepo,
+//		                     SqlSponsorAdminRepository sponsorAdminRepo)
+//		{
+//			this.answerRepo = answerRepo;
+//			this.reportRepo = reportRepo;
+//			this.projectRepo = projectRepo;
+//			this.optionRepo = optionRepo;
+//			this.departmentRepo = departmentRepo;
+//			this.questionRepo = questionRepo;
+//			this.indexRepo = indexRepo;
+//			this.sponsorRepo = sponsorRepo;
+//			this.sponsorAdminRepo = sponsorAdminRepo;
+//		}
 		
 		public IList<IReportPart> FindByProjectAndLanguage(int projectRoundID, int langID)
 		{
-			return reportRepository.FindByProjectAndLanguage(projectRoundID, langID);
+//			return reportRepo.FindByProjectAndLanguage(projectRoundID, langID);
+			var reportPartLangs = reportRepo.FindByProjectAndLanguage(projectRoundID, langID);
+			foreach (var rpl in reportPartLangs) {
+				rpl.Languages = reportPartLangRepo.FindByReportPart(rpl.ReportPart.Id);
+				rpl.Components = reportPartComponentRepo.FindByReportPart(rpl.ReportPart.Id) as List<ReportPartComponent>;
+				foreach (var rpc in rpl.Components) {
+					rpc.WeightedQuestionOption = weightedQuestionOptionRepo.Read(rpc.WeightedQuestionOptionID);
+					rpc.Index = indexRepo.Read(rpc.IdxID);
+				}
+			}
+			return reportPartLangs;
+		}
+		
+		public ReportPart ReadReportPart(int reportPartID)
+		{
+			var rp = reportPartRepo.Read(reportPartID);
+			if (rp != null) {
+				rp.Languages = reportPartLangRepo.FindByReportPart(reportPartID);
+				rp.Components = reportPartComponentRepo.FindByReportPart(reportPartID) as List<ReportPartComponent>;
+				foreach (var rpc in rp.Components) {
+					rpc.WeightedQuestionOption = weightedQuestionOptionRepo.Read(rpc.WeightedQuestionOptionID);
+					rpc.Index = indexRepo.Read(rpc.IdxID);
+				}
+			}
+			return rp;
 		}
 		
 		public IAdmin ReadSponsor(int sponsorID)
@@ -66,20 +106,28 @@ namespace HW.Core.Services
 		
 		public ProjectRoundUnit ReadProjectRoundUnit(int projectRoundUnitID)
 		{
-			return projectRepository.ReadRoundUnit(projectRoundUnitID);
+			return projectRepo.ReadRoundUnit(projectRoundUnitID);
 		}
 		
-		public ReportPart ReadReportPart(int rpid, int langID)
+		public ReportPart ReadReportPart(int reportPartID, int langID)
 		{
-			return reportRepository.ReadReportPart(rpid, langID);
+//			return reportRepo.ReadReportPart(reportPartID, langID);
+			var rp = reportRepo.ReadReportPart(reportPartID, langID);
+			rp.Languages = reportPartLangRepo.FindByReportPart(reportPartID);
+			rp.Components = reportPartComponentRepo.FindByReportPart(reportPartID) as List<ReportPartComponent>;
+			foreach (var rpc in rp.Components) {
+				rpc.WeightedQuestionOption = weightedQuestionOptionRepo.Read(rpc.WeightedQuestionOptionID);
+				rpc.Index = indexRepo.Read(rpc.IdxID);
+			}
+			return rp;
 		}
 		
 		public IGraphFactory GetGraphFactory(bool hasAnswerKey)
 		{
 			if (hasAnswerKey) {
-				return new UserLevelGraphFactory(answerRepository, reportRepository);
+				return new UserLevelGraphFactory(answerRepo, reportRepo);
 			} else {
-				return new GroupStatsGraphFactory(answerRepository, reportRepository, projectRepository, optionRepository, indexRepository, questionRepository, departmentRepository);
+				return new GroupStatsGraphFactory(answerRepo, reportRepo, projectRepo, optionRepo, indexRepo, questionRepo, departmentRepo);
 			}
 		}
 	}
