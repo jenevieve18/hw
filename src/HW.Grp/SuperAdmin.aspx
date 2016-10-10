@@ -16,7 +16,7 @@
                 <div class="smallContent">
                     <table border="0" cellspacing="0" cellpadding="5">
                         <tr>
-                            <th><%= R.Str(lid, "manager.username", "Username")%></th>
+                            <%--<th><%= R.Str(lid, "manager.username", "Username")%></th>--%>
                             <th><%= R.Str(lid, "email", "Email")%></th>
                             <th><%= R.Str(lid, "sponsor", "Sponsor")%></th>
                             <th><%= R.Str(lid, "department", "Department")%></th>
@@ -25,7 +25,7 @@
                         <% var j = 0; %>
                         <% foreach (var u in users) { %>
                             <tr<%= (j % 2 == 0) ? " bgcolor='#F2F2F2'" : "" %>>
-                                <td><%= u.Name%></td>
+                                <%--<td><%= u.Name%></td>--%>
                                 <td><%= u.Email%></td>
                                 <td><%= u.Sponsor.Name%></td>
                                 <td><%= u.Department.Name%></td>
