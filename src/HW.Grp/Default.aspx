@@ -72,9 +72,15 @@
         </h2>
         <p style="font-size:14px">
             <small>
+                <% if (lid != 1) { %>
                 <%= HtmlHelper.Anchor(R.Str(1, "i18n"), string.Format("default.aspx?lid=1&r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)), "class='i18n'")%>
+                <% } %>
+                <% if (lid != 2) { %>
                 <%= HtmlHelper.Anchor(R.Str(2, "i18n"), string.Format("default.aspx?lid=2&r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)), "class='i18n'")%>
+                <% } %>
+                <% if (lid != 4) { %>
                 <%= HtmlHelper.Anchor(R.Str(4, "i18n"), string.Format("default.aspx?lid=4&r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)), "class='i18n'")%>
+                <% } %>
             </small>
         </p>
 

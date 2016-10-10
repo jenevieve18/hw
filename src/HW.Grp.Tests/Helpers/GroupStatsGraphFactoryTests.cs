@@ -27,44 +27,6 @@ namespace HW.Grp.Tests.Helpers
 		);
 		ExtendedGraph g;
 		
-//		[Test]
-//		public void TestGetWeightedQuestionOptionReportPartGraph()
-//		{
-//			var reportPart = new SqlReportRepository().ReadReportPart(14, 2);
-//			int langID = 2;
-//			int point = 0;
-//			bool hasGrouping = true;
-//			int sponsorID = 83;
-//			int sponsorAdminID = 514;
-//			int sponsorMinUserCountToDisclose = 10;
-//			string departmentIDs = "0";
-//			int grouping = Grouping.None;
-//			int groupBy = GroupBy.TwoWeeksStartWithEven;
-//			int cx = reportPart.Components.Capacity;
-//			var projectRoundUnit = new SqlProjectRepository().ReadRoundUnit(2643);
-//			var dateFrom = new DateTime(2012, 9, 1);
-//			var dateTo = new DateTime(2013, 9, 1);
-//			
-//			g = f.GetWeightedQuestionOptionReportPartGraph(
-//				reportPart,
-//				langID,
-//				point,
-//				hasGrouping,
-//				sponsorID,
-//				sponsorMinUserCountToDisclose,
-//				departmentIDs,
-//				projectRoundUnit.Id,
-//				sponsorAdminID,
-//				grouping,
-//				groupBy != 0 ? groupBy : GroupBy.TwoWeeksStartWithOdd,
-//				PlotType.Bar,
-//				cx,
-//				projectRoundUnit.SortString,
-//				dateFrom,
-//				dateTo
-//			);
-//		}
-		
 		[Test]
 		public void TestGetWeightedQuestionOptionReportPartGraph()
 		{
