@@ -14,6 +14,9 @@ namespace HW.Grp.Tests.Models
 	[TestFixture]
 	public class ReportTests
 	{
-		
+		[Test]
+		public void TestMethod()
+		{
+		}
 	}
 }

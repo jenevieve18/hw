@@ -54,7 +54,7 @@
     <Compile Include="Helpers\GroupStatsGraphFactoryTests.cs" />
     <Compile Include="Helpers\HWListTests.cs" />
     <Compile Include="Helpers\ReminderHelperTests.cs" />
-    <Compile Include="Helpers\UserLevelStatsGraphFactoryTests.cs" />
+    <Compile Include="Helpers\UserLevelGraphFactoryTests.cs" />
     <Compile Include="Models\ReportTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ReportRepositoryTests.cs" />

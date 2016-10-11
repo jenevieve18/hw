@@ -21,5 +21,25 @@ namespace HW.Grp.Tests.Helpers
 			Assert.AreEqual(47.5, l.Mean);
 			Assert.AreEqual(50, l.Median);
 		}
+		
+		[Test]
+		public void TestMethod2()
+		{
+			var l = new HWList(100.00,
+75.00,
+41.67,
+58.33,
+58.33,
+75.00,
+75.00,
+50.00,
+50.00,
+50.00
+);
+			Console.WriteLine("Min: {0}", l.Min);
+			Console.WriteLine("Max: {0}", l.Max);
+			Console.WriteLine("Median: {0}", l.Median);
+			Console.WriteLine("Median: {0}", l.Median);
+		}
 	}
 }

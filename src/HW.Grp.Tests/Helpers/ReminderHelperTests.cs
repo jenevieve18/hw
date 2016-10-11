@@ -1,9 +1,12 @@
-﻿
+﻿// <file>
+//  <license></license>
+//  <owner name="Ian Escarro" email="ian.escarro@gmail.com"/>
+// </file>
+
 using System;
 using System.Collections.Generic;
 using HW.Core.Models;
 using HW.Core.Repositories.Sql;
-//using HW.Grp;
 using NUnit.Framework;
 
 namespace HW.Grp.Tests.Helpers
@@ -17,12 +20,12 @@ namespace HW.Grp.Tests.Helpers
 		[SetUp]
 		public void Setup()
 		{
-			loginDays = ReminderHelper.GetLoginDays();
-			loginWeekdays = ReminderHelper.GetLoginWeekdays();
+//			loginDays = ReminderHelper.GetLoginDays();
+//			loginWeekdays = ReminderHelper.GetLoginWeekdays();
 		}
 		
 		[Test]
-		public void c()
+		public void TestMethod()
 		{
 			var dr = new SqlDepartmentRepository();
 			var sr = new SqlSponsorRepository();
