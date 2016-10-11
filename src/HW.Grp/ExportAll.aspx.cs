@@ -147,7 +147,7 @@ namespace HW.Grp
 //			}
 //		}
 		
-		string GetReportImageUrl(string path, int langID, int yearFrom, int yearTo, int spons, int sid, int gb, int reportPartID, int projectRoundUnitID, string gid, int grpng, int plot, int monthFrom, int monthTo)
+		string GetReportImageUrl(string path, int langID, int yearFrom, int yearTo, int sposorAdminID, int sponsorID, int groupBy, int reportPartID, int projectRoundUnitID, string departmentIDs, int grouping, int plot, int monthFrom, int monthTo)
 		{
 			P p = new P(path, "reportImage.aspx");
 			p.Q.Add("LangID", langID);
@@ -155,13 +155,13 @@ namespace HW.Grp
 			p.Q.Add("TY", yearTo);
 			p.Q.Add("FM", monthFrom);
 			p.Q.Add("TM", monthTo);
-			p.Q.Add("SAID", spons);
-			p.Q.Add("SID", sid);
-			p.Q.Add("GB", gb);
+			p.Q.Add("SAID", sposorAdminID);
+			p.Q.Add("SID", sponsorID);
+			p.Q.Add("GB", groupBy);
 			p.Q.Add("RPID", reportPartID);
 			p.Q.Add("PRUID", projectRoundUnitID);
-			p.Q.Add("GID", gid);
-			p.Q.Add("GRPNG", grpng);
+			p.Q.Add("GID", departmentIDs);
+			p.Q.Add("GRPNG", grouping);
 			p.Q.Add("PLOT", plot);
 			return p.ToString();
 		}

@@ -138,7 +138,9 @@ namespace HW.Grp
 //			exporter.UrlSet += delegate(object sender2, ReportPartEventArgs e2) { e2.Url = GetReportImageUrl(path, langID, yearFrom, yearTo, sponsorAdminID, sponsorID, groupBy, e2.ReportPart.Id, project, departmentIDs, grouping, plot, monthFrom, monthTo); };
 //			HtmlHelper.Write(exporter.ExportAll(langID, projectRoundUnitID, yearFrom, yearTo, groupBy, plot, grouping, sponsorAdminID, sponsorID, departmentIDs, s.MinUserCountToDisclose, monthFrom, monthTo), Response);
 
-			exporter.UrlSet += delegate(object sender2, ReportPartEventArgs e2) { e2.Url = GetReportImageUrl(path, langID, dateFrom.Year, dateTo.Year, sponsorAdminID, sponsorID, groupBy, e2.ReportPart.Id, project, departmentIDs, grouping, plot, dateFrom.Month, dateTo.Month); };
+			exporter.UrlSet += delegate(object sender2, ReportPartEventArgs e2) {
+				e2.Url = GetReportImageUrl(path, langID, dateFrom.Year, dateTo.Year, sponsorAdminID, sponsorID, groupBy, e2.ReportPart.Id, project, departmentIDs, grouping, plot, dateFrom.Month, dateTo.Month);
+			};
 			HtmlHelper.Write(exporter.ExportAll(langID, projectRoundUnit, dateFrom, dateTo, groupBy, plot, grouping, sponsorAdmin, sponsor as Sponsor, departmentIDs), Response);
 		}
 
