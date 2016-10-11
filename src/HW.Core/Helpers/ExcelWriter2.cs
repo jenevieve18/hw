@@ -8,6 +8,18 @@ namespace HW.Core.Helpers
 {
 	public class ExcelCell
 	{
+		public ExcelCell()
+		{
+			FontBold = false;
+			Value = "";
+			FontSize = 10;
+			BackgroundColor = Color.White;
+			ForegroundColor = Color.Black;
+			BorderStyle = ExcelBorderStyle.None;
+			HorizontalAlignment = ExcelHorizontalAlignment.Left;
+			VerticalAlignment = ExcelVerticalAlignment.Bottom;
+		}
+		
 		public int Row { get; set; }
 		public int Column { get; set; }
 		public object Value { get; set; }
@@ -20,18 +32,6 @@ namespace HW.Core.Helpers
 		public ExcelHorizontalAlignment HorizontalAlignment { get; set; }
 		public ExcelVerticalAlignment VerticalAlignment { get; set; }
 		public bool FontBold { get; set; }
-		
-		public ExcelCell()
-		{
-			FontBold = false;
-			Value = "";
-			FontSize = 10;
-			BackgroundColor = Color.White;
-			ForegroundColor = Color.Black;
-			BorderStyle = ExcelBorderStyle.None;
-			HorizontalAlignment = ExcelHorizontalAlignment.Left;
-			VerticalAlignment = ExcelVerticalAlignment.Bottom;
-		}
 	}
 	
 	public class ExcelWriter

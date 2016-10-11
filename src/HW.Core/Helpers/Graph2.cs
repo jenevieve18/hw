@@ -6,23 +6,15 @@ using HW.Core.Helpers;
 
 namespace HW.Core.Helpers
 {
+	public interface IGraphType2
+	{
+		void Draw(Graph2 graph);
+	}
+	
 	public class Graph2
 	{
 		Graphics g;
 		Bitmap b;
-		
-		public Graphics Graphics {
-			get { return g; }
-		}
-		
-		public int Width { get; set; }
-		public int Height { get; set; }
-		
-		public Bitmap Bitmap {
-			get { return b; }
-		}
-		
-		public Margin Margin { get; set; }
 		
 		public Graph2(int w, int h, string color)
 		{
@@ -38,6 +30,19 @@ namespace HW.Core.Helpers
 			Type = new LineGraphType();
 		}
 		
+		public Graphics Graphics {
+			get { return g; }
+		}
+		
+		public int Width { get; set; }
+		public int Height { get; set; }
+		
+		public Bitmap Bitmap {
+			get { return b; }
+		}
+		
+		public Margin Margin { get; set; }
+		
 		public int InnerWidth {
 			get { return Width - (Margin.Right + Margin.Left); }
 		}
@@ -48,14 +53,12 @@ namespace HW.Core.Helpers
 		
 		public List<Series> Series { get; set; }
 		
-		
+		public IGraphType2 Type { get; set; }
 		
 		public void Draw()
 		{
 			Type.Draw(this);
 		}
-		
-		public IGraphType2 Type { get; set; }
 		
 		abstract class BaseGraphType : IGraphType2
 		{
@@ -121,18 +124,8 @@ namespace HW.Core.Helpers
 //		}
 	}
 	
-	public interface IGraphType2
-	{
-		void Draw(Graph2 graph);
-	}
-	
 	public class Margin
 	{
-		public int Top { get; set; }
-		public int Right { get; set; }
-		public int Bottom { get; set; }
-		public int Left { get; set; }
-		
 		public Margin() : this(0, 0, 0, 0)
 		{
 		}
@@ -144,5 +137,10 @@ namespace HW.Core.Helpers
 			this.Bottom = bottom;
 			this.Left = left;
 		}
+		
+		public int Top { get; set; }
+		public int Right { get; set; }
+		public int Bottom { get; set; }
+		public int Left { get; set; }
 	}
 }

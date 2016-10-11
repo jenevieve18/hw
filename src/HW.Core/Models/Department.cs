@@ -13,6 +13,18 @@ namespace HW.Core.Models
 	
 	public class Department : BaseModel, IDepartment
 	{
+		public Department()
+		{
+		}
+		
+		public Department(string key, string name, int minUserCountToDisclose, string query)
+		{
+			this.Key = key;
+			this.Name = name;
+			this.MinUserCountToDisclose = minUserCountToDisclose;
+			this.Query = query;
+		}
+		
 		public Sponsor Sponsor { get; set; }
 		public string Name { get; set; }
 		public Department Parent { get; set; }
@@ -33,18 +45,6 @@ namespace HW.Core.Models
 		public string Query { get; set; }
 		
 		public IList<Department> Parents { get; set; }
-		
-		public Department()
-		{
-		}
-		
-		public Department(string key, string name, int minUserCountToDisclose, string query)
-		{
-			this.Key = key;
-			this.Name = name;
-			this.MinUserCountToDisclose = minUserCountToDisclose;
-			this.Query = query;
-		}
 		
 		public int? GetLoginDays()
 		{
@@ -132,7 +132,7 @@ namespace HW.Core.Models
 //				return loginDays[Sponsor.LoginDays.Value];
 //			}
 //		}
-		
+//		
 		public override string ToString()
 		{
 			return Name;

@@ -2188,10 +2188,11 @@ namespace HW.Core.FromHW
 				@"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" + 
 				@".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
 			Regex re = new Regex(strRegex);
-			if (re.IsMatch(inputEmail))
+			if (re.IsMatch(inputEmail)) {
 				return true;
-			else
+			} else {
 				return false;
+			}
 		}
 
 		public static string HashMD5(string str)
@@ -2199,7 +2200,7 @@ namespace HW.Core.FromHW
 			System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
 			byte[] hashByteArray = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes("HW" + str + "HW"));
 			string hash = "";
-			for(int i = 0; i < hashByteArray.Length; i++)
+			for (int i = 0; i < hashByteArray.Length; i++)
 				hash += hashByteArray[i];
 			return hash;
 		}

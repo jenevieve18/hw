@@ -18,6 +18,17 @@ namespace HW.Core.Models
 		HWList GetDoubleValues();
 	}
 	
+	public interface IValue
+	{
+//		int ValueInt { get; set; }
+		decimal ValueDecimal { get; set; }
+		string ValueText { get; set; }
+		
+//		float ValueFloat { get; set; }
+//		
+		double ValueDouble { get; set; }
+	}
+	
 	public class Answer : BaseModel, IMinMax, IAnswer
 	{
 		float min = 0;
@@ -39,11 +50,6 @@ namespace HW.Core.Models
 		public DateTime EndDate { get; set; }
 		public IList<IValue> Values { get; set; }
 		public int CurrentPage { get; set; }
-		
-		public void AddValue(IValue value)
-		{
-			Values.Add(value);
-		}
 		
 		public float Average { get; set; }
 		public int DummyValue1 { get; set; } // TODO: This is used by dbo.cf_yearWeek and related methods
@@ -67,6 +73,11 @@ namespace HW.Core.Models
 		public int CountV { get; set; }
 		public float StandardDeviation { get; set; }
 		
+		public void AddValue(IValue value)
+		{
+			Values.Add(value);
+		}
+		
 //		public HWList GetIntValues()
 //		{
 //			List<double> n = new List<double>();
@@ -75,7 +86,7 @@ namespace HW.Core.Models
 //			}
 //			return new HWList(n);
 //		}
-		
+//		
 		public HWList GetDoubleValues()
 		{
 			List<double> n = new List<double>();
@@ -95,16 +106,6 @@ namespace HW.Core.Models
 //		}
 	}
 	
-	public interface IValue
-	{
-//		int ValueInt { get; set; }
-		decimal ValueDecimal { get; set; }
-		string ValueText { get; set; }
-//		float ValueFloat { get; set; }
-		
-		double ValueDouble { get; set; }
-	}
-	
 	public class AnswerValue : BaseModel, IValue
 	{
 		public Answer Answer { get; set; }
@@ -118,7 +119,7 @@ namespace HW.Core.Models
 		public string ValueTextJapaneseUnicode { get; set; }
 		
 //		public float ValueFloat { get; set; }
-		
+//		
 		public double ValueDouble { get; set; }
 	}
 }

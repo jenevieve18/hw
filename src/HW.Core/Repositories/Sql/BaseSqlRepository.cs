@@ -61,16 +61,6 @@ namespace HW.Core.Repositories.Sql
 			throw new NotImplementedException();
 		}
 		
-		SqlConnection CreateConnection(string connectionName)
-		{
-			if (ConfigurationManager.ConnectionStrings[connectionName] != null) {
-				con = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionName].ConnectionString);
-			} else {
-				con = new SqlConnection(ConfigurationManager.AppSettings[connectionName]);
-			}
-			return con;
-		}
-		
 		protected void ExecuteNonQuery(string query, string connectionName, params SqlParameter[] parameters)
 		{
 			con = CreateConnection(connectionName);
@@ -256,6 +246,16 @@ namespace HW.Core.Repositories.Sql
 			if (con != null && con.State == ConnectionState.Closed) {
 				con.Open();
 			}
+		}
+		
+		SqlConnection CreateConnection(string connectionName)
+		{
+			if (ConfigurationManager.ConnectionStrings[connectionName] != null) {
+				con = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionName].ConnectionString);
+			} else {
+				con = new SqlConnection(ConfigurationManager.AppSettings[connectionName]);
+			}
+			return con;
 		}
 	}
 }

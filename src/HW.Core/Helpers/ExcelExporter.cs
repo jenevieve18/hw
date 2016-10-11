@@ -11,6 +11,17 @@ using OfficeOpenXml.Style;
 
 namespace HW.Core.Helpers
 {
+	public interface IExcelWriter
+	{
+		void WriteCell(int row, int col, object value, Color bgColor, ExcelBorderStyle border);
+		
+		void WriteCell(int row, int col, object value, Color fgColor, Color bgColor, int size, ExcelBorderStyle border, bool merge, int mergeCount);
+		
+		void WriteCell(int row, int col, object value, ExcelBorderStyle border);
+		
+		void EndWrite();
+	}
+	
 	public class ExcelStatsExporter : AbstractExporter
 	{
 		bool hasAnswerKey;
@@ -156,17 +167,6 @@ namespace HW.Core.Helpers
 			w.EndWrite();
 			return output;
 		}
-	}
-	
-	public interface IExcelWriter
-	{
-		void WriteCell(int row, int col, object value, Color bgColor, ExcelBorderStyle border);
-		
-		void WriteCell(int row, int col, object value, Color fgColor, Color bgColor, int size, ExcelBorderStyle border, bool merge, int mergeCount);
-		
-		void WriteCell(int row, int col, object value, ExcelBorderStyle border);
-		
-		void EndWrite();
 	}
 	
 	public class AbstractExcel

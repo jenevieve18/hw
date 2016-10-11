@@ -10,10 +10,21 @@ namespace HW.Core.Models
 	
 	public class Project : BaseModel
 	{
+		public Project()
+		{
+			Rounds = new List<ProjectRound>();
+		}
+		
 		public string Internal { get; set; }
 		public string Name { get; set; }
 		public string AppURL { get; set; }
 		public IList<ProjectRound> Rounds { get; set; }
+		
+		public void AddRound(ProjectRound pr)
+		{
+			pr.Project = this;
+			Rounds.Add(pr);
+		}
 	}
 	
 	public class ProjectRound : BaseModel

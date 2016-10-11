@@ -15,6 +15,10 @@ namespace HW.Core.Libraries
 	{
 		static SqlConnection instance;
 		
+		ConnectionSingleton()
+		{
+		}
+		
 		public static SqlConnection Instance {
 			get {
 				if (instance == null) {
@@ -22,10 +26,6 @@ namespace HW.Core.Libraries
 				}
 				return instance;
 			}
-		}
-		
-		ConnectionSingleton()
-		{
 		}
 		
 		public static void SetConnectionString(string connectionString)

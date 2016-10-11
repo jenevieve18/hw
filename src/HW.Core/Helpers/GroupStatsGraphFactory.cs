@@ -42,23 +42,6 @@ namespace HW.Core.Helpers
 			this.departmentRepo = departmentRepo;
 		}
 		
-		IGraphType GetGraphType(int plot, int t)
-		{
-			if (plot == PlotType.BoxPlotMinMax) {
-				return new BoxPlotMinMaxGraphType();
-			} else if (plot == PlotType.BoxPlot) {
-				return new BoxPlotGraphType();
-			} else if (plot == PlotType.LineSDWithCI) {
-				return new LineGraphType(2, t);
-			} else if (plot == PlotType.LineSD) {
-				return new LineGraphType(1, t);
-			} else if (plot == PlotType.Bar) {
-				return new BarGraphType();
-			} else {
-				return new LineGraphType(0, t);
-			}
-		}
-		
 		#region
 //		ExtendedGraph GetGraphForReportPartTypeOne(ReportPart p, int langID, string sortString, int yearFrom, int yearTo, int monthFrom, int monthTo)
 //		{
@@ -404,7 +387,7 @@ namespace HW.Core.Helpers
 			return g;
 		}
 		
-		void GetGraphForReportPartTypeThreeForExcelWriter(ReportPart reportPart, ProjectRoundUnit projectRoundUnit, int langID, DateTime dateFrom, DateTime dateTo)
+		public void GetGraphForReportPartTypeThreeForExcelWriter(ReportPart reportPart, ProjectRoundUnit projectRoundUnit, int langID, DateTime dateFrom, DateTime dateTo)
 		{
 			foreach (ReportPartComponent c in reportRepo.FindComponents(reportPart.Id)) {
 				SortedList all = new SortedList();
@@ -561,7 +544,7 @@ namespace HW.Core.Helpers
 			return g;
 		}
 		
-		void GetIndexReportPartGraphForExcelWriter(ReportPart reportPart, int langID, bool hasGrouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ProjectRoundUnit projectRoundUnit, int grouping, int groupBy, int plot, DateTime dateFrom, DateTime dateTo, ref List<IDepartment> departmentsWithQuery, ref Dictionary<string, List<IAnswer>> weeks)
+		public void GetIndexReportPartGraphForExcelWriter(ReportPart reportPart, int langID, bool hasGrouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ProjectRoundUnit projectRoundUnit, int grouping, int groupBy, int plot, DateTime dateFrom, DateTime dateTo, ref List<IDepartment> departmentsWithQuery, ref Dictionary<string, List<IAnswer>> weeks)
 		{
 			int cx = reportPart.Components.Capacity;
 			
@@ -589,7 +572,7 @@ namespace HW.Core.Helpers
 				var c = reportPart.FirstComponent;
 				if (c.HasIndex) {
 					int bx = 0;
-					foreach(var i in departmentsWithQuery) {
+					foreach (var i in departmentsWithQuery) {
 						cx = 1;
 						int lastDT = minDT - 1;
 						var indexes = indexRepo.FindByLanguage3(i.Query, groupByQuery, c.Index.Id, langID, dateFrom.Year, dateTo.Year, projectRoundUnit.SortString, dateFrom.Month, dateTo.Month);
@@ -634,26 +617,6 @@ namespace HW.Core.Helpers
 					bx++;
 				}
 			}
-		}
-		
-		IList<Department> GetSponsorAdminSponsorDepartments(int grouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, SqlDepartmentRepository departmentRepo)
-		{
-			IList<Department> departments = new List<Department>();
-			switch (grouping) {
-				case Grouping.None:
-					departments = sponsorAdmin != null ? departmentRepo.FindBySponsorWithSponsorAdmin(sponsor.Id, sponsorAdmin.Id, sponsor.MinUserCountToDisclose) : departmentRepo.FindBySponsorOrderedBySortString(sponsor.Id, sponsor.MinUserCountToDisclose);
-					break;
-				case Grouping.UsersOnUnit:
-					departments = sponsorAdmin != null ? departmentRepo.FindBySponsorWithSponsorAdminIn(sponsor.Id, sponsorAdmin.Id, departmentIDs, sponsor.MinUserCountToDisclose) : departmentRepo.FindBySponsorOrderedBySortStringIn(sponsor.Id, departmentIDs, sponsor.MinUserCountToDisclose);
-					break;
-				case Grouping.UsersOnUnitAndSubUnits:
-					departments = sponsorAdmin != null ? departmentRepo.FindBySponsorWithSponsorAdminIn(sponsor.Id, sponsorAdmin.Id, departmentIDs, sponsor.MinUserCountToDisclose) : departmentRepo.FindBySponsorOrderedBySortStringIn(sponsor.Id, departmentIDs, sponsor.MinUserCountToDisclose);
-					break;
-				case Grouping.BackgroundVariable:
-					departments = sponsorAdmin != null ? departmentRepo.FindBySponsorWithSponsorAdmin(sponsor.Id, sponsorAdmin.Id, sponsor.MinUserCountToDisclose) : departmentRepo.FindBySponsorOrderedBySortString(sponsor.Id, sponsor.MinUserCountToDisclose);
-					break;
-			}
-			return departments;
 		}
 		
 		public ExtendedGraph GetWeightedQuestionOptionReportPartGraph(ReportPart reportPart, int langID, int point, bool hasGrouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ProjectRoundUnit projectRoundUnit, int grouping, int groupBy, int plot, DateTime dateFrom, DateTime dateTo)
@@ -725,7 +688,7 @@ namespace HW.Core.Helpers
 				ReportPartComponent c = reportRepo.ReadComponentByPartAndLanguage(reportPart.Id, langID);
 				if (c != null) {
 					int bx = 0;
-					foreach(var i in departmentsWithQuery) {
+					foreach (var i in departmentsWithQuery) {
 						cx = 1;
 						int lastDT = minDT - 1;
 						var answers = answerRepo.FindByQuestionAndOptionJoinedAndGrouped2(i.Query, groupByQuery, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, dateFrom.Year, dateTo.Year, dateFrom.Month, dateTo.Month);
@@ -799,7 +762,7 @@ namespace HW.Core.Helpers
 			return g;
 		}
 		
-		void GetWeightedQuestionOptionReportPartGraphForExcelWriter(ReportPart reportPart, int langID, bool hasGrouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ProjectRoundUnit projectRoundUnit, int grouping, int groupBy, int plot, DateTime dateFrom, DateTime dateTo, ref List<IDepartment> departmentsWithQuery, ref Dictionary<string, List<IAnswer>> weeks)
+		public void GetWeightedQuestionOptionReportPartGraphForExcelWriter(ReportPart reportPart, int langID, bool hasGrouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ProjectRoundUnit projectRoundUnit, int grouping, int groupBy, int plot, DateTime dateFrom, DateTime dateTo, ref List<IDepartment> departmentsWithQuery, ref Dictionary<string, List<IAnswer>> weeks)
 		{
 			int cx = reportPart.Components.Capacity;
 			if (groupBy == 0) {
@@ -929,6 +892,43 @@ namespace HW.Core.Helpers
 			plotter.ForMerge += delegate(object sender, MergeEventArgs e) { OnForMerge(e); };
 			plotter.CellWrite += delegate(object sender, ExcelCellEventArgs e) { OnCellWrite(e); };
 			plotter.ToExcel(departments, weeks, writer, ref index);
+		}
+		
+		IGraphType GetGraphType(int plot, int t)
+		{
+			if (plot == PlotType.BoxPlotMinMax) {
+				return new BoxPlotMinMaxGraphType();
+			} else if (plot == PlotType.BoxPlot) {
+				return new BoxPlotGraphType();
+			} else if (plot == PlotType.LineSDWithCI) {
+				return new LineGraphType(2, t);
+			} else if (plot == PlotType.LineSD) {
+				return new LineGraphType(1, t);
+			} else if (plot == PlotType.Bar) {
+				return new BarGraphType();
+			} else {
+				return new LineGraphType(0, t);
+			}
+		}
+		
+		IList<Department> GetSponsorAdminSponsorDepartments(int grouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, SqlDepartmentRepository departmentRepo)
+		{
+			IList<Department> departments = new List<Department>();
+			switch (grouping) {
+				case Grouping.None:
+					departments = sponsorAdmin != null ? departmentRepo.FindBySponsorWithSponsorAdmin(sponsor.Id, sponsorAdmin.Id, sponsor.MinUserCountToDisclose) : departmentRepo.FindBySponsorOrderedBySortString(sponsor.Id, sponsor.MinUserCountToDisclose);
+					break;
+				case Grouping.UsersOnUnit:
+					departments = sponsorAdmin != null ? departmentRepo.FindBySponsorWithSponsorAdminIn(sponsor.Id, sponsorAdmin.Id, departmentIDs, sponsor.MinUserCountToDisclose) : departmentRepo.FindBySponsorOrderedBySortStringIn(sponsor.Id, departmentIDs, sponsor.MinUserCountToDisclose);
+					break;
+				case Grouping.UsersOnUnitAndSubUnits:
+					departments = sponsorAdmin != null ? departmentRepo.FindBySponsorWithSponsorAdminIn(sponsor.Id, sponsorAdmin.Id, departmentIDs, sponsor.MinUserCountToDisclose) : departmentRepo.FindBySponsorOrderedBySortStringIn(sponsor.Id, departmentIDs, sponsor.MinUserCountToDisclose);
+					break;
+				case Grouping.BackgroundVariable:
+					departments = sponsorAdmin != null ? departmentRepo.FindBySponsorWithSponsorAdmin(sponsor.Id, sponsorAdmin.Id, sponsor.MinUserCountToDisclose) : departmentRepo.FindBySponsorOrderedBySortString(sponsor.Id, sponsor.MinUserCountToDisclose);
+					break;
+			}
+			return departments;
 		}
 		
 		Dictionary<string, List<IAnswer>> GetWeeks(int minDT, int maxDT, int groupBy)

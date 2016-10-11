@@ -5,6 +5,11 @@ namespace HW.Core.Models
 {
 	public class Exercise : BaseModel
 	{
+		public Exercise()
+		{
+			Languages = new List<ExerciseLanguage>();
+		}
+		
         public string Script { get; set; }
         public int Status { get; set; }
 		public virtual string Image { get; set; }
@@ -17,6 +22,7 @@ namespace HW.Core.Models
 		public virtual IList<ExerciseLanguage> Languages { get; set; }
 		public virtual IList<ExerciseVariant> Variants { get; set; }
 		public virtual bool PrintOnBottom { get; set; }
+		
 		public virtual string AreaCategoryName {
 			get {
 				return string.Format("{0}{1}", Area.AreaName, Category.CategoryName != "" ? " - " + Category.CategoryName : "");
@@ -35,11 +41,6 @@ namespace HW.Core.Models
 		public virtual ExerciseLanguage CurrentLanguage { get; set; }
 		public virtual ExerciseVariantLanguage CurrentVariant { get; set; }
 		public virtual ExerciseTypeLanguage CurrentType { get; set; }
-		
-		public Exercise()
-		{
-			Languages = new List<ExerciseLanguage>();
-		}
 		
 		public void AddLanguage(string name, string time, string teaser, int langID)
 		{
@@ -61,26 +62,6 @@ namespace HW.Core.Models
 	
 	public class ExerciseArea : BaseModel
 	{
-		public virtual string Image { get; set; }
-		public virtual int SortOrder { get; set; }
-		public virtual IList<ExerciseAreaLanguage> Languages { get; set; }
-		public virtual ExerciseAreaLanguage SelectedLanguage {
-			get {
-				if (Languages != null && Languages.Count > 0) {
-					return Languages[0];
-				}
-				return null;
-			}
-		}
-		public string AreaName {
-			get {
-				if (SelectedLanguage != null) {
-					return SelectedLanguage.AreaName;
-				}
-				return "";
-			}
-		}
-		
 		public ExerciseArea()
 		{
 		}
@@ -90,14 +71,32 @@ namespace HW.Core.Models
 			this.Id = id;
 			this.Languages = new List<ExerciseAreaLanguage>(languages);
 		}
+		
+		public virtual string Image { get; set; }
+		public virtual int SortOrder { get; set; }
+		public virtual IList<ExerciseAreaLanguage> Languages { get; set; }
+		
+		public virtual ExerciseAreaLanguage SelectedLanguage {
+			get {
+				if (Languages != null && Languages.Count > 0) {
+					return Languages[0];
+				}
+				return null;
+			}
+		}
+		
+		public string AreaName {
+			get {
+				if (SelectedLanguage != null) {
+					return SelectedLanguage.AreaName;
+				}
+				return "";
+			}
+		}
 	}
 	
 	public class ExerciseAreaLanguage : BaseModel
 	{
-		public virtual ExerciseArea Area { get; set; }
-		public virtual Language Language { get; set; }
-		public virtual string AreaName { get; set; }
-		
 		public ExerciseAreaLanguage()
 		{
 		}
@@ -107,6 +106,10 @@ namespace HW.Core.Models
 			this.AreaName = name;
 		}
 		
+		public ExerciseArea Area { get; set; }
+		public Language Language { get; set; }
+		public string AreaName { get; set; }
+		
 		public override string ToString()
 		{
 			return AreaName;
@@ -115,9 +118,15 @@ namespace HW.Core.Models
 	
 	public class ExerciseCategory : BaseModel
 	{
-		public virtual int SortOrder { get; set; }
-		public virtual IList<ExerciseCategoryLanguage> Languages { get; set; }
-		public virtual ExerciseCategoryLanguage SelectedLanguage {
+		public ExerciseCategory(params ExerciseCategoryLanguage[] languages)
+		{
+			this.Languages = new List<ExerciseCategoryLanguage>(languages);
+		}
+		
+		public int SortOrder { get; set; }
+		public IList<ExerciseCategoryLanguage> Languages { get; set; }
+		
+		public ExerciseCategoryLanguage SelectedLanguage {
 			get {
 				if (Languages != null && Languages.Count > 0) {
 					return Languages[0];
@@ -125,6 +134,7 @@ namespace HW.Core.Models
 				return null;
 			}
 		}
+		
 		public virtual string CategoryName {
 			get {
 				if (SelectedLanguage != null) {
@@ -133,19 +143,10 @@ namespace HW.Core.Models
 				return "";
 			}
 		}
-		
-		public ExerciseCategory(params ExerciseCategoryLanguage[] languages)
-		{
-			this.Languages = new List<ExerciseCategoryLanguage>(languages);
-		}
 	}
 	
 	public class ExerciseCategoryLanguage : BaseModel
 	{
-		public virtual Language Language { get; set; }
-		public virtual ExerciseCategory Category { get; set; }
-		public virtual string CategoryName { get; set; }
-		
 		public ExerciseCategoryLanguage()
 		{
 		}
@@ -155,6 +156,10 @@ namespace HW.Core.Models
 			this.CategoryName = name;
 		}
 		
+		public Language Language { get; set; }
+		public ExerciseCategory Category { get; set; }
+		public string CategoryName { get; set; }
+		
 		public override string ToString()
 		{
 			return CategoryName;
@@ -163,38 +168,39 @@ namespace HW.Core.Models
 	
 	public class ExerciseLanguage : BaseModel
 	{
-		public virtual Exercise Exercise { get; set; }
-		public virtual string ExerciseName { get; set; }
-		public virtual string Time { get; set; }
-		public virtual string Teaser { get; set; }
-		public virtual string Content { get; set; }
-		public virtual Language Language { get; set; }
-		public virtual bool IsNew { get; set; }
+		public Exercise Exercise { get; set; }
+		public string ExerciseName { get; set; }
+		public string Time { get; set; }
+		public string Teaser { get; set; }
+		public string Content { get; set; }
+		public Language Language { get; set; }
+		public bool IsNew { get; set; }
 	}
 	
 	public class ExerciseMiracle : BaseModel
 	{
-		public virtual User User { get; set; }
-		public virtual DateTime Time { get; set; }
-		public virtual DateTime TimeChanged { get; set; }
-		public virtual string MiracleDescription { get; set; }
-		public virtual bool AllowPublished { get; set; }
-		public virtual bool Published { get; set; }
+		public User User { get; set; }
+		public DateTime Time { get; set; }
+		public DateTime TimeChanged { get; set; }
+		public string MiracleDescription { get; set; }
+		public bool AllowPublished { get; set; }
+		public bool Published { get; set; }
 	}
 	
 	public class ExerciseStats : BaseModel
 	{
-		public virtual User User { get; set; }
-		public virtual ExerciseVariantLanguage VariantLanguage { get; set; }
-		public virtual DateTime Date { get; set; }
-		public virtual UserProfile UserProfile { get; set; }
+		public User User { get; set; }
+		public ExerciseVariantLanguage VariantLanguage { get; set; }
+		public DateTime Date { get; set; }
+		public UserProfile UserProfile { get; set; }
 	}
 	
 	public class ExerciseType : BaseModel
 	{
-		public virtual int SortOrder { get; set; }
-		public virtual IList<ExerciseTypeLanguage> Languages { get; set; }
-		public virtual ExerciseTypeLanguage SelectedLanguage {
+		public int SortOrder { get; set; }
+		public IList<ExerciseTypeLanguage> Languages { get; set; }
+		
+		public ExerciseTypeLanguage SelectedLanguage {
 			get {
 				if (Languages != null && Languages.Count > 0) {
 					return Languages[0];
@@ -203,17 +209,17 @@ namespace HW.Core.Models
 			}
 		}
 		
+		public bool HasContent()
+		{
+			return Id == Text || Id == Pdf;
+		}
+		
 		public const int Text = 1;
 		public const int Animation = 2;
 		public const int AnimationMute = 3;
 		public const int AnimationNonStop = 4;
 		public const int Pdf = 5;
 		public const int Sortable = 6;
-		
-		public bool HasContent()
-		{
-			return Id == Text || Id == Pdf;
-		}
 		
 		public bool IsText()
 		{

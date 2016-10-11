@@ -7,76 +7,85 @@ using HW.Core.Models;
 namespace HW.Core.Repositories.Sql
 {
 	public class SqlPlotTypeRepository : BaseSqlRepository<PlotType>, IPlotTypeRepository
-    {
-        public int Save(PlotType p)
-        {
-            string query = string.Format(
-                @"
+	{
+		public int Save(PlotType p)
+		{
+			string query = string.Format(
+				@"
 INSERT INTO PlotType(Name, Description)
 VALUES(@Name, @Description)"
-                );
-            ExecuteNonQuery(query, "eFormSqlConnection",
-                new SqlParameter("@Name", p.Name),
-                new SqlParameter("@Description", p.Description)
-            );
-            query = string.Format(
-                @"
+			);
+			ExecuteNonQuery(
+				query,
+				"eFormSqlConnection",
+				new SqlParameter("@Name", p.Name),
+				new SqlParameter("@Description", p.Description)
+			);
+			
+			query = string.Format(
+				@"
 SELECT TOP 1 Id FROM PlotType ORDER BY Id DESC"
-            );
-            return (int)ExecuteScalar(query, "eFormSqlConnection");
-        }
+			);
+			return (int)ExecuteScalar(query, "eFormSqlConnection");
+		}
 
-        public override void Update(PlotType p, int plotTypeId)
-        {
-            string query = string.Format(
-                @"
+		public override void Update(PlotType p, int plotTypeId)
+		{
+			string query = string.Format(
+				@"
 UPDATE PlotType SET Name = @Name, Description = @Description
 WHERE PlotTypeID = @Id"
-                );
-            ExecuteNonQuery(query, "eFormSqlConnection",
-                new SqlParameter("@Name", p.Name),
-                new SqlParameter("@Description", p.Description),
-                new SqlParameter("@Id", plotTypeId)
-            );
-        }
+			);
+			ExecuteNonQuery(
+				query,
+				"eFormSqlConnection",
+				new SqlParameter("@Name", p.Name),
+				new SqlParameter("@Description", p.Description),
+				new SqlParameter("@Id", plotTypeId)
+			);
+		}
 
-        public void SaveLanguage(PlotTypeLanguage p)
-        {
-            string query = string.Format(
-                @"
+		public void SaveLanguage(PlotTypeLanguage p)
+		{
+			string query = string.Format(
+				@"
 INSERT INTO PlotTypeLang(Name, Description, PlotTypeID, LangID, ShortName)
 VALUES(@Name, @Description, @PlotTypeID, @LangID, @ShortName)"
-            );
-            ExecuteNonQuery(query, "eFormSqlConnection",
-                new SqlParameter("@Name", p.Name),
-                new SqlParameter("@Description", p.Description),
-                new SqlParameter("@PlotTypeID", p.PlotType.Id),
-                new SqlParameter("@LangID", p.Language.Id),
-                new SqlParameter("@ShortName", p.ShortName)
-            );
-        }
+			);
+			ExecuteNonQuery(
+				query,
+				"eFormSqlConnection",
+				new SqlParameter("@Name", p.Name),
+				new SqlParameter("@Description", p.Description),
+				new SqlParameter("@PlotTypeID", p.PlotType.Id),
+				new SqlParameter("@LangID", p.Language.Id),
+				new SqlParameter("@ShortName", p.ShortName)
+			);
+		}
 
-        public void UpdateLanguage(PlotTypeLanguage p, int plotTypeLangId)
-        {
-            string query = string.Format(
-                @"
+		public void UpdateLanguage(PlotTypeLanguage p, int plotTypeLangId)
+		{
+			string query = string.Format(
+				@"
 UPDATE PlotTypeLang SET Name = @Name,
 Description = @Description,
 ShortName = @ShortName
 WHERE PlotTypeLangId = @PlotTypeLangId"
-            );
-            ExecuteNonQuery(query, "eFormSqlConnection",
-                new SqlParameter("@Name", p.Name),
-                new SqlParameter("@ShortName", p.ShortName),
-                new SqlParameter("@Description", p.Description),
-                new SqlParameter("@PlotTypeLangId", plotTypeLangId)
-            );
-        }
+			);
+			ExecuteNonQuery(
+				query,
+				"eFormSqlConnection",
+				new SqlParameter("@Name", p.Name),
+				new SqlParameter("@ShortName", p.ShortName),
+				new SqlParameter("@Description", p.Description),
+				new SqlParameter("@PlotTypeLangId", plotTypeLangId)
+			);
+		}
 
-        public List<PlotTypeLanguage> GetLanguagesWithPlotType(int plotTypeID)
-        {
-            string query = string.Format(
-                @"
+		public List<PlotTypeLanguage> GetLanguagesWithPlotType(int plotTypeID)
+		{
+			string query = string.Format(
+				@"
 SELECT
   l.LangID,
   ptl.PlotTypeLangID
@@ -84,23 +93,20 @@ FROM healthWatch..Lang l
 LEFT OUTER JOIN PlotTypeLang ptl
   ON l.LangID = (ptl.LangID - 1)
   AND ptl.PlotTypeID = @PlotTypeID"
-            );
-            var p = new List<PlotTypeLanguage>();
-            using (SqlDataReader rs = ExecuteReader(query, "eFormSqlConnection", new SqlParameter("@PlotTypeID", plotTypeID)))
-            {
-                while (rs.Read())
-                {
-                    var t = new PlotTypeLanguage()
-                    {
-                        Language = new Language { Id = GetInt32(rs, 0) },
-                        Id = GetInt32(rs, 1)
-                    };
-                    p.Add(t);
-                }
-            }
-            CloseConnection();
-            return p;
-        }
+			);
+			var p = new List<PlotTypeLanguage>();
+			using (SqlDataReader rs = ExecuteReader(query, "eFormSqlConnection", new SqlParameter("@PlotTypeID", plotTypeID))) {
+				while (rs.Read()) {
+					var t = new PlotTypeLanguage() {
+						Language = new Language { Id = GetInt32(rs, 0) },
+						Id = GetInt32(rs, 1)
+					};
+					p.Add(t);
+				}
+			}
+			CloseConnection();
+			return p;
+		}
 
 		public override IList<PlotType> FindAll()
 		{
@@ -124,10 +130,10 @@ FROM PlotType"
 			return types;
 		}
 
-        public List<PlotTypeLanguage> FindAllLanguages(int plotTypeId)
-        {
-            string query = string.Format(
-                @"
+		public List<PlotTypeLanguage> FindAllLanguages(int plotTypeId)
+		{
+			string query = string.Format(
+				@"
 SELECT PlotTypeLangID,
     PlotTypeID,
     LangID,
@@ -137,28 +143,28 @@ SELECT PlotTypeLangID,
     SupportsMultipleSeries
 FROM PlotTypeLang
 WHERE PlotTypeID = @PlotTypeId"
-            );
-            var l = new List<PlotTypeLanguage>();
-            using (SqlDataReader rs = ExecuteReader(query, "eFormSqlConnection", new SqlParameter("@PlotTypeId", plotTypeId)))
-            {
-                while (rs.Read())
-                {
-                    var p = new PlotTypeLanguage()
-                    {
-                        Id = GetInt32(rs, 0),
-                        PlotType = new PlotType { Id = GetInt32(rs, 1) }, 
-                        Language = new Language { Id = GetInt32(rs, 2) },
-                        Name = GetString(rs, 3),
-                        Description = GetString(rs, 4),
-                        ShortName = GetString(rs, 5),
-                        SupportsMultipleSeries = GetInt32(rs, 6) == 1
-                    };
-                    l.Add(p);
-                }
-            }
-            CloseConnection();
-            return l;
-        }
+			);
+			var l = new List<PlotTypeLanguage>();
+			using (SqlDataReader rs = ExecuteReader(query, "eFormSqlConnection", new SqlParameter("@PlotTypeId", plotTypeId)))
+			{
+				while (rs.Read())
+				{
+					var p = new PlotTypeLanguage()
+					{
+						Id = GetInt32(rs, 0),
+						PlotType = new PlotType { Id = GetInt32(rs, 1) },
+						Language = new Language { Id = GetInt32(rs, 2) },
+						Name = GetString(rs, 3),
+						Description = GetString(rs, 4),
+						ShortName = GetString(rs, 5),
+						SupportsMultipleSeries = GetInt32(rs, 6) == 1
+					};
+					l.Add(p);
+				}
+			}
+			CloseConnection();
+			return l;
+		}
 		
 		public override PlotType Read(int id)
 		{
@@ -186,9 +192,9 @@ WHERE PlotTypeID = @Id"
 		{
 			string query = string.Format(
 				@"
-SELECT PlotTypeID, 
-	Name, 
-	Description, 
+SELECT PlotTypeID,
+	Name,
+	Description,
 	ShortName,
 	SupportsMultipleSeries
 FROM PlotTypeLang

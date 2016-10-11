@@ -13,11 +13,29 @@ namespace HW.Core.Models
 	
 	public class ManagerFunction : BaseModel
 	{
+		public ManagerFunction()
+		{
+		}
+		
+		public ManagerFunction(IList<ManagerFunctionLang> languages)
+		{
+			Languages = languages;
+		}
+		
 		public string URL { get; set; }
+
 		public IList<ManagerFunctionLang> Languages { get; set; }
+		
 		public ManagerFunctionLang SelectedLanguage {
 			get { return Languages[0]; }
 		}
+        
+        public bool HasLanguages
+        {
+            get {
+                return Languages != null && Languages.Count > 0;
+            }
+        }
 		
 		public const int Organization = 1;
 		public const int Statistics = 2;
@@ -27,15 +45,6 @@ namespace HW.Core.Models
 		public const int Exercises = 7;
 		public const int Reminders = 8;
 		public const int MyExercises = 9;
-		
-		public ManagerFunction()
-		{
-		}
-		
-		public ManagerFunction(IList<ManagerFunctionLang> languages)
-		{
-			Languages = languages;
-		}
 		
         public ManagerFunctionLang FindLanguage(int langID)
         {
@@ -47,14 +56,6 @@ namespace HW.Core.Models
                 }
             }
             return null;
-        }
-        
-        public bool HasLanguages
-        {
-            get
-            {
-                return Languages != null && Languages.Count > 0;
-            }
         }
 	}
 	

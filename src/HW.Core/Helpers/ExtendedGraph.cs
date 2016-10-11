@@ -8,6 +8,34 @@ using HW.Core.Repositories;
 
 namespace HW.Core.Helpers
 {
+	public interface ICircle
+	{
+		int Color { get; set; }
+		float Value { get; set; }
+		int CX { get; set; }
+	}
+	
+	public interface ILine
+	{
+		int Color { get; set; }
+		int X1 { get; set; }
+		float Y1 { get; set; }
+		int X2 { get; set; }
+		float Y2 { get; set; }
+		int T { get; set; }
+	}
+	
+	public interface IExplanation
+	{
+		int Color { get; set; }
+		string Description { get; set; }
+		bool Right { get; set; }
+		bool Box { get; set; }
+		bool HasAxis { get; set; }
+		int X { get; set; }
+		int Y { get; set; }
+	}
+	
 	public class ExtendedGraph : Graph
 	{
 		IGraphType type;
@@ -611,28 +639,11 @@ namespace HW.Core.Helpers
 		}
 	}
 	
-	public interface ICircle
-	{
-		int Color { get; set; }
-		float Value { get; set; }
-		int CX { get; set; }
-	}
-	
 	public class Circle : ICircle
 	{
 		public int Color { get; set; }
 		public float Value { get; set; }
 		public int CX { get; set; }
-	}
-	
-	public interface ILine
-	{
-		int Color { get; set; }
-		int X1 { get; set; }
-		float Y1 { get; set; }
-		int X2 { get; set; }
-		float Y2 { get; set; }
-		int T { get; set; }
 	}
 	
 	public class Line : ILine
@@ -654,17 +665,6 @@ namespace HW.Core.Helpers
 		public int X2 { get; set; }
 		public float Y2 { get; set; }
 		public int T { get; set; } // TODO: This should be stroke thickness
-	}
-	
-	public interface IExplanation
-	{
-		int Color { get; set; }
-		string Description { get; set; }
-		bool Right { get; set; }
-		bool Box { get; set; }
-		bool HasAxis { get; set; }
-		int X { get; set; }
-		int Y { get; set; }
 	}
 	
 	public class Explanation : IExplanation

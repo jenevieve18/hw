@@ -66,7 +66,8 @@ VALUES ({0}, '{1}', {2})",
 				@"
 INSERT INTO SponsorAdminDepartment (SponsorAdminID, DepartmentID)
 VALUES ({0}, {1})",
-				d.Id, d.Department.Id
+				d.Id,
+				d.Department.Id
 			);
 			Db.exec(query, "healthWatchSqlConnection");
 		}
