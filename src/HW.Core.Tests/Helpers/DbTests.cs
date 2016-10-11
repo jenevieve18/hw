@@ -1,11 +1,8 @@
-﻿/*
- * Created by SharpDevelop.
- * User: Ian
- * Date: 7/13/2016
- * Time: 6:53 PM
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
+﻿// <file>
+//  <license></license>
+//  <owner name="Ian Escarro" email="ian.escarro@gmail.com"/>
+// </file>
+
 using System;
 using HW.Core.Helpers;
 using NUnit.Framework;
@@ -30,7 +27,7 @@ namespace HW.Core.Tests.Helpers
 		[Test]
 		public void TestHasMD5()
 		{
-			Console.WriteLine(Db.HashMd5("password"));
+			Console.WriteLine(Db.HashMd5("support1"));
 		}
 	}
 }

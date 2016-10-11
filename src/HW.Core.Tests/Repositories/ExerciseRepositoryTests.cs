@@ -1,4 +1,9 @@
-﻿using System;
+﻿// <file>
+//  <license></license>
+//  <owner name="Ian Escarro" email="ian.escarro@gmail.com"/>
+// </file>
+
+using System;
 using System.IO;
 using System.Text;
 using HW.Core;

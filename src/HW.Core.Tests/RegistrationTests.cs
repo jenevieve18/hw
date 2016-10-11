@@ -21,10 +21,10 @@ namespace HW.Core.Tests
 			var session = new Dictionary<string, object>();
 			session["UserID"] = null;
 			//lalala(session, "D322060F10971");
-			lalala(session, "84A0D0B510981");
+			Register(session, "84A0D0B510981");
 		}
 		
-		void lalala(Dictionary<string, object> session, string invite)
+		void Register(Dictionary<string, object> session, string invite)
 		{
 			if (Convert.ToInt32(session["UserID"]) != 0) {
 				Db.exec("UPDATE [Session] SET EndDT = GETDATE() WHERE EndDT IS NULL AND SessionID = " + Convert.ToInt32(session["SessionID"]));

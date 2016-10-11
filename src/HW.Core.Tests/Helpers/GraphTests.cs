@@ -1,11 +1,8 @@
-﻿/*
- * Created by SharpDevelop.
- * User: Ian
- * Date: 7/13/2016
- * Time: 7:09 PM
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
+﻿// <file>
+//  <license></license>
+//  <owner name="Ian Escarro" email="ian.escarro@gmail.com"/>
+// </file>
+
 using System;
 using System.Drawing;
 using System.Windows.Forms;
