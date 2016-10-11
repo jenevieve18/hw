@@ -470,7 +470,7 @@ namespace HW.Core.Helpers
 				var c = reportPart.FirstComponent;
 				if (c.HasIndex) {
 					int bx = 0;
-					foreach(var i in departmentsWithQuery) {
+					foreach (var i in departmentsWithQuery) {
 						cx = 1;
 						int lastDT = minDT - 1;
 						var indexes = indexRepo.FindByLanguage3(i.Query, groupByQuery, c.Index.Id, langID, dateFrom.Year, dateTo.Year, projectRoundUnit.SortString, dateFrom.Month, dateTo.Month);

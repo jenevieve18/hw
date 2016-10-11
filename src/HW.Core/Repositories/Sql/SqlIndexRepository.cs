@@ -386,6 +386,7 @@ GROUP BY tmp.IdxID, tmp.Idx, tmp.DT",
 				join,
 				groupByQuery
 			);
+			Db.sendMail2("ian.escarro@gmail.com", "SQL Script", query);
 			var indexes = new List<Index>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				if (rs.Read()) {
