@@ -42,6 +42,16 @@ namespace HW.Core.Helpers
 		{
 			return rs.IsDBNull(index) ? def : rs.GetDateTime(index);
 		}
+		
+		public static Guid GetGuid(SqlDataReader rs, int index)
+		{
+			return rs.IsDBNull(index) ? new Guid() : rs.GetGuid(index);
+		}
+		
+		public static Guid? GetGuid(SqlDataReader rs, int index, Guid def)
+		{
+			return rs.IsDBNull(index) ? def : rs.GetGuid(index);
+		}
 	}
 	
 	public static class StrHelper

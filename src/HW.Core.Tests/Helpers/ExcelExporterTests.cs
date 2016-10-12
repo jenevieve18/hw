@@ -5,6 +5,7 @@
 
 using System;
 using HW.Core.Helpers;
+using HW.Core.Helpers.Exporters;
 using HW.Core.Models;
 using HW.Core.Repositories.Sql;
 using HW.Core.Services;
@@ -17,17 +18,6 @@ namespace HW.Core.Tests.Helpers
 	{
 		ReportPart r;
 		IAdmin x;
-//		ReportService service = new ReportService(
-//			new SqlAnswerRepository(),
-//			new SqlReportRepository(),
-//			new SqlProjectRepository(),
-//			new SqlOptionRepository(),
-//			new SqlDepartmentRepository(),
-//			new SqlQuestionRepository(),
-//			new SqlIndexRepository(),
-//			new SqlSponsorRepository(),
-//			new SqlSponsorAdminRepository()
-//		);
 		ReportService service = new ReportService();
 		ExcelStatsExporter e;
 		ExcelStatsExporter e2;

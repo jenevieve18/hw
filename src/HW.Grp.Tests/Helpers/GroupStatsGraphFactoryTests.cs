@@ -65,7 +65,6 @@ namespace HW.Grp.Tests.Helpers
 		public void TestGetIndexReportPartGraph()
 		{
 			var sponsorService = new SponsorService();
-//			var reportService = new ReportService3();
 			var reportService = new ReportService();
 			var projectService = new ProjectService();
 			
@@ -105,7 +104,6 @@ namespace HW.Grp.Tests.Helpers
 		public void TestGetQuestionReportPartGraph()
 		{
 			var sponsorService = new SponsorService();
-//			var reportService = new ReportService3();
 			var reportService = new ReportService();
 			var projectService = new ProjectService();
 			

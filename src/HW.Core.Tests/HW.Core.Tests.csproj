@@ -101,6 +101,7 @@
     <Compile Include="Repositories\SponsorRepositoryTests.cs" />
     <Compile Include="Repositories\UserRepositoryTests.cs" />
     <Compile Include="RegistrationTests.cs" />
+    <Compile Include="Services\ReportServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -111,7 +112,9 @@
       <Name>HW.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Services" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Repositories\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

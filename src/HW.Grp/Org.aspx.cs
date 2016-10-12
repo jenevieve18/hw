@@ -1178,7 +1178,8 @@ SELECT ses.SponsorExtendedSurveyID,
 	ses.WarnIfMissingQID,
 	ses.ExtraEmailSubject,
 	ses.Answers,
-	ses.Total
+	ses.Total,
+	LEFT(REPLACE(CONVERT(VARCHAR(255), pr.RoundKey), '-', ''), 8)
 FROM SponsorExtendedSurvey ses
 LEFT OUTER JOIN SponsorExtendedSurvey ses2 ON ses.SponsorID = ses2.SponsorID AND ses.PreviousProjectRoundID = ses2.ProjectRoundID
 LEFT OUTER JOIN eform..ProjectRound pr ON ses.ProjectRoundID = pr.ProjectRoundID
@@ -1197,7 +1198,9 @@ ORDER BY ses.SponsorExtendedSurveyID",
 							ProjectRound = new ProjectRound {
 								Id = DbHelper.GetInt32(rs, 2),
 								Started = DbHelper.GetDateTime(rs, 8, DateTime.MaxValue),
-								Closed = DbHelper.GetDateTime(rs, 9, DateTime.MaxValue)
+								Closed = DbHelper.GetDateTime(rs, 9, DateTime.MaxValue),
+//								RoundKey = DbHelper.GetGuid(rs, 14),
+								RoundKey = DbHelper.GetString(rs, 14),
 							},
 							Feedback = new HW.Core.Models.Feedback {
 								Id = DbHelper.GetInt32(rs, 3)
@@ -1607,7 +1610,7 @@ d.SponsorID = {4} ORDER BY d.SortString",
 							(
 								!rs.IsDBNull(idx + 2) && extendedSurveys[i].Feedback.Id != 0 && rac <= rs.GetInt32(idx)
 								? string.Format(
-									"<a href=\"JavaScript:void(window.open('{0}feedback.aspx?AB=1&R={1}&{2}{3}{4}U={5}&RAC={6}&UD={7}&N={8}','es{9}','scrollbars=1,width=880,height=700,resizable=1,toolbar=0,status=0,menubar=0,location=0'));\"><img src='img/graphIcon2.gif' border='0'/></a>",
+									"<a href=\"JavaScript:void(window.open('{0}feedback.aspx?AB=1&R={1}&RK={10}&{2}{3}{4}U={5}&RAC={6}&UD={7}&N={8}','es{9}','scrollbars=1,width=880,height=700,resizable=1,toolbar=0,status=0,menubar=0,location=0'));\"><img src='img/graphIcon2.gif' border='0'/></a>",
 									ConfigurationManager.AppSettings["eFormURL"],
 									extendedSurveys[i].ProjectRound.Id,
 									S.Str(extendedSurveys[i].PreviousProjectRound.Id != 0, string.Format("RR={0}&", extendedSurveys[i].PreviousProjectRound.Id), ""),
@@ -1617,7 +1620,8 @@ d.SponsorID = {4} ORDER BY d.SortString",
 									rac,
 									Server.HtmlEncode(rs.GetString(0)).Replace("&", "_0_").Replace("#", "_1_"),
 									Server.HtmlEncode(Session["Sponsor"].ToString()).Replace("&", "_0_").Replace("#", "_1_"),
-									i
+									i,
+									extendedSurveys[i].ProjectRound.RoundKey
 								) : ""
 							),
 							(
@@ -1989,14 +1993,15 @@ WHERE up.UserID = {1}",
 						extendedSurveys[i].Feedback.Id != 0 && extendedSurveys[i].RequiredUserCount <= extendedSurveys[i].Answers
 //						extendedSurveys[i].Feedback.Id != 0 && sponsor.MinUserCountToDisclose <= extendedSurveys[i].Answers
 						? string.Format(
-							"<a href=\"JavaScript:void(window.open('{0}feedback.aspx?R={1}&{2}{3}{4}N={5}','es{6}','scrollbars=1,width=880,height=700,resizable=1,toolbar=0,status=0,menubar=0,location=0'));\"><img src='img/graphIcon2.gif' border='0'/></a>",
+							"<a href=\"JavaScript:void(window.open('{0}feedback.aspx?R={1}&RK={7}&{2}{3}{4}N={5}','es{6}','scrollbars=1,width=880,height=700,resizable=1,toolbar=0,status=0,menubar=0,location=0'));\"><img src='img/graphIcon2.gif' border='0'/></a>",
 							ConfigurationManager.AppSettings["eFormURL"],
 							extendedSurveys[i].ProjectRound.Id,
 							S.Str(extendedSurveys[i].PreviousProjectRound.Id != 0, string.Format("RR={0}&", extendedSurveys[i].PreviousProjectRound.Id), ""),
 							S.Str(extendedSurveys[i].PreviousProjectRound.Id != 0, string.Format("R1={0}&", extendedSurveys[i].RoundText), ""),
 							S.Str(extendedSurveys[i].PreviousProjectRound.Id != 0, string.Format("R2={0}&", extendedSurveys[i].RoundText2), ""),
 							Server.HtmlEncode(Session["Sponsor"].ToString()).Replace("&", "_0_").Replace("#", "_1_"),
-							i
+							i,
+							extendedSurveys[i].ProjectRound.RoundKey
 						)
 						: ""
 					),
@@ -2132,6 +2137,7 @@ WHERE usesX.AnswerID IS NOT NULL AND si.SponsorID = {3} AND ISNULL(sib.BAID,upb.
 								OrgTree.Text += "<td align='center'>&nbsp;" +
 									"<a href=\"JavaScript:void(window.open('" + ConfigurationManager.AppSettings["eFormURL"] + "feedback.aspx?" +
 									"R=" + (ESrounds.Split(',')[i]) + "&" +
+									"RK=" + extendedSurveys[i].ProjectRound.RoundKey + "&" +
 									"AIDS=0" + sb.ToString() + "&" +
 									"UD=" + rs2.GetString(1) + "&" +
 									"RAC=" + Convert.ToInt32(ESattr.Split(',')[i].Split(':')[1]) + "&" +

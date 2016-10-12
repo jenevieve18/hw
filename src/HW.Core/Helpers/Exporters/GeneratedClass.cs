@@ -11,11 +11,11 @@ using P14 = DocumentFormat.OpenXml.Office2010.PowerPoint;
 using Ap = DocumentFormat.OpenXml.ExtendedProperties;
 using Vt = DocumentFormat.OpenXml.VariantTypes;
 
-namespace HW.Core.Helpers
+namespace HW.Core.Helpers.Exporters
 {
-	public class PresentationDocumentGeneratedCode
+	public class GeneratedClass
 	{
-		public void CreateParts(PresentationDocument document, IList<ReportPartLang> parts, string url)
+		public void CreateParts(PresentationDocument document, IList<IReportPart> parts)
 		{
 			ThumbnailPart thumbnailPart1 = document.AddNewPart<ThumbnailPart>("image/jpeg", "rId2");
 			GenerateThumbnailPart1Content(thumbnailPart1);
@@ -23,187 +23,166 @@ namespace HW.Core.Helpers
 			PresentationPart presentationPart1 = document.AddPresentationPart();
 			GeneratePresentationPart1Content(presentationPart1, parts);
 
-			TableStylesPart tableStylesPart1 = presentationPart1.AddNewPart<TableStylesPart>("rId8");
-			GenerateTableStylesPart1Content(tableStylesPart1);
-
 			SlidePart slidePart1 = presentationPart1.AddNewPart<SlidePart>("rId3");
 			GenerateSlidePart1Content(slidePart1);
-
+			
 			ImagePart imagePart1 = slidePart1.AddNewPart<ImagePart>("image/png", "rId3");
 			GenerateImagePart1Content(imagePart1);
-
 			ImagePart imagePart2 = slidePart1.AddNewPart<ImagePart>("image/jpeg", "rId2");
 			GenerateImagePart2Content(imagePart2);
-
+			
 			SlideLayoutPart slideLayoutPart1 = slidePart1.AddNewPart<SlideLayoutPart>("rId1");
 			GenerateSlideLayoutPart1Content(slideLayoutPart1);
-
+			
 			SlideMasterPart slideMasterPart1 = slideLayoutPart1.AddNewPart<SlideMasterPart>("rId1");
 			GenerateSlideMasterPart1Content(slideMasterPart1);
 
 			SlideLayoutPart slideLayoutPart2 = slideMasterPart1.AddNewPart<SlideLayoutPart>("rId8");
 			GenerateSlideLayoutPart2Content(slideLayoutPart2);
-
 			slideLayoutPart2.AddPart(slideMasterPart1, "rId1");
 
 			SlideLayoutPart slideLayoutPart3 = slideMasterPart1.AddNewPart<SlideLayoutPart>("rId3");
 			GenerateSlideLayoutPart3Content(slideLayoutPart3);
-
 			slideLayoutPart3.AddPart(slideMasterPart1, "rId1");
 
 			SlideLayoutPart slideLayoutPart4 = slideMasterPart1.AddNewPart<SlideLayoutPart>("rId7");
 			GenerateSlideLayoutPart4Content(slideLayoutPart4);
-
 			slideLayoutPart4.AddPart(slideMasterPart1, "rId1");
-
-			ThemePart themePart1 = slideMasterPart1.AddNewPart<ThemePart>("rId12");
-			GenerateThemePart1Content(themePart1);
 
 			SlideLayoutPart slideLayoutPart5 = slideMasterPart1.AddNewPart<SlideLayoutPart>("rId2");
 			GenerateSlideLayoutPart5Content(slideLayoutPart5);
-
 			slideLayoutPart5.AddPart(slideMasterPart1, "rId1");
 
 			slideMasterPart1.AddPart(slideLayoutPart1, "rId1");
 
 			SlideLayoutPart slideLayoutPart6 = slideMasterPart1.AddNewPart<SlideLayoutPart>("rId6");
 			GenerateSlideLayoutPart6Content(slideLayoutPart6);
-
 			slideLayoutPart6.AddPart(slideMasterPart1, "rId1");
 
 			SlideLayoutPart slideLayoutPart7 = slideMasterPart1.AddNewPart<SlideLayoutPart>("rId11");
 			GenerateSlideLayoutPart7Content(slideLayoutPart7);
-
 			slideLayoutPart7.AddPart(slideMasterPart1, "rId1");
-
-			SlideLayoutPart slideLayoutPart8 = slideMasterPart1.AddNewPart<SlideLayoutPart>("rId5");
-			GenerateSlideLayoutPart8Content(slideLayoutPart8);
-
-			slideLayoutPart8.AddPart(slideMasterPart1, "rId1");
 
 			SlideLayoutPart slideLayoutPart9 = slideMasterPart1.AddNewPart<SlideLayoutPart>("rId10");
 			GenerateSlideLayoutPart9Content(slideLayoutPart9);
-
 			slideLayoutPart9.AddPart(slideMasterPart1, "rId1");
 
 			SlideLayoutPart slideLayoutPart10 = slideMasterPart1.AddNewPart<SlideLayoutPart>("rId4");
 			GenerateSlideLayoutPart10Content(slideLayoutPart10);
-
 			slideLayoutPart10.AddPart(slideMasterPart1, "rId1");
 
 			SlideLayoutPart slideLayoutPart11 = slideMasterPart1.AddNewPart<SlideLayoutPart>("rId9");
 			GenerateSlideLayoutPart11Content(slideLayoutPart11);
-
 			slideLayoutPart11.AddPart(slideMasterPart1, "rId1");
-
-			presentationPart1.AddPart(themePart1, "rId7");
-
+			
 			SlideMasterPart slideMasterPart2 = presentationPart1.AddNewPart<SlideMasterPart>("rId2");
 			GenerateSlideMasterPart2Content(slideMasterPart2);
 
 			SlideLayoutPart slideLayoutPart12 = slideMasterPart2.AddNewPart<SlideLayoutPart>("rId8");
 			GenerateSlideLayoutPart12Content(slideLayoutPart12);
-
 			slideLayoutPart12.AddPart(slideMasterPart2, "rId1");
 
 			SlideLayoutPart slideLayoutPart13 = slideMasterPart2.AddNewPart<SlideLayoutPart>("rId13");
 			GenerateSlideLayoutPart13Content(slideLayoutPart13);
-
 			slideLayoutPart13.AddPart(slideMasterPart2, "rId1");
 
 			SlideLayoutPart slideLayoutPart14 = slideMasterPart2.AddNewPart<SlideLayoutPart>("rId3");
 			GenerateSlideLayoutPart14Content(slideLayoutPart14);
-
 			ImagePart imagePart3 = slideLayoutPart14.AddNewPart<ImagePart>("image/png", "rId3");
 			GenerateImagePart3Content(imagePart3);
-
 			slideLayoutPart14.AddPart(imagePart1, "rId2");
-
 			slideLayoutPart14.AddPart(slideMasterPart2, "rId1");
-
-			ImagePart imagePart4 = slideLayoutPart14.AddNewPart<ImagePart>("image/png", "rId5");
-			GenerateImagePart4Content(imagePart4);
 
 			ImagePart imagePart5 = slideLayoutPart14.AddNewPart<ImagePart>("image/png", "rId4");
 			GenerateImagePart5Content(imagePart5);
+			
+			ImagePart imagePart4 = slideLayoutPart14.AddNewPart<ImagePart>("image/png", "rId5");
+			GenerateImagePart4Content(imagePart4);
 
 			SlideLayoutPart slideLayoutPart15 = slideMasterPart2.AddNewPart<SlideLayoutPart>("rId7");
 			GenerateSlideLayoutPart15Content(slideLayoutPart15);
-
 			slideLayoutPart15.AddPart(imagePart1, "rId2");
-
 			slideLayoutPart15.AddPart(slideMasterPart2, "rId1");
 
 			SlideLayoutPart slideLayoutPart16 = slideMasterPart2.AddNewPart<SlideLayoutPart>("rId12");
 			GenerateSlideLayoutPart16Content(slideLayoutPart16);
-
 			slideLayoutPart16.AddPart(slideMasterPart2, "rId1");
 
 			SlideLayoutPart slideLayoutPart17 = slideMasterPart2.AddNewPart<SlideLayoutPart>("rId2");
 			GenerateSlideLayoutPart17Content(slideLayoutPart17);
-
 			slideLayoutPart17.AddPart(imagePart3, "rId3");
-
 			slideLayoutPart17.AddPart(imagePart1, "rId2");
-
-			slideLayoutPart17.AddPart(slideMasterPart2, "rId1");
-
 			slideLayoutPart17.AddPart(imagePart5, "rId4");
+			slideLayoutPart17.AddPart(slideMasterPart2, "rId1");
 
 			SlideLayoutPart slideLayoutPart18 = slideMasterPart2.AddNewPart<SlideLayoutPart>("rId1");
 			GenerateSlideLayoutPart18Content(slideLayoutPart18);
-
 			slideLayoutPart18.AddPart(imagePart1, "rId3");
-
 			slideLayoutPart18.AddPart(imagePart2, "rId2");
-
-			slideLayoutPart18.AddPart(slideMasterPart2, "rId1");
-
 			slideLayoutPart18.AddPart(imagePart5, "rId5");
-
 			slideLayoutPart18.AddPart(imagePart3, "rId4");
+			slideLayoutPart18.AddPart(slideMasterPart2, "rId1");
 
 			SlideLayoutPart slideLayoutPart19 = slideMasterPart2.AddNewPart<SlideLayoutPart>("rId6");
 			GenerateSlideLayoutPart19Content(slideLayoutPart19);
-
 			ImagePart imagePart6 = slideLayoutPart19.AddNewPart<ImagePart>("image/png", "rId3");
 			GenerateImagePart6Content(imagePart6);
-
 			slideLayoutPart19.AddPart(imagePart1, "rId2");
-
 			slideLayoutPart19.AddPart(slideMasterPart2, "rId1");
 
 			SlideLayoutPart slideLayoutPart20 = slideMasterPart2.AddNewPart<SlideLayoutPart>("rId11");
 			GenerateSlideLayoutPart20Content(slideLayoutPart20);
-
 			slideLayoutPart20.AddPart(slideMasterPart2, "rId1");
 
 			SlideLayoutPart slideLayoutPart21 = slideMasterPart2.AddNewPart<SlideLayoutPart>("rId5");
 			GenerateSlideLayoutPart21Content(slideLayoutPart21);
-
 			slideLayoutPart21.AddPart(imagePart6, "rId3");
-
 			slideLayoutPart21.AddPart(imagePart1, "rId2");
-
 			slideLayoutPart21.AddPart(slideMasterPart2, "rId1");
 
 			SlideLayoutPart slideLayoutPart22 = slideMasterPart2.AddNewPart<SlideLayoutPart>("rId10");
 			GenerateSlideLayoutPart22Content(slideLayoutPart22);
-
 			slideLayoutPart22.AddPart(slideMasterPart2, "rId1");
 
 			SlideLayoutPart slideLayoutPart23 = slideMasterPart2.AddNewPart<SlideLayoutPart>("rId4");
 			GenerateSlideLayoutPart23Content(slideLayoutPart23);
-
 			slideLayoutPart23.AddPart(imagePart6, "rId3");
-
 			slideLayoutPart23.AddPart(imagePart1, "rId2");
-
 			slideLayoutPart23.AddPart(slideMasterPart2, "rId1");
+
+			UInt32Value slideID = 265;
+			
+			foreach (var p in parts) {
+				// Slide insert
+				SlidePart sp2 = presentationPart1.AddNewPart<SlidePart>("rId" + slideID);
+				GenerateSlidePart2Content(p.Subject, sp2);
+				ReportPartEventArgs e = new ReportPartEventArgs(p.ReportPart);
+				OnUrlSet(e);
+				ImagePart img2 = sp2.AddNewPart<ImagePart>("image/gif", "rId2");
+				GenerateImagePart7Content(img2, e.Url);
+				sp2.AddPart(slideLayoutPart19, "rId1");
+				slideID++;
+			}
+			
+			SlideLayoutPart slideLayoutPart8 = slideMasterPart1.AddNewPart<SlideLayoutPart>("rId5");
+			GenerateSlideLayoutPart8Content(slideLayoutPart8);
+			slideLayoutPart8.AddPart(slideMasterPart1, "rId1");
+
+			PresentationPropertiesPart presentationPropertiesPart1 = presentationPart1.AddNewPart<PresentationPropertiesPart>("rId5");
+			GeneratePresentationPropertiesPart1Content(presentationPropertiesPart1);
+
+			ViewPropertiesPart viewPropertiesPart1 = presentationPart1.AddNewPart<ViewPropertiesPart>("rId6");
+			GenerateViewPropertiesPart1Content(viewPropertiesPart1);
+
+			ThemePart themePart1 = slideMasterPart1.AddNewPart<ThemePart>("rId12");
+			GenerateThemePart1Content(themePart1);
+			presentationPart1.AddPart(themePart1, "rId7");
+
+			TableStylesPart tableStylesPart1 = presentationPart1.AddNewPart<TableStylesPart>("rId8");
+			GenerateTableStylesPart1Content(tableStylesPart1);
 
 			SlideLayoutPart slideLayoutPart24 = slideMasterPart2.AddNewPart<SlideLayoutPart>("rId9");
 			GenerateSlideLayoutPart24Content(slideLayoutPart24);
-
 			slideLayoutPart24.AddPart(slideMasterPart2, "rId1");
 
 			ThemePart themePart2 = slideMasterPart2.AddNewPart<ThemePart>("rId14");
@@ -211,40 +190,22 @@ namespace HW.Core.Helpers
 
 			presentationPart1.AddPart(slideMasterPart1, "rId1");
 
-			ViewPropertiesPart viewPropertiesPart1 = presentationPart1.AddNewPart<ViewPropertiesPart>("rId6");
-			GenerateViewPropertiesPart1Content(viewPropertiesPart1);
-
-			PresentationPropertiesPart presentationPropertiesPart1 = presentationPart1.AddNewPart<PresentationPropertiesPart>("rId5");
-			GeneratePresentationPropertiesPart1Content(presentationPropertiesPart1);
-
-//			SlidePart slidePart2 = presentationPart1.AddNewPart<SlidePart>("rId4");
-//			GenerateSlidePart2Content(slidePart2, r);
-//
-//			ImagePart imagePart7 = slidePart2.AddNewPart<ImagePart>("image/gif", "rId2");
-//			GenerateImagePart7Content(imagePart7, url);
-//
-//			slidePart2.AddPart(slideLayoutPart19, "rId1");
-			foreach (var r in parts) {
-				GenerateSlide(presentationPart1, slideLayoutPart19, r, "rPartId" + r.Id, url);
-			}
-
 			ExtendedFilePropertiesPart extendedFilePropertiesPart1 = document.AddNewPart<ExtendedFilePropertiesPart>("rId4");
 			GenerateExtendedFilePropertiesPart1Content(extendedFilePropertiesPart1);
 
 			SetPackageProperties(document);
 		}
 		
-		void GenerateSlide(PresentationPart presentationPart1, SlideLayoutPart slideLayoutPart19, ReportPartLang r, string slideId, string url)
+		public event EventHandler<ReportPartEventArgs> UrlSet;
+		
+		protected virtual void OnUrlSet(ReportPartEventArgs e)
 		{
-			SlidePart slidePart2 = presentationPart1.AddNewPart<SlidePart>(slideId);
-			GenerateSlidePart2Content(slidePart2, r);
-
-			ImagePart imagePart7 = slidePart2.AddNewPart<ImagePart>("image/gif", "rId2");
-			GenerateImagePart7Content(imagePart7, url);
-
-			slidePart2.AddPart(slideLayoutPart19, "rId1");
+			if (UrlSet != null) {
+				UrlSet(this, e);
+			}
 		}
 
+		// Generates content of thumbnailPart1.
 		private void GenerateThumbnailPart1Content(ThumbnailPart thumbnailPart1)
 		{
 			System.IO.Stream data = GetBinaryDataStream(thumbnailPart1Data);
@@ -252,7 +213,8 @@ namespace HW.Core.Helpers
 			data.Close();
 		}
 
-		private void GeneratePresentationPart1Content(PresentationPart presentationPart1, IList<ReportPartLang> parts)
+		// Generates content of presentationPart1.
+		private void GeneratePresentationPart1Content(PresentationPart presentationPart1, IList<IReportPart> parts)
 		{
 			Presentation presentation1 = new Presentation(){ SaveSubsetFonts = true };
 			presentation1.AddNamespaceDeclaration("a", "http://schemas.openxmlformats.org/drawingml/2006/main");
@@ -269,11 +231,16 @@ namespace HW.Core.Helpers
 			SlideIdList slideIdList1 = new SlideIdList();
 			SlideId slideId1 = new SlideId(){ Id = (UInt32Value)258U, RelationshipId = "rId3" };
 			slideIdList1.Append(slideId1);
-			foreach (var r in parts) {
-				SlideId slideId2 = new SlideId(){ Id = (UInt32Value)265U, RelationshipId = "rPartId" + r.Id };
+			
+			UInt32Value slideID = 265;
+			foreach (var p in parts) {
+				SlideId slideId2 = new SlideId(){ Id = (UInt32Value)slideID, RelationshipId = "rId" + slideID };
+				slideID++;
 				slideIdList1.Append(slideId2);
 			}
 
+//			slideIdList1.Append(slideId1);
+//			slideIdList1.Append(slideId2);
 			SlideSize slideSize1 = new SlideSize(){ Cx = 9144000, Cy = 6858000, Type = SlideSizeValues.Screen4x3 };
 			NotesSize notesSize1 = new NotesSize(){ Cx = 6858000, Cy = 9144000 };
 
@@ -475,6 +442,7 @@ namespace HW.Core.Helpers
 			presentationPart1.Presentation = presentation1;
 		}
 
+		// Generates content of tableStylesPart1.
 		private void GenerateTableStylesPart1Content(TableStylesPart tableStylesPart1)
 		{
 			A.TableStyleList tableStyleList1 = new A.TableStyleList(){ Default = "{5C22544A-7EE6-4342-B048-85BDC9FD1C3A}" };
@@ -483,6 +451,7 @@ namespace HW.Core.Helpers
 			tableStylesPart1.TableStyleList = tableStyleList1;
 		}
 
+		// Generates content of slidePart1.
 		private void GenerateSlidePart1Content(SlidePart slidePart1)
 		{
 			Slide slide1 = new Slide();
@@ -970,6 +939,7 @@ namespace HW.Core.Helpers
 			slidePart1.Slide = slide1;
 		}
 
+		// Generates content of imagePart1.
 		private void GenerateImagePart1Content(ImagePart imagePart1)
 		{
 			System.IO.Stream data = GetBinaryDataStream(imagePart1Data);
@@ -977,6 +947,7 @@ namespace HW.Core.Helpers
 			data.Close();
 		}
 
+		// Generates content of imagePart2.
 		private void GenerateImagePart2Content(ImagePart imagePart2)
 		{
 			System.IO.Stream data = GetBinaryDataStream(imagePart2Data);
@@ -984,6 +955,7 @@ namespace HW.Core.Helpers
 			data.Close();
 		}
 
+		// Generates content of slideLayoutPart1.
 		private void GenerateSlideLayoutPart1Content(SlideLayoutPart slideLayoutPart1)
 		{
 			SlideLayout slideLayout1 = new SlideLayout(){ Type = SlideLayoutValues.Title, Preserve = true };
@@ -1343,7 +1315,7 @@ namespace HW.Core.Helpers
 			A.RunProperties runProperties7 = new A.RunProperties(){ Language = "en-US", SmartTagClean = false };
 			A.ParagraphProperties paragraphProperties3 = new A.ParagraphProperties();
 			A.Text text7 = new A.Text();
-			text7.Text = "8/28/2013";
+			text7.Text = "9/17/2013";
 
 			field1.Append(runProperties7);
 			field1.Append(paragraphProperties3);
@@ -1467,6 +1439,7 @@ namespace HW.Core.Helpers
 			slideLayoutPart1.SlideLayout = slideLayout1;
 		}
 
+		// Generates content of slideMasterPart1.
 		private void GenerateSlideMasterPart1Content(SlideMasterPart slideMasterPart1)
 		{
 			SlideMaster slideMaster1 = new SlideMaster();
@@ -1771,7 +1744,7 @@ namespace HW.Core.Helpers
 			A.RunProperties runProperties15 = new A.RunProperties(){ Language = "en-US", SmartTagClean = false };
 			A.ParagraphProperties paragraphProperties10 = new A.ParagraphProperties();
 			A.Text text15 = new A.Text();
-			text15.Text = "8/28/2013";
+			text15.Text = "9/17/2013";
 
 			field3.Append(runProperties15);
 			field3.Append(paragraphProperties10);
@@ -2490,6 +2463,7 @@ namespace HW.Core.Helpers
 			slideMasterPart1.SlideMaster = slideMaster1;
 		}
 
+		// Generates content of slideLayoutPart2.
 		private void GenerateSlideLayoutPart2Content(SlideLayoutPart slideLayoutPart2)
 		{
 			SlideLayout slideLayout2 = new SlideLayout(){ Type = SlideLayoutValues.ObjectText, Preserve = true };
@@ -2923,7 +2897,7 @@ namespace HW.Core.Helpers
 			A.RunProperties runProperties24 = new A.RunProperties(){ Language = "en-US", SmartTagClean = false };
 			A.ParagraphProperties paragraphProperties18 = new A.ParagraphProperties();
 			A.Text text24 = new A.Text();
-			text24.Text = "8/28/2013";
+			text24.Text = "9/17/2013";
 
 			field5.Append(runProperties24);
 			field5.Append(paragraphProperties18);
@@ -3048,6 +3022,7 @@ namespace HW.Core.Helpers
 			slideLayoutPart2.SlideLayout = slideLayout2;
 		}
 
+		// Generates content of slideLayoutPart3.
 		private void GenerateSlideLayoutPart3Content(SlideLayoutPart slideLayoutPart3)
 		{
 			SlideLayout slideLayout3 = new SlideLayout(){ Type = SlideLayoutValues.SectionHeader, Preserve = true };
@@ -3415,7 +3390,7 @@ namespace HW.Core.Helpers
 			A.RunProperties runProperties28 = new A.RunProperties(){ Language = "en-US", SmartTagClean = false };
 			A.ParagraphProperties paragraphProperties21 = new A.ParagraphProperties();
 			A.Text text28 = new A.Text();
-			text28.Text = "8/28/2013";
+			text28.Text = "9/17/2013";
 
 			field7.Append(runProperties28);
 			field7.Append(paragraphProperties21);
@@ -3539,6 +3514,7 @@ namespace HW.Core.Helpers
 			slideLayoutPart3.SlideLayout = slideLayout3;
 		}
 
+		// Generates content of slideLayoutPart4.
 		private void GenerateSlideLayoutPart4Content(SlideLayoutPart slideLayoutPart4)
 		{
 			SlideLayout slideLayout4 = new SlideLayout(){ Type = SlideLayoutValues.Blank, Preserve = true };
@@ -3604,7 +3580,7 @@ namespace HW.Core.Helpers
 			A.RunProperties runProperties30 = new A.RunProperties(){ Language = "en-US", SmartTagClean = false };
 			A.ParagraphProperties paragraphProperties23 = new A.ParagraphProperties();
 			A.Text text30 = new A.Text();
-			text30.Text = "8/28/2013";
+			text30.Text = "9/17/2013";
 
 			field9.Append(runProperties30);
 			field9.Append(paragraphProperties23);
@@ -3726,6 +3702,7 @@ namespace HW.Core.Helpers
 			slideLayoutPart4.SlideLayout = slideLayout4;
 		}
 
+		// Generates content of themePart1.
 		private void GenerateThemePart1Content(ThemePart themePart1)
 		{
 			A.Theme theme1 = new A.Theme(){ Name = "Copy of HW11-template" };
@@ -4291,6 +4268,7 @@ namespace HW.Core.Helpers
 			themePart1.Theme = theme1;
 		}
 
+		// Generates content of slideLayoutPart5.
 		private void GenerateSlideLayoutPart5Content(SlideLayoutPart slideLayoutPart5)
 		{
 			SlideLayout slideLayout5 = new SlideLayout(){ Type = SlideLayoutValues.Object, Preserve = true };
@@ -4510,7 +4488,7 @@ namespace HW.Core.Helpers
 			A.RunProperties runProperties38 = new A.RunProperties(){ Language = "en-US", SmartTagClean = false };
 			A.ParagraphProperties paragraphProperties30 = new A.ParagraphProperties();
 			A.Text text38 = new A.Text();
-			text38.Text = "8/28/2013";
+			text38.Text = "9/17/2013";
 
 			field11.Append(runProperties38);
 			field11.Append(paragraphProperties30);
@@ -4634,6 +4612,7 @@ namespace HW.Core.Helpers
 			slideLayoutPart5.SlideLayout = slideLayout5;
 		}
 
+		// Generates content of slideLayoutPart6.
 		private void GenerateSlideLayoutPart6Content(SlideLayoutPart slideLayoutPart6)
 		{
 			SlideLayout slideLayout6 = new SlideLayout(){ Type = SlideLayoutValues.TitleOnly, Preserve = true };
@@ -4745,7 +4724,7 @@ namespace HW.Core.Helpers
 			A.RunProperties runProperties41 = new A.RunProperties(){ Language = "en-US", SmartTagClean = false };
 			A.ParagraphProperties paragraphProperties32 = new A.ParagraphProperties();
 			A.Text text41 = new A.Text();
-			text41.Text = "8/28/2013";
+			text41.Text = "9/17/2013";
 
 			field13.Append(runProperties41);
 			field13.Append(paragraphProperties32);
@@ -4868,6 +4847,7 @@ namespace HW.Core.Helpers
 			slideLayoutPart6.SlideLayout = slideLayout6;
 		}
 
+		// Generates content of slideLayoutPart7.
 		private void GenerateSlideLayoutPart7Content(SlideLayoutPart slideLayoutPart7)
 		{
 			SlideLayout slideLayout7 = new SlideLayout(){ Type = SlideLayoutValues.VerticalTitleAndText, Preserve = true };
@@ -5107,7 +5087,7 @@ namespace HW.Core.Helpers
 			A.RunProperties runProperties49 = new A.RunProperties(){ Language = "en-US", SmartTagClean = false };
 			A.ParagraphProperties paragraphProperties39 = new A.ParagraphProperties();
 			A.Text text49 = new A.Text();
-			text49.Text = "8/28/2013";
+			text49.Text = "9/17/2013";
 
 			field15.Append(runProperties49);
 			field15.Append(paragraphProperties39);
@@ -5231,6 +5211,7 @@ namespace HW.Core.Helpers
 			slideLayoutPart7.SlideLayout = slideLayout7;
 		}
 
+		// Generates content of slideLayoutPart8.
 		private void GenerateSlideLayoutPart8Content(SlideLayoutPart slideLayoutPart8)
 		{
 			SlideLayout slideLayout8 = new SlideLayout(){ Type = SlideLayoutValues.TwoTextAndTwoObjects, Preserve = true };
@@ -5958,7 +5939,7 @@ namespace HW.Core.Helpers
 			A.RunProperties runProperties64 = new A.RunProperties(){ Language = "en-US", SmartTagClean = false };
 			A.ParagraphProperties paragraphProperties53 = new A.ParagraphProperties();
 			A.Text text64 = new A.Text();
-			text64.Text = "8/28/2013";
+			text64.Text = "9/17/2013";
 
 			field17.Append(runProperties64);
 			field17.Append(paragraphProperties53);
@@ -6085,6 +6066,7 @@ namespace HW.Core.Helpers
 			slideLayoutPart8.SlideLayout = slideLayout8;
 		}
 
+		// Generates content of slideLayoutPart9.
 		private void GenerateSlideLayoutPart9Content(SlideLayoutPart slideLayoutPart9)
 		{
 			SlideLayout slideLayout9 = new SlideLayout(){ Type = SlideLayoutValues.VerticalText, Preserve = true };
@@ -6304,7 +6286,7 @@ namespace HW.Core.Helpers
 			A.RunProperties runProperties72 = new A.RunProperties(){ Language = "en-US", SmartTagClean = false };
 			A.ParagraphProperties paragraphProperties60 = new A.ParagraphProperties();
 			A.Text text72 = new A.Text();
-			text72.Text = "8/28/2013";
+			text72.Text = "9/17/2013";
 
 			field19.Append(runProperties72);
 			field19.Append(paragraphProperties60);
@@ -6888,7 +6870,7 @@ namespace HW.Core.Helpers
 			A.RunProperties runProperties85 = new A.RunProperties(){ Language = "en-US", SmartTagClean = false };
 			A.ParagraphProperties paragraphProperties72 = new A.ParagraphProperties();
 			A.Text text85 = new A.Text();
-			text85.Text = "8/28/2013";
+			text85.Text = "9/17/2013";
 
 			field21.Append(runProperties85);
 			field21.Append(paragraphProperties72);
@@ -7013,6 +6995,7 @@ namespace HW.Core.Helpers
 			slideLayoutPart10.SlideLayout = slideLayout10;
 		}
 
+		// Generates content of slideLayoutPart11.
 		private void GenerateSlideLayoutPart11Content(SlideLayoutPart slideLayoutPart11)
 		{
 			SlideLayout slideLayout11 = new SlideLayout(){ Type = SlideLayoutValues.PictureText, Preserve = true };
@@ -7402,7 +7385,7 @@ namespace HW.Core.Helpers
 			A.RunProperties runProperties90 = new A.RunProperties(){ Language = "en-US", SmartTagClean = false };
 			A.ParagraphProperties paragraphProperties75 = new A.ParagraphProperties();
 			A.Text text90 = new A.Text();
-			text90.Text = "8/28/2013";
+			text90.Text = "9/17/2013";
 
 			field23.Append(runProperties90);
 			field23.Append(paragraphProperties75);
@@ -7832,7 +7815,7 @@ namespace HW.Core.Helpers
 			A.RunProperties runProperties98 = new A.RunProperties(){ Language = "sv-SE", SmartTagClean = false };
 			A.ParagraphProperties paragraphProperties82 = new A.ParagraphProperties();
 			A.Text text98 = new A.Text();
-			text98.Text = "2013-08-28";
+			text98.Text = "2013-09-17";
 
 			field25.Append(runProperties98);
 			field25.Append(paragraphProperties82);
@@ -8567,6 +8550,7 @@ namespace HW.Core.Helpers
 			slideMasterPart2.SlideMaster = slideMaster2;
 		}
 
+		// Generates content of slideLayoutPart12.
 		private void GenerateSlideLayoutPart12Content(SlideLayoutPart slideLayoutPart12)
 		{
 			SlideLayout slideLayout12 = new SlideLayout(){ Type = SlideLayoutValues.TitleOnly, Preserve = true };
@@ -8678,7 +8662,7 @@ namespace HW.Core.Helpers
 			A.RunProperties runProperties101 = new A.RunProperties(){ Language = "sv-SE", SmartTagClean = false };
 			A.ParagraphProperties paragraphProperties84 = new A.ParagraphProperties();
 			A.Text text101 = new A.Text();
-			text101.Text = "2013-08-28";
+			text101.Text = "2013-09-17";
 
 			field27.Append(runProperties101);
 			field27.Append(paragraphProperties84);
@@ -8813,6 +8797,7 @@ namespace HW.Core.Helpers
 			slideLayoutPart12.SlideLayout = slideLayout12;
 		}
 
+		// Generates content of slideLayoutPart13.
 		private void GenerateSlideLayoutPart13Content(SlideLayoutPart slideLayoutPart13)
 		{
 			SlideLayout slideLayout13 = new SlideLayout(){ Type = SlideLayoutValues.VerticalTitleAndText, Preserve = true };
@@ -9052,7 +9037,7 @@ namespace HW.Core.Helpers
 			A.RunProperties runProperties109 = new A.RunProperties(){ Language = "sv-SE", SmartTagClean = false };
 			A.ParagraphProperties paragraphProperties91 = new A.ParagraphProperties();
 			A.Text text109 = new A.Text();
-			text109.Text = "2013-08-28";
+			text109.Text = "2013-09-17";
 
 			field29.Append(runProperties109);
 			field29.Append(paragraphProperties91);
@@ -9188,6 +9173,7 @@ namespace HW.Core.Helpers
 			slideLayoutPart13.SlideLayout = slideLayout13;
 		}
 
+		// Generates content of slideLayoutPart14.
 		private void GenerateSlideLayoutPart14Content(SlideLayoutPart slideLayoutPart14)
 		{
 			SlideLayout slideLayout14 = new SlideLayout(){ Preserve = true, UserDrawn = true };
@@ -10857,7 +10843,7 @@ namespace HW.Core.Helpers
 			A.RunProperties runProperties129 = new A.RunProperties(){ Language = "sv-SE", SmartTagClean = false };
 			A.ParagraphProperties paragraphProperties109 = new A.ParagraphProperties();
 			A.Text text129 = new A.Text();
-			text129.Text = "2013-08-28";
+			text129.Text = "2013-09-17";
 
 			field32.Append(runProperties129);
 			field32.Append(paragraphProperties109);
@@ -13762,7 +13748,7 @@ namespace HW.Core.Helpers
 			A.RunProperties runProperties153 = new A.RunProperties(){ Language = "sv-SE", SmartTagClean = false };
 			A.ParagraphProperties paragraphProperties128 = new A.ParagraphProperties();
 			A.Text text153 = new A.Text();
-			text153.Text = "2013-08-28";
+			text153.Text = "2013-09-17";
 
 			field35.Append(runProperties153);
 			field35.Append(paragraphProperties128);
@@ -14983,7 +14969,7 @@ namespace HW.Core.Helpers
 			A.RunProperties runProperties170 = new A.RunProperties(){ Language = "sv-SE", SmartTagClean = false };
 			A.ParagraphProperties paragraphProperties145 = new A.ParagraphProperties();
 			A.Text text170 = new A.Text();
-			text170.Text = "2013-08-28";
+			text170.Text = "2013-09-17";
 
 			field38.Append(runProperties170);
 			field38.Append(paragraphProperties145);
@@ -15984,7 +15970,7 @@ namespace HW.Core.Helpers
 			A.RunProperties runProperties178 = new A.RunProperties(){ Language = "sv-SE", SmartTagClean = false };
 			A.ParagraphProperties paragraphProperties155 = new A.ParagraphProperties();
 			A.Text text178 = new A.Text();
-			text178.Text = "2013-08-28";
+			text178.Text = "2013-09-17";
 
 			field41.Append(runProperties178);
 			field41.Append(paragraphProperties155);
@@ -16691,7 +16677,7 @@ namespace HW.Core.Helpers
 		// Generates content of viewPropertiesPart1.
 		private void GenerateViewPropertiesPart1Content(ViewPropertiesPart viewPropertiesPart1)
 		{
-			ViewProperties viewProperties1 = new ViewProperties();
+			ViewProperties viewProperties1 = new ViewProperties(){ LastView = ViewValues.SlideThumbnailView };
 			viewProperties1.AddNamespaceDeclaration("a", "http://schemas.openxmlformats.org/drawingml/2006/main");
 			viewProperties1.AddNamespaceDeclaration("r", "http://schemas.openxmlformats.org/officeDocument/2006/relationships");
 			viewProperties1.AddNamespaceDeclaration("p", "http://schemas.openxmlformats.org/presentationml/2006/main");
@@ -16807,7 +16793,7 @@ namespace HW.Core.Helpers
 		}
 
 		// Generates content of slidePart2.
-		private void GenerateSlidePart2Content(SlidePart slidePart2, ReportPartLang r)
+		private void GenerateSlidePart2Content(string text, SlidePart slidePart2)
 		{
 			Slide slide2 = new Slide();
 			slide2.AddNamespaceDeclaration("a", "http://schemas.openxmlformats.org/drawingml/2006/main");
@@ -16871,8 +16857,8 @@ namespace HW.Core.Helpers
 			A.Run run138 = new A.Run();
 			A.RunProperties runProperties180 = new A.RunProperties(){ Language = "sv-SE", Dirty = false, SmartTagClean = false };
 			A.Text text180 = new A.Text();
-//			text180.Text = "Självskattad hälsa";
-			text180.Text = r.Subject;
+//			text180.Text = "Hälsa";
+			text180.Text = text;
 
 			run138.Append(runProperties180);
 			run138.Append(text180);
@@ -17106,6 +17092,7 @@ namespace HW.Core.Helpers
 //			System.IO.Stream data = GetBinaryDataStream(imagePart7Data);
 //			imagePart7.FeedData(data);
 //			data.Close();
+			
 			WebRequest req = WebRequest.Create(url);
 			WebResponse response = req.GetResponse();
 			Stream stream = response.GetResponseStream();
@@ -17120,9 +17107,9 @@ namespace HW.Core.Helpers
 			Ap.Template template1 = new Ap.Template();
 			template1.Text = "Copy of HW11-template";
 			Ap.TotalTime totalTime1 = new Ap.TotalTime();
-			totalTime1.Text = "9";
+			totalTime1.Text = "13";
 			Ap.Words words1 = new Ap.Words();
-			words1.Text = "12";
+			words1.Text = "11";
 			Ap.Application application1 = new Ap.Application();
 			application1.Text = "Microsoft Office PowerPoint";
 			Ap.PresentationFormat presentationFormat1 = new Ap.PresentationFormat();
@@ -17227,9 +17214,9 @@ namespace HW.Core.Helpers
 		{
 			document.PackageProperties.Creator = "Ian";
 			document.PackageProperties.Title = "PowerPoint-presentation";
-			document.PackageProperties.Revision = "3";
+			document.PackageProperties.Revision = "9";
 			document.PackageProperties.Created = System.Xml.XmlConvert.ToDateTime("2013-07-23T13:08:43Z", System.Xml.XmlDateTimeSerializationMode.RoundtripKind);
-			document.PackageProperties.Modified = System.Xml.XmlConvert.ToDateTime("2013-08-28T09:57:25Z", System.Xml.XmlDateTimeSerializationMode.RoundtripKind);
+			document.PackageProperties.Modified = System.Xml.XmlConvert.ToDateTime("2013-09-17T12:02:31Z", System.Xml.XmlDateTimeSerializationMode.RoundtripKind);
 			document.PackageProperties.LastModifiedBy = "ultra";
 		}
 
@@ -17248,7 +17235,7 @@ namespace HW.Core.Helpers
 
 		private string imagePart6Data = "iVBORw0KGgoAAAANSUhEUgAAAfgAAACgCAYAAADggn5RAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjExNTg3OUM1QzM3MzExRTA5MkRDRkE4NUJGQ0U2Q0I4IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjExNTg3OUM2QzM3MzExRTA5MkRDRkE4NUJGQ0U2Q0I4Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MTE1ODc5QzNDMzczMTFFMDkyRENGQTg1QkZDRTZDQjgiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MTE1ODc5QzRDMzczMTFFMDkyRENGQTg1QkZDRTZDQjgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7y4i1mAAAllUlEQVR42uydC3AV9b3H/wkhJEBIUkBIhmgwTay9QqJUp2CnBDLVmQoK3tvOYFsgMx0MzvTKw1qn6pDcWx1vlVc7o+g4Q6C3OlOvgoJ3RmskdK7SaUWTMlPb0GgkDAGBJiGBhITH/X//Z/+HPZvdc3bP+/H9zCx7sq9z2N1zPvv7P37/rKtXrwpCCCGEpBfZPAWEEEJI+pGDf7Kysngm0oiW9roiOauVU42cFjpsdlBObXJqratu6eNZI4SQ+NH/zPhS4/cZv9VVciqw2eywnDrktK/wsdEON8c1l8pn4Q8KPm3EjhvlYTkt87hrs5x2SdG38iySVKVTNEyUs1lyusm0uBtThdhxlmeIJInY58nZGjnN87hrj5xekqLfR8FnltgRqW81ngQjAYKvl6Lv4lklKST2+XJWJ6eyIJtB8IfwdZGyv8CzRhIgdkTom6LwO41IvtEpoqfg00vujcZNEy1QXL9eSr6ZZ5ckudhRrLlaTlM97Aa575eSb+EZJHGUO+7VF4V9MXy4NNlF8xR8eoi9yIjaV8foLZql5Ot5pkkSR+2O935O+VQxXk6X+y6IkbbjdpsckpLnQyyJh9yXytkGr3Ifd121ml/+st2T5Cn49BD8J8LXiM4Vk/MrxOwZK8Wn3c+KS5cHKXmSdnLPr60Sk1d9U0xaViOyi/ID1kHy/dvfFwPNhyh5kvSRO+Sed8/L4vzO2z1H8hR86st9p5fIPWfcZHFH5YsiL3eGOH3uA3Gky1OJ/jYp+fU86yRJ5I4fzI3mZZD59J2rpNir/TIfau0QV/qHfOsL89U6RPWXus6Kk8t3mKN6FNfv45klMZA7pP6KnEq87Jc1oUhMfOD34vKxP4jhlo1ud3tA18lT8Kkt93XCVzTvmjnlTWL6lDv9f0PwEL0HlkvJ7+XZJ0kg+KeFqc4dci89sEHk1sxS8j5dv1vJ3Q5E+NN3rpT7TBQnFm0xS/7nbGVPYiD4RjlbEo7cEcEjeg9RPG+mRwp+qVXwTHSTWnIvFx4b1KFo3ix3UFn6kNe33mnU+ROSSLnPF5YGdYjcIXfI+vitTznKHWAdtrnSd0HM3NNgXrWUZ5dEWe6lXuUO8uqeU3KH2D3IHZQYdf0BUPCpBeTuSbQlxXePvYlyZyjxewDvuY6nnySYgB8wiF0Xy39Zv0uKeyjkAbANonwU1xesnq8Xzzf60BMSLdZ43SH/uy+L8XNWqtejR3ZH5T0p+NSK3ld73a/AQeTWqN4FDzOKJwmM3qdao3ctdETvDi3lHSN57Dvxvmrz4mqeZRKl6L3Aa/Se+42f+OXuE/xvwnlrRPG1FHxqsizB71+UBJ+BZC5lzlG597w1qK8fF9jSvoynmEQJTxnqIPa8us3X7s2jb4mrF/ui8t4UfOqwKgk+w328DCRZBF+86R5f9FNTNqZbXDBQPI/ifbcPEITESvCob0fRvJlRKfhovXcOr0XyYxSNj+nzjmJ2a1368Mgp0Xu+Xc5Pqr8HhjpF0aSxpY8e+sInUykCIQq0iNd16JB78aYl4uz611ztO3Xr93gCSSypcit3tJg3g8g9zPp32/em4FMD24Q2M79yl2Ndep+UfMeJ50VP7zuibNr9Y9afPvdhuA8bNXXVLW28JCSR6OhdU7husZoHkzweBCB33TDv/JvtPJEkIejucJgHCH64X0z41pMh97/S/4WrBwEKPoUF3zfY7ih4RO233bhZfPzZRtXn3bxd95k3/BE+yMudKfJzZwRE+p+fcrx52NCOJIIz5j8u9w2penQUt5slD3kjY935ve1qvY720aAOEb8uykcjO0tWO/aDJ9FiXjhyVw+hhTeICXcGFzyi/AuvfMfVB6HgUwNbqSIKD9anHRnsvj7rUSX5/BtnquL8waFOJW+sQ2SPbnToNmcliODLeTlIAghoJn9q+Q4l7pIDgUkWIXxE6QWr5qs+73ito3szeAiwdKvr5ikmUQLJGByL6XUim3DQcnfbR56CT2EQhff0vislfZfjNjrRDSSPh4GjJ55Xf1eWrlWSDwMKnsSdCrGju1M0IMr2h+wX25ydrPvIm/q6X/vetHaI3sb91sWsdiLRYsBpBcSOVvKXgjSkG3/LShXJRyp3Cj4NQKQ9fcqCoLKeVrhA1cV/2v1LFbHfXPbToMcMkcaWP4QkUaBM3d+/GBE4+r/btIhXIMud3aAzyEVvjbiYqpbEQ/BuMtShT7wdQ2//2I3cA96b3eRSg65gUTyi82Ct4ouNuvXiydUh5Q7O9AdtgNfHy0ESBMZwD+j0Hiw1rVnueBjobXrbSFU7JuMdB5sh0eRwuDvmVN5rWzc/9L8/Dhr1O703BZ/iggeoV//wbz9UxfW2N40R3c+yaU0/xt7n21W0H+5nISRWyCgbct8VEK7sOhR0HxTHo2X9sdmP2xXLq4cGedwOnl2SFIK/fqGt3D10nQt4b44mlyqhS3vdVVc3iJQ5InZr/3gU5S+e+15Iuf+la1Ow0oC+uuqWYl4Nkkg6RcP35axO/40i+nFFgankR7vO+lvRB6Fbyv0XPKMk2vQ/Mx7DxFZ53W9yw9GA+ncMFzvy0a+9HGLRlJ+N+IvpWQefOrTKqTbURpAz6tC9DAerovZ/vhsqcgccMpYkQyT/Oyl5oSXvJQ+9CUTtL/BskhjxqvA48ica4Jnljqjdo9z3Fz42OnD1Z6aAj9chZdjlRvBOoP5dg6J89KEfHj0pegc9Jft4k5eBJJHkIWmkcPY6Etx+uT/r3UnMkKLdJ6N4jO5W4nafwMFmdquieY+8ZF1AwacOiJ63iggTzaCbHBLdhEFXXXULI3iSTJJvMySPSH7MWPEWUH+Pp9l9bDFP4kSjnF50HcFf/+2I5C4fKk5Q8CmKlGtfS3vdduGx2MfK4HBnuLs28SqQJJQ8xI1ofJ+UPQaMQZ+5aRaxd7MhHUlAFH9YRvEoql8RalsUzaOIHt3gwpD7YfleL9mtoOBTi23CVyRZHuf3bZMPGM08/STJZY/MN8xIR5JJ8pvdjA+P7nGQu9sUtCbw4PqI44MDL0FqRfFyVh/JMXKyPWevi/g9CSEkgyXfKGf7g0fw5UruHseBh9wfRMM6Cj59JN8qZ+vD3d/afc4F6zl6HCGERCz5zU7r0R3Oo9xfDSV3Cj51JY+i+mZPYs+rCOet6lk0TwghUZE8pHyviCARjqTHEPvmUHIHTHSTwrS01+GpcFOMDk+5E0JIDOh/ZjyS4DwgJ6SuK3CxSyuidjTcC7UhnE7Bp4/kl8nZThG9cdq75LScxfKEEBI32d8kxvaZR4Te4UbqFHx6Sx5yXxdhNI8KIHTD22Y05iOEEJJiUPDpLfrVcnpYuO9Kh0gdWfKaKXZiR6doQAKZgQqxY4RnI+Wiw1Lhy4mO34NcYzGuY5cRHZ7gWaLgSerJHl/oGmMqNOZa6P3GHP3bu3i2iEXoqBOcJ3xFhtb6QTTy+TsTxyS92CHzWhcP+vj+t0rR8+GNgieEpLHYcw2xz3GxOeoHD0rRMwJMTrkvFcFT95pB6t59lHz6CZ7d5AghWu5LXcpdGJH9ErlfFc9e0jFPyx0DmExa8Z6YeP//2I41bjDV2IekGYzgCSEQPORegrHVJy3z1eZgPPWh1g7/uOr5tVUir/aazweaD+l1+xnJJ030jgcvlft8wreeFBPufDJg/YVXvyMuHTvotPurbvpWE0bwhJDUkXtVTvnUktID68V1O1f5l+ctrBRYVrhusZixp0FM37lSXOm7IIal9DGf9cnjYurW72HThTyLScMt+sX4W1aOWTn+lh/5X2NwE0x2+5L0gIPNEELmFayer6Lzz7LWBqxARF96YIM4v7dNHJv9hH85IvvsoomieNM94uz61wrwkMCGd0mBfyS9rLzCMSuz8nzpMlB0jxHMlASq7hUX/+8/A/Yl6QEjeEIyO3pHNyrHTFojbcfl1C0Gd/0x1KFu4tlMLkaP/Gbs9TyyW8kdGFK3RvGEETwhJE0oSbLjkCihBzDJKfPVoFz86Fcqgke9/Pmdt4v8776sZB/G+OOEgieEEBJnLgb8IaP0i8IXqUPmkDqYvLZDZE0oUnIflVG93b4k9WERPSGEpA9ddgvNcgc2cnfcl1DwKUVLe904OU3k5SeEpBOFj42ioeOYrm65lhb1NnIfMPYlaUTGFNFLoaMh0XXCNOqaXIYZsjehM++puuqWy7wlSIZx1vwHur1NqJnlk8DBo6qvu18SRh/5/IWV4nLfkBhXlO94HJJQ0NF9iXnB5S/bxbjrv+0kd70PSTMyItGNkZc9VNpGiL5TSv4CbwuSKRgZ7B4oblySiy5vdlyRMke/95xy+6+Q0bXucIXYcZhnNDkwhiBdIK4NMKMy2V0d7lOyt/zufcjoPX3IqFz0Uu4Vwv1Y6YjgOyh5kmGSR5rSeRC4ylYnI3TMnYSORDeI7tW8tUNL4hWONpd0kp9qSN6ph0OPIXeWvlDwKSn3UuG9+w5+pP7K4nqSYVH8vwpLf/jsonyBBDjFm5aolLRf1u9S/eJtOCTlfoRnMmlFXyACRwZEHX0P09JS8Kks93HCN3AG5iJn3GRRNu1+0X3mDXHp8qB/u5Liu9Xfp899EPBkKwXP3NokkySPaA/56HM97toh5d7KM0hI8gk+nVvRF2m5T86vELNnrFRTQX5FwEYlX7lLzClvEsWTq9VDgEEhbxOSSUhJqyFDhbfGcocpd0KSl6Ct6PufGY9hpZaJwMEk2uSEVhp7Cx8b7Uvi/9sELffbbtwsBoc71cLJeYGCz8n2Sf1WuQ2i+89P7UZEzy50JFMl/7oxBCzq5Z1S2HYYcmcRLyFJjG0RvRQ7pL5VTuVB9oXct8tpWzKKXte/L577nu/Dnm8XRZNC51w+euJ5Jfq66ha2CCbm74RusAT5oR+ZfgiEFLsN6R2S34W0aaApRV9gSB71t5D5IIeFJSS5CVoHL3/IdsrZag/HQ0S/XP6wdSWj4M0RPATf0/uuGB456d8OdfB5uTPUa1MET8ETs9hRNz3fxeaQ+/u4/dJJ9ISQ1BR8tuXHzKvcAYrxP5H7FiXZ//MS/hkc6hSfdj8rhkZOqYUne99REtfT8OhJf+Su5S58LekJ5Y57+wmXchdGVI8EIxvkvmU8g4SQRJJt+jFrNMs9p/JeNYwgchgjQYIeOxjz3G/8xHocyH1Pkv3f/NUGaCEPsaOYftTUgh4MyAcARPWW1vWsW6TcIfW14lpRvP87AJDLG9+DCd96Un1X8LeJMkqeEJJoVBH9uf/KLZevPzevmLTiPXGp+6AaahBzgJGJIPuJK37vlO6wvvCx0eZk+c+5zGBnx5G66hZG8Zkr9zIjcveTV7dZifziB//pv++V5G//iRp+E8Nyjnz0azHy51+r1waom9/C4npCSLywK6J/2OtBrIMXhHucGIMfWK+i7qLcM55VdgsRwSPVp/+LJEWOh1487EL2EP3EB35vjubxoFDH00kISQRa8LVROl6NjH7Kk+U/Z2SjQ/84txEU5M60jZkdvc83xBzAyEe/EoM7KsXlY38Ysw8i+ktH31KvUa1lkfwSeUx2uySEJEzwNXYrUTyfJaMWzL1IPpn+g0ZeeXRhQt5lp/SzqHPvoNyJ0/17pf8LNTkx3LLR/xqSR9G9ifk8rYSQRAl+DKh3h9xVw6K8QnGp462UFLyO5JF6Vk5thuy7DOHjNerbIXc2rCNB71+0P8mre064eQBAAzxTFF/D00oIiTeOmexQt4jiSDSou9jyiHWIQflj1pWS/2GKnDhhDLFpS/53XxbjjN4k2YXlKmK3fieuQvBGS3vIHeNvG0X3s3h2CSFJE8GrldfNHbMsy/gBQ2tiB1p5Wkm6can7D/5ucmhcZ5W7+buhGTfDnzmRdfCEkIQJvs1uZVbe2Nw11/rDlzsds4unlaQbV061+8Vubklv/l5kWwRPCCGJRBfR7xJB6glVUeOxg26O15ZsKWsJCfvLcf1C/32P+vXBF6qU5O1EnvuNfw92KPaDJ4QkLIJvFqbMb36xX+c8OItd8b2kiaeUpCry4bTD/Pf4W37k/w5A7DqBjbU1PR4EbLI7mrc7zrNLCElIBI/R4PqfGQ85bzWv1EWR5iJJ3TL46sV+67Fa5XH28pSSFAfJkVQ/eNS7o0/70Ns/9vdzHxu5+9LV2mHqedLG00qIe0xZSDFo2EXhG7WReUo8EjCanN1gM4hgrA2KbJbhB2xRko8PT0hIjEQ3/u/A5Iajqkge9zsS2lz58i9qOUqwME6DUykX0taa+sb/XH43+MNEiDux4ztY4LAJekEdRLdnni17Qg0Xiyh+nYfjtQrfcLGUO0kXyT9tRA9K4JPq/+xpfxTNn995uy7SP5RM4zMQksRyh9jnuPUO8pfwrHkUvPEDVytnm0TwFLZdcmrij1f60ykazPcBGmP2CVNviQqxozXNBI/+8P7wG5E6EtxYRoxzlPvQG/+mS7gQtf+Cg80QElLuVU6+yRk3WRRPqhaXrgyKypKHxMefbdQjf+5nJB+G4E0/dOVytkz4hoM1s1f+aLFeMT1lXmN80RYaMi93uSuED9Gj2XmrlH5Xiks+oKgekTxGlEOPEidQhD/c8oiO3CF1jCTXzbuKkKByz5WzB+SUa7d++pQ7xZzyJjWs9/QpC8TwyCkt+bNS8K/zDIYpeJIxUi83ZLbKg9BDgQdAdL9slrJPyeobq+S16HOq7hXZU3wZ7RCpI6sjGuGZWs0jcn+BcicksugdlBTfLSpL16pIHnI/fe4D0X3mDfn6JFa/zoZ3zoLP4enIeLFvskosStQY0yb5Ps1y3pRqopeCPiQljy5u35eTSmMLodtlsTNxSE6/Y7E8Ia4pDyb3m8t+ql6jWD4vd4aaG3LX+1LwDlDwmSl2VLlsjZHYreC90GhztXzf7XK+LZVEb0Thm416+QXCl1feOpxsh1Fi0cbW8oR4ZkIouStZyQgekTuh4Imz3NGmYqcY264iHqJHacEq+RnqU61hnpEEh612CYkDVrmDT7ufFT297/DkeCCbpyBzonY5Qex7EiB3M+VyOiA/SyOvCiFE+BLZBIA6d8qdgicu5Q6pivgUybsFdfN7jM9GCMlcuoKtDCH3Lp4+Z9iKPv3lXmNE7eVJ+hFVFsRUbWlPCIkMaze5ytKHVCO6weFOMTRyytygzkpPXXXLPp7BQMyt6BnBp7fcy43IvTyJPyYeQA4wkickM5GSHhG+HBpi9oyVKlpHY7rewfZgcsc+H/LsMYLPVLnrYvmaFPnISI6ziFeOkIyN5IP2h7fKnalqGcFnMntSSO6g1mgESAjJzEgewt4vfAPKONEjp32UOyP4TI7eG4WvS1oqslxG8hx2mJDMjuYx2FO5JWo/wax13iJ4Cj795I6o/ZMU/i+gsd1sNrojhJDIBM8i+vQj1Yu5i9Lg/0AIIQmHgk+v6H21CLPePb+2Sk055VOj8llwrNyaWeHuvswyRC0hhBCPMFVteuGp3h0SnvLwYjFpWXXA8ktdZ8XArj+K/m0t4krfkOvjFayeLwrl8axiP7+3XZzb/r4Yau3w+n9p5SUlhJDwYB18ekXvroq2s4vyxcw9DSKvtirodpD76fpdStDBgNBxvFDR/0DzIXF2/WteHhoWpVrOekIISSRsZJeegkfDupDF85Bw6YH1nori+7e9r8TsFLVP37nS9bFG2o6LE4u2uJU8xpKv59UlwTD6T8+T001yKjEWl8rphH62FL6Bgg7XVbcc5hkjFDxJJbm7bjk/65PHw6obR/R9un53RHLXoETg1PIdbjcvZot6YiP1AjlbIaelJqm7upXldFBOL0nZn+CZJOkseDaySw9WudmocN3isBu+QebFjUsiljtAnX9+iOoBE8t4eYlZ7HJaI1++Jac1HuWubl054UZ+Sx6nUU6lPKskXaHg04NaV4J/eHFEb1K86R4l9kjkrpm86ptuN72Pl5cYcsdT4SuG2Asc7638ClE27X5RPLk61CEh+t/K4y7l2SXpCIvoUxwj53xvyCe5onxR3rsl4vdD3TmOFSloqX9s9hNuNu2rEDuKeaUzXu6QcMheIhiJDHL33zzn28VfujaJS5cHQ+26v666pZFnmqQ6LKJPL1z1e59QUxaVN4uG3IGHRn5Fxqh4hHIPCkYiM8td3TyTqsXc8iY3b7MERfY82ySdoOBTn9oM+D9S8JR7UPJyZyrB66j981O7RU/vu37JlxTfTckTCp6kHDe42chjkpmY4yWBToY8xJCxcked+wY322q5Q+ofd25Ugv+0+5dyejZgvUvJs06eUPAktaJb1HsnCyNt3bxyJBSIpgtCbZQzbrKM0O8SwyOnxNETzwes6+l9R5w+94GM8GeI6VPudPu+G9i6nqQDTFWbQaD/ObrKJcVnebPdy+Y38OplXPSOKHpMX0q0kB8vha4ZvTwoCvK+ql4jardrTHf0xAtK7tMK7xQDw50iX8o+b/xMJX0U5w/JB4PhkZPmXfBQscZ4wCCEgifJz8CuQ8kj+L2eBF/Oq5dxrLGK/euzHlVz50h+kqqLt8haPgBUKPEjysdkB6J8FOebHhBQVM9kOISCJ6kB0sQOt3aEzEEf8weN5kNJVV1AkjJ6D0hgM/eG/1ARN4CET5/70C9yXb+OLnKYIOuT/3zX3x8+xxTxo45e74f1utge88FpnaoUwPKQwSieUPAkNehteluUJFjw+AweYarazGKhdYGWO+rZ/3T0QX+kDXlD8Ii+e8+3qwgdf2txDw5B2s+KodGT4o7KF8WZ/g/UA4C5ZADLARLjfH4q+OcgJJVgI7sMA63pMXhMosB7hxG9t/PKZRS1TivQaM5cz15gFNkPS4FD7ojYsb77zBuqfl1F8dOx7Lxf6GbwAIDtHEBa3Hm8HIQRPEkUXd4j6P0qH7yXEeWiAaoI8N6EOOEkVIjYrv49J9tX/F5Z8pBaD7GbG9uh/zsi+jsqd6hl5uJ66zFO939g99b4PByBjjCCJwnhC687oA/6yeU7vPZFjwi815f1u8J9zzZe5ozBtv4I4gbWrm5oGa9B0T26yZkjfET8WI66d8gd+5slj0Z5eDDAPjoxjpvPQwgFT+JBWPJDNH1aCjdeYHhYvGe8SilIymLb7x2i1lG8lvzNZY+qYnks//izjWoOec8pbxKL576n6ta1vCF+PCSgLl8vB18v+6n/AcIhX30BLwmh4ElKCR6gq5p1jPdYgPeIIJMeBpthBE/EX4//Ukn4ZillSFrL/dKVQb+czQ3sdNc6DbZBIz1w242b1bZIY6tT2xJCwZOkQsqvK5IIF13WIOBYFNfjmDg23iMCWnmVCfC1iN+tonTIG1G5uUU80K3tNdZ6ezTGQ5E9RA/B45gYbY6QdISN7NKDvXJaF4nkL7Z1i9IDG6I2WhzkfmLRlkiK5TVv8vKSa8L+qv81GtD1WlrAo/+7uZ5e192bwXr9IIA5psGhQZ5ckhS0tNdh6M9ZcppmLLqAW7muusVzMSgFnx7sikTwACI+futTYuaeBpFbM0tEeiw04otSMhtG8ESBLnAolkeReo8UOYrqdR27BhH9ERmR6+VmwaOf++S8CrWf7h+P+noU46MO38WY8YTESuoT5axOTvPlNNVhG4gefZxbpOwvuDkui+jTAKOOuivS40DIiLojKVLHvjhGlOS+16iCIJmDbZRiHg72r93P+lvH665v5qgdkkdRvlnu2Ab55zFXI85JoWM7vNYZ7xxgFzkSa7mjp8YTclriJHeDicY2T8l9aij4zGJ7NA6i68291stjW7SUj3J9/nZeVgoeQO6QM6SsU80iCj/yha/+HJE40tTa9XOH/Bd87b9VUTykj2FkdbSuG9fp49vQw0tCYih3ROwbQ4jdTvRrjX0p+AyhWUQxpSsicRTZD7to/Y5tsK3HAWRC0SWj91Ze1szCGNylY6ykF/ilHnCfGn/3GWlqIXIdjaNI/raKzUr+uvV832DgPWoemMZhIBregySWkfvqCA6xOpTkKfg0QcqwL9oRr6/Ifqs4u/4126hcR/vYJgaDx6znVc1Y9lkX6Oga0g64Ry/7ushhyNcP//ZDNQgNIvlv/8teceuNm1WWuk8+2+gvrkdOervjWl9rucsHjgFeDhIDuU/UckcVER5EkbsBk111Ee57vX7B135r/h58Xx5rKgWfGWwTMUgKg/zxx2Y/HlA3b7csirTKB5a9vJwZy8ExD5tGkTr6rSMiN4se0TkifIhdR/o6YseP5yz5g6lz1JtLAFCvj/7wXj4HIVECDeqUmDFSos7HgDYheEgFkD4m3NcoqcI6bIOqpjk3NOkHUjwoLHV6k6yrV6+KrKwsnu40oVM01MrZgVgdX+evj/Fwr7PZuC7jI5xG4WtQpECXuJuNrHNO6GFku8+8rkQOgUPs5m5xwC6vPfb909EGc5F9j4zel/JKkBjd309D8Ho0Q51p0QyidQCpf9y50b9c7/Op0dhUckHeq/4STzjd/3vNU51eoN5aSh6R/LpYHD8O47ivp9yJBKE1hmtVqWLxQ4YkNdOkrAtMckbR/ODQP1SUgxHj0IDuWmR/Uv1wItIpyb1LRUD56Pc+fmaA2HuNTHbm+njBceBJ7ORepqP38Ua10ODwtZIlRO1m0LUTy3oHffepyt6oeo9M0ptMRH2+XT95Cj49aRK+ITdrUuxzo1vcNl4+grpv+aO1Rb70p5nDD1zvoH1DTiTAQSM55Kc3Sx6RP5ajyN68PAT75fuzexyJFf46c91IVI9oCFBcHyBp+RCgl31+yvc3JvNDgeQmYdM4lXXw6RnFo8HdchHFVvVxAH3563n1iEnyaGznanxhFMv7hH6XqqNHsTyiel2s7yHXfIdRekBIrCjTL3S7EPOoiCiS7zNlaMQ2+Fs/3OLeViVPg6F7LVHw6Sv5LjlblCKSV5/VeDAhxCz5RuEi2Qx+JM1DykLyujXyoGqg9I6bt0Of9wfZcp7EE9y3eDBFmxGA+nZznTsidfxtztlgl4KZgs88ybelgOTxGZdT7iQIj7iJ5FHfbh3TXQ8l6zJyp9xJPPh7wFOlMRTy3Gst4wMi+QFTzw9UQaHu3Ubwtqlr2Yo+A+gUDaiLR8v6oiSUOyN34oqW9ro1crYm1HboQoc6S9S7u4zcW+XURLmTON3HqIN/2rwM0fsdlTvUPXu05/kxxe9YX1m6VhTL+xoPrNaET5LNupGduRU9BZ85kofc9whf47tkoFn4WsxT7sTLj+M84UvtWRWFw0HoW4y6fkLieR8j93yZeRmi97nlTerhFAIfGPa1lkevEd1PXosfEbxpcCTHbnIUfOaJvlGYWiYngD5D7M28GiSCH0j0UV8RpuhR1w6pv8qonSTo/kWK2dV269DP3Ze7YaaK2FEKhTEYIH3dNx718aaGo/vND6kUPCWPIvutCYjmGbWTaP9QVhn38TxjcgLFl2isd1j+GLbyzJFkjOLNoKrp5lmPig//9gP/MqSpRR08ktxA+hIkJvmFefhYCp5o0dca0XysRY8f1CYOHkPi8KNZYInqe4wBbAhJtnsVct8gfOlmbYHQB4b/4c/MiFTMloyLkHu3eR8KntiJfpWclonoNcRDlL7XEHsXzzIhhHiTPKSuRzlEnTt6iRh174jYfyflPmYwEAqeOIm+yIjm7xO+LHheM+G1GdH6QQ4WQwghriSPVvWrhfv2JIjYd1kjdwqehBvdFwWRPYQuWPxOCCERiR6CrwvyW4sAqs0uaqfgCSGERPrAXyp8gwDhwR+vS0yr0Yixx5hjyGf2UAhf9ii6z9d/2w0kQ8ETQgiJhtjRQwFJhua53AVyfxUTRR9fKHhCCCFuxI5eCUgstCTMQ0Du7EGTIMEzFz0hhBAnub8YTO65NbNE4brFwQ6DYzwnj7WGZzT+cDx4QgghTnIP2rJ75p4GkVPuG968f9v7wTZdI4+Jxrgv8ezGD0bwhBBCrDwXSu6I3LXcizctEdlF+aGOucbolUMoeEIIIQmI3kM2poPMIXWnv4OwySgdIBQ8IYSQOMod8l0RarupW783JmJHRI86+RC4Oj6h4AkhhESXJYaEHYHEC1bPD1h2qeusmk+T4nfBCkbxFDwhhJD4sjTUBnYSP37rU2qeV1slJi2rdhPF1/JUU/CEEELigBFVB21Yh8gdEjcz3NohrvQN+aN4u+J7G+bxjFPwhBBC4kNQufsa0t1juw6t6c/vbfe/LlxXF+q9Sni6KXhCCCHxoTTYSkhbd4sDA82+MU9GZeSO/vBX+oeubfvw4oBtGcFT8IQQQhKHY1QNWZujd0Trp+t3q2L5S1/8c0zr+WDRPokfzGRHCCFEBeXBVvYs2up/jai9uHGJuNh23F/3jvlnWWt5Fil4QgghSYbtkKRoFT9jT8OY5WhY17/9fX+Duuk7V6op4Imh+ZCK9N2+F4kuLKInhBCignS7hVMd+rZrsUP0TqDVfX6tbdu9EzzdFDwhhJA4UCF2nLBKHsXwwRrLZReG7A6nonqbbnMHecYpeEIIIfFjnzlCR2v4YCA6L1j1zaDb+BrojclT38pTTcETQgiJH/v1CxSvh0pYg9bzebVVIQ9qGTN+f4XYMcBTHXvYyI4QQogCxfSdogFjtq9BA7nsoolROa5uaS98LfU5JnycyLp69arIysrimSCEEKJT1r4oQmS2C5PN8iHiVZ7l2AGna1hETwghxBzFI8puFCH6xYfBfso9vlDwhBBCrJJHP/UHoyh5yL2RZ5aCJ4QQkhyS/4GcDkd4qJco98TAOnhCCCFB6RQNGCd+jfA2ClyrnLYY/etJnDDXwVPwhBBC3Iq+Vs4wzXOQ/WFj2k+xJ4ngCSGEEJJesA6eEEIIoeAJIYQQQsETQgghJCH8vwADABMBhtY1vJo8AAAAAElFTkSuQmCC";
 
-		private string imagePart7Data = "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";
+		private string imagePart7Data = "R0lGODlhfwO4AfcAAAAAAAAAFBQAFBQUFAAANRQANTUAADUAFDUANQAASAAUXwAAdDUUXwBISABIdEgAAF8UAF8UFF8UNXQAAEgASEgAdHQASHQAdEhIAHRIAEhISEhIdEh0dHRISAA1jxQ1jwBInAB0vxRfxUhInEh0v3RInDWPjzWP/zHP3XS/v0ic4F+P/3S//1/F/481AI81FJxIAL90AJxISJxIdL90SMVfFJycdP+PNeCcSOCcdP+/dP/FX5y//4//j7/gnL//v4///5zg/7////+oqMz/u+DgnP/gnP//j+D/v//+vv//v8zMzMX/xcX/////xeD/4OD/////4P///zMzMzMzZjMzmTMzzDMz/zNmADNmMzNmZjNmmTNmzDNm/zOZADOZMzOZZjOZmTOZzDOZ/zPMADPMMzPMZjPMmTPMzDPM/zP/ADP/MzP/ZjP/mTP/zDP//2YAAGYAM2YAZmYAmWYAzGYA/2YzAGYzM2YzZmYzmWYzzGYz/2ZmAGZmM2ZmZmZmmWZmzGZm/2aZAGaZM2aZZmaZmWaZzGaZ/2bMAGbMM2bMZmbMmWbMzGbM/2b/AGb/M2b/Zmb/mWb/zGb//5kAAJkAM5kAZpkAmZkAzJkA/5kzAJkzM5kzZpkzmZkzzJkz/5lmAJlmM5lmZplmmZlmzJlm/5mZAJmZM5mZZpmZmZmZzJmZ/5nMAJnMM5nMZpnMmZnMzJnM/5n/AJn/M5n/Zpn/mZn/zJn//8wAAMwAM8wAZswAmcwAzMwA/8wzAMwzM8wzZswzmcwzzMwz/8xmAMxmM8xmZsxmmcxmzMxm/8yZAMyZM8yZZsyZmcyZzMyZ/8zMAMzMM8zMZszMmczMzMzM/8z/AMz/M8z/Zsz/mcz/zMz///8AAP8AM/8AZv8Amf8AzP8A//8zAP8zM/8zZv8zmf8zzP8z//9mAP9mM/9mZv9mmf9mzP9m//+ZAP+ZM/+ZZv+Zmf+ZzP+Z///MAP/MM//MZv/Mmf/MzP/M////AP//M///Zv//mf//zAAAACH5BAEAAP8ALAAAAAB/A7gBAAisAKUIHEiwoMGDCBMqXMiwocOHECNKnEixosWLGDNq3Mixo8ePIEOKHEmypMmTKFOqXMmypcuXMGPKnEmzps2bOHPq3Mmzp8+fQIMKHUq0qNGjSJMqXcq0qdOnUKNKnUq1qtWrWLNq3cq1q9evYMOKHUu2rNmzaNOqXcu2rdu3cOPKnUu3rt27ePPq3cu3r9+/gAMLHky4sOHDiBMrXsy4sePHkCNLnky5suXLmP8za97MubPnz6BDix5N1sgIKAZNo5aomrTr17Bjf2xdkHZBHCpsE9Qtu7fv38AF8pYyvGHx4MiTKy9sZEMGACFiAACB2siD6dWvYyd+nbpqHCEExmAhRTp04s4X+NDuvfvq5fDjy69rhEIQJRNYRJERJMoMIeXpBwN5qvkH4HiqKXGBEAoCKJASFgRRX38DEjfCE/8FON+GHHZ4VoH87SehdgDkdpqFUFgHwIomojaeDuFJocOKCUh4WmumFUGiCjKt6OOPK3oo5JBEagRif/zZhuONJwp3IozjEVeBECKqtmQRTc4EAApcdtklAAupCECNGR3nEG0zAkCgdirgx2LakXDGSdeRIuJHIA8QBiEjdXYSx0Nr+FGH4oQJRrgnEvn52aOXjIKpEI4PkHeRmcadaMSUlwqhA3kQ2sDpgnKGKqpadPLH3YrkpdmApdqxQFsMPIoHgAMd2Iiaqje2uiijX4bZJKTYNfccmeWtGJ6wCWBgrLDQSSeoit45B10UMBgLoxQiDpQtiqN26+23Bm3JK5eOJkRbgwYGOOGe7+W5Lo722SliugjGuyCOU2roJBSBvgfuvwDDKe645SJ07r07AgpqmjUuWd1p8yaZMMRJNmkesXkOlGnAHHepzOHAvBZ8EG1WZqmwEJlWaenKUERsq8YUv6xthhlra6rHOOccHMiN+podp4ka8eeJ4A1qn8Moutyn0EfqVvS6UuSg58Y6V221azx7KXJq2hF7qppiClosrS9TC12pU7dKZ7Xh4bCd2z5qQKOeV9dtd2dZ94oRpXf37be3QAZeZpZ/F2744YgnrvjijDfu+OOQRy755JRXbvnlmGeu+eacd+7556CHLvropFGXbvrpqFu1deqst36Xj67HLrtcYNY+++24n+Xo7rn37jtYq/8u/PBTBU/88cgnZXzyzDf/0/LORy99TdBPb/31K1WP/fbch6R99+CHf9H34pfGb35D5J+v/voDpc/+++W7D//83MtP//2sK1HCamlK2j9C9sOfAEnnNkGprGUV81f7BshA3znsgNsqSAAbSEHOPTCBESTIBCvIwctd0FYZbN8SRkjCEprwhChMoQpXyMIWuvCFMIyhDGdIwxra8IY4zKEOd8jDHvrwh0AMohCHSMQiGvGISEziTD54pIMAgAhQjKIUp0jFKhKhg1hcXGsgmEAnWvGLYIRiFsdoOLipSUaoEsj/vBjGNk6RjHDU3BPdSMcrxvGOYZWbYx3biMc+Sk6PewSjHwfpOEAG0oqETKTiDHlIKirykYZjZCOlCMlK9k2SkxSjJTdpNUxmkpOgzJknJxnKUnJslI00pSrBhcpDrvKVo2plIGFJyzjJco+1zOWQbllHXfqS8mOZROQvhwkfXtKRmMj0zBrXGK5gVjGZ0MxMplLWxWY6843RzCZlrsVFuknwmtjUpjgfszEExYyN4NTkONfJmIuB8GYSTKI850nPetrznvjMpz73yc9++vOfAA1oCXVioCZaM512ZKdCFVO0A6IznQuNqGEKyL80PhScEs0oZYzpRo16FDIc5eNHR7qYkIaRpChYRYxJBZnSlg5mpV90qUwBA1NhzvSmeqnpM3HK09chVJ09DWpcdOpIoRr1LUQN51GXmpakUpKpUNXdTxMa1aqGxalRtKpWgTfVrXqVK1gF6lfHSpWwUpWsaH71yTItelCIpvWtPGkQNWX2zZ/C9a45aZBcz9lWjOL1rzX5n0HrilDAGjYmDcKBd/gaT4E69rGQjaxkJ0vZylr2spjN7E24iUF4arCrhw0tSzKVJ4f29ZqiTa1K4OY/thLWraqNrU3MKtva0oS2ts3tS3Cr296qhLe+DW5JgCvi3OKChLeMMq5yMYJbFBTEucuNrkRoC93nSve6DjFrdQ2yXex697Xg7C5BxPvd72r3udAlb3mxe96B8Gq98JVCe8frpfiWl7oHSW5X9MsR/tq3Jv5NXHOtK4UAW6W76qUIgv8LYAIvErQFri99u3QTA1uEvAmOCIZ/YmHAdPjCEi7Mhysy4gZz12NmPA8zwYtah5Q4JQvOSIIz7OKE0FgmMR5MjmXsYMHsGCM/xsmMdQYr07LYmRIJsUs2DOQJj+vJUH5yjy/yYogwuSdV1rCSm3xiHndZI1meSZgbcmUq55cnQ//G2TQZ+1m7TmTLMLYxQ6JM5zrb+b1SvvCUSSxnNO9Zz+MFc58BfWYvu5fDf37zoPmMkBu/xLnjKnDOYJU0z7YPwm+m8Eq2e+dOR/rQZnavpx1dZkYXWielNnWguSyQUbs60Ro+NaplrWpXjxrWOKazxzY2WA3600vztDWwWYgCFRYbh8dGYbJHXcJkn9DZKRT2sHPIKB5Cu9nUNnYLpc1tKC+B2cTW9g6rPW5xr7Db6K52l74dUF6Z0N2ZjTcKc0LpSnuzzYWVsaZFEuVVhxrXVqZ1o9NN8DsnGeAP4XTBF95pf9ea4e8FNatbLWhRQ1zJjl6IwiMeEzyfmePdopr/kfENW31zibtwnjOUF01oim8kyFpG95zlbHCWuzzmF69zhBuucZsfvNEqL7iiv2zlhc8c6P9G75g7AnJJO3zn+5YTtWKlRteS3K/9lTDMlf5piT+dyikHe9STjnAyC9ziunb62bv99Z+f3e1tH3rZj95qbr9d7U62ddxjTfSWgzrPJGl63m28dFER9+UpF2+/FbJ1rKR54ngns52hrndYZ5zxPpf7zQ29eb9/ne1st3zFvQ55DAsezIXXeOqLdPisj53yp2d82LWSahC/PtO3hjvpVb1725+c6bPXfO+DLmzhd17sv3d98gcee7TPePUJ/zD0fdN65eu8L42nyePJgH55s+89K9kPONJLT5WuPx3B08f92MMfn+q/vO7N30v6T7J95HffxcGnff7Ff/ck758pebZh5qcSHtd3HeJ+o2eAoVJ7C9h/czGAsHd//HZ6Ekh9mPYR9Tcq7AcnG0gXNVdhIFeBzLd8mYGACTh8ojJ/8qGCawFpBZgTLrh4vCeCtyp1gSDRgQymFhloYvDHcz2ngBtlgzf4fznYgpknZoOWe8eHgpFhgkWIGQzIg9/nfNfHhCAlhE/IGTgIE1uYXx9ofzmFhVm4GSxIf0TofT0ogwk3d2vhhGNoOkP2hQpIg2Phhm9YOlFYczsIF3Z4h6TThXJIh1clhn6YOioIeJEHFmYTIyt2dS1WiOuzh11Rb9hSTUcWTJDIPpK4FQ0CMwh0b5fmZpmoPlHIFWJyLGwWivk2iqTIhotX0TSpKBAAIG+0WIu2eIu4mIu6uIu8uG3TZk830Rrm9IlOlATGeIzImIzKuIxJwIqi5TIj1z7MOI3UaIzOKFoqEiuNKI3V2I3JeI3RBQDeOI7WCI7KJY7k6I3meI7pqI7rWFzo2I7U+I7wKI/VSI/CFY/2uIz4GFz6uI/f2I+99Y8AeYwCOZAFyY8HeJlbBJmQC8mQCamMD2lbDVmQE1lbFQmQFylbGbmPGxlbHWmPH6laISmPI2lVbjImerKNshiRAXmSUNWJAhGNLemSBgmTMQkq+xJCNWmTzYiTTJWSPNJr3OiTQFlV7hKL8tWLTNmUTvmUUBmVUjmVAEVQnQWKPWmTR1q5VJsiJVRiiRrkk+W4lUIlJq11RsUolmSJVyXZjmt5V22Zjm8JV3FJjnP5VnU5jneZVnnpjns5Vn3ZjX9JVoF5j4P5VYU5j4fpVYk5jYvJmGL5k49pVY3JjJOKqVWVqZCXGVWZKZGbyZmR+ZmgqZaiyVSd+ZKl6VExICgsKV+hmZqqyQExUxyniYywqVG4UTLEGC6veZsLhRuDopS1eZO+yU5m4yMggCW72VhU2ZzO+ZzQGZ3SOZ3xphO6yZPyNQTauZ3c2Z3e+Z1DUJwZBYsKJIvgeZ7oqZ3iKVGt0ZoAkJ7w6Z3rWslT7xmf9hme83lT9Xmf8Jmf+smf8emfM7WfAHqeAipTBFqg33mgLpWgCtqdDNpSDvqg2xmhKTWhFIqfFjpSGEqhG0pSHfqgH8qhGbqgI+pRIaqgJ4qiJSqfK3qaUSlaoC8Koy0KoTMaUTEKoDdaS0JZdWgZLjXKnTtKS12JLmDZPkFaoUNaS9dpaeaZpBq6pKrUL/bmRFAapVKqSmu2nL5GnV76pWAapmI6pmQ6bznRTVYKpVmqSlLjlTSZnWq6pqXEMHTjnlcqp9qUo/yJp9mkp/fJp0nR5Kf2CajQJKgBSqjIZKj9iajEpKjpyaiNeqeQ+kuOip6TSqmSeqm5VKkGqqmbmqmeCkucCp6hWkujaqKl+kqn6qKpukqraqOtb6pKryqksRpHYqKNVoekcVqrZFSkEfKms6qkvBpHaAqkuzqsZNSkWAmnSYqscJQxRCmLZTqt1Fqt1nqt2CpQOFEz0cqsQeqsWQQ1lUhXGgSq4EpBKcYjdnqs5/pIwaqe7VpJ74ql8UpI81qvkHSv+EGqSPq6r/Zqrv6KR/0asH00sAR7RwZ7sHCUsAo7RgzbsFj0sBDLQRI7sRRUsRbLQBibsQK0sRyLPfpTUT8qQQD7sV7gQ1HjSpsla7Ld80Fp2qwsaz4ua6wwG7PiM7PMma06u7M827M++7MmlBM4W67sarPcs0VH+qQ1a7TcY0apkqtK+61Mq7ErO7Xv47FWGz9Vm7Xqg7VcCz5e+7X1s7ViPys+YVu213O2aDs9aru20dO2bts8cBu3yTO3dHs8dnu3w5O3evs7fNu3vfO3gFs667q0g0s8wEq2h3s73Sq4i18LOo2ruI8bO40bOJZ7uZibuZq7uZzbuZ77uaAbuqI7uqRbuqZ7uqibuqq7uqzbuq77urAbu7I7u7Rbu7Z7u57bE906ufjzpryLP635u8I7vMRbvMZ7vMibvMq7vMzbvP/O+7zQG73SO73UW71eUQMAcAIggb3a+xHcu73ZC77d6xHf673ha77j2xHlS77ny77pyxHrq77tK7/vuxHxC7/zi7/1qxH3a7/567/7mxH9y7//OxnYuyIewL4IrMAAkMDyu8AP3MAM7MD4C8EVLMERTMH+a8EbjMEXrMEEzMEh7MEdDMIC7CMmjBEHTMIjnMIXscIubBEwPME0rBlHYAArIgIeccM5vMM4DAA63BE8DMQ+3MNC/MNBzBFDnMQbscRFTMRHbMRKjMRPzMQa4cRRDMVTLMVNTMVZbMUZgcVbrMVdzMVX7MVjDMaZMcAnHMAqXMBtLL5yjL5z7L51TL//d6y/eQzAe0zAbvzCcPzGfyzDgQzIg1wRbGy9WegCBAAEA7EDBeDIXdzIHuECP6LGFcHDBNADOIzJocLIkiwFkBzKFwHKjxzJGmHKAjHKqUzJq4zKGaHKogzLKqzBrCzAtkzLL5zLpCzDvMy/vzzJvXzGrnzExXwZLmACDNAEA+EChwwRR4AAnPzMD1EDDvwCLVADCsDMsay9N6zD2KwR4TwQNUDNDTHOAlHOG4HOUqDO4twCBOHOGcHO8owRybzMzWzOC3HP3CwFzpzKytzP/xzLAZ3PAI3PAjHQGMHO/qzPCsHQCn0REO3QCTHR71wQEY0R0TzNOyzNBkDRDLHRiB+dGc68Ax9g0E2MAI7sAjEcEU4QAfDcztqb0RThBBLgyNHsyPVsEZYcOCB9ED0NJD9tEEH9I0ON0ZZ71ARR1D6i1Pls0ihtzycA1Qnt1FVN1Q2dylN90lWt1VhN0xPx0vCc01mNEWItBWQN1hJx1mlt1Wyt0mV9EW+90lY9EGnd0hNx10IM1yz/jRn/fAMJfNaxnNSprMNOAAEzXdf/XAMBAM8MXRGPvc4x/RGRfdEgUdndLAWALQWCLdWaHdgwrdWfzdmhndmb3dmlrL2nXdoqrMM7MAArgNoy7NqwLduITNuxzdovjNu2TRE1wNu6zdOEPdg+ncrDXRkDfQNmrNFw3RGHLcIZ8dwKwAQQwMLdktzLXRHYTcapLRDKzd083b3f7ckSsd3k7dLV3ciWjNcQ8dzqbd0V4d5AsN4bId/0rRH2Dd8WQdYfwd8dPcyKDIlqndkgMeCeXck/0tgbIcu3TMwAXsqXvMWb3MkcUdQK3sqh3OBhbADHbNw+ct4RocmcDN7C7SMX/x7LxazhGs3hD17i2Z3JODzhJK7dCT7Z9pziurziHe7XdQ3UPU7UP47RQe7PTHwEB2DjPF3QXZ3SHG2/15zN2yza3ywFmB0RLlDkR37QAv3jIv3j1iwQ2KzN/dzdU17lEHHlBGHkSK7dSh7XYezRXv7kYi7lBgDOa04RaG7XWU7QCO3mzN3kmmHg3V3gQx7V+B3cgv4QJc3Vfn4Reh3dpa3Oid4QNo3TcL3TNY3oir3Vhs7cK83eDiHYku7WN43Wl+7Wmu7VjD7pD/HoZh3piR3dpU7WmB7Wqd7NX83lfA3q09PXen7nE/HXoA3s5X3cpWzYiN3oeK69jO3YxG7lGv+s5qK92s9+5sbO08ge65nd7FRe7Yoe7Xvu2dTu4UJd2Jyd7KzOEIut4Gb+7Wke7t097sRd7pbx5afc4hFh70Fd6EtexoVc7Cbu7You3i+eyc3NEc+t3xYh3dSt8MFe4wtO8DNu8Phe09Xt8BYPANNd3bzuEBYu8B4v8SAe4gdf3xff8Q/B8Bxf4RAv2ppd8BTh35hh0fMc0/+c7vs8vzifEGeN5tIe4L8x18q+1qV98z3Ow9278xXdAoKt9PvM70NP4B/h9CEfElTfEFev7lCf9U9v9Vv/9V4f9oQu9lMP9Xrx26Jc28F922id5VxvEEj/9t7dyOq8AwIA8gNP9pVIDPZj3/dlr/cdIfcIIfg+DvgVzvd/7/d7b/iVkd8or+5GTPgE8dxH/8MAcOIRz/gun/icv/iKH/iI7/mdD/qaL/Wif/qk//lA/7/IEw/hI//wr1/ssf/JOF7xil77GH7vuf/Ktu/xuI/LBKHiiBzMtRz8OT78xt/7DWHvvD/FO77hz6/jys8Yc+69UW79Yw6/1+8R9Nzj3S/Z8ez9Nl7rFPH9Wt7pbN7ngs/P6I/nbb7+71/XNL/QSC748y/R9S//+a/EcN7RANHDwAkpBQ0eRJhQYcEjCAQSXBhR4kSKFS1exJhR40aOHT1+BMnRBQCSJQFABDnSJEmUH1WubOnxpcmYHWeWrCnyxI4PBl3k3PiTp0+gGoX2LPgzpJSjRJc2TVoUo5MILaQ0BMJU6kWqVrFqDdn1KoKsSkGK/Wr2I1qyYJeOLevhLf/Dti7kzk17d+5evn39/gUcWHDBF1b9Fv6L+LDhvor7Kr0hV2xIyJKrPiUYWcrklJktM3bpefPlkDVESNkxYAXnj6ZRq2bt0XXq1aRBzoZtu/Vp2rFtrmT5FPhJ4cC3DkaeXPly5s2dP4eu3OwNkqcxF6QOwDpliNm3d8Ze/e108UudQABAAMhIvWfRq2f/9nz69QDar31f/77H+fDt7/2qrwD5GjA6Aw9EMEEFF2SwQQcfhDBCCSeksEILDXRBPYN2KCAryjQsiEMPUwIRtQ6fKlHECWtoT8XS7nrpOJtkxOgIA4JbscUTX0wKp7/UWspGHCVk8SAXb4PRR7+ADEn/SOJyNHJHJHsc8kIrM3LBBAaacIoyLbmM6qkvu0xpzDBDckyKGmisKE23QFJMKSZ/a2nOjcRy4bQjDgDNozTXfMtNOzeKk6BBjXryzLUuy/MqPpf6k02KBJVUokLfdClRTDvCU89H0QQNUEj7PDSjS0u9MtWEoNp0xqEUDe3VVnWSFdWLbqqS08vSqnShyeTsNSIhIbLVosJ+DVYhXDXV1au6kkUI2Vk5GhZWP1uQlrLhoD2IrbK4NUjaYi2qdlqNjiVtXIqWBbcgb82dKl1D21UVwspG63NGKTTzTad9P7uOX92u/Qu32vLlyLU9rVKX3BtPaFiiG9QDdAcBECYUwePSeMtN44wUfjRiioYVeaGJgaj44lEL5vjgpUBmmN6DSJb55JQ9xsjNuQzudyOY4a03aPK0G6+78rgLj+jr9j06wv70m0sl60qmaD6Zr7qRpABwTvDp+MYrj+qJrH7LSQC2ptDr/8BWWmyJyA4y67O5RlDt/WQK++qg9+a7b7//BjxwwQcnvHDDgzIJbba1pvvWxBu3aCbFM/0uaqX5GqlysDUXjnNtPU/p8r0yX1J0y0GnvHTU8V79t9ZFMn1z1Wf/P7zvRg1a+Knvcqds909T8h3yiWpQAEy+iDd+L+T9Wr6v5o8vnvnonZ8e+uR3rl757LG//q3nte/+5e29H1/88Esrv3YLY3M73IHbd/d9etnXW33778c/f/33538wu2b+nUvaw7uUDDCAMjGg8Pq3QAY20IEPhKD9JKfAiUzQciWZnLYwSMEIdtCDHwRhCEU4QhKW0IQnRGEKVbjCCmVoREdySYqkFMMXzlAmMhwRDTdkQ5vgEEU1zOENgfjDHQaxh0P8EBJJpEQdhoiHIvFhEotIRCcaEYpMFOIUWZiYUF0tUoHqIhgPIiovbYlMLjET0G6VRvglhY0yy5IZrWWT/zeKSY5qjFwdy2i8NjJFj2W6Yx/jyEc4/hGNgSwkIu1IyEWeUSaG3OLotlUcmFCSJpZUUmdqBcedIAWPFWGVIDvpSFd5UpSbxAwquaNKTZqSk6yMlStTKctV0rKVpKSVLWOJy6CMco655GUk4cRBYxGzTcacFDIrKJqeGYWZA9OXwJTpFGkGDGBIqyY2rwmebHJzm6H5F76sKU5tktOb5gRnN9P5TZk8c5phUmc7w9lMYdZzOUN7XeSMFjt9MY2f/vJnPkG5T4Gui6BFS1pBl5lQhAa0od55aNPA6dClQbSiEpUnRZGmUfBwdKIWtWdIRTpSkpbUpCe9ZxSXqMWVVnaRiiayIuw2eEHG0XRuNs1g6Ga6uJvyNKeZ2qklf4q3oGqwpj59p08eh9OkUumoQm0qU5aKVJQ+UpF7DCaWIEnHqwIPgEm9HUMOaJPg6e6rZsXdWEVS1t6dta1pBStbvQpXtIo1rm6dq13r6qi70vWtev0rX/dK/8CqYsmXnzQoLNup2FJmlSvyCwtkzyLZRZFqfpTlD2abhZA20i+ylv0sZy8L2smStrKiDe1BOqtZjni2tKh9rWrrZ8970RMjtYWmv+IZTXbaJIFP+S1lgltAvAqwuAg8rm+TK5LhGtevxH2ucwEL3elKV7DCXW5Qmovc6HK3ut69bmENy9CL/rOX5N0oSI3aU6gy1b1UhW9747veof6mqDp9Kn2jasH54pe9+n2vfMU7YAIX2MAHRrD+YgAAFfhlwQ3uy4MdzOAEV9jCF8aw4HAAAij4ZcMd7suHPczhxYzRi2FcmUHIOEwTi1HFJ25xiguy4o98UcZqgvGLXTzjHP/zeMc4/jGNCabjGwu5IzYGVYwznGF2YTJX9q3kejMJ1Cj7d8pErTKVLynlJ8s0y1jespW7jDjjOJlZUA6zlq+M5jV7Oc1LrrDOfrwXOd+YzlFFSJ2TXGI+NwbPB9Ezi/vMl0DX+M8GKfSQ/QxnRjfa0Y+GdKQlPWlKV9rSW1ywSVgwl0yXZNNv6TRJPr2UUANg1FJ0Kaph+lIYZjHVLV21qlt9RJY2MdawnvUVa+3qW9s610FRqa+fCGws0vrVwo6pUYL9aCWUAMR8afaz9xJtv1B7PFsVCbaDom2jcFurXT0kI7H6y22D26riBiS6w+3YNZqbq+o+N7vz6O5s07tD3PB+t7wvHINT74Xff/m3g/u9S3I7k7HALLhhD97LhRtcl4t9eGMTftvDnjLiCEfsMhuu8IszvOMO13diP87xkGt85P8ZjgIMBr6UlK88JC33C8wRulvd9rbm6JQnzc+rc2fOM7c7tznQcc7bod/ctrdy5ziPrk+fgzXp5Vz6QJuu9J/3nOcWDnUI/G0SrXOa61svSdcjat6eezSj6v0oRvuJ9rOrHaBsX7vbz2v2uJN9vHR/u9zLDve8253i6O0o3+cu+L3r/dKHR3ziFb94xi9HwhGmMOQhzJfHUz7ylp/81jPv9c2D+vKan3DnSf15zofe9JI/PeYbL14Rh5jErpf2XFrPl9nvpfayfz3tc2/73eM+9m+5PfB7L/zfLyX4xh8+8osfkuMzP/mrh370pT996vOFBkHAgcs/cv3s94X72vf/yPerP37yl/9+4rc+9sHfEfTvpf3mh3/85a+q97+l/ku5f0jyP3/+99//B9q/7VM/7xvA9Os+r9M0BPQ0BRQ1BjQ1B1y/jCi1CMSICYTAC/S8BMzABdzABuzAB/xACrwICwxBDBw9DYy0AAy/AnQ/FpwLFfwIa4M2Z6s2GuwLGZw2G5zB5QMJHJwLH3wLIFwKIQwJIuxBHcxBHoxBJPxBJgxCJxxCKCxCKYQzGOQIK9wILNQILeSIgIswEdwIL6Q8MNQIMfQ3MpRANKxANRxBNrQIM+Q0N6wIOAQ1OaQIOiQ1O5wIPAwJPgQJP8wwLsQIQbwIQrQIQ7wImeMLRdwLLkacC0d8C0hkOZWLOUrsC0l8OUtcRE1sRE58RE+MRFCcRD2MCEwECVP8CFT0CFX//L8GyjqwIwmxO8FYhEUAkMU+/DoGvMU/zMUO3MWPeEVdrMVf9Ihg9MVhREZhVMZjbMVmdMZnhMZolMZppMZqtMZrxMZs3LcFEAKDMIIK6MYgnABuvMFxDMdpM0dtVMd1nL8YSAEdBMSMUIIL+IEJIMWEmMd6vEeEyEd7NMB9RAhEpAiBnAiClAiDjAiEXAiFVAiGTAiHDEgXtD+JxD+K1D+LBAmIPAiNNAiOLAiPlAKQDCl+MwISMIh4xIh57MYYIMaOUEkpYMlpu4CVbMkrxEgBPMAWzMkXvMkV3MmJ/MmKDMqLHMqM7En2O0qbLEqcBMiNTMosfMotjMqMAMmq/5xKBPs3HdC6KJCBIJhFFATG4djHUvNAoWzKjrzKQkzLQ1zLirDKpfTJs/zIthxIuixIuzxIvExIvVxIvmxIv3xIwIxIuERKwlRKuRSpgNMBkhA9j3jJG5zJaotMAjRMqKxMqbxMqhRMp8zMQdxMtOxMtQxNthxNt/zMuSzNukzNu1zNvGzNvXzNvozNv5zNwKxNdrySt0RM3aTM3TzNkPxN3vzH3iTO4TROnfTN2+TM5ETMkMKBruu05kRHAFiAeiS9IpyAsjTL4kRO7uRJ5QRN5vROoBTP4/zO8uxO8yTP8dzOFPRKmNw0lDTNg7jNf1OCCWiw63u5roTJBlMCCzx4z/ZMzwE9T/YkSvQsUPUU0AQl0PVU0AM1UKMET9SUTmHiyvf8N/m8Q7F8uRnoxpeszeu70ILQUNw00RP/fTQc8E8Ahc+KBLhNw4EE8Er9DAkd4MbuMwIKCFAU5dEenbRMg7ASfY6UAwAQeAIYsMUfzE6SkFEfddInhdIoldIppVITuk9yhLZ0lD1Z/MZzxE4sRUcwVVIx7UMw7VJSM1NwRNNzPNMyZVM1lZDnPIg2HUItBT4uhVOQkFNvzNOP2NOCoNMv9VLmw9NBrdJ66Ue5TFSeRAghnYhFlUl9hDZ69EdQe8dnc9SFcEd4HMtLPclO5VQXNYjbpNFP/UFKbcpSJdF9VNUWvchGbUpIFVVTPVS+ecmYPFWaZDn+vNVYjUxcDcJfrcmNuNVhXcOSpNU/ZAFkXdU8ZFZXVdZn/81UhSBLEExFXv1VX9XV/fTKXuVWKfDWU8TWldRWmDRWixjRcK1VVanWseRQ5mswI9AAHhhRXAQOd73Xr+RAZZUCrZSCeuVXfwVYYNw0geXPPizYrTxYo/wLFZUCeaXXhQ3LfIXXh53XgfUIh4VYjO0Ijb1YiS3Gd9XTeP3YHV3XVHnMSTXUU0RSblywc03JyVRZyVxZgi2IxbzOjlBMxqzDm+XZPPTZnG0QInXZJM3VTaROIXjZUEzapZ3EpjXaYK3ZVWxZpY3ak8XarNXarb2QUGtMnTWJr3XMJQXIPY3ODmzSMZ1ajrhP6rROsWVbsr3TOe3TiWVSkz1DCgm1tP/9SrjNCLPdVz8tVLTFW67tnz3lvufTCMTFPsXFiBGNgRUtXKhs1mlNiMg9iP+cXLZF1TgEV/wEzm/FXM2d1Wbtw8wjXVw8NcuNSPoESMw1iNTV065LXCX0zMplVZNl3YOA3YKQXQF0XcOtkHrtvt0tCOKNz9ytV+P914PN0HvEWOaNXWFlOQ8F18gM0SBYXugdV2hdRZCV3s8FQelt12/lXe59z+JFX9z9VnX9Xt3F15WoUOHltAaDOfK1X0qUXhsVAhzVUeOTXO8tRln83ZClWH6N0Rnd3IzgX/9dYIzw2Ih94BEkYBZVUlOT3lbltAqe4DfM3+QFYHBlUemNYI4E7UIOLoFd+rUQIr3ap23hOi0JvrXXIH1dk5DhIpRZpjVSJIVZi2jbu2Xaou3hObThDt4IIp1fwmXaF55h02VZqB3iDY1hI1bhKrbiK8biLNbiLebiLvbiLwbjMBbjMSbjMjbjM0bjNFbjNWbjNnbjN4bjOJbjOabjOrbjO8bjPNbjPebjPvY24z8G5EAW5EEm5EI25ENG5ERW5EVm5EZ25EeG5EiW5Emm5Eq25EvG5EzW5E3m5E725E8e5IAAADsNCg0KPCFET0NUWVBFIGh0bWwgUFVCTElDICItLy9XM0MvL0RURCBYSFRNTCAxLjAgVHJhbnNpdGlvbmFsLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL1RSL3hodG1sMS9EVEQveGh0bWwxLXRyYW5zaXRpb25hbC5kdGQiPg0KDQo8aHRtbCB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94aHRtbCI+DQo8aGVhZD48dGl0bGU+DQoNCjwvdGl0bGU+PC9oZWFkPg0KPGJvZHk+DQogICAgPGZvcm0gbmFtZT0iZm9ybTEiIG1ldGhvZD0icG9zdCIgYWN0aW9uPSJyZXBvcnRJbWFnZS5hc3B4P0xhbmdJRD0xJmFtcDtGWT0yMDEyJmFtcDtUWT0yMDEzJmFtcDtTQUlEPTUxNCZhbXA7U0lEPTgzJmFtcDtHQj03JmFtcDtSUElEPTE0JmFtcDtQUlVJRD0yNjQzJmFtcDtHSUQ9MCUyYzkyMyZhbXA7R1JQTkc9MiZhbXA7UExPVD1MaW5lUGxvdCIgaWQ9ImZvcm0xIj4NCjxpbnB1dCB0eXBlPSJoaWRkZW4iIG5hbWU9Il9fVklFV1NUQVRFIiBpZD0iX19WSUVXU1RBVEUiIHZhbHVlPSIvd0VQRHdVTExURTJNVFkyT0RjeU1qbGtaTHpxb2k4WFovKzV6eDBXK09IalB1dDkzM0pBVnhWVS91VXZldGVGbGJLTSIgLz4NCg0KICAgIDxkaXY+DQogICAgDQogICAgPC9kaXY+DQogICAgPC9mb3JtPg0KPC9ib2R5Pg0KPC9odG1sPg0K";
 
 		private System.IO.Stream GetBinaryDataStream(string base64String)
 		{
@@ -17256,5 +17243,8 @@ namespace HW.Core.Helpers
 		}
 
 		#endregion
+
+
 	}
+
 }

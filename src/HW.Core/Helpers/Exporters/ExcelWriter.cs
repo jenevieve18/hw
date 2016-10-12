@@ -4,7 +4,7 @@ using System.IO;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 
-namespace HW.Core.Helpers
+namespace HW.Core.Helpers.Exporters
 {
 	public class ExcelCell
 	{

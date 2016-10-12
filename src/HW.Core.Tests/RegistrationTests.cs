@@ -20,7 +20,7 @@ namespace HW.Core.Tests
 		{
 			var session = new Dictionary<string, object>();
 			session["UserID"] = null;
-			//lalala(session, "D322060F10971");
+			//Register(session, "D322060F10971");
 			Register(session, "84A0D0B510981");
 		}
 		

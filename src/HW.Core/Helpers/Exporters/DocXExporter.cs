@@ -8,7 +8,7 @@ using HW.Core.Models;
 using HW.Core.Services;
 using Novacode;
 
-namespace HW.Core.Helpers
+namespace HW.Core.Helpers.Exporters
 {
 	public class DocXStatsExporter : AbstractExporter
 	{
@@ -88,16 +88,12 @@ namespace HW.Core.Helpers
 //			return output;
 //		}
 		
-//		public override object Export(string url, int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
 		public override object Export(string url, int langID, ProjectRoundUnit projectRoundUnit, DateTime dateFrom, DateTime dateTo, int groupBy, int plot, int grouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs)
 		{
 			MemoryStream output = new MemoryStream();
 			using (DocX d = DocX.Load(template)) {
 				Paragraph header = d.Paragraphs[0];
-//				header.Append(r.CurrentLanguage.Subject).Font(new FontFamily("Calibri")).FontSize(14).Bold().Color(Color.SteelBlue);
 				header.Append(r.SelectedReportPartLang.Subject).Font(new FontFamily("Calibri")).FontSize(14).Bold().Color(Color.SteelBlue);
-				
-//				string url = GetUrl(path, langID, fy, ty, spons, sid, gb, r.Id, pruid, gid, grpng, plot, fm, tm);
 				
 				Paragraph image = d.InsertParagraph();
 				image.AppendPicture(CreatePicture(d, url));
@@ -107,7 +103,6 @@ namespace HW.Core.Helpers
 			return output;
 		}
 		
-//		public override object ExportAll(int langID, int pruid, int fy, int ty, int gb, int plot, int grpng, int spons, int sid, string gid, int sponsorMinUserCountToDisclose, int fm, int tm)
 		public override object ExportAll(int langID, ProjectRoundUnit projectRoundUnit, DateTime dateFrom, DateTime dateTo, int groupBy, int plot, int grouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs)
 		{
 			MemoryStream output = new MemoryStream();
@@ -117,15 +112,11 @@ namespace HW.Core.Helpers
 					ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
 					if (i == 0) {
 						Paragraph header = d.Paragraphs[0];
-//						header.Append(r.CurrentLanguage.Subject).Font(new FontFamily("Calibri")).FontSize(14).Bold().Color(Color.SteelBlue);
 						header.Append(p.Subject).Font(new FontFamily("Calibri")).FontSize(14).Bold().Color(Color.SteelBlue);
 					} else {
 						Paragraph header = d.InsertParagraph();
-//						header.Append(r.CurrentLanguage.Subject).Font(new FontFamily("Calibri")).FontSize(14).Bold().Color(Color.SteelBlue);
 						header.Append(p.Subject).Font(new FontFamily("Calibri")).FontSize(14).Bold().Color(Color.SteelBlue);
 					}
-					
-//					string url = GetUrl(path, langID, fy, ty, spons, sid, gb, r.Id, pruid, gid, grpng, plot, fm, tm);
 					
 					if (r == null) {
 						r = new ReportPart();
@@ -155,7 +146,6 @@ namespace HW.Core.Helpers
 			MemoryStream output = new MemoryStream();
 			using (DocX d = DocX.Load(template)) {
 				Paragraph header = d.Paragraphs[0];
-//				header.Append(r.CurrentLanguage.Subject).Font(new FontFamily("Calibri")).FontSize(14).Bold().Color(Color.SteelBlue);
 				header.Append(r.SelectedReportPartLang.Subject).Font(new FontFamily("Calibri")).FontSize(14).Bold().Color(Color.SteelBlue);
 				
 				Paragraph image = d.InsertParagraph();
@@ -175,11 +165,9 @@ namespace HW.Core.Helpers
 					ReportPart r = service.ReadReportPart(p.ReportPart.Id, langID);
 					if (i == 0) {
 						Paragraph header = d.Paragraphs[0];
-//						header.Append(r.CurrentLanguage.Subject).Font(new FontFamily("Calibri")).FontSize(14).Bold().Color(Color.SteelBlue);
 						header.Append(r.SelectedReportPartLang.Subject).Font(new FontFamily("Calibri")).FontSize(14).Bold().Color(Color.SteelBlue);
 					} else {
 						Paragraph header = d.InsertParagraph();
-//						header.Append(r.CurrentLanguage.Subject).Font(new FontFamily("Calibri")).FontSize(14).Bold().Color(Color.SteelBlue);
 						header.Append(r.SelectedReportPartLang.Subject).Font(new FontFamily("Calibri")).FontSize(14).Bold().Color(Color.SteelBlue);
 					}
 					

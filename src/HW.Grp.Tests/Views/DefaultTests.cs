@@ -1,11 +1,8 @@
-﻿/*
- * Created by SharpDevelop.
- * User: Ian
- * Date: 7/13/2016
- * Time: 7:17 PM
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
+﻿// <file>
+//  <license></license>
+//  <owner name="Ian Escarro" email="ian.escarro@gmail.com"/>
+// </file>
+
 using System;
 using HW.Core.Repositories;
 using NUnit.Framework;
@@ -22,7 +19,7 @@ namespace HW.Grp.Tests.Views
 		{
 			v = new HW.Grp.Default();
 
-			v = new HW.Grp.Default(new SponsorRepositoryStub(), new NewsRepositoryStub());
+//			v = new HW.Grp.Default(new SponsorRepositoryStub(), new NewsRepositoryStub());
 		}
 		
 		[Test]

@@ -116,37 +116,37 @@
   <ItemGroup>
     <Compile Include="AppContext.cs" />
     <Compile Include="FromHW\Db.cs" />
-    <Compile Include="Helpers\BaseGraphFactory.cs" />
+    <Compile Include="Helpers\Graph\BaseGraphFactory.cs" />
     <Compile Include="Helpers\DateHelper.cs" />
+    <Compile Include="Helpers\Exporters\CsvExporter.cs" />
+    <Compile Include="Helpers\Exporters\DocXExporter.cs" />
+    <Compile Include="Helpers\Exporters\ExcelExporter.cs" />
     <Compile Include="Helpers\MergeEventArgs.cs" />
-    <Compile Include="Helpers\PdfExerciseExporter.cs" />
+    <Compile Include="Helpers\Exporters\PdfExerciseExporter.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
-    <Compile Include="Helpers\ForStepCount.cs" />
-    <Compile Include="Helpers\GeneratedClass.cs" />
+    <Compile Include="Helpers\Graph\ForStepCount.cs" />
+    <Compile Include="Helpers\Exporters\GeneratedClass.cs" />
     <Compile Include="Helpers\ConvertHelper.cs" />
-    <Compile Include="Helpers\CsvExporter.cs" />
     <Compile Include="Helpers\Db.cs" />
-    <Compile Include="Helpers\DocXExporter.cs" />
-    <Compile Include="Helpers\ExcelExporter.cs" />
-    <Compile Include="Helpers\ExcelWriter2.cs" />
+    <Compile Include="Helpers\Exporters\ExcelWriter.cs" />
     <Compile Include="Helpers\ExtendedGraph.cs" />
     <Compile Include="Helpers\Graph.cs" />
     <Compile Include="Helpers\Graph2.cs" />
     <Compile Include="Helpers\MailHelper.cs" />
     <Compile Include="Helpers\SmtpHelper.cs" />
-    <Compile Include="Helpers\UserLevelGraphFactory.cs" />
-    <Compile Include="Helpers\GroupStatsGraphFactory.cs" />
+    <Compile Include="Helpers\Graph\UserLevelGraphFactory.cs" />
+    <Compile Include="Helpers\Graph\GroupStatsGraphFactory.cs" />
     <Compile Include="Helpers\HtmlHelper.cs" />
     <Compile Include="Helpers\HWList.cs" />
     <Compile Include="Helpers\OctreeQuantizer.cs" />
-    <Compile Include="Helpers\PdfExporter.cs" />
-    <Compile Include="Helpers\PresentationDocumentExporter.cs" />
-    <Compile Include="Helpers\PresentationDocumentGeneratedCode.cs" />
+    <Compile Include="Helpers\Exporters\PdfExporter.cs" />
+    <Compile Include="Helpers\Exporters\PresentationDocumentExporter.cs" />
+    <Compile Include="Helpers\Exporters\PresentationDocumentGeneratedCode.cs" />
     <Compile Include="Helpers\Quantizer.cs" />
-    <Compile Include="Helpers\IExporter.cs" />
+    <Compile Include="Helpers\Exporters\IExporter.cs" />
     <Compile Include="Helpers\HtmlControls.cs" />
-    <Compile Include="Helpers\SpreadsheetDocumentExporter.cs" />
-    <Compile Include="Helpers\SpreadsheetDocumentExporter2.cs" />
+    <Compile Include="Helpers\Exporters\SpreadsheetDocumentExporter.cs" />
+    <Compile Include="Helpers\Exporters\SpreadsheetDocumentExporter2.cs" />
     <Compile Include="Libraries\ConnectionSingleton.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\BackgroundAnswer.cs" />
@@ -242,5 +242,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

@@ -14,8 +14,6 @@ namespace HW.Core.Repositories
 		
 		Sponsor ReadSponsor3(int sponsorID);
 		
-//		IList<SponsorBackgroundQuestion> FindBySponsor(int sponsorId);
-		
 		IList<SponsorProjectRoundUnit> FindBySponsorAndLanguage(int sponsorId, int langId);
 		
 		SponsorAdmin ReadSponsorAdmin(string skey, string sakey, string sa, string said, string anv, string los);

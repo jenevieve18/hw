@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Core.Helpers;
+using HW.Core.Helpers.Exporters;
 using HW.Core.Models;
 using HW.Core.Repositories.Sql;
 using HW.Core.Services;
@@ -14,33 +15,23 @@ namespace HW.Grp
 {
 	public partial class SuperExportAll : System.Web.UI.Page
 	{
-//		ReportService service = new ReportService(
-//			new SqlAnswerRepository(),
-//			new SqlReportRepository(),
-//			new SqlProjectRepository(),
-//			new SqlOptionRepository(),
-//			new SqlDepartmentRepository(),
-//			new SqlQuestionRepository(),
-//			new SqlIndexRepository(),
-//			new SqlSponsorRepository(),
-//			new SqlSponsorAdminRepository()
-//		);
 		ReportService service = new ReportService();
-		SqlReportRepository r = new SqlReportRepository();
-		SqlUserRepository userRepository = new SqlUserRepository();
+		SqlReportRepository reportRepo = new SqlReportRepository();
+		SqlUserRepository userRepo = new SqlUserRepository();
+		
 		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			HtmlHelper.RedirectIf(Session["SuperAdminID"] == null, "default.aspx", true);
 
-			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+			var userSession = userRepo.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
 			if (userSession != null) {
 				lid = userSession.Lang;
 			}
 			string type = StrHelper.Str3(Request.QueryString["TYPE"], "docx");
 			
-			var parts = r.FindPartLanguagesByReport(Convert.ToInt32(Request.QueryString["RID"]), lid);
+			var parts = reportRepo.FindPartLanguagesByReport(Convert.ToInt32(Request.QueryString["RID"]), lid);
 			
 			var exporter = ExportFactory.GetSuperExporterAll(type, service, parts, Server.MapPath("HW template for Word.docx"));
 			exporter.CellWrite += delegate(object sender2, ExcelCellEventArgs e2) {
@@ -96,22 +87,5 @@ namespace HW.Grp
 				(StrHelper.Str3(Request.QueryString["Plot"], ""))
 			);
 		}
-		
-//		void Write(object obj)
-//		{
-//			if (obj is MemoryStream) {
-//				Response.BinaryWrite(((MemoryStream)obj).ToArray());
-//				Response.End();
-//			} else if (obj is string) {
-//				Response.Write((string)obj);
-//			}
-//		}
-//		
-//		void AddHeaderIf(bool condition, string name, string value)
-//		{
-//			if (condition) {
-//				Response.AddHeader(name, value);
-//			}
-//		}
 	}
 }

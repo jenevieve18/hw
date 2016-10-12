@@ -12,7 +12,7 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using Xdr = DocumentFormat.OpenXml.Drawing.Spreadsheet;
 using A = DocumentFormat.OpenXml.Drawing;
 
-namespace HW.Core.Helpers
+namespace HW.Core.Helpers.Exporters
 {
 	public class SpreadsheetDocumentExporter : AbstractExporter
 	{

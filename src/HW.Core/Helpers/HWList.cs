@@ -58,35 +58,16 @@ namespace HW.Core.Helpers
 
 		public double LowerBox {
 			get {
-//				return GetMeanMedian(data.GetRange(0, data.Count / 2));
-				return GetMeanMedian(data.GetRange(0, Math.Max(1, data.Count / 2)));
-//				double q = 0.25 * (data.Count);
-//				if (q % 1 == 0) {
-//					return data[(int)q];
-//				} else {
-//					int index = (int)q;
-//					double a = data[index - 1];
-//					double b = data[index];
-//					return a + 0.25 * (b - a);
-//				}
+				var rangeData = data.GetRange(0, Math.Max(1, data.Count / 2));
+				return GetMedian(rangeData);
 			}
 		}
 
 		public double UpperBox {
 			get {
-//				int lower = data.Count % 2 != 0 ? data.Count / 2 + 1 : data.Count / 2;
-//				return GetMeanMedian(data.GetRange(lower, data.Count / 2));
 				int lower = data.Count % 2 != 0 && data.Count > 1 ? data.Count / 2 + 1 : data.Count / 2;
-				return GetMeanMedian(data.GetRange(lower, Math.Max(1, data.Count / 2)));
-//				double q = 0.75 * (data.Count);
-//				if (q % 1 == 0) {
-//					return data[(int)q];
-//				} else {
-//					int index = (int)q;
-//					double a = data[index];
-//					double b = data[index + 1];
-//					return a + 0.5 * (b - a);
-//				}
+				var rangeData = data.GetRange(lower, Math.Max(1, data.Count / 2));
+				return GetMedian(rangeData);
 			}
 		}
 		
@@ -115,12 +96,12 @@ namespace HW.Core.Helpers
 		}
 
 		public double Median {
-			get { return GetMeanMedian(data); }
+			get { return GetMedian(data); }
 		}
 
-		public object[] YValues {
-			get { return new object[] { LowerWhisker, UpperWhisker, LowerBox, UpperBox, Mean, Median }; }
-		}
+//		public object[] YValues {
+//			get { return new object[] { LowerWhisker, UpperWhisker, LowerBox, UpperBox, Mean, Median }; }
+//		}
 
 		public override string ToString()
 		{
@@ -141,9 +122,8 @@ namespace HW.Core.Helpers
 			return s;
 		}
 
-		double GetMeanMedian(List<double> data)
+		double GetMedian(List<double> data)
 		{
-//			LoggingService.Info(ToStr());
 			if (data.Count % 2 != 0) {
 				return data[data.Count / 2];
 			} else {

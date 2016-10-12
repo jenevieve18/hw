@@ -14,7 +14,7 @@ using iTextSharp.text.html.simpleparser;
 using iTextSharp.text.pdf;
 using System.Collections.Generic;
 
-namespace HW.Core.Helpers
+namespace HW.Core.Helpers.Exporters
 {
 	public class PdfExerciseExporter
 	{

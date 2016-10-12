@@ -10,7 +10,7 @@ using HW.Core.Services;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 
-namespace HW.Core.Helpers
+namespace HW.Core.Helpers.Exporters
 {
 	public class PdfStatsExporter : AbstractExporter
 	{

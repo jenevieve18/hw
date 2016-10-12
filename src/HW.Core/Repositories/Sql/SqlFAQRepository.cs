@@ -10,19 +10,19 @@ namespace HW.Core.Repositories.Sql
 	    public override void Delete(int id)
 	    {
 	        string query = @"
-	DELETE FROM FAQ WHERE FAQID = @FAQID";
+DELETE FROM FAQ WHERE FAQID = @FAQID";
 	        ExecuteNonQuery(query, "SqlConnection", new SqlParameter("@FAQID", id));
 	        query = @"
-	DELETE FROM FAQLang WHERE FAQID = @FAQID";
+DELETE FROM FAQLang WHERE FAQID = @FAQID";
 	        ExecuteNonQuery(query, "SqlConnection", new SqlParameter("@FAQID", id));
 	    }
 	
 	    public override IList<FAQ> FindAll()
 	    {
 	        string query = @"
-	SELECT FAQID, Name
-	FROM FAQ
-	ORDER BY Name";
+SELECT FAQID, Name
+FROM FAQ
+ORDER BY Name";
 	        var f = new List<FAQ>();
 	        using (var rs = ExecuteReader(query, "SqlConnection"))
 	        {
@@ -45,9 +45,9 @@ namespace HW.Core.Repositories.Sql
 	    IList<FAQLanguage> GetLanguages(int faqId)
 	    {
 	        string query = @"
-	SELECT FAQLangID, Question, Answer, LangID
-	FROM FAQLang
-	WHERE FAQID = @FAQID";
+SELECT FAQLangID, Question, Answer, LangID
+FROM FAQLang
+WHERE FAQID = @FAQID";
 	        var l = new List<FAQLanguage>();
 	        using (var rs = ExecuteReader(query, "SqlConnection", new SqlParameter("@FAQID", faqId)))
 	        {
@@ -69,17 +69,17 @@ namespace HW.Core.Repositories.Sql
 	    public override void Update(FAQ t, int id)
 	    {
 	        string query = @"
-	UPDATE FAQ SET Name = @Name
-	WHERE FAQID = @FAQID";
+UPDATE FAQ SET Name = @Name
+WHERE FAQID = @FAQID";
 	        ExecuteNonQuery(query, "SqlConnection", new SqlParameter("@Name", t.Name), new SqlParameter("@FAQID", id));
 	    }
 	
 	    public override FAQ Read(int id)
 	    {
 	        string query = @"
-	SELECT FAQID, Name
-	FROM FAQ
-	WHERE FAQID = @FAQID";
+SELECT FAQID, Name
+FROM FAQ
+WHERE FAQID = @FAQID";
 	        FAQ f = null;
 	        using (var rs = ExecuteReader(query, "SqlConnection", new SqlParameter("@FAQID", id)))
 	        {
@@ -102,8 +102,8 @@ namespace HW.Core.Repositories.Sql
 	    public void SaveFAQLanguage(FAQLanguage f)
 	    {
 	        string query = @"
-	INSERT INTO FAQLang(FAQID, LangID, Question, Answer)
-	VALUES(@FAQID, @LangID, @Question, @Answer)";
+INSERT INTO FAQLang(FAQID, LangID, Question, Answer)
+VALUES(@FAQID, @LangID, @Question, @Answer)";
 	        ExecuteNonQuery(
 	            query,
 	            "SqlConnection",
@@ -117,10 +117,10 @@ namespace HW.Core.Repositories.Sql
 	    public FAQLanguage ReadFAQLanguage(int faqID, int langID)
 	    {
 	        string query = @"
-	SELECT FAQLangID, FAQID, LangID, Question, Answer
-	FROM FAQLang
-	WHERE FAQID = @FAQID
-	AND LangID = @LangID";
+SELECT FAQLangID, FAQID, LangID, Question, Answer
+FROM FAQLang
+WHERE FAQID = @FAQID
+AND LangID = @LangID";
 	        FAQLanguage l = null;
 	        using (var rs = ExecuteReader(query, "SqlConnection", new SqlParameter("@FAQID", faqID), new SqlParameter("@LangID", langID)))
 	        {
@@ -143,8 +143,8 @@ namespace HW.Core.Repositories.Sql
 	    public void UpdateFAQLanguage(FAQLanguage f, int id)
 	    {
 	        string query = @"
-	UPDATE FAQLang SET Question = @Question, Answer = @Answer
-	WHERE FAQLangID = @FAQLangID";
+UPDATE FAQLang SET Question = @Question, Answer = @Answer
+WHERE FAQLangID = @FAQLangID";
 	        ExecuteNonQuery(
 	            query,
 	            "SqlConnection",
@@ -157,8 +157,8 @@ namespace HW.Core.Repositories.Sql
 	    public int SaveFAQ(FAQ f)
 	    {
 	        string query = @"
-	INSERT INTO FAQ(Name)
-	VALUES(@Name)";
+INSERT INTO FAQ(Name)
+VALUES(@Name)";
 	        ExecuteNonQuery(query, "SqlConnection", new SqlParameter("@Name", f.Name));
 	        int id = 0;
 	        using (var rs = ExecuteReader("SELECT TOP 1 FAQID FROM FAQ ORDER BY FAQID DESC"))
@@ -175,12 +175,12 @@ namespace HW.Core.Repositories.Sql
 	    public IList<FAQLanguage> FindLanguages()
 	    {
 	        string query = @"
-	SELECT fl.Question,
-	fl.Answer,
-	fl.FAQLangID,
-	f.FAQID
-	FROM FAQ f
-	INNER JOIN FAQLang fl ON fl.FAQID = f.FAQID";
+SELECT fl.Question,
+fl.Answer,
+fl.FAQLangID,
+f.FAQID
+FROM FAQ f
+INNER JOIN FAQLang fl ON fl.FAQID = f.FAQID";
 	        var faqs = new List<FAQLanguage>();
 	        using (var rs = ExecuteReader(query))
 	        {

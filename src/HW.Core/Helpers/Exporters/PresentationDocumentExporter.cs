@@ -14,7 +14,7 @@ using Vt = DocumentFormat.OpenXml.VariantTypes;
 using HW.Core.Models;
 using HW.Core.Services;
 
-namespace HW.Core.Helpers
+namespace HW.Core.Helpers.Exporters
 {
 	public class PresentationDocumentStatsExporter : AbstractExporter
 	{

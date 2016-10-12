@@ -4,6 +4,7 @@
 // </file>
 
 using System;
+using HW.Core.Models;
 using NUnit.Framework;
 
 namespace HW.Core.Tests.Models
@@ -14,6 +15,13 @@ namespace HW.Core.Tests.Models
 		[Test]
 		public void TestMethod()
 		{
+			var r = new Report {};
+			r.AddPart(new ReportPart {});
+			r.AddPart(new ReportPart {});
+			r.AddPart(new ReportPart {});
+			r.AddPart(new ReportPart {});
+			
+			Assert.AreEqual(4, r.Parts.Count);
 		}
 	}
 }

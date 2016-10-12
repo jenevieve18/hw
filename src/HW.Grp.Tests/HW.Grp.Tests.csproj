@@ -52,7 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\GroupStatsGraphFactoryTests.cs" />
-    <Compile Include="Helpers\HWListTests.cs" />
     <Compile Include="Helpers\ReminderHelperTests.cs" />
     <Compile Include="Helpers\UserLevelGraphFactoryTests.cs" />
     <Compile Include="Models\ReportTests.cs" />

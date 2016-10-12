@@ -43,32 +43,40 @@ namespace HW.Core.Tests.Models
 		[Test]
 		public void TestValues2()
 		{
-			var e = new HWList(2, 2, 3, 3, 3);
-			Assert.AreEqual(2, e.LowerBox);
-			Assert.AreEqual(3, e.UpperBox);
+			var l = new HWList(2, 2, 3, 3, 3);
+			Assert.AreEqual(2, l.LowerBox);
+			Assert.AreEqual(3, l.UpperBox);
 		}
 		
 		[Test]
 		public void TestValues3()
 		{
-			var e = new HWList(2, 2, 3, 3, 3, 4);
-//			Assert.AreEqual(2.25, e.LowerBox);
-			Assert.AreEqual(2, e.LowerBox);
-			Assert.AreEqual(3, e.UpperBox);
+			var l = new HWList(2, 2, 3, 3, 3, 4);
+			Assert.AreEqual(2, l.LowerBox);
+			Assert.AreEqual(3, l.UpperBox);
 		}
 		
 		[Test]
 		public void TestValues4()
 		{
-			var e = new HWList(18, 20, 20, 23, 23, 23, 24, 27, 29);
-			Assert.AreEqual(20, e.LowerBox);
-			Assert.AreEqual(25.5, e.UpperBox);
-			Assert.AreEqual(18, e.LowerWhisker);
-			Assert.AreEqual(29, e.UpperWhisker);
-//			Assert.AreEqual(11.75, e.NerdLowerWhisker);
-			Assert.AreEqual(18, e.NerdLowerWhisker);
-//			Assert.AreEqual(33.75, e.NerdUpperWhisker);
-			Assert.AreEqual(29, e.NerdUpperWhisker);
+			var l = new HWList(18, 20, 20, 23, 23, 23, 24, 27, 29);
+			Assert.AreEqual(20, l.LowerBox);
+			Assert.AreEqual(25.5, l.UpperBox);
+			Assert.AreEqual(18, l.LowerWhisker);
+			Assert.AreEqual(29, l.UpperWhisker);
+			Assert.AreEqual(18, l.NerdLowerWhisker);
+			Assert.AreEqual(29, l.NerdUpperWhisker);
+		}
+		
+		[Test]
+		public void TestValues5()
+		{
+			var l = new HWList(100.00, 75.00, 50.00, 25.00, 50.00, 75.00, 50.00, 25.00, 50.00, 50.00);
+			Console.WriteLine("Min: {0}", l.Min);
+			Console.WriteLine("Max: {0}", l.Max);
+			Console.WriteLine("Mean: {0}", l.Mean);
+			Console.WriteLine("Lower Box: {0}", l.LowerBox);
+			Console.WriteLine("Upper Box: {0}", l.UpperBox);
 		}
 	}
 }

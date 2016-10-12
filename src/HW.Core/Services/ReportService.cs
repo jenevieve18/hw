@@ -38,12 +38,6 @@ namespace HW.Core.Services
 		{
 		}
 		
-//		int lastCount = 0;
-//		float lastVal = 0;
-//		string lastDesc = "";
-//		Hashtable res = new Hashtable();
-//		Hashtable cnt = new Hashtable();
-		
 //		public ReportService(SqlAnswerRepository answerRepo,
 //		                     SqlReportRepository reportRepo,
 //		                     SqlProjectRepository projectRepo,
@@ -67,7 +61,6 @@ namespace HW.Core.Services
 		
 		public IList<IReportPart> FindByProjectAndLanguage(int projectRoundID, int langID)
 		{
-//			return reportRepo.FindByProjectAndLanguage(projectRoundID, langID);
 			var reportPartLangs = reportRepo.FindByProjectAndLanguage(projectRoundID, langID);
 			foreach (var rpl in reportPartLangs) {
 				rpl.Languages = reportPartLangRepo.FindByReportPart(rpl.ReportPart.Id);
@@ -111,7 +104,6 @@ namespace HW.Core.Services
 		
 		public ReportPart ReadReportPart(int reportPartID, int langID)
 		{
-//			return reportRepo.ReadReportPart(reportPartID, langID);
 			var rp = reportRepo.ReadReportPart(reportPartID, langID);
 			rp.Languages = reportPartLangRepo.FindByReportPart(reportPartID);
 			rp.Components = reportPartComponentRepo.FindByReportPart(reportPartID) as List<ReportPartComponent>;
