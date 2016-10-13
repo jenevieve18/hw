@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using HW.Core.Helpers;
+using HW.Core.Util;
 
 namespace HW.Core.Models
 {
@@ -58,15 +59,6 @@ namespace HW.Core.Models
 		public int DummyValue2 { get; set; }
 		public int DummyValue3 { get; set; }
 		
-//		public HWList GetFloatValues()
-//		{
-//			List<double> n = new List<double>();
-//			foreach (var v in Values) {
-//				n.Add((double)v.ValueFloat);
-//			}
-//			return new HWList(n);
-//		}
-//		
 //		public HWList GetIntValues()
 //		{
 //			List<double> n = new List<double>();
@@ -93,7 +85,6 @@ namespace HW.Core.Models
 //		public int ValueInt { get; set; }
 		public decimal ValueDecimal { get; set; }
 		public string ValueText { get; set; }
-//		public float ValueFloat { get; set; }
 		
 		public double ValueDouble { get; set; }
 	}

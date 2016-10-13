@@ -38,7 +38,8 @@ namespace HW.Core.Models
 		public int RepeatedEntry { get; set; }
 		public int SurveyID { get; set; }
 		public int LangID { get; set; }
-		public Guid? RoundKey { get; set; }
+//		public Guid? RoundKey { get; set; }
+		public string RoundKey { get; set; }
 		public string EmailFromAddress { get; set; }
 		public int ReminderInterval { get; set; }
 		public int Layout { get; set; }

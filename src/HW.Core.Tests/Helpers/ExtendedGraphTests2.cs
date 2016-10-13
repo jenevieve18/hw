@@ -10,6 +10,8 @@ using HW.Core.Helpers;
 using HW.Core.Repositories.Sql;
 using HW.Core.Services;
 using HW.Core.Models;
+using HW.Core.Util;
+using HW.Core.Util.Graphs;
 using NUnit.Framework;
 
 namespace HW.Core.Tests.Helpers
@@ -21,17 +23,6 @@ namespace HW.Core.Tests.Helpers
 		Form f;
 		PictureBox p;
 		
-//		ReportService service = new ReportService(
-//			new SqlAnswerRepository(),
-//			new SqlReportRepository(),
-//			new SqlProjectRepository(),
-//			new SqlOptionRepository(),
-//			new SqlDepartmentRepository(),
-//			new SqlQuestionRepository(),
-//			new SqlIndexRepository(),
-//			new SqlSponsorRepository(),
-//			new SqlSponsorAdminRepository()
-//		);
 		ReportService service = new ReportService();
 		
 		[SetUp]

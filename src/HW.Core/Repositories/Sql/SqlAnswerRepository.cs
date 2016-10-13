@@ -44,23 +44,21 @@ AND LEFT(pru.SortString, {5}) = '{6}'",
 			return 0;
 		}
 		
-		public int CountByProject(int projectRoundUserID, int yearFrom, int yearTo, int fm, int tm)
+		public int CountByProject(int projectRoundUserID, int yearFrom, int yearTo, int monthFrom, int monthTo)
 		{
 			string query = string.Format(
 				@"
 SELECT COUNT(DISTINCT dbo.cf_yearMonthDay(a.EndDT))
 FROM Answer a
 WHERE a.EndDT IS NOT NULL
---AND YEAR(a.EndDT) >= {1}
---AND YEAR(a.EndDT) <= {2}
 AND (YEAR(a.EndDT) = {1} AND MONTH(a.EndDT) >= {3} OR YEAR(a.EndDT) > {1})
 AND (YEAR(a.EndDT) = {2} AND MONTH(a.EndDT) <= {4} OR YEAR(a.EndDT) < {2})
 AND a.ProjectRoundUserID = {0}",
 				projectRoundUserID,
-				yearFrom, //yearFrom != 0 ? "AND YEAR(a.EndDT) >= " + yearFrom : "",
-				yearTo, //yearTo != 0 ? "AND YEAR(a.EndDT) <= " + yearTo : "",
-				fm,
-				tm
+				yearFrom,
+				yearTo,
+				monthFrom,
+				monthTo
 			);
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlConnection")) {
 				if (rs.Read()) {

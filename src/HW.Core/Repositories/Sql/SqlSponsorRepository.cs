@@ -2488,7 +2488,8 @@ SELECT 	SponsorID,
 	ForceLID, 
 	MinUserCountToDisclose, 
 	EmailFrom, 
-	Comment
+	Comment,
+	DefaultPlotType
 FROM Sponsor
 WHERE SponsorID = @SponsorID";
 			Sponsor sponsor = null;
@@ -2535,7 +2536,8 @@ WHERE SponsorID = @SponsorID";
 						ForceLID = GetInt32(rs, 35),
 						MinUserCountToDisclose = GetInt32(rs, 36),
 						EmailFrom = GetString(rs, 37),
-						Comment = GetString(rs, 38)
+						Comment = GetString(rs, 38),
+						DefaultPlotType = GetInt32(rs, 39)
 					};
 				}
 			}

@@ -4,46 +4,6 @@ using System.Web;
 
 namespace HW.Core.Helpers
 {
-	public static class SessionHelper
-	{
-		public static object Get(string name)
-		{
-			return HttpContext.Current.Session[name];
-		}
-		
-		public static void RemoveIf(bool condition, string name)
-		{
-			if (condition) {
-				HttpContext.Current.Session.Remove(name);
-			}
-		}
-		
-		public static void AddIf(bool condition, string name, object val)
-		{
-			if (condition) {
-				HttpContext.Current.Session[name] = val;
-			}
-		}
-	}
-	
-	public static class ExtensionMethods
-	{
-		public static int Ceiling(this int i)
-		{
-			int d = 10;
-			if (i > 100000) {
-				d = 100000;
-			} else if (i > 10000) {
-				d = 10000;
-			} else if (i > 100) {
-				d = 100;
-			} else {
-				d = 10;
-			}
-			return ((int)Math.Ceiling(i / (double)d)) * d;
-		}
-	}
-	
 	public static class ConvertHelper
 	{
 		public static int ToInt32If(bool condition, object val, int def)

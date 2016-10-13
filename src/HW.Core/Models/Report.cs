@@ -3,13 +3,14 @@ using System.Collections.Generic;
 
 namespace HW.Core.Models
 {
-	public class ReportPartType
+	public interface IReportPart : IBaseModel
 	{
-		public const int Question = 1;
-		public const int Index = 2;
-		public const int Three = 3;
-		public const int WeightedQuestionOption = 8;
-		public const int Nine = 9;
+		string Subject { get; set; }
+		string Header { get; set; }
+		ReportPart ReportPart { get; set; }
+		
+		List<ReportPartComponent> Components { get; set; }
+		IList<ReportPartLang> Languages { get; set; }
 	}
 	
 	public class Report : BaseModel
@@ -47,9 +48,19 @@ namespace HW.Core.Models
 		public Question Question { get; set; }
 	}
 	
+	public class ReportPartType
+	{
+		public const int Question = 1;
+		public const int Index = 2;
+		public const int Three = 3;
+		public const int WeightedQuestionOption = 8;
+		public const int Nine = 9;
+	}
+	
 	public class ReportPart : BaseModel
 	{
-		ReportPartLang currentLanguage;
+//		ReportPartLang currentLanguage;
+		ReportPartLang selectedReportPartLang;
 		
 		public ReportPart()
 		{
@@ -100,16 +111,18 @@ namespace HW.Core.Models
 //			}
 //		}
 		
+		public bool HasLanguages {
+			get { return Languages.Count > 0; }
+		}
+		
 		public ReportPartLang FirstLanguage {
 			get {
-				if (Languages.Count > 0) {
+				if (HasLanguages) {
 					return Languages[0];
 				}
 				return null;
 			}
 		}
-		
-		ReportPartLang selectedReportPartLang;
 		
 		public ReportPartLang SelectedReportPartLang {
 			get {
@@ -184,15 +197,5 @@ namespace HW.Core.Models
 		
 		public List<ReportPartComponent> Components { get; set; }
 		public IList<ReportPartLang> Languages { get; set; }
-	}
-	
-	public interface IReportPart : IBaseModel
-	{
-		string Subject { get; set; }
-		string Header { get; set; }
-		ReportPart ReportPart { get; set; }
-		
-		List<ReportPartComponent> Components { get; set; }
-		IList<ReportPartLang> Languages { get; set; }
 	}
 }

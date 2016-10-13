@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using HW.Core.Helpers;
+using HW.Core.Util;
 
 namespace HW.Core.Models
 {
@@ -14,7 +15,6 @@ namespace HW.Core.Models
 	{
 		IList<IValue> Values { get; set; }
 //		HWList GetIntValues();
-//		HWList GetFloatValues();
 		HWList GetDoubleValues();
 	}
 	
@@ -24,8 +24,6 @@ namespace HW.Core.Models
 		decimal ValueDecimal { get; set; }
 		string ValueText { get; set; }
 		
-//		float ValueFloat { get; set; }
-//		
 		double ValueDouble { get; set; }
 	}
 	
@@ -95,15 +93,6 @@ namespace HW.Core.Models
 			}
 			return new HWList(n);
 		}
-		
-//		public HWList GetFloatValues()
-//		{
-//			List<double> n = new List<double>();
-//			foreach (var v in Values) {
-//				n.Add((double)v.ValueFloat);
-//			}
-//			return new HWList(n);
-//		}
 	}
 	
 	public class AnswerValue : BaseModel, IValue
@@ -118,8 +107,6 @@ namespace HW.Core.Models
 		public string ValueText { get; set; }
 		public string ValueTextJapaneseUnicode { get; set; }
 		
-//		public float ValueFloat { get; set; }
-//		
 		public double ValueDouble { get; set; }
 	}
 }

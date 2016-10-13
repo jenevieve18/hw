@@ -6,6 +6,7 @@
 using System;
 using HW.Core;
 using HW.Core.Helpers;
+using HW.Core.Util;
 using NUnit.Framework;
 
 namespace HW.Core.Tests.Models

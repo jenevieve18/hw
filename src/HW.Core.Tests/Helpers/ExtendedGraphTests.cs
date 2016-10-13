@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using HW.Core.Helpers;
 using HW.Core.Models;
 using HW.Core.Repositories.Sql;
+using HW.Core.Util.Graphs;
 using NUnit.Framework;
 
 namespace HW.Core.Tests.Helpers

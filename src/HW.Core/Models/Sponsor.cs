@@ -74,6 +74,7 @@ namespace HW.Core.Models
 		public int MinUserCountToDisclose { get; set; }
 		public string EmailFrom { get; set; }
 		public string Comment { get; set; }
+		public int DefaultPlotType { get; set; }
 		
 		public bool HasSuperSponsor {
 			get { return SuperSponsor != null; }

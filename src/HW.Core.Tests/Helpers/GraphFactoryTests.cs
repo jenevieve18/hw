@@ -7,6 +7,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using HW.Core.Helpers;
+using HW.Core.Util.Graphs;
 using NUnit.Framework;
 
 namespace HW.Core.Tests.Helpers
