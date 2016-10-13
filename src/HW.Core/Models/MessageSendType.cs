@@ -451,22 +451,42 @@ namespace HW.Core.Models
 	
 	public class PasswordActivationLink
 	{
-		public void Send(string to, string uid, string name, string username)
+		public void Send(string to, string key, string name, string username, string subject, string body)
 		{
-			string body = string.Format(
-				@"Dear {0},
-
-A manager account has been set up for you to the HealthWatch group administration interface. Please click the link below to choose a password.
-
-{1}PasswordActivation.aspx?KEY={2}
-
-{3}",
-				name,
-				ConfigurationManager.AppSettings["grpURL"],
-				uid,
-				username != "" ? string.Format("Your username is '{0}'", username) : ""
-			);
-			Db.sendMail2("info@healthwatch.se", to, "Your HealthWatch Group Administration account", body);
+//			string body = string.Format(
+//				@"Dear {0},
+//
+//A manager account has been set up for you to the HealthWatch group administration interface. Please click the link below to choose a password.
+//
+//{1}PasswordActivation.aspx?KEY={2}
+//
+//{3}",
+//				name,
+//				ConfigurationManager.AppSettings["grpURL"],
+//				key,
+//				username != "" ? string.Format("Your username is '{0}'", username) : ""
+//			);
+//			Db.sendMail2("info@healthwatch.se", to, "Your HealthWatch Group Administration account", body);
+			
+			Db.sendMail2("info@healthwatch.se", to, subject, body);
 		}
+		
+//		public void Send(string to, string key, string name, string username)
+//		{
+//			string body = string.Format(
+//				@"Dear {0},
+//
+//A manager account has been set up for you to the HealthWatch group administration interface. Please click the link below to choose a password.
+//
+//{1}PasswordActivation.aspx?KEY={2}
+//
+//{3}",
+//				name,
+//				ConfigurationManager.AppSettings["grpURL"],
+//				key,
+//				username != "" ? string.Format("Your username is '{0}'", username) : ""
+//			);
+//			Db.sendMail2("info@healthwatch.se", to, "Your HealthWatch Group Administration account", body);
+//		}
 	}
 }

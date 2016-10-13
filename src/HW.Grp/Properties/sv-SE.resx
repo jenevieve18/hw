@@ -360,8 +360,24 @@
   <data name="password.activate" xml:space="preserve">
     <value>Aktivera lösenord</value>
   </data>
+  <data name="password.activate.body" xml:space="preserve">
+    <value>Bästa &lt;NAME&gt;,
+
+Ett chefskonto har skapats för dig för åtkomst till HealthWatchs gruppadministrationssida. Vänligen klicka på länken nedan för att välja ett lösenord.
+
+&lt;LINK&gt;PasswordActivation.aspx?KEY=&lt;KEY&gt;
+
+
+&lt;USERNAME&gt;</value>
+  </data>
   <data name="password.activate.sent" xml:space="preserve">
     <value>Aktiveringslänk för lösenord skickad!</value>
+  </data>
+  <data name="password.activate.subject" xml:space="preserve">
+    <value>Ditt gruppadministrationskonto på HealthWatch</value>
+  </data>
+  <data name="password.activate.username" xml:space="preserve">
+    <value>Ditt användarnamn är</value>
   </data>
   <data name="password.change" xml:space="preserve">
     <value>Ändra lösenord</value>

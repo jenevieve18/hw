@@ -360,8 +360,23 @@
   <data name="password.activate" xml:space="preserve">
     <value>Passwort aktivieren</value>
   </data>
+  <data name="password.activate.body" xml:space="preserve">
+    <value>Dear &lt;NAME&gt;,
+
+A manager account has been set up for you to the HealthWatch group administration interface. Please click the link below to choose a password.
+
+&lt;LINK&gt;PasswordActivation.aspx?KEY=&lt;KEY&gt;
+
+&lt;USERNAME&gt;</value>
+  </data>
   <data name="password.activate.sent" xml:space="preserve">
     <value>Aktivierungslink für Passwort versandt.</value>
+  </data>
+  <data name="password.activate.subject" xml:space="preserve">
+    <value>Your HealthWatch Group Administration account</value>
+  </data>
+  <data name="password.activate.username" xml:space="preserve">
+    <value>Your username is</value>
   </data>
   <data name="password.change" xml:space="preserve">
     <value>Passwort ändern</value>

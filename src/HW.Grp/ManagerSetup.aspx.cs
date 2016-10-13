@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -17,18 +18,19 @@ namespace HW.Grp
 		protected IList<SponsorAdminDepartment> sponsorAdminDepartments;
 		protected string errorMessage = string.Empty;
 		protected string message = "";
+
+		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
+		
 		int sponsorAdminID = 0;
 		int sponsorID = 0;
-//		protected int lid;
-
-		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
-		SqlManagerFunctionRepository managerRepository = new SqlManagerFunctionRepository();
-		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
-		SqlSponsorAdminRepository sponsorAdminRepository = new SqlSponsorAdminRepository();
 		
-		SqlUserRepository userRepository = new SqlUserRepository();
-//		protected int lid = Language.ENGLISH;
-		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
+		SqlUserRepository userRepo = new SqlUserRepository();
+
+		SqlDepartmentRepository departmentRepo = new SqlDepartmentRepository();
+		SqlManagerFunctionRepository managerRepo = new SqlManagerFunctionRepository();
+		SqlSponsorRepository sponsorRepo = new SqlSponsorRepository();
+		SqlSponsorAdminRepository sponsorAdminRepo = new SqlSponsorAdminRepository();
+		
 
 		bool HasSAID {
 			get { return Request.QueryString["SAID"] != null; }
@@ -46,8 +48,8 @@ namespace HW.Grp
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			sponsorID = Convert.ToInt32(Session["SponsorID"]);
-//			lid = ConvertHelper.ToInt32(Session["lid"], 2);
-			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+
+			var userSession = userRepo.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
 			if (userSession != null) {
 				lid = userSession.Lang;
 			}
@@ -57,21 +59,21 @@ namespace HW.Grp
 				Cancel.Click += new EventHandler(Cancel_Click);
 
 				if (!IsPostBack) {
-					foreach (var f in managerRepository.FindAll(lid)) {
+					foreach (var f in managerRepo.FindAll(lid)) {
 						ManagerFunctionID.Items.Add(new ListItem(f.Function + " (" + f.Expl + ")", f.Id.ToString()));
 					}
 					sponsorAdminID = Convert.ToInt32(Session["SponsorAdminID"]);
 					
 					HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Managers), "default.aspx", true);
 					
-					var a = sponsorAdminRepository.ReadSponsor(sponsorAdminID);
+					var a = sponsorAdminRepo.ReadSponsor(sponsorAdminID);
 					if (a != null && !a.SuperUser) {
 						SuperUser.Visible = false;
 					}
 
 					OrgTree.Text = string.Format("<tr><td>{0}</td></tr>", Session["Sponsor"]);
 					Dictionary<int, bool> DX = new Dictionary<int, bool>();
-					sponsorAdminDepartments = departmentRepository.a(sponsorID, sponsorAdminID);
+					sponsorAdminDepartments = departmentRepo.a(sponsorID, sponsorAdminID);
 					foreach (var d in sponsorAdminDepartments) {
 						int depth = d.Department.Depth;
 						DX[depth] = (d.Department.Siblings > 0);
@@ -110,9 +112,9 @@ namespace HW.Grp
 						);
 					}
 				} else {
-					int tempSponsorAdminID = sponsorRepository.SponsorAdminExists(Convert.ToInt32(Session["SponsorAdminID"]), Usr.Text);
+					int tempSponsorAdminID = sponsorRepo.SponsorAdminExists(Convert.ToInt32(Session["SponsorAdminID"]), Usr.Text);
 					//if (tempSponsorAdminID >= 0) {
-					foreach (var d in departmentRepository.a(sponsorID, tempSponsorAdminID)) {
+					foreach (var d in departmentRepo.a(sponsorID, tempSponsorAdminID)) {
 						bool hasDepartmentID = Request.Form["DepartmentID"] != null;
 						if (hasDepartmentID) {
 							string departmentID = Request.Form["DepartmentID"];
@@ -133,7 +135,7 @@ namespace HW.Grp
 					
 					int SAID = Convert.ToInt32(Request.QueryString["SAID"]);
 					sponsorAdminID = Convert.ToInt32(Session["SponsorAdminID"]);
-					var a = sponsorRepository.ReadSponsorAdmin(sponsorID, sponsorAdminID, SAID);
+					var a = sponsorRepo.ReadSponsorAdmin(sponsorID, sponsorAdminID, SAID);
 					if (a != null) {
 						sponsorAdminID = a.Id;
 						if (!IsPostBack) {
@@ -149,16 +151,16 @@ namespace HW.Grp
 							LastName.Text = a.LastName;
 							PermanentlyDeleteUsers.Checked = a.PermanentlyDeleteUsers;
 
-							foreach (var f in sponsorRepository.FindAdminFunctionBySponsorAdmin(a.Id)) {
+							foreach (var f in sponsorRepo.FindAdminFunctionBySponsorAdmin(a.Id)) {
 								if (ManagerFunctionID.Items.FindByValue(f.Function.Id.ToString()) != null) {
 									ManagerFunctionID.Items.FindByValue(f.Function.Id.ToString()).Selected = true;
 								}
 							}
-							foreach (var d in sponsorRepository.FindAdminDepartmentBySponsorAdmin(a.Id)) {
+							foreach (var d in sponsorRepo.FindAdminDepartmentBySponsorAdmin(a.Id)) {
 								OrgTree.Text = OrgTree.Text.Replace("value='" + d.Department.Id + "'", "value='" + d.Department.Id + "' checked");
 							}
 						} else {
-							foreach (var d in departmentRepository.b(sponsorID, sponsorAdminID)) {
+							foreach (var d in departmentRepo.b(sponsorID, sponsorAdminID)) {
 								bool hasDepartmentID = Request.Form["DepartmentID"] != null;
 								if (hasDepartmentID) {
 									string departmentID = Request.Form["DepartmentID"];
@@ -184,7 +186,7 @@ namespace HW.Grp
 
 		void Save_Click(object sender, EventArgs e)
 		{
-			int tempSponsorAdminID = sponsorRepository.SponsorAdminExists2(sponsorAdminID, Usr.Text);
+			int tempSponsorAdminID = sponsorRepo.SponsorAdminExists2(sponsorAdminID, Usr.Text);
 			if (tempSponsorAdminID <= 0) {
 				var a = new SponsorAdmin {
 					Id = sponsorAdminID,
@@ -200,31 +202,31 @@ namespace HW.Grp
 				a.Validate();
 				a.AddErrorIf(a.Name == "", R.Str(lid, "manager.name.required", "Sponsor admin name is required."));
 				a.AddErrorIf(a.Email == "", R.Str(lid, "manager.email.required", "Email address name is required."));
-				a.AddErrorIf(sponsorAdminRepository.SponsorAdminEmailExists(a.Email, sponsorAdminID), R.Str(lid, "manager.email.notunique", "Please choose a unique email address!"));
+				a.AddErrorIf(sponsorAdminRepo.SponsorAdminEmailExists(a.Email, sponsorAdminID), R.Str(lid, "manager.email.notunique", "Please choose a unique email address!"));
 				if (!a.HasErrors) {
 					if (sponsorAdminID != 0) {
-						sponsorRepository.UpdateSponsorAdmin(a);
+						sponsorRepo.UpdateSponsorAdmin(a);
 					} else {
-						sponsorRepository.SaveSponsorAdmin(a);
-						a = sponsorRepository.ReadSponsorAdmin(sponsorID, Usr.Text, Email.Text);
+						sponsorRepo.SaveSponsorAdmin(a);
+						a = sponsorRepo.ReadSponsorAdmin(sponsorID, Usr.Text, Email.Text);
 						if (a != null) {
 							sponsorAdminID = a.Id;
 						}
 					}
-					sponsorRepository.DeleteSponsorAdminFunction(sponsorAdminID);
-					foreach (var f in managerRepository.FindAll()) {
+					sponsorRepo.DeleteSponsorAdminFunction(sponsorAdminID);
+					foreach (var f in managerRepo.FindAll()) {
 						if (ManagerFunctionID.Items.FindByValue(f.Id.ToString()) != null) {
 							if (ManagerFunctionID.Items.FindByValue(f.Id.ToString()).Selected) {
 								var x = new SponsorAdminFunction {
 									Admin = new SponsorAdmin { Id = sponsorAdminID },
 									Function = new ManagerFunction { Id = f.Id }
 								};
-								sponsorRepository.SaveSponsorAdminFunction(x);
+								sponsorRepo.SaveSponsorAdminFunction(x);
 							}
 						}
 					}
-					foreach (var d in departmentRepository.b(sponsorID, sponsorAdminID)) {
-						departmentRepository.DeleteSponsorAdminDepartment(sponsorAdminID, d.Department.Id);
+					foreach (var d in departmentRepo.b(sponsorID, sponsorAdminID)) {
+						departmentRepo.DeleteSponsorAdminDepartment(sponsorAdminID, d.Department.Id);
 						bool hasDepartmentID = Request.Form["DepartmentID"] != null;
 						if (hasDepartmentID) {
 							string departmentID = Request.Form["DepartmentID"];
@@ -235,7 +237,7 @@ namespace HW.Grp
 									Id = sponsorAdminID,
 									Department = new Department { Id = d.Department.Id }
 								};
-								departmentRepository.SaveSponsorAdminDepartment(x);
+								departmentRepo.SaveSponsorAdminDepartment(x);
 							}
 						}
 					}
@@ -251,8 +253,25 @@ namespace HW.Grp
 		protected void buttonSend_Click(object sender, EventArgs e)
 		{
 			string uid = Guid.NewGuid().ToString().ToUpper().Replace("-", "");
-			sponsorAdminRepository.UpdateUniqueKey(uid, sponsorAdminID);
-			new PasswordActivationLink().Send(Email.Text, uid, Name.Text, Usr.Text);
+			sponsorAdminRepo.UpdateUniqueKey(uid, sponsorAdminID);
+			
+//			new PasswordActivationLink().Send(Email.Text, uid, Name.Text, Usr.Text);
+			string subject = R.Str(lid, "password.activate.subject", "Your HealthWatch Group Administration account");
+			string body = R.Str(lid, "password.activate.body", @"Dear <NAME>,
+
+A manager account has been set up for you to the HealthWatch group administration interface. Please click the link below to choose a password.
+
+<LINK>PasswordActivation.aspx?KEY=<KEY>
+
+<USERNAME>");
+			
+			body = body.Replace("<NAME>", Name.Text);
+			body = body.Replace("<LINK>", ConfigurationManager.AppSettings["grpURL"]);
+			body = body.Replace("<KEY>", uid);
+            string username = Usr.Text != "" ? R.Str(lid, "password.activate.username", "Your username is ") + Usr.Text : "";
+			body = body.Replace("<USERNAME>", username);
+			
+			new PasswordActivationLink().Send(Email.Text, uid, Name.Text, Usr.Text, subject, body);
 			
 			message = R.Str(lid, "password.activate.sent", "Password activation link sent!");
 		}

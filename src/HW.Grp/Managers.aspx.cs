@@ -16,18 +16,11 @@ namespace HW.Grp
 	public partial class Managers : System.Web.UI.Page
 	{
 		protected IList<SponsorAdmin> sponsorAdmins;
-//		protected int lid;
 		protected int sortFirstName;
         protected int sortLastName;
-//		ManagerService service = new ManagerService(
-//			AppContext.GetRepositoryFactory().CreateManagerFunctionRepository(),
-//			AppContext.GetRepositoryFactory().CreateSponsorRepository(),
-//			AppContext.GetRepositoryFactory().CreateSponsorAdminRepository()
-//		);
 		ManagerService service;
         string sort;
         SqlUserRepository userRepository = new SqlUserRepository();
-//		protected int lid = Language.ENGLISH;
         protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
 		public Managers() : this(new ManagerService(new SqlManagerFunctionRepository(), new SqlSponsorRepository(), new SqlSponsorAdminRepository()))
@@ -67,7 +60,6 @@ namespace HW.Grp
 			
 			HtmlHelper.RedirectIf(!HasAccess(sponsorAdminID, ManagerFunction.Managers), "default.aspx", true);
 			
-//			lid = ConvertHelper.ToInt32(Session["lid"], 2);
 			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
 			if (userSession != null) {
 				lid = userSession.Lang;
