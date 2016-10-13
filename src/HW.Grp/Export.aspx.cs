@@ -7,7 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Core;
 using HW.Core.Helpers;
-using HW.Core.Helpers.Exporters;
+using HW.Core.Util.Exporters;
 using HW.Core.Models;
 using HW.Core.Repositories.Sql;
 using HW.Core.Services;
@@ -16,17 +16,6 @@ namespace HW.Grp
 {
 	public partial class Export : System.Web.UI.Page
 	{
-//		ReportService service = new ReportService(
-//			new SqlAnswerRepository(),
-//			new SqlReportRepository(),
-//			new SqlProjectRepository(),
-//			new SqlOptionRepository(),
-//			new SqlDepartmentRepository(),
-//			new SqlQuestionRepository(),
-//			new SqlIndexRepository(),
-//			new SqlSponsorRepository(),
-//			new SqlSponsorAdminRepository()
-//		);
 		ReportService service = new ReportService();
 //		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		

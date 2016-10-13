@@ -25,16 +25,20 @@ namespace HW.Grp
 		SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
 		SqlSponsorBQRepository sponsorBQRepo = new SqlSponsorBQRepository();
 		
-		protected IList<IReportPart> reportParts = null;
-		protected IList<BaseModel> urlModels;
-		protected IList<PlotTypeLanguage> plotTypes = new List<PlotTypeLanguage>();
 		IList<Department> departments;
 		IList<SponsorBackgroundQuestion> questions;
 		int sponsorID = 0;
 		int sponsorAdminID = 0;
+		
+		protected IList<IReportPart> reportParts = null;
+		protected IList<BaseModel> urlModels;
+		protected IList<PlotTypeLanguage> plotTypes = new List<PlotTypeLanguage>();
+		
 		protected DateTime startDate;
 		protected DateTime endDate;
 		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
+		
+		protected Sponsor sponsor;
 
 		public IList<SponsorProjectRoundUnit> SponsorProjectRoundUnits {
 			set {
@@ -227,6 +231,8 @@ namespace HW.Grp
 			
 			HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Statistics), "default.aspx", true);
 			
+			sponsor = sponsorRepo.Read(sponsorID);
+			
 			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
 			if (userSession != null) {
 				lid = userSession.Lang;
@@ -289,16 +295,16 @@ namespace HW.Grp
 			return p.ToString();
 		}
 
-		protected string GetReportImageUrl(int reportID, int reportPartLangID, Q additionalQuery)
+		protected string GetReportImageUrl(int reportID, int reportPartLangID, Q additionalQuery, int defaultPlotType)
 		{
-			var p = GetPage("reportImage.aspx", reportID, reportPartLangID);
+			var p = GetPage("reportImage.aspx", reportID, reportPartLangID, defaultPlotType);
 			p.Add(additionalQuery);
 			return p.ToString();
 		}
 		
-		protected string GetExportUrl(int reportID, int reportPartID, string type, Q additionalQuery)
+		protected string GetExportUrl(int reportID, int reportPartID, string type, Q additionalQuery, int defaultPlotType)
 		{
-			var p = GetPage("Export.aspx", reportID, reportPartID);
+			var p = GetPage("Export.aspx", reportID, reportPartID, defaultPlotType);
 			p.Q.Add("TYPE", type);
 			p.Add(additionalQuery);
 			return p.ToString();
@@ -306,7 +312,7 @@ namespace HW.Grp
 		
 		protected string GetExportAllUrl(string type, Q additionalQuery)
 		{
-			var p = GetPage("ExportAll.aspx", 0, 0);
+			var p = GetPage("ExportAll.aspx", 0, 0, 0);
 			p.Q.Add("TYPE", type);
 			p.Add(additionalQuery);
 			return p.ToString();
@@ -314,7 +320,7 @@ namespace HW.Grp
 		
 		protected string GetExportAllUrl2(string type, Q additionalQuery)
 		{
-			var p = GetPage("ExportAll2.aspx", 0, 0);
+			var p = GetPage("ExportAll2.aspx", 0, 0, 0);
 			p.Q.Add("TYPE", type);
 			p.Add(additionalQuery);
 			return p.ToString();
@@ -369,7 +375,7 @@ namespace HW.Grp
 			return p;
 		}
 		
-		P GetPage(string page, int reportID, int reportPartLangID)
+		P GetPage(string page, int reportID, int reportPartLangID, int defaultPlotType)
 		{
 			P p = new P(page);
 			p.Q.Add("LangID", lid);
@@ -385,7 +391,8 @@ namespace HW.Grp
 			p.Q.Add("RPLID", reportPartLangID);
 			p.Q.Add("PRUID", ProjectRoundUnitID.SelectedValue);
 			p.Q.Add("GRPNG", Grouping.SelectedValue);
-			p.Q.AddIf(Request.QueryString["PLOT"] != null, "PLOT", Request.QueryString["PLOT"]);
+			//p.Q.AddIf(Request.QueryString["PLOT"] != null, "PLOT", Request.QueryString["PLOT"]);
+            p.Q.Add("PLOT", defaultPlotType);
 			return p;
 		}
 
