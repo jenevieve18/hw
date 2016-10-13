@@ -361,7 +361,7 @@
     <value>Aktivera lösenord</value>
   </data>
   <data name="password.activate.body" xml:space="preserve">
-    <value>Bästa &lt;NAME&gt;,
+    <value>Hej &lt;NAME&gt;,
 
 Ett chefskonto har skapats för dig för åtkomst till HealthWatchs gruppadministrationssida. Vänligen klicka på länken nedan för att välja ett lösenord.
 
