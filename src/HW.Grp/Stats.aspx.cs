@@ -16,14 +16,19 @@ namespace HW.Grp
 {
 	public partial class Stats : System.Web.UI.Page
 	{
-		SqlSponsorProjectRepository sponsorProjectRepo = new SqlSponsorProjectRepository();
-		SqlUserRepository userRepository = new SqlUserRepository();
-		SqlProjectRepository projRepository = new SqlProjectRepository();
 		SqlSponsorRepository sponsorRepo = new SqlSponsorRepository();
+		SqlSponsorProjectRepository sponsorProjectRepo = new SqlSponsorProjectRepository();
+		SqlSponsorBQRepository sponsorBQRepo = new SqlSponsorBQRepository();
+		SqlSponsorProjectRoundUnitRepository sponsorProjectRoundUnitRepo = new SqlSponsorProjectRoundUnitRepository();
+		
+		SqlUserRepository userRepository = new SqlUserRepository();
+		
+		SqlProjectRepository projRepository = new SqlProjectRepository();
+		
 		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
+		
 		SqlReportRepository reportRepository = new SqlReportRepository();
 		SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
-		SqlSponsorBQRepository sponsorBQRepo = new SqlSponsorBQRepository();
 		
 		IList<Department> departments;
 		IList<SponsorBackgroundQuestion> questions;
@@ -178,7 +183,6 @@ namespace HW.Grp
 			if (sponsorID != 0) {
 				if (!IsPostBack) {
 					
-					// startDate = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day);
 					startDate = ToDate(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day);
 					endDate = DateTime.Now;
 					
@@ -201,7 +205,6 @@ namespace HW.Grp
 					
 					SponsorProjects = sponsorProjectRepo.FindSponsorProjects(sponsorID);
 
-//					BackgroundQuestions = sponsorRepo.FindBySponsor(sponsorID);
 					BackgroundQuestions = sponsorBQRepo.FindBySponsor(sponsorID);
 				} else {
 					startDate = GetDateFromString(Request.Form["startDate"]);
@@ -241,81 +244,52 @@ namespace HW.Grp
 			plotTypes = plotRepository.FindByLanguage(lid);
 			
 			SaveAdminSession(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Statistics, DateTime.Now);
+			
 			Index(sponsorID, sponsorAdminID);
-//			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Statistics, DateTime.Now);
-//			if (sponsorID != 0) {
-//				if (!IsPostBack) {
-//
-//					startDate = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day);
-//					endDate = DateTime.Now;
-//
-//					GroupBy.Items.Clear();
-//					GroupBy.Items.Add(new ListItem(R.Str(lid, "week.one", "One week"), "1"));
-//					GroupBy.Items.Add(new ListItem(R.Str(lid, "week.two.even", "Two weeks, start with even"), "7"));
-//					GroupBy.Items.Add(new ListItem(R.Str(lid, "week.two.odd", "Two weeks, start with odd"), "2"));
-//					GroupBy.Items.Add(new ListItem(R.Str(lid, "month.one", "One month"), "3"));
-//					GroupBy.Items.Add(new ListItem(R.Str(lid, "month.three", "Three months"), "4"));
-//					GroupBy.Items.Add(new ListItem(R.Str(lid, "month.six", "Six months"), "5"));
-//					GroupBy.Items.Add(new ListItem(R.Str(lid, "year.one", "One year"), "6"));
-//
-//					Grouping.Items.Clear();
-//					Grouping.Items.Add(new ListItem(R.Str(lid, "", "< none >"), "0"));
-//					Grouping.Items.Add(new ListItem(R.Str(lid, "users.unit", "Users on unit"), "1"));
-//					Grouping.Items.Add(new ListItem(R.Str(lid, "users.unit.subunit", "Users on unit+subunits"), "2"));
-//					Grouping.Items.Add(new ListItem(R.Str(lid, "background.variable", "Background variable"), "3"));
-//
-//					ProjectRoundUnits = sponsorRepository.FindBySponsorAndLanguage(sponsorID, lid);
-//
-//					BackgroundQuestions = sponsorRepository.FindBySponsor(sponsorID);
-//				} else {
-//					startDate = GetDateFromString(Request.Form["startDate"]);
-//					endDate = GetDateFromString(Request.Form["endDate"]);
-//				}
-//				Departments = departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID);
-//			} else {
-//				Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
-//			}
-			Execute.Click += new EventHandler(Execute_Click);
+
+			Execute.Click += new EventHandler(ExecuteClick);
+			ProjectRoundUnitID.SelectedIndexChanged += new EventHandler(ProjectRoundUnitSelectedIndexChanged);
+		}
+
+		void ProjectRoundUnitSelectedIndexChanged(object sender, EventArgs e)
+		{
+            if (ProjectRoundUnitID.SelectedValue.Contains("SPRU")) {
+            	int pruID = ConvertHelper.ToInt32(ProjectRoundUnitID.SelectedValue.Replace("SPRU", ""));
+            	var sponsorProjectRoundUnit = sponsorProjectRoundUnitRepo.ReadByProjectRoundUnit(pruID);
+            	if (sponsorProjectRoundUnit != null && sponsorProjectRoundUnit.DefaultAggregation != 0) {
+            		GroupBy.SelectedValue = sponsorProjectRoundUnit.DefaultAggregation.ToString();
+            	}
+            }
 		}
 		
 		DateTime GetDateFromString(string s)
 		{
 			DateTime d = DateTime.Now;
 			try {
-//				d = DateTime.ParseExact(s, "yyyy MMM", CultureInfo.InvariantCulture);
 				d = DateTime.ParseExact(s, "yyyy MMM", GetCultureInfo(lid));
 			} catch {}
 			return d;
 		}
 		
-//		protected string GetReportImageUrl2(int reportPartLangID, Q additionalQuery, int defaultPlotType)
 		protected string GetReportImageUrl2(int reportPartLangID, Q additionalQuery)
 		{
-			//var p = GetPage2("reportImage2.aspx", reportPartLangID, defaultPlotType);
             var p = GetPage2("reportImage2.aspx", reportPartLangID);
 			p.Add(additionalQuery);
-//            p.Q.AddIf(defaultPlotType != 0, "Plot", defaultPlotType);
 			return p.ToString();
 		}
 
-//		protected string GetReportImageUrl(int reportID, int reportPartLangID, Q additionalQuery, int defaultPlotType)
 		protected string GetReportImageUrl(int reportID, int reportPartLangID, Q additionalQuery)
 		{
-			//var p = GetPage("reportImage.aspx", reportID, reportPartLangID, defaultPlotType);
             var p = GetPage("reportImage.aspx", reportID, reportPartLangID);
 			p.Add(additionalQuery);
-//            p.Q.AddIf(defaultPlotType != 0, "Plot", defaultPlotType);
 			return p.ToString();
 		}
 		
-//		protected string GetExportUrl(int reportID, int reportPartID, string type, Q additionalQuery, int defaultPlotType)
 		protected string GetExportUrl(int reportID, int reportPartID, string type, Q additionalQuery)
 		{
-			//var p = GetPage("Export.aspx", reportID, reportPartID, defaultPlotType);
             var p = GetPage("Export.aspx", reportID, reportPartID);
 			p.Q.Add("TYPE", type);
 			p.Add(additionalQuery);
-//            p.Q.AddIf(defaultPlotType != 0, "Plot", defaultPlotType);
 			return p.ToString();
 		}
 		
@@ -364,7 +338,6 @@ namespace HW.Grp
 			return q;
 		}
 
-		//P GetPage2(string page, int reportPartLangID, int defaultPlotType)
         P GetPage2(string page, int reportPartLangID)
 		{
 			P p = new P(page);
@@ -381,11 +354,9 @@ namespace HW.Grp
 			p.Q.Add("RPLID", reportPartLangID);
 			p.Q.Add("PRUID", ProjectRoundUnitID.SelectedValue);
 			p.Q.Add("GRPNG", Grouping.SelectedValue);
-            //p.Q.AddIf(defaultPlotType != 0, "Plot", defaultPlotType);
 			return p;
 		}
 		
-		//P GetPage(string page, int reportID, int reportPartLangID, int defaultPlotType)
         P GetPage(string page, int reportID, int reportPartLangID)
 		{
 			P p = new P(page);
@@ -402,11 +373,10 @@ namespace HW.Grp
 			p.Q.Add("RPLID", reportPartLangID);
 			p.Q.Add("PRUID", ProjectRoundUnitID.SelectedValue);
 			p.Q.Add("GRPNG", Grouping.SelectedValue);
-            //p.Q.AddIf(defaultPlotType != 0, "Plot", defaultPlotType);
 			return p;
 		}
 
-		void Execute_Click(object sender, EventArgs e)
+		void ExecuteClick(object sender, EventArgs e)
 		{
 //			int selectedProjectRoundUnitID = Convert.ToInt32(ProjectRoundUnitID.SelectedValue);
 			int grouping = Convert.ToInt32(Grouping.SelectedValue);

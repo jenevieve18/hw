@@ -360,6 +360,18 @@ namespace HW.Core.Models
 		public ProjectRoundUnit ProjectRoundUnit { get; set; }
 		public string Navigation { get; set; }
 		public Survey Survey { get; set; }
+		public int DefaultAggregation { get; set; }
+		public int SponsorProjectRoundUnitID { get; set; }
+		public int SponsorID { get; set; }
+		public int ProjectRoundUnitID { get; set; }
+//		public Guid SurveyKey { get; set; }
+		public string SurveyKey { get; set; }
+		public int SortOrder { get; set; }
+		public string Feedback { get; set; }
+		public int Ext { get; set; }
+		public int SurveyID { get; set; }
+		public int OnlyEveryDays { get; set; }
+		public int GoToStatistics { get; set; }
 	}
 	
 	public class SponsorProjectRoundUnitLanguage : BaseModel

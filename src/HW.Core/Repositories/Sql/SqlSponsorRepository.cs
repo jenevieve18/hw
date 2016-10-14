@@ -2089,7 +2089,8 @@ ORDER BY s.SortOrder",
 			string query = string.Format(
 				@"
 SELECT ISNULL(sprul.Nav, spru.Nav),
-	spru.ProjectRoundUnitID
+	spru.ProjectRoundUnitID,
+	spru.DefaultAggregation
 FROM SponsorProjectRoundUnit spru
 LEFT OUTER JOIN SponsorProjectRoundUnitLang sprul ON spru.SponsorProjectRoundUnitID = sprul.SponsorProjectRoundUnitID AND ISNULL(sprul.LangID, 1) = {1}
 WHERE spru.SponsorID = {0}",
@@ -2112,7 +2113,8 @@ WHERE spru.SponsorID = {0}",
 				while (rs.Read()) {
 					var p = new SponsorProjectRoundUnit {
 						Navigation = rs.GetString(0),
-						ProjectRoundUnit = new ProjectRoundUnit {Id = rs.GetInt32(1)}
+						ProjectRoundUnit = new ProjectRoundUnit { Id = rs.GetInt32(1) },
+						DefaultAggregation = GetInt32(rs, 2)
 					};
 					projects.Add(p);
 				}

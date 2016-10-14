@@ -59,7 +59,6 @@ namespace HW.Core.Models
 	
 	public class ReportPart : BaseModel
 	{
-//		ReportPartLang currentLanguage;
 		ReportPartLang selectedReportPartLang;
 		
 		public ReportPart()
@@ -102,14 +101,6 @@ namespace HW.Core.Models
 		public bool HasComponents {
 			get { return Components.Count > 0; }
 		}
-		
-//		public ReportPartLang CurrentLanguage {
-//			get { return currentLanguage; }
-//			set {
-//				currentLanguage = value;
-//				currentLanguage.ReportPart = this;
-//			}
-//		}
 		
 		public bool HasLanguages {
 			get { return Languages.Count > 0; }
