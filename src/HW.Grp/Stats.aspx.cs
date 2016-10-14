@@ -288,31 +288,40 @@ namespace HW.Grp
 			return d;
 		}
 		
+//		protected string GetReportImageUrl2(int reportPartLangID, Q additionalQuery, int defaultPlotType)
 		protected string GetReportImageUrl2(int reportPartLangID, Q additionalQuery)
 		{
-			var p = GetPage2("reportImage2.aspx", reportPartLangID);
+			//var p = GetPage2("reportImage2.aspx", reportPartLangID, defaultPlotType);
+            var p = GetPage2("reportImage2.aspx", reportPartLangID);
 			p.Add(additionalQuery);
+//            p.Q.AddIf(defaultPlotType != 0, "Plot", defaultPlotType);
 			return p.ToString();
 		}
 
-		protected string GetReportImageUrl(int reportID, int reportPartLangID, Q additionalQuery, int defaultPlotType)
+//		protected string GetReportImageUrl(int reportID, int reportPartLangID, Q additionalQuery, int defaultPlotType)
+		protected string GetReportImageUrl(int reportID, int reportPartLangID, Q additionalQuery)
 		{
-			var p = GetPage("reportImage.aspx", reportID, reportPartLangID, defaultPlotType);
+			//var p = GetPage("reportImage.aspx", reportID, reportPartLangID, defaultPlotType);
+            var p = GetPage("reportImage.aspx", reportID, reportPartLangID);
 			p.Add(additionalQuery);
+//            p.Q.AddIf(defaultPlotType != 0, "Plot", defaultPlotType);
 			return p.ToString();
 		}
 		
-		protected string GetExportUrl(int reportID, int reportPartID, string type, Q additionalQuery, int defaultPlotType)
+//		protected string GetExportUrl(int reportID, int reportPartID, string type, Q additionalQuery, int defaultPlotType)
+		protected string GetExportUrl(int reportID, int reportPartID, string type, Q additionalQuery)
 		{
-			var p = GetPage("Export.aspx", reportID, reportPartID, defaultPlotType);
+			//var p = GetPage("Export.aspx", reportID, reportPartID, defaultPlotType);
+            var p = GetPage("Export.aspx", reportID, reportPartID);
 			p.Q.Add("TYPE", type);
 			p.Add(additionalQuery);
+//            p.Q.AddIf(defaultPlotType != 0, "Plot", defaultPlotType);
 			return p.ToString();
 		}
 		
 		protected string GetExportAllUrl(string type, Q additionalQuery)
 		{
-			var p = GetPage("ExportAll.aspx", 0, 0, 0);
+			var p = GetPage("ExportAll.aspx", 0, 0);
 			p.Q.Add("TYPE", type);
 			p.Add(additionalQuery);
 			return p.ToString();
@@ -320,7 +329,7 @@ namespace HW.Grp
 		
 		protected string GetExportAllUrl2(string type, Q additionalQuery)
 		{
-			var p = GetPage("ExportAll2.aspx", 0, 0, 0);
+			var p = GetPage("ExportAll2.aspx", 0, 0);
 			p.Q.Add("TYPE", type);
 			p.Add(additionalQuery);
 			return p.ToString();
@@ -355,7 +364,8 @@ namespace HW.Grp
 			return q;
 		}
 
-		P GetPage2(string page, int reportPartLangID)
+		//P GetPage2(string page, int reportPartLangID, int defaultPlotType)
+        P GetPage2(string page, int reportPartLangID)
 		{
 			P p = new P(page);
 			p.Q.Add("LangID", lid);
@@ -371,11 +381,12 @@ namespace HW.Grp
 			p.Q.Add("RPLID", reportPartLangID);
 			p.Q.Add("PRUID", ProjectRoundUnitID.SelectedValue);
 			p.Q.Add("GRPNG", Grouping.SelectedValue);
-			p.Q.AddIf(Request.QueryString["PLOT"] != null, "PLOT", Request.QueryString["PLOT"]);
+            //p.Q.AddIf(defaultPlotType != 0, "Plot", defaultPlotType);
 			return p;
 		}
 		
-		P GetPage(string page, int reportID, int reportPartLangID, int defaultPlotType)
+		//P GetPage(string page, int reportID, int reportPartLangID, int defaultPlotType)
+        P GetPage(string page, int reportID, int reportPartLangID)
 		{
 			P p = new P(page);
 			p.Q.Add("LangID", lid);
@@ -391,8 +402,7 @@ namespace HW.Grp
 			p.Q.Add("RPLID", reportPartLangID);
 			p.Q.Add("PRUID", ProjectRoundUnitID.SelectedValue);
 			p.Q.Add("GRPNG", Grouping.SelectedValue);
-			//p.Q.AddIf(Request.QueryString["PLOT"] != null, "PLOT", Request.QueryString["PLOT"]);
-            p.Q.Add("PLOT", defaultPlotType);
+            //p.Q.AddIf(defaultPlotType != 0, "Plot", defaultPlotType);
 			return p;
 		}
 

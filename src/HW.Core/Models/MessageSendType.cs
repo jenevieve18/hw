@@ -328,19 +328,19 @@ namespace HW.Core.Models
 		protected void SendPushNotification(int userID)
 		{
 			var apiKey = "AIzaSyB3ne08mvULbQX8HalX-qRGQtP1Ih9bqDY";
-			var senderId = "59929247886";
+			var senderID = "59929247886";
 			var message = "Reminder";
 
-			var registrationIds = service.GetUserRegistrationIDs(userID);
-			SendGcmNotification(registrationIds, apiKey, senderId, message, userID, "");
+			var registrationIDs = service.GetUserRegistrationIDs(userID);
+			SendGcmNotification(registrationIDs, apiKey, senderID, message, userID, "");
 		}
 		
-		void SendGcmNotification(List<string> registrationIds, string apiKey, string senderId, string message, int userId, string userKey)
+		void SendGcmNotification(List<string> registrationIDs, string apiKey, string senderID, string message, int userID, string userKey)
 		{
 			userKey = userKey.Length >= 12 ? userKey.Substring(0, 12) : userKey;
-			string keyAndUserID = userKey + userId.ToString();
+			string keyAndUserID = userKey + userID.ToString();
 			
-			var config = new GcmConfiguration(senderId, apiKey, null);
+			var config = new GcmConfiguration(senderID, apiKey, null);
 			var gcmBroker = new GcmServiceBroker(config);
 
 			gcmBroker.OnNotificationFailed += (notification, aggregateEx) => {
@@ -374,16 +374,9 @@ namespace HW.Core.Models
 							Console.WriteLine("Device RegistrationId Expired: {0}", oldId);
 							Console.WriteLine("Removing Registration ID {0} from the database...", oldId);
 
-//						exec(
-//							"UPDATE dbo.UserRegistrationID SET UserID = " + -userId + " " +
-//							"WHERE UserID = " + userId + " " +
-//							"AND RegistrationID = '" + userKey.Replace("'", "") + "'"
-//						);
-//						repo.ccc(userId, userKey);
-
 							Db.exec(
-								"UPDATE dbo.UserRegistrationID SET UserID = " + -userId + " " +
-								"WHERE UserID = " + userId + " " +
+								"UPDATE dbo.UserRegistrationID SET UserID = " + -userID + " " +
+								"WHERE UserID = " + userID + " " +
 								"AND RegistrationID = '" + userKey.Replace("'", "") + "'"
 							);
 
@@ -392,14 +385,9 @@ namespace HW.Core.Models
 								
 								Console.WriteLine("Update Registration ID from {0} to {1}...", oldId, newId);
 								
-//							exec(
-//								"INSERT INTO dbo.UserRegistrationID(UserID, RegistrationID) " +
-//								"VALUES(" + userId + ", '" + userKey.Replace("'", "") + "')"
-//							);
-//							repo.ddd(userId, userKey);
 								Db.exec(
 									"INSERT INTO dbo.UserRegistrationID(UserID, RegistrationID) " +
-									"VALUES(" + userId + ", '" + userKey.Replace("'", "") + "')"
+									"VALUES(" + userID + ", '" + userKey.Replace("'", "") + "')"
 								);
 							}
 						} else if (ex is RetryAfterException) {
@@ -419,7 +407,7 @@ namespace HW.Core.Models
 
 			gcmBroker.Start();
 
-			foreach (var registrationId in registrationIds) {
+			foreach (var registrationId in registrationIDs) {
 				gcmBroker.QueueNotification(
 					new GcmNotification {
 						RegistrationIds = new List<string> {
@@ -453,21 +441,6 @@ namespace HW.Core.Models
 	{
 		public void Send(string to, string key, string name, string username, string subject, string body)
 		{
-//			string body = string.Format(
-//				@"Dear {0},
-//
-//A manager account has been set up for you to the HealthWatch group administration interface. Please click the link below to choose a password.
-//
-//{1}PasswordActivation.aspx?KEY={2}
-//
-//{3}",
-//				name,
-//				ConfigurationManager.AppSettings["grpURL"],
-//				key,
-//				username != "" ? string.Format("Your username is '{0}'", username) : ""
-//			);
-//			Db.sendMail2("info@healthwatch.se", to, "Your HealthWatch Group Administration account", body);
-			
 			Db.sendMail2("info@healthwatch.se", to, subject, body);
 		}
 		

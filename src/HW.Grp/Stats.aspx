@@ -177,6 +177,7 @@
 
             var img = partContent.find('img.report-part-graph');
             var imageUrl = partContent.find('.hidden-image-url').text();
+            console.log(imageUrl);
             img.attr('src', imageUrl + '&PLOT=' + plotType);
 
             var exportDocXUrl = partContent.find('.hidden-export-docx-url').text();
@@ -228,36 +229,20 @@
             <div class="settingsPane">
 	            <span class="desc"><%= R.Str(lid, "timeframe", "Timeframe")%></span>
 
-                <!--<div class="input-daterange" id="datepicker">-->
                 <span class="input-daterange">
                     <input readonly style="cursor:pointer" type="text" class="input-small date" name="startDate" value="<%= startDate.ToString("yyyy MMM", GetCultureInfo(lid)) %>" />
                     <span>--</span>
                     <input readonly style="cursor:pointer" type="text" class="input-small date" name="endDate" value="<%= endDate.ToString("yyyy MMM", GetCultureInfo(lid)) %>" />
                 </span>
-                <!--</div>-->
 
-                <!--<asp:DropDownList ID="FromYear" runat="server" />--<asp:DropDownList ID="ToYear" runat="server" />-->
                 <%= R.Str(lid, "survey", "Survey")%>
                 <asp:DropDownList AutoPostBack="true" ID="ProjectRoundUnitID" runat="server" />
 			    <%= R.Str(lid, "aggregation", "Aggregation")%>
 				<asp:DropDownList AutoPostBack="true" ID="GroupBy" runat="server">
-					<%--<asp:ListItem Value="1" Text="One week" />
-					<asp:ListItem Value="7" Text="Two weeks, start with even" />
-					<asp:ListItem Value="2" Text="Two weeks, start with odd" />
-					<asp:ListItem Value="3" Text="One month" />
-					<asp:ListItem Value="4" Text="Three months" />
-					<asp:ListItem Value="5" Text="Six months" />
-					<asp:ListItem Value="6" Text="One year" />--%>
 				</asp:DropDownList><br />
 			    <span class="desc"><%= R.Str(lid, "grouping", "Grouping")%></span>
 				<asp:DropDownList AutoPostBack="true" ID="Grouping" runat="server">
-					<%--<asp:ListItem Value="0" Text="< none >" />
-					<asp:ListItem Value="1" Text="Users on unit" />
-					<asp:ListItem Value="2" Text="Users on unit+subunits" />
-					<asp:ListItem Value="3" Text="Background variable" />--%>
 				</asp:DropDownList>
-                <%--<%= R.Str(lid, "language", "Language")%>
-                <asp:DropDownList ID="LangID" runat="server" AutoPostBack="true" />--%>
                 <br />
                 <asp:PlaceHolder ID="Org" runat="server" Visible="false" />
     	        <asp:CheckBoxList RepeatDirection="Vertical" RepeatLayout="table" CellPadding="0" CellSpacing="0" ID="BQ" runat="server" Visible="false" />
@@ -334,7 +319,6 @@
                             <% var xxx = lid == 1 ? new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Linje", SupportsMultipleSeries = true } :
                                    new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Line", SupportsMultipleSeries = true }; %>
                             <% foreach (var p in new PlotTypeLanguage[] { xxx }) { %>
-                            <%--<% foreach (var p in plotTypes) { %>--%>
                                 <% if (!p.SupportsMultipleSeries && !forSingleSeries) {} %>
                                 <% else { %><option value="<%= p.PlotType.Id %>" <%= p.PlotType.Id == sponsor.DefaultPlotType ? "selected" : "" %>><%= p.ShortName %></option><% } %>
                             <% } %>
@@ -372,10 +356,9 @@
 						<div class="report-part-header"><%= r.Header %></div>
 						<div class="report-part-content">
                             <% if (r is ReportPartLang) { %>
-                                <% string imageUrl = GetReportImageUrl(r.ReportPart.Id, r.Id, additionalQuery, sponsor.DefaultPlotType); %>
+                                <% string imageUrl = GetReportImageUrl(r.ReportPart.Id, r.Id, additionalQuery); %>
 							    <span class="hidden hidden-image-url"><%= imageUrl %></span>
-                                <img class="report-part-graph" src="<%= imageUrl %>" alt="" />
-                                <!--<div class="chart-description1" style="display:none"></div>-->
+                                <img class="report-part-graph" src="<%= imageUrl %>&Plot=<%= sponsor.DefaultPlotType %>" alt="" />
 							    <div class="action">
 								    <span class="small"><%= R.Str(lid, "graphs.change", "Change this graph to:")%></span>
                                     <select class="plot-types small">
@@ -384,28 +367,21 @@
                                             <% else { %><option value="<%= p.PlotType.Id %>" <%= p.PlotType.Id == sponsor.DefaultPlotType ? "selected" : "" %>><%= p.ShortName %></option><% } %>
                                         <% } %>
                                     </select>
-								    <!--<span class="button white small graph"><span class="hidden plot-type"><%= PlotType.Line %></span><%= PlotType.GetString(PlotType.Line)%></span>
-								    <span class="button white small graph"><span class="hidden plot-type"><%= PlotType.LineSD%></span><%= PlotType.GetString(PlotType.LineSD)%></span>
-								    <span class="button white small graph"><span class="hidden plot-type"><%= PlotType.LineSDWithCI%></span><%= PlotType.GetString(PlotType.LineSDWithCI)%></span>
-                                    <% if (supportsBoxPlot) { %>
-									    <span class="button white small graph"><span class="hidden plot-type"><%= PlotType.BoxPlotMinMax%></span><%= PlotType.GetString(PlotType.BoxPlotMinMax)%></span>
-                                        <span class="button white small graph"><span class="hidden plot-type"><%= PlotType.BoxPlot%></span><%= PlotType.GetString(PlotType.BoxPlot)%></span>
-								    <% } %>-->
 								    <span class="small"><%= R.Str(lid, "graphs.export", "Export this graph to:")%></span>
 								    <span class="button white small export">
-                                        <% string exportDocXUrl = GetExportUrl(r.ReportPart.Id, r.Id, "docx", additionalQuery, sponsor.DefaultPlotType); %>
+                                        <% string exportDocXUrl = GetExportUrl(r.ReportPart.Id, r.Id, "docx", additionalQuery); %>
 							            <span class="hidden hidden-export-docx-url"><%= exportDocXUrl%></span>
-									    <%= HtmlHelper.Anchor("docx", exportDocXUrl, "class='export-docx-url' target='_blank'")%>
+									    <%= HtmlHelper.Anchor("docx", exportDocXUrl + "&Plot=" + sponsor.DefaultPlotType, "class='export-docx-url' target='_blank'")%>
 								    </span>
 								    <span class="button white small export">
-                                        <% string exportPptXUrl = GetExportUrl(r.ReportPart.Id, r.Id, "pptx", additionalQuery, sponsor.DefaultPlotType); %>
+                                        <% string exportPptXUrl = GetExportUrl(r.ReportPart.Id, r.Id, "pptx", additionalQuery); %>
 							            <span class="hidden hidden-export-pptx-url"><%= exportPptXUrl%></span>
-									    <%= HtmlHelper.Anchor("pptx", exportPptXUrl, "class='export-pptx-url' target='_blank'")%>
+									    <%= HtmlHelper.Anchor("pptx", exportPptXUrl + "&Plot=" + sponsor.DefaultPlotType, "class='export-pptx-url' target='_blank'")%>
 								    </span>
-                                    <% string exportXlsUrl = GetExportUrl(r.ReportPart.Id, r.Id, "xls", additionalQuery, sponsor.DefaultPlotType); %>
+                                    <% string exportXlsUrl = GetExportUrl(r.ReportPart.Id, r.Id, "xls", additionalQuery); %>
 								    <span class="button white small export">
 							            <span class="hidden hidden-export-xls-url"><%= exportXlsUrl%></span>
-									    <%= HtmlHelper.Anchor("xls", exportXlsUrl, "class='export-xls-url' target='_blank'")%>
+									    <%= HtmlHelper.Anchor("xls", exportXlsUrl + "&Plot=" + sponsor.DefaultPlotType, "class='export-xls-url' target='_blank'")%>
 								    </span>
 								    <span class="button white small export">
 									    <%= HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportXlsUrl + "&PLOT=" + PlotType.Verbose, "class='export-xls-verbose-url' target='_blank'")%>
@@ -414,37 +390,18 @@
                             <% } else { %>
                                 <% string imageUrl = GetReportImageUrl2(r.Id, additionalQuery); %>
 							    <span class="hidden hidden-image-url"><%= imageUrl %></span>
-                                <img class="report-part-graph" src="<%= imageUrl %>" alt="" />
+                                <img class="report-part-graph" src="<%= imageUrl %>&Plot=<%= sponsor.DefaultPlotType %>" alt="" />
 							    <div class="action">
 								    <span class="small"><%= R.Str(lid, "graphs.change", "Change this graph to:")%></span>
                                     <select class="plot-types small">
                                         <% var xxx = lid == 1 ? new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Linje", SupportsMultipleSeries = true } :
                                                new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Line", SupportsMultipleSeries = true }; %>
                                         <% foreach (var p in new PlotTypeLanguage[] { xxx }) { %>
-                                        <%--<% foreach (var p in plotTypes) { %>--%>
                                             <% if (!p.SupportsMultipleSeries && !forSingleSeries) {} %>
                                             <% else { %><option value="<%= p.PlotType.Id %>" <%= p.PlotType.Id == sponsor.DefaultPlotType ? "selected" : "" %>><%= p.ShortName %></option><% } %>
                                         <% } %>
                                     </select>
 								    <span class="small"><%= R.Str(lid, "graphs.export", "Export this graph to:")%></span>
-								    <%--<span class="button white small export">
-                                        <% string exportDocXUrl = GetExportUrl(r.ReportPart.Id, r.Id, "docx", additionalQuery); %>
-							            <span class="hidden hidden-export-docx-url"><%= exportDocXUrl%></span>
-									    <%= HtmlHelper.Anchor("docx", exportDocXUrl, "class='export-docx-url' target='_blank'")%>
-								    </span>
-								    <span class="button white small export">
-                                        <% string exportPptXUrl = GetExportUrl(r.ReportPart.Id, r.Id, "pptx", additionalQuery); %>
-							            <span class="hidden hidden-export-pptx-url"><%= exportPptXUrl%></span>
-									    <%= HtmlHelper.Anchor("pptx", exportPptXUrl, "class='export-pptx-url' target='_blank'")%>
-								    </span>
-                                    <% string exportXlsUrl = GetExportUrl(r.ReportPart.Id, r.Id, "xls", additionalQuery); %>
-								    <span class="button white small export">
-							            <span class="hidden hidden-export-xls-url"><%= exportXlsUrl%></span>
-									    <%= HtmlHelper.Anchor("xls", exportXlsUrl, "class='export-xls-url' target='_blank'")%>
-								    </span>
-								    <span class="button white small export">
-									    <%= HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportXlsUrl + "&PLOT=" + PlotType.Verbose, "class='export-xls-verbose-url' target='_blank'")%>
-								    </span>--%>
                                     <span class="button white small export">
                                         <% string exportAllDocXUrl = GetExportAllUrl2("docx", additionalQuery); %>
                                         <span class="hidden hidden-export-docx-url"><%= exportAllDocXUrl%></span>

@@ -15,17 +15,6 @@ namespace HW.Grp
 {
 	public partial class ReportImage : System.Web.UI.Page
 	{
-//		ReportService service = new ReportService(
-//			new SqlAnswerRepository(),
-//			new SqlReportRepository(),
-//			new SqlProjectRepository(),
-//			new SqlOptionRepository(),
-//			new SqlDepartmentRepository(),
-//			new SqlQuestionRepository(),
-//			new SqlIndexRepository(),
-//			new SqlSponsorRepository(),
-//			new SqlSponsorAdminRepository()
-//		);
 		ReportService service = new ReportService();
 		
 //		bool HasAnswerKey {

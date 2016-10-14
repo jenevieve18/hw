@@ -13,24 +13,6 @@ namespace HW.Grp {
     public partial class Stats {
         
         /// <summary>
-        /// FromYear control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList FromYear;
-        
-        /// <summary>
-        /// ToYear control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ToYear;
-        
-        /// <summary>
         /// ProjectRoundUnitID control.
         /// </summary>
         /// <remarks>
