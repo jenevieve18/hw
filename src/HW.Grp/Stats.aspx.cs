@@ -258,7 +258,9 @@ namespace HW.Grp
             	var sponsorProjectRoundUnit = sponsorProjectRoundUnitRepo.ReadByProjectRoundUnit(pruID);
             	if (sponsorProjectRoundUnit != null && sponsorProjectRoundUnit.DefaultAggregation != 0) {
             		GroupBy.SelectedValue = sponsorProjectRoundUnit.DefaultAggregation.ToString();
-            	}
+            	} else {
+                    GroupBy.SelectedValue = "7";
+                }
             }
 		}
 		
