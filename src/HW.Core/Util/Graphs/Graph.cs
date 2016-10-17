@@ -65,7 +65,12 @@ namespace HW.Core.Util.Graphs
 			w = width;
 			h = height;
 
-			colors = new string[22] { "95CE22", "FDB827", "CC0000", "65DD31", "31CFDD", "4467E9", "C444E9", "B49595", "5555A8", "FFB4A8", "FFA8FC", "67E944", "6744E9", "44E967", "E94467", "E96744", "33FF33", "FFFF33", "FF3333", "8EFF70", "000000", "EFEFEF" };
+			colors = new string[32] {
+				"95CE22", "FDB827", "CC0000", "65DD31", "31CFDD", "4467E9", "C444E9", "B49595",
+				"5555A8", "FFB4A8", "FFA8FC", "67E944", "6744E9", "44E967", "E94467", "E96744",
+				"33FF33", "FFFF33", "FF3333", "8EFF70", "000000", "EFEFEF", /* new addtional colors */ "FF1493", "F5F5F5",
+				"FFB6C1", "B22222", "FFFACD", "FF69B4", "800000", "228B22", "FFD700", "ADFF2F"
+			};
 
 			objBitmap = new Bitmap(w, h, PixelFormat.Format24bppRgb);
 			objGraphics = Graphics.FromImage(objBitmap);
