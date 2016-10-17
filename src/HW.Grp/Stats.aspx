@@ -251,8 +251,8 @@
         </div>
 		<% if (reportParts != null && reportParts.Count > 0) { %>
 			<% Q additionalQuery = GetGID(urlModels); %>
-            <% bool supportsBoxPlot = SelectedDepartments.Count == 1 || Grouping.SelectedValue == "0"; %>
-            <% bool forSingleSeries = SelectedDepartments.Count == 1 || Grouping.SelectedValue == "0"; %>
+            <%--<% bool supportsBoxPlot = SelectedDepartments.Count <= 1 || Grouping.SelectedValue == "0"; %>--%>
+            <% bool forSingleSeries = SelectedDepartments.Count <= 1 || Grouping.SelectedValue == "0"; %>
 			<div class="report-parts">
                 <% if (reportParts[0] is ReportPartLang) { %>
 				    <div class="action">
