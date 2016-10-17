@@ -39,7 +39,7 @@ namespace HW.Invoicing
                             customerId
                         )
                     );
-                    Db.sendMail(
+                    Db.sendMail2(
                         "info@danhasson.se",
                         agreement.Email,
                         company.AgreementEmailSubject,

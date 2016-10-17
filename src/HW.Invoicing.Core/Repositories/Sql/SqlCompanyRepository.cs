@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
 using HW.Core.Repositories.Sql;
+using HW.Invoicing.Core.Helpers;
 using HW.Invoicing.Core.Models;
 using System.Collections.Generic;
 
@@ -186,6 +187,7 @@ WHERE Id = @Id";
 			Company c = null;
 			using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@Id", id))) {
 				if (rs.Read()) {
+                    int invoiceExporter = GetInt32(rs, 23, InvoiceExporterFactory.DEFAULT);
 					c = new Company {
 						Id = GetInt32(rs, 0),
 						Name = GetString(rs, 1),
@@ -210,7 +212,7 @@ WHERE Id = @Id";
 						AgreementSignedEmailSubject = GetString(rs, 20),
 						AgreementTemplate = GetString(rs, 21),
 						Website = GetString(rs, 22),
-						InvoiceExporter = GetInt32(rs, 23),
+						InvoiceExporter = invoiceExporter == 0 ? InvoiceExporterFactory.DEFAULT : invoiceExporter,
 						User = new User { Id = GetInt32(rs, 24) },
                         InvoiceEmail = GetString(rs, 25),
                         InvoiceEmailSubject = GetString(rs, 27),

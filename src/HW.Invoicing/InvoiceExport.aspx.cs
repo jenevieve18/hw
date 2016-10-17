@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Mime;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -34,17 +35,17 @@ namespace HW.Invoicing
 			Response.ContentType = System.Net.Mime.MediaTypeNames.Application.Pdf;
 
 //			string file = string.Format("{0} {1} {2} {3}", invoice.Number, invoice.Customer != null ? invoice.Customer.Name : "", invoice.Customer != null && invoice.Customer.ContactPerson != null ? invoice.Customer.ContactPerson.Name : "", DateTime.Now.ToString("MMM yyyy"));
-			string file = string.Format("{0} {1} {2} {3}", invoice.Number, invoice.Customer != null ? invoice.Customer.Name : "", invoice.Customer != null && invoice.CustomerContact != null ? invoice.CustomerContact.Name : "", DateTime.Now.ToString("MMM yyyy"));
-			Response.AddHeader("content-disposition", string.Format("attachment;filename=\"{0}.pdf\";", file));
+			string file = string.Format("{0} {1} {2} {3}.pdf", invoice.Number, invoice.Customer != null ? invoice.Customer.Name : "", invoice.Customer != null && invoice.CustomerContact != null ? invoice.CustomerContact.Name : "", DateTime.Now.ToString("MMM yyyy"));
+			Response.AddHeader("Content-disposition", string.Format("attachment;filename=\"{0}.pdf\";", file));
 
-//			var exporter = InvoiceExporterFactory.GetExporter(invoice.Customer.Company.InvoiceExporter);
 			var exporter = InvoiceExporterFactory.GetExporter(invoice.Company.InvoiceExporter);
 
 			var exported = exporter.Export(invoice);
+			
 			exported.WriteTo(Response.OutputStream);
-
-			Response.Flush();
-			Response.Close();
+			
+//			Response.Flush();
+//			Response.Close();
 			Response.End();
 		}
 	}

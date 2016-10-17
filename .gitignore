@@ -198,3 +198,4 @@ OpenCover**
 /contrib/HW.EForm.Report/packages
 /contrib/HW.EForm2/packages
 contrib/HW.EForm.Core/StyleCopViolations.xml
+/src/HW.Invoicing/packages

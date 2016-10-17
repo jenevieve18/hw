@@ -115,7 +115,7 @@ namespace HW.Invoicing
 //			r.UpdateAgreement(a, id);
 			service.UpdateCustomerAgreement(a, id);
 
-			Db.sendMail(
+			Db.sendMail2(
 				company.Email,
 				"Customer Updated the Agreement",
 				string.Format(@"The customer agreement has been updated. Please click {0}customeragreementedit.aspx?Id={1}&CustomerId={2} to visit the agreement.", ConfigurationManager.AppSettings["InvoiceUrl"], id, customerId)
