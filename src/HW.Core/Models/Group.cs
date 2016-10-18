@@ -343,8 +343,10 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 							tmpSelect +
 							tmpJoin +
 							tmpOrder;
-						questions = questionRepository.FindBackgroundQuestionsWithAnswers(query, gids.Length);
-						foreach (var bq in questions) {
+//						questions = questionRepository.FindBackgroundQuestionsWithAnswers(query, gids.Length);
+//						foreach (var bq in questions) {
+						using (var rs2 = Db.rs(query)) {
+							while (rs2.Read()) {
 							string key = "";
 							string txt = "";
 							string sql = string.Format(
@@ -357,18 +359,28 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 								sslen,
 								tmpSS
 							);
-
-							foreach (var a in bq.Answers) {
-								key += string.Format("{0}{1}", (key != "" ? "X" : ""), a.Id);
-								txt += string.Format("{0}{1}", (txt != "" ? " / " : ""), a.Internal);
+//							foreach (var a in bq.Answers) {
+//								key += string.Format("{0}{1}", (key != "" ? "X" : ""), a.Id);
+//								txt += string.Format("{0}{1}", (txt != "" ? " / " : ""), a.Internal);
+//								sql += string.Format(
+//									@"
+//INNER JOIN healthWatch..UserProfileBQ HWp{0} ON HWup.UserProfileID = HWp{0}.UserProfileID AND HWp{0}.BQID = {0} AND HWp{0}.ValueInt = {1}",
+//									bq.Id,
+//									a.Id
+//								);
+//							}
+							for (int j = 0; j < gids.Length; j++) {
+								key += string.Format("{0}{1}", (key != "" ? "X" : ""), rs2.GetInt32(0 + j * 3));
+								txt += string.Format("{0}{1}", (txt != "" ? " / " : ""), rs2.GetString(1 + j * 3));
 								sql += string.Format(
 									@"
 INNER JOIN healthWatch..UserProfileBQ HWp{0} ON HWup.UserProfileID = HWp{0}.UserProfileID AND HWp{0}.BQID = {0} AND HWp{0}.ValueInt = {1}",
-									bq.Id,
-									a.Id
+									gids[j],
+									rs2.GetInt32(0 + j * 3)
 								);
 							}
 							departmentsWithJoinQuery.Add(new Department(key, txt, minUserCountToDisclose, sql));
+							}
 						}
 						break;
 					}
@@ -650,10 +662,10 @@ INNER JOIN healthWatch..Department d ON d.DepartmentID = up.DepartmentID AND LEF
 //							string txt = "";
 //							string sql = string.Format(
 //								@"
-					//INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
-					//INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID AND HWu.ProjectRoundUnitID = {0}
-					//INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID
-					//INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString, {1}) IN ({2})",
+//					INNER JOIN healthWatch..UserProjectRoundUserAnswer HWa ON a.AnswerID = HWa.AnswerID
+//					INNER JOIN healthWatch..UserProjectRoundUser HWu ON HWa.ProjectRoundUserID = HWu.ProjectRoundUserID AND HWu.ProjectRoundUnitID = {0}
+//					INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfileID
+//					INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID AND LEFT(HWd.SortString, {1}) IN ({2})",
 //								"509", //pruid,
 //								sslen,
 //								tmpSS
@@ -664,7 +676,7 @@ INNER JOIN healthWatch..Department d ON d.DepartmentID = up.DepartmentID AND LEF
 //								txt += string.Format("{0}{1}", (txt != "" ? " / " : ""), a.Internal);
 //								sql += string.Format(
 //									@"
-					//INNER JOIN healthWatch..UserProfileBQ HWp{0} ON HWup.UserProfileID = HWp{0}.UserProfileID AND HWp{0}.BQID = {0} AND HWp{0}.ValueInt = {1}",
+//					INNER JOIN healthWatch..UserProfileBQ HWp{0} ON HWup.UserProfileID = HWp{0}.UserProfileID AND HWp{0}.BQID = {0} AND HWp{0}.ValueInt = {1}",
 //									bq.Id,
 //									a.Id
 //								);

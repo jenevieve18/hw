@@ -62,6 +62,45 @@ namespace HW.Grp.Tests.Helpers
 			);
 		}
 		
+		[Test]
+		public void a()
+		{
+			int groupBy = 7;
+			
+			var dateFrom = new DateTime(2015, 10, 1);
+			var dateTo = new DateTime(2016, 10, 1);
+			
+			int langID = 2;
+
+			int reportPartID = 14;
+			int projectRoundUnitID = 2643;
+			
+			bool hasGrouping = true;
+			
+			int plot = 4;
+//			string key = null;
+			
+			int grouping = 3;
+			int sponsorAdminID = 514;
+			int sponsorID = 83;
+			string departmentIDs = "0,2,7";
+			
+//			object disabled = null;
+			
+			int point = 0;
+			
+			ReportService service = new ReportService();
+			
+			var reportPart = service.ReadReportPart(reportPartID);
+			reportPart.SelectedReportPartLangID = langID;
+
+			var projectRoundUnit = service.ReadProjectRoundUnit(projectRoundUnitID);
+			var sponsorAdmin = service.ReadSponsorAdmin(sponsorAdminID);
+			
+			var sponsor = new SqlSponsorRepository().Read(sponsorID);
+			g = f.CreateGraph(reportPart, projectRoundUnit, langID, sponsorAdmin, sponsor, dateFrom, dateTo, groupBy, hasGrouping, plot, grouping, departmentIDs, point);
+		}
+		
 		[TestAttribute]
 		public void TestGetIndexReportPartGraph()
 		{
