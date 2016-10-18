@@ -67,8 +67,8 @@ namespace HW.Grp.Tests.Helpers
 		{
 			int groupBy = 7;
 			
-			var dateFrom = new DateTime(2015, 10, 1);
-			var dateTo = new DateTime(2016, 10, 1);
+			var dateFrom = new DateTime(2012, 10, 1);
+			var dateTo = new DateTime(2013, 10, 1);
 			
 			int langID = 2;
 
@@ -77,7 +77,7 @@ namespace HW.Grp.Tests.Helpers
 			
 			bool hasGrouping = true;
 			
-			int plot = 4;
+			int plot = 0;
 //			string key = null;
 			
 			int grouping = 3;

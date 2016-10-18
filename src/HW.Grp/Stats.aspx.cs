@@ -73,6 +73,14 @@ namespace HW.Grp
 				BQ.SelectedIndex = 0;
 			}
 		}
+
+        protected int SelectedBackgroundQuestions
+        {
+            get
+            {
+                return BQ.Items.Cast<ListItem>().Where(li => li.Selected).ToList().Count();
+            }
+        }
 		
 		public IList<Department> Departments {
 			set {
