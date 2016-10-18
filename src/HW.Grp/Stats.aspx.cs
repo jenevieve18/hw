@@ -81,6 +81,18 @@ namespace HW.Grp
                 return BQ.Items.Cast<ListItem>().Where(li => li.Selected).ToList().Count();
             }
         }
+
+        public int GetSponsorDefaultPlotType(int defaultPlotType, bool forSingleSeries)
+        {
+            if (forSingleSeries && defaultPlotType > 3 || Grouping.SelectedValue == "3")
+            {
+                return 0;
+            }
+            else
+            {
+                return sponsor.DefaultPlotType;
+            }
+        }
 		
 		public IList<Department> Departments {
 			set {
@@ -281,14 +293,14 @@ namespace HW.Grp
 			return d;
 		}
 		
-		protected string GetReportImageUrl2(int reportPartLangID, Q additionalQuery)
+		protected string GetReportImageUrlForSponsorProject(int reportPartLangID, Q additionalQuery)
 		{
             var p = GetPage2("reportImage2.aspx", reportPartLangID);
 			p.Add(additionalQuery);
 			return p.ToString();
 		}
 
-		protected string GetReportImageUrl(int reportID, int reportPartLangID, Q additionalQuery)
+		protected string GetReportImageUrlForReportPart(int reportID, int reportPartLangID, Q additionalQuery)
 		{
             var p = GetPage("reportImage.aspx", reportID, reportPartLangID);
 			p.Add(additionalQuery);

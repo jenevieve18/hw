@@ -251,8 +251,7 @@
         </div>
 		<% if (reportParts != null && reportParts.Count > 0) { %>
 			<% Q additionalQuery = GetGID(urlModels); %>
-            <%--<% bool supportsBoxPlot = SelectedDepartments.Count <= 1 || Grouping.SelectedValue == "0"; %>--%>
-            <% bool forSingleSeries = (SelectedDepartments.Count <= 1 && (Grouping.SelectedValue == "1" || Grouping.SelectedValue == "2")) || Grouping.SelectedValue == "0" || (Grouping.SelectedValue == "3" && SelectedBackgroundQuestions <= 1); %>
+            <% bool forSingleSeries = (SelectedDepartments.Count <= 1 && (Grouping.SelectedValue == "1" || Grouping.SelectedValue == "2")) || Grouping.SelectedValue == "0"; %>
 			<div class="report-parts">
                 <% if (reportParts[0] is ReportPartLang) { %>
 				    <div class="action">
@@ -356,9 +355,9 @@
 						<div class="report-part-header"><%= r.Header %></div>
 						<div class="report-part-content">
                             <% if (r is ReportPartLang) { %>
-                                <% string imageUrl = GetReportImageUrl(r.ReportPart.Id, r.Id, additionalQuery); %>
+                                <% string imageUrl = GetReportImageUrlForReportPart(r.ReportPart.Id, r.Id, additionalQuery); %>
 							    <span class="hidden hidden-image-url"><%= imageUrl %></span>
-                                <img class="report-part-graph" src="<%= imageUrl %>&Plot=<%= sponsor.DefaultPlotType %>" alt="" />
+                                <img class="report-part-graph" src="<%= imageUrl %>&Plot=<%= GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries) %>" alt="" />
 							    <div class="action">
 								    <span class="small"><%= R.Str(lid, "graphs.change", "Change this graph to:")%></span>
                                     <select class="plot-types small">
@@ -371,26 +370,26 @@
 								    <span class="button white small export">
                                         <% string exportDocXUrl = GetExportUrl(r.ReportPart.Id, r.Id, "docx", additionalQuery); %>
 							            <span class="hidden hidden-export-docx-url"><%= exportDocXUrl%></span>
-									    <%= HtmlHelper.Anchor("docx", exportDocXUrl + "&Plot=" + sponsor.DefaultPlotType, "class='export-docx-url' target='_blank'")%>
+									    <%= HtmlHelper.Anchor("docx", exportDocXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries), "class='export-docx-url' target='_blank'")%>
 								    </span>
 								    <span class="button white small export">
                                         <% string exportPptXUrl = GetExportUrl(r.ReportPart.Id, r.Id, "pptx", additionalQuery); %>
 							            <span class="hidden hidden-export-pptx-url"><%= exportPptXUrl%></span>
-									    <%= HtmlHelper.Anchor("pptx", exportPptXUrl + "&Plot=" + sponsor.DefaultPlotType, "class='export-pptx-url' target='_blank'")%>
+									    <%= HtmlHelper.Anchor("pptx", exportPptXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries), "class='export-pptx-url' target='_blank'")%>
 								    </span>
                                     <% string exportXlsUrl = GetExportUrl(r.ReportPart.Id, r.Id, "xls", additionalQuery); %>
 								    <span class="button white small export">
 							            <span class="hidden hidden-export-xls-url"><%= exportXlsUrl%></span>
-									    <%= HtmlHelper.Anchor("xls", exportXlsUrl + "&Plot=" + sponsor.DefaultPlotType, "class='export-xls-url' target='_blank'")%>
+									    <%= HtmlHelper.Anchor("xls", exportXlsUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries), "class='export-xls-url' target='_blank'")%>
 								    </span>
 								    <span class="button white small export">
 									    <%= HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportXlsUrl + "&PLOT=" + PlotType.Verbose, "class='export-xls-verbose-url' target='_blank'")%>
 								    </span>
 							    </div>
                             <% } else { %>
-                                <% string imageUrl = GetReportImageUrl2(r.Id, additionalQuery); %>
+                                <% string imageUrl = GetReportImageUrlForSponsorProject(r.Id, additionalQuery); %>
 							    <span class="hidden hidden-image-url"><%= imageUrl %></span>
-                                <img class="report-part-graph" src="<%= imageUrl %>&Plot=<%= sponsor.DefaultPlotType %>" alt="" />
+                                <img class="report-part-graph" src="<%= imageUrl %>&Plot=<%= GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries) %>" alt="" />
 							    <div class="action">
 								    <span class="small"><%= R.Str(lid, "graphs.change", "Change this graph to:")%></span>
                                     <select class="plot-types small">
