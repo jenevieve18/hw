@@ -357,7 +357,7 @@
                             <% if (r is ReportPartLang) { %>
                                 <% string imageUrl = GetReportImageUrlForReportPart(r.ReportPart.Id, r.Id, additionalQuery); %>
 							    <span class="hidden hidden-image-url"><%= imageUrl %></span>
-                                <img class="report-part-graph" src="<%= imageUrl %>&Plot=<%= GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries) %>" alt="" />
+                                <img class="report-part-graph" src="<%= imageUrl %>&Plot=<%= GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)) %>" alt="" />
 							    <div class="action">
 								    <span class="small"><%= R.Str(lid, "graphs.change", "Change this graph to:")%></span>
                                     <select class="plot-types small">
@@ -370,17 +370,17 @@
 								    <span class="button white small export">
                                         <% string exportDocXUrl = GetExportUrl(r.ReportPart.Id, r.Id, "docx", additionalQuery); %>
 							            <span class="hidden hidden-export-docx-url"><%= exportDocXUrl%></span>
-									    <%= HtmlHelper.Anchor("docx", exportDocXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries), "class='export-docx-url' target='_blank'")%>
+									    <%= HtmlHelper.Anchor("docx", exportDocXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-docx-url' target='_blank'")%>
 								    </span>
 								    <span class="button white small export">
                                         <% string exportPptXUrl = GetExportUrl(r.ReportPart.Id, r.Id, "pptx", additionalQuery); %>
 							            <span class="hidden hidden-export-pptx-url"><%= exportPptXUrl%></span>
-									    <%= HtmlHelper.Anchor("pptx", exportPptXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries), "class='export-pptx-url' target='_blank'")%>
+									    <%= HtmlHelper.Anchor("pptx", exportPptXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-pptx-url' target='_blank'")%>
 								    </span>
                                     <% string exportXlsUrl = GetExportUrl(r.ReportPart.Id, r.Id, "xls", additionalQuery); %>
 								    <span class="button white small export">
 							            <span class="hidden hidden-export-xls-url"><%= exportXlsUrl%></span>
-									    <%= HtmlHelper.Anchor("xls", exportXlsUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries), "class='export-xls-url' target='_blank'")%>
+									    <%= HtmlHelper.Anchor("xls", exportXlsUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-xls-url' target='_blank'")%>
 								    </span>
 								    <span class="button white small export">
 									    <%= HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportXlsUrl + "&PLOT=" + PlotType.Verbose, "class='export-xls-verbose-url' target='_blank'")%>
@@ -389,7 +389,7 @@
                             <% } else { %>
                                 <% string imageUrl = GetReportImageUrlForSponsorProject(r.Id, additionalQuery); %>
 							    <span class="hidden hidden-image-url"><%= imageUrl %></span>
-                                <img class="report-part-graph" src="<%= imageUrl %>&Plot=<%= GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries) %>" alt="" />
+                                <img class="report-part-graph" src="<%= imageUrl %>&Plot=<%= GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)) %>" alt="" />
 							    <div class="action">
 								    <span class="small"><%= R.Str(lid, "graphs.change", "Change this graph to:")%></span>
                                     <select class="plot-types small">

@@ -44,7 +44,7 @@ namespace HW.Grp
 		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
 		protected Sponsor sponsor;
-
+		
 		public IList<SponsorProjectRoundUnit> SponsorProjectRoundUnits {
 			set {
 				ProjectRoundUnitID.Items.Clear();
@@ -81,18 +81,17 @@ namespace HW.Grp
                 return BQ.Items.Cast<ListItem>().Where(li => li.Selected).ToList().Count();
             }
         }
-
-        public int GetSponsorDefaultPlotType(int defaultPlotType, bool forSingleSeries)
-        {
-            if (forSingleSeries && defaultPlotType > 3 || Grouping.SelectedValue == "3")
-            {
-                return 0;
-            }
-            else
-            {
-                return sponsor.DefaultPlotType;
-            }
-        }
+		
+		public int GetSponsorDefaultPlotType(int defaultPlotType, bool forSingleSeries, int grouping)
+		{
+			if (grouping == 3 && defaultPlotType > 3) {
+				return 0;
+			} else if (grouping <= 2 && !forSingleSeries) {
+				return 0;
+			} else {
+				return defaultPlotType;
+			}
+		}
 		
 		public IList<Department> Departments {
 			set {
