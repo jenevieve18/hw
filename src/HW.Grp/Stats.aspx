@@ -281,17 +281,17 @@
 					    <span class="button white small export">
                             <% string exportAllDocXUrl = GetExportAllUrl("docx", additionalQuery); %>
                             <span class="hidden hidden-exportall-docx-url"><%= exportAllDocXUrl%></span>
-						    <%= HtmlHelper.Anchor("docx", exportAllDocXUrl, "class='exportall-docx-url' target='_blank'") %>
+						    <%= HtmlHelper.Anchor("docx", exportAllDocXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='exportall-docx-url' target='_blank'") %>
                         </span>
 					    <span class="button white small export">
                             <% string exportAllPptxUrl = GetExportAllUrl("pptx", additionalQuery); %>
                             <span class="hidden hidden-exportall-pptx-url"><%= exportAllPptxUrl%></span>
-						    <%= HtmlHelper.Anchor("pptx", exportAllPptxUrl, "class='exportall-pptx-url' target='_blank'") %>
+						    <%= HtmlHelper.Anchor("pptx", exportAllPptxUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='exportall-pptx-url' target='_blank'") %>
                         </span>
                         <% string exportAllXlsUrl = GetExportAllUrl("xls", additionalQuery); %>
 					    <span class="button white small export">
                             <span class="hidden hidden-exportall-xls-url"><%= exportAllXlsUrl%></span>
-						    <%= HtmlHelper.Anchor("xls", exportAllXlsUrl, "class='exportall-xls-url' target='_blank'")%>
+						    <%= HtmlHelper.Anchor("xls", exportAllXlsUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='exportall-xls-url' target='_blank'")%>
                         </span>
 					    <span class="button white small export">
 						    <%= HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportAllXlsUrl + "&PLOT=" + PlotType.Verbose, "class='exportall-xls-verbose-url' target='_blank'")%>
@@ -327,17 +327,17 @@
 					    <span class="button white small export">
                             <% string exportAllDocXUrl = GetExportAllUrl2("docx", additionalQuery); %>
                             <span class="hidden hidden-exportall-docx-url"><%= exportAllDocXUrl%></span>
-						    <%= HtmlHelper.Anchor("docx", exportAllDocXUrl, "class='exportall-docx-url' target='_blank'") %>
+						    <%= HtmlHelper.Anchor("docx", exportAllDocXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='exportall-docx-url' target='_blank'") %>
                         </span>
 					    <span class="button white small export">
                             <% string exportAllPptxUrl = GetExportAllUrl2("pptx", additionalQuery); %>
                             <span class="hidden hidden-exportall-pptx-url"><%= exportAllPptxUrl%></span>
-						    <%= HtmlHelper.Anchor("pptx", exportAllPptxUrl, "class='exportall-pptx-url' target='_blank'") %>
+						    <%= HtmlHelper.Anchor("pptx", exportAllPptxUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='exportall-pptx-url' target='_blank'") %>
                         </span>
                         <% string exportAllXlsUrl = GetExportAllUrl2("xls", additionalQuery); %>
 					    <span class="button white small export">
                             <span class="hidden hidden-exportall-xls-url"><%= exportAllXlsUrl%></span>
-						    <%= HtmlHelper.Anchor("xls", exportAllXlsUrl, "class='exportall-xls-url' target='_blank'")%>
+						    <%= HtmlHelper.Anchor("xls", exportAllXlsUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='exportall-xls-url' target='_blank'")%>
                         </span>
 					    <span class="button white small export">
 						    <%= HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportAllXlsUrl + "&PLOT=" + PlotType.Verbose, "class='exportall-xls-verbose-url' target='_blank'")%>
@@ -404,17 +404,17 @@
                                     <span class="button white small export">
                                         <% string exportAllDocXUrl = GetExportAllUrl2("docx", additionalQuery); %>
                                         <span class="hidden hidden-export-docx-url"><%= exportAllDocXUrl%></span>
-						                <%= HtmlHelper.Anchor("docx", exportAllDocXUrl, "class='export-docx-url' target='_blank'") %>
+						                <%= HtmlHelper.Anchor("docx", exportAllDocXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-docx-url' target='_blank'") %>
                                     </span>
 					                <span class="button white small export">
                                         <% string exportAllPptxUrl = GetExportAllUrl2("pptx", additionalQuery); %>
                                         <span class="hidden hidden-export-pptx-url"><%= exportAllPptxUrl%></span>
-						                <%= HtmlHelper.Anchor("pptx", exportAllPptxUrl, "class='export-pptx-url' target='_blank'") %>
+						                <%= HtmlHelper.Anchor("pptx", exportAllPptxUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-pptx-url' target='_blank'") %>
                                     </span>
                                     <% string exportAllXlsUrl = GetExportAllUrl2("xls", additionalQuery); %>
 					                <span class="button white small export">
                                         <span class="hidden hidden-export-xls-url"><%= exportAllXlsUrl%></span>
-						                <%= HtmlHelper.Anchor("xls", exportAllXlsUrl, "class='export-xls-url' target='_blank'")%>
+						                <%= HtmlHelper.Anchor("xls", exportAllXlsUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-xls-url' target='_blank'")%>
                                     </span>
 					                <span class="button white small export">
 						                <%= HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportAllXlsUrl + "&PLOT=" + PlotType.Verbose, "class='exportall-xls-verbose-url' target='_blank'")%>
