@@ -275,7 +275,6 @@ INNER JOIN healthWatch..UserProfile HWup ON HWa.UserProfileID = HWup.UserProfile
 								d.Id
 							);
 							departmentsWithJoinQuery.Add(new Department(d.Id.ToString(), d.Name, d.MinUserCountToDisclose, query));
-							break;
 						}
 						break;
 					}
@@ -293,7 +292,6 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 								d.SortString
 							);
 							departmentsWithJoinQuery.Add(new Department(d.Id.ToString(), d.Name, d.MinUserCountToDisclose, query));
-							break;
 						}
 						break;
 					}
