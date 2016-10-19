@@ -875,7 +875,7 @@ namespace HW.Core.Util.Graphs
 					langID = roundUnit.Language.Id;
 				}
 			}
-			Dictionary<string, List<IAnswer>> weeks = null;
+			Dictionary<string, List<IAnswer>> weeks = new Dictionary<string, List<IAnswer>>();
 			List<IDepartment> departments = null;
 			
 			LanguageFactory.SetCurrentCulture(langID);
