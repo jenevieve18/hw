@@ -546,7 +546,8 @@ namespace HW.Core.Util.Graphs
 			return g;
 		}
 		
-		public void GetIndexReportPartGraphForExcelWriter(ReportPart reportPart, int langID, bool hasGrouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ProjectRoundUnit projectRoundUnit, int grouping, int groupBy, int plot, DateTime dateFrom, DateTime dateTo, ref List<IDepartment> departmentsWithQuery, ref Dictionary<string, List<IAnswer>> weeks)
+//		public void GetIndexReportPartGraphForExcelWriter(ReportPart reportPart, int langID, bool hasGrouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ProjectRoundUnit projectRoundUnit, int grouping, int groupBy, int plot, DateTime dateFrom, DateTime dateTo, ref List<IDepartment> departmentsWithQuery, ref Dictionary<string, List<IAnswer>> weeks)
+		public void GetIndexReportPartGraphForExcelWriter(ReportPart reportPart, int langID, bool hasGrouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ProjectRoundUnit projectRoundUnit, int grouping, int groupBy, int plot, DateTime dateFrom, DateTime dateTo, List<IDepartment> departmentsWithQuery, Dictionary<string, List<IAnswer>> weeks)
 		{
 			int cx = reportPart.Components.Capacity;
 			
@@ -562,14 +563,19 @@ namespace HW.Core.Util.Graphs
 
 			cx = 0;
 			
-			weeks = GetWeeks(minDT, maxDT, groupBy);
+//			weeks = GetWeeks(minDT, maxDT, groupBy);
+			var generatedWeeks = GetWeeks(minDT, maxDT, groupBy);
+			foreach (var k in generatedWeeks.Keys) {
+				weeks.Add(k, generatedWeeks[k]);
+			}
 			
 			if (hasGrouping) {
 				string extraDesc = "";
 				
 				var departments = GetSponsorAdminSponsorDepartments(grouping, sponsorAdmin, sponsor, departmentIDs, departmentRepo);
 				
-				departmentsWithQuery = GroupFactory.GetCount2(grouping, sponsor, projectRoundUnit, departmentIDs, ref extraDesc, questionRepo, departments);
+//				departmentsWithQuery = GroupFactory.GetCount2(grouping, sponsor, projectRoundUnit, departmentIDs, ref extraDesc, questionRepo, departments);
+				departmentsWithQuery.AddRange(GroupFactory.GetCount2(grouping, sponsor, projectRoundUnit, departmentIDs, ref extraDesc, questionRepo, departments));
 
 				var c = reportPart.FirstComponent;
 				if (c.HasIndex) {
@@ -764,7 +770,8 @@ namespace HW.Core.Util.Graphs
 			return g;
 		}
 		
-		public void GetWeightedQuestionOptionReportPartGraphForExcelWriter(ReportPart reportPart, int langID, bool hasGrouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ProjectRoundUnit projectRoundUnit, int grouping, int groupBy, int plot, DateTime dateFrom, DateTime dateTo, ref List<IDepartment> departmentsWithQuery, ref Dictionary<string, List<IAnswer>> weeks)
+//		public void GetWeightedQuestionOptionReportPartGraphForExcelWriter(ReportPart reportPart, int langID, bool hasGrouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ProjectRoundUnit projectRoundUnit, int grouping, int groupBy, int plot, DateTime dateFrom, DateTime dateTo, ref List<IDepartment> departmentsWithQuery, ref Dictionary<string, List<IAnswer>> weeks)
+		public void GetWeightedQuestionOptionReportPartGraphForExcelWriter(ReportPart reportPart, int langID, bool hasGrouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ProjectRoundUnit projectRoundUnit, int grouping, int groupBy, int plot, DateTime dateFrom, DateTime dateTo, List<IDepartment> departmentsWithQuery, Dictionary<string, List<IAnswer>> weeks)
 		{
 			int cx = reportPart.Components.Capacity;
 			if (groupBy == 0) {
@@ -786,7 +793,11 @@ namespace HW.Core.Util.Graphs
 			
 			cx = 0;
 			
-			weeks = GetWeeks(minDT, maxDT, groupBy);
+//			weeks = GetWeeks(minDT, maxDT, groupBy);
+			var generatedWeeks = GetWeeks(minDT, maxDT, groupBy);
+			foreach (var k in generatedWeeks.Keys) {
+				weeks.Add(k, generatedWeeks[k]);
+			}
 			
 			if (hasGrouping) {
 				int count = 0;
@@ -794,7 +805,8 @@ namespace HW.Core.Util.Graphs
 				
 				var departments = GetSponsorAdminSponsorDepartments(grouping, sponsorAdmin, sponsor, departmentIDs, departmentRepo);
 				
-				departmentsWithQuery = GroupFactory.GetCount2(grouping, sponsor, projectRoundUnit, departmentIDs, ref extraDesc, questionRepo, departments);
+//				departmentsWithQuery = GroupFactory.GetCount2(grouping, sponsor, projectRoundUnit, departmentIDs, ref extraDesc, questionRepo, departments);
+				departmentsWithQuery.AddRange(GroupFactory.GetCount2(grouping, sponsor, projectRoundUnit, departmentIDs, ref extraDesc, questionRepo, departments));
 				
 				ReportPartComponent c = reportRepo.ReadComponentByPartAndLanguage(reportPart.Id, langID);
 				if (c != null) {
@@ -876,7 +888,7 @@ namespace HW.Core.Util.Graphs
 				}
 			}
 			Dictionary<string, List<IAnswer>> weeks = new Dictionary<string, List<IAnswer>>();
-			List<IDepartment> departments = null;
+			List<IDepartment> departments = new List<IDepartment>();
 			
 			LanguageFactory.SetCurrentCulture(langID);
 			
@@ -885,9 +897,11 @@ namespace HW.Core.Util.Graphs
 			} else if (reportPart.Type == ReportPartType.Three) {
 				GetGraphForReportPartTypeThreeForExcelWriter(reportPart, projectRoundUnit, langID, dateFrom, dateTo);
 			} else if (reportPart.Type == ReportPartType.Index) {
-				GetIndexReportPartGraphForExcelWriter(reportPart, langID, hasGrouping, sponsorAdmin, sponsor, departmentIDs, projectRoundUnit, grouping, GB != 0 ? GB : GroupBy.TwoWeeksStartWithOdd, plot, dateFrom, dateTo, ref departments, ref weeks);
+//				GetIndexReportPartGraphForExcelWriter(reportPart, langID, hasGrouping, sponsorAdmin, sponsor, departmentIDs, projectRoundUnit, grouping, GB != 0 ? GB : GroupBy.TwoWeeksStartWithOdd, plot, dateFrom, dateTo, ref departments, ref weeks);
+				GetIndexReportPartGraphForExcelWriter(reportPart, langID, hasGrouping, sponsorAdmin, sponsor, departmentIDs, projectRoundUnit, grouping, GB != 0 ? GB : GroupBy.TwoWeeksStartWithOdd, plot, dateFrom, dateTo, departments, weeks);
 			} else if (reportPart.Type == ReportPartType.WeightedQuestionOption) {
-				GetWeightedQuestionOptionReportPartGraphForExcelWriter(reportPart, langID, hasGrouping, sponsorAdmin, sponsor, departmentIDs, projectRoundUnit, grouping, GB != 0 ? GB : GroupBy.TwoWeeksStartWithOdd, plot, dateFrom, dateTo, ref departments, ref weeks);
+//				GetWeightedQuestionOptionReportPartGraphForExcelWriter(reportPart, langID, hasGrouping, sponsorAdmin, sponsor, departmentIDs, projectRoundUnit, grouping, GB != 0 ? GB : GroupBy.TwoWeeksStartWithOdd, plot, dateFrom, dateTo, ref departments, ref weeks);
+				GetWeightedQuestionOptionReportPartGraphForExcelWriter(reportPart, langID, hasGrouping, sponsorAdmin, sponsor, departmentIDs, projectRoundUnit, grouping, GB != 0 ? GB : GroupBy.TwoWeeksStartWithOdd, plot, dateFrom, dateTo, departments, weeks);
 			}
 			
 			var plotter = GetPlotter(plot);
@@ -937,6 +951,7 @@ namespace HW.Core.Util.Graphs
 		{
 			int j = 0;
 			var weeks = new Dictionary<string, List<IAnswer>>();
+			weeks = new Dictionary<string, List<IAnswer>>();
 			for (int i = minDT; i <= maxDT; i++) {
 				j++;
 				string w = GetBottomString(groupBy, i, j, "");
@@ -1058,7 +1073,11 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 					maxDT = answer.DummyValue3;
 				}
 				
-				weeks = GetWeeks(minDT, maxDT, GB);
+//				weeks = GetWeeks(minDT, maxDT, GB);
+				var generatedWeeks = GetWeeks(minDT, maxDT, GB);
+				foreach (var k in generatedWeeks.Keys) {
+					weeks.Add(k, generatedWeeks[k]);
+				}
 				
 				List<IIndex> indexes = new List<IIndex>();
 				List<IMinMax> minMaxes = new List<IMinMax>();
