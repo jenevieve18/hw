@@ -19,18 +19,18 @@ namespace HW.Core.Util.Exporters
 		public static readonly string PresentationDocument = "pptx";
 		public static readonly string Excel = "xls";
 	
-		public static IExporter GetExporter(ReportService service, string type, bool hasAnswerKey, bool hasGrouping, ReportPart r, string template)
+		public static IExporter GetExporter(ReportService service, string type, bool hasAnswerKey, bool hasGrouping, ReportPart reportPart, string template)
 		{
 			if (type == Pdf) {
-				return new PdfStatsExporter(r);
+				return new PdfStatsExporter(reportPart);
 			} else if (type == Csv) {
-				return new CsvStatsExporter(service, hasAnswerKey, hasGrouping, r);
+				return new CsvStatsExporter(service, hasAnswerKey, hasGrouping, reportPart);
 			} else if (type == Excel) {
-				return new ExcelStatsExporter(service, hasAnswerKey, hasGrouping, r);
+				return new ExcelStatsExporter(service, hasAnswerKey, hasGrouping, reportPart);
 			} else if (type == WordDocument) {
-				return new DocXStatsExporter(r, template);
+				return new DocXStatsExporter(reportPart, template);
 			} else if (type == PresentationDocument) {
-				return new PresentationDocumentStatsExporter(r);
+				return new PresentationDocumentStatsExporter(reportPart);
 			} else {
 				throw new NotSupportedException();
 			}

@@ -16,32 +16,10 @@ namespace HW.Core.Services
 {
 	public class ProjectService
 	{
-//		IProjectRepository projectRepo;
-//		IProjectRoundUnitRepository projectRoundUnitRepo;
-//		IProjectRoundUserRepository projectRoundUserRepo;
-//		
-//		public ProjectService(IProjectRepository projectRepo, 
-//		                      IProjectRoundUnitRepository projectRoundUnitRepo,
-//		                     IProjectRoundUserRepository projectRoundUserRepo)
-//		{
-//			this.projectRepo = projectRepo;
-//			this.projectRoundUnitRepo = projectRoundUnitRepo;
-//			this.projectRoundUserRepo = projectRoundUserRepo;
-//		}
-		
 		SqlProjectRepository projectRepo = new SqlProjectRepository();
 		SqlProjectRoundRepository projectRoundRepo = new SqlProjectRoundRepository();
 		SqlProjectRoundUnitRepository projectRoundUnitRepo = new SqlProjectRoundUnitRepository();
 		SqlProjectRoundUserRepository projectRoundUserRepo = new SqlProjectRoundUserRepository();
-		
-//		public ProjectService(IProjectRepository projectRepo, 
-//		                      IProjectRoundUnitRepository projectRoundUnitRepo,
-//		                     IProjectRoundUserRepository projectRoundUserRepo)
-//		{
-//			this.projectRepo = projectRepo;
-//			this.projectRoundUnitRepo = projectRoundUnitRepo;
-//			this.projectRoundUserRepo = projectRoundUserRepo;
-//		}
 		
 		public IList<Project> FindAllProjects()
 		{
@@ -51,8 +29,10 @@ namespace HW.Core.Services
 		public ProjectRoundUnit ReadProjectRoundUnit(int projectRoundUnitID)
 		{
 			var pru = projectRoundUnitRepo.Read(projectRoundUnitID);
-			pru.ProjectRound = projectRoundRepo.Read(pru.ProjectRoundID);
-			pru.ProjectRoundUsers = projectRoundUserRepo.FindByProjectRoundUnit(projectRoundUnitID);
+			if (pru != null) {
+				pru.ProjectRound = projectRoundRepo.Read(pru.ProjectRoundID);
+				pru.ProjectRoundUsers = projectRoundUserRepo.FindByProjectRoundUnit(projectRoundUnitID);
+			}
 			return pru;
 		}
 	}

@@ -28,12 +28,6 @@ namespace HW.Grp
 			int groupBy = (Request.QueryString["GB"] != null ? Convert.ToInt32(Request.QueryString["GB"].ToString()) : 0);
 //			int stdev = Convert.ToInt32(Request.QueryString["STDEV"]);
 			
-//			int yearFrom = Request.QueryString["FY"] != null ? Convert.ToInt32(Request.QueryString["FY"]) : 0;
-//			int yearTo = Request.QueryString["TY"] != null ? Convert.ToInt32(Request.QueryString["TY"]) : 0;
-//			
-//			int monthFrom = ConvertHelper.ToInt32(Request.QueryString["FM"]);
-//			int monthTo = ConvertHelper.ToInt32(Request.QueryString["TM"]);
-			
 			DateTime dateFrom = new DateTime(ConvertHelper.ToInt32(Request.QueryString["FY"]), ConvertHelper.ToInt32(Request.QueryString["FM"]), 1);
 			DateTime dateTo = new DateTime(ConvertHelper.ToInt32(Request.QueryString["TY"]), ConvertHelper.ToInt32(Request.QueryString["TM"]), 1);
 			
@@ -77,7 +71,6 @@ namespace HW.Grp
 			Response.ClearHeaders();
 			Response.ClearContent();
 			Response.ContentType = exporter.Type;
-			//HtmlHelper.AddHeaderIf(exporter.HasContentDisposition(reportPart.CurrentLanguage.Subject), "content-disposition", exporter.GetContentDisposition(reportPart.CurrentLanguage.Subject), Response);
             HtmlHelper.AddHeaderIf(exporter.HasContentDisposition(reportPart.SelectedReportPartLang.Subject), "content-disposition", exporter.GetContentDisposition(reportPart.SelectedReportPartLang.Subject), Response);
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
 			

@@ -195,6 +195,7 @@ WHERE ProjectRoundUnitID = @ProjectRoundUnitID";
 				if (rs.Read()) {
 					projectRoundUnit = new ProjectRoundUnit {
 						ProjectRoundUnitID = GetInt32(rs, 0),
+						Id = GetInt32(rs, 0),
 						ProjectRoundID = GetInt32(rs, 1),
 						Name = GetString(rs, 2),
 						ID = GetString(rs, 3),

@@ -34,7 +34,7 @@ namespace HW.Core.Models
 	
 	public class GroupFactory
 	{
-		public static string GetGroupBy(int groupBy)
+		public static string GetGroupByQuery(int groupBy)
 		{
 			switch (groupBy) {
 					case GroupBy.OneWeek: return "dbo.cf_yearWeek";
@@ -224,7 +224,7 @@ namespace HW.Core.Models
 //		}
 		#endregion
 		
-		public static List<IDepartment> GetCount2(int grouping, Sponsor sponsor, ProjectRoundUnit projectRoundUnit, string departmentIDs, ref string extraDesc, SqlQuestionRepository questionRepository, IList<Department> departments)
+		public static List<IDepartment> GetDepartmentsWithJoinQuery(int grouping, Sponsor sponsor, ProjectRoundUnit projectRoundUnit, string departmentIDs, ref string extraDesc, SqlQuestionRepository questionRepo, IList<Department> departments)
 		{
 			var departmentsWithJoinQuery = new List<IDepartment>();
 			switch (grouping) {
@@ -325,7 +325,7 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 						}
 						string bqid = departmentIDs.Replace("'", "");
 						departmentIDs = "";
-						var questions = questionRepository.FindLikeBackgroundQuestions(bqid);
+						var questions = questionRepo.FindLikeBackgroundQuestions(bqid);
 						foreach (var bq in questions) {
 							departmentIDs += string.Format("{0}{1}", (departmentIDs != "" ? "," : ""), bq.Id);
 

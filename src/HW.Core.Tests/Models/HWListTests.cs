@@ -72,7 +72,18 @@ namespace HW.Core.Tests.Models
 		[Test]
 		public void TestValues5()
 		{
-			var l = new HWList(100.00, 75.00, 50.00, 25.00, 50.00, 75.00, 50.00, 25.00, 50.00, 50.00);
+			//var l = new HWList(100.00, 75.00, 50.00, 25.00, 50.00, 75.00, 50.00, 25.00, 50.00, 50.00);
+			var l = new HWList(100.00,
+75.00,
+100.00,
+75.00,
+0.00,
+75.00,
+100.00,
+75.00,
+25.00,
+75.00
+);
 			Console.WriteLine("Min: {0}", l.Min);
 			Console.WriteLine("Max: {0}", l.Max);
 			Console.WriteLine("Mean: {0}", l.Mean);

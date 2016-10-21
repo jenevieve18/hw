@@ -18,63 +18,14 @@ namespace HW.Grp
 	{
 		protected IList<IReportPart> reportParts = null;
 		ReportService service = new ReportService();
-//		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
 		bool HasAnswerKey {
 			get { return Request.QueryString["AK"] != null; }
 		}
 		
-//		bool HasWidth {
-//			get { return Request.QueryString["W"] != null; }
-//		}
-//		
-//		bool HasHeight {
-//			get { return Request.QueryString["H"] != null; }
-//		}
-//		
-//		bool HasBackground {
-//			get { return Request.QueryString["BG"] != null; }
-//		}
-//		
-//		int Width {
-//			get {
-//				if (HasWidth) {
-//					return Convert.ToInt32(Request.QueryString["W"]);
-//				} else {
-//					return 550;
-//				}
-//			}
-//		}
-//		
-//		int Height {
-//			get {
-//				if (HasHeight) {
-//					return Convert.ToInt32(Request.QueryString["H"]);
-//				} else {
-//					return 440;
-//				}
-//			}
-//		}
-//		
-//		string Background {
-//			get {
-//				if (HasBackground) {
-//					return "#" + Request.QueryString["BG"];
-//				} else {
-//					return "#EFEFEF";
-//				}
-//			}
-//		}
-		
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			int groupBy = (Request.QueryString["GB"] != null ? Convert.ToInt32(Request.QueryString["GB"].ToString()) : 0);
-			
-//			int yearFrom = Request.QueryString["FY"] != null ? Convert.ToInt32(Request.QueryString["FY"]) : 0;
-//			int yearTo = Request.QueryString["TY"] != null ? Convert.ToInt32(Request.QueryString["TY"]) : 0;
-//			
-//			int monthFrom = ConvertHelper.ToInt32(Request.QueryString["FM"]);
-//			int monthTo = ConvertHelper.ToInt32(Request.QueryString["TM"]);
 			
 			DateTime dateFrom = new DateTime(Convert.ToInt32(Request.QueryString["FY"]), ConvertHelper.ToInt32(Request.QueryString["FM"]), 1);
 			DateTime dateTo = new DateTime(Convert.ToInt32(Request.QueryString["TY"]), ConvertHelper.ToInt32(Request.QueryString["TM"]), 1);
@@ -93,7 +44,6 @@ namespace HW.Grp
             string type = StrHelper.Str3(Request.QueryString["TYPE"], "");
 			
 			bool hasGrouping = Request.QueryString["GRPNG"] != null || Request.QueryString["GRPNG"] != "0";
-//			string key = Request.QueryString["AK"];
 			
 			IAdmin sponsor = service.ReadSponsor(sponsorID);
 			reportParts = service.FindByProjectAndLanguage(projectRoundUnitID, langID);
@@ -103,7 +53,6 @@ namespace HW.Grp
 
 			var exporter = ExportFactory.GetExporterAll(service, type, HasAnswerKey, hasGrouping, reportParts, Server.MapPath("HW template for Word.docx"));
 			exporter.CellWrite += delegate(object sender2, ExcelCellEventArgs e2) {
-//				e2.ExcelCell.Value = R.Str(lid, e2.ValueKey, "");
 				e2.ExcelCell.Value = R.Str(langID, e2.ValueKey, "");
 				e2.Writer.WriteCell(e2.ExcelCell);
 			};
@@ -113,29 +62,9 @@ namespace HW.Grp
 			HtmlHelper.AddHeaderIf(exporter.HasContentDisposition2, "content-disposition", exporter.ContentDisposition2, Response);
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
 			
-//			exporter.UrlSet += delegate(object sender2, ReportPartEventArgs e2) { e2.Url = GetReportImageUrl(path, langID, yearFrom, yearTo, sponsorAdminID, sponsorID, groupBy, e2.ReportPart.Id, projectRoundUnitID, departmentIDs, grouping, plot, monthFrom, monthTo); };
-//			HtmlHelper.Write(exporter.ExportAll(langID, projectRoundUnitID, yearFrom, yearTo, groupBy, plot, grouping, sponsorAdminID, sponsorID, departmentIDs, sponsor.MinUserCountToDisclose, monthFrom, monthTo), Response);
-			
 			exporter.UrlSet += delegate(object sender2, ReportPartEventArgs e2) { e2.Url = GetReportImageUrl(path, langID, dateFrom.Year, dateTo.Year, sponsorAdminID, sponsorID, groupBy, e2.ReportPart.Id, projectRoundUnitID, departmentIDs, grouping, plot, dateFrom.Month, dateTo.Month); };
 			HtmlHelper.Write(exporter.ExportAll(langID, projectRoundUnit, dateFrom, dateTo, groupBy, plot, grouping, sponsorAdmin, sponsor as Sponsor, departmentIDs), Response);
 		}
-		
-//		void Write(object obj)
-//		{
-//			if (obj is MemoryStream) {
-//				Response.BinaryWrite(((MemoryStream)obj).ToArray());
-//				Response.End();
-//			} else if (obj is string) {
-//				Response.Write((string)obj);
-//			}
-//		}
-//		
-//		void AddHeaderIf(bool condition, string name, string value)
-//		{
-//			if (condition) {
-//				Response.AddHeader(name, value);
-//			}
-//		}
 		
 		string GetReportImageUrl(string path, int langID, int yearFrom, int yearTo, int sposorAdminID, int sponsorID, int groupBy, int reportPartID, int projectRoundUnitID, string departmentIDs, int grouping, int plot, int monthFrom, int monthTo)
 		{

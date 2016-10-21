@@ -153,7 +153,7 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 			int maxDT = 0;
 
 			if (type == 8) {
-				groupBy = GroupFactory.GetGroupBy(GB);
+				groupBy = GroupFactory.GetGroupByQuery(GB);
 				g = new ExtendedGraph(895, 440, "#FFFFFF");
 
 				Answer answer = answerRepository.ReadByGroup(groupBy, yearFrom, yearTo, rnds);
@@ -492,7 +492,7 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 			int maxDT = 0;
 			
 			if (type == 8) {
-				groupBy = GroupFactory.GetGroupBy(GB);
+				groupBy = GroupFactory.GetGroupByQuery(GB);
 				g = new ExtendedGraph(895, 440, "#FFFFFF");
 
 				Answer answer = answerRepository.ReadByGroup(groupBy, yearFrom, yearTo, rnds);

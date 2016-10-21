@@ -9,12 +9,15 @@ namespace HW.Core.Models
 		string Name { get; set; }
 		string Query { get; set; }
 		int MinUserCountToDisclose { get; set; }
+		
+		IList<Answer> Answers { get; set; }
 	}
 	
 	public class Department : BaseModel, IDepartment
 	{
 		public Department()
 		{
+			Answers = new List<Answer>();
 		}
 		
 		public Department(string key, string name, int minUserCountToDisclose, string query)
@@ -23,6 +26,8 @@ namespace HW.Core.Models
 			this.Name = name;
 			this.MinUserCountToDisclose = minUserCountToDisclose;
 			this.Query = query;
+			
+			Answers = new List<Answer>();
 		}
 		
 		public Sponsor Sponsor { get; set; }
@@ -45,6 +50,8 @@ namespace HW.Core.Models
 		public string Query { get; set; }
 		
 		public IList<Department> Parents { get; set; }
+		
+		public IList<Answer> Answers { get; set; }
 		
 		public int? GetLoginDays()
 		{

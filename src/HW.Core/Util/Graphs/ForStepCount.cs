@@ -68,7 +68,7 @@ namespace HW.Core.Util.Graphs
 				GB = 2;
 			}
 			
-			string groupByQuery = GroupFactory.GetGroupBy(GB);
+			string groupByQuery = GroupFactory.GetGroupByQuery(GB);
 			g = new ExtendedGraph(895, 440, "#FFFFFF");
 			
 			g.Type = GetGraphType(plot, 2);
@@ -222,7 +222,7 @@ namespace HW.Core.Util.Graphs
 				groupBy = GroupBy.TwoWeeksStartWithOdd;
 			}
 
-			string groupByQuery = GroupFactory.GetGroupBy(groupBy);
+			string groupByQuery = GroupFactory.GetGroupByQuery(groupBy);
 
 			var answer = measureRepo.ReadByGroup(groupByQuery, dateFrom.Year, dateTo.Year, sortString, dateFrom.Month, dateTo.Month);
 			if (answer != null) {

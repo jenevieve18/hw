@@ -12,7 +12,7 @@ using HW.Core.Services;
 using HW.Core.Util.Graphs;
 using NUnit.Framework;
 
-namespace HW.Grp.Tests.Helpers
+namespace HW.Grp.Tests.Util
 {
 	[TestFixture]
 	public class GroupStatsGraphFactoryTests
@@ -31,19 +31,27 @@ namespace HW.Grp.Tests.Helpers
 		[Test]
 		public void TestGetWeightedQuestionOptionReportPartGraph()
 		{
-			var reportPart = new SqlReportRepository().ReadReportPart(14, 2);
-			int langID = 2;
-			int point = 0;
-			bool hasGrouping = true;
-			var sponsor = new SqlSponsorRepository().Read(83);
-			var sponsorAdmin = new SqlSponsorAdminRepository().Read(514);
-			string departmentIDs = "0";
-			int grouping = Grouping.None;
-			int groupBy = GroupBy.TwoWeeksStartWithEven;
-			int cx = reportPart.Components.Capacity;
-			var projectRoundUnit = new SqlProjectRepository().ReadRoundUnit(2643);
 			var dateFrom = new DateTime(2012, 9, 1);
 			var dateTo = new DateTime(2013, 9, 1);
+			
+			int langID = 2;
+			
+			var reportPart = new SqlReportRepository().ReadReportPart(14, 2);
+			var projectRoundUnit = new SqlProjectRepository().ReadRoundUnit(2643);
+			
+			bool hasGrouping = true;
+			
+			var sponsor = new SqlSponsorRepository().Read(83);
+			var sponsorAdmin = new SqlSponsorAdminRepository().Read(514);
+			
+			int groupBy = GroupBy.TwoWeeksStartWithEven;
+			int grouping = Grouping.None;
+			
+			string departmentIDs = "0";
+			
+			int cx = reportPart.Components.Capacity;
+			
+			int point = 0;
 			
 			g = f.GetWeightedQuestionOptionReportPartGraph(
 				reportPart,
@@ -63,10 +71,8 @@ namespace HW.Grp.Tests.Helpers
 		}
 		
 		[Test]
-		public void a()
+		public void TestGetWeightedQuestionOptionReportPartGraph2()
 		{
-			int groupBy = 7;
-			
 			var dateFrom = new DateTime(2012, 10, 1);
 			var dateTo = new DateTime(2013, 10, 1);
 			
@@ -78,14 +84,14 @@ namespace HW.Grp.Tests.Helpers
 			bool hasGrouping = true;
 			
 			int plot = 0;
-//			string key = null;
 			
-			int grouping = 3;
+			int groupBy = GroupBy.TwoWeeksStartWithEven;
+			int grouping = Grouping.BackgroundVariable;
+			
 			int sponsorAdminID = 514;
 			int sponsorID = 83;
-			string departmentIDs = "0,2,7";
 			
-//			object disabled = null;
+			string departmentIDs = "0,2,7";
 			
 			int point = 0;
 			
@@ -97,7 +103,7 @@ namespace HW.Grp.Tests.Helpers
 			var projectRoundUnit = service.ReadProjectRoundUnit(projectRoundUnitID);
 			var sponsorAdmin = service.ReadSponsorAdmin(sponsorAdminID);
 			
-			var sponsor = new SqlSponsorRepository().Read(sponsorID);
+			var sponsor = service.ReadSponsor(sponsorID) as Sponsor;
 			g = f.CreateGraph(reportPart, projectRoundUnit, langID, sponsorAdmin, sponsor, dateFrom, dateTo, groupBy, hasGrouping, plot, grouping, departmentIDs, point);
 		}
 		
@@ -114,17 +120,17 @@ namespace HW.Grp.Tests.Helpers
 			
 			int langID = 2;
 			
-			var reportPart2 = reportService.ReadReportPart(114);
-			reportPart2.SelectedReportPartLangID = langID;
+			var reportPart = reportService.ReadReportPart(114);
+			reportPart.SelectedReportPartLangID = langID;
 			
-			var projectRoundUnit = new SqlProjectRepository().ReadRoundUnit(3476);
-			var projectRoundUnit2 = projectService.ReadProjectRoundUnit(3476);
+//			var projectRoundUnit = new SqlProjectRepository().ReadRoundUnit(3476);
+			var projectRoundUnit = projectService.ReadProjectRoundUnit(3476);
 			
-			var dateFrom = new DateTime(2015, 9, 1);
-			var dateTo = new DateTime(2016, 9, 1);
+			var dateFrom = new DateTime(2015, 10, 1);
+			var dateTo = new DateTime(2016, 10, 1);
 			
 			g = f.GetIndexReportPartGraph(
-				reportPart2,
+				reportPart,
 				langID,
 				0,
 				true,
@@ -133,8 +139,44 @@ namespace HW.Grp.Tests.Helpers
 				"0,1251",
 				projectRoundUnit,
 				Grouping.None,
-				GroupBy.TwoWeeksStartWithEven,
+				GroupBy.OneYear,
 				PlotType.Bar,
+				dateFrom,
+				dateTo
+			);
+		}
+		
+		[TestAttribute]
+		public void TestGetIndexReportPartGraph2()
+		{
+			var sponsorService = new SponsorService();
+			var reportService = new ReportService();
+			var projectService = new ProjectService();
+			
+			var sponsor = sponsorService.ReadSponsor(1);
+			var sponsorAdmin = sponsorService.ReadSponsorAdmin(-1);
+			
+			int langID = 2;
+			
+			var reportPart = reportService.ReadReportPart(114);
+			reportPart.SelectedReportPartLangID = langID;
+			
+			var projectRoundUnit = projectService.ReadProjectRoundUnit(3476);
+			
+			var dateFrom = new DateTime(2015, 10, 1);
+			var dateTo = new DateTime(2016, 10, 1);
+			
+			g = f.lalala(
+				reportPart,
+				langID,
+				0,
+				sponsorAdmin,
+				sponsor,
+				"0",
+				projectRoundUnit,
+				Grouping.None,
+				GroupBy.OneYear,
+				PlotType.BoxPlot,
 				dateFrom,
 				dateTo
 			);

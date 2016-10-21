@@ -424,7 +424,7 @@ namespace HW.Core.Util.Graphs
 		{
 			int cx = reportPart.Components.Capacity;
 			
-			string groupByQuery = GroupFactory.GetGroupBy(groupBy);
+			string groupByQuery = GroupFactory.GetGroupByQuery(groupBy);
 			int minDT = 0;
 			int maxDT = 0;
 			ExtendedGraph g = new ExtendedGraph(895, 440, "#FFFFFF");
@@ -447,7 +447,7 @@ namespace HW.Core.Util.Graphs
 				
 				var departments = GetSponsorAdminSponsorDepartments(grouping, sponsorAdmin, sponsor, departmentIDs, departmentRepo);
 				
-				var departmentsWithQuery = GroupFactory.GetCount2(grouping, sponsor, projectRoundUnit, departmentIDs, ref extraDesc, questionRepo, departments);
+				var departmentsWithQuery = GroupFactory.GetDepartmentsWithJoinQuery(grouping, sponsor, projectRoundUnit, departmentIDs, ref extraDesc, questionRepo, departments);
 				
 				int breaker = 6;
 				int itemWidth = 120;
@@ -469,13 +469,13 @@ namespace HW.Core.Util.Graphs
 						HasAxis = false
 					}
 				);
-				var c = reportPart.FirstComponent;
-				if (c.HasIndex) {
+				var reportPartComponent = reportPart.FirstComponent;
+				if (reportPartComponent.HasIndex) {
 					int bx = 0;
 					foreach (var i in departmentsWithQuery) {
 						cx = 1;
 						int lastDT = minDT - 1;
-						var indexes = indexRepo.FindByLanguage3(i.Query, groupByQuery, c.Index.Id, langID, dateFrom.Year, dateTo.Year, projectRoundUnit.SortString, dateFrom.Month, dateTo.Month);
+						var indexes = indexRepo.FindByLanguage3(i.Query, groupByQuery, reportPartComponent.Index.Id, langID, dateFrom.Year, dateTo.Year, projectRoundUnit.SortString, dateFrom.Month, dateTo.Month);
 						Series s = new Series {
 							Description = i.Name,
 							Color = bx + 4,
@@ -546,12 +546,100 @@ namespace HW.Core.Util.Graphs
 			return g;
 		}
 		
+		public ExtendedGraph lalala(ReportPart reportPart, int langID, int point, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ProjectRoundUnit projectRoundUnit, int grouping, int groupBy, int plot, DateTime dateFrom, DateTime dateTo)
+		{
+			int cx = reportPart.Components.Capacity;
+			
+			string groupByQuery = GroupFactory.GetGroupByQuery(groupBy);
+			int minDT = 0;
+			int maxDT = 0;
+			ExtendedGraph g = new ExtendedGraph(895, 440, "#FFFFFF");
+			g.Type = GetGraphType(plot, 2);
+			Answer answer = answerRepo.ReadByGroup(groupByQuery, dateFrom.Year, dateTo.Year, projectRoundUnit.SortString, dateFrom.Month, dateTo.Month);
+			if (answer != null) {
+				cx = answer.DummyValue1 + 3;
+				minDT = answer.DummyValue2;
+				maxDT = answer.DummyValue3;
+			}
+			g.SetMinMax(new Answer());
+			g.DrawComputingSteps(null, cx);
+			
+			cx = 0;
+			
+			g.DrawBottomString(minDT, maxDT, groupBy);
+			
+			string extraDesc = "";
+			
+			var departments = GetSponsorAdminSponsorDepartments(grouping, sponsorAdmin, sponsor, departmentIDs, departmentRepo);
+			
+			var departmentsWithQuery = GroupFactory.GetDepartmentsWithJoinQuery(grouping, sponsor, projectRoundUnit, departmentIDs, ref extraDesc, questionRepo, departments);
+			
+			int breaker = 6;
+			int itemWidth = 120;
+			if (departmentsWithQuery.Count < 6) {
+				breaker = 4;
+				itemWidth = 180;
+			}
+			if (departmentsWithQuery.Count < 4) {
+				breaker = 3;
+				itemWidth = 240;
+			}
+			
+			g.Explanations.Add(
+				new Explanation {
+					Description = (extraDesc != "" ? extraDesc + "\n" : "") + LanguageFactory.GetMeanText(langID) + (point == Distribution.StandardDeviation ? " " + HttpUtility.HtmlDecode("&plusmn;") + "SD" : ""),
+					Color = 0,
+					Right = false,
+					Box = false,
+					HasAxis = false
+				}
+			);
+			var rpc = reportPart.FirstComponent;
+			if (rpc.HasIndex) {
+				int bx = 0;
+				foreach (var i in departmentsWithQuery) {
+					cx = 1;
+					int lastDT = minDT - 1;
+					var indexes = indexRepo.FindByLanguage3(i.Query, groupByQuery, rpc.Index.Id, langID, dateFrom.Year, dateTo.Year, projectRoundUnit.SortString, dateFrom.Month, dateTo.Month);
+//					var answers = answerRepo.FindByQuestionAndOptionJoinedAndGrouped2(i.Query, groupByQuery, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, dateFrom.Year, dateTo.Year, dateFrom.Month, dateTo.Month);
+					Series s = new Series {
+						Description = i.Name,
+						Color = bx + 4,
+						X = 130 + (int)((bx % breaker) * itemWidth),
+						Y = 20 + (int)Math.Floor((double)bx / breaker) * 15
+					};
+					foreach (var a in indexes) {
+						if (a.DT < minDT) {
+							continue;
+						}
+						while (lastDT + 1 < a.DT) {
+							lastDT++;
+							cx++;
+						}
+						if (a.Values.Count >= i.MinUserCountToDisclose) {
+							if (departmentsWithQuery.Count == 1) {
+								string v = GetBottomString(groupBy, a.DT, cx, (departmentsWithQuery.Count == 1 ? ", n = " + a.Values.Count : ""));
+								g.DrawBottomString(v, cx);
+							}
+							s.Points.Add(new PointV { X = cx, Values = a.GetDoubleValues() });
+						}
+						lastDT = a.DT;
+						cx++;
+					}
+					g.Series.Add(s);
+					bx++;
+				}
+			}
+			g.Draw();
+			return g;
+		}
+		
 //		public void GetIndexReportPartGraphForExcelWriter(ReportPart reportPart, int langID, bool hasGrouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ProjectRoundUnit projectRoundUnit, int grouping, int groupBy, int plot, DateTime dateFrom, DateTime dateTo, ref List<IDepartment> departmentsWithQuery, ref Dictionary<string, List<IAnswer>> weeks)
 		public void GetIndexReportPartGraphForExcelWriter(ReportPart reportPart, int langID, bool hasGrouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ProjectRoundUnit projectRoundUnit, int grouping, int groupBy, int plot, DateTime dateFrom, DateTime dateTo, List<IDepartment> departmentsWithQuery, Dictionary<string, List<IAnswer>> weeks)
 		{
 			int cx = reportPart.Components.Capacity;
 			
-			string groupByQuery = GroupFactory.GetGroupBy(groupBy);
+			string groupByQuery = GroupFactory.GetGroupByQuery(groupBy);
 			int minDT = 0;
 			int maxDT = 0;
 			Answer answer = answerRepo.ReadByGroup(groupByQuery, dateFrom.Year, dateTo.Year, projectRoundUnit.SortString, dateFrom.Month, dateTo.Month);
@@ -575,7 +663,7 @@ namespace HW.Core.Util.Graphs
 				var departments = GetSponsorAdminSponsorDepartments(grouping, sponsorAdmin, sponsor, departmentIDs, departmentRepo);
 				
 //				departmentsWithQuery = GroupFactory.GetCount2(grouping, sponsor, projectRoundUnit, departmentIDs, ref extraDesc, questionRepo, departments);
-				departmentsWithQuery.AddRange(GroupFactory.GetCount2(grouping, sponsor, projectRoundUnit, departmentIDs, ref extraDesc, questionRepo, departments));
+				departmentsWithQuery.AddRange(GroupFactory.GetDepartmentsWithJoinQuery(grouping, sponsor, projectRoundUnit, departmentIDs, ref extraDesc, questionRepo, departments));
 
 				var c = reportPart.FirstComponent;
 				if (c.HasIndex) {
@@ -631,7 +719,7 @@ namespace HW.Core.Util.Graphs
 		{
 			int cx = reportPart.Components.Capacity;
 			
-			string groupByQuery = GroupFactory.GetGroupBy(groupBy);
+			string groupByQuery = GroupFactory.GetGroupByQuery(groupBy);
 			int minDT = 0;
 			int maxDT = 0;
 			ExtendedGraph g = new ExtendedGraph(895, 440, "#FFFFFF");
@@ -671,7 +759,7 @@ namespace HW.Core.Util.Graphs
 				
 				var departments = GetSponsorAdminSponsorDepartments(grouping, sponsorAdmin, sponsor, departmentIDs, departmentRepo);
 				
-				var departmentsWithQuery = GroupFactory.GetCount2(grouping, sponsor, projectRoundUnit, departmentIDs, ref extraDesc, questionRepo, departments);
+				var departmentsWithQuery = GroupFactory.GetDepartmentsWithJoinQuery(grouping, sponsor, projectRoundUnit, departmentIDs, ref extraDesc, questionRepo, departments);
 				
 				int breaker = 6;
 				int itemWidth = 120;
@@ -770,7 +858,6 @@ namespace HW.Core.Util.Graphs
 			return g;
 		}
 		
-//		public void GetWeightedQuestionOptionReportPartGraphForExcelWriter(ReportPart reportPart, int langID, bool hasGrouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ProjectRoundUnit projectRoundUnit, int grouping, int groupBy, int plot, DateTime dateFrom, DateTime dateTo, ref List<IDepartment> departmentsWithQuery, ref Dictionary<string, List<IAnswer>> weeks)
 		public void GetWeightedQuestionOptionReportPartGraphForExcelWriter(ReportPart reportPart, int langID, bool hasGrouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ProjectRoundUnit projectRoundUnit, int grouping, int groupBy, int plot, DateTime dateFrom, DateTime dateTo, List<IDepartment> departmentsWithQuery, Dictionary<string, List<IAnswer>> weeks)
 		{
 			int cx = reportPart.Components.Capacity;
@@ -778,7 +865,7 @@ namespace HW.Core.Util.Graphs
 				groupBy = 2;
 			}
 			
-			string groupByQuery = GroupFactory.GetGroupBy(groupBy);
+			string groupByQuery = GroupFactory.GetGroupByQuery(groupBy);
 			int minDT = 0;
 			int maxDT = 0;
 			if (plot == PlotType.BoxPlotMinMax) {
@@ -793,7 +880,6 @@ namespace HW.Core.Util.Graphs
 			
 			cx = 0;
 			
-//			weeks = GetWeeks(minDT, maxDT, groupBy);
 			var generatedWeeks = GetWeeks(minDT, maxDT, groupBy);
 			foreach (var k in generatedWeeks.Keys) {
 				weeks.Add(k, generatedWeeks[k]);
@@ -805,16 +891,15 @@ namespace HW.Core.Util.Graphs
 				
 				var departments = GetSponsorAdminSponsorDepartments(grouping, sponsorAdmin, sponsor, departmentIDs, departmentRepo);
 				
-//				departmentsWithQuery = GroupFactory.GetCount2(grouping, sponsor, projectRoundUnit, departmentIDs, ref extraDesc, questionRepo, departments);
-				departmentsWithQuery.AddRange(GroupFactory.GetCount2(grouping, sponsor, projectRoundUnit, departmentIDs, ref extraDesc, questionRepo, departments));
+				departmentsWithQuery.AddRange(GroupFactory.GetDepartmentsWithJoinQuery(grouping, sponsor, projectRoundUnit, departmentIDs, ref extraDesc, questionRepo, departments));
 				
-				ReportPartComponent c = reportRepo.ReadComponentByPartAndLanguage(reportPart.Id, langID);
-				if (c != null) {
+				ReportPartComponent rpc = reportRepo.ReadComponentByPartAndLanguage(reportPart.Id, langID);
+				if (rpc != null) {
 					int bx = 0;
 					foreach(var i in departmentsWithQuery) {
 						cx = 1;
 						int lastDT = minDT - 1;
-						var answers = answerRepo.FindByQuestionAndOptionJoinedAndGrouped2(i.Query, groupByQuery, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, dateFrom.Year, dateTo.Year, dateFrom.Month, dateTo.Month);
+						var answers = answerRepo.FindByQuestionAndOptionJoinedAndGrouped2(i.Query, groupByQuery, rpc.WeightedQuestionOption.Question.Id, rpc.WeightedQuestionOption.Option.Id, dateFrom.Year, dateTo.Year, dateFrom.Month, dateTo.Month);
 						foreach (var a in answers) {
 							if (a.DT < minDT) {
 								continue;
@@ -827,6 +912,95 @@ namespace HW.Core.Util.Graphs
 								if (count == 1) {
 								}
 								weeks[GetBottomString(groupBy, a.DT, cx, "")].Add(a);
+							} else {
+								weeks[GetBottomString(groupBy, a.DT, cx, "")].Add(new Answer());
+							}
+							lastDT = a.DT;
+							cx++;
+						}
+						bx++;
+					}
+				}
+			} else {
+				int bx = 0;
+				foreach (ReportPartComponent c in reportRepo.FindComponentsByPartAndLanguage2(reportPart.Id, langID)) {
+					cx = 1;
+					int lastDT = minDT - 1;
+					var answers = answerRepo.FindByQuestionAndOptionGrouped(groupByQuery, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, dateFrom.Year, dateTo.Year, projectRoundUnit.SortString, dateFrom.Month, dateTo.Month);
+					foreach (Answer a in answers) {
+						if (a.DT < minDT) {
+							continue;
+						}
+						while (lastDT + 1 < a.DT) {
+							lastDT++;
+							cx++;
+						}
+						
+						if (a.CountV >= reportPart.RequiredAnswerCount) {
+						}
+						lastDT = a.DT;
+						cx++;
+					}
+					bx++;
+				}
+			}
+		}
+		
+		public void GetWeightedQuestionOptionReportPartGraphForExcelWriter2(ReportPart reportPart, int langID, bool hasGrouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ProjectRoundUnit projectRoundUnit, int grouping, int groupBy, int plot, DateTime dateFrom, DateTime dateTo, List<IDepartment> departmentsWithQuery, Dictionary<string, List<IAnswer>> weeks)
+		{
+			int cx = reportPart.Components.Capacity;
+			if (groupBy == 0) {
+				groupBy = 2;
+			}
+			
+			string groupByQuery = GroupFactory.GetGroupByQuery(groupBy);
+			int minDT = 0;
+			int maxDT = 0;
+			if (plot == PlotType.BoxPlotMinMax) {
+			} else {
+			}
+			Answer answer = answerRepo.ReadByGroup(groupByQuery, dateFrom.Year, dateTo.Year, projectRoundUnit.SortString, dateFrom.Month, dateTo.Month);
+			if (answer != null) {
+				cx = answer.DummyValue1 + 3;
+				minDT = answer.DummyValue2;
+				maxDT = answer.DummyValue3;
+			}
+			
+			cx = 0;
+			
+			var generatedWeeks = GetWeeks(minDT, maxDT, groupBy);
+			foreach (var k in generatedWeeks.Keys) {
+				weeks.Add(k, generatedWeeks[k]);
+			}
+			
+			if (hasGrouping) {
+				int count = 0;
+				string extraDesc = "";
+				
+				var departments = GetSponsorAdminSponsorDepartments(grouping, sponsorAdmin, sponsor, departmentIDs, departmentRepo);
+				
+				departmentsWithQuery.AddRange(GroupFactory.GetDepartmentsWithJoinQuery(grouping, sponsor, projectRoundUnit, departmentIDs, ref extraDesc, questionRepo, departments));
+				
+				ReportPartComponent rpc = reportRepo.ReadComponentByPartAndLanguage(reportPart.Id, langID);
+				if (rpc != null) {
+					int bx = 0;
+					foreach(var i in departmentsWithQuery) {
+						cx = 1;
+						int lastDT = minDT - 1;
+						var answers = answerRepo.FindByQuestionAndOptionJoinedAndGrouped2(i.Query, groupByQuery, rpc.WeightedQuestionOption.Question.Id, rpc.WeightedQuestionOption.Option.Id, dateFrom.Year, dateTo.Year, dateFrom.Month, dateTo.Month);
+						foreach (var a in answers) {
+							if (a.DT < minDT) {
+								continue;
+							}
+							while (lastDT + 1 < a.DT) {
+								lastDT++;
+								cx++;
+							}
+							if (a.Values.Count >= i.MinUserCountToDisclose) {
+								if (count == 1) {
+								}
+//								weeks[GetBottomString(groupBy, a.DT, cx, "")].Add(a);
+								i.Answers.Add(a);
 							}
 							lastDT = a.DT;
 							cx++;
@@ -897,11 +1071,9 @@ namespace HW.Core.Util.Graphs
 			} else if (reportPart.Type == ReportPartType.Three) {
 				GetGraphForReportPartTypeThreeForExcelWriter(reportPart, projectRoundUnit, langID, dateFrom, dateTo);
 			} else if (reportPart.Type == ReportPartType.Index) {
-//				GetIndexReportPartGraphForExcelWriter(reportPart, langID, hasGrouping, sponsorAdmin, sponsor, departmentIDs, projectRoundUnit, grouping, GB != 0 ? GB : GroupBy.TwoWeeksStartWithOdd, plot, dateFrom, dateTo, ref departments, ref weeks);
 				GetIndexReportPartGraphForExcelWriter(reportPart, langID, hasGrouping, sponsorAdmin, sponsor, departmentIDs, projectRoundUnit, grouping, GB != 0 ? GB : GroupBy.TwoWeeksStartWithOdd, plot, dateFrom, dateTo, departments, weeks);
 			} else if (reportPart.Type == ReportPartType.WeightedQuestionOption) {
-//				GetWeightedQuestionOptionReportPartGraphForExcelWriter(reportPart, langID, hasGrouping, sponsorAdmin, sponsor, departmentIDs, projectRoundUnit, grouping, GB != 0 ? GB : GroupBy.TwoWeeksStartWithOdd, plot, dateFrom, dateTo, ref departments, ref weeks);
-				GetWeightedQuestionOptionReportPartGraphForExcelWriter(reportPart, langID, hasGrouping, sponsorAdmin, sponsor, departmentIDs, projectRoundUnit, grouping, GB != 0 ? GB : GroupBy.TwoWeeksStartWithOdd, plot, dateFrom, dateTo, departments, weeks);
+				GetWeightedQuestionOptionReportPartGraphForExcelWriter2(reportPart, langID, hasGrouping, sponsorAdmin, sponsor, departmentIDs, projectRoundUnit, grouping, GB != 0 ? GB : GroupBy.TwoWeeksStartWithOdd, plot, dateFrom, dateTo, departments, weeks);
 			}
 			
 			var plotter = GetPlotter(plot);
@@ -932,16 +1104,24 @@ namespace HW.Core.Util.Graphs
 			IList<Department> departments = new List<Department>();
 			switch (grouping) {
 				case Grouping.None:
-					departments = sponsorAdmin != null ? departmentRepo.FindBySponsorWithSponsorAdmin(sponsor.Id, sponsorAdmin.Id, sponsor.MinUserCountToDisclose) : departmentRepo.FindBySponsorOrderedBySortString(sponsor.Id, sponsor.MinUserCountToDisclose);
+					departments = sponsorAdmin != null ?
+						departmentRepo.FindBySponsorWithSponsorAdmin(sponsor.Id, sponsorAdmin.Id, sponsor.MinUserCountToDisclose) :
+						departmentRepo.FindBySponsorOrderedBySortString(sponsor.Id, sponsor.MinUserCountToDisclose);
 					break;
 				case Grouping.UsersOnUnit:
-					departments = sponsorAdmin != null ? departmentRepo.FindBySponsorWithSponsorAdminIn(sponsor.Id, sponsorAdmin.Id, departmentIDs, sponsor.MinUserCountToDisclose) : departmentRepo.FindBySponsorOrderedBySortStringIn(sponsor.Id, departmentIDs, sponsor.MinUserCountToDisclose);
+					departments = sponsorAdmin != null ?
+						departmentRepo.FindBySponsorWithSponsorAdminIn(sponsor.Id, sponsorAdmin.Id, departmentIDs, sponsor.MinUserCountToDisclose) :
+						departmentRepo.FindBySponsorOrderedBySortStringIn(sponsor.Id, departmentIDs, sponsor.MinUserCountToDisclose);
 					break;
 				case Grouping.UsersOnUnitAndSubUnits:
-					departments = sponsorAdmin != null ? departmentRepo.FindBySponsorWithSponsorAdminIn(sponsor.Id, sponsorAdmin.Id, departmentIDs, sponsor.MinUserCountToDisclose) : departmentRepo.FindBySponsorOrderedBySortStringIn(sponsor.Id, departmentIDs, sponsor.MinUserCountToDisclose);
+					departments = sponsorAdmin != null ?
+						departmentRepo.FindBySponsorWithSponsorAdminIn(sponsor.Id, sponsorAdmin.Id, departmentIDs, sponsor.MinUserCountToDisclose) :
+						departmentRepo.FindBySponsorOrderedBySortStringIn(sponsor.Id, departmentIDs, sponsor.MinUserCountToDisclose);
 					break;
 				case Grouping.BackgroundVariable:
-					departments = sponsorAdmin != null ? departmentRepo.FindBySponsorWithSponsorAdmin(sponsor.Id, sponsorAdmin.Id, sponsor.MinUserCountToDisclose) : departmentRepo.FindBySponsorOrderedBySortString(sponsor.Id, sponsor.MinUserCountToDisclose);
+					departments = sponsorAdmin != null ? 
+						departmentRepo.FindBySponsorWithSponsorAdmin(sponsor.Id, sponsorAdmin.Id, sponsor.MinUserCountToDisclose) : 
+						departmentRepo.FindBySponsorOrderedBySortString(sponsor.Id, sponsor.MinUserCountToDisclose);
 					break;
 			}
 			return departments;
@@ -1064,7 +1244,7 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 			var departments = new List<IDepartment>();
 			
 			if (type == 8) {
-				groupBy = GroupFactory.GetGroupBy(GB);
+				groupBy = GroupFactory.GetGroupByQuery(GB);
 
 				Answer answer = answerRepo.ReadByGroup(groupBy, yearFrom, yearTo, rnds);
 				if (answer != null) {
