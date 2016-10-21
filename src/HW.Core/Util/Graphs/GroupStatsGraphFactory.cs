@@ -996,12 +996,12 @@ namespace HW.Core.Util.Graphs
 								lastDT++;
 								cx++;
 							}
-							if (a.Values.Count >= i.MinUserCountToDisclose) {
-								if (count == 1) {
-								}
+//							if (a.Values.Count >= i.MinUserCountToDisclose) {
+//								if (count == 1) {
+//								}
 //								weeks[GetBottomString(groupBy, a.DT, cx, "")].Add(a);
 								i.Answers.Add(a);
-							}
+//							}
 							lastDT = a.DT;
 							cx++;
 						}
