@@ -118,6 +118,7 @@
     <Compile Include="FromHW\Db.cs" />
     <Compile Include="Helpers\DbHelper.cs" />
     <Compile Include="Repositories\Sql\SqlSponsorProjectRoundUnitRepository.cs" />
+    <Compile Include="Util\Exporters\Class1.cs" />
     <Compile Include="Util\Exporters\ExportFactory.cs" />
     <Compile Include="Util\Graphs\BaseGraphFactory.cs" />
     <Compile Include="Helpers\DateHelper.cs" />

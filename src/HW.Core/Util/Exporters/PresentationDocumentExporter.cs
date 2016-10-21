@@ -21,7 +21,7 @@ namespace HW.Core.Util.Exporters
 		ReportPart r;
 		IList<IReportPart> parts;
 		ReportService service;
-		GeneratedClass gc = new GeneratedClass();
+		GeneratedClass2 gc = new GeneratedClass2();
 		
 		public PresentationDocumentStatsExporter(ReportPart r)
 		{
