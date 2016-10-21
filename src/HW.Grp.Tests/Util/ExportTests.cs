@@ -34,7 +34,7 @@ namespace HW.Grp.Tests.Util
 			int grouping = 2;
 			int sponsorAdminID = -1;
 			int sponsorID = 83;
-			string departmentIDs = "0,928,929,930";
+			string departmentIDs = "0,927,929,930";
 			int plot = PlotType.BoxPlot;
 //			string type = "xls";
 			

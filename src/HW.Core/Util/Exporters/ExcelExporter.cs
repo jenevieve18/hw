@@ -234,7 +234,7 @@ namespace HW.Core.Util.Exporters
 			foreach (var d in departments) {
 				j = 1;
 				foreach (var a in d.Answers) {
-					if (a.Values.Count > d.MinUserCountToDisclose) {
+					if (a.Values.Count >= d.MinUserCountToDisclose) {
 						writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = a.GetDoubleValues().Mean, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
 					} else {
 						writer.WriteCell(new ExcelCell { Row = i, Column = j, BorderStyle = ExcelBorderStyle.Thin });
@@ -301,7 +301,7 @@ namespace HW.Core.Util.Exporters
 			foreach (var d in departments) {
 				j = 1;
 				foreach (var a in d.Answers) {
-					if (a.Values.Count > d.MinUserCountToDisclose) {
+					if (a.Values.Count >= d.MinUserCountToDisclose) {
 						writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = a.Values.Count, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
 						writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, Value = a.GetDoubleValues().Mean, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
 						writer.WriteCell(new ExcelCell { Row = i, Column = j + 2, Value = a.GetDoubleValues().ConfidenceInterval, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
@@ -372,7 +372,7 @@ namespace HW.Core.Util.Exporters
 			foreach (var d in departments) {
 				j = 1;
 				foreach (var a in d.Answers) {
-					if (a.Values.Count > d.MinUserCountToDisclose) {
+					if (a.Values.Count >= d.MinUserCountToDisclose) {
 						writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = a.Values.Count, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
 						writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, Value = a.GetDoubleValues().Mean, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
 						writer.WriteCell(new ExcelCell { Row = i, Column = j + 2, Value = a.GetDoubleValues().StandardDeviation, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
@@ -440,7 +440,7 @@ namespace HW.Core.Util.Exporters
 			foreach (var d in departments) {
 				j = 1;
 				foreach (var a in d.Answers) {
-					if (a.Values.Count > d.MinUserCountToDisclose) {
+					if (a.Values.Count >= d.MinUserCountToDisclose) {
 						writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = a.Values.Count, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
 						writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, Value = a.GetDoubleValues().Median, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
 					} else {
@@ -542,7 +542,7 @@ namespace HW.Core.Util.Exporters
 			foreach (var d in departments) {
 				j = 2;
 				foreach (var a in d.Answers) {
-					if (a.Values.Count > d.MinUserCountToDisclose) {
+					if (a.Values.Count >= d.MinUserCountToDisclose) {
 						var v = a.GetDoubleValues();
 						writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = v.Mean, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
 						writer.WriteCell(new ExcelCell { Row = i + 1, Column = j, Value = v.StandardDeviation, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
