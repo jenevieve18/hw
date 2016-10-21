@@ -84,6 +84,7 @@ namespace HW.Core.Util.Graphs
 //				sum += (decimal)p.Y;
 //				Graph.drawBar(s.Color, i, p.Y);
 //				Graph.drawBottomString(p.Description, i, true);
+				Graph.drawColorExplBox(s.Description, s.Color, s.X, s.Y);
 				Graph.drawBar(s.Color, p.X, (float)p.Values.Mean);
 //				Graph.drawBottomString(p.Description, p.X, true);
 //				if (b.HasReference) {
