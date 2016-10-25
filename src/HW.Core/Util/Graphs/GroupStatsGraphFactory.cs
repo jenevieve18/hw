@@ -669,6 +669,11 @@ namespace HW.Core.Util.Graphs
 				if (c.HasIndex) {
 					int bx = 0;
 					foreach (var i in departmentsWithQuery) {
+						
+						foreach (var k in weeks.Keys) {
+							i.Weeks.Add(new Week(k));
+						}
+						
 						cx = 1;
 						int lastDT = minDT - 1;
 						var indexes = indexRepo.FindByLanguage3(i.Query, groupByQuery, c.Index.Id, langID, dateFrom.Year, dateTo.Year, projectRoundUnit.SortString, dateFrom.Month, dateTo.Month);
