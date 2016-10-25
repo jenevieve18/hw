@@ -10,16 +10,34 @@ namespace HW.Core.Models
 		string Query { get; set; }
 		int MinUserCountToDisclose { get; set; }
 		
-//		IList<Answer> Answers { get; set; }
-		IList<IAnswer> Answers { get; set; }
+//		IList<IAnswer> Answers { get; set; }
+		
+		IList<Week> Weeks { get; set; }
+		
+		Week FindWeek(string week);
+	}
+	
+	public class Week
+	{
+		public string Number { get; set; }
+		public IAnswer Answer { get; set; }
+		public bool HasAnswer {
+			get { return Answer != null; }
+		}
+		
+		public Week(string number)
+		{
+			this.Number = number;
+		}
 	}
 	
 	public class Department : BaseModel, IDepartment
 	{
 		public Department()
 		{
-//			Answers = new List<Answer>();
-			Answers = new List<IAnswer>();
+//			Answers = new List<IAnswer>();
+			
+			Weeks = new List<Week>();
 		}
 		
 		public Department(string key, string name, int minUserCountToDisclose, string query)
@@ -29,8 +47,19 @@ namespace HW.Core.Models
 			this.MinUserCountToDisclose = minUserCountToDisclose;
 			this.Query = query;
 			
-//			Answers = new List<Answer>();
-			Answers = new List<IAnswer>();
+//			Answers = new List<IAnswer>();
+			
+			Weeks = new List<Week>();
+		}
+		
+		public Week FindWeek(string week)
+		{
+			foreach (var w in Weeks) {
+				if (w.Number == week) {
+					return w;
+				}
+			}
+			return null;
 		}
 		
 		public Sponsor Sponsor { get; set; }
@@ -54,8 +83,9 @@ namespace HW.Core.Models
 		
 		public IList<Department> Parents { get; set; }
 		
-//		public IList<Answer> Answers { get; set; }
-		public IList<IAnswer> Answers { get; set; }
+//		public IList<IAnswer> Answers { get; set; }
+		
+		public IList<Week> Weeks { get; set; }
 		
 		public int? GetLoginDays()
 		{

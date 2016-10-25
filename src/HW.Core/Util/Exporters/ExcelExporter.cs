@@ -229,24 +229,25 @@ namespace HW.Core.Util.Exporters
 //				j++;
 //				i = k;
 //			}
-//			j = 1;
+//			i += departments.Count + 2;
+			
 			i = k;
 			foreach (var d in departments) {
 				j = 1;
-				foreach (var a in d.Answers) {
-					if (a.Values.Count >= d.MinUserCountToDisclose) {
-						writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = a.GetDoubleValues().Mean, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-					} else {
-						writer.WriteCell(new ExcelCell { Row = i, Column = j, BorderStyle = ExcelBorderStyle.Thin });
+//				foreach (var a in d.Answers) {
+				foreach (var w in d.Weeks) {
+					if (w.HasAnswer) {
+						var a = w.Answer;
+						if (a.Values.Count >= d.MinUserCountToDisclose) {
+							writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = a.GetDoubleValues().Mean, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+						} else {
+							writer.WriteCell(new ExcelCell { Row = i, Column = j, BorderStyle = ExcelBorderStyle.Thin });
+						}
 					}
-//					i++;
 					j++;
 				}
-//				j++;
-//				i = k;
 				i++;
 			}
-//			i += departments.Count + 2;
 			i += 2;
 			OnForMerge(new MergeEventArgs { WeeksCount = weeks.Count });
 		}
@@ -296,28 +297,29 @@ namespace HW.Core.Util.Exporters
 //				j += 3;
 //				i = k;
 //			}
-//			j = 1;
+//			i += departments.Count + 2;
+			
 			i = k;
 			foreach (var d in departments) {
 				j = 1;
-				foreach (var a in d.Answers) {
-					if (a.Values.Count >= d.MinUserCountToDisclose) {
-						writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = a.Values.Count, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-						writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, Value = a.GetDoubleValues().Mean, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-						writer.WriteCell(new ExcelCell { Row = i, Column = j + 2, Value = a.GetDoubleValues().ConfidenceInterval, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-					} else {
-						writer.WriteCell(new ExcelCell { Row = i, Column = j });
-						writer.WriteCell(new ExcelCell { Row = i, Column = j + 1 });
-						writer.WriteCell(new ExcelCell { Row = i, Column = j + 2 });
+//				foreach (var a in d.Answers) {
+				foreach (var w in d.Weeks) {
+					if (w.HasAnswer) {
+						var a = w.Answer;
+						if (a.Values.Count >= d.MinUserCountToDisclose) {
+							writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = a.Values.Count, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+							writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, Value = a.GetDoubleValues().Mean, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+							writer.WriteCell(new ExcelCell { Row = i, Column = j + 2, Value = a.GetDoubleValues().ConfidenceInterval, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+						} else {
+							writer.WriteCell(new ExcelCell { Row = i, Column = j });
+							writer.WriteCell(new ExcelCell { Row = i, Column = j + 1 });
+							writer.WriteCell(new ExcelCell { Row = i, Column = j + 2 });
+						}
 					}
-//					i++;
 					j += 3;
 				}
-//				j += 3;
-//				i = k;
 				i++;
 			}
-//			i += departments.Count + 2;
 			i += 2;
 			OnForMerge(new MergeEventArgs { WeeksCount = weeks.Count * 3 });
 		}
@@ -367,28 +369,29 @@ namespace HW.Core.Util.Exporters
 //				j += 3;
 //				i = k;
 //			}
-//			j = 1;
+//			i += departments.Count + 2;
+			
 			i = k;
 			foreach (var d in departments) {
 				j = 1;
-				foreach (var a in d.Answers) {
-					if (a.Values.Count >= d.MinUserCountToDisclose) {
-						writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = a.Values.Count, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-						writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, Value = a.GetDoubleValues().Mean, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-						writer.WriteCell(new ExcelCell { Row = i, Column = j + 2, Value = a.GetDoubleValues().StandardDeviation, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-					} else {
-						writer.WriteCell(new ExcelCell { Row = i, Column = j, BorderStyle = ExcelBorderStyle.Thin });
-						writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, BorderStyle = ExcelBorderStyle.Thin });
-						writer.WriteCell(new ExcelCell { Row = i, Column = j + 2, BorderStyle = ExcelBorderStyle.Thin });
+//				foreach (var a in d.Answers) {
+				foreach (var w in d.Weeks) {
+					if (w.HasAnswer) {
+						var a = w.Answer;
+						if (a.Values.Count >= d.MinUserCountToDisclose) {
+							writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = a.Values.Count, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+							writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, Value = a.GetDoubleValues().Mean, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+							writer.WriteCell(new ExcelCell { Row = i, Column = j + 2, Value = a.GetDoubleValues().StandardDeviation, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+						} else {
+							writer.WriteCell(new ExcelCell { Row = i, Column = j, BorderStyle = ExcelBorderStyle.Thin });
+							writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, BorderStyle = ExcelBorderStyle.Thin });
+							writer.WriteCell(new ExcelCell { Row = i, Column = j + 2, BorderStyle = ExcelBorderStyle.Thin });
+						}
 					}
-//					i++;
 					j += 3;
 				}
-//				j += 3;
-//				i = k;
 				i++;
 			}
-//			i += departments.Count + 2;
 			i += 2;
 			OnForMerge(new MergeEventArgs { WeeksCount = weeks.Count * 3 });
 		}
@@ -435,26 +438,27 @@ namespace HW.Core.Util.Exporters
 //				j += 2;
 //				i = k;
 //			}
-//			j = 1;
+//			i += departments.Count + 2;
+			
 			i = k;
 			foreach (var d in departments) {
 				j = 1;
-				foreach (var a in d.Answers) {
-					if (a.Values.Count >= d.MinUserCountToDisclose) {
-						writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = a.Values.Count, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-						writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, Value = a.GetDoubleValues().Median, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-					} else {
-						writer.WriteCell(new ExcelCell { Row = i, Column = j, BorderStyle = ExcelBorderStyle.Thin });
-						writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, BorderStyle = ExcelBorderStyle.Thin });
+//				foreach (var a in d.Answers) {
+				foreach (var w in d.Weeks) {
+					if (w.HasAnswer) {
+						var a = w.Answer;
+						if (a.Values.Count >= d.MinUserCountToDisclose) {
+							writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = a.Values.Count, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+							writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, Value = a.GetDoubleValues().Median, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+						} else {
+							writer.WriteCell(new ExcelCell { Row = i, Column = j, BorderStyle = ExcelBorderStyle.Thin });
+							writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, BorderStyle = ExcelBorderStyle.Thin });
+						}
 					}
-//					i++;
 					j += 2;
 				}
-//				j += 2;
-//				i = k;
 				i++;
 			}
-//			i += departments.Count + 2;
 			i += 2;
 			OnForMerge(new MergeEventArgs { WeeksCount = weeks.Count * 2 });
 		}
@@ -539,36 +543,41 @@ namespace HW.Core.Util.Exporters
 //				j += 1;
 //				i = k;
 //			}
+//			i += (departments.Count * 9) + 2;
+			
 			foreach (var d in departments) {
 				j = 2;
-				foreach (var a in d.Answers) {
-					if (a.Values.Count >= d.MinUserCountToDisclose) {
-						var v = a.GetDoubleValues();
-						writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = v.Mean, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-						writer.WriteCell(new ExcelCell { Row = i + 1, Column = j, Value = v.StandardDeviation, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-						writer.WriteCell(new ExcelCell { Row = i + 2, Column = j, Value = v.ConfidenceInterval, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-						writer.WriteCell(new ExcelCell { Row = i + 3, Column = j, Value = v.LowerBox, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-						writer.WriteCell(new ExcelCell { Row = i + 4, Column = j, Value = v.Median, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-						writer.WriteCell(new ExcelCell { Row = i + 5, Column = j, Value = v.UpperBox, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-						writer.WriteCell(new ExcelCell { Row = i + 6, Column = j, Value = a.Values.Count, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-						writer.WriteCell(new ExcelCell { Row = i + 7, Column = j, Value = v.LowerWhisker, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-						writer.WriteCell(new ExcelCell { Row = i + 8, Column = j, Value = v.UpperWhisker, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
-					} else {
-						writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
-						writer.WriteCell(new ExcelCell { Row = i + 1, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
-						writer.WriteCell(new ExcelCell { Row = i + 2, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
-						writer.WriteCell(new ExcelCell { Row = i + 3, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
-						writer.WriteCell(new ExcelCell { Row = i + 4, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
-						writer.WriteCell(new ExcelCell { Row = i + 5, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
-						writer.WriteCell(new ExcelCell { Row = i + 6, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
-						writer.WriteCell(new ExcelCell { Row = i + 7, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
-						writer.WriteCell(new ExcelCell { Row = i + 8, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
+//				foreach (var a in d.Answers) {
+				foreach (var w in d.Weeks) {
+					if (w.HasAnswer) {
+						var a = w.Answer;
+						if (a.Values.Count >= d.MinUserCountToDisclose) {
+							var v = a.GetDoubleValues();
+							writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = v.Mean, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+							writer.WriteCell(new ExcelCell { Row = i + 1, Column = j, Value = v.StandardDeviation, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+							writer.WriteCell(new ExcelCell { Row = i + 2, Column = j, Value = v.ConfidenceInterval, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+							writer.WriteCell(new ExcelCell { Row = i + 3, Column = j, Value = v.LowerBox, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+							writer.WriteCell(new ExcelCell { Row = i + 4, Column = j, Value = v.Median, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+							writer.WriteCell(new ExcelCell { Row = i + 5, Column = j, Value = v.UpperBox, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+							writer.WriteCell(new ExcelCell { Row = i + 6, Column = j, Value = a.Values.Count, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+							writer.WriteCell(new ExcelCell { Row = i + 7, Column = j, Value = v.LowerWhisker, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+							writer.WriteCell(new ExcelCell { Row = i + 8, Column = j, Value = v.UpperWhisker, BorderStyle = ExcelBorderStyle.Thin, HorizontalAlignment = ExcelHorizontalAlignment.Center });
+						} else {
+							writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
+							writer.WriteCell(new ExcelCell { Row = i + 1, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
+							writer.WriteCell(new ExcelCell { Row = i + 2, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
+							writer.WriteCell(new ExcelCell { Row = i + 3, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
+							writer.WriteCell(new ExcelCell { Row = i + 4, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
+							writer.WriteCell(new ExcelCell { Row = i + 5, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
+							writer.WriteCell(new ExcelCell { Row = i + 6, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
+							writer.WriteCell(new ExcelCell { Row = i + 7, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
+							writer.WriteCell(new ExcelCell { Row = i + 8, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
+						}
 					}
 					j += 1;
 				}
 				i += 9;
 			}
-//			i += (departments.Count * 9) + 2;
 			i += 2;
 			OnForMerge(new MergeEventArgs { WeeksCount = weeks.Count + 1 });
 		}

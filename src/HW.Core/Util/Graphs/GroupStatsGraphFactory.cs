@@ -682,8 +682,11 @@ namespace HW.Core.Util.Graphs
 							}
 //							if (a.Values.Count >= i.MinUserCountToDisclose) {
 //								weeks[GetBottomString(groupBy, a.DT, cx, "")].Add(a);
-								i.Answers.Add(a);
 //							}
+							var x = i.FindWeek(GetBottomString(groupBy, a.DT, cx, ""));
+							if (x != null) {
+								x.Answer = a;
+							}
 							lastDT = a.DT;
 							cx++;
 						}
@@ -866,7 +869,7 @@ namespace HW.Core.Util.Graphs
 //			if (groupBy == 0) {
 //				groupBy = 2;
 //			}
-//			
+//
 //			string groupByQuery = GroupFactory.GetGroupByQuery(groupBy);
 //			int minDT = 0;
 //			int maxDT = 0;
@@ -879,22 +882,22 @@ namespace HW.Core.Util.Graphs
 //				minDT = answer.DummyValue2;
 //				maxDT = answer.DummyValue3;
 //			}
-//			
+//
 //			cx = 0;
-//			
+//
 //			var generatedWeeks = GetWeeks(minDT, maxDT, groupBy);
 //			foreach (var k in generatedWeeks.Keys) {
 //				weeks.Add(k, generatedWeeks[k]);
 //			}
-//			
+//
 //			if (hasGrouping) {
 //				int count = 0;
 //				string extraDesc = "";
-//				
+//
 //				var departments = GetSponsorAdminSponsorDepartments(grouping, sponsorAdmin, sponsor, departmentIDs, departmentRepo);
-//				
+//
 //				departmentsWithQuery.AddRange(GroupFactory.GetDepartmentsWithJoinQuery(grouping, sponsor, projectRoundUnit, departmentIDs, ref extraDesc, questionRepo, departments));
-//				
+//
 //				ReportPartComponent rpc = reportRepo.ReadComponentByPartAndLanguage(reportPart.Id, langID);
 //				if (rpc != null) {
 //					int bx = 0;
@@ -937,7 +940,7 @@ namespace HW.Core.Util.Graphs
 //							lastDT++;
 //							cx++;
 //						}
-//						
+//
 //						if (a.CountV >= reportPart.RequiredAnswerCount) {
 //						}
 //						lastDT = a.DT;
@@ -988,6 +991,11 @@ namespace HW.Core.Util.Graphs
 				if (rpc != null) {
 					int bx = 0;
 					foreach(var i in departmentsWithQuery) {
+						
+						foreach (var k in weeks.Keys) {
+							i.Weeks.Add(new Week(k));
+						}
+						
 						cx = 1;
 						int lastDT = minDT - 1;
 						var answers = answerRepo.FindByQuestionAndOptionJoinedAndGrouped2(i.Query, groupByQuery, rpc.WeightedQuestionOption.Question.Id, rpc.WeightedQuestionOption.Option.Id, dateFrom.Year, dateTo.Year, dateFrom.Month, dateTo.Month);
@@ -1003,8 +1011,11 @@ namespace HW.Core.Util.Graphs
 //								if (count == 1) {
 //								}
 //								weeks[GetBottomString(groupBy, a.DT, cx, "")].Add(a);
-								i.Answers.Add(a);
 //							}
+							var x = i.FindWeek(GetBottomString(groupBy, a.DT, cx, ""));
+							if (x != null) {
+								x.Answer = a;
+							}
 							lastDT = a.DT;
 							cx++;
 						}
@@ -1122,8 +1133,8 @@ namespace HW.Core.Util.Graphs
 						departmentRepo.FindBySponsorOrderedBySortStringIn(sponsor.Id, departmentIDs, sponsor.MinUserCountToDisclose);
 					break;
 				case Grouping.BackgroundVariable:
-					departments = sponsorAdmin != null ? 
-						departmentRepo.FindBySponsorWithSponsorAdmin(sponsor.Id, sponsorAdmin.Id, sponsor.MinUserCountToDisclose) : 
+					departments = sponsorAdmin != null ?
+						departmentRepo.FindBySponsorWithSponsorAdmin(sponsor.Id, sponsorAdmin.Id, sponsor.MinUserCountToDisclose) :
 						departmentRepo.FindBySponsorOrderedBySortString(sponsor.Id, sponsor.MinUserCountToDisclose);
 					break;
 			}

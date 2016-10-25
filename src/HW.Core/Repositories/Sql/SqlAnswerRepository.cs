@@ -939,7 +939,7 @@ GROUP BY a.ProjectRoundUserID, {1}(a.EndDT)",
 				monthFrom,
 				monthTo
 			);
-			Db.sendMail2("ian.escarro@gmail.com", "SQL Script", query);
+//			Db.sendMail2("ian.escarro@gmail.com", "SQL Script", query);
 			var answers = new List<Answer>();
 			using (SqlDataReader rs = Db.rs(query, "eFormSqlconnection")) {
 				if (rs.Read()) {
