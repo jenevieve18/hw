@@ -197,11 +197,16 @@ namespace HW.Core.Models
 		{
 			if (Password == null || Password == "") {
 				return notActivated;
-			} else if (LoginDays == -1) {
+//			} else if (LoginDays == -1) {
+			} else if (HaveNotLoggedIn) {
 				return notOnRecord;
 			} else {
 				return string.Format("{0} {1}", LoginDays, days);
 			}
+		}
+		
+		public bool HaveNotLoggedIn {
+			get { return LoginDays == -1; }
 		}
 		
 		public override string ToString()

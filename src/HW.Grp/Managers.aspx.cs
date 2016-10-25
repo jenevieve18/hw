@@ -15,12 +15,13 @@ namespace HW.Grp
 {
 	public partial class Managers : System.Web.UI.Page
 	{
-		protected IList<SponsorAdmin> sponsorAdmins;
-		protected int sortFirstName;
-        protected int sortLastName;
 		ManagerService service;
         string sort;
         SqlUserRepository userRepository = new SqlUserRepository();
+        
+        protected IList<SponsorAdmin> sponsorAdmins;
+		protected int sortFirstName;
+        protected int sortLastName;
         protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
 		public Managers() : this(new ManagerService(new SqlManagerFunctionRepository(), new SqlSponsorRepository(), new SqlSponsorAdminRepository()))

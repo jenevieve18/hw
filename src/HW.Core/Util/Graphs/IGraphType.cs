@@ -77,21 +77,17 @@ namespace HW.Core.Util.Graphs
 
 //			int i = 0;
 //			decimal sum = 0;
-			Series s = series[0];
 //			foreach (Bar b in bars) {
-			foreach (var p in s.Points) {
 //				i++;
 //				sum += (decimal)p.Y;
 //				Graph.drawBar(s.Color, i, p.Y);
 //				Graph.drawBottomString(p.Description, i, true);
-				Graph.drawColorExplBox(s.Description, s.Color, s.X, s.Y);
-				Graph.drawBar(s.Color, p.X, (float)p.Values.Mean);
 //				Graph.drawBottomString(p.Description, p.X, true);
 //				if (b.HasReference) {
 //					Graph.drawReference(i, b.Reference);
 //				}
 //				Graph.drawReference(i, 12);
-			}
+//			}
 //			foreach (int l in referenceLines) {
 //				drawReferenceLine(l, " = riktvärde");
 //			}
@@ -99,6 +95,13 @@ namespace HW.Core.Util.Graphs
 //				Graph.drawBar(4, ++i, Convert.ToInt32(Math.Round((tot - sum) / tot * 100M, 0)));
 //				Graph.drawBottomString("Inget svar", i, true);
 //			}
+			if (series.Count > 0) {
+				Series s = series[0];
+				foreach (var p in s.Points) {
+					Graph.drawColorExplBox(s.Description, s.Color, s.X, s.Y);
+					Graph.drawBar(s.Color, p.X, (float)p.Values.Mean);
+				}
+			}
 		}
 	}
 	
@@ -108,18 +111,17 @@ namespace HW.Core.Util.Graphs
 		
 		public void Draw(List<Series> series)
 		{
-            if (series.Count > 0)
-            {
-                Series s = series[0];
-                Graph.drawColorExplBox(s.Description, s.Color, s.X, s.Y);
-                foreach (PointV p in s.Points)
-                {
-                    HWList l = p.Values;
-                    Graph.DrawWhiskers2(s.Color, (int)p.X, (int)l.UpperWhisker, (int)l.LowerWhisker);
-                    Graph.DrawBar2(s.Color, (int)p.X, (int)l.LowerBox, (int)l.UpperBox);
-                    Graph.DrawMedian((int)p.X, (int)l.Median);
-                }
-            }
+			if (series.Count > 0) {
+				Series s = series[0];
+				Graph.drawColorExplBox(s.Description, s.Color, s.X, s.Y);
+				foreach (PointV p in s.Points)
+				{
+					HWList l = p.Values;
+					Graph.DrawWhiskers2(s.Color, (int)p.X, (int)l.UpperWhisker, (int)l.LowerWhisker);
+					Graph.DrawBar2(s.Color, (int)p.X, (int)l.LowerBox, (int)l.UpperBox);
+					Graph.DrawMedian((int)p.X, (int)l.Median);
+				}
+			}
 		}
 	}
 	
@@ -129,13 +131,15 @@ namespace HW.Core.Util.Graphs
 		
 		public void Draw(List<Series> series)
 		{
-			Series s = series[0];
-			Graph.drawColorExplBox(s.Description, s.Color, s.X, s.Y);
-			foreach (PointV p in s.Points) {
-				HWList l = p.Values;
-				Graph.DrawWhiskers2(s.Color, (int)p.X, (int)l.NerdUpperWhisker, (int)l.NerdLowerWhisker);
-				Graph.DrawBar2(s.Color, (int)p.X, (int)l.LowerBox, (int)l.UpperBox);
-				Graph.DrawMedian((int)p.X, (int)l.Median);
+			if (series.Count > 0) {
+				Series s = series[0];
+				Graph.drawColorExplBox(s.Description, s.Color, s.X, s.Y);
+				foreach (PointV p in s.Points) {
+					HWList l = p.Values;
+					Graph.DrawWhiskers2(s.Color, (int)p.X, (int)l.NerdUpperWhisker, (int)l.NerdLowerWhisker);
+					Graph.DrawBar2(s.Color, (int)p.X, (int)l.LowerBox, (int)l.UpperBox);
+					Graph.DrawMedian((int)p.X, (int)l.Median);
+				}
 			}
 		}
 	}
