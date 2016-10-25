@@ -680,9 +680,10 @@ namespace HW.Core.Util.Graphs
 								lastDT++;
 								cx++;
 							}
-							if (a.Values.Count >= i.MinUserCountToDisclose) {
-								weeks[GetBottomString(groupBy, a.DT, cx, "")].Add(a);
-							}
+//							if (a.Values.Count >= i.MinUserCountToDisclose) {
+//								weeks[GetBottomString(groupBy, a.DT, cx, "")].Add(a);
+								i.Answers.Add(a);
+//							}
 							lastDT = a.DT;
 							cx++;
 						}
@@ -858,93 +859,95 @@ namespace HW.Core.Util.Graphs
 			return g;
 		}
 		
-		public void GetWeightedQuestionOptionReportPartGraphForExcelWriter(ReportPart reportPart, int langID, bool hasGrouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ProjectRoundUnit projectRoundUnit, int grouping, int groupBy, int plot, DateTime dateFrom, DateTime dateTo, List<IDepartment> departmentsWithQuery, Dictionary<string, List<IAnswer>> weeks)
-		{
-			int cx = reportPart.Components.Capacity;
-			if (groupBy == 0) {
-				groupBy = 2;
-			}
-			
-			string groupByQuery = GroupFactory.GetGroupByQuery(groupBy);
-			int minDT = 0;
-			int maxDT = 0;
-			if (plot == PlotType.BoxPlotMinMax) {
-			} else {
-			}
-			Answer answer = answerRepo.ReadByGroup(groupByQuery, dateFrom.Year, dateTo.Year, projectRoundUnit.SortString, dateFrom.Month, dateTo.Month);
-			if (answer != null) {
-				cx = answer.DummyValue1 + 3;
-				minDT = answer.DummyValue2;
-				maxDT = answer.DummyValue3;
-			}
-			
-			cx = 0;
-			
-			var generatedWeeks = GetWeeks(minDT, maxDT, groupBy);
-			foreach (var k in generatedWeeks.Keys) {
-				weeks.Add(k, generatedWeeks[k]);
-			}
-			
-			if (hasGrouping) {
-				int count = 0;
-				string extraDesc = "";
-				
-				var departments = GetSponsorAdminSponsorDepartments(grouping, sponsorAdmin, sponsor, departmentIDs, departmentRepo);
-				
-				departmentsWithQuery.AddRange(GroupFactory.GetDepartmentsWithJoinQuery(grouping, sponsor, projectRoundUnit, departmentIDs, ref extraDesc, questionRepo, departments));
-				
-				ReportPartComponent rpc = reportRepo.ReadComponentByPartAndLanguage(reportPart.Id, langID);
-				if (rpc != null) {
-					int bx = 0;
-					foreach(var i in departmentsWithQuery) {
-						cx = 1;
-						int lastDT = minDT - 1;
-						var answers = answerRepo.FindByQuestionAndOptionJoinedAndGrouped2(i.Query, groupByQuery, rpc.WeightedQuestionOption.Question.Id, rpc.WeightedQuestionOption.Option.Id, dateFrom.Year, dateTo.Year, dateFrom.Month, dateTo.Month);
-						foreach (var a in answers) {
-							if (a.DT < minDT) {
-								continue;
-							}
-							while (lastDT + 1 < a.DT) {
-								lastDT++;
-								cx++;
-							}
-							if (a.Values.Count >= i.MinUserCountToDisclose) {
-								if (count == 1) {
-								}
-								weeks[GetBottomString(groupBy, a.DT, cx, "")].Add(a);
-							} else {
-								weeks[GetBottomString(groupBy, a.DT, cx, "")].Add(new Answer());
-							}
-							lastDT = a.DT;
-							cx++;
-						}
-						bx++;
-					}
-				}
-			} else {
-				int bx = 0;
-				foreach (ReportPartComponent c in reportRepo.FindComponentsByPartAndLanguage2(reportPart.Id, langID)) {
-					cx = 1;
-					int lastDT = minDT - 1;
-					var answers = answerRepo.FindByQuestionAndOptionGrouped(groupByQuery, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, dateFrom.Year, dateTo.Year, projectRoundUnit.SortString, dateFrom.Month, dateTo.Month);
-					foreach (Answer a in answers) {
-						if (a.DT < minDT) {
-							continue;
-						}
-						while (lastDT + 1 < a.DT) {
-							lastDT++;
-							cx++;
-						}
-						
-						if (a.CountV >= reportPart.RequiredAnswerCount) {
-						}
-						lastDT = a.DT;
-						cx++;
-					}
-					bx++;
-				}
-			}
-		}
+		#region
+//		public void GetWeightedQuestionOptionReportPartGraphForExcelWriter(ReportPart reportPart, int langID, bool hasGrouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ProjectRoundUnit projectRoundUnit, int grouping, int groupBy, int plot, DateTime dateFrom, DateTime dateTo, List<IDepartment> departmentsWithQuery, Dictionary<string, List<IAnswer>> weeks)
+//		{
+//			int cx = reportPart.Components.Capacity;
+//			if (groupBy == 0) {
+//				groupBy = 2;
+//			}
+//			
+//			string groupByQuery = GroupFactory.GetGroupByQuery(groupBy);
+//			int minDT = 0;
+//			int maxDT = 0;
+//			if (plot == PlotType.BoxPlotMinMax) {
+//			} else {
+//			}
+//			Answer answer = answerRepo.ReadByGroup(groupByQuery, dateFrom.Year, dateTo.Year, projectRoundUnit.SortString, dateFrom.Month, dateTo.Month);
+//			if (answer != null) {
+//				cx = answer.DummyValue1 + 3;
+//				minDT = answer.DummyValue2;
+//				maxDT = answer.DummyValue3;
+//			}
+//			
+//			cx = 0;
+//			
+//			var generatedWeeks = GetWeeks(minDT, maxDT, groupBy);
+//			foreach (var k in generatedWeeks.Keys) {
+//				weeks.Add(k, generatedWeeks[k]);
+//			}
+//			
+//			if (hasGrouping) {
+//				int count = 0;
+//				string extraDesc = "";
+//				
+//				var departments = GetSponsorAdminSponsorDepartments(grouping, sponsorAdmin, sponsor, departmentIDs, departmentRepo);
+//				
+//				departmentsWithQuery.AddRange(GroupFactory.GetDepartmentsWithJoinQuery(grouping, sponsor, projectRoundUnit, departmentIDs, ref extraDesc, questionRepo, departments));
+//				
+//				ReportPartComponent rpc = reportRepo.ReadComponentByPartAndLanguage(reportPart.Id, langID);
+//				if (rpc != null) {
+//					int bx = 0;
+//					foreach(var i in departmentsWithQuery) {
+//						cx = 1;
+//						int lastDT = minDT - 1;
+//						var answers = answerRepo.FindByQuestionAndOptionJoinedAndGrouped2(i.Query, groupByQuery, rpc.WeightedQuestionOption.Question.Id, rpc.WeightedQuestionOption.Option.Id, dateFrom.Year, dateTo.Year, dateFrom.Month, dateTo.Month);
+//						foreach (var a in answers) {
+//							if (a.DT < minDT) {
+//								continue;
+//							}
+//							while (lastDT + 1 < a.DT) {
+//								lastDT++;
+//								cx++;
+//							}
+//							if (a.Values.Count >= i.MinUserCountToDisclose) {
+//								if (count == 1) {
+//								}
+//								weeks[GetBottomString(groupBy, a.DT, cx, "")].Add(a);
+//							} else {
+//								weeks[GetBottomString(groupBy, a.DT, cx, "")].Add(new Answer());
+//							}
+//							lastDT = a.DT;
+//							cx++;
+//						}
+//						bx++;
+//					}
+//				}
+//			} else {
+//				int bx = 0;
+//				foreach (ReportPartComponent c in reportRepo.FindComponentsByPartAndLanguage2(reportPart.Id, langID)) {
+//					cx = 1;
+//					int lastDT = minDT - 1;
+//					var answers = answerRepo.FindByQuestionAndOptionGrouped(groupByQuery, c.WeightedQuestionOption.Question.Id, c.WeightedQuestionOption.Option.Id, dateFrom.Year, dateTo.Year, projectRoundUnit.SortString, dateFrom.Month, dateTo.Month);
+//					foreach (Answer a in answers) {
+//						if (a.DT < minDT) {
+//							continue;
+//						}
+//						while (lastDT + 1 < a.DT) {
+//							lastDT++;
+//							cx++;
+//						}
+//						
+//						if (a.CountV >= reportPart.RequiredAnswerCount) {
+//						}
+//						lastDT = a.DT;
+//						cx++;
+//					}
+//					bx++;
+//				}
+//			}
+//		}
+		#endregion
 		
 		public void GetWeightedQuestionOptionReportPartGraphForExcelWriter2(ReportPart reportPart, int langID, bool hasGrouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ProjectRoundUnit projectRoundUnit, int grouping, int groupBy, int plot, DateTime dateFrom, DateTime dateTo, List<IDepartment> departmentsWithQuery, Dictionary<string, List<IAnswer>> weeks)
 		{

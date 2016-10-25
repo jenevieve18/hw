@@ -24,7 +24,7 @@ namespace HW.Grp.Tests.Util
 			int groupBy = 7;
 			
 			DateTime dateFrom = new DateTime(2012, 1, 1);
-			DateTime dateTo = new DateTime(2012, 1, 1);
+			DateTime dateTo = new DateTime(2013, 1, 1);
 			
 			int langID = 2;
 
@@ -35,7 +35,7 @@ namespace HW.Grp.Tests.Util
 			int sponsorAdminID = -1;
 			int sponsorID = 83;
 			string departmentIDs = "0,927,929,930";
-			int plot = PlotType.BoxPlot;
+			int plot = PlotType.Line;
 //			string type = "xls";
 			
 			bool hasGrouping = true;
