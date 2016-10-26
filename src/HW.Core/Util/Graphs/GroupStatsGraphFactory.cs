@@ -1300,7 +1300,7 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 				if (p != null) {
 					Series s1 = new Series { Description = r1, Color = 4, X = 300, Y = 20 };
 					
-					var d1 = new Department { Name = r1 };
+					var d1 = new Department { Name = r1, MinUserCountToDisclose = r.RequiredAnswerCount };
 					departments.Add(d1);
 					
 					foreach (var k in weeks.Keys) {
@@ -1330,7 +1330,7 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 					if (rnds2 != "") {
 						Series s2 = new Series { Description = r2, Color = 5, X = 600, Y = 20 };
 						
-						var d2 = new Department { Name = r2 };
+						var d2 = new Department { Name = r2, MinUserCountToDisclose = r.RequiredAnswerCount };
 						departments.Add(d2);
 						
 						foreach (var k in weeks.Keys) {

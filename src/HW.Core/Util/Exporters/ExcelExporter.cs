@@ -243,6 +243,8 @@ namespace HW.Core.Util.Exporters
 						} else {
 							writer.WriteCell(new ExcelCell { Row = i, Column = j, BorderStyle = ExcelBorderStyle.Thin });
 						}
+					} else {
+						writer.WriteCell(new ExcelCell { Row = i, Column = j, BorderStyle = ExcelBorderStyle.Thin });
 					}
 					j++;
 				}
@@ -315,6 +317,10 @@ namespace HW.Core.Util.Exporters
 							writer.WriteCell(new ExcelCell { Row = i, Column = j + 1 });
 							writer.WriteCell(new ExcelCell { Row = i, Column = j + 2 });
 						}
+					} else {
+						writer.WriteCell(new ExcelCell { Row = i, Column = j });
+						writer.WriteCell(new ExcelCell { Row = i, Column = j + 1 });
+						writer.WriteCell(new ExcelCell { Row = i, Column = j + 2 });
 					}
 					j += 3;
 				}
@@ -387,6 +393,10 @@ namespace HW.Core.Util.Exporters
 							writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, BorderStyle = ExcelBorderStyle.Thin });
 							writer.WriteCell(new ExcelCell { Row = i, Column = j + 2, BorderStyle = ExcelBorderStyle.Thin });
 						}
+					} else {
+						writer.WriteCell(new ExcelCell { Row = i, Column = j, BorderStyle = ExcelBorderStyle.Thin });
+						writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, BorderStyle = ExcelBorderStyle.Thin });
+						writer.WriteCell(new ExcelCell { Row = i, Column = j + 2, BorderStyle = ExcelBorderStyle.Thin });
 					}
 					j += 3;
 				}
@@ -454,6 +464,9 @@ namespace HW.Core.Util.Exporters
 							writer.WriteCell(new ExcelCell { Row = i, Column = j, BorderStyle = ExcelBorderStyle.Thin });
 							writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, BorderStyle = ExcelBorderStyle.Thin });
 						}
+					} else {
+						writer.WriteCell(new ExcelCell { Row = i, Column = j, BorderStyle = ExcelBorderStyle.Thin });
+						writer.WriteCell(new ExcelCell { Row = i, Column = j + 1, BorderStyle = ExcelBorderStyle.Thin });
 					}
 					j += 2;
 				}
@@ -573,6 +586,16 @@ namespace HW.Core.Util.Exporters
 							writer.WriteCell(new ExcelCell { Row = i + 7, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
 							writer.WriteCell(new ExcelCell { Row = i + 8, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
 						}
+					} else {
+						writer.WriteCell(new ExcelCell { Row = i, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
+						writer.WriteCell(new ExcelCell { Row = i + 1, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
+						writer.WriteCell(new ExcelCell { Row = i + 2, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
+						writer.WriteCell(new ExcelCell { Row = i + 3, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
+						writer.WriteCell(new ExcelCell { Row = i + 4, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
+						writer.WriteCell(new ExcelCell { Row = i + 5, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
+						writer.WriteCell(new ExcelCell { Row = i + 6, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
+						writer.WriteCell(new ExcelCell { Row = i + 7, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
+						writer.WriteCell(new ExcelCell { Row = i + 8, Column = j, Value = "", BorderStyle = ExcelBorderStyle.Thin });
 					}
 					j += 1;
 				}
