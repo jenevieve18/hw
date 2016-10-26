@@ -372,8 +372,8 @@ namespace HW.Grp
 				SponsorID.Text += string.Format(
                     @"
 <tr{0}>
-	<!--<td><a{1} href='default.aspx?SA=0&SKEY={2}{3}' target='sponsor{3}'>{4}</a></td>-->
-    <td><a{1} onclick='window.open(""default.aspx?SA=0&SKEY={2}{3}"", ""sponsor{3}"", ""width=1280,height=720"")'>{4}</a></td>
+	<td><a{1} href='default.aspx?SA=0&SKEY={2}{3}' target='sponsor{3}'>{4}</a></td>
+    <!--<td><a{1} onclick='window.open(""default.aspx?SA=0&SKEY={2}{3}"", ""sponsor{3}"", ""width=1280,height=720"")'>{4}</a></td>-->
 	<td>{5}</td>
 	<td>{6}</td>
 	<td>{7}</td>
