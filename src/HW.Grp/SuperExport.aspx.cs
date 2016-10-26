@@ -16,14 +16,13 @@ namespace HW.Grp
 	{
 		SqlReportRepository reportRepo = new SqlReportRepository();
 		SqlUserRepository userRepo = new SqlUserRepository();
-//		protected int lid = Language.ENGLISH;
+
 		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			HtmlHelper.RedirectIf(Session["SuperAdminID"] == null, "default.aspx", true);
+			//HtmlHelper.RedirectIf(Session["SuperAdminID"] == null, "default.aspx", true);
 
-//			int lid = ConvertHelper.ToInt32(Session["lid"], 2);
 			var userSession = userRepo.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
 			if (userSession != null) {
 				lid = userSession.Lang;
@@ -42,7 +41,6 @@ namespace HW.Grp
 			Response.ClearHeaders();
 			Response.ClearContent();
 			Response.ContentType = exporter.Type;
-//			HtmlHelper.AddHeaderIf(exporter.HasContentDisposition(p.CurrentLanguage.Subject), "content-disposition", exporter.GetContentDisposition(p.CurrentLanguage.Subject), Response);
 			HtmlHelper.AddHeaderIf(exporter.HasContentDisposition(p.SelectedReportPartLang.Subject), "content-disposition", exporter.GetContentDisposition(p.SelectedReportPartLang.Subject), Response);
 			
 			string path = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath;
@@ -84,22 +82,5 @@ namespace HW.Grp
 				(StrHelper.Str3(Request.QueryString["Plot"], ""))
 			);
 		}
-		
-//		void Write(object obj)
-//		{
-//			if (obj is MemoryStream) {
-//				Response.BinaryWrite(((MemoryStream)obj).ToArray());
-//				Response.End();
-//			} else if (obj is string) {
-//				Response.Write((string)obj);
-//			}
-//		}
-//		
-//		void AddHeaderIf(bool condition, string name, string value)
-//		{
-//			if (condition) {
-//				Response.AddHeader(name, value);
-//			}
-//		}
 	}
 }

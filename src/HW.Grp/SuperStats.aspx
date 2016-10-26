@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Grp.Master" AutoEventWireup="true" CodeBehind="SuperStats.aspx.cs" Inherits="HW.Grp.SuperStats" %>
 <%@ Import Namespace="HW.Grp" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
+<%@ Import Namespace="HW.Core.Models" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
 <script type="text/javascript">

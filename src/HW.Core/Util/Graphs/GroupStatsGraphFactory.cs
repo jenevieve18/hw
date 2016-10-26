@@ -957,7 +957,7 @@ namespace HW.Core.Util.Graphs
 //		}
 		#endregion
 		
-		public void GetWeightedQuestionOptionReportPartGraphForExcelWriter2(ReportPart reportPart, int langID, bool hasGrouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ProjectRoundUnit projectRoundUnit, int grouping, int groupBy, int plot, DateTime dateFrom, DateTime dateTo, List<IDepartment> departmentsWithQuery, Dictionary<string, List<IAnswer>> weeks)
+		public void GetWeightedQuestionOptionReportPartGraphForExcelWriter(ReportPart reportPart, int langID, bool hasGrouping, SponsorAdmin sponsorAdmin, Sponsor sponsor, string departmentIDs, ProjectRoundUnit projectRoundUnit, int grouping, int groupBy, int plot, DateTime dateFrom, DateTime dateTo, List<IDepartment> departmentsWithQuery, Dictionary<string, List<IAnswer>> weeks)
 		{
 			int cx = reportPart.Components.Capacity;
 			if (groupBy == 0) {
@@ -1092,7 +1092,7 @@ namespace HW.Core.Util.Graphs
 			} else if (reportPart.Type == ReportPartType.Index) {
 				GetIndexReportPartGraphForExcelWriter(reportPart, langID, hasGrouping, sponsorAdmin, sponsor, departmentIDs, projectRoundUnit, grouping, GB != 0 ? GB : GroupBy.TwoWeeksStartWithOdd, plot, dateFrom, dateTo, departments, weeks);
 			} else if (reportPart.Type == ReportPartType.WeightedQuestionOption) {
-				GetWeightedQuestionOptionReportPartGraphForExcelWriter2(reportPart, langID, hasGrouping, sponsorAdmin, sponsor, departmentIDs, projectRoundUnit, grouping, GB != 0 ? GB : GroupBy.TwoWeeksStartWithOdd, plot, dateFrom, dateTo, departments, weeks);
+				GetWeightedQuestionOptionReportPartGraphForExcelWriter(reportPart, langID, hasGrouping, sponsorAdmin, sponsor, departmentIDs, projectRoundUnit, grouping, GB != 0 ? GB : GroupBy.TwoWeeksStartWithOdd, plot, dateFrom, dateTo, departments, weeks);
 			}
 			
 			var plotter = GetPlotter(plot);
@@ -1272,7 +1272,6 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 					maxDT = answer.DummyValue3;
 				}
 				
-//				weeks = GetWeeks(minDT, maxDT, GB);
 				var generatedWeeks = GetWeeks(minDT, maxDT, GB);
 				foreach (var k in generatedWeeks.Keys) {
 					weeks.Add(k, generatedWeeks[k]);
@@ -1301,7 +1300,12 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 				if (p != null) {
 					Series s1 = new Series { Description = r1, Color = 4, X = 300, Y = 20 };
 					
-					departments.Add(new Department { Name = r1 });
+					var d1 = new Department { Name = r1 };
+					departments.Add(d1);
+					
+					foreach (var k in weeks.Keys) {
+						d1.Weeks.Add(new Week(k));
+					}
 					
 					cx = 1;
 					int lastDT = minDT - 1;
@@ -1313,7 +1317,11 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 						}
 						if (a.Values.Count >= r.RequiredAnswerCount) {
 							s1.Points.Add(new PointV { X = cx, Values = a.GetDoubleValues() });
-							weeks[GetBottomString(GB, a.DT, cx, "")].Add(a);
+//							weeks[GetBottomString(GB, a.DT, cx, "")].Add(a);
+						}
+						var x = d1.FindWeek(GetBottomString(GB, a.DT, cx, ""));
+						if (x != null) {
+							x.Answer = a;
 						}
 						lastDT = a.DT;
 						cx++;
@@ -1322,7 +1330,12 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 					if (rnds2 != "") {
 						Series s2 = new Series { Description = r2, Color = 5, X = 600, Y = 20 };
 						
-						departments.Add(new Department { Name = r2 });
+						var d2 = new Department { Name = r2 };
+						departments.Add(d2);
+						
+						foreach (var k in weeks.Keys) {
+							d2.Weeks.Add(new Week(k));
+						}
 
 						cx = 1;
 						lastDT = minDT - 1;
@@ -1333,7 +1346,11 @@ INNER JOIN healthWatch..Department HWd ON HWup.DepartmentID = HWd.DepartmentID A
 							}
 							if (a.Values.Count >= r.RequiredAnswerCount) {
 								s2.Points.Add(new PointV { X = cx, Values = a.GetDoubleValues() });
-								weeks[GetBottomString(GB, a.DT, cx, "")].Add(a);
+//								weeks[GetBottomString(GB, a.DT, cx, "")].Add(a);
+							}
+							var x = d2.FindWeek(GetBottomString(GB, a.DT, cx, ""));
+							if (x != null) {
+								x.Answer = a;
 							}
 							lastDT = a.DT;
 							cx++;
