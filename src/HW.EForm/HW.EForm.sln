@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW.EForm", "HW.EForm.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW.EForm.Tests", "..\HW.EForm.Tests\HW.EForm.Tests.csproj", "{BFC590D7-6CF0-4553-9C2F-2ECB8027869B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW.EForm.Core", "..\HW.EForm.Core\HW.EForm.Core.csproj", "{489C2456-EB4D-4EDA-A400-7E7EB7B20DC0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{BFC590D7-6CF0-4553-9C2F-2ECB8027869B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BFC590D7-6CF0-4553-9C2F-2ECB8027869B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BFC590D7-6CF0-4553-9C2F-2ECB8027869B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{489C2456-EB4D-4EDA-A400-7E7EB7B20DC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{489C2456-EB4D-4EDA-A400-7E7EB7B20DC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{489C2456-EB4D-4EDA-A400-7E7EB7B20DC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{489C2456-EB4D-4EDA-A400-7E7EB7B20DC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

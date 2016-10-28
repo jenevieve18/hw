@@ -24,12 +24,12 @@ namespace eform
 		protected Button Save;
 
 		int managerID = 0;
-		int projectRoundID = 0;
+		int projectRoundIDx = 0;
 
 		private void Page_Load(object sender, System.EventArgs e)
 		{
 			managerID = (HttpContext.Current.Request.QueryString["ManagerID"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["ManagerID"].ToString()) : 0);
-			projectRoundID = (HttpContext.Current.Request.QueryString["ProjectRoundID"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["ProjectRoundID"].ToString()) : 0);
+			projectRoundIDx = (HttpContext.Current.Request.QueryString["ProjectRoundID"] != null ? Convert.ToInt32(HttpContext.Current.Request.QueryString["ProjectRoundID"].ToString()) : 0);
 
 			Save.Click += new EventHandler(Save_Click);
 			ProjectRoundID.SelectedIndexChanged += new EventHandler(ProjectRoundID_SelectedIndexChanged);
@@ -50,24 +50,24 @@ namespace eform
 					}
 					rs.Close();
 
-					if(projectRoundID == 0)
+					if(projectRoundIDx == 0)
 					{
 						rs = Db.recordSet("SELECT TOP 1 ProjectRoundID, ShowAllUnits FROM ManagerProjectRound WHERE ManagerID = " + managerID);
 						if(rs.Read())
 						{
-							projectRoundID = rs.GetInt32(0);
-							ProjectRoundID.SelectedValue = projectRoundID.ToString();
+							projectRoundIDx = rs.GetInt32(0);
+							ProjectRoundID.SelectedValue = projectRoundIDx.ToString();
 							ShowCompleteOrg.Checked = !rs.IsDBNull(1);
 						}
 						rs.Close();
 					}
 					else
 					{
-						rs = Db.recordSet("SELECT ProjectRoundID, ShowAllUnits FROM ManagerProjectRound WHERE ProjectRoundID = " + projectRoundID + " AND ManagerID = " + managerID);
+						rs = Db.recordSet("SELECT ProjectRoundID, ShowAllUnits FROM ManagerProjectRound WHERE ProjectRoundID = " + projectRoundIDx + " AND ManagerID = " + managerID);
 						if(rs.Read())
 						{
-							projectRoundID = rs.GetInt32(0);
-							ProjectRoundID.SelectedValue = projectRoundID.ToString();
+							projectRoundIDx = rs.GetInt32(0);
+							ProjectRoundID.SelectedValue = projectRoundIDx.ToString();
 							ShowCompleteOrg.Checked = !rs.IsDBNull(1);
 						}
 						rs.Close();
@@ -79,15 +79,15 @@ namespace eform
 				while(rs.Read())
 				{
 					ProjectRoundID.Items.Add(new ListItem(rs.GetString(1) + " » " + rs.GetString(2), rs.GetInt32(0).ToString()));
-					if(projectRoundID == 0 && cx++ == 0)
+					if(projectRoundIDx == 0 && cx++ == 0)
 					{
-						projectRoundID = rs.GetInt32(0);
+						projectRoundIDx = rs.GetInt32(0);
 					}
 				}
 				rs.Close();
-				if(projectRoundID != 0)
+				if(projectRoundIDx != 0)
 				{
-					ProjectRoundID.SelectedValue = projectRoundID.ToString();
+					ProjectRoundID.SelectedValue = projectRoundIDx.ToString();
 				}
 
 				populateRound();
@@ -147,33 +147,33 @@ namespace eform
 				
 				bool hasUnits = false;
 				
-				Db.execute("DELETE FROM ManagerProjectRoundUnit WHERE ManagerID = " + managerID + " AND ProjectRoundID = " + projectRoundID);
-				OdbcDataReader rs = Db.recordSet("SELECT ProjectRoundUnitID FROM ProjectRoundUnit WHERE ProjectRoundID = " + projectRoundID);
+				Db.execute("DELETE FROM ManagerProjectRoundUnit WHERE ManagerID = " + managerID + " AND ProjectRoundID = " + projectRoundIDx);
+				OdbcDataReader rs = Db.recordSet("SELECT ProjectRoundUnitID FROM ProjectRoundUnit WHERE ProjectRoundID = " + projectRoundIDx);
 				while(rs.Read())
 				{
 					if(ProjectRoundUnitID.Items.FindByValue(rs.GetInt32(0).ToString()).Selected)
 					{
 						hasUnits = true;
-						Db.execute("INSERT INTO ManagerProjectRoundUnit (ManagerID, ProjectRoundID, ProjectRoundUnitID) VALUES (" + managerID + "," + projectRoundID + "," + rs.GetInt32(0) + ")");
+						Db.execute("INSERT INTO ManagerProjectRoundUnit (ManagerID, ProjectRoundID, ProjectRoundUnitID) VALUES (" + managerID + "," + projectRoundIDx + "," + rs.GetInt32(0) + ")");
 					}
 				}
 				rs.Close();
 				if(hasUnits)
 				{
-					rs = Db.recordSet("SELECT ManagerProjectRoundID FROM ManagerProjectRound WHERE ManagerID = " + managerID + " AND ProjectRoundID = " + projectRoundID);
+					rs = Db.recordSet("SELECT ManagerProjectRoundID FROM ManagerProjectRound WHERE ManagerID = " + managerID + " AND ProjectRoundID = " + projectRoundIDx);
 					if(rs.Read())
 					{
 						Db.execute("UPDATE ManagerProjectRound SET ShowAllUnits = " + (ShowCompleteOrg.Checked ? "1" : "NULL") + " WHERE ManagerProjectRoundID = " + rs.GetInt32(0));
 					}
 					else
 					{
-						Db.execute("INSERT INTO ManagerProjectRound (ManagerID,ProjectRoundID,ShowAllUnits) VALUES (" + managerID + "," + projectRoundID + "," + (ShowCompleteOrg.Checked ? "1" : "NULL") + ")");
+						Db.execute("INSERT INTO ManagerProjectRound (ManagerID,ProjectRoundID,ShowAllUnits) VALUES (" + managerID + "," + projectRoundIDx + "," + (ShowCompleteOrg.Checked ? "1" : "NULL") + ")");
 					}
 					rs.Close();
 				}
 				else
 				{
-					Db.execute("DELETE FROM ManagerProjectRound WHERE ManagerID = " + managerID + " AND ProjectRoundID = " + projectRoundID);
+					Db.execute("DELETE FROM ManagerProjectRound WHERE ManagerID = " + managerID + " AND ProjectRoundID = " + projectRoundIDx);
 				}
 				HttpContext.Current.Response.Redirect("managerSetup.aspx?ManagerID=" + managerID + "&ProjectRoundID=" +  Convert.ToInt32(ProjectRoundID.SelectedValue), true);
 			}
@@ -183,14 +183,14 @@ namespace eform
 		{
 			ProjectRoundUnitID.Items.Clear();
 
-			OdbcDataReader rs = Db.recordSet("SELECT ProjectRoundUnitID, dbo.cf_projectUnitTree(ProjectRoundUnitID,' » ') FROM ProjectRoundUnit WHERE ProjectRoundID = " + projectRoundID + " ORDER BY SortString");
+			OdbcDataReader rs = Db.recordSet("SELECT ProjectRoundUnitID, dbo.cf_projectUnitTree(ProjectRoundUnitID,' » ') FROM ProjectRoundUnit WHERE ProjectRoundID = " + projectRoundIDx + " ORDER BY SortString");
 			while(rs.Read())
 			{
 				ProjectRoundUnitID.Items.Add(new ListItem(rs.GetString(1), rs.GetInt32(0).ToString()));
 			}
 			rs.Close();
 
-			rs = Db.recordSet("SELECT ProjectRoundUnitID FROM ManagerProjectRoundUnit WHERE ManagerID = " + managerID + " AND ProjectRoundID = " + projectRoundID);
+			rs = Db.recordSet("SELECT ProjectRoundUnitID FROM ManagerProjectRoundUnit WHERE ManagerID = " + managerID + " AND ProjectRoundID = " + projectRoundIDx);
 			while(rs.Read())
 			{
 				if(ProjectRoundUnitID.Items.FindByValue(rs.GetInt32(0).ToString()) != null)
