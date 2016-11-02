@@ -47,7 +47,7 @@ COMMIT;",
 			return null;
 		}
 		
-		public void Save(Department d)
+		public override void Save(Department d)
 		{
 			string query = string.Format(
 				@"

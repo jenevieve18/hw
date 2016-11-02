@@ -34,12 +34,10 @@ namespace HW.Grp
 		string hiddenBqWhere = "";
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
-//		protected int lid;
 		SponsorAdmin sponsorAdmin;
 		int sponsorAdminID;
 		IAdmin sponsor;
 		SqlUserRepository userRepository = new SqlUserRepository();
-//		protected int lid = Language.ENGLISH;
 		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 
 		protected void Page_Load(object sender, EventArgs e)
@@ -53,7 +51,6 @@ namespace HW.Grp
 
 			HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Organization), "default.aspx", true);
 
-//			lid = ConvertHelper.ToInt32(Session["lid"], 2);
 			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
 			if (userSession != null) {
 				lid = userSession.Lang;
@@ -2223,7 +2220,7 @@ SELECT UserID
 FROM SponsorInvite
 WHERE SponsorID = {0} AND Email = '{1}'",
 					sponsorID,
-					Email.Text.Replace("'", "''")
+					Email.Text.Replace("'", "''").Trim()
 				);
 				rs = Db.rs(query);
 				if (rs.Read()) {

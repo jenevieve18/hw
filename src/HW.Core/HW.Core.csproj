@@ -54,6 +54,7 @@
     </Reference>
     <Reference Include="DocX">
       <HintPath>..\..\lib\DocX.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="EPPlus">
       <HintPath>..\..\lib\EPPlus.dll</HintPath>

@@ -16,12 +16,9 @@ namespace HW.Grp
 {
 	public partial class Exercise : System.Web.UI.Page
 	{
-//		IExerciseRepository exerciseRepository;
-//		ISponsorRepository sponsorRepository;
 		SqlExerciseRepository exerciseRepository = new SqlExerciseRepository();
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		
-//		protected int BX = 0;
 		protected int EAID;
 		protected string sortQS;
 		protected int ECID;
@@ -30,22 +27,9 @@ namespace HW.Grp
 		protected IList<HW.Core.Models.Exercise> exercises;
 		protected int sponsorID;
 		protected int sponsorAdminID;
-//		int AX = 0;
-//		protected int lid;
 		protected int SORTX;
 		SqlUserRepository userRepository = new SqlUserRepository();
-//		protected int lid = Language.ENGLISH;
 		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
-		
-//		public Exercise() : this(new SqlSponsorRepository(), new SqlExerciseRepository())
-//		{
-//		}
-//		
-//		public Exercise(ISponsorRepository sponsorRepository, IExerciseRepository exerciseRepository)
-//		{
-//			this.sponsorRepository = sponsorRepository;
-//			this.exerciseRepository = exerciseRepository;
-//		}
 		
 		public string AdditionalSortQuery {
 			get { return (EAID != 0 ? "&EAID=" + EAID : "") + (ECID != 0 ? "&ECID=" + ECID : ""); }
@@ -104,16 +88,15 @@ namespace HW.Grp
 				lid = userSession.Lang;
 			}
 
-			Index(
+			SetExercises(
 				ConvertHelper.ToInt32(Request.QueryString["EAID"]),
 				ConvertHelper.ToInt32(Request.QueryString["ECID"]),
-//				ConvertHelper.ToInt32(Session["lid"], 2),
 				lid,
 				ConvertHelper.ToInt32(Request.QueryString["SORT"])
 			);
 		}
 		
-		public void Index(int areaID, int categoryID, int lid, int sort)
+		public void SetExercises(int areaID, int categoryID, int lid, int sort)
 		{
 			this.EAID = areaID;
 			this.ECID = categoryID;
