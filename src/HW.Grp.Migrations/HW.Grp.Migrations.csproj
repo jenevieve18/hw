@@ -30,6 +30,9 @@
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Rooko.Core">
       <HintPath>..\HW.Grp\packages\Rooko.Core.dll.0.2\lib\net35\Rooko.Core.dll</HintPath>
@@ -55,7 +58,9 @@
     <Compile Include="CreateSponsorAdminExerciseDataInput.cs" />
     <Compile Include="CreateUserSession.cs" />
     <Compile Include="InsertMyExercisesManagerFunction.cs" />
-    <Compile Include="MainForm.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>

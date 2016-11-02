@@ -26,7 +26,7 @@ namespace HW.Grp.Tests.Views
 		[Test]
 		public void TestExercises()
 		{
-			v.Index(1, 1, 1, 1);
+			v.SetExercises(1, 1, 1, 1);
 		}
 		
 		[Test]
@@ -39,18 +39,18 @@ namespace HW.Grp.Tests.Views
 		public void TestAdditionalSortQuery()
 		{
 			Assert.AreEqual("", v.AdditionalSortQuery);
-			v.Index(1, 1, 1, 1);
+			v.SetExercises(1, 1, 1, 1);
 			Assert.AreEqual("&EAID=1&ECID=1", v.AdditionalSortQuery);
 		}
 		
 		[Test]
 		public void TestAreasAndCategories()
 		{
-			v.Index(1, 1, 1, 1);
+			v.SetExercises(1, 1, 1, 1);
 			Assert.IsTrue(v.HasSelectedArea);
 			Assert.IsTrue(v.HasSelectedCategory);
 			
-			v.Index(666, 666, 1, 1);
+			v.SetExercises(666, 666, 1, 1);
 			Assert.IsFalse(v.HasSelectedArea);
 			Assert.IsFalse(v.HasSelectedCategory);
 		}
