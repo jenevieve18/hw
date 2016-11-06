@@ -19,9 +19,9 @@ namespace HW.Grp
 		SqlExerciseRepository exerciseRepository = new SqlExerciseRepository();
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		
-		protected int EAID;
-		protected string sortQS;
-		protected int ECID;
+		protected int exerciseAreaID;
+		protected string sortQueryString;
+		protected int exerciseCategoryID;
 		protected IList<ExerciseCategoryLanguage> categories;
 		protected IList<ExerciseAreaLanguage> areas;
 		protected IList<HW.Core.Models.Exercise> exercises;
@@ -32,7 +32,7 @@ namespace HW.Grp
 		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
 		public string AdditionalSortQuery {
-			get { return (EAID != 0 ? "&EAID=" + EAID : "") + (ECID != 0 ? "&ECID=" + ECID : ""); }
+			get { return (exerciseAreaID != 0 ? "&EAID=" + exerciseAreaID : "") + (exerciseCategoryID != 0 ? "&ECID=" + exerciseCategoryID : ""); }
 		}
 		
 		public bool HasSelectedArea {
@@ -42,7 +42,7 @@ namespace HW.Grp
 		public ExerciseAreaLanguage SelectedArea {
 			get {
 				foreach (var a in areas) {
-					if (a.Area.Id == EAID) {
+					if (a.Area.Id == exerciseAreaID) {
 						return a;
 					}
 				}
@@ -57,7 +57,7 @@ namespace HW.Grp
 		public ExerciseCategoryLanguage SelectedCategory {
 			get {
 				foreach (var c in categories) {
-					if (c.Category.Id == ECID) {
+					if (c.Category.Id == exerciseCategoryID) {
 						return c;
 					}
 				}
@@ -81,7 +81,7 @@ namespace HW.Grp
 
 			SaveAdminSession(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Exercises, DateTime.Now);
 
-			sortQS = "&SORT=" + SORTX;
+			sortQueryString = "&SORT=" + SORTX;
 			
 			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
 			if (userSession != null) {
@@ -98,8 +98,8 @@ namespace HW.Grp
 		
 		public void SetExercises(int areaID, int categoryID, int lid, int sort)
 		{
-			this.EAID = areaID;
-			this.ECID = categoryID;
+			this.exerciseAreaID = areaID;
+			this.exerciseCategoryID = categoryID;
 			this.lid = lid;
 			this.SORTX = sort;
 			

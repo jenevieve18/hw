@@ -12,18 +12,18 @@ namespace HW.Core.Models
 		
         public string Script { get; set; }
         public int Status { get; set; }
-		public virtual string Image { get; set; }
-		public virtual ExerciseCategory Category { get; set; }
-		public virtual ExerciseArea Area { get; set; }
-		public virtual int SortOrder { get; set; }
-		public virtual int Minutes { get; set; }
-		public virtual int RequiredUserLevel { get; set; }
-		public virtual string ReplacementHead { get; set; }
-		public virtual IList<ExerciseLanguage> Languages { get; set; }
-		public virtual IList<ExerciseVariant> Variants { get; set; }
-		public virtual bool PrintOnBottom { get; set; }
+		public string Image { get; set; }
+		public ExerciseCategory Category { get; set; }
+		public ExerciseArea Area { get; set; }
+		public int SortOrder { get; set; }
+		public int Minutes { get; set; }
+		public int RequiredUserLevel { get; set; }
+		public string ReplacementHead { get; set; }
+		public IList<ExerciseLanguage> Languages { get; set; }
+		public IList<ExerciseVariant> Variants { get; set; }
+		public bool PrintOnBottom { get; set; }
 		
-		public virtual string AreaCategoryName {
+		public string AreaCategoryName {
 			get {
 				return string.Format("{0}{1}", Area.AreaName, Category.CategoryName != "" ? " - " + Category.CategoryName : "");
 			}
@@ -38,9 +38,9 @@ namespace HW.Core.Models
 			}
 		}
 		
-		public virtual ExerciseLanguage CurrentLanguage { get; set; }
-		public virtual ExerciseVariantLanguage CurrentVariant { get; set; }
-		public virtual ExerciseTypeLanguage CurrentType { get; set; }
+		public ExerciseLanguage CurrentLanguage { get; set; }
+		public ExerciseVariantLanguage CurrentVariant { get; set; }
+		public ExerciseTypeLanguage CurrentType { get; set; }
 		
 		public void AddLanguage(string name, string time, string teaser, int langID)
 		{
@@ -72,11 +72,11 @@ namespace HW.Core.Models
 			this.Languages = new List<ExerciseAreaLanguage>(languages);
 		}
 		
-		public virtual string Image { get; set; }
-		public virtual int SortOrder { get; set; }
-		public virtual IList<ExerciseAreaLanguage> Languages { get; set; }
+		public string Image { get; set; }
+		public int SortOrder { get; set; }
+		public IList<ExerciseAreaLanguage> Languages { get; set; }
 		
-		public virtual ExerciseAreaLanguage SelectedLanguage {
+		public ExerciseAreaLanguage SelectedLanguage {
 			get {
 				if (Languages != null && Languages.Count > 0) {
 					return Languages[0];
@@ -135,7 +135,7 @@ namespace HW.Core.Models
 			}
 		}
 		
-		public virtual string CategoryName {
+		public string CategoryName {
 			get {
 				if (SelectedLanguage != null) {
 					return SelectedLanguage.CategoryName;
@@ -229,10 +229,10 @@ namespace HW.Core.Models
 	
 	public class ExerciseTypeLanguage : BaseModel
 	{
-		public virtual ExerciseType Type { get; set; }
-		public virtual Language Language { get; set; }
-		public virtual string TypeName { get; set; }
-		public virtual string SubTypeName { get; set; }
+		public ExerciseType Type { get; set; }
+		public Language Language { get; set; }
+		public string TypeName { get; set; }
+		public string SubTypeName { get; set; }
 		
 		bool HasSubTypeName {
 			get { return SubTypeName != null && SubTypeName != ""; }
@@ -254,20 +254,20 @@ namespace HW.Core.Models
 	
 	public class ExerciseVariant : BaseModel
 	{
-		public virtual Exercise Exercise { get; set; }
-		public virtual ExerciseType Type { get; set; }
-		public virtual IList<ExerciseVariantLanguage> Languages { get; set; }
+		public Exercise Exercise { get; set; }
+		public ExerciseType Type { get; set; }
+		public IList<ExerciseVariantLanguage> Languages { get; set; }
 	}
 	
 	public class ExerciseVariantLanguage : BaseModel
 	{
-		public virtual ExerciseVariant Variant { get; set; }
-		public virtual string File { get; set; }
-		public virtual int Size { get; set; }
-		public virtual string Content { get; set; }
-		public virtual int ExerciseWindowX { get; set; }
-		public virtual int ExerciseWindowY { get; set; }
-		public virtual Language Language { get; set; }
+		public ExerciseVariant Variant { get; set; }
+		public string File { get; set; }
+		public int Size { get; set; }
+		public string Content { get; set; }
+		public int ExerciseWindowX { get; set; }
+		public int ExerciseWindowY { get; set; }
+		public Language Language { get; set; }
 	}
 	
 //	public class ExerciseDataInput : BaseModel

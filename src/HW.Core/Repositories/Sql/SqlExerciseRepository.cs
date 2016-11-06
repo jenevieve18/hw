@@ -24,9 +24,8 @@ WHERE ExerciseVariantLangID = @ExerciseVariantLangID";
 		public void UpdateExerciseScript(string script, int exerciseID)
 		{
 			string query = @"
-UPDATE dbo.Exercise
-   SET Script = @Script
- WHERE ExerciseID = @ExerciseID";
+UPDATE dbo.Exercise SET Script = @Script
+WHERE ExerciseID = @ExerciseID";
 			ExecuteNonQuery(query, "healthWatchSqlConnection",
 			                new SqlParameter("@Script", script),
 			                new SqlParameter("@ExerciseID", exerciseID));
@@ -35,9 +34,8 @@ UPDATE dbo.Exercise
 		public void UpdateExerciseVariantLanguageContent(string content, int exerciseVariantLangID)
 		{
 			string query = @"
-UPDATE dbo.ExerciseVariantLang
-   SET ExerciseContent = @ExerciseContent
- WHERE ExerciseVariantLangID = @ExerciseVariantLangID";
+UPDATE dbo.ExerciseVariantLang SET ExerciseContent = @ExerciseContent
+WHERE ExerciseVariantLangID = @ExerciseVariantLangID";
 			ExecuteNonQuery(query, "healthWatchSqlConnection",
 			                new SqlParameter("@ExerciseContent", content),
 			                new SqlParameter("@ExerciseVariantLangID", exerciseVariantLangID));
@@ -136,7 +134,7 @@ WHERE el.Lang = {0}",
 			string query = string.Format(
 				@"
 SELECT evl.ExerciseContent,
-evl.ExerciseVariantLangID
+	evl.ExerciseVariantLangID
 FROM dbo.SponsorAdminExercise sae
 INNER JOIN dbo.ExerciseVariantLang evl ON evl.ExerciseVariantLangID = sae.ExerciseVariantLangID
 INNER JOIN dbo.ExerciseVariant ev ON ev.ExerciseVariantID = evl.ExerciseVariantID
@@ -163,8 +161,8 @@ WHERE sae.SponsorAdminExerciseID = {0}",
 SELECT ExerciseVariantLangID
 FROM dbo.ExerciseVariantLang evl
 INNER JOIN dbo.ExerciseVariant ev ON ev.ExerciseVariantID = evl.ExerciseVariantID
-	AND ev.ExerciseID = @ExerciseID
-	AND evl.Lang = @Lang";
+AND ev.ExerciseID = @ExerciseID
+AND evl.Lang = @Lang";
 			int exerciseVariantLangID = 0;
 			using (var rs = ExecuteReader(
 				query, "healthWatchSqlConnection",
@@ -181,14 +179,14 @@ INNER JOIN dbo.ExerciseVariant ev ON ev.ExerciseVariantID = evl.ExerciseVariantI
 		{
 			string query = @"
 SELECT [ExerciseLangID]
-      ,[ExerciseID]
-      ,[Exercise]
-      ,[ExerciseTime]
-      ,[ExerciseTeaser]
-      ,[Lang]
-      ,[New]
-  FROM [healthWatch].[dbo].[ExerciseLang]
-  WHERE [ExerciseID] = @ExerciseID AND [Lang] = @Lang";
+  ,[ExerciseID]
+  ,[Exercise]
+  ,[ExerciseTime]
+  ,[ExerciseTeaser]
+  ,[Lang]
+  ,[New]
+FROM [healthWatch].[dbo].[ExerciseLang]
+WHERE [ExerciseID] = @ExerciseID AND [Lang] = @Lang";
 			ExerciseLanguage el = null;
 			using (SqlDataReader rs = ExecuteReader(
 				query,
