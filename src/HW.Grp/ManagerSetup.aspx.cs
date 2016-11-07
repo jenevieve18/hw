@@ -24,6 +24,8 @@ namespace HW.Grp
 		int sponsorAdminID = 0;
 		int sponsorID = 0;
 		
+		string sponsorAdminEmail = "";
+		
 		SqlUserRepository userRepo = new SqlUserRepository();
 
 		SqlDepartmentRepository departmentRepo = new SqlDepartmentRepository();
@@ -137,7 +139,10 @@ namespace HW.Grp
 					sponsorAdminID = Convert.ToInt32(Session["SponsorAdminID"]);
 					var a = sponsorRepo.ReadSponsorAdmin(sponsorID, sponsorAdminID, SAID);
 					if (a != null) {
-						sponsorAdminID = a.Id;
+                        sponsorAdminID = a.Id;
+
+                        sponsorAdminEmail = a.Email;
+
 						if (!IsPostBack) {
 							ReadOnly.Checked = a.ReadOnly;
 							SuperUser.Checked = a.SuperUser;
@@ -183,6 +188,18 @@ namespace HW.Grp
 		{
 			Response.Redirect("managers.aspx", true);
 		}
+		
+		bool SponsorAdminEmailHasDuplicate(string email, string previousEmail, int sponsorAdminID)
+		{
+//			return sponsorAdminRepo.SponsorAdminEmailExists(email, sponsorAdminID);
+			
+			if (email == previousEmail) {
+				return false;
+			} else {
+				var sponsorAdminEmailExists = sponsorAdminRepo.SponsorAdminEmailExists(email, sponsorAdminID);
+				return sponsorAdminEmailExists;
+			}
+		}
 
 		void Save_Click(object sender, EventArgs e)
 		{
@@ -202,7 +219,7 @@ namespace HW.Grp
 				a.Validate();
 				a.AddErrorIf(a.Name == "", R.Str(lid, "manager.name.required", "Sponsor admin name is required."));
 				a.AddErrorIf(a.Email == "", R.Str(lid, "manager.email.required", "Email address name is required."));
-				a.AddErrorIf(sponsorAdminRepo.SponsorAdminEmailExists(a.Email, sponsorAdminID), R.Str(lid, "manager.email.notunique", "Please choose a unique email address!"));
+				a.AddErrorIf(SponsorAdminEmailHasDuplicate(a.Email, sponsorAdminEmail, sponsorAdminID), R.Str(lid, "manager.email.notunique", "Please choose a unique email address!"));
 				if (!a.HasErrors) {
 					if (sponsorAdminID != 0) {
 						sponsorRepo.UpdateSponsorAdmin(a);
@@ -268,7 +285,7 @@ A manager account has been set up for you to the HealthWatch group administratio
 			body = body.Replace("<NAME>", Name.Text);
 			body = body.Replace("<LINK>", ConfigurationManager.AppSettings["grpURL"]);
 			body = body.Replace("<KEY>", uid);
-            string username = Usr.Text != "" ? R.Str(lid, "password.activate.username", "Your username is ") + Usr.Text : "";
+			string username = Usr.Text != "" ? R.Str(lid, "password.activate.username", "Your username is ") + Usr.Text : "";
 			body = body.Replace("<USERNAME>", username);
 			
 			new PasswordActivationLink().Send(Email.Text, uid, Name.Text, Usr.Text, subject, body);
