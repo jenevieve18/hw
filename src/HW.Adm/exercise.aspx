@@ -10,7 +10,7 @@
 		<table width="500" border="0" cellspacing="0" cellpadding="0">
 			<tr><td style="font-size:16px;" align="center">Exercises</td></tr>
 		</table>
-        <table style="margin:20px;" width="800" border="0" cellspacing="0" cellpadding="0">
+        <table style="margin:20px;" width="1000" border="0" cellspacing="0" cellpadding="0">
 		    <tr>
                 <td><i>Exercise</i>&nbsp;&nbsp;</td>
                 <td><i>Use count</i>&nbsp;&nbsp;</td>
