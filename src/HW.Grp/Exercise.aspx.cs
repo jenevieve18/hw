@@ -27,7 +27,7 @@ namespace HW.Grp
 		protected IList<HW.Core.Models.Exercise> exercises;
 		protected int sponsorID;
 		protected int sponsorAdminID;
-		protected int SORTX;
+		protected int sort;
 		SqlUserRepository userRepository = new SqlUserRepository();
 		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
@@ -81,7 +81,7 @@ namespace HW.Grp
 
 			SaveAdminSession(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Exercises, DateTime.Now);
 
-			sortQueryString = "&SORT=" + SORTX;
+			sortQueryString = "&SORT=" + sort;
 			
 			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
 			if (userSession != null) {
@@ -101,7 +101,7 @@ namespace HW.Grp
 			this.exerciseAreaID = areaID;
 			this.exerciseCategoryID = categoryID;
 			this.lid = lid;
-			this.SORTX = sort;
+			this.sort = sort;
 			
 			if (!IsPostBack) {
 				areas = exerciseRepository.FindAreas(areaID, lid - 1);

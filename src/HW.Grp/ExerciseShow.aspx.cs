@@ -71,8 +71,7 @@ namespace HW.Grp
 		[WebMethod]
 		public static string SaveOrUpdateSponsorAdminExercise(string[] dataInputs, int sponsorAdminID, int exerciseVariantLangID, int sponsorAdminExerciseID)
 		{
-			try
-			{
+			try {
 				var r = new SqlSponsorRepository();
 				if (sponsorAdminExerciseID <= 0) {
 					r.SaveSponsorAdminExercise(dataInputs, sponsorAdminID, exerciseVariantLangID);
@@ -80,9 +79,23 @@ namespace HW.Grp
 					r.UpdateSponsorAdminExercise(dataInputs, sponsorAdminExerciseID);
 				}
 				return "Exercise data for this manager is saved.";
+			} catch (Exception ex) {
+				throw ex;
 			}
-			catch (Exception ex)
-			{
+		}
+
+		[WebMethod]
+		public static string SaveOrUpdateSponsorAdminExercise2(SponsorAdminExerciseDataInput[] dataInputs, int sponsorAdminID, int exerciseVariantLangID, int sponsorAdminExerciseID)
+		{
+			try {
+				var r = new SqlSponsorRepository();
+				if (sponsorAdminExerciseID <= 0) {
+					r.SaveSponsorAdminExercise2(dataInputs, sponsorAdminID, exerciseVariantLangID);
+				} else {
+					r.UpdateSponsorAdminExercise2(dataInputs, sponsorAdminExerciseID);
+				}
+				return "Exercise data for this manager is saved.";
+			} catch (Exception ex) {
 				throw ex;
 			}
 		}
@@ -96,29 +109,19 @@ namespace HW.Grp
 				var inputs = r.FindSponsorAdminExerciseDataInputs(sponsorAdminExerciseID);
 				var data = new List<object>();
 				foreach (var i in inputs) {
-					data.Add(new { content = i.Content });
+					data.Add(
+						new {
+							ValueText = i.ValueText,
+							ValueInt = i.ValueInt,
+                            Type = i.Type
+						}
+					);
 				}
 				return data;
 			} catch (Exception ex) {
 				throw ex;
 			}
 		}
-		
-//		public void Show(int exerciseVariantLangId, int userId, int userProfileId)
-//		{
-//			if (!IsPostBack) {
-//				er.SaveStats(exerciseVariantLangId, userId, userProfileId);
-//			}
-//			evl = er.ReadExerciseVariant(exerciseVariantLangId);
-//			if (evl != null) {
-//				replacementHead = evl.Variant.Exercise.ReplacementHead;
-//				if (evl.Variant.Type.HasContent() && evl.File != null) {
-//					Response.Redirect("exercise/" + evl.File, true);
-//				} else {
-//					exercise.Controls.Add(GetExerciseTypeControl(evl));
-//				}
-//			}
-//		}
 		
 		public void Show(ExerciseVariantLanguage evl)
 		{
@@ -132,24 +135,8 @@ namespace HW.Grp
 			}
 		}
 		
-//		public void SetSponsor(int sponsorId)
-//		{
-//			this.sponsorId = sponsorId;
-//			var s = sr.ReadSponsor3(sponsorId);
-//			if (s != null) {
-//				if (s.HasSuperSponsor) {
-//					logos += "<img src='img/partner/" + s.SuperSponsor.Id + ".gif'/>";
-//				}
-//				if (s.HasSuperSponsor && s.SuperSponsor.Languages[0].Header != "") {
-//					headerText += " - " + s.SuperSponsor.Languages[0].Header;
-//				}
-//			}
-//		}
-		
 		public void SetSponsor(Sponsor s)
 		{
-//			this.sponsorId = sponsorId;
-//			var s = sr.ReadSponsor3(sponsorId);
 			if (s != null) {
 				if (s.HasSuperSponsor) {
 					logos += "<img src='img/partner/" + s.SuperSponsor.Id + ".gif'/>";

@@ -402,10 +402,21 @@ namespace HW.Core.Models
 	public class SponsorAdminExerciseDataInput : BaseModel
 	{
 		public SponsorAdminExercise SponsorAdminExercise { get; set; }
-		public string Content { get; set; }
+		public string ValueText { get; set; }
 		public int Order { get; set; }
+		public int ValueInt { get; set; }
+		public int Type { get; set; }
 	}
 	
+//	public class SponsorAdminExerciseDataInputType
+//	{
+//		public const int SingleChoice = 1;
+//		public const int FreeText = 2;
+//		public const int MultiChoice = 3;
+//		public const int Numeric = 4;
+//		public const int VAS = 9;
+//	}
+//	
 	public class SuperAdmin : BaseModel
 	{
 		public string Name { get; set; }

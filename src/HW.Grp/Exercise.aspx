@@ -138,10 +138,9 @@
 					<%= R.Str(lid, "exercises.sorting", "Exercises - Sorting:")%>
                 </span>
 			    <div class="forms">
-                    <%-- <asp:PlaceHolder ID="Sort" runat="server" /> --%>
-                    <%= HtmlHelper.AnchorSpan(R.Str(lid, "random", "Random"), SORTX == 0 ? "javascript:;" : "exercise.aspx?SORT=0" + AdditionalSortQuery + "#filter", SORTX == 0 ? "class='active'" : "")%>
-                    <%= HtmlHelper.AnchorSpan(R.Str(lid, "popularity", "Popularity"), SORTX == 1 ? "javascript:;" : "exercise.aspx?SORT=1" + AdditionalSortQuery + "#filter", SORTX == 1 ? "class='active'" : "")%>
-                    <%= HtmlHelper.AnchorSpan(R.Str(lid, "alphabetical", "Alphabethical"), SORTX == 2 ? "javascript:;" : "exercise.aspx?SORT=2" + AdditionalSortQuery + "#filter", SORTX == 2 ? "class='active'" : "")%>
+                    <%= HtmlHelper.AnchorSpan(R.Str(lid, "random", "Random"), sort == 0 ? "javascript:;" : "exercise.aspx?SORT=0" + AdditionalSortQuery + "#filter", sort == 0 ? "class='active'" : "")%>
+                    <%= HtmlHelper.AnchorSpan(R.Str(lid, "popularity", "Popularity"), sort == 1 ? "javascript:;" : "exercise.aspx?SORT=1" + AdditionalSortQuery + "#filter", sort == 1 ? "class='active'" : "")%>
+                    <%= HtmlHelper.AnchorSpan(R.Str(lid, "alphabetical", "Alphabethical"), sort == 2 ? "javascript:;" : "exercise.aspx?SORT=2" + AdditionalSortQuery + "#filter", sort == 2 ? "class='active'" : "")%>
 			    </div>
 			</div>
 		</div>
@@ -192,6 +191,5 @@
         <% } %>
 		<div class="bottom"></div>
 	</div>
-
 
 </asp:Content>

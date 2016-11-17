@@ -105,9 +105,9 @@ namespace HW.Grp.Tests.Views
 				},
 				DataInputs = new System.Collections.Generic.List<SponsorAdminExerciseDataInput>(
 					new[] {
-						new SponsorAdminExerciseDataInput { Content = "Hello world" },
-						new SponsorAdminExerciseDataInput { Content = "World hello" },
-						new SponsorAdminExerciseDataInput { Content = "World hello otot!" },
+						new SponsorAdminExerciseDataInput { ValueText = "Hello world" },
+						new SponsorAdminExerciseDataInput { ValueText = "World hello" },
+						new SponsorAdminExerciseDataInput { ValueText = "World hello otot!" },
 					}
 				)
 			};

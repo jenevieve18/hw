@@ -109,7 +109,7 @@ namespace HW.Core.Util.Exporters
 				
 				string contents = "<ul>";
 				foreach (var c in sae.DataInputs) {
-					contents += string.Format("<li>{0}</li>", c.Content);
+					contents += string.Format("<li>{0}</li>", c.ValueText);
 				}
 				evl.Content = evl.Content.Replace("<ul class=\"sortable\">", contents);
 				
