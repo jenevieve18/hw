@@ -232,8 +232,8 @@ WHERE SponsorAdminExerciseId = @SponsorAdminExerciseId"
 			
 			query = string.Format(
 				@"
-INSERT SponsorAdminExerciseDataInput(SponsorAdminExerciseID, ValueText, [Order])
-VALUES(@SponsorAdminExerciseID, @ValueText, @Order)");
+INSERT SponsorAdminExerciseDataInput(SponsorAdminExerciseID, ValueText, [Order], ValueInt)
+VALUES(@SponsorAdminExerciseID, @ValueText, @Order, @Type)");
 			int i = 0;
 			foreach (var data in dataInputs) {
 				ExecuteNonQuery(
@@ -241,7 +241,9 @@ VALUES(@SponsorAdminExerciseID, @ValueText, @Order)");
 					"healthWatchSqlConnection",
 					new SqlParameter("@SponsorAdminExerciseID", sponsorAdminExerciseId),
 					new SqlParameter("@ValueText", data.ValueText),
-					new SqlParameter("@Order", i++)
+					new SqlParameter("@Order", i++),
+					new SqlParameter("@ValueInt", data.ValueInt),
+					new SqlParameter("@Type", data.Type)
 				);
 			}
 		}
