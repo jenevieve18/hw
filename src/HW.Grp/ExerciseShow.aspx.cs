@@ -63,7 +63,6 @@ namespace HW.Grp
 				if (!IsPostBack) {
 					er.SaveStats(exerciseVariantLangId, userId, userProfileId);
 				}
-//				Show(exerciseVariantLangId, userId, userProfileId);
 				Show(er.ReadExerciseVariant(exerciseVariantLangId));
 			}
 		}

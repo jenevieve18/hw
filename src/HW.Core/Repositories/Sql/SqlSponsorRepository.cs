@@ -232,8 +232,8 @@ WHERE SponsorAdminExerciseId = @SponsorAdminExerciseId"
 			
 			query = string.Format(
 				@"
-INSERT SponsorAdminExerciseDataInput(SponsorAdminExerciseID, ValueText, [Order], ValueInt)
-VALUES(@SponsorAdminExerciseID, @ValueText, @Order, @Type)");
+INSERT SponsorAdminExerciseDataInput(SponsorAdminExerciseID, ValueText, [Order], ValueInt, Type)
+VALUES(@SponsorAdminExerciseID, @ValueText, @Order, @ValueInt, @Type)");
 			int i = 0;
 			foreach (var data in dataInputs) {
 				ExecuteNonQuery(

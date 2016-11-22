@@ -7,20 +7,43 @@ function getData(elements) {
 }
 
 function getData2(elements) {
-  var data = [];
-  $(elements).each(function(i, field) {
-    if ($(field).is(':checkbox')) {
-      if ($(field).attr('checked')) {
-        data.push({ ValueInt: field.value, Type: 3 });
-      } else {
-        data.push({ ValueInt: 0, Type: 3 });
-      }
-    } else {
-      data.push({ ValueText: field.value, Type: 2 });
-    }
-  });
-  return data;
+	var data = [];
+	$(elements).each(function(i, field) {
+		if ($(field).is(':checkbox')) {
+			if ($(field).is(':checked')) {
+				data.push({ ValueInt: 1, Type: 3 });
+			} else {
+				data.push({ ValueInt: 0, Type: 3 });
+			}
+    } else if ($(field).is(':radio')) {
+      if ($(field).is(':checked')) {
+				data.push({ ValueInt: 1, Type: 1 });
+			} else {
+				data.push({ ValueInt: 0, Type: 1 });
+			}
+		} else {
+			data.push({ ValueText: field.value, Type: 2 });
+		}
+	});
+	return data;
 }
+
+// function getData2(elements) {
+//   var data = [];
+//   $(elements).each(function(i, field) {
+//     if ($(field).is(':checkbox')) {
+//       console.log($(field).attr('checked'));
+//       if ($(field).attr('checked')) {
+//         data.push({ ValueInt: 1, Type: 3 });
+//       } else {
+//         data.push({ ValueInt: 0, Type: 3 });
+//       }
+//     } else {
+//       data.push({ ValueText: field.value, Type: 2 });
+//     }
+//   });
+//   return data;
+// }
 
 var SponsorRepository = function() {};
 

@@ -1202,7 +1202,7 @@ ORDER BY ses.SponsorExtendedSurveyID",
 							Feedback = new HW.Core.Models.Feedback {
 								Id = DbHelper.GetInt32(rs, 3)
 							},
-							RequiredUserCount = DbHelper.GetInt32(rs, 4),
+							RequiredUserCount = DbHelper.GetInt32(rs, 4, 10),
 							PreviousProjectRound = new ProjectRound { Id = DbHelper.GetInt32(rs, 5) },
 							RoundText = DbHelper.GetString(rs, 6),
 							RoundText2 = DbHelper.GetString(rs, 7),
@@ -1580,8 +1580,8 @@ d.SponsorID = {4} ORDER BY d.SortString",
 				for (int i = 0; i < EScount; i++) {
 					int idx = 12 + 6 * i;
 					ESanswerCount[i] += rs.GetInt32(idx + 1);
-//					int rac = (rs.IsDBNull(idx + 3) ? Convert.ToInt32(ESattr.Split(',')[i].Split(':')[1]) : rs.GetInt32(idx + 3));
-					int rac = DbHelper.GetInt32(rs, idx + 3, extendedSurveys[i].RequiredUserCount);
+					int rac = (rs.IsDBNull(idx + 3) ? Convert.ToInt32(ESattr.Split(',')[i].Split(':')[1]) : rs.GetInt32(idx + 3));
+//					int rac = DbHelper.GetInt32(rs, idx + 3, extendedSurveys[i].RequiredUserCount);
 					
 					if (rs.IsDBNull(idx + 4)) {
 						OrgTree.Text += string.Format(
