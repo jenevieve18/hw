@@ -2213,7 +2213,7 @@ AND (si.Email LIKE '%{3}%'{4})",
 
 			string query = "";
 			if (userID == 0) {
-				#region create new sponsor invite, if email not already in org
+				#region Create new sponsor invite, if email not already in org
 				query = string.Format(
 					@"
 SELECT UserID
@@ -2650,7 +2650,7 @@ DepartmentID = {3} WHERE SponsorInviteID = {4}",
 				}
 			}
 			if (!exists) {
-				#region update SponsorInviteBQ
+				#region Update SponsorInviteBQ
 				query = string.Format(
 					@"
 SELECT BQ.BQID,
