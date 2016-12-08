@@ -3018,8 +3018,9 @@ namespace HW.WebService
 							try
 							{
 								int answerInt = Convert.ToInt32(answer);
-								int oldAnswerInt = execIntScal("SELECT TOP 1 ValueInt FROM UserProfileBQ WHERE BQID = " + questionID + " AND UserProfileID = " + userProfileID);
-								if (oldAnswerInt != 0 && oldAnswerInt != answerInt)
+								int oldAnswerInt = execIntScal("SELECT TOP 1 ValueInt FROM UserProfileBQ WHERE BQID = " + questionID + " AND UserProfileID = " + userProfileID, int.MinValue);
+//								if (oldAnswerInt != 0 && oldAnswerInt != answerInt)
+								if (oldAnswerInt != int.MinValue && oldAnswerInt != answerInt)
 								{
 									userProfileID = duplicateUserProfile(userID, userProfileID, questionID);
 									oldAnswerInt = 0;
@@ -3405,11 +3406,20 @@ namespace HW.WebService
 		}
 		private int execIntScal(string sqlString, string con)
 		{
+			return execIntScal(sqlString, con, 0);
+		}
+		private int execIntScal(string sqlString, int defaultValue)
+		{
+			return execIntScal(sqlString, "SqlConnection", defaultValue);
+		}
+		private int execIntScal(string sqlString, string con, int defaultValue)
+		{
 			SqlConnection dataConnection = new SqlConnection(ConfigurationManager.ConnectionStrings[con].ConnectionString);
 			dataConnection.Open();
 			SqlCommand dataCommand = new SqlCommand(sqlString, dataConnection);
 			object o = dataCommand.ExecuteScalar();
-			int ret = 0;
+//			int ret = 0;
+			int ret = defaultValue;
 			if(o != null)
 				ret = Convert.ToInt32(o.ToString());
 			dataConnection.Close();
