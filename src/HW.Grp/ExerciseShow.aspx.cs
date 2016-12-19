@@ -98,6 +98,22 @@ namespace HW.Grp
 				throw ex;
 			}
 		}
+
+		[WebMethod]
+		public static string SaveOrUpdateSponsorAdminExercise3(SponsorAdminExerciseDataInput[] dataInputs, int sponsorAdminID, int exerciseVariantLangID, int sponsorAdminExerciseID)
+		{
+			try {
+				var r = new SqlSponsorRepository();
+				if (sponsorAdminExerciseID <= 0) {
+					r.SaveSponsorAdminExercise3(dataInputs, sponsorAdminID, exerciseVariantLangID);
+				} else {
+					r.UpdateSponsorAdminExercise3(dataInputs, sponsorAdminExerciseID);
+				}
+				return "Exercise data for this manager is saved.";
+			} catch (Exception ex) {
+				throw ex;
+			}
+		}
 		
 		[WebMethod]
 		[ScriptMethod(UseHttpGet = true)]
@@ -112,9 +128,37 @@ namespace HW.Grp
 						new {
 							ValueText = i.ValueText,
 							ValueInt = i.ValueInt,
-                            Type = i.Type
+							Type = i.Type
 						}
 					);
+				}
+				return data;
+			} catch (Exception ex) {
+				throw ex;
+			}
+		}
+		
+		[WebMethod]
+		[ScriptMethod(UseHttpGet = true)]
+		public static IList<object> FindSponsorAdminExerciseDataInputs2(int sponsorAdminExerciseID)
+		{
+			try {
+				var r = new SqlSponsorRepository();
+				var inputs = r.FindSponsorAdminExerciseDataInputs2(sponsorAdminExerciseID);
+				var data = new List<object>();
+				foreach (var i in inputs) {
+					var d = new {
+                        Id = i.Id,
+						ValueText = i.ValueText,
+						ValueInt = i.ValueInt,
+						Type = i.Type,
+                        Components = new List<object>()
+					};
+                    foreach (var c in i.Components)
+                    {
+                        d.Components.Add(new { Id = c.Id, ValueText = c.ValueText, ValueInt = c.ValueInt });
+                    }
+					data.Add(d);
 				}
 				return data;
 			} catch (Exception ex) {

@@ -9,7 +9,6 @@ namespace HW.Core.Repositories.Sql
 	public class SqlSponsorAdminRepository : BaseSqlRepository<SponsorAdmin>, IExtendedSurveyRepository, ISponsorAdminRepository
 	{
 		public void SavePassword(string password, string uid)
-        //public void SavePassword(string password, string uniqueKey, int sponsorAdminID)
 		{
             string query = string.Format(
                 @"
@@ -22,39 +21,7 @@ WHERE UniqueKey = @UniqueKey");
                 new SqlParameter("@Password", password),
                 new SqlParameter("@UniqueKey", uid)
             );
-//            string query = string.Format(
-//                @"
-//UPDATE SponsorAdmin SET Pas = @Password,
-//UniqueKey = @UniqueKey,
-//UniqueKeyUsed = 1
-//WHERE SponsorAdminID = @SponsorAdminID");
-//            ExecuteNonQuery(
-//                query,
-//                "healthWatchSqlConnection",
-//                new SqlParameter("@Password", password),
-//                new SqlParameter("@UniqueKey", uniqueKey),
-//                new SqlParameter("@SponsorAdminID", sponsorAdminID)
-//            );
 		}
-		
-//		public void SaveAdminExerciseDataInputs(string[] dataInputs, int sponsorAdminID, int exerciseVariantLangID)
-//		{
-//			string query = string.Format(
-//				@"
-//INSERT SponsorAdminExerciseDataInput([Content], SponsorAdminID, [Order], ExerciseVariantLangID)
-//VALUES(@Content, @SponsorAdminID, @Order, @ExerciseVariantLangID)");
-//			int i = 0;
-//			foreach (var data in dataInputs) {
-//				ExecuteNonQuery(
-//					query,
-//					"healthWatchSqlConnection",
-//					new SqlParameter("@Content", data),
-//					new SqlParameter("@SponsorAdminID", sponsorAdminID),
-//					new SqlParameter("@Order", i++),
-//					new SqlParameter("@ExerciseVariantLangID", exerciseVariantLangID)
-//				);
-//			}
-//		}
 		
 		public void UpdateUniqueKey(string uid, int sponsorAdminID)
 		{
@@ -376,35 +343,6 @@ AND a.SponsorAdminID = {0}",
 				return d1;
 			}
 		}
-		
-//		public IList<SponsorAdminExerciseDataInput> FindSponsorAdminExerciseDataInputs(int sponsorAdminID, int exerciseVariantLangID)
-//		{
-//			string query = string.Format(
-//				@"
-//SELECT SponsorAdminExerciseDataInputID,
-//	[Content],
-//	SponsorAdminID,
-//	[Order]
-//FROM SponsorAdminExerciseDataInput
-//WHERE SponsorAdminID = {0}
-//AND ExerciseVariantLangID = {1}",
-//				sponsorAdminID,
-//				exerciseVariantLangID
-//			);
-//			var inputs = new List<SponsorAdminExerciseDataInput>();
-//			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
-//				while (rs.Read()) {
-//					var i = new SponsorAdminExerciseDataInput {
-//						Id = GetInt32(rs, 0),
-//						Content = GetString(rs, 1),
-//						SponsorAdmin = new SponsorAdmin { Id = GetInt32(rs, 2) },
-//						Order = GetInt32(rs, 3)
-//					};
-//					inputs.Add(i);
-//				}
-//			}
-//			return inputs;
-//		}
 		
 		public IList<IExtendedSurvey> FindExtendedSurveysBySponsorAdmin(int sponsorID, int sponsorAdminID)
 		{

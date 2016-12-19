@@ -21,7 +21,7 @@ namespace HW.Core.Tests
 			var session = new Dictionary<string, object>();
 			session["UserID"] = null;
 			//Register(session, "D322060F10971");
-			Register(session, "B64B215D28851");
+			Register(session, "756E6B8D28863");
 		}
 		
 		void Register(Dictionary<string, object> session, string invite)

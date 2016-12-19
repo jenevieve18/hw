@@ -182,6 +182,56 @@ VALUES(@SponsorAdminExerciseID, @ValueText, @Order, @ValueInt, @Type)");
 			}
 		}
 		
+		public void SaveSponsorAdminExercise3(SponsorAdminExerciseDataInput[] dataInputs, int sponsorAdminID, int exerciseVariantLangID)
+		{
+			string query = string.Format(
+				@"
+INSERT INTO SponsorAdminExercise(SponsorAdminID, ExerciseVariantLangID, Date)
+VALUES(@SponsorAdminID, @ExerciseVariantLangID, GETDATE());
+SELECT IDENT_CURRENT('SponsorAdminExercise');"
+			);
+			int sponsorAdminExerciseID = ConvertHelper.ToInt32(
+				ExecuteScalar(
+					query,
+					"healthWatchSqlConnection",
+					new SqlParameter("@SponsorAdminID", sponsorAdminID),
+					new SqlParameter("@ExerciseVariantLangID", exerciseVariantLangID)
+				)
+			);
+			query = string.Format(
+				@"
+INSERT SponsorAdminExerciseDataInput(SponsorAdminExerciseID, ValueText, [Order], ValueInt, Type)
+VALUES(@SponsorAdminExerciseID, @ValueText, @Order, @ValueInt, @Type);
+SELECT IDENT_CURRENT('SponsorAdminExerciseDataInput')"
+			);
+			int i = 0;
+			foreach (var data in dataInputs) {
+				int sponsorAdminExerciseDataInputID = ConvertHelper.ToInt32(
+					ExecuteScalar(
+						query,
+						"healthWatchSqlConnection",
+						new SqlParameter("@SponsorAdminExerciseID", sponsorAdminExerciseID),
+						new SqlParameter("@ValueText", data.ValueText),
+						new SqlParameter("@Order", i++),
+						new SqlParameter("@ValueInt", data.ValueInt),
+						new SqlParameter("@Type", data.Type)
+					)
+				);
+				foreach (var c in data.Components) {
+					ExecuteNonQuery(
+						@"
+INSERT INTO SponsorAdminExerciseDataInputComponent(SponsorAdminExerciseDataInputID, ValueText, SortOrder, ValueInt)
+VALUES(@SponsorAdminExerciseDataInputID, @ValueText, @SortOrder, @ValueInt)",
+						"healthWatchSqlConnection",
+						new SqlParameter("@SponsorAdminExerciseDataInputID", sponsorAdminExerciseDataInputID),
+						new SqlParameter("@ValueText", c.ValueText),
+						new SqlParameter("@SortOrder", c.SortOrder),
+						new SqlParameter("@ValueInt", c.ValueInt)
+					);
+				}
+			}
+		}
+		
 		public void UpdateSponsorAdminExercise(string[] dataInputs, int sponsorAdminExerciseId)
 		{
 			string query = string.Format(
@@ -226,10 +276,8 @@ WHERE SponsorAdminExerciseId = @SponsorAdminExerciseId"
 				"healthWatchSqlConnection",
 				new SqlParameter("@SponsorAdminExerciseId", sponsorAdminExerciseId)
 			);
-			
 			query = string.Format("DELETE FROM SponsorAdminExerciseDataInput WHERE SponsorAdminExerciseID = @SponsorAdminExerciseID", sponsorAdminExerciseId);
 			ExecuteNonQuery(query, "healthWatchSqlConnection", new SqlParameter("@SponsorAdminExerciseID", sponsorAdminExerciseId));
-			
 			query = string.Format(
 				@"
 INSERT SponsorAdminExerciseDataInput(SponsorAdminExerciseID, ValueText, [Order], ValueInt, Type)
@@ -245,6 +293,54 @@ VALUES(@SponsorAdminExerciseID, @ValueText, @Order, @ValueInt, @Type)");
 					new SqlParameter("@ValueInt", data.ValueInt),
 					new SqlParameter("@Type", data.Type)
 				);
+			}
+		}
+		
+		public void UpdateSponsorAdminExercise3(SponsorAdminExerciseDataInput[] dataInputs, int sponsorAdminExerciseId)
+		{
+			string query = string.Format(
+				@"
+UPDATE SponsorAdminExercise SET DATE = GETDATE()
+WHERE SponsorAdminExerciseId = @SponsorAdminExerciseId"
+			);
+			ExecuteNonQuery(
+				query,
+				"healthWatchSqlConnection",
+				new SqlParameter("@SponsorAdminExerciseId", sponsorAdminExerciseId)
+			);
+			query = string.Format("DELETE FROM SponsorAdminExerciseDataInput WHERE SponsorAdminExerciseID = @SponsorAdminExerciseID", sponsorAdminExerciseId);
+			ExecuteNonQuery(query, "healthWatchSqlConnection", new SqlParameter("@SponsorAdminExerciseID", sponsorAdminExerciseId));
+			query = string.Format(
+				@"
+INSERT SponsorAdminExerciseDataInput(SponsorAdminExerciseID, ValueText, [Order], ValueInt, Type)
+VALUES(@SponsorAdminExerciseID, @ValueText, @Order, @ValueInt, @Type);
+SELECT IDENT_CURRENT('SponsorAdminExerciseDataInput')");
+			int i = 0;
+			foreach (var data in dataInputs) {
+                ExecuteNonQuery(string.Format("DELETE FROM SponsorAdminExerciseDataInputComponent WHERE SponsorAdminExerciseDataInputID = {0}", data.Id), "healthWatchSqlConnection");
+				int sponsorAdminExerciseDataInputID = ConvertHelper.ToInt32(
+					ExecuteScalar(
+						query,
+						"healthWatchSqlConnection",
+						new SqlParameter("@SponsorAdminExerciseID", sponsorAdminExerciseId),
+						new SqlParameter("@ValueText", data.ValueText),
+						new SqlParameter("@Order", i++),
+						new SqlParameter("@ValueInt", data.ValueInt),
+						new SqlParameter("@Type", data.Type)
+					)
+				);
+				foreach (var c in data.Components) {
+					ExecuteNonQuery(
+						@"
+INSERT INTO SponsorAdminExerciseDataInputComponent(SponsorAdminExerciseDataInputID, ValueText, SortOrder, ValueInt)
+VALUES(@SponsorAdminExerciseDataInputID, @ValueText, @SortOrder, @ValueInt)",
+						"healthWatchSqlConnection",
+						new SqlParameter("@SponsorAdminExerciseDataInputID", sponsorAdminExerciseDataInputID),
+						new SqlParameter("@ValueText", c.ValueText),
+						new SqlParameter("@SortOrder", c.SortOrder),
+						new SqlParameter("@ValueInt", c.ValueInt)
+					);
+				}
 			}
 		}
 		
@@ -416,34 +512,69 @@ WHERE sae.SponsorAdminExerciseID = {0}",
 			return inputs;
 		}
 		
-		/*public IList<SponsorExerciseDataInput> FindSponsorExerciseDataInputs(int sponsorID, int exerciseVariantLangID)
+		public IList<SponsorAdminExerciseDataInput> FindSponsorAdminExerciseDataInputs2(int sponsorAdminExerciseID)
 		{
 			string query = string.Format(
 				@"
-SELECT SponsorExerciseDataInputID,
-	[Content],
-	SponsorID,
-	[Order]
-FROM SponsorExerciseDataInput
-WHERE SponsorID = {0}
-AND ExerciseVariantLangID = {1}",
-				sponsorID,
-				exerciseVariantLangID
+SELECT saed.SponsorAdminExerciseDataInputID,
+	saed.ValueText,
+	saed.SponsorAdminExerciseID,
+	saed.[Order],
+	saed.ValueInt,
+	saed.Type
+FROM SponsorAdminExerciseDataInput saed
+INNER JOIN SponsorAdminExercise sae ON sae.SponsorAdminExerciseID = saed.SponsorAdminExerciseID
+WHERE sae.SponsorAdminExerciseID = {0}",
+				sponsorAdminExerciseID
 			);
-			var inputs = new List<SponsorExerciseDataInput>();
-			using (SqlDataReader rs = Db.rs(query, "healthWatchSqlConnection")) {
+			var inputs = new List<SponsorAdminExerciseDataInput>();
+			using (var rs = Db.rs(query, "healthWatchSqlConnection")) {
 				while (rs.Read()) {
-					var i = new SponsorExerciseDataInput {
+					var i = new SponsorAdminExerciseDataInput {
 						Id = GetInt32(rs, 0),
-						Content = GetString(rs, 1),
-						Sponsor = new Sponsor { Id = GetInt32(rs, 2) },
-						Order = GetInt32(rs, 3)
+						ValueText = GetString(rs, 1),
+						SponsorAdminExercise = new SponsorAdminExercise { Id = GetInt32(rs, 2) },
+						Order = GetInt32(rs, 3),
+						ValueInt = GetInt32(rs, 4),
+						Type = GetInt32(rs, 5, OptionType.FreeText)
 					};
 					inputs.Add(i);
 				}
 			}
+			foreach (var i in inputs) {
+				i.Components = FindSponsorAdminExerciseDataInputComponentss(i.Id);
+			}
 			return inputs;
-		}*/
+		}
+		
+		public IList<SponsorAdminExerciseDataInputComponent> FindSponsorAdminExerciseDataInputComponentss(int sponsorAdminExerciseDataInputID)
+		{
+			string query = string.Format(
+				@"
+SELECT SponsorAdminExerciseDataInputComponentID,
+	SponsorAdminExerciseDataInputID,
+	ValueText,
+	SortOrder,
+	ValueInt
+FROM SponsorAdminExerciseDataInputComponent
+WHERE SponsorAdminExerciseDataInputID = {0}",
+				sponsorAdminExerciseDataInputID
+			);
+			var components = new List<SponsorAdminExerciseDataInputComponent>();
+			using (var rs = Db.rs(query, "healthWatchSqlConnection")) {
+				while (rs.Read()) {
+					var c = new SponsorAdminExerciseDataInputComponent {
+						Id = GetInt32(rs, 0),
+						SponsorAdminExerciseDataInput = new SponsorAdminExerciseDataInput { Id = GetInt32(rs, 1) },
+						ValueText = GetString(rs, 2),
+						SortOrder = GetInt32(rs, 3),
+						ValueInt = GetInt32(rs, 4)
+					};
+					components.Add(c);
+				}
+			}
+			return components;
+		}
 
 		public void InsertSponsorAdminExtendedSurvey(SponsorAdminExtendedSurvey s)
 		{
@@ -1210,8 +1341,8 @@ WHERE s.SponsorID = {0}",
 						MinUserCountToDisclose = GetInt32(rs, 30, 10),
 						ProjectRoundUnit = new ProjectRoundUnit { Id = GetInt32(rs, 31) },
 						EmailFrom = GetString(rs, 32, "", "info@healthwatch.se"),
-                        SponsorID = GetInt32(rs, 33),
-                        Id = GetInt32(rs, 33)
+						SponsorID = GetInt32(rs, 33),
+						Id = GetInt32(rs, 33)
 					};
 				}
 			}
@@ -2525,44 +2656,44 @@ WHERE si.SponsorID = {1}",
 		public override Sponsor Read(int id)
 		{
 			string query = @"
-SELECT 	SponsorID, 
-	Sponsor, 
-	Application, 
-	ProjectRoundUnitID, 
-	SponsorKey, 
-	InviteTxt, 
-	InviteReminderTxt, 
-	LoginTxt, 
-	InviteLastSent, 
-	InviteReminderLastSent, 
-	LoginLastSent, 
-	InviteSubject, 
-	InviteReminderSubject, 
-	LoginSubject, 
-	LoginDays, 
-	LoginWeekday, 
-	LID, 
-	TreatmentOffer, 
-	TreatmentOfferText, 
-	TreatmentOfferEmail, 
-	TreatmentOfferIfNeededText, 
-	TreatmentOfferBQ, 
-	TreatmentOfferBQfn, 
-	TreatmentOfferBQmorethan, 
-	InfoText, 
-	ConsentText, 
-	Closed, 
-	Deleted, 
-	SuperSponsorID, 
-	AlternativeTreatmentOfferText, 
-	AlternativeTreatmentOfferEmail, 
-	SponsorApiKey, 
-	AllMessageSubject, 
-	AllMessageBody, 
-	AllMessageLastSent, 
-	ForceLID, 
-	MinUserCountToDisclose, 
-	EmailFrom, 
+SELECT 	SponsorID,
+	Sponsor,
+	Application,
+	ProjectRoundUnitID,
+	SponsorKey,
+	InviteTxt,
+	InviteReminderTxt,
+	LoginTxt,
+	InviteLastSent,
+	InviteReminderLastSent,
+	LoginLastSent,
+	InviteSubject,
+	InviteReminderSubject,
+	LoginSubject,
+	LoginDays,
+	LoginWeekday,
+	LID,
+	TreatmentOffer,
+	TreatmentOfferText,
+	TreatmentOfferEmail,
+	TreatmentOfferIfNeededText,
+	TreatmentOfferBQ,
+	TreatmentOfferBQfn,
+	TreatmentOfferBQmorethan,
+	InfoText,
+	ConsentText,
+	Closed,
+	Deleted,
+	SuperSponsorID,
+	AlternativeTreatmentOfferText,
+	AlternativeTreatmentOfferEmail,
+	SponsorApiKey,
+	AllMessageSubject,
+	AllMessageBody,
+	AllMessageLastSent,
+	ForceLID,
+	MinUserCountToDisclose,
+	EmailFrom,
 	Comment,
 	DefaultPlotType
 FROM Sponsor

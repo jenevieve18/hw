@@ -406,6 +406,20 @@ namespace HW.Core.Models
 		public int Order { get; set; }
 		public int ValueInt { get; set; }
 		public int Type { get; set; }
+		public IList<SponsorAdminExerciseDataInputComponent> Components { get; set; }
+		
+		public SponsorAdminExerciseDataInput()
+		{
+			Components = new List<SponsorAdminExerciseDataInputComponent>();
+		}
+	}
+	
+	public class SponsorAdminExerciseDataInputComponent : BaseModel
+	{
+		public SponsorAdminExerciseDataInput SponsorAdminExerciseDataInput { get; set; }
+		public string ValueText { get; set; }
+		public int SortOrder { get; set; }
+		public int ValueInt { get; set; }
 	}
 	
 //	public class SponsorAdminExerciseDataInputType
