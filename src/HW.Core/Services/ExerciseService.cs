@@ -17,7 +17,7 @@ namespace HW.Core.Services
 		{
 			var a = sr.ReadSponsorAdminExercise(sponsorAdminExerciseID);
 			a.ExerciseVariantLanguage = er.ReadExerciseVariant(a.ExerciseVariantLanguage.Id);
-			a.DataInputs = sr.FindSponsorAdminExerciseDataInputs(sponsorAdminExerciseID);
+			a.Inputs = sr.FindSponsorAdminExerciseDataInputs(sponsorAdminExerciseID);
 			return a;
 		}
 		

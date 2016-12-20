@@ -103,7 +103,7 @@ namespace HW.Grp.Tests.Views
 <ul class='sortable'><!-- <li><input type='text' name='text0' value=''></li> --></ul>
 </form></div>"
 				},
-				DataInputs = new System.Collections.Generic.List<SponsorAdminExerciseDataInput>(
+				Inputs = new System.Collections.Generic.List<SponsorAdminExerciseDataInput>(
 					new[] {
 						new SponsorAdminExerciseDataInput { ValueText = "Hello world" },
 						new SponsorAdminExerciseDataInput { ValueText = "World hello" },

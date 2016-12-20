@@ -4,6 +4,7 @@
 // </file>
 
 using System;
+using HW.Core.Models;
 using HW.Core.Repositories.Sql;
 using NUnit.Framework;
 
@@ -21,17 +22,38 @@ namespace HW.Core.Tests.Repositories
 		}
 		
 		[Test]
-		public void TestSaveAdminExerciseDataInputs()
+		public void TestSaveSponsorAdminExercise()
 		{
-//			r.SaveAdminExerciseDataInputs(new[] { "life", "box", "chocolate" }, 514, 135);
+			var e = new SponsorAdminExercise {
+				Date = DateTime.Now,
+				SponsorAdmin = new SponsorAdmin { Id = 514 },
+				ExerciseVariantLanguage = new ExerciseVariantLanguage { Id = 1 }
+			};
+			
+			var i = new SponsorAdminExerciseDataInput {};
+			i.AddComponent(new SponsorAdminExerciseDataInputComponent { ValueText = "hello world" });
+			i.AddComponent(new SponsorAdminExerciseDataInputComponent { ValueText = "world hello" });
+			e.AddDataInput(i);
+			
+			i = new SponsorAdminExerciseDataInput {};
+			i.AddComponent(new SponsorAdminExerciseDataInputComponent { ValueText = "world hello" });
+			i.AddComponent(new SponsorAdminExerciseDataInputComponent { ValueText = "hello world" });
+			e.AddDataInput(i);
+			
+			r.SaveSponsorAdminExercise(e);
 		}
 		
 		[Test]
-		public void TestFindSponsorAdminExerciseDataInputs()
+		public void TestReadSponsorAdminExercise()
 		{
-//			foreach (var i in r.FindSponsorAdminExerciseDataInputs(514, 135)) {
-//				Console.WriteLine(i.Content);
-//			}
+			var e = r.ReadSponsorAdminExercise(8);
+			Console.WriteLine(e.Date);
+			foreach (var i in e.Inputs) {
+				Console.WriteLine("\t" + i.Id);
+				foreach (var c in i.Components) {
+					Console.WriteLine("\t\t" + c.ValueText);
+				}
+			}
 		}
 	}
 }

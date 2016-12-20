@@ -108,7 +108,7 @@ namespace HW.Core.Util.Exporters
 				evl.Content = evl.Content.Replace("<a href='javascript:;' class='btn btnSaveSponsorAdminExercise'>Spara</a>", "");
 				
 				string contents = "<ul>";
-				foreach (var c in sae.DataInputs) {
+				foreach (var c in sae.Inputs) {
 					contents += string.Format("<li>{0}</li>", c.ValueText);
 				}
 				evl.Content = evl.Content.Replace("<ul class=\"sortable\">", contents);

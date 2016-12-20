@@ -1,0 +1,35 @@
+body ul {
+  font-size: 10pt;
+}
+body ul li {
+  font-size: 1em;
+}
+body #sortable {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+body #sortable li {
+  margin: 0 3px 3px;
+  padding: 0.4em 0.4em 0.4em 1.5em;
+  height: 18px;
+}
+body #sortable li span {
+  position: absolute;
+  margin-left: -1.3em;
+}
+
+.alert {
+  padding: 5px;
+}
+
+.alert-success {
+  border: 1px solid black;
+  background: gray;
+}
+
+.hidden {
+  display: none;
+}
+
+/*# sourceMappingURL=styles.css.map */

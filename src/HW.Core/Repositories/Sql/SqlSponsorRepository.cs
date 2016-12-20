@@ -317,7 +317,7 @@ VALUES(@SponsorAdminExerciseID, @ValueText, @Order, @ValueInt, @Type);
 SELECT IDENT_CURRENT('SponsorAdminExerciseDataInput')");
 			int i = 0;
 			foreach (var data in dataInputs) {
-                ExecuteNonQuery(string.Format("DELETE FROM SponsorAdminExerciseDataInputComponent WHERE SponsorAdminExerciseDataInputID = {0}", data.Id), "healthWatchSqlConnection");
+				ExecuteNonQuery(string.Format("DELETE FROM SponsorAdminExerciseDataInputComponent WHERE SponsorAdminExerciseDataInputID = {0}", data.Id), "healthWatchSqlConnection");
 				int sponsorAdminExerciseDataInputID = ConvertHelper.ToInt32(
 					ExecuteScalar(
 						query,

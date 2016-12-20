@@ -10,17 +10,64 @@ namespace HW.Core.Repositories.Sql
 	{
 		public void SavePassword(string password, string uid)
 		{
-            string query = string.Format(
-                @"
+			string query = string.Format(
+				@"
 UPDATE SponsorAdmin SET Pas = @Password,
     UniqueKeyUsed = 1
 WHERE UniqueKey = @UniqueKey");
-            ExecuteNonQuery(
-                query,
-                "healthWatchSqlConnection",
-                new SqlParameter("@Password", password),
-                new SqlParameter("@UniqueKey", uid)
-            );
+			ExecuteNonQuery(
+				query,
+				"healthWatchSqlConnection",
+				new SqlParameter("@Password", password),
+				new SqlParameter("@UniqueKey", uid)
+			);
+		}
+		
+		public void SaveSponsorAdminExercise(SponsorAdminExercise exercise)
+		{
+			string query = string.Format(
+				@"
+INSERT INTO SponsorAdminExercise(SponsorAdminID, ExerciseVariantLangID, Date)
+VALUES(@SponsorAdminID, @ExerciseVariantLangID, GETDATE());
+SELECT IDENT_CURRENT('SponsorAdminExercise');"
+			);
+			int sponsorAdminExerciseID = ConvertHelper.ToInt32(
+				ExecuteScalar(
+					query,
+					"healthWatchSqlConnection",
+					new SqlParameter("@SponsorAdminID", exercise.SponsorAdmin.Id),
+					new SqlParameter("@ExerciseVariantLangID", exercise.ExerciseVariantLanguage.Id)
+				)
+			);
+			query = string.Format(
+				@"
+INSERT SponsorAdminExerciseDataInput(SponsorAdminExerciseID, ValueText, [Order])
+VALUES(@SponsorAdminExerciseID, @ValueText, @Order);
+SELECT IDENT_CURRENT('SponsorAdminExerciseDataInput');");
+			int i = 0;
+			foreach (var data in exercise.Inputs) {
+				int sponsorAdminExerciseDataInputID = ConvertHelper.ToInt32(
+					ExecuteScalar(
+						query,
+						"healthWatchSqlConnection",
+						new SqlParameter("@SponsorAdminExerciseID", sponsorAdminExerciseID),
+						new SqlParameter("@ValueText", data.ValueText),
+						new SqlParameter("@Order", i++)
+					)
+				);
+				foreach (var c in data.Components) {
+					ExecuteNonQuery(
+						@"
+INSERT INTO SponsorAdminExerciseDataInputComponent(SponsorAdminExerciseDataInputID, ValueText, SortOrder, ValueInt)
+VALUES(@SponsorAdminExerciseDataInputID, @ValueText, @SortOrder, @ValueInt)",
+						"healthWatchSqlConnection",
+						new SqlParameter("@SponsorAdminExerciseDataInputID", sponsorAdminExerciseDataInputID),
+						new SqlParameter("@ValueText", c.ValueText),
+						new SqlParameter("@SortOrder", c.SortOrder),
+						new SqlParameter("@ValueInt", c.ValueInt)
+					);
+				}
+			}
 		}
 		
 		public void UpdateUniqueKey(string uid, int sponsorAdminID)
@@ -148,24 +195,24 @@ FROM ManagerFunction f
 			return hasAccess;
 		}
 
-        public bool SponsorAdminUniqueKeyUsed(string uid)
-        {
-            string query = string.Format(
-                @"
+		public bool SponsorAdminUniqueKeyUsed(string uid)
+		{
+			string query = string.Format(
+				@"
 SELECT UniqueKey, UniqueKeyUsed
 FROM SponsorAdmin
 WHERE UniqueKey = @UniqueKey"
-            );
-            bool used = false;
-            using (SqlDataReader rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@UniqueKey", uid)))
-            {
-                if (rs.Read())
-                {
-                    used = GetInt32(rs, 1) == 1;
-                }
-            }
-            return used;
-        }
+			);
+			bool used = false;
+			using (SqlDataReader rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@UniqueKey", uid)))
+			{
+				if (rs.Read())
+				{
+					used = GetInt32(rs, 1) == 1;
+				}
+			}
+			return used;
+		}
 		
 		public bool SponsorAdminUniqueKeyExists(string uid)
 		{
@@ -184,52 +231,135 @@ WHERE UniqueKey = @UniqueKey"
 			return exists;
 		}
 
-        public SponsorAdmin ReadSponsorByUniqueKey(string uniqueKey)
-        {
-            string query = @"
+		public SponsorAdmin ReadSponsorByUniqueKey(string uniqueKey)
+		{
+			string query = @"
 SELECT SponsorAdminID
 FROM SponsorAdmin
 WHERE UniqueKey = @UniqueKey";
 			SponsorAdmin a = null;
-            using (SqlDataReader rs = ExecuteReader(query, "healthWatchSqlConnection"))
-            {
-                if (rs.Read())
-                {
-                    a = new SponsorAdmin {
-                        Id = GetInt32(rs, 0)
-                    };
-                }
-            }
-            return a;
-        }
-        
-        public override SponsorAdmin Read(int id)
+			using (SqlDataReader rs = ExecuteReader(query, "healthWatchSqlConnection"))
+			{
+				if (rs.Read())
+				{
+					a = new SponsorAdmin {
+						Id = GetInt32(rs, 0)
+					};
+				}
+			}
+			return a;
+		}
+
+		public SponsorAdminExercise ReadSponsorAdminExercise(int sponsorAdminExerciseID)
 		{
 			string query = @"
-SELECT 	SponsorAdminID, 
-	Usr, 
-	Pas, 
-	SponsorID, 
-	Name, 
-	Email, 
-	SuperUser, 
-	SponsorAdminKey, 
-	Anonymized, 
-	SeeUsers, 
-	ReadOnly, 
-	LastName, 
-	PermanentlyDeleteUsers, 
-	InviteSubject, 
-	InviteTxt, 
-	InviteReminderSubject, 
-	InviteReminderTxt, 
-	AllMessageSubject, 
-	AllMessageBody, 
-	InviteLastSent, 
-	InviteReminderLastSent, 
-	AllMessageLastSent, 
-	LoginLastSent, 
-	UniqueKey, 
+SELECT SponsorAdminExerciseID,
+	Date,
+	SponsorAdminID,
+	ExerciseVariantLangID
+FROM SponsorAdminExercise
+WHERE SponsorAdminExerciseID = @SponsorAdminExerciseID";
+			SponsorAdminExercise exercise = null;
+			using (var rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@SponsorAdminExerciseID", sponsorAdminExerciseID))) {
+				if (rs.Read()) {
+					exercise = new SponsorAdminExercise {
+						Id = GetInt32(rs, 0),
+						Date = GetDateTime(rs, 1),
+						SponsorAdmin = new SponsorAdmin { Id = GetInt32(rs, 2) },
+						ExerciseVariantLanguage = new ExerciseVariantLanguage { Id = GetInt32(rs, 3) }
+					};
+				}
+			}
+			if (exercise != null) {
+				exercise.AddDataInputs(FindSponsorAdminExerciseDataInputs(sponsorAdminExerciseID));
+				foreach (var d in exercise.Inputs) {
+					d.AddComponents(FindSponsorAdminExerciseDataInputComponents(d.Id));
+				}
+			}
+			return exercise;
+		}
+		
+		IList<SponsorAdminExerciseDataInputComponent> FindSponsorAdminExerciseDataInputComponents(int sponsorAdminExerciseDataInputID)
+		{
+			string query = @"
+SELECT SponsorAdminExerciseDataInputComponentID,
+	SponsorAdminExerciseDataInputID,
+	ValueText,
+	SortOrder,
+	ValueInt
+FROM dbo.SponsorAdminExerciseDataInputComponent
+WHERE SponsorAdminExerciseDataInputID = @SponsorAdminExerciseDataInputID";
+			var components = new List<SponsorAdminExerciseDataInputComponent>();
+			using (var rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@SponsorAdminExerciseDataInputID", sponsorAdminExerciseDataInputID))) {
+				while (rs.Read()) {
+					components.Add(
+						new SponsorAdminExerciseDataInputComponent {
+							Id = GetInt32(rs, 0),
+							ValueText = GetString(rs, 2),
+							SortOrder = GetInt32(rs, 3),
+							ValueInt = GetInt32(rs, 4)
+						}
+					);
+				}
+			}
+			return components;
+		}
+		
+		IList<SponsorAdminExerciseDataInput> FindSponsorAdminExerciseDataInputs(int sponsorAdminExerciseID)
+		{
+			string query = @"
+SELECT SponsorAdminExerciseDataInputID,
+	SponsorAdminExerciseID,
+	ValueText,
+	[Order],
+	ValueInt,
+	[Type]
+FROM dbo.SponsorAdminExerciseDataInput
+WHERE SponsorAdminExerciseID = @SponsorAdminExerciseID";
+			var inputs = new List<SponsorAdminExerciseDataInput>();
+			using (var rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@SponsorAdminExerciseID", sponsorAdminExerciseID))) {
+				while (rs.Read()) {
+					inputs.Add(
+						new SponsorAdminExerciseDataInput {
+							Id = GetInt32(rs, 0),
+							ValueText = GetString(rs, 2),
+							Order = GetInt32(rs, 3),
+							ValueInt = GetInt32(rs, 4),
+							Type = GetInt32(rs, 5)
+						}
+					);
+				}
+			}
+			return inputs;
+		}
+		
+		public override SponsorAdmin Read(int id)
+		{
+			string query = @"
+SELECT 	SponsorAdminID,
+	Usr,
+	Pas,
+	SponsorID,
+	Name,
+	Email,
+	SuperUser,
+	SponsorAdminKey,
+	Anonymized,
+	SeeUsers,
+	ReadOnly,
+	LastName,
+	PermanentlyDeleteUsers,
+	InviteSubject,
+	InviteTxt,
+	InviteReminderSubject,
+	InviteReminderTxt,
+	AllMessageSubject,
+	AllMessageBody,
+	InviteLastSent,
+	InviteReminderLastSent,
+	AllMessageLastSent,
+	LoginLastSent,
+	UniqueKey,
 	UniqueKeyUsed
 FROM SponsorAdmin
 WHERE SponsorAdminID = @SponsorAdminID";

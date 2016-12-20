@@ -396,7 +396,25 @@ namespace HW.Core.Models
 		public DateTime? Date { get; set; }
 		public SponsorAdmin SponsorAdmin { get; set; }
 		public ExerciseVariantLanguage ExerciseVariantLanguage { get; set; }
-		public IList<SponsorAdminExerciseDataInput> DataInputs { get; set; }
+		public IList<SponsorAdminExerciseDataInput> Inputs { get; set; }
+		
+		public SponsorAdminExercise()
+		{
+			Inputs = new List<SponsorAdminExerciseDataInput>();
+		}
+		
+		public void AddDataInputs(IList<SponsorAdminExerciseDataInput> inputs)
+		{
+			foreach (var i in inputs) {
+				AddDataInput(i);
+			}
+		}
+		
+		public void AddDataInput(SponsorAdminExerciseDataInput input)
+		{
+			input.SponsorAdminExercise = this;
+			Inputs.Add(input);
+		}
 	}
 	
 	public class SponsorAdminExerciseDataInput : BaseModel
@@ -411,6 +429,19 @@ namespace HW.Core.Models
 		public SponsorAdminExerciseDataInput()
 		{
 			Components = new List<SponsorAdminExerciseDataInputComponent>();
+		}
+		
+		public void AddComponents(IList<SponsorAdminExerciseDataInputComponent> components)
+		{
+			foreach (var c in components) {
+				AddComponent(c);
+			}
+		}
+		
+		public void AddComponent(SponsorAdminExerciseDataInputComponent component)
+		{
+			component.SponsorAdminExerciseDataInput = this;
+			Components.Add(component);
 		}
 	}
 	
