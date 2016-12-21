@@ -169,6 +169,7 @@ namespace HW.Core.Models
 		public SponsorAdmin()
 		{
 			Functions = new List<SponsorAdminFunction>();
+			ExtendedSurveys = new List<SponsorAdminExtendedSurvey>();
 		}
 		
 		public bool HasExtendedSurveys {
@@ -237,6 +238,13 @@ namespace HW.Core.Models
 		public string InviteReminderTxt { get; set; }
 		public string UniqueKey { get; set; }
 		public int UniqueKeyUsed { get; set; }
+		
+		public override object ToObject()
+		{
+			return new {
+				id = Id
+			};
+		}
 	}
 	
 	public class SponsorAdminExtendedSurvey : BaseModel, IExtendedSurvey
@@ -395,7 +403,9 @@ namespace HW.Core.Models
 	{
 		public DateTime? Date { get; set; }
 		public SponsorAdmin SponsorAdmin { get; set; }
+		public bool HasSponsorAdmin { get { return SponsorAdmin != null; }}
 		public ExerciseVariantLanguage ExerciseVariantLanguage { get; set; }
+		public bool HasExerciseVariantLanguage { get { return ExerciseVariantLanguage != null; } }
 		public IList<SponsorAdminExerciseDataInput> Inputs { get; set; }
 		
 		public SponsorAdminExercise()
@@ -414,6 +424,21 @@ namespace HW.Core.Models
 		{
 			input.SponsorAdminExercise = this;
 			Inputs.Add(input);
+		}
+		
+		public override object ToObject()
+		{
+			var inputs = new List<object>();
+			foreach (var i in Inputs) {
+				inputs.Add(i.ToObject());
+			}
+			return new {
+				id = Id,
+				date = Date,
+				sponsorAdmin = HasSponsorAdmin ? SponsorAdmin.ToObject() : null,
+				exerciseVariantLanguage = HasExerciseVariantLanguage ? ExerciseVariantLanguage.ToObject() : null,
+				inputs = inputs
+			};
 		}
 	}
 	
@@ -443,6 +468,22 @@ namespace HW.Core.Models
 			component.SponsorAdminExerciseDataInput = this;
 			Components.Add(component);
 		}
+		
+		public override object ToObject()
+		{
+			var components = new List<object>();
+			foreach (var c in Components) {
+				components.Add(c.ToObject());
+			}
+			return new {
+				id = Id,
+				valueText = ValueText,
+				valueInt = ValueInt,
+				sorOrder = Order,
+				type = Type,
+				components = components
+			};
+		}
 	}
 	
 	public class SponsorAdminExerciseDataInputComponent : BaseModel
@@ -451,6 +492,15 @@ namespace HW.Core.Models
 		public string ValueText { get; set; }
 		public int SortOrder { get; set; }
 		public int ValueInt { get; set; }
+		
+		public override object ToObject()
+		{
+			return new {
+				valueText = ValueText,
+				valueInt = ValueInt,
+				sortOrder = SortOrder
+			};
+		}
 	}
 	
 //	public class SponsorAdminExerciseDataInputType
@@ -461,7 +511,7 @@ namespace HW.Core.Models
 //		public const int Numeric = 4;
 //		public const int VAS = 9;
 //	}
-//	
+//
 	public class SuperAdmin : BaseModel
 	{
 		public string Name { get; set; }

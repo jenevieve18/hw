@@ -70,6 +70,65 @@ VALUES(@SponsorAdminExerciseDataInputID, @ValueText, @SortOrder, @ValueInt)",
 			}
 		}
 		
+		public void UpdateSponsorAdminExercise(SponsorAdminExercise exercise, int sponsorAdminExerciseID)
+		{
+			string query = string.Format(
+				@"
+UPDATE SponsorAdminExercise SET Date = GETDATE()
+WHERE SponsorAdminExerciseID = @SponsorAdminExerciseID"
+			);
+			ExecuteNonQuery(
+				query,
+				"healthWatchSqlConnection",
+				new SqlParameter("@SponsorAdminExerciseID", sponsorAdminExerciseID)
+			);
+			ExecuteNonQuery(
+				@"
+DELETE dic FROM SponsorAdminExerciseDataInputComponent dic
+INNER JOIN SponsorAdminExerciseDataInput di on di.SponsorAdminExerciseDataInputID = dic.SponsorAdminExerciseDataInputID
+WHERE di.SponsorAdminExerciseID = @SponsorAdminExerciseID",
+				"healthWatchSqlConnection",
+				new SqlParameter("@SponsorAdminExerciseID", sponsorAdminExerciseID)
+			);
+			ExecuteNonQuery(
+				@"DELETE FROM SponsorAdminExerciseDataInput WHERE SponsorAdminExerciseID = @SponsorAdminExerciseID",
+				"healthWatchSqlConnection",
+				new SqlParameter("@SponsorAdminExerciseID", sponsorAdminExerciseID)
+			);
+			query = string.Format(
+				@"
+INSERT SponsorAdminExerciseDataInput(SponsorAdminExerciseID, ValueText, [Order])
+VALUES(@SponsorAdminExerciseID, @ValueText, @Order);
+SELECT IDENT_CURRENT('SponsorAdminExerciseDataInput');");
+			int i = 0;
+			foreach (var data in exercise.Inputs) {
+//				ExecuteNonQuery("DELETE FROM SponsorAdminExerciseDataInputComponent WHERE SponsorAdminExerciseDataInputID = @SponsorAdminExerciseDataInputID", "healthWatchSqlConnection", new SqlParameter("@SponsorAdminExerciseDataInputID", data.Id));
+				int sponsorAdminExerciseDataInputID = ConvertHelper.ToInt32(
+					ExecuteScalar(
+						query,
+						"healthWatchSqlConnection",
+						new SqlParameter("@SponsorAdminExerciseID", sponsorAdminExerciseID),
+						new SqlParameter("@ValueText", data.ValueText),
+						new SqlParameter("@Order", i++)
+					)
+				);
+				int j = 0;
+				foreach (var c in data.Components) {
+					ExecuteNonQuery(
+						@"
+INSERT INTO SponsorAdminExerciseDataInputComponent(SponsorAdminExerciseDataInputID, ValueText, SortOrder, ValueInt)
+VALUES(@SponsorAdminExerciseDataInputID, @ValueText, @SortOrder, @ValueInt)",
+						"healthWatchSqlConnection",
+						new SqlParameter("@SponsorAdminExerciseDataInputID", sponsorAdminExerciseDataInputID),
+						new SqlParameter("@ValueText", c.ValueText),
+//						new SqlParameter("@SortOrder", c.SortOrder),
+						new SqlParameter("@SortOrder", j++),
+						new SqlParameter("@ValueInt", c.ValueInt)
+					);
+				}
+			}
+		}
+		
 		public void UpdateUniqueKey(string uid, int sponsorAdminID)
 		{
 			string query = string.Format(

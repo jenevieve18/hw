@@ -33,5 +33,10 @@ namespace HW.Core.Models
 				Errors.Add(message);
 			}
 		}
+		
+		public virtual object ToObject()
+		{
+			return this;
+		}
 	}
 }
