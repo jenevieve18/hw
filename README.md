@@ -1,7 +1,7 @@
 # HealthWatch
 
 ## Table of Contents
-* Overview
-* Best Practices
+* [Overview](Overview)
+* [Best Practices](Best Practices)
 
 ## Overview
