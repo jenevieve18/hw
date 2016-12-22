@@ -2,6 +2,6 @@
 
 ## Table of Contents
 * [Overview](Overview)
-* [Best Practices](Best Practices)
+* [Coding Guidelines](codingguidelines)
 
 ## Overview
