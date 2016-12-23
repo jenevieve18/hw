@@ -7,6 +7,9 @@ var healthwatch = (function() {
         },
         readAdminExercise: function(exerciseId, success, error) {
           return repo.readAdminExercise(exerciseId, success, error);
+        },
+        hello: function(success, error) {
+          return repo.hello(success, error);
         }
       };
     }
@@ -15,10 +18,13 @@ var healthwatch = (function() {
 
 function ExerciseRepo() {
   this.saveAdminExercise = function(exercise, success, error) {
-    ajax.save('Service.aspx/SaveSponsorAdminExercise', exercise, success, error);
+    ajax.post('Service.aspx/SaveManagerExercise', { exercise: exercise }, success, error);
   };
   this.readAdminExercise = function(exerciseId, success, error) {
-    ajax.get('Service.aspx/ReadSponsorAdminExercise', { sponsorAdminExerciseID: exerciseId }, success, error);
+    ajax.get('Service.aspx/ReadManagerExercise', { sponsorAdminExerciseID: exerciseId }, success, error);
+  };
+  this.hello = function(success, error) {
+    ajax.get('Service.aspx/Hello', {}, success, error);
   };
 }
 
@@ -34,23 +40,78 @@ function _ExerciseRepo() {
     }
   };
   this.readAdminExercise = function(exerciseId, success, error) {
-    if (typeof exerciseId == 'undefined') {
+    if (exerciseId == 0) {
       success(null);
     } else if (exerciseId > 0) {
       success({
-        inputs: [
-          { valueText: 'Value Text 1' },
-          { valueText: 'Value Text 2' },
-          { valueText: 'Value Text 3' },
-          { valueText: 'Value Text 4' },
-          { valueText: 'Value Text 5' }
+        inputs: [{
+            valueText: 'Input 1',
+            components: [
+              { valueText: 'Component 11' },
+              { valueText: 'Component 12' },
+              { valueText: 'Component 13' },
+              { valueText: 'Component 14' },
+              { valueText: 'Component 15' },
+              { valueText: 'Component 16' },
+              { valueText: 'Component 17' },
+            ]
+          },
+          {
+            valueText: 'Input 2',
+            components: [
+              { valueText: 'Component 21' },
+              { valueText: 'Component 22' },
+              { valueText: 'Component 23' },
+              { valueText: 'Component 24' },
+              { valueText: 'Component 25' },
+            ]
+          },
+          { valueText: 'Input 3' },
+          { valueText: 'Input 4' },
+          { valueText: 'Input 5' }
         ]
       });
     } else {
       error('Holy crap, goes boom!', {}, {});
     }
   };
+  this.hello = function(success, error) {
+    success("Hello, world!");
+  }
 }
+
+var ajax = {
+  post: function(url, data, success, error) {
+    $.ajax({
+      type: 'POST',
+      url: url,
+      data: JSON.stringify(data),
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      success: function(response) {
+        success(response.d);
+      },
+      error: function(request, status, error) {
+        error(request, status, error);
+      }
+    });
+  },
+  get: function(url, data, success, error) {
+    $.ajax({
+      type: 'GET',
+      url: url,
+      data: data,
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      success: function(response) {
+        success(response.d);
+      },
+      error: function(request, status, error) {
+        error(request, status, error);
+      }
+    });
+  }
+};
 
 var html = {
   getData: function(elements) {
@@ -93,38 +154,5 @@ var html = {
       _class += '"';
     }
     return _class;
-  }
-};
-
-var ajax = {
-  save: function(url, data, success, error) {
-    $.ajax({
-      type: 'POST',
-      url: url,
-      data: JSON.stringify(data),
-      contentType: "application/json;charset=utf-8",
-      dataType: "json",
-      success: function(response) {
-        success(response);
-      },
-      error: function(request, status, error) {
-        error(request, status, error);
-      }
-    });
-  },
-  get: function(url, data, success, error) {
-    $.ajax({
-      type: 'GET',
-      url: url,
-      data: data,
-      contentType: "application/json;charset=utf-8",
-      dataType: "json",
-      success: function(response) {
-        success(response);
-      },
-      error: function(request, status, error) {
-        error(request, status, error);
-      }
-    });
   }
 };

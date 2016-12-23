@@ -45,7 +45,7 @@ namespace HW.Grp
 			} else {
 				sponsorAdminRepo.SaveSponsorAdminExercise(exercise);
 			}
-			return "Success!";
+			return "Manager exercise saved successfully!";
 		}
 	}
 }
