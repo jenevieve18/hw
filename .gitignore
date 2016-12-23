@@ -198,7 +198,6 @@ OpenCover**
 /contrib/HW.EForm.Report/packages
 /contrib/HW.EForm2/packages
 contrib/HW.EForm.Core/StyleCopViolations.xml
-/src/HW.Invoicing/packages
 src/HW.Grp/assets/exercises/js/budskapssorteraren.js
 src/HW.Grp/assets/exercises/js/bygga_fortroende.js
 src/HW.Grp/assets/exercises/js/finsliparen.js
@@ -219,3 +218,5 @@ src/HW.Grp/index.html
 src/HW.Grp/kommunikationspusslet-en.html
 src/HW.Grp/kommunikationspusslet.html
 src/HW.Grp/links.html
+src/HW.Invoicing/packages
+src/HW.Invoicing/UpgradeLog.htm
