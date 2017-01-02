@@ -446,7 +446,7 @@ namespace HW.Core.Models
 	{
 		public SponsorAdminExercise SponsorAdminExercise { get; set; }
 		public string ValueText { get; set; }
-		public int Order { get; set; }
+		public int SortOrder { get; set; }
 		public int ValueInt { get; set; }
 		public int Type { get; set; }
 		public IList<SponsorAdminExerciseDataInputComponent> Components { get; set; }
@@ -479,7 +479,7 @@ namespace HW.Core.Models
 				id = Id,
 				valueText = ValueText,
 				valueInt = ValueInt,
-				sorOrder = Order,
+				sorOrder = SortOrder,
 				type = Type,
 				components = components
 			};

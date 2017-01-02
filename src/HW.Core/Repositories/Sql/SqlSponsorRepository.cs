@@ -502,7 +502,7 @@ WHERE sae.SponsorAdminExerciseID = {0}",
 						Id = GetInt32(rs, 0),
 						ValueText = GetString(rs, 1),
 						SponsorAdminExercise = new SponsorAdminExercise { Id = GetInt32(rs, 2) },
-						Order = GetInt32(rs, 3),
+						SortOrder = GetInt32(rs, 3),
 						ValueInt = GetInt32(rs, 4),
 						Type = GetInt32(rs, 5, OptionType.FreeText)
 					};
@@ -534,7 +534,7 @@ WHERE sae.SponsorAdminExerciseID = {0}",
 						Id = GetInt32(rs, 0),
 						ValueText = GetString(rs, 1),
 						SponsorAdminExercise = new SponsorAdminExercise { Id = GetInt32(rs, 2) },
-						Order = GetInt32(rs, 3),
+						SortOrder = GetInt32(rs, 3),
 						ValueInt = GetInt32(rs, 4),
 						Type = GetInt32(rs, 5, OptionType.FreeText)
 					};

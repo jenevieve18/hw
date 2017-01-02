@@ -41,8 +41,8 @@ SELECT IDENT_CURRENT('SponsorAdminExercise');"
 			);
 			query = string.Format(
 				@"
-INSERT SponsorAdminExerciseDataInput(SponsorAdminExerciseID, ValueText, [Order])
-VALUES(@SponsorAdminExerciseID, @ValueText, @Order);
+INSERT SponsorAdminExerciseDataInput(SponsorAdminExerciseID, ValueText, [Order], ValueInt, Type)
+VALUES(@SponsorAdminExerciseID, @ValueText, @Order, @ValueInt, @Type);
 SELECT IDENT_CURRENT('SponsorAdminExerciseDataInput');");
 			int i = 0;
 			foreach (var data in exercise.Inputs) {
@@ -52,7 +52,9 @@ SELECT IDENT_CURRENT('SponsorAdminExerciseDataInput');");
 						"healthWatchSqlConnection",
 						new SqlParameter("@SponsorAdminExerciseID", sponsorAdminExerciseID),
 						new SqlParameter("@ValueText", data.ValueText),
-						new SqlParameter("@Order", i++)
+						new SqlParameter("@Order", i++),
+						new SqlParameter("@ValueInt", data.ValueInt),
+						new SqlParameter("@Type", data.Type)
 					)
 				);
 				foreach (var c in data.Components) {
@@ -97,8 +99,8 @@ WHERE di.SponsorAdminExerciseID = @SponsorAdminExerciseID",
 			);
 			query = string.Format(
 				@"
-INSERT SponsorAdminExerciseDataInput(SponsorAdminExerciseID, ValueText, [Order])
-VALUES(@SponsorAdminExerciseID, @ValueText, @Order);
+INSERT SponsorAdminExerciseDataInput(SponsorAdminExerciseID, ValueText, [Order], ValueInt, Type)
+VALUES(@SponsorAdminExerciseID, @ValueText, @Order, @ValueInt, @Type);
 SELECT IDENT_CURRENT('SponsorAdminExerciseDataInput');");
 			int i = 0;
 			foreach (var data in exercise.Inputs) {
@@ -109,7 +111,9 @@ SELECT IDENT_CURRENT('SponsorAdminExerciseDataInput');");
 						"healthWatchSqlConnection",
 						new SqlParameter("@SponsorAdminExerciseID", sponsorAdminExerciseID),
 						new SqlParameter("@ValueText", data.ValueText),
-						new SqlParameter("@Order", i++)
+						new SqlParameter("@Order", i++),
+						new SqlParameter("@ValueInt", data.ValueInt),
+						new SqlParameter("@Type", data.Type)
 					)
 				);
 				int j = 0;
@@ -382,7 +386,7 @@ WHERE SponsorAdminExerciseID = @SponsorAdminExerciseID";
 						new SponsorAdminExerciseDataInput {
 							Id = GetInt32(rs, 0),
 							ValueText = GetString(rs, 2),
-							Order = GetInt32(rs, 3),
+							SortOrder = GetInt32(rs, 3),
 							ValueInt = GetInt32(rs, 4),
 							Type = GetInt32(rs, 5)
 						}
