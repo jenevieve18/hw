@@ -6,7 +6,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
-using HW.Core.Models;
 
 namespace HW.WebService
 {
@@ -91,6 +90,11 @@ namespace HW.WebService
 			public String token;
 			public DateTime tokenExpires;
 			public int languageID;
+		}
+		public struct DeviceID
+		{
+			public string registrationID;
+			public bool inactive;
 		}
 		public struct NewsCategory
 		{
@@ -3126,30 +3130,87 @@ namespace HW.WebService
 			return ret;
 		}
 
-		[WebMethod(Description = "Saves the user device registration ID. Returns false if the device ID is already in the database.")]
-		public bool UserSaveRegistrationID(string registrationID, string token, int expirationMinutes)
+		[WebMethod(Description = "Saves the user device registration ID. Updates the values if there is a record for the device ID on that user. Returns false if the device ID is already in the database.")]
+		public bool UserSaveRegistrationID(string registrationID, bool inactive, string token, int expirationMinutes)
 		{
 			int userID = getUserIdFromToken(token, expirationMinutes);
 			bool isNewValue = false;
 			if (userID != 0) {
 				SqlDataReader r = rs(
-					"SELECT UserRegistrationID, UserID, RegistrationID " +
+					"SELECT 1 " +
 					"FROM dbo.UserRegistrationID " +
 					"WHERE UserID = " + userID + " " +
-					"AND RegistrationID = '" + registrationID + "'"
+					"AND RegistrationID = '" + registrationID.Replace("'", "") + "'"
 				);
 				if (!r.Read()) {
 					isNewValue = true;
 				}
 				if (isNewValue) {
 					exec(
-						"INSERT INTO dbo.UserRegistrationID(UserID, RegistrationID)" +
-						"VALUES(" + userID + ", '" + registrationID.Replace("'", "") + "')"
+						"INSERT INTO dbo.UserRegistrationID(UserID, RegistrationID, Inactive)" +
+						"VALUES(" + userID + ", '" + registrationID.Replace("'", "") + "', " + (inactive ? 1 : 0) + ")"
+					);
+				} else {
+					exec(
+						"UPDATE dbo.UserRegistrationID SET Inactive = " + (inactive ? 1 : 0) + " " +
+						"WHERE UserID = " + userID + " " +
+//						"AND RegistrationID = '" + registrationID.Replace("'", "") + "'" +
+						""
 					);
 				}
 				r.Close();
 			}
 			return isNewValue;
+		}
+		
+		[WebMethod(Description = "Gets the user device registration ID. Returns the DeviceID object if the registration device ID for user is in the database.")]
+		public DeviceID UserGetRegistrationID(string registrationID, string token, int expirationMinutes)
+		{
+			DeviceID deviceID = new DeviceID();
+			int userID = getUserIdFromToken(token, expirationMinutes);
+			if (userID != 0) {
+				SqlDataReader r = rs(
+					"SELECT UserRegistrationID, UserID, RegistrationID, Inactive " +
+					"FROM dbo.UserRegistrationID " +
+					"WHERE UserID = " + userID + " " +
+					"AND RegistrationID = '" + registrationID.Replace("'", "") + "'"
+				);
+				if (!r.Read()) {
+					deviceID = new DeviceID {
+						registrationID = r.IsDBNull(2) ? "" : r.GetString(2),
+						inactive = r.IsDBNull(3) ? false : r.GetInt32(3) == 1
+					};
+				}
+				r.Close();
+			}
+			return deviceID;
+		}
+
+		[WebMethod(Description = "Removes the user device registration ID. Returns false if the device ID is not found in the database.")]
+		public bool UserRemoveRegistrationID(string registrationID, string token, int expirationMinutes)
+		{
+			int userID = getUserIdFromToken(token, expirationMinutes);
+			bool registrationIDFound = false;
+			if (userID != 0) {
+				SqlDataReader r = rs(
+					"SELECT UserRegistrationID " +
+					"FROM dbo.UserRegistrationID " +
+					"WHERE RegistrationID = '" + registrationID.Replace("'", "") + "' " +
+					"AND UserID = " + userID
+				);
+				if (r.Read()) {
+					registrationIDFound = true;
+				}
+				if (registrationIDFound) {
+					exec(
+						"DELETE FROM dbo.UserRegistrationID " +
+						"WHERE RegistrationID = '" + registrationID.Replace("'", "") + "' " +
+						"AND UserID = " + userID
+					);
+				}
+				r.Close();
+			}
+			return registrationIDFound;
 		}
 
 		[WebMethod(Description = "Gets the UserKey and updates a new value into the database. Returns 0 if UserKey is not found. This will only update a new UserKey if the User's ReminderLink is 2.")]
@@ -3177,32 +3238,6 @@ namespace HW.WebService
 				r.Close();
 			}
 			return validKey;
-		}
-
-		[WebMethod(Description = "Removes the user device registration ID. Returns false if the device ID is not found in the database.")]
-		public bool UserRemoveRegistrationID(string registrationID, string token, int expirationMinutes)
-		{
-			int userID = getUserIdFromToken(token, expirationMinutes);
-			bool registrationIDFound = false;
-			if (userID != 0) {
-				SqlDataReader r = rs(
-					"SELECT UserRegistrationID " +
-					"FROM dbo.UserRegistrationID " +
-					"WHERE RegistrationID = '" + registrationID + "'"
-				);
-				if (r.Read()) {
-					registrationIDFound = true;
-				}
-				if (registrationIDFound) {
-					exec(
-						"UPDATE dbo.UserRegistrationID SET UserID = -UserID " +
-						"WHERE RegistrationID = '" + registrationID + "' " +
-						"AND UserID > 0"
-					);
-				}
-				r.Close();
-			}
-			return registrationIDFound;
 		}
 		
 		[WebMethod(Description="Validates a user key and, if there is a match, returns a user data object including token with a variable lifetime (max 20 minutes).")]
