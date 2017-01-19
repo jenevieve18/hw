@@ -3177,7 +3177,7 @@ namespace HW.WebService
 					"WHERE UserID = " + userID + " " +
 					"AND RegistrationID = '" + registrationID.Replace("'", "") + "'"
 				);
-				if (!r.Read()) {
+				if (r.Read()) {
 					deviceID = new DeviceID {
 						registrationID = r.IsDBNull(2) ? "" : r.GetString(2),
 						inactive = r.IsDBNull(3) ? false : r.GetInt32(3) == 1,
