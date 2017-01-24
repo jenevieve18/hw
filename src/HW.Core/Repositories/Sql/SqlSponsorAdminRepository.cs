@@ -41,7 +41,7 @@ SELECT IDENT_CURRENT('SponsorAdminExercise');"
 			);
 			query = string.Format(
 				@"
-INSERT SponsorAdminExerciseDataInput(SponsorAdminExerciseID, ValueText, [Order], ValueInt, Type)
+INSERT SponsorAdminExerciseDataInput(SponsorAdminExerciseID, ValueText, SortOrder, ValueInt, Type)
 VALUES(@SponsorAdminExerciseID, @ValueText, @Order, @ValueInt, @Type);
 SELECT IDENT_CURRENT('SponsorAdminExerciseDataInput');");
 			int i = 0;
@@ -99,7 +99,7 @@ WHERE di.SponsorAdminExerciseID = @SponsorAdminExerciseID",
 			);
 			query = string.Format(
 				@"
-INSERT SponsorAdminExerciseDataInput(SponsorAdminExerciseID, ValueText, [Order], ValueInt, Type)
+INSERT SponsorAdminExerciseDataInput(SponsorAdminExerciseID, ValueText, SortOrder, ValueInt, Type)
 VALUES(@SponsorAdminExerciseID, @ValueText, @Order, @ValueInt, @Type);
 SELECT IDENT_CURRENT('SponsorAdminExerciseDataInput');");
 			int i = 0;
@@ -374,7 +374,7 @@ WHERE SponsorAdminExerciseDataInputID = @SponsorAdminExerciseDataInputID";
 SELECT SponsorAdminExerciseDataInputID,
 	SponsorAdminExerciseID,
 	ValueText,
-	[Order],
+	SortOrder,
 	ValueInt,
 	[Type]
 FROM dbo.SponsorAdminExerciseDataInput
