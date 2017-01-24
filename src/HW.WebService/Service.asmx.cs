@@ -95,6 +95,7 @@ namespace HW.WebService
 		{
 			public string registrationID;
 			public bool inactive;
+			public string phoneName;
 		}
 		public struct NewsCategory
 		{
@@ -3131,7 +3132,7 @@ namespace HW.WebService
 		}
 
 		[WebMethod(Description = "Saves the user device registration ID. Updates the values if there is a record for the device ID on that user. Returns false if the device ID is already in the database.")]
-		public bool UserSaveRegistrationID(string registrationID, bool inactive, string token, int expirationMinutes)
+		public bool UserSaveRegistrationID(string registrationID, string phoneName, bool inactive, string token, int expirationMinutes)
 		{
 			int userID = getUserIdFromToken(token, expirationMinutes);
 			bool isNewValue = false;
@@ -3147,12 +3148,13 @@ namespace HW.WebService
 				}
 				if (isNewValue) {
 					exec(
-						"INSERT INTO dbo.UserRegistrationID(UserID, RegistrationID, Inactive)" +
-						"VALUES(" + userID + ", '" + registrationID.Replace("'", "") + "', " + (inactive ? 1 : 0) + ")"
+						"INSERT INTO dbo.UserRegistrationID(UserID, RegistrationID, Inactive, PhoneName)" +
+						"VALUES(" + userID + ", '" + registrationID.Replace("'", "") + "', " + (inactive ? 1 : 0) + ", '" + phoneName.Replace("'", "") + "')"
 					);
 				} else {
 					exec(
-						"UPDATE dbo.UserRegistrationID SET Inactive = " + (inactive ? 1 : 0) + " " +
+						"UPDATE dbo.UserRegistrationID SET Inactive = " + (inactive ? 1 : 0) + " , " +
+						"PhoneName = '" + phoneName.Replace("'", "") + "'" +
 						"WHERE UserID = " + userID + " " +
 //						"AND RegistrationID = '" + registrationID.Replace("'", "") + "'" +
 						""
@@ -3170,15 +3172,16 @@ namespace HW.WebService
 			int userID = getUserIdFromToken(token, expirationMinutes);
 			if (userID != 0) {
 				SqlDataReader r = rs(
-					"SELECT UserRegistrationID, UserID, RegistrationID, Inactive " +
+					"SELECT UserRegistrationID, UserID, RegistrationID, Inactive, PhoneName " +
 					"FROM dbo.UserRegistrationID " +
 					"WHERE UserID = " + userID + " " +
 					"AND RegistrationID = '" + registrationID.Replace("'", "") + "'"
 				);
-				if (!r.Read()) {
+				if (r.Read()) {
 					deviceID = new DeviceID {
 						registrationID = r.IsDBNull(2) ? "" : r.GetString(2),
-						inactive = r.IsDBNull(3) ? false : r.GetInt32(3) == 1
+						inactive = r.IsDBNull(3) ? false : r.GetInt32(3) == 1,
+						phoneName = r.IsDBNull(4) ? "" : r.GetString(4)
 					};
 				}
 				r.Close();
