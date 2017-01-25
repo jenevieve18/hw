@@ -4,6 +4,25 @@ body ul {
 body ul li {
   font-size: 1em;
 }
+body .text-warning {
+  color: #FF7D00;
+}
+body .bubble {
+  cursor: hand;
+  background: url("../img/speech-bubble.png") no-repeat;
+  width: 270px;
+  height: 195px;
+  text-align: center;
+}
+body .bubble:hover {
+  background: url("../img/speech-bubble1.png") no-repeat;
+}
+body .text-center {
+  text-align: center;
+}
+body .text-right {
+  text-align: right;
+}
 body #sortable {
   list-style-type: none;
   margin: 0;
@@ -24,6 +43,12 @@ body #sortable li span {
   border-radius: 4px;
 }
 
+.alert-info {
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+
 .alert-success {
   color: #3c763d;
   background-color: #dff0d8;
@@ -34,6 +59,17 @@ body #sortable li span {
   color: #a94442;
   background-color: #f2dede;
   border-color: #ebccd1;
+}
+
+.alert-warning {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+}
+
+.company .data-input {
+  padding: 10px;
+  border-radius: 4px;
 }
 
 .hidden {
