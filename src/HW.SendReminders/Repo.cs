@@ -265,7 +265,8 @@ namespace HW.SendReminders
 				"RegistrationID " +
 				"FROM dbo.UserRegistrationID " +
 //				"WHERE UserID = " + rs.GetInt32(0)
-				"WHERE UserID = " + userID
+				"WHERE UserID = " + userID + " " +
+				"AND Inactive != 1"
 			)) {
 				while (rs2.Read()) {
 					if (!rs2.IsDBNull(2)) {
