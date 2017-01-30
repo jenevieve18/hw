@@ -79,7 +79,8 @@ namespace HW.SendReminders
 		void fff(int userID);
 		void eee(int userID, string reminderSubject, string personalReminderMessage);
 		void ddd(int userID, string userKey);
-		void UpdateUserRegistrationID(int userID, string userKey);
+//		void UpdateUserRegistrationID(int userID, string userKey);
+		void RemoveUserRegistrationID(int userID, string registrationID);
 		void bbb(Sponsor s);
 		void aaa(int sponsorID);
 	}
@@ -184,19 +185,28 @@ namespace HW.SendReminders
 		public void ddd(int userID, string userKey)
 		{
 			exec(
-				"INSERT INTO dbo.UserRegistrationID(UserID, RegistrationID) " +
+				"INSERT INTO UserRegistrationID(UserID, RegistrationID) " +
 				"VALUES(" + userID + ", '" + userKey.Replace("'", "") + "')"
 			);
 		}
 		
-		public void UpdateUserRegistrationID(int userID, string userKey)
+		public void RemoveUserRegistrationID(int userID, string registrationID)
 		{
 			exec(
-				"UPDATE dbo.UserRegistrationID SET UserID = " + -userID + " " +
+				"DELETE FROM UserRegistrationID " +
 				"WHERE UserID = " + userID + " " +
-				"AND RegistrationID = '" + userKey.Replace("'", "") + "'"
+				"AND RegistrationID = '" + registrationID.Replace("'", "") + "'"
 			);
 		}
+		
+//		public void UpdateUserRegistrationID(int userID, string userKey)
+//		{
+//			exec(
+//				"UPDATE UserRegistrationID SET UserID = " + -userID + " " +
+//				"WHERE UserID = " + userID + " " +
+//				"AND RegistrationID = '" + userKey.Replace("'", "") + "'"
+//			);
+//		}
 		
 		public void demyo(int userID, string personalReminderMessage, string xxx, string yyy)
 		{
@@ -255,10 +265,9 @@ namespace HW.SendReminders
 				"SELECT UserRegistrationID, " +
 				"UserID, " +
 				"RegistrationID " +
-				"FROM dbo.UserRegistrationID " +
-//				"WHERE UserID = " + rs.GetInt32(0)
+				"FROM UserRegistrationID " +
 				"WHERE UserID = " + userID + " " +
-				"AND Inactive != 1"
+				"AND ISNULL(Inactive, 0) != 1"
 			)) {
 				while (rs2.Read()) {
 					if (!rs2.IsDBNull(2)) {

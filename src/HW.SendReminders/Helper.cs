@@ -65,26 +65,20 @@ namespace HW.SendReminders
 							var oldId = expiredException.OldSubscriptionId;
 							var newId = expiredException.NewSubscriptionId;
 
-							Console.WriteLine("Device RegistrationId Expired: {0}", oldId);
+//							Console.WriteLine("Device RegistrationId Expired: {0}", oldId);
+							Console.WriteLine("Device Registration ID expired.");
 							
-							Console.WriteLine("Removing Registration ID {0} from the database...", oldId);
-							
-//						exec(
-//							"UPDATE dbo.UserRegistrationID SET UserID = " + -userId + " " +
-//							"WHERE UserID = " + userId + " " +
-//							"AND RegistrationID = '" + userKey.Replace("'", "") + "'"
-//						);
-							repo.UpdateUserRegistrationID(userId, userKey);
+//							Console.WriteLine("Removing Registration ID {0} from the database...", oldId);
+							Console.WriteLine("Removing Registration ID from the database...");
 
+//							repo.UpdateUserRegistrationID(userId, userKey);
+							repo.RemoveUserRegistrationID(userId, oldId);
+							
 							if (!string.IsNullOrWhiteSpace(newId)) {
 								Console.WriteLine("Device RegistrationId Changed To: {0}", newId);
 								
 								Console.WriteLine("Update Registration ID from {0} to {1}...", oldId, newId);
 								
-//							exec(
-//								"INSERT INTO dbo.UserRegistrationID(UserID, RegistrationID) " +
-//								"VALUES(" + userId + ", '" + userKey.Replace("'", "") + "')"
-//							);
 								repo.ddd(userId, userKey);
 							}
 						} else if (ex is RetryAfterException) {

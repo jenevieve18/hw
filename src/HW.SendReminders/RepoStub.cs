@@ -141,7 +141,12 @@ namespace HW.SendReminders
 			throw new NotImplementedException();
 		}
 		
-		public void UpdateUserRegistrationID(int userID, string userKey)
+//		public void UpdateUserRegistrationID(int userID, string userKey)
+//		{
+//			throw new NotImplementedException();
+//		}
+		
+		public void RemoveUserRegistrationID(int userID, string registrationID)
 		{
 			throw new NotImplementedException();
 		}
