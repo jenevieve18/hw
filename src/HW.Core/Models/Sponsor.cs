@@ -492,13 +492,15 @@ namespace HW.Core.Models
 		public string ValueText { get; set; }
 		public int SortOrder { get; set; }
 		public int ValueInt { get; set; }
+		public string Class { get; set; }
 		
 		public override object ToObject()
 		{
 			return new {
 				valueText = ValueText,
 				valueInt = ValueInt,
-				sortOrder = SortOrder
+				sortOrder = SortOrder,
+				@class = Class
 			};
 		}
 	}
