@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta name="Robots" content="noarchive">
+    <meta name="description" content="Exercises">
+    <title>Exercises - HealthWatch</title>
+    <link type="text/css" rel="stylesheet" href="includes2/css/960.css">
+    <link type="text/css" rel="stylesheet" href="assets/exercises/css/main.css">
+    <link type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/exercises/js/healthwatch.js"></script>
+  </head>
+  <!--if lt IE 7 body.ie6  
+  -->
+  <!--if IE 7 body.ie7  
+  -->
+  <!--if IE 8 body.ie8  
+  -->
+  <!--if IE 9 body.ie9  
+  -->
+  <!-- [if (gt IE 9)|!(IE)] <!-->
+  <body class="popup">
+    <form>
+      <input id="sponsorID" type="hidden" value="">
+      <input id="sponsorAdminID" type="hidden" value="">
+      <input id="exerciseVariantLangID" type="hidden" value="">
+      <input id="sponsorAdminExerciseID" type="hidden" value="0">
+      <div id="popupie" class="popupie">
+        <div class="header">
+          <h1>HealthWatch.se</h1><a id="printBtn" href="#" onclick="window.print();return false;" class="print">Print</a>
+        </div>
+        <div class="content"><img src="img/hwlogosmall.gif"><br><br>
+          <script src="assets/exercises/js/monitorera.js"></script>
+          <div class="exercise-content">
+            <div id="message" class="alert alert-success hidden"></div>
+            <h2>Time required: 30 minutes</h2>
+            <p>
+              Monitoring is all about how you can work systematically to maintain and improve your employees' performance. It's about having a good idea of ​​what they do and achieve in their work. Make it a habit to collect information about how your employees
+              perform their tasks. Below we present four different methods which you can learn to develop concrete examples of how you can monitor your employees. When you are done, you can print your own examples.
+            </p>
+            <div class="accordion">
+              <h3><span title="Click for more information">Method 1: Remove sample from a person's work</span></h3>
+              <div>
+                <p>This is one of the most effective methods to monitor anyone. This means observing something that the person has worked with.</p>
+                <table id="tbl0" class="tbl">
+                  <tr>
+                    <td>Coworker
+                      <p>The person or persons in your group that you want to monitor</p>
+                    </td>
+                    <td>Sample
+                      <p>What the work you want to take a sample of</p>
+                    </td>
+                    <td>How monitor
+                      <p>How will you do this to take samples</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><i>Example:<br> Payroll Administrator</i></td>
+                    <td><i>Example:<br>Numbers that he registered in the payroll system</i></td>
+                    <td><i>Example:<br>Log on to the payroll system and look at some randomly selected individuals, and reports</i></td>
+                  </tr>
+                </table>
+                <p><a onclick="addInput('tbl0', 0)" class="ui-button ui-widget ui-corner-all">Add row...</a></p>
+              </div>
+              <h3><span title="Click for more information">Method 2: Observe a person at work</span></h3>
+              <div>
+                <p>This method is very effective and is to be with and observe meanwhile the person performing any moment in their work.</p>
+                <table id="tbl1" class="tbl">
+                  <tr>
+                    <td>Coworker
+                      <p>The person or persons in your group that you want to monitor</p>
+                    </td>
+                    <td>Sample
+                      <p>What the work you want to take a sample of</p>
+                    </td>
+                    <td>How monitor
+                      <p>How will you do this to take samples</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><i>Example:<br> The manager</i></td>
+                    <td><i>Example:<br>How she allocates tasks in the group</i></td>
+                    <td><i>Example:<br>Sitting on a planning</i></td>
+                  </tr>
+                </table>
+                <p><a onclick="addInput('tbl1', 1)" class="ui-button ui-widget ui-corner-all">Add row...</a></p>
+              </div>
+              <h3><span title="Click for more information">Method 3: Let a person talk about their results</span></h3>
+              <div>
+                <p>This method can be used as a complement to the first two methods. It asks when questions about what the person did to achieve something and then listen carefully to the answer.</p>
+                <table id="tbl2" class="tbl">
+                  <tr>
+                    <td>Coworker
+                      <p>The person or persons in your group that you want to monitor</p>
+                    </td>
+                    <td>Story
+                      <p>What the work you want the person to tell you about</p>
+                    </td>
+                    <td>Question
+                      <p>What and when to ask</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><i>Example:<br>Process Manager</i></td>
+                    <td><i>Example:<br>How he proceeded to involve all those concerned in the process</i></td>
+                    <td><i>Example:<br>Question during the coffee break</i></td>
+                  </tr>
+                </table>
+                <p><a onclick="addInput('tbl2', 2)" class="ui-button ui-widget ui-corner-all">Add row...</a></p>
+              </div>
+              <h3><span title="Click for more information">Method 4: Ask a third person about someone's performance</span></h3>
+              <div>
+                <p>
+                  If it is difficult to get good information by using the other methods on how one worked, one can ask a third person who observed the employee or his results. It sets thus questions about how you want to monitor made to achieve something and then
+                  listen to the answer.
+                </p>
+                <table id="tbl3" class="tbl">
+                  <tr>
+                    <td>Coworker
+                      <p>The person or persons in your group that you want to monitor</p>
+                    </td>
+                    <td>Third person
+                      <p>Whoever you want to ask about the employee's work</p>
+                    </td>
+                    <td>Question
+                      <p>What and when to ask</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><i>Example:<br>Safety representatives</i></td>
+                    <td><i>Example:<br>One of the participants in a training on security protection officer held</i></td>
+                    <td><i>Example:<br>After the training, ask participants how it was planned and carried out</i></td>
+                  </tr>
+                </table>
+                <p><a onclick="addInput('tbl3', 3)" class="ui-button ui-widget ui-corner-all">Add row...</a></p>
+              </div>
+            </div>
+            <p><a id="btn-save" class="ui-button ui-widget ui-corner-all">Save</a></p>
+          </div>
+        </div>
+        <div class="footer">© 2016 www.healthwatch.se</div>
+      </div>
+    </form>
+  </body>
+</html>

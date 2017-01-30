@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta name="Robots" content="noarchive">
+    <meta name="description" content="Exercises">
+    <title>Exercises - HealthWatch</title>
+    <link type="text/css" rel="stylesheet" href="includes2/css/960.css">
+    <link type="text/css" rel="stylesheet" href="assets/exercises/css/main.css">
+    <link type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/exercises/js/healthwatch.js"></script>
+  </head>
+  <!--if lt IE 7 body.ie6  
+  -->
+  <!--if IE 7 body.ie7  
+  -->
+  <!--if IE 8 body.ie8  
+  -->
+  <!--if IE 9 body.ie9  
+  -->
+  <!-- [if (gt IE 9)|!(IE)] <!-->
+  <body class="popup">
+    <form>
+      <input id="sponsorID" type="hidden" value="">
+      <input id="sponsorAdminID" type="hidden" value="">
+      <input id="exerciseVariantLangID" type="hidden" value="">
+      <input id="sponsorAdminExerciseID" type="hidden" value="0">
+      <div id="popupie" class="popupie">
+        <div class="header">
+          <h1>HealthWatch.se</h1><a id="printBtn" href="#" onclick="window.print();return false;" class="print">Print</a>
+        </div>
+        <div class="content"><img src="img/hwlogosmall.gif"><br><br>
+          <script src="assets/exercises/js/index.js"></script>
+          <div class="exercise-content">
+            <div id="message" class="alert alert-success hidden"></div>
+            <p>Required time: Preparation 2 min; implementation of about 20 minutes together with your employees.</p>
+            <p>If you as a manager understand your employees' different preferences and wishes, it will increase your ability to find ways to celebrate success that with motivate them.</p>
+            <p>This is a form that you can distribute to your employees to find out how they would like you to celebrate successes.</p>
+            <p>You can choose to distribute it as it is - or better yet, brainstorm in a group, and then compile the favorites in the form.</p>
+            <h2>Favorite Celebration</h2>
+            <p>Success should be celebrated! You can celebrate in several ways - and what is perceived as relevant ways varies between individuals. Below you can fill in what you think you can do to celebrate something which has been successful. The aim is to give your manager ideas about what you in particular appreciate.</p>
+            <table>
+              <tr>
+                <td valign="top">Begin to generate as many different suggestions of celebration you can think of.
+                  <p></p>
+                  <ul class="inputs"></ul>
+                </td>
+                <td valign="top">Rank your suggestions by writing a figure in the proposals; 1 for the proposal that would feel the best for you, 2 for the second best and so on.
+                  <p></p>
+                  <ul class="sortable-inputs"></ul>
+                </td>
+              </tr>
+            </table>
+            <p><a id="btn-add" class="ui-button ui-widget ui-corner-all">Add</a><a id="btn-save" class="ui-button ui-widget ui-corner-all">Save</a></p>
+          </div>
+        </div>
+        <div class="footer">© 2016 www.healthwatch.se</div>
+      </div>
+    </form>
+  </body>
+</html>

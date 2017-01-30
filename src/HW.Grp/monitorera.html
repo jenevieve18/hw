@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta name="Robots" content="noarchive">
+    <meta name="description" content="Exercises">
+    <title>Exercises - HealthWatch</title>
+    <link type="text/css" rel="stylesheet" href="includes2/css/960.css">
+    <link type="text/css" rel="stylesheet" href="assets/exercises/css/main.css">
+    <link type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/exercises/js/healthwatch.js"></script>
+  </head>
+  <!--if lt IE 7 body.ie6  
+  -->
+  <!--if IE 7 body.ie7  
+  -->
+  <!--if IE 8 body.ie8  
+  -->
+  <!--if IE 9 body.ie9  
+  -->
+  <!-- [if (gt IE 9)|!(IE)] <!-->
+  <body class="popup">
+    <form>
+      <input id="sponsorID" type="hidden" value="">
+      <input id="sponsorAdminID" type="hidden" value="">
+      <input id="exerciseVariantLangID" type="hidden" value="">
+      <input id="sponsorAdminExerciseID" type="hidden" value="0">
+      <div id="popupie" class="popupie">
+        <div class="header">
+          <h1>HealthWatch.se</h1><a id="printBtn" href="#" onclick="window.print();return false;" class="print">Print</a>
+        </div>
+        <div class="content"><img src="img/hwlogosmall.gif"><br><br>
+          <script src="assets/exercises/js/monitorera.js"></script>
+          <div class="exercise-content">
+            <div id="message" class="alert alert-success hidden"></div>
+            <h2>Tidsåtgång: 30 min</h2>
+            <p>
+              Monitorering handlar om hur du kan arbeta systematiskt för att bevara och förbättra dina medarbetares prestationsförmåga. Det handlar om att ha en god uppfattning om vad de gör och åstadkommer i sitt arbete. Gör det till en vana att samla in information
+              om hur dina medarbetare utför sina uppgifter. Nedan presenteras fyra olika metoder där du kan lära dig att ta fram konkreta exempel på hur du kan monitorera dina medarbetare. När du är klar kan du skriva ut dina egna exempel.
+            </p>
+            <div class="accordion">
+              <h3><span title="Klicka för mer information">Metod 1: Ta stickprov ur en persons arbete</span></h3>
+              <div>
+                <p>Detta är en av de mest effektiva metoderna för att monitorera någon. Det innebär att man observerar något som personen har arbetat med.</p>
+                <table id="tbl0" class="tbl">
+                  <tr>
+                    <td>Medarbetare
+                      <p>Den eller de personer i din grupp som du vill monitorera</p>
+                    </td>
+                    <td>Stickprov
+                      <p>Vad i arbetet du vill ta stickprov på</p>
+                    </td>
+                    <td>Hur monitorera
+                      <p>Hur ska du göra du för att ta stickprov</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><i>Exempel:<br> Löneadministratören</i></td>
+                    <td><i>Exempel:<br>Siffror som han registrerat i lönesystemet</i></td>
+                    <td><i>Exempel:<br>Logga in i lönesystemet och titta på några slumpmässigt valda individer och rapporter</i></td>
+                  </tr>
+                </table>
+                <p><a onclick="addInput('tbl0', 0)" class="ui-button ui-widget ui-corner-all">Lägg till rad...</a>
+                </p>
+              </div>
+              <h3><span title="Klicka för mer information">Metod 2: Observera en person i sitt arbete</span></h3>
+              <div>
+                <p>Den här metoden är också mycket effektiv och går ut på att vara med och observera under tiden personen utför något moment i sitt arbete.</p>
+                <table id="tbl1" class="tbl">
+                  <tr>
+                    <td>Medarbetare
+                      <p>Den eller de personer i din grupp som du vill monitorera</p>
+                    </td>
+                    <td>Stickprov
+                      <p>Vad i arbetet du vill ta stickprov på</p>
+                    </td>
+                    <td>Hur monitorera
+                      <p>Hur ska du göra du för att ta stickprov</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><i>Exempel:<br> Projektledaren</i></td>
+                    <td><i>Exempel:<br>Hur hon fördelar uppgifter i gruppen</i></td>
+                    <td><i>Exempel:<br>Sitta med på ett planeringsmöte</i></td>
+                  </tr>
+                </table>
+                <p><a onclick="addInput('tbl1', 1)" class="ui-button ui-widget ui-corner-all">Lägg till rad...</a>
+                </p>
+              </div>
+              <h3><span title="Klicka för mer information">Metod 3: Låta en person berätta om sina resultat</span></h3>
+              <div>
+                <p>Den här metoden kan man använda som ett komplement till de två första metoderna. Man ställer då frågor om hur personen gjorde för att uppnå något och lyssnar sedan uppmärksamt på svaret.</p>
+                <table id="tbl2" class="tbl">
+                  <tr>
+                    <td>Medarbetare
+                      <p>Den eller de personer i din grupp som du vill monitorera</p>
+                    </td>
+                    <td>Berättelse
+                      <p>Vad i arbetet du vill att personen ska berätta om</p>
+                    </td>
+                    <td>Fråga
+                      <p>Vad och när du ska fråga</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><i>Exempel:<br>Processansvarig</i></td>
+                    <td><i>Exempel:<br>Hur han gick tillväga för att involvera alla som är berörda i processen</i></td>
+                    <td><i>Exempel:<br>Fråga i samband med fikapausen</i></td>
+                  </tr>
+                </table>
+                <p><a onclick="addInput('tbl2', 2)" class="ui-button ui-widget ui-corner-all">Lägg till rad...</a>
+                </p>
+              </div>
+              <h3><span title="Klicka för mer information">Metod 4: Fråga en tredje person om någons resultat</span></h3>
+              <div>
+                <p>
+                  Om det är svårt att få bra information med hjälp av de andra metoderna om hur någon arbetat kan man fråga en tredje person som observerat medarbetaren eller dennes resultat. Man ställer på så vis frågor om hur den du vill monitorera gjorde för
+                  att uppnå något och lyssnar sedan på svaret.
+                </p>
+                <table id="tbl3" class="tbl">
+                  <tr>
+                    <td>Medarbetare
+                      <p>Den eller de personer i din grupp som du vill monitorera</p>
+                    </td>
+                    <td>Tredje person
+                      <p>Den som du vill fråga om medarbetarens arbete</p>
+                    </td>
+                    <td>Fråga
+                      <p>Vad och när du ska fråga</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><i>Exempel:<br>Skyddsombud</i></td>
+                    <td><i>Exempel:<br>En av deltagarna i en utbildning om säkerhet som skyddsombudet hållit</i></td>
+                    <td><i>Exempel:<br>Efter genomförd utbildning, fråga deltagaren hur den var upplagd och genomfördes</i></td>
+                  </tr>
+                </table>
+                <p><a onclick="addInput('tbl3', 3)" class="ui-button ui-widget ui-corner-all">Lägg till rad...</a>
+                </p>
+              </div>
+            </div>
+            <p><a id="btn-save" class="ui-button ui-widget ui-corner-all">Spara</a></p>
+          </div>
+        </div>
+        <div class="footer">© 2016 www.healthwatch.se</div>
+      </div>
+    </form>
+  </body>
+</html>

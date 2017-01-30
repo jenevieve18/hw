@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta name="Robots" content="noarchive">
+    <meta name="description" content="Exercises">
+    <title>Exercises - HealthWatch</title>
+    <link type="text/css" rel="stylesheet" href="includes2/css/960.css">
+    <link type="text/css" rel="stylesheet" href="assets/exercises/css/main.css">
+    <link type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/exercises/js/healthwatch.js"></script>
+  </head>
+  <!--if lt IE 7 body.ie6  
+  -->
+  <!--if IE 7 body.ie7  
+  -->
+  <!--if IE 8 body.ie8  
+  -->
+  <!--if IE 9 body.ie9  
+  -->
+  <!-- [if (gt IE 9)|!(IE)] <!-->
+  <body class="popup">
+    <form>
+      <input id="sponsorID" type="hidden" value="">
+      <input id="sponsorAdminID" type="hidden" value="">
+      <input id="exerciseVariantLangID" type="hidden" value="">
+      <input id="sponsorAdminExerciseID" type="hidden" value="0">
+      <div id="popupie" class="popupie">
+        <div class="header">
+          <h1>HealthWatch.se</h1><a id="printBtn" href="#" onclick="window.print();return false;" class="print">Print</a>
+        </div>
+        <div class="content"><img src="img/hwlogosmall.gif"><br><br>
+          <script src="assets/exercises/js/roda_traden.js"></script>
+          <div class="exercise-content">
+            <div id="message" class="alert alert-success hidden"></div>
+            <p>
+              This exercise is to create a common thread between the goals of the organization, the group's mission and what employees do in their daily work. The exercise will serve as a basis for discussion at a team meeting or a private conversation with a coworker.
+              The idea is to pay attention to how well the company's overall vision is consistent with how to actually work. Hanging employees' behavior together with the company's vision? Is there a gap? Please go through the following questions on your own first.
+              Bring your notes in mind when the group hits and doing exercise. If the group has difficulty answering the questions, you can present what you think and ask if it is consistent with their view. The aim is to stimulate discussion rather than to present
+              an answer key.
+            </p>
+            <h2>Do this:</h2>
+            <ol>
+              <li>What is the company's vision look like? Write it in the first box.</li>
+              <li>What is your group's mission out? Write it in the box for the group's mission.</li>
+              <li>What are the main tasks of your employees? Write them in the boxes of the employees.<br>Describe your employees to do as concrete as possible. What you describe going to be perceived as by several people.</li>
+              <li>
+                Assess whether there is a common thread in what you described. Linked tasks associated with your mission, and it is in line with the company's vision? If not, think about how you can create a thread, and the level at which a change should take place.
+                This could involve a dialogue with your supervisor about your group's mission or with your employees about their duties.
+              </li>
+            </ol>
+            <p></p>
+            <div class="company">
+              <div class="company-vision text-center">
+                <textarea id="input0" type="text" name="input[]" data-content="The company's vision" class="data-input">The company's vision</textarea>
+              </div><br>
+              <div class="company-mission text-center">
+                <textarea id="input1" type="text" name="input[]" data-content="The group's mission" class="data-input">The group's mission</textarea>
+              </div><br>
+              <div class="employee-behaviors">
+                <textarea id="input2" name="input[]" data-content="Employee 1's behavior" class="data-input">Employee 1's behavior</textarea>
+                <textarea id="input3" name="input[]" data-content="Employee 2's behavior" class="data-input">Employee 2's behavior</textarea>
+                <textarea id="input4" name="input[]" data-content="Employee 3's behavior" class="data-input">Employee 3's behavior</textarea>
+                <textarea id="input5" name="input[]" data-content="Employee 4's behavior" class="data-input">Employee 4's behavior</textarea>
+                <textarea id="input6" name="input[]" data-content="Employee 5's behavior" class="data-input">Employee 5's behavior</textarea>
+              </div>
+            </div>
+            <p><a id="btn-add" class="ui-button ui-widget ui-corner-all">More boxes for employees ...</a><a id="btn-save" class="ui-button ui-widget ui-corner-all">Save</a></p>
+          </div>
+        </div>
+        <div class="footer">© 2016 www.healthwatch.se</div>
+      </div>
+    </form>
+  </body>
+</html>

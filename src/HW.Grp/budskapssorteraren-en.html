@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta name="Robots" content="noarchive">
+    <meta name="description" content="Exercises">
+    <title>Exercises - HealthWatch</title>
+    <link type="text/css" rel="stylesheet" href="includes2/css/960.css">
+    <link type="text/css" rel="stylesheet" href="assets/exercises/css/main.css">
+    <link type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/exercises/js/healthwatch.js"></script>
+  </head>
+  <!--if lt IE 7 body.ie6  
+  -->
+  <!--if IE 7 body.ie7  
+  -->
+  <!--if IE 8 body.ie8  
+  -->
+  <!--if IE 9 body.ie9  
+  -->
+  <!-- [if (gt IE 9)|!(IE)] <!-->
+  <body class="popup">
+    <form>
+      <input id="sponsorID" type="hidden" value="">
+      <input id="sponsorAdminID" type="hidden" value="">
+      <input id="exerciseVariantLangID" type="hidden" value="">
+      <input id="sponsorAdminExerciseID" type="hidden" value="0">
+      <div id="popupie" class="popupie">
+        <div class="header">
+          <h1>HealthWatch.se</h1><a id="printBtn" href="#" onclick="window.print();return false;" class="print">Print</a>
+        </div>
+        <div class="content"><img src="img/hwlogosmall.gif"><br><br>
+          <script src="assets/exercises/js/budskapssorteraren.js"></script>
+          <script>
+            var newExercise = {
+              inputs: [
+                { components: [] },
+                { components: [] },
+                { components: [
+                  { valueText: 'Answer the phone', class: 'beteende' },
+                  { valueText: 'Ask a question', class: 'beteende' },
+                  { valueText: 'Lazy', class: 'ickebeteende' },
+                  { valueText: 'Say yes', class: 'beteende' },
+                  { valueText: 'Nonchalant', class: 'ickebeteende' },
+                  { valueText: 'Ambitious', class: 'ickebeteende' },
+                  { valueText: 'Putting on the helmet', class: 'beteende' },
+                  { valueText: 'Take responsibility', class: 'ickebeteende' },
+                  { valueText: 'Security Conscious', class: 'ickebeteende' },
+                  { valueText: 'Good', class: 'ickebeteende' },
+                  { valueText: 'Perform tasks with high quality', class: 'beteende' },
+                  { valueText: 'Positive', class: 'ickebeteende' },
+                  { valueText: 'Smile', class: 'beteende' },
+                  { valueText: 'Nod', class: 'beteende' },
+                  { valueText: 'Careless', class: 'ickebeteende' },
+                  { valueText: 'LOYAL', class: 'ickebeteende' }
+                ] }
+              ]
+            };
+          </script>
+          <div class="exercise-content">
+            <h2>Time: 8 minutes</h2>
+            <div id="message" class="alert alert-success hidden"></div>
+            <p>To increase the likelihood that your employees understand and embrace of your message, it is good to express what you want them to do (behaviors) rather than how you want it to be (attitudes, characteristics or attributes). It reduces the risk of misunderstandings and makes it easier to absorb both positive and corrective feedback. Here you can test your skills in distinguishing between behavior (what one says or does) and non-behavior (eg attitudes, characteristics, attributes).</p>
+            <p><i>Sort the list below so that the descriptions end up in the right column.</i></p>
+            <div id="div1">
+              <table width="100%">
+                <tr>
+                  <th width="50%">Behavior </th>
+                  <th width="50%">Non-behavior</th>
+                </tr>
+                <tr>
+                  <td style="background-color:#72bae4" valign="top">
+                    <div id="behavior" style="min-height:50px" class="input0 ui-helper-reset"></div>
+                  </td>
+                  <td style="background-color:#72bae4" valign="top">
+                    <div id="non-behavior" style="min-height:50px" class="input1 ui-helper-reset"></div>
+                  </td>
+                </tr>
+              </table>
+              <ul id="choices" style="background-color:#EBEBEB" class="input2 gallery ui-helper-reset">
+              </ul>
+            </div>
+            <div id="div2">
+              <table width="100%">
+                <tr>
+                  <th width="50%"> Behavior </th>
+                  <th width="50%"> Non-behavior</th>
+                </tr>
+                <tr>
+                  <td valign="top">
+                    <ul>
+                      <li>
+                        <div>Answer the phone</div>
+                        <div class="bete alert alert-warning">This is real enough.</div>
+                      </li>
+                      <li>
+                        <div>Ask a question</div>
+                        <div class="bete alert alert-warning">This is real enough.</div>
+                      </li>
+                      <li>
+                        <div>Say yes</div>
+                        <div class="bete alert alert-warning">This is real enough.</div>
+                      </li>
+                      <li>
+                        <div>Putting on the helmet</div>
+                        <div class="bete alert alert-warning">This is real enough. Drafted as a positive action (compare to "have a helmet on, ")</div>
+                      </li>
+                      <li>
+                        <div>Perform tasks with high quality</div>
+                        <div class="bete alert alert-warning">As long as "tasks" and "high quality" is defined, this is a behavior.</div>
+                      </li>
+                      <li>
+                        <div>Smile</div>
+                        <div class="bete alert alert-warning">This is observable and thus concretely enough.</div>
+                      </li>
+                      <li>
+                        <div>Nod</div>
+                        <div class="bete alert alert-warning">This is observable and thus concretely enough.</div>
+                      </li>
+                    </ul>
+                  </td>
+                  <td valign="top">
+                    <ul>
+                      <li>
+                        <div>Lazy</div>
+                        <div class="icke alert alert-warning">An evaluative word that is difficult to assimilate and provoke. That can mean several different things, and therefore involves several different behaviors (coming late, miss deadlines, do not do data)</div>
+                      </li>
+                      <li>
+                        <div>Nonchalant</div>
+                        <div class="icke alert alert-warning">An evaluative word that is difficult to assimilate and provoke. That can mean several different things, and therefore involves several different behaviors (coming late, miss deadlines, doing tasks for poor quality., Looking away when someone is talking, interrupting others, etc.)</div>
+                      </li>
+                      <li>
+                        <div>Ambitious</div>
+                        <div class="icke alert alert-warning">A word which admittedly can be positively loaded but nevertheless evaluative and can mean several different things: Do more than what is expected, doing other people's jobs, working long hours, over deliver, over control,</div>
+                      </li>
+                      <li>
+                        <div>Take responsibility</div>
+                        <div class="icke alert alert-warning">Very common with the word "ambitious": A word which admittedly can be positively loaded but nevertheless evaluative and can mean several different things: Do more than what is expected, doing other tasks, working hours, help others, solve problems</div>
+                      </li>
+                      <li>
+                        <div>security Conscious</div>
+                        <div class="icke alert alert-warning">Lack sufficient specification - can thus mean several different things. For example, to remind colleagues to use their personal safety, self be careful to take on the security or talk about the importance of safety at the meetings.</div>
+                      </li>
+                      <li>
+                        <div>Good</div>
+                        <div class="icke alert alert-warning">Similar to "take responsibility" and "ambitious": Evaluating, ambiguous: Does more than what is expected, doing other tasks, working hours, help others, solve problems</div>
+                      </li>
+                      <li>
+                        <div>Positive</div>
+                        <div class="icke alert alert-warning">Lack sufficient specification - can thus mean several different things. Say yes to new things, pulling funny stories in the coffee room, give positive feedback to colleagues.</div>
+                      </li>
+                      <li>
+                        <div>Careless</div>
+                        <div class="icke alert alert-warning">An evaluative word that is difficult to assimilate and provoke. That can mean several different things, and therefore involves several different behaviors (coming late, miss deadlines, performing their duties with poorer quality)</div>
+                      </li>
+                      <li>
+                        <div>LOYAL</div>
+                        <div class="icke alert alert-warning">For general to several observers would agree on what it means: to fulfill their obligations, in time, have been employed long etc.</div>
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <p><a id="btn-cheat" class="ui-button ui-widget ui-corner-all">Do you want to cheat</a><a id="btn-back" class="hidden ui-button ui-widget ui-corner-all">Back</a><a id="btn-save" class="ui-button ui-widget ui-corner-all">Save</a></p>
+            <p>To read more about the behaviors and how they work in organizations, we recommend Rolf Olofsson: Behavior Analysis in organizations. Handbook of OBM. Stockholm: Nature and Culture in 2010.</p>
+          </div>
+        </div>
+        <div class="footer">© 2016 www.healthwatch.se</div>
+      </div>
+    </form>
+  </body>
+</html>

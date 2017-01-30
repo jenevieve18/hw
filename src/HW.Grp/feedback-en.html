@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta name="Robots" content="noarchive">
+    <meta name="description" content="Exercises">
+    <title>Exercises - HealthWatch</title>
+    <link type="text/css" rel="stylesheet" href="includes2/css/960.css">
+    <link type="text/css" rel="stylesheet" href="assets/exercises/css/main.css">
+    <link type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/exercises/js/healthwatch.js"></script>
+  </head>
+  <!--if lt IE 7 body.ie6  
+  -->
+  <!--if IE 7 body.ie7  
+  -->
+  <!--if IE 8 body.ie8  
+  -->
+  <!--if IE 9 body.ie9  
+  -->
+  <!-- [if (gt IE 9)|!(IE)] <!-->
+  <body class="popup">
+    <form>
+      <input id="sponsorID" type="hidden" value="">
+      <input id="sponsorAdminID" type="hidden" value="">
+      <input id="exerciseVariantLangID" type="hidden" value="">
+      <input id="sponsorAdminExerciseID" type="hidden" value="0">
+      <div id="popupie" class="popupie">
+        <div class="header">
+          <h1>HealthWatch.se</h1><a id="printBtn" href="#" onclick="window.print();return false;" class="print">Print</a>
+        </div>
+        <div class="content"><img src="img/hwlogosmall.gif"><br><br>
+          <script src="assets/exercises/js/feedback.js"></script>
+          <div class="exercise-content">
+            <div id="message" class="alert alert-success hidden"></div>
+            <h2>Time: 5-10 minutes</h2>
+            <p>Increase opportunities for others to understand what you expect by specifying what you want your employees to do. Try how clear you can be! Read the following terms and formulate what behaviors you find that they include.</p>
+            <p>1) Take responsibility</p>
+            <textarea id="input0" name="input[]" style="width:100%;height:100px"></textarea>
+            <div class="description hidden">
+              <p>Here are examples of what can be mean when you say: "Take Responsibility"</p>
+              <ul>
+                <li>Making their tasks</li>
+                <li>Help others</li>
+                <li>Make sure others feel good</li>
+                <li>Plan ahead</li>
+                <li>Suggest improvements</li>
+                <li>Unload the dishwasher</li>
+              </ul>
+            </div>
+            <p>2) Be positive</p>
+            <textarea id="input1" name="input[]" style="width:100%;height:100px"></textarea>
+            <div class="description hidden">
+              <p>Here are some examples of what behaviors can be mean when you say "Be positive"</p>
+              <ul>
+                <li>Say hello in the hallway</li>
+                <li>Joke</li>
+                <li>Suggest activities</li>
+                <li>Find opportunities in problems</li>
+                <li>Suggest improvements</li>
+                <li>Fix the coffee to the other</li>
+                <li>Give positive feedback to someone who has done something good</li>
+              </ul>
+            </div>
+            <p>3) Be efficient</p>
+            <textarea id="input2" name="input" style="width:100%;height:100px"></textarea>
+            <div class="description hidden">
+              <p>Here are some examples of what behaviors can be mean when you say "Be efficient "</p>
+              <ul>
+                <li>Making timelines</li>
+                <li>Reply to all mail</li>
+                <li>Moving fast in the corridors</li>
+                <li>Being first or last on the job</li>
+                <li>Keep up with what they thought</li>
+                <li>Do the things that are most important based on objectives</li>
+              </ul>
+            </div>
+            <p><a id="btn-move-on" class="ui-button ui-widget ui-corner-all">Move on</a><a id="btn-save" class="ui-button ui-widget ui-corner-all">Save</a></p>
+            <div class="description">
+              <p>The same general expression can have different meanings for different people. By pinpointing and in a neutral way to describe what someone does or says, you reduce the risk of misunderstanding and increases the likelihood that what you say has the intended effect.</p>
+            </div>
+          </div>
+        </div>
+        <div class="footer">© 2016 www.healthwatch.se</div>
+      </div>
+    </form>
+  </body>
+</html>

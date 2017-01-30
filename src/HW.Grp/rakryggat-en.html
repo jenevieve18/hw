@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta name="Robots" content="noarchive">
+    <meta name="description" content="Exercises">
+    <title>Exercises - HealthWatch</title>
+    <link type="text/css" rel="stylesheet" href="includes2/css/960.css">
+    <link type="text/css" rel="stylesheet" href="assets/exercises/css/main.css">
+    <link type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/exercises/js/healthwatch.js"></script>
+  </head>
+  <!--if lt IE 7 body.ie6  
+  -->
+  <!--if IE 7 body.ie7  
+  -->
+  <!--if IE 8 body.ie8  
+  -->
+  <!--if IE 9 body.ie9  
+  -->
+  <!-- [if (gt IE 9)|!(IE)] <!-->
+  <body class="popup">
+    <form>
+      <input id="sponsorID" type="hidden" value="">
+      <input id="sponsorAdminID" type="hidden" value="">
+      <input id="exerciseVariantLangID" type="hidden" value="">
+      <input id="sponsorAdminExerciseID" type="hidden" value="0">
+      <div id="popupie" class="popupie">
+        <div class="header">
+          <h1>HealthWatch.se</h1><a id="printBtn" href="#" onclick="window.print();return false;" class="print">Print</a>
+        </div>
+        <div class="content"><img src="img/hwlogosmall.gif"><br><br>
+          <script src="assets/exercises/js/rakryggat.js"></script>
+          <div class="exercise-content">
+            <div id="message" class="alert alert-success hidden"></div>
+            <p>
+              Trust is created through that there is a common thread between what one says and what one does. For example; if you say "It is important to follow our work processes," you also need to follow up and make it easier for employees to follow these processes.
+              This exercise will help you develop your skills in building trust and perceived as upright.
+            </p>
+            <p>
+              Think about what you are keen for employees to do (behavior). Then describe what you can say to start the behavior of employees (activator) and what you can do (consequence) to increase the probability that they are doing so again. Look back and see
+              that you created a thread, so that you ask your employees if also followed by positive consequences. With such actions are perceived, you usually both upright and confidence-building!
+            </p><br>
+            <table id="tbl">
+              <tr>
+                <td> </td>
+                <td>Your instructions (activators)</td>
+                <td>This should employees do (behaviors)</td>
+                <td>How you react to it employees do (consequences)</td>
+              </tr>
+              <tr>
+                <td>Example</td>
+                <td>You say: "It is important to follow our work processes"</td>
+                <td>Follow work processes</td>
+                <td>
+                  <ul>
+                    <li>Encourage employees to follow the processes</li>
+                    <li>Following the processes themselves (good example)</li>
+                    <li>Helping employees who do not follow the process to make it</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>Enter yourself</td>
+                <td>
+                  <textarea id="input0" name="input[]" style="width:90%;height:50px"></textarea>
+                </td>
+                <td>
+                  <textarea id="input1" name="input[]" style="width:90%;height:50px"></textarea>
+                </td>
+                <td>
+                  <textarea id="input2" name="input[]" style="width:90%;height:50px"></textarea>
+                </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td>
+                  <textarea id="input3" name="input[]" style="width:90%;height:50px"></textarea>
+                </td>
+                <td>
+                  <textarea id="input4" name="input[]" style="width:90%;height:50px"></textarea>
+                </td>
+                <td>
+                  <textarea id="input5" name="input[]" style="width:90%;height:50px"></textarea>
+                </td>
+              </tr>
+            </table>
+            <p class="text-right"><a id="btn-add" class="ui-button ui-widget ui-corner-all">Add more boxes</a><a id="btn-save" class="ui-button ui-widget ui-corner-all">Save</a></p>
+          </div>
+        </div>
+        <div class="footer">© 2016 www.healthwatch.se</div>
+      </div>
+    </form>
+  </body>
+</html>

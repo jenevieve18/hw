@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta name="Robots" content="noarchive">
+    <meta name="description" content="Exercises">
+    <title>Exercises - HealthWatch</title>
+    <link type="text/css" rel="stylesheet" href="includes2/css/960.css">
+    <link type="text/css" rel="stylesheet" href="assets/exercises/css/main.css">
+    <link type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/exercises/js/healthwatch.js"></script>
+  </head>
+  <!--if lt IE 7 body.ie6  
+  -->
+  <!--if IE 7 body.ie7  
+  -->
+  <!--if IE 8 body.ie8  
+  -->
+  <!--if IE 9 body.ie9  
+  -->
+  <!-- [if (gt IE 9)|!(IE)] <!-->
+  <body class="popup">
+    <form>
+      <input id="sponsorID" type="hidden" value="">
+      <input id="sponsorAdminID" type="hidden" value="">
+      <input id="exerciseVariantLangID" type="hidden" value="">
+      <input id="sponsorAdminExerciseID" type="hidden" value="0">
+      <div id="popupie" class="popupie">
+        <div class="header">
+          <h1>HealthWatch.se</h1><a id="printBtn" href="#" onclick="window.print();return false;" class="print">Print</a>
+        </div>
+        <div class="content"><img src="img/hwlogosmall.gif"><br><br>
+          <script src="assets/exercises/js/hissovningen.js"></script>
+          <div class="exercise-content">
+            <div id="message" class="alert alert-success hidden"></div>
+            <h2>Tidsåtgång: 10 sekunder - 5 min</h2>
+            <p>
+              Ett bra sätt för en chef att väcka medarbetarnas engagemang är att kärnfullt beskriva hur det man gör på avdelningen hänger samman med företagets vision och mål. Då förstår medarbetarna lättare värdet av det de gör. Öva upp din förmåga att på
+              10-15 sekunder göra en kort presentation där du beskriver målet med din verksamhet och varför det ni gör är viktigt för företaget och era kunder; precis lagom att göra i en hiss.
+            </p>
+            <p>Besvara följande frågor som en förberedelse: </p>
+            <p><a id="btn-clock" class="ui-button ui-widget ui-corner-all">Starta klockan</a>
+              <div id="clock" class="alert alert-info hidden"></div>
+            </p>
+            <p>1. Vad är det unika ni bidrar med?</p>
+            <textarea id="input0" name="input[]" style="width:100%;height:100px"></textarea>
+            <p>2. På vilket sätt är det viktigt för era kunder och för företaget?</p>
+            <textarea id="input1" name="input[]" style="width:100%;height:100px"></textarea>
+            <p>3. Vad är er unika kompetens som gör detta möjligt?</p>
+            <textarea id="input2" name="input[]" style="width:100%;height:100px"></textarea>
+            <p><a id="btn-save" class="ui-button ui-widget ui-corner-all">Spara</a></p>
+            <p>
+              Föreställ dig att du går in i hissen och gör din presentation: Tips! Spela in din presentation. Ta tid och lyssna sedan på den. Hur långt hinner du på 10 sekunder? Låter det inspirerande? Tydligt? Är det en arbetsplats där du skulle vilja jobba?
+              Göra affärer med? Äga? Testa igen och se om du kan vässa dig ytterligare!
+            </p>
+          </div>
+        </div>
+        <div class="footer">© 2016 www.healthwatch.se</div>
+      </div>
+    </form>
+  </body>
+</html>

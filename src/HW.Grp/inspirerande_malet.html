@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta name="Robots" content="noarchive">
+    <meta name="description" content="Exercises">
+    <title>Exercises - HealthWatch</title>
+    <link type="text/css" rel="stylesheet" href="includes2/css/960.css">
+    <link type="text/css" rel="stylesheet" href="assets/exercises/css/main.css">
+    <link type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/exercises/js/healthwatch.js"></script>
+  </head>
+  <!--if lt IE 7 body.ie6  
+  -->
+  <!--if IE 7 body.ie7  
+  -->
+  <!--if IE 8 body.ie8  
+  -->
+  <!--if IE 9 body.ie9  
+  -->
+  <!-- [if (gt IE 9)|!(IE)] <!-->
+  <body class="popup">
+    <form>
+      <input id="sponsorID" type="hidden" value="">
+      <input id="sponsorAdminID" type="hidden" value="">
+      <input id="exerciseVariantLangID" type="hidden" value="">
+      <input id="sponsorAdminExerciseID" type="hidden" value="0">
+      <div id="popupie" class="popupie">
+        <div class="header">
+          <h1>HealthWatch.se</h1><a id="printBtn" href="#" onclick="window.print();return false;" class="print">Print</a>
+        </div>
+        <div class="content"><img src="img/hwlogosmall.gif"><br><br>
+          <script src="assets/exercises/js/inspirerande_malet.js"></script>
+          <div class="exercise-content">
+            <div id="message" class="alert alert-success hidden"></div>
+            <h2>Tidsåtgång: 10-15 minuter</h2>
+            <p>
+              Dina medarbetares engagemang och motivation ökar om de deltar i att ta fram verksamhetens mål. Målen ger riktning för arbetet. Om målet känns viktigt – för kunderna och företaget – ökar engagemanget ytterligare. Här hittar du övningar som hjälper dig
+              att använda målen strategiskt och inspirerande.
+            </p>
+            <p>Fundera ett par minuter för dig själv över ert mål. Vad är viktigt med målet? Vad skapar ni för värde? För vem skapar ni värdet? På vilket sätt kan ni inspireras av målet?</p>
+            <ol>
+              <li>Vår verksamhet går ut på att
+                <p>
+                  <textarea id="input0" name="input[]" style="width:100%;height:100px;"></textarea>
+                </p>
+              </li>
+              <li>Vår verksamhet är viktig för
+                <p>
+                  <textarea id="input1" name="input[]" style="width:100%;height:100px;"></textarea>
+                </p>
+              </li>
+              <li>Vår verksamhet är viktig eftersom
+                <p>
+                  <textarea id="input2" name="input[]" style="width:100%;height:100px;"></textarea>
+                </p>
+              </li>
+              <li>Medarbetarna bidrar till detta genom att
+                <p>
+                  <textarea id="input3" name="input[]" style="width:100%;height:100px;"></textarea>
+                </p>
+              </li>
+            </ol>
+            <p>I dina funderingar, vad la du fokus på? Bocka för den intressent eller de intressenter som ni skapar mest värde för</p>
+            <table width="100%">
+              <tr>
+                <td>
+                  <input id="input4" type="checkbox" name="input[]" value="1">företaget
+                </td>
+                <td>
+                  <input id="input5" type="checkbox" name="input[]" value="1">ägarna
+                </td>
+                <td>
+                  <input id="input6" type="checkbox" name="input[]" value="1">kunderna
+                </td>
+                <td>
+                  <input id="input7" type="checkbox" name="input[]" value="1">samhället
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input id="input8" type="checkbox" name="input[]" value="1">mänskligheten
+                </td>
+                <td>
+                  <input id="input9" type="checkbox" name="input[]" value="1">miljön
+                </td>
+                <td>
+                  <input id="input10" type="checkbox" name="input[]" value="1">medarbetarna
+                </td>
+              </tr>
+            </table>
+            <p>När du tittar på hur du svarat, hur tror du att dina svar påverkar hur du pratar kring målet med dina medarbetare, och hur påverkar det i sin tur deras engagemang i målet? Kan/bör du förändra något?</p>
+            <p>Ett grundläggande mänskligt behov är att vilja göra nytta. Formulera målet så att du hjälper dina medarbetare att se hur de gör nytta genom sitt arbete.</p>
+            <p>Så här skapar vi nytta:</p>
+            <textarea id="input11" name="input[]" style="width:100%;height:100px;"></textarea>
+            <p><a id="btn-save" class="ui-button ui-widget ui-corner-all">Spara</a></p>
+          </div>
+        </div>
+        <div class="footer">© 2016 www.healthwatch.se</div>
+      </div>
+    </form>
+  </body>
+</html>

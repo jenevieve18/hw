@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta name="Robots" content="noarchive">
+    <meta name="description" content="Exercises">
+    <title>Exercises - HealthWatch</title>
+    <link type="text/css" rel="stylesheet" href="includes2/css/960.css">
+    <link type="text/css" rel="stylesheet" href="assets/exercises/css/main.css">
+    <link type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/exercises/js/healthwatch.js"></script>
+  </head>
+  <!--if lt IE 7 body.ie6  
+  -->
+  <!--if IE 7 body.ie7  
+  -->
+  <!--if IE 8 body.ie8  
+  -->
+  <!--if IE 9 body.ie9  
+  -->
+  <!-- [if (gt IE 9)|!(IE)] <!-->
+  <body class="popup">
+    <form>
+      <input id="sponsorID" type="hidden" value="">
+      <input id="sponsorAdminID" type="hidden" value="">
+      <input id="exerciseVariantLangID" type="hidden" value="">
+      <input id="sponsorAdminExerciseID" type="hidden" value="0">
+      <div id="popupie" class="popupie">
+        <div class="header">
+          <h1>HealthWatch.se</h1><a id="printBtn" href="#" onclick="window.print();return false;" class="print">Print</a>
+        </div>
+        <div class="content"><img src="img/hwlogosmall.gif"><br><br>
+          <script src="assets/exercises/js/rakryggat.js"></script>
+          <div class="exercise-content">
+            <div id="message" class="alert alert-success hidden"></div>
+            <p>
+              Förtroende skapas genom att det finns en röd tråd mellan det man säger och det man gör. Till exempel; om man säger "Det är viktigt att följa våra arbetsprocesser" behöver man också följa upp och underlätta för medarbetarna att följa dessa
+              arbetsprocesser. Denna övning hjälper dig att utveckla dina färdigheter i att skapa förtroende och uppfattas som rakryggad.
+            </p>
+            <p>
+              Fundera på vad du är angelägen om att medarbetarna ska göra (beteende). Beskriv sedan vad du kan säga för att starta beteendet hos medarbetarna (aktiverare) och vad du kan göra (konsekvens) för att öka sannolikheten att de gör så igen. Blicka tillbaka
+              och se till att du skapat en röd tråd, så att det du ber dina medarbetare om också följs av positiva konsekvenser. Med ett sådant agerande uppfattas du oftast som både rakryggad och förtroendeskapande!
+            </p><br>
+            <table id="tbl">
+              <tr>
+                <td> </td>
+                <td>Dina instruktioner (aktiverare)</td>
+                <td>Det här ska medarbetarna göra (beteenden)</td>
+                <td>Hur du reagerar på det medarbetarna gör (konsekvenser)</td>
+              </tr>
+              <tr>
+                <td>Exempel</td>
+                <td>Du säger: ”Det är viktigt att följa våra arbetsprocesser”</td>
+                <td>Följa arbetsprocesser</td>
+                <td>
+                  <ul>
+                    <li>Uppmuntrar medarbetare som följer processerna</li>
+                    <li>Följer processerna själv (gott föredöme)</li>
+                    <li>Hjälper medarbetare som inte följer processer att göra det</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>Fyll i själv</td>
+                <td>
+                  <textarea id="input0" name="input[]" style="width:90%;height:50px"></textarea>
+                </td>
+                <td>
+                  <textarea id="input1" name="input[]" style="width:90%;height:50px"></textarea>
+                </td>
+                <td>
+                  <textarea id="input2" name="input[]" style="width:90%;height:50px"></textarea>
+                </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td>
+                  <textarea id="input3" name="input[]" style="width:90%;height:50px"></textarea>
+                </td>
+                <td>
+                  <textarea id="input4" name="input[]" style="width:90%;height:50px"></textarea>
+                </td>
+                <td>
+                  <textarea id="input5" name="input[]" style="width:90%;height:50px"></textarea>
+                </td>
+              </tr>
+            </table>
+            <p class="text-right"><a id="btn-add" class="ui-button ui-widget ui-corner-all">Lägg till fler rutor</a><a id="btn-save" class="ui-button ui-widget ui-corner-all">Spara</a></p>
+          </div>
+        </div>
+        <div class="footer">© 2016 www.healthwatch.se</div>
+      </div>
+    </form>
+  </body>
+</html>

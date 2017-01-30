@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta name="Robots" content="noarchive">
+    <meta name="description" content="Exercises">
+    <title>Exercises - HealthWatch</title>
+    <link type="text/css" rel="stylesheet" href="includes2/css/960.css">
+    <link type="text/css" rel="stylesheet" href="assets/exercises/css/main.css">
+    <link type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/exercises/js/healthwatch.js"></script>
+  </head>
+  <!--if lt IE 7 body.ie6  
+  -->
+  <!--if IE 7 body.ie7  
+  -->
+  <!--if IE 8 body.ie8  
+  -->
+  <!--if IE 9 body.ie9  
+  -->
+  <!-- [if (gt IE 9)|!(IE)] <!-->
+  <body class="popup">
+    <form>
+      <input id="sponsorID" type="hidden" value="">
+      <input id="sponsorAdminID" type="hidden" value="">
+      <input id="exerciseVariantLangID" type="hidden" value="">
+      <input id="sponsorAdminExerciseID" type="hidden" value="0">
+      <div id="popupie" class="popupie">
+        <div class="header">
+          <h1>HealthWatch.se</h1><a id="printBtn" href="#" onclick="window.print();return false;" class="print">Print</a>
+        </div>
+        <div class="content"><img src="img/hwlogosmall.gif"><br><br>
+          <script src="assets/exercises/js/feedback_quiz.js"></script>
+          <div class="exercise-content">
+            <div id="message" class="alert alert-success hidden"></div>
+            <h2>Tidsåtgång: 3 minuter</h2>
+            <p>Som chef har du möjlighet att stimolera dina medarbetare att göra rätt saker – sådant som driver verksamhetens resoltat. Förutom instruktioner och praktiska förutsättningar är återkoppling det främsta verktyg du har till ditt förfogande.</p>
+            <p>Här kan du testa vad du kan om feedback </p>
+            <ol class="quiz">
+              <li>Vad bör feedback fokusera på?
+                <ol>
+                  <li>
+                    <input id="input0" type="checkbox" name="input[]" value="1">Det som någon gjort bra
+                  </li>
+                  <li>
+                    <input id="input1" type="checkbox" name="input[]" value="1">Det som någon gjort dåligt
+                  </li>
+                  <li>
+                    <input id="input2" type="checkbox" name="input[]" value="1">Det någon generellt ska tänka på
+                  </li>
+                  <li>
+                    <input id="input3" type="checkbox" name="input[]" value="1">Det man tror att medarbetaren vill höra
+                  </li>
+                  <li>
+                    <input id="input4" type="checkbox" name="input[]" value="1">Sådant som är utöver det vanliga
+                  </li>
+                </ol>
+                <p class="description hidden"><strong>Som en tumregel kan man tänka  att feedback till en person ska vara fördelad enligt principen 80 procent  positiv feedback och 20 procent korrigerande feedback.</strong></p>
+              </li>
+              <li>Vad bör man ge feedback på?
+                <ol>
+                  <li>
+                    <input id="input5" type="checkbox" name="input[]" value="1">Beteende – vad dina medarbetare gör
+                  </li>
+                  <li>
+                    <input id="input6" type="checkbox" name="input[]" value="1">Attityd – vilken inställning till arbetet som dina medarbetare har
+                  </li>
+                  <li>
+                    <input id="input7" type="checkbox" name="input[]" value="1">Utseende – hur attraktiv din medarbetare är
+                  </li>
+                  <li>
+                    <input id="input8" type="checkbox" name="input[]" value="1">Det som är utanför individens kontroll
+                  </li>
+                  <li>
+                    <input id="input9" type="checkbox" name="input[]" value="1">Det andra säger om personen bakom ryggen
+                  </li>
+                </ol>
+                <p class="description hidden"><strong>Genom att ge feedback på det som någon gör (beteenden) snarare än  exempelvis attityder är det lättare att förstå och ta till sig budskapet.</strong></p>
+              </li>
+              <li>Vid vilket tillfälle bör man ge feedback?
+                <ol>
+                  <li>
+                    <input id="input10" type="checkbox" name="input[]" value="1">I nära anslutning till handlingen som feedbacken berör
+                  </li>
+                  <li>
+                    <input id="input11" type="checkbox" name="input[]" value="1">När man samlat på sig så många exempel att man inte kan låta bli
+                  </li>
+                  <li>
+                    <input id="input12" type="checkbox" name="input[]" value="1">Aldrig
+                  </li>
+                  <li>
+                    <input id="input13" type="checkbox" name="input[]" value="1">En gång om året vid utvecklingssamtal
+                  </li>
+                  <li>
+                    <input id="input14" type="checkbox" name="input[]" value="1">När man är riktigt upprörd över någonting
+                  </li>
+                </ol>
+                <p class="description hidden"><strong>Det är lättare att ta till sig feedback på händelser som ligger nära i  tid. Personen minns lättare händelsen som beskrivs och har möjlighet att göra  mer, eller mindre, av det som feedbacken handlar om.</strong></p>
+              </li>
+              <li>I vilket sammanhang bör man ge feedback?
+                <ol>
+                  <li>
+                    <input id="input15" type="checkbox" name="input[]" value="1">Bakom ryggen på den det berör
+                  </li>
+                  <li>
+                    <input id="input16" type="checkbox" name="input[]" value="1">Via någon annan
+                  </li>
+                  <li>
+                    <input id="input17" type="checkbox" name="input[]" value="1">Individuellt till den som det berör
+                  </li>
+                  <li>
+                    <input id="input18" type="checkbox" name="input[]" value="1">När det är så många andra som lyssnar som möjligt
+                  </li>
+                  <li>
+                    <input id="input19" type="checkbox" name="input[]" value="1">I en bisats i ett mejl
+                  </li>
+                </ol>
+                <p class="description hidden"><strong>Korrigerande feedback bör ges individuellt. Korrigerande feedback inför  andra är obehagligt för samtliga närvarande. Positiv feedback kan ges både  individuellt och inför andra men det är inte självklart att den som får positiv  feedback inför andra upplever det som positivt. Dessutom kan de som lyssnar  tolka det som att de inte gjort något bra eftersom de inte nämns. Välj därför  med omsorg de tillfällen du ger positiv feedback till någon i grupp.</strong></p>
+              </li>
+            </ol>
+            <p><a id="btn-correct" class="ui-button ui-widget ui-corner-all">Rätta</a><a id="btn-save" class="ui-button ui-widget ui-corner-all">Spara</a></p>
+          </div>
+        </div>
+        <div class="footer">© 2016 www.healthwatch.se</div>
+      </div>
+    </form>
+  </body>
+</html>

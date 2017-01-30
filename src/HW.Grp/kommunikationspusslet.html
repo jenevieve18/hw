@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta name="Robots" content="noarchive">
+    <meta name="description" content="Exercises">
+    <title>Exercises - HealthWatch</title>
+    <link type="text/css" rel="stylesheet" href="includes2/css/960.css">
+    <link type="text/css" rel="stylesheet" href="assets/exercises/css/main.css">
+    <link type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/exercises/js/healthwatch.js"></script>
+  </head>
+  <!--if lt IE 7 body.ie6  
+  -->
+  <!--if IE 7 body.ie7  
+  -->
+  <!--if IE 8 body.ie8  
+  -->
+  <!--if IE 9 body.ie9  
+  -->
+  <!-- [if (gt IE 9)|!(IE)] <!-->
+  <body class="popup">
+    <form>
+      <input id="sponsorID" type="hidden" value="">
+      <input id="sponsorAdminID" type="hidden" value="">
+      <input id="exerciseVariantLangID" type="hidden" value="">
+      <input id="sponsorAdminExerciseID" type="hidden" value="0">
+      <div id="popupie" class="popupie">
+        <div class="header">
+          <h1>HealthWatch.se</h1><a id="printBtn" href="#" onclick="window.print();return false;" class="print">Print</a>
+        </div>
+        <div class="content"><img src="img/hwlogosmall.gif"><br><br>
+          <script src="assets/exercises/js/kommunikationspusslet.js"></script>
+          <div class="exercise-content">
+            <script>
+              var newExercise = {
+                inputs: [
+                  { components: [
+                    { valueText: 'En medarbetare har fått kritik från en kund/uppdragsgivare.' },
+                    { valueText: 'Du kommenterar en film du såg på TV föregående kväll.' },
+                    { valueText: 'Strategier för arbetsgruppen behöver diskuteras.' },
+                    { valueText: 'Du har fått ett mail från en medarbetare och vill passa på att återkoppla att denna är på rätt spår.' },
+                    { valueText: 'Återkoppling på arbetsprestation under senaste året.' },
+                    { valueText: 'En medarbetare har löst en svår uppgift.' },
+                    { valueText: 'Diskutera förändrade arbetsuppgifter för en medarbetare.' },
+                    { valueText: 'Kontinuerlig uppföljning av medarbetares prestation.' }
+                  ]},
+                  { components: [
+                    { valueText: 'Enskilt samtal så snart som möjligt efter att det kommit till din kännedom.' },
+                    { valueText: 'Personalrummet under lunchen.' },
+                    { valueText: 'På ett arbetsgruppsmöte, förannonserat så att deltagarna kunnat förbereda sig.' },
+                    { valueText: 'Hissen.' },
+                    { valueText: 'Utvecklingssamtal.' },
+                    { valueText: 'Enskilt samtal eller tillsammans med arbetsgruppen så snart som möjligt efter att det kommit till din kännedom.' },
+                    { valueText: 'Inbokat enskilt samtal.' },
+                    { valueText: 'Vid månadsvisa ett-till-ett samtal.' },
+                  ]}
+                ]
+              };
+            </script>
+            <div id="message" class="alert alert-success hidden"></div>
+            <h2>Tidsåtgång: 5-10 minuter</h2>
+            <p>
+              För att skapa ett öppet klimat är det viktigt att kommunikation sker vid rätt tillfälle. Men när är det? Testa att pussla ihop nedanstående kommunikationssituationer med det tillfälle som du anser vara mest lämpligt. Övningen är som ett 15-spel: Även
+              om en kommunikationssituation kan vara lämplig vid flera tillfällen så finns det bara en lösning där samtliga situationer sker vid lämpliga tillfällen. Du kan därför behöva flytta runt flera gånger innan du hittar en lösning där allt faller på plats.
+            </p>
+            <p>
+              <table>
+                <tr>
+                  <td valign="top"><strong>Kommunikationssituation</strong></td>
+                  <td valign="top"><strong>Rätt tillfälle att säga något </strong>
+                    <p><span class="text-warning">Observera att du bara kan flytta runt bland meningarna i denna kolumn.</span></p>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">
+                    <ul id="input0" style="min-height:100px" class="ui-helper-reset"></ul>
+                  </td>
+                  <td valign="top">
+                    <ul id="input1" style="min-height:100px" class="ui-helper-reset"></ul>
+                  </td>
+                </tr>
+              </table>
+            </p>
+            <p><a id="btn-clear" class="ui-button ui-widget ui-corner-all">Klar</a><a id="btn-correct" class="ui-button ui-widget ui-corner-all">Vill du fuska?</a><a id="btn-save" class="ui-button ui-widget ui-corner-all">Spara</a></p>
+          </div>
+        </div>
+        <div class="footer">© 2016 www.healthwatch.se</div>
+      </div>
+    </form>
+  </body>
+</html>
