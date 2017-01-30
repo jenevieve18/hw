@@ -57,35 +57,35 @@ namespace HW.EForm.Report.Tests.Models
 			var av11 = new AnswerValue { Question = q1, Option = o1, OptionComponent = o1.Components[0].OptionComponent };
 			var av12 = new AnswerValue { Question = q2, Option = o2, OptionComponent = o2.Components[0].OptionComponent };
 			var av13 = new AnswerValue { Question = q3, Option = o3, OptionComponent = o3.Components[0].OptionComponent };
-			a1.AddAnswerValue(av11);
-			a1.AddAnswerValue(av12);
-			a1.AddAnswerValue(av13);
+			a1.AddValue(av11);
+			a1.AddValue(av12);
+			a1.AddValue(av13);
 			
 			var a2 = new Answer { ProjectRoundUser = u2 };
 			var av21 = new AnswerValue { Question = q1, Option = o1, OptionComponent = o1.Components[1].OptionComponent };
 			var av22 = new AnswerValue { Question = q2, Option = o2, OptionComponent = o2.Components[1].OptionComponent };
 			var av23 = new AnswerValue { Question = q3, Option = o3, OptionComponent = o3.Components[1].OptionComponent };
-			a2.AddAnswerValue(av21);
-			a2.AddAnswerValue(av22);
-			a2.AddAnswerValue(av23);
+			a2.AddValue(av21);
+			a2.AddValue(av22);
+			a2.AddValue(av23);
 			
 			var a3 = new Answer { ProjectRoundUser = u3 };
 			var av31 = new AnswerValue { Question = q1, Option = o1, OptionComponent = o1.Components[2].OptionComponent };
 			var av32 = new AnswerValue { Question = q2, Option = o2, OptionComponent = o2.Components[2].OptionComponent };
 			var av33 = new AnswerValue { Question = q3, Option = o3, OptionComponent = o3.Components[2].OptionComponent };
-			a3.AddAnswerValue(av31);
-			a3.AddAnswerValue(av32);
-			a3.AddAnswerValue(av33);
+			a3.AddValue(av31);
+			a3.AddValue(av32);
+			a3.AddValue(av33);
 			
 			var a4 = new Answer { ProjectRoundUser = u4 };
 			var av42 = new AnswerValue { Question = q2, Option = o2, OptionComponent = o2.Components[3].OptionComponent };
 			var av43 = new AnswerValue { Question = q3, Option = o3, OptionComponent = o3.Components[3].OptionComponent };
-			a4.AddAnswerValue(av42);
-			a4.AddAnswerValue(av43);
+			a4.AddValue(av42);
+			a4.AddValue(av43);
 			
 			var a5 = new Answer { ProjectRoundUser = u5 };
 			var av52 = new AnswerValue { Question = q2, Option = o2, OptionComponent = o2.Components[4].OptionComponent };
-			a5.AddAnswerValue(av52);
+			a5.AddValue(av52);
 			
 			pru1.AddAnswer(a1);
 			pru1.AddAnswer(a2);

@@ -43,20 +43,20 @@ namespace HW.EForm.Report.Tests.Models
 			var av12 = new AnswerValue { Answer = a1, Question = q, Option = o, ValueInt = 2 };
 			var av13 = new AnswerValue { Answer = a1, Question = q, Option = o, ValueInt = 3 };
 			var av14 = new AnswerValue { Answer = a1, Question = q, Option = o, ValueInt = 4 };
-			a1.AddAnswerValue(av11);
-			a1.AddAnswerValue(av12);
-			a1.AddAnswerValue(av13);
-			a1.AddAnswerValue(av14);
+			a1.AddValue(av11);
+			a1.AddValue(av12);
+			a1.AddValue(av13);
+			a1.AddValue(av14);
 		
 			var a2 = new Answer { ProjectRoundUser = u2 };
 			var av21 = new AnswerValue { Answer = a2, Question = q, Option = o, ValueInt = 1 };
 			var av22 = new AnswerValue { Answer = a2, Question = q, Option = o, ValueInt = 2 };
 			var av23 = new AnswerValue { Answer = a2, Question = q, Option = o, ValueInt = 3 };
 			var av24 = new AnswerValue { Answer = a2, Question = q, Option = o, ValueInt = 4 };
-			a2.AddAnswerValue(av21);
-			a2.AddAnswerValue(av22);
-			a2.AddAnswerValue(av23);
-			a2.AddAnswerValue(av24);
+			a2.AddValue(av21);
+			a2.AddValue(av22);
+			a2.AddValue(av23);
+			a2.AddValue(av24);
 		}
 	}
 }

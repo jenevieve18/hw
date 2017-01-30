@@ -12,13 +12,13 @@ namespace HW.EForm.Report.Tests.Helpers
 	{
 		public static double GetMean(this Answer answer)
 		{
-			return GetTotalValueInt(answer) / answer.AnswerValues.Count;
+			return GetTotalValueInt(answer) / answer.Values.Count;
 		}
 		
 		static double GetTotalValueInt(this Answer answer)
 		{
 			double total = 0;
-			foreach (var v in answer.AnswerValues) {
+			foreach (var v in answer.Values) {
 				total += v.ValueInt;
 			}
 			return total;

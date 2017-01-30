@@ -20,7 +20,7 @@ namespace HW.EForm.Report.Tests.Services
 //			var a = s.ReadAnswer(214);
 			var a = s.ReadAnswer(9534);
 			Console.WriteLine("Email: {0}, AnswerKey: {1}", a.HasProjectRoundUser ? a.ProjectRoundUser.Email : "", a.AnswerKey);
-			foreach (var av in a.AnswerValues) {
+			foreach (var av in a.Values) {
 				Console.WriteLine("\tValueInt: {0}, QuestionID: {3}, Question: {1}, Option: {2}", av.ValueInt, av.Question.Internal, av.Option.Internal, av.QuestionID);
 			}
 		}

@@ -46,26 +46,26 @@ namespace HW.EForm.Report.Tests.Helpers
 			prus.Add(pru);
 			
 			var a1 = new Answer { ProjectRoundUnit = pru, ProjectRoundUser = new ProjectRoundUser { Email = "info@eform.se" } };
-			a1.AddAnswerValue(new AnswerValue { Question = q, Option = o, OptionComponent = o.Components[0].OptionComponent });
+			a1.AddValue(new AnswerValue { Question = q, Option = o, OptionComponent = o.Components[0].OptionComponent });
 			
 			var a2 = new Answer { ProjectRoundUnit = pru, ProjectRoundUser = new ProjectRoundUser { Email = "info@eform.se" } };
-			a2.AddAnswerValue(new AnswerValue { Question = q, Option = o, OptionComponent = o.Components[1].OptionComponent });
+			a2.AddValue(new AnswerValue { Question = q, Option = o, OptionComponent = o.Components[1].OptionComponent });
 			
 			var a3 = new Answer { ProjectRoundUnit = pru, ProjectRoundUser = new ProjectRoundUser { Email = "info@eform.se" } };
-			a3.AddAnswerValue(new AnswerValue { Question = q, Option = o, OptionComponent = o.Components[2].OptionComponent });
+			a3.AddValue(new AnswerValue { Question = q, Option = o, OptionComponent = o.Components[2].OptionComponent });
 			
 			var a4 = new Answer { ProjectRoundUnit = pru, ProjectRoundUser = new ProjectRoundUser { Email = "info@eform.se" } };
-			a4.AddAnswerValue(new AnswerValue { Question = q, Option = o, OptionComponent = o.Components[2].OptionComponent });
+			a4.AddValue(new AnswerValue { Question = q, Option = o, OptionComponent = o.Components[2].OptionComponent });
 			
 			var a5 = new Answer { ProjectRoundUnit = pru, ProjectRoundUser = new ProjectRoundUser { Email = "info@eform.se" } };
-			a5.AddAnswerValue(new AnswerValue { Question = q, Option = o, OptionComponent = o.Components[2].OptionComponent });
+			a5.AddValue(new AnswerValue { Question = q, Option = o, OptionComponent = o.Components[2].OptionComponent });
 			
 			var qo = q.FirstOption;
-			qo.AddAnswerValue(a1.AnswerValues[0]);
-			qo.AddAnswerValue(a2.AnswerValues[0]);
-			qo.AddAnswerValue(a3.AnswerValues[0]);
-			qo.AddAnswerValue(a4.AnswerValues[0]);
-			qo.AddAnswerValue(a5.AnswerValues[0]);
+			qo.AddAnswerValue(a1.Values[0]);
+			qo.AddAnswerValue(a2.Values[0]);
+			qo.AddAnswerValue(a3.Values[0]);
+			qo.AddAnswerValue(a4.Values[0]);
+			qo.AddAnswerValue(a5.Values[0]);
 			
 			Assert.AreEqual(1, qo.GetAnswerValues(1, 0).Count);
 			Assert.AreEqual(1, qo.GetAnswerValues(1, 1).Count);

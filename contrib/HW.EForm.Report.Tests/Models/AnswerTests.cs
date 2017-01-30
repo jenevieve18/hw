@@ -41,9 +41,9 @@ namespace HW.EForm.Report.Tests.Models
 			q3.AddOption(o3);
 			
 			var a1 = new Answer { ProjectRoundUser = u1 };
-			a1.AddAnswerValue(new AnswerValue { Question = q1, Option = o1, ValueInt = 0 });
-			a1.AddAnswerValue(new AnswerValue { Question = q2, Option = o2, ValueInt = 3 });
-			a1.AddAnswerValue(new AnswerValue { Question = q3, Option = o3, ValueInt = 8 });
+			a1.AddValue(new AnswerValue { Question = q1, Option = o1, ValueInt = 0 });
+			a1.AddValue(new AnswerValue { Question = q2, Option = o2, ValueInt = 3 });
+			a1.AddValue(new AnswerValue { Question = q3, Option = o3, ValueInt = 8 });
 		}
 	}
 }

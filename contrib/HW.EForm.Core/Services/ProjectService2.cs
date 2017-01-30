@@ -12,57 +12,57 @@ namespace HW.EForm.Core.Services
 {
 	public class ProjectService
 	{
-//		SqlProjectRepository projectRepo = new SqlProjectRepository();
-//		SqlProjectRoundRepository projectRoundRepo = new SqlProjectRoundRepository();
-//		SqlProjectRoundLangRepository projectRoundLangRepo = new SqlProjectRoundLangRepository();
-//		SqlProjectRoundUnitRepository projectRoundUnitRepo = new SqlProjectRoundUnitRepository();
-//		SqlProjectRoundUnitManagerRepository projectRoundUnitManagerRepo = new SqlProjectRoundUnitManagerRepository();
-//		SqlProjectRoundUserRepository projectRoundUserRepo = new SqlProjectRoundUserRepository();
-//		SqlProjectSurveyRepository projectSurveyRepo = new SqlProjectSurveyRepository();
+		SqlProjectRepository projectRepo = new SqlProjectRepository();
+		SqlProjectRoundRepository projectRoundRepo = new SqlProjectRoundRepository();
+		SqlProjectRoundLangRepository projectRoundLangRepo = new SqlProjectRoundLangRepository();
+		SqlProjectRoundUnitRepository projectRoundUnitRepo = new SqlProjectRoundUnitRepository();
+		SqlProjectRoundUnitManagerRepository projectRoundUnitManagerRepo = new SqlProjectRoundUnitManagerRepository();
+		SqlProjectRoundUserRepository projectRoundUserRepo = new SqlProjectRoundUserRepository();
+		SqlProjectSurveyRepository projectSurveyRepo = new SqlProjectSurveyRepository();
+		
+		SqlFeedbackRepository feedbackRepo = new SqlFeedbackRepository();
+		SqlFeedbackQuestionRepository feedbackQuestionRepo = new SqlFeedbackQuestionRepository();
+		
+		SqlSurveyRepository surveyRepo = new SqlSurveyRepository();
+		SqlSurveyQuestionRepository surveyQuestionRepo = new SqlSurveyQuestionRepository();
+		
+		SqlQuestionRepository questionRepo = new SqlQuestionRepository();
+		SqlQuestionOptionRepository questionOptionRepo = new SqlQuestionOptionRepository();
+		SqlQuestionLangRepository questionLangRepo = new SqlQuestionLangRepository();
+		
+		SqlOptionRepository optionRepo = new SqlOptionRepository();
+		SqlOptionComponentsRepository optionComponentsRepo = new SqlOptionComponentsRepository();
+		SqlOptionComponentRepository optionComponentRepo = new SqlOptionComponentRepository();
+		SqlOptionComponentLangRepository optionComponentLangRepo = new SqlOptionComponentLangRepository();
+		
+		SqlAnswerRepository answerRepo = new SqlAnswerRepository();
+		SqlAnswerValueRepository answerValueRepo = new SqlAnswerValueRepository();
+		
+//		IProjectRepository projectRepo;
+//		IProjectRoundRepository projectRoundRepo;
+//		IProjectRoundLangRepository projectRoundLangRepo;
+//		IProjectRoundUnitRepository projectRoundUnitRepo;
+//		IProjectRoundUnitManagerRepository projectRoundUnitManagerRepo;
+//		IProjectRoundUserRepository projectRoundUserRepo;
+//		IProjectSurveyRepository projectSurveyRepo;
 //		
-//		SqlFeedbackRepository feedbackRepo = new SqlFeedbackRepository();
-//		SqlFeedbackQuestionRepository feedbackQuestionRepo = new SqlFeedbackQuestionRepository();
+//		IFeedbackRepository feedbackRepo;
+//		IFeedbackQuestionRepository feedbackQuestionRepo;
 //		
-//		SqlSurveyRepository surveyRepo = new SqlSurveyRepository();
-//		SqlSurveyQuestionRepository surveyQuestionRepo = new SqlSurveyQuestionRepository();
+//		ISurveyRepository surveyRepo;
+//		ISurveyQuestionRepository surveyQuestionRepo;
 //		
-//		SqlQuestionRepository questionRepo = new SqlQuestionRepository();
-//		SqlQuestionOptionRepository questionOptionRepo = new SqlQuestionOptionRepository();
-//		SqlQuestionLangRepository questionLangRepo = new SqlQuestionLangRepository();
+//		IQuestionRepository questionRepo;
+//		IQuestionOptionRepository questionOptionRepo;
+//		IQuestionLangRepository questionLangRepo;
 //		
-//		SqlOptionRepository optionRepo = new SqlOptionRepository();
-//		SqlOptionComponentsRepository optionComponentsRepo = new SqlOptionComponentsRepository();
-//		SqlOptionComponentRepository optionComponentRepo = new SqlOptionComponentRepository();
-//		SqlOptionComponentLangRepository optionComponentLangRepo = new SqlOptionComponentLangRepository();
+//		IOptionRepository optionRepo;
+//		IOptionComponentsRepository optionComponentsRepo;
+//		IOptionComponentRepository optionComponentRepo;
+//		IOptionComponentLangRepository optionComponentLangRepo;
 //		
-//		SqlAnswerRepository answerRepo = new SqlAnswerRepository();
-//		SqlAnswerValueRepository answerValueRepo = new SqlAnswerValueRepository();
-		
-		IProjectRepository projectRepo;
-		IProjectRoundRepository projectRoundRepo;
-		IProjectRoundLangRepository projectRoundLangRepo;
-		IProjectRoundUnitRepository projectRoundUnitRepo;
-		IProjectRoundUnitManagerRepository projectRoundUnitManagerRepo;
-		IProjectRoundUserRepository projectRoundUserRepo;
-		IProjectSurveyRepository projectSurveyRepo;
-		
-		IFeedbackRepository feedbackRepo;
-		IFeedbackQuestionRepository feedbackQuestionRepo;
-		
-		ISurveyRepository surveyRepo;
-		ISurveyQuestionRepository surveyQuestionRepo;
-		
-		IQuestionRepository questionRepo;
-		IQuestionOptionRepository questionOptionRepo;
-		IQuestionLangRepository questionLangRepo;
-		
-		IOptionRepository optionRepo;
-		IOptionComponentsRepository optionComponentsRepo;
-		IOptionComponentRepository optionComponentRepo;
-		IOptionComponentLangRepository optionComponentLangRepo;
-		
-		IAnswerRepository answerRepo = new SqlAnswerRepository();
-		IAnswerValueRepository answerValueRepo = new SqlAnswerValueRepository();
+//		IAnswerRepository answerRepo = new SqlAnswerRepository();
+//		IAnswerValueRepository answerValueRepo = new SqlAnswerValueRepository();
 		
 		public ProjectService()
 		{
