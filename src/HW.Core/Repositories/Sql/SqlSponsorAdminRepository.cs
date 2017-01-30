@@ -42,7 +42,7 @@ SELECT IDENT_CURRENT('SponsorAdminExercise');"
 			query = string.Format(
 				@"
 INSERT SponsorAdminExerciseDataInput(SponsorAdminExerciseID, ValueText, SortOrder, ValueInt, Type)
-VALUES(@SponsorAdminExerciseID, @ValueText, @Order, @ValueInt, @Type);
+VALUES(@SponsorAdminExerciseID, @ValueText, @SortOrder, @ValueInt, @Type);
 SELECT IDENT_CURRENT('SponsorAdminExerciseDataInput');");
 			int i = 0;
 			foreach (var data in exercise.Inputs) {
@@ -52,11 +52,12 @@ SELECT IDENT_CURRENT('SponsorAdminExerciseDataInput');");
 						"healthWatchSqlConnection",
 						new SqlParameter("@SponsorAdminExerciseID", sponsorAdminExerciseID),
 						new SqlParameter("@ValueText", data.ValueText),
-						new SqlParameter("@Order", i++),
+						new SqlParameter("@SortOrder", i++),
 						new SqlParameter("@ValueInt", data.ValueInt),
 						new SqlParameter("@Type", data.Type)
 					)
 				);
+				int j = 0;
 				foreach (var c in data.Components) {
 					ExecuteNonQuery(
 						@"
@@ -65,7 +66,7 @@ VALUES(@SponsorAdminExerciseDataInputID, @ValueText, @SortOrder, @ValueInt)",
 						"healthWatchSqlConnection",
 						new SqlParameter("@SponsorAdminExerciseDataInputID", sponsorAdminExerciseDataInputID),
 						new SqlParameter("@ValueText", c.ValueText),
-						new SqlParameter("@SortOrder", c.SortOrder),
+						new SqlParameter("@SortOrder", j++),
 						new SqlParameter("@ValueInt", c.ValueInt)
 					);
 				}
