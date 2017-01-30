@@ -33,7 +33,9 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DocumentFormat.OpenXml" />
+    <Reference Include="DocumentFormat.OpenXml">
+      <HintPath>..\..\lib\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="RestSharp">
       <HintPath>..\HW.EForm.Report\packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
     </Reference>
