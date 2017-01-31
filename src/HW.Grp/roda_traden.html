@@ -37,6 +37,25 @@
         <div class="content"><img src="img/hwlogosmall.gif"><br><br>
           <script src="assets/exercises/js/roda_traden.js"></script>
           <div class="exercise-content">
+            <script>
+              var newExercise = {
+                inputs: [
+                  { valueText: "Företagets vision" },
+                  { valueText: "Gruppens uppdrag" },
+                  { components: [
+                      { valueText: "Medarbetare 1's beteende" },
+                      { valueText: "Medarbetare 2's beteende" },
+                      { valueText: "Medarbetare 3's beteende" },
+                      { valueText: "Medarbetare 4's beteende" },
+                      { valueText: "Medarbetare 5's beteende" },
+                    ]
+                  }
+                ]
+              };
+              function initBehavior(behaviors) {
+                return "Medarbetare " + behaviors + "'s beteende";
+              }
+            </script>
             <div id="message" class="alert alert-success hidden"></div>
             <p>
               Den här övningen är till för att skapa en röd tråd mellan organisationens mål, gruppens uppdrag och vad medarbetarna gör i sitt dagliga arbete. Övningen ska fungera som ett diskussionsunderlag till ett gruppmöte eller ett enskilt samtal med en medarbetare.
@@ -57,17 +76,12 @@
             <p></p>
             <div class="company">
               <div class="company-vision text-center">
-                <textarea id="input0" type="text" name="dataInput[]" data-content="Företagets vision" class="data-input">Företagets vision</textarea>
+                <textarea id="input0" class="input"></textarea>
               </div><br>
               <div class="company-mission text-center">
-                <textarea id="input1" type="text" name="dataInput[]" data-content="Gruppens uppdrag" class="data-input">Gruppens uppdrag</textarea>
+                <textarea id="input1" class="input"></textarea>
               </div><br>
               <div class="employee-behaviors">
-                <textarea id="input2" name="dataInput[]" data-content="Medarbetare 1's beteende" class="data-input">Medarbetare 1's beteende</textarea>
-                <textarea id="input3" name="dataInput[]" data-content="Medarbetare 2's beteende" class="data-input">Medarbetare 2's beteende</textarea>
-                <textarea id="input4" name="dataInput[]" data-content="Medarbetare 3's beteende" class="data-input">Medarbetare 3's beteende</textarea>
-                <textarea id="input5" name="dataInput[]" data-content="Medarbetare 4's beteende" class="data-input">Medarbetare 4's beteende</textarea>
-                <textarea id="input6" name="dataInput[]" data-content="Medarbetare 5's beteende" class="data-input">Medarbetare 5's beteende</textarea>
               </div>
             </div>
             <p><a id="btn-add" class="ui-button ui-widget ui-corner-all">Fler rutor för medarbetare...</a><a id="btn-save" class="ui-button ui-widget ui-corner-all">Spara</a></p>

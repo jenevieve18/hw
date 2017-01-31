@@ -37,6 +37,25 @@
         <div class="content"><img src="img/hwlogosmall.gif"><br><br>
           <script src="assets/exercises/js/roda_traden.js"></script>
           <div class="exercise-content">
+            <script>
+              var newExercise = {
+                inputs: [
+                  { valueText: "The company's vision" },
+                  { valueText: "The group's mission" },
+                  { components: [
+                      { valueText: "Employee 1's behavior" },
+                      { valueText: "Employee 2's behavior" },
+                      { valueText: "Employee 3's behavior" },
+                      { valueText: "Employee 4's behavior" },
+                      { valueText: "Employee 5's behavior" },
+                    ]
+                  }
+                ]
+              };
+              function initBehavior(behaviors) {
+                return "Employee " + behaviors + "'s behavior";
+              }
+            </script>
             <div id="message" class="alert alert-success hidden"></div>
             <p>
               This exercise is to create a common thread between the goals of the organization, the group's mission and what employees do in their daily work. The exercise will serve as a basis for discussion at a team meeting or a private conversation with a coworker.
@@ -57,18 +76,12 @@
             <p></p>
             <div class="company">
               <div class="company-vision text-center">
-                <textarea id="input0" type="text" name="input[]" data-content="The company's vision" class="data-input">The company's vision</textarea>
+                <textarea id="input0" class="input"></textarea>
               </div><br>
               <div class="company-mission text-center">
-                <textarea id="input1" type="text" name="input[]" data-content="The group's mission" class="data-input">The group's mission</textarea>
+                <textarea id="input1" class="input"></textarea>
               </div><br>
-              <div class="employee-behaviors">
-                <textarea id="input2" name="input[]" data-content="Employee 1's behavior" class="data-input">Employee 1's behavior</textarea>
-                <textarea id="input3" name="input[]" data-content="Employee 2's behavior" class="data-input">Employee 2's behavior</textarea>
-                <textarea id="input4" name="input[]" data-content="Employee 3's behavior" class="data-input">Employee 3's behavior</textarea>
-                <textarea id="input5" name="input[]" data-content="Employee 4's behavior" class="data-input">Employee 4's behavior</textarea>
-                <textarea id="input6" name="input[]" data-content="Employee 5's behavior" class="data-input">Employee 5's behavior</textarea>
-              </div>
+              <div class="employee-behaviors"></div>
             </div>
             <p><a id="btn-add" class="ui-button ui-widget ui-corner-all">More boxes for employees ...</a><a id="btn-save" class="ui-button ui-widget ui-corner-all">Save</a></p>
           </div>

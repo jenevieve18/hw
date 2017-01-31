@@ -37,6 +37,25 @@
         <div class="content"><img src="img/hwlogosmall.gif"><br><br>
           <script src="assets/exercises/js/rakryggat.js"></script>
           <div class="exercise-content">
+            <script>
+              var newExercise = {
+                inputs: [
+                  { components: [
+                    { valueText: '' },
+                    { valueText: '' },
+                    { valueText: '' }
+                  ]},
+                  { components: [
+                    { valueText: '' },
+                    { valueText: '' },
+                    { valueText: '' }
+                  ]}
+                ]
+              };
+              function getEnterText() {
+                return 'Enter yourself';
+              }
+            </script>
             <div id="message" class="alert alert-success hidden"></div>
             <p>
               Trust is created through that there is a common thread between what one says and what one does. For example; if you say "It is important to follow our work processes," you also need to follow up and make it easier for employees to follow these processes.
@@ -63,30 +82,6 @@
                     <li>Following the processes themselves (good example)</li>
                     <li>Helping employees who do not follow the process to make it</li>
                   </ul>
-                </td>
-              </tr>
-              <tr>
-                <td>Enter yourself</td>
-                <td>
-                  <textarea id="input0" name="input[]" style="width:90%;height:50px"></textarea>
-                </td>
-                <td>
-                  <textarea id="input1" name="input[]" style="width:90%;height:50px"></textarea>
-                </td>
-                <td>
-                  <textarea id="input2" name="input[]" style="width:90%;height:50px"></textarea>
-                </td>
-              </tr>
-              <tr>
-                <td> </td>
-                <td>
-                  <textarea id="input3" name="input[]" style="width:90%;height:50px"></textarea>
-                </td>
-                <td>
-                  <textarea id="input4" name="input[]" style="width:90%;height:50px"></textarea>
-                </td>
-                <td>
-                  <textarea id="input5" name="input[]" style="width:90%;height:50px"></textarea>
                 </td>
               </tr>
             </table>
