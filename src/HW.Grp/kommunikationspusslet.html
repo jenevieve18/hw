@@ -14,6 +14,12 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script type="text/javascript" src="assets/exercises/js/healthwatch.js"></script>
+    <script>
+      $(function() {
+        $('#btn-pdf').click();
+      });
+      
+    </script>
   </head>
   <!--if lt IE 7 body.ie6  
   -->
@@ -32,7 +38,7 @@
       <input id="sponsorAdminExerciseID" type="hidden" value="0">
       <div id="popupie" class="popupie">
         <div class="header">
-          <h1>HealthWatch.se</h1><a id="printBtn" href="#" onclick="window.print();return false;" class="print">Print</a>
+          <h1>HealthWatch.se</h1><a id="btn-pdf" href="#" class="print">PDF</a><a id="printBtn" href="#" onclick="window.print();return false;" class="print">Print</a>
         </div>
         <div class="content"><img src="img/hwlogosmall.gif"><br><br>
           <script src="assets/exercises/js/kommunikationspusslet.js"></script>
