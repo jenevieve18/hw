@@ -15,13 +15,12 @@ $(function () {
       exerciseVariantLanguage: { id: $('#exerciseVariantLangID').val() || 0 },
       inputs: inputs
     },
-      function (message) {
-        $('#message').text(message).fadeIn(1000).fadeOut(1000);
-      },
-      function (message) {
-        $('#message').text(message).fadeIn(1000).fadeOut(1000);
-      }
-    );
+    function (message) {
+      $('#message').text(message).fadeIn(1000).fadeOut(1000);
+    },
+    function (message) {
+      $('#message').text(message).fadeIn(1000).fadeOut(1000);
+    });
   });
 
   healthwatch.grp(exerciseRepo).readManagerExercise(
@@ -32,7 +31,7 @@ $(function () {
       }
       $('#input0').text(exercise.inputs[0].valueText).data('content', exercise.inputs[0].valueText);
       $('#input1').text(exercise.inputs[1].valueText).data('content', exercise.inputs[1].valueText);
-      $.each(exercise.inputs[2].components, function(i, component) {
+      $.each(exercise.inputs[2].components, function (i, component) {
         $('.employee-behaviors').append('<textarea id="' + behaviors + '" name="input2[]" data-content="' + component.valueText + '">' + component.valueText + '</textarea> ');
         behaviors++;
       });
