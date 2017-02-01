@@ -20,9 +20,8 @@
       $(function () {
         $('#btn-pdf').click(function () {
           var doc = new jsPDF('p', 'pt', 'a4');
-          //- var doc = new jsPDF();
-          doc.addHTML(document.getElementById('popupie'), 20, 20, function() {
-            console.log('PDF generated...');
+          doc.addHTML($('#popupie').first(), function() {
+            console.log('Generating PDF...');
             doc.save('a4.pdf');
           });
         });
@@ -45,11 +44,11 @@
       <input id="sponsorAdminID" type="hidden" value="">
       <input id="exerciseVariantLangID" type="hidden" value="">
       <input id="sponsorAdminExerciseID" type="hidden" value="0">
-      <div id="popupie" class="popupie">
+      <div id="popupie" style="background:white" class="popupie">
         <div class="header">
           <h1>HealthWatch.se</h1><a id="btn-pdf" href="#" class="print">PDF</a><a id="printBtn" href="#" onclick="window.print();return false;" class="print">Print</a>
         </div>
-        <div class="content"><img src="img/hwlogosmall.gif"><br><br>
+        <div id="content" style="background:white" class="content"><img src="img/hwlogosmall.gif"><br><br>
           <script src="assets/exercises/js/bygga_fortroende.js"></script>
           <div class="exercise-content">
             <script>
