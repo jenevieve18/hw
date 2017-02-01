@@ -1,4 +1,3 @@
-// var inputs = 5;
 var exerciseRepo = new ExerciseRepo();
 
 $(function () {
@@ -37,23 +36,19 @@ $(function () {
       if (exercise === null) {
         exercise = newExercise;
       }
-      // if (exercise !== null) {
       for (inputs = 0; inputs < exercise.inputs.length;) {
-        if (inputs < 6) {
-          $('[id="input' + inputs + '"]').val(exercise.inputs[inputs].valueText);
-          inputs++;
-        } else {
+        // if (inputs < 6) {
+        //   $('[id="input' + inputs + '"]').val(exercise.inputs[inputs].valueText);
+        //   inputs++;
+        // } else {
           $('#tbl').append('<tr>\
   						<td>' + getEnterText() + '</td>\
-  						<td><textarea name="input[]" id="input' + (inputs) + '">' + exercise.inputs[(inputs)].valueText + '</textarea></td>\
-  						<td><textarea name="input[]" id="input' + (inputs + 1) + '">' + exercise.inputs[(inputs + 1)].valueText + '</textarea></td>\
-  						<td><textarea name="input[]" id="input' + (inputs + 2) + '">' + exercise.inputs[(inputs + 2)].valueText + '</textarea></td>\
+  						<td><textarea name="input[]" id="input' + (inputs) + '" style="width:90%;height:50px;padding:3px">' + exercise.inputs[(inputs)].valueText + '</textarea></td>\
+  						<td><textarea name="input[]" id="input' + (inputs + 1) + '" style="width:90%;height:50px;padding:3px">' + exercise.inputs[(inputs + 1)].valueText + '</textarea></td>\
+  						<td><textarea name="input[]" id="input' + (inputs + 2) + '" style="width:90%;height:50px;padding:3px">' + exercise.inputs[(inputs + 2)].valueText + '</textarea></td>\
   					</tr>');
           inputs += 3;
-        }
+        // }
       }
-      // } else {
-      //   inputs = 5;
-      // }
     });
 });
