@@ -31,13 +31,7 @@ $(function() {
       if (exercise === null) {
         exercise = newExercise;
       }
-      $(exercise.inputs[0].components).each(function(i, component) {
-        $('<li><span class="ui-icon ui-icon-arrow-4"></span>' + component.valueText + '</li>').appendTo('.input0').fadeIn();
-      });
-      $(exercise.inputs[1].components).each(function(i, component) {
-        $('<li><span class="ui-icon ui-icon-trash"></span>' + component.valueText + '</li>').appendTo('.input1').fadeIn();
-      });
-      init(true);
+      setExercise(exercise);
     },
     function(message, status, error) {
       $('#message').text(message).fadeIn(1000).fadeOut(1000);
@@ -49,18 +43,32 @@ $(function() {
     if ($txtInput.val() !== "") {
       $("<li><span class='ui-icon ui-icon-arrow-4'></span>" + $txtInput.val() + "</li>").appendTo($suggestedThings).fadeIn();
       $txtInput.val('');
-
-      init(true);
+      init();
     }
+  });
+
+  $('#btn-reset').click(function() {
+    setExercise(newExercise);
   });
 
   $("#btn-subtext").click(function() {
     $("#sub-text").fadeIn();
   });
 
-  function init(sortable) {
-    $ranking.sortable().disableSelection();
-    
+  function setExercise(exercise) {
+    $suggestedThings.empty();
+    $ranking.empty();
+    $(exercise.inputs[0].components).each(function(i, component) {
+      $('<li><span class="ui-icon ui-icon-arrow-4"></span>' + component.valueText + '</li>').appendTo('.input0').fadeIn();
+    });
+    $(exercise.inputs[1].components).each(function(i, component) {
+      $('<li><span class="ui-icon ui-icon-trash"></span>' + component.valueText + '</li>').appendTo('.input1').fadeIn();
+    });
+    init();
+  }
+
+  function init() {
+    // $ranking.sortable().disableSelection();
     $("li", $suggestedThings).draggable({
       cancel: "a.ui-icon",
       appendTo: "body",
@@ -116,7 +124,6 @@ $(function() {
         .end()
         .prepend('<span class="ui-icon ui-icon-arrow-4"></span>')
         .end();
-      console.log($item);
       $suggestedThings.append($item);
     }
   });
