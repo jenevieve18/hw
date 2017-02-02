@@ -153,7 +153,8 @@ namespace HW.SendReminders
 							}
 							
 							var registrationIds = repo.GetUserRegistrationIDs(rs.GetInt32(0));
-							Helper.sendGcmNotification(repo, registrationIds, Helper.GcmAPIKey, Helper.GcmSenderId, Helper.GcmMessage, rs.GetInt32(0), rs.GetString(3));
+//							Helper.sendGcmNotification(repo, registrationIds, Helper.GcmAPIKey, Helper.GcmSenderId, Helper.GcmMessage, rs.GetInt32(0), rs.GetString(3));
+							Helper.sendGcmNotification(repo, registrationIds, Helper.GcmAPIKey, Helper.GcmSenderId, reminderSubjectLang[rs.GetInt32(7) - 1], rs.GetInt32(0), rs.GetString(3));
 
 							exec("UPDATE [User] SET " +
 								(!usingAlternative ? "EmailFailure = NULL, " : "") +
@@ -298,7 +299,8 @@ namespace HW.SendReminders
 									}
 									
 									var registrationIds = repo.GetUserRegistrationIDs(rs.GetInt32(0));
-									Helper.sendGcmNotification(repo, registrationIds, Helper.GcmAPIKey, Helper.GcmSenderId, Helper.GcmMessage, rs.GetInt32(0), rs.GetString(3));
+//									Helper.sendGcmNotification(repo, registrationIds, Helper.GcmAPIKey, Helper.GcmSenderId, Helper.GcmMessage, rs.GetInt32(0), rs.GetString(3));
+									Helper.sendGcmNotification(repo, registrationIds, Helper.GcmAPIKey, Helper.GcmSenderId, reminderSubject, rs.GetInt32(0), rs.GetString(3));
 
 									exec("UPDATE [User] SET " +
 										(!usingAlternative ? "EmailFailure = NULL, " : "") +
