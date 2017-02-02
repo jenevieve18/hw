@@ -20,7 +20,12 @@
       $(function () {
         $('#btn-pdf').click(function () {
           var doc = new jsPDF('p', 'pt', 'a4');
-          doc.addHTML($('#popupie').first(), function() {
+          //- var doc = new jsPDF();
+          var options = {
+            background: '#fff',
+            pagesplit: true
+          };
+          doc.addHTML($('#popupie').first(), 0, 0, options, function() {
             console.log('Generating PDF...');
             doc.save('a4.pdf');
           });
@@ -44,11 +49,11 @@
       <input id="sponsorAdminID" type="hidden" value="">
       <input id="exerciseVariantLangID" type="hidden" value="">
       <input id="sponsorAdminExerciseID" type="hidden" value="0">
-      <div id="popupie" style="background:white" class="popupie">
+      <div id="popupie" class="popupie">
         <div class="header">
           <h1>HealthWatch.se</h1><a id="btn-pdf" href="#" class="print">PDF</a><a id="printBtn" href="#" onclick="window.print();return false;" class="print">Print</a>
         </div>
-        <div id="content" style="background:white" class="content"><img src="img/hwlogosmall.gif"><br><br>
+        <div class="content"><img src="img/hwlogosmall.gif"><br><br>
           <div class="exercise-content">
             <div id="message" class="alert alert-success hidden"></div>
             <h2>Tidsåtgång: 30 minuter – 1 timme</h2>

@@ -33,24 +33,6 @@ $(function () {
       if (exercise === null) {
         exercise = newExercise;
       }
-      // $(exercise.inputs[0].components).each(function (i, component) {
-      //   $('<li><span class="ui-icon ui-icon-trash"></span>' + component.valueText + '</li>').appendTo('.input0').fadeIn();
-      // });
-      // $(exercise.inputs[1].components).each(function (i, component) {
-      //   $('<li><span class="ui-icon ui-icon-trash"></span>' + component.valueText + '</li>').appendTo('.input1').fadeIn();
-      // });
-      // $(exercise.inputs[2].components).each(function (i, component) {
-      //   $('<li><span class="ui-icon ui-icon-arrow-4"></span>' + component.valueText + '</li>').appendTo('.input2').fadeIn();
-      // });
-      // $(exercise.inputs[3].components).each(function (i, component) {
-      //   $('<li><span class="ui-icon ui-icon-trash"></span>' + component.valueText + '</li>').appendTo('.input3').fadeIn();
-      // });
-      // $(exercise.inputs[4].components).each(function (i, component) {
-      //   $('<li><span class="ui-icon ui-icon-trash"></span>' + component.valueText + '</li>').appendTo('.input4').fadeIn();
-      // });
-      // $(exercise.inputs[5].components).each(function (i, component) {
-      //   $('<li><span class="ui-icon ui-icon-arrow-4"></span>' + component.valueText + '</li>').appendTo('.input5').fadeIn();
-      // });
       setInputs(
         { input: exercise.inputs[0], container: '.input0' }, 
         { input: exercise.inputs[1], container: '.input1' }, 
@@ -61,41 +43,11 @@ $(function () {
         { input: exercise.inputs[4], container: '.input4' }, 
         { input: exercise.inputs[5], container: '.input5' }
       );
-      // setExercise(exercise);
-      // init();
     },
     function (message, status, error) {
       $('#message').text(message).fadeIn(1000).fadeOut(1000);
     }
   );
-
-  // function setExercise(exercise) {
-  //   $('.input0').empty();
-  //   $('.input1').empty();
-  //   $('.input2').empty();
-  //   $('.input3').empty();
-  //   $('.input4').empty();
-  //   $('.input5').empty();
-
-  //   $(exercise.inputs[0].components).each(function (i, component) {
-  //     $('<li><span class="ui-icon ui-icon-trash"></span>' + component.valueText + '</li>').appendTo('.input0').fadeIn();
-  //   });
-  //   $(exercise.inputs[1].components).each(function (i, component) {
-  //     $('<li><span class="ui-icon ui-icon-trash"></span>' + component.valueText + '</li>').appendTo('.input1').fadeIn();
-  //   });
-  //   $(exercise.inputs[2].components).each(function (i, component) {
-  //     $('<li><span class="ui-icon ui-icon-arrow-4"></span>' + component.valueText + '</li>').appendTo('.input2').fadeIn();
-  //   });
-  //   $(exercise.inputs[3].components).each(function (i, component) {
-  //     $('<li><span class="ui-icon ui-icon-trash"></span>' + component.valueText + '</li>').appendTo('.input3').fadeIn();
-  //   });
-  //   $(exercise.inputs[4].components).each(function (i, component) {
-  //     $('<li><span class="ui-icon ui-icon-trash"></span>' + component.valueText + '</li>').appendTo('.input4').fadeIn();
-  //   });
-  //   $(exercise.inputs[5].components).each(function (i, component) {
-  //     $('<li><span class="ui-icon ui-icon-arrow-4"></span>' + component.valueText + '</li>').appendTo('.input5').fadeIn();
-  //   });
-  // }
 
   function setInputs(input1, input2, input3) {
     $(input1.container).empty();
@@ -130,18 +82,18 @@ $(function () {
       cursor: "move"
     });
 
-    $('li', $trigger1).draggable({
-      cancel: "a.ui-icon", // Clicking an icon won't initiate dragging
-      revert: "invalid", // When not dropped, the item will revert back to its initial position
-      helper: "clone",
-      cursor: "move"
-    });
-    $('li', $impact1).draggable({
-      cancel: "a.ui-icon", // Clicking an icon won't initiate dragging
-      revert: "invalid", // When not dropped, the item will revert back to its initial position
-      helper: "clone",
-      cursor: "move"
-    });
+    // $('li', $trigger1).draggable({
+    //   cancel: "a.ui-icon", // Clicking an icon won't initiate dragging
+    //   revert: "invalid", // When not dropped, the item will revert back to its initial position
+    //   helper: "clone",
+    //   cursor: "move"
+    // });
+    // $('li', $impact1).draggable({
+    //   cancel: "a.ui-icon", // Clicking an icon won't initiate dragging
+    //   revert: "invalid", // When not dropped, the item will revert back to its initial position
+    //   helper: "clone",
+    //   cursor: "move"
+    // });
 
     $trigger1.droppable({
       accept: "#gallery1 > li",
@@ -207,7 +159,6 @@ $(function () {
         { input: newExercise.inputs[1], container: '.input1' }, 
         { input: newExercise.inputs[2], container: '.input2' }
       );
-      // setExercise(newExercise);
     });
 
     // $('li', $trigger2).draggable({
@@ -295,7 +246,6 @@ $(function () {
         { input: newExercise.inputs[4], container: '.input4' }, 
         { input: newExercise.inputs[5], container: '.input5' }
       );
-      // setExercise(newExercise);
     });
   }
 
