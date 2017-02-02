@@ -32,9 +32,10 @@ $(function () {
       $('#input0').text(exercise.inputs[0].valueText).data('content', exercise.inputs[0].valueText);
       $('#input1').text(exercise.inputs[1].valueText).data('content', exercise.inputs[1].valueText);
       $.each(exercise.inputs[2].components, function (i, component) {
-        $('.employee-behaviors').append('<textarea id="' + behaviors + '" name="input2[]" data-content="' + component.valueText + '">' + component.valueText + '</textarea> ');
+        $('.employee-behaviors').append('<textarea id="' + behaviors + '" name="input2[]" class="input" data-content="' + component.valueText + '">' + component.valueText + '</textarea> ');
         behaviors++;
       });
+      init();
     }
   );
 
