@@ -1,16 +1,17 @@
 var exerciseRepo = new ExerciseRepo();
+var inputs = 0;
 
 $(function () {
   var exerciseId = $('#sponsorAdminExerciseID').val() || 0;
 
   $('#btn-add').click(function () {
-    if ($('#input' + (inputs - 2)).val() !== "" || $('#input' + (inputs - 1)).val() !== "" || $('#input' + (inputs)).val() !== "") {
+    if ($('#input' + (inputs - 3)).val() !== "" || $('#input' + (inputs - 2)).val() !== "" || $('#input' + (inputs - 1)).val() !== "") {
       inputs += 3;
       $('#tbl').append('<tr>\
 					<td>Enter yourself</td>\
-					<td><textarea name="input[]" id="input' + (inputs - 2) + '" style="width:90%;height:50px;padding:3px"></textarea></td>\
+					<td><textarea name="input[]" id="input' + (inputs - 3) + '" style="width:90%;height:50px;padding:3px"></textarea></td>\
+					<td><textarea name="input[]" id="input' + (inputs - 2) + '"style="width:90%;height:50px;padding:3px"></textarea></td>\
 					<td><textarea name="input[]" id="input' + (inputs - 1) + '"style="width:90%;height:50px;padding:3px"></textarea></td>\
-					<td><textarea name="input[]" id="input' + (inputs) + '"style="width:90%;height:50px;padding:3px"></textarea></td>\
 				</tr>');
     }
   });
@@ -37,18 +38,13 @@ $(function () {
         exercise = newExercise;
       }
       for (inputs = 0; inputs < exercise.inputs.length;) {
-        // if (inputs < 6) {
-        //   $('[id="input' + inputs + '"]').val(exercise.inputs[inputs].valueText);
-        //   inputs++;
-        // } else {
-          $('#tbl').append('<tr>\
-  						<td>' + getEnterText() + '</td>\
-  						<td><textarea name="input[]" id="input' + (inputs) + '" style="width:90%;height:50px;padding:3px">' + exercise.inputs[(inputs)].valueText + '</textarea></td>\
-  						<td><textarea name="input[]" id="input' + (inputs + 1) + '" style="width:90%;height:50px;padding:3px">' + exercise.inputs[(inputs + 1)].valueText + '</textarea></td>\
-  						<td><textarea name="input[]" id="input' + (inputs + 2) + '" style="width:90%;height:50px;padding:3px">' + exercise.inputs[(inputs + 2)].valueText + '</textarea></td>\
-  					</tr>');
-          inputs += 3;
-        // }
+        $('#tbl').append('<tr>\
+            <td>' + getEnterText() + '</td>\
+            <td><textarea name="input[]" id="input' + (inputs) + '" style="width:90%;height:50px;padding:3px">' + exercise.inputs[(inputs)].valueText + '</textarea></td>\
+            <td><textarea name="input[]" id="input' + (inputs + 1) + '" style="width:90%;height:50px;padding:3px">' + exercise.inputs[(inputs + 1)].valueText + '</textarea></td>\
+            <td><textarea name="input[]" id="input' + (inputs + 2) + '" style="width:90%;height:50px;padding:3px">' + exercise.inputs[(inputs + 2)].valueText + '</textarea></td>\
+          </tr>');
+        inputs += 3;
       }
     });
 });
