@@ -1,4 +1,50 @@
+var exerciseRepo = new ExerciseRepo();
+
 $(function () {
+  var exerciseId = $('#sponsorAdminExerciseID').val() || 0;
+
+  $('#btn-save').click(function() {
+    var inputs = [];
+    inputs.push({ id: $('.input0').data('id'), components: html.getElementValues($('[name^="input[]')) });
+    inputs.push({ id: $('.input1').data('id'), components: html.getElementTexts($('.input1 li')) });
+    inputs.push({ id: $('.input2').data('id'), components: html.getElementTexts($('.input2 li')) });
+    inputs.push({ id: $('.input3').data('id'), components: html.getElementTexts($('.input3 li')) });
+    inputs.push({ id: $('.input4').data('id'), components: html.getElementTexts($('.input4 li')) });
+    inputs.push({ id: $('.input5').data('id'), components: html.getElementTexts($('.input5 li')) });
+    inputs.push({ id: $('.input6').data('id'), components: html.getElementTexts($('.input6 li')) });
+    
+    healthwatch.grp(exerciseRepo).saveManagerExercise({
+        id: exerciseId,
+        sponsorAdmin: { id: $('#sponsorAdminID').val() || 0 },
+        exerciseVariantLanguage: { exerciseVariantLanguage: $('#exerciseVariantLanguage').val() || 0 },
+        inputs: inputs
+      },
+      function(message) {
+        $('#message').text(message).fadeIn(1000).fadeOut(1000);
+      },
+      function(message, status, error) {
+        $('#message').text(message).faceIn(1000).fadeOut(1000);
+      }
+    );
+  });
+
+  healthwatch.grp(exerciseRepo).readManagerExercise(
+    exerciseId,
+    function(exercise) {
+      if (exercise === null) {
+        exercise = newExercise;
+      }
+      $(exercise.inputs).each(function(i, input) {
+        $('<li><input type="checkbox" name="input[]" value="d' + (i + 1) + '">' + input.valueText + '</li>').appendTo($('.input0'));
+        $('<li><span class="ui-icon ui-icon-arrow-4"></span>' + input.valueText + '</li>').appendTo($('#gallery'));
+      });
+      init();
+    },
+    function(message, status, error) {
+      $('#message').text(message).fadeIn(1000).fadeOut(1000);
+    }
+  );
+
   $("#btn-clear1").click(function () {
     var ansArr = ['d1', 'd2', 'd4', 'd6', 'd9', 'd10'];
     $("input[name='input[]']").each(function () {
@@ -17,108 +63,114 @@ $(function () {
     $("#second-question").fadeIn();
   });
 
-  var $gallery = $("#gallery"),
-    $trash1 = $("#trash1"),
-    $trash2 = $("#trash2"),
-    $trash3 = $("#trash3"),
-    $trash4 = $("#trash4"),
-    $trash5 = $("#trash5");
+  function init() {
+    var $gallery = $("#gallery"),
+      $trash1 = $("#trash1"),
+      $trash2 = $("#trash2"),
+      $trash3 = $("#trash3"),
+      $trash4 = $("#trash4"),
+      $trash5 = $("#trash5");
 
-  $("li", $gallery).draggable({
-    cancel: "a.ui-icon", // clicking an icon won't initiate dragging
-    revert: "invalid", // when not dropped, the item will back to initial position
-    helper: "clone",
-    cursor: "move"
-  });
-
-  $trash1.droppable({
-    accept: "#gallery > li",
-    activeClass: "ui-state-highlight",
-    drop: function (event, ui) {
-      deleteImage(ui.draggable, $trash1);
-    }
-  });
-
-  $trash2.droppable({
-    accept: "#gallery > li",
-    activeClass: "ui-state-highlight",
-    drop: function (event, ui) {
-      deleteImage(ui.draggable, $trash2);
-    }
-  });
-
-  $trash3.droppable({
-    accept: "#gallery > li",
-    activeClass: "ui-state-highlight",
-    drop: function (event, ui) {
-      deleteImage(ui.draggable, $trash3);
-    }
-  });
-
-  $trash4.droppable({
-    accept: "#gallery > li",
-    activeClass: "ui-state-highlight",
-    drop: function (event, ui) {
-      deleteImage(ui.draggable, $trash4);
-    }
-  });
-
-  $trash5.droppable({
-    accept: "#gallery > li",
-    activeClass: "ui-state-highlight",
-    drop: function (event, ui) {
-      deleteImage(ui.draggable, $trash5);
-    }
-  });
-
-  $gallery.droppable({
-    accept: "#trash1 li, #trash2 li, #trash3 li, #trash4 li, #trash5 li",
-    activeClass: "custom-state-active",
-    drop: function (event, ui) {
-      recycleImage(ui.draggable);
-    }
-  });
-
-  function deleteImage($item, $trash) {
-    $item.fadeOut(function () {
-      var $list = $("ul", $trash).length ?
-        $("ul", $trash) :
-        $("<ul class='gallery ui-helper-reset'/>").appendTo($trash);
-
-      $item.find("a.ui-icon-trash").remove();
-      $item.append().appendTo($list).fadeIn(function () {
-        resetclass($trash);
-      });
+    $("li", $gallery).draggable({
+      cancel: "a.ui-icon", // clicking an icon won't initiate dragging
+      revert: "invalid", // when not dropped, the item will back to initial position
+      helper: "clone",
+      cursor: "move"
     });
-  }
 
-  function recycleImage($item) {
-    $item.fadeOut(function () {
-      $item
-        .find("a.ui-icon-refresh")
-        .remove()
-        .end()
-        .appendTo($gallery)
-        .fadeIn();
-      resetclass();
+    $trash1.droppable({
+      accept: "#gallery > li, #trash2 li, #trash3 li, #trash4 li, #trash5 li",
+      activeClass: "ui-state-highlight",
+      drop: function (event, ui) {
+        deleteImage(ui.draggable, $trash1);
+      }
     });
-  }
 
-  function resetclass($trash) {
-    $("ul li", $trash).removeAttr('class');
-    for (var j = 1; j <= $("li", $trash).length; j++) {
-      $("ul li:nth-child(" + j + ")", $trash).addClass(function () {
-        return "ui-draggable item-" + j;
+    $trash2.droppable({
+      accept: "#gallery > li, #trash1 li, #trash3 li, #trash4 li, #trash5 li",
+      activeClass: "ui-state-highlight",
+      drop: function (event, ui) {
+        deleteImage(ui.draggable, $trash2);
+      }
+    });
+
+    $trash3.droppable({
+      accept: "#gallery > li, #trash1 li, #trash2 li, #trash4 li, #trash5 li",
+      activeClass: "ui-state-highlight",
+      drop: function (event, ui) {
+        deleteImage(ui.draggable, $trash3);
+      }
+    });
+
+    $trash4.droppable({
+      accept: "#gallery > li, #trash1 li, #trash2 li, #trash3 li, #trash5 li",
+      activeClass: "ui-state-highlight",
+      drop: function (event, ui) {
+        deleteImage(ui.draggable, $trash4);
+      }
+    });
+
+    $trash5.droppable({
+      accept: "#gallery > li, #trash1 li, #trash2 li, #trash3 li, #trash4 li",
+      activeClass: "ui-state-highlight",
+      drop: function (event, ui) {
+        deleteImage(ui.draggable, $trash5);
+      }
+    });
+
+    $gallery.droppable({
+      accept: "#trash1 li, #trash2 li, #trash3 li, #trash4 li, #trash5 li",
+      activeClass: "ui-state-default",
+      drop: function (event, ui) {
+        recycleImage(ui.draggable);
+      }
+    });
+
+    function deleteImage($item, $trash) {
+      $item.fadeOut(function () {
+        // var $list = $("ul", $trash).length ?
+        //   $("ul", $trash) :
+        //   $("<ul class='gallery ui-helper-reset'/>").appendTo($trash);
+
+        $item.find("span.ui-icon").remove();
+        // $item.append().appendTo($list).fadeIn(function () {
+        $item
+          .prepend('<span class="ui-icon ui-icon-trash"></span>')
+          .appendTo($trash)
+          .fadeIn(function () {
+          // resetclass($trash);
+        });
       });
     }
 
-    $("ul li", $trash2).removeAttr('class');
-    for (var j = 1; j <= $("li", $trash2).length; j++) {
-      $("ul li:nth-child(" + j + ")", $trash2).addClass(function () {
-        return "ui-draggable item-" + j;
+    function recycleImage($item) {
+      $item.fadeOut(function () {
+        $item
+          .find("span.ui-icon-refresh")
+          .remove()
+          .end()
+          .appendTo($gallery)
+          .fadeIn();
+        // resetclass();
       });
     }
-    $("li", $gallery).css('color', '#666');
+
+    // function resetclass($trash) {
+    //   $("ul li", $trash).removeAttr('class');
+    //   for (var j = 1; j <= $("li", $trash).length; j++) {
+    //     $("ul li:nth-child(" + j + ")", $trash).addClass(function () {
+    //       return "ui-draggable item-" + j;
+    //     });
+    //   }
+
+    //   $("ul li", $trash2).removeAttr('class');
+    //   for (var j = 1; j <= $("li", $trash2).length; j++) {
+    //     $("ul li:nth-child(" + j + ")", $trash2).addClass(function () {
+    //       return "ui-draggable item-" + j;
+    //     });
+    //   }
+    //   $("li", $gallery).css('color', '#666');
+    // }
   }
 
   $('#btn-clear2').click(function () {
@@ -161,7 +213,7 @@ $(function () {
       $("</ul>").appendTo("#trash" + s);
     }
 
-    $("#gallery").css("display", "none");
+    // $("#gallery").css("display", "none");
     // $('#btn-notify').css("display", "none");
     $('#btn-notify').hide();
   });
