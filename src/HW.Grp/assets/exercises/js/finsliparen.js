@@ -72,8 +72,8 @@ $(function () {
       $trash5 = $("#trash5");
 
     $("li", $gallery).draggable({
-      cancel: "a.ui-icon", // clicking an icon won't initiate dragging
-      revert: "invalid", // when not dropped, the item will back to initial position
+      cancel: "a.ui-icon", // Clicking an icon won't initiate dragging
+      revert: "invalid", // When not dropped, the item will back to initial position
       helper: "clone",
       cursor: "move"
     });

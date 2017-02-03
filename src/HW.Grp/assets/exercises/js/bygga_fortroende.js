@@ -3,6 +3,13 @@ var exerciseRepo = new ExerciseRepo();
 $(function () {
 
   var exerciseId = $('#sponsorAdminExerciseID').val() || 0;
+  
+  var $gallery1 = $("#gallery1"),
+    $gallery2 = $("#gallery2"),
+    $trigger1 = $("#trigger1"),
+    $impact1 = $("#impact1"),
+    $trigger2 = $("#trigger2"),
+    $impact2 = $("#impact2");
 
   $('#btn-save').click(function () {
     healthwatch.grp(exerciseRepo).saveManagerExercise({
@@ -67,13 +74,6 @@ $(function () {
   }
 
   function init() {
-    var $gallery1 = $("#gallery1"),
-      $gallery2 = $("#gallery2"),
-      $trigger1 = $("#trigger1"),
-      $impact1 = $("#impact1"),
-      $trigger2 = $("#trigger2"),
-      $impact2 = $("#impact2");
-
     $("li", $gallery1).draggable({
       cancel: "a.ui-icon", // Clicking an icon won't initiate dragging
       appendTo: "body",
@@ -94,22 +94,6 @@ $(function () {
     //   helper: "clone",
     //   cursor: "move"
     // });
-
-    $trigger1.droppable({
-      accept: "#gallery1 > li",
-      activeClass: "ui-state-highlight",
-      drop: function (event, ui) {
-        var $item = ui.draggable;
-        $item.fadeOut(function () {
-          $item.find(".ui-icon-arrow-4")
-            .remove()
-            .end()
-            .prepend('<span class="ui-icon ui-icon-trash"></span>')
-            .appendTo($trigger1)
-            .fadeIn();
-        });
-      }
-    });
 
     $impact1.droppable({
       accept: "#gallery1 > li",
@@ -140,6 +124,62 @@ $(function () {
             .appendTo($gallery1)
             .fadeIn();
         });
+      }
+    });
+  
+    $trigger1.click(function(e) {
+      var $target = $(e.target);
+      if ($target.is('.ui-icon-trash')) {
+        var $item = $target.parent();
+        $item
+          .find('.ui-icon-trash')
+          .remove()
+          .end()
+          .prepend('<span class="ui-icon ui-icon-arrow-4"></span>')
+          .end();
+        $gallery1.append($item);
+      }
+    });
+
+    $impact1.click(function(e) {
+      var $target = $(e.target);
+      if ($target.is('.ui-icon-trash')) {
+        var $item = $target.parent();
+        $item
+          .find('.ui-icon-trash')
+          .remove()
+          .end()
+          .prepend('<span class="ui-icon ui-icon-arrow-4"></span>')
+          .end();
+        $gallery1.append($item);
+      }
+    });
+  
+    $trigger2.click(function(e) {
+      var $target = $(e.target);
+      if ($target.is('.ui-icon-trash')) {
+        var $item = $target.parent();
+        $item
+          .find('.ui-icon-trash')
+          .remove()
+          .end()
+          .prepend('<span class="ui-icon ui-icon-arrow-4"></span>')
+          .end();
+        $gallery2.append($item);
+      }
+    });
+
+    $impact2.click(function(e) {
+      var $target = $(e.target);
+      if ($target.is('.ui-icon-trash')) {
+        var $item = $target.parent();
+        $item
+          .find('.ui-icon-trash')
+          .remove()
+          .end()
+          .prepend('<span class="ui-icon ui-icon-arrow-4"></span>')
+          .end();
+        $gallery2.append($item);
       }
     });
 
@@ -248,6 +288,22 @@ $(function () {
       );
     });
   }
+
+  $trigger1.droppable({
+    accept: "#gallery1 > li",
+    activeClass: "ui-state-highlight",
+    drop: function (event, ui) {
+      var $item = ui.draggable;
+      $item.fadeOut(function () {
+        $item.find(".ui-icon-arrow-4")
+          .remove()
+          .end()
+          .prepend('<span class="ui-icon ui-icon-trash"></span>')
+          .appendTo($trigger1)
+          .fadeIn();
+      });
+    }
+  });
 
   // function test(str, ab) {
   //   var arr = ['Uppmana medarbetare att säga sin åsikt', 'Be medarbetarna förbereda någon punkt till mötet'];
