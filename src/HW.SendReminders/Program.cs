@@ -111,8 +111,7 @@ namespace HW.SendReminders
 				               "AND u.Reminder <> 0 " +
 				               "AND (NULLIF(u.AltEmail,'') IS NOT NULL OR u.EmailFailure IS NULL OR DATEADD(MONTH,1,u.EmailFailure) < GETDATE()) " +
 				               "AND u.ReminderNextSend IS NOT NULL " +
-				               "AND u.ReminderNextSend <= GETDATE() " +
-				               "AND u.UserID = 17509");
+				               "AND u.ReminderNextSend <= GETDATE()");
 				while (rs.Read())
 				{
 					bool badEmail = false, usingAlternative = false;
