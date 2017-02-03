@@ -3208,7 +3208,8 @@ namespace HW.WebService
 					exec(
 						"DELETE FROM dbo.UserRegistrationID " +
 						"WHERE RegistrationID = '" + registrationID.Replace("'", "") + "' " +
-						"AND UserID = " + userID
+						""
+//						"AND UserID = " + userID
 					);
 				}
 				r.Close();
