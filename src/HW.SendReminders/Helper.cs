@@ -24,7 +24,7 @@ namespace HW.SendReminders
 			get { return ConfigurationManager.AppSettings["GcmMessage"]; }
 		}
 		
-		public static void sendGcmNotification(IRepo repo, List<string> registrationIds, string apiKey, string senderId, string message, int userId, string userKey)
+		public static void sendGcmNotification(IRepo repo, List<string> registrationIds, string apiKey, string senderId, string title, string body, int userId, string userKey)
 		{
 			userKey = userKey.Length >= 12 ? userKey.Substring(0, 12) : userKey;
 			string keyAndUserID = userKey + userId.ToString();
@@ -106,7 +106,8 @@ namespace HW.SendReminders
 						RegistrationIds = new List<string> {
 							registrationId
 						},
-						Notification = JObject.Parse("{ 'sound': 'default', 'badge': '1', 'title': 'HealthWatch', 'body': '" + message + "', 'click_action': 'se.healthwatch.HealthWatch.NotificationClick'}"),
+//						Notification = JObject.Parse("{ 'sound': 'default', 'badge': '1', 'title': 'HealthWatch', 'body': '" + body + "', 'click_action': 'se.healthwatch.HealthWatch.NotificationClick'}"),
+						Notification = JObject.Parse("{ 'sound': 'default', 'badge': '1', 'title': '" + title + "', 'body': '" + body + "', 'click_action': 'se.healthwatch.HealthWatch.NotificationClick' }"),
 						Priority = GcmNotificationPriority.High,
 						Data = JObject.Parse("{ 'userKey': '" + keyAndUserID + "' }")
 					}
