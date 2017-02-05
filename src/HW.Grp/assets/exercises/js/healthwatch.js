@@ -19,7 +19,7 @@ var healthwatch = (function() {
 function ExerciseRepo() {
   this.saveManagerExercise = function(exercise, success, error) {
     // console.log('Saving exercise...');
-    console.log(exercise);
+    // console.log(exercise);
     ajax.post('Service.aspx/SaveManagerExercise', { exercise: exercise }, success, error);
   };
   this.readManagerExercise = function(exerciseId, success, error) {

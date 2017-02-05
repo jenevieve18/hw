@@ -50,6 +50,7 @@ $(function () {
         { input: exercise.inputs[4], container: '.input4' }, 
         { input: exercise.inputs[5], container: '.input5' }
       );
+      init();
     },
     function (message, status, error) {
       $('#message').text(message).fadeIn(1000).fadeOut(1000);
@@ -69,8 +70,7 @@ $(function () {
     $(input3.input.components).each(function (i, component) {
       $('<li><span class="ui-icon ui-icon-arrow-4"></span>' + component.valueText + '</li>').appendTo(input3.container).fadeIn();
     });
-
-    init();
+    // init();
   }
 
   function init() {
@@ -184,13 +184,28 @@ $(function () {
     });
 
     $('#btn-notify1').click(function () {
-      console.log('hello world');
-      // for (var j = 1; j <= $("li", $trash).length; j++) {
-      //   test($("ul li:nth-child(" + j + ")", $trash)[0].innerHTML, j);
-      // }
-      // for (var j = 1; j <= $("li", $trash2).length; j++) {
-      //   testa($("ul li:nth-child(" + j + ")", $trash2)[0].innerHTML, j);
-      // }
+      var triggers = [
+        newExercise.inputs[2].components[0].valueText,
+        newExercise.inputs[2].components[11].valueText
+      ];
+      $('.input0 li').each(function(i, component) {
+        if ($.inArray($(this).text(), triggers) > -1) {
+          $(this).css('color', '#81BE23');
+        } else {
+          $(this).css('color', '#ff0000');
+        }
+      });
+      var impacts = [
+        newExercise.inputs[2].components[3].valueText, 
+        newExercise.inputs[2].components[4].valueText
+      ];
+      $('.input1 li').each(function(i, component) {
+        if ($.inArray($(this).text(), impacts) > -1) {
+          $(this).css('color', '#81BE23');
+        } else {
+          $(this).css('color', '#ff0000');
+        }
+      });
     });
     
     $('#btn-reset1').click(function() {
@@ -199,6 +214,7 @@ $(function () {
         { input: newExercise.inputs[1], container: '.input1' }, 
         { input: newExercise.inputs[2], container: '.input2' }
       );
+      init();
     });
 
     // $('li', $trigger2).draggable({
@@ -271,13 +287,28 @@ $(function () {
     });
 
     $('#btn-notify2').click(function () {
-      console.log('world hello');
-      // for (var j = 1; j <= $("li", $trash3).length; j++) {
-      //   test1($("ul li:nth-child(" + j + ")", $trash3)[0].innerHTML, j);
-      // }
-      // for (var j = 1; j <= $("li", $trash4).length; j++) {
-      //   testa1($("ul li:nth-child(" + j + ")", $trash4)[0].innerHTML, j);
-      // }
+      var triggers = [
+        newExercise.inputs[5].components[0].valueText,
+        newExercise.inputs[5].components[1].valueText
+      ];
+      $('.input3 li').each(function(i, component) {
+        if ($.inArray($(this).text(), triggers) > -1) {
+          $(this).css('color', '#81BE23');
+        } else {
+          $(this).css('color', '#ff0000');
+        }
+      });
+      var impacts = [
+        newExercise.inputs[5].components[5].valueText, 
+        newExercise.inputs[5].components[6].valueText
+      ];
+      $('.input4 li').each(function(i, component) {
+        if ($.inArray($(this).text(), impacts) > -1) {
+          $(this).css('color', '#81BE23');
+        } else {
+          $(this).css('color', '#ff0000');
+        }
+      });
     });
     
     $('#btn-reset2').click(function() {
@@ -286,6 +317,7 @@ $(function () {
         { input: newExercise.inputs[4], container: '.input4' }, 
         { input: newExercise.inputs[5], container: '.input5' }
       );
+      init();
     });
   }
 
@@ -304,40 +336,4 @@ $(function () {
       });
     }
   });
-
-  // function test(str, ab) {
-  //   var arr = ['Uppmana medarbetare att säga sin åsikt', 'Be medarbetarna förbereda någon punkt till mötet'];
-  //   if (jQuery.inArray(str, arr) > -1) {
-  //     $("ul li.item-" + ab, $trash).css('color', '#81BE23');
-  //   } else {
-  //     $("ul li.item-" + ab, $trash).css('color', '#ff0000');
-  //   }
-  // }
-
-  // function testa(str, ab) {
-  //   var arr2 = ['Tacka för synpunkterna', 'Tala om vad som händer härnäst i det av medarbetaren vidtalade ärendet', 'Be om fler synpunkter på det som någon sagt'];
-  //   if (jQuery.inArray(str, arr2) > -1) {
-  //     $("ul li.item-" + ab, $trash2).css('color', '#81BE23');
-  //   } else {
-  //     $("ul li.item-" + ab, $trash2).css('color', '#ff0000');
-  //   }
-  // }
-
-  // function test1(str, ab) {
-  //   var arr3 = ['Säga ”lägg det andra åt sidan och koncentrera dig på det här', 'Fråga om han/hon kan åta sig det här mot att bli avlastad i något annat'];
-  //   if (jQuery.inArray(str, arr3) > -1) {
-  //     $("ul li.item-" + ab, $trash3).css('color', '#81BE23');
-  //   } else {
-  //     $("ul li.item-" + ab, $trash3).css('color', '#ff0000');
-  //   }
-  // }
-
-  // function testa1(str, ab) {
-  //   var arr4 = ['Fråga hur det går och betona att det andra får ligga så länge', 'Tacka för utfört arbete och fråga om han/hon behöver hjälp att prioritera bland de ordinarie uppgifterna'];
-  //   if (jQuery.inArray(str, arr4) > -1) {
-  //     $("ul li.item-" + ab, $trash4).css('color', '#81BE23');
-  //   } else {
-  //     $("ul li.item-" + ab, $trash4).css('color', '#ff0000');
-  //   }
-  // }
 });
