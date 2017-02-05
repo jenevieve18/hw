@@ -116,6 +116,7 @@ $(function () {
       activeClass: "ui-state-default",
       drop: function (event, ui) {
         var $item = ui.draggable;
+        $item.removeAttr('style');
         $item.fadeOut(function () {
           $item.find(".ui-icon-trash")
             .remove()
@@ -131,6 +132,7 @@ $(function () {
       var $target = $(e.target);
       if ($target.is('.ui-icon-trash')) {
         var $item = $target.parent();
+        $item.removeAttr('style');
         $item
           .find('.ui-icon-trash')
           .remove()
@@ -145,6 +147,7 @@ $(function () {
       var $target = $(e.target);
       if ($target.is('.ui-icon-trash')) {
         var $item = $target.parent();
+        $item.removeAttr('style');
         $item
           .find('.ui-icon-trash')
           .remove()
@@ -159,6 +162,7 @@ $(function () {
       var $target = $(e.target);
       if ($target.is('.ui-icon-trash')) {
         var $item = $target.parent();
+        $item.removeAttr('style');
         $item
           .find('.ui-icon-trash')
           .remove()
@@ -173,6 +177,7 @@ $(function () {
       var $target = $(e.target);
       if ($target.is('.ui-icon-trash')) {
         var $item = $target.parent();
+        $item.removeAttr('style');
         $item
           .find('.ui-icon-trash')
           .remove()
@@ -275,6 +280,7 @@ $(function () {
       activeClass: "ui-state-default",
       drop: function (event, ui) {
         var $item = ui.draggable;
+        $item.removeAttr('style');
         $item.fadeOut(function () {
           $item.find(".ui-icon-trash")
             .remove()
