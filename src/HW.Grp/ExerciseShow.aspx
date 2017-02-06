@@ -81,7 +81,7 @@
 	        </div>
 	        <div class="content">
                 <img src="img/hwlogosmall.gif" />
-                <script src="assets/js/exerciseshow.js"></script>
+                <%--<script src="assets/js/exerciseshow.js"></script>--%>
                 <%= logos %>
                 <br /><br />
 		        <asp:PlaceHolder id="exercise" runat="server"/>		
