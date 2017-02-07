@@ -1,9 +1,13 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Grp.Master" AutoEventWireup="true" CodeBehind="Exercise.aspx.cs" Inherits="HW.Grp.Exercise" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Grp.Master" AutoEventWireup="true" CodeBehind="SavedExercise.aspx.cs" Inherits="HW.Grp.SavedExercise" %>
 
 <%@ Import Namespace="HW.Core.Models" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
 <%@ Import Namespace="HW.Grp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+    <script type="text/javascript">
+        
+    </script>
     <script src="assets/js/exercise.js"></script>
     <link rel="stylesheet" href="assets/css/exercise.css" />
 </asp:Content>
@@ -15,7 +19,7 @@
             <a class="hw-button hw-button-exercise" href="exercise.aspx">Group Exercises</a>
         </div>
         <div class="statschosergroup">
-            <h1 class="header"><%= R.Str(lid, "exercises.group", "Group-<br>exercises")%></h1>
+            <h1 class="header"><%= R.Str(lid, "exercises.group.save", "Saved-<br>exercises")%></h1>
             <a name="filter"></a>
             <div class="statschoser">
                 <div class="filter misc">
@@ -106,7 +110,8 @@
         </div>
         <% if (exercises.Count > 0)
            { %>
-        <div class="results">
+        <%--<div class="results">--%>
+        <div>
             <div class="largelegend">
                 <%-- LanguageFactory.GetLegend(LID) --%>
             </div>
@@ -115,12 +120,33 @@
                 <%--<asp:PlaceHolder ID="ExerciseList" runat="server" />--%>
                 <% foreach (var l in exercises)
                    { %>
-                <div class="item">
+                <% var evl = l.ExerciseVariantLanguage; %>
+                <% var v = l.ExerciseVariantLanguage.Variant; %>
+                <% var e = v.Exercise; %>
+                <% var el = e.Languages[0]; %>
+                <table>
+                    <tr>
+                        <th>Edit/Delete</th>
+                        <th>Date</th>
+                        <th>Exercise</th>
+                        <th>Comment</th>
+                        <th>Area</th>
+                        <th>Category</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href=""></a>
+                            <a href=""></a>
+                        </td>
+                        <td><%= l.Date.Value.ToString("yyyy-MM-dd HH:mm") %></td>
+                        <td><%= e.AreaCategoryName %></td>
+                    </tr>
+                </table>
+                <%--<div class="item">
                     <div class="overview"></div>
                     <div class="detail">
                         <div class="image">
-                            <img src="<%= l.Image %>" width="121" height="100">
-                        </div>
+                            <img src="<%= l.Image %>" width="121" height="100"></div>
                         <div class="time"><%= l.CurrentLanguage.Time %><span class="time-end"></span></div>
                         <div class="descriptions"><%= l.AreaCategoryName %></div>
                         <h2><%= l.CurrentLanguage.ExerciseName %></h2>
@@ -136,12 +162,11 @@
                                         l.CurrentVariant.ExerciseWindowY
                                     );
                             %>
-                            <%-- HtmlHelper.Anchor(l.CurrentType.ToString(), t, "class='sidearrow'") --%>
                             <a class="sidearrow" href="<%= t %>"><%= l.CurrentType.ToString() %></a>
                         </div>
                         <div class="bottom">&nbsp;</div>
                     </div>
-                </div>
+                </div>--%>
                 <% } %>
             </div>
             <!-- end .contentlist -->
@@ -155,7 +180,7 @@
         </div>
         <!-- end .results -->
         <% } %>
-        <div class="bottom"></div>
+        <%--<div class="bottom"></div>--%>
     </div>
 
 </asp:Content>

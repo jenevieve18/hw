@@ -1,0 +1,24 @@
+﻿
+.exercise-options {
+    background: #cdecf7;
+    height: 41px;
+    line-height: 41px;
+    font-size: 15px;
+    padding-left: 20px;
+}
+
+.exercise-options a {
+    color: #4d4d4d;
+}
+
+.hw-button {
+    color: #4d4d4d;
+    margin-right: 26px;
+    padding-left: 21px;
+    height: 16px;
+    letter-spacing: 1px;
+}
+
+.hw-button-save {
+    background: url(../img/disk.png) no-repeat;
+}

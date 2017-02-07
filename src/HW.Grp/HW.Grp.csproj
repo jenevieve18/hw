@@ -102,6 +102,7 @@
     <Content Include="assets\bootstrap\css\bootstrap-responsive.min.css" />
     <Content Include="assets\bootstrap\css\bootstrap.css" />
     <Content Include="assets\bootstrap\css\bootstrap.min.css" />
+    <Content Include="assets\css\exercise.css" />
     <Content Include="assets\exercises\css\main.css" />
     <Content Include="assets\exercises\images\book.png" />
     <Content Include="assets\exercises\images\champagne.png" />
@@ -116,6 +117,7 @@
     <Content Include="assets\exercises\images\submenu.jpg" />
     <Content Include="assets\exercises\images\text_bg.png" />
     <Content Include="assets\exercises\images\text_bg1.png" />
+    <Content Include="assets\js\exercise.js" />
     <Content Include="assets\ui\jquery-ui.css" />
     <Content Include="assets\js\jquery-1.10.2.js" />
     <Content Include="assets\ui\jquery-ui-1.9.2.custom.min.js" />
@@ -370,6 +372,8 @@
     <Content Include="Reminders.aspx" />
     <Content Include="ReportImage.aspx" />
     <Content Include="ReportImage2.aspx" />
+    <Content Include="SavedExercise.aspx" />
+    <Content Include="SavedExerciseShow.aspx" />
     <Content Include="Service.aspx" />
     <Content Include="Settings.aspx" />
     <Content Include="sql.aspx" />
@@ -529,6 +533,20 @@
     <Compile Include="ReportImage2.aspx.designer.cs">
       <DependentUpon>ReportImage2.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SavedExercise.aspx.cs">
+      <DependentUpon>SavedExercise.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SavedExercise.aspx.designer.cs">
+      <DependentUpon>SavedExercise.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SavedExerciseShow.aspx.cs">
+      <DependentUpon>SavedExerciseShow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SavedExerciseShow.aspx.designer.cs">
+      <DependentUpon>SavedExerciseShow.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Service.aspx.cs">
       <DependentUpon>Service.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -636,7 +654,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>7981</DevelopmentServerPort>
+          <DevelopmentServerPort>3775</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
