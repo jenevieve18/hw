@@ -117,13 +117,6 @@
             </div>
 
             <div class="contentlist">
-                <%--<asp:PlaceHolder ID="ExerciseList" runat="server" />--%>
-                <% foreach (var l in exercises)
-                   { %>
-                <% var evl = l.ExerciseVariantLanguage; %>
-                <% var v = l.ExerciseVariantLanguage.Variant; %>
-                <% var e = v.Exercise; %>
-                <% var el = e.Languages[0]; %>
                 <table>
                     <tr>
                         <th>Edit/Delete</th>
@@ -133,6 +126,13 @@
                         <th>Area</th>
                         <th>Category</th>
                     </tr>
+                    <%--<asp:PlaceHolder ID="ExerciseList" runat="server" />--%>
+                    <% foreach (var l in exercises)
+                       { %>
+                    <% var evl = l.ExerciseVariantLanguage; %>
+                    <% var v = l.ExerciseVariantLanguage.Variant; %>
+                    <% var e = v.Exercise; %>
+                    <% var el = e.Languages[0]; %>
                     <tr>
                         <td>
                             <a href=""></a>
