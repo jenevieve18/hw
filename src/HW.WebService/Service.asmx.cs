@@ -3199,7 +3199,8 @@ namespace HW.WebService
 					"SELECT UserRegistrationID " +
 					"FROM dbo.UserRegistrationID " +
 					"WHERE RegistrationID = '" + registrationID.Replace("'", "") + "' " +
-					"AND UserID = " + userID
+					""
+//					"AND UserID = " + userID
 				);
 				if (r.Read()) {
 					registrationIDFound = true;
