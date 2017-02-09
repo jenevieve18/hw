@@ -1,0 +1,10 @@
+﻿.sort {
+        background-repeat:no-repeat;
+        padding-left:16px;
+    }
+    .sort-asc {
+        background-image:url(images/bullet_arrow_down.png);
+    }
+    .sort-desc {
+        background-image:url(images/bullet_arrow_up.png);
+    }
