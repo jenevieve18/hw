@@ -4,10 +4,6 @@
 <%@ Import Namespace="HW.Core.Helpers" %>
 <%@ Import Namespace="HW.Grp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-
-    <script type="text/javascript">
-        
-    </script>
     <script src="assets/js/exercise.js"></script>
     <link rel="stylesheet" href="assets/css/exercise.css" />
 </asp:Content>
@@ -15,8 +11,8 @@
 
     <div class="contentgroup grid_16 exercises">
         <div class="exercise-options">
-            <a class="hw-button hw-button-save" href="savedexercise.aspx">Saved Exercises</a>
-            <a class="hw-button hw-button-exercise" href="exercise.aspx">Group Exercises</a>
+            <a class="hw-button hw-button-group" href="exercise.aspx">Group Exercises</a>
+            <a class="hw-button hw-button-save" href="savedexercise.aspx"><strong>Saved Exercises</strong></a>
         </div>
         <div class="statschosergroup">
             <h1 class="header"><%= R.Str(lid, "exercises.group.save", "Saved-<br>exercises")%></h1>
@@ -27,29 +23,22 @@
                         <%= R.Str(lid, "exercises.area", "Choose area")%>
                     </div>
                     <dl class="dropdown">
-                        <%-- <asp:PlaceHolder ID="AreaID" runat="server" />--%>
                         <dt>
-                            <% if (HasSelectedArea)
-                               { %>
-                            <a href="javascript:;"><span><%= SelectedArea.AreaName %></span></a>
-                            <% }
-                               else
-                               { %>
-                            <a href="javascript:;"><span><%= R.Str(lid, "show.all", "Show all") %></span></a>
+                            <% if (HasSelectedArea) { %>
+                                <a href="javascript:;"><span><%= SelectedArea.AreaName %></span></a>
+                            <% } else { %>
+                                <a href="javascript:;"><span><%= R.Str(lid, "show.all", "Show all") %></span></a>
                             <% } %>
                         </dt>
                         <dd>
                             <ul>
-                                <% if (HasSelectedArea)
-                                   { %>
-                                <li><%= HtmlHelper.Anchor(R.Str(lid, "show.all", "Show all"), string.Format("exercise.aspx?EAID=0{0}#filter", sortQueryString))%></li>
+                                <% if (HasSelectedArea) { %>
+                                    <li><%= HtmlHelper.Anchor(R.Str(lid, "show.all", "Show all"), string.Format("exercise.aspx?EAID=0{0}#filter", sortQueryString))%></li>
                                 <% } %>
                                 <% int i = 0; %>
-                                <% foreach (var a in areas)
-                                   { %>
-                                <% if (!HasSelectedArea || (HasSelectedArea && a.Area.Id != SelectedArea.Area.Id))
-                                   { %>
-                                <li<%= (i++ < areas.Count - 1) ? "" : " class='last'" %> id="EAID=<%= a.Area.Id %>">
+                                <% foreach (var a in areas) { %>
+                                    <% if (!HasSelectedArea || (HasSelectedArea && a.Area.Id != SelectedArea.Area.Id)) { %>
+                                        <li<%= (i++ < areas.Count - 1) ? "" : " class='last'" %> id="EAID=<%= a.Area.Id %>">
                                             <%= HtmlHelper.Anchor(a.AreaName, string.Format("exercise.aspx?EAID={0}{1}#filter", a.Area.Id, sortQueryString)) %>
                                         </li>
                                     <% } %>
@@ -63,29 +52,22 @@
                         <%= R.Str(lid, "exercises.category", "Choose a Category")%>
                     </div>
                     <dl class="dropdown">
-                        <%-- <asp:PlaceHolder ID="CategoryID" runat="server" />--%>
                         <dt>
-                            <% if (HasSelectedCategory)
-                               { %>
-                            <a href="javascript:;"><span><%= SelectedCategory.CategoryName %></span></a>
-                            <% }
-                               else
-                               { %>
-                            <a href="javascript:;"><span><%= R.Str(lid, "show.all", "Show all") %></span></a>
+                            <% if (HasSelectedCategory) { %>
+                                <a href="javascript:;"><span><%= SelectedCategory.CategoryName %></span></a>
+                            <% } else { %>
+                                <a href="javascript:;"><span><%= R.Str(lid, "show.all", "Show all") %></span></a>
                             <% } %>
                         </dt>
                         <dd>
                             <ul>
-                                <% if (HasSelectedCategory)
-                                   { %>
-                                <li><%= HtmlHelper.Anchor(R.Str(lid, "show.all", "Show all"), string.Format("exercise.aspx?ECID=0{0}{1}#filter", sortQueryString, (exerciseAreaID != 0 ? "&EAID=" + exerciseAreaID : "")))%></li>
+                                <% if (HasSelectedCategory) { %>
+                                    <li><%= HtmlHelper.Anchor(R.Str(lid, "show.all", "Show all"), string.Format("exercise.aspx?ECID=0{0}{1}#filter", sortQueryString, (exerciseAreaID != 0 ? "&EAID=" + exerciseAreaID : "")))%></li>
                                 <% } %>
                                 <% i = 0; %>
-                                <% foreach (var c in categories)
-                                   { %>
-                                <% if (!HasSelectedCategory || (HasSelectedCategory && c.Category.Id != SelectedCategory.Category.Id))
-                                   { %>
-                                <li<%= (i++ < categories.Count - 1) ? "" : " class='last'" %> id="ECID<%= c.Category.Id %>">
+                                <% foreach (var c in categories) { %>
+                                    <% if (!HasSelectedCategory || (HasSelectedCategory && c.Category.Id != SelectedCategory.Category.Id)) { %>
+                                        <li<%= (i++ < categories.Count - 1) ? "" : " class='last'" %> id="ECID<%= c.Category.Id %>">
                                             <%= HtmlHelper.Anchor(c.CategoryName, string.Format("exercise.aspx?ECID={0}{1}{2}#filter", c.Category.Id, sortQueryString, (exerciseAreaID != 0 ? "&EAID=" + exerciseAreaID : "")))%>
                                         </li>
                                     <% } %>
@@ -108,16 +90,15 @@
                 </div>
             </div>
         </div>
+        <div style="clear:both"></div>
         <% if (exercises.Count > 0)
            { %>
-        <%--<div class="results">--%>
         <div>
             <div class="largelegend">
-                <%-- LanguageFactory.GetLegend(LID) --%>
             </div>
 
             <div class="contentlist">
-                <table>
+                <table class="hw-table">
                     <tr>
                         <th>Edit/Delete</th>
                         <th>Date</th>
@@ -126,21 +107,24 @@
                         <th>Area</th>
                         <th>Category</th>
                     </tr>
-                    <%--<asp:PlaceHolder ID="ExerciseList" runat="server" />--%>
-                    <% foreach (var l in exercises)
-                       { %>
+                    <% foreach (var l in exercises) { %>
                     <% var evl = l.ExerciseVariantLanguage; %>
                     <% var v = l.ExerciseVariantLanguage.Variant; %>
                     <% var e = v.Exercise; %>
                     <% var el = e.Languages[0]; %>
                     <tr>
                         <td>
-                            <a href=""></a>
-                            <a href=""></a>
+                            <a href="#"><img src="assets/img/application_edit.png" /></a>
+                            <a href="#"><img src="assets/img/cross.png" /></a>
                         </td>
                         <td><%= l.Date.Value.ToString("yyyy-MM-dd HH:mm") %></td>
+                        <td>
+
+                        </td>
+                        <td></td>
                         <td><%= e.AreaCategoryName %></td>
                     </tr>
+                    <% } %>
                 </table>
                 <%--<div class="item">
                     <div class="overview"></div>
@@ -167,7 +151,6 @@
                         <div class="bottom">&nbsp;</div>
                     </div>
                 </div>--%>
-                <% } %>
             </div>
             <!-- end .contentlist -->
 

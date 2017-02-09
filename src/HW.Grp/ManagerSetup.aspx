@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Grp.Master" AutoEventWireup="true" CodeBehind="ManagerSetup.aspx.cs" Inherits="HW.Grp.ManagerSetup" %>
+
 <%@ Import Namespace="HW.Core.Helpers" %>
 <%@ Import Namespace="HW.Grp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -9,59 +10,95 @@
 
         <asp:Panel ID="Panel1" runat="server" DefaultButton="Save">
 
-        <div id="contextbar">
-            <div class="settingsPane">
-			    <asp:Button CssClass="btn" ID="Cancel" runat=server Text="Cancel" />
-			    <asp:Button CssClass="btn" ID="Save" runat=server Text="Save" />
-                <asp:Button ID="buttonSend" runat="server" Text="Send" CssClass="btn" 
-                    onclick="buttonSend_Click" Visible="False" />
+            <div id="contextbar">
+                <div class="settingsPane">
+                    <asp:Button CssClass="btn" ID="Cancel" runat="server" Text="Cancel" />
+                    <asp:Button CssClass="btn" ID="Save" runat="server" Text="Save" />
+                    <asp:Button ID="buttonSend" runat="server" Text="Send" CssClass="btn"
+                        OnClick="buttonSend_Click" Visible="False" />
 
-                <% if (message != "") { %>
-			    	<span style="color:#00cc00;"><%= message %></span>
-			    <% } %>
+                    <% if (message != "") { %>
+                        <span style="color: #00cc00;"><%= message %></span>
+                    <% } %>
 
-			    <% if (errorMessage != "") { %>
-			    	<br /><br /><span style="color:#cc0000;"><%= errorMessage %></span>
-			    <% } %>
+                    <% if (errorMessage != "") { %>
+                        <br />
+                        <br />
+                        <span style="color: #cc0000;"><%= errorMessage %></span>
+                    <% } %>
+                </div>
             </div>
-        </div>
 
-        <div class="smallContent">
-            <br />
-            <table border="0" cellpadding="0" cellspacing="0">
-                <tr>
-                    <td valign="top">
-	                    <table border="0" cellpadding="0" cellspacing="0">
-		                    <tr><td colspan="2"><b><%= R.Str(lid, "credentials", "Credentials") %></b></td></tr>
-		                    <tr><td><%= R.Str(lid, "manager.name", "First Name")%>&nbsp;</td><td><asp:TextBox ID="Name" Width=200 runat=server /></td></tr>
-                            <tr><td><%= R.Str(lid, "manager.name.last", "Last Name")%>&nbsp;</td><td><asp:TextBox ID="LastName" Width=200 runat=server /></td></tr>
-                            
-                            <asp:Panel ID="panelUserName" runat="server">
-                            <tr><td><%= R.Str(lid, "manager.username", "Username")%>&nbsp;</td><td><asp:TextBox ID="Usr" Width=200 runat=server /></td></tr>
-                            </asp:Panel>
-		                    
-		                    <%-- <tr><td><%= R.Str(lid, "manager.password", "Password")%>&nbsp;</td><td><asp:TextBox ID="Pas" TextMode=Password Width=200 runat=server /></td></tr>--%>
-		                    <tr><td><%= R.Str(lid, "email") %>&nbsp;</td><td><asp:TextBox ID="Email" Width=200 runat=server /></td></tr>
-                            <tr><td><%= R.Str(lid, "organization.readonly", "Organization read only")%>&nbsp;</td><td><asp:CheckBox ID=ReadOnly runat=server /></td></tr>
-                            <tr><td><%= R.Str(lid, "access.nodelete", "Access to permanently delete users")%></td><td><asp:CheckBox ID=PermanentlyDeleteUsers runat=server Checked="False" /></td></tr>
-                        </table>
-                    </td>
-                    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    <td valign="top">
-	                    <table border="0" cellpadding="0" cellspacing="0">
-		                    <tr><td><b><%= R.Str(lid, "manager.access", "Roles")%></b></td></tr>
-		                    <tr><td><asp:CheckBox ID="SuperUser" Text="Super user (can administer its own manager account, including all units)" runat=server /></td></tr>
-		                    <tr><td><asp:CheckBoxList CellPadding=0 CellSpacing=0 ID="ManagerFunctionID" runat=server /></td></tr>
-                        </table>
-                    </td>
-                </tr>
-	        </table>
-            <table border="0" cellpadding="0" cellspacing="0">
-	            <tr>
-					<td><b><%= R.Str(lid, "organization.access", "Organisation access")%></b></td>
-				</tr>
-	            <asp:Label ID=OrgTree runat=server />
-				<%--<tr>
+            <div class="smallContent">
+                <br />
+                <table border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td valign="top">
+                            <table border="0" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td colspan="2"><b><%= R.Str(lid, "credentials", "Credentials") %></b></td>
+                                </tr>
+                                <tr>
+                                    <td><%= R.Str(lid, "manager.name", "First Name")%>&nbsp;</td>
+                                    <td>
+                                        <asp:TextBox ID="Name" Width="200" runat="server" /></td>
+                                </tr>
+                                <tr>
+                                    <td><%= R.Str(lid, "manager.name.last", "Last Name")%>&nbsp;</td>
+                                    <td>
+                                        <asp:TextBox ID="LastName" Width="200" runat="server" /></td>
+                                </tr>
+
+                                <asp:Panel ID="panelUserName" runat="server">
+                                    <tr>
+                                        <td><%= R.Str(lid, "manager.username", "Username")%>&nbsp;</td>
+                                        <td>
+                                            <asp:TextBox ID="Usr" Width="200" runat="server" /></td>
+                                    </tr>
+                                </asp:Panel>
+
+                                <%-- <tr><td><%= R.Str(lid, "manager.password", "Password")%>&nbsp;</td><td><asp:TextBox ID="Pas" TextMode=Password Width=200 runat=server /></td></tr>--%>
+                                <tr>
+                                    <td><%= R.Str(lid, "email") %>&nbsp;</td>
+                                    <td>
+                                        <asp:TextBox ID="Email" Width="200" runat="server" /></td>
+                                </tr>
+                                <tr>
+                                    <td><%= R.Str(lid, "organization.readonly", "Organization read only")%>&nbsp;</td>
+                                    <td>
+                                        <asp:CheckBox ID="ReadOnly" runat="server" /></td>
+                                </tr>
+                                <tr>
+                                    <td><%= R.Str(lid, "access.nodelete", "Access to permanently delete users")%></td>
+                                    <td>
+                                        <asp:CheckBox ID="PermanentlyDeleteUsers" runat="server" Checked="False" /></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td valign="top">
+                            <table border="0" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td><b><%= R.Str(lid, "manager.access", "Roles")%></b></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <asp:CheckBox ID="SuperUser" Text="Super user (can administer its own manager account, including all units)" runat="server" /></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <asp:CheckBoxList CellPadding="0" CellSpacing="0" ID="ManagerFunctionID" runat="server" /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <table border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td><b><%= R.Str(lid, "organization.access", "Organisation access")%></b></td>
+                    </tr>
+                    <asp:Label ID="OrgTree" runat="server" />
+                    <%--<tr>
 					<td><%= Session["Sponsor"] %></td>
 				</tr>
 				<% bool[] DX = new bool[8]; %>
@@ -89,8 +126,8 @@
 					</tr>
 					<% } %>
 				<% } %>--%>
-            </table>
-        </div>
+                </table>
+            </div>
 
         </asp:Panel>
 

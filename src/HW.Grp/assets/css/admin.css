@@ -184,3 +184,7 @@
 #admin .smallContent {
 	font-size: 12px;
 }
+.i18n {
+    background: url(../img/rsaquo.gif) no-repeat 0 4px;
+    padding-left: 7px;
+}

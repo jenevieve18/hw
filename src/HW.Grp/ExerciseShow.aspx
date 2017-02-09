@@ -1,17 +1,18 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ExerciseShow.aspx.cs" Inherits="HW.Grp.ExerciseShow" %>
+
 <%@ Import Namespace="HW.Core.FromHW" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head runat="server">
     <meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta http-equiv="Pragma" content="no-cache">
-	<meta http-equiv="Expires" content="-1">
-	<meta name="Robots" content="noarchive">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta name="Robots" content="noarchive">
     <meta name="description" content="Exercises">
 
-	<title><%= langId == 1 ? "Övningar" : "Exercises"%> - HealthWatch</title>
-	
+    <title><%= langId == 1 ? "Övningar" : "Exercises"%> - HealthWatch</title>
+
     <%--<link rel="shortcut icon" href="favicon.ico">
 	<link rel="apple-touch-icon" href="apple-touch-icon.png">
 	
@@ -43,7 +44,6 @@
         $(function () {
             $('#btn-pdf').click(function () {
                 var doc = new jsPDF('p', 'pt', 'a4');
-                //- var doc = new jsPDF();
                 var options = {
                     background: '#fff',
                     pagesplit: true
@@ -62,7 +62,9 @@
 <!--[if IE 7 ]>    <body class="ie7" class="popup"> <![endif]-->
 <!--[if IE 8 ]>    <body class="ie8" class="popup"> <![endif]-->
 <!--[if IE 9 ]>    <body class="ie9" class="popup"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <body class="popup"> <!--<![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<body class="popup">
+    <!--<![endif]-->
 
     <form id="Form1" method="post" runat="server">
 
@@ -72,25 +74,26 @@
         <input id="sponsorAdminExerciseID" type="hidden" value="0" />
 
         <div id="popupie" class="popupie">
-	        <div class="header">
-		        <h1>HealthWatch.se<%= headerText %></h1>
+            <div class="header">
+                <h1>HealthWatch.se<%= headerText %></h1>
                 <a id="btn-pdf" href="#" class="print">PDF</a>
                 <a href="#" id="printBtn" onclick="window.print();return false;" class="print">
                     <%= langId == 1 ? "Skriv ut" : "Print" %>
                 </a>
-	        </div>
-	        <div class="content">
+            </div>
+            <div class="content">
                 <img src="img/hwlogosmall.gif" />
-                <%--<script src="assets/js/exerciseshow.js"></script>--%>
                 <%= logos %>
-                <br /><br />
-		        <asp:PlaceHolder id="exercise" runat="server"/>		
-		        <% if (evl != null && evl.Variant.Exercise.PrintOnBottom) { %>
-			        <br><br>
-			        <a href='#' id='printBtn2' onclick='window.print();return false;' class='print'>
-				        <%= langId == 1 ? "Skriv ut" : "Print" %>
-			        </a>
-		        <% } %>
+                <br />
+                <br />
+                <asp:PlaceHolder ID="exercise" runat="server" />
+                <% if (evl != null && evl.Variant.Exercise.PrintOnBottom) { %>
+                    <br>
+                    <br>
+                    <a href='#' id='printBtn2' onclick='window.print();return false;' class='print'>
+                        <%= langId == 1 ? "Skriv ut" : "Print" %>
+                    </a>
+                <% } %>
             </div>
             <div class="footer">&copy; <%=DateTime.Now.Year%> www.healthwatch.se</div>
         </div>
