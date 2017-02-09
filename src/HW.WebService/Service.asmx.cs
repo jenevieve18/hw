@@ -3153,7 +3153,7 @@ namespace HW.WebService
 					);
 				} else {
 					exec(
-						"UPDATE UserRegistrationID SET Inactive = " + (inactive ? 1 : 0) + " , " +
+						"UPDATE UserRegistrationID SET Inactive = " + (inactive ? 1 : 0) + " " +
 						"WHERE UserID = " + userID + ""
 					);
 					exec(
