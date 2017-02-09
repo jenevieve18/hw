@@ -3139,7 +3139,7 @@ namespace HW.WebService
 			if (userID != 0) {
 				SqlDataReader r = rs(
 					"SELECT 1 " +
-					"FROM dbo.UserRegistrationID " +
+					"FROM UserRegistrationID " +
 					"WHERE UserID = " + userID + " " +
 					"AND RegistrationID = '" + registrationID.Replace("'", "") + "'"
 				);
@@ -3148,16 +3148,18 @@ namespace HW.WebService
 				}
 				if (isNewValue) {
 					exec(
-						"INSERT INTO dbo.UserRegistrationID(UserID, RegistrationID, Inactive, PhoneName)" +
+						"INSERT INTO UserRegistrationID(UserID, RegistrationID, Inactive, PhoneName)" +
 						"VALUES(" + userID + ", '" + registrationID.Replace("'", "") + "', " + (inactive ? 1 : 0) + ", '" + phoneName.Replace("'", "") + "')"
 					);
 				} else {
 					exec(
-						"UPDATE dbo.UserRegistrationID SET Inactive = " + (inactive ? 1 : 0) + " , " +
-						"PhoneName = '" + phoneName.Replace("'", "") + "'" +
+						"UPDATE UserRegistrationID SET Inactive = " + (inactive ? 1 : 0) + " , " +
+						"WHERE UserID = " + userID + ""
+					);
+					exec(
+						"UPDATE UserRegistrationID SET PhoneName = '" + phoneName.Replace("'", "") + "' " +
 						"WHERE UserID = " + userID + " " +
-//						"AND RegistrationID = '" + registrationID.Replace("'", "") + "'" +
-						""
+						"AND RegistrationID = '" + registrationID.Replace("'", "") + "'"
 					);
 				}
 				r.Close();
