@@ -52,15 +52,15 @@
                     <td style="text-align: center"><%= s.GetLoginDays(R.Str(lid, "manager.login.notactivated", "Not activated"), R.Str(lid, "manager.login.notonrecord", "Not on record"), R.Str(lid, "manager.login.days", "days(s)")) %></td>
                     <td>
                         <%
-                       string url = string.Format(
-                           @"javascript:if(confirm(""{1}"")) {{
+                        string url = string.Format(
+                            @"javascript:if(confirm(""{1}"")) {{
 									location.href=""managers.aspx?Delete={0}"";
 								}}",
-                           s.Id,
-                           R.Str(lid, "manager.delete", "Are you sure you want to delete this manager?")
-                       );
+                            s.Id,
+                            R.Str(lid, "manager.delete", "Are you sure you want to delete this manager?")
+                        );
                         %>
-                        <%= HtmlHelper.AnchorImage(url, "img/deltoolsmall.gif")%>
+                        <%= HtmlHelper.AnchorImage(url, "assets/img/deltoolsmall.gif")%>
                     </td>
                 </tr>
                 <% } %>

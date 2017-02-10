@@ -70,8 +70,6 @@
     <Compile Include="Views\ManagerSetupTests.cs" />
     <Compile Include="Views\ManagersTests.cs" />
     <Compile Include="Views\MessagesTests.cs" />
-    <Compile Include="Views\MyExerciseShowTests.cs" />
-    <Compile Include="Views\MyExerciseTests.cs" />
     <Compile Include="Views\OrgTests.cs" />
     <Compile Include="Views\RemindersTests.cs" />
     <Compile Include="Views\StatsTests.cs" />

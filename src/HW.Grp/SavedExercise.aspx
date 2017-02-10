@@ -115,7 +115,17 @@
                     <tr>
                         <td>
                             <a href="#"><img src="assets/img/application_edit.png" /></a>
-                            <a href="#"><img src="assets/img/cross.png" /></a>
+                            <%--<a href="#"><img src="assets/img/cross.png" /></a>--%>
+                            <%
+                            string url = string.Format(
+                                @"javascript:if(confirm(""{1}"")) {{
+									location.href=""savedexercise.aspx?Delete={0}"";
+								}}",
+                                l.Id,
+                                R.Str(lid, "exercise.delete", "Are you sure you want to delete this exercise?")
+                            );
+                            %>
+                            <%= HtmlHelper.AnchorImage(url, "assets/img/cross.png")%>
                         </td>
                         <td><%= l.Date.Value.ToString("yyyy-MM-dd HH:mm") %></td>
                         <td>
