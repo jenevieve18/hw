@@ -62,7 +62,7 @@
                             </small>
                         </span>
                         <br />
-                        <%= HtmlHelper.Image(string.Format("/img/partner/{0}.gif", sponsor.SuperSponsor.Id)) %>
+                        <%= HtmlHelper.Image(string.Format("img/partner/{0}.gif", sponsor.SuperSponsor.Id)) %>
                     <% } else { %>
 					    HealthWatch.se<br />
                         <span style="font-size: 14px">

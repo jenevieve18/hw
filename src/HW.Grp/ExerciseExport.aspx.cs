@@ -30,7 +30,7 @@ namespace HW.Grp
 			
 			HtmlHelper.AddHeaderIf(exporter.HasContentDisposition(""), "content-disposition", exporter.GetContentDisposition(""), Response);
 
-			string logo = Server.MapPath("~/img/hwlogosmall.gif");
+			string logo = Server.MapPath("~/assets/img/hwlogosmall.gif");
 			
 			int sponsorId = Convert.ToInt32(Session["SponsorID"]);
 			string sponsorLogo = "";

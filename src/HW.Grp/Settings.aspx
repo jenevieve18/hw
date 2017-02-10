@@ -10,7 +10,7 @@
             <div class="settingsPane">
                 <asp:PlaceHolder ID="Txt" runat="server"><%= R.Str(lid, "password.change", "Change password")%></asp:PlaceHolder>
                 <asp:TextBox ID="Password" runat="server" TextMode="Password" />
-                <asp:Button ID="Save" runat="server" Text="Save" />
+                <asp:Button ID="Save" runat="server" CssClass="btn" Text="Save" />
                 <asp:Label ID="Message" runat="server" />
             </div>
         </div>

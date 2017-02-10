@@ -79,7 +79,7 @@
         .report-part-subject .icon {
             width: 32px;
             height: 16px;
-            background: url(img/myhealth_statistics_bar_detail_toggle.png);
+            background: url(assets/img/myhealth_statistics_bar_detail_toggle.png);
             display: inline-block;
             cursor: pointer;
         }
@@ -88,7 +88,7 @@
         }
 
         .report-part-subject .icon-hover {
-            background: url(img/myhealth_statistics_bar_detail_toggle.png);
+            background: url(assets/img/myhealth_statistics_bar_detail_toggle.png);
             background-position: 0 -16px;
         }
     </style>
@@ -101,12 +101,11 @@
     <div class="report-part-all">
         <%= R.Str(lid, "graphs.change.all", "Change all graphs to:")%>
         <select class="all-plot-types">
-            <% foreach (var p in plotTypes)
-               { %>
-            <% if (!p.SupportsMultipleSeries && !forSingleSeries) { } %>
-            <% else
-               { %><option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option>
-            <% } %>
+            <% foreach (var p in plotTypes) { %>
+                <% if (!p.SupportsMultipleSeries && !forSingleSeries) { } %>
+                <% else { %>
+                    <option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option>
+                <% } %>
             <% } %>
         </select>
         <%= R.Str(lid, "graphs.export.all", "Export all graphs to:")%>
@@ -120,57 +119,55 @@
 
     <% int cx = 0; %>
 
-    <% foreach (var r in reportParts)
-       { %>
+    <% foreach (var r in reportParts) { %>
 
-    <div <%= cx > 0 ? " style='page-break-before:always;'" : "" %>>&nbsp;<br>
-        &nbsp;<br>
-    </div>
-    <table border="0" cellspacing="0" cellpadding="0" class="report-part">
-        <tbody>
-            <tr class="noscreen">
-                <td align="center" valign="middle" background="img/top_healthWatch.jpg" height="140" style="font-size: 24px;"><%= r.Subject %></td>
-            </tr>
-            <tr class="noprint report-part-subject">
-                <td style="font-size: 18px;"><%= r.Subject %></td>
-                <td style="text-align: right">
-                    <span class="icon icon-active"></span>
-                </td>
-            </tr>
-            <tr class="report-part-header">
-                <td colspan="2">
-                    <%= r.Header.Replace("\r", "").Replace("\n", "<br/>")%>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <% string url = GetReportImageUrl(r); %>
-                    <img class="image" src="<%= url %>" />
-                    <span class="hidden image-url"><%= url %></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <%= R.Str(lid, "graphs.change", "Change this graph to:")%>
-                    <select class="plot-types">
-                        <% foreach (var p in plotTypes)
-                           { %>
-                        <option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option>
-                        <% } %>
-                    </select>
-                    <%= R.Str(lid, "graphs.export", "Export this graph to:")%>
-                    <% string exportUrl = GetReportExportUrl(r); %>
-                    <span class="hidden export-url"><%= exportUrl %></span>
-                    <input type="button" class="button-docx" value="docx" onclick="window.open('<%= exportUrl + "&TYPE=docx" %>    ', '_blank')" />
-                    <input type="button" class="button-pptx" value="pptx" onclick="window.open('<%= exportUrl + "&TYPE=pptx" %>    ', '_blank')" />
-                    <input type="button" class="button-xls" value="xls" onclick="window.open('<%= exportUrl + "&TYPE=xls" %>    ', '_blank')" />
-                    <input type="button" class="button-xlsverbose" value="<%=R.Str(lid, "xls.verbose", "xls verbose") %>" onclick="window.open('<%= exportUrl + "&TYPE=xls&PLOT=" + PlotType.Verbose %>    ', '_blank')" />
-                </td>
-            </tr>
-        </tbody>
-    </table>
+        <div <%= cx > 0 ? " style='page-break-before:always;'" : "" %>>&nbsp;<br>
+            &nbsp;<br>
+        </div>
+        <table border="0" cellspacing="0" cellpadding="0" class="report-part">
+            <tbody>
+                <tr class="noscreen">
+                    <td align="center" valign="middle" background="img/top_healthWatch.jpg" height="140" style="font-size: 24px;"><%= r.Subject %></td>
+                </tr>
+                <tr class="noprint report-part-subject">
+                    <td style="font-size: 18px;"><%= r.Subject %></td>
+                    <td style="text-align: right">
+                        <span class="icon icon-active"></span>
+                    </td>
+                </tr>
+                <tr class="report-part-header">
+                    <td colspan="2">
+                        <%= r.Header.Replace("\r", "").Replace("\n", "<br/>")%>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <% string url = GetReportImageUrl(r); %>
+                        <img class="image" src="<%= url %>" />
+                        <span class="hidden image-url"><%= url %></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <%= R.Str(lid, "graphs.change", "Change this graph to:")%>
+                        <select class="plot-types">
+                            <% foreach (var p in plotTypes) { %>
+                                <option value="<%= p.PlotType.Id %>"><%= p.ShortName %></option>
+                            <% } %>
+                        </select>
+                        <%= R.Str(lid, "graphs.export", "Export this graph to:")%>
+                        <% string exportUrl = GetReportExportUrl(r); %>
+                        <span class="hidden export-url"><%= exportUrl %></span>
+                        <input type="button" class="button-docx" value="docx" onclick="window.open('<%= exportUrl + "&TYPE=docx" %>    ', '_blank')" />
+                        <input type="button" class="button-pptx" value="pptx" onclick="window.open('<%= exportUrl + "&TYPE=pptx" %>    ', '_blank')" />
+                        <input type="button" class="button-xls" value="xls" onclick="window.open('<%= exportUrl + "&TYPE=xls" %>    ', '_blank')" />
+                        <input type="button" class="button-xlsverbose" value="<%=R.Str(lid, "xls.verbose", "xls verbose") %>" onclick="window.open('<%= exportUrl + "&TYPE=xls&PLOT=" + PlotType.Verbose %>    ', '_blank')" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-    <% cx++; %>
+        <% cx++; %>
 
     <% } %>
 </asp:Content>

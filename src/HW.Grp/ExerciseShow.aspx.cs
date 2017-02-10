@@ -49,7 +49,7 @@ namespace HW.Grp
 					headerText += " - " + Application["SUPERSPONSORHEAD" + Convert.ToInt32(Session["SponsorID"]) + "LANG" + Convert.ToInt32(Session["LID"])];
 				}
 				if (Convert.ToInt32(Application["SUPERSPONSOR" + Convert.ToInt32(Session["SponsorID"])]) > 0) {
-					logos += "<img src='img/partner/" + Convert.ToInt32(Application["SUPERSPONSOR" + Convert.ToInt32(Session["SponsorID"])]) + ".gif'/>";
+                    logos += "<img src='img/partner/" + Convert.ToInt32(Application["SUPERSPONSOR" + Convert.ToInt32(Session["SponsorID"])]) + ".gif'/>";
 				}
 			}
 			if(HttpContext.Current.Session["UserProfileID"] != null) {
@@ -182,7 +182,7 @@ namespace HW.Grp
 		{
 			if (s != null) {
 				if (s.HasSuperSponsor) {
-					logos += "<img src='img/partner/" + s.SuperSponsor.Id + ".gif'/>";
+                    logos += "<img src='img/partner/" + s.SuperSponsor.Id + ".gif'/>";
 				}
 				if (s.HasSuperSponsor && s.SuperSponsor.Languages[0].Header != "") {
 					headerText += " - " + s.SuperSponsor.Languages[0].Header;

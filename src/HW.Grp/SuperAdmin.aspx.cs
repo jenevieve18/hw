@@ -367,7 +367,7 @@ namespace HW.Grp
 //					"<td>" + rs.GetInt32(5) + "</TD>" +
 //					"<td>" + (rs.IsDBNull(6) ? "N/A" : rs.GetDateTime(6).ToString("yyyy-MM-dd")) + "</TD>" +
 //					"<td>" + (rs.IsDBNull(7) ? "No" : "Yes") + "</TD>" +
-//					"<td>" + (!rs.IsDBNull(6) ? "<A HREF='superadmin.aspx?ATSID=" + rs.GetInt32(0) + "'><img src='img/auditTrail.gif' border='0'/></a>" : "") + (rs.IsDBNull(9) ? "" : " <span style='color:#cc0000;'>Closed " + rs.GetDateTime(9).ToString("yyyy-MM-dd") + "</span>") + "</td>" +
+                //					"<td>" + (!rs.IsDBNull(6) ? "<A HREF='superadmin.aspx?ATSID=" + rs.GetInt32(0) + "'><img src='assets/img/auditTrail.gif' border='0'/></a>" : "") + (rs.IsDBNull(9) ? "" : " <span style='color:#cc0000;'>Closed " + rs.GetDateTime(9).ToString("yyyy-MM-dd") + "</span>") + "</td>" +
 //					"</tr>";
 				SponsorID.Text += string.Format(
                     @"
@@ -393,7 +393,7 @@ namespace HW.Grp
 					sap.Sponsor.ActiveInvites.Capacity,
 					(sap.Sponsor.MinimumInviteDate == null ? "N/A" : sap.Sponsor.MinimumInviteDate.Value.ToString("yyyy-MM-dd")),
 					(sap.SeeUsers ? "No" : "Yes"),
-					(sap.Sponsor.MinimumInviteDate != null ? "<a href='superadmin.aspx?ATSID=" + sap.Sponsor.Id + "'><img src='img/auditTrail.gif' border='0'/></a>" : ""),
+                    (sap.Sponsor.MinimumInviteDate != null ? "<a href='superadmin.aspx?ATSID=" + sap.Sponsor.Id + "'><img src='assets/img/auditTrail.gif' border='0'/></a>" : ""),
 					(sap.Sponsor.Closed == null ? "" : " <span style='color:#cc0000;'>Closed " + sap.Sponsor.Closed.Value.ToString("yyyy-MM-dd") + "</span>")
 				);
 

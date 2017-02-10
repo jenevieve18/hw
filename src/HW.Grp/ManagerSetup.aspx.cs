@@ -91,9 +91,9 @@ namespace HW.Grp
 								DX[i] = false;
 							}
 							if (i == depth) {
-								OrgTree.Text += string.Format("<img src='img/{0}.gif' width='19' height='20'/>", (DX[i] ? "T" : "L"));
+								OrgTree.Text += string.Format("<img src='assets/img/{0}.gif' width='19' height='20'/>", (DX[i] ? "T" : "L"));
 							} else {
-								OrgTree.Text += string.Format("<img src='img/{0}.gif' width='19' height='20'/>", (DX[i] ? "I" : "null"));
+								OrgTree.Text += string.Format("<img src='assets/img/{0}.gif' width='19' height='20'/>", (DX[i] ? "I" : "null"));
 							}
 						}
 						OrgTree.Text += string.Format(

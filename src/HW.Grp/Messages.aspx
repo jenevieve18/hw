@@ -34,7 +34,7 @@
                         <asp:Label ID="labelInviteLastSent" runat="server" /></span>)</td>
                     <td rowspan="9">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                     <td bgcolor="#CCCCCC" rowspan="9">
-                        <img src="img/null.gif" width="1" height="1" /></td>
+                        <img src="assets/img/null.gif" width="1" height="1" /></td>
                     <td rowspan="9">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                     <td><b><%= R.Str(lid, "login.reminder.subject", "Login reminder subject/message")%></b> (<span style="font-size: 9px;"><%= R.Str(lid, "sent.last", "Last sent") %>: 
                         <asp:Label ID="labelLoginLastSent" runat="server" /></span>)</td>

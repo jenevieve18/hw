@@ -130,16 +130,16 @@
                     <tr>
                         <td valign="top" id="act1" runat="server">
                             <b><%= R.Str(lid, "action", "Action")%></b><br />
-                            <a href=""><img src="img/unt_add.gif" border="0" />&nbsp;Add&nbsp;unit</a><br />
-                            <a href=""><img src="img/usr_add.gif" border="0" />&nbsp;Add&nbsp;user</a>
+                            <a href=""><img src="assets/img/unt_add.gif" border="0" />&nbsp;Add&nbsp;unit</a><br />
+                            <a href=""><img src="assets/img/usr_add.gif" border="0" />&nbsp;Add&nbsp;user</a>
                         </td>
                         <td width="5%" id="act2" runat="server">
                             &nbsp;
                         </td>
                         <td valign="top" id="act3" runat="server">
                             &nbsp;<br />
-                            <a href=""><img src="img/unt_imp.gif" border="0" />&nbsp;Import&nbsp;units</a><br />
-                            <a href=""><img src="img/usr_imp.gif" border="0" />&nbsp;Import&nbsp;users</a>
+                            <a href=""><img src="assets/img/unt_imp.gif" border="0" />&nbsp;Import&nbsp;units</a><br />
+                            <a href=""><img src="assets/img/usr_imp.gif" border="0" />&nbsp;Import&nbsp;users</a>
                         </td>
                         <td width="5%" id="act4" runat="server">
                             &nbsp;
@@ -153,24 +153,24 @@
                         </td>
                         <td valign="top">
                             <b>Legend</b><br />
-                            <img src="img/usr_on.gif" />&nbsp;Show&nbsp;members<br />
-                            <img src="img/key.gif" />&nbsp;Display&nbsp;restricted
+                            <img src="assets/img/usr_on.gif" />&nbsp;Show&nbsp;members<br />
+                            <img src="assets/img/key.gif" />&nbsp;Display&nbsp;restricted
                         </td>
                         <td width="5%" id="act5" runat="server">
                             &nbsp;
                         </td>
                         <td valign="top" id="act6" runat="server">
                             &nbsp;<br />
-                            <img src="img/unt_edt.gif" />&nbsp;Edit&nbsp;unit<br />
-                            <img src="img/usr_edt.gif" />&nbsp;Edit&nbsp;user
+                            <img src="assets/img/unt_edt.gif" />&nbsp;Edit&nbsp;unit<br />
+                            <img src="assets/img/usr_edt.gif" />&nbsp;Edit&nbsp;user
                         </td>
                         <td width="5%" id="act7" runat="server">
                             &nbsp;
                         </td>
                         <td valign="top" id="act8" runat="server">
                             &nbsp;<br />
-                            <img src="img/unt_del.gif" />&nbsp;Delete&nbsp;unit<br />
-                            <img src="img/usr_del.gif" />&nbsp;Delete&nbsp;user
+                            <img src="assets/img/unt_del.gif" />&nbsp;Delete&nbsp;unit<br />
+                            <img src="assets/img/usr_del.gif" />&nbsp;Delete&nbsp;user
                         </td>
                         <td width="20%" id="act9" runat="server">
                             &nbsp;

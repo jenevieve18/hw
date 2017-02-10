@@ -37,7 +37,7 @@
                 <tr>
                     <td>
                         <% if (s.ReadOnly) { %>
-                            <img src="img/locked.gif" />
+                            <img src="assets/img/locked.gif" />
                         <% } %>
                         <%= HtmlHelper.Anchor(s.ToString(), "managerSetup.aspx?SAID=" + s.Id.ToString()) %>
                     </td>

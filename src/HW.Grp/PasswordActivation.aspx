@@ -28,12 +28,6 @@
         });
     });
 	</script>-->
-    <%--<style type="text/css">
-        .i18n {
-            background: url(https://healthwatch.se/includes/resources/rsaquo.gif) no-repeat 0 4px;
-            padding-left: 7px;
-        }
-    </style>--%>
     <style type="text/css">
         #admin #contextbar .actionPane {
             border-top: 1px solid #b0e1f3;

@@ -1,7 +1,7 @@
 ﻿.detail {
 	width: 32px;
 	height: 16px;
-	background:url(https://healthwatch.se/includes/resources/myhealth_statistics_bar_detail_toggle.gif);
+	background:url(../img/myhealth_statistics_bar_detail_toggle.gif);
 }
 .button {
 	display: inline-block;

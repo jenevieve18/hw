@@ -129,33 +129,27 @@
 #admin #contextbar .bottom .import-users {
 	background: url('resources/admin/organization_sprites.png') no-repeat left -52px;
 }
-
-#admin #contextbar .inpt 
-{
+#admin #contextbar .inpt {
     width:350px;
 }
-#admin #contextbar .maxInpt 
-{
+#admin #contextbar .maxInpt {
     max-width:750px;
 }
-#admin #contextbar .desc 
-{
+#admin #contextbar .desc {
     display:block;
     float:left;
-    width:120px;
+    /*width:120px;*/
+    width:100px;
 }
-#admin #contextbar .descLong
-{
+#admin #contextbar .descLong {
     display:block;
     float:left;
     width:150px;
 }
-#admin #contextbar .btn 
-{
+#admin #contextbar .btn {
     margin:5px 14px 0px 0px;
 }
-#admin #contextbar .actionBlock 
-{
+#admin #contextbar .actionBlock {
     margin-bottom: 10px;
     padding-top: 10px;
 	margin-top: 2px;
@@ -182,4 +176,8 @@
 }
 #admin .smallContent {
 	font-size: 12px;
+}
+.i18n {
+    background: url(../img/rsaquo.gif) no-repeat 0 4px;
+    padding-left: 7px;
 }

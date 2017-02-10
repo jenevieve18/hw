@@ -16,7 +16,7 @@
     <%--<link rel="shortcut icon" href="favicon.ico">
 	<link rel="apple-touch-icon" href="apple-touch-icon.png">
 	
-    <link type="text/css" rel="stylesheet" href="includes2/css/960.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/960.css">
 	<link type="text/css" rel="stylesheet" href="includes2/css/site.css">
 	
     <link type="text/css" href="includes/ui/css/ui-lightness/jquery-ui-1.8.11.custom.css" rel="Stylesheet">
@@ -32,12 +32,16 @@
     <script type="text/javascript">        $("body").addClass("popup"); $(document).ready(function () { $("body").addClass("popup"); });</script>
     <script src="AC_ActiveX.js" type="text/javascript"></script>--%>
 
-    <link type="text/css" rel="stylesheet" href="includes2/css/960.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/960.css">
     <link type="text/css" rel="stylesheet" href="assets/exercises/css/main.css">
+    
     <link type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+    
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    
     <script type="text/javascript" src="assets/exercises/js/healthwatch.js"></script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
     <script type="text/javascript">
@@ -82,7 +86,7 @@
                 </a>
             </div>
             <div class="content">
-                <img src="img/hwlogosmall.gif" />
+                <img src="assets/img/hwlogosmall.gif" />
                 <%= logos %>
                 <br />
                 <br />
