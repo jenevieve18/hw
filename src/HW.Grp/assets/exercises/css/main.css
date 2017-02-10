@@ -204,6 +204,14 @@ ul li input {
   cursor: pointer;
 }
 
+.text-info {
+  color: #337ab7;
+}
+
+.text-success {
+  color: #dff0d8;
+}
+
 ol li, ul li {
   padding: 2px 0;
 }
