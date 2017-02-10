@@ -20,7 +20,7 @@
                 </asp:DropDownList>
                 <%= R.Str(lid, "message.confirm", "message, confirm with password")%>
                 <asp:TextBox ID="textBoxPassword" runat="server" TextMode="Password" />
-                <asp:Button ID="buttonSend" runat="server" Text="Send" />
+                <asp:Button ID="buttonSend" runat="server" Text="Send" CssClass="btn" />
                 <br />
                 <asp:Button ID="buttonRevert" CssClass="btn" runat="server" Text="Revert to default" />
             </div>

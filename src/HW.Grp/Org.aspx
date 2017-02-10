@@ -10,7 +10,7 @@
                 <div class="search">
                     <%= R.Str(lid, "search.email", "Search user by email") %>
                     <asp:TextBox ID="SearchEmail" runat="server" />
-                    <asp:Button ID="Search" Text="Search" runat="server" />
+                    <asp:Button ID="Search" CssClass="btn" Text="Search" runat="server" />
                 </div>
             </div>
             <div class="bottom" id="ActionNav" runat="server">
