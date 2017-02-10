@@ -42,7 +42,7 @@
         <div class="container_16" id="admin">
             <div class="headergroup grid_16">
                 <div class="grid_3 alpha">
-                    <img src="img/hwlogo.png" width="186" height="126" alt="HealthWatch group administrator" />
+                    <img src="assets/img/hwlogo.png" width="186" height="126" alt="HealthWatch group administrator" />
                 </div>
                 <div class="grid_8 omega p2">
                     <% if (sponsor != null) { %>

@@ -12,8 +12,8 @@
 
     <script type="text/javascript" src="assets/js/stats.js"></script>
 
-    <link href="assets/bootstrap-datepicker/css/bootstrap-combined.min.css" rel="stylesheet" />
-    <link href="assets/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+    <%--<link rel="stylesheet" href="assets/bootstrap-datepicker/css/bootstrap-combined.min.css" />--%>
+    <link rel="stylesheet" href="assets/bootstrap-datepicker/css/bootstrap-datepicker.css" />
 
     <script type="text/javascript" src="assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="assets/bootstrap-datepicker/locales/bootstrap-datepicker.sv.min.js"></script>

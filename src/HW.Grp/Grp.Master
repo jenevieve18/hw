@@ -14,6 +14,8 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
+    <link rel="stylesheet" href="assets/bootstrap-datepicker/css/bootstrap-combined.min.css" />
+
     <link rel="Stylesheet" href="assets/css/960.css" />
     <link rel="Stylesheet" href="assets/css/admin.css" />
     <link rel="Stylesheet" href="assets/css/site.css" />
@@ -42,7 +44,7 @@
         <div class="container_16" id="admin">
             <div class="headergroup grid_16">
                 <div class="grid_3 alpha">
-                    <img src="img/hwlogo.png" width="186" height="126" alt="HealthWatch group administrator" />
+                    <img src="assets/img/hwlogo.png" width="186" height="126" alt="HealthWatch group administrator" />
                 </div>
                 <div class="grid_8 omega p2">
                     <% if (sponsor != null) { %>

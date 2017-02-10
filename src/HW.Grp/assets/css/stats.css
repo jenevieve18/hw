@@ -2,7 +2,6 @@
     font-family: Arial;
     font-size: 13px;
 }
-
 .button {
     display: inline-block;
     outline: none;
@@ -19,34 +18,27 @@
     -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
     box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
 }
-
 .button:hover {
     text-decoration: none;
 }
-
 .button:active {
     position: relative;
     top: 1px;
 }
-
 .white {
     color: #606060;
     border: solid 1px #b7b7b7;
 }
-
 .white:hover {
     background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#dcdcdc));
 }
-
 .small {
     font-size: 11px;
     padding: .2em 1em .275em;
 }
-
 .report-part {
     border: 1px solid #e7e7e7;
 }
-
 .report-part-subject, .report-part-header, .report-part-content {
     padding: 10px;
 }
@@ -57,11 +49,9 @@
     background: #e7e7e7;
     cursor: pointer;
 }
-
 .report-part-header {
     font-size: 13px;
 }
-
 .report-part-content {
     background: white;
     padding: 10px;
@@ -85,11 +75,9 @@
     margin-bottom: 5px;
     font-size: 9pt;
 }
-
 .chart-description {
     background: url(../img/myhealth_statistics_bar_detail_toggle.png);
 }
-
 .chart-descriptions-info {
     width: 16px;
     height: 16px;
@@ -97,7 +85,6 @@
     display: inline-block;
     cursor: pointer;
 }
-
 .toggle {
     width: 32px;
     height: 16px;
@@ -105,14 +92,11 @@
     display: inline-block;
     cursor: pointer;
 }
-
 .toggle-right {
     float: right;
 }
-
 .toggle-active {
 }
-
 .toggle-active-hover {
     background: url(../img/myhealth_statistics_bar_detail_toggle.png);
     background-position: 0 -16px;
