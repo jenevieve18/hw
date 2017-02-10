@@ -200,12 +200,12 @@ ul li input {
     display: none;
   }
 }
-ol li, ul li {
-  padding: 2px 0;
-}
-
 .accordion h2, .accordion h3, .accordion h4 {
   cursor: pointer;
+}
+
+ol li, ul li {
+  padding: 2px 0;
 }
 
 /*# sourceMappingURL=main.css.map */
