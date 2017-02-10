@@ -171,5 +171,8 @@ ul li input {
     display: none;
   }
 }
+ol li, ul li {
+  padding: 2px 0;
+}
 
 /*# sourceMappingURL=exercises.css.map */

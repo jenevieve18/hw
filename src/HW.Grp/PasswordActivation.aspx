@@ -14,7 +14,7 @@
     <script language="JavaScript">    window.history.forward(1);</script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <script type="text/javascript" src="assets/js/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <!--<script type="text/javascript">
     $(document).ready(function () {
         var descriptionS = $("#submenu .description").html();
