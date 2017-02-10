@@ -23,6 +23,19 @@ WHERE UniqueKey = @UniqueKey");
 			);
 		}
 		
+		public void SaveSponsorAdminExerciseComments(int sponsorAdminExerciseID, string comments)
+		{
+			
+		}
+		
+		public void DeleteSponsorAdminExercise(int sponsorAdminExerciseID)
+		{
+			string query = string.Format(@"
+DELETE FROM SponsorAdminExercise
+WHERE SponsorAdminExerciseID = @SponsorAdminExerciseID");
+			ExecuteNonQuery(query, "healthWatchSqlConnection", new SqlParameter("@SponsorAdminExerciseID", sponsorAdminExerciseID));
+		}
+		
 		public void SaveSponsorAdminExercise(SponsorAdminExercise exercise)
 		{
 			string query = string.Format(
