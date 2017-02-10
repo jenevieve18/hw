@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Grp.master.cs" Inherits="HW.Grp.Grp" EnableTheming="true" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Grp.master.cs" Inherits="HW.Grp.Grp" %>
 
 <%@ Import Namespace="HW.Core.Helpers" %>
 <%@ Import Namespace="HW.Grp" %>
@@ -14,7 +14,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-    <link rel="stylesheet" href="assets/bootstrap-datepicker/css/bootstrap-combined.min.css" />
+    <%--<link rel="stylesheet" href="assets/bootstrap-datepicker/css/bootstrap-combined.min.css" />--%>
 
     <link rel="Stylesheet" href="assets/css/960.css" />
     <link rel="Stylesheet" href="assets/css/admin.css" />
