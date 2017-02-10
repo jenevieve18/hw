@@ -1,0 +1,211 @@
+.alert {
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.alert-info {
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+
+.alert-success {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+
+.alert-danger {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
+.alert-warning {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.celebration .image {
+  text-align: center;
+}
+
+.company-vision textarea, .company-mission textarea {
+  width: 33%;
+}
+
+.employee-behaviors textarea {
+  height: 60px;
+}
+
+#trash ul {
+  list-style: none;
+  padding-left: 5px;
+}
+
+footer, header {
+  display: block;
+}
+
+ul.inputs, ul.sortable-inputs {
+  list-style: none;
+}
+ul.inputs li, ul.sortable-inputs li {
+  padding: 3px;
+}
+
+input, textarea {
+  font: 99% sans-serif;
+  padding: 3px;
+}
+
+.hidden {
+  display: none;
+}
+
+.text-center {
+  text-align: center;
+}
+
+body {
+  font-size: 1em;
+  color: #666;
+}
+
+a {
+  color: #3a80b7;
+  font-style: normal;
+  text-decoration: none;
+  cursor: pointer;
+}
+a:hover, a:active {
+  text-decoration: underline;
+}
+a:visited {
+  text-decoration: #666;
+}
+
+h1, h2, h3 {
+  font-size: 1.5em;
+  font-style: normal;
+  font-weight: normal;
+}
+
+th {
+  text-align: center;
+}
+
+.bubble {
+  cursor: hand;
+  background: url("../img/speech-bubble.png") no-repeat;
+  width: 330px;
+  height: 238px;
+  text-align: center;
+}
+
+.bubble:hover {
+  background: url("../img/speech-bubble1.png") no-repeat;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+ul li input {
+  padding: 3px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.header {
+  padding: 10px 18px;
+  width: 928px;
+  height: 27px;
+  color: #3B92C7;
+  letter-spacing: 0;
+}
+
+.print {
+  float: right;
+  background: url("../img/myhealth_diary_print.gif") no-repeat;
+  height: 26px;
+  line-height: 26px;
+  width: 54px;
+  padding-left: 34px;
+  margin-right: 20px;
+  margin-top: -5px;
+  font-size: 13px;
+}
+.print:hover {
+  background-position: 0 -26px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.popup {
+  font-family: arial;
+}
+.popup h1 {
+  color: #1c73a8;
+}
+.popup .header {
+  display: block;
+  background: #f5f5f5;
+  max-width: 100%;
+  height: 42px;
+  border-bottom: 1px solid #b3cede;
+  margin-bottom: 34px;
+  padding: 0;
+  width: auto;
+}
+.popup .header * {
+  margin: 0 18px;
+}
+.popup .header h1 {
+  font-size: 20px;
+  color: #0084b6;
+  line-height: 42px;
+  float: left;
+  margin-bottom: 0;
+}
+.popup .header .print {
+  margin-top: 8px;
+}
+.popup .content {
+  margin: 0 41px;
+}
+.popup .footer {
+  margin: 12px 41px;
+  font-size: 11px;
+  color: #808080;
+  display: block;
+  width: 300px;
+  float: left;
+}
+
+@media print {
+  .print {
+    display: none;
+  }
+}
+.accordion h2, .accordion h3, .accordion h4 {
+  cursor: pointer;
+}
+
+ol li, ul li {
+  padding: 2px 0;
+}
+
+/*# sourceMappingURL=main.css.map */
