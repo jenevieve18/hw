@@ -1160,8 +1160,8 @@ namespace HW.WebService
 				                            "INNER JOIN SponsorProjectRoundUnit spru ON s.SponsorID = spru.SponsorID " +
 				                            "LEFT OUTER JOIN SponsorProjectRoundUnitLang sprul ON spru.SponsorProjectRoundUnitID = sprul.SponsorProjectRoundUnitID AND sprul.LangID = " + languageID + " " +
 				                            "LEFT OUTER JOIN UserProjectRoundUser upru ON spru.ProjectRoundUnitID = upru.ProjectRoundUnitID AND upru.UserID = u.UserID " +
-				                            "WHERE u.UserID = " + userID + " " +
-				                            "AND spru.OnlyEveryDays IS NULL " +
+				                            "WHERE spru.OnlyEveryDays IS NULL " +
+				                            "AND u.UserID = " + userID + " " +
 				                            "" );
 
 				Form[] ret = new Form[formCount];
