@@ -114,10 +114,21 @@
                     <% var el = e.Languages[0]; %>
                     <tr>
                         <td>
-                            <a href="#"><img src="assets/img/application_edit.png" /></a>
-                            <%--<a href="#"><img src="assets/img/cross.png" /></a>--%>
+                            <% string editUrl = string.Format(
+                                    "JavaScript:void(window.open('SavedExerciseShow.aspx?SID={1}&AUID={2}&ExerciseVariantLangID={3}','EVLID{3}','scrollbars=yes,resizable=yes,width={4},height={5}'));",
+                                    ConfigurationManager.AppSettings["healthWatchURL"],
+                                    sponsorID,
+                                    sponsorAdminID,
+                                    v.Id,
+                                    evl.Id,
+                                    evl.ExerciseWindowX,
+                                    evl.ExerciseWindowY
+                                );
+                            %>
+                            <%--<a href="#"><img src="assets/img/application_edit.png" /></a>--%>
+                            <a href="<%= editUrl %>"><img src="assets/img/application_edit.png" /></a>
                             <%
-                            string url = string.Format(
+                            string deleteUrl = string.Format(
                                 @"javascript:if(confirm(""{1}"")) {{
 									location.href=""savedexercise.aspx?Delete={0}"";
 								}}",
@@ -125,42 +136,19 @@
                                 R.Str(lid, "exercise.delete", "Are you sure you want to delete this exercise?")
                             );
                             %>
-                            <%= HtmlHelper.AnchorImage(url, "assets/img/cross.png")%>
+                            <%= HtmlHelper.AnchorImage(deleteUrl, "assets/img/cross.png")%>
                         </td>
                         <td><%= l.Date.Value.ToString("yyyy-MM-dd HH:mm") %></td>
+                        <td><%= el.ExerciseName %></td>
                         <td>
-
+                            <span class="hw-icon hw-icon-exercise"></span>
+                            <%= "Hello world!" %>
                         </td>
-                        <td></td>
-                        <td><%= e.AreaCategoryName %></td>
+                        <td><%= e.Area.AreaName %></td>
+                        <td><%= e.Category.CategoryName %></td>
                     </tr>
                     <% } %>
                 </table>
-                <%--<div class="item">
-                    <div class="overview"></div>
-                    <div class="detail">
-                        <div class="image">
-                            <img src="<%= l.Image %>" width="121" height="100"></div>
-                        <div class="time"><%= l.CurrentLanguage.Time %><span class="time-end"></span></div>
-                        <div class="descriptions"><%= l.AreaCategoryName %></div>
-                        <h2><%= l.CurrentLanguage.ExerciseName %></h2>
-                        <p><%= l.CurrentLanguage.Teaser %></p>
-                        <div>
-                            <% string t = string.Format(
-                                        "JavaScript:void(window.open('ExerciseShow.aspx?SID={1}&AUID={2}&ExerciseVariantLangID={3}','EVLID{3}','scrollbars=yes,resizable=yes,width={4},height={5}'));",
-                                        ConfigurationManager.AppSettings["healthWatchURL"],
-                                        sponsorID,
-                                        sponsorAdminID,
-                                        l.CurrentVariant.Id,
-                                        l.CurrentVariant.ExerciseWindowX,
-                                        l.CurrentVariant.ExerciseWindowY
-                                    );
-                            %>
-                            <a class="sidearrow" href="<%= t %>"><%= l.CurrentType.ToString() %></a>
-                        </div>
-                        <div class="bottom">&nbsp;</div>
-                    </div>
-                </div>--%>
             </div>
             <!-- end .contentlist -->
 
