@@ -1153,14 +1153,6 @@ namespace HW.WebService
 			int userID = getUserIdFromToken(token, expirationMinutes);
 			if (userID != 0)
 			{
-//				int formCount = execIntScal("SELECT " +
-//				                            "COUNT(*) " +
-//				                            "FROM [User] u " +
-//				                            "INNER JOIN Sponsor s ON u.SponsorID = s.SponsorID " +
-//				                            "INNER JOIN SponsorProjectRoundUnit spru ON s.SponsorID = spru.SponsorID " +
-//				                            "LEFT OUTER JOIN SponsorProjectRoundUnitLang sprul ON spru.SponsorProjectRoundUnitID = sprul.SponsorProjectRoundUnitID AND sprul.LangID = " + languageID + " " +
-//				                            "LEFT OUTER JOIN UserProjectRoundUser upru ON spru.ProjectRoundUnitID = upru.ProjectRoundUnitID AND upru.UserID = u.UserID " +
-//				                            "WHERE u.UserID = " + userID);
 				int formCount = execIntScal("SELECT " +
 				                            "COUNT(*) " +
 				                            "FROM [User] u " +
@@ -1169,7 +1161,7 @@ namespace HW.WebService
 				                            "LEFT OUTER JOIN SponsorProjectRoundUnitLang sprul ON spru.SponsorProjectRoundUnitID = sprul.SponsorProjectRoundUnitID AND sprul.LangID = " + languageID + " " +
 				                            "LEFT OUTER JOIN UserProjectRoundUser upru ON spru.ProjectRoundUnitID = upru.ProjectRoundUnitID AND upru.UserID = u.UserID " +
 				                            "WHERE u.UserID = " + userID + " " +
-//				                            "AND spru.OnlyEveryDays IS NULL " +
+				                            "AND spru.OnlyEveryDays IS NULL " +
 				                            "" );
 
 				Form[] ret = new Form[formCount];
