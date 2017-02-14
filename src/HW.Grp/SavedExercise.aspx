@@ -140,9 +140,11 @@
                         </td>
                         <td><%= l.Date.Value.ToString("yyyy-MM-dd HH:mm") %></td>
                         <td><%= el.ExerciseName %></td>
-                        <td>
+                        <td class="exercise-comments">
                             <span class="hw-icon hw-icon-exercise"></span>
-                            <%= "Hello world!" %>
+                            <span class="exercise-comment-label"></span>
+                            <textarea data-id="<%= l.Id %>" class="exercise-comment-text"></textarea>
+                            <img alt="" class="spinner" src="assets/img/spiffygif_30x30.gif" />
                         </td>
                         <td><%= e.Area.AreaName %></td>
                         <td><%= e.Category.CategoryName %></td>

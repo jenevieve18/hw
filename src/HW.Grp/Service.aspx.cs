@@ -47,5 +47,12 @@ namespace HW.Grp
 			}
 			return "Success! Manager exercise saved successfully.";
 		}
+
+        [WebMethod]
+        public static string UpdateManagerExerciseComments(int sponsorAdminExerciseID, string comments)
+        {
+            sponsorAdminRepo.UpdateSponsorAdminExerciseComments(sponsorAdminExerciseID, comments);
+            return "Success! Manager exercise comments saved successfully.";
+        }
 	}
 }

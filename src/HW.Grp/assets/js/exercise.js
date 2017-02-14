@@ -50,5 +50,47 @@
         $(this).parent().find(".detail").slideUp('fast', function () {
             $(this).parent().removeClass("active");
         })
-    })
+    });
+
+    $(this).find('.exercise-comment-text').hide();
+    $(this).find('.spinner').hide();
+    //$('.exercise-comments').click(function () {
+    //    console.log($(this).find('.test'));
+    //    $(this).find('.hw-icon-exercise').hide();
+    //    $(this).find('.exercise-comment-text').show();
+    //});
+
+    $('.exercise-comments').click(function () {
+        var text = $(this).find('.exercise-comment-text');
+        $(this).find('.exercise-comment-label').hide();
+        text.show();
+        text.focus();
+        $(this).find('.hw-icon-exercise').hide();
+    });
+    $('.exercise-comment-text').focusout(function () {
+        var comments = $(this).val();
+        var id = $(this).data('id') || 0;
+        var icon = $(this).closest('td').find('.hw-icon-exercise');
+        var label = $(this).closest('td').find('.exercise-comment-label');
+        label.text(comments);
+
+        var spinner = $(this).closest('td').find('.spinner');
+        spinner.show();
+        $.ajax({
+            type: 'POST',
+            url: 'Service.aspx/UpdateManagerExerciseComments',
+            data: JSON.stringify({ sponsorAdminExerciseID: id, comments: comments }),
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            success: function (msg) {
+                spinner.hide();
+            },
+            error: function (msg) {
+                spinner.hide();
+            }
+        });
+        $(this).hide();
+        icon.show();
+        label.show();
+    });
 })

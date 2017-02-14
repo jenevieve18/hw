@@ -264,6 +264,7 @@
     <Content Include="assets\img\org.gif" />
     <Content Include="assets\img\rsaquo.gif" />
     <Content Include="assets\img\save.gif" />
+    <Content Include="assets\img\spiffygif_30x30.gif" />
     <Content Include="assets\img\star.gif" />
     <Content Include="assets\img\starOK.gif" />
     <Content Include="assets\img\stat.gif" />
