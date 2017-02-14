@@ -27,7 +27,7 @@ namespace HW.Core.Tests.Helpers
 		[Test]
 		public void TestHasMD5()
 		{
-			Console.WriteLine(Db.HashMd5("support1"));
+			Console.WriteLine(Db.HashMd5("iiiii"));
 		}
 	}
 }
