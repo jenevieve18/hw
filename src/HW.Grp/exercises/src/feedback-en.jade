@@ -1,0 +1,46 @@
+extends includes/layout
+block script
+  script(src='assets/exercises/js/feedback.js')
+block content
+  #message.alert.alert-success.hidden
+  h2 Time: 5-10 minutes
+  p Increase opportunities for others to understand what you expect by specifying what you want your employees to do. Try how clear you can be! Read the following terms and formulate what behaviors you find that they include.
+  p 1) Take responsibility
+  textarea#input0(name='input[]', style='width:100%;height:100px')
+  .description.hidden
+    p Here are examples of what can be mean when you say: "Take Responsibility"
+    ul
+      li Making their tasks
+      li Help others
+      li Make sure others feel good
+      li Plan ahead
+      li Suggest improvements
+      li Unload the dishwasher
+  p 2) Be positive
+  textarea#input1(name='input[]', style='width:100%;height:100px')
+  .description.hidden
+    p Here are some examples of what behaviors can be mean when you say "Be positive"
+    ul
+      li Say hello in the hallway
+      li Joke
+      li Suggest activities
+      li Find opportunities in problems
+      li Suggest improvements
+      li Fix the coffee to the other
+      li Give positive feedback to someone who has done something good
+  p 3) Be efficient
+  textarea#input2(name='input', style='width:100%;height:100px')
+  .description.hidden
+    p Here are some examples of what behaviors can be mean when you say "Be efficient "
+    ul
+      li Making timelines
+      li Reply to all mail
+      li Moving fast in the corridors
+      li Being first or last on the job
+      li Keep up with what they thought
+      li Do the things that are most important based on objectives
+  p
+    a#btn-move-on.ui-button.ui-widget.ui-corner-all Move on
+    a#btn-save.ui-button.ui-widget.ui-corner-all Save
+  .description
+    p The same general expression can have different meanings for different people. By pinpointing and in a neutral way to describe what someone does or says, you reduce the risk of misunderstanding and increases the likelihood that what you say has the intended effect.

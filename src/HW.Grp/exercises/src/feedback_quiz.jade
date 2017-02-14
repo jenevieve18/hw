@@ -1,0 +1,101 @@
+extends includes/layout
+block script
+  script(src='assets/exercises/js/feedback_quiz.js')
+block content
+  #message.alert.alert-success.hidden
+  h2 Tidsåtgång: 3 minuter
+  p
+    | Som chef har du möjlighet att stimolera dina medarbetare att göra rätt saker – sådant som driver verksamhetens resoltat. Förutom instruktioner och praktiska förutsättningar är återkoppling det främsta verktyg du har till ditt förfogande.
+  p Här kan du testa vad du kan om feedback 
+  p 1. Vad bör feedback fokusera på?
+  p
+    label
+      input#input0(type='radio', name='input0', value='1')
+      | Det som någon gjort bra
+      br
+    label
+      input#input1(type='radio', name='input0', value='2')
+      | Det som någon gjort dåligt
+      br
+    label
+      input#input2(type='radio', name='input0', value='3')
+      | Det någon generellt ska tänka på
+      br
+    label
+      input#input3(type='radio', name='input0', value='4')
+      | Det man tror att medarbetaren vill höra
+      br
+    label
+      input#input4(type='radio', name='input0', value='5')
+      | Sådant som är utöver det vanliga
+  p.description.hidden.text-info Som en tumregel kan man tänka  att feedback till en person ska vara fördelad enligt principen 80 procent  positiv feedback och 20 procent korrigerande feedback.
+  p 2. Vad bör man ge feedback på?
+  p
+    label
+      input#input5(type='radio', name='input1', value='1')
+      | Beteende – vad dina medarbetare gör
+      br
+    label
+      input#input6(type='radio', name='input1', value='2')
+      | Attityd – vilken inställning till arbetet som dina medarbetare har
+      br
+    label
+      input#input7(type='radio', name='input1', value='3')
+      | Utseende – hur attraktiv din medarbetare är
+      br
+    label
+      input#input8(type='radio', name='input1', value='4')
+      | Det som är utanför individens kontroll
+      br
+    label
+      input#input9(type='radio', name='input1', value='5')
+      | Det andra säger om personen bakom ryggen
+  p.description.hidden.text-info Genom att ge feedback på det som någon gör (beteenden) snarare än  exempelvis attityder är det lättare att förstå och ta till sig budskapet.
+  p 3. Vid vilket tillfälle bör man ge feedback?
+  p
+    label
+      input#input10(type='radio', name='input2', value='1')
+      | I nära anslutning till handlingen som feedbacken berör
+      br
+    label
+      input#input11(type='radio', name='input2', value='2')
+      | När man samlat på sig så många exempel att man inte kan låta bli
+      br
+    label
+      input#input12(type='radio', name='input2', value='3')
+      | Aldrig
+      br
+    label
+      input#input13(type='radio', name='input2', value='4')
+      | En gång om året vid utvecklingssamtal
+      br
+    label
+      input#input14(type='radio', name='input2', value='5')
+      | När man är riktigt upprörd över någonting
+  p.description.hidden.text-info Det är lättare att ta till sig feedback på händelser som ligger nära i  tid. Personen minns lättare händelsen som beskrivs och har möjlighet att göra  mer, eller mindre, av det som feedbacken handlar om.
+  p 4. I vilket sammanhang bör man ge feedback?
+  p
+    label
+      input#input15(type='radio', name='input3', value='1')
+      | Bakom ryggen på den det berör
+      br
+    label
+      input#input16(type='radio', name='input3', value='2')
+      | Via någon annan
+      br
+    label
+      input#input17(type='radio', name='input3', value='3')
+      | Individuellt till den som det berör
+      br
+    label
+      input#input18(type='radio', name='input3', value='4')
+      | När det är så många andra som lyssnar som möjligt
+      br
+    label
+      input#input19(type='radio', name='input3', value='5')
+      | I en bisats i ett mejl
+  p.description.hidden.text-info
+    | Korrigerande feedback bör ges individuellt. Korrigerande feedback inför  andra är obehagligt för samtliga närvarande. Positiv feedback kan ges både  individuellt och inför andra men det är inte självklart att den som får positiv  feedback inför andra upplever det som positivt. Dessutom kan de som lyssnar  tolka det som att de inte gjort något bra eftersom de inte nämns. Välj därför  med omsorg de tillfällen du ger positiv feedback till någon i grupp.
+  p
+    a#btn-correct.ui-button.ui-widget.ui-corner-all Rätta
+    a#btn-save.ui-button.ui-widget.ui-corner-all Spara

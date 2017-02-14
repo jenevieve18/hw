@@ -1,0 +1,21 @@
+{
+  "name": "grp-manager-exercises",
+  "description": "",
+  "main": "links.html",
+  "authors": [
+    "Ian Escarro <ian.escarro@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/healthwatch/grp-exercises",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery-ui": "1.8.23",
+    "qunit": "^2.1.0"
+  }
+}

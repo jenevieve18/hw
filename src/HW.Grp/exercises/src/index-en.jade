@@ -1,0 +1,22 @@
+extends includes/layout
+block script
+  script(src='assets/exercises/js/index.js')
+block content  
+  #message.alert.alert-success.hidden
+  p Required time: Preparation 2 min; implementation of about 20 minutes together with your employees.
+  p If you as a manager understand your employees' different preferences and wishes, it will increase your ability to find ways to celebrate success that with motivate them.
+  p This is a form that you can distribute to your employees to find out how they would like you to celebrate successes.
+  p You can choose to distribute it as it is - or better yet, brainstorm in a group, and then compile the favorites in the form.
+  h2 Favorite Celebration
+  p Success should be celebrated! You can celebrate in several ways - and what is perceived as relevant ways varies between individuals. Below you can fill in what you think you can do to celebrate something which has been successful. The aim is to give your manager ideas about what you in particular appreciate.
+  table
+    tr
+      td(valign="top") Begin to generate as many different suggestions of celebration you can think of.
+        p
+        ul.inputs
+      td(valign="top") Rank your suggestions by writing a figure in the proposals; 1 for the proposal that would feel the best for you, 2 for the second best and so on.
+        p
+        ul.sortable-inputs
+  p
+    a#btn-add.ui-button.ui-widget.ui-corner-all Add
+    a#btn-save.ui-button.ui-widget.ui-corner-all Save

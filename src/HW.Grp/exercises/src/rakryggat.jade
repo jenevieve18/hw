@@ -1,0 +1,60 @@
+extends includes/layout
+block script
+  script(src='assets/exercises/js/rakryggat.js')
+block content
+  script.
+    var newExercise = {
+      inputs: [
+        { valueText: '' },
+        { valueText: '' },
+        { valueText: '' },
+        { valueText: '' },
+        { valueText: '' },
+        { valueText: '' }
+      ]
+    };
+    function getEnterText() {
+      return 'Fyll i själv';
+    }
+  #message.alert.alert-success.hidden
+  p
+    | Förtroende skapas genom att det finns en röd tråd mellan det man säger och det man gör. Till exempel; om man säger "Det är viktigt att följa våra arbetsprocesser" behöver man också följa upp och underlätta för medarbetarna att följa dessa
+    | arbetsprocesser. Denna övning hjälper dig att utveckla dina färdigheter i att skapa förtroende och uppfattas som rakryggad.
+  p
+    | Fundera på vad du är angelägen om att medarbetarna ska göra (beteende). Beskriv sedan vad du kan säga för att starta beteendet hos medarbetarna (aktiverare) och vad du kan göra (konsekvens) för att öka sannolikheten att de gör så igen. Blicka tillbaka
+    | och se till att du skapat en röd tråd, så att det du ber dina medarbetare om också följs av positiva konsekvenser. Med ett sådant agerande uppfattas du oftast som både rakryggad och förtroendeskapande!
+  br
+  table#tbl
+    tr
+      td  
+      td Dina instruktioner (aktiverare)
+      td Det här ska medarbetarna göra (beteenden)
+      td Hur du reagerar på det medarbetarna gör (konsekvenser)
+    tr
+      td Exempel
+      td Du säger: ”Det är viktigt att följa våra arbetsprocesser”
+      td Följa arbetsprocesser
+      td
+        ul
+          li Uppmuntrar medarbetare som följer processerna
+          li Följer processerna själv (gott föredöme)
+          li Hjälper medarbetare som inte följer processer att göra det
+    //- tr
+    //-   td Fyll i själv
+    //-   td
+    //-     textarea#input0(name='input[]', style="width:90%;height:50px")
+    //-   td
+    //-     textarea#input1(name='input[]', style="width:90%;height:50px")
+    //-   td
+    //-     textarea#input2(name='input[]', style="width:90%;height:50px")
+    //- tr
+    //-   td  
+    //-   td
+    //-     textarea#input3(name='input[]', style="width:90%;height:50px")
+    //-   td
+    //-     textarea#input4(name='input[]', style="width:90%;height:50px")
+    //-   td
+    //-     textarea#input5(name='input[]', style="width:90%;height:50px")
+  p.text-right
+    a#btn-add.ui-button.ui-widget.ui-corner-all Lägg till fler rutor
+    a#btn-save.ui-button.ui-widget.ui-corner-all Spara

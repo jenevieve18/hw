@@ -1,0 +1,172 @@
+extends includes/layout
+block script
+  script(src='assets/exercises/js/takhojaren.js')
+block content
+  #message.alert.alert-success.hidden
+  p Tidsåtgång: 10-15 minuter för chefen; 1-2 timmar som gruppövning. Vid systematisk implementering, punktinsatser under 2-3 månader.
+  p
+    | På många arbetsplatser är öppet klimat och högt i tak något man verkligen vill uppnå. En väg dit är att vara strategisk och skapa förutsättningar för öppenhet i arbetsgruppen på ett strukturerat sätt. Den här övningen identifierar vad ett öppet klimat
+    | innebär för er och fyra enkla steg som kan ta er dit. Börja med att göra övningen på egen hand först. Därefter kan du genomföra den tillsammans med din arbetsgrupp. Om du vill uppnå en bestående förändring, implementera systematiskt det ni kommit fram
+    | till under 2-3 månader och utvärdera kontinuerligt.
+  h2 Reflektion
+  p
+    | Börja med att reflektera över vad ett öppet klimat är. Konkretisera vad ett öppet klimat innebär för dig. Hur agerar medarbetarna och cheferna, och hur interagerar de? Skriv ned de specifika beteenden som du tycker är avgörande för att ha ett öppet
+    | klimat.
+  p
+    textarea#input0(style='width:100%;height:100px;', name='input0')
+  .accordion
+    h3 Tycker du det är svårt att komma på några relevanta beteenden kan du utgå förslag som du hittar här.
+    div
+      p
+        textarea#input1(style='width:100%;height:100px', name='input1')
+  h2 Börja där ni är
+  p
+    | När du har identifierat vad som är viktigt för att få ett öppet klimat är det dags att påbörja en gradvis förändring. Tanken är att du börjar där du och dina medarbetare är genom att du uppmuntrar alla handlingar som påminner om det du vill se mer
+    | av. Gradvis blir du sedan mer selektivt inriktad på handlingar som ligger närmare ”målbeteendet”.
+  p
+    | Föreställ dig nu att du angett ”feedback” som en av de viktigaste faktorerna för att få ett öppet klimat.
+  ul
+    li
+      | Börja med att ta på dig feedbackglasögonen. Uppgiften är nu att relatera till det dina medarbetare säger som embryon till konstruktiv feedback.
+    li
+      | Föreställ dig att du har en medarbetare som ”klagar”. Uppmuntra inledningsvis allt som välvilligt kan tolkas som feedback. Undvik att anmärka på hur klagomålet beskrivs, och hjälp istället till att omformulera det konstruktivt. På så sätt utgör du ett
+      | positivt exempel som kan fungera som modell för medarbetaren. Det här steget är ofta det svåraste eftersom det är lätt att bli provocerad av klagomål som ju oftast inte känns konstruktiva. Det kan vara en hjälp att se detta som en utmaning för dig
+      | själv att komma på nya, mer ändamålsenliga sätt att uttrycka dig på.
+      p
+      table
+        tr
+          th Medarbetare
+          th Chef
+        tr
+          td.bubble ”Ingenting funkar här.”
+            br
+            br
+            br
+          td.bubble ”Tack för att du gör mig 
+            br
+            | uppmärksam på 
+            br
+            | samordningsproblemen 
+            br
+            | kring den nya tjänsten.”
+            br
+            br
+            br
+        tr
+          td
+          td.bubble ”Tack för att du 
+            br
+            | engagerar dig.”
+            br
+            br
+            br
+    li
+      | Öka gradvis ”kraven” genom att lägga till frågor som ger medarbetaren möjlighet att uttrycka sig mer konstruktivt. Var specifik och föreslå lösningar. Utmaningen är att leverera dina kommentarer på ett ärligt menat sätt så att det inte blir något påklistrat.
+      | För att bli tagen på allvar behöver du lyckas förmedla att du menar det du säger.
+      p
+      table
+        tr
+          th Medarbetare
+          th Chef
+        tr
+          td.bubble ”Den nya tjänsten är 
+            br
+            | alldeles för oklar!”
+            br
+            br
+          td.bubble ”Tack för att du sätter 
+            br
+            | fokus på den här viktiga frågan. 
+            br
+            | På vilket sätt är den 
+            br
+            | oklar?”
+            br
+            br
+        tr
+          td
+          td.bubble ”Bra att du tar upp detta. 
+            br
+            | Vad är det som du mer 
+            br
+            | specifikt tänker på? Hur 
+            br
+            | tycker du vi skulle 
+            br
+            | kunna lösa detta?”
+            br
+            br
+    li
+      | Höj svårighetsgraden ytterligare genom att be medarbetarna att komma med lösningsförslag och resonera om för- och nackdelar. Var uppmärksam på hur den nya svårighetsgraden tas emot. Om man höjer kraven för fort kommer medarbetare att uppleva det som alltför
+      | krävande och jobbigt med motfrågorna. Då kan de minska sitt engagemang i att ge konstruktiv feedback.
+      p
+      table
+        tr
+          th Medarbetare
+          th Chef
+        tr
+          td.bubble ”Den nya tjänsten är alldeles 
+            br
+            | för oklar. Vi har dubbelarbetat
+            br
+            | flera gånger den senaste 
+            br
+            | veckan, och vi gör saker 
+            br
+            | i fel ordning.”
+            br
+            br
+          td.bubble ”Ja, detta är onekligen ett 
+            br
+            | problem. Skulle vi tillsammans 
+            br
+            | kunna titta på möjliga 
+            br
+            | lösningar och vilka för- 
+            br
+            | och nackdelar det 
+            br
+            | finns?
+            br
+            br
+        tr
+          td
+          td.bubble ”Du som är så insatt
+            br
+            |  i det här - har du möjlighet att
+            br
+            | sammanställa några lämpliga 
+            br
+            | handlingsalternativ för oss, 
+            br
+            | inklusive för- och nackdelar, 
+            br
+            | som vi kan ha som 
+            br
+            | beslutsunderlag när 
+            br
+            | vi går vidare?”
+            br
+            br
+  p
+    | Sammanfattningsvis: Så här kan du gå från att få problem dumpade i knäet till att få kreativa förslag där medarbetarna är engagerade från ax till limpa.
+  ul
+    li Tacka för de synpunkter som framkommit oavsett hur de framförs.
+    li Ställ följdfrågor för att bättre förstå problemet.
+    li Fråga vad de ser för möjliga lösningar.
+    li
+      | Be dem själva resonera i för- nackdelar kring de olika lösningarna och, om möjligt, be dem rekommendera en av lösningarna.
+  h2 Men kan man inte bara säga åt folk att ge mer feedback, vara konstruktiva, etc.?
+  p
+    | Känns det frustrerande att förändra ett (litet) steg i taget? Då kan det vara bra att fundera på vad alternativet är. Hur ofta har du exempelvis varit med om att människor lyckas göra stora och hållbara förändringar snabbt? Det är exempelvis ganska
+    | ovanligt att man från ingenting helt plötsligt börja träna hårt flera gånger i veckan. Om man nu gör det, hur länge brukar sådana förändringar hålla i sig?
+  p
+    | Du kan också helt enkelt uppmana dina medarbetare att ägna sig mer åt det beteende du vill främja. Även om det kan vara ett bra första steg är det sällan tillräckligt. Om medarbetarna ändrar beteende är det avgörande att de också upplever positiva
+    | konsekvenser av förändringen. Om du vill att de ska göra det igen är det bra att de får uppskattning, märker att de kan påverka och att deras åsikt tas tillvara. Många gånger är det mer effektivt och hållbart att börja där man är och sedan gå stegvis
+    | framåt.
+  p
+    | Om du till exempel vill öka förekomsten av feedback inom arbetsgruppen är det bra att uppmuntra all typ av feedback till att börja med, oavsett hur den är formulerad. Om feedbacken är otydlig eller irrelevant kan du till att börja med att ställa vänligt
+    | formulerade följdfrågor för att förtydliga. Därefter ska man höja kraven på feedbackkvalitet genom att gradvis gå över till att bara uppmuntra feedback som innehåller någon typ av åtgärdsförslag (är konstruktiv).
+  p
+    //- a#btnSaveSponsorAdminExercise.btn(href='javascript:;') Spara
+    a#btn-save.ui-button.ui-widget.ui-corner-all Spara

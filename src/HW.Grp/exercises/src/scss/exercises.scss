@@ -1,0 +1,350 @@
+// html, body, div, h1, h2, h3, h4, h5, h6, p, code, em, img, b, i, ol, ul, form, table, tr, td, footer, header {
+//   margin: 0;
+//   padding: 0;
+//   border: 0;
+//   outline: 0;
+//   font-size: 100%;
+//   vertical-align: baseline;
+//   background: transparent;
+// }
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.celebration {
+  .image {
+    text-align: center;
+  }
+}
+
+.company-vision, .company-mission {
+  textarea {
+    width: 33%;
+  }
+}
+
+.employee-behaviors {
+  textarea {
+    height: 60px;
+  }
+}
+
+#trash ul {
+  list-style: none;
+  padding-left: 5px;
+  // ul.sortable {
+  //   list-style: none;
+  //   padding: 0;
+  // }
+}
+
+footer, header {
+  display: block;
+}
+
+// a {
+//   margin: 0;
+//   padding: 0;
+//   font-size: 100%;
+//   vertical-align: baseline;
+//   background: transparent;
+// }
+//
+//
+// table {
+//   border-collapse: collapse;
+//   border-spacing: 0;
+// }
+//
+// input {
+//   vertical-align: middle;
+// }
+//
+// h1, h2, h3, h4, h5, h6 {
+//   text-rendering: optimizeLegibility;
+// }
+//
+// table {
+//   font-size: inherit;
+//   font: 100%;
+// }
+//
+
+ul.inputs, ul.sortable-inputs {
+  list-style: none;
+  li {
+    padding: 3px;
+  }
+}
+
+input, textarea {
+  font: 99% sans-serif;
+  padding: 3px;
+}
+
+//
+// code {
+//   font-family: monospace, sans-serif;
+// }
+//
+// input {
+//   &[type="radio"] {
+//     vertical-align: text-bottom;
+//   }
+//   &[type="checkbox"] {
+//     vertical-align: bottom;
+//     *vertical-align: baseline;
+//   }
+// }
+//
+// .ie6 input {
+//   vertical-align: text-bottom;
+// }
+//
+// input {
+//   &[type=button], &[type=submit] {
+//     cursor: pointer;
+//   }
+// }
+//
+// button {
+//   cursor: pointer;
+// }
+//
+// ::-moz-selection, ::selection {
+//   text-shadow: none;
+//   color: white;
+//   background: #3B92C7;
+// }
+//
+// html {
+//   overflow-y: scroll;
+// }
+//
+// button {
+//   width: auto;
+//   overflow: visible;
+// }
+//
+// .ie7 img {
+//   -ms-interpolation-mode: bicubic;
+// }
+//
+// * html .clearfix {
+//   height: 1%;
+// }
+//
+.hidden {
+  display: none;
+  // visibility: hidden;
+}
+.text-center {
+  text-align: center;
+}
+//
+// .ui-widget-header {
+//   border: 0 !important;
+// }
+//
+//
+body {
+//   font: 13px sans-serif;
+//   *font-size: small;
+//   *font: x-small;
+//   line-height: 1.22;
+//   font-family: georgia, serif;
+  font-size: 1em;
+  color: #666;
+//   font-weight: 85pt;
+//   background: url('../resources/background.gif');
+//   background-position: center top;
+//   &.popup {
+//     background: #fff;
+//   }
+}
+
+a {
+  color: #3a80b7;
+  font-style: normal;
+  text-decoration: none;
+  cursor: pointer;
+  // &:link {
+  //   -webkit-tap-highlight-color: #3a80b7;
+  // }
+  &:hover, &:active {
+    text-decoration: underline;
+  }
+  &:visited {
+    text-decoration: #666;
+  }
+}
+
+// h1 {
+//   font-size: 1.5em;
+//   line-height: 120%;
+//   font-style: normal;
+//   font-weight: normal;
+//   letter-spacing: 1px;
+// }
+//
+// h2 {
+//   font-size: 1.5em;
+//   line-height: 120%;
+//   font-style: normal;
+//   padding-top: 27px;
+//   font-weight: normal;
+//   letter-spacing: 1px;
+// }
+//
+// h3 {
+//   font-weight: normal;
+//   font-size: 15px;
+// }
+
+h1, h2, h3 {
+  font-size: 1.5em;
+  font-style: normal;
+  font-weight: normal;
+}
+
+th {
+  text-align: center;
+}
+
+.bubble {
+  cursor: hand;
+  background: url("../img/speech-bubble.png") no-repeat;
+  width: 330px;
+  height: 238px;
+  text-align: center;
+}
+
+.bubble:hover {
+  background: url("../img/speech-bubble1.png") no-repeat;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+ul {
+  li {
+    //list-style: none;
+    //padding: 3px 0;
+    input {
+      padding: 3px;
+    }
+  }
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.header {
+  padding: 10px 18px;
+  width: 928px;
+  height: 27px;
+  color: #3B92C7;
+  // font-size: 26px;
+  letter-spacing: 0;
+}
+
+// .form_footer {
+//   background: url("../resources/myhealth/form/myhealth_form_footer.gif");
+//   width: 868px;
+//   height: 31px;
+//   float: left;
+//   border-top: 1px solid #DDD;
+//   position: relative;
+//   top: -1px;
+//   left: -1px;
+//   padding: 21px 52px;
+// }
+//
+// form input[type=submit] {
+//   height: 32px;
+//   width: 99px;
+//   margin-right: 30px;
+// }
+//
+// .form_footer a {
+//   color: #999999;
+//   font-size: 12px;
+//   text-decoration: underline;
+// }
+
+.print {
+  float: right;
+  // background: url('../resources/myhealth/diary/myhealth_diary_print.gif') no-repeat;
+  background: url('../img/myhealth_diary_print.gif') no-repeat;
+  height: 26px;
+  line-height: 26px;
+  width: 54px;
+  padding-left: 34px;
+  margin-right: 20px;
+  margin-top: -5px;
+  font-size: 13px;
+  &:hover {
+    background-position: 0 -26px;
+    color: #fff;
+    text-decoration: none;
+  }
+}
+
+.popup {
+  // font-family: arial, Helvetica, sans-serif;
+  font-family: arial;
+  // min-width: 0;
+  // font-size: 15px;
+  h1 {
+    // font-size: 32px;
+    color: #1c73a8;
+    // margin-bottom: 9px;
+  }
+  .header {
+    display: block;
+    background: #f5f5f5;
+    max-width: 100%;
+    height: 42px;
+    border-bottom: 1px solid #b3cede;
+    margin-bottom: 34px;
+    padding: 0;
+    width: auto;
+    * {
+      margin: 0 18px;
+    }
+    h1 {
+      font-size: 20px;
+      color: #0084b6;
+      line-height: 42px;
+      float: left;
+      margin-bottom: 0;
+    }
+    .print {
+      margin-top: 8px;
+    }
+  }
+  .content {
+    margin: 0 41px;
+  }
+  .footer {
+    margin: 12px 41px;
+    font-size: 11px;
+    color: #808080;
+    display: block;
+    width: 300px;
+    float: left;
+  }
+}
+
+@media print {
+  .print {
+    display: none;
+  }
+}

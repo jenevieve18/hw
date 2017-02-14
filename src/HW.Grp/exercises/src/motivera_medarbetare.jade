@@ -1,0 +1,50 @@
+extends includes/layout
+block script
+  script(src='assets/exercises/js/motivera_medarbetare.js')
+block content
+  #message.alert.alert-success.hidden
+  h2 Tidsåtgång: 3 min
+  #first-question
+    p
+      | Du kan med ditt agerande påverka dina medarbetares motivation så att dom vill prestera så bra som möjligt. Vissa sätt är mer effektiva än andra. Markera i listan de två aktiviteter som du tror har visat sig mest effektiva för att få engagerade medarbetare
+      | i forskning.
+    ul.monitorer
+      p
+        input#input0(type='checkbox', name='input[]', value='1')
+        | Förmedla en vision om verksamheten
+      p
+        input#input1(type='checkbox', name='input0[]', value='m1')
+        | Ta reda på hur medarbetarna utför sina uppgifter
+      p
+        input#input2(type='checkbox', name='input0[]', value='m2')
+        | Ge tydliga instruktioner till medarbetarna om vad de ska göra
+      p
+        input#input3(type='checkbox', name='input0[]', value='m3')
+        | Ge feedback till medarbetare utifrån deras prestationer
+      p
+        input#input4(type='checkbox', name='input0[]', value='m4')
+        | Prata med medarbetarna om ämnen utanför jobbet
+      p
+        input#input5(type='checkbox', name='input0[]', value='m5')
+        | Arbeta hårt med sitt eget arbete som ett föredöme
+    p
+      a#btn-correct1.ui-button.ui-widget.ui-corner-all Rätta
+  #second-question.hidden
+    p
+      | Det viktigaste en ledare kan göra för att få högpresterande grupper är att kontinuerligt ta reda på vad medarbetarna gör samt ge feedback på detta. Men vilken av dem är viktigast, tror du?
+    ul.monitorer
+      p
+        input#input6(type='radio', name='input1[]', value='m1')
+        | Ta reda på hur medarbetarna utför sina uppgifter
+      p
+        input#input7(type='radio', name='input1[]', value='m2')
+        | Ge feedback till medarbetare utifrån deras prestationer
+    p
+      a#btn-correct2.ui-button.ui-widget.ui-corner-all Rätta
+    p.description.hidden
+      | Att arbeta aktivt med att undersöka på vilket sätt ens medarbetare utför sitt jobb har visat sig vara ett mycket effektivt sätt att höja deras motivation och resultat. Det kan finnas olika förklaringar till detta. En anledning är säkert att vi människor
+      | helt enkelt upplever det som positivt när någon visar ett genuint intresse för vad vi gör. En annan anledning kan vara att när man undersöker hur någon utfört en uppgift så leder det ofta till ett meningsfullt samtal om arbetet. Det samtalet kan
+      | ge nya infallsvinklar och idéer och det är också en bra situation för både positiv och korrigerande feedback. En ytterligare förklaring kan vara att medarbetare som upplever att deras chef är intresserad av vad de gör i större utsträckning berättar
+      | om problem de har så att de kan få det stöd de behöver.
+  p
+    a#btn-save.ui-button.ui-widget.ui-corner-all Spara

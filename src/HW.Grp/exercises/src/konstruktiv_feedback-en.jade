@@ -1,0 +1,82 @@
+extends includes/layout
+block script
+  script(src='assets/exercises/js/konstruktiv_feedback.js')
+block content
+  #message.alert.alert-success.hidden
+  h2 Time: 5-10 minutes
+  p
+    | Empowered and dedicated employees who make suggestions and feedback is the basis for a creative and effective workplace. Sometimes, suggestions and feedback feel like whining and complaints rather than the constructive and fulfilling as it could
+    | be. This exercise shows how less constructive comments from co-workers can be turned into something positive.
+  p
+    | Below are examples of comments that can be heard in a workgroup. For each comment are a number of suggestions on what you as a manager can say. Decide how you are supposed to, or how you think you would respond in a similar situation.
+  ol
+    li "You never get any information!"
+      ol.radio_ans
+        li.yellow
+          input#input0(type='radio', name='input1[]', value='1')
+          | You have certainly been informed. I took it up at the previous meeting.
+        li.yellow
+          input#input1(type='radio', name='input1[]', value='1')
+          | But is not it on the intranet?
+        li.yellow
+          input#input2(type='radio', name='input1[]', value='1')
+          | Thank you for your commitment in the way we provide information. Do you have any suggestions on what we could do differently?
+        li.blue
+          input#input3(type='radio', name='input1[]', value='1')
+          | No I know. It's really tricky in this kind of organizations!
+    li "What we have tried before. It did not work. "
+      ol.radio_ans
+        li.yellow
+          input#input4(type='radio', name='input2[]', value='1')
+          | That I think is not a constructive approach. It is important to be open to change!
+        li.yellow
+          input#input5(type='radio', name='input2[]', value='1')
+          | Interesting. Can you tell me more about it? What did not work?
+        li.yellow
+          input#input6(type='radio', name='input2[]', value='1')
+          | No, just that here we have not actually tried before, and I have good reason to believe that it works just fine!
+        li.blue
+          input#input7(type='radio', name='input2[]', value='1')
+          | I know, but now it is in all cases decided so just like the position.
+    li "Some of this does not make his job!"
+      ol.radio_ans
+        li.yellow
+          input#input8(type='radio', name='input3[]', value='1')
+          | That does not actually. All actually do as best they can.
+        li.yellow
+          input#input9(type='radio', name='input3[]', value='1')
+          | Ok. What are you thinking then? Can you give an example? In what way is it a problem for you?
+        li.yellow
+          input#input10(type='radio', name='input3[]', value='1')
+          | I think that actually is not that you have to do.
+        li.blue
+          input#input11(type='radio', name='input3[]', value='1')
+          | Nämen! I will immediately grab!
+  p
+    a#submit.ui-button.ui-widget.ui-corner-all Submit
+  p
+    a#btn-save.ui-button.ui-widget.ui-corner-all Save
+  .msg.hidden
+    h3
+      | Look at the answers that are 
+      span.yellow marked in green
+      | . Reflect on what you think is common to them. Click here for a description
+    p
+      | The answers that are marked gives the manager example of how, through its response can gradually help the employee to express themselves constructively. The manager's response should also encourage employees to express themselves without getting
+      | stuck in negative communication patterns. This way you avoid reinforcing "whining", ie non-constructive complaints that do not contain enough specific information to be able to act on it. These examples show how to balance between encouraging
+      | employees to speak their minds while affecting communication towards a constructive, committed dialogue.
+    h3
+      | Look at the answers that are 
+      span.yellow marked in yellow
+      | ”. What do you have in common? Click here for a description.
+    p
+      | This is an example of how it sounds when one is anxious to give accurate information. There is a risk that this type of feedback discourages employees from saying their opinion, rather than he / she takes to the instruction. Instead, you can:
+      | 1) choose to interpret the employee's comment as a sign of commitment, and 2) see the comment as an invitation to a more constructive dialogue, which helps employees to express themselves in a more constructive terms.
+    h3
+      | Look at the answers that are 
+      span.blue marked in blue
+      | . What would you say is common to them? Click here for a description.
+    p
+      | In these examples, it seems that the boss thinks that his / her employees have some good points. It might also seem that the manager just is keen to avoid a conflict or avoid offending employee. The manager's response probably contributes
+      | to the employee feels confirmed. This increases the risk that the manager reinforces the employee's non-constructive ways to express their opinions. Instead, choose to: 1) interpret the employee's comment as a sign of commitment, and 2)
+      | see the comment as an invitation to a more constructive dialogue, which helps employees to express themselves in a more constructive terms.

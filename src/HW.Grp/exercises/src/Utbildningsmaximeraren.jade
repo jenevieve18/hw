@@ -1,0 +1,38 @@
+extends includes/layout
+block script
+  script(src='assets/exercises/js/Utbildningsmaximeraren.js')
+block content
+  #message.alert.alert-success.hidden
+  p
+    b Längd: ca 1 timme / anställd + uppföljning
+    br
+    br
+    | Den här övningen genomförs tillsammans med respektive medarbetare.
+  p
+    | Hur många kurser har du gått som verkligen ändrat ditt arbetssätt till det bättre? Hur ser det ut för dina medarbetare? Om du vill få ut så mycket som möjligt av utbildningar är det viktigt att det finns en strategisk tanke med vilka utbildningar som
+    | dina medarbetare genomgår. För att en utvecklingsplan ska vara effektiv bör den uppfylla två kriterier: att verksamhetens mål uppfylls - och den ökar medarbetarens anställningsbarhet.
+  p
+    | Följande frågor kan du ställa för att identifiera utvecklingsbehov hos dina medarbetare. Använd frågorna som ett diskussionsunderlag när du sitter tillsammans med dem. Dokumentera svaren nedan.
+  ol
+    li
+      | Börja med att definiera vad din grupp ska åstadkomma utifrån organisationens vision/mål. Detta för att koppla utvecklingsbehovet hos individen till verksamhetens mål. Ta hänsyn till om målen och verksamheten kommer att förändras framöver.
+      p
+        textarea#input0(name='input[]', style='width:100%;height:100px')
+    li
+      | Hur ser medarbetarens uppdrag ut i förhållande till gruppens mål - idag och i framtiden?
+      p
+        textarea#input1(name='input[]', style='width:100%;height:100px')
+    li
+      | Hur stämmer medarbetarens kompetens ihop med hennes/hans uppdrag - idag och i framtiden? Finns det något gap?
+      p
+        textarea#input2(name='input[]', style='width:100%;height:100px')
+    li
+      | Vilken typ av kompetensutveckling skulle kunna fylla gapet. Kurs? Färdighetsträning? Mentor? Kollegialt erfarenhetsutbyte? Feedback?
+      p
+        textarea#input3(name='input[]', style='width:100%;height:100px')
+    li
+      | Gör en plan för utveckling inklusive utvärdering och uppföljning.
+      p
+        textarea#input4(name='input[]', style='width:100%;height:100px')
+  p
+    a#btn-save.ui-button.ui-widget.ui-corner-all Spara

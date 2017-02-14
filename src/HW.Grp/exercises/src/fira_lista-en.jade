@@ -1,0 +1,52 @@
+extends includes/layout
+block script
+  script(src='assets/exercises/js/fira_lista.js')
+  script.
+    var newExercise = {
+      inputs: [
+        { components: [
+          { valueText: 'Met Group quantitative performance' },
+          { valueText: 'Achieved group qualitative performance' },
+          { valueText: 'Collaborated to solve a task' },
+          { valueText: 'Solved a difficult mission' },
+          { valueText: 'Complied a customer in an exceptional way' },
+          { valueText: 'Reached a milestone' },
+          { valueText: 'Made the things that we have planned (whether it led to the intended results)' },
+        ]}, {
+          components: []
+        }
+      ]
+    };
+block content
+  h2 Time: 5 minutes
+  #message.alert.alert-success.hidden
+  p
+    | Celebrating success is more important than you might think. There is a way to emphasize the value of performance and to strengthen the group cohesion by emphasizing joint efforts. The celebration can be an enjoyable and stimulating social situation.
+    | It can also help employees socialize in more relaxed conditions, which in itself can have positive effects on the climate of the group.
+  p
+    | But what is there that is worth celebrating? What is worth celebrating in your particular group? The following are suggestions that may be worth celebrating. Rank them as to what is most specify location to celebrate your particular group will top,
+    | followed in descending order. You can also add your own proposals and rank them.
+  p
+    table(width='100%')
+      tr
+        td(width='50%')
+          strong Suggested things to celebrate:
+        td
+          strong The ranking for your group
+      tr
+        td(valign="top")
+          ul#suggested-things.input0.ui-helper-reset(style='min-height:30px')
+          p(style='margin-right:20px')
+            textarea#text-input(style='width:90%')
+          p
+            a#btn-add.ui-button.ui-widget.ui-corner-all Add
+        td(valign="top")
+          ul#ranking.input1.ui-helper-reset(style='min-height:100px')
+  div
+    a#btn-subtext.ui-button.ui-widget.ui-corner-all Clear
+    a#btn-reset.ui-button.ui-widget.ui-corner-all Start over
+    a#btn-save.ui-button.ui-widget.ui-corner-all Save
+  p#sub-text.hidden
+    | MVad one should celebrate is understood differently in different organizations, and something you and your employees themselves have to decide based on the requirements of your business. A crucial factor is that the celebration is linked to objectives
+    | that are clearly communicated and, above all, the employees themselves can affect the way they act. Think about why the item on again about how your employees through their actions have contributed to the goal you are celebrating. Another crucial factor
+    | is the way to celebrate the perceived as reinforcing the employees themselves. You can read more about the exercise Tailored celebration

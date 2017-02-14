@@ -1,0 +1,163 @@
+extends includes/layout
+block script
+  script(src='assets/exercises/js/finsliparen.js')
+block content
+  style.
+    .trash {
+      min-height:100px;
+    }
+  script.
+    var newExercise = {
+      inputs: [
+        { valueText: 'Listen to a couple of your employees talking about how to solve a problem.' },
+        { valueText: 'Watch as an employee leading a meeting.' },
+        { valueText: 'Say: You have probably seen that we have new procedures for how we report absences?' },
+        { valueText: 'Go out and look at a wall on a building site after the person who worked on it goes from there.' },
+        { valueText: 'Ask one of our employees in a major project: "Will we make it in time?"' },
+        { valueText: 'Question: "Did you send away the material that we talked about?"' },
+        { valueText: 'Talk to employees about what they did over the weekend?' },
+        { valueText: 'Question: Why have not submitted the report on time?' },
+        { valueText: 'Question: "Did Donald through the project plan with you today?"' },
+        { valueText: "Reading through an employee's report before it is completed." },
+        { valueText: 'Say, "Here we go hard today, right !?"' },
+        { valueText: 'Say: This report should not exceed three pages and contain at least 2 characters.' },
+      ]
+    };
+  h2 Time required: 20 minutes
+  #message.alert.alert-success.hidden
+  #first-question
+    p A good way to motivate their employees to monitor. Managers who monitors have satisfied employees and groups that work more efficiently. Monitoring involves collecting information about how employees are performing their tasks and how this affects the results. The interesting thing is that only by monitoring employees become more motivated. One reason for this is that it allows for a more informed, effective and empathetic conversation with employees. Now you'll get to practice monitoring. Select the situations you consider to be monitoring.
+    ul.inputs.input0
+      //- li
+      //-   input(type='checkbox', name='input[]', value='d1')
+      //-   | Listen to a couple of your employees talking about how to solve a problem.
+      //- li
+      //-   input(type='checkbox', name='input[]', value='d2')
+      //-   | Watch as an employee leading a meeting.
+      //- li
+      //-   input(type='checkbox', name='input[]', value='d3')
+      //-   | Say: You have probably seen that we have new procedures for how we report absences?
+      //- li
+      //-   input(type='checkbox', name='input[]', value='d4')
+      //-   | Go out and look at a wall on a building site after the person who worked on it goes from there.
+      //- li
+      //-   input(type='checkbox', name='input[]', value='d5')
+      //-   | Ask one of our employees in a major project: "Will we be ready in time?"
+      //- li
+      //-   input(type='checkbox', name='input[]', value='d6')
+      //-   | Question: "Did you send away the material that we talked about?"
+      //- li
+      //-   input(type='checkbox', name='input[]', value='d7')
+      //-   | Talk to employees about what they did over the weekend?
+      //- li
+      //-   input(type='checkbox', name='input[]', value='d8')
+      //-   | Question: Why have not submitted the report on time?
+      //- li
+      //-   input(type='checkbox', name='input[]', value='d9')
+      //-   | Question: "Did Donald through the project plan with you today?"
+      //- li
+      //-   input(type='checkbox', name='input[]', value='d10')
+      //-   | Reading through an employee's report before it is completed.
+      //- li
+      //-   input(type='checkbox', name='input[]', value='d11')
+      //-   | Say, "Here we go hard today, right !?"
+      //- li
+      //-   input(type='checkbox', name='input[]', value='d12')
+      //-   | Say: This report should not exceed three pages and contain at least 2 characters.
+    p
+      a#btn-clear1.ui-button.ui-widget.ui-corner-all Clear
+      a#btn-start.ui-button.ui-widget.ui-corner-all Start over
+      a#btn-continue.ui-button.ui-widget.ui-corner-all Continue
+  #second-question.hidden
+    p By monitoring, you create the conditions for effective and informed conversation about employees' work. It makes your feedback more relevant, giving you a better basis for making strategic decisions and solve problems. It also increases your credibility in the eyes of the employees. There are several ways to do this.
+    p Below is the same example you looked at just now. Now is your task to categorize the type of monitoring is concerned. Select the category that best describes the situation. Drag the points to each category in the table
+    //- table.tbl(style='background-color:#888')
+    table(width="100%", border="1", cellpadding="5")
+      tr
+        td Take sample from a person's work
+        td Observe a person at work	
+        td Let a person talk about their results	
+        td Ask a third person about someone's performance	
+        td Not an example of monitoring
+      tr
+        td(valign="top")
+          #trash1.trash.input1.ui-helper-reset(style="min-height:100px")
+        td(valign="top")
+          #trash2.trash.input2.ui-helper-reset(style="min-height:100px")
+        td(valign="top")
+          #trash3.trash.input3.ui-helper-reset(style="min-height:100px")
+        td(valign="top")
+          #trash4.trash.input4.ui-helper-reset(style="min-height:100px")
+        td(valign="top")
+          #trash5.trash.input5.ui-helper-reset(style="min-height:100px")
+    p
+    ul#gallery.input6.ui-helper-reset(style="min-height:100px")
+      //- li
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Listen to a couple of your employees talking about how to solve a problem.
+      //- li
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Watch as an employee leading a meeting.
+      //- li
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Say: You have probably seen that we have new procedures for how we report absences?
+      //- li
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Go out and look at a wall on a building site after the person who worked on it goes from there.
+      //- li
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Ask one of our employees in a major project: "Will we make it in time?"
+      //- li
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Question: "Did you send away the material that we talked about?"
+      //- li
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Talk to employees about what they did over the weekend?
+      //- li
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Question: Why have not submitted the report on time?
+      //- li
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Question: "Did Donald through the project plan with you today?"
+      //- li
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Reading through an employee's report before it is completed.
+      //- li
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Say, "Here we go hard today, right !?"
+      //- li
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Say: This report should not exceed three pages and contain at least 2 characters.
+    p
+      a#btn-clear2.ui-button.ui-widget.ui-corner-all Clear
+      a#btn-notify.ui-button.ui-widget.ui-corner-all Notify
+    //- #body1(style='display:none;')
+    #body1.hidden
+      p
+        | Det finns fyra olika metoder för att ta reda på hur medarbetarna utför sina arbetsuppgifter.
+      p
+        | Ta stickprov ur en persons arbete
+        br
+        i
+          | Studera något som personen har arbetat med, t ex en rapport, ett mail, en spacklad vägg, en tidsplan, osv.
+      p
+        | Observera en person i sitt arbete
+        br
+        i
+          | Titta eller lyssna när personen utför något i sitt arbete, t ex leder ett möte, pratar med en kund, lägger på spackel, hjälper en kollega, osv.
+      p
+        | Låta en person berätta om sina resultat
+        br
+        i
+          | Ställa frågor om hur personen gjorde för att uppnå något och lyssna på svaret, t ex hur hon gick tillväga för att planera och genomföra en utbildning, hur hon gjorde för att hjälpa en kollega, osv.
+      p
+        | Fråga en tredje person om någons resultat
+        br
+        i
+          | Ställa frågor till någon annan om hur personen gjorde för att uppnå något och lyssna på svaret, t ex hur en kollega uppfattade att personen gjorde för att hantera en besvärlig kund, osv.
+      p
+        | Alla dessa metoder är alltså bra att använda men stickprov och observation är de som är allra mest effektiva för att påverka medarbetarnas engagemang.
+      p
+        | Du monitorerar för att uppmärksamma kopplingen mellan en persons agerande och resultatet. Genom att monitorer beteenden snarare än resultat fokuserar du på faktorer som medarbetaren kan kontrollera vilket ökar effektiviteten.
+  p
+    a#btn-save.ui-button.ui-widget.ui-corner-all Save

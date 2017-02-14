@@ -1,0 +1,48 @@
+extends includes/layout
+block script
+  script(src='assets/exercises/js/feedback.js')
+block content
+  #message.alert.alert-success.hidden
+  h2 Tidsåtgång: 5-10 minuter
+  p Öka möjligheterna för andra att förstå vad du förväntar dig genom att precisera vad du vill att dina medarbetare ska göra. Pröva hur tydlig du kan vara! Läs följande uttryck och formulera vilka beteenden du tycker att de innefattar.
+  p 1) Ta ansvar
+  textarea#input0(name='input[]', style='width:100%;height:100px')
+  .description.hidden
+    p Här kommer exempel på vad man kan mena när man säger: ”Ta ansvar”
+    ul
+      li Göra sina uppgifter
+      li Hjälpa andra
+      li Se till att andra mår bra
+      li Planera i förväg
+      li Ge förslag på förbättringar
+      li Plocka ur diskmaskinen
+  p 2) Vara positiv
+  textarea#input1(name='input[]', style='width:100%;height:100px')
+  .description.hidden
+    p Här kommer några exempel på vilka beteenden man kan mena när man säger ”Vara positiv”
+    ul
+      li Säga hej i korridoren
+      li Skämta
+      li Föreslå aktiviteter
+      li Hitta möjligheter i problem
+      li Ge förslag på förbättringar
+      li Fixa kaffe till de andra
+      li Ge positiv feedback till någon som gjort nåt bra
+  p 3) Vara effektiv
+  textarea#input2(name='input[]', style='width:100%;height:100px')
+  .description.hidden
+    p Här kommer några exempel på vilka beteenden man kan mena när man säger ”Vara effektiv
+      a#_GoBack(name='_GoBack')
+      | ”
+    ul
+      li Göra en tidsplanering
+      li Svara på alla mail
+      li Röra sig fort i korridorerna
+      li Vara först eller sist på jobbet
+      li Hinner med det man tänkt
+      li Göra de saker som är viktigast utifrån målen
+  p
+    a#btn-move-on.ui-button.ui-widget.ui-corner-all Gå vidare
+    a#btn-save.ui-button.ui-widget.ui-corner-all Spara
+  .description.hidden
+    p Samma generella uttryck kan ha olika betydelser för olika personer. Genom att precisera och på ett neutralt sätt beskriva vad någon gör eller säger minskar du risken för missförstånd och ökar sannolikheten för att det du säger får avsedd effekt.

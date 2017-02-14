@@ -1,0 +1,62 @@
+body {
+  ul {
+    font-size: 10pt;
+
+    li {
+      font-size: 1em;
+    }
+  }
+
+  .text-warning {
+    color: #FF7D00;
+  }
+
+  .bubble {
+    cursor: hand;
+    background: url("../img/speech-bubble.png") no-repeat;
+    width: 270px;
+    height: 195px;
+    text-align: center;
+  }
+
+  .bubble:hover {
+    background: url("../img/speech-bubble1.png") no-repeat;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .text-right {
+    text-align: right;
+  }
+
+  #sortable {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      margin: 0 3px 3px;
+      padding: 0.4em 0.4em 0.4em 1.5em;
+      height: 18px;
+
+      span {
+        position: absolute;
+        margin-left: -1.3em;
+      }
+    }
+  }
+}
+@import 'alert.scss';
+
+.company {
+  .data-input {
+    padding: 10px;
+    border-radius: 4px;
+  }
+}
+
+.hidden {
+  display: none;
+}

@@ -1,0 +1,51 @@
+extends includes/layout
+block script
+  script(src='assets/exercises/js/roda_traden.js')
+block content
+  script.
+    var newExercise = {
+      inputs: [
+        { valueText: "Företagets vision" },
+        { valueText: "Gruppens uppdrag" },
+        { components: [
+            { valueText: "Medarbetare 1's beteende" },
+            { valueText: "Medarbetare 2's beteende" },
+            { valueText: "Medarbetare 3's beteende" },
+            { valueText: "Medarbetare 4's beteende" },
+            { valueText: "Medarbetare 5's beteende" },
+          ]
+        }
+      ]
+    };
+    function initBehavior(behaviors) {
+      return "Medarbetare " + behaviors + "'s beteende";
+    }
+  #message.alert.alert-success.hidden
+  p
+    | Den här övningen är till för att skapa en röd tråd mellan organisationens mål, gruppens uppdrag och vad medarbetarna gör i sitt dagliga arbete. Övningen ska fungera som ett diskussionsunderlag till ett gruppmöte eller ett enskilt samtal med en medarbetare.
+    | Tanken är att uppmärksamma hur väl företagets övergripande vision stämmer överens med hur man faktiskt arbetar. Hänger medarbetarnas beteende ihop med företagets vision? Finns det ett glapp? Gå gärna igenom nedanstående frågor på egen hand först. Ta
+    | med dina noteringar i bakhuvudet när träffar gruppen och gör övningen. Om gruppen har svårt att besvara frågorna kan du presentera hur du tänker och fråga om det stämmer överens med deras uppfattning. Syftet är att stimulera till en diskussion snarare
+    | än att presentera ett facit.
+  h2 Gör så här:
+  ol
+    li Hur ser företagets vision ut? Skriv det i första rutan.
+    li Hur ser din grupps uppdrag ut? Skriv det i rutan för gruppens uppdrag.
+    li
+      | Vilka är det viktigaste arbetsuppgifterna för dina medarbetare? Skriv dem i rutorna för medarbetare.
+      br
+      | Beskriv det dina medarbetare ska göra så konkret som möjligt. Det du beskriver ska gå att uppfattas lika av flera personer.
+    li
+      | Bedöm om det finns en röd tråd i det du beskrivit. Hänger arbetsuppgifterna samman med ert uppdrag och är det i linje med företagets vision? Om inte, fundera över hur du kan skapa en röd tråd och på vilken nivå en förändring bör ske. Det kan exempelvis
+      | handla om en dialog med din närmaste chef om din grupps uppdrag eller med dina medarbetare om deras arbetsuppgifter.
+  p
+  .company
+    .company-vision.text-center
+      textarea#input0.input
+    br
+    .company-mission.text-center
+      textarea#input1.input
+    br
+    .employee-behaviors
+  p
+    a#btn-add.ui-button.ui-widget.ui-corner-all Fler rutor för medarbetare...
+    a#btn-save.ui-button.ui-widget.ui-corner-all Spara

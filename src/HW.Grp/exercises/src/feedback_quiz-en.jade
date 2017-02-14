@@ -1,0 +1,101 @@
+extends includes/layout
+block script
+  script(src='assets/exercises/js/feedback_quiz.js')
+block content
+  #message.alert.alert-success.hidden
+  h2 Time: 3 minutes
+  p
+    | As a manager, you have the opportunity to stimolera your employees to do the right things - things that drive business resoltat. In addition to instructions and practical conditions is the feedback the main tools you have at your disposal.
+  p Here you can test your feedback
+  p 1. What feedback should focus on?
+  p
+    label
+      input#input0(type='radio', name='input0', value='1')
+      | What anyone made good
+      br
+    label
+      input#input1(type='radio', name='input0', value='2')
+      | What someone has done bad
+      br
+    label
+      input#input2(type='radio', name='input0', value='3')
+      | The one generally must consider
+      br
+    label
+      input#input3(type='radio', name='input0', value='4')
+      | It is believed that the employee wants to hear
+      br
+    label
+      input#input4(type='radio', name='input0', value='5')
+      | Things that are beyond the ordinary
+  p.description.hidden.text-info As a rule of thumb, one can imagine that the feedback to a person shall be distributed in accordance with the principle of 80 per cent positive feedback, and 20 percent corrective feedback.
+  p 2. What should you give feedback?
+  p
+    label
+      input#input5(type='radio', name='input1', value='1')
+      | Behavior - what your employees do
+      br
+    label
+      input#input6(type='radio', name='input1', value='2')
+      | Attitude - the attitude to the work that your employees have
+      br
+    label
+      input#input7(type='radio', name='input1', value='3')
+      | Appearance - how attractive your employees
+      br
+    label
+      input#input8(type='radio', name='input1', value='4')
+      | It is outside the control of the individual
+      br
+    label
+      input#input9(type='radio', name='input1', value='5')
+      | The others say about the person behind the back
+  p.description.hidden.text-info By giving feedback on what someone is doing (behaviors) rather than, say, attitudes, it is easier to understand and grasp the message.
+  p 3. At what point should give feedback?
+  p
+    label
+      input#input10(type='radio', name='input2', value='1')
+      | Close to act as feedback concerns
+      br
+    label
+      input#input11(type='radio', name='input2', value='2')
+      | When accumulated so many examples that one can not help but
+      br
+    label
+      input#input12(type='radio', name='input2', value='3')
+      | Never
+      br
+    label
+      input#input13(type='radio', name='input2', value='4')
+      | Once a year during performance reviews
+      br
+    label
+      input#input14(type='radio', name='input2', value='5')
+      | When you are really upset about something
+  p.description.hidden.text-info It is easier to assimilate feedback on events that are close in time. The person remembers easier incident described and have the opportunity to do more, or less, of what feedback is about.
+  p 4. In what context should give feedback?
+  p
+    label
+      input#input15(type='radio', name='input3', value='1')
+      | Behind the backs of whom it may concern
+      br
+    label
+      input#input16(type='radio', name='input3', value='2')
+      | Via another
+      br
+    label
+      input#input17(type='radio', name='input3', value='3')
+      | Individually it as it touches
+      br
+    label
+      input#input18(type='radio', name='input3', value='4')
+      | When there are so many others who listens as possible
+      br
+    label
+      input#input19(type='radio', name='input3', value='5')
+      | In a subordinate clause in an email
+  p.description.hidden.text-info
+      | Corrective feedback should be given individually. Corrective feedback in front of others is unpleasant for all present. Positive feedback can be provided both individually and in front of others but it is not clear that the person receiving positive feedback to others perceive it as positive. In addition, the listener interpret what they have not done anything good since they are not mentioned. Therefore, choose carefully the occasions you give positive feedback to someone in the group.
+  p
+    a#btn-correct.ui-button.ui-widget.ui-corner-all Correct
+    a#btn-save.ui-button.ui-widget.ui-corner-all Save

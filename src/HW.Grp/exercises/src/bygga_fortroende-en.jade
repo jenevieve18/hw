@@ -1,0 +1,89 @@
+extends includes/layout
+block script
+  script(src='assets/exercises/js/bygga_fortroende.js')
+block content
+  script.
+    var newExercise = {
+      inputs: [
+        { components: [] },
+        { components: [] },
+        { components: [
+          { valueText: 'Encourage employees to speak their mind' },
+          { valueText: 'Talk continuously self' },
+          { valueText: 'Celestial eye when the employee talk' },
+          { valueText: 'Thanks for the comments' },
+          { valueText: 'Talk about what happens next in the employee take put the matter' },
+          { valueText: 'Laugh at the employee said' },
+          { valueText: 'Be quiet' },
+          { valueText: 'Returning to a previous thread with no comment' },
+          { valueText: 'Point out that the employee has the wrong' },
+          { valueText: 'Sigh' },
+          { valueText: 'Ask for more feedback on what someone said' },
+          { valueText: 'Ask employees prepare any point to meeting' }
+        ]},
+        { components: [] },
+        { components: [] },
+        { components: [
+          { valueText: 'Say "put the others aside and concentrate on this' },
+          { valueText: 'Ask if he / she can commit this to be relieved of any other' },
+          { valueText: 'Adding the papers on the employee table without further comment' },
+          { valueText: 'Write an email to the whole group that "this must be a priority" without specifying who should do it' },
+          { valueText: 'Ask the employee why not he / she has not done their regular duties?' },
+          { valueText: 'Ask how it goes and to emphasize that the others may be as long' },
+          { valueText: 'Thanks for the work done and ask if he / she needs help to prioritize among the normal tasks' },
+          { valueText: 'Send mail to the entire group if you do not reach the goals (of the regular duty) this month' }
+        ]}
+      ]
+    }
+  #message.alert.alert-success.hidden
+  h2 Building trust and confidence
+  p Confidence and trust are essential in the relationship between managers and employees and is something that you can create through their actions. It's about being predictable and to create a common thread between what you say and do. In this exercise, you can train your skills to create trust. The exercise is based on the example of the things that people do and the task is to piece together the "activator" that gets the employee to start the action with the consequence that allowed them to continue. As a bonus, the more confidence you as a manager.
+  h2 Example 1
+  p Looking at the example below. If you want employees to express their opinion at a meeting, what can you do to encourage it? Choose from the list below and place the activators for the behavior and the favorable impact so that it creates a thread between: activator - the employee's behavior - favorable impact.
+  table(width="100%", cellpadding="3")
+    tr
+      th(width='33%') Triggers 
+      th(width='33%') The employee behavior
+      th(width='33%') Beneficial impact
+    tr
+      //- td(valign="top", style='background-color:#72bae4')
+      td(valign="top", style='background-color:#EBEBEB')
+        #trigger1.input0.ui-helper-reset(style='min-height:30px')
+      td.text-center Say their opinion at a meeting
+      //- td(valign="top", style='background-color:#72bae4')
+      td(valign="top", style='background-color:#EBEBEB')
+        #impact1.input1.ui-helper-reset(style='min-height:30px')
+  p.text-center
+    a#btn-notify1.ui-button.ui-widget.ui-corner-all Notify
+    a#btn-reset1.ui-button.ui-widget.ui-corner-all Start over
+  p
+  ul#gallery1.input2.gallery.ui-helper-reset(style='background-color:#EBEBEB')
+  h3 Reflection
+  p What if you are asking employees to say something but then do not comment on it, or say the opposite?
+  p Tip!
+  p It happens that one says "I want you to commit yourself and say what you think" when you do not really have time for discussion. It might not be there any real opportunities to influence or it may just be prepared for the positive comments. Reflect for a moment on your own before asking for opinions. In this way, you ensure that your employees know that their views really are in demand those times you ask for opinions. They will also understand that they are welcome, even if their ideas are not consistent with your views.
+  h2 Example 2
+  table(width="100%", cellpadding="3")
+    tr
+      th(width='33%') Triggers 
+      th(width='33%') The employee behavior
+      th(width='33%') Beneficial impact
+    tr
+      //- td(valign="top", style='background-color:#72bae4')
+      td(valign="top", style='background-color:#EBEBEB')
+        #trigger2.input3.ui-helper-reset(style='min-height:30px')
+      td.text-center Adding their regular duties aside and prioritize something new
+      //- td(valign="top", style='background-color:#72bae4')
+      td(valign="top", style='background-color:#EBEBEB')
+        #impact2.input4.ui-helper-reset(style='min-height:30px')
+  p.text-center
+    a#btn-notify2.ui-button.ui-widget.ui-corner-all Notify
+    a#btn-reset2.ui-button.ui-widget.ui-corner-all Start over
+  p
+  ul#gallery2.input5.gallery.ui-helper-reset.ui-helper-clearfix(style='background-color:#EBEBEB')
+  h3 Reflection
+  p What if you are asking employees to prioritize something, but then forget to talk about it when you follow up the regular work?
+  p Tips!
+  p It happens that one says: "This is a priority", without having thought through the activities that consequently down-prioritized. Reflect for a moment on your own before you make a priority in your group. In this way, you ensure that you are also prepared for other lower priority. This means that your employees will trust that you will understand that other things become less priority when you ask them to prioritize something.
+  p
+    a#btn-save.ui-button.ui-widget.ui-corner-all Save

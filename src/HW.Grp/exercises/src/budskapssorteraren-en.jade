@@ -1,0 +1,168 @@
+extends includes/layout
+block script
+  script(src='assets/exercises/js/budskapssorteraren.js')
+  script.
+    var newExercise = {
+      inputs: [
+        { components: [] },
+        { components: [] },
+        { components: [
+          { valueText: 'Answer the phone', class: 'beteende' },
+          { valueText: 'Ask a question', class: 'beteende' },
+          { valueText: 'Lazy', class: 'ickebeteende' },
+          { valueText: 'Say yes', class: 'beteende' },
+          { valueText: 'Nonchalant', class: 'ickebeteende' },
+          { valueText: 'Ambitious', class: 'ickebeteende' },
+          { valueText: 'Putting on the helmet', class: 'beteende' },
+          { valueText: 'Take responsibility', class: 'ickebeteende' },
+          { valueText: 'Security Conscious', class: 'ickebeteende' },
+          { valueText: 'Good', class: 'ickebeteende' },
+          { valueText: 'Perform tasks with high quality', class: 'beteende' },
+          { valueText: 'Positive', class: 'ickebeteende' },
+          { valueText: 'Smile', class: 'beteende' },
+          { valueText: 'Nod', class: 'beteende' },
+          { valueText: 'Careless', class: 'ickebeteende' },
+          { valueText: 'LOYAL', class: 'ickebeteende' }
+        ] }
+      ]
+    };
+block content
+  h2 Time: 8 minutes
+  #message.alert.alert-success.hidden
+  p To increase the likelihood that your employees understand and embrace of your message, it is good to express what you want them to do (behaviors) rather than how you want it to be (attitudes, characteristics or attributes). It reduces the risk of misunderstandings and makes it easier to absorb both positive and corrective feedback. Here you can test your skills in distinguishing between behavior (what one says or does) and non-behavior (eg attitudes, characteristics, attributes).
+  p
+    i Sort the list below so that the descriptions end up in the right column.
+  #div1
+    table(width="100%")
+      tr
+        th(width='50%') Behavior 
+        th(width='50%') Non-behavior
+      tr
+        td(style='background-color:#72bae4', valign="top")
+          #behavior.input0.ui-helper-reset(style='min-height:50px')
+        td(style='background-color:#72bae4', valign="top")
+          #non-behavior.input1.ui-helper-reset(style='min-height:50px')
+    ul#choices.input2.gallery.ui-helper-reset(style='background-color:#EBEBEB')
+      //- li.beteende
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Answer the phone
+      //- li.beteende
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Ask a question
+      //- li.ickebeteende
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Lazy
+      //- li.beteende
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Say yes
+      //- li.ickebeteende
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Nonchalant
+      //- li.ickebeteende
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Ambitious
+      //- li.beteende
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Putting on the helmet
+      //- li.ickebeteende
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Take responsibility
+      //- li.ickebeteende
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Security Conscious
+      //- li.ickebeteende
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Good
+      //- li.beteende
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Perform tasks with high quality
+      //- li.ickebeteende
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Positive
+      //- li.beteende
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Smile
+      //- li.beteende
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Nod
+      //- li.ickebeteende
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | Careless
+      //- li.ickebeteende
+      //-   span.ui-icon.ui-icon-arrow-4
+      //-   | LOYAL
+  #div2
+    table(width="100%")
+      tr
+        th(width='50%')  Behavior 
+        th(width='50%')  Non-behavior
+      tr
+        td(valign="top")
+          ul
+            li
+              div Answer the phone
+              .bete.alert.alert-warning This is real enough.
+            li
+              div Ask a question
+              .bete.alert.alert-warning This is real enough.
+            li
+              div Say yes
+              .bete.alert.alert-warning This is real enough.
+            li
+              div Putting on the helmet
+              .bete.alert.alert-warning
+                | This is real enough. Drafted as a positive action (compare to "have a helmet on, ")
+            li
+              div Perform tasks with high quality
+              .bete.alert.alert-warning
+                | As long as "tasks" and "high quality" is defined, this is a behavior.
+            li
+              div Smile
+              .bete.alert.alert-warning This is observable and thus concretely enough.
+            li
+              div Nod
+              .bete.alert.alert-warning This is observable and thus concretely enough.
+        td(valign="top")
+          ul
+            li
+              div Lazy
+              .icke.alert.alert-warning
+                | An evaluative word that is difficult to assimilate and provoke. That can mean several different things, and therefore involves several different behaviors (coming late, miss deadlines, do not do data)
+            li
+              div Nonchalant
+              .icke.alert.alert-warning
+                | An evaluative word that is difficult to assimilate and provoke. That can mean several different things, and therefore involves several different behaviors (coming late, miss deadlines, doing tasks for poor quality., Looking away when someone is talking, interrupting others, etc.)
+            li
+              div Ambitious
+              .icke.alert.alert-warning
+                | A word which admittedly can be positively loaded but nevertheless evaluative and can mean several different things: Do more than what is expected, doing other people's jobs, working long hours, over deliver, over control,
+            li
+              div Take responsibility
+              .icke.alert.alert-warning
+                | Very common with the word "ambitious": A word which admittedly can be positively loaded but nevertheless evaluative and can mean several different things: Do more than what is expected, doing other tasks, working hours, help others, solve problems
+            li
+              div security Conscious
+              .icke.alert.alert-warning
+                | Lack sufficient specification - can thus mean several different things. For example, to remind colleagues to use their personal safety, self be careful to take on the security or talk about the importance of safety at the meetings.
+            li
+              div Good
+              .icke.alert.alert-warning
+                | Similar to "take responsibility" and "ambitious": Evaluating, ambiguous: Does more than what is expected, doing other tasks, working hours, help others, solve problems
+            li
+              div Positive
+              .icke.alert.alert-warning
+                | Lack sufficient specification - can thus mean several different things. Say yes to new things, pulling funny stories in the coffee room, give positive feedback to colleagues.
+            li
+              div Careless
+              .icke.alert.alert-warning
+                | An evaluative word that is difficult to assimilate and provoke. That can mean several different things, and therefore involves several different behaviors (coming late, miss deadlines, performing their duties with poorer quality)
+            li
+              div LOYAL
+              .icke.alert.alert-warning
+                | For general to several observers would agree on what it means: to fulfill their obligations, in time, have been employed long etc.
+  p
+    a#btn-cheat.ui-button.ui-widget.ui-corner-all Do you want to cheat
+    a#btn-back.hidden.ui-button.ui-widget.ui-corner-all Back
+    a#btn-save.ui-button.ui-widget.ui-corner-all Save
+  p
+    | To read more about the behaviors and how they work in organizations, we recommend Rolf Olofsson: Behavior Analysis in organizations. Handbook of OBM. Stockholm: Nature and Culture in 2010.

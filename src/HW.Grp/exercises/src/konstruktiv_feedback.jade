@@ -1,0 +1,82 @@
+extends includes/layout
+block script
+  script(src='assets/exercises/js/konstruktiv_feedback.js')
+block content
+  #message.alert.alert-success.hidden
+  h2 Tidsåtgång: 5-10 min
+  p
+    | Delaktiga och engagerade medarbetare som kommer med förslag och feedback är grunden för en kreativ och effektiv arbetsplats. Ibland kan förslag och feedback kännas som gnäll och klagomål snarare än det konstruktiva och utvecklande som det skulle kunna
+    | vara. Den här övningen visar hur mindre konstruktiva kommentarer från medarbetare kan vändas till något positivt.
+  p
+    | Nedan följer exempel på kommentarer som man kan höra i en arbetsgrupp. Till varje kommentar finns ett antal förslag på vad du som chef kan säga. Ta ställning till hur du brukar svara, eller hur du tror att du skulle svara i en liknande situation.
+  ol
+    li ”Man får aldrig någon information!”
+      ol.radio_ans
+        li.yellow
+          input#input0(type='radio', name='input1[]', value='1')
+          |  Du har visst fått information. Jag tog upp det på förra mötet.
+        li.yellow
+          input#input1(type='radio', name='input1[]', value='1')
+          |  Men står inte det på intranätet?
+        li.yellow
+          input#input2(type='radio', name='input1[]', value='1')
+          |  Tack för att du engagerar dig i hur vi ger information. Har du något förslag på vad vi skulle kunna göra annorlunda?
+        li.blue
+          input#input3(type='radio', name='input1[]', value='1')
+          |  Nej, jag vet. Det är verkligen knepigt i sådana här organisationer!
+    li ”Det här har vi provat förut. Det fungerade inte. ”
+      ol.radio_ans
+        li.yellow
+          input#input4(type='radio', name='input2[]', value='1')
+          |  Det där tycker jag inte är en konstruktiv inställning. Det är viktigt att vara förändringsbenägen!
+        li.yellow
+          input#input5(type='radio', name='input2[]', value='1')
+          |  Intressant. Kan du berätta mer om det? Vad var det som inte fungerade?
+        li.yellow
+          input#input6(type='radio', name='input2[]', value='1')
+          |  Nej, precis det här har vi faktiskt inte provat förut, och jag har goda skäl att tro att det fungerar alldeles utmärkt!
+        li.blue
+          input#input7(type='radio', name='input2[]', value='1')
+          |  Jag vet men nu är det i alla fall bestämt så det är bara att gilla läget.
+    li ”Vissa här gör ju inte sitt jobb!”
+      ol.radio_ans
+        li.yellow
+          input#input8(type='radio', name='input3[]', value='1')
+          |  Det där stämmer faktiskt inte. Alla gör faktiskt så gott de kan.
+        li.yellow
+          input#input9(type='radio', name='input3[]', value='1')
+          |  Ok. Vad tänker du på då? Kan du ge något exempel? På vilket sätt blir det ett problem för dig?
+        li.yellow
+          input#input10(type='radio', name='input3[]', value='1')
+          |  Det tycker jag faktiskt inte att du har med att göra.
+        li.blue
+          input#input11(type='radio', name='input3[]', value='1')
+          |  Nämen! Det ska jag omedelbart ta tag i!
+  p
+    a#submit.ui-button.ui-widget.ui-corner-all Lämna
+  p
+    a#btn-save.ui-button.ui-widget.ui-corner-all Spara
+  .msg.hidden
+    h3
+      | Titta på de svaren som är 
+      span.yellow grönmarkerade
+      | . Reflektera över vad du tycker är gemensamt för dem. Klicka sedan här för en beskrivning.
+    p
+      | I svaren som är markerade ger chefen exempel på hur man genom sitt svar gradvis kan hjälpa medarbetaren att uttrycka sig konstruktivt. Chefens svar ska också uppmuntra medarbetarna att uttrycka sig utan att fastna i negativa kommunikationsmönster.
+      | På så vis undviker man att förstärka ”gnäll”, det vill säga icke-konstruktiv klagan som inte innehåller tillräckligt konkret information för att man ska kunna agera på den. Dessa exempel visar hur man kan balansera mellan att uppmuntra medarbetare
+      | att säga sin mening samtidigt som man påverkar kommunikationen i riktning mot en konstruktiv, engagerad dialog.
+    h3
+      | Titta på de svaren som är 
+      span.yellow gulmarkerade
+      | ”. Vad tycker du är gemensamt för dem? Klicka sedan här för en beskrivning.
+    p
+      | Detta är exempel på hur det kan låta när man är angelägen om att ge korrekt information. Det finns risk att den här typen av respons avskräcker medarbetaren från att säga sin åsikt, snarare än att hon/han tar till sig instruktionen. Istället kan man:
+      | 1) välja att tolka medarbetarens kommentar som ett tecken på engagemang, och 2) se kommentaren som en inbjudan till en mer konstruktiv dialog, där man hjälper medarbetaren att uttrycka sig på ett mer konstruktivt sett.
+    h3
+      | Titta på de svaren som är 
+      span.blue blåmarkerade
+      | . Vad skulle du säga är gemensamt för dem? Klicka sedan här för en beskrivning.
+    p
+      | I de här exemplen verkar det som att chefen tycker att hennes/hans medarbetare har en del poänger. Det kan också verka som att chefen bara är angelägen om att undvika en konflikt eller undvika att såra medarbetaren. Chefens svar bidrar antagligen till
+      | att medarbetaren känner sig bekräftad. Då ökar risken för att chefen förstärker medarbetarens icke-konstruktiva sätt att framföra sina åsikter. Välj istället att: 1) tolka medarbetarens kommentar som ett tecken på engagemang, och 2) se kommentaren
+      | som en inbjudan till en mer konstruktiv dialog, där man hjälper medarbetaren att uttrycka sig på ett mer konstruktivt sett.

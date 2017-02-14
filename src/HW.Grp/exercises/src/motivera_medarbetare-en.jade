@@ -1,0 +1,50 @@
+extends includes/layout
+block script
+  script(src='assets/exercises/js/motivera_medarbetare.js')
+block content
+  #message.alert.alert-success.hidden
+  h2 Duration: 3 min
+  #first-question
+    p
+      | You can your actions affect your employees' motivation so that they want to perform as good as possible. Some ways are more effective than others. Mark in the list the two activities that you think has proved most effective to have dedicated employees
+      | in research.
+    ul.monitorer
+      p
+        input#input0(type='checkbox', name='input0[]', value='m1')
+        | Communicating a vision for the business
+      p
+        input#input1(type='checkbox', name='input0[]', value='m2')
+        | Find out how employees perform their tasks
+      p
+        input#input2(type='checkbox', name='input0[]', value='m3')
+        | Give clear instructions to staff on what to do
+      p
+        input#input3(type='checkbox', name='input0[]', value='m4')
+        | Give your feedback to employees based on their performance
+      p
+        input#input4(type='checkbox', name='input0[]', value='m5')
+        | Talk to employees about topics outside of work
+      p
+        input#input5(type='checkbox', name='input0[]', value='m6')
+        | Work hard with his own work as a model
+    p
+      a#btn-correct1.ui-button.ui-widget.ui-corner-all Correct
+  #second-question.hidden
+    p
+      | The most important thing a leader can do to get the high performance groups are continuously finding out what employees are doing and provide feedback on this. But which of them are most important, do you think?
+    ul.monitorer
+      p
+        input#input6(type='radio', name='input1[]', value='m1')
+        | Find out how employees perform their tasks
+      p
+        input#input7(type='radio', name='input1[]', value='m2')
+        | Give your feedback to employees based on their performance
+    p
+      a#btn-correct2.ui-button.ui-widget.ui-corner-all Correct
+    p.description.hidden
+      | Working actively to explore ways even employees perform their jobs has proven to be a very effective way to increase their motivation and performance. There may be different explanations for this. One reason is surely that we humans simply appreciate
+      | the fact that when someone shows a genuine interest in what we do. Another reason may be that when examining how someone performing a task as it often leads to a meaningful conversation about work. That conversation can bring new perspectives and
+      | ideas, and it's also a good situation for both positive and corrective feedback. Another explanation could be that employees who feel that their manager is interested in what they are doing increasingly talk about problems they have so that they can
+      | get the support they need.
+  p
+    a#btn-save.ui-button.ui-widget.ui-corner-all Save

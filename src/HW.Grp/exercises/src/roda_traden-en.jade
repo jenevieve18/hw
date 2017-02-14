@@ -1,0 +1,51 @@
+extends includes/layout
+block script
+  script(src='assets/exercises/js/roda_traden.js')
+block content
+  script.
+    var newExercise = {
+      inputs: [
+        { valueText: "The company's vision" },
+        { valueText: "The group's mission" },
+        { components: [
+            { valueText: "Employee 1's behavior" },
+            { valueText: "Employee 2's behavior" },
+            { valueText: "Employee 3's behavior" },
+            { valueText: "Employee 4's behavior" },
+            { valueText: "Employee 5's behavior" },
+          ]
+        }
+      ]
+    };
+    function initBehavior(behaviors) {
+      return "Employee " + behaviors + "'s behavior";
+    }
+  #message.alert.alert-success.hidden
+  p
+    | This exercise is to create a common thread between the goals of the organization, the group's mission and what employees do in their daily work. The exercise will serve as a basis for discussion at a team meeting or a private conversation with a coworker.
+    | The idea is to pay attention to how well the company's overall vision is consistent with how to actually work. Hanging employees' behavior together with the company's vision? Is there a gap? Please go through the following questions on your own first.
+    | Bring your notes in mind when the group hits and doing exercise. If the group has difficulty answering the questions, you can present what you think and ask if it is consistent with their view. The aim is to stimulate discussion rather than to present
+    | an answer key.
+  h2 Do this:
+  ol
+    li What is the company's vision look like? Write it in the first box.
+    li What is your group's mission out? Write it in the box for the group's mission.
+    li
+      | What are the main tasks of your employees? Write them in the boxes of the employees.
+      br
+      | Describe your employees to do as concrete as possible. What you describe going to be perceived as by several people.
+    li
+      | Assess whether there is a common thread in what you described. Linked tasks associated with your mission, and it is in line with the company's vision? If not, think about how you can create a thread, and the level at which a change should take place.
+      | This could involve a dialogue with your supervisor about your group's mission or with your employees about their duties.
+  p
+  .company
+    .company-vision.text-center
+      textarea#input0.input
+    br
+    .company-mission.text-center
+      textarea#input1.input
+    br
+    .employee-behaviors
+  p
+    a#btn-add.ui-button.ui-widget.ui-corner-all More boxes for employees ...
+    a#btn-save.ui-button.ui-widget.ui-corner-all Save

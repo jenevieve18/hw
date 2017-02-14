@@ -1,0 +1,52 @@
+extends includes/layout
+block script
+  script(src='assets/exercises/js/fira_lista.js')
+  script.
+    var newExercise = {
+      inputs: [
+        { components: [
+          { valueText: 'Uppfyllt gruppens kvantitativa prestationsmål' },
+          { valueText: 'Uppfyllt gruppens kvalitativa prestationsmål' },
+          { valueText: 'Samarbetat för att lösa en uppgift' },
+          { valueText: 'Löst ett svårt uppdrag' },
+          { valueText: 'Tillmötesgått en kund på ett exceptionellt sätt' },
+          { valueText: 'Nått ett delmål' },
+          { valueText: 'Gjort de saker som vi planerat (oavsett om det lett till avsett resultat)' },
+        ]}, {
+          components: []
+        }
+      ]
+    };
+block content
+  h2 Tidsåtgång: 5 min
+  #message.alert.alert-success.hidden
+  p
+    | Att fira framgång är viktigare än vad man kan tro. Det är ett sätt att understryka värdet av prestationer och att stärka gruppens sammanhållning genom att betona gemensamma ansträngningar. Firandet kan utgöra en trevlig och stimulerande social situation.
+    | Det kan också bidra till att medarbetarna umgås under mer avslappnade former, vilket i sig kan ha positiva effekter på klimatet i gruppen.
+  p
+    | Men vad finns det som är värt att fira? Vad är värt att fira i just DIN grupp? Nedan följer förslag på sådant som kan vara värt att fira. Rangordna dem så att det som är mest angeläget att fira i just din grupp kommer överst, och därefter i fallande
+    | ordning. Du kan också lägga till egna förslag och rangordna dem. Dra förslagen till höger under rubriken Rangordningen för din grupp för att rangordna dem.
+  p
+    table(width='100%')
+      tr
+        td(width='50%')
+          strong Förslag på saker att fira:
+        td
+          strong Rangordningen för din grupp
+      tr
+        td(valign='top')
+          ul#suggested-things.input0.ui-helper-reset(style='min-height:30px')
+          p(style='margin-right:20px')
+            textarea#text-input(style='width:90%')
+          p
+            a#btn-add.ui-button.ui-widget.ui-corner-all Lägg till
+        td(valign="top")
+          ul#ranking.input1.ui-helper-reset(style='min-height:100px')
+  div
+    a#btn-subtext.ui-button.ui-widget.ui-corner-all Klar
+    a#btn-reset.ui-button.ui-widget.ui-corner-all Börja om
+    a#btn-save.ui-button.ui-widget.ui-corner-all Spara
+  p#sub-text.hidden
+    | MVad man ska fira är förstås olika i olika organisationer, och något du och dina medarbetare själva behöver bestämma utifrån kraven i er verksamhet. En avgörande faktor är att firandet är kopplat till mål som är tydligt kommunicerade och framför allt,
+    | som medarbetarna själva kan påverka genom hur de agerar. Fundera därför gärna en extra gång kring på vilket sätt dina medarbetare genom sitt agerande har bidragit till det mål ni firar. En annan avgörande faktor är att sättet man firar på upplevs som
+    | förstärkande av medarbetarna själva. Det kan du läsa mer om i övningen Skräddarsytt firande

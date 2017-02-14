@@ -1,0 +1,70 @@
+doctype html
+html
+  head
+    meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    meta(http-equiv='Pragma', content='no-cache')
+    meta(http-equiv='Expires', content='-1')
+    meta(name='Robots', content='noarchive')
+    meta(name='description', content='Exercises')
+    
+    title Exercises - HealthWatch
+
+    link(type='text/css', rel='stylesheet', href='assets/css/960.css')
+    link(type='text/css', rel='stylesheet', href='assets/exercises/css/main.css')
+    link(type='text/css', href='https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css', rel='stylesheet')
+    
+    script(type='text/javascript', src='https://code.jquery.com/jquery-1.12.4.min.js')
+    script(type='text/javascript', src='https://code.jquery.com/ui/1.12.1/jquery-ui.min.js')
+    script(type='text/javascript', src='assets/exercises/js/healthwatch.js')
+    
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js')
+    script(type='text/javascript').
+      $(function () {
+        $('#btn-pdf').click(function () {
+          var doc = new jsPDF('p', 'pt', 'a4');
+          //- var doc = new jsPDF();
+          var options = {
+            background: '#fff',
+            pagesplit: true
+          };
+          doc.addHTML($('#popupie').first(), 0, 0, options, function() {
+            console.log('Generating PDF...');
+            doc.save('a4.pdf');
+          });
+        });
+      });
+
+  //if lt IE 7 
+    body.ie6  
+  //if IE 7 
+    body.ie7  
+  //if IE 8 
+    body.ie8  
+  //if IE 9 
+    body.ie9  
+  // [if (gt IE 9)|!(IE)] <!
+  body.popup
+    form
+      input#sponsorID(type='hidden', value='')
+      input#sponsorAdminID(type='hidden', value='')
+      input#exerciseVariantLangID(type='hidden', value='')
+      input#sponsorAdminExerciseID(type='hidden', value='0')
+      //- .popupie#popupie(style="background:white")
+      .popupie#popupie
+        .header
+          h1 HealthWatch.se
+          a#btn-pdf.print(href='#')
+            | PDF
+          a#printBtn.print(href='#', onclick='window.print();return false;')
+            | Print
+        //- .content#content(style="background:white")
+        .content
+          img(src='assets/img/hwlogosmall.gif')
+          br
+          br
+          block script
+          .exercise-content
+            block content
+        .footer © 2016 www.healthwatch.se
