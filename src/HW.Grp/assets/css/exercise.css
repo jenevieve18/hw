@@ -28,3 +28,7 @@
 .hw-table th, .hw-table td {
     padding: 3px;
 }
+.hw-icon {
+    background: url(../img/comment.png) no-repeat;
+    padding-left: 18px;
+}

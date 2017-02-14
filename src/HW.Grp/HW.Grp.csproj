@@ -227,6 +227,7 @@
     <Content Include="assets\exercises\images\submenu.jpg" />
     <Content Include="assets\exercises\images\text_bg.png" />
     <Content Include="assets\exercises\images\text_bg1.png" />
+    <Content Include="assets\exercises\img\myhealth_diary_print.gif" />
     <Content Include="assets\img\application_edit.png" />
     <Content Include="assets\img\auditTrail.gif" />
     <Content Include="assets\img\back.gif" />

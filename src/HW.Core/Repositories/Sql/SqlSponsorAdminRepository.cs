@@ -25,12 +25,24 @@ WHERE UniqueKey = @UniqueKey");
 		
 		public void SaveSponsorAdminExerciseComments(int sponsorAdminExerciseID, string comments)
 		{
-			
+			string query = @"
+INSERT INTO SponsorAdminExerciseComments()
+VALUES()";
 		}
 		
 		public void DeleteSponsorAdminExercise(int sponsorAdminExerciseID)
 		{
-			string query = string.Format(@"
+			string query = @"
+DELETE edic FROM SponsorAdminExerciseDataInputComponent edic
+INNER JOIN SponsorAdminExerciseDataInput edi ON edi.SponsorAdminExerciseDataInputID = edic.SponsorAdminExerciseDataInputID
+WHERE edic.SponsorAdminExerciseDataInputID = edi.SponsorAdminExerciseDataInputID
+AND edi.SponsorAdminExerciseID = @SponsorAdminExerciseID;
+
+DELETE FROM SponsorAdminExerciseDataInput
+WHERE SponsorAdminExerciseID = @SponsorAdminExerciseID";
+			ExecuteNonQuery(query, "healthWatchSqlConnection", new SqlParameter("@SponsorAdminExerciseID", sponsorAdminExerciseID));
+			
+			query = string.Format(@"
 DELETE FROM SponsorAdminExercise
 WHERE SponsorAdminExerciseID = @SponsorAdminExerciseID");
 			ExecuteNonQuery(query, "healthWatchSqlConnection", new SqlParameter("@SponsorAdminExerciseID", sponsorAdminExerciseID));
