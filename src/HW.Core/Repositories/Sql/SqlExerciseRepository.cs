@@ -521,7 +521,8 @@ SELECT sae.Date,
 	evl.ExerciseWindowX,
 	evl.ExerciseWindowY,
 	evl.ExerciseVariantLangID,
-	sae.SponsorAdminExerciseID
+	sae.SponsorAdminExerciseID,
+	sae.Comments
 FROM SponsorAdminExercise sae
 INNER JOIN ExerciseVariantLang evl ON evl.ExerciseVariantLangID = sae.ExerciseVariantLangID
 INNER JOIN ExerciseVariant ev ON ev.ExerciseVariantID = evl.ExerciseVariantID
@@ -592,7 +593,8 @@ ORDER BY sae.Date DESC"
 					var sae = new SponsorAdminExercise {
 						Date = GetDateTime(rs, 0),
 						ExerciseVariantLanguage = evl,
-						Id = GetInt32(rs, 12)
+						Id = GetInt32(rs, 12),
+						Comments = GetString(rs, 13)
 					};
 					managerExercises.Add(sae);
 				}

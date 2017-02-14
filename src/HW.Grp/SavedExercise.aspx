@@ -98,7 +98,7 @@
             </div>
 
             <div class="contentlist">
-                <table class="hw-table">
+                <table class="hw-table small">
                     <tr>
                         <th>Edit/Delete</th>
                         <th>Date</th>
@@ -125,7 +125,6 @@
                                     evl.ExerciseWindowY
                                 );
                             %>
-                            <%--<a href="#"><img src="assets/img/application_edit.png" /></a>--%>
                             <a href="<%= editUrl %>"><img src="assets/img/application_edit.png" /></a>
                             <%
                             string deleteUrl = string.Format(
@@ -142,8 +141,8 @@
                         <td><%= el.ExerciseName %></td>
                         <td class="exercise-comments">
                             <span class="hw-icon hw-icon-exercise"></span>
-                            <span class="exercise-comment-label"></span>
-                            <textarea data-id="<%= l.Id %>" class="exercise-comment-text"></textarea>
+                            <span class="exercise-comment-label"><%= l.Comments %></span>
+                            <textarea data-id="<%= l.Id %>" class="exercise-comment-text"><%= l.Comments %></textarea>
                             <img alt="" class="spinner" src="assets/img/spiffygif_30x30.gif" />
                         </td>
                         <td><%= e.Area.AreaName %></td>

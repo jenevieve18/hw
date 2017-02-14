@@ -407,6 +407,7 @@ namespace HW.Core.Models
 		public ExerciseVariantLanguage ExerciseVariantLanguage { get; set; }
 		public bool HasExerciseVariantLanguage { get { return ExerciseVariantLanguage != null; } }
 		public IList<SponsorAdminExerciseDataInput> Inputs { get; set; }
+		public string Comments { get; set; }
 		
 		public SponsorAdminExercise()
 		{
