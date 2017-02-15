@@ -12,7 +12,7 @@ namespace HW.Grp
 {
 	public partial class SavedExercise : System.Web.UI.Page
 	{
-		SqlExerciseRepository exerciseRepository = new SqlExerciseRepository();
+		SqlExerciseRepository exerciseRepo = new SqlExerciseRepository();
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
 		SqlUserRepository userRepository = new SqlUserRepository();
 		SqlSponsorAdminRepository sponsorAdminRepo = new SqlSponsorAdminRepository();
@@ -102,7 +102,8 @@ namespace HW.Grp
 			SetLanguage(userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent));
 			
 			Show(
-				exerciseRepository.FindBySponsorAdminExerciseHistory(lid - 1, sponsorAdminID),
+//				exerciseRepo.FindBySponsorAdminExerciseHistory(lid - 1, sponsorAdminID),
+				sponsorAdminRepo.FindBySponsorAdminExerciseHistory(lid - 1, sponsorAdminID),
 				ConvertHelper.ToInt32(Request.QueryString["EAID"]),
 				ConvertHelper.ToInt32(Request.QueryString["ECID"]),
 				lid,
@@ -128,8 +129,8 @@ namespace HW.Grp
 
 			if (!IsPostBack)
 			{
-				areas = exerciseRepository.FindAreas(areaID, lid - 1);
-				categories = exerciseRepository.FindCategories(areaID, categoryID, lid - 1);
+				areas = exerciseRepo.FindAreas(areaID, lid - 1);
+				categories = exerciseRepo.FindCategories(areaID, categoryID, lid - 1);
 			}
 		}
 

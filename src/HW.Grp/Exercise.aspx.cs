@@ -18,6 +18,7 @@ namespace HW.Grp
 	{
 		SqlExerciseRepository exerciseRepository = new SqlExerciseRepository();
 		SqlSponsorRepository sponsorRepository = new SqlSponsorRepository();
+		SqlUserRepository userRepository = new SqlUserRepository();
 		
 		protected int exerciseAreaID;
 		protected string sortQueryString;
@@ -28,7 +29,6 @@ namespace HW.Grp
 		protected int sponsorID;
 		protected int sponsorAdminID;
 		protected int sort;
-		SqlUserRepository userRepository = new SqlUserRepository();
 		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
 		public string AdditionalSortQuery {

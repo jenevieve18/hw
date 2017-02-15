@@ -283,3 +283,4 @@ src/HW.Grp/pdftest.html
 
 node_modules
 .sass-cache
+src/HW.Grp/exercises/.vscode/settings.json

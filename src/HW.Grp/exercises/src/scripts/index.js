@@ -18,7 +18,8 @@ $(function() {
       id: exerciseId,
       sponsorAdmin: { id: $('#sponsorAdminID').val() || 0 },
       exerciseVariantLanguage: { id: $('#exerciseVariantLangID').val() || 0 },
-      inputs: html.getElementValues($('.sortable-inputs input[id^="text"]')),
+      // inputs: html.getElementValues($('.sortable-inputs input[name="input[]"]')),
+      inputs: html.getElementValues($('.input1')),
     };
     healthwatch.grp(exerciseRepo).saveManagerExercise(
       exercise,
@@ -50,8 +51,8 @@ $(function() {
   );
 
   function addInput(text) {
-    $('.inputs').append('<li><input type="text" id="input' + count + '" value="' + text + '" name="input[]"></li>');
-    $('.sortable-inputs').append('<li><span class="ui-icon ui-icon-arrow-4"></span><input type="text" id="input' + count + '" value="' + text + '" name="input[]"><span class="ui-icon ui-icon-trash pointer btn-delete" data-id=""></span></li>');
+    $('.inputs').append('<li><input type="text" class="input0" id="input' + count + '" value="' + text + '" name="input[]"></li>');
+    $('.sortable-inputs').append('<li><span class="ui-icon ui-icon-arrow-4"></span><input type="text" class="input1" id="input' + count + '" value="' + text + '" name="input[]"><span class="ui-icon ui-icon-trash pointer btn-delete" data-id=""></span></li>');
     $('.btn-delete').click(function() {
       $(this).parent().remove();
       var id = $(this).parent().find('input').attr('id');

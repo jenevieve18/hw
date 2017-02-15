@@ -42,11 +42,11 @@ module.exports = function(grunt) {
           cwd: 'src/scripts/',
           src: ['*.js'],
           dest: 'dist/assets/exercises/js'
-        // }, {
-        //   expand: true,
-        //   cwd: 'dist/assets/exercises/js/',
-        //   src: ['*.js'],
-        //   dest: GRP_PROJECT_DIR + 'assets/exercises/js'
+        }, {
+          expand: true,
+          cwd: 'dist/assets/exercises/js/',
+          src: ['*.js'],
+          dest: GRP_PROJECT_DIR + 'assets/exercises/js'
         }]
       },
       css: {
@@ -70,7 +70,7 @@ module.exports = function(grunt) {
         tasks: ['sass', 'copy']
       },
       js: {
-        files: ['src/scripts/**/*.js', 'dist/assets/exercises/js/**/*.js'],
+        files: ['src/scripts/**/*.js'],
         // tasks: ['copy', 'qunit']
         tasks: ['copy']
       },

@@ -23,6 +23,103 @@ WHERE UniqueKey = @UniqueKey");
 			);
 		}
 		
+		public IList<SponsorAdminExercise> FindBySponsorAdminExerciseHistory(int langID, int sponsorAdminID)
+		{
+			string query = string.Format(
+				@"
+SELECT sae.Date,
+	e.ExerciseImg,
+	el.Exercise,
+	el.ExerciseTeaser,
+	el.ExerciseTime,
+	evl.ExerciseFile,
+	eal.ExerciseArea,
+	ecl.ExerciseCategory,
+	etl.ExerciseType,
+	evl.ExerciseWindowX,
+	evl.ExerciseWindowY,
+	evl.ExerciseVariantLangID,
+	sae.SponsorAdminExerciseID,
+	sae.Comments,
+	ev.ExerciseVariantID
+FROM SponsorAdminExercise sae
+INNER JOIN ExerciseVariantLang evl ON evl.ExerciseVariantLangID = sae.ExerciseVariantLangID
+INNER JOIN ExerciseVariant ev ON ev.ExerciseVariantID = evl.ExerciseVariantID
+INNER JOIN ExerciseType et ON et.ExerciseTypeID = ev.ExerciseTypeID
+INNER JOIN ExerciseTypeLang etl ON etl.ExerciseTypeID = et.ExerciseTypeID AND etl.Lang = @Lang
+INNER JOIN Exercise e ON e.ExerciseID = ev.ExerciseID
+INNER JOIN ExerciseLang el ON el.ExerciseID = e.ExerciseID AND el.Lang = @Lang
+INNER JOIN ExerciseCategory ec ON ec.ExerciseCategoryID = e.ExerciseCategoryID
+INNER JOIN ExerciseCategoryLang ecl ON ecl.ExerciseCategoryID = ec.ExerciseCategoryID AND ecl.Lang = @Lang
+INNER JOIN ExerciseArea ea ON ea.ExerciseAreaID = e.ExerciseAreaID
+INNER JOIN ExerciseAreaLang eal ON eal.ExerciseAreaID = ea.ExerciseAreaID AND eal.Lang = @Lang
+WHERE sae.SponsorAdminID = @SponsorAdminID
+ORDER BY sae.Date DESC"
+			);
+			var managerExercises = new List<SponsorAdminExercise>();
+			using (SqlDataReader rs = ExecuteReader(
+				query,
+				"healthWatchSqlConnection",
+				new SqlParameter("@Lang", langID),
+				new SqlParameter("@SponsorAdminID", sponsorAdminID))) {
+				while (rs.Read()) {
+					var e = new Exercise {
+						Image = GetString(rs, 1),
+						Languages = new List<ExerciseLanguage>(
+							new ExerciseLanguage[] {
+								new ExerciseLanguage {
+									ExerciseName = GetString(rs, 2),
+									Teaser = GetString(rs, 3),
+									Time = GetString(rs, 4),
+								}
+							}
+						),
+						Area = new ExerciseArea {
+							Languages = new List<ExerciseAreaLanguage>(
+								new ExerciseAreaLanguage[] {
+									new ExerciseAreaLanguage { AreaName = GetString(rs, 6) }
+								}
+							)
+						},
+						Category = new ExerciseCategory {
+							Languages = new List<ExerciseCategoryLanguage>(
+								new ExerciseCategoryLanguage[] {
+									new ExerciseCategoryLanguage { CategoryName = GetString(rs, 7) }
+								}
+							)
+						}
+					};
+					var ev = new ExerciseVariant {
+						Id = GetInt32(rs, 14),
+						Exercise = e,
+						Type =  new ExerciseType {
+							Languages = new List<ExerciseTypeLanguage>(
+								new ExerciseTypeLanguage[] {
+									new ExerciseTypeLanguage { TypeName = GetString(rs, 8) }
+								}
+							)
+						}
+					};
+					var evl = new ExerciseVariantLanguage {
+						Variant = ev,
+						File = GetString(rs, 5),
+						ExerciseWindowX = GetInt32(rs, 9, 980),
+						ExerciseWindowY = GetInt32(rs, 10, 760),
+						Id = GetInt32(rs, 11)
+							
+					};
+					var sae = new SponsorAdminExercise {
+						Date = GetDateTime(rs, 0),
+						ExerciseVariantLanguage = evl,
+						Id = GetInt32(rs, 12),
+						Comments = GetString(rs, 13)
+					};
+					managerExercises.Add(sae);
+				}
+			}
+			return managerExercises;
+		}
+		
 		public void UpdateSponsorAdminExerciseComments(int sponsorAdminExerciseID, string comments)
 		{
 			string query = @"
@@ -381,7 +478,7 @@ SELECT SponsorAdminExerciseDataInputComponentID,
 	ValueText,
 	SortOrder,
 	ValueInt
-FROM dbo.SponsorAdminExerciseDataInputComponent
+FROM SponsorAdminExerciseDataInputComponent
 WHERE SponsorAdminExerciseDataInputID = @SponsorAdminExerciseDataInputID";
 			var components = new List<SponsorAdminExerciseDataInputComponent>();
 			using (var rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@SponsorAdminExerciseDataInputID", sponsorAdminExerciseDataInputID))) {
@@ -399,7 +496,7 @@ WHERE SponsorAdminExerciseDataInputID = @SponsorAdminExerciseDataInputID";
 			return components;
 		}
 		
-		IList<SponsorAdminExerciseDataInput> FindSponsorAdminExerciseDataInputs(int sponsorAdminExerciseID)
+		public IList<SponsorAdminExerciseDataInput> FindSponsorAdminExerciseDataInputs(int sponsorAdminExerciseID)
 		{
 			string query = @"
 SELECT SponsorAdminExerciseDataInputID,
@@ -408,7 +505,7 @@ SELECT SponsorAdminExerciseDataInputID,
 	SortOrder,
 	ValueInt,
 	[Type]
-FROM dbo.SponsorAdminExerciseDataInput
+FROM SponsorAdminExerciseDataInput
 WHERE SponsorAdminExerciseID = @SponsorAdminExerciseID";
 			var inputs = new List<SponsorAdminExerciseDataInput>();
 			using (var rs = ExecuteReader(query, "healthWatchSqlConnection", new SqlParameter("@SponsorAdminExerciseID", sponsorAdminExerciseID))) {

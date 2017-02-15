@@ -7,6 +7,7 @@ namespace HW.Core.Services
 	public class ExerciseService
 	{
 		SqlSponsorRepository sr = new SqlSponsorRepository();
+		SqlSponsorAdminRepository sar = new SqlSponsorAdminRepository();
 		SqlExerciseRepository er = new SqlExerciseRepository();
 		
 		public ExerciseService()
@@ -17,7 +18,7 @@ namespace HW.Core.Services
 		{
 			var a = sr.ReadSponsorAdminExercise(sponsorAdminExerciseID);
 			a.ExerciseVariantLanguage = er.ReadExerciseVariant(a.ExerciseVariantLanguage.Id);
-			a.Inputs = sr.FindSponsorAdminExerciseDataInputs(sponsorAdminExerciseID);
+			a.Inputs = sar.FindSponsorAdminExerciseDataInputs(sponsorAdminExerciseID);
 			return a;
 		}
 		

@@ -84,15 +84,14 @@
                     <%= R.Str(lid, "exercises.sorting", "Exercises - Sorting:")%>
                 </span>
                 <div class="forms">
-                    <%= HtmlHelper.AnchorSpan(R.Str(lid, "random", "Random"), sort == 0 ? "javascript:;" : "exercise.aspx?SORT=0" + AdditionalSortQuery + "#filter", sort == 0 ? "class='active'" : "")%>
-                    <%= HtmlHelper.AnchorSpan(R.Str(lid, "popularity", "Popularity"), sort == 1 ? "javascript:;" : "exercise.aspx?SORT=1" + AdditionalSortQuery + "#filter", sort == 1 ? "class='active'" : "")%>
-                    <%= HtmlHelper.AnchorSpan(R.Str(lid, "alphabetical", "Alphabethical"), sort == 2 ? "javascript:;" : "exercise.aspx?SORT=2" + AdditionalSortQuery + "#filter", sort == 2 ? "class='active'" : "")%>
+                    <%= HtmlHelper.AnchorSpan(R.Str(lid, "random", "Random"), sort == 0 ? "javascript:;" : "savedexercise.aspx?SORT=0" + AdditionalSortQuery + "#filter", sort == 0 ? "class='active'" : "")%>
+                    <%= HtmlHelper.AnchorSpan(R.Str(lid, "popularity", "Popularity"), sort == 1 ? "javascript:;" : "savedexercise.aspx?SORT=1" + AdditionalSortQuery + "#filter", sort == 1 ? "class='active'" : "")%>
+                    <%= HtmlHelper.AnchorSpan(R.Str(lid, "alphabetical", "Alphabethical"), sort == 2 ? "javascript:;" : "savedexercise.aspx?SORT=2" + AdditionalSortQuery + "#filter", sort == 2 ? "class='active'" : "")%>
                 </div>
             </div>
         </div>
         <div style="clear:both"></div>
-        <% if (exercises.Count > 0)
-           { %>
+        <% if (exercises.Count > 0) { %>
         <div>
             <div class="largelegend">
             </div>
@@ -114,26 +113,28 @@
                     <% var el = e.Languages[0]; %>
                     <tr>
                         <td>
-                            <% string editUrl = string.Format(
-                                    "JavaScript:void(window.open('SavedExerciseShow.aspx?SID={1}&AUID={2}&ExerciseVariantLangID={3}','EVLID{3}','scrollbars=yes,resizable=yes,width={4},height={5}'));",
+                            <%
+                                string editUrl = string.Format(
+                                    "javascript:void(window.open('SavedExerciseShow.aspx?SID={1}&AUID={2}&ExerciseVariantLangID={4}&SponsorAdminExerciseID={7}','EVLID{4}','scrollbars=yes,resizable=yes,width={5},height={6}'));",
                                     ConfigurationManager.AppSettings["healthWatchURL"],
                                     sponsorID,
                                     sponsorAdminID,
                                     v.Id,
                                     evl.Id,
                                     evl.ExerciseWindowX,
-                                    evl.ExerciseWindowY
+                                    evl.ExerciseWindowY,
+                                    l.Id
                                 );
                             %>
                             <a href="<%= editUrl %>"><img src="assets/img/application_edit.png" /></a>
                             <%
-                            string deleteUrl = string.Format(
-                                @"javascript:if(confirm(""{1}"")) {{
-									location.href=""savedexercise.aspx?Delete={0}"";
-								}}",
-                                l.Id,
-                                R.Str(lid, "exercise.delete", "Are you sure you want to delete this exercise?")
-                            );
+                                string deleteUrl = string.Format(
+                                    @"javascript:if(confirm(""{1}"")) {{
+									    location.href=""savedexercise.aspx?Delete={0}"";
+								    }}",
+                                    l.Id,
+                                    R.Str(lid, "exercise.delete", "Are you sure you want to delete this exercise?")
+                                );
                             %>
                             <%= HtmlHelper.AnchorImage(deleteUrl, "assets/img/cross.png")%>
                         </td>
