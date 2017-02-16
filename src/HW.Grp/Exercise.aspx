@@ -87,7 +87,7 @@
                 </span>
                 <div class="forms">
                     <%= HtmlHelper.AnchorSpan(R.Str(lid, "random", "Random"), sort == 0 ? "javascript:;" : "exercise.aspx?SORT=0" + AdditionalSortQuery + "#filter", sort == 0 ? "class='active'" : "")%>
-                    <%= HtmlHelper.AnchorSpan(R.Str(lid, "popularity", "Popularity"), sort == 1 ? "javascript:;" : "sexercise.aspx?SORT=1" + AdditionalSortQuery + "#filter", sort == 1 ? "class='active'" : "")%>
+                    <%= HtmlHelper.AnchorSpan(R.Str(lid, "popularity", "Popularity"), sort == 1 ? "javascript:;" : "exercise.aspx?SORT=1" + AdditionalSortQuery + "#filter", sort == 1 ? "class='active'" : "")%>
                     <%= HtmlHelper.AnchorSpan(R.Str(lid, "alphabetical", "Alphabethical"), sort == 2 ? "javascript:;" : "exercise.aspx?SORT=2" + AdditionalSortQuery + "#filter", sort == 2 ? "class='active'" : "")%>
                 </div>
             </div>
