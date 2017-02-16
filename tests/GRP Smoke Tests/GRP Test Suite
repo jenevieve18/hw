@@ -8,7 +8,25 @@
 <body>
 <table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
 <tr><td><b>Test Suite</b></td></tr>
-<tr><td><a href="Test Case 6.html">Test Case 6</a></td></tr>
+<tr><td><a href="Organization - Admin.html">Organization - Admin</a></td></tr>
+<tr><td><a href="Organization - Super Admin.html">Organization - Super Admin</a></td></tr>
+<tr><td><a href="Organization - Internal Admin.html">Organization - Internal Admin</a></td></tr>
+<tr><td><a href="Statistics - Admin.html">Statistics - Admin</a></td></tr>
+<tr><td><a href="Statistics - Super Admin.html">Statistics - Super Admin</a></td></tr>
+<tr><td><a href="Statistitcs - Internal Admin.html">Statistitcs - Internal Admin</a></td></tr>
+<tr><td><a href="Messages - Admin.html">Messages - Admin</a></td></tr>
+<tr><td><a href="Messages - Super Admin.html">Messages - Super Admin</a></td></tr>
+<tr><td><a href="Messages - Internal Admin.html">Messages - Internal Admin</a></td></tr>
+<tr><td><a href="Exercise - Admin.html">Exercise - Admin</a></td></tr>
+<tr><td><a href="Exercise - Super Admin.html">Exercise - Super Admin</a></td></tr>
+<tr><td><a href="Exercise - Internal Admin.html">Exercise - Internal Admin</a></td></tr>
+<tr><td><a href="Reminders - Admin.html">Reminders - Admin</a></td></tr>
+<tr><td><a href="Reminders - Super Admin.html">Reminders - Super Admin</a></td></tr>
+<tr><td><a href="Reminders - Internal Admin.html">Reminders - Internal Admin</a></td></tr>
+<tr><td><a href="Settings - Admin.html">Settings - Admin</a></td></tr>
+<tr><td><a href="Settings - Super Admin.html">Settings - Super Admin</a></td></tr>
+<tr><td><a href="Settings - Internal Admin.html">Settings - Internal Admin</a></td></tr>
+<tr><td><a href="Test Case - Sponsor Default Plot Type.html">Test Case - Sponsor Default Plot Type</a></td></tr>
 </tbody></table>
 </body>
 </html>
