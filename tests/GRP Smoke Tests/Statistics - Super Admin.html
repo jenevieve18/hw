@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="https://dev-grp.healthwatch.se/" />
+<title>Test Case 5</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Test Case 5</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/default.aspx?SKEY=36AB0EA0127</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Statistics</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_Execute</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ContentPlaceHolder1_GroupBy</td>
+	<td>label=One week</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=option[value=&quot;1&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_Execute</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ContentPlaceHolder1_GroupBy</td>
+	<td>label=One month</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=option[value=&quot;3&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_Execute</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=xls</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=xls verbose</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>css=select.plot-types.small</td>
+	<td>label=Line (± 1.96 SD)</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=select.plot-types.small &gt; option[value=&quot;3&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>css=select.plot-types.small</td>
+	<td>label=Line (± SD)</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>css=select.plot-types.small</td>
+	<td>label=Line (± 1.96 SD)</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=select.plot-types.small &gt; option[value=&quot;3&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>css=select.plot-types.small</td>
+	<td>label=Boxplot (Min/Max)</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=select.plot-types.small &gt; option[value=&quot;4&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>css=div.report-part-content &gt; div.action &gt; select.plot-types.small</td>
+	<td>label=Line (± 1.96 SD)</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//div[@id='admin']/div[2]/div[2]/div[5]/div[4]/div/select</td>
+	<td>label=Line (± 1.96 SD)</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//a[contains(text(),'pptx')])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>css=select.plot-types.small</td>
+	<td>label=Boxplot (Tukey)</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//div[@id='admin']/div[2]/div[2]/div[7]/div[4]/div/select</td>
+	<td>label=Line (± 1.96 SD)</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//a[contains(text(),'xls')])[7]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>css=div.report-part-content &gt; div.action &gt; select.plot-types.small</td>
+	<td>label=Line</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=a.export-xls-url</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>css=select.plot-types.small</td>
+	<td>label=Line</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=xls verbose</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ContentPlaceHolder1_Grouping</td>
+	<td>label=Users on unit</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#ContentPlaceHolder1_Grouping &gt; option[value=&quot;1&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ContentPlaceHolder1_DID3641</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ContentPlaceHolder1_DID3642</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ContentPlaceHolder1_DID3643</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_Execute</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=xls verbose</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Log out</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

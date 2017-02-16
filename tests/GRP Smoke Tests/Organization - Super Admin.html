@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" "https://dev-grp.healthwatch.se/" />
+<title>Test Case 3a</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Test Case 3</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/default.aspx?SKEY=36AB0EA0127</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=a &gt; img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ContentPlaceHolder1_Department</td>
+	<td>Very very long department name this is, says Yoda</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ContentPlaceHolder1_DepartmentShort</td>
+	<td>L</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ContentPlaceHolder1_ParentDepartmentID</td>
+	<td>label=Medium Length Department</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_SaveUnit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//span[@id='ContentPlaceHolder1_OrgTree']/table/tbody/tr[4]/td[2]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ContentPlaceHolder1_Department</td>
+	<td>Short Department</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ContentPlaceHolder1_DepartmentShort</td>
+	<td>S</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ContentPlaceHolder1_ParentDepartmentID</td>
+	<td>label=&lt; top level &gt;</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_SaveUnit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Add user</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ContentPlaceHolder1_Email</td>
+	<td>user@codewemust.com</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ContentPlaceHolder1_DepartmentID</td>
+	<td>label=Short Department</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_SaveUser</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Add user</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ContentPlaceHolder1_Email</td>
+	<td>user@codewemust.com</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_SaveUser</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>id=ContentPlaceHolder1_AddUserError</td>
+	<td>A user with this email address already exist!</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_CancelUser</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//span[@id='ContentPlaceHolder1_OrgTree']/table/tbody/tr[3]/td[2]/a[2]/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Send</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Resend</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//span[@id='ContentPlaceHolder1_OrgTree']/table/tbody/tr[4]/td[3]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ContentPlaceHolder1_Hidden23</td>
+	<td>label=Nej</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//span[@id='ContentPlaceHolder1_OrgTree']/table/tbody/tr[4]/td[3]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ContentPlaceHolder1_Email</td>
+	<td>user@codewemust.comx</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_SaveUser</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//span[@id='ContentPlaceHolder1_OrgTree']/table/tbody/tr[4]/td[3]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ContentPlaceHolder1_DepartmentID</td>
+	<td>label=Medium Length Department</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ContentPlaceHolder1_StoppedReason</td>
+	<td>label=Stopped, work related</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ContentPlaceHolder1_Stopped</td>
+	<td>2016-10-12</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_SaveUser</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//span[@id='ContentPlaceHolder1_OrgTree']/table/tbody/tr[4]/td[2]/a[2]/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//span[@id='ContentPlaceHolder1_OrgTree']/table/tbody/tr[5]/td[3]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ContentPlaceHolder1_Email</td>
+	<td>user@codewemust.com</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ContentPlaceHolder1_UserUpdateFrom_1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_SaveUser</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Send</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//span[@id='ContentPlaceHolder1_OrgTree']/table/tbody/tr[5]/td[3]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ContentPlaceHolder1_UserUpdateFrom_2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_SaveUser</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//span[@id='ContentPlaceHolder1_OrgTree']/table/tbody/tr[5]/td[3]/a[2]/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_SaveDeleteUser</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Import users</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ContentPlaceHolder1_UsersFilename</td>
+	<td>D:\ian\projects\HW\tests\GRP Smoke Tests\uploads\testImport.txt</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ContentPlaceHolder1_ImportUsersParentDepartmentID</td>
+	<td>label=Medium Length Department</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_SaveImportUser</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//span[@id='ContentPlaceHolder1_OrgTree']/table/tbody/tr[4]/td[2]/a[2]/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//span[@id='ContentPlaceHolder1_OrgTree']/table/tbody/tr[5]/td[3]/a[2]/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_SaveDeleteUser</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//span[@id='ContentPlaceHolder1_OrgTree']/table/tbody/tr[3]/td[2]/a[2]/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//span[@id='ContentPlaceHolder1_OrgTree']/table/tbody/tr[4]/td[3]/a[2]/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_SaveDeleteUser</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Add unit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ContentPlaceHolder1_Department</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ContentPlaceHolder1_DepartmentShort</td>
+	<td>D</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ContentPlaceHolder1_ParentDepartmentID</td>
+	<td>label=Bottom Department</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_SaveUnit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//span[@id='ContentPlaceHolder1_OrgTree']/table/tbody/tr[6]/td[2]/a[2]/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_SaveDeleteDepartment</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Import units</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ContentPlaceHolder1_UnitsFilename</td>
+	<td>D:\ian\projects\HW\tests\GRP Smoke Tests\uploads\testUnitImport.txt</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ContentPlaceHolder1_ImportUnitsParentDepartmentID</td>
+	<td>label=Medium Length Department</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_SaveImportUnit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//span[@id='ContentPlaceHolder1_OrgTree']/table/tbody/tr[7]/td[2]/a[2]/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_SaveDeleteDepartment</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//span[@id='ContentPlaceHolder1_OrgTree']/table/tbody/tr[5]/td[2]/a[2]/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_SaveDeleteDepartment</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Managers</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Add manager</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=DepartmentID</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@name='DepartmentID'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ContentPlaceHolder1_ReadOnly</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ContentPlaceHolder1_Name</td>
+	<td>Test</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ContentPlaceHolder1_LastName</td>
+	<td>Test</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ContentPlaceHolder1_Email</td>
+	<td>manager1@codewemust.com</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_Save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=li</td>
+	<td>Please choose a unique email address!</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ContentPlaceHolder1_Email</td>
+	<td>manager2@codewemust.com</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_Save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_Cancel</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Test</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ContentPlaceHolder1_ManagerFunctionID_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ContentPlaceHolder1_ManagerFunctionID_1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ContentPlaceHolder1_ManagerFunctionID_2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ContentPlaceHolder1_ManagerFunctionID_3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ContentPlaceHolder1_ManagerFunctionID_4</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ContentPlaceHolder1_ManagerFunctionID_5</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_Save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@name='DepartmentID'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_Save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_Cancel</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Test</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ContentPlaceHolder1_Cancel</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='admin']/div[2]/div[2]/table/tbody/tr[3]/td[5]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete this manager?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Log out</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>
