@@ -1,7 +1,2 @@
 # HealthWatch
-
-## Table of Contents
-* [Overview](Overview)
-* [Coding Guidelines](codingguidelines)
-
-## Overview
+All documentations are saved in HealthWatch's Google Drive shared directory. Please contact administrator for access.
