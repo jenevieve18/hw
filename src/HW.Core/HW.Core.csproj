@@ -117,6 +117,7 @@
   <ItemGroup>
     <Compile Include="AppContext.cs" />
     <Compile Include="FromHW\Db.cs" />
+    <Compile Include="Helpers\BaseSerializable.cs" />
     <Compile Include="Helpers\DbHelper.cs" />
     <Compile Include="Repositories\Sql\SqlSponsorProjectRoundUnitRepository.cs" />
     <Compile Include="Util\Exporters\Class1.cs" />
