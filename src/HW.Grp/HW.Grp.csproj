@@ -98,6 +98,8 @@
   <ItemGroup>
     <Content Include="AC_ActiveX.js" />
     <Content Include="AC_RunActiveContent.js" />
+    <Content Include="App_Themes\Emua\assets\css\styles.css" />
+    <Content Include="App_Themes\Emua\assets\css\styles2.css" />
     <Content Include="assets\bootstrap-datepicker\css\bootstrap-combined.min.css" />
     <Content Include="assets\bootstrap-datepicker\css\bootstrap-datepicker.css" />
     <Content Include="assets\bootstrap-datepicker\css\bootstrap-datepicker.min.css" />
@@ -821,13 +823,6 @@
     <Compile Include="Grp.Master.designer.cs">
       <DependentUpon>Grp.Master</DependentUpon>
     </Compile>
-    <Compile Include="Layout.Master.cs">
-      <DependentUpon>Layout.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Layout.Master.designer.cs">
-      <DependentUpon>Layout.Master</DependentUpon>
-    </Compile>
     <Compile Include="Managers.aspx.cs">
       <DependentUpon>Managers.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -977,7 +972,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Themes\Aqua\assets\" />
-    <Folder Include="App_Themes\Emua\assets\css\" />
     <Folder Include="App_Themes\Emua\assets\img\" />
     <Folder Include="App_Themes\Emua\assets\js\" />
     <Folder Include="assets\exercises\js\" />
@@ -991,7 +985,6 @@
     <Content Include="App_Themes\Aqua\Controls.skin" />
     <None Include="~etc\assets\css\main.css" />
     <None Include="~etc\assets\~etc\plasm\javascript\demo1.js" />
-    <Content Include="Layout.Master" />
     <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup>
