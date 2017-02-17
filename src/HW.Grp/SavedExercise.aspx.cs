@@ -102,7 +102,6 @@ namespace HW.Grp
 			SetLanguage(userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent));
 			
 			Show(
-//				exerciseRepo.FindBySponsorAdminExerciseHistory(lid - 1, sponsorAdminID),
 				sponsorAdminRepo.FindBySponsorAdminExerciseHistory(lid - 1, sponsorAdminID),
 				ConvertHelper.ToInt32(Request.QueryString["EAID"]),
 				ConvertHelper.ToInt32(Request.QueryString["ECID"]),
