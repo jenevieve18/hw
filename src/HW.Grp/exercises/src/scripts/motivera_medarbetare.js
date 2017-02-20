@@ -56,14 +56,11 @@ $(function() {
         $('#btn-correct1').click();
         $('#btn-correct2').click();
         $.each(exercise.inputs, function(i, input) {
-          if (input.type == 2) {
-            $('[id="input' + i + '"]').val(input.valueText);
-          } else if (input.type == 3 && input.valueInt == 1) {
-            $('[id="input' + i + '"]').attr('checked', true);
-          } else if (input.type == 1 && input.valueInt == 1) {
+          if ((input.type == 3 || input.type == 1) && input.valueInt == 1) {
             $('[id="input' + i + '"]').attr('checked', true);
           }
         });
+        $('input[name="input0[]"]').change();
       }
     },
     function(message) {}
