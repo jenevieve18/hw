@@ -27,9 +27,8 @@ $(function() {
       exerciseVariantLanguage: { id: $('#exerciseVariantLangID').val() || 0 },
       id: exerciseId
     };
-    console.log(exercise);
     healthwatch.grp(exerciseRepo).saveManagerExercise(
-      exercise, 
+      exercise,
       function(message) {
         $('#message').text(message).fadeIn(1000).fadeOut(1000);
       },
@@ -43,10 +42,10 @@ $(function() {
     exerciseId,
     function(exercise) {
       if (exercise !== null) {
-				// $('#btn-correct').click();
+				$('#btn-correct').click();
         $.each(exercise.inputs, function(i, input) {
           $("input[name='input" + i + "']").each(function() {
-            if ($(this).val() === input.valueInt) {
+            if ($(this).val() == input.valueInt) {
               $(this).attr('checked', 'checked');
             }
           });
