@@ -88,7 +88,8 @@ $(function() {
             .remove()
             .end()
             .prepend('<span class="ui-icon ui-icon-trash"></span>')
-            .prependTo($ranking)
+            // .prependTo($ranking)
+            .appendTo($ranking)
             .fadeIn();
         });
       }

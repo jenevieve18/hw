@@ -1,6 +1,7 @@
 extends includes/layout
 block script
   script(src='assets/exercises/js/fira_lista.js')
+block content
   script.
     var newExercise = {
       inputs: [
@@ -17,7 +18,6 @@ block script
         }
       ]
     };
-block content
   h2 Tidsåtgång: 5 min
   #message.alert.alert-success.hidden
   p
