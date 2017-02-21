@@ -100,19 +100,27 @@ namespace HW.SendReminders
 			gcmBroker.Start();
 
 
-			foreach (var registrationId in registrationIds) {
-				gcmBroker.QueueNotification(
-					new GcmNotification {
-						RegistrationIds = new List<string> {
-							registrationId
-						},
-//						Notification = JObject.Parse("{ 'sound': 'default', 'badge': '1', 'title': 'HealthWatch', 'body': '" + body + "', 'click_action': 'se.healthwatch.HealthWatch.NotificationClick'}"),
-						Notification = JObject.Parse("{ 'sound': 'default', 'badge': '1', 'title': '" + title + "', 'body': '" + body + "', 'click_action': 'se.healthwatch.HealthWatch.NotificationClick' }"),
-						Priority = GcmNotificationPriority.High,
-						Data = JObject.Parse("{ 'userKey': '" + keyAndUserID + "' }")
-					}
-				);
-			}
+//			foreach (var registrationId in registrationIds) {
+//				gcmBroker.QueueNotification(
+//					new GcmNotification {
+//						RegistrationIds = new List<string> {
+//							registrationId
+//						},
+//						Notification = JObject.Parse("{ 'sound': 'default', 'badge': '1', 'title': '" + title + "', 'body': '" + body + "', 'click_action': 'se.healthwatch.HealthWatch.NotificationClick' }"),
+//						Priority = GcmNotificationPriority.High,
+//						Data = JObject.Parse("{ 'userKey': '" + keyAndUserID + "' }")
+//					}
+//				);
+//			}
+			
+			gcmBroker.QueueNotification(
+				new GcmNotification {
+					RegistrationIds = registrationIds,
+					Notification = JObject.Parse("{ 'sound': 'default', 'badge': '1', 'title': '" + title + "', 'body': '" + body + "', 'click_action': 'se.healthwatch.HealthWatch.NotificationClick' }"),
+					Priority = GcmNotificationPriority.High,
+					Data = JObject.Parse("{ 'userKey': '" + keyAndUserID + "' }")
+				}
+			);
 
 			gcmBroker.Stop();
 		}
