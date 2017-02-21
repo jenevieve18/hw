@@ -45,19 +45,19 @@ namespace HW.SendReminders
 								var gcmNotification = notificationException.Notification;
 								var description = notificationException.Description;
 
-								Console.WriteLine("GCM Notification Failed: ID={0}, Desc={1}", gcmNotification.MessageId, description);
+								Console.WriteLine("GcmNotificationException: ID={0}, Desc={1}", gcmNotification.MessageId, description);
 							} else if (ex is GcmMulticastResultException) {
 								var multicastException = (GcmMulticastResultException)ex;
 
 								foreach (var succeededNotification in multicastException.Succeeded) {
-									Console.WriteLine("GCM Notification Failed: ID={0}", succeededNotification.MessageId);
+									Console.WriteLine("GcmMulticastResultException: ID={0}", succeededNotification.MessageId);
 								}
 
 								foreach (var failedKvp in multicastException.Failed) {
 									var n = failedKvp.Key;
 									var en = failedKvp.Value;
 
-									Console.WriteLine("GCM Notification Failed: ID={0}, Desc={1}", n.MessageId, en.Data);
+									Console.WriteLine("GcmMulticastResultException: ID={0}, Desc={1}", n.MessageId, en.Data);
 								}
 
 							} else if (ex is DeviceSubscriptionExpiredException) {
