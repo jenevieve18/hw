@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Theme="" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="HW.Grp.Default" %>
+﻿<%@ Page Language="C#" EnableTheming="true" Theme="Aqua" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="HW.Grp.Default" %>
 
 <%@ Import Namespace="HW.Core.Helpers" %>
 <%@ Import Namespace="HW.Grp" %>
@@ -16,18 +16,20 @@
 
     <%--<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-responsive.css" />--%>
-
-    <link rel="stylesheet" href="assets/bootstrap-datepicker/css/bootstrap-combined.min.css" />
     
     <%--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css" />--%>
 
+    <link rel="stylesheet" href="assets/bootstrap-datepicker/css/bootstrap-combined.min.css" />
+
     <link rel="stylesheet" href="assets/css/default.css" />
+
 </head>
 <body>
     <form id="form1" runat="server" class="form-signin">
 
-        <img src="assets/img/hwlogo.png" alt="HealthWatch group administrator" />
+        <%--<img src="assets/img/hwlogo.png" alt="HealthWatch group administrator" />--%>
+        <asp:Image ID="Image1" runat="server" ImageUrl="assets/img/hwlogo.png" />
         <h2>
             <%= R.Str(lid, "login.header", "HealthWatch.se<br>Group administration") %>
         </h2>

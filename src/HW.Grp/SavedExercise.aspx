@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Grp.Master" AutoEventWireup="true" CodeBehind="SavedExercise.aspx.cs" Inherits="HW.Grp.SavedExercise" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Layout.Master" AutoEventWireup="true" CodeBehind="SavedExercise.aspx.cs" Inherits="HW.Grp.SavedExercise" %>
 
 <%@ Import Namespace="HW.Core.Models" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
@@ -152,7 +152,6 @@
                     <% } %>
                 </table>
             </div>
-            <!-- end .contentlist -->
 
             <!--<div class="disclaimer">
 				<div class="paginationgroup">Sida 1 av 13
@@ -161,7 +160,6 @@
 			</div>-->
 
         </div>
-        <!-- end .results -->
         <% } %>
         <%--<div class="bottom"></div>--%>
     </div>
