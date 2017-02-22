@@ -1,0 +1,13 @@
+extends includes/layout
+block content
+
+  include includes/navbar.jade
+  mixin navbar('org.html', 'Administer units and users')
+
+  .contentgroup.grid_16
+    #contextbar
+      include includes/orgnav.jade
+      .actionPane
+    div(style='clear: both')
+      span#ContentPlaceHolder1_OrgTree
+        include includes/org.jade

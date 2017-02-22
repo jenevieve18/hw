@@ -1,0 +1,153 @@
+extends includes/layout
+block content
+  
+  include includes/navbar.jade
+  mixin navbar('exercise.html', 'Manage exercises')
+  
+  .contentgroup.grid_16.exercises
+    include includes/exerciseoptions.jade
+    .statschosergroup
+      h1.header(style="line-height: 1.3em;font-weight: normal;")
+        | Saved-
+        br
+        | exercises
+      a(name='filter')
+      .statschoser
+        //- .filter.misc
+        //-   .title
+        //-     | Choose area
+        //-   dl.dropdown
+        //-     dt(style="font-weight:normal")
+        //-       a(href='javascript:;')
+        //-         span Show all
+        //-     dd
+        //-       ul
+        //-         li.last(id='EAID=7')
+        //-           a(href='#') Work joy and efficiency
+        //- .filter.misc
+        //-   .title
+        //-     | Choose a Category
+        //-   dl.dropdown
+        //-     dt(style="font-weight:normal")
+        //-       a(href='javascript:;')
+        //-         span Show all
+        //-     dd
+        //-       ul
+        //-         li#ECID2
+        //-           a(href='#') Celebrate success
+        //-         li#ECID4.last
+        //-           a(href='#') Confidence-building leadership
+    //- div
+    //-   .currentform
+    //-     span.lastform
+    //-       | Exercises - Sorting:
+    //-     .forms
+    //-       a.active(href='javascript:;')
+    //-         span Random
+    //-       a(href='#')
+    //-         span Popularity
+    //-       a(href='#')
+    //-         span Alphabetical
+    //- .results
+    br
+    div
+      .largelegend
+      .contentlist
+        table.table.table
+          tr
+            th Edit/Delete
+            th Date
+            th Exercise
+            th Comment
+            th Area
+            th Category
+          each i in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+            tr
+              td
+                a(href="#")
+                  img(src="assets/img/application_edit.png")
+
+                a(href="#")
+                  img(src="assets/img/cross.png")
+              td 2016-01-01
+              td Roda traden
+              td
+                a(href="#")
+                | Some comment here
+              td Work joy and efficiency
+              td Confidence-building leadership
+        //- each i in [1,2,3,4,5,6,7,8,9,10]
+        //-   .item
+        //-     .overview
+        //-     .detail
+        //-       .image
+        //-         img(src='', width='121', height='100')
+        //-       .time
+        //-         | 5 min
+        //-         span.time-end
+        //-       .descriptions Work joy and efficiency - Target &amp; Visions
+        //-       h2(style="line-height:0px") The Elevator exercise
+        //-       p(style="margin-bottom:0px") Describe goals and mission in 10 seconds
+        //-       div
+        //-         //- a.sidearrow(href="JavaScript:void(window.open('ExerciseShow.aspx?SID=83&AUID=791&ExerciseVariantLangID=122','EVLID122','scrollbars=yes,resizable=yes,width=960,height=760'));") Text 
+        //-         a.sidearrow(href="javascript:void(window.open('exerciseshow.html','EVLID122','scrollbars=yes,resizable=yes,width=960,height=760'));") Text 
+        //-       .bottom  
+        //- .item
+        //-   .overview
+        //-   .detail
+        //-     .image
+        //-       //- img(src='http://localhost:7981/exercise.aspx?Rnd=1915070877', width='121', height='100')
+        //-       img(src='', width='121', height='100')
+        //-     .time
+        //-       | 5 min
+        //-       span.time-end
+        //-     .descriptions Work joy and efficiency - Celebrate success
+        //-     h2 Celebrating success effectively
+        //-     p
+        //-     div
+        //-       a.sidearrow(href="JavaScript:void(window.open('ExerciseShow.aspx?SID=83&AUID=791&ExerciseVariantLangID=122','EVLID122','scrollbars=yes,resizable=yes,width=960,height=760'));") Text 
+        //-     .bottom  
+        //- .item
+        //-   .overview
+        //-   .detail
+        //-     .image
+        //-       img(src='http://localhost:7981/exercise.aspx?Rnd=1915070877', width='121', height='100')
+        //-     .time
+        //-       | 5 min
+        //-       span.time-end
+        //-     .descriptions Work joy and efficiency - Confidence-building leadership
+        //-     h2 Acting stand tall
+        //-     p a planning
+        //-     div
+        //-       a.sidearrow(href="JavaScript:void(window.open('ExerciseShow.aspx?SID=83&AUID=791&ExerciseVariantLangID=96','EVLID96','scrollbars=yes,resizable=yes,width=960,height=760'));") Text 
+        //-     .bottom  
+        //- .item
+        //-   .overview
+        //-   .detail
+        //-     .image
+        //-       img(src='http://localhost:7981/exercise.aspx?Rnd=1915070877', width='121', height='100')
+        //-     .time
+        //-       | 5-10 min
+        //-       span.time-end
+        //-     .descriptions Work joy and efficiency - Celebrate success
+        //-     h2 Celebrating success
+        //-     p
+        //-       | All you need to know to acknowledge your employees in a way that increases motivation
+        //-     div
+        //-       a.sidearrow(href="JavaScript:void(window.open('ExerciseShow.aspx?SID=83&AUID=791&ExerciseVariantLangID=72','EVLID72','scrollbars=yes,resizable=yes,width=960,height=760'));") Text 
+        //-     .bottom  
+        //- .item
+        //-   .overview
+        //-   .detail
+        //-     .image
+        //-       img(src='http://localhost:7981/exercise.aspx?Rnd=1915070877', width='121', height='100')
+        //-     .time
+        //-       | 10 sec - 5 min
+        //-       span.time-end
+        //-     .descriptions Work joy and efficiency
+        //-     h2 The Elevator exercise
+        //-     p Describe goals and mission in 10 seconds
+        //-     div
+        //-       a.sidearrow(href="JavaScript:void(window.open('ExerciseShow.aspx?SID=83&AUID=791&ExerciseVariantLangID=80','EVLID80','scrollbars=yes,resizable=yes,width=960,height=760'));") Text 
+        //-     .bottom  
+    //- .bottom

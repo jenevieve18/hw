@@ -1,0 +1,51 @@
+mixin navbar(selectedUrl, description)
+  .headergroup.grid_16
+    .grid_3.alpha
+      //- img(src='assets/img/hwlogo.png', width='186', height='126', alt='HealthWatch group administrator')
+      img(src='assets/img/hwlogo.png', alt='HealthWatch group administrator')
+    .grid_8.omega.p2
+      | HealthWatch.se - 
+      br
+      span(style='font-size:14px;')
+        | Group administration - Sponsor83
+        small 
+          //- a.i18n(href='#') In English
+          //- | &nbsp;
+          a.i18n(href='#') På svenska
+          | &nbsp;
+          a.i18n(href='#') Auf Deutsch
+      br
+      img(src='assets/img/1.gif', alt='')
+    .logincontainer.grid_5.alpha.omega
+      .gears
+        span sponsor83admin514
+        span(style='color:white;') 791
+        br
+        a.active(href='settings.html') Settings
+        | &nbsp;
+        a.active(href='index.html') Log out
+    #submenu.grid_16.alpha
+      //- a.active(href='org.html', title='Administer units and users', style='background-position: center -80px;') Organization
+      //- a(href='org.html', title='Administer units and users') Organization
+      //- a(href='stats.html', title='View results and compare groups') Statistics
+      //- a(href='messages.html', title='Administer messages, invitations and reminders') Messages
+      //- a(href='managers.html', title='Administer unit managers') Managers
+      //- a(href='exercise.html', title='Manage exercises') Exercises
+      //- a(href='myexercise.html', title='Saved Exercise') Saved Exercise
+      //- .description Statistics
+      -
+        var navs = [
+          { url: 'org.html', title: 'Administer units and users', name: 'Organization', description: 'Organization' }, 
+          { url: 'stats.html', title: 'View results and compare groups', name: 'Statistics', description: 'Statistics' }, 
+          { url: 'messages.html', title: 'Administer messages, invitations and reminders', name: 'Messages', description: '' }, 
+          { url: 'managers.html', title: 'Administer unit managers', name: 'Managers', description: '' }, 
+          { url: 'exercise.html', title: 'Manage exercises', name: 'Exercises', description: '' }, 
+          //- { url: 'myexercise.html', title: 'Saved Exercises', name: 'Saved Exercise', description: '' }
+        ]
+      each n, i in navs
+        - if (selectedUrl == n.url) {
+          a.active(href="#{n.url}", title="#{n.title}") #{n.name}
+        - } else {
+          a(href="#{n.url}", title="#{n.title}") #{n.name}
+        - }
+      .description #{description}

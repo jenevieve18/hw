@@ -1,0 +1,552 @@
+doctype html
+html
+  include includes/head.jade
+  body
+    form
+      #admin.container_16
+        include includes/navbar.jade
+        mixin navbar('managers.html', 'Administer unit managers')
+        .contentgroup.grid_16
+          #ContentPlaceHolder1_Panel1(language='javascript', onkeypress="javascript:return WebForm_FireDefaultButton(event, 'ContentPlaceHolder1_Save')")
+            #contextbar
+              .settingsPane
+                input#ContentPlaceHolder1_Cancel.btn(type='submit', name='_ctl0:ContentPlaceHolder1:Cancel', value='Cancel')
+                input#ContentPlaceHolder1_Save.btn(type='submit', name='_ctl0:ContentPlaceHolder1:Save', value='Save')
+                input#ContentPlaceHolder1_buttonSend.btn(type='submit', name='_ctl0:ContentPlaceHolder1:buttonSend', value='Send credentials')
+            .smallContent
+              br
+              table(border='0', cellpadding='0', cellspacing='0')
+                tbody
+                  tr
+                    td(valign='top')
+                      #ContentPlaceHolder1_panelUserName
+                      table(border='0', cellpadding='0', cellspacing='0')
+                        tbody
+                          tr
+                            td(colspan='2')
+                              b Credentials
+                          tr
+                            td Name 
+                            td
+                              input#ContentPlaceHolder1_Name(name='_ctl0:ContentPlaceHolder1:Name', type='text', value='Dan', style='width:200px;')
+                          tr
+                            td Last Name 
+                            td
+                              input#ContentPlaceHolder1_LastName(name='_ctl0:ContentPlaceHolder1:LastName', type='text', value='Hasson', style='width:200px;')
+                          tr
+                            td Username 
+                            td
+                              input#ContentPlaceHolder1_Usr(name='_ctl0:ContentPlaceHolder1:Usr', type='text', value='dan@healthwatch.se', style='width:200px;')
+                          tr
+                            td Email 
+                            td
+                              input#ContentPlaceHolder1_Email(name='_ctl0:ContentPlaceHolder1:Email', type='text', value='dan@healthwatch.se', style='width:200px;')
+                          tr
+                            td Organization read only 
+                            td
+                              input#ContentPlaceHolder1_ReadOnly(type='checkbox', name='_ctl0:ContentPlaceHolder1:ReadOnly', checked='checked')
+                          tr
+                            td Access to permanently delete users
+                            td
+                              input#ContentPlaceHolder1_PermanentlyDeleteUsers(type='checkbox', name='_ctl0:ContentPlaceHolder1:PermanentlyDeleteUsers', checked='checked')
+                    td     
+                    td(valign='top')
+                      table(border='0', cellpadding='0', cellspacing='0')
+                        tbody
+                          tr
+                            td
+                              b Roles
+                          tr
+                            td
+                          tr
+                            td
+                              table#ContentPlaceHolder1_ManagerFunctionID(cellspacing='0', cellpadding='0', style='border-collapse:collapse;')
+                                tbody
+                                  tr
+                                    td
+                                      label.checkbox(for='ContentPlaceHolder1_ManagerFunctionID_0') Organization (Administer units and users)
+                                        input#ContentPlaceHolder1_ManagerFunctionID_0(type='checkbox', name='_ctl0:ContentPlaceHolder1:ManagerFunctionID:0', checked='checked', value='1')
+                                  tr
+                                    td
+                                      label.checkbox(for='ContentPlaceHolder1_ManagerFunctionID_1') Statistics (View results and compare groups)
+                                        input#ContentPlaceHolder1_ManagerFunctionID_1(type='checkbox', name='_ctl0:ContentPlaceHolder1:ManagerFunctionID:1', checked='checked', value='2')
+                                  tr
+                                    td
+                                      label.checkbox(for='ContentPlaceHolder1_ManagerFunctionID_2') Messages (Administer messages, invitations and reminders)
+                                        input#ContentPlaceHolder1_ManagerFunctionID_2(type='checkbox', name='_ctl0:ContentPlaceHolder1:ManagerFunctionID:2', value='3')
+                                  tr
+                                    td
+                                      label.checkbox(for='ContentPlaceHolder1_ManagerFunctionID_3') Managers (Administer unit managers)
+                                        input#ContentPlaceHolder1_ManagerFunctionID_3(type='checkbox', name='_ctl0:ContentPlaceHolder1:ManagerFunctionID:3', value='4')
+                                  tr
+                                    td
+                                      label.checkbox(for='ContentPlaceHolder1_ManagerFunctionID_4') Exercises (Manage exercises)
+                                        input#ContentPlaceHolder1_ManagerFunctionID_4(type='checkbox', name='_ctl0:ContentPlaceHolder1:ManagerFunctionID:4', checked='checked', value='7')
+                                  tr
+                                    td
+                                      label.checkbox(for='ContentPlaceHolder1_ManagerFunctionID_5') Reminders (Reminders settings)
+                                        input#ContentPlaceHolder1_ManagerFunctionID_5(type='checkbox', name='_ctl0:ContentPlaceHolder1:ManagerFunctionID:5', value='8')
+                                  tr
+                                    td
+                                      label.checkbox(for='ContentPlaceHolder1_ManagerFunctionID_6') My Exercises ()
+                                        input#ContentPlaceHolder1_ManagerFunctionID_6(type='checkbox', name='_ctl0:ContentPlaceHolder1:ManagerFunctionID:6', value='10')
+              span#ContentPlaceHolder1_OrgTree
+              table(border='0', cellpadding='0', cellspacing='0')
+                tbody
+                  tr
+                    td
+                      b Organisation access
+                  tr
+                    td Sponsor83
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(value='925', checked='', name='DepartmentID', type='checkbox')
+                              |  Department A
+                    td(style='font-size:9px;')  D
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/L.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(value='1256', checked='', name='DepartmentID', type='checkbox')
+                              |  Department A1
+                    td(style='font-size:9px;')  Da1
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/null.gif', width='19', height='20')
+                              img(src='assets/img/L.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(value='928', checked='', name='DepartmentID', type='checkbox')
+                              |  Team 1
+                    td(style='font-size:9px;')  dw
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/null.gif', width='19', height='20')
+                              img(src='assets/img/null.gif', width='19', height='20')
+                              img(src='assets/img/L.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(value='1257', checked='', name='DepartmentID', type='checkbox')
+                              |  Team 1a
+                    td(style='font-size:9px;')  t1a
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='927', name='DepartmentID', type='checkbox')
+                              |  Department927
+                    td(style='font-size:9px;')  D927
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='929', name='DepartmentID', type='checkbox')
+                              |  Department929
+                    td(style='font-size:9px;')  D929
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='930', name='DepartmentID', type='checkbox')
+                              |  Department930
+                    td(style='font-size:9px;')  D930
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='931', name='DepartmentID', type='checkbox')
+                              |  Department931
+                    td(style='font-size:9px;')  D931
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='932', name='DepartmentID', type='checkbox')
+                              |  Department932
+                    td(style='font-size:9px;')  D932
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/L.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='933', name='DepartmentID', type='checkbox')
+                              |  Department933
+                    td(style='font-size:9px;')  D933
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='934', name='DepartmentID', type='checkbox')
+                              |  Department934
+                    td(style='font-size:9px;')  D934
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='935', name='DepartmentID', type='checkbox')
+                              |  Department935
+                    td(style='font-size:9px;')  D935
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='936', name='DepartmentID', type='checkbox')
+                              |  Department936
+                    td(style='font-size:9px;')  D936
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='937', name='DepartmentID', type='checkbox')
+                              |  Department937
+                    td(style='font-size:9px;')  D937
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='938', name='DepartmentID', type='checkbox')
+                              |  Department938
+                    td(style='font-size:9px;')  D938
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/L.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='1075', name='DepartmentID', type='checkbox')
+                              |  Department1075
+                    td(style='font-size:9px;')  D1075
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/null.gif', width='19', height='20')
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='939', name='DepartmentID', type='checkbox')
+                              |  Department939
+                    td(style='font-size:9px;')  D939
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/null.gif', width='19', height='20')
+                              img(src='assets/img/L.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='940', name='DepartmentID', type='checkbox')
+                              |  Department940
+                    td(style='font-size:9px;')  D940
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='941', name='DepartmentID', type='checkbox')
+                              |  Department941
+                    td(style='font-size:9px;')  D941
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='942', name='DepartmentID', type='checkbox')
+                              |  Department942
+                    td(style='font-size:9px;')  D942
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='943', name='DepartmentID', type='checkbox')
+                              |  Department943
+                    td(style='font-size:9px;')  D943
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='944', name='DepartmentID', type='checkbox')
+                              |  Department944
+                    td(style='font-size:9px;')  D944
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='945', name='DepartmentID', type='checkbox')
+                              |  Department945!
+                    td(style='font-size:9px;')  D945
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/L.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='946', name='DepartmentID', type='checkbox')
+                              |  Department946
+                    td(style='font-size:9px;')  D946
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='1084', name='DepartmentID', type='checkbox')
+                              |  Department1084
+                    td(style='font-size:9px;')  D1084
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='924', name='DepartmentID', type='checkbox')
+                              |  Department924
+                    td(style='font-size:9px;')  D924
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/L.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='926', name='DepartmentID', type='checkbox')
+                              |  Department926
+                    td(style='font-size:9px;')  D926
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='1109', name='DepartmentID', type='checkbox')
+                              |  Department1109
+                    td(style='font-size:9px;')  D1109
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='1110', name='DepartmentID', type='checkbox')
+                              |  Department1110
+                    td(style='font-size:9px;')  D1110
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/L.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='1111', name='DepartmentID', type='checkbox')
+                              |  Department1111
+                    td(style='font-size:9px;')  D1111
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='1112', name='DepartmentID', type='checkbox')
+                              |  Department1112
+                    td(style='font-size:9px;')  D1112
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/L.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='1113', name='DepartmentID', type='checkbox')
+                              |  Department1113
+                    td(style='font-size:9px;')  D1113
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/null.gif', width='19', height='20')
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='1114', name='DepartmentID', type='checkbox')
+                              |  Department1114
+                    td(style='font-size:9px;')  D1114
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/I.gif', width='19', height='20')
+                              img(src='assets/img/null.gif', width='19', height='20')
+                              img(src='assets/img/L.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='1115', name='DepartmentID', type='checkbox')
+                              |  Department1115
+                    td(style='font-size:9px;')  D1115
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(value='3541', name='DepartmentID', type='checkbox')
+                              |  Department B
+                    td(style='font-size:9px;')  DB
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/T.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='3615', name='DepartmentID', type='checkbox')
+                              |  Short department
+                    td(style='font-size:9px;')  S
+                  tr
+                    td
+                      table(border='0', cellspacing='0', cellpadding='0')
+                        tbody
+                          tr
+                            td
+                              img(src='assets/img/L.gif', width='19', height='20')
+                            td(valign='middle')
+                              input(disabled='', value='3616', name='DepartmentID', type='checkbox')
+                              |  Medium Length Department
+                    td(style='font-size:9px;')  3616
+      //- script(type='text/javascript').
+      //-   var theForm = document.forms['form1'];
+      //-   if (!theForm) {
+      //-     theForm = document.form1;
+      //-   }
+      //-   function __doPostBack(eventTarget, eventArgument) {
+      //-     if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+      //-       theForm.__EVENTTARGET.value = eventTarget;
+      //-       theForm.__EVENTARGUMENT.value = eventArgument;
+      //-       theForm.submit();
+      //-     }
+      //-   }
+      //- script(src='./manager-add_files/WebResource.axd', type='text/javascript')

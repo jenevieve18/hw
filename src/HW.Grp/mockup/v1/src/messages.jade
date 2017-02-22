@@ -1,0 +1,136 @@
+doctype html
+html
+  include includes/head.jade
+  body
+    form
+      #admin.container_16
+        include includes/navbar.jade
+        mixin navbar('messages.html', 'Administer messages, invitations and reminders')
+        .contentgroup.grid_16
+          #contextbar
+            .settingsPane
+              input#ContentPlaceHolder1_buttonSave.btn(type='submit', name='_ctl0:ContentPlaceHolder1:buttonSave', value='Save')
+              | 				Send
+              select#ContentPlaceHolder1_dropDownSendType(name='_ctl0:ContentPlaceHolder1:dropDownSendType')
+                option(value='0') < Select send type >
+                option(value='1') Registration
+                option(value='2') Registration reminder
+                option(value='3') Login reminder
+                option(value='9') All activated users
+                option(value='5') Thank you: WebbQPS 22015
+              | 				message, confirm with password 
+              input#ContentPlaceHolder1_textBoxPassword(name='_ctl0:ContentPlaceHolder1:textBoxPassword', type='password')
+              input#ContentPlaceHolder1_buttonSend.btn(type='submit', name='_ctl0:ContentPlaceHolder1:buttonSend', value='Send')
+              br
+              input#ContentPlaceHolder1_buttonRevert.btn(type='submit', name='_ctl0:ContentPlaceHolder1:buttonRevert', value='Revert to default messages')
+          .smallContent
+            br
+            table(border='0', cellspacing='0', cellpadding='0')
+              tbody
+                tr
+                  td
+                    b Registration invitation subject/message *
+                    |  (
+                    span(style='font-size:9px;')
+                      | Last sent: 
+                      span#ContentPlaceHolder1_labelInviteLastSent 2016-02-17 08:58
+                    | )
+                  td(rowspan='9')      
+                  td(bgcolor='#CCCCCC', rowspan='9')
+                    img(src='assets/img/null.gif', width='1', height='1')
+                  td(rowspan='9')      
+                  td
+                    b Login reminder subject/message
+                    |  (
+                    span(style='font-size:9px;')
+                      | Last sent: 
+                      span#ContentPlaceHolder1_labelLoginLastSent 2016-02-17 08:59
+                    | )
+                tr
+                  td
+                    input#ContentPlaceHolder1_textBoxInviteSubject(name='_ctl0:ContentPlaceHolder1:textBoxInviteSubject', type='text', value='Invitation to HealthWatch: 2016-02-05', style='width:460px;')
+                  td
+                    input#ContentPlaceHolder1_textBoxLoginSubject.aspNetDisabled(name='_ctl0:ContentPlaceHolder1:textBoxLoginSubject', type='text', value='Login reminder from HealthWatch 10-09-2015 x', disabled='disabled', style='width:460px;')
+                tr
+                  td(valign='top')
+                    textarea#ContentPlaceHolder1_textBoxInviteTxt(name='_ctl0:ContentPlaceHolder1:textBoxInviteTxt', rows='10', style='width:460px;')
+                      | Hi there,
+                      | Welcome to HealthWatch!
+                      | Best regards,
+                      | KarinAx
+                  td
+                    textarea#ContentPlaceHolder1_textBoxLoginTxt.aspNetDisabled(name='_ctl0:ContentPlaceHolder1:textBoxLoginTxt', rows='6', disabled='disabled', style='width:460px;') This is a reminder to login in HealthWatch 10-09-2015 x
+                    br
+                    | 						Send to individuals who have not logged in during the last 
+                    select#ContentPlaceHolder1_dropDownLoginDays.aspNetDisabled(name='_ctl0:ContentPlaceHolder1:dropDownLoginDays', disabled='disabled')
+                      option(value='1') every day
+                      option(value='7') week
+                      option(selected='selected', value='14') 2 weeks
+                      option(value='30') month
+                      option(value='90') 3 months
+                      option(value='100') 6 months
+                    br
+                    | 						Automatically perform check and send every 
+                    select#ContentPlaceHolder1_dropDownLoginWeekday.aspNetDisabled(name='_ctl0:ContentPlaceHolder1:dropDownLoginWeekday', disabled='disabled')
+                      option(value='NULL') < disabled >
+                      option(value='0') < every day >
+                      option(value='1') Monday
+                      option(selected='selected', value='2') Tuesday
+                      option(value='3') Wednesday
+                      option(value='4') Thursday
+                      option(value='5') Friday
+                    br
+                    br
+                    i The automatic send in every day mode will only execute once/week/user
+                tr
+                  td(colspan='2')  
+                tr
+                  td
+                    b Registration reminder subject/message **
+                    |  (
+                    span(style='font-size:9px;')
+                      | Last sent: 
+                      span#ContentPlaceHolder1_labelInviteReminderLastSent 2016-02-17 08:58
+                    | )
+                  td
+                    span#ContentPlaceHolder1_labelExtendedSurveyFinished
+                      | Thank you mail for 
+                      b WebbQPS 22015
+                      |  (
+                      span(style='font-size:9px;') Period: 2015-10-14--2016-10-14, Recipients: 0, Last sent: Never
+                      | )
+                tr
+                  td
+                    input#ContentPlaceHolder1_textBoxInviteReminderSubject(name='_ctl0:ContentPlaceHolder1:textBoxInviteReminderSubject', type='text', value='Reminder from HealthWatch 2016-02-05', style='width:460px;')
+                  td
+                    input#ContentPlaceHolder1_textBoxExtendedSurveyFinishedSubject(name='_ctl0:ContentPlaceHolder1:textBoxExtendedSurveyFinishedSubject', type='text', value='FinishedEmailSubjectxx', style='width:460px;')
+                tr
+                  td
+                    textarea#ContentPlaceHolder1_textBoxInviteReminderTxt(name='_ctl0:ContentPlaceHolder1:textBoxInviteReminderTxt', rows='10', style='width:460px;')
+                      | test jay
+                      | Best regards,
+                      | HealthWatchx
+                  td
+                    textarea#ContentPlaceHolder1_textBoxExtendedSurveyFinishedTxt(name='_ctl0:ContentPlaceHolder1:textBoxExtendedSurveyFinishedTxt', rows='10', style='width:460px;') test jay thank you message  2016-02-05
+                tr
+                  td(colspan='2')  
+                tr
+                  td
+                    b Message to all activated users
+                    |  (
+                    span(style='font-size:9px;')
+                      span#ContentPlaceHolder1_labelAllMessageLastSent Recipients: 1, Last sent: 2016-02-17 08:59
+                    | )
+                tr
+                  td
+                    input#ContentPlaceHolder1_textBoxAllMessageSubject(name='_ctl0:ContentPlaceHolder1:textBoxAllMessageSubject', type='text', value='All  Active Users 2016-02-05', style='width:460px;')
+                tr
+                  td
+                    textarea#ContentPlaceHolder1_textBoxAllMessageBody(name='_ctl0:ContentPlaceHolder1:textBoxAllMessageBody', rows='10', style='width:460px;') test jay active user 2016-02-05
+                tr
+                  td(colspan='2')  
+                tr
+                  td
+                    | * Sent only once to each individual (status is reset upon email address change)
+                    br
+                    | ** Sent only to individuals who have received invitation but not activated their account

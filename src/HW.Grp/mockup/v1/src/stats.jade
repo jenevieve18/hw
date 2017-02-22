@@ -1,0 +1,546 @@
+//- doctype html
+//- html
+//-   include includes/head.jade
+//-   script(type='text/javascript', src='assets/js/stats.js')
+  
+//-   link(href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css', rel='stylesheet')
+//-   script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js')
+//-   script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.sv.min.js')
+//-   script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.de.min.js')
+//-   body
+//-     form
+//-       #admin.container_16
+extends includes/layout
+block content
+
+  include includes/navbar.jade
+  mixin navbar('stats.html', 'View results and compare groups')
+  
+  .contentgroup.grid_16
+    #contextbar
+      .settingsPane
+        span.desc Timeframe
+        span.input-daterange
+          input.input-small.date(readonly='', style='cursor:pointer', type='text', name='startDate', value='2015 Dec')
+          span --
+          input.input-small.date(readonly='', style='cursor:pointer', type='text', name='endDate', value='2016 Dec')
+        |  Survey 
+        select
+          option(selected='selected', value='SPRU2643') Health & Stress
+        |  Aggregation 
+        select
+          option(value='1') One week
+          option(selected='selected', value='7') Two weeks, start with even
+          option(value='2') Two weeks, start with odd
+          option(value='3') One month
+          option(value='4') 3 months
+          option(value='5') 6 months
+          option(value='6') One year
+        br
+        span.desc Grouping 
+        select
+          option(selected='selected', value='0') <none >
+          option(value='1') Users on unit
+          option(value='2') Users on unit+subunits
+          option(value='3') Background variable
+        br
+        input.btn(type='submit', value='Execute')
+    .report-parts
+      .action
+        span.small Change all graphs to:
+        select.plot-types.small
+          option(value='1') Line
+          option(value='2') Line (± SD)
+          option(value='3') Line (± 1.96 SD)
+          option(value='4') Boxplot (Min/Max)
+          option(value='5') Boxplot (Tukey)
+        span.chart-descriptions-info 
+        span.small Export all graphs to: 
+        span.button.white.small.export
+          span.hidden.hidden-exportall-docx-url
+            | ExportAll.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=0&RPLID=0&PRUID=SPRU2643&GRPNG=0&TYPE=docx&GID=0
+          a.exportall-docx-url(href='#', target='_blank') docx
+        | &nbsp;
+        span.button.white.small.export
+          span.hidden.hidden-exportall-pptx-url
+            | ExportAll.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=0&RPLID=0&PRUID=SPRU2643&GRPNG=0&TYPE=pptx&GID=0
+          a.exportall-pptx-url(href='#', target='_blank') pptx
+        | &nbsp;
+        span.button.white.small.export
+          span.hidden.hidden-exportall-xls-url
+            | ExportAll.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=0&RPLID=0&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0
+          a.exportall-xls-url(href='#', target='_blank') xls
+        | &nbsp;
+        span.button.white.small.export
+          a.exportall-xls-verbose-url(href='#', target='_blank') xls verbose
+        | &nbsp;
+      each i in [1,2,3,4,5,6,7,8,9,10]
+        div
+          br
+        .report-part
+          .hidden.selected-plot-type 3
+          .report-part-subject
+            span Health
+            span.toggle.toggle-right.toggle-active-
+          .report-part-header(style='display: none;')
+            | It is now well established that self-rated health is an important indicator of how it will feel in the future. If assessing their health as fairly good or good has far greater chance to preserve and improve their health in the future than those who overestimated their own health as poor.
+          .report-part-content
+            span.hidden.hidden-image-url
+              | reportImage.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=14&RPLID=116&PRUID=SPRU2643&GRPNG=0&GID=0
+            img.report-part-graph(src='assets/img/reportImage.gif', alt='')
+            .action
+              span.small Change this graph to:
+              select.plot-types.small
+                option(value='1') Line
+                option(value='2') Line (± SD)
+                option(value='3') Line (± 1.96 SD)
+                option(value='4') Boxplot (Min/Max)
+                option(value='5') Boxplot (Tukey)
+              span.small Export this graph to:
+              span.button.white.small.export
+                span.hidden.hidden-export-docx-url
+                  | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=14&RPLID=116&PRUID=SPRU2643&GRPNG=0&TYPE=docx&GID=0
+                a.export-docx-url(href='#', target='_blank') docx
+              | &nbsp;
+              span.button.white.small.export
+                span.hidden.hidden-export-pptx-url
+                  | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=14&RPLID=116&PRUID=SPRU2643&GRPNG=0&TYPE=pptx&GID=0
+                a.export-pptx-url(href='#', target='_blank') pptx
+              | &nbsp;
+              span.button.white.small.export
+                span.hidden.hidden-export-xls-url
+                  | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=14&RPLID=116&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0
+                a.export-xls-url(href='#', target='_blank') xls
+              | &nbsp;
+              span.button.white.small.export
+                a.export-xls-verbose-url(href='#', target='_blank') xls verbose
+              | &nbsp;
+          .report-part-bottom  
+      //- div
+      //-   br
+      //- .report-part
+      //-   .hidden.selected-plot-type 3
+      //-   .report-part-subject
+      //-     span Sleep
+      //-     span.toggle.toggle-right.toggle-active
+      //-   .report-part-header(style='display: none;')
+      //-     | Sleep is our most important resource for recovery and is essential in particular to preserve the health, wellbeing and performance. During sleep hormone several important hormones that repair, heal and build up the body. If sleep for a longer period is disturbed runs the great risk of eventually suffer from various stress-related diseases.
+      //-   .report-part-content
+      //-     span.hidden.hidden-image-url
+      //-       | reportImage.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=15&RPLID=120&PRUID=SPRU2643&GRPNG=0&GID=0
+      //-     img.report-part-graph(src='assets/img/reportImage.gif', alt='')
+      //-     .action
+      //-       span.small Change this graph to:
+      //-       select.plot-types.small
+      //-         option(value='1') Line
+      //-         option(value='2') Line (± SD)
+      //-         option(value='3') Line (± 1.96 SD)
+      //-         option(value='4') Boxplot (Min/Max)
+      //-         option(value='5') Boxplot (Tukey)
+      //-       span.small Export this graph to:
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-docx-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=15&RPLID=120&PRUID=SPRU2643&GRPNG=0&TYPE=docx&GID=0
+      //-         a.export-docx-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=15&RPLID=120&PRUID=SPRU2643&GRPNG=0&TYPE=docx&GID=0&Plot=0', target='_blank') docx
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-pptx-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=15&RPLID=120&PRUID=SPRU2643&GRPNG=0&TYPE=pptx&GID=0
+      //-         a.export-pptx-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=15&RPLID=120&PRUID=SPRU2643&GRPNG=0&TYPE=pptx&GID=0&Plot=0', target='_blank') pptx
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-xls-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=15&RPLID=120&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0
+      //-         a.export-xls-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=15&RPLID=120&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0&Plot=0', target='_blank') xls
+      //-       span.button.white.small.export
+      //-         a.export-xls-verbose-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=15&RPLID=120&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0&PLOT=7', target='_blank') xls verbose
+      //-   .report-part-bottom  
+      //- div
+      //-   br
+      //- .report-part
+      //-   .hidden.selected-plot-type 3
+      //-   .report-part-subject
+      //-     span Concentration
+      //-     span.toggle.toggle-right.toggle-active
+      //-   .report-part-header(style='display: none;')
+      //-     | It places great demands on the brain's capacity when to concentrate. Compare, for example, to read a book (concentration consuming activity) to watch TV (much less demanding concentration). The ability to concentrate are among the most important indicators of stress level. As the stress increases tend concentration ability impaired (although stress can also contribute to the short term becomes more focused). The ability to concentrate may also reflect the overall health and well-being and is a sensitive measure affected relative ease of different things, such as sleep deprivation. The concentration is essential for learning and memory.
+      //-   .report-part-content
+      //-     span.hidden.hidden-image-url
+      //-       | reportImage.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=16&RPLID=122&PRUID=SPRU2643&GRPNG=0&GID=0
+      //-     img.report-part-graph(src='assets/img/reportImage.gif', alt='')
+      //-     .action
+      //-       span.small Change this graph to:
+      //-       select.plot-types.small
+      //-         option(value='1') Line
+      //-         option(value='2') Line (± SD)
+      //-         option(value='3') Line (± 1.96 SD)
+      //-         option(value='4') Boxplot (Min/Max)
+      //-         option(value='5') Boxplot (Tukey)
+      //-       span.small Export this graph to:
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-docx-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=16&RPLID=122&PRUID=SPRU2643&GRPNG=0&TYPE=docx&GID=0
+      //-         a.export-docx-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=16&RPLID=122&PRUID=SPRU2643&GRPNG=0&TYPE=docx&GID=0&Plot=0', target='_blank') docx
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-pptx-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=16&RPLID=122&PRUID=SPRU2643&GRPNG=0&TYPE=pptx&GID=0
+      //-         a.export-pptx-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=16&RPLID=122&PRUID=SPRU2643&GRPNG=0&TYPE=pptx&GID=0&Plot=0', target='_blank') pptx
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-xls-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=16&RPLID=122&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0
+      //-         a.export-xls-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=16&RPLID=122&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0&Plot=0', target='_blank') xls
+      //-       span.button.white.small.export
+      //-         a.export-xls-verbose-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=16&RPLID=122&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0&PLOT=7', target='_blank') xls verbose
+      //-   .report-part-bottom  
+      //- div
+      //-   br
+      //- .report-part
+      //-   .hidden.selected-plot-type 3
+      //-   .report-part-subject
+      //-     span Stress
+      //-     span.toggle.toggle-right.toggle-active
+      //-   .report-part-header(style='display: none;')
+      //-     | The knowledge of how stress affects the physical and mental health is now developing rapidly. Today's research data shows including the need to vary their activity and stress level to preserve and enhance the health, well-being and performance. Our physiological systems are designed for it. This means that there seems to be good with a moderate and regular exposure to stress in combination with rest and recovery. Stress in itself need not be dangerous, but rather strengthening and efficiency, when combined with adequate recovery and rest. Cooldown and variation thus appears to be the key to a healthy stress. But prolonged stress without adequate recovery can help skew control of our physiological systems with psychological and physical symptoms and illness as a result. As our knowledge of the limits of healthy and sustainable stress level improves, we will also adjust the boundaries of stresskalan.
+      //-   .report-part-content
+      //-     span.hidden.hidden-image-url
+      //-       | reportImage.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=17&RPLID=124&PRUID=SPRU2643&GRPNG=0&GID=0
+      //-     img.report-part-graph(src='assets/img/reportImage.gif', alt='')
+      //-     .action
+      //-       span.small Change this graph to:
+      //-       select.plot-types.small
+      //-         option(value='1') Line
+      //-         option(value='2') Line (± SD)
+      //-         option(value='3') Line (± 1.96 SD)
+      //-         option(value='4') Boxplot (Min/Max)
+      //-         option(value='5') Boxplot (Tukey)
+      //-       span.small Export this graph to:
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-docx-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=17&RPLID=124&PRUID=SPRU2643&GRPNG=0&TYPE=docx&GID=0
+      //-         a.export-docx-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=17&RPLID=124&PRUID=SPRU2643&GRPNG=0&TYPE=docx&GID=0&Plot=0', target='_blank') docx
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-pptx-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=17&RPLID=124&PRUID=SPRU2643&GRPNG=0&TYPE=pptx&GID=0
+      //-         a.export-pptx-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=17&RPLID=124&PRUID=SPRU2643&GRPNG=0&TYPE=pptx&GID=0&Plot=0', target='_blank') pptx
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-xls-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=17&RPLID=124&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0
+      //-         a.export-xls-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=17&RPLID=124&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0&Plot=0', target='_blank') xls
+      //-       span.button.white.small.export
+      //-         a.export-xls-verbose-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=17&RPLID=124&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0&PLOT=7', target='_blank') xls verbose
+      //-   .report-part-bottom  
+      //- div
+      //-   br
+      //- .report-part
+      //-   .hidden.selected-plot-type 3
+      //-   .report-part-subject
+      //-     span Energy
+      //-     span.toggle.toggle-right.toggle-active
+      //-   .report-part-header(style='display: none;')
+      //-     | The energy level is an indicator of overall well-being and health, general strength and absence of depression and sadness. High estimates of energy level indicates good health, energy and force for change and good welfare. Low energy level usually indicates a feeling of lethargy, depression, irritability, etc. and may well be linked to an ongoing infection or that you feel worn out / exhausted.
+      //-   .report-part-content
+      //-     span.hidden.hidden-image-url
+      //-       | reportImage.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=18&RPLID=126&PRUID=SPRU2643&GRPNG=0&GID=0
+      //-     img.report-part-graph(src='assets/img/reportImage.gif', alt='')
+      //-     .action
+      //-       span.small Change this graph to:
+      //-       select.plot-types.small
+      //-         option(value='1') Line
+      //-         option(value='2') Line (± SD)
+      //-         option(value='3') Line (± 1.96 SD)
+      //-         option(value='4') Boxplot (Min/Max)
+      //-         option(value='5') Boxplot (Tukey)
+      //-       span.small Export this graph to:
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-docx-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=18&RPLID=126&PRUID=SPRU2643&GRPNG=0&TYPE=docx&GID=0
+      //-         a.export-docx-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=18&RPLID=126&PRUID=SPRU2643&GRPNG=0&TYPE=docx&GID=0&Plot=0', target='_blank') docx
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-pptx-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=18&RPLID=126&PRUID=SPRU2643&GRPNG=0&TYPE=pptx&GID=0
+      //-         a.export-pptx-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=18&RPLID=126&PRUID=SPRU2643&GRPNG=0&TYPE=pptx&GID=0&Plot=0', target='_blank') pptx
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-xls-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=18&RPLID=126&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0
+      //-         a.export-xls-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=18&RPLID=126&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0&Plot=0', target='_blank') xls
+      //-       span.button.white.small.export
+      //-         a.export-xls-verbose-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=18&RPLID=126&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0&PLOT=7', target='_blank') xls verbose
+      //-   .report-part-bottom  
+      //- div
+      //-   br
+      //- .report-part
+      //-   .hidden.selected-plot-type 3
+      //-   .report-part-subject
+      //-     span Control
+      //-     span.toggle.toggle-right.toggle-active
+      //-   .report-part-header(style='display: none;')
+      //-     | People's sense of being in control of events and life is a crucial factor in maintaining good health and quality of life and coping with stress. If you have a job with high demands, but have a sense of control (eg, over what should be done and when), has significantly less physiological stress and are at lower risk of future health problems than individuals who have high standards but small control and little influence. Control and influence offers people a greater potential to influence their situation and adjust the requirements desired. Of course there are limits to how high requirements of an individual may be, whatever the degree of control. Lack of sense of control may eventually lead to an increased risk of illness.
+      //-   .report-part-content
+      //-     span.hidden.hidden-image-url
+      //-       | reportImage.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=19&RPLID=128&PRUID=SPRU2643&GRPNG=0&GID=0
+      //-     img.report-part-graph(src='assets/img/reportImage.gif', alt='')
+      //-     .action
+      //-       span.small Change this graph to:
+      //-       select.plot-types.small
+      //-         option(value='1') Line
+      //-         option(value='2') Line (± SD)
+      //-         option(value='3') Line (± 1.96 SD)
+      //-         option(value='4') Boxplot (Min/Max)
+      //-         option(value='5') Boxplot (Tukey)
+      //-       span.small Export this graph to:
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-docx-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=19&RPLID=128&PRUID=SPRU2643&GRPNG=0&TYPE=docx&GID=0
+      //-         a.export-docx-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=19&RPLID=128&PRUID=SPRU2643&GRPNG=0&TYPE=docx&GID=0&Plot=0', target='_blank') docx
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-pptx-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=19&RPLID=128&PRUID=SPRU2643&GRPNG=0&TYPE=pptx&GID=0
+      //-         a.export-pptx-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=19&RPLID=128&PRUID=SPRU2643&GRPNG=0&TYPE=pptx&GID=0&Plot=0', target='_blank') pptx
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-xls-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=19&RPLID=128&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0
+      //-         a.export-xls-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=19&RPLID=128&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0&Plot=0', target='_blank') xls
+      //-       span.button.white.small.export
+      //-         a.export-xls-verbose-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=19&RPLID=128&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0&PLOT=7', target='_blank') xls verbose
+      //-   .report-part-bottom  
+      //- div
+      //-   br
+      //- .report-part
+      //-   .hidden.selected-plot-type 3
+      //-   .report-part-subject
+      //-     span Social life
+      //-     span.toggle.toggle-right.toggle-active
+      //-   .report-part-header(style='display: none;')
+      //-     | Social life is about how you perceive the relationship with loved ones and how they enjoy their social situation in general. Good social life, support and networking are perhaps some our most important and most powerful buffers against distress and increases the chances for good quality of life. Social support may mean that you have access to a few people that you can be completely open and honest with. The quality of the social fabric seems to be more important than quantity. With too large a circle of friends, there is a risk that you give more of yourself than you get back, for example, that one person who always sets up and listen to people's problems without exerting a valve for their own thoughts. It can lead to energy drain. A healthy social life and social interaction generates contrast energy.
+      //-   .report-part-content
+      //-     span.hidden.hidden-image-url
+      //-       | reportImage.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=20&RPLID=130&PRUID=SPRU2643&GRPNG=0&GID=0
+      //-     img.report-part-graph(src='assets/img/reportImage.gif', alt='')
+      //-     .action
+      //-       span.small Change this graph to:
+      //-       select.plot-types.small
+      //-         option(value='1') Line
+      //-         option(value='2') Line (± SD)
+      //-         option(value='3') Line (± 1.96 SD)
+      //-         option(value='4') Boxplot (Min/Max)
+      //-         option(value='5') Boxplot (Tukey)
+      //-       span.small Export this graph to:
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-docx-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=20&RPLID=130&PRUID=SPRU2643&GRPNG=0&TYPE=docx&GID=0
+      //-         a.export-docx-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=20&RPLID=130&PRUID=SPRU2643&GRPNG=0&TYPE=docx&GID=0&Plot=0', target='_blank') docx
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-pptx-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=20&RPLID=130&PRUID=SPRU2643&GRPNG=0&TYPE=pptx&GID=0
+      //-         a.export-pptx-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=20&RPLID=130&PRUID=SPRU2643&GRPNG=0&TYPE=pptx&GID=0&Plot=0', target='_blank') pptx
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-xls-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=20&RPLID=130&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0
+      //-         a.export-xls-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=20&RPLID=130&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0&Plot=0', target='_blank') xls
+      //-       span.button.white.small.export
+      //-         a.export-xls-verbose-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=20&RPLID=130&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0&PLOT=7', target='_blank') xls verbose
+      //-   .report-part-bottom  
+      //- div
+      //-   br
+      //- .report-part
+      //-   .hidden.selected-plot-type 3
+      //-   .report-part-subject
+      //-     span Work efficiency
+      //-     span.toggle.toggle-right.toggle-active
+      //-   .report-part-header(style='display: none;')
+      //-     | Efficiency is an important area. Higher efficiency often relates to a better estimate of the health and vice versa. Therefore, it is important to maintain and increase efficiency, not least as a health measure. High stress can also be a sign of low efficiency because it often means that you need to work ever harder while providing less and less.
+      //-   .report-part-content
+      //-     span.hidden.hidden-image-url
+      //-       | reportImage.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=21&RPLID=132&PRUID=SPRU2643&GRPNG=0&GID=0
+      //-     img.report-part-graph(src='assets/img/reportImage.gif', alt='')
+      //-     .action
+      //-       span.small Change this graph to:
+      //-       select.plot-types.small
+      //-         option(value='1') Line
+      //-         option(value='2') Line (± SD)
+      //-         option(value='3') Line (± 1.96 SD)
+      //-         option(value='4') Boxplot (Min/Max)
+      //-         option(value='5') Boxplot (Tukey)
+      //-       span.small Export this graph to:
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-docx-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=21&RPLID=132&PRUID=SPRU2643&GRPNG=0&TYPE=docx&GID=0
+      //-         a.export-docx-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=21&RPLID=132&PRUID=SPRU2643&GRPNG=0&TYPE=docx&GID=0&Plot=0', target='_blank') docx
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-pptx-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=21&RPLID=132&PRUID=SPRU2643&GRPNG=0&TYPE=pptx&GID=0
+      //-         a.export-pptx-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=21&RPLID=132&PRUID=SPRU2643&GRPNG=0&TYPE=pptx&GID=0&Plot=0', target='_blank') pptx
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-xls-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=21&RPLID=132&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0
+      //-         a.export-xls-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=21&RPLID=132&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0&Plot=0', target='_blank') xls
+      //-       span.button.white.small.export
+      //-         a.export-xls-verbose-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=21&RPLID=132&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0&PLOT=7', target='_blank') xls verbose
+      //-   .report-part-bottom  
+      //- div
+      //-   br
+      //- .report-part
+      //-   .hidden.selected-plot-type 3
+      //-   .report-part-subject
+      //-     span Work joy
+      //-     span.toggle.toggle-right.toggle-active
+      //-   .report-part-header(style='display: none;')
+      //-   .report-part-content
+      //-     span.hidden.hidden-image-url
+      //-       | reportImage.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=22&RPLID=134&PRUID=SPRU2643&GRPNG=0&GID=0
+      //-     img.report-part-graph(src='assets/img/reportImage.gif', alt='')
+      //-     .action
+      //-       span.small Change this graph to:
+      //-       select.plot-types.small
+      //-         option(value='1') Line
+      //-         option(value='2') Line (± SD)
+      //-         option(value='3') Line (± 1.96 SD)
+      //-         option(value='4') Boxplot (Min/Max)
+      //-         option(value='5') Boxplot (Tukey)
+      //-       span.small Export this graph to:
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-docx-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=22&RPLID=134&PRUID=SPRU2643&GRPNG=0&TYPE=docx&GID=0
+      //-         a.export-docx-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=22&RPLID=134&PRUID=SPRU2643&GRPNG=0&TYPE=docx&GID=0&Plot=0', target='_blank') docx
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-pptx-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=22&RPLID=134&PRUID=SPRU2643&GRPNG=0&TYPE=pptx&GID=0
+      //-         a.export-pptx-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=22&RPLID=134&PRUID=SPRU2643&GRPNG=0&TYPE=pptx&GID=0&Plot=0', target='_blank') pptx
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-xls-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=22&RPLID=134&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0
+      //-         a.export-xls-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=22&RPLID=134&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0&Plot=0', target='_blank') xls
+      //-       span.button.white.small.export
+      //-         a.export-xls-verbose-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=22&RPLID=134&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0&PLOT=7', target='_blank') xls verbose
+      //-   .report-part-bottom  
+      //- div
+      //-   br
+      //- .report-part
+      //-   .hidden.selected-plot-type 3
+      //-   .report-part-subject
+      //-     span Work load
+      //-     span.toggle.toggle-right.toggle-active
+      //-   .report-part-header(style='display: none;')
+      //-   .report-part-content
+      //-     span.hidden.hidden-image-url
+      //-       | reportImage.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=23&RPLID=138&PRUID=SPRU2643&GRPNG=0&GID=0
+      //-     img.report-part-graph(src='assets/img/reportImage.gif', alt='')
+      //-     .action
+      //-       span.small Change this graph to:
+      //-       select.plot-types.small
+      //-         option(value='1') Line
+      //-         option(value='2') Line (± SD)
+      //-         option(value='3') Line (± 1.96 SD)
+      //-         option(value='4') Boxplot (Min/Max)
+      //-         option(value='5') Boxplot (Tukey)
+      //-       span.small Export this graph to:
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-docx-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=23&RPLID=138&PRUID=SPRU2643&GRPNG=0&TYPE=docx&GID=0
+      //-         a.export-docx-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=23&RPLID=138&PRUID=SPRU2643&GRPNG=0&TYPE=docx&GID=0&Plot=0', target='_blank') docx
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-pptx-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=23&RPLID=138&PRUID=SPRU2643&GRPNG=0&TYPE=pptx&GID=0
+      //-         a.export-pptx-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=23&RPLID=138&PRUID=SPRU2643&GRPNG=0&TYPE=pptx&GID=0&Plot=0', target='_blank') pptx
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-xls-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=23&RPLID=138&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0
+      //-         a.export-xls-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=23&RPLID=138&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0&Plot=0', target='_blank') xls
+      //-       span.button.white.small.export
+      //-         a.export-xls-verbose-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=23&RPLID=138&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0&PLOT=7', target='_blank') xls verbose
+      //-   .report-part-bottom  
+      //- div
+      //-   br
+      //- .report-part
+      //-   .hidden.selected-plot-type 3
+      //-   .report-part-subject
+      //-     span Work atmosphere
+      //-     span.toggle.toggle-right.toggle-active
+      //-   .report-part-header(style='display: none;')
+      //-   .report-part-content
+      //-     span.hidden.hidden-image-url
+      //-       | reportImage.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=24&RPLID=136&PRUID=SPRU2643&GRPNG=0&GID=0
+      //-     img.report-part-graph(src='assets/img/reportImage.gif', alt='')
+      //-     .action
+      //-       span.small Change this graph to:
+      //-       select.plot-types.small
+      //-         option(value='1') Line
+      //-         option(value='2') Line (± SD)
+      //-         option(value='3') Line (± 1.96 SD)
+      //-         option(value='4') Boxplot (Min/Max)
+      //-         option(value='5') Boxplot (Tukey)
+      //-       span.small Export this graph to:
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-docx-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=24&RPLID=136&PRUID=SPRU2643&GRPNG=0&TYPE=docx&GID=0
+      //-         a.export-docx-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=24&RPLID=136&PRUID=SPRU2643&GRPNG=0&TYPE=docx&GID=0&Plot=0', target='_blank') docx
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-pptx-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=24&RPLID=136&PRUID=SPRU2643&GRPNG=0&TYPE=pptx&GID=0
+      //-         a.export-pptx-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=24&RPLID=136&PRUID=SPRU2643&GRPNG=0&TYPE=pptx&GID=0&Plot=0', target='_blank') pptx
+      //-       span.button.white.small.export
+      //-         span.hidden.hidden-export-xls-url
+      //-           | Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=24&RPLID=136&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0
+      //-         a.export-xls-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=24&RPLID=136&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0&Plot=0', target='_blank') xls
+      //-       span.button.white.small.export
+      //-         a.export-xls-verbose-url(href='http://localhost:7981/Export.aspx?LangID=2&FY=2015&TY=2016&FM=12&TM=12&SAID=791&SID=83&GB=7&RPID=24&RPLID=136&PRUID=SPRU2643&GRPNG=0&TYPE=xls&GID=0&PLOT=7', target='_blank') xls verbose
+      //-   .report-part-bottom  
+  script(type='text/javascript').
+    $('.input-daterange').datepicker({
+      format: "yyyy M",
+      minViewMode: 1,
+      language: "en",
+      autoclose: true
+    });
+//- .ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-draggable.ui-resizable(tabindex='-1', role='dialog', aria-labelledby='ui-id-1', style='display: none; outline: 0px; z-index: 1000; position: absolute;')
+//-   .ui-dialog-titlebar.ui-widget-header.ui-corner-all.ui-helper-clearfix
+//-     span#ui-id-1.ui-dialog-title Chart Descriptions
+//-     a.ui-dialog-titlebar-close.ui-corner-all(href='http://localhost:7981/stats.aspx?Rnd=1704037938#', role='button')
+//-       span.ui-icon.ui-icon-closethick close
+//-   .chart-descriptions.ui-dialog-content.ui-widget-content
+//-     div
+//-       div
+//-         br
+//-       .report-part
+//-         .report-part-subject
+//-           span Line - Line chart
+//-           span.toggle.toggle-right.toggle-active
+//-         .report-part-header(style='display: none;') Line chart with mean value
+//-       div
+//-         br
+//-       .report-part
+//-         .report-part-subject
+//-           span Line (± SD) - Line chart with Standard Deviation
+//-           span.toggle.toggle-right.toggle-active
+//-         .report-part-header(style='display: none;')
+//-           | Shows mean value and standard deviation. The standard deviation is a theoretical statistical measure that illustrates the range (variation from the average) in which approximately 67 % of the responses are. A low standard deviation indicates that the responses tend to be very close to the mean (lower variation); a high standard deviation indicates that the responses are spread out over a larger range of values.
+//-       div
+//-         br
+//-       .report-part
+//-         .report-part-subject
+//-           span Line (± 1.96 SD) - Line chart with Standard Deviation and confidence interval
+//-           span.toggle.toggle-right.toggle-active
+//-         .report-part-header(style='display: none;')
+//-           | Shows mean value and approximately 2 standard deviations, which is roughly equivalent to the so called confidence interval. This in turn is a theoretical distribution of about 95 % of the responses.
+//-       div
+//-         br
+//-       .report-part
+//-         .report-part-subject
+//-           span Boxplot (Min/Max) - Boxplot with Min/Max
+//-           span.toggle.toggle-right.toggle-active
+//-         .report-part-header(style='display: none;')
+//-           | Shows the median value (the line in the box) and the total distribution of the responses in 4 equal parts, so called quartiles. This means that every part/interval consists of 25 % of the responses. 50 % of the responses are thus within the blue box (25 % under, and 25 % over the median line). The ends show the highest and lowest observations. One of the benefits with a box plot is that it is less sensitive to skewed data. It can also yield a more accurate picture than the mean value in smaller groups since the mean value can be significantly influenced by extreme values.
+//-       div
+//-         br
+//-       .report-part
+//-         .report-part-subject
+//-           span Boxplot (Tukey) - Boxplot Tukey
+//-           span.toggle.toggle-right.toggle-active
+//-         .report-part-header(style='display: none;')
+//-           | Similar to the above mentioned box plot but mathematically removes extreme values, which might reflect the distribution more accurately if only a few individuals have reported extreme values.
+//-   .ui-resizable-handle.ui-resizable-n(style='z-index: 1000;')
+//-   .ui-resizable-handle.ui-resizable-e(style='z-index: 1000;')
+//-   .ui-resizable-handle.ui-resizable-s(style='z-index: 1000;')
+//-   .ui-resizable-handle.ui-resizable-w(style='z-index: 1000;')
+//-   .ui-resizable-handle.ui-resizable-se.ui-icon.ui-icon-gripsmall-diagonal-se.ui-icon-grip-diagonal-se(style='z-index: 1000;')
+//-   .ui-resizable-handle.ui-resizable-sw(style='z-index: 1000;')
+//-   .ui-resizable-handle.ui-resizable-ne(style='z-index: 1000;')
+//-   .ui-resizable-handle.ui-resizable-nw(style='z-index: 1000;')

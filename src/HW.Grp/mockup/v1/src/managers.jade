@@ -1,0 +1,161 @@
+doctype html
+html
+  include includes/head.jade
+  body
+    form
+      #admin.container_16
+        include includes/navbar.jade
+        mixin navbar('managers.html', 'Administer unit managers')
+        .contentgroup.grid_16
+          #contextbar
+            .actionPane2
+              #ContentPlaceHolder1_ActionNav.bottom
+                a.add-user(href='manager-add.html') Add manager
+          .smallContent
+            br
+            table(border='0', cellpadding='3', cellspacing='0')
+              tbody
+                tr
+                  th
+                    a.sort.sort-asc(href='http://localhost:7981/managers.aspx?Sort=FirstName&SortFirstName=1&SortLastName=0') Name
+                  th
+                    a.sort.sort-asc(href='http://localhost:7981/managers.aspx?Sort=LastName&SortFirstName=0&SortLastName=1') Last Name
+                  th Roles
+                  th Last login
+                  th
+                //- each i in [1,2,3,4,5]
+                //-   tr
+                //-     td
+                //-       a(href='http://localhost:7981/managerSetup.aspx?SAID=810') aaaaaaaa
+                //-     td
+                //-     td
+                //-     td(style='text-align:center') Not on record
+                //-     td
+                //-       a(href='javascript:if(confirm("Are you sure you want to delete this manager?")) {\
+                //-       location.href="managers.aspx?Delete=810";\
+                //-       }')
+                //-         img(src='assets/img/deltoolsmall.gif')
+                tr
+                  td
+                    a(href='manager-add.html') aaaaaaaa
+                  td
+                  td
+                  td(style='text-align:center') Not on record
+                  td
+                    a(href='javascript:if(confirm("Are you sure you want to delete this manager?")) {\
+                    location.href="managers.aspx?Delete=810";\
+                    }')
+                      img(src='assets/img/deltoolsmall.gif')
+                tr
+                  td
+                    a(href='manager-add.html') Asponsor83admin515
+                  td
+                  td
+                    | Organization
+                    | , Statistics
+                    | , Messages
+                    | , Managers
+                    | , Exercises
+                    | , Reminders
+                  td(style='text-align:center') 307 days(s)
+                  td
+                    a(href='javascript:if(confirm("Are you sure you want to delete this manager?")) {\
+                    location.href="managers.aspx?Delete=515";\
+                    }')
+                      img(src='assets/img/deltoolsmall.gif')
+                tr
+                  td
+                    img(src='assets/img/locked.gif')
+                    a(href='manager-add.html') Dan
+                  td Hasson
+                  td
+                    | Organization
+                    | , Statistics
+                    | , Exercises
+                  td(style='text-align:center') Not activated
+                  td
+                    a(href='javascript:if(confirm("Are you sure you want to delete this manager?")) {\
+                    location.href="managers.aspx?Delete=1056";\
+                    }')
+                      img(src='assets/img/deltoolsmall.gif')
+                tr
+                  td
+                    img(src='assets/img/locked.gif')
+                    a(href='manager-add.html') Dodong
+                  td Yanyan
+                  td
+                    | Organization
+                    | , Statistics
+                    | , Messages
+                    | , Managers
+                    | , Exercises
+                    | , Reminders
+                  td(style='text-align:center') 343 days(s)
+                  td
+                    a(href='javascript:if(confirm("Are you sure you want to delete this manager?")) {\
+                    location.href="managers.aspx?Delete=1098";\
+                    }')
+                      img(src='assets/img/deltoolsmall.gif')
+                tr
+                  td
+                    img(src='assets/img/locked.gif')
+                    a(href='manager-add.html') Ian
+                  td Escarro
+                  td
+                    | Organization
+                    | , Statistics
+                    | , Messages
+                    | , Managers
+                    | , Exercises
+                    | , Reminders
+                  td(style='text-align:center') 343 days(s)
+                  td
+                    a(href='javascript:if(confirm("Are you sure you want to delete this manager?")) {\
+                    location.href="managers.aspx?Delete=1096";\
+                    }')
+                      img(src='assets/img/deltoolsmall.gif')
+                tr
+                  td
+                    a(href='manager-add.html') K
+                  td V
+                  td
+                    | Organization
+                  td(style='text-align:center') 444 days(s)
+                  td
+                    a(href='javascript:if(confirm("Are you sure you want to delete this manager?")) {\
+                    location.href="managers.aspx?Delete=1088";\
+                    }')
+                      img(src='assets/img/deltoolsmall.gif')
+                tr
+                  td
+                    a(href='manager-add.html') Karin
+                  td Villaume
+                  td
+                    | Organization
+                    | , Statistics
+                    | , Messages
+                    | , Managers
+                    | , Exercises
+                    | , Reminders
+                  td(style='text-align:center') Not activated
+                  td
+                    a(href='javascript:if(confirm("Are you sure you want to delete this manager?")) {\
+                    location.href="managers.aspx?Delete=1055";\
+                    }')
+                      img(src='assets/img/deltoolsmall.gif')
+                tr
+                  td
+                    a(href='manager-add.html') resr
+                  td
+                  td
+                    | Organization
+                    | , Statistics
+                    | , Messages
+                    | , Managers
+                    | , Exercises
+                  td(style='text-align:center') 699 days(s)
+                  td
+                    a(href='javascript:if(confirm("Are you sure you want to delete this manager?")) {\
+                    location.href="managers.aspx?Delete=842";\
+                    }')
+                      img(src='assets/img/deltoolsmall.gif')

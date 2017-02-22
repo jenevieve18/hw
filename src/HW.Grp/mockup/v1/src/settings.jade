@@ -1,0 +1,14 @@
+extends includes/layout
+block content
+
+  include includes/navbar.jade
+  mixin navbar('settings.html')
+  
+  .contentgroup.grid_16
+    #contextbar
+      .settingsPane
+        | Change password 
+        input#ContentPlaceHolder1_Password(name='_ctl0:ContentPlaceHolder1:Password', type='password')
+        input#ContentPlaceHolder1_Save.btn(type='submit', name='_ctl0:ContentPlaceHolder1:Save', value='Save')
+        span#ContentPlaceHolder1_Message
+    .smallContent

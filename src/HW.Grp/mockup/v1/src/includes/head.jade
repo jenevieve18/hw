@@ -1,0 +1,36 @@
+head
+  meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+  meta(http-equiv='Pragma', content='no-cache')
+  meta(http-equiv='Expires', content='-1')
+  meta(name='Robots', content='noarchive')
+  meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+  title HealthWatch.se / Group administration
+  link(rel='stylesheet', href='assets/css/960.css')
+  link(rel='stylesheet', href='assets/css/admin.css')
+  link(rel='stylesheet', href='assets/css/site.css')
+  link(rel='stylesheet', href='assets/css/main.css')
+  //- link(rel='stylesheet', href='assets/css/styles.purified.css')
+  
+  link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css')
+  
+  script(language='javascript').
+    //- window.history.forward(1);
+  script(type='text/javascript', src='https://code.jquery.com/jquery-1.12.4.min.js')
+  script(type='text/javascript', src='https://code.jquery.com/ui/1.11.4/jquery-ui.min.js')
+  script(type='text/javascript').
+    $(document).ready(function () {
+      var description = $("#submenu .description").html();
+      $("#submenu a").mouseover(function () {
+        $("#submenu .description").html($(this).html());
+        $("#submenu .active").css('background-position', 'center -80px');
+      });
+      $("#submenu a").mouseout(function () {
+        $("#submenu .description").html(description);
+        $("#submenu .active").css('background-position', 'center -120px');
+      });
+    });
+  style(type='text/css').
+    .i18n {
+      background:url(assets/img/rsaquo.gif) no-repeat 0 4px;
+      padding-left: 7px;
+    }

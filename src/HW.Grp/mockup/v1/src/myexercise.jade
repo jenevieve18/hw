@@ -1,0 +1,111 @@
+doctype html
+html
+  include includes/head.jade
+  body
+    form
+      #admin.container_16
+        include includes/navbar.jade
+        mixin navbar('myexercise.html', 'Saved exercises')
+        .contentgroup.grid_16.exercises
+          .statschosergroup
+            h1.header
+              | Group-
+              br
+              | exercises
+            a(name='filter')
+            .statschoser
+              .filter.misc
+                .title
+                  | Choose area
+                dl.dropdown
+                  dt
+                    a(href='javascript:;')
+                      span Show all
+                  dd
+                    ul
+                      li.last(id='EAID=7')
+                        a(href='#') Work joy and efficiency
+              .filter.misc
+                .title
+                  | Choose a Category
+                dl.dropdown
+                  dt
+                    a(href='javascript:;')
+                      span Show all
+                  dd
+                    ul
+                      li#ECID2
+                        a(href='#') Celebrate success
+                      li#ECID4.last
+                        a(href='#') Confidence-building leadership
+          div
+            .currentform
+              span.lastform
+                | Exercises - Sorting:
+              .forms
+                a.active(href='javascript:;')
+                  span Random
+                a(href='#r')
+                  span Popularity
+                a(href='#')
+                  span Alphabetical
+          .results
+            .largelegend
+            .contentlist
+              .item
+                .overview
+                .detail
+                  .image
+                    img(src='', width='121', height='100')
+                  .time
+                    | 5 min
+                    span.time-end
+                  .descriptions Work joy and efficiency - Celebrate success
+                  h2 Celebrating success effectively
+                  p
+                  div
+                    a.sidearrow(href="JavaScript:void(window.open('ExerciseShow.aspx?SID=83&AUID=791&ExerciseVariantLangID=122','EVLID122','scrollbars=yes,resizable=yes,width=960,height=760'));") Text 
+                  .bottom  
+              .item
+                .overview
+                .detail
+                  .image
+                    img(src='', width='121', height='100')
+                  .time
+                    | 5 min
+                    span.time-end
+                  .descriptions Work joy and efficiency - Confidence-building leadership
+                  h2 Acting stand tall
+                  p a planning
+                  div
+                    a.sidearrow(href="JavaScript:void(window.open('ExerciseShow.aspx?SID=83&AUID=791&ExerciseVariantLangID=96','EVLID96','scrollbars=yes,resizable=yes,width=960,height=760'));") Text 
+                  .bottom  
+              .item
+                .overview
+                .detail
+                  .image
+                    img(src='', width='121', height='100')
+                  .time
+                    | 5-10 min
+                    span.time-end
+                  .descriptions Work joy and efficiency - Celebrate success
+                  h2 Celebrating success
+                  p
+                    | All you need to know to acknowledge your employees in a way that increases motivation
+                  div
+                    a.sidearrow(href="JavaScript:void(window.open('ExerciseShow.aspx?SID=83&AUID=791&ExerciseVariantLangID=72','EVLID72','scrollbars=yes,resizable=yes,width=960,height=760'));") Text 
+                  .bottom  
+              .item
+                .overview
+                .detail
+                  .image
+                    img(src='', width='121', height='100')
+                  .time
+                    | 10 sec - 5 min
+                    span.time-end
+                  .descriptions Work joy and efficiency
+                  h2 The Elevator exercise
+                  p Describe goals and mission in 10 seconds
+                  div
+                    a.sidearrow(href="JavaScript:void(window.open('ExerciseShow.aspx?SID=83&AUID=791&ExerciseVariantLangID=80','EVLID80','scrollbars=yes,resizable=yes,width=960,height=760'));") Text 
+                  .bottom  

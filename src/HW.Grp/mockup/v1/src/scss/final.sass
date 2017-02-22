@@ -1,0 +1,888 @@
+@media print
+  #admin
+    .headergroup, #contextbar
+      display: none
+
+#admin
+  font-family: arial, sans-serif
+  .grid_16
+    padding-right: 0
+  .headergroup .p2
+    line-height: 1.1em
+  .logincontainer
+    background: none
+    font-size: 15px
+    padding-top: 12px
+    .gears
+      background: url("resources/admin/gears.gif") no-repeat
+      float: right
+      height: 64px
+      padding: 15px 0 0 134px
+      margin-right: 30px
+  .headergroup #submenu
+    background: #cccccc
+    height: 40px
+    padding-left: 0
+    margin-bottom: 40px
+    margin-top: 10px
+  #submenu
+    a
+      margin-top: 0
+      height: 40px
+      padding: 0 23px
+      margin: 0
+      margin-right: 1px
+      line-height: 40px
+      background: url("resources/admin/submenu.gif") center 0
+      font-size: 18px
+      &:hover
+        background: url("resources/admin/submenu.gif") center -40px
+        text-decoration: none
+      &.active
+        color: #fff
+        background: url("resources/admin/submenu.gif") center -120px
+    .active:hover
+      background: url("resources/admin/submenu.gif") center -120px
+    .description
+      width: 100%
+      float: left
+      height: 40px
+      line-height: 40px
+      margin-left: 20px
+  .contentgroup
+    margin-top: 35px
+  #contextbar
+    width: 100%
+    float: left
+    margin-bottom: 10px
+    div
+      padding-left: 20px
+    input
+      font-size: 15px
+      margin-top: -2px
+    .top
+      border-top: 1px solid #b0e1f3
+      background: #e3f4fb
+      margin-bottom: 2px
+      height: 70px
+      line-height: 70px
+      font-size: 18px
+      .search
+        background: url("resources/admin/search.png") left center no-repeat
+        padding-left: 39px
+      input
+        margin: 0 0 0 7px
+    .bottom
+      background: #cdecf7
+      height: 41px
+      line-height: 41px
+      font-size: 15px
+      a
+        color: #4d4d4d
+        margin-right: 26px
+        background: url("resources/admin/organization_sprites.png") no-repeat left 1px
+        padding-left: 21px
+        height: 16px
+        letter-spacing: 1px
+      .add-unit
+        background: url("resources/admin/organization_sprites.png") no-repeat left 1px
+      .import-unit
+        background: url("resources/admin/organization_sprites.png") no-repeat left -16px
+      .add-user
+        background: url("resources/admin/organization_sprites.png") no-repeat left -33px
+      .import-users
+        background: url("resources/admin/organization_sprites.png") no-repeat left -52px
+    .inpt
+      width: 350px
+    .maxInpt
+      max-width: 750px
+    .desc
+      display: block
+      float: left
+      /*width:120px;
+      width: 100px
+    .descLong
+      display: block
+      float: left
+      width: 150px
+    .btn
+      margin: 5px 14px 0px 0px
+    .actionBlock
+      margin-bottom: 10px
+      padding-top: 10px
+      margin-top: 2px
+      font-size: 15px
+    .actionPane
+      background: #e3f4fb
+      border-bottom: 1px solid #97D2EB
+    .actionPane2
+      background: #cdecf7
+      border-bottom: 1px solid #97D2EB
+      border-top: 1px solid #97D2EB
+    .settingsPane
+      border-top: 1px solid #b0e1f3
+      border-bottom: 1px solid #97D2EB
+      background: #e3f4fb
+      margin-bottom: 10px
+      padding-top: 10px
+      padding-bottom: 10px
+      margin-top: 2px
+      font-size: 15px
+  .smallContent
+    font-size: 12px
+
+.detail
+  width: 32px
+  height: 16px
+  background: url(https://healthwatch.se/includes/resources/myhealth_statistics_bar_detail_toggle.gif)
+
+.button
+  display: inline-block
+  outline: none
+  cursor: pointer
+  text-align: center
+  text-decoration: none
+  padding: .5em 2em .55em
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3)
+  -webkit-border-radius: .4em
+  -moz-border-radius: .4em
+  border-radius: .4em
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2)
+  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2)
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2)
+  &:hover
+    text-decoration: none
+  &:active
+    position: relative
+    top: 1px
+
+.white
+  color: #606060
+  border: solid 1px #b7b7b7
+  &:hover
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#dcdcdc))
+
+.small
+  font-size: 11px
+  padding: .2em 1em .275em
+
+.report-part
+  border: 1px solid #e7e7e7
+
+.report-part-subject
+  background: #efefef
+  padding: 5px 0 5px 20px
+
+.report-part-content
+  padding: 20px
+
+.chart-description1
+  border: 1px solid #efefef
+  padding: 5px
+  background-color: #fcfcfc
+  margin-bottom: 5px
+  font-size: 9pt
+
+/*
+ *html5doctor.com Reset Stylesheet (Eric Meyer's Reset Reloaded + HTML5 baseline)
+ *v1.4 2009-07-27 | Authors: Eric Meyer & Richard Clark
+ *html5doctor.com/html-5-reset-stylesheet/
+
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, address, code, del, em, img, q, small, var, b, i, dl, dt, dd, ol, ul, li, form, label, figure, footer, header, time
+  margin: 0
+  padding: 0
+  border: 0
+  outline: 0
+  font-size: 100%
+  vertical-align: baseline
+  background: transparent
+
+figure, footer, header
+  display: block
+
+q
+  quotes: none
+  &:before, &:after
+    content: ''
+    content: none
+
+a
+  margin: 0
+  padding: 0
+  font-size: 100%
+  vertical-align: baseline
+  background: transparent
+
+del
+  text-decoration: line-through
+
+/* tables still need cellspacing="0" in the markup
+
+table
+  border-collapse: collapse
+  border-spacing: 0
+
+hr
+  display: block
+  height: 1px
+  border: 0
+  border-top: 1px solid #ccc
+  margin: 1em 0
+  padding: 0
+
+input, select
+  vertical-align: middle
+
+/* END RESET CSS
+
+/*	Default styles
+
+h1, h2, h3, h4, h5, h6
+  text-rendering: optimizeLegibility
+
+table
+  font-size: inherit
+  font: 100%
+
+select, input, textarea
+  font: 99% sans-serif
+
+/* normalize monospace sizing
+ * en.wikipedia.org/wiki/MediaWiki_talk:Common.css/Archive_11#Teletype_style_fix_for_Chrome
+
+code
+  font-family: monospace, sans-serif
+
+small
+  font-size: 85%
+
+th
+  font-weight: bold
+
+input
+  &[type="radio"]
+    vertical-align: text-bottom
+  &[type="checkbox"]
+    vertical-align: bottom
+    *vertical-align: baseline
+
+.ie6 input
+  vertical-align: text-bottom
+
+label
+  cursor: pointer
+
+input
+  &[type=button], &[type=submit]
+    cursor: pointer
+
+button
+  cursor: pointer
+
+/* These selection declarations have to be separate.
+ * No text-shadow: twitter.com/miketaylr/status/12228805301
+
+\::-moz-selection, ::selection
+  text-shadow: none
+  color: white
+  background: #3B92C7
+
+html
+  overflow-y: scroll
+
+/* make buttons play nice in IE:
+ * www.viget.com/inspire/styling-the-button-element-in-internet-explorer/
+
+button
+  width: auto
+  overflow: visible
+
+/* bicubic resizing for non-native sized IMG:
+ * code.flickr.com/blog/2008/11/12/on-ui-quality-the-little-things-client-side-image-resizing/
+
+.ie7 img
+  -ms-interpolation-mode: bicubic
+
+/* >> The Magnificent CLEARFIX <<
+
+* html .clearfix
+  height: 1%
+
+/* Hides from IE-mac \
+
+.hidden
+  display: none
+  visibility: hidden
+
+/* jQuery UI overrides
+
+.ui-datepicker
+  font-size: 12px !important
+
+/* Customized default styles
+
+body
+  font: 13px sans-serif
+  *font-size: small
+  *font: x-small
+  line-height: 1.22
+  font-family: georgia, serif
+  font-size: 1em
+  color: #666
+  font-weight: 85pt
+  background: url("resources/background.gif")
+  background-position: center top
+
+a
+  color: #3a80b7
+  font-style: normal
+  text-decoration: none
+  cursor: pointer
+  &:link
+    -webkit-tap-highlight-color: #3a80b7
+  &:hover, &:active
+    text-decoration: underline
+  &:visited
+    text-decoration: #666
+
+h1
+  font-size: 1.5em
+  line-height: 120%
+  font-style: normal
+  font-weight: normal
+  letter-spacing: 1px
+
+h2
+  font-size: 1.5em
+  line-height: 120%
+  font-style: normal
+  padding-top: 27px
+  font-weight: normal
+  letter-spacing: 1px
+
+h3
+  font-weight: normal
+  font-size: 15px
+
+hr
+  background: #fff url("resources/border.gif") no-repeat 24px 0
+  border: none
+  border-width: 0px
+  width: 972px
+  padding: 0 13px
+  margin-left: -26px
+  height: 10px
+  float: left
+
+/* Helper styles
+
+.placeholder
+  color: #aaa
+
+/* 	Sitewide element styles
+
+.container_16
+  background: #fff
+
+.contentgroup
+  /*padding-bottom: 80px !important;
+
+/* 	header specific styles
+
+.headergroup
+  height: 186px
+  background: #fff
+  .p2
+    margin-top: 32px
+    margin-left: 20px
+    font-size: 20px
+    font-family: arial, Helvetica, sans-serif
+    line-height: 0.87em
+    height: 100px
+    a
+      margin-top: 0px
+  .logincontainer
+    margin-top: 30px
+    font-family: arial, Helvetica, sans-serif
+    width: 330px
+    .login_label
+      background: url("resources/login_key.gif") no-repeat 0px 3px
+      padding-left: 18px
+      margin-bottom: 3px
+    input
+      width: 120px
+      height: 24px
+      border: 2px solid #E6E6E6
+      margin-bottom: 3px
+      font-size: 13px
+      padding-left: 5px
+      float: left
+      margin-right: 2px
+      background: #F6F6F6
+      &[type=submit]
+        background: #FFF url("resources/login_button.png") no-repeat 1px 1px
+        width: 32px
+        height: 30px
+    .support
+      font-size: 12px
+      margin-right: 10px
+  #submenu
+    background: url("resources/landing_articles/landing_submenu.gif") no-repeat
+    height: 56px
+    padding-left: 2px
+    margin-top: -2px
+    font-family: arial, helvetica, arial, sans-serif
+    font-size: 15px
+
+.ie7 .headergroup #submenu
+  margin-top: -6px
+
+.ie9 .headergroup #submenu
+  margin-top: -3px
+
+.headergroup #submenu a
+  margin-left: 20px
+  float: left
+  margin-top: 18px
+  margin-right: 4px
+  color: #fff
+
+#submenu a.active
+  background: transparent url("resources/landing_articles/landing_submenu_active_a.gif") no-repeat scroll top right
+  color: #666666
+  display: block
+  float: left
+  height: 32px
+  margin-right: 6px
+  padding-right: 2px
+  /* sliding doors padding
+  text-decoration: none
+  margin-top: 12px
+  span
+    background: transparent url("resources/landing_articles/landing_submenu_active_span.gif") no-repeat
+    display: block
+    line-height: 14px
+    padding: 9px 10px 9px 10px
+
+/*	Footer specific styles
+
+/* 	Landing Page specific styles
+
+.container_16
+  /*z-index: 50;
+   *opacity: 0.55 !important;
+
+.contentgroup
+  background: #fff
+
+/* 	article specific styles
+
+/* 	sidebar specific styles
+
+/* index detail specific styles
+
+.detail .contentgroup
+  margin-top: 36px
+
+.form_footer
+  background: url("resources/myhealth/form/myhealth_form_footer.gif")
+  width: 868px
+  height: 31px
+  float: left
+  border-top: 1px solid #DDD
+  position: relative
+  top: -1px
+  left: -1px
+  padding: 21px 52px
+
+form input[type=submit]
+  /*background: url('resources/myhealth_submit.gif') no-repeat;
+   *border: 0;
+  height: 32px
+  /*width: 99px;
+  margin-right: 30px
+
+.form_footer a
+  color: #999999
+  font-size: 12px
+  text-decoration: underline
+
+/* Exercises
+
+.header
+  padding: 10px 18px
+  width: 928px
+  height: 27px
+  color: #3B92C7
+  font-size: 26px
+  letter-spacing: 0
+
+.sidearrow
+  background: url("resources/myhealth/form/myhealth_formchoser_arrow.gif") no-repeat
+  margin-top: 3px
+  padding-left: 21px
+  padding-top: 1px
+  margin-right: 10px
+  height: 19px
+  float: left
+  margin-right: 0px
+  color: #3a80b7
+  font-style: normal
+  text-decoration: none
+
+.exercises
+  .sidearrow
+    padding-right: 16px
+    margin-top: 8px
+    font-size: 13px
+  .forms a
+    background: transparent url("resources/myhealth/form/myhealth_formchoser_passive_a.gif") no-repeat scroll top right
+    color: #1C73A8
+    display: block
+    float: left
+    height: 26px
+    margin-left: 9px
+    padding-right: 2px
+    /* sliding doors padding
+    text-decoration: none
+    color: #fff
+    font-size: 13px
+    margin-top: -1px
+    color: #fff
+    span
+      background: transparent url("resources/myhealth/form/myhealth_formchoser_passive_span.gif") no-repeat
+      display: block
+      padding: 5px 7px 8px 9px
+      color: #1C73A8
+    &.active
+      background: transparent url("resources/myhealth/form/myhealth_formchoser_active_a.gif") no-repeat scroll top right
+      span
+        background: transparent url("resources/myhealth/form/myhealth_formchoser_active_span.gif") no-repeat
+        color: #fff
+  .statschosergroup
+    height: 106px
+    padding-top: 24px
+    padding-left: 2px
+    background: #EDF7FC url("resources/myhealth_statistics_stats.gif") repeat-x
+    border-bottom: 1px solid #DDD
+    padding-right: 15px
+    font-size: 15px
+    .header
+      float: left
+      width: auto
+      padding-top: 5px
+    .statschoser
+      background: url("resources/myhealth_exercises_statschooser_bgr.gif") no-repeat
+      width: 767px
+      height: 78px
+      float: right
+      padding: 4px
+      .filter
+        .title
+          background: url("resources/myhealth_statistics_statschooser_icons.gif") no-repeat
+          margin-left: 2px
+          padding-left: 21px
+          height: 16px
+          margin-bottom: 10px
+        &.who .title
+          background-position: 0 -32px
+        &.misc .title
+          background-position: 0 -48px
+        float: left
+        width: 360px
+        padding: 10px
+  .currentform
+    padding: 15px
+    padding-left: 18px
+    font-size: 13px
+    padding-top: 12px
+    span
+      margin-top: 3px
+      padding-top: 1px
+      height: 19px
+      margin-right: 2px
+      color: #3a80b7
+      font-style: normal
+      text-decoration: none
+      &.lastform
+        padding-left: 21px
+        background: url("resources/myhealth/form/myhealth_formchoser_arrow_down.gif") no-repeat
+      &.period
+        color: #666
+  .results
+    background: #F7F7F7 url("resources/myhealth_statistics_meta.gif") repeat-x
+    padding: 21px 18px
+    float: left
+    padding-top: 9px
+    .largelegend
+      margin-top: 9px
+      margin-bottom: 22px
+      color: #808080
+      float: left
+      font-size: 12px
+      width: 100%
+  .lastform
+    float: left
+  .forms
+    float: left
+    margin-bottom: 10px
+    margin-left: -3px
+    span
+      margin-top: 0
+  .statschosergroup .statschoser .filter
+    &.who .title
+      background-position: 0 -32px
+    float: left
+    width: 360px
+    padding: 10px
+  .results .contentlist .item
+    background: url("resources/myhealth/statistics/myhealth_statistics_bar_bgr.gif") no-repeat
+    float: left
+    min-height: 16px
+    width: 912px
+    margin: -1px
+    margin-bottom: 0px
+    padding: 10px
+    padding-bottom: 10px
+    padding-top: 14px
+    font-size: 14px
+    &.active
+      cursor: auto
+      background-position: 0px -36px
+    .time
+      float: right
+      margin-right: 22px
+      padding-left: 32px
+      background: #eeeeee url(resources/ovningar/clock_1.png) no-repeat
+      height: 28px
+      line-height: 30px
+      max-width: 250px
+    .time-end
+      float: right
+      background: #eeeeee url(resources/ovningar/clock_2.png) no-repeat right
+      height: 28px
+      width: 10px
+      color: #eeeeee
+      position: relative
+      left: 4px
+      display: inline
+
+/* very random placement of this code.
+
+/* Hide this element if not needed
+
+.ie6 .exercises .results .contentlist .item .time-end, .ie7 .exercises .results .contentlist .item .time-end
+  top: -30px
+
+.exercises
+  .results .contentlist .item
+    .descriptions
+      font-size: 11px
+    .image
+      margin: 0 22px
+      margin-right: 25px
+      width: 121px
+      height: 100px
+      background: lightgrey
+      float: left
+    h2
+      padding: 5px 0
+      font-size: 16px
+      font-weight: bold
+    p
+      font-size: 13px
+      max-width: 887px
+      max-height: 30px
+    .detail
+      margin-left: -10px
+      padding-top: 10px
+      min-height: 120px
+      background: #fff
+      width: 930px
+      cursor: auto
+      border-left: 1px solid #e8e8e8
+      border-right: 1px solid #e8e8e8
+      .bottom
+        width: 110%
+        background: url("resources/myhealth_excersises_bottom.gif") no-repeat
+        height: 4px
+        margin-left: -1px
+        margin-top: 20px
+  .bottom
+    width: 972px
+    height: 4px
+    float: left
+    background: url("resources/myhealth_statistics_bottom.gif")
+    margin-left: -1px
+
+/* semigeneralized exercises view styles
+
+/* Dropdown styles
+
+.dropdown
+  dd
+    margin: 0px
+    padding: 0px
+    position: relative
+  a
+    color: #fff
+    text-decoration: none
+    outline: none
+    font-size: 14px
+  dt a
+    display: block
+    height: 30px
+
+.statschoser dt a
+  background: #428cb8 url(resources/myhealth_statistics_statschoser_dropdown.gif) no-repeat scroll 0% 0%
+  width: 236px
+
+.exercises .statschoser dt a
+  background: #428cb8 url(resources/myhealth_exercises_dropdown.gif) no-repeat scroll 0% 0%
+  width: 361px
+
+.dropdown
+  dt a span
+    cursor: pointer
+    display: block
+    padding: 10px
+    padding-top: 6px
+  dd ul
+    color: #C5C0B0
+    display: none
+    left: 0px
+    position: absolute
+    z-index: 98
+    top: 2px
+    width: 236px
+    overflow: ellipsis
+    list-style: none
+
+.exercises .dropdown dd ul
+  width: 361px
+
+.dropdown
+  span.value
+    display: none
+    visibility: hidden
+  dd ul li
+    a
+      padding: 5px 10px
+      display: block
+      background: url("resources/myhealth_statistics_statschoser_dropdown_active.gif") repeat-x #58a8cb
+      border-bottom: 1px solid #51a2c8
+      &:hover
+        background: url("resources/myhealth_statistics_statschoser_dropdown_active_hover.gif") repeat-x
+    &:first-child a
+      background: url("resources/myhealth_statistics_statschoser_dropdown_active_edge.gif") no-repeat 0 0
+      &:hover
+        background: url("resources/myhealth_statistics_statschoser_dropdown_active_edge.gif") no-repeat -236px 0
+
+/*.dropdown dd ul li {
+ *	cursor: crosshair;
+ *}
+
+.exercises .dropdown dd ul li:first-child a
+  background: url("resources/myhealth_exercises_dropdown_active_edge.gif") no-repeat 0 0
+  &:hover
+    background: url("resources/myhealth_exercises_dropdown_active_edge.gif") no-repeat -361px 0
+
+.dropdown dd ul li.last a
+  background: url("resources/myhealth_statistics_statschoser_dropdown_active_edge.gif") no-repeat 0px -63px
+  border-bottom: 0
+
+.exercises .dropdown dd ul li.last a
+  background: url("resources/myhealth_exercises_dropdown_active_edge.gif") no-repeat 0px -63px
+  border-bottom: 0
+
+.dropdown dd ul li.last a:hover
+  background: url("resources/myhealth_statistics_statschoser_dropdown_active_edge.gif") no-repeat -236px -63px
+
+.exercises .dropdown dd ul li.last a:hover
+  background: url("resources/myhealth_exercises_dropdown_active_edge.gif") no-repeat -361px -63px
+
+.ie7
+  .dropdown dd ul li.last a
+    background: transparent url("resources/myhealth_statistics_statschoser_dropdown_active_edge.gif") no-repeat 0px -61px
+    padding-bottom: 11px
+    &:hover
+      background: transparent url("resources/myhealth_statistics_statschoser_dropdown_active_edge.gif") no-repeat -236px -61px
+      padding-bottom: 11px
+  .exercises .dropdown dd ul li.last a
+    background: transparent url("resources/myhealth_exercises_dropdown_active_edge.gif") no-repeat 0px -61px
+    padding-bottom: 11px
+    &:hover
+      background: transparent url("resources/myhealth_exercises_dropdown_active_edge.gif") no-repeat -236px -61px
+      padding-bottom: 11px
+
+.var
+  dt a
+    background: #eee url(resources/myhealth_statistics_white_dropdown.gif) no-repeat scroll 0% 0%
+    width: 206px
+    height: 27px
+    font-size: 13px
+    span
+      color: #666 !important
+  ul li a
+    color: #666 !important
+
+.var1 dt a span
+  color: #4684EE !important
+
+.var2 dt a span
+  color: #FF9900 !important
+
+.var3 dt a span
+  color: #00804F !important
+
+.var4 dt a span
+  color: #DC3912 !important
+
+.var dd ul
+  a
+    font-size: 13px
+  background: #eee
+  display: none
+  left: 0px
+  position: absolute
+  top: 2px
+  width: 205px
+  overflow: ellipsis
+  list-style: none
+  li
+    &:first-child a
+      background: url("resources/myhealth_statistics_white_dropdown_active_edge.gif") no-repeat 0 0 #f2f2f2
+      border: 0
+      border-bottom: 1px solid #C8C8C8
+      &:hover
+        background: url("resources/myhealth_statistics_white_dropdown_active_edge.gif") no-repeat -205px 0 #fdfdfd
+    a
+      background: url("resources/myhealth_statistics_white_dropdown_active.gif") #f2f2f2
+      border-bottom: 1px solid #C8C8C8
+      border-right: 1px solid #C8C8C8
+      border-left: 1px solid #C8C8C8
+      &:hover
+        background: #fdfdfd
+    &.last a
+      background: url("resources/myhealth_statistics_white_dropdown_active_edge.gif") no-repeat 0 -53px #f2f2f2
+      border: 0
+      &:hover
+        background: url("resources/myhealth_statistics_white_dropdown_active_edge.gif") no-repeat -205px -53px #fdfdfd
+        border: 0
+
+.ie7 .var dd ul li.last a
+  background: transparent url("resources/myhealth_statistics_white_dropdown_active_edge.gif") no-repeat 0px -47px
+  padding-bottom: 10px
+  &:hover
+    background: transparent url("resources/myhealth_statistics_white_dropdown_active_edge.gif") no-repeat -205px -47px
+    padding-bottom: 11px
+
+/* statistics bottom radius thingy findfind
+
+@media all and (max-device-width: 480px)
+  .headergroup .logincontainer input[type=submit]
+    position: relative
+    left: 274px
+    top: -35px
+
+/*# sourceMappingURL=styles.css.map

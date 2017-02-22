@@ -1,0 +1,35 @@
+doctype html
+html
+  include includes/head.jade
+  body
+    form
+      #admin.container_16
+        include includes/navbar.jade
+        mixin navbar('org.html')
+        .contentgroup.grid_16
+          #contextbar
+            include includes/orgnav.jade
+            .actionPane
+              .actionBlock
+                span.desc Unit name
+                input#ContentPlaceHolder1_Department.inpt(name='_ctl0:ContentPlaceHolder1:Department', type='text')
+                | (for display in hierarchy)
+                br
+                span.desc Unit ID
+                input#ContentPlaceHolder1_DepartmentShort.inpt(name='_ctl0:ContentPlaceHolder1:DepartmentShort', type='text')
+                | (for user import/export, short name, no spaces)
+                br
+                span.desc Parent unit
+                select#ContentPlaceHolder1_ParentDepartmentID.maxInpt(name='_ctl0:ContentPlaceHolder1:ParentDepartmentID')
+                  option(value='NULL') < top level >
+                  option(value='925') Department A
+                  option(value='1256') Department A » Department A1
+                  option(value='928') Department A » Department A1 » Team 1
+                  option(value='1257') Department A » Department A1 » Team 1 » Team 1a
+                  option(value='3541') Department B
+                br
+                input#ContentPlaceHolder1_CancelUnit.btn(type='submit', name='_ctl0:ContentPlaceHolder1:CancelUnit', value='Cancel')
+                input#ContentPlaceHolder1_SaveUnit.btn(type='submit', name='_ctl0:ContentPlaceHolder1:SaveUnit', value='Save')
+          div(style='clear: both')
+            span#ContentPlaceHolder1_OrgTree
+              include includes/org.jade

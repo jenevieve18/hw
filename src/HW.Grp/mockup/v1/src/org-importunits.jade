@@ -1,0 +1,32 @@
+doctype html
+html
+  include includes/head.jade
+  body
+    form
+      #admin.container_16
+        include includes/navbar.jade
+        mixin navbar('org.html')
+        .contentgroup.grid_16
+          #contextbar
+            include includes/orgnav.jade
+            .actionPane
+              .actionBlock
+                span.descLong Filename
+                input#ContentPlaceHolder1_UnitsFilename.inpt(name='_ctl0:ContentPlaceHolder1:UnitsFilename', type='file')
+                br
+                span.descLong Default parent unit
+                select#ContentPlaceHolder1_ImportUnitsParentDepartmentID.maxInpt(name='_ctl0:ContentPlaceHolder1:ImportUnitsParentDepartmentID')
+                  option(value='NULL') < top level >
+                  option(value='925') Department A
+                  option(value='1256') Department A » Department A1
+                  option(value='928') Department A » Department A1 » Team 1
+                  option(value='1257') Department A » Department A1 » Team 1 » Team 1a
+                  option(value='3541') Department B
+                br
+                span(style='color: #CC0000;')
+                  span#ContentPlaceHolder1_ImportUnitsError
+                input#ContentPlaceHolder1_CancelImportUnit.btn(type='submit', name='_ctl0:ContentPlaceHolder1:CancelImportUnit', value='Cancel')
+                input#ContentPlaceHolder1_SaveImportUnit.btn(type='submit', name='_ctl0:ContentPlaceHolder1:SaveImportUnit', value='Save')
+          div(style='clear: both')
+            span#ContentPlaceHolder1_OrgTree
+              include includes/org.jade

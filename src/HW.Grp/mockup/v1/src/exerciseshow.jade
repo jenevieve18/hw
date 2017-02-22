@@ -1,0 +1,81 @@
+doctype html
+html
+  head
+    meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    meta(http-equiv='Pragma', content='no-cache')
+    meta(http-equiv='Expires', content='-1')
+    meta(name='Robots', content='noarchive')
+    meta(name='description', content='Exercises')
+    title Exercises - HealthWatch
+    link(rel='shortcut icon', href='favicon.ico')
+    link(rel='apple-touch-icon', href='apple-touch-icon.png')
+    link(type='text/css', rel='stylesheet', href='assets/css/960.css')
+    link(type='text/css', rel='stylesheet', href='exerciseshow_files/site.css')
+    link(type='text/css', href='https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css', rel='Stylesheet')
+    style(type='text/css').
+      p {
+        margin:1em 0;
+      }
+      ul, ol {
+        margin:0 2em;
+      }
+    script(type='text/javascript', src='https://code.jquery.com/jquery-1.12.4.min.js')
+    script(type='text/javascript', src='https://code.jquery.com/ui/1.12.1/jquery-ui.min.js')
+    script(type='text/JavaScript').
+      eval(function (p, a, c, k, e, d) { e = function (c) { return (c < a ? '' : e(parseInt(c / a))) + ((c = c % a) > 35 ? String.fromCharCode(c + 29) : c.toString(36)) }; if (!''.replace(/^/, String)) { while (c--) d[e(c)] = k[c] || e(c); k = [function (e) { return d[e] } ]; e = function () { return '\\\w+' }; c = 1 }; while (c--) if (k[c]) p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]); return p } ('9 e(4,s){3 6=4.o(\' \');3 n=6[0];3 f=6[1];6[0]="";6[1]="";4=6.H(" ").G(2);3 g=\'\';3 j=4.o(\' \');c(3 i F j){3 m=j[i];3 h=k(m,n,f);d(s&&i<7)E;d(s&&h==D)C;g+=B.A(h)}a g}9 z(4){x.w=e(4,v)}9 u(4,n,f){r.q(e(4,l));a l}9 k(b,8,y){d(y%2==0){5=1;c(3 i=1;i<=y/2;i++){t=(b*b)%8;5=(t*5)%8}}p{5=b;c(3 i=1;i<=y/2;i++){t=(b*b)%8;5=(t*5)%8}}a 5}', 44, 44, '|||var|cds|ar|ns||ex|function|return||for|if|ds|dk|dds|ddc||ccs|em|true|cc||split|else|write|document|||de|false|location|parent||dm|fromCharCode|String|break|63|continue|in|substr|join'.split('|'), 0, {}))
+    script(type='text/JavaScript').
+      AC_FL_RunContent = 0;
+    script(type='text/javascript', src='assets/js/AC_RunActiveContent.js')
+    script(type='text/javascript').
+      $(document).ready(function () { $("#hide").toggle(function () { $("#underlay").hide(); }, function () { $("#underlay").show(); }); $("#hide_ol").toggle(function () { $(".index").hide(); }, function () { $(".index").show(); }); $('[placeholder]').focus(function () { var input = $(this); if (input.val() == input.attr('placeholder')) { input.val(''); input.removeClass('placeholder'); } }).blur(function () { var input = $(this); if (input.val() == '' || input.val() == input.attr('placeholder')) { input.addClass('placeholder'); input.val(input.attr('placeholder')); } }).blur(); });
+    script(type='text/javascript').
+      window.history.forward(1);
+    script(type='text/javascript').
+      $("body").addClass("popup"); $(document).ready(function () { $("body").addClass("popup"); });
+    script(type='text/javascript', src='assets/js/AC_ActiveX.js')
+  //if lt IE 7 
+    body.ie6  
+  //if IE 7 
+    body.ie7  
+  //if IE 8 
+    body.ie8  
+  //if IE 9 
+    body.ie9  
+  // [if (gt IE 9)|!(IE)] <!
+  body.popup
+    form
+      input#sponsorID(type='hidden', value='83')
+      input#sponsorAdminID(type='hidden', value='791')
+      input#exerciseVariantLangID(type='hidden', value='122')
+      input#sponsorAdminExerciseID(type='hidden', value='0')
+      .popupie
+        .header
+          h1 HealthWatch.se
+          a#printBtn.print(href='#', onclick='window.print();return false;')
+            | Print
+        .content
+          img(src='assets/img/hwlogosmall.gif')
+          br
+          br
+          script(src="assets/js/exerciseshow.js")
+          .exercise-content
+            h1 Celebrate success efficiently!
+            p Required time: Preparation 2 min; implementation of about 20 minutes together with your employees.
+            p If you as a manager understand your employees' different preferences and wishes, it will increase your ability to find ways to celebrate success that with motivate them.
+            p This is a form that you can distribute to your employees to find out how they would like you to celebrate successes.
+            p You can choose to distribute it as it is - or better yet, brainstorm in a group, and then compile the favorites in the form.
+            h2 Favorite Celebration
+            p Success should be celebrated! You can celebrate in several ways - and what is perceived as relevant ways varies between individuals. Below you can fill in what you think you can do to celebrate something which has been successful. The aim is to give your manager ideas about what you in particular appreciate.
+            table(width="100%")
+              tr
+                td(valign="top")
+                  p Begin to generate as many different suggestions of celebration you can think of.
+                  ul#sortable1(style='padding-right: 0px; padding-left: 0px; list-style-type: none; margin: 0px 0px 0px 30px; width: 300px;')
+                  p
+                    button#addItem.btn(href='javascript:;') Add
+                    button#save.btn(href='javascript:;', onclick="save('Saving...', 'Save')") Save
+                td(valign="top")
+                  p Rank your suggestions by writing a figure in the proposals; 1 for the proposal that would feel the best for you, 2 for the second best and so on.
+                  ul#sortable.ui-sortable(style='padding-right: 0px; padding-left: 0px; list-style-type: none; margin: 0px 0px 0px 30px; width: 300px;')
+        .footer © 2016 www.healthwatch.se
