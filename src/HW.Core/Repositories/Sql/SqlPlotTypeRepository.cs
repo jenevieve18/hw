@@ -34,7 +34,8 @@ SELECT TOP 1 Id FROM PlotType ORDER BY Id DESC"
 			string query = string.Format(
 				@"
 UPDATE PlotType SET Name = @Name, Description = @Description
-WHERE PlotTypeID = @Id"
+--WHERE PlotTypeID = @Id
+WHERE Id = @Id"
 			);
 			ExecuteNonQuery(
 				query,
@@ -172,7 +173,8 @@ WHERE PlotTypeID = @PlotTypeId"
 				@"
 SELECT *
 FROM PlotType
-WHERE PlotTypeID = @Id"
+--WHERE PlotTypeID = @Id
+WHERE Id = @Id"
 			);
 			PlotType p = null;
 			using (SqlDataReader rs = ExecuteReader(query, "eFormSqlConnection", new SqlParameter("@Id", id))) {
