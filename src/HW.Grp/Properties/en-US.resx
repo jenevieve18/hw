@@ -150,6 +150,9 @@
   <data name="cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="chart.description" xml:space="preserve">
+    <value>Chart Descriptions</value>
+  </data>
   <data name="count.answer" xml:space="preserve">
     <value>Answer count</value>
   </data>

@@ -55,7 +55,8 @@
             <% if (reportParts[0] is ReportPartLang)
                { %>
             <div class="action">
-                <div class="chart-descriptions" title="Chart Descriptions">
+                <%--<div class="chart-descriptions" title="Chart Descriptions">--%>
+                <div class="chart-descriptions" title="<%= R.Str(lid, "chart.description", "Chart Descriptions") %>">
                     <div>
                         <% foreach (var p in plotTypes)
                            { %>
@@ -106,7 +107,8 @@
                else
                { %>
             <div class="action">
-                <div class="chart-descriptions" title="Chart Descriptions">
+                <%--<div class="chart-descriptions" title="Chart Descriptions">--%>
+                <div class="chart-descriptions" title="<%= R.Str(lid, "chart.description", "Chart Descriptions") %>">
                     <div>
                         <% foreach (var p in plotTypes)
                            { %>
