@@ -8,7 +8,7 @@ $(function() {
 
   $('input[name="input0[]"]').change(function() {
     var checked = $('input[name="input0[]"]:checked').length;
-    if (checked === answers1.length) {
+    if (checked == answers1.length) {
       $('input[name="input0[]"]:not(:checked)').attr('disabled', true);
     } else {
       $('input[name="input0[]"]:disabled').attr('disabled', false);
