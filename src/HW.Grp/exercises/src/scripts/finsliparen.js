@@ -12,11 +12,11 @@ $(function () {
     inputs.push({ id: $('.input4').data('id'), components: html.getElementTexts($('.input4 li')) });
     inputs.push({ id: $('.input5').data('id'), components: html.getElementTexts($('.input5 li')) });
     inputs.push({ id: $('.input6').data('id'), components: html.getElementTexts($('.input6 li')) });
-    
+
     healthwatch.grp(exerciseRepo).saveManagerExercise({
         id: exerciseId,
         sponsorAdmin: { id: $('#sponsorAdminID').val() || 0 },
-        exerciseVariantLanguage: { exerciseVariantLanguage: $('#exerciseVariantLanguage').val() || 0 },
+        exerciseVariantLanguage: { id: $('#exerciseVariantLangID').val() || 0 },
         inputs: inputs
       },
       function(message) {

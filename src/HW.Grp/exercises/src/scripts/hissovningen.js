@@ -16,7 +16,7 @@ $(function() {
       }
     }, 1000);
   });
-  
+
   $('#btn-save').click(function() {
     healthwatch.grp(exerciseRepo).saveManagerExercise({
         inputs: html.getInputs($('textarea[id^="input"]')),

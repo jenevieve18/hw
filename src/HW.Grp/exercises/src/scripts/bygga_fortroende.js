@@ -3,7 +3,7 @@ var exerciseRepo = new ExerciseRepo();
 $(function () {
 
   var exerciseId = $('#sponsorAdminExerciseID').val() || 0;
-  
+
   var $gallery1 = $("#gallery1"),
     $gallery2 = $("#gallery2"),
     $trigger1 = $("#trigger1"),
@@ -15,7 +15,7 @@ $(function () {
     healthwatch.grp(exerciseRepo).saveManagerExercise({
       id: exerciseId,
       sponsorAdmin: { id: $('#sponsorAdminID').val() || 0 },
-      exerciseVariantLanguage: { exerciseVariantLanguage: $('#exerciseVariantLanguage').val() || 0 },
+      exerciseVariantLanguage: { id: $('#exerciseVariantLangID').val() || 0 },
       inputs: [
         { id: $('.input0').data('id'), components: html.getElementTexts($('.input0 li')) },
         { id: $('.input1').data('id'), components: html.getElementTexts($('.input1 li')) },
@@ -41,13 +41,13 @@ $(function () {
         exercise = newExercise;
       }
       setInputs(
-        { input: exercise.inputs[0], container: '.input0' }, 
-        { input: exercise.inputs[1], container: '.input1' }, 
+        { input: exercise.inputs[0], container: '.input0' },
+        { input: exercise.inputs[1], container: '.input1' },
         { input: exercise.inputs[2], container: '.input2' }
       );
       setInputs(
-        { input: exercise.inputs[3], container: '.input3' }, 
-        { input: exercise.inputs[4], container: '.input4' }, 
+        { input: exercise.inputs[3], container: '.input3' },
+        { input: exercise.inputs[4], container: '.input4' },
         { input: exercise.inputs[5], container: '.input5' }
       );
       init();
@@ -127,7 +127,7 @@ $(function () {
         });
       }
     });
-  
+
     $trigger1.click(function(e) {
       var $target = $(e.target);
       if ($target.is('.ui-icon-trash')) {
@@ -157,7 +157,7 @@ $(function () {
         $gallery1.append($item);
       }
     });
-  
+
     $trigger2.click(function(e) {
       var $target = $(e.target);
       if ($target.is('.ui-icon-trash')) {
@@ -201,7 +201,7 @@ $(function () {
         }
       });
       var impacts = [
-        newExercise.inputs[2].components[3].valueText, 
+        newExercise.inputs[2].components[3].valueText,
         newExercise.inputs[2].components[4].valueText
       ];
       $('.input1 li').each(function(i, component) {
@@ -212,11 +212,11 @@ $(function () {
         }
       });
     });
-    
+
     $('#btn-reset1').click(function() {
       setInputs(
-        { input: newExercise.inputs[0], container: '.input0' }, 
-        { input: newExercise.inputs[1], container: '.input1' }, 
+        { input: newExercise.inputs[0], container: '.input0' },
+        { input: newExercise.inputs[1], container: '.input1' },
         { input: newExercise.inputs[2], container: '.input2' }
       );
       init();
@@ -305,7 +305,7 @@ $(function () {
         }
       });
       var impacts = [
-        newExercise.inputs[5].components[5].valueText, 
+        newExercise.inputs[5].components[5].valueText,
         newExercise.inputs[5].components[6].valueText
       ];
       $('.input4 li').each(function(i, component) {
@@ -316,11 +316,11 @@ $(function () {
         }
       });
     });
-    
+
     $('#btn-reset2').click(function() {
       setInputs(
-        { input: newExercise.inputs[3], container: '.input3' }, 
-        { input: newExercise.inputs[4], container: '.input4' }, 
+        { input: newExercise.inputs[3], container: '.input3' },
+        { input: newExercise.inputs[4], container: '.input4' },
         { input: newExercise.inputs[5], container: '.input5' }
       );
       init();

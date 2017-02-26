@@ -14,7 +14,7 @@ $(function () {
     healthwatch.grp(exerciseRepo).saveManagerExercise({
       id: exerciseId,
       sponsorAdmin: { id: $('#sponsorAdminID').val() || 0 },
-      exerciseVariantLanguage: { exerciseVariantLanguage: $('#exerciseVariantLanguage').val() || 0 },
+      exerciseVariantLanguage: { id: $('#exerciseVariantLangID').val() || 0 },
       inputs: [
         { id: $('.input0').data('id'), components: html.getElementTexts($('.input0 li')) },
         { id: $('.input1').data('id'), components: html.getElementTexts($('.input1 li')) }
