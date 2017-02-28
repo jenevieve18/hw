@@ -1,6 +1,7 @@
 extends includes/layout
 block script
   script(src='assets/exercises/js/budskapssorteraren.js')
+block content
   script.
     var newExercise = {
       inputs: [
@@ -26,7 +27,6 @@ block script
         ] }
       ]
     };
-block content
   h2 Time: 8 minutes
   #message.alert.alert-success.hidden
   p To increase the likelihood that your employees understand and embrace of your message, it is good to express what you want them to do (behaviors) rather than how you want it to be (attitudes, characteristics or attributes). It reduces the risk of misunderstandings and makes it easier to absorb both positive and corrective feedback. Here you can test your skills in distinguishing between behavior (what one says or does) and non-behavior (eg attitudes, characteristics, attributes).

@@ -112,6 +112,34 @@ $(function () {
 		});
 	}
 
+	$behavior.click(function(e) {
+		var $target = $(e.target);
+		if ($target.is('.ui-icon-trash')) {
+			var $item = $target.parent();
+			$item
+				.find('.ui-icon-trash')
+				.remove()
+				.end()
+				.prepend('<span class="ui-icon ui-icon-arrow-4"></span>')
+				.end();
+			$choices.append($item);
+		}
+	});
+
+	$nonBehavior.click(function(e) {
+		var $target = $(e.target);
+		if ($target.is('.ui-icon-trash')) {
+			var $item = $target.parent();
+			$item
+				.find('.ui-icon-trash')
+				.remove()
+				.end()
+				.prepend('<span class="ui-icon ui-icon-arrow-4"></span>')
+				.end();
+			$choices.append($item);
+		}
+	});
+
 	$('#btn-back').hide();
 
 	$('#btn-cheat').click(function () {
