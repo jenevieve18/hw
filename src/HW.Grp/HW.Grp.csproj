@@ -98,7 +98,7 @@
   <ItemGroup>
     <Content Include="AC_ActiveX.js" />
     <Content Include="AC_RunActiveContent.js" />
-    <Content Include="App_Themes\Emua\assets\css\styles.css" />
+    <Content Include="App_Themes\Emua\assets\css\default.css" />
     <Content Include="assets\bootstrap-datepicker\css\bootstrap-combined.min.css" />
     <Content Include="assets\bootstrap-datepicker\css\bootstrap-datepicker.css" />
     <Content Include="assets\bootstrap-datepicker\css\bootstrap-datepicker.min.css" />
@@ -240,8 +240,8 @@
     <Content Include="assets\img\cross.png" />
     <Content Include="assets\img\DelToolSmall.gif" />
     <Content Include="assets\img\disk.png" />
-    <Content Include="assets\img\glyphicons-halflings-white.png" />
-    <Content Include="assets\img\glyphicons-halflings.png" />
+    <Content Include="assets\bootstrap-datepicker\img\glyphicons-halflings-white.png" />
+    <Content Include="assets\bootstrap-datepicker\img\glyphicons-halflings.png" />
     <Content Include="assets\img\graphIcon.gif" />
     <Content Include="assets\img\graphIcon2.gif" />
     <Content Include="assets\img\graphIcon3.gif" />
@@ -972,8 +972,6 @@
   <ItemGroup>
     <Folder Include="App_Code\" />
     <Folder Include="App_Themes\Aqua\assets\" />
-    <Folder Include="App_Themes\Emua\assets\img\" />
-    <Folder Include="App_Themes\Emua\assets\js\" />
     <Folder Include="assets\exercises\js\" />
     <Folder Include="~etc\assets\exercises\js\" />
     <Folder Include="~etc\assets\~etc\bootstrap\js\" />

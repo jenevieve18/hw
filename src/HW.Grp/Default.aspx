@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" EnableTheming="true" Theme="Aqua" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="HW.Grp.Default" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="HW.Grp.Default" %>
 
 <%@ Import Namespace="HW.Core.Helpers" %>
 <%@ Import Namespace="HW.Grp" %>
@@ -28,7 +28,6 @@
 <body>
     <form id="form1" runat="server" class="form-signin">
 
-        <%--<img src="assets/img/hwlogo.png" alt="HealthWatch group administrator" />--%>
         <asp:Image ID="Image1" runat="server" ImageUrl="assets/img/hwlogo.png" />
         <h2>
             <%= R.Str(lid, "login.header", "HealthWatch.se<br>Group administration") %>

@@ -188,13 +188,14 @@ SELECT IDENT_CURRENT('SponsorAdminExerciseDataInput');");
 				foreach (var c in data.Components) {
 					ExecuteNonQuery(
 						@"
-INSERT INTO SponsorAdminExerciseDataInputComponent(SponsorAdminExerciseDataInputID, ValueText, SortOrder, ValueInt)
-VALUES(@SponsorAdminExerciseDataInputID, @ValueText, @SortOrder, @ValueInt)",
+INSERT INTO SponsorAdminExerciseDataInputComponent(SponsorAdminExerciseDataInputID, ValueText, SortOrder, ValueInt, Class)
+VALUES(@SponsorAdminExerciseDataInputID, @ValueText, @SortOrder, @ValueInt, @Class)",
 						"healthWatchSqlConnection",
 						new SqlParameter("@SponsorAdminExerciseDataInputID", sponsorAdminExerciseDataInputID),
 						new SqlParameter("@ValueText", c.ValueText),
 						new SqlParameter("@SortOrder", j++),
-						new SqlParameter("@ValueInt", c.ValueInt)
+						new SqlParameter("@ValueInt", c.ValueInt),
+                        new SqlParameter("@Class", c.Class)
 					);
 				}
 			}
@@ -477,7 +478,8 @@ SELECT SponsorAdminExerciseDataInputComponentID,
 	SponsorAdminExerciseDataInputID,
 	ValueText,
 	SortOrder,
-	ValueInt
+	ValueInt,
+    Class
 FROM SponsorAdminExerciseDataInputComponent
 WHERE SponsorAdminExerciseDataInputID = @SponsorAdminExerciseDataInputID";
 			var components = new List<SponsorAdminExerciseDataInputComponent>();
@@ -488,7 +490,8 @@ WHERE SponsorAdminExerciseDataInputID = @SponsorAdminExerciseDataInputID";
 							Id = GetInt32(rs, 0),
 							ValueText = GetString(rs, 2),
 							SortOrder = GetInt32(rs, 3),
-							ValueInt = GetInt32(rs, 4)
+							ValueInt = GetInt32(rs, 4),
+                            Class = GetString(rs, 5)
 						}
 					);
 				}

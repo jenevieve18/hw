@@ -41,7 +41,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div class="container_16" id="admin">
+        <div class="container_16 container" id="admin">
             <div class="headergroup grid_16">
                 <div class="grid_3 alpha">
                     <%--<img src="assets/img/hwlogo.png" width="186" height="126" alt="HealthWatch group administrator" />--%>
