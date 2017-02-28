@@ -249,14 +249,15 @@ SELECT IDENT_CURRENT('SponsorAdminExerciseDataInput');");
 				foreach (var c in data.Components) {
 					ExecuteNonQuery(
 						@"
-INSERT INTO SponsorAdminExerciseDataInputComponent(SponsorAdminExerciseDataInputID, ValueText, SortOrder, ValueInt)
-VALUES(@SponsorAdminExerciseDataInputID, @ValueText, @SortOrder, @ValueInt)",
+INSERT INTO SponsorAdminExerciseDataInputComponent(SponsorAdminExerciseDataInputID, ValueText, SortOrder, ValueInt, Class)
+VALUES(@SponsorAdminExerciseDataInputID, @ValueText, @SortOrder, @ValueInt, @Class)",
 						"healthWatchSqlConnection",
 						new SqlParameter("@SponsorAdminExerciseDataInputID", sponsorAdminExerciseDataInputID),
 						new SqlParameter("@ValueText", c.ValueText),
 //						new SqlParameter("@SortOrder", c.SortOrder),
 						new SqlParameter("@SortOrder", j++),
-						new SqlParameter("@ValueInt", c.ValueInt)
+						new SqlParameter("@ValueInt", c.ValueInt),
+                        new SqlParameter("@Class", c.Class)
 					);
 				}
 			}
