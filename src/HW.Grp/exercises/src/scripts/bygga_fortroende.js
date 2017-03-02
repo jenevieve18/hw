@@ -1,6 +1,6 @@
 var exerciseRepo = new ExerciseRepo();
 
-$(function () {
+$(function() {
 
   var exerciseId = $('#sponsorAdminExerciseID').val() || 0;
 
@@ -11,24 +11,24 @@ $(function () {
     $trigger2 = $("#trigger2"),
     $impact2 = $("#impact2");
 
-  $('#btn-save').click(function () {
+  $('#btn-save').click(function() {
     healthwatch.grp(exerciseRepo).saveManagerExercise({
-      id: exerciseId,
-      sponsorAdmin: { id: $('#sponsorAdminID').val() || 0 },
-      exerciseVariantLanguage: { id: $('#exerciseVariantLangID').val() || 0 },
-      inputs: [
-        { id: $('.input0').data('id'), components: html.getElementTexts($('.input0 li')) },
-        { id: $('.input1').data('id'), components: html.getElementTexts($('.input1 li')) },
-        { id: $('.input2').data('id'), components: html.getElementTexts($('.input2 li')) },
-        { id: $('.input3').data('id'), components: html.getElementTexts($('.input3 li')) },
-        { id: $('.input4').data('id'), components: html.getElementTexts($('.input4 li')) },
-        { id: $('.input5').data('id'), components: html.getElementTexts($('.input5 li')) }
-      ]
-    },
-      function (message) {
+        id: exerciseId,
+        sponsorAdmin: { id: $('#sponsorAdminID').val() || 0 },
+        exerciseVariantLanguage: { id: $('#exerciseVariantLangID').val() || 0 },
+        inputs: [
+          { id: $('.input0').data('id'), components: html.getElementTexts($('.input0 li')) },
+          { id: $('.input1').data('id'), components: html.getElementTexts($('.input1 li')) },
+          { id: $('.input2').data('id'), components: html.getElementTexts($('.input2 li')) },
+          { id: $('.input3').data('id'), components: html.getElementTexts($('.input3 li')) },
+          { id: $('.input4').data('id'), components: html.getElementTexts($('.input4 li')) },
+          { id: $('.input5').data('id'), components: html.getElementTexts($('.input5 li')) }
+        ]
+      },
+      function(message) {
         $('#message').text(message).fadeIn(1000).fadeOut(1000);
       },
-      function (message, status, error) {
+      function(message, status, error) {
         $('#message').text(message).faceIn(1000).fadeOut(1000);
       }
     );
@@ -36,23 +36,15 @@ $(function () {
 
   healthwatch.grp(exerciseRepo).readManagerExercise(
     exerciseId,
-    function (exercise) {
+    function(exercise) {
       if (exercise === null) {
         exercise = newExercise;
       }
-      setInputs(
-        { input: exercise.inputs[0], container: '.input0' },
-        { input: exercise.inputs[1], container: '.input1' },
-        { input: exercise.inputs[2], container: '.input2' }
-      );
-      setInputs(
-        { input: exercise.inputs[3], container: '.input3' },
-        { input: exercise.inputs[4], container: '.input4' },
-        { input: exercise.inputs[5], container: '.input5' }
-      );
+      setInputs({ input: exercise.inputs[0], container: '.input0' }, { input: exercise.inputs[1], container: '.input1' }, { input: exercise.inputs[2], container: '.input2' });
+      setInputs({ input: exercise.inputs[3], container: '.input3' }, { input: exercise.inputs[4], container: '.input4' }, { input: exercise.inputs[5], container: '.input5' });
       init();
     },
-    function (message, status, error) {
+    function(message, status, error) {
       $('#message').text(message).fadeIn(1000).fadeOut(1000);
     }
   );
@@ -61,14 +53,14 @@ $(function () {
     $(input1.container).empty();
     $(input2.container).empty();
     $(input3.container).empty();
-    $(input1.input.components).each(function (i, component) {
-      $('<li><span class="ui-icon ui-icon-trash"></span>' + component.valueText + '</li>').appendTo(input1.container).fadeIn();
+    $(input1.input.components).each(function(i, component) {
+      $('<li class="' + component.class + '"><span class="ui-icon ui-icon-trash"></span>' + component.valueText + '</li>').appendTo(input1.container).fadeIn();
     });
-    $(input2.input.components).each(function (i, component) {
-      $('<li><span class="ui-icon ui-icon-trash"></span>' + component.valueText + '</li>').appendTo(input2.container).fadeIn();
+    $(input2.input.components).each(function(i, component) {
+      $('<li class="' + component.class + '"><span class="ui-icon ui-icon-trash"></span>' + component.valueText + '</li>').appendTo(input2.container).fadeIn();
     });
-    $(input3.input.components).each(function (i, component) {
-      $('<li><span class="ui-icon ui-icon-arrow-4"></span>' + component.valueText + '</li>').appendTo(input3.container).fadeIn();
+    $(input3.input.components).each(function(i, component) {
+      $('<li class="' + component.class + '"><span class="ui-icon ui-icon-arrow-4"></span>' + component.valueText + '</li>').appendTo(input3.container).fadeIn();
     });
     // init();
   }
@@ -98,9 +90,9 @@ $(function () {
     $impact1.droppable({
       accept: "#gallery1 > li",
       activeClass: "ui-state-highlight",
-      drop: function (event, ui) {
+      drop: function(event, ui) {
         var $item = ui.draggable;
-        $item.fadeOut(function () {
+        $item.fadeOut(function() {
           $item.find('.ui-icon-arrow-4')
             .remove()
             .end()
@@ -114,10 +106,10 @@ $(function () {
     $gallery1.droppable({
       accept: "#trigger1 li, #impact1 li",
       activeClass: "ui-state-default",
-      drop: function (event, ui) {
+      drop: function(event, ui) {
         var $item = ui.draggable;
         $item.removeAttr('style');
-        $item.fadeOut(function () {
+        $item.fadeOut(function() {
           $item.find(".ui-icon-trash")
             .remove()
             .end()
@@ -128,67 +120,7 @@ $(function () {
       }
     });
 
-    $trigger1.click(function(e) {
-      var $target = $(e.target);
-      if ($target.is('.ui-icon-trash')) {
-        var $item = $target.parent();
-        $item.removeAttr('style');
-        $item
-          .find('.ui-icon-trash')
-          .remove()
-          .end()
-          .prepend('<span class="ui-icon ui-icon-arrow-4"></span>')
-          .end();
-        $gallery1.append($item);
-      }
-    });
-
-    $impact1.click(function(e) {
-      var $target = $(e.target);
-      if ($target.is('.ui-icon-trash')) {
-        var $item = $target.parent();
-        $item.removeAttr('style');
-        $item
-          .find('.ui-icon-trash')
-          .remove()
-          .end()
-          .prepend('<span class="ui-icon ui-icon-arrow-4"></span>')
-          .end();
-        $gallery1.append($item);
-      }
-    });
-
-    $trigger2.click(function(e) {
-      var $target = $(e.target);
-      if ($target.is('.ui-icon-trash')) {
-        var $item = $target.parent();
-        $item.removeAttr('style');
-        $item
-          .find('.ui-icon-trash')
-          .remove()
-          .end()
-          .prepend('<span class="ui-icon ui-icon-arrow-4"></span>')
-          .end();
-        $gallery2.append($item);
-      }
-    });
-
-    $impact2.click(function(e) {
-      var $target = $(e.target);
-      if ($target.is('.ui-icon-trash')) {
-        var $item = $target.parent();
-        $item.removeAttr('style');
-        $item
-          .find('.ui-icon-trash')
-          .remove()
-          .end()
-          .prepend('<span class="ui-icon ui-icon-arrow-4"></span>')
-          .end();
-        $gallery2.append($item);
-      }
-    });
-
-    $('#btn-notify1').click(function () {
+    $('#btn-notify1').click(function() {
       var triggers = [
         newExercise.inputs[2].components[0].valueText,
         newExercise.inputs[2].components[11].valueText
@@ -214,11 +146,7 @@ $(function () {
     });
 
     $('#btn-reset1').click(function() {
-      setInputs(
-        { input: newExercise.inputs[0], container: '.input0' },
-        { input: newExercise.inputs[1], container: '.input1' },
-        { input: newExercise.inputs[2], container: '.input2' }
-      );
+      setInputs({ input: newExercise.inputs[0], container: '.input0' }, { input: newExercise.inputs[1], container: '.input1' }, { input: newExercise.inputs[2], container: '.input2' });
       init();
     });
 
@@ -246,9 +174,9 @@ $(function () {
     $trigger2.droppable({
       accept: "#gallery2 > li",
       activeClass: "ui-state-highlight",
-      drop: function (event, ui) {
+      drop: function(event, ui) {
         var $item = ui.draggable;
-        $item.fadeOut(function () {
+        $item.fadeOut(function() {
           $item.find('.ui-icon-arrow-4')
             .remove()
             .end()
@@ -262,9 +190,9 @@ $(function () {
     $impact2.droppable({
       accept: "#gallery2 > li",
       activeClass: "ui-state-highlight",
-      drop: function (event, ui) {
+      drop: function(event, ui) {
         var $item = ui.draggable;
-        $item.fadeOut(function () {
+        $item.fadeOut(function() {
           $item.find('.ui-icon-arrow-4')
             .remove()
             .end()
@@ -278,10 +206,10 @@ $(function () {
     $gallery2.droppable({
       accept: "#trigger2 li, #impact2 li",
       activeClass: "ui-state-default",
-      drop: function (event, ui) {
+      drop: function(event, ui) {
         var $item = ui.draggable;
         $item.removeAttr('style');
-        $item.fadeOut(function () {
+        $item.fadeOut(function() {
           $item.find(".ui-icon-trash")
             .remove()
             .end()
@@ -292,7 +220,7 @@ $(function () {
       }
     });
 
-    $('#btn-notify2').click(function () {
+    $('#btn-notify2').click(function() {
       var triggers = [
         newExercise.inputs[5].components[0].valueText,
         newExercise.inputs[5].components[1].valueText
@@ -318,21 +246,85 @@ $(function () {
     });
 
     $('#btn-reset2').click(function() {
-      setInputs(
-        { input: newExercise.inputs[3], container: '.input3' },
-        { input: newExercise.inputs[4], container: '.input4' },
-        { input: newExercise.inputs[5], container: '.input5' }
-      );
+      setInputs({ input: newExercise.inputs[3], container: '.input3' }, { input: newExercise.inputs[4], container: '.input4' }, { input: newExercise.inputs[5], container: '.input5' });
       init();
     });
   }
 
+  var deleteTrigger1Item = function(e) {
+    var $target = $(e.target);
+    if ($target.is('.ui-icon-trash')) {
+      var $item = $target.parent();
+      $item.removeAttr('style');
+      $item
+        .find('.ui-icon-trash')
+        .remove()
+        .end()
+        .prepend('<span class="ui-icon ui-icon-arrow-4"></span>')
+        .end();
+      $gallery1.append($item);
+    }
+    init();
+  }
+
+  $trigger1.click(deleteTrigger1Item);
+  $impact1.click(deleteTrigger1Item);
+
+  var deleteTrigger2Item = function(e) {
+    var $target = $(e.target);
+    if ($target.is('.ui-icon-trash')) {
+      var $item = $target.parent();
+      $item.removeAttr('style');
+      $item
+        .find('.ui-icon-trash')
+        .remove()
+        .end()
+        .prepend('<span class="ui-icon ui-icon-arrow-4"></span>')
+        .end();
+      $gallery2.append($item);
+    }
+    init();
+  }
+
+  $trigger2.click(deleteTrigger2Item);
+  $impact2.click(deleteTrigger2Item);
+
+  // $impact1.click(function(e) {
+  //   var $target = $(e.target);
+  //   if ($target.is('.ui-icon-trash')) {
+  //     var $item = $target.parent();
+  //     $item.removeAttr('style');
+  //     $item
+  //       .find('.ui-icon-trash')
+  //       .remove()
+  //       .end()
+  //       .prepend('<span class="ui-icon ui-icon-arrow-4"></span>')
+  //       .end();
+  //     $gallery1.append($item);
+  //   }
+  // });
+  //
+  // $impact2.click(function(e) {
+  //   var $target = $(e.target);
+  //   if ($target.is('.ui-icon-trash')) {
+  //     var $item = $target.parent();
+  //     $item.removeAttr('style');
+  //     $item
+  //       .find('.ui-icon-trash')
+  //       .remove()
+  //       .end()
+  //       .prepend('<span class="ui-icon ui-icon-arrow-4"></span>')
+  //       .end();
+  //     $gallery2.append($item);
+  //   }
+  // });
+
   $trigger1.droppable({
     accept: "#gallery1 > li",
     activeClass: "ui-state-highlight",
-    drop: function (event, ui) {
+    drop: function(event, ui) {
       var $item = ui.draggable;
-      $item.fadeOut(function () {
+      $item.fadeOut(function() {
         $item.find(".ui-icon-arrow-4")
           .remove()
           .end()
