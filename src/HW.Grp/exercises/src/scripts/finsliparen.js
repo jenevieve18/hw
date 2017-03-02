@@ -30,14 +30,27 @@ $(function() {
   healthwatch.grp(exerciseRepo).readManagerExercise(
     exerciseId,
     function(exercise) {
+      var isNewExercise = false;
       if (exercise === null) {
+        isNewExercise = true;
         exercise = newExercise;
       }
-      // $(exercise.inputs).each(function(i, input) {
-      //   $('<li><input type="checkbox" name="input[]" value="d' + (i + 1) + '">' + input.valueText + '</li>').appendTo($('.input0'));
-      //   $('<li><span class="ui-icon ui-icon-arrow-4"></span>' + input.valueText + '</li>').appendTo($('#gallery'));
-      // });
-      
+      $(exercise.inputs[0].components).each(function(i, c) {
+        var checked = (c.valueInt == 1 ? 'checked' : '');
+        $('<li><input type="checkbox" name="input[]" value="d' + (i + 1) + '" ' + checked + '>' + components[i].valueText + '</li>').appendTo($('.input0'));
+      });
+      for (i = 1; i <= 5; i++) {
+        $(exercise.inputs[i].components).each(function(j, c) {
+          $('<li><span class="' + c.class + ' ui-icon ui-icon-trash"></span>' + c.valueText + '</li>').appendTo($('.input' + i));
+        });
+      }
+      $(exercise.inputs[6].components).each(function(i, c) {
+        console.log(c.valueText);
+        $('<li><span class="' + c.class + ' ui-icon ui-icon-arrow-4"></span>' + c.valueText + '</li>').appendTo($('.input6'));
+      });
+      if (!isNewExercise) {
+        $('#btn-continue').click();
+      }
       init();
     },
     function(message, status, error) {
@@ -63,14 +76,14 @@ $(function() {
     $("#second-question").fadeIn();
   });
 
-  function init() {
-    var $gallery = $("#gallery"),
-      $trash1 = $("#trash1"),
-      $trash2 = $("#trash2"),
-      $trash3 = $("#trash3"),
-      $trash4 = $("#trash4"),
-      $trash5 = $("#trash5");
+  var $gallery = $("#gallery"),
+    $trash1 = $("#trash1"),
+    $trash2 = $("#trash2"),
+    $trash3 = $("#trash3"),
+    $trash4 = $("#trash4"),
+    $trash5 = $("#trash5");
 
+  function init() {
     $("li", $gallery).draggable({
       cancel: "a.ui-icon", // Clicking an icon won't initiate dragging
       revert: "invalid", // When not dropped, the item will back to initial position
@@ -85,40 +98,6 @@ $(function() {
         deleteImage(ui.draggable, $trash1);
       }
     });
-
-    $trash1.click(function(e) {
-      removeItem($gallery, e);
-    });
-
-    $trash2.click(function(e) {
-      removeItem($gallery, e);
-    });
-
-    $trash3.click(function(e) {
-      removeItem($gallery, e);
-    });
-
-    $trash4.click(function(e) {
-      removeItem($gallery, e);
-    });
-
-    $trash5.click(function(e) {
-      removeItem($gallery, e);
-    });
-
-    function removeItem($gallery, e) {
-      var $target = $(e.target);
-      if ($target.is('.ui-icon-trash')) {
-        var $item = $target.parent();
-        $item
-          .find('.ui-icon-trash')
-          .remove()
-          .end()
-          .prepend('<span class="ui-icon ui-icon-arrow-4"></span>')
-          .end();
-        $gallery.append($item);
-      }
-    }
 
     $trash2.droppable({
       accept: "#gallery > li, #trash1 li, #trash3 li, #trash4 li, #trash5 li",
@@ -207,6 +186,41 @@ $(function() {
     //   }
     //   $("li", $gallery).css('color', '#666');
     // }
+  }
+
+  $trash1.click(function(e) {
+    removeItem($gallery, e);
+  });
+
+  $trash2.click(function(e) {
+    removeItem($gallery, e);
+  });
+
+  $trash3.click(function(e) {
+    removeItem($gallery, e);
+  });
+
+  $trash4.click(function(e) {
+    removeItem($gallery, e);
+  });
+
+  $trash5.click(function(e) {
+    removeItem($gallery, e);
+  });
+
+  function removeItem($gallery, e) {
+    var $target = $(e.target);
+    if ($target.is('.ui-icon-trash')) {
+      var $item = $target.parent();
+      $item
+        .find('.ui-icon-trash')
+        .remove()
+        .end()
+        .prepend('<span class="ui-icon ui-icon-arrow-4"></span>')
+        .end();
+      $gallery.append($item);
+    }
+    init();
   }
 
   $('#btn-clear2').click(function() {

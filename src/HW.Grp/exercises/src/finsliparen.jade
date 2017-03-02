@@ -7,20 +7,29 @@ block content
       min-height:100px;
     }
   script.
+    var components = [
+      { valueText: 'Lyssna när ett par av dina medarbetare pratar om hur de ska lösa ett problem.' },
+      { valueText: 'Titta på när en medarbetare leder ett möte.' },
+      { valueText: 'Säga: Ni har väl sett att vi fått nya rutiner för hur vi rapporterar frånvaro?' },
+      { valueText: 'Gå ut och titta på en vägg på ett bygge efter att personen som jobbat med den gått därifrån.' },
+      { valueText: 'Fråga en av medarbetarna i ett stort projekt: ”Kommer vi bli klara i tid?”' },
+      { valueText: 'Fråga: “Skickade du iväg materialet som vi pratat om?”' },
+      { valueText: 'Prata med medarbetarna om vad de gjort i helgen?' },
+      { valueText: 'Fråga: Varför har du inte lämnat in rapporten i tid?' },
+      { valueText: 'Fråga: ”Gick Kalle igenom projektplanen med er idag?”' },
+      { valueText: 'Läsa igenom en medarbetares rapport innan den är klar.' },
+      { valueText: 'Säga: ”Då kör vi hårt idag, eller hur!?”' },
+      { valueText: 'Säga: Den här rapporten bör vara max 3 sidor och innehålla minst 2 figurer.' }
+    ];
     var newExercise = {
       inputs: [
-        { valueText: 'Lyssna när ett par av dina medarbetare pratar om hur de ska lösa ett problem.' },
-        { valueText: 'Titta på när en medarbetare leder ett möte.' },
-        { valueText: 'Säga: Ni har väl sett att vi fått nya rutiner för hur vi rapporterar frånvaro?' },
-        { valueText: 'Gå ut och titta på en vägg på ett bygge efter att personen som jobbat med den gått därifrån.' },
-        { valueText: 'Fråga en av medarbetarna i ett stort projekt: ”Kommer vi bli klara i tid?”' },
-        { valueText: 'Fråga: “Skickade du iväg materialet som vi pratat om?”' },
-        { valueText: 'Prata med medarbetarna om vad de gjort i helgen?' },
-        { valueText: 'Fråga: Varför har du inte lämnat in rapporten i tid?' },
-        { valueText: 'Fråga: ”Gick Kalle igenom projektplanen med er idag?”' },
-        { valueText: 'Läsa igenom en medarbetares rapport innan den är klar.' },
-        { valueText: 'Säga: ”Då kör vi hårt idag, eller hur!?”' },
-        { valueText: 'Säga: Den här rapporten bör vara max 3 sidor och innehålla minst 2 figurer.' }
+        { components: components },
+        { components: [] },
+        { components: [] },
+        { components: [] },
+        { components: [] },
+        { components: [] },
+        { components: components },
       ]
     };
   h2 Tidsåtgång: 20 min
@@ -114,10 +123,8 @@ block content
     p
       a#btn-clear2.ui-button.ui-widget.ui-corner-all Klar
       a#btn-notify.ui-button.ui-widget.ui-corner-all Rätta
-    //- #body1(style='display:none;')
     #body1.hidden
-      p
-        | Det finns fyra olika metoder för att ta reda på hur medarbetarna utför sina arbetsuppgifter.
+      p Det finns fyra olika metoder för att ta reda på hur medarbetarna utför sina arbetsuppgifter.
       p
         | Ta stickprov ur en persons arbete
         br
@@ -138,9 +145,7 @@ block content
         br
         i
           | Ställa frågor till någon annan om hur personen gjorde för att uppnå något och lyssna på svaret, t ex hur en kollega uppfattade att personen gjorde för att hantera en besvärlig kund, osv.
-      p
-        | Alla dessa metoder är alltså bra att använda men stickprov och observation är de som är allra mest effektiva för att påverka medarbetarnas engagemang.
-      p
-        | Du monitorerar för att uppmärksamma kopplingen mellan en persons agerande och resultatet. Genom att monitorer beteenden snarare än resultat fokuserar du på faktorer som medarbetaren kan kontrollera vilket ökar effektiviteten.
+      p Alla dessa metoder är alltså bra att använda men stickprov och observation är de som är allra mest effektiva för att påverka medarbetarnas engagemang.
+      p Du monitorerar för att uppmärksamma kopplingen mellan en persons agerande och resultatet. Genom att monitorer beteenden snarare än resultat fokuserar du på faktorer som medarbetaren kan kontrollera vilket ökar effektiviteten.
   p
     a#btn-save.ui-button.ui-widget.ui-corner-all Spara
