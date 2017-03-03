@@ -35,40 +35,37 @@ $(function() {
         isNewExercise = true;
         exercise = newExercise;
       }
-      $(exercise.inputs[0].components).each(function(i, c) {
-        var checked = (c.valueInt == 1 ? 'checked' : '');
-        $('<li><input type="checkbox" name="input[]" value="d' + (i + 1) + '" ' + checked + '>' + components[i].valueText + '</li>').appendTo($('.input0'));
-      });
-      for (i = 1; i <= 5; i++) {
-        $(exercise.inputs[i].components).each(function(j, c) {
-          $('<li><span class="' + c.class + ' ui-icon ui-icon-trash"></span>' + c.valueText + '</li>').appendTo($('.input' + i));
-        });
-      }
-      $(exercise.inputs[6].components).each(function(i, c) {
-        console.log(c.valueText);
-        $('<li><span class="' + c.class + ' ui-icon ui-icon-arrow-4"></span>' + c.valueText + '</li>').appendTo($('.input6'));
-      });
-      if (!isNewExercise) {
-        $('#btn-continue').click();
-      }
-      init();
+      setExercise(exercise, isNewExercise);
     },
     function(message, status, error) {
       $('#message').text(message).fadeIn(1000).fadeOut(1000);
     }
   );
 
-  $("#btn-clear1").click(function() {
-    var ansArr = ['d1', 'd2', 'd4', 'd6', 'd9', 'd10'];
-    $("input[name='input[]']").each(function() {
-      if ($.inArray($(this).val(), ansArr) > -1)
-        $(this).parent('li').css("color", "green");
+  function setExercise(exercise, isNewExercise) {
+    $('.input0').empty();
+    $(exercise.inputs[0].components).each(function(i, c) {
+      var checked = (c.valueInt == 1 ? 'checked' : '');
+      $('<li><input type="checkbox" name="input[]" value="d' + (i + 1) + '" ' + checked + '>' + components[i].valueText + '</li>').appendTo($('.input0'));
     });
-  });
+    for (i = 1; i <= 5; i++) {
+      $('.input' + i).empty();
+      $(exercise.inputs[i].components).each(function(j, c) {
+        $('<li><span class="' + c.class + ' ui-icon ui-icon-trash"></span>' + c.valueText + '</li>').appendTo($('.input' + i));
+      });
+    }
+    $('.input6').empty();
+    $(exercise.inputs[6].components).each(function(i, c) {
+      $('<li><span class="' + c.class + ' ui-icon ui-icon-arrow-4"></span>' + c.valueText + '</li>').appendTo($('.input6'));
+    });
+    if (!isNewExercise) {
+      $('#btn-continue').click();
+    }
+    init();
+  }
 
   $("#btn-start").click(function() {
-    $(".inputs input:checkbox").removeAttr("checked");
-    $(".inputs input:checkbox").parent('li').removeAttr("style");
+    setExercise(newExercise, true);
     $('#second-question').hide();
   });
 
@@ -195,47 +192,55 @@ $(function() {
     init();
   }
 
-  $('#btn-clear2').click(function() {
-    // var arr = [
-    //   ['Gå ut och titta på en vägg på ett bygge efter att personen som jobbat med den gått därifrån.', 'Läsa igenom en medarbetares rapport innan den är klar.'],
-    //   ['Lyssna när ett par av dina medarbetare pratar om hur de ska lösa ett problem.', 'Titta på när en medarbetare leder ett möte.'],
-    //   ['Fråga: “Skickade du iväg materialet som vi pratat om?”'],
-    //   ['Fråga: ”Gick Kalle igenom projektplanen med er idag?”'],
-    //   ['Säga: Ni har väl sett att vi fått nya rutiner för hur vi rapporterar frånvaro?', 'Fråga en av medarbetarna i ett stort projekt: ”Kommer vi hinna i tid?”', 'Prata med medarbetarna om vad de gjort i helgen?', 'Fråga: Varför har du inte lämnat in rapporten i tid?', 'Säga: ”Då kör vi hårt idag, eller hur!?”', 'Säga: Den här rapporten bör vara max 3 sidor och innehålla minst 2 figurer.']
-    // ];
-    var answerIndexes = [3, 0, 5, 8, 2];
+  $("#btn-clear1").click(function() {
+    var answers = ['d1', 'd2', 'd4', 'd6', 'd9', 'd10'];
+    $("input[name='input[]']").each(function() {
+      if ($.inArray($(this).val(), answers) > -1)
+        $(this).parent('li').css("color", "green");
+    });
+  });
 
-    // for (var t = 1; t <= 5; t++) {
-    //   $("#trash" + t + " ul li").css('color', 'red');
-    //   for (var j = 1; j <= $("#trash" + t + " li").length; j++) {
-    //     var str = $("#trash" + t + " ul li:nth-child(" + j + ")")[0].innerHTML;
-    //     if (jQuery.inArray(str, arr[t - 1]) > -1) {
-    //       $("#trash" + t + " ul li.item-" + j).css('color', '#81BE23');
-    //     }
-    //   }
-    // }
+  $('#btn-clear2').click(function() {
+    var answers = [
+      [components[3].valueText, components[9].valueText],
+      [components[0].valueText, components[1].valueText],
+      [components[5].valueText],
+      [components[8].valueText],
+      [components[2].valueText, components[4].valueText]
+    ];
+    for (i = 1; i <= 5; i++) {
+      $('#trash' + i + ' li').css('color', 'red');
+      for (j = 1; j <= $('#trash' + i + ' li').length; j++) {
+        var element = $("#trash" + i + " li:nth-child(" + j + ")");
+        var str = element.text();
+        if (jQuery.inArray(str, answers[i - 1]) > -1) {
+          $('#trash' + i + ' li:nth-child(' + j + ")").css('color', '#81BE23');
+        }
+      }
+    }
     $("#body1").show(300);
   });
 
   $('#btn-notify').click(function() {
-    // var arr = [
-    //   ['Gå ut och titta på en vägg på ett bygge efter att personen som jobbat med den gått därifrån.', 'Läsa igenom en medarbetares rapport innan den är klar.'],
-    //   ['Lyssna när ett par av dina medarbetare pratar om hur de ska lösa ett problem.', 'Titta på när en medarbetare leder ett möte.'],
-    //   ['Fråga: “Skickade du iväg materialet som vi pratat om?”'],
-    //   ['Fråga: ”Gick Kalle igenom projektplanen med er idag?”'],
-    //   ['Säga: Ni har väl sett att vi fått nya rutiner för hur vi rapporterar frånvaro?', 'Fråga en av medarbetarna i ett stort projekt: ”Kommer vi hinna i tid?”', 'Prata med medarbetarna om vad de gjort i helgen?', 'Fråga: Varför har du inte lämnat in rapporten i tid?', 'Säga: ”Då kör vi hårt idag, eller hur!?”', 'Säga: Den här rapporten bör vara max 3 sidor och innehålla minst 2 figurer.']
-    // ];
+    $('.input6').empty();
+    $(components).each(function(i, c) {
+      $('<li>' + c.valueText + '</li>').appendTo($('.input6'));
+    });
 
-    // var s = 0;
-    // for (var a = 0; a <= 4; a++) {
-    //   s++;
-    //   $("<ul class='gallery ui-helper-reset'>").appendTo("#trash" + s);
-    //   for (var b = 0; b <= arr[a].length - 1; b++) {
-    //     $("<li class='ui-draggable item-1' style='display: list-item;' >" + arr[a][b] + "</li>").appendTo("#trash" + s + " ul");
-    //   }
-    //   $("</ul>").appendTo("#trash" + s);
-    // }
+    var answers = [
+      [components[3].valueText, components[9].valueText],
+      [components[0].valueText, components[1].valueText],
+      [components[5].valueText],
+      [components[8].valueText],
+      [components[2].valueText, components[4].valueText]
+    ];
+    for (i = 1; i <= 5; i++) {
+      $('.input' + i).empty();
+      $(answers[i -1]).each(function(j, c) {
+        $('<li>' + c + '</li>').appendTo($('.input' + i));
+      });
+    }
 
-    // $('#btn-notify').hide();
+    $('#btn-notify').hide();
   });
 });
