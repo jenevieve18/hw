@@ -198,6 +198,15 @@
   <data name="exercises.group" xml:space="preserve">
     <value>Gruppen-&lt;br&gt;übungen</value>
   </data>
+  <data name="exercises.group1" xml:space="preserve">
+    <value>Gruppenübungen</value>
+  </data>
+  <data name="exercises.saved" xml:space="preserve">
+    <value>Gespeicherte&lt;br&gt;Übungen</value>
+  </data>
+  <data name="exercises.saved1" xml:space="preserve">
+    <value>Gespeicherte Übungen</value>
+  </data>
   <data name="exercises.sorting" xml:space="preserve">
     <value>Übungen - Sortierung:</value>
   </data>

@@ -198,6 +198,15 @@
   <data name="exercises.group" xml:space="preserve">
     <value>Group-&lt;br&gt;exercises</value>
   </data>
+  <data name="exercises.group1" xml:space="preserve">
+    <value>Group Exercises</value>
+  </data>
+  <data name="exercises.saved" xml:space="preserve">
+    <value>Saved-&lt;br&gt;exercises</value>
+  </data>
+  <data name="exercises.saved1" xml:space="preserve">
+    <value>Saved Exercises</value>
+  </data>
   <data name="exercises.sorting" xml:space="preserve">
     <value>Exercises - Sorting:</value>
   </data>

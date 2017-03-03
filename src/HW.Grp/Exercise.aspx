@@ -11,8 +11,8 @@
 
     <div class="contentgroup grid_16 exercises">
         <div class="exercise-options">
-            <a class="hw-button hw-button-group" href="exercise.aspx"><strong>Group Exercises</strong></a>
-            <a class="hw-button hw-button-save" href="savedexercise.aspx">Saved Exercises</a>
+            <a class="hw-button hw-button-group" href="exercise.aspx"><strong><%= R.Str(lid, "exercises.group1", "Group Exercises") %></strong></a>
+            <a class="hw-button hw-button-save" href="savedexercise.aspx"><%= R.Str(lid, "exercises.saved1", "Saved Exercises") %></a>
         </div>
         <div class="statschosergroup">
             <h1 class="header"><%= R.Str(lid, "exercises.group", "Group-<br>exercises")%></h1>

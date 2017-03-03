@@ -11,11 +11,11 @@
 
     <div class="contentgroup grid_16 exercises">
         <div class="exercise-options">
-            <a class="hw-button hw-button-group" href="exercise.aspx">Group Exercises</a>
-            <a class="hw-button hw-button-save" href="savedexercise.aspx"><strong>Saved Exercises</strong></a>
+            <a class="hw-button hw-button-group" href="exercise.aspx"><%= R.Str(lid, "exercises.group1", "Group Exercises") %></a>
+            <a class="hw-button hw-button-save" href="savedexercise.aspx"><strong><%= R.Str(lid, "exercises.saved1", "Saved Exercises") %></strong></a>
         </div>
         <div class="statschosergroup">
-            <h1 class="header"><%= R.Str(lid, "exercises.group.save", "Saved-<br>exercises")%></h1>
+            <h1 class="header"><%= R.Str(lid, "exercises.saved", "Saved-<br>exercises")%></h1>
             <a name="filter"></a>
             <div class="statschoser">
                 <div class="filter misc">
