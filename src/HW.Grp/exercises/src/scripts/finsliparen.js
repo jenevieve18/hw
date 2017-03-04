@@ -66,6 +66,7 @@ $(function() {
 
   $("#btn-start").click(function() {
     setExercise(newExercise, true);
+    $('#btn-notify').show();
     $('#second-question').hide();
   });
 
@@ -222,11 +223,6 @@ $(function() {
   });
 
   $('#btn-notify').click(function() {
-    $('.input6').empty();
-    $(components).each(function(i, c) {
-      $('<li>' + c.valueText + '</li>').appendTo($('.input6'));
-    });
-
     var answers = [
       [components[3].valueText, components[9].valueText],
       [components[0].valueText, components[1].valueText],
@@ -234,6 +230,20 @@ $(function() {
       [components[8].valueText],
       [components[2].valueText, components[4].valueText]
     ];
+
+    $('.input6').empty();
+    $(components).each(function(i, c) {
+      var found = false;
+      $(answers).each(function(j, a) {
+        if (jQuery.inArray(c.valueText, a) > -1) {
+          found = true;
+        }
+      });
+      if (!found) {
+        $('<li>' + c.valueText + '</li>').appendTo($('.input6'));
+      }
+    });
+
     for (i = 1; i <= 5; i++) {
       $('.input' + i).empty();
       $(answers[i -1]).each(function(j, c) {
@@ -242,5 +252,6 @@ $(function() {
     }
 
     $('#btn-notify').hide();
+    $( ".input6" ).draggable({ cancel: ".input6" });
   });
 });
