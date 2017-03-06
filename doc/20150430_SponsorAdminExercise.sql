@@ -1,7 +1,5 @@
 use healthwatch;
 
-alter table ExerciseLang add ExerciseContent text;
-
 create table SponsorAdminExercise(
 	SponsorAdminExerciseID integer not null primary key identity,
 	Date datetime,
