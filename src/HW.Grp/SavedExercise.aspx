@@ -99,12 +99,12 @@
             <div class="contentlist">
                 <table class="hw-table small">
                     <tr>
-                        <th>Edit/Delete</th>
-                        <th>Date</th>
-                        <th>Exercise</th>
-                        <th>Comment</th>
-                        <th>Area</th>
-                        <th>Category</th>
+                        <th><%= R.Str(lid, "action.editdelete", "Edit/Delete") %></th>
+                        <th><%= R.Str(lid, "date", "Date") %></th>
+                        <th><%= R.Str(lid, "exercise", "Exercise") %></th>
+                        <th><%= R.Str(lid, "comment", "Comment") %></th>
+                        <th><%= R.Str(lid, "area", "Area") %></th>
+                        <th><%= R.Str(lid, "category", "Category") %></th>
                     </tr>
                     <% foreach (var l in exercises) { %>
                     <% var evl = l.ExerciseVariantLanguage; %>

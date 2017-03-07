@@ -123,6 +123,9 @@
   <data name="action" xml:space="preserve">
     <value>Aktivität</value>
   </data>
+  <data name="action.editdelete" xml:space="preserve">
+    <value>Edit/Delete</value>
+  </data>
   <data name="active" xml:space="preserve">
     <value>Aktiv</value>
   </data>
@@ -144,20 +147,32 @@
   <data name="answer.last" xml:space="preserve">
     <value>Zahl der Antworten&lt;br/&gt;im letzten Monat</value>
   </data>
+  <data name="area" xml:space="preserve">
+    <value>Area</value>
+  </data>
   <data name="background.variable" xml:space="preserve">
     <value>Hintergrundvariable</value>
   </data>
   <data name="cancel" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
+  <data name="category" xml:space="preserve">
+    <value>Category</value>
+  </data>
   <data name="chart.description" xml:space="preserve">
     <value>Chart Descriptions</value>
+  </data>
+  <data name="comment" xml:space="preserve">
+    <value>Comment</value>
   </data>
   <data name="count.answer" xml:space="preserve">
     <value>Anzahl Antworten</value>
   </data>
   <data name="credentials" xml:space="preserve">
     <value>Daten</value>
+  </data>
+  <data name="date" xml:space="preserve">
+    <value>Date</value>
   </data>
   <data name="date.future.no" xml:space="preserve">
     <value>(zukünftige Datumsangaben unzulässig)</value>
@@ -188,6 +203,9 @@
   </data>
   <data name="execute" xml:space="preserve">
     <value>Ausführen</value>
+  </data>
+  <data name="exercise" xml:space="preserve">
+    <value>Exercise</value>
   </data>
   <data name="exercises.area" xml:space="preserve">
     <value>Gebiet wählen</value>
