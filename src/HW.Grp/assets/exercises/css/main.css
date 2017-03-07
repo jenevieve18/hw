@@ -99,7 +99,7 @@ h1, h2, h3 {
 
 h4 {
   font-size: 1.25em;
-  font-weight: bold;
+  font-weight: normal;
 }
 
 th {
@@ -210,6 +210,9 @@ ul li input {
 }
 .accordion h2:hover, .accordion h3:hover, .accordion h4:hover {
   text-decoration: underline;
+}
+.accordion h4 {
+  font-weight: bold;
 }
 
 .text-info {
