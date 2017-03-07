@@ -1,5 +1,8 @@
 .accordion {
   h2, h3, h4 {
     cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
