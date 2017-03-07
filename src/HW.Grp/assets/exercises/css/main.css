@@ -203,6 +203,9 @@ ul li input {
 .accordion h2, .accordion h3, .accordion h4 {
   cursor: pointer;
 }
+.accordion h2:hover, .accordion h3:hover, .accordion h4:hover {
+  text-decoration: underline;
+}
 
 .text-info {
   color: #337ab7;

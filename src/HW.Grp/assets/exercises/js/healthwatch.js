@@ -70,6 +70,10 @@ var html = {
     $(element + ' h3').click(function() {
       $(this).next('div').slideToggle(300);
     });
+    $(element + ' h4').next('div').hide();
+    $(element + ' h4').click(function() {
+      $(this).next('div').slideToggle(300);
+    });
   },
   getData: function(elements) {
     var data = [];
