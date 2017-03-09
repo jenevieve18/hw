@@ -96,6 +96,7 @@ namespace HW.WebService
 		public struct UserDetail
 		{
 			public UserData UserData;
+			public string secretKey;
 			public string resourceID;
 		}
 		public struct UserSecret
