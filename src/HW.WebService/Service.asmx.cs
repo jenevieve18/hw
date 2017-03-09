@@ -4,6 +4,8 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Services;
 
@@ -93,10 +95,8 @@ namespace HW.WebService
 		}
 		public struct UserDetail
 		{
-			public String token;
-			public DateTime tokenExpires;
-			public int languageID;
-			public bool enable2FA;
+			public UserData UserData;
+			public string resourceID;
 		}
 		public struct UserSecret
 		{
@@ -3282,7 +3282,14 @@ namespace HW.WebService
 			return ud;
 		}
 		
-		[WebMethod(Description="")]
+		/// <summary>
+		/// Validates a username and password combination and, if there is a match, returns a user detail object including user data with token, variable lifetime (max 20 minutes) and resource identification for 2 factor authentication.
+		/// </summary>
+		/// <param name="username">Username</param>
+		/// <param name="password">Password</param>
+		/// <param name="expirationMinutes">Expiration minutes</param>
+		/// <returns></returns>
+		[WebMethod(Description="Validates a username and password combination and, if there is a match, returns a user detail object including user data with token, variable lifetime (max 20 minutes) and resource identification for 2 factor authentication.")]
 		public UserDetail UserLogin2FA(string username, string password, int expirationMinutes)
 		{
 			UserDetail ud = new UserDetail();
@@ -3290,13 +3297,14 @@ namespace HW.WebService
 			SqlDataReader r1 = rs("SELECT u.UserID, u.LID, u.Enable2FA, u.SponsorID FROM [User] u WHERE u.Username = '" + username.Replace("'", "") + "' AND u.Password = '" + HashMD5(password.Trim()) + "'");
 			if (r1.Read())
 			{
-				ud = getUserToken2FA(r1.GetInt32(0),r1.GetInt32(1),expirationMinutes);
+				ud = getUserToken2FA(r1.GetInt32(0), r1.GetInt32(1), expirationMinutes);
+				bool enable2FA = false;
 				using (var r2 = executeReader("SELECT Enable2FA FROM Sponsor WHERE SponsorID = @SponsorID", new SqlParameter("@SponsorID", getInt32(r1, 3)))) {
 					if (r2.Read()) {
 						bool sponsorEnforces2FA = getInt32(r2, 0) == 1;
-						ud.enable2FA = sponsorEnforces2FA ? sponsorEnforces2FA : getInt32(r1, 2) == 1;
+						enable2FA = sponsorEnforces2FA ? sponsorEnforces2FA : getInt32(r1, 2) == 1;
 					} else {
-						ud.enable2FA = getInt32(r1, 2) == 1;
+						enable2FA = getInt32(r1, 2) == 1;
 					}
 				}
 			}
@@ -3305,33 +3313,34 @@ namespace HW.WebService
 			return ud;
 		}
 		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="resourceID">Resource Identification</param>
+		/// <returns></returns>
 		[WebMethod(Description="")]
-		public string UserGenerateSecretKey(string token, int expirationMinutes)
+		public bool CancelLoginAttempt(string resourceID)
 		{
-			int userID = getUserIdFromToken(token, expirationMinutes);
-			if (userID != 0) {
-				string secretKey = Guid.NewGuid().ToString();
-				executeNonQuery(
-					"INSERT INTO UserSecret(UserID, SecretKey) VALUES(@UserID, @SecretKey)",
-					new SqlParameter("@UserID", userID),
-					new SqlParameter("@SecretKey", secretKey)
-				);
-				return secretKey;
-			}
-			return "";
+			return true;
 		}
 		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="resourceID">Resource Identification</param>
+		/// <returns></returns>
 		[WebMethod(Description="")]
-		public bool UserSubmitSecretKey(string secretKey, int expirationMinutes)
+		public UserData UserHolding(string resourceID)
 		{
-			using (var rs = executeReader("SELECT 1 FROM UserSecret WHERE SecretKey = @SecretKey", new SqlParameter("@SecretKey", secretKey))) {
-				if (rs.Read()) {
-					return true;
-				}
-			}
-			return false;
+			return new UserData();
 		}
 		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="token">User token</param>
+		/// <param name="expirationMinutes">Expiration minutes</param>
+		/// <returns></returns>
 		[WebMethod(Description="")]
 		public bool UserEnable2FA(string token, int expirationMinutes)
 		{
@@ -3352,6 +3361,12 @@ namespace HW.WebService
 			}
 		}
 		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="token"></param>
+		/// <param name="expirationMinutes"></param>
+		/// <returns></returns>
 		[WebMethod(Description="")]
 		public bool UserDisable2FA(string token, int expirationMinutes)
 		{
@@ -3359,7 +3374,7 @@ namespace HW.WebService
 				int userID = getUserIdFromToken(token, expirationMinutes);
 				if (userID != 0) {
 					executeNonQuery(
-						"UPDATE [User] SET Enable2FA = @Enable2FA where UserID = @UserID",
+						"UPDATE [User] SET Enable2FA = @Enable2FA WHERE UserID = @UserID",
 						new SqlParameter("@Enable2FA", false),
 						new SqlParameter("@UserID", userID)
 					);
@@ -3372,6 +3387,90 @@ namespace HW.WebService
 			}
 		}
 		
+		[WebMethod()]
+		public bool UserGet2FAStatus(string token, int expirationMinutes)
+		{
+			try {
+				int userID = getUserIdFromToken(token, expirationMinutes);
+				if (userID != 0) {
+					using (var r1 = executeReader("SELECT Enable2FA, SponsorID FROM [User] WHERE UserID = @UserID", new SqlParameter("@UserID", userID))) {
+						if (r1.Read()) {
+							bool enable2FA = false;
+							using (var r2 = executeReader("SELECT Enable2FA FROM Sponsor WHERE SponsorID = @SponsorID", new SqlParameter("@SponsorID", getInt32(r1, 1)))) {
+								if (r2.Read()) {
+									bool sponsorEnforces2FA = getInt32(r2, 0) == 1;
+									enable2FA = sponsorEnforces2FA ? sponsorEnforces2FA : getInt32(r1, 2) == 1;
+								} else {
+									enable2FA = getInt32(r1, 2) == 1;
+								}
+							}
+							return enable2FA;
+						} else {
+							return false;
+						}
+					}
+				} else {
+					return false;
+				}
+			} catch {
+				return false;
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="token"></param>
+		/// <param name="expirationMinutes"></param>
+		/// <returns></returns>
+		[WebMethod(Description="")]
+		public string UserGenerateSecretKey(string token, int expirationMinutes)
+		{
+			int userID = getUserIdFromToken(token, expirationMinutes);
+			if (userID != 0) {
+				string secretKey = Guid.NewGuid().ToString();
+				executeNonQuery(
+					"INSERT INTO UserSecret(UserID, SecretKey) VALUES(@UserID, @SecretKey)",
+					new SqlParameter("@UserID", userID),
+					new SqlParameter("@SecretKey", secretKey)
+				);
+				return secretKey;
+			}
+			return "";
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="secretKey"></param>
+		/// <param name="expirationMinutes"></param>
+		/// <returns></returns>
+		[WebMethod(Description="")]
+		public bool UserSubmitSecretKey(string secretKey, int expirationMinutes)
+		{
+			using (var rs = executeReader("SELECT 1 FROM UserSecret WHERE SecretKey = @SecretKey", new SqlParameter("@SecretKey", secretKey))) {
+				if (rs.Read()) {
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		private string generateSHA512String(string inputString)
+        {
+            SHA512 sha512 = SHA512Managed.Create();
+            byte[] bytes = Encoding.UTF8.GetBytes(inputString);
+            byte[] hash = sha512.ComputeHash(bytes);
+            return GetStringFromHash(hash);
+        }
+		private string GetStringFromHash(byte[] hash)
+        {
+            StringBuilder result = new StringBuilder();
+            for (int i = 0; i < hash.Length; i++) {
+                result.Append(hash[i].ToString("X2"));
+            }
+            return result.ToString();
+        }
 		private string subString(string str, int startIndex)
 		{
 			try {
@@ -3726,10 +3825,12 @@ namespace HW.WebService
 		private UserDetail getUserToken2FA(int userID, int languageID, int expirationMinutes)
 		{
 			UserDetail ud = new UserDetail();
-			ud.languageID = languageID;
-			ud.tokenExpires = DateTime.Now.AddMinutes(Math.Min(expirationMinutes, 20));
 			int sessionID = execIntScal("INSERT INTO Session (DT,UserAgent,UserID,IP,AutoEnded) OUTPUT INSERTED.SessionID VALUES (GETDATE(),'App'," + userID + ",'127.0.0.1',1)");
-			ud.token = execStrScal("INSERT INTO UserToken (UserID, Expires,SessionID) OUTPUT INSERTED.UserToken VALUES (" + userID + ",DATEADD(minute," + Math.Min(expirationMinutes, 20) + ",GETDATE())," + sessionID + ")");
+			ud.UserData = new UserData {
+				languageID = languageID,
+				tokenExpires = DateTime.Now.AddMinutes(Math.Min(expirationMinutes, 20)),
+				token = execStrScal("INSERT INTO UserToken (UserID, Expires,SessionID) OUTPUT INSERTED.UserToken VALUES (" + userID + ",DATEADD(minute," + Math.Min(expirationMinutes, 20) + ",GETDATE())," + sessionID + ")")
+			};
 
 			return ud;
 		}
