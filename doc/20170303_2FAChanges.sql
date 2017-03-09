@@ -9,4 +9,3 @@ create table UserSecret(
 	UserID integer,
 	SecretKey varchar(2048)
 );
-
