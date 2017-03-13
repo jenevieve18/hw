@@ -26,7 +26,7 @@ WHERE UniqueKey = @UniqueKey");
 		public IList<SponsorAdminExercise> FindBySponsorAdminExerciseHistory(int langID, int sponsorAdminID)
 		{
 			string query = string.Format(
-				@"
+                @"
 SELECT sae.Date,
 	e.ExerciseImg,
 	el.Exercise,
@@ -34,14 +34,15 @@ SELECT sae.Date,
 	el.ExerciseTime,
 	evl.ExerciseFile,
 	eal.ExerciseArea,
-	ecl.ExerciseCategory,
+	NULL, --ecl.ExerciseCategory,
 	etl.ExerciseType,
 	evl.ExerciseWindowX,
 	evl.ExerciseWindowY,
 	evl.ExerciseVariantLangID,
 	sae.SponsorAdminExerciseID,
 	sae.Comments,
-	ev.ExerciseVariantID
+	ev.ExerciseVariantID,
+	e.ExerciseCategoryID
 FROM SponsorAdminExercise sae
 INNER JOIN ExerciseVariantLang evl ON evl.ExerciseVariantLangID = sae.ExerciseVariantLangID
 INNER JOIN ExerciseVariant ev ON ev.ExerciseVariantID = evl.ExerciseVariantID
@@ -49,13 +50,13 @@ INNER JOIN ExerciseType et ON et.ExerciseTypeID = ev.ExerciseTypeID
 INNER JOIN ExerciseTypeLang etl ON etl.ExerciseTypeID = et.ExerciseTypeID AND etl.Lang = @Lang
 INNER JOIN Exercise e ON e.ExerciseID = ev.ExerciseID
 INNER JOIN ExerciseLang el ON el.ExerciseID = e.ExerciseID AND el.Lang = @Lang
-INNER JOIN ExerciseCategory ec ON ec.ExerciseCategoryID = e.ExerciseCategoryID
-INNER JOIN ExerciseCategoryLang ecl ON ecl.ExerciseCategoryID = ec.ExerciseCategoryID AND ecl.Lang = @Lang
+--INNER JOIN ExerciseCategory ec ON ec.ExerciseCategoryID = e.ExerciseCategoryID
+--INNER JOIN ExerciseCategoryLang ecl ON ecl.ExerciseCategoryID = ec.ExerciseCategoryID AND ecl.Lang = @Lang
 INNER JOIN ExerciseArea ea ON ea.ExerciseAreaID = e.ExerciseAreaID
 INNER JOIN ExerciseAreaLang eal ON eal.ExerciseAreaID = ea.ExerciseAreaID AND eal.Lang = @Lang
 WHERE sae.SponsorAdminID = @SponsorAdminID
 ORDER BY sae.Date DESC"
-			);
+            );
 			var managerExercises = new List<SponsorAdminExercise>();
 			using (SqlDataReader rs = ExecuteReader(
 				query,
@@ -63,6 +64,20 @@ ORDER BY sae.Date DESC"
 				new SqlParameter("@Lang", langID),
 				new SqlParameter("@SponsorAdminID", sponsorAdminID))) {
 				while (rs.Read()) {
+					string categoryName = "";
+					using (var rs2 = ExecuteReader(
+						@"
+SELECT ecl.ExerciseCategory
+FROM ExerciseCategory ec 
+INNER JOIN ExerciseCategoryLang ecl ON ecl.ExerciseCategoryID = ec.ExerciseCategoryID AND ecl.Lang = @Lang
+WHERE ec.ExerciseCategoryID = @ExerciseCategoryID",
+                                                  "healthWatchSqlConnection",
+                           new SqlParameter("@Lang", langID),
+                           new SqlParameter("@ExerciseCategoryID", GetInt32(rs, 15)))) {
+						if (rs2.Read()) {
+							categoryName = GetString(rs2, 0);
+						}
+					}
 					var e = new Exercise {
 						Image = GetString(rs, 1),
 						Languages = new List<ExerciseLanguage>(
@@ -84,7 +99,8 @@ ORDER BY sae.Date DESC"
 						Category = new ExerciseCategory {
 							Languages = new List<ExerciseCategoryLanguage>(
 								new ExerciseCategoryLanguage[] {
-									new ExerciseCategoryLanguage { CategoryName = GetString(rs, 7) }
+//									new ExerciseCategoryLanguage { CategoryName = GetString(rs, 7) }
+									new ExerciseCategoryLanguage { CategoryName = categoryName }
 								}
 							)
 						}
