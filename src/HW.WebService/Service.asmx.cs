@@ -3293,25 +3293,34 @@ namespace HW.WebService
 		[WebMethod(Description="Validates a username and password combination and, if there is a match, returns a user detail object including user data with token, variable lifetime (max 20 minutes) and resource identification for 2 factor authentication.")]
 		public UserDetail UserLogin2FA(string username, string password, int expirationMinutes)
 		{
-			UserDetail ud = new UserDetail();
+			UserDetail u = new UserDetail();
 
-			SqlDataReader r1 = rs("SELECT u.UserID, u.LID, u.Enable2FA, u.SponsorID FROM [User] u WHERE u.Username = '" + username.Replace("'", "") + "' AND u.Password = '" + HashMD5(password.Trim()) + "'");
-			if (r1.Read())
-			{
-				ud = getUserToken2FA(r1.GetInt32(0), r1.GetInt32(1), expirationMinutes);
-				bool enable2FA = false;
-				using (var r2 = executeReader("SELECT Enable2FA FROM Sponsor WHERE SponsorID = @SponsorID", new SqlParameter("@SponsorID", getInt32(r1, 3)))) {
-					if (r2.Read()) {
-						bool sponsorEnforces2FA = getInt32(r2, 0) == 1;
-						enable2FA = sponsorEnforces2FA ? sponsorEnforces2FA : getInt32(r1, 2) == 1;
-					} else {
-						enable2FA = getInt32(r1, 2) == 1;
+			using (var r1 = executeReader("SELECT u.UserID, u.LID, u.Enable2FA, u.SponsorID FROM [User] u WHERE u.Username = @Username AND u.Password = @Password", new SqlParameter("@Username", username), new SqlParameter("@Password", HashMD5(password.Trim())))) {
+				if (r1.Read()) {
+					u = getUserToken2FA(r1.GetInt32(0), r1.GetInt32(1), expirationMinutes);
+					bool enable2FA = false;
+					using (var r2 = executeReader("SELECT Enable2FA FROM Sponsor WHERE SponsorID = @SponsorID", new SqlParameter("@SponsorID", getInt32(r1, 3)))) {
+						if (r2.Read()) {
+							bool sponsorEnforces2FA = getInt32(r2, 0) == 1;
+							enable2FA = sponsorEnforces2FA ? sponsorEnforces2FA : getInt32(r1, 2) == 1;
+						} else {
+							enable2FA = getInt32(r1, 2) == 1;
+						}
+					}
+					if (enable2FA) {
+                        string resourceID = Guid.NewGuid().ToString();
+						executeNonQuery(
+							"INSERT INTO UserLoginAttempt(UserID, IPAddress, LoginAttempt, ResourceID) VALUES(@UserID, @IPAddress, @LoginAttempt, @ResourceID)",
+							new SqlParameter("@UserID", getInt32(r1, 0)),
+	                 		new SqlParameter("@IPAddress", HttpContext.Current.Request.UserHostAddress),
+	                 		new SqlParameter("@LoginAttempt", DateTime.Now),
+                            new SqlParameter("@ResourceID", resourceID)
+                 		);
+                        u.resourceID = resourceID;
 					}
 				}
 			}
-			r1.Close();
-
-			return ud;
+			return u;
 		}
 		
 		/// <summary>
@@ -3322,7 +3331,14 @@ namespace HW.WebService
 		[WebMethod(Description="")]
 		public bool CancelLoginAttempt(string resourceID)
 		{
-			return true;
+			bool validLogin = false;
+			using (var rs = executeReader("SELECT 1 FROM UserLoginAttempt WHERE ResourceID = @ResourceID", new SqlParameter("@ResourceID", resourceID))) {
+				if (rs.Read()) {
+					validLogin = true;
+					executeNonQuery("DELETE FROM UserLoginAttempt WHERE ResourceID = @ResourceID", new SqlParameter("@ResourceID", resourceID));
+				}
+			}
+			return validLogin;
 		}
 		
 		/// <summary>
@@ -3333,7 +3349,16 @@ namespace HW.WebService
 		[WebMethod(Description="")]
 		public UserData UserHolding(string resourceID)
 		{
-			return new UserData();
+			var u = new UserData();
+			using (var rs1 = executeReader(@"
+SELECT u.UserID FROM [User] u
+INNER JOIN UserLoginAttempt ula
+WHERE ula.ResourceID = @ResourceID", new SqlParameter("@ResourceID", resourceID))) {
+			    if (rs1.Read()) {
+	       			u = getUserToken(getInt32(rs1, 0), getInt32(rs1, 1), 20);
+				}
+			}
+			return u;
 		}
 		
 		/// <summary>
@@ -3462,9 +3487,9 @@ namespace HW.WebService
             SHA512 sha512 = SHA512Managed.Create();
             byte[] bytes = Encoding.UTF8.GetBytes(inputString);
             byte[] hash = sha512.ComputeHash(bytes);
-            return GetStringFromHash(hash);
+            return getStringFromHash(hash);
         }
-		private string GetStringFromHash(byte[] hash)
+		private string getStringFromHash(byte[] hash)
         {
             StringBuilder result = new StringBuilder();
             for (int i = 0; i < hash.Length; i++) {
