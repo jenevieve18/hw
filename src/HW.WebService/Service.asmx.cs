@@ -3295,12 +3295,16 @@ namespace HW.WebService
 		public UserDetail UserLogin2FA(string username, string password, int expirationMinutes)
 		{
 			UserDetail u = new UserDetail();
-			using (var userReader = executeReader("SELECT u.UserID, u.LID, u.Enable2FA, u.SponsorID FROM [User] u WHERE u.Username = @Username AND u.Password = @Password", new SqlParameter("@Username", username), new SqlParameter("@Password", HashMD5(password.Trim())))) {
+			using (var userReader = executeReader(@"
+SELECT u.UserID, u.LID, u.Enable2FA, u.SponsorID 
+FROM [User] u WHERE u.Username = @Username AND u.Password = @Password", new SqlParameter("@Username", username), new SqlParameter("@Password", HashMD5(password.Trim())))) {
 				if (userReader.Read()) {
 					int userID = getInt32(userReader, 0);
 					u = getUserToken2FA(userID, getInt32(userReader, 1), expirationMinutes);
 					bool enable2FA = false;
-					using (var sponsorReader = executeReader("SELECT Enable2FA FROM Sponsor WHERE SponsorID = @SponsorID", new SqlParameter("@SponsorID", getInt32(userReader, 3)))) {
+					using (var sponsorReader = executeReader(@"
+SELECT Enable2FA FROM Sponsor 
+WHERE SponsorID = @SponsorID", new SqlParameter("@SponsorID", getInt32(userReader, 3)))) {
 						if (sponsorReader.Read()) {
 							bool sponsorEnforces2FA = getInt32(sponsorReader, 0) == 1;
 							enable2FA = sponsorEnforces2FA ? sponsorEnforces2FA : getInt32(userReader, 2) == 1;
@@ -3313,7 +3317,9 @@ namespace HW.WebService
                         string secretKey = "";
                         string resourceID = "";
 						bool firstTimeLoginWith2FA = true;
-                        using (var loginReader = executeReader("SELECT SecretKey, ResourceID FROM UserLogin WHERE UserID = @UserID", new SqlParameter("@UserID", userID))) {
+                        using (var loginReader = executeReader(@"
+SELECT SecretKey, ResourceID 
+FROM UserLogin WHERE UserID = @UserID", new SqlParameter("@UserID", userID))) {
                             if (loginReader.Read()) {
                                 firstTimeLoginWith2FA = false;
                                 secretKey = getString(loginReader, 0);
@@ -3331,6 +3337,7 @@ namespace HW.WebService
 	                            new SqlParameter("@ResourceID", resourceID),
                                 new SqlParameter("@SecretKey", secretKey)
 	                 		);
+                            u.secretKey = secretKey;
 	                        u.resourceID = resourceID;
 						} else {
                             executeNonQuery(
@@ -3341,6 +3348,7 @@ namespace HW.WebService
                                 new SqlParameter("@ResourceID", resourceID),
                                 new SqlParameter("@SecretKey", secretKey)
                             );
+                            u.resourceID = resourceID;
 						}
 					}
 				}
@@ -3357,10 +3365,10 @@ namespace HW.WebService
 		public bool UserCancelLoginAttempt(string resourceID)
 		{
 			bool validLogin = false;
-			using (var rs = executeReader("SELECT 1 FROM UserLogin WHERE ResourceID = @ResourceID", new SqlParameter("@ResourceID", resourceID))) {
+			using (var rs = executeReader("SELECT 1 FROM UserLogin WHERE ResourceID = @ResourceID AND IPAddress = @IPAddress", new SqlParameter("@ResourceID", resourceID), new SqlParameter("@IPAddress", HttpContext.Current.Request.UserHostAddress))) {
 				if (rs.Read()) {
 					validLogin = true;
-					executeNonQuery("DELETE FROM UserLogin WHERE ResourceID = @ResourceID", new SqlParameter("@ResourceID", resourceID));
+                    executeNonQuery("DELETE FROM UserLogin WHERE ResourceID = @ResourceID AND IPAddress = @IPAddress", new SqlParameter("@ResourceID", resourceID), new SqlParameter("@IPAddress", HttpContext.Current.Request.UserHostAddress));
 				}
 			}
 			return validLogin;
@@ -3376,9 +3384,12 @@ namespace HW.WebService
 		{
 			var u = new UserData();
 			using (var rs1 = executeReader(@"
-SELECT u.UserID FROM [User] u
-INNER JOIN UserLogin ula
-WHERE ula.ResourceID = @ResourceID", new SqlParameter("@ResourceID", resourceID))) {
+SELECT u.UserID 
+FROM [User] u
+INNER JOIN UserLogin ula ON ula.UserID = u.UserID
+WHERE ula.ResourceID = @ResourceID
+AND IPAddress = @IPAddress", new SqlParameter("@ResourceID", resourceID), new SqlParameter("@IPAddress", HttpContext.Current.Request.UserHostAddress)))
+            {
 			    if (rs1.Read()) {
 	       			u = getUserToken(getInt32(rs1, 0), getInt32(rs1, 1), 20);
 				}
@@ -3450,6 +3461,7 @@ WHERE ula.ResourceID = @ResourceID", new SqlParameter("@ResourceID", resourceID)
 			try {
 				int userID = getUserIdFromToken(token, expirationMinutes);
 				if (userID != 0) {
+                    // TODO: Reuse this code against the code in UserLogin2FA for checking sponsors.
 					using (var r1 = executeReader("SELECT Enable2FA, SponsorID FROM [User] WHERE UserID = @UserID", new SqlParameter("@UserID", userID))) {
 						if (r1.Read()) {
 							bool enable2FA = false;
@@ -3487,8 +3499,9 @@ WHERE ula.ResourceID = @ResourceID", new SqlParameter("@ResourceID", resourceID)
 			if (userID != 0) {
                 string secretKey = generateSHA512String(userID.ToString());
 				executeNonQuery(
-					"INSERT INTO UserLogin(UserID, SecretKey) VALUES(@UserID, @SecretKey)",
+					"INSERT INTO UserLogin(UserID, IPAddress, SecretKey) VALUES(@UserID, @IPAddress, @SecretKey)",
 					new SqlParameter("@UserID", userID),
+                    new SqlParameter("@IPAddress", HttpContext.Current.Request.UserHostAddress),
 					new SqlParameter("@SecretKey", secretKey)
 				);
 				return secretKey;
@@ -3505,7 +3518,8 @@ WHERE ula.ResourceID = @ResourceID", new SqlParameter("@ResourceID", resourceID)
         [WebMethod(Description = "Submits the users secret; the second part of a 2FA login.")]
 		public bool UserSubmitSecretKey(string secretKey, int expirationMinutes)
 		{
-			using (var rs = executeReader("SELECT 1 FROM UserLogin WHERE SecretKey = @SecretKey", new SqlParameter("@SecretKey", secretKey))) {
+			using (var rs = executeReader(@"
+SELECT 1 FROM UserLogin WHERE SecretKey = @SecretKey", new SqlParameter("@SecretKey", secretKey))) {
 				if (rs.Read()) {
 					return true;
 				}
