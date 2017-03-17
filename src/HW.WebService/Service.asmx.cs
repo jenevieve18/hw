@@ -100,10 +100,10 @@ namespace HW.WebService
 			public string resourceID;
 			public bool activeLoginAttempt;
 		}
-		public struct UserSecret
+		public struct User2FAStatus
 		{
-			public int userID;
-			public string secretKey;
+			public bool user2FAEnabled;
+			public bool sponsor2FAEnabled;
 		}
 		public struct DeviceID
 		{
@@ -3456,34 +3456,46 @@ AND IPAddress = @IPAddress", new SqlParameter("@ResourceID", resourceID), new Sq
         /// <param name="expirationMinutes">Expiration minutes</param>
         /// <returns></returns>
         [WebMethod(Description = "Returns whether or not the user has 2FA enabled, and whether it is via a sponsor (forced) or on their own accord.")]
-		public bool UserGet2FAStatus(string token, int expirationMinutes)
+		public User2FAStatus UserGet2FAStatus(string token, int expirationMinutes)
 		{
+			var u = new User2FAStatus();
 			try {
 				int userID = getUserIdFromToken(token, expirationMinutes);
 				if (userID != 0) {
-                    // TODO: Reuse this code against the code in UserLogin2FA for checking sponsors.
 					using (var r1 = executeReader("SELECT Enable2FA, SponsorID FROM [User] WHERE UserID = @UserID", new SqlParameter("@UserID", userID))) {
 						if (r1.Read()) {
-							bool enable2FA = false;
+							u.user2FAEnabled = getInt32(r1, 2) == 1;
 							using (var r2 = executeReader("SELECT Enable2FA FROM Sponsor WHERE SponsorID = @SponsorID", new SqlParameter("@SponsorID", getInt32(r1, 1)))) {
 								if (r2.Read()) {
-									bool sponsorEnforces2FA = getInt32(r2, 0) == 1;
-									enable2FA = sponsorEnforces2FA ? sponsorEnforces2FA : getInt32(r1, 2) == 1;
-								} else {
-									enable2FA = getInt32(r1, 2) == 1;
+									u.sponsor2FAEnabled = getInt32(r2, 0) == 1;
 								}
 							}
-							return enable2FA;
-						} else {
-							return false;
 						}
 					}
-				} else {
-					return false;
+                    // TODO: Reuse this code against the code in UserLogin2FA for checking sponsors.
+//					using (var r1 = executeReader("SELECT Enable2FA, SponsorID FROM [User] WHERE UserID = @UserID", new SqlParameter("@UserID", userID))) {
+//						if (r1.Read()) {
+//							bool enable2FA = false;
+//							using (var r2 = executeReader("SELECT Enable2FA FROM Sponsor WHERE SponsorID = @SponsorID", new SqlParameter("@SponsorID", getInt32(r1, 1)))) {
+//								if (r2.Read()) {
+//									bool sponsorEnforces2FA = getInt32(r2, 0) == 1;
+//									enable2FA = sponsorEnforces2FA ? sponsorEnforces2FA : getInt32(r1, 2) == 1;
+//								} else {
+//									enable2FA = getInt32(r1, 2) == 1;
+//								}
+//							}
+//							return enable2FA;
+//						} else {
+//							return false;
+//						}
+//					}
+//				} else {
+//					return false;
 				}
 			} catch {
-				return false;
+//				return false;
 			}
+			return u;
 		}
 		
 		/// <summary>
@@ -3493,7 +3505,7 @@ AND IPAddress = @IPAddress", new SqlParameter("@ResourceID", resourceID), new Sq
 		/// <param name="expirationMinutes">Expiration minutes</param>
 		/// <returns></returns>
         [WebMethod(Description = "Generates (additional) secret(s) for the users device(s) so that they can be used for authenticating.")]
-		public string UserGenerateSecretKey(string token, int expirationMinutes)
+		public string UserGenerateSecret(string token, int expirationMinutes)
 		{
 			int userID = getUserIdFromToken(token, expirationMinutes);
 			if (userID != 0) {
