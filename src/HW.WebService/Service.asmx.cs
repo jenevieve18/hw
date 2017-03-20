@@ -16,10 +16,24 @@ namespace HW.WebService
 	[System.Web.Script.Services.ScriptService]
 	public class Service : System.Web.Services.WebService
 	{
-		public Service () {
+		IRequest request;
+		
+		class MyHttpRequest : IRequest
+		{
+			public string UserHostAddress {
+				get { return HttpContext.Current.Request.UserHostAddress; }
+			}
+		}
+		
+		public Service() : this(new MyHttpRequest()) {
 
 			//Uncomment the following line if using designed components
 			//InitializeComponent();
+		}
+		
+		public Service(IRequest request)
+		{
+			this.request = request;
 		}
 
 		public struct SponsorInvite
@@ -99,6 +113,10 @@ namespace HW.WebService
 			public string secretKey;
 			public string resourceID;
 			public bool activeLoginAttempt;
+		}
+		public interface IRequest
+		{
+			string UserHostAddress { get; }
 		}
 		public struct User2FAStatus
 		{
@@ -3327,7 +3345,8 @@ FROM UserLogin WHERE UserID = @UserID", new SqlParameter("@UserID", userID))) {
                             }
                         }
 						if (firstTimeLoginWith2FA) {
-                            secretKey = generateSHA512String(userID.ToString());
+                            //secretKey = generateSHA512String(userID.ToString());
+                            secretKey = Guid.NewGuid().ToString().Replace("-", "");
                             resourceID = Guid.NewGuid().ToString();
 							executeNonQuery(
 								@"INSERT INTO UserLogin(UserID, IPAddress, LoginAttempt, ResourceID, SecretKey) VALUES(@UserID, @IPAddress, @LoginAttempt, @ResourceID, @SecretKey)",
@@ -3335,7 +3354,7 @@ FROM UserLogin WHERE UserID = @UserID", new SqlParameter("@UserID", userID))) {
 		                 		new SqlParameter("@IPAddress", HttpContext.Current.Request.UserHostAddress),
 		                 		new SqlParameter("@LoginAttempt", DateTime.Now),
 	                            new SqlParameter("@ResourceID", resourceID),
-                                new SqlParameter("@SecretKey", secretKey)
+	                            new SqlParameter("@SecretKey", generateSHA512String(secretKey))
 	                 		);
                             u.secretKey = secretKey;
 	                        u.resourceID = resourceID;
@@ -3346,7 +3365,7 @@ FROM UserLogin WHERE UserID = @UserID", new SqlParameter("@UserID", userID))) {
                                 new SqlParameter("@IPAddress", HttpContext.Current.Request.UserHostAddress),
                                 new SqlParameter("@LoginAttempt", DateTime.Now),
                                 new SqlParameter("@ResourceID", resourceID),
-                                new SqlParameter("@SecretKey", secretKey)
+                                new SqlParameter("@SecretKey", generateSHA512String(secretKey))
                             );
                             u.resourceID = resourceID;
 						}
@@ -3493,12 +3512,13 @@ AND IPAddress = @IPAddress", new SqlParameter("@ResourceID", resourceID), new Sq
 		{
 			int userID = getUserIdFromToken(token, expirationMinutes);
 			if (userID != 0) {
-                string secretKey = generateSHA512String(userID.ToString());
+                //string secretKey = generateSHA512String(userID.ToString());
+                string secretKey = Guid.NewGuid().ToString().Replace("-", "");
 				executeNonQuery(
 					"INSERT INTO UserLogin(UserID, IPAddress, SecretKey) VALUES(@UserID, @IPAddress, @SecretKey)",
 					new SqlParameter("@UserID", userID),
-                    new SqlParameter("@IPAddress", HttpContext.Current.Request.UserHostAddress),
-					new SqlParameter("@SecretKey", secretKey)
+                    new SqlParameter("@IPAddress", request.UserHostAddress),
+                    new SqlParameter("@SecretKey", generateSHA512String(secretKey))
 				);
 				return secretKey;
 			}
@@ -3515,7 +3535,7 @@ AND IPAddress = @IPAddress", new SqlParameter("@ResourceID", resourceID), new Sq
 		public bool UserSubmitSecretKey(string secretKey, int expirationMinutes)
 		{
 			using (var rs = executeReader(@"
-SELECT 1 FROM UserLogin WHERE SecretKey = @SecretKey", new SqlParameter("@SecretKey", secretKey))) {
+SELECT 1 FROM UserLogin WHERE SecretKey = @SecretKey", new SqlParameter("@SecretKey", generateSHA512String(secretKey)))) {
 				if (rs.Read()) {
 					return true;
 				}
