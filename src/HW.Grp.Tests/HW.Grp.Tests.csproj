@@ -62,6 +62,7 @@
     <Compile Include="Services\ReportServiceTests.cs" />
     <Compile Include="Util\ExportTests.cs" />
     <Compile Include="Util\GroupStatsGraphFactoryTests.cs" />
+    <Compile Include="Util\Test1.cs" />
     <Compile Include="Views\DefaultTests.cs" />
     <Compile Include="Views\ExerciseExportTests.cs" />
     <Compile Include="Views\ExerciseShowTests.cs" />
