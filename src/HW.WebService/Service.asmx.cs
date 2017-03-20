@@ -3409,11 +3409,15 @@ AND IPAddress = @IPAddress", new SqlParameter("@ResourceID", resourceID), new Sq
 			try {
 				int userID = getUserIdFromToken(token, expirationMinutes);
 				if (userID != 0) {
-					executeNonQuery(
-						"UPDATE [User] SET Enable2FA = @Enable2FA where UserID = @UserID",
-						new SqlParameter("@Enable2FA", true),
-						new SqlParameter("@UserID", userID)
-					);
+                    if (!UserGet2FAStatus(token, expirationMinutes).user2FAEnabled)
+                    {
+                        executeNonQuery(
+                            "UPDATE [User] SET Enable2FA = @Enable2FA where UserID = @UserID",
+                            new SqlParameter("@Enable2FA", true),
+                            new SqlParameter("@UserID", userID)
+                        );
+                        UserLogout(token);
+                    }
 					return true;
 				} else {
 					return false;
@@ -3435,11 +3439,11 @@ AND IPAddress = @IPAddress", new SqlParameter("@ResourceID", resourceID), new Sq
 			try {
 				int userID = getUserIdFromToken(token, expirationMinutes);
 				if (userID != 0) {
-					executeNonQuery(
-						"UPDATE [User] SET Enable2FA = @Enable2FA WHERE UserID = @UserID",
-						new SqlParameter("@Enable2FA", false),
-						new SqlParameter("@UserID", userID)
-					);
+                    executeNonQuery(
+                        "UPDATE [User] SET Enable2FA = @Enable2FA WHERE UserID = @UserID",
+                        new SqlParameter("@Enable2FA", false),
+                        new SqlParameter("@UserID", userID)
+                    );
 					return true;
 				} else {
 					return false;
@@ -3472,28 +3476,8 @@ AND IPAddress = @IPAddress", new SqlParameter("@ResourceID", resourceID), new Sq
 							}
 						}
 					}
-                    // TODO: Reuse this code against the code in UserLogin2FA for checking sponsors.
-//					using (var r1 = executeReader("SELECT Enable2FA, SponsorID FROM [User] WHERE UserID = @UserID", new SqlParameter("@UserID", userID))) {
-//						if (r1.Read()) {
-//							bool enable2FA = false;
-//							using (var r2 = executeReader("SELECT Enable2FA FROM Sponsor WHERE SponsorID = @SponsorID", new SqlParameter("@SponsorID", getInt32(r1, 1)))) {
-//								if (r2.Read()) {
-//									bool sponsorEnforces2FA = getInt32(r2, 0) == 1;
-//									enable2FA = sponsorEnforces2FA ? sponsorEnforces2FA : getInt32(r1, 2) == 1;
-//								} else {
-//									enable2FA = getInt32(r1, 2) == 1;
-//								}
-//							}
-//							return enable2FA;
-//						} else {
-//							return false;
-//						}
-//					}
-//				} else {
-//					return false;
 				}
 			} catch {
-//				return false;
 			}
 			return u;
 		}
