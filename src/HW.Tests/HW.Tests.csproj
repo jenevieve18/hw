@@ -92,6 +92,7 @@
     <Compile Include="ExerciseShowTests.cs" />
     <Compile Include="JsonConvertTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test4.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HW.Core\HW.Core.csproj">
