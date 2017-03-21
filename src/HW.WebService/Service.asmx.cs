@@ -3337,8 +3337,7 @@ WHERE SponsorID = @SponsorID", new SqlParameter("@SponsorID", getInt32(userReade
 						bool firstTimeLoginWith2FA = true;
                         using (var loginReader = executeReader(@"
 SELECT SecretKey, ResourceID 
-FROM UserLogin WHERE UserID = @UserID
-ORDER BY UserLoginAttemptID", new SqlParameter("@UserID", userID)))
+FROM UserLogin WHERE UserID = @UserID", new SqlParameter("@UserID", userID)))
                         {
                             if (loginReader.Read()) {
                                 firstTimeLoginWith2FA = false;
