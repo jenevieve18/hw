@@ -6,12 +6,14 @@ $(function() {
   $('#btn-clock').click(function() {
     var count = 15;
     countdown = setInterval(function() {
-      $('#clock').text(count + ' sekunder terstr');
+      $('#clock').text(count + ' ' + getCounterText());
       if (count > 0) {
+        $('#btn-clock').hide();
         $('#clock').show();
         count--;
       } else {
         $('#clock').hide();
+        $('#btn-clock').show();
         clearInterval(countdown);
       }
     }, 1000);

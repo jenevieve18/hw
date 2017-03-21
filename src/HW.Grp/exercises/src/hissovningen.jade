@@ -2,6 +2,10 @@ extends includes/layout
 block script
   script(src='assets/exercises/js/hissovningen.js')
 block content
+  script.
+    function getCounterText() {
+      return 'sekunder återstår';
+    }
   #message.alert.alert-success.hidden
   h2 Tidsåtgång: 10 sekunder - 5 min
   p

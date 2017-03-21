@@ -2,6 +2,10 @@ extends includes/layout
 block script
   script(src='assets/exercises/js/hissovningen.js')
 block content
+  script.
+    function getCounterText() {
+      return 'seconds remaining';
+    }
   #message.alert.alert-success.hidden
   h2 Duration: 10 seconds - 5 minutes
   p
