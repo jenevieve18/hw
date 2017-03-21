@@ -26,11 +26,9 @@ namespace HW.WebService.Tests
 		public void TestMethod()
 		{
 			var u = s.UserLogin("test1", "password", 10);
-			
 			var token = u.token;
 			
 			Assert.IsTrue(s.UserDisable2FA(token, 10));
-			
 			Assert.IsTrue(s.UserEnable2FA(token, 10));
 		}
 		
