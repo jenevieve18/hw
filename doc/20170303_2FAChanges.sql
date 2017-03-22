@@ -12,3 +12,5 @@ create table UserLogin(
 	ResourceID varchar(255),
 	SecretKey varchar(255)
 );
+
+alter table UserLogin add UserToken varchar(255);

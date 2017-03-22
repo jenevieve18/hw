@@ -2518,6 +2518,18 @@ namespace HW.WebService
 		{
 			return (exec("UPDATE UserToken SET Expires = GETDATE() WHERE UserToken = '" + token.Replace("'", "''") + "'") > 0);
 		}
+		
+		/// <summary>
+		/// Expires all token for a user. Returns true if successful.
+		/// </summary>
+		/// <param name="token">User token</param>
+		/// <returns></returns>
+		bool UserLogoutAll(string token, int expirationMinutes)
+		{
+			int userID = getUserIdFromToken(token, expirationMinutes);
+//			return (exec("UPDATE UserToken SET Expires = GETDATE() WHERE UserToken = '" + token.Replace("'", "''") + "'") > 0);
+			return (executeNonQuery("DELETE FROM UserToken WHERE UserID = @UserID", new SqlParameter("@UserID", userID)) > 0);
+		}
 
 		[WebMethod(Description = "Report issue. Returns true if successful.")]
 		public bool ReportIssue(string token, int expirationMinutes, string title, string description)
@@ -3319,6 +3331,7 @@ FROM [User] u WHERE u.Username = @Username AND u.Password = @Password", new SqlP
 				if (userReader.Read()) {
 					int userID = getInt32(userReader, 0);
 					u = getUserToken2FA(userID, getInt32(userReader, 1), expirationMinutes);
+					string token = u.UserData.token;
 					bool enable2FA = false;
 					using (var sponsorReader = executeReader(@"
 SELECT Enable2FA FROM Sponsor 
@@ -3349,23 +3362,25 @@ FROM UserLogin WHERE UserID = @UserID", new SqlParameter("@UserID", userID)))
                             secretKey = Guid.NewGuid().ToString().Replace("-", "");
                             resourceID = Guid.NewGuid().ToString();
 							executeNonQuery(
-								@"INSERT INTO UserLogin(UserID, IPAddress, LoginAttempt, ResourceID, SecretKey) VALUES(@UserID, @IPAddress, @LoginAttempt, @ResourceID, @SecretKey)",
+								@"INSERT INTO UserLogin(UserID, IPAddress, LoginAttempt, ResourceID, SecretKey, UserToken) VALUES(@UserID, @IPAddress, @LoginAttempt, @ResourceID, @SecretKey, @UserToken)",
 								new SqlParameter("@UserID", userID),
-		                 		new SqlParameter("@IPAddress", HttpContext.Current.Request.UserHostAddress),
+								new SqlParameter("@IPAddress", request.UserHostAddress),
 		                 		new SqlParameter("@LoginAttempt", DateTime.Now),
 	                            new SqlParameter("@ResourceID", resourceID),
-	                            new SqlParameter("@SecretKey", generateSHA512String(secretKey))
+	                            new SqlParameter("@SecretKey", generateSHA512String(secretKey)),
+	                            new SqlParameter("@UserToken", token)
 	                 		);
                             u.secretKey = secretKey;
 	                        u.resourceID = resourceID;
 						} else {
                             executeNonQuery(
-                                @"INSERT INTO UserLogin(UserID, IPAddress, LoginAttempt, ResourceID, SecretKey) VALUES(@UserID, @IPAddress, @LoginAttempt, @ResourceID, @SecretKey)",
+                                @"INSERT INTO UserLogin(UserID, IPAddress, LoginAttempt, ResourceID, SecretKey, UserToken) VALUES(@UserID, @IPAddress, @LoginAttempt, @ResourceID, @SecretKey, @UserToken)",
                                 new SqlParameter("@UserID", userID),
-                                new SqlParameter("@IPAddress", HttpContext.Current.Request.UserHostAddress),
+								new SqlParameter("@IPAddress", request.UserHostAddress),
                                 new SqlParameter("@LoginAttempt", DateTime.Now),
                                 new SqlParameter("@ResourceID", resourceID),
-                                new SqlParameter("@SecretKey", generateSHA512String(secretKey))
+                                new SqlParameter("@SecretKey", generateSHA512String(secretKey)),
+                                new SqlParameter("@UserToken", token)
                             );
                             u.resourceID = resourceID;
 						}
@@ -3403,14 +3418,15 @@ FROM UserLogin WHERE UserID = @UserID", new SqlParameter("@UserID", userID)))
 		{
 			var u = new UserData();
 			using (var rs1 = executeReader(@"
-SELECT u.UserID, u.LID
+SELECT u.UserID, u.LID, ula.UserToken
 FROM [User] u
 INNER JOIN UserLogin ula ON ula.UserID = u.UserID
 WHERE ula.ResourceID = @ResourceID
 AND IPAddress = @IPAddress", new SqlParameter("@ResourceID", resourceID), new SqlParameter("@IPAddress", HttpContext.Current.Request.UserHostAddress)))
             {
 			    if (rs1.Read()) {
-	       			u = getUserToken(getInt32(rs1, 0), getInt32(rs1, 1), 20);
+//	       			u = getUserToken(getInt32(rs1, 0), getInt32(rs1, 1), 20);
+					u.token = getString(rs1, 2);
 				}
 			}
 			return u;
@@ -3435,7 +3451,7 @@ AND IPAddress = @IPAddress", new SqlParameter("@ResourceID", resourceID), new Sq
                             new SqlParameter("@Enable2FA", true),
                             new SqlParameter("@UserID", userID)
                         );
-                        UserLogout(token);
+                        UserLogoutAll(token, expirationMinutes);
                     }
 					return true;
 				} else {
@@ -3915,7 +3931,6 @@ SELECT 1 FROM UserLogin WHERE SecretKey = @SecretKey", new SqlParameter("@Secret
 			int sessionID = execIntScal("INSERT INTO Session (DT,UserAgent,UserID,IP,AutoEnded) OUTPUT INSERTED.SessionID VALUES (GETDATE(),'App'," + userID + ",'127.0.0.1',1)");
 			
 			detail.UserData = new UserData();
-			detail.UserData.token = "";
 			
 			detail.UserData.languageID = languageID;
 			detail.UserData.tokenExpires = DateTime.Now.AddMinutes(Math.Min(expirationMinutes, 20));
