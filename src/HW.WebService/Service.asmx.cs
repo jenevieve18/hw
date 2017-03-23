@@ -3348,6 +3348,7 @@ WHERE SponsorID = @SponsorID", new SqlParameter("@SponsorID", getInt32(userReade
                         string secretKey = "";
                         string resourceID = "";
 						bool firstTimeLoginWith2FA = true;
+						// TODO: Only check for UserLogin, move SecretKey to anothre table
                         using (var loginReader = executeReader(@"
 SELECT SecretKey, ResourceID 
 FROM UserLogin WHERE UserID = @UserID", new SqlParameter("@UserID", userID)))
@@ -3367,9 +3368,10 @@ FROM UserLogin WHERE UserID = @UserID", new SqlParameter("@UserID", userID)))
 								new SqlParameter("@IPAddress", request.UserHostAddress),
 		                 		new SqlParameter("@LoginAttempt", DateTime.Now),
 	                            new SqlParameter("@ResourceID", resourceID),
-	                            new SqlParameter("@SecretKey", generateSHA512String(secretKey)),
+	                            //new SqlParameter("@SecretKey", generateSHA512String(secretKey)),
 	                            new SqlParameter("@UserToken", token)
 	                 		);
+                            // TODO: Insert new secret key to another table (UserSecret)
                             u.secretKey = secretKey;
 	                        u.resourceID = resourceID;
 						} else {
