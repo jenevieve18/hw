@@ -3389,20 +3389,6 @@ VALUES(@UserID, @IPAddress, @LoginAttempt, @ResourceID, @UserToken)",
 			return ud;
 		}
 		
-		string generateUniqueResourceID() {
-		    string resourceID = "";
-		    bool found = false;
-		    do {
-		        resourceID = Guid.NewGuid().ToString();
-		        using (var rs = executeReader("SELECT 1 FROM UserLogin WHERE ResourceID = @ResourceID", new SqlParameter("@ResourceID", resourceID))) {
-		            if (rs.Read()) {
-		                found = true;
-		            }
-		        }
-		    } while (found);
-		    return resourceID;
-		}
-		
 		/// <summary>
         /// Cancels active login attempt for the given resourceID if and only if this request and the request that created the login attempt originated from the same IP.
 		/// </summary>
@@ -3589,6 +3575,19 @@ SELECT 1 FROM UserSecret WHERE SecretKey = @SecretKey", new SqlParameter("@Secre
 			return false;
 		}
 		
+		private string generateUniqueResourceID() {
+		    string resourceID = "";
+		    bool found = false;
+		    do {
+		        resourceID = Guid.NewGuid().ToString();
+		        using (var rs = executeReader("SELECT 1 FROM UserLogin WHERE ResourceID = @ResourceID", new SqlParameter("@ResourceID", resourceID))) {
+		            if (rs.Read()) {
+		                found = true;
+		            }
+		        }
+		    } while (found);
+		    return resourceID;
+		}
 		private string generateSHA512String(string inputString)
         {
             SHA512 sha512 = SHA512Managed.Create();
