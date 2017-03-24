@@ -49,8 +49,8 @@ namespace HW.WebService.Tests
 		    Assert.AreEqual(0, ud.UserData.languageID);
 		    
 		    Assert.IsNull(ud.secretKey);
-		    Assert.IsNull(ud.resourceID);
-		    Assert.IsFalse(ud.activeLoginAttempt);
+		    //Assert.IsNull(ud.resourceID);
+		    Assert.IsTrue(ud.activeLoginAttempt);
 		}
 		
 		[Test]

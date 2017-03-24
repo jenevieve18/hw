@@ -25,6 +25,8 @@ namespace HW.WebService
 			}
 		}
 		
+		const int MINUTE = 1;
+		
 		public Service() : this(new MyHttpRequest()) {
 
 			//Uncomment the following line if using designed components
@@ -3345,18 +3347,18 @@ WHERE SponsorID = @SponsorID", new SqlParameter("@SponsorID", sponsorID))) {
         			}
 					if (enable2FA) {
                         ud.UserData = new UserData();
-						bool firstTimeLoginWith2FA = true;
                         using (var loginReader = executeReader(@"
 SELECT ResourceID 
-FROM UserLogin WHERE UserID = @UserID", new SqlParameter("@UserID", userID))) {
-						    // TODO: Check also if login attempt exceeds a minute. Generate new resource ID each login. Delete expired login attempts
+FROM UserLogin 
+WHERE UserID = @UserID
+AND DATEDIFF(MINUTE, LoginAttempt, GETDATE()) < @Minute", new SqlParameter("@UserID", userID), new SqlParameter("@Minute", MINUTE))) {
+						    executeNonQuery(@"DELETE FROM UserLogin WHERE UserID = @UserID AND DATEDIFF(MINUTE, LoginAttempt, GETDATE()) > @Minute", new SqlParameter("@UserID", userID), new SqlParameter("@Minute", MINUTE));
                             if (loginReader.Read()) {
-                                firstTimeLoginWith2FA = false;
                                 ud.resourceID = getString(loginReader, 0);
+                                ud.activeLoginAttempt = true;
 						    } else {
 						        string secretKey = Guid.NewGuid().ToString().Replace("-", "");
-                                string resourceID = Guid.NewGuid().ToString();
-                                // TODO: Check the newly generated resource ID exists in db, if so, generate a new one!
+                                string resourceID = generateUniqueResourceID();
                                 string token = getUserToken(userID, languageID, expirationMinutes).token;
                                 ud.secretKey = secretKey;
     	                        ud.resourceID = resourceID;
@@ -3385,6 +3387,20 @@ VALUES(@UserID, @IPAddress, @LoginAttempt, @ResourceID, @UserToken)",
 			    }
 			}
 			return ud;
+		}
+		
+		string generateUniqueResourceID() {
+		    string resourceID = "";
+		    bool found = false;
+		    do {
+		        resourceID = Guid.NewGuid().ToString();
+		        using (var rs = executeReader("SELECT 1 FROM UserLogin WHERE ResourceID = @ResourceID", new SqlParameter("@ResourceID", resourceID))) {
+		            if (rs.Read()) {
+		                found = true;
+		            }
+		        }
+		    } while (found);
+		    return resourceID;
 		}
 		
 		/// <summary>
@@ -3425,19 +3441,22 @@ AND IPAddress = @IPAddress",
 		public UserData UserHolding(string resourceID)
 		{
 			var u = new UserData();
-			using (var rs1 = executeReader(@"
-SELECT u.UserID, u.LID, ula.UserToken
+			using (var rs1 = executeReader(
+			    @"
+SELECT u.UserID, u.LID, ula.UserToken, ula.UserLoginID
 FROM [User] u
 INNER JOIN UserLogin ula ON ula.UserID = u.UserID
 WHERE ula.ResourceID = @ResourceID
-AND IPAddress = @IPAddress", new SqlParameter("@ResourceID", resourceID), new SqlParameter("@IPAddress", HttpContext.Current.Request.UserHostAddress)))
-            {
-			    // TODO: Check the timeliness, shouldn't be more than 1 minute. Put constant 1 minute timeout in the code.
-			    // TODO: Check that the resourceID is "unlocked": that a secret has been submitted for this resourceID
+AND IPAddress = @IPAddress
+AND DATEDIFF(MINUTE, ula.LoginAttempt, GETDATE()) < @Minute
+AND Unblocked != 1",
+                    new SqlParameter("@ResourceID", resourceID), 
+                    new SqlParameter("@IPAddress", request.UserHostAddress), 
+                    new SqlParameter("@Minute", MINUTE))) {
 			    if (rs1.Read()) {
 //	       			u = getUserToken(getInt32(rs1, 0), getInt32(rs1, 1), 20);
 					u.token = getString(rs1, 2);
-					// TODO: REmove the entry if it's consumed!
+					executeNonQuery(@"DELETE FROM UserLogin WHERE UserLoginID = @UserLoginID", new SqlParameter("@UserLoginID", getInt32(rs1, 3)));
 				}
 			}
 			return u;
@@ -3485,14 +3504,12 @@ AND IPAddress = @IPAddress", new SqlParameter("@ResourceID", resourceID), new Sq
 			try {
 				int userID = getUserIdFromToken(token, expirationMinutes);
 				if (userID != 0) {
-//				    if (UserGet2FAStatus(token, expirationMinutes).user2FAEnabled) {
-                        executeNonQuery(
-                            "UPDATE [User] SET Enable2FA = @Enable2FA WHERE UserID = @UserID",
-                            new SqlParameter("@Enable2FA", false),
-                            new SqlParameter("@UserID", userID)
-                        );
-				        executeNonQuery(@"DELETE FROM UserLogin WHERE UserID = @UserID", new SqlParameter("@UserID", userID));
-//				    }
+                    executeNonQuery(
+                        "UPDATE [User] SET Enable2FA = @Enable2FA WHERE UserID = @UserID",
+                        new SqlParameter("@Enable2FA", false),
+                        new SqlParameter("@UserID", userID)
+                    );
+			        executeNonQuery(@"DELETE FROM UserLogin WHERE UserID = @UserID", new SqlParameter("@UserID", userID));
 				    return true;
 				} else {
 					return false;
@@ -3542,12 +3559,10 @@ AND IPAddress = @IPAddress", new SqlParameter("@ResourceID", resourceID), new Sq
 		{
 			int userID = getUserIdFromToken(token, expirationMinutes);
 			if (userID != 0) {
-                //string secretKey = generateSHA512String(userID.ToString());
                 string secretKey = Guid.NewGuid().ToString().Replace("-", "");
 				executeNonQuery(
-					"INSERT INTO UserLogin(UserID, IPAddress, SecretKey) VALUES(@UserID, @IPAddress, @SecretKey)",
+					"INSERT INTO Usersecret(UserID, SecretKey) VALUES(@UserID, @SecretKey)",
 					new SqlParameter("@UserID", userID),
-                    new SqlParameter("@IPAddress", request.UserHostAddress),
                     new SqlParameter("@SecretKey", generateSHA512String(secretKey))
 				);
 				return secretKey;
