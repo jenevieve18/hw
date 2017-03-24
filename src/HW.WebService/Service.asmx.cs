@@ -3565,7 +3565,7 @@ AND IPAddress = @IPAddress", new SqlParameter("@ResourceID", resourceID), new Sq
 		public bool UserSubmitSecretKey(string secretKey, int expirationMinutes)
 		{
 			using (var rs = executeReader(@"
-SELECT 1 FROM UserLogin WHERE SecretKey = @SecretKey", new SqlParameter("@SecretKey", generateSHA512String(secretKey)))) {
+SELECT 1 FROM UserSecret WHERE SecretKey = @SecretKey", new SqlParameter("@SecretKey", generateSHA512String(secretKey)))) {
 				if (rs.Read()) {
 		            // TODO: "Unlock" resourceID
 					return true;
