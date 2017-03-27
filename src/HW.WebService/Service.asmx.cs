@@ -3435,7 +3435,7 @@ INNER JOIN UserLogin ula ON ula.UserID = u.UserID
 WHERE ula.ResourceID = @ResourceID
 AND IPAddress = @IPAddress
 AND DATEDIFF(MINUTE, ula.LoginAttempt, GETDATE()) < @Minute
-AND Unblocked != 1",
+AND ISNULL(Unblocked, 0) != 1",
                     new SqlParameter("@ResourceID", resourceID), 
                     new SqlParameter("@IPAddress", request.UserHostAddress), 
                     new SqlParameter("@Minute", MINUTE))) {
@@ -3460,8 +3460,7 @@ AND Unblocked != 1",
 			try {
 				int userID = getUserIdFromToken(token, expirationMinutes);
 				if (userID != 0) {
-                    if (!UserGet2FAStatus(token, expirationMinutes).user2FAEnabled)
-                    {
+                    if (!UserGet2FAStatus(token, expirationMinutes).user2FAEnabled) {
                         executeNonQuery(
                             "UPDATE [User] SET Enable2FA = @Enable2FA where UserID = @UserID",
                             new SqlParameter("@Enable2FA", true),
@@ -3566,9 +3565,10 @@ AND Unblocked != 1",
 		public bool UserSubmitSecretKey(string secretKey, int expirationMinutes)
 		{
 			using (var rs = executeReader(@"
-SELECT 1 FROM UserSecret WHERE SecretKey = @SecretKey", new SqlParameter("@SecretKey", generateSHA512String(secretKey)))) {
+SELECT UserID FROM UserSecret WHERE SecretKey = @SecretKey", new SqlParameter("@SecretKey", generateSHA512String(secretKey)))) {
 				if (rs.Read()) {
-		            // TODO: "Unlock" resourceID
+					int userID = getInt32(rs, 0);
+					executeNonQuery("UPDATE UserLogin SET Unblocked = 1 WHERE UserID = @UserID", new SqlParameter("@UserID", userID));
 					return true;
 				}
 			}
