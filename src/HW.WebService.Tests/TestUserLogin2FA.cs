@@ -8,11 +8,13 @@ namespace HW.WebService.Tests
 	public class TestUserLogin2FA
 	{
 		Service s;
+		Service s2;
 		
 		[SetUpAttribute]
 		public void Setup()
 		{
 		    s = new Service(new DummyRequest());
+		    s2 = new Service(new DummyRequest2());
 		}
 		
 		[Test]
@@ -43,7 +45,7 @@ namespace HW.WebService.Tests
 		    
 		    var ud = s.UserLogin2FA("test1", "password", 10);
 		    
-		    ud = s.UserLogin2FA("test1", "password", 10);
+		    ud = s2.UserLogin2FA("test1", "password", 10);
 		    Assert.IsNull(ud.UserData.token);
 		    Assert.AreEqual(new DateTime(), ud.UserData.tokenExpires);
 		    Assert.AreEqual(0, ud.UserData.languageID);
@@ -89,6 +91,13 @@ namespace HW.WebService.Tests
 		{
 			public string UserHostAddress {
 				get { return "test"; }
+			}
+		}
+		
+		class DummyRequest2 : Service.IRequest
+		{
+			public string UserHostAddress {
+				get { return "test2"; }
 			}
 		}
 	}

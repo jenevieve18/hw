@@ -3637,7 +3637,7 @@ SELECT 1 FROM UserSecret WHERE SecretKey = @SecretKey", new SqlParameter("@Secre
 			                     "upbq.ValueInt " +
 			                     "FROM UserProfile up " +
 			                     "INNER JOIN SponsorBQ sbq ON up.SponsorID = sbq.SponsorID " +
-			                     "INNER JOIN BQ ON BQ.BQID = sbq.BQID " +
+			                     "INNER JOIN BQ ON BQ.BQID s= sbq.BQID " +
 			                     "INNER JOIN UserProfileBQ upbq ON up.UserProfileID = upbq.UserProfileID AND upbq.BQID = BQ.BQID " +
 			                     "WHERE BQ.Type IN (1,7) AND BQ.Comparison = 1 AND up.UserProfileID = " + userProfileID + " ORDER BY BQ.BQID");
 			while (r.Read())
