@@ -3359,7 +3359,7 @@ AND DATEDIFF(MINUTE, LoginAttempt, GETDATE()) < @Minute", new SqlParameter("@Use
 						    } else {
 						        string secretKey = Guid.NewGuid().ToString().Replace("-", "");
                                 string resourceID = generateUniqueResourceID();
-                                string token = getUserToken(userID, languageID, expirationMinutes).token;
+                                var token = getUserToken(userID, languageID, expirationMinutes).token;
                                 ud.secretKey = secretKey;
     	                        ud.resourceID = resourceID;
                                 executeNonQuery(
@@ -3427,22 +3427,28 @@ AND IPAddress = @IPAddress",
 		public UserData UserHolding(string resourceID)
 		{
 			var u = new UserData();
-			using (var rs1 = executeReader(
+			using (var resourceReader = executeReader(
 			    @"
 SELECT u.UserID, u.LID, ula.UserToken, ula.UserLoginID
 FROM [User] u
 INNER JOIN UserLogin ula ON ula.UserID = u.UserID
 WHERE ula.ResourceID = @ResourceID
-AND IPAddress = @IPAddress
+--AND IPAddress = @IPAddress
 AND DATEDIFF(MINUTE, ula.LoginAttempt, GETDATE()) < @Minute
 AND ISNULL(Unblocked, 0) = 1",
                     new SqlParameter("@ResourceID", resourceID), 
                     new SqlParameter("@IPAddress", request.UserHostAddress), 
                     new SqlParameter("@Minute", MINUTE))) {
-			    if (rs1.Read()) {
+			    if (resourceReader.Read()) {
 //	       			u = getUserToken(getInt32(rs1, 0), getInt32(rs1, 1), 20);
-					u.token = getString(rs1, 2);
-					executeNonQuery(@"DELETE FROM UserLogin WHERE UserLoginID = @UserLoginID", new SqlParameter("@UserLoginID", getInt32(rs1, 3)));
+					u.token = getString(resourceReader, 2);
+					using (var tokenReader = executeReader("SELECT Expires FROM UserToken WHERE UserToken = @UserToken", new SqlParameter("@UserToken", u.token))) {
+					    if (tokenReader.Read()) {
+					        u.tokenExpires = getDateTime(tokenReader, 0);
+					    }
+					}
+					executeNonQuery(@"DELETE FROM UserLogin WHERE UserLoginID = @UserLoginID", new SqlParameter("@UserLoginID", getInt32(resourceReader, 3)));
+					// TODO: Delete the expired ones.
 				}
 			}
 			return u;
@@ -3726,6 +3732,14 @@ SELECT UserID FROM UserSecret WHERE SecretKey = @SecretKey", new SqlParameter("@
 			updateProfileComparison(newUserProfileID);
 
 			return newUserProfileID;
+		}
+		private DateTime getDateTime(SqlDataReader rs, int index)
+		{
+		    return getDateTime(rs, index, new DateTime());
+		}
+		private DateTime getDateTime(SqlDataReader rs, int index, DateTime def)
+		{
+			return rs.IsDBNull(index) ? def : rs.GetDateTime(index);
 		}
 		private string getString(SqlDataReader rs, int index)
 		{
