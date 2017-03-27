@@ -85,6 +85,33 @@ namespace HW.WebService.Tests
 		    
 		    Assert.IsNotEmpty(ud.secretKey);
 		    Assert.IsNotEmpty(ud.resourceID);
+		    
+		    u = s.UserHolding(ud.resourceID);
+		    Console.WriteLine(u.token);
+		    Assert.IsNotEmpty(u.token);
+		}
+		
+		[Test]
+		public void a()
+		{
+		    var u = s.UserLogin("test1", "password", 10);
+		    Assert.IsTrue(s.UserDisable2FA(u.token, 10));
+		    Assert.IsTrue(s.UserEnable2FA(u.token, 10));
+		    
+		    var ud = s.UserLogin2FA("test1", "password", 10);
+		    
+		    Assert.IsNull(ud.UserData.token);
+		    Assert.AreEqual(new DateTime(), ud.UserData.tokenExpires);
+		    Assert.AreEqual(0, ud.UserData.languageID);
+		    
+		    Assert.IsNotEmpty(ud.secretKey);
+		    Assert.IsNotEmpty(ud.resourceID);
+		    
+		    Assert.IsTrue(s.UserSubmitSecretKey(ud.secretKey, 10));
+		    
+		    u = s.UserHolding(ud.resourceID);
+		    Console.WriteLine(u.token);
+		    Assert.IsNotEmpty(u.token);
 		}
 		
 		class DummyRequest : Service.IRequest

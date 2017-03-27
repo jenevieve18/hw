@@ -3435,7 +3435,7 @@ INNER JOIN UserLogin ula ON ula.UserID = u.UserID
 WHERE ula.ResourceID = @ResourceID
 AND IPAddress = @IPAddress
 AND DATEDIFF(MINUTE, ula.LoginAttempt, GETDATE()) < @Minute
-AND ISNULL(Unblocked, 0) != 1",
+AND ISNULL(Unblocked, 0) = 1",
                     new SqlParameter("@ResourceID", resourceID), 
                     new SqlParameter("@IPAddress", request.UserHostAddress), 
                     new SqlParameter("@Minute", MINUTE))) {
