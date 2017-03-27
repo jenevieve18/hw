@@ -22,17 +22,19 @@
 
     <link rel="stylesheet" href="assets/bootstrap-datepicker/css/bootstrap-combined.min.css" />
 
-    <link rel="stylesheet" href="assets/css/default.css" />
+    <link rel="stylesheet" href="assets/theme2/css/default.css" />
 
 </head>
 <body>
     <form id="form1" runat="server" class="form-signin">
 
-        <asp:Image ID="Image1" runat="server" ImageUrl="assets/img/hwlogo.png" />
-        <h2>
-            <%= R.Str(lid, "login.header", "HealthWatch.se<br>Group administration") %>
-        </h2>
-        <p style="font-size: 14px">
+        <header>
+            <asp:Image ID="Image1" runat="server" ImageUrl="assets/theme2/img/hwlogo.png" />
+            <h2>
+                <%= R.Str(lid, "login.header", "Group administration") %>
+            </h2>
+        </header>
+        <%--<p style="font-size: 14px">
             <small>
                 <% if (lid != 1) { %>
                     <%= HtmlHelper.Anchor(R.Str(1, "i18n"), string.Format("default.aspx?lid=1&r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)), "class='i18n'")%>
@@ -44,7 +46,7 @@
                     <%= HtmlHelper.Anchor(R.Str(4, "i18n"), string.Format("default.aspx?lid=4&r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)), "class='i18n'")%>
                 <% } %>
             </small>
-        </p>
+        </p>--%>
 
         <% if (errorMessage != "") { %>
             <div class="alert alert-error">
@@ -59,7 +61,7 @@
             <i class="icon-circle-arrow-right"></i><%= R.Str(lid, "login.signin", "Sign in") %>
         </button>
 
-        <% if (adminNews.Count > 0) { %>
+        <%--<% if (adminNews.Count > 0) { %>
             <hr />
             <div class="news">
                 <h4><%= R.Str(lid, "news", "News") %></h4>
@@ -75,7 +77,7 @@
                     <% i++; %>
                 <% } %>
             </div>
-        <% } %>
+        <% } %>--%>
     </form>
 
     <div class="footer">
