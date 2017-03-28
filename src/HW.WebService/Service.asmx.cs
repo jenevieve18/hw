@@ -3448,7 +3448,7 @@ AND ISNULL(Unblocked, 0) = 1",
 					    }
 					}
 					executeNonQuery(@"DELETE FROM UserLogin WHERE UserLoginID = @UserLoginID", new SqlParameter("@UserLoginID", getInt32(resourceReader, 3)));
-					executeNonQuery(@"DELETE FROM UserLOgin WHERE DATEDIFF(MINUTE, ula.LoginAttempt, GETDATE()) > @Minute", new SqlParameter("@Minute", MINUTE));
+					executeNonQuery(@"DELETE FROM UserLOgin WHERE DATEDIFF(MINUTE, LoginAttempt, GETDATE()) > @Minute", new SqlParameter("@Minute", MINUTE));
 				}
 			}
 			return u;
