@@ -3440,7 +3440,7 @@ AND ISNULL(Unblocked, 0) = 1",
                     new SqlParameter("@IPAddress", request.UserHostAddress), 
                     new SqlParameter("@Minute", MINUTE))) {
 			    if (resourceReader.Read()) {
-//	       			u = getUserToken(getInt32(rs1, 0), getInt32(rs1, 1), 20);
+			        u.languageID = getInt32(resourceReader, 1);
 					u.token = getString(resourceReader, 2);
 					using (var tokenReader = executeReader("SELECT Expires FROM UserToken WHERE UserToken = @UserToken", new SqlParameter("@UserToken", u.token))) {
 					    if (tokenReader.Read()) {
@@ -3448,7 +3448,7 @@ AND ISNULL(Unblocked, 0) = 1",
 					    }
 					}
 					executeNonQuery(@"DELETE FROM UserLogin WHERE UserLoginID = @UserLoginID", new SqlParameter("@UserLoginID", getInt32(resourceReader, 3)));
-					// TODO: Delete the expired ones.
+					executeNonQuery(@"DELETE FROM UserLOgin WHERE DATEDIFF(MINUTE, ula.LoginAttempt, GETDATE()) > @Minute", new SqlParameter("@Minute", MINUTE));
 				}
 			}
 			return u;
@@ -3568,7 +3568,21 @@ AND ISNULL(Unblocked, 0) = 1",
 		/// <param name="expirationMinutes">Expiration minutes</param>
 		/// <returns></returns>
         [WebMethod(Description = "Submits the users secret; the second part of a 2FA login.")]
-		public bool UserSubmitSecretKey(string secretKey, int expirationMinutes)
+		public bool UserSubmitSecretKey(string secretKey)
+		{
+			using (var rs = executeReader(@"
+SELECT UserID FROM UserSecret WHERE SecretKey = @SecretKey", new SqlParameter("@SecretKey", generateSHA512String(secretKey)))) {
+				if (rs.Read()) {
+					int userID = getInt32(rs, 0);
+					executeNonQuery("UPDATE UserLogin SET Unblocked = 1 WHERE UserID = @UserID", new SqlParameter("@UserID", userID));
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		[WebMethod(Description = "Submits the users secret; the second part of a 2FA login.")]
+		public bool UserSubmitSecretKeyWeb(string secretKey)
 		{
 			using (var rs = executeReader(@"
 SELECT UserID FROM UserSecret WHERE SecretKey = @SecretKey", new SqlParameter("@SecretKey", generateSHA512String(secretKey)))) {
