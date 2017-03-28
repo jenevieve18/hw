@@ -131,7 +131,7 @@ $(function() {
 	$behavior.click(deleteItem);
 	$nonBehavior.click(deleteItem);
 
-  $('#btn-back').hide();
+  // $('#btn-back').hide();
 
   $('#btn-cheat').click(function() {
     $("#div1").hide();

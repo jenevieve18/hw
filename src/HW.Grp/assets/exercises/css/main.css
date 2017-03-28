@@ -223,6 +223,10 @@ ul li input {
   color: #dff0d8;
 }
 
+.text-center {
+  text-align: center;
+}
+
 ol li, ul li {
   padding: 2px 0;
 }

@@ -38,11 +38,14 @@ block content
         th(width='50%') Behavior 
         th(width='50%') Non-behavior
       tr
-        td(style='background-color:#72bae4', valign="top")
+        //- td(style='background-color:#72bae4', valign="top")
+        td(style='background-color:#EBEBEB', valign="top")
           #behavior.input0.ui-helper-reset(style='min-height:50px')
-        td(style='background-color:#72bae4', valign="top")
+        //- td(style='background-color:#72bae4', valign="top")
+        td(style='background-color:#EBEBEB', valign="top")
           #non-behavior.input1.ui-helper-reset(style='min-height:50px')
-    ul#choices.input2.gallery.ui-helper-reset(style='background-color:#EBEBEB')
+    //- ul#choices.input2.gallery.ui-helper-reset(style='background-color:#EBEBEB')
+    ul#choices.input2.gallery.ui-helper-reset
       //- li.beteende
       //-   span.ui-icon.ui-icon-arrow-4
       //-   | Answer the phone
@@ -160,9 +163,9 @@ block content
               div LOYAL
               .icke.alert.alert-warning
                 | For general to several observers would agree on what it means: to fulfill their obligations, in time, have been employed long etc.
-  p
-    a#btn-cheat.ui-button.ui-widget.ui-corner-all Do you want to cheat
-    a#btn-back.hidden.ui-button.ui-widget.ui-corner-all Back
+  p.text-center
+    a#btn-cheat.ui-button.ui-widget.ui-corner-all Start Over
+    a#btn-back.ui-button.ui-widget.ui-corner-all Check Answers
     a#btn-save.ui-button.ui-widget.ui-corner-all Save
   p
     | To read more about the behaviors and how they work in organizations, we recommend Rolf Olofsson: Behavior Analysis in organizations. Handbook of OBM. Stockholm: Nature and Culture in 2010.
