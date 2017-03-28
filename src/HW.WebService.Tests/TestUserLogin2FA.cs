@@ -87,8 +87,7 @@ namespace HW.WebService.Tests
 		    Assert.IsNotEmpty(ud.resourceID);
 		    
 		    u = s.UserHolding(ud.resourceID);
-		    Console.WriteLine(u.token);
-		    Assert.IsNotEmpty(u.token);
+		    Assert.IsNull(u.token);
 		}
 		
 		[Test]
@@ -107,10 +106,10 @@ namespace HW.WebService.Tests
 		    Assert.IsNotEmpty(ud.secretKey);
 		    Assert.IsNotEmpty(ud.resourceID);
 		    
-		    Assert.IsTrue(s.UserSubmitSecretKey(ud.secretKey, 10));
+		    Assert.IsTrue(s.UserSubmitSecretKey(ud.secretKey));
 		    
 		    u = s.UserHolding(ud.resourceID);
-		    Console.WriteLine(u.token);
+		    Assert.AreNotEqual(new DateTime(), u.tokenExpires);
 		    Assert.IsNotEmpty(u.token);
 		}
 		
