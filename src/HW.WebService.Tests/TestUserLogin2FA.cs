@@ -110,7 +110,6 @@ namespace HW.WebService.Tests
 		    Assert.IsTrue(s.UserSubmitSecretKey(ud.secretKey, 10));
 		    
 		    u = s.UserHolding(ud.resourceID);
-		    Console.WriteLine(u.token);
 		    Assert.IsNotEmpty(u.token);
 		}
 		
