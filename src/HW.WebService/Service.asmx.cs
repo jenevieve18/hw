@@ -8,6 +8,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Services;
+using System.Web.Caching;
+//using System.Web.Http.Filters;
 
 namespace HW.WebService
 {
@@ -2529,8 +2531,8 @@ namespace HW.WebService
 		bool UserLogoutAll(string token, int expirationMinutes)
 		{
 			int userID = getUserIdFromToken(token, expirationMinutes);
-//			return (exec("UPDATE UserToken SET Expires = GETDATE() WHERE UserToken = '" + token.Replace("'", "''") + "'") > 0);
-			return (executeNonQuery("DELETE FROM UserToken WHERE UserID = @UserID", new SqlParameter("@UserID", userID)) > 0);
+			return (executeNonQuery("UPDATE UserToken SET Expires = GETDATE() WHERE UserID = @UserID", new SqlParameter("@UserID", userID)) > 0);
+//			return (executeNonQuery("DELETE FROM UserToken WHERE UserID = @UserID", new SqlParameter("@UserID", userID)) > 0);
 		}
 
 		[WebMethod(Description = "Report issue. Returns true if successful.")]
@@ -3595,6 +3597,13 @@ SELECT UserID FROM UserSecret WHERE SecretKey = @SecretKey", new SqlParameter("@
 			return false;
 		}
 		
+		[WebMethod(Description = "")]
+//		[Throttle(TimeUnit = TimeUnit.Minute, Count = 5)]
+		public string Hello(string name)
+		{
+		    return "Hello " + name;
+		}
+		
 		private string generateUniqueResourceID() {
 		    string resourceID = "";
 		    bool found = false;
@@ -4121,5 +4130,57 @@ SELECT UserID FROM UserSecret WHERE SecretKey = @SecretKey", new SqlParameter("@
 		{
 			return 15 + level;
 		}
+		
+		public enum TimeUnit
+        {
+            Minute = 60,
+            Hour = 3600,
+            Day = 86400
+        }
+     
+//        [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+//        public class ThrottleAttribute : ActionFilterAttribute
+//        {
+//            public TimeUnit TimeUnit { get; set; }
+//            public int Count { get; set; }
+//     
+//            public override void OnActionExecuting(ActionExecutingContext filterContext)
+//            {
+//                var seconds = Convert.ToInt32(TimeUnit);
+//     
+//                var key = string.Join(
+//                    "-",
+//                    seconds,
+//                    filterContext.HttpContext.Request.HttpMethod,
+//                    filterContext.ActionDescriptor.ControllerDescriptor.ControllerName,
+//                    filterContext.ActionDescriptor.ActionName,
+//                    filterContext.HttpContext.Request.UserHostAddress
+//                );
+//     
+//                // increment the cache value
+//                var cnt = 1;
+//                if (HttpRuntime.Cache[key] != null) {
+//                    cnt = (int)HttpRuntime.Cache[key] + 1;
+//                }
+//                HttpRuntime.Cache.Insert(
+//                    key,
+//                    cnt,
+//                    null,
+//                    DateTime.UtcNow.AddSeconds(seconds),
+//                    Cache.NoSlidingExpiration,
+//                    CacheItemPriority.Low,
+//                    null
+//                );
+//     
+//                if (cnt > Count)
+//                {
+//                    filterContext.Result = new ContentResult
+//                    {
+//                        Content = "You are allowed to make only " + Count + " requests per " + TimeUnit.ToString().ToLower()
+//                    };
+//                    filterContext.HttpContext.Response.StatusCode = 429;
+//                }
+//            }
+//        }
 	}
 }
