@@ -117,6 +117,10 @@ $(function() {
             .appendTo($gallery1)
             .fadeIn();
         });
+      },
+      out: function(event, ui) {
+        console.log('hello world');
+        $(this).droppable('option', 'accept', '.drag-item');
       }
     });
 
