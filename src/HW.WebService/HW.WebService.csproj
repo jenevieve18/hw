@@ -79,10 +79,6 @@
       <Project>{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}</Project>
       <Name>HW.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HW.Core\HW.Core.csproj">
-      <Project>{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}</Project>
-      <Name>HW.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

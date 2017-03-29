@@ -2520,7 +2520,7 @@ namespace HW.WebService
 		[WebMethod(Description = "Expire token. Returns true if successful.")]
 		public bool UserLogout(string token)
 		{
-			return (exec("UPDATE UserToken SET Expires = GETDATE() WHERE UserToken = '" + token.Replace("'", "''") + "'") > 0);
+			return (exec("UPDATE UserToken SET Expires = DATEADD(MINUTE, -1, GETDATE()) WHERE UserToken = '" + token.Replace("'", "''") + "'") > 0);
 		}
 		
 		/// <summary>
@@ -2531,7 +2531,7 @@ namespace HW.WebService
 		bool UserLogoutAll(string token, int expirationMinutes)
 		{
 			int userID = getUserIdFromToken(token, expirationMinutes);
-			return (executeNonQuery("UPDATE UserToken SET Expires = GETDATE() WHERE UserID = @UserID", new SqlParameter("@UserID", userID)) > 0);
+			return (executeNonQuery("UPDATE UserToken SET Expires = DATEADD(MINUTE, -1, GETDATE()) WHERE UserID = @UserID", new SqlParameter("@UserID", userID)) > 0);
 //			return (executeNonQuery("DELETE FROM UserToken WHERE UserID = @UserID", new SqlParameter("@UserID", userID)) > 0);
 		}
 

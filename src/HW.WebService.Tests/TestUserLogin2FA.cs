@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Threading;
 using NUnit.Framework;
 
 namespace HW.WebService.Tests
@@ -111,6 +112,16 @@ namespace HW.WebService.Tests
             u = s.UserHolding(ud.resourceID);
             Assert.AreNotEqual(new DateTime(), u.tokenExpires);
             Assert.IsNotEmpty(u.token);
+        }
+        
+        [Test]
+        public void b()
+        {
+            var u = s.UserLogin("test1", "password", 10);
+            Assert.IsTrue(s.UserDisable2FA(u.token, 10));
+            Assert.IsTrue(s.UserEnable2FA(u.token, 10));
+            
+            Assert.IsFalse(s.UserExtendToken(u.token, 10));
         }
     }
     
