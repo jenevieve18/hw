@@ -4,7 +4,7 @@
 <%@ Import Namespace="HW.Grp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-    <link rel="stylesheet" href="assets/css/managers.css" />
+    <link rel="stylesheet" href="assets/theme1/css/managers.css" />
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -37,7 +37,7 @@
                 <tr>
                     <td>
                         <% if (s.ReadOnly) { %>
-                            <img src="assets/img/locked.gif" />
+                            <img src="assets/theme1/img/locked.gif" />
                         <% } %>
                         <%= HtmlHelper.Anchor(s.ToString(), "managerSetup.aspx?SAID=" + s.Id.ToString()) %>
                     </td>
@@ -60,7 +60,7 @@
                             R.Str(lid, "manager.delete", "Are you sure you want to delete this manager?")
                         );
                         %>
-                        <%= HtmlHelper.AnchorImage(url, "assets/img/deltoolsmall.gif")%>
+                        <%= HtmlHelper.AnchorImage(url, "assets/theme1/img/deltoolsmall.gif")%>
                     </td>
                 </tr>
                 <% } %>

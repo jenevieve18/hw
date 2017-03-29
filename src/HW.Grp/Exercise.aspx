@@ -5,7 +5,7 @@
 <%@ Import Namespace="HW.Grp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="assets/js/exercise.js"></script>
-    <link rel="stylesheet" href="assets/css/exercise.css" />
+    <link rel="stylesheet" href="assets/theme1/css/exercise.css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 

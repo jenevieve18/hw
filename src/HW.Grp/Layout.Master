@@ -16,9 +16,9 @@
 
     <%--<link rel="stylesheet" href="assets/bootstrap-datepicker/css/bootstrap-combined.min.css" />--%>
 
-    <link rel="Stylesheet" href="assets/css/960.css" />
-    <link rel="Stylesheet" href="assets/css/admin.css" />
-    <link rel="Stylesheet" href="assets/css/site.css" />
+    <link rel="Stylesheet" href="assets/theme1/css/960.css" />
+    <link rel="Stylesheet" href="assets/theme1/css/admin.css" />
+    <link rel="Stylesheet" href="assets/theme1/css/site.css" />
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
@@ -45,7 +45,7 @@
             <div class="headergroup grid_16">
                 <div class="grid_3 alpha">
                     <%--<img src="assets/img/hwlogo.png" width="186" height="126" alt="HealthWatch group administrator" />--%>
-                    <asp:Image ID="imageLogo" runat="server" ImageUrl="assets/img/hwlogo.png" Width="186" Height="126" AlternateText="HealthWatch group administrator" />
+                    <asp:Image ID="imageLogo" runat="server" ImageUrl="assets/theme1/img/hwlogo.png" Width="186" Height="126" AlternateText="HealthWatch group administrator" />
                 </div>
                 <div class="grid_8 omega p2">
                     <% if (sponsor != null) { %>
