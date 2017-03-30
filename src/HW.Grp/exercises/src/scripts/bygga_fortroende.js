@@ -65,6 +65,11 @@ $(function() {
     // init();
   }
 
+  var trigger1Count = 0,
+    impact1Count = 0,
+    trigger2Count = 0,
+    impact2Count = 0;
+
   function init() {
     $("li", $gallery1).draggable({
       cancel: "a.ui-icon", // Clicking an icon won't initiate dragging
@@ -74,32 +79,41 @@ $(function() {
       cursor: "move"
     });
 
-    // $('li', $trigger1).draggable({
-    //   cancel: "a.ui-icon", // Clicking an icon won't initiate dragging
-    //   revert: "invalid", // When not dropped, the item will revert back to its initial position
-    //   helper: "clone",
-    //   cursor: "move"
-    // });
-    // $('li', $impact1).draggable({
-    //   cancel: "a.ui-icon", // Clicking an icon won't initiate dragging
-    //   revert: "invalid", // When not dropped, the item will revert back to its initial position
-    //   helper: "clone",
-    //   cursor: "move"
-    // });
+    $trigger1.droppable({
+      accept: "#gallery1 > li",
+      activeClass: "ui-state-highlight",
+      drop: function(event, ui) {
+        if (trigger1Count++ < 1) {
+          var $item = ui.draggable;
+          $item.fadeOut(function() {
+            $item.find(".ui-icon-arrow-4")
+              .remove()
+              .end()
+              .prepend('<span class="ui-icon ui-icon-trash"></span>')
+              .appendTo($trigger1)
+              .fadeIn();
+          });
+          $(this).droppable({ disabled: true });
+        }
+      }
+    });
 
     $impact1.droppable({
       accept: "#gallery1 > li",
       activeClass: "ui-state-highlight",
       drop: function(event, ui) {
-        var $item = ui.draggable;
-        $item.fadeOut(function() {
-          $item.find('.ui-icon-arrow-4')
-            .remove()
-            .end()
-            .prepend('<span class="ui-icon ui-icon-trash"></span>')
-            .prependTo($impact1)
-            .fadeIn();
-        });
+        if (impact1Count++ < 1) {
+          var $item = ui.draggable;
+          $item.fadeOut(function() {
+            $item.find('.ui-icon-arrow-4')
+              .remove()
+              .end()
+              .prepend('<span class="ui-icon ui-icon-trash"></span>')
+              .prependTo($impact1)
+              .fadeIn();
+          });
+          $(this).droppable({ disabled: true });
+        }
       }
     });
 
@@ -117,10 +131,17 @@ $(function() {
             .appendTo($gallery1)
             .fadeIn();
         });
-      },
-      out: function(event, ui) {
-        console.log('hello world');
-        $(this).droppable('option', 'accept', '.drag-item');
+        console.log($item);
+        console.log($item.parent());
+        console.log($trigger1);
+        if ($item.parent() == $trigger1) {
+          console.log('trigger');
+          $trigger1.droppable({ disabled: false });
+        } else {
+          console.log('impact');
+          impact1Count = 0;
+          $impact1.droppable({ disabled: false });
+        }
       }
     });
 
@@ -154,19 +175,6 @@ $(function() {
       init();
     });
 
-    // $('li', $trigger2).draggable({
-    //   cancel: "a.ui-icon", // Clicking an icon won't initiate dragging
-    //   revert: "invalid", // When not dropped, the item will revert back to its initial position
-    //   helper: "clone",
-    //   cursor: "move"
-    // });
-    // $('li', $impact2).draggable({
-    //   cancel: "a.ui-icon", // Clicking an icon won't initiate dragging
-    //   revert: "invalid", // When not dropped, the item will revert back to its initial position
-    //   helper: "clone",
-    //   cursor: "move"
-    // });
-
     $("li", $gallery2).draggable({
       cancel: "a.ui-icon", // Clicking an icon won't initiate dragging
       appendTo: "body",
@@ -179,15 +187,18 @@ $(function() {
       accept: "#gallery2 > li",
       activeClass: "ui-state-highlight",
       drop: function(event, ui) {
-        var $item = ui.draggable;
-        $item.fadeOut(function() {
-          $item.find('.ui-icon-arrow-4')
-            .remove()
-            .end()
-            .prepend('<span class="ui-icon ui-icon-trash"></span>')
-            .prependTo($trigger2)
-            .fadeIn();
-        });
+        if (trigger2Count++ < 1) {
+          var $item = ui.draggable;
+          $item.fadeOut(function() {
+            $item.find('.ui-icon-arrow-4')
+              .remove()
+              .end()
+              .prepend('<span class="ui-icon ui-icon-trash"></span>')
+              .prependTo($trigger2)
+              .fadeIn();
+          });
+          $(this).droppable({ disabled: true });
+        }
       }
     });
 
@@ -195,15 +206,18 @@ $(function() {
       accept: "#gallery2 > li",
       activeClass: "ui-state-highlight",
       drop: function(event, ui) {
-        var $item = ui.draggable;
-        $item.fadeOut(function() {
-          $item.find('.ui-icon-arrow-4')
-            .remove()
-            .end()
-            .prepend('<span class="ui-icon ui-icon-trash"></span>')
-            .prependTo($impact2)
-            .fadeIn();
-        });
+        if (impact2Count++ < 1) {
+          var $item = ui.draggable;
+          $item.fadeOut(function() {
+            $item.find('.ui-icon-arrow-4')
+              .remove()
+              .end()
+              .prepend('<span class="ui-icon ui-icon-trash"></span>')
+              .prependTo($impact2)
+              .fadeIn();
+          });
+          $(this).droppable({ disabled: true });
+        }
       }
     });
 
@@ -221,6 +235,11 @@ $(function() {
             .appendTo($gallery2)
             .fadeIn();
         });
+        if ($item.parent() == $trigger1) {
+          $trigger2.droppable({ disabled: false });
+        } else {
+          $impact2.droppable({ disabled: false });
+        }
       }
     });
 
@@ -267,12 +286,32 @@ $(function() {
         .prepend('<span class="ui-icon ui-icon-arrow-4"></span>')
         .end();
       $gallery1.append($item);
+      trigger1Count = 0;
+      $trigger1.droppable({ disabled: false });
+    }
+    init();
+  }
+
+  var deleteImpact1Item = function(e) {
+    var $target = $(e.target);
+    if ($target.is('.ui-icon-trash')) {
+      var $item = $target.parent();
+      $item.removeAttr('style');
+      $item
+        .find('.ui-icon-trash')
+        .remove()
+        .end()
+        .prepend('<span class="ui-icon ui-icon-arrow-4"></span>')
+        .end();
+      $gallery1.append($item);
+      impact1Count = 0;
+      $impact1.droppable({ disabled: false });
     }
     init();
   }
 
   $trigger1.click(deleteTrigger1Item);
-  $impact1.click(deleteTrigger1Item);
+  $impact1.click(deleteImpact1Item);
 
   var deleteTrigger2Item = function(e) {
     var $target = $(e.target);
@@ -286,56 +325,30 @@ $(function() {
         .prepend('<span class="ui-icon ui-icon-arrow-4"></span>')
         .end();
       $gallery2.append($item);
+      trigger2Count = 0;
+      $trigger2.droppable({ disabled: false });
+    }
+    init();
+  }
+
+  var deleteImpact2Item = function(e) {
+    var $target = $(e.target);
+    if ($target.is('.ui-icon-trash')) {
+      var $item = $target.parent();
+      $item.removeAttr('style');
+      $item
+        .find('.ui-icon-trash')
+        .remove()
+        .end()
+        .prepend('<span class="ui-icon ui-icon-arrow-4"></span>')
+        .end();
+      $gallery2.append($item);
+      impact2Count = 0;
+      $impact2.droppable({ disabled: false });
     }
     init();
   }
 
   $trigger2.click(deleteTrigger2Item);
-  $impact2.click(deleteTrigger2Item);
-
-  // $impact1.click(function(e) {
-  //   var $target = $(e.target);
-  //   if ($target.is('.ui-icon-trash')) {
-  //     var $item = $target.parent();
-  //     $item.removeAttr('style');
-  //     $item
-  //       .find('.ui-icon-trash')
-  //       .remove()
-  //       .end()
-  //       .prepend('<span class="ui-icon ui-icon-arrow-4"></span>')
-  //       .end();
-  //     $gallery1.append($item);
-  //   }
-  // });
-  //
-  // $impact2.click(function(e) {
-  //   var $target = $(e.target);
-  //   if ($target.is('.ui-icon-trash')) {
-  //     var $item = $target.parent();
-  //     $item.removeAttr('style');
-  //     $item
-  //       .find('.ui-icon-trash')
-  //       .remove()
-  //       .end()
-  //       .prepend('<span class="ui-icon ui-icon-arrow-4"></span>')
-  //       .end();
-  //     $gallery2.append($item);
-  //   }
-  // });
-
-  $trigger1.droppable({
-    accept: "#gallery1 > li",
-    activeClass: "ui-state-highlight",
-    drop: function(event, ui) {
-      var $item = ui.draggable;
-      $item.fadeOut(function() {
-        $item.find(".ui-icon-arrow-4")
-          .remove()
-          .end()
-          .prepend('<span class="ui-icon ui-icon-trash"></span>')
-          .appendTo($trigger1)
-          .fadeIn();
-      });
-    }
-  });
+  $impact2.click(deleteImpact2Item);
 });
