@@ -71,6 +71,11 @@ $(function() {
     impact2Count = 0;
 
   function init() {
+    trigger1Count = 0;
+    impact1Count = 0;
+    trigger2Count = 0;
+    impact2Count = 0;
+
     $("li", $gallery1).draggable({
       cancel: "a.ui-icon", // Clicking an icon won't initiate dragging
       appendTo: "body",
@@ -131,14 +136,10 @@ $(function() {
             .appendTo($gallery1)
             .fadeIn();
         });
-        console.log($item);
-        console.log($item.parent());
-        console.log($trigger1);
-        if ($item.parent() == $trigger1) {
-          console.log('trigger');
+        if ($item.parent().attr('id') == $trigger1.attr('id')) {
+          trigger1Count = 0;
           $trigger1.droppable({ disabled: false });
         } else {
-          console.log('impact');
           impact1Count = 0;
           $impact1.droppable({ disabled: false });
         }
@@ -173,6 +174,8 @@ $(function() {
     $('#btn-reset1').click(function() {
       setInputs({ input: newExercise.inputs[0], container: '.input0' }, { input: newExercise.inputs[1], container: '.input1' }, { input: newExercise.inputs[2], container: '.input2' });
       init();
+      $trigger1.droppable({ disabled: false });
+      $impact1.droppable({ disabled: false });
     });
 
     $("li", $gallery2).draggable({
@@ -235,9 +238,11 @@ $(function() {
             .appendTo($gallery2)
             .fadeIn();
         });
-        if ($item.parent() == $trigger1) {
+        if ($item.parent().attr('id') == $trigger2.attr('id')) {
+          trigger2Count = 0;
           $trigger2.droppable({ disabled: false });
         } else {
+          impact2Count = 0;
           $impact2.droppable({ disabled: false });
         }
       }
@@ -271,6 +276,8 @@ $(function() {
     $('#btn-reset2').click(function() {
       setInputs({ input: newExercise.inputs[3], container: '.input3' }, { input: newExercise.inputs[4], container: '.input4' }, { input: newExercise.inputs[5], container: '.input5' });
       init();
+      $trigger2.droppable({ disabled: false });
+      $impact2.droppable({ disabled: false });
     });
   }
 

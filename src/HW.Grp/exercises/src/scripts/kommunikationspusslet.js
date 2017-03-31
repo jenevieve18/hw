@@ -67,7 +67,7 @@ $(function() {
   }
 
   function init() {
-    $('#input0').sortable().disableSelection();
+    // $('#input0').sortable().disableSelection();
     $('#input1').sortable().disableSelection();
   }
 
