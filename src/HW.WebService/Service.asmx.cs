@@ -3358,10 +3358,10 @@ WHERE SponsorID = @SponsorID", new SqlParameter("@SponsorID", sponsorID))) {
 SELECT ResourceID 
 FROM UserLogin 
 WHERE UserID = @UserID
-AND DATEDIFF(MINUTE, LoginAttempt, GETDATE()) < @Minute", new SqlParameter("@UserID", userID), new SqlParameter("@Minute", MINUTE))) {
+AND DATEDIFF(MINUTE, LoginAttempt, GETDATE()) < @Minute
+AND ISNULL(Unblocked, 0) = 0", new SqlParameter("@UserID", userID), new SqlParameter("@Minute", MINUTE))) {
 						    executeNonQuery(@"DELETE FROM UserLogin WHERE UserID = @UserID AND DATEDIFF(MINUTE, LoginAttempt, GETDATE()) > @Minute", new SqlParameter("@UserID", userID), new SqlParameter("@Minute", MINUTE));
                             if (loginReader.Read()) {
-                                ud.resourceID = getString(loginReader, 0);
                                 ud.activeLoginAttempt = true;
 						    } else {
 						        string secretKey = Guid.NewGuid().ToString().Replace("-", "");

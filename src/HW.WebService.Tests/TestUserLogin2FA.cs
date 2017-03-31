@@ -112,6 +112,11 @@ namespace HW.WebService.Tests
             u = s.UserHolding(ud.resourceID);
             Assert.AreNotEqual(new DateTime(), u.tokenExpires);
             Assert.IsNotEmpty(u.token);
+            
+            ud = s.UserLogin2FA("test1", "password", 10);
+            Assert.IsNull(ud.UserData.token);
+            Assert.AreEqual(new DateTime(), ud.UserData.tokenExpires);
+            Assert.AreEqual(0, ud.UserData.languageID);
         }
         
         [Test]
@@ -122,6 +127,27 @@ namespace HW.WebService.Tests
             Assert.IsTrue(s.UserEnable2FA(u.token, 10));
             
             Assert.IsFalse(s.UserExtendToken(u.token, 10));
+        }
+        
+        [Test]
+        public void c()
+        {
+            var u = s.UserLogin("test1", "password", 10);
+            Assert.IsTrue(s.UserDisable2FA(u.token, 10));
+            Assert.IsTrue(s.UserEnable2FA(u.token, 10));
+            
+            var ud = s.UserLogin2FA("test1", "password", 10);
+            
+            Assert.IsNull(ud.UserData.token);
+            Assert.AreEqual(new DateTime(), ud.UserData.tokenExpires);
+            Assert.AreEqual(0, ud.UserData.languageID);
+            
+            Assert.IsNotEmpty(ud.secretKey);
+            Assert.IsNotEmpty(ud.resourceID);
+            
+            ud = s.UserLogin2FA("test1", "password", 10);
+            Assert.IsNull(ud.resourceID);
+            Assert.IsTrue(ud.activeLoginAttempt);
         }
     }
     
