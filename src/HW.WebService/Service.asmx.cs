@@ -127,6 +127,11 @@ namespace HW.WebService
 			public bool user2FAEnabled;
 			public bool sponsor2FAEnabled;
 		}
+		public struct ActiveLoginAttempts
+		{
+		    public int webservice;
+		    public int website;
+		}
 		public struct DeviceID
 		{
 			public string registrationID;
@@ -3597,6 +3602,18 @@ SELECT UserID FROM UserSecret WHERE SecretKey = @SecretKey", new SqlParameter("@
 			return false;
 		}
 		
+		[WebMethod()]
+		public ActiveLoginAttempts UserGetLoginAttempts(string token)
+		{
+		    var a = new ActiveLoginAttempts();
+//		    using (var rs = executeReader()) {
+//		        if (rs.Read()) {
+//		            
+//		        }
+//		    }
+		    return a;
+		}
+		
 		[WebMethod(Description = "")]
 //		[Throttle(TimeUnit = TimeUnit.Minute, Count = 5)]
 		public string Hello(string name)
@@ -3949,7 +3966,7 @@ SELECT UserID FROM UserSecret WHERE SecretKey = @SecretKey", new SqlParameter("@
 							                                          "\r\n\r\n" +
 							                                          "En begäran om nytt lösenord till ditt konto med användarnamn \"" + r.GetString(2) + "\" har inkommit. Om du begärt detta, klicka på länken nedan för att ange ett nytt lösenord." +
 							                                          "\r\n\r\n" +
-							                                          "https://www.healthwatch.se/password.aspx?NL=1&K=" + r.GetString(3) + r.GetInt32(0) + "");
+							                                          ConfigurationManager.AppSettings["hw_url"] + "/password.aspx?NL=1&K=" + r.GetString(3) + r.GetInt32(0) + "");
 							break;
 						case 2:
 //							success = sendMail("support@healthwatch.se", r.GetString(1),
@@ -3959,7 +3976,7 @@ SELECT UserID FROM UserSecret WHERE SecretKey = @SecretKey", new SqlParameter("@
 							                                          "\r\n\r\n" +
 							                                          "A request for new password for your account with username \"" + r.GetString(2) + "\" has arrived. If you made this request, click the link below to set a new password." +
 							                                          "\r\n\r\n" +
-							                                          "https://www.healthwatch.se/password.aspx?NL=1&K=" + r.GetString(3) + r.GetInt32(0) + "");
+							                                          ConfigurationManager.AppSettings["hw_url"] + "/password.aspx?NL=1&K=" + r.GetString(3) + r.GetInt32(0) + "");
 							break;
 					}
 				}
