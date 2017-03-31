@@ -46,13 +46,14 @@ namespace HW.WebService.Tests
             
             var ud = s.UserLogin2FA("test1", "password", 10);
             
-            ud = s2.UserLogin2FA("test1", "password", 10);
             Assert.IsNull(ud.UserData.token);
             Assert.AreEqual(new DateTime(), ud.UserData.tokenExpires);
             Assert.AreEqual(0, ud.UserData.languageID);
             
+            ud = s2.UserLogin2FA("test1", "password", 10);
+            
             Assert.IsNull(ud.secretKey);
-            //Assert.IsNull(ud.resourceID);
+            Assert.IsNull(ud.resourceID);
             Assert.IsTrue(ud.activeLoginAttempt);
         }
         
@@ -60,6 +61,7 @@ namespace HW.WebService.Tests
         public void TestLoginCorrect2FA()
         {
             var u = s.UserLogin("test1", "password", 10);
+            Assert.IsTrue(s.UserDisable2FA(u.token, 10));
             Assert.IsTrue(s.UserEnable2FA(u.token, 10));
             
             var ud = s.UserLogin2FA("test1", "password", 10);
@@ -120,34 +122,13 @@ namespace HW.WebService.Tests
         }
         
         [Test]
-        public void b()
+        public void TestUserExtendToken()
         {
             var u = s.UserLogin("test1", "password", 10);
             Assert.IsTrue(s.UserDisable2FA(u.token, 10));
             Assert.IsTrue(s.UserEnable2FA(u.token, 10));
             
             Assert.IsFalse(s.UserExtendToken(u.token, 10));
-        }
-        
-        [Test]
-        public void c()
-        {
-            var u = s.UserLogin("test1", "password", 10);
-            Assert.IsTrue(s.UserDisable2FA(u.token, 10));
-            Assert.IsTrue(s.UserEnable2FA(u.token, 10));
-            
-            var ud = s.UserLogin2FA("test1", "password", 10);
-            
-            Assert.IsNull(ud.UserData.token);
-            Assert.AreEqual(new DateTime(), ud.UserData.tokenExpires);
-            Assert.AreEqual(0, ud.UserData.languageID);
-            
-            Assert.IsNotEmpty(ud.secretKey);
-            Assert.IsNotEmpty(ud.resourceID);
-            
-            ud = s.UserLogin2FA("test1", "password", 10);
-            Assert.IsNull(ud.resourceID);
-            Assert.IsTrue(ud.activeLoginAttempt);
         }
     }
     

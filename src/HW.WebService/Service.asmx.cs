@@ -27,7 +27,7 @@ namespace HW.WebService
 			}
 		}
 		
-		const int MINUTE = 1;
+		const int MINUTE = 2;
 		
 		public Service() : this(new MyHttpRequest()) {
 
