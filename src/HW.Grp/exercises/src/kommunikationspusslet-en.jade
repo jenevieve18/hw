@@ -27,6 +27,24 @@ block content
         ]}
       ]
     };
+  style.
+    #input1, #input0 {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+    #input1 li, #input0 li {
+      margin: 0 5px 5px 5px;
+      padding: 5px;
+      height: 2.5em;
+      vertical-align: middle;
+    }
+    html>body #input1 li, html>body #input0 li {
+      line-height: 1.2em;
+    }
+    .ui-state-highlight {
+      line-height: 1.2em;
+    }
   #message.alert.alert-success.hidden
   h2 Time: 5-10 minutes
   p To create an open climate, it is important that communication takes place at the right time. But when is it? Try to piece together the following communication situations with the opportunity that you deem most appropriate. The exercise is like a 15-game: Although a communication situation may be appropriate on several occasions, there is only one solution where all situations occur at appropriate times. You may have to move around several times before you find a solution where everything falls into place.
@@ -43,7 +61,8 @@ block content
         td(valign='top')
           ul#input0.ui-helper-reset(style='min-height:100px')
         td(valign='top')
-          ul#input1.ui-helper-reset(style='min-height:100px')
+          //- ul#input1.ui-helper-reset(style='min-height:100px').sortable
+          ul#input1(style='min-height:100px')
   p.text-center
     a#btn-clear.ui-button.ui-widget.ui-corner-all Start Over
     a#btn-correct.ui-button.ui-widget.ui-corner-all Check Answers

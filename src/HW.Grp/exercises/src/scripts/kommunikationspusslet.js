@@ -43,7 +43,8 @@ $(function() {
           shuffledComponents = arrayShuffle(input.components);
         }
         $(shuffledComponents).each(function(j, component) {
-          $('#input' + i).append('<li><span class="ui-icon ui-icon-arrow-4"></span>' + component.valueText + '</li>');
+          // $('#input' + i).append('<li><span class="ui-icon ui-icon-arrow-4"></span>' + component.valueText + '</li>');
+          $('#input' + i).append('<li class="ui-state-default"><span class="ui-icon ui-icon-arrow-4"></span>' + component.valueText + '</li>');
         });
       });
       init();
