@@ -1,7 +1,6 @@
-use eform
-go
-alter table PlotTypeLang add ShortName nvarchar(255)
-go
+use eform;
+
+--alter table PlotTypeLang add ShortName nvarchar(255);
 
 update PlotTypeLang set ShortName = 'Line' where PlotTypeLangID = 1
 go

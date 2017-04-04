@@ -1,9 +1,9 @@
 use healthWatch;
 
-SET IDENTITY_INSERT ManagerFunction ON 
-INSERT INTO ManagerFunction(ManagerFunctionID, ManagerFunction, URL, Expl) 
-VALUES (9, 'My Exercises', 'myexercise.aspx', 'Manager Exercises') 
-SET IDENTITY_INSERT ManagerFunction OFF
+--SET IDENTITY_INSERT ManagerFunction ON 
+--INSERT INTO ManagerFunction(ManagerFunctionID, ManagerFunction, URL, Expl) 
+--VALUES (9, 'My Exercises', 'myexercise.aspx', 'Manager Exercises') 
+--SET IDENTITY_INSERT ManagerFunction OFF
 
 insert into ManagerFunctionLang(ManagerFunctionID, ManagerFunction, URL, Expl, LangID)
 values(9, 'Chef övningar', 'myexercise.aspx', 'Chef övningar', 1);
