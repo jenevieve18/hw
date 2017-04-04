@@ -94,6 +94,54 @@ namespace HW.WebService.Tests
         }
         
         [Test]
+        public void TestLoginCorrectNo2FA()
+        {
+//        	var u = s.UserLogin("test1", "password", 10);
+//        	Assert.IsTrue(s.UserDisable2FA(u.token, 10));
+        	
+        	var ud = s.UserLogin2FA("test1", "password", 10);
+        	Assert.IsNull(ud.secretKey);
+        	Assert.IsNull(ud.resourceID);
+        }
+        
+        [Test]
+        public void TestGetLoginAttempts()
+        {
+        	var u = s.UserLogin("test1", "password", 10);
+            Assert.IsTrue(s.UserDisable2FA(u.token, 10));
+            Assert.IsTrue(s.UserEnable2FA(u.token, 10));
+            
+            var ud = s.UserLogin2FA("test1", "password", 10);
+            
+            Assert.IsNull(ud.UserData.token);
+            Assert.AreEqual(new DateTime(), ud.UserData.tokenExpires);
+            Assert.AreEqual(0, ud.UserData.languageID);
+            
+            string secretKey = ud.secretKey;
+            string resourceID = ud.resourceID;
+        	
+            Assert.IsFalse(ud.activeLoginAttempt);
+        	Assert.IsNotNull(ud.secretKey);
+        	Assert.IsNotNull(resourceID);
+            
+            ud = s2.UserLogin2FA("test1", "password", 10);
+            
+            Assert.IsNull(ud.secretKey);
+            Assert.IsNull(ud.resourceID);
+            Assert.IsTrue(ud.activeLoginAttempt);
+            
+            Assert.IsTrue(s.UserSubmitSecretKey(secretKey));
+            u = s.UserHolding(resourceID);
+            
+            Assert.IsNotNull(u.token);
+            Assert.AreNotEqual(new DateTime(), u.tokenExpires);
+            Assert.AreNotEqual(0, u.languageID);
+            
+        	Assert.IsFalse(s.UserGetLoginAttempts(u.token).webservice);
+        	Assert.IsFalse(s.UserGetLoginAttempts(u.token).website);
+        }
+        
+        [Test]
         public void a()
         {
             var u = s.UserLogin("test1", "password", 10);
