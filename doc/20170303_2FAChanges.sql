@@ -13,7 +13,9 @@ create table UserLogin(
 	ResourceID varchar(255),
 	UserToken varchar(255),
 	ActiveLoginAttempt integer,
-	Unblocked integer
+	Unblocked integer,
+	FromWebService integer,
+	FromWebsite integer
 );
 
 --drop table UserSecret;

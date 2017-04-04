@@ -129,8 +129,8 @@ namespace HW.WebService
 		}
 		public struct ActiveLoginAttempts
 		{
-		    public int webservice;
-		    public int website;
+		    public bool webservice;
+		    public bool website;
 		}
 		public struct DeviceID
 		{
@@ -3378,13 +3378,14 @@ VALUES(@UserID, @SecretKey)",
                                 );
     							executeNonQuery(
     								@"
-INSERT INTO UserLogin(UserID, IPAddress, LoginAttempt, ResourceID, UserToken) 
-VALUES(@UserID, @IPAddress, @LoginAttempt, @ResourceID, @UserToken)",
+INSERT INTO UserLogin(UserID, IPAddress, LoginAttempt, ResourceID, UserToken, FromWebService) 
+VALUES(@UserID, @IPAddress, @LoginAttempt, @ResourceID, @UserToken, @FromWebService)",
     								new SqlParameter("@UserID", userID),
     								new SqlParameter("@IPAddress", request.UserHostAddress),
     		                 		new SqlParameter("@LoginAttempt", DateTime.Now),
     	                            new SqlParameter("@ResourceID", resourceID),
-    	                            new SqlParameter("@UserToken", token)
+    	                            new SqlParameter("@UserToken", token),
+    	                            new SqlParameter("@FromWebService", true)
     	                 		);
 						    }
                         }
@@ -3602,19 +3603,37 @@ SELECT UserID FROM UserSecret WHERE SecretKey = @SecretKey", new SqlParameter("@
 			return false;
 		}
 		
-		[WebMethod()]
+		[WebMethod(Description = "Returns true if there are active login attempts for the webservice or website.")]
 		public ActiveLoginAttempts UserGetLoginAttempts(string token)
 		{
 		    var a = new ActiveLoginAttempts();
-//		    using (var rs = executeReader()) {
-//		        if (rs.Read()) {
-//		            
-//		        }
-//		    }
+		    int userID = getUserIdFromToken(token, 20);
+		    if (userID != 0) {
+		    	using (var rs = executeReader(@"
+SELECT 1 FROM UserLogin 
+WHERE UserID = @UserID
+AND DATEDIFF(MINUTE, LoginAttempt, GETDATE()) < @Minute
+AND ISNULL(Unblocked, 0) = 0
+AND ISNULL(FromWebService, 0) = 1", new SqlParameter("@UserID", userID), new SqlParameter("@Minute", MINUTE))) {
+		    		if (rs.Read()) {
+		    			a.webservice = true;
+		    		}
+		    	}
+		    	using (var rs = executeReader(@"
+SELECT 1 FROM UserLogin 
+WHERE UserID = @UserID
+AND DATEDIFF(MINUTE, LoginAttempt, GETDATE()) < @Minute
+AND ISNULL(Unblocked, 0) = 0
+AND ISNULL(FromWebsite, 0) = 1", new SqlParameter("@UserID", userID), new SqlParameter("@Minute", MINUTE))) {
+		    		if (rs.Read()) {
+		    			a.website = true;
+		    		}
+		    	}
+		    }
 		    return a;
 		}
 		
-		[WebMethod(Description = "")]
+		[WebMethod(Description = "Says hello to a name sent. Returns 'Hello ' + name.")]
 //		[Throttle(TimeUnit = TimeUnit.Minute, Count = 5)]
 		public string Hello(string name)
 		{
