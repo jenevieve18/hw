@@ -60,10 +60,10 @@ $(function() {
       helper: "clone",
       cursor: "move"
     });
-		console.log('test');
 
     $behavior.droppable({
-      accept: "#choices > li.beteende",
+      // accept: "#choices > li.beteende",
+      accept: "#choices > li",
       activeClass: "ui-state-highlight",
       drop: function(event, ui) {
         var $item = ui.draggable;
@@ -79,7 +79,8 @@ $(function() {
     });
 
     $nonBehavior.droppable({
-      accept: "#choices > li.ickebeteende",
+      // accept: "#choices > li.ickebeteende",
+      accept: "#choices > li",
       activeClass: "ui-state-highlight",
       drop: function(event, ui) {
         var $item = ui.draggable;
@@ -133,10 +134,10 @@ $(function() {
 
   // $('#btn-back').hide();
 
-  $('#btn-cheat').click(function() {
+  $('#btn-start-over').click(function() {
     $("#div1").hide();
     $("#div2").show();
-    $('#btn-cheat').hide();
+    $('#btn-start-over').hide();
     $('#btn-back').show();
   });
 
@@ -144,6 +145,6 @@ $(function() {
     $('#div1').show();
     $('#div2').hide();
     $('#btn-back').hide();
-    $('#btn-cheat').show();
+    $('#btn-start-over').show();
   });
 });
