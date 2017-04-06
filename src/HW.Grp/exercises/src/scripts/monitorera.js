@@ -45,10 +45,15 @@ $(function() {
       for (var i = 0; i < exercise.inputs.length; i++) {
         var input = exercise.inputs[i];
         for (j = 0; j < input.components.length;) {
+          // $('#tbl' + (i)).append("<tr>\
+          //       <td><input type='text' name='input" + (i) + "[]' value='" + input.components[(j)].valueText + "' id='inputComponent" + (j) + "' /></td>\
+          //       <td><input type='text' name='input" + (i) + "[]' value='" + input.components[(j + 1)].valueText + "' id='inputComponent" + (j + 1) + "' /></td>\
+          //       <td><input type='text' name='input" + (i) + "[]' value='" + input.components[(j + 2)].valueText + "' id='inputComponent" + (j + 2) + "'/></td>\
+    			// 		</tr>");
           $('#tbl' + (i)).append("<tr>\
-                <td><input type='text' name='input" + (i) + "[]' value='" + input.components[(j)].valueText + "' id='inputComponent" + (j) + "' /></td>\
-                <td><input type='text' name='input" + (i) + "[]' value='" + input.components[(j + 1)].valueText + "' id='inputComponent" + (j + 1) + "' /></td>\
-                <td><input type='text' name='input" + (i) + "[]' value='" + input.components[(j + 2)].valueText + "' id='inputComponent" + (j + 2) + "'/></td>\
+                <td><textarea style='width:90%' name='input" + (i) + "[]' value='" + input.components[(j)].valueText + "' id='inputComponent" + (j) + "' /></td>\
+                <td><textarea style='width:90%' name='input" + (i) + "[]' value='" + input.components[(j + 1)].valueText + "' id='inputComponent" + (j + 1) + "' /></td>\
+                <td><textarea style='width:90%' name='input" + (i) + "[]' value='" + input.components[(j + 2)].valueText + "' id='inputComponent" + (j + 2) + "'/></td>\
     					</tr>");
           j += 3;
         }
