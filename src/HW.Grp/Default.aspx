@@ -22,7 +22,7 @@
 
     <link rel="stylesheet" href="assets/bootstrap-datepicker/css/bootstrap-combined.min.css" />
 
-    <link rel="stylesheet" href="assets/theme2/css/default.css" />
+    <link rel="stylesheet" href="assets/theme1/css/default.css" />
 
 </head>
 <body>
@@ -61,7 +61,7 @@
             <i class="icon-circle-arrow-right"></i><%= R.Str(lid, "login.signin", "Sign in") %>
         </button>
 
-        <%--<% if (adminNews.Count > 0) { %>
+        <% if (adminNews.Count > 0) { %>
             <hr />
             <div class="news">
                 <h4><%= R.Str(lid, "news", "News") %></h4>
@@ -77,7 +77,7 @@
                     <% i++; %>
                 <% } %>
             </div>
-        <% } %>--%>
+        <% } %>
     </form>
 
     <div class="footer">
