@@ -80,7 +80,7 @@
         <div id="popupie" class="popupie">
             <div class="header">
                 <h1>HealthWatch.se<%= headerText %></h1>
-                <a id="btn-pdf" href="#" class="print">PDF</a>
+                <%--<a id="btn-pdf" href="#" class="print">PDF</a>--%>
                 <a href="#" id="printBtn" onclick="window.print();return false;" class="print">
                     <%= langId == 1 ? "Skriv ut" : "Print" %>
                 </a>
