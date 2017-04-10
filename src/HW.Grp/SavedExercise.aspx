@@ -5,7 +5,7 @@
 <%@ Import Namespace="HW.Grp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="assets/js/exercise.js"></script>
-    <link rel="stylesheet" href="assets/css/exercise.css" />
+    <link rel="stylesheet" href="assets/theme1/css/exercise.css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -126,7 +126,7 @@
                                     l.Id
                                 );
                             %>
-                            <a href="<%= editUrl %>"><img src="assets/img/application_edit.png" /></a>
+                            <a href="<%= editUrl %>"><img src="assets/theme1/img/application_edit.png" /></a>
                             <%
                                 string deleteUrl = string.Format(
                                     @"javascript:if(confirm(""{1}"")) {{
@@ -136,7 +136,7 @@
                                     R.Str(lid, "exercise.delete", "Are you sure you want to delete this exercise?")
                                 );
                             %>
-                            <%= HtmlHelper.AnchorImage(deleteUrl, "assets/img/cross.png")%>
+                            <%= HtmlHelper.AnchorImage(deleteUrl, "assets/theme1/img/cross.png")%>
                         </td>
                         <td><%= l.Date.Value.ToString("yyyy-MM-dd HH:mm") %></td>
                         <td><%= el.ExerciseName %></td>
@@ -144,7 +144,7 @@
                             <span class="hw-icon hw-icon-exercise"></span>
                             <span class="exercise-comment-label"><%= l.Comments %></span>
                             <textarea data-id="<%= l.Id %>" class="exercise-comment-text"><%= l.Comments %></textarea>
-                            <img alt="" class="spinner" src="assets/img/spiffygif_30x30.gif" />
+                            <img alt="" class="spinner" src="assets/theme1/img/spiffygif_30x30.gif" />
                         </td>
                         <td><%= e.Area.AreaName %></td>
                         <td><%= e.Category.CategoryName %></td>
