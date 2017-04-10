@@ -34,16 +34,10 @@ block content
     i Sort the list below so that the descriptions end up in the right column.
   #div1
     table(width="100%")
-      //- tr
-      //-   th(width='50%') Behavior 
-      //-   th(width='50%') Non-behavior
       tr
-        //- td(style='background-color:#EBEBEB', valign="top")
         td(width="50%", valign="top")
           p
           ul#choices.input2.gallery.ui-helper-reset
-          //- #behavior.input0.ui-helper-reset(style='min-height:50px')
-        //- td(style='background-color:#EBEBEB', valign="top")
         td(width="50%", valign="top")
           p.text-center
             strong Behavior
@@ -53,14 +47,16 @@ block content
             strong Non-behavior
           .wrapper(style='background-color:#EBEBEB')
             #non-behavior.input1.ui-helper-reset(style='min-height:100px;padding:5px')
-    //- ul#choices.input2.gallery.ui-helper-reset
   #div2
     table(width="100%")
+      //- tr
+      //-   th(width='50%')  Behavior 
+      //-   th(width='50%')  Non-behavior
       tr
-        th(width='50%')  Behavior 
-        th(width='50%')  Non-behavior
-      tr
-        td(valign="top")
+        td(width="50%", valign="top")
+        td(width="50%", valign="top")
+          p.text-center
+            strong Behavior
           ul
             li
               div Answer the phone
@@ -85,7 +81,8 @@ block content
             li
               div Nod
               .bete.alert.alert-warning This is observable and thus concretely enough.
-        td(valign="top")
+          p.text-center
+            strong Non-behavior
           ul
             li
               div Lazy
@@ -124,9 +121,6 @@ block content
               .icke.alert.alert-warning
                 | For general to several observers would agree on what it means: to fulfill their obligations, in time, have been employed long etc.
   p.text-center
-    //- a#btn-cheat.ui-button.ui-widget.ui-corner-all Start Over
-    //- a#btn-back.ui-button.ui-widget.ui-corner-all Check Answers
-    //- a#btn-save.ui-button.ui-widget.ui-corner-all Save
     a#btn-start-over.ui-button.ui-widget.ui-corner-all Start Over
     a#btn-check-answers.ui-button.ui-widget.ui-corner-all Check Answers
     a#btn-save.ui-button.ui-widget.ui-corner-all Save

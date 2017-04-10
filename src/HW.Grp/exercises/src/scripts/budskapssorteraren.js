@@ -31,21 +31,32 @@ $(function() {
       if (exercise === null) {
         exercise = newExercise;
       }
-      $(exercise.inputs[0].components).each(function(i, component) {
-        $('<li class="' + component.class + '"><span class="ui-icon ui-icon-trash"></span>' + component.valueText + '</li>').appendTo('.input0').fadeIn();
-      });
-      $(exercise.inputs[1].components).each(function(i, component) {
-        $('<li class="' + component.class + '"><span class="ui-icon ui-icon-trash"></span>' + component.valueText + '</li>').appendTo('.input1').fadeIn();
-      });
-      $(exercise.inputs[2].components).each(function(i, component) {
-        $('<li class="' + component.class + '"><span class="ui-icon ui-icon-arrow-4"></span>' + component.valueText + '</li>').appendTo('.input2').fadeIn();
-      });
-      init();
+      setExercise(exercise);
     },
     function(message, status, error) {
       $('#message').text(message).fadeIn(1000).fadeOut(1000);
     }
   );
+
+  function setExercise(exercise) {
+    $('.input0').empty();
+    $(exercise.inputs[0].components).each(function(i, component) {
+      $('<li class="' + component.class + '"><span class="ui-icon ui-icon-trash"></span>' + component.valueText + '</li>')
+        .appendTo('.input0').fadeIn();
+    });
+    $('.input1').empty();
+    $(exercise.inputs[1].components).each(function(i, component) {
+      $('<li class="' + component.class + '"><span class="ui-icon ui-icon-trash"></span>' + component.valueText + '</li>')
+        .appendTo('.input1').fadeIn();
+    });
+    $('.input2').empty();
+    $(exercise.inputs[2].components).each(function(i, component) {
+      $('<li class="' + component.class + '"><span class="ui-icon ui-icon-arrow-4"></span>' + component.valueText + '</li>')
+        .appendTo('.input2').fadeIn();
+    });
+
+    init();
+  }
 
   var $choices = $("#choices"),
     $behavior = $("#behavior"),
@@ -62,7 +73,6 @@ $(function() {
     });
 
     $behavior.droppable({
-      // accept: "#choices > li.beteende",
       accept: "#choices > li",
       activeClass: "ui-state-highlight",
       drop: function(event, ui) {
@@ -79,7 +89,6 @@ $(function() {
     });
 
     $nonBehavior.droppable({
-      // accept: "#choices > li.ickebeteende",
       accept: "#choices > li",
       activeClass: "ui-state-highlight",
       drop: function(event, ui) {
@@ -98,7 +107,6 @@ $(function() {
     $choices.droppable({
       accept: "#behavior li, #non-behavior li",
       activeClass: "ui-state-default",
-      // hoverClass: "ui-state-hover",
       drop: function(event, ui) {
         var $item = ui.draggable;
         $item.fadeOut(function() {
@@ -132,19 +140,14 @@ $(function() {
 	$behavior.click(deleteItem);
 	$nonBehavior.click(deleteItem);
 
-  // $('#btn-back').hide();
-
-  $('#btn-start-over').click(function() {
+  $('#btn-check-answers').click(function() {
     $("#div1").hide();
     $("#div2").show();
-    $('#btn-start-over').hide();
-    $('#btn-back').show();
   });
 
-  $('#btn-back').click(function() {
+  $('#btn-start-over').click(function() {
+    setExercise(newExercise);
     $('#div1').show();
     $('#div2').hide();
-    $('#btn-back').hide();
-    $('#btn-start-over').show();
   });
 });
