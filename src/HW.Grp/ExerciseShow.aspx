@@ -86,7 +86,7 @@
                 </a>
             </div>
             <div class="content">
-                <img src="assets/img/hwlogosmall.gif" />
+                <img src="assets/theme1/img/hwlogosmall.gif" />
                 <%= logos %>
                 <br />
                 <br />
