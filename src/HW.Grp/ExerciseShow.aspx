@@ -32,7 +32,7 @@
     <script type="text/javascript">        $("body").addClass("popup"); $(document).ready(function () { $("body").addClass("popup"); });</script>
     <script src="AC_ActiveX.js" type="text/javascript"></script>--%>
 
-    <link type="text/css" rel="stylesheet" href="assets/css/960.css">
+    <link type="text/css" rel="stylesheet" href="assets/theme1/css/960.css">
     <link type="text/css" rel="stylesheet" href="assets/exercises/css/main.css">
     
     <link type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
