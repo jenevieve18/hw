@@ -2573,14 +2573,11 @@ namespace HW.WebService
 			success = false;
 			try
 			{
-//				sendMail("info@healthwatch.se", "support@healthwatch.se", d, "Issue report: " + t);
-//				HW.Core.Helpers.SmtpHelper.Send("info@healthwatch.se", "support@healthwatch.se", d, "Issue report: " + t);
-				HW.Core.Helpers.SmtpHelper.Send("info@healthwatch.se", "info@healthwatch.se", d, "Issue report: " + t);
+				HW.Core.Helpers.SmtpHelper.Send(ConfigurationManager.AppSettings["EmailFrom"], ConfigurationManager.AppSettings["EmailSupport"], d, "Issue report: " + t);
 				success = true;
 			}
 			catch (Exception) { }
 
-//			return true;
 			return success;
 		}
 
@@ -3979,24 +3976,22 @@ AND ISNULL(FromWebsite, 0) = 1", new SqlParameter("@UserID", userID), new SqlPar
 					switch (languageID)
 					{
 						case 1:
-//							success = sendMail("support@healthwatch.se", r.GetString(1),
-							success = HW.Core.Helpers.SmtpHelper.Send("support@healthwatch.se", r.GetString(1),
+							success = HW.Core.Helpers.SmtpHelper.Send(ConfigurationManager.AppSettings["EmailFrom"], r.GetString(1),
 							                                          "Nytt lösenord",
 							                                          "Hej." +
 							                                          "\r\n\r\n" +
 							                                          "En begäran om nytt lösenord till ditt konto med användarnamn \"" + r.GetString(2) + "\" har inkommit. Om du begärt detta, klicka på länken nedan för att ange ett nytt lösenord." +
 							                                          "\r\n\r\n" +
-							                                          ConfigurationManager.AppSettings["hw_url"] + "/password.aspx?NL=1&K=" + r.GetString(3) + r.GetInt32(0) + "");
+							                                          ConfigurationManager.AppSettings["LinkUrl"] + "/password.aspx?NL=1&K=" + r.GetString(3) + r.GetInt32(0) + "");
 							break;
 						case 2:
-//							success = sendMail("support@healthwatch.se", r.GetString(1),
-							success = HW.Core.Helpers.SmtpHelper.Send("support@healthwatch.se", r.GetString(1),
+							success = HW.Core.Helpers.SmtpHelper.Send(ConfigurationManager.AppSettings["EmailSupport"], r.GetString(1),
 							                                          "New password",
 							                                          "Hi." +
 							                                          "\r\n\r\n" +
 							                                          "A request for new password for your account with username \"" + r.GetString(2) + "\" has arrived. If you made this request, click the link below to set a new password." +
 							                                          "\r\n\r\n" +
-							                                          ConfigurationManager.AppSettings["hw_url"] + "/password.aspx?NL=1&K=" + r.GetString(3) + r.GetInt32(0) + "");
+							                                          ConfigurationManager.AppSettings["LinkUrl"] + "/password.aspx?NL=1&K=" + r.GetString(3) + r.GetInt32(0) + "");
 							break;
 					}
 				}
