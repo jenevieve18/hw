@@ -2574,7 +2574,8 @@ namespace HW.WebService
 			try
 			{
 //				sendMail("info@healthwatch.se", "support@healthwatch.se", d, "Issue report: " + t);
-				HW.Core.Helpers.SmtpHelper.Send("info@healthwatch.se", "support@healthwatch.se", d, "Issue report: " + t);
+//				HW.Core.Helpers.SmtpHelper.Send("info@healthwatch.se", "support@healthwatch.se", d, "Issue report: " + t);
+				HW.Core.Helpers.SmtpHelper.Send("info@healthwatch.se", "info@healthwatch.se", d, "Issue report: " + t);
 				success = true;
 			}
 			catch (Exception) { }
