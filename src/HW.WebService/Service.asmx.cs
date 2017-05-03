@@ -3531,7 +3531,7 @@ AND ISNULL(Unblocked, 0) = 1",
 				if (userID != 0) {
 					using (var r1 = executeReader("SELECT Enable2FA, SponsorID FROM [User] WHERE UserID = @UserID", new SqlParameter("@UserID", userID))) {
 						if (r1.Read()) {
-							u.user2FAEnabled = getInt32(r1, 2) == 1;
+							u.user2FAEnabled = getInt32(r1, 0) == 1;
 							using (var r2 = executeReader("SELECT Enable2FA FROM Sponsor WHERE SponsorID = @SponsorID", new SqlParameter("@SponsorID", getInt32(r1, 1)))) {
 								if (r2.Read()) {
 									u.sponsor2FAEnabled = getInt32(r2, 0) == 1;
