@@ -342,7 +342,24 @@ namespace HW.WebService
 			int userID = getUserIdFromToken(token, expirationMinutes);
 			if (userID != 0)
 			{
-				int projectRoundUnitID = 0, projectRoundUserID = 0;
+//				int projectRoundUnitID = 0, projectRoundUserID = 0;
+//				SqlDataReader r = rs("SELECT " +
+//				                     "spru.ProjectRoundUnitID, " +
+//				                     "upru.ProjectRoundUserID " +
+//				                     "FROM [User] u " +
+//				                     "INNER JOIN Sponsor s ON u.SponsorID = s.SponsorID " +
+//				                     "INNER JOIN SponsorProjectRoundUnit spru ON s.SponsorID = spru.SponsorID " +
+//				                     "INNER JOIN UserProjectRoundUser upru ON spru.ProjectRoundUnitID = upru.ProjectRoundUnitID AND upru.UserID = u.UserID " +
+//				                     "WHERE u.UserID = " + userID + " " +
+//				                     "AND REPLACE(CONVERT(VARCHAR(255),spru.SurveyKey),'-','') = '" + formKey.Replace("'", "") + "'");
+//				if (r.Read())
+//				{
+//					projectRoundUnitID = r.GetInt32(0);
+//					projectRoundUserID = r.GetInt32(1);
+//				}
+//				r.Close();
+				var projectRoundUnitIDs = new List<int>();
+				var projectRoundUserIDs = new List<int>();
 				SqlDataReader r = rs("SELECT " +
 				                     "spru.ProjectRoundUnitID, " +
 				                     "upru.ProjectRoundUserID " +
@@ -352,10 +369,10 @@ namespace HW.WebService
 				                     "INNER JOIN UserProjectRoundUser upru ON spru.ProjectRoundUnitID = upru.ProjectRoundUnitID AND upru.UserID = u.UserID " +
 				                     "WHERE u.UserID = " + userID + " " +
 				                     "AND REPLACE(CONVERT(VARCHAR(255),spru.SurveyKey),'-','') = '" + formKey.Replace("'", "") + "'");
-				if (r.Read())
+				while (r.Read())
 				{
-					projectRoundUnitID = r.GetInt32(0);
-					projectRoundUserID = r.GetInt32(1);
+					projectRoundUnitIDs.Add(r.GetInt32(0));
+					projectRoundUserIDs.Add(r.GetInt32(1));
 				}
 				r.Close();
 				int QID = 0, OID = 0; string header = "";
@@ -389,7 +406,8 @@ namespace HW.WebService
 				                     "AND av.QuestionID = " + QID + " " +
 				                     "AND av.OptionID = " + OID + " " +
 				                     "WHERE a.EndDT IS NOT NULL " +
-				                     "AND ha.ProjectRoundUserID = " + projectRoundUserID + " " +
+//				                     "AND ha.ProjectRoundUserID = " + projectRoundUserID + " " +
+				                     "AND ha.ProjectRoundUserID IN (" + Implode(",", projectRoundUserIDs) + ") " +
 				                     "AND a.EndDT >= '" + fromDateTime.ToString("yyyy-MM-dd") + "' " +
 				                     "AND a.EndDT <= '" + toDateTime.ToString("yyyy-MM-dd") + "'", "eFormSqlConnection");
 				FormFeedback[] ret = new FormFeedback[cx];
@@ -415,7 +433,8 @@ namespace HW.WebService
 				       "AND av.QuestionID = " + QID + " " +
 				       "AND av.OptionID = " + OID + " " +
 				       "WHERE a.EndDT IS NOT NULL " +
-				       "AND ha.ProjectRoundUserID = " + projectRoundUserID + " " +
+//				       "AND ha.ProjectRoundUserID = " + projectRoundUserID + " " +
+				       "AND ha.ProjectRoundUserID IN (" + Implode(",", projectRoundUserIDs) + ") " +
 				       "AND a.EndDT >= '" + fromDateTime.ToString("yyyy-MM-dd") + "' " +
 				       "AND a.EndDT <= '" + toDateTime.ToString("yyyy-MM-dd") + "' " +
 				       "ORDER BY a.EndDT ASC", "eFormSqlConnection");
@@ -435,6 +454,17 @@ namespace HW.WebService
 				return ret;
 			}
 			return (new FormFeedback[0]);
+		}
+		string Implode(string glue, IList<int> pieces)
+		{
+			string s = "";
+			for (int i = 0; i < pieces.Count; i++) {
+				if (i > 0) {
+					s += glue;
+				}
+				s += pieces[i];
+			}
+			return s;
 		}
 		[WebMethod(CacheDuration = 10 * 60, Description = "Enumerate form feedback templates. Expiration minutes greater than 0 extends the token expiration by that many minutes from now.")]
 		public FormFeedbackTemplate[] FormFeedbackTemplateEnum(string token,string formKey,int languageID,int expirationMinutes)
