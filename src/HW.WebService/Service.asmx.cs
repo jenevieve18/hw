@@ -358,8 +358,8 @@ namespace HW.WebService
 //					projectRoundUserID = r.GetInt32(1);
 //				}
 //				r.Close();
-				var projectRoundUnitIDs = new List<int>();
-				var projectRoundUserIDs = new List<int>();
+				var projectRoundUnitIDs = new List<int>(new [] { 0 });
+				var projectRoundUserIDs = new List<int>(new [] { 0 });
 				SqlDataReader r = rs("SELECT " +
 				                     "spru.ProjectRoundUnitID, " +
 				                     "upru.ProjectRoundUserID " +
@@ -407,7 +407,7 @@ namespace HW.WebService
 				                     "AND av.OptionID = " + OID + " " +
 				                     "WHERE a.EndDT IS NOT NULL " +
 //				                     "AND ha.ProjectRoundUserID = " + projectRoundUserID + " " +
-				                     (projectRoundUserIDs.Count > 0 ? "AND ha.ProjectRoundUserID IN (" + Implode(",", projectRoundUserIDs) + ") " : "") +
+				                     "AND ha.ProjectRoundUserID IN (" + Implode(",", projectRoundUserIDs) + ") " +
 				                     "AND a.EndDT >= '" + fromDateTime.ToString("yyyy-MM-dd") + "' " +
 				                     "AND a.EndDT <= '" + toDateTime.ToString("yyyy-MM-dd") + "'", "eFormSqlConnection");
 				FormFeedback[] ret = new FormFeedback[cx];
@@ -434,7 +434,7 @@ namespace HW.WebService
 				       "AND av.OptionID = " + OID + " " +
 				       "WHERE a.EndDT IS NOT NULL " +
 //				       "AND ha.ProjectRoundUserID = " + projectRoundUserID + " " +
-				       (projectRoundUserIDs.Count > 0 ? "AND ha.ProjectRoundUserID IN (" + Implode(",", projectRoundUserIDs) + ") " : "") +
+				       "AND ha.ProjectRoundUserID IN (" + Implode(",", projectRoundUserIDs) + ") " +
 				       "AND a.EndDT >= '" + fromDateTime.ToString("yyyy-MM-dd") + "' " +
 				       "AND a.EndDT <= '" + toDateTime.ToString("yyyy-MM-dd") + "' " +
 				       "ORDER BY a.EndDT ASC", "eFormSqlConnection");
