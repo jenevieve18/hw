@@ -407,7 +407,7 @@ namespace HW.WebService
 				                     "AND av.OptionID = " + OID + " " +
 				                     "WHERE a.EndDT IS NOT NULL " +
 //				                     "AND ha.ProjectRoundUserID = " + projectRoundUserID + " " +
-				                     "AND ha.ProjectRoundUserID IN (" + Implode(",", projectRoundUserIDs) + ") " +
+				                     (projectRoundUserIDs.Count > 0 ? "AND ha.ProjectRoundUserID IN (" + Implode(",", projectRoundUserIDs) + ") " : "") +
 				                     "AND a.EndDT >= '" + fromDateTime.ToString("yyyy-MM-dd") + "' " +
 				                     "AND a.EndDT <= '" + toDateTime.ToString("yyyy-MM-dd") + "'", "eFormSqlConnection");
 				FormFeedback[] ret = new FormFeedback[cx];
@@ -434,7 +434,7 @@ namespace HW.WebService
 				       "AND av.OptionID = " + OID + " " +
 				       "WHERE a.EndDT IS NOT NULL " +
 //				       "AND ha.ProjectRoundUserID = " + projectRoundUserID + " " +
-				       "AND ha.ProjectRoundUserID IN (" + Implode(",", projectRoundUserIDs) + ") " +
+				       (projectRoundUserIDs.Count > 0 ? "AND ha.ProjectRoundUserID IN (" + Implode(",", projectRoundUserIDs) + ") " : "") +
 				       "AND a.EndDT >= '" + fromDateTime.ToString("yyyy-MM-dd") + "' " +
 				       "AND a.EndDT <= '" + toDateTime.ToString("yyyy-MM-dd") + "' " +
 				       "ORDER BY a.EndDT ASC", "eFormSqlConnection");
