@@ -125,7 +125,7 @@ namespace HW.WebService
 		public struct User2FAStatus
 		{
 			public bool user2FAEnabled;
-			public bool sponsor2FAEnabled;
+			public bool sponsor2FAEnabled; // Sponsor enforced 2FA status.
 		}
 		public struct ActiveLoginAttempts
 		{
@@ -3431,22 +3431,27 @@ VALUES(@UserID, @IPAddress, @LoginAttempt, @ResourceID, @UserToken, @FromWebServ
 		/// <param name="resourceID">Resource Identification</param>
 		/// <returns></returns>
         [WebMethod(Description = "Cancels active login attempt for the given resourceID if and only if this request and the request that created the login attempt originated from the same IP.")]
-		public bool UserCancelLoginAttempt(string resourceID)
+		public bool UserCancelLoginAttempt(string resourceID, string username)
 		{
 			bool validLogin = false;
 			using (var rs = executeReader(@"
 SELECT 1 
-FROM UserLogin
-WHERE ResourceID = @ResourceID 
-AND IPAddress = @IPAddress", new SqlParameter("@ResourceID", resourceID), new SqlParameter("@IPAddress", request.UserHostAddress))) {
+FROM UserLogin ul
+INNER JOIN [User] u ON u.UserID = ul.UserID
+WHERE ul.ResourceID = @ResourceID 
+AND u.Username = @Username
+AND ul.IPAddress = @IPAddress", new SqlParameter("@Username", username), new SqlParameter("@ResourceID", resourceID), new SqlParameter("@IPAddress", request.UserHostAddress))) {
 				if (rs.Read()) {
 					validLogin = true;
                     executeNonQuery(
 					    @"
-DELETE FROM UserLogin 
-WHERE ResourceID = @ResourceID 
-AND IPAddress = @IPAddress", 
+DELETE ul FROM UserLogin ul
+INNER JOIN [User] u ON u.UserID = ul.UserID
+WHERE ul.ResourceID = @ResourceID 
+AND u.Username = @Username
+AND ul.IPAddress = @IPAddress", 
 					    new SqlParameter("@ResourceID", resourceID), 
+					    new SqlParameter("@Username", username),
 					    new SqlParameter("@IPAddress", request.UserHostAddress)
 				   );
 				}
@@ -3460,7 +3465,7 @@ AND IPAddress = @IPAddress",
 		/// <param name="resourceID">Resource Identification</param>
 		/// <returns></returns>
         [WebMethod(Description = "Returns UserData if a valid secret, belonging to the user linked to this resourceID, has been submitted using SubmitSecret.")]
-		public UserData UserHolding(string resourceID)
+		public UserData UserHolding(string resourceID, string username)
 		{
 			var u = new UserData();
 			using (var resourceReader = executeReader(
@@ -3471,9 +3476,11 @@ INNER JOIN UserLogin ula ON ula.UserID = u.UserID
 WHERE ula.ResourceID = @ResourceID
 --AND IPAddress = @IPAddress
 AND DATEDIFF(MINUTE, ula.LoginAttempt, GETDATE()) < @Minute
+AND u.Username = @Username
 AND ISNULL(Unblocked, 0) = 1",
                     new SqlParameter("@ResourceID", resourceID), 
-                    new SqlParameter("@IPAddress", request.UserHostAddress), 
+//                    new SqlParameter("@IPAddress", request.UserHostAddress), 
+                    new SqlParameter("@Username", username),
                     new SqlParameter("@Minute", MINUTE))) {
 			    if (resourceReader.Read()) {
 			        u.languageID = getInt32(resourceReader, 1);
@@ -3565,6 +3572,7 @@ AND ISNULL(Unblocked, 0) = 1",
 							using (var r2 = executeReader("SELECT Enable2FA FROM Sponsor WHERE SponsorID = @SponsorID", new SqlParameter("@SponsorID", getInt32(r1, 1)))) {
 								if (r2.Read()) {
 									u.sponsor2FAEnabled = getInt32(r2, 0) == 1;
+									u.user2FAEnabled = u.sponsor2FAEnabled ? u.sponsor2FAEnabled : u.user2FAEnabled;
 								}
 							}
 						}
@@ -3661,12 +3669,12 @@ AND ISNULL(FromWebsite, 0) = 1", new SqlParameter("@UserID", userID), new SqlPar
 		    return a;
 		}
 		
-		[WebMethod(Description = "Says hello to a name sent. Returns 'Hello ' + name.")]
+//		[WebMethod(Description = "Says hello to a name sent. Returns 'Hello ' + name.")]
 //		[Throttle(TimeUnit = TimeUnit.Minute, Count = 5)]
-		public string Hello(string name)
-		{
-		    return "Hello " + name;
-		}
+//		public string Hello(string name)
+//		{
+//		    return "Hello " + name;
+//		}
 		
 		private string generateUniqueResourceID() {
 		    string resourceID = "";
