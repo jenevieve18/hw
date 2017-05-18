@@ -65,11 +65,17 @@ $(function() {
 
 function addInput(tbl, input) {
   var fields = $("#" + tbl + " input:text").length / 3;
+  // $('#' + tbl).append("\
+  //   <tr>\
+  //     <td><input type='text' name='input" + input + "[]' value='' id='inputComponent" + "' /></td>\
+  //     <td><input type='text' name='input" + input + "[]' value='' id='inputComponent" + "' /></td>\
+  //     <td><input type='text' name='input" + input + "[]' value='' id='inputComponent" + "'/></td>\
+  //   </tr>");
   $('#' + tbl).append("\
     <tr>\
-      <td><input type='text' name='input" + input + "[]' value='' id='inputComponent" + "' /></td>\
-      <td><input type='text' name='input" + input + "[]' value='' id='inputComponent" + "' /></td>\
-      <td><input type='text' name='input" + input + "[]' value='' id='inputComponent" + "'/></td>\
+      <td><textarea style='width:90%' name='input" + input + "[]' value='' id='inputComponent" + "' /></td>\
+      <td><textarea style='width:90%' name='input" + input + "[]' value='' id='inputComponent" + "' /></td>\
+      <td><textarea style='width:90%' name='input" + input + "[]' value='' id='inputComponent" + "'/></td>\
     </tr>");
   $("." + tbl + " input[name=text" + fields + "1]").focus();
 }

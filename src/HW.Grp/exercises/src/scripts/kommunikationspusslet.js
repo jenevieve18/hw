@@ -43,7 +43,6 @@ $(function() {
           shuffledComponents = arrayShuffle(input.components);
         }
         $(shuffledComponents).each(function(j, component) {
-          // $('#input' + i).append('<li><span class="ui-icon ui-icon-arrow-4"></span>' + component.valueText + '</li>');
           $('#input' + i).append('<li class="ui-state-default"><span class="ui-icon ui-icon-arrow-4"></span>' + component.valueText + '</li>');
         });
       });
@@ -68,7 +67,6 @@ $(function() {
   }
 
   function init() {
-    // $('#input0').sortable().disableSelection();
     $('#input1').sortable().disableSelection();
   }
 
@@ -86,7 +84,6 @@ $(function() {
       var answer = $('#input0 li:nth-child(' + (i + 1) + ')').text() + ' ' + $('#input1 li:nth-child(' + (i + 1) + ')').text();
       answers.push(answer.trim());
     }
-    // console.log(correctAnswers);
     $(answers).each(function(i, a) {
       if ($.inArray(a, correctAnswers) > -1) {
         $('#input0 li:nth-child(' + (i + 1) + ')').css('color', 'green');

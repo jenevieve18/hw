@@ -20,7 +20,8 @@
     <link rel="Stylesheet" href="assets/theme1/css/admin.css" />
     <link rel="Stylesheet" href="assets/theme1/css/site.css" />
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <%--<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>--%>
+    <script type="text/javascript" src="assets/jquery/jquery-1.12.4.min.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {

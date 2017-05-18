@@ -6,7 +6,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
     <link rel="stylesheet" href="assets/smoothness/jquery-ui-1.9.2.custom.min.css" />
-    <link rel="stylesheet" href="assets/css/stats.css" />
+    <link rel="stylesheet" href="assets/theme1/css/stats.css" />
 
     <script type="text/javascript" src="assets/ui/jquery-ui-1.9.2.custom.min.js"></script>
 

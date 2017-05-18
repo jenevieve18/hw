@@ -35,15 +35,20 @@
     <link type="text/css" rel="stylesheet" href="assets/theme1/css/960.css">
     <link type="text/css" rel="stylesheet" href="assets/exercises/css/main.css">
     
-    <link type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <%--<link type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">--%>
+    <link type="text/css" href="assets/ui/jquery-ui-1.12.1.css" rel="stylesheet">
     
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <%--<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>--%>
+    <%--<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>--%>
+    <script type="text/javascript" src="assets/jquery/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="assets/ui/jquery-ui-1.12.1.min.js"></script>
     
     <script type="text/javascript" src="assets/exercises/js/healthwatch.js"></script>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
+    <%--<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>--%>
+    <script src="assets/html2canvas/html2canvas.js"></script>
+    <script src="assets/jspdf/jspdf.debug.js"></script>
     <script type="text/javascript">
         $(function () {
             $('#btn-pdf').click(function () {
