@@ -2595,7 +2595,16 @@ namespace HW.WebService
 			bool success = false;
 			try
 			{
-				exec("INSERT INTO [Issue] (IssueDate,Title,Description,UserID) VALUES (GETDATE(),'" + t.Replace("'", "''") + "','" + d.Replace("'", "''") + "'," + userID + ")");
+//				exec("INSERT INTO [Issue] (IssueDate,Title,Description,UserID) VALUES (GETDATE(),'" + t.Replace("'", "''") + "','" + d.Replace("'", "''") + "'," + userID + ")");
+				string query = @"
+INSERT INTO [Issue](IssueDate, Title, Description, UserID)
+VALUES(GETDATE(), @Title, @Description, @UserID)";
+				executeNonQuery(
+					query,
+					new SqlParameter("@Title", t),
+					new SqlParameter("@Description", d),
+					new SqlParameter("@UserID", userID)
+				);
 				success = true;
 			}
 			catch (Exception) { }
@@ -2603,7 +2612,8 @@ namespace HW.WebService
 			success = false;
 			try
 			{
-				HW.Core.Helpers.SmtpHelper.Send(ConfigurationManager.AppSettings["EmailFrom"], ConfigurationManager.AppSettings["EmailSupport"], d, "Issue report: " + t);
+//				HW.Core.Helpers.SmtpHelper.Send(ConfigurationManager.AppSettings["EmailFrom"], ConfigurationManager.AppSettings["EmailSupport"], d, "Issue report: " + t);
+				HW.Core.Helpers.SmtpHelper.Send(ConfigurationManager.AppSettings["EmailFrom"], ConfigurationManager.AppSettings["EmailSupport"], t, "Issue report: " + d);
 				success = true;
 			}
 			catch (Exception) { }
