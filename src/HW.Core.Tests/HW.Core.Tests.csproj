@@ -76,6 +76,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\AnswerTests.cs" />
+    <Compile Include="Models\BaseModelTests.cs" />
     <Compile Include="Models\GroupFactoryTests.cs" />
     <Compile Include="Models\HWListTests.cs" />
     <Compile Include="Models\ProjectTests.cs" />

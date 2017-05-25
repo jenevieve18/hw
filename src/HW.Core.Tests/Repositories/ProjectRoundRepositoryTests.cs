@@ -1,9 +1,4 @@
-﻿// <file>
-//  <license></license>
-//  <owner name="Ian Escarro" email="ian.escarro@gmail.com"/>
-// </file>
-
-using System;
+﻿using System;
 using HW.Core.Repositories.Sql;
 using HW.Core.Services;
 using NUnit.Framework;
