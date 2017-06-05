@@ -3678,13 +3678,13 @@ AND ISNULL(FromWebsite, 0) = 1", new SqlParameter("@UserID", userID), new SqlPar
 		    }
 		    return a;
 		}
-		
-//		[WebMethod(Description = "Says hello to a name sent. Returns 'Hello ' + name.")]
-//		[Throttle(TimeUnit = TimeUnit.Minute, Count = 5)]
-//		public string Hello(string name)
-//		{
-//		    return "Hello " + name;
-//		}
+
+        [WebMethod(Description = "Says hello to a name sent. Returns 'Hello ' + name.")]
+        //[Throttle(TimeUnit = TimeUnit.Minute, Count = 5)]
+        public string Hello(string name)
+        {
+            return "Hello " + name;
+        }
 		
 		private string generateUniqueResourceID() {
 		    string resourceID = "";
