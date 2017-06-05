@@ -53,6 +53,9 @@
   <ItemGroup>
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTest2.cs" />
+    <Compile Include="TestPasswordReset.cs" />
+    <Compile Include="TestUserLogin2FA.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
