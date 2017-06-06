@@ -3370,76 +3370,117 @@ VALUES(GETDATE(), @Title, @Description, @UserID)";
 		/// <returns></returns>
 		[WebMethod(Description="Validates a username and password combination and, if there is a match, returns a user detail object including user data with token, variable lifetime (max 20 minutes) and resource identification for 2 factor authentication.")]
 		public UserDetail UserLogin2FA(string username, string password, int expirationMinutes)
-		{
-			UserDetail ud = new UserDetail();
-			using (var userReader = executeReader(@"
-SELECT u.UserID, u.LID, u.Enable2FA, u.SponsorID 
-FROM [User] u WHERE u.Username = @Username AND u.Password = @Password", new SqlParameter("@Username", username), new SqlParameter("@Password", HashMD5(password.Trim())))) {
-				if (userReader.Read()) {
-					int userID = getInt32(userReader, 0);
-					int languageID = getInt32(userReader, 1);
-					int sponsorID = getInt32(userReader, 3);
-					bool enable2FA = false;
-        			using (var rs = executeReader(@"
-SELECT Enable2FA FROM Sponsor 
-WHERE SponsorID = @SponsorID", new SqlParameter("@SponsorID", sponsorID))) {
-        				if (rs.Read()) {
-        					bool sponsorEnforces2FA = getInt32(rs, 0) == 1;
-        					enable2FA = sponsorEnforces2FA ? sponsorEnforces2FA : getInt32(userReader, 2) == 1;
-        				} else {
-        					enable2FA = getInt32(userReader, 2) == 1;
-        				}
-        			}
-					if (enable2FA) {
-                        ud.UserData = new UserData();
-                        using (var loginReader = executeReader(@"
-SELECT ResourceID 
-FROM UserLogin 
-WHERE UserID = @UserID
-AND DATEDIFF(MINUTE, LoginAttempt, GETDATE()) < @Minute
-AND ISNULL(Unblocked, 0) = 0", new SqlParameter("@UserID", userID), new SqlParameter("@Minute", MINUTE))) {
-						    executeNonQuery(@"DELETE FROM UserLogin WHERE UserID = @UserID AND DATEDIFF(MINUTE, LoginAttempt, GETDATE()) > @Minute", new SqlParameter("@UserID", userID), new SqlParameter("@Minute", MINUTE));
-                            if (loginReader.Read()) {
-                                ud.activeLoginAttempt = true;
-						    } else {
-						        string secretKey = Guid.NewGuid().ToString().Replace("-", "");
-                                string resourceID = generateUniqueResourceID();
-                                var token = getUserToken(userID, languageID, expirationMinutes).token;
-                                ud.secretKey = secretKey;
-    	                        ud.resourceID = resourceID;
-                                executeNonQuery(
-                                	@"
-INSERT INTO UserSecret(UserID, SecretKey) 
-VALUES(@UserID, @SecretKey)",
-                                	new SqlParameter("@UserID", userID),
-                                	new SqlParameter("@SecretKey", generateSHA512String(secretKey))
-                                );
-    							executeNonQuery(
-    								@"
-INSERT INTO UserLogin(UserID, IPAddress, LoginAttempt, ResourceID, UserToken, FromWebService) 
-VALUES(@UserID, @IPAddress, @LoginAttempt, @ResourceID, @UserToken, @FromWebService)",
-    								new SqlParameter("@UserID", userID),
-    								new SqlParameter("@IPAddress", request.UserHostAddress),
-    		                 		new SqlParameter("@LoginAttempt", DateTime.Now),
-    	                            new SqlParameter("@ResourceID", resourceID),
-    	                            new SqlParameter("@UserToken", token),
-    	                            new SqlParameter("@FromWebService", true)
-    	                 		);
-						    }
+        {
+            UserDetail ud = new UserDetail();
+            using (var userReader = executeReader(@"SELECT u.UserID, u.LID, u.Enable2FA, u.SponsorID 
+                                                    FROM [User] u WHERE u.Username = @Username AND u.Password = @Password", new SqlParameter("@Username", username), new SqlParameter("@Password", HashMD5(password.Trim()))))
+            {
+                if (userReader.Read())
+                {
+                    int userID = getInt32(userReader, 0);
+                    int languageID = getInt32(userReader, 1);
+                    int sponsorID = getInt32(userReader, 3);
+                    bool enable2FA = false;
+                    using (var rs = executeReader(@"SELECT Enable2FA FROM Sponsor 
+                                                     WHERE SponsorID = @SponsorID", new SqlParameter("@SponsorID", sponsorID)))
+                    {
+                        if (rs.Read())
+                        {
+                            bool sponsorEnforces2FA = getInt32(rs, 0) == 1;
+                            enable2FA = sponsorEnforces2FA ? sponsorEnforces2FA : getInt32(userReader, 2) == 1;
                         }
-					} else {
-					    ud.UserData = getUserToken(userID, languageID, expirationMinutes);
-					}
-			    }
-			}
-			return ud;
-		}
-		
-		/// <summary>
+                        else
+                        {
+                            enable2FA = getInt32(userReader, 2) == 1;
+                        }
+                    }
+
+
+
+                    if (enable2FA)
+                    {
+                        ud.UserData = new UserData();
+                        using (var loginReader = executeReader(@"SELECT ul.ResourceID
+                                                                FROM UserLogin ul
+                                                                WHERE ul.UserID = @UserID
+                                                                AND DATEDIFF(MINUTE, ul.LoginAttempt, GETDATE()) < @Minute
+                                                                AND ISNULL(ul.Unblocked, 0) = 0", new SqlParameter("@UserID", userID), new SqlParameter("@Minute", MINUTE)))
+                        {
+
+                            executeNonQuery(@"DELETE FROM UserLogin WHERE UserID = @UserID AND DATEDIFF(MINUTE, LoginAttempt, GETDATE()) > @Minute", new SqlParameter("@UserID", userID), new SqlParameter("@Minute", MINUTE));
+                            if (loginReader.Read())
+                            {
+                                ud.activeLoginAttempt = true;
+                            }
+                            else
+                            {
+
+                                using (var checkIfSecretkeyExist = executeReader(@"SELECT us.SecretKey 
+                                                                       FROM UserSecret us
+                                                                       WHERE us.UserID = @UserID", new SqlParameter("@UserID", userID)))
+                                {
+                                    if (!checkIfSecretkeyExist.Read())
+                                    {
+                                        if (checkSecretKeyExist(checkIfSecretkeyExist.FieldCount))
+                                        {
+                                            string secretKey = Guid.NewGuid().ToString().Replace("-", "");
+                                            string resourceID = generateUniqueResourceID();
+                                            var token = getUserToken(userID, languageID, expirationMinutes).token;
+                                            ud.secretKey = secretKey;
+                                            ud.resourceID = resourceID;
+                                            executeNonQuery(
+                                                @"INSERT INTO UserSecret(UserID, SecretKey) 
+                                                  VALUES(@UserID, @SecretKey)",
+                                                new SqlParameter("@UserID", userID),
+                                                new SqlParameter("@SecretKey", generateSHA512String(secretKey))
+                                            );
+                                            executeNonQuery(
+                                                @"INSERT INTO UserLogin(UserID, IPAddress, LoginAttempt, ResourceID, UserToken, FromWebService) 
+                                                VALUES(@UserID, @IPAddress, GETDATE(), @ResourceID, @UserToken, @FromWebService)",
+                                                new SqlParameter("@UserID", userID),
+                                                new SqlParameter("@IPAddress", request.UserHostAddress),
+                                                //new SqlParameter("@LoginAttempt", DateTime.Now),
+                                                new SqlParameter("@ResourceID", resourceID),
+                                                new SqlParameter("@UserToken", token),
+                                                new SqlParameter("@FromWebService", true)
+                                             );
+                                        }
+                                    }
+                                    else
+                                    {
+                                        string secretKey = Guid.NewGuid().ToString().Replace("-", "");
+                                        string resourceID = generateUniqueResourceID();
+                                        var token = getUserToken(userID, languageID, expirationMinutes).token;
+                                        ud.resourceID = resourceID;
+                                        executeNonQuery(
+                                            @"INSERT INTO UserLogin(UserID, IPAddress, LoginAttempt, ResourceID, UserToken, FromWebService) 
+                                                VALUES(@UserID, @IPAddress, GETDATE(), @ResourceID, @UserToken, @FromWebService)",
+                                            new SqlParameter("@UserID", userID),
+                                            new SqlParameter("@IPAddress", request.UserHostAddress),
+                                            //new SqlParameter("@LoginAttempt", DateTime.Now),
+                                            new SqlParameter("@ResourceID", resourceID),
+                                            new SqlParameter("@UserToken", token),
+                                            new SqlParameter("@FromWebService", true)
+                                         );
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        ud.UserData = getUserToken(userID, languageID, expirationMinutes);
+                    }
+                }
+            }
+            return ud;
+        }
+
+        /// <summary>
         /// Cancels active login attempt for the given resourceID if and only if this request and the request that created the login attempt originated from the same IP.
-		/// </summary>
-		/// <param name="resourceID">Resource Identification</param>
-		/// <returns></returns>
+        /// </summary>
+        /// <param name="resourceID">Resource Identification</param>
+        /// <returns></returns>
         [WebMethod(Description = "Cancels active login attempt for the given resourceID if and only if this request and the request that created the login attempt originated from the same IP.")]
 		public bool UserCancelLoginAttempt(string resourceID, string username)
 		{
