@@ -3824,7 +3824,7 @@ AND ISNULL(Unblocked, 0) = 1",
         public bool UserSubmitSecretKey(string secretKey)
         {
             using (var rs = executeReader(@"
-SELECT UserID FROM UserSecret WHERE SecretKey = @SecretKey", new SqlParameter("@SecretKey", secretKey)))
+SELECT UserID FROM UserSecret WHERE SecretKey = @SecretKey", new SqlParameter("@SecretKey", generateSHA512String(secretKey))))
             {
                 if (rs.Read())
                 {
