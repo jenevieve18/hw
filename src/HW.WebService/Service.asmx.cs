@@ -3471,42 +3471,42 @@ AND ISNULL(Unblocked, 0) = 0", new SqlParameter("@UserID", userID), new SqlParam
                         }
                     }
                     
-                    if (enable2FA) {
-                    	bool activeLoginAttempt = hasActiveLoginAttempt(userID);
-                    	if (activeLoginAttempt) {
-                    		ud.activeLoginAttempt = activeLoginAttempt;
-                    	} else {
-                    		string resourceID = generateUniqueResourceID();
-                    		ud.resourceID = resourceID;
-                            var token = getUserToken(userID, languageID, expirationMinutes).token;
-                            if (!hasSecretKey(userID)) {
-                            	string secretKey = Guid.NewGuid().ToString().Replace("-", "");
-	                            ud.secretKey = secretKey;
-	                            executeNonQuery(
-	                                @"
-INSERT INTO UserSecret(UserID, SecretKey) 
-VALUES(@UserID, @SecretKey)",
-	                                new SqlParameter("@UserID", userID),
-	                                new SqlParameter("@SecretKey", secretKey)
-	                            );
-                            }
-                            executeNonQuery(
-                                @"
-INSERT INTO UserLogin(UserID, IPAddress, LoginAttempt, ResourceID, UserToken, FromWebService) 
-VALUES(@UserID, @IPAddress, @LoginAttempt, @ResourceID, @UserToken, @FromWebService)",
-                                new SqlParameter("@UserID", userID),
-                                new SqlParameter("@IPAddress", request.UserHostAddress),
-                                new SqlParameter("@LoginAttempt", DateTime.Now),
-                                new SqlParameter("@ResourceID", resourceID),
-                                new SqlParameter("@UserToken", token),
-                                new SqlParameter("@FromWebService", true)
-                            );
-                        }
-                    } else {
-                    	ud.UserData = getUserToken(userID, languageID, expirationMinutes);
-                    }
+//                    if (enable2FA) {
+//                    	bool activeLoginAttempt = hasActiveLoginAttempt(userID);
+//                    	if (activeLoginAttempt) {
+//                    		ud.activeLoginAttempt = activeLoginAttempt;
+//                    	} else {
+//                    		string resourceID = generateUniqueResourceID();
+//                    		ud.resourceID = resourceID;
+//                            var token = getUserToken(userID, languageID, expirationMinutes).token;
+//                            if (!hasSecretKey(userID)) {
+//                            	string secretKey = Guid.NewGuid().ToString().Replace("-", "");
+//	                            ud.secretKey = secretKey;
+//	                            executeNonQuery(
+//	                                @"
+//INSERT INTO UserSecret(UserID, SecretKey) 
+//VALUES(@UserID, @SecretKey)",
+//	                                new SqlParameter("@UserID", userID),
+//	                                new SqlParameter("@SecretKey", secretKey)
+//	                            );
+//                            }
+//                            executeNonQuery(
+//                                @"
+//INSERT INTO UserLogin(UserID, IPAddress, LoginAttempt, ResourceID, UserToken, FromWebService) 
+//VALUES(@UserID, @IPAddress, @LoginAttempt, @ResourceID, @UserToken, @FromWebService)",
+//                                new SqlParameter("@UserID", userID),
+//                                new SqlParameter("@IPAddress", request.UserHostAddress),
+//                                new SqlParameter("@LoginAttempt", DateTime.Now),
+//                                new SqlParameter("@ResourceID", resourceID),
+//                                new SqlParameter("@UserToken", token),
+//                                new SqlParameter("@FromWebService", true)
+//                            );
+//                        }
+//                    } else {
+//                    	ud.UserData = getUserToken(userID, languageID, expirationMinutes);
+//                    }
 
-                    /*
+                    
                     using (var getSecretKey = executeReader(@"SELECT u.UserID, us.SecretKey
                                                        FROM UserSecret us
                                                             INNER JOIN [User] u ON u.UserID = us. UserID
@@ -3572,7 +3572,8 @@ VALUES(@UserID, @IPAddress, @LoginAttempt, @ResourceID, @UserToken, @FromWebServ
                                                     INSERT INTO UserSecret(UserID, SecretKey) 
                                                     VALUES(@UserID, @SecretKey)",
                                         new SqlParameter("@UserID", userID),
-                                        new SqlParameter("@SecretKey", generateSHA512String(secretKey))
+                                        //new SqlParameter("@SecretKey", generateSHA512String(secretKey))
+                                        new SqlParameter("@SecretKey", secretKey)
                                     );
                                     executeNonQuery(
                                         @"
@@ -3588,7 +3589,7 @@ VALUES(@UserID, @IPAddress, @LoginAttempt, @ResourceID, @UserToken, @FromWebServ
                                 }
                             }
                         }
-                    }*/
+                    }
                 }
             }
             return ud;
