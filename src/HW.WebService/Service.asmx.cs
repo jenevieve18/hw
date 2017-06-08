@@ -372,6 +372,7 @@ namespace HW.WebService
                                      "FROM [User] u " +
                                      "INNER JOIN Sponsor s ON u.SponsorID = s.SponsorID " +
                                      "INNER JOIN SponsorProjectRoundUnit spru ON s.SponsorID = spru.SponsorID " +
+                                     "INNER JOIN SponsorProjectRoundUnit spru2 ON spru.SurveyID = spru2.SurveyID " +
                                      "INNER JOIN UserProjectRoundUser upru ON spru.ProjectRoundUnitID = upru.ProjectRoundUnitID AND upru.UserID = u.UserID " +
                                      "WHERE u.UserID = " + userID + " " +
                                      "AND REPLACE(CONVERT(VARCHAR(255),spru.SurveyKey),'-','') = '" + formKey.Replace("'", "") + "'");
