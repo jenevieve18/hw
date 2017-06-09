@@ -11,7 +11,7 @@ namespace HW.WebService.Tests2
         [TestMethod]
         public void TestUserCreate()
         {
-            //			s.UserCreate("test1", "password", "test1@localhost.com", "", true, 2, 0, 0, 10);
+            //s.UserCreate("test1", "password", "test1@localhost.com", "", true, 2, 0, 0, 10);
         }
 
         [TestMethod]
@@ -19,7 +19,7 @@ namespace HW.WebService.Tests2
         {
             for (int i = 0; i < 100; i++)
             {
-                s.Hello("Dong");
+                //s.Hello("Dong");
             }
         }
     }

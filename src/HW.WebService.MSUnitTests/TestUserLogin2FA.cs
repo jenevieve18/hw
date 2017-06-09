@@ -67,33 +67,53 @@ namespace HW.WebService.Tests2
         }
 
         [TestMethod]
-        public void TestLogin2FAFirstTime()
+        public void TestLogin2FA()
         {
             var u = s.UserLogin("test1", "password", 10);
-            Assert.IsTrue(s.UserDisable2FA(u.token, 10));
-            Assert.IsTrue(s.UserEnable2FA(u.token, 10));
-
-            var ud = s.UserLogin2FA("test1", "password", 10);
-
-            Assert.IsNull(ud.UserData.token);
-            Assert.AreEqual(new DateTime(), ud.UserData.tokenExpires);
-            Assert.AreEqual(0, ud.UserData.languageID);
-
-            //Assert.IsNotEmpty(ud.secretKey);
-            //Assert.IsNotEmpty(ud.resourceID);
-            Assert.IsTrue(ud.secretKey != "");
-            Assert.IsTrue(ud.resourceID != "");
-
-            //			u = s.UserHolding(ud.resourceID);
-            u = s.UserHolding(ud.resourceID, "test1");
-            Assert.IsNull(u.token);
+			Assert.IsTrue(s.UserDisable2FA(u.token, 10));
+			Assert.IsTrue(s.UserEnable2FA(u.token, 10));
+			
+			// First time logging in.
+			var ud = s.UserLogin2FA("test1", "password", 10);
+			
+			Assert.IsNull(ud.UserData.token);
+			Assert.AreEqual(new DateTime(), ud.UserData.tokenExpires);
+			Assert.AreEqual(0, ud.UserData.languageID);
+			
+			Assert.IsTrue(ud.secretKey != "");
+			Assert.IsTrue(ud.resourceID != "");
+			
+			// In a way, store secret key locally...
+			string secretKey = ud.secretKey;
+			
+			Assert.IsTrue(s.UserSubmitSecretKey(secretKey));
+			u = s.UserHolding(ud.resourceID, "test1");
+			Assert.IsNotNull(u.token);
+			
+			Assert.IsTrue(s.UserLogout(u.token));
+			
+			
+			// 2nd time around when logging in using 2FA.
+			ud = s.UserLogin2FA("test1", "password", 10);
+			
+			Assert.IsNull(ud.UserData.token);
+			Assert.AreEqual(new DateTime(), ud.UserData.tokenExpires);
+			Assert.AreEqual(0, ud.UserData.languageID);
+			
+			Assert.IsNull(ud.secretKey);
+			Assert.IsTrue(ud.resourceID != "");
+			
+			// Use local secret key...
+			Assert.IsTrue(s.UserSubmitSecretKey(secretKey));
+			u = s.UserHolding(ud.resourceID, "test1");
+			Assert.IsNotNull(u.token);
         }
 
         [TestMethod]
         public void TestLoginCorrectNo2FA()
         {
-            //			var u = s.UserLogin("test1", "password", 10);
-            //			Assert.IsTrue(s.UserDisable2FA(u.token, 10));
+            //var u = s.UserLogin("test1", "password", 10);
+            //Assert.IsTrue(s.UserDisable2FA(u.token, 10));
 
             var ud = s.UserLogin2FA("test1", "password", 10);
             Assert.IsNull(ud.secretKey);
@@ -127,7 +147,7 @@ namespace HW.WebService.Tests2
             Assert.IsTrue(ud.activeLoginAttempt);
 
             Assert.IsTrue(s.UserSubmitSecretKey(secretKey));
-            //			u = s.UserHolding(resourceID);
+            //u = s.UserHolding(resourceID);
             u = s.UserHolding(resourceID, "test1");
 
             Assert.IsNotNull(u.token);
@@ -158,7 +178,7 @@ namespace HW.WebService.Tests2
 
             Assert.IsTrue(s.UserSubmitSecretKey(ud.secretKey));
 
-            //			u = s.UserHolding(ud.resourceID);
+            //u = s.UserHolding(ud.resourceID);
             u = s.UserHolding(ud.resourceID, "test1");
             Assert.AreNotEqual(new DateTime(), u.tokenExpires);
             //Assert.IsNotEmpty(u.token);
