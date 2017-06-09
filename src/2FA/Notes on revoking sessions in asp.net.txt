@@ -1,0 +1,1 @@
+http://stackoverflow.com/questions/3098724/programatically-logout-an-asp-net-user

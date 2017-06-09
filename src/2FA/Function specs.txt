@@ -1,0 +1,52 @@
+https://dev-ws.healthwatch.se/service.asmx
+
+Autologin links can be kept, as long as they are the kind that isn't static.
+
+[DONE] =Userlogin2FA function=
+Takes: Username, Password, ExpirationMinutes
+
+Returns:
+
+If incorrect password:
+UserInfo, no proper token.
+
+If correct password, no 2FA:
+UserInfo
+
+If correct password, 2FA:
+Return same as no login, but include in response a URL that points to a "holding" resource. This should be processed the same as a response that the credentials are invalid by an old version of the app. Add to a database table, using the User as key, the IP, time of login, and generated URL.
+
+If first login after enabling 2FA:
+Return same as no login, but also return a 32 character string (A-Z, a-z, 0-9). This is a secret. Store a hash of it on the server, with the key being the users ID.
+
+=CancelLoginAttempt function=
+Takes: URL of holding resource.
+Returns: A success field; true if there is an active login attempt related to this that was canceled as a result of this request. Else, false.
+
+=UserHolding function=
+
+Returns empty SOAP response until it either 404s or returns UserInfo once, after which it 404s.
+
+[DONE] =UserEnable2FA function=
+Takes: token
+Returns: Success (true/false)
+
+[DONE] =UserDisable2FA function=
+Takes: token
+Returns: Success (true/false)
+
+=UserGet2FAStatus=		!!NEW!!
+Returns: Enabled (true/false)
+
+=UserGenerateSecret function=
+Takes: token
+
+Returns: a 32 character string (A-Z, a-z, 0-9). Store a hash of it on the server, with the key being the users ID.
+
+Also returns a success field, that can be false if a user doesn't have 2FA but attempts to call this function (shouldn't happen).
+
+=SubmitSecret function=
+Takes: secret, ExpirationMinutes
+Returns: Success (true/false)
+
+

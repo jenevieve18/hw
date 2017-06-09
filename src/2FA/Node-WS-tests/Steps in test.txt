@@ -1,0 +1,9 @@
+Create a new user, log in as that user, check that 2FA is disabled, enable 2FA, check that your token is now invalid
+
+Log in again, store the secret, submit the secret, check that you get a token, check that the token is valid, check that 2FA is enabled
+
+left:
+try to disable 2FA, check that it behaves as it should. (make sure that secrets are deleted so that no extra ones stay when we re-enable 2FA)
+We would need to test password resets, but that would require an email account. I would have to look into that, and it'd almost be easier to do manually.
+
+

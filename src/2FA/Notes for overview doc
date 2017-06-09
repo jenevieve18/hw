@@ -1,0 +1,19 @@
+Ensure that only one login per person can be done at a time - done? Check all login flows. - Done. It's true... except we need a separate service for logging in.
+
+I WILL NEED TO KEEP THINKING ABOUT SCENARIOS AND HOW TO HANDLE THEM REGARDING OUTDATED SECRETS
+
+Confirm that logging in with a second device in "Login via app for 2FA enabled user" is "sane".
+
+Use GeoIP resolving to ensure that the user knows where an auth request is coming from- otherwise you risk someone "sniping" the authentication - SIDESTEPPED. By only allowing one authentication per user, per service, there's no reason to suspect that, when you're held at a holding page, the server is holding any other auth request than yours.
+
+How is a user considered "logged in" on a device? A session? Or is the user logged in using in-memory credentials every time the app is opened? Because it might hamper the users ability to use 2FA; they'd have to open the app BEFORE being prompted to, as they'd only be able to log in on one device at a time. It can be sidestepped by allowing one login attempt per service - one for web, one for cellphone. Potential temporary lockout would be caused by a user trying to log in on a device with no secret. Perhaps we shouldn't have the service "hold the phone" if a device with an invalid secret tries to log in a 2FA user.
+
+^A user could, when opening the "authenticate" button, be, much like bankID, see what login they're authing for, and have to put in their password. Basically, get the IP for which you're authing, send back the IP you're authing for in your request. Authenticate in a FIFO fashion? I mean, if someone spams authentications, reset your password. Just having one auth attempt per person just became obsolete. Only this is not a viable way of doing things, as trying to decrypt the secret with an invalid password removes that secret.
+
+Have user pick whether they want to auth for a mobile device or for the web service. Done.
+
+If a stored user is automatically logged in, make sure that 2FA users passwords are NOT STORED IN NON-VOLATILE MEMORY, otherwise the security of a shared device is completely compromised.
+
+Left to do before presentation:
+re-structure, add ToC??? user initiated actions come first, as it's easiest to grasp how the user interacts that way
+proofread/sanity check
