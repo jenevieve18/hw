@@ -30,7 +30,8 @@ namespace HW.WebService
 
         const int MINUTE = 2;
 
-        public Service() : this(new MyHttpRequest())
+        public Service()
+            : this(new MyHttpRequest())
         {
 
             //Uncomment the following line if using designed components
@@ -119,7 +120,6 @@ namespace HW.WebService
             public string secretKey;
             public string resourceID;
             public bool activeLoginAttempt;
-            public bool checkSecretkeyExist;
         }
         public interface IRequest
         {
@@ -372,7 +372,6 @@ namespace HW.WebService
                                      "FROM [User] u " +
                                      "INNER JOIN Sponsor s ON u.SponsorID = s.SponsorID " +
                                      "INNER JOIN SponsorProjectRoundUnit spru ON s.SponsorID = spru.SponsorID " +
-                                     "INNER JOIN SponsorProjectRoundUnit spru2 ON spru.SurveyID = spru2.SurveyID " +
                                      "INNER JOIN UserProjectRoundUser upru ON spru.ProjectRoundUnitID = upru.ProjectRoundUnitID AND upru.UserID = u.UserID " +
                                      "WHERE u.UserID = " + userID + " " +
                                      "AND REPLACE(CONVERT(VARCHAR(255),spru.SurveyKey),'-','') = '" + formKey.Replace("'", "") + "'");
@@ -406,14 +405,14 @@ namespace HW.WebService
                                      "COUNT(*) " +
                                      "FROM Answer a " +
                                      "INNER JOIN healthWatch..UserProjectRoundUserAnswer ha ON a.AnswerID = ha.AnswerID AND ha.ProjectRoundUserID = a.ProjectRoundUserID " +
-                                     //"INNER JOIN healthWatch..UserProjectRoundUser h ON ha.ProjectRoundUserID = h.ProjectRoundUserID " +
+                    //"INNER JOIN healthWatch..UserProjectRoundUser h ON ha.ProjectRoundUserID = h.ProjectRoundUserID " +
                                      "INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID " +
                                      "AND av.ValueInt IS NOT NULL " +
                                      "AND av.DeletedSessionID IS NULL " +
                                      "AND av.QuestionID = " + QID + " " +
                                      "AND av.OptionID = " + OID + " " +
                                      "WHERE a.EndDT IS NOT NULL " +
-                                     //				                     "AND ha.ProjectRoundUserID = " + projectRoundUserID + " " +
+                    //				                     "AND ha.ProjectRoundUserID = " + projectRoundUserID + " " +
                                      "AND ha.ProjectRoundUserID IN (" + Implode(",", projectRoundUserIDs) + ") " +
                                      "AND a.EndDT >= '" + fromDateTime.ToString("yyyy-MM-dd") + "' " +
                                      "AND a.EndDT <= '" + toDateTime.ToString("yyyy-MM-dd") + "'", "eFormSqlConnection");
@@ -433,14 +432,14 @@ namespace HW.WebService
                        "REPLACE(CONVERT(VARCHAR(255),ha.AnswerKey),'-','') " +
                        "FROM Answer a " +
                        "INNER JOIN healthWatch..UserProjectRoundUserAnswer ha ON a.AnswerID = ha.AnswerID AND ha.ProjectRoundUserID = a.ProjectRoundUserID " +
-                       //"INNER JOIN healthWatch..UserProjectRoundUser h ON ha.ProjectRoundUserID = h.ProjectRoundUserID " +
+                    //"INNER JOIN healthWatch..UserProjectRoundUser h ON ha.ProjectRoundUserID = h.ProjectRoundUserID " +
                        "INNER JOIN AnswerValue av ON a.AnswerID = av.AnswerID " +
                        "AND av.ValueInt IS NOT NULL " +
                        "AND av.DeletedSessionID IS NULL " +
                        "AND av.QuestionID = " + QID + " " +
                        "AND av.OptionID = " + OID + " " +
                        "WHERE a.EndDT IS NOT NULL " +
-                       //				       "AND ha.ProjectRoundUserID = " + projectRoundUserID + " " +
+                    //				       "AND ha.ProjectRoundUserID = " + projectRoundUserID + " " +
                        "AND ha.ProjectRoundUserID IN (" + Implode(",", projectRoundUserIDs) + ") " +
                        "AND a.EndDT >= '" + fromDateTime.ToString("yyyy-MM-dd") + "' " +
                        "AND a.EndDT <= '" + toDateTime.ToString("yyyy-MM-dd") + "' " +
@@ -633,12 +632,12 @@ namespace HW.WebService
                             fiv[cx].feedbackTemplateID = r.GetInt32(3);
 
                             SqlDataReader r2 = rs("SELECT " +
-                                                  "rpc.WeightedQuestionOptionID, " +    // 0
+                                                  "rpc.WeightedQuestionOptionID, " +	// 0
                                                   "wqol.WeightedQuestionOption, " +
                                                   "wqo.TargetVal, " +
                                                   "wqo.YellowLow, " +
                                                   "wqo.GreenLow, " +
-                                                  "wqo.GreenHigh, " +                   // 5
+                                                  "wqo.GreenHigh, " +					// 5
                                                   "wqo.YellowHigh, " +
                                                   "wqo.QuestionID, " +
                                                   "wqo.OptionID, " +
@@ -859,7 +858,7 @@ namespace HW.WebService
                     {
                         answerID = execIntScal("SELECT AnswerID FROM Answer WHERE REPLACE(CONVERT(VARCHAR(255),AnswerKey),'-','') = '" + formInstanceKey.Replace("'", "") + "' AND ProjectRoundUserID = " + projectRoundUserID, "eFormSqlConnection");
                     }
-                    #endregion
+                        #endregion
                     if (answerID != 0)
                     {
                         int sessionID = 0;
@@ -1125,25 +1124,25 @@ namespace HW.WebService
 
                 cx = 0;
                 r = rs("SELECT " +
-                       "sq.SurveyQuestionID, " +    // 0
-                       "sq.OptionsPlacement, " +    // 1
-                       "q.FontFamily, " +           // 2
-                       "ISNULL(sq.FontSize,q.FontSize), " +         // 3
-                       "q.FontDecoration, " +       // 4
-                       "q.FontColor, " +            // 5
-                       "q.Underlined, " +           // 6
-                       "ISNULL(sql.Question,ql.Question) AS Question, " +           // 7
-                       "q.QuestionID, " +           // 8
-                       "q.Box, " +                  // 9
-                       "sq.NoCount, " +         // 10
-                       "sq.RestartCount, " +        // 11
-                       "(SELECT COUNT(*) FROM SurveyQuestionOption sqo WHERE sqo.OptionPlacement = 1 AND sqo.SurveyQuestionID = sq.SurveyQuestionID), " +   // 12
-                       "(SELECT COUNT(*) FROM SurveyQuestionOption sqo INNER JOIN QuestionOption qo ON sqo.QuestionOptionID = qo.QuestionOptionID WHERE qo.Hide = 1 AND sqo.SurveyQuestionID = sq.SurveyQuestionID), " +    // 13
-                       "sq.NoBreak, " +         // 14
-                       "sq.BreakAfterQuestion, " +  // 15
-                       "s.FlipFlopBg, " +           // 16
+                       "sq.SurveyQuestionID, " +	// 0
+                       "sq.OptionsPlacement, " +	// 1
+                       "q.FontFamily, " +			// 2
+                       "ISNULL(sq.FontSize,q.FontSize), " +			// 3
+                       "q.FontDecoration, " +		// 4
+                       "q.FontColor, " +			// 5
+                       "q.Underlined, " +			// 6
+                       "ISNULL(sql.Question,ql.Question) AS Question, " +			// 7
+                       "q.QuestionID, " +			// 8
+                       "q.Box, " +					// 9
+                       "sq.NoCount, " +			// 10
+                       "sq.RestartCount, " +		// 11
+                       "(SELECT COUNT(*) FROM SurveyQuestionOption sqo WHERE sqo.OptionPlacement = 1 AND sqo.SurveyQuestionID = sq.SurveyQuestionID), " +	// 12
+                       "(SELECT COUNT(*) FROM SurveyQuestionOption sqo INNER JOIN QuestionOption qo ON sqo.QuestionOptionID = qo.QuestionOptionID WHERE qo.Hide = 1 AND sqo.SurveyQuestionID = sq.SurveyQuestionID), " +	// 13
+                       "sq.NoBreak, " +			// 14
+                       "sq.BreakAfterQuestion, " +	// 15
+                       "s.FlipFlopBg, " +			// 16
                        "s.TwoColumns, " +          // 17
-                       "(SELECT COUNT(*) FROM SurveyQuestionOption sqo WHERE sqo.SurveyQuestionID = sq.SurveyQuestionID) " +    // 18
+                       "(SELECT COUNT(*) FROM SurveyQuestionOption sqo WHERE sqo.SurveyQuestionID = sq.SurveyQuestionID) " +	// 18
                        "FROM Survey s " +
                        "INNER JOIN SurveyQuestion sq ON s.SurveyID = sq.SurveyID " +
                        "INNER JOIN Question q ON sq.QuestionID = q.QuestionID " +
@@ -1157,16 +1156,16 @@ namespace HW.WebService
                     if (r.GetInt32(18) > 0)
                     {
                         SqlDataReader r2 = rs("SELECT " +
-                                              "qo.QuestionID, " +           // 0
-                                              "qo.OptionID, " +         // 1
-                                              "sqo.OptionPlacement, " + // 2
-                                              "o.OptionType, " +            // 3
-                                              "o.Width, " +             // 4
-                                              "ISNULL(sqo.Height,o.Height), " +             // 5
-                                              "sqo.Forced, " +          // 6
-                                              "o.InnerWidth, " +            // 7
-                                              "qo.Hide, " +             // 8
-                                              "o.BgColor, " +               // 9
+                                              "qo.QuestionID, " +			// 0
+                                              "qo.OptionID, " +			// 1
+                                              "sqo.OptionPlacement, " +	// 2
+                                              "o.OptionType, " +			// 3
+                                              "o.Width, " +				// 4
+                                              "ISNULL(sqo.Height,o.Height), " +				// 5
+                                              "sqo.Forced, " +			// 6
+                                              "o.InnerWidth, " +			// 7
+                                              "qo.Hide, " +				// 8
+                                              "o.BgColor, " +				// 9
                                               "(SELECT COUNT(*) FROM OptionComponents ocs WHERE ocs.OptionID = o.OptionID) " +    // 10
                                               "FROM SurveyQuestionOption sqo " +
                                               "INNER JOIN QuestionOption qo ON sqo.QuestionOptionID = qo.QuestionOptionID " +
@@ -1457,13 +1456,13 @@ namespace HW.WebService
             if (userID != 0)
             {
                 SqlDataReader r = rs("SELECT " +
-                                     "u.Username, " +       // 0
-                                     "s.LoginDays, " +      // 1
-                                     "u.Reminder, " +       // 2
-                                     "u.ReminderType, " +   // 3
-                                     "u.ReminderLink, " +   // 4
+                                     "u.Username, " +		// 0
+                                     "s.LoginDays, " +		// 1
+                                     "u.Reminder, " +		// 2
+                                     "u.ReminderType, " +	// 3
+                                     "u.ReminderLink, " +	// 4
                                      "u.ReminderSettings, " +// 5
-                                     "u.Email " +           // 6
+                                     "u.Email " +			// 6
                                      "FROM [User] u " +
                                      "LEFT OUTER JOIN Sponsor s ON u.SponsorID = s.SponsorID " +
                                      "WHERE u.UserID = " + userID);
@@ -1818,14 +1817,14 @@ namespace HW.WebService
                                      "LEFT OUTER JOIN MeasureTypeLang mtl ON mt.MeasureTypeID = mtl.MeasureTypeID AND mtl.LangID = " + languageID + " " +
                                      "WHERE mc.SPRUID IS NULL " +
                                      (measureTypeID != 0 ? "AND mc.MeasureTypeID = " + measureTypeID + " " : "") +
-                                     //"UNION ALL " +
-                                     //"SELECT COUNT(*) AS CX " +
-                                     //"FROM MeasureCategory mc " +
-                                     //"INNER JOIN MeasureType mt ON mc.MeasureTypeID = mt.MeasureTypeID " +
-                                     //"INNER JOIN SponsorProjectRoundUnit spru ON mc.SPRUID = spru.SponsorProjectRoundUnitID AND spru.SponsorID = " + sponsorID + " " +
-                                     //"LEFT OUTER JOIN MeasureCategoryLang mcl ON mc.MeasureCategoryID = mcl.MeasureCategoryID AND mcl.LangID = " + languageID + " " +
-                                     //"LEFT OUTER JOIN MeasureTypeLang mtl ON mt.MeasureTypeID = mtl.MeasureTypeID AND mtl.LangID = " + languageID + " " +
-                                     //(measureTypeID != 0 ? "WHERE mc.MeasureTypeID = " + measureTypeID + " " : "") +
+                    //"UNION ALL " +
+                    //"SELECT COUNT(*) AS CX " +
+                    //"FROM MeasureCategory mc " +
+                    //"INNER JOIN MeasureType mt ON mc.MeasureTypeID = mt.MeasureTypeID " +
+                    //"INNER JOIN SponsorProjectRoundUnit spru ON mc.SPRUID = spru.SponsorProjectRoundUnitID AND spru.SponsorID = " + sponsorID + " " +
+                    //"LEFT OUTER JOIN MeasureCategoryLang mcl ON mc.MeasureCategoryID = mcl.MeasureCategoryID AND mcl.LangID = " + languageID + " " +
+                    //"LEFT OUTER JOIN MeasureTypeLang mtl ON mt.MeasureTypeID = mtl.MeasureTypeID AND mtl.LangID = " + languageID + " " +
+                    //(measureTypeID != 0 ? "WHERE mc.MeasureTypeID = " + measureTypeID + " " : "") +
                                      ") tmp");
                 MeasureCategory[] ret = new MeasureCategory[cx];
                 cx = 0;
@@ -1843,20 +1842,20 @@ namespace HW.WebService
                                      "LEFT OUTER JOIN MeasureTypeLang mtl ON mt.MeasureTypeID = mtl.MeasureTypeID AND mtl.LangID = " + languageID + " " +
                                      "WHERE mc.SPRUID IS NULL " +
                                      (measureTypeID != 0 ? "AND mc.MeasureTypeID = " + measureTypeID + " " : "") +
-                                     //"UNION ALL " +
-                                     //"SELECT " +
-                                     //"mc.MeasureCategoryID, " +       // 0
-                                     //"ISNULL(mcl.MeasureCategory,mc.MeasureCategory), " +
-                                     //"REPLACE(CONVERT(VARCHAR(255),spru.SurveyKey),'-',''), " +
-                                     //"mc.SortOrder AS SO, " +
-                                     //"mt.MeasureTypeID, " +
-                                     //"ISNULL(mtl.MeasureType,mt.MeasureType) " +
-                                     //"FROM MeasureCategory mc " +
-                                     //"INNER JOIN MeasureType mt ON mc.MeasureTypeID = mt.MeasureTypeID " +
-                                     //"INNER JOIN SponsorProjectRoundUnit spru ON mc.SPRUID = spru.SponsorProjectRoundUnitID AND spru.SponsorID = " + sponsorID + " " +
-                                     //"LEFT OUTER JOIN MeasureCategoryLang mcl ON mc.MeasureCategoryID = mcl.MeasureCategoryID AND mcl.LangID = " + languageID + " " +
-                                     //"LEFT OUTER JOIN MeasureTypeLang mtl ON mt.MeasureTypeID = mtl.MeasureTypeID AND mtl.LangID = " + languageID + " " +
-                                     //(measureTypeID != 0 ? "WHERE mc.MeasureTypeID = " + measureTypeID + " " : "") +
+                    //"UNION ALL " +
+                    //"SELECT " +
+                    //"mc.MeasureCategoryID, " +       // 0
+                    //"ISNULL(mcl.MeasureCategory,mc.MeasureCategory), " +
+                    //"REPLACE(CONVERT(VARCHAR(255),spru.SurveyKey),'-',''), " +
+                    //"mc.SortOrder AS SO, " +
+                    //"mt.MeasureTypeID, " +
+                    //"ISNULL(mtl.MeasureType,mt.MeasureType) " +
+                    //"FROM MeasureCategory mc " +
+                    //"INNER JOIN MeasureType mt ON mc.MeasureTypeID = mt.MeasureTypeID " +
+                    //"INNER JOIN SponsorProjectRoundUnit spru ON mc.SPRUID = spru.SponsorProjectRoundUnitID AND spru.SponsorID = " + sponsorID + " " +
+                    //"LEFT OUTER JOIN MeasureCategoryLang mcl ON mc.MeasureCategoryID = mcl.MeasureCategoryID AND mcl.LangID = " + languageID + " " +
+                    //"LEFT OUTER JOIN MeasureTypeLang mtl ON mt.MeasureTypeID = mtl.MeasureTypeID AND mtl.LangID = " + languageID + " " +
+                    //(measureTypeID != 0 ? "WHERE mc.MeasureTypeID = " + measureTypeID + " " : "") +
                                      "ORDER BY SO");
                 while (r.Read())
                 {
@@ -2398,14 +2397,14 @@ namespace HW.WebService
                 SqlDataReader r = rs("SELECT " +
                                      "el.New, " +                    // 0
                                      "NULL, " +
-                                     //"(" +
-                                     //    "SELECT COUNT(*) FROM [ExerciseVariantLang] evlTmp " +
-                                     //    "INNER JOIN [ExerciseVariant] evTmp ON evlTmp.ExerciseVariantID = evTmp.ExerciseVariantID " +
-                                     //    "WHERE evTmp.ExerciseTypeID >= 3 " +
-                                     //    "AND evTmp.ExerciseTypeID <= 4 " +
-                                     //    "AND Lang = evl.Lang " +
-                                     //    "AND evTmp.ExerciseID = ev.ExerciseID" +
-                                     //") AS VariantCount, " +         // 1
+                    //"(" +
+                    //    "SELECT COUNT(*) FROM [ExerciseVariantLang] evlTmp " +
+                    //    "INNER JOIN [ExerciseVariant] evTmp ON evlTmp.ExerciseVariantID = evTmp.ExerciseVariantID " +
+                    //    "WHERE evTmp.ExerciseTypeID >= 3 " +
+                    //    "AND evTmp.ExerciseTypeID <= 4 " +
+                    //    "AND Lang = evl.Lang " +
+                    //    "AND evTmp.ExerciseID = ev.ExerciseID" +
+                    //") AS VariantCount, " +         // 1
                                      "evl.ExerciseVariantLangID, " + // 2
                                      "eal.ExerciseArea, " +          // 3
                                      "eal.ExerciseAreaID, " +        // 4
@@ -2588,7 +2587,7 @@ namespace HW.WebService
          [Title] [varchar](255) NULL,
          [Description] [text] NULL,
          [UserID] [int] NULL,
-			 */
+             */
             int userID = getUserIdFromToken(token, expirationMinutes);
 
             string t = title;
@@ -3314,7 +3313,7 @@ VALUES(GETDATE(), @Title, @Description, @UserID)";
                     "FROM dbo.UserRegistrationID " +
                     "WHERE RegistrationID = '" + registrationID.Replace("'", "") + "' " +
                     ""
-                //					"AND UserID = " + userID
+                    //					"AND UserID = " + userID
                 );
                 if (r.Read())
                 {
@@ -3326,7 +3325,7 @@ VALUES(GETDATE(), @Title, @Description, @UserID)";
                         "DELETE FROM dbo.UserRegistrationID " +
                         "WHERE RegistrationID = '" + registrationID.Replace("'", "") + "' " +
                         ""
-                    //						"AND UserID = " + userID
+                        //						"AND UserID = " + userID
                     );
                 }
                 r.Close();
@@ -3391,55 +3390,6 @@ VALUES(GETDATE(), @Title, @Description, @UserID)";
         /// <param name="password">Password</param>
         /// <param name="expirationMinutes">Expiration minutes</param>
         /// <returns></returns>
-        /// 
-
-        private static bool checkSecretKeyExist(int? value)
-        {
-            if (value > 0)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        //private static bool checkIfSameSecretKey(string value1, string value2)
-        //{
-        //    if(value1 == value2)
-        //    {
-        //        return true;
-        //    }
-        //    return false;
-        //}
-        
-        bool hasActiveLoginAttempt(int userID)
-        {
-        	bool activeLoginAttempt = false;
-        	using (var loginReader = executeReader(
-        		@"
-SELECT ResourceID 
-FROM UserLogin 
-WHERE UserID = @UserID
-AND DATEDIFF(MINUTE, LoginAttempt, GETDATE()) < @Minute
-AND ISNULL(Unblocked, 0) = 0", new SqlParameter("@UserID", userID), new SqlParameter("@Minute", MINUTE))) {
-                executeNonQuery(@"DELETE FROM UserLogin WHERE UserID = @UserID AND DATEDIFF(MINUTE, LoginAttempt, GETDATE()) > @Minute", new SqlParameter("@UserID", userID), new SqlParameter("@Minute", MINUTE));
-                if (loginReader.Read()) {
-                    activeLoginAttempt = true;
-                }
-        	}
-        	return activeLoginAttempt;
-        }
-        
-        bool hasSecretKey(int userID)
-        {
-        	bool hasSecretKey = false;
-        	using (var secretKeyReader = executeReader(@"SELECT 1 FROM UserSecret WHERE UserID = @UserID", new SqlParameter("@UserID", userID))) {
-        		if (secretKeyReader.Read()) {
-        			hasSecretKey = true;
-        		}
-        	}
-        	return hasSecretKey;
-        }
-
         [WebMethod(Description = "Validates a username and password combination and, if there is a match, returns a user detail object including user data with token, variable lifetime (max 20 minutes) and resource identification for 2 factor authentication.")]
         public UserDetail UserLogin2FA(string username, string password, int expirationMinutes)
         {
@@ -3543,7 +3493,7 @@ AND ISNULL(Unblocked, 0) = 0", new SqlParameter("@UserID", userID), new SqlParam
                                                 WHERE UserID = @UserID
                                                 AND DATEDIFF(MINUTE, LoginAttempt, GETDATE()) < @Minute
                                                 AND ISNULL(Unblocked, 0) = 0", new SqlParameter("@UserID", userID), new SqlParameter("@Minute", MINUTE)))
-                                {                 
+                                {
                                     ud.activeLoginAttempt = true;
                                     string resourceID = generateUniqueResourceID();
                                     ud.resourceID = resourceID;
@@ -3627,11 +3577,11 @@ AND ul.IPAddress = @IPAddress", new SqlParameter("@Username", username), new Sql
                     validLogin = true;
                     executeNonQuery(
                         @"
-DELETE ul FROM UserLogin ul
-INNER JOIN [User] u ON u.UserID = ul.UserID
-WHERE ul.ResourceID = @ResourceID 
-AND u.Username = @Username
-AND ul.IPAddress = @IPAddress",
+                        DELETE ul FROM UserLogin ul
+                        INNER JOIN [User] u ON u.UserID = ul.UserID
+                        WHERE ul.ResourceID = @ResourceID 
+                        AND u.Username = @Username
+                        AND ul.IPAddress = @IPAddress",
                         new SqlParameter("@ResourceID", resourceID),
                         new SqlParameter("@Username", username),
                         new SqlParameter("@IPAddress", request.UserHostAddress)
@@ -3651,19 +3601,18 @@ AND ul.IPAddress = @IPAddress",
         {
             var u = new UserData();
             using (var resourceReader = executeReader(
-                @"
-SELECT u.UserID, u.LID, ula.UserToken, ula.UserLoginID
-FROM [User] u
-INNER JOIN UserLogin ula ON ula.UserID = u.UserID
-WHERE ula.ResourceID = @ResourceID
---AND IPAddress = @IPAddress
-AND DATEDIFF(MINUTE, ula.LoginAttempt, GETDATE()) < @Minute
-AND u.Username = @Username
-AND ISNULL(Unblocked, 0) = 1",
-                    new SqlParameter("@ResourceID", resourceID),
-                    //                    new SqlParameter("@IPAddress", request.UserHostAddress), 
-                    new SqlParameter("@Username", username),
-                    new SqlParameter("@Minute", MINUTE)))
+                @" 
+                 SELECT u.UserID, u.LID, ula.UserToken, ula.UserLoginID
+                FROM [User] u
+                INNER JOIN UserLogin ula ON ula.UserID = u.UserID
+                WHERE ula.ResourceID = @ResourceID
+                AND DATEDIFF(MINUTE, ula.LoginAttempt, GETDATE()) < @Minute
+                AND u.Username = @Username
+                AND ISNULL(Unblocked, 0) = 1", new SqlParameter("@ResourceID", resourceID), new SqlParameter("@Username", username), new SqlParameter("@Minute", MINUTE)))
+                   
+                //new SqlParameter("@IPAddress", request.UserHostAddress), 
+                //AND IPAddress = @IPAddress
+                //AND DATEDIFF(MINUTE, ula.LoginAttempt, GETDATE()) < @Minute
             {
                 if (resourceReader.Read())
                 {
@@ -3739,7 +3688,6 @@ AND ISNULL(Unblocked, 0) = 1",
                         new SqlParameter("@UserID", userID)
                     );
                     executeNonQuery(@"DELETE FROM UserLogin WHERE UserID = @UserID", new SqlParameter("@UserID", userID));
-                    executeNonQuery(@"DELETE FROM UserSecret WHERE UserID = @UserID", new SqlParameter("@UserID", userID)); // TODO: To verify with Kevin!
                     return true;
                 }
                 else
@@ -4342,7 +4290,7 @@ AND ISNULL(FromWebsite, 0) = 1", new SqlParameter("@UserID", userID), new SqlPar
                                     }
                                     break;
                                 }
-                            #endregion
+                                #endregion
                             case 2:
                                 #region Week
                                 {
@@ -4353,7 +4301,7 @@ AND ISNULL(FromWebsite, 0) = 1", new SqlParameter("@UserID", userID), new SqlPar
                                     }
                                     break;
                                 }
-                            #endregion
+                                #endregion
                             case 3:
                                 #region Month
                                 {
