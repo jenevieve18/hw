@@ -3480,12 +3480,14 @@ VALUES(GETDATE(), @Title, @Description, @UserID)";
                             //var userSecretkey = HashMD5(reader["SecretKey"].ToString().Replace("-", String.Empty).ToString());                         
                             //var userSecretKey = new Guid(reader["SecretKey"].ToString().Replace("-", String.Empty).ToString()).GetHashCode();
                             var SecretKey = getString(reader, 1);
-
+                  
 
                             //Added by Jenevieve 06|06|17 - I am  adding the condition  if that Userid has already userSecretKey it means it will generate the resourceID
                             //the second attempt log-in will fall here if the userSecretKey is already generated.
                             if (enable2FA == true && SecretKey != null)
                             {
+
+
                                 ud.UserData = new UserData();
                                 using (var loginReader = executeReader(@"
                                                 SELECT ResourceID 
@@ -3494,9 +3496,36 @@ VALUES(GETDATE(), @Title, @Description, @UserID)";
                                                 AND DATEDIFF(MINUTE, LoginAttempt, GETDATE()) < @Minute
                                                 AND ISNULL(Unblocked, 0) = 0", new SqlParameter("@UserID", userID), new SqlParameter("@Minute", MINUTE)))
                                 {
-                                    ud.activeLoginAttempt = true;
-                                    string resourceID = generateUniqueResourceID();
-                                    ud.resourceID = resourceID;
+
+                                    if (loginReader.Read())
+                                    {
+                                        bool activeLoginAttempt = getInt32(loginReader, 0) == 1;
+                                        activeLoginAttempt = activeLoginAttempt ? activeLoginAttempt : getInt32(userReader, 2) == 1;
+                                        string resourceID = generateUniqueResourceID();
+                                        ud.resourceID = resourceID;
+                                    }
+
+                                    else
+                                    {
+                                        bool activeLoginAttempt = getInt32(loginReader, 1) == 1;
+                                        ud.activeLoginAttempt = activeLoginAttempt;
+                                        string resourceID = generateUniqueResourceID();
+                                        ud.resourceID = resourceID;
+                                    }
+                                    //    if (loginReader.Read())
+                                    //    {
+                                    //        ud.activeLoginAttempt = true;
+
+                                    //    }
+
+                                    //    else
+                                    //    {
+                                    //        ud.activeLoginAttempt = false;
+                                    //        string resourceID = generateUniqueResourceID();
+                                    //        ud.resourceID = resourceID;
+                                    //    }
+
+                                    //}
                                 }
                             }
                             else
@@ -3808,23 +3837,23 @@ SELECT UserID FROM UserSecret WHERE SecretKey = @SecretKey", new SqlParameter("@
             if (userID != 0)
             {
                 using (var rs = executeReader(@"
-SELECT 1 FROM UserLogin 
-WHERE UserID = @UserID
-AND DATEDIFF(MINUTE, LoginAttempt, GETDATE()) < @Minute
-AND ISNULL(Unblocked, 0) = 0
-AND ISNULL(FromWebService, 0) = 1", new SqlParameter("@UserID", userID), new SqlParameter("@Minute", MINUTE)))
-                {
+                        SELECT 1 FROM UserLogin 
+                        WHERE UserID = @UserID
+                        AND DATEDIFF(MINUTE, LoginAttempt, GETDATE()) < @Minute
+                        AND ISNULL(Unblocked, 0) = 0
+                        AND ISNULL(FromWebService, 0) = 1", new SqlParameter("@UserID", userID), new SqlParameter("@Minute", MINUTE)))
+                   {
                     if (rs.Read())
                     {
                         a.webservice = true;
                     }
                 }
                 using (var rs = executeReader(@"
-SELECT 1 FROM UserLogin 
-WHERE UserID = @UserID
-AND DATEDIFF(MINUTE, LoginAttempt, GETDATE()) < @Minute
-AND ISNULL(Unblocked, 0) = 0
-AND ISNULL(FromWebsite, 0) = 1", new SqlParameter("@UserID", userID), new SqlParameter("@Minute", MINUTE)))
+                        SELECT 1 FROM UserLogin 
+                        WHERE UserID = @UserID
+                        AND DATEDIFF(MINUTE, LoginAttempt, GETDATE()) < @Minute
+                        AND ISNULL(Unblocked, 0) = 0
+                        AND ISNULL(FromWebsite, 0) = 1", new SqlParameter("@UserID", userID), new SqlParameter("@Minute", MINUTE)))
                 {
                     if (rs.Read())
                     {
