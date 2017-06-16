@@ -3796,33 +3796,43 @@ AND ul.IPAddress = @IPAddress", new SqlParameter("@Username", username), new Sql
         [WebMethod(Description = "Submits the users secret; the second part of a 2FA login.")]
         public bool UserSubmitSecretKey(string secretKey)
         {
-            using (var rs = executeReader(@"
-SELECT UserID FROM UserSecret WHERE SecretKey = @SecretKey", new SqlParameter("@SecretKey", generateSHA512String(secretKey))))
+            using (var checkLoginAttempt = executeReader(@"SELECT TOP 1 ul.LoginAttempt FROM UserLogin ul INNER JOIN UserSecret us ON us.UserID = ul.UserID WHERE SecretKey = @SecretKey AND DATEDIFF(MINUTE, ul.LoginAttempt, GETDATE()) < @Minute", new SqlParameter("@SecretKey", generateSHA512String(secretKey)), new SqlParameter("@Minute", MINUTE)))
             {
-                if (rs.Read())
+                if (checkLoginAttempt.Read())
                 {
-                    int userID = getInt32(rs, 0);
-                    executeNonQuery("UPDATE UserLogin SET Unblocked = 1 WHERE UserID = @UserID", new SqlParameter("@UserID", userID));
-                    return true;
+                    using (var rs = executeReader(@"SELECT UserID FROM UserSecret WHERE SecretKey = @SecretKey", new SqlParameter("@SecretKey", generateSHA512String(secretKey))))
+                    {
+                        if (rs.Read())
+                        {
+                            int userID = getInt32(rs, 0);
+                            executeNonQuery("UPDATE UserLogin SET Unblocked = 1 WHERE UserID = @UserID", new SqlParameter("@UserID", userID));
+                            return true;
+                        }
+                    }
                 }
+                return false;
             }
-            return false;
         }
 
         [WebMethod(Description = "Submits the users secret; the second part of a 2FA login.")]
         public bool UserSubmitSecretKeyWeb(string secretKey)
         {
-            using (var rs = executeReader(@"
-SELECT UserID FROM UserSecret WHERE SecretKey = @SecretKey", new SqlParameter("@SecretKey", generateSHA512String(secretKey))))
+            using (var checkLoginAttempt = executeReader(@"SELECT TOP 1 ul.LoginAttempt FROM UserLogin ul INNER JOIN UserSecret us ON us.UserID = ul.UserID WHERE SecretKey = @SecretKey AND DATEDIFF(MINUTE, ul.LoginAttempt, GETDATE()) < @Minute", new SqlParameter("@SecretKey", generateSHA512String(secretKey)), new SqlParameter("@Minute", MINUTE)))
             {
-                if (rs.Read())
+                if (checkLoginAttempt.Read())
                 {
-                    int userID = getInt32(rs, 0);
-                    executeNonQuery("UPDATE UserLogin SET Unblocked = 1 WHERE UserID = @UserID", new SqlParameter("@UserID", userID));
-                    return true;
+                    using (var rs = executeReader(@"SELECT UserID FROM UserSecret WHERE SecretKey = @SecretKey", new SqlParameter("@SecretKey", generateSHA512String(secretKey))))
+                    {
+                        if (rs.Read())
+                        {
+                            int userID = getInt32(rs, 0);
+                            executeNonQuery("UPDATE UserLogin SET Unblocked = 1 WHERE UserID = @UserID", new SqlParameter("@UserID", userID));
+                            return true;
+                        }
+                    }
                 }
+                return false;
             }
-            return false;
         }
 
         [WebMethod(Description = "Returns true if there are active login attempts for the webservice or website.")]
