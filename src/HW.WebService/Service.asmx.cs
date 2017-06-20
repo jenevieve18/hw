@@ -3794,13 +3794,13 @@ AND ul.IPAddress = @IPAddress", new SqlParameter("@Username", username), new Sql
         /// <param name="expirationMinutes">Expiration minutes</param>
         /// <returns></returns>
         [WebMethod(Description = "Submits the users secret; the second part of a 2FA login.")]
-        public bool UserSubmitSecretKey(string secretKey)
+        public bool UserSubmitSecretKey(string secretKey, string username)
         {
             using (var checkLoginAttempt = executeReader(@"SELECT TOP 1 ul.LoginAttempt FROM UserLogin ul INNER JOIN UserSecret us ON us.UserID = ul.UserID WHERE SecretKey = @SecretKey AND DATEDIFF(MINUTE, ul.LoginAttempt, GETDATE()) < @Minute", new SqlParameter("@SecretKey", generateSHA512String(secretKey)), new SqlParameter("@Minute", MINUTE)))
             {
                 if (checkLoginAttempt.Read())
                 {
-                    using (var rs = executeReader(@"SELECT UserID FROM UserSecret WHERE SecretKey = @SecretKey", new SqlParameter("@SecretKey", generateSHA512String(secretKey))))
+                    using (var rs = executeReader(@"SELECT us.UserID FROM UserSecret us INNER JOIN [User] u ON u.UserID = us.UserID WHERE us.SecretKey = @SecretKey  AND u.Username = @Username", new SqlParameter("@SecretKey", generateSHA512String(secretKey)), new SqlParameter("@Username", username)))
                     {
                         if (rs.Read())
                         {
