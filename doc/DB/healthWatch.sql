@@ -1,6 +1,6 @@
 USE [healthWatch]
 GO
-/****** Object:  StoredProcedure [dbo].[cp_createSponsorExtendedSurveyDepartments]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  StoredProcedure [dbo].[cp_createSponsorExtendedSurveyDepartments]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -17,7 +17,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[cp_updateEformExternalID]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  StoredProcedure [dbo].[cp_updateEformExternalID]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -45,7 +45,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[cp_updateEformID]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  StoredProcedure [dbo].[cp_updateEformID]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -73,7 +73,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[cp_updateShortEformExternalID]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  StoredProcedure [dbo].[cp_updateShortEformExternalID]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -102,7 +102,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[cp_updateSponsorExtendedSurveyAnswers]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  StoredProcedure [dbo].[cp_updateSponsorExtendedSurveyAnswers]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -127,7 +127,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[cp_updateSponsorExtendedSurveyDepartmentAnswers]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  StoredProcedure [dbo].[cp_updateSponsorExtendedSurveyDepartmentAnswers]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -156,7 +156,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[cp_updateSponsorExtendedSurveyDepartmentTotal]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  StoredProcedure [dbo].[cp_updateSponsorExtendedSurveyDepartmentTotal]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -185,7 +185,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[cp_updateSponsorExtendedSurveyTotal]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  StoredProcedure [dbo].[cp_updateSponsorExtendedSurveyTotal]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -208,7 +208,7 @@ BEGIN
 END
 
 GO
-/****** Object:  UserDefinedFunction [dbo].[cf_daysFromLastLogin]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  UserDefinedFunction [dbo].[cf_daysFromLastLogin]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -228,7 +228,7 @@ BEGIN
 END
 
 GO
-/****** Object:  UserDefinedFunction [dbo].[cf_departmentDepth]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  UserDefinedFunction [dbo].[cf_departmentDepth]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -252,7 +252,7 @@ END
 
 
 GO
-/****** Object:  UserDefinedFunction [dbo].[cf_DepartmentShortTree]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  UserDefinedFunction [dbo].[cf_DepartmentShortTree]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -281,7 +281,7 @@ END
 
 
 GO
-/****** Object:  UserDefinedFunction [dbo].[cf_departmentSortString]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  UserDefinedFunction [dbo].[cf_departmentSortString]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -301,7 +301,7 @@ END
 
 
 GO
-/****** Object:  UserDefinedFunction [dbo].[cf_DepartmentTree]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  UserDefinedFunction [dbo].[cf_DepartmentTree]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -330,7 +330,7 @@ END
 
 
 GO
-/****** Object:  UserDefinedFunction [dbo].[cf_eFormDepartmentTree]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  UserDefinedFunction [dbo].[cf_eFormDepartmentTree]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -360,7 +360,7 @@ END
 
 
 GO
-/****** Object:  UserDefinedFunction [dbo].[cf_hourMinute]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  UserDefinedFunction [dbo].[cf_hourMinute]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS OFF
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -371,7 +371,7 @@ BEGIN
 RETURN '' + RIGHT('0' + CAST(DATEPART(hh,@dt) AS VARCHAR(2)),2) + ':' + RIGHT('0' + CAST(DATEPART(mi,@dt) AS VARCHAR(2)),2)
 END
 GO
-/****** Object:  UserDefinedFunction [dbo].[cf_hourMinutes]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  UserDefinedFunction [dbo].[cf_hourMinutes]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS OFF
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -383,7 +383,7 @@ RETURN DATEPART(hh,@dt)*60 + DATEPART(mi,@dt)
 END
 
 GO
-/****** Object:  UserDefinedFunction [dbo].[cf_lastSubmission]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  UserDefinedFunction [dbo].[cf_lastSubmission]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -409,7 +409,7 @@ BEGIN
 END
 
 GO
-/****** Object:  UserDefinedFunction [dbo].[cf_monthsSinceRegistration]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  UserDefinedFunction [dbo].[cf_monthsSinceRegistration]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -438,7 +438,7 @@ BEGIN
 END
 
 GO
-/****** Object:  UserDefinedFunction [dbo].[cf_sessionMinutes]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  UserDefinedFunction [dbo].[cf_sessionMinutes]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -476,7 +476,7 @@ BEGIN
 END
 
 GO
-/****** Object:  UserDefinedFunction [dbo].[cf_UserCreatedReferrer]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  UserDefinedFunction [dbo].[cf_UserCreatedReferrer]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -494,7 +494,7 @@ BEGIN
 END
 
 GO
-/****** Object:  UserDefinedFunction [dbo].[cf_yearMonthDay]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  UserDefinedFunction [dbo].[cf_yearMonthDay]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS OFF
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -505,7 +505,7 @@ BEGIN
 RETURN '' + CAST(YEAR(@dt) AS VARCHAR(4)) + '-' + RIGHT('0' + CAST(MONTH(@dt) AS VARCHAR(2)),2) + '-' + RIGHT('0' + CAST(DAY(@dt) AS VARCHAR(2)),2)
 END
 GO
-/****** Object:  Table [dbo].[Absence]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[Absence]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -523,7 +523,7 @@ CREATE TABLE [dbo].[Absence](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[AdminNews]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[AdminNews]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -539,7 +539,7 @@ CREATE TABLE [dbo].[AdminNews](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Affiliate]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[Affiliate]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -558,7 +558,7 @@ CREATE TABLE [dbo].[Affiliate](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[BA]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[BA]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -580,7 +580,7 @@ CREATE TABLE [dbo].[BA](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[BALang]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[BALang]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -601,7 +601,7 @@ CREATE TABLE [dbo].[BALang](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[BQ]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[BQ]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -631,7 +631,7 @@ CREATE TABLE [dbo].[BQ](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[BQLang]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[BQLang]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -652,7 +652,7 @@ CREATE TABLE [dbo].[BQLang](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[BQvisibility]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[BQvisibility]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -669,7 +669,7 @@ CREATE TABLE [dbo].[BQvisibility](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[CX]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[CX]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -683,7 +683,7 @@ CREATE TABLE [dbo].[CX](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Department]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[Department]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -714,7 +714,7 @@ CREATE TABLE [dbo].[Department](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Diary]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[Diary]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -734,7 +734,7 @@ CREATE TABLE [dbo].[Diary](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Exercise]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[Exercise]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -762,7 +762,7 @@ CREATE TABLE [dbo].[Exercise](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[ExerciseArea]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[ExerciseArea]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -782,7 +782,7 @@ CREATE TABLE [dbo].[ExerciseArea](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[ExerciseAreaLang]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[ExerciseAreaLang]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -803,7 +803,7 @@ CREATE TABLE [dbo].[ExerciseAreaLang](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[ExerciseCategory]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[ExerciseCategory]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -818,7 +818,7 @@ CREATE TABLE [dbo].[ExerciseCategory](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[ExerciseCategoryLang]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[ExerciseCategoryLang]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -839,7 +839,7 @@ CREATE TABLE [dbo].[ExerciseCategoryLang](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[ExerciseLang]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[ExerciseLang]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -863,7 +863,7 @@ CREATE TABLE [dbo].[ExerciseLang](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[ExerciseMiracle]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[ExerciseMiracle]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -883,7 +883,7 @@ CREATE TABLE [dbo].[ExerciseMiracle](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[ExerciseStats]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[ExerciseStats]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -901,7 +901,7 @@ CREATE TABLE [dbo].[ExerciseStats](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[ExerciseType]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[ExerciseType]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -916,7 +916,7 @@ CREATE TABLE [dbo].[ExerciseType](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[ExerciseTypeLang]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[ExerciseTypeLang]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -938,7 +938,7 @@ CREATE TABLE [dbo].[ExerciseTypeLang](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[ExerciseVariant]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[ExerciseVariant]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -954,7 +954,7 @@ CREATE TABLE [dbo].[ExerciseVariant](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[ExerciseVariantLang]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[ExerciseVariantLang]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -979,7 +979,7 @@ CREATE TABLE [dbo].[ExerciseVariantLang](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[FAQ]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[FAQ]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -998,7 +998,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[FAQLang]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[FAQLang]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1020,7 +1020,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Feedback]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[Feedback]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1039,7 +1039,7 @@ CREATE TABLE [dbo].[Feedback](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[FeedbackInstance]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[FeedbackInstance]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1060,7 +1060,7 @@ CREATE TABLE [dbo].[FeedbackInstance](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[FeedbackPart]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[FeedbackPart]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1082,7 +1082,7 @@ CREATE TABLE [dbo].[FeedbackPart](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[FeedbackPartLevel]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[FeedbackPartLevel]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1101,7 +1101,7 @@ CREATE TABLE [dbo].[FeedbackPartLevel](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[FeedbackPartRef]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[FeedbackPartRef]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1117,7 +1117,7 @@ CREATE TABLE [dbo].[FeedbackPartRef](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[FeedbackPartRefRow]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[FeedbackPartRefRow]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1135,7 +1135,7 @@ CREATE TABLE [dbo].[FeedbackPartRefRow](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[FileUpload]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[FileUpload]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1156,7 +1156,7 @@ CREATE TABLE [dbo].[FileUpload](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Issue]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[Issue]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1179,7 +1179,7 @@ CREATE TABLE [dbo].[Issue](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Lang]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[Lang]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1198,7 +1198,7 @@ CREATE TABLE [dbo].[Lang](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[LID]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[LID]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1217,7 +1217,7 @@ CREATE TABLE [dbo].[LID](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[ManagerFunction]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[ManagerFunction]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1238,7 +1238,7 @@ CREATE TABLE [dbo].[ManagerFunction](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[ManagerFunctionLang]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[ManagerFunctionLang]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1261,7 +1261,7 @@ CREATE TABLE [dbo].[ManagerFunctionLang](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Measure]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[Measure]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1285,7 +1285,7 @@ CREATE TABLE [dbo].[Measure](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[MeasureCategory]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[MeasureCategory]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1307,7 +1307,7 @@ CREATE TABLE [dbo].[MeasureCategory](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[MeasureCategoryLang]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[MeasureCategoryLang]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1328,7 +1328,7 @@ CREATE TABLE [dbo].[MeasureCategoryLang](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[MeasureComponent]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[MeasureComponent]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1358,7 +1358,7 @@ CREATE TABLE [dbo].[MeasureComponent](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[MeasureComponentLang]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[MeasureComponentLang]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1380,7 +1380,7 @@ CREATE TABLE [dbo].[MeasureComponentLang](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[MeasureComponentPart]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[MeasureComponentPart]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1397,7 +1397,7 @@ CREATE TABLE [dbo].[MeasureComponentPart](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[MeasureLang]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[MeasureLang]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1418,7 +1418,7 @@ CREATE TABLE [dbo].[MeasureLang](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[MeasureType]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[MeasureType]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1439,7 +1439,7 @@ CREATE TABLE [dbo].[MeasureType](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[MeasureTypeLang]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[MeasureTypeLang]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1460,7 +1460,7 @@ CREATE TABLE [dbo].[MeasureTypeLang](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[ProfileComparison]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[ProfileComparison]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1479,7 +1479,7 @@ CREATE TABLE [dbo].[ProfileComparison](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[ProfileComparisonBQ]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[ProfileComparisonBQ]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1496,7 +1496,7 @@ CREATE TABLE [dbo].[ProfileComparisonBQ](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Reminder]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[Reminder]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1514,7 +1514,7 @@ CREATE TABLE [dbo].[Reminder](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Session]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[Session]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1541,7 +1541,7 @@ CREATE TABLE [dbo].[Session](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Sponsor]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[Sponsor]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1601,7 +1601,7 @@ CREATE TABLE [dbo].[Sponsor](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[SponsorAdmin]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorAdmin]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1646,7 +1646,7 @@ ALTER TABLE [dbo].[SponsorAdmin] ADD [ExternalUserKey] [nvarchar](max) NULL
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[SponsorAdminDepartment]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorAdminDepartment]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1662,7 +1662,7 @@ CREATE TABLE [dbo].[SponsorAdminDepartment](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SponsorAdminExercise]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorAdminExercise]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1680,7 +1680,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SponsorAdminExerciseDataInput]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorAdminExerciseDataInput]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1699,7 +1699,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SponsorAdminExerciseDataInputComponent]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorAdminExerciseDataInputComponent]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1722,7 +1722,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[SponsorAdminExtendedSurvey]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorAdminExtendedSurvey]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1744,7 +1744,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SponsorAdminFunction]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorAdminFunction]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1760,7 +1760,7 @@ CREATE TABLE [dbo].[SponsorAdminFunction](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SponsorAdminSession]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorAdminSession]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1777,7 +1777,7 @@ CREATE TABLE [dbo].[SponsorAdminSession](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SponsorAdminSessionFunction]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorAdminSessionFunction]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1795,7 +1795,7 @@ CREATE TABLE [dbo].[SponsorAdminSessionFunction](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SponsorBQ]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorBQ]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1819,7 +1819,7 @@ CREATE TABLE [dbo].[SponsorBQ](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SponsorBQderive]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorBQderive]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1837,7 +1837,7 @@ CREATE TABLE [dbo].[SponsorBQderive](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SponsorExtendedSurvey]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorExtendedSurvey]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1876,7 +1876,7 @@ CREATE TABLE [dbo].[SponsorExtendedSurvey](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[SponsorExtendedSurveyBA]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorExtendedSurveyBA]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1894,7 +1894,7 @@ CREATE TABLE [dbo].[SponsorExtendedSurveyBA](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SponsorExtendedSurveyBQ]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorExtendedSurveyBQ]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1912,7 +1912,7 @@ CREATE TABLE [dbo].[SponsorExtendedSurveyBQ](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SponsorExtendedSurveyDepartment]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorExtendedSurveyDepartment]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1934,7 +1934,7 @@ CREATE TABLE [dbo].[SponsorExtendedSurveyDepartment](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SponsorInvite]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorInvite]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1965,7 +1965,7 @@ CREATE TABLE [dbo].[SponsorInvite](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[SponsorInviteAbsence]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorInviteAbsence]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1979,7 +1979,7 @@ CREATE TABLE [dbo].[SponsorInviteAbsence](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SponsorInviteBQ]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorInviteBQ]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1999,7 +1999,7 @@ CREATE TABLE [dbo].[SponsorInviteBQ](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SponsorInviteTest]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorInviteTest]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2018,7 +2018,7 @@ CREATE TABLE [dbo].[SponsorInviteTest](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SponsorInviteTestMeasureComponent]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorInviteTestMeasureComponent]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2038,7 +2038,7 @@ CREATE TABLE [dbo].[SponsorInviteTestMeasureComponent](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SponsorLang]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorLang]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2057,7 +2057,7 @@ CREATE TABLE [dbo].[SponsorLang](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SponsorLogo]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorLogo]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2077,7 +2077,7 @@ CREATE TABLE [dbo].[SponsorLogo](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[SponsorProject]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorProject]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2096,7 +2096,7 @@ CREATE TABLE [dbo].[SponsorProject](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SponsorProjectMeasure]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorProjectMeasure]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2112,7 +2112,7 @@ CREATE TABLE [dbo].[SponsorProjectMeasure](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SponsorProjectRoundUnit]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorProjectRoundUnit]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2141,7 +2141,7 @@ CREATE TABLE [dbo].[SponsorProjectRoundUnit](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[SponsorProjectRoundUnitDepartment]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorProjectRoundUnitDepartment]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2158,7 +2158,7 @@ CREATE TABLE [dbo].[SponsorProjectRoundUnitDepartment](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SponsorProjectRoundUnitLang]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorProjectRoundUnitLang]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2180,7 +2180,7 @@ CREATE TABLE [dbo].[SponsorProjectRoundUnitLang](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[SponsorPRUBQmap]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorPRUBQmap]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2199,7 +2199,7 @@ CREATE TABLE [dbo].[SponsorPRUBQmap](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SponsorPRUBQmapVal]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SponsorPRUBQmapVal]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2216,7 +2216,7 @@ CREATE TABLE [dbo].[SponsorPRUBQmapVal](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SuperAdmin]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SuperAdmin]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2237,7 +2237,7 @@ CREATE TABLE [dbo].[SuperAdmin](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[SuperAdminSponsor]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SuperAdminSponsor]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2254,7 +2254,7 @@ CREATE TABLE [dbo].[SuperAdminSponsor](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SuperSponsor]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SuperSponsor]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2276,7 +2276,7 @@ CREATE TABLE [dbo].[SuperSponsor](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[SuperSponsorLang]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SuperSponsorLang]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2294,7 +2294,7 @@ CREATE TABLE [dbo].[SuperSponsorLang](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SystemSettings]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SystemSettings]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2316,7 +2316,7 @@ CREATE TABLE [dbo].[SystemSettings](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[SystemSettingsLang]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[SystemSettingsLang]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2341,7 +2341,7 @@ CREATE TABLE [dbo].[SystemSettingsLang](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[User]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2381,7 +2381,34 @@ CREATE TABLE [dbo].[User](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[UserMeasure]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[UserLogin]    Script Date: 2017-06-20 11:15:42 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[UserLogin](
+	[UserLoginID] [int] IDENTITY(1,1) NOT NULL,
+	[UserID] [int] NULL,
+	[IPAddress] [varchar](255) NULL,
+	[LoginAttempt] [datetime] NULL,
+	[ResourceID] [varchar](255) NULL,
+	[UserToken] [varchar](255) NULL,
+	[ActiveLoginAttempt] [int] NULL,
+	[Unblocked] [int] NULL,
+	[FromWebService] [int] NULL,
+	[FromWebsite] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[UserLoginID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[UserMeasure]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2400,7 +2427,7 @@ CREATE TABLE [dbo].[UserMeasure](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[UserMeasureComponent]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[UserMeasureComponent]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2420,7 +2447,7 @@ CREATE TABLE [dbo].[UserMeasureComponent](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[UserProfile]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[UserProfile]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2439,7 +2466,7 @@ CREATE TABLE [dbo].[UserProfile](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[UserProfileBQ]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[UserProfileBQ]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2458,7 +2485,7 @@ CREATE TABLE [dbo].[UserProfileBQ](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[UserProjectRoundUser]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[UserProjectRoundUser]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2475,7 +2502,7 @@ CREATE TABLE [dbo].[UserProjectRoundUser](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[UserProjectRoundUserAnswer]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[UserProjectRoundUserAnswer]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2498,7 +2525,7 @@ CREATE TABLE [dbo].[UserProjectRoundUserAnswer](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[UserRegistrationID]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[UserRegistrationID]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2516,7 +2543,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[UserSecret]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[UserSecret]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2536,7 +2563,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[UserSession]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[UserSession]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2557,7 +2584,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[UserSponsorExtendedSurvey]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[UserSponsorExtendedSurvey]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2578,7 +2605,7 @@ CREATE TABLE [dbo].[UserSponsorExtendedSurvey](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[UserSponsorProject]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[UserSponsorProject]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2595,7 +2622,7 @@ CREATE TABLE [dbo].[UserSponsorProject](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[UserToken]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[UserToken]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2612,7 +2639,7 @@ CREATE TABLE [dbo].[UserToken](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Wise]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[Wise]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2627,7 +2654,7 @@ CREATE TABLE [dbo].[Wise](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[WiseLang]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  Table [dbo].[WiseLang]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2645,7 +2672,7 @@ CREATE TABLE [dbo].[WiseLang](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  UserDefinedFunction [dbo].[FindDepartmentWithReminder]    Script Date: 2017-06-20 11:06:56 ******/
+/****** Object:  UserDefinedFunction [dbo].[FindDepartmentWithReminder]    Script Date: 2017-06-20 11:15:42 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
