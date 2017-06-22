@@ -1,6 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="Customers.aspx.cs" Inherits="HW.Invoicing.Customers" %>
 <%@ Import Namespace="HW.Core.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<style>
+    .badge-success {
+        background-color: #47a447;
+        border-color: #398439;
+    }
+</style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -38,11 +44,13 @@
                     <% if (c.IsInactive) { %>
                         <tr>
                             <td>
-                                <strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike>
                                 <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
                                 <% if (openTimebooks.Count > 0) { %>
-                                    <span class="label label-default"><%= openTimebooks.Count %> TIMEBOOKS</span>
+                                    <span class="badge">&nbsp;</span>
+                                <% } else { %>
+                                    <span class="badge badge-success">&nbsp;</span>
                                 <% } %>
+                                <strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike>                                
                             </td>
                             <td>
                                 <% if (c.PrimaryContact != null) { %>
@@ -55,11 +63,13 @@
                     <% } else { %>
                         <tr>
                             <td>
-                                <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %>
                                 <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
                                 <% if (openTimebooks.Count > 0) { %>
-                                    <span class="label label-default"><%= openTimebooks.Count %> TIMEBOOKS</span>
+                                    <span class="badge">&nbsp;</span>
+                                <% } else { %>
+                                    <span class="badge badge-success">&nbsp;</span>
                                 <% } %>
+                                <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %>
                             </td>
                             <td><%= c.PrimaryContact != null ? c.PrimaryContact.ToString() : "" %></td>
                             <td><%= c.PrimaryContact != null ? c.PrimaryContact.Phone : "" %></td>
@@ -85,11 +95,13 @@
                 <% foreach (var c in deletedCustomers) { %>
                     <tr>
                         <td>
+                                <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
+                                <% if (openTimebooks.Count > 0) { %>
+                                    <span class="badge">&nbsp;</span>
+                                <% } else { %>
+                                    <span class="badge badge-success">&nbsp;</span>
+                                <% } %>
                             <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %>
-                            <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
-                            <% if (openTimebooks.Count > 0) { %>
-                                <span class="label label-default"><%= openTimebooks.Count %> TIMEBOOKS</span>
-                            <% } %>
                         </td>
                         <td><%= c.PrimaryContact != null ? c.PrimaryContact.ToString() : "" %></td>
                         <td><%= c.PrimaryContact != null ? c.PrimaryContact.Phone : "" %></td>
@@ -130,11 +142,13 @@
                     <% if (c.IsInactive) { %>
                         <tr>
                             <td>
-                                <strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike>
                                 <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
                                 <% if (openTimebooks.Count > 0) { %>
-                                    <span class="label label-default"><%= openTimebooks.Count %> TIMEBOOKS</span>
+                                    <span class="badge">&nbsp;</span>
+                                <% } else { %>
+                                    <span class="badge badge-success">&nbsp;</span>
                                 <% } %>
+                                <strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike>
                             </td>
                             <td>
                                 <% if (c.PrimaryContact != null) { %>
@@ -147,11 +161,13 @@
                     <% } else { %>
                         <tr>
                             <td>
-                                <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %>
                                 <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
                                 <% if (openTimebooks.Count > 0) { %>
-                                    <span class="label label-default"><%= openTimebooks.Count %> TIMEBOOKS</span>
+                                    <span class="badge">&nbsp;</span>
+                                <% } else { %>
+                                    <span class="badge badge-success">&nbsp;</span>
                                 <% } %>
+                                <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %>
                             </td>
                             <td><%= c.PrimaryContact != null ? c.PrimaryContact.ToString() : "" %></td>
                             <td><%= c.PrimaryContact != null ? c.PrimaryContact.Phone : "" %></td>
@@ -178,11 +194,13 @@
                     <% if (c.IsInactive) { %>
                         <tr>
                             <td>
-                                <strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike>
                                 <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
                                 <% if (openTimebooks.Count > 0) { %>
-                                    <span class="label label-default"><%= openTimebooks.Count %> TIMEBOOKS</span>
+                                    <span class="badge">&nbsp;</span>
+                                <% } else { %>
+                                    <span class="badge badge-success">&nbsp;</span>
                                 <% } %>
+                                <strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike>
                             </td>
                             <td>
                                 <% if (c.PrimaryContact != null) { %>
@@ -195,11 +213,13 @@
                     <% } else { %>
                         <tr>
                             <td>
-                                <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %>
                                 <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
                                 <% if (openTimebooks.Count > 0) { %>
-                                    <span class="label label-default"><%= openTimebooks.Count %> TIMEBOOKS</span>
+                                    <span class="badge">&nbsp;</span>
+                                <% } else { %>
+                                    <span class="badge badge-success">&nbsp;</span>
                                 <% } %>
+                                <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %>
                             </td>
                             <td><%= c.PrimaryContact != null ? c.PrimaryContact.ToString() : "" %></td>
                             <td><%= c.PrimaryContact != null ? c.PrimaryContact.Phone : "" %></td>
@@ -225,11 +245,13 @@
                 <% foreach (var c in deletedCustomers) { %>
                     <tr>
                         <td>
+                                <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
+                                <% if (openTimebooks.Count > 0) { %>
+                                    <span class="badge">&nbsp;</span>
+                                <% } else { %>
+                                    <span class="badge badge-success">&nbsp;</span>
+                                <% } %>
                             <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %>
-                            <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
-                            <% if (openTimebooks.Count > 0) { %>
-                                <span class="label label-default"><%= openTimebooks.Count %> TIMEBOOKS</span>
-                            <% } %>
                         </td>
                         <td><%= c.PrimaryContact != null ? c.PrimaryContact.ToString() : "" %></td>
                         <td><%= c.PrimaryContact != null ? c.PrimaryContact.Phone : "" %></td>
