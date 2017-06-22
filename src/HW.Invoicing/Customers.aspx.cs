@@ -17,7 +17,7 @@ namespace HW.Invoicing
 		protected IList<Customer> subscribers;
 		protected IList<Customer> nonSubscribers;
 		protected IList<Customer> deletedCustomers;
-		CustomerService s = new CustomerService(new SqlCustomerRepository(), new SqlItemRepository());
+		protected CustomerService s = new CustomerService(new SqlCustomerRepository(), new SqlItemRepository());
 		protected Company company;
 		SqlCompanyRepository cr = new SqlCompanyRepository();
         protected string selectedTab;

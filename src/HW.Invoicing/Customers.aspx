@@ -37,7 +37,13 @@
                 <% foreach (var c in nonSubscribers) { %>
                     <% if (c.IsInactive) { %>
                         <tr>
-                            <td><strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike></td>
+                            <td>
+                                <strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike>
+                                <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
+                                <% if (openTimebooks.Count > 0) { %>
+                                    <span class="label label-default"><%= openTimebooks.Count %> TIMEBOOKS</span>
+                                <% } %>
+                            </td>
                             <td>
                                 <% if (c.PrimaryContact != null) { %>
                                     <strike><%= c.PrimaryContact.Name%></strike>
@@ -48,7 +54,13 @@
                         </tr>
                     <% } else { %>
                         <tr>
-                            <td><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></td>
+                            <td>
+                                <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %>
+                                <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
+                                <% if (openTimebooks.Count > 0) { %>
+                                    <span class="label label-default"><%= openTimebooks.Count %> TIMEBOOKS</span>
+                                <% } %>
+                            </td>
                             <td><%= c.PrimaryContact != null ? c.PrimaryContact.ToString() : "" %></td>
                             <td><%= c.PrimaryContact != null ? c.PrimaryContact.Phone : "" %></td>
                             <td><%= c.PrimaryContact != null ? c.PrimaryContact.Email : "" %></td>
@@ -72,7 +84,13 @@
                 </tr>
                 <% foreach (var c in deletedCustomers) { %>
                     <tr>
-                        <td><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></td>
+                        <td>
+                            <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %>
+                            <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
+                            <% if (openTimebooks.Count > 0) { %>
+                                <span class="label label-default"><%= openTimebooks.Count %> TIMEBOOKS</span>
+                            <% } %>
+                        </td>
                         <td><%= c.PrimaryContact != null ? c.PrimaryContact.ToString() : "" %></td>
                         <td><%= c.PrimaryContact != null ? c.PrimaryContact.Phone : "" %></td>
                         <td><%= c.PrimaryContact != null ? c.PrimaryContact.Email : "" %></td>
@@ -111,7 +129,13 @@
                 <% foreach (var c in subscribers) { %>
                     <% if (c.IsInactive) { %>
                         <tr>
-                            <td><strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike></td>
+                            <td>
+                                <strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike>
+                                <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
+                                <% if (openTimebooks.Count > 0) { %>
+                                    <span class="label label-default"><%= openTimebooks.Count %> TIMEBOOKS</span>
+                                <% } %>
+                            </td>
                             <td>
                                 <% if (c.PrimaryContact != null) { %>
                                     <strike><%= c.PrimaryContact.Name%></strike>
@@ -122,7 +146,13 @@
                         </tr>
                     <% } else { %>
                         <tr>
-                            <td><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></td>
+                            <td>
+                                <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %>
+                                <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
+                                <% if (openTimebooks.Count > 0) { %>
+                                    <span class="label label-default"><%= openTimebooks.Count %> TIMEBOOKS</span>
+                                <% } %>
+                            </td>
                             <td><%= c.PrimaryContact != null ? c.PrimaryContact.ToString() : "" %></td>
                             <td><%= c.PrimaryContact != null ? c.PrimaryContact.Phone : "" %></td>
                             <td><%= c.PrimaryContact != null ? c.PrimaryContact.Email : "" %></td>
@@ -147,7 +177,13 @@
                 <% foreach (var c in nonSubscribers) { %>
                     <% if (c.IsInactive) { %>
                         <tr>
-                            <td><strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike></td>
+                            <td>
+                                <strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike>
+                                <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
+                                <% if (openTimebooks.Count > 0) { %>
+                                    <span class="label label-default"><%= openTimebooks.Count %> TIMEBOOKS</span>
+                                <% } %>
+                            </td>
                             <td>
                                 <% if (c.PrimaryContact != null) { %>
                                     <strike><%= c.PrimaryContact.Name%></strike>
@@ -158,7 +194,13 @@
                         </tr>
                     <% } else { %>
                         <tr>
-                            <td><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></td>
+                            <td>
+                                <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %>
+                                <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
+                                <% if (openTimebooks.Count > 0) { %>
+                                    <span class="label label-default"><%= openTimebooks.Count %> TIMEBOOKS</span>
+                                <% } %>
+                            </td>
                             <td><%= c.PrimaryContact != null ? c.PrimaryContact.ToString() : "" %></td>
                             <td><%= c.PrimaryContact != null ? c.PrimaryContact.Phone : "" %></td>
                             <td><%= c.PrimaryContact != null ? c.PrimaryContact.Email : "" %></td>
@@ -182,7 +224,13 @@
                 </tr>
                 <% foreach (var c in deletedCustomers) { %>
                     <tr>
-                        <td><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></td>
+                        <td>
+                            <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %>
+                            <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
+                            <% if (openTimebooks.Count > 0) { %>
+                                <span class="label label-default"><%= openTimebooks.Count %> TIMEBOOKS</span>
+                            <% } %>
+                        </td>
                         <td><%= c.PrimaryContact != null ? c.PrimaryContact.ToString() : "" %></td>
                         <td><%= c.PrimaryContact != null ? c.PrimaryContact.Phone : "" %></td>
                         <td><%= c.PrimaryContact != null ? c.PrimaryContact.Email : "" %></td>
