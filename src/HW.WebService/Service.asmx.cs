@@ -2535,12 +2535,53 @@ namespace HW.WebService
         {
             UserData ud = new UserData();
 
-            SqlDataReader r = rs("SELECT u.UserID, u.LID FROM [User] u WHERE u.Username = '" + username.Replace("'", "") + "' AND u.Password = '" + HashMD5(password.Trim()) + "'");
-            if (r.Read())
+            //SqlDataReader r = rs("SELECT u.UserID, u.LID FROM [User] u WHERE u.Username = '" + username.Replace("'", "") + "' AND u.Password = '" + HashMD5(password.Trim()) + "'");
+            //if (r.Read())
+            //{
+            //    ud = getUserToken(r.GetInt32(0), r.GetInt32(1), expirationMinutes);
+            //}
+            //r.Close();
+
+            //Added based on UserLogin2FA
+            using (var userReader = executeReader(@"
+                SELECT u.UserID, u.LID, u.Enable2FA, u.SponsorID ,u.UserKey
+                FROM [User] u WHERE u.Username = @Username AND u.Password = @Password", new SqlParameter("@Username", username), new SqlParameter("@Password", HashMD5(password.Trim()))))
             {
-                ud = getUserToken(r.GetInt32(0), r.GetInt32(1), expirationMinutes);
+
+                if (userReader.Read())
+                {
+                    int userID = getInt32(userReader, 0);
+                    int languageID = getInt32(userReader, 1);
+                    int sponsorID = getInt32(userReader, 3);
+                    bool enable2FA = false;
+
+                    var userKey = new Guid(userReader["UserKey"].ToString());
+
+                    using (var rs = executeReader(@"
+                        SELECT Enable2FA FROM Sponsor 
+                        WHERE SponsorID = @SponsorID", new SqlParameter("@SponsorID", sponsorID)))
+                    {
+                        if (rs.Read())
+                        {
+                            bool sponsorEnforces2FA = getInt32(rs, 0) == 1;
+                            enable2FA = sponsorEnforces2FA ? sponsorEnforces2FA : getInt32(userReader, 2) == 1;
+                        }
+                        else
+                        {
+                            enable2FA = getInt32(userReader, 2) == 1;
+                        }
+                    }
+
+                    if (enable2FA)
+                    {
+
+                    }
+                    else
+                    {
+                        ud = getUserToken(userID, languageID, expirationMinutes);
+                    }
+                }
             }
-            r.Close();
 
             return ud;
         }
