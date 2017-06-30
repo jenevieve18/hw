@@ -89,6 +89,11 @@
 				<td><B>Minimum users to disclose counters</B>&nbsp;</td>
 				<td colspan="2"><asp:TextBox ID=MinUserCountToDisclose Width=30 runat=server /></td>
 			</tr>
+             <tr>
+				<td><B>Enable 2FA</B>&nbsp;</td>
+				<td colspan="2">
+                    <asp:CheckBox ID="CheckBoxEnable2FA" runat="server" /></td>
+			</tr>
 			<tr><td colspan="3">&nbsp;</td></tr>
 			<tr><td colspan="3"><asp:Button ID=Back Text="Back" runat=server />&nbsp;<asp:Button ID=Save runat=server Text="Save" />&nbsp;<asp:Button ID=AddExtendedSurvey runat=server Text="Add extended survey" />&nbsp;<asp:Button ID=Close runat=server Text="Close down" />&nbsp;<asp:Button ID=Delete runat=server Text="Delete" />&nbsp;<asp:Button ID=DisconnectAll runat=server Text="Disconnect all" /></td></tr>
 		</table>

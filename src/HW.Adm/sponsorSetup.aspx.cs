@@ -108,7 +108,8 @@ public partial class sponsorSetup : System.Web.UI.Page
                     "s.AlternativeTreatmentOfferEmail, " +
                     "s.LID, " +
                     "s.MinUserCountToDisclose, " +
-                    "s.EmailFrom " + 
+                    "s.EmailFrom, " +
+                    "s.Enable2FA " +
                     "FROM Sponsor s WHERE s.SponsorID = " + sponsorID);
                 if (rs.Read())
                 {
@@ -139,6 +140,7 @@ public partial class sponsorSetup : System.Web.UI.Page
                     LID.SelectedValue = (rs.IsDBNull(15) ? "NULL" : rs.GetInt32(15).ToString());
                     MinUserCountToDisclose.Text = (rs.IsDBNull(16) ? "10" : rs.GetInt32(16).ToString());
                     EmailFrom.Text = (rs.IsDBNull(17) ? "info@healthwatch.se" : rs.GetString(17));
+                    CheckBoxEnable2FA.Checked = (rs.IsDBNull(18) ? false : rs.GetInt32(18) == 1);
                 }
                 rs.Close();
             }
@@ -831,7 +833,8 @@ public partial class sponsorSetup : System.Web.UI.Page
                 "ConsentText = " + (ConsentText.Text != "" ? "'" + ConsentText.Text.Replace("'", "''") + "'" : "NULL") + ", " +
                 "MinUserCountToDisclose = " + (MinUserCountToDisclose.Text != "" ? Convert.ToInt32(MinUserCountToDisclose.Text).ToString() : "NULL") + ", " +
                 "LID = " + (LID.SelectedValue) + ", " +
-                "EmailFrom = " + (EmailFrom.Text != "" ? "'" + EmailFrom.Text.Replace("'", "''") + "'" : "NULL") + " " +
+                "EmailFrom = " + (EmailFrom.Text != "" ? "'" + EmailFrom.Text.Replace("'", "''") + "'" : "NULL") + ", " +
+                "Enable2FA = " + (CheckBoxEnable2FA.Checked ? "1" : "0") + " " +
                 "WHERE SponsorID = " + sponsorID);
 
             rs = Db.rs("SELECT " +
