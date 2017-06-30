@@ -1405,6 +1405,27 @@ AND NOT EXISTS (
 			return t;
 		}
 		
+		public bool HasOpenTimebooks(int customerId)
+		{
+			string query = @"
+SELECT COUNT(*)
+FROM CustomerTimebook t
+LEFT OUTER JOIN CustomerContact c on c.Id = t.CustomerContactId
+LEFT OUTER JOIN Item i ON i.Id = t.ItemId
+LEFT OUTER JOIN Unit u ON u.Id = i.UnitId
+WHERE t.Customerid = @CustomerId
+AND NOT EXISTS (
+    SELECT 1 FROM InvoiceTimebook it WHERE it.CustomerTimebookid = t.Id
+)";
+			int count = 0;
+			using (var rs = ExecuteReader(query, "invoicing", new SqlParameter("@CustomerId", customerId))) {
+				while (rs.Read()) {
+			        count = GetInt32(rs, 0);
+				}
+			}
+			return count > 0;
+		}
+		
 		public int CountAllTimebooks(int customerId)
 		{
 			string query = string.Format(

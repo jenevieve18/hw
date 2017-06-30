@@ -288,11 +288,11 @@
 
     <asp:Panel ID="Panel1" DefaultButton="buttonSave" runat="server">
 
-    <div class='alert alert-warning'>
+    <%--<div class='alert alert-warning'>
         <h4>Testing Purposes Only</h4>
         <p>This will delete all subscription timebooks. This will be removed on production.</p>
         <p><asp:Button ID="buttonClear" runat="server" Text="Click here!" CssClass="btn btn-warning" OnClick="buttonClear_Click" /></p>
-    </div>
+    </div>--%>
 
     <% if (message  != null) { %>
         <%= message %>

@@ -17,7 +17,17 @@ namespace HW.Invoicing.Core.Services
 			this.cr = cr;
 			this.ir = ir;
 		}
+		
+//		public bool CustomerHasOpenTimebooks(int customerId)
+//		{
+//		    return cr.HasOpenTimebooks(customerId);
+//		}
 
+		public IList<CustomerTimebook> CustomerFindOpenTimebooks(int customerId)
+		{
+		    return cr.FindOpenTimebooks(customerId);
+		}
+		
 		public IList<Customer> FindSubscribersByCompany(int companyId)
 		{
 			var customers = cr.FindSubscribersByCompany(companyId);
