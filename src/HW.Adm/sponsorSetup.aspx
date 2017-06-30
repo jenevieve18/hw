@@ -90,7 +90,7 @@
 				<td colspan="2"><asp:TextBox ID=MinUserCountToDisclose Width=30 runat=server /></td>
 			</tr>
              <tr>
-				<td><B>Enable 2FA</B>&nbsp;</td>
+				<td><B>Force 2FA</B>&nbsp;</td>
 				<td colspan="2">
                     <asp:CheckBox ID="CheckBoxEnable2FA" runat="server" /></td>
 			</tr>
