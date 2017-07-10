@@ -4468,11 +4468,11 @@ AND ul.IPAddress = @IPAddress", new SqlParameter("@Username", username), new Sql
         bool hasActiveLoginAttempt(int userID)
         {
             string query = @"
-SELECT ResourceID
-FROM UserLogin
-WHERE UserID = @UserID
-AND DATEDIFF(MINUTE, LoginAttempt, GETDATE()) < @Minute
-AND ISNULL(Unblocked, 0) = 0";
+                SELECT ResourceID
+                FROM UserLogin
+                WHERE UserID = @UserID
+                AND DATEDIFF(MINUTE, LoginAttempt, GETDATE()) < @Minute
+                AND ISNULL(Unblocked, 0) = 0 AND ISNULL(FromWebService, 0) = 1;";
             bool hasLoginAttempt = false;
             using (var rs = executeReader(query, new SqlParameter("@UserID", userID), new SqlParameter("@Minute", MINUTE)))
             {
