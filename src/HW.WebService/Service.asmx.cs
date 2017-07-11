@@ -3673,7 +3673,7 @@ AND ul.IPAddress = @IPAddress", new SqlParameter("@Username", username), new Sql
                 WHERE ula.ResourceID = @ResourceID
                 AND DATEDIFF(MINUTE, ula.LoginAttempt, GETDATE()) < @Minute
                 AND u.Username = @Username
-                AND ISNULL(Unblocked, 0) = 1 AND ISNULL(FromWebService, 0) = 1;", new SqlParameter("@ResourceID", resourceID), new SqlParameter("@Username", username), new SqlParameter("@Minute", MINUTE)))
+                AND ISNULL(ula.Unblocked, 0) = 1 AND ISNULL(ula.FromWebService, 0) = 1;", new SqlParameter("@ResourceID", resourceID), new SqlParameter("@Username", username), new SqlParameter("@Minute", MINUTE)))
                    
                 //new SqlParameter("@IPAddress", request.UserHostAddress), 
                 //AND IPAddress = @IPAddress
@@ -3867,7 +3867,7 @@ AND ul.IPAddress = @IPAddress", new SqlParameter("@Username", username), new Sql
                         if (rs.Read())
                         {
                             int userID = getInt32(rs, 0);
-                            executeNonQuery("UPDATE UserLogin SET Unblocked = 1 WHERE UserID = @UserID AND ISNULL(ul.FromWebsite, 0) = 1;", new SqlParameter("@UserID", userID));
+                            executeNonQuery("UPDATE UserLogin SET Unblocked = 1 WHERE UserID = @UserID AND ISNULL(FromWebsite, 0) = 1;", new SqlParameter("@UserID", userID));
                             return true;
                         }
                     }
