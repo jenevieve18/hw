@@ -3506,6 +3506,7 @@ VALUES(GETDATE(), @Title, @Description, @UserID)";
                             bool TwoactiveLoginAttempt = hasTwoActiveLoginAttempt(userID);
                             if (TwoactiveLoginAttempt)
                             {
+                                UserCancelLoginAttempt(resourceID, username);
                                 ud = new UserDetail();
                                 ud.activeLoginAttempt = TwoactiveLoginAttempt;
                             }
