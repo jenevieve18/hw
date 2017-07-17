@@ -3502,6 +3502,13 @@ VALUES(GETDATE(), @Title, @Description, @UserID)";
                                 new SqlParameter("@UserToken", token),
                                 new SqlParameter("@FromWebService", true)
                             );
+
+                            bool TwoactiveLoginAttempt = hasTwoActiveLoginAttempt(userID);
+                            if (TwoactiveLoginAttempt)
+                            {
+                                ud = new UserDetail();
+                                ud.activeLoginAttempt = TwoactiveLoginAttempt;
+                            }
                         }
                     }
                     else
@@ -4482,6 +4489,23 @@ AND ul.IPAddress = @IPAddress", new SqlParameter("@Username", username), new Sql
                 }
             }
             return hasLoginAttempt;
+        }
+
+        bool hasTwoActiveLoginAttempt(int userID)
+        {
+            string query = @"SELECT COUNT(ISNULL(UserID, 0)) as totalLogin 
+                            FROM [UserLogin] WHERE UserID = @UserID AND DATEDIFF(MINUTE, LoginAttempt, GETDATE()) < @Minute 
+                            AND ISNULL(Unblocked, 0) = 0 AND ISNULL(FromWebService, 0) = 1;";
+            bool hasTwoLoginAttempt = false;
+            using (var rs = executeReader(query, new SqlParameter("@UserID", userID), new SqlParameter("@Minute", MINUTE)))
+            {
+                if (rs.Read())
+                {
+                    if(Convert.ToInt32(rs["totalLogin"]) > 1)
+                        hasTwoLoginAttempt = true;
+                }
+            }
+            return hasTwoLoginAttempt;
         }
 
         bool hasSecretKey(int userID)
