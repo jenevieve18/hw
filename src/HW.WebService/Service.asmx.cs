@@ -3503,9 +3503,11 @@ VALUES(GETDATE(), @Title, @Description, @UserID)";
                                 new SqlParameter("@FromWebService", true)
                             );
 
+                            //boolean variable to recheck if their is a race condition happen for the user login for same account
                             bool TwoactiveLoginAttempt = hasTwoActiveLoginAttempt(userID);
                             if (TwoactiveLoginAttempt)
                             {
+                                // cancel login attempt if found two user login in same timestamp
                                 UserCancelLoginAttempt(resourceID, username);
                                 ud = new UserDetail();
                                 ud.activeLoginAttempt = TwoactiveLoginAttempt;
@@ -4492,6 +4494,7 @@ AND ul.IPAddress = @IPAddress", new SqlParameter("@Username", username), new Sql
             return hasLoginAttempt;
         }
 
+        //function to recheck if their is two user login found in same timestamp for race condition issue
         bool hasTwoActiveLoginAttempt(int userID)
         {
             string query = @"SELECT COUNT(ISNULL(UserID, 0)) as totalLogin 
