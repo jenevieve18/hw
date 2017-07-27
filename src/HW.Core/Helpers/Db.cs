@@ -194,11 +194,13 @@ WHERE ProjectRoundUnitID = {0}",
 			return ID;
 		}
 
+		[Obsolete("Please use the DbHelper class.")]
 		public static int getInt32(string sqlString)
 		{
 			return getInt32(sqlString, "SqlConnection");
 		}
 
+		[Obsolete("Please use the DbHelper class.")]
 		public static int getInt32(string query, string con)
 		{
 			int val = 0;
@@ -218,6 +220,7 @@ WHERE ProjectRoundUnitID = {0}",
 			return val;
 		}
 
+		[Obsolete("Please use the DbHelper class.")]
 		public static string HashMd5(string str)
 		{
 			System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
@@ -229,11 +232,13 @@ WHERE ProjectRoundUnitID = {0}",
 			return hash;
 		}
 
+		[Obsolete("Please use the DbHelper class.")]
 		public static SqlDataReader rs(string sqlString)
 		{
 			return rs(sqlString, "SqlConnection");
 		}
 		
+		[Obsolete("Please use the DbHelper class.")]
 		public static SqlDataReader rs(string sqlString, string con)
 		{
 			SqlConnection dataConnection = new SqlConnection(ConfigurationManager.AppSettings[con]);
@@ -244,11 +249,13 @@ WHERE ProjectRoundUnitID = {0}",
 			return dataReader;
 		}
 
+		[Obsolete("Please use the DbHelper class.")]
 		public static object exes(string sqlString)
 		{
 			return exes(sqlString, "SqlConnection");
 		}
 
+		[Obsolete("Please use the DbHelper class.")]
 		public static object exes(string sqlString, string con)
 		{
 			object o = null;
@@ -261,11 +268,13 @@ WHERE ProjectRoundUnitID = {0}",
 			return o;
 		}
 
+		[Obsolete("Please use the DbHelper class.")]
 		public static void exec(string sqlString)
 		{
 			exec(sqlString, "SqlConnection");
 		}
 		
+		[Obsolete("Please use the DbHelper class.")]
 		public static void exec(string sqlString, string con)
 		{
 			SqlConnection dataConnection = new SqlConnection(ConfigurationManager.AppSettings[con]);

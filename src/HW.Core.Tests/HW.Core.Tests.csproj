@@ -117,7 +117,9 @@
       <Name>HW.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="ProfilingSessions\Session20170727_145652.sdps" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Repositories\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
