@@ -7,6 +7,41 @@ namespace HW.Core.Helpers
 {
 	public static class DbHelper
 	{
+		public static bool GetBoolean(SqlDataReader reader, int index)
+		{
+			return reader.IsDBNull(index) ? false : reader.GetBoolean(index);
+		}
+		
+		public static float GetFloat(SqlDataReader reader, int index)
+		{
+			return GetFloat(reader, index, 0);
+		}
+		
+		public static float GetFloat(SqlDataReader reader, int index, float defaultValue)
+		{
+			return reader.IsDBNull(index) ? defaultValue : reader.GetFloat(index);
+		}
+		
+		public static double GetDouble(SqlDataReader reader, int index)
+		{
+			return GetDouble(reader, index, 0);
+		}
+		
+		public static double GetDouble(SqlDataReader reader, int index, double defaultValue)
+		{
+			return reader.IsDBNull(index) ? defaultValue : reader.GetDouble(index);
+		}
+		
+		public static decimal GetDecimal(SqlDataReader reader, int index)
+		{
+			return GetDecimal(reader, index, 0);
+		}
+		
+		public static decimal GetDecimal(SqlDataReader reader, int index, decimal defaultValue)
+		{
+			return reader.IsDBNull(index) ? defaultValue : reader.GetDecimal(index);
+		}
+		
 		/// <summary>
 		/// Returns a date time from a data reader.
 		/// </summary>
