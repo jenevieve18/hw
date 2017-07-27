@@ -114,11 +114,6 @@ namespace HW.Core.Helpers
 			RedirectIf(condition, url, false);
 		}
 		
-		static int GetRandomInt()
-		{
-			return (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
-		}
-		
 		public static void RedirectIf(bool condition, string url, bool random)
 		{
 			if (condition) {
@@ -154,6 +149,11 @@ namespace HW.Core.Helpers
 			if (condition) {
 				response.AddHeader(name, value);
 			}
+		}
+		
+		static int GetRandomInt()
+		{
+			return (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
 		}
 	}
 	
