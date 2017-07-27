@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\ConvertHelperTests.cs" />
+    <Compile Include="Helpers\DbHelperTests.cs" />
     <Compile Include="Helpers\DbTests.cs" />
     <Compile Include="Helpers\ExcelExporterTests.cs" />
     <Compile Include="Helpers\ExporterTests.cs" />
