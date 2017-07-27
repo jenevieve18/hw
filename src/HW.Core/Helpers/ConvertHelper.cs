@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Web;
 
 namespace HW.Core.Helpers
 {
@@ -22,7 +21,6 @@ namespace HW.Core.Helpers
 		public static int ToInt32(object val, int def)
 		{
 			try {
-//				return Convert.ToInt32(val);
 				return Int32.Parse(val.ToString());
 			} catch {
 				return def;
@@ -48,23 +46,20 @@ namespace HW.Core.Helpers
 			return ToDateTime(val, DateTime.Now);
 		}
 
-        public static DateTime ToDateTime(string val, DateTime def)
-        {
-            return ToDateTime(val, def, "yyyy-MM-dd");
-        }
+		public static DateTime ToDateTime(string val, DateTime def)
+		{
+			return ToDateTime(val, def, "yyyy-MM-dd");
+		}
 		
 		public static DateTime ToDateTime(string val, DateTime def, string format)
 		{
 			try {
 				DateTime dt;
-				//if (DateTime.TryParseExact(val.ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dt)) {
-                if (DateTime.TryParseExact(val.ToString(), format, CultureInfo.InvariantCulture, DateTimeStyles.None, out dt))
-                {
+				if (DateTime.TryParseExact(val.ToString(), format, CultureInfo.InvariantCulture, DateTimeStyles.None, out dt)) {
 					return dt;
 				} else {
 					return def;
 				}
-				
 			} catch {
 				return def;
 			}
