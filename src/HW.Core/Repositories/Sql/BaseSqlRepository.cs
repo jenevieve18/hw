@@ -61,6 +61,8 @@ namespace HW.Core.Repositories.Sql
 			throw new NotImplementedException();
 		}
 		
+		#region Obsolete methods
+		
 		[Obsolete("Please use DbHelper's ExecuteNonQuery method from now on. This is efficient since it creates only one connection at a time.")]
 		protected void ExecuteNonQuery(string query, string connectionName, params SqlParameter[] parameters)
 		{
@@ -126,10 +128,10 @@ namespace HW.Core.Repositories.Sql
 		[Obsolete("Please use DbHelper's GetDateTime method from now on.")]
 		protected DateTime? GetDateTime(SqlDataReader rs, int index)
 		{
-			//return rs.IsDBNull(index) ? null : (DateTime?)rs.GetDateTime(index);
             return GetDateTime(rs, index, null);
 		}
 		
+		[Obsolete()]
 		protected void SetDateTime(DateTime date, SqlDataReader rs, int index)
 		{
 			if (rs.IsDBNull(index)) {
@@ -186,17 +188,6 @@ namespace HW.Core.Repositories.Sql
 			}
 		}
 		
-//		protected object GetObject(SqlDataReader rs, int index, Type type)
-//		{
-//			if (!rs.IsDBNull(index)) {
-//				BaseModel m = (BaseModel)Activator.CreateInstance(type);
-//				m.Id = GetInt32(rs, index);
-//				return m;
-//			} else {
-//				return null;
-//			}
-//		}
-//
 		[Obsolete("Please use DbHelper's GetInt32 method from now on.")]
 		protected int GetInt32(SqlDataReader rs, int index)
 		{
@@ -283,5 +274,7 @@ namespace HW.Core.Repositories.Sql
 			}
 			return con;
 		}
+		
+		#endregion
 	}
 }
