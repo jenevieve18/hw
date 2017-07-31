@@ -15,9 +15,9 @@ namespace HW.Core.Models
         {
             Errors = new ErrorMessages();
         }
-
-		public virtual int Id { get; set; }
-		public virtual ErrorMessages Errors { get; set; }
+        public int Id { get; set; }
+        //public virtual int Id { get; set; }
+        public virtual ErrorMessages Errors { get; set; }
 		public virtual bool HasErrors {
 			get { return Errors.Count > 0; }
 		}

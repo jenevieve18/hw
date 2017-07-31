@@ -2195,6 +2195,7 @@ namespace HW.Core.FromHW
 			}
 		}
 
+		[ObsoleteAttribute("Please use HW.Core.Helpers.Db's class version of this method.")]
 		public static string HashMD5(string str)
 		{
 			System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
