@@ -66,37 +66,37 @@
       <HintPath>..\..\lib\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
-      <HintPath>..\HW.Grp\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+      <HintPath>..\packages\log4net.2.0.3\lib\net10-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data">
       <HintPath>..\..\lib\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\HW.Grp\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net20\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate">
       <HintPath>..\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="PushSharp.Amazon">
-      <HintPath>..\HW.Grp\packages\PushSharp.4.0.10\lib\net45\PushSharp.Amazon.dll</HintPath>
+      <HintPath>..\packages\PushSharp.4.0.10\lib\net45\PushSharp.Amazon.dll</HintPath>
     </Reference>
     <Reference Include="PushSharp.Apple">
-      <HintPath>..\HW.Grp\packages\PushSharp.4.0.10\lib\net45\PushSharp.Apple.dll</HintPath>
+      <HintPath>..\packages\PushSharp.4.0.10\lib\net45\PushSharp.Apple.dll</HintPath>
     </Reference>
     <Reference Include="PushSharp.Blackberry">
-      <HintPath>..\HW.Grp\packages\PushSharp.4.0.10\lib\net45\PushSharp.Blackberry.dll</HintPath>
+      <HintPath>..\packages\PushSharp.4.0.10\lib\net45\PushSharp.Blackberry.dll</HintPath>
     </Reference>
     <Reference Include="PushSharp.Core">
-      <HintPath>..\HW.Grp\packages\PushSharp.4.0.10\lib\net45\PushSharp.Core.dll</HintPath>
+      <HintPath>..\packages\PushSharp.4.0.10\lib\net45\PushSharp.Core.dll</HintPath>
     </Reference>
     <Reference Include="PushSharp.Firefox">
-      <HintPath>..\HW.Grp\packages\PushSharp.4.0.10\lib\net45\PushSharp.Firefox.dll</HintPath>
+      <HintPath>..\packages\PushSharp.4.0.10\lib\net45\PushSharp.Firefox.dll</HintPath>
     </Reference>
     <Reference Include="PushSharp.Google">
-      <HintPath>..\HW.Grp\packages\PushSharp.4.0.10\lib\net45\PushSharp.Google.dll</HintPath>
+      <HintPath>..\packages\PushSharp.4.0.10\lib\net45\PushSharp.Google.dll</HintPath>
     </Reference>
     <Reference Include="PushSharp.Windows">
-      <HintPath>..\HW.Grp\packages\PushSharp.4.0.10\lib\net45\PushSharp.Windows.dll</HintPath>
+      <HintPath>..\packages\PushSharp.4.0.10\lib\net45\PushSharp.Windows.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -119,6 +119,8 @@
     <Compile Include="FromHW\Db.cs" />
     <Compile Include="Helpers\BaseSerializable.cs" />
     <Compile Include="Helpers\DbHelper.cs" />
+    <Compile Include="Models\SponsorAdministrator.cs" />
+    <Compile Include="Models\UserData.cs" />
     <Compile Include="Repositories\Sql\SqlSponsorProjectRoundUnitRepository.cs" />
     <Compile Include="Util\Exporters\Class1.cs" />
     <Compile Include="Util\Exporters\ExportFactory.cs" />
