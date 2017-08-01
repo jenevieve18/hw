@@ -79,11 +79,12 @@ namespace HW.Grp
 				string sa = Request.QueryString["SA"];
 				string said = sa != null ? (Session["SuperAdminID"] != null ? Session["SuperAdminID"].ToString() : "0") : "";
                 
-                string firstUrl = "default.aspx?Logout=1&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
+                string firstUrl = "default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
 
                 var ServiceResponse = Service.ManagerLogin(username, password, 20);
                 if(ServiceResponse.Token != null)
                 {
+                    firstUrl = "default.aspx?Logout=1&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
                     login = true;
                     Session["Token"] = ServiceResponse.Token;
                     if (ServiceResponse.SuperAdminId > 0)
@@ -110,7 +111,7 @@ namespace HW.Grp
 
             }
 
-            if (login && Session["SponsorAdminID"] != null || Request.QueryString["Logout"] != null || Request.QueryString["SuperLogout"] != null)
+            if (Request.QueryString["Logout"] != null || Request.QueryString["SuperLogout"] != null)
             {
                 var LogoutResponse = Service.ManagerLogOut(Convert.ToInt32(Session["SponsorAdminID"]), Session["Token"].ToString());
                 Session.Remove("Token");
