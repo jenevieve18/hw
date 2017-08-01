@@ -111,7 +111,7 @@ namespace HW.Grp
 
             }
 
-            if (Request.QueryString["Logout"] != null || Request.QueryString["SuperLogout"] != null)
+            if ((Session["SponsorAdminID"] != null && Request.QueryString["Logout"] != null) || (Session["SuperAdminID"] != null && Request.QueryString["SuperLogout"] != null))
             {
                 var LogoutResponse = Service.ManagerLogOut(Convert.ToInt32(Session["SponsorAdminID"]), Session["Token"].ToString());
                 Session.Remove("Token");
