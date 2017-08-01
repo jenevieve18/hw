@@ -11,6 +11,7 @@ using HW.Core.Models;
 using HW.Core.Repositories;
 using HW.Core.Repositories.Sql;
 using HW.Core.Helpers;
+using HW.Grp.WebService;
 
 namespace HW.Grp
 {
@@ -68,7 +69,8 @@ namespace HW.Grp
 			Index();
 			
 			bool login = false;
-			SponsorAdmin sponsorAdmin = null;
+            var Service = new Soap();
+
 			if (((Request.Form["ANV"] != null && Request.Form["ANV"] != "") && (Request.Form["LOS"] != null || Request.Form["LOS"] != "")) || Request.QueryString["SKEY"] != null || Request.QueryString["SAKEY"] != null) {
 				string sponsorKey = Request.QueryString["SKEY"];
 				string sponsorAdminKey = Request.QueryString["SAKEY"];
@@ -76,57 +78,60 @@ namespace HW.Grp
 				string password = Request.Form["LOS"];
 				string sa = Request.QueryString["SA"];
 				string said = sa != null ? (Session["SuperAdminID"] != null ? Session["SuperAdminID"].ToString() : "0") : "";
-				sponsorAdmin = sponsorRepo.ReadSponsorAdmin(sponsorKey, sponsorAdminKey, sa, said, username, password);
-				if (sponsorAdmin != null) {
-					login = true;
-					sponsorRepo.SaveSponsorAdminSession(sponsorAdmin.Id, DateTime.Now);
-					Session["SponsorAdminSessionID"] = sponsorRepo.ReadLastSponsorAdminSession();
-					
-					Session["Name"] = sponsorAdmin.Name;
-					if (sponsorAdmin.SuperAdmin) {
-						Session["SuperAdminID"] = sponsorAdmin.SuperAdminId;
-					} else {
-						Session["SponsorID"] = sponsorAdmin.Sponsor.Id;
-						Session["SponsorAdminID"] = sponsorAdmin.Id;
-						Session["Sponsor"] = sponsorAdmin.Sponsor.Name;
-						Session["Anonymized"] = sponsorAdmin.Anonymized ? 1 : 0;
-						Session["SeeUsers"] = sponsorAdmin.SeeUsers ? 1 : 0;
-						Session["ReadOnly"] = sponsorAdmin.ReadOnly ? 1 : 0;
+                
+                string firstUrl = "default.aspx?Logout=1&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
 
-						SessionHelper.AddIf(sponsorKey != null, "SponsorKey", sponsorKey);
-						SessionHelper.RemoveIf(sponsorKey == null, "SponsorKey");
-					}
-				} else {
-					errorMessage = R.Str(lid, "login.invalid", "Invalid user name and password. Please try again.");
-				}
-			}
-			if (login && (Session["SponsorAdminID"] != null || Session["SuperAdminID"] != null)) {
-				string firstUrl = "default.aspx?Logout=1&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
-				ManagerFunction firstFunction = functionRepo.ReadFirstFunctionBySponsorAdmin(sponsorAdmin.Id);
-				if (firstFunction != null) {
-					firstUrl = firstFunction.URL + "?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
-				}
-				if (sponsorAdmin.SuperAdmin) {
-					Response.Redirect("superadmin.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
-				} else if (Session["SponsorID"] != null) {
-					Response.Redirect(firstUrl, true);
-				}
-			} else if (login && Session["SponsorAdminID"] != null || Request.QueryString["Logout"] != null) {
-				sponsorRepo.UpdateSponsorAdminSession(Convert.ToInt32(Session["SponsorAdminSessionID"]), DateTime.Now);
-				
-				Session.Remove("SponsorID");
-				Session.Remove("SponsorAdminID");
-				Session.Remove("Sponsor");
-				Session.Remove("Anonymized");
-				Session.Remove("SeeUsers");
-				Session.Remove("ReadOnly");
-				Session.Remove("SponsorAdminSessionID");
-				Session.Remove("SponsorKey");
-				ClientScript.RegisterStartupScript(this.GetType(), "CLOSE", "<script language='JavaScript'>window.close();</script>");
-			} else if (login && Session["SuperAdminID"] != null || Request.QueryString["SuperLogout"] != null) {
-				Session.Remove("SuperAdminID");
-				ClientScript.RegisterStartupScript(this.GetType(), "CLOSE", "<script language='JavaScript'>window.close();</script>");
-			}
-		}
-	}
+                var ServiceResponse = Service.ManagerLogin(username, password, 20);
+                if(ServiceResponse.Token != null)
+                {
+                    login = true;
+                    Session["Token"] = ServiceResponse.Token;
+                    if (ServiceResponse.SuperAdminId > 0)
+                    {
+                        Session["SuperAdminID"] = ServiceResponse.SuperAdminId;
+                        Response.Redirect("superadmin.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+                    }
+                    else
+                    {
+                        Session["SponsorID"] = ServiceResponse.Sponsor.Id;
+                        Session["SponsorAdminID"] = ServiceResponse.Id;
+                        Session["Sponsor"] = ServiceResponse.Sponsor.Name;
+                        Session["Anonymized"] = ServiceResponse.Anonymized ? 1 : 0;
+                        Session["SeeUsers"] = ServiceResponse.SeeUsers ? 1 : 0;
+                        Session["ReadOnly"] = ServiceResponse.ReadOnly ? 1 : 0;
+
+                        ManagerFunction firstFunction = functionRepo.ReadFirstFunctionBySponsorAdmin(ServiceResponse.Id);
+                        firstUrl = firstFunction.URL + "?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
+                        Response.Redirect(firstUrl, true);
+                    }
+                }
+                Response.Redirect(firstUrl, true);
+
+
+            }
+
+            if (login && Session["SponsorAdminID"] != null || Request.QueryString["Logout"] != null || Request.QueryString["SuperLogout"] != null)
+            {
+                var LogoutResponse = Service.ManagerLogOut(Convert.ToInt32(Session["SponsorAdminID"]), Session["Token"].ToString());
+                Session.Remove("Token");
+                if (Session["SuperAdminID"] != null)
+                {
+                    Session.Remove("SuperAdminID");
+                }
+                else
+                {
+                    Session.Remove("SponsorID");
+                    Session.Remove("SponsorAdminID");
+                    Session.Remove("Sponsor");
+                    Session.Remove("Anonymized");
+                    Session.Remove("SeeUsers");
+                    Session.Remove("ReadOnly");
+                    Session.Remove("SponsorAdminSessionID");
+                    Session.Remove("SponsorKey");
+                }
+                
+                ClientScript.RegisterStartupScript(this.GetType(), "CLOSE", "<script language='JavaScript'>window.close();</script>");
+            }
+        }
+    }
 }
