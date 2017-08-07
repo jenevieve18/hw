@@ -153,7 +153,7 @@ namespace HW.Grp
                     /// <summary>
                     /// Update Manager logout process to call GRP-WS (ManagerLogout Webmethod) for expiration of token.
                     /// </summary>
-                    var logoutResponse = service.ManagerLogOut(Convert.ToInt32(Session["SponsorAdminID"]), Session["Token"].ToString());
+                    var logoutResponse = service.ManagerLogOut(Session["Token"].ToString());
                 }
                 Session.Remove("Token");
                 Session.Remove("SponsorID");
@@ -172,7 +172,7 @@ namespace HW.Grp
                     /// <summary>
                     /// Update Manager logout process to call GRP-WS (ManagerLogout Webmethod) for expiration of token.
                     /// </summary>
-                    var logoutResponse = service.ManagerLogOut(0, Session["SuperAdminToken"].ToString());
+                    var logoutResponse = service.ManagerLogOut(Session["SuperAdminToken"].ToString());
                 }
                 Session.Remove("SuperAdminToken");
                 Session.Remove("SuperAdminID");
