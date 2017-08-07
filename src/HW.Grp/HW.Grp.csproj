@@ -27,6 +27,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -958,12 +959,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HW.Core\HW.Core.csproj">
-      <Project>{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}</Project>
-      <Name>HW.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Properties\de-DE.resx" />
     <EmbeddedResource Include="Properties\en-US.resx" />
     <EmbeddedResource Include="Properties\sv-SE.resx" />
@@ -979,6 +974,16 @@
     <None Include="~etc\assets\css\main.css" />
     <None Include="~etc\assets\~etc\plasm\javascript\demo1.js" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\GRP-Webservice\HW.Grp.WebService\HW.Grp.WebService.csproj">
+      <Project>{00e6acde-4463-45e4-bcc4-7d4fcdeafb6c}</Project>
+      <Name>HW.Grp.WebService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HW.Core\HW.Core.csproj">
+      <Project>{c7b845fd-7d23-42ef-9ea7-521a83c4ef60}</Project>
+      <Name>HW.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
