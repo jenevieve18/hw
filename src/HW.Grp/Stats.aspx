@@ -3,6 +3,7 @@
 <%@ Import Namespace="HW.Core.Helpers" %>
 <%@ Import Namespace="HW.Core.Models" %>
 <%@ Import Namespace="HW.Grp" %>
+<%@ Import Namespace="System.Linq" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
     <link rel="stylesheet" href="assets/smoothness/jquery-ui-1.9.2.custom.min.css" />
@@ -158,6 +159,13 @@
                 </span>
             </div>
             <% } %>
+            <% 
+                ///<summary>
+                /// Access GRP-WS to get image url list.
+                ///</summary>
+                var soap = new HW.Grp.WebService.Soap();
+                var imageURLs = soap.GetReportImageUrl(Session["Token"].ToString(), startDate, endDate, lid, Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]), Convert.ToInt32(HttpContext.Current.Session["SponsorID"]), Convert.ToInt32(GroupBy.SelectedValue), ProjectRoundUnitID.SelectedValue, Convert.ToInt32(Grouping.SelectedValue), Convert.ToInt32(Session["Anonymize"]), 923, 20);
+            %>
             <% foreach (var r in reportParts)
                { %>
             <div>&nbsp;<br />
@@ -172,9 +180,8 @@
                 <div class="report-part-content">
                     <% if (r is ReportPartLang)
                        { %>
-                    <% string imageUrl = GetReportImageUrlForReportPart(r.ReportPart.Id, r.Id, additionalQuery); %>
-                    <span class="hidden hidden-image-url"><%= imageUrl %></span>
-                    <img class="report-part-graph" src="<%= imageUrl %>&Plot=<%= GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)) %>" alt="" />
+                    <span class="hidden hidden-image-url"><%= imageURLs.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0] %></span>
+                    <img class="report-part-graph" src="<%= imageURLs.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0] %>&Plot=<%= GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)) %>" alt="" />
                     <div class="action">
                         <span class="small"><%= R.Str(lid, "graphs.change", "Change this graph to:")%></span>
                         <select class="plot-types small">
