@@ -1048,6 +1048,10 @@ VALUES ({0},1,NULL,{1},GETDATE())",
 			Response.Redirect("org.aspx?SDID=" + showDepartmentID + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + (showReg ? "&ShowReg=1" : ""), true);
 		}
 
+        /// <summary>
+        /// Modified OnPreRender page using GRP-WS for displaying Department Tree data.
+        /// </summary>
+        #region
         protected override void OnPreRender(EventArgs e)
         {
             Search.Text = R.Str(lid, "search", "Search");
@@ -1065,10 +1069,6 @@ VALUES ({0},1,NULL,{1},GETDATE())",
             SaveDeleteDepartment.Text = R.Str(lid, "execute", "Execute");
 
             #region Normal org
-            string select = "";
-            string join = "";
-            string BQs = "";
-            string BQdesc = "";
 
             UserUpdate.Visible = (userID != 0);
 
@@ -1083,268 +1083,7 @@ VALUES ({0},1,NULL,{1},GETDATE())",
                 DeleteDepartment.Visible = true;
                 Actions.Visible = false;
             }
-
-            string aggrBQ = "", aggrBRdesc = "";
-            int aggrBQcx = 0;
-            string query = string.Format(
-                @"
-        SELECT BQ.Internal,
-        	BQ.BQID,
-        	BQ.Type,
-        	sbq.Hidden,
-        	sbq.InGrpAdmin,
-        	sbq.Fn,
-        	BQ.InternalAggregate,
-        	BQ.Restricted
-        FROM SponsorBQ sbq
-        INNER JOIN BQ ON sbq.BQID = BQ.BQID
-        WHERE sbq.SponsorID = {0} AND (sbq.Hidden = 1 OR sbq.InGrpAdmin = 1)
-        ORDER BY sbq.SortOrder",
-                sponsorID
-            );
-            SqlDataReader rs = Db.rs(query);
-            while (rs.Read())
-            {
-                if (!rs.IsDBNull(3) && rs.GetInt32(3) == 1)
-                {
-                    if (!rs.IsDBNull(7))
-                    {
-                        // Changed after code sent to Ian, JPE 121214
-                        select += ", LEFT(CAST(y" + rs.GetInt32(1) + ".SponsorInviteID AS VARCHAR(8)),0)+'*****' AS XI" + rs.GetInt32(1) + "";
-                        join += "" + " LEFT OUTER JOIN SponsorInviteBQ y" + rs.GetInt32(1) + " ON y" + rs.GetInt32(1) + ".SponsorInviteID = s.SponsorInviteID AND y" + rs.GetInt32(1) + ".BQID = " + rs.GetInt32(1);
-                    }
-                    else if (rs.GetInt32(2) == 1 || rs.GetInt32(2) == 7)
-                    {
-                        select += ", x" + rs.GetInt32(1) + ".Internal AS XI" + rs.GetInt32(1) + "";
-                        join += "" + " LEFT OUTER JOIN SponsorInviteBQ y" + rs.GetInt32(1) + " ON y" + rs.GetInt32(1) + ".SponsorInviteID = s.SponsorInviteID AND y" + rs.GetInt32(1) + ".BQID = " + rs.GetInt32(1) +
-                            " LEFT OUTER JOIN BA x" + rs.GetInt32(1) + " ON x" + rs.GetInt32(1) + ".BQID = y" + rs.GetInt32(1) + ".BQID AND y" + rs.GetInt32(1) + ".BAID = x" + rs.GetInt32(1) + ".BAID";
-                    }
-                    else if (rs.GetInt32(2) == 2)
-                    {
-                        select += ", y" + rs.GetInt32(1) + ".ValueText AS XI" + rs.GetInt32(1) + "";
-                        join += "" + " LEFT OUTER JOIN SponsorInviteBQ y" + rs.GetInt32(1) + " ON y" + rs.GetInt32(1) + ".SponsorInviteID = s.SponsorInviteID AND y" + rs.GetInt32(1) + ".BQID = " + rs.GetInt32(1);
-                    }
-                    else if (rs.GetInt32(2) == 4)
-                    {
-                        select += ", y" + rs.GetInt32(1) + ".ValueInt AS XI" + rs.GetInt32(1) + "";
-                        join += "" + " LEFT OUTER JOIN SponsorInviteBQ y" + rs.GetInt32(1) + " ON y" + rs.GetInt32(1) + ".SponsorInviteID = s.SponsorInviteID AND y" + rs.GetInt32(1) + ".BQID = " + rs.GetInt32(1);
-                    }
-                    else if (rs.GetInt32(2) == 3)
-                    {
-                        select += ", '' + CAST(DATEPART(yyyy,y" + rs.GetInt32(1) + ".ValueDate) AS VARCHAR(4)) + '-' + CAST(DATEPART(mm,y" + rs.GetInt32(1) + ".ValueDate) AS VARCHAR(2)) + '-' + CAST(DATEPART(dd,y" + rs.GetInt32(1) + ".ValueDate) AS VARCHAR(2)) + '' AS XI" + rs.GetInt32(1) + "";
-                        join += "" + " LEFT OUTER JOIN SponsorInviteBQ y" + rs.GetInt32(1) + " ON y" + rs.GetInt32(1) + ".SponsorInviteID = s.SponsorInviteID AND y" + rs.GetInt32(1) + ".BQID = " + rs.GetInt32(1);
-                    }
-
-                    BQs += (BQs != "" ? ":" : "") + rs.GetInt32(1).ToString();
-                    BQdesc += "<TD ALIGN='CENTER' STYLE='font-size:9px;'>&nbsp;<B>" + rs.GetString(0) + "</B>&nbsp;</TD>";
-                }
-                else
-                {
-                    aggrBQcx++;
-                    aggrBQ += (aggrBQ != "" ? "," : "") + rs.GetInt32(1);
-                    aggrBRdesc += "<TD ALIGN='CENTER' STYLE='font-size:9px;'>&nbsp;<B>" + rs.GetString(6) + "</B>&nbsp;</TD>";
-                }
-            }
-            rs.Close();
-
-            string ESstart = "";
-            string ESdesc = "";
-            string ESselect = "";
-            string ESuserSelect = "";
-            string ESuserJoin = "";
-            string ESrounds = "";
-            string ESroundTexts = "";
-            string ESpreviousRounds = "";
-            string ESpreviousRoundTexts = "";
-            string ESjoin = "";
-            string ESattr = "";
-            string bqESselect = "", bqESjoin = "";
-            int EScount = 0;
-            int totalEScount = 0;
-            int tmpEScount = 0;
-            //			query = string.Format(
-            //				@"
-            //SELECT COUNT(*)
-            //FROM SponsorExtendedSurvey ses
-            //WHERE ses.SponsorID = {0}",
-            //				sponsorID
-            //			);
-            //			rs = Db.rs(query);
-            //			if (rs.Read()) {
-            //				totalEScount = rs.GetInt32(0);
-            //			}
-            //			rs.Close();
-            totalEScount = sponsorRepository.CountExtendedSurveyBySponsor(sponsorID);
-            query = string.Format(
-                @"
-        SELECT ses.SponsorExtendedSurveyID,
-        	ses.Internal,
-        	ses.ProjectRoundID,
-        	ses.EformFeedbackID,
-        	ses.RequiredUserCount,
-        	ses.PreviousProjectRoundID,
-        	ses.RoundText,
-        	ses2.RoundText,
-        	pr.Started,
-        	pr.Closed,
-        	ses.WarnIfMissingQID,
-        	ses.ExtraEmailSubject,
-        	ses.Answers,
-        	ses.Total,
-        	LEFT(REPLACE(CONVERT(VARCHAR(255), pr.RoundKey), '-', ''), 8)
-        FROM SponsorExtendedSurvey ses
-        LEFT OUTER JOIN SponsorExtendedSurvey ses2 ON ses.SponsorID = ses2.SponsorID AND ses.PreviousProjectRoundID = ses2.ProjectRoundID
-        LEFT OUTER JOIN eform..ProjectRound pr ON ses.ProjectRoundID = pr.ProjectRoundID
-        WHERE ses.SponsorID = {0}
-        ORDER BY ses.SponsorExtendedSurveyID",
-                sponsorID
-            );
-            rs = Db.rs(query);
-            var extendedSurveys = new List<SponsorExtendedSurvey>();
-            while (rs.Read())
-            {
-                if (totalEScount <= 8 || tmpEScount >= (totalEScount - 8))
-                {
-                    extendedSurveys.Add(
-                        new SponsorExtendedSurvey
-                        {
-                            Id = DbHelper.GetInt32(rs, 0),
-                            Internal = DbHelper.GetString(rs, 1),
-                            ProjectRound = new ProjectRound
-                            {
-                                Id = DbHelper.GetInt32(rs, 2),
-                                Started = DbHelper.GetDateTime(rs, 8, DateTime.MaxValue),
-                                Closed = DbHelper.GetDateTime(rs, 9, DateTime.MaxValue),
-                                        //								RoundKey = DbHelper.GetGuid(rs, 14),
-                                        RoundKey = DbHelper.GetString(rs, 14),
-                            },
-                            Feedback = new HW.Core.Models.Feedback
-                            {
-                                Id = DbHelper.GetInt32(rs, 3)
-                            },
-                            RequiredUserCount = DbHelper.GetInt32(rs, 4, 10),
-                            PreviousProjectRound = new ProjectRound { Id = DbHelper.GetInt32(rs, 5) },
-                            RoundText = DbHelper.GetString(rs, 6),
-                            RoundText2 = DbHelper.GetString(rs, 7),
-                            WarnIfMissingQID = DbHelper.GetInt32(rs, 10),
-                            ExtraEmailSubject = DbHelper.GetString(rs, 11),
-                            Answers = DbHelper.GetInt32(rs, 12),
-                            Total = DbHelper.GetInt32(rs, 13)
-                        }
-                    );
-                    //					ESstart += (ESstart != "" ? "," : "") + (rs.IsDBNull(8) ? DateTime.MaxValue : rs.GetDateTime(8)).ToString("yyyy-MM-dd");
-                    //					ESrounds += (ESrounds != "" ? "," : "") + rs.GetInt32(2);
-                    //					ESroundTexts += (ESroundTexts != "" ? "," : "") + (rs.IsDBNull(6) ? "$" : rs.GetString(6));
-                    //					ESpreviousRounds += (ESpreviousRounds != "" ? "," : "") + (rs.IsDBNull(5) ? 0 : rs.GetInt32(5));
-                    //					ESpreviousRoundTexts += (ESpreviousRoundTexts != "" ? "," : "") + (rs.IsDBNull(7) ? "$" : rs.GetString(7));
-                    ESstart += (ESstart != "" ? "," : "") + DbHelper.GetDateTime(rs, 8, DateTime.MaxValue).ToString("yyyy-MM-dd");
-                    ESrounds += (ESrounds != "" ? "," : "") + DbHelper.GetInt32(rs, 2);
-                    ESroundTexts += (ESroundTexts != "" ? "," : "") + DbHelper.GetString(rs, 6, "$");
-                    ESpreviousRounds += (ESpreviousRounds != "" ? "," : "") + DbHelper.GetInt32(rs, 5);
-                    ESpreviousRoundTexts += (ESpreviousRoundTexts != "" ? "," : "") + DbHelper.GetString(rs, 7, "$");
-                    // Answers on this department and below
-                    ESselect += string.Format(
-                        @",
-        	ISNULL(sesd{0}.Answers,0) ",
-                        rs.GetInt32(0)
-                    );
-                    //					ESselect += string.Format(
-                    //						@",
-                    //	(
-                    //		SELECT COUNT(*)
-                    //		FROM UserSponsorExtendedSurvey x
-                    //		--INNER JOIN [User] xu ON x.UserID = xu.UserID
-                    //		INNER JOIN SponsorInvite xsi ON x.UserID = xsi.UserID
-                    //		INNER JOIN Department xd ON xsi.DepartmentID = xd.DepartmentID
-                    //		--WHERE LEFT(xd.SortString,LEN(d.SortString)) = d.SortString
-                    //		WHERE LEFT(xd.SortString,d.SortStringLength) = d.SortString
-                    //		AND x.SponsorExtendedSurveyID = {0}
-                    //		AND xsi.SponsorID = d.SponsorID
-                    //		AND x.AnswerID IS NOT NULL
-                    //	) ",
-                    //						rs.GetInt32(0)
-                    //					);
-                    // Answers on this department
-                    ESselect += string.Format(
-                        @",
-        	ISNULL(sesd{0}.Total,0) ",
-                        rs.GetInt32(0)
-                    );
-                    //					ESselect += string.Format(
-                    //						@",
-                    //	(
-                    //		SELECT COUNT(*)
-                    //		FROM UserSponsorExtendedSurvey x
-                    //		--INNER JOIN [User] xu ON x.UserID = xu.UserID
-                    //		INNER JOIN SponsorInvite xsi ON x.UserID = xsi.UserID
-                    //		INNER JOIN Department xd ON xsi.DepartmentID = xd.DepartmentID
-                    //		WHERE xd.DepartmentID = d.DepartmentID
-                    //		AND x.SponsorExtendedSurveyID = {0}
-                    //		AND xsi.SponsorID = d.SponsorID
-                    //		AND x.AnswerID IS NOT NULL
-                    //	) ",
-                    //						rs.GetInt32(0)
-                    //					);
-                    //					ESselect += ", es" + rs.GetInt32(0) + ".ProjectRoundUnitID AS PRUID" + rs.GetInt32(0) + ", sesd" + rs.GetInt32(0) + ".RequiredUserCount, sesd" + rs.GetInt32(0) + ".Hide, sesd" + rs.GetInt32(0) + ".Ext ";
-                    ESselect += string.Format(
-                        @",
-        	es{0}.ProjectRoundUnitID AS PRUID{0},
-        	sesd{0}.RequiredUserCount,
-        	sesd{0}.Hide,
-        	sesd{0}.Ext ",
-                        rs.GetInt32(0)
-                    );
-
-                    //					ESjoin += " " +
-                    //						"LEFT OUTER JOIN SponsorExtendedSurveyDepartment sesd" + rs.GetInt32(0) + " ON sesd" + rs.GetInt32(0) + ".SponsorExtendedSurveyID = " + rs.GetInt32(0) + " AND sesd" + rs.GetInt32(0) + ".DepartmentID = d.DepartmentID " +
-                    //						"LEFT OUTER JOIN eform..ProjectRoundUnit es" + rs.GetInt32(0) + " ON es" + rs.GetInt32(0) + ".ProjectRoundID = " + rs.GetInt32(2) + " " +
-                    //						"AND (s.Sponsor + '=' + dbo.cf_departmentTree(d.DepartmentID,'=')) = eform.dbo.cf_projectUnitTree(es" + rs.GetInt32(0) + ".ProjectRoundUnitID,'=') ";
-                    ESjoin += string.Format(
-                        @"
-        LEFT OUTER JOIN SponsorExtendedSurveyDepartment sesd{0} ON sesd{0}.SponsorExtendedSurveyID = {0} AND sesd{0}.DepartmentID = d.DepartmentID 
-        LEFT OUTER JOIN eform..ProjectRoundUnit es{0} ON es{0}.ProjectRoundID = {1} AND (s.Sponsor + '=' + dbo.cf_departmentTree(d.DepartmentID,'=')) = eform.dbo.cf_projectUnitTree(es{0}.ProjectRoundUnitID,'=') ",
-                        rs.GetInt32(0),
-                        //						rs.GetInt32(2)
-                        DbHelper.GetInt32(rs, 2)
-                    );
-                    ESdesc += string.Format(
-                        @"
-        	<td align='center' style='font-size:9px;'>
-        		&nbsp;<b style='font-size:8px;'>{0}</b>&nbsp;
-        		<br/>{1}<br/>--
-        		<br/>{2}
-        	</td>",
-                        //						rs.GetString(1).Replace(" ", "&nbsp;<br/>&nbsp;"),
-                        DbHelper.GetString(rs, 1).Replace(" ", "&nbsp;<br/>&nbsp;"),
-                        (rs.IsDBNull(8) ? "" : rs.GetDateTime(8).ToString("yyMMdd")),
-                        (rs.IsDBNull(9) ? "" : rs.GetDateTime(9).ToString("yyMMdd"))
-                    );
-                    ESuserSelect += ", s" + rs.GetInt32(0) + ".AnswerID AS AID" + rs.GetInt32(0) + ", " +
-                        "s" + rs.GetInt32(0) + ".ProjectRoundUserID AS PRU2ID" + rs.GetInt32(0) + " ";
-                    ESuserJoin += " " +
-                        "LEFT OUTER JOIN UserSponsorExtendedSurvey s" + rs.GetInt32(0) + " ON s.UserID = s" + rs.GetInt32(0) + ".UserID " +
-                        "AND s" + rs.GetInt32(0) + ".SponsorExtendedSurveyID = " + rs.GetInt32(0) + " ";
-                    ESattr += (ESattr != "" ? "," : "") +
-                        (!rs.IsDBNull(3) ? rs.GetInt32(3) : 0) + ":" +      // 0 EformFeedbackID
-                        (!rs.IsDBNull(4) ? rs.GetInt32(4) : 10) + ":" +     // 1 RequiredUserCount
-                        (!rs.IsDBNull(10) ? rs.GetInt32(10) : 0) + ":" +    // 2 WarnIfMissingQID
-                        (!rs.IsDBNull(11) ? 1 : 0) + ":" +                  // 3 Has ExtraEmailSubject
-                        (!rs.IsDBNull(0) ? rs.GetInt32(0) : 0);             // 4 SponsorExtendedSurveyID
-                    EScount++;
-
-                    // Answers for this BQ.BAID
-                    bqESselect += ", COUNT(s" + rs.GetInt32(0) + ".AnswerID) ";
-                    bqESjoin += " " +
-                        "LEFT OUTER JOIN UserSponsorExtendedSurvey s" + rs.GetInt32(0) + " ON u.UserID = s" + rs.GetInt32(0) + ".UserID " +
-                        "AND s" + rs.GetInt32(0) + ".SponsorExtendedSurveyID = " + rs.GetInt32(0) + " ";
-
-                }
-
-                tmpEScount++;
-            }
-            rs.Close();
-            int[] ESanswerCount = new int[EScount];
-
+            
             OrgTree.Text = "";
 
             if (showDepartmentID != 0)
@@ -1366,9 +1105,6 @@ VALUES ({0},1,NULL,{1},GETDATE())",
         		<td align='center' style='font-size:9px;'>&nbsp;<b>{7}</b>&nbsp;</td>
         		<!--<td align='center' style='font-size:9px;'>&nbsp;<b>{8}</b>&nbsp;</td>-->
         	</tr>",
-                    //ESdesc,
-                    //aggrBRdesc,
-                    //BQdesc,
                     R.Str(lid, "unit.email", "Unit/Email"),
                     R.Str(lid, "action", "Action"),
                     R.Str(lid, "active", "Active"),
@@ -1398,8 +1134,6 @@ VALUES ({0},1,NULL,{1},GETDATE())",
         		<td align='center' style='font-size:9px;'>&nbsp;<b>{5}</b>&nbsp;</td>
                 <!--<td align='center' style='font-size:9px;'>&nbsp;<b>{6}</b>&nbsp;</td>-->
         	</tr>",
-                    //ESdesc,
-                    //aggrBRdesc,
                     R.Str(lid, "unit", "Unit"),
                     R.Str(lid, "action", "Action"),
                     R.Str(lid, "active", "Active"),
@@ -1410,128 +1144,31 @@ VALUES ({0},1,NULL,{1},GETDATE())",
                     R.Str(lid, "invite.first", "1st invite&nbsp;<br/>&nbsp;sent")
                 );
             }
-            //OrgTree.Text += "<tr><td colspan='" + (aggrBQcx + 8 + (showDepartmentID != 0 && BQs != "" ? BQs.Split(':').Length : 0) + EScount) + "' style='height:1px;line-height:1px;background-color:#333333'><img src='assets/theme1/img/null.gif' width='1' height='1'></td></tr>";
             OrgTree.Text += string.Format("<tr><td colspan='3'>{0}</td>[xxx]</tr>", Session["Sponsor"]);
 
             int UX = 0; int totalActivated = 0; int IX = 0; int totalActive = 0;
-
-            //			int MIN_SHOW = sponsorRepository.ReadSponsor(sponsorID).MinUserCountToDisclose;
             int MIN_SHOW = sponsor.MinUserCountToDisclose;
 
             Dictionary<int, bool> DX = new Dictionary<int, bool>();
 
-            ////////////			string sql = string.Format(
-            ////////////                @"
-            ////////////SELECT d.Department,
-            ////////////	dbo.cf_departmentDepth(d.DepartmentID),
-            ////////////	d.DepartmentID,
-            ////////////	(
-            ////////////		SELECT COUNT(*)
-            ////////////		FROM SponsorInvite si
-            ////////////		WHERE si.DepartmentID = d.DepartmentID AND si.SponsorID = d.SponsorID AND (si.StoppedReason IS NULL OR si.StoppedPercent IS NOT NULL)
-            ////////////	),
-            ////////////	(
-            ////////////		SELECT COUNT(*)
-            ////////////		FROM SponsorInvite si INNER JOIN [User] u ON si.UserID = u.UserID
-            ////////////		WHERE si.DepartmentID = d.DepartmentID AND si.SponsorID = d.SponsorID AND (si.StoppedReason IS NULL OR si.StoppedPercent IS NOT NULL)
-            ////////////	),
-            ////////////	(
-            ////////////		SELECT COUNT(*)
-            ////////////		FROM SponsorInvite si
-            ////////////		WHERE si.DepartmentID = d.DepartmentID AND si.SponsorID = d.SponsorID AND si.Sent IS NOT NULL AND (si.StoppedReason IS NULL OR si.StoppedPercent IS NOT NULL)
-            ////////////	),
-            ////////////	(
-            ////////////		SELECT COUNT(*) FROM Department x
-            ////////////		{0}
-            ////////////		WHERE (x.ParentDepartmentID = d.ParentDepartmentID OR x.ParentDepartmentID IS NULL AND d.ParentDepartmentID IS NULL)
-            ////////////		AND d.SponsorID = x.SponsorID
-            ////////////		AND d.SortString < x.SortString
-            ////////////	),
-            ////////////	--(
-            ////////////	--	SELECT COUNT(*)
-            ////////////	--	FROM SponsorInvite si
-            ////////////	--	INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID
-            ////////////	--	WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID
-            ////////////	--),
-            ////////////	(
-            ////////////		SELECT COUNT(*)
-            ////////////		FROM SponsorInvite si
-            ////////////		INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID
-            ////////////		--WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID AND (si.StoppedReason IS NULL OR si.StoppedPercent IS NOT NULL)
-            ////////////		WHERE LEFT(sid.SortString,d.SortStringLength) = d.SortString AND si.SponsorID = d.SponsorID AND (si.StoppedReason IS NULL OR si.StoppedPercent IS NOT NULL)
-            ////////////	),
-            ////////////	(
-            ////////////		SELECT COUNT(*)
-            ////////////		FROM SponsorInvite si
-            ////////////		INNER JOIN [User] u ON si.UserID = u.UserID
-            ////////////		INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID
-            ////////////		--WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID AND (si.StoppedReason IS NULL OR si.StoppedPercent IS NOT NULL)
-            ////////////		WHERE LEFT(sid.SortString,d.SortStringLength) = d.SortString AND si.SponsorID = d.SponsorID AND (si.StoppedReason IS NULL OR si.StoppedPercent IS NOT NULL)
-            ////////////	),
-            ////////////	(
-            ////////////		SELECT COUNT(*)
-            ////////////		FROM SponsorInvite si
-            ////////////		INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID
-            ////////////		--WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID AND si.Sent IS NOT NULL AND (si.StoppedReason IS NULL OR si.StoppedPercent IS NOT NULL)
-            ////////////		WHERE LEFT(sid.SortString,d.SortStringLength) = d.SortString AND si.SponsorID = d.SponsorID AND si.Sent IS NOT NULL AND (si.StoppedReason IS NULL OR si.StoppedPercent IS NOT NULL)
-            ////////////	),
-            ////////////	(
-            ////////////		SELECT MIN(si.Sent)
-            ////////////		FROM SponsorInvite si
-            ////////////		INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID
-            ////////////		--WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString AND si.SponsorID = d.SponsorID AND si.Sent IS NOT NULL
-            ////////////		WHERE LEFT(sid.SortString,d.SortStringLength) = d.SortString AND si.SponsorID = d.SponsorID AND si.Sent IS NOT NULL
-            ////////////	),
-            ////////////	d.DepartmentShort {1},
-            ////////////	(
-            ////////////		SELECT COUNT(*) --SELECT COUNT(*)
-            ////////////		FROM SponsorInvite si --FROM SponsorInvite si
-            ////////////		WHERE si.DepartmentID = d.DepartmentID --INNER JOIN [User] u ON si.UserID = u.UserID
-            ////////////		AND si.SponsorID = d.SponsorID --INNER JOIN Department sid ON si.DepartmentID = sid.DepartmentID
-            ////////////		--WHERE LEFT(sid.SortString,LEN(d.SortString)) = d.SortString
-            ////////////		--AND si.SponsorID = d.SponsorID
-            ////////////		--AND si.StoppedReason IS NULL
-            ////////////		--AND si.UserID IS NOT NULL
-            ////////////	),
-            ////////////	(
-            ////////////		SELECT COUNT(*)
-            ////////////		FROM SponsorInvite si
-            ////////////		INNER JOIN [User] u ON si.UserID = u.UserID
-            ////////////		WHERE si.DepartmentID = d.DepartmentID
-            ////////////		AND si.StoppedReason IS NULL
-            ////////////	),
-            ////////////	d.MinUserCountToDisclose
-            ////////////FROM Department d
-            ////////////INNER JOIN Sponsor s ON d.SponsorID = s.SponsorID {2}
-            ////////////{3}
-            ////////////d.SponsorID = {4} ORDER BY d.SortString",
-            ////////////				(Session["SponsorAdminID"].ToString() != "-1" ? "INNER JOIN SponsorAdminDepartment xx ON x.DepartmentID = xx.DepartmentID AND xx.SponsorAdminID = " + Session["SponsorAdminID"] + " " : ""),
-            ////////////				ESselect,
-            ////////////				ESjoin,
-            ////////////				(Session["SponsorAdminID"].ToString() != "-1" ? "INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = " + Session["SponsorAdminID"] + " AND " : "WHERE "),
-            ////////////				sponsorID
-            ////////////			);
-            ////////////			rs = Db.rs(sql);
-
+            /// <summary>
+            /// Initialize GRP-WS and access GetDepartmentTree WebMethod for the Department Tree data.
+            /// </summary>
             var soapService = new HW.Grp.WebService.Soap();
-            var soapResponse = soapService.GetDepartmentTree("712951ed-32fd-46f7-b5ad-7f0f7d97700f", 20);
-            if (soapResponse.SponsorID != 0)
+            var soapResponse = soapService.GetDepartmentTree(Session["Token"].ToString(), 20);
+            if (soapResponse.SponsorID != 0 && soapResponse.Departments.Count > 0)
             {
                 UX = soapResponse.TotalCount;
                 totalActivated = soapResponse.Departments[0].TotalActive;
                 IX = Convert.ToInt32(soapResponse.TotalCountReceiveInvitation.Replace("%", ""));
-                // Start here
+                /// <summary>
+                /// Populate Department Tree from GRP-WS return.
+                /// </summary>
                 for (int listCount = 0; listCount < soapResponse.Departments.Count; listCount++)
                 {
                     int depth = soapResponse.Departments[listCount].Depth;
                     DX[depth] = (soapResponse.Departments[listCount].DepthX > 0);
 
-                    // UX += rs.GetInt32(3);
-                    // totalActivated += rs.GetInt32(4);
-                    // IX += rs.GetInt32(5);
-                    // int active = rs.GetInt32(8); //rs.GetInt32(12 + 6 * EScount);
-                    // totalActive += rs.GetInt32(4); //rs.GetInt32(12 + 6 * EScount + 1);
-                    // int deptMinUserCountToDisclose = DbHelper.GetInt32(rs, 12 + 6 * EScount + 2, MIN_SHOW);
                     /// <summary>
                     /// For Unit Column
                     /// </summary>
@@ -1556,7 +1193,7 @@ VALUES ({0},1,NULL,{1},GETDATE())",
                             (i == depth ? (DX[i] ? "T" : "L") : (DX[i] ? "I" : "null"))
                         );
                     }
-                    string s = soapResponse.Departments[listCount].DepartmentName; // rs.GetString(0);
+                    string s = soapResponse.Departments[listCount].DepartmentName; 
                     if (s.Length > 30)
                     {
                         int i0 = s.Length / 2;
@@ -1587,69 +1224,62 @@ VALUES ({0},1,NULL,{1},GETDATE())",
                         (""),
                         (
                             Convert.ToInt32(Session["ReadOnly"]) == 0
-                            ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DID=" + 923 + "'><img src='assets/theme1/img/unt_edt.gif' border='0'/></A>" + ""
+                            ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DID=" + soapResponse.Departments[listCount].DepartmentId + "'><img src='assets/theme1/img/unt_edt.gif' border='0'/></A>" + ""
                             : ""
                         ),
                         (
-                            10 > 0 /*rs.GetInt32(3) > 0*/
-                            ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&SDID=" + 923 + "'><img src='assets/theme1/img/usr_on.gif' border='0'/></A>"
+                            soapResponse.Departments[listCount].Total > 0 /*rs.GetInt32(3) > 0*/
+                            ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&SDID=" + soapResponse.Departments[listCount].DepartmentId + "'><img src='assets/theme1/img/usr_on.gif' border='0'/></A>"
                             : (
                                 Convert.ToInt32(Session["ReadOnly"]) == 0
-                                ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DeleteDID=" + 923 + "'><img src='assets/theme1/img/unt_del.gif' border='0'/></a>"
+                                ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DeleteDID=" + soapResponse.Departments[listCount].DepartmentId + "'><img src='assets/theme1/img/unt_del.gif' border='0'/></a>"
                                 : ""
                             )
                         )
                     );
-                    // Active
-                    OrgTree.Text += "<td align='center'>&nbsp;<img src='assets/theme1/img/key.gif'/>&nbsp</td>";
-                    // Total
+                    /// <summary>
+                    /// Active Column in Department Tree
+                    /// </summary>
+                    OrgTree.Text += string.Format(
+                        @"
+            <td align='center'>&nbsp;{0}&nbsp;</td>",
+                        (soapResponse.Departments[listCount].Active == 0 ? "<img src = 'assets/theme1/img/key.gif'/>" : soapResponse.Departments[listCount].Active.ToString())
+                        );
+                    /// <summary>
+                    /// Total Column in Department Tree
+                    /// </summary>
                     OrgTree.Text += string.Format(
                         @"
             <td align='center' style='font-size:9px;'>&nbsp;{0}&nbsp;</td>",
-                        // rs.GetInt32(7),
-                        soapResponse.Departments[listCount].Total.ToString().Equals("") ? "N/A" : soapResponse.Departments[listCount].Total.ToString()
-                    // (rs.GetInt32(3) > 0 && rs.GetInt32(3) != rs.GetInt32(7) ? " (" + rs.GetInt32(3) + ")" : "")
+                        soapResponse.Departments[listCount].SubTotal + (soapResponse.Departments[listCount].Total <= 0 ? "" : " (" + soapResponse.Departments[listCount].Total.ToString() + ")")
                     );
-                    // Received Invitation
+                    /// <summary>
+                    /// Received Invitation Column in Department Tree
+                    /// </summary>
                     OrgTree.Text += string.Format(
                         @"
             <td align='center' style='font-size:9px;'>&nbsp;{0}&nbsp;</td>",
-                        //(
-                        //    rs.GetInt32(7) > 0
-                        //    ? Math.Round(((float)rs.GetInt32(9) / (float)rs.GetInt32(7)) * 100, 0).ToString() + "%"
-                        //    : "-"
-                        //) +
-                        //(
-                        //    rs.GetInt32(3) > 0 && rs.GetInt32(5) != rs.GetInt32(9) && Math.Round(((float)rs.GetInt32(9) / (float)rs.GetInt32(7)) * 100, 0) != Math.Round((float)rs.GetInt32(5) / (float)rs.GetInt32(3) * 100, 0)
-                        //    ? " (" + Math.Round((float)rs.GetInt32(5) / (float)rs.GetInt32(3) * 100, 0).ToString() + "%" + ")"
-                        //    : ""
-                        //)
-                        soapResponse.Departments[listCount].ReceiveInvitation.ToString().Equals("") ? "N/A" : soapResponse.Departments[listCount].ReceiveInvitation.ToString()
+                        soapResponse.Departments[listCount].ReceiveInvitation.ToString().Equals("") ? "-" : soapResponse.Departments[listCount].ReceiveInvitation.ToString()
                     );
-                    // 1st Invite sent
+                    /// <summary>
+                    /// 1st Invite Column in Department Tree
+                    /// </summary>
                     OrgTree.Text += string.Format(
                         @"
         	<td align='center' style='font-size:9px;'>&nbsp;{0}&nbsp;</td>",
-                        //(rs.IsDBNull(10) ? "N/A" : rs.GetDateTime(10).ToString("yyMMdd"))
                         soapResponse.Departments[listCount].FirstInviteSent.ToString().Equals("") ? "N/A" : soapResponse.Departments[listCount].FirstInviteSent.ToString()
                     );
-
-
-                    //var deptWithReminder = departmentRepository.ReadWithReminder3(rs.GetInt32(2));
-                    //deptWithReminder.Sponsor = sponsor as Sponsor;
-                    //string reminder = deptWithReminder.GetReminder2(ReminderHelper.GetLoginDays(), ReminderHelper.GetLoginWeekdays());
-                    // department short
+                    /// <summary>
+                    /// Unit ID Column in Department Tree
+                    /// </summary>
                     OrgTree.Text += string.Format(
                         @"
-        	<td align='center' style='font-size:9px;'>&nbsp;{0}&nbsp;</td>
-        	<!--<td align='center' style='font-size:9px;'>{1}</td>-->",
-                        (soapResponse.Departments[listCount].DepartmentShort.ToString().Equals("") ? "N/A" : soapResponse.Departments[listCount].DepartmentShort.ToString()),
-                        "" //HtmlHelper.ToHtml(reminder)
+        	<td align='center' style='font-size:9px;'>&nbsp;{0}&nbsp;</td>",
+                        (soapResponse.Departments[listCount].DepartmentShort.ToString().Equals("") ? "N/A" : soapResponse.Departments[listCount].DepartmentShort.ToString())
                     );
                     OrgTree.Text += @"
         </tr>";
                 }
-                // End here
             }
 
             OrgTree.Text += string.Format(
@@ -1657,50 +1287,10 @@ VALUES ({0},1,NULL,{1},GETDATE())",
         <tr>
         	<td colspan='{0}' style='border-top:1px solid #333333'>&nbsp;</td>
         </tr>",
-                (aggrBQcx + 8 + (showDepartmentID != 0 && BQs != "" ? BQs.Split(':').Length : 0) + EScount + 1)
+                (9)
             );
-            //			string header = "<td align='center' style='font-size:9px;'>" + totalActive.ToString() + " / " + (totalActivated >= MIN_SHOW ? totalActivated.ToString() : "<img src='assets/theme1/img/key.gif'/>") + "</td>";
             string header = string.Format(@"
         	<td align='center' style='font-size:9px;'>{0}</td>", (totalActive >= MIN_SHOW ? totalActive.ToString() : "<img src='assets/theme1/img/key.gif'/>"));
-         //   for (int i = 0; i < EScount; i++)
-         //   {
-         //       header += string.Format(
-         //           @"
-        	//<td align='center' style='font-size:9px;'>&nbsp;{0}&nbsp;{1}&nbsp;</td>",
-         //           (
-         //               //						Convert.ToInt32(ESattr.Split(',')[i].Split(':')[0]) != 0 && Convert.ToInt32(ESattr.Split(',')[i].Split(':')[1]) <= ESanswerCount[i]
-         //               //						? string.Format(
-         //               //							"<a href=\"JavaScript:void(window.open('{0}feedback.aspx?R={1}&{2}{3}{4}",
-         //               //							ConfigurationManager.AppSettings["eFormURL"],
-         //               //							(ESrounds.Split(',')[i]),
-         //               //							ESpreviousRounds.Split(',')[i] != "0" ? string.Format("RR={0}&", ESpreviousRounds.Split(',')[i]) : "",
-         //               //							ESpreviousRounds.Split(',')[i] != "0" ? string.Format("R1={0}&", ESroundTexts.Split(',')[i]) : "",
-         //               //							ESpreviousRounds.Split(',')[i] != "0" ? string.Format("R2={0}&", ESpreviousRoundTexts.Split(',')[i]) : ""
-         //               //						) +
-         //               //						"N=" + Server.HtmlEncode(Session["Sponsor"].ToString()).Replace("&", "_0_").Replace("#", "_1_") + "','es" + i + "','scrollbars=1,width=880,height=700,resizable=1,toolbar=0,status=0,menubar=0,location=0'));\"><img src='assets/theme1/img/graphIcon2.gif' border='0'/></a>"
-         //               //						: ""
-         //               extendedSurveys[i].Feedback.Id != 0 && extendedSurveys[i].RequiredUserCount <= extendedSurveys[i].Answers
-         //               //						extendedSurveys[i].Feedback.Id != 0 && sponsor.MinUserCountToDisclose <= extendedSurveys[i].Answers
-         //               ? string.Format(
-         //                   "<a href=\"JavaScript:void(window.open('{0}feedback.aspx?R={1}&RK={7}&{2}{3}{4}N={5}','es{6}','scrollbars=1,width=880,height=700,resizable=1,toolbar=0,status=0,menubar=0,location=0'));\"><img src='assets/theme1/img/graphIcon2.gif' border='0'/></a>",
-         //                   ConfigurationManager.AppSettings["eFormURL"],
-         //                   extendedSurveys[i].ProjectRound.Id,
-         //                   S.Str(extendedSurveys[i].PreviousProjectRound.Id != 0, string.Format("RR={0}&", extendedSurveys[i].PreviousProjectRound.Id), ""),
-         //                   S.Str(extendedSurveys[i].PreviousProjectRound.Id != 0, string.Format("R1={0}&", extendedSurveys[i].RoundText), ""),
-         //                   S.Str(extendedSurveys[i].PreviousProjectRound.Id != 0, string.Format("R2={0}&", extendedSurveys[i].RoundText2), ""),
-         //                   Server.HtmlEncode(Session["Sponsor"].ToString()).Replace("&", "_0_").Replace("#", "_1_"),
-         //                   i,
-         //                   extendedSurveys[i].ProjectRound.RoundKey
-         //               )
-         //               : ""
-         //           ),
-         //           //					ESanswerCount[i]
-         //           extendedSurveys[i].Answers
-         //       );
-         //   }
-            //			header += "<td align='center' style='font-size:9px;'>" + UX + "</td>";
-            //			header += "<td align='center' style='font-size:9px;'>&nbsp;" + Math.Round(((float)IX / (float)UX) * 100, 0) + "%&nbsp;</td>";
-            //			header += "<td align='center' style='font-size:9px;'>&nbsp;</td>";
             header += string.Format(
                 @"
         	<td align='center' style='font-size:9px;'>{0}</td>
@@ -1708,172 +1298,12 @@ VALUES ({0},1,NULL,{1},GETDATE())",
         	<td align='center' style='font-size:9px;'>&nbsp;</td>",
                 UX,
                 IX.ToString()
-            //Math.Round(((float)IX / (float)UX) * 100, 0)
             );
 
-            if (aggrBQcx != 0)
-            {
-                foreach (string a in aggrBQ.Split(','))
-                {
-                    header += @"
-        	<td align='center'>&nbsp;";
-                    query = string.Format(
-                        @"
-        SELECT AVG(DATEDIFF(year, upbq.ValueDate, GETDATE())), COUNT(upbq.ValueDate)
-        FROM SponsorInvite si
-        INNER JOIN [User] u ON si.UserID = u.UserID
-        INNER JOIN UserProfileBQ upbq ON u.UserProfileID = upbq.UserProfileID AND upbq.BQID = {0}
-        WHERE si.SponsorID = {1}",
-                        Convert.ToInt32(a),
-                        sponsorID
-                    );
-                    SqlDataReader rs2 = Db.rs(query);
-                    if (rs2.Read() && !rs2.IsDBNull(0))
-                    {
-                        header += (rs2.GetInt32(1) >= MIN_SHOW ? rs2.GetValue(0).ToString() : "<img src='assets/theme1/img/key.gif'/>");
-                    }
-                    rs2.Close();
-                    header += @"&nbsp;
-        	</td>";
-                }
-            }
-
             OrgTree.Text = OrgTree.Text.Replace("[xxx]", header) + "</table>";
-            //			foreach (string key in actives.Keys) {
-            //				OrgTree.Text = OrgTree.Text.Replace(key, (actives[key] / totalActive * 100).ToString("0.0"));
-            //			}
             #endregion
-
-            if (Session["SuperAdminID"] != null || Session["SponsorAdminID"] != null && Session["SponsorAdminID"].ToString() == "-1")
-            {
-                query = string.Format(
-                    @"
-        SELECT BQ.BQID,
-        	BQ.Internal,
-        	(SELECT COUNT(*) FROM BA WHERE BA.BQID = BQ.BQID)
-        FROM SponsorBQ sbq
-        INNER JOIN BQ ON sbq.BQID = BQ.BQID
-        WHERE sbq.SponsorID = {0} AND sbq.Organize = 1",
-                    sponsorID
-                );
-                rs = Db.rs(query);
-                while (rs.Read())
-                {
-                    int cx = 0;
-                    OrgTree.Text += @"
-        <table border='0' cellspacing='0' cellpadding='0' style='font-size:12px;line-height:1.0;vertical-align:middle;'>";
-                    OrgTree.Text += string.Format(
-                        @"
-        	<tr style='border-bottom:1px solid #333333;'>
-        		<td><b style='color:#cc0000;'>{0}</b>&nbsp;</td>
-        		<td><b>Activated</b>&nbsp;</td>{1}
-        		<td><b>Total</b>&nbsp;</td>
-        	</tr>",
-                        rs.GetString(1),
-                        ESdesc
-                    );
-                    query = string.Format(
-                        @"
-        SELECT BA.BAID,
-        	BA.Internal,
-        	COUNT(u.UserID),
-        	COUNT(si.SponsorInviteID)
-        	{0}
-        FROM SponsorInvite si
-        LEFT OUTER JOIN SponsorInviteBQ sib ON si.SponsorInviteID = sib.SponsorInviteID AND sib.BQID = {1}
-        LEFT OUTER JOIN [User] u ON si.UserID = u.UserID
-        LEFT OUTER JOIN UserProfile up ON u.UserProfileID = up.UserProfileID
-        LEFT OUTER JOIN UserProfileBQ upb ON up.UserProfileID = upb.UserProfileID AND upb.BQID = {2}
-        LEFT OUTER JOIN BA ON ISNULL(sib.BAID,upb.ValueInt) = BA.BAID
-        {3}
-        WHERE si.SponsorID = {4}
-        GROUP BY BA.BAID, BA.Internal",
-                        bqESselect,
-                        rs.GetInt32(0),
-                        rs.GetInt32(0),
-                        bqESjoin,
-                        sponsorID
-                    );
-                    SqlDataReader rs2 = Db.rs(query);
-                    while (rs2.Read())
-                    {
-                        cx++;
-                        OrgTree.Text += @"
-        <tr style='background-color:#EEEEEE'>
-            <td>
-                <table border='0' cellspacing='0' cellpadding='0'>
-                    <tr>
-                        <td><img src='assets/theme1/img/" + (cx == rs.GetInt32(2) ? "L" : "T") + ".gif' width='19' height='20'/></td><td>" + (rs2.IsDBNull(1) ? "?" : rs2.GetString(1)) + "&nbsp;</td></tr></table></td><td align='center'>&nbsp;" + rs2.GetInt32(2) + "&nbsp;</td>";
-                        for (int i = 0; i < EScount; i++)
-                        {
-                            int idx = 4 + i;
-                            if (!rs2.IsDBNull(idx) && rs2.GetInt32(idx) >= Convert.ToInt32(ESattr.Split(',')[i].Split(':')[1]))
-                            {
-                                StringBuilder sb = new StringBuilder();
-                                query = string.Format(
-                                    @"
-        SELECT usesX.AnswerID
-        FROM SponsorInvite si
-        INNER JOIN [User] u ON si.UserID = u.UserID
-        INNER JOIN UserSponsorExtendedSurvey usesX ON u.UserID = usesX.UserID AND usesX.SponsorExtendedSurveyID = {0}
-        LEFT OUTER JOIN SponsorInviteBQ sib ON si.SponsorInviteID = sib.SponsorInviteID AND sib.BQID = {1}
-        LEFT OUTER JOIN UserProfile up ON u.UserProfileID = up.UserProfileID
-        LEFT OUTER JOIN UserProfileBQ upb ON up.UserProfileID = upb.UserProfileID AND upb.BQID = {2}
-        WHERE usesX.AnswerID IS NOT NULL AND si.SponsorID = {3} AND ISNULL(sib.BAID,upb.ValueInt) = {4}",
-                                    Convert.ToInt32(ESattr.Split(',')[i].Split(':')[4]),
-                                    rs.GetInt32(0),
-                                    rs.GetInt32(0),
-                                    sponsorID,
-                                    rs2.GetInt32(0)
-                                );
-                                SqlDataReader rs3 = Db.rs(query);
-                                while (rs3.Read())
-                                {
-                                    sb.Append("," + rs3.GetInt32(0));
-                                }
-                                rs3.Close();
-
-                                OrgTree.Text += "<td align='center'>&nbsp;" +
-                                    "<a href=\"JavaScript:void(window.open('" + ConfigurationManager.AppSettings["eFormURL"] + "feedback.aspx?" +
-                                    "R=" + (ESrounds.Split(',')[i]) + "&" +
-                                    "RK=" + extendedSurveys[i].ProjectRound.RoundKey + "&" +
-                                    "AIDS=0" + sb.ToString() + "&" +
-                                    "UD=" + rs2.GetString(1) + "&" +
-                                    "RAC=" + Convert.ToInt32(ESattr.Split(',')[i].Split(':')[1]) + "&" +
-                                    "N=" + Server.HtmlEncode(Session["Sponsor"].ToString()).Replace("&", "_0_").Replace("#", "_1_") + "" +
-                                    "','esBQ" + i + "','scrollbars=1,width=880,height=700,resizable=1,toolbar=0,status=0,menubar=0,location=0'));\"><img src='assets/theme1/img/graphIcon2.gif' border='0'/></A>" +
-                                    "&nbsp;" + rs2.GetInt32(idx) + "&nbsp;</td>";
-                            }
-                            else if (!rs2.IsDBNull(idx))
-                            {
-                                OrgTree.Text += string.Format(
-                                    @"
-        	<td align='center' style='color:#EEEEEE'>
-        		<img src='assets/theme1/img/key.gif'/>&nbsp;{0}&nbsp;
-        	</td>",
-                                    rs2.GetInt32(idx)
-                                );
-                            }
-                            else
-                            {
-                                OrgTree.Text += @"
-        	<td align='center'><img src='assets/theme1/img/key.gif'/></td>";
-                            }
-                        }
-                        OrgTree.Text += string.Format(
-                            @"
-        	<td align='center'>&nbsp;{0}&nbsp;</td>
-        </tr>",
-                            rs2.GetInt32(3)
-                        );
-                    }
-                    rs2.Close();
-                    OrgTree.Text += @"
-        </table>";
-                }
-                rs.Close();
-            }
         }
+        #endregion End here for modification
 
         void Search_Click(object sender, EventArgs e)
 		{
