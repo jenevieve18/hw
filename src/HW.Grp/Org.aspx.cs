@@ -40,7 +40,12 @@ namespace HW.Grp
 		SqlUserRepository userRepository = new SqlUserRepository();
 		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 
-		protected void Page_Load(object sender, EventArgs e)
+
+        /// <summary>
+        /// Start here Page Load
+        /// </summary>
+        #region
+        protected void Page_Load(object sender, EventArgs e)
 		{
 			SearchResultList.Text = "";
 			SearchResults.Visible = false;
@@ -137,8 +142,7 @@ WHERE SponsorInviteID = {1}",
 				}
 				if (Request.QueryString["BQID"] != null) {
 					query = string.Format(
-						@"
-SELECT sib.BAID,
+@"SELECT sib.BAID,
 	sib.ValueInt,
 	sib.ValueText,
 	sib.ValueDate,
@@ -515,8 +519,15 @@ ORDER BY d.SortString",
 				Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
 		}
+#endregion PageLoad
 
-		void RewritePRU(int fromSponsorID, int sponsorID, int userID)
+
+
+        /// <summary>
+        /// Update Project Round User Function
+        /// </summary>
+        #region
+        void RewritePRU(int fromSponsorID, int sponsorID, int userID)
 		{
 			string query = string.Format(
 				@"
@@ -574,8 +585,18 @@ WHERE ProjectRoundUserID = {1}",
 			}
 			rs.Close();
 		}
-		
-		void SaveImportUser_Click(object sender, EventArgs e)
+
+#endregion 
+
+
+
+
+
+        /// <summary>
+        /// Save Import User Click Function
+        /// </summary>
+        #region
+        void SaveImportUser_Click(object sender, EventArgs e)
 		{
 			// 0 Email
 			// 1 DepartmentShort
@@ -789,8 +810,15 @@ VALUES ({0},{1},{2})",
 				}
 			}
 		}
+#endregion
 
-		void SaveImportUnit_Click(object sender, EventArgs e)
+
+
+        /// <summary>
+        /// Save ImportUnit Click Function
+        /// </summary>
+        #region
+        void SaveImportUnit_Click(object sender, EventArgs e)
 		{
 			string query = "";
 			if (UnitsFilename.PostedFile != null && UnitsFilename.PostedFile.ContentLength != 0) {
@@ -926,8 +954,14 @@ VALUES ({0}, {1})",
 				}
 			}
 		}
+#endregion 
 
-		void SaveDeleteDepartment_Click(object sender, EventArgs e)
+
+        /// <summary>
+        /// Save Delete Departmen Click
+        /// </summary>
+        #region
+        void SaveDeleteDepartment_Click(object sender, EventArgs e)
 		{
 			string query = string.Format("SELECT ParentDepartmentID FROM Department WHERE SponsorID = " + sponsorID + " AND DepartmentID = " + deleteDepartmentID);
 			SqlDataReader rs = Db.rs(query);
@@ -949,8 +983,15 @@ VALUES ({0}, {1})",
 
 			Response.Redirect("org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + (showReg ? "&ShowReg=1" : ""), true);
 		}
+        #endregion
 
-		void SaveDeleteUser_Click(object sender, EventArgs e)
+
+
+        /// <summary>
+        /// Save Delete User Click Function
+        /// </summary>
+        #region
+        void SaveDeleteUser_Click(object sender, EventArgs e)
 		{
 			string query = string.Format("SELECT si.UserID FROM SponsorInvite si WHERE si.SponsorInviteID = " + deleteUserID);;
 			SqlDataReader rs = Db.rs(query);
@@ -1047,6 +1088,9 @@ VALUES ({0},1,NULL,{1},GETDATE())",
 			Db.exec(query);
 			Response.Redirect("org.aspx?SDID=" + showDepartmentID + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + (showReg ? "&ShowReg=1" : ""), true);
 		}
+        #endregion
+
+
 
         /// <summary>
         /// Modified OnPreRender page using GRP-WS for displaying Department Tree data.
@@ -1305,26 +1349,33 @@ VALUES ({0},1,NULL,{1},GETDATE())",
         }
         #endregion End here for modification
 
+
+
+
+        /// <summary>
+        /// Search User Click Function
+        /// </summary>
+        #region
         void Search_Click(object sender, EventArgs e)
 		{
 			if (SearchEmail.Text != "") {
 				bool found = false;
 
 				string q = string.Format(
-					@"
-SELECT si.SponsorInviteID,
-	si.DepartmentID,
-	dbo.cf_departmentTree(si.DepartmentID,' » ') + ' » ' + si.Email
+                    
+@"SELECT si.SponsorInviteID,
+si.DepartmentID,
+dbo.cf_departmentTree(si.DepartmentID,' » ') + ' » ' + si.Email
 FROM SponsorInvite si
 {0}
 {1}
 si.SponsorID = {2}
 AND (si.Email LIKE '%{3}%'{4})",
-					hiddenBqJoin,
-					(Session["SponsorAdminID"].ToString() != "-1" ? "INNER JOIN SponsorAdminDepartment sad ON si.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = " + Session["SponsorAdminID"] + " AND " : "WHERE "),
-					sponsorID,
-					SearchEmail.Text.Replace("'", ""),
-					hiddenBqWhere.Replace("[x]", "'%" + SearchEmail.Text.Replace("'", "") + "%'")
+hiddenBqJoin,
+(Session["SponsorAdminID"].ToString() != "-1" ? "INNER JOIN SponsorAdminDepartment sad ON si.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = " + Session["SponsorAdminID"] + " AND " : "WHERE "),
+sponsorID,
+SearchEmail.Text.Replace("'", ""),
+hiddenBqWhere.Replace("[x]", "'%" + SearchEmail.Text.Replace("'", "") + "%'")
 				);
 				SqlDataReader rs = Db.rs(q);
 				while (rs.Read()) {
@@ -1339,8 +1390,15 @@ AND (si.Email LIKE '%{3}%'{4})",
 				SearchResults.Visible = true;
 			}
 		}
+        #endregion
 
-		void SaveUser_Click(object sender, EventArgs e)
+
+        /// <summary>
+        ///  Save User Click function
+        /// </summary>
+        #region
+
+        void SaveUser_Click(object sender, EventArgs e)
 		{
 			string url = "";
 			SqlDataReader rs;
@@ -1884,13 +1942,27 @@ VALUES ({0},{1},{2})",
 				AddUserError.Text = R.Str(lid, "user.exists", "A user with this email address already exist!") + "<br/>";
 			}
 		}
+      #endregion
 
-		void Cancel_Click(object sender, EventArgs e)
+
+        /// <summary>
+        /// Cancel Click function
+        /// </summary>
+        #region
+        void Cancel_Click(object sender, EventArgs e)
 		{
 			Response.Redirect("org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + (showReg ? "&ShowReg=1" : ""), true);
 		}
 
-		void SaveUnit_Click(object sender, EventArgs e)
+         #endregion
+
+
+
+        /// <summary>
+        /// Save Unit Click function
+        /// </summary>
+        #region 
+        void SaveUnit_Click(object sender, EventArgs e)
 		{
 //			string query = "";
 			if (deptID == 0) {
@@ -1963,5 +2035,6 @@ VALUES ({0},{1},{2})",
 
 			Response.Redirect("org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + (showReg ? "&ShowReg=1" : ""), true);
 		}
-	}
+         #endregion
+    }
 }
