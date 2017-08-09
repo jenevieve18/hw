@@ -1134,7 +1134,7 @@ VALUES ({0},1,NULL,{1},GETDATE())",
             {
                 OrgTree.Text += string.Format(
                     @"
-        <table border='0' cellspacing='0' cellpadding='0' style='font-size:12px;line-height:1.0;vertical-align:middle;'>
+        <table id='tableOrg' border='0' cellspacing='0' cellpadding='0' style='font-size:12px;line-height:1.0;vertical-align:middle;'>
         	<tr style='border-bottom:1px solid #333333;'>
         		<td colspan='2'><b>{0}</b>&nbsp;</td>
         		<td align='center' style='font-size:9px;'>&nbsp;<b>{1}</b>&nbsp;</td>
@@ -1164,7 +1164,7 @@ VALUES ({0},1,NULL,{1},GETDATE())",
             {
                 OrgTree.Text += string.Format(
                     @"
-        <table border='0' cellspacing='0' cellpadding='0' style='font-size:12px;line-height:1.0;vertical-align:middle;'>
+        <table id='tableOrg' border='0' cellspacing='0' cellpadding='0' style='font-size:12px;line-height:1.0;vertical-align:middle;'>
         	<tr style='border-bottom:1px solid #333333;'>
         		<td colspan='2'><b>{0}</b>&nbsp;</td>
         		<td align='center' style='font-size:9px;'>&nbsp;<b>{1}</b>&nbsp;</td>
@@ -1273,7 +1273,7 @@ VALUES ({0},1,NULL,{1},GETDATE())",
                         ),
                         (
                             soapResponse.Departments[listCount].Total > 0 /*rs.GetInt32(3) > 0*/
-                            ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&SDID=" + soapResponse.Departments[listCount].DepartmentId + "'><img src='assets/theme1/img/usr_on.gif' border='0'/></A>"
+                            ? "<span onclick='getDepartmentUser(\"" + Session["Token"].ToString() + "\", " + sponsorID + ", " + soapResponse.Departments[listCount].DepartmentId + ");'><img src='assets/theme1/img/usr_on.gif' border='0'/></A> <input type='hidden' id='token' name='token' value='" + xtoken + "'/> <input type='hidden' id='sponsorID' name='sponsorID' value='" + soapResponse.Departments[listCount].SponsorID + "'/>       <input type='hidden' id='deptID' name='DeptID' value='" + soapResponse.Departments[listCount].DepartmentId + "'/></span>"
                             : (
                                 Convert.ToInt32(Session["ReadOnly"]) == 0
                                 ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DeleteDID=" + soapResponse.Departments[listCount].DepartmentId + "'><img src='assets/theme1/img/unt_del.gif' border='0'/></a>"
