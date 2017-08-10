@@ -8,6 +8,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using HW.Core.Models;
 using HW.Core.Repositories.Sql;
+using GrpWS = HW.Grp.WebService.Soap;
+using HW.Grp.WebService;
 
 namespace HW.Grp
 {
@@ -54,5 +56,24 @@ namespace HW.Grp
             sponsorAdminRepo.UpdateSponsorAdminExerciseComments(sponsorAdminExerciseID, comments);
             return "Success! Manager exercise comments saved successfully.";
         }
-	}
+
+
+
+        #region
+        // static GrpWS grpWSs = new GrpWS();
+        static HW.Grp.WebService.User grpModel = new HW.Grp.WebService.User();
+
+        [WebMethod]
+        public static HW.Grp.WebService.User[] GetAllUsersInDepartment(string token, int departmentID, int sponsorID, int expirationMinutes)
+        {
+            var soap = new GrpWS();
+            var getAllUsers = soap.GetUsersInDepartment(token, sponsorID, departmentID, 20);
+            if (getAllUsers != null)
+            {
+                return getAllUsers;
+            }
+            return null;
+        }
+        #endregion
+    }
 }

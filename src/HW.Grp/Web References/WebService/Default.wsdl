@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="ManagerLogin">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ManagerLoginResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ManagerLoginResult" type="tns:SponsorAdministrator" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="SponsorAdministrator">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseModel">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="tokenExpires" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="Status" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="Sponsor" type="tns:Sponsors" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="ReadOnly" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="SeeUsers" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="Anonymized" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="SuperAdminId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BaseModel">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Errors" type="tns:ArrayOfString" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Sponsors">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseModel">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="SuperAdminToken">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SuperAdminTokenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SuperAdminTokenResult" type="tns:SponsorAdministrator" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDepartmentTree">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDepartmentTreeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDepartmentTreeResult" type="tns:DepartmentTree" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="DepartmentTree">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="SponsorID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TotalCount" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="TotalCountReceiveInvitation" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Departments" type="tns:ArrayOfDepartment" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDepartment">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Department" nillable="true" type="tns:Department" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Department">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SponsorID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="SponsorName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DepartmentId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="DepartmentName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Depth" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TotalActive" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Active" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SubTotal" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Total" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="FirstInviteSent" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ReceiveInvitation" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DepartmentShort" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DepthX" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetUsersInDepartment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="departmentID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUsersInDepartmentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUsersInDepartmentResult" type="tns:ArrayOfUser" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfUser">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="User" nillable="true" type="tns:User" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="User">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseModel">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Sent" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="DepartmentID" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="Stopped" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="StoppedReason" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="Internal" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PersonNumber" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="ManagerLogOut">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorAdminID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ManagerLogOutResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ManagerLogOutResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SponsorAdministrator" nillable="true" type="tns:SponsorAdministrator" />
+      <s:element name="DepartmentTree" nillable="true" type="tns:DepartmentTree" />
+      <s:element name="ArrayOfUser" nillable="true" type="tns:ArrayOfUser" />
+      <s:element name="boolean" type="s:boolean" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ManagerLoginSoapIn">
+    <wsdl:part name="parameters" element="tns:ManagerLogin" />
+  </wsdl:message>
+  <wsdl:message name="ManagerLoginSoapOut">
+    <wsdl:part name="parameters" element="tns:ManagerLoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="SuperAdminTokenSoapIn">
+    <wsdl:part name="parameters" element="tns:SuperAdminToken" />
+  </wsdl:message>
+  <wsdl:message name="SuperAdminTokenSoapOut">
+    <wsdl:part name="parameters" element="tns:SuperAdminTokenResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDepartmentTreeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDepartmentTree" />
+  </wsdl:message>
+  <wsdl:message name="GetDepartmentTreeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDepartmentTreeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUsersInDepartmentSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUsersInDepartment" />
+  </wsdl:message>
+  <wsdl:message name="GetUsersInDepartmentSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUsersInDepartmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="ManagerLogOutSoapIn">
+    <wsdl:part name="parameters" element="tns:ManagerLogOut" />
+  </wsdl:message>
+  <wsdl:message name="ManagerLogOutSoapOut">
+    <wsdl:part name="parameters" element="tns:ManagerLogOutResponse" />
+  </wsdl:message>
+  <wsdl:message name="ManagerLoginHttpPostIn">
+    <wsdl:part name="username" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ManagerLoginHttpPostOut">
+    <wsdl:part name="Body" element="tns:SponsorAdministrator" />
+  </wsdl:message>
+  <wsdl:message name="SuperAdminTokenHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="sponsorID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SuperAdminTokenHttpPostOut">
+    <wsdl:part name="Body" element="tns:SponsorAdministrator" />
+  </wsdl:message>
+  <wsdl:message name="GetDepartmentTreeHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDepartmentTreeHttpPostOut">
+    <wsdl:part name="Body" element="tns:DepartmentTree" />
+  </wsdl:message>
+  <wsdl:message name="GetUsersInDepartmentHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="sponsorID" type="s:string" />
+    <wsdl:part name="departmentID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetUsersInDepartmentHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfUser" />
+  </wsdl:message>
+  <wsdl:message name="ManagerLogOutHttpPostIn">
+    <wsdl:part name="sponsorAdminID" type="s:string" />
+    <wsdl:part name="token" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ManagerLogOutHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:portType name="SoapSoap">
+    <wsdl:operation name="ManagerLogin">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Validates a username and password combination and, if there is a match, returns a Sponsor Admin object including sponsor data with token, variable lifetime (max 20 minutes).</wsdl:documentation>
+      <wsdl:input message="tns:ManagerLoginSoapIn" />
+      <wsdl:output message="tns:ManagerLoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SuperAdminToken">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Validates token and sponsor ID to create a Super Admin Token.</wsdl:documentation>
+      <wsdl:input message="tns:SuperAdminTokenSoapIn" />
+      <wsdl:output message="tns:SuperAdminTokenSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartmentTree">
+      <wsdl:input message="tns:GetDepartmentTreeSoapIn" />
+      <wsdl:output message="tns:GetDepartmentTreeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersInDepartment">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Generate a list of users under a specific department</wsdl:documentation>
+      <wsdl:input message="tns:GetUsersInDepartmentSoapIn" />
+      <wsdl:output message="tns:GetUsersInDepartmentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ManagerLogOut">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Expire session and token. Returns true if successful.</wsdl:documentation>
+      <wsdl:input message="tns:ManagerLogOutSoapIn" />
+      <wsdl:output message="tns:ManagerLogOutSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="SoapHttpPost">
+    <wsdl:operation name="ManagerLogin">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Validates a username and password combination and, if there is a match, returns a Sponsor Admin object including sponsor data with token, variable lifetime (max 20 minutes).</wsdl:documentation>
+      <wsdl:input message="tns:ManagerLoginHttpPostIn" />
+      <wsdl:output message="tns:ManagerLoginHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SuperAdminToken">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Validates token and sponsor ID to create a Super Admin Token.</wsdl:documentation>
+      <wsdl:input message="tns:SuperAdminTokenHttpPostIn" />
+      <wsdl:output message="tns:SuperAdminTokenHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartmentTree">
+      <wsdl:input message="tns:GetDepartmentTreeHttpPostIn" />
+      <wsdl:output message="tns:GetDepartmentTreeHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersInDepartment">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Generate a list of users under a specific department</wsdl:documentation>
+      <wsdl:input message="tns:GetUsersInDepartmentHttpPostIn" />
+      <wsdl:output message="tns:GetUsersInDepartmentHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ManagerLogOut">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Expire session and token. Returns true if successful.</wsdl:documentation>
+      <wsdl:input message="tns:ManagerLogOutHttpPostIn" />
+      <wsdl:output message="tns:ManagerLogOutHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SoapSoap" type="tns:SoapSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ManagerLogin">
+      <soap:operation soapAction="http://tempuri.org/ManagerLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SuperAdminToken">
+      <soap:operation soapAction="http://tempuri.org/SuperAdminToken" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartmentTree">
+      <soap:operation soapAction="http://tempuri.org/GetDepartmentTree" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersInDepartment">
+      <soap:operation soapAction="http://tempuri.org/GetUsersInDepartment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ManagerLogOut">
+      <soap:operation soapAction="http://tempuri.org/ManagerLogOut" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SoapSoap12" type="tns:SoapSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ManagerLogin">
+      <soap12:operation soapAction="http://tempuri.org/ManagerLogin" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SuperAdminToken">
+      <soap12:operation soapAction="http://tempuri.org/SuperAdminToken" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartmentTree">
+      <soap12:operation soapAction="http://tempuri.org/GetDepartmentTree" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersInDepartment">
+      <soap12:operation soapAction="http://tempuri.org/GetUsersInDepartment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ManagerLogOut">
+      <soap12:operation soapAction="http://tempuri.org/ManagerLogOut" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SoapHttpPost" type="tns:SoapHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="ManagerLogin">
+      <http:operation location="/ManagerLogin" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SuperAdminToken">
+      <http:operation location="/SuperAdminToken" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartmentTree">
+      <http:operation location="/GetDepartmentTree" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersInDepartment">
+      <http:operation location="/GetUsersInDepartment" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ManagerLogOut">
+      <http:operation location="/ManagerLogOut" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Soap">
+    <wsdl:port name="SoapSoap" binding="tns:SoapSoap">
+      <soap:address location="http://localhost:53850/Default.asmx" />
+    </wsdl:port>
+    <wsdl:port name="SoapSoap12" binding="tns:SoapSoap12">
+      <soap12:address location="http://localhost:53850/Default.asmx" />
+    </wsdl:port>
+    <wsdl:port name="SoapHttpPost" binding="tns:SoapHttpPost">
+      <http:address location="http://localhost:53850/Default.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
