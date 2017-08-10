@@ -1273,7 +1273,7 @@ VALUES ({0},1,NULL,{1},GETDATE())",
                         ),
                         (
                             soapResponse.Departments[listCount].Total > 0 /*rs.GetInt32(3) > 0*/
-                            ? "<span onclick='getDepartmentUser(\"" + Session["Token"].ToString() + "\", " + sponsorID + ", " + soapResponse.Departments[listCount].DepartmentId + ");'><img src='assets/theme1/img/usr_on.gif' border='0'/></A> <input type='hidden' id='token' name='token' value='" + xtoken + "'/> <input type='hidden' id='sponsorID' name='sponsorID' value='" + soapResponse.Departments[listCount].SponsorID + "'/>       <input type='hidden' id='deptID' name='DeptID' value='" + soapResponse.Departments[listCount].DepartmentId + "'/></span>"
+                            ? "<span onclick='getDepartmentUser(\"" + Session["Token"].ToString() + "\", " + sponsorID + ", " + soapResponse.Departments[listCount].DepartmentId + ");'><img src='assets/theme1/img/usr_on.gif' border='0'/></A></span>"
                             : (
                                 Convert.ToInt32(Session["ReadOnly"]) == 0
                                 ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DeleteDID=" + soapResponse.Departments[listCount].DepartmentId + "'><img src='assets/theme1/img/unt_del.gif' border='0'/></a>"
