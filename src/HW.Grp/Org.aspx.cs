@@ -1200,7 +1200,7 @@ VALUES ({0},1,NULL,{1},GETDATE())",
             /// </summary>
             var soapService = new HW.Grp.WebService.Soap();
             var soapResponse = soapService.GetDepartmentTree(Session["Token"].ToString(), 20);
-            if (soapResponse.SponsorID != 0 && soapResponse.Departments.Count > 0)
+            if (soapResponse.SponsorID != 0 && soapResponse.Departments.Length > 0)
             {
                 UX = soapResponse.TotalCount;
                 totalActivated = soapResponse.Departments[0].TotalActive;
@@ -1208,7 +1208,7 @@ VALUES ({0},1,NULL,{1},GETDATE())",
                 /// <summary>
                 /// Populate Department Tree from GRP-WS return.
                 /// </summary>
-                for (int listCount = 0; listCount < soapResponse.Departments.Count; listCount++)
+                for (int listCount = 0; listCount < soapResponse.Departments.Length; listCount++)
                 {
                     int depth = soapResponse.Departments[listCount].Depth;
                     DX[depth] = (soapResponse.Departments[listCount].DepthX > 0);

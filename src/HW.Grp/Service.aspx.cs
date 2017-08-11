@@ -58,13 +58,17 @@ namespace HW.Grp
         }
 
 
-
+        /// <summary>
+        ///  Get the List Of UserInfo from the Webservice
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="departmentID"></param>
+        /// <param name="sponsorID"></param>
+        /// <param name="expirationMinutes"></param>
+        /// <returns>UserInfo</returns>
         #region
-        // static GrpWS grpWSs = new GrpWS();
-        static HW.Grp.WebService.Models.User grpModel = new HW.Grp.WebService.Models.User();
-
         [WebMethod]
-        public static List<HW.Grp.WebService.Models.User> GetAllUsersInDepartment(string token, int departmentID, int sponsorID, int expirationMinutes)
+        public static HW.Grp.WebService.User[] GetAllUsersInDepartment(string token, int departmentID, int sponsorID, int expirationMinutes)
         {
             var soap = new GrpWS();
             var getAllUsers = soap.GetUsersInDepartment(token, sponsorID, departmentID, 20);

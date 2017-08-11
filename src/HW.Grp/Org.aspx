@@ -181,8 +181,17 @@
             <asp:Label ID="OrgTree" runat="server" />
         </div>
     </div>
-    <script type="text/javascript">
 
+
+
+    <script type="text/javascript">
+        /**
+         * 
+         * @param token
+         * @param sponsorID
+         * @param departmentID
+           Description : Populate user info in each department.
+         */
         function getDepartmentUser(token, sponsorID, departmentID) {
             
             var prev = document.getElementById("departmentUsers");
@@ -190,10 +199,9 @@
                 prev.outerHTML = '';
                 var prev = document.getElementById("departmentUsers");
             }
-        
-
             var table = document.getElementById("tableOrg");
             var rows = table.getElementsByTagName("tr");
+
             for (i = 0; i < rows.length - 1; i++) {
                 var currentRow = table.rows[i];
                 if (currentRow) {
@@ -212,7 +220,8 @@
                                     var idx = this.index;
                                     for (var i = 0; i < data.d.length; i++) {
                                         idx++;
-                                        function ConvertJsonDateString(jsonDate) {
+
+                                        function ConvertJsonDateString(jsonDate) { /*Convert Date in Sent field*/
                                             var shortDate = null;
 
                                             if (jsonDate) {
@@ -246,8 +255,8 @@
                                             "<td align='center' style='font-size:9px; background-color:#FFF7D6' colspan='2'>&nbsp; " + ConvertJsonDateString(data.d[i].Sent) + " <a href='org.aspx?SendSPIID=" + data.d[i].UserID + "&SDID=" + data.d[i].DepartmentID + "&Rnd=" + rndNum + "\'>Resend</a>&nbsp;</td>" +
                                             "<td align='center' style='font-size:9px; background-color:#FFF7D6' colspan='2'></td>" +
                                             "</tr >";
-                                        var lamisa = document.getElementById("tableOrg");
-                                        var newRow = lamisa.insertRow(idx);
+                                        var tableorgId = document.getElementById("tableOrg");
+                                        var newRow = tableorgId.insertRow(idx);
                                         newRow.id = "departmentUsers";
                                         newRow.innerHTML = str;
                                     }

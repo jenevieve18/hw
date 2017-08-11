@@ -993,6 +993,7 @@
     <Compile Include="SuperStats.aspx.designer.cs">
       <DependentUpon>SuperStats.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Web References\WebService\Reference.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\GRP-Webservice\HW.Grp.WebService\HW.Grp.WebService.csproj">
@@ -1018,33 +1019,19 @@
   <ItemGroup>
     <Content Include="Layout.Master" />
     <None Include="Web References\WebService\Default.wsdl" />
-    <Content Include="Web References\WebService\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-    </Content>
+    <Content Include="Web References\WebService\DepartmentTree.datasource" />
+    <Content Include="Web References\WebService\Reference.map" />
+    <Content Include="Web References\WebService\SponsorAdministrator.datasource" />
+    <Content Include="Web References\WebService\User.datasource" />
     <None Include="~etc\assets\css\main.css" />
     <None Include="~etc\assets\~etc\plasm\javascript\demo1.js" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://localhost:53850/Default.asmx">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\WebService\</RelPath>
-      <UpdateFromURL>http://localhost:53850/Default.asmx</UpdateFromURL>
-      <ServiceLocationURL>
-      </ServiceLocationURL>
-      <CachedDynamicPropName>
-      </CachedDynamicPropName>
-      <CachedAppSettingsObjectName>
-      </CachedAppSettingsObjectName>
-      <CachedSettingsPropName>
-      </CachedSettingsPropName>
-    </WebReferenceUrl>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
