@@ -61,10 +61,10 @@ namespace HW.Grp
 
         #region
         // static GrpWS grpWSs = new GrpWS();
-        static HW.Grp.WebService.User grpModel = new HW.Grp.WebService.User();
+        static HW.Grp.WebService.Models.User grpModel = new HW.Grp.WebService.Models.User();
 
         [WebMethod]
-        public static HW.Grp.WebService.User[] GetAllUsersInDepartment(string token, int departmentID, int sponsorID, int expirationMinutes)
+        public static List<HW.Grp.WebService.Models.User> GetAllUsersInDepartment(string token, int departmentID, int sponsorID, int expirationMinutes)
         {
             var soap = new GrpWS();
             var getAllUsers = soap.GetUsersInDepartment(token, sponsorID, departmentID, 20);

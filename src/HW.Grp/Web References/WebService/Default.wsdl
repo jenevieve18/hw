@@ -158,7 +158,6 @@
       <s:element name="ManagerLogOut">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="sponsorAdminID" type="s:int" />
             <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
           </s:sequence>
         </s:complexType>
@@ -239,7 +238,6 @@
     <wsdl:part name="Body" element="tns:ArrayOfUser" />
   </wsdl:message>
   <wsdl:message name="ManagerLogOutHttpPostIn">
-    <wsdl:part name="sponsorAdminID" type="s:string" />
     <wsdl:part name="token" type="s:string" />
   </wsdl:message>
   <wsdl:message name="ManagerLogOutHttpPostOut">
@@ -266,7 +264,7 @@
       <wsdl:output message="tns:GetUsersInDepartmentSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="ManagerLogOut">
-      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Expire session and token. Returns true if successful.</wsdl:documentation>
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Expire token. Returns true if successful.</wsdl:documentation>
       <wsdl:input message="tns:ManagerLogOutSoapIn" />
       <wsdl:output message="tns:ManagerLogOutSoapOut" />
     </wsdl:operation>
@@ -292,7 +290,7 @@
       <wsdl:output message="tns:GetUsersInDepartmentHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="ManagerLogOut">
-      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Expire session and token. Returns true if successful.</wsdl:documentation>
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Expire token. Returns true if successful.</wsdl:documentation>
       <wsdl:input message="tns:ManagerLogOutHttpPostIn" />
       <wsdl:output message="tns:ManagerLogOutHttpPostOut" />
     </wsdl:operation>
