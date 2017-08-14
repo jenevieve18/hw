@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
       <s:element name="ManagerLogin">
@@ -155,6 +155,22 @@
           </s:extension>
         </s:complexContent>
       </s:complexType>
+      <s:element name="GetUserInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="userID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserInfoResult" type="tns:User" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="ManagerLogOut">
         <s:complexType>
           <s:sequence>
@@ -172,6 +188,7 @@
       <s:element name="SponsorAdministrator" nillable="true" type="tns:SponsorAdministrator" />
       <s:element name="DepartmentTree" nillable="true" type="tns:DepartmentTree" />
       <s:element name="ArrayOfUser" nillable="true" type="tns:ArrayOfUser" />
+      <s:element name="User" nillable="true" type="tns:User" />
       <s:element name="boolean" type="s:boolean" />
     </s:schema>
   </wsdl:types>
@@ -198,6 +215,12 @@
   </wsdl:message>
   <wsdl:message name="GetUsersInDepartmentSoapOut">
     <wsdl:part name="parameters" element="tns:GetUsersInDepartmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetUserInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserInfoResponse" />
   </wsdl:message>
   <wsdl:message name="ManagerLogOutSoapIn">
     <wsdl:part name="parameters" element="tns:ManagerLogOut" />
@@ -237,6 +260,14 @@
   <wsdl:message name="GetUsersInDepartmentHttpPostOut">
     <wsdl:part name="Body" element="tns:ArrayOfUser" />
   </wsdl:message>
+  <wsdl:message name="GetUserInfoHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="userID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetUserInfoHttpPostOut">
+    <wsdl:part name="Body" element="tns:User" />
+  </wsdl:message>
   <wsdl:message name="ManagerLogOutHttpPostIn">
     <wsdl:part name="token" type="s:string" />
   </wsdl:message>
@@ -263,6 +294,11 @@
       <wsdl:input message="tns:GetUsersInDepartmentSoapIn" />
       <wsdl:output message="tns:GetUsersInDepartmentSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get user with the specified userID</wsdl:documentation>
+      <wsdl:input message="tns:GetUserInfoSoapIn" />
+      <wsdl:output message="tns:GetUserInfoSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="ManagerLogOut">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Expire token. Returns true if successful.</wsdl:documentation>
       <wsdl:input message="tns:ManagerLogOutSoapIn" />
@@ -288,6 +324,11 @@
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Generate a list of users under a specific department</wsdl:documentation>
       <wsdl:input message="tns:GetUsersInDepartmentHttpPostIn" />
       <wsdl:output message="tns:GetUsersInDepartmentHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get user with the specified userID</wsdl:documentation>
+      <wsdl:input message="tns:GetUserInfoHttpPostIn" />
+      <wsdl:output message="tns:GetUserInfoHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="ManagerLogOut">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Expire token. Returns true if successful.</wsdl:documentation>
@@ -326,6 +367,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetUsersInDepartment">
       <soap:operation soapAction="http://tempuri.org/GetUsersInDepartment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <soap:operation soapAction="http://tempuri.org/GetUserInfo" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -381,6 +431,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <soap12:operation soapAction="http://tempuri.org/GetUserInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="ManagerLogOut">
       <soap12:operation soapAction="http://tempuri.org/ManagerLogOut" style="document" />
       <wsdl:input>
@@ -429,6 +488,15 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <http:operation location="/GetUserInfo" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="ManagerLogOut">
       <http:operation location="/ManagerLogOut" />
       <wsdl:input>
@@ -441,13 +509,13 @@
   </wsdl:binding>
   <wsdl:service name="Soap">
     <wsdl:port name="SoapSoap" binding="tns:SoapSoap">
-      <soap:address location="http://localhost:53850/Default.asmx" />
+      <soap:address location="https://dev-grpws.healthwatch.se/default.asmx" />
     </wsdl:port>
     <wsdl:port name="SoapSoap12" binding="tns:SoapSoap12">
-      <soap12:address location="http://localhost:53850/Default.asmx" />
+      <soap12:address location="https://dev-grpws.healthwatch.se/default.asmx" />
     </wsdl:port>
     <wsdl:port name="SoapHttpPost" binding="tns:SoapHttpPost">
-      <http:address location="http://localhost:53850/Default.asmx" />
+      <http:address location="https://dev-grpws.healthwatch.se/default.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

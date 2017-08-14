@@ -38,6 +38,8 @@ namespace HW.Grp.WebService {
         
         private System.Threading.SendOrPostCallback GetUsersInDepartmentOperationCompleted;
         
+        private System.Threading.SendOrPostCallback GetUserInfoOperationCompleted;
+        
         private System.Threading.SendOrPostCallback ManagerLogOutOperationCompleted;
         
         private bool useDefaultCredentialsSetExplicitly;
@@ -89,6 +91,9 @@ namespace HW.Grp.WebService {
         
         /// <remarks/>
         public event GetUsersInDepartmentCompletedEventHandler GetUsersInDepartmentCompleted;
+        
+        /// <remarks/>
+        public event GetUserInfoCompletedEventHandler GetUserInfoCompleted;
         
         /// <remarks/>
         public event ManagerLogOutCompletedEventHandler ManagerLogOutCompleted;
@@ -226,26 +231,57 @@ namespace HW.Grp.WebService {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetUserInfo", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public User GetUserInfo(string token, int userID, int expirationMinutes) {
+            object[] results = this.Invoke("GetUserInfo", new object[] {
+                        token,
+                        userID,
+                        expirationMinutes});
+            return ((User)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetUserInfoAsync(string token, int userID, int expirationMinutes) {
+            this.GetUserInfoAsync(token, userID, expirationMinutes, null);
+        }
+        
+        /// <remarks/>
+        public void GetUserInfoAsync(string token, int userID, int expirationMinutes, object userState) {
+            if ((this.GetUserInfoOperationCompleted == null)) {
+                this.GetUserInfoOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetUserInfoOperationCompleted);
+            }
+            this.InvokeAsync("GetUserInfo", new object[] {
+                        token,
+                        userID,
+                        expirationMinutes}, this.GetUserInfoOperationCompleted, userState);
+        }
+        
+        private void OnGetUserInfoOperationCompleted(object arg) {
+            if ((this.GetUserInfoCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetUserInfoCompleted(this, new GetUserInfoCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ManagerLogOut", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public bool ManagerLogOut(int sponsorAdminID, string token) {
+        public bool ManagerLogOut(string token) {
             object[] results = this.Invoke("ManagerLogOut", new object[] {
-                        sponsorAdminID,
                         token});
             return ((bool)(results[0]));
         }
         
         /// <remarks/>
-        public void ManagerLogOutAsync(int sponsorAdminID, string token) {
-            this.ManagerLogOutAsync(sponsorAdminID, token, null);
+        public void ManagerLogOutAsync(string token) {
+            this.ManagerLogOutAsync(token, null);
         }
         
         /// <remarks/>
-        public void ManagerLogOutAsync(int sponsorAdminID, string token, object userState) {
+        public void ManagerLogOutAsync(string token, object userState) {
             if ((this.ManagerLogOutOperationCompleted == null)) {
                 this.ManagerLogOutOperationCompleted = new System.Threading.SendOrPostCallback(this.OnManagerLogOutOperationCompleted);
             }
             this.InvokeAsync("ManagerLogOut", new object[] {
-                        sponsorAdminID,
                         token}, this.ManagerLogOutOperationCompleted, userState);
         }
         
@@ -890,6 +926,32 @@ namespace HW.Grp.WebService {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((User[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void GetUserInfoCompletedEventHandler(object sender, GetUserInfoCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetUserInfoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetUserInfoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public User Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((User)(this.results[0]));
             }
         }
     }
