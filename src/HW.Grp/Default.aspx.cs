@@ -71,6 +71,34 @@ namespace HW.Grp
             bool login = false;
             SponsorAdmin sponsorAdmin = null;
             var service = new Soap();
+
+            string message = string.Format(
+                @"
+            APPSETTINGS
+            healthWatchSqlConnection: {0}
+            SqlConnection: {1}
+            newsSqlConnection: {2}
+            eFormSqlConnection: {3}
+            
+            CONNECTION STRINGS
+            healthWatchSqlConnection: {4}
+            SqlConnection: {5}
+            newsSqlConnection: {6}
+            eFormSqlConnection: {7}
+
+            URL: {8}",
+                System.Configuration.ConfigurationManager.AppSettings["healthWatchSqlConnection"],
+                System.Configuration.ConfigurationManager.AppSettings["SqlConnection"],
+                "Nothing",
+                System.Configuration.ConfigurationManager.AppSettings["eFormSqlConnection"],
+                System.Configuration.ConfigurationManager.ConnectionStrings["healthWatch"].ConnectionString,
+                System.Configuration.ConfigurationManager.ConnectionStrings["SqlConnection"].ConnectionString,
+                "Nothing",
+                System.Configuration.ConfigurationManager.ConnectionStrings["eForm"].ConnectionString,
+                service.Url
+            );
+            SmtpHelper.Send("noreply@healthwatch.se", "mark@healthwatch.se", "ConnectionString And URL", message);
+
             if (((Request.Form["ANV"] != null && Request.Form["ANV"] != "") && (Request.Form["LOS"] != null && Request.Form["LOS"] != "")) || Request.QueryString["SKEY"] != null || Request.QueryString["SAKEY"] != null)
             {
                 string sponsorKey = Request.QueryString["SKEY"];
