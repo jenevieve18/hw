@@ -27,6 +27,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,6 +39,31 @@
     <WarningLevel>4</WarningLevel>
     <DeployEncryptKey>Encryption password is used only if any deployment setting is marked as secure</DeployEncryptKey>
     <PlatformTarget>x86</PlatformTarget>
+    <PublishDatabaseSettings>
+      <Objects>
+        <ObjectGroup Name="eForm-Deployment" Order="1">
+          <Destination Path="" />
+          <Object Type="DbFullSql">
+            <PreSource Path="database=eform%3bserver=DESKTOP-KGCMQE4\MSSQLSERVER2%3buser=sa%3bpwd=deg%3b" ScriptSchema="False" ScriptData="True" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\eForm-Deployment_DataOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+        <ObjectGroup Name="healthWatch-Deployment" Order="2">
+          <Destination Path="" />
+          <Object Type="DbFullSql">
+            <PreSource Path="database=healthwatch%3bserver=DESKTOP-KGCMQE4\MSSQLSERVER2%3buser=sa%3bpwd=deg%3b" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\healthWatch-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+        <ObjectGroup Name="SqlConnection-Deployment" Order="3">
+          <Destination Path="" />
+          <Object Type="DbFullSql">
+            <PreSource Path="database=healthwatch%3bserver=DESKTOP-KGCMQE4\MSSQLSERVER2%3buser=sa%3bpwd=deg%3b" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\SqlConnection-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+      </Objects>
+    </PublishDatabaseSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -171,46 +197,6 @@
     <Content Include="assets\bootstrap-datepicker\locales\bootstrap-datepicker.vi.min.js" />
     <Content Include="assets\bootstrap-datepicker\locales\bootstrap-datepicker.zh-CN.min.js" />
     <Content Include="assets\bootstrap-datepicker\locales\bootstrap-datepicker.zh-TW.min.js" />
-    <Content Include="assets\theme1\css\960.css" />
-    <Content Include="assets\theme1\css\admin.css" />
-    <Content Include="assets\theme1\css\default.css" />
-    <Content Include="assets\theme1\css\exercise.css" />
-    <None Include="assets\theme1\css\main.css" />
-    <Content Include="assets\theme1\css\managers.css" />
-    <Content Include="assets\theme1\css\resources\admin\folderImport.png" />
-    <Content Include="assets\theme1\css\resources\admin\gears.gif" />
-    <Content Include="assets\theme1\css\resources\admin\organization_sprites.gif" />
-    <Content Include="assets\theme1\css\resources\admin\organization_sprites.png" />
-    <Content Include="assets\theme1\css\resources\admin\search.png" />
-    <Content Include="assets\theme1\css\resources\admin\submenu.gif" />
-    <Content Include="assets\theme1\css\resources\admin\userImport.png" />
-    <Content Include="assets\theme1\css\resources\admin\user_add.png" />
-    <Content Include="assets\theme1\css\resources\avatars\default.gif" />
-    <Content Include="assets\theme1\css\resources\background.gif" />
-    <Content Include="assets\theme1\css\resources\myhealth\form\myhealth_formchoser_active_a.gif" />
-    <Content Include="assets\theme1\css\resources\myhealth\form\myhealth_formchoser_active_span.gif" />
-    <Content Include="assets\theme1\css\resources\myhealth\form\myhealth_formchoser_arrow.gif" />
-    <Content Include="assets\theme1\css\resources\myhealth\form\myhealth_formchoser_arrow_down.gif" />
-    <Content Include="assets\theme1\css\resources\myhealth\form\myhealth_formchoser_passive_a.gif" />
-    <Content Include="assets\theme1\css\resources\myhealth\form\myhealth_formchoser_passive_span.gif" />
-    <Content Include="assets\theme1\css\resources\myhealth\form\myhealth_statistics_bar_bgr.gif" />
-    <Content Include="assets\theme1\css\resources\myhealth\statistics\myhealth_statistics_bar_bgr.gif" />
-    <Content Include="assets\theme1\css\resources\myhealth_excersises_bottom.gif" />
-    <Content Include="assets\theme1\css\resources\myhealth_exercises_dropdown.gif" />
-    <Content Include="assets\theme1\css\resources\myhealth_exercises_dropdown_active_edge.gif" />
-    <Content Include="assets\theme1\css\resources\myhealth_exercises_statschooser_bgr.gif" />
-    <Content Include="assets\theme1\css\resources\myhealth_statistics_bar_detail_toggle.gif" />
-    <Content Include="assets\theme1\css\resources\myhealth_statistics_bottom.gif" />
-    <Content Include="assets\theme1\css\resources\myhealth_statistics_meta.gif" />
-    <Content Include="assets\theme1\css\resources\myhealth_statistics_stats.gif" />
-    <Content Include="assets\theme1\css\resources\myhealth_statistics_statschooser_icons.gif" />
-    <Content Include="assets\theme1\css\resources\myhealth_statistics_statschoser_dropdown_active_edge.gif" />
-    <Content Include="assets\theme1\css\resources\myhealth_statistics_statschoser_dropdown_active_hover.gif" />
-    <Content Include="assets\theme1\css\resources\ovningar\clock_1.png" />
-    <Content Include="assets\theme1\css\resources\ovningar\clock_2.png" />
-    <Content Include="assets\theme1\css\resources\rsaquo.gif" />
-    <Content Include="assets\theme1\css\site.css" />
-    <Content Include="assets\theme1\css\stats.css" />
     <Content Include="assets\exercises\css\exercises.css" />
     <Content Include="assets\exercises\css\main.css" />
     <Content Include="assets\exercises\css\styles.css" />
@@ -228,77 +214,8 @@
     <Content Include="assets\exercises\images\text_bg.png" />
     <Content Include="assets\exercises\images\text_bg1.png" />
     <Content Include="assets\exercises\img\myhealth_diary_print.gif" />
-    <Content Include="assets\theme1\img\application_edit.png" />
-    <Content Include="assets\theme1\img\auditTrail.gif" />
-    <Content Include="assets\theme1\img\back.gif" />
-    <Content Include="assets\theme1\img\box-border.gif" />
-    <Content Include="assets\theme1\img\box-bottom.gif" />
-    <Content Include="assets\theme1\img\box-header.gif" />
-    <Content Include="assets\theme1\img\bullet_arrow_down.png" />
-    <Content Include="assets\theme1\img\bullet_arrow_up.png" />
-    <Content Include="assets\theme1\img\cross.png" />
-    <Content Include="assets\theme1\img\DelToolSmall.gif" />
-    <Content Include="assets\theme1\img\disk.png" />
     <Content Include="assets\bootstrap-datepicker\img\glyphicons-halflings-white.png" />
     <Content Include="assets\bootstrap-datepicker\img\glyphicons-halflings.png" />
-    <Content Include="assets\theme1\img\graphIcon.gif" />
-    <Content Include="assets\theme1\img\graphIcon2.gif" />
-    <Content Include="assets\theme1\img\graphIcon3.gif" />
-    <Content Include="assets\theme1\img\group.png" />
-    <Content Include="assets\theme1\img\hwlogo.png" />
-    <Content Include="assets\theme1\img\hwlogosmall.gif" />
-    <Content Include="assets\theme1\img\I.gif" />
-    <Content Include="assets\theme1\img\information.png" />
-    <Content Include="assets\theme1\img\key.gif" />
-    <Content Include="assets\theme1\img\L.gif" />
-    <Content Include="assets\theme1\img\LangID_0.gif" />
-    <Content Include="assets\theme1\img\LangID_1.gif" />
-    <Content Include="assets\theme1\img\langID_2.gif" />
-    <Content Include="assets\theme1\img\langID_3.gif" />
-    <Content Include="assets\theme1\img\lock.gif" />
-    <Content Include="assets\theme1\img\locked.gif" />
-    <Content Include="assets\theme1\img\logout.gif" />
-    <Content Include="assets\theme1\img\mess.gif" />
-    <Content Include="assets\theme1\img\myhealth_statistics_bar_detail_toggle.png" />
-    <Content Include="assets\theme1\img\null.gif" />
-    <Content Include="assets\theme1\img\org.gif" />
-    <Content Include="assets\theme1\img\rsaquo.gif" />
-    <Content Include="assets\theme1\img\save.gif" />
-    <Content Include="assets\theme1\img\spiffygif_30x30.gif" />
-    <Content Include="assets\theme1\img\star.gif" />
-    <Content Include="assets\theme1\img\starOK.gif" />
-    <Content Include="assets\theme1\img\stat.gif" />
-    <Content Include="assets\theme1\img\T.gif" />
-    <Content Include="assets\theme1\img\top_healthWatch.jpg" />
-    <Content Include="assets\theme1\img\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="assets\theme1\img\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="assets\theme1\img\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="assets\theme1\img\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="assets\theme1\img\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="assets\theme1\img\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <Content Include="assets\theme1\img\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="assets\theme1\img\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <Content Include="assets\theme1\img\ui-icons_222222_256x240.png" />
-    <Content Include="assets\theme1\img\ui-icons_2e83ff_256x240.png" />
-    <Content Include="assets\theme1\img\ui-icons_454545_256x240.png" />
-    <Content Include="assets\theme1\img\ui-icons_888888_256x240.png" />
-    <Content Include="assets\theme1\img\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="assets\theme1\img\unlock.gif" />
-    <Content Include="assets\theme1\img\unt_add.gif" />
-    <Content Include="assets\theme1\img\unt_cls.gif" />
-    <Content Include="assets\theme1\img\unt_del.gif" />
-    <Content Include="assets\theme1\img\unt_edt.gif" />
-    <Content Include="assets\theme1\img\unt_imp.gif" />
-    <Content Include="assets\theme1\img\unt_opn.gif" />
-    <Content Include="assets\theme1\img\UpToolSmall.gif" />
-    <Content Include="assets\theme1\img\usr_add.gif" />
-    <Content Include="assets\theme1\img\usr_del.gif" />
-    <Content Include="assets\theme1\img\usr_edt.gif" />
-    <Content Include="assets\theme1\img\usr_imp.gif" />
-    <Content Include="assets\theme1\img\usr_off.gif" />
-    <Content Include="assets\theme1\img\usr_on.gif" />
-    <Content Include="assets\theme1\js\exercise.js" />
-    <Content Include="assets\theme1\js\stats.js" />
     <Content Include="assets\smoothness\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="assets\smoothness\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="assets\smoothness\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -313,6 +230,116 @@
     <Content Include="assets\smoothness\images\ui-icons_888888_256x240.png" />
     <Content Include="assets\smoothness\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="assets\smoothness\jquery-ui-1.9.2.custom.min.css" />
+    <Content Include="assets\theme2\css\960.css" />
+    <Content Include="assets\theme2\css\admin.css" />
+    <Content Include="assets\theme2\css\default.css" />
+    <Content Include="assets\theme2\css\exercise.css" />
+    <Content Include="assets\theme2\css\main.css" />
+    <Content Include="assets\theme2\css\managers.css" />
+    <Content Include="assets\theme2\css\resources\admin\folderImport.png" />
+    <Content Include="assets\theme2\css\resources\admin\gears.gif" />
+    <Content Include="assets\theme2\css\resources\admin\organization_sprites.gif" />
+    <Content Include="assets\theme2\css\resources\admin\organization_sprites.png" />
+    <Content Include="assets\theme2\css\resources\admin\search.png" />
+    <Content Include="assets\theme2\css\resources\admin\submenu.gif" />
+    <Content Include="assets\theme2\css\resources\admin\userImport.png" />
+    <Content Include="assets\theme2\css\resources\admin\user_add.png" />
+    <Content Include="assets\theme2\css\resources\avatars\default.gif" />
+    <Content Include="assets\theme2\css\resources\background.gif" />
+    <Content Include="assets\theme2\css\resources\myhealth\form\myhealth_formchoser_active_a.gif" />
+    <Content Include="assets\theme2\css\resources\myhealth\form\myhealth_formchoser_active_span.gif" />
+    <Content Include="assets\theme2\css\resources\myhealth\form\myhealth_formchoser_arrow.gif" />
+    <Content Include="assets\theme2\css\resources\myhealth\form\myhealth_formchoser_arrow_down.gif" />
+    <Content Include="assets\theme2\css\resources\myhealth\form\myhealth_formchoser_passive_a.gif" />
+    <Content Include="assets\theme2\css\resources\myhealth\form\myhealth_formchoser_passive_span.gif" />
+    <Content Include="assets\theme2\css\resources\myhealth\form\myhealth_statistics_bar_bgr.gif" />
+    <Content Include="assets\theme2\css\resources\myhealth\statistics\myhealth_statistics_bar_bgr.gif" />
+    <Content Include="assets\theme2\css\resources\myhealth_excersises_bottom.gif" />
+    <Content Include="assets\theme2\css\resources\myhealth_exercises_dropdown.gif" />
+    <Content Include="assets\theme2\css\resources\myhealth_exercises_dropdown_active_edge.gif" />
+    <Content Include="assets\theme2\css\resources\myhealth_exercises_statschooser_bgr.gif" />
+    <Content Include="assets\theme2\css\resources\myhealth_statistics_bar_detail_toggle.gif" />
+    <Content Include="assets\theme2\css\resources\myhealth_statistics_bottom.gif" />
+    <Content Include="assets\theme2\css\resources\myhealth_statistics_meta.gif" />
+    <Content Include="assets\theme2\css\resources\myhealth_statistics_stats.gif" />
+    <Content Include="assets\theme2\css\resources\myhealth_statistics_statschooser_icons.gif" />
+    <Content Include="assets\theme2\css\resources\myhealth_statistics_statschoser_dropdown_active_edge.gif" />
+    <Content Include="assets\theme2\css\resources\myhealth_statistics_statschoser_dropdown_active_hover.gif" />
+    <Content Include="assets\theme2\css\resources\ovningar\clock_1.png" />
+    <Content Include="assets\theme2\css\resources\ovningar\clock_2.png" />
+    <Content Include="assets\theme2\css\resources\rsaquo.gif" />
+    <Content Include="assets\theme2\css\site.css" />
+    <Content Include="assets\theme2\css\stats.css" />
+    <Content Include="assets\theme2\img\application_edit.png" />
+    <Content Include="assets\theme2\img\auditTrail.gif" />
+    <Content Include="assets\theme2\img\back.gif" />
+    <Content Include="assets\theme2\img\box-border.gif" />
+    <Content Include="assets\theme2\img\box-bottom.gif" />
+    <Content Include="assets\theme2\img\box-header.gif" />
+    <Content Include="assets\theme2\img\bullet_arrow_down.png" />
+    <Content Include="assets\theme2\img\bullet_arrow_up.png" />
+    <Content Include="assets\theme2\img\comment.png" />
+    <Content Include="assets\theme2\img\cross.png" />
+    <Content Include="assets\theme2\img\DelToolSmall.gif" />
+    <Content Include="assets\theme2\img\disk.png" />
+    <Content Include="assets\theme2\img\graphIcon.gif" />
+    <Content Include="assets\theme2\img\graphIcon2.gif" />
+    <Content Include="assets\theme2\img\graphIcon3.gif" />
+    <Content Include="assets\theme2\img\group.png" />
+    <Content Include="assets\theme2\img\hwlogo.png" />
+    <Content Include="assets\theme2\img\hwlogosmall.gif" />
+    <Content Include="assets\theme2\img\I.gif" />
+    <Content Include="assets\theme2\img\information.png" />
+    <Content Include="assets\theme2\img\key.gif" />
+    <Content Include="assets\theme2\img\L.gif" />
+    <Content Include="assets\theme2\img\LangID_0.gif" />
+    <Content Include="assets\theme2\img\LangID_1.gif" />
+    <Content Include="assets\theme2\img\langID_2.gif" />
+    <Content Include="assets\theme2\img\langID_3.gif" />
+    <Content Include="assets\theme2\img\lock.gif" />
+    <Content Include="assets\theme2\img\locked.gif" />
+    <Content Include="assets\theme2\img\logout.gif" />
+    <Content Include="assets\theme2\img\mess.gif" />
+    <Content Include="assets\theme2\img\myhealth_statistics_bar_detail_toggle.png" />
+    <Content Include="assets\theme2\img\null.gif" />
+    <Content Include="assets\theme2\img\org.gif" />
+    <Content Include="assets\theme2\img\rsaquo.gif" />
+    <Content Include="assets\theme2\img\save.gif" />
+    <Content Include="assets\theme2\img\spiffygif_30x30.gif" />
+    <Content Include="assets\theme2\img\star.gif" />
+    <Content Include="assets\theme2\img\starOK.gif" />
+    <Content Include="assets\theme2\img\stat.gif" />
+    <Content Include="assets\theme2\img\T.gif" />
+    <Content Include="assets\theme2\img\top_healthWatch.jpg" />
+    <Content Include="assets\theme2\img\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="assets\theme2\img\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="assets\theme2\img\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="assets\theme2\img\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="assets\theme2\img\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="assets\theme2\img\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="assets\theme2\img\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="assets\theme2\img\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="assets\theme2\img\ui-icons_222222_256x240.png" />
+    <Content Include="assets\theme2\img\ui-icons_2e83ff_256x240.png" />
+    <Content Include="assets\theme2\img\ui-icons_454545_256x240.png" />
+    <Content Include="assets\theme2\img\ui-icons_888888_256x240.png" />
+    <Content Include="assets\theme2\img\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="assets\theme2\img\unlock.gif" />
+    <Content Include="assets\theme2\img\unt_add.gif" />
+    <Content Include="assets\theme2\img\unt_cls.gif" />
+    <Content Include="assets\theme2\img\unt_del.gif" />
+    <Content Include="assets\theme2\img\unt_edt.gif" />
+    <Content Include="assets\theme2\img\unt_imp.gif" />
+    <Content Include="assets\theme2\img\unt_opn.gif" />
+    <Content Include="assets\theme2\img\UpToolSmall.gif" />
+    <Content Include="assets\theme2\img\usr_add.gif" />
+    <Content Include="assets\theme2\img\usr_del.gif" />
+    <Content Include="assets\theme2\img\usr_edt.gif" />
+    <Content Include="assets\theme2\img\usr_imp.gif" />
+    <Content Include="assets\theme2\img\usr_off.gif" />
+    <Content Include="assets\theme2\img\usr_on.gif" />
+    <Content Include="assets\theme2\js\exercise.js" />
+    <Content Include="assets\theme2\js\stats.js" />
     <Content Include="assets\ui\i18n\jquery-ui-i18n.js" />
     <Content Include="assets\ui\i18n\jquery.ui.datepicker-af.js" />
     <Content Include="assets\ui\i18n\jquery.ui.datepicker-ar-DZ.js" />
@@ -360,6 +387,12 @@
     <Content Include="assets\ui\jquery.ui.theme.css" />
     <Content Include="assets\ui\jquery.ui.widget.js" />
     <Content Include="assets\ui\text_expand.js" />
+    <Content Include="sql.aspx" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\WebService\Default.disco" />
     <Content Include="~etc\assets\css\default.css" />
     <Content Include="~etc\assets\exercises\css\exercises.css" />
     <Content Include="~etc\assets\exercises\css\styles.css" />
@@ -675,7 +708,6 @@
     <Content Include="SavedExerciseShow.aspx" />
     <Content Include="Service.aspx" />
     <Content Include="Settings.aspx" />
-    <Content Include="sql.aspx" />
     <Content Include="Stats.aspx" />
     <Content Include="SuperAdmin.aspx" />
     <Content Include="SuperExport.aspx" />
@@ -857,6 +889,11 @@
       <DependentUpon>PasswordActivation.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="R.cs" />
     <Compile Include="Reminders.aspx.cs">
       <DependentUpon>Reminders.aspx</DependentUpon>
@@ -956,8 +993,13 @@
     <Compile Include="SuperStats.aspx.designer.cs">
       <DependentUpon>SuperStats.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Web References\WebService\Reference.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\GRP-Webservice\HW.Grp.WebService\HW.Grp.WebService.csproj">
+      <Project>{00E6ACDE-4463-45E4-BCC4-7D4FCDEAFB6C}</Project>
+      <Name>HW.Grp.WebService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HW.Core\HW.Core.csproj">
       <Project>{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}</Project>
       <Name>HW.Core</Name>
@@ -976,9 +1018,28 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Layout.Master" />
+    <None Include="Web References\WebService\Default.wsdl" />
+    <Content Include="Web References\WebService\DepartmentTree.datasource" />
+    <Content Include="Web References\WebService\Reference.map" />
+    <Content Include="Web References\WebService\SponsorAdministrator.datasource" />
+    <Content Include="Web References\WebService\User.datasource" />
     <None Include="~etc\assets\css\main.css" />
     <None Include="~etc\assets\~etc\plasm\javascript\demo1.js" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\GRP-Webservice\HW.Grp.WebService\HW.Grp.WebService.csproj">
+      <Project>{00e6acde-4463-45e4-bcc4-7d4fcdeafb6c}</Project>
+      <Name>HW.Grp.WebService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HW.Core\HW.Core.csproj">
+      <Project>{c7b845fd-7d23-42ef-9ea7-521a83c4ef60}</Project>
+      <Name>HW.Core</Name>
+    </ProjectReference>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
