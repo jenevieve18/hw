@@ -39,6 +39,31 @@
     <WarningLevel>4</WarningLevel>
     <DeployEncryptKey>Encryption password is used only if any deployment setting is marked as secure</DeployEncryptKey>
     <PlatformTarget>x86</PlatformTarget>
+    <PublishDatabaseSettings>
+      <Objects>
+        <ObjectGroup Name="eForm-Deployment" Order="1">
+          <Destination Path="" />
+          <Object Type="DbFullSql">
+            <PreSource Path="database=eform%3bserver=DESKTOP-KGCMQE4\MSSQLSERVER2%3buser=sa%3bpwd=deg%3b" ScriptSchema="False" ScriptData="True" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\eForm-Deployment_DataOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+        <ObjectGroup Name="healthWatch-Deployment" Order="2">
+          <Destination Path="" />
+          <Object Type="DbFullSql">
+            <PreSource Path="database=healthwatch%3bserver=DESKTOP-KGCMQE4\MSSQLSERVER2%3buser=sa%3bpwd=deg%3b" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\healthWatch-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+        <ObjectGroup Name="SqlConnection-Deployment" Order="3">
+          <Destination Path="" />
+          <Object Type="DbFullSql">
+            <PreSource Path="database=healthwatch%3bserver=DESKTOP-KGCMQE4\MSSQLSERVER2%3buser=sa%3bpwd=deg%3b" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\SqlConnection-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+      </Objects>
+    </PublishDatabaseSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -361,6 +386,7 @@
     <Content Include="assets\ui\jquery.ui.theme.css" />
     <Content Include="assets\ui\jquery.ui.widget.js" />
     <Content Include="assets\ui\text_expand.js" />
+    <Content Include="SQLUtil.aspx" />
     <Content Include="~etc\assets\css\default.css" />
     <Content Include="~etc\assets\exercises\css\exercises.css" />
     <Content Include="~etc\assets\exercises\css\styles.css" />
@@ -676,7 +702,6 @@
     <Content Include="SavedExerciseShow.aspx" />
     <Content Include="Service.aspx" />
     <Content Include="Settings.aspx" />
-    <Content Include="sql.aspx" />
     <Content Include="Stats.aspx" />
     <Content Include="SuperAdmin.aspx" />
     <Content Include="SuperExport.aspx" />
@@ -908,12 +933,11 @@
     <Compile Include="Settings.aspx.designer.cs">
       <DependentUpon>Settings.aspx</DependentUpon>
     </Compile>
-    <Compile Include="sql.aspx.cs">
-      <DependentUpon>sql.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
+    <Compile Include="SQLUtil.aspx.cs">
+      <DependentUpon>SQLUtil.aspx</DependentUpon>
     </Compile>
-    <Compile Include="sql.aspx.designer.cs">
-      <DependentUpon>sql.aspx</DependentUpon>
+    <Compile Include="SQLUtil.aspx.designer.cs">
+      <DependentUpon>SQLUtil.aspx</DependentUpon>
     </Compile>
     <Compile Include="Stats.aspx.cs">
       <DependentUpon>Stats.aspx</DependentUpon>
@@ -957,6 +981,16 @@
     <Compile Include="SuperStats.aspx.designer.cs">
       <DependentUpon>SuperStats.aspx</DependentUpon>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\GRP-Webservice\HW.Grp.WebService\HW.Grp.WebService.csproj">
+      <Project>{00E6ACDE-4463-45E4-BCC4-7D4FCDEAFB6C}</Project>
+      <Name>HW.Grp.WebService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HW.Core\HW.Core.csproj">
+      <Project>{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}</Project>
+      <Name>HW.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\de-DE.resx" />
