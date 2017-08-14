@@ -181,8 +181,17 @@
             <asp:Label ID="OrgTree" runat="server" />
         </div>
     </div>
-    <script type="text/javascript">
 
+
+
+    <script type="text/javascript">
+        /**
+         * 
+         * @param token
+         * @param sponsorID
+         * @param departmentID
+           Description : Populate user info in each department.
+         */
         function getDepartmentUser(token, sponsorID, departmentID) {
             
             var prev = document.getElementById("departmentUsers");
@@ -190,59 +199,67 @@
                 prev.outerHTML = '';
                 var prev = document.getElementById("departmentUsers");
             }
-        
-
             var table = document.getElementById("tableOrg");
             var rows = table.getElementsByTagName("tr");
+
             for (i = 0; i < rows.length - 1; i++) {
                 var currentRow = table.rows[i];
                 if (currentRow) {
                     var createNewRow = function (row, idx) {
                         return function () {
-                            
-
-                            var grpWSUrl = '<%=ConfigurationManager.AppSettings["GrpWSUrl"].ToString()%>';
-
-                            var soapRequest = '<?xml version="1.0" encoding="utf-8"?> \
-                                    <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"> \
-                             <soap:Body> \
-                            <GetUsersInDepartment xmlns="http://tempuri.org/"> \
-                            <token>\'' + token + '\'</token> \
-                            <sponsorID>' + sponsorID + '</sponsorID> \
-                             <departmentID>' + departmentID + '</departmentID> \
-                                    <expirationMinutes>20</expirationMinutes> \
-                            </GetUsersInDepartment> \
-                            </soap:Body> \
-                            </soap:Envelope>';
 
                             $.ajax({
-                                url: grpWSUrl + "?op=GetUsersInDepartment",
+                                url: "Service.aspx/GetAllUsersInDepartment",
                                 type: "POST",
-                                dataType: "xml",
-                                contentType: "text/xml; charset=\"utf-8\"",
+                                dataType: "json",
+                                contentType: "application/json; charset=utf-8",
                                 index: idx,
 
-                                data: soapRequest,
-                                success: function (xml) {
+                                data: JSON.stringify({ "token": token, "sponsorID": sponsorID, "departmentID": departmentID, "expirationMinutes": 20 }),
+                                success: function (data) {
                                     var idx = this.index;
-                                    $(xml).find('User').each(function () {
+                                    for (var i = 0; i < data.d.length; i++) {
                                         idx++;
+
+                                        function ConvertJsonDateString(jsonDate) { /*Convert Date in Sent field*/
+                                            var shortDate = null;
+
+                                            if (jsonDate) {
+                                                var regex = /-?\d+/;
+                                                var matches = regex.exec(jsonDate);
+                                                var dt = new Date(parseInt(matches[0]));
+                                                var month = dt.getMonth() + 1;
+                                                var monthString = month > 9 ? month : '0' + month;
+                                                var day = dt.getDate();
+                                                var dayString = day > 9 ? day : '0' + day;
+                                                var year = dt.getFullYear();
+                                                testDate = year + monthString + dayString;
+                                                if (testDate !== '19000101') {
+                                                    shortDate = 'Yes, ' + year + monthString + dayString + ',';
+                                                } else {
+                                                    shortDate = 'No, ';
+                                                }
+                                            }
+
+                                            return shortDate;
+                                        };
+
                                         var rndNum = <%=(new Random(unchecked((int)DateTime.Now.Ticks))).Next()%>;
                                         var str =
                                             "<tr>" +
                                             "<td style='background-color:#FFF7D6'> <img src='assets/theme1/img/null.gif' width='19' height='20' /> <img src='assets/theme1/img/I.gif' width='19' height='20' /></td>" +
-                                            "<td style= 'font-size:9px; background-color:#FFF7D6' nowrap>" + $(this).find('Email').text() + "</td > " +
-                                            "<td style='background-color:#FFF7D6' align='center'><a href='org.aspx?SDID=" + $(this).find('DepartmentID').text() + "&Rnd=" + rndNum + "&UID=" + $(this).find('UserID').text() + "\'><img src='assets/theme1/img/usr_edt.gif' border='0' /></a><a href='org.aspx?SDID=" + $(this).find('DepartmentID').text() + "&Rnd=" + rndNum + "&DeleteUID=" + $(this).find('UserID').text() + "\'><img src='assets/theme1/img/usr_del.gif' border='0' /></a></td> " +
+                                            "<td style= 'font-size:9px; background-color:#FFF7D6' nowrap>" + data.d[i].Email + "</td > " +
+                                            "<td style='background-color:#FFF7D6' align='center'><a href='org.aspx?SDID=" + data.d[i].DepartmentID + "&Rnd=" + rndNum + "&UID=" + data.d[i].UserID + "\'><img src='assets/theme1/img/usr_edt.gif' border='0' /></a><a href='org.aspx?SDID=" + data.d[i].DepartmentID + "&Rnd=" + rndNum + "&DeleteUID=" + data.d[i].UserID + "\'><img src='assets/theme1/img/usr_del.gif' border='0' /></a></td> " +
                                             "<td style='background-color:#FFF7D6' align='center'></td>" +
                                             "<td style='background-color:#FFF7D6'>&nbsp;</td>" +
-                                            "<td align='center' style='font-size:9px; background-color:#FFF7D6' colspan='2'>&nbsp;Yes, " + $(this).find('Sent').text().substring(0,10).replace(/-/gi,'') + ", <a href='org.aspx?SendSPIID=" + $(this).find('UserID').text() + "&SDID=" + $(this).find('DepartmentID').text() + "&Rnd=" + rndNum + "\'>Resend</a>&nbsp;</td>" +
+                                            "<td align='center' style='font-size:9px; background-color:#FFF7D6' colspan='2'>&nbsp; " + ConvertJsonDateString(data.d[i].Sent) + " <a href='org.aspx?SendSPIID=" + data.d[i].UserID + "&SDID=" + data.d[i].DepartmentID + "&Rnd=" + rndNum + "\'>Resend</a>&nbsp;</td>" +
                                             "<td align='center' style='font-size:9px; background-color:#FFF7D6' colspan='2'></td>" +
                                             "</tr >";
-                                        var lamisa = document.getElementById("tableOrg");
-                                        var newRow = lamisa.insertRow(idx);
+                                        var tableorgId = document.getElementById("tableOrg");
+                                        var newRow = tableorgId.insertRow(idx);
                                         newRow.id = "departmentUsers";
                                         newRow.innerHTML = str;
-                                    });
+                                    }
                                 }
                             }); 
                         }
