@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="HW_Grp_WebService_Soap" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">https://dev-grpws.healthwatch.se/Default.asmx</Value>
+      <Value Profile="(Default)">https://dev-grpws.healthwatch.se/default.asmx</Value>
     </Setting>
   </Settings>
 </SettingsFile>

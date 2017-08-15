@@ -34,9 +34,13 @@ namespace HW.Grp.WebService {
         
         private System.Threading.SendOrPostCallback SuperAdminTokenOperationCompleted;
         
-        private System.Threading.SendOrPostCallback ManagerLogOutOperationCompleted;
+        private System.Threading.SendOrPostCallback GetDepartmentTreeOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GetReportImageUrlOperationCompleted;
+        private System.Threading.SendOrPostCallback GetUsersInDepartmentOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback GetUserInfoOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback ManagerLogOutOperationCompleted;
         
         private bool useDefaultCredentialsSetExplicitly;
         
@@ -83,19 +87,25 @@ namespace HW.Grp.WebService {
         public event SuperAdminTokenCompletedEventHandler SuperAdminTokenCompleted;
         
         /// <remarks/>
+        public event GetDepartmentTreeCompletedEventHandler GetDepartmentTreeCompleted;
+        
+        /// <remarks/>
+        public event GetUsersInDepartmentCompletedEventHandler GetUsersInDepartmentCompleted;
+        
+        /// <remarks/>
+        public event GetUserInfoCompletedEventHandler GetUserInfoCompleted;
+        
+        /// <remarks/>
         public event ManagerLogOutCompletedEventHandler ManagerLogOutCompleted;
         
         /// <remarks/>
-        public event GetReportImageUrlCompletedEventHandler GetReportImageUrlCompleted;
-        
-        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ManagerLogin", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public SponsorAdminstrator ManagerLogin(string username, string password, int expirationMinutes) {
+        public SponsorAdministrator ManagerLogin(string username, string password, int expirationMinutes) {
             object[] results = this.Invoke("ManagerLogin", new object[] {
                         username,
                         password,
                         expirationMinutes});
-            return ((SponsorAdminstrator)(results[0]));
+            return ((SponsorAdministrator)(results[0]));
         }
         
         /// <remarks/>
@@ -123,12 +133,12 @@ namespace HW.Grp.WebService {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/SuperAdminToken", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public SponsorAdminstrator SuperAdminToken(string token, int sponsorID, int expirationMinutes) {
+        public SponsorAdministrator SuperAdminToken(string token, int sponsorID, int expirationMinutes) {
             object[] results = this.Invoke("SuperAdminToken", new object[] {
                         token,
                         sponsorID,
                         expirationMinutes});
-            return ((SponsorAdminstrator)(results[0]));
+            return ((SponsorAdministrator)(results[0]));
         }
         
         /// <remarks/>
@@ -151,6 +161,105 @@ namespace HW.Grp.WebService {
             if ((this.SuperAdminTokenCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.SuperAdminTokenCompleted(this, new SuperAdminTokenCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetDepartmentTree", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public DepartmentTree GetDepartmentTree(string token, int expirationMinutes) {
+            object[] results = this.Invoke("GetDepartmentTree", new object[] {
+                        token,
+                        expirationMinutes});
+            return ((DepartmentTree)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetDepartmentTreeAsync(string token, int expirationMinutes) {
+            this.GetDepartmentTreeAsync(token, expirationMinutes, null);
+        }
+        
+        /// <remarks/>
+        public void GetDepartmentTreeAsync(string token, int expirationMinutes, object userState) {
+            if ((this.GetDepartmentTreeOperationCompleted == null)) {
+                this.GetDepartmentTreeOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetDepartmentTreeOperationCompleted);
+            }
+            this.InvokeAsync("GetDepartmentTree", new object[] {
+                        token,
+                        expirationMinutes}, this.GetDepartmentTreeOperationCompleted, userState);
+        }
+        
+        private void OnGetDepartmentTreeOperationCompleted(object arg) {
+            if ((this.GetDepartmentTreeCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetDepartmentTreeCompleted(this, new GetDepartmentTreeCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetUsersInDepartment", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public User[] GetUsersInDepartment(string token, int sponsorID, int departmentID, int expirationMinutes) {
+            object[] results = this.Invoke("GetUsersInDepartment", new object[] {
+                        token,
+                        sponsorID,
+                        departmentID,
+                        expirationMinutes});
+            return ((User[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetUsersInDepartmentAsync(string token, int sponsorID, int departmentID, int expirationMinutes) {
+            this.GetUsersInDepartmentAsync(token, sponsorID, departmentID, expirationMinutes, null);
+        }
+        
+        /// <remarks/>
+        public void GetUsersInDepartmentAsync(string token, int sponsorID, int departmentID, int expirationMinutes, object userState) {
+            if ((this.GetUsersInDepartmentOperationCompleted == null)) {
+                this.GetUsersInDepartmentOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetUsersInDepartmentOperationCompleted);
+            }
+            this.InvokeAsync("GetUsersInDepartment", new object[] {
+                        token,
+                        sponsorID,
+                        departmentID,
+                        expirationMinutes}, this.GetUsersInDepartmentOperationCompleted, userState);
+        }
+        
+        private void OnGetUsersInDepartmentOperationCompleted(object arg) {
+            if ((this.GetUsersInDepartmentCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetUsersInDepartmentCompleted(this, new GetUsersInDepartmentCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetUserInfo", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public User GetUserInfo(string token, int userID, int expirationMinutes) {
+            object[] results = this.Invoke("GetUserInfo", new object[] {
+                        token,
+                        userID,
+                        expirationMinutes});
+            return ((User)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetUserInfoAsync(string token, int userID, int expirationMinutes) {
+            this.GetUserInfoAsync(token, userID, expirationMinutes, null);
+        }
+        
+        /// <remarks/>
+        public void GetUserInfoAsync(string token, int userID, int expirationMinutes, object userState) {
+            if ((this.GetUserInfoOperationCompleted == null)) {
+                this.GetUserInfoOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetUserInfoOperationCompleted);
+            }
+            this.InvokeAsync("GetUserInfo", new object[] {
+                        token,
+                        userID,
+                        expirationMinutes}, this.GetUserInfoOperationCompleted, userState);
+        }
+        
+        private void OnGetUserInfoOperationCompleted(object arg) {
+            if ((this.GetUserInfoCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetUserInfoCompleted(this, new GetUserInfoCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -184,57 +293,6 @@ namespace HW.Grp.WebService {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetReportImageUrl", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public ListURL[] GetReportImageUrl(string token, System.DateTime startDate, System.DateTime endDate, int LID, int sponsorAdminID, int sponsorID, int groupBy, string projectRoundUnit, int grouping, int anonymized, int departmentSelected, int expirationMinutes) {
-            object[] results = this.Invoke("GetReportImageUrl", new object[] {
-                        token,
-                        startDate,
-                        endDate,
-                        LID,
-                        sponsorAdminID,
-                        sponsorID,
-                        groupBy,
-                        projectRoundUnit,
-                        grouping,
-                        anonymized,
-                        departmentSelected,
-                        expirationMinutes});
-            return ((ListURL[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void GetReportImageUrlAsync(string token, System.DateTime startDate, System.DateTime endDate, int LID, int sponsorAdminID, int sponsorID, int groupBy, string projectRoundUnit, int grouping, int anonymized, int departmentSelected, int expirationMinutes) {
-            this.GetReportImageUrlAsync(token, startDate, endDate, LID, sponsorAdminID, sponsorID, groupBy, projectRoundUnit, grouping, anonymized, departmentSelected, expirationMinutes, null);
-        }
-        
-        /// <remarks/>
-        public void GetReportImageUrlAsync(string token, System.DateTime startDate, System.DateTime endDate, int LID, int sponsorAdminID, int sponsorID, int groupBy, string projectRoundUnit, int grouping, int anonymized, int departmentSelected, int expirationMinutes, object userState) {
-            if ((this.GetReportImageUrlOperationCompleted == null)) {
-                this.GetReportImageUrlOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetReportImageUrlOperationCompleted);
-            }
-            this.InvokeAsync("GetReportImageUrl", new object[] {
-                        token,
-                        startDate,
-                        endDate,
-                        LID,
-                        sponsorAdminID,
-                        sponsorID,
-                        groupBy,
-                        projectRoundUnit,
-                        grouping,
-                        anonymized,
-                        departmentSelected,
-                        expirationMinutes}, this.GetReportImageUrlOperationCompleted, userState);
-        }
-        
-        private void OnGetReportImageUrlOperationCompleted(object arg) {
-            if ((this.GetReportImageUrlCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GetReportImageUrlCompleted(this, new GetReportImageUrlCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
         public new void CancelAsync(object userState) {
             base.CancelAsync(userState);
         }
@@ -259,7 +317,7 @@ namespace HW.Grp.WebService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
-    public partial class SponsorAdminstrator : BaseModel {
+    public partial class SponsorAdministrator : BaseModel {
         
         private System.DateTime tokenExpiresField;
         
@@ -392,8 +450,9 @@ namespace HW.Grp.WebService {
     }
     
     /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(User))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Sponsors))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SponsorAdminstrator))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SponsorAdministrator))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -432,29 +491,337 @@ namespace HW.Grp.WebService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
-    public partial class ListURL {
+    public partial class Department {
         
-        private int idField;
+        private string tokenField;
         
-        private string urlField;
+        private int sponsorIDField;
+        
+        private string sponsorNameField;
+        
+        private int departmentIdField;
+        
+        private string departmentNameField;
+        
+        private int depthField;
+        
+        private int totalActiveField;
+        
+        private int activeField;
+        
+        private int subTotalField;
+        
+        private int totalField;
+        
+        private string firstInviteSentField;
+        
+        private string receiveInvitationField;
+        
+        private string departmentShortField;
+        
+        private int depthXField;
         
         /// <remarks/>
-        public int Id {
+        public string Token {
             get {
-                return this.idField;
+                return this.tokenField;
             }
             set {
-                this.idField = value;
+                this.tokenField = value;
             }
         }
         
         /// <remarks/>
-        public string Url {
+        public int SponsorID {
             get {
-                return this.urlField;
+                return this.sponsorIDField;
             }
             set {
-                this.urlField = value;
+                this.sponsorIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string SponsorName {
+            get {
+                return this.sponsorNameField;
+            }
+            set {
+                this.sponsorNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int DepartmentId {
+            get {
+                return this.departmentIdField;
+            }
+            set {
+                this.departmentIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string DepartmentName {
+            get {
+                return this.departmentNameField;
+            }
+            set {
+                this.departmentNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int Depth {
+            get {
+                return this.depthField;
+            }
+            set {
+                this.depthField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int TotalActive {
+            get {
+                return this.totalActiveField;
+            }
+            set {
+                this.totalActiveField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int Active {
+            get {
+                return this.activeField;
+            }
+            set {
+                this.activeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int SubTotal {
+            get {
+                return this.subTotalField;
+            }
+            set {
+                this.subTotalField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int Total {
+            get {
+                return this.totalField;
+            }
+            set {
+                this.totalField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string FirstInviteSent {
+            get {
+                return this.firstInviteSentField;
+            }
+            set {
+                this.firstInviteSentField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ReceiveInvitation {
+            get {
+                return this.receiveInvitationField;
+            }
+            set {
+                this.receiveInvitationField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string DepartmentShort {
+            get {
+                return this.departmentShortField;
+            }
+            set {
+                this.departmentShortField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int DepthX {
+            get {
+                return this.depthXField;
+            }
+            set {
+                this.depthXField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class DepartmentTree {
+        
+        private int sponsorIDField;
+        
+        private int totalCountField;
+        
+        private string totalCountReceiveInvitationField;
+        
+        private Department[] departmentsField;
+        
+        /// <remarks/>
+        public int SponsorID {
+            get {
+                return this.sponsorIDField;
+            }
+            set {
+                this.sponsorIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int TotalCount {
+            get {
+                return this.totalCountField;
+            }
+            set {
+                this.totalCountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string TotalCountReceiveInvitation {
+            get {
+                return this.totalCountReceiveInvitationField;
+            }
+            set {
+                this.totalCountReceiveInvitationField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public Department[] Departments {
+            get {
+                return this.departmentsField;
+            }
+            set {
+                this.departmentsField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class User : BaseModel {
+        
+        private System.Nullable<System.DateTime> sentField;
+        
+        private string emailField;
+        
+        private int departmentIDField;
+        
+        private int userIDField;
+        
+        private System.Nullable<System.DateTime> stoppedField;
+        
+        private int stoppedReasonField;
+        
+        private string internalField;
+        
+        private string personNumberField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> Sent {
+            get {
+                return this.sentField;
+            }
+            set {
+                this.sentField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Email {
+            get {
+                return this.emailField;
+            }
+            set {
+                this.emailField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int DepartmentID {
+            get {
+                return this.departmentIDField;
+            }
+            set {
+                this.departmentIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int UserID {
+            get {
+                return this.userIDField;
+            }
+            set {
+                this.userIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> Stopped {
+            get {
+                return this.stoppedField;
+            }
+            set {
+                this.stoppedField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int StoppedReason {
+            get {
+                return this.stoppedReasonField;
+            }
+            set {
+                this.stoppedReasonField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Internal {
+            get {
+                return this.internalField;
+            }
+            set {
+                this.internalField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string PersonNumber {
+            get {
+                return this.personNumberField;
+            }
+            set {
+                this.personNumberField = value;
             }
         }
     }
@@ -477,10 +844,10 @@ namespace HW.Grp.WebService {
         }
         
         /// <remarks/>
-        public SponsorAdminstrator Result {
+        public SponsorAdministrator Result {
             get {
                 this.RaiseExceptionIfNecessary();
-                return ((SponsorAdminstrator)(this.results[0]));
+                return ((SponsorAdministrator)(this.results[0]));
             }
         }
     }
@@ -503,10 +870,88 @@ namespace HW.Grp.WebService {
         }
         
         /// <remarks/>
-        public SponsorAdminstrator Result {
+        public SponsorAdministrator Result {
             get {
                 this.RaiseExceptionIfNecessary();
-                return ((SponsorAdminstrator)(this.results[0]));
+                return ((SponsorAdministrator)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void GetDepartmentTreeCompletedEventHandler(object sender, GetDepartmentTreeCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetDepartmentTreeCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetDepartmentTreeCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public DepartmentTree Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((DepartmentTree)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void GetUsersInDepartmentCompletedEventHandler(object sender, GetUsersInDepartmentCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetUsersInDepartmentCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetUsersInDepartmentCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public User[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((User[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void GetUserInfoCompletedEventHandler(object sender, GetUserInfoCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetUserInfoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetUserInfoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public User Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((User)(this.results[0]));
             }
         }
     }
@@ -533,32 +978,6 @@ namespace HW.Grp.WebService {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
-    public delegate void GetReportImageUrlCompletedEventHandler(object sender, GetReportImageUrlCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GetReportImageUrlCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal GetReportImageUrlCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public ListURL[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((ListURL[])(this.results[0]));
             }
         }
     }

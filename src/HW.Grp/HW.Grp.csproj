@@ -39,6 +39,31 @@
     <WarningLevel>4</WarningLevel>
     <DeployEncryptKey>Encryption password is used only if any deployment setting is marked as secure</DeployEncryptKey>
     <PlatformTarget>x86</PlatformTarget>
+    <PublishDatabaseSettings>
+      <Objects>
+        <ObjectGroup Name="eForm-Deployment" Order="1">
+          <Destination Path="" />
+          <Object Type="DbFullSql">
+            <PreSource Path="database=eform%3bserver=DESKTOP-KGCMQE4\MSSQLSERVER2%3buser=sa%3bpwd=deg%3b" ScriptSchema="False" ScriptData="True" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\eForm-Deployment_DataOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+        <ObjectGroup Name="healthWatch-Deployment" Order="2">
+          <Destination Path="" />
+          <Object Type="DbFullSql">
+            <PreSource Path="database=healthwatch%3bserver=DESKTOP-KGCMQE4\MSSQLSERVER2%3buser=sa%3bpwd=deg%3b" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\healthWatch-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+        <ObjectGroup Name="SqlConnection-Deployment" Order="3">
+          <Destination Path="" />
+          <Object Type="DbFullSql">
+            <PreSource Path="database=healthwatch%3bserver=DESKTOP-KGCMQE4\MSSQLSERVER2%3buser=sa%3bpwd=deg%3b" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\SqlConnection-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+      </Objects>
+    </PublishDatabaseSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -364,6 +389,7 @@
     <Content Include="assets\ui\jquery.ui.theme.css" />
     <Content Include="assets\ui\jquery.ui.widget.js" />
     <Content Include="assets\ui\text_expand.js" />
+    <Content Include="sql.aspx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -684,7 +710,6 @@
     <Content Include="SavedExerciseShow.aspx" />
     <Content Include="Service.aspx" />
     <Content Include="Settings.aspx" />
-    <Content Include="sql.aspx" />
     <Content Include="Stats.aspx" />
     <Content Include="SuperAdmin.aspx" />
     <Content Include="SuperExport.aspx" />
@@ -975,6 +1000,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
+    <Compile Include="Web References\WebService\Reference.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\GRP-Webservice\HW.Grp.WebService\HW.Grp.WebService.csproj">
+      <Project>{00E6ACDE-4463-45E4-BCC4-7D4FCDEAFB6C}</Project>
+      <Name>HW.Grp.WebService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HW.Core\HW.Core.csproj">
+      <Project>{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}</Project>
+      <Name>HW.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\de-DE.resx" />
@@ -1000,6 +1036,10 @@
     <Content Include="Web References\WebService\SponsorAdminstrator.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
+    <Content Include="Web References\WebService\DepartmentTree.datasource" />
+    <Content Include="Web References\WebService\Reference.map" />
+    <Content Include="Web References\WebService\SponsorAdministrator.datasource" />
+    <Content Include="Web References\WebService\User.datasource" />
     <None Include="~etc\assets\css\main.css" />
     <None Include="~etc\assets\~etc\plasm\javascript\demo1.js" />
     <None Include="packages.config" />
@@ -1009,6 +1049,10 @@
       <Project>{c7b845fd-7d23-42ef-9ea7-521a83c4ef60}</Project>
       <Name>HW.Core</Name>
     </ProjectReference>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
