@@ -404,21 +404,16 @@ namespace HW.Grp
 
 		void ExecuteClick(object sender, EventArgs e)
 		{
-//			int selectedProjectRoundUnitID = Convert.ToInt32(ProjectRoundUnitID.SelectedValue);
 			int grouping = Convert.ToInt32(Grouping.SelectedValue);
 			
 			if (departments.Count > 0) {
-//				int selectedDepartmentID = departments[0].Id;
-//				var reportParts = reportRepository.FindByProjectAndLanguage2(selectedProjectRoundUnitID, lid, selectedDepartmentID);
-//				if (reportParts.Count <= 0) {
-//					reportParts = reportRepository.FindByProjectAndLanguage(selectedProjectRoundUnitID, lid);
-//				}
 				var reportParts = GetReportParts(ProjectRoundUnitID.SelectedValue);
 				SetReportPartLanguages(reportParts, GetUrlModels(grouping));
 			}
 
-            // generate HTML File for the statistic image.
-
+            /// <summary>
+            /// Generate HTML File to display in Statistic image.
+            /// </summary>
             String imageBuilder = "";
             
             if (reportParts != null && reportParts.Count > 0)
@@ -530,6 +525,10 @@ namespace HW.Grp
                     imageBuilder += "</div>";
                 }
 
+                /// <summary>
+                /// Initializing GRP-WS and call GetReportImageUrl webmethod.
+                /// </summary>
+                /// <returns>List of Statistic Image URLs</returns>
                 var soapService = new Grp.WebService.Soap();
                 var soapResponse = soapService.GetReportImageUrl(
                     Session["Token"].ToString(), 
@@ -544,7 +543,9 @@ namespace HW.Grp
                     Convert.ToInt32(Session["Anonymize"]), 
                     20);
 
-                // display images from url
+                /// <summary>
+                /// Display image to Statistic page.
+                /// </summary>
                 foreach (var r in reportParts)
                 {
                     imageBuilder += "<div> &nbsp;<br/>";
@@ -559,7 +560,6 @@ namespace HW.Grp
                     imageBuilder += "<div class=\"report-part-content\">";
                     if (r is ReportPartLang)
                     {
-                        //string imageUrl = GetReportImageUrlForReportPart(r.ReportPart.Id, r.Id, additionalQuery);
                         imageBuilder += "<span class=\"hidden hidden-image-url\">" + soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0] + "</span>";
                         imageBuilder += "<img class=\"report-part-graph\" src=" + soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0] + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)) + " alt=\"\"/>";
                         imageBuilder += "<div class=\"action\">";
@@ -597,7 +597,6 @@ namespace HW.Grp
                     }
                     else
                     {
-                        //string imageUrl = GetReportImageUrlForSponsorProject(r.Id, additionalQuery);
                         imageBuilder += "<span class=\"hidden hidden-image-url\">" + soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0] + "</span>";
                         imageBuilder += "<img class=\"report-part-graph\" src=" + soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0] + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)) + " alt=\"\" />";
                         imageBuilder += "<div class=\"action\">";
