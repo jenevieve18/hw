@@ -265,11 +265,17 @@ namespace HW.Grp
                 lid = userSession.Lang;
             }
 
+
             plotTypes = plotRepository.FindByLanguage(lid);
 			
 			SaveAdminSession(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Statistics, DateTime.Now);
 			
 			Index(sponsorID, sponsorAdminID);
+
+            if(reportParts == null)
+            {
+                StatisticImage.Text = "";
+            }
 
 			Execute.Click += new EventHandler(ExecuteClick);
 			ProjectRoundUnitID.SelectedIndexChanged += new EventHandler(ProjectRoundUnitSelectedIndexChanged);
