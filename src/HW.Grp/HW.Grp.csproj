@@ -1000,17 +1000,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
-    <Compile Include="Web References\WebService\Reference.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\GRP-Webservice\HW.Grp.WebService\HW.Grp.WebService.csproj">
-      <Project>{00E6ACDE-4463-45E4-BCC4-7D4FCDEAFB6C}</Project>
-      <Name>HW.Grp.WebService</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HW.Core\HW.Core.csproj">
-      <Project>{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}</Project>
-      <Name>HW.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\de-DE.resx" />
@@ -1026,6 +1015,9 @@
   <ItemGroup>
     <Content Include="Layout.Master" />
     <None Include="Web References\WebService\Default.wsdl" />
+    <Content Include="Web References\WebService\DepartmentTree.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
     <Content Include="Web References\WebService\ListURL.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
@@ -1033,13 +1025,12 @@
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="Web References\WebService\SponsorAdminstrator.datasource">
+    <Content Include="Web References\WebService\SponsorAdministrator.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
-    <Content Include="Web References\WebService\DepartmentTree.datasource" />
-    <Content Include="Web References\WebService\Reference.map" />
-    <Content Include="Web References\WebService\SponsorAdministrator.datasource" />
-    <Content Include="Web References\WebService\User.datasource" />
+    <Content Include="Web References\WebService\User.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
     <None Include="~etc\assets\css\main.css" />
     <None Include="~etc\assets\~etc\plasm\javascript\demo1.js" />
     <None Include="packages.config" />
@@ -1049,6 +1040,11 @@
       <Project>{c7b845fd-7d23-42ef-9ea7-521a83c4ef60}</Project>
       <Name>HW.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HW.Core\HW.Core.csproj">
+      <Project>{c7b845fd-7d23-42ef-9ea7-521a83c4ef60}</Project>
+      <Name>HW.Core</Name>
+    </ProjectReference>
+    <WebReferences Include="Web References\" />
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
@@ -1058,13 +1054,10 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferences Include="Web References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WebReferenceUrl Include="https://dev-grpws.healthwatch.se/Default.asmx">
+    <WebReferenceUrl Include="http://localhost:53850/Default.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\WebService\</RelPath>
-      <UpdateFromURL>https://dev-grpws.healthwatch.se/Default.asmx</UpdateFromURL>
+      <UpdateFromURL>http://localhost:53850/Default.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>

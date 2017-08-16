@@ -11,12 +11,16 @@ using HW.Core.Helpers;
 using HW.Core.Models;
 using HW.Core.Repositories;
 using HW.Core.Repositories.Sql;
+using System.Text;
 
 namespace HW.Grp
 {
 	public partial class Stats : System.Web.UI.Page
 	{
-		SqlSponsorRepository sponsorRepo = new SqlSponsorRepository();
+
+        Grp.WebService.Soap service = new WebService.Soap();
+
+        SqlSponsorRepository sponsorRepo = new SqlSponsorRepository();
 		SqlSponsorProjectRepository sponsorProjectRepo = new SqlSponsorProjectRepository();
 		SqlSponsorBQRepository sponsorBQRepo = new SqlSponsorBQRepository();
 		SqlSponsorProjectRoundUnitRepository sponsorProjectRoundUnitRepo = new SqlSponsorProjectRoundUnitRepository();
@@ -44,7 +48,7 @@ namespace HW.Grp
 		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
 		protected Sponsor sponsor;
-		
+
 		public IList<SponsorProjectRoundUnit> SponsorProjectRoundUnits {
 			set {
 				ProjectRoundUnitID.Items.Clear();
@@ -219,10 +223,10 @@ namespace HW.Grp
 					Grouping.Items.Add(new ListItem(R.Str(lid, "users.unit", "Users on unit"), "1"));
 					Grouping.Items.Add(new ListItem(R.Str(lid, "users.unit.subunit", "Users on unit+subunits"), "2"));
 					Grouping.Items.Add(new ListItem(R.Str(lid, "background.variable", "Background variable"), "3"));
-					
-					SponsorProjectRoundUnits = sponsorRepo.FindBySponsorAndLanguage(sponsorID, lid);
-					
-					SponsorProjects = sponsorProjectRepo.FindSponsorProjects(sponsorID);
+
+                    SponsorProjectRoundUnits = sponsorRepo.FindBySponsorAndLanguage(sponsorID, lid);
+
+                    SponsorProjects = sponsorProjectRepo.FindSponsorProjects(sponsorID);
 
 					BackgroundQuestions = sponsorBQRepo.FindBySponsor(sponsorID);
 				} else {
@@ -250,17 +254,18 @@ namespace HW.Grp
 		{
 			sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
 			sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
-			
-			HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Statistics), "default.aspx", true);
-			
-			sponsor = sponsorRepo.Read(sponsorID);
-			
-			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
-			if (userSession != null) {
-				lid = userSession.Lang;
-			}
-			
-			plotTypes = plotRepository.FindByLanguage(lid);
+
+            HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Statistics), "default.aspx", true);
+
+            sponsor = sponsorRepo.Read(sponsorID);
+
+            var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+            if (userSession != null)
+            {
+                lid = userSession.Lang;
+            }
+
+            plotTypes = plotRepository.FindByLanguage(lid);
 			
 			SaveAdminSession(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Statistics, DateTime.Now);
 			
@@ -411,9 +416,235 @@ namespace HW.Grp
 				var reportParts = GetReportParts(ProjectRoundUnitID.SelectedValue);
 				SetReportPartLanguages(reportParts, GetUrlModels(grouping));
 			}
-		}
-		
-		IList<IReportPart> GetReportParts(string project)
+
+            // generate HTML File for the statistic image.
+
+            String imageBuilder = "";
+            
+            if (reportParts != null && reportParts.Count > 0)
+            {
+                Q additionalQuery = GetGID(urlModels);
+                bool forSingleSeries = (SelectedDepartments.Count <= 1 && (Grouping.SelectedValue == "1" || Grouping.SelectedValue == "2")) || Grouping.SelectedValue == "0";
+                imageBuilder += "<div class=\"report-parts\">";
+                if (reportParts[0] is ReportPartLang)
+                {
+                imageBuilder += "<div class=\"action\">";
+                imageBuilder += "<div class=\"chart-descriptions\" title=" + R.Str(lid, "chart.description", "Chart Descriptions") + ">";
+                imageBuilder += "<div>";
+                    foreach (var p in plotTypes)
+                    {
+                        imageBuilder += "<div>&nbsp;<br /></div>";
+                        imageBuilder += "<div class=\"report -part\">";
+                        imageBuilder += "<div class=\"report -part-subject\">";
+                        imageBuilder += "<span>" + p.ShortName + " - " + p.Name  + "</span>";
+                        imageBuilder += "<span class=\"toggle toggle-right toggle-active\"></span></div>";
+                        imageBuilder += "<div class=\"report-part-header\">" + p.Description + "</div></div>";
+                    };
+                    imageBuilder += "</div>";
+                    imageBuilder += "</div>";
+                    imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.change.all", "Change all graphs to:") + "</span>";
+                    imageBuilder += "<select class=\"plot-types small\">";
+                    foreach (var p in plotTypes)
+                    { 
+                        if (!p.SupportsMultipleSeries && !forSingleSeries) { } 
+                        else
+                           {
+                                imageBuilder += "<option value = " + p.PlotType.Id.ToString() + (p.PlotType.Id == sponsor.DefaultPlotType ? "selected" : "" )+">" + p.ShortName + "</ option >";
+                           }
+                    };
+                    imageBuilder += "</select>";
+                    imageBuilder += "<span class=\"chart-descriptions-info\"></span>";
+                    imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.export.all", "Export all graphs to:") + "</span>";
+                    imageBuilder += "<span class=\"button white small export\">";
+                    string exportAllDocXUrl = GetExportAllUrl("docx", additionalQuery);
+                    imageBuilder += "<span class=\"hidden hidden-exportall-docx-url\">" + exportAllDocXUrl + "</span>";
+                    imageBuilder += HtmlHelper.Anchor("docx", exportAllDocXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='exportall-docx-url' target='_blank'");
+                    imageBuilder += "</span>";
+                    imageBuilder += "<span class=\"button white small export\">";
+                    string exportAllPptxUrl = GetExportAllUrl("pptx", additionalQuery);
+                    imageBuilder += "<span class=\"hidden hidden-exportall-pptx-url\">" + exportAllPptxUrl + "</span>";
+                    imageBuilder += HtmlHelper.Anchor("pptx", exportAllPptxUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='exportall-pptx-url' target='_blank'");
+                    imageBuilder += "</span>";
+                    string exportAllXlsUrl = GetExportAllUrl("xls", additionalQuery);
+                    imageBuilder += "<span class=\"button white small export\">";
+                    imageBuilder += "<span class=\"hidden hidden-exportall-xls-url\">" + exportAllXlsUrl + "</span>";
+                    imageBuilder += HtmlHelper.Anchor("xls", exportAllXlsUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='exportall-xls-url' target='_blank'");
+                    imageBuilder += "</span>";
+                    imageBuilder += "<span class=\"button white small export\">";
+                    imageBuilder += HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportAllXlsUrl + "&PLOT=" + PlotType.Verbose, "class='exportall-xls-verbose-url' target='_blank'");
+                    imageBuilder += "</span>";
+                    imageBuilder += "</div>";
+                }
+                else
+                {
+                    imageBuilder += "<div class=\"action\">";
+                    imageBuilder += "<div class=\"chart-descriptions\" title=" + R.Str(lid, "chart.description", "Chart Descriptions") + ">";
+                    imageBuilder += "<div>";
+                        foreach (var p in plotTypes)
+                        {
+                            imageBuilder += "<div>&nbsp;<br />";
+                            imageBuilder += "</div>";
+                            imageBuilder += "<div class=\"report-part\">";
+                            imageBuilder += "<div class=\"report-part-subject\">";
+                            imageBuilder += "<span>" + p.ShortName + " - " + p.Name + "</span>";
+                            imageBuilder += "<span class=\"toggle toggle-right toggle-active\"></span>";
+                            imageBuilder += "</div>";
+                            imageBuilder += "<div class=\"report-part-header\">" + p.Description + "</div>";
+                            imageBuilder += "</div>";
+                        };
+                    imageBuilder += "</div>";
+                    imageBuilder += "</div>";
+                    imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.change.all", "Change all graphs to:") + "</span>";
+                    imageBuilder += "<select class=\"plot-types small\">";
+                    var xxx = lid == 1 ? new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Linje", SupportsMultipleSeries = true } :
+                                   new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Line", SupportsMultipleSeries = true };
+                    foreach (var p in new PlotTypeLanguage[] { xxx })
+                       { 
+                    if (!p.SupportsMultipleSeries && !forSingleSeries) { }
+                    else
+                       {
+                            imageBuilder += "<option value = " + p.PlotType.Id.ToString() + (p.PlotType.Id == sponsor.DefaultPlotType ? "selected" : "") + ">" + p.ShortName + "</option>";
+                       } 
+                    };
+                    imageBuilder += "</select>";
+                    imageBuilder += "<span class=\"chart-descriptions-info\"></span>";
+                    imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.export.all", "Export all graphs to:") + "</span>";
+                    imageBuilder += "<span class=\"button white small export\">";
+                    string exportAllDocXUrl = GetExportAllUrl2("docx", additionalQuery);
+                    imageBuilder += "<span class=\"hidden hidden-exportall-docx-url\">" + exportAllDocXUrl + "</span>";
+                    imageBuilder += HtmlHelper.Anchor("docx", exportAllDocXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='exportall-docx-url' target='_blank'");
+                    imageBuilder += "</span>";
+                    imageBuilder += "<span class=\"button white small export\">";
+                    string exportAllPptxUrl = GetExportAllUrl2("pptx", additionalQuery);
+                    imageBuilder += "<span class=\"hidden hidden-exportall-pptx-url\">" + exportAllPptxUrl + "</span>";
+                    imageBuilder += HtmlHelper.Anchor("pptx", exportAllPptxUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='exportall-pptx-url' target='_blank'");
+                    imageBuilder += "</span>";
+                    string exportAllXlsUrl = GetExportAllUrl2("xls", additionalQuery);
+                    imageBuilder += "<span class=\"button white small export\">";
+                    imageBuilder += "<span class=\"hidden hidden-exportall-xls-url\">" + exportAllXlsUrl + "</span>";
+                    imageBuilder += HtmlHelper.Anchor("xls", exportAllXlsUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='exportall-xls-url' target='_blank'");
+                    imageBuilder += "</span>";
+                    imageBuilder += "<span class=\"button white small export\">";
+                    imageBuilder += HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportAllXlsUrl + "&PLOT=" + PlotType.Verbose, "class='exportall-xls-verbose-url' target='_blank'");
+                    imageBuilder += "</span>";
+                    imageBuilder += "</div>";
+                }
+
+                var soapService = new Grp.WebService.Soap();
+                var soapResponse = soapService.GetReportImageUrl(
+                    Session["Token"].ToString(), 
+                    startDate, 
+                    endDate, 
+                    lid, 
+                    sponsorAdminID, 
+                    sponsorID, 
+                    Convert.ToInt32(GroupBy.SelectedValue), 
+                    ProjectRoundUnitID.SelectedValue, 
+                    Convert.ToInt32(Grouping.SelectedValue), 
+                    Convert.ToInt32(Session["Anonymize"]), 
+                    20);
+
+                // display images from url
+                foreach (var r in reportParts)
+                {
+                    imageBuilder += "<div> &nbsp;<br/>";
+                    imageBuilder += "</div>";
+                    imageBuilder += "<div class=\"report-part\">";
+                    imageBuilder += "<div class=\"hidden selected-plot-type\">" + PlotType.Line + "</div>";
+                    imageBuilder += "<div class=\"report-part-subject\">";
+                    imageBuilder += "<span>" + r.Subject + "</span>";
+                    imageBuilder += "<span class=\"toggle toggle-right toggle-active\"></span>";
+                    imageBuilder += "</div>";
+                    imageBuilder += "<div class=\"report-part-header\">" + r.Header  + "</div>";
+                    imageBuilder += "<div class=\"report-part-content\">";
+                    if (r is ReportPartLang)
+                    {
+                        //string imageUrl = GetReportImageUrlForReportPart(r.ReportPart.Id, r.Id, additionalQuery);
+                        imageBuilder += "<span class=\"hidden hidden-image-url\">" + soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0] + "</span>";
+                        imageBuilder += "<img class=\"report-part-graph\" src=" + soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0] + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)) + " alt=\"\"/>";
+                        imageBuilder += "<div class=\"action\">";
+                        imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.change", "Change this graph to:") + "</span>";
+                        imageBuilder += "<select class=\"plot-types small\">";
+                            foreach (var p in plotTypes)
+                               { 
+                            if (!p.SupportsMultipleSeries && !forSingleSeries) { } 
+                            else
+                                {
+                                imageBuilder += "<option value = " + p.PlotType.Id.ToString() +  (p.PlotType.Id == sponsor.DefaultPlotType ? "selected" : "") + ">" + p.ShortName + "</ option >";
+                                } 
+                            };
+                        imageBuilder += "</select>";
+                        imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.export", "Export this graph to:") + "</span>";
+                        imageBuilder += "<span class=\"button white small export\">";
+                        string exportDocXUrl = GetExportUrl(r.ReportPart.Id, r.Id, "docx", additionalQuery);
+                        imageBuilder += "<span class=\"hidden hidden-export-docx-url\">" + exportDocXUrl + "</span>";
+                        imageBuilder += HtmlHelper.Anchor("docx", exportDocXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-docx-url' target='_blank'");
+                        imageBuilder += "</span>";
+                        imageBuilder += "<span class=\"button white small export\">";
+                        string exportPptXUrl = GetExportUrl(r.ReportPart.Id, r.Id, "pptx", additionalQuery);
+                        imageBuilder += "<span class=\"hidden hidden-export-pptx-url\">"+ exportPptXUrl + "</span>";
+                        imageBuilder += HtmlHelper.Anchor("pptx", exportPptXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-pptx-url' target='_blank'");
+                        imageBuilder += "</span>";
+                        string exportXlsUrl = GetExportUrl(r.ReportPart.Id, r.Id, "xls", additionalQuery);
+                        imageBuilder += "<span class=\"button white small export\">";
+                        imageBuilder += "<span class=\"hidden hidden-export-xls-url\">" + exportXlsUrl + "</span>";
+                        imageBuilder += HtmlHelper.Anchor("xls", exportXlsUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-xls-url' target='_blank'");
+                        imageBuilder += "</span>";
+                        imageBuilder += "<span class=\"button white small export\">";
+                        imageBuilder += HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportXlsUrl + "&PLOT=" + PlotType.Verbose, "class='export-xls-verbose-url' target='_blank'");
+                        imageBuilder += "</span>";
+                        imageBuilder += "</div>";
+                    }
+                    else
+                    {
+                        //string imageUrl = GetReportImageUrlForSponsorProject(r.Id, additionalQuery);
+                        imageBuilder += "<span class=\"hidden hidden-image-url\">" + soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0] + "</span>";
+                        imageBuilder += "<img class=\"report-part-graph\" src=" + soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0] + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)) + " alt=\"\" />";
+                        imageBuilder += "<div class=\"action\">";
+                        imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.change", "Change this graph to:") + "</span>";
+                        imageBuilder += "<select class=\"plot-types small\">";
+                            var xxx = lid == 1 ? new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Linje", SupportsMultipleSeries = true } :
+                                               new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Line", SupportsMultipleSeries = true }; 
+                            foreach (var p in new PlotTypeLanguage[] { xxx })
+                               { 
+                            if (!p.SupportsMultipleSeries && !forSingleSeries) { }
+                            else
+                               {
+                                imageBuilder += "<option value = " + p.PlotType.Id.ToString() + (p.PlotType.Id == sponsor.DefaultPlotType ? "selected" : "" ) + ">" + p.ShortName + "</option>";
+                               }
+                            };
+                        imageBuilder += "</select>";
+                        imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.export", "Export this graph to:") + "</span>";
+                        imageBuilder += "<span class=\"button white small export\">";
+                        string exportAllDocXUrl = GetExportAllUrl2("docx", additionalQuery);
+                        imageBuilder += "<span class=\"hidden hidden-export-docx-url\">" + exportAllDocXUrl + "</span>";
+                        imageBuilder += HtmlHelper.Anchor("docx", exportAllDocXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-docx-url' target='_blank'");
+                        imageBuilder += "</span>";
+                        imageBuilder += "<span class=\"button white small export\">";
+                        string exportAllPptxUrl = GetExportAllUrl2("pptx", additionalQuery);
+                        imageBuilder += "<span class=\"hidden hidden-export-pptx-url\">" + exportAllPptxUrl + "</span>";
+                        imageBuilder += HtmlHelper.Anchor("pptx", exportAllPptxUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-pptx-url' target='_blank'");
+                        imageBuilder += "</span>";
+                        string exportAllXlsUrl = GetExportAllUrl2("xls", additionalQuery);
+                        imageBuilder += "<span class=\"button white small export\">";
+                        imageBuilder += "<span class=\"hidden hidden-export-xls-url\">" + exportAllXlsUrl + "</span>";
+                        imageBuilder += HtmlHelper.Anchor("xls", exportAllXlsUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-xls-url' target='_blank'");
+                        imageBuilder += "</span>";
+                        imageBuilder += "<span class=\"button white small export\">";
+                        imageBuilder += HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportAllXlsUrl + "&PLOT=" + PlotType.Verbose, "class='exportall-xls-verbose-url' target='_blank'");
+                        imageBuilder += "</span>";
+                        imageBuilder += "</div>";
+                    }
+                    imageBuilder += "</div>";
+                    imageBuilder += "<div class=\"report -part-bottom\">&nbsp;</div>";
+                    imageBuilder += "</div>";
+                }
+            }
+            imageBuilder += "</div>";
+            StatisticImage.Text = imageBuilder;
+        }
+
+        IList<IReportPart> GetReportParts(string project)
 		{
 			var parts = new List<IReportPart>();
 			if (project.Contains("SPRU")) {
