@@ -198,6 +198,7 @@
             <s:element minOccurs="0" maxOccurs="1" name="projectRoundUnit" type="s:string" />
             <s:element minOccurs="1" maxOccurs="1" name="grouping" type="s:int" />
             <s:element minOccurs="1" maxOccurs="1" name="anonymized" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="selectedDepartment" type="s:string" />
             <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
           </s:sequence>
         </s:complexType>
@@ -327,6 +328,7 @@
     <wsdl:part name="projectRoundUnit" type="s:string" />
     <wsdl:part name="grouping" type="s:string" />
     <wsdl:part name="anonymized" type="s:string" />
+    <wsdl:part name="selectedDepartment" type="s:string" />
     <wsdl:part name="expirationMinutes" type="s:string" />
   </wsdl:message>
   <wsdl:message name="GetReportImageUrlHttpPostOut">

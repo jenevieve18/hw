@@ -299,7 +299,7 @@ namespace HW.Grp.WebService {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetReportImageUrl", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public ListURL[] GetReportImageUrl(string token, System.DateTime startDate, System.DateTime endDate, int LID, int sponsorAdminID, int sponsorID, int groupBy, string projectRoundUnit, int grouping, int anonymized, int expirationMinutes) {
+        public ListURL[] GetReportImageUrl(string token, System.DateTime startDate, System.DateTime endDate, int LID, int sponsorAdminID, int sponsorID, int groupBy, string projectRoundUnit, int grouping, int anonymized, string selectedDepartment, int expirationMinutes) {
             object[] results = this.Invoke("GetReportImageUrl", new object[] {
                         token,
                         startDate,
@@ -311,17 +311,18 @@ namespace HW.Grp.WebService {
                         projectRoundUnit,
                         grouping,
                         anonymized,
+                        selectedDepartment,
                         expirationMinutes});
             return ((ListURL[])(results[0]));
         }
         
         /// <remarks/>
-        public void GetReportImageUrlAsync(string token, System.DateTime startDate, System.DateTime endDate, int LID, int sponsorAdminID, int sponsorID, int groupBy, string projectRoundUnit, int grouping, int anonymized, int expirationMinutes) {
-            this.GetReportImageUrlAsync(token, startDate, endDate, LID, sponsorAdminID, sponsorID, groupBy, projectRoundUnit, grouping, anonymized, expirationMinutes, null);
+        public void GetReportImageUrlAsync(string token, System.DateTime startDate, System.DateTime endDate, int LID, int sponsorAdminID, int sponsorID, int groupBy, string projectRoundUnit, int grouping, int anonymized, string selectedDepartment, int expirationMinutes) {
+            this.GetReportImageUrlAsync(token, startDate, endDate, LID, sponsorAdminID, sponsorID, groupBy, projectRoundUnit, grouping, anonymized, selectedDepartment, expirationMinutes, null);
         }
         
         /// <remarks/>
-        public void GetReportImageUrlAsync(string token, System.DateTime startDate, System.DateTime endDate, int LID, int sponsorAdminID, int sponsorID, int groupBy, string projectRoundUnit, int grouping, int anonymized, int expirationMinutes, object userState) {
+        public void GetReportImageUrlAsync(string token, System.DateTime startDate, System.DateTime endDate, int LID, int sponsorAdminID, int sponsorID, int groupBy, string projectRoundUnit, int grouping, int anonymized, string selectedDepartment, int expirationMinutes, object userState) {
             if ((this.GetReportImageUrlOperationCompleted == null)) {
                 this.GetReportImageUrlOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetReportImageUrlOperationCompleted);
             }
@@ -336,6 +337,7 @@ namespace HW.Grp.WebService {
                         projectRoundUnit,
                         grouping,
                         anonymized,
+                        selectedDepartment,
                         expirationMinutes}, this.GetReportImageUrlOperationCompleted, userState);
         }
         

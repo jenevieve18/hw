@@ -395,6 +395,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Web References\WebService\Default.disco" />
+    <Content Include="Stats.aspx" />
     <Content Include="~etc\assets\css\default.css" />
     <Content Include="~etc\assets\exercises\css\exercises.css" />
     <Content Include="~etc\assets\exercises\css\styles.css" />
@@ -710,7 +711,6 @@
     <Content Include="SavedExerciseShow.aspx" />
     <Content Include="Service.aspx" />
     <Content Include="Settings.aspx" />
-    <Content Include="Stats.aspx" />
     <Content Include="SuperAdmin.aspx" />
     <Content Include="SuperExport.aspx" />
     <Content Include="SuperExportAll.aspx" />

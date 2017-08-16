@@ -531,22 +531,28 @@ namespace HW.Grp
                     imageBuilder += "</div>";
                 }
 
+                var selectedGID = "0";
+                foreach (var gid in urlModels)
+                {
+                    selectedGID += "," + gid.Id.ToString();
+                }
                 /// <summary>
                 /// Initializing GRP-WS and call GetReportImageUrl webmethod.
                 /// </summary>
                 /// <returns>List of Statistic Image URLs</returns>
                 var soapService = new Grp.WebService.Soap();
                 var soapResponse = soapService.GetReportImageUrl(
-                    Session["Token"].ToString(), 
-                    startDate, 
-                    endDate, 
-                    lid, 
-                    sponsorAdminID, 
-                    sponsorID, 
-                    Convert.ToInt32(GroupBy.SelectedValue), 
-                    ProjectRoundUnitID.SelectedValue, 
-                    Convert.ToInt32(Grouping.SelectedValue), 
-                    Convert.ToInt32(Session["Anonymize"]), 
+                    Session["Token"].ToString(),
+                    startDate,
+                    endDate,
+                    lid,
+                    sponsorAdminID,
+                    sponsorID,
+                    Convert.ToInt32(GroupBy.SelectedValue),
+                    ProjectRoundUnitID.SelectedValue,
+                    Convert.ToInt32(Grouping.SelectedValue),
+                    Convert.ToInt32(Session["Anonymize"]),
+                    selectedGID,
                     20);
 
                 /// <summary>
